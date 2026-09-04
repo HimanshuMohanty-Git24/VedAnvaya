@@ -1,0 +1,274 @@
+{
+  "$defs": {
+    "LexicalPredicate": {
+      "description": "Deterministic predicates added by the lexical / cross-mantra layer.\n\n``HAS_RISHI``, ``HAS_DEVATA`` and ``HAS_CHANDAS`` are *not* here: traditional\nassignment lives in :class:`MetadataPredicate` and is never conflated with\nlexical evidence.",
+      "enum": [
+        "MENTIONS_ENTITY",
+        "EXACT_PARALLEL_OF",
+        "PARALLEL_TO",
+        "HAS_COMPONENT"
+      ],
+      "title": "LexicalPredicate",
+      "type": "string"
+    },
+    "LexicalProvenanceClass": {
+      "description": "What kind of statement a lexical-layer assertion rests on.\n\nThese never mix with :class:`ProvenanceClass`, whose members describe claims\nread directly out of the Anukramaṇī.",
+      "enum": [
+        "DETERMINISTIC_DERIVED",
+        "HUMAN_REVIEWED"
+      ],
+      "title": "LexicalProvenanceClass",
+      "type": "string"
+    },
+    "ParallelMethod": {
+      "description": "The representation at which two mantras were found identical.\n\nThe levels are not collapsed: two mantras may be ``ACCENTLESS_EXACT``\nwithout being ``SOURCE_EXACT``, and the difference is real information.",
+      "enum": [
+        "SOURCE_EXACT",
+        "NFC_EXACT",
+        "ACCENTLESS_EXACT",
+        "TOKEN_EXACT",
+        "LEMMA_SEQUENCE_EXACT"
+      ],
+      "title": "ParallelMethod",
+      "type": "string"
+    },
+    "ParallelMetrics": {
+      "additionalProperties": false,
+      "description": "Individual deterministic similarity measurements for one mantra pair.\n\nThey are stored separately and never fused into a single opaque score. A policy may\ncombine them, but the policy is versioned and the inputs stay inspectable.",
+      "properties": {
+        "character_ngram_similarity": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Character Ngram Similarity",
+          "type": "number"
+        },
+        "left_token_count": {
+          "minimum": 0,
+          "title": "Left Token Count",
+          "type": "integer"
+        },
+        "lemma_jaccard": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Lemma Jaccard",
+          "type": "number"
+        },
+        "length_ratio": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Length Ratio",
+          "type": "number"
+        },
+        "normalized_edit_similarity": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Normalized Edit Similarity",
+          "type": "number"
+        },
+        "ordered_token_similarity": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Ordered Token Similarity",
+          "type": "number"
+        },
+        "right_token_count": {
+          "minimum": 0,
+          "title": "Right Token Count",
+          "type": "integer"
+        },
+        "shared_token_count": {
+          "minimum": 0,
+          "title": "Shared Token Count",
+          "type": "integer"
+        },
+        "token_jaccard": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Token Jaccard",
+          "type": "number"
+        }
+      },
+      "required": [
+        "token_jaccard",
+        "lemma_jaccard",
+        "ordered_token_similarity",
+        "normalized_edit_similarity",
+        "character_ngram_similarity",
+        "length_ratio",
+        "shared_token_count",
+        "left_token_count",
+        "right_token_count"
+      ],
+      "title": "ParallelMetrics",
+      "type": "object"
+    },
+    "ParallelStatus": {
+      "description": "Review state of one mantra-pair parallel.",
+      "enum": [
+        "EXACT_PARALLEL",
+        "HIGH_CONFIDENCE_NEAR_PARALLEL",
+        "CANDIDATE_PARALLEL",
+        "REJECTED"
+      ],
+      "title": "ParallelStatus",
+      "type": "string"
+    },
+    "ParallelUnit": {
+      "description": "The textual unit a parallel relates.\n\n``PADA`` is declared now and unused in v1: the schema must not foreclose\npāda-level matching, which the annotation layer's pāda-tagged token ids\nalready make possible.",
+      "enum": [
+        "MANTRA",
+        "PADA"
+      ],
+      "title": "ParallelUnit",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "One canonical, order-normalized parallel between two distinct mantras.\n\nThe pair is always stored with ``subject_key < object_key`` so A-B and B-A cannot\nboth exist. Rendering it in both directions is a graph-loading concern, not a\nstorage one.",
+  "properties": {
+    "assertion_id": {
+      "format": "uuid",
+      "title": "Assertion Id",
+      "type": "string"
+    },
+    "group_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Group Id"
+    },
+    "methods": {
+      "items": {
+        "$ref": "#/$defs/ParallelMethod"
+      },
+      "title": "Methods",
+      "type": "array"
+    },
+    "metrics": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ParallelMetrics"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "object_citation": {
+      "minLength": 1,
+      "title": "Object Citation",
+      "type": "string"
+    },
+    "object_id": {
+      "format": "uuid",
+      "title": "Object Id",
+      "type": "string"
+    },
+    "object_key": {
+      "pattern": "^VG:RV:SAK:M\\d{2}:S\\d{3}:V\\d{3}$",
+      "title": "Object Key",
+      "type": "string"
+    },
+    "object_locator": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Object Locator"
+    },
+    "parallel_policy_version": {
+      "minLength": 1,
+      "title": "Parallel Policy Version",
+      "type": "string"
+    },
+    "predicate": {
+      "$ref": "#/$defs/LexicalPredicate"
+    },
+    "provenance_class": {
+      "$ref": "#/$defs/LexicalProvenanceClass",
+      "default": "DETERMINISTIC_DERIVED"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "$ref": "#/$defs/ParallelStatus"
+    },
+    "strongest_method": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ParallelMethod"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "subject_citation": {
+      "minLength": 1,
+      "title": "Subject Citation",
+      "type": "string"
+    },
+    "subject_id": {
+      "format": "uuid",
+      "title": "Subject Id",
+      "type": "string"
+    },
+    "subject_key": {
+      "pattern": "^VG:RV:SAK:M\\d{2}:S\\d{3}:V\\d{3}$",
+      "title": "Subject Key",
+      "type": "string"
+    },
+    "subject_locator": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Subject Locator"
+    },
+    "text_version_id": {
+      "minLength": 1,
+      "title": "Text Version Id",
+      "type": "string"
+    },
+    "unit": {
+      "$ref": "#/$defs/ParallelUnit",
+      "default": "MANTRA"
+    }
+  },
+  "required": [
+    "assertion_id",
+    "subject_key",
+    "subject_id",
+    "object_key",
+    "object_id",
+    "predicate",
+    "status",
+    "parallel_policy_version",
+    "text_version_id",
+    "subject_citation",
+    "object_citation"
+  ],
+  "title": "MantraParallel",
+  "type": "object"
+}

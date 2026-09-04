@@ -1,4 +1,4 @@
-.PHONY: install format lint typecheck test check schemas pilot rigveda lineage knowledge
+.PHONY: install format lint typecheck test check schemas pilot rigveda lineage knowledge lexical
 
 install:
 	uv sync --extra dev
@@ -36,3 +36,8 @@ knowledge:
 	uv run python scripts/build_anukramani_registries.py
 	uv run python scripts/build_rigveda_knowledge.py
 	uv run python scripts/generate_knowledge_reports.py
+
+lexical:
+	uv run python scripts/build_vedaweb_morphology_index.py
+	uv run python scripts/build_rigveda_lexical.py
+	uv run python scripts/generate_lexical_reports.py

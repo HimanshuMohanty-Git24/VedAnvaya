@@ -85,15 +85,76 @@ Evidence: [`RIGVEDA_ANUKRAMANI_SOURCE.md`](docs/architecture/RIGVEDA_ANUKRAMANI_
 [ADR-011](docs/decisions/ADR-011-deterministic-knowledge-layer.md) and
 [ADR-012](docs/decisions/ADR-012-entity-resolution-is-registry-data.md).
 
+## Deterministic lexical and cross-mantra layer
+
+The second knowledge layer answers a different question from the first: not what the
+tradition *assigns* to a mantra, but what words the mantra actually *contains*.
+
+It is built on the University of Zurich morphosyntactic annotation (`VEDAWEB.ZURICH`,
+CC BY 4.0) — over a decade of hand annotation, corrected against Grassmann's dictionary —
+which is already present in the book TEI artifacts this repository had pinned and hashed
+for the corpus build. Selecting it introduced no new source, licence or download.
+
+- **164,758 annotated tokens over 10,552/10,552 mantras (100%)**, aligned by the stanza's
+  own `xml:id` rather than by comparing text: 0 unaligned, 0 duplicates, 0 mismatches.
+- **8,961 `MENTIONS_ENTITY` edges**, every one matched on the annotation's stable
+  Grassmann-linked lemma identifier. Measured precision: **0.34%** detectable false
+  positives, audited against grammatical gender, which played no part in choosing aliases.
+- **256 exact mantra parallels** in 389 groups across five separately recorded
+  representation levels, plus 69 reviewed near parallels — found by scoring **0.27%** of
+  all 55.7 million pairs, with recall verified by brute-forcing a whole Mandala.
+- **28 `HAS_COMPONENT` edges** from human-reviewed composite Devatā decompositions only.
+
+The rules this layer will not bend:
+
+**No substring matching, ever.** `if alias in mantra_text` is not implemented anywhere.
+Matching starts from an annotated token and its lemma identifier, so sandhi, compounding
+and short names cannot produce a false positive — the failure mode is structurally absent,
+not filtered out afterwards.
+
+**Fuzzy matching may only produce candidates.** It writes `LexicalAliasCandidate` records
+for a human. It cannot write an alias, and it cannot write an edge.
+
+**Ambiguity fails closed.** A lemma reaching two entities produces nothing, however
+frequent. 786 tokens were deliberately left unresolved rather than guessed — including
+every occurrence of Sarasvatī, whose stem the annotation shares with the masculine
+Sarasvant.
+
+**A group deity is not the set of its members.** `viśvedevāḥ` and `ādityāḥ` have their
+non-decomposition recorded as a reviewed decision, not left as an oversight.
+
+**Assignment and mention are counted separately, and rank differently.** `pavamānaḥ somaḥ`
+is assigned to 1,087 mantras and mentioned in none; `mitraḥ` is assigned to 10 and
+mentioned in 320. The statistics file carries a written warning that none of the three
+counts means "the most used god".
+
+```bash
+make lexical
+```
+
+Evidence: [`RIGVEDA_MORPHOLOGY_SOURCE.md`](docs/architecture/RIGVEDA_MORPHOLOGY_SOURCE.md),
+[`RIGVEDA_MORPHOLOGY_DECISION.md`](docs/architecture/RIGVEDA_MORPHOLOGY_DECISION.md),
+[`RIGVEDA_LEXICAL_MENTION_POLICY.md`](docs/architecture/RIGVEDA_LEXICAL_MENTION_POLICY.md),
+[`RIGVEDA_RISHI_STRUCTURE_FINDINGS.md`](docs/architecture/RIGVEDA_RISHI_STRUCTURE_FINDINGS.md),
+[`RIGVEDA_DETERMINISTIC_LEXICAL_BUILD.md`](docs/reports/RIGVEDA_DETERMINISTIC_LEXICAL_BUILD.md),
+[`RIGVEDA_LEXICAL_MENTION_REVIEW.md`](docs/reports/RIGVEDA_LEXICAL_MENTION_REVIEW.md),
+[`RIGVEDA_PARALLEL_REVIEW.md`](docs/reports/RIGVEDA_PARALLEL_REVIEW.md) and
+[ADR-013](docs/decisions/ADR-013-lexical-mention-is-not-traditional-assignment.md).
+
 ## Explicitly not implemented
 
 There is no Neo4j driver, Cypher, GraphRAG, embedding pipeline, frontend, LLM API, semantic
 extraction, mass corpus crawl, or audio download. The RV 1.1 pilot is infrastructure validation,
 not a publication-ready text edition.
 
-The knowledge layer's predicate whitelist is exactly `HAS_RISHI`, `HAS_DEVATA` and `HAS_CHANDAS`.
-`MENTIONS_ENTITY` and `HAS_COMPONENT` belong to a later deterministic lexical phase; `SYMBOLIZES`,
-`EXPRESSES`, `RELATED_TO` and `THEME` belong to a later interpretive layer. Neither exists.
+The deterministic predicate whitelist is exactly `HAS_RISHI`, `HAS_DEVATA`, `HAS_CHANDAS`
+(traditional metadata) plus `MENTIONS_ENTITY`, `EXACT_PARALLEL_OF`, `PARALLEL_TO` and
+`HAS_COMPONENT` (lexical and cross-mantra). `SYMBOLIZES`, `EXPRESSES`, `RELATED_TO` and `THEME`
+belong to a later interpretive layer that does not exist.
+
+No Ṛṣi genealogy edges exist either: the pinned Anukramaṇī has no family, gotra or ancestor
+field, and the lineage visible in a name like `vaiśvāmitro madhucchandāḥ` is Sanskrit grammar
+rather than data. The honest output is no edges, and that is what was produced.
 
 ## Install
 
@@ -237,16 +298,20 @@ CI performs the same locked, secret-free checks and never crawls sources.
 
 ## Next milestone
 
-The Rigveda deterministic knowledge layer is built: `RIGVEDA_DETERMINISTIC_KNOWLEDGE_READY_WITH_LIMITATIONS`.
-Alignment, identity, provenance, reproducibility and QA all pass; the limitations are source gaps
-reported honestly (RV 8.31 has no seer field, nine hymns' meter scopes do not cover every verse),
-deferred composite decomposition, and two VHP disagreements at RV 1.191 awaiting human review.
+The Rigveda deterministic lexical and cross-mantra layer is built:
+`RIGVEDA_DETERMINISTIC_LEXICAL_READY_WITH_LIMITATIONS`. Alignment, token identity, precision,
+reproducibility and QA all pass. The limitations are deliberate: mention coverage is partial
+(38 accepted aliases of 214 Devatā entities), Sarasvatī awaits feature-conditioned matching,
+Ṛṣi lexical mentions await a source that can decompose patronymic labels, and Ṛṣi genealogy
+has no sufficient deterministic source at all.
 
-Next is **deterministic lexical and cross-mantra knowledge**: literal entity-name occurrence,
-canonical alias matching over the Sanskrit, exact and near mantra parallels, source-backed Ṛṣi
-family relationships and reviewed Devatā composition. Only after that comes semantic extraction,
-then Neo4j as a derived database, then GraphRAG.
+Next is **semantic knowledge extraction**: `THEME`, `EXPRESSES`, `DESCRIBES`, `PRAISES`,
+`INVOKES`, ritual and natural-phenomenon associations. Its output will be candidate assertions
+only, and it will never alter the canonical corpus, the traditional metadata, the lexical
+mentions or the deterministic parallels. Only after that comes Neo4j as a derived database,
+then GraphRAG.
 
 Progress and blockers are maintained in [`docs/STATUS.md`](docs/STATUS.md); the generated build
-summaries are [`RIGVEDA_FULL_BUILD.md`](docs/reports/RIGVEDA_FULL_BUILD.md) and
-[`RIGVEDA_DETERMINISTIC_KNOWLEDGE_BUILD.md`](docs/reports/RIGVEDA_DETERMINISTIC_KNOWLEDGE_BUILD.md).
+summaries are [`RIGVEDA_FULL_BUILD.md`](docs/reports/RIGVEDA_FULL_BUILD.md),
+[`RIGVEDA_DETERMINISTIC_KNOWLEDGE_BUILD.md`](docs/reports/RIGVEDA_DETERMINISTIC_KNOWLEDGE_BUILD.md)
+and [`RIGVEDA_DETERMINISTIC_LEXICAL_BUILD.md`](docs/reports/RIGVEDA_DETERMINISTIC_LEXICAL_BUILD.md).

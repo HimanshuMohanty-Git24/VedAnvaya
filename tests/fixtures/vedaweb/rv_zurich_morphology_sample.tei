@@ -1,0 +1,173 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+  Minimal fixture mirroring the element structure of the Zurich annotation layer in
+  VedaWeb's book TEI (CC BY 4.0, VedaWebProject/vedaweb-data @ d3eb8af). It is written
+  by hand rather than extracted, so it ships no source text: the lemmas and identifiers
+  are the small set the lexical tests need, arranged exactly as the real files arrange
+  them.
+
+  Deliberate contents:
+    b01_h001_01  agni twice (multiple occurrences in one mantra), one indra
+    b01_h001_02  ka (a DO_NOT_MATCH lemma) and mitra
+    b01_h001_03  dadhikra (a lemma reaching two entities -> must stay ambiguous)
+                 and a token with two lemma ids (source ambiguity)
+    b01_h002_01  repeats b01_h001_01's tokens exactly, for parallel detection
+-->
+<teiCorpus xmlns="http://www.tei-c.org/ns/1.0">
+  <TEI>
+    <text>
+      <body>
+        <div type="book" n="1">
+          <div type="hymn" n="1">
+
+            <div type="stanza" xml:id="b01_h001_01">
+              <lg xml:id="b01_h001_01_aufrecht" source="aufrecht">
+                <l xml:id="b01_h001_01_aufrecht_a">agnim ile indram</l>
+              </lg>
+              <lg xml:id="b01_h001_01_zur" source="zurich">
+                <l xml:id="b01_h001_01_zur_a">agním ī́ḷe índram agním</l>
+                <l xml:id="b01_h001_01_zur_a_tokens">
+                  <fs type="zurich_info" xml:id="b01_h001_01_zur_a_01">
+                    <f name="surface"><string>agním</string></f>
+                    <f name="gra_lemma"><string correction="#lemma_agni_79">agní-</string></f>
+                    <f name="gra_gramm"><symbol value="nominal stem"/></f>
+                    <f name="morphosyntax">
+                      <fs type="leipzig_glossing_rules">
+                        <f name="case"><symbol value="ACC"/></f>
+                        <f name="gender"><symbol value="M"/></f>
+                        <f name="number"><symbol value="SG"/></f>
+                      </fs>
+                    </f>
+                  </fs>
+                  <fs type="zurich_info" xml:id="b01_h001_01_zur_a_02">
+                    <f name="surface"><string>índram</string></f>
+                    <f name="gra_lemma"><string correction="#lemma_indra_1708">índra-</string></f>
+                    <f name="gra_gramm"><symbol value="nominal stem"/></f>
+                    <f name="morphosyntax">
+                      <fs type="leipzig_glossing_rules">
+                        <f name="case"><symbol value="ACC"/></f>
+                        <f name="gender"><symbol value="M"/></f>
+                        <f name="number"><symbol value="SG"/></f>
+                      </fs>
+                    </f>
+                  </fs>
+                </l>
+                <l xml:id="b01_h001_01_zur_b">agním</l>
+                <l xml:id="b01_h001_01_zur_b_tokens">
+                  <fs type="zurich_info" xml:id="b01_h001_01_zur_b_01">
+                    <f name="surface"><string>ágne</string></f>
+                    <f name="gra_lemma"><string correction="#lemma_agni_79">agní-</string></f>
+                    <f name="gra_gramm"><symbol value="nominal stem"/></f>
+                    <f name="morphosyntax">
+                      <fs type="leipzig_glossing_rules">
+                        <f name="case"><symbol value="VOC"/></f>
+                        <f name="gender"><symbol value="M"/></f>
+                        <f name="number"><symbol value="SG"/></f>
+                      </fs>
+                    </f>
+                  </fs>
+                </l>
+              </lg>
+            </div>
+
+            <div type="stanza" xml:id="b01_h001_02">
+              <lg xml:id="b01_h001_02_zur" source="zurich">
+                <l xml:id="b01_h001_02_zur_a">káḥ mitráḥ</l>
+                <l xml:id="b01_h001_02_zur_a_tokens">
+                  <fs type="zurich_info" xml:id="b01_h001_02_zur_a_01">
+                    <f name="surface"><string>káḥ</string></f>
+                    <f name="gra_lemma"><string correction="#lemma_ka_2373">ká-</string></f>
+                    <f name="gra_gramm"><symbol value="pronoun"/></f>
+                    <f name="morphosyntax">
+                      <fs type="leipzig_glossing_rules">
+                        <f name="case"><symbol value="NOM"/></f>
+                        <f name="number"><symbol value="SG"/></f>
+                      </fs>
+                    </f>
+                  </fs>
+                  <fs type="zurich_info" xml:id="b01_h001_02_zur_a_02">
+                    <f name="surface"><string>mitráḥ</string></f>
+                    <f name="gra_lemma"><string correction="#lemma_mitra_6824">mitrá-</string></f>
+                    <f name="gra_gramm"><symbol value="nominal stem"/></f>
+                    <f name="morphosyntax">
+                      <fs type="leipzig_glossing_rules">
+                        <f name="case"><symbol value="NOM"/></f>
+                        <f name="gender"><symbol value="M"/></f>
+                        <f name="number"><symbol value="SG"/></f>
+                      </fs>
+                    </f>
+                  </fs>
+                </l>
+              </lg>
+            </div>
+
+            <div type="stanza" xml:id="b01_h001_03">
+              <lg xml:id="b01_h001_03_zur" source="zurich">
+                <l xml:id="b01_h001_03_zur_a">dadhikrā́m dyúbhiḥ</l>
+                <l xml:id="b01_h001_03_zur_a_tokens">
+                  <fs type="zurich_info" xml:id="b01_h001_03_zur_a_01">
+                    <f name="surface"><string>dadhikrā́m</string></f>
+                    <f name="gra_lemma"><string correction="#lemma_daDikrA_4074">dadhikrā́-</string></f>
+                    <f name="gra_gramm"><symbol value="nominal stem"/></f>
+                    <f name="morphosyntax">
+                      <fs type="leipzig_glossing_rules">
+                        <f name="case"><symbol value="ACC"/></f>
+                        <f name="gender"><symbol value="M"/></f>
+                        <f name="number"><symbol value="SG"/></f>
+                      </fs>
+                    </f>
+                  </fs>
+                  <fs type="zurich_info" xml:id="b01_h001_03_zur_a_02">
+                    <f name="surface"><string>dyúbhiḥ</string></f>
+                    <f name="gra_lemma"><string correction="#lemma_div_4231 #lemma_agni_79">dyú- ~ div-</string></f>
+                    <f name="gra_gramm"><symbol value="nominal stem"/></f>
+                    <f name="morphosyntax">
+                      <fs type="leipzig_glossing_rules">
+                        <f name="case"><symbol value="INS"/></f>
+                        <f name="number"><symbol value="PL"/></f>
+                      </fs>
+                    </f>
+                  </fs>
+                </l>
+              </lg>
+            </div>
+          </div>
+
+          <div type="hymn" n="2">
+            <div type="stanza" xml:id="b01_h002_01">
+              <lg xml:id="b01_h002_01_zur" source="zurich">
+                <l xml:id="b01_h002_01_zur_a">agním ī́ḷe índram agním</l>
+                <l xml:id="b01_h002_01_zur_a_tokens">
+                  <fs type="zurich_info" xml:id="b01_h002_01_zur_a_01">
+                    <f name="surface"><string>agním</string></f>
+                    <f name="gra_lemma"><string correction="#lemma_agni_79">agní-</string></f>
+                    <f name="gra_gramm"><symbol value="nominal stem"/></f>
+                    <f name="morphosyntax">
+                      <fs type="leipzig_glossing_rules">
+                        <f name="case"><symbol value="ACC"/></f>
+                        <f name="gender"><symbol value="M"/></f>
+                        <f name="number"><symbol value="SG"/></f>
+                      </fs>
+                    </f>
+                  </fs>
+                  <fs type="zurich_info" xml:id="b01_h002_01_zur_a_02">
+                    <f name="surface"><string>índram</string></f>
+                    <f name="gra_lemma"><string correction="#lemma_indra_1708">índra-</string></f>
+                    <f name="gra_gramm"><symbol value="nominal stem"/></f>
+                    <f name="morphosyntax">
+                      <fs type="leipzig_glossing_rules">
+                        <f name="case"><symbol value="ACC"/></f>
+                        <f name="gender"><symbol value="M"/></f>
+                        <f name="number"><symbol value="SG"/></f>
+                      </fs>
+                    </f>
+                  </fs>
+                </l>
+              </lg>
+            </div>
+          </div>
+        </div>
+      </body>
+    </text>
+  </TEI>
+</teiCorpus>

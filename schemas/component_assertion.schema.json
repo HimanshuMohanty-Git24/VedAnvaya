@@ -1,0 +1,113 @@
+{
+  "$defs": {
+    "LexicalPredicate": {
+      "description": "Deterministic predicates added by the lexical / cross-mantra layer.\n\n``HAS_RISHI``, ``HAS_DEVATA`` and ``HAS_CHANDAS`` are *not* here: traditional\nassignment lives in :class:`MetadataPredicate` and is never conflated with\nlexical evidence.",
+      "enum": [
+        "MENTIONS_ENTITY",
+        "EXACT_PARALLEL_OF",
+        "PARALLEL_TO",
+        "HAS_COMPONENT"
+      ],
+      "title": "LexicalPredicate",
+      "type": "string"
+    },
+    "LexicalProvenanceClass": {
+      "description": "What kind of statement a lexical-layer assertion rests on.\n\nThese never mix with :class:`ProvenanceClass`, whose members describe claims\nread directly out of the Anukramaṇī.",
+      "enum": [
+        "DETERMINISTIC_DERIVED",
+        "HUMAN_REVIEWED"
+      ],
+      "title": "LexicalProvenanceClass",
+      "type": "string"
+    },
+    "ReviewStatus": {
+      "enum": [
+        "UNREVIEWED",
+        "NEEDS_REVIEW",
+        "ACCEPTED",
+        "REJECTED"
+      ],
+      "title": "ReviewStatus",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "A reviewed composite Devatā and one of its components.\n\nOnly rows a human marked ``ACCEPTED`` in ``data/registry/devata_components.yaml``\nreach this record. Composition is never inferred from a hyphen, a dual ending, or\nmembership in a group label.",
+  "properties": {
+    "assertion_id": {
+      "format": "uuid",
+      "title": "Assertion Id",
+      "type": "string"
+    },
+    "component_sequence": {
+      "minimum": 1,
+      "title": "Component Sequence",
+      "type": "integer"
+    },
+    "evidence": {
+      "minLength": 1,
+      "title": "Evidence",
+      "type": "string"
+    },
+    "notes": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Notes"
+    },
+    "object_id": {
+      "format": "uuid",
+      "title": "Object Id",
+      "type": "string"
+    },
+    "object_key": {
+      "pattern": "^VG:DEVATA:[A-Z0-9-]+$",
+      "title": "Object Key",
+      "type": "string"
+    },
+    "predicate": {
+      "$ref": "#/$defs/LexicalPredicate",
+      "default": "HAS_COMPONENT"
+    },
+    "provenance_class": {
+      "$ref": "#/$defs/LexicalProvenanceClass",
+      "default": "HUMAN_REVIEWED"
+    },
+    "review_status": {
+      "$ref": "#/$defs/ReviewStatus"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "subject_id": {
+      "format": "uuid",
+      "title": "Subject Id",
+      "type": "string"
+    },
+    "subject_key": {
+      "pattern": "^VG:DEVATA:[A-Z0-9-]+$",
+      "title": "Subject Key",
+      "type": "string"
+    }
+  },
+  "required": [
+    "assertion_id",
+    "subject_key",
+    "subject_id",
+    "object_key",
+    "object_id",
+    "component_sequence",
+    "evidence",
+    "review_status"
+  ],
+  "title": "ComponentAssertion",
+  "type": "object"
+}

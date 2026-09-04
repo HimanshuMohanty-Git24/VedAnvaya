@@ -23,6 +23,14 @@ from vedagraph.models import (
     TraditionalMetadataAssertion,
     Translation,
 )
+from vedagraph.models.lexical import (
+    ComponentAssertion,
+    LexicalAlias,
+    LexicalManifest,
+    MantraParallel,
+    MentionAssertion,
+    MorphologyToken,
+)
 
 SCHEMA_MODELS: dict[str, type[BaseModel]] = {
     "passage.schema.json": Passage,
@@ -41,6 +49,12 @@ SCHEMA_MODELS: dict[str, type[BaseModel]] = {
     "knowledge_entity.schema.json": KnowledgeEntity,
     "knowledge_assertion.schema.json": KnowledgeAssertion,
     "knowledge_manifest.schema.json": KnowledgeManifest,
+    "morphology_token.schema.json": MorphologyToken,
+    "lexical_alias.schema.json": LexicalAlias,
+    "mention_assertion.schema.json": MentionAssertion,
+    "mantra_parallel.schema.json": MantraParallel,
+    "component_assertion.schema.json": ComponentAssertion,
+    "lexical_manifest.schema.json": LexicalManifest,
 }
 
 

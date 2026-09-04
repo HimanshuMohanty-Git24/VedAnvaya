@@ -1,0 +1,118 @@
+{
+  "$defs": {
+    "KnowledgeEntityType": {
+      "description": "Canonical entity families in the deterministic knowledge layer.",
+      "enum": [
+        "RISHI",
+        "DEVATA",
+        "CHANDAS"
+      ],
+      "title": "KnowledgeEntityType",
+      "type": "string"
+    },
+    "LexicalAliasType": {
+      "description": "Why one lemma or form is permitted to establish a literal entity mention.\n\nThis vocabulary is deliberately separate from :class:`AliasType`. An\n``AliasType`` says \"this Anukramaṇī spelling names this entity\"; a\n``LexicalAliasType`` says \"this word occurring in the Sanskrit text is\nevidence that the mantra mentions this entity\". The two answer different\nquestions, and a registry alias is never silently promoted to a lexical one.\n\n``DO_NOT_MATCH`` is an explicit negative: a form that looks like an entity\nname but must never produce a mention.",
+      "enum": [
+        "CANONICAL_LEMMA",
+        "ORTHOGRAPHIC_VARIANT",
+        "KNOWN_LEMMA_VARIANT",
+        "INFLECTIONAL_SOURCE_FORM",
+        "EPITHET_REVIEWED",
+        "COMPOSITE_NAME",
+        "DO_NOT_MATCH"
+      ],
+      "title": "LexicalAliasType",
+      "type": "string"
+    },
+    "ReviewStatus": {
+      "enum": [
+        "UNREVIEWED",
+        "NEEDS_REVIEW",
+        "ACCEPTED",
+        "REJECTED"
+      ],
+      "title": "ReviewStatus",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "A reviewed statement that one lemma may evidence a mention of one entity.\n\nEvery alias carries ``review_status`` and ``evidence``. An alias that is not\n``ACCEPTED`` never produces a ``MENTIONS_ENTITY`` edge, whatever its type.",
+  "properties": {
+    "alias_id": {
+      "format": "uuid",
+      "title": "Alias Id",
+      "type": "string"
+    },
+    "alias_key": {
+      "minLength": 1,
+      "title": "Alias Key",
+      "type": "string"
+    },
+    "alias_type": {
+      "$ref": "#/$defs/LexicalAliasType"
+    },
+    "entity_key": {
+      "pattern": "^VG:(RISHI|DEVATA|CHANDAS):[A-Z0-9-]+$",
+      "title": "Entity Key",
+      "type": "string"
+    },
+    "entity_type": {
+      "$ref": "#/$defs/KnowledgeEntityType"
+    },
+    "evidence": {
+      "minLength": 1,
+      "title": "Evidence",
+      "type": "string"
+    },
+    "lemma": {
+      "minLength": 1,
+      "title": "Lemma",
+      "type": "string"
+    },
+    "lemma_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Lemma Ids",
+      "type": "array"
+    },
+    "normalized_lemma": {
+      "minLength": 1,
+      "title": "Normalized Lemma",
+      "type": "string"
+    },
+    "notes": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Notes"
+    },
+    "review_status": {
+      "$ref": "#/$defs/ReviewStatus"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "alias_id",
+    "alias_key",
+    "entity_key",
+    "entity_type",
+    "lemma",
+    "normalized_lemma",
+    "alias_type",
+    "review_status",
+    "evidence"
+  ],
+  "title": "LexicalAlias",
+  "type": "object"
+}

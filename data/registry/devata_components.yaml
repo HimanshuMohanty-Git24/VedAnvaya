@@ -1,0 +1,164 @@
+# Reviewed composite-Devatā composition.
+#
+# HAS_COMPONENT is human-reviewed enrichment. It is NEVER inferred:
+#
+#   * not from a hyphen in a label,
+#   * not from a dual or plural ending,
+#   * not from a substring that happens to look like another entity's name,
+#   * and never by expanding a group name into "all its members".
+#
+# Viśvedevāḥ in particular is a group deity, not shorthand for the set of every
+# individual deva, and it therefore has no component list here.
+#
+# Only rows with review_status: ACCEPTED become HAS_COMPONENT edges. Everything
+# else is recorded so the decision is visible, and produces nothing.
+#
+# Fields:
+#   composite_entity_id  the pinned composite entity key
+#   component_entity_ids ordered component entity keys, all of which must exist
+#   evidence             why this decomposition is asserted
+#   review_status        ACCEPTED | NEEDS_REVIEW | REJECTED
+policy_version: rigveda-devata-component-policy-v1
+
+components:
+
+# --- Dvandva pairs. Each is a grammatical compound of two names that both exist
+# --- as canonical entities in their own right, and the Anukramaṇī uses both the
+# --- pair and its members as separate Devatā assignments.
+
+- composite_entity_id: VG:DEVATA:MITRAVARUNAU
+  component_entity_ids: [VG:DEVATA:MITRAH, VG:DEVATA:VARUNAH]
+  evidence: >-
+    mitrāvaruṇau is the nominative dual of the devatā-dvandva mitrā́váruṇa-, whose
+    two members Mitra and Varuṇa are separately registered Devatās and separately
+    assigned by the Anukramaṇī.
+  review_status: ACCEPTED
+
+- composite_entity_id: VG:DEVATA:INDRAGNI
+  component_entity_ids: [VG:DEVATA:INDRAH, VG:DEVATA:AGNIH]
+  evidence: >-
+    indrāgnī is the dvandva of Indra and Agni; both are separately registered and
+    separately assigned.
+  review_status: ACCEPTED
+
+- composite_entity_id: VG:DEVATA:INDRABRHASPATI
+  component_entity_ids: [VG:DEVATA:INDRAH, VG:DEVATA:BRHASPATIH]
+  evidence: dvandva of Indra and Bṛhaspati, both separately registered Devatās.
+  review_status: ACCEPTED
+
+- composite_entity_id: VG:DEVATA:INDRAVAYU
+  component_entity_ids: [VG:DEVATA:INDRAH, VG:DEVATA:VAYUH]
+  evidence: dvandva of Indra and Vāyu, both separately registered Devatās.
+  review_status: ACCEPTED
+
+- composite_entity_id: VG:DEVATA:INDRASOMAU
+  component_entity_ids: [VG:DEVATA:INDRAH, VG:DEVATA:SOMAH]
+  evidence: dvandva of Indra and Soma, both separately registered Devatās.
+  review_status: ACCEPTED
+
+- composite_entity_id: VG:DEVATA:SOMARUDRAU
+  component_entity_ids: [VG:DEVATA:SOMAH, VG:DEVATA:RUDRAH]
+  evidence: dvandva of Soma and Rudra, both separately registered Devatās.
+  review_status: ACCEPTED
+
+- composite_entity_id: VG:DEVATA:SOMAVARUNAU
+  component_entity_ids: [VG:DEVATA:SOMAH, VG:DEVATA:VARUNAH]
+  evidence: dvandva of Soma and Varuṇa, both separately registered Devatās.
+  review_status: ACCEPTED
+
+- composite_entity_id: VG:DEVATA:AGNISOMAU
+  component_entity_ids: [VG:DEVATA:AGNIH, VG:DEVATA:SOMAH]
+  evidence: >-
+    agnīṣomau is the dvandva of Agni and Soma, with the regular ṣ of the
+    compound; both members are separately registered Devatās.
+  review_status: ACCEPTED
+
+- composite_entity_id: VG:DEVATA:AGNINDRAU
+  component_entity_ids: [VG:DEVATA:AGNIH, VG:DEVATA:INDRAH]
+  evidence: >-
+    agnīndrau is the dvandva of Agni and Indra, ordered the other way from
+    indrāgnī; the pair is registered separately by the source and is kept
+    separate here rather than merged with it.
+  review_status: ACCEPTED
+
+- composite_entity_id: VG:DEVATA:INDRAPUSANAU
+  component_entity_ids: [VG:DEVATA:INDRAH, VG:DEVATA:PUSA]
+  evidence: dvandva of Indra and Pūṣan, both separately registered Devatās.
+  review_status: ACCEPTED
+
+- composite_entity_id: VG:DEVATA:SOMAPUSANAU
+  component_entity_ids: [VG:DEVATA:SOMAH, VG:DEVATA:PUSA]
+  evidence: dvandva of Soma and Pūṣan, both separately registered Devatās.
+  review_status: ACCEPTED
+
+- composite_entity_id: VG:DEVATA:INDRABRAHMANASPATI
+  component_entity_ids: [VG:DEVATA:INDRAH, VG:DEVATA:BRAHMANASPATIH]
+  evidence: dvandva of Indra and Brahmaṇaspati, both separately registered Devatās.
+  review_status: ACCEPTED
+
+- composite_entity_id: VG:DEVATA:DYAVAPRTHIVYAU
+  component_entity_ids: []
+  evidence: >-
+    dyāvāpṛthivyau is grammatically the dvandva of Dyaus and Pṛthivī, and Pṛthivī
+    is a registered Devatā. Dyaus is not: the Anukramaṇī never assigns it alone,
+    so the canonical registry holds no entity for it. Half a decomposition is not
+    a decomposition, and inventing the missing entity to complete one is exactly
+    what this registry exists to prevent.
+  review_status: NEEDS_REVIEW
+  notes: >-
+    Becomes ACCEPTED as soon as a reviewed VG:DEVATA:DYAUH entity exists, with no
+    change to this reasoning.
+
+- composite_entity_id: VG:DEVATA:USASANAKTA
+  component_entity_ids: [VG:DEVATA:USAH, VG:DEVATA:RATRIH]
+  evidence: >-
+    uṣāsānaktā is the dvandva of Uṣas and Naktā (Night). The second member is
+    registered under the Anukramaṇī's own label rātriḥ.
+  review_status: NEEDS_REVIEW
+  notes: >-
+    Held back deliberately. Equating the compound's náktā- with the registry's
+    rātriḥ is an identification across two different words, not a decomposition,
+    and needs a human decision.
+
+# --- Hyphen-joined source labels. The hyphen here is the WSC2023 editors' own
+# --- compositional marker between separate Devatā names, so the decomposition is
+# --- read off the source rather than inferred from orthography.
+
+- composite_entity_id: VG:DEVATA:AGNIH-MARUTAH
+  component_entity_ids: [VG:DEVATA:AGNIH, VG:DEVATA:MARUTAH]
+  evidence: >-
+    The source label agniḥ-marutaḥ joins two complete nominative forms, each of
+    which is itself a registered Devatā label in the same dataset.
+  review_status: ACCEPTED
+
+- composite_entity_id: VG:DEVATA:INDRAH-MARUTAH
+  component_entity_ids: [VG:DEVATA:INDRAH, VG:DEVATA:MARUTAH]
+  evidence: >-
+    The source label indraḥ-marutaḥ joins two complete nominative forms, each a
+    registered Devatā label.
+  review_status: ACCEPTED
+
+# --- Explicitly NOT decomposed. Listed so that the absence of an edge is a
+# --- recorded decision rather than an oversight.
+
+- composite_entity_id: VG:DEVATA:VISVEDEVAH
+  component_entity_ids: []
+  evidence: >-
+    Viśvedevāḥ is a group deity addressed as a collective. It is not an
+    abbreviation for the set of all individually registered Devatās, and treating
+    it as one would fabricate thousands of edges the tradition does not assert.
+  review_status: REJECTED
+
+- composite_entity_id: VG:DEVATA:ADITYAH
+  component_entity_ids: []
+  evidence: >-
+    Ādityāḥ is a plural group whose membership varies between passages and between
+    later enumerations. No source in this repository fixes the list.
+  review_status: REJECTED
+
+- composite_entity_id: VG:DEVATA:MARUTAH
+  component_entity_ids: []
+  evidence: >-
+    marutaḥ is a plural, not a compound. A plural ending is not evidence of
+    componenthood, and the Maruts have no enumerated members.
+  review_status: REJECTED

@@ -1,0 +1,245 @@
+{
+  "$defs": {
+    "LexicalPredicate": {
+      "description": "Deterministic predicates added by the lexical / cross-mantra layer.\n\n``HAS_RISHI``, ``HAS_DEVATA`` and ``HAS_CHANDAS`` are *not* here: traditional\nassignment lives in :class:`MetadataPredicate` and is never conflated with\nlexical evidence.",
+      "enum": [
+        "MENTIONS_ENTITY",
+        "EXACT_PARALLEL_OF",
+        "PARALLEL_TO",
+        "HAS_COMPONENT"
+      ],
+      "title": "LexicalPredicate",
+      "type": "string"
+    },
+    "QAStatus": {
+      "enum": [
+        "NOT_RUN",
+        "PASSED",
+        "FAILED",
+        "PASSED_WITH_WARNINGS"
+      ],
+      "title": "QAStatus",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Pins every input, policy and output hash of one lexical-layer build.",
+  "properties": {
+    "built_at": {
+      "format": "date-time",
+      "title": "Built At",
+      "type": "string"
+    },
+    "canonical_text_version_id": {
+      "minLength": 1,
+      "title": "Canonical Text Version Id",
+      "type": "string"
+    },
+    "component_mapping_sha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Component Mapping Sha256",
+      "type": "string"
+    },
+    "corpus_dataset_id": {
+      "title": "Corpus Dataset Id",
+      "type": "string"
+    },
+    "corpus_manifest_sha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Corpus Manifest Sha256",
+      "type": "string"
+    },
+    "corpus_passage_count": {
+      "minimum": 0,
+      "title": "Corpus Passage Count",
+      "type": "integer"
+    },
+    "corpus_version": {
+      "title": "Corpus Version",
+      "type": "string"
+    },
+    "dataset": {
+      "default": "VedaGraph Deterministic Lexical Knowledge Layer",
+      "title": "Dataset",
+      "type": "string"
+    },
+    "entity_registry_hashes": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Entity Registry Hashes",
+      "type": "object"
+    },
+    "generated_files": {
+      "items": {
+        "additionalProperties": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ]
+        },
+        "type": "object"
+      },
+      "title": "Generated Files",
+      "type": "array"
+    },
+    "knowledge_layer_version": {
+      "minLength": 1,
+      "title": "Knowledge Layer Version",
+      "type": "string"
+    },
+    "knowledge_manifest_sha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Knowledge Manifest Sha256",
+      "type": "string"
+    },
+    "lexical_registry_hashes": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Lexical Registry Hashes",
+      "type": "object"
+    },
+    "mention_policy_version": {
+      "minLength": 1,
+      "title": "Mention Policy Version",
+      "type": "string"
+    },
+    "morphology_annotation_layer_id": {
+      "minLength": 1,
+      "title": "Morphology Annotation Layer Id",
+      "type": "string"
+    },
+    "morphology_artifact_hashes": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Morphology Artifact Hashes",
+      "type": "object"
+    },
+    "morphology_artifact_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Morphology Artifact Ids",
+      "type": "array"
+    },
+    "morphology_commit_sha": {
+      "pattern": "^[a-f0-9]{40}$",
+      "title": "Morphology Commit Sha",
+      "type": "string"
+    },
+    "morphology_license": {
+      "minLength": 1,
+      "title": "Morphology License",
+      "type": "string"
+    },
+    "morphology_parser_version": {
+      "minLength": 1,
+      "title": "Morphology Parser Version",
+      "type": "string"
+    },
+    "morphology_repository_url": {
+      "format": "uri",
+      "minLength": 1,
+      "title": "Morphology Repository Url",
+      "type": "string"
+    },
+    "morphology_snapshot_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Morphology Snapshot Ids",
+      "type": "array"
+    },
+    "morphology_source_id": {
+      "minLength": 1,
+      "title": "Morphology Source Id",
+      "type": "string"
+    },
+    "parallel_policy_version": {
+      "minLength": 1,
+      "title": "Parallel Policy Version",
+      "type": "string"
+    },
+    "predicate_whitelist": {
+      "items": {
+        "$ref": "#/$defs/LexicalPredicate"
+      },
+      "title": "Predicate Whitelist",
+      "type": "array"
+    },
+    "qa_status": {
+      "$ref": "#/$defs/QAStatus"
+    },
+    "record_counts": {
+      "additionalProperties": {
+        "type": "integer"
+      },
+      "title": "Record Counts",
+      "type": "object"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "software_version": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Software Version"
+    },
+    "token_id_policy_version": {
+      "minLength": 1,
+      "title": "Token Id Policy Version",
+      "type": "string"
+    },
+    "version": {
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "version",
+    "built_at",
+    "corpus_dataset_id",
+    "corpus_version",
+    "corpus_manifest_sha256",
+    "corpus_passage_count",
+    "knowledge_manifest_sha256",
+    "knowledge_layer_version",
+    "morphology_source_id",
+    "morphology_repository_url",
+    "morphology_commit_sha",
+    "morphology_annotation_layer_id",
+    "morphology_license",
+    "morphology_artifact_ids",
+    "morphology_artifact_hashes",
+    "morphology_snapshot_ids",
+    "entity_registry_hashes",
+    "lexical_registry_hashes",
+    "canonical_text_version_id",
+    "morphology_parser_version",
+    "token_id_policy_version",
+    "mention_policy_version",
+    "parallel_policy_version",
+    "component_mapping_sha256",
+    "predicate_whitelist",
+    "record_counts",
+    "qa_status",
+    "generated_files"
+  ],
+  "title": "LexicalManifest",
+  "type": "object"
+}

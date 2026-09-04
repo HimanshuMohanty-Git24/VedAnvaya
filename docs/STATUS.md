@@ -1,6 +1,6 @@
 # Project status
 
-Updated: 2026-09-04 (Rigveda deterministic knowledge layer)
+Updated: 2026-09-04 (Rigveda deterministic lexical & cross-mantra layer)
 
 ## DONE
 
@@ -171,6 +171,108 @@ classifier or word-vector artifacts.
 | Metadata coverage | PARTIAL — 18 mantras without a Ṛṣi, 34 without Chandas, from source gaps |
 | Composite decomposition | DEFERRED by design |
 | VHP disagreement | RECORDED, awaiting human review |
+
+## RIGVEDA DETERMINISTIC LEXICAL & CROSS-MANTRA LAYER
+
+The second knowledge-engineering layer. It answers a different question from the first:
+not *what the tradition assigns to a mantra*, but *what words the mantra actually
+contains*. Still no Neo4j, no embeddings, no GraphRAG, no LLM.
+
+- **Morphology source selected and pinned: `PRIMARY_MORPHOLOGY_SELECTED`.** The University
+  of Zurich morphosyntactic annotation (`VEDAWEB.ZURICH`), CC BY 4.0, at the already-pinned
+  commit `d3eb8af7…`. It is an annotation layer inside book TEI artifacts this repository
+  had already registered and hashed, so no new source, licence or fetch was introduced.
+  Surveyed against `sanskrit-texts/rigveda`, which is not rejected as a source and remains
+  the recommended route for a future verb-argument layer. Evidence:
+  [`RIGVEDA_MORPHOLOGY_SOURCE.md`](architecture/RIGVEDA_MORPHOLOGY_SOURCE.md),
+  [`RIGVEDA_MORPHOLOGY_DECISION.md`](architecture/RIGVEDA_MORPHOLOGY_DECISION.md).
+- **Token layer is total and structurally aligned.** 164,758 tokens across
+  **10,552/10,552 mantras (100%)**; 0 tokens without a lemma, 0 unaligned records, 0
+  duplicate token keys, 0 passage mismatches, 0 unparsable ids. Alignment reads the
+  stanza's own `xml:id`, so nothing is placed by comparing text and no edition mapping
+  table was needed.
+- **Token identity names the annotation layer; mantra identity does not.**
+  `VG:TOKEN:VEDAWEB-ZURICH:RV:SAK:M01:S001:V001:PA:T001`, UUIDv5 from a canonical URN.
+  Adopting a second morphology source adds new token ids and changes no mantra id.
+- **Canonical Sanskrit untouched.** `GRETIL.RV.AUFRECHT` remains primary; the annotation's
+  reading is preserved separately as `surface_form`.
+- **8,961 `MENTIONS_ENTITY` edges** over 6,531 mantras, 9,322 token occurrences — **all of
+  them `LEMMA_ID_EXACT`**, matched on the annotation's own Grassmann-linked lemma
+  identifiers. No substring, surface or fuzzy match created a single edge.
+- **Precision measured independently: 0.34%** detectable false positives (32 off-gender of
+  9,322), using the annotation's grammatical gender, which played no part in choosing the
+  aliases. Stratified review sample of 228 rows.
+  [`RIGVEDA_LEXICAL_MENTION_REVIEW.md`](reports/RIGVEDA_LEXICAL_MENTION_REVIEW.md).
+- **`DO_NOT_MATCH` is why precision holds.** 22 evidenced suppressions stop Anukramaṇī
+  Devatā labels that are ordinary nouns — `kaḥ` (interrogative pronoun, 468 occurrences),
+  `rathaḥ` ("chariot", 471), `hariḥ` (271) — from fabricating ~2,000 false mentions.
+- **Ambiguity fails closed.** 786 tokens matched a registered alias and produced **no
+  edge**, reported rather than guessed: `sárasvant-` (Sarasvatī/Sarasvant share one stem),
+  `áp-`, `yamá-`, `mr̥tyú-`, `vená-`, `dadhikrā́-`.
+- **Assignment is not mention, and the numbers prove it.** `pavamānaḥ somaḥ` is assigned to
+  1,087 mantras and mentioned in 0; `viśvedevāḥ` 805 and 0; `mitraḥ` 10 and 320; `pṛthivī`
+  4 and 319. Three counts are computed separately and the stats file carries a written
+  warning that none of them means "the most used god".
+- **28 `HAS_COMPONENT` edges**, provenance `HUMAN_REVIEWED`, from 14 `ACCEPTED` rows in
+  `devata_components.yaml`. `viśvedevāḥ`, `ādityāḥ` and `marutaḥ` are recorded `REJECTED`:
+  a group deity is not the set of its members and a plural ending is not componenthood.
+  `dyāvāpṛthivyau` is held because no canonical Dyaus entity exists.
+- **Ṛṣi family structure: `NO SUFFICIENT DETERMINISTIC SOURCE FOUND`.** The pinned
+  Anukramaṇī has one seer field and no family, gotra or ancestor column; the lineage in
+  `vaiśvāmitro madhucchandāḥ` is name grammar, not data. No genealogy edges created. The
+  same finding scopes mentions to Devatā only.
+  [`RIGVEDA_RISHI_STRUCTURE_FINDINGS.md`](architecture/RIGVEDA_RISHI_STRUCTURE_FINDINGS.md).
+- **256 exact parallel pairs** in 389 groups across five separately recorded representation
+  levels, largest group 14 mantras (the Viśvāmitra refrain spanning Mandalas 3 and 10),
+  28 cross-Mandala groups. `LEMMA_SEQUENCE_EXACT` (250) is *below* `TOKEN_EXACT` (252)
+  because GRETIL and the Lubotsky-based annotation genuinely disagree on two pairs —
+  visible only because the levels are never collapsed.
+- **No O(n²) pass.** MinHash banding scored 148,092 pairs, **0.27%** of all 55,687,476.
+  Recall was measured, not assumed: brute-forcing all 613,278 Mandala 9 pairs, the banding
+  recovered 3/3 policy-accepted and 74/74 candidate-tier pairs. 0 buckets skipped.
+- **69 accepted `PARALLEL_TO`**, 792 candidates kept for review. Thresholds were set from
+  the observed distribution, require every metric to clear, and exclude short mantras.
+  [`RIGVEDA_PARALLEL_REVIEW.md`](reports/RIGVEDA_PARALLEL_REVIEW.md).
+- **279 co-occurrence pairs** with explicit `unit: MANTRA` and method. No `RELATED_TO` or
+  `CO_OCCURS_WITH` edge derived from them.
+- **Reproducible and byte-identical**, asserted by a test that rebuilds the whole layer and
+  compares every output hash. Full build 176 s: morphology parse 38 s, mentions 6 s,
+  parallels 130 s.
+- **Manifest `vedagraph-rigveda-knowledge-deterministic-lexical-1.0.0-rc1`** pins the corpus
+  manifest, the knowledge manifest, the morphology commit and ten artifact hashes, the
+  entity and lexical registry hashes, the component mapping hash, four policy versions and
+  every output file hash.
+- QA: **0 errors, 0 warnings**; one `INFO` recording 11 deliberately unreviewed aliases.
+- Reports: [`RIGVEDA_DETERMINISTIC_LEXICAL_BUILD.md`](reports/RIGVEDA_DETERMINISTIC_LEXICAL_BUILD.md).
+  Policy: [`RIGVEDA_LEXICAL_MENTION_POLICY.md`](architecture/RIGVEDA_LEXICAL_MENTION_POLICY.md).
+  Decision: [ADR-013](decisions/ADR-013-lexical-mention-is-not-traditional-assignment.md).
+
+### Lexical layer readiness
+
+**RIGVEDA_DETERMINISTIC_LEXICAL_READY_WITH_LIMITATIONS**
+
+| Condition | State |
+| --- | --- |
+| Morphology source selected, pinned, rights documented | PASS |
+| Alignment to 10,552 canonical mantras | PASS — 10,552/10,552, 0 unaligned |
+| Token ids deterministic and stable | PASS |
+| Canonical Sanskrit unmodified | PASS |
+| No substring matching | PASS — all edges `LEMMA_ID_EXACT` |
+| No fuzzy automatic resolution | PASS — candidates only |
+| Mention precision | PASS — 0.34% detectable false positives |
+| Ambiguity fails closed | PASS — 786 tokens, 0 edges |
+| `HAS_COMPONENT` reviewed-only | PASS |
+| Exact parallels, canonical pair ordering | PASS |
+| Parallel engine sub-quadratic with measured recall | PASS — 0.27% of pairs, 100% recall on M9 |
+| Assignment vs mention kept separate | PASS |
+| Deterministic byte-identical rebuild | PASS |
+| No LLM, embedding, or classifier | PASS |
+| Structural errors | PASS — 0 QA errors |
+| Mention coverage | PARTIAL — 6,531/10,552 mantras; 38 aliases of 214 Devatās |
+| Sarasvatī mentions | DEFERRED — needs feature-conditioned matching |
+| Ṛṣi lexical mentions | DEFERRED — no deterministic source for label decomposition |
+| Ṛṣi family / genealogy edges | NOT IMPLEMENTED — no sufficient source |
+| Pāda-level parallels | DEFERRED by design; schema permits, not implemented |
 
 ## IN PROGRESS
 

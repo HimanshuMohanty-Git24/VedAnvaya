@@ -291,3 +291,108 @@ class MetadataAgreement(StrEnum):
     LABEL_DIFFERENCE = "LABEL_DIFFERENCE"
     SOURCE_CONFLICT = "SOURCE_CONFLICT"
     UNCOMPARABLE = "UNCOMPARABLE"
+
+
+class LexicalAliasType(StrEnum):
+    """Why one lemma or form is permitted to establish a literal entity mention.
+
+    This vocabulary is deliberately separate from :class:`AliasType`. An
+    ``AliasType`` says "this Anukramaṇī spelling names this entity"; a
+    ``LexicalAliasType`` says "this word occurring in the Sanskrit text is
+    evidence that the mantra mentions this entity". The two answer different
+    questions, and a registry alias is never silently promoted to a lexical one.
+
+    ``DO_NOT_MATCH`` is an explicit negative: a form that looks like an entity
+    name but must never produce a mention.
+    """
+
+    CANONICAL_LEMMA = "CANONICAL_LEMMA"
+    ORTHOGRAPHIC_VARIANT = "ORTHOGRAPHIC_VARIANT"
+    KNOWN_LEMMA_VARIANT = "KNOWN_LEMMA_VARIANT"
+    INFLECTIONAL_SOURCE_FORM = "INFLECTIONAL_SOURCE_FORM"
+    EPITHET_REVIEWED = "EPITHET_REVIEWED"
+    COMPOSITE_NAME = "COMPOSITE_NAME"
+    DO_NOT_MATCH = "DO_NOT_MATCH"
+
+
+class MentionMethod(StrEnum):
+    """How one token was matched to a canonical entity.
+
+    Ordered strongest first. ``LEMMA_ID_EXACT`` rests on the annotation source's
+    own stable lemma identifier and involves no string comparison at all.
+    """
+
+    LEMMA_ID_EXACT = "LEMMA_ID_EXACT"
+    LEMMA_EXACT = "LEMMA_EXACT"
+    LEMMA_NORMALIZED_EXACT = "LEMMA_NORMALIZED_EXACT"
+    SURFACE_EXACT = "SURFACE_EXACT"
+
+
+class LexicalMatchStatus(StrEnum):
+    """Fail-closed outcome of trying to link one lemma to a canonical entity."""
+
+    MATCHED = "MATCHED"
+    AMBIGUOUS_LEXICAL_ENTITY = "AMBIGUOUS_LEXICAL_ENTITY"
+    AMBIGUOUS_SOURCE_LEMMA = "AMBIGUOUS_SOURCE_LEMMA"
+    SUPPRESSED_DO_NOT_MATCH = "SUPPRESSED_DO_NOT_MATCH"
+    NO_LEXICAL_ALIAS = "NO_LEXICAL_ALIAS"
+
+
+class LexicalPredicate(StrEnum):
+    """Deterministic predicates added by the lexical / cross-mantra layer.
+
+    ``HAS_RISHI``, ``HAS_DEVATA`` and ``HAS_CHANDAS`` are *not* here: traditional
+    assignment lives in :class:`MetadataPredicate` and is never conflated with
+    lexical evidence.
+    """
+
+    MENTIONS_ENTITY = "MENTIONS_ENTITY"
+    EXACT_PARALLEL_OF = "EXACT_PARALLEL_OF"
+    PARALLEL_TO = "PARALLEL_TO"
+    HAS_COMPONENT = "HAS_COMPONENT"
+
+
+class LexicalProvenanceClass(StrEnum):
+    """What kind of statement a lexical-layer assertion rests on.
+
+    These never mix with :class:`ProvenanceClass`, whose members describe claims
+    read directly out of the Anukramaṇī.
+    """
+
+    DETERMINISTIC_DERIVED = "DETERMINISTIC_DERIVED"
+    HUMAN_REVIEWED = "HUMAN_REVIEWED"
+
+
+class ParallelMethod(StrEnum):
+    """The representation at which two mantras were found identical.
+
+    The levels are not collapsed: two mantras may be ``ACCENTLESS_EXACT``
+    without being ``SOURCE_EXACT``, and the difference is real information.
+    """
+
+    SOURCE_EXACT = "SOURCE_EXACT"
+    NFC_EXACT = "NFC_EXACT"
+    ACCENTLESS_EXACT = "ACCENTLESS_EXACT"
+    TOKEN_EXACT = "TOKEN_EXACT"
+    LEMMA_SEQUENCE_EXACT = "LEMMA_SEQUENCE_EXACT"
+
+
+class ParallelStatus(StrEnum):
+    """Review state of one mantra-pair parallel."""
+
+    EXACT_PARALLEL = "EXACT_PARALLEL"
+    HIGH_CONFIDENCE_NEAR_PARALLEL = "HIGH_CONFIDENCE_NEAR_PARALLEL"
+    CANDIDATE_PARALLEL = "CANDIDATE_PARALLEL"
+    REJECTED = "REJECTED"
+
+
+class ParallelUnit(StrEnum):
+    """The textual unit a parallel relates.
+
+    ``PADA`` is declared now and unused in v1: the schema must not foreclose
+    pāda-level matching, which the annotation layer's pāda-tagged token ids
+    already make possible.
+    """
+
+    MANTRA = "MANTRA"
+    PADA = "PADA"

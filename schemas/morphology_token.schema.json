@@ -1,0 +1,161 @@
+{
+  "additionalProperties": false,
+  "description": "One annotated token of the pinned morphology layer.\n\n``surface_form`` is the annotation layer's own reading and is *not* the canonical\nSanskrit. The canonical text remains ``GRETIL.RV.AUFRECHT``; this record only ever\nreferences a mantra, it never replaces its text.",
+  "properties": {
+    "annotation_layer_id": {
+      "minLength": 1,
+      "title": "Annotation Layer Id",
+      "type": "string"
+    },
+    "annotation_method": {
+      "minLength": 1,
+      "title": "Annotation Method",
+      "type": "string"
+    },
+    "annotation_provenance": {
+      "minLength": 1,
+      "title": "Annotation Provenance",
+      "type": "string"
+    },
+    "canonical_urn": {
+      "pattern": "^urn:vedagraph:token:",
+      "title": "Canonical Urn",
+      "type": "string"
+    },
+    "lemma": {
+      "minLength": 1,
+      "title": "Lemma",
+      "type": "string"
+    },
+    "lemma_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Lemma Ids",
+      "type": "array"
+    },
+    "morphological_features": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Morphological Features",
+      "type": "object"
+    },
+    "normalized_lemma": {
+      "minLength": 1,
+      "title": "Normalized Lemma",
+      "type": "string"
+    },
+    "normalized_surface": {
+      "minLength": 1,
+      "title": "Normalized Surface",
+      "type": "string"
+    },
+    "pada": {
+      "pattern": "^[a-z]$",
+      "title": "Pada",
+      "type": "string"
+    },
+    "pada_sequence": {
+      "minimum": 1,
+      "title": "Pada Sequence",
+      "type": "integer"
+    },
+    "parser_version": {
+      "minLength": 1,
+      "title": "Parser Version",
+      "type": "string"
+    },
+    "part_of_speech": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Part Of Speech"
+    },
+    "passage_id": {
+      "format": "uuid",
+      "title": "Passage Id",
+      "type": "string"
+    },
+    "passage_key": {
+      "pattern": "^VG:RV:SAK:M\\d{2}:S\\d{3}:V\\d{3}$",
+      "title": "Passage Key",
+      "type": "string"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "sequence": {
+      "minimum": 1,
+      "title": "Sequence",
+      "type": "integer"
+    },
+    "snapshot_id": {
+      "minLength": 1,
+      "title": "Snapshot Id",
+      "type": "string"
+    },
+    "source_artifact_id": {
+      "minLength": 1,
+      "title": "Source Artifact Id",
+      "type": "string"
+    },
+    "source_id": {
+      "minLength": 1,
+      "title": "Source Id",
+      "type": "string"
+    },
+    "source_locator": {
+      "minLength": 1,
+      "title": "Source Locator",
+      "type": "string"
+    },
+    "surface_form": {
+      "minLength": 1,
+      "title": "Surface Form",
+      "type": "string"
+    },
+    "token_id": {
+      "format": "uuid",
+      "title": "Token Id",
+      "type": "string"
+    },
+    "token_key": {
+      "pattern": "^VG:TOKEN:[A-Z0-9-]+:RV:SAK:M\\d{2}:S\\d{3}:V\\d{3}:P[A-Z]:T\\d{3}$",
+      "title": "Token Key",
+      "type": "string"
+    }
+  },
+  "required": [
+    "token_id",
+    "token_key",
+    "canonical_urn",
+    "passage_key",
+    "passage_id",
+    "annotation_layer_id",
+    "source_id",
+    "source_artifact_id",
+    "snapshot_id",
+    "source_locator",
+    "sequence",
+    "pada",
+    "pada_sequence",
+    "surface_form",
+    "normalized_surface",
+    "lemma",
+    "normalized_lemma",
+    "annotation_provenance",
+    "annotation_method",
+    "parser_version"
+  ],
+  "title": "MorphologyToken",
+  "type": "object"
+}

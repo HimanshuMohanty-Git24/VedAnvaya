@@ -1,0 +1,625 @@
+# Reviewed LEXICAL alias registry.
+#
+# A lexical alias answers one question only: "does this word, occurring in the
+# Sanskrit text, count as evidence that the mantra MENTIONS this entity?"
+#
+# It is NOT the same thing as an entity alias in anukramani_aliases.yaml. That
+# file says "this Anukramaṇī spelling names this entity"; being listed there
+# does not make a string a lexical alias, and nothing promotes one to the other.
+#
+# Matching is by the annotation layer's own stable lemma identifier
+# (VEDAWEB.ZURICH, Grassmann-linked, e.g. lemma_agni_79). No substring search
+# over mantra text is performed anywhere in the pipeline, and no fuzzy match may
+# ever create an edge.
+#
+# Fields:
+#   entity_key    pinned canonical entity, must exist in devatas.yaml
+#   lemma         the annotation layer's lemma, verbatim, for human review
+#   lemma_ids     the stable lemma identifiers actually matched on
+#   alias_type    see LexicalAliasType; DO_NOT_MATCH is a suppression rule
+#   review_status only ACCEPTED may produce MENTIONS_ENTITY
+#   evidence      why this decision was made
+#
+# Scope of v1: DEVATA only. See ADR-013 for why RISHI lexical mentions are
+# deferred, and RIGVEDA_LEXICAL_MENTION_POLICY.md for the full policy.
+policy_version: rigveda-lexical-mention-policy-v1
+annotation_layer_id: VEDAWEB.ZURICH
+
+aliases:
+
+# ---------------------------------------------------------------------------
+# ACCEPTED - the lemma is the proper name of the deity and the annotation layer
+# assigns it a single dedicated lexical entry.
+# ---------------------------------------------------------------------------
+
+- entity_key: VG:DEVATA:AGNIH
+  lemma: agní-
+  lemma_ids: [lemma_agni_79]
+  alias_type: CANONICAL_LEMMA
+  review_status: ACCEPTED
+  evidence: >-
+    Zurich annotation lemma agní- (Grassmann entry lemma_agni_79) is the proper
+    name of the fire deity and is the only lexical entry the layer assigns it.
+    The registry label agniḥ is its nominative singular.
+
+- entity_key: VG:DEVATA:INDRAH
+  lemma: índra-
+  lemma_ids: [lemma_indra_1708]
+  alias_type: CANONICAL_LEMMA
+  review_status: ACCEPTED
+  evidence: >-
+    Lemma índra- (lemma_indra_1708) is a proper name with no appellative use in
+    the Rigveda. Registry label indraḥ is its nominative singular.
+
+- entity_key: VG:DEVATA:SOMAH
+  lemma: sóma-
+  lemma_ids: [lemma_soma_10160]
+  alias_type: CANONICAL_LEMMA
+  review_status: ACCEPTED
+  evidence: >-
+    Lemma sóma- (lemma_soma_10160). The Rigveda does not lexically separate the
+    deity from the pressed draught, and the Anukramaṇī assigns somaḥ on the same
+    understanding, so the single canonical entity is the correct target.
+  notes: >-
+    Deliberate known limitation: mentions of the ritual substance and of the
+    deity are one lemma and are not distinguished. Recorded in the precision
+    audit rather than silently split.
+
+- entity_key: VG:DEVATA:VARUNAH
+  lemma: váruṇa-
+  lemma_ids: [lemma_varuRa_7721]
+  alias_type: CANONICAL_LEMMA
+  review_status: ACCEPTED
+  evidence: Proper name, single dedicated lemma lemma_varuRa_7721.
+
+- entity_key: VG:DEVATA:SURYAH
+  lemma: sū́rya-
+  lemma_ids: [lemma_sUrya_10120]
+  alias_type: CANONICAL_LEMMA
+  review_status: ACCEPTED
+  evidence: >-
+    Lemma sū́rya- (lemma_sUrya_10120) names the sun deity; the appellative sense
+    "sun" is the same referent in this corpus and the Anukramaṇī agrees.
+
+- entity_key: VG:DEVATA:MITRAH
+  lemma: mitrá-
+  lemma_ids: [lemma_mitra_6824]
+  alias_type: CANONICAL_LEMMA
+  review_status: ACCEPTED
+  evidence: >-
+    Lemma mitrá- (lemma_mitra_6824) is the deity Mitra. The neuter appellative
+    "alliance, friendship" shares the lemma and is not separated here.
+  notes: >-
+    Highest-risk accepted alias in the registry. Sampled explicitly in the
+    precision audit; if precision falls, restrict rather than expand.
+
+- entity_key: VG:DEVATA:VAYUH
+  lemma: vāyú-
+  lemma_ids: [lemma_vAyu_7917]
+  alias_type: CANONICAL_LEMMA
+  review_status: ACCEPTED
+  evidence: Proper name of the wind deity, single dedicated lemma.
+
+- entity_key: VG:DEVATA:RUDRAH
+  lemma: rudrá-
+  lemma_ids: [lemma_rudra_7439]
+  alias_type: CANONICAL_LEMMA
+  review_status: ACCEPTED
+  evidence: Proper name, single dedicated lemma lemma_rudra_7439.
+
+- entity_key: VG:DEVATA:VISNUH
+  lemma: víṣṇu-
+  lemma_ids: [lemma_vizRu_8260]
+  alias_type: CANONICAL_LEMMA
+  review_status: ACCEPTED
+  evidence: Proper name, single dedicated lemma lemma_vizRu_8260.
+
+- entity_key: VG:DEVATA:BRHASPATIH
+  lemma: bŕ̥haspáti-
+  lemma_ids: [lemma_bfhaspati_6247]
+  alias_type: CANONICAL_LEMMA
+  review_status: ACCEPTED
+  evidence: >-
+    Proper name, single dedicated lemma. The annotation writes ISO 15919 r̥ where
+    the registry label bṛhaspatiḥ writes IAST ṛ; matching is by lemma id, so the
+    transcription difference is not relied upon.
+
+- entity_key: VG:DEVATA:PRTHIVI
+  lemma: pr̥thivī́-
+  lemma_ids: [lemma_pfTivI_5760]
+  alias_type: CANONICAL_LEMMA
+  review_status: ACCEPTED
+  evidence: >-
+    Lemma pr̥thivī́- (lemma_pfTivI_5760) is the earth goddess; the appellative
+    "earth" is the same deified referent throughout the Rigveda.
+
+- entity_key: VG:DEVATA:ADITIH
+  lemma: áditi-
+  lemma_ids: [lemma_aditi_287]
+  alias_type: CANONICAL_LEMMA
+  review_status: ACCEPTED
+  evidence: Proper name of the goddess Aditi, single dedicated lemma.
+
+- entity_key: VG:DEVATA:USAH
+  lemma: uṣás-
+  lemma_ids: [lemma_uzas_2081]
+  alias_type: KNOWN_LEMMA_VARIANT
+  review_status: ACCEPTED
+  evidence: >-
+    The registry label uṣāḥ is the nominative singular of the s-stem uṣás-, which
+    is the annotation layer's lemma. Stem and nominative are the same word; the
+    relation is stated here rather than derived by a suffix rule.
+
+- entity_key: VG:DEVATA:ASVINAU
+  lemma: aśvín-
+  lemma_ids: [lemma_aSvin_1288]
+  alias_type: KNOWN_LEMMA_VARIANT
+  review_status: ACCEPTED
+  evidence: >-
+    The registry label aśvinau is the nominative dual of the stem aśvín-. The
+    Aśvins are a lexicalised pair and the annotation gives them one lemma.
+
+- entity_key: VG:DEVATA:MARUTAH
+  lemma: marút-
+  lemma_ids: [lemma_marut_6679]
+  alias_type: KNOWN_LEMMA_VARIANT
+  review_status: ACCEPTED
+  evidence: >-
+    The registry label marutaḥ is the nominative plural of the stem marút-. The
+    Maruts are a group deity with one lexical entry.
+
+- entity_key: VG:DEVATA:PUSA
+  lemma: pūṣán-
+  lemma_ids: [lemma_pUzan_5727]
+  alias_type: KNOWN_LEMMA_VARIANT
+  review_status: ACCEPTED
+  evidence: The registry label pūṣā is the nominative singular of the n-stem pūṣán-.
+
+- entity_key: VG:DEVATA:SAVITA
+  lemma: savitár-
+  lemma_ids: [lemma_savitf_9484]
+  alias_type: KNOWN_LEMMA_VARIANT
+  review_status: ACCEPTED
+  evidence: The registry label savitā is the nominative singular of the r-stem savitár-.
+
+- entity_key: VG:DEVATA:TVASTA
+  lemma: tváṣṭar-
+  lemma_ids: [lemma_tvazwf_3992]
+  alias_type: KNOWN_LEMMA_VARIANT
+  review_status: ACCEPTED
+  evidence: The registry label tvaṣṭā is the nominative singular of the r-stem tváṣṭar-.
+
+- entity_key: VG:DEVATA:PARJANYAH
+  lemma: parjánya-
+  lemma_ids: [lemma_parjanya_5334]
+  alias_type: CANONICAL_LEMMA
+  review_status: ACCEPTED
+  evidence: Proper name of the rain deity, single dedicated lemma.
+
+- entity_key: VG:DEVATA:NIRRTIH
+  lemma: nírr̥ti-
+  lemma_ids: [lemma_nirfti_5009]
+  alias_type: CANONICAL_LEMMA
+  review_status: ACCEPTED
+  evidence: Proper name of the goddess Nirṛti, single dedicated lemma.
+
+- entity_key: VG:DEVATA:SRADDHA
+  lemma: śraddhā́-
+  lemma_ids: [lemma_SradDA_8956]
+  alias_type: CANONICAL_LEMMA
+  review_status: ACCEPTED
+  evidence: >-
+    Lemma śraddhā́- (lemma_SradDA_8956) is the deified Śraddhā of RV 10.151, the
+    hymn the Anukramaṇī assigns to this entity.
+
+- entity_key: VG:DEVATA:SACI
+  lemma: śácī-
+  lemma_ids: [lemma_SacI_8584]
+  alias_type: CANONICAL_LEMMA
+  review_status: ACCEPTED
+  evidence: Lemma śácī- (lemma_SacI_8584), single dedicated lexical entry.
+
+- entity_key: VG:DEVATA:ARANYANI
+  lemma: araṇyāní- ~ araṇyānī́-
+  lemma_ids: [lemma_araRyAni_967]
+  alias_type: CANONICAL_LEMMA
+  review_status: ACCEPTED
+  evidence: >-
+    Proper name of the forest goddess of RV 10.146. The annotation records two
+    accentuations of one lexical entry; both carry the same lemma id.
+
+- entity_key: VG:DEVATA:DRAVINODAH
+  lemma: draviṇodā́-
+  lemma_ids: [lemma_draviRoda_4548]
+  alias_type: CANONICAL_LEMMA
+  review_status: ACCEPTED
+  evidence: Single dedicated lemma lemma_draviRoda_4548 for the Draviṇodas hymns.
+
+- entity_key: VG:DEVATA:RAKA
+  lemma: rākā́-
+  lemma_ids: [lemma_rAkA_7357]
+  alias_type: CANONICAL_LEMMA
+  review_status: ACCEPTED
+  evidence: Proper name of the goddess Rākā, single dedicated lemma.
+
+- entity_key: VG:DEVATA:SINIVALI
+  lemma: sinīvālī́-
+  lemma_ids: [lemma_sinIvAlI_9679]
+  alias_type: CANONICAL_LEMMA
+  review_status: ACCEPTED
+  evidence: Proper name of the goddess Sinīvālī, single dedicated lemma.
+
+- entity_key: VG:DEVATA:YAMI
+  lemma: yamī́-
+  lemma_ids: [lemma_yamI_7059]
+  alias_type: CANONICAL_LEMMA
+  review_status: ACCEPTED
+  evidence: >-
+    Proper name of Yamī, lemma_yamI_7059, distinct from the masculine yamá- and
+    from the appellative yáma-.
+
+- entity_key: VG:DEVATA:SARAMA
+  lemma: sarámā-
+  lemma_ids: [lemma_saramA_9440]
+  alias_type: CANONICAL_LEMMA
+  review_status: ACCEPTED
+  evidence: Proper name of Saramā, single dedicated lemma lemma_saramA_9440.
+
+- entity_key: VG:DEVATA:URVASI
+  lemma: urváśī-
+  lemma_ids: [lemma_urvaSI_2056]
+  alias_type: CANONICAL_LEMMA
+  review_status: ACCEPTED
+  evidence: Proper name of Urvaśī, single dedicated lemma lemma_urvaSI_2056.
+
+- entity_key: VG:DEVATA:TARKSYAH
+  lemma: tā́rkṣya-
+  lemma_ids: [lemma_tArkzya_3741]
+  alias_type: CANONICAL_LEMMA
+  review_status: ACCEPTED
+  evidence: Proper name Tārkṣya, single dedicated lemma.
+
+- entity_key: VG:DEVATA:ASAMATIH
+  lemma: ásamāti-
+  lemma_ids: [lemma_asamAti_1324]
+  alias_type: CANONICAL_LEMMA
+  review_status: ACCEPTED
+  evidence: Proper name Asamāti of RV 10.60, single dedicated lemma.
+
+- entity_key: VG:DEVATA:ASUNITIH
+  lemma: ásunīti-
+  lemma_ids: [lemma_asunIti_1342]
+  alias_type: CANONICAL_LEMMA
+  review_status: ACCEPTED
+  evidence: Single dedicated lemma lemma_asunIti_1342 for the Asunīti verses.
+
+# --- Lexicalised pair and group names. The annotation layer gives each a single
+# --- stem, so matching them needs no compound splitting. Their internal
+# --- composition is a separate, human-reviewed HAS_COMPONENT question.
+
+- entity_key: VG:DEVATA:INDRAGNI
+  lemma: indrāgní-
+  lemma_ids: [lemma_indrAgni_1735]
+  alias_type: COMPOSITE_NAME
+  review_status: ACCEPTED
+  evidence: >-
+    The dvandva Indrāgnī is a single lexical entry in the annotation layer, so
+    the mention rests on an annotated lemma and not on splitting a compound.
+
+- entity_key: VG:DEVATA:MITRAVARUNAU
+  lemma: mitrā́váruṇa-
+  lemma_ids: [lemma_mitrAvaruRa_6834]
+  alias_type: COMPOSITE_NAME
+  review_status: ACCEPTED
+  evidence: Single annotated lexical entry for the dvandva Mitrāvaruṇā.
+
+- entity_key: VG:DEVATA:INDRABRHASPATI
+  lemma: índrābŕ̥haspáti-
+  lemma_ids: [lemma_indrAbfhaspati_1739]
+  alias_type: COMPOSITE_NAME
+  review_status: ACCEPTED
+  evidence: Single annotated lexical entry for the dvandva Indrābṛhaspatī.
+
+- entity_key: VG:DEVATA:DYAVAPRTHIVYAU
+  lemma: dyā́vāpr̥thivī́-
+  lemma_ids: [lemma_dyAvApfTivI_4511]
+  alias_type: COMPOSITE_NAME
+  review_status: ACCEPTED
+  evidence: Single annotated lexical entry for the dvandva Dyāvāpṛthivī.
+
+- entity_key: VG:DEVATA:DYAVABHUMI
+  lemma: dyā́vābhū́mī-
+  lemma_ids: [lemma_dyAvABUmi_4512]
+  alias_type: COMPOSITE_NAME
+  review_status: ACCEPTED
+  evidence: Single annotated lexical entry for the dvandva Dyāvābhūmī.
+
+- entity_key: VG:DEVATA:USASANAKTA
+  lemma: uṣā́sānáktā-
+  lemma_ids: [lemma_uzAsAnaktA_2083]
+  alias_type: COMPOSITE_NAME
+  review_status: ACCEPTED
+  evidence: Single annotated lexical entry for the dvandva Uṣāsānaktā.
+
+# ---------------------------------------------------------------------------
+# DO_NOT_MATCH - the registry holds a Devatā entity under this label because the
+# Anukramaṇī assigns it, but the corresponding lemma is an ordinary Vedic noun
+# whose occurrences overwhelmingly do not name the deity. Matching them would
+# manufacture thousands of false mentions. These rules suppress that, and are
+# the main reason mention precision is high.
+# ---------------------------------------------------------------------------
+
+- entity_key: VG:DEVATA:KAH
+  lemma: ká-
+  lemma_ids: [lemma_ka_2373]
+  alias_type: DO_NOT_MATCH
+  review_status: ACCEPTED
+  evidence: >-
+    ká- is the interrogative pronoun "who, which" and is annotated as a pronoun
+    in every one of its 468 occurrences. The deity Ka is a later reading of the
+    kásmai devā́ya refrain, not a lexical entry.
+
+- entity_key: VG:DEVATA:RATHAH
+  lemma: rátha-
+  lemma_ids: [lemma_raTa_7258]
+  alias_type: DO_NOT_MATCH
+  review_status: ACCEPTED
+  evidence: >-
+    rátha- is the ordinary noun "chariot" throughout the corpus. The Devatā Ratha
+    of RV 6.47 is a ritual deification of the object, not a distinct lexeme.
+
+- entity_key: VG:DEVATA:ASHVAH
+  lemma: áśva-
+  lemma_ids: [lemma_aSva_1254]
+  alias_type: DO_NOT_MATCH
+  review_status: ACCEPTED
+  evidence: áśva- is the ordinary noun "horse".
+
+- entity_key: VG:DEVATA:ASHVAAH
+  lemma: áśvā-
+  lemma_ids: [lemma_aSva_1254]
+  alias_type: DO_NOT_MATCH
+  review_status: ACCEPTED
+  evidence: >-
+    áśvā- "mare" shares lemma id lemma_aSva_1254 with áśva-; both are ordinary
+    nouns and neither may establish a mention.
+
+- entity_key: VG:DEVATA:HARIH
+  lemma: hári-
+  lemma_ids: [lemma_hari_10555]
+  alias_type: DO_NOT_MATCH
+  review_status: ACCEPTED
+  evidence: hári- is the ordinary adjective/noun "tawny (steed)", chiefly Indra's horses.
+
+- entity_key: VG:DEVATA:AHIH
+  lemma: áhi-
+  lemma_ids: [lemma_ahi_1412]
+  alias_type: DO_NOT_MATCH
+  review_status: ACCEPTED
+  evidence: áhi- is the ordinary noun "serpent", most often the adversary Vṛtra.
+
+- entity_key: VG:DEVATA:SYENAH
+  lemma: śyená-
+  lemma_ids: [lemma_Syena_8947]
+  alias_type: DO_NOT_MATCH
+  review_status: ACCEPTED
+  evidence: śyená- is the ordinary noun "eagle, falcon".
+
+- entity_key: VG:DEVATA:MANYUH
+  lemma: manyú-
+  lemma_ids: [lemma_manyu_6657]
+  alias_type: DO_NOT_MATCH
+  review_status: ACCEPTED
+  evidence: >-
+    manyú- is the ordinary noun "ardour, wrath". Only RV 10.83-84 deify it, and
+    those verses cannot be separated lexically.
+
+- entity_key: VG:DEVATA:VANASPATIH
+  lemma: vánaspáti-
+  lemma_ids: [lemma_vanaspati_7628]
+  alias_type: DO_NOT_MATCH
+  review_status: ACCEPTED
+  evidence: vánaspáti- is the ordinary noun "tree, forest lord", chiefly the sacrificial post.
+
+- entity_key: VG:DEVATA:SUNAH
+  lemma: śuná-
+  lemma_ids: [lemma_Suna_8850]
+  alias_type: DO_NOT_MATCH
+  review_status: ACCEPTED
+  evidence: śuná- is the ordinary noun "prosperity, success".
+
+- entity_key: VG:DEVATA:DHANUH
+  lemma: dhánu-
+  lemma_ids: [lemma_Danu_4638]
+  alias_type: DO_NOT_MATCH
+  review_status: ACCEPTED
+  evidence: dhánu- is the ordinary noun "bow", deified only in the weapon hymn RV 6.75.
+
+- entity_key: VG:DEVATA:YUPAH
+  lemma: yū́pa-
+  lemma_ids: [lemma_yUpa_7177]
+  alias_type: DO_NOT_MATCH
+  review_status: ACCEPTED
+  evidence: yū́pa- is the ordinary noun "sacrificial post".
+
+- entity_key: VG:DEVATA:ISUDHIH
+  lemma: iṣudhí-
+  lemma_ids: [lemma_izuDi_1795]
+  alias_type: DO_NOT_MATCH
+  review_status: ACCEPTED
+  evidence: iṣudhí- is the ordinary noun "quiver".
+
+- entity_key: VG:DEVATA:DUNDUBHIH
+  lemma: dundubhí-
+  lemma_ids: [lemma_dunduBi_4294]
+  alias_type: DO_NOT_MATCH
+  review_status: ACCEPTED
+  evidence: dundubhí- is the ordinary noun "drum".
+
+- entity_key: VG:DEVATA:JYA
+  lemma: jyā́-
+  lemma_ids: [lemma_jyA_3582]
+  alias_type: DO_NOT_MATCH
+  review_status: ACCEPTED
+  evidence: jyā́- is the ordinary noun "bowstring".
+
+- entity_key: VG:DEVATA:DAKSINA
+  lemma: dakṣiṇā́
+  lemma_ids: [lemma_dakziRA_4052]
+  alias_type: DO_NOT_MATCH
+  review_status: ACCEPTED
+  evidence: >-
+    The annotation classes dakṣiṇā́ as invariable, i.e. the adverb "southward",
+    not the deified priestly gift.
+
+- entity_key: VG:DEVATA:DEVYAH
+  lemma: devyà-
+  lemma_ids: [lemma_devya_4490]
+  alias_type: DO_NOT_MATCH
+  review_status: ACCEPTED
+  evidence: devyà- is the ordinary adjective "divine, belonging to the gods".
+
+- entity_key: VG:DEVATA:VAJINAH
+  lemma: vā́jina-
+  lemma_ids: [lemma_vAjina_7878]
+  alias_type: DO_NOT_MATCH
+  review_status: ACCEPTED
+  evidence: vā́jina- is the ordinary noun "steed, prize-winner".
+
+- entity_key: VG:DEVATA:KRSIH
+  lemma: kr̥ṣí-
+  lemma_ids: [lemma_kfzi_2685]
+  alias_type: DO_NOT_MATCH
+  review_status: ACCEPTED
+  evidence: kr̥ṣí- is the ordinary noun "tillage".
+
+- entity_key: VG:DEVATA:HASTAGHNAH
+  lemma: hastaghná-
+  lemma_ids: [lemma_hastaGna_10629]
+  alias_type: DO_NOT_MATCH
+  review_status: ACCEPTED
+  evidence: hastaghná- is the ordinary noun "hand-guard" of the archer hymn.
+
+- entity_key: VG:DEVATA:ARTNI
+  lemma: ā́rtnī-
+  lemma_ids: [lemma_ArtnI_1605]
+  alias_type: DO_NOT_MATCH
+  review_status: ACCEPTED
+  evidence: ā́rtnī- is the ordinary noun "bow-end".
+
+- entity_key: VG:DEVATA:PURUSAH
+  lemma: púruṣa-
+  lemma_ids: [lemma_puruza_5629]
+  alias_type: DO_NOT_MATCH
+  review_status: ACCEPTED
+  evidence: >-
+    púruṣa- is the ordinary noun "man". The cosmic Puruṣa of RV 10.90 uses the
+    same lemma and cannot be separated from it lexically.
+
+# ---------------------------------------------------------------------------
+# NEEDS_REVIEW - a real lexical link is plausible but cannot be settled without
+# either a human decision or a mechanism v1 does not have. These produce NO
+# edges. They are listed so the gap is explicit rather than invisible.
+# ---------------------------------------------------------------------------
+
+- entity_key: VG:DEVATA:SARASVATI
+  lemma: sárasvant-
+  lemma_ids: [lemma_sarasvat_9445]
+  alias_type: KNOWN_LEMMA_VARIANT
+  review_status: NEEDS_REVIEW
+  evidence: >-
+    The annotation lemmatises every Sarasvatī form under the vant-stem
+    sárasvant-, which also covers the masculine deity Sarasvant. The two are
+    separable by the annotation's own gender feature, but v1 has no
+    feature-conditioned alias mechanism, so no edge is created.
+  notes: >-
+    Highest-value deferred alias. Resolving it needs feature-conditioned
+    matching (gender=F to Sarasvatī, gender=M to Sarasvant), which is a
+    deliberate v2 item.
+
+- entity_key: VG:DEVATA:APAH
+  lemma: áp-
+  lemma_ids: [lemma_ap_616]
+  alias_type: KNOWN_LEMMA_VARIANT
+  review_status: NEEDS_REVIEW
+  evidence: >-
+    áp- is both the ordinary noun "water" (547 occurrences) and the deified
+    Āpaḥ. The deified sense cannot be isolated lexically.
+
+- entity_key: VG:DEVATA:YAMAH
+  lemma: yamá-
+  lemma_ids: [lemma_yama_7054]
+  alias_type: KNOWN_LEMMA_VARIANT
+  review_status: NEEDS_REVIEW
+  evidence: >-
+    lemma_yama_7054 covers both the deity Yama and the appellative "twin"; the
+    separate entry lemma_yama_7055 (yáma- "rein") is a different word. Splitting
+    the first entry needs a human decision per occurrence.
+
+- entity_key: VG:DEVATA:MRTYUH
+  lemma: mr̥tyú-
+  lemma_ids: [lemma_mftyu_6925]
+  alias_type: KNOWN_LEMMA_VARIANT
+  review_status: NEEDS_REVIEW
+  evidence: mr̥tyú- is the ordinary noun "death", deified only in RV 10.18.
+
+- entity_key: VG:DEVATA:VENAH
+  lemma: vená-
+  lemma_ids: [lemma_venA_8472]
+  alias_type: KNOWN_LEMMA_VARIANT
+  review_status: NEEDS_REVIEW
+  evidence: >-
+    vená- is both the seer-name Vena of RV 10.123 and an appellative "yearning
+    one"; the annotation gives them one entry.
+
+- entity_key: VG:DEVATA:ATRIH
+  lemma: átri-
+  lemma_ids: [lemma_atri_258]
+  alias_type: KNOWN_LEMMA_VARIANT
+  review_status: NEEDS_REVIEW
+  evidence: >-
+    átri- names the seer Atri. Whether an occurrence evidences the Devatā entity
+    the Anukramaṇī registers, or the Ṛṣi, is exactly the ambiguity v1 refuses to
+    resolve automatically.
+
+- entity_key: VG:DEVATA:VISVAMITRAH
+  lemma: viśvā́mitra-
+  lemma_ids: [lemma_viSvAmitra_12580, lemma_viSvAmitra_8224]
+  alias_type: KNOWN_LEMMA_VARIANT
+  review_status: NEEDS_REVIEW
+  evidence: >-
+    Two competing lemma entries for the same name, and the same Devatā/Ṛṣi
+    question as átri-.
+
+- entity_key: VG:DEVATA:VAMADEVAH
+  lemma: vāmádeva-
+  lemma_ids: [lemma_vAmadeva_7910]
+  alias_type: KNOWN_LEMMA_VARIANT
+  review_status: NEEDS_REVIEW
+  evidence: Same Devatā/Ṛṣi question as átri-, on a single occurrence.
+
+- entity_key: VG:DEVATA:SITA
+  lemma: sī́tā-
+  lemma_ids: [lemma_sItA_9696]
+  alias_type: KNOWN_LEMMA_VARIANT
+  review_status: NEEDS_REVIEW
+  evidence: sī́tā- is the ordinary noun "furrow", deified only in RV 4.57.
+
+- entity_key: VG:DEVATA:DADHIKRA
+  lemma: dadhikrā́-
+  lemma_ids: [lemma_daDikrA_4074]
+  alias_type: CANONICAL_LEMMA
+  review_status: NEEDS_REVIEW
+  evidence: >-
+    The registry holds two Devatā entities, dadhikrā and dadhikrāḥ, for one
+    annotated lemma. Which one a mention belongs to is undecidable without a
+    reviewed merge of the two registry entries, which is out of scope here.
+
+- entity_key: VG:DEVATA:DADHIKRAH
+  lemma: dadhikrā́-
+  lemma_ids: [lemma_daDikrA_4074]
+  alias_type: CANONICAL_LEMMA
+  review_status: NEEDS_REVIEW
+  evidence: >-
+    Counterpart of VG:DEVATA:DADHIKRA above. Both are left unaccepted so the
+    ambiguity is reported rather than arbitrarily resolved.
