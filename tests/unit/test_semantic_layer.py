@@ -44,6 +44,7 @@ from vedagraph.semantic.evaluate import (
 )
 from vedagraph.semantic.extract import (
     SCHEMA_NAME,
+    CodexDirectProvider,
     ExtractionConfig,
     OpenAILunaProvider,
     RecordedProvider,
@@ -62,7 +63,13 @@ from vedagraph.semantic.ontology import (
     SemanticSubjectKind,
     predicate_rule,
 )
-from vedagraph.semantic.packet import PACKET_VERSION, PacketSources, packet_input_hash, sha256_text
+from vedagraph.semantic.packet import (
+    PACKET_VERSION,
+    PacketSources,
+    build_packet,
+    packet_input_hash,
+    sha256_text,
+)
 from vedagraph.semantic.pilot import STRATA
 from vedagraph.semantic.registry import (
     ResolutionIndex,
@@ -984,6 +991,16 @@ def test_an_offline_run_produces_reviewable_candidates_and_accepts_nothing():
     assert result.assertions[0].status is SemanticAssertionStatus.NEEDS_REVIEW
     assert result.by_status(SemanticAssertionStatus.AUTO_ACCEPTED) == []
     assert result.usage.requests == 1
+
+
+def test_codex_direct_provider_replays_without_api_usage():
+    provider = CodexDirectProvider(payloads={KEY: _reply()})
+    packet = _sources()
+    evidence_packet = build_packet(packet, KEY)
+    reply = provider.extract(evidence_packet, load_system_prompt())
+    assert reply.ok
+    assert reply.model == "gpt-5.6-luna"
+    assert reply.usage.requests == 0
 
 
 def test_an_unlocked_predicate_reaches_auto_accepted_through_the_full_run():

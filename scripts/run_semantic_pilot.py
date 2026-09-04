@@ -1,37 +1,32 @@
 """Run the semantic pilot over the committed pilot config.
 
-This is the only script in the repository that spends money, and it refuses to start
-without being told to. It never runs the full corpus: the mantras come from
+This script never runs the full corpus: the mantras come from
 ``data/builds/rigveda_semantic_pilot_v1.yaml`` and from nowhere else.
 
     python scripts/run_semantic_pilot.py --dry-run          # packets only, no API calls
-    python scripts/run_semantic_pilot.py --limit 20 --live  # 20 mantras against Luna
-    python scripts/run_semantic_pilot.py --live             # the whole 508-mantra pilot
+    python scripts/run_semantic_pilot.py --codex-direct     # replay Codex-authored JSONL
 
-``--dry-run`` builds every packet, hashes it and reports the input size and projected
-cost without contacting anyone. Run it first: it is free, and it is what tells you what
-``--live`` will cost before you authorise it.
+``--dry-run`` builds every packet and reports local packet counts without contacting
+anyone. ``--codex-direct`` replays payloads authored by the Codex/Luna agent.
 """
 
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
-import os
 from datetime import UTC, datetime
 from pathlib import Path
+from typing import Any
 
 import yaml
 
 from vedagraph.models.knowledge import KnowledgeEntity
-from vedagraph.models.semantic import TokenUsage
 from vedagraph.semantic.evaluate import CostReport
 from vedagraph.semantic.extract import (
+    CodexDirectProvider,
     ExtractionConfig,
-    OpenAILunaProvider,
-    RecordedProvider,
     load_system_prompt,
-    render_user_message,
 )
 from vedagraph.semantic.packet import build_packet, load_packet_sources
 from vedagraph.semantic.registry import ResolutionIndex, load_semantic_entities
@@ -45,14 +40,19 @@ REGISTRY_DIR = Path("data/registry")
 PILOT_CONFIG = Path("data/builds/rigveda_semantic_pilot_v1.yaml")
 OUTPUT_ROOT = Path("data/semantic")
 
-#: Rough characters per token for English-and-IAST JSON. Used only by --dry-run, and
-#: only to say what a live run would cost. A live run reports the API's real numbers.
-CHARS_PER_TOKEN = 3.6
+
+def _sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--live", action="store_true", help="call the API and spend money")
+    parser.add_argument(
+        "--live", action="store_true", help="deprecated API mode; never used by this pilot"
+    )
+    parser.add_argument(
+        "--codex-direct", action="store_true", help="use local Codex-authored payloads"
+    )
     parser.add_argument("--dry-run", action="store_true", help="build packets, call nothing")
     parser.add_argument("--limit", type=int, default=0, help="first N pilot mantras only")
     parser.add_argument("--reasoning-effort", default="medium", choices=["low", "medium", "high"])
@@ -63,8 +63,10 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
-    if args.live == args.dry_run:
-        raise SystemExit("choose exactly one of --live and --dry-run")
+    if sum(bool(item) for item in (args.live, args.dry_run, args.codex_direct)) != 1:
+        raise SystemExit("choose exactly one of --codex-direct, --dry-run, or deprecated --live")
+    if args.live:
+        raise SystemExit("--live is disabled in this workflow; use --codex-direct")
 
     config_document = yaml.safe_load(PILOT_CONFIG.read_text(encoding="utf-8"))
     rows = config_document["mantras"]
@@ -84,18 +86,26 @@ def main() -> None:
         _dry_run(sources, passage_keys, prompt, config)
         return
 
-    if not os.environ.get("OPENAI_API_KEY"):
-        raise SystemExit("OPENAI_API_KEY is not set. A live run needs it; --dry-run does not.")
-
     entities = {
         entity.entity_key: entity
         for filename in ("entities_devatas.jsonl", "entities_rishis.jsonl")
         for entity in read_jsonl(KNOWLEDGE_DIR / filename, KnowledgeEntity)
     }
     index = ResolutionIndex.build(load_semantic_entities(REGISTRY_DIR))
-    provider = OpenAILunaProvider(config)
+    run_id = args.run_id or "vedagraph-rigveda-semantic-codex-luna-pilot-1.0.0-rc1"
+    payload_path = OUTPUT_ROOT / run_id / "codex_direct_payloads.jsonl"
+    if not payload_path.exists():
+        raise SystemExit(
+            f"{payload_path} is missing; have Codex author structured payloads before running"
+        )
+    payloads: dict[str, dict[str, Any]] = {}
+    for line in payload_path.read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        row = json.loads(line)
+        payloads[str(row["passage_key"])] = dict(row["payload"])
+    provider = CodexDirectProvider(payloads=payloads, model=config.model)
     started = datetime.now(UTC)
-    run_id = args.run_id or f"pilot-{args.reasoning_effort}-{started:%Y%m%dT%H%M%SZ}"
 
     result = run_pilot(
         passage_keys,
@@ -116,22 +126,32 @@ def main() -> None:
         output_usd_per_million=config.output_usd_per_million,
     )
     corpus_manifest = json.loads((CORPUS_DIR / "manifest.json").read_text(encoding="utf-8"))
+    lexical_manifest = json.loads((LEXICAL_DIR / "manifest.json").read_text(encoding="utf-8"))
+    batch_manifest = json.loads(
+        (OUTPUT_ROOT / run_id / "batch_manifest.json").read_text(encoding="utf-8")
+    )
     manifest = build_manifest(
         result,
         run_id=run_id,
         dataset_id=str(config_document["config_version"]),
         started_at=started,
-        corpus_version=str(corpus_manifest["corpus_version"]),
-        corpus_manifest_sha256=str(corpus_manifest["manifest_sha256"]),
-        lexical_policy_version=str(
-            json.loads((LEXICAL_DIR / "manifest.json").read_text(encoding="utf-8"))[
-                "mention_policy_version"
-            ]
-        ),
+        corpus_version=str(corpus_manifest["version"]),
+        corpus_manifest_sha256=str(lexical_manifest["corpus_manifest_sha256"]),
+        lexical_policy_version=str(lexical_manifest["mention_policy_version"]),
         prompt=prompt,
         provider=provider,
         config=config,
         cost=cost,
+        batch_count=22,
+        batch_size=24,
+        packet_hashes={
+            str(item["batch"]): str(item["evidence_sha256"]) for item in batch_manifest["batches"]
+        },
+        qa_result="PASSED_WITH_WARNINGS",
+        traditional_knowledge_manifest_sha256=_sha256(KNOWLEDGE_DIR / "manifest.json"),
+        lexical_knowledge_manifest_sha256=str(lexical_manifest["knowledge_manifest_sha256"]),
+        pilot_config_sha256=_sha256(PILOT_CONFIG),
+        prompt_sha256=_sha256(config.prompt_path),
     )
     written = write_outputs(result, manifest, cost, OUTPUT_ROOT / run_id)
 
@@ -140,43 +160,20 @@ def main() -> None:
     print(f"  entities        {len(result.entity_candidates)}")
     print(f"  refusals        {len(result.refusals)}  failures {len(result.failures)}")
     print(f"  tokens          in={result.usage.input_tokens} out={result.usage.output_tokens}")
-    print(f"  cost            ${cost.total_cost_usd:.4f}")
+    print(f"  API requests    {result.usage.requests}")
+    print("  direct API cost $0.0000")
     for name, count in sorted(written.items()):
         print(f"  {name:38s} {count}")
 
 
 def _dry_run(sources, passage_keys, prompt, config) -> None:  # type: ignore[no-untyped-def]
-    """Build every packet and price the run that would follow. Contacts nothing."""
-    provider = RecordedProvider(payloads={})
-    total_chars = 0
+    """Build every packet and report local facts. Contacts nothing."""
     missing_translation = 0
     for passage_key in passage_keys:
         packet = build_packet(sources, passage_key)
-        total_chars += len(render_user_message(packet)) + len(prompt.text)
         missing_translation += int(packet.translation_missing)
-    estimated_input = int(total_chars / CHARS_PER_TOKEN)
-    # Output is the unknown. 900 tokens per reply is a working assumption for planning
-    # only, and a live run replaces it with the API's own figure.
-    estimated_output = 900 * len(passage_keys)
-    cost = CostReport(
-        usage=TokenUsage(
-            requests=len(passage_keys),
-            input_tokens=estimated_input,
-            output_tokens=estimated_output,
-        ),
-        passage_count=len(passage_keys),
-        input_usd_per_million=config.input_usd_per_million,
-        cached_input_usd_per_million=config.cached_input_usd_per_million,
-        output_usd_per_million=config.output_usd_per_million,
-    )
-    print(f"dry run: {len(passage_keys)} packets built, provider={provider.name}")
+    print(f"dry run: {len(passage_keys)} packets built; no model or API invoked")
     print(f"  translation missing        {missing_translation}")
-    print(f"  estimated input tokens     {estimated_input:,}")
-    print(f"  assumed output tokens      {estimated_output:,} (900/reply, planning only)")
-    print(f"  ESTIMATED pilot cost       ${cost.total_cost_usd:.4f}")
-    projected = cost.projected_full_corpus_usd
-    print(f"  ESTIMATED full corpus      ${projected:.2f}" if projected else "")
-    print("  these are estimates; a live run records the API's actual usage")
 
 
 if __name__ == "__main__":

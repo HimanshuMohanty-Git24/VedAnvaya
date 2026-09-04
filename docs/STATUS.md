@@ -392,10 +392,12 @@ deterministic layers were verified clean at that commit — ruff, mypy strict, 2
 byte-identical lexical rebuild — before any semantic work began, and none of them is
 written to by anything in this section.
 
-Status: **`READY_WITH_LIMITATIONS`** — pipeline complete and tested offline, **not yet run**.
+Status: **`RIGVEDA_SEMANTIC_PILOT_COMPLETE_AWAITING_HUMAN_GOLD`** — the 508-mantra
+Codex-direct pilot completed; full-corpus extraction remains unauthorized.
 
 Decision: [ADR-014](decisions/ADR-014-llm-output-is-candidate-only.md).
 Reports: [RIGVEDA_SEMANTIC_PILOT.md](reports/RIGVEDA_SEMANTIC_PILOT.md),
+[RIGVEDA_SEMANTIC_PILOT_CODEX_LUNA.md](reports/RIGVEDA_SEMANTIC_PILOT_CODEX_LUNA.md),
 [RIGVEDA_SEMANTIC_ONTOLOGY.md](reports/RIGVEDA_SEMANTIC_ONTOLOGY.md),
 [RIGVEDA_SEMANTIC_EVAL.md](reports/RIGVEDA_SEMANTIC_EVAL.md),
 [RIGVEDA_SEMANTIC_COST.md](reports/RIGVEDA_SEMANTIC_COST.md).
@@ -439,32 +441,30 @@ edges so the gap stays visible.
 | pilot mantras selected | 508 of 10,552 (deterministic, hash-ordered, all 10 Maṇḍalas) |
 | gold subset selected | 120 |
 | **gold subset annotated** | **0** |
-| **live extractions run** | **0** |
+| **Codex-direct extractions run** | **508** |
+| **candidate assertions** | **425**, all `NEEDS_REVIEW` |
+| **no-claim mantras** | **224** |
+| **validation rejected** | **0** |
+| **auto-accepted** | **0** |
 | semantic node types | 17 |
 | predicates allowed | 14 (7 LOW, 7 MEDIUM, 0 HIGH) |
 | predicates refused by name | 5, each with a recorded reason |
 | **predicates unlocked for auto-acceptance** | **0** |
 | semantic entities in the registry | 0 — nothing is seeded |
-| offline tests | 62 |
+| offline tests | 323 passed (2 API/live deselected) |
 
-## Blockers
+## Remaining gate
 
-1. **No `OPENAI_API_KEY`.** The live extractor, the medium-vs-high reasoning comparison,
-   measured precision and actual cost all need one. `make semantic-dry-run` builds all
-   508 packets and prices the run for free.
-2. **The gold subset is unannotated.** 120 rows marked `UNANNOTATED` in
+1. **The gold subset is unannotated.** 120 rows marked `UNANNOTATED` in
    `data/gold/rigveda_semantic_gold_v1.jsonl`. It must be written by a person — see
    [RIGVEDA_SEMANTIC_GOLD_PROTOCOL.md](architecture/RIGVEDA_SEMANTIC_GOLD_PROTOCOL.md).
    An LLM-authored gold set would measure agreement between two model passes, which is
    not precision and is worse than no measurement because it looks like one.
 
-Until both are resolved, `unlocked_predicates` is empty and a live run auto-accepts
-**nothing**, routing every clean candidate to review. Full-corpus extraction is not
-authorised.
+Until this is resolved, `unlocked_predicates` is empty and every clean candidate routes
+to review. Full-corpus extraction is not authorised.
 
-## Estimated cost
+## Direct-run cost
 
-Measured: 508 packets, ~1.91M input tokens, ~3,770 per request. Estimated at published
-rates and an assumed 900-token reply: **$0.93** for the pilot, **~$19.35** projected for
-all 10,552 mantras (~$9.70 via Batch). Cost is not the constraint on this project;
-precision is.
+The pilot made **0 API calls** and incurred **$0 direct API cost**. No API cost or
+full-corpus projection is reported for this run.

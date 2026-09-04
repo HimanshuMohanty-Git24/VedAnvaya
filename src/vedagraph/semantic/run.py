@@ -280,6 +280,15 @@ def build_manifest(
     provider: SemanticExtractorProvider,
     config: ExtractionConfig,
     cost: CostReport,
+    batch_count: int = 0,
+    batch_size: int = 0,
+    packet_hashes: dict[str, str] | None = None,
+    output_hashes: dict[str, str] | None = None,
+    qa_result: str = "",
+    traditional_knowledge_manifest_sha256: str = "",
+    lexical_knowledge_manifest_sha256: str = "",
+    pilot_config_sha256: str = "",
+    prompt_sha256: str = "",
 ) -> SemanticRunManifest:
     return SemanticRunManifest(
         run_id=run_id,
@@ -288,6 +297,10 @@ def build_manifest(
         finished_at=datetime.now(UTC),
         corpus_version=corpus_version,
         corpus_manifest_sha256=corpus_manifest_sha256,
+        traditional_knowledge_manifest_sha256=traditional_knowledge_manifest_sha256,
+        lexical_knowledge_manifest_sha256=lexical_knowledge_manifest_sha256,
+        pilot_config_sha256=pilot_config_sha256,
+        prompt_sha256=prompt_sha256,
         lexical_policy_version=lexical_policy_version,
         ontology_version=ONTOLOGY_VERSION,
         acceptance_policy_version=ACCEPTANCE_POLICY_VERSION,
@@ -295,6 +308,8 @@ def build_manifest(
         packet_version=PACKET_VERSION,
         schema_name=SCHEMA_NAME,
         provider=provider.name,
+        extraction_runtime=("CODEX_DIRECT" if provider.name == "codex-direct" else "API"),
+        api_invocation=(provider.name != "codex-direct"),
         model=provider.model_identity(),
         model_snapshot=next(
             (item.model_snapshot for item in result.assertions if item.model_snapshot), None
@@ -308,6 +323,14 @@ def build_manifest(
         cached_input_cost_usd_per_million=config.cached_input_usd_per_million,
         output_cost_usd_per_million=config.output_usd_per_million,
         total_cost_usd=cost.total_cost_usd,
+        batch_count=batch_count,
+        batch_size=batch_size,
+        unlocked_predicates=[],
+        gold_status="UNANNOTATED",
+        validator_version="rigveda-semantic-validator-v1",
+        qa_result=qa_result,
+        packet_hashes=packet_hashes or {},
+        output_hashes=output_hashes or {},
         notes=(
             f"{len(result.refusals)} refusals, {len(result.failures)} failures, "
             f"{len(result.parse_errors)} unbuildable claims dropped. "

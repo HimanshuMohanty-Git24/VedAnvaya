@@ -3,10 +3,9 @@
 Evaluation version: `rigveda-semantic-evaluation-v1`
 Gold worksheet: [`data/gold/rigveda_semantic_gold_v1.jsonl`](../../data/gold/rigveda_semantic_gold_v1.jsonl)
 
-**No evaluation has been run.** The gold subset is not annotated and no live extraction
-has taken place. This document records what will be measured, how, and what the numbers
-are allowed to authorise — written before the run, so the targets cannot be adjusted to
-fit a result.
+**No human-gold evaluation has been run.** The gold subset is not annotated. The
+Codex-direct pilot has produced review candidates, but those suggestions are not labels
+and are not scored as gold.
 
 ---
 
@@ -16,7 +15,8 @@ fit a result.
 |---|---|
 | gold mantras selected | 120 |
 | gold mantras annotated | **0** |
-| live extractions run | **0** |
+| Codex-direct pilot extractions | **508** |
+| vendor API extractions | **0** |
 | predicates unlocked for automatic acceptance | **0 of 14** |
 
 Every figure below is therefore a specification, not a finding. There is no

@@ -4,9 +4,8 @@ Pilot config: [`data/builds/rigveda_semantic_pilot_v1.yaml`](../../data/builds/r
 Config version: `rigveda-semantic-pilot-v1`
 Selection rule: `rigveda-semantic-pilot-selection-v1`
 
-**Status: the pipeline is built and tested end to end offline. No live extraction has
-been run.** Two things are missing and neither is code — see [What is
-blocked](#what-is-blocked).
+**Status: the pipeline is built and tested end to end offline. The 508-mantra
+Codex-direct pilot has completed.** Human gold remains the gate for promotion.
 
 ---
 
@@ -179,24 +178,17 @@ wearing a validator's approval.
 
 ---
 
-## What is blocked
+## Remaining gate
 
-Two things, and neither is code.
-
-**1. No `OPENAI_API_KEY` is configured.** Everything up to the request is built and
-tested; the live extractor, the reasoning-effort comparison, the measured precision and
-the actual cost all need one. `make semantic-dry-run` runs the full 508-packet build
-today and costs nothing.
-
-**2. The gold subset is not annotated.** `data/gold/rigveda_semantic_gold_v1.jsonl`
+The gold subset is not annotated. `data/gold/rigveda_semantic_gold_v1.jsonl`
 holds 120 rows, all marked `UNANNOTATED`. Gold must be written by a person: an
 LLM-authored gold set would measure agreement between two model passes, which is not
 precision and would be worse than no measurement because it would look like one. The
 evaluator skips `UNANNOTATED` rows rather than scoring them as "no relations here", which
 would manufacture a precision of zero out of an empty file.
 
-Until the gold set exists, `unlocked_predicates` is empty, and a live run would route
-**every** clean candidate to human review and auto-accept nothing. That is a usable
+Until the gold set exists, `unlocked_predicates` is empty, and the Codex-direct run routes
+**every** clean candidate to human review and auto-accepts nothing. That is a usable
 state — it produces reviewable candidates with checked evidence — but it is not the
 state a full-corpus run should be authorised from.
 

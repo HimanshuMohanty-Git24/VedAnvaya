@@ -255,6 +255,42 @@ class RecordedProvider(SemanticExtractorProvider):
         )
 
 
+@dataclass
+class CodexDirectProvider(SemanticExtractorProvider):
+    """Use structured payloads authored by the Codex/Luna agent, with no API call.
+
+    This provider is deliberately a file/replay boundary. Python does not invoke Luna,
+    inspect credentials, or pretend that a local replay is a vendor request. The agent
+    reads each EvidencePacket in small batches and writes the payloads it authored;
+    this class only makes those payloads available to the deterministic parser and
+    validator.
+    """
+
+    payloads: dict[str, dict[str, Any]]
+    model: str = "gpt-5.6-luna"
+    name: str = "codex-direct"
+
+    def model_identity(self) -> str:
+        return self.model
+
+    def extract(self, packet: EvidencePacket, prompt: SystemPrompt) -> ExtractionResult:
+        payload = self.payloads.get(packet.passage_key)
+        if payload is None:
+            return ExtractionResult(
+                passage_key=packet.passage_key,
+                payload={},
+                usage=TokenUsage(),
+                model=self.model,
+                error="no Codex-direct payload for this passage",
+            )
+        return ExtractionResult(
+            passage_key=packet.passage_key,
+            payload=payload,
+            usage=TokenUsage(),
+            model=self.model,
+        )
+
+
 class OpenAILunaProvider(SemanticExtractorProvider):
     """gpt-5.6-luna over the OpenAI Responses API with strict Structured Outputs.
 

@@ -1,4 +1,4 @@
-.PHONY: install format lint typecheck test check schemas pilot rigveda lineage knowledge lexical semantic-config semantic-dry-run
+.PHONY: install format lint typecheck test check schemas pilot rigveda lineage knowledge lexical semantic-config semantic-dry-run semantic-batches
 
 install:
 	uv sync --extra dev
@@ -48,3 +48,6 @@ semantic-config:
 # Builds every pilot packet and prices the run without contacting anyone. Free.
 semantic-dry-run:
 	uv run python scripts/run_semantic_pilot.py --dry-run
+
+semantic-batches:
+	uv run python scripts/build_semantic_batches.py

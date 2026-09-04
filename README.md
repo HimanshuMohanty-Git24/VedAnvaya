@@ -307,15 +307,16 @@ Mention policy v2 added feature-conditioned aliases and a lemma-identity rule, t
 detectable false-positive rate from 0.34% to 0.01% and recovering Sarasvatī and Sarasvant
 from one shared annotated lemma.
 
-The **semantic candidate layer** is built and tested offline but has not been run:
-`RIGVEDA_SEMANTIC_PIPELINE_READY_WITH_LIMITATIONS`. A closed ontology of 17 node types and
+The **semantic candidate layer** is built and tested offline, and the 508-mantra
+Codex-direct pilot is complete:
+`RIGVEDA_SEMANTIC_PILOT_COMPLETE_AWAITING_HUMAN_GOLD`. A closed ontology of 17 node types and
 14 predicates, a deterministic evidence packet, strict Structured Outputs against
 `gpt-5.6-luna`, a structural validator that rejects fabricated citations, and a per-predicate
 acceptance policy that auto-accepts nothing until a hand-annotated gold set has measured it.
 Its output is candidate assertions only, and it never alters the canonical corpus, the
-traditional metadata, the lexical mentions or the deterministic parallels. Two things block a
-run and neither is code: no API key is configured, and the 120-mantra gold subset is
-unannotated. Decision:
+traditional metadata, the lexical mentions or the deterministic parallels. The 120-mantra
+gold subset remains unannotated, so no predicate is unlocked and no semantic assertion is
+accepted. Decision:
 [ADR-014](docs/decisions/ADR-014-llm-output-is-candidate-only.md). Only after that comes
 Neo4j as a derived database, then GraphRAG.
 

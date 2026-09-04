@@ -391,6 +391,10 @@ class SemanticRunManifest(VGModel):
     finished_at: datetime | None = None
     corpus_version: str = Field(min_length=1)
     corpus_manifest_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    traditional_knowledge_manifest_sha256: str = ""
+    lexical_knowledge_manifest_sha256: str = ""
+    pilot_config_sha256: str = ""
+    prompt_sha256: str = ""
     lexical_policy_version: str = Field(min_length=1)
     ontology_version: str = Field(min_length=1)
     acceptance_policy_version: str = Field(min_length=1)
@@ -398,6 +402,8 @@ class SemanticRunManifest(VGModel):
     packet_version: str = Field(min_length=1)
     schema_name: str = Field(min_length=1)
     provider: str = Field(min_length=1)
+    extraction_runtime: str = "API"
+    api_invocation: bool = False
     model: str = Field(min_length=1)
     model_snapshot: str | None = None
     reasoning_effort: str = Field(min_length=1)
@@ -409,6 +415,14 @@ class SemanticRunManifest(VGModel):
     cached_input_cost_usd_per_million: float = Field(ge=0.0)
     output_cost_usd_per_million: float = Field(ge=0.0)
     total_cost_usd: float = Field(ge=0.0, default=0.0)
+    batch_count: int = Field(ge=0, default=0)
+    batch_size: int = Field(ge=0, default=0)
+    unlocked_predicates: list[str] = Field(default_factory=list)
+    gold_status: str = "UNANNOTATED"
+    validator_version: str = ""
+    qa_result: str = ""
+    packet_hashes: dict[str, str] = Field(default_factory=dict)
+    output_hashes: dict[str, str] = Field(default_factory=dict)
     notes: str = Field(default="")
     schema_version: str = SCHEMA_VERSION
 

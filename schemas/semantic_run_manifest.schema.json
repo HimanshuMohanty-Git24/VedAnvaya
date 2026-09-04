@@ -47,6 +47,23 @@
       "title": "Acceptance Policy Version",
       "type": "string"
     },
+    "api_invocation": {
+      "default": false,
+      "title": "Api Invocation",
+      "type": "boolean"
+    },
+    "batch_count": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Batch Count",
+      "type": "integer"
+    },
+    "batch_size": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Batch Size",
+      "type": "integer"
+    },
     "cached_input_cost_usd_per_million": {
       "minimum": 0.0,
       "title": "Cached Input Cost Usd Per Million",
@@ -67,6 +84,11 @@
       "title": "Dataset Id",
       "type": "string"
     },
+    "extraction_runtime": {
+      "default": "API",
+      "title": "Extraction Runtime",
+      "type": "string"
+    },
     "finished_at": {
       "anyOf": [
         {
@@ -80,10 +102,20 @@
       "default": null,
       "title": "Finished At"
     },
+    "gold_status": {
+      "default": "UNANNOTATED",
+      "title": "Gold Status",
+      "type": "string"
+    },
     "input_cost_usd_per_million": {
       "minimum": 0.0,
       "title": "Input Cost Usd Per Million",
       "type": "number"
+    },
+    "lexical_knowledge_manifest_sha256": {
+      "default": "",
+      "title": "Lexical Knowledge Manifest Sha256",
+      "type": "string"
     },
     "lexical_policy_version": {
       "minLength": 1,
@@ -127,6 +159,20 @@
       "title": "Output Cost Usd Per Million",
       "type": "number"
     },
+    "output_hashes": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Output Hashes",
+      "type": "object"
+    },
+    "packet_hashes": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Packet Hashes",
+      "type": "object"
+    },
     "packet_version": {
       "minLength": 1,
       "title": "Packet Version",
@@ -137,6 +183,16 @@
       "title": "Passage Count",
       "type": "integer"
     },
+    "pilot_config_sha256": {
+      "default": "",
+      "title": "Pilot Config Sha256",
+      "type": "string"
+    },
+    "prompt_sha256": {
+      "default": "",
+      "title": "Prompt Sha256",
+      "type": "string"
+    },
     "prompt_version": {
       "minLength": 1,
       "title": "Prompt Version",
@@ -145,6 +201,11 @@
     "provider": {
       "minLength": 1,
       "title": "Provider",
+      "type": "string"
+    },
+    "qa_result": {
+      "default": "",
+      "title": "Qa Result",
       "type": "string"
     },
     "reasoning_effort": {
@@ -190,8 +251,25 @@
       "title": "Total Cost Usd",
       "type": "number"
     },
+    "traditional_knowledge_manifest_sha256": {
+      "default": "",
+      "title": "Traditional Knowledge Manifest Sha256",
+      "type": "string"
+    },
+    "unlocked_predicates": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Unlocked Predicates",
+      "type": "array"
+    },
     "usage": {
       "$ref": "#/$defs/TokenUsage"
+    },
+    "validator_version": {
+      "default": "",
+      "title": "Validator Version",
+      "type": "string"
     }
   },
   "required": [
