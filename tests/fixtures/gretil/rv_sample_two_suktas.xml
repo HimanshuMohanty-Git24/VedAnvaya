@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xml:id="sa_Rgveda-edAufrecht">
+  <teiHeader xml:lang="en">
+    <fileDesc>
+      <titleStmt>
+        <title>Ṛgveda-Saṃhitā</title>
+        <respStmt><resp>data entry</resp><name>Barend A. Van Nooten</name><name>Gary B. Holland</name></respStmt>
+        <respStmt><resp>conversion and revision</resp><name>Detlef Eichler</name></respStmt>
+      </titleStmt>
+      <publicationStmt>
+        <publisher>Göttingen Register of Electronic Texts in Indian Languages (GRETIL), SUB Göttingen</publisher>
+        <availability>
+          <p>File-level good-faith statement.</p>
+          <licence target="https://creativecommons.org/licenses/by-nc-sa/4.0/">Distributed under CC BY-NC-SA 4.0.</licence>
+        </availability>
+        <date when-iso="2019-10-03"/>
+      </publicationStmt>
+      <sourceDesc><biblStruct><monogr><editor>Theodor Aufrecht</editor><title>Die Hymnen des Rigveda</title><imprint><date when-iso="1877"/></imprint></monogr></biblStruct></sourceDesc>
+    </fileDesc>
+    <encodingDesc><editorialDecl><normalization><p>Accents are preserved in orig elements.</p></normalization></editorialDecl></encodingDesc>
+    <profileDesc><langUsage><language ident="sa-Latn">Sanskrit</language></langUsage></profileDesc>
+  </teiHeader>
+  <text><body><div type="maṇḍala" n="1">
+    <div type="sūkta" n="001">
+    <lg xml:id="RV_1.001.01"><l n="1.001.01a">a<orig>̱</orig>gnim <choice><orig>ī<orig>̍</orig>ḻe</orig><reg>īḷe</reg></choice></l><l n="1.001.01c">puróhitaṃ</l></lg>
+    <lg xml:id="RV_1.001.02"><l n="1.001.02a">a<orig>̱</orig>gníḥ <choice><sic>pū́rvebhir</sic><corr>pūrvebhir</corr></choice></l></lg>
+    </div>
+    <div type="sūkta" n="002">
+    <lg xml:id="RV_1.002.01"><l n="1.002.01a">vā<orig>̍</orig>ya<orig>̱</orig>v ā<orig>̍</orig> yāhi darśate<orig>̱</orig>me sómā arankr̥táḥ</l></lg>
+    </div>
+  </div></body></text>
+</TEI>

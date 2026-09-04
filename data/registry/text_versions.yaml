@@ -1,0 +1,230 @@
+schema_version: 1.0.0
+text_versions:
+- text_version_id: GRETIL.RV.AUFRECHT
+  artifact_id: GRETIL.RV.AUFRECHT.TEI.2019
+  source_version_key: sa_Rgveda-edAufrecht
+  human_title: Rigveda-Samhita (GRETIL TEI, Aufrecht lineage)
+  text_type: Transmitted Samhita transcription
+  text_form: SAMHITA
+  text_role: PRIMARY_TEXT
+  recension: Shakala (structural identification; not stated in the TEI header)
+  underlying_edition: Theodor Aufrecht, Die Hymnen des Rigveda, Bonn, 1877, volumes 1-2
+  electronic_lineage:
+  - 'Data entry: Barend A. Van Nooten and Gary B. Holland'
+  - 'Conversion and revision: Detlef Eichler'
+  - 'Contribution to GRETIL: Detlef Eichler'
+  - 'Initial GRETIL normalization: Reinhold Gruenendahl'
+  - 'TEI normalization and conversion: Maximilian Mehner'
+  language: sa
+  script: Latin
+  transliteration_scheme: IAST with GRETIL conventions (U+1E3B for the retroflex lateral)
+  accent_support: Accented; anudatta U+0331 and svarita U+030D with udatta unmarked, carried in standalone
+    orig nodes
+  metrical_restoration: false
+  orthographic_normalization: GRETIL normalization of the Aufrecht transcription; the header states
+    that apparent errors were silently corrected
+  normalized_rights: CC_BY_NC_SA
+  license_uri: https://creativecommons.org/licenses/by-nc-sa/4.0/
+  verbatim_license: Distributed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0
+    International License.
+  upstream_rights_notes:
+  - This e-text was provided to GRETIL in good faith that no copyright rights have been infringed.
+    If anyone wishes to assert copyright over this file, please contact the GRETIL management at gretil(at)sub(dot)uni-goettingen(dot)de.
+    The file will be immediately removed pending resolution of the claim.
+  transformation_provenance: GRETIL TEI publication dated 2019-10-03
+  notes: 'Upstream of VEDAWEB.AUFRECHT. One file for the whole Rigveda: 10,552 lg records, 2,006 of
+    them in Mandala 1.'
+- text_version_id: VEDAWEB.AUFRECHT
+  artifact_id: VEDAWEB.RV.BOOK01.TEI.D3EB8AF
+  source_version_key: aufrecht
+  human_title: Rigveda-Samhita (Aufrecht lineage, VedaWeb rendering)
+  text_type: Transmitted Samhita transcription
+  text_form: SAMHITA
+  text_role: PARALLEL_TEXT
+  recension: Shakala (structural identification; not stated in the TEI header)
+  underlying_edition: Theodor Aufrecht, Die Hymnen des Rigveda, Bonn, 1877
+  electronic_lineage:
+  - 'Data entry: Barend A. Van Nooten and Gary B. Holland'
+  - 'Conversion and revision: Detlef Eichler'
+  - 'GRETIL normalization: Reinhold Gruenendahl; TEI conversion: Maximilian Mehner'
+  - GRETIL sa_Rgveda-edAufrecht.xml (2019-10-03), cited by ptr in the VedaWeb header
+  - Modified for VedaWeb by Dieter Gunkel and Kevin M. Ryan
+  language: sa
+  script: Latin
+  transliteration_scheme: ISO 15919
+  accent_support: Accented; udatta marked with U+0301, unlike GRETIL anudatta/svarita notation
+  metrical_restoration: false
+  orthographic_normalization: Re-transcribed from GRETIL IAST into ISO 15919; split into hemistich
+    lines
+  normalized_rights: CC_BY_NC_SA
+  license_uri: https://creativecommons.org/licenses/by-nc-sa/4.0/
+  verbatim_license: Distributed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0
+    International License.
+  upstream_rights_notes:
+  - This e-text was provided to GRETIL in good faith that no copyright rights have been infringed.
+    If anyone wishes to assert copyright over this file, please contact the GRETIL management at gretil(at)sub(dot)uni-goettingen(dot)de.
+    The file will be immediately removed pending resolution of the claim.
+  - Distributed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
+  transformation_provenance: Derived from the same GRETIL file VedaGraph registers as GRETIL.RV.AUFRECHT.TEI.2019
+  notes: Downstream of GRETIL.RV.AUFRECHT.TEI.2019; not an independent witness.
+- text_version_id: VEDAWEB.EICHLER
+  artifact_id: VEDAWEB.RV.BOOK01.TEI.D3EB8AF
+  source_version_key: eichler
+  human_title: Rigveda-Samhita, Devanagari (Detlef Eichler)
+  text_type: Transmitted Samhita transcription in Devanagari
+  text_form: SAMHITA
+  text_role: PARALLEL_TEXT
+  recension: Shakala (structural identification)
+  underlying_edition: Not stated in the TEI header
+  electronic_lineage:
+  - 'Editor: Detlef Eichler, http://www.detlef108.de/RV-D-UTF8.html'
+  - Downloaded by VedaWeb on 2020-11-22
+  - 'VedaWeb editor: Daniel Koelligan'
+  language: sa
+  script: Devanagari
+  accent_support: Accented Devanagari using U+0951/U+0952 svara marks
+  metrical_restoration: false
+  orthographic_normalization: Devanagari; hemistich line split matching the aufrecht layer
+  normalized_rights: CC_BY_NC_SA
+  license_uri: https://creativecommons.org/licenses/by-nc-sa/4.0/
+  verbatim_license: Distributed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0
+    International License.
+  upstream_rights_notes:
+  - Distributed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
+  transformation_provenance: Independent Devanagari e-text; no printed edition is named in the header
+  notes: The only accented Devanagari Rigveda layer in the VedaWeb corpus.
+- text_version_id: VEDAWEB.LUBOTSKY
+  artifact_id: VEDAWEB.RV.BOOK01.TEI.D3EB8AF
+  source_version_key: lubotsky
+  human_title: A Rgvedic Word Concordance (Lubotsky) text layer
+  text_type: Concordance-derived pada text
+  text_form: SAMHITA
+  text_role: COMPARISON_ONLY
+  recension: Shakala
+  underlying_edition: A. Lubotsky, A Rgvedic Word Concordance, 1997
+  electronic_lineage:
+  - Author file shared with Dieter Gunkel and Kevin Ryan on 2010-03-29
+  - Modified for VedaWeb by Dieter Gunkel and Kevin M. Ryan
+  language: sa
+  script: Latin
+  transliteration_scheme: ISO 15919
+  accent_support: Accented; udatta marked with U+0301
+  metrical_restoration: false
+  orthographic_normalization: Pada-segmented; carries concordance markers such as a trailing hyphen-underscore
+  normalized_rights: CC_BY_NC_SA
+  license_uri: https://creativecommons.org/licenses/by-nc-sa/4.0/
+  verbatim_license: Distributed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0
+    International License.
+  upstream_rights_notes:
+  - Source file shared with Dieter Gunkel and Kevin Ryan on
+  transformation_provenance: Extracted from a word concordance, not from a reading edition
+  notes: Editorial markers make this unsuitable as a display text.
+- text_version_id: VEDAWEB.PADAPATHA
+  artifact_id: VEDAWEB.RV.BOOK01.TEI.D3EB8AF
+  source_version_key: padapatha
+  human_title: Rigvedasamhita, Padapatha
+  text_type: Padapatha, the word-by-word analysed recitation text
+  text_form: PADAPATHA
+  text_role: PADAPATHA
+  recension: Shakala
+  underlying_edition: Not stated in the TEI header
+  electronic_lineage:
+  - 'Data entry and contribution to GRETIL: members of the Sansknet Project'
+  - 'GRETIL normalization: Reinhold Gruenendahl; TEI conversion: Maximilian Mehner'
+  - GRETIL sa_RgvedasaMhitApadapATha.xml (2020-07-31)
+  - Modified for VedaWeb by Dieter Gunkel and Kevin M. Ryan
+  language: sa
+  script: Latin
+  transliteration_scheme: ISO 15919
+  accent_support: Unaccented in the VedaWeb layer
+  metrical_restoration: false
+  orthographic_normalization: Word-segmented with hyphen compound boundaries; uses l plus U+0325 where
+    other layers use U+1E37
+  normalized_rights: CC_BY_NC_SA
+  license_uri: https://creativecommons.org/licenses/by-nc-sa/4.0/
+  verbatim_license: Distributed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0
+    International License.
+  upstream_rights_notes:
+  - This e-text was provided to GRETIL in good faith that no copyright rights have been infringed.
+    If anyone wishes to assert copyright over this file, please contact the GRETIL management at gretil(at)sub(dot)uni-goettingen(dot)de.
+    The file will be immediately removed pending resolution of the claim.
+  - Distributed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
+  transformation_provenance: A separate textual object, not a variant reading of the samhita
+  notes: Padapatha is a different textual object and must never be reconciled against samhita text.
+- text_version_id: VEDAWEB.VNH
+  artifact_id: VEDAWEB.RV.BOOK01.TEI.D3EB8AF
+  source_version_key: vnh
+  human_title: The Rigveda - Metrically Restored Text (van Nooten and Holland)
+  text_type: Metrically restored editorial reconstruction
+  text_form: SAMHITA
+  text_role: METRICALLY_RESTORED
+  recension: Shakala
+  underlying_edition: 'B. A. van Nooten and G. B. Holland, Rig Veda: A Metrically Restored Text, Harvard
+    University Press, 1994'
+  electronic_lineage:
+  - 1970 University of Texas Linguistics Research Center electronic text
+  - van Nooten and Holland diskette issued with the 1994 printed book
+  - Online edition by Karen Thomson and Jonathan Slocum, UT Austin LRC
+  - Modified for VedaWeb by Dieter Gunkel and Kevin M. Ryan
+  language: sa
+  script: Latin
+  transliteration_scheme: ISO 15919
+  accent_support: Accented; udatta marked with U+0301
+  metrical_restoration: true
+  orthographic_normalization: Pada-segmented; vowel restorations depart from the transmitted samhita
+    text
+  normalized_rights: CC_BY_NC_SA
+  license_uri: https://creativecommons.org/licenses/by-nc-sa/4.0/
+  verbatim_license: Distributed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0
+    International License.
+  upstream_rights_notes:
+  - 'This online text of the Rigveda derives from the highly important Rig Veda: a Metrically Restored
+    Text, by Barend A. van Nooten and Gary B. Holland, published in 1994 by Harvard University Press;
+    van Nooten and Holland''s edition, as the first attempt to present the poems in their entirety
+    in the poetic form in which they were composed, constituted a watershed in Rigvedic scholarship,
+    but it has been out of print for several years. The preface of the printed book states (p. i)
+    that the content was "in part derived from an incomplete electronic version of the Rig Veda produced
+    at the University of Texas in 1970." (N.B. The Linguistics Research Center produced a complete
+    electronic version of the text; decades ago, a copy was donated to the Oxford Text Archive.) Re:
+    editing in this new online electronic version, outlined below, or Rigvedic language issues in
+    general, contact Karen Thomson.'
+  - 'Our text here is based on the van Nooten and Holland electronic version (itself derived from
+    the much earlier UT Linguistics Research Center electronic text), which was issued on a 3.5" diskette
+    together with the printed book. A file on the diskette bore the notice:'
+  - Copyright with the authors and Harvard Oriental Series. The electronic text may be used for research
+    but not for commercial purposes.
+  - Our non-commercial use here is for research by ourselves, other scholars, and the public at large,
+    who may lack access to the out-of-print Harvard edition and be unaware of the deficiencies of
+    the ancient saṃhitā text which formed the basis for Theodor Aufrecht's nineteenth-century transliterated
+    edition. Aufrecht's unrestored text has continued to be generally used, as, for example, by Alexander
+    Lubotsky in his 1997 concordance.
+  source_specific_restrictions: The TEI preserves the diskette notice restricting the electronic text
+    to research and not commercial purposes; VedaWeb additionally applies CC BY-NC-SA 4.0.
+  transformation_provenance: Editorial restoration of the poetic form; explicitly not the transmitted
+    samhita text
+  notes: Scholarly parallel only. Its editors state that the transmitted samhita text underlying Aufrecht
+    is deficient, a philological position VedaGraph does not adjudicate.
+- text_version_id: VEDAWEB.ZURICH
+  artifact_id: VEDAWEB.RV.BOOK01.TEI.D3EB8AF
+  source_version_key: zurich
+  human_title: Rigveda - University of Zurich linguistic version
+  text_type: Linguistically annotated normalized text with token morphology
+  text_form: SAMHITA
+  text_role: LINGUISTIC_ANNOTATION
+  recension: Shakala
+  underlying_edition: University of Zurich Rigveda database, revised 2020-2024
+  electronic_lineage:
+  - Universitaet Zuerich, Institut fuer Vergleichende Sprachwissenschaft
+  - Modified by Jakob Halfmann, Natalie Korobzow, Antje Casaretto, Anna Fischer, Pascal Coenen
+  language: sa
+  script: Latin
+  transliteration_scheme: ISO 15919
+  accent_support: Accented; udatta marked with U+0301
+  metrical_restoration: false
+  orthographic_normalization: Uses U+1E43 for anusvara where the aufrecht and vnh layers use U+1E41
+  normalized_rights: CC_BY
+  license_uri: https://creativecommons.org/licenses/by/4.0/
+  verbatim_license: Distributed under a Creative Commons Attribution 4.0 International License.
+  upstream_rights_notes: []
+  transformation_provenance: Annotation-bearing layer maintained for morphological research
+  notes: Carries lemma, morphosyntax and Grassmann references per token.

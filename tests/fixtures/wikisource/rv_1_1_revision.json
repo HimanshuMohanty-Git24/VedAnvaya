@@ -1,0 +1,11 @@
+{
+  "query": {
+    "pages": [
+      {
+        "pageid": 12345,
+        "title": "The Hymns of the Rigveda/Book 1/Hymn 1",
+        "revisions": [{"revid": 987654321, "timestamp": "2026-09-01T12:00:00Z"}]
+      }
+    ]
+  }
+}

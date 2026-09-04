@@ -1,0 +1,229 @@
+{
+  "$defs": {
+    "AliasType": {
+      "description": "Why one surface string is treated as naming the same entity.\n\nA string is only classified beyond ``SOURCE_SPELLING`` when evidence supports it.",
+      "enum": [
+        "SOURCE_SPELLING",
+        "ORTHOGRAPHIC_VARIANT",
+        "TRANSLITERATION_VARIANT",
+        "INFLECTIONAL_FORM",
+        "ALTERNATE_NAME",
+        "EPITHET",
+        "COMPOSITE_LABEL",
+        "UNCERTAIN_EQUIVALENCE"
+      ],
+      "title": "AliasType",
+      "type": "string"
+    },
+    "DevataSubtype": {
+      "description": "Optional Devatā classification. ``UNKNOWN`` unless evidence exists.",
+      "enum": [
+        "INDIVIDUAL",
+        "PAIR",
+        "GROUP",
+        "ABSTRACT",
+        "RITUAL_OBJECT",
+        "NATURAL_PHENOMENON",
+        "OTHER",
+        "UNKNOWN"
+      ],
+      "title": "DevataSubtype",
+      "type": "string"
+    },
+    "EntityAlias": {
+      "additionalProperties": false,
+      "description": "One surface string treated as naming an entity, with the reason recorded.",
+      "properties": {
+        "alias": {
+          "minLength": 1,
+          "title": "Alias",
+          "type": "string"
+        },
+        "alias_type": {
+          "$ref": "#/$defs/AliasType"
+        },
+        "evidence": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Evidence"
+        }
+      },
+      "required": [
+        "alias",
+        "alias_type"
+      ],
+      "title": "EntityAlias",
+      "type": "object"
+    },
+    "KnowledgeEntityType": {
+      "description": "Canonical entity families in the deterministic knowledge layer.",
+      "enum": [
+        "RISHI",
+        "DEVATA",
+        "CHANDAS"
+      ],
+      "title": "KnowledgeEntityType",
+      "type": "string"
+    },
+    "ResolutionStatus": {
+      "description": "How a raw source label reached (or failed to reach) a canonical entity.\n\nOnly ``EXACT``, ``NORMALIZED_EXACT``, ``KNOWN_ALIAS`` and ``COMPOSITE_PRESERVED``\nmay attach a canonical entity id.",
+      "enum": [
+        "EXACT",
+        "NORMALIZED_EXACT",
+        "KNOWN_ALIAS",
+        "COMPOSITE_PRESERVED",
+        "NEEDS_REVIEW",
+        "AMBIGUOUS",
+        "REJECTED"
+      ],
+      "title": "ResolutionStatus",
+      "type": "string"
+    },
+    "ReviewStatus": {
+      "enum": [
+        "UNREVIEWED",
+        "NEEDS_REVIEW",
+        "ACCEPTED",
+        "REJECTED"
+      ],
+      "title": "ReviewStatus",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "A canonical Ṛṣi, Devatā or Chandas.\n\n``entity_key`` is pinned registry data, not a value recomputed from the label at\nbuild time, so an entity's identity survives a change to the normalization rules.",
+  "properties": {
+    "aliases": {
+      "items": {
+        "$ref": "#/$defs/EntityAlias"
+      },
+      "title": "Aliases",
+      "type": "array"
+    },
+    "canonical_urn": {
+      "pattern": "^urn:vedagraph:entity:",
+      "title": "Canonical Urn",
+      "type": "string"
+    },
+    "composite_parts": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Composite Parts",
+      "type": "array"
+    },
+    "devanagari": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Devanagari"
+    },
+    "devata_subtype": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/DevataSubtype"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "entity_id": {
+      "format": "uuid",
+      "title": "Entity Id",
+      "type": "string"
+    },
+    "entity_key": {
+      "pattern": "^VG:(RISHI|DEVATA|CHANDAS):[A-Z0-9-]+$",
+      "title": "Entity Key",
+      "type": "string"
+    },
+    "entity_type": {
+      "$ref": "#/$defs/KnowledgeEntityType"
+    },
+    "is_composite": {
+      "default": false,
+      "title": "Is Composite",
+      "type": "boolean"
+    },
+    "notes": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Notes"
+    },
+    "occurrence_count": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Occurrence Count",
+      "type": "integer"
+    },
+    "preferred_label": {
+      "minLength": 1,
+      "title": "Preferred Label",
+      "type": "string"
+    },
+    "preferred_label_iast": {
+      "minLength": 1,
+      "title": "Preferred Label Iast",
+      "type": "string"
+    },
+    "provenance": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Provenance",
+      "type": "array"
+    },
+    "resolution_status": {
+      "$ref": "#/$defs/ResolutionStatus"
+    },
+    "review_status": {
+      "$ref": "#/$defs/ReviewStatus",
+      "default": "UNREVIEWED"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_labels": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Source Labels",
+      "type": "array"
+    }
+  },
+  "required": [
+    "entity_id",
+    "entity_key",
+    "canonical_urn",
+    "entity_type",
+    "preferred_label",
+    "preferred_label_iast",
+    "resolution_status"
+  ],
+  "title": "KnowledgeEntity",
+  "type": "object"
+}

@@ -1,0 +1,4 @@
+hymn.verses.seer.divinity.meter
+1.3.vaiśvāmitro madhucchandāḥ.agniḥ.gāyatrī
+2.4.vaiśvāmitro madhucchandāḥ.(1-2)vāyuḥ,(3)indravāyū,(4)mitrāvaruṇau.gāyatrī
+3.5.kāṇvo medhātithiḥ.(1-2,5)iḻā-sarasvatī-mahī,(3-4)agniḥ.(1-4)gāyatrī,(5)jagatiī

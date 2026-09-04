@@ -1,0 +1,202 @@
+{
+  "$defs": {
+    "AudioType": {
+      "enum": [
+        "VEDIC_RECITATION",
+        "HINDI_NARRATION",
+        "ENGLISH_NARRATION",
+        "COMMENTARY_AUDIO",
+        "LECTURE",
+        "MUSICAL_RENDERING",
+        "OTHER"
+      ],
+      "title": "AudioType",
+      "type": "string"
+    },
+    "RightsStatus": {
+      "enum": [
+        "PUBLIC_DOMAIN",
+        "CC_BY",
+        "CC_BY_SA",
+        "CC_BY_NC",
+        "CC_BY_NC_SA",
+        "APACHE_2_0",
+        "PERMISSION_GRANTED",
+        "PERMISSION_REQUIRED",
+        "RESEARCH_ONLY",
+        "REFERENCE_ONLY",
+        "EXTERNAL_REFERENCE_ONLY",
+        "UNKNOWN"
+      ],
+      "title": "RightsStatus",
+      "type": "string"
+    },
+    "StoragePolicy": {
+      "enum": [
+        "LOCAL",
+        "OBJECT_STORAGE",
+        "EXTERNAL_REFERENCE"
+      ],
+      "title": "StoragePolicy",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "audio_id": {
+      "format": "uuid",
+      "title": "Audio Id",
+      "type": "string"
+    },
+    "audio_type": {
+      "$ref": "#/$defs/AudioType"
+    },
+    "duration_ms": {
+      "anyOf": [
+        {
+          "exclusiveMinimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Duration Ms"
+    },
+    "language": {
+      "title": "Language",
+      "type": "string"
+    },
+    "mime_type": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Mime Type"
+    },
+    "patha_type": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Patha Type"
+    },
+    "recension": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Recension"
+    },
+    "recitation_tradition": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Recitation Tradition"
+    },
+    "reciter": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Reciter"
+    },
+    "rights_status": {
+      "$ref": "#/$defs/RightsStatus"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "sha256": {
+      "anyOf": [
+        {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Sha256"
+    },
+    "source_id": {
+      "title": "Source Id",
+      "type": "string"
+    },
+    "source_media_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Source Media Id"
+    },
+    "source_url": {
+      "anyOf": [
+        {
+          "format": "uri",
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Source Url"
+    },
+    "storage_policy": {
+      "$ref": "#/$defs/StoragePolicy"
+    },
+    "target_id": {
+      "format": "uuid",
+      "title": "Target Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "audio_id",
+    "target_id",
+    "language",
+    "audio_type",
+    "source_id",
+    "storage_policy",
+    "rights_status"
+  ],
+  "title": "AudioRecording",
+  "type": "object"
+}

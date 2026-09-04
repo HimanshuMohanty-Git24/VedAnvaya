@@ -1,0 +1,149 @@
+{
+  "$defs": {
+    "MetadataPredicate": {
+      "enum": [
+        "HAS_RISHI",
+        "HAS_DEVATA",
+        "HAS_CHANDAS"
+      ],
+      "title": "MetadataPredicate",
+      "type": "string"
+    },
+    "ScopeOrigin": {
+      "description": "The scope the source itself stated, before expansion to mantras.",
+      "enum": [
+        "SUKTA_WIDE",
+        "MANTRA_RANGE",
+        "SINGLE_MANTRA"
+      ],
+      "title": "ScopeOrigin",
+      "type": "string"
+    },
+    "ScopeType": {
+      "enum": [
+        "WHOLE_PASSAGE",
+        "SINGLE_MANTRA",
+        "MANTRA_RANGE"
+      ],
+      "title": "ScopeType",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "One attributable raw metadata claim, before any entity resolution.\n\n``raw_value`` is never rewritten to a canonical spelling, so the digitized\nAnukramaṇī can be reconstructed exactly from these records.",
+  "properties": {
+    "assertion_id": {
+      "format": "uuid",
+      "title": "Assertion Id",
+      "type": "string"
+    },
+    "citation": {
+      "title": "Citation",
+      "type": "string"
+    },
+    "end_mantra": {
+      "anyOf": [
+        {
+          "minimum": 1,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "End Mantra"
+    },
+    "normalized_value": {
+      "minLength": 1,
+      "title": "Normalized Value",
+      "type": "string"
+    },
+    "parser_version": {
+      "title": "Parser Version",
+      "type": "string"
+    },
+    "predicate": {
+      "$ref": "#/$defs/MetadataPredicate"
+    },
+    "raw_line": {
+      "minLength": 1,
+      "title": "Raw Line",
+      "type": "string"
+    },
+    "raw_segment": {
+      "minLength": 1,
+      "title": "Raw Segment",
+      "type": "string"
+    },
+    "raw_value": {
+      "minLength": 1,
+      "title": "Raw Value",
+      "type": "string"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "scope_origin": {
+      "$ref": "#/$defs/ScopeOrigin"
+    },
+    "scope_type": {
+      "$ref": "#/$defs/ScopeType"
+    },
+    "snapshot_id": {
+      "title": "Snapshot Id",
+      "type": "string"
+    },
+    "source_artifact_id": {
+      "title": "Source Artifact Id",
+      "type": "string"
+    },
+    "source_id": {
+      "title": "Source Id",
+      "type": "string"
+    },
+    "source_locator": {
+      "title": "Source Locator",
+      "type": "string"
+    },
+    "start_mantra": {
+      "anyOf": [
+        {
+          "minimum": 1,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Start Mantra"
+    },
+    "subject_key": {
+      "pattern": "^VG:RV:SAK:",
+      "title": "Subject Key",
+      "type": "string"
+    }
+  },
+  "required": [
+    "assertion_id",
+    "subject_key",
+    "scope_type",
+    "scope_origin",
+    "predicate",
+    "raw_value",
+    "normalized_value",
+    "raw_segment",
+    "raw_line",
+    "source_id",
+    "source_artifact_id",
+    "snapshot_id",
+    "source_locator",
+    "citation",
+    "parser_version"
+  ],
+  "title": "MetadataSourceAssertion",
+  "type": "object"
+}

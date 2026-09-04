@@ -1,0 +1,150 @@
+{
+  "$defs": {
+    "AssertionStatus": {
+      "enum": [
+        "UNREVIEWED",
+        "ACCEPTED",
+        "REJECTED",
+        "CONFLICT",
+        "SUPERSEDED",
+        "NEEDS_REVIEW"
+      ],
+      "title": "AssertionStatus",
+      "type": "string"
+    },
+    "MetadataPredicate": {
+      "enum": [
+        "HAS_RISHI",
+        "HAS_DEVATA",
+        "HAS_CHANDAS"
+      ],
+      "title": "MetadataPredicate",
+      "type": "string"
+    },
+    "MetadataScope": {
+      "additionalProperties": false,
+      "properties": {
+        "end_sequence": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "End Sequence"
+        },
+        "passage_id": {
+          "format": "uuid",
+          "title": "Passage Id",
+          "type": "string"
+        },
+        "scope_type": {
+          "$ref": "#/$defs/ScopeType"
+        },
+        "start_sequence": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Start Sequence"
+        }
+      },
+      "required": [
+        "scope_type",
+        "passage_id"
+      ],
+      "title": "MetadataScope",
+      "type": "object"
+    },
+    "ScopeType": {
+      "enum": [
+        "WHOLE_PASSAGE",
+        "SINGLE_MANTRA",
+        "MANTRA_RANGE"
+      ],
+      "title": "ScopeType",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "assertion_id": {
+      "format": "uuid",
+      "title": "Assertion Id",
+      "type": "string"
+    },
+    "confidence": {
+      "anyOf": [
+        {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Confidence"
+    },
+    "notes": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Notes"
+    },
+    "predicate": {
+      "$ref": "#/$defs/MetadataPredicate"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "scope": {
+      "$ref": "#/$defs/MetadataScope"
+    },
+    "source_id": {
+      "title": "Source Id",
+      "type": "string"
+    },
+    "source_locator": {
+      "title": "Source Locator",
+      "type": "string"
+    },
+    "status": {
+      "$ref": "#/$defs/AssertionStatus",
+      "default": "UNREVIEWED"
+    },
+    "value": {
+      "title": "Value",
+      "type": "string"
+    }
+  },
+  "required": [
+    "assertion_id",
+    "predicate",
+    "value",
+    "scope",
+    "source_id",
+    "source_locator"
+  ],
+  "title": "TraditionalMetadataAssertion",
+  "type": "object"
+}

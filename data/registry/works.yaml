@@ -1,0 +1,46 @@
+schema_version: 1.0.0
+works:
+  - work_id: VG:WORK:RV:SAK
+    abbreviation: RV
+    veda: Rigveda
+    work_name: Rigveda Samhita
+    recension: Shakala
+    hierarchy: [Mandala, Sukta, Mantra]
+    citation_pattern: "RV {mandala}.{sukta}.{mantra}"
+    key_pattern: "VG:RV:SAK:M{mandala:02d}:S{sukta:03d}:V{mantra:03d}"
+    identity_status: FINAL
+
+  - work_id: VG:WORK:SV:KAU
+    abbreviation: SV
+    veda: Samaveda
+    work_name: Samaveda Samhita
+    recension: Kauthuma
+    hierarchy: [Arcika, Prapathaka, Ardha, Adhyaya, Khanda, Mantra]
+    citation_pattern: "Edition-specific; alternate citations required"
+    key_pattern: null
+    identity_status: RESEARCH_REQUIRED
+    notes: >-
+      Do not reduce identity to a single running mantra number. Canonical identity must
+      preserve the selected edition's Purvarcika/Uttararcika hierarchy and carry alternate
+      citation systems. The exact key is intentionally not finalized in D1.
+
+  - work_id: VG:WORK:YV:VSM
+    abbreviation: VSM
+    veda: Shukla Yajurveda
+    work_name: Vajasaneyi Samhita
+    recension: Madhyandina
+    hierarchy: [Adhyaya, Mantra]
+    citation_pattern: "VSM {adhyaya}.{mantra}"
+    key_pattern: "VG:YV:VSM:A{adhyaya:02d}:V{mantra:03d}"
+    identity_status: FINAL
+
+  - work_id: VG:WORK:AV:SAU
+    abbreviation: AVS
+    veda: Atharvaveda
+    work_name: Atharvaveda Samhita
+    recension: Shaunaka
+    hierarchy: [Kanda, Sukta, Mantra]
+    citation_pattern: "AVS {kanda}.{sukta}.{mantra}"
+    key_pattern: "VG:AV:SAU:K{kanda:02d}:S{sukta:03d}:V{mantra:03d}"
+    identity_status: FINAL
+

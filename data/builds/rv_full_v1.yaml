@@ -1,0 +1,22 @@
+config_version: 1.0.0
+dataset_id: rigveda_full_v1
+release_version: vedagraph-rigveda-shakala-1.0.0-rc1
+work_id: VG:WORK:RV:SAK
+mandala_configs:
+- data/builds/rv_mandala_1_full_v1.yaml
+- data/builds/rv_mandala_2_full_v1.yaml
+- data/builds/rv_mandala_3_full_v1.yaml
+- data/builds/rv_mandala_4_full_v1.yaml
+- data/builds/rv_mandala_5_full_v1.yaml
+- data/builds/rv_mandala_6_full_v1.yaml
+- data/builds/rv_mandala_7_full_v1.yaml
+- data/builds/rv_mandala_8_full_v1.yaml
+- data/builds/rv_mandala_9_full_v1.yaml
+- data/builds/rv_mandala_10_full_v1.yaml
+expected_mandalas: 10
+expected_suktas: 1028
+expected_mantras: 10552
+reconciliation_policy_version: rv-shakala-v1
+qa_policy_version: rigveda-full-corpus-qa-v1
+output_location: data/canonical/rigveda_full_v1
+build_timestamp: '2026-09-04T00:00:00+05:30'

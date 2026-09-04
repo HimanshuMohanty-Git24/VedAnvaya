@@ -1,0 +1,200 @@
+{
+  "$defs": {
+    "AuthorityTier": {
+      "enum": [
+        "PRIMARY_TRADITIONAL",
+        "SCHOLARLY_EDITION",
+        "HISTORICAL_TRANSLATION",
+        "AGGREGATOR",
+        "COMMUNITY_TRANSCRIPTION"
+      ],
+      "title": "AuthorityTier",
+      "type": "string"
+    },
+    "RightsInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "holder": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Holder"
+        },
+        "jurisdiction": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Jurisdiction"
+        },
+        "license_url": {
+          "anyOf": [
+            {
+              "format": "uri",
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "License Url"
+        },
+        "notes": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Notes"
+        },
+        "status": {
+          "$ref": "#/$defs/RightsStatus"
+        },
+        "verified_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Verified At"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "title": "RightsInfo",
+      "type": "object"
+    },
+    "RightsStatus": {
+      "enum": [
+        "PUBLIC_DOMAIN",
+        "CC_BY",
+        "CC_BY_SA",
+        "CC_BY_NC",
+        "CC_BY_NC_SA",
+        "APACHE_2_0",
+        "PERMISSION_GRANTED",
+        "PERMISSION_REQUIRED",
+        "RESEARCH_ONLY",
+        "REFERENCE_ONLY",
+        "EXTERNAL_REFERENCE_ONLY",
+        "UNKNOWN"
+      ],
+      "title": "RightsStatus",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "authority_tier": {
+      "$ref": "#/$defs/AuthorityTier"
+    },
+    "bulk_ingestion_status": {
+      "title": "Bulk Ingestion Status",
+      "type": "string"
+    },
+    "formats": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Formats",
+      "type": "array"
+    },
+    "known_languages": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Known Languages",
+      "type": "array"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "notes": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Notes"
+    },
+    "organization": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Organization"
+    },
+    "rights": {
+      "$ref": "#/$defs/RightsInfo"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_id": {
+      "pattern": "^[A-Z][A-Z0-9_]+$",
+      "title": "Source Id",
+      "type": "string"
+    },
+    "url": {
+      "format": "uri",
+      "minLength": 1,
+      "title": "Url",
+      "type": "string"
+    },
+    "verification_roles": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Verification Roles",
+      "type": "array"
+    }
+  },
+  "required": [
+    "source_id",
+    "name",
+    "url",
+    "authority_tier",
+    "formats",
+    "known_languages",
+    "rights",
+    "verification_roles",
+    "bulk_ingestion_status"
+  ],
+  "title": "Source",
+  "type": "object"
+}

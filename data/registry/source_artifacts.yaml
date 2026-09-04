@@ -1,0 +1,674 @@
+schema_version: 1.0.0
+source_artifacts:
+- artifact_id: GRETIL.RV.AUFRECHT.TEI.2019
+  checksum_sha256: 14197d9c1dcced64900ef971d9f4dc5b46aa8750780f5599453c9739d6a29edd
+  citation_system: RV_<mandala>.<sukta padded to 3>.<verse padded to 2>
+  contributors:
+  - Detlef Eichler
+  edition_title: Die Hymnen des Rigveda. Mandala I–VI / VII–X
+  editors:
+  - Theodor Aufrecht
+  electronic_editors:
+  - Barend A. Van Nooten
+  - Gary B. Holland
+  - Detlef Eichler
+  - Reinhold Grünendahl
+  - Maximilian Mehner
+  encoding: UTF-8 TEI, Sanskrit in Latin/IAST with combining Vedic accent marks
+  filename: sa_Rgveda-edAufrecht.xml
+  format: TEI_XML
+  language: sa-Latn
+  license_statement_verbatim: This e-text was provided to GRETIL in good faith that no copyright rights
+    have been infringed. If anyone wishes to assert copyright over this file, please contact the GRETIL
+    management at gretil(at)sub(dot)uni-goettingen(dot)de. The file will be immediately removed pending
+    resolution of the claim. Distributed under a Creative Commons Attribution-NonCommercial-ShareAlike
+    4.0 International License.
+  license_url: https://creativecommons.org/licenses/by-nc-sa/4.0/
+  notes: The file has 10,552 lg verse records. Its accent marks are standalone orig elements, not choice/orig/reg
+    pairs. Redistribution must satisfy CC BY-NC-SA 4.0.
+  provenance_notes: Data entry by Barend A. Van Nooten and Gary B. Holland; conversion and revision by
+    Detlef Eichler; initial GRETIL normalization by Reinhold Grünendahl; TEI normalization and conversion
+    by Maximilian Mehner. The header cites both volumes of Aufrecht 1877.
+  publication_date: '2019-10-03'
+  recension: Shakala (structural identification; TEI header does not state the recension)
+  retrieval_date: 2026-09-04
+  rights_status: CC_BY_NC_SA
+  source_edition: Theodor Aufrecht, Die Hymnen des Rigveda, Bonn, 1877, volumes 1–2
+  source_id: GRETIL
+  title: Ṛgveda-Saṃhitā
+  transformation_version: GRETIL TEI publication dated 2019-10-03
+  url: https://gretil.sub.uni-goettingen.de/gretil/corpustei/sa_Rgveda-edAufrecht.xml
+  work_id: VG:WORK:RV:SAK
+- artifact_id: GRIFFITH.RV.1896.WIKISOURCE
+  citation_system: Book <mandala> / Hymn <sukta> / numbered stanza
+  edition_title: Second Edition, complete in two volumes
+  editors:
+  - Ralph T. H. Griffith
+  filename: The_Hymns_of_the_Rigveda
+  format: MEDIAWIKI_TRANSCRIPTION
+  language: en
+  license_statement_verbatim: Wikisource marks both the original work and translation public domain worldwide
+    because they were published before 1931 and the author died at least 100 years ago.
+  notes: Page-level MediaWiki revision provenance is required because the hosted transcription can change
+    independently of the public-domain print edition.
+  publication_date: '1896'
+  rights_status: PUBLIC_DOMAIN
+  source_edition: E. J. Lazarus and Co., Benares, 1896
+  source_id: WIKISOURCE_GRIFFITH_RV
+  title: The Hymns of the Rigveda
+  url: https://en.wikisource.org/wiki/The_Hymns_of_the_Rigveda
+  work_id: VG:WORK:RV:SAK
+- artifact_id: VHP.RV.SHAKALA.MANDALA1.WEB
+  filename: mandal-01
+  format: HTML_REFERENCE
+  language: sa-Deva
+  license_url: https://vedicheritage.gov.in/copyright-policy/
+  notes: Verification, traditional metadata, hierarchy, and external media discovery only. Do not redistribute
+    page text or media without written permission.
+  recension: Shakala
+  rights_status: PERMISSION_REQUIRED
+  source_id: VHP
+  title: Rigveda – Shakala Samhita – Mandala 01
+  url: https://vedicheritage.gov.in/samhitas/rigveda/shakala-samhita/mandal-01/
+  work_id: VG:WORK:RV:SAK
+- artifact_id: VEDAWEB.RV.CORPUS.TEI.D3EB8AF
+  checksum_sha256: 7ba145d984d5a669318e144fbd1b7154adf982827a5385f323ea7ef4e797a15b
+  citation_system: none (header only)
+  contributors:
+  - Patrick Sahle
+  - Peter Dängeli
+  - Martina Gödel
+  edition_title: Rigveda Edition VedaWeb 2020
+  editors:
+  - Daniel Kölligan
+  - Uta Reinöhl
+  electronic_editors:
+  - Francisco Mondaca
+  - Anna Fischer
+  encoding: UTF-8 TEI teiCorpus
+  file_size_bytes: 111892
+  filename: vedaweb_corpus.tei
+  format: TEI_XML
+  git_blob_sha: 741738f7d476ff08f8a0ec17096834e65bf257c2
+  language: mul
+  license_statement_verbatim: Please see the licensing terms for each source
+  notes: 'rights_status is UNKNOWN by design: this file has no single licence. Per-version licences live
+    in data/registry/text_versions.yaml, extracted from this header.'
+  provenance_notes: teiCorpus header only. It carries no Rigveda text; it declares every incorporated
+    source, its responsibility statements, its upstream bibliography, and its individual Creative Commons
+    licence. This file is the authority for per-version rights.
+  publication_date: '2020'
+  repository_commit_sha: d3eb8af7324338161520d2d35eae8f7e985a19a5
+  repository_path: rigveda/TEI/vedaweb_corpus.tei
+  repository_url: https://github.com/VedaWebProject/vedaweb-data
+  retrieval_date: 2026-09-04
+  rights_status: UNKNOWN
+  source_id: VEDAWEB
+  title: VedaWeb - Rigveda
+  transformation_version: VedaWeb TEI corpus header, repository commit d3eb8af
+  url: https://raw.githubusercontent.com/VedaWebProject/vedaweb-data/d3eb8af7324338161520d2d35eae8f7e985a19a5/rigveda/TEI/vedaweb_corpus.tei
+  work_id: VG:WORK:RV:SAK
+- artifact_id: VEDAWEB.RV.BOOK01.TEI.D3EB8AF
+  checksum_sha256: c5c18d89a415ea16917f0f63616ee9fff7e32c4828b67f1e7647d2d023bc984c
+  citation_system: b<book padded to 2>_h<hymn padded to 3>_<stanza padded to 2>
+  edition_title: Rigveda Edition VedaWeb 2020
+  electronic_editors:
+  - Francisco Mondaca
+  - Anna Fischer
+  encoding: UTF-8 TEI; Sanskrit in ISO 15919 (san-Latn-x-ISO-15919) and Devanagari (san-Deva)
+  file_size_bytes: 43847826
+  filename: rv_book_01.tei
+  format: TEI_XML
+  git_blob_sha: e2321eab20f3ff9c73f466347f8e6ca20ad1079c
+  language: mul
+  license_statement_verbatim: 'For more information regarding sources and their licences, please see:
+    vedaweb_corpus.tei#vedaweb_header'
+  notes: rights_status is UNKNOWN at file level because the file mixes CC BY 4.0 and CC BY-NC-SA 4.0 layers.
+    Use the per-version rights in text_versions.yaml.
+  parent_artifact_id: VEDAWEB.RV.CORPUS.TEI.D3EB8AF
+  provenance_notes: 'Mandala 1 only: 191 hymns and 2,006 stanzas, matching the GRETIL TEI Mandala 1 count
+    exactly. Each stanza carries parallel lg blocks for six Sanskrit versions plus strata annotation and
+    up to nine translations. Its sourceDesc points at VEDAWEB.RV.CORPUS.TEI.D3EB8AF for all licence information.'
+  publication_date: '2020'
+  recension: Shakala (structural identification; the TEI does not state the recension)
+  repository_commit_sha: d3eb8af7324338161520d2d35eae8f7e985a19a5
+  repository_path: rigveda/TEI/rv_book_01.tei
+  repository_url: https://github.com/VedaWebProject/vedaweb-data
+  retrieval_date: 2026-09-04
+  rights_status: UNKNOWN
+  source_id: VEDAWEB
+  title: Rigveda - VedaWeb Version - Book 01
+  transformation_version: VedaWeb TEI generated by VedaWebProject/tei-transformations
+  url: https://raw.githubusercontent.com/VedaWebProject/vedaweb-data/d3eb8af7324338161520d2d35eae8f7e985a19a5/rigveda/TEI/rv_book_01.tei
+  work_id: VG:WORK:RV:SAK
+- artifact_id: VEDAWEB.RV.BOOK02.TEI.D3EB8AF
+  checksum_sha256: 236269da756609ef371df54bfe0734c6fc6177060a4cbcdc1fa9dc047c3a8c4b
+  edition_title: Rigveda Edition VedaWeb 2020
+  file_size_bytes: 10358758
+  filename: rv_book_02.tei
+  format: TEI_XML
+  git_blob_sha: 0fc691d958343f39216a3e21055d12e2b188674a
+  notes: Mixed-rights container; use per-version rights in text_versions.yaml.
+  parent_artifact_id: VEDAWEB.RV.CORPUS.TEI.D3EB8AF
+  provenance_notes: Mandala 2; 43 hymns and 429 stanzas, source-derived.
+  repository_commit_sha: d3eb8af7324338161520d2d35eae8f7e985a19a5
+  repository_path: rigveda/TEI/rv_book_02.tei
+  repository_url: https://github.com/VedaWebProject/vedaweb-data
+  retrieval_date: 2026-09-04
+  rights_status: UNKNOWN
+  source_id: VEDAWEB
+  title: Rigveda - VedaWeb Version - Book 02
+  url: https://raw.githubusercontent.com/VedaWebProject/vedaweb-data/d3eb8af7324338161520d2d35eae8f7e985a19a5/rigveda/TEI/rv_book_02.tei
+  work_id: VG:WORK:RV:SAK
+- artifact_id: VEDAWEB.RV.BOOK03.TEI.D3EB8AF
+  checksum_sha256: be1c5c4cb8afaf521a3dd0b15a5f1427c436344443738d65e39ed2d737681ecf
+  edition_title: Rigveda Edition VedaWeb 2020
+  file_size_bytes: 13651928
+  filename: rv_book_03.tei
+  format: TEI_XML
+  git_blob_sha: 70b8930f45c9b78e61f15002bfce06ab06edfbcd
+  notes: Mixed-rights container; use per-version rights in text_versions.yaml.
+  parent_artifact_id: VEDAWEB.RV.CORPUS.TEI.D3EB8AF
+  provenance_notes: Mandala 3; 62 hymns and 617 stanzas, source-derived.
+  repository_commit_sha: d3eb8af7324338161520d2d35eae8f7e985a19a5
+  repository_path: rigveda/TEI/rv_book_03.tei
+  repository_url: https://github.com/VedaWebProject/vedaweb-data
+  retrieval_date: 2026-09-04
+  rights_status: UNKNOWN
+  source_id: VEDAWEB
+  title: Rigveda - VedaWeb Version - Book 03
+  url: https://raw.githubusercontent.com/VedaWebProject/vedaweb-data/d3eb8af7324338161520d2d35eae8f7e985a19a5/rigveda/TEI/rv_book_03.tei
+  work_id: VG:WORK:RV:SAK
+- artifact_id: VEDAWEB.RV.BOOK04.TEI.D3EB8AF
+  checksum_sha256: 6904be320f7dfd6fb63f7ec9b094842a1710518c0a61c46fc6affa905ad8f138
+  edition_title: Rigveda Edition VedaWeb 2020
+  file_size_bytes: 13024469
+  filename: rv_book_04.tei
+  format: TEI_XML
+  git_blob_sha: 4e36ce28fcf5053af468913bbfa0f48b1856ecc5
+  notes: Mixed-rights container; use per-version rights in text_versions.yaml.
+  parent_artifact_id: VEDAWEB.RV.CORPUS.TEI.D3EB8AF
+  provenance_notes: Mandala 4; 58 hymns and 589 stanzas, source-derived.
+  repository_commit_sha: d3eb8af7324338161520d2d35eae8f7e985a19a5
+  repository_path: rigveda/TEI/rv_book_04.tei
+  repository_url: https://github.com/VedaWebProject/vedaweb-data
+  retrieval_date: 2026-09-04
+  rights_status: UNKNOWN
+  source_id: VEDAWEB
+  title: Rigveda - VedaWeb Version - Book 04
+  url: https://raw.githubusercontent.com/VedaWebProject/vedaweb-data/d3eb8af7324338161520d2d35eae8f7e985a19a5/rigveda/TEI/rv_book_04.tei
+  work_id: VG:WORK:RV:SAK
+- artifact_id: VEDAWEB.RV.BOOK05.TEI.D3EB8AF
+  checksum_sha256: 7df03f8c5d9e757523d258e461143f600c3024ee9d3eaa9847d989f656bfae12
+  edition_title: Rigveda Edition VedaWeb 2020
+  file_size_bytes: 15799754
+  filename: rv_book_05.tei
+  format: TEI_XML
+  git_blob_sha: 711a5fc379997f71542017137b8cb9023a598de9
+  notes: Mixed-rights container; use per-version rights in text_versions.yaml.
+  parent_artifact_id: VEDAWEB.RV.CORPUS.TEI.D3EB8AF
+  provenance_notes: Mandala 5; 87 hymns and 727 stanzas, source-derived.
+  repository_commit_sha: d3eb8af7324338161520d2d35eae8f7e985a19a5
+  repository_path: rigveda/TEI/rv_book_05.tei
+  repository_url: https://github.com/VedaWebProject/vedaweb-data
+  retrieval_date: 2026-09-04
+  rights_status: UNKNOWN
+  source_id: VEDAWEB
+  title: Rigveda - VedaWeb Version - Book 05
+  url: https://raw.githubusercontent.com/VedaWebProject/vedaweb-data/d3eb8af7324338161520d2d35eae8f7e985a19a5/rigveda/TEI/rv_book_05.tei
+  work_id: VG:WORK:RV:SAK
+- artifact_id: VEDAWEB.RV.BOOK06.TEI.D3EB8AF
+  checksum_sha256: 03e16cb1b8f7e06fac982b7902a860590620fb275bc71b05278d89220aaf91d9
+  edition_title: Rigveda Edition VedaWeb 2020
+  file_size_bytes: 16764669
+  filename: rv_book_06.tei
+  format: TEI_XML
+  git_blob_sha: f40109953363caf682676405c3b4e87642f71f98
+  notes: Mixed-rights container; use per-version rights in text_versions.yaml.
+  parent_artifact_id: VEDAWEB.RV.CORPUS.TEI.D3EB8AF
+  provenance_notes: Mandala 6; 75 hymns and 765 stanzas, source-derived.
+  repository_commit_sha: d3eb8af7324338161520d2d35eae8f7e985a19a5
+  repository_path: rigveda/TEI/rv_book_06.tei
+  repository_url: https://github.com/VedaWebProject/vedaweb-data
+  retrieval_date: 2026-09-04
+  rights_status: UNKNOWN
+  source_id: VEDAWEB
+  title: Rigveda - VedaWeb Version - Book 06
+  url: https://raw.githubusercontent.com/VedaWebProject/vedaweb-data/d3eb8af7324338161520d2d35eae8f7e985a19a5/rigveda/TEI/rv_book_06.tei
+  work_id: VG:WORK:RV:SAK
+- artifact_id: VEDAWEB.RV.BOOK07.TEI.D3EB8AF
+  checksum_sha256: b182a5b4752f5aa2c02ae07828c9810015a1f30d12f7ffce7687051b36677fce
+  edition_title: Rigveda Edition VedaWeb 2020
+  file_size_bytes: 18936506
+  filename: rv_book_07.tei
+  format: TEI_XML
+  git_blob_sha: de9b0a3369367399d45330cc59d29bc3758715af
+  notes: Mixed-rights container; use per-version rights in text_versions.yaml.
+  parent_artifact_id: VEDAWEB.RV.CORPUS.TEI.D3EB8AF
+  provenance_notes: Mandala 7; 104 hymns and 841 stanzas, source-derived.
+  repository_commit_sha: d3eb8af7324338161520d2d35eae8f7e985a19a5
+  repository_path: rigveda/TEI/rv_book_07.tei
+  repository_url: https://github.com/VedaWebProject/vedaweb-data
+  retrieval_date: 2026-09-04
+  rights_status: UNKNOWN
+  source_id: VEDAWEB
+  title: Rigveda - VedaWeb Version - Book 07
+  url: https://raw.githubusercontent.com/VedaWebProject/vedaweb-data/d3eb8af7324338161520d2d35eae8f7e985a19a5/rigveda/TEI/rv_book_07.tei
+  work_id: VG:WORK:RV:SAK
+- artifact_id: VEDAWEB.RV.BOOK08.TEI.D3EB8AF
+  checksum_sha256: b03b440347e7a41e1821eeff7f342ce6f7127542274e565101586a31b7f782ec
+  edition_title: Rigveda Edition VedaWeb 2020
+  file_size_bytes: 30069055
+  filename: rv_book_08.tei
+  format: TEI_XML
+  git_blob_sha: 8576c3fb0d6557b326b69e87dc2ce30b3edbec6e
+  notes: Mixed-rights container; use per-version rights in text_versions.yaml.
+  parent_artifact_id: VEDAWEB.RV.CORPUS.TEI.D3EB8AF
+  provenance_notes: Mandala 8; 103 hymns and 1,716 stanzas, source-derived.
+  repository_commit_sha: d3eb8af7324338161520d2d35eae8f7e985a19a5
+  repository_path: rigveda/TEI/rv_book_08.tei
+  repository_url: https://github.com/VedaWebProject/vedaweb-data
+  retrieval_date: 2026-09-04
+  rights_status: UNKNOWN
+  source_id: VEDAWEB
+  title: Rigveda - VedaWeb Version - Book 08
+  url: https://raw.githubusercontent.com/VedaWebProject/vedaweb-data/d3eb8af7324338161520d2d35eae8f7e985a19a5/rigveda/TEI/rv_book_08.tei
+  work_id: VG:WORK:RV:SAK
+- artifact_id: VEDAWEB.RV.BOOK09.TEI.D3EB8AF
+  checksum_sha256: 83b24f18270de4e31a6fe981dcf7eac6cc3a1d6a8f0bf990e5c1dfbab7185917
+  edition_title: Rigveda Edition VedaWeb 2020
+  file_size_bytes: 20038585
+  filename: rv_book_09.tei
+  format: TEI_XML
+  git_blob_sha: fd6f5b9c8f8de79f49befc6cdba716eec5cc0caa
+  notes: Mixed-rights container; use per-version rights in text_versions.yaml.
+  parent_artifact_id: VEDAWEB.RV.CORPUS.TEI.D3EB8AF
+  provenance_notes: Mandala 9; 114 hymns and 1,108 stanzas, source-derived.
+  repository_commit_sha: d3eb8af7324338161520d2d35eae8f7e985a19a5
+  repository_path: rigveda/TEI/rv_book_09.tei
+  repository_url: https://github.com/VedaWebProject/vedaweb-data
+  retrieval_date: 2026-09-04
+  rights_status: UNKNOWN
+  source_id: VEDAWEB
+  title: Rigveda - VedaWeb Version - Book 09
+  url: https://raw.githubusercontent.com/VedaWebProject/vedaweb-data/d3eb8af7324338161520d2d35eae8f7e985a19a5/rigveda/TEI/rv_book_09.tei
+  work_id: VG:WORK:RV:SAK
+- artifact_id: VEDAWEB.RV.BOOK10.TEI.D3EB8AF
+  checksum_sha256: e2e4deebb0cb418fd6b10c48c08967353de2d5d70114042af93418c4e2907060
+  edition_title: Rigveda Edition VedaWeb 2020
+  file_size_bytes: 40017181
+  filename: rv_book_10.tei
+  format: TEI_XML
+  git_blob_sha: e929adba2c0e753899fcc1e700dddec299a6f0d2
+  notes: Mixed-rights container; use per-version rights in text_versions.yaml.
+  parent_artifact_id: VEDAWEB.RV.CORPUS.TEI.D3EB8AF
+  provenance_notes: Mandala 10; 191 hymns and 1,754 stanzas, source-derived.
+  repository_commit_sha: d3eb8af7324338161520d2d35eae8f7e985a19a5
+  repository_path: rigveda/TEI/rv_book_10.tei
+  repository_url: https://github.com/VedaWebProject/vedaweb-data
+  retrieval_date: 2026-09-04
+  rights_status: UNKNOWN
+  source_id: VEDAWEB
+  title: Rigveda - VedaWeb Version - Book 10
+  url: https://raw.githubusercontent.com/VedaWebProject/vedaweb-data/d3eb8af7324338161520d2d35eae8f7e985a19a5/rigveda/TEI/rv_book_10.tei
+  work_id: VG:WORK:RV:SAK
+- artifact_id: WSC2023.RV.ANUKRAMANI.M01
+  checksum_sha256: 37b7e312f0bce81ed895a6ad72929d918dcfbd25389effda61e3f32728c1c430
+  citation_system: hymn.verse within Mandala; Aufrecht/Sakala hymn numbering
+  edition_title: Digital Rig Vedic Index (Anukramani), WSC 2023
+  editors:
+  - A V S D S Mahesh (Mahesh Akavarapu)
+  - Arnab Bhattacharya
+  electronic_editors:
+  - A V S D S Mahesh (Mahesh Akavarapu)
+  - Arnab Bhattacharya
+  encoding: UTF-8
+  file_size_bytes: 14256
+  filename: Mandala_1.txt
+  format: PLAIN_TEXT
+  git_blob_sha: 3c565852ea10f5efdb81daf4130b45f4f0503046
+  language: sa
+  license_statement_verbatim: Apache License, Version 2.0 (repository-level LICENSE; no artifact-level
+    licence statement accompanies the Anukramani data files)
+  license_url: https://www.apache.org/licenses/LICENSE-2.0
+  notes: Metadata artifact, not a text artifact. Traditional-source assertion, not canonical entity resolution.
+  provenance_notes: 'Mandala 1; one row per Sukta, fields hymn.verses.seer.divinity.meter. Manual annotation
+    of the traditional Anukramani (Katyayana''s Sarvanukramani tradition) into a machine-readable index;
+    verse-scoped entries are given in parentheses. Gold data only: the repository''s classifier models
+    and dcs_w2v.vec word vectors are deliberately not ingested.'
+  publication_date: '2023'
+  recension: Shakala
+  repository_commit_sha: 05b5987d6d8d6ec7228926eb68d6a21117c9b1f2
+  repository_path: Anukramani/Mandala_1.txt
+  repository_url: https://github.com/mahesh-ak/WSC2023
+  retrieval_date: '2026-09-04'
+  rights_status: APACHE_2_0
+  source_edition: Katyayana's Sarvanukramani tradition, as digitized by the authors
+  source_id: WSC2023
+  title: Digital Rig Vedic Anukramani - Mandala 1
+  url: https://raw.githubusercontent.com/mahesh-ak/WSC2023/05b5987d6d8d6ec7228926eb68d6a21117c9b1f2/Anukramani/Mandala_1.txt
+  work_id: VG:WORK:RV:SAK
+- artifact_id: WSC2023.RV.ANUKRAMANI.M02
+  checksum_sha256: bbbbfc91d7b018cff9854e9d78deca9dacf15050b71f4324ed629ce77e7ed837
+  citation_system: hymn.verse within Mandala; Aufrecht/Sakala hymn numbering
+  edition_title: Digital Rig Vedic Index (Anukramani), WSC 2023
+  editors:
+  - A V S D S Mahesh (Mahesh Akavarapu)
+  - Arnab Bhattacharya
+  electronic_editors:
+  - A V S D S Mahesh (Mahesh Akavarapu)
+  - Arnab Bhattacharya
+  encoding: UTF-8
+  file_size_bytes: 3274
+  filename: Mandala_2.txt
+  format: PLAIN_TEXT
+  git_blob_sha: 558de64b0c93cd4d4ab0a6bf50363f014b056d7d
+  language: sa
+  license_statement_verbatim: Apache License, Version 2.0 (repository-level LICENSE; no artifact-level
+    licence statement accompanies the Anukramani data files)
+  license_url: https://www.apache.org/licenses/LICENSE-2.0
+  notes: Metadata artifact, not a text artifact. Traditional-source assertion, not canonical entity resolution.
+  provenance_notes: 'Mandala 2; one row per Sukta, fields hymn.verses.seer.divinity.meter. Manual annotation
+    of the traditional Anukramani (Katyayana''s Sarvanukramani tradition) into a machine-readable index;
+    verse-scoped entries are given in parentheses. Gold data only: the repository''s classifier models
+    and dcs_w2v.vec word vectors are deliberately not ingested.'
+  publication_date: '2023'
+  recension: Shakala
+  repository_commit_sha: 05b5987d6d8d6ec7228926eb68d6a21117c9b1f2
+  repository_path: Anukramani/Mandala_2.txt
+  repository_url: https://github.com/mahesh-ak/WSC2023
+  retrieval_date: '2026-09-04'
+  rights_status: APACHE_2_0
+  source_edition: Katyayana's Sarvanukramani tradition, as digitized by the authors
+  source_id: WSC2023
+  title: Digital Rig Vedic Anukramani - Mandala 2
+  url: https://raw.githubusercontent.com/mahesh-ak/WSC2023/05b5987d6d8d6ec7228926eb68d6a21117c9b1f2/Anukramani/Mandala_2.txt
+  work_id: VG:WORK:RV:SAK
+- artifact_id: WSC2023.RV.ANUKRAMANI.M03
+  checksum_sha256: 24da5ff8d89d8dfe35695003919089d54d74df33e1a2f806d25768121f4dcbf7
+  citation_system: hymn.verse within Mandala; Aufrecht/Sakala hymn numbering
+  edition_title: Digital Rig Vedic Index (Anukramani), WSC 2023
+  editors:
+  - A V S D S Mahesh (Mahesh Akavarapu)
+  - Arnab Bhattacharya
+  electronic_editors:
+  - A V S D S Mahesh (Mahesh Akavarapu)
+  - Arnab Bhattacharya
+  encoding: UTF-8
+  file_size_bytes: 4303
+  filename: Mandala_3.txt
+  format: PLAIN_TEXT
+  git_blob_sha: 99c0c725c5acc5b4acea053343d0d81ab6bb6134
+  language: sa
+  license_statement_verbatim: Apache License, Version 2.0 (repository-level LICENSE; no artifact-level
+    licence statement accompanies the Anukramani data files)
+  license_url: https://www.apache.org/licenses/LICENSE-2.0
+  notes: Metadata artifact, not a text artifact. Traditional-source assertion, not canonical entity resolution.
+  provenance_notes: 'Mandala 3; one row per Sukta, fields hymn.verses.seer.divinity.meter. Manual annotation
+    of the traditional Anukramani (Katyayana''s Sarvanukramani tradition) into a machine-readable index;
+    verse-scoped entries are given in parentheses. Gold data only: the repository''s classifier models
+    and dcs_w2v.vec word vectors are deliberately not ingested.'
+  publication_date: '2023'
+  recension: Shakala
+  repository_commit_sha: 05b5987d6d8d6ec7228926eb68d6a21117c9b1f2
+  repository_path: Anukramani/Mandala_3.txt
+  repository_url: https://github.com/mahesh-ak/WSC2023
+  retrieval_date: '2026-09-04'
+  rights_status: APACHE_2_0
+  source_edition: Katyayana's Sarvanukramani tradition, as digitized by the authors
+  source_id: WSC2023
+  title: Digital Rig Vedic Anukramani - Mandala 3
+  url: https://raw.githubusercontent.com/mahesh-ak/WSC2023/05b5987d6d8d6ec7228926eb68d6a21117c9b1f2/Anukramani/Mandala_3.txt
+  work_id: VG:WORK:RV:SAK
+- artifact_id: WSC2023.RV.ANUKRAMANI.M04
+  checksum_sha256: ff60813efe8afd0eafa06a162b976831012499198acd99e8fc2b4dbe7ba9a84e
+  citation_system: hymn.verse within Mandala; Aufrecht/Sakala hymn numbering
+  edition_title: Digital Rig Vedic Index (Anukramani), WSC 2023
+  editors:
+  - A V S D S Mahesh (Mahesh Akavarapu)
+  - Arnab Bhattacharya
+  electronic_editors:
+  - A V S D S Mahesh (Mahesh Akavarapu)
+  - Arnab Bhattacharya
+  encoding: UTF-8
+  file_size_bytes: 3786
+  filename: Mandala_4.txt
+  format: PLAIN_TEXT
+  git_blob_sha: fb485c5095845845cbdeb7c318a9eaa1f6342764
+  language: sa
+  license_statement_verbatim: Apache License, Version 2.0 (repository-level LICENSE; no artifact-level
+    licence statement accompanies the Anukramani data files)
+  license_url: https://www.apache.org/licenses/LICENSE-2.0
+  notes: Metadata artifact, not a text artifact. Traditional-source assertion, not canonical entity resolution.
+  provenance_notes: 'Mandala 4; one row per Sukta, fields hymn.verses.seer.divinity.meter. Manual annotation
+    of the traditional Anukramani (Katyayana''s Sarvanukramani tradition) into a machine-readable index;
+    verse-scoped entries are given in parentheses. Gold data only: the repository''s classifier models
+    and dcs_w2v.vec word vectors are deliberately not ingested.'
+  publication_date: '2023'
+  recension: Shakala
+  repository_commit_sha: 05b5987d6d8d6ec7228926eb68d6a21117c9b1f2
+  repository_path: Anukramani/Mandala_4.txt
+  repository_url: https://github.com/mahesh-ak/WSC2023
+  retrieval_date: '2026-09-04'
+  rights_status: APACHE_2_0
+  source_edition: Katyayana's Sarvanukramani tradition, as digitized by the authors
+  source_id: WSC2023
+  title: Digital Rig Vedic Anukramani - Mandala 4
+  url: https://raw.githubusercontent.com/mahesh-ak/WSC2023/05b5987d6d8d6ec7228926eb68d6a21117c9b1f2/Anukramani/Mandala_4.txt
+  work_id: VG:WORK:RV:SAK
+- artifact_id: WSC2023.RV.ANUKRAMANI.M05
+  checksum_sha256: 3186e5592d57091e4fd156c1c6506aa784eb92deca35a3fc153b4ad566d05402
+  citation_system: hymn.verse within Mandala; Aufrecht/Sakala hymn numbering
+  edition_title: Digital Rig Vedic Index (Anukramani), WSC 2023
+  editors:
+  - A V S D S Mahesh (Mahesh Akavarapu)
+  - Arnab Bhattacharya
+  electronic_editors:
+  - A V S D S Mahesh (Mahesh Akavarapu)
+  - Arnab Bhattacharya
+  encoding: UTF-8
+  file_size_bytes: 6127
+  filename: Mandala_5.txt
+  format: PLAIN_TEXT
+  git_blob_sha: 21b6c9f7f9d6cb9c310b4b38611b2e8a8d4cc1c4
+  language: sa
+  license_statement_verbatim: Apache License, Version 2.0 (repository-level LICENSE; no artifact-level
+    licence statement accompanies the Anukramani data files)
+  license_url: https://www.apache.org/licenses/LICENSE-2.0
+  notes: Metadata artifact, not a text artifact. Traditional-source assertion, not canonical entity resolution.
+  provenance_notes: 'Mandala 5; one row per Sukta, fields hymn.verses.seer.divinity.meter. Manual annotation
+    of the traditional Anukramani (Katyayana''s Sarvanukramani tradition) into a machine-readable index;
+    verse-scoped entries are given in parentheses. Gold data only: the repository''s classifier models
+    and dcs_w2v.vec word vectors are deliberately not ingested.'
+  publication_date: '2023'
+  recension: Shakala
+  repository_commit_sha: 05b5987d6d8d6ec7228926eb68d6a21117c9b1f2
+  repository_path: Anukramani/Mandala_5.txt
+  repository_url: https://github.com/mahesh-ak/WSC2023
+  retrieval_date: '2026-09-04'
+  rights_status: APACHE_2_0
+  source_edition: Katyayana's Sarvanukramani tradition, as digitized by the authors
+  source_id: WSC2023
+  title: Digital Rig Vedic Anukramani - Mandala 5
+  url: https://raw.githubusercontent.com/mahesh-ak/WSC2023/05b5987d6d8d6ec7228926eb68d6a21117c9b1f2/Anukramani/Mandala_5.txt
+  work_id: VG:WORK:RV:SAK
+- artifact_id: WSC2023.RV.ANUKRAMANI.M06
+  checksum_sha256: 8284cff25182f78723d697d6241aa06b554d8c7bf2e423cc1566770843a50ccf
+  citation_system: hymn.verse within Mandala; Aufrecht/Sakala hymn numbering
+  edition_title: Digital Rig Vedic Index (Anukramani), WSC 2023
+  editors:
+  - A V S D S Mahesh (Mahesh Akavarapu)
+  - Arnab Bhattacharya
+  electronic_editors:
+  - A V S D S Mahesh (Mahesh Akavarapu)
+  - Arnab Bhattacharya
+  encoding: UTF-8
+  file_size_bytes: 5757
+  filename: Mandala_6.txt
+  format: PLAIN_TEXT
+  git_blob_sha: 687cb22d81adae3aef185a10c8f836d632d9e8da
+  language: sa
+  license_statement_verbatim: Apache License, Version 2.0 (repository-level LICENSE; no artifact-level
+    licence statement accompanies the Anukramani data files)
+  license_url: https://www.apache.org/licenses/LICENSE-2.0
+  notes: Metadata artifact, not a text artifact. Traditional-source assertion, not canonical entity resolution.
+  provenance_notes: 'Mandala 6; one row per Sukta, fields hymn.verses.seer.divinity.meter. Manual annotation
+    of the traditional Anukramani (Katyayana''s Sarvanukramani tradition) into a machine-readable index;
+    verse-scoped entries are given in parentheses. Gold data only: the repository''s classifier models
+    and dcs_w2v.vec word vectors are deliberately not ingested.'
+  publication_date: '2023'
+  recension: Shakala
+  repository_commit_sha: 05b5987d6d8d6ec7228926eb68d6a21117c9b1f2
+  repository_path: Anukramani/Mandala_6.txt
+  repository_url: https://github.com/mahesh-ak/WSC2023
+  retrieval_date: '2026-09-04'
+  rights_status: APACHE_2_0
+  source_edition: Katyayana's Sarvanukramani tradition, as digitized by the authors
+  source_id: WSC2023
+  title: Digital Rig Vedic Anukramani - Mandala 6
+  url: https://raw.githubusercontent.com/mahesh-ak/WSC2023/05b5987d6d8d6ec7228926eb68d6a21117c9b1f2/Anukramani/Mandala_6.txt
+  work_id: VG:WORK:RV:SAK
+- artifact_id: WSC2023.RV.ANUKRAMANI.M07
+  checksum_sha256: 8233fe4bee1cfdf0b08b5e50f3b0a88b6d6c0c38f06ec0609a1188c9154fd3f6
+  citation_system: hymn.verse within Mandala; Aufrecht/Sakala hymn numbering
+  edition_title: Digital Rig Vedic Index (Anukramani), WSC 2023
+  editors:
+  - A V S D S Mahesh (Mahesh Akavarapu)
+  - Arnab Bhattacharya
+  electronic_editors:
+  - A V S D S Mahesh (Mahesh Akavarapu)
+  - Arnab Bhattacharya
+  encoding: UTF-8
+  file_size_bytes: 7894
+  filename: Mandala_7.txt
+  format: PLAIN_TEXT
+  git_blob_sha: 985304b12574fdd4aa3f815fce674d603abfeb8e
+  language: sa
+  license_statement_verbatim: Apache License, Version 2.0 (repository-level LICENSE; no artifact-level
+    licence statement accompanies the Anukramani data files)
+  license_url: https://www.apache.org/licenses/LICENSE-2.0
+  notes: Metadata artifact, not a text artifact. Traditional-source assertion, not canonical entity resolution.
+  provenance_notes: 'Mandala 7; one row per Sukta, fields hymn.verses.seer.divinity.meter. Manual annotation
+    of the traditional Anukramani (Katyayana''s Sarvanukramani tradition) into a machine-readable index;
+    verse-scoped entries are given in parentheses. Gold data only: the repository''s classifier models
+    and dcs_w2v.vec word vectors are deliberately not ingested.'
+  publication_date: '2023'
+  recension: Shakala
+  repository_commit_sha: 05b5987d6d8d6ec7228926eb68d6a21117c9b1f2
+  repository_path: Anukramani/Mandala_7.txt
+  repository_url: https://github.com/mahesh-ak/WSC2023
+  retrieval_date: '2026-09-04'
+  rights_status: APACHE_2_0
+  source_edition: Katyayana's Sarvanukramani tradition, as digitized by the authors
+  source_id: WSC2023
+  title: Digital Rig Vedic Anukramani - Mandala 7
+  url: https://raw.githubusercontent.com/mahesh-ak/WSC2023/05b5987d6d8d6ec7228926eb68d6a21117c9b1f2/Anukramani/Mandala_7.txt
+  work_id: VG:WORK:RV:SAK
+- artifact_id: WSC2023.RV.ANUKRAMANI.M08
+  checksum_sha256: a2b61f79779ca479f6afd624320fb12e30ee594bd48d61e1783d43c155cd1d57
+  citation_system: hymn.verse within Mandala; Aufrecht/Sakala hymn numbering
+  edition_title: Digital Rig Vedic Index (Anukramani), WSC 2023
+  editors:
+  - A V S D S Mahesh (Mahesh Akavarapu)
+  - Arnab Bhattacharya
+  electronic_editors:
+  - A V S D S Mahesh (Mahesh Akavarapu)
+  - Arnab Bhattacharya
+  encoding: UTF-8
+  file_size_bytes: 8512
+  filename: Mandala_8.txt
+  format: PLAIN_TEXT
+  git_blob_sha: 1153141e03caf356c7a5fdb9c6cae4b2923f3312
+  language: sa
+  license_statement_verbatim: Apache License, Version 2.0 (repository-level LICENSE; no artifact-level
+    licence statement accompanies the Anukramani data files)
+  license_url: https://www.apache.org/licenses/LICENSE-2.0
+  notes: Metadata artifact, not a text artifact. Traditional-source assertion, not canonical entity resolution.
+  provenance_notes: 'Mandala 8; one row per Sukta, fields hymn.verses.seer.divinity.meter. Manual annotation
+    of the traditional Anukramani (Katyayana''s Sarvanukramani tradition) into a machine-readable index;
+    verse-scoped entries are given in parentheses. Gold data only: the repository''s classifier models
+    and dcs_w2v.vec word vectors are deliberately not ingested.'
+  publication_date: '2023'
+  recension: Shakala
+  repository_commit_sha: 05b5987d6d8d6ec7228926eb68d6a21117c9b1f2
+  repository_path: Anukramani/Mandala_8.txt
+  repository_url: https://github.com/mahesh-ak/WSC2023
+  retrieval_date: '2026-09-04'
+  rights_status: APACHE_2_0
+  source_edition: Katyayana's Sarvanukramani tradition, as digitized by the authors
+  source_id: WSC2023
+  title: Digital Rig Vedic Anukramani - Mandala 8
+  url: https://raw.githubusercontent.com/mahesh-ak/WSC2023/05b5987d6d8d6ec7228926eb68d6a21117c9b1f2/Anukramani/Mandala_8.txt
+  work_id: VG:WORK:RV:SAK
+- artifact_id: WSC2023.RV.ANUKRAMANI.M09
+  checksum_sha256: 8fd7d14b71085642aa1d2536e2c2d968b2c739cff1281536c51ac7eb9dc16a53
+  citation_system: hymn.verse within Mandala; Aufrecht/Sakala hymn numbering
+  edition_title: Digital Rig Vedic Index (Anukramani), WSC 2023
+  editors:
+  - A V S D S Mahesh (Mahesh Akavarapu)
+  - Arnab Bhattacharya
+  electronic_editors:
+  - A V S D S Mahesh (Mahesh Akavarapu)
+  - Arnab Bhattacharya
+  encoding: UTF-8
+  file_size_bytes: 8561
+  filename: Mandala_9.txt
+  format: PLAIN_TEXT
+  git_blob_sha: 747e2c6ffb00e05201730b685d829eb572ecc4b2
+  language: sa
+  license_statement_verbatim: Apache License, Version 2.0 (repository-level LICENSE; no artifact-level
+    licence statement accompanies the Anukramani data files)
+  license_url: https://www.apache.org/licenses/LICENSE-2.0
+  notes: Metadata artifact, not a text artifact. Traditional-source assertion, not canonical entity resolution.
+  provenance_notes: 'Mandala 9; one row per Sukta, fields hymn.verses.seer.divinity.meter. Manual annotation
+    of the traditional Anukramani (Katyayana''s Sarvanukramani tradition) into a machine-readable index;
+    verse-scoped entries are given in parentheses. Gold data only: the repository''s classifier models
+    and dcs_w2v.vec word vectors are deliberately not ingested.'
+  publication_date: '2023'
+  recension: Shakala
+  repository_commit_sha: 05b5987d6d8d6ec7228926eb68d6a21117c9b1f2
+  repository_path: Anukramani/Mandala_9.txt
+  repository_url: https://github.com/mahesh-ak/WSC2023
+  retrieval_date: '2026-09-04'
+  rights_status: APACHE_2_0
+  source_edition: Katyayana's Sarvanukramani tradition, as digitized by the authors
+  source_id: WSC2023
+  title: Digital Rig Vedic Anukramani - Mandala 9
+  url: https://raw.githubusercontent.com/mahesh-ak/WSC2023/05b5987d6d8d6ec7228926eb68d6a21117c9b1f2/Anukramani/Mandala_9.txt
+  work_id: VG:WORK:RV:SAK
+- artifact_id: WSC2023.RV.ANUKRAMANI.M10
+  checksum_sha256: ac402cc3a8535f7658fce115efe58d64b80fdb41624a982339451150150285cf
+  citation_system: hymn.verse within Mandala; Aufrecht/Sakala hymn numbering
+  edition_title: Digital Rig Vedic Index (Anukramani), WSC 2023
+  editors:
+  - A V S D S Mahesh (Mahesh Akavarapu)
+  - Arnab Bhattacharya
+  electronic_editors:
+  - A V S D S Mahesh (Mahesh Akavarapu)
+  - Arnab Bhattacharya
+  encoding: UTF-8
+  file_size_bytes: 14438
+  filename: Mandala_10.txt
+  format: PLAIN_TEXT
+  git_blob_sha: e1af933dffafb8ca6685d04ca84673396c9a3746
+  language: sa
+  license_statement_verbatim: Apache License, Version 2.0 (repository-level LICENSE; no artifact-level
+    licence statement accompanies the Anukramani data files)
+  license_url: https://www.apache.org/licenses/LICENSE-2.0
+  notes: Metadata artifact, not a text artifact. Traditional-source assertion, not canonical entity resolution.
+  provenance_notes: 'Mandala 10; one row per Sukta, fields hymn.verses.seer.divinity.meter. Manual annotation
+    of the traditional Anukramani (Katyayana''s Sarvanukramani tradition) into a machine-readable index;
+    verse-scoped entries are given in parentheses. Gold data only: the repository''s classifier models
+    and dcs_w2v.vec word vectors are deliberately not ingested.'
+  publication_date: '2023'
+  recension: Shakala
+  repository_commit_sha: 05b5987d6d8d6ec7228926eb68d6a21117c9b1f2
+  repository_path: Anukramani/Mandala_10.txt
+  repository_url: https://github.com/mahesh-ak/WSC2023
+  retrieval_date: '2026-09-04'
+  rights_status: APACHE_2_0
+  source_edition: Katyayana's Sarvanukramani tradition, as digitized by the authors
+  source_id: WSC2023
+  title: Digital Rig Vedic Anukramani - Mandala 10
+  url: https://raw.githubusercontent.com/mahesh-ak/WSC2023/05b5987d6d8d6ec7228926eb68d6a21117c9b1f2/Anukramani/Mandala_10.txt
+  work_id: VG:WORK:RV:SAK

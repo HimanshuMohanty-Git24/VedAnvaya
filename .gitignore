@@ -1,0 +1,28 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.env
+dist/
+build/
+*.egg-info/
+
+# Raw and generated corpus artifacts are reproducible and may carry restricted content.
+data/raw/**
+data/staged/**
+data/canonical/**
+data/derived/**
+data/qa/**
+!data/raw/.gitkeep
+!data/staged/.gitkeep
+!data/canonical/.gitkeep
+!data/derived/.gitkeep
+!data/qa/.gitkeep
+
+
+# Deterministic knowledge layer outputs are reproducible from pinned artifacts.
+data/knowledge/**

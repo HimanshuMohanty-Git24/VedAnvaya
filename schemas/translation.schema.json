@@ -1,0 +1,207 @@
+{
+  "$defs": {
+    "AlignmentLevel": {
+      "enum": [
+        "WORK",
+        "SECTION",
+        "HYMN",
+        "MANTRA"
+      ],
+      "title": "AlignmentLevel",
+      "type": "string"
+    },
+    "QualityStatus": {
+      "enum": [
+        "UNREVIEWED",
+        "MACHINE_ALIGNED",
+        "HUMAN_REVIEWED",
+        "VERIFIED"
+      ],
+      "title": "QualityStatus",
+      "type": "string"
+    },
+    "RightsStatus": {
+      "enum": [
+        "PUBLIC_DOMAIN",
+        "CC_BY",
+        "CC_BY_SA",
+        "CC_BY_NC",
+        "CC_BY_NC_SA",
+        "APACHE_2_0",
+        "PERMISSION_GRANTED",
+        "PERMISSION_REQUIRED",
+        "RESEARCH_ONLY",
+        "REFERENCE_ONLY",
+        "EXTERNAL_REFERENCE_ONLY",
+        "UNKNOWN"
+      ],
+      "title": "RightsStatus",
+      "type": "string"
+    },
+    "TranslationAlignment": {
+      "enum": [
+        "EXACT_MANTRA_ALIGNMENT",
+        "HYMN_LEVEL_ALIGNMENT",
+        "RANGE_ALIGNMENT",
+        "UNCERTAIN_ALIGNMENT"
+      ],
+      "title": "TranslationAlignment",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "alignment": {
+      "$ref": "#/$defs/TranslationAlignment",
+      "default": "UNCERTAIN_ALIGNMENT"
+    },
+    "alignment_level": {
+      "$ref": "#/$defs/AlignmentLevel"
+    },
+    "canonical_page_url": {
+      "anyOf": [
+        {
+          "format": "uri",
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Canonical Page Url"
+    },
+    "language": {
+      "title": "Language",
+      "type": "string"
+    },
+    "passage_id": {
+      "format": "uuid",
+      "title": "Passage Id",
+      "type": "string"
+    },
+    "quality_status": {
+      "$ref": "#/$defs/QualityStatus"
+    },
+    "rights_status": {
+      "$ref": "#/$defs/RightsStatus"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_artifact_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Source Artifact Id"
+    },
+    "source_id": {
+      "title": "Source Id",
+      "type": "string"
+    },
+    "source_page_id": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Source Page Id"
+    },
+    "source_page_title": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Source Page Title"
+    },
+    "source_revision_id": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Source Revision Id"
+    },
+    "source_revision_timestamp": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Source Revision Timestamp"
+    },
+    "text": {
+      "minLength": 1,
+      "title": "Text",
+      "type": "string"
+    },
+    "translation_id": {
+      "format": "uuid",
+      "title": "Translation Id",
+      "type": "string"
+    },
+    "translator": {
+      "title": "Translator",
+      "type": "string"
+    },
+    "work_edition": {
+      "title": "Work Edition",
+      "type": "string"
+    },
+    "year": {
+      "anyOf": [
+        {
+          "maximum": 3000,
+          "minimum": 1000,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Year"
+    }
+  },
+  "required": [
+    "translation_id",
+    "passage_id",
+    "language",
+    "translator",
+    "work_edition",
+    "text",
+    "source_id",
+    "rights_status",
+    "alignment_level",
+    "quality_status"
+  ],
+  "title": "Translation",
+  "type": "object"
+}

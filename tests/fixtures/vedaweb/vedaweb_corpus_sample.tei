@@ -1,0 +1,536 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<teiCorpus xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.tei-c.org/ns/1.0">
+    <teiHeader xml:id="vedaweb_header">
+        <fileDesc>
+            <titleStmt>
+                <title type="desc">VedaWeb - Rigveda</title>
+            </titleStmt>
+            <publicationStmt>
+                <publisher>
+                    <orgName xml:id="cceh">Cologne Center for eHumanities</orgName>
+                    <orgName>University of Cologne</orgName>
+                </publisher>
+                <pubPlace>Cologne</pubPlace>
+                <date>2020</date>
+                <date>2023</date>
+                <date>2024</date>
+                <availability>
+                    <p>Please see the licensing terms for each source</p>
+                </availability>
+            </publicationStmt>
+            <sourceDesc>
+                <listBibl>
+                    <biblFull xml:id="zurich">
+                        <fileDesc>
+                            <titleStmt>
+                                <title>Rigveda - University of Zurich</title>
+                                <respStmt>
+                                    <resp>Modified by</resp>
+                                    <persName>Jakob Halfmann<affiliation>
+                                            <orgName>
+                                                <orgName>Historical Comparative Linguistics -
+                                                  Department of Linguistics</orgName>
+                                                <orgName>University of Cologne</orgName>
+                                            </orgName>
+                                        </affiliation>
+                                    </persName>
+                                    <persName>Natalie Korobzow<affiliation>
+                                            <orgName>
+                                                <orgName>Historical Comparative Linguistics -
+                                                  Department of Linguistics</orgName>
+                                                <orgName>University of Cologne</orgName>
+                                            </orgName>
+                                        </affiliation>
+                                    </persName>
+                                    <persName>Antje Casaretto<affiliation>
+                                            <orgName>
+                                                <orgName>Sprachwissenschaftliches Seminar - Allgemeine
+                                                    Sprachwissenschaft</orgName>
+                                                <orgName>Albert-Ludwigs-Universität Freiburg</orgName>
+                                            </orgName>
+                                        </affiliation>
+                                    </persName>
+                                    <persName>Anna Fischer<affiliation>
+                                            <orgName>
+                                                <orgName>Digital Humanities</orgName>
+                                                <orgName>Bergische Universität Wuppertal</orgName>
+                                            </orgName>
+                                        </affiliation>
+                                    </persName>
+                                    <persName>Pascal Coenen<affiliation>
+                                            <orgName>
+                                                <orgName>Institut für Altertumswissenschaften -
+                                                  Vergleichende Sprachwissenschaft</orgName>
+                                                <orgName>Julius-Maximilians-Universität
+                                                  Würzburg</orgName>
+                                            </orgName>
+                                        </affiliation>
+                                    </persName>
+                                </respStmt>
+                            </titleStmt>
+                            <publicationStmt>
+                                <publisher>Cologne Center for e-Humanities
+                                    <abbr>CCeH</abbr></publisher>
+                                <pubPlace>Cologne, Germany</pubPlace>
+                                <date>2020</date>
+                                <date>2023</date>
+                                <date>2024</date>
+                                <availability>
+                                    <licence target="https://creativecommons.org/licenses/by/4.0/">Distributed under a Creative Commons Attribution 4.0
+                                        International License.</licence>
+                                </availability>
+                                <ptr target="https://github.com/VedaWebProject/vedaweb-data/tree/main/rigveda/versions/vedaweb_zurich.xlsx"/>
+                            </publicationStmt>
+                            <sourceDesc>
+                                <p>
+                                    <persName>Prof. Dr. Paul Widmer</persName> and <persName>Dr.
+                                        Salvatore Scarlata</persName> from the <orgName>
+                                        <orgName>Institut für Vergleichende
+                                            Sprachwissenschaft</orgName>
+                                        <orgName>Universität Zürich</orgName>
+                                    </orgName> provided the VedaWeb project a Filemaker file that
+                                    was later transformed in Cologne into a Excel file</p>
+                                <p>This data contained a version of the Rigveda by <persName>Prof.
+                                        Dr. A. Lubotsky<affiliation>
+                                            <orgName>
+                                                <orgName>Indo-European Linguistics</orgName>
+                                                <orgName>Leiden University</orgName>
+                                            </orgName>
+                                        </affiliation>
+                                    </persName> that had been morphosytactically annotated over the
+                                    course of more than 10 years at the University of Zurich</p>
+                                <p>It also contained for each token, if available, a reference to an
+                                    entry in Grassmann's dictionary for the Rigveda.</p>
+                            </sourceDesc>
+                        </fileDesc>
+                        <profileDesc>
+                            <abstract>
+                                <p>These are the modifications made by <persName>Jakob
+                                        Halfmann</persName> and <persName>Natalie
+                                        Korobzow</persName>&gt;to the data in 2020 
+                                    <ptr target="https://github.com/VedaWebProject/vedaweb-data/tree/main/rigveda/versions/zurich.xlsx"/>
+                                </p>
+                                <list>
+                                    <item n="1">Disambiguation of the relevant categories, if
+                                        unspecified in Zurich data, according to the Grassmann
+                                        dictionary (updates from 6th edition partially included up
+                                        to page 274): <list>
+                                            <item n="a">case, gender and number for nouns, pronouns
+                                                (columns G–I) </item>
+                                            <item n="b">number, person, mood, tense and voice for
+                                                verbs (columns I–M) up to line 109216</item>
+                                            <item n="c">case, gender, number, tense and voice for
+                                                participles (columns G–I, L–M) up to line 109216 </item>
+                                            <item n="d">absolutives are marked as Abs. in columns N
+                                                and V </item>
+                                        </list>
+                                    </item>
+                                    <item n="2">Inconsistencies between the original file from
+                                        Zurich and the Grassmann dictionary as well as internal
+                                        inconsistencies in Grassmann are noted in column AE,
+                                        whenever they were noticed. Zurich data was overwritten by
+                                        conflicting Grassmann data in columns G–M but retained
+                                        elsewhere. </item>
+                                    <item n="3">Verb classes according to Whitney (1885) and Jamison
+                                        (1983) for class 10 in column Y, differences in root
+                                        spelling between Whitney and Grassmann are noted in column
+                                        Z. All potential verb classes provided by Whitney are given
+                                        for every occurrence of the root. </item>
+                                    <item n="4">Local particles and verbal forms containing them are
+                                        marked as LP in column AF. </item>
+                                    <item n="5">Comparatives and superlatives are marked as such in
+                                        column X and desideratives as Des. in column Y. </item>
+                                </list>
+                                <p>These are the modifications made by <persName>Anna Fischer</persName> 
+                                    (data transformation, technical realisation) to the data:</p>
+                                <list>
+                                    <item n="6">New structure of data table for linguistic annotations with new column titles: 
+                                        <item n="a">A - "VERS_NR": renamed column (from "belege::stelleMMSSSRR")</item>
+                    					<item n="b">B - "PADA_NR": renamed column (from "belege::pada")</item>
+                    					<item n="c">C - "PADA_TEXT_LUBOTSKY": renamed column (from "belege::lubotskypada")</item>
+                    					<item n="d">D - "TOKEN_NR_VERS": renamed column (from "belege::wortnummer rc")</item>
+                    					<item n="e">E - "TOKEN_NR_PADA": renamed column (from "belege::wortnummer pada")</item>
+                    					<item n="f">F - "FORM": renamed column (from "belege::form")</item>
+                    					<item n="g">G - "KASUS": renamed column (from "belege::kasus")</item>
+                    					<item n="h">H - "GENUS": renamed column (from "belege::genus")</item>
+                    					<item n="i">I - "NUMERUS": renamed column (from "belege::numerus")</item>
+                    					<item n="j">J - "PERSON": renamed column (from "belege::person")</item>
+                    					<item n="k">K - "TEMPUS": moved and renamed column (from L "belege::tempus")</item>
+                    					<item n="l">L - "PRAESENSKLASSE": created new column for present stem class for each form</item>
+                    					<item n="m">M - "LEMMA_PRAESENSKLASSEN": created column for present stem classes of respective lemma: Moved and renamed column (from Y "formen::zusätzliche merkmale verb"), moved values "Abs." and "Inf." to column P "INFINIT", moved values "Prek." and "si-Ipv." to column N "MOOD", moved value "Des." to column Q "ABGELEITETE_KONJUGATION": moved value "se-Form" to column W "WEITERE_WERTE"</item>
+                    					<item n="n">N - "MODUS": moved and renamed column (from K "belege::modus")</item>
+                    					<item n="o">O - "DIATHESE": moved and renamed column (from M "belege::diathese")</item>
+                    					<item n="p">P - "INFINIT": created new column for infinite forms "Abs.", "Inf.", "Ptz.", "ta-Ptz.", "na-Ptz."</item>
+                    					<item n="q">Q - "ABGELEITETE_KONJUGATION": created new column for secondary conjugation "Des.", "Int.", "Kaus."</item>
+                    					<item n="r">R - "GRADUS": created new column for degree: "Comp.", "Sup."</item>
+                    					<item n="s">S - "LOKALPARTIKEL": moved and renamed column (from AF "LP")</item>
+                    					<item n="t">T - "LEMMA_ZÜRICH": moved and renamed column (from AA "lemmata klassisch::lemma")</item>
+                    					<item n="u">U - "LEMMA_ZÜRICH_LEMMATYP": moved and renamed column (from AB "lemmata klassisch::lemmatyp")</item>
+                                        <item n="v"> V - "LEMMA_ZÜRICH_BEDEUTUNG": moved and renamed column (from AC "lemmata klassisch::bedeutung")</item>
+                    					<item n="w">W - "WEITERE_WERTE": created new column for all miscellaneous values: e.g. "Hyperchar.", "n-haltig", "se-Form"</item>
+                    					<item n="x">X - "KOMMENTAR": created new column merging former columns Z "formen::HELPformbestimmung", AD "lemmata klassisch::HELPbedeutung" and AE "anmerkungen abweichungen"</item>
+                                    </item>
+                                    <item n="7">Columns that were removed due to redundant information: 
+                                         <item n="a">"formen::zusätzliche merkmale nomen": values "superlative" And "comparative" were renamed "sup." and "comp." and moved to new column R "GRADUS", all other values were moved to new column for miscellaneous W "WEITERE_WERTE"</item>
+                    					<item n="b">"belege::belegbestimmung summe simpel": values "Ptz.", "ta-Ptz." and "na-Ptz." were moved to new new column P "INFINIT"</item>
+                    					<item n="c">"belege::kasus bestof"</item>
+                    					<item n="d">"belege::genus bestof"</item>
+                    					<item n="e">"belege::numerus bestof"</item>
+                    					<item n="f">"belege::person bestof"</item>
+                    					<item n="g">"belege::modus bestof"</item>
+                    					<item n="h">"belege::tempus bestof"</item>
+                    					<item n="i">"belege::diathese bestof"</item>
+                    					<item n="j">"belege::belegbestimmung bestof summe sophistiziert"</item>
+                                    </item>
+
+                                </list>
+                                <p>These are the revisions and additions made by <persName>Antje Casaretto</persName> to the data in 2023</p>
+                                <list>
+                                    <item n="7">Column F-T: revision and correction (wherever necessary) of all annotations (books 1-7)</item>
+                                    <item n="8">Column G,H,I: disambiguation of case forms, reg. pronouns and nominal forms, if unspecified in Zurich data (books 1-7)</item>
+                                    <item n="9">Column L: disambiguation of present stem classes (book 7 and book 1 up to line 21050 vers 01.125.01)</item>
+                                    <item n="10">Column M: disambiguation of denominal verbs from primary verbs of the 10th class (books 1-10)</item>
+                                    <item n="11">Column N: disambiguation of precative and optative forms wherever possible (books 1-7)</item>
+                                    <item n="12">Column Q: new annotations for "Int." (intensives) and "Kaus." (causatives) (books 1-7)</item>
+                                </list>
+                                <p>These are the revisions and additions made by <persName>Antje Casaretto</persName> to the data in 2024 with processual and computational support by <persName>Anna Fischer</persName></p>
+                                <list>
+                                    <item n="13">Column F-T: revision and correction (wherever necessary) of all annotations (books 8-10)</item>
+                                    <item n="14">Column G,H,I: disambiguation of case and gender forms in nominal and pronominal forms, if unspecified in Zurich data (books 8-10)</item>
+                                    <item n="15">Column L, M: disambiguation of present stem classes (books 1-10)</item>
+                                    <item n="17">Column N: disambiguation of precative and optative forms wherever possible (books 8-10)</item>
+                                    <item n="18">Column P: new annotations for "Gdv." (gerundives)</item>
+                                    <item n="19">Column Q: new annotations for "Den." (denominatives) (books 1-10) and further annotations of "Kaus." (causatives) and "Int." (intensives) (books 8-10)</item>
+                                    <item n="20">Column T: revision of lemmatization (books 1-10)</item>
+                                    <item n="21">Column V: update of meanings according to revised lemmatization; minimal revision</item>
+                                    <item n="22">Column W: revised annotation of ending -se (“se-Form”) (books 1-10); no systematic revision</item>
+                                    <item n="23">Column X: no systematic revision</item>
+                                    <item n="24">Column A-U: general revision or formal inconsistencies and typing errors (book 1-10)</item>
+                                </list>
+                                <p>These are the revisions and additions made by <persName>Natalie Korobzov</persName> and <persName>Pascal Coenen</persName>to the data in 2024 with processual and computational support by <persName>Anna Fischer</persName></p>
+                                    <item n="25">Y: "LEMMA_GRASSMANN_ID": new column for references to Grassmann dictionary and revision of Grassmann references (books 1-10)</item>
+                            </abstract>
+                        </profileDesc>
+                    </biblFull>
+
+                    <biblFull xml:id="aufrecht">
+                        <fileDesc>
+                            <titleStmt>
+                                <title>Ṛgveda-Saṃhitā</title>
+                                <respStmt>
+                                    <resp>Modified by</resp>
+                                    <persName>Dr. Dieter Gunkel<affiliation>
+                                            <orgName>
+                                                <orgName>Historical Linguistics - Department of
+                                                  Classical Studies</orgName>
+                                                <orgName>University of Richmond</orgName>
+                                            </orgName>
+                                        </affiliation>
+                                    </persName>
+                                    <persName>Prof. Dr. Kevin M. Ryan<affiliation>
+                                            <orgName>
+                                                <orgName>Department of Linguistics</orgName>
+                                                <orgName>Harvard University</orgName>
+                                            </orgName>
+                                        </affiliation>
+                                    </persName>
+                                </respStmt>
+                            </titleStmt>
+                            <publicationStmt>
+                                <publisher>Cologne Center for e-Humanities
+                                    <abbr>CCeH</abbr></publisher>
+                                <pubPlace>Cologne, Germany</pubPlace>
+                                <date>2020</date>
+                                <date>2023</date>
+                                <availability>
+                                    <licence target="https://creativecommons.org/licenses/by-nc-sa/4.0/">Distributed under a Creative Commons
+                                        Attribution-NonCommercial-ShareAlike 4.0 International
+                                        License.</licence>
+                                </availability>
+                                <ptr target="https://github.com/VedaWebProject/vedaweb-data/tree/main/rigveda/versions/aufrecht.csv"/>
+                            </publicationStmt>
+                            <sourceDesc>
+                                <biblFull xml:id="sa_Rgveda-edAufrecht">
+                                    <titleStmt>
+                                        <title>Ṛgveda-Saṃhitā</title>
+                                        <author/>
+                                        <respStmt>
+                                            <resp>data entry</resp>
+                                            <name>Barend A. Van Nooten</name>
+                                            <name>Gary B. Holland</name>
+                                        </respStmt>
+                                        <respStmt>
+                                            <resp>conversion and revision</resp>
+                                            <name>Detlef Eichler</name>
+                                        </respStmt>
+                                        <respStmt>
+                                            <resp>contribution to GRETIL</resp>
+                                            <name>Detlef Eichler</name>
+                                        </respStmt>
+                                        <respStmt>
+                                            <resp>initial normalization and conversion to legacy
+                                                GRETIL formats</resp>
+                                            <name>Reinhold Grünendahl</name>
+                                        </respStmt>
+                                        <respStmt>
+                                            <resp>normalization and conversion to TEI-conformant
+                                                markup</resp>
+                                            <name>Maximilian Mehner</name>
+                                        </respStmt>
+                                    </titleStmt>
+                                    <publicationStmt>
+                                        <publisher>Göttingen Register of Electronic Texts in Indian
+                                            Languages (GRETIL), SUB Göttingen</publisher>
+                                        <availability>
+                                            <p>This e-text was provided to GRETIL in good faith that
+                                                no copyright rights have been infringed. If anyone
+                                                wishes to assert copyright over this file, please
+                                                contact the GRETIL management at
+                                                  <email>gretil(at)sub(dot)uni-goettingen(dot)de</email>.
+                                                The file will be immediately removed pending
+                                                resolution of the claim.</p>
+
+                                            <licence target="https://creativecommons.org/licenses/by-nc-sa/4.0/">Distributed under a Creative Commons
+                                                Attribution-NonCommercial-ShareAlike 4.0
+                                                International License.</licence>
+                                        </availability>
+                                        <date when-iso="2019-10-03"/>
+                                        <date>2023</date>
+                                        <ptr target="http://gretil.sub.uni-goettingen.de/gretil/corpustei/sa_Rgveda-edAufrecht.xml"/>
+                                    </publicationStmt>
+                                </biblFull>
+                            </sourceDesc>
+                        </fileDesc>
+                        <profileDesc>
+                            <langUsage>
+                                <language ident="san">Sanskrit</language>
+                            </langUsage>
+                        </profileDesc>
+                    </biblFull>
+
+
+                    <biblFull xml:id="padapatha">
+                        <fileDesc>
+                            <titleStmt>
+                                <title>Ṛgvedasaṃhitā, Padapāṭha</title>
+                                <respStmt>
+                                    <resp>Modified by</resp>
+                                    <persName>Dr. Dieter Gunkel<affiliation>
+                                            <orgName>
+                                                <orgName>Historical Linguistics - Department of
+                                                  Classical Studies</orgName>
+                                                <orgName>University of Richmond</orgName>
+                                            </orgName>
+                                        </affiliation>
+                                    </persName>
+                                    <persName>Prof. Dr. Kevin M. Ryan<affiliation>
+                                            <orgName>
+                                                <orgName>Department of Linguistics</orgName>
+                                                <orgName>Harvard University</orgName>
+                                            </orgName>
+                                        </affiliation>
+                                    </persName>
+                                </respStmt>
+                            </titleStmt>
+                            <publicationStmt>
+                                <publisher>Cologne Center for e-Humanities
+                                    <abbr>CCeH</abbr></publisher>
+                                <pubPlace>Cologne, Germany</pubPlace>
+                                <date>2020</date>
+                                <availability>
+                                    <licence target="https://creativecommons.org/licenses/by-nc-sa/4.0/">Distributed under a Creative Commons
+                                        Attribution-NonCommercial-ShareAlike 4.0 International
+                                        License.</licence>
+                                </availability>
+                                <ptr target="https://github.com/VedaWebProject/vedaweb-data/tree/main/rigveda/versions/padapatha.csv"/>
+                            </publicationStmt>
+                            <sourceDesc>
+                                <biblFull xml:id="sa_RgvedasaMhitApadapATha">
+                                    <titleStmt>
+                                        <title>Ṛgvedasaṃhitā, Padapāṭha</title>
+                                        <author/>
+                                        <respStmt>
+                                            <resp>data entry</resp>
+                                            <name>members of the Sansknet Project</name>
+                                        </respStmt>
+                                        <respStmt>
+                                            <resp>contribution to GRETIL</resp>
+                                            <name>members of the Sansknet Project</name>
+                                        </respStmt>
+                                        <respStmt>
+                                            <resp>initial normalization and conversion to legacy
+                                                GRETIL formats</resp>
+                                            <name>Reinhold Grünendahl</name>
+                                        </respStmt>
+                                        <respStmt>
+                                            <resp>normalization and conversion to TEI-conformant
+                                                markup</resp>
+                                            <name>Maximilian Mehner</name>
+                                        </respStmt>
+                                    </titleStmt>
+                                    <publicationStmt>
+                                        <publisher>Göttingen Register of Electronic Texts in Indian
+                                            Languages (GRETIL), SUB Göttingen</publisher>
+                                        <availability>
+                                            <p>This e-text was provided to GRETIL in good faith that
+                                                no copyright rights have been infringed. If anyone
+                                                wishes to assert copyright over this file, please
+                                                contact the GRETIL management at
+                                                  <email>gretil(at)sub(dot)uni-goettingen(dot)de</email>.
+                                                The file will be immediately removed pending
+                                                resolution of the claim.</p>
+                                            <licence target="https://creativecommons.org/licenses/by-nc-sa/4.0/">Distributed under a Creative Commons
+                                                Attribution-NonCommercial-ShareAlike 4.0
+                                                International License.</licence>
+                                        </availability>
+                                        <date when-iso="2020-07-31"/>
+                                        <ptr target="http://gretil.sub.uni-goettingen.de/gretil/corpustei/sa_RgvedasaMhitApadapATha.xml"/>
+                                    </publicationStmt>
+                                </biblFull>
+                            </sourceDesc>
+                        </fileDesc>
+                        <profileDesc>
+                            <langUsage>
+                                <language ident="san">Sanskrit</language>
+                            </langUsage>
+                        </profileDesc>
+                    </biblFull>
+
+                    <biblFull xml:id="vnh">
+                        <fileDesc>
+                            <titleStmt>
+                                <title>The Rigveda - Metrically Restored Text</title>
+                                <respStmt>
+                                    <resp>Modified by</resp>
+                                    <persName>Dr. Dieter Gunkel<affiliation>
+                                            <orgName>
+                                                <orgName>Historical Linguistics - Department of
+                                                  Classical Studies</orgName>
+                                                <orgName>University of Richmond</orgName>
+                                            </orgName>
+                                        </affiliation>
+                                    </persName>
+                                    <persName>Prof. Dr. Kevin M. Ryan<affiliation>
+                                            <orgName>
+                                                <orgName>Department of Linguistics</orgName>
+                                                <orgName>Harvard University</orgName>
+                                            </orgName>
+                                        </affiliation>
+                                    </persName>
+                                </respStmt>
+                            </titleStmt>
+                            <publicationStmt>
+                                <publisher>Cologne Center for e-Humanities
+                                    <abbr>CCeH</abbr></publisher>
+                                <pubPlace>Cologne, Germany</pubPlace>
+                                <date>2020</date>
+                                <availability>
+                                    <licence target="https://creativecommons.org/licenses/by-nc-sa/4.0/">Distributed under a Creative Commons
+                                        Attribution-NonCommercial-ShareAlike 4.0 International
+                                        License.</licence>
+                                </availability>
+                                <ptr target="https://github.com/VedaWebProject/vedaweb-data/tree/main/rigveda/versions/vnh.csv"/>
+                            </publicationStmt>
+                            <sourceDesc>
+                                <biblFull xml:id="vnh_texas">
+                                    <titleStmt>
+                                        <title>The Rigveda - Metrically Restored Text</title>
+                                        <author/>
+                                        <respStmt>
+                                            <resp>Editors:</resp>
+                                            <name>Karen Thomson</name>
+                                            <name>Jonathan Slocum</name>
+                                        </respStmt>
+                                    </titleStmt>
+                                    <publicationStmt>
+                                        <publisher>The University of Texas at Austin - Linguistics
+                                            Research Center</publisher>
+                                        <pubPlace>Texas, United States</pubPlace>
+                                        <availability>
+                                            <p>This online text of the Rigveda derives from the
+                                                highly important Rig Veda: a Metrically Restored
+                                                Text, by Barend A. van Nooten and Gary B. Holland,
+                                                published in 1994 by Harvard University Press; van
+                                                Nooten and Holland's edition, as the first attempt
+                                                to present the poems in their entirety in the poetic
+                                                form in which they were composed, constituted a
+                                                watershed in Rigvedic scholarship, but it has been
+                                                out of print for several years. The preface of the
+                                                printed book states (p. i) that the content was "in
+                                                part derived from an incomplete electronic version
+                                                of the Rig Veda produced at the University of Texas
+                                                in 1970." (N.B. The Linguistics Research Center
+                                                produced a complete electronic version of the text;
+                                                decades ago, a copy was donated to the Oxford Text
+                                                Archive.) Re: editing in this new online electronic
+                                                version, outlined below, or Rigvedic language issues
+                                                in general, contact Karen Thomson.</p>
+                                            <p>Our text here is based on the van Nooten and Holland
+                                                electronic version (itself derived from the much
+                                                earlier UT Linguistics Research Center electronic
+                                                text), which was issued on a 3.5" diskette together
+                                                with the printed book. A file on the diskette bore
+                                                the notice:</p>
+                                            <p>Copyright with the authors and Harvard Oriental
+                                                Series. The electronic text may be used for research
+                                                but not for commercial purposes.</p>
+                                            <p>Our non-commercial use here is for research by
+                                                ourselves, other scholars, and the public at large,
+                                                who may lack access to the out-of-print Harvard
+                                                edition and be unaware of the deficiencies of the
+                                                ancient saṃhitā text which formed the basis for
+                                                Theodor Aufrecht's nineteenth-century transliterated
+                                                edition. Aufrecht's unrestored text has continued to
+                                                be generally used, as, for example, by Alexander
+                                                Lubotsky in his 1997 concordance. </p>
+                                        </availability>
+                                        <ptr target="https://liberalarts.utexas.edu/lrc/rigveda/index.php"/>
+                                    </publicationStmt>
+                                </biblFull>
+                            </sourceDesc>
+                        </fileDesc>
+                        <profileDesc>
+                            <langUsage>
+                                <language ident="san">Sanskrit</language>
+                            </langUsage>
+                        </profileDesc>
+                    </biblFull>
+
+                    </listBibl>
+            </sourceDesc>
+            <revisionDesc>
+                <change when-iso="2023-07-05">complete revision of the following translations: elizarenkova.csv, geldner.csv, griffith.csv and renou.csv (by Natalie Korobzov)</change>
+                <change when-iso="2023-07-05">revision of special characters and missing quotation marks in all translations (by Natalie Korobzow and Anna Fischer)</change>
+                <change when-iso="2023-07-05">correction of iterative compounds in aufrecht.csv (by Anna Fischer)</change>
+                <change when-iso="2023-07-05">revised references to Grassmann’s dictionary for frequent lemmata - with frequency of 10 times or more in Rigveda (by Natalie Korobzow</change>
+                <change when-iso="2023-07-05">converted all versions and translations (except zurich data) from .json to tab separated .csv (by Anna Fischer) for simplifying future manual corrections</change>
+                <change when-iso="2023-07-07">moved source files and TEI files to new Github repository, updated all URLs pointing to source files (by Anna Fischer and Börge Kiss)</change>
+                <change when-iso="2024-10-16">revised references to Grassmann’s dictionary (by Natalie Korobzow, Pascal Coenen and Anna Fischer)</change>
+
+            </revisionDesc>
+        </fileDesc>
+
+
+    </teiHeader>
+    <text>
+        <body>
+            <p/>
+        </body>
+    </text>
+
+
+    <xi:include href="rv_book_01.tei"/>
+    <xi:include href="rv_book_02.tei"/>
+    <xi:include href="rv_book_03.tei"/>
+    <xi:include href="rv_book_04.tei"/>
+    <xi:include href="rv_book_05.tei"/>
+    <xi:include href="rv_book_06.tei"/>
+    <xi:include href="rv_book_07.tei"/>
+    <xi:include href="rv_book_08.tei"/>
+    <xi:include href="rv_book_09.tei"/>
+    <xi:include href="rv_book_10.tei"/>
+
+
+
+
+</teiCorpus>

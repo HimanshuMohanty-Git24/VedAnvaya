@@ -1,0 +1,202 @@
+{
+  "$defs": {
+    "MetadataPredicate": {
+      "enum": [
+        "HAS_RISHI",
+        "HAS_DEVATA",
+        "HAS_CHANDAS"
+      ],
+      "title": "MetadataPredicate",
+      "type": "string"
+    },
+    "QAStatus": {
+      "enum": [
+        "NOT_RUN",
+        "PASSED",
+        "FAILED",
+        "PASSED_WITH_WARNINGS"
+      ],
+      "title": "QAStatus",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Pins the exact corpus, artifacts, registries and policies a build used.",
+  "properties": {
+    "assertion_counts": {
+      "additionalProperties": {
+        "type": "integer"
+      },
+      "title": "Assertion Counts",
+      "type": "object"
+    },
+    "built_at": {
+      "format": "date-time",
+      "title": "Built At",
+      "type": "string"
+    },
+    "corpus_dataset_id": {
+      "title": "Corpus Dataset Id",
+      "type": "string"
+    },
+    "corpus_manifest_sha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Corpus Manifest Sha256",
+      "type": "string"
+    },
+    "corpus_passage_count": {
+      "minimum": 0,
+      "title": "Corpus Passage Count",
+      "type": "integer"
+    },
+    "corpus_version": {
+      "title": "Corpus Version",
+      "type": "string"
+    },
+    "dataset": {
+      "default": "VedaGraph Deterministic Knowledge Layer",
+      "title": "Dataset",
+      "type": "string"
+    },
+    "generated_files": {
+      "items": {
+        "additionalProperties": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ]
+        },
+        "type": "object"
+      },
+      "title": "Generated Files",
+      "type": "array"
+    },
+    "normalization_policy_version": {
+      "title": "Normalization Policy Version",
+      "type": "string"
+    },
+    "parser_version": {
+      "title": "Parser Version",
+      "type": "string"
+    },
+    "predicate_whitelist": {
+      "items": {
+        "$ref": "#/$defs/MetadataPredicate"
+      },
+      "title": "Predicate Whitelist",
+      "type": "array"
+    },
+    "qa_policy_version": {
+      "title": "Qa Policy Version",
+      "type": "string"
+    },
+    "qa_status": {
+      "$ref": "#/$defs/QAStatus"
+    },
+    "registry_hashes": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Registry Hashes",
+      "type": "object"
+    },
+    "resolution_policy_version": {
+      "title": "Resolution Policy Version",
+      "type": "string"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "snapshot_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Snapshot Ids",
+      "type": "array"
+    },
+    "software_version": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Software Version"
+    },
+    "source_artifact_hashes": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Source Artifact Hashes",
+      "type": "object"
+    },
+    "source_artifact_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Source Artifact Ids",
+      "type": "array"
+    },
+    "source_commit_sha": {
+      "pattern": "^[a-f0-9]{40}$",
+      "title": "Source Commit Sha",
+      "type": "string"
+    },
+    "source_id": {
+      "title": "Source Id",
+      "type": "string"
+    },
+    "source_repository_url": {
+      "format": "uri",
+      "minLength": 1,
+      "title": "Source Repository Url",
+      "type": "string"
+    },
+    "unresolved_counts": {
+      "additionalProperties": {
+        "type": "integer"
+      },
+      "title": "Unresolved Counts",
+      "type": "object"
+    },
+    "version": {
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "version",
+    "built_at",
+    "corpus_dataset_id",
+    "corpus_version",
+    "corpus_manifest_sha256",
+    "corpus_passage_count",
+    "source_id",
+    "source_repository_url",
+    "source_commit_sha",
+    "source_artifact_ids",
+    "source_artifact_hashes",
+    "snapshot_ids",
+    "registry_hashes",
+    "normalization_policy_version",
+    "resolution_policy_version",
+    "parser_version",
+    "qa_policy_version",
+    "predicate_whitelist",
+    "assertion_counts",
+    "unresolved_counts",
+    "qa_status",
+    "generated_files"
+  ],
+  "title": "KnowledgeManifest",
+  "type": "object"
+}

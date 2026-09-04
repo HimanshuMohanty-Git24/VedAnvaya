@@ -1,0 +1,62 @@
+# Stratified Rigveda Mandala 1 text-version comparison sample.
+#
+# Only IDs, snapshot hashes, and selection rationale are version-controlled here. The
+# comparison output and the corpus text itself are written under data/ and stay out of Git.
+#
+# Deliberately not "the first N mantras": the sample spans early, middle and late Mandala
+# positions, the shortest and the longest Suktas, hymns with simple and with heavily
+# qualified traditional metadata, and the passages that already exercise the corpus build.
+config_version: 1.0.0
+dataset_id: rv_m1_text_comparison
+work_id: VG:WORK:RV:SAK
+mandala: 1
+selected_suktas: [1, 2, 3, 12, 22, 32, 50, 85, 92, 99, 100, 154, 164, 170, 172, 179, 185, 191]
+sample_rationale:
+  "1": Early Mandala opening hymn; already in the corpus sample; 9 mantras.
+  "2": Early Mandala; short Vayu/Indra-Vayu/Mitra-Varuna hymn; 9 mantras.
+  "3": Early Mandala; 12 mantras; gayatri throughout.
+  "12": Early Mandala Agni hymn; 12 mantras.
+  "22": Early-middle; 21 mantras; VHP devata metadata is a clean per-mantra range list.
+  "32": Middle; 15 mantras; Indra-Vrtra narrative, triṣṭubh.
+  "50": Middle; 13 mantras; VHP metadata mixes a default devata with a parenthesised
+    exception list including a half-verse qualifier.
+  "85": Middle; 12 mantras; Marut hymn, accent-rich.
+  "92": Middle; 18 mantras; Usas hymn with a metre change inside the Sukta.
+  "99": Middle; the shortest Sukta in Mandala 1 at a single mantra.
+  "100": Middle; 19 mantras; long triṣṭubh Indra hymn.
+  "154": Late; 6 mantras; Visnu hymn.
+  "164": Late; 52 mantras; the longest and most complex Sukta in Mandala 1, with
+    sub-mantra devata assignments and multiple metres.
+  "170": Late; 5 mantras; short dialogue hymn.
+  "172": Late; 3 mantras; one of the shortest Suktas.
+  "179": Late; 6 mantras; dialogue hymn with unusual language.
+  "185": Late; 11 mantras; Dyava-Prthivi hymn with a refrain.
+  "191": Late; 16 mantras; closing Sukta of Mandala 1, with a metre change at 10-13.
+baseline_version_id: GRETIL.RV.AUFRECHT
+compared_version_ids:
+  - VEDAWEB.AUFRECHT
+  - VEDAWEB.EICHLER
+  - VEDAWEB.LUBOTSKY
+  - VEDAWEB.VNH
+  - VEDAWEB.ZURICH
+  - VEDAWEB.PADAPATHA
+# Comparing the two VedaWeb Latin layers against each other cancels out the shared
+# VedaWeb transcription conventions, so the residual is metrical restoration itself.
+additional_pairs:
+  - [VEDAWEB.AUFRECHT, VEDAWEB.VNH]
+text_selection_policy: ORIGINAL
+inputs:
+  - source_id: GRETIL
+    artifact_id: GRETIL.RV.AUFRECHT.TEI.2019
+    snapshot_path: data/raw/gretil/2026-09-04/14197d9c1dcced64900ef971d9f4dc5b46aa8750780f5599453c9739d6a29edd.xml
+    snapshot_id: GRETIL:14197d9c1dcced64900ef971d9f4dc5b46aa8750780f5599453c9739d6a29edd
+    snapshot_sha256: 14197d9c1dcced64900ef971d9f4dc5b46aa8750780f5599453c9739d6a29edd
+    parser_version: gretil-rigveda-tei-v2
+  - source_id: VEDAWEB
+    artifact_id: VEDAWEB.RV.BOOK01.TEI.D3EB8AF
+    snapshot_path: data/raw/vedaweb/2026-09-04/c5c18d89a415ea16917f0f63616ee9fff7e32c4828b67f1e7647d2d023bc984c.tei
+    snapshot_id: VEDAWEB:c5c18d89a415ea16917f0f63616ee9fff7e32c4828b67f1e7647d2d023bc984c
+    snapshot_sha256: c5c18d89a415ea16917f0f63616ee9fff7e32c4828b67f1e7647d2d023bc984c
+    parser_version: vedaweb-rigveda-tei-v1
+output_location: data/derived/rv_m1_text_comparison
+report_path: docs/reports/rv_m1_text_comparison_report.md

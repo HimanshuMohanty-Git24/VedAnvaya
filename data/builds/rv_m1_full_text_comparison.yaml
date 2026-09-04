@@ -1,0 +1,39 @@
+# Full Rigveda Mandala 1 text-version comparison: every Sukta, primary vs. the one
+# parallel version this build carries (GRETIL.RV.AUFRECHT vs VEDAWEB.AUFRECHT), which is
+# exactly the pair the PRIMARY_PARALLEL_TEXT_DIVERGENCE QA policy classifies per mantra.
+# Only IDs, snapshot hashes, and this rationale are version-controlled here. The
+# comparison output and the corpus text itself are written under data/ and stay out of Git.
+config_version: 1.0.0
+dataset_id: rv_m1_full_text_comparison
+work_id: VG:WORK:RV:SAK
+mandala: 1
+selected_suktas: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+  21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+  41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60,
+  61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80,
+  81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100,
+  101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120,
+  121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140,
+  141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160,
+  161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180,
+  181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191]
+baseline_version_id: GRETIL.RV.AUFRECHT
+compared_version_ids:
+  - VEDAWEB.AUFRECHT
+additional_pairs: []
+text_selection_policy: ORIGINAL
+inputs:
+  - source_id: GRETIL
+    artifact_id: GRETIL.RV.AUFRECHT.TEI.2019
+    snapshot_path: data/raw/gretil/2026-09-04/14197d9c1dcced64900ef971d9f4dc5b46aa8750780f5599453c9739d6a29edd.xml
+    snapshot_id: GRETIL:14197d9c1dcced64900ef971d9f4dc5b46aa8750780f5599453c9739d6a29edd
+    snapshot_sha256: 14197d9c1dcced64900ef971d9f4dc5b46aa8750780f5599453c9739d6a29edd
+    parser_version: gretil-rigveda-tei-v2
+  - source_id: VEDAWEB
+    artifact_id: VEDAWEB.RV.BOOK01.TEI.D3EB8AF
+    snapshot_path: data/raw/vedaweb/2026-09-04/c5c18d89a415ea16917f0f63616ee9fff7e32c4828b67f1e7647d2d023bc984c.tei
+    snapshot_id: VEDAWEB:c5c18d89a415ea16917f0f63616ee9fff7e32c4828b67f1e7647d2d023bc984c
+    snapshot_sha256: c5c18d89a415ea16917f0f63616ee9fff7e32c4828b67f1e7647d2d023bc984c
+    parser_version: vedaweb-rigveda-tei-v1
+output_location: data/derived/rv_m1_full_text_comparison
+report_path: docs/reports/rv_m1_full_text_comparison_report.md

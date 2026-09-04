@@ -1,0 +1,178 @@
+config_version: 1.0.0
+dataset_id: rv_mandala_1_sample_v2
+release_version: 0.2.0-sample.2
+work_id: VG:WORK:RV:SAK
+mandala: 1
+selected_suktas: [1, 22, 50, 164, 191]
+text_selection_policy: ORIGINAL
+# Which Sanskrit representation is canonical is a build decision, not a parser constant.
+# Passage identity is derived from the citation hierarchy alone, so changing these entries
+# cannot change a mantra UUID. See docs/decisions/ADR-008-primary-sanskrit-text.md.
+primary_sanskrit:
+  artifact: GRETIL.RV.AUFRECHT.TEI.2019
+  text_version: GRETIL.RV.AUFRECHT
+  role: PRIMARY_TEXT
+  selection_policy: ORIGINAL
+parallel_sanskrit:
+  - artifact: VEDAWEB.RV.BOOK01.TEI.D3EB8AF
+    text_version: VEDAWEB.AUFRECHT
+    role: PARALLEL_TEXT
+  - artifact: VEDAWEB.RV.BOOK01.TEI.D3EB8AF
+    text_version: VEDAWEB.EICHLER
+    role: PARALLEL_TEXT
+  - artifact: VEDAWEB.RV.BOOK01.TEI.D3EB8AF
+    text_version: VEDAWEB.VNH
+    role: METRICALLY_RESTORED
+  - artifact: VEDAWEB.RV.BOOK01.TEI.D3EB8AF
+    text_version: VEDAWEB.PADAPATHA
+    role: PADAPATHA
+  - artifact: VEDAWEB.RV.BOOK01.TEI.D3EB8AF
+    text_version: VEDAWEB.LUBOTSKY
+    role: COMPARISON_ONLY
+  - artifact: VEDAWEB.RV.BOOK01.TEI.D3EB8AF
+    text_version: VEDAWEB.ZURICH
+    role: LINGUISTIC_ANNOTATION
+translation_sources: [WIKISOURCE_GRIFFITH_RV]
+metadata_sources: [VHP]
+media_discovery_sources: [VHP]
+reconciliation_policy_version: rv-mandala-1-v1
+output_location: data/canonical/rv_mandala_1_sample_v2
+staging_location: data/staged/rv_mandala_1_sample_v2
+build_timestamp: 2026-09-04T00:00:00+05:30
+sources:
+  - source_id: GRETIL
+    role: sanskrit
+    scope: RV.1
+    source_artifact_id: GRETIL.RV.AUFRECHT.TEI.2019
+    snapshot_path: data/raw/gretil/2026-09-04/14197d9c1dcced64900ef971d9f4dc5b46aa8750780f5599453c9739d6a29edd.xml
+    snapshot_id: GRETIL:14197d9c1dcced64900ef971d9f4dc5b46aa8750780f5599453c9739d6a29edd
+    snapshot_sha256: 14197d9c1dcced64900ef971d9f4dc5b46aa8750780f5599453c9739d6a29edd
+    parser_version: gretil-rigveda-tei-v2
+  - source_id: VHP
+    role: discovery
+    scope: RV.1
+    source_artifact_id: VHP.RV.SHAKALA.MANDALA1.WEB
+    snapshot_path: data/raw/vhp/2026-09-04/3a4c8eae800f90e8dd86a48b46bbdbe1b6b2995eeaed67575dd21941a202c633.html
+    snapshot_id: VHP:3a4c8eae800f90e8dd86a48b46bbdbe1b6b2995eeaed67575dd21941a202c633
+    snapshot_sha256: 3a4c8eae800f90e8dd86a48b46bbdbe1b6b2995eeaed67575dd21941a202c633
+    parser_version: vhp-rigveda-v2
+  - source_id: VHP
+    role: metadata
+    scope: RV.1.1
+    source_artifact_id: VHP.RV.SHAKALA.MANDALA1.WEB
+    snapshot_path: data/raw/vhp/2026-09-04/3a4c8eae800f90e8dd86a48b46bbdbe1b6b2995eeaed67575dd21941a202c633.html
+    snapshot_id: VHP:3a4c8eae800f90e8dd86a48b46bbdbe1b6b2995eeaed67575dd21941a202c633
+    snapshot_sha256: 3a4c8eae800f90e8dd86a48b46bbdbe1b6b2995eeaed67575dd21941a202c633
+    parser_version: vhp-rigveda-v2
+  - source_id: VHP
+    role: metadata
+    scope: RV.1.22
+    source_artifact_id: VHP.RV.SHAKALA.MANDALA1.WEB
+    snapshot_path: data/raw/vhp/2026-09-04/943d5a5b3cdf87319f1b634cc49925e119c6ea5334fb6b1a73a1975cd0837937.html
+    snapshot_id: VHP:943d5a5b3cdf87319f1b634cc49925e119c6ea5334fb6b1a73a1975cd0837937
+    snapshot_sha256: 943d5a5b3cdf87319f1b634cc49925e119c6ea5334fb6b1a73a1975cd0837937
+    parser_version: vhp-rigveda-v2
+  - source_id: VHP
+    role: metadata
+    scope: RV.1.50
+    source_artifact_id: VHP.RV.SHAKALA.MANDALA1.WEB
+    snapshot_path: data/raw/vhp/2026-09-04/fb49e07090c27445149d9e915adef719c0f8a9e2d22c44fdf6d69cb7752567e2.html
+    snapshot_id: VHP:fb49e07090c27445149d9e915adef719c0f8a9e2d22c44fdf6d69cb7752567e2
+    snapshot_sha256: fb49e07090c27445149d9e915adef719c0f8a9e2d22c44fdf6d69cb7752567e2
+    parser_version: vhp-rigveda-v2
+  - source_id: VHP
+    role: metadata
+    scope: RV.1.164
+    source_artifact_id: VHP.RV.SHAKALA.MANDALA1.WEB
+    snapshot_path: data/raw/vhp/2026-09-04/5eee5aa6c4a162425e6afda8b6952ddc68a762a9245dc2cdf7d05b5382aaa8c2.html
+    snapshot_id: VHP:5eee5aa6c4a162425e6afda8b6952ddc68a762a9245dc2cdf7d05b5382aaa8c2
+    snapshot_sha256: 5eee5aa6c4a162425e6afda8b6952ddc68a762a9245dc2cdf7d05b5382aaa8c2
+    parser_version: vhp-rigveda-v2
+  - source_id: VHP
+    role: metadata
+    scope: RV.1.191
+    source_artifact_id: VHP.RV.SHAKALA.MANDALA1.WEB
+    snapshot_path: data/raw/vhp/2026-09-04/ea578e56195ea1b1acb7635338185ab089b474d4597b9a272d602c11459dbee9.html
+    snapshot_id: VHP:ea578e56195ea1b1acb7635338185ab089b474d4597b9a272d602c11459dbee9
+    snapshot_sha256: ea578e56195ea1b1acb7635338185ab089b474d4597b9a272d602c11459dbee9
+    parser_version: vhp-rigveda-v2
+  - source_id: WIKISOURCE_GRIFFITH_RV
+    role: translation
+    scope: RV.1.1
+    source_artifact_id: GRIFFITH.RV.1896.WIKISOURCE
+    snapshot_path: data/raw/wikisource_griffith_rv/2026-09-04/21ca0e2b39fb75421ea8038b13bc672d3e57cf2952b1883eb609c269a311cf57.php
+    snapshot_id: WIKISOURCE_GRIFFITH_RV:21ca0e2b39fb75421ea8038b13bc672d3e57cf2952b1883eb609c269a311cf57
+    snapshot_sha256: 21ca0e2b39fb75421ea8038b13bc672d3e57cf2952b1883eb609c269a311cf57
+    parser_version: wikisource-griffith-v2
+  - source_id: WIKISOURCE_GRIFFITH_RV
+    role: translation_revision
+    scope: RV.1.1
+    source_artifact_id: GRIFFITH.RV.1896.WIKISOURCE
+    snapshot_path: data/raw/wikisource_griffith_rv/2026-09-04/bab75f936eaf06e2a6d2c346ef4c405a71d12d168b7d58b7d0bb97ef1d5ddf3e.php
+    snapshot_id: WIKISOURCE_GRIFFITH_RV:bab75f936eaf06e2a6d2c346ef4c405a71d12d168b7d58b7d0bb97ef1d5ddf3e
+    snapshot_sha256: bab75f936eaf06e2a6d2c346ef4c405a71d12d168b7d58b7d0bb97ef1d5ddf3e
+    parser_version: mediawiki-revision-v1
+  - source_id: WIKISOURCE_GRIFFITH_RV
+    role: translation
+    scope: RV.1.22
+    source_artifact_id: GRIFFITH.RV.1896.WIKISOURCE
+    snapshot_path: data/raw/wikisource_griffith_rv/2026-09-04/154cd0d816f1141b61b3899825cd087e62f8a4dd1af75bcb28ffd4d31ead8bf1.php
+    snapshot_id: WIKISOURCE_GRIFFITH_RV:154cd0d816f1141b61b3899825cd087e62f8a4dd1af75bcb28ffd4d31ead8bf1
+    snapshot_sha256: 154cd0d816f1141b61b3899825cd087e62f8a4dd1af75bcb28ffd4d31ead8bf1
+    parser_version: wikisource-griffith-v2
+  - source_id: WIKISOURCE_GRIFFITH_RV
+    role: translation_revision
+    scope: RV.1.22
+    source_artifact_id: GRIFFITH.RV.1896.WIKISOURCE
+    snapshot_path: data/raw/wikisource_griffith_rv/2026-09-04/0fb63bfc9a9307f6f210c5fe49647c5b77f5e98c14bd57b5bf6f18b1b90fb8c4.php
+    snapshot_id: WIKISOURCE_GRIFFITH_RV:0fb63bfc9a9307f6f210c5fe49647c5b77f5e98c14bd57b5bf6f18b1b90fb8c4
+    snapshot_sha256: 0fb63bfc9a9307f6f210c5fe49647c5b77f5e98c14bd57b5bf6f18b1b90fb8c4
+    parser_version: mediawiki-revision-v1
+  - source_id: WIKISOURCE_GRIFFITH_RV
+    role: translation
+    scope: RV.1.50
+    source_artifact_id: GRIFFITH.RV.1896.WIKISOURCE
+    snapshot_path: data/raw/wikisource_griffith_rv/2026-09-04/079b0364bd7dee6b14a9b365ee8167b402a252a4bc7f4b70221ad783666f3a1a.php
+    snapshot_id: WIKISOURCE_GRIFFITH_RV:079b0364bd7dee6b14a9b365ee8167b402a252a4bc7f4b70221ad783666f3a1a
+    snapshot_sha256: 079b0364bd7dee6b14a9b365ee8167b402a252a4bc7f4b70221ad783666f3a1a
+    parser_version: wikisource-griffith-v2
+  - source_id: WIKISOURCE_GRIFFITH_RV
+    role: translation_revision
+    scope: RV.1.50
+    source_artifact_id: GRIFFITH.RV.1896.WIKISOURCE
+    snapshot_path: data/raw/wikisource_griffith_rv/2026-09-04/b32fe2c83d2a0c78c7853478ea4a6dd2b570b78c55c72a740a1d3aa4dd6dd50b.php
+    snapshot_id: WIKISOURCE_GRIFFITH_RV:b32fe2c83d2a0c78c7853478ea4a6dd2b570b78c55c72a740a1d3aa4dd6dd50b
+    snapshot_sha256: b32fe2c83d2a0c78c7853478ea4a6dd2b570b78c55c72a740a1d3aa4dd6dd50b
+    parser_version: mediawiki-revision-v1
+  - source_id: WIKISOURCE_GRIFFITH_RV
+    role: translation
+    scope: RV.1.164
+    source_artifact_id: GRIFFITH.RV.1896.WIKISOURCE
+    snapshot_path: data/raw/wikisource_griffith_rv/2026-09-04/564c06cde819cc01ac6c60a8aa031c95f5e4ab892bc3aebb8bb8a236225be6cd.php
+    snapshot_id: WIKISOURCE_GRIFFITH_RV:564c06cde819cc01ac6c60a8aa031c95f5e4ab892bc3aebb8bb8a236225be6cd
+    snapshot_sha256: 564c06cde819cc01ac6c60a8aa031c95f5e4ab892bc3aebb8bb8a236225be6cd
+    parser_version: wikisource-griffith-v2
+  - source_id: WIKISOURCE_GRIFFITH_RV
+    role: translation_revision
+    scope: RV.1.164
+    source_artifact_id: GRIFFITH.RV.1896.WIKISOURCE
+    snapshot_path: data/raw/wikisource_griffith_rv/2026-09-04/1ced430aa6e83f5a5d8d0951119c10a15e960079c8d14a4c1c209d9c3dc350de.php
+    snapshot_id: WIKISOURCE_GRIFFITH_RV:1ced430aa6e83f5a5d8d0951119c10a15e960079c8d14a4c1c209d9c3dc350de
+    snapshot_sha256: 1ced430aa6e83f5a5d8d0951119c10a15e960079c8d14a4c1c209d9c3dc350de
+    parser_version: mediawiki-revision-v1
+  - source_id: WIKISOURCE_GRIFFITH_RV
+    role: translation
+    scope: RV.1.191
+    source_artifact_id: GRIFFITH.RV.1896.WIKISOURCE
+    snapshot_path: data/raw/wikisource_griffith_rv/2026-09-04/2b0b8746d52f84fb5db33e05b9839aaf73f948116ae8b78602e465b236e976c5.php
+    snapshot_id: WIKISOURCE_GRIFFITH_RV:2b0b8746d52f84fb5db33e05b9839aaf73f948116ae8b78602e465b236e976c5
+    snapshot_sha256: 2b0b8746d52f84fb5db33e05b9839aaf73f948116ae8b78602e465b236e976c5
+    parser_version: wikisource-griffith-v2
+  - source_id: WIKISOURCE_GRIFFITH_RV
+    role: translation_revision
+    scope: RV.1.191
+    source_artifact_id: GRIFFITH.RV.1896.WIKISOURCE
+    snapshot_path: data/raw/wikisource_griffith_rv/2026-09-04/246ec1f87c7079debead3813ac9d0d1dc25bde3432c1bd585b328aaccdfd17c6.php
+    snapshot_id: WIKISOURCE_GRIFFITH_RV:246ec1f87c7079debead3813ac9d0d1dc25bde3432c1bd585b328aaccdfd17c6
+    snapshot_sha256: 246ec1f87c7079debead3813ac9d0d1dc25bde3432c1bd585b328aaccdfd17c6
+    parser_version: mediawiki-revision-v1

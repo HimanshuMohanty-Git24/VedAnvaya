@@ -1,0 +1,10 @@
+{
+  "categories": {
+    "ACCENT_ONLY": 1842,
+    "SANDHI_OR_SEGMENTATION": 3,
+    "UNCLASSIFIED": 161
+  },
+  "comparison_count": 2006,
+  "residual_count": 164,
+  "residual_keys_sha256": "7e52a2f0681985722353efdc37c1eb97a7c3e7bef7e35d0bd306489a2aa196a1"
+}

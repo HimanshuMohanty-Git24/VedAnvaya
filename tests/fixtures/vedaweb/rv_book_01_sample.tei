@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Rigveda - VedaWeb Version - Book 01</title>
+      </titleStmt>
+      <publicationStmt>
+        <p>CCeH - Cologne Center for eHumanities - 2020</p>
+      </publicationStmt>
+      <sourceDesc>
+        <p>For more information regarding sources and their licences, see:<ptr target="vedaweb_corpus.tei#vedaweb_header"/></p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <div type="book" xml:id="b01">
+        <div type="hymn" ana="1" xml:id="b01_h001">
+          <div xml:id="b01_h001_01" type="stanza">
+            <lg xml:id="b01_h001_01_zur" xml:lang="san-Latn-x-ISO-15919" source="zurich">
+              <l xml:id="b01_h001_01_zur_a">agním īḷe puróhitaṃ</l>
+              <l xml:id="b01_h001_01_zur_b">yajñásya devám r̥tvíjam</l>
+              <l xml:id="b01_h001_01_zur_c">hótāraṃ ratnadhā́tamam</l>
+              </lg>
+            <lg xml:id="b01_h001_01_lubotsky" xml:lang="san-Latn-x-ISO-15919" source="lubotsky">
+              <l xml:id="b01_h001_01_lubotsky_a">agním īḷe-_ puróhitam</l>
+              <l xml:id="b01_h001_01_lubotsky_b">yajñásya devám r̥tvíjam</l>
+              <l xml:id="b01_h001_01_lubotsky_c">hótāram ratnadhā́tamam</l>
+            </lg>
+            <lg xml:id="b01_h001_01_vnh" xml:lang="san-Latn-x-ISO-15919" source="vnh">
+              <l xml:id="b01_h001_01_vnh_a">agním īḷe puróhitaṁ</l>
+              <l xml:id="b01_h001_01_vnh_b">yajñásya devám r̥tvíjam</l>
+              <l xml:id="b01_h001_01_vnh_c">hótāraṁ ratnadhā́tamam</l>
+            </lg>
+            <lg xml:id="b01_h001_01_aufrecht" xml:lang="san-Latn-x-ISO-15919" source="aufrecht">
+              <l xml:id="b01_h001_01_aufrecht_a">agním īḷe puróhitaṁ yajñásya devám r̥tvíjam</l>
+              <l xml:id="b01_h001_01_aufrecht_c">hótāraṁ ratnadhā́tamam</l>
+            </lg>
+            <lg xml:id="b01_h001_01_padapatha" xml:lang="san-Latn-x-ISO-15919" source="padapatha">
+              <l xml:id="b01_h001_01_padapatha_0" xml:lang="san-Latn-x-ISO-15919">
+                <w xml:id="b01_h001_01_padapatha_0_01">agnim</w>
+                <w xml:id="b01_h001_01_padapatha_0_02">īl̥e</w>
+                <w xml:id="b01_h001_01_padapatha_0_03">puraḥ-hitam</w>
+                <w xml:id="b01_h001_01_padapatha_0_04">yajñasya</w>
+                <w xml:id="b01_h001_01_padapatha_0_05">devam</w>
+                <w xml:id="b01_h001_01_padapatha_0_06">r̥tvijam</w>
+                <w xml:id="b01_h001_01_padapatha_0_07">hotāram</w>
+                <w xml:id="b01_h001_01_padapatha_0_08">ratna-dhātamam</w>
+              </l>
+            </lg>
+            <lg xml:id="b01_h001_01_eichler" xml:lang="san-Deva" source="eichler">
+              <l xml:id="b01_h001_01_eichler_a">अ॒ग्निमी॑ळे पु॒रोहि॑तं य॒ज्ञस्य॑ दे॒वमृ॒त्विज॑म्</l>
+              <l xml:id="b01_h001_01_eichler_c">होता॑रं रत्न॒धात॑मम्</l>
+            </lg>
+            <lg xml:id="b01_h001_01_griffith" xml:lang="eng" source="griffith">
+              <l xml:id="b01_h001_01_griffith_0" xml:lang="eng">I Laud Agni, the chosen Priest, God, minister of sacrifice, The hotar, lavishest of wealth.</l>
+            </lg>
+            </div>
+          <div xml:id="b01_h001_02" type="stanza">
+            <lg xml:id="b01_h001_02_zur" xml:lang="san-Latn-x-ISO-15919" source="zurich">
+              <l xml:id="b01_h001_02_zur_a">agníḥ pū́rvebhir ŕ̥ṣibhir</l>
+              <l xml:id="b01_h001_02_zur_b">ī́ḍyo nū́tanair utá</l>
+              <l xml:id="b01_h001_02_zur_c">sá devā́m̐ éhá vakṣati</l>
+              </lg>
+            <lg xml:id="b01_h001_02_lubotsky" xml:lang="san-Latn-x-ISO-15919" source="lubotsky">
+              <l xml:id="b01_h001_02_lubotsky_a">agníḥ pū́rvebhiḥ ŕ̥ṣibhiḥ</l>
+              <l xml:id="b01_h001_02_lubotsky_b">ī́ḍyaḥ nū́tanaiḥ utá</l>
+              <l xml:id="b01_h001_02_lubotsky_c">sá devā́n ā́ ihá vakṣati</l>
+            </lg>
+            <lg xml:id="b01_h001_02_vnh" xml:lang="san-Latn-x-ISO-15919" source="vnh">
+              <l xml:id="b01_h001_02_vnh_a">agníḥ pū́rvebhir ŕ̥ṣibhir</l>
+              <l xml:id="b01_h001_02_vnh_b">ī́ḍiyo nū́tanair utá</l>
+              <l xml:id="b01_h001_02_vnh_c">sá devā́m̐ éhá vakṣati</l>
+            </lg>
+            <lg xml:id="b01_h001_02_aufrecht" xml:lang="san-Latn-x-ISO-15919" source="aufrecht">
+              <l xml:id="b01_h001_02_aufrecht_a">agníḥ pū́rvebhir ŕ̥ṣibhir ī́ḍyo nū́tanair utá</l>
+              <l xml:id="b01_h001_02_aufrecht_c">sá devā́m̐ éhá vakṣati</l>
+            </lg>
+            <lg xml:id="b01_h001_02_padapatha" xml:lang="san-Latn-x-ISO-15919" source="padapatha">
+              <l xml:id="b01_h001_02_padapatha_0" xml:lang="san-Latn-x-ISO-15919">
+                <w xml:id="b01_h001_02_padapatha_0_01">agniḥ</w>
+                <w xml:id="b01_h001_02_padapatha_0_02">pūrvebhiḥ</w>
+                <w xml:id="b01_h001_02_padapatha_0_03">r̥ṣi-bhiḥ</w>
+                <w xml:id="b01_h001_02_padapatha_0_04">īḍyaḥ</w>
+                <w xml:id="b01_h001_02_padapatha_0_05">nūtanaiḥ</w>
+                <w xml:id="b01_h001_02_padapatha_0_06">uta</w>
+                <w xml:id="b01_h001_02_padapatha_0_07">saḥ</w>
+                <w xml:id="b01_h001_02_padapatha_0_08">devān</w>
+                <w xml:id="b01_h001_02_padapatha_0_09">ā</w>
+                <w xml:id="b01_h001_02_padapatha_0_10">iha</w>
+                <w xml:id="b01_h001_02_padapatha_0_11">vakṣati</w>
+              </l>
+            </lg>
+            <lg xml:id="b01_h001_02_eichler" xml:lang="san-Deva" source="eichler">
+              <l xml:id="b01_h001_02_eichler_a">अ॒ग्निः पूर्वे॑भि॒र्ऋषि॑भि॒रीड्यो॒ नूत॑नैरु॒त</l>
+              <l xml:id="b01_h001_02_eichler_c">स दे॒वाँ एह व॑क्षति</l>
+            </lg>
+            <lg xml:id="b01_h001_02_griffith" xml:lang="eng" source="griffith">
+              <l xml:id="b01_h001_02_griffith_0" xml:lang="eng">Worthy is Agni to be praised by living as by ancient seers. He shall bring hitherward the Gods.</l>
+            </lg>
+            </div>
+        </div>
+      </div>
+    </body>
+  </text>
+</TEI>

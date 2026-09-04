@@ -1,0 +1,209 @@
+schema_version: 1.0.0
+sources:
+- authority_tier: PRIMARY_TRADITIONAL
+  bulk_ingestion_status: PROHIBITED_WITHOUT_PERMISSION
+  formats:
+  - HTML
+  - PDF
+  - audio
+  - video
+  known_languages:
+  - sa
+  - hi
+  - en
+  name: Vedic Heritage Portal
+  notes: Per-asset contributor rights may vary. Do not download or rehost media automatically.
+  organization: Indira Gandhi National Centre for the Arts, Ministry of Culture, Government of India
+  rights:
+    holder: Indira Gandhi National Centre for the Arts or contributor
+    license_url: https://vedicheritage.gov.in/copyright-policy/
+    notes: Reproduction requires written permission; link/reference and bounded verification only.
+    status: PERMISSION_REQUIRED
+  source_id: VHP
+  url: https://vedicheritage.gov.in/
+  verification_roles:
+  - recension
+  - hierarchy
+  - accented_text
+  - traditional_metadata
+  - audio_discovery
+  - textual_qa
+- authority_tier: SCHOLARLY_EDITION
+  bulk_ingestion_status: FILE_LEVEL_REVIEW_REQUIRED
+  formats:
+  - TEI_XML
+  - HTML
+  - TXT
+  known_languages:
+  - sa
+  name: Göttingen Register of Electronic Texts in Indian Languages
+  notes: Prefer TEI XML; do not infer a corpus-wide license from site accessibility. The reviewed sa_Rgveda-edAufrecht.xml
+    file specifically declares CC BY-NC-SA 4.0 in its TEI header.
+  organization: University of Göttingen
+  rights:
+    status: UNKNOWN
+  source_id: GRETIL
+  url: https://gretil.sub.uni-goettingen.de/
+  verification_roles:
+  - machine_readable_text
+  - hierarchy
+  - edition_comparison
+- authority_tier: AGGREGATOR
+  bulk_ingestion_status: NOT_APPROVED
+  formats:
+  - HTML
+  - JSON_API
+  - audio_reference
+  known_languages:
+  - sa
+  - hi
+  - en
+  name: VedSearch
+  notes: Numbering and displayed counts are assertions requiring reconciliation; English is not canonical.
+  organization: VedSearch
+  rights:
+    notes: No reusable content license was established during D1 research.
+    status: UNKNOWN
+  source_id: VEDSEARCH
+  url: https://vedsearch.org/
+  verification_roles:
+  - navigation_alignment
+  - translation_discovery
+  - source_assertions
+  - audio_discovery
+- authority_tier: HISTORICAL_TRANSLATION
+  bulk_ingestion_status: BOUNDED_PILOT_ALLOWED
+  formats:
+  - HTML
+  - MediaWiki_API
+  - DJVU
+  known_languages:
+  - en
+  name: The Hymns of the Rigveda, Griffith, second edition
+  notes: Translator Ralph T. H. Griffith; second edition, 1896. Validate verse segmentation against Sanskrit.
+  organization: Wikisource transcription of E. J. Lazarus & Co. edition
+  rights:
+    holder: Public domain
+    license_url: https://en.wikisource.org/wiki/The_Hymns_of_the_Rigveda
+    notes: Underlying 1896 Griffith translation is marked public domain; preserve Wikisource revision
+      provenance.
+    status: PUBLIC_DOMAIN
+  source_id: WIKISOURCE_GRIFFITH_RV
+  url: https://en.wikisource.org/wiki/The_Hymns_of_the_Rigveda
+  verification_roles:
+  - english_translation
+- authority_tier: HISTORICAL_TRANSLATION
+  bulk_ingestion_status: REVIEW_BEFORE_INGESTION
+  formats:
+  - HTML
+  - MediaWiki_API
+  known_languages:
+  - en
+  name: The Samaveda, Griffith translation
+  notes: Do not align until Kauthuma edition hierarchy and numbering are fixed.
+  organization: Wikisource
+  rights:
+    notes: Historical translation appears public domain; exact Wikisource edition/revision requires verification.
+    status: PUBLIC_DOMAIN
+  source_id: WIKISOURCE_GRIFFITH_SV
+  url: https://en.wikisource.org/wiki/The_Sama_Veda
+  verification_roles:
+  - english_translation
+  - alternate_citation
+- authority_tier: HISTORICAL_TRANSLATION
+  bulk_ingestion_status: SOURCE_SELECTION_REQUIRED
+  formats:
+  - SCAN
+  - OCR
+  known_languages:
+  - en
+  name: The Texts of the White Yajurveda, Griffith translation
+  notes: Exact edition, year, scan URL, and Madhyandina alignment remain unresolved.
+  organization: Historical printed edition; digital host to be selected
+  rights:
+    notes: Underlying historical work is public domain; select and record a specific scan and edition
+      before use.
+    status: PUBLIC_DOMAIN
+  source_id: GRIFFITH_WHITE_YAJURVEDA
+  url: https://archive.org/
+  verification_roles:
+  - english_translation
+- authority_tier: HISTORICAL_TRANSLATION
+  bulk_ingestion_status: REVIEW_BEFORE_INGESTION
+  formats:
+  - HTML
+  - MediaWiki_API
+  - SCAN
+  known_languages:
+  - en
+  name: Atharva-Veda Samhita, Whitney and Lanman translation
+  notes: Translation/commentary segmentation and Shaunaka numbering require fixture-backed validation.
+  organization: Wikisource transcription of Harvard Oriental Series edition
+  rights:
+    notes: Underlying 1905 Whitney/Lanman edition is public domain; preserve page revision provenance.
+    status: PUBLIC_DOMAIN
+  source_id: WIKISOURCE_WHITNEY_AV
+  url: https://en.wikisource.org/wiki/Atharva-Veda_Samhita
+  verification_roles:
+  - english_translation
+  - commentary
+- authority_tier: SCHOLARLY_EDITION
+  bulk_ingestion_status: VERSION_LEVEL_REVIEW_REQUIRED
+  formats:
+  - TEI_XML
+  - CSV
+  - JSON
+  - XLSX
+  known_languages:
+  - sa
+  - en
+  - de
+  - fr
+  - ru
+  - pt
+  name: VedaWeb Rigveda public data
+  notes: Git-hosted. Every build must pin an exact commit SHA; never build against main. The Book 1 TEI
+    carries six distinct Sanskrit versions with two different CC licences.
+  organization: Cologne Center for eHumanities, University of Cologne
+  rights:
+    notes: No repository-wide licence exists. Every incorporated source carries its own CC licence in
+      the vedaweb_corpus.tei header, so rights are recorded per text version in data/registry/text_versions.yaml
+      and never at host level.
+    status: UNKNOWN
+  source_id: VEDAWEB
+  url: https://github.com/VedaWebProject/vedaweb-data
+  verification_roles:
+  - machine_readable_text
+  - hierarchy
+  - edition_comparison
+  - parallel_text_versions
+  - padapatha
+  - linguistic_annotation
+  - translation_discovery
+- authority_tier: SCHOLARLY_EDITION
+  bulk_ingestion_status: COMMIT_PINNED_ARTIFACTS_ONLY
+  formats:
+  - PLAIN_TEXT
+  known_languages:
+  - sa
+  name: Digital Rig Vedic Index (Anukramani), WSC 2023
+  notes: Digitization of the traditional Anukramani, cited as Akavarapu and Bhattacharya (2023), Proceedings
+    of the Computational Sanskrit & Digital Humanities, 18th World Sanskrit Conference, pages 89-96, https://aclanthology.org/2023.wsc-csdh.6/.
+    Only Anukramani/Mandala_*.txt is ingested. The repository's devata classifier models and dcs_w2v.vec
+    word vectors are model artifacts, not traditional metadata, and are never ingested.
+  organization: Dept. of Computer Science and Engineering, IIT Kanpur
+  rights:
+    holder: A V S D S Mahesh and Arnab Bhattacharya
+    license_url: https://www.apache.org/licenses/LICENSE-2.0
+    notes: Repository-level Apache-2.0. The Anukramani data files carry no separate artifact-level licence
+      statement, so the repository licence is recorded at artifact level after inspecting the exact files.
+      Per project policy the raw snapshots stay gitignored; derived registries and aggregate reports are
+      committed.
+    status: APACHE_2_0
+  source_id: WSC2023
+  url: https://github.com/mahesh-ak/WSC2023
+  verification_roles:
+  - traditional_metadata_rishi
+  - traditional_metadata_devata
+  - traditional_metadata_chandas
+  - hymn_verse_count_cross_check

@@ -1,0 +1,4 @@
+hymn.verses.seer.divinity.meter
+1.2.(1-2)dampatī.(1)uṣnik,(2)anuṣṭup
+2.3.śaunako gṛtsamadaḥ.agniḥ.(3-1)triṣṭup
+3.2.śaunako gṛtsamadaḥ.agniḥ.(1-9)triṣṭup

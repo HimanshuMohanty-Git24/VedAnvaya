@@ -1,0 +1,15 @@
+schema_version: 1.0.0
+statuses:
+  PUBLIC_DOMAIN: Copyright expired or explicitly dedicated; provenance and edition still required.
+  CC_BY: Creative Commons Attribution.
+  CC_BY_SA: Creative Commons Attribution-ShareAlike.
+  CC_BY_NC: Creative Commons Attribution-NonCommercial.
+  CC_BY_NC_SA: Creative Commons Attribution-NonCommercial-ShareAlike.
+  PERMISSION_GRANTED: Written permission is recorded for the specific asset and use.
+  PERMISSION_REQUIRED: Rights holder permission is required before copying or redistribution.
+  RESEARCH_ONLY: Internal research use under a documented basis; never publish automatically.
+  REFERENCE_ONLY: Metadata/reference use only; content is not copied.
+  EXTERNAL_REFERENCE_ONLY: Store and expose only a link or external identifier.
+  UNKNOWN: Rights have not been established; default to no redistribution.
+policy: Rights attach to each source file or asset, not merely to a host website.
+

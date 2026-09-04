@@ -1,0 +1,65 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "vedagraph"
+version = "0.1.0"
+description = "Provenance-aware canonical corpus tooling for the Vedas"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "License undecided; see README.md and docs/architecture/RIGHTS_POLICY.md" }
+authors = [{ name = "VedaGraph contributors" }]
+dependencies = [
+  "beautifulsoup4>=4.12",
+  "httpx>=0.27",
+  "indic-transliteration>=2.3",
+  "lxml>=5.3",
+  "orjson>=3.10",
+  "pydantic>=2.10",
+  "pydantic-settings>=2.7",
+  "pyyaml>=6.0",
+  "rich>=13.9",
+  "tenacity>=9.0",
+  "typer>=0.15",
+]
+
+[project.optional-dependencies]
+dev = [
+  "lxml-stubs>=0.5",
+  "mypy>=1.14",
+  "pytest>=8.3",
+  "pytest-asyncio>=0.25",
+  "pytest-cov>=6.0",
+  "ruff>=0.9",
+  "types-pyyaml>=6.0",
+]
+
+[project.scripts]
+vedagraph = "vedagraph.cli.app:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/vedagraph"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "RUF"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+packages = ["vedagraph"]
+mypy_path = "src"
+plugins = ["pydantic.mypy"]
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-markers --cov=vedagraph --cov-report=term-missing"
+testpaths = ["tests"]
+markers = ["live: requires internet access and is disabled unless explicitly selected"]
+
+[tool.coverage.run]
+branch = true
+source = ["vedagraph"]

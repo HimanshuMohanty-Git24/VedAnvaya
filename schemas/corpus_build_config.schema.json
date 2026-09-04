@@ -1,0 +1,280 @@
+{
+  "$defs": {
+    "BuildSourceInput": {
+      "additionalProperties": false,
+      "properties": {
+        "parser_version": {
+          "title": "Parser Version",
+          "type": "string"
+        },
+        "role": {
+          "title": "Role",
+          "type": "string"
+        },
+        "scope": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Scope"
+        },
+        "snapshot_id": {
+          "title": "Snapshot Id",
+          "type": "string"
+        },
+        "snapshot_path": {
+          "format": "path",
+          "title": "Snapshot Path",
+          "type": "string"
+        },
+        "snapshot_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Snapshot Sha256",
+          "type": "string"
+        },
+        "source_artifact_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Artifact Id"
+        },
+        "source_id": {
+          "title": "Source Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_id",
+        "role",
+        "snapshot_path",
+        "snapshot_id",
+        "snapshot_sha256",
+        "parser_version"
+      ],
+      "title": "BuildSourceInput",
+      "type": "object"
+    },
+    "TextRole": {
+      "description": "How VedaGraph is allowed to use one Sanskrit textual representation.",
+      "enum": [
+        "PRIMARY_TEXT",
+        "PARALLEL_TEXT",
+        "PADAPATHA",
+        "METRICALLY_RESTORED",
+        "NORMALIZED",
+        "SEARCH_DERIVATIVE",
+        "DISPLAY_DERIVATIVE",
+        "LINGUISTIC_ANNOTATION",
+        "COMPARISON_ONLY",
+        "REFERENCE_ONLY"
+      ],
+      "title": "TextRole",
+      "type": "string"
+    },
+    "TextSelectionPolicy": {
+      "enum": [
+        "ORIGINAL",
+        "REGULARIZED"
+      ],
+      "title": "TextSelectionPolicy",
+      "type": "string"
+    },
+    "TextVersionSelection": {
+      "additionalProperties": false,
+      "description": "Build-configuration reference to one declared text version.",
+      "properties": {
+        "artifact": {
+          "title": "Artifact",
+          "type": "string"
+        },
+        "role": {
+          "$ref": "#/$defs/TextRole"
+        },
+        "selection_policy": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Selection Policy"
+        },
+        "text_version": {
+          "title": "Text Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "artifact",
+        "text_version",
+        "role"
+      ],
+      "title": "TextVersionSelection",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "build_timestamp": {
+      "format": "date-time",
+      "title": "Build Timestamp",
+      "type": "string"
+    },
+    "candidate_text_versions": {
+      "items": {
+        "$ref": "#/$defs/TextVersionSelection"
+      },
+      "title": "Candidate Text Versions",
+      "type": "array"
+    },
+    "config_version": {
+      "title": "Config Version",
+      "type": "string"
+    },
+    "dataset_id": {
+      "title": "Dataset Id",
+      "type": "string"
+    },
+    "mandala": {
+      "minimum": 1,
+      "title": "Mandala",
+      "type": "integer"
+    },
+    "media_discovery_sources": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Media Discovery Sources",
+      "type": "array"
+    },
+    "media_policy_version": {
+      "default": "external-reference-only-v1",
+      "title": "Media Policy Version",
+      "type": "string"
+    },
+    "metadata_sources": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Metadata Sources",
+      "type": "array"
+    },
+    "output_location": {
+      "format": "path",
+      "title": "Output Location",
+      "type": "string"
+    },
+    "parallel_sanskrit": {
+      "items": {
+        "$ref": "#/$defs/TextVersionSelection"
+      },
+      "title": "Parallel Sanskrit",
+      "type": "array"
+    },
+    "primary_sanskrit": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/TextVersionSelection"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "qa_policy_version": {
+      "default": "corpus-qa-v1",
+      "title": "Qa Policy Version",
+      "type": "string"
+    },
+    "reconciliation_policy_version": {
+      "title": "Reconciliation Policy Version",
+      "type": "string"
+    },
+    "release_version": {
+      "title": "Release Version",
+      "type": "string"
+    },
+    "rights_policy_version": {
+      "default": "artifact-and-version-rights-v1",
+      "title": "Rights Policy Version",
+      "type": "string"
+    },
+    "selected_suktas": {
+      "items": {
+        "type": "integer"
+      },
+      "minItems": 1,
+      "title": "Selected Suktas",
+      "type": "array"
+    },
+    "sources": {
+      "items": {
+        "$ref": "#/$defs/BuildSourceInput"
+      },
+      "title": "Sources",
+      "type": "array"
+    },
+    "staging_location": {
+      "anyOf": [
+        {
+          "format": "path",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Staging Location"
+    },
+    "text_selection_policy": {
+      "$ref": "#/$defs/TextSelectionPolicy"
+    },
+    "translation_alignment_policy_version": {
+      "default": "conservative-source-numbered-v1",
+      "title": "Translation Alignment Policy Version",
+      "type": "string"
+    },
+    "translation_sources": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Translation Sources",
+      "type": "array"
+    },
+    "work_id": {
+      "title": "Work Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "config_version",
+    "dataset_id",
+    "release_version",
+    "work_id",
+    "mandala",
+    "selected_suktas",
+    "text_selection_policy",
+    "sources",
+    "reconciliation_policy_version",
+    "output_location",
+    "build_timestamp"
+  ],
+  "title": "CorpusBuildConfig",
+  "type": "object"
+}

@@ -1,0 +1,60 @@
+# Reviewed statements that one source spelling names an already-registered entity.
+#
+# This file is the ONLY place where two different strings are united. The build never
+# merges labels on similarity: an unregistered label stays unresolved and is reported
+# for review instead. Every entry names the evidence that justified it.
+#
+# Deliberately absent: aśvaḥ / aśvāḥ. Their ASCII keys collide, but the source uses the
+# singular for the Horse of RV 1.162 and the plural for the chariot horses of RV 6.75.7.
+# They are kept as two entities, and the key of the plural is disambiguated instead.
+aliases:
+  - entity_type: CHANDAS
+    alias: jagatiī
+    canonical: jagatī
+    alias_type: SOURCE_SPELLING
+    evidence: >-
+      Doubled vowel sign in the source file. The intended meter name jagatī occurs 1,252
+      times across all ten Maṇḍalas; this spelling occurs only in Maṇḍala 9 and differs
+      from it by one inserted i.
+
+  - entity_type: CHANDAS
+    alias: uṣnik
+    canonical: uṣṇik
+    alias_type: SOURCE_SPELLING
+    evidence: >-
+      Missing retroflex dot on ṇ. The spelling uṣṇik occurs 314 times; uṣnik occurs 5
+      times and is otherwise identical.
+
+  - entity_type: CHANDAS
+    alias: atyaṣtiḥ
+    canonical: atyaṣṭiḥ
+    alias_type: SOURCE_SPELLING
+    evidence: >-
+      Missing retroflex dot on ṭ. The spelling atyaṣṭiḥ occurs 79 times; atyaṣtiḥ occurs
+      3 times and is otherwise identical.
+
+  - entity_type: CHANDAS
+    alias: kakup
+    canonical: kakubh
+    alias_type: ORTHOGRAPHIC_VARIANT
+    evidence: >-
+      kakup is the pausa form of the meter name kakubh; the final aspirate is written
+      unvoiced in isolation. Both spellings denote the same meter and both occur in this
+      dataset (kakubh 5, kakup 11).
+
+  - entity_type: RISHI
+    alias: mārīcāḥ kaśyapaḥ
+    canonical: mārīcaḥ kaśyapaḥ
+    alias_type: SOURCE_SPELLING
+    evidence: >-
+      One occurrence (RV 9.64) against five of mārīcaḥ kaśyapaḥ, including four elsewhere
+      in Maṇḍala 9. The patronymic is written with a plural ending beside a singular
+      personal name, which the singular form does not do.
+
+  - entity_type: DEVATA
+    alias: sarasvati-iḻā-bhāratī
+    canonical: sarasvatī-iḻā-bhāratī
+    alias_type: SOURCE_SPELLING
+    evidence: >-
+      Missing macron on the first component only. Both spellings name the same composite
+      of the three ritual goddesses and are otherwise identical.

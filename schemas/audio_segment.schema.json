@@ -1,0 +1,88 @@
+{
+  "$defs": {
+    "AlignmentMethod": {
+      "enum": [
+        "SOURCE_PROVIDED",
+        "MANUAL",
+        "ALGORITHMIC",
+        "ALGORITHMIC_REVIEWED"
+      ],
+      "title": "AlignmentMethod",
+      "type": "string"
+    },
+    "ReviewStatus": {
+      "enum": [
+        "UNREVIEWED",
+        "NEEDS_REVIEW",
+        "ACCEPTED",
+        "REJECTED"
+      ],
+      "title": "ReviewStatus",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "alignment_confidence": {
+      "anyOf": [
+        {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Alignment Confidence"
+    },
+    "alignment_method": {
+      "$ref": "#/$defs/AlignmentMethod"
+    },
+    "audio_id": {
+      "format": "uuid",
+      "title": "Audio Id",
+      "type": "string"
+    },
+    "end_ms": {
+      "exclusiveMinimum": 0,
+      "title": "End Ms",
+      "type": "integer"
+    },
+    "passage_id": {
+      "format": "uuid",
+      "title": "Passage Id",
+      "type": "string"
+    },
+    "review_status": {
+      "$ref": "#/$defs/ReviewStatus",
+      "default": "UNREVIEWED"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "segment_id": {
+      "format": "uuid",
+      "title": "Segment Id",
+      "type": "string"
+    },
+    "start_ms": {
+      "minimum": 0,
+      "title": "Start Ms",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "segment_id",
+    "audio_id",
+    "passage_id",
+    "start_ms",
+    "end_ms",
+    "alignment_method"
+  ],
+  "title": "AudioSegment",
+  "type": "object"
+}

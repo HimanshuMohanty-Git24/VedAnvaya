@@ -1,0 +1,139 @@
+{
+  "$defs": {
+    "MetadataPredicate": {
+      "enum": [
+        "HAS_RISHI",
+        "HAS_DEVATA",
+        "HAS_CHANDAS"
+      ],
+      "title": "MetadataPredicate",
+      "type": "string"
+    },
+    "ProvenanceClass": {
+      "description": "What kind of statement a knowledge assertion rests on.",
+      "enum": [
+        "SOURCE_EXPLICIT",
+        "SOURCE_DERIVED_SCOPE"
+      ],
+      "title": "ProvenanceClass",
+      "type": "string"
+    },
+    "ResolutionStatus": {
+      "description": "How a raw source label reached (or failed to reach) a canonical entity.\n\nOnly ``EXACT``, ``NORMALIZED_EXACT``, ``KNOWN_ALIAS`` and ``COMPOSITE_PRESERVED``\nmay attach a canonical entity id.",
+      "enum": [
+        "EXACT",
+        "NORMALIZED_EXACT",
+        "KNOWN_ALIAS",
+        "COMPOSITE_PRESERVED",
+        "NEEDS_REVIEW",
+        "AMBIGUOUS",
+        "REJECTED"
+      ],
+      "title": "ResolutionStatus",
+      "type": "string"
+    },
+    "ScopeOrigin": {
+      "description": "The scope the source itself stated, before expansion to mantras.",
+      "enum": [
+        "SUKTA_WIDE",
+        "MANTRA_RANGE",
+        "SINGLE_MANTRA"
+      ],
+      "title": "ScopeOrigin",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "A deterministic edge: one mantra, one predicate, one canonical entity.\n\nDeterministic resolution carries no probability. ``confidence`` is fixed at 1.0 for\nevery record in this file; an unresolved label produces no record at all.",
+  "properties": {
+    "assertion_id": {
+      "format": "uuid",
+      "title": "Assertion Id",
+      "type": "string"
+    },
+    "citation": {
+      "title": "Citation",
+      "type": "string"
+    },
+    "confidence": {
+      "default": 1.0,
+      "maximum": 1.0,
+      "minimum": 1.0,
+      "title": "Confidence",
+      "type": "number"
+    },
+    "object_id": {
+      "format": "uuid",
+      "title": "Object Id",
+      "type": "string"
+    },
+    "object_key": {
+      "pattern": "^VG:(RISHI|DEVATA|CHANDAS):[A-Z0-9-]+$",
+      "title": "Object Key",
+      "type": "string"
+    },
+    "predicate": {
+      "$ref": "#/$defs/MetadataPredicate"
+    },
+    "provenance_class": {
+      "$ref": "#/$defs/ProvenanceClass"
+    },
+    "resolution_method": {
+      "$ref": "#/$defs/ResolutionStatus"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "scope_origin": {
+      "$ref": "#/$defs/ScopeOrigin"
+    },
+    "source_artifact_id": {
+      "title": "Source Artifact Id",
+      "type": "string"
+    },
+    "source_assertion_id": {
+      "format": "uuid",
+      "title": "Source Assertion Id",
+      "type": "string"
+    },
+    "source_id": {
+      "title": "Source Id",
+      "type": "string"
+    },
+    "source_label": {
+      "minLength": 1,
+      "title": "Source Label",
+      "type": "string"
+    },
+    "subject_id": {
+      "format": "uuid",
+      "title": "Subject Id",
+      "type": "string"
+    },
+    "subject_key": {
+      "pattern": "^VG:RV:SAK:M\\d{2}:S\\d{3}:V\\d{3}$",
+      "title": "Subject Key",
+      "type": "string"
+    }
+  },
+  "required": [
+    "assertion_id",
+    "subject_key",
+    "subject_id",
+    "predicate",
+    "object_key",
+    "object_id",
+    "source_label",
+    "source_assertion_id",
+    "provenance_class",
+    "scope_origin",
+    "resolution_method",
+    "source_id",
+    "source_artifact_id",
+    "citation"
+  ],
+  "title": "KnowledgeAssertion",
+  "type": "object"
+}
