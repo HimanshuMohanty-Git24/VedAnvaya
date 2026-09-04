@@ -31,6 +31,14 @@ from vedagraph.models.lexical import (
     MentionAssertion,
     MorphologyToken,
 )
+from vedagraph.models.semantic import (
+    EvidencePacket,
+    GoldAnnotation,
+    SemanticAssertionCandidate,
+    SemanticEntityCandidate,
+    SemanticRunManifest,
+    SemanticValidationResult,
+)
 
 SCHEMA_MODELS: dict[str, type[BaseModel]] = {
     "passage.schema.json": Passage,
@@ -55,6 +63,12 @@ SCHEMA_MODELS: dict[str, type[BaseModel]] = {
     "mantra_parallel.schema.json": MantraParallel,
     "component_assertion.schema.json": ComponentAssertion,
     "lexical_manifest.schema.json": LexicalManifest,
+    "semantic_evidence_packet.schema.json": EvidencePacket,
+    "semantic_entity_candidate.schema.json": SemanticEntityCandidate,
+    "semantic_assertion_candidate.schema.json": SemanticAssertionCandidate,
+    "semantic_validation_result.schema.json": SemanticValidationResult,
+    "semantic_gold_annotation.schema.json": GoldAnnotation,
+    "semantic_run_manifest.schema.json": SemanticRunManifest,
 }
 
 

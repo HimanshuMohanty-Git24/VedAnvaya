@@ -20,9 +20,23 @@
 #   review_status only ACCEPTED may produce MENTIONS_ENTITY
 #   evidence      why this decision was made
 #
+# Optional deterministic morphology constraints (policy v2). Declared only where one
+# lemma really is shared between a deity and something else and the annotation's own
+# features separate them; most aliases declare none. A token carrying no value for a
+# constrained feature fails closed.
+#   allowed_pos          part-of-speech readings that may establish a mention
+#   allowed_gender       gender values that may establish a mention
+#   allowed_number       number values that may establish a mention
+#   allowed_case         case values that may establish a mention
+#   forbidden_features   feature=VALUE pairs that disqualify a token outright
+#
+# Policy v2 also requires, for every alias and without configuration, that the token's
+# lemma *string* be the alias's lemma. A shared lemma id is necessary but not
+# sufficient: the annotators file a derived stem under the base entry's id.
+#
 # Scope of v1: DEVATA only. See ADR-013 for why RISHI lexical mentions are
 # deferred, and RIGVEDA_LEXICAL_MENTION_POLICY.md for the full policy.
-policy_version: rigveda-lexical-mention-policy-v1
+policy_version: rigveda-lexical-mention-policy-v2
 annotation_layer_id: VEDAWEB.ZURICH
 
 aliases:
@@ -50,6 +64,11 @@ aliases:
   evidence: >-
     Lemma índra- (lemma_indra_1708) is a proper name with no appellative use in
     the Rigveda. Registry label indraḥ is its nominative singular.
+  notes: >-
+    Three occurrences carry lemma_indra_1708 on the derived superlatives índratama-
+    and índravātatama-, which are adjectives, not the name. The policy v2 lemma-string
+    rule excludes them; gender caught only two of the three, which is why the rule is
+    on the lemma and not on agreement features.
 
 - entity_key: VG:DEVATA:SOMAH
   lemma: sóma-
@@ -80,6 +99,13 @@ aliases:
   evidence: >-
     Lemma sū́rya- (lemma_sUrya_10120) names the sun deity; the appellative sense
     "sun" is the same referent in this corpus and the Anukramaṇī agrees.
+  allowed_gender: [M]
+  notes: >-
+    The same lemma id also carries the feminine ā-stem sūryā́-, the Sun's daughter of
+    RV 10.85, in 23 occurrences. She is a different referent, and the annotation's own
+    gender feature separates the two without any appeal to context. Those occurrences
+    are additionally excluded by the lemma-string rule, since sūryā́- is not sū́rya-.
+    Which entity they belong to is left open: see VG:DEVATA:SAVITRI-SURYA below.
 
 - entity_key: VG:DEVATA:MITRAH
   lemma: mitrá-
@@ -92,6 +118,7 @@ aliases:
   notes: >-
     Highest-risk accepted alias in the registry. Sampled explicitly in the
     precision audit; if precision falls, restrict rather than expand.
+  allowed_gender: [M]
 
 - entity_key: VG:DEVATA:VAYUH
   lemma: vāyú-
@@ -139,6 +166,10 @@ aliases:
   alias_type: CANONICAL_LEMMA
   review_status: ACCEPTED
   evidence: Proper name of the goddess Aditi, single dedicated lemma.
+  allowed_gender: [F]
+  notes: >-
+    One masculine occurrence (RV 10.92.14, áditim ACC SG M) is the adjective áditi-
+    "unbound", not the goddess, who is feminine throughout.
 
 - entity_key: VG:DEVATA:USAH
   lemma: uṣás-
@@ -158,6 +189,11 @@ aliases:
   evidence: >-
     The registry label aśvinau is the nominative dual of the stem aśvín-. The
     Aśvins are a lexicalised pair and the annotation gives them one lemma.
+  allowed_gender: [M]
+  notes: >-
+    One neuter occurrence (RV 1.53.4, aśvínā INS SG N) is the appellative aśvína-
+    "horse-team, ride", not the deities, and is excluded by gender. Number is
+    deliberately left unconstrained: 17 masculine singulars are genuine.
 
 - entity_key: VG:DEVATA:MARUTAH
   lemma: marút-
@@ -234,6 +270,9 @@ aliases:
   alias_type: CANONICAL_LEMMA
   review_status: ACCEPTED
   evidence: Single dedicated lemma lemma_draviRoda_4548 for the Draviṇodas hymns.
+  notes: >-
+    RV 1.53.1 draviṇodéṣu is the adjective draviṇodá- "wealth-giving" under the same
+    lemma id, excluded by the lemma-string rule.
 
 - entity_key: VG:DEVATA:RAKA
   lemma: rākā́-
@@ -278,6 +317,9 @@ aliases:
   alias_type: CANONICAL_LEMMA
   review_status: ACCEPTED
   evidence: Proper name Tārkṣya, single dedicated lemma.
+  notes: >-
+    RV 8.102.8 tákṣyā is the gerundive of √takṣ filed under this entry's lemma id.
+    Excluded by the lemma-string rule; the off-gender audit never reached it.
 
 - entity_key: VG:DEVATA:ASAMATIH
   lemma: ásamāti-
@@ -312,6 +354,12 @@ aliases:
   alias_type: COMPOSITE_NAME
   review_status: ACCEPTED
   evidence: Single annotated lexical entry for the dvandva Mitrāvaruṇā.
+  notes: >-
+    RV 10.93.6 mitrā́váruṇau is tagged NOM DU N by the annotation while every other
+    occurrence is masculine. There is no neuter appellative mitrāvaruṇa-, so gender
+    supplies no discriminant here and the mention is kept. Recorded as an annotation
+    gender-tag anomaly, not as a lexical false positive: the one detectable off-gender
+    occurrence remaining in the layer.
 
 - entity_key: VG:DEVATA:INDRABRHASPATI
   lemma: índrābŕ̥haspáti-
@@ -340,6 +388,38 @@ aliases:
   alias_type: COMPOSITE_NAME
   review_status: ACCEPTED
   evidence: Single annotated lexical entry for the dvandva Uṣāsānaktā.
+
+# --- Feature-conditioned aliases. One annotated lexical entry, two canonical
+# --- entities, separated by the annotation's own gender feature and by nothing
+# --- else. These were deferred in v1 for want of the mechanism, not for want of
+# --- evidence.
+
+- entity_key: VG:DEVATA:SARASVATI
+  lemma: sárasvant-
+  lemma_ids: [lemma_sarasvat_9445]
+  alias_type: KNOWN_LEMMA_VARIANT
+  review_status: ACCEPTED
+  evidence: >-
+    The annotation lemmatises every Sarasvatī form under the vant-stem sárasvant-,
+    which also covers the masculine river deity Sarasvant. The entry's 75
+    occurrences split 70 feminine / 5 masculine on the annotation's own gender
+    feature, with no third reading, so gender is a complete discriminant. The
+    feminine occurrences are the goddess Sarasvatī.
+  allowed_gender: [F]
+  notes: >-
+    Counterpart of VG:DEVATA:SARASVAN below. Neither reading is reached by context,
+    only by the annotated feature.
+
+- entity_key: VG:DEVATA:SARASVAN
+  lemma: sárasvant-
+  lemma_ids: [lemma_sarasvat_9445]
+  alias_type: KNOWN_LEMMA_VARIANT
+  review_status: ACCEPTED
+  evidence: >-
+    The masculine reading of lemma_sarasvat_9445 is the deity Sarasvant, whom the
+    Anukramaṇī registers as sarasvān (RV 1.164.52, 7.95-96, 10.66). Five masculine
+    occurrences; the remaining 70 are feminine and belong to VG:DEVATA:SARASVATI.
+  allowed_gender: [M]
 
 # ---------------------------------------------------------------------------
 # DO_NOT_MATCH - the registry holds a Devatā entity under this label because the
@@ -522,20 +602,22 @@ aliases:
 # edges. They are listed so the gap is explicit rather than invisible.
 # ---------------------------------------------------------------------------
 
-- entity_key: VG:DEVATA:SARASVATI
-  lemma: sárasvant-
-  lemma_ids: [lemma_sarasvat_9445]
+- entity_key: VG:DEVATA:SAVITRI-SURYA
+  lemma: sūryā́-
+  lemma_ids: [lemma_sUrya_10120]
   alias_type: KNOWN_LEMMA_VARIANT
   review_status: NEEDS_REVIEW
   evidence: >-
-    The annotation lemmatises every Sarasvatī form under the vant-stem
-    sárasvant-, which also covers the masculine deity Sarasvant. The two are
-    separable by the annotation's own gender feature, but v1 has no
-    feature-conditioned alias mechanism, so no edge is created.
+    The 23 feminine occurrences of lemma_sUrya_10120 are the ā-stem sūryā́-, the
+    Sun's daughter, chiefly RV 10.85. Gender and lemma string both separate them
+    cleanly from sū́rya-, so removing them from VG:DEVATA:SURYAH is deterministic.
+    Assigning them is not: the registry's nearest entity is the Anukramaṇī's
+    compound label sāvitrī sūryā, and deciding whether that names the same entity
+    is a registry merge question, not a lexical one.
+  allowed_gender: [F]
   notes: >-
-    Highest-value deferred alias. Resolving it needs feature-conditioned
-    matching (gender=F to Sarasvatī, gender=M to Sarasvant), which is a
-    deliberate v2 item.
+    Produces no edges. Listed so that 23 occurrences removed from Sūrya are visible
+    as a deferred assignment rather than as silent loss.
 
 - entity_key: VG:DEVATA:APAH
   lemma: áp-

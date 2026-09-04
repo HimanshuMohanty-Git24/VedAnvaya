@@ -51,6 +51,34 @@
     "alias_type": {
       "$ref": "#/$defs/LexicalAliasType"
     },
+    "allowed_case": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Allowed Case",
+      "type": "array"
+    },
+    "allowed_gender": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Allowed Gender",
+      "type": "array"
+    },
+    "allowed_number": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Allowed Number",
+      "type": "array"
+    },
+    "allowed_pos": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Allowed Pos",
+      "type": "array"
+    },
     "entity_key": {
       "pattern": "^VG:(RISHI|DEVATA|CHANDAS):[A-Z0-9-]+$",
       "title": "Entity Key",
@@ -63,6 +91,13 @@
       "minLength": 1,
       "title": "Evidence",
       "type": "string"
+    },
+    "forbidden_features": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Forbidden Features",
+      "type": "array"
     },
     "lemma": {
       "minLength": 1,

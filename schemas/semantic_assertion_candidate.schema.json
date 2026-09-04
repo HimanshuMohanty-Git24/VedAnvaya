@@ -1,0 +1,312 @@
+{
+  "$defs": {
+    "EvidenceSpanType": {
+      "description": "Which supplied record an assertion's evidence points at.\n\nThe distinction is the point: a claim resting on Griffith's English is not the same\nclaim as one resting on the Sanskrit, and the graph must never lose track of which\nit was.",
+      "enum": [
+        "SANSKRIT_TOKEN",
+        "SANSKRIT_LINE",
+        "TRANSLATION_LINE",
+        "TRADITIONAL_METADATA",
+        "LEXICAL_MENTION"
+      ],
+      "title": "EvidenceSpanType",
+      "type": "string"
+    },
+    "Explicitness": {
+      "description": "How the model says it got there. Self-reported, and validated against evidence.",
+      "enum": [
+        "EXPLICIT",
+        "STRONG_INFERENCE",
+        "INTERPRETIVE"
+      ],
+      "title": "Explicitness",
+      "type": "string"
+    },
+    "SemanticAssertionObject": {
+      "additionalProperties": false,
+      "description": "Exactly one of: an existing canonical entity, or a proposed semantic concept.",
+      "properties": {
+        "candidate_entity_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Candidate Entity Id"
+        },
+        "entity_key": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Entity Key"
+        },
+        "node_type": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SemanticNodeType"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "title": "SemanticAssertionObject",
+      "type": "object"
+    },
+    "SemanticAssertionStatus": {
+      "description": "Lifecycle of a semantic assertion.\n\nThe extractor may only ever produce ``CANDIDATE``. Every other value is written by a\ndeterministic stage or by a person; a model that emitted ``AUTO_ACCEPTED`` would be\ngrading its own paper.",
+      "enum": [
+        "CANDIDATE",
+        "AUTO_ACCEPTED",
+        "HUMAN_ACCEPTED",
+        "HUMAN_REJECTED",
+        "VALIDATION_REJECTED",
+        "SUPERSEDED",
+        "NEEDS_REVIEW"
+      ],
+      "title": "SemanticAssertionStatus",
+      "type": "string"
+    },
+    "SemanticEvidence": {
+      "additionalProperties": false,
+      "description": "One thing an assertion rests on, precise enough to be checked or refused.",
+      "properties": {
+        "evidence_text_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Evidence Text Sha256"
+        },
+        "note": {
+          "default": "",
+          "title": "Note",
+          "type": "string"
+        },
+        "passage_key": {
+          "pattern": "^VG:RV:SAK:M\\d{2}:S\\d{3}:V\\d{3}$",
+          "title": "Passage Key",
+          "type": "string"
+        },
+        "sanskrit_token_keys": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Sanskrit Token Keys",
+          "type": "array"
+        },
+        "span_type": {
+          "$ref": "#/$defs/EvidenceSpanType"
+        },
+        "translation_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Translation Id"
+        }
+      },
+      "required": [
+        "passage_key",
+        "span_type"
+      ],
+      "title": "SemanticEvidence",
+      "type": "object"
+    },
+    "SemanticNodeType": {
+      "description": "Categories a semantic entity may belong to.\n\nChosen to be usable across the four Vedas, not tuned to the Rigveda. Adding a type\nis an ontology version bump, because every stored candidate names the version it was\nproduced under.",
+      "enum": [
+        "CONCEPT",
+        "PHILOSOPHICAL_CONCEPT",
+        "THEME",
+        "RITUAL",
+        "OFFERING",
+        "SUBSTANCE",
+        "PLANT",
+        "ANIMAL",
+        "OBJECT",
+        "PLACE",
+        "RIVER",
+        "REGION",
+        "NATURAL_PHENOMENON",
+        "COSMIC_ENTITY",
+        "ACTION",
+        "QUALITY",
+        "STATE"
+      ],
+      "title": "SemanticNodeType",
+      "type": "string"
+    },
+    "SemanticPredicate": {
+      "description": "Every relation name an extraction may emit, and the ones it may not.\n\nThe forbidden members exist so that a proposal naming one is rejected as a *policy*\ndecision with a recorded reason, instead of failing schema validation as an unknown\nstring. The difference matters when reading a rejection report.",
+      "enum": [
+        "EXPRESSES",
+        "DESCRIBES",
+        "PRAISES",
+        "INVOKES",
+        "REQUESTS",
+        "ASSOCIATED_WITH",
+        "INVOLVES_RITUAL",
+        "INVOLVES_OFFERING",
+        "INVOLVES_SUBSTANCE",
+        "REFERS_TO_PLACE",
+        "REFERS_TO_NATURAL_PHENOMENON",
+        "DESCRIBES_ACTION",
+        "HAS_THEME",
+        "CONTRASTS_WITH",
+        "SYMBOLIZES",
+        "REPRESENTS",
+        "IS_GOD_OF",
+        "MEANS",
+        "CAUSES"
+      ],
+      "title": "SemanticPredicate",
+      "type": "string"
+    },
+    "SemanticSubjectKind": {
+      "description": "Textual units a semantic assertion may be about.",
+      "enum": [
+        "MANTRA",
+        "SUKTA"
+      ],
+      "title": "SemanticSubjectKind",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "What a model proposed about one passage. A proposal, in the file, with its receipts.\n\n``confidence`` is the model's self-assessment and has no authority. It is stored\nbecause it is cheap and occasionally diagnostic, and it is used only as a floor\ninside a predicate's own acceptance rule — never as a reason on its own. See\n:func:`vedagraph.semantic.validate.decide_status`.",
+  "properties": {
+    "candidate_assertion_id": {
+      "minLength": 1,
+      "title": "Candidate Assertion Id",
+      "type": "string"
+    },
+    "confidence": {
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Confidence",
+      "type": "number"
+    },
+    "evidence": {
+      "items": {
+        "$ref": "#/$defs/SemanticEvidence"
+      },
+      "title": "Evidence",
+      "type": "array"
+    },
+    "explicitness": {
+      "$ref": "#/$defs/Explicitness"
+    },
+    "input_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Input Sha256",
+      "type": "string"
+    },
+    "model": {
+      "minLength": 1,
+      "title": "Model",
+      "type": "string"
+    },
+    "model_snapshot": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Model Snapshot"
+    },
+    "object": {
+      "$ref": "#/$defs/SemanticAssertionObject"
+    },
+    "ontology_version": {
+      "minLength": 1,
+      "title": "Ontology Version",
+      "type": "string"
+    },
+    "predicate": {
+      "$ref": "#/$defs/SemanticPredicate"
+    },
+    "prompt_version": {
+      "minLength": 1,
+      "title": "Prompt Version",
+      "type": "string"
+    },
+    "reasoning_effort": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Reasoning Effort"
+    },
+    "schema_name": {
+      "minLength": 1,
+      "title": "Schema Name",
+      "type": "string"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "$ref": "#/$defs/SemanticAssertionStatus",
+      "default": "CANDIDATE"
+    },
+    "subject_key": {
+      "minLength": 1,
+      "title": "Subject Key",
+      "type": "string"
+    },
+    "subject_kind": {
+      "$ref": "#/$defs/SemanticSubjectKind"
+    }
+  },
+  "required": [
+    "candidate_assertion_id",
+    "subject_key",
+    "subject_kind",
+    "predicate",
+    "object",
+    "explicitness",
+    "confidence",
+    "model",
+    "prompt_version",
+    "ontology_version",
+    "schema_name",
+    "input_sha256"
+  ],
+  "title": "SemanticAssertionCandidate",
+  "type": "object"
+}

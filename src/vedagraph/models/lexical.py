@@ -159,7 +159,34 @@ class LexicalAlias(VGModel):
     review_status: ReviewStatus
     evidence: str = Field(min_length=1)
     notes: str | None = None
+    #: Optional deterministic morphology constraints. An empty list means "unconstrained",
+    #: not "nothing is allowed": constraints are declared only where a lemma really is
+    #: shared between a deity and something else, and the annotation's own features
+    #: separate them. A token carrying no value for a constrained feature never matches.
+    allowed_pos: list[str] = Field(default_factory=list)
+    allowed_gender: list[str] = Field(default_factory=list)
+    allowed_number: list[str] = Field(default_factory=list)
+    allowed_case: list[str] = Field(default_factory=list)
+    #: ``feature=VALUE`` pairs that disqualify a token outright, e.g. ``non-finite=GDV``.
+    forbidden_features: list[str] = Field(default_factory=list)
     schema_version: str = SCHEMA_VERSION
+
+    @model_validator(mode="after")
+    def forbidden_features_are_pairs(self) -> LexicalAlias:
+        for item in self.forbidden_features:
+            if item.count("=") != 1 or not all(item.split("=")):
+                raise ValueError(f"forbidden_features entry must be feature=VALUE, got {item!r}")
+        return self
+
+    @property
+    def has_feature_constraints(self) -> bool:
+        return bool(
+            self.allowed_pos
+            or self.allowed_gender
+            or self.allowed_number
+            or self.allowed_case
+            or self.forbidden_features
+        )
 
     @property
     def may_produce_mention(self) -> bool:

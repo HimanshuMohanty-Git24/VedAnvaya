@@ -313,6 +313,108 @@ def test_do_not_match_suppresses_a_high_frequency_lemma(tmp_path, tokens, corpus
     assert {mention.object_key for mention in mentions} == {"VG:DEVATA:MITRAH"}
 
 
+def test_derived_stem_sharing_a_lemma_id_creates_no_edge(tmp_path, tokens, corpus):
+    """`índratama-` "most Indra-like" is filed under Indra's lemma id. It is not the name.
+
+    Gender cannot catch this class: the superlative agrees with whatever it qualifies,
+    so it is masculine as often as not. Only the lemma string separates them.
+    """
+    entities = make_entities()
+    write_alias_registry(tmp_path, [alias_row("VG:DEVATA:INDRAH", "índra-", ["lemma_indra_1708"])])
+    matcher = LexicalMatcher(load_lexical_aliases(tmp_path, entities=entities))
+    base = next(token for token in tokens if token.normalized_lemma == "indra")
+    derived = base.model_copy(update={"lemma": "índratama-", "normalized_lemma": "indratama"})
+
+    assert matcher.match(base).status is LexicalMatchStatus.MATCHED
+    result = matcher.match(derived)
+    assert result.status is LexicalMatchStatus.SUPPRESSED_LEMMA_MISMATCH
+    assert result.alias is None
+
+
+def test_feature_constraint_separates_two_entities_on_one_lemma(tmp_path, tokens, corpus):
+    """The Sarasvatī/Sarasvant case: one annotated entry, two deities, split by gender.
+
+    Both aliases are ACCEPTED on the same lemma id, so without the constraint this
+    token would be AMBIGUOUS_LEXICAL_ENTITY and produce nothing.
+    """
+    entities = make_entities()
+    write_alias_registry(
+        tmp_path,
+        [
+            alias_row("VG:DEVATA:MITRAH", "mitrá-", ["lemma_mitra_6824"], allowed_gender=["M"]),
+            alias_row("VG:DEVATA:AGNIH", "mitrá-", ["lemma_mitra_6824"], allowed_gender=["N"]),
+        ],
+    )
+    matcher = LexicalMatcher(load_lexical_aliases(tmp_path, entities=entities))
+    masculine = next(token for token in tokens if token.normalized_lemma == "mitra")
+    neuter = masculine.model_copy(
+        update={"morphological_features": {"case": "ACC", "gender": "N", "number": "SG"}}
+    )
+
+    matched = matcher.match(masculine)
+    assert matched.status is LexicalMatchStatus.MATCHED
+    assert matched.alias is not None
+    assert matched.alias.entity_key == "VG:DEVATA:MITRAH"
+    other = matcher.match(neuter)
+    assert other.status is LexicalMatchStatus.MATCHED
+    assert other.alias is not None
+    assert other.alias.entity_key == "VG:DEVATA:AGNIH"
+
+
+def test_constrained_feature_missing_from_the_token_fails_closed(tmp_path, tokens):
+    """No value for a constrained feature is not a pass. `ká-` carries no gender."""
+    entities = make_entities()
+    write_alias_registry(
+        tmp_path, [alias_row("VG:DEVATA:KAH", "ká-", ["lemma_ka_2373"], allowed_gender=["M"])]
+    )
+    matcher = LexicalMatcher(load_lexical_aliases(tmp_path, entities=entities))
+    pronoun = next(token for token in tokens if token.normalized_lemma == "ka")
+    assert "gender" not in pronoun.morphological_features
+    assert matcher.match(pronoun).status is LexicalMatchStatus.SUPPRESSED_FEATURE_CONSTRAINT
+
+
+def test_forbidden_feature_disqualifies_a_token(tmp_path, tokens):
+    entities = make_entities()
+    write_alias_registry(
+        tmp_path,
+        [
+            alias_row(
+                "VG:DEVATA:MITRAH",
+                "mitrá-",
+                ["lemma_mitra_6824"],
+                forbidden_features=["non-finite=GDV"],
+            )
+        ],
+    )
+    matcher = LexicalMatcher(load_lexical_aliases(tmp_path, entities=entities))
+    token = next(item for item in tokens if item.normalized_lemma == "mitra")
+    gerundive = token.model_copy(
+        update={"morphological_features": {**token.morphological_features, "non-finite": "GDV"}}
+    )
+    assert matcher.match(token).status is LexicalMatchStatus.MATCHED
+    assert matcher.match(gerundive).status is LexicalMatchStatus.SUPPRESSED_FEATURE_CONSTRAINT
+
+
+def test_forbidden_feature_must_be_a_pair(tmp_path):
+    write_alias_registry(
+        tmp_path,
+        [alias_row("VG:DEVATA:AGNIH", "agní-", ["lemma_agni_79"], forbidden_features=["gender"])],
+    )
+    with pytest.raises(ValueError, match="feature=VALUE"):
+        load_lexical_aliases(tmp_path, entities=make_entities())
+
+
+def test_an_unconstrained_alias_is_unaffected(tmp_path, tokens):
+    """An empty constraint list means "unconstrained", never "nothing is allowed"."""
+    entities = make_entities()
+    write_alias_registry(tmp_path, [alias_row("VG:DEVATA:AGNIH", "agní-", ["lemma_agni_79"])])
+    aliases = load_lexical_aliases(tmp_path, entities=entities)
+    assert aliases[0].has_feature_constraints is False
+    matcher = LexicalMatcher(aliases)
+    agni = next(token for token in tokens if token.normalized_lemma == "agni")
+    assert matcher.match(agni).status is LexicalMatchStatus.MATCHED
+
+
 def test_ambiguous_lemma_creates_no_edge(tmp_path, tokens, corpus):
     """One lemma reaching two accepted entities fails closed, however frequent."""
     entities = make_entities()
@@ -338,9 +440,13 @@ def test_ambiguous_lemma_creates_no_edge(tmp_path, tokens, corpus):
 
 
 def test_source_lemma_ambiguity_is_reported_not_resolved(tmp_path, tokens, corpus):
-    """The annotators gave `dyú- ~ div-` two entries; only one reaches an entity."""
+    """The annotators gave `dyú- ~ div-` two entries; only one reaches an entity.
+
+    The alias is registered on `dyú-` because the token really is that word: the
+    lemma-string rule rejects a token before its source ambiguity is even considered.
+    """
     entities = make_entities()
-    write_alias_registry(tmp_path, [alias_row("VG:DEVATA:AGNIH", "agní-", ["lemma_agni_79"])])
+    write_alias_registry(tmp_path, [alias_row("VG:DEVATA:AGNIH", "dyú-", ["lemma_agni_79"])])
     aliases = load_lexical_aliases(tmp_path, entities=entities)
     matcher = LexicalMatcher(aliases)
     dyu = next(token for token in tokens if token.lemma.startswith("dyú-"))

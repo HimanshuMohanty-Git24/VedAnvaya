@@ -98,7 +98,7 @@ for the corpus build. Selecting it introduced no new source, licence or download
 - **164,758 annotated tokens over 10,552/10,552 mantras (100%)**, aligned by the stanza's
   own `xml:id` rather than by comparing text: 0 unaligned, 0 duplicates, 0 mismatches.
 - **8,961 `MENTIONS_ENTITY` edges**, every one matched on the annotation's stable
-  Grassmann-linked lemma identifier. Measured precision: **0.34%** detectable false
+  Grassmann-linked lemma identifier. Measured precision: **0.01%** detectable false
   positives, audited against grammatical gender, which played no part in choosing aliases.
 - **256 exact mantra parallels** in 389 groups across five separately recorded
   representation levels, plus 69 reviewed near parallels — found by scoring **0.27%** of
@@ -116,7 +116,7 @@ not filtered out afterwards.
 for a human. It cannot write an alias, and it cannot write an edge.
 
 **Ambiguity fails closed.** A lemma reaching two entities produces nothing, however
-frequent. 786 tokens were deliberately left unresolved rather than guessed — including
+frequent. 711 tokens were deliberately left unresolved rather than guessed — including
 every occurrence of Sarasvatī, whose stem the annotation shares with the masculine
 Sarasvant.
 
@@ -301,15 +301,23 @@ CI performs the same locked, secret-free checks and never crawls sources.
 The Rigveda deterministic lexical and cross-mantra layer is built:
 `RIGVEDA_DETERMINISTIC_LEXICAL_READY_WITH_LIMITATIONS`. Alignment, token identity, precision,
 reproducibility and QA all pass. The limitations are deliberate: mention coverage is partial
-(38 accepted aliases of 214 Devatā entities), Sarasvatī awaits feature-conditioned matching,
-Ṛṣi lexical mentions await a source that can decompose patronymic labels, and Ṛṣi genealogy
-has no sufficient deterministic source at all.
+(40 accepted aliases of 214 Devatā entities), Ṛṣi lexical mentions await a source that can
+decompose patronymic labels, and Ṛṣi genealogy has no sufficient deterministic source at all.
+Mention policy v2 added feature-conditioned aliases and a lemma-identity rule, taking the
+detectable false-positive rate from 0.34% to 0.01% and recovering Sarasvatī and Sarasvant
+from one shared annotated lemma.
 
-Next is **semantic knowledge extraction**: `THEME`, `EXPRESSES`, `DESCRIBES`, `PRAISES`,
-`INVOKES`, ritual and natural-phenomenon associations. Its output will be candidate assertions
-only, and it will never alter the canonical corpus, the traditional metadata, the lexical
-mentions or the deterministic parallels. Only after that comes Neo4j as a derived database,
-then GraphRAG.
+The **semantic candidate layer** is built and tested offline but has not been run:
+`RIGVEDA_SEMANTIC_PIPELINE_READY_WITH_LIMITATIONS`. A closed ontology of 17 node types and
+14 predicates, a deterministic evidence packet, strict Structured Outputs against
+`gpt-5.6-luna`, a structural validator that rejects fabricated citations, and a per-predicate
+acceptance policy that auto-accepts nothing until a hand-annotated gold set has measured it.
+Its output is candidate assertions only, and it never alters the canonical corpus, the
+traditional metadata, the lexical mentions or the deterministic parallels. Two things block a
+run and neither is code: no API key is configured, and the 120-mantra gold subset is
+unannotated. Decision:
+[ADR-014](docs/decisions/ADR-014-llm-output-is-candidate-only.md). Only after that comes
+Neo4j as a derived database, then GraphRAG.
 
 Progress and blockers are maintained in [`docs/STATUS.md`](docs/STATUS.md); the generated build
 summaries are [`RIGVEDA_FULL_BUILD.md`](docs/reports/RIGVEDA_FULL_BUILD.md),

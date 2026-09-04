@@ -196,17 +196,17 @@ contains*. Still no Neo4j, no embeddings, no GraphRAG, no LLM.
   Adopting a second morphology source adds new token ids and changes no mantra id.
 - **Canonical Sanskrit untouched.** `GRETIL.RV.AUFRECHT` remains primary; the annotation's
   reading is preserved separately as `surface_form`.
-- **8,961 `MENTIONS_ENTITY` edges** over 6,531 mantras, 9,322 token occurrences — **all of
+- **8,961 `MENTIONS_ENTITY` edges** over 6,560 mantras, 9,364 token occurrences — **all of
   them `LEMMA_ID_EXACT`**, matched on the annotation's own Grassmann-linked lemma
   identifiers. No substring, surface or fuzzy match created a single edge.
-- **Precision measured independently: 0.34%** detectable false positives (32 off-gender of
-  9,322), using the annotation's grammatical gender, which played no part in choosing the
+- **Precision measured independently: 0.01%** detectable false positives (1 off-gender of
+  9,364), using the annotation's grammatical gender, which played no part in choosing the
   aliases. Stratified review sample of 228 rows.
   [`RIGVEDA_LEXICAL_MENTION_REVIEW.md`](reports/RIGVEDA_LEXICAL_MENTION_REVIEW.md).
 - **`DO_NOT_MATCH` is why precision holds.** 22 evidenced suppressions stop Anukramaṇī
   Devatā labels that are ordinary nouns — `kaḥ` (interrogative pronoun, 468 occurrences),
   `rathaḥ` ("chariot", 471), `hariḥ` (271) — from fabricating ~2,000 false mentions.
-- **Ambiguity fails closed.** 786 tokens matched a registered alias and produced **no
+- **Ambiguity fails closed.** 711 tokens matched a registered alias and produced **no
   edge**, reported rather than guessed: `sárasvant-` (Sarasvatī/Sarasvant share one stem),
   `áp-`, `yamá-`, `mr̥tyú-`, `vená-`, `dadhikrā́-`.
 - **Assignment is not mention, and the numbers prove it.** `pavamānaḥ somaḥ` is assigned to
@@ -259,8 +259,8 @@ contains*. Still no Neo4j, no embeddings, no GraphRAG, no LLM.
 | Canonical Sanskrit unmodified | PASS |
 | No substring matching | PASS — all edges `LEMMA_ID_EXACT` |
 | No fuzzy automatic resolution | PASS — candidates only |
-| Mention precision | PASS — 0.34% detectable false positives |
-| Ambiguity fails closed | PASS — 786 tokens, 0 edges |
+| Mention precision | PASS — 0.01% detectable false positives |
+| Ambiguity fails closed | PASS — 711 tokens, 0 edges |
 | `HAS_COMPONENT` reviewed-only | PASS |
 | Exact parallels, canonical pair ordering | PASS |
 | Parallel engine sub-quadratic with measured recall | PASS — 0.27% of pairs, 100% recall on M9 |
@@ -268,7 +268,7 @@ contains*. Still no Neo4j, no embeddings, no GraphRAG, no LLM.
 | Deterministic byte-identical rebuild | PASS |
 | No LLM, embedding, or classifier | PASS |
 | Structural errors | PASS — 0 QA errors |
-| Mention coverage | PARTIAL — 6,531/10,552 mantras; 38 aliases of 214 Devatās |
+| Mention coverage | PARTIAL — 6,560/10,552 mantras; 40 aliases of 214 Devatās |
 | Sarasvatī mentions | DEFERRED — needs feature-conditioned matching |
 | Ṛṣi lexical mentions | DEFERRED — no deterministic source for label decomposition |
 | Ṛṣi family / genealogy edges | NOT IMPLEMENTED — no sufficient source |
@@ -381,3 +381,90 @@ Limitations that make this `READY_WITH_LIMITATIONS` rather than `READY`:
 - Decide whether to seek VHP permission or to accept partial traditional-metadata coverage.
 - Consider a periodic re-check of RV 1.179 on Wikisource in case the page markup changes; revision
   pinning means this build will not silently pick up a fix.
+
+---
+
+# SEMANTIC CANDIDATE LAYER
+
+Deterministic checkpoint this layer is built on: **`98be4d0`**
+(`Rigveda deterministic lexical and cross-mantra knowledge layer v1`). The three
+deterministic layers were verified clean at that commit — ruff, mypy strict, 254 tests,
+byte-identical lexical rebuild — before any semantic work began, and none of them is
+written to by anything in this section.
+
+Status: **`READY_WITH_LIMITATIONS`** — pipeline complete and tested offline, **not yet run**.
+
+Decision: [ADR-014](decisions/ADR-014-llm-output-is-candidate-only.md).
+Reports: [RIGVEDA_SEMANTIC_PILOT.md](reports/RIGVEDA_SEMANTIC_PILOT.md),
+[RIGVEDA_SEMANTIC_ONTOLOGY.md](reports/RIGVEDA_SEMANTIC_ONTOLOGY.md),
+[RIGVEDA_SEMANTIC_EVAL.md](reports/RIGVEDA_SEMANTIC_EVAL.md),
+[RIGVEDA_SEMANTIC_COST.md](reports/RIGVEDA_SEMANTIC_COST.md).
+
+## Lexical hardening, policy v2
+
+The v1 audit found 32 detectable false-positive occurrences. Every class a deterministic
+feature can separate is now excluded by a registry rule:
+
+| | v1 | v2 |
+|---|---:|---:|
+| mention assertions | 8,961 | 9,000 |
+| token occurrences | 9,322 | 9,364 |
+| mantras with a mention | 6,531 | 6,560 |
+| accepted aliases | 38 | 40 |
+| tokens left ambiguous | 786 | 711 |
+| **detectable off-gender occurrences** | **32** | **1** |
+| **detectable false-positive rate** | **0.34%** | **0.01%** |
+
+Two new rules, both properties of the annotation record and neither contextual:
+
+- **Lemma identity is required, always.** A shared Grassmann lemma id is necessary but not
+  sufficient: `índratama-` and `tákṣya-` are filed under the base word's id. Five occurrences
+  removed, two of which the gender audit could never have found.
+- **An alias may declare morphology constraints.** `allowed_pos` / `allowed_gender` /
+  `allowed_number` / `allowed_case` / `forbidden_features`, enforced fail-closed. 28
+  occurrences removed; **75 recovered**, because `sárasvant-` splits 70 F / 5 M and now
+  reaches Sarasvatī and Sarasvant as separate entities instead of producing nothing.
+
+One off-gender occurrence remains, kept deliberately: RV 10.93.6 `mitrā́váruṇau` is tagged
+neuter dual and there is no neuter appellative for it to be, so gender supplies no
+discriminant. It is an annotation gender-tag anomaly, recorded in the registry notes.
+The 23 `sūryā́-` occurrences were removed from Sūrya but **not** reassigned: which entity
+they belong to is a registry merge question, held as a `NEEDS_REVIEW` alias producing no
+edges so the gap stays visible.
+
+## Semantic pipeline
+
+| | value |
+|---|---|
+| pilot mantras selected | 508 of 10,552 (deterministic, hash-ordered, all 10 Maṇḍalas) |
+| gold subset selected | 120 |
+| **gold subset annotated** | **0** |
+| **live extractions run** | **0** |
+| semantic node types | 17 |
+| predicates allowed | 14 (7 LOW, 7 MEDIUM, 0 HIGH) |
+| predicates refused by name | 5, each with a recorded reason |
+| **predicates unlocked for auto-acceptance** | **0** |
+| semantic entities in the registry | 0 — nothing is seeded |
+| offline tests | 62 |
+
+## Blockers
+
+1. **No `OPENAI_API_KEY`.** The live extractor, the medium-vs-high reasoning comparison,
+   measured precision and actual cost all need one. `make semantic-dry-run` builds all
+   508 packets and prices the run for free.
+2. **The gold subset is unannotated.** 120 rows marked `UNANNOTATED` in
+   `data/gold/rigveda_semantic_gold_v1.jsonl`. It must be written by a person — see
+   [RIGVEDA_SEMANTIC_GOLD_PROTOCOL.md](architecture/RIGVEDA_SEMANTIC_GOLD_PROTOCOL.md).
+   An LLM-authored gold set would measure agreement between two model passes, which is
+   not precision and is worse than no measurement because it looks like one.
+
+Until both are resolved, `unlocked_predicates` is empty and a live run auto-accepts
+**nothing**, routing every clean candidate to review. Full-corpus extraction is not
+authorised.
+
+## Estimated cost
+
+Measured: 508 packets, ~1.91M input tokens, ~3,770 per request. Estimated at published
+rates and an assumed 900-token reply: **$0.93** for the pilot, **~$19.35** projected for
+all 10,552 mantras (~$9.70 via Batch). Cost is not the constraint on this project;
+precision is.

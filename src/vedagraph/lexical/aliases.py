@@ -16,6 +16,21 @@ alias it proposes has no effect until a person moves it into the registry with
 **Fail closed on ambiguity.** If one lemma reaches two accepted entities, the
 matcher returns ``AMBIGUOUS_LEXICAL_ENTITY`` and no edge is produced, however
 frequent the lemma is.
+
+Two further rules were added in policy v2, both to close false-positive classes the
+v1 audit found and neither of them contextual:
+
+**The lemma must be the alias's lemma.** Matching is by the annotation's stable lemma
+id, and the annotators give a derived stem the *base* word's id: ``índratama-`` "most
+Indra-like" and ``tákṣya-`` "to be fashioned" carry ``lemma_indra_1708`` and
+``lemma_tArkzya_3741``. A shared id is therefore necessary but not sufficient; the
+lemma string must agree too, or the match is ``SUPPRESSED_LEMMA_MISMATCH``.
+
+**Declared morphology constraints are enforced.** An alias may state which
+part-of-speech, gender, number or case readings of its lemma name the entity. This is
+what lets ``sárasvant-`` reach Sarasvatī when feminine and Sarasvant when masculine
+without any appeal to what a verse is about. Constraints are declared only where a
+lemma really is shared; most aliases declare none.
 """
 
 from __future__ import annotations
@@ -44,7 +59,7 @@ from vedagraph.models.lexical import (
 from vedagraph.normalize import fold_transcription, normalize_nfc, strip_vedic_accents
 
 LEXICAL_ALIAS_FILE = "lexical_aliases.yaml"
-MENTION_POLICY_VERSION = "rigveda-lexical-mention-policy-v1"
+MENTION_POLICY_VERSION = "rigveda-lexical-mention-policy-v2"
 
 #: Entity families v1 accepts lexical aliases for. Ṛṣi is excluded: the canonical
 #: Ṛṣi registry stores patronymic-plus-name labels (``rāhūgaṇo gotamaḥ``), and
@@ -132,9 +147,65 @@ def load_lexical_aliases(
                 review_status=ReviewStatus(row["review_status"]),
                 evidence=str(row["evidence"]),
                 notes=str(row["notes"]) if row.get("notes") else None,
+                allowed_pos=[str(item) for item in row.get("allowed_pos", [])],
+                allowed_gender=[str(item) for item in row.get("allowed_gender", [])],
+                allowed_number=[str(item) for item in row.get("allowed_number", [])],
+                allowed_case=[str(item) for item in row.get("allowed_case", [])],
+                forbidden_features=[str(item) for item in row.get("forbidden_features", [])],
             )
         )
     return sorted(aliases, key=lambda alias: alias.alias_key)
+
+
+#: Which morphology feature each ``allowed_*`` list constrains. ``allowed_pos`` is not
+#: here: part of speech is a token field, not a morphosyntax feature.
+_FEATURE_FIELDS: tuple[tuple[str, str], ...] = (
+    ("gender", "allowed_gender"),
+    ("number", "allowed_number"),
+    ("case", "allowed_case"),
+)
+
+
+def disqualify(
+    alias: LexicalAlias, token: MorphologyToken
+) -> tuple[LexicalMatchStatus, str] | None:
+    """Why this token may not evidence this alias, or ``None`` if it may.
+
+    Two checks, in order. Both are deterministic properties of the annotation record;
+    neither looks at the mantra's meaning, its neighbours or its traditional metadata.
+    """
+    alias_keys = lemma_match_keys(alias.normalized_lemma)
+    token_keys = lemma_match_keys(token.normalized_lemma)
+    if alias_keys and not set(alias_keys) & set(token_keys):
+        # Shared lemma id, different word: a derived stem carrying the base entry's id.
+        return (
+            LexicalMatchStatus.SUPPRESSED_LEMMA_MISMATCH,
+            f"token lemma {token.lemma!r} is not the alias lemma {alias.lemma!r}",
+        )
+    if alias.allowed_pos and (token.part_of_speech or "") not in alias.allowed_pos:
+        return (
+            LexicalMatchStatus.SUPPRESSED_FEATURE_CONSTRAINT,
+            f"part of speech {token.part_of_speech!r} is not in {alias.allowed_pos}",
+        )
+    for feature, field_name in _FEATURE_FIELDS:
+        allowed: list[str] = getattr(alias, field_name)
+        if not allowed:
+            continue
+        value = token.morphological_features.get(feature)
+        if value not in allowed:
+            # A token with no value for a constrained feature fails closed.
+            return (
+                LexicalMatchStatus.SUPPRESSED_FEATURE_CONSTRAINT,
+                f"{feature}={value!r} is not in {allowed}",
+            )
+    for pair in alias.forbidden_features:
+        feature, _, value = pair.partition("=")
+        if token.morphological_features.get(feature) == value:
+            return (
+                LexicalMatchStatus.SUPPRESSED_FEATURE_CONSTRAINT,
+                f"{pair} is registered as disqualifying",
+            )
+    return None
 
 
 @dataclass(frozen=True)
@@ -217,6 +288,15 @@ class LexicalMatcher:
         if not hits:
             hits = {alias.alias_key: alias for key in keys for alias in self._by_lemma.get(key, ())}
             method = MentionMethod.LEMMA_NORMALIZED_EXACT
+
+        rejections = {key: disqualify(alias, token) for key, alias in hits.items()}
+        surviving = {key: alias for key, alias in hits.items() if rejections[key] is None}
+        if hits and not surviving:
+            # Every alias this token reached rules it out. Report the first reason in
+            # registry order so the outcome is stable across rebuilds.
+            first = next(r for key in sorted(hits) if (r := rejections[key]) is not None)
+            return AliasMatch(first[0], candidates=tuple(sorted(hits)), reason=first[1])
+        hits = surviving
 
         entities = {alias.entity_key for alias in hits.values()}
         if len(entities) > 1:

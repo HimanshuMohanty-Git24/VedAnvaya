@@ -1,6 +1,6 @@
 # Rigveda Lexical Mention Policy
 
-Policy version: `rigveda-lexical-mention-policy-v1`
+Policy version: `rigveda-lexical-mention-policy-v2`
 Applies to: `MENTIONS_ENTITY` in `data/knowledge/rigveda_lexical_v1`.
 
 ---
@@ -40,7 +40,7 @@ mentioned in none.
 2. **`LEMMA_NORMALIZED_EXACT`** — the token's lemma and the alias lemma have the
    same comparison key. Available only for aliases that declare no lemma id.
 
-In the v1 build, **all 9,322 mention token occurrences came from
+In the v1 build, **all 9,364 mention token occurrences came from
 `LEMMA_ID_EXACT`.** The string path contributed nothing.
 
 ### What is forbidden
@@ -115,7 +115,7 @@ rather than silent.
 a token several lexical entries and only some reach a canonical entity. That is the
 source's uncertainty, not ours to settle.
 
-786 tokens were deliberately left unresolved in v1. The largest groups:
+711 tokens are deliberately left unresolved. The largest groups:
 
 - `sárasvant-` — the annotation lemmatises every Sarasvatī form under the vant-stem
   that also covers the masculine Sarasvant. Separable by the annotation's own
@@ -179,6 +179,30 @@ word.
 
 ---
 
+## Policy v2: two rules the audit forced
+
+**A shared lemma id is necessary but not sufficient.** The annotators file a derived
+stem under the base word's Grassmann entry: `índratama-` "most Indra-like" carries
+`lemma_indra_1708`, `tákṣya-` "to be fashioned" carries `lemma_tArkzya_3741`. Matching
+on the id alone therefore admits words that are not the name. Every match now also
+requires the token's lemma *string* to be the alias's lemma, compared on the same
+folded surface and split on the annotation's `~` alternants. This is not configurable
+and no alias may opt out of it. Failure is `SUPPRESSED_LEMMA_MISMATCH`.
+
+**An alias may state which readings of its lemma name the entity.** Optional
+`allowed_pos`, `allowed_gender`, `allowed_number`, `allowed_case` and
+`forbidden_features` are enforced against the annotation's own features. Constraints
+are declared only where a lemma really is shared and the features really do separate
+the readings; most aliases declare none, and an empty list means *unconstrained*, never
+*nothing allowed*. A token carrying no value for a constrained feature fails closed.
+Failure is `SUPPRESSED_FEATURE_CONSTRAINT`.
+
+Both rules are properties of the annotation record. Neither consults the mantra's
+meaning, its neighbours, its translation or its traditional metadata — that boundary is
+unchanged from v1, and everything on the far side of it belongs to the semantic layer.
+
+---
+
 ## Measured precision
 
 Full method and sample in
@@ -190,29 +214,52 @@ whose gender disagrees with the deity's is a candidate false positive.
 
 | measure | value |
 |---|---|
-| mention token occurrences | 9,322 |
-| off-gender occurrences (upper bound on detectable false positives) | 32 |
-| **detectable false-positive rate** | **0.34%** |
+| mention token occurrences | 9,364 |
+| off-gender occurrences (upper bound on detectable false positives) | 1 |
+| **detectable false-positive rate** | **0.01%** |
 | stratified review sample | 228 rows |
-| tokens deliberately left ambiguous | 786 |
+| tokens deliberately left ambiguous | 711 |
 
-Per-entity, the riskiest accepted aliases behave as predicted:
+### What v2 removed
 
-| entity | occurrences | off-gender | rate |
-|---|---|---|---|
-| `VG:DEVATA:SURYAH` | 404 | 23 | 5.69% |
-| `VG:DEVATA:MITRAVARUNAU` | 92 | 1 | 1.09% |
-| `VG:DEVATA:MITRAH` | 328 | 3 | 0.91% |
-| `VG:DEVATA:ADITIH` | 174 | 1 | 0.57% |
-| `VG:DEVATA:ASVINAU` | 444 | 1 | 0.23% |
-| `VG:DEVATA:INDRAH` | 2,438 | 2 | 0.08% |
-| `VG:DEVATA:AGNIH` | 1,724 | 0 | 0.00% |
+The v1 audit found 32 detectable false-positive occurrences. Every one whose class a
+deterministic feature could separate is now excluded by a registry rule, not by
+judgement about what a verse is about:
 
-`mitrá-` was flagged in the registry as the highest-risk accepted alias before the
-audit ran; the audit found 3 neuter occurrences ("alliance") out of 328. Sūrya's
-23 feminine occurrences are `sūryā́-`, the Sun's daughter of RV 10.85 — arguably a
-distinct entity rather than an error, and recorded as the one entity worth
-splitting first.
+| entity | v1 | v2 | what the 32 actually were | rule |
+|---|---|---|---|---|
+| `VG:DEVATA:SURYAH` | 404 | 381 | 23 × `sūryā́-`, the Sun's daughter of RV 10.85 | gender + lemma string |
+| `VG:DEVATA:MITRAH` | 328 | 325 | 3 × neuter `mitrá-` "alliance" | gender |
+| `VG:DEVATA:INDRAH` | 2,438 | 2,435 | 3 × `índratama-` / `índravātatama-`, superlatives | lemma string |
+| `VG:DEVATA:ADITIH` | 174 | 173 | 1 × masculine `áditi-` "unbound" | gender |
+| `VG:DEVATA:ASVINAU` | 444 | 443 | 1 × neuter `aśvína-` "horse-team" | gender |
+| `VG:DEVATA:TARKSYAH` | 3 | 2 | 1 × `tákṣyā`, gerundive of √takṣ | lemma string |
+| `VG:DEVATA:DRAVINODAH` | 24 | 23 | 1 × adjective `draviṇodá-` | lemma string |
+| `VG:DEVATA:MITRAVARUNAU` | 92 | 92 | 1 × `mitrā́váruṇau` tagged NOM DU **N** | **kept** |
+
+Two of those classes gender could not have found. `índratama-` is a superlative that
+agrees with whatever it qualifies, so it is masculine as often as feminine; the audit
+caught two of its three occurrences by luck of agreement. `tákṣyā` was never reachable
+by the gender audit at all. Both are excluded by the lemma-string rule instead, which
+is why that rule is a default and not an opt-in.
+
+The one remaining off-gender occurrence is kept deliberately. There is no neuter
+appellative `mitrāvaruṇa-` for RV 10.93.6 to be, so gender supplies no discriminant
+there; it is an annotation gender-tag anomaly, and suppressing it would be a guess
+dressed as a rule. It is recorded in the registry notes rather than removed.
+
+### What v2 recovered
+
+`sárasvant-` is one annotated entry covering two deities, split 70 feminine / 5
+masculine with no third reading. v1 deferred it for want of the mechanism, not for want
+of evidence, and produced nothing. v2 accepts both readings under feature-conditioned
+aliases: **+70** occurrences to `VG:DEVATA:SARASVATI`, **+5** to `VG:DEVATA:SARASVAN`.
+
+The 23 `sūryā́-` occurrences were **not** reassigned. Removing them from Sūrya is
+deterministic; deciding which entity they belong to is a registry merge question — the
+nearest registered entity is the Anukramaṇī's compound label `sāvitrī sūryā` — and that
+is not a lexical decision. They are held as a `NEEDS_REVIEW` alias producing no edges,
+so the gap is visible rather than silent.
 
 This is an upper bound on the classes gender can detect. It cannot detect an error
 where deity and appellative share a gender, which is why the `DO_NOT_MATCH` rules
@@ -222,10 +269,10 @@ carry the cases where that would apply.
 
 ## Precision over recall
 
-The layer covers 6,531 of 10,552 mantras. 4,021 mantras have no recognised mention.
+The layer covers 6,560 of 10,552 mantras. 3,992 mantras have no recognised mention.
 That number is not a defect to be closed by loosening the policy. It reflects:
 
-- 38 accepted aliases out of 214 registered Devatā entities;
+- 40 accepted aliases out of 214 registered Devatā entities;
 - 22 deliberate suppressions;
 - 11 unreviewed aliases producing nothing;
 - Ṛṣi mentions not attempted at all.

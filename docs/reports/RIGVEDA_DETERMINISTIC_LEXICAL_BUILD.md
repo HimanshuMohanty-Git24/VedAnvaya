@@ -83,7 +83,7 @@ text; the annotation's reading is stored separately as `surface_form`.
 | category | count |
 |---|---|
 | registry rows | 71 |
-| accepted, mention-bearing | 38 |
+| accepted, mention-bearing | 40 |
 | `DO_NOT_MATCH` suppressions | 22 |
 | registered but `NEEDS_REVIEW` (produce nothing) | 11 |
 | machine-proposed candidates still awaiting review | 0 |
@@ -102,11 +102,11 @@ Full policy: [RIGVEDA_LEXICAL_MENTION_POLICY.md](../architecture/RIGVEDA_LEXICAL
 | measure | value |
 |---|---|
 | assertions | 8,961 |
-| token occurrences | 9,322 |
-| mantras with at least one mention | 6,531 (61.9%) |
-| mantras with no recognised mention | 4,021 |
-| tokens deliberately left ambiguous | 786 |
-| match method | `LEMMA_ID_EXACT` — 9,322 of 9,322 |
+| token occurrences | 9,364 |
+| mantras with at least one mention | 6,560 (61.9%) |
+| mantras with no recognised mention | 3,992 |
+| tokens deliberately left ambiguous | 711 |
+| match method | `LEMMA_ID_EXACT` — 9,364 of 9,364 |
 
 **Every edge came from a stable Grassmann-linked lemma identifier.** No substring match,
 no surface match and no fuzzy match contributed anything.
@@ -118,8 +118,8 @@ in that choice — is independent evidence.
 
 | measure | value |
 |---|---|
-| off-gender occurrences | 32 / 9,322 |
-| **detectable false-positive rate** | **0.34%** |
+| off-gender occurrences | 1 / 9,364 |
+| **detectable false-positive rate** | **0.01%** |
 | stratified review sample | 228 rows |
 
 Detail: [RIGVEDA_LEXICAL_MENTION_REVIEW.md](RIGVEDA_LEXICAL_MENTION_REVIEW.md).
@@ -286,7 +286,7 @@ Carried deliberately, each with a recorded reason:
    separable by the annotation's own gender feature, but v1 has no feature-conditioned
    alias mechanism. Highest-value item to fix.
 2. **No Ṛṣi mentions**, for the source reason above.
-3. **786 tokens left ambiguous** — `áp-`, `yamá-`, `mr̥tyú-`, `vená-`, `dadhikrā́-`.
+3. **711 tokens left ambiguous** — `áp-`, `yamá-`, `mr̥tyú-`, `vená-`, `dadhikrā́-`.
 4. **38 accepted aliases of 214 Devatā entities.** Coverage is partial by design.
 5. **`sū́rya-` carries 23 feminine occurrences** (`sūryā́-`, RV 10.85), arguably a
    distinct entity. The clearest candidate for an entity split.

@@ -1,0 +1,2101 @@
+config_version: rigveda-semantic-pilot-v1
+selection_rule_version: rigveda-semantic-pilot-selection-v1
+corpus_dataset_id: rigveda_full_v1
+description: Mantra ids only. No Sanskrit or translation text is stored here; every evidence packet is
+  rebuilt from the pinned corpus using these ids.
+strata:
+- name: TRANSLATION_MISSING
+  quota: 60
+  selected: 52
+  reason: 'no Griffith verse exists: the packet carries Sanskrit and morphology only, and the model must
+    decline rather than translate'
+- name: LEXICALLY_AMBIGUOUS
+  quota: 45
+  selected: 45
+  reason: the lexical layer deliberately refused to resolve a token here; a model that resolves it anyway
+    is doing so without evidence
+- name: EXACT_PARALLEL
+  quota: 45
+  selected: 45
+  reason: the mantra recurs verbatim elsewhere, so its extraction can be compared with that of its twin
+- name: NEAR_PARALLEL
+  quota: 30
+  selected: 30
+  reason: 'a near-parallel: similar wording, possibly different claims'
+- name: RARE_DEVATA
+  quota: 40
+  selected: 40
+  reason: assigned a Devatā with at most 12 mantras
+- name: RARE_CHANDAS
+  quota: 25
+  selected: 25
+  reason: assigned a metre with at most 12 mantras
+- name: RARE_RISHI
+  quota: 25
+  selected: 25
+  reason: assigned a Ṛṣi with at most 12 mantras
+- name: MULTI_DEVATA
+  quota: 25
+  selected: 6
+  reason: tradition assigns more than one Devatā
+- name: NO_LEXICAL_MENTION
+  quota: 40
+  selected: 40
+  reason: no deterministic mention was found, so the model has metadata and text but no pre-established
+    entity to lean on
+- name: SHORT_SUKTA
+  quota: 25
+  selected: 25
+  reason: 'a Sūkta of at most 3 mantras: little context'
+- name: LONG_SUKTA
+  quota: 25
+  selected: 25
+  reason: 'a Sūkta of at least 30 mantras: a narrow window'
+- name: MANDALA_09_SOMA
+  quota: 40
+  selected: 40
+  reason: 'Maṇḍala 9 is almost entirely Soma Pavamāna: highly repetitive ritual language'
+- name: MANDALA_10
+  quota: 40
+  selected: 40
+  reason: Maṇḍala 10 carries the cosmological and philosophical material, where the temptation to interpret
+    is strongest
+- name: MANDALA_SPREAD
+  quota: 70
+  selected: 70
+  reason: an even draw across all ten Maṇḍalas so no book is represented only by its difficult cases
+pilot_mantra_count: 508
+gold_mantra_count: 120
+mantras:
+- passage_key: VG:RV:SAK:M01:S005:V003
+  citation: RV 1.5.3
+  stratum: NO_LEXICAL_MENTION
+  gold: true
+- passage_key: VG:RV:SAK:M01:S013:V011
+  citation: RV 1.13.11
+  stratum: RARE_DEVATA
+  gold: false
+- passage_key: VG:RV:SAK:M01:S014:V004
+  citation: RV 1.14.4
+  stratum: NO_LEXICAL_MENTION
+  gold: true
+- passage_key: VG:RV:SAK:M01:S022:V006
+  citation: RV 1.22.6
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: false
+- passage_key: VG:RV:SAK:M01:S022:V015
+  citation: RV 1.22.15
+  stratum: RARE_DEVATA
+  gold: false
+- passage_key: VG:RV:SAK:M01:S023:V020
+  citation: RV 1.23.20
+  stratum: NEAR_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M01:S023:V021
+  citation: RV 1.23.21
+  stratum: EXACT_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M01:S024:V006
+  citation: RV 1.24.6
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: false
+- passage_key: VG:RV:SAK:M01:S025:V016
+  citation: RV 1.25.16
+  stratum: NO_LEXICAL_MENTION
+  gold: true
+- passage_key: VG:RV:SAK:M01:S032:V011
+  citation: RV 1.32.11
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: false
+- passage_key: VG:RV:SAK:M01:S035:V005
+  citation: RV 1.35.5
+  stratum: MANDALA_SPREAD
+  gold: true
+- passage_key: VG:RV:SAK:M01:S036:V018
+  citation: RV 1.36.18
+  stratum: MANDALA_SPREAD
+  gold: true
+- passage_key: VG:RV:SAK:M01:S043:V006
+  citation: RV 1.43.6
+  stratum: NO_LEXICAL_MENTION
+  gold: true
+- passage_key: VG:RV:SAK:M01:S046:V004
+  citation: RV 1.46.4
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: false
+- passage_key: VG:RV:SAK:M01:S051:V009
+  citation: RV 1.51.9
+  stratum: MANDALA_SPREAD
+  gold: true
+- passage_key: VG:RV:SAK:M01:S053:V001
+  citation: RV 1.53.1
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M01:S058:V001
+  citation: RV 1.58.1
+  stratum: NO_LEXICAL_MENTION
+  gold: true
+- passage_key: VG:RV:SAK:M01:S061:V003
+  citation: RV 1.61.3
+  stratum: NO_LEXICAL_MENTION
+  gold: true
+- passage_key: VG:RV:SAK:M01:S062:V008
+  citation: RV 1.62.8
+  stratum: MANDALA_SPREAD
+  gold: true
+- passage_key: VG:RV:SAK:M01:S065:V006
+  citation: RV 1.65.6
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M01:S065:V007
+  citation: RV 1.65.7
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M01:S065:V008
+  citation: RV 1.65.8
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M01:S065:V009
+  citation: RV 1.65.9
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M01:S065:V010
+  citation: RV 1.65.10
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M01:S066:V006
+  citation: RV 1.66.6
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M01:S066:V007
+  citation: RV 1.66.7
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M01:S066:V008
+  citation: RV 1.66.8
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M01:S066:V009
+  citation: RV 1.66.9
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M01:S066:V010
+  citation: RV 1.66.10
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M01:S067:V006
+  citation: RV 1.67.6
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M01:S067:V007
+  citation: RV 1.67.7
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M01:S067:V008
+  citation: RV 1.67.8
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M01:S067:V009
+  citation: RV 1.67.9
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M01:S067:V010
+  citation: RV 1.67.10
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M01:S068:V006
+  citation: RV 1.68.6
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M01:S068:V007
+  citation: RV 1.68.7
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M01:S068:V008
+  citation: RV 1.68.8
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M01:S068:V009
+  citation: RV 1.68.9
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M01:S068:V010
+  citation: RV 1.68.10
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M01:S069:V006
+  citation: RV 1.69.6
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M01:S069:V007
+  citation: RV 1.69.7
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M01:S069:V008
+  citation: RV 1.69.8
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M01:S069:V009
+  citation: RV 1.69.9
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M01:S069:V010
+  citation: RV 1.69.10
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M01:S070:V007
+  citation: RV 1.70.7
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M01:S070:V008
+  citation: RV 1.70.8
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M01:S070:V009
+  citation: RV 1.70.9
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M01:S070:V010
+  citation: RV 1.70.10
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M01:S070:V011
+  citation: RV 1.70.11
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M01:S073:V001
+  citation: RV 1.73.1
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M01:S083:V001
+  citation: RV 1.83.1
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: false
+- passage_key: VG:RV:SAK:M01:S083:V005
+  citation: RV 1.83.5
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: false
+- passage_key: VG:RV:SAK:M01:S091:V018
+  citation: RV 1.91.18
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M01:S094:V013
+  citation: RV 1.94.13
+  stratum: MANDALA_SPREAD
+  gold: true
+- passage_key: VG:RV:SAK:M01:S095:V011
+  citation: RV 1.95.11
+  stratum: EXACT_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M01:S101:V005
+  citation: RV 1.101.5
+  stratum: MANDALA_SPREAD
+  gold: true
+- passage_key: VG:RV:SAK:M01:S104:V005
+  citation: RV 1.104.5
+  stratum: NO_LEXICAL_MENTION
+  gold: true
+- passage_key: VG:RV:SAK:M01:S107:V001
+  citation: RV 1.107.1
+  stratum: SHORT_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M01:S108:V010
+  citation: RV 1.108.10
+  stratum: NEAR_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M01:S116:V009
+  citation: RV 1.116.9
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: false
+- passage_key: VG:RV:SAK:M01:S118:V003
+  citation: RV 1.118.3
+  stratum: NEAR_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M01:S120:V008
+  citation: RV 1.120.8
+  stratum: RARE_CHANDAS
+  gold: false
+- passage_key: VG:RV:SAK:M01:S122:V008
+  citation: RV 1.122.8
+  stratum: NO_LEXICAL_MENTION
+  gold: true
+- passage_key: VG:RV:SAK:M01:S127:V002
+  citation: RV 1.127.2
+  stratum: NO_LEXICAL_MENTION
+  gold: true
+- passage_key: VG:RV:SAK:M01:S129:V008
+  citation: RV 1.129.8
+  stratum: RARE_CHANDAS
+  gold: false
+- passage_key: VG:RV:SAK:M01:S133:V006
+  citation: RV 1.133.6
+  stratum: RARE_CHANDAS
+  gold: false
+- passage_key: VG:RV:SAK:M01:S135:V007
+  citation: RV 1.135.7
+  stratum: RARE_CHANDAS
+  gold: false
+- passage_key: VG:RV:SAK:M01:S136:V007
+  citation: RV 1.136.7
+  stratum: RARE_DEVATA
+  gold: true
+- passage_key: VG:RV:SAK:M01:S137:V001
+  citation: RV 1.137.1
+  stratum: RARE_CHANDAS
+  gold: false
+- passage_key: VG:RV:SAK:M01:S137:V002
+  citation: RV 1.137.2
+  stratum: RARE_CHANDAS
+  gold: false
+- passage_key: VG:RV:SAK:M01:S137:V003
+  citation: RV 1.137.3
+  stratum: RARE_CHANDAS
+  gold: false
+- passage_key: VG:RV:SAK:M01:S147:V003
+  citation: RV 1.147.3
+  stratum: EXACT_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M01:S148:V004
+  citation: RV 1.148.4
+  stratum: NO_LEXICAL_MENTION
+  gold: true
+- passage_key: VG:RV:SAK:M01:S150:V003
+  citation: RV 1.150.3
+  stratum: SHORT_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M01:S154:V006
+  citation: RV 1.154.6
+  stratum: NO_LEXICAL_MENTION
+  gold: true
+- passage_key: VG:RV:SAK:M01:S157:V005
+  citation: RV 1.157.5
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: true
+- passage_key: VG:RV:SAK:M01:S162:V021
+  citation: RV 1.162.21
+  stratum: NO_LEXICAL_MENTION
+  gold: true
+- passage_key: VG:RV:SAK:M01:S164:V010
+  citation: RV 1.164.10
+  stratum: NO_LEXICAL_MENTION
+  gold: true
+- passage_key: VG:RV:SAK:M01:S167:V011
+  citation: RV 1.167.11
+  stratum: EXACT_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M01:S173:V006
+  citation: RV 1.173.6
+  stratum: MANDALA_SPREAD
+  gold: true
+- passage_key: VG:RV:SAK:M01:S175:V006
+  citation: RV 1.175.6
+  stratum: EXACT_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M01:S179:V001
+  citation: RV 1.179.1
+  stratum: TRANSLATION_MISSING
+  gold: true
+- passage_key: VG:RV:SAK:M01:S179:V002
+  citation: RV 1.179.2
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M01:S179:V003
+  citation: RV 1.179.3
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M01:S179:V004
+  citation: RV 1.179.4
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M01:S179:V005
+  citation: RV 1.179.5
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M01:S179:V006
+  citation: RV 1.179.6
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M01:S184:V006
+  citation: RV 1.184.6
+  stratum: EXACT_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M01:S187:V007
+  citation: RV 1.187.7
+  stratum: RARE_DEVATA
+  gold: false
+- passage_key: VG:RV:SAK:M02:S003:V002
+  citation: RV 2.3.2
+  stratum: MANDALA_SPREAD
+  gold: false
+- passage_key: VG:RV:SAK:M02:S008:V006
+  citation: RV 2.8.6
+  stratum: MANDALA_SPREAD
+  gold: true
+- passage_key: VG:RV:SAK:M02:S011:V013
+  citation: RV 2.11.13
+  stratum: MANDALA_SPREAD
+  gold: false
+- passage_key: VG:RV:SAK:M02:S011:V019
+  citation: RV 2.11.19
+  stratum: MANDALA_SPREAD
+  gold: false
+- passage_key: VG:RV:SAK:M02:S014:V005
+  citation: RV 2.14.5
+  stratum: MANDALA_SPREAD
+  gold: false
+- passage_key: VG:RV:SAK:M02:S014:V012
+  citation: RV 2.14.12
+  stratum: EXACT_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M02:S017:V005
+  citation: RV 2.17.5
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: true
+- passage_key: VG:RV:SAK:M02:S020:V009
+  citation: RV 2.20.9
+  stratum: EXACT_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M02:S022:V002
+  citation: RV 2.22.2
+  stratum: RARE_CHANDAS
+  gold: false
+- passage_key: VG:RV:SAK:M02:S022:V003
+  citation: RV 2.22.3
+  stratum: RARE_CHANDAS
+  gold: false
+- passage_key: VG:RV:SAK:M02:S024:V016
+  citation: RV 2.24.16
+  stratum: EXACT_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M02:S025:V005
+  citation: RV 2.25.5
+  stratum: MANDALA_SPREAD
+  gold: false
+- passage_key: VG:RV:SAK:M02:S027:V017
+  citation: RV 2.27.17
+  stratum: EXACT_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M02:S037:V003
+  citation: RV 2.37.3
+  stratum: RARE_DEVATA
+  gold: false
+- passage_key: VG:RV:SAK:M02:S038:V004
+  citation: RV 2.38.4
+  stratum: MANDALA_SPREAD
+  gold: false
+- passage_key: VG:RV:SAK:M02:S041:V015
+  citation: RV 2.41.15
+  stratum: EXACT_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M03:S004:V008
+  citation: RV 3.4.8
+  stratum: EXACT_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M03:S004:V010
+  citation: RV 3.4.10
+  stratum: EXACT_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M03:S004:V011
+  citation: RV 3.4.11
+  stratum: EXACT_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M03:S006:V011
+  citation: RV 3.6.11
+  stratum: EXACT_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M03:S009:V009
+  citation: RV 3.9.9
+  stratum: EXACT_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M03:S011:V004
+  citation: RV 3.11.4
+  stratum: MANDALA_SPREAD
+  gold: true
+- passage_key: VG:RV:SAK:M03:S017:V003
+  citation: RV 3.17.3
+  stratum: RARE_RISHI
+  gold: false
+- passage_key: VG:RV:SAK:M03:S020:V001
+  citation: RV 3.20.1
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: false
+- passage_key: VG:RV:SAK:M03:S021:V002
+  citation: RV 3.21.2
+  stratum: MANDALA_SPREAD
+  gold: false
+- passage_key: VG:RV:SAK:M03:S022:V003
+  citation: RV 3.22.3
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: false
+- passage_key: VG:RV:SAK:M03:S023:V005
+  citation: RV 3.23.5
+  stratum: EXACT_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M03:S026:V006
+  citation: RV 3.26.6
+  stratum: MANDALA_SPREAD
+  gold: false
+- passage_key: VG:RV:SAK:M03:S031:V014
+  citation: RV 3.31.14
+  stratum: MANDALA_SPREAD
+  gold: false
+- passage_key: VG:RV:SAK:M03:S035:V002
+  citation: RV 3.35.2
+  stratum: MANDALA_SPREAD
+  gold: false
+- passage_key: VG:RV:SAK:M03:S035:V011
+  citation: RV 3.35.11
+  stratum: EXACT_PARALLEL
+  gold: true
+- passage_key: VG:RV:SAK:M03:S048:V003
+  citation: RV 3.48.3
+  stratum: MANDALA_SPREAD
+  gold: false
+- passage_key: VG:RV:SAK:M03:S050:V004
+  citation: RV 3.50.4
+  stratum: EXACT_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M03:S053:V013
+  citation: RV 3.53.13
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: false
+- passage_key: VG:RV:SAK:M03:S058:V003
+  citation: RV 3.58.3
+  stratum: NEAR_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M03:S062:V002
+  citation: RV 3.62.2
+  stratum: MANDALA_SPREAD
+  gold: false
+- passage_key: VG:RV:SAK:M04:S001:V001
+  citation: RV 4.1.1
+  stratum: RARE_CHANDAS
+  gold: false
+- passage_key: VG:RV:SAK:M04:S001:V003
+  citation: RV 4.1.3
+  stratum: RARE_CHANDAS
+  gold: false
+- passage_key: VG:RV:SAK:M04:S001:V004
+  citation: RV 4.1.4
+  stratum: MANDALA_SPREAD
+  gold: false
+- passage_key: VG:RV:SAK:M04:S001:V007
+  citation: RV 4.1.7
+  stratum: MANDALA_SPREAD
+  gold: false
+- passage_key: VG:RV:SAK:M04:S001:V008
+  citation: RV 4.1.8
+  stratum: NO_LEXICAL_MENTION
+  gold: true
+- passage_key: VG:RV:SAK:M04:S002:V014
+  citation: RV 4.2.14
+  stratum: MANDALA_SPREAD
+  gold: false
+- passage_key: VG:RV:SAK:M04:S003:V012
+  citation: RV 4.3.12
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: false
+- passage_key: VG:RV:SAK:M04:S011:V006
+  citation: RV 4.11.6
+  stratum: MANDALA_SPREAD
+  gold: true
+- passage_key: VG:RV:SAK:M04:S014:V005
+  citation: RV 4.14.5
+  stratum: EXACT_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M04:S017:V021
+  citation: RV 4.17.21
+  stratum: EXACT_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M04:S019:V010
+  citation: RV 4.19.10
+  stratum: MANDALA_SPREAD
+  gold: false
+- passage_key: VG:RV:SAK:M04:S022:V006
+  citation: RV 4.22.6
+  stratum: NO_LEXICAL_MENTION
+  gold: true
+- passage_key: VG:RV:SAK:M04:S022:V011
+  citation: RV 4.22.11
+  stratum: EXACT_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M04:S023:V011
+  citation: RV 4.23.11
+  stratum: EXACT_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M04:S026:V007
+  citation: RV 4.26.7
+  stratum: RARE_DEVATA
+  gold: false
+- passage_key: VG:RV:SAK:M04:S032:V015
+  citation: RV 4.32.15
+  stratum: MANDALA_SPREAD
+  gold: true
+- passage_key: VG:RV:SAK:M04:S032:V016
+  citation: RV 4.32.16
+  stratum: EXACT_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M04:S033:V003
+  citation: RV 4.33.3
+  stratum: NO_LEXICAL_MENTION
+  gold: true
+- passage_key: VG:RV:SAK:M04:S034:V006
+  citation: RV 4.34.6
+  stratum: NO_LEXICAL_MENTION
+  gold: true
+- passage_key: VG:RV:SAK:M04:S035:V009
+  citation: RV 4.35.9
+  stratum: NO_LEXICAL_MENTION
+  gold: true
+- passage_key: VG:RV:SAK:M04:S039:V005
+  citation: RV 4.39.5
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: false
+- passage_key: VG:RV:SAK:M04:S044:V007
+  citation: RV 4.44.7
+  stratum: EXACT_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M04:S053:V005
+  citation: RV 4.53.5
+  stratum: MANDALA_SPREAD
+  gold: false
+- passage_key: VG:RV:SAK:M05:S003:V008
+  citation: RV 5.3.8
+  stratum: MANDALA_SPREAD
+  gold: true
+- passage_key: VG:RV:SAK:M05:S004:V002
+  citation: RV 5.4.2
+  stratum: MANDALA_SPREAD
+  gold: false
+- passage_key: VG:RV:SAK:M05:S010:V002
+  citation: RV 5.10.2
+  stratum: MANDALA_SPREAD
+  gold: false
+- passage_key: VG:RV:SAK:M05:S017:V001
+  citation: RV 5.17.1
+  stratum: RARE_RISHI
+  gold: true
+- passage_key: VG:RV:SAK:M05:S020:V001
+  citation: RV 5.20.1
+  stratum: RARE_RISHI
+  gold: true
+- passage_key: VG:RV:SAK:M05:S029:V006
+  citation: RV 5.29.6
+  stratum: MANDALA_SPREAD
+  gold: true
+- passage_key: VG:RV:SAK:M05:S038:V003
+  citation: RV 5.38.3
+  stratum: MANDALA_SPREAD
+  gold: false
+- passage_key: VG:RV:SAK:M05:S039:V005
+  citation: RV 5.39.5
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: false
+- passage_key: VG:RV:SAK:M05:S042:V018
+  citation: RV 5.42.18
+  stratum: EXACT_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M05:S043:V017
+  citation: RV 5.43.17
+  stratum: EXACT_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M05:S044:V014
+  citation: RV 5.44.14
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M05:S045:V010
+  citation: RV 5.45.10
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: false
+- passage_key: VG:RV:SAK:M05:S047:V007
+  citation: RV 5.47.7
+  stratum: RARE_RISHI
+  gold: false
+- passage_key: VG:RV:SAK:M05:S049:V003
+  citation: RV 5.49.3
+  stratum: RARE_RISHI
+  gold: true
+- passage_key: VG:RV:SAK:M05:S052:V005
+  citation: RV 5.52.5
+  stratum: MANDALA_SPREAD
+  gold: false
+- passage_key: VG:RV:SAK:M05:S053:V016
+  citation: RV 5.53.16
+  stratum: NO_LEXICAL_MENTION
+  gold: true
+- passage_key: VG:RV:SAK:M05:S055:V008
+  citation: RV 5.55.8
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M05:S061:V009
+  citation: RV 5.61.9
+  stratum: RARE_DEVATA
+  gold: false
+- passage_key: VG:RV:SAK:M05:S061:V017
+  citation: RV 5.61.17
+  stratum: MULTI_DEVATA
+  gold: false
+- passage_key: VG:RV:SAK:M05:S061:V018
+  citation: RV 5.61.18
+  stratum: MULTI_DEVATA
+  gold: false
+- passage_key: VG:RV:SAK:M05:S061:V019
+  citation: RV 5.61.19
+  stratum: MULTI_DEVATA
+  gold: false
+- passage_key: VG:RV:SAK:M05:S068:V001
+  citation: RV 5.68.1
+  stratum: RARE_RISHI
+  gold: true
+- passage_key: VG:RV:SAK:M05:S071:V001
+  citation: RV 5.71.1
+  stratum: SHORT_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M05:S073:V006
+  citation: RV 5.73.6
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: true
+- passage_key: VG:RV:SAK:M05:S074:V009
+  citation: RV 5.74.9
+  stratum: NO_LEXICAL_MENTION
+  gold: true
+- passage_key: VG:RV:SAK:M05:S080:V002
+  citation: RV 5.80.2
+  stratum: MANDALA_SPREAD
+  gold: true
+- passage_key: VG:RV:SAK:M05:S087:V008
+  citation: RV 5.87.8
+  stratum: RARE_RISHI
+  gold: false
+- passage_key: VG:RV:SAK:M06:S013:V001
+  citation: RV 6.13.1
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: true
+- passage_key: VG:RV:SAK:M06:S015:V006
+  citation: RV 6.15.6
+  stratum: RARE_CHANDAS
+  gold: false
+- passage_key: VG:RV:SAK:M06:S016:V006
+  citation: RV 6.16.6
+  stratum: RARE_CHANDAS
+  gold: false
+- passage_key: VG:RV:SAK:M06:S021:V006
+  citation: RV 6.21.6
+  stratum: MANDALA_SPREAD
+  gold: false
+- passage_key: VG:RV:SAK:M06:S028:V005
+  citation: RV 6.28.5
+  stratum: MANDALA_SPREAD
+  gold: false
+- passage_key: VG:RV:SAK:M06:S035:V004
+  citation: RV 6.35.4
+  stratum: RARE_RISHI
+  gold: false
+- passage_key: VG:RV:SAK:M06:S035:V005
+  citation: RV 6.35.5
+  stratum: RARE_RISHI
+  gold: false
+- passage_key: VG:RV:SAK:M06:S039:V002
+  citation: RV 6.39.2
+  stratum: MANDALA_SPREAD
+  gold: true
+- passage_key: VG:RV:SAK:M06:S042:V004
+  citation: RV 6.42.4
+  stratum: MANDALA_SPREAD
+  gold: true
+- passage_key: VG:RV:SAK:M06:S044:V012
+  citation: RV 6.44.12
+  stratum: MANDALA_SPREAD
+  gold: true
+- passage_key: VG:RV:SAK:M06:S045:V019
+  citation: RV 6.45.19
+  stratum: NO_LEXICAL_MENTION
+  gold: true
+- passage_key: VG:RV:SAK:M06:S045:V027
+  citation: RV 6.45.27
+  stratum: EXACT_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M06:S045:V029
+  citation: RV 6.45.29
+  stratum: RARE_CHANDAS
+  gold: false
+- passage_key: VG:RV:SAK:M06:S045:V031
+  citation: RV 6.45.31
+  stratum: RARE_DEVATA
+  gold: false
+- passage_key: VG:RV:SAK:M06:S047:V007
+  citation: RV 6.47.7
+  stratum: LONG_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M06:S047:V012
+  citation: RV 6.47.12
+  stratum: EXACT_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M06:S047:V017
+  citation: RV 6.47.17
+  stratum: LONG_SUKTA
+  gold: true
+- passage_key: VG:RV:SAK:M06:S047:V023
+  citation: RV 6.47.23
+  stratum: RARE_DEVATA
+  gold: false
+- passage_key: VG:RV:SAK:M06:S048:V015
+  citation: RV 6.48.15
+  stratum: RARE_CHANDAS
+  gold: false
+- passage_key: VG:RV:SAK:M06:S052:V007
+  citation: RV 6.52.7
+  stratum: EXACT_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M06:S061:V002
+  citation: RV 6.61.2
+  stratum: MANDALA_SPREAD
+  gold: false
+- passage_key: VG:RV:SAK:M06:S064:V004
+  citation: RV 6.64.4
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: false
+- passage_key: VG:RV:SAK:M06:S068:V006
+  citation: RV 6.68.6
+  stratum: NO_LEXICAL_MENTION
+  gold: true
+- passage_key: VG:RV:SAK:M06:S069:V007
+  citation: RV 6.69.7
+  stratum: MANDALA_SPREAD
+  gold: true
+- passage_key: VG:RV:SAK:M06:S073:V001
+  citation: RV 6.73.1
+  stratum: SHORT_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M06:S073:V002
+  citation: RV 6.73.2
+  stratum: SHORT_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M06:S075:V005
+  citation: RV 6.75.5
+  stratum: RARE_DEVATA
+  gold: false
+- passage_key: VG:RV:SAK:M06:S075:V009
+  citation: RV 6.75.9
+  stratum: RARE_DEVATA
+  gold: true
+- passage_key: VG:RV:SAK:M07:S001:V020
+  citation: RV 7.1.20
+  stratum: EXACT_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M07:S004:V003
+  citation: RV 7.4.3
+  stratum: MANDALA_SPREAD
+  gold: true
+- passage_key: VG:RV:SAK:M07:S004:V010
+  citation: RV 7.4.10
+  stratum: EXACT_PARALLEL
+  gold: true
+- passage_key: VG:RV:SAK:M07:S007:V007
+  citation: RV 7.7.7
+  stratum: EXACT_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M07:S009:V003
+  citation: RV 7.9.3
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: false
+- passage_key: VG:RV:SAK:M07:S012:V001
+  citation: RV 7.12.1
+  stratum: SHORT_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M07:S012:V002
+  citation: RV 7.12.2
+  stratum: SHORT_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M07:S013:V003
+  citation: RV 7.13.3
+  stratum: SHORT_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M07:S015:V007
+  citation: RV 7.15.7
+  stratum: MANDALA_SPREAD
+  gold: false
+- passage_key: VG:RV:SAK:M07:S017:V001
+  citation: RV 7.17.1
+  stratum: RARE_CHANDAS
+  gold: false
+- passage_key: VG:RV:SAK:M07:S017:V003
+  citation: RV 7.17.3
+  stratum: RARE_CHANDAS
+  gold: false
+- passage_key: VG:RV:SAK:M07:S017:V005
+  citation: RV 7.17.5
+  stratum: RARE_CHANDAS
+  gold: false
+- passage_key: VG:RV:SAK:M07:S017:V007
+  citation: RV 7.17.7
+  stratum: RARE_CHANDAS
+  gold: false
+- passage_key: VG:RV:SAK:M07:S021:V008
+  citation: RV 7.21.8
+  stratum: MANDALA_SPREAD
+  gold: false
+- passage_key: VG:RV:SAK:M07:S025:V006
+  citation: RV 7.25.6
+  stratum: EXACT_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M07:S029:V005
+  citation: RV 7.29.5
+  stratum: EXACT_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M07:S032:V003
+  citation: RV 7.32.3
+  stratum: RARE_CHANDAS
+  gold: false
+- passage_key: VG:RV:SAK:M07:S032:V020
+  citation: RV 7.32.20
+  stratum: MANDALA_SPREAD
+  gold: true
+- passage_key: VG:RV:SAK:M07:S034:V023
+  citation: RV 7.34.23
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: false
+- passage_key: VG:RV:SAK:M07:S041:V002
+  citation: RV 7.41.2
+  stratum: MANDALA_SPREAD
+  gold: false
+- passage_key: VG:RV:SAK:M07:S044:V002
+  citation: RV 7.44.2
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: true
+- passage_key: VG:RV:SAK:M07:S053:V001
+  citation: RV 7.53.1
+  stratum: SHORT_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M07:S053:V002
+  citation: RV 7.53.2
+  stratum: SHORT_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M07:S054:V002
+  citation: RV 7.54.2
+  stratum: SHORT_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M07:S056:V025
+  citation: RV 7.56.25
+  stratum: EXACT_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M07:S060:V012
+  citation: RV 7.60.12
+  stratum: EXACT_PARALLEL
+  gold: true
+- passage_key: VG:RV:SAK:M07:S063:V005
+  citation: RV 7.63.5
+  stratum: MULTI_DEVATA
+  gold: false
+- passage_key: VG:RV:SAK:M07:S072:V005
+  citation: RV 7.72.5
+  stratum: EXACT_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M07:S077:V005
+  citation: RV 7.77.5
+  stratum: MANDALA_SPREAD
+  gold: true
+- passage_key: VG:RV:SAK:M07:S083:V008
+  citation: RV 7.83.8
+  stratum: MANDALA_SPREAD
+  gold: false
+- passage_key: VG:RV:SAK:M07:S083:V009
+  citation: RV 7.83.9
+  stratum: NO_LEXICAL_MENTION
+  gold: true
+- passage_key: VG:RV:SAK:M07:S083:V010
+  citation: RV 7.83.10
+  stratum: EXACT_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M07:S091:V007
+  citation: RV 7.91.7
+  stratum: EXACT_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M07:S096:V003
+  citation: RV 7.96.3
+  stratum: RARE_CHANDAS
+  gold: false
+- passage_key: VG:RV:SAK:M07:S101:V003
+  citation: RV 7.101.3
+  stratum: NO_LEXICAL_MENTION
+  gold: true
+- passage_key: VG:RV:SAK:M07:S102:V001
+  citation: RV 7.102.1
+  stratum: SHORT_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M07:S104:V008
+  citation: RV 7.104.8
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: false
+- passage_key: VG:RV:SAK:M08:S001:V013
+  citation: RV 8.1.13
+  stratum: LONG_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M08:S001:V017
+  citation: RV 8.1.17
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: true
+- passage_key: VG:RV:SAK:M08:S002:V006
+  citation: RV 8.2.6
+  stratum: LONG_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M08:S002:V029
+  citation: RV 8.2.29
+  stratum: LONG_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M08:S002:V039
+  citation: RV 8.2.39
+  stratum: LONG_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M08:S005:V014
+  citation: RV 8.5.14
+  stratum: LONG_SUKTA
+  gold: true
+- passage_key: VG:RV:SAK:M08:S005:V015
+  citation: RV 8.5.15
+  stratum: NO_LEXICAL_MENTION
+  gold: true
+- passage_key: VG:RV:SAK:M08:S006:V002
+  citation: RV 8.6.2
+  stratum: LONG_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M08:S006:V013
+  citation: RV 8.6.13
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: true
+- passage_key: VG:RV:SAK:M08:S006:V037
+  citation: RV 8.6.37
+  stratum: NEAR_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M08:S007:V004
+  citation: RV 8.7.4
+  stratum: LONG_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M08:S009:V012
+  citation: RV 8.9.12
+  stratum: MANDALA_SPREAD
+  gold: true
+- passage_key: VG:RV:SAK:M08:S010:V006
+  citation: RV 8.10.6
+  stratum: RARE_RISHI
+  gold: true
+- passage_key: VG:RV:SAK:M08:S015:V008
+  citation: RV 8.15.8
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: false
+- passage_key: VG:RV:SAK:M08:S016:V002
+  citation: RV 8.16.2
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: false
+- passage_key: VG:RV:SAK:M08:S019:V025
+  citation: RV 8.19.25
+  stratum: LONG_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M08:S019:V037
+  citation: RV 8.19.37
+  stratum: LONG_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M08:S021:V014
+  citation: RV 8.21.14
+  stratum: NO_LEXICAL_MENTION
+  gold: true
+- passage_key: VG:RV:SAK:M08:S022:V014
+  citation: RV 8.22.14
+  stratum: MANDALA_SPREAD
+  gold: true
+- passage_key: VG:RV:SAK:M08:S023:V010
+  citation: RV 8.23.10
+  stratum: LONG_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M08:S023:V014
+  citation: RV 8.23.14
+  stratum: LONG_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M08:S024:V007
+  citation: RV 8.24.7
+  stratum: LONG_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M08:S024:V010
+  citation: RV 8.24.10
+  stratum: LONG_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M08:S026:V008
+  citation: RV 8.26.8
+  stratum: NO_LEXICAL_MENTION
+  gold: true
+- passage_key: VG:RV:SAK:M08:S029:V008
+  citation: RV 8.29.8
+  stratum: NO_LEXICAL_MENTION
+  gold: true
+- passage_key: VG:RV:SAK:M08:S031:V006
+  citation: RV 8.31.6
+  stratum: RARE_DEVATA
+  gold: false
+- passage_key: VG:RV:SAK:M08:S031:V012
+  citation: RV 8.31.12
+  stratum: RARE_DEVATA
+  gold: true
+- passage_key: VG:RV:SAK:M08:S031:V014
+  citation: RV 8.31.14
+  stratum: RARE_DEVATA
+  gold: false
+- passage_key: VG:RV:SAK:M08:S032:V018
+  citation: RV 8.32.18
+  stratum: LONG_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M08:S032:V029
+  citation: RV 8.32.29
+  stratum: EXACT_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M08:S035:V005
+  citation: RV 8.35.5
+  stratum: NEAR_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M08:S035:V006
+  citation: RV 8.35.6
+  stratum: NEAR_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M08:S035:V007
+  citation: RV 8.35.7
+  stratum: NEAR_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M08:S035:V008
+  citation: RV 8.35.8
+  stratum: NEAR_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M08:S035:V009
+  citation: RV 8.35.9
+  stratum: NEAR_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M08:S035:V016
+  citation: RV 8.35.16
+  stratum: NEAR_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M08:S035:V018
+  citation: RV 8.35.18
+  stratum: NEAR_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M08:S036:V004
+  citation: RV 8.36.4
+  stratum: NEAR_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M08:S036:V005
+  citation: RV 8.36.5
+  stratum: NEAR_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M08:S036:V006
+  citation: RV 8.36.6
+  stratum: NEAR_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M08:S037:V002
+  citation: RV 8.37.2
+  stratum: MANDALA_SPREAD
+  gold: true
+- passage_key: VG:RV:SAK:M08:S037:V007
+  citation: RV 8.37.7
+  stratum: NEAR_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M08:S043:V024
+  citation: RV 8.43.24
+  stratum: LONG_SUKTA
+  gold: true
+- passage_key: VG:RV:SAK:M08:S043:V032
+  citation: RV 8.43.32
+  stratum: LONG_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M08:S045:V001
+  citation: RV 8.45.1
+  stratum: RARE_DEVATA
+  gold: false
+- passage_key: VG:RV:SAK:M08:S045:V042
+  citation: RV 8.45.42
+  stratum: LONG_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M08:S046:V002
+  citation: RV 8.46.2
+  stratum: LONG_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M08:S046:V015
+  citation: RV 8.46.15
+  stratum: RARE_CHANDAS
+  gold: false
+- passage_key: VG:RV:SAK:M08:S046:V021
+  citation: RV 8.46.21
+  stratum: NO_LEXICAL_MENTION
+  gold: true
+- passage_key: VG:RV:SAK:M08:S046:V027
+  citation: RV 8.46.27
+  stratum: NO_LEXICAL_MENTION
+  gold: true
+- passage_key: VG:RV:SAK:M08:S051:V007
+  citation: RV 8.51.7
+  stratum: RARE_RISHI
+  gold: true
+- passage_key: VG:RV:SAK:M08:S052:V008
+  citation: RV 8.52.8
+  stratum: RARE_RISHI
+  gold: true
+- passage_key: VG:RV:SAK:M08:S060:V011
+  citation: RV 8.60.11
+  stratum: MANDALA_SPREAD
+  gold: true
+- passage_key: VG:RV:SAK:M08:S067:V006
+  citation: RV 8.67.6
+  stratum: NO_LEXICAL_MENTION
+  gold: true
+- passage_key: VG:RV:SAK:M08:S073:V002
+  citation: RV 8.73.2
+  stratum: MANDALA_SPREAD
+  gold: true
+- passage_key: VG:RV:SAK:M08:S080:V004
+  citation: RV 8.80.4
+  stratum: RARE_RISHI
+  gold: true
+- passage_key: VG:RV:SAK:M08:S089:V005
+  citation: RV 8.89.5
+  stratum: MANDALA_SPREAD
+  gold: true
+- passage_key: VG:RV:SAK:M08:S092:V021
+  citation: RV 8.92.21
+  stratum: NEAR_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M08:S093:V001
+  citation: RV 8.93.1
+  stratum: LONG_SUKTA
+  gold: true
+- passage_key: VG:RV:SAK:M08:S093:V005
+  citation: RV 8.93.5
+  stratum: NO_LEXICAL_MENTION
+  gold: true
+- passage_key: VG:RV:SAK:M08:S093:V024
+  citation: RV 8.93.24
+  stratum: EXACT_PARALLEL
+  gold: true
+- passage_key: VG:RV:SAK:M08:S093:V029
+  citation: RV 8.93.29
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M08:S096:V007
+  citation: RV 8.96.7
+  stratum: MANDALA_SPREAD
+  gold: true
+- passage_key: VG:RV:SAK:M08:S101:V005
+  citation: RV 8.101.5
+  stratum: MULTI_DEVATA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S002:V008
+  citation: RV 9.2.8
+  stratum: NO_LEXICAL_MENTION
+  gold: true
+- passage_key: VG:RV:SAK:M09:S004:V009
+  citation: RV 9.4.9
+  stratum: NO_LEXICAL_MENTION
+  gold: true
+- passage_key: VG:RV:SAK:M09:S005:V009
+  citation: RV 9.5.9
+  stratum: MANDALA_09_SOMA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S005:V010
+  citation: RV 9.5.10
+  stratum: RARE_DEVATA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S007:V008
+  citation: RV 9.7.8
+  stratum: MANDALA_09_SOMA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S007:V009
+  citation: RV 9.7.9
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M09:S008:V002
+  citation: RV 9.8.2
+  stratum: MANDALA_09_SOMA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S019:V006
+  citation: RV 9.19.6
+  stratum: MANDALA_09_SOMA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S020:V002
+  citation: RV 9.20.2
+  stratum: MANDALA_09_SOMA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S023:V005
+  citation: RV 9.23.5
+  stratum: MANDALA_09_SOMA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S027:V006
+  citation: RV 9.27.6
+  stratum: MANDALA_09_SOMA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S028:V005
+  citation: RV 9.28.5
+  stratum: RARE_RISHI
+  gold: false
+- passage_key: VG:RV:SAK:M09:S029:V001
+  citation: RV 9.29.1
+  stratum: MANDALA_09_SOMA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S030:V006
+  citation: RV 9.30.6
+  stratum: MANDALA_09_SOMA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S032:V002
+  citation: RV 9.32.2
+  stratum: NEAR_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M09:S034:V002
+  citation: RV 9.34.2
+  stratum: NEAR_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M09:S038:V002
+  citation: RV 9.38.2
+  stratum: NEAR_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M09:S039:V002
+  citation: RV 9.39.2
+  stratum: MANDALA_09_SOMA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S039:V006
+  citation: RV 9.39.6
+  stratum: MANDALA_09_SOMA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S040:V001
+  citation: RV 9.40.1
+  stratum: RARE_RISHI
+  gold: true
+- passage_key: VG:RV:SAK:M09:S042:V003
+  citation: RV 9.42.3
+  stratum: MANDALA_09_SOMA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S043:V003
+  citation: RV 9.43.3
+  stratum: MANDALA_09_SOMA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S045:V005
+  citation: RV 9.45.5
+  stratum: MANDALA_09_SOMA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S045:V006
+  citation: RV 9.45.6
+  stratum: MANDALA_SPREAD
+  gold: false
+- passage_key: VG:RV:SAK:M09:S047:V005
+  citation: RV 9.47.5
+  stratum: MANDALA_09_SOMA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S052:V005
+  citation: RV 9.52.5
+  stratum: MANDALA_09_SOMA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S057:V001
+  citation: RV 9.57.1
+  stratum: MANDALA_SPREAD
+  gold: false
+- passage_key: VG:RV:SAK:M09:S061:V001
+  citation: RV 9.61.1
+  stratum: NO_LEXICAL_MENTION
+  gold: true
+- passage_key: VG:RV:SAK:M09:S062:V003
+  citation: RV 9.62.3
+  stratum: NO_LEXICAL_MENTION
+  gold: true
+- passage_key: VG:RV:SAK:M09:S062:V019
+  citation: RV 9.62.19
+  stratum: MANDALA_09_SOMA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S062:V026
+  citation: RV 9.62.26
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: false
+- passage_key: VG:RV:SAK:M09:S063:V010
+  citation: RV 9.63.10
+  stratum: MANDALA_09_SOMA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S063:V016
+  citation: RV 9.63.16
+  stratum: LONG_SUKTA
+  gold: true
+- passage_key: VG:RV:SAK:M09:S064:V009
+  citation: RV 9.64.9
+  stratum: MANDALA_SPREAD
+  gold: false
+- passage_key: VG:RV:SAK:M09:S064:V013
+  citation: RV 9.64.13
+  stratum: MANDALA_09_SOMA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S065:V020
+  citation: RV 9.65.20
+  stratum: NEAR_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M09:S066:V016
+  citation: RV 9.66.16
+  stratum: LONG_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S066:V019
+  citation: RV 9.66.19
+  stratum: RARE_DEVATA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S066:V021
+  citation: RV 9.66.21
+  stratum: RARE_DEVATA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S066:V028
+  citation: RV 9.66.28
+  stratum: LONG_SUKTA
+  gold: true
+- passage_key: VG:RV:SAK:M09:S067:V004
+  citation: RV 9.67.4
+  stratum: NO_LEXICAL_MENTION
+  gold: true
+- passage_key: VG:RV:SAK:M09:S067:V024
+  citation: RV 9.67.24
+  stratum: RARE_DEVATA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S068:V010
+  citation: RV 9.68.10
+  stratum: MANDALA_09_SOMA
+  gold: true
+- passage_key: VG:RV:SAK:M09:S071:V007
+  citation: RV 9.71.7
+  stratum: MANDALA_SPREAD
+  gold: false
+- passage_key: VG:RV:SAK:M09:S073:V003
+  citation: RV 9.73.3
+  stratum: MANDALA_09_SOMA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S074:V001
+  citation: RV 9.74.1
+  stratum: RARE_RISHI
+  gold: true
+- passage_key: VG:RV:SAK:M09:S074:V003
+  citation: RV 9.74.3
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: false
+- passage_key: VG:RV:SAK:M09:S077:V001
+  citation: RV 9.77.1
+  stratum: MANDALA_09_SOMA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S086:V002
+  citation: RV 9.86.2
+  stratum: MANDALA_09_SOMA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S086:V004
+  citation: RV 9.86.4
+  stratum: RARE_RISHI
+  gold: true
+- passage_key: VG:RV:SAK:M09:S086:V029
+  citation: RV 9.86.29
+  stratum: MANDALA_09_SOMA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S086:V038
+  citation: RV 9.86.38
+  stratum: RARE_RISHI
+  gold: false
+- passage_key: VG:RV:SAK:M09:S086:V047
+  citation: RV 9.86.47
+  stratum: LONG_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S087:V004
+  citation: RV 9.87.4
+  stratum: MANDALA_09_SOMA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S087:V009
+  citation: RV 9.87.9
+  stratum: MANDALA_09_SOMA
+  gold: true
+- passage_key: VG:RV:SAK:M09:S089:V006
+  citation: RV 9.89.6
+  stratum: MANDALA_09_SOMA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S092:V006
+  citation: RV 9.92.6
+  stratum: MANDALA_09_SOMA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S093:V002
+  citation: RV 9.93.2
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: false
+- passage_key: VG:RV:SAK:M09:S095:V004
+  citation: RV 9.95.4
+  stratum: MANDALA_09_SOMA
+  gold: true
+- passage_key: VG:RV:SAK:M09:S096:V018
+  citation: RV 9.96.18
+  stratum: MANDALA_09_SOMA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S097:V003
+  citation: RV 9.97.3
+  stratum: MANDALA_SPREAD
+  gold: false
+- passage_key: VG:RV:SAK:M09:S097:V012
+  citation: RV 9.97.12
+  stratum: MANDALA_SPREAD
+  gold: false
+- passage_key: VG:RV:SAK:M09:S097:V023
+  citation: RV 9.97.23
+  stratum: MANDALA_09_SOMA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S097:V024
+  citation: RV 9.97.24
+  stratum: MANDALA_09_SOMA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S097:V044
+  citation: RV 9.97.44
+  stratum: MANDALA_09_SOMA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S099:V006
+  citation: RV 9.99.6
+  stratum: MANDALA_09_SOMA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S100:V007
+  citation: RV 9.100.7
+  stratum: MANDALA_SPREAD
+  gold: false
+- passage_key: VG:RV:SAK:M09:S103:V003
+  citation: RV 9.103.3
+  stratum: MANDALA_09_SOMA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S104:V005
+  citation: RV 9.104.5
+  stratum: RARE_RISHI
+  gold: true
+- passage_key: VG:RV:SAK:M09:S107:V009
+  citation: RV 9.107.9
+  stratum: MANDALA_09_SOMA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S108:V004
+  citation: RV 9.108.4
+  stratum: MANDALA_09_SOMA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S109:V017
+  citation: RV 9.109.17
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: false
+- passage_key: VG:RV:SAK:M09:S109:V020
+  citation: RV 9.109.20
+  stratum: MANDALA_09_SOMA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S109:V022
+  citation: RV 9.109.22
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: true
+- passage_key: VG:RV:SAK:M09:S110:V008
+  citation: RV 9.110.8
+  stratum: MANDALA_09_SOMA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S111:V001
+  citation: RV 9.111.1
+  stratum: SHORT_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S111:V003
+  citation: RV 9.111.3
+  stratum: SHORT_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M09:S114:V002
+  citation: RV 9.114.2
+  stratum: MANDALA_09_SOMA
+  gold: false
+- passage_key: VG:RV:SAK:M10:S006:V007
+  citation: RV 10.6.7
+  stratum: MANDALA_SPREAD
+  gold: false
+- passage_key: VG:RV:SAK:M10:S007:V005
+  citation: RV 10.7.5
+  stratum: MANDALA_10
+  gold: false
+- passage_key: VG:RV:SAK:M10:S009:V004
+  citation: RV 10.9.4
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: false
+- passage_key: VG:RV:SAK:M10:S009:V006
+  citation: RV 10.9.6
+  stratum: NEAR_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M10:S010:V014
+  citation: RV 10.10.14
+  stratum: RARE_DEVATA
+  gold: true
+- passage_key: VG:RV:SAK:M10:S012:V002
+  citation: RV 10.12.2
+  stratum: MANDALA_10
+  gold: false
+- passage_key: VG:RV:SAK:M10:S014:V001
+  citation: RV 10.14.1
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: true
+- passage_key: VG:RV:SAK:M10:S014:V012
+  citation: RV 10.14.12
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: false
+- passage_key: VG:RV:SAK:M10:S015:V002
+  citation: RV 10.15.2
+  stratum: MANDALA_10
+  gold: false
+- passage_key: VG:RV:SAK:M10:S015:V010
+  citation: RV 10.15.10
+  stratum: MANDALA_10
+  gold: false
+- passage_key: VG:RV:SAK:M10:S016:V011
+  citation: RV 10.16.11
+  stratum: MANDALA_10
+  gold: false
+- passage_key: VG:RV:SAK:M10:S018:V008
+  citation: RV 10.18.8
+  stratum: RARE_DEVATA
+  gold: false
+- passage_key: VG:RV:SAK:M10:S020:V004
+  citation: RV 10.20.4
+  stratum: MANDALA_10
+  gold: false
+- passage_key: VG:RV:SAK:M10:S023:V005
+  citation: RV 10.23.5
+  stratum: RARE_CHANDAS
+  gold: false
+- passage_key: VG:RV:SAK:M10:S025:V001
+  citation: RV 10.25.1
+  stratum: NO_LEXICAL_MENTION
+  gold: true
+- passage_key: VG:RV:SAK:M10:S026:V008
+  citation: RV 10.26.8
+  stratum: MANDALA_10
+  gold: false
+- passage_key: VG:RV:SAK:M10:S027:V013
+  citation: RV 10.27.13
+  stratum: NO_LEXICAL_MENTION
+  gold: true
+- passage_key: VG:RV:SAK:M10:S028:V006
+  citation: RV 10.28.6
+  stratum: MULTI_DEVATA
+  gold: false
+- passage_key: VG:RV:SAK:M10:S030:V001
+  citation: RV 10.30.1
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: false
+- passage_key: VG:RV:SAK:M10:S030:V003
+  citation: RV 10.30.3
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: true
+- passage_key: VG:RV:SAK:M10:S032:V006
+  citation: RV 10.32.6
+  stratum: NEAR_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M10:S035:V008
+  citation: RV 10.35.8
+  stratum: MANDALA_10
+  gold: false
+- passage_key: VG:RV:SAK:M10:S037:V002
+  citation: RV 10.37.2
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: false
+- passage_key: VG:RV:SAK:M10:S039:V011
+  citation: RV 10.39.11
+  stratum: MANDALA_10
+  gold: true
+- passage_key: VG:RV:SAK:M10:S040:V001
+  citation: RV 10.40.1
+  stratum: NO_LEXICAL_MENTION
+  gold: true
+- passage_key: VG:RV:SAK:M10:S040:V003
+  citation: RV 10.40.3
+  stratum: MANDALA_10
+  gold: false
+- passage_key: VG:RV:SAK:M10:S040:V007
+  citation: RV 10.40.7
+  stratum: MANDALA_SPREAD
+  gold: false
+- passage_key: VG:RV:SAK:M10:S041:V001
+  citation: RV 10.41.1
+  stratum: RARE_RISHI
+  gold: false
+- passage_key: VG:RV:SAK:M10:S042:V005
+  citation: RV 10.42.5
+  stratum: MANDALA_SPREAD
+  gold: false
+- passage_key: VG:RV:SAK:M10:S042:V011
+  citation: RV 10.42.11
+  stratum: EXACT_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M10:S045:V005
+  citation: RV 10.45.5
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: false
+- passage_key: VG:RV:SAK:M10:S045:V008
+  citation: RV 10.45.8
+  stratum: MANDALA_10
+  gold: true
+- passage_key: VG:RV:SAK:M10:S046:V005
+  citation: RV 10.46.5
+  stratum: MANDALA_SPREAD
+  gold: false
+- passage_key: VG:RV:SAK:M10:S046:V007
+  citation: RV 10.46.7
+  stratum: MANDALA_10
+  gold: false
+- passage_key: VG:RV:SAK:M10:S048:V007
+  citation: RV 10.48.7
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M10:S050:V003
+  citation: RV 10.50.3
+  stratum: RARE_CHANDAS
+  gold: false
+- passage_key: VG:RV:SAK:M10:S055:V002
+  citation: RV 10.55.2
+  stratum: MANDALA_10
+  gold: false
+- passage_key: VG:RV:SAK:M10:S056:V007
+  citation: RV 10.56.7
+  stratum: MANDALA_10
+  gold: false
+- passage_key: VG:RV:SAK:M10:S057:V004
+  citation: RV 10.57.4
+  stratum: MANDALA_10
+  gold: false
+- passage_key: VG:RV:SAK:M10:S058:V001
+  citation: RV 10.58.1
+  stratum: NEAR_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M10:S058:V004
+  citation: RV 10.58.4
+  stratum: NEAR_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M10:S058:V005
+  citation: RV 10.58.5
+  stratum: NEAR_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M10:S058:V006
+  citation: RV 10.58.6
+  stratum: NEAR_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M10:S058:V007
+  citation: RV 10.58.7
+  stratum: NEAR_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M10:S058:V009
+  citation: RV 10.58.9
+  stratum: NEAR_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M10:S058:V011
+  citation: RV 10.58.11
+  stratum: NEAR_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M10:S058:V012
+  citation: RV 10.58.12
+  stratum: RARE_DEVATA
+  gold: true
+- passage_key: VG:RV:SAK:M10:S061:V005
+  citation: RV 10.61.5
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M10:S061:V006
+  citation: RV 10.61.6
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M10:S061:V007
+  citation: RV 10.61.7
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M10:S061:V008
+  citation: RV 10.61.8
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M10:S061:V009
+  citation: RV 10.61.9
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M10:S061:V010
+  citation: RV 10.61.10
+  stratum: MANDALA_10
+  gold: false
+- passage_key: VG:RV:SAK:M10:S063:V010
+  citation: RV 10.63.10
+  stratum: MANDALA_10
+  gold: false
+- passage_key: VG:RV:SAK:M10:S064:V006
+  citation: RV 10.64.6
+  stratum: MANDALA_10
+  gold: false
+- passage_key: VG:RV:SAK:M10:S065:V009
+  citation: RV 10.65.9
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: false
+- passage_key: VG:RV:SAK:M10:S066:V004
+  citation: RV 10.66.4
+  stratum: MANDALA_10
+  gold: false
+- passage_key: VG:RV:SAK:M10:S069:V010
+  citation: RV 10.69.10
+  stratum: MANDALA_10
+  gold: false
+- passage_key: VG:RV:SAK:M10:S078:V005
+  citation: RV 10.78.5
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: false
+- passage_key: VG:RV:SAK:M10:S084:V004
+  citation: RV 10.84.4
+  stratum: MANDALA_10
+  gold: false
+- passage_key: VG:RV:SAK:M10:S085:V002
+  citation: RV 10.85.2
+  stratum: MANDALA_10
+  gold: false
+- passage_key: VG:RV:SAK:M10:S085:V008
+  citation: RV 10.85.8
+  stratum: RARE_DEVATA
+  gold: false
+- passage_key: VG:RV:SAK:M10:S085:V019
+  citation: RV 10.85.19
+  stratum: RARE_DEVATA
+  gold: false
+- passage_key: VG:RV:SAK:M10:S085:V021
+  citation: RV 10.85.21
+  stratum: RARE_DEVATA
+  gold: false
+- passage_key: VG:RV:SAK:M10:S085:V028
+  citation: RV 10.85.28
+  stratum: RARE_DEVATA
+  gold: true
+- passage_key: VG:RV:SAK:M10:S085:V031
+  citation: RV 10.85.31
+  stratum: RARE_DEVATA
+  gold: false
+- passage_key: VG:RV:SAK:M10:S085:V034
+  citation: RV 10.85.34
+  stratum: MANDALA_SPREAD
+  gold: false
+- passage_key: VG:RV:SAK:M10:S086:V001
+  citation: RV 10.86.1
+  stratum: MANDALA_10
+  gold: false
+- passage_key: VG:RV:SAK:M10:S086:V016
+  citation: RV 10.86.16
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M10:S086:V017
+  citation: RV 10.86.17
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M10:S087:V025
+  citation: RV 10.87.25
+  stratum: MANDALA_10
+  gold: true
+- passage_key: VG:RV:SAK:M10:S089:V008
+  citation: RV 10.89.8
+  stratum: MANDALA_10
+  gold: true
+- passage_key: VG:RV:SAK:M10:S089:V013
+  citation: RV 10.89.13
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: false
+- passage_key: VG:RV:SAK:M10:S089:V016
+  citation: RV 10.89.16
+  stratum: MANDALA_10
+  gold: false
+- passage_key: VG:RV:SAK:M10:S090:V007
+  citation: RV 10.90.7
+  stratum: MANDALA_10
+  gold: false
+- passage_key: VG:RV:SAK:M10:S090:V016
+  citation: RV 10.90.16
+  stratum: EXACT_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M10:S091:V003
+  citation: RV 10.91.3
+  stratum: MANDALA_10
+  gold: true
+- passage_key: VG:RV:SAK:M10:S091:V012
+  citation: RV 10.91.12
+  stratum: MANDALA_10
+  gold: false
+- passage_key: VG:RV:SAK:M10:S095:V003
+  citation: RV 10.95.3
+  stratum: RARE_DEVATA
+  gold: false
+- passage_key: VG:RV:SAK:M10:S096:V006
+  citation: RV 10.96.6
+  stratum: MANDALA_10
+  gold: false
+- passage_key: VG:RV:SAK:M10:S097:V007
+  citation: RV 10.97.7
+  stratum: MANDALA_SPREAD
+  gold: false
+- passage_key: VG:RV:SAK:M10:S098:V008
+  citation: RV 10.98.8
+  stratum: MANDALA_10
+  gold: false
+- passage_key: VG:RV:SAK:M10:S099:V003
+  citation: RV 10.99.3
+  stratum: MANDALA_10
+  gold: false
+- passage_key: VG:RV:SAK:M10:S099:V007
+  citation: RV 10.99.7
+  stratum: RARE_RISHI
+  gold: false
+- passage_key: VG:RV:SAK:M10:S102:V002
+  citation: RV 10.102.2
+  stratum: RARE_RISHI
+  gold: true
+- passage_key: VG:RV:SAK:M10:S102:V007
+  citation: RV 10.102.7
+  stratum: MANDALA_10
+  gold: false
+- passage_key: VG:RV:SAK:M10:S106:V004
+  citation: RV 10.106.4
+  stratum: MANDALA_SPREAD
+  gold: false
+- passage_key: VG:RV:SAK:M10:S107:V008
+  citation: RV 10.107.8
+  stratum: RARE_DEVATA
+  gold: true
+- passage_key: VG:RV:SAK:M10:S107:V010
+  citation: RV 10.107.10
+  stratum: RARE_DEVATA
+  gold: false
+- passage_key: VG:RV:SAK:M10:S108:V001
+  citation: RV 10.108.1
+  stratum: RARE_DEVATA
+  gold: true
+- passage_key: VG:RV:SAK:M10:S112:V001
+  citation: RV 10.112.1
+  stratum: MANDALA_10
+  gold: false
+- passage_key: VG:RV:SAK:M10:S115:V005
+  citation: RV 10.115.5
+  stratum: MANDALA_10
+  gold: false
+- passage_key: VG:RV:SAK:M10:S118:V001
+  citation: RV 10.118.1
+  stratum: RARE_DEVATA
+  gold: true
+- passage_key: VG:RV:SAK:M10:S125:V001
+  citation: RV 10.125.1
+  stratum: MANDALA_10
+  gold: false
+- passage_key: VG:RV:SAK:M10:S126:V006
+  citation: RV 10.126.6
+  stratum: MANDALA_10
+  gold: false
+- passage_key: VG:RV:SAK:M10:S127:V005
+  citation: RV 10.127.5
+  stratum: RARE_DEVATA
+  gold: false
+- passage_key: VG:RV:SAK:M10:S131:V007
+  citation: RV 10.131.7
+  stratum: EXACT_PARALLEL
+  gold: false
+- passage_key: VG:RV:SAK:M10:S132:V002
+  citation: RV 10.132.2
+  stratum: RARE_CHANDAS
+  gold: false
+- passage_key: VG:RV:SAK:M10:S132:V005
+  citation: RV 10.132.5
+  stratum: TRANSLATION_MISSING
+  gold: false
+- passage_key: VG:RV:SAK:M10:S134:V005
+  citation: RV 10.134.5
+  stratum: RARE_RISHI
+  gold: false
+- passage_key: VG:RV:SAK:M10:S135:V001
+  citation: RV 10.135.1
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: false
+- passage_key: VG:RV:SAK:M10:S143:V002
+  citation: RV 10.143.2
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: false
+- passage_key: VG:RV:SAK:M10:S144:V003
+  citation: RV 10.144.3
+  stratum: RARE_RISHI
+  gold: false
+- passage_key: VG:RV:SAK:M10:S145:V006
+  citation: RV 10.145.6
+  stratum: RARE_DEVATA
+  gold: false
+- passage_key: VG:RV:SAK:M10:S146:V005
+  citation: RV 10.146.5
+  stratum: RARE_DEVATA
+  gold: true
+- passage_key: VG:RV:SAK:M10:S150:V001
+  citation: RV 10.150.1
+  stratum: MANDALA_10
+  gold: false
+- passage_key: VG:RV:SAK:M10:S150:V005
+  citation: RV 10.150.5
+  stratum: LEXICALLY_AMBIGUOUS
+  gold: false
+- passage_key: VG:RV:SAK:M10:S151:V002
+  citation: RV 10.151.2
+  stratum: RARE_DEVATA
+  gold: false
+- passage_key: VG:RV:SAK:M10:S151:V004
+  citation: RV 10.151.4
+  stratum: RARE_DEVATA
+  gold: false
+- passage_key: VG:RV:SAK:M10:S161:V005
+  citation: RV 10.161.5
+  stratum: RARE_RISHI
+  gold: false
+- passage_key: VG:RV:SAK:M10:S164:V003
+  citation: RV 10.164.3
+  stratum: RARE_DEVATA
+  gold: false
+- passage_key: VG:RV:SAK:M10:S165:V005
+  citation: RV 10.165.5
+  stratum: MANDALA_10
+  gold: false
+- passage_key: VG:RV:SAK:M10:S166:V001
+  citation: RV 10.166.1
+  stratum: RARE_DEVATA
+  gold: false
+- passage_key: VG:RV:SAK:M10:S170:V001
+  citation: RV 10.170.1
+  stratum: MANDALA_10
+  gold: false
+- passage_key: VG:RV:SAK:M10:S177:V001
+  citation: RV 10.177.1
+  stratum: SHORT_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M10:S179:V001
+  citation: RV 10.179.1
+  stratum: SHORT_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M10:S180:V003
+  citation: RV 10.180.3
+  stratum: SHORT_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M10:S182:V001
+  citation: RV 10.182.1
+  stratum: SHORT_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M10:S182:V003
+  citation: RV 10.182.3
+  stratum: SHORT_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M10:S183:V001
+  citation: RV 10.183.1
+  stratum: SHORT_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M10:S183:V002
+  citation: RV 10.183.2
+  stratum: RARE_DEVATA
+  gold: false
+- passage_key: VG:RV:SAK:M10:S188:V002
+  citation: RV 10.188.2
+  stratum: SHORT_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M10:S189:V001
+  citation: RV 10.189.1
+  stratum: SHORT_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M10:S189:V002
+  citation: RV 10.189.2
+  stratum: SHORT_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M10:S190:V001
+  citation: RV 10.190.1
+  stratum: SHORT_SUKTA
+  gold: false
+- passage_key: VG:RV:SAK:M10:S190:V002
+  citation: RV 10.190.2
+  stratum: SHORT_SUKTA
+  gold: false

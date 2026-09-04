@@ -1,0 +1,373 @@
+{
+  "$defs": {
+    "PacketMention": {
+      "additionalProperties": false,
+      "description": "A deterministic lexical mention already established for this mantra.\n\nSupplied so the model does not re-derive it and, more importantly, so it can cite it\nrather than paraphrase it. This is a fact, not a hint.",
+      "properties": {
+        "entity_key": {
+          "minLength": 1,
+          "title": "Entity Key",
+          "type": "string"
+        },
+        "entity_label": {
+          "minLength": 1,
+          "title": "Entity Label",
+          "type": "string"
+        },
+        "occurrence_count": {
+          "minimum": 1,
+          "title": "Occurrence Count",
+          "type": "integer"
+        },
+        "token_keys": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Token Keys",
+          "type": "array"
+        }
+      },
+      "required": [
+        "entity_key",
+        "entity_label",
+        "occurrence_count",
+        "token_keys"
+      ],
+      "title": "PacketMention",
+      "type": "object"
+    },
+    "PacketNeighbour": {
+      "additionalProperties": false,
+      "description": "The mantra before or after the target, for context and nothing else.\n\nA neighbour may be cited as evidence only by an assertion whose subject is the\ntarget mantra; it never becomes a subject of its own in the same packet.",
+      "properties": {
+        "citation": {
+          "minLength": 1,
+          "title": "Citation",
+          "type": "string"
+        },
+        "passage_key": {
+          "pattern": "^VG:RV:SAK:M\\d{2}:S\\d{3}:V\\d{3}$",
+          "title": "Passage Key",
+          "type": "string"
+        },
+        "sanskrit": {
+          "minLength": 1,
+          "title": "Sanskrit",
+          "type": "string"
+        },
+        "translation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PacketTranslation"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "passage_key",
+        "citation",
+        "sanskrit"
+      ],
+      "title": "PacketNeighbour",
+      "type": "object"
+    },
+    "PacketToken": {
+      "additionalProperties": false,
+      "description": "One annotated Sanskrit token, offered as citable evidence.\n\nToken ids are what an assertion points at. A model claiming a word is in the mantra\nhas to name the token that is, and the validator checks the name against this list.",
+      "properties": {
+        "lemma": {
+          "minLength": 1,
+          "title": "Lemma",
+          "type": "string"
+        },
+        "morphology": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Morphology",
+          "type": "object"
+        },
+        "pada": {
+          "pattern": "^[a-z]$",
+          "title": "Pada",
+          "type": "string"
+        },
+        "part_of_speech": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Part Of Speech"
+        },
+        "sequence": {
+          "minimum": 1,
+          "title": "Sequence",
+          "type": "integer"
+        },
+        "surface": {
+          "minLength": 1,
+          "title": "Surface",
+          "type": "string"
+        },
+        "token_key": {
+          "minLength": 1,
+          "title": "Token Key",
+          "type": "string"
+        }
+      },
+      "required": [
+        "token_key",
+        "pada",
+        "sequence",
+        "surface",
+        "lemma"
+      ],
+      "title": "PacketToken",
+      "type": "object"
+    },
+    "PacketTranslation": {
+      "additionalProperties": false,
+      "description": "A translation record referenced by id, with a hash of the text supplied.\n\n``text`` is populated at request time from the local build and never reaches disk:\nonly the hash does. See :meth:`EvidencePacket.index_row`.",
+      "properties": {
+        "language": {
+          "minLength": 1,
+          "title": "Language",
+          "type": "string"
+        },
+        "text": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Text"
+        },
+        "text_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Text Sha256",
+          "type": "string"
+        },
+        "translation_id": {
+          "minLength": 1,
+          "title": "Translation Id",
+          "type": "string"
+        },
+        "translator": {
+          "minLength": 1,
+          "title": "Translator",
+          "type": "string"
+        }
+      },
+      "required": [
+        "translation_id",
+        "translator",
+        "language",
+        "text_sha256"
+      ],
+      "title": "PacketTranslation",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Everything one extraction request is allowed to see, and nothing else.\n\nDeliberately small. A whole Maṇḍala in the context window costs money, buys no\nprecision, and makes an assertion's evidence impossible to check, because anything\ncan be justified from enough text.",
+  "properties": {
+    "chandas_keys": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Chandas Keys",
+      "type": "array"
+    },
+    "chandas_labels": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Chandas Labels",
+      "type": "array"
+    },
+    "citation": {
+      "minLength": 1,
+      "title": "Citation",
+      "type": "string"
+    },
+    "devata_keys": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Devata Keys",
+      "type": "array"
+    },
+    "devata_labels": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Devata Labels",
+      "type": "array"
+    },
+    "exact_parallel_passage_keys": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Exact Parallel Passage Keys",
+      "type": "array"
+    },
+    "input_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Input Sha256",
+      "type": "string"
+    },
+    "mandala": {
+      "maximum": 10,
+      "minimum": 1,
+      "title": "Mandala",
+      "type": "integer"
+    },
+    "mantra": {
+      "minimum": 1,
+      "title": "Mantra",
+      "type": "integer"
+    },
+    "mentions": {
+      "items": {
+        "$ref": "#/$defs/PacketMention"
+      },
+      "title": "Mentions",
+      "type": "array"
+    },
+    "near_parallel_passage_keys": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Near Parallel Passage Keys",
+      "type": "array"
+    },
+    "next": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PacketNeighbour"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "packet_version": {
+      "minLength": 1,
+      "title": "Packet Version",
+      "type": "string"
+    },
+    "passage_id": {
+      "format": "uuid",
+      "title": "Passage Id",
+      "type": "string"
+    },
+    "passage_key": {
+      "pattern": "^VG:RV:SAK:M\\d{2}:S\\d{3}:V\\d{3}$",
+      "title": "Passage Key",
+      "type": "string"
+    },
+    "previous": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PacketNeighbour"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "rishi_keys": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Rishi Keys",
+      "type": "array"
+    },
+    "rishi_labels": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Rishi Labels",
+      "type": "array"
+    },
+    "sanskrit": {
+      "minLength": 1,
+      "title": "Sanskrit",
+      "type": "string"
+    },
+    "sanskrit_text_version_id": {
+      "minLength": 1,
+      "title": "Sanskrit Text Version Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "sukta": {
+      "minimum": 1,
+      "title": "Sukta",
+      "type": "integer"
+    },
+    "sukta_mantra_count": {
+      "minimum": 1,
+      "title": "Sukta Mantra Count",
+      "type": "integer"
+    },
+    "tokens": {
+      "items": {
+        "$ref": "#/$defs/PacketToken"
+      },
+      "title": "Tokens",
+      "type": "array"
+    },
+    "translation": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PacketTranslation"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "translation_missing": {
+      "default": false,
+      "title": "Translation Missing",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "packet_version",
+    "passage_key",
+    "passage_id",
+    "citation",
+    "mandala",
+    "sukta",
+    "mantra",
+    "sanskrit",
+    "sanskrit_text_version_id",
+    "sukta_mantra_count",
+    "input_sha256"
+  ],
+  "title": "EvidencePacket",
+  "type": "object"
+}

@@ -25,6 +25,10 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+# Only the live semantic extractor needs a vendor SDK. Everything else - packets,
+# validation, acceptance, evaluation, cost - runs offline against RecordedProvider,
+# so the default install has no LLM dependency at all.
+llm = ["openai>=1.60"]
 dev = [
   "lxml-stubs>=0.5",
   "mypy>=1.14",
@@ -55,10 +59,19 @@ packages = ["vedagraph"]
 mypy_path = "src"
 plugins = ["pydantic.mypy"]
 
+[[tool.mypy.overrides]]
+# Optional dependency: the semantic extractor imports it lazily and the package is not
+# installed unless the 'llm' extra is.
+module = ["openai"]
+ignore_missing_imports = true
+
 [tool.pytest.ini_options]
 addopts = "-ra --strict-markers --cov=vedagraph --cov-report=term-missing"
 testpaths = ["tests"]
-markers = ["live: requires internet access and is disabled unless explicitly selected"]
+markers = [
+  "live: requires internet access and is disabled unless explicitly selected",
+  "api: calls a paid LLM API and is disabled unless explicitly selected",
+]
 
 [tool.coverage.run]
 branch = true

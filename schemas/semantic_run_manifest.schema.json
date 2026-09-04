@@ -1,0 +1,220 @@
+{
+  "$defs": {
+    "TokenUsage": {
+      "additionalProperties": false,
+      "description": "Actual usage reported by the API. Never an estimate when a real number exists.",
+      "properties": {
+        "cached_input_tokens": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Cached Input Tokens",
+          "type": "integer"
+        },
+        "input_tokens": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Input Tokens",
+          "type": "integer"
+        },
+        "output_tokens": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Output Tokens",
+          "type": "integer"
+        },
+        "reasoning_tokens": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Reasoning Tokens",
+          "type": "integer"
+        },
+        "requests": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Requests",
+          "type": "integer"
+        }
+      },
+      "title": "TokenUsage",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "What was run, against what, with which configuration, and what it produced.",
+  "properties": {
+    "acceptance_policy_version": {
+      "minLength": 1,
+      "title": "Acceptance Policy Version",
+      "type": "string"
+    },
+    "cached_input_cost_usd_per_million": {
+      "minimum": 0.0,
+      "title": "Cached Input Cost Usd Per Million",
+      "type": "number"
+    },
+    "corpus_manifest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Corpus Manifest Sha256",
+      "type": "string"
+    },
+    "corpus_version": {
+      "minLength": 1,
+      "title": "Corpus Version",
+      "type": "string"
+    },
+    "dataset_id": {
+      "minLength": 1,
+      "title": "Dataset Id",
+      "type": "string"
+    },
+    "finished_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Finished At"
+    },
+    "input_cost_usd_per_million": {
+      "minimum": 0.0,
+      "title": "Input Cost Usd Per Million",
+      "type": "number"
+    },
+    "lexical_policy_version": {
+      "minLength": 1,
+      "title": "Lexical Policy Version",
+      "type": "string"
+    },
+    "max_output_tokens": {
+      "minimum": 1,
+      "title": "Max Output Tokens",
+      "type": "integer"
+    },
+    "model": {
+      "minLength": 1,
+      "title": "Model",
+      "type": "string"
+    },
+    "model_snapshot": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Model Snapshot"
+    },
+    "notes": {
+      "default": "",
+      "title": "Notes",
+      "type": "string"
+    },
+    "ontology_version": {
+      "minLength": 1,
+      "title": "Ontology Version",
+      "type": "string"
+    },
+    "output_cost_usd_per_million": {
+      "minimum": 0.0,
+      "title": "Output Cost Usd Per Million",
+      "type": "number"
+    },
+    "packet_version": {
+      "minLength": 1,
+      "title": "Packet Version",
+      "type": "string"
+    },
+    "passage_count": {
+      "minimum": 0,
+      "title": "Passage Count",
+      "type": "integer"
+    },
+    "prompt_version": {
+      "minLength": 1,
+      "title": "Prompt Version",
+      "type": "string"
+    },
+    "provider": {
+      "minLength": 1,
+      "title": "Provider",
+      "type": "string"
+    },
+    "reasoning_effort": {
+      "minLength": 1,
+      "title": "Reasoning Effort",
+      "type": "string"
+    },
+    "run_id": {
+      "minLength": 1,
+      "title": "Run Id",
+      "type": "string"
+    },
+    "schema_name": {
+      "minLength": 1,
+      "title": "Schema Name",
+      "type": "string"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "started_at": {
+      "format": "date-time",
+      "title": "Started At",
+      "type": "string"
+    },
+    "temperature": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Temperature"
+    },
+    "total_cost_usd": {
+      "default": 0.0,
+      "minimum": 0.0,
+      "title": "Total Cost Usd",
+      "type": "number"
+    },
+    "usage": {
+      "$ref": "#/$defs/TokenUsage"
+    }
+  },
+  "required": [
+    "run_id",
+    "dataset_id",
+    "started_at",
+    "corpus_version",
+    "corpus_manifest_sha256",
+    "lexical_policy_version",
+    "ontology_version",
+    "acceptance_policy_version",
+    "prompt_version",
+    "packet_version",
+    "schema_name",
+    "provider",
+    "model",
+    "reasoning_effort",
+    "max_output_tokens",
+    "passage_count",
+    "input_cost_usd_per_million",
+    "cached_input_cost_usd_per_million",
+    "output_cost_usd_per_million"
+  ],
+  "title": "SemanticRunManifest",
+  "type": "object"
+}

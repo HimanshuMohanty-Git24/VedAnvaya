@@ -54,7 +54,7 @@ produce review candidates and never an edge. This is stated in full in
 ### 4. Ambiguity fails closed
 
 A lemma reaching two accepted entities produces no edge and an
-`AMBIGUOUS_LEXICAL_ENTITY` record, regardless of how frequent it is. 786 tokens
+`AMBIGUOUS_LEXICAL_ENTITY` record, regardless of how frequent it is. 711 tokens
 were left unresolved on these grounds in v1.
 
 ### 5. Ṛṣi lexical mentions are deferred

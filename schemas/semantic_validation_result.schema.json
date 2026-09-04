@@ -1,0 +1,85 @@
+{
+  "$defs": {
+    "SemanticAssertionStatus": {
+      "description": "Lifecycle of a semantic assertion.\n\nThe extractor may only ever produce ``CANDIDATE``. Every other value is written by a\ndeterministic stage or by a person; a model that emitted ``AUTO_ACCEPTED`` would be\ngrading its own paper.",
+      "enum": [
+        "CANDIDATE",
+        "AUTO_ACCEPTED",
+        "HUMAN_ACCEPTED",
+        "HUMAN_REJECTED",
+        "VALIDATION_REJECTED",
+        "SUPERSEDED",
+        "NEEDS_REVIEW"
+      ],
+      "title": "SemanticAssertionStatus",
+      "type": "string"
+    },
+    "SemanticValidationCode": {
+      "description": "Why a candidate was rejected or flagged. One code, one failure mode.",
+      "enum": [
+        "OK",
+        "UNKNOWN_PASSAGE",
+        "PASSAGE_NOT_IN_PACKET",
+        "PREDICATE_NOT_WHITELISTED",
+        "PREDICATE_FORBIDDEN",
+        "SUBJECT_KIND_INVALID",
+        "OBJECT_TYPE_INVALID",
+        "OBJECT_UNRESOLVED",
+        "UNKNOWN_CANONICAL_ENTITY",
+        "CANDIDATE_ENTITY_MALFORMED",
+        "NO_EVIDENCE",
+        "EVIDENCE_PASSAGE_NOT_SUPPLIED",
+        "EVIDENCE_TOKEN_NOT_IN_PASSAGE",
+        "EVIDENCE_TRANSLATION_NOT_SUPPLIED",
+        "EVIDENCE_HASH_MISMATCH",
+        "CONFIDENCE_OUT_OF_RANGE",
+        "EXPLICITNESS_INVALID",
+        "EXPLICITNESS_UNSUPPORTED_BY_EVIDENCE",
+        "DETERMINISTIC_CONTEXT_CONFLICT",
+        "DUPLICATE_ASSERTION"
+      ],
+      "title": "SemanticValidationCode",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "The deterministic verdict on one candidate, and why.",
+  "properties": {
+    "candidate_assertion_id": {
+      "minLength": 1,
+      "title": "Candidate Assertion Id",
+      "type": "string"
+    },
+    "codes": {
+      "items": {
+        "$ref": "#/$defs/SemanticValidationCode"
+      },
+      "title": "Codes",
+      "type": "array"
+    },
+    "conflicts_with_metadata": {
+      "default": false,
+      "title": "Conflicts With Metadata",
+      "type": "boolean"
+    },
+    "reason": {
+      "default": "",
+      "title": "Reason",
+      "type": "string"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "$ref": "#/$defs/SemanticAssertionStatus"
+    }
+  },
+  "required": [
+    "candidate_assertion_id",
+    "status"
+  ],
+  "title": "SemanticValidationResult",
+  "type": "object"
+}

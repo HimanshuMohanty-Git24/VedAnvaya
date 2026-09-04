@@ -26,3 +26,13 @@ data/qa/**
 
 # Deterministic knowledge layer outputs are reproducible from pinned artifacts.
 data/knowledge/**
+
+# Semantic pilot outputs: model-authored candidates and evidence packets. Reproducible
+# from the committed pilot config and the pinned corpus, and kept out of the repository
+# so no run's raw payloads or source text are ever committed.
+data/semantic/**
+!data/semantic/.gitkeep
+
+# Never commit a key.
+.env.*
+*.key

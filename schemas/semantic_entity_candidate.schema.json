@@ -1,0 +1,144 @@
+{
+  "$defs": {
+    "SemanticEntityResolution": {
+      "description": "What happened when a proposed concept met the registry.",
+      "enum": [
+        "ACCEPTED_NEW_ENTITY",
+        "MATCHED_EXISTING_ENTITY",
+        "NEEDS_REVIEW"
+      ],
+      "title": "SemanticEntityResolution",
+      "type": "string"
+    },
+    "SemanticNodeType": {
+      "description": "Categories a semantic entity may belong to.\n\nChosen to be usable across the four Vedas, not tuned to the Rigveda. Adding a type\nis an ontology version bump, because every stored candidate names the version it was\nproduced under.",
+      "enum": [
+        "CONCEPT",
+        "PHILOSOPHICAL_CONCEPT",
+        "THEME",
+        "RITUAL",
+        "OFFERING",
+        "SUBSTANCE",
+        "PLANT",
+        "ANIMAL",
+        "OBJECT",
+        "PLACE",
+        "RIVER",
+        "REGION",
+        "NATURAL_PHENOMENON",
+        "COSMIC_ENTITY",
+        "ACTION",
+        "QUALITY",
+        "STATE"
+      ],
+      "title": "SemanticNodeType",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "A concept a model proposed. Not yet an entity, and not given a canonical id.\n\n``candidate_id`` is derived from the normalized label and type, so the same proposal\nfrom two mantras is one candidate with two source mantras — which is what makes\n``evidence_count`` mean anything.",
+  "properties": {
+    "aliases": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Aliases",
+      "type": "array"
+    },
+    "candidate_id": {
+      "minLength": 1,
+      "title": "Candidate Id",
+      "type": "string"
+    },
+    "created_by_model": {
+      "minLength": 1,
+      "title": "Created By Model",
+      "type": "string"
+    },
+    "description": {
+      "default": "",
+      "title": "Description",
+      "type": "string"
+    },
+    "entity_type": {
+      "$ref": "#/$defs/SemanticNodeType"
+    },
+    "evidence_count": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Evidence Count",
+      "type": "integer"
+    },
+    "matched_entity_key": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Matched Entity Key"
+    },
+    "normalized_label": {
+      "minLength": 1,
+      "title": "Normalized Label",
+      "type": "string"
+    },
+    "ontology_version": {
+      "minLength": 1,
+      "title": "Ontology Version",
+      "type": "string"
+    },
+    "preferred_label": {
+      "minLength": 1,
+      "title": "Preferred Label",
+      "type": "string"
+    },
+    "prompt_version": {
+      "minLength": 1,
+      "title": "Prompt Version",
+      "type": "string"
+    },
+    "resolution": {
+      "$ref": "#/$defs/SemanticEntityResolution",
+      "default": "NEEDS_REVIEW"
+    },
+    "resolution_reason": {
+      "default": "",
+      "title": "Resolution Reason",
+      "type": "string"
+    },
+    "review_candidate_keys": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Review Candidate Keys",
+      "type": "array"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_passage_keys": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Source Passage Keys",
+      "type": "array"
+    }
+  },
+  "required": [
+    "candidate_id",
+    "entity_type",
+    "preferred_label",
+    "normalized_label",
+    "created_by_model",
+    "prompt_version",
+    "ontology_version"
+  ],
+  "title": "SemanticEntityCandidate",
+  "type": "object"
+}

@@ -1,4 +1,4 @@
-.PHONY: install format lint typecheck test check schemas pilot rigveda lineage knowledge lexical
+.PHONY: install format lint typecheck test check schemas pilot rigveda lineage knowledge lexical semantic-config semantic-dry-run
 
 install:
 	uv sync --extra dev
@@ -15,7 +15,7 @@ typecheck:
 	uv run mypy
 
 test:
-	uv run pytest -m "not live"
+	uv run pytest -m "not live and not api"
 
 check: lint typecheck test
 
@@ -41,3 +41,10 @@ lexical:
 	uv run python scripts/build_vedaweb_morphology_index.py
 	uv run python scripts/build_rigveda_lexical.py
 	uv run python scripts/generate_lexical_reports.py
+
+semantic-config:
+	uv run python scripts/build_semantic_pilot_config.py
+
+# Builds every pilot packet and prices the run without contacting anyone. Free.
+semantic-dry-run:
+	uv run python scripts/run_semantic_pilot.py --dry-run
