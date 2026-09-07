@@ -1,0 +1,79 @@
+{
+  "collection_not_adapted_work": "This manifest enumerates four SEPARATELY LICENSED datasets. It is not a single adapted work and must not be published as one. SV and YV primary layers are CC BY-SA 4.0; the Rigveda primary is CC BY-NC-SA 4.0, which is NOT on the BY-SA compatibility list, so under CC BY-SA 4.0 s3(b)(1) a merged adaptation would have to satisfy both at once. The AV transcription is CC0, which composes upward into either but only upward. PERMITTED: four directories, four licences, four attribution blocks, plus rights-neutral cross-work identity data. FORBIDDEN: one licence declaration for the whole, a merged text table, or any jointly built index spanning the BY-SA and BY-NC-SA layers.",
+  "cross_work_identity": {
+    "clean": true,
+    "cross_work_canonical_key_collisions": {},
+    "cross_work_canonical_urn_collisions": {},
+    "cross_work_entity_id_collisions": {},
+    "intra_work_duplicate_keys": {},
+    "passages_examined": 16121,
+    "passages_per_work": {
+      "VG:WORK:AV:SAU": 174,
+      "VG:WORK:RV:SAK": 11590,
+      "VG:WORK:SV:KAU": 2342,
+      "VG:WORK:YV:VSM": 2015
+    }
+  },
+  "manifest_version": "four-veda-candidate-v1",
+  "members": {
+    "VG:WORK:AV:SAU": {
+      "attribution": "VedaGraph transcription of Roth & Whitney 1856 (BSB/MDZ bsb10219750)",
+      "declared_release_dir": "atharvaveda_saunaka_v1",
+      "present": false,
+      "primary_licence": "CC0",
+      "reason_absent": "no production release exists for this work. The surviving pilot is NOT substituted here: it is built from the REFERENCE_ONLY Orlandi lineage, whose terms forbid derived redistribution.",
+      "work_id": "VG:WORK:AV:SAU"
+    },
+    "VG:WORK:RV:SAK": {
+      "aggregate_content_sha256": "59409f7c23b0286496ef71ee304c48452f55548f7cfe9e56e843878b9d2348ec",
+      "attribution": "GRETIL / VedaWeb, Aufrecht lineage; see text_versions.yaml",
+      "declared_release_dir": "rigveda_full_v1",
+      "file_count": 16,
+      "mantra_count": 10552,
+      "present": true,
+      "primary_licence": "CC_BY_NC_SA",
+      "release_kind": "PRODUCTION",
+      "work_id": "VG:WORK:RV:SAK"
+    },
+    "VG:WORK:SV:KAU": {
+      "aggregate_content_sha256": "5d12b7e2ca6ba43d33a42354dd303f51b48a36b66fcbe07d20f631a9a0af60b2",
+      "attribution": "Sanskrit Wikisource contributors, CC BY-SA 4.0; per-page revids retained",
+      "declared_release_dir": "samaveda_arcika_v1",
+      "file_count": 14,
+      "mantra_count": 1844,
+      "present": true,
+      "primary_licence": "CC_BY_SA",
+      "release_kind": "PRODUCTION",
+      "work_id": "VG:WORK:SV:KAU"
+    },
+    "VG:WORK:YV:VSM": {
+      "aggregate_content_sha256": "c8c05a909b289963953607b76f768ed518772d2ee3e084b6e4f03bbd36b61bb6",
+      "attribution": "Sanskrit Wikisource contributors, CC BY-SA 4.0; per-page revids retained",
+      "declared_release_dir": "yajurveda_vsm_v1",
+      "file_count": 17,
+      "mantra_count": 1975,
+      "present": true,
+      "primary_licence": "CC_BY_SA",
+      "release_kind": "PRODUCTION",
+      "work_id": "VG:WORK:YV:VSM"
+    }
+  },
+  "members_absent": [
+    "VG:WORK:AV:SAU"
+  ],
+  "members_present": [
+    "VG:WORK:RV:SAK",
+    "VG:WORK:SV:KAU",
+    "VG:WORK:YV:VSM"
+  ],
+  "not_frozen": "This is a candidate. The freeze is a separate phase and has not happened. Nothing here asserts that these bytes are final.",
+  "produced_by_run": "FULL_SV_YV_AV_CANONICAL_INGESTION",
+  "samaveda_scope": "The Samaveda member is the Kauthuma ARCIKA corpus only. The gana collections are a parallel and larger body that VG:WORK:SV:KAU does not address and that needs its own work_id. This manifest must never be described as containing a complete Samaveda.",
+  "source_assertion_completeness": {
+    "assertions_examined": 26693,
+    "clean": true,
+    "orphan_claims": {},
+    "orphan_count": 0
+  },
+  "status": "CANDIDATE"
+}

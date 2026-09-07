@@ -37,7 +37,7 @@ downstream on derived surfaces only.
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from urllib.parse import quote, urlencode
 
@@ -277,6 +277,12 @@ class AdhyayaParse:
     accented_collisions: dict[int, int]
     #: Departures from the source bytes, emitted downstream as reviewable assertions.
     editorial_interventions: list[EditorialIntervention]
+    #: mantra number -> the source line its accented run OPENED on. An
+    #: ORDINAL_HEADER_ABSENT ParseFailure carries the same line_number, so a consumer can
+    #: attribute a boundary fallback to the right record BY LINE. Attributing it by text
+    #: prefix is unsound: VSM 11.9 and 11.28 share their first 63 characters, so a greedy
+    #: earliest match claims 11.9 for a fallback that belongs to 11.28.
+    accented_start_lines: dict[int, int] = field(default_factory=dict)
 
 
 def _strip_markup(line: str) -> str:
@@ -374,6 +380,7 @@ class YajurvedaWikisourceAdapter(SourceAdapter):
         )
         collisions = dict(getattr(self, "_last_collisions", {}))
         interventions = list(getattr(self, "_last_interventions", []))
+        start_lines = dict(getattr(self, "_last_accented_start_lines", {}))
         return AdhyayaParse(
             adhyaya=adhyaya,
             revision=revision,
@@ -383,6 +390,7 @@ class YajurvedaWikisourceAdapter(SourceAdapter):
             failures=failures,
             accented_collisions=collisions,
             editorial_interventions=interventions,
+            accented_start_lines=start_lines,
         )
 
     @staticmethod
@@ -585,6 +593,8 @@ class YajurvedaWikisourceAdapter(SourceAdapter):
         interventions: list[EditorialIntervention] = []
         seen: dict[int, int] = {}
         buffer: list[str] = []
+        run_start_line = -1
+        accented_start_lines: dict[int, int] = {}
         is_commentary = False
         ordinal_header_seen = False  # True when the previous meaningful line was an ordinal header
         # "Pending mula" state: when the ordinal-signaled accented run ends without a
@@ -708,6 +718,7 @@ class YajurvedaWikisourceAdapter(SourceAdapter):
                                 )
                             else:
                                 seen[fb_mantra] = 1
+                                accented_start_lines[fb_mantra] = run_start_line
                                 records.append(
                                     self._record(
                                         adhyaya=adhyaya,
@@ -827,6 +838,7 @@ class YajurvedaWikisourceAdapter(SourceAdapter):
                                 )
                             else:
                                 seen[fb_mantra] = 1
+                                accented_start_lines[fb_mantra] = run_start_line
                                 records.append(
                                     self._record(
                                         adhyaya=adhyaya,
@@ -910,6 +922,14 @@ class YajurvedaWikisourceAdapter(SourceAdapter):
                             )
                         )
 
+            if not buffer:
+                # The line this run OPENED on. An ORDINAL_HEADER_ABSENT failure is emitted
+                # at exactly this moment and carries the same line_number, so recording it
+                # lets a consumer join failure to record BY LINE instead of by text prefix.
+                # Prefix joining is what mis-attributed VSM 11.9 and 11.28: both open with
+                # the same 63-character formula, so a greedy earliest match claimed 11.9
+                # for a fallback that belongs to 11.28.
+                run_start_line = line_number
             buffer.append(stripped)
             terminal = _ACCENTED_TERMINAL.search(stripped)
             if terminal is None:
@@ -992,6 +1012,7 @@ class YajurvedaWikisourceAdapter(SourceAdapter):
                     text_role=TextRole.PARALLEL_TEXT,
                 )
             )
+            accented_start_lines[mantra] = run_start_line
             buffer, is_commentary = [], False
 
         if buffer and not is_commentary:
@@ -1005,4 +1026,5 @@ class YajurvedaWikisourceAdapter(SourceAdapter):
             )
         self._last_collisions = {m: n for m, n in sorted(seen.items()) if n > 1}
         self._last_interventions = interventions
+        self._last_accented_start_lines = accented_start_lines
         return records

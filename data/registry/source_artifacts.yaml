@@ -1461,7 +1461,24 @@ source_artifacts:
     (pageid 4998, revid 274559) and Samavedah/Kauthumiya/Samhita/Purvarcikah/Atharanyarcikah/1.2.1 Prathama Dasatih
     (pageid 4939, revid 323308) - but the dotted address is NOT a uniform coordinate: slot 3 means prapathaka under
     1.1.x, dasati under 1.2.x and ardha under 2.x.y, so it must be read against each collection''s declared shape.
-    Retrieved via action=parse with wikitext and revid captured.'
+    Retrieved via action=parse with wikitext and revid captured.
+    RE-MEASURED 2026-09-07 by FULL_SV_YV_AV_CANONICAL_INGESTION against the live MediaWiki API, and the
+    headline split is CONFIRMED EXACTLY: 840 total pages, 106 arcika, 725 gana, with the gana books at
+    gramageya 190 / aranyakageya 86 / uhagana 362 / uhyagana 87. Two findings extend it, neither reconciled
+    away:
+    (1) rahasyagana is a SEPARATE 726th page (pageid 93478), not a subtree of uhyagana. The "uhya/rahasya"
+    conflation used elsewhere in this repository is contradicted by the witness and is left unadjudicated.
+    (2) 64 OF THE 726 GANA PAGES ARE REDIRECTS. The real content surface is 662 pages and about 3.4 MB of
+    wikitext, not 725. Anyone scoping the gana ingestion from the 725 figure is over by 64. This is the same
+    class of error as citing 840 as this work''s coverage: a page count that is not a content count.
+    Also measured: gana page depth varies from 4 to 7 title segments WITHIN a single book, uha and uhya use a
+    ritual-occasion axis (dasaratra, samvatsara, ekaha, ahina, sattra, ksudra, prayascitta) that gramageya and
+    aranyakageya do not have, gramageya carries transcriber-split pages 03a/03b and 12a/12b, and
+    mahanamnyarcika sits INSIDE the aranyakageya appendix. None of that is decided here; it is enumerated in
+    docs/work_packets/SAMAVEDA_GANA_INGESTION.md as open questions for the gana work_id.
+    Commons categories are NOT a usable enumeration basis for the audio: Category:Audio files of Samaveda
+    holds only 441 .ogg against the 475 actually referenced from these pages. The page-reference route is the
+    basis, and it is what produces the PAGE_LEVEL alignment.'
   recension: Kauthuma
   retrieval_date: '2026-09-07'
   rights_status: CC_BY_SA
@@ -1559,10 +1576,35 @@ source_artifacts:
     is a curation decision, not a rights decision, and it should be made deliberately rather than by default. PARTICULARLY
     VALUABLE because it renders the GANA - the sung dimension that the GRETIL Kauthuma text lacks entirely and that
     is the reason Samaveda is a distinct Veda rather than a Rigveda excerpt.'
-  provenance_notes: Reached via https://sa.wikisource.org/wiki/samavedah; files hosted on upload.wikimedia.org.
-    474 distinct .ogg referenced from 444 Kauthuma Samhita pages. Principal uploaders "Seet..." (317 files) and
-    "Puranastudy" (157), Credit recorded as "Own work". Reciters are not named per file. Reported by Agent B; not
-    yet snapshotted by Agent E, so no collection-level checksum is recorded.
+  provenance_notes: 'Reached via https://sa.wikisource.org/wiki/samavedah; files hosted on upload.wikimedia.org.
+    ORIGINALLY RECORDED (Agent B): 474 distinct .ogg referenced from 444 Kauthuma Samhita pages; principal
+    uploaders "Seet..." (317 files) and "Puranastudy" (157); Credit "Own work"; reciters not named per file;
+    "not yet snapshotted by Agent E, so no collection-level checksum is recorded".
+    RE-MEASURED 2026-09-07 by FULL_SV_YV_AV_CANONICAL_INGESTION directly against the Commons
+    imageinfo/extmetadata API, 27 requests, per file rather than per collection: 475 distinct .ogg referenced
+    from 450 Samhita pages; 459 CC BY-SA 4.0 and 16 CC0 1.0 and 0 without a licence; uploaders
+    "Seetharaman G.K." 319 and "Puranastudy" 156. THE DELTAS ARE RECORDED AND NOT RECONCILED: +1 file,
+    +6 pages, +1 CC BY-SA, and an uploader split that moves in OPPOSITE directions (+2/-1), which a simple
+    net +1 cannot explain - so the two enumerations were probably not scoped identically rather than the
+    holding having drifted. Both figures are kept so a later reader can see which is which.
+    COLLECTION-LEVEL DIGEST, which closes the gap the original note names:
+    4001c9d4fe41ac11879f0b850f2bbc36e9733047b56967b7586ba78f724eed41 - sha256 over UTF-8 lines
+    "{file_name}	{sha1}
+" ordered by (file_name, sha1). IT IS DELIBERATELY NOT PUT IN checksum_sha256,
+    which means sha256-of-bytes: this digests API METADATA, and the per-file sha1 is MediaWiki''s digest, not
+    a sha256. No bytes were downloaded. Reproduced identically on three runs.
+    NEW FACTS: 472 of 475 files reference a GANA page and only 3 reference an arcika page alone (the three
+    Ajyastotra files on Uttararcika 2.1.1); 7 files are referenced from more than one page, up to 4, so
+    file-to-passage is many-to-many; 447 of 662 gana content pages carry audio and 215 do not, with
+    rahasyagana carrying none; 808,529,118 bytes total, about 19.14 hours; all application/ogg.
+    Alignment stays PAGE_LEVEL - the API exposes a whole-file duration and nothing finer, and no mantra
+    timestamp was invented.
+    THE work_id ON THIS ROW IS PROVISIONAL AND PROBABLY WRONG. It is filed under VG:WORK:SV:KAU, which is the
+    ARCIKA-ONLY work, while 99.4% of its files reference gana pages that this work_id cannot address. It is
+    left in place only because no gana work_id exists yet; it must be refiled when one does. Mirroring is
+    PERMITTED by the licences and is DEFERRED for a stated reason: with no gana passage to point at, a mirror
+    today would produce 475 audio records with a null target. See
+    docs/work_packets/SAMAVEDA_GANA_INGESTION.md and data/source_registry/samaveda_gana_audio_inventory.jsonl.'
   recension: Kauthuma
   retrieval_date: '2026-09-07'
   rights_status: CC_BY_SA
@@ -1675,7 +1717,17 @@ source_artifacts:
     E, so no checksum recorded.
   recension: Saunaka, INFERRED from text match and NOT STATED by the dataset - recorded as UNVERIFIED
   retrieval_date: '2026-09-07'
-  rights_status: APACHE_2_0
+  rights_status: UNKNOWN
+  # DOWNGRADED from APACHE_2_0 2026-09-07 by FULL_SV_YV_AV_CANONICAL_INGESTION, on the rights
+  # authority's finding. The Apache-2.0 value came from a HuggingFace dataset card, while this
+  # record's own notes state that the filenames match a third-party archive.org upload and call
+  # the chain "RESIDUAL RISK, not a clean chain". That is RIGHTS-10 and RIGHTS-9 exactly: an
+  # uploader has no standing to license a recording it did not make, and the chain is followed
+  # to its root rather than to the nearest licence. The defect was that the permissive value sat
+  # in the OPERATIVE field while the doubt sat in prose, so any consumer resolving rights
+  # programmatically would have read Apache-2.0 and never seen the caveat. Under RIGHTS-4 a
+  # permissive status is never inferred, only evidenced, so the correct value while the chain is
+  # unresolved is UNKNOWN.
   source_id: VEDAVANI
   title: Vedavani speech dataset, Atharvaveda portion
   url: https://huggingface.co/datasets/sanganaka/Vedavani-Dataset
@@ -1814,4 +1866,164 @@ source_artifacts:
   source_id: WIKISOURCE_SA
   title: Shuklayajurvedah / prakkathanam, visayanukramanika ca (preface and table of contents)
   url: https://sa.wikisource.org/wiki/%E0%A4%B6%E0%A5%81%E0%A4%95%E0%A5%8D%E0%A4%B2%E0%A4%AF%E0%A4%9C%E0%A5%81%E0%A4%B0%E0%A5%8D%E0%A4%B5%E0%A5%87%E0%A4%A6%E0%A4%83
+  work_id: VG:WORK:YV:VSM
+- artifact_id: BSB.AV.SAUNAKA.ROTH_WHITNEY.1856.SCAN
+  checksum_sha256: 4008cdca2886f79a37d23a1323fe2e5edec676f3e08549d23aa865088f3917b6
+  citation_system: 'Kanda | Sukta | Mantra, read from the printed running head "atharvavede K . S" and the
+    Devanagari verse-terminal numerals. The volume carries no continuous whole-Samhita verse number, so no
+    running-number citation system exists for it.'
+  contributors: []
+  editors:
+  - Rudolph Roth
+  - William Dwight Whitney
+  electronic_editors: []
+  encoding: 'NOT APPLICABLE - this is a raster scan, not an e-text. 478 IIIF JPEG derivatives, ONE PER CANVAS,
+    AT WIDTH 4000px. The Devanagari is an 1856 Berlin fount whose glyph for "a" is easily misread as "r"/"sr"
+    by a reader used to modern type; this is recorded because it is the dominant transcription error risk.
+    THE WIDTH IS PART OF THE ARTIFACT AND IS NOT A CONVENIENCE SETTING. The first acquisition of this run took
+    width 2000, and at that resolution the Vedic accent marks of this fount sit on AKSARA BOUNDARIES and
+    cannot be assigned to a specific aksara without guessing. Readers correctly refused to record them under
+    RIGHTS-13, and the resulting corpus-wide absence of accent was very nearly written up as a
+    transcription-capability failure when it was an ACQUISITION failure. At width 4000 the same marks are
+    unambiguously attached to their aksara, verified visually on leaf n17. NOTE that the IIIF "full" size
+    returns only 2025px for this item, so 4000 must be requested EXPLICITLY; it is a real server-side
+    derivative and not an upscale. checksum_sha256 and file_size_bytes below are for the 4000px set; the
+    superseded 2000px aggregate was 478cdf546d65409ab3ea3726fbf92911fc95f756072fcb679bcf2ed9f771ba75.'
+  file_size_bytes: 676021671
+  filename: bsb10219750
+  format: SCAN
+  language: sa-Deva
+  license_statement_verbatim: 'BSB/MDZ declares "Kein Urheberrechtsschutz" (no copyright protection) for this
+    digitisation at https://www.digitale-sammlungen.de/view/bsb10219750.'
+  license_url: https://www.digitale-sammlungen.de/view/bsb10219750
+  notes: 'REGISTERED 2026-09-07 by the FULL_SV_YV_AV_CANONICAL_INGESTION run. THIS ROW CLOSES A STRUCTURAL GAP,
+    not merely an administrative one: source_id BSB_MDZ was registered in sources.yaml and the clean route was
+    recorded as RESOLVED in the blocker registry, but NO ARTIFACT ROW EXISTED. Rights resolve through artifacts,
+    so until now a build could not bind an Atharvaveda row to the public-domain route at all - the only
+    resolvable AV artifacts were the REFERENCE_ONLY GRETIL pair and the VedaWeb translation. A cleared source
+    with no artifact row is not a usable source. This is the AV analogue of the Samaveda SV-TEXTVERSION gap.
+    THIS IS THE ONLY PERMITTED BASIS FOR CANONICAL SHAUNAKA SANSKRIT. The Orlandi 1991 lineage - GRETIL
+    avs_acu.htm/avs___u.htm, TITUS, VedaWeb AVS Sanskrit - is one text with one in-copyright root and stays
+    REFERENCE_ONLY. Under RIGHTS-9 the chain is followed to its root and the root governs, so no amount of
+    re-publication downstream makes that text usable. This scan bypasses the encumbrance entirely rather than
+    seeking permission through it.
+    WHY BSB AND NOT ARCHIVE.ORG. The 1856 work is public domain by age (published 1856; Whitney d. 1894, Roth
+    d. 1895) under RIGHTS-7, and no digitiser has standing to establish that status under RIGHTS-10. What BSB
+    uniquely supplies is a DISCLAIMER OF THE SCAN-LAYER RIGHT: German law may attach a thin neighbouring right
+    to a faithful reproduction photograph (UrhG s.72 Lichtbildschutz), and BSB is the one party with standing to
+    assert or waive that right over its own digitisation. It has waived it. The archive.org copy is a re-upload
+    of a Google scan tagged CC BY 3.0 by an account that is not the digitiser - void for want of standing, the
+    sixth recorded instance of RIGHTS-10 - and is a convenience mirror only.
+    THE CHECKSUM IS AN AGGREGATE, and that is deliberate. A 478-leaf scan has no single file to hash. This value
+    is sha256 over the "mdz_image_id:sha256" line of every leaf in canvas order, so it changes if any leaf
+    changes, if one is missing, or if they are reordered. Per-leaf sha256, byte size, IIIF canvas and retrieval
+    URL are pinned in data/source_registry/atharvaveda_bsb_leaf_manifest.jsonl, which is git-tracked precisely
+    because data/raw/** is not: without it, a transcription citing "printed page 287" would be unverifiable.
+    Leaf n(P+14) is printed page P; the text begins at n15 = printed page 1.
+    TRANSCRIPTION FROM THIS ARTIFACT IS GOVERNED BY RIGHTS-13 and its output licence MUST BE SPLIT - transcribed
+    text CC0/public domain, only VedaGraph structural apparatus under a VedaGraph licence. Asserting copyright
+    over a faithful transcription of a public-domain work would be the same copyfraud RIGHTS-10 condemns in
+    others. See docs/work_packets/ATHARVAVEDA_TRANSCRIPTION_PROTOCOL.md.'
+  provenance_notes: 'Acquired 2026-09-07 by scripts/fetch_atharvaveda_bsb_scan.py from the BSB IIIF Image API,
+    478 canvases, region "full", size "2000,". Each leaf carries its own sha256 and retrieval sidecar under
+    data/raw/bsb_mdz/2026-09-07/bsb10219750/. Coverage verified visually on sampled leaves: n30 = printed p.16
+    (kanda 2, suktas 4-6), n300 = printed p.286 (kanda 12 sukta 5, a prose paryaya sukta), n420 = printed p.407
+    (kanda 20). All 20 kandas present and Kanda 20 present; Kanda 20 COMPLETENESS is not directly observed and
+    must not be asserted from presence.'
+  publication_date: '1856'
+  recension: Shaunaka
+  retrieval_date: '2026-09-07'
+  rights_status: PUBLIC_DOMAIN
+  source_edition: Atharva Veda Sanhita, herausgegeben von R. Roth und W. D. Whitney. Erster Band. Text. Berlin,
+    Ferd. Duemmler's Verlagsbuchhandlung, 1856
+  source_id: BSB_MDZ
+  title: Atharva veda sanhita. 1, Text
+  upstream_print_rights_status: PUBLIC_DOMAIN_BY_AGE
+  url: https://www.digitale-sammlungen.de/view/bsb10219750
+  work_id: VG:WORK:AV:SAU
+- artifact_id: GRIFFITH.YV.1899.SACREDTEXTS
+  checksum_sha256: 44048d5d130530c985b1437a498779190bf39e68055308df15868806a4b44983
+  citation_system: 'Book (one sacred-texts book = one VSM adhyaya) / verse number printed inline in the body
+    text. UNLIKE GRIFFITH.AV.1896.SACREDTEXTS there are NO per-verse HTML anchors - verified, the only anchor
+    elements inside the reader container are printed-page markers with no name, id or href. The printed numeral
+    is the only address carrier that exists.'
+  editors:
+  - Ralph T. H. Griffith
+  file_size_bytes: 12988751
+  filename: hin/wyv/wyvbk{BB}.htm
+  format: HTML
+  language: en
+  license_statement_verbatim: 'Verbatim from https://sacred-texts.com/copyrights.htm, snapshotted 2026-09-07
+    (sha256 008aec2f485ce55d22892def0bbdae5224af325806f023988974f375f4e61677): "Public domain files from this
+    site can be used for any purposes... Create derivative works... without asking anyone (including sacred-texts)
+    for permission." The same page states "books printed outside the US in or before 1922 are in the public domain
+    in the US", which covers a Benares 1899 imprint directly. TWO CARVE-OUTS, neither touching the body text:
+    (1) "index files, the sub-section graphics and any of the descriptive material... may not be reproduced in
+    any form without the permission of the copyright holder, J.B. Hare" - the wyv index blurb quoted under
+    provenance_notes falls under this and is retained as EVIDENCE, not for redistribution; (2) "Public domain
+    files prepared at sacred-texts may be licensed for commercial use... These files are listed in the
+    Bibliography." NO site-wide copyright meta element exists on the new SPA pages - the old "Public Domain and
+    Creative Commons" meta tag recorded on the SACRED_TEXTS source row is GONE from these responses. Underlying
+    PUBLIC_DOMAIN rests on the work: Griffith 1826-1906, published 1899.'
+  license_url: https://sacred-texts.com/copyrights.htm
+  notes: 'SELECTED English translation route for VG:WORK:YV:VSM, and the FIRST machine-readable Griffith
+    Yajurveda text located - GRIFFITH.YV.1899.ARCHIVE is page images only and Wikisource has no Yajurveda English
+    at all. 40 pages snapshotted 2026-09-07, all HTTP 200; the "Site returns HTTP 403 to automated agents" note
+    on the SACRED_TEXTS source row does NOT hold for this route.
+    ALIGNMENT PROVEN, NOT ASSUMED: 1903 of 1975 canonical mantras carry English (96.4%) - EXACT 1889,
+    STRUCTURAL_DIVERGENCE 14, SOURCE_GAP 72, plus 37 AMBIGUOUS and 24 UNRESOLVED units carried with full text.
+    24 of 40 books are 100 percent EXACT, and in 38 of 40 the last printed verse number equals the canonical
+    mantra count exactly, which is the end-to-end anchor that makes the per-verse claims credible. The address
+    of every unit is the number GRIFFITH PRINTS, never its position: a test feeds units printing 3, 2, 1 in that
+    document order and asserts the first takes mantra 3, and a second test shuffles every book and asserts
+    byte-identical output.
+    AUDITED DEFECTS, recorded so they are never discovered later as silent gaps.
+    (1) BOOK 12 NUMBERING-SPINE DIVERGENCE: 118 printed labels against 117 canonical mantras, with one verse
+    printed TWICE (at 97 and again at 102). Verified against the canonical Sanskrit that printed 98..118
+    correspond to canonical 97..117, so a naive printed-number map would put the WRONG translation on 21 keys.
+    Which copy is spurious is not decidable from the print - dropping either satisfies the arithmetic - so NO
+    shift is applied: units 97-118 are UNRESOLVED and keys 12.97-12.117 are SOURCE_GAP.
+    (2) VSM 23.20-31 are ABSENT and the page says so, replacing them with two rows of dots - the Latin-appendix
+    omission Griffith made deliberately. Inferring a span here would have invented 12 translations the page
+    states are not there.
+    (3) BOOK 20.84-86: the page prints 84, an unreadable "S5", then 85 - three units for two numbers, and the
+    unit printed "85" actually carries VSM 20.86. All three refused rather than asserted.
+    (4) 34 units carry a DUPLICATE printed number (OCR misreads such as "17" for 27 in book 8, "14" for 44 and
+    "71" for 74 in book 12), each surfacing as AMBIGUOUS on both claimants.
+    (5) 39 canonical mantras have no printed number at all.
+    COVERAGE LIMIT declared by the digitiser itself: "footnotes and indexes are omitted for technical reasons",
+    so this artifact carries NO Griffith footnotes and that layer remains a genuine gap for VSM.
+    UNVERIFIED, the same open item as GRIFFITH.AV.1896.SACREDTEXTS: whether these files appear on the
+    sacred-texts commercial-licensing Bibliography list. Resolve before any commercial use.'
+  provenance_notes: 'Reported by Agent C2 2026-09-07. Snapshots at data/raw/sacred_texts/2026-09-07/wyv/,
+    content-addressed with per-page metadata sidecars and a manifest; staged alignment at
+    data/staged/yajurveda_translation_stage.json (both gitignored, reproducible from
+    scripts/fetch_griffith_yajurveda.py).
+    DIGITISATION BASE, verbatim from the JSON-LD on wyv/index.htm: "This is the last of the Griffith Veda
+    translations to be digitized. We worked from a somewhat problematic 1976 photographic reprint of the first
+    edition, printed in Victorian India. As with the other volumes, footnotes and indexes are omitted for
+    technical reasons. Long vowels are indicated, but not dotted consonants." That sentence is the direct cause
+    of the OCR numbering defects recorded in notes.
+    THE CHECKSUM IS A CONTENT DIGEST, NOT A RESPONSE DIGEST, and the distinction is load-bearing: every response
+    carries a fresh CSP nonce and a fresh SvelteKit hydration id, so refetching an unchanged page yields
+    different bytes. Verified by refetching wyvbk01.htm - response sha256
+    54bd31fc3438d1cf8c9ff4dace552e523b7219a7963ccf98e7acc7c55f4a2b64 against the pinned
+    7907e008072a84d76549028c30abbe18111c102b63f1c50b5562e4cc5143a294, while the extracted-text digest was
+    identical at 1e6b7b99ae5ce7c99af12f07ecda8ada41bbf64d54c036a9f0eec439fcfaf807. A whole-response hash would
+    therefore have reported this stable artifact as changed on every retrieval. checksum_sha256 here is sha256
+    over the 40 "AA:content_sha256" pairs in adhyaya order; the per-retrieval response aggregate for this
+    snapshot was 35c00c494aa96f98a50be4822402f19c8d5e0f3f58a9e2dabaad199cd9004b81.'
+  publication_date: '1899'
+  recension: Vajasaneyi Madhyandina
+  retrieval_date: '2026-09-07'
+  rights_status: PUBLIC_DOMAIN
+  source_edition: Ralph T. H. Griffith, The Texts of the White Yajurveda, E. J. Lazarus and Co., Benares, 1899
+  source_id: SACRED_TEXTS
+  title: The Texts of the White Yajurveda, Griffith translation
+  upstream_print_rights_status: 'PUBLIC_DOMAIN by age for the 1899 first edition (Griffith d. 1906; Benares
+    imprint, pre-1922, therefore PD in the US, and 60/70 years pma clears India and the EU). The transcription
+    was keyed from a 1976 PHOTOGRAPHIC REPRINT of that edition. A faithful photographic reproduction adds no new
+    authorship, so no reprint copyright is asserted here - but the fact is recorded rather than assumed away,
+    exactly as the Munshiram Manoharlal reprint was flagged on GRIFFITH.YV.1899.ARCHIVE.'
+  url: https://sacred-texts.com/hin/wyv/index.htm
   work_id: VG:WORK:YV:VSM

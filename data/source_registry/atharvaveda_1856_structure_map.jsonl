@@ -1,0 +1,478 @@
+{"canvas_index": 1, "header_literal": null, "is_text_leaf": false, "kanda": null, "notes": "binding / front cover board", "printed_page": null, "sukta_first": null, "sukta_last": null}
+{"canvas_index": 2, "header_literal": null, "is_text_leaf": false, "kanda": null, "notes": "flyleaf; BSB shelfmark '4o A.or. 2840' and manuscript title 'Atharva V. Sanhita' in ink", "printed_page": null, "sukta_first": null, "sukta_last": null}
+{"canvas_index": 3, "header_literal": null, "is_text_leaf": false, "kanda": null, "notes": "blank flyleaf", "printed_page": null, "sukta_first": null, "sukta_last": null}
+{"canvas_index": 4, "header_literal": null, "is_text_leaf": false, "kanda": null, "notes": "blank flyleaf", "printed_page": null, "sukta_first": null, "sukta_last": null}
+{"canvas_index": 5, "header_literal": null, "is_text_leaf": false, "kanda": null, "notes": "title page: || atharvavedasamhita || / ATHARVA VEDA SANHITA / herausgegeben von R. ROTH und W. D. WHITNEY / ERSTER BAND. TEXT. / BERLIN, FERD. DUEMMLER'S VERLAGSBUCHHANDLUNG. 1856", "printed_page": null, "sukta_first": null, "sukta_last": null}
+{"canvas_index": 6, "header_literal": null, "is_text_leaf": false, "kanda": null, "notes": "verso of title page; printer's imprint 'Berlin, Druck der Gebr. Unger'schen Hofbuchdruckerei.' at foot", "printed_page": null, "sukta_first": null, "sukta_last": null}
+{"canvas_index": 7, "header_literal": null, "is_text_leaf": false, "kanda": null, "notes": "VORREDE (preface), dated 'Im Oktober 1856', signed 'R. u. Wh.'", "printed_page": null, "sukta_first": null, "sukta_last": null}
+{"canvas_index": 8, "header_literal": null, "is_text_leaf": false, "kanda": null, "notes": "blank verso of the Vorrede", "printed_page": null, "sukta_first": null, "sukta_last": null}
+{"canvas_index": 9, "header_literal": null, "is_text_leaf": false, "kanda": null, "notes": "second (fascicle) title page: || atharvavedasamhita || / ATHARVA VEDA SANHITA / R. ROTH und W. D. WHITNEY / ERSTE ABTHEILUNG / BERLIN 1855", "printed_page": null, "sukta_first": null, "sukta_last": null}
+{"canvas_index": 10, "header_literal": null, "is_text_leaf": false, "kanda": null, "notes": "blank verso", "printed_page": null, "sukta_first": null, "sukta_last": null}
+{"canvas_index": 11, "header_literal": null, "is_text_leaf": false, "kanda": null, "notes": "publisher's/editor's notice beginning 'Vorliegende Lieferung enthaelt den Text der Atharva Sanhita vollstaendig', dated 'Im Februar 1855', signed 'R.'", "printed_page": null, "sukta_first": null, "sukta_last": null}
+{"canvas_index": 12, "header_literal": null, "is_text_leaf": false, "kanda": null, "notes": "blank verso", "printed_page": null, "sukta_first": null, "sukta_last": null}
+{"canvas_index": 13, "header_literal": null, "is_text_leaf": false, "kanda": null, "notes": "Sanskrit title leaf: atharvangirasah / srimadatharvavedasamhita / rothena ca hvitneyena ca / sodhita / samvat 1855", "printed_page": null, "sukta_first": null, "sukta_last": null}
+{"canvas_index": 14, "header_literal": null, "is_text_leaf": false, "kanda": null, "notes": "blank verso", "printed_page": null, "sukta_first": null, "sukta_last": null}
+{"canvas_index": 15, "header_literal": null, "is_text_leaf": true, "kanda": 1, "notes": "first page of the text; no running head is printed on this page. Kanda/sukta taken from the printed body: the page opens '|| om ||' and carries the marginal sukta markers || 1 || and || 2 ||, with the catchword 'atharvaveda' and page number '1' at the foot. Faint text visible in the head margin is show-through from the verso.", "printed_page": 1, "sukta_first": 1, "sukta_last": 2}
+{"canvas_index": 16, "header_literal": "॥ अथर्ववेदे १ । ३-६ ॥", "is_text_leaf": true, "kanda": 1, "notes": null, "printed_page": 2, "sukta_first": 3, "sukta_last": 6}
+{"canvas_index": 17, "header_literal": "॥ अथर्ववेदे १ । ६-८ ॥", "is_text_leaf": true, "kanda": 1, "notes": null, "printed_page": 3, "sukta_first": 6, "sukta_last": 8}
+{"canvas_index": 18, "header_literal": "॥ अथर्ववेदे १ । ८-११ ॥", "is_text_leaf": true, "kanda": 1, "notes": null, "printed_page": 4, "sukta_first": 8, "sukta_last": 11}
+{"canvas_index": 19, "header_literal": "॥ अथर्ववेदे १ । ११-१३ ॥", "is_text_leaf": true, "kanda": 1, "notes": null, "printed_page": 5, "sukta_first": 11, "sukta_last": 13}
+{"canvas_index": 20, "header_literal": "॥ अथर्ववेदे १ । १३-१६ ॥", "is_text_leaf": true, "kanda": 1, "notes": null, "printed_page": 6, "sukta_first": 13, "sukta_last": 16}
+{"canvas_index": 21, "header_literal": "॥ अथर्ववेदे १ । १६-१९ ॥", "is_text_leaf": true, "kanda": 1, "notes": null, "printed_page": 7, "sukta_first": 16, "sukta_last": 19}
+{"canvas_index": 22, "header_literal": "॥ अथर्ववेदे १ । १९-२२ ॥", "is_text_leaf": true, "kanda": 1, "notes": null, "printed_page": 8, "sukta_first": 19, "sukta_last": 22}
+{"canvas_index": 23, "header_literal": "॥ अथर्ववेदे १ । २२-२५ ॥", "is_text_leaf": true, "kanda": 1, "notes": null, "printed_page": 9, "sukta_first": 22, "sukta_last": 25}
+{"canvas_index": 24, "header_literal": "॥ अथर्ववेदे १ । २५-२८ ॥", "is_text_leaf": true, "kanda": 1, "notes": null, "printed_page": 10, "sukta_first": 25, "sukta_last": 28}
+{"canvas_index": 25, "header_literal": "॥ अथर्ववेदे १ । २८-३० ॥", "is_text_leaf": true, "kanda": 1, "notes": null, "printed_page": 11, "sukta_first": 28, "sukta_last": 30}
+{"canvas_index": 26, "header_literal": "॥ अथर्ववेदे १ । ३०-३३ ॥", "is_text_leaf": true, "kanda": 1, "notes": null, "printed_page": 12, "sukta_first": 30, "sukta_last": 33}
+{"canvas_index": 27, "header_literal": "॥ अथर्ववेदे १ । ३३-३५ ॥", "is_text_leaf": true, "kanda": 1, "notes": null, "printed_page": 13, "sukta_first": 33, "sukta_last": 35}
+{"canvas_index": 28, "header_literal": "॥ अथर्ववेदे २ । १. २ ॥", "is_text_leaf": true, "kanda": 2, "notes": null, "printed_page": 14, "sukta_first": 1, "sukta_last": 2}
+{"canvas_index": 29, "header_literal": "॥ अथर्ववेदे २ । २-४ ॥", "is_text_leaf": true, "kanda": 2, "notes": null, "printed_page": 15, "sukta_first": 2, "sukta_last": 4}
+{"canvas_index": 30, "header_literal": "॥ अथर्ववेदे २ । ४-६ ॥", "is_text_leaf": true, "kanda": 2, "notes": null, "printed_page": 16, "sukta_first": 4, "sukta_last": 6}
+{"canvas_index": 31, "header_literal": "॥ अथर्ववेदे २ । ६-८ ॥", "is_text_leaf": true, "kanda": 2, "notes": null, "printed_page": 17, "sukta_first": 6, "sukta_last": 8}
+{"canvas_index": 32, "header_literal": "॥ अथर्ववेदे २ । ९. १० ॥", "is_text_leaf": true, "kanda": 2, "notes": null, "printed_page": 18, "sukta_first": 9, "sukta_last": 10}
+{"canvas_index": 33, "header_literal": "॥ अथर्ववेदे २ । ११-१३ ॥", "is_text_leaf": true, "kanda": 2, "notes": null, "printed_page": 19, "sukta_first": 11, "sukta_last": 13}
+{"canvas_index": 34, "header_literal": "॥ अथर्ववेदे २ । १३-१५ ॥", "is_text_leaf": true, "kanda": 2, "notes": null, "printed_page": 20, "sukta_first": 13, "sukta_last": 15}
+{"canvas_index": 35, "header_literal": "॥ अथर्ववेदे २ । १५-१८ ॥", "is_text_leaf": true, "kanda": 2, "notes": null, "printed_page": 21, "sukta_first": 15, "sukta_last": 18}
+{"canvas_index": 36, "header_literal": "॥ अथर्ववेदे २ । १९-२३ ॥", "is_text_leaf": true, "kanda": 2, "notes": null, "printed_page": 22, "sukta_first": 19, "sukta_last": 23}
+{"canvas_index": 37, "header_literal": "॥ अथर्ववेदे २ । २३-२५ ॥", "is_text_leaf": true, "kanda": 2, "notes": null, "printed_page": 23, "sukta_first": 23, "sukta_last": 25}
+{"canvas_index": 38, "header_literal": "॥ अथर्ववेदे २ । २६-२८ ॥", "is_text_leaf": true, "kanda": 2, "notes": null, "printed_page": 24, "sukta_first": 26, "sukta_last": 28}
+{"canvas_index": 39, "header_literal": "॥ अथर्ववेदे २ । २८-३० ॥", "is_text_leaf": true, "kanda": 2, "notes": null, "printed_page": 25, "sukta_first": 28, "sukta_last": 30}
+{"canvas_index": 40, "header_literal": "॥ अथर्ववेदे २ । ३०-३२ ॥", "is_text_leaf": true, "kanda": 2, "notes": null, "printed_page": 26, "sukta_first": 30, "sukta_last": 32}
+{"canvas_index": 41, "header_literal": "॥ अथर्ववेदे २ । ३२-३४ ॥", "is_text_leaf": true, "kanda": 2, "notes": null, "printed_page": 27, "sukta_first": 32, "sukta_last": 34}
+{"canvas_index": 42, "header_literal": "॥ अथर्ववेदे २ । ३४-३६ ॥", "is_text_leaf": true, "kanda": 2, "notes": null, "printed_page": 28, "sukta_first": 34, "sukta_last": 36}
+{"canvas_index": 43, "header_literal": "॥ अथर्ववेदे २ । ३६ ॥", "is_text_leaf": true, "kanda": 2, "notes": null, "printed_page": 29, "sukta_first": 36, "sukta_last": 36}
+{"canvas_index": 44, "header_literal": "॥ अथर्ववेदे ३ । १. २ ॥", "is_text_leaf": true, "kanda": 3, "notes": null, "printed_page": 30, "sukta_first": 1, "sukta_last": 2}
+{"canvas_index": 45, "header_literal": "॥ अथर्ववेदे ३ । २-४ ॥", "is_text_leaf": true, "kanda": 3, "notes": null, "printed_page": 31, "sukta_first": 2, "sukta_last": 4}
+{"canvas_index": 46, "header_literal": "॥ अथर्ववेदे ३ । ४. ५ ॥", "is_text_leaf": true, "kanda": 3, "notes": null, "printed_page": 32, "sukta_first": 4, "sukta_last": 5}
+{"canvas_index": 47, "header_literal": "॥ अथर्ववेदे ३ । ५-७ ॥", "is_text_leaf": true, "kanda": 3, "notes": null, "printed_page": 33, "sukta_first": 5, "sukta_last": 7}
+{"canvas_index": 48, "header_literal": "॥ अथर्ववेदे ३ । ७-९ ॥", "is_text_leaf": true, "kanda": 3, "notes": null, "printed_page": 34, "sukta_first": 7, "sukta_last": 9}
+{"canvas_index": 49, "header_literal": "॥ अथर्ववेदे ३ । ९. १० ॥", "is_text_leaf": true, "kanda": 3, "notes": null, "printed_page": 35, "sukta_first": 9, "sukta_last": 10}
+{"canvas_index": 50, "header_literal": "॥ अथर्ववेदे ३ । १०. ११ ॥", "is_text_leaf": true, "kanda": 3, "notes": null, "printed_page": 36, "sukta_first": 10, "sukta_last": 11}
+{"canvas_index": 51, "header_literal": "॥ अथर्ववेदे ३ । ११-१३ ॥", "is_text_leaf": true, "kanda": 3, "notes": null, "printed_page": 37, "sukta_first": 11, "sukta_last": 13}
+{"canvas_index": 52, "header_literal": "॥ अथर्ववेदे ३ । १३-१५ ॥", "is_text_leaf": true, "kanda": 3, "notes": null, "printed_page": 38, "sukta_first": 13, "sukta_last": 15}
+{"canvas_index": 53, "header_literal": "॥ अथर्ववेदे ३ । १५. १६ ॥", "is_text_leaf": true, "kanda": 3, "notes": null, "printed_page": 39, "sukta_first": 15, "sukta_last": 16}
+{"canvas_index": 54, "header_literal": "॥ अथर्ववेदे ३ । १६. १७ ॥", "is_text_leaf": true, "kanda": 3, "notes": null, "printed_page": 40, "sukta_first": 16, "sukta_last": 17}
+{"canvas_index": 55, "header_literal": "॥ अथर्ववेदे ३ । १८. १९ ॥", "is_text_leaf": true, "kanda": 3, "notes": null, "printed_page": 41, "sukta_first": 18, "sukta_last": 19}
+{"canvas_index": 56, "header_literal": "॥ अथर्ववेदे ३ । १९. २० ॥", "is_text_leaf": true, "kanda": 3, "notes": null, "printed_page": 42, "sukta_first": 19, "sukta_last": 20}
+{"canvas_index": 57, "header_literal": "॥ अथर्ववेदे ३ । २१. २२ ॥", "is_text_leaf": true, "kanda": 3, "notes": null, "printed_page": 43, "sukta_first": 21, "sukta_last": 22}
+{"canvas_index": 58, "header_literal": "॥ अथर्ववेदे ३ । २२-२४ ॥", "is_text_leaf": true, "kanda": 3, "notes": null, "printed_page": 44, "sukta_first": 22, "sukta_last": 24}
+{"canvas_index": 59, "header_literal": "॥ अथर्ववेदे ३ । २४-२६ ॥", "is_text_leaf": true, "kanda": 3, "notes": null, "printed_page": 45, "sukta_first": 24, "sukta_last": 26}
+{"canvas_index": 60, "header_literal": "॥ अथर्ववेदे ३ । २६. २७ ॥", "is_text_leaf": true, "kanda": 3, "notes": null, "printed_page": 46, "sukta_first": 26, "sukta_last": 27}
+{"canvas_index": 61, "header_literal": "॥ अथर्ववेदे ३ । २८. २९ ॥", "is_text_leaf": true, "kanda": 3, "notes": null, "printed_page": 47, "sukta_first": 28, "sukta_last": 29}
+{"canvas_index": 62, "header_literal": "॥ अथर्ववेदे ३ । २९-३१ ॥", "is_text_leaf": true, "kanda": 3, "notes": null, "printed_page": 48, "sukta_first": 29, "sukta_last": 31}
+{"canvas_index": 63, "header_literal": "॥ अथर्ववेदे ३ । ३१ ॥", "is_text_leaf": true, "kanda": 3, "notes": null, "printed_page": 49, "sukta_first": 31, "sukta_last": 31}
+{"canvas_index": 64, "header_literal": "॥ अथर्ववेदे ४ । १. २ ॥", "is_text_leaf": true, "kanda": 4, "notes": null, "printed_page": 50, "sukta_first": 1, "sukta_last": 2}
+{"canvas_index": 65, "header_literal": "॥ अथर्ववेदे ४ । २. ३ ॥", "is_text_leaf": true, "kanda": 4, "notes": null, "printed_page": 51, "sukta_first": 2, "sukta_last": 3}
+{"canvas_index": 66, "header_literal": "॥ अथर्ववेदे ४ । ३-५ ॥", "is_text_leaf": true, "kanda": 4, "notes": null, "printed_page": 52, "sukta_first": 3, "sukta_last": 5}
+{"canvas_index": 67, "header_literal": "॥ अथर्ववेदे ४ । ५. ६ ॥", "is_text_leaf": true, "kanda": 4, "notes": null, "printed_page": 53, "sukta_first": 5, "sukta_last": 6}
+{"canvas_index": 68, "header_literal": "॥ अथर्ववेदे ४ । ७. ८ ॥", "is_text_leaf": true, "kanda": 4, "notes": null, "printed_page": 54, "sukta_first": 7, "sukta_last": 8}
+{"canvas_index": 69, "header_literal": "॥ अथर्ववेदे ४ । ८-१० ॥", "is_text_leaf": true, "kanda": 4, "notes": null, "printed_page": 55, "sukta_first": 8, "sukta_last": 10}
+{"canvas_index": 70, "header_literal": "॥ अथर्ववेदे ४ । १०. ११ ॥", "is_text_leaf": true, "kanda": 4, "notes": null, "printed_page": 56, "sukta_first": 10, "sukta_last": 11}
+{"canvas_index": 71, "header_literal": "॥ अथर्ववेदे ४ । ११. १२ ॥", "is_text_leaf": true, "kanda": 4, "notes": null, "printed_page": 57, "sukta_first": 11, "sukta_last": 12}
+{"canvas_index": 72, "header_literal": "॥ अथर्ववेदे ४ । १२-१४ ॥", "is_text_leaf": true, "kanda": 4, "notes": null, "printed_page": 58, "sukta_first": 12, "sukta_last": 14}
+{"canvas_index": 73, "header_literal": "॥ अथर्ववेदे ४ । १४. १५ ॥", "is_text_leaf": true, "kanda": 4, "notes": null, "printed_page": 59, "sukta_first": 14, "sukta_last": 15}
+{"canvas_index": 74, "header_literal": "॥ अथर्ववेदे ४ । १५. १६ ॥", "is_text_leaf": true, "kanda": 4, "notes": null, "printed_page": 60, "sukta_first": 15, "sukta_last": 16}
+{"canvas_index": 75, "header_literal": "॥ अथर्ववेदे ४ । १६. १७ ॥", "is_text_leaf": true, "kanda": 4, "notes": null, "printed_page": 61, "sukta_first": 16, "sukta_last": 17}
+{"canvas_index": 76, "header_literal": "॥ अथर्ववेदे ४ । १७-१९ ॥", "is_text_leaf": true, "kanda": 4, "notes": null, "printed_page": 62, "sukta_first": 17, "sukta_last": 19}
+{"canvas_index": 77, "header_literal": "॥ अथर्ववेदे ४ । १९. २० ॥", "is_text_leaf": true, "kanda": 4, "notes": null, "printed_page": 63, "sukta_first": 19, "sukta_last": 20}
+{"canvas_index": 78, "header_literal": "॥ अथर्ववेदे ४ । २०-२२ ॥", "is_text_leaf": true, "kanda": 4, "notes": null, "printed_page": 64, "sukta_first": 20, "sukta_last": 22}
+{"canvas_index": 79, "header_literal": "॥ अथर्ववेदे ४ । २२. २३ ॥", "is_text_leaf": true, "kanda": 4, "notes": null, "printed_page": 65, "sukta_first": 22, "sukta_last": 23}
+{"canvas_index": 80, "header_literal": "॥ अथर्ववेदे ४ । २४. २५ ॥", "is_text_leaf": true, "kanda": 4, "notes": null, "printed_page": 66, "sukta_first": 24, "sukta_last": 25}
+{"canvas_index": 81, "header_literal": "॥ अथर्ववेदे ४ । २५-२७ ॥", "is_text_leaf": true, "kanda": 4, "notes": null, "printed_page": 67, "sukta_first": 25, "sukta_last": 27}
+{"canvas_index": 82, "header_literal": "॥ अथर्ववेदे ४ । २७-२९ ॥", "is_text_leaf": true, "kanda": 4, "notes": null, "printed_page": 68, "sukta_first": 27, "sukta_last": 29}
+{"canvas_index": 83, "header_literal": "॥ अथर्ववेदे ४ । २९. ३० ॥", "is_text_leaf": true, "kanda": 4, "notes": null, "printed_page": 69, "sukta_first": 29, "sukta_last": 30}
+{"canvas_index": 84, "header_literal": "॥ अथर्ववेदे ४ । ३१. ३२ ॥", "is_text_leaf": true, "kanda": 4, "notes": null, "printed_page": 70, "sukta_first": 31, "sukta_last": 32}
+{"canvas_index": 85, "header_literal": "॥ अथर्ववेदे ४ । ३२-३४ ॥", "is_text_leaf": true, "kanda": 4, "notes": null, "printed_page": 71, "sukta_first": 32, "sukta_last": 34}
+{"canvas_index": 86, "header_literal": "॥ अथर्ववेदे ४ । ३४-३६ ॥", "is_text_leaf": true, "kanda": 4, "notes": null, "printed_page": 72, "sukta_first": 34, "sukta_last": 36}
+{"canvas_index": 87, "header_literal": "॥ अथर्ववेदे ४ । ३६. ३७ ॥", "is_text_leaf": true, "kanda": 4, "notes": null, "printed_page": 73, "sukta_first": 36, "sukta_last": 37}
+{"canvas_index": 88, "header_literal": "॥ अथर्ववेदे ४ । ३७. ३८ ॥", "is_text_leaf": true, "kanda": 4, "notes": null, "printed_page": 74, "sukta_first": 37, "sukta_last": 38}
+{"canvas_index": 89, "header_literal": "॥ अथर्ववेदे ४ । ३८. ३९ ॥", "is_text_leaf": true, "kanda": 4, "notes": null, "printed_page": 75, "sukta_first": 38, "sukta_last": 39}
+{"canvas_index": 90, "header_literal": "॥ अथर्ववेदे ४ । ४० ॥", "is_text_leaf": true, "kanda": 4, "notes": null, "printed_page": 76, "sukta_first": 40, "sukta_last": 40}
+{"canvas_index": 91, "header_literal": "॥ अथर्ववेदे ५ । १ ॥", "is_text_leaf": true, "kanda": 5, "notes": null, "printed_page": 77, "sukta_first": 1, "sukta_last": 1}
+{"canvas_index": 92, "header_literal": "॥ अथर्ववेदे ५ । १-३ ॥", "is_text_leaf": true, "kanda": 5, "notes": null, "printed_page": 78, "sukta_first": 1, "sukta_last": 3}
+{"canvas_index": 93, "header_literal": "॥ अथर्ववेदे ५ । ३. ४ ॥", "is_text_leaf": true, "kanda": 5, "notes": null, "printed_page": 79, "sukta_first": 3, "sukta_last": 4}
+{"canvas_index": 94, "header_literal": "॥ अथर्ववेदे ५ । ४. ५ ॥", "is_text_leaf": true, "kanda": 5, "notes": null, "printed_page": 80, "sukta_first": 4, "sukta_last": 5}
+{"canvas_index": 95, "header_literal": "॥ अथर्ववेदे ५ । ५. ६ ॥", "is_text_leaf": true, "kanda": 5, "notes": null, "printed_page": 81, "sukta_first": 5, "sukta_last": 6}
+{"canvas_index": 96, "header_literal": "॥ अथर्ववेदे ५ । ६. ७ ॥", "is_text_leaf": true, "kanda": 5, "notes": null, "printed_page": 82, "sukta_first": 6, "sukta_last": 7}
+{"canvas_index": 97, "header_literal": "॥ अथर्ववेदे ५ । ७-९ ॥", "is_text_leaf": true, "kanda": 5, "notes": null, "printed_page": 83, "sukta_first": 7, "sukta_last": 9}
+{"canvas_index": 98, "header_literal": "॥ अथर्ववेदे ५ । ९-११ ॥", "is_text_leaf": true, "kanda": 5, "notes": null, "printed_page": 84, "sukta_first": 9, "sukta_last": 11}
+{"canvas_index": 99, "header_literal": "॥ अथर्ववेदे ५ । ११. १२ ॥", "is_text_leaf": true, "kanda": 5, "notes": null, "printed_page": 85, "sukta_first": 11, "sukta_last": 12}
+{"canvas_index": 100, "header_literal": "॥ अथर्ववेदे ५ । १२. १३ ॥", "is_text_leaf": true, "kanda": 5, "notes": null, "printed_page": 86, "sukta_first": 12, "sukta_last": 13}
+{"canvas_index": 101, "header_literal": "॥ अथर्ववेदे ५ । १३. १४ ॥", "is_text_leaf": true, "kanda": 5, "notes": null, "printed_page": 87, "sukta_first": 13, "sukta_last": 14}
+{"canvas_index": 102, "header_literal": "॥ अथर्ववेदे ५ । १४. १५ ॥", "is_text_leaf": true, "kanda": 5, "notes": null, "printed_page": 88, "sukta_first": 14, "sukta_last": 15}
+{"canvas_index": 103, "header_literal": "॥ अथर्ववेदे ५ । १५-१७ ॥", "is_text_leaf": true, "kanda": 5, "notes": null, "printed_page": 89, "sukta_first": 15, "sukta_last": 17}
+{"canvas_index": 104, "header_literal": "॥ अथर्ववेदे ५ । १७. १८ ॥", "is_text_leaf": true, "kanda": 5, "notes": null, "printed_page": 90, "sukta_first": 17, "sukta_last": 18}
+{"canvas_index": 105, "header_literal": "॥ अथर्ववेदे ५ । १८ ॥", "is_text_leaf": true, "kanda": 5, "notes": null, "printed_page": 91, "sukta_first": 18, "sukta_last": 18}
+{"canvas_index": 106, "header_literal": "॥ अथर्ववेदे ५ । १८. १९ ॥", "is_text_leaf": true, "kanda": 5, "notes": null, "printed_page": 92, "sukta_first": 18, "sukta_last": 19}
+{"canvas_index": 107, "header_literal": "॥ अथर्ववेदे ५ । १९. २० ॥", "is_text_leaf": true, "kanda": 5, "notes": null, "printed_page": 93, "sukta_first": 19, "sukta_last": 20}
+{"canvas_index": 108, "header_literal": "॥ अथर्ववेदे ५ । २०. २१ ॥", "is_text_leaf": true, "kanda": 5, "notes": null, "printed_page": 94, "sukta_first": 20, "sukta_last": 21}
+{"canvas_index": 109, "header_literal": "॥ अथर्ववेदे ५ । २१. २२ ॥", "is_text_leaf": true, "kanda": 5, "notes": null, "printed_page": 95, "sukta_first": 21, "sukta_last": 22}
+{"canvas_index": 110, "header_literal": "॥ अथर्ववेदे ५ । २२. २३ ॥", "is_text_leaf": true, "kanda": 5, "notes": null, "printed_page": 96, "sukta_first": 22, "sukta_last": 23}
+{"canvas_index": 111, "header_literal": "॥ अथर्ववेदे ५ । २३. २४ ॥", "is_text_leaf": true, "kanda": 5, "notes": null, "printed_page": 97, "sukta_first": 23, "sukta_last": 24}
+{"canvas_index": 112, "header_literal": "॥ अथर्ववेदे ५ । २४. २५ ॥", "is_text_leaf": true, "kanda": 5, "notes": null, "printed_page": 98, "sukta_first": 24, "sukta_last": 25}
+{"canvas_index": 113, "header_literal": "॥ अथर्ववेदे ५ । २५-२७ ॥", "is_text_leaf": true, "kanda": 5, "notes": null, "printed_page": 99, "sukta_first": 25, "sukta_last": 27}
+{"canvas_index": 114, "header_literal": "॥ अथर्ववेदे ५ । २७. २८ ॥", "is_text_leaf": true, "kanda": 5, "notes": null, "printed_page": 100, "sukta_first": 27, "sukta_last": 28}
+{"canvas_index": 115, "header_literal": "॥ अथर्ववेदे ५ । २८. २९ ॥", "is_text_leaf": true, "kanda": 5, "notes": null, "printed_page": 101, "sukta_first": 28, "sukta_last": 29}
+{"canvas_index": 116, "header_literal": "॥ अथर्ववेदे ५ । २९. ३० ॥", "is_text_leaf": true, "kanda": 5, "notes": null, "printed_page": 102, "sukta_first": 29, "sukta_last": 30}
+{"canvas_index": 117, "header_literal": "॥ अथर्ववेदे ५ । ३०. ३१ ॥", "is_text_leaf": true, "kanda": 5, "notes": null, "printed_page": 103, "sukta_first": 30, "sukta_last": 31}
+{"canvas_index": 118, "header_literal": "॥ अथर्ववेदे ५ । ३१ ॥", "is_text_leaf": true, "kanda": 5, "notes": null, "printed_page": 104, "sukta_first": 31, "sukta_last": 31}
+{"canvas_index": 119, "header_literal": "॥ अथर्ववेदे ६ । १-३ ॥", "is_text_leaf": true, "kanda": 6, "notes": null, "printed_page": 105, "sukta_first": 1, "sukta_last": 3}
+{"canvas_index": 120, "header_literal": "॥ अथर्ववेदे ६ । ४-८ ॥", "is_text_leaf": true, "kanda": 6, "notes": null, "printed_page": 106, "sukta_first": 4, "sukta_last": 8}
+{"canvas_index": 121, "header_literal": "॥ अथर्ववेदे ६ । ८-१२ ॥", "is_text_leaf": true, "kanda": 6, "notes": null, "printed_page": 107, "sukta_first": 8, "sukta_last": 12}
+{"canvas_index": 122, "header_literal": "॥ अथर्ववेदे ६ । १२-१५ ॥", "is_text_leaf": true, "kanda": 6, "notes": null, "printed_page": 108, "sukta_first": 12, "sukta_last": 15}
+{"canvas_index": 123, "header_literal": "॥ अथर्ववेदे ६ । १६-१९ ॥", "is_text_leaf": true, "kanda": 6, "notes": null, "printed_page": 109, "sukta_first": 16, "sukta_last": 19}
+{"canvas_index": 124, "header_literal": "॥ अथर्ववेदे ६ । २०-२३ ॥", "is_text_leaf": true, "kanda": 6, "notes": null, "printed_page": 110, "sukta_first": 20, "sukta_last": 23}
+{"canvas_index": 125, "header_literal": "॥ अथर्ववेदे ६ । २३-२७ ॥", "is_text_leaf": true, "kanda": 6, "notes": null, "printed_page": 111, "sukta_first": 23, "sukta_last": 27}
+{"canvas_index": 126, "header_literal": "॥ अथर्ववेदे ६ । २७-३० ॥", "is_text_leaf": true, "kanda": 6, "notes": null, "printed_page": 112, "sukta_first": 27, "sukta_last": 30}
+{"canvas_index": 127, "header_literal": "॥ अथर्ववेदे ६ । ३१-३५ ॥", "is_text_leaf": true, "kanda": 6, "notes": null, "printed_page": 113, "sukta_first": 31, "sukta_last": 35}
+{"canvas_index": 128, "header_literal": "॥ अथर्ववेदे ६ । ३५-३९ ॥", "is_text_leaf": true, "kanda": 6, "notes": null, "printed_page": 114, "sukta_first": 35, "sukta_last": 39}
+{"canvas_index": 129, "header_literal": "॥ अथर्ववेदे ६ । ४०-४३ ॥", "is_text_leaf": true, "kanda": 6, "notes": null, "printed_page": 115, "sukta_first": 40, "sukta_last": 43}
+{"canvas_index": 130, "header_literal": "॥ अथर्ववेदे ६ । ४३-४७ ॥", "is_text_leaf": true, "kanda": 6, "notes": null, "printed_page": 116, "sukta_first": 43, "sukta_last": 47}
+{"canvas_index": 131, "header_literal": "॥ अथर्ववेदे ६ । ४७-५० ॥", "is_text_leaf": true, "kanda": 6, "notes": null, "printed_page": 117, "sukta_first": 47, "sukta_last": 50}
+{"canvas_index": 132, "header_literal": "॥ अथर्ववेदे ६ । ५१-५४ ॥", "is_text_leaf": true, "kanda": 6, "notes": null, "printed_page": 118, "sukta_first": 51, "sukta_last": 54}
+{"canvas_index": 133, "header_literal": "॥ अथर्ववेदे ६ । ५४-५८ ॥", "is_text_leaf": true, "kanda": 6, "notes": null, "printed_page": 119, "sukta_first": 54, "sukta_last": 58}
+{"canvas_index": 134, "header_literal": "॥ अथर्ववेदे ६ । ५८-६१ ॥", "is_text_leaf": true, "kanda": 6, "notes": null, "printed_page": 120, "sukta_first": 58, "sukta_last": 61}
+{"canvas_index": 135, "header_literal": "॥ अथर्ववेदे ६ । ६२-६५ ॥", "is_text_leaf": true, "kanda": 6, "notes": null, "printed_page": 121, "sukta_first": 62, "sukta_last": 65}
+{"canvas_index": 136, "header_literal": "॥ अथर्ववेदे ६ । ६५-६९ ॥", "is_text_leaf": true, "kanda": 6, "notes": null, "printed_page": 122, "sukta_first": 65, "sukta_last": 69}
+{"canvas_index": 137, "header_literal": "॥ अथर्ववेदे ६ । ६९-७२ ॥", "is_text_leaf": true, "kanda": 6, "notes": null, "printed_page": 123, "sukta_first": 69, "sukta_last": 72}
+{"canvas_index": 138, "header_literal": "॥ अथर्ववेदे ६ । ७२-७६ ॥", "is_text_leaf": true, "kanda": 6, "notes": null, "printed_page": 124, "sukta_first": 72, "sukta_last": 76}
+{"canvas_index": 139, "header_literal": "॥ अथर्ववेदे ६ । ७६-७९ ॥", "is_text_leaf": true, "kanda": 6, "notes": null, "printed_page": 125, "sukta_first": 76, "sukta_last": 79}
+{"canvas_index": 140, "header_literal": "॥ अथर्ववेदे ६ । ८०-८३ ॥", "is_text_leaf": true, "kanda": 6, "notes": null, "printed_page": 126, "sukta_first": 80, "sukta_last": 83}
+{"canvas_index": 141, "header_literal": "॥ अथर्ववेदे ६ । ८३-८६ ॥", "is_text_leaf": true, "kanda": 6, "notes": null, "printed_page": 127, "sukta_first": 83, "sukta_last": 86}
+{"canvas_index": 142, "header_literal": "॥ अथर्ववेदे ६ । ८७-९० ॥", "is_text_leaf": true, "kanda": 6, "notes": null, "printed_page": 128, "sukta_first": 87, "sukta_last": 90}
+{"canvas_index": 143, "header_literal": "॥ अथर्ववेदे ६ । ९०-९४ ॥", "is_text_leaf": true, "kanda": 6, "notes": null, "printed_page": 129, "sukta_first": 90, "sukta_last": 94}
+{"canvas_index": 144, "header_literal": "॥ अथर्ववेदे ६ । ९४-९७ ॥", "is_text_leaf": true, "kanda": 6, "notes": null, "printed_page": 130, "sukta_first": 94, "sukta_last": 97}
+{"canvas_index": 145, "header_literal": "॥ अथर्ववेदे ६ । ९८-१०१ ॥", "is_text_leaf": true, "kanda": 6, "notes": null, "printed_page": 131, "sukta_first": 98, "sukta_last": 101}
+{"canvas_index": 146, "header_literal": "॥ अथर्ववेदे ६ । १०१-१०४ ॥", "is_text_leaf": true, "kanda": 6, "notes": null, "printed_page": 132, "sukta_first": 101, "sukta_last": 104}
+{"canvas_index": 147, "header_literal": "॥ अथर्ववेदे ६ । १०४-१०८ ॥", "is_text_leaf": true, "kanda": 6, "notes": null, "printed_page": 133, "sukta_first": 104, "sukta_last": 108}
+{"canvas_index": 148, "header_literal": "॥ अथर्ववेदे ६ । १०८-१११ ॥", "is_text_leaf": true, "kanda": 6, "notes": null, "printed_page": 134, "sukta_first": 108, "sukta_last": 111}
+{"canvas_index": 149, "header_literal": "॥ अथर्ववेदे ६ । १११-११५ ॥", "is_text_leaf": true, "kanda": 6, "notes": null, "printed_page": 135, "sukta_first": 111, "sukta_last": 115}
+{"canvas_index": 150, "header_literal": "॥ अथर्ववेदे ६ । ११५-११८ ॥", "is_text_leaf": true, "kanda": 6, "notes": null, "printed_page": 136, "sukta_first": 115, "sukta_last": 118}
+{"canvas_index": 151, "header_literal": "॥ अथर्ववेदे ६ । ११९-१२२ ॥", "is_text_leaf": true, "kanda": 6, "notes": null, "printed_page": 137, "sukta_first": 119, "sukta_last": 122}
+{"canvas_index": 152, "header_literal": "॥ अथर्ववेदे ६ । १२२-१२५ ॥", "is_text_leaf": true, "kanda": 6, "notes": null, "printed_page": 138, "sukta_first": 122, "sukta_last": 125}
+{"canvas_index": 153, "header_literal": "॥ अथर्ववेदे ६ । १२५-१२८ ॥", "is_text_leaf": true, "kanda": 6, "notes": null, "printed_page": 139, "sukta_first": 125, "sukta_last": 128}
+{"canvas_index": 154, "header_literal": "॥ अथर्ववेदे ६ । १२८-१३१ ॥", "is_text_leaf": true, "kanda": 6, "notes": null, "printed_page": 140, "sukta_first": 128, "sukta_last": 131}
+{"canvas_index": 155, "header_literal": "॥ अथर्ववेदे ६ । १३२-१३४ ॥", "is_text_leaf": true, "kanda": 6, "notes": null, "printed_page": 141, "sukta_first": 132, "sukta_last": 134}
+{"canvas_index": 156, "header_literal": "॥ अथर्ववेदे ६ । १३५-१३८ ॥", "is_text_leaf": true, "kanda": 6, "notes": null, "printed_page": 142, "sukta_first": 135, "sukta_last": 138}
+{"canvas_index": 157, "header_literal": "॥ अथर्ववेदे ६ । १३८-१४० ॥", "is_text_leaf": true, "kanda": 6, "notes": null, "printed_page": 143, "sukta_first": 138, "sukta_last": 140}
+{"canvas_index": 158, "header_literal": "॥ अथर्ववेदे ६ । १४१. १४२ ॥", "is_text_leaf": true, "kanda": 6, "notes": null, "printed_page": 144, "sukta_first": 141, "sukta_last": 142}
+{"canvas_index": 159, "header_literal": "॥ अथर्ववेदे ७ । १-६ ॥", "is_text_leaf": true, "kanda": 7, "notes": "printed running head reads '7 | 1-6' but the leaf itself carries only suktas 1-5: the marginal sukta markers on this page run || 1 || .. || 5 ||, and sukta 5 breaks off mid-sukta at the foot ('yajno babhuva sa a babhuva ...') to continue on n160. n160's head reads '7 | 5-9' and its body confirms it opens with sukta 5 mantra 2. The printed head on this leaf is therefore one sukta too high - the only such slip found in the book. header_literal records the head as printed; sukta_first/sukta_last record what the leaf actually carries.", "printed_page": 145, "sukta_first": 1, "sukta_last": 5}
+{"canvas_index": 160, "header_literal": "॥ अथर्ववेदे ७ । ५-९ ॥", "is_text_leaf": true, "kanda": 7, "notes": "opens with the remaining mantras of kanda 7 sukta 5, then marginal sukta markers || 6 || .. || 9 ||; head and body agree. See the note on n159, whose head overlaps this one by one sukta too many.", "printed_page": 146, "sukta_first": 5, "sukta_last": 9}
+{"canvas_index": 161, "header_literal": "॥ अथर्ववेदे ७ । ९-१३ ॥", "is_text_leaf": true, "kanda": 7, "notes": null, "printed_page": 147, "sukta_first": 9, "sukta_last": 13}
+{"canvas_index": 162, "header_literal": "॥ अथर्ववेदे ७ । १४-१८ ॥", "is_text_leaf": true, "kanda": 7, "notes": null, "printed_page": 148, "sukta_first": 14, "sukta_last": 18}
+{"canvas_index": 163, "header_literal": "॥ अथर्ववेदे ७ । १८-२२ ॥", "is_text_leaf": true, "kanda": 7, "notes": null, "printed_page": 149, "sukta_first": 18, "sukta_last": 22}
+{"canvas_index": 164, "header_literal": "॥ अथर्ववेदे ७ । २३-२६ ॥", "is_text_leaf": true, "kanda": 7, "notes": null, "printed_page": 150, "sukta_first": 23, "sukta_last": 26}
+{"canvas_index": 165, "header_literal": "॥ अथर्ववेदे ७ । २७-३४ ॥", "is_text_leaf": true, "kanda": 7, "notes": null, "printed_page": 151, "sukta_first": 27, "sukta_last": 34}
+{"canvas_index": 166, "header_literal": "॥ अथर्ववेदे ७ । ३५-३८ ॥", "is_text_leaf": true, "kanda": 7, "notes": null, "printed_page": 152, "sukta_first": 35, "sukta_last": 38}
+{"canvas_index": 167, "header_literal": "॥ अथर्ववेदे ७ । ३९-४५ ॥", "is_text_leaf": true, "kanda": 7, "notes": null, "printed_page": 153, "sukta_first": 39, "sukta_last": 45}
+{"canvas_index": 168, "header_literal": "॥ अथर्ववेदे ७ । ४५-५० ॥", "is_text_leaf": true, "kanda": 7, "notes": null, "printed_page": 154, "sukta_first": 45, "sukta_last": 50}
+{"canvas_index": 169, "header_literal": "॥ अथर्ववेदे ७ । ५०-५२ ॥", "is_text_leaf": true, "kanda": 7, "notes": null, "printed_page": 155, "sukta_first": 50, "sukta_last": 52}
+{"canvas_index": 170, "header_literal": "॥ अथर्ववेदे ७ । ५३-५६ ॥", "is_text_leaf": true, "kanda": 7, "notes": null, "printed_page": 156, "sukta_first": 53, "sukta_last": 56}
+{"canvas_index": 171, "header_literal": "॥ अथर्ववेदे ७ । ५६-५८ ॥", "is_text_leaf": true, "kanda": 7, "notes": null, "printed_page": 157, "sukta_first": 56, "sukta_last": 58}
+{"canvas_index": 172, "header_literal": "॥ अथर्ववेदे ७ । ५९-६२ ॥", "is_text_leaf": true, "kanda": 7, "notes": null, "printed_page": 158, "sukta_first": 59, "sukta_last": 62}
+{"canvas_index": 173, "header_literal": "॥ अथर्ववेदे ७ । ६३-६८ ॥", "is_text_leaf": true, "kanda": 7, "notes": null, "printed_page": 159, "sukta_first": 63, "sukta_last": 68}
+{"canvas_index": 174, "header_literal": "॥ अथर्ववेदे ७ । ६९-७३ ॥", "is_text_leaf": true, "kanda": 7, "notes": null, "printed_page": 160, "sukta_first": 69, "sukta_last": 73}
+{"canvas_index": 175, "header_literal": "॥ अथर्ववेदे ७ । ७३. ७४ ॥", "is_text_leaf": true, "kanda": 7, "notes": null, "printed_page": 161, "sukta_first": 73, "sukta_last": 74}
+{"canvas_index": 176, "header_literal": "॥ अथर्ववेदे ७ । ७४-७७ ॥", "is_text_leaf": true, "kanda": 7, "notes": null, "printed_page": 162, "sukta_first": 74, "sukta_last": 77}
+{"canvas_index": 177, "header_literal": "॥ अथर्ववेदे ७ । ७७-८० ॥", "is_text_leaf": true, "kanda": 7, "notes": null, "printed_page": 163, "sukta_first": 77, "sukta_last": 80}
+{"canvas_index": 178, "header_literal": "॥ अथर्ववेदे ७ । ८१. ८२ ॥", "is_text_leaf": true, "kanda": 7, "notes": null, "printed_page": 164, "sukta_first": 81, "sukta_last": 82}
+{"canvas_index": 179, "header_literal": "॥ अथर्ववेदे ७ । ८३-८७ ॥", "is_text_leaf": true, "kanda": 7, "notes": null, "printed_page": 165, "sukta_first": 83, "sukta_last": 87}
+{"canvas_index": 180, "header_literal": "॥ अथर्ववेदे ७ । ८८-९३ ॥", "is_text_leaf": true, "kanda": 7, "notes": null, "printed_page": 166, "sukta_first": 88, "sukta_last": 93}
+{"canvas_index": 181, "header_literal": "॥ अथर्ववेदे ७ । ९४-९७ ॥", "is_text_leaf": true, "kanda": 7, "notes": null, "printed_page": 167, "sukta_first": 94, "sukta_last": 97}
+{"canvas_index": 182, "header_literal": "॥ अथर्ववेदे ७ । ९८-१०६ ॥", "is_text_leaf": true, "kanda": 7, "notes": null, "printed_page": 168, "sukta_first": 98, "sukta_last": 106}
+{"canvas_index": 183, "header_literal": "॥ अथर्ववेदे ७ । १०६-११० ॥", "is_text_leaf": true, "kanda": 7, "notes": null, "printed_page": 169, "sukta_first": 106, "sukta_last": 110}
+{"canvas_index": 184, "header_literal": "॥ अथर्ववेदे ७ । ११०-११५ ॥", "is_text_leaf": true, "kanda": 7, "notes": null, "printed_page": 170, "sukta_first": 110, "sukta_last": 115}
+{"canvas_index": 185, "header_literal": "॥ अथर्ववेदे ७ । ११५-११८ ॥", "is_text_leaf": true, "kanda": 7, "notes": null, "printed_page": 171, "sukta_first": 115, "sukta_last": 118}
+{"canvas_index": 186, "header_literal": "॥ अथर्ववेदे ८ । १ ॥", "is_text_leaf": true, "kanda": 8, "notes": null, "printed_page": 172, "sukta_first": 1, "sukta_last": 1}
+{"canvas_index": 187, "header_literal": "॥ अथर्ववेदे ८ । १ ॥", "is_text_leaf": true, "kanda": 8, "notes": null, "printed_page": 173, "sukta_first": 1, "sukta_last": 1}
+{"canvas_index": 188, "header_literal": "॥ अथर्ववेदे ८ । २ ॥", "is_text_leaf": true, "kanda": 8, "notes": null, "printed_page": 174, "sukta_first": 2, "sukta_last": 2}
+{"canvas_index": 189, "header_literal": "॥ अथर्ववेदे ८ । २ ॥", "is_text_leaf": true, "kanda": 8, "notes": null, "printed_page": 175, "sukta_first": 2, "sukta_last": 2}
+{"canvas_index": 190, "header_literal": "॥ अथर्ववेदे ८ । २. ३ ॥", "is_text_leaf": true, "kanda": 8, "notes": null, "printed_page": 176, "sukta_first": 2, "sukta_last": 3}
+{"canvas_index": 191, "header_literal": "॥ अथर्ववेदे ८ । ३ ॥", "is_text_leaf": true, "kanda": 8, "notes": null, "printed_page": 177, "sukta_first": 3, "sukta_last": 3}
+{"canvas_index": 192, "header_literal": "॥ अथर्ववेदे ८ । ३. ४ ॥", "is_text_leaf": true, "kanda": 8, "notes": null, "printed_page": 178, "sukta_first": 3, "sukta_last": 4}
+{"canvas_index": 193, "header_literal": "॥ अथर्ववेदे ८ । ४ ॥", "is_text_leaf": true, "kanda": 8, "notes": null, "printed_page": 179, "sukta_first": 4, "sukta_last": 4}
+{"canvas_index": 194, "header_literal": "॥ अथर्ववेदे ८ । ४. ५ ॥", "is_text_leaf": true, "kanda": 8, "notes": null, "printed_page": 180, "sukta_first": 4, "sukta_last": 5}
+{"canvas_index": 195, "header_literal": "॥ अथर्ववेदे ८ । ५ ॥", "is_text_leaf": true, "kanda": 8, "notes": null, "printed_page": 181, "sukta_first": 5, "sukta_last": 5}
+{"canvas_index": 196, "header_literal": "॥ अथर्ववेदे ८ । ५. ६ ॥", "is_text_leaf": true, "kanda": 8, "notes": null, "printed_page": 182, "sukta_first": 5, "sukta_last": 6}
+{"canvas_index": 197, "header_literal": "॥ अथर्ववेदे ८ । ६ ॥", "is_text_leaf": true, "kanda": 8, "notes": null, "printed_page": 183, "sukta_first": 6, "sukta_last": 6}
+{"canvas_index": 198, "header_literal": "॥ अथर्ववेदे ८ । ६. ७ ॥", "is_text_leaf": true, "kanda": 8, "notes": null, "printed_page": 184, "sukta_first": 6, "sukta_last": 7}
+{"canvas_index": 199, "header_literal": "॥ अथर्ववेदे ८ । ७ ॥", "is_text_leaf": true, "kanda": 8, "notes": null, "printed_page": 185, "sukta_first": 7, "sukta_last": 7}
+{"canvas_index": 200, "header_literal": "॥ अथर्ववेदे ८ । ७. ८ ॥", "is_text_leaf": true, "kanda": 8, "notes": null, "printed_page": 186, "sukta_first": 7, "sukta_last": 8}
+{"canvas_index": 201, "header_literal": "॥ अथर्ववेदे ८ । ८ ॥", "is_text_leaf": true, "kanda": 8, "notes": null, "printed_page": 187, "sukta_first": 8, "sukta_last": 8}
+{"canvas_index": 202, "header_literal": "॥ अथर्ववेदे ८ । ८. ९ ॥", "is_text_leaf": true, "kanda": 8, "notes": null, "printed_page": 188, "sukta_first": 8, "sukta_last": 9}
+{"canvas_index": 203, "header_literal": "॥ अथर्ववेदे ८ । ९ ॥", "is_text_leaf": true, "kanda": 8, "notes": null, "printed_page": 189, "sukta_first": 9, "sukta_last": 9}
+{"canvas_index": 204, "header_literal": "॥ अथर्ववेदे ८ । ९. १० ॥", "is_text_leaf": true, "kanda": 8, "notes": null, "printed_page": 190, "sukta_first": 9, "sukta_last": 10}
+{"canvas_index": 205, "header_literal": "॥ अथर्ववेदे ८ । १० ॥", "is_text_leaf": true, "kanda": 8, "notes": null, "printed_page": 191, "sukta_first": 10, "sukta_last": 10}
+{"canvas_index": 206, "header_literal": "॥ अथर्ववेदे ८ । १० ॥", "is_text_leaf": true, "kanda": 8, "notes": null, "printed_page": 192, "sukta_first": 10, "sukta_last": 10}
+{"canvas_index": 207, "header_literal": "॥ अथर्ववेदे ८ । १० ॥", "is_text_leaf": true, "kanda": 8, "notes": null, "printed_page": 193, "sukta_first": 10, "sukta_last": 10}
+{"canvas_index": 208, "header_literal": "॥ अथर्ववेदे ९ । १ ॥", "is_text_leaf": true, "kanda": 9, "notes": null, "printed_page": 194, "sukta_first": 1, "sukta_last": 1}
+{"canvas_index": 209, "header_literal": "॥ अथर्ववेदे ९ । १ ॥", "is_text_leaf": true, "kanda": 9, "notes": null, "printed_page": 195, "sukta_first": 1, "sukta_last": 1}
+{"canvas_index": 210, "header_literal": "॥ अथर्ववेदे ९ । १. २ ॥", "is_text_leaf": true, "kanda": 9, "notes": null, "printed_page": 196, "sukta_first": 1, "sukta_last": 2}
+{"canvas_index": 211, "header_literal": "॥ अथर्ववेदे ९ । २ ॥", "is_text_leaf": true, "kanda": 9, "notes": null, "printed_page": 197, "sukta_first": 2, "sukta_last": 2}
+{"canvas_index": 212, "header_literal": "॥ अथर्ववेदे ९ । ३ ॥", "is_text_leaf": true, "kanda": 9, "notes": null, "printed_page": 198, "sukta_first": 3, "sukta_last": 3}
+{"canvas_index": 213, "header_literal": "॥ अथर्ववेदे ९ । ३ ॥", "is_text_leaf": true, "kanda": 9, "notes": null, "printed_page": 199, "sukta_first": 3, "sukta_last": 3}
+{"canvas_index": 214, "header_literal": "॥ अथर्ववेदे ९ । ३. ४ ॥", "is_text_leaf": true, "kanda": 9, "notes": null, "printed_page": 200, "sukta_first": 3, "sukta_last": 4}
+{"canvas_index": 215, "header_literal": "॥ अथर्ववेदे ९ । ४ ॥", "is_text_leaf": true, "kanda": 9, "notes": null, "printed_page": 201, "sukta_first": 4, "sukta_last": 4}
+{"canvas_index": 216, "header_literal": "॥ अथर्ववेदे ९ । ५ ॥", "is_text_leaf": true, "kanda": 9, "notes": null, "printed_page": 202, "sukta_first": 5, "sukta_last": 5}
+{"canvas_index": 217, "header_literal": "॥ अथर्ववेदे ९ । ५ ॥", "is_text_leaf": true, "kanda": 9, "notes": null, "printed_page": 203, "sukta_first": 5, "sukta_last": 5}
+{"canvas_index": 218, "header_literal": "॥ अथर्ववेदे ९ । ५ ॥", "is_text_leaf": true, "kanda": 9, "notes": null, "printed_page": 204, "sukta_first": 5, "sukta_last": 5}
+{"canvas_index": 219, "header_literal": "॥ अथर्ववेदे ९ । ६ ॥", "is_text_leaf": true, "kanda": 9, "notes": null, "printed_page": 205, "sukta_first": 6, "sukta_last": 6}
+{"canvas_index": 220, "header_literal": "॥ अथर्ववेदे ९ । ६ ॥", "is_text_leaf": true, "kanda": 9, "notes": null, "printed_page": 206, "sukta_first": 6, "sukta_last": 6}
+{"canvas_index": 221, "header_literal": "॥ अथर्ववेदे ९ । ६. ७ ॥", "is_text_leaf": true, "kanda": 9, "notes": null, "printed_page": 207, "sukta_first": 6, "sukta_last": 7}
+{"canvas_index": 222, "header_literal": "॥ अथर्ववेदे ९ । ७. ८ ॥", "is_text_leaf": true, "kanda": 9, "notes": null, "printed_page": 208, "sukta_first": 7, "sukta_last": 8}
+{"canvas_index": 223, "header_literal": "॥ अथर्ववेदे ९ । ८ ॥", "is_text_leaf": true, "kanda": 9, "notes": null, "printed_page": 209, "sukta_first": 8, "sukta_last": 8}
+{"canvas_index": 224, "header_literal": "॥ अथर्ववेदे ९ । ८. ९ ॥", "is_text_leaf": true, "kanda": 9, "notes": null, "printed_page": 210, "sukta_first": 8, "sukta_last": 9}
+{"canvas_index": 225, "header_literal": "॥ अथर्ववेदे ९ । ९. १० ॥", "is_text_leaf": true, "kanda": 9, "notes": null, "printed_page": 211, "sukta_first": 9, "sukta_last": 10}
+{"canvas_index": 226, "header_literal": "॥ अथर्ववेदे ९ । १० ॥", "is_text_leaf": true, "kanda": 9, "notes": null, "printed_page": 212, "sukta_first": 10, "sukta_last": 10}
+{"canvas_index": 227, "header_literal": "॥ अथर्ववेदे ९ । १० ॥", "is_text_leaf": true, "kanda": 9, "notes": null, "printed_page": 213, "sukta_first": 10, "sukta_last": 10}
+{"canvas_index": 228, "header_literal": "॥ अथर्ववेदे ९ । १० ॥", "is_text_leaf": true, "kanda": 9, "notes": null, "printed_page": 214, "sukta_first": 10, "sukta_last": 10}
+{"canvas_index": 229, "header_literal": "॥ अथर्ववेदे १० । १ ॥", "is_text_leaf": true, "kanda": 10, "notes": null, "printed_page": 215, "sukta_first": 1, "sukta_last": 1}
+{"canvas_index": 230, "header_literal": "॥ अथर्ववेदे १० । १ ॥", "is_text_leaf": true, "kanda": 10, "notes": null, "printed_page": 216, "sukta_first": 1, "sukta_last": 1}
+{"canvas_index": 231, "header_literal": "॥ अथर्ववेदे १० । १. २ ॥", "is_text_leaf": true, "kanda": 10, "notes": null, "printed_page": 217, "sukta_first": 1, "sukta_last": 2}
+{"canvas_index": 232, "header_literal": "॥ अथर्ववेदे १० । २ ॥", "is_text_leaf": true, "kanda": 10, "notes": null, "printed_page": 218, "sukta_first": 2, "sukta_last": 2}
+{"canvas_index": 233, "header_literal": "॥ अथर्ववेदे १० । २ ॥", "is_text_leaf": true, "kanda": 10, "notes": null, "printed_page": 219, "sukta_first": 2, "sukta_last": 2}
+{"canvas_index": 234, "header_literal": "॥ अथर्ववेदे १० । २. ३ ॥", "is_text_leaf": true, "kanda": 10, "notes": null, "printed_page": 220, "sukta_first": 2, "sukta_last": 3}
+{"canvas_index": 235, "header_literal": "॥ अथर्ववेदे १० । ३ ॥", "is_text_leaf": true, "kanda": 10, "notes": null, "printed_page": 221, "sukta_first": 3, "sukta_last": 3}
+{"canvas_index": 236, "header_literal": "॥ अथर्ववेदे १० । ३. ४ ॥", "is_text_leaf": true, "kanda": 10, "notes": null, "printed_page": 222, "sukta_first": 3, "sukta_last": 4}
+{"canvas_index": 237, "header_literal": "॥ अथर्ववेदे १० । ४ ॥", "is_text_leaf": true, "kanda": 10, "notes": null, "printed_page": 223, "sukta_first": 4, "sukta_last": 4}
+{"canvas_index": 238, "header_literal": "॥ अथर्ववेदे १० । ४. ५ ॥", "is_text_leaf": true, "kanda": 10, "notes": null, "printed_page": 224, "sukta_first": 4, "sukta_last": 5}
+{"canvas_index": 239, "header_literal": "॥ अथर्ववेदे १० । ५ ॥", "is_text_leaf": true, "kanda": 10, "notes": null, "printed_page": 225, "sukta_first": 5, "sukta_last": 5}
+{"canvas_index": 240, "header_literal": "॥ अथर्ववेदे १० । ५ ॥", "is_text_leaf": true, "kanda": 10, "notes": null, "printed_page": 226, "sukta_first": 5, "sukta_last": 5}
+{"canvas_index": 241, "header_literal": "॥ अथर्ववेदे १० । ५. ६ ॥", "is_text_leaf": true, "kanda": 10, "notes": null, "printed_page": 227, "sukta_first": 5, "sukta_last": 6}
+{"canvas_index": 242, "header_literal": "॥ अथर्ववेदे १० । ६ ॥", "is_text_leaf": true, "kanda": 10, "notes": null, "printed_page": 228, "sukta_first": 6, "sukta_last": 6}
+{"canvas_index": 243, "header_literal": "॥ अथर्ववेदे १० । ६ ॥", "is_text_leaf": true, "kanda": 10, "notes": null, "printed_page": 229, "sukta_first": 6, "sukta_last": 6}
+{"canvas_index": 244, "header_literal": "॥ अथर्ववेदे १० । ७ ॥", "is_text_leaf": true, "kanda": 10, "notes": null, "printed_page": 230, "sukta_first": 7, "sukta_last": 7}
+{"canvas_index": 245, "header_literal": "॥ अथर्ववेदे १० । ७ ॥", "is_text_leaf": true, "kanda": 10, "notes": null, "printed_page": 231, "sukta_first": 7, "sukta_last": 7}
+{"canvas_index": 246, "header_literal": "॥ अथर्ववेदे १० । ७ ॥", "is_text_leaf": true, "kanda": 10, "notes": null, "printed_page": 232, "sukta_first": 7, "sukta_last": 7}
+{"canvas_index": 247, "header_literal": "॥ अथर्ववेदे १० । ७. ८ ॥", "is_text_leaf": true, "kanda": 10, "notes": null, "printed_page": 233, "sukta_first": 7, "sukta_last": 8}
+{"canvas_index": 248, "header_literal": "॥ अथर्ववेदे १० । ८ ॥", "is_text_leaf": true, "kanda": 10, "notes": null, "printed_page": 234, "sukta_first": 8, "sukta_last": 8}
+{"canvas_index": 249, "header_literal": "॥ अथर्ववेदे १० । ८ ॥", "is_text_leaf": true, "kanda": 10, "notes": null, "printed_page": 235, "sukta_first": 8, "sukta_last": 8}
+{"canvas_index": 250, "header_literal": "॥ अथर्ववेदे १० । ८ ॥", "is_text_leaf": true, "kanda": 10, "notes": null, "printed_page": 236, "sukta_first": 8, "sukta_last": 8}
+{"canvas_index": 251, "header_literal": "॥ अथर्ववेदे १० । ९ ॥", "is_text_leaf": true, "kanda": 10, "notes": null, "printed_page": 237, "sukta_first": 9, "sukta_last": 9}
+{"canvas_index": 252, "header_literal": "॥ अथर्ववेदे १० । ९. १० ॥", "is_text_leaf": true, "kanda": 10, "notes": null, "printed_page": 238, "sukta_first": 9, "sukta_last": 10}
+{"canvas_index": 253, "header_literal": "॥ अथर्ववेदे १० । १० ॥", "is_text_leaf": true, "kanda": 10, "notes": null, "printed_page": 239, "sukta_first": 10, "sukta_last": 10}
+{"canvas_index": 254, "header_literal": "॥ अथर्ववेदे १० । १० ॥", "is_text_leaf": true, "kanda": 10, "notes": null, "printed_page": 240, "sukta_first": 10, "sukta_last": 10}
+{"canvas_index": 255, "header_literal": "॥ अथर्ववेदे १० । १० ॥", "is_text_leaf": true, "kanda": 10, "notes": null, "printed_page": 241, "sukta_first": 10, "sukta_last": 10}
+{"canvas_index": 256, "header_literal": "॥ अथर्ववेदे ११ । १ ॥", "is_text_leaf": true, "kanda": 11, "notes": null, "printed_page": 242, "sukta_first": 1, "sukta_last": 1}
+{"canvas_index": 257, "header_literal": "॥ अथर्ववेदे ११ । १ ॥", "is_text_leaf": true, "kanda": 11, "notes": null, "printed_page": 243, "sukta_first": 1, "sukta_last": 1}
+{"canvas_index": 258, "header_literal": "॥ अथर्ववेदे ११ । १ ॥", "is_text_leaf": true, "kanda": 11, "notes": null, "printed_page": 244, "sukta_first": 1, "sukta_last": 1}
+{"canvas_index": 259, "header_literal": "॥ अथर्ववेदे ११ । १. २ ॥", "is_text_leaf": true, "kanda": 11, "notes": null, "printed_page": 245, "sukta_first": 1, "sukta_last": 2}
+{"canvas_index": 260, "header_literal": "॥ अथर्ववेदे ११ । २ ॥", "is_text_leaf": true, "kanda": 11, "notes": null, "printed_page": 246, "sukta_first": 2, "sukta_last": 2}
+{"canvas_index": 261, "header_literal": "॥ अथर्ववेदे ११ । २. ३ ॥", "is_text_leaf": true, "kanda": 11, "notes": null, "printed_page": 247, "sukta_first": 2, "sukta_last": 3}
+{"canvas_index": 262, "header_literal": "॥ अथर्ववेदे ११ । ३ ॥", "is_text_leaf": true, "kanda": 11, "notes": null, "printed_page": 248, "sukta_first": 3, "sukta_last": 3}
+{"canvas_index": 263, "header_literal": "॥ अथर्ववेदे ११ । ३ ॥", "is_text_leaf": true, "kanda": 11, "notes": null, "printed_page": 249, "sukta_first": 3, "sukta_last": 3}
+{"canvas_index": 264, "header_literal": "॥ अथर्ववेदे ११ । ३. ४ ॥", "is_text_leaf": true, "kanda": 11, "notes": null, "printed_page": 250, "sukta_first": 3, "sukta_last": 4}
+{"canvas_index": 265, "header_literal": "॥ अथर्ववेदे ११ । ४ ॥", "is_text_leaf": true, "kanda": 11, "notes": null, "printed_page": 251, "sukta_first": 4, "sukta_last": 4}
+{"canvas_index": 266, "header_literal": "॥ अथर्ववेदे ११ । ४ ॥", "is_text_leaf": true, "kanda": 11, "notes": null, "printed_page": 252, "sukta_first": 4, "sukta_last": 4}
+{"canvas_index": 267, "header_literal": "॥ अथर्ववेदे ११ । ५ ॥", "is_text_leaf": true, "kanda": 11, "notes": null, "printed_page": 253, "sukta_first": 5, "sukta_last": 5}
+{"canvas_index": 268, "header_literal": "॥ अथर्ववेदे ११ । ५ ॥", "is_text_leaf": true, "kanda": 11, "notes": null, "printed_page": 254, "sukta_first": 5, "sukta_last": 5}
+{"canvas_index": 269, "header_literal": "॥ अथर्ववेदे ११ । ६ ॥", "is_text_leaf": true, "kanda": 11, "notes": null, "printed_page": 255, "sukta_first": 6, "sukta_last": 6}
+{"canvas_index": 270, "header_literal": "॥ अथर्ववेदे ११ । ६. ७ ॥", "is_text_leaf": true, "kanda": 11, "notes": null, "printed_page": 256, "sukta_first": 6, "sukta_last": 7}
+{"canvas_index": 271, "header_literal": "॥ अथर्ववेदे ११ । ७ ॥", "is_text_leaf": true, "kanda": 11, "notes": null, "printed_page": 257, "sukta_first": 7, "sukta_last": 7}
+{"canvas_index": 272, "header_literal": "॥ अथर्ववेदे ११ । ७ ॥", "is_text_leaf": true, "kanda": 11, "notes": null, "printed_page": 258, "sukta_first": 7, "sukta_last": 7}
+{"canvas_index": 273, "header_literal": "॥ अथर्ववेदे ११ । ८ ॥", "is_text_leaf": true, "kanda": 11, "notes": null, "printed_page": 259, "sukta_first": 8, "sukta_last": 8}
+{"canvas_index": 274, "header_literal": "॥ अथर्ववेदे ११ । ८ ॥", "is_text_leaf": true, "kanda": 11, "notes": null, "printed_page": 260, "sukta_first": 8, "sukta_last": 8}
+{"canvas_index": 275, "header_literal": "॥ अथर्ववेदे ११ । ८. ९ ॥", "is_text_leaf": true, "kanda": 11, "notes": null, "printed_page": 261, "sukta_first": 8, "sukta_last": 9}
+{"canvas_index": 276, "header_literal": "॥ अथर्ववेदे ११ । ९ ॥", "is_text_leaf": true, "kanda": 11, "notes": null, "printed_page": 262, "sukta_first": 9, "sukta_last": 9}
+{"canvas_index": 277, "header_literal": "॥ अथर्ववेदे ११ । ९ ॥", "is_text_leaf": true, "kanda": 11, "notes": null, "printed_page": 263, "sukta_first": 9, "sukta_last": 9}
+{"canvas_index": 278, "header_literal": "॥ अथर्ववेदे ११ । १० ॥", "is_text_leaf": true, "kanda": 11, "notes": null, "printed_page": 264, "sukta_first": 10, "sukta_last": 10}
+{"canvas_index": 279, "header_literal": "॥ अथर्ववेदे ११ । १० ॥", "is_text_leaf": true, "kanda": 11, "notes": null, "printed_page": 265, "sukta_first": 10, "sukta_last": 10}
+{"canvas_index": 280, "header_literal": "॥ अथर्ववेदे ११ । १० ॥", "is_text_leaf": true, "kanda": 11, "notes": null, "printed_page": 266, "sukta_first": 10, "sukta_last": 10}
+{"canvas_index": 281, "header_literal": "॥ अथर्ववेदे १२ । १ ॥", "is_text_leaf": true, "kanda": 12, "notes": null, "printed_page": 267, "sukta_first": 1, "sukta_last": 1}
+{"canvas_index": 282, "header_literal": "॥ अथर्ववेदे १२ । १ ॥", "is_text_leaf": true, "kanda": 12, "notes": null, "printed_page": 268, "sukta_first": 1, "sukta_last": 1}
+{"canvas_index": 283, "header_literal": "॥ अथर्ववेदे १२ । १ ॥", "is_text_leaf": true, "kanda": 12, "notes": null, "printed_page": 269, "sukta_first": 1, "sukta_last": 1}
+{"canvas_index": 284, "header_literal": "॥ अथर्ववेदे १२ । १ ॥", "is_text_leaf": true, "kanda": 12, "notes": null, "printed_page": 270, "sukta_first": 1, "sukta_last": 1}
+{"canvas_index": 285, "header_literal": "॥ अथर्ववेदे १२ । १ ॥", "is_text_leaf": true, "kanda": 12, "notes": null, "printed_page": 271, "sukta_first": 1, "sukta_last": 1}
+{"canvas_index": 286, "header_literal": "॥ अथर्ववेदे १२ । १. २ ॥", "is_text_leaf": true, "kanda": 12, "notes": null, "printed_page": 272, "sukta_first": 1, "sukta_last": 2}
+{"canvas_index": 287, "header_literal": "॥ अथर्ववेदे १२ । २ ॥", "is_text_leaf": true, "kanda": 12, "notes": null, "printed_page": 273, "sukta_first": 2, "sukta_last": 2}
+{"canvas_index": 288, "header_literal": "॥ अथर्ववेदे १२ । २ ॥", "is_text_leaf": true, "kanda": 12, "notes": null, "printed_page": 274, "sukta_first": 2, "sukta_last": 2}
+{"canvas_index": 289, "header_literal": "॥ अथर्ववेदे १२ । २ ॥", "is_text_leaf": true, "kanda": 12, "notes": null, "printed_page": 275, "sukta_first": 2, "sukta_last": 2}
+{"canvas_index": 290, "header_literal": "॥ अथर्ववेदे १२ । २ ॥", "is_text_leaf": true, "kanda": 12, "notes": null, "printed_page": 276, "sukta_first": 2, "sukta_last": 2}
+{"canvas_index": 291, "header_literal": "॥ अथर्ववेदे १२ । ३ ॥", "is_text_leaf": true, "kanda": 12, "notes": null, "printed_page": 277, "sukta_first": 3, "sukta_last": 3}
+{"canvas_index": 292, "header_literal": "॥ अथर्ववेदे १२ । ३ ॥", "is_text_leaf": true, "kanda": 12, "notes": null, "printed_page": 278, "sukta_first": 3, "sukta_last": 3}
+{"canvas_index": 293, "header_literal": "॥ अथर्ववेदे १२ । ३ ॥", "is_text_leaf": true, "kanda": 12, "notes": null, "printed_page": 279, "sukta_first": 3, "sukta_last": 3}
+{"canvas_index": 294, "header_literal": "॥ अथर्ववेदे १२ । ३ ॥", "is_text_leaf": true, "kanda": 12, "notes": null, "printed_page": 280, "sukta_first": 3, "sukta_last": 3}
+{"canvas_index": 295, "header_literal": "॥ अथर्ववेदे १२ । ३. ४ ॥", "is_text_leaf": true, "kanda": 12, "notes": null, "printed_page": 281, "sukta_first": 3, "sukta_last": 4}
+{"canvas_index": 296, "header_literal": "॥ अथर्ववेदे १२ । ४ ॥", "is_text_leaf": true, "kanda": 12, "notes": null, "printed_page": 282, "sukta_first": 4, "sukta_last": 4}
+{"canvas_index": 297, "header_literal": "॥ अथर्ववेदे १२ । ४ ॥", "is_text_leaf": true, "kanda": 12, "notes": null, "printed_page": 283, "sukta_first": 4, "sukta_last": 4}
+{"canvas_index": 298, "header_literal": "॥ अथर्ववेदे १२ । ४ ॥", "is_text_leaf": true, "kanda": 12, "notes": null, "printed_page": 284, "sukta_first": 4, "sukta_last": 4}
+{"canvas_index": 299, "header_literal": "॥ अथर्ववेदे १२ । ४ ॥", "is_text_leaf": true, "kanda": 12, "notes": null, "printed_page": 285, "sukta_first": 4, "sukta_last": 4}
+{"canvas_index": 300, "header_literal": "॥ अथर्ववेदे १२ । ५ ॥", "is_text_leaf": true, "kanda": 12, "notes": null, "printed_page": 286, "sukta_first": 5, "sukta_last": 5}
+{"canvas_index": 301, "header_literal": "॥ अथर्ववेदे १२ । ५ ॥", "is_text_leaf": true, "kanda": 12, "notes": null, "printed_page": 287, "sukta_first": 5, "sukta_last": 5}
+{"canvas_index": 302, "header_literal": "॥ अथर्ववेदे १२ । ५ ॥", "is_text_leaf": true, "kanda": 12, "notes": null, "printed_page": 288, "sukta_first": 5, "sukta_last": 5}
+{"canvas_index": 303, "header_literal": "॥ अथर्ववेदे १३ । १ ॥", "is_text_leaf": true, "kanda": 13, "notes": null, "printed_page": 289, "sukta_first": 1, "sukta_last": 1}
+{"canvas_index": 304, "header_literal": "॥ अथर्ववेदे १३ । १ ॥", "is_text_leaf": true, "kanda": 13, "notes": null, "printed_page": 290, "sukta_first": 1, "sukta_last": 1}
+{"canvas_index": 305, "header_literal": "॥ अथर्ववेदे १३ । १ ॥", "is_text_leaf": true, "kanda": 13, "notes": null, "printed_page": 291, "sukta_first": 1, "sukta_last": 1}
+{"canvas_index": 306, "header_literal": "॥ अथर्ववेदे १३ । १ ॥", "is_text_leaf": true, "kanda": 13, "notes": null, "printed_page": 292, "sukta_first": 1, "sukta_last": 1}
+{"canvas_index": 307, "header_literal": "॥ अथर्ववेदे १३ । १. २ ॥", "is_text_leaf": true, "kanda": 13, "notes": null, "printed_page": 293, "sukta_first": 1, "sukta_last": 2}
+{"canvas_index": 308, "header_literal": "॥ अथर्ववेदे १३ । २ ॥", "is_text_leaf": true, "kanda": 13, "notes": null, "printed_page": 294, "sukta_first": 2, "sukta_last": 2}
+{"canvas_index": 309, "header_literal": "॥ अथर्ववेदे १३ । २ ॥", "is_text_leaf": true, "kanda": 13, "notes": null, "printed_page": 295, "sukta_first": 2, "sukta_last": 2}
+{"canvas_index": 310, "header_literal": "॥ अथर्ववेदे १३ । २ ॥", "is_text_leaf": true, "kanda": 13, "notes": null, "printed_page": 296, "sukta_first": 2, "sukta_last": 2}
+{"canvas_index": 311, "header_literal": "॥ अथर्ववेदे १३ । २. ३ ॥", "is_text_leaf": true, "kanda": 13, "notes": null, "printed_page": 297, "sukta_first": 2, "sukta_last": 3}
+{"canvas_index": 312, "header_literal": "॥ अथर्ववेदे १३ । ३ ॥", "is_text_leaf": true, "kanda": 13, "notes": null, "printed_page": 298, "sukta_first": 3, "sukta_last": 3}
+{"canvas_index": 313, "header_literal": "॥ अथर्ववेदे १३ । ३. ४ ॥", "is_text_leaf": true, "kanda": 13, "notes": null, "printed_page": 299, "sukta_first": 3, "sukta_last": 4}
+{"canvas_index": 314, "header_literal": "॥ अथर्ववेदे १३ । ४ ॥", "is_text_leaf": true, "kanda": 13, "notes": null, "printed_page": 300, "sukta_first": 4, "sukta_last": 4}
+{"canvas_index": 315, "header_literal": "॥ अथर्ववेदे १३ । ४ ॥", "is_text_leaf": true, "kanda": 13, "notes": null, "printed_page": 301, "sukta_first": 4, "sukta_last": 4}
+{"canvas_index": 316, "header_literal": "॥ अथर्ववेदे १४ । १ ॥", "is_text_leaf": true, "kanda": 14, "notes": null, "printed_page": 302, "sukta_first": 1, "sukta_last": 1}
+{"canvas_index": 317, "header_literal": "॥ अथर्ववेदे १४ । १ ॥", "is_text_leaf": true, "kanda": 14, "notes": null, "printed_page": 303, "sukta_first": 1, "sukta_last": 1}
+{"canvas_index": 318, "header_literal": "॥ अथर्ववेदे १४ । १ ॥", "is_text_leaf": true, "kanda": 14, "notes": null, "printed_page": 304, "sukta_first": 1, "sukta_last": 1}
+{"canvas_index": 319, "header_literal": "॥ अथर्ववेदे १४ । १ ॥", "is_text_leaf": true, "kanda": 14, "notes": null, "printed_page": 305, "sukta_first": 1, "sukta_last": 1}
+{"canvas_index": 320, "header_literal": "॥ अथर्ववेदे १४ । १ ॥", "is_text_leaf": true, "kanda": 14, "notes": null, "printed_page": 306, "sukta_first": 1, "sukta_last": 1}
+{"canvas_index": 321, "header_literal": "॥ अथर्ववेदे १४ । १. २ ॥", "is_text_leaf": true, "kanda": 14, "notes": null, "printed_page": 307, "sukta_first": 1, "sukta_last": 2}
+{"canvas_index": 322, "header_literal": "॥ अथर्ववेदे १४ । २ ॥", "is_text_leaf": true, "kanda": 14, "notes": null, "printed_page": 308, "sukta_first": 2, "sukta_last": 2}
+{"canvas_index": 323, "header_literal": "॥ अथर्ववेदे १४ । २ ॥", "is_text_leaf": true, "kanda": 14, "notes": null, "printed_page": 309, "sukta_first": 2, "sukta_last": 2}
+{"canvas_index": 324, "header_literal": "॥ अथर्ववेदे १४ । २ ॥", "is_text_leaf": true, "kanda": 14, "notes": null, "printed_page": 310, "sukta_first": 2, "sukta_last": 2}
+{"canvas_index": 325, "header_literal": "॥ अथर्ववेदे १४ । २ ॥", "is_text_leaf": true, "kanda": 14, "notes": null, "printed_page": 311, "sukta_first": 2, "sukta_last": 2}
+{"canvas_index": 326, "header_literal": "॥ अथर्ववेदे १४ । २ ॥", "is_text_leaf": true, "kanda": 14, "notes": null, "printed_page": 312, "sukta_first": 2, "sukta_last": 2}
+{"canvas_index": 327, "header_literal": "॥ अथर्ववेदे १४ । २ ॥", "is_text_leaf": true, "kanda": 14, "notes": null, "printed_page": 313, "sukta_first": 2, "sukta_last": 2}
+{"canvas_index": 328, "header_literal": "॥ अथर्ववेदे १५ । १. २ ॥", "is_text_leaf": true, "kanda": 15, "notes": null, "printed_page": 314, "sukta_first": 1, "sukta_last": 2}
+{"canvas_index": 329, "header_literal": "॥ अथर्ववेदे १५ । २. ३ ॥", "is_text_leaf": true, "kanda": 15, "notes": null, "printed_page": 315, "sukta_first": 2, "sukta_last": 3}
+{"canvas_index": 330, "header_literal": "॥ अथर्ववेदे १५ । ३. ४ ॥", "is_text_leaf": true, "kanda": 15, "notes": null, "printed_page": 316, "sukta_first": 3, "sukta_last": 4}
+{"canvas_index": 331, "header_literal": "॥ अथर्ववेदे १५ । ५. ६ ॥", "is_text_leaf": true, "kanda": 15, "notes": null, "printed_page": 317, "sukta_first": 5, "sukta_last": 6}
+{"canvas_index": 332, "header_literal": "॥ अथर्ववेदे १५ । ६. ७ ॥", "is_text_leaf": true, "kanda": 15, "notes": null, "printed_page": 318, "sukta_first": 6, "sukta_last": 7}
+{"canvas_index": 333, "header_literal": "॥ अथर्ववेदे १५ । ७-११ ॥", "is_text_leaf": true, "kanda": 15, "notes": null, "printed_page": 319, "sukta_first": 7, "sukta_last": 11}
+{"canvas_index": 334, "header_literal": "॥ अथर्ववेदे १५ । ११-१३ ॥", "is_text_leaf": true, "kanda": 15, "notes": null, "printed_page": 320, "sukta_first": 11, "sukta_last": 13}
+{"canvas_index": 335, "header_literal": "॥ अथर्ववेदे १५ । १३. १४ ॥", "is_text_leaf": true, "kanda": 15, "notes": null, "printed_page": 321, "sukta_first": 13, "sukta_last": 14}
+{"canvas_index": 336, "header_literal": "॥ अथर्ववेदे १५ । १४-१७ ॥", "is_text_leaf": true, "kanda": 15, "notes": null, "printed_page": 322, "sukta_first": 14, "sukta_last": 17}
+{"canvas_index": 337, "header_literal": "॥ अथर्ववेदे १५ । १७. १८ ॥", "is_text_leaf": true, "kanda": 15, "notes": null, "printed_page": 323, "sukta_first": 17, "sukta_last": 18}
+{"canvas_index": 338, "header_literal": "॥ अथर्ववेदे १६ । १-३ ॥", "is_text_leaf": true, "kanda": 16, "notes": null, "printed_page": 324, "sukta_first": 1, "sukta_last": 3}
+{"canvas_index": 339, "header_literal": "॥ अथर्ववेदे १६ । ३-५ ॥", "is_text_leaf": true, "kanda": 16, "notes": null, "printed_page": 325, "sukta_first": 3, "sukta_last": 5}
+{"canvas_index": 340, "header_literal": "॥ अथर्ववेदे १६ । ६-८ ॥", "is_text_leaf": true, "kanda": 16, "notes": null, "printed_page": 326, "sukta_first": 6, "sukta_last": 8}
+{"canvas_index": 341, "header_literal": "॥ अथर्ववेदे १६ । ८ ॥", "is_text_leaf": true, "kanda": 16, "notes": null, "printed_page": 327, "sukta_first": 8, "sukta_last": 8}
+{"canvas_index": 342, "header_literal": "॥ अथर्ववेदे १६ । ८. ९ ॥", "is_text_leaf": true, "kanda": 16, "notes": null, "printed_page": 328, "sukta_first": 8, "sukta_last": 9}
+{"canvas_index": 343, "header_literal": "॥ अथर्ववेदे १७ । १ ॥", "is_text_leaf": true, "kanda": 17, "notes": null, "printed_page": 329, "sukta_first": 1, "sukta_last": 1}
+{"canvas_index": 344, "header_literal": "॥ अथर्ववेदे १७ । १ ॥", "is_text_leaf": true, "kanda": 17, "notes": null, "printed_page": 330, "sukta_first": 1, "sukta_last": 1}
+{"canvas_index": 345, "header_literal": "॥ अथर्ववेदे १७ । १ ॥", "is_text_leaf": true, "kanda": 17, "notes": null, "printed_page": 331, "sukta_first": 1, "sukta_last": 1}
+{"canvas_index": 346, "header_literal": "॥ अथर्ववेदे १८ । १ ॥", "is_text_leaf": true, "kanda": 18, "notes": null, "printed_page": 332, "sukta_first": 1, "sukta_last": 1}
+{"canvas_index": 347, "header_literal": "॥ अथर्ववेदे १८ । १ ॥", "is_text_leaf": true, "kanda": 18, "notes": null, "printed_page": 333, "sukta_first": 1, "sukta_last": 1}
+{"canvas_index": 348, "header_literal": "॥ अथर्ववेदे १८ । १ ॥", "is_text_leaf": true, "kanda": 18, "notes": null, "printed_page": 334, "sukta_first": 1, "sukta_last": 1}
+{"canvas_index": 349, "header_literal": "॥ अथर्ववेदे १८ । १ ॥", "is_text_leaf": true, "kanda": 18, "notes": null, "printed_page": 335, "sukta_first": 1, "sukta_last": 1}
+{"canvas_index": 350, "header_literal": "॥ अथर्ववेदे १८ । १ ॥", "is_text_leaf": true, "kanda": 18, "notes": null, "printed_page": 336, "sukta_first": 1, "sukta_last": 1}
+{"canvas_index": 351, "header_literal": "॥ अथर्ववेदे १८ । २ ॥", "is_text_leaf": true, "kanda": 18, "notes": null, "printed_page": 337, "sukta_first": 2, "sukta_last": 2}
+{"canvas_index": 352, "header_literal": "॥ अथर्ववेदे १८ । २ ॥", "is_text_leaf": true, "kanda": 18, "notes": null, "printed_page": 338, "sukta_first": 2, "sukta_last": 2}
+{"canvas_index": 353, "header_literal": "॥ अथर्ववेदे १८ । २ ॥", "is_text_leaf": true, "kanda": 18, "notes": null, "printed_page": 339, "sukta_first": 2, "sukta_last": 2}
+{"canvas_index": 354, "header_literal": "॥ अथर्ववेदे १८ । २ ॥", "is_text_leaf": true, "kanda": 18, "notes": null, "printed_page": 340, "sukta_first": 2, "sukta_last": 2}
+{"canvas_index": 355, "header_literal": "॥ अथर्ववेदे १८ । २. ३ ॥", "is_text_leaf": true, "kanda": 18, "notes": null, "printed_page": 341, "sukta_first": 2, "sukta_last": 3}
+{"canvas_index": 356, "header_literal": "॥ अथर्ववेदे १८ । ३ ॥", "is_text_leaf": true, "kanda": 18, "notes": null, "printed_page": 342, "sukta_first": 3, "sukta_last": 3}
+{"canvas_index": 357, "header_literal": "॥ अथर्ववेदे १८ । ३ ॥", "is_text_leaf": true, "kanda": 18, "notes": null, "printed_page": 343, "sukta_first": 3, "sukta_last": 3}
+{"canvas_index": 358, "header_literal": "॥ अथर्ववेदे १८ । ३ ॥", "is_text_leaf": true, "kanda": 18, "notes": null, "printed_page": 344, "sukta_first": 3, "sukta_last": 3}
+{"canvas_index": 359, "header_literal": "॥ अथर्ववेदे १८ । ३ ॥", "is_text_leaf": true, "kanda": 18, "notes": null, "printed_page": 345, "sukta_first": 3, "sukta_last": 3}
+{"canvas_index": 360, "header_literal": "॥ अथर्ववेदे १८ । ३. ४ ॥", "is_text_leaf": true, "kanda": 18, "notes": null, "printed_page": 346, "sukta_first": 3, "sukta_last": 4}
+{"canvas_index": 361, "header_literal": "॥ अथर्ववेदे १८ । ४ ॥", "is_text_leaf": true, "kanda": 18, "notes": null, "printed_page": 347, "sukta_first": 4, "sukta_last": 4}
+{"canvas_index": 362, "header_literal": "॥ अथर्ववेदे १८ । ४ ॥", "is_text_leaf": true, "kanda": 18, "notes": null, "printed_page": 348, "sukta_first": 4, "sukta_last": 4}
+{"canvas_index": 363, "header_literal": "॥ अथर्ववेदे १८ । ४ ॥", "is_text_leaf": true, "kanda": 18, "notes": null, "printed_page": 349, "sukta_first": 4, "sukta_last": 4}
+{"canvas_index": 364, "header_literal": "॥ अथर्ववेदे १८ । ४ ॥", "is_text_leaf": true, "kanda": 18, "notes": null, "printed_page": 350, "sukta_first": 4, "sukta_last": 4}
+{"canvas_index": 365, "header_literal": "॥ अथर्ववेदे १८ । ४ ॥", "is_text_leaf": true, "kanda": 18, "notes": null, "printed_page": 351, "sukta_first": 4, "sukta_last": 4}
+{"canvas_index": 366, "header_literal": "॥ अथर्ववेदे १८ । ४ ॥", "is_text_leaf": true, "kanda": 18, "notes": null, "printed_page": 352, "sukta_first": 4, "sukta_last": 4}
+{"canvas_index": 367, "header_literal": "॥ अथर्ववेदे १९ । १. २ ॥", "is_text_leaf": true, "kanda": 19, "notes": null, "printed_page": 353, "sukta_first": 1, "sukta_last": 2}
+{"canvas_index": 368, "header_literal": "॥ अथर्ववेदे १९ । २-५ ॥", "is_text_leaf": true, "kanda": 19, "notes": null, "printed_page": 354, "sukta_first": 2, "sukta_last": 5}
+{"canvas_index": 369, "header_literal": "॥ अथर्ववेदे १९ । ५. ६ ॥", "is_text_leaf": true, "kanda": 19, "notes": null, "printed_page": 355, "sukta_first": 5, "sukta_last": 6}
+{"canvas_index": 370, "header_literal": "॥ अथर्ववेदे १९ । ६-८ ॥", "is_text_leaf": true, "kanda": 19, "notes": null, "printed_page": 356, "sukta_first": 6, "sukta_last": 8}
+{"canvas_index": 371, "header_literal": "॥ अथर्ववेदे १९ । ८. ९ ॥", "is_text_leaf": true, "kanda": 19, "notes": null, "printed_page": 357, "sukta_first": 8, "sukta_last": 9}
+{"canvas_index": 372, "header_literal": "॥ अथर्ववेदे १९ । ९ ॥", "is_text_leaf": true, "kanda": 19, "notes": null, "printed_page": 358, "sukta_first": 9, "sukta_last": 9}
+{"canvas_index": 373, "header_literal": "॥ अथर्ववेदे १९ । १०. ११ ॥", "is_text_leaf": true, "kanda": 19, "notes": null, "printed_page": 359, "sukta_first": 10, "sukta_last": 11}
+{"canvas_index": 374, "header_literal": "॥ अथर्ववेदे १९ । ११-१३ ॥", "is_text_leaf": true, "kanda": 19, "notes": null, "printed_page": 360, "sukta_first": 11, "sukta_last": 13}
+{"canvas_index": 375, "header_literal": "॥ अथर्ववेदे १९ । १३-१५ ॥", "is_text_leaf": true, "kanda": 19, "notes": null, "printed_page": 361, "sukta_first": 13, "sukta_last": 15}
+{"canvas_index": 376, "header_literal": "॥ अथर्ववेदे १९ । १६-१८ ॥", "is_text_leaf": true, "kanda": 19, "notes": null, "printed_page": 362, "sukta_first": 16, "sukta_last": 18}
+{"canvas_index": 377, "header_literal": "॥ अथर्ववेदे १९ । १८. १९ ॥", "is_text_leaf": true, "kanda": 19, "notes": null, "printed_page": 363, "sukta_first": 18, "sukta_last": 19}
+{"canvas_index": 378, "header_literal": "॥ अथर्ववेदे १९ । २०-२२ ॥", "is_text_leaf": true, "kanda": 19, "notes": null, "printed_page": 364, "sukta_first": 20, "sukta_last": 22}
+{"canvas_index": 379, "header_literal": "॥ अथर्ववेदे १९ । २२-२४ ॥", "is_text_leaf": true, "kanda": 19, "notes": null, "printed_page": 365, "sukta_first": 22, "sukta_last": 24}
+{"canvas_index": 380, "header_literal": "॥ अथर्ववेदे १९ । २४-२६ ॥", "is_text_leaf": true, "kanda": 19, "notes": null, "printed_page": 366, "sukta_first": 24, "sukta_last": 26}
+{"canvas_index": 381, "header_literal": "॥ अथर्ववेदे १९ । २६. २७ ॥", "is_text_leaf": true, "kanda": 19, "notes": null, "printed_page": 367, "sukta_first": 26, "sukta_last": 27}
+{"canvas_index": 382, "header_literal": "॥ अथर्ववेदे १९ । २७. २८ ॥", "is_text_leaf": true, "kanda": 19, "notes": null, "printed_page": 368, "sukta_first": 27, "sukta_last": 28}
+{"canvas_index": 383, "header_literal": "॥ अथर्ववेदे १९ । २९. ३० ॥", "is_text_leaf": true, "kanda": 19, "notes": null, "printed_page": 369, "sukta_first": 29, "sukta_last": 30}
+{"canvas_index": 384, "header_literal": "॥ अथर्ववेदे १९ । ३१ ॥", "is_text_leaf": true, "kanda": 19, "notes": null, "printed_page": 370, "sukta_first": 31, "sukta_last": 31}
+{"canvas_index": 385, "header_literal": "॥ अथर्ववेदे १९ । ३१. ३२ ॥", "is_text_leaf": true, "kanda": 19, "notes": null, "printed_page": 371, "sukta_first": 31, "sukta_last": 32}
+{"canvas_index": 386, "header_literal": "॥ अथर्ववेदे १९ । ३२-३४ ॥", "is_text_leaf": true, "kanda": 19, "notes": null, "printed_page": 372, "sukta_first": 32, "sukta_last": 34}
+{"canvas_index": 387, "header_literal": "॥ अथर्ववेदे १९ । ३४. ३५ ॥", "is_text_leaf": true, "kanda": 19, "notes": null, "printed_page": 373, "sukta_first": 34, "sukta_last": 35}
+{"canvas_index": 388, "header_literal": "॥ अथर्ववेदे १९ । ३५-३७ ॥", "is_text_leaf": true, "kanda": 19, "notes": null, "printed_page": 374, "sukta_first": 35, "sukta_last": 37}
+{"canvas_index": 389, "header_literal": "॥ अथर्ववेदे १९ । ३७-३९ ॥", "is_text_leaf": true, "kanda": 19, "notes": null, "printed_page": 375, "sukta_first": 37, "sukta_last": 39}
+{"canvas_index": 390, "header_literal": "॥ अथर्ववेदे १९ । ३९-४१ ॥", "is_text_leaf": true, "kanda": 19, "notes": null, "printed_page": 376, "sukta_first": 39, "sukta_last": 41}
+{"canvas_index": 391, "header_literal": "॥ अथर्ववेदे १९ । ४२-४४ ॥", "is_text_leaf": true, "kanda": 19, "notes": null, "printed_page": 377, "sukta_first": 42, "sukta_last": 44}
+{"canvas_index": 392, "header_literal": "॥ अथर्ववेदे १९ । ४४. ४५ ॥", "is_text_leaf": true, "kanda": 19, "notes": null, "printed_page": 378, "sukta_first": 44, "sukta_last": 45}
+{"canvas_index": 393, "header_literal": "॥ अथर्ववेदे १९ । ४५. ४६ ॥", "is_text_leaf": true, "kanda": 19, "notes": null, "printed_page": 379, "sukta_first": 45, "sukta_last": 46}
+{"canvas_index": 394, "header_literal": "॥ अथर्ववेदे १९ । ४६. ४७ ॥", "is_text_leaf": true, "kanda": 19, "notes": null, "printed_page": 380, "sukta_first": 46, "sukta_last": 47}
+{"canvas_index": 395, "header_literal": "॥ अथर्ववेदे १९ । ४८. ४९ ॥", "is_text_leaf": true, "kanda": 19, "notes": null, "printed_page": 381, "sukta_first": 48, "sukta_last": 49}
+{"canvas_index": 396, "header_literal": "॥ अथर्ववेदे १९ । ४९. ५० ॥", "is_text_leaf": true, "kanda": 19, "notes": null, "printed_page": 382, "sukta_first": 49, "sukta_last": 50}
+{"canvas_index": 397, "header_literal": "॥ अथर्ववेदे १९ । ५०-५२ ॥", "is_text_leaf": true, "kanda": 19, "notes": null, "printed_page": 383, "sukta_first": 50, "sukta_last": 52}
+{"canvas_index": 398, "header_literal": "॥ अथर्ववेदे १९ । ५३. ५४ ॥", "is_text_leaf": true, "kanda": 19, "notes": null, "printed_page": 384, "sukta_first": 53, "sukta_last": 54}
+{"canvas_index": 399, "header_literal": "॥ अथर्ववेदे १९ । ५४. ५५ ॥", "is_text_leaf": true, "kanda": 19, "notes": null, "printed_page": 385, "sukta_first": 54, "sukta_last": 55}
+{"canvas_index": 400, "header_literal": "॥ अथर्ववेदे १९ । ५६. ५७ ॥", "is_text_leaf": true, "kanda": 19, "notes": null, "printed_page": 386, "sukta_first": 56, "sukta_last": 57}
+{"canvas_index": 401, "header_literal": "॥ अथर्ववेदे १९ । ५७-५९ ॥", "is_text_leaf": true, "kanda": 19, "notes": null, "printed_page": 387, "sukta_first": 57, "sukta_last": 59}
+{"canvas_index": 402, "header_literal": "॥ अथर्ववेदे १९ । ५९-६४ ॥", "is_text_leaf": true, "kanda": 19, "notes": null, "printed_page": 388, "sukta_first": 59, "sukta_last": 64}
+{"canvas_index": 403, "header_literal": "॥ अथर्ववेदे १९ । ६४-६९ ॥", "is_text_leaf": true, "kanda": 19, "notes": null, "printed_page": 389, "sukta_first": 64, "sukta_last": 69}
+{"canvas_index": 404, "header_literal": "॥ अथर्ववेदे १९ । ६९-७२ ॥", "is_text_leaf": true, "kanda": 19, "notes": null, "printed_page": 390, "sukta_first": 69, "sukta_last": 72}
+{"canvas_index": 405, "header_literal": "॥ अथर्ववेदे २० । १-४ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 391, "sukta_first": 1, "sukta_last": 4}
+{"canvas_index": 406, "header_literal": "॥ अथर्ववेदे २० । ४-८ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 392, "sukta_first": 4, "sukta_last": 8}
+{"canvas_index": 407, "header_literal": "॥ अथर्ववेदे २० । ८-११ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 393, "sukta_first": 8, "sukta_last": 11}
+{"canvas_index": 408, "header_literal": "॥ अथर्ववेदे २० । ११. १२ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 394, "sukta_first": 11, "sukta_last": 12}
+{"canvas_index": 409, "header_literal": "॥ अथर्ववेदे २० । १२-१५ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 395, "sukta_first": 12, "sukta_last": 15}
+{"canvas_index": 410, "header_literal": "॥ अथर्ववेदे २० । १५. १६ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 396, "sukta_first": 15, "sukta_last": 16}
+{"canvas_index": 411, "header_literal": "॥ अथर्ववेदे २० । १६. १७ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 397, "sukta_first": 16, "sukta_last": 17}
+{"canvas_index": 412, "header_literal": "॥ अथर्ववेदे २० । १७-२० ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 398, "sukta_first": 17, "sukta_last": 20}
+{"canvas_index": 413, "header_literal": "॥ अथर्ववेदे २० । २०. २१ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 399, "sukta_first": 20, "sukta_last": 21}
+{"canvas_index": 414, "header_literal": "॥ अथर्ववेदे २० । २१-२४ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 400, "sukta_first": 21, "sukta_last": 24}
+{"canvas_index": 415, "header_literal": "॥ अथर्ववेदे २० । २४-२६ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 401, "sukta_first": 24, "sukta_last": 26}
+{"canvas_index": 416, "header_literal": "॥ अथर्ववेदे २० । २६-३० ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 402, "sukta_first": 26, "sukta_last": 30}
+{"canvas_index": 417, "header_literal": "॥ अथर्ववेदे २० । ३०-३३ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 403, "sukta_first": 30, "sukta_last": 33}
+{"canvas_index": 418, "header_literal": "॥ अथर्ववेदे २० । ३३. ३४ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 404, "sukta_first": 33, "sukta_last": 34}
+{"canvas_index": 419, "header_literal": "॥ अथर्ववेदे २० । ३४. ३५ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 405, "sukta_first": 34, "sukta_last": 35}
+{"canvas_index": 420, "header_literal": "॥ अथर्ववेदे २० । ३५ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 406, "sukta_first": 35, "sukta_last": 35}
+{"canvas_index": 421, "header_literal": "॥ अथर्ववेदे २० । ३५. ३६ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 407, "sukta_first": 35, "sukta_last": 36}
+{"canvas_index": 422, "header_literal": "॥ अथर्ववेदे २० । ३७. ३८ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 408, "sukta_first": 37, "sukta_last": 38}
+{"canvas_index": 423, "header_literal": "॥ अथर्ववेदे २० । ३८-४३ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 409, "sukta_first": 38, "sukta_last": 43}
+{"canvas_index": 424, "header_literal": "॥ अथर्ववेदे २० । ४४-४७ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 410, "sukta_first": 44, "sukta_last": 47}
+{"canvas_index": 425, "header_literal": "॥ अथर्ववेदे २० । ४७-४९ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 411, "sukta_first": 47, "sukta_last": 49}
+{"canvas_index": 426, "header_literal": "॥ अथर्ववेदे २० । ४९-५२ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 412, "sukta_first": 49, "sukta_last": 52}
+{"canvas_index": 427, "header_literal": "॥ अथर्ववेदे २० । ५३-५६ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 413, "sukta_first": 53, "sukta_last": 56}
+{"canvas_index": 428, "header_literal": "॥ अथर्ववेदे २० । ५६. ५७ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 414, "sukta_first": 56, "sukta_last": 57}
+{"canvas_index": 429, "header_literal": "॥ अथर्ववेदे २० । ५७-६० ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 415, "sukta_first": 57, "sukta_last": 60}
+{"canvas_index": 430, "header_literal": "॥ अथर्ववेदे २० । ६०-६२ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 416, "sukta_first": 60, "sukta_last": 62}
+{"canvas_index": 431, "header_literal": "॥ अथर्ववेदे २० । ६२. ६३ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 417, "sukta_first": 62, "sukta_last": 63}
+{"canvas_index": 432, "header_literal": "॥ अथर्ववेदे २० । ६३-६५ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 418, "sukta_first": 63, "sukta_last": 65}
+{"canvas_index": 433, "header_literal": "॥ अथर्ववेदे २० । ६६. ६७ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 419, "sukta_first": 66, "sukta_last": 67}
+{"canvas_index": 434, "header_literal": "॥ अथर्ववेदे २० । ६७-६९ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 420, "sukta_first": 67, "sukta_last": 69}
+{"canvas_index": 435, "header_literal": "॥ अथर्ववेदे २० । ६९-७१ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 421, "sukta_first": 69, "sukta_last": 71}
+{"canvas_index": 436, "header_literal": "॥ अथर्ववेदे २० । ७१. ७२ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 422, "sukta_first": 71, "sukta_last": 72}
+{"canvas_index": 437, "header_literal": "॥ अथर्ववेदे २० । ७२-७४ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 423, "sukta_first": 72, "sukta_last": 74}
+{"canvas_index": 438, "header_literal": "॥ अथर्ववेदे २० । ७५. ७६ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 424, "sukta_first": 75, "sukta_last": 76}
+{"canvas_index": 439, "header_literal": "॥ अथर्ववेदे २० । ७६-७९ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 425, "sukta_first": 76, "sukta_last": 79}
+{"canvas_index": 440, "header_literal": "॥ अथर्ववेदे २० । ७९-८४ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 426, "sukta_first": 79, "sukta_last": 84}
+{"canvas_index": 441, "header_literal": "॥ अथर्ववेदे २० । ८४-८७ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 427, "sukta_first": 84, "sukta_last": 87}
+{"canvas_index": 442, "header_literal": "॥ अथर्ववेदे २० । ८७-८९ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 428, "sukta_first": 87, "sukta_last": 89}
+{"canvas_index": 443, "header_literal": "॥ अथर्ववेदे २० । ८९-९१ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 429, "sukta_first": 89, "sukta_last": 91}
+{"canvas_index": 444, "header_literal": "॥ अथर्ववेदे २० । ९१. ९२ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 430, "sukta_first": 91, "sukta_last": 92}
+{"canvas_index": 445, "header_literal": "॥ अथर्ववेदे २० । ९२ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 431, "sukta_first": 92, "sukta_last": 92}
+{"canvas_index": 446, "header_literal": "॥ अथर्ववेदे २० । ९२-९४ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 432, "sukta_first": 92, "sukta_last": 94}
+{"canvas_index": 447, "header_literal": "॥ अथर्ववेदे २० । ९४. ९५ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 433, "sukta_first": 94, "sukta_last": 95}
+{"canvas_index": 448, "header_literal": "॥ अथर्ववेदे २० । ९५. ९६ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 434, "sukta_first": 95, "sukta_last": 96}
+{"canvas_index": 449, "header_literal": "॥ अथर्ववेदे २० । ९६ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 435, "sukta_first": 96, "sukta_last": 96}
+{"canvas_index": 450, "header_literal": "॥ अथर्ववेदे २० । ९७-१०१ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 436, "sukta_first": 97, "sukta_last": 101}
+{"canvas_index": 451, "header_literal": "॥ अथर्ववेदे २० । १०१-१०५ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 437, "sukta_first": 101, "sukta_last": 105}
+{"canvas_index": 452, "header_literal": "॥ अथर्ववेदे २० । १०५-१०७ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 438, "sukta_first": 105, "sukta_last": 107}
+{"canvas_index": 453, "header_literal": "॥ अथर्ववेदे २० । १०७. १०८ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 439, "sukta_first": 107, "sukta_last": 108}
+{"canvas_index": 454, "header_literal": "॥ अथर्ववेदे २० । १०९-११३ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 440, "sukta_first": 109, "sukta_last": 113}
+{"canvas_index": 455, "header_literal": "॥ अथर्ववेदे २० । ११४-११८ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 441, "sukta_first": 114, "sukta_last": 118}
+{"canvas_index": 456, "header_literal": "॥ अथर्ववेदे २० । ११८-१२३ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 442, "sukta_first": 118, "sukta_last": 123}
+{"canvas_index": 457, "header_literal": "॥ अथर्ववेदे २० । १२३-१२५ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 443, "sukta_first": 123, "sukta_last": 125}
+{"canvas_index": 458, "header_literal": "॥ अथर्ववेदे २० । १२६ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 444, "sukta_first": 126, "sukta_last": 126}
+{"canvas_index": 459, "header_literal": "॥ अथर्ववेदे २० । १२६. १२७ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 445, "sukta_first": 126, "sukta_last": 127}
+{"canvas_index": 460, "header_literal": "॥ अथर्ववेदे २० । १२७ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 446, "sukta_first": 127, "sukta_last": 127}
+{"canvas_index": 461, "header_literal": "॥ अथर्ववेदे २० । १२७. १२८ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 447, "sukta_first": 127, "sukta_last": 128}
+{"canvas_index": 462, "header_literal": "॥ अथर्ववेदे २० । १२८ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 448, "sukta_first": 128, "sukta_last": 128}
+{"canvas_index": 463, "header_literal": "॥ अथर्ववेदे २० । १२९. १३० ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 449, "sukta_first": 129, "sukta_last": 130}
+{"canvas_index": 464, "header_literal": "॥ अथर्ववेदे २० । १३०-१३२ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 450, "sukta_first": 130, "sukta_last": 132}
+{"canvas_index": 465, "header_literal": "॥ अथर्ववेदे २० । १३२. १३३ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 451, "sukta_first": 132, "sukta_last": 133}
+{"canvas_index": 466, "header_literal": "॥ अथर्ववेदे २० । १३४. १३५ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 452, "sukta_first": 134, "sukta_last": 135}
+{"canvas_index": 467, "header_literal": "॥ अथर्ववेदे २० । १३५. १३६ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 453, "sukta_first": 135, "sukta_last": 136}
+{"canvas_index": 468, "header_literal": "॥ अथर्ववेदे २० । १३६ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 454, "sukta_first": 136, "sukta_last": 136}
+{"canvas_index": 469, "header_literal": "॥ अथर्ववेदे २० । १३६. १३७ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 455, "sukta_first": 136, "sukta_last": 137}
+{"canvas_index": 470, "header_literal": "॥ अथर्ववेदे २० । १३७-१४० ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 456, "sukta_first": 137, "sukta_last": 140}
+{"canvas_index": 471, "header_literal": "॥ अथर्ववेदे २० । १४०-१४२ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 457, "sukta_first": 140, "sukta_last": 142}
+{"canvas_index": 472, "header_literal": "॥ अथर्ववेदे २० । १४३ ॥", "is_text_leaf": true, "kanda": 20, "notes": null, "printed_page": 458, "sukta_first": 143, "sukta_last": 143}
+{"canvas_index": 473, "header_literal": null, "is_text_leaf": false, "kanda": null, "notes": "publisher's advertisement, first page: 'In Ferd. Duemmler's Verlagsbuchhandlung in Berlin sind erschienen:' listing Weber's White Yajurveda, the Brahma-Vaivarta-Purani specimen, Mahabharata episodes, Ghatakarparam, Urvasia and related titles. No printed page number, no running head.", "printed_page": null, "sukta_first": null, "sukta_last": null}
+{"canvas_index": 474, "header_literal": null, "is_text_leaf": false, "kanda": null, "notes": "publisher's advertisement, second page (Pertsch, Stenzler, Weber, Bopp titles); BSB oval stamp; printer's imprint at foot. No printed page number, no running head.", "printed_page": null, "sukta_first": null, "sukta_last": null}
+{"canvas_index": 475, "header_literal": null, "is_text_leaf": false, "kanda": null, "notes": "blank flyleaf", "printed_page": null, "sukta_first": null, "sukta_last": null}
+{"canvas_index": 476, "header_literal": null, "is_text_leaf": false, "kanda": null, "notes": "blank flyleaf; only show-through of the advertisement on n474 is visible", "printed_page": null, "sukta_first": null, "sukta_last": null}
+{"canvas_index": 477, "header_literal": null, "is_text_leaf": false, "kanda": null, "notes": "blank flyleaf / rear pastedown", "printed_page": null, "sukta_first": null, "sukta_last": null}
+{"canvas_index": 478, "header_literal": null, "is_text_leaf": false, "kanda": null, "notes": "binding / rear cover board", "printed_page": null, "sukta_first": null, "sukta_last": null}

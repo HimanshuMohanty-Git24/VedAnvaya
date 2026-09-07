@@ -162,12 +162,20 @@ def _same_occurrence(before: ReferentFingerprint, after: ReferentFingerprint) ->
     """Whether two fingerprints denote the same source occurrence.
 
     Text alone is NOT sufficient, and the Samaveda is why. Its Uttararcika repeats
-    Purvarcika verses verbatim in gana context, so of 1,844 released keys only 1,658 have
-    a distinct ``comparison_sha256``: 184 equivalence classes covering 369 keys share one,
-    and 173 of those classes share a byte-identical ``text_sha256`` too. Comparing text
+    Purvarcika verses verbatim in gana context, so of 1,844 released keys only 1,651 have
+    a distinct ``comparison_sha256``: 192 equivalence classes covering 385 keys share one,
+    and 174 of those classes share a byte-identical ``text_sha256`` too. Comparing text
     alone therefore lets two genuinely different occurrences swap keys undetected -- and it
     also let a wholesale rewrite of every ``source_locator`` pass as 1,844 unchanged
     referents, because the locator was stored in the baseline and never read.
+
+    CORRECTED 2026-09-07 by FULL_SV_YV_AV_CANONICAL_INGESTION: this paragraph read
+    "1,658 ... 184 ... 369 ... 173". Those figures were measured against a superseded
+    build; recounted against the committed baseline the values are 1,651 / 192 / 385 / 174.
+    The argument is unaffected and is in fact slightly stronger -- MORE keys share a
+    comparison digest than the stale note claimed, so text-only comparison is blinder than
+    it said. Fixed because a gate whose rationale cites unreproducible numbers invites the
+    next reader to distrust the gate rather than the numbers.
 
     The locator and the printed verse marker are what actually identify the occurrence, so
     they are compared too.

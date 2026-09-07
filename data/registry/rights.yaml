@@ -11,10 +11,16 @@ schema_version: 1.0.0
 # assigned to an artifact.
 #
 # CC0 was requested from Agent A and LANDED in RightsStatus on 2026-09-07, so
-# all 13 classes below are assignable. No VedaGraph artifact currently qualifies
-# for CC0: it is documented and available, but unused. It must not be applied to
-# an artifact merely because the underlying Vedic composition is ancient; see
-# policy rule RIGHTS-7.
+# all 13 classes below are assignable. It must not be applied to an artifact merely
+# because the underlying Vedic composition is ancient; see policy rule RIGHTS-7.
+#
+# CORRECTED 2026-09-07 by FULL_SV_YV_AV_CANONICAL_INGESTION: this comment said "No
+# VedaGraph artifact currently qualifies for CC0: it is documented and available, but
+# unused." CC0 IS NOW IN USE, twice over, and was already in use once when that sentence
+# was last read. See the CC0 entry below for both. This is the third recorded instance of
+# a STALE ABSENCE CLAIM in this repository - an assertion that something does not exist,
+# left standing after it came to exist. The pattern is worth naming because an absence
+# claim is exactly the kind a reader does not think to re-check.
 # ---------------------------------------------------------------------------
 
 statuses:
@@ -77,7 +83,23 @@ operational_semantics:
     conditions: >-
       Present in RightsStatus as of 2026-09-07. Requires an explicit CC0
       dedication by the rights holder of THIS artifact. Never assign on the
-      grounds that the underlying composition is ancient. Currently unused.
+      grounds that the underlying composition is ancient.
+      IN USE, in two places, superseding the "Currently unused" note this field carried.
+      (1) SIXTEEN of the 475 Wikimedia Commons Samaveda saman recordings under
+      COMMONS.SV.KAU.SAMAN.AUDIO carry a CC0 1.0 dedication from the uploader, checked
+      per file via the Commons imageinfo/extmetadata API rather than inferred from the
+      collection. Those 16 must retain CC0 and must not be flattened into the 459 CC BY-SA
+      files' terms.
+      (2) The VedaGraph Atharvaveda transcription VEDAGRAPH.AVS.ROTH_WHITNEY_1856.TRANSCRIPTION
+      is CC0 BY DEDICATION FROM VEDAGRAPH, and the reasoning is the inverse of the usual
+      caution: there is no copyright in a faithful transcription of a public-domain 1856
+      print, so claiming CC BY-SA over it would be the same copyfraud RIGHTS-10 condemns in
+      other parties. Note this is NOT the forbidden move of assigning CC0 because the
+      composition is ancient - the 1856 EDITION is out of copyright by age under RIGHTS-7,
+      and the transcription layer is dedicated rather than assumed.
+      CC0 composes upward into a CC BY-SA artifact; the reverse does not hold, which is why
+      the CC BY-SA Samaveda and Yajurveda layers and this CC0 layer must not be merged into
+      one licensed blob.
 
   CC_BY:
     copy_local: yes

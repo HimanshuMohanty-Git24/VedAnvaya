@@ -42,7 +42,7 @@ principle and is not attempted.
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 
 from vedagraph.ingest.adapters.base import DiscoveredResource, SourceAdapter
@@ -67,10 +67,16 @@ _RANGE_DASHES = "-–—−"  # noqa: RUF001  (hyphen, en dash, em dash, minus)
 # "<name> <adhyaya>.<spec>" then an optional danda. The name may carry a parenthetical
 # qualifier, e.g. "angirasah(virupa-)", which is kept verbatim as part of the value and
 # never decomposed into components.
+#: A member the page prints but that states no mantra number. The index uses a bare
+#: asterisk once (line 90, "gotama: 25.17-22, 24-26, 28-47, *"). It is NOT expanded and
+#: NOT guessed: it is dropped from the expansion and reported, so the line's readable
+#: members are still ingested instead of the whole line being lost.
+_PLACEHOLDER_MEMBER = "*"
+
 _INDEX_LINE = re.compile(
     r"^(?P<name>[^\d०-९]+?)\s*[:：]?\s*"  # noqa: RUF001
     r"(?P<adhyaya>[0-9०-९]+)\s*\.\s*"  # noqa: RUF001
-    r"(?P<spec>[0-9०-९\s," + _RANGE_DASHES + r"]+?)"  # noqa: RUF001
+    r"(?P<spec>[0-9०-९\s,*" + _RANGE_DASHES + r"]+?)"  # noqa: RUF001
     r"\s*[।॥]*\s*$"
 )
 
@@ -97,14 +103,47 @@ class RishiIndexParse:
     assertions: list[RishiAssertion]
     unparsed_lines: list[tuple[int, str]]
     adhyayas_covered: list[int]
+    #: ``(line_number, member)`` for a spec member the page prints but that states no
+    #: mantra number. Kept separate from ``unparsed_lines`` because the line WAS read and
+    #: its other members WERE ingested; only this member is missing.
+    unreadable_spec_members: list[tuple[int, str]] = field(default_factory=list)
 
 
-def _expand_spec(spec: str) -> list[tuple[int, str]]:
-    """Expand "15-22, 24-30" into mantra numbers, tagging how each was stated."""
+def _spec_members(spec: str) -> list[str]:
+    """Split a spec into its members on commas AND on whitespace.
+
+    The printed index separates members with a comma, but four lines drop one and leave
+    two members touching -- "27-31 36" for gr̥tsamada at 11, "23 27" for prajapati at 25.
+    A comma-only split reads those as a single unreadable member and loses the WHOLE line,
+    which is how adhyaya 25 came to have zero r̥ṣi coverage despite the index stating it
+    twice.
+
+    A member CAN contain a space, though, and the naive version of this split lost a line
+    that the comma-only split had read correctly: bharadvaja at 29 is printed "38 -60",
+    with the space before the dash rather than around a missing comma. Splitting that on
+    whitespace yields "38" and "-60", and "-60" is not a range. So whitespace adjacent to
+    a dash is collapsed FIRST, which binds a range back together; only whitespace that
+    separates two complete members then remains, and that is the separator this split is
+    for. Net effect measured over the whole index: adhyaya 25 recovered, no line lost.
+    """
+    joined = re.sub(rf"\s*([{_RANGE_DASHES}])\s*", r"\1", spec)
+    return [member for member in re.split(r"[,\s]+", joined) if member]
+
+
+def _expand_spec(spec: str) -> tuple[list[tuple[int, str]], list[str]]:
+    """Expand "15-22, 24-30" into mantra numbers, tagging how each was stated.
+
+    Returns ``(expanded, unreadable_members)``. A member that states no mantra number is
+    reported rather than expanded or guessed.
+    """
     results: list[tuple[int, str]] = []
-    for chunk in spec.split(","):
+    unreadable: list[str] = []
+    for chunk in _spec_members(spec):
         piece = chunk.strip()
         if not piece:
+            continue
+        if piece == _PLACEHOLDER_MEMBER:
+            unreadable.append(piece)
             continue
         # The page writes some ranges with a doubled dash ("2.1--16"). Collapsing runs of
         # dashes is safe because a dash is only ever a range separator in this index.
@@ -120,7 +159,7 @@ def _expand_spec(spec: str) -> list[tuple[int, str]]:
         if end < start:
             raise ValueError(f"descending range {piece!r}")
         results.extend((value, f"MANTRA_RANGE {start}-{end}") for value in range(start, end + 1))
-    return results
+    return results, unreadable
 
 
 class RishiIndexAdapter(SourceAdapter):
@@ -151,6 +190,7 @@ class RishiIndexAdapter(SourceAdapter):
         revision = self._page.read_revision(snapshot_path)
         assertions: list[RishiAssertion] = []
         unparsed: list[tuple[int, str]] = []
+        unreadable_members: list[tuple[int, str]] = []
         for line_number, raw in enumerate(revision.content.split("\n"), start=1):
             line = re.sub(r"<[^>]+>", "", raw).strip()
             if not line:
@@ -162,10 +202,11 @@ class RishiIndexAdapter(SourceAdapter):
             name = " ".join(match.group("name").split())
             try:
                 adhyaya = parse_mixed_digits(match.group("adhyaya"))
-                expanded = _expand_spec(match.group("spec"))
+                expanded, unreadable = _expand_spec(match.group("spec"))
             except ValueError:
                 unparsed.append((line_number, line[:160]))
                 continue
+            unreadable_members.extend((line_number, member) for member in unreadable)
             if not name or not expanded:
                 unparsed.append((line_number, line[:160]))
                 continue
@@ -186,4 +227,5 @@ class RishiIndexAdapter(SourceAdapter):
             assertions=assertions,
             unparsed_lines=unparsed,
             adhyayas_covered=covered,
+            unreadable_spec_members=unreadable_members,
         )

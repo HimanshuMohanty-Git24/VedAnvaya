@@ -1,0 +1,607 @@
+{
+  "built_at": "2026-09-07T00:00:00+00:00",
+  "corroboration": {
+    "additional_withheld_in_same_dasati": 5,
+    "agreed": 1845,
+    "compared": 1861,
+    "disagreed": 16,
+    "performed": true,
+    "second_witness_unsound_units": 13,
+    "uncorroborated_dasati_groups": [
+      "UTTARA:P4:R1:D22",
+      "UTTARA:P4:R2:D14",
+      "UTTARA:P5:R1:D17",
+      "UTTARA:P5:R2:D5"
+    ],
+    "verse_index_not_comparable": 67,
+    "withheld": [
+      {
+        "page": "2.4.1 प्रथमोऽर्द्धः",
+        "retired_key": "VG:SV:KAU:UTTARA:P04:R01:D22:V04",
+        "running": 1110,
+        "second_witness": "UTTARA P4 R1 D23 V1",
+        "selected_witness": "UTTARA P4 R1 D22 V4"
+      },
+      {
+        "page": "2.4.1 प्रथमोऽर्द्धः",
+        "retired_key": "VG:SV:KAU:UTTARA:P04:R01:D22:V05",
+        "running": 1111,
+        "second_witness": "UTTARA P4 R1 D23 V2",
+        "selected_witness": "UTTARA P4 R1 D22 V5"
+      },
+      {
+        "page": "2.4.1 प्रथमोऽर्द्धः",
+        "retired_key": "VG:SV:KAU:UTTARA:P04:R01:D22:V06",
+        "running": 1112,
+        "second_witness": "UTTARA P4 R1 D23 V3",
+        "selected_witness": "UTTARA P4 R1 D22 V6"
+      },
+      {
+        "page": "2.4.1 प्रथमोऽर्द्धः",
+        "retired_key": "VG:SV:KAU:UTTARA:P04:R01:D22:V07",
+        "running": 1113,
+        "second_witness": "UTTARA P4 R1 D24 V1",
+        "selected_witness": "UTTARA P4 R1 D22 V7"
+      },
+      {
+        "page": "2.4.1 प्रथमोऽर्द्धः",
+        "retired_key": "VG:SV:KAU:UTTARA:P04:R01:D22:V08",
+        "running": 1114,
+        "second_witness": "UTTARA P4 R1 D24 V2",
+        "selected_witness": "UTTARA P4 R1 D22 V8"
+      },
+      {
+        "page": "2.4.1 प्रथमोऽर्द्धः",
+        "retired_key": "VG:SV:KAU:UTTARA:P04:R01:D22:V09",
+        "running": 1115,
+        "second_witness": "UTTARA P4 R1 D24 V3",
+        "selected_witness": "UTTARA P4 R1 D22 V9"
+      },
+      {
+        "page": "2.4.2 द्वितीयोऽर्द्धः",
+        "retired_key": "VG:SV:KAU:UTTARA:P04:R02:D14:V01",
+        "running": 1172,
+        "second_witness": "UTTARA P4 R2 D13 V4",
+        "selected_witness": "UTTARA P4 R2 D14 V1"
+      },
+      {
+        "page": "2.4.2 द्वितीयोऽर्द्धः",
+        "retired_key": "VG:SV:KAU:UTTARA:P04:R02:D14:V02",
+        "running": 1173,
+        "second_witness": "UTTARA P4 R2 D13 V5",
+        "selected_witness": "UTTARA P4 R2 D14 V2"
+      },
+      {
+        "page": "2.4.2 द्वितीयोऽर्द्धः",
+        "retired_key": "VG:SV:KAU:UTTARA:P04:R02:D14:V03",
+        "running": 1174,
+        "second_witness": "UTTARA P4 R2 D13 V6",
+        "selected_witness": "UTTARA P4 R2 D14 V3"
+      },
+      {
+        "page": "2.5.1 प्रथमोऽर्द्धः",
+        "retired_key": "VG:SV:KAU:UTTARA:P05:R01:D17:V01",
+        "running": 1241,
+        "second_witness": "UTTARA P5 R1 D16 V4",
+        "selected_witness": "UTTARA P5 R1 D17 V1"
+      },
+      {
+        "page": "2.5.1 प्रथमोऽर्द्धः",
+        "retired_key": "VG:SV:KAU:UTTARA:P05:R01:D17:V02",
+        "running": 1242,
+        "second_witness": "UTTARA P5 R1 D16 V5",
+        "selected_witness": "UTTARA P5 R1 D17 V2"
+      },
+      {
+        "page": "2.5.1 प्रथमोऽर्द्धः",
+        "retired_key": "VG:SV:KAU:UTTARA:P05:R01:D17:V03",
+        "running": 1243,
+        "second_witness": "UTTARA P5 R1 D16 V6",
+        "selected_witness": "UTTARA P5 R1 D17 V3"
+      },
+      {
+        "page": "2.5.2 द्वितीयोऽर्द्धः",
+        "retired_key": "VG:SV:KAU:UTTARA:P05:R02:D05:V03",
+        "running": 1282,
+        "second_witness": "UTTARA P5 R2 D6 V3",
+        "selected_witness": "UTTARA P5 R2 D5 V3"
+      },
+      {
+        "page": "2.5.2 द्वितीयोऽर्द्धः",
+        "retired_key": "VG:SV:KAU:UTTARA:P05:R02:D05:V04",
+        "running": 1283,
+        "second_witness": "UTTARA P5 R2 D7 V4",
+        "selected_witness": "UTTARA P5 R2 D5 V4"
+      },
+      {
+        "page": "2.5.2 द्वितीयोऽर्द्धः",
+        "retired_key": "VG:SV:KAU:UTTARA:P05:R02:D05:V05",
+        "running": 1284,
+        "second_witness": "UTTARA P5 R2 D8 V5",
+        "selected_witness": "UTTARA P5 R2 D5 V5"
+      },
+      {
+        "page": "2.5.2 द्वितीयोऽर्द्धः",
+        "retired_key": "VG:SV:KAU:UTTARA:P05:R02:D05:V06",
+        "running": 1285,
+        "second_witness": "UTTARA P5 R2 D9 V6",
+        "selected_witness": "UTTARA P5 R2 D5 V6"
+      }
+    ]
+  },
+  "coverage": {
+    "accented_occurrences": 0,
+    "candidate_occurrences": 1874,
+    "distinct_printed_markers": 1873,
+    "duplicated_printed_markers": [
+      1181
+    ],
+    "equations": {
+      "minted_by_collection": {
+        "balances": true,
+        "left": 1844,
+        "right": 1844,
+        "statement": "1844 minted keys = 585 CHANDA + 55 ARANYA + 10 MAHANAMNYA + 1194 UTTARA",
+        "terms": {
+          "ARANYA": 55,
+          "CHANDA": 585,
+          "MAHANAMNYA": 10,
+          "UTTARA": 1194
+        }
+      },
+      "occurrences_vs_printed_markers": {
+        "balances": true,
+        "left": 1874,
+        "right": 1874,
+        "statement": "1874 candidate occurrences = 1873 distinct printed markers + 1 repeated marker occurrence(s)",
+        "terms": {
+          "distinct_printed_markers": 1873,
+          "markerless_occurrences": 0,
+          "repeated_marker_occurrences": 1
+        }
+      },
+      "printed_vs_traditional": {
+        "balances": true,
+        "left": 1875,
+        "right": 1875,
+        "statement": "1875 = 1873 distinct printed markers + 2 the selected witness does not print",
+        "terms": {
+          "distinct_printed_markers": 1873,
+          "unprinted": 2
+        }
+      },
+      "released_keys_vs_distinct_released_markers": {
+        "balances": true,
+        "left": 1844,
+        "right": 1844,
+        "statement": "1844 minted keys = 1844 distinct printed markers among them, i.e. one printed verse each",
+        "terms": {
+          "distinct_released_markers": 1844,
+          "markers_both_released_and_withheld": 0,
+          "minted_keys": 1844,
+          "released_keys_without_a_printed_marker": 0
+        }
+      },
+      "released_vs_traditional": {
+        "balances": true,
+        "left": 1875,
+        "right": 1875,
+        "statement": "1875 = 1844 minted keys + 29 withheld printed verses + 2 unprinted",
+        "terms": {
+          "minted_keys": 1844,
+          "unprinted": 2,
+          "withheld_printed_verses": 29
+        }
+      }
+    },
+    "minted_by_collection": {
+      "ARANYA": 55,
+      "CHANDA": 585,
+      "MAHANAMNYA": 10,
+      "UTTARA": 1194
+    },
+    "minted_keys": 1844,
+    "purvarcika_group_minted": 650,
+    "traditional_total": 1875,
+    "unprinted_running_numbers": [
+      1179,
+      1315
+    ],
+    "uttararcika_minted": 1194,
+    "withheld_occurrences": 30,
+    "withheld_printed_verses": 29,
+    "withheld_running_numbers": [
+      1107,
+      1108,
+      1109,
+      1110,
+      1111,
+      1112,
+      1113,
+      1114,
+      1115,
+      1172,
+      1173,
+      1174,
+      1178,
+      1180,
+      1181,
+      1182,
+      1183,
+      1184,
+      1185,
+      1186,
+      1241,
+      1242,
+      1243,
+      1280,
+      1281,
+      1282,
+      1283,
+      1284,
+      1285
+    ]
+  },
+  "coverage_status": "INCOMPLETE_BOUNDED",
+  "dataset_id": "samaveda_arcika_v1",
+  "forbidden_text_version_ids": [
+    "GRETIL.SV.KAUTHUMA",
+    "SANSKRITLIB.SV.KAUTHUMA",
+    "TITUS.SV.KAUTHUMA"
+  ],
+  "gana_corpus_included": false,
+  "generated_content_sha256": "57076778eec001860faacd476e58fa3a0ed77f0dba6590edc8e9c3d837fd013f",
+  "licensing_run": "FULL_SV_YV_AV_CANONICAL_INGESTION",
+  "migrations_licensing_this_run": 0,
+  "pinned_page_set_sha256": "5810a16a3ce00020c660ccdb519ae238d6a52a13ff00d3f227b11440e738f2b7",
+  "record_counts": {
+    "audio_recordings": 0,
+    "audio_segments": 0,
+    "citations": 3688,
+    "passages": 2342,
+    "qa_issues": 39,
+    "referent_bindings": 1844,
+    "source_artifacts": 1,
+    "source_assertions": 69,
+    "sources": 1,
+    "text_versions": 1844,
+    "traditional_metadata": 0,
+    "translations": 0,
+    "works": 1
+  },
+  "referent_baseline": "tests/fixtures/identity/sv_referent_baseline.jsonl",
+  "referent_verdicts": {
+    "INTENTIONAL_REFERENT_CORRECTION": 0,
+    "NEWLY_DISCOVERED_PASSAGE": 0,
+    "REFERENT_DRIFT": 0,
+    "REMOVED_INVALID_PASSAGE": 0,
+    "UNCHANGED_REFERENT": 1844
+  },
+  "release_version": "1.0.0",
+  "scope": "ARCIKA ONLY. SAMAVEDA_GANA_CORPUS IS NOT IMPLIED AND IS NOT INCLUDED. This release is the Kauthuma arcika verse corpus; the gramageya, aranyakageya, uhagana and uhyagana books are a parallel and LARGER body that VG:WORK:SV:KAU cannot address and that requires its own work_id. Never describe this dataset as the complete Samaveda.",
+  "selected_artifact_id": "WIKISOURCE_SA.SV.KAU.SAMHITA.DEVANAGARI",
+  "selected_rights": "CC_BY_SA",
+  "selected_text_version_id": "WIKISOURCE_SA.SV.KAU.ARCIKA_MULA",
+  "withheld_by_reason": {
+    "REFERENT_UNRESOLVED": 9,
+    "STRUCTURAL_AMBIGUITY": 21
+  },
+  "withheld_groups": [
+    {
+      "container_key": "VG:SV:KAU:UTTARA:P04:R01:D22",
+      "corroborating_witness_ardha_dasati_labels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24
+      ],
+      "corroborating_witness_ardha_label_gaps": [],
+      "corroborating_witness_ardha_repeated_labels": [],
+      "corroborating_witness_dasatis": [
+        22,
+        23,
+        24
+      ],
+      "corroborating_witness_verse_indices": [
+        1,
+        2,
+        3
+      ],
+      "corroborating_witness_welded_verses_in_ardha": 0,
+      "evidence": [
+        "the corroborating witness spreads these occurrences across dasatis [22, 23, 24] while the selected witness prints one heading for all of them"
+      ],
+      "resolved": false,
+      "running_numbers": [
+        1107,
+        1108,
+        1109,
+        1110,
+        1111,
+        1112,
+        1113,
+        1114,
+        1115
+      ],
+      "selected_witness_derives_a_local_index": true,
+      "selected_witness_local_indices": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "verdict": "SELECTED_WITNESS_OMITS_STRUCTURE",
+      "why_not": "NO KEY IS MINTED. Unwithholding any of these would change a frozen released key set and the committed referent baseline, and would require a segmentation or corroboration-policy change in files this build does not own. The evidence is recorded so the decision can be made on it rather than on a count.",
+      "withheld_occurrences": 9
+    },
+    {
+      "container_key": "VG:SV:KAU:UTTARA:P04:R02:D14",
+      "corroborating_witness_ardha_dasati_labels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "corroborating_witness_ardha_label_gaps": [],
+      "corroborating_witness_ardha_repeated_labels": [],
+      "corroborating_witness_dasatis": [
+        13
+      ],
+      "corroborating_witness_verse_indices": [
+        4,
+        5,
+        6
+      ],
+      "corroborating_witness_welded_verses_in_ardha": 0,
+      "evidence": [
+        "the selected witness's local index restarts at 1 here -- it PRINTS a dasati heading -- while the corroborating witness continues the preceding dasati at verse index 4"
+      ],
+      "resolved": false,
+      "running_numbers": [
+        1172,
+        1173,
+        1174
+      ],
+      "selected_witness_derives_a_local_index": true,
+      "selected_witness_local_indices": [
+        1,
+        2,
+        3
+      ],
+      "verdict": "CORROBORATING_WITNESS_MERGES_A_PRINTED_BOUNDARY",
+      "why_not": "NO KEY IS MINTED. Unwithholding any of these would change a frozen released key set and the committed referent baseline, and would require a segmentation or corroboration-policy change in files this build does not own. The evidence is recorded so the decision can be made on it rather than on a count.",
+      "withheld_occurrences": 3
+    },
+    {
+      "container_key": "VG:SV:KAU:UTTARA:P05:R01:D02",
+      "corroborating_witness_ardha_dasati_labels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        18,
+        19,
+        20
+      ],
+      "corroborating_witness_ardha_label_gaps": [
+        17
+      ],
+      "corroborating_witness_ardha_repeated_labels": [],
+      "corroborating_witness_dasatis": [
+        2
+      ],
+      "corroborating_witness_verse_indices": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "corroborating_witness_welded_verses_in_ardha": 0,
+      "evidence": [
+        "the corroborating witness SKIPS dasati label(s) [17] in this ardha while continuing to number the ones after them, which is a self-inconsistency in that witness"
+      ],
+      "resolved": false,
+      "running_numbers": [
+        1178,
+        1180,
+        1181,
+        1181,
+        1182,
+        1183,
+        1184,
+        1185,
+        1186
+      ],
+      "selected_witness_derives_a_local_index": false,
+      "selected_witness_local_indices": [],
+      "verdict": "LOCAL_INDEX_ATTESTED_BY_CORROBORATING_WITNESS",
+      "why_not": "NO KEY IS MINTED. Unwithholding any of these would change a frozen released key set and the committed referent baseline, and would require a segmentation or corroboration-policy change in files this build does not own. The evidence is recorded so the decision can be made on it rather than on a count.",
+      "withheld_occurrences": 9
+    },
+    {
+      "container_key": "VG:SV:KAU:UTTARA:P05:R01:D17",
+      "corroborating_witness_ardha_dasati_labels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        18,
+        19,
+        20
+      ],
+      "corroborating_witness_ardha_label_gaps": [
+        17
+      ],
+      "corroborating_witness_ardha_repeated_labels": [],
+      "corroborating_witness_dasatis": [
+        16
+      ],
+      "corroborating_witness_verse_indices": [
+        4,
+        5,
+        6
+      ],
+      "corroborating_witness_welded_verses_in_ardha": 0,
+      "evidence": [
+        "the corroborating witness SKIPS dasati label(s) [17] in this ardha while continuing to number the ones after them, which is a self-inconsistency in that witness",
+        "the selected witness's local index restarts at 1 here -- it PRINTS a dasati heading -- while the corroborating witness continues the preceding dasati at verse index 4"
+      ],
+      "resolved": false,
+      "running_numbers": [
+        1241,
+        1242,
+        1243
+      ],
+      "selected_witness_derives_a_local_index": true,
+      "selected_witness_local_indices": [
+        1,
+        2,
+        3
+      ],
+      "verdict": "CORROBORATING_WITNESS_DEFECTIVE_IN_SPAN",
+      "why_not": "NO KEY IS MINTED. Unwithholding any of these would change a frozen released key set and the committed referent baseline, and would require a segmentation or corroboration-policy change in files this build does not own. The evidence is recorded so the decision can be made on it rather than on a count.",
+      "withheld_occurrences": 3
+    },
+    {
+      "container_key": "VG:SV:KAU:UTTARA:P05:R02:D05",
+      "corroborating_witness_ardha_dasati_labels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23
+      ],
+      "corroborating_witness_ardha_label_gaps": [],
+      "corroborating_witness_ardha_repeated_labels": [
+        6,
+        7,
+        8,
+        9
+      ],
+      "corroborating_witness_dasatis": [
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "corroborating_witness_verse_indices": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "corroborating_witness_welded_verses_in_ardha": 4,
+      "evidence": [
+        "the corroborating witness prints dasati label(s) [6, 7, 8, 9] more than once in this ardha",
+        "4 verse(s) in the corroborating witness's copy of this ardha carry more than one running number each, i.e. two printed units welded onto one address",
+        "the corroborating witness spreads these occurrences across dasatis [5, 6, 7, 8, 9] while the selected witness prints one heading for all of them"
+      ],
+      "resolved": false,
+      "running_numbers": [
+        1280,
+        1281,
+        1282,
+        1283,
+        1284,
+        1285
+      ],
+      "selected_witness_derives_a_local_index": true,
+      "selected_witness_local_indices": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "verdict": "CORROBORATING_WITNESS_DEFECTIVE_IN_SPAN",
+      "why_not": "NO KEY IS MINTED. Unwithholding any of these would change a frozen released key set and the committed referent baseline, and would require a segmentation or corroboration-policy change in files this build does not own. The evidence is recorded so the decision can be made on it rather than on a count.",
+      "withheld_occurrences": 6
+    }
+  ],
+  "work_id": "VG:WORK:SV:KAU"
+}

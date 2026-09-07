@@ -1,0 +1,197 @@
+{
+  "anomalies": [
+    "n159 (printed 145): running head prints '7 | 1-6' but the leaf's own marginal sukta markers run 1-5 with sukta 5 continuing onto n160, whose head prints '7 | 5-9'. The head is one sukta too high. This is the only head/body disagreement found. header_literal keeps the printed head; sukta_first/sukta_last carry the body reading.",
+    "n15 (printed 1): the first page of the text carries no running head at all. Its coordinates were read from the body (opens '|| om ||' with marginal sukta markers || 1 || and || 2 ||).",
+    "Internal consistency of the head sequence: across all 458 text leaves the head ranges are monotone within each kanda, no sukta number in 1..highest is skipped by the heads in any kanda, and no head starts more than one sukta above the previous head's last sukta. The n159/n160 pair is the only place where two consecutive heads overlap by more than one sukta."
+  ],
+  "back_matter": "n473-n474 a two-page Ferd. Duemmler publisher's advertisement (unpaginated, no running head); n475-n477 blank flyleaves / rear pastedown; n478 the rear cover board.",
+  "back_matter_leaves": 6,
+  "boundary_verification": "Kanda boundaries were taken from the leaf on which the running head's kanda number changes. Spot-checked against the printed colophons at the foot of the last leaf of a kanda: n27 (printed 13) prints '॥ द्वितीयः प्रपाठकः ॥ ॥ प्रथमं काण्डं समाप्तम् ॥' and n118 (printed 104) prints '॥ षष्ठोऽनुवाकः ॥ ॥ द्वादशः प्रपाठकः ॥ ॥ पञ्चमं काण्डं समाप्तम् ॥', both agreeing with the head-derived boundary. n472 (printed 458) closes kanda 20 and the samhita.",
+  "comparison_to_previously_observed": {
+    "kanda_count": {
+      "derived_from_1856_headers": 20,
+      "difference": 0,
+      "previously_observed": 20
+    },
+    "mantra_total": {
+      "derived_from_1856_headers": null,
+      "difference": null,
+      "previously_observed": 5839,
+      "reason": "mantra counts are not carried by the running head; they can only be obtained by reading the mantra terminals on each page, which this pass did not do"
+    },
+    "note": "Comparison only. Nothing above was adjusted to match these figures.",
+    "sukta_total": {
+      "derived_from_1856_headers": 731,
+      "difference": 0,
+      "previously_observed": 731
+    }
+  },
+  "front_matter_leaves": 14,
+  "kanda_count": 20,
+  "per_kanda": {
+    "1": {
+      "first_canvas": 15,
+      "first_printed_page": 1,
+      "highest_sukta_seen": 35,
+      "last_canvas": 27,
+      "last_printed_page": 13
+    },
+    "10": {
+      "first_canvas": 229,
+      "first_printed_page": 215,
+      "highest_sukta_seen": 10,
+      "last_canvas": 255,
+      "last_printed_page": 241
+    },
+    "11": {
+      "first_canvas": 256,
+      "first_printed_page": 242,
+      "highest_sukta_seen": 10,
+      "last_canvas": 280,
+      "last_printed_page": 266
+    },
+    "12": {
+      "first_canvas": 281,
+      "first_printed_page": 267,
+      "highest_sukta_seen": 5,
+      "last_canvas": 302,
+      "last_printed_page": 288
+    },
+    "13": {
+      "first_canvas": 303,
+      "first_printed_page": 289,
+      "highest_sukta_seen": 4,
+      "last_canvas": 315,
+      "last_printed_page": 301
+    },
+    "14": {
+      "first_canvas": 316,
+      "first_printed_page": 302,
+      "highest_sukta_seen": 2,
+      "last_canvas": 327,
+      "last_printed_page": 313
+    },
+    "15": {
+      "first_canvas": 328,
+      "first_printed_page": 314,
+      "highest_sukta_seen": 18,
+      "last_canvas": 337,
+      "last_printed_page": 323
+    },
+    "16": {
+      "first_canvas": 338,
+      "first_printed_page": 324,
+      "highest_sukta_seen": 9,
+      "last_canvas": 342,
+      "last_printed_page": 328
+    },
+    "17": {
+      "first_canvas": 343,
+      "first_printed_page": 329,
+      "highest_sukta_seen": 1,
+      "last_canvas": 345,
+      "last_printed_page": 331
+    },
+    "18": {
+      "first_canvas": 346,
+      "first_printed_page": 332,
+      "highest_sukta_seen": 4,
+      "last_canvas": 366,
+      "last_printed_page": 352
+    },
+    "19": {
+      "first_canvas": 367,
+      "first_printed_page": 353,
+      "highest_sukta_seen": 72,
+      "last_canvas": 404,
+      "last_printed_page": 390
+    },
+    "2": {
+      "first_canvas": 28,
+      "first_printed_page": 14,
+      "highest_sukta_seen": 36,
+      "last_canvas": 43,
+      "last_printed_page": 29
+    },
+    "20": {
+      "first_canvas": 405,
+      "first_printed_page": 391,
+      "highest_sukta_seen": 143,
+      "last_canvas": 472,
+      "last_printed_page": 458
+    },
+    "3": {
+      "first_canvas": 44,
+      "first_printed_page": 30,
+      "highest_sukta_seen": 31,
+      "last_canvas": 63,
+      "last_printed_page": 49
+    },
+    "4": {
+      "first_canvas": 64,
+      "first_printed_page": 50,
+      "highest_sukta_seen": 40,
+      "last_canvas": 90,
+      "last_printed_page": 76
+    },
+    "5": {
+      "first_canvas": 91,
+      "first_printed_page": 77,
+      "highest_sukta_seen": 31,
+      "last_canvas": 118,
+      "last_printed_page": 104
+    },
+    "6": {
+      "first_canvas": 119,
+      "first_printed_page": 105,
+      "highest_sukta_seen": 142,
+      "last_canvas": 158,
+      "last_printed_page": 144
+    },
+    "7": {
+      "first_canvas": 159,
+      "first_printed_page": 145,
+      "highest_sukta_seen": 118,
+      "last_canvas": 185,
+      "last_printed_page": 171
+    },
+    "8": {
+      "first_canvas": 186,
+      "first_printed_page": 172,
+      "highest_sukta_seen": 10,
+      "last_canvas": 207,
+      "last_printed_page": 193
+    },
+    "9": {
+      "first_canvas": 208,
+      "first_printed_page": 194,
+      "highest_sukta_seen": 10,
+      "last_canvas": 228,
+      "last_printed_page": 214
+    }
+  },
+  "rights": "RIGHTS-13. Every coordinate here was read off the BSB page images of the 1856 print. No GRETIL, TITUS, VedaWeb, data/raw/gretil_avs, data/raw/vedaweb_avs or data/canonical/atharvaveda_pilot_v1 material was consulted at any point in deriving this map. The figures under comparison_to_previously_observed were used only after the derivation was complete and changed nothing.",
+  "source": {
+    "derivation": "every kanda/sukta coordinate below was read off the running head printed on the leaf image itself; no digital Atharvaveda text was consulted",
+    "digitisation": "BSB/MDZ bsb10219750",
+    "leaf_count": 478,
+    "leaf_to_printed_page": "printed_page = canvas_index - 14 (verified: n15 = printed 1, n30 = printed 16, n300 = printed 286)",
+    "work": "Atharva Veda Sanhita, ed. R. Roth and W. D. Whitney, Berlin, Ferd. Duemmler, 1856 (Erster Band: Text)"
+  },
+  "sukta_total_caveat": "A running head names the sukta(s) that appear ON that page, not the sukta count of the kanda. highest_sukta_seen is therefore a LOWER BOUND on the number of suktas in a kanda unless the final leaf of that kanda was legible and its head named the kanda's last sukta. Here the final leaf of every kanda was legible, so each bound is tight against the printed heads; it is still a lower bound in principle, because a sukta that opened and closed without the head being updated would not be visible in this evidence.",
+  "sukta_total_from_headers": 731,
+  "text_end": {
+    "closing_colophons_at_foot_of_printed_page_458": [
+      "॥ नवमोऽनुवाकः ॥",
+      "॥ [?]स्तकाण्डं नाम विंशं काण्डं समाप्तम् ॥",
+      "॥ अथर्ववेदसंहिता च संपूर्णा ॥"
+    ],
+    "colophon_note": "The first akshara of the kanda-20 colophon's opening word is not legible with confidence in this fount and is left as [?] rather than completed from memory (RIGHTS-13). The rest of that line is clear and states that the twentieth kanda is complete, which independently confirms kanda_count = 20 from the print itself.",
+    "last_head": "॥ अथर्ववेदे २० । १४३ ॥",
+    "last_printed_page": 458,
+    "last_text_canvas": 472
+  },
+  "text_first_canvas": 15,
+  "text_last_canvas": 472,
+  "text_leaf_count": 458
+}

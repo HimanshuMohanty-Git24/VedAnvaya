@@ -297,10 +297,19 @@ def corroborate(rows: list[AuditRow], witness: Partition) -> dict[str, object]:
             continue
         row.second_witness_corroborated = False
         row.referent_class = ReferentClass.SOURCE_NUMBERING_ANOMALY.value
+        # State the DISAGREEMENT, which is measured, and not a CAUSE, which is not.
+        # This note used to end "the selected witness omits a dasati heading here", an
+        # explanation the comparison never checked and which is BACKWARDS for three of the
+        # four withheld groups: at UTTARA P4/R2/D14, P5/R1/D17 and P5/R2/D5 the selected
+        # witness DOES print the heading and the second witness is the one that merges or
+        # skips it. Attributing a cause the code cannot see turned an honest "these two
+        # sources disagree" into a false claim about which source is defective, in a field
+        # a reader would reasonably take as evidence.
         row.notes.append(
             "the second witness declares a different container address for this "
-            f"printed verse number ({'; '.join(mismatches)}); the selected witness omits "
-            "a dasati heading here, so no canonical key is minted"
+            f"printed verse number ({'; '.join(mismatches)}); the two witnesses disagree "
+            "about this dasati partition and the disagreement is not adjudicated here, so "
+            "no canonical key is minted"
         )
         withheld.append(
             {

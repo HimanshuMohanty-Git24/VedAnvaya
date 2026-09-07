@@ -1,0 +1,145 @@
+# Samaveda Kauthuma ARCIKA -- first production canonical release.
+#
+# SCOPE, STATED BEFORE ANYTHING ELSE. This configuration builds the ARCIKA (verse)
+# corpus of the Kauthuma Samaveda and NOTHING ELSE. It does not build, imply, contain
+# or stand in for SAMAVEDA_GANA_CORPUS. The Kauthuma gana books -- gramageya,
+# aranyakageya, uhagana, uhyagana, roughly 2,639 ganas against 1,875 arcika verses --
+# are a parallel and LARGER body which this work_id cannot address and which needs its
+# own work_id. The sung dimension is the reason the Samaveda is a distinct Veda rather
+# than a Rigveda excerpt, so a release of the verse skeleton is not "the Samaveda".
+# The phrase "complete Samaveda" must never be applied to this dataset.
+#
+# This validates against models.WorkBuildConfig (ADR-018), NOT CorpusBuildConfig, which
+# requires `mandala` and `selected_suktas` and is Rigveda-specific by design.
+
+config_version: 1.0.0
+dataset_id: samaveda_arcika_v1
+release_version: 1.0.0
+work_id: VG:WORK:SV:KAU
+
+# The work's own level vocabulary, from data/registry/works.yaml. An empty
+# selected_sections means the WHOLE work: every pinned arcika page is read, so no
+# headline count in this release is extrapolated from a sample.
+section_level: Collection
+selected_sections: []
+mantra_level: Verse
+
+# ORIGINAL: the stored text is what the wiki spells, normalized to NFC and nothing else.
+# The source's own defects -- running number 1179 typeset as a second 1181, single-danda
+# verse terminators at 1133 and 1592 -- are preserved, not repaired.
+text_selection_policy: ORIGINAL
+
+# THE ONLY PRIMARY LAYER. The build calls release.select_primary_text_version with this
+# id, the pinned artifact id, and an explicit forbidden list; selection RAISES rather
+# than falling back. The forbidden list is NOT configurable here on purpose: a build
+# configuration must not be able to relax a rights refusal. It lives in
+# scripts/build_samaveda_canonical.py as FORBIDDEN_TEXT_VERSION_IDS and names
+# GRETIL.SV.KAUTHUMA, TITUS.SV.KAUTHUMA and SANSKRITLIB.SV.KAUTHUMA -- three
+# re-publications of one Anshuman Pandey 1998/99 e-text whose own licence forbids
+# modification outright, which is what parsing, re-keying and JSONL republication are.
+primary_sanskrit:
+  artifact: WIKISOURCE_SA.SV.KAU.SAMHITA.DEVANAGARI
+  text_version: WIKISOURCE_SA.SV.KAU.ARCIKA_MULA
+  role: PRIMARY_TEXT
+  selection_policy: fail-closed-single-primary-v1
+
+parallel_sanskrit: []
+candidate_text_versions: []
+
+# INPUTS, EACH PINNED BY DIGEST.
+#
+# The first entry is the released text. Its snapshot_path is the snapshot DIRECTORY
+# because the witness is 106 separate MediaWiki pages rather than one file, and its
+# snapshot_sha256 is a SET digest: sha256 over the sorted "page_title\tsha256\trevid"
+# lines of every pinned arcika page. The build recomputes it and refuses to run if it
+# differs, so silently swapping, adding or dropping a pinned page cannot pass.
+#
+# The second entry is the rights-encumbered structural corroboration witness. Its TEXT
+# is never read and can never be released -- PERMISSION_REQUIRED, modification forbidden
+# -- but its DECLARED REFERENCE LABELS are what make an address corroborated rather than
+# merely the selected witness's opinion, and 30 occurrences are WITHHELD on its
+# evidence. That makes it a real build input, so it is declared as one rather than being
+# an undeclared side effect of the audit path. If it is absent the build STOPS: without
+# it the corroboration gate silently passes and 21 uncorroborated keys would be minted.
+sources:
+  - source_id: WIKISOURCE_SA
+    role: PRIMARY_TEXT
+    scope: Samavedah/Kauthumiya/Samhita -- 106 arcika pages (74 Purvarcikah, 32 Uttararcikah)
+    snapshot_path: data/raw/wikisource_sa/2026-09-07
+    snapshot_id: WIKISOURCE_SA:SV:KAU:ARCIKA:2026-09-07
+    snapshot_sha256: 5810a16a3ce00020c660ccdb519ae238d6a52a13ff00d3f227b11440e738f2b7
+    source_artifact_id: WIKISOURCE_SA.SV.KAU.SAMHITA.DEVANAGARI
+    parser_version: wikisource-sa-samaveda-arcika-v2
+  - source_id: GRETIL
+    role: STRUCTURAL_CORROBORATION_ONLY
+    scope: declared reference labels and printed running numbers only; text never read
+    snapshot_path: data/raw/gretil/2026-09-07/91c28c0394e94dccc9bad12a08224fbcde0a1194402b610df26647621ed92456.xml
+    snapshot_id: GRETIL:91c28c0394e94dccc9bad12a08224fbcde0a1194402b610df26647621ed92456
+    snapshot_sha256: 91c28c0394e94dccc9bad12a08224fbcde0a1194402b610df26647621ed92456
+    source_artifact_id: GRETIL.SV.KAUTHUMA.TEI.2020
+    parser_version: gretil-samaveda-arcika-v1
+
+# EMPTY, EACH FOR A STATED REASON, and each still written as a zero-length file so that
+# "none exists" is distinguishable from "the build forgot".
+#
+# translation_sources: no rights-clear, alignable Samaveda translation is held. Griffith
+#   1893 is public domain by age but exists locally only as unaligned prose; aligning it
+#   to dasati-local keys would be a machine guess published as a record.
+# metadata_sources: the selected witness declares NO rsi, devata or chandas for any
+#   arcika verse. The saman names its pages do carry (bhadram, syenah, ...) name GANA
+#   units, which are out of scope for this work_id, so asserting them here would attach
+#   gana metadata to verse keys.
+# media_discovery_sources: 474 CC BY-SA / CC0 Ogg recitations exist under
+#   WIKIMEDIA_COMMONS.SV.KAU.RECITATION, but they are aligned to PAGES (typically one
+#   dasati or one gana), not to verses, and most of them render GANA. Emitting them
+#   against arcika verse keys would assert an alignment the source does not make.
+translation_sources: []
+metadata_sources: []
+media_discovery_sources: []
+
+reconciliation_policy_version: samaveda-arcika-v1
+qa_policy_version: corpus-qa-v1
+rights_policy_version: artifact-and-version-rights-v1
+media_policy_version: external-reference-only-v1
+translation_alignment_policy_version: conservative-source-numbered-v1
+
+output_location: data/canonical/samaveda_arcika_v1
+
+# FROM THE CONFIG, NEVER THE CLOCK. Two independent rebuilds are required to be
+# byte-identical, which a wall-clock timestamp would make impossible.
+build_timestamp: 2026-09-07T00:00:00Z
+
+notes: >-
+  ARCIKA ONLY. SAMAVEDA_GANA_CORPUS IS NOT IMPLIED AND IS NOT INCLUDED. This dataset is
+  the Kauthuma arcika verse corpus. The gana books are a separate, larger body under a
+  future work_id; never describe this release as the "complete Samaveda".
+
+
+  COVERAGE IS INCOMPLETE AND BOUNDED, AND IS NOT FORCED TO 1,875. The release carries
+  1,844 canonical keys. 1875 = 1873 distinct printed markers + 2 the selected witness
+  does not print (1179, 1315); and 1875 = 1844 minted keys + 29 withheld printed verses
+  + 2 unprinted. Every withheld occurrence carries a qa_issues row with an explicit
+  reason. No key is ever minted to close a gap against a traditional total: the
+  arithmetic is recomputed from the audit rows at build time and the build FAILS if it
+  does not close.
+
+
+  THE CORPUS IS UNACCENTED, MEASURED RATHER THAN ASSUMED. Zero of the released verse
+  occurrences carry a Vedic accent (U+0951, U+0952, U+1CD0-U+1CFF) or a Devanagari
+  Extended saman mark (U+A8E0-U+A8FF), so every TextVersion.accented is false. The
+  artifact record's claim that the source "includes real saman notation" is true of the
+  ARTIFACT and false of the released verses: 1,158 of its 1,163 extension codepoints sit
+  on one page and none falls inside a parsed verse. The build recounts this and fails if
+  the count is not zero.
+
+
+  THE RUNNING NUMBER IS NEVER IDENTITY. The source prints a running whole-samhita number
+  1..1875; it is emitted as a NON-canonical Citation and as evidence on the referent
+  binding, never as a key component. The canonical verse index is the DASATI-LOCAL rank
+  derived from the source's own printed arithmetic.
+
+
+  SHARE-ALIKE IS A LIVE OBLIGATION. The released text is CC BY-SA 4.0. Any redistributed
+  artifact embedding it must itself be CC BY-SA compatible, and CC BY-SA 4.0 is ONE-WAY
+  INCOMPATIBLE with the CC0 output required for the Atharvaveda transcription, so the two
+  primary Sanskrit layers must not be merged into a single licensed blob.

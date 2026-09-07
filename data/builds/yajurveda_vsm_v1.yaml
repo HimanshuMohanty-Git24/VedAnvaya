@@ -1,0 +1,127 @@
+# Vajasaneyi Samhita (Madhyandina) -- FULL PRODUCTION CANONICAL RELEASE.
+#
+# This supersedes data/builds/yajurveda_pilot_v1.yaml, which built four representative
+# adhyayas with parser v1. It does NOT edit that config or its output: the pilot is a
+# sealed v1 artifact and is left where it is. This build is a separate dataset id at
+# full scale on parser v2.
+#
+# The executable is scripts/build_yajurveda_canonical.py. This file is the auditable
+# statement of intent: what was selected, what was refused, and on whose authority.
+#
+# ---------------------------------------------------------------------------------------
+# WHAT THIS WORK DOES NOT HAVE, STATED UP FRONT
+# ---------------------------------------------------------------------------------------
+# THERE IS NO PRIMARY_TEXT LAYER IN THIS WORK, and the build must not manufacture one.
+# data/registry/text_versions.yaml (owned by the rights/provenance authority, not by this
+# build) registers:
+#
+#   WIKISOURCE_SA.YV.VSM.ACCENTED    -> text_role: EXTRACTED_FROM_CONTAINER
+#   WIKISOURCE_SA.YV.VSM.UNACCENTED  -> text_role: PARALLEL_TEXT
+#
+# The accented layer is the complete one (1,975 of 1,975 addresses) but its unit
+# boundaries are quoted out of the surrounding Uvata-Mahidhara bhasya, so a subset of
+# them is an editorial inference rather than a boundary the source declared. Relabelling
+# that layer PRIMARY_TEXT would make an interpretive segmentation canonical, and it is an
+# explicitly forbidden shortcut in this run. The builder therefore passes
+# allowed_roles=(TextRole.EXTRACTED_FROM_CONTAINER,) EXPLICITLY at the
+# select_primary_text_version call site, so a reader sees the concession being made.
+#
+# The honest consequence is reported as FOUR DISTINCT NUMBERS, never merged into one
+# "coverage" figure: source-declared units, inference-derived units, variant-bearing
+# units, and review items. See reports/layer_statistics.json in the output.
+
+config_version: yajurveda-vsm-v1
+dataset_id: yajurveda_vsm_v1
+release_version: 1.0.0-vsm.1
+work_id: VG:WORK:YV:VSM
+
+# Work-agnostic hierarchy declaration, matching data/registry/works.yaml
+# (hierarchy: [Adhyaya, Mantra], identity_status FINAL). VSM has NO sukta/hymn level.
+section_level: Adhyaya
+mantra_level: Mantra
+
+# FULL SCALE. All 40 adhyayas. Not a sample.
+selected_sections: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+                    21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38,
+                    39, 40]
+
+# ---------------------------------------------------------------------------------------
+# TEXT LAYERS
+# ---------------------------------------------------------------------------------------
+# "primary_text_version" names the layer that leads coverage, comparison and the referent
+# bindings. It is NOT a TextRole and it confers no canonical status: roles are read from
+# the registry at build time and emitted verbatim onto every TextVersion row.
+primary_text_version: WIKISOURCE_SA.YV.VSM.ACCENTED
+parallel_text_versions:
+  - WIKISOURCE_SA.YV.VSM.UNACCENTED
+
+# Witnesses that must never become this work's primary layer, named so the refusal is a
+# property a test can assert directly rather than a side effect of a rights check.
+# TITUS holds a complete accented Madhyandina text but every page forbids republication;
+# The Sanskrit Library's bytes are unreachable. Neither is registered, and neither may be
+# silently substituted if the selected id ever stops resolving.
+forbidden_text_version_ids:
+  - TITUS.YV.VSM.ACCENTED
+  - SANSKRIT_LIBRARY.YV.VSM
+
+# The artifact the selected layer MUST resolve to. A mismatch stops the build rather than
+# releasing rows bound to an unpinned artifact.
+expected_artifact_id: WIKISOURCE_SA.YV.VSM.SAMHITA.DEVANAGARI
+
+# ---------------------------------------------------------------------------------------
+# TRADITIONAL METADATA
+# ---------------------------------------------------------------------------------------
+# rsi ONLY, extracted from the edition's own per-mantra rsi index
+# (WIKISOURCE_SA.YV.VSM.RISHISUCI). The count is RECOMPUTED from the source records at
+# every build and is never hard-coded; prior research projected 2,106 assertions and that
+# projection is treated as a claim to be checked, not as validation truth.
+#
+# devata and chandas are NOT asserted and MUST NOT be invented. No approved deterministic
+# per-mantra source for them exists for this work. The Sarvanukramani page is continuous
+# sutra prose grouped by anuvaka; resolving it to per-mantra claims needs expert
+# philological reading, so it is snapshotted as evidence and deliberately NOT
+# machine-resolved. Its absence is emitted as a reported gap, not filled.
+metadata_sources: [RISHI_INDEX]
+
+# ---------------------------------------------------------------------------------------
+# TRANSLATIONS
+# ---------------------------------------------------------------------------------------
+# EMPTY IN THIS RELEASE. Griffith 1899 (The Texts of the White Yajurveda) is public domain
+# by age and is being acquired separately; until an aligned artifact exists,
+# translations.jsonl is written as a zero-length file that the manifest counts, so
+# "no translation" is distinguishable from "the build forgot".
+#
+# The slot below is live, not decorative: the builder reads Translation records from each
+# declared jsonl_path, fails if the file is absent, and fails if any passage_id in it does
+# not resolve to a passage in this release. Adding an entry here is the whole integration.
+#
+# ENABLED 2026-09-07. Griffith 1899, acquired from sacred-texts and aligned from the
+# PRINTED verse numbers rather than from position. 1903 of 1975 canonical mantras carry
+# English; the remaining 72 are reported gaps, not silence. Of the 1903, 1889 are
+# EXACT_MANTRA_ALIGNMENT and 14 are RANGE_ALIGNMENT where the two spines do not agree
+# unit-for-unit. The 21 keys of the book-12 spine divergence are deliberately NOT filled:
+# Griffith prints one verse twice there, dropping either copy satisfies the arithmetic
+# equally, and shifting on a guess would have put the wrong translation on 21 keys.
+translation_sources:
+  - source_id: SACRED_TEXTS
+    source_artifact_id: GRIFFITH.YV.1899.SACREDTEXTS
+    jsonl_path: data/staged/yajurveda_griffith_1899/translations.jsonl
+
+# ---------------------------------------------------------------------------------------
+# AUDIO
+# ---------------------------------------------------------------------------------------
+# Reference-only. No recording is held, no segment is aligned, and both files are written
+# empty. Emitting an AudioRecording for bytes VedaGraph does not hold would assert
+# custody it does not have.
+audio_sources: []
+
+reconciliation_policy_version: yajurveda-vsm-v1
+segmentation_policy_version: wikisource-sa-vsm-v2-ordinal-header
+
+raw_root: data/raw/wikisource_sa
+output_location: data/canonical/yajurveda_vsm_v1
+
+# DETERMINISM: built_at comes from here, never from the clock. Pinned to the snapshot
+# retrieval date of the 2026-09-07 Sanskrit Wikisource fetch, so two independent rebuilds
+# from the same immutable snapshots are byte-identical including manifest.json.
+build_timestamp: 2026-09-07T00:00:00+05:30

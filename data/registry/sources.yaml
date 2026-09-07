@@ -416,7 +416,7 @@ sources:
   - audio
   - samaveda_gana_audio
 - authority_tier: COMMUNITY_TRANSCRIPTION
-  bulk_ingestion_status: RECENSION_MISMATCH_DO_NOT_ALIGN
+  bulk_ingestion_status: SELECTED_PER_ARTIFACT_SEE_NOTES
   formats:
   - HTML
   known_languages:
@@ -430,22 +430,43 @@ sources:
     has nine prapathakas. Aligning it to a Kauthuma Sanskrit text would produce a silently WRONG
     alignment, not an approximate one. The same preface also establishes that Satyavrata Samasrami''s
     Bibliotheca Indica edition is Ranayaniya, so the archive.org DLI Samasrami scans are not a Kauthuma
-    witness either. Site returns HTTP 403 to automated agents.'
+    witness either.
+    CORRECTED 2026-09-07 by FULL_SV_YV_AV_CANONICAL_INGESTION, on three counts, all evidenced.
+    (1) "Site returns HTTP 403 to automated agents" is FALSE for /hin/wyv/: 45 of 45 requests returned
+    HTTP 200 with a declared User-Agent and a 1.5s delay. Whatever produced the 403 was not a site-wide
+    block, and the sentence was doing real damage - it is the kind of claim that stops a later run from
+    even trying.
+    (2) bulk_ingestion_status was RECENSION_MISMATCH_DO_NOT_ALIGN, which is a SAMAVEDA-SPECIFIC verdict
+    that had been applied SOURCE-WIDE. The Samaveda warning below is entirely correct and stands; it says
+    nothing about the Yajurveda. GRIFFITH.YV.1899.SACREDTEXTS is on the correct Vajasaneyi Madhyandina
+    spine and IS alignable - 1903 of 1975 canonical mantras, proven from printed verse numbers. The status
+    is therefore per-artifact, and the recension warning belongs to the Samaveda artifact rather than to
+    the host. This is the same defect class as RIGHTS-1: a property of one file recorded at the level of
+    the site.
+    (3) See rights.notes for the vanished meta element.
+    THE SAMAVEDA WARNING IS UNAFFECTED AND STILL BINDING: the Griffith Samaveda here is RANAYANIYA and
+    must never be aligned to the Kauthuma corpus.'
   organization: Internet Sacred Text Archive
   rights:
     license_url: https://sacred-texts.com/
-    notes: 'No per-artifact statement exists. The only host signal is a site-wide HTML meta element,
-      verbatim: <meta name="copyright" content="Public Domain and Creative Commons">. That is generic,
-      names two mutually distinct regimes without saying which applies to what, and is not
-      artifact-level, so under policy rule RIGHTS-1 it carries NO weight and is recorded only as an
-      observation. PUBLIC_DOMAIN rests instead on the underlying work: Griffith died 1906, translation
-      published 1895.'
+    notes: 'SUPERSEDED OBSERVATION, kept because it is the historical record: this field previously said
+      the only host signal was a site-wide meta element reading "Public Domain and Creative Commons",
+      and correctly gave it no weight under RIGHTS-1. THAT ELEMENT NO LONGER EXISTS - the site has moved
+      to a single-page-application layout and it is absent from all 45 pages snapshotted 2026-09-07.
+      THE LIVE STATEMENT is https://sacred-texts.com/copyrights.htm, snapshotted at sha256
+      008aec2f485ce55d22892def0bbdae5224af325806f023988974f375f4e61677, which grants derivative use of
+      public-domain files without permission and states that books printed outside the US in or before
+      1922 are public domain in the US. TWO CARVE-OUTS that do not touch translated body text: index
+      files and descriptive material remain J.B. Hare''s, and some prepared files are commercially
+      licensable and listed in a Bibliography which has NOT been checked against these files.
+      PUBLIC_DOMAIN still rests on the underlying works rather than on the host: Griffith died 1906.'
     status: PUBLIC_DOMAIN
     verified_at: 2026-09-07
   source_id: SACRED_TEXTS
   url: https://sacred-texts.com/
   verification_roles:
   - english_translation_reference
+  - english_translation_selected
   - recension_warning
 - authority_tier: SCHOLARLY_EDITION
   bulk_ingestion_status: PERMISSIVE_LICENCE_RESIDUAL_CHAIN_RISK

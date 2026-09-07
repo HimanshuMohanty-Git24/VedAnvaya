@@ -1141,8 +1141,96 @@ blockers:
       structural_count_reconciliation: OPEN_RESEARCH
       clean_source_acquisition: RESOLVED
       transcription_labour: OPEN_ENGINEERING
-    dimensions_updated_by_run: FOUR_VEDA_CANONICAL_SANSKRIT_BLOCKER_CLOSURE
+      transcription_channel_independence: OPEN_RIGHTS
+      transcription_fidelity_measured: OPEN_RESEARCH
+      production_artifact_registration: RESOLVED
+    dimensions_updated_by_run: FULL_SV_YV_AV_CANONICAL_INGESTION
     dimensions_updated_on: "2026-09-07"
+    dimensions_added_this_run:
+      transcription_fidelity_measured: >-
+        NEW, OPEN_RESEARCH. Model transcription of this source was attempted at production
+        settings under the two-stage protocol and MEASURED rather than assumed.
+        MEASURED OVER 204 UNITS READ INDEPENDENTLY TWICE (26 leaves, kandas 1-2):
+          VERIFIED_EXACT 103, exact agreement rate 0.505.
+          VERIFIED_WITH_ORTHOGRAPHIC_NOTE 42 - agree on the letters, differ in accent or in
+          punctuation, numerals and spacing.
+          TRANSCRIPTION_UNCERTAIN 59 - differ in the letters themselves, e.g. AVS 2.19.1
+          read as "dvesi" by one reader and "dvesti" by the other.
+          14 of 313 units carry any Vedic accent mark.
+        THE RATE MOVED THREE TIMES AS THE SAMPLE GREW AND EVERY EARLIER FIGURE IS WITHDRAWN:
+        0.00 on 22 units (one leaf), 0.26 on 46, 0.485 on 167, 0.505 on 204. The first was
+        recorded here in a sentence that ALSO said 22 units were "enough to refuse promotion
+        and NOT enough to characterise the error rate" - and then stated the rate anyway.
+        That is the one-locus overgeneralisation this registry has corrected four times,
+        committed once more by the run correcting the others, and then repeated at 46 and
+        again at 167. THE MONOTONE CLIMB IS ITSELF THE FINDING: at every sample size so far
+        the measurement has been pessimistic and has not converged, so 0.505 is a FLOOR from
+        two kandas at a resolution now known to be wrong, and must not be cited as a corpus
+        rate. Anyone quoting a single number from this dimension is quoting a snapshot of an
+        unconverged series.
+        THE ACCENT RESULT HAS A DIFFERENT CAUSE THAN FIRST RECORDED, and the correction
+        matters more than the number. Both readers initially recorded ZERO accents, which
+        read as a capability failure. It was an ACQUISITION failure: the first pass fetched
+        the IIIF derivative at width 2000, and a reader stated the reason precisely - at
+        that resolution the accent marks of this fount "sit on aksara boundaries and cannot
+        be assigned to a specific aksara without guessing", so they refused to record them,
+        which is exactly what RIGHTS-13 requires. Re-fetched at width 4000 the same marks
+        are unambiguously attached to their aksara, verified visually on leaf n17. The IIIF
+        "full" size returns only 2025px, so 4000 must be requested explicitly. The volume
+        has been re-acquired at 4000 and IMAGE_WIDTH in the fetch script now pins it.
+        SO WHAT THIS DIMENSION ACTUALLY RECORDS: an exact-agreement rate of 0.505 on a
+        small sample at the WRONG resolution, with the resolution defect now fixed - the
+        whole volume re-acquired at width 4000, aggregate
+        4008cdca2886f79a37d23a1323fe2e5edec676f3e08549d23aa865088f3917b6 - and the
+        measurement NOT yet repeated at the right one. It is not yet evidence about what
+        model transcription can do from an adequate image.
+        WHAT IS STILL TRUE INDEPENDENT OF RESOLUTION: a failure both readers share is
+        invisible to a two-reader check, because agreement is its only signal. The zero-accent
+        result was caught by a separate accent_fidelity_gap measurement, not by the status
+        vocabulary, and that gap measurement is retained for exactly that reason.
+        WHAT DID NOT MOVE: the source is legible, its structure was derived from it
+        successfully and independently (20 kandas, 731 suktas from the printed running heads
+        alone), and rights are clear. Nothing here weakens the acquisition or the artifact.
+        WHAT WOULD CLOSE IT: a measured exact-agreement rate at width 4000 over a
+        statistically meaningful sample, and independent human verification of a subset.
+      transcription_channel_independence: >-
+        NEW, OPEN_RIGHTS. RIGHTS-13 names an LLM assistant as the MOST LIKELY breach path
+        for this project, because the agents operating it hold GRETIL and TITUS text in
+        training and will complete an unclear aksara helpfully and silently. This run began
+        transcribing with model readers, so the channel is no longer hypothetical and needs
+        its own dimension rather than being folded into transcription_labour, which is about
+        EFFORT and would go RESOLVED on volume alone while this stayed open.
+        WHAT IS CONTROLLED: readers are instructed to read the page and not answer from
+        recall, to mark an unclear aksara [?] rather than guess, and never to consult any
+        digital Atharvaveda; two readers who cannot see each other read the same image; and
+        no reading is ever synthesised from two disagreeing ones, because a merged reading
+        has no traceable source. VERIFIED_EXACT is assigned only by agreement.
+        WHAT IS NOT CONTROLLED, AND WHY THIS IS OPEN RATHER THAN RESOLVED: a model
+        transcribing Devanagari from an image is not performing pure optical recognition.
+        Its output is shaped by language priors learned from a corpus that includes the
+        encumbered text. Two independent model readings can therefore AGREE because they
+        share a prior rather than because the page says so, which is a correlated-error mode
+        that a two-reader check cannot detect by construction. The residual is unquantified.
+        WHAT WOULD CLOSE IT: independent human verification of a statistically meaningful
+        sample against the leaf images, or verification against a second rights-compatible
+        public-domain witness. Neither is available in an automated run.
+        SCOPE NOTE: this is the same class of gap already recorded for Samaveda as
+        cross-script rendering under samaveda_sources.yaml, which observed that
+        agent-performed transliteration of a passage the model holds memorised is a
+        RIGHTS-13-class channel that RIGHTS-13 does not name. Both are the general problem
+        that RIGHTS-13's OPERATIONAL TEST assumes a reader whose recall is separable from
+        their reading, and a model's is not.
+      production_artifact_registration: >-
+        NEW, RESOLVED in this run. source_id BSB_MDZ was registered and clean_source_acquisition
+        was RESOLVED, but NO ARTIFACT ROW EXISTED for the scan, and rights resolve through
+        artifacts. A build therefore could not bind an Atharvaveda row to the public-domain
+        route at all; the only resolvable AV artifacts were the REFERENCE_ONLY GRETIL pair
+        and the VedaWeb translation. Closed by registering
+        BSB.AV.SAUNAKA.ROTH_WHITNEY.1856.SCAN (aggregate checksum over 478 leaves) and
+        VEDAGRAPH.AVS.ROTH_WHITNEY_1856.TRANSCRIPTION (CC0, PRIMARY_TEXT), plus the tracked
+        per-leaf manifest at data/source_registry/atharvaveda_bsb_leaf_manifest.jsonl.
+        Recorded as its own dimension because "the source is cleared" and "a build can bind
+        to the source" were being treated as one fact and are not.
     binding_blocker: >-
       transcription_labour. NOTE THIS IS A NEW DIMENSION, added because the old
       set could not express the state this Veda actually reached. Rights and
@@ -1181,7 +1269,23 @@ blockers:
       kanda_20_unabridged_basis: >-
         Edition preface only. Leaf n420 sits 25.2% into kanda 20 (242 of 959
         units), so completeness is NOT directly observed. Presence is.
-      transcription_performed: false
+      transcription_performed: PARTIAL_AND_MEASURED_NOT_RELEASED
+      structure_derived_from_the_1856_source: >-
+        DONE 2026-09-07 by FULL_SV_YV_AV_CANONICAL_INGESTION, and it half-closes an exit
+        criterion. All 478 leaves were acquired and the running head of every text leaf was
+        read directly, giving 20 kandas and 731 suktas DERIVED FROM THIS EDITION rather than
+        imported from the digital lineage. Both figures match the previously observed
+        20/731 exactly, and the derivation was completed before the comparison was written.
+        The kanda count is additionally corroborated by the volume's own closing colophon on
+        printed p.458. Text occupies leaves n15-n472 = printed pages 1-458; front matter
+        n1-n14, back matter n473-n478; printed_page = canvas_index - 14 holds for all 458.
+        THE MANTRA TOTAL IS NOT DERIVED and 5,839 therefore remains UNRECONCILED: a running
+        head names the sukta(s) on its page and never a mantra count, so mantra totals can
+        only come from reading the verse terminals on every page - which is the
+        transcription workload, not a separate exercise. Recorded as null rather than
+        estimated. One printed error found: p.145 heads "7 . 1-6" where the body runs 1-5.
+        See data/source_registry/atharvaveda_1856_structure_map.jsonl and
+        atharvaveda_1856_structure_summary.json.
       transcription_pilot_demonstrated: true
       transcription_governed_by: RIGHTS-13
       output_licence_split_required: >-

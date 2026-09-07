@@ -91,8 +91,20 @@ works:
       genuinely unattested value; (b) 9 verses in one Uttararcika dasati whose printed run
       is non-contiguous because the source typesets 1179 as a second 1181, a defect both
       lineages share; and (c) 21 verses in four Uttararcika dasati groups where the
+      two witnesses disagree about the dasati partition.
+      CORRECTED 2026-09-07 by FULL_SV_YV_AV_CANONICAL_INGESTION: clause (c) read "where the
       selected witness omits a dasati heading, so its partition is contradicted by the
-      second witness. In every case the WHOLE affected dasati is withheld, so supplying
+      second witness". That attributes the defect to the wrong witness in THREE of the four
+      groups. Measured per group: at UTTARA P4:R2:D14 the selected witness prints the
+      heading and the second witness runs D13 to six verses; at P5:R1:D17 the selected
+      witness prints it and the second witness skips label 17 entirely in that ardha; at
+      P5:R2:D5 the selected witness prints it and the second witness prints labels 6-9
+      twice with four welded verses carrying two running numbers each. Only P4:R1:D22 is
+      the shape originally described - one heading over 1107-1112 then an unheaded block
+      1113-1115. The WITHHOLDING IS UNCHANGED and remains correct: an unadjudicated
+      disagreement between two witnesses is not a licence to mint from either. What was
+      wrong was the stated reason, which named the selected witness as defective on
+      evidence that says the opposite. In every case the WHOLE affected dasati is withheld, so supplying
       the missing structure later ADDS keys without renumbering any existing one.
       A REFERENT-INTEGRITY GATE now binds each released key to the occurrence it denotes.
       UUID determinism was never evidence of identity correctness: the only identity check
