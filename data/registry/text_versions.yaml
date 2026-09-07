@@ -405,13 +405,14 @@ text_versions:
   text_role: PRIMARY_TEXT
   recension: Shaunaka; two in-artifact witnesses - the printed title page and the running head - and the
     Paippalada recension is excluded structurally, not by assumption
-  underlying_edition: Atharva Veda Sanhita, herausgegeben von R. Roth und W. D. Whitney. Erster Band. Text.
-    Berlin, Ferd. Duemmler Verlagsbuchhandlung, 1856. 478 scanned leaves, 464 printed pages, Devanagari.
+  underlying_edition: 'Atharva Veda Sanhita, herausgegeben von R. Roth und W. D. Whitney. Erster Band. Text.
+    Berlin, Ferd. Duemmler Verlagsbuchhandlung, 1856. 478 scanned leaves: 14 front-matter leaves, 458 numbered
+    text pages, and 6 unpaginated back-matter leaves. Devanagari.'
   electronic_lineage:
   - 'Printed edition: Roth and Whitney, Berlin 1856 (public domain by age)'
   - 'Digitisation: Bayerische Staatsbibliothek / Muenchener DigitalisierungsZentrum, bsb10219750, Kein
     Urheberrechtsschutz'
-  - 'Acquisition: VedaGraph, scripts/fetch_atharvaveda_bsb_scan.py, 478 IIIF canvases at width 2000px,
+  - 'Acquisition: VedaGraph, scripts/fetch_atharvaveda_bsb_scan.py, 478 IIIF canvases at width 4000px,
     snapshot 2026-09-07, per-leaf sha256 in data/source_registry/atharvaveda_bsb_leaf_manifest.jsonl'
   - 'Transcription: VedaGraph, policy bsb-1856-devanagari-v1, two independent readings per leaf reconciled by
     scripts/reconcile_atharvaveda_transcription.py'

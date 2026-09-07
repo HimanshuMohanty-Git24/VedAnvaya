@@ -39,3 +39,4 @@ data/semantic/**
 
 # Local reviewer identity is machine/session state, not semantic gold.
 data/gold/.reviewer_identity.json
+scratch_av_crops/

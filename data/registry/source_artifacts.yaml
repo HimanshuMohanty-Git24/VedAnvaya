@@ -1884,8 +1884,9 @@ source_artifacts:
     width 2000, and at that resolution the Vedic accent marks of this fount sit on AKSARA BOUNDARIES and
     cannot be assigned to a specific aksara without guessing. Readers correctly refused to record them under
     RIGHTS-13, and the resulting corpus-wide absence of accent was very nearly written up as a
-    transcription-capability failure when it was an ACQUISITION failure. At width 4000 the same marks are
-    unambiguously attached to their aksara, verified visually on leaf n17. NOTE that the IIIF "full" size
+    transcription-capability failure when it was an ACQUISITION failure. At width 4000 the marks are materially
+    more separable, but their attachment still requires line-by-line visual adjudication and is never inferred
+    from language knowledge. NOTE that the IIIF "full" size
     returns only 2025px for this item, so 4000 must be requested EXPLICITLY; it is a real server-side
     derivative and not an upscale. checksum_sha256 and file_size_bytes below are for the 4000px set; the
     superseded 2000px aggregate was 478cdf546d65409ab3ea3726fbf92911fc95f756072fcb679bcf2ed9f771ba75.'
@@ -1925,11 +1926,13 @@ source_artifacts:
     over a faithful transcription of a public-domain work would be the same copyfraud RIGHTS-10 condemns in
     others. See docs/work_packets/ATHARVAVEDA_TRANSCRIPTION_PROTOCOL.md.'
   provenance_notes: 'Acquired 2026-09-07 by scripts/fetch_atharvaveda_bsb_scan.py from the BSB IIIF Image API,
-    478 canvases, region "full", size "2000,". Each leaf carries its own sha256 and retrieval sidecar under
+    478 canvases, region "full", size "4000,". Each leaf carries its own sha256 and retrieval sidecar under
     data/raw/bsb_mdz/2026-09-07/bsb10219750/. Coverage verified visually on sampled leaves: n30 = printed p.16
     (kanda 2, suktas 4-6), n300 = printed p.286 (kanda 12 sukta 5, a prose paryaya sukta), n420 = printed p.407
-    (kanda 20). All 20 kandas present and Kanda 20 present; Kanda 20 COMPLETENESS is not directly observed and
-    must not be asserted from presence.'
+    (kanda 20). The later source-only structure pass in
+    data/source_registry/atharvaveda_1856_structure_map.jsonl reads every leaf: text runs from n15 (printed p.1)
+    through n472 (printed p.458), whose printed colophons close kanda 20 and the samhita. This establishes all
+    20 kandas and the physical completeness of the scanned text block; it does not establish a mantra total.'
   publication_date: '1856'
   recension: Shaunaka
   retrieval_date: '2026-09-07'
