@@ -1150,21 +1150,22 @@ blockers:
       transcription_fidelity_measured: >-
         NEW, OPEN_RESEARCH. Model transcription of this source was attempted at production
         settings under the two-stage protocol and MEASURED rather than assumed.
-        MEASURED OVER 204 UNITS READ INDEPENDENTLY TWICE (26 leaves, kandas 1-2):
-          VERIFIED_EXACT 103, exact agreement rate 0.505.
+        MEASURED OVER 227 UNITS READ INDEPENDENTLY TWICE (26 leaves, kandas 1-2):
+          VERIFIED_EXACT 123, exact agreement rate 0.542.
           VERIFIED_WITH_ORTHOGRAPHIC_NOTE 42 - agree on the letters, differ in accent or in
           punctuation, numerals and spacing.
-          TRANSCRIPTION_UNCERTAIN 59 - differ in the letters themselves, e.g. AVS 2.19.1
+          TRANSCRIPTION_UNCERTAIN 62 - differ in the letters themselves, e.g. AVS 2.19.1
           read as "dvesi" by one reader and "dvesti" by the other.
           14 of 313 units carry any Vedic accent mark.
-        THE RATE MOVED THREE TIMES AS THE SAMPLE GREW AND EVERY EARLIER FIGURE IS WITHDRAWN:
-        0.00 on 22 units (one leaf), 0.26 on 46, 0.485 on 167, 0.505 on 204. The first was
+        THE RATE MOVED FOUR TIMES AS THE SAMPLE GREW AND EVERY EARLIER FIGURE IS WITHDRAWN:
+        0.00 on 22 units (one leaf), 0.26 on 46, 0.485 on 167, 0.505 on 204, 0.542 on 227.
+        The first was
         recorded here in a sentence that ALSO said 22 units were "enough to refuse promotion
         and NOT enough to characterise the error rate" - and then stated the rate anyway.
         That is the one-locus overgeneralisation this registry has corrected four times,
         committed once more by the run correcting the others, and then repeated at 46 and
-        again at 167. THE MONOTONE CLIMB IS ITSELF THE FINDING: at every sample size so far
-        the measurement has been pessimistic and has not converged, so 0.505 is a FLOOR from
+        again at 167. THE MONOTONE CLIMB IS ITSELF THE FINDING: across FIVE successive sample
+        sizes the measurement has risen every time and has not converged, so 0.542 is a FLOOR from
         two kandas at a resolution now known to be wrong, and must not be cited as a corpus
         rate. Anyone quoting a single number from this dimension is quoting a snapshot of an
         unconverged series.
@@ -1178,7 +1179,7 @@ blockers:
         are unambiguously attached to their aksara, verified visually on leaf n17. The IIIF
         "full" size returns only 2025px, so 4000 must be requested explicitly. The volume
         has been re-acquired at 4000 and IMAGE_WIDTH in the fetch script now pins it.
-        SO WHAT THIS DIMENSION ACTUALLY RECORDS: an exact-agreement rate of 0.505 on a
+        SO WHAT THIS DIMENSION ACTUALLY RECORDS: an exact-agreement rate of 0.542 on a
         small sample at the WRONG resolution, with the resolution defect now fixed - the
         whole volume re-acquired at width 4000, aggregate
         4008cdca2886f79a37d23a1323fe2e5edec676f3e08549d23aa865088f3917b6 - and the

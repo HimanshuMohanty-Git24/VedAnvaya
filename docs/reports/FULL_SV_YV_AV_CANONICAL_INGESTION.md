@@ -270,27 +270,27 @@ canonical Sanskrit**, and the reason is a measurement rather than a shortfall of
 
 ### The measurement, and the mistake I made reading it
 
-Transcription was attempted at production settings. Measured over **204 units read
+Transcription was attempted at production settings. Measured over **227 units read
 independently twice** (26 leaves, kāṇḍas 1–2):
 
 | Result | Count |
 |---|---|
-| `VERIFIED_EXACT` (codepoint agreement) | 103 — rate **0.505** |
+| `VERIFIED_EXACT` (codepoint agreement) | 123 — rate **0.542** |
 | Agree on letters; differ in accent, punctuation, numerals or spacing | 42 |
-| Differ in the **letters themselves** | 59 |
+| Differ in the **letters themselves** | 62 |
 | Units carrying any Vedic accent mark (of 313 total) | 14 |
 
 An example of a letter-level disagreement, AVS 2.19.1: one reader read `द्वेषि`, the other
 `द्वेष्टि`.
 
-**The rate moved three times as the sample grew, and every earlier figure is withdrawn:**
-0.00 on 22 units (one leaf), 0.26 on 46, 0.485 on 167, 0.505 on 204. I recorded the first
+**The rate moved four times as the sample grew, and every earlier figure is withdrawn:**
+0.00 on 22 units (one leaf), 0.26 on 46, 0.485 on 167, 0.505 on 204, 0.542 on 227. I recorded the first
 in a sentence that *also* said 22 units were "enough to refuse promotion and NOT enough to
 characterise the error rate" — and then stated the rate anyway. That is the one-locus
 overgeneralisation this repository has corrected four times, committed once more by the run
 correcting the others, and then repeated at 46 and again at 167. **The monotone climb is
 itself the finding:** at every sample size the measurement has been pessimistic and has not
-converged, so 0.505 is a floor from two kāṇḍas, not a corpus rate.
+converged across five successive sample sizes, so 0.542 is a floor from two kāṇḍas, not a corpus rate.
 
 **The zero-accent result had a different cause than I first recorded, and the correction
 matters more than the number.** Both readers initially recorded no accent at all, which
@@ -312,7 +312,7 @@ What the re-fetch *did* prove is that resolution changes the base text: re-readi
 leaves at 4000px produced **4 substantive changes in 86 units, about 4.7%** — including
 `उपासान्` → `उपास्मान्` and `यद्गावः` → `यन्नावः` — and resolved both outstanding `[?]` marks.
 
-So what this records is an exact-agreement rate of 0.505 on a small sample **at the wrong
+So what this records is an exact-agreement rate of 0.542 on a small sample **at the wrong
 resolution**, with the defect fixed — the whole volume re-acquired at width 4000, 478
 leaves, 676,021,671 bytes, aggregate `4008cdca…17b6` — and the measurement **not yet
 repeated at the right one**. It is not yet evidence about what model transcription can do
