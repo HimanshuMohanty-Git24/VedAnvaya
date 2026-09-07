@@ -1,0 +1,10 @@
+{
+  "candidate": "OCR_TESSERACT",
+  "devanagari_codepoints_returned": 0,
+  "engine": "tesseract 'eng' + 'osd' only; no Devanagari traineddata installed",
+  "first_line_returned": "9b u Wade Pie i",
+  "reason": "The engine returns zero Devanagari codepoints; it transliterates the glyph shapes into Latin noise. Installing a san/hin model would add an external dependency, and those models are trained on modern type, not an 1856 Berlin fount whose accent marks are free-standing strokes above and below the line. OCR is not a credible route to this page and no amount of visual post-correction repairs a base output that contains none of the target script.",
+  "tested_on": "leaf n32 band 1 (kanda 2, printed page 18)",
+  "total_chars_returned": 317,
+  "verdict": "REJECTED"
+}
