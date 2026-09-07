@@ -81,7 +81,10 @@ Verified across sampled leaves n30 (printed p.16) and n300 (printed p.286):
 - **Running head:** `॥ अथर्ववेदे K । S ॥` where `K` is the kāṇḍa and `S` the sūkta or
   sūkta range on that page, in Devanagari digits. The printed page number sits in the
   outer margin — left on verso, right on recto.
-- **Sūkta opening:** a bracketed Devanagari numeral in the left margin, e.g. `॥ ५ ॥`.
+- **Sūkta opening:** a bracketed Devanagari numeral in the **outer** margin, e.g. `॥ ५ ॥` —
+  right on recto, left on verso, as is the printed page number. An earlier version of this
+  document said "left margin"; that is true of verso pages only and is wrong for half the
+  volume. Page 1 carries no running head at all.
 - **Mantra terminal:** `॥ N ॥` in Devanagari digits at the end of each mantra.
 - **Prose / paryāya sūktas** (e.g. kāṇḍa 12.5, printed p.286) run continuously with
   paryāya markers `(१)`, `(२)`, mantra terminals `॥ १ ॥` inline, and a bracketed running
@@ -90,10 +93,16 @@ Verified across sampled leaves n30 (printed p.16) and n300 (printed p.286):
 - **Anuvāka colophon:** `॥ प्रथमोऽनुवाकः ॥` etc. Record in `structural_marker`, do not
   transcribe as a mantra.
 - **Typeface:** an 1856 Berlin Devanagari fount. `अ` has an unfamiliar shape that can read
-  as `ऋ`/`श्र` to an eye used to modern type. Accents are marked with a subscript line for
-  anudātta and a superscript stroke for svarita. Reproduce accents where legible; where an
-  accent is present but its identity is unclear, transcribe the akṣara and note it rather
-  than guessing the accent.
+  as `ऋ`/`श्र` to an eye used to modern type.
+- **Accent, and the honest state of it.** The page prints anudātta as a detached line below
+  and svarita as a free-standing vertical above. **Acquire at width 4000, never 2000**: at
+  2000 the marks sit on akṣara boundaries and cannot be assigned at all, and a first pass of
+  this run was re-read at 4000 with **4 substantive changes in 86 units (~4.7%)**.
+  But 4000 does NOT make accent solved. A reader working line by line at up to 7× zoom on
+  the 4000px scan reports the marks are now stem-aligned yet still not reliably assignable
+  to a specific akṣara, and omitted them rather than guess — which is what this protocol
+  requires. **A dedicated accent pass is separate scoped work.** A partially-correct accent
+  layer is worse than none, because it looks complete.
 
 ---
 
