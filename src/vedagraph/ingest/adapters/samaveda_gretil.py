@@ -34,7 +34,6 @@ from pathlib import Path
 
 from lxml import etree
 
-from vedagraph.identity import sv_mantra_identity
 from vedagraph.ingest.adapters.base import DiscoveredResource, SourceAdapter
 from vedagraph.models import StagingTextRecord
 from vedagraph.models.enums import TextRole
@@ -79,14 +78,13 @@ _ITRANS_RESIDUE = re.compile(r"[A-Za-z]\^")
 _UNEXPECTED_UPPERCASE = re.compile(r"[A-Z]")
 
 
-def _defect_locator(arcika: int, prapathaka: int, ardha: int, dasati: int, verse: int) -> str:
-    """A human locator for a record the canonical identity function refuses.
+def _structural_locator(arcika: int, prapathaka: int, ardha: int, dasati: int, verse: int) -> str:
+    """A locator in the artifact's OWN declared reference system.
 
-    ``sv_mantra_identity`` fails closed on a defective verse index, so a defect record
-    still needs something to point at.  This is deliberately not key-shaped: nothing
-    downstream may mistake it for canonical identity.
+    Deliberately not key-shaped, so nothing downstream can mistake a coordinate read off
+    the rejected witness for canonical VedaGraph identity.
     """
-    return f"SV-DEFECT {arcika}.{prapathaka}.{ardha}.{dasati}.{verse}"
+    return f"GRETIL-SV {arcika}.{prapathaka}.{ardha}.{dasati}.{verse}"
 
 
 @dataclass(frozen=True)
@@ -141,15 +139,23 @@ class SamavedaVerse:
 
     @property
     def has_canonical_identity(self) -> bool:
-        """False when the source's own indices are defective beyond minting identity."""
+        """False when the source's own indices are defective beyond addressing a verse."""
         return self.arcika >= 1 and self.verse >= 1
 
     @property
     def verse_key(self) -> str:
-        """The canonical key, or a clearly-marked defect locator when identity is refused."""
-        if not self.has_canonical_identity:
-            return _defect_locator(*self.coordinates)
-        return sv_mantra_identity(*self.coordinates)[0]
+        """A structural locator for this verse. NEVER a canonical VedaGraph key.
+
+        This adapter used to call ``sv_mantra_identity`` here. It must not: the artifact is
+        ``PERMISSION_REQUIRED`` and was rejected as canonical primary, and its arcika
+        ordinals encode the contested four-sibling arity that a canonical key deliberately
+        does not commit to. Minting canonical identity from the rejected witness is what
+        put the flattened five-slot address into the key in the first place.
+
+        The artifact's legitimate roles are ``hierarchy``, ``reference_system`` and
+        ``edition_comparison``, all of which this locator serves.
+        """
+        return _structural_locator(*self.coordinates)
 
     @property
     def structural_path(self) -> list[str]:

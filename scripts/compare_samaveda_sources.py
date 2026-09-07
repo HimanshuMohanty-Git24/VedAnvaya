@@ -1,177 +1,221 @@
-"""Cross-source comparison: GRETIL IAST vs Sanskrit Wikisource Devanagari.
+"""Cross-witness STRUCTURAL validation of the Samaveda arcika coordinate system.
 
-The two sources are in different scripts, and ``compare.text.classify`` deliberately
-refuses to compare across scripts. So the Devanagari side is transliterated to IAST with
-the repository's existing deterministic transliterator first, and the resulting reading
-is declared COMPARISON_ONLY: it is a derived surface used to classify a difference, and
-it never becomes stored text for either source.
+This compares ADDRESSES, not text. No Sanskrit from the rights-encumbered GRETIL artifact
+is read, stored or printed here: the comparison uses its declared reference labels and its
+printed running numbers only. That use is affirmatively granted -- the artifact carries
+``verification_roles: [hierarchy, reference_system, edition_comparison]`` -- while its
+``bulk_ingestion_status`` remains ``PROHIBITED_PENDING_RIGHTS_RESOLUTION``.
 
-Neither source is modified. Output is a TextComparison record per aligned verse plus a
-category distribution.
+What it is for
+--------------
+The selected witness (Sanskrit Wikisource) declares the daśati partition of the
+Uttarārcika with a numeral printed inside each ardha page. Some ardha pages omit some of
+those numerals, which shifts every later daśati index on the page. A shifted index is a
+moved referent under a well-formed key, so it must be measured rather than assumed away.
 
-    ./.venv/Scripts/python.exe scripts/compare_samaveda_sources.py
+The join key is the printed running number, which is the one axis both witnesses state
+directly. It is NOT injective on either side -- running number 1181 is printed twice in
+both lineages -- so ambiguous values are reported and excluded from the agreement rate
+instead of being silently first-won.
 """
 
 from __future__ import annotations
 
-from collections import Counter
+import json
+import sys
+from collections import defaultdict
 from pathlib import Path
 
-from vedagraph.compare.text import (
-    COMPARATOR_VERSION,
-    VersionReading,
-    compare_missing,
-    compare_readings,
-)
-from vedagraph.identity import sv_mantra_identity
-from vedagraph.ingest.adapters.samaveda_gretil import SamavedaGRETILAdapter
-from vedagraph.ingest.adapters.samaveda_wikisource import SamavedaWikisourceAdapter
-from vedagraph.models.enums import TextRole
-from vedagraph.storage.jsonl import write_jsonl
-from vedagraph.transliteration import DevanagariToIAST
+REPO = Path(__file__).resolve().parents[1]
+if str(REPO / "src") not in sys.path:
+    sys.path.insert(0, str(REPO / "src"))
 
-GRETIL_SNAPSHOT = Path(
-    "data/raw/gretil/2026-09-07/"
-    "91c28c0394e94dccc9bad12a08224fbcde0a1194402b610df26647621ed92456.xml"
-)
-WIKISOURCE_ROOT = Path("data/raw/wikisource_sa/2026-09-07")
-
-# How the two sources are joined, and why it is not by sequence position.
-#
-# The two sources index verses on DIFFERENT systems, which a first attempt at this
-# comparison exposed rather than papered over:
-#
-#   GRETIL      numbers a verse locally inside its dasati:  1 1 1 0501a -> verse 1
-#   Wikisource  labels the same verse with the running whole-Samhita number: 45
-#
-# Aligning by printed verse number therefore produced 19 spurious MISSING rows out of
-# 29 for every dasati except the first, where the two systems coincide. Rather than
-# invent a per-unit offset (which would silently assume 10 verses per dasati, a thing
-# this edition does not guarantee), the join is on the RUNNING VERSE NUMBER, which both
-# sources supply independently: GRETIL prints it in its verse apparatus and Wikisource
-# uses it as its verse label. That is a source-provided alignment, not a derived one.
-#
-# Where the two disagree about which running number a given text carries, that is a real
-# cross-source divergence and is reported, not reconciled.
-ALIGNMENT: tuple[tuple[str, tuple[int, int, int, int], str], ...] = (
-    (
-        "1b3005b62194531bb233fbaddfd9fe2da8f46114d69ed19cc043663cc4c87c76.php",
-        (1, 1, 1, 1),
-        "Purvarcika chanda arcika, prapathaka 1, dasati 1 -> GRETIL ardha 1",
-    ),
-    (
-        "3ffa60f176d76e6b59c87bdbaa32d0a260f9aeb1674b0ddfb9566cc3e4535ed4.php",
-        (1, 1, 1, 5),
-        "Purvarcika chanda arcika, prapathaka 1, dasati 5 -> GRETIL ardha 1",
-    ),
-    (
-        "eeffe2eeff9ab43463b4d942fe1040eb013a7e975dbb12f8c7b9db55be72d80d.php",
-        (2, 0, 0, 1),
-        "Wikisource nests Aranya arcika under Purvarcika as 1.2.1; GRETIL makes it arcika 2",
-    ),
+from vedagraph.identity import SamavedaCollection  # noqa: E402
+from vedagraph.ingest.adapters.samaveda_gretil import SamavedaGRETILAdapter  # noqa: E402
+from vedagraph.ingest.adapters.samaveda_wikisource import (  # noqa: E402
+    SamavedaWikisourceAdapter,
+    resolve_local_indices,
 )
 
-LEFT_VERSION = "GRETIL.SV.KAUTHUMA"
-RIGHT_VERSION = "WIKISOURCE.SA.SV.KAUTHUMA.IAST"
-OUTPUT = Path("data/canonical/samaveda_pilot_v1/text_comparisons.jsonl")
+GRETIL_SNAPSHOT = (
+    REPO
+    / "data"
+    / "raw"
+    / "gretil"
+    / "2026-09-07"
+    / "91c28c0394e94dccc9bad12a08224fbcde0a1194402b610df26647621ed92456.xml"
+)
+WIKISOURCE_DIR = REPO / "data" / "raw" / "wikisource_sa"
+OUT_PATH = REPO / "data" / "derived" / "samaveda_cross_witness_structure.json"
+
+# How the rejected artifact's flat arcika ordinals map onto the named collections. This
+# mapping is the whole content of the arity dispute: the Pandey lineage numbers the three
+# Purvarcika sections as sibling top-level arcikas 1-3 and the Uttararcika as 4.
+GRETIL_ARCIKA_TO_COLLECTION: dict[int, SamavedaCollection] = {
+    1: SamavedaCollection.CHANDA,
+    2: SamavedaCollection.ARANYA,
+    3: SamavedaCollection.MAHANAMNYA,
+    4: SamavedaCollection.UTTARA,
+}
+
+
+def gretil_by_running() -> tuple[dict[int, tuple], set[int]]:
+    """Running number -> declared GRETIL coordinates, plus the non-injective values."""
+    adapter = SamavedaGRETILAdapter()
+    result = adapter.parse_structure(GRETIL_SNAPSHOT)
+    holders: dict[int, list[tuple]] = defaultdict(list)
+    for verse in result.verses:
+        for running in verse.running_numbers:
+            holders[running].append(verse.coordinates)
+    ambiguous = {value for value, rows in holders.items() if len(set(rows)) > 1}
+    return {value: rows[0] for value, rows in holders.items()}, ambiguous
+
+
+def wikisource_by_running() -> tuple[dict[int, dict], set[int]]:
+    adapter = SamavedaWikisourceAdapter()
+    pages = []
+    for meta in sorted(WIKISOURCE_DIR.rglob("*.metadata.json")):
+        sha = meta.name.split(".")[0]
+        body = meta.with_name(f"{sha}.php")
+        if not body.exists():
+            continue
+        try:
+            payload = json.loads(body.read_text(encoding="utf-8"))
+        except ValueError:
+            continue
+        parse = payload.get("parse")
+        if not parse:
+            continue
+        title = parse.get("title", "")
+        if "/संहिता/पूर्वार्चिकः" not in title and "/संहिता/उत्तरार्चिकः" not in title:
+            continue
+        pages.append(adapter.parse_page(body, snapshot_sha256=sha))
+    resolve_local_indices(pages)
+
+    holders: dict[int, list[dict]] = defaultdict(list)
+    for page in pages:
+        for item in page.occurrences:
+            if item.running_number is None:
+                continue
+            holders[item.running_number].append(
+                {
+                    "collection": item.collection.value,
+                    "prapathaka": item.prapathaka,
+                    "ardha": item.ardha,
+                    "dasati": item.dasati,
+                    "verse": item.local_index,
+                    "page": item.page_title.rsplit("/", 1)[-1],
+                }
+            )
+    ambiguous = {value for value, rows in holders.items() if len(rows) > 1}
+    return {value: rows[0] for value, rows in holders.items()}, ambiguous
 
 
 def main() -> None:
-    gretil = SamavedaGRETILAdapter()
-    wikisource = SamavedaWikisourceAdapter()
-    transliterator = DevanagariToIAST()
+    gretil, gretil_ambiguous = gretil_by_running()
+    wiki, wiki_ambiguous = wikisource_by_running()
 
-    # Join key: the running verse number the source itself prints.
-    parsed = gretil.parse_structure(GRETIL_SNAPSHOT)
-    gretil_by_running: dict[int, tuple[tuple[int, ...], str]] = {}
-    ambiguous_running: set[int] = set()
-    for verse in parsed.verses:
-        text = gretil.verse_text(verse)
-        for running in set(verse.running_numbers):
-            if running in gretil_by_running:
-                ambiguous_running.add(running)
-                continue
-            gretil_by_running[running] = (verse.coordinates, text)
+    ambiguous = sorted(gretil_ambiguous | wiki_ambiguous)
+    shared = sorted((set(gretil) & set(wiki)) - set(ambiguous))
 
-    comparisons = []
-    notes: list[str] = []
-    numbering_divergences: list[str] = []
-    for filename, (arcika, prapathaka, ardha, dasati), rationale in ALIGNMENT:
-        snapshot = WIKISOURCE_ROOT / filename
-        page = wikisource.parse_dasati(snapshot)
-        records = wikisource.parse(
-            snapshot,
-            snapshot_id=f"WIKISOURCE_SA:{filename.split('.')[0]}",
-            arcika=arcika,
-            prapathaka=prapathaka,
-            ardha=ardha,
-            dasati=dasati,
-        )
-        notes.append(
-            f"{page.page_title} rev {page.revision_id}: {len(records)} verses parsed; "
-            f"{len(page.unparsed_remainder)} unparsed fragment(s). {rationale}"
-        )
-        for record in records:
-            # The Wikisource verse label IS the running whole-Samhita number.
-            running = int(record.hierarchy["verse"])
-            matched = gretil_by_running.get(running)
-            if matched is None:
-                passage_key = f"SV-UNJOINED:running:{running}"
-                comparisons.append(
-                    compare_missing(
-                        passage_key=passage_key,
-                        citation=f"SV running {running}",
-                        left_version_id=LEFT_VERSION,
-                        right_version_id=RIGHT_VERSION,
-                    )
-                )
-                continue
-            coordinates, left_text = matched
-            passage_key = sv_mantra_identity(*coordinates)[0]
-            citation = (
-                f"SV {'.'.join(str(v) for v in coordinates)} (running {running})"
+    report: dict[str, object] = {
+        "gretil_running_values": len(gretil),
+        "wikisource_running_values": len(wiki),
+        "shared_running_values": len(shared),
+        "join_key_ambiguous_on_either_side": ambiguous,
+        "only_in_gretil": sorted(set(gretil) - set(wiki)),
+        "only_in_wikisource": sorted(set(wiki) - set(gretil)),
+    }
+
+    agree_collection = 0
+    disagree: dict[str, list[dict]] = defaultdict(list)
+    per_collection_levels: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
+
+    for running in shared:
+        g_arcika, g_prapathaka, g_ardha, g_dasati, g_verse = gretil[running]
+        w = wiki[running]
+        g_collection = GRETIL_ARCIKA_TO_COLLECTION.get(g_arcika)
+        if g_collection is None:
+            continue
+        collection = w["collection"]
+        stats = per_collection_levels[collection]
+        stats["compared"] += 1
+
+        if g_collection.value != collection:
+            disagree["collection"].append(
+                {"running": running, "gretil": g_collection.value, "wikisource": collection}
             )
-            if coordinates[:4] != (arcika, prapathaka, ardha, dasati):
-                numbering_divergences.append(
-                    f"running {running}: Wikisource places it in unit "
-                    f"{(arcika, prapathaka, ardha, dasati)} but GRETIL's running number "
-                    f"puts the same verse at {coordinates}"
-                )
-            if running in ambiguous_running:
-                numbering_divergences.append(
-                    f"running {running}: GRETIL prints this number on more than one verse"
-                )
-            right_iast = transliterator.transliterate(record.text_original)
-            comparisons.append(
-                compare_readings(
-                    passage_key=passage_key,
-                    citation=citation,
-                    left=VersionReading(LEFT_VERSION, left_text, TextRole.PRIMARY_TEXT),
-                    right=VersionReading(RIGHT_VERSION, right_iast, TextRole.COMPARISON_ONLY),
-                )
+            continue
+        agree_collection += 1
+
+        # Compare only the levels the collection actually declares. GRETIL writes a
+        # literal 0 for a level it treats as absent, so those slots are not comparable.
+        if collection == SamavedaCollection.CHANDA.value:
+            pairs = (
+                ("prapathaka", g_prapathaka, w["prapathaka"]),
+                ("dasati", g_dasati, w["dasati"]),
+            )
+        elif collection == SamavedaCollection.ARANYA.value:
+            pairs = (("dasati", g_dasati, w["dasati"]),)
+        elif collection == SamavedaCollection.MAHANAMNYA.value:
+            pairs = ()
+        else:
+            pairs = (
+                ("prapathaka", g_prapathaka, w["prapathaka"]),
+                ("ardha", g_ardha, w["ardha"]),
+                ("dasati", g_dasati, w["dasati"]),
             )
 
-    comparisons.sort(key=lambda item: item.passage_key)
-    written = write_jsonl(OUTPUT, comparisons)
+        for level, gretil_value, wiki_value in pairs:
+            if gretil_value == wiki_value:
+                stats[f"{level}_agree"] += 1
+            else:
+                stats[f"{level}_disagree"] += 1
+                disagree[level].append(
+                    {
+                        "running": running,
+                        "gretil": gretil_value,
+                        "wikisource": wiki_value,
+                        "page": w["page"],
+                    }
+                )
+        if g_verse == w["verse"]:
+            stats["verse_agree"] += 1
+        else:
+            stats["verse_disagree"] += 1
+            disagree["verse"].append(
+                {
+                    "running": running,
+                    "gretil": g_verse,
+                    "wikisource": w["verse"],
+                    "page": w["page"],
+                }
+            )
 
-    print(f"comparator: {COMPARATOR_VERSION}")
-    for note in notes:
-        print(f"  {note}")
-    print(f"\nnumbering divergences detected: {len(numbering_divergences)}")
-    for line in numbering_divergences[:12]:
-        print(f"  {line}")
-    print(f"\naligned verse comparisons: {written} -> {OUTPUT}")
-    print("\ncategory distribution:")
-    for category, count in sorted(Counter(c.category.value for c in comparisons).items()):
-        print(f"  {category}: {count}")
-    print("\nsimilarity: "
-          f"min={min(c.similarity for c in comparisons):.4f} "
-          f"mean={sum(c.similarity for c in comparisons) / len(comparisons):.4f} "
-          f"max={max(c.similarity for c in comparisons):.4f}")
-    print("\nlowest-similarity examples:")
-    for c in sorted(comparisons, key=lambda item: item.similarity)[:6]:
-        print(f"  {c.citation} {c.category.value} sim={c.similarity:.4f} "
-              f"tokens {c.left_token_count}/{c.right_token_count}: {c.classification_basis}")
+    report["collection_agreement"] = {
+        "agree": agree_collection,
+        "disagree": len(disagree["collection"]),
+    }
+    report["per_collection_levels"] = {
+        collection: dict(sorted(stats.items()))
+        for collection, stats in sorted(per_collection_levels.items())
+    }
+    report["disagreement_counts"] = {level: len(rows) for level, rows in sorted(disagree.items())}
+    # Pages whose dasati partition disagrees, which is the shifted-heading signature.
+    pages_with_dasati_shift: dict[str, int] = defaultdict(int)
+    for row in disagree["dasati"]:
+        pages_with_dasati_shift[str(row["page"])] += 1
+    report["pages_with_dasati_disagreement"] = dict(
+        sorted(pages_with_dasati_shift.items(), key=lambda item: -item[1])
+    )
+    report["disagreement_samples"] = {level: rows[:12] for level, rows in sorted(disagree.items())}
+
+    OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
+    OUT_PATH.write_text(
+        json.dumps(report, ensure_ascii=False, indent=2, sort_keys=True), encoding="utf-8"
+    )
+    print(json.dumps(report, ensure_ascii=False, indent=2, sort_keys=True))
+    print(f"\nwrote {OUT_PATH}")
 
 
 if __name__ == "__main__":

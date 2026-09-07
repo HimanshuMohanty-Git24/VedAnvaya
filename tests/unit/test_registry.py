@@ -10,20 +10,26 @@ def test_source_registry_loads_as_models() -> None:
     )
 
 
-def test_work_registry_preserves_samaveda_uncertainty() -> None:
-    """No Samaveda key is declared, because the artifact evidencing it was rejected.
+def test_work_registry_declares_the_frozen_samaveda_key() -> None:
+    """The Samaveda key is now a commitment, not a withheld one.
 
-    The hierarchy is a corrected observation and is asserted here. The key is a
-    commitment and is deliberately absent: the sole evidencing artifact failed both
-    rights and edition-identity adjudication, and every known digital Kauthuma text
-    descends from the same encumbered lineage, so no independent witness exists.
+    This test asserted the opposite state -- ``RESEARCH_REQUIRED`` with no
+    ``key_pattern`` -- because the only artifact that could evidence a key had failed both
+    rights and edition-identity adjudication. The collection-keyed model does not rest on
+    that artifact: it records only what every witness agrees on (which collections exist
+    and what belongs to each) and leaves the contested top-level ARITY -- whether Chanda
+    is a sibling of Uttara or a child of Purva -- to the container hierarchy, where
+    settling it renumbers nothing. That is what makes the key freezable.
     """
     work = next(work for work in load_works() if work.work_id == "VG:WORK:SV:KAU")
-    assert work.identity_status == "RESEARCH_REQUIRED"
-    assert work.key_pattern is None
-    # The hierarchy correction must survive: the source declares its own reference
-    # system, and that observation does not depend on whether we may ingest the bytes.
-    assert work.hierarchy == ["Arcika", "Prapathaka", "Ardha", "Dasati", "Verse"]
+    assert work.identity_status == "FINAL"
+    assert work.key_pattern is not None
+    assert isinstance(work.key_pattern, str)
+    assert work.key_pattern.strip() != ""
+    # The levels the frozen model addresses, outermost first. The top level is the
+    # collection's NAME; a bare ordinal there was the 1,225-verse referent collision.
+    assert work.hierarchy == ["Collection", "Prapathaka", "Ardha", "Dasati", "Verse"]
+    assert "Arcika" not in work.hierarchy
     # The superseded VHP-derived guess must not creep back in.
     assert "Adhyaya" not in work.hierarchy
     assert "Khanda" not in work.hierarchy

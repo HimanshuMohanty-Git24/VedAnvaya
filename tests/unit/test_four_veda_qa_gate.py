@@ -176,7 +176,7 @@ SV_WORK = Work(
     veda="Samaveda",
     work_name="Samaveda Samhita",
     recension="Kauthuma",
-    hierarchy=["Arcika", "Prapathaka", "Ardha", "Dasati", "Verse"],
+    hierarchy=["Collection", "Prapathaka", "Ardha", "Dasati", "Verse"],
     citation_pattern="edition-specific",
 )
 
@@ -317,40 +317,47 @@ def test_hierarchy_keys_must_be_the_declared_levels_of_the_work() -> None:
     assert [issue for issue in issues if issue.check_id == "declared_work_hierarchy"]
 
 
-def test_a_zero_hierarchy_level_is_reported_as_absent_not_rejected() -> None:
-    """Samaveda encodes a level that does not exist in a division as a literal 0.
+def test_a_level_a_division_does_not_have_is_omitted_and_accepted() -> None:
+    """The successor to a test that asserted the opposite, and the inversion is the point.
 
-    It must be surfaced (so it can never pass silently) but must not be an ERROR, or 65
-    real Samaveda verses would be rejected as invalid.
+    This used to be ``test_a_zero_hierarchy_level_is_reported_as_absent_not_rejected``,
+    on the premise that "Samaveda encodes a level that does not exist in a division as a
+    literal 0" and that rejecting it would invalidate 65 real verses. That encoding is
+    gone: it made the rejected edition's flattening choice part of every Samaveda passage,
+    and it made "the text has no ardha here" indistinguishable from "the edition declined
+    to number it". A level a division does not have is now OMITTED, so a passage's
+    hierarchy is an outermost-anchored SUBSEQUENCE of the work's declared levels rather
+    than a prefix of them.
+
+    The Mahanamnya collection is the extreme case: its verses carry only
+    ``{collection, verse}`` against five declared levels, and hang directly off the
+    collection container with three declared levels skipped.
     """
-    arcika_urn = "urn:vedagraph:section:samaveda:kauthuma:arcika:3"
-    verse_urn = "urn:vedagraph:mantra:samaveda:kauthuma:arcika:3:verse:1"
+    container_urn = "urn:vedagraph:section:samaveda:kauthuma:mahanamnya"
+    verse_urn = "urn:vedagraph:mantra:samaveda:kauthuma:mahanamnya:verse:1"
     passages = [
         _passage(
-            "VG:SV:KAU:A3",
-            arcika_urn,
+            "VG:SV:KAU:MAHANAMNYA",
+            container_urn,
             EntityType.STRUCTURAL_CONTAINER,
             "VG:WORK:SV:KAU",
-            {"arcika": 3},
-            "SV 3",
+            {"collection": "MAHANAMNYA"},
+            "SV MAHANAMNYA",
             None,
             1,
         ),
         _passage(
-            "VG:SV:KAU:A3:P00:R0:D00:V01",
+            "VG:SV:KAU:MAHANAMNYA:V01",
             verse_urn,
             EntityType.MANTRA,
             "VG:WORK:SV:KAU",
-            {"arcika": 3, "prapathaka": 0, "ardha": 0, "dasati": 0, "verse": 1},
-            "SV 3.0.0.0.1",
-            "VG:SV:KAU:A3",  # three absent levels in between
+            {"collection": "MAHANAMNYA", "verse": 1},
+            "SV MAHANAMNYA 1",
+            "VG:SV:KAU:MAHANAMNYA",  # three declared levels skipped, none of them present
             1,
         ),
     ]
     issues = validate_corpus(_records(passages), works=[SV_WORK])
-    absent = [issue for issue in issues if issue.check_id == "valid_hierarchy"]
-    assert absent, "a declared-absent level must be surfaced"
-    assert all(issue.severity == QASeverity.INFO for issue in absent)
     # Structural checks only: this corpus carries no text, so non_empty_sanskrit fires and
     # is correct to fire.
     structural = [
@@ -362,36 +369,48 @@ def test_a_zero_hierarchy_level_is_reported_as_absent_not_rejected() -> None:
     assert structural == [], [issue.message for issue in structural]
 
 
-def test_a_negative_hierarchy_level_is_still_an_error() -> None:
-    urn = "urn:vedagraph:mantra:samaveda:kauthuma:arcika:3:verse:2"
-    passages = [
-        _passage(
-            "VG:SV:KAU:A3",
-            "urn:vedagraph:section:samaveda:kauthuma:arcika:3",
-            EntityType.STRUCTURAL_CONTAINER,
-            "VG:WORK:SV:KAU",
-            {"arcika": 3},
-            "SV 3",
-            None,
-            1,
-        ),
-        _passage(
-            "VG:SV:KAU:A3:P00:R0:D00:V02",
-            urn,
-            EntityType.MANTRA,
-            "VG:WORK:SV:KAU",
-            {"arcika": 3, "prapathaka": -1, "ardha": 0, "dasati": 0, "verse": 2},
-            "SV 3",
-            "VG:SV:KAU:A3",
-            2,
-        ),
-    ]
-    issues = validate_corpus(_records(passages), works=[SV_WORK])
-    assert [
-        issue
-        for issue in issues
-        if issue.check_id == "valid_hierarchy" and issue.severity == QASeverity.ERROR
-    ]
+def test_a_zero_or_negative_hierarchy_level_is_an_error() -> None:
+    """Zero is now as invalid as a negative, and for the same reason.
+
+    A level a division does not have must be omitted. Tolerating 0 would leave the
+    superseded flattened address representable.
+    """
+    for bad_value in (0, -1):
+        passages = [
+            _passage(
+                "VG:SV:KAU:UTTARA",
+                "urn:vedagraph:section:samaveda:kauthuma:uttara",
+                EntityType.STRUCTURAL_CONTAINER,
+                "VG:WORK:SV:KAU",
+                {"collection": "UTTARA"},
+                "SV UTTARA",
+                None,
+                1,
+            ),
+            _passage(
+                "VG:SV:KAU:UTTARA:P01:R01:D01:V02",
+                "urn:vedagraph:mantra:samaveda:kauthuma:uttara"
+                ":prapathaka:1:ardha:1:dasati:1:verse:2",
+                EntityType.MANTRA,
+                "VG:WORK:SV:KAU",
+                {
+                    "collection": "UTTARA",
+                    "prapathaka": bad_value,
+                    "ardha": 1,
+                    "dasati": 1,
+                    "verse": 2,
+                },
+                "SV UTTARA 1.1.1.2",
+                "VG:SV:KAU:UTTARA",
+                2,
+            ),
+        ]
+        issues = validate_corpus(_records(passages), works=[SV_WORK])
+        assert [
+            issue
+            for issue in issues
+            if issue.check_id == "valid_hierarchy" and issue.severity == QASeverity.ERROR
+        ], f"value {bad_value} must be an ERROR"
 
 
 def test_a_forged_entity_id_is_caught_by_the_uuid_check() -> None:

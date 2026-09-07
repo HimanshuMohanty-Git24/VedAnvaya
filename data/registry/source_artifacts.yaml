@@ -1419,31 +1419,49 @@ source_artifacts:
     text "Creative Commons Attribution-Share Alike 4.0". The API rightsinfo response is used rather than a scraped
     page footer because it is the machine-readable statement the project itself publishes.'
   license_url: https://creativecommons.org/licenses/by-sa/4.0/
-  notes: 'UPGRADED 2026-09-07 from DEFERRED to the SELECTED primary Sanskrit candidate for Samaveda. INDEPENDENCE
-    FROM THE PANDEY LINEAGE IS NOW PROVEN TEXTUALLY, not argued from provenance - which was the exact blocker Agent
-    E recorded. Agent B demonstrated it at running verses 1 and 2, where GRETIL MISPLACES A PADA between verses
-    (verse 2''s a-pada is tagged 0101a instead of 0102a) while Wikisource has both verses whole: GRETIL running
-    1 absorbs "tvamagne yajnanam hota visvesam hitah" into verse 1, leaving running 2 as the bare fragment "devebhirmanuse
-    jane"; Wikisource splits them correctly. A text cannot inherit from a source it does not share an error with.
-    Corroborated by the different verse-numbering system (running whole-Samhita vs dasati-local). This is the strongest
-    possible form of the argument: the Pandey lineage is textually CORRUPT at that point and this witness is correct.
-    IT ALSO CARRIES THE GANA, WHICH NOTHING ELSE REUSABLE DOES. Agent B counts 840 Kauthuma Samhita pages and 725
-    gana pages (gramageya 190, aranyakageya 86, uhagana 362, uhyagana 87). Everywhere else the gana is PDF-only
-    or absent. Since the GRETIL text has ZERO gana content, this is the only route to a Samaveda that is not merely
-    a verse skeleton. REMAINING BLOCKER IS NOW SOLELY THE EDITION BAR, not rights and not independence: it is a
-    community transcription with no single named printed edition. So the precise statement of the Samaveda problem
-    is NOT "no independent witness exists" - it is "no witness combines an identified printed edition WITH redistribution
-    rights". Sanskrit Wikisource clears the rights bar and fails the edition bar; GRETIL and The Sanskrit Library
-    fail the rights bar. Contrast Sukla Yajurveda, where the sibling preface page names a printed edition and BOTH
-    bars are cleared. Note the same Anshuman Pandey Samaveda also sits on archive.org as shastras-vedas-sama-veda-kauthuma-samhita
+  notes: 'THE SELECTED primary Sanskrit source for Samaveda, and as of 2026-09-07 the source the frozen Samaveda
+    identity is built from. CORRECTED 2026-09-07 by SAMAVEDA_REFERENT_INTEGRITY_REPAIR - this note previously read
+    "INDEPENDENCE FROM THE PANDEY LINEAGE IS NOW PROVEN TEXTUALLY" and called it "the strongest possible form of
+    the argument". THE GRADE OF RECORD IS NOT_A_VERBATIM_COPY, NOT PROVEN, and the evidence has since moved AGAINST
+    the stronger claim. The maxim "a text cannot inherit from a source it does not share an error with" is invalid
+    as a universal: it excludes only verbatim UNCORRECTED inheritance, not copy-then-correct, and the claim rested
+    on ONE locus (running verses 1-2, where GRETIL tags verse 2''s a-pada as 0101a and bleeds it into verse 1 while
+    this witness has both verses whole) whose defect is conspicuous enough to be exactly what a copyist repairs.
+    THREE FURTHER LOCI NOW POINT THE OTHER WAY, found by parsing the full corpus: running number 1179 is typeset
+    as a second 1181 in BOTH lineages at the same place, and single-danda verse terminators appear at running numbers
+    1133 and 1592 in BOTH. Either common descent or a shared print antecedent; not adjudicated. The better independence
+    evidence remains the wholesale difference in numbering system (running whole-Samhita vs dasati-local), not the
+    pada. NOT load-bearing for identity, which is mechanically source-blind. IS load-bearing for text redistribution,
+    because the redistribution basis is CC BY-SA on the TRANSCRIPTION: re-verify at codepoint level at MORE THAN
+    TWO loci, outside the Purvarcika defect-free region, BEFORE any bulk text release. Tracked as blocker dimension
+    independence_codepoint_reverification.
+    SCOPE, and the figure that must not be misquoted: this artifact covers 840 Kauthuma Samhita pages of which only
+    106 ARE ARCIKA - the other 725 are gana (gramageya 190, aranyakageya 86, uhagana 362, uhyagana 87) and are OUT
+    OF SCOPE for VG:WORK:SV:KAU. NEVER cite "840 pages" as this work''s coverage. The gana holding is nonetheless
+    real and unique - everywhere else the gana is PDF-only or absent, and the GRETIL text has ZERO gana content -
+    so this is the only route to a Samaveda that is not merely a verse skeleton, under a future gana work_id.
+    THE EDITION BAR IS NO LONGER A BLOCKER ON IDENTITY. This witness is a community transcription with no named
+    printed edition, established positively rather than merely unfound, and Passage identity does not depend on
+    edition identity - nothing edition-valued reaches a UUID and no RV/YV/AV works.yaml entry names an edition
+    either. Note the same Anshuman Pandey Samaveda also sits on archive.org as shastras-vedas-sama-veda-kauthuma-samhita
     under CC BY-NC-ND 4.0, and ND forbids derivatives outright - so even the author''s own release is unusable for
     a segmented corpus. Sanskrit Wikisource site-wide licence, retrieved AUTHORITATIVELY from the MediaWiki API
     endpoint action=query&meta=siteinfo&siprop=rightsinfo on 2026-09-07, which returned exactly: url "https://creativecommons.org/licenses/by-sa/4.0/deed.sa",
     text "Creative Commons Attribution-Share Alike 4.0".'
-  provenance_notes: Only 3 pages sampled so far, snapshotted under the ad-hoc unregistered source_id WIKISOURCE_SA_SV_KAU.
-    Sampled titles confirm a full traditional hierarchy is encoded in the page titles, for example Samavedah/Kauthumiya/Samhita/Purvarcikah/Chanda
-    Arcikah/1.1.1 Prathamaprapathakah/1.1.1.1 Prathama Dasatih (pageid 4998, revid 274559) and Samavedah/Kauthumiya/Samhita/Purvarcikah/Atharanyarcikah/1.2.1
-    Prathama Dasatih (pageid 4939, revid 323308). Retrieved via action=parse with wikitext and revid captured.
+  source_edition: UNIDENTIFIED
+  upstream_print_rights_status: UNRESOLVED
+  provenance_notes: 'UPDATED 2026-09-07: the full arcika corpus is now pinned. 106 pages under
+    samavedah/kauthumiya/samhita - 74 Purvarcikah and 32 Uttararcikah - snapshotted under the REGISTERED source_id
+    WIKISOURCE_SA at data/raw/wikisource_sa/2026-09-07/, each with its own sha256 and MediaWiki revid, which CC
+    BY-SA 3(a)(1)(A)(iii) URI retention requires because the source is mutable. This supersedes the previous note
+    "Only 3 pages sampled so far, snapshotted under the ad-hoc unregistered source_id WIKISOURCE_SA_SV_KAU" - that
+    source_id was never registered and the recorded snapshot_dir did not exist. The 3 originally pinned pages were
+    reused from cache and are part of the 106. Page titles encode the full traditional hierarchy, for example
+    Samavedah/Kauthumiya/Samhita/Purvarcikah/Chanda Arcikah/1.1.1 Prathamaprapathakah/1.1.1.1 Prathama Dasatih
+    (pageid 4998, revid 274559) and Samavedah/Kauthumiya/Samhita/Purvarcikah/Atharanyarcikah/1.2.1 Prathama Dasatih
+    (pageid 4939, revid 323308) - but the dotted address is NOT a uniform coordinate: slot 3 means prapathaka under
+    1.1.x, dasati under 1.2.x and ardha under 2.x.y, so it must be read against each collection''s declared shape.
+    Retrieved via action=parse with wikitext and revid captured.'
   recension: Kauthuma
   retrieval_date: '2026-09-07'
   rights_status: CC_BY_SA

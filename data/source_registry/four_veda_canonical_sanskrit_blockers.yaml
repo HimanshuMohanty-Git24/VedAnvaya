@@ -46,6 +46,107 @@ blocker_states:
 # explicitly secondary to `dimensions`, and `dimensions` is what a consumer reads.
 # ---------------------------------------------------------------------------
 state_transitions:
+  - run: SAMAVEDA_REFERENT_INTEGRITY_REPAIR
+    date: "2026-09-07"
+    work_id: VG:WORK:SV:KAU
+    dimension: referent_integrity
+    old_state: OPEN_ENGINEERING
+    new_state: RESOLVED
+    agent: "Agent A (coordinator, sole writer of identity contracts), Agent B (segmentation), Agent C (arity and level classification), Agent D (identity invariants), Agent E (provenance), Agent F (adversarial QA)"
+    evidence: >-
+      THE DEFECT SET WAS AUDITED ON THE SELECTED WITNESS, NOT THE REJECTED ONE, and that
+      changed the problem. The previous run's forensics - seven welded addresses, nine
+      surplus markers, a phantom thirteenth verse - were all measured on the GRETIL
+      artifact, which is PERMISSION_REQUIRED and was never going to be the canonical
+      source. Of the 1,875-verse corpus, only 29 verses (1.55%) of the SELECTED witness
+      were pinned, all three pinned pages sitting in the one region with zero defects.
+      This run fetched the remaining arcika corpus: 106 pages under
+      samavedah/kauthumiya/samhita (74 Purvarcika + 32 Uttararcika), gana excluded by
+      scope, into data/raw/wikisource_sa/ with per-page sha256 and revid.
+      SIX SOURCE-SYNTAX FAMILIES WERE FOUND THAT THE PREVIOUS ADAPTER COULD NOT READ, and
+      the honest measure of the old parser is that it found 1,195 of 1,875 verse markers
+      and reported nothing wrong: (1) verse terminators spelled with two ASCII pipes;
+      (2) terminators spelled with two single dandas U+0964; (3) unterminated terminators
+      with an opening danda only; (4) a mixed single-open/double-close terminator; (5) an
+      HTML-table dialect that prints the local verse index and pada label in a second
+      cell; (6) dasati headings written parenthesised rather than bare, which made one
+      whole ardha read as having no dasati structure at all. All six are handled by
+      SYNTAX CLASS, not by verse id. Repaired lift: 1,872 of the 1,875 printed markers.
+      THE PRIMARY DEFECT WAS NOT ANY OF THOSE. The superseded adapter's parse_at_address
+      took the five-level address FROM THE CALLER and wrote the samhita RUNNING number
+      (1..1875) into the identity-bearing verse slot. The repair removes the method: the
+      address is now derived from the page title read against each collection's DECLARED
+      SHAPE - necessary because the dotted address in a title means prapathaka under
+      1.1.x, dasati under 1.2.x and ardha under 2.x.y, so a positional read mis-keys - the
+      dasati from the numeral the page prints, and the dasati-local verse index from the
+      source's own printed running-number arithmetic, which FAILS CLOSED when that
+      arithmetic does not close. Document order is never consulted.
+      MEASURED OUTCOME on the full selected corpus: 1,874 candidate occurrences, 1,844
+      canonical keys, ZERO addresses absorbing more than one printed verse, ZERO source
+      occurrences claimed by two keys, ZERO unexplained positional identity. The
+      Purvarcika group reproduces the traditional 650 EXACTLY as 585 + 55 + 10.
+      A BINDING INVARIANT NOW EXISTS. models.PassageReferentBinding records per released
+      key the source artifact, locator, revision, snapshot digest, printed verse marker,
+      raw text SHA-256 and a normalization-independent comparison SHA-256.
+      vedagraph.referent.compare_referents classifies every key across builds as
+      UNCHANGED_REFERENT, INTENTIONAL_REFERENT_CORRECTION, REFERENT_DRIFT,
+      REMOVED_INVALID_PASSAGE or NEWLY_DISCOVERED_PASSAGE, and assert_no_referent_drift
+      FAILS the build on any drift without a recorded migration. The baseline is committed
+      at tests/fixtures/identity/sv_referent_baseline.jsonl BECAUSE data/derived/** is
+      gitignored and a baseline written there would silently not be a baseline.
+      THE FINGERPRINT IS A GUARD, NOT IDENTITY: it is never an input to uuid_for_urn,
+      canonical keys name no source, and replacing a TextVersion cannot change a key.
+    reason: >-
+      RESOLVED because the defect CLASS is unrepresentable, not because the known
+      instances were patched. A key can no longer carry a running number, an index above
+      its dasati's printed verse count, a level its collection does not declare, or an
+      address inferred from document position. And the failure mode that made the class
+      invisible - a byte-identical UUID over a moved referent passing every gate - now has
+      a gate that fails it.
+      WHAT IS NOT CLAIMED: coverage is incomplete and is tracked as its own dimension.
+      31 of 1,875 verses carry no key. That is a coverage gap, not an identity ambiguity;
+      no minted key is capable of denoting a different verse, and because the WHOLE
+      affected dasati is withheld in every case, supplying the missing structure later adds
+      keys without renumbering any existing one.
+
+  - run: SAMAVEDA_REFERENT_INTEGRITY_REPAIR
+    date: "2026-09-07"
+    work_id: VG:WORK:SV:KAU
+    dimension: arcika_arity
+    old_state: OPEN_PHILOLOGICAL_REVIEW
+    new_state: RESOLVED
+    agent: "Agent C (research), Agent A (identity decision)"
+    evidence: >-
+      DISSOLVED AS AN IDENTITY QUESTION RATHER THAN ADJUDICATED, and the distinction is
+      the point. The arity dispute was binding only because the candidate key put a bare
+      ORDINAL in its top slot, and that ordinal has no stable denotation across witnesses:
+      slot-1 value 2 means Aranyarcika in the Pandey e-text lineage (GRETIL + TITUS, which
+      are ONE witness) and Uttararcika in all six independent witnesses, a 1,225-verse
+      referent collision verified on both sides.
+      EVERY WITNESS AGREES ON WHAT ACTUALLY MATTERS FOR IDENTITY: the same four blocks, in
+      the same order, with the same extents - Chanda 585, Aranya 55, Mahanamnya 10,
+      Uttara 1225. The dispute is a BRACKETING dispute about how far the grouping name
+      "Purvarcika" reaches. The selected witness's own root page settles its own usage,
+      numbering two top-level arcikas and giving Purvarcika = 1-650, and its Purvarcika
+      index page asserts the three-way internal split with exact ranges.
+      THE KEY THEREFORE NAMES THE FOUR SUB-COLLECTIONS AND NUMBERS NOTHING. It deliberately
+      does NOT name the two top-level groupings, because a further finding of this run is
+      that the extent of "Purvarcika" is itself contested - 650 in Wikisource, the Vedic
+      Heritage Portal, Wikipedia and B. R. Sharma HOS 57, but 585 in Caland and Vedapeetha,
+      which treat the Aranyaka portion as a separate collection. The four sub-collection
+      extents are disputed by nobody, so they are the safest thing in the corpus to key on.
+      CROSS-WITNESS MEASUREMENT, structure only, no encumbered text read: collection
+      assignment agrees for 1,867 of 1,867 comparable printed verse numbers, ZERO
+      disagreements. Chanda agrees 585/585 on prapathaka, dasati AND verse; Aranya 55/55;
+      Uttara 1,217/1,217 on prapathaka and ardha.
+    reason: >-
+      RESOLVED for identity. The philological question is NOT closed and is not pretended
+      to be: whether Chanda/Aranya/Mahanamnya are siblings of Uttara or children of a
+      Purvarcika, and whether "Purvarcika" reaches 585 or 650, remain open. They are now
+      DOCUMENTATION questions. Answering either changes the container spine and renumbers
+      no key, which is exactly the property the previous scheme lacked and the reason the
+      arity had to block a freeze before.
+
   - run: FOUR_VEDA_CANONICAL_SANSKRIT_BLOCKER_CLOSURE
     date: "2026-09-07"
     work_id: VG:WORK:YV:VSM
@@ -671,6 +772,63 @@ state_transitions:
       7 addresses that explain the count are the referent_integrity blocker. A count that
       reconciles is not an identity that is safe.
 
+# ---------------------------------------------------------------------------
+# THE FOUR-VEDA GATE. Set by SAMAVEDA_REFERENT_INTEGRITY_REPAIR, 2026-09-07.
+# Previous value, superseded: FOUR_VEDA_CANONICAL_SANSKRIT_BLOCKERS_PARTIALLY_CLOSED /
+# authorized false / NEXT_PROJECT_PHASE SAMAVEDA_REFERENT_INTEGRITY_REPAIR.
+# ---------------------------------------------------------------------------
+four_veda_gate:
+  state: FOUR_VEDA_CANONICAL_SANSKRIT_BLOCKERS_CLOSED_WITH_AV_TRANSCRIPTION_WORKLOAD
+  set_by_run: SAMAVEDA_REFERENT_INTEGRITY_REPAIR
+  set_on: "2026-09-07"
+  full_sv_yv_av_canonical_ingestion_authorized: true
+  next_project_phase: FULL_SV_YV_AV_CANONICAL_INGESTION
+  why: >-
+    All four works now carry identity_status FINAL. Samaveda was the last outstanding one
+    and is frozen with a referent-integrity gate; Yajurveda's primary-text blocker closed
+    with a review item; Atharvaveda's rights are clear. No remaining item is an IDENTITY
+    blocker for any work.
+  authorization_scope: >-
+    INGESTION, not release. The distinction is load-bearing and is not a hedge: ingestion
+    and internal derivation are cleared for all three, while a public release of the
+    Samaveda Sanskrit additionally requires the codepoint independence re-check below, and
+    a COMBINED four-Veda release is not licensable as a single adapted work from current
+    sources at all - the Rigveda primary is CC BY-NC-SA and SV/YV are CC BY-SA.
+  hard_preconditions_before_the_first_canonical_build:
+    - id: SV-TEXTVERSION
+      requirement: >-
+        Register a WIKISOURCE_SA.SV.KAU.* text_version in data/registry/text_versions.yaml.
+        BLOCKING and easy to miss: no such record exists, so a Samaveda build today
+        resolves its rows against GRETIL.SV.KAUTHUMA at PERMISSION_REQUIRED - the
+        encumbered lineage the whole repair exists to get away from. The registry is the
+        only surface a build resolves rights through.
+      blocks: SV
+    - id: AV-TRANSCRIPTION
+      requirement: >-
+        ~60-120h of transcription from the pinned PD Roth and Whitney 1856 scan. Rights are
+        clear and the source is pinned; the corpus is empty. This is labour, not a blocker.
+      blocks: AV
+  non_blocking_followups:
+    - id: SV-COVERAGE
+      note: >-
+        31 of 1875 Samaveda verses carry no key. A coverage gap, not an identity ambiguity:
+        no minted key can denote a different verse, and because the WHOLE affected dasati is
+        withheld in every case, filling it ADDS keys without renumbering any.
+    - id: SV-RELEASE-INDEPENDENCE
+      note: >-
+        Codepoint-level independence re-verification at MORE THAN TWO loci, outside the
+        Purvarcika defect-free region, before any bulk release of the Samaveda Sanskrit.
+        Gates RELEASE only. This run found three loci where both lineages share a defect,
+        which strengthens the requirement rather than weakening it.
+    - id: SV-GATE-WIRING
+      note: >-
+        vedagraph.referent.assert_no_referent_drift is called from the test suite and
+        nowhere else, because no canonical Samaveda build path exists yet - the pilot that
+        produced one was retired for minting identity from the encumbered artifact. Wire the
+        gate into the first real build.
+    - id: YV-BOUNDARY-PROVENANCE
+      note: "36 of 1975 Vajasaneyi units fall back to accent-presence inference; per-record boundary provenance is the fix, not a role flip."
+
 blockers:
   - work_id: VG:WORK:YV:VSM
     veda: Shukla Yajurveda
@@ -736,72 +894,145 @@ blockers:
     dimensions:
       rights: RESOLVED
       source_edition_identity: RESOLVED          # established NEGATIVE; no edition exists to find
-      printed_edition_recension_determination: OPEN_RESEARCH   # NEW; narrow and named
-      addressing_edition_independence: RESOLVED  # NEW; resolved POSITIVELY
-      structural_count_discrepancy: RESOLVED     # mechanism corrected this run
-      referent_integrity: OPEN_ENGINEERING       # NEW; PRIMARY BINDING BLOCKER
-      arcika_arity: OPEN_PHILOLOGICAL_REVIEW     # NEW; second binding blocker
+      printed_edition_recension_determination: OPEN_RESEARCH   # narrow, named, NON-BINDING
+      addressing_edition_independence: RESOLVED
+      structural_count_discrepancy: RESOLVED
+      referent_integrity: RESOLVED               # repaired and gated 2026-09-07
+      arcika_arity: RESOLVED                     # dissolved as an identity question
       engineering_parser_hierarchy: RESOLVED
-      engineering_repoint_to_wikisource: OPEN_ENGINEERING
+      engineering_repoint_to_wikisource: RESOLVED  # the selected witness is now the primary
+      arcika_coverage_completeness: OPEN_ENGINEERING  # NEW; 31 of 1875, bounded, non-identity
+      independence_codepoint_reverification: OPEN_RESEARCH  # NEW; gates RELEASE, not ingestion
       english_translation: DEFERRED_NONBLOCKING
       gana_coverage: DEFERRED_NONBLOCKING
-    dimensions_updated_by_run: SAMAVEDA_CANONICAL_IDENTITY_FINAL_CLOSURE
+    dimensions_updated_by_run: SAMAVEDA_REFERENT_INTEGRITY_REPAIR
     dimensions_updated_on: "2026-09-07"
     binding_blocker: >-
-      referent_integrity (primary) and arcika_arity (secondary). NEITHER IS THE
-      SOURCE-EDITION QUESTION, and that is this run's central result.
-      The session was convened to close source_edition_identity, framed as a single
-      missing external fact. It DID settle that question - the pinned corpus is now shown
-      POSITIVELY to be a hand-keyed community transcription with no printed antecedent,
-      so there is no edition to find - and then established that IT WAS NEVER THE BINDING
-      CONSTRAINT. Two previously invisible blockers were discovered, either sufficient
-      alone.
-      (1) referent_integrity, OPEN_ENGINEERING. Seven addresses absorb nine printed verses
-      by CONCATENATIVE MERGE, and one canonical key -
-      VG:SV:KAU:A4:P04:R2:D01:V13 - denotes a verse that does not exist. Repairing them
-      leaves key, URN and UUID BYTE-IDENTICAL while the verse behind them CHANGES: 5 of the
-      7 referents move. No gate can detect it, because Passage carries no text field and
-      stable_uuid_deterministic recomputes from the URN alone. Three affected keys are
-      ALREADY MATERIALIZED at status CANONICAL.
-      (2) arcika_arity, OPEN_PHILOLOGICAL_REVIEW. The top slot encodes Pandey arity - four
-      flat sibling arcikas - on 1 witness, 0 independent corroborations and 6 independent
-      contradictions, with TWO HARD COORDINATE COLLISIONS verified on both sides.
-      WHY THIS IS A BETTER POSITION THAN BEFORE: the blocker moved from OPEN_RESEARCH on an
-      external dependency to OPEN_ENGINEERING against a pinned artifact plus one narrow
-      recorded human decision. Both remaining items are bounded and actionable. Neither
-      requires a new source, new rights, or another search campaign.
-      GOVERNANCE QUESTION ANSWERED, and it does not need re-litigating: exact printed-edition
-      identification is NOT required to freeze Passage identity. Identity is mechanically
-      source-blind (uuid_for_urn takes one string; Passage has no source, URL or edition
-      field under extra="forbid"), the registry's own layering puts source_edition at the
-      ARTIFACT level and underlying_edition at the TEXT_VERSION level with NEITHER in
-      works.yaml, and no RV/YV/AV works.yaml entry names an edition while all three are
-      FINAL - AV being FINAL with REFERENCE_ONLY text, zero Sanskrit transcribed and
-      unreconciled counts. Requiring the Wikisource edition IN ORDER TO FREEZE THE PASSAGE
-      ID is a category error.
+      NONE for the identity question. Samaveda passage identity is FROZEN.
+      HOW THE TWO BINDING BLOCKERS CLOSED.
+      (1) referent_integrity, was OPEN_ENGINEERING, now RESOLVED. The defect family was
+      real and was worse than recorded: the seven welded addresses and the phantom
+      thirteenth verse were all artifacts of parsing the REJECTED witness, and the
+      superseded Wikisource adapter additionally wrote the samhita RUNNING number into the
+      identity-bearing verse slot, minting keys such as V45 inside D05 for verses that do
+      not exist. The repair does not patch those cases individually. It makes the class
+      unrepresentable: the address is now derived from the page title read against each
+      collection's declared shape, the dasati from the numeral the source prints, and the
+      dasati-local verse index from the source's own printed running-number arithmetic,
+      which FAILS CLOSED when that arithmetic does not close. Sequence position is never
+      consulted, so reordering a page cannot move a referent. MEASURED over the full
+      selected corpus: 1,844 keys minted, ZERO addresses absorbing more than one printed
+      verse, ZERO source occurrences claimed by two keys.
+      (2) arcika_arity, was OPEN_PHILOLOGICAL_REVIEW, now RESOLVED - and note HOW. The
+      philological question of whether the Kauthuma samhita has two, three or four
+      top-level arcikas is NOT settled and does not need to be. It was only ever binding
+      because the candidate key put a bare ORDINAL in its top slot, and that ordinal has no
+      stable denotation: slot-1 value 2 means Aranyarcika in the Pandey lineage and
+      Uttararcika in all six independent witnesses. Every witness holds the SAME FOUR
+      BLOCKS IN THE SAME ORDER with the same extents 585/55/10/1225; the dispute is purely
+      about how far the grouping name "Purvarcika" reaches. Naming the four collections
+      records exactly what is agreed and leaves the bracketing to the container spine,
+      where revising it renumbers nothing. MEASURED: collection assignment agrees between
+      the two lineages for 1,867 of 1,867 comparable printed verse numbers, zero
+      disagreements. An arity decision is now a documentation change, not a migration.
+      A NEW INVARIANT EXISTS THAT DID NOT BEFORE. models.PassageReferentBinding records,
+      per released key, the source artifact, locator, revision, snapshot digest, printed
+      verse marker, raw text SHA-256 and a normalization-independent comparison SHA-256.
+      vedagraph.referent compares a build against the COMMITTED baseline at
+      tests/fixtures/identity/sv_referent_baseline.jsonl and FAILS the build when a key
+      changes what it denotes without a recorded migration. The fingerprint is a GUARD and
+      never an identity input: keys stay source-independent and a TextVersion replacement
+      cannot change one. This closes the defect class where a byte-identical UUID over a
+      moved referent was reported as a success by every gate in the build.
+      WHAT REMAINS, and why neither item is an identity blocker.
+      (a) arcika_coverage_completeness, OPEN_ENGINEERING. 31 of the traditional 1,875
+      verses carry no key: 3 running numbers the selected witness does not print at all
+      (1179, 1315 - of which 1179 is unprinted by BOTH lineages and is the single
+      genuinely unattested value in the corpus), 9 verses in one Uttararcika dasati whose
+      printed run is non-contiguous because the source typesets 1179 as a second 1181, and
+      21 verses in four Uttararcika dasati groups where the selected witness omits a dasati
+      heading so its partition is contradicted by the second witness. In every case the
+      WHOLE affected dasati is withheld, so supplying the missing structure later ADDS keys
+      without renumbering any existing one. This is a coverage gap, not an ambiguity: no
+      minted key is capable of denoting a different verse.
+      (b) independence_codepoint_reverification, OPEN_RESEARCH. Gates public RELEASE of the
+      Sanskrit text, not ingestion or identity. The rights basis is CC BY-SA on the
+      TRANSCRIPTION, so if the transcription were a derivative of the Pandey text that
+      basis would collapse. Independence is graded NOT_A_VERBATIM_COPY on ONE locus; the
+      sole rights authority requires re-verification at codepoint level at MORE THAN TWO
+      loci before any bulk text release. The 106-page fetch performed this run makes that
+      cheap, and it must be done outside the Purvarcika defect-free zone.
+      ONE FINDING THAT CUTS AGAINST THE INDEPENDENCE CLAIM, recorded rather than buried:
+      the 1179-typeset-as-1181 defect is present in BOTH lineages at the same locus, and
+      so are single-danda verse terminators at running numbers 1133 and 1592. Two readings
+      are open - common descent, or a defect inherited from a shared print antecedent - and
+      this run does not adjudicate between them. It is direct evidence for the codepoint
+      re-verification item above.
     known_facts:
-      hierarchy: [Arcika, Prapathaka, Ardha, Dasati, Verse]
+      hierarchy: [Collection, Prapathaka, Ardha, Dasati, Verse]
       hierarchy_level_list_corroborated_by_printed_edition: true
-      identity_status: RESEARCH_REQUIRED
-      key_pattern: null
-      # THE FOUR-NUMBER LADDER. Four correct counts of four different things.
-      # Conflating any two of them is the error this run had to unwind. Full
-      # itemisation in data/source_registry/samaveda_count_ledger.yaml.
-      printed_verse_terminal_markers: 1875
-      markers_liftable_by_current_adapter: 1871
-      distinct_structural_addresses: 1868
-      minted_canonical_keys: 1866
-      count_equation: "1875 = 1868 - 2 markerless + 9 surplus  =>  gap = 7"
+      identity_status: FINAL
+      coverage_status: INCOMPLETE_BOUNDED
+      key_pattern: "VG:SV:KAU:{collection}[:P{prapathaka:02d}][:R{ardha:02d}][:D{dasati:02d}]:V{verse:02d}"
+      urn_pattern: "urn:vedagraph:mantra:samaveda:kauthuma:{collection_lower}[:prapathaka:{prapathaka}][:ardha:{ardha}][:dasati:{dasati}]:verse:{verse}"
+      collection_vocabulary: [CHANDA, ARANYA, MAHANAMNYA, UTTARA]
+      collection_levels:
+        CHANDA: [prapathaka, dasati]
+        ARANYA: [dasati]
+        MAHANAMNYA: []
+        UTTARA: [prapathaka, ardha, dasati]
+      # ALL FIGURES BELOW ARE MEASURED ON THE SELECTED WITNESS, 106 pinned pages.
+      # The superseded four-number ladder (1875/1871/1868/1866) was forensics on the
+      # REJECTED witness and is retained only in samaveda_count_ledger.yaml as the record
+      # of a defect family that is now unrepresentable.
+      selected_witness_pages_pinned: 106
+      selected_witness_leaf_pages: 87
+      printed_verse_terminal_markers_distinct: 1873
+      markers_not_printed_by_selected_witness: [1179, 1315]
+      markers_not_printed_by_either_witness: [1179]
+      duplicated_markers: [1181]
+      candidate_verse_occurrences: 1874
+      minted_canonical_keys: 1844
+      count_equation: "1875 = 1873 distinct printed markers + 2 the selected witness does not print"
+      coverage_equation: "1875 = 1844 minted + 29 withheld printed verses + 2 unprinted verses"
       unresolved_count_residue: 0
-      count_gap_is_apparatus_not_text: true
-      collided_addresses: 7
-      surplus_markers_absorbed: 9
-      referents_that_move_under_an_unchanged_uuid: 5
-      phantom_canonical_keys: ["VG:SV:KAU:A4:P04:R2:D01:V13"]
-      key_to_text_binding_invariant_exists: false
+      purvarcika_group_minted: 650
+      purvarcika_group_traditional: 650
+      purvarcika_group_exact: true
+      per_collection_minted: {CHANDA: 585, ARANYA: 55, MAHANAMNYA: 10, UTTARA: 1194}
+      collided_addresses: 0
+      surplus_markers_absorbed: 0
+      one_referent_two_key_splits: 0
+      referents_that_move_under_an_unchanged_uuid: 0
+      phantom_canonical_keys: []
+      phantom_key_retired: "VG:SV:KAU:A4:P04:R2:D01:V13"
+      key_to_text_binding_invariant_exists: true
+      key_to_text_binding_record: models.PassageReferentBinding
+      referent_drift_gate: vedagraph.referent.assert_no_referent_drift
+      referent_drift_baseline: tests/fixtures/identity/sv_referent_baseline.jsonl
+      referent_drift_baseline_is_git_tracked: true
+      marker_dialects_accepted: [DOUBLE_DANDA, TWO_DANDA, ASCII_PIPES, UNTERMINATED, SINGLE_DANDA, NO_OPENING_SEPARATOR]
+      marker_dialect_counts: {DOUBLE_DANDA: 1214, TWO_DANDA: 621, ASCII_PIPES: 30, UNTERMINATED: 6, SINGLE_DANDA: 2, NO_OPENING_SEPARATOR: 1}
+      single_notation_reader_would_have_found: 1195
       arcika_arity_witness_count: {four: 1, two: 6, three: 1}
       arcika_arity_four_independent_corroborations: 0
-      verified_coordinate_collisions: 2
+      arcika_arity_resolution: >-
+        DISSOLVED as an identity question rather than adjudicated. The key names the four
+        collections instead of numbering them, so the bracketing dispute no longer reaches
+        identity. The philological question - how far the name "Purvarcika" reaches, 585 or
+        650 - remains open and is now a documentation matter.
+      verified_coordinate_collisions_before_repair: 2
+      verified_coordinate_collisions_after_repair: 0
+      cross_witness_collection_agreement: "1867 of 1867, zero disagreements"
+      cross_witness_chanda_agreement: "585 of 585 on prapathaka, dasati and verse"
+      cross_witness_aranya_agreement: "55 of 55 on dasati and verse"
+      cross_witness_uttara_prapathaka_ardha_agreement: "1217 of 1217"
+      cross_witness_uttara_dasati_disagreement: 16
+      uncorroborated_dasati_groups: ["UTTARA:P4:R1:D22", "UTTARA:P4:R2:D14", "UTTARA:P5:R1:D17", "UTTARA:P5:R2:D5"]
+      shared_defects_across_lineages: >-
+        1179 typeset as a second 1181, and single-danda verse terminators at 1133 and 1592,
+        occur in BOTH lineages at the same loci. Evidence for either common descent or a
+        shared print antecedent; not adjudicated.
       selected_primary_source: "Sanskrit Wikisource (CC_BY_SA)"
       selected_primary_source_arcika_pages: 106
       selected_primary_source_gana_pages: 725

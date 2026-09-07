@@ -11,6 +11,7 @@ from uuid import uuid4
 import pytest
 
 from vedagraph.identity import (
+    SamavedaCollection,
     avs_kanda_identity,
     avs_mantra_identity,
     avs_sukta_identity,
@@ -70,65 +71,152 @@ def test_cc0_is_distinct_from_public_domain() -> None:
 
 
 def test_samaveda_key_encodes_the_native_hierarchy() -> None:
-    key, urn, _ = sv_mantra_identity(1, 1, 1, 1, 1)
-    assert key == "VG:SV:KAU:A1:P01:R1:D01:V01"
-    assert urn == (
-        "urn:vedagraph:mantra:samaveda:kauthuma:arcika:1:prapathaka:1:ardha:1:dasati:1:verse:1"
+    """One key shape per collection, carrying exactly the levels that collection declares.
+
+    The top level is the collection's NAME, not an ordinal. A bare ordinal did not denote
+    a stable collection: slot-1 value ``2`` means Aranyarcika in the GRETIL/Pandey lineage
+    and Uttararcika in six independent witnesses, a 1,225-verse referent collision.
+    """
+    chanda_key, chanda_urn, _ = sv_mantra_identity(
+        SamavedaCollection.CHANDA, prapathaka=1, dasati=1, verse=1
+    )
+    assert chanda_key == "VG:SV:KAU:CHANDA:P01:D01:V01"
+    assert chanda_urn == (
+        "urn:vedagraph:mantra:samaveda:kauthuma:chanda:prapathaka:1:dasati:1:verse:1"
+    )
+
+    aranya_key, aranya_urn, _ = sv_mantra_identity(SamavedaCollection.ARANYA, dasati=3, verse=1)
+    assert aranya_key == "VG:SV:KAU:ARANYA:D03:V01"
+    assert aranya_urn == "urn:vedagraph:mantra:samaveda:kauthuma:aranya:dasati:3:verse:1"
+
+    mahanamnya_key, mahanamnya_urn, _ = sv_mantra_identity(SamavedaCollection.MAHANAMNYA, verse=7)
+    assert mahanamnya_key == "VG:SV:KAU:MAHANAMNYA:V07"
+    assert mahanamnya_urn == "urn:vedagraph:mantra:samaveda:kauthuma:mahanamnya:verse:7"
+
+    uttara_key, uttara_urn, _ = sv_mantra_identity(
+        SamavedaCollection.UTTARA, prapathaka=1, ardha=1, dasati=1, verse=1
+    )
+    assert uttara_key == "VG:SV:KAU:UTTARA:P01:R01:D01:V01"
+    assert uttara_urn == (
+        "urn:vedagraph:mantra:samaveda:kauthuma:uttara:prapathaka:1:ardha:1:dasati:1:verse:1"
     )
 
 
-def test_samaveda_accepts_zero_for_a_level_the_edition_marks_absent() -> None:
-    """The Aranya and Mahanamnya arcikas genuinely lack levels; 0 is not an error.
+def test_samaveda_omits_a_level_the_collection_does_not_declare() -> None:
+    """A level a collection does not have is ABSENT from the key, never a literal 0.
 
-    Applying the positive-integer rule here would reject 65 real verses.
+    This test's premise is inverted from the one it replaces. The old scheme wrote
+    ``VG:SV:KAU:A2:P00:R0:D03:V01`` for an Aranya verse and ``VG:SV:KAU:A3:P00:R0:D00:V07``
+    for a Mahanamnya one, reasoning that ``0`` recorded "the edition marks this level
+    absent". That was wrong twice over: the flat five-slot address is the rejected
+    GRETIL/Pandey lineage's presentation, so writing ``0`` made one edition's flattening
+    choice part of canonical identity -- and no witness declares a prapathaka or an ardha
+    for these collections at all, so there is nothing there to number, not even with 0.
     """
-    aranya_key, _, _ = sv_mantra_identity(2, 0, 0, 3, 1)
-    assert aranya_key == "VG:SV:KAU:A2:P00:R0:D03:V01"
-    mahanamnya_key, _, _ = sv_mantra_identity(3, 0, 0, 0, 7)
-    assert mahanamnya_key == "VG:SV:KAU:A3:P00:R0:D00:V07"
+    aranya_key, _, _ = sv_mantra_identity(SamavedaCollection.ARANYA, dasati=3, verse=1)
+    assert aranya_key == "VG:SV:KAU:ARANYA:D03:V01"
+    assert ":P" not in aranya_key
+    assert ":R" not in aranya_key
+
+    mahanamnya_key, _, _ = sv_mantra_identity(SamavedaCollection.MAHANAMNYA, verse=7)
+    assert mahanamnya_key == "VG:SV:KAU:MAHANAMNYA:V07"
+    assert mahanamnya_key.split(":")[3:] == ["MAHANAMNYA", "V07"]
+
+    # An undeclared level cannot be supplied at all -- neither numbered nor zeroed -- and a
+    # declared one cannot be omitted.
+    for call in (
+        lambda: sv_mantra_identity(SamavedaCollection.ARANYA, prapathaka=1, dasati=3, verse=1),
+        lambda: sv_mantra_identity(
+            SamavedaCollection.CHANDA, prapathaka=1, ardha=2, dasati=1, verse=1
+        ),
+        lambda: sv_mantra_identity(SamavedaCollection.MAHANAMNYA, dasati=1, verse=7),
+        lambda: sv_container_identity(SamavedaCollection.ARANYA, prapathaka=0, dasati=3),
+        lambda: sv_container_identity(SamavedaCollection.MAHANAMNYA, dasati=0),
+        lambda: sv_mantra_identity(SamavedaCollection.CHANDA, prapathaka=1, verse=1),
+    ):
+        with pytest.raises(ValueError):
+            call()
 
 
 def test_samaveda_allows_a_third_ardha() -> None:
     """Uttararcika prapathakas 6-9 have three ardhas; depth is not uniform."""
-    key, _, _ = sv_mantra_identity(4, 6, 3, 16, 2)
-    assert key == "VG:SV:KAU:A4:P06:R3:D16:V02"
+    key, _, _ = sv_mantra_identity(
+        SamavedaCollection.UTTARA, prapathaka=6, ardha=3, dasati=16, verse=2
+    )
+    assert key == "VG:SV:KAU:UTTARA:P06:R03:D16:V02"
 
 
 def test_samaveda_refuses_identity_for_a_defective_verse_index() -> None:
-    """A verse whose own index is 0 is a source defect and gets no canonical key."""
-    with pytest.raises(ValueError):
-        sv_mantra_identity(4, 6, 2, 16, 0)
-    with pytest.raises(ValueError):
-        sv_mantra_identity(0, 1, 1, 1, 1)
-    with pytest.raises(ValueError):
-        sv_mantra_identity(1, -1, 1, 1, 1)
+    """A verse whose own index is 0 is a source defect and gets no canonical key.
+
+    The old corpus coordinate ``(4, 6, 2, 16, 0)`` no longer exists as an address, so the
+    synthetic invariants are asserted on Uttara, the collection that carries all three
+    inner levels. The upper bound rides along: a value wider than the fixed key slot is
+    refused, so the key width -- and with it lexicographic ordering -- cannot drift.
+    """
+    for call in (
+        lambda: sv_mantra_identity(
+            SamavedaCollection.UTTARA, prapathaka=6, ardha=2, dasati=16, verse=0
+        ),
+        lambda: sv_mantra_identity(
+            SamavedaCollection.UTTARA, prapathaka=6, ardha=2, dasati=16, verse=-1
+        ),
+        lambda: sv_mantra_identity(
+            SamavedaCollection.UTTARA, prapathaka=-1, ardha=2, dasati=16, verse=1
+        ),
+        lambda: sv_mantra_identity(
+            SamavedaCollection.UTTARA, prapathaka=6, ardha=2, dasati=16, verse=100
+        ),
+        lambda: sv_mantra_identity(
+            SamavedaCollection.UTTARA, prapathaka=100, ardha=2, dasati=16, verse=1
+        ),
+    ):
+        with pytest.raises(ValueError):
+            call()
 
 
 def test_samaveda_container_truncates_at_variable_depth() -> None:
-    assert sv_container_identity(1)[0] == "VG:SV:KAU:A1"
-    assert sv_container_identity(1, 1)[0] == "VG:SV:KAU:A1:P01"
-    assert sv_container_identity(1, 1, 2)[0] == "VG:SV:KAU:A1:P01:R2"
-    assert sv_container_identity(1, 1, 2, 7)[0] == "VG:SV:KAU:A1:P01:R2:D07"
+    chanda = SamavedaCollection.CHANDA
+    assert sv_container_identity(chanda)[0] == "VG:SV:KAU:CHANDA"
+    assert sv_container_identity(chanda, prapathaka=1)[0] == "VG:SV:KAU:CHANDA:P01"
+    assert sv_container_identity(chanda, prapathaka=1, dasati=7)[0] == "VG:SV:KAU:CHANDA:P01:D07"
+    uttara = SamavedaCollection.UTTARA
+    assert sv_container_identity(uttara)[0] == "VG:SV:KAU:UTTARA"
+    assert sv_container_identity(uttara, prapathaka=1)[0] == "VG:SV:KAU:UTTARA:P01"
+    assert sv_container_identity(uttara, prapathaka=1, ardha=2)[0] == "VG:SV:KAU:UTTARA:P01:R02"
+    assert sv_container_identity(uttara, prapathaka=1, ardha=2, dasati=7)[0] == (
+        "VG:SV:KAU:UTTARA:P01:R02:D07"
+    )
 
 
-def test_samaveda_container_distinguishes_absent_from_unaddressed() -> None:
-    """``0`` means the source marks the level absent; ``None`` means not addressed."""
-    absent_key, absent_urn, _ = sv_container_identity(2, 0, 0, 3)
-    assert absent_key == "VG:SV:KAU:A2:P00:R0:D03"
-    assert absent_urn.endswith("arcika:2:prapathaka:0:ardha:0:dasati:3")
-    unaddressed_key, _, _ = sv_container_identity(2)
-    assert unaddressed_key == "VG:SV:KAU:A2"
-    assert absent_key != unaddressed_key
+def test_samaveda_container_distinguishes_undeclared_from_unaddressed() -> None:
+    """Two different facts, and neither of them is spelt ``0`` any more.
+
+    The old scheme wrote both into the same five-slot address: ``P00`` meant "the source
+    marks this level absent" and a missing argument meant "not addressed". Now a level the
+    collection does not declare cannot be supplied at all, and a level it does declare but
+    that the caller did not supply simply truncates the key.
+    """
+    with pytest.raises(ValueError):
+        sv_container_identity(SamavedaCollection.ARANYA, prapathaka=1, dasati=3)
+    addressed_key, addressed_urn, _ = sv_container_identity(SamavedaCollection.ARANYA, dasati=3)
+    assert addressed_key == "VG:SV:KAU:ARANYA:D03"
+    assert addressed_urn.endswith("aranya:dasati:3")
+    unaddressed_key, _, _ = sv_container_identity(SamavedaCollection.ARANYA)
+    assert unaddressed_key == "VG:SV:KAU:ARANYA"
+    assert addressed_key != unaddressed_key
 
 
 def test_samaveda_container_rejects_a_gap_in_the_level_chain() -> None:
     with pytest.raises(ValueError):
-        sv_container_identity(1, None, 2)
+        sv_container_identity(SamavedaCollection.UTTARA, prapathaka=None, ardha=2)
 
 
 def test_samaveda_container_and_mantra_urns_cannot_collide() -> None:
-    container = sv_container_identity(1, 1, 1, 1)[1]
-    mantra = sv_mantra_identity(1, 1, 1, 1, 1)[1]
+    container = sv_container_identity(SamavedaCollection.UTTARA, prapathaka=1, ardha=1, dasati=1)[1]
+    mantra = sv_mantra_identity(
+        SamavedaCollection.UTTARA, prapathaka=1, ardha=1, dasati=1, verse=1
+    )[1]
     assert container != mantra
     assert ":section:" in container
     assert ":mantra:" in mantra
@@ -169,12 +257,22 @@ def test_atharvaveda_levels_do_not_collide() -> None:
     assert len(keys) == 3
 
 
-def test_container_identity_keeps_positive_integer_rule_outside_samaveda() -> None:
-    """Only Samaveda's edition encodes absence as 0. Nothing else may pass 0."""
+def test_no_work_may_pass_zero_for_a_hierarchy_level() -> None:
+    """The positive-integer rule is uniform across all four works. Nothing may pass 0.
+
+    Samaveda used to be the documented exception: the rejected witness wrote a literal 0
+    for a level its collection does not have, and identity applied a non-negative rule to
+    the inner levels to accommodate it. The collection-keyed model omits the level instead,
+    so 0 is no longer a legal value for Samaveda either.
+    """
     for call in (
         lambda: vsm_adhyaya_identity(0),
         lambda: avs_kanda_identity(0),
         lambda: avs_sukta_identity(1, 0),
+        lambda: sv_container_identity(SamavedaCollection.CHANDA, prapathaka=0),
+        lambda: sv_container_identity(SamavedaCollection.UTTARA, prapathaka=1, ardha=0),
+        lambda: sv_mantra_identity(SamavedaCollection.ARANYA, dasati=0, verse=1),
+        lambda: sv_mantra_identity(SamavedaCollection.MAHANAMNYA, verse=0),
     ):
         with pytest.raises(ValueError):
             call()
@@ -188,7 +286,7 @@ def test_no_two_works_share_a_mantra_urn_or_uuid() -> None:
         rv_mantra_identity(1, 1, 1),
         vsm_mantra_identity(1, 1),
         avs_mantra_identity(1, 1, 1),
-        sv_mantra_identity(1, 1, 1, 1, 1),
+        sv_mantra_identity(SamavedaCollection.CHANDA, prapathaka=1, dasati=1, verse=1),
     ]
     assert len({item[0] for item in identities}) == 4
     assert len({item[1] for item in identities}) == 4
@@ -252,37 +350,43 @@ def test_structural_path_must_align_with_native_labels() -> None:
         _passage(structural_path=["1", "1", "1"])
 
 
-def test_structural_path_preserves_zero_padding_and_absent_levels() -> None:
-    """Samaveda needs the padded, depth-varying path to survive as written."""
-    key, urn, identifier = sv_mantra_identity(2, 0, 0, 3, 1)
+def test_structural_path_preserves_zero_padding_and_variable_depth() -> None:
+    """Samaveda needs the padded, depth-varying path to survive as written.
+
+    Rebuilt on the Aranya collection, whose address is two levels deep where Uttara's is
+    four. It previously used the flattened five-slot Aranya address ``A2:P00:R0:D03:V01``;
+    the zero-padding requirement is unchanged, but depth now varies by OMITTING a level
+    the collection does not declare rather than by zeroing it.
+    """
+    key, urn, identifier = sv_mantra_identity(SamavedaCollection.ARANYA, dasati=3, verse=1)
     passage = Passage(
         entity_id=identifier,
         canonical_key=key,
         canonical_urn=urn,
         entity_type=EntityType.MANTRA,
         work_id="VG:WORK:SV:KAU",
-        hierarchy={"arcika": 2, "prapathaka": 0, "ardha": 0, "dasati": 3, "verse": 1},
-        canonical_citation="SV 2.0.0.3.1",
+        hierarchy={"collection": "ARANYA", "dasati": 3, "verse": 1},
+        canonical_citation="SV Aranya 3.1",
         sequence_in_parent=1,
-        native_labels=["Arcika", "Prapathaka", "Ardha", "Dasati", "Verse"],
-        structural_path=["2", "00", "0", "03", "01"],
+        native_labels=["Collection", "Dasati", "Verse"],
+        structural_path=["ARANYA", "03", "01"],
     )
-    assert passage.structural_path == ["2", "00", "0", "03", "01"]
+    assert passage.structural_path == ["ARANYA", "03", "01"]
     assert passage.entity_type == EntityType.MANTRA
 
 
 def test_samaveda_container_passage_uses_the_generic_entity_type() -> None:
-    key, urn, identifier = sv_container_identity(1, 1, 2, 7)
+    key, urn, identifier = sv_container_identity(SamavedaCollection.CHANDA, prapathaka=1, dasati=7)
     passage = Passage(
         entity_id=identifier,
         canonical_key=key,
         canonical_urn=urn,
         entity_type=EntityType.STRUCTURAL_CONTAINER,
         work_id="VG:WORK:SV:KAU",
-        hierarchy={"arcika": 1, "prapathaka": 1, "ardha": 2, "dasati": 7},
-        canonical_citation="SV 1.1.2.7",
+        hierarchy={"collection": "CHANDA", "prapathaka": 1, "dasati": 7},
+        canonical_citation="SV Chanda 1.7",
         sequence_in_parent=7,
-        native_labels=["Arcika", "Prapathaka", "Ardha", "Dasati"],
+        native_labels=["Collection", "Prapathaka", "Dasati"],
     )
     assert passage.entity_type == EntityType.STRUCTURAL_CONTAINER
     assert "Dasati" in passage.native_labels
@@ -314,19 +418,30 @@ def test_section_discovery_record_covers_a_work_without_a_sukta_level() -> None:
     assert record.known_child_count == 48
 
 
-def test_section_discovery_allows_zero_for_an_absent_samaveda_level() -> None:
+def test_section_discovery_covers_a_samaveda_container_at_variable_depth() -> None:
+    """Discovery names the level the collection declares, at whatever depth that is.
+
+    This replaces ``test_section_discovery_allows_zero_for_an_absent_samaveda_level``,
+    which asserted ``VG:SV:KAU:A2:P00`` with ``section_number=0`` on the reasoning that 0
+    recorded a level the edition marks absent. No Samaveda key writes 0 any more: the
+    Aranya collection's only container level is the dasati, and its prapathaka is omitted
+    rather than zeroed, so a discovery record has nothing to number 0.
+    """
     record = SectionDiscoveryRecord(
         work_id="VG:WORK:SV:KAU",
-        canonical_section_key="VG:SV:KAU:A2:P00",
-        section_level="Prapathaka",
-        section_number=0,
+        canonical_section_key=sv_container_identity(SamavedaCollection.ARANYA, dasati=3)[0],
+        section_level="Dasati",
+        section_number=3,
+        parent_key=sv_container_identity(SamavedaCollection.ARANYA)[0],
         availability=DiscoveryAvailability.AVAILABLE,
         discovery_source="GRETIL",
         source_id="GRETIL",
-        source_locator="aranya arcika",
+        source_locator="aranya arcika dasati 3",
         snapshot_id="GRETIL:deadbeef",
     )
-    assert record.section_number == 0
+    assert record.canonical_section_key == "VG:SV:KAU:ARANYA:D03"
+    assert record.parent_key == "VG:SV:KAU:ARANYA"
+    assert record.section_number == 3
 
 
 def test_work_build_config_expresses_a_work_with_no_mandala() -> None:

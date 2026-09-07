@@ -89,6 +89,12 @@ class SourceArtifact(VGModel):
     publication_date: str | None = None
     license_statement_verbatim: str | None = None
     rights_status: RightsStatus
+    # The rights status of the PRINT ANTECEDENT, which is not the same question as this
+    # artifact's own licence. A community transcription can be cleanly licensed while the
+    # edition it was keyed from is unknown and therefore cannot be shown to be public
+    # domain. A field rather than a note because silence is the failure mode RIGHTS-8
+    # forbids, and a note is not queryable.
+    upstream_print_rights_status: str | None = None
     license_url: AnyHttpUrl | None = None
     transformation_version: str | None = None
     encoding: str | None = None
@@ -133,7 +139,13 @@ class Work(VGModel):
     hierarchy: list[str] = Field(min_length=1)
     citation_pattern: str
     key_pattern: str | None = None
+    urn_pattern: str | None = None
     identity_status: str = "FINAL"
+    # Whether the corpus addressed by this key is complete. Kept separate from
+    # ``identity_status`` because the two fail independently: a key scheme can be frozen
+    # and referent-stable while some verses still lack an address, and conflating the two
+    # would either block a sound freeze or overstate coverage.
+    coverage_status: str = "COMPLETE"
     structure_evidence_sha256: str | None = Field(default=None, pattern=r"^[a-f0-9]{64}$")
     notes: str | None = None
     schema_version: str = SCHEMA_VERSION
@@ -195,6 +207,77 @@ class Passage(VGModel):
             if len(self.structural_path) != len(self.native_labels):
                 raise ValueError("structural_path and native_labels must be positionally aligned")
         return self
+
+
+class PassageReferentBinding(VGModel):
+    """A release-time assertion that a canonical key denotes one source occurrence.
+
+    This record exists because UUID determinism is not evidence of identity correctness.
+    ``stable_uuid_deterministic`` recomputes ``uuid_for_urn(canonical_urn)`` from the URN
+    alone, so it passes identically before and after a key silently starts denoting a
+    different verse. ``Passage`` carries no text field, and nothing else in the schema
+    binds a key to the occurrence it addresses. A byte-identical UUID over a moved
+    referent is a failure that every existing gate reports as a success.
+
+    The fingerprint here is a GUARD, not identity. It is deliberately NOT an input to the
+    UUID: canonical identity stays source-independent, so replacing the TextVersion,
+    re-fetching the artifact or normalising the script must not change any key. What the
+    binding adds is the ability to detect, at build time, that the *occurrence* behind an
+    unchanged key has changed -- and to require an explicit migration record when it has.
+
+    One binding per released passage per source artifact.
+    """
+
+    canonical_key: str = Field(pattern=r"^VG:[A-Z]+:[A-Z]+:.+$")
+    canonical_urn: str = Field(pattern=r"^urn:vedagraph:")
+    entity_id: UUID
+    work_id: str
+    structural_coordinates: dict[str, int | str]
+    source_id: str
+    source_artifact_id: str
+    source_locator: str
+    source_revision_id: int | None = None
+    source_snapshot_sha256: str | None = Field(default=None, pattern=r"^[a-f0-9]{64}$")
+    # SHA-256 of the source text exactly as the snapshot spells it.
+    text_sha256: str = Field(pattern=r"^[a-f0-9]{64}$")
+    # SHA-256 of a normalization-independent surface, so that a pure encoding or accent
+    # change is distinguishable from a genuine change of referent.
+    comparison_sha256: str = Field(pattern=r"^[a-f0-9]{64}$")
+    # The source's own verse-terminal number, recorded as evidence for the binding. It
+    # is never part of identity; see Refusal 3.
+    source_verse_marker: int | None = None
+    segmentation_policy_version: str
+    parser_version: str
+    referent_class: str = "ONE_TO_ONE"
+    schema_version: str = SCHEMA_VERSION
+
+
+class ReferentMigration(VGModel):
+    """A recorded, reviewed change to what a canonical key denotes.
+
+    A build FAILS when a key's referent moves without one of these. Nothing here is
+    described as backwards compatible: if the referent changed, the key means something
+    else, and that is a breaking change even when the UUID is unchanged.
+    """
+
+    migration_class: str
+    old_canonical_key: str | None = None
+    old_canonical_urn: str | None = None
+    old_entity_id: UUID | None = None
+    old_source_locator: str | None = None
+    old_text_sha256: str | None = Field(default=None, pattern=r"^[a-f0-9]{64}$")
+    new_canonical_key: str | None = None
+    new_canonical_urn: str | None = None
+    new_entity_id: UUID | None = None
+    new_source_locator: str | None = None
+    new_text_sha256: str | None = Field(default=None, pattern=r"^[a-f0-9]{64}$")
+    work_id: str
+    reason: str
+    evidence: str
+    externally_frozen_before_change: bool
+    downstream_impact: str
+    recorded_by_run: str
+    schema_version: str = SCHEMA_VERSION
 
 
 class TextVersion(VGModel):
@@ -477,14 +560,16 @@ class SectionDiscoveryRecord(VGModel):
     ``mandala_number`` and ``parent_mandala_key`` -- so works with no sukta level
     (Vajasaneyi) or with four container levels (Samaveda) cannot use it. It is left
     exactly as it is because the sealed Rigveda corpus contains 2,247 such records;
-    this is the additive generic form for every other work. ``section_number`` allows
-    ``0`` because Samaveda encodes an absent level as a literal zero.
+    this is the additive generic form for every other work.
     """
 
     work_id: str
     canonical_section_key: str
     section_level: str
-    section_number: int = Field(ge=0)
+    # ``ge=1``. This was ``ge=0`` on the grounds that "Samaveda encodes an absent level as
+    # a literal zero"; that encoding is gone, a level a division does not have is omitted
+    # instead, and no record in data/ ever used the 0.
+    section_number: int = Field(ge=1)
     parent_key: str | None = None
     known_child_count: int | None = Field(default=None, ge=0)
     availability: DiscoveryAvailability

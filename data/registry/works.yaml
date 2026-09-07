@@ -15,11 +15,91 @@ works:
     veda: Samaveda
     work_name: Samaveda Samhita
     recension: Kauthuma
-    hierarchy: [Arcika, Prapathaka, Ardha, Dasati, Verse]
-    citation_pattern: "Edition-specific; alternate citations required"
-    key_pattern: null
-    identity_status: RESEARCH_REQUIRED
+    hierarchy: [Collection, Prapathaka, Ardha, Dasati, Verse]
+    citation_pattern: "SV {collection} {prapathaka}.{ardha}.{dasati}.{verse}, levels omitted where the collection declares none"
+    key_pattern: "VG:SV:KAU:{collection}[:P{prapathaka:02d}][:R{ardha:02d}][:D{dasati:02d}]:V{verse:02d}"
+    urn_pattern: "urn:vedagraph:mantra:samaveda:kauthuma:{collection_lower}[:prapathaka:{prapathaka}][:ardha:{ardha}][:dasati:{dasati}]:verse:{verse}"
+    identity_status: FINAL
+    coverage_status: INCOMPLETE_BOUNDED
     notes: >-
+      FROZEN 2026-09-07 by SAMAVEDA_REFERENT_INTEGRITY_REPAIR. The key names the
+      COLLECTION and never numbers it, and it carries only the levels that collection
+      actually declares:
+      VG:SV:KAU:CHANDA:P{prapathaka:02d}:D{dasati:02d}:V{verse:02d};
+      VG:SV:KAU:ARANYA:D{dasati:02d}:V{verse:02d};
+      VG:SV:KAU:MAHANAMNYA:V{verse:02d};
+      VG:SV:KAU:UTTARA:P{prapathaka:02d}:R{ardha:02d}:D{dasati:02d}:V{verse:02d}.
+      WHY THE TOP SLOT IS A NAME AND NOT AN ORDINAL. The superseded candidate key wrote
+      A{arcika}, which encoded the contested four-sibling arity. That ordinal does not
+      denote a stable collection: slot-1 value 2 means Aranyarcika in the Pandey e-text
+      lineage and Uttararcika in all six independent witnesses, a 1,225-verse referent
+      collision. The arity dispute is a BRACKETING dispute - every witness holds the same
+      four blocks in the same order with the same extents 585/55/10/1225 - so naming the
+      blocks records exactly what is agreed and leaves the bracketing to the container
+      spine, where changing it renumbers nothing. MEASURED: collection assignment agrees
+      between the two lineages for 1,867 of 1,867 comparable printed verse numbers, zero
+      disagreements. arcika_arity is therefore RESOLVED as an identity question without
+      the philological question having to be settled.
+      The four SUB-collections are named rather than the two top-level groupings because
+      the extent of the grouping name "Purvarcika" is itself disputed - 650 in Wikisource,
+      the Vedic Heritage Portal, Wikipedia and B. R. Sharma HOS 57, but 585 in Caland and
+      Vedapeetha, which treat the Aranyaka portion as a separate collection. The four
+      sub-collection extents are disputed by nobody.
+      THE LITERAL 0 IS GONE. The superseded key wrote 0 for a level the rejected edition
+      treated as absent, which made that edition's flattening choice part of canonical
+      identity. A level a collection does not declare is now OMITTED from the key, and
+      identity.sv_mantra_identity REFUSES a value for an undeclared level rather than
+      coercing it. Every level value is padded to two digits so a key sorts
+      lexicographically in coordinate order and no key is a prefix of another.
+      ARDHA is present only in the Uttararcika, where it is load-bearing: dasati resets
+      inside each ardha, so ardha 1 spans dasati 1-23 and ardha 2 spans dasati 1-22 in
+      prapathaka 1, and dropping ardha would collapse 22 distinct units onto 22 keys.
+      MEASURED: prapathaka and ardha agree between the two lineages for 1,217 of 1,217
+      comparable Uttararcika verses. Ardha is deliberately ABSENT from the Chanda key even
+      though an identified printed edition asserts it there, because in the Chanda
+      collection the dasati already numbers 1-10 continuously across the prapathaka, so
+      the ardha carries no information and admitting it would create a representable
+      ambiguity: the same key shape could then be produced by the print convention, which
+      numbers dasati 1-5 per ardha, denoting a different unit. Omitting it makes the print
+      convention unrepresentable rather than ambiguously representable, which fails closed.
+      The print's per-ardha dasati reset is recorded as an alternate Citation, not as a
+      competing canonical value; both machine-readable witnesses number the Chanda dasati
+      1-10 continuously and agree for 585 of 585 verses.
+      VERSE IS THE DASATI-LOCAL INDEX, never the samhita running number. The selected
+      witness prints only the running number, so the local index is DERIVED from the
+      source's own printed arithmetic - rank within the dasati's contiguous ascending run -
+      and the derivation FAILS CLOSED when that run is not contiguous.
+      THE ORDER-INDEPENDENCE CLAIM, STATED EXACTLY, because a blanket version of it was
+      recorded here and was too strong. The VERSE index is order-free: it is arithmetic
+      over printed numbers, sorted by value, so permuting verse blocks on a page cannot
+      change it - verified over Chanda, Aranya and Mahanamnya leaf pages and over whole
+      Uttararcika dasati units, 3 seeds each. The DASATI of an Uttararcika verse is a
+      different matter: it is the nearest preceding printed dasati numeral in DOCUMENT
+      ORDER, because that is how the source declares it, so moving a verse block across a
+      heading does move its dasati. That affects the dasati level of 1,194 of the 1,844
+      released keys. It is a property of the source's own layout rather than of the parser,
+      and no alternative exists short of the source numbering each verse - but it is not
+      the same as "document order is never consulted", and it must not be written that
+      way. The
+      superseded adapter wrote the running number straight into the verse slot, minting
+      keys such as V45 inside D05 for verses that do not exist; deriving the address from
+      the page title and the printed numbers makes that class of defect unrepresentable.
+      COVERAGE IS INCOMPLETE AND BOUNDED, and this is a coverage gap, not an identity
+      ambiguity: 1,844 of the traditional 1,875 verses carry a canonical key. The 31
+      without one are (a) 2 running numbers the selected witness does not print at all
+      (1179, 1315), of which 1179 is unprinted by BOTH witnesses and is the single
+      genuinely unattested value; (b) 9 verses in one Uttararcika dasati whose printed run
+      is non-contiguous because the source typesets 1179 as a second 1181, a defect both
+      lineages share; and (c) 21 verses in four Uttararcika dasati groups where the
+      selected witness omits a dasati heading, so its partition is contradicted by the
+      second witness. In every case the WHOLE affected dasati is withheld, so supplying
+      the missing structure later ADDS keys without renumbering any existing one.
+      A REFERENT-INTEGRITY GATE now binds each released key to the occurrence it denotes.
+      UUID determinism was never evidence of identity correctness: the only identity check
+      recomputed uuid5(namespace, urn) from the URN alone and so returned the identical
+      verdict before and after a key silently started denoting a different verse. See
+      models.PassageReferentBinding, vedagraph.referent, and the committed baseline at
+      tests/fixtures/identity/sv_referent_baseline.jsonl.
       Hierarchy confirmed from the selected source record, not from secondary literature:
       the GRETIL Samavedasamhita TEI named in structure_evidence_sha256 below declares its
       own reference system in its body as
@@ -27,13 +107,19 @@ works:
       VHP-derived guess of [Arcika, Prapathaka, Ardha, Adhyaya, Khanda, Mantra]: the fourth
       level is Dasati, and there is no Adhyaya or Khanda identity level. "line" is a
       sub-verse pada label (a/c/e) and is deliberately excluded from identity.
-      Depth is NOT uniform. The Aranya arcika has no prapathaka and no ardha; the
-      Mahanamnya arcika additionally has no dasati. The edition encodes an absent level as
-      a literal 0, so 0 is a legitimate hierarchy value for this work alone and
-      identity.sv_mantra_identity applies _non_negative rather than _positive to
-      prapathaka/ardha/dasati. The fourth slot has no fixed cardinality: a Purvarcika
-      dasati is a decad numbered 1-10 across the ardha, while an Uttararcika dasati resets
-      inside each ardha and holds two or three verses.
+      Depth is NOT uniform, and that remains true; what changed is how absence is encoded.
+      SUPERSEDED 2026-09-07 by SAMAVEDA_REFERENT_INTEGRITY_REPAIR: this paragraph used to
+      read "the edition encodes an absent level as a literal 0, so 0 is a legitimate
+      hierarchy value for this work alone and identity.sv_mantra_identity applies
+      _non_negative rather than _positive". Both halves are now false. _non_negative no
+      longer exists; 0 is refused on every path for every work; and a level a collection
+      does not declare is OMITTED from the key rather than zero-filled. The Aranya
+      collection has no prapathaka and no ardha, the Mahanamnya collection has none of the
+      three, and their keys simply carry no such segment. The fourth slot still has no
+      fixed cardinality: a Chanda dasati is a decad numbered 1-10 continuously across the
+      prapathaka, while an Uttararcika dasati resets inside each ardha and holds two or
+      three verses - which is exactly why ardha is in the Uttara key and not the Chanda
+      key.
       Identity is NOT reduced to a running mantra number, as originally required. The
       artifact prints a running verse number 1..1875 and it is recorded only as a
       non-canonical Citation.
@@ -95,9 +181,15 @@ works:
       e-text, so their agreement is NOT corroboration. An earlier version of this note
       claimed four independent witnesses; that overstated the evidence and is corrected
       here. The hierarchy conclusion is unaffected.
-      key_pattern nevertheless stays null and identity_status stays RESEARCH_REQUIRED. The
-      hierarchy is an observation; the key is a commitment, and the commitment cannot yet
-      be made. The blocker is no longer "no witness exists" - it is that NO WITNESS
+      SUPERSEDED 2026-09-07: the following paragraph said "key_pattern nevertheless stays
+      null and identity_status stays RESEARCH_REQUIRED ... the commitment cannot yet be
+      made". The commitment HAS been made - see the FROZEN block at the head of this note.
+      Its observation that "the hierarchy is an observation; the key is a commitment"
+      remains the right distinction and is why the two were tracked separately. Its
+      statement of the blocker is retained because it is the historical record of a
+      position this project held and then found to be a category error: edition identity
+      never reached a UUID, and no RV/YV/AV entry names an edition either.
+      The blocker is no longer "no witness exists" - it is that NO WITNESS
       COMBINES AN IDENTIFIED PRINTED EDITION WITH REDISTRIBUTION RIGHTS. The GRETIL TEI
       was adjudicated unusable on two independent grounds: its rights (the upstream it
       names, the 1998 legacy HTML, self-declares reference-only and prohibits
@@ -110,10 +202,18 @@ works:
       redistributable - by written consent from the data-entry rights holder, by a fresh
       transcription from a public-domain printed edition, or by Wikisource pages being
       traced to a named edition.
-      The CANDIDATE key, recorded so the research is not lost and so freezing later is a
-      purely additive change, is implemented in identity.sv_mantra_identity as
-      "VG:SV:KAU:A{arcika}:P{prapathaka:02d}:R{ardha}:D{dasati:02d}:V{verse:02d}". It is a
-      candidate, not a declaration, and nothing may treat it as canonical.
+      SUPERSEDED 2026-09-07: this note previously recorded a CANDIDATE key
+      "VG:SV:KAU:A{arcika}:P{prapathaka:02d}:R{ardha}:D{dasati:02d}:V{verse:02d}" and
+      insisted nothing treat it as canonical. That key is retired and is no longer
+      implemented anywhere. It is not merely renamed: its top slot was the contested arcika
+      ordinal and its zero-filled slots encoded the rejected edition's flattening. The
+      declared key is the one in key_pattern above, and it IS canonical. Every retired key
+      has a migration entry in data/source_registry/samaveda_referent_migrations.jsonl.
+      NOTE FOR THE RECORD, because it is a governance lesson rather than a detail: a null
+      key_pattern did NOT prevent 139 passages being materialized at status CANONICAL under
+      the candidate key, three of them holding welded multi-verse referents. The null key
+      was not functioning as a safety mechanism. What actually prevents that class of
+      defect is the referent-binding gate, not the absence of a declaration.
       SCOPE LIMIT, not a caveat: this work_id addresses the arcika (verse) text ONLY. The
       Kauthuma gana collections - roughly 2,639 ganas across gramageya, aranyakageya, uha
       and uhya/rahasya, against 1,875 arcika verses - are a PARALLEL AND LARGER body that

@@ -252,11 +252,32 @@ per-file licences.
 **May not:** ingest, modify or republish any Pandey-derived Kauthuma text — which is *every scholarly*
 digital Kauthuma text located (GRETIL, TITUS, Sanskrit Library).
 
-**Primary Sanskrit is now CLEARED.** Sanskrit Wikisource was proved independent of the Pandey lineage
-**textually** rather than by provenance argument: at running verses 1–2 GRETIL misplaces a pāda between
-verses while Wikisource has both whole, and the two use different verse-numbering systems. *A text
-cannot inherit from a source it does not share an error with.* It is CC BY-SA 4.0, 840 Kauthuma pages,
-and uniquely it **carries the gāna** (725 pages).
+**Primary Sanskrit is CLEARED for ingestion, NOT yet for bulk release.** Sanskrit Wikisource is
+CC BY-SA 4.0, and uniquely it **carries the gāna** (725 pages). Its arcika portion — the only part
+`VG:WORK:SV:KAU` covers — is **106 pages**; the frequently quoted "840 Kauthuma pages" is the arcika
+*plus* the out-of-scope gāna and must never be cited as this work's coverage.
+
+> **CORRECTED 2026-09-07 by `SAMAVEDA_REFERENT_INTEGRITY_REPAIR`.** This paragraph previously said
+> Wikisource "was proved independent of the Pandey lineage **textually**" and cited *"a text cannot
+> inherit from a source it does not share an error with."* The grade of record is
+> **`NOT_A_VERBATIM_COPY`**, not proven, and the evidence has moved against the stronger claim.
+>
+> The maxim is invalid as a universal — it excludes only verbatim **uncorrected** inheritance, not
+> copy-then-correct — and it rested on **one** locus (the verse 1–2 pāda bleed) whose defect is
+> conspicuous enough to be exactly what a copyist repairs. Parsing the full corpus then found **three
+> loci pointing the other way**: running number 1179 is typeset as a second 1181 in **both** lineages
+> at the same place, and single-daṇḍa verse terminators appear at 1133 and 1592 in **both**. Either
+> common descent or a shared print antecedent; not adjudicated here.
+>
+> The better independence evidence is the wholesale difference in numbering system — running
+> whole-saṃhitā versus daśati-local — not the pāda.
+>
+> **Consequence, and it is narrow.** Independence is *not* load-bearing for identity, which is
+> mechanically source-blind; Sāmaveda identity is `FINAL`. It **is** load-bearing for text
+> redistribution, because the redistribution basis is CC BY-SA on the *transcription*: if the
+> transcription were a derivative of the Pandey text, that basis collapses (RIGHTS-9). **Re-verify at
+> codepoint level at more than two loci, outside the Pūrvārcika defect-free region, before any bulk
+> text release.** Tracked as `independence_codepoint_reverification`.
 
 **English translation is now a GAP, not the one clear role.** Two independent failures:
 1. The registered Wikisource Griffith Sāmaveda **contains no verse text** — 934 words,

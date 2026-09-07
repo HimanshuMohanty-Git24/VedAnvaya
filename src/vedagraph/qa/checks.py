@@ -100,27 +100,37 @@ def _check_structural_position(
     assumption: a two-level work has no hymn level at all, so every one of its mantras
     was previously reported as wrongly parented.
 
-    A level whose value is ``0`` is treated as *declared absent* rather than missing, so
-    a work whose middle levels do not exist in some divisions still presents a complete
-    key set. ``valid_hierarchy`` reports that as INFO; it is never silent.
+    A passage's hierarchy is a SUBSEQUENCE of its work's declared levels, not necessarily
+    a prefix of them. Rigveda, Vajasaneyi and Atharvaveda happen to use prefixes, but
+    Samaveda does not: a collection that declares no ardha OMITS that level, so an Aranya
+    verse carries ``{collection, dasati, verse}`` while the work declares
+    ``[Collection, Prapathaka, Ardha, Dasati, Verse]``.
+
+    A previous revision required a prefix and treated a level valued ``0`` as "declared
+    absent" instead. That tolerance existed for the superseded Samaveda encoding, which
+    zero-filled absent levels and thereby made one edition's flattening choice part of
+    every Samaveda passage. No work can now emit a ``0`` level, so the tolerance is gone
+    and the subsequence rule replaces it. Leaf-ness is decided by whether the innermost
+    declared level is present, not by counting.
     """
     entity = str(passage.entity_id)
     keys = set(passage.hierarchy)
+    present = [level for level in levels if level in keys]
     depth = len(keys)
-    if depth == 0 or depth > len(levels) or keys != set(levels[:depth]):
+    if depth == 0 or set(present) != keys or present[0] != levels[0]:
         issues.append(
             _issue(
                 "declared_work_hierarchy",
                 QASeverity.ERROR,
-                f"hierarchy keys {sorted(keys)} are not the first {depth} declared "
-                f"level(s) of {passage.work_id}",
+                f"hierarchy keys {sorted(keys)} are not an outermost-anchored subsequence "
+                f"of the declared levels of {passage.work_id}",
                 entity,
                 declared=levels,
                 present=sorted(keys),
             )
         )
         return
-    is_leaf = depth == len(levels)
+    is_leaf = levels[-1] in keys
     if is_leaf and passage.entity_type != EntityType.MANTRA:
         issues.append(
             _issue(
@@ -162,31 +172,27 @@ def _check_structural_position(
             )
         )
         return
-    # A parent normally sits exactly one level up. It may sit further up when every level
-    # in between is declared absent (value 0) for this division: the Samaveda Aranya and
-    # Mahanamnya arcikas have no prapathaka, ardha or dasati, so their verses hang directly
-    # off the arcika and there is no intervening container to point at. Requiring depth-1
-    # unconditionally reported 11 of the 102 verses in the Samaveda pilot as broken when
-    # they were correct, so the skipped run is checked instead of the depth alone.
-    parent_depth = len(parent.hierarchy)
-    skipped = levels[parent_depth : depth - 1]
-    if parent_depth >= depth or (
-        skipped and not all(passage.hierarchy.get(level) == 0 for level in skipped)
-    ):
+    # The parent carries this passage's own level sequence minus its innermost level. That
+    # is one level up in the passage's OWN sequence, which is not the same as one level up
+    # in the work's declared list: a Samaveda Mahanamnya verse is
+    # {collection, verse} and its parent is {collection}, skipping three declared levels
+    # that this collection does not have at all.
+    expected = present[:-1]
+    parent_present = [level for level in levels if level in parent.hierarchy]
+    if parent_present != expected:
         issues.append(
             _issue(
                 "valid_parents",
                 QASeverity.ERROR,
-                f"parent sits at hierarchy depth {parent_depth}; a depth-{depth} passage in "
-                f"{passage.work_id} requires a depth-{depth - 1} parent, or a parent higher up "
-                f"with only declared-absent levels in between",
+                f"parent carries levels {parent_present}; a passage with levels {present} "
+                f"in {passage.work_id} requires a parent carrying exactly {expected}",
                 entity,
-                skipped_levels=skipped,
-                skipped_values=[str(passage.hierarchy.get(level)) for level in skipped],
+                expected_levels=expected,
+                parent_levels=parent_present,
             )
         )
         return
-    shared = {level: passage.hierarchy[level] for level in levels[:parent_depth]}
+    shared = {level: passage.hierarchy[level] for level in expected}
     if dict(parent.hierarchy) != shared:
         issues.append(
             _issue(
@@ -244,37 +250,25 @@ def validate_corpus(records: CorpusRecords, *, works: list[Work] | None = None) 
                     str(passage.entity_id),
                 )
             )
-        negative = sorted(
+        # Zero is now an ERROR alongside the negatives. It used to be an INFO meaning
+        # "this division has no such level", which was the superseded Samaveda encoding;
+        # a level a division does not have is now OMITTED from the hierarchy, and the
+        # subsequence rule in _check_structural_position validates that. Keeping 0 as a
+        # tolerated value would leave the flattened address representable.
+        invalid = sorted(
             level
             for level, value in passage.hierarchy.items()
-            if isinstance(value, int) and value < 0
+            if isinstance(value, int) and value < 1
         )
-        if negative:
+        if invalid:
             issues.append(
                 _issue(
                     "valid_hierarchy",
                     QASeverity.ERROR,
-                    f"negative hierarchy value at level(s) {negative}",
+                    f"hierarchy value below 1 at level(s) {invalid}; a level a division "
+                    "does not have must be omitted, not zero-filled",
                     str(passage.entity_id),
-                    levels=negative,
-                )
-            )
-        # A zero states that this division has no such level (e.g. a Samaveda arcika with
-        # no prapathaka). That is a real reading of the source, so it is surfaced rather
-        # than rejected -- and surfaced rather than silently accepted.
-        absent = sorted(
-            level
-            for level, value in passage.hierarchy.items()
-            if isinstance(value, int) and value == 0
-        )
-        if absent:
-            issues.append(
-                _issue(
-                    "valid_hierarchy",
-                    QASeverity.INFO,
-                    f"hierarchy level(s) {absent} are declared absent (value 0) by the source",
-                    str(passage.entity_id),
-                    levels=absent,
+                    levels=invalid,
                 )
             )
         recomputed = str(uuid_for_urn(passage.canonical_urn))

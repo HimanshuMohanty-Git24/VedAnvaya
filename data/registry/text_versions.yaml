@@ -453,10 +453,18 @@ text_versions:
     value is the deliverable here: previously this id resolved against nothing, so a build could attach no rights
     to 102 emitted rows over an artifact that forbids modification. SUPERSEDED FOR SELECTION PURPOSES: Agent E''s
     adjudication selects WIKISOURCE_SA.SV.KAU.SAMHITA.DEVANAGARI (CC_BY_SA) as the Samaveda primary Sanskrit source
-    instead, because Agent B proved its independence from the Pandey lineage textually - GRETIL misplaces a pada
-    between running verses 1 and 2 while Wikisource has both whole, and a text cannot inherit from a source it does
-    not share an error with. That source also carries the GANA, which this one lacks entirely. This record exists
-    so the pilot''s existing rows have resolvable rights, NOT to endorse this layer as the selected primary.'
+    instead. CORRECTED 2026-09-07 by SAMAVEDA_REFERENT_INTEGRITY_REPAIR - this note previously said Agent B "proved
+    its independence from the Pandey lineage textually" and cited the maxim "a text cannot inherit from a source it
+    does not share an error with". THE GRADE OF RECORD IS NOT_A_VERBATIM_COPY, NOT PROVEN: the maxim excludes only
+    verbatim UNCORRECTED inheritance, the claim rests on one locus, and three further loci (running number 1179
+    typeset as a second 1181, single-danda terminators at 1133 and 1592) are shared by BOTH lineages. That source
+    also carries the GANA, which this one lacks entirely.
+    THE PILOT THAT PRODUCED THESE 102 ROWS IS RETIRED. scripts/build_samaveda_pilot.py has been deleted: it minted
+    canonical identity from this PERMISSION_REQUIRED artifact under the superseded A{arcika} key. This record is
+    kept so any surviving pilot row still has resolvable rights, NOT to endorse this layer as a primary. NOTE THE
+    OUTSTANDING GAP: no WIKISOURCE_SA.SV.KAU.* text_version is registered yet, so a canonical Samaveda build would
+    bind its rows to THIS record and inherit PERMISSION_REQUIRED. Registering one is a precondition for the first
+    canonical Samaveda build.'
 - text_version_id: WIKISOURCE_SA.YV.VSM.UNACCENTED
   artifact_id: WIKISOURCE_SA.YV.VSM.SAMHITA.DEVANAGARI
   source_version_key: samhita_block_unaccented

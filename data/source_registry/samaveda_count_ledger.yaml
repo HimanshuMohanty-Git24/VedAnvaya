@@ -10,6 +10,46 @@ derived_on: "2026-09-07"
 starting_commit: dc160d7
 human_readable_mirror: docs/reports/SAMAVEDA_COUNT_RECONCILIATION.md
 
+superseded_for_the_canonical_corpus:
+  by_run: SAMAVEDA_REFERENT_INTEGRITY_REPAIR
+  # NOT "on:" -- YAML 1.1 parses a bare `on` key as the boolean True, so this block
+  # silently gained a True key when it was first written.
+  superseded_on: "2026-09-07"
+  status: >-
+    RETAINED AS THE RECORD OF A DEFECT FAMILY THAT IS NOW UNREPRESENTABLE. Nothing in this
+    file describes the canonical Samaveda corpus, and its four-number ladder
+    (1875/1871/1868/1866) must not be cited as if it did.
+  what_replaced_it: >-
+    The canonical corpus is built from the SELECTED witness, 106 pinned Sanskrit Wikisource
+    arcika pages. Its figures: 1,874 candidate occurrences, 1,873 distinct printed markers,
+    1,844 canonical keys, ZERO collided addresses, ZERO splits. Equation
+    "1875 = 1873 distinct printed markers + 2 the selected witness does not print".
+    See docs/reports/SAMAVEDA_REFERENT_INTEGRITY_REPAIR.md and
+    data/derived/samaveda_referent_audit.jsonl.
+  what_this_file_still_establishes: >-
+    Two things, both still load-bearing. (1) The 1868-vs-1875 gap is APPARATUS, not text,
+    and not a philological fact about the Kauthuma tradition - which is why repointing to
+    the selected witness was the right move rather than a workaround. (2) The per-item
+    forensics below are the evidence base for the 144-entry migration ledger at
+    data/source_registry/samaveda_referent_migrations.jsonl; the six REFERENT_CORRECTED
+    entries are exactly the welded addresses recorded in collided_addresses here.
+  independently_confirmed_by_the_selected_witness:
+    - "RN 1179 is the ONLY genuinely unprinted value. Neither lineage prints it, and both typeset it as a second 1181."
+    - "RN 1035, 1133, 1211 and 1592 ARE printed. The selected witness prints all four and the repaired parser lifts them, confirming they were adapter lifting failures rather than source gaps."
+    - "The phantom V13 is spurious. The selected witness prints twelve verses in the corresponding dasati and the repaired build mints twelve keys."
+    - "The welded addresses are welds. The selected witness prints their constituents at distinct addresses."
+  contradicted_by_the_selected_witness: >-
+    NOTHING in the count axis. But note a finding this file could not have made: the
+    single-danda terminators at RN 1133 and 1592 recorded here as GRETIL defects are
+    present in the SELECTED witness too, at the same loci, as is the 1179-as-1181 typo.
+    That is evidence about lineage independence, not about counting, and it is recorded in
+    the blockers registry under independence_codepoint_reverification.
+  count_of_seven_welds_versus_six_migrations: >-
+    Both figures are correct and neither should be quoted alone. collided_addresses below
+    has SEVEN entries; one of them, (4,6,2,16,0) with markers 1421/1422, has key: null
+    because sv_mantra_identity failed closed on verse index 0. It never had a key, so it has
+    nothing to migrate. 7 - 1 = 6 REFERENT_CORRECTED entries.
+
 artifact_sha256: 91c28c0394e94dccc9bad12a08224fbcde0a1194402b610df26647621ed92456
 artifact_id: GRETIL.SV.KAUTHUMA.TEI.2020
 artifact_role: REFERENCE_ONLY

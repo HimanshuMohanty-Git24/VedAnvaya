@@ -1,15 +1,22 @@
 # Four-Veda structural model
 
-Status: Accepted for Rigveda, Vajasaneyi and Atharvaveda. Samaveda structure observed,
-Samaveda identity NOT declared (`RESEARCH_REQUIRED`).
+Status: **Accepted for all four Vedas.** Samaveda identity was the last outstanding one and
+is now `FINAL`.
 
-**Updated 2026-09-07 by `SAMAVEDA_CANONICAL_IDENTITY_FINAL_CLOSURE`.** The Samaveda **level
-list** is now additionally corroborated by the printed colophons of an identified edition, so
-`addressing_edition_independence` is `RESOLVED`. The **arity** of the top level is not: it is
-tracked as the new blocker dimension `arcika_arity`, alongside `referent_integrity`. Identity
-stays `RESEARCH_REQUIRED`, but **for different reasons than this document previously gave** —
-see §5.2 and §7 item 1, and
-[`SAMAVEDA_CANONICAL_IDENTITY_FINAL_CLOSURE.md`](reports/SAMAVEDA_CANONICAL_IDENTITY_FINAL_CLOSURE.md).
+**Updated 2026-09-07 by `SAMAVEDA_REFERENT_INTEGRITY_REPAIR`.** Samaveda identity is
+**FROZEN**: `key_pattern` and `urn_pattern` are declared, the top slot is a collection
+**name** rather than an arcika ordinal, a level a collection does not declare is omitted
+rather than zero-filled, and a referent-integrity gate now binds each released key to the
+source occurrence it denotes. `referent_integrity` and `arcika_arity` are both `RESOLVED`, the latter
+*dissolved* as an identity question rather than adjudicated. Coverage is tracked
+separately and is `INCOMPLETE_BOUNDED` (1,844 of 1,875). See
+[`SAMAVEDA_FINAL_IDENTITY.md`](reports/SAMAVEDA_FINAL_IDENTITY.md) and
+[`SAMAVEDA_REFERENT_INTEGRITY_REPAIR.md`](reports/SAMAVEDA_REFERENT_INTEGRITY_REPAIR.md).
+
+*Superseded status line, kept so the change is legible:* "Accepted for Rigveda, Vajasaneyi
+and Atharvaveda. Samaveda structure observed, Samaveda identity NOT declared
+(`RESEARCH_REQUIRED`)."
+
 Date: 2026-09-07
 Owner: shared-contract single writer (`identity.py`, `models/enums.py`, `models/core.py`,
 `schema.py`, `data/registry/works.yaml`).
@@ -136,17 +143,54 @@ Adhyaya -> Mantra
 **Two levels. There is no Sukta.** This is stated here, asserted by test, and is the
 single most likely place for an RV assumption to leak in.
 
-### Samaveda — `VG:WORK:SV:KAU`, Kauthuma. `identity_status: RESEARCH_REQUIRED`
+### Samaveda — `VG:WORK:SV:KAU`, Kauthuma. `identity_status: FINAL`
 
 ```
-Arcika -> Prapathaka -> Ardha -> Dasati -> Verse
+Collection -> Prapathaka -> Ardha -> Dasati -> Verse
 ```
 
-**The hierarchy below is a corroborated observation. The key is not declared.**
-`key_pattern` is `null` and `identity_status` is `RESEARCH_REQUIRED` — see Section 7.1.
-The distinction matters: a hierarchy is something we *observed*, a key is something
-VedaGraph *commits to forever*. The first survives a rejected artifact; the second does
-not.
+**FROZEN 2026-09-07 by `SAMAVEDA_REFERENT_INTEGRITY_REPAIR`.** `key_pattern` and
+`urn_pattern` are declared; `coverage_status` is `INCOMPLETE_BOUNDED`. Full detail in
+[`SAMAVEDA_FINAL_IDENTITY.md`](reports/SAMAVEDA_FINAL_IDENTITY.md).
+
+**Samaveda is the one work whose hierarchy is not a PREFIX chain.** The five levels above
+are the work's declared vocabulary, but no single passage carries all of them: each
+collection carries exactly the levels it declares, and a level a collection does not have
+is **omitted**, not zero-filled. A passage's hierarchy is therefore an
+outermost-anchored **subsequence** of the declared list. `qa/checks.py` enforces that
+rule; it previously required a prefix, which would have rejected every Āraṇya passage.
+
+| Collection | Levels below the collection | Key | Verses |
+|---|---|---|---:|
+| `CHANDA` | prapāṭhaka, daśati | `VG:SV:KAU:CHANDA:P{p:02d}:D{d:02d}:V{v:02d}` | 585 |
+| `ARANYA` | daśati | `VG:SV:KAU:ARANYA:D{d:02d}:V{v:02d}` | 55 |
+| `MAHANAMNYA` | *(none)* | `VG:SV:KAU:MAHANAMNYA:V{v:02d}` | 10 |
+| `UTTARA` | prapāṭhaka, ardha, daśati | `VG:SV:KAU:UTTARA:P{p:02d}:R{r:02d}:D{d:02d}:V{v:02d}` | 1,225 |
+
+**The top slot is a NAME, and that is the whole repair.** The superseded candidate key
+wrote `A{arcika}`, a bare ordinal whose denotation is not stable across witnesses: slot-1
+value `2` means Āraṇyārcika in the Pandey e-text lineage and Uttarārcika in all six
+independent witnesses, a 1,225-verse referent collision. Every witness holds the same four
+blocks in the same order with the same extents, so naming them records exactly what is
+agreed and leaves the bracketing dispute to the container spine, where revising it
+renumbers nothing. **MEASURED: collection assignment agrees between the two lineages for
+1,867 of 1,867 comparable printed verse numbers, zero disagreements.**
+
+**`ardha` is present only in the Uttarārcika**, where daśati resets inside each ardha
+(prapāṭhaka 1: ardha 1 = daśati 1–23, ardha 2 = daśati 1–22, agreement 1,217/1,217). It is
+deliberately absent from the Chanda key even though an identified print asserts it there,
+because in the Chanda collection daśati already numbers 1–10 continuously and a redundant
+slot would make the print's competing per-ardha convention *ambiguously representable*
+rather than unrepresentable.
+
+**`verse` is the daśati-local index, never the samhita running number.** The selected
+witness prints only the running number, so the local index is derived from the source's own
+printed arithmetic and the derivation fails closed when the run is not contiguous.
+
+The paragraphs below are the original hierarchy-discovery record. They remain accurate
+about the LEVEL LIST and about how it was corroborated, and are retained for that. Where
+they describe the key, the zero encoding, or `identity_status`, they are superseded by the
+block above.
 
 The hierarchy rests on the selected source's own declared reference system, corroborated
 by **two independent textual witnesses and one independent addressing scheme**. Counting
@@ -158,11 +202,29 @@ declares its own reference system in its body (below).
 
 **Independent textual witnesses — 2:**
 
-1. **Sanskrit Wikisource** — 840 pages, CC BY-SA 4.0, Devanagari. Independence is
-   *proven*, not argued: it **corrects** the Pandey text where that text is corrupt.
+1. **Sanskrit Wikisource** — **106 arcika pages** (the other 725 of the 840 are gāna and
+   out of scope for this `work_id`; "840 pages" must never be cited as this work's
+   coverage), CC BY-SA 4.0, Devanagari. It **corrects** the Pandey text at one locus:
    GRETIL mislabels verse 2's first pāda as `0101a`, which bleeds the pāda into verse 1
-   and strips it from verse 2; Wikisource carries both verses whole. A text cannot
-   inherit from a source it does not share an error with.
+   and strips it from verse 2, while Wikisource carries both verses whole.
+
+   > **CORRECTED 2026-09-07.** This item previously read *"Independence is proven, not
+   > argued"* and cited the maxim *"a text cannot inherit from a source it does not share
+   > an error with."* The grade of record is **`NOT_A_VERBATIM_COPY`**, not proven. The
+   > maxim is invalid as a universal — it excludes only verbatim **uncorrected**
+   > inheritance, not copy-then-correct — and the claim rests on **one** locus whose defect
+   > is conspicuous enough to be exactly what a copyist would repair.
+   >
+   > `SAMAVEDA_REFERENT_INTEGRITY_REPAIR` then found **three loci pointing the other
+   > way**: running number 1179 is typeset as a second 1181 in **both** lineages at the
+   > same place, and so are single-daṇḍa verse terminators at 1133 and 1592. Either common
+   > descent or a shared print antecedent; not adjudicated. The better independence
+   > evidence remains the wholesale difference in numbering system (running 1..1875 versus
+   > daśati-local), not the pāda.
+   >
+   > Not load-bearing for identity, which is mechanically source-blind. **Is** load-bearing
+   > for text redistribution, and codepoint-level re-verification at more than two loci is
+   > a precondition for any bulk release.
 2. **Griffith 1895**, translating Benfey (Ranayaniya), structures his English as
    BOOK / CHAPTER / **DECADE** with 1–10 verses per decade. It predates Pandey by a
    century and independently uses the dasati as the fourth level.
@@ -403,12 +465,36 @@ Vedas three-deep would fabricate a structural claim no edition makes. Asserted b
 web pages, not a source record. The selected edition declares `dasati`. The guess is
 superseded and tested against.
 
-**3. A single running mantra number as Samaveda identity.** The edition does print a
-running verse number 1..1875. It is *defective*: five values absent (1035, 1133, 1179,
-1211, 1592) and one duplicated (1181), and it is printed only on a verse's last line.
-It is recorded as a `Citation` with `is_canonical=False` and never as identity. The
-count gap (1,868 structural verse keys against the edition's own 1,875 claim) is
-**reported as declared, not filled.**
+**3. A single running mantra number as Samaveda identity.** Both witnesses print a running
+verse number 1..1875. It is recorded as a `Citation` with `is_canonical=False` and never as
+identity, and the refusal has been **independently strengthened twice** since it was first
+made.
+
+> **CORRECTED 2026-09-07.** This refusal previously justified itself by calling the
+> apparatus *"defective: five values absent (1035, 1133, 1179, 1211, 1592) and one
+> duplicated (1181)"*, and by citing a *"count gap of 1,868 structural verse keys against
+> the edition's own 1,875 claim."* **Both figures are refuted, and §7 of this same document
+> plus three registries already said so** — this paragraph was missed when they were
+> corrected.
+>
+> What is actually true. The rejected artifact prints **exactly 1,875** markers; four of
+> the five "absent" values are **printed** and were lost to parser regex strictness. The
+> selected witness prints **1,872** distinct markers and recovers all four of them
+> (1035, 1133, 1211, 1592). Only **1179** is genuinely unprinted — by *either* lineage,
+> which is what makes the identification firm. The count equation is
+> `1875 = 1872 printed + 3 the selected witness does not print`, residue 0.
+>
+> **The refusal itself stands, on better grounds than the ones it was originally given.**
+> (a) The one located printed edition carries **no continuous 1..1875 series at all**, only
+> a per-section counter that resets, so the running number is attested by the hand-keyed
+> wiki text and the Pandey lineage and by no print. (b) It is **not injective**: 1181 sits
+> on two addresses in both lineages. A non-injective, print-unattested number cannot be an
+> identifier. It is, however, the correct *alignment axis* between witnesses, and the
+> cross-witness structural comparison uses it as exactly that.
+
+The dasati-local verse index used by the frozen key is *derived* from this running number's
+arithmetic and fails closed where the arithmetic does not close — which is a different
+thing from using the number as identity.
 
 **4. Samaveda kanda as a tree level.** The named kanda division (agneya, aindra,
 saumya-pavamana, aranya) does not nest: its colophons cut *across* prapathaka and ardha

@@ -31,13 +31,31 @@
 
 ## 2. Run it
 
-```sh
-./.venv/Scripts/python.exe scripts/build_samaveda_pilot.py data/builds/samaveda_pilot_v1.yaml
-./.venv/Scripts/python.exe scripts/compare_samaveda_sources.py
-```
+> **RETIRED 2026-09-07 by `SAMAVEDA_REFERENT_INTEGRITY_REPAIR`.**
+> `scripts/build_samaveda_pilot.py` has been **deleted**, and this section is kept only so
+> the rest of this document reads as the historical record it now is. The script minted
+> canonical `Passage`, `TextVersion` and `Citation` identity from the GRETIL artifact,
+> which is `PERMISSION_REQUIRED` and was adjudicated unusable as canonical primary, using
+> the retired `A{arcika}` key with zero-filled absent levels. It had also stopped running
+> at HEAD. Leaving it was the worse option: repairing its call signature would have
+> re-materialized encumbered rows under a dead scheme.
+>
+> Its replacements, both of which read the **selected** witness:
+>
+> ```sh
+> ./.venv/Scripts/python.exe scripts/build_samaveda_referent_audit.py [--baseline]
+> ./.venv/Scripts/python.exe scripts/build_samaveda_referent_migrations.py
+> ./.venv/Scripts/python.exe scripts/compare_samaveda_sources.py   # structure only
+> ```
+>
+> The GRETIL artifact retains its granted roles — `hierarchy`, `reference_system`,
+> `edition_comparison` — and `compare_samaveda_sources.py` exercises exactly those,
+> reading reference labels and printed running numbers and no Sanskrit text. It can no
+> longer mint identity at all: `SamavedaVerse.verse_key` now returns a `GRETIL-SV …`
+> structural locator.
 
-The build reads only the config, the hash-verified snapshot, and the registries. It fetches
-nothing, takes its timestamp from the config rather than the clock, and repairs no defect.
+The build read only the config, the hash-verified snapshot, and the registries. It fetched
+nothing, took its timestamp from the config rather than the clock, and repaired no defect.
 
 ---
 
