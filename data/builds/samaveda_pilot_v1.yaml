@@ -1,0 +1,112 @@
+$schema_note: >-
+  Samaveda pilot build configuration. This is deliberately NOT a CorpusBuildConfig:
+  that model is Rigveda-shaped (it requires `mandala` and `selected_suktas`) and is
+  owned by Agent A. When Agent A lands a work-generic build config, this file should be
+  migrated to it rather than the other way round.
+
+config_version: 1.0.0
+dataset_id: samaveda_pilot_v1
+release_version: 0.1.0-pilot
+work_id: VG:WORK:SV:KAU
+parser_version: gretil-samaveda-arcika-v1
+
+primary_sanskrit:
+  source_id: GRETIL
+  artifact_id: GRETIL.SV.KAUTHUMA.TEI.2020
+  text_version_id: GRETIL.SV.KAUTHUMA
+  role: PRIMARY_TEXT
+  retrieval_url: https://gretil.sub.uni-goettingen.de/gretil/corpustei/sa_sAmavedasaMhitA.xml
+  snapshot_path: data/raw/gretil/2026-09-07/91c28c0394e94dccc9bad12a08224fbcde0a1194402b610df26647621ed92456.xml
+  snapshot_id: GRETIL:91c28c0394e94dccc9bad12a08224fbcde0a1194402b610df26647621ed92456
+  snapshot_sha256: 91c28c0394e94dccc9bad12a08224fbcde0a1194402b610df26647621ed92456
+  script: Latin
+  transliteration_scheme: IAST
+  # Agent E's ruling: the TEI wrapper claims CC BY-NC-SA 4.0 but the artifact's own
+  # embedded legacy header forbids modification and requires written consent. The
+  # restrictive statement governs.
+  rights_status: PERMISSION_REQUIRED
+
+# Structural region sampling. Each entry is an (arcika, prapathaka, ardha, dasati)
+# unit. Absent levels are written 0 because that is how the source writes them.
+# Every unit is here for a stated reason; nothing was chosen because it was first.
+sample_units:
+  # --- Purvarcika (arcika 1): early / middle / late ---
+  - unit: [1, 1, 1, 1]
+    region: PURVARCIKA_EARLY
+    rationale: first dasati of the work; also carries the DUPLICATE_LINE_LABEL defect
+  - unit: [1, 1, 1, 5]
+    region: PURVARCIKA_EARLY
+    rationale: last dasati of the first ardha; carries a TRANSLITERATION_RESIDUE defect
+  - unit: [1, 3, 2, 8]
+    region: PURVARCIKA_MIDDLE
+    rationale: mid-work dasati in the second ardha, aindra kanda
+  - unit: [1, 6, 2, 9]
+    region: PURVARCIKA_LATE
+    rationale: final dasati of the Purvarcika; carries an UNEXPECTED_UPPERCASE defect
+
+  # --- Aranya arcika (arcika 2): depth anomaly, no prapathaka and no ardha ---
+  - unit: [2, 0, 0, 1]
+    region: ARANYA_ARCIKA
+    rationale: proves the parser and identity handle a missing prapathaka and ardha
+
+  # --- Mahanamnya arcika (arcika 3): maximum depth anomaly, dasati also absent ---
+  - unit: [3, 0, 0, 0]
+    region: MAHANAMNYA_ARCIKA
+    rationale: shallowest arcika in the edition; all three middle levels absent
+
+  # --- Uttararcika (arcika 4): early / middle / late ---
+  - unit: [4, 1, 1, 1]
+    region: UTTARARCIKA_EARLY
+    rationale: first unit of the Uttararcika; SPACED label notation; has inline anukramani
+  - unit: [4, 1, 1, 2]
+    region: UTTARARCIKA_EARLY
+    rationale: second unit; has inline anukramani
+  - unit: [4, 1, 1, 6]
+    region: UTTARARCIKA_EARLY
+    rationale: carries a six-line DUPLICATE_LINE_LABEL collision
+  - unit: [4, 1, 1, 12]
+    region: UTTARARCIKA_EARLY
+    rationale: carries a TRANSLITERATION_RESIDUE defect
+  - unit: [4, 4, 1, 1]
+    region: UTTARARCIKA_MIDDLE
+    rationale: control unit adjacent to the corrupt-label region
+  - unit: [4, 4, 1, 2]
+    region: UTTARARCIKA_MIDDLE
+    rationale: the UNPARSEABLE_REFERENCE_LABEL region; one source line is not ingested
+  - unit: [4, 4, 1, 3]
+    region: UTTARARCIKA_MIDDLE
+    rationale: control unit adjacent to the corrupt-label region
+  - unit: [4, 5, 1, 18]
+    region: UTTARARCIKA_MIDDLE
+    rationale: carries a TRANSLITERATION_RESIDUE defect
+  - unit: [4, 5, 2, 6]
+    region: UTTARARCIKA_MIDDLE
+    rationale: DUPLICATE_LINE_LABEL collision in the second ardha
+  - unit: [4, 5, 2, 10]
+    region: UTTARARCIKA_MIDDLE
+    rationale: DUPLICATE_LINE_LABEL collision spanning three verses
+  - unit: [4, 6, 2, 16]
+    region: UTTARARCIKA_MIDDLE
+    rationale: the ZERO_VERSE_INDEX defect; also the CONCAT/SPACED notation boundary
+  - unit: [4, 9, 3, 1]
+    region: UTTARARCIKA_LATE
+    rationale: final prapathaka, third ardha
+  - unit: [4, 9, 3, 5]
+    region: UTTARARCIKA_LATE
+    rationale: final prapathaka, mid third ardha
+  - unit: [4, 9, 3, 9]
+    region: UTTARARCIKA_LATE
+    rationale: last unit of the work; carries an UNEXPECTED_UPPERCASE defect
+
+# The source's own count claims, for reconciliation. Read off the file, not from memory.
+source_stated_counts:
+  terminal_running_verse_number: 1875
+  terminal_colophon: ".. iti sAmavedasaMhitA samAptA.."
+  declared_reference_system: "arcika | prapathaka | ardha | dasati | verse | line"
+  declared_recension: "kauthuma sAkhA"
+
+rights_policy_version: artifact-and-version-rights-v1
+qa_policy_version: corpus-qa-v1
+output_location: data/canonical/samaveda_pilot_v1
+manifest_path: docs/manifests/samaveda_pilot_v1.json
+build_timestamp: "2026-09-07T00:00:00Z"

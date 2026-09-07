@@ -1,10 +1,12 @@
 {
   "$defs": {
     "AlignmentLevel": {
+      "description": "The passage depth a translation or annotation is aligned to.\n\n``STRUCTURAL_CONTAINER`` exists so a translation aligned to a container that is\nneither a section nor a hymn (a Samaveda Dasati, a Vajasaneyi Adhyaya) is not\nforced to claim ``HYMN`` alignment it does not have.",
       "enum": [
         "WORK",
         "SECTION",
         "HYMN",
+        "STRUCTURAL_CONTAINER",
         "MANTRA"
       ],
       "title": "AlignmentLevel",
@@ -23,6 +25,7 @@
     "RightsStatus": {
       "enum": [
         "PUBLIC_DOMAIN",
+        "CC0",
         "CC_BY",
         "CC_BY_SA",
         "CC_BY_NC",

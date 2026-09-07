@@ -1,0 +1,69 @@
+{
+  "$defs": {
+    "GoldReviewStatus": {
+      "description": "Lifecycle of a human Stage A annotation.",
+      "enum": [
+        "UNANNOTATED",
+        "IN_PROGRESS",
+        "COMPLETE",
+        "NEEDS_SECOND_REVIEW",
+        "ADJUDICATED",
+        "SIGNED"
+      ],
+      "title": "GoldReviewStatus",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Auditable Stage A metadata, kept separate from semantic judgments.",
+  "properties": {
+    "gold_modified_after_model_reveal": {
+      "default": false,
+      "title": "Gold Modified After Model Reveal",
+      "type": "boolean"
+    },
+    "model_revealed_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Model Revealed At"
+    },
+    "modification_reason": {
+      "default": "",
+      "title": "Modification Reason",
+      "type": "string"
+    },
+    "reviewed_at": {
+      "format": "date-time",
+      "title": "Reviewed At",
+      "type": "string"
+    },
+    "reviewer": {
+      "minLength": 1,
+      "title": "Reviewer",
+      "type": "string"
+    },
+    "stage_a_locked": {
+      "default": false,
+      "title": "Stage A Locked",
+      "type": "boolean"
+    },
+    "status": {
+      "$ref": "#/$defs/GoldReviewStatus"
+    }
+  },
+  "required": [
+    "reviewer",
+    "reviewed_at",
+    "status"
+  ],
+  "title": "GoldReviewMetadata",
+  "type": "object"
+}

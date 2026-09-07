@@ -1,0 +1,93 @@
+You are performing one isolated semantic-extraction task for a Rigveda philology project. You have no memory of any other mantra and must not assume anything about how any other mantra was or will be handled. Do not use any tool. Do not read or write any file. Do not search the web. Reason silently and then output ONLY the JSON object described at the end — no prose, no markdown fences, nothing else.
+
+TASK: Apply the extraction policy below to exactly one Rigveda verse, using only the evidence supplied. Do not use remembered Vedic knowledge, traditional commentary, or outside philological knowledge as evidence — only the Sanskrit and English translation text given to you below.
+
+=== EXTRACTION POLICY (verbatim, v3.2) ===
+
+Return only structured semantic content. Every assertion is an occurrence-level candidate for review, never an accepted fact. Use only the supplied evidence below. Do not use remembered Vedic knowledge.
+
+Inspect all fourteen allowed predicate families independently, in this order, before finalizing any result — including a result that emits assertions:
+1. INVOKES
+2. PRAISES
+3. REQUESTS
+4. DESCRIBES
+5. DESCRIBES_ACTION
+6. INVOLVES_RITUAL
+7. INVOLVES_OFFERING
+8. INVOLVES_SUBSTANCE
+9. REFERS_TO_NATURAL_PHENOMENON
+10. REFERS_TO_PLACE
+11. EXPRESSES
+12. HAS_THEME
+13. ASSOCIATED_WITH
+14. CONTRASTS_WITH
+
+For each family, ask: does the evidence directly support both this relation force AND a bindable target/object? A family that fails contributes nothing; no family is owed an assertion.
+
+Never emit these forbidden predicates, including disguised inside ASSOCIATED_WITH: IS_GOD_OF, SYMBOLIZES, REPRESENTS, MEANS, CAUSES.
+
+Rule 1 (emit-vs-omit floor): After inspecting all fourteen families, emit every relation for which both hold: (a) relation force is directly supported, (b) the target/object is directly supported and bindable. Do not omit a directly-supported relation just because another was already emitted. Do not infer unsupported semantics to raise assertion count either.
+
+Rule 2 (REQUESTS force): Treat as request force: imperative, optative, prohibitive wish, explicit grant/give/bring/send/bestow construction, or an expressed desired result ("may X occur", "may we receive"). The requested outcome is the desired resulting state/action, not automatically the grammatical object of the request verb. Do not invent an addressee/beneficiary the evidence doesn't ground.
+
+Rule 3 (REQUESTS splitting): One REQUESTS assertion per independently coordinated desired outcome. A modifier/beneficiary qualifying one result stays inside that one outcome.
+
+Rule 4 (DESCRIBES precedence): DESCRIBES = entity-level state/quality/property/role directly attributed to an entity. If the only content is an action, use DESCRIBES_ACTION instead, not both (unless the passage independently states both a quality/state AND an action, each with its own evidence).
+
+Rule 5 (DESCRIBES_ACTION scope): Only for an action asserted/narrated as actually occurring. A commanded or wished-for action is REQUESTS, not DESCRIBES_ACTION, regardless of verb form.
+
+Rule 6 (material/ritual co-emission): A substance/offering/ritual relation may coexist with other predicates only when each independently has direct local evidence. Do not create duplicate assertions merely because a word recurs.
+
+Rule 7 (no-claim criterion): no_claim is permitted only after all fourteen families are inspected and none passes the direct test. Never return no_claim out of caution when a relation is genuinely supported. Never invent semantics merely to avoid no_claim.
+
+Object kind guidance:
+- INVOKES/PRAISES: use CANONICAL_ENTITY_REF only if a supplied "mentions" entity key resolves the referent; otherwise use OPAQUE_REFERENT.
+- DESCRIBES: target the entity being described (not an action).
+- REQUESTS: one REQUESTED_OUTCOME object per outcome; concise head, not a copy of the sentence.
+- DESCRIBES_ACTION: use EVENT with a concise action_head; actor/patient only if directly supported.
+- INVOLVES_RITUAL: RITUAL_EVENT. INVOLVES_OFFERING: OFFERING_REF. INVOLVES_SUBSTANCE: SUBSTANCE_REF.
+- REFERS_TO_NATURAL_PHENOMENON: NATURAL_PHENOMENON_REF (a traditional deity/devata label is NOT proof of this).
+- REFERS_TO_PLACE: PLACE_REF only for an explicit place; else OPAQUE_SPATIAL_REFERENT.
+- EXPRESSES: STATE_REF, QUALITY_REF, or CONCEPT_REF.
+- Unmodeled human/patron/ancestor/kinship referents: ONTOLOGY_GAP_REF with an appropriate gap code (not used here unless it truly applies).
+
+Explicitness: EXPLICIT when both relation and target are directly supportable from the given text. STRONG_INFERENCE only when exactly one limited inferential step is needed (name it). INTERPRETIVE is prohibited — never use it; if it would require broad narrative/symbolic/theological reasoning, do not emit the claim at all.
+
+Every assertion needs an exact verbatim substring of the ENGLISH TRANSLATION below as its "relation_quote" (the wording that carries the relation), and an exact verbatim substring as "object_quote" (the wording that identifies/names the object/target/outcome itself). These must be character-for-character exact substrings of the translation text given below (copy-paste exact, including punctuation/case), each substring must be UNIQUE within the translation (appear only once) and must not be the entire translation string. A traditional devata/rishi/chandas label is contextual metadata only, never itself evidence for an assertion.
+
+=== EVIDENCE PACKET ===
+Passage: VG:RV:SAK:M09:S087:V004 (citation: RV 9.87.4)
+Sanskrit: e̱ṣa sya te̱ madhu̍mām̐ indra̱ somo̱ vṛṣā̱ vṛṣṇe̱ pari̍ pa̱vitre̍ akṣāḥ | sa̱ha̱sra̱sāḥ śa̍ta̱sā bhū̍ri̱dāvā̍ śaśvatta̱mam ba̱rhir ā vā̱jy a̍sthāt ||
+English translation (this is the ONLY translation text; quotes must come from exactly this string): "This thine own Soma rich in meath, O Indra, Steer for the Steer, hath flowed into the filter. The strong Free-giver, winning hundreds, thousands, hath reached the holy grass that never fails him."
+Supplied lexical mentions (entity keys you may use as canonical_entity_id — there are no others available): ['VG:DEVATA:INDRAH', 'VG:DEVATA:SOMAH']
+Traditional metadata (context only, NOT evidence): devata=['pavamānaḥ somaḥ'], rishi=['kāvya uśanāḥ'], chandas=['triṣṭup']
+
+=== OUTPUT FORMAT ===
+Output exactly one JSON object, nothing else, with this shape:
+
+If no relation passes the test:
+{"no_claim": true, "no_claim_reasons": ["<specific reason naming which families were considered and why none qualified>"]}
+
+If one or more relations pass the test:
+{"no_claim": false, "assertions": [
+  {
+    "predicate": "<one of the 14 allowed predicates>",
+    "explicitness": "EXPLICIT" or "STRONG_INFERENCE",
+    "inference_step": "<string naming the single inferential step, or null if EXPLICIT>",
+    "relation_quote": "<exact unique substring of the translation>",
+    "object": {
+      "object_kind": "<one of: CANONICAL_ENTITY_REF, SEMANTIC_ENTITY_REF, EVENT, REQUESTED_OUTCOME, RITUAL_EVENT, OFFERING_REF, SUBSTANCE_REF, NATURAL_PHENOMENON_REF, PLACE_REF, STATE_REF, QUALITY_REF, CONCEPT_REF, ACTION_REF, OPAQUE_REFERENT, OPAQUE_SPATIAL_REFERENT, ONTOLOGY_GAP_REF>",
+      "display_label": "<short human label>",
+      "normalized_head": "<short normalized head or null>",
+      "canonical_entity_id": "<a supplied mention entity key, or null if not CANONICAL_ENTITY_REF>",
+      "object_quote": "<exact unique substring of the translation identifying this object/target/outcome>",
+      "event": {"action_head": "...", "actor_entity_id": null, "patient_entity_id": null, "other_participants": [], "qualifiers": []} or null (only for EVENT kind),
+      "target_entity_id": null,
+      "beneficiary_entity_id": null,
+      "ontology_gap_code": null,
+      "qualifiers": []
+    }
+  }
+]}
+
+Think carefully through all fourteen families first, then output only the final JSON object.

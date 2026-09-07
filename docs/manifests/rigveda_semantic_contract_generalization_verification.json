@@ -1,0 +1,50 @@
+{
+  "adr": "docs/decisions/ADR-016-execution-runtime-is-recorded-not-assumed.md",
+  "change": "codex_direct.ExecutionRuntime: runtime became a two-member vocabulary; validate_receipt now checks it against the run contract",
+  "execution_contract_sha256_after": "f972cf43621a7daf87ad2e3129ef9956f11fe2989dd6d4a4daae56c2fd1af253",
+  "execution_contract_sha256_before": "398b22f27919113c1db671c45b930098f1a4f5c38f9b69b7c6e2aab340a2182a",
+  "historical_failures": 0,
+  "historical_revalidated_clean": 689,
+  "historical_stored_responses_total": 689,
+  "historical_validation_weakened": false,
+  "known_consequence": "re-running scripts/seal_real_luna_v3_1_508.py now reports frozen-input drift on execution_contract_sha256; the freeze is a detector and this is it detecting a real change",
+  "known_remaining_luna_pin": {
+    "changed": false,
+    "impact": "blocks a non-Luna FULL-CORPUS run via BatchStore; not on the 448 pilot path",
+    "location": "src/vedagraph/semantic/full_run.py",
+    "reason": "not required by this run; changing it speculatively would touch the sealed full-run freeze machinery for no present gain",
+    "symbols": [
+      "MODEL_PROVENANCE",
+      "Freeze.model"
+    ]
+  },
+  "record_version": "rigveda-semantic-contract-generalization-verification-v1",
+  "runs_revalidated": [
+    {
+      "clean": 508,
+      "failures": 0,
+      "run": "vedagraph-rigveda-semantic-luna-v3.1-508",
+      "stored_responses": 508
+    },
+    {
+      "clean": 60,
+      "failures": 0,
+      "run": "vedagraph-rigveda-semantic-luna-v3.1-regression",
+      "stored_responses": 60
+    },
+    {
+      "clean": 61,
+      "failures": 0,
+      "run": "vedagraph-rigveda-semantic-luna-v3.2-stability-60-a",
+      "stored_responses": 61
+    },
+    {
+      "clean": 60,
+      "failures": 0,
+      "run": "vedagraph-rigveda-semantic-luna-v3.2-stability-60-b",
+      "stored_responses": 60
+    }
+  ],
+  "sealed_artifacts_mutated": 0,
+  "verification_method": "every stored raw_response.json in every run store re-validated from scratch through validate_receipt, validate_candidate_invariants, validate_v3_payload, validate_evidence_anchors and validate_bindings under the changed code"
+}

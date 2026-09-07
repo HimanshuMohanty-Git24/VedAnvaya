@@ -1,0 +1,66 @@
+{
+  "final_state": "FULL_RIGVEDA_V3_CANDIDATE_RUN_BLOCKED",
+  "git_safety": {
+    "baseline": "docs/manifests/readiness_starting_files.json",
+    "changed": 0,
+    "detail": "V3 prompt, schema, object ontology and extractor byte-identical to session start; no commit, reset, stash or cleanup performed; unrelated dirty changes preserved",
+    "files_tracked": 680,
+    "missing": 0
+  },
+  "mypy_strict": {
+    "detail": "no issues found in 88 source files",
+    "result": "PASS"
+  },
+  "new_tests": {
+    "count": 21,
+    "covers": [
+      "ontology-gap classification schema",
+      "parallel disagreement classification",
+      "blocker logic",
+      "full-run freeze contract",
+      "full 10,552 ID set",
+      "deterministic batch plan",
+      "checkpoint/resume manifest",
+      "duplicate prevention",
+      "batch hash validation",
+      "failure/resume",
+      "final seal prerequisites",
+      "candidate-only invariant",
+      "no predicate unlocking"
+    ],
+    "file": "tests/unit/test_semantic_full_run.py"
+  },
+  "notice": "Quality gate for the readiness audit session. No semantic extraction was performed.",
+  "pytest": {
+    "skip_reason": "optional 'openai' extra not installed",
+    "tests/integration": {
+      "note": "live source crawl is manual-only by policy",
+      "passed": 0,
+      "result": "PASS",
+      "skipped": 1
+    },
+    "tests/unit": {
+      "passed": 426,
+      "result": "PASS",
+      "skipped": 1
+    },
+    "tests/unit -k semantic": {
+      "passed": 167,
+      "result": "PASS",
+      "skipped": 1
+    }
+  },
+  "python": "3.12.1",
+  "ruff_check": {
+    "detail": "All checks passed",
+    "result": "PASS"
+  },
+  "ruff_format_check": {
+    "detail": "276 files already formatted",
+    "result": "PASS"
+  },
+  "source_changes_this_session": [
+    "src/vedagraph/semantic/full_run.py: _aggregate now raises the contract ValueError for a missing checkpoint instead of leaking FileNotFoundError",
+    "scripts/audit_semantic_full_readiness.py: reflow + file-level ruff noqa E501, matching the existing report-generator convention; generated content byte-identical"
+  ]
+}

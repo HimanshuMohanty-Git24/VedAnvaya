@@ -1,0 +1,30 @@
+config_version: rigveda-semantic-expert-audit-v1
+source_benchmark: vedagraph-rigveda-semantic-silver-sol-v1
+human_gold_status: UNANNOTATED
+proposed_only: true
+mantras:
+- passage_key: VG:RV:SAK:M10:S030:V003
+- passage_key: VG:RV:SAK:M07:S083:V009
+- passage_key: VG:RV:SAK:M05:S080:V002
+- passage_key: VG:RV:SAK:M01:S154:V006
+- passage_key: VG:RV:SAK:M09:S068:V010
+- passage_key: VG:RV:SAK:M08:S046:V027
+- passage_key: VG:RV:SAK:M06:S013:V001
+- passage_key: VG:RV:SAK:M03:S035:V011
+- passage_key: VG:RV:SAK:M04:S034:V006
+- passage_key: VG:RV:SAK:M02:S017:V005
+- passage_key: VG:RV:SAK:M10:S085:V028
+- passage_key: VG:RV:SAK:M08:S046:V021
+- passage_key: VG:RV:SAK:M09:S063:V016
+- passage_key: VG:RV:SAK:M10:S102:V002
+- passage_key: VG:RV:SAK:M07:S101:V003
+- passage_key: VG:RV:SAK:M06:S075:V009
+- passage_key: VG:RV:SAK:M01:S164:V010
+- passage_key: VG:RV:SAK:M01:S122:V008
+- passage_key: VG:RV:SAK:M10:S107:V008
+- passage_key: VG:RV:SAK:M10:S025:V001
+- passage_key: VG:RV:SAK:M09:S104:V005
+- passage_key: VG:RV:SAK:M09:S095:V004
+- passage_key: VG:RV:SAK:M09:S087:V009
+- passage_key: VG:RV:SAK:M09:S074:V001
+- passage_key: VG:RV:SAK:M09:S004:V009

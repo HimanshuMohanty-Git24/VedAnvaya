@@ -15,14 +15,77 @@ works:
     veda: Samaveda
     work_name: Samaveda Samhita
     recension: Kauthuma
-    hierarchy: [Arcika, Prapathaka, Ardha, Adhyaya, Khanda, Mantra]
+    hierarchy: [Arcika, Prapathaka, Ardha, Dasati, Verse]
     citation_pattern: "Edition-specific; alternate citations required"
     key_pattern: null
     identity_status: RESEARCH_REQUIRED
     notes: >-
-      Do not reduce identity to a single running mantra number. Canonical identity must
-      preserve the selected edition's Purvarcika/Uttararcika hierarchy and carry alternate
-      citation systems. The exact key is intentionally not finalized in D1.
+      Hierarchy confirmed from the selected source record, not from secondary literature:
+      the GRETIL Samavedasamhita TEI named in structure_evidence_sha256 below declares its
+      own reference system in its body as
+      "arcika | prapathaka | ardha | dasati | verse | line". This supersedes the earlier
+      VHP-derived guess of [Arcika, Prapathaka, Ardha, Adhyaya, Khanda, Mantra]: the fourth
+      level is Dasati, and there is no Adhyaya or Khanda identity level. "line" is a
+      sub-verse pada label (a/c/e) and is deliberately excluded from identity.
+      Depth is NOT uniform. The Aranya arcika has no prapathaka and no ardha; the
+      Mahanamnya arcika additionally has no dasati. The edition encodes an absent level as
+      a literal 0, so 0 is a legitimate hierarchy value for this work alone and
+      identity.sv_mantra_identity applies _non_negative rather than _positive to
+      prapathaka/ardha/dasati. The fourth slot has no fixed cardinality: a Purvarcika
+      dasati is a decad numbered 1-10 across the ardha, while an Uttararcika dasati resets
+      inside each ardha and holds two or three verses.
+      Identity is NOT reduced to a running mantra number, as originally required. The
+      edition does print a running verse number 1..1875, but it is defective (five values
+      absent, one duplicated) and is recorded only as a non-canonical Citation. The named
+      kanda division (agneya, aindra, saumya-pavamana, aranya) cannot be a tree level
+      because its colophons cut across prapathaka/ardha boundaries; it is an alternate
+      Citation system. The artifact contains no gana collection, so no gana slot exists;
+      gana collections would need their own work_id.
+      Corroboration, counted exactly: the hierarchy rests on the selected source's own
+      declared reference system, plus TWO independent textual witnesses and ONE independent
+      addressing scheme. The two textual witnesses are Sanskrit Wikisource (840 CC BY-SA
+      4.0 pages under samavedah/kauthumiya/samhita, whose independence is PROVEN rather
+      than argued because it CORRECTS the Pandey text where that text is corrupt: GRETIL
+      mislabels verse 2's first pada as 0101a, bleeding the pada into verse 1 and stripping
+      it from verse 2, while Wikisource has both verses whole) and Griffith 1895 translating
+      Benfey, which predates Pandey by a century and uses DECADE as the fourth level. The
+      addressing scheme is TITUS's 8-level Kauthuma address, which corroborates the level
+      vocabulary and that there are exactly four arcikas, but whose TEXT is NOT independent:
+      the page carries "Copyright (C) 1998, 1999 Anshuman Pandey".
+      GRETIL, sanskritdocuments and TITUS are THREE re-publications of ONE Pandey 1998/99
+      e-text, so their agreement is NOT corroboration. An earlier version of this note
+      claimed four independent witnesses; that overstated the evidence and is corrected
+      here. The hierarchy conclusion is unaffected.
+      key_pattern nevertheless stays null and identity_status stays RESEARCH_REQUIRED. The
+      hierarchy is an observation; the key is a commitment, and the commitment cannot yet
+      be made. The blocker is no longer "no witness exists" - it is that NO WITNESS
+      COMBINES AN IDENTIFIED PRINTED EDITION WITH REDISTRIBUTION RIGHTS. The GRETIL TEI
+      was adjudicated unusable on two independent grounds: its rights (the upstream it
+      names, the 1998 legacy HTML, self-declares reference-only and prohibits
+      modification, so the CC BY-NC-SA 4.0 on the 2020 TEI is a blanket licence its
+      upstream never granted) and its edition identity (sourceDesc/bibl is empty). Other
+      Pandey-lineage re-publishers do not help: two of them agreeing is the same defect
+      twice rather than corroboration. Wikisource clears the RIGHTS bar but not the
+      EDITION bar, being a community transcription with no single named printed edition.
+      Resolution requires an identified printed Kauthuma edition that is also
+      redistributable - by written consent from the data-entry rights holder, by a fresh
+      transcription from a public-domain printed edition, or by Wikisource pages being
+      traced to a named edition.
+      The CANDIDATE key, recorded so the research is not lost and so freezing later is a
+      purely additive change, is implemented in identity.sv_mantra_identity as
+      "VG:SV:KAU:A{arcika}:P{prapathaka:02d}:R{ardha}:D{dasati:02d}:V{verse:02d}". It is a
+      candidate, not a declaration, and nothing may treat it as canonical.
+      SCOPE LIMIT, not a caveat: this work_id addresses the arcika (verse) text ONLY. The
+      Kauthuma gana collections - roughly 2,639 ganas across gramageya, aranyakageya, uha
+      and uhya/rahasya, against 1,875 arcika verses - are a PARALLEL AND LARGER body that
+      this work_id does not cover and cannot address. The sung dimension is not a
+      decoration on the verse skeleton; it is the reason the Samaveda is a distinct Veda
+      rather than a Rigveda excerpt. Any claim that VedaGraph "has the Samaveda" while
+      holding only the arcika is FALSE. The ganas need their own work_id; Sanskrit
+      Wikisource carries all four gana books, so this is real future work and not a
+      hypothetical.
+      See docs/FOUR_VEDA_STRUCTURAL_MODEL.md and ADR-017.
+    structure_evidence_sha256: 91c28c0394e94dccc9bad12a08224fbcde0a1194402b610df26647621ed92456
 
   - work_id: VG:WORK:YV:VSM
     abbreviation: VSM

@@ -1,5 +1,18 @@
 {
   "$defs": {
+    "EvidenceReferenceType": {
+      "description": "Kinds of deterministic ids a human may cite.",
+      "enum": [
+        "PASSAGE",
+        "TRANSLATION",
+        "TOKEN",
+        "ENTITY",
+        "TRADITIONAL_ASSERTION",
+        "PARALLEL"
+      ],
+      "title": "EvidenceReferenceType",
+      "type": "string"
+    },
     "Explicitness": {
       "description": "How the model says it got there. Self-reported, and validated against evidence.",
       "enum": [
@@ -10,10 +23,91 @@
       "title": "Explicitness",
       "type": "string"
     },
+    "GoldEntityAnnotation": {
+      "additionalProperties": false,
+      "description": "A human semantic entity judgment.",
+      "properties": {
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/GoldEvidenceReference"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "existing_entity_key": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Existing Entity Key"
+        },
+        "new_semantic_entity_candidate": {
+          "default": false,
+          "title": "New Semantic Entity Candidate",
+          "type": "boolean"
+        },
+        "node_type": {
+          "$ref": "#/$defs/SemanticNodeType"
+        },
+        "notes": {
+          "default": "",
+          "title": "Notes",
+          "type": "string"
+        },
+        "preferred_label": {
+          "minLength": 1,
+          "title": "Preferred Label",
+          "type": "string"
+        }
+      },
+      "required": [
+        "node_type",
+        "preferred_label"
+      ],
+      "title": "GoldEntityAnnotation",
+      "type": "object"
+    },
+    "GoldEvidenceReference": {
+      "additionalProperties": false,
+      "description": "A human-selected deterministic evidence id, never copied evidence text.",
+      "properties": {
+        "kind": {
+          "$ref": "#/$defs/EvidenceReferenceType"
+        },
+        "note": {
+          "default": "",
+          "title": "Note",
+          "type": "string"
+        },
+        "reference_id": {
+          "minLength": 1,
+          "title": "Reference Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "reference_id"
+      ],
+      "title": "GoldEvidenceReference",
+      "type": "object"
+    },
     "GoldRelation": {
       "additionalProperties": false,
       "description": "One relation a human annotator says is present, or says is tempting but absent.",
       "properties": {
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/GoldEvidenceReference"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
         "explicitness": {
           "$ref": "#/$defs/Explicitness"
         },
@@ -57,6 +151,18 @@
           "default": false,
           "title": "Rejected",
           "type": "boolean"
+        },
+        "subject": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Subject"
         }
       },
       "required": [
@@ -66,6 +172,108 @@
       ],
       "title": "GoldRelation",
       "type": "object"
+    },
+    "GoldReviewMetadata": {
+      "additionalProperties": false,
+      "description": "Auditable Stage A metadata, kept separate from semantic judgments.",
+      "properties": {
+        "gold_modified_after_model_reveal": {
+          "default": false,
+          "title": "Gold Modified After Model Reveal",
+          "type": "boolean"
+        },
+        "model_revealed_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model Revealed At"
+        },
+        "modification_reason": {
+          "default": "",
+          "title": "Modification Reason",
+          "type": "string"
+        },
+        "reviewed_at": {
+          "format": "date-time",
+          "title": "Reviewed At",
+          "type": "string"
+        },
+        "reviewer": {
+          "minLength": 1,
+          "title": "Reviewer",
+          "type": "string"
+        },
+        "stage_a_locked": {
+          "default": false,
+          "title": "Stage A Locked",
+          "type": "boolean"
+        },
+        "status": {
+          "$ref": "#/$defs/GoldReviewStatus"
+        }
+      },
+      "required": [
+        "reviewer",
+        "reviewed_at",
+        "status"
+      ],
+      "title": "GoldReviewMetadata",
+      "type": "object"
+    },
+    "GoldReviewStatus": {
+      "description": "Lifecycle of a human Stage A annotation.",
+      "enum": [
+        "UNANNOTATED",
+        "IN_PROGRESS",
+        "COMPLETE",
+        "NEEDS_SECOND_REVIEW",
+        "ADJUDICATED",
+        "SIGNED"
+      ],
+      "title": "GoldReviewStatus",
+      "type": "string"
+    },
+    "OntologyGap": {
+      "additionalProperties": false,
+      "description": "A request the current ontology cannot encode; it never changes the ontology.",
+      "properties": {
+        "kind": {
+          "$ref": "#/$defs/OntologyGapKind"
+        },
+        "notes": {
+          "default": "",
+          "title": "Notes",
+          "type": "string"
+        },
+        "requested_value": {
+          "minLength": 1,
+          "title": "Requested Value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "requested_value"
+      ],
+      "title": "OntologyGap",
+      "type": "object"
+    },
+    "OntologyGapKind": {
+      "description": "A requested concept that cannot be represented by the current ontology.",
+      "enum": [
+        "NODE_TYPE",
+        "PREDICATE",
+        "OTHER"
+      ],
+      "title": "OntologyGapKind",
+      "type": "string"
     },
     "SemanticNodeType": {
       "description": "Categories a semantic entity may belong to.\n\nChosen to be usable across the four Vedas, not tuned to the Rigveda. Adding a type\nis an ontology version bump, because every stored candidate names the version it was\nproduced under.",
@@ -143,15 +351,71 @@
       "title": "Entities",
       "type": "array"
     },
+    "gold_assertions": {
+      "items": {
+        "$ref": "#/$defs/GoldRelation"
+      },
+      "title": "Gold Assertions",
+      "type": "array"
+    },
+    "gold_entities": {
+      "items": {
+        "$ref": "#/$defs/GoldEntityAnnotation"
+      },
+      "title": "Gold Entities",
+      "type": "array"
+    },
+    "gold_modified_after_model_reveal": {
+      "default": false,
+      "title": "Gold Modified After Model Reveal",
+      "type": "boolean"
+    },
+    "model_revealed_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Model Revealed At"
+    },
+    "modification_reason": {
+      "default": "",
+      "title": "Modification Reason",
+      "type": "string"
+    },
+    "no_claim": {
+      "default": false,
+      "title": "No Claim",
+      "type": "boolean"
+    },
     "notes": {
       "default": "",
       "title": "Notes",
       "type": "string"
     },
+    "ontology_gaps": {
+      "items": {
+        "$ref": "#/$defs/OntologyGap"
+      },
+      "title": "Ontology Gaps",
+      "type": "array"
+    },
     "passage_key": {
       "pattern": "^VG:RV:SAK:M\\d{2}:S\\d{3}:V\\d{3}$",
       "title": "Passage Key",
       "type": "string"
+    },
+    "rejected_tempting_relations": {
+      "items": {
+        "$ref": "#/$defs/GoldRelation"
+      },
+      "title": "Rejected Tempting Relations",
+      "type": "array"
     },
     "relations": {
       "items": {
@@ -160,10 +424,32 @@
       "title": "Relations",
       "type": "array"
     },
+    "review": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/GoldReviewMetadata"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "review_history": {
+      "items": {
+        "$ref": "#/$defs/GoldReviewMetadata"
+      },
+      "title": "Review History",
+      "type": "array"
+    },
     "schema_version": {
       "default": "1.0.0",
       "title": "Schema Version",
       "type": "string"
+    },
+    "status": {
+      "$ref": "#/$defs/GoldReviewStatus",
+      "default": "UNANNOTATED"
     }
   },
   "required": [

@@ -1,0 +1,1939 @@
+{
+  "anchor_defects": [
+    {
+      "case_id": "VG:SEMOBJ:16F7FAFCADF25A5C2890",
+      "context": "te-footed, have manifested light to",
+      "matched": "man",
+      "passage_id": "VG:RV:SAK:M01:S035:V005",
+      "span": {
+        "end": 59,
+        "start": 56
+      }
+    },
+    {
+      "case_id": "VG:SEMOBJ:42615F880B92B826A3A2",
+      "context": "n: His who hath many gifts to give ",
+      "matched": "man",
+      "passage_id": "VG:RV:SAK:M01:S122:V008",
+      "span": {
+        "end": 102,
+        "start": 99
+      }
+    },
+    {
+      "case_id": "VG:SEMOBJ:3FECEADE9790BDD51D1D",
+      "context": "s lives through many autumns.",
+      "matched": "man",
+      "passage_id": "VG:RV:SAK:M06:S047:V017",
+      "span": {
+        "end": 166,
+        "start": 163
+      }
+    },
+    {
+      "case_id": "VG:SEMOBJ:7828FF617C5E5EF63E48",
+      "context": "per, that which many crave, more gl",
+      "matched": "man",
+      "passage_id": "VG:RV:SAK:M08:S060:V011",
+      "span": {
+        "end": 108,
+        "start": 105
+      }
+    },
+    {
+      "case_id": "VG:SEMOBJ:A678CCEB5978653A8F53",
+      "context": "By worship, Pavamana! men have stre",
+      "matched": "man",
+      "passage_id": "VG:RV:SAK:M09:S004:V009",
+      "span": {
+        "end": 19,
+        "start": 16
+      }
+    },
+    {
+      "case_id": "VG:SEMOBJ:0DC4F8B26A9253989CB4",
+      "context": "For he, as Pavamana, sends thousan",
+      "matched": "man",
+      "passage_id": "VG:RV:SAK:M09:S020:V002",
+      "span": {
+        "end": 18,
+        "start": 15
+      }
+    },
+    {
+      "case_id": "VG:SEMOBJ:FBBA2642A3AB526107C5",
+      "context": "ery side: O Pavamana, Steer, thou w",
+      "matched": "man",
+      "passage_id": "VG:RV:SAK:M09:S086:V038",
+      "span": {
+        "end": 53,
+        "start": 50
+      }
+    },
+    {
+      "case_id": "VG:SEMOBJ:48999B99D1D9CF8439AC",
+      "context": "ows the path to many.",
+      "matched": "man",
+      "passage_id": "VG:RV:SAK:M10:S014:V001",
+      "span": {
+        "end": 173,
+        "start": 170
+      }
+    },
+    {
+      "case_id": "VG:SEMOBJ:58E4609B2C25E2F1BA23",
+      "context": "ld of life, O woman: come, he is li",
+      "matched": "man",
+      "passage_id": "VG:RV:SAK:M10:S018:V008",
+      "span": {
+        "end": 42,
+        "start": 39
+      }
+    },
+    {
+      "case_id": "VG:SEMOBJ:B3A81CD5D3561DDFD3A4",
+      "context": "send energy and mental power. Then-",
+      "matched": "men",
+      "passage_id": "VG:RV:SAK:M10:S025:V001",
+      "span": {
+        "end": 50,
+        "start": 47
+      }
+    },
+    {
+      "case_id": "VG:SEMOBJ:ADAA67E7C2A1BA344A9C",
+      "context": "urs, invoked by many a man, that co",
+      "matched": "man",
+      "passage_id": "VG:RV:SAK:M10:S041:V001",
+      "span": {
+        "end": 41,
+        "start": 38
+      }
+    },
+    {
+      "case_id": "VG:SEMOBJ:9F3B3ACDDDD654EDE60B",
+      "context": " the wind the woman's robe was stre",
+      "matched": "man",
+      "passage_id": "VG:RV:SAK:M10:S102:V002",
+      "span": {
+        "end": 27,
+        "start": 24
+      }
+    },
+    {
+      "case_id": "VG:SEMOBJ:E9DE2354F9495F60B11C",
+      "context": "una, Mitra, Aryaman, These who are ",
+      "matched": "man",
+      "passage_id": "VG:RV:SAK:M10:S126:V006",
+      "span": {
+        "end": 53,
+        "start": 50
+      }
+    },
+    {
+      "case_id": "VG:SEMOBJ:46291DEF49F108C5B10C",
+      "context": "as a youthful woman, rise to meet m",
+      "matched": "man",
+      "passage_id": "VG:RV:SAK:M10:S183:V002",
+      "span": {
+        "end": 118,
+        "start": 115
+      }
+    }
+  ],
+  "gaps": [
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:F8CF7C27140FFEE3C797",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M01:S013:V011"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Oblation giver is a donor role, separate from the addressed Wood deity."
+    },
+    {
+      "blocker_ids": [
+        "B02"
+      ],
+      "case_id": "VG:SEMOBJ:16F7FAFCADF25A5C2890",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M01:S035:V005"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "All men is a human collective distinct from Savitar; the stored span instead hits manifested."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:8C760A88CDB657888F7B",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M01:S043:V006"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Men and women are explicitly contrasted with livestock; one group occurrence need not identify persons."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:2B1FB41CD503A34D0061",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M01:S051:V009"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "The pious man is the beneficiary, distinct from the mentioned Indra."
+    },
+    {
+      "blocker_ids": [
+        "B01"
+      ],
+      "case_id": "VG:SEMOBJ:832DD9EF729F319EAB6F",
+      "classification": "EXTRACTION_OVERREACH",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M01:S061:V003"
+      ],
+      "person_ref": "UNSAFE",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Most bounteous Giver qualifies the addressed Lord, not an evidenced human patron."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:902B68ED70B2ED1797D5",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M01:S083:V001"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Mortal man is the beneficiary guarded by Indra, not Indra himself."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:99008A083CE83BDF02C2",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M01:S120:V008"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Any man who hates us is an indefinite adversary; do not invent an identity."
+    },
+    {
+      "blocker_ids": [
+        "B02"
+      ],
+      "case_id": "VG:SEMOBJ:42615F880B92B826A3A2",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M01:S122:V008"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Men with hero children is a human group; wealthy chief is a separate donor context."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:DC01F3196969AA781714",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M01:S127:V002"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Priest of men includes a human collective distinct from the invoked Priest."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:9E1C46BB5DAB4BFB71DA",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M01:S133:V006"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Not slaying men still mentions humans; negation must remain attached to any proposed event."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:F6B32CFAEBB72E5D7E59",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M01:S137:V003"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "The men pressed juice identifies human ritual participants, distinct from Soma and the addressees."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:283BD66BA3D0980AAE7C",
+      "classification": "EXPERT_PHILOLOGY_REQUIRED",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M01:S150:V003"
+      ],
+      "person_ref": "EXPERT_REQUIRED",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "That man, mightiest in heaven may be a figurative or divine referent; human typing is unsafe."
+    },
+    {
+      "blocker_ids": [
+        "B01"
+      ],
+      "case_id": "VG:SEMOBJ:BE8AE343984497D95C59",
+      "classification": "WRONG_GAP_CODE",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M03:S004:V008"
+      ],
+      "person_ref": "UNSAFE",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Sisters and kindred Rivers relate to Three Goddesses; the human kinship gap code is misapplied."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:8B634F34B4CF1EEC1A28",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M03:S017:V003"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "The man who worships is the beneficiary of help, distinct from Agni."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:706335D939736454F154",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M03:S062:V002"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "This diligent man invokes the addressees; the worshipper is not the canonical Maruts or Earth."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:6B51D7A700BF30B87628",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M04:S001:V001"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Mortal men explicitly contrast with immortal Agni."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:3A14479DD5D3749E2792",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M04:S019:V010"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Wise man and man's advantage supply a human referent without establishing a named person."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:E6AF8391B1A080164B07",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M05:S017:V001"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "A mortal/man calls Agni; human actor and invoked deity remain separate."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:E777B236161E97E5F57A",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M05:S053:V016"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Liberal patron's rite supports a donor role; Free-givers elsewhere does not identify that patron."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:E67E7DD133D3AA6A78CA",
+      "classification": "INTENTIONAL_OPAQUE_CASE",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M05:S087:V008"
+      ],
+      "person_ref": "UNSAFE",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Like car-borne men is a comparison applied to Maruts; retain opaque comparison, not literal humans."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:3C89C743EFFC34A4F8A8",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M06:S045:V019"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Lowly man is the one helped by the addressed Friend; identity unresolved but human type supportable."
+    },
+    {
+      "blocker_ids": [
+        "B02"
+      ],
+      "case_id": "VG:SEMOBJ:3FECEADE9790BDD51D1D",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M06:S047:V017"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Men whose worship is rejected are distinct from Indra."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:BE7F6BAF849A4A601550",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M06:S048:V015"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Our men are human beneficiaries; the canonical Pusan is not their identity."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:C150245D08C8952CC04C",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M07:S004:V003"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Men seize Agni and he shines for man; human collective contrasts with Agni."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:38434ABF08EA094EF05B",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M07:S015:V007"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Men must seek the Lord of the house; humans and Agni are distinct."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:41D69E310BF329764969",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M07:S032:V020"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Active man gains spoil; the later named Indra is not that man's registry identity."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:DAE51FC332AF19D729EF",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M08:S001:V017"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Men wash and dress Soma; physical milk and human operators are separate occurrences."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:5339288468AC790E2BB6",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M08:S002:V006"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Other men than we identifies people without canonical identities."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:D5B8148C25B67F504377",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M08:S002:V039"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Cattle restored to men distinguishes human beneficiaries from livestock."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:F947ECB327DF4961021A",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M08:S006:V037"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Men with prepared grass invoke the unnamed addressee; no deity identity for the human group."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:06C8A7EE875243DECD97",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M08:S021:V014"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Wealthy man and scorners are human referents; Father is a separate comparison."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:10D60618AA400F347C99",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M08:S023:V014"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Lord of men refers to a human collective governed by Agni."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:460C9F92154884B955B4",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M08:S043:V024"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "King of men similarly distinguishes human collective from Agni."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:1BB478FFAFC4819B8660",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M08:S045:V042"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "World of men denotes a human collective; do not mint a world/person canonical entity."
+    },
+    {
+      "blocker_ids": [
+        "B01"
+      ],
+      "case_id": "VG:SEMOBJ:FC47DD6B982F2168153C",
+      "classification": "EXTRACTION_OVERREACH",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M08:S046:V002"
+      ],
+      "person_ref": "UNSAFE",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Giver refers to the addressed Hurler of the Bolt; no human patron is evidenced by that epithet."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:F76BA8FD5C8B841D1812",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M08:S046:V021"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Godless man and named recipients are human; names alone are not supplied canonical IDs."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:0A9E044472193AA5DD62",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M08:S046:V027"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "A man yet more devout is a recipient in gift context; do not resolve Nahup from memory."
+    },
+    {
+      "blocker_ids": [
+        "B02"
+      ],
+      "case_id": "VG:SEMOBJ:7828FF617C5E5EF63E48",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M08:S060:V011"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Wealth renowned with men supports human audience; stored span hits many instead."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:B73A5D14EFB0F2ACD40D",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M08:S093:V001"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Works for man supports human beneficiary distinct from Surya and the Hero."
+    },
+    {
+      "blocker_ids": [
+        "B02"
+      ],
+      "case_id": "VG:SEMOBJ:A678CCEB5978653A8F53",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M09:S004:V009"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Men have strengthened Pavamana supplies human worshippers; stored span hits Pavamana."
+    },
+    {
+      "blocker_ids": [
+        "B02"
+      ],
+      "case_id": "VG:SEMOBJ:0DC4F8B26A9253989CB4",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M09:S020:V002"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Singing-men are human recipients of treasure, distinct from Pavamana."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:08898BD88BD68FDB57A2",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M09:S039:V002"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Food to man supplies human beneficiary; rain/heaven are separate referents."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:AFBCC451DB6AAA196F76",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M09:S045:V006"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "The man who worships Indu is human; no new Indu identity may be invented."
+    },
+    {
+      "blocker_ids": [
+        "B01"
+      ],
+      "case_id": "VG:SEMOBJ:902140BABC5B9113978C",
+      "classification": "EXTRACTION_OVERREACH",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M09:S052:V005"
+      ],
+      "person_ref": "UNSAFE",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Wealth-giver addresses Indu; a human patron cannot be inferred from giver."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:9C1C326D4EEBB7F7C763",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M09:S064:V013"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Sapient men prepare the flow; Indu remains distinct from human operators."
+    },
+    {
+      "blocker_ids": [
+        "B02"
+      ],
+      "case_id": "VG:SEMOBJ:FBBA2642A3AB526107C5",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M09:S086:V038"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Men seen by Soma are distinct from the addressed Soma/Pavamana."
+    },
+    {
+      "blocker_ids": [
+        "B01"
+      ],
+      "case_id": "VG:SEMOBJ:57FDA1FC392FFECBBC61",
+      "classification": "CANONICAL_ENTITY_RESOLUTION_MISSED",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M09:S087:V004"
+      ],
+      "person_ref": "UNSAFE",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Free-giver continues the supplied Soma referent; an existing SOMAH mention is available, not a new patron."
+    },
+    {
+      "blocker_ids": [
+        "B01"
+      ],
+      "case_id": "VG:SEMOBJ:A87A920F3FE97AB232CD",
+      "classification": "CANONICAL_ENTITY_RESOLUTION_MISSED",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M09:S087:V009"
+      ],
+      "person_ref": "UNSAFE",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Prompt Giver continues the addressed Soma; supplied SOMAH exists, while Indra is the companion."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:E13EEDB36EF5C1D34854",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S007:V005"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Men generate/stablish Agni; human actors are not the AGNIH or MITRAH mention."
+    },
+    {
+      "blocker_ids": [
+        "B02"
+      ],
+      "case_id": "VG:SEMOBJ:48999B99D1D9CF8439AC",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S014:V001"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Yama gathers men; Vivasvan's Son identifies the King, not requested offspring or the human group."
+    },
+    {
+      "blocker_ids": [
+        "B02"
+      ],
+      "case_id": "VG:SEMOBJ:58E4609B2C25E2F1BA23",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S018:V008"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Woman, wife and husband are evidenced humans; the stored man substring inside woman is not a full referent span."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:0115ACB11CF481804B8E",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S020:V004"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Furtherer of men distinguishes human beneficiaries from the described agent."
+    },
+    {
+      "blocker_ids": [
+        "B02"
+      ],
+      "case_id": "VG:SEMOBJ:B3A81CD5D3561DDFD3A4",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S025:V001"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Let men joy names a human group; stored men inside mental is a misleading span."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:4D2ABF72CD8068FFAB46",
+      "classification": "EXPERT_PHILOLOGY_REQUIRED",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S027:V013"
+      ],
+      "person_ref": "EXPERT_REQUIRED",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "The man eaten in this riddle is not safely resolvable as literal human; retain philological uncertainty."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:8AE85486DA5DBCB71AD7",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S039:V011"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "The man protected by the Asvins is a human beneficiary; no supplied named person identity."
+    },
+    {
+      "blocker_ids": [
+        "B02"
+      ],
+      "case_id": "VG:SEMOBJ:ADAA67E7C2A1BA344A9C",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S041:V001"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Many a man invokes the Car; Dawn metadata/mention does not make Dawn the invoked target."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:A96A39423F19065E4AC2",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S050:V003"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Question who are the men explicitly concerns humans; no named identity is established."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:DA8AD1026262D55B9E6A",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S086:V001"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Men abstain from pouring; preserve negation rather than infer actual offering from the action word."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:BCA8077058D1FB64CA8B",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S089:V008"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Men who injure law are distinct from Indra, Varuna and Mitra."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:20F5C66433C07F8AE961",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S097:V007"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "This man may be whole again identifies a human beneficiary of herbs."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:CB96CDF2F28C30B0D83B",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S098:V008"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Devapi Arstisena is called mortal man, but no person entity key is supplied in packet mentions."
+    },
+    {
+      "blocker_ids": [
+        "B02"
+      ],
+      "case_id": "VG:SEMOBJ:9F3B3ACDDDD654EDE60B",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S102:V002"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Woman and Mudgalani support a human occurrence; do not equate a name with a canonical key."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:DA5E4CDBA2C96973749F",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S107:V010"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Bounteous giver, maid and his home support a human donor role without a global patron registry."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:EDFE96AE21E512A3678A",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S118:V001"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Men among whom Agni shines are human collective, distinct from Agni."
+    },
+    {
+      "blocker_ids": [
+        "B02"
+      ],
+      "case_id": "VG:SEMOBJ:E9DE2354F9495F60B11C",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S126:V006"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Living men are governed by the named gods; stored man inside Aryaman is wrong anchoring."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:A30FD65B1B9B8647A906",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S146:V005"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Man eats fruit contrasts with Goddess; do not type Aranyani as this person."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:561933FE114CE426EF01",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S151:V002"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Man who gives and liberal worshippers support humans with optional donor role."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "VG:SEMOBJ:95C5C925EF83756D5E1E",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S151:V004"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Gods and men explicitly distinguish humans from deities in sacrificial context."
+    },
+    {
+      "blocker_ids": [
+        "B01"
+      ],
+      "case_id": "VG:SEMOBJ:1992DB70F9C8B38FC568",
+      "classification": "EXTRACTION_OVERREACH",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S170:V001"
+      ],
+      "person_ref": "UNSAFE",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "In person is an idiom about the Bright God, not an additional human referent."
+    },
+    {
+      "blocker_ids": [
+        "B02"
+      ],
+      "case_id": "VG:SEMOBJ:46291DEF49F108C5B10C",
+      "classification": "TRUE_SCHEMA_GAP",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S183:V002"
+      ],
+      "person_ref": "USEFUL",
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Youthful woman and her offspring support human occurrence; no canonical person registry is implied."
+    }
+  ],
+  "parallels": [
+    {
+      "blocker_ids": [],
+      "case_id": "PAR-01",
+      "classification": "TRANSLATION_VARIANT_EFFECT",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M04:S017:V021",
+        "VG:RV:SAK:M04:S022:V011"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Identical Sanskrit and lexical sequence; same rishi/devata/metre. 4.22.11 translates isam as wealth, others as power. Wealth is recognized as REQUESTS, power is absent from the regex outcome list. Neighbors differ but the implementation never reads them. Translation effect exposes coverage asymmetry; do not force equality or choose a Sanskrit gloss."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "PAR-02",
+      "classification": "TRANSLATION_VARIANT_EFFECT",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M04:S022:V011",
+        "VG:RV:SAK:M04:S023:V011"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Identical Sanskrit and lexical sequence; same rishi/devata/metre. 4.22.11 translates isam as wealth, others as power. Wealth is recognized as REQUESTS, power is absent from the regex outcome list. Neighbors differ but the implementation never reads them. Translation effect exposes coverage asymmetry; do not force equality or choose a Sanskrit gloss."
+    },
+    {
+      "blocker_ids": [
+        "B01"
+      ],
+      "case_id": "PAR-03",
+      "classification": "EXTRACTION_INCONSISTENCY",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S058:V001",
+        "VG:RV:SAK:M10:S058:V004"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "10.58.1 emits REQUESTS offspring from Vivasvan's Son plus come in the shared return-of-spirit refrain. Son identifies Yama, not a requested child. Shared metadata and neighbors do not license that relation. The other destination wording does not request offspring either. Repeated whole-verse cue binding is an extraction bug."
+    },
+    {
+      "blocker_ids": [
+        "B01"
+      ],
+      "case_id": "PAR-04",
+      "classification": "EXTRACTION_INCONSISTENCY",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S058:V001",
+        "VG:RV:SAK:M10:S058:V005"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "10.58.1 emits REQUESTS offspring from Vivasvan's Son plus come in the shared return-of-spirit refrain. Son identifies Yama, not a requested child. Shared metadata and neighbors do not license that relation. The other destination wording does not request offspring either. Repeated whole-verse cue binding is an extraction bug."
+    },
+    {
+      "blocker_ids": [
+        "B01"
+      ],
+      "case_id": "PAR-05",
+      "classification": "EXTRACTION_INCONSISTENCY",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S058:V001",
+        "VG:RV:SAK:M10:S058:V006"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "10.58.1 emits REQUESTS offspring from Vivasvan's Son plus come in the shared return-of-spirit refrain. Son identifies Yama, not a requested child. Shared metadata and neighbors do not license that relation. The other destination wording does not request offspring either. Repeated whole-verse cue binding is an extraction bug."
+    },
+    {
+      "blocker_ids": [
+        "B01"
+      ],
+      "case_id": "PAR-06",
+      "classification": "EXTRACTION_INCONSISTENCY",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S058:V001",
+        "VG:RV:SAK:M10:S058:V007"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "10.58.1 emits REQUESTS offspring from Vivasvan's Son plus come in the shared return-of-spirit refrain. Son identifies Yama, not a requested child. Shared metadata and neighbors do not license that relation. The other destination wording does not request offspring either. Repeated whole-verse cue binding is an extraction bug."
+    },
+    {
+      "blocker_ids": [
+        "B01"
+      ],
+      "case_id": "PAR-07",
+      "classification": "EXTRACTION_INCONSISTENCY",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S058:V001",
+        "VG:RV:SAK:M10:S058:V009"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "10.58.1 emits REQUESTS offspring from Vivasvan's Son plus come in the shared return-of-spirit refrain. Son identifies Yama, not a requested child. Shared metadata and neighbors do not license that relation. The other destination wording does not request offspring either. Repeated whole-verse cue binding is an extraction bug."
+    },
+    {
+      "blocker_ids": [
+        "B01"
+      ],
+      "case_id": "PAR-08",
+      "classification": "EXTRACTION_INCONSISTENCY",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S058:V001",
+        "VG:RV:SAK:M10:S058:V011"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "10.58.1 emits REQUESTS offspring from Vivasvan's Son plus come in the shared return-of-spirit refrain. Son identifies Yama, not a requested child. Shared metadata and neighbors do not license that relation. The other destination wording does not request offspring either. Repeated whole-verse cue binding is an extraction bug."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "PAR-09",
+      "classification": "TEXT_VARIANT_JUSTIFIED_DIFFERENCE",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S058:V004",
+        "VG:RV:SAK:M10:S058:V007"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "10.58.7 specifically names waters and plants (apah/osadhih); the other verse names a different destination. Water substance/phenomenon candidates reflect changed words. Shared return-of-spirit refrain does not require identical object sets. Missing other place/event candidates is separate recall uncertainty."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "PAR-10",
+      "classification": "TEXT_VARIANT_JUSTIFIED_DIFFERENCE",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S058:V005",
+        "VG:RV:SAK:M10:S058:V007"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "10.58.7 specifically names waters and plants (apah/osadhih); the other verse names a different destination. Water substance/phenomenon candidates reflect changed words. Shared return-of-spirit refrain does not require identical object sets. Missing other place/event candidates is separate recall uncertainty."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "PAR-11",
+      "classification": "TEXT_VARIANT_JUSTIFIED_DIFFERENCE",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S058:V006",
+        "VG:RV:SAK:M10:S058:V007"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "10.58.7 specifically names waters and plants (apah/osadhih); the other verse names a different destination. Water substance/phenomenon candidates reflect changed words. Shared return-of-spirit refrain does not require identical object sets. Missing other place/event candidates is separate recall uncertainty."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "PAR-12",
+      "classification": "TEXT_VARIANT_JUSTIFIED_DIFFERENCE",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S058:V007",
+        "VG:RV:SAK:M10:S058:V009"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "10.58.7 specifically names waters and plants (apah/osadhih); the other verse names a different destination. Water substance/phenomenon candidates reflect changed words. Shared return-of-spirit refrain does not require identical object sets. Missing other place/event candidates is separate recall uncertainty."
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "PAR-13",
+      "classification": "TEXT_VARIANT_JUSTIFIED_DIFFERENCE",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S058:V007",
+        "VG:RV:SAK:M10:S058:V011"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "10.58.7 specifically names waters and plants (apah/osadhih); the other verse names a different destination. Water substance/phenomenon candidates reflect changed words. Shared return-of-spirit refrain does not require identical object sets. Missing other place/event candidates is separate recall uncertainty."
+    }
+  ],
+  "review_queue": [
+    {
+      "blocker_ids": [
+        "B01",
+        "B02"
+      ],
+      "case_id": "REV-01",
+      "classification": "PREDICATE_BOUNDARY",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S170:V001"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "May the God drink does not request offspring; guards our offspring is descriptive. In person is not human.",
+      "secondary_tags": [
+        "ONTOLOGY_GAP",
+        "ARCHITECTURE_BUG"
+      ]
+    },
+    {
+      "blocker_ids": [
+        "B02"
+      ],
+      "case_id": "REV-02",
+      "classification": "ONTOLOGY_GAP",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M09:S004:V009"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Human worshippers are evidenced, but gap span points into Pavamana; no-claim itself may remain cautious.",
+      "secondary_tags": [
+        "ARCHITECTURE_BUG"
+      ]
+    },
+    {
+      "blocker_ids": [
+        "B01"
+      ],
+      "case_id": "REV-03",
+      "classification": "CANONICAL_ENTITY_RISK",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M01:S137:V003"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Come nigh addresses Mitra and Varuna, while extractor invokes the Soma to be drunk; milk verbs also become substance.",
+      "secondary_tags": [
+        "ONTOLOGY_GAP",
+        "ARCHITECTURE_BUG"
+      ]
+    },
+    {
+      "blocker_ids": [
+        "B02"
+      ],
+      "case_id": "REV-04",
+      "classification": "ONTOLOGY_GAP",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M09:S086:V038"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Human collective is valid, but gap span points inside Pavamana; wealth and strength requests are directly phrased.",
+      "secondary_tags": [
+        "ARCHITECTURE_BUG"
+      ]
+    },
+    {
+      "blocker_ids": [
+        "B01"
+      ],
+      "case_id": "REV-05",
+      "classification": "CANONICAL_ENTITY_RISK",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M08:S035:V008"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "O Asvins is the address; Soma sought for drinking and accompanying Surya become INVOKES targets.",
+      "secondary_tags": [
+        "ARCHITECTURE_BUG"
+      ]
+    },
+    {
+      "blocker_ids": [
+        "B01"
+      ],
+      "case_id": "REV-06",
+      "classification": "CANONICAL_ENTITY_RISK",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M08:S035:V009"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Same Asvin address is misbound to Soma/Surya; added oblation supports an independent offering difference.",
+      "secondary_tags": [
+        "ARCHITECTURE_BUG"
+      ]
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "REV-07",
+      "classification": "PREDICATE_BOUNDARY",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M08:S035:V016"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Commands to slay and drive away disease raise request/event boundary; retained event is review-sensitive.",
+      "secondary_tags": []
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "REV-08",
+      "classification": "PREDICATE_BOUNDARY",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M08:S035:V018"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Give strength is a real wording addition; shared commands need event/request review, not enforced equality.",
+      "secondary_tags": []
+    },
+    {
+      "blocker_ids": [
+        "B01"
+      ],
+      "case_id": "REV-09",
+      "classification": "CANONICAL_ENTITY_RISK",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M08:S036:V004"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "O Satakratu, drink Soma addresses the drinker; INVOKES SOMAH confuses drink with addressee.",
+      "secondary_tags": [
+        "ARCHITECTURE_BUG"
+      ]
+    },
+    {
+      "blocker_ids": [
+        "B01"
+      ],
+      "case_id": "REV-10",
+      "classification": "CANONICAL_ENTITY_RISK",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M08:S036:V006"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Glorify the Atris' hymn and drink Soma does not praise/invoke Soma; verse-wide cue scope fails.",
+      "secondary_tags": [
+        "ARCHITECTURE_BUG"
+      ]
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "REV-11",
+      "classification": "ONTOLOGY_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M08:S001:V017"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Human operators, milk and waters are explicit; ritual/substance detail is reviewable.",
+      "secondary_tags": []
+    },
+    {
+      "blocker_ids": [
+        "B02"
+      ],
+      "case_id": "REV-12",
+      "classification": "ONTOLOGY_GAP",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M09:S020:V002"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Singing-men are human recipients but span points inside Pavamana; send action is directly supported.",
+      "secondary_tags": [
+        "ARCHITECTURE_BUG"
+      ]
+    },
+    {
+      "blocker_ids": [
+        "B01"
+      ],
+      "case_id": "REV-13",
+      "classification": "CANONICAL_ENTITY_RISK",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M09:S087:V004"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "O Indra receives address; Soma is thine own drink, not a second invoked target; Free-giver is not human patron.",
+      "secondary_tags": [
+        "ONTOLOGY_GAP",
+        "ARCHITECTURE_BUG"
+      ]
+    },
+    {
+      "blocker_ids": [
+        "B01"
+      ],
+      "case_id": "REV-14",
+      "classification": "CANONICAL_ENTITY_RISK",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M09:S087:V009"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Indra is a companion, not necessarily praised; Giver is addressed Soma, not an unmodeled human patron.",
+      "secondary_tags": [
+        "ONTOLOGY_GAP",
+        "ARCHITECTURE_BUG"
+      ]
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "REV-15",
+      "classification": "ONTOLOGY_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S097:V007"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Human patient is explicit; rich in Soma substance identity may need domain review without structural leakage.",
+      "secondary_tags": []
+    },
+    {
+      "blocker_ids": [
+        "B02"
+      ],
+      "case_id": "REV-16",
+      "classification": "ONTOLOGY_GAP",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M01:S122:V008"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Donor/men are clear, but span man comes from many; no-claim does not justify canonicalizing a chief.",
+      "secondary_tags": [
+        "ARCHITECTURE_BUG"
+      ]
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "REV-17",
+      "classification": "ONTOLOGY_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M01:S127:V002"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Priest of men includes humans; unnamed divine identity and archaic address can remain unclaimed.",
+      "secondary_tags": []
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "REV-18",
+      "classification": "PHILOLOGY_REQUIRED",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M04:S019:V010"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Elliptical grammar and wise-man addressee need reading; no structural failure in withholding assertions.",
+      "secondary_tags": [
+        "ONTOLOGY_GAP"
+      ]
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "REV-19",
+      "classification": "ONTOLOGY_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M07:S032:V020"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Active man is human; Much-invoked is descriptive epithet, not necessarily a fresh invocation.",
+      "secondary_tags": []
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "REV-20",
+      "classification": "ONTOLOGY_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M08:S006:V037"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Human invokers are clear; unnamed Best slayer identity remains unresolved.",
+      "secondary_tags": []
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "REV-21",
+      "classification": "TRANSLATION_AMBIGUITY",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M08:S021:V014"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Wealthy man, scorners and Father simile leave target scope open; no invented identity.",
+      "secondary_tags": [
+        "ONTOLOGY_GAP"
+      ]
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "REV-22",
+      "classification": "PHILOLOGY_REQUIRED",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M08:S046:V027"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Glorious one, Nahup and more devout man need referent resolution; retain opaque uncertainty.",
+      "secondary_tags": [
+        "ONTOLOGY_GAP"
+      ]
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "REV-23",
+      "classification": "ONTOLOGY_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M09:S045:V006"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Worshipping human is explicit; Flow and heroic strength are not automatically a strength request.",
+      "secondary_tags": []
+    },
+    {
+      "blocker_ids": [
+        "B02"
+      ],
+      "case_id": "REV-24",
+      "classification": "ONTOLOGY_GAP",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S018:V008"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Woman and husband are clear, but stored span is only man inside woman; funeral interpretation is not needed for this diagnostic.",
+      "secondary_tags": [
+        "ARCHITECTURE_BUG"
+      ]
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "REV-25",
+      "classification": "PHILOLOGY_REQUIRED",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S027:V013"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Riddle participant and pronouns are obscure; withholding a canonical interpretation is appropriate.",
+      "secondary_tags": [
+        "ONTOLOGY_GAP"
+      ]
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "REV-26",
+      "classification": "ONTOLOGY_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S039:V011"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Man is beneficiary; corrupted come u on translation deserves source review, not invented correction.",
+      "secondary_tags": []
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "REV-27",
+      "classification": "ONTOLOGY_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S107:V010"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Human donor is supported; lake/palaces are similes and need no forced place assertions.",
+      "secondary_tags": []
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "REV-28",
+      "classification": "EXPECTED_MODEL_UNCERTAINTY",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S118:V001"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "No-claim omits slayest wording; isolated omission remains review, and cannot validate checklist completeness.",
+      "secondary_tags": [
+        "ONTOLOGY_GAP"
+      ]
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "REV-29",
+      "classification": "OBJECT_GRANULARITY",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M01:S023:V020"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Extra sentence Waters hold all medicines explains medicine detail; Soma speaker versus substance remains review-sensitive.",
+      "secondary_tags": []
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "REV-30",
+      "classification": "PREDICATE_BOUNDARY",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M01:S133:V006"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Thunder-armed epithet becomes storm; distinguish figurative description from actual phenomenon without ontology rewrite.",
+      "secondary_tags": [
+        "ONTOLOGY_GAP"
+      ]
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "REV-31",
+      "classification": "TYPE_BOUNDARY_RISK",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M05:S017:V001"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Sacrifice may denote act rather than offered object; permitted OFFERING_REF shape alone does not settle semantic role.",
+      "secondary_tags": [
+        "ONTOLOGY_GAP"
+      ]
+    },
+    {
+      "blocker_ids": [
+        "B01"
+      ],
+      "case_id": "REV-32",
+      "classification": "CANONICAL_ENTITY_RISK",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M08:S035:V007"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "O Asvins address again produces Soma and Surya invocations: repeated target-scope failure.",
+      "secondary_tags": [
+        "ARCHITECTURE_BUG"
+      ]
+    },
+    {
+      "blocker_ids": [
+        "B01"
+      ],
+      "case_id": "REV-33",
+      "classification": "CANONICAL_ENTITY_RISK",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M08:S036:V005"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Satakratu is addressed; Soma is drunk, not invoked. Same failure as neighboring verses.",
+      "secondary_tags": [
+        "ARCHITECTURE_BUG"
+      ]
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "REV-34",
+      "classification": "OBJECT_GRANULARITY",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M09:S034:V002"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Soma juice normalized as meath is a granularity/translation diagnostic; recipient list differs from next pair member.",
+      "secondary_tags": []
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "REV-35",
+      "classification": "ONTOLOGY_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M09:S039:V002"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Food for man, rain and heaven are supplied; send normalizes bringing and is reviewable.",
+      "secondary_tags": []
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "REV-36",
+      "classification": "PREDICATE_BOUNDARY",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M09:S065:V020"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Water-winner epithet drives water/phenomenon claims; preserve candidate review for figurative scope.",
+      "secondary_tags": []
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "REV-37",
+      "classification": "OBJECT_GRANULARITY",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S009:V006"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Shorter Waters passage lacks explicit medicines sentence; broad comparison is partial for explainable reason.",
+      "secondary_tags": []
+    },
+    {
+      "blocker_ids": [
+        "B01"
+      ],
+      "case_id": "REV-38",
+      "classification": "CANONICAL_ENTITY_RISK",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S041:V001"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "The invoked/described Car is not the lexical Dawn entity; verse-wide descriptive cue attaches DESCRIBES to Dawn.",
+      "secondary_tags": [
+        "ONTOLOGY_GAP",
+        "ARCHITECTURE_BUG"
+      ]
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "REV-39",
+      "classification": "TYPE_BOUNDARY_RISK",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S151:V004"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Gods and men who sacrifice states an act, not automatically a thing offered; keep role boundary review.",
+      "secondary_tags": [
+        "ONTOLOGY_GAP"
+      ]
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "REV-40",
+      "classification": "SAFE_REVIEW_ONLY",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S058:V004"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Four quarters differs from Yama's Son; its no-claim does not share the false offspring assertion.",
+      "secondary_tags": []
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "REV-41",
+      "classification": "SAFE_REVIEW_ONLY",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S058:V005"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Sea wording differs from waters/plants; absence of an ontology head is not evidence fabrication.",
+      "secondary_tags": []
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "REV-42",
+      "classification": "SAFE_REVIEW_ONLY",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S058:V006"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Beams of light differ from waters/plants; withheld claim is not itself a systemic error.",
+      "secondary_tags": []
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "REV-43",
+      "classification": "SAFE_REVIEW_ONLY",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S058:V009"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Mountain heights differ from waters/plants; local no-claim does not justify global semantic equality.",
+      "secondary_tags": []
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "REV-44",
+      "classification": "SAFE_REVIEW_ONLY",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M10:S058:V011"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Distant realms remain vague; opaque spatial handling is acceptable.",
+      "secondary_tags": []
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "REV-45",
+      "classification": "TRANSLATION_AMBIGUITY",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M08:S035:V005"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Sarya/Surya and Come/Conie source variants explain lexical sensitivity; no silent text repair.",
+      "secondary_tags": []
+    },
+    {
+      "blocker_ids": [
+        "B01"
+      ],
+      "case_id": "REV-46",
+      "classification": "CANONICAL_ENTITY_RISK",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M08:S035:V006"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "O Asvins still receives the address; Surya becomes INVOKES because its name and O co-occur.",
+      "secondary_tags": [
+        "ARCHITECTURE_BUG"
+      ]
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "REV-47",
+      "classification": "ONTOLOGY_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M01:S013:V011"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Giver of the oblation is a donor role; existing gap is safer than forced identity.",
+      "secondary_tags": []
+    },
+    {
+      "blocker_ids": [
+        "B02"
+      ],
+      "case_id": "REV-48",
+      "classification": "ONTOLOGY_GAP",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M01:S035:V005"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "All men is supported but span hits manifested; ID-valid evidence is not enough.",
+      "secondary_tags": [
+        "ARCHITECTURE_BUG"
+      ]
+    },
+    {
+      "blocker_ids": [],
+      "case_id": "REV-49",
+      "classification": "ONTOLOGY_GAP",
+      "decision": "DOES_NOT_BLOCK_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M01:S043:V006"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Human and livestock beneficiaries explicitly receive health; person typing can be deferred safely.",
+      "secondary_tags": []
+    },
+    {
+      "blocker_ids": [
+        "B01"
+      ],
+      "case_id": "REV-50",
+      "classification": "CANONICAL_ENTITY_RISK",
+      "decision": "BLOCKS_FULL_RUN",
+      "passage_ids": [
+        "VG:RV:SAK:M01:S051:V009"
+      ],
+      "provenance": "ENGINEERING_DIAGNOSTIC",
+      "rationale": "Vamra when glorified drives PRAISES Indra elsewhere in the verse; laudatory target is misbound.",
+      "secondary_tags": [
+        "ONTOLOGY_GAP",
+        "ARCHITECTURE_BUG"
+      ]
+    }
+  ],
+  "summary": {
+    "anchor_defect_count": 14,
+    "batch_count": 440,
+    "blockers": {
+      "B01": "Repeated predicate-target binding failure: verse-wide cue matching creates unsupported requests and invokes/praises the wrong mentioned entity (10.58.1, 10.170.1, 8.35.7-9, 8.36.4-6). Correct the extraction execution path, preserve old artifacts, and verify these regressions before scaling. No semantic-schema expansion is needed.",
+      "B02": "Evidence anchoring and validation are incomplete: gap spans match inside unrelated words; legacy validation does not validate gap anchors, other_evidence_ids or nested entity IDs. The new offline import guard closes ID-membership holes, but the frozen producer still creates misleading spans. Correct producer anchoring and version the execution contract.",
+      "B03": "Provenance/readiness evidence mismatch: run_semantic_luna_v3_508.py calls the regex extract_packet implementation directly; model labels are constants and no independent model response receipt is consumed. Stable replay proves deterministic reproduction, not independent Luna replication. Establish an auditable actual Luna execution path and a bounded verification under its new execution version before authorizing the full model run. Do not relabel old data."
+    },
+    "final_state": "FULL_RIGVEDA_V3_CANDIDATE_RUN_BLOCKED",
+    "freeze_hash": "67149b2dca2c8146b5cc6d44d787f99fe76c7893a31698549b83f4f5020f65fd",
+    "full_id_hash": "5270614db1fd2b68642c535e0b3f81fb2dc471902674a8063acd26ca38861da2",
+    "gap_counts": {
+      "CANONICAL_ENTITY_RESOLUTION_MISSED": 2,
+      "EXPERT_PHILOLOGY_REQUIRED": 2,
+      "EXTRACTION_OVERREACH": 4,
+      "INTENTIONAL_OPAQUE_CASE": 1,
+      "TRUE_SCHEMA_GAP": 60,
+      "WRONG_GAP_CODE": 1
+    },
+    "ontology_decision": "KEEP_GAPS_FOR_FULL_RUN",
+    "parallel_counts": {
+      "EXTRACTION_INCONSISTENCY": 6,
+      "TEXT_VARIANT_JUSTIFIED_DIFFERENCE": 5,
+      "TRANSLATION_VARIANT_EFFECT": 2
+    },
+    "parallel_decision": "PARALLEL_EXTRACTION_BUG_FOUND",
+    "plan_hash": "55eb8c6277eeb658131b7cdd0541914069279959d241da74b7181c42dd341673",
+    "triage_blocking": 19,
+    "triage_counts": {
+      "CANONICAL_ENTITY_RISK": 12,
+      "EXPECTED_MODEL_UNCERTAINTY": 1,
+      "OBJECT_GRANULARITY": 3,
+      "ONTOLOGY_GAP": 17,
+      "PHILOLOGY_REQUIRED": 3,
+      "PREDICATE_BOUNDARY": 5,
+      "SAFE_REVIEW_ONLY": 5,
+      "TRANSLATION_AMBIGUITY": 2,
+      "TYPE_BOUNDARY_RISK": 2
+    }
+  }
+}

@@ -93,39 +93,42 @@ sources:
   verification_roles:
   - english_translation
 - authority_tier: HISTORICAL_TRANSLATION
-  bulk_ingestion_status: REVIEW_BEFORE_INGESTION
+  bulk_ingestion_status: BOUNDED_PILOT_ALLOWED
   formats:
   - HTML
   - MediaWiki_API
   known_languages:
   - en
-  name: The Samaveda, Griffith translation
-  notes: Do not align until Kauthuma edition hierarchy and numbering are fixed.
-  organization: Wikisource
+  name: The Hymns of the Samaveda, Griffith translation
+  notes: Ralph T. H. Griffith, 1895. Page title and year verified first-hand 2026-09-07; the earlier entry left the year unspecified. Wikisource page categories flag transcription progress at 25 percent, so the transcription layer may be incomplete even though the underlying translation is not. Do not align until Kauthuma edition hierarchy and numbering are fixed; that is a sequencing constraint, not a rights constraint.
+  organization: Wikisource transcription of the Griffith 1895 edition
   rights:
-    notes: Historical translation appears public domain; exact Wikisource edition/revision requires verification.
+    license_url: https://en.wikisource.org/wiki/The_Sama_Veda
+    notes: Artifact-level Wikisource PD-old banner verified verbatim on 2026-09-07 - "This work was published before January 1, 1931, and is in the public domain worldwide because the author died at least 100 years ago." Griffith died 1906. Page categories include "1895 works" and "PD-old". Site-level Wikimedia footer is separately CC BY-SA and covers the transcription layer, not the translation; the two levels diverge and both are recorded. Per-page revision IDs are still to be captured.
     status: PUBLIC_DOMAIN
+    verified_at: 2026-09-07
   source_id: WIKISOURCE_GRIFFITH_SV
   url: https://en.wikisource.org/wiki/The_Sama_Veda
   verification_roles:
   - english_translation
   - alternate_citation
 - authority_tier: HISTORICAL_TRANSLATION
-  bulk_ingestion_status: SOURCE_SELECTION_REQUIRED
+  bulk_ingestion_status: ITEM_RESOLVED_ALIGNMENT_PENDING
   formats:
   - SCAN
   - OCR
   known_languages:
   - en
   name: The Texts of the White Yajurveda, Griffith translation
-  notes: Exact edition, year, scan URL, and Madhyandina alignment remain unresolved.
-  organization: Historical printed edition; digital host to be selected
+  notes: RESOLVED 2026-09-07. Edition, year and item identifier are now fixed - Ralph T. H. Griffith, 1899, E. J. Lazarus and Co., Benares. Preferred item is archive.org in.ernet.dli.2015.215626 (the 1899 original). The alternate item textswhiteyajur00grifgoog is a 1987 Munshiram Manoharlal REPRINT scan, and a modern reprint can carry its own typographic rights even where the translation does not, so the 1899 item is preferred. Not available on Wikisource - the page en.wikisource.org/wiki/The_Texts_of_the_White_Yajurveda does not exist, verified 2026-09-07. Madhyandina verse alignment remains open as a QA item, not a rights item.
+  organization: Internet Archive scan of the E. J. Lazarus and Co. edition, Benares, 1899
   rights:
-    notes: Underlying historical work is public domain; select and record a specific scan and edition
-      before use.
+    notes: PUBLIC_DOMAIN rests on the UNDERLYING WORK, never on host metadata. archive.org
+      /metadata/in.ernet.dli.2015.215626 returns NO licenseurl, NO rights and NO possible-copyright-status field - the set of licence-bearing keys is empty. Under policy rule RIGHTS-8 that silence is not a grant. The determination is instead that Ralph T. H. Griffith lived 1826-1906 and the translation was published 1899, so it is public domain by age in both the US and India. The secondary Google/Harvard scan textswhiteyajur00grifgoog does carry possible-copyright-status NOT_IN_COPYRIGHT with copyright-region US - note the hedge "possible" and the US-only scope, which is why it is corroboration and not the basis.
     status: PUBLIC_DOMAIN
+    verified_at: 2026-09-07
   source_id: GRIFFITH_WHITE_YAJURVEDA
-  url: https://archive.org/
+  url: https://archive.org/details/in.ernet.dli.2015.215626
   verification_roles:
   - english_translation
 - authority_tier: HISTORICAL_TRANSLATION
@@ -207,3 +210,314 @@ sources:
   - traditional_metadata_devata
   - traditional_metadata_chandas
   - hymn_verse_count_cross_check
+- authority_tier: SCHOLARLY_EDITION
+  bulk_ingestion_status: PROHIBITED_WITHOUT_PERMISSION
+  formats:
+  - HTML
+  known_languages:
+  - sa
+  name: Thesaurus Indogermanischer Text- und Sprachmaterialien
+  notes: Added by Agent E 2026-09-07. TITUS is the actual upstream that GRETIL's Atharvaveda files point
+    to when they say "COPYRIGHT AND TERMS OF USAGE AS FOR SOURCE FILE", so resolving TITUS was necessary
+    to interpret GRETIL. It is also the only retrievable host of a Madhyandina Vajasaneyi Samhita, a Veda
+    GRETIL does not carry at all. Confirmed to serve ACCENTED Devanagari for the Vajasaneyi Samhita by
+    direct inspection of vs003.htm. Note that this is the one source in the registry where the SITE level
+    is the only level at which terms exist; relying on it is safe only because those terms are
+    RESTRICTIVE. Inferring a restriction from a site is conservative, whereas inferring a permission from
+    a site is what policy rule RIGHTS-1 forbids. The direction of the inference is what matters.
+  organization: Johann Wolfgang Goethe University Frankfurt
+  rights:
+    holder: TITUS project; individual editors named per text
+    license_url: https://titus.uni-frankfurt.de/texte/texte2.htm
+    notes: 'CORRECTED 2026-09-07. Initially recorded RESEARCH_ONLY from the project-wide page alone;
+      that was an error of exactly the kind policy rule RIGHTS-1 exists to prevent. EVERY TITUS Veda
+      text page carries its own stricter notice, verbatim, independently verified by fetching vs001.htm,
+      svk001.htm and avs001.htm: "Copyright TITUS Project, Frankfurt a/M, 2.11.2013. No parts of this
+      document may be republished in any form without prior permission by the copyright holder." The
+      project-wide page at https://titus.uni-frankfurt.de/texte/texte2.htm says instead: "Those texts
+      that can be downloaded via http can be used freely for scholarly purposes, provided that they are
+      quoted as sources and the name(s) of the editor(s) and the date of last changes are indicated in
+      publications. The texts must not be used for any kind of commercial usage." THE TWO LEVELS
+      CONFLICT, and unusually the SITE level is the more PERMISSIVE one. Under rule RIGHTS-3 the more
+      restrictive statement controls, so the status is PERMISSION_REQUIRED. This is the clearest
+      demonstration in the registry that reading a licence page is not the same as reading THE artifact.
+      Separately, svk001.htm also carries "Copyright (C) 1998, 1999 Anshuman Pandey", confirming at
+      artifact level that the TITUS Samaveda shares the encumbered Pandey lineage.'
+    status: PERMISSION_REQUIRED
+    verified_at: 2026-09-07
+  source_id: TITUS
+  url: https://titus.uni-frankfurt.de/
+  verification_roles:
+  - machine_readable_text
+  - accented_text
+  - edition_comparison
+  - yajurveda_primary_candidate
+- authority_tier: SCHOLARLY_EDITION
+  bulk_ingestion_status: ARTIFACT_LEVEL_REVIEW_REQUIRED
+  formats:
+  - TEI_XML
+  - CATALOGUE_RECORD
+  known_languages:
+  - sa
+  name: The Sanskrit Library
+  notes: Added by Agent E 2026-09-07. Catalogues TEI XML editions of all four Vedas - Rigveda Books I-X,
+    Samaveda Kauthuma (svk.html), Vajasaneyi Samhita Madhyandina (vs.html), Atharvaveda Shaunaka
+    (avs.html). Rights are declared PER CATALOGUE RECORD and the declared licence text is IDENTICAL
+    across all four, yet the correct verdict DIFFERS per Veda because each record names a different
+    source chain and the verdict follows the chain rather than the licence label. Vajasaneyi is accepted
+    as CC_BY_NC_SA because its root is Weber 1849, public domain by age. Samaveda is held UNKNOWN because
+    its root is the Anshuman Pandey data entry whose own terms forbid modification. Atharvaveda is held
+    UNKNOWN because its root includes Orlandi, Pisa 1991, a modern edition still in copyright. This
+    source is the clearest demonstration in the registry that an identical licence string does not imply
+    an identical rights outcome. ACQUISITION IS UNRESOLVED for every one of them - the catalogue pages are
+    bibliographic records exposing no download link, and probing /TEI_MS/vs.xml returned HTTP 404.
+  organization: The Sanskrit Library, Providence, Rhode Island
+  rights:
+    holder: The Sanskrit Library
+    license_url: http://creativecommons.org/licenses/by-nc-sa/3.0/
+    notes: 'Source-level status is UNKNOWN by design because it varies per artifact; see
+      data/registry/source_artifacts.yaml for the per-Veda verdicts. Each catalogue record carries this
+      verbatim declaration, retrieved 2026-09-07: "Copyright (C) 2010 The Sanskrit Library" and "All
+      rights reserved other than those granted under the Creative Commons Attribution Non-Commercial
+      Share Alike license available in full at http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode
+      , and summarized at http://creativecommons.org/licenses/by-nc-sa/3.0/ . Permission is granted to
+      build upon this work non-commercially, as long as credit is explicitly acknowledged exactly as
+      described herein and derivative work is distributed under the same license." NOTE THE INVERSE OF THE
+      GRETIL PATTERN: there is NO site-level licence at all - sanskritlibrary.org/copyright.html and
+      /terms.html both return HTTP 404, verified 2026-09-07 - so the artifact level is the only level at
+      which a licence exists. A source can be rights-clear per artifact while having no site licence
+      whatsoever.'
+    status: UNKNOWN
+    verified_at: 2026-09-07
+  source_id: SANSKRIT_LIBRARY
+  url: https://sanskritlibrary.org/
+  verification_roles:
+  - machine_readable_text
+  - edition_comparison
+  - four_veda_primary_candidate
+- authority_tier: COMMUNITY_TRANSCRIPTION
+  bulk_ingestion_status: REVISION_PINNED_PILOT_ALLOWED
+  formats:
+  - MEDIAWIKI_TRANSCRIPTION
+  - MediaWiki_API
+  known_languages:
+  - sa
+  name: Sanskrit Wikisource
+  notes: Added by Agent E 2026-09-07 after auditing snapshots that Agents C and D had already taken.
+    Supplies ACCENTED DEVANAGARI primary text, which no other rights-clear source in the registry does.
+    Materially changes two verdicts. For Sukla Yajurveda it is now the strongest primary-Sanskrit
+    candidate - complete, all 40 adhyayas with no gaps, accented, revision-pinned, and redistributable -
+    which matters because GRETIL does not host that Veda at all, TITUS grants no redistribution, and The
+    Sanskrit Library bytes are unreachable. It also carries sarvanukramani and rishisuci pages that fill
+    the previously empty Sukla Yajurveda traditional-metadata role. For Samaveda it may break the Anshuman
+    Pandey monopoly that blocks every other Kauthuma text. AUTHORITY CAVEAT, which is the real limitation
+    here - this is a COMMUNITY transcription, not a scholarly edition. Page headers carry EMPTY year and
+    notes fields, so the underlying printed edition is UNIDENTIFIED, exactly the edition-identity defect
+    that independently disqualified the GRETIL Samaveda TEI. Rights are clear; edition provenance is not.
+    Accuracy against a printed edition is unverified. Always pin per-page revision ids, which the
+    MediaWiki API supplies and our snapshots already record.
+  organization: Wikimedia Foundation
+  rights:
+    holder: Wikisource contributors, collectively
+    license_url: https://creativecommons.org/licenses/by-sa/4.0/
+    notes: 'Site-wide licence taken AUTHORITATIVELY from the MediaWiki API rather than a scraped footer:
+      action=query&meta=siteinfo&siprop=rightsinfo returned url
+      "https://creativecommons.org/licenses/by-sa/4.0/deed.sa" and text "Creative Commons
+      Attribution-Share Alike 4.0" on 2026-09-07. Recording a SITE-level licence as operative is
+      justified here, and the justification is specific rather than a relaxation of policy rule RIGHTS-1:
+      the underlying Vedic mantra text is ancient and not copyrightable, so the community transcription is
+      the ONLY copyrightable contribution, and a Wikimedia project licenses contributions site-wide by
+      construction. Contrast the English Wikisource Griffith and Whitney pages, where the copyrightable
+      work is a modern translation that is public domain by age and the site CC BY-SA covers only an
+      incidental transcription layer - there the ARTIFACT-level PD banner is what we rely on, and the
+      site licence is deliberately not depended upon. Same platform, two different operative levels,
+      decided by what is actually copyrightable in each case. Share-alike is a live constraint: any
+      VedaGraph output incorporating this text must itself be CC BY-SA compatible.'
+    status: CC_BY_SA
+    verified_at: 2026-09-07
+  source_id: WIKISOURCE_SA
+  url: https://sa.wikisource.org/
+  verification_roles:
+  - machine_readable_text
+  - accented_text
+  - devanagari_text
+  - hierarchy
+  - traditional_metadata
+  - yajurveda_primary_candidate
+  - samaveda_primary_candidate
+- authority_tier: SCHOLARLY_EDITION
+  bulk_ingestion_status: COVERAGE_INSUFFICIENT_RIGHTS_CLEAR
+  formats:
+  - CONLLU
+  known_languages:
+  - sa
+  name: Digital Corpus of Sanskrit
+  notes: 'Added by Agent E 2026-09-07 on Agent C evidence. Carries the MOST PERMISSIVE licence found for
+    any Veda primary text in this registry - CC BY 4.0, with neither a non-commercial nor a share-alike
+    restriction, which nothing else here achieves. It is nonetheless not selected for any role, and the
+    reason is worth recording: rights are not the binding constraint here, COVERAGE is. Its Vajasaneyi
+    Samhita (Madhyandina, text_id 523) covers only adhyayas 1-15 of 40 and carries ZERO accents, and
+    Vedic accent is part of the text rather than decoration. Registered because it is the only artifact
+    that could support a commercially licensable derivative, and because its morphological annotation is
+    an independent cross-check on the selected Wikisource text. Correct host is
+    http://www.sanskrit-linguistics.org/dcs/; dcs.uni-heidelberg.de no longer resolves.'
+  organization: Oliver Hellwig; formerly Heidelberg University
+  rights:
+    holder: Digital Corpus of Sanskrit project
+    license_url: https://creativecommons.org/licenses/by/4.0/
+    notes: 'Artifact-level, verbatim from dcs/data/conllu/readme.md: "The data in this directory are
+      licensed under the Creative Commons BY 4.0 (CC BY 4.0) license." UNRESOLVED DISCREPANCY, recorded
+      rather than resolved in our favour: the DCS site impressum states 3.0 while the data readme states
+      4.0. CC BY 3.0 and 4.0 differ in attribution and termination detail, so this is not cosmetic and
+      should be clarified with the project before the data is relied upon. Not fetched or snapshotted by
+      Agent E, so no artifact checksum exists yet.'
+    status: CC_BY
+    verified_at: 2026-09-07
+  source_id: DCS
+  url: http://www.sanskrit-linguistics.org/dcs/
+  verification_roles:
+  - machine_readable_text
+  - linguistic_annotation
+  - edition_comparison
+- authority_tier: COMMUNITY_TRANSCRIPTION
+  bulk_ingestion_status: PER_FILE_LICENCE_REQUIRED
+  formats:
+  - AUDIO_OGG
+  known_languages:
+  - sa
+  name: Wikimedia Commons
+  notes: 'Added by Agent E 2026-09-07 on Agent B evidence. HOLDS THE ONLY MIRRORABLE AUDIO FOUND IN THE
+    ENTIRE FOUR-VEDA SURVEY - 474 Ogg files of Kauthuma saman/gana recitation, referenced from 444
+    Sanskrit Wikisource pages. Every other audio asset examined across every other host is
+    REFERENCE_ONLY, PERMISSION_REQUIRED or UNKNOWN, so this single source overturns an otherwise
+    zero-mirrorable audio position. It is also the first and only CC0 material in the registry: 16 of the
+    474 files are CC0 and 458 are CC BY-SA 4.0. CRITICAL HANDLING RULE - licences are PER FILE and are
+    NOT uniform, so they must be carried per file and never flattened to a single collection licence.
+    Authority caveat, which is the real trade-off: reciters are unnamed and files are credited "Own
+    work", so recitation authority is LOWER than IGNCA''s. For Samaveda audio the choice is therefore
+    explicitly between authority (VHP, unmirrorable) and usability (this, mirrorable) - a curation
+    decision that should be made deliberately.'
+  organization: Wikimedia Foundation
+  rights:
+    holder: Individual uploaders, per file
+    license_url: https://creativecommons.org/licenses/by-sa/4.0/
+    notes: 'Source-level status CC_BY_SA reflects the majority licence, but rights are genuinely PER FILE
+      and were verified per file by Agent B through the Commons imageinfo/extmetadata API rather than
+      inferred from Commons'' general terms: 458 files CC BY-SA 4.0, 16 files CC0, 0 files missing a
+      licence. Example verbatim - UsageTerms "Creative Commons Attribution-Share Alike 4.0", LicenseUrl
+      https://creativecommons.org/licenses/by-sa/4.0, Credit "Own work". Checking per file rather than
+      trusting the platform is exactly what policy rule RIGHTS-1 requires, and here it paid off by
+      surfacing a 16-file CC0 subset that a platform-level reading would have mislabelled.'
+    status: CC_BY_SA
+    verified_at: 2026-09-07
+  source_id: WIKIMEDIA_COMMONS
+  url: https://commons.wikimedia.org/
+  verification_roles:
+  - audio
+  - samaveda_gana_audio
+- authority_tier: COMMUNITY_TRANSCRIPTION
+  bulk_ingestion_status: RECENSION_MISMATCH_DO_NOT_ALIGN
+  formats:
+  - HTML
+  known_languages:
+  - en
+  name: Internet Sacred Text Archive
+  notes: 'Added by Agent E 2026-09-07 on Agent B evidence, and registered primarily as a WARNING rather
+    than as a usable source. It hosts the only COMPLETE Griffith Samaveda translation located, and that
+    translation is of the RANAYANIYA recension, not the Kauthuma recension VG:WORK:SV:KAU is defined as.
+    Griffith''s own preface says verbatim "I have followed Benfey''s text" and identifies Benfey''s
+    edition as Ranayaniya; structurally, Griffith''s Part II has six Books where the Kauthuma Uttararcika
+    has nine prapathakas. Aligning it to a Kauthuma Sanskrit text would produce a silently WRONG
+    alignment, not an approximate one. The same preface also establishes that Satyavrata Samasrami''s
+    Bibliotheca Indica edition is Ranayaniya, so the archive.org DLI Samasrami scans are not a Kauthuma
+    witness either. Site returns HTTP 403 to automated agents.'
+  organization: Internet Sacred Text Archive
+  rights:
+    license_url: https://sacred-texts.com/
+    notes: 'No per-artifact statement exists. The only host signal is a site-wide HTML meta element,
+      verbatim: <meta name="copyright" content="Public Domain and Creative Commons">. That is generic,
+      names two mutually distinct regimes without saying which applies to what, and is not
+      artifact-level, so under policy rule RIGHTS-1 it carries NO weight and is recorded only as an
+      observation. PUBLIC_DOMAIN rests instead on the underlying work: Griffith died 1906, translation
+      published 1895.'
+    status: PUBLIC_DOMAIN
+    verified_at: 2026-09-07
+  source_id: SACRED_TEXTS
+  url: https://sacred-texts.com/
+  verification_roles:
+  - english_translation_reference
+  - recension_warning
+- authority_tier: SCHOLARLY_EDITION
+  bulk_ingestion_status: PERMISSIVE_LICENCE_RESIDUAL_CHAIN_RISK
+  formats:
+  - AUDIO_WAV_DATASET
+  - CSV
+  known_languages:
+  - sa
+  name: Vedavani Dataset
+  notes: 'Added by Agent E 2026-09-07 on Agent D evidence. ACL 2025, arXiv:2506.00145. Carries the ONLY
+    PERMISSIVE audio licence found in the whole four-Veda survey - Apache-2.0, with neither a
+    non-commercial nor a share-alike restriction - and is uniquely the only audio asset anywhere with
+    PER-MANTRA granularity paired with Devanagari transcription. Every other audio asset surveyed has no
+    timing or cue artifact at all. Two limits on that: the transcription is UNACCENTED and it carries no
+    AVS kanda.sukta.mantra reference, so mapping it onto the VedaGraph spine must be a reviewable DERIVED
+    layer produced by text-matching, never asserted as source data. Recension and recitation type are
+    both UNVERIFIED - the dataset states neither. THE REASON THIS IS NOT SIMPLY GOOD NEWS: its
+    Atharvaveda_Part_NNN filenames match the archive.org Veda Prasara Samithi upload exactly, so at least
+    part of the source audio is almost certainly that recording, and an Apache-2.0 grant asserted by the
+    DATASET AUTHORS over third-party recordings is not a verified chain of title. Agent E separately
+    rejects the upstream CC Public Domain Mark as not credible for a 2020 studio recording still sold on
+    CD. Residual risk, flagged for a human decision before publication rather than treated as settled.'
+  organization: Sanganaka; Vedavani project authors
+  rights:
+    holder: Vedavani dataset authors
+    license_url: https://www.apache.org/licenses/LICENSE-2.0
+    notes: 'Verbatim from the HuggingFace cardData license field and README front-matter: "License -
+      Apache License 2.0" (license: apache-2.0). Recorded as APACHE_2_0 because that is what the artifact
+      states and the dataset is the authors own work product. The chain-of-title caveat above is recorded
+      on the artifact rather than downgrading the status, because the stated licence is genuine and the
+      risk attaches to the upstream recordings rather than to the dataset licence.'
+    status: APACHE_2_0
+    verified_at: 2026-09-07
+  source_id: VEDAVANI
+  url: https://huggingface.co/datasets/sanganaka/Vedavani-Dataset
+  verification_roles:
+  - audio
+  - audio_text_alignment
+- authority_tier: AGGREGATOR
+  bulk_ingestion_status: PER_ITEM_RIGHTS_REQUIRED
+  formats:
+  - SCAN
+  - OCR
+  - AUDIO_MP3
+  known_languages:
+  - sa
+  - en
+  - hi
+  name: Internet Archive
+  notes: 'Added by Agent E 2026-09-07. Registered as a HOST, not as a rights source, because it asserts no
+    rights over uploader content: the per-item licenseurl field is the ONLY rights signal, and it is
+    uploader-asserted. Concrete measure of how weak that signal is, from the audio survey: of 199 Veda
+    audio items, only 75 carry any licenseurl at all - the other 124, or 62 percent, have no licence field
+    and are therefore all-rights-reserved by default. Of the 75, 47 are NC-ND, which forbids the segmented
+    derivatives our alignment work produces, and 21 carry CC Public Domain Mark applied by re-uploaders to
+    2020 studio recordings. So the LICENSED minority is more dangerous than the silent majority. Items are
+    adjudicated individually in data/registry/source_artifacts.yaml; a permissive classification here rests
+    on the underlying work''s age (rule RIGHTS-8) or on a grant from a party with standing, never on the
+    host. Also note IA''s own Terms assert access is "granted for scholarship and research purposes only".'
+  organization: Internet Archive
+  rights:
+    notes: 'Source-level status is UNKNOWN by design and must stay that way: rights are per item and
+      frequently absent, contradictory, or asserted by parties without standing. See rules RIGHTS-8,
+      RIGHTS-10 and RIGHTS-11. Worked example in our own set: the same Veda Prasara Samithi recording
+      appears twice with byte-identical file sets, once tagged CC Public Domain Mark and once with no
+      licence at all - the same bytes cannot be both public domain and all rights reserved, which shows the
+      tag is uploader noise rather than a rights position.'
+    status: UNKNOWN
+    verified_at: 2026-09-07
+  source_id: ARCHIVE_ORG
+  url: https://archive.org/
+  verification_roles:
+  - scan_discovery
+  - audio_discovery
+  - edition_comparison

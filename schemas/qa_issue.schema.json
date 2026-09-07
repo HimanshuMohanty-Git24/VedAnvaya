@@ -1,0 +1,74 @@
+{
+  "$defs": {
+    "QASeverity": {
+      "enum": [
+        "INFO",
+        "WARNING",
+        "ERROR"
+      ],
+      "title": "QASeverity",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "check_id": {
+      "title": "Check Id",
+      "type": "string"
+    },
+    "details": {
+      "additionalProperties": true,
+      "title": "Details",
+      "type": "object"
+    },
+    "entity_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Entity Id"
+    },
+    "file": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "File"
+    },
+    "issue_id": {
+      "format": "uuid",
+      "title": "Issue Id",
+      "type": "string"
+    },
+    "message": {
+      "title": "Message",
+      "type": "string"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "severity": {
+      "$ref": "#/$defs/QASeverity"
+    }
+  },
+  "required": [
+    "issue_id",
+    "check_id",
+    "severity",
+    "message"
+  ],
+  "title": "QAIssue",
+  "type": "object"
+}

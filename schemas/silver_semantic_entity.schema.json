@@ -1,0 +1,110 @@
+{
+  "$defs": {
+    "SemanticNodeType": {
+      "description": "Categories a semantic entity may belong to.\n\nChosen to be usable across the four Vedas, not tuned to the Rigveda. Adding a type\nis an ontology version bump, because every stored candidate names the version it was\nproduced under.",
+      "enum": [
+        "CONCEPT",
+        "PHILOSOPHICAL_CONCEPT",
+        "THEME",
+        "RITUAL",
+        "OFFERING",
+        "SUBSTANCE",
+        "PLANT",
+        "ANIMAL",
+        "OBJECT",
+        "PLACE",
+        "RIVER",
+        "REGION",
+        "NATURAL_PHENOMENON",
+        "COSMIC_ENTITY",
+        "ACTION",
+        "QUALITY",
+        "STATE"
+      ],
+      "title": "SemanticNodeType",
+      "type": "string"
+    },
+    "SilverEvidenceReference": {
+      "additionalProperties": false,
+      "description": "An identifier inside the EvidencePacket used for the independent judgment.",
+      "properties": {
+        "kind": {
+          "enum": [
+            "PASSAGE",
+            "TRANSLATION",
+            "TOKEN",
+            "ENTITY",
+            "PARALLEL"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "note": {
+          "default": "",
+          "title": "Note",
+          "type": "string"
+        },
+        "reference_id": {
+          "minLength": 1,
+          "title": "Reference Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "reference_id"
+      ],
+      "title": "SilverEvidenceReference",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "An entity used by the silver reviewer, canonical or packet-bounded candidate.",
+  "properties": {
+    "candidate_key": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Candidate Key"
+    },
+    "entity_key": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Entity Key"
+    },
+    "evidence": {
+      "items": {
+        "$ref": "#/$defs/SilverEvidenceReference"
+      },
+      "title": "Evidence",
+      "type": "array"
+    },
+    "label": {
+      "minLength": 1,
+      "title": "Label",
+      "type": "string"
+    },
+    "node_type": {
+      "$ref": "#/$defs/SemanticNodeType"
+    }
+  },
+  "required": [
+    "label",
+    "node_type"
+  ],
+  "title": "SilverSemanticEntity",
+  "type": "object"
+}

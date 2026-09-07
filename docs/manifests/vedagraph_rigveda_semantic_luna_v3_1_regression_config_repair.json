@@ -1,0 +1,8 @@
+{
+  "canonical_selection_sha256": "26d2f85aec91e621d43444931d40fc81e08a7c9d533bdce820c86945c398783c",
+  "new_yaml_sha256": "e36bfc458dd72cfc664525de089efade19edffc0c7a40b40c834aaa00ec1dae5",
+  "old_malformed_yaml_sha256": "040e541d404cebf671bf8f11e0c54400ea16d6b7761d1ef3a383ad0d3a716245",
+  "reason": "YAML_UNQUOTED_COLON_SERIALIZATION_DEFECT",
+  "serialization_repair_before_execution": true,
+  "serializer": "yaml.safe_dump(allow_unicode=true, default_flow_style=false, sort_keys=false)"
+}

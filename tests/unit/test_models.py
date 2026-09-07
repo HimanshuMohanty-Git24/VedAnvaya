@@ -13,8 +13,14 @@ from vedagraph.models.enums import (
 
 
 def test_rights_enum_is_complete() -> None:
+    """The rights vocabulary is closed at 13 classes. Growing it is a decision.
+
+    CC0 was added for artifacts carrying an explicit CC0 1.0 waiver, which is not the
+    same fact as PUBLIC_DOMAIN (reached by law) and must not be collapsed into it.
+    """
     assert {item.value for item in RightsStatus} == {
         "PUBLIC_DOMAIN",
+        "CC0",
         "CC_BY",
         "CC_BY_SA",
         "CC_BY_NC",

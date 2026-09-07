@@ -1,0 +1,389 @@
+{
+  "$defs": {
+    "Explicitness": {
+      "description": "How the model says it got there. Self-reported, and validated against evidence.",
+      "enum": [
+        "EXPLICIT",
+        "STRONG_INFERENCE",
+        "INTERPRETIVE"
+      ],
+      "title": "Explicitness",
+      "type": "string"
+    },
+    "OntologyGapKind": {
+      "description": "A requested concept that cannot be represented by the current ontology.",
+      "enum": [
+        "NODE_TYPE",
+        "PREDICATE",
+        "OTHER"
+      ],
+      "title": "OntologyGapKind",
+      "type": "string"
+    },
+    "SemanticNodeType": {
+      "description": "Categories a semantic entity may belong to.\n\nChosen to be usable across the four Vedas, not tuned to the Rigveda. Adding a type\nis an ontology version bump, because every stored candidate names the version it was\nproduced under.",
+      "enum": [
+        "CONCEPT",
+        "PHILOSOPHICAL_CONCEPT",
+        "THEME",
+        "RITUAL",
+        "OFFERING",
+        "SUBSTANCE",
+        "PLANT",
+        "ANIMAL",
+        "OBJECT",
+        "PLACE",
+        "RIVER",
+        "REGION",
+        "NATURAL_PHENOMENON",
+        "COSMIC_ENTITY",
+        "ACTION",
+        "QUALITY",
+        "STATE"
+      ],
+      "title": "SemanticNodeType",
+      "type": "string"
+    },
+    "SemanticPredicate": {
+      "description": "Every relation name an extraction may emit, and the ones it may not.\n\nThe forbidden members exist so that a proposal naming one is rejected as a *policy*\ndecision with a recorded reason, instead of failing schema validation as an unknown\nstring. The difference matters when reading a rejection report.",
+      "enum": [
+        "EXPRESSES",
+        "DESCRIBES",
+        "PRAISES",
+        "INVOKES",
+        "REQUESTS",
+        "ASSOCIATED_WITH",
+        "INVOLVES_RITUAL",
+        "INVOLVES_OFFERING",
+        "INVOLVES_SUBSTANCE",
+        "REFERS_TO_PLACE",
+        "REFERS_TO_NATURAL_PHENOMENON",
+        "DESCRIBES_ACTION",
+        "HAS_THEME",
+        "CONTRASTS_WITH",
+        "SYMBOLIZES",
+        "REPRESENTS",
+        "IS_GOD_OF",
+        "MEANS",
+        "CAUSES"
+      ],
+      "title": "SemanticPredicate",
+      "type": "string"
+    },
+    "SilverEvidenceReference": {
+      "additionalProperties": false,
+      "description": "An identifier inside the EvidencePacket used for the independent judgment.",
+      "properties": {
+        "kind": {
+          "enum": [
+            "PASSAGE",
+            "TRANSLATION",
+            "TOKEN",
+            "ENTITY",
+            "PARALLEL"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "note": {
+          "default": "",
+          "title": "Note",
+          "type": "string"
+        },
+        "reference_id": {
+          "minLength": 1,
+          "title": "Reference Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "reference_id"
+      ],
+      "title": "SilverEvidenceReference",
+      "type": "object"
+    },
+    "SilverOntologyGap": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "$ref": "#/$defs/OntologyGapKind"
+        },
+        "note": {
+          "minLength": 1,
+          "title": "Note",
+          "type": "string"
+        },
+        "requested_value": {
+          "minLength": 1,
+          "title": "Requested Value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "requested_value",
+        "note"
+      ],
+      "title": "SilverOntologyGap",
+      "type": "object"
+    },
+    "SilverSemanticAssertion": {
+      "additionalProperties": false,
+      "description": "One conservative relation independently supported by the packet.",
+      "properties": {
+        "assertion_id": {
+          "minLength": 1,
+          "title": "Assertion Id",
+          "type": "string"
+        },
+        "confidence": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/SilverEvidenceReference"
+          },
+          "minItems": 1,
+          "title": "Evidence",
+          "type": "array"
+        },
+        "explicitness": {
+          "$ref": "#/$defs/Explicitness"
+        },
+        "object_entity_key": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Object Entity Key"
+        },
+        "object_label": {
+          "minLength": 1,
+          "title": "Object Label",
+          "type": "string"
+        },
+        "object_node_type": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SemanticNodeType"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "predicate": {
+          "$ref": "#/$defs/SemanticPredicate"
+        },
+        "rationale_code": {
+          "minLength": 1,
+          "title": "Rationale Code",
+          "type": "string"
+        },
+        "subject": {
+          "minLength": 1,
+          "title": "Subject",
+          "type": "string"
+        }
+      },
+      "required": [
+        "assertion_id",
+        "subject",
+        "predicate",
+        "object_label",
+        "explicitness",
+        "evidence",
+        "rationale_code",
+        "confidence"
+      ],
+      "title": "SilverSemanticAssertion",
+      "type": "object"
+    },
+    "SilverSemanticEntity": {
+      "additionalProperties": false,
+      "description": "An entity used by the silver reviewer, canonical or packet-bounded candidate.",
+      "properties": {
+        "candidate_key": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Candidate Key"
+        },
+        "entity_key": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Entity Key"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/SilverEvidenceReference"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "label": {
+          "minLength": 1,
+          "title": "Label",
+          "type": "string"
+        },
+        "node_type": {
+          "$ref": "#/$defs/SemanticNodeType"
+        }
+      },
+      "required": [
+        "label",
+        "node_type"
+      ],
+      "title": "SilverSemanticEntity",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "A sealed independent review. It is never a human annotation.",
+  "properties": {
+    "batch_id": {
+      "pattern": "^batch_\\d{3}$",
+      "title": "Batch Id",
+      "type": "string"
+    },
+    "citation": {
+      "minLength": 1,
+      "title": "Citation",
+      "type": "string"
+    },
+    "entities": {
+      "items": {
+        "$ref": "#/$defs/SilverSemanticEntity"
+      },
+      "title": "Entities",
+      "type": "array"
+    },
+    "evidence_packet_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Evidence Packet Hash",
+      "type": "string"
+    },
+    "mantra_id": {
+      "pattern": "^VG:RV:SAK:M\\d{2}:S\\d{3}:V\\d{3}$",
+      "title": "Mantra Id",
+      "type": "string"
+    },
+    "no_claim": {
+      "title": "No Claim",
+      "type": "boolean"
+    },
+    "no_claim_code": {
+      "anyOf": [
+        {
+          "const": "NO_SUPPORTED_SEMANTIC_ASSERTION",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "No Claim Code"
+    },
+    "ontology_gaps": {
+      "items": {
+        "$ref": "#/$defs/SilverOntologyGap"
+      },
+      "title": "Ontology Gaps",
+      "type": "array"
+    },
+    "ontology_version": {
+      "minLength": 1,
+      "title": "Ontology Version",
+      "type": "string"
+    },
+    "provenance": {
+      "const": "MODEL_REVIEWED_SILVER",
+      "default": "MODEL_REVIEWED_SILVER",
+      "title": "Provenance",
+      "type": "string"
+    },
+    "reasoning_effort": {
+      "const": "high",
+      "default": "high",
+      "title": "Reasoning Effort",
+      "type": "string"
+    },
+    "review_run_id": {
+      "minLength": 1,
+      "title": "Review Run Id",
+      "type": "string"
+    },
+    "reviewed_at": {
+      "format": "date-time",
+      "title": "Reviewed At",
+      "type": "string"
+    },
+    "reviewer_model": {
+      "minLength": 1,
+      "title": "Reviewer Model",
+      "type": "string"
+    },
+    "reviewer_runtime": {
+      "const": "CODEX_DIRECT",
+      "default": "CODEX_DIRECT",
+      "title": "Reviewer Runtime",
+      "type": "string"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "semantic_assertions": {
+      "items": {
+        "$ref": "#/$defs/SilverSemanticAssertion"
+      },
+      "title": "Semantic Assertions",
+      "type": "array"
+    },
+    "uncertainties": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Uncertainties",
+      "type": "array"
+    }
+  },
+  "required": [
+    "mantra_id",
+    "citation",
+    "reviewer_model",
+    "ontology_version",
+    "evidence_packet_hash",
+    "no_claim",
+    "reviewed_at",
+    "review_run_id",
+    "batch_id"
+  ],
+  "title": "SilverSemanticAnnotation",
+  "type": "object"
+}

@@ -1,0 +1,943 @@
+# Atharvaveda-Samhita source candidate matrix - Agent D fragment
+#
+# Scope: VG:WORK:AV:SAU (Saunaka recension, AVS). Paippalada (AVP) appears ONLY as an
+# explicit non-candidate, so that a future reader cannot mistake it for a parallel of AVS.
+#
+# This file is EVIDENCE, not adjudication. Agent E owns data/registry/sources.yaml,
+# source_artifacts.yaml and rights.yaml. `rights_status_recommended` below is a
+# recommendation with its evidence attached; Agent E rules.
+#
+# Rule applied throughout: artifact-level rights and site/repository-level rights are
+# recorded SEPARATELY, and artifact rights are never inferred from the site. Where they
+# conflict, the conflict is stated rather than resolved by preference.
+#
+# Verification date: 2026-09-07. Every entry marked verified was fetched, not recalled.
+
+fragment_version: atharvaveda-sources-v2
+work_id: VG:WORK:AV:SAU
+recension: Shaunaka
+verification_date: 2026-09-07
+
+# =======================================================================================
+# SOURCE_ID RULING FROM THE RIGHTS AUTHORITY - recorded because it corrects this fragment
+# =======================================================================================
+# This fragment originally proposed GRETIL_AVS and VEDAWEB_AVS as new source_ids. That was
+# WRONG and has been overruled. They are new ARTIFACTS of GRETIL and VEDAWEB, both already
+# registered. Registering them as sources would assert four hosts where there are two, and
+# would break the rights logic, because the entire purpose of the artifact layer is that
+# rights differ per FILE within one host. This fragment's own evidence proves the point:
+# VedaWeb's AVS Sanskrit resource reproduces the TITUS no-republication clause while its
+# Whitney translation resource returns a null licence - same host, same Veda, same API,
+# opposite verdicts. A source-level rights value for "VEDAWEB_AVS" could not be correct.
+#
+# The pilot build now reads Source and SourceArtifact records from data/registry via
+# load_sources() / load_source_artifacts() and constructs neither locally. Registered ids:
+#   GRETIL.AV.SAUNAKA.ACCENTED.HTML                source_id GRETIL
+#   GRETIL.AV.SAUNAKA.UNACCENTED.HTML              source_id GRETIL
+#   VEDAWEB.AVS.WHITNEY_LANMAN_1905.PLAINTEXT.L2   source_id VEDAWEB
+#   VEDAWEB.AVS.SANSKRIT.TITUS.PLAINTEXT           source_id VEDAWEB  (not ingested)
+# The source_id values used below are retained as this fragment's own research labels; the
+# registry is the authority.
+#
+# Raw snapshot directories keep the local namespaces GRETIL_AVS and VEDAWEB_AVS on purpose,
+# so Atharvaveda snapshots do not mix into the Rigveda's data/raw/gretil/ and data/raw/
+# vedaweb/. A raw directory is storage layout; the registry source_id is the contract.
+
+sources:
+
+  # =====================================================================================
+  # SELECTED - primary Sanskrit
+  # =====================================================================================
+  - source_id: GRETIL_AVS
+    role: PRIMARY_SANSKRIT
+    selected: true
+    verified: true
+    authority_tier: SCHOLARLY_EDITION
+    site: >-
+      GRETIL (Goettingen Register of Electronic Texts in Indian Languages), SUB Goettingen
+    site_url: https://gretil.sub.uni-goettingen.de/gretil.html
+    work: Atharvaveda-Samhita
+    artifact_recension: Shaunaka
+    recension_evidence: >-
+      Proved from the artifact by two independent witnesses, not from the filename.
+      (1) document title reads "Atharvaveda-Samhita, Saunaka recension, ACCENTED TEXT".
+      (2) all 11,395 body locators are prefixed AVS_ with the palatal sibilant, for example
+      (AVS_1,1.1a) - the recension marker is present per verse in the data, not only in a
+      header that could belong to a swapped file.
+    edition: >-
+      Gli inni dell' Atharvaveda (Saunaka), trasliterazione a cura di Chatia Orlandi,
+      Pisa 1991, collated with R. Roth and W.D. Whitney, Atharva Veda Sanhita, Berlin 1856.
+      Books 11-20 improved by Arlo Griffiths (2000) and Philipp Kubisch (2007); revised by
+      Arlo Griffiths, August 2009.
+    provenance_chain: >-
+      Roth/Whitney 1856 plus Orlandi 1991 -> data entry by Vladimir Petr and Petr Vavrousek
+      (Praha 1996) -> TITUS redaction by Jost Gippert (1997-2012) -> GRETIL re-host as
+      legacy HTML. GRETIL is a RE-HOST, not the rights holder; its own introduction says it
+      provides "the contributions of varying sources and quality in an appropriately
+      normalized way".
+    text_type: >-
+      samhita-patha, continuous text with explicit pada divisions
+    format: >-
+      legacy HTML, one BR-separated line per pada, each line prefixed by a parenthesised
+      locator
+    format_rank: 3
+    format_rank_note: >-
+      Machine-readable text. Structured XML/TEI was NOT available for the Saunaka recension
+      at all - see the gaps section. No OCR was performed or needed.
+    encoding: >-
+      UTF-8, Latin scholarly transliteration (NOT Devanagari)
+    machine_readable: true
+    structural_addressability: >-
+      per-mantra AND per-pada, explicit in every line
+    artifacts:
+      - source_artifact_id: GRETIL.AVS.SAUNAKA.TITUS.ACCENTED.2009
+        url: https://gretil.sub.uni-goettingen.de/gretil/1_sanskr/1_veda/1_sam/avs_acu.htm
+        http_status: 200
+        byte_length: 1114524
+        sha256: cd89bd1e29e6158d7c3c7bcb607b8e4eed4c7556c8c2027dec039f56736adddb
+        local_snapshot: data/raw/gretil_avs/2026-09-07/cd89bd1e29e6158d7c3c7bcb607b8e4eed4c7556c8c2027dec039f56736adddb.htm
+        accent_status: ACCENTED_VERIFIED
+        accent_evidence: >-
+          Declares "ACCENTED TEXT"; 5843 of 5843 parsed units test positive under
+          has_vedic_accents(). Encoding uses COMBINING LATIN marks, NOT Devanagari svaras:
+          udatta is U+0301 combining acute, svarita is U+0300 combining grave. No U+0951 or
+          U+0952 and no Vedic Extensions codepoint occurs anywhere in the file. Pluti is
+          written as an inline digit 3, for example aasii3d at AVS 12.5.50.
+        completeness: >-
+          COMPLETE. 20 kandas, 731 suktas, 5,839 distinct mantras, 11,395 padas, all
+          computed from the snapshot. Sukta numbering is 1..N contiguous in all twenty books.
+      - source_artifact_id: GRETIL.AVS.SAUNAKA.TITUS.UNACCENTED.2009
+        url: https://gretil.sub.uni-goettingen.de/gretil/1_sanskr/1_veda/1_sam/avs___u.htm
+        http_status: 200
+        byte_length: 1024198
+        sha256: 7e3f74f313d1b4348bf9e1f60a80e03bb72709994b85585a4f854a51bf57272c
+        local_snapshot: data/raw/gretil_avs/2026-09-07/7e3f74f313d1b4348bf9e1f60a80e03bb72709994b85585a4f854a51bf57272c.htm
+        accent_status: UNACCENTED_VERIFIED
+        accent_evidence: >-
+          Declares "UNACCENTED TEXT"; 0 of 5843 units test positive.
+        completeness: >-
+          Identical structure to the accented artifact - 5,843 units in exactly the same
+          order.
+        independence_warning: >-
+          NOT an independent witness. It is a mechanical accent-strip of the accented file.
+          Evidence: (a) all 153 sampled mantras classify as ACCENT_ONLY with zero other
+          differences; (b) the accent-removal transform corrupted the file's own preamble,
+          which reads "WD. Whitney" with a retroflex D where the accented file reads
+          "W.D. Whitney". Do not cite it as cross-edition corroboration of the text.
+    artifact_rights_verbatim: |
+      THIS GRETIL TEXT FILE IS FOR REFERENCE PURPOSES ONLY!
+      COPYRIGHT AND TERMS OF USAGE AS FOR SOURCE FILE.
+    artifact_rights_location: >-
+      Preamble of both avs_acu.htm and avs___u.htm, immediately after the edition
+      statement. Extracted programmatically by
+      GretilAVSAdapter.extract_header_metadata().licence_statement_verbatim, so the quote is
+      machine-derived from the snapshot rather than transcribed by hand.
+    artifact_rights_reading: >-
+      This is not a licence. It is a disclaimer that DEFERS to the upstream source file,
+      which the artifact itself identifies as the TITUS edition. The governing terms are
+      therefore TITUS's - recorded separately under source_id TITUS_AVS below.
+    artifact_declares_no_cc_licence: true
+    important_contrast: >-
+      GRETIL's Rigveda TEI file declares CC BY-NC-SA 4.0 in a TEI availability element. The
+      Atharvaveda files are NOT TEI, have NO availability element, and declare NO Creative
+      Commons licence of any kind. The Rigveda licence tells us nothing here.
+    site_rights_verbatim: null
+    site_rights_finding: >-
+      NONE FOUND. The GRETIL index page gretil.html (1,033,721 bytes) contains no occurrence
+      of licence, license, copyright, terms of use, Creative Commons or public domain
+      anywhere. Both https://gretil.sub.uni-goettingen.de/ and /gretil.htm are 59-byte
+      meta-refresh redirects to gretil.html. There are no about, terms, legal or impressum
+      links in the index. GRETIL declares no site-level licence at all.
+    site_directory_listing: >-
+      HTTP 403 on /gretil/1_sanskr/1_veda/1_sam/ - no directory indexes
+    artifact_vs_site_conflict: >-
+      NO CONFLICT, because there is no site-level statement to conflict with. The only
+      applicable statement is the artifact's own FOR REFERENCE PURPOSES ONLY.
+    rights_status_recommended: REFERENCE_ONLY
+    rights_recommendation_basis: >-
+      The artifact's own words are FOR REFERENCE PURPOSES ONLY. Redistribution is NOT
+      established. Local research ingestion with full provenance is what the pilot does;
+      publishing the Sanskrit text is not authorised by anything found.
+    redistribution_blocker: >-
+      YES. Requires written permission from the TITUS Project, Institut fuer Empirische
+      Sprachwissenschaft, Universitaet Frankfurt am Main.
+    known_defects:
+      - >-
+        4 locator collisions - AVS 9.6.48, 12.5.53, 13.4.26 and 20.96.22 each occur twice.
+        Three are typos; 20.96.22 is a genuine two-verses-one-number edition divergence.
+      - >-
+        13 label-versus-marker disagreements, nine of them clustered in kanda 7
+        (7.6.3, 7.6.4, 7.45.2, 7.54.2, 7.55.1, 7.68.3, 7.72.3, 7.76.5, 7.76.6)
+      - >-
+        1 corrupt pada letter - (AVS_8,5.11 with retroflex d) where c is meant
+      - >-
+        46 units carry no in-text verse marker at all
+      - >-
+        anuvaka group markers exist in only 11 of 20 kandas (3, 8-14, 17, 18), so a complete
+        anuvaka layer CANNOT be built from this artifact
+    stated_counts_in_artifact: >-
+      NONE. The preamble asserts no kanda, sukta or mantra total. Verified
+      programmatically - extract_header_metadata().stated_total_counts returns the empty
+      tuple. There is therefore no source-stated total to reconcile against for this
+      artifact, and that absence is itself recorded in the build provenance.
+
+  # =====================================================================================
+  # SELECTED - English translation, per-stanza aligned
+  # =====================================================================================
+  - source_id: VEDAWEB_AVS
+    role: ENGLISH_TRANSLATION
+    selected: true
+    verified: true
+    authority_tier: HISTORICAL_TRANSLATION
+    site: >-
+      VedaWeb 2.0 - Online Research Platform for Old Indic texts, University of Cologne
+    site_url: https://vedaweb.uni-koeln.de/
+    platform_software: >-
+      Tekst (https://github.com/VedaWebProject/Tekst), AGPL-3.0. This is a SOFTWARE licence
+      only and says nothing about content rights.
+    api_base: https://vedaweb.uni-koeln.de/api
+    api_openapi: https://vedaweb.uni-koeln.de/api/openapi.json
+    api_version: 0.54.1b0
+    api_auth_required: false
+    vedaweb_text_id: 68b049424a624d3e1abc8188
+    vedaweb_text_title: Atharvaveda Saunaka
+    note_on_recension: >-
+      VedaWeb 2.0 hosts BOTH recensions as separate texts - avs
+      (68b049424a624d3e1abc8188) and avp (68cbc6e95976546dd5af4643). Only avs is used. This
+      overturns the older assumption that VedaWeb is Rigveda-only.
+    artifacts:
+      - source_artifact_id: VEDAWEB.AVS.WHITNEY_LANMAN_1905.PLAINTEXT.L2
+        vedaweb_resource_id: 696f42266f50da42570ad040
+        resource_type: >-
+          plainText, level 2 (Stanza)
+        url: >-
+          https://vedaweb.uni-koeln.de/api/contents?res=696f42266f50da42570ad040&limit=6000
+        http_status: 200
+        byte_length: 1862244
+        content_entries: 4881
+        coverage: >-
+          4,881 of 5,842 stanzas. Covered ranges 1.1.1-3.9.3, 3.9.5-5.12.10, 5.13.1-10.8.29
+          and 10.8.31-19.72.1. KANDA 20, all 958 stanzas, IS NOT TRANSLATED. Gaps also at
+          3.9.4 and 10.8.30.
+        machine_readable: true
+        addressability: >-
+          EXACT. Location aliases are the printed labels ("1.1.1", "1,1,1", "01.001.01"),
+          resolvable by GET /api/locations?textSlug=avs&alias=K.S.M. Alignment is therefore
+          by printed citation and never by sequence position.
+        translator: >-
+          William Dwight Whitney, revised and edited by Charles Rockwell Lanman
+        edition: >-
+          Atharva-Veda Samhita, translated with a critical and exegetical commentary.
+          Harvard Oriental Series 7-8. Cambridge MA, Harvard University Press, 1905.
+        year: 1905
+    artifact_rights_verbatim: null
+    artifact_rights_finding: >-
+      The VedaWeb API returns "license": null and "licenseUrl": null for this resource, and
+      the resource carries NO restrictive statement - only a citation request. This is
+      materially different from VedaWeb's AVS Sanskrit resource 696f331f6f50da42570ad028,
+      whose description reproduces verbatim "Copyright TITUS Project, Frankfurt a/M,
+      4.3.2015. No parts of this document may be republished in any form without prior
+      permission by the copyright holder." That clause attaches to the Sanskrit text, not
+      to this translation.
+    underlying_work_rights: PUBLIC_DOMAIN
+    underlying_work_rights_basis: >-
+      Published 1905, that is before 1931, therefore public domain in the United States.
+      Longest-living author Charles Rockwell Lanman died 1941. Independently corroborated -
+      English Wikisource tags the same edition PD/US 1941 at
+      https://en.wikisource.org/wiki/Atharva-Veda_Samhita
+    citation_required_verbatim: >-
+      Whitney, William Dwight & Charles Rockwell Lanman. 1905. Atharva-Veda Samhita.
+      Translated with a critical and exegetical commentary by William Dwight Whitney.
+      Revised and brought nearer to completion and edited by Charles Rockwell Lanman.
+      Cambridge, MA: Harvard University Press. Curated and hosted by VedaWeb - Online
+      Research Platform for Old Indic texts. University of Cologne.
+    site_rights_verbatim: >-
+      Individual resources provide their own citation guidelines, which can be found in the
+      resource information. Please use these for citing specific data.
+    site_rights_location: >-
+      systemSiteNotice, enUS locale, via GET /api/platform
+    artifact_vs_site_conflict: >-
+      NO CONFLICT for the translation. The site defers to per-resource terms, and this
+      resource's only term is a citation request.
+    rights_status_recommended: PUBLIC_DOMAIN
+    rights_recommendation_caveat: >-
+      Recommended on the strength of the 1905 publication date plus independent Wikisource
+      corroboration, NOT on the strength of VedaWeb's silence. The digital transcription
+      layer itself declares no licence. If Agent E prefers to treat an undeclared digital
+      layer as UNKNOWN that is a defensible downgrade, and the underlying public-domain
+      status of the 1905 text is unaffected either way.
+    cross_source_finding_of_record: >-
+      IMPORTANT. VedaWeb documents its own edit "Transformation and revision of TITUS verse
+      count". Concretely, VedaWeb's AVS 13.4 has 56 stanzas numbered 1..56 INCLUDING a verse
+      1, whereas the GRETIL/TITUS artifact has no 13.4.1 because it mislabels the sukta's
+      first verse as 26. VedaWeb has silently fixed the exact defect the VedaGraph parser
+      detected independently from the artifact's own verse marker. This is genuine
+      cross-source corroboration of the defect, and it also means VedaWeb's stanza count of
+      5,842 is NOT the same count as the GRETIL artifact's 5,839 distinct / 5,843 units.
+
+  # =====================================================================================
+  # NOT SELECTED - investigated, rejected or deferred, with the reason
+  # =====================================================================================
+  - source_id: TITUS_AVS
+    role: UPSTREAM_RIGHTS_HOLDER_AND_PARALLEL_CANDIDATE
+    selected: false
+    verified: true
+    authority_tier: SCHOLARLY_EDITION
+    site: >-
+      TITUS - Thesaurus Indogermanischer Text- und Sprachmaterialien, Universitaet Frankfurt
+    site_url: http://titus.uni-frankfurt.de/indexe.htm
+    why_it_matters: >-
+      This is the upstream that GRETIL's "COPYRIGHT AND TERMS OF USAGE AS FOR SOURCE FILE"
+      defers to, and the same edition VedaWeb re-serves. TITUS, GRETIL_AVS and VedaWeb's AVS
+      Sanskrit layer are ONE licensing dependency, not three. A single TITUS permission
+      unlocks all three.
+    entry_point: http://titus.uni-frankfurt.de/texte/etcs/ind/aind/ved/av/avs/avs.htm
+    entry_point_http_status: 200
+    structure: >-
+      773 sequential frameset HTML pages avs001.htm to avs773.htm (avs774.htm returns 404).
+      The index frame carries a SELECT element listing all 20 kandas.
+    format: >-
+      HTML 3.2-era framesets, UTF-8, with per-line structural labels reading Book,
+      Hymn, Verse and Halfverse
+    format_rank: 3
+    accent_status: >-
+      ACCENTED - the sole combining mark in the text is U+0301. Uses U+02B0 modifier letter
+      small h for aspirates and m-with-dot-below for anusvara.
+    machine_readable: >-
+      Yes, scrapable, but the markup is very noisy - every single word is wrapped in a
+      javascript concordance link, so pages run 7-20 KB for a few verses.
+    artifact_rights_verbatim: |
+      This text is part of the TITUS edition of Atharva-Veda-Samhita (Saunaka).
+      Copyright TITUS Project, Frankfurt a/M, 4.3.2015. No parts of this document may be
+      republished in any form without prior permission by the copyright holder.
+    artifact_rights_location: >-
+      http://titus.uni-frankfurt.de/texte/etcs/ind/aind/ved/av/avs/avs.htm and the footer of
+      each avsNNN.htm page
+    site_rights_verbatim: |
+      All texts that can be downloaded via http from the TITUS server can be used freely
+      for scholarly purposes, provided that they are quoted as sources and the name(s) of
+      the editor(s) and the date of last changes are indicated in publications. The texts
+      must not be used for any kind of commercial usage. Downloading of some of the texts
+      is restricted to members of the TITUS project.
+    site_rights_location: >-
+      http://titus.uni-frankfurt.de/texte/textex.htm, section headed
+      "Notice on copyright and etiquette"
+    artifact_vs_site_conflict: >-
+      YES, AND IT IS MATERIAL. The site grants free scholarly use with attribution; the
+      artifact forbids republication in any form without prior permission. A redistributed
+      derived corpus cannot satisfy both. The stricter artifact-level statement governs,
+      per this project's rule that artifact rights are not overridden by site rights.
+    additional_restriction: >-
+      The catalogue page texte2.htm labels a plain-text version "Plain text retrieval
+      (TITUS Members only)" at
+      http://titus.fkidg1.uni-frankfurt.de/private/texte/indica/vedica/av/av.txt. That URL
+      currently returns HTTP 200 with no authentication (798,190 bytes, ISO-8859-1, TITUS's
+      own ASCII markup, 5,919 verse markers), so the access control is not enforced. It sits
+      under /private/, which is Disallow-ed in robots.txt on both titus.uni-frankfurt.de and
+      titus.fkidg1.uni-frankfurt.de. TREAT AS OFF-LIMITS REGARDLESS OF THE 200. VedaGraph
+      did not fetch it and must not.
+    rights_status_recommended: REFERENCE_ONLY
+    rejection_reason: >-
+      Not rejected on quality - it is a good edition and a genuine parallel candidate whose
+      halfverse granularity would be useful. Deferred on rights: non-commercial, plus no
+      republication, plus attribution including date of last change. Note also its 5,919
+      verse markers against the GRETIL artifact's 5,839 distinct / 5,843 units, a third
+      distinct count within the same lineage, which deserves reconciliation if TITUS is ever
+      licensed.
+    action_required: >-
+      Written permission request to the TITUS Project.
+
+  - source_id: WIKISOURCE_AVS_SA
+    role: PARALLEL_SANSKRIT_CANDIDATE
+    selected: false
+    verified: true
+    authority_tier: COMMUNITY_TRANSCRIPTION
+    site: Sanskrit Wikisource
+    index_url: https://sa.wikisource.org/wiki/%E0%A4%85%E0%A4%A5%E0%A4%B0%E0%A5%8D%E0%A4%B5%E0%A4%B5%E0%A5%87%E0%A4%A6%E0%A4%83
+    artifact_recension: Shaunaka
+    recension_evidence: >-
+      The index page wikitext header declares the title as Atharvaveda (Saunaka-sakha) in
+      Devanagari.
+    script: Devanagari
+    structure: >-
+      20 kanda pages plus roughly 771 sukta subpages, 852 pages total under the prefix
+    completeness: >-
+      Substantively all 20 kandas, but title hygiene is poor. Kanda 17's single hymn has no
+      subpage - the text sits on the kanda page directly. Kandas 7-13, 16 and 18-19 show
+      excess page counts from zero-padding duplicates and inconsistent naming, plus about 40
+      stub redirects. A per-page content diff is required to dedupe and was NOT performed.
+    format: >-
+      MediaWiki wikitext and HTML, with a full API
+    format_rank: 2
+    machine_readable: true
+    api: >-
+      https://sa.wikisource.org/w/api.php - action=query&prop=revisions&rvslots=main,
+      action=parse, generator=allpages
+    api_note: >-
+      Wikimedia enforces its User-Agent policy. A generic curl UA returns HTTP 429; send a
+      descriptive User-Agent with contact information.
+    accent_status: UNACCENTED_VERIFIED
+    accent_evidence: >-
+      Verified on kanda 1 sukta 01, kanda 17, and kanda 20 sukta 143. The only combining
+      mark present is U+094D VIRAMA. NO U+0951 UDATTA and NO U+0952 ANUDATTA anywhere.
+    bonus_content: >-
+      Many sukta pages carry Sayana-bhasya in a template, and header notes carry
+      devata/chandas/rishi strings. This is a traditional-metadata lead and is under
+      separate investigation. Sayana's Atharvaveda commentary is of disputed authenticity;
+      its presence is recorded, its authenticity is NOT asserted.
+    site_rights_verbatim: >-
+      Text is available under the Creative Commons Attribution-ShareAlike License;
+      additional terms may apply. (Devanagari original in the sa.wikisource footer; the href
+      resolves the version to https://creativecommons.org/licenses/by-sa/4.0/)
+    rights_status_recommended: CC_BY_SA
+    rights_layer_distinction: >-
+      CC BY-SA 4.0 covers Wikisource contributors' markup and compilation. The underlying
+      traditional Sanskrit text is not itself copyrightable. GFDL could NOT be confirmed on
+      the current footer - the string is absent from the pages fetched - so treat
+      "CC BY-SA plus GFDL" as historically true but unverified today.
+    rejection_reason: >-
+      Rejected as PRIMARY because it is UNACCENTED and accent preservation is a corpus
+      requirement. It is the best-licensed Devanagari AVS found and is the right choice if
+      an openly-licensed Devanagari surface is ever needed without accents. Cross-script
+      comparison against the Latin primary is blocked in any case - compare/text.py
+      classify() returns UNCLASSIFIED for readings in different scripts by design.
+
+  - source_id: WIKISOURCE_WHITNEY_AV
+    role: ENGLISH_TRANSLATION_ALTERNATIVE
+    selected: false
+    verified: true
+    authority_tier: HISTORICAL_TRANSLATION
+    registry_note: >-
+      This source_id already exists as a placeholder in data/registry/sources.yaml. Findings
+      for Agent E - the underlying work IS public domain and the page templates say so, but
+      the digitisation has a structural gap that makes VEDAWEB_AVS the better choice.
+    site: English Wikisource
+    root_url: https://en.wikisource.org/wiki/Atharva-Veda_Samhita
+    pages: >-
+      850 under the prefix; a ProofreadPage project over Index:Atharva-Veda samhita.djvu
+      (Progress=V, validated) plus volume 2
+    granularity: >-
+      per-HYMN, not per-verse
+    completeness: >-
+      Books I-XIV and XVII-XIX match canonical hymn counts exactly. Books XV and XVI use
+      Paryaya N subpages (18 and 9, correct). Book VII uses dual numbering such as
+      "/Book VII/Hymn 45 (46, 47)" and has 118 pages, correct.
+      GAP - BOOK XX HAS NO HYMN SUBPAGES. /Book XX is 278 bytes and transcludes a single
+      djvu page, so 143 hymns are unavailable at hymn granularity. There are also 222 legacy
+      Roman-numeral duplicate titles in books II, III, IV and VI needing dedupe.
+    content_note: >-
+      Content is the translation PLUS Whitney's full critical and exegetical commentary, NOT
+      the Sanskrit samhita text - the Devanagari character count on a hymn page is 1.
+      Transliteration inside the commentary is accented with U+0301 and uses old Harvard
+      Oriental Series conventions such as c-cedilla for s-acute.
+    site_rights_verbatim: >-
+      Text is available under the Creative Commons Attribution-ShareAlike License;
+      additional terms may apply. By using this site, you agree to the Terms of Use and
+      Privacy Policy.
+    artifact_rights_verbatim: >-
+      The PD/US 1941 template renders - this work is in the public domain in the United
+      States because it was published before January 1, 1931. The longest-living author of
+      this work died in 1941, so this work is in the public domain in countries and areas
+      where the copyright term is the author's life plus 84 years or less.
+    artifact_vs_site_conflict: >-
+      NOT A CONFLICT, A LAYERING. The 1905 work is public domain; CC BY-SA 4.0 covers
+      Wikisource contributors' own markup and annotation layer. Both statements are true of
+      different things. Agent E asked specifically for this read: public domain applies to
+      the text, CC BY-SA to the wiki layer, and citing the public-domain source alone is not
+      sufficient if the wiki markup is reused verbatim.
+    rights_status_recommended: PUBLIC_DOMAIN
+    rights_status_note_wiki_layer: >-
+      CC_BY_SA applies separately to the Wikisource markup and compilation layer.
+    revision_ids_used: >-
+      NONE. This source was not ingested, so no oldid was pinned. If Agent E needs pinned
+      revision ids, they must be captured at ingestion time, not retro-fitted.
+    rejection_reason: >-
+      Per-hymn granularity only, and book XX is missing. VEDAWEB_AVS carries the SAME
+      Whitney and Lanman 1905 translation at per-stanza granularity with printed-label
+      aliases, which is what mantra-level alignment requires. Book XX is untranslated in
+      both.
+
+  - source_id: WIKISOURCE_GRIFFITH_AV
+    role: ENGLISH_TRANSLATION_ALTERNATIVE
+    selected: false
+    verified: true
+    authority_tier: HISTORICAL_TRANSLATION
+    url: https://en.wikisource.org/wiki/Hymns_of_the_Atharva-Veda
+    title_note: >-
+      The correct title is hyphenated. "Hymns of the Atharvaveda" returns zero pages.
+    completeness: >-
+      21 pages total - root, /Book 1, /Book 1/Hymn 1 through Hymn 18, and an empty /Book 2.
+      That is 18 of 731 hymns, about 2.5 percent.
+    rights_status_recommended: PUBLIC_DOMAIN
+    rejection_reason: >-
+      Abandoned stub. Unusable at any granularity.
+
+  - source_id: VHP_AVS
+    role: PARALLEL_SANSKRIT_AND_AUDIO_CANDIDATE
+    selected: false
+    verified: true
+    authority_tier: PRIMARY_TRADITIONAL
+    site: >-
+      Vedic Heritage Portal, Indira Gandhi National Centre for the Arts (IGNCA), Ministry of
+      Culture, Government of India
+    site_url: https://vedicheritage.gov.in/
+    landing: https://vedicheritage.gov.in/samhitas/atharvaveda-samhitas/shaunaka-samhita/
+    artifact_recension: >-
+      Shaunaka. A separate paippalada-samhita section exists on the same site and is not
+      used.
+    content_per_sukta: >-
+      accented Devanagari text, plus one recitation MP3, plus rishi/devata/metre metadata,
+      plus a scanned page image
+    accent_status: >-
+      ACCENTED_VERIFIED - U+0951 DEVANAGARI STRESS SIGN UDATTA and U+0952 DEVANAGARI STRESS
+      SIGN ANUDATTA are both present
+    completeness: >-
+      About 734 per-sukta pages plus 18 kanda-introduction pages under /shaunaka-samhita/,
+      from a 760-URL Atharvaveda set in the WordPress sitemap. Exact match to canonical hymn
+      counts for kandas 1-5, 7-12, 14-17, 19 and 20. Anomalies NOT resolved - kanda 13 has 9
+      pages against a canonical 4, kanda 18 has 3 against 4, kanda 6 has 141 plus one
+      mis-nested page, and there is one stray kanda-07-sukta-010-2. The sitemap index is
+      also broken (wp-sitemap-posts-page-2.xml returns 404).
+    format: >-
+      WordPress HTML only. No API, no JSON, no TEI, no bulk download.
+    format_rank: 2
+    machine_readable: >-
+      Scrapable only
+    robots_txt: >-
+      Disallows only /wp-admin/, /wp-includes/, /wp-content/plugins/ and one intro video.
+      The AVS content paths and /atharaveda_mp3/ are NOT robots-disallowed. Note that
+      robots.txt permitting a crawl does not grant reproduction rights.
+    site_rights_verbatim: |
+      The contents of this website can not be reproduced partially or fully, without written
+      permission from Indira Gandhi National Center for the Arts or the contributor (with
+      intimate to IGNCA). If referred to as a part of another publication, the source must
+      be appropriately acknowledged. The contents of this website can not be used in any
+      misleading or objectionable context.
+    site_rights_location: https://vedicheritage.gov.in/copyright-policy/
+    linking_policy_conflict: |
+      TWO LIVE PAGES DIRECTLY CONTRADICT EACH OTHER on inbound linking.
+      https://vedicheritage.gov.in/terms-conditions/ says:
+        "We do not object to linking directly to the information that is hosted on this
+         portal and no prior permission is required for the same."
+      https://vedicheritage.gov.in/hyper-linking-policy/ says:
+        "Prior permission is required before hyperlinks are directed from any website/portal
+         to this site."
+      Note that /hyperlinking-policy/ without the hyphen is a 404. Both footers are dated
+      "Information Update on August 27, 2026". Framing is separately prohibited by the
+      Terms and Conditions. If linking matters, get it in writing from IGNCA.
+    mirroring_permitted: false
+    mirroring_evidence: >-
+      The Copyright Policy forbids reproduction partially or fully without written
+      permission. There is NO open-government-data licence, NO GODL-India reference, NO
+      Creative Commons licence and NO personal-use carve-out anywhere on the Terms and
+      Conditions or Copyright Policy pages.
+    rights_status_recommended: PERMISSION_REQUIRED
+    rejection_reason: >-
+      Content-wise the STRONGEST AVS source found - the only accented Devanagari text at
+      sukta granularity with per-sukta recitation audio across all 20 kandas, on predictable
+      URLs. Rejected purely on rights, because reproduction is explicitly forbidden. This is
+      a permission request to IGNCA, not an engineering problem.
+    action_required: >-
+      Written permission request to IGNCA, Ministry of Culture. The portal is hosted by NIC.
+
+  - source_id: THEVYASA_AVS
+    role: PARALLEL_SANSKRIT_CANDIDATE
+    selected: false
+    verified: true
+    authority_tier: COMMUNITY_TRANSCRIPTION
+    url: https://thevyasa.in/atharvaveda-shaunaka/
+    additional_urls: >-
+      https://thevyasa.in/atharvaveda-shaunaka-10to14/ and
+      https://thevyasa.in/atharva-shaunaka/
+    http_status: 200
+    byte_length: 694989
+    attribution_claimed_by_catalogue: >-
+      Avadhoota Datta Peetham - SGS VedaNidhi Academy and Masters' Institute (SVAMI), per
+      the sanskritdocuments.org catalogue entry describing it as "Atharvaveda
+      Shaunakasamhita Unicode text with vaidic svaras". NOT independently confirmed on
+      thevyasa.in itself.
+    artifact_recension: >-
+      Shaunaka - the page title reads Atharvaveda Saunaka-samhita (sasvara) in Devanagari
+    accent_status: >-
+      ACCENTED_VERIFIED - 9,204 occurrences of U+0951 and 12,305 of U+0952 counted on a
+      single page
+    structure: >-
+      Devanagari using the same apparatus convention as the TITUS/GRETIL text - double-danda
+      verse markers with Devanagari digits, and curly-brace anuvaka markers. Split across
+      pages by kanda RANGE, for example 10 to 14, and kanda/sukta boundaries must be
+      recovered from headings because there are no per-mantra locators.
+    machine_readable: >-
+      Partially - parseable, but not directly addressable per mantra
+    format: >-
+      WordPress HTML
+    format_rank: 2
+    site_rights_verbatim: null
+    site_rights_finding: >-
+      NONE FOUND. No occurrence of copyright, licence, license, permission or terms was
+      found in the rendered page text. Rights are UNKNOWN, which is not the same as
+      permissive.
+    rights_status_recommended: UNKNOWN
+    rejection_reason: >-
+      Rights unknown, so not ingested. Worth recording because it is the only accented
+      Devanagari AVS found outside vedicheritage.gov.in, and therefore the only candidate
+      that could close the "no accented Devanagari under an open licence" gap if its
+      provenance and terms can be established with SVAMI.
+
+
+  - source_id: SACRED_TEXTS_GRIFFITH_AV
+    role: ENGLISH_TRANSLATION_COMPLETE
+    selected: false
+    verified: true
+    authority_tier: HISTORICAL_TRANSLATION
+    site: sacred-texts.com (Internet Sacred Text Archive)
+    index_url: https://sacred-texts.com/hin/av/index.htm
+    bulk_dump_url: https://sacred-texts.com/hin/av/av.txt.gz
+    bulk_dump_bytes_compressed: 352823
+    bulk_dump_bytes_uncompressed: 1059297
+    http_note: >-
+      The live host returns HTTP 403 to non-browser clients (Cloudflare). Everything here
+      was verified through the Wayback Machine.
+    translator: Ralph T. H. Griffith
+    edition: >-
+      The Hymns of the Atharvaveda, 1895-96; 2nd ed. E. J. Lazarus, Benares - Vol. I books
+      I-IX (1916), Vol. II books X-XX plus "The Kuntapa Section" (1917)
+    year: 1895
+    coverage: >-
+      ALL 20 KANDAS - the only complete AVS translation. Unlike Whitney it covers book XX.
+    addressability: >-
+      per-VERSE. URL pattern av{BB}{HHH}.htm with per-verse anchors of the form
+      name="an_0100101" = book 01 / hymn 001 / verse 01.
+    numbering_system: >-
+      BERLIN / Roth-Whitney, i.e. the SAME spine as GRETIL_AVS. Verified from the book index
+      hymn-link counts - bk 1 = 35, bk 7 = 118 (not the Bombay 123), bk 11 = 10, bk 15 = 18,
+      bk 20 = 143. Griffith's printed book VII also ends at HYMN CXVIII. GRETIL, Whitney and
+      Griffith are therefore 1:1 alignable, which is the single most load-bearing alignment
+      fact found in this investigation.
+    format: static per-hymn HTML, plus a single gzipped text dump
+    format_rank: 3
+    machine_readable: true
+    site_rights_verbatim: |
+      Most of the files at this site are in the public domain in the United States...
+      Public domain files from this site can be used for any purposes. You may: Download,
+      print and make copies of them for personal purposes... Post copies of them on your
+      website... Create derivative works... without asking anyone (including sacred-texts)
+      for permission. In fact, we encourage these activities. It is considered good
+      netiquette (but not absolutely required) to identify sacred-texts as the source of
+      the file.
+    site_rights_location: https://sacred-texts.com/cnote.htm
+    artifact_rights_verbatim: >-
+      Scanned, proofed and formatted at sacred-texts.com, April 2007, by John Bruno Hare.
+      This text is in the public domain because it was published prior to 1923.
+    artifact_rights_location: header of https://sacred-texts.com/hin/av/av.txt.gz
+    rights_carve_outs: |
+      TWO, and both matter. From the same cnote.htm page, verbatim:
+        "Some files are copyrighted because they are original material produced especially
+         for sacred-texts. This includes index files, the sub-section graphics and any of
+         the descriptive material. These files, graphics and text may not be reproduced in
+         any form without the permission of the copyright holder, J.B. Hare."
+      So the per-hymn BODY TEXT is mirrorable but sacred-texts' own index pages
+      (avbook01.htm etc.) and descriptive blurbs are NOT.
+      Also verbatim: "Public domain files prepared at sacred-texts may be licensed for
+      commercial use... These files are listed in the Bibliography." Whether the AV file is
+      on that Bibliography list is UNVERIFIED - the list could not be located.
+    mirroring_permitted: true
+    rights_status_recommended: PUBLIC_DOMAIN
+    known_defects: |
+      Audited, not assumed. The bulk dump yields 721 of 731 hymns and 5,602 of 5,839 verses.
+      - AVS 2.20-2.23 are GENUINELY MISSING. The file carries its own editorial note:
+        "It appears that hymns 20-23 were omitted--JBH"
+      - The remaining apparent gaps are ANCHOR-ID CORRUPTION, not missing text: AVS 6.7 is
+        present under the correct header but anchored [0700601] (= book 07 hymn 006). Same
+        class of error near 7.3 and 20.120. The human-readable headers are trustworthy; the
+        machine anchors are not, in spots.
+      - Griffith printed some passages in Latin in an appendix rather than in English -
+        AVS 1.11.3-6, 4.4.3-9, 6.72, 6.101, 20.126.16-17 and 20.136 - and none of that
+        appendix material is in the dump. So Griffith's English is about 99% complete, not
+        100%.
+    why_not_selected_yet: >-
+      Not a rejection. It is the right source for kanda 20 and for whole-corpus translation
+      coverage, and it should be added in the next release alongside Whitney as a SECOND
+      independent Translation record per passage. It was not ingested in this pilot because
+      the anchor corruption needs a verification pass first, and because a per-verse
+      alignment must be validated against the Berlin spine rather than trusted.
+
+  - source_id: WIKISOURCE_WHITNEY_AV_ANUKRAMANI
+    role: TRADITIONAL_METADATA_CANDIDATE
+    selected: false
+    verified: true
+    authority_tier: HISTORICAL_TRANSLATION
+    site: English Wikisource
+    root_url: https://en.wikisource.org/wiki/Atharva-Veda_Samhita
+    what_it_is: >-
+      Whitney's per-hymn bracketed header is an EXCERPT OF THE BRHATSARVANUKRAMANI, giving
+      rsi (plus the rsi's kama), devata and chandas with per-verse metre exceptions. Example
+      as transcribed on the wiki, verbatim - "[''Atharvan'' (''ayuskamah'').-''vaicvadevam.
+      traistubham: 3. cakvaragarbha viradjagati.'']"
+    coverage: >-
+      essentially all 588 hymns of books I-XIX. "Anukr" is cited 567 times in volume 1
+      alone. Does NOT cover kanda 20.
+    transcription_quality: >-
+      ProofreadPage Progress=V, i.e. VALIDATED, the highest tier. 648 + 606 = 1,254
+      Page:-namespace pages covering the complete scans of both volumes. IAST is correct.
+    format: MediaWiki wikitext + API
+    format_rank: 2
+    machine_readable: true
+    bonus_content: >-
+      Book VII page titles carry Whitney's dual Berlin/Bombay numeration IN THE TITLE, e.g.
+      "Atharva-Veda Samhita/Book VII/Hymn 45 (46, 47)" and "Hymn 118 (123)" - a ready-made
+      crosswalk for exactly the kanda-7 divergence this pilot detected. Also 580
+      "Translated:" bibliography paragraphs giving a per-hymn concordance across Weber,
+      Ludwig, Grill, Griffith, Bloomfield and Henry (551 cite Griffith, 187 cite Bloomfield).
+    rights_status_recommended: PUBLIC_DOMAIN
+    rights_basis: >-
+      {{PD/US|1941}} renders - "public domain in the United States because it was published
+      before January 1, 1931. The longest-living author of this work died in 1941, so this
+      work is in the public domain in countries and areas where the copyright term is the
+      author's life plus 84 years or less." Life+84 comfortably covers India's life+60.
+    mirroring_permitted: true
+    limitations: >-
+      per-HYMN for rsi/devata (per-mantra only for metre exceptions); no kanda 20; old
+      Harvard Oriental Series orthography uses c-cedilla for s-acute and needs a
+      normalisation pass; oldids must be pinned at ingestion.
+    why_not_selected_yet: >-
+      This is the RECOMMENDED route for a future traditional-metadata layer and is the only
+      PD, machine-extractable, SOURCED per-hymn rsi/devata/chandas source for AVS. It was
+      not ingested in this pilot because it was verified after the build was sealed, and
+      because a metadata layer deserves its own build with its own review queue rather than
+      being bolted onto a text pilot.
+
+  - source_id: VEDAVANI_HF
+    role: AUDIO_CANDIDATE
+    selected: false
+    verified: true
+    authority_tier: AGGREGATOR
+    site: HuggingFace Datasets
+    url: https://huggingface.co/datasets/sanganaka/Vedavani-Dataset
+    paper: >-
+      Kumar, Ray, Beerukuri, Kamoji, Jagadeeshan, Goyal, "Vedavani - A Benchmark Corpus for
+      ASR on Vedic Sanskrit Poetry", ACL 2025, arXiv:2506.00145
+    code: https://github.com/SujeetNlp/Vedavani
+    scope: >-
+      9,997 Atharvaveda samples out of ~54 h / 30,779 total. Kandas 1-13 explicitly named in
+      filenames (6,306 samples); the remainder sits under opaque Part_NNN names (3,691).
+    format: WAV plus train/validation/test CSV with columns audio_file, text, length
+    alignment_granularity: >-
+      per-mantra / per-hemistich, WITH Devanagari transcription - but carrying NO AVS
+      kanda.sukta.mantra reference, and the transcription is UNACCENTED.
+    recension: >-
+      Saunaka, INFERRED from text match. NOT stated by the dataset. Treat as UNVERIFIED.
+    recitation_type: >-
+      samhita-patha, INFERRED. NOT stated. Treat as UNVERIFIED.
+    reciter: UNVERIFIED - not stated
+    artifact_rights_verbatim: >-
+      "License - Apache License 2.0" (HuggingFace cardData license field and README
+      front-matter both read apache-2.0)
+    rights_status_recommended: APACHE_2_0
+    mirroring_permitted: true
+    chain_of_title_caution: >-
+      The Atharvaveda_Part_NNN filenames match the archive.org "Veda Prasara Samithi" upload
+      exactly, so at least part of the source audio is almost certainly that recording. An
+      Apache-2.0 grant asserted by dataset authors over third-party recordings is a coherent
+      chain when the upstream is CC PD Mark, but it is the authors' own assertion and not a
+      clean verified chain of title. Flag as residual risk.
+    why_not_selected_yet: >-
+      Best-licensed and only mantra-segmented AVS audio found, and the recommended audio
+      base. Not ingested because alignment to the VedaGraph spine requires text-matching
+      against the AVS Sanskrit - the dataset carries no AVS references - and that must be a
+      reviewable derived layer, never asserted as source data.
+
+  - source_id: ARCHIVE_ORG_AV_202107
+    role: AUDIO_CANDIDATE
+    selected: false
+    verified: true
+    authority_tier: COMMUNITY_TRANSCRIPTION
+    url: https://archive.org/details/atharvaveda_202107
+    title: Atharva Veda Complete Chanting
+    creator: Veda Prasara Samithi (2020)
+    scope: complete, 28 files (Atharvaveda Part 001-027 plus an Introduction)
+    duration_hours: 19.20
+    format: MP3
+    alignment_granularity: >-
+      NONE - arbitrary parts of about 42 minutes each, with no structural correspondence to
+      kanda/sukta/mantra.
+    recension: UNVERIFIED - not stated
+    recitation_type: samhita-patha, assumed, not stated
+    reciter: unnamed
+    artifact_rights_verbatim: >-
+      item licenseurl - http://creativecommons.org/publicdomain/mark/1.0/
+    rights_status_recommended: UNKNOWN
+    mirroring_permitted: false
+    rights_recommendation_history: >-
+      SUPERSEDED. This entry originally recommended CC0 with mirroring permitted, on the
+      strength of the PD Mark. The rights authority OVERRULED that and was right; recorded
+      here rather than quietly edited, so the disagreement stays auditable. Registered by the
+      authority as ARCHIVE.AV.CHANTING.PDMARK.202107 with rights_status UNKNOWN and no
+      redistribution, under policy rule RIGHTS-11.
+    rights_overrule_reasoning: >-
+      A Public Domain Mark is NOT a licence and NOT a waiver. It is an assertion by whoever
+      applied it that a work is ALREADY out of copyright. This is a 2020 recording of living
+      performers, tagged by a third-party re-uploader with no standing, so the assertion is
+      not merely unverified - it is not credible. The clinching evidence is a fact recorded in
+      this very fragment: atharvaveda_202106 is a BYTE-IDENTICAL file set carrying NO
+      licenceurl at all. The same bytes cannot be simultaneously public domain and all rights
+      reserved, which proves the tag is uploader noise rather than a rights position. Nothing
+      is lost operationally, since this item's alignment granularity is NONE anyway.
+    why_not_selected: >-
+      Rights not established, and zero structural alignment. Vedavani (Apache-2.0, per-mantra
+      segmented) is the audio base.
+
+  - source_id: VEDAMU_AVS
+    role: AUDIO_CANDIDATE
+    selected: false
+    verified: true
+    authority_tier: PRIMARY_TRADITIONAL
+    site: Sri Sathya Sai Veda Pratishtan, Hyderabad
+    url: http://vedamu.org/VedicChanting.aspx
+    http_note: HTTPS fails; the site is reachable over HTTP only.
+    scope: >-
+      Saunaka samhita-patha in full, AND Paippalada samhita-patha in full, labelled
+      separately. AV is part of 178 h across five sakhas.
+    file_pattern: http://vedamu.org/VedicChanting/{ID}${NAME}.mp3
+    recension: Saunaka AND Paippalada, explicitly distinguished by the site
+    recitation_type: samhita-patha only
+    artifact_rights_verbatim: |
+      Of Sounaka sakha, we present Samhita patha of Kanda 1 preceded by Prarthana.
+      Of Pippalada sakha, we present the Samhitapatha in full, though very recently
+      structured.
+      We also present the entire text of Sounaka-sakha in Samhitapatha which is open to
+      listen, and not to download.
+      We are working through a group of scholars to construct Pada and Krama pathas for
+      Sounaka & Pippalada sakhas, and upload on to the portal. Thereafter, we intend to get
+      Jata and Ghana pathas also to be constructed for these sakhas.
+    site_rights_verbatim: null
+    site_rights_finding: >-
+      No copyright, terms or licence page exists anywhere on the site (checked homepage,
+      ABoutUs.aspx and VedicChanting.aspx).
+    rights_status_recommended: REFERENCE_ONLY
+    mirroring_permitted: false
+    mirroring_note: >-
+      The operator states in its own words that the full Saunaka set is "open to listen, and
+      not to download". Only Prarthana and Kanda 1 carry download buttons.
+    definitive_negative_finding: >-
+      AVS PADA-, KRAMA-, JATA- AND GHANA-PATHA RECORDINGS DO NOT EXIST. This is stated by
+      the only institution that would have them, in the passage quoted above - they are
+      described as future work. Any AVS patha_type other than SAMHITA is currently
+      unfillable, and must not be asserted.
+    related_rights_warning: >-
+      archive.org item Atharvaveda-shaunaka-shAkhA carries filenames byte-identical to these
+      vedamu files, i.e. it appears to be an unauthorised mirror of exactly the material the
+      operator says is not to be downloaded. Do not use it.
+
+# =======================================================================================
+# EXPLICIT NON-CANDIDATES - recorded so nobody mistakes them for AVS
+# =======================================================================================
+non_candidates:
+  - source_id: GRETIL_AVP
+    what: >-
+      Atharvaveda-Samhita, PAIPPALADA recension
+    url: https://gretil.sub.uni-goettingen.de/gretil/corpustei/sa_paippalAdasaMhitA.xml
+    format: >-
+      TEI-conformant XML. A better format than the Saunaka artifact, and irrelevant, because
+      it is the wrong text.
+    input_by: >-
+      Arlo Griffiths, Thomas Zehnder, Philipp Kubisch, Duccio Lelli, Alexander Lubotsky,
+      Carmen Spiers, Michael Witzel
+    why_excluded: >-
+      DIFFERENT RECENSION. AVP differs substantially from AVS in content and numbering. It
+      is NOT a parallel edition of AVS and must never be used as one, nor as the source of an
+      AVS mantra. GretilAVSAdapter.assert_saunaka_recension() raises RecensionMismatchError
+      rather than parse it. A cross-RECENSION comparison layer would be a legitimate
+      separate project; conflation would not.
+  - source_id: VEDAWEB_AVP
+    what: >-
+      Atharvaveda Paippalada on VedaWeb, text id 68cbc6e95976546dd5af4643, 4 resources
+      including a textAnnotation layer
+    why_excluded: >-
+      Different recension, same reason as GRETIL_AVP.
+  - source_id: GRETIL_AV_UNSPECIFIED
+    what: >-
+      The GRETIL index entry simply headed "Atharvaveda (input by ...)"
+    status: >-
+      GRETIL states "Only restricted download / proprietary format" and "Converted file(s)
+      not available at present"
+    why_excluded: >-
+      No artifact is available, and the recension is not even stated.
+
+# =======================================================================================
+# GAPS - stated plainly
+# =======================================================================================
+gaps:
+  - gap: NO_ACCENTED_SANSKRIT_UNDER_AN_OPEN_LICENCE
+    detail: >-
+      Every accented AVS source found is rights-encumbered - GRETIL, TITUS and VedaWeb's
+      Sanskrit layer are REFERENCE_ONLY pending TITUS permission; vedicheritage.gov.in is
+      PERMISSION_REQUIRED; thevyasa.in is UNKNOWN. Every openly-licensed AVS source found is
+      unaccented (sa.wikisource, CC BY-SA 4.0). This is a permission problem, not an
+      engineering problem. But note the routes are NARROWER than first stated: a TITUS grant
+      alone is NOT sufficient for the Latin text, because the root of that chain is Orlandi
+      1991 and still in copyright - see the ORLANDI gap below. The genuinely open routes are
+      IGNCA for accented Devanagari plus audio, or a fresh Saunaka text derived solely from
+      the public-domain Roth/Whitney 1856 edition.
+  - gap: NO_RETRIEVABLE_XML_OR_TEI_FOR_AVS
+    detail: >-
+      CORRECTED. An XML/TEI edition of the Saunaka Atharvaveda DOES exist - The Sanskrit
+      Library, 2010, ed. Peter M. Scharf with XML markup and TEI header by Matthias H.
+      Ahlborn - but the rights authority verified that only the bibliographic catalogue
+      record is retrievable and THE UNDERLYING TEI IS NOT EXPOSED AT ANY DISCOVERED URL
+      (registered as SANSKRITLIB.AV.SAUNAKA.TEI.2010, format CATALOGUE_RECORD for exactly
+      that reason). So the correct statement is not "no TEI exists" but "no TEI is
+      retrievable". Beyond that: GRETIL serves the PAIPPALADA recension as TEI but the
+      SAUNAKA recension only as legacy HTML; its corpustei collection holds only the
+      ancillary sa_atharvavedapariziSTas.xml and sa_atharvaprAyazcittAni.xml, which are not
+      the samhita. TITUS is frameset HTML. VedaWeb serves JSON but not TEI, and
+      github.com/VedaWebProject/vedaweb-data contains only a rigveda directory. So format
+      rank 3 remains the best achievable in practice. No OCR was performed or needed.
+
+  - gap: THE_ROOT_OF_THE_CHAIN_IS_ORLANDI_1991_AND_STILL_IN_COPYRIGHT
+    detail: >-
+      THE MOST IMPORTANT CORRECTION IN THIS FRAGMENT, and it weakens an earlier conclusion of
+      mine. I wrote that ONE permission request to the TITUS Project would unlock GRETIL,
+      TITUS and VedaWeb's Sanskrit layer together. Following the provenance chain to its ROOT
+      shows that is not sufficient. Every accented Latin AVS text in this matrix descends from
+      "Gli inni dell' Atharvaveda (Saunaka), trasliterazione a cura di Chatia Orlandi, Pisa:
+      Giardini, 1991" - a MODERN SCHOLARLY TRANSLITERATION STILL IN COPYRIGHT - collated with
+      the public-domain Roth/Whitney 1856 edition. The Sanskrit Library asserts CC BY-NC-SA
+      3.0 downstream of Orlandi, which cannot cure an encumbered root. Under the authority's
+      rule RIGHTS-9 the chain is followed to its root and the root governs.
+      CONSEQUENCE: resolution requires EITHER additional permission from the Orlandi/Giardini
+      rights holders on top of TITUS, OR a Saunaka text based solely on Roth/Whitney 1856 with
+      no Orlandi-derived collation. The latter is the only identified route to a rights-clear
+      Saunaka Sanskrit text, and no such artifact was found in this investigation.
+  - gap: KANDA_20_HAS_NO_WHITNEY_TRANSLATION_BUT_GRIFFITH_COVERS_IT
+    detail: >-
+      CORRECTED after further verification. VedaWeb's Whitney layer stops before book 20 and
+      English Wikisource has no book XX hymn subpages, so 958 of 5,839 mantras (16.4 percent)
+      have no WHITNEY translation - Whitney excluded book 20 deliberately, calling it "in the
+      main a pure mass of excerpts from the Rig-Veda". But GRIFFITH covers all 20 kandas,
+      per-verse, on the same Berlin numbering spine, and sacred-texts.com's rights policy
+      permits mirroring the body text. So this gap is CLOSABLE and is simply not closed in
+      this release. See source_id SACRED_TEXTS_GRIFFITH_AV.
+  - gap: FOUR_DIFFERENT_VERSE_COUNTS_IN_ONE_TEXTUAL_LINEAGE
+    detail: >-
+      GRETIL/TITUS legacy HTML gives 5,839 distinct triples and 5,843 parsed units.
+      VedaWeb, which revised the TITUS count, gives 5,842 stanza locations.
+      The TITUS restricted plain text carries 5,919 verse markers.
+      Reference literature usually cites about 5,977. All of the first three descend from
+      the same Petr/Vavrousek entry of Roth-Whitney plus Orlandi, so the differences are
+      real editorial decisions rather than parser noise. None has been reconciled, and this
+      pilot does not pretend otherwise.
+  - gap: NO_RIGHTS_CLEAR_PER_MANTRA_TRADITIONAL_METADATA_EXISTS
+    detail: >-
+      RESOLVED AS A FINDING. A rights-clear, machine-readable, PER-MANTRA
+      rishi/devata/chandas layer for AVS DOES NOT EXIST. You get either PD-but-per-HYMN
+      (Whitney's Anukramani brackets on English Wikisource, 588 hymns, books I-XIX,
+      ProofreadPage-Validated - see source_id WIKISOURCE_WHITNEY_AV_ANUKRAMANI) or
+      per-MANTRA-but-COPYRIGHTED (Vishva Bandhu, Atharvaveda Rsi-Devata-Chando-Anukramanika,
+      Hoshiarpur 1970, which prints "sarvadhikarah suraksitah" and runs to 2034 in India).
+      The Brhatsarvanukramani and Pancapatalika have NO e-text at all - verified absent from
+      the entire GRETIL index and from TITUS. vedicheritage.gov.in has per-sukta data but
+      forbids reproduction. sa.wikisource is deterministic and 97-99 percent covered but
+      cites NO source edition anywhere and disagrees with its own index at a measured 5.3
+      percent. The pilot therefore emits ZERO TraditionalMetadataAssertion records. Rigvedic
+      Anukramani rules do NOT transfer to the Atharvaveda and nothing was inferred or
+      generated.

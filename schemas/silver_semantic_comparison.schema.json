@@ -1,0 +1,177 @@
+{
+  "$defs": {
+    "SemanticPredicate": {
+      "description": "Every relation name an extraction may emit, and the ones it may not.\n\nThe forbidden members exist so that a proposal naming one is rejected as a *policy*\ndecision with a recorded reason, instead of failing schema validation as an unknown\nstring. The difference matters when reading a rejection report.",
+      "enum": [
+        "EXPRESSES",
+        "DESCRIBES",
+        "PRAISES",
+        "INVOKES",
+        "REQUESTS",
+        "ASSOCIATED_WITH",
+        "INVOLVES_RITUAL",
+        "INVOLVES_OFFERING",
+        "INVOLVES_SUBSTANCE",
+        "REFERS_TO_PLACE",
+        "REFERS_TO_NATURAL_PHENOMENON",
+        "DESCRIBES_ACTION",
+        "HAS_THEME",
+        "CONTRASTS_WITH",
+        "SYMBOLIZES",
+        "REPRESENTS",
+        "IS_GOD_OF",
+        "MEANS",
+        "CAUSES"
+      ],
+      "title": "SemanticPredicate",
+      "type": "string"
+    },
+    "SilverComparisonCategory": {
+      "description": "Model-vs-model outcomes; none of these categories is a gold verdict.",
+      "enum": [
+        "MATCH",
+        "PARTIAL_MATCH",
+        "WRONG_ENTITY",
+        "WRONG_PREDICATE",
+        "UNSUPPORTED",
+        "OVERINTERPRETATION",
+        "EVIDENCE_PROBLEM",
+        "LUNA_MISSED_RELATION",
+        "SOL_ONLY_RELATION",
+        "NO_CLAIM_AGREEMENT",
+        "DISAGREEMENT_REQUIRES_EXPERT"
+      ],
+      "title": "SilverComparisonCategory",
+      "type": "string"
+    },
+    "SilverEvidenceAssessment": {
+      "description": "Evidence-specific review of a Luna assertion against its supplied packet.",
+      "enum": [
+        "SUFFICIENT",
+        "TOKEN_REFERENCE_MISSING",
+        "TRANSLATION_REFERENCE_MISSING",
+        "METADATA_ONLY",
+        "TEXTUAL_OVERREACH",
+        "AMBIGUOUS"
+      ],
+      "title": "SilverEvidenceAssessment",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "One comparison row between sealed Sol silver and Luna pilot output.",
+  "properties": {
+    "category": {
+      "$ref": "#/$defs/SilverComparisonCategory"
+    },
+    "evidence_assessment": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/SilverEvidenceAssessment"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "luna_assertion_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Luna Assertion Id"
+    },
+    "luna_object": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Luna Object"
+    },
+    "luna_predicate": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/SemanticPredicate"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "mantra_id": {
+      "minLength": 1,
+      "title": "Mantra Id",
+      "type": "string"
+    },
+    "provenance": {
+      "const": "MODEL_VS_MODEL_SILVER",
+      "default": "MODEL_VS_MODEL_SILVER",
+      "title": "Provenance",
+      "type": "string"
+    },
+    "reasoning": {
+      "minLength": 1,
+      "title": "Reasoning",
+      "type": "string"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "sol_assertion_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Sol Assertion Id"
+    },
+    "sol_object": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Sol Object"
+    },
+    "sol_predicate": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/SemanticPredicate"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    }
+  },
+  "required": [
+    "mantra_id",
+    "category",
+    "reasoning"
+  ],
+  "title": "SilverComparison",
+  "type": "object"
+}

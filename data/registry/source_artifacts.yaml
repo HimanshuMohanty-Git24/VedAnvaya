@@ -1,4 +1,38 @@
 schema_version: 1.0.0
+# ---------------------------------------------------------------------------
+# MULTI-PAGE ARTIFACT CHECKSUM CONVENTION
+#
+# Set by Agent E on 2026-09-07 at Agent C's request, after a wrong-scope
+# checksum defect. Binding on this file.
+#
+# RULE 1 - checksum_sha256 is the digest of ONE retrieved file, and nothing
+#   else. If an artifact_id denotes a SET of files (for example a 40-page
+#   MediaWiki transcription, or an API-paginated collection), the field MUST BE
+#   LEFT ABSENT. Do not synthesise a digest for a set.
+#
+# RULE 2 - do NOT invent a concatenation hash. An ordered-concatenation digest
+#   was considered and REJECTED, because it silently encodes a page ordering
+#   and a normalization choice that nothing else in the pipeline declares, so
+#   two honest builds could disagree. If such a convention is ever wanted it
+#   must be declared explicitly with its ordering and normalization, and it is
+#   not declared here.
+#
+# RULE 3 - byte verification for multi-file artifacts belongs PER SNAPSHOT, in
+#   manifest.raw_snapshot_hashes, which is already the right level and already
+#   content-addressed (filename == sha256).
+#
+# RULE 4 - SCOPE MUST BE VERIFIED, NOT JUST INTEGRITY. Before pinning a
+#   checksum, confirm the bytes are the artifact the row DENOTES - for a
+#   MediaWiki payload, parse the page title. A digest that hashes correctly but
+#   points at a sibling page passes every integrity check while asserting
+#   something false. "Matches some snapshot" is not verification. A missing
+#   checksum is visibly absent; a mis-scoped one is invisibly wrong.
+#
+# RULE 5 - evidence-for-a-claim is not evidence-of-the-artifact. A hash quoted
+#   beside an edition statement documents WHERE THE STATEMENT WAS READ. It does
+#   not become the artifact's checksum. Where such a page matters, register it
+#   as its OWN artifact - see WIKISOURCE_SA.YV.VSM.PREFACE.
+# ---------------------------------------------------------------------------
 source_artifacts:
 - artifact_id: GRETIL.RV.AUFRECHT.TEI.2019
   checksum_sha256: 14197d9c1dcced64900ef971d9f4dc5b46aa8750780f5599453c9739d6a29edd
@@ -672,3 +706,1094 @@ source_artifacts:
   title: Digital Rig Vedic Anukramani - Mandala 10
   url: https://raw.githubusercontent.com/mahesh-ak/WSC2023/05b5987d6d8d6ec7228926eb68d6a21117c9b1f2/Anukramani/Mandala_10.txt
   work_id: VG:WORK:RV:SAK
+- artifact_id: GRETIL.SV.KAUTHUMA.LEGACY.1998.HTML
+  checksum_sha256: 8b7b45f2b0ec48511f8063e80b9e24a5f10b9a554f6c52020f0108ebc8abe059
+  contributors:
+  - Reinhold Gruenendahl
+  editors:
+  - Anshuman Pandey
+  encoding: UTF-8 HTML, Sanskrit in Latin/IAST
+  file_size_bytes: 326420
+  filename: samavedu.htm
+  format: HTML
+  language: sa-Latn
+  license_statement_verbatim: THIS GRETIL TEXT FILE IS FOR REFERENCE PURPOSES ONLY! COPYRIGHT AND TERMS OF USAGE
+    AS FOR SOURCE FILE. Copyright (C) 1998 Anshuman Pandey. This document may only be used for academic and scholarly
+    purposes. No modification of this document is in any way authorized. Any publication or other use of this document
+    requires written consent of the editor.
+  notes: 'Rights EVIDENCE artifact. The parent self-declares REFERENCE PURPOSES ONLY and carries the Pandey 1998
+    prohibition on modification. Reading this parent is what settles the contradictory licence on the TEI child:
+    the CC BY-NC-SA 4.0 there was applied by GRETIL mass conversion over an upstream that never granted it. Never
+    ingested; retained as a private verification snapshot and as a structural cross-check.'
+  provenance_notes: Data entry by Anshuman Pandey, updated 08 March 1998, complete edition. Initial normalization
+    to legacy GRETIL formats by Reinhold Gruenendahl. This file is the PARENT of GRETIL.SV.KAUTHUMA.TEI.2020, which
+    was produced from it by GRETIL mass conversion in 2020.
+  publication_date: '1998'
+  recension: Kauthuma (file body states verbatim kauthuma sakha)
+  retrieval_date: '2026-09-07'
+  rights_status: REFERENCE_ONLY
+  source_edition: UNIDENTIFIED - the underlying printed Kauthuma edition is named nowhere in the file
+  source_id: GRETIL
+  title: Samaveda-Samhita
+  url: https://gretil.sub.uni-goettingen.de/gretil/1_sanskr/1_veda/1_sam/samavedu.htm
+  work_id: VG:WORK:SV:KAU
+- artifact_id: GRETIL.SV.KAUTHUMA.TEI.2020
+  checksum_sha256: 91c28c0394e94dccc9bad12a08224fbcde0a1194402b610df26647621ed92456
+  citation_system: none usable; refsDecl is mass-conversion boilerplate claiming references live in xml:id attributes
+    the body does not contain
+  editors:
+  - Anshuman Pandey
+  electronic_editors:
+  - Anshuman Pandey
+  - Reinhold Gruenendahl
+  - Maximilian Mehner
+  encoding: UTF-8 TEI P5, Sanskrit in Latin/IAST, NOT Devanagari
+  file_size_bytes: 272261
+  filename: sa_sAmavedasaMhitA.xml
+  format: TEI_XML
+  language: sa-Latn
+  license_statement_verbatim: 'TEI publicationStmt/availability ASSERTS: This e-text was provided to GRETIL in good
+    faith that no copyright rights have been infringed. If anyone wishes to assert copyright over this file, please
+    contact the GRETIL management at gretil(at)sub(dot)uni-goettingen(dot)de. The file will be immediately removed
+    pending resolution of the claim. Distributed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0
+    International License. BUT the SAME fileDesc notesStmt/note[@type=legacyheader] ASSERTS: Copyright (C) 1998
+    Anshuman Pandey. This document may only be used for academic and scholarly purposes. No modification of this
+    document is in any way authorized. Any publication or other use of this document requires written consent of
+    the editor.'
+  license_url: https://creativecommons.org/licenses/by-nc-sa/4.0/
+  notes: 'rights_status is PERMISSION_REQUIRED, NOT CC_BY_NC_SA, despite the CC declaration in this file. IRRECONCILABLE
+    INTRA-ARTIFACT CONFLICT: CC BY-NC-SA 4.0 permits adaptation under share-alike, while the embedded Pandey statement
+    forbids modification outright and requires written consent for any publication. Under policy rule RIGHTS-3 the
+    more restrictive statement controls, and under RIGHTS-9 the defect propagates from the root of the chain. GRETIL
+    cannot grant rights it does not hold and by its own good-faith wording does not claim to. Decisive operationally
+    because the VedaGraph pipeline - TEI parse, NFC normalization, structural re-keying, JSONL republication - is
+    both modification AND publication. Conclusion reached independently by Agent B and Agent E. REJECTED as primary
+    Sanskrit on a SECOND independent ground as well: sourceDesc/bibl is empty, so the artifact cannot state which
+    printed Kauthuma edition it represents, which is fatal given that the Samaveda identity contract requires the
+    selected edition hierarchy.'
+  parent_artifact_id: GRETIL.SV.KAUTHUMA.LEGACY.1998.HTML
+  provenance_notes: 'Created by GRETIL mass conversion from samavedu.htm (see parent_artifact_id). Coverage measured
+    by Agent B: 4 arcikas, 1868 distinct structural verse keys, 3714 verse lines (Purvarcika 585, Aranya 55, Mahanamnya
+    10, Uttararcika 1218). The file running numbering CLAIMS 1875 verses, so the structural parse is 7 short - an
+    open reconciliation gap. Contains arcika/verse text ONLY, with NO gana collections.'
+  publication_date: '2020-07-31'
+  recension: Kauthuma (file body states verbatim kauthuma sakha)
+  retrieval_date: '2026-09-07'
+  rights_status: PERMISSION_REQUIRED
+  source_edition: UNIDENTIFIED - sourceDesc contains an EMPTY bibl element
+  source_id: GRETIL
+  title: Samavedasamhita
+  transformation_version: GRETIL TEI mass conversion dated 2020-07-31
+  url: https://gretil.sub.uni-goettingen.de/gretil/corpustei/sa_sAmavedasaMhitA.xml
+  work_id: VG:WORK:SV:KAU
+- artifact_id: GRETIL.AV.SAUNAKA.UNACCENTED.HTML
+  checksum_sha256: 7e3f74f313d1b4348bf9e1f60a80e03bb72709994b85585a4f854a51bf57272c
+  citation_system: Books 11-20 basic numbering follows Roth/Whitney; bracketed alternates follow Vishva Bandhu,
+    Hoshiarpur 1960-1964
+  editors:
+  - Chatia Orlandi
+  - Rudolf von Roth
+  - William Dwight Whitney
+  electronic_editors:
+  - Vladimir Petr
+  - Petr Vavrousek
+  - Jost Gippert
+  - Arlo Griffiths
+  - Philipp Kubisch
+  encoding: UTF-8 HTML, Sanskrit in Latin/IAST, unaccented
+  file_size_bytes: 1024198
+  filename: avs___u.htm
+  format: HTML
+  language: sa-Latn
+  license_statement_verbatim: THIS GRETIL TEXT FILE IS FOR REFERENCE PURPOSES ONLY! COPYRIGHT AND TERMS OF USAGE
+    AS FOR SOURCE FILE.
+  notes: 'THE HEADLINE CROSS-VEDA RIGHTS DIVERGENCE. Same repository as GRETIL.RV.AUFRECHT.TEI.2019 (CC BY-NC-SA
+    4.0, clean) and GRETIL.SV.KAUTHUMA.TEI.2020 (CC BY-NC-SA 4.0 contradicted from inside the same file) - yet this
+    Atharvaveda file carries NO CC licence at all and an explicit REFERENCE PURPOSES ONLY. Anyone inferring Atharvaveda
+    rights from the Rigveda file would have been flatly wrong. The COPYRIGHT AND TERMS OF USAGE AS FOR SOURCE FILE
+    clause is a POINTER, not a grant, and it must be followed: the source file is the TITUS redaction by Jost Gippert,
+    so the operative terms are the TITUS terms recorded on TITUS.AV.SAUNAKA.HTML - scholarly use, attribution, strictly
+    non-commercial - and behind those sits Orlandi 1991, a modern edition still in copyright. Note also that GRETIL
+    has NO Atharvaveda Shaunaka Samhita in its corpustei TEI collection; only the ancillary sa_atharvavedapariziSTas.xml
+    and sa_atharvaprAyazcittAni.xml, which are not the samhita. So for Atharvaveda there is no TEI option at all.
+    Its sa_paippalAdasaMhitA.xml is the PAIPPALADA recension, a different Veda text from Shaunaka, and is rejected
+    on recension before rights are even reached. Never ingested. COVERAGE COMPUTED FROM THE SNAPSHOT by Agent D,
+    not quoted from a reference work: COMPLETE - 20 kandas, 731 suktas, 5839 distinct mantras, 11395 padas. Per-kanda
+    sukta counts 35, 36, 31, 40, 31, 142, 118, 10, 10, 10, 10, 5, 4, 2, 18, 9, 1, 4, 72, 143. THE UPSTREAM TITUS
+    NOTICE IS NOW READ, which closes the pointer this file leaves open. TITUS''s own AVS pages state verbatim: "This
+    text is part of the TITUS edition of Atharva-Veda-Samhita (Saunaka). Copyright TITUS Project, Frankfurt a/M,
+    4.3.2015. No parts of this document may be republished in any form without prior permission by the copyright
+    holder." So "COPYRIGHT AND TERMS OF USAGE AS FOR SOURCE FILE" resolves to an express prohibition on republication,
+    not to the milder scholarly-use terms on the TITUS site page. REFERENCE_ONLY is confirmed, and the blocker is
+    a written permission request to the TITUS Project. SITE LEVEL AT GRETIL: NONE EXISTS AT ALL - Agent D grepped
+    the full 1033721-byte gretil.html for licence, license, copyright, terms of use, Creative Commons and public
+    domain and found ZERO occurrences, with no about/terms/legal/impressum links anywhere. So for this artifact
+    there is no site-level statement to conflict with; the artifact statement is the only applicable one.'
+  provenance_notes: Input by Vladimir Petr and Petr Vavrousek. TITUS redaction by Jost Gippert, 31 January 1997.
+    Text of Books 11-20 improved by Arlo Griffiths, Leiden 18 May 2000, and Philipp Kubisch, Bonn 13 March 2007.
+    Revised by Arlo Griffiths, August 2009.
+  recension: 'Shaunaka, PROVED FROM THE ARTIFACT by two independent witnesses per Agent D: (1) the document title
+    "Atharvaveda-Samhita, Saunaka recension"; (2) all 11395 body locators are prefixed AVS_ with the palatal sibilant,
+    e.g. (AVS_1,1.1a) - so the recension marker is per-verse in the data, not only in a header that could belong
+    to a swapped file'
+  retrieval_date: '2026-09-07'
+  rights_status: REFERENCE_ONLY
+  source_edition: Gli inni dell Atharvaveda (Saunaka), trasliterazione a cura di Chatia Orlandi, Pisa 1991, collated
+    with R. Roth and W. D. Whitney, Atharva Veda Sanhita, Berlin 1856
+  source_id: GRETIL
+  title: Atharvaveda-Samhita, Saunaka recension, UNACCENTED TEXT
+  url: https://gretil.sub.uni-goettingen.de/gretil/1_sanskr/1_veda/1_sam/avs___u.htm
+  work_id: VG:WORK:AV:SAU
+- artifact_id: GRETIL.AV.SAUNAKA.ACCENTED.HTML
+  checksum_sha256: cd89bd1e29e6158d7c3c7bcb607b8e4eed4c7556c8c2027dec039f56736adddb
+  citation_system: Books 11-20 basic numbering follows Roth/Whitney; bracketed alternates follow Vishva Bandhu,
+    Hoshiarpur 1960-1964
+  editors:
+  - Chatia Orlandi
+  - Rudolf von Roth
+  - William Dwight Whitney
+  electronic_editors:
+  - Vladimir Petr
+  - Petr Vavrousek
+  - Jost Gippert
+  - Arlo Griffiths
+  - Philipp Kubisch
+  encoding: UTF-8 HTML, Sanskrit in Latin/IAST with accent marks
+  file_size_bytes: 1114524
+  filename: avs_acu.htm
+  format: HTML
+  language: sa-Latn
+  license_statement_verbatim: THIS GRETIL TEXT FILE IS FOR REFERENCE PURPOSES ONLY! COPYRIGHT AND TERMS OF USAGE
+    AS FOR SOURCE FILE.
+  notes: 'THE HEADLINE CROSS-VEDA RIGHTS DIVERGENCE. Same repository as GRETIL.RV.AUFRECHT.TEI.2019 (CC BY-NC-SA
+    4.0, clean) and GRETIL.SV.KAUTHUMA.TEI.2020 (CC BY-NC-SA 4.0 contradicted from inside the same file) - yet this
+    Atharvaveda file carries NO CC licence at all and an explicit REFERENCE PURPOSES ONLY. Anyone inferring Atharvaveda
+    rights from the Rigveda file would have been flatly wrong. The COPYRIGHT AND TERMS OF USAGE AS FOR SOURCE FILE
+    clause is a POINTER, not a grant, and it must be followed: the source file is the TITUS redaction by Jost Gippert,
+    so the operative terms are the TITUS terms recorded on TITUS.AV.SAUNAKA.HTML - scholarly use, attribution, strictly
+    non-commercial - and behind those sits Orlandi 1991, a modern edition still in copyright. Note also that GRETIL
+    has NO Atharvaveda Shaunaka Samhita in its corpustei TEI collection; only the ancillary sa_atharvavedapariziSTas.xml
+    and sa_atharvaprAyazcittAni.xml, which are not the samhita. So for Atharvaveda there is no TEI option at all.
+    Its sa_paippalAdasaMhitA.xml is the PAIPPALADA recension, a different Veda text from Shaunaka, and is rejected
+    on recension before rights are even reached. Never ingested. COVERAGE COMPUTED FROM THE SNAPSHOT by Agent D,
+    not quoted from a reference work: COMPLETE - 20 kandas, 731 suktas, 5839 distinct mantras, 11395 padas. Per-kanda
+    sukta counts 35, 36, 31, 40, 31, 142, 118, 10, 10, 10, 10, 5, 4, 2, 18, 9, 1, 4, 72, 143. THE UPSTREAM TITUS
+    NOTICE IS NOW READ, which closes the pointer this file leaves open. TITUS''s own AVS pages state verbatim: "This
+    text is part of the TITUS edition of Atharva-Veda-Samhita (Saunaka). Copyright TITUS Project, Frankfurt a/M,
+    4.3.2015. No parts of this document may be republished in any form without prior permission by the copyright
+    holder." So "COPYRIGHT AND TERMS OF USAGE AS FOR SOURCE FILE" resolves to an express prohibition on republication,
+    not to the milder scholarly-use terms on the TITUS site page. REFERENCE_ONLY is confirmed, and the blocker is
+    a written permission request to the TITUS Project. SITE LEVEL AT GRETIL: NONE EXISTS AT ALL - Agent D grepped
+    the full 1033721-byte gretil.html for licence, license, copyright, terms of use, Creative Commons and public
+    domain and found ZERO occurrences, with no about/terms/legal/impressum links anywhere. So for this artifact
+    there is no site-level statement to conflict with; the artifact statement is the only applicable one.'
+  provenance_notes: Input by Vladimir Petr and Petr Vavrousek. TITUS redaction by Jost Gippert, 31 January 1997.
+    Text of Books 11-20 improved by Arlo Griffiths, Leiden 18 May 2000, and Philipp Kubisch, Bonn 13 March 2007.
+    Revised by Arlo Griffiths, August 2009.
+  recension: 'Shaunaka, PROVED FROM THE ARTIFACT by two independent witnesses per Agent D: (1) the document title
+    "Atharvaveda-Samhita, Saunaka recension"; (2) all 11395 body locators are prefixed AVS_ with the palatal sibilant,
+    e.g. (AVS_1,1.1a) - so the recension marker is per-verse in the data, not only in a header that could belong
+    to a swapped file'
+  retrieval_date: '2026-09-07'
+  rights_status: REFERENCE_ONLY
+  source_edition: Gli inni dell Atharvaveda (Saunaka), trasliterazione a cura di Chatia Orlandi, Pisa 1991, collated
+    with R. Roth and W. D. Whitney, Atharva Veda Sanhita, Berlin 1856
+  source_id: GRETIL
+  title: Atharvaveda-Samhita, Saunaka recension, ACCENTED TEXT
+  url: https://gretil.sub.uni-goettingen.de/gretil/1_sanskr/1_veda/1_sam/avs_acu.htm
+  work_id: VG:WORK:AV:SAU
+- artifact_id: TITUS.YV.VSM.MADHYANDINA.HTML
+  citation_system: Part / Paragraph / Verse / Sentence, served as per-adhyaya pages vs001.htm onward
+  editors:
+  - Albrecht Weber
+  electronic_editors:
+  - Martin Kuemmel
+  - Jost Gippert
+  encoding: UTF-8; served in both IAST and ACCENTED Devanagari. Accented Devanagari confirmed by direct inspection
+    of vs003.htm on 2026-09-07
+  filename: vs.htm
+  format: HTML
+  language: sa
+  license_statement_verbatim: 'ARTIFACT-LEVEL notice, present on EVERY TITUS Veda text page, verbatim, independently
+    verified by Agent E on 2026-09-07 by fetching vs001.htm, svk001.htm and avs001.htm: "Copyright TITUS Project,
+    Frankfurt a/M, 2.11.2013. No parts of this document may be republished in any form without prior permission
+    by the copyright holder." SITE-LEVEL statement, separately, at https://titus.uni-frankfurt.de/texte/texte2.htm:
+    "Those texts that can be downloaded via http can be used freely for scholarly purposes, provided that they are
+    quoted as sources and the name(s) of the editor(s) and the date of last changes are indicated in publications.
+    The texts must not be used for any kind of commercial usage." THE TWO LEVELS CONFLICT: the site page appears
+    to grant free scholarly use, while the per-page notice forbids republication in any form without prior permission.
+    Under policy rule RIGHTS-3 the more restrictive statement controls, so the operative status is PERMISSION_REQUIRED.'
+  license_url: https://titus.uni-frankfurt.de/texte/texte2.htm
+  notes: 'CORRECTED 2026-09-07 by Agent E: this artifact was initially recorded as RESEARCH_ONLY on the basis of
+    the TITUS project-wide statement at texte2.htm alone. That was an ERROR OF EXACTLY THE KIND policy rule RIGHTS-1
+    exists to prevent - a site-level statement was read and the artifact''s own page was not. Agent C found the
+    per-page notice; Agent E then verified it independently by direct fetch before amending the record. The per-page
+    notice forbids republication in ANY form without prior permission, which is materially stricter than the site
+    page implies, so the status is PERMISSION_REQUIRED and copy_local is limited to a bounded private verification
+    snapshot. Recorded openly rather than quietly amended, because the failure mode is instructive: checking ''a''
+    licence page is not the same as checking THE artifact, and the site page here is the more permissive of the
+    two. Best RETRIEVABLE Madhyandina text and the reason Sukla Yajurveda is not fully blocked: correct recension,
+    named public-domain printed edition (Weber 1849), accented, live and fetchable. NOT cleared for corpus redistribution
+    - scholarly use with attribution and non-commercial only. CRITICAL CONTEXT: GRETIL hosts NO Vajasaneyi Samhita
+    at all, established by exhaustive search of the 1,033,721-byte GRETIL index on 2026-09-07, which returned zero
+    occurrences of Vajasaneyi, Yajurveda or any vs_/vajas/yaju filename. GRETIL 1_veda/1_sam carries only Atharvaveda
+    and Maitrayani Samhita, and Maitrayani is KRISHNA Yajurveda, a different Veda from ours. The chain of title
+    here is CLEAN at the root, unlike Samaveda and Atharvaveda: Weber 1849 is public domain by age, so the restriction
+    is TITUS asserting terms over its own data entry, which is negotiable with a known party rather than a defect.
+    Not yet snapshotted, so no checksum is recorded. COVERAGE now established by Agent C: exactly 40 adhyayas, vs001.htm..vs040.htm,
+    vs041.htm returns 404 - but VS 2.32 is MISSING, so it yields 1974 mantras rather than 1975. Encoding is TITUS-PROPRIETARY
+    romanisation, NOT IAST: aspirates use modifier letter U+02B0, e.g. "stha" written with a superscript h, so it
+    would need its own transliteration mapping rather than reuse of the Rigveda tooling. It remains TECHNICALLY
+    THE BEST Madhyandina text found - complete, accented, per-pada anchors, named scholarly edition (Weber, stated
+    as Berlin 1849 in the artifact) - and is rejected purely on rights. If TITUS granted written permission it would
+    become the preferred primary source, because it is a named scholarly edition and the selected Wikisource artifact
+    is a community transcription.'
+  provenance_notes: Data entry by M. Kuemmel, Freiburg 1997. TITUS redaction by Jost Gippert, Frankfurt 2008.
+  recension: Madhyandina
+  retrieval_date: '2026-09-07'
+  rights_status: PERMISSION_REQUIRED
+  source_edition: Albrecht Weber, The Vajasaneyi-Samhita in the Madhyandina and the Kanva-Sakha with the Commentary
+    of Mahidhara, Berlin 1849 (repr. Varanasi 1972, Chowkhamba Sanskrit Series 103)
+  source_id: TITUS
+  title: 'White Yajur-Veda: Vajasaneyi-Samhita (Madhyandina)'
+  url: https://titus.uni-frankfurt.de/texte/etcs/ind/aind/ved/yvw/vs/vs.htm
+  work_id: VG:WORK:YV:VSM
+- artifact_id: SANSKRITLIB.YV.VSM.MADHYANDINA.TEI.2010
+  contributors:
+  - Matthias H. Ahlborn
+  edition_title: First XML edition
+  editors:
+  - Peter M. Scharf
+  filename: vs.html
+  format: CATALOGUE_RECORD
+  language: sa
+  license_statement_verbatim: Copyright (C) 2010 The Sanskrit Library. All rights reserved other than those granted
+    under the Creative Commons Attribution Non-Commercial Share Alike license available in full at http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode
+    , and summarized at http://creativecommons.org/licenses/by-nc-sa/3.0/ . Permission is granted to build upon
+    this work non-commercially, as long as credit is explicitly acknowledged exactly as described herein and derivative
+    work is distributed under the same license.
+  license_url: http://creativecommons.org/licenses/by-nc-sa/3.0/
+  notes: 'format is CATALOGUE_RECORD, not TEI_XML, because only the bibliographic record was retrieved - the underlying
+    TEI is not exposed at any discovered URL. No site-level licence exists: sanskritlibrary.org/copyright.html and
+    /terms.html both return HTTP 404, verified 2026-09-07, so the artifact level is the ONLY level at which a licence
+    exists. That is the INVERSE of the GRETIL pattern and shows a source can be rights-clear per artifact while
+    having no site licence whatsoever. ACCEPTED as CC_BY_NC_SA and RECOMMENDED TARGET for Sukla Yajurveda. THE BEST
+    CHAIN OF TITLE IN THE ENTIRE FOUR-VEDA SET: no link forbids modification, and the upstream TITUS terms (non-commercial,
+    attribution) are CONSISTENT with CC BY-NC-SA rather than contradictory. Contrast the same publisher Samaveda
+    and Atharvaveda records - identical licence text, opposite verdicts, because the verdict follows the chain and
+    not the licence label. BLOCKER IS ACQUISITION ONLY: the catalogue page is a bibliographic record with no download
+    link and /TEI_MS/vs.xml returns HTTP 404, so the TEI bytes are not exposed. This is the one deferral in the
+    matrix that a single email to The Sanskrit Library could convert into a selection, which makes it the highest-value
+    action item for this Veda.'
+  provenance_notes: 'XML markup and TEI header by Matthias H. Ahlborn; document template by Peter M. Scharf. Publication:
+    Providence, RI: The Sanskrit Library, 2010. Version 0.1. ROOT OF CHAIN: Weber 1849, PUBLIC DOMAIN by age.'
+  publication_date: '2010'
+  recension: Madhyandina
+  retrieval_date: '2026-09-07'
+  rights_status: CC_BY_NC_SA
+  source_edition: The Sanskrit Library 2010 <- TITUS/Gippert 2008 <- Kuemmel, Freiburg 1997 <- Albrecht Weber, Berlin
+    1849 / Varanasi 1972, Chowkhamba Sanskrit Series 103
+  source_id: SANSKRIT_LIBRARY
+  title: The Vajasaneyi-Samhita, Madhyandina-Recension
+  url: https://sanskritlibrary.org/catalogsText/titus/vedic/vs.html
+  work_id: VG:WORK:YV:VSM
+- artifact_id: SANSKRITLIB.SV.KAUTHUMA.TEI.2010
+  contributors:
+  - Matthias H. Ahlborn
+  edition_title: First XML edition
+  editors:
+  - Peter M. Scharf
+  filename: svk.html
+  format: CATALOGUE_RECORD
+  language: sa
+  license_statement_verbatim: Copyright (C) 2010 The Sanskrit Library. All rights reserved other than those granted
+    under the Creative Commons Attribution Non-Commercial Share Alike license available in full at http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode
+    , and summarized at http://creativecommons.org/licenses/by-nc-sa/3.0/ . Permission is granted to build upon
+    this work non-commercially, as long as credit is explicitly acknowledged exactly as described herein and derivative
+    work is distributed under the same license.
+  license_url: http://creativecommons.org/licenses/by-nc-sa/3.0/
+  notes: 'format is CATALOGUE_RECORD, not TEI_XML, because only the bibliographic record was retrieved - the underlying
+    TEI is not exposed at any discovered URL. No site-level licence exists: sanskritlibrary.org/copyright.html and
+    /terms.html both return HTTP 404, verified 2026-09-07, so the artifact level is the ONLY level at which a licence
+    exists. That is the INVERSE of the GRETIL pattern and shows a source can be rights-clear per artifact while
+    having no site licence whatsoever. Recorded UNKNOWN, NOT CC_BY_NC_SA, despite the explicit CC declaration. THE
+    MOST IMPORTANT SAMAVEDA FINDING: this record own source chain names Anshuman Pandey as the root - THE SAME UPSTREAM
+    whose terms forbid modification and require written consent, recorded verbatim on GRETIL.SV.KAUTHUMA.LEGACY.1998.HTML.
+    So TWO independent re-publishers, GRETIL and The Sanskrit Library, have each applied a CC BY-NC-SA licence over
+    the same encumbered Pandey text. Their agreement is not corroboration - it is the same defect twice. Taking
+    the asserted licence at face value would launder the upstream restriction, which is what policy rule RIGHTS-9
+    exists to prevent. Resolution requires written consent from Anshuman Pandey, or a Kauthuma text from a genuinely
+    independent data entry, or a fresh transcription from a public-domain printed edition. Note that EVERY digital
+    Kauthuma text located traces to this one data entry, so there is no independent parallel witness available and
+    no amount of source-shopping will produce one.'
+  provenance_notes: 'XML markup and TEI header by Matthias H. Ahlborn; document template by Peter M. Scharf. Publication:
+    Providence, RI: The Sanskrit Library, 2010. Version 0.1. ROOT OF CHAIN: Anshuman Pandey 1999, ENCUMBERED - forbids
+    modification.'
+  publication_date: '2010'
+  recension: Kauthuma
+  retrieval_date: '2026-09-07'
+  rights_status: UNKNOWN
+  source_edition: 'The Sanskrit Library 2010 <- TITUS/Gippert 2008 <- Sama-Veda-Samhita, Kauthuma-Sakha, Editor:
+    Anshuman Pandey, 1999'
+  source_id: SANSKRIT_LIBRARY
+  title: The Samaveda-Samhita, Kauthumasakha
+  url: https://sanskritlibrary.org/catalogsText/titus/vedic/svk.html
+  work_id: VG:WORK:SV:KAU
+- artifact_id: SANSKRITLIB.AV.SAUNAKA.TEI.2010
+  contributors:
+  - Matthias H. Ahlborn
+  edition_title: First XML edition
+  editors:
+  - Peter M. Scharf
+  filename: avs.html
+  format: CATALOGUE_RECORD
+  language: sa
+  license_statement_verbatim: Copyright (C) 2010 The Sanskrit Library. All rights reserved other than those granted
+    under the Creative Commons Attribution Non-Commercial Share Alike license available in full at http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode
+    , and summarized at http://creativecommons.org/licenses/by-nc-sa/3.0/ . Permission is granted to build upon
+    this work non-commercially, as long as credit is explicitly acknowledged exactly as described herein and derivative
+    work is distributed under the same license.
+  license_url: http://creativecommons.org/licenses/by-nc-sa/3.0/
+  notes: 'format is CATALOGUE_RECORD, not TEI_XML, because only the bibliographic record was retrieved - the underlying
+    TEI is not exposed at any discovered URL. No site-level licence exists: sanskritlibrary.org/copyright.html and
+    /terms.html both return HTTP 404, verified 2026-09-07, so the artifact level is the ONLY level at which a licence
+    exists. That is the INVERSE of the GRETIL pattern and shows a source can be rights-clear per artifact while
+    having no site licence whatsoever. Recorded UNKNOWN, NOT CC_BY_NC_SA, and for a DIFFERENT reason from the Samaveda
+    record. The chain names Orlandi, Pisa: Giardini, 1991 - a modern scholarly transliteration still in copyright
+    - and The Sanskrit Library asserts CC BY-NC-SA 3.0 downstream of it. Per policy rule RIGHTS-9 the chain is followed
+    to its root and the root is encumbered. Resolution requires either permission from the Orlandi/Giardini rights
+    holders, or a Shaunaka text based solely on the public-domain Roth/Whitney 1856 edition with no Orlandi-derived
+    collation - the latter being the only identified route to a rights-clear Shaunaka Sanskrit text.'
+  provenance_notes: 'XML markup and TEI header by Matthias H. Ahlborn; document template by Peter M. Scharf. Publication:
+    Providence, RI: The Sanskrit Library, 2010. Version 0.1. ROOT OF CHAIN: Orlandi, Pisa 1991, IN COPYRIGHT.'
+  publication_date: '2010'
+  recension: Shaunaka
+  retrieval_date: '2026-09-07'
+  rights_status: UNKNOWN
+  source_edition: 'The Sanskrit Library 2010 <- TITUS/Gippert 2008 <- Vladimir Petr, Praha 1996 <- Gli inni dell
+    Atharvaveda (Saunaka), Chatia Orlandi, Pisa: Giardini, 1991, Orientamenti linguistici 28, and Roth/Whitney,
+    Berlin 1856'
+  source_id: SANSKRIT_LIBRARY
+  title: The Atharva-Veda-Samhita, Saunaka recension
+  url: https://sanskritlibrary.org/catalogsText/titus/vedic/avs.html
+  work_id: VG:WORK:AV:SAU
+- artifact_id: TITUS.SV.KAUTHUMA.HTML
+  electronic_editors:
+  - Jost Gippert
+  filename: svk.htm
+  format: HTML
+  language: sa
+  license_statement_verbatim: 'ARTIFACT-LEVEL notice, present on EVERY TITUS Veda text page, verbatim, independently
+    verified by Agent E on 2026-09-07 by fetching vs001.htm, svk001.htm and avs001.htm: "Copyright TITUS Project,
+    Frankfurt a/M, 2.11.2013. No parts of this document may be republished in any form without prior permission
+    by the copyright holder." SITE-LEVEL statement, separately, at https://titus.uni-frankfurt.de/texte/texte2.htm:
+    "Those texts that can be downloaded via http can be used freely for scholarly purposes, provided that they are
+    quoted as sources and the name(s) of the editor(s) and the date of last changes are indicated in publications.
+    The texts must not be used for any kind of commercial usage." THE TWO LEVELS CONFLICT: the site page appears
+    to grant free scholarly use, while the per-page notice forbids republication in any form without prior permission.
+    Under policy rule RIGHTS-3 the more restrictive statement controls, so the operative status is PERMISSION_REQUIRED.'
+  license_url: https://titus.uni-frankfurt.de/texte/texte2.htm
+  notes: 'CORRECTED 2026-09-07 by Agent E: this artifact was initially recorded as RESEARCH_ONLY on the basis of
+    the TITUS project-wide statement at texte2.htm alone. That was an ERROR OF EXACTLY THE KIND policy rule RIGHTS-1
+    exists to prevent - a site-level statement was read and the artifact''s own page was not. Agent C found the
+    per-page notice; Agent E then verified it independently by direct fetch before amending the record. The per-page
+    notice forbids republication in ANY form without prior permission, which is materially stricter than the site
+    page implies, so the status is PERMISSION_REQUIRED and copy_local is limited to a bounded private verification
+    snapshot. Recorded openly rather than quietly amended, because the failure mode is instructive: checking ''a''
+    licence page is not the same as checking THE artifact, and the site page here is the more permissive of the
+    two. Endpoint confirmed live, HTTP 200 on 2026-09-07, but not parsed and not snapshotted, so no checksum and
+    no coverage measurement are recorded. Recorded because this is the actual upstream that the GRETIL files of
+    the same Veda point to with COPYRIGHT AND TERMS OF USAGE AS FOR SOURCE FILE - resolving TITUS is what makes
+    that clause interpretable. TITUS terms independently forbid commercial use and do not grant bulk redistribution,
+    and the upstream encumbrance for this Veda remains regardless. ADDITIONAL FINDING on this page specifically:
+    svk001.htm carries, alongside the TITUS notice, "Copyright (C) 1998, 1999 Anshuman Pandey". That is DIRECT confirmation
+    at the artifact level that the TITUS Samaveda shares the same encumbered Pandey lineage as the GRETIL and Sanskrit
+    Library Kauthuma texts - previously inferred from The Sanskrit Library''s citation of its sources, now read
+    off the artifact itself. Three re-publishers, one root defect.'
+  publication_date: '2008'
+  recension: Kauthuma
+  retrieval_date: '2026-09-07'
+  rights_status: PERMISSION_REQUIRED
+  source_id: TITUS
+  title: Sama-Veda-Samhita, Kauthuma-Sakha
+  url: https://titus.uni-frankfurt.de/texte/etcs/ind/aind/ved/sv/svk/svk.htm
+  work_id: VG:WORK:SV:KAU
+- artifact_id: TITUS.AV.SAUNAKA.HTML
+  electronic_editors:
+  - Jost Gippert
+  filename: avs.htm
+  format: HTML
+  language: sa
+  license_statement_verbatim: 'ARTIFACT-LEVEL notice, present on EVERY TITUS Veda text page, verbatim, independently
+    verified by Agent E on 2026-09-07 by fetching vs001.htm, svk001.htm and avs001.htm: "Copyright TITUS Project,
+    Frankfurt a/M, 2.11.2013. No parts of this document may be republished in any form without prior permission
+    by the copyright holder." SITE-LEVEL statement, separately, at https://titus.uni-frankfurt.de/texte/texte2.htm:
+    "Those texts that can be downloaded via http can be used freely for scholarly purposes, provided that they are
+    quoted as sources and the name(s) of the editor(s) and the date of last changes are indicated in publications.
+    The texts must not be used for any kind of commercial usage." THE TWO LEVELS CONFLICT: the site page appears
+    to grant free scholarly use, while the per-page notice forbids republication in any form without prior permission.
+    Under policy rule RIGHTS-3 the more restrictive statement controls, so the operative status is PERMISSION_REQUIRED.'
+  license_url: https://titus.uni-frankfurt.de/texte/texte2.htm
+  notes: 'CORRECTED 2026-09-07 by Agent E: this artifact was initially recorded as RESEARCH_ONLY on the basis of
+    the TITUS project-wide statement at texte2.htm alone. That was an ERROR OF EXACTLY THE KIND policy rule RIGHTS-1
+    exists to prevent - a site-level statement was read and the artifact''s own page was not. Agent C found the
+    per-page notice; Agent E then verified it independently by direct fetch before amending the record. The per-page
+    notice forbids republication in ANY form without prior permission, which is materially stricter than the site
+    page implies, so the status is PERMISSION_REQUIRED and copy_local is limited to a bounded private verification
+    snapshot. Recorded openly rather than quietly amended, because the failure mode is instructive: checking ''a''
+    licence page is not the same as checking THE artifact, and the site page here is the more permissive of the
+    two. Endpoint confirmed live, HTTP 200 on 2026-09-07, but not parsed and not snapshotted, so no checksum and
+    no coverage measurement are recorded. Recorded because this is the actual upstream that the GRETIL files of
+    the same Veda point to with COPYRIGHT AND TERMS OF USAGE AS FOR SOURCE FILE - resolving TITUS is what makes
+    that clause interpretable. TITUS terms independently forbid commercial use and do not grant bulk redistribution,
+    and the upstream encumbrance for this Veda remains regardless.'
+  publication_date: '2008'
+  recension: Shaunaka
+  retrieval_date: '2026-09-07'
+  rights_status: PERMISSION_REQUIRED
+  source_id: TITUS
+  title: Atharva-Veda Samhita, Saunaka Recension
+  url: https://titus.uni-frankfurt.de/texte/etcs/ind/aind/ved/av/avs/avs.htm
+  work_id: VG:WORK:AV:SAU
+- artifact_id: GRIFFITH.YV.1899.ARCHIVE
+  editors:
+  - Ralph T. H. Griffith
+  filename: in.ernet.dli.2015.215626
+  format: SCAN
+  language: en
+  license_statement_verbatim: 'NO LICENCE STATEMENT EXISTS. archive.org /metadata/in.ernet.dli.2015.215626 returns
+    NO licenseurl field, NO rights field and NO possible-copyright-status field - the set of licence-bearing keys
+    is literally empty. Verified 2026-09-07. The PUBLIC_DOMAIN determination rests on the underlying work, not on
+    this silence: Ralph T. H. Griffith lived 1826-1906 and the translation was published 1899, therefore public
+    domain by age in both the US and India.'
+  notes: 'RESOLVES a standing registry placeholder that read url https://archive.org/ with the note that exact edition,
+    year, scan URL and Madhyandina alignment remain unresolved. Edition, year and item identifier are now fixed.
+    Cleanest illustration of policy rule RIGHTS-8: absence of a licence field is NOT a grant, and had we relied
+    on the host metadata we would have had no basis at all. NOT available on Wikisource - en.wikisource.org/wiki/The_Texts_of_the_White_Yajurveda
+    does not exist, verified 2026-09-07 - so unlike the other three Vedas there is no Wikisource route for Yajurveda
+    English. Madhyandina verse alignment remains open as a QA item, not a rights item.'
+  provenance_notes: Digital Library of India scan, collections digitallibraryindia and JaiGyan. A secondary Google/Harvard
+    scan exists at archive.org/details/textswhiteyajur00grifgoog and DOES carry possible-copyright-status NOT_IN_COPYRIGHT
+    with copyright-region US - note the hedge possible and the US-only scope, which is why it is corroboration and
+    not the basis of the determination. That secondary item is a 1987 Munshiram Manoharlal REPRINT scan, and a modern
+    reprint can carry its own typographic rights even where the translation does not, so the 1899 original item
+    is preferred.
+  publication_date: '1899'
+  retrieval_date: '2026-09-07'
+  rights_status: PUBLIC_DOMAIN
+  source_edition: E. J. Lazarus and Co., Benares, 1899
+  source_id: GRIFFITH_WHITE_YAJURVEDA
+  title: The Texts of the White Yajurveda
+  url: https://archive.org/details/in.ernet.dli.2015.215626
+  work_id: VG:WORK:YV:VSM
+- artifact_id: GRIFFITH.SV.1895.WIKISOURCE
+  checksum_sha256: 7fe81ea645c56d75e01429409a208f4295f79fe6dadb877aebaf783b987ef490
+  citation_system: Book / Hymn / numbered stanza
+  editors:
+  - Ralph T. H. Griffith
+  file_size_bytes: 5798
+  filename: The_Hymns_of_the_Samaveda
+  format: MEDIAWIKI_TRANSCRIPTION
+  language: en
+  license_statement_verbatim: 'ARTIFACT LEVEL, from the page wikitext itself: "{{translation license|original ={{pd-old}}|translation={{pd-old}}}}"
+    - BOTH the original and the translation are tagged pd-old. Griffith died 1906. SITE LEVEL, separately, Wikimedia
+    footer: "Text is available under the Creative Commons Attribution-ShareAlike License; additional terms may apply."'
+  license_url: https://en.wikisource.org/wiki/The_Hymns_of_the_Samaveda
+  notes: 'DOWNGRADED 2026-09-07. THIS ARTIFACT CONTAINS NO VERSE TEXT. Rights were and remain fine; COVERAGE is
+    the problem, and the earlier SELECTED verdict was wrong. Reported by Agent B and independently verified by Agent
+    E via the MediaWiki API on 2026-09-07: the page is 5615 characters / 934 words, carries {{TextQuality|25%}},
+    and is PREFACE ONLY. It lists 33 chapter links of the form "Samaveda, Part I, Book I, Chapter I" and an allpages
+    prefix query for "The_Hymns_of_the_Samaveda" returns EXACTLY ONE page - there are no subpages, so every one
+    of those 33 links is unresolved. The wikitext even contains the commented-out line "[[:mul:samavedah]], the
+    original text in Sanskrite - still empty". URL CORRECTED: the registry previously pointed at /wiki/The_Sama_Veda.
+    That URL does resolve HTTP 200 for Agent E, but only as a redirect to this page; Agent B saw a 404. Either way
+    the canonical title is The Hymns of the Samaveda and that is now recorded. LESSON RECORDED, and it is the mirror
+    image of the usual failure: every rights check on this artifact passed. A PD banner, a clear date, a dead author.
+    What no rights check would ever have caught is that there is nothing behind the banner. A clean licence on an
+    empty artifact is still an empty artifact, and rights clearance must never be mistaken for content verification.
+    RETAINED, not deleted, for two reasons: its Preface is the primary evidence for the Ranayaniya recension finding
+    recorded on GRIFFITH.SV.1895.SACREDTEXTS, and it documents why this route was rejected. Snapshot sha256 7fe81ea645c56d75e01429409a208f4295f79fe6dadb877aebaf783b987ef490,
+    5798 bytes, taken by Agent B.'
+  publication_date: '1895'
+  retrieval_date: '2026-09-07'
+  rights_status: PUBLIC_DOMAIN
+  source_id: WIKISOURCE_GRIFFITH_SV
+  title: The Hymns of the Samaveda
+  url: https://en.wikisource.org/wiki/The_Hymns_of_the_Samaveda
+  work_id: VG:WORK:SV:KAU
+- artifact_id: WHITNEY.AV.1905.WIKISOURCE
+  citation_system: Kanda / Sukta / numbered verse
+  contributors:
+  - William Dwight Whitney
+  edition_title: Harvard Oriental Series
+  editors:
+  - Charles Rockwell Lanman
+  filename: Atharva-Veda_Samhita
+  format: MEDIAWIKI_TRANSCRIPTION
+  language: en
+  license_statement_verbatim: 'ARTIFACT LEVEL: Wikisource page categories include 1905 works, PD-old-80-US and Harvard
+    Oriental Series. SITE LEVEL, separately, Wikimedia footer: Text is available under the Creative Commons Attribution-ShareAlike
+    License; additional terms may apply.'
+  license_url: https://en.wikisource.org/wiki/Atharva-Veda_Samhita
+  notes: 'Same PD-work / CC-BY-SA-transcription-layer divergence as the Griffith pages. Note the template here is
+    PD-old-80-US, which is US-scoped, rather than the plain PD-old used on the Griffith pages; the determination
+    is comfortable regardless given 1905 publication with both contributors long dead, but the jurisdictional scoping
+    is recorded rather than glossed. NOTE THE ASYMMETRY FOR THIS VEDA: the English translation is rights-clear while
+    the Sanskrit text is NOT, so Atharvaveda can be given an English layer before it can be given a canonical Sanskrit
+    one. Partial clarity per role is the normal case, not the exception. Page revision IDs not yet captured and
+    no snapshot taken, so no checksum is recorded.'
+  provenance_notes: Translated by William Dwight Whitney (died 1894), edited by Charles Rockwell Lanman (died 1941),
+    published 1905 in the Harvard Oriental Series. Includes Whitney critical commentary.
+  publication_date: '1905'
+  recension: Shaunaka
+  retrieval_date: '2026-09-07'
+  rights_status: PUBLIC_DOMAIN
+  source_id: WIKISOURCE_WHITNEY_AV
+  title: Atharva-Veda Samhita
+  url: https://en.wikisource.org/wiki/Atharva-Veda_Samhita
+  work_id: VG:WORK:AV:SAU
+- artifact_id: WIKISOURCE_SA.YV.VSM.SAMHITA.DEVANAGARI
+  citation_system: Adhyaya / mantra; 40 adhyayas as subpages adhyayah 01-40
+  edition_title: Nirnaya Sagara Press 2nd edition, Bombay, 1929
+  editors:
+  - Vasudeva Sarma Panasikara
+  encoding: 'UTF-8 Devanagari, ACCENTED. Vedic accent marks measured across the retrieved corpus: 17206 udatta (U+0951)
+    and 24331 anudatta (U+0952) combining marks.'
+  filename: Shuklayajurvedah
+  format: MEDIAWIKI_TRANSCRIPTION
+  language: sa-Deva
+  license_statement_verbatim: 'Sanskrit Wikisource site-wide licence, retrieved AUTHORITATIVELY from the MediaWiki
+    API endpoint action=query&meta=siteinfo&siprop=rightsinfo on 2026-09-07, which returned exactly: url "https://creativecommons.org/licenses/by-sa/4.0/deed.sa",
+    text "Creative Commons Attribution-Share Alike 4.0". The API rightsinfo response is used rather than a scraped
+    page footer because it is the machine-readable statement the project itself publishes.'
+  license_url: https://creativecommons.org/licenses/by-sa/4.0/
+  notes: 'CHECKSUM REMOVED 2026-09-07 - IT WAS A WRONG-SCOPE DEFECT, reported by Agent C and independently verified
+    by Agent E before removal. The field carried cb13ec2ee19ba0279bfaee40077647336a78c34e3607f7aaad64d91a3e86e1bf,
+    which is a REAL, self-verifying snapshot OF THE WRONG PAGE: it is the preface page shuklayajurvedah/prakkathanam,
+    visayanukramanika ca, 26330 bytes, not the samhita text. Agent E confirmed the page title by parsing the stored
+    bytes. WHY THIS DEFECT CLASS MATTERS MORE THAN A MISSING CHECKSUM: a checksum that points at the wrong artifact
+    PASSES every integrity check while verifying NOTHING. The bytes hash correctly, the snapshot exists, the sidecar
+    agrees - and the assertion is still false. A missing checksum is visibly absent; a mis-scoped one is invisibly
+    wrong, which is worse. Agent C''s first-generation check said only "matches a snapshot", which was technically
+    true and therefore useless; it now names the page a checksum belongs to and reports WRONG_SCOPE_matches_<title>.
+    That generalisation is worth adopting wherever checksums are gated: MATCHING SOME SNAPSHOT IS NOT VERIFICATION.
+    HOW IT GOT THERE, recorded because the mechanism is reusable: Agent C supplied the hash inside an edition_evidence
+    block, where it correctly documented WHERE the 1929 edition statement was read, and Agent E lifted it into the
+    artifact checksum slot. Evidence-for-a-claim and evidence-of-the-artifact are different things, and a hash next
+    to a claim is not a hash of the artifact. NO ARTIFACT-LEVEL CHECKSUM IS CORRECT FOR THIS ROW. It is 40 MediaWiki
+    pages, not one file, so no single digest is meaningful; see the MULTI-PAGE ARTIFACT CHECKSUM CONVENTION at the
+    head of this file. Byte verification for this artifact is carried PER SNAPSHOT in manifest.raw_snapshot_hashes,
+    which is the correct level for it. The preface page is now registered separately and honestly as WIKISOURCE_SA.YV.VSM.PREFACE,
+    where that digest IS in scope. SELECTED as the primary Sanskrit source for Sukla Yajurveda. UPGRADED 2026-09-07
+    after Agent C delivered its fragment: the edition is NO LONGER UNIDENTIFIED. Agent E had recorded it as unidentified
+    because the per-adhyaya {{header}} templates carry EMPTY year, notes, author and translator fields - which is
+    true of those pages. Agent C found that the wiki''s separate PREFACE page reproduces the printed title page
+    verbatim, naming Vasudeva Sarma Panasikara, 2nd edition, Nirnaya Sagara Press, Bombay, Saka 1850 = CE 1929,
+    with Uvata''s Mantrabhasya and Mahidhara''s Vedadipa. LESSON RECORDED: edition identity may live on a sibling
+    page rather than in the artifact header, so absence of edition metadata in the header is not proof that the
+    edition is unknown - unlike the GRETIL Samaveda TEI, whose sourceDesc/bibl is affirmatively EMPTY with no sibling
+    page to rescue it. Those two cases look alike and are not. RIGHTS LAYERING, both layers clean: the 1929 print
+    is PUBLIC DOMAIN by age, and the transcription is CC BY-SA 4.0. There is no encumbered link anywhere in this
+    chain - which is what distinguishes this Veda from Samaveda (Pandey) and Atharvaveda (Orlandi 1991). COVERAGE,
+    COMPUTED from the records by Agent C rather than quoted from the source: 40 of 40 adhyayas and 1975 of 1975
+    mantras, complete with no gaps. Compare TITUS, which is missing VS 2.32 and yields 1974. Accents present and
+    measured by Agent E: 17206 udatta (U+0951) and 24331 anudatta (U+0952) combining marks. Revision id and timestamp
+    captured for every page. REMAINING LIMITATION, and it is now the only one: authority tier is COMMUNITY_TRANSCRIPTION,
+    so transcription accuracy against the named 1929 print is UNVERIFIED and must be validated before this is treated
+    as canonical. Rights are solved, the edition is now named, and fidelity is the open question. SHARE-ALIKE: any
+    distributed VedaGraph artifact embedding this text inherits the CC BY-SA obligation. Snapshotted as 44 content-addressed
+    files under data/raw/wikisource_sa_vsm/2026-09-07/; per-scope list in docs/manifests/yajurveda_pilot_v1.md.'
+  provenance_notes: 'Retrieved via the MediaWiki API with rvprop=content|ids|timestamp, so every page carries its
+    own revision id and timestamp - revision provenance is captured for 43 of 43 pages, not merely for the collection.
+    Snapshotted by Agent C under the ad-hoc source_id WIKISOURCE_SA_VSM, which is NOT a registered source_id; see
+    docs/reports/FOUR_VEDA_SNAPSHOT_PROVENANCE.md for the reconciliation action. 43 distinct page titles retrieved:
+    1 index page, all 40 adhyayas 01-40 with no gaps, plus rishisuci and sarvanukramani. Total 2967444 characters
+    of wikitext.'
+  publication_date: '1929'
+  recension: Madhyandina, PROVED FROM THE ARTIFACT ITSELF, which titles itself "srimad-vajasaneyi-madhyandina sukla-yajurveda-samhita"
+  retrieval_date: '2026-09-07'
+  rights_status: CC_BY_SA
+  source_edition: Vajasaneyi-Madhyandina Sukla Yajurveda Samhita, edited by Vasudeva Sarma Panasikara, 2nd edition,
+    Nirnaya Sagara Press, Bombay, Saka 1850 = CE 1929, with Uvata's Mantrabhasya and Mahidhara's Vedadipa
+  source_id: WIKISOURCE_SA
+  title: Shuklayajurvedah (Shukla Yajurveda Samhita)
+  url: https://sa.wikisource.org/wiki/%E0%A4%B6%E0%A5%81%E0%A4%95%E0%A5%8D%E0%A4%B2%E0%A4%AF%E0%A4%9C%E0%A5%81%E0%A4%B0%E0%A5%8D%E0%A4%B5%E0%A5%87%E0%A4%A6%E0%A4%83
+  work_id: VG:WORK:YV:VSM
+- artifact_id: WIKISOURCE_SA.YV.VSM.SARVANUKRAMANI
+  checksum_sha256: 91203256234de6dbe6fa626c911a9bb674aebe0a6688acd2ba2a5388c0208e28
+  file_size_bytes: 140511
+  filename: SARVANUKRAMANI
+  format: MEDIAWIKI_TRANSCRIPTION
+  language: sa-Deva
+  license_statement_verbatim: 'Sanskrit Wikisource site-wide licence, retrieved AUTHORITATIVELY from the MediaWiki
+    API endpoint action=query&meta=siteinfo&siprop=rightsinfo on 2026-09-07, which returned exactly: url "https://creativecommons.org/licenses/by-sa/4.0/deed.sa",
+    text "Creative Commons Attribution-Share Alike 4.0". The API rightsinfo response is used rather than a scraped
+    page footer because it is the machine-readable statement the project itself publishes.'
+  license_url: https://creativecommons.org/licenses/by-sa/4.0/
+  notes: 'CHECKSUM ADDED 2026-09-07, supplied by Agent C and INDEPENDENTLY VERIFIED by Agent E before pinning: the
+    stored bytes were re-hashed, the digest matched, and the page title was parsed from the payload to confirm SCOPE
+    as well as integrity - it resolves to shuklayajurvedah/sarvanukramani. Scope was checked explicitly rather than
+    assumed, because the sibling samhita row previously carried a self-verifying digest of the WRONG page. An artifact-level
+    checksum IS meaningful here because this row is a SINGLE MediaWiki page, unlike the 40-page samhita row. FILLS
+    THE TRADITIONAL_METADATA GAP FOR SUKLA YAJURVEDA, which was previously recorded as an outright GAP because WSC2023
+    is Rigveda-only and must never be extended to a Veda it does not contain. This page carries the traditional
+    Sarvanukramani index for the Madhyandina recension, under a licence that permits derivation. Contents NOT yet
+    parsed or validated, so coverage and per-mantra rishi/devata/chandas completeness are UNMEASURED - it is registered
+    as a rights-cleared candidate, not as verified metadata. RIGHTS REASONING, which differs from the Griffith/Whitney
+    Wikisource pages and must not be confused with them. On those pages the copyrightable work is a modern TRANSLATION
+    that happens to be public domain by age, and the CC BY-SA site licence covers only an incidental transcription
+    layer we deliberately avoid depending on. HERE the underlying text is the Vedic mantra text itself, which is
+    ancient and not copyrightable at all, so there is no PD-by-age translation in play. That means the ONLY copyrightable
+    contribution is the community transcription, and that contribution IS licensed CC BY-SA 4.0. The practical consequence
+    is favourable: unlike TITUS RESEARCH_ONLY, this artifact may be redistributed and derived from, subject to attribution
+    and share-alike. Share-alike is a real constraint - any VedaGraph output incorporating this text must itself
+    be CC BY-SA compatible - but it is a grant rather than a prohibition. COUNTERVAILING LIMITATION, recorded because
+    it is severe and is NOT a rights issue: the page header carries EMPTY year, notes, author and translator fields,
+    so the underlying printed edition is UNIDENTIFIED. That is the same edition-identity defect that independently
+    disqualified the GRETIL Samaveda TEI. Rights are clear; provenance of the edition is not. Authority tier is
+    COMMUNITY_TRANSCRIPTION, not SCHOLARLY_EDITION: accuracy against any printed edition is unverified and must
+    be validated before this is treated as canonical.'
+  provenance_notes: Retrieved via the MediaWiki API with revision id and timestamp captured. One of the 43 pages
+    in the Shuklayajurvedah snapshot set.
+  recension: Madhyandina
+  retrieval_date: '2026-09-07'
+  rights_status: CC_BY_SA
+  source_id: WIKISOURCE_SA
+  title: Shuklayajurvedah / Sarvanukramani
+  url: https://sa.wikisource.org/wiki/%E0%A4%B6%E0%A5%81%E0%A4%95%E0%A5%8D%E0%A4%B2%E0%A4%AF%E0%A4%9C%E0%A5%81%E0%A4%B0%E0%A5%8D%E0%A4%B5%E0%A5%87%E0%A4%A6%E0%A4%83/%E0%A4%B8%E0%A4%B0%E0%A5%8D%E0%A4%B5%E0%A4%BE%E0%A4%A8%E0%A5%81%E0%A4%95%E0%A5%8D%E0%A4%B0%E0%A4%AE%E0%A4%A3%E0%A5%80
+  work_id: VG:WORK:YV:VSM
+- artifact_id: WIKISOURCE_SA.YV.VSM.RISHISUCI
+  checksum_sha256: 2151af3f369e21c2792b0bc7d43efce3c2242e568ad1c5725fe40fd35c743caa
+  file_size_bytes: 23358
+  filename: RISHISUCI
+  format: MEDIAWIKI_TRANSCRIPTION
+  language: sa-Deva
+  license_statement_verbatim: 'Sanskrit Wikisource site-wide licence, retrieved AUTHORITATIVELY from the MediaWiki
+    API endpoint action=query&meta=siteinfo&siprop=rightsinfo on 2026-09-07, which returned exactly: url "https://creativecommons.org/licenses/by-sa/4.0/deed.sa",
+    text "Creative Commons Attribution-Share Alike 4.0". The API rightsinfo response is used rather than a scraped
+    page footer because it is the machine-readable statement the project itself publishes.'
+  license_url: https://creativecommons.org/licenses/by-sa/4.0/
+  notes: 'CHECKSUM ADDED 2026-09-07, supplied by Agent C and INDEPENDENTLY VERIFIED by Agent E before pinning: the
+    stored bytes were re-hashed, the digest matched, and the page title was parsed from the payload to confirm SCOPE
+    as well as integrity - it resolves to shuklayajurvedah/rsisuci. Scope was checked explicitly rather than assumed,
+    because the sibling samhita row previously carried a self-verifying digest of the WRONG page. An artifact-level
+    checksum IS meaningful here because this row is a SINGLE MediaWiki page, unlike the 40-page samhita row. FILLS
+    THE TRADITIONAL_METADATA GAP FOR SUKLA YAJURVEDA, which was previously recorded as an outright GAP because WSC2023
+    is Rigveda-only and must never be extended to a Veda it does not contain. This page carries the rishi index
+    for the Madhyandina recension, under a licence that permits derivation. Contents NOT yet parsed or validated,
+    so coverage and per-mantra rishi/devata/chandas completeness are UNMEASURED - it is registered as a rights-cleared
+    candidate, not as verified metadata. RIGHTS REASONING, which differs from the Griffith/Whitney Wikisource pages
+    and must not be confused with them. On those pages the copyrightable work is a modern TRANSLATION that happens
+    to be public domain by age, and the CC BY-SA site licence covers only an incidental transcription layer we deliberately
+    avoid depending on. HERE the underlying text is the Vedic mantra text itself, which is ancient and not copyrightable
+    at all, so there is no PD-by-age translation in play. That means the ONLY copyrightable contribution is the
+    community transcription, and that contribution IS licensed CC BY-SA 4.0. The practical consequence is favourable:
+    unlike TITUS RESEARCH_ONLY, this artifact may be redistributed and derived from, subject to attribution and
+    share-alike. Share-alike is a real constraint - any VedaGraph output incorporating this text must itself be
+    CC BY-SA compatible - but it is a grant rather than a prohibition. COUNTERVAILING LIMITATION, recorded because
+    it is severe and is NOT a rights issue: the page header carries EMPTY year, notes, author and translator fields,
+    so the underlying printed edition is UNIDENTIFIED. That is the same edition-identity defect that independently
+    disqualified the GRETIL Samaveda TEI. Rights are clear; provenance of the edition is not. Authority tier is
+    COMMUNITY_TRANSCRIPTION, not SCHOLARLY_EDITION: accuracy against any printed edition is unverified and must
+    be validated before this is treated as canonical.'
+  provenance_notes: Retrieved via the MediaWiki API with revision id and timestamp captured. One of the 43 pages
+    in the Shuklayajurvedah snapshot set.
+  recension: Madhyandina
+  retrieval_date: '2026-09-07'
+  rights_status: CC_BY_SA
+  source_id: WIKISOURCE_SA
+  title: Shuklayajurvedah / Rishisuci
+  url: https://sa.wikisource.org/wiki/%E0%A4%B6%E0%A5%81%E0%A4%95%E0%A5%8D%E0%A4%B2%E0%A4%AF%E0%A4%9C%E0%A5%81%E0%A4%B0%E0%A5%8D%E0%A4%B5%E0%A5%87%E0%A4%A6%E0%A4%83/%E0%A4%8B%E0%A4%B7%E0%A4%BF%E0%A4%B8%E0%A5%82%E0%A4%9A%E0%A5%80
+  work_id: VG:WORK:YV:VSM
+- artifact_id: WIKISOURCE_SA.SV.KAU.SAMHITA.DEVANAGARI
+  citation_system: Arcika / Prapathaka / Dasati via page-title hierarchy; verses labelled by the RUNNING whole-Samhita
+    number, whereas GRETIL uses a dasati-local index - two different numbering systems, itself evidence of independent
+    descent
+  encoding: UTF-8 Devanagari, including real saman notation in Devanagari Extended U+A8E1-U+A8E5 (vedic tone/svara
+    marks) per Agent B
+  filename: Samavedah_Kauthumiya
+  format: MEDIAWIKI_TRANSCRIPTION
+  language: sa-Deva
+  license_statement_verbatim: 'Sanskrit Wikisource site-wide licence, retrieved AUTHORITATIVELY from the MediaWiki
+    API endpoint action=query&meta=siteinfo&siprop=rightsinfo on 2026-09-07, which returned exactly: url "https://creativecommons.org/licenses/by-sa/4.0/deed.sa",
+    text "Creative Commons Attribution-Share Alike 4.0". The API rightsinfo response is used rather than a scraped
+    page footer because it is the machine-readable statement the project itself publishes.'
+  license_url: https://creativecommons.org/licenses/by-sa/4.0/
+  notes: 'UPGRADED 2026-09-07 from DEFERRED to the SELECTED primary Sanskrit candidate for Samaveda. INDEPENDENCE
+    FROM THE PANDEY LINEAGE IS NOW PROVEN TEXTUALLY, not argued from provenance - which was the exact blocker Agent
+    E recorded. Agent B demonstrated it at running verses 1 and 2, where GRETIL MISPLACES A PADA between verses
+    (verse 2''s a-pada is tagged 0101a instead of 0102a) while Wikisource has both verses whole: GRETIL running
+    1 absorbs "tvamagne yajnanam hota visvesam hitah" into verse 1, leaving running 2 as the bare fragment "devebhirmanuse
+    jane"; Wikisource splits them correctly. A text cannot inherit from a source it does not share an error with.
+    Corroborated by the different verse-numbering system (running whole-Samhita vs dasati-local). This is the strongest
+    possible form of the argument: the Pandey lineage is textually CORRUPT at that point and this witness is correct.
+    IT ALSO CARRIES THE GANA, WHICH NOTHING ELSE REUSABLE DOES. Agent B counts 840 Kauthuma Samhita pages and 725
+    gana pages (gramageya 190, aranyakageya 86, uhagana 362, uhyagana 87). Everywhere else the gana is PDF-only
+    or absent. Since the GRETIL text has ZERO gana content, this is the only route to a Samaveda that is not merely
+    a verse skeleton. REMAINING BLOCKER IS NOW SOLELY THE EDITION BAR, not rights and not independence: it is a
+    community transcription with no single named printed edition. So the precise statement of the Samaveda problem
+    is NOT "no independent witness exists" - it is "no witness combines an identified printed edition WITH redistribution
+    rights". Sanskrit Wikisource clears the rights bar and fails the edition bar; GRETIL and The Sanskrit Library
+    fail the rights bar. Contrast Sukla Yajurveda, where the sibling preface page names a printed edition and BOTH
+    bars are cleared. Note the same Anshuman Pandey Samaveda also sits on archive.org as shastras-vedas-sama-veda-kauthuma-samhita
+    under CC BY-NC-ND 4.0, and ND forbids derivatives outright - so even the author''s own release is unusable for
+    a segmented corpus. Sanskrit Wikisource site-wide licence, retrieved AUTHORITATIVELY from the MediaWiki API
+    endpoint action=query&meta=siteinfo&siprop=rightsinfo on 2026-09-07, which returned exactly: url "https://creativecommons.org/licenses/by-sa/4.0/deed.sa",
+    text "Creative Commons Attribution-Share Alike 4.0".'
+  provenance_notes: Only 3 pages sampled so far, snapshotted under the ad-hoc unregistered source_id WIKISOURCE_SA_SV_KAU.
+    Sampled titles confirm a full traditional hierarchy is encoded in the page titles, for example Samavedah/Kauthumiya/Samhita/Purvarcikah/Chanda
+    Arcikah/1.1.1 Prathamaprapathakah/1.1.1.1 Prathama Dasatih (pageid 4998, revid 274559) and Samavedah/Kauthumiya/Samhita/Purvarcikah/Atharanyarcikah/1.2.1
+    Prathama Dasatih (pageid 4939, revid 323308). Retrieved via action=parse with wikitext and revid captured.
+  recension: Kauthuma
+  retrieval_date: '2026-09-07'
+  rights_status: CC_BY_SA
+  source_id: WIKISOURCE_SA
+  title: Samavedah / Kauthumiya / Samhita
+  url: https://sa.wikisource.org/wiki/%E0%A4%B8%E0%A4%BE%E0%A4%AE%E0%A4%B5%E0%A5%87%E0%A4%A6%E0%A4%83
+  work_id: VG:WORK:SV:KAU
+- artifact_id: DCS.YV.VSM.MADHYANDINA.CONLLU
+  filename: dcs/data/conllu
+  format: CONLLU
+  language: sa
+  license_statement_verbatim: 'ARTIFACT-LEVEL, verbatim from dcs/data/conllu/readme.md: "The data in this directory
+    are licensed under the Creative Commons BY 4.0 (CC BY 4.0) license." NOTE A VERSION MISMATCH: the DCS site impressum
+    states 3.0 while the data readme states 4.0. Recorded as an unresolved discrepancy rather than silently resolved
+    in our favour; CC BY 3.0 and 4.0 differ in attribution and termination detail, so the difference is not cosmetic.'
+  license_url: https://creativecommons.org/licenses/by/4.0/
+  notes: 'THE MOST PERMISSIVE LICENCE FOUND FOR ANY VEDA PRIMARY TEXT - CC BY 4.0, with no non-commercial and no
+    share-alike restriction, which no other primary Sanskrit artifact in this registry achieves. It is nonetheless
+    NOT selected, for two coverage reasons that rights cannot fix: (1) it covers only adhyayas 1-15 of 40, so it
+    is 37 percent of the Veda; (2) it carries ZERO accents, and Vedic accent is not decoration - it is part of the
+    text. Registered because it is the one artifact that could support a commercially licensable derivative, and
+    because its morphological annotation has independent value as a cross-check on the selected Wikisource text.
+    Chase the 3.0-versus-4.0 impressum discrepancy before relying on it.'
+  provenance_notes: Digital Corpus of Sanskrit, morphologically analysed CoNLL-U. Reported by Agent C. Correct host
+    is http://www.sanskrit-linguistics.org/dcs/ - dcs.uni-heidelberg.de no longer resolves. Not fetched or snapshotted
+    by Agent E, so no checksum is recorded.
+  recension: Madhyandina
+  retrieval_date: '2026-09-07'
+  rights_status: CC_BY
+  source_id: DCS
+  title: Vajasaneyisamhita (Madhyandina), DCS text_id 523
+  url: http://www.sanskrit-linguistics.org/dcs/
+  work_id: VG:WORK:YV:VSM
+- artifact_id: GRIFFITH.SV.1895.SACREDTEXTS
+  citation_system: BOOK I-IX / CHAPTER I-III / DECADE I-XII, complete on a single page
+  editors:
+  - Ralph T. H. Griffith
+  filename: sv.htm
+  format: HTML
+  language: en
+  license_statement_verbatim: 'NO PER-ARTIFACT STATEMENT EXISTS. The only host signal is a site-wide HTML meta element,
+    verbatim: <meta name="copyright" content="Public Domain and Creative Commons">. That is generic, covers two
+    mutually distinct regimes without saying which applies to what, and is not artifact-level - so under policy
+    rule RIGHTS-1 it carries NO weight and is recorded only as an observation. The PUBLIC_DOMAIN status rests instead
+    on the underlying work: Griffith died 1906 and the translation was published 1895, so it is public domain by
+    age.'
+  notes: 'THE ONLY COMPLETE GRIFFITH SAMAVEDA TEXT LOCATED - and it is the WRONG RECENSION. CRITICAL ALIGNMENT WARNING,
+    and this is the single most consequential Samaveda finding after the Pandey lineage: Griffith''s own preface
+    states verbatim "I have followed Benfey''s text", and the same preface identifies Benfey''s edition as RANAYANIYA.
+    So this translation does not render the Kauthuma recension that VG:WORK:SV:KAU is defined as. Structural corroboration
+    rather than assertion: Griffith''s Part II has SIX Books where the Kauthuma Uttararcika has NINE prapathakas.
+    CONSEQUENCE: aligning this translation to a Kauthuma Sanskrit text would be a silent cross-recension alignment
+    - the two texts genuinely differ in content and arrangement, so the alignment would be wrong rather than merely
+    approximate. Agent B correctly left translations.jsonl EMPTY in its pilot rather than fabricate one. SECOND-ORDER
+    FINDING that likely invalidates an assumption elsewhere: the same Griffith preface establishes that Satyavrata
+    Samasrami''s Bibliotheca Indica edition is ALSO Ranayaniya. So the archive.org DLI scans of Samasrami are NOT
+    a Kauthuma witness either. Anyone reaching for a printed Samaveda to cross-check Kauthuma counts must confirm
+    the recension first. VERDICT: rights are clear, coverage is complete, and it is still NOT selectable for VG:WORK:SV:KAU.
+    Samaveda therefore has NO rights-clear, coverage-complete, RECENSION-CORRECT English translation. The English
+    translation role for this Veda is a genuine GAP, not a solved problem - which corrects the earlier verdict that
+    it was the one clear role Samaveda had.'
+  provenance_notes: Reported by Agent B. The site returns HTTP 403 to automated agents; Agent B confirmed content
+    via the Wayback capture 20260718092330. Not snapshotted into data/raw, so no checksum is recorded.
+  publication_date: '1895'
+  recension: RANAYANIYA, NOT KAUTHUMA - see notes. This is a recension MISMATCH against VG:WORK:SV:KAU.
+  retrieval_date: '2026-09-07'
+  rights_status: PUBLIC_DOMAIN
+  source_edition: Ralph T. H. Griffith, The Hymns of the Samaveda, 1895, following Benfey's text
+  source_id: SACRED_TEXTS
+  title: The Sama-Veda, Griffith translation
+  url: https://sacred-texts.com/hin/sv.htm
+  work_id: VG:WORK:SV:KAU
+- artifact_id: COMMONS.SV.KAU.SAMAN.AUDIO
+  filename: upload.wikimedia.org saman ogg set
+  format: AUDIO_OGG_COLLECTION
+  language: sa
+  license_statement_verbatim: PER-FILE licences, checked individually via the Commons imageinfo/extmetadata API
+    and NOT inferred from Commons' general terms - 458 files CC BY-SA 4.0, 16 files CC0, 0 files missing a licence.
+    Example verbatim for File:vasishtham(vrshashono) Vasishtham.ogg - UsageTerms "Creative Commons Attribution-Share
+    Alike 4.0", LicenseUrl https://creativecommons.org/licenses/by-sa/4.0, Credit "Own work", 1971570 bytes.
+  license_url: https://creativecommons.org/licenses/by-sa/4.0/
+  notes: 'THE ONLY MIRRORABLE AUDIO FOUND ANYWHERE IN THE FOUR-VEDA SURVEY. This single artifact overturns the audio
+    verdict, which was otherwise zero-mirrorable across all four Vedas and every other host. Local mirroring is
+    PERMITTED, conditional on carrying attribution and share-alike PER FILE - the two licences are not uniform,
+    so the 16 CC0 files and the 458 CC BY-SA 4.0 files must retain their own terms rather than be flattened to one
+    collection licence. IT IS ALSO THE FIRST AND ONLY CC0 IN THE REGISTRY. Until now CC0 was documented in data/registry/rights.yaml
+    but assigned to nothing, and the enum member Agent A added on request was unused. Those 16 files are the justification,
+    arriving after the request. ALIGNMENT: PAGE_LEVEL and SOURCE_PROVIDED - each file is referenced from the specific
+    Wikisource page (typically one dasati or one gana) it belongs to. That makes it the best audio alignment available
+    for any Veda, and crucially it is the SOURCE''s own statement rather than a derived claim. Compare every other
+    audio asset surveyed, where no timing or cue artifact exists at all. AUTHORITY CAVEAT, recorded because it is
+    the real trade-off: recitation authority is LOWER than IGNCA''s - these are community contributions with unnamed
+    reciters, credited "Own work", versus VHP''s institutional recordings. So for Samaveda audio the choice is explicitly
+    between authority (VHP, PERMISSION_REQUIRED, unmirrorable) and usability (this, CC BY-SA, mirrorable). That
+    is a curation decision, not a rights decision, and it should be made deliberately rather than by default. PARTICULARLY
+    VALUABLE because it renders the GANA - the sung dimension that the GRETIL Kauthuma text lacks entirely and that
+    is the reason Samaveda is a distinct Veda rather than a Rigveda excerpt.'
+  provenance_notes: Reached via https://sa.wikisource.org/wiki/samavedah; files hosted on upload.wikimedia.org.
+    474 distinct .ogg referenced from 444 Kauthuma Samhita pages. Principal uploaders "Seet..." (317 files) and
+    "Puranastudy" (157), Credit recorded as "Own work". Reciters are not named per file. Reported by Agent B; not
+    yet snapshotted by Agent E, so no collection-level checksum is recorded.
+  recension: Kauthuma
+  retrieval_date: '2026-09-07'
+  rights_status: CC_BY_SA
+  source_id: WIKIMEDIA_COMMONS
+  title: Kauthuma saman/gana recitation, 474 Ogg files
+  url: https://commons.wikimedia.org/wiki/Category:Samaveda
+  work_id: VG:WORK:SV:KAU
+- artifact_id: VEDAWEB.AVS.WHITNEY_LANMAN_1905.PLAINTEXT.L2
+  checksum_sha256: 19591257ab941154c9e6febf33b2d87c02eb8248bd6f36e6dfd15313017cda1d
+  contributors:
+  - William Dwight Whitney
+  edition_title: Harvard Oriental Series 7-8
+  editors:
+  - Charles Rockwell Lanman
+  file_size_bytes: 1862244
+  filename: vedaweb_avs_contents_696f42266f50da42570ad040.json
+  format: JSON_API_PLAINTEXT
+  language: en
+  license_statement_verbatim: 'VedaWeb''s API returns "license": null and "licenseUrl": null for this resource,
+    and it carries NO restrictive statement - only a citation request. Under policy rule RIGHTS-8 that silence is
+    NOT a grant, so the PUBLIC_DOMAIN status rests on the underlying work instead: published 1905, longest-living
+    author Charles Rockwell Lanman died 1941, therefore public domain in the US. Independently corroborated by English
+    Wikisource tagging the same edition {{PD/US|1941}}. Required citation, verbatim: "Whitney, William Dwight &
+    Charles Rockwell Lanman. 1905. Atharva-Veda Samhita. Translated with a critical and exegetical commentary by
+    William Dwight Whitney. Revised and brought nearer to completion and edited by Charles Rockwell Lanman. Cambridge,
+    MA: Harvard University Press. Curated and hosted by VedaWeb - Online Research Platform for Old Indic texts.
+    University of Cologne."'
+  notes: 'CHECKSUM ADDED 2026-09-07, supplied by Agent D and INDEPENDENTLY VERIFIED by Agent E on all four legs
+    before pinning: the file exists on disk, a fresh recomputation of the bytes gives 19591257ab941154c9e6febf33b2d87c02eb8248bd6f36e6dfd15313017cda1d,
+    the content-addressed filename agrees, and the metadata sidecar digest agrees. The file_size_bytes 1862244 already
+    recorded on this row also matches exactly, so this is a CONSISTENT ADDITION rather than a correction. SELECTED
+    as the Atharvaveda English translation, in preference to English Wikisource, on COVERAGE GRANULARITY: this is
+    per-STANZA where en.wikisource is per-hymn only. RULING REQUESTED BY AGENT D AND GIVEN: Agent D asked whether
+    an undeclared digital transcription layer over a public-domain work should be downgraded to UNKNOWN. It should
+    NOT, and the reason is the same one used for the Griffith archive.org scan: we classify on the UNDERLYING WORK''s
+    age, never on the host''s silence. Agent D''s reasoning was already correct on both counts - it cited the 1905
+    publication and Lanman''s 1941 death, and explicitly did NOT rely on VedaWeb''s null licence field. That is
+    precisely the RIGHTS-8 discipline. A mechanical transcription of a public-domain text carries no independent
+    originality worth protecting. COVERAGE LIMITATION, material and honest: 4881 of 5842 stanzas. KANDA 20, all
+    958 stanzas, IS NOT TRANSLATED. Note that en.wikisource has the SAME gap - Agent D found its Book XX page is
+    278 bytes transcluding a single djvu page with no hymn subpages. So the Kanda 20 gap is a property of the Whitney/Lanman
+    tradition as digitised, not of either host, and no amount of source-switching closes it. Roughly 16 percent
+    of the Veda has no English translation available from either route. CRITICAL DISTINCTION, which Agent D identified
+    and asked me to record: the TITUS no-republication clause attaches to VedaWeb''s AVS SANSKRIT resource, NOT
+    to this translation resource. CONFIRMED - see VEDAWEB.AVS.SANSKRIT.TITUS.PLAINTEXT. Two resources on one host,
+    one host-level silence, two different rights outcomes, decided per resource.'
+  provenance_notes: Reported by Agent D. 4881 entries, HTTP 200. 23 snapshots under data/raw/vedaweb_avs/2026-09-07/
+    - one contents GET plus 11 hymn alias GETs and 11 children GETs - all via PoliteFetcher on stable URLs, all
+    hash-verified by Agent E's audit. Snapshotted under the ad-hoc source_id VEDAWEB_AVS, which is not registered;
+    the artifact is recorded here under the correct source_id VEDAWEB.
+  publication_date: '1905'
+  recension: Shaunaka
+  retrieval_date: '2026-09-07'
+  rights_status: PUBLIC_DOMAIN
+  source_id: VEDAWEB
+  title: Atharva-Veda Samhita, Whitney and Lanman translation, VedaWeb resource 696f42266f50da42570ad040
+  url: https://vedaweb.uni-koeln.de/api/contents?res=696f42266f50da42570ad040&limit=6000
+  work_id: VG:WORK:AV:SAU
+- artifact_id: VEDAWEB.AVS.SANSKRIT.TITUS.PLAINTEXT
+  filename: vedaweb_avs_sanskrit_696f331f6f50da42570ad028
+  format: JSON_API_PLAINTEXT
+  language: sa-Latn
+  license_statement_verbatim: 'This resource REPRODUCES THE TITUS CLAUSE VERBATIM in its VedaWeb resource description:
+    "Copyright TITUS Project, Frankfurt a/M, 4.3.2015. No parts of this document may be republished in any form
+    without prior permission by the copyright holder."'
+  notes: 'RECORDED SPECIFICALLY TO MAKE A HOST-LEVEL INFERENCE IMPOSSIBLE. VedaWeb hosts both this Sanskrit resource
+    and the Whitney translation resource. The translation returns a null licence and is PUBLIC_DOMAIN by the age
+    of the underlying work; THIS resource reproduces the TITUS prohibition and is PERMISSION_REQUIRED. Same host,
+    same Veda, same API, opposite verdicts - so no VedaWeb-wide rights statement can be correct, which is why VEDAWEB''s
+    source-level status stays UNKNOWN by design. THE SINGLE MOST USEFUL STRUCTURAL FINDING FOR THIS VEDA, from Agent
+    D: TITUS, GRETIL''s avs_*.htm, and this VedaWeb Sanskrit layer are ALL THE SAME Petr/Vavrousek text. They are
+    not three sources to compare but ONE licensing dependency wearing three hats - so there is no independent Shaunaka
+    witness among them, and ONE written permission from the TITUS Project would unlock the accented AVS in its cleanest
+    machine-readable form across all three. That makes a TITUS request the highest-value single rights action for
+    the Atharvaveda. The only identified route that BYPASSES TITUS entirely remains a fresh transcription from Roth
+    and Whitney, Berlin 1856, which is public domain by age.'
+  provenance_notes: Reported by Agent D. Not ingested. Same Petr/Vavrousek text as GRETIL and TITUS.
+  recension: Shaunaka
+  retrieval_date: '2026-09-07'
+  rights_status: PERMISSION_REQUIRED
+  source_id: VEDAWEB
+  title: Atharva-Veda Samhita Sanskrit, VedaWeb AVS resource
+  url: https://vedaweb.uni-koeln.de/api/contents?res=696f331f6f50da42570ad028
+  work_id: VG:WORK:AV:SAU
+- artifact_id: VEDAVANI.AV.SAUNAKA.WAV.HF
+  filename: Vedavani-Dataset
+  format: AUDIO_WAV_DATASET
+  language: sa
+  license_statement_verbatim: 'Verbatim from the HuggingFace cardData license field and README front-matter: "License
+    - Apache License 2.0" (license: apache-2.0).'
+  license_url: https://www.apache.org/licenses/LICENSE-2.0
+  notes: 'THE ONLY MIRRORABLE ATHARVAVEDA AUDIO, and the only PERMISSIVELY licensed audio anywhere in the four-Veda
+    survey - Apache-2.0 carries neither a non-commercial nor a share-alike restriction, unlike the CC BY-SA/CC0
+    Commons Samaveda set. UNIQUELY, IT HAS PER-MANTRA GRANULARITY WITH TRANSCRIPTION. Every other audio asset surveyed
+    has no timing or cue artifact at all; this one pairs audio with Devanagari transcription at mantra/hemistich
+    level. Two limitations on that: the transcription is UNACCENTED, and it carries NO AVS kanda.sukta.mantra reference,
+    so mapping it onto the VedaGraph spine must be a REVIEWABLE DERIVED layer produced by text-matching against
+    the AVS Sanskrit - never asserted as source data. CHAIN-OF-TITLE CAUTION, recorded rather than glossed, per
+    Agent D: the Atharvaveda_Part_NNN filenames match the archive.org Veda Prasara Samithi upload exactly, so at
+    least part of the source audio is almost certainly that recording. An Apache-2.0 grant asserted by the DATASET
+    AUTHORS over third-party recordings is not a verified chain of title. It is coherent only if the upstream really
+    is unencumbered - and Agent E''s standing policy is that the upstream''s CC Public Domain Mark is NOT credible
+    for a 2020 studio recording still sold on CD. So this is RESIDUAL RISK, not a clean chain. Recorded as APACHE_2_0
+    because that is what the artifact states and it is the dataset authors'' own work product, but flagged for a
+    human decision before publication rather than treated as settled. Recension and recitation type are both UNVERIFIED
+    - neither is stated by the dataset.'
+  provenance_notes: Reported by Agent D. ACL 2025, arXiv:2506.00145; code at github.com/SujeetNlp/Vedavani. 9997
+    Atharvaveda samples of ~30779 total (~54 h). Kandas 1-13 named explicitly in filenames (6306 samples); the remaining
+    3691 sit under opaque Part_NNN names. WAV plus train/validation/test CSV. Not fetched or snapshotted by Agent
+    E, so no checksum recorded.
+  recension: Saunaka, INFERRED from text match and NOT STATED by the dataset - recorded as UNVERIFIED
+  retrieval_date: '2026-09-07'
+  rights_status: APACHE_2_0
+  source_id: VEDAVANI
+  title: Vedavani speech dataset, Atharvaveda portion
+  url: https://huggingface.co/datasets/sanganaka/Vedavani-Dataset
+  work_id: VG:WORK:AV:SAU
+- artifact_id: ARCHIVE.AV.CHANTING.PDMARK.202107
+  filename: atharvaveda_202107
+  format: AUDIO_MP3
+  language: sa
+  license_statement_verbatim: The item licenseurl field reads verbatim "http://creativecommons.org/publicdomain/mark/1.0/"
+    - CC Public Domain Mark 1.0.
+  license_url: http://creativecommons.org/publicdomain/mark/1.0/
+  notes: 'AGENT E OVERRULES AGENT D ON THIS ONE ITEM. Agent D recorded mirroring as PERMITTED on the strength of
+    the CC Public Domain Mark. Agent E records it as UNKNOWN, no redistribution, applying the standing policy already
+    documented in docs/FOUR_VEDA_AUDIO_SOURCE_INVENTORY.md section 2 and derived from rights.yaml rules RIGHTS-4
+    and RIGHTS-8. REASONING: PD Mark is NOT a licence and NOT a waiver. It is an ASSERTION BY WHOEVER APPLIED IT
+    that a work is ALREADY out of copyright. This is a 2020 sound recording by Veda Prasara Samithi, whose master
+    is still sold as physical CDs, tagged by a third-party re-uploader with no standing. A 21st-century recording
+    of living performers is not out of copyright anywhere, so the assertion is not merely unverified - it is not
+    credible. The byte-identical sibling carrying NO licence at all is corroborating evidence that the tag is uploader
+    noise rather than a rights position: the same bytes cannot be both public domain and all rights reserved. Two
+    uploads, two metadata states, one underlying encumbered recording. Recorded explicitly, including the disagreement,
+    so the decision is auditable rather than silent. Alignment granularity is NONE in any case, so nothing is lost
+    operationally by excluding it.'
+  provenance_notes: Reported by Agent D. Complete, 28 files, 19.20 h, MP3, arbitrary ~42-minute parts with NO structural
+    correspondence to kanda/sukta/mantra. The sibling item atharvaveda_202106 is a byte-identical file set with
+    NO licenseurl at all.
+  recension: UNVERIFIED - not stated
+  retrieval_date: '2026-09-07'
+  rights_status: UNKNOWN
+  source_id: ARCHIVE_ORG
+  title: Atharva Veda Complete Chanting, Veda Prasara Samithi 2020
+  url: https://archive.org/details/atharvaveda_202107
+  work_id: VG:WORK:AV:SAU
+- artifact_id: GRIFFITH.AV.1896.SACREDTEXTS
+  citation_system: 'Per-verse anchors on the Berlin / Roth-Whitney numbering spine - VERIFIED to match GRETIL_AVS:
+    book 7 has 118 hymns (not the Bombay edition''s 123) and book 20 has 143'
+  editors:
+  - Ralph T. H. Griffith
+  filename: hin/av/av{BB}{HHH}.htm
+  format: HTML
+  language: en
+  license_statement_verbatim: 'Verbatim from the sacred-texts rights policy: "Public domain files from this site
+    can be used for any purposes... Create derivative works... without asking anyone (including sacred-texts) for
+    permission." TWO CARVE-OUTS which do NOT cover the body text but must be respected: the site''s own index pages,
+    graphics and descriptive material are copyright J. B. Hare and "may not be reproduced in any form". Underlying
+    PUBLIC_DOMAIN status rests on the work: Griffith died 1906, published 1895-96.'
+  license_url: https://sacred-texts.com/
+  notes: 'THIS CLOSES THE KANDA 20 GAP AND CORRECTS AN EARLIER AGENT E RECORD. Agent E had recorded that Kanda 20
+    - 958 stanzas, roughly 16 percent of the Veda - was untranslated in BOTH VedaWeb and Wikisource, and concluded
+    the gap belonged to the digitised Whitney tradition and that no source-switching would close it. That conclusion
+    was WRONG, and the error was in scoping the search to the Whitney tradition. Griffith''s translation is a DIFFERENT
+    translation, is the ONLY COMPLETE AVS translation, and does cover book XX per-verse. WHAT MAKES IT USABLE RATHER
+    THAN MERELY EXISTENT: it sits on the SAME Berlin/Roth-Whitney numbering spine as our GRETIL_AVS Sanskrit, verified
+    structurally by Agent D on two independent counts (book 7 = 118 hymns, book 20 = 143). Contrast the Samaveda
+    case, where the only complete Griffith translation is on a DIFFERENT recension and therefore unusable. Same
+    translator, same era, opposite outcome - and the deciding factor is the numbering spine, not the licence. AUDITED
+    DEFECTS, recorded because they must not be discovered later as silent gaps: AVS 2.20-2.23 are genuinely MISSING
+    and the file says so itself; some verse anchors are CORRUPTED (AVS 6.7 is anchored as book 07 hymn 006); and
+    Griffith''s Latin-appendix passages are ABSENT - 1.11.3-6, 4.4.3-9, 6.72, 6.101, 20.126.16-17, 20.136. UNVERIFIED:
+    whether this file appears on the sacred-texts commercial-licensing Bibliography list. Resolve before any commercial
+    use. Site returns HTTP 403 to automated agents.'
+  provenance_notes: Reported by Agent D. Not snapshotted by Agent E, so no checksum recorded.
+  publication_date: '1895'
+  recension: Shaunaka
+  retrieval_date: '2026-09-07'
+  rights_status: PUBLIC_DOMAIN
+  source_edition: Ralph T. H. Griffith, The Hymns of the Atharvaveda, 1895-96
+  source_id: SACRED_TEXTS
+  title: The Hymns of the Atharvaveda, Griffith translation
+  url: https://sacred-texts.com/hin/av/index.htm
+  work_id: VG:WORK:AV:SAU
+- artifact_id: WIKISOURCE.AV.WHITNEY.ANUKRAMANI.HEADERS
+  contributors:
+  - William Dwight Whitney
+  editors:
+  - Charles Rockwell Lanman
+  filename: Atharva-Veda_Samhita per-hymn headers
+  format: MEDIAWIKI_TRANSCRIPTION
+  language: en
+  license_statement_verbatim: 'Wikisource {{PD/US|1941}}, rendering "public domain in the United States because
+    it was published before January 1, 1931. The longest-living author of this work died in 1941...". Site-level
+    Wikimedia footer separately: "Text is available under the Creative Commons Attribution-ShareAlike License; additional
+    terms may apply."'
+  license_url: https://en.wikisource.org/wiki/Atharva-Veda_Samhita
+  notes: 'FILLS THE ATHARVAVEDA TRADITIONAL_METADATA ROLE, previously recorded as an outright GAP. Whitney''s per-hymn
+    bracketed header IS an excerpt of the Brhatsarvanukramani, giving rsi, devata and chandas with per-verse metre
+    exceptions. It is public domain, machine-readable, sourced, and in a ProofreadPage-validated transcription.
+    GRANULARITY LIMIT: PER-HYMN, not per-mantra, and it covers books I-XIX only - book XX is outside it. THE PER-MANTRA
+    ALTERNATIVE IS RIGHTS-BLOCKED, and its licence metadata is actively misleading. Vishva Bandhu''s Atharvaveda
+    Rsi-Devata-Chando-Anukramanika (Hoshiarpur 1970) is the only TRUE per-mantra source. The printed volume itself
+    states "sarvadhikarah suraksitah" - all rights reserved. Vishva Bandhu died 1973, so it runs to 2034 in India
+    and is URAA-restored in the US. Its archive.org scan carries a CC0 tag which is a DIGITISER ASSERTION, not a
+    rightsholder grant. DO NOT MIRROR. See rights.yaml rule RIGHTS-10, which was added because of this pattern.'
+  provenance_notes: Reported by Agent D. ProofreadPage-VALIDATED transcription. Covers all 588 hymns of books I-XIX.
+    Revision ids NOT captured because the source was not ingested - Agent D correctly declined to retro-fit oldids,
+    since back-filled revision pins would be fabricated provenance.
+  publication_date: '1905'
+  recension: Shaunaka
+  retrieval_date: '2026-09-07'
+  rights_status: PUBLIC_DOMAIN
+  source_id: WIKISOURCE_WHITNEY_AV
+  title: Brhatsarvanukramani excerpts in Whitney's per-hymn bracketed headers
+  url: https://en.wikisource.org/wiki/Atharva-Veda_Samhita
+  work_id: VG:WORK:AV:SAU
+- artifact_id: WIKISOURCE_SA.YV.VSM.PREFACE
+  checksum_sha256: cb13ec2ee19ba0279bfaee40077647336a78c34e3607f7aaad64d91a3e86e1bf
+  file_size_bytes: 26330
+  filename: Shuklayajurvedah_prakkathanam
+  format: MEDIAWIKI_TRANSCRIPTION
+  language: sa-Deva
+  license_statement_verbatim: 'Sanskrit Wikisource site-wide licence, retrieved AUTHORITATIVELY from the MediaWiki
+    API endpoint action=query&meta=siteinfo&siprop=rightsinfo on 2026-09-07, which returned exactly: url "https://creativecommons.org/licenses/by-sa/4.0/deed.sa",
+    text "Creative Commons Attribution-Share Alike 4.0".'
+  license_url: https://creativecommons.org/licenses/by-sa/4.0/
+  notes: 'REGISTERED 2026-09-07 TO PUT A REAL SNAPSHOT WHERE IT IS ACTUALLY IN SCOPE. This digest was previously
+    mis-pinned as the checksum of WIKISOURCE_SA.YV.VSM.SAMHITA.DEVANAGARI, where it verified the wrong thing. The
+    right fix was not to delete the evidence but to give it its own row. THIS PAGE IS EVIDENTIALLY IMPORTANT IN
+    ITS OWN RIGHT, which is why deleting the digest would have lost something real: it is the artifact that IDENTIFIES
+    THE PRINTED EDITION behind the whole Sukla Yajurveda text selection. Agent E had recorded that edition as UNIDENTIFIED
+    because the per-adhyaya page headers carry empty year, notes, author and translator fields. Agent C found that
+    THIS page reproduces the printed title page verbatim, naming Panasikara, Nirnaya Sagara Press, Bombay, Saka
+    1850 = CE 1929. So the edition-identity claim for a 40-page primary text rests on this single 26330-byte snapshot,
+    and it is now independently addressable and hash-pinned. GENERAL LESSON RECORDED: edition identity may live
+    on a SIBLING page rather than in the artifact header, so an empty header is not proof the edition is unknown.
+    Contrast the GRETIL Samaveda TEI, whose sourceDesc/bibl is affirmatively EMPTY with no sibling page to rescue
+    it. Those two cases look identical from the header alone and are not.'
+  provenance_notes: Snapshotted under source_id WIKISOURCE_SA at data/raw/wikisource_sa/2026-09-07/, filename ==
+    sha256. Digest re-verified by Agent E and the page title parsed from the payload to confirm identity.
+  publication_date: '1929'
+  recension: Madhyandina
+  retrieval_date: '2026-09-07'
+  rights_status: CC_BY_SA
+  source_edition: 'Reproduces the printed title page of: Vajasaneyi-Madhyandina Sukla Yajurveda Samhita, ed. Vasudeva
+    Sarma Panasikara, 2nd edition, Nirnaya Sagara Press, Bombay, Saka 1850 = CE 1929, with Uvata''s Mantrabhasya
+    and Mahidhara''s Vedadipa'
+  source_id: WIKISOURCE_SA
+  title: Shuklayajurvedah / prakkathanam, visayanukramanika ca (preface and table of contents)
+  url: https://sa.wikisource.org/wiki/%E0%A4%B6%E0%A5%81%E0%A4%95%E0%A5%8D%E0%A4%B2%E0%A4%AF%E0%A4%9C%E0%A5%81%E0%A4%B0%E0%A5%8D%E0%A4%B5%E0%A5%87%E0%A4%A6%E0%A4%83
+  work_id: VG:WORK:YV:VSM

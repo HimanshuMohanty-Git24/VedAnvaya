@@ -5,6 +5,10 @@ from enum import StrEnum
 
 class RightsStatus(StrEnum):
     PUBLIC_DOMAIN = "PUBLIC_DOMAIN"
+    # CC0 1.0 Universal public-domain dedication. Legally requires no attribution;
+    # VedaGraph still records attribution as provenance. Distinct from PUBLIC_DOMAIN,
+    # which is a status a work reached by law rather than by an explicit waiver.
+    CC0 = "CC0"
     CC_BY = "CC_BY"
     CC_BY_SA = "CC_BY_SA"
     CC_BY_NC = "CC_BY_NC"
@@ -33,9 +37,20 @@ class PassageStatus(StrEnum):
 
 
 class EntityType(StrEnum):
+    """What kind of node a passage is on the generic Work -> container -> Passage spine.
+
+    ``SECTION`` and ``HYMN`` are frozen by the sealed Rigveda corpus and are NOT
+    renamed: in RV they mean Mandala and Sukta, in AVS Kanda and Sukta. Neither
+    name generalises, so works whose containers are not section/hymn-shaped --
+    Samaveda's Arcika/Prapathaka/Ardha/Dasati chain, four deep -- use
+    ``STRUCTURAL_CONTAINER`` and carry their real level name in
+    ``Passage.native_labels``. See docs/FOUR_VEDA_STRUCTURAL_MODEL.md.
+    """
+
     WORK = "WORK"
     SECTION = "SECTION"
     HYMN = "HYMN"
+    STRUCTURAL_CONTAINER = "STRUCTURAL_CONTAINER"
     MANTRA = "MANTRA"
 
 
@@ -46,9 +61,17 @@ class TextForm(StrEnum):
 
 
 class AlignmentLevel(StrEnum):
+    """The passage depth a translation or annotation is aligned to.
+
+    ``STRUCTURAL_CONTAINER`` exists so a translation aligned to a container that is
+    neither a section nor a hymn (a Samaveda Dasati, a Vajasaneyi Adhyaya) is not
+    forced to claim ``HYMN`` alignment it does not have.
+    """
+
     WORK = "WORK"
     SECTION = "SECTION"
     HYMN = "HYMN"
+    STRUCTURAL_CONTAINER = "STRUCTURAL_CONTAINER"
     MANTRA = "MANTRA"
 
 
@@ -102,6 +125,13 @@ class TextRole(StrEnum):
     LINGUISTIC_ANNOTATION = "LINGUISTIC_ANNOTATION"
     COMPARISON_ONLY = "COMPARISON_ONLY"
     REFERENCE_ONLY = "REFERENCE_ONLY"
+    # The layer was lifted out of a larger containing text -- mantra quotations pulled
+    # from inside a commentary block, for instance -- so where each unit begins and ends
+    # is an editorial judgement rather than a boundary the source declared. Such a layer
+    # is DERIVED and REVIEWABLE and must never be selected as primary_sanskrit: doing so
+    # would make an interpretive segmentation canonical. Record how it was extracted in
+    # TextVersionDescriptor.transformation_provenance.
+    EXTRACTED_FROM_CONTAINER = "EXTRACTED_FROM_CONTAINER"
 
 
 class TextComparisonCategory(StrEnum):

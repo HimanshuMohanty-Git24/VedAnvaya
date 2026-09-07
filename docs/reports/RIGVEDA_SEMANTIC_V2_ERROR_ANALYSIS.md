@@ -1,0 +1,284 @@
+# Rigveda semantic Luna v2 — 120-mantra pilot
+
+**NO HUMAN GOLD EXISTS. All agreement numbers below are model-vs-model silver diagnostics, not human accuracy.**
+
+## Error and boundary analysis
+
+- Validator rejection rate: **0/186**.
+- Evidence error rate: **0/186**.
+- Wrong-predicate silver disagreements: **11**.
+- Wrong-entity or partial-granularity silver disagreements: **65**.
+- Potential over-extraction / unresolved model disagreement cases: **96**.
+- V2-only normalized relation keys (not truth claims):
+
+- `VG:RV:SAK:M01:S005:V003` — `EXPRESSES` → `state need`
+- `VG:RV:SAK:M01:S005:V003` — `REQUESTS` → `concept wealth`
+- `VG:RV:SAK:M01:S014:V004` — `DESCRIBES_ACTION` → `action pouring`
+- `VG:RV:SAK:M01:S014:V004` — `EXPRESSES` → `state gladden`
+- `VG:RV:SAK:M01:S014:V004` — `INVOLVES_OFFERING` → `offering offering`
+- `VG:RV:SAK:M01:S014:V004` — `INVOLVES_SUBSTANCE` → `substance meath`
+- `VG:RV:SAK:M01:S025:V016` — `EXPRESSES` → `state yearning`
+- `VG:RV:SAK:M01:S025:V016` — `REFERS_TO_PLACE` → `place pasture`
+- `VG:RV:SAK:M01:S036:V018` — `REQUESTS` → `concept victory`
+- `VG:RV:SAK:M01:S043:V006` — `REQUESTS` → `state health`
+- `VG:RV:SAK:M01:S051:V009` — `DESCRIBES` → `indrah`
+- `VG:RV:SAK:M01:S051:V009` — `DESCRIBES_ACTION` → `action destroying`
+- `VG:RV:SAK:M01:S051:V009` — `REFERS_TO_PLACE` → `place heaven`
+- `VG:RV:SAK:M01:S058:V001` — `EXPRESSES` → `state faint`
+- `VG:RV:SAK:M01:S058:V001` — `INVOLVES_OFFERING` → `offering oblation`
+- `VG:RV:SAK:M01:S058:V001` — `INVOLVES_RITUAL` → `ritual oblation`
+- `VG:RV:SAK:M01:S061:V003` — `REFERS_TO_PLACE` → `place heaven`
+- `VG:RV:SAK:M01:S062:V008` — `REFERS_TO_NATURAL_PHENOMENON` → `natural phenomenon dawn`
+- `VG:RV:SAK:M01:S062:V008` — `REFERS_TO_PLACE` → `place heaven`
+- `VG:RV:SAK:M01:S094:V013` — `INVOLVES_OFFERING` → `offering offering`
+- `VG:RV:SAK:M01:S094:V013` — `INVOLVES_RITUAL` → `ritual sacrifice`
+- `VG:RV:SAK:M01:S094:V013` — `REQUESTS` → `state protection`
+- `VG:RV:SAK:M01:S101:V005` — `DESCRIBES` → `indrah`
+- `VG:RV:SAK:M01:S136:V007` — `REQUESTS` → `concept assistance`
+- `VG:RV:SAK:M01:S148:V004` — `REFERS_TO_NATURAL_PHENOMENON` → `natural phenomenon wind`
+- `VG:RV:SAK:M01:S154:V006` — `EXPRESSES` → `state fain`
+- `VG:RV:SAK:M01:S157:V005` — `DESCRIBES_ACTION` → `action sending`
+- `VG:RV:SAK:M01:S157:V005` — `INVOLVES_SUBSTANCE` → `substance water`
+- `VG:RV:SAK:M01:S157:V005` — `REFERS_TO_NATURAL_PHENOMENON` → `natural phenomenon waters`
+- `VG:RV:SAK:M01:S164:V010` — `REFERS_TO_PLACE` → `place heaven`
+- `VG:RV:SAK:M01:S173:V006` — `DESCRIBES` → `indrah`
+- `VG:RV:SAK:M01:S173:V006` — `REFERS_TO_PLACE` → `place heaven`
+- `VG:RV:SAK:M02:S008:V006` — `DESCRIBES` → `agnih`
+- `VG:RV:SAK:M02:S008:V006` — `DESCRIBES` → `indrah`
+- `VG:RV:SAK:M02:S008:V006` — `DESCRIBES` → `somah`
+- `VG:RV:SAK:M02:S008:V006` — `INVOLVES_SUBSTANCE` → `substance soma`
+- `VG:RV:SAK:M02:S008:V006` — `REQUESTS` → `concept assistance`
+- `VG:RV:SAK:M02:S017:V005` — `INVOLVES_SUBSTANCE` → `substance water`
+- `VG:RV:SAK:M02:S017:V005` — `REFERS_TO_NATURAL_PHENOMENON` → `natural phenomenon waters`
+- `VG:RV:SAK:M02:S017:V005` — `REFERS_TO_PLACE` → `place heaven`
+- `VG:RV:SAK:M03:S011:V004` — `DESCRIBES` → `agnih`
+- `VG:RV:SAK:M03:S035:V011` — `DESCRIBES_ACTION` → `action destroying`
+- `VG:RV:SAK:M04:S001:V008` — `EXPRESSES` → `state joyeth`
+- `VG:RV:SAK:M04:S001:V008` — `INVOLVES_SUBSTANCE` → `substance food`
+- `VG:RV:SAK:M04:S022:V006` — `EXPRESSES` → `state fear`
+- `VG:RV:SAK:M04:S022:V006` — `REFERS_TO_PLACE` → `place river`
+- `VG:RV:SAK:M04:S032:V015` — `PRAISES` → `indrah`
+- `VG:RV:SAK:M04:S033:V003` — `INVOLVES_OFFERING` → `offering offering`
+- `VG:RV:SAK:M04:S033:V003` — `INVOLVES_RITUAL` → `ritual sacrifice`
+- `VG:RV:SAK:M04:S033:V003` — `INVOLVES_SUBSTANCE` → `substance soma`
+- `VG:RV:SAK:M04:S033:V003` — `REQUESTS` → `state protection`
+- `VG:RV:SAK:M04:S034:V006` — `INVOLVES_OFFERING` → `offering offering`
+- `VG:RV:SAK:M04:S034:V006` — `INVOLVES_RITUAL` → `ritual sacrifice`
+- `VG:RV:SAK:M04:S034:V006` — `INVOLVES_SUBSTANCE` → `substance meath`
+- `VG:RV:SAK:M04:S034:V006` — `REQUESTS` → `concept wealth`
+- `VG:RV:SAK:M04:S035:V009` — `DESCRIBES_ACTION` → `action pouring`
+- `VG:RV:SAK:M04:S035:V009` — `EXPRESSES` → `state joy`
+- `VG:RV:SAK:M04:S035:V009` — `INVOLVES_OFFERING` → `offering offering`
+- `VG:RV:SAK:M04:S035:V009` — `INVOLVES_RITUAL` → `ritual libation`
+- `VG:RV:SAK:M05:S003:V008` — `INVOLVES_RITUAL` → `ritual offerings`
+- `VG:RV:SAK:M05:S003:V008` — `REFERS_TO_NATURAL_PHENOMENON` → `natural phenomenon dawn`
+- `VG:RV:SAK:M05:S017:V001` — `INVOLVES_OFFERING` → `offering offering`
+- `VG:RV:SAK:M05:S017:V001` — `INVOLVES_RITUAL` → `ritual rites`
+- `VG:RV:SAK:M05:S017:V001` — `REQUESTS` → `state protection`
+- `VG:RV:SAK:M05:S020:V001` — `DESCRIBES` → `agnih`
+- `VG:RV:SAK:M05:S029:V006` — `PRAISES` → `indrah`
+- `VG:RV:SAK:M05:S029:V006` — `REFERS_TO_PLACE` → `place heaven`
+- `VG:RV:SAK:M05:S053:V016` — `EXPRESSES` → `state joy`
+- `VG:RV:SAK:M05:S053:V016` — `INVOLVES_RITUAL` → `ritual rite`
+- `VG:RV:SAK:M05:S068:V001` — `DESCRIBES` → `mitrah`
+- `VG:RV:SAK:M05:S068:V001` — `DESCRIBES` → `varunah`
+- `VG:RV:SAK:M05:S074:V009` — `INVOLVES_SUBSTANCE` → `substance meath`
+- `VG:RV:SAK:M05:S080:V002` — `REFERS_TO_NATURAL_PHENOMENON` → `natural phenomenon dawn`
+- `VG:RV:SAK:M06:S013:V001` — `INVOLVES_SUBSTANCE` → `substance water`
+- `VG:RV:SAK:M06:S013:V001` — `REFERS_TO_NATURAL_PHENOMENON` → `natural phenomenon rain`
+- `VG:RV:SAK:M06:S013:V001` — `REFERS_TO_PLACE` → `place heaven`
+- `VG:RV:SAK:M06:S042:V004` — `INVOLVES_RITUAL` → `ritual offerings`
+- `VG:RV:SAK:M06:S042:V004` — `INVOLVES_SUBSTANCE` → `substance meath`
+- `VG:RV:SAK:M06:S044:V012` — `DESCRIBES` → `indrah`
+- `VG:RV:SAK:M06:S044:V012` — `REFERS_TO_NATURAL_PHENOMENON` → `natural phenomenon rain`
+- `VG:RV:SAK:M06:S045:V019` — `DESCRIBES_ACTION` → `action sending`
+- `VG:RV:SAK:M06:S047:V017` — `DESCRIBES` → `indrah`
+- `VG:RV:SAK:M06:S068:V006` — `DESCRIBES_ACTION` → `action sending`
+- `VG:RV:SAK:M06:S068:V006` — `INVOLVES_RITUAL` → `ritual sacrifices`
+- `VG:RV:SAK:M06:S068:V006` — `INVOLVES_SUBSTANCE` → `substance food`
+- `VG:RV:SAK:M06:S068:V006` — `REQUESTS` → `concept wealth`
+- `VG:RV:SAK:M06:S069:V007` — `INVOLVES_SUBSTANCE` → `substance meath`
+- `VG:RV:SAK:M06:S069:V007` — `INVOLVES_SUBSTANCE` → `substance soma`
+- `VG:RV:SAK:M07:S004:V003` — `DESCRIBES` → `agnih`
+- `VG:RV:SAK:M07:S044:V002` — `INVOLVES_OFFERING` → `offering offering`
+- `VG:RV:SAK:M07:S044:V002` — `INVOLVES_RITUAL` → `ritual sacrifice`
+- `VG:RV:SAK:M07:S060:V012` — `INVOLVES_RITUAL` → `ritual sacrifices`
+- `VG:RV:SAK:M07:S077:V005` — `INVOLVES_SUBSTANCE` → `substance food`
+- `VG:RV:SAK:M07:S077:V005` — `REFERS_TO_NATURAL_PHENOMENON` → `natural phenomenon dawn`
+- `VG:RV:SAK:M07:S083:V009` — `DESCRIBES_ACTION` → `action destroying`
+- `VG:RV:SAK:M07:S083:V009` — `REQUESTS` → `state protection`
+- `VG:RV:SAK:M08:S001:V017` — `INVOLVES_RITUAL` → `ritual soma pressing`
+- `VG:RV:SAK:M08:S001:V017` — `INVOLVES_SUBSTANCE` → `substance milk`
+- `VG:RV:SAK:M08:S001:V017` — `INVOLVES_SUBSTANCE` → `substance soma`
+- `VG:RV:SAK:M08:S001:V017` — `INVOLVES_SUBSTANCE` → `substance water`
+- `VG:RV:SAK:M08:S001:V017` — `REFERS_TO_NATURAL_PHENOMENON` → `natural phenomenon waters`
+- `VG:RV:SAK:M08:S005:V014` — `EXPRESSES` → `state gladdening`
+- `VG:RV:SAK:M08:S005:V014` — `INVOLVES_SUBSTANCE` → `substance meath`
+- `VG:RV:SAK:M08:S005:V015` — `INVOLVES_SUBSTANCE` → `substance food`
+- `VG:RV:SAK:M08:S005:V015` — `REQUESTS` → `concept wealth`
+- `VG:RV:SAK:M08:S006:V013` — `DESCRIBES_ACTION` → `action sending`
+- `VG:RV:SAK:M08:S006:V013` — `INVOLVES_SUBSTANCE` → `substance water`
+- `VG:RV:SAK:M08:S006:V013` — `REFERS_TO_NATURAL_PHENOMENON` → `natural phenomenon waters`
+- `VG:RV:SAK:M08:S010:V006` — `REFERS_TO_PLACE` → `place heaven`
+- `VG:RV:SAK:M08:S010:V006` — `REQUESTS` → `concept wealth`
+- `VG:RV:SAK:M08:S022:V014` — `INVOLVES_OFFERING` → `offering offering`
+- `VG:RV:SAK:M08:S022:V014` — `INVOLVES_RITUAL` → `ritual sacrifice`
+- `VG:RV:SAK:M08:S022:V014` — `REQUESTS` → `concept wealth`
+- `VG:RV:SAK:M08:S026:V008` — `INVOLVES_OFFERING` → `offering offering`
+- `VG:RV:SAK:M08:S026:V008` — `INVOLVES_RITUAL` → `ritual offering`
+- `VG:RV:SAK:M08:S046:V021` — `REQUESTS` → `concept offspring`
+- `VG:RV:SAK:M08:S051:V007` — `DESCRIBES_ACTION` → `action pouring`
+- `VG:RV:SAK:M08:S052:V008` — `DESCRIBES` → `indrah`
+- `VG:RV:SAK:M08:S060:V011` — `INVOKES` → `agnih`
+- `VG:RV:SAK:M08:S060:V011` — `REQUESTS` → `concept wealth`
+
+## Sol-only relations
+
+The following are independent-review relations absent from v2; they are not automatically
+correct and remain model-vs-model review material.
+
+- `VG:RV:SAK:M01:S035:V005` — `DESCRIBES` → `savitā`
+- `VG:RV:SAK:M01:S058:V001` — `DESCRIBES` → `agniḥ`
+- `VG:RV:SAK:M01:S061:V003` — `PRAISES` → `indraḥ`
+- `VG:RV:SAK:M01:S062:V008` — `REFERS_TO_NATURAL_PHENOMENON` → `dawn`
+- `VG:RV:SAK:M01:S094:V013` — `INVOKES` → `agniḥ`
+- `VG:RV:SAK:M01:S094:V013` — `PRAISES` → `agniḥ`
+- `VG:RV:SAK:M01:S104:V005` — `INVOKES` → `indraḥ`
+- `VG:RV:SAK:M01:S104:V005` — `REQUESTS` → `remembrance and continued favor`
+- `VG:RV:SAK:M01:S127:V002` — `INVOKES` → `agniḥ`
+- `VG:RV:SAK:M01:S127:V002` — `PRAISES` → `agniḥ`
+- `VG:RV:SAK:M01:S127:V002` — `INVOLVES_RITUAL` → `sacrifice`
+- `VG:RV:SAK:M01:S148:V004` — `DESCRIBES` → `agniḥ`
+- `VG:RV:SAK:M01:S154:V006` — `REFERS_TO_PLACE` → `the widely-striding Bull's sublimest mansion`
+- `VG:RV:SAK:M01:S157:V005` — `DESCRIBES` → `aśvinau`
+- `VG:RV:SAK:M01:S162:V021` — `DESCRIBES_ACTION` → `the horse's journey to the Gods`
+- `VG:RV:SAK:M01:S162:V021` — `INVOLVES_RITUAL` → `animal immolation`
+- `VG:RV:SAK:M01:S173:V006` — `PRAISES` → `indraḥ`
+- `VG:RV:SAK:M01:S179:V001` — `REFERS_TO_NATURAL_PHENOMENON` → `uṣāḥ`
+- `VG:RV:SAK:M02:S017:V005` — `DESCRIBES_ACTION` → `stabilizing hills, earth, and heaven and directing waters`
+- `VG:RV:SAK:M03:S035:V011` — `PRAISES` → `indraḥ`
+- `VG:RV:SAK:M04:S001:V008` — `DESCRIBES` → `agniḥ`
+- `VG:RV:SAK:M04:S001:V008` — `PRAISES` → `agniḥ`
+- `VG:RV:SAK:M04:S011:V006` — `PRAISES` → `agniḥ`
+- `VG:RV:SAK:M04:S011:V006` — `DESCRIBES` → `agniḥ`
+- `VG:RV:SAK:M04:S022:V006` — `PRAISES` → `indraḥ`
+- `VG:RV:SAK:M04:S022:V006` — `DESCRIBES_ACTION` → `rivers moving swiftly in fear`
+- `VG:RV:SAK:M04:S022:V006` — `REFERS_TO_NATURAL_PHENOMENON` → `rivers`
+- `VG:RV:SAK:M04:S032:V015` — `REQUESTS` → `Indra's approach`
+- `VG:RV:SAK:M04:S033:V003` — `DESCRIBES_ACTION` → `making aged parents young again`
+- `VG:RV:SAK:M04:S034:V006` — `INVOKES` → `ṛbhavaḥ`
+- `VG:RV:SAK:M04:S035:V009` — `INVOKES` → `ṛbhavaḥ`
+- `VG:RV:SAK:M05:S003:V008` — `DESCRIBES` → `agniḥ`
+- `VG:RV:SAK:M05:S003:V008` — `INVOLVES_OFFERING` → `offerings`
+- `VG:RV:SAK:M05:S020:V001` — `REQUESTS` → `wealth worthy of praise`
+- `VG:RV:SAK:M05:S029:V006` — `DESCRIBES_ACTION` → `demolishing ninety-nine castles`
+- `VG:RV:SAK:M05:S049:V003` — `REQUESTS` → `auspicious days`
+- `VG:RV:SAK:M05:S053:V016` — `INVOKES` → `marutaḥ`
+- `VG:RV:SAK:M05:S053:V016` — `PRAISES` → `marutaḥ`
+- `VG:RV:SAK:M05:S068:V001` — `PRAISES` → `mitrāvaruṇau`
+- `VG:RV:SAK:M05:S073:V006` — `DESCRIBES_ACTION` → `stirring the spotless flame`
+- `VG:RV:SAK:M05:S074:V009` — `INVOKES` → `aśvinau`
+- `VG:RV:SAK:M05:S074:V009` — `PRAISES` → `aśvinau`
+- `VG:RV:SAK:M05:S080:V002` — `DESCRIBES` → `uṣāḥ`
+- `VG:RV:SAK:M06:S039:V002` — `DESCRIBES` → `indraḥ`
+- `VG:RV:SAK:M06:S039:V002` — `DESCRIBES_ACTION` → `breaking Vala's ridge and subduing the Panis`
+- `VG:RV:SAK:M06:S042:V004` — `INVOLVES_OFFERING` → `expressed juice`
+- `VG:RV:SAK:M06:S042:V004` — `REQUESTS` → `safety from hostile curses`
+- `VG:RV:SAK:M06:S045:V019` — `INVOKES` → `indraḥ`
+- `VG:RV:SAK:M06:S068:V006` — `INVOKES` → `indrāvaruṇau`
+- `VG:RV:SAK:M06:S069:V007` — `INVOKES` → `indravisṇu`
+- `VG:RV:SAK:M06:S069:V007` — `INVOLVES_OFFERING` → `Soma drink`
+- `VG:RV:SAK:M07:S004:V010` — `REQUESTS` → `felicity, understanding, and protection`
+- `VG:RV:SAK:M07:S032:V020` — `PRAISES` → `indraḥ`
+- `VG:RV:SAK:M07:S044:V002` — `INVOKES` → `aśvinau`
+- `VG:RV:SAK:M07:S060:V012` — `INVOKES` → `mitrāvaruṇau`
+- `VG:RV:SAK:M07:S060:V012` — `REQUESTS` → `safe passage and preservation`
+- `VG:RV:SAK:M07:S077:V005` — `INVOKES` → `uṣāḥ`
+- `VG:RV:SAK:M07:S077:V005` — `REQUESTS` → `light, long life, food, and bounty`
+- `VG:RV:SAK:M07:S083:V009` — `INVOKES` → `indrāvaruṇau`
+- `VG:RV:SAK:M07:S083:V009` — `PRAISES` → `indrāvaruṇau`
+- `VG:RV:SAK:M08:S001:V017` — `DESCRIBES_ACTION` → `pressing, washing, and filtering Soma`
+- `VG:RV:SAK:M08:S005:V014` — `INVOKES` → `aśvinau`
+- `VG:RV:SAK:M08:S005:V014` — `INVOLVES_OFFERING` → `presented meath`
+- `VG:RV:SAK:M08:S005:V015` — `INVOKES` → `aśvinau`
+- `VG:RV:SAK:M08:S009:V012` — `DESCRIBES` → `aśvinau`
+- `VG:RV:SAK:M08:S009:V012` — `REFERS_TO_PLACE` → `Visnu's striding-places`
+- `VG:RV:SAK:M08:S010:V006` — `INVOKES` → `aśvinau`
+- `VG:RV:SAK:M08:S010:V006` — `PRAISES` → `aśvinau`
+- `VG:RV:SAK:M08:S021:V014` — `DESCRIBES` → `indraḥ`
+- `VG:RV:SAK:M08:S022:V014` — `INVOKES` → `aśvinau`
+- `VG:RV:SAK:M08:S026:V008` — `INVOKES` → `aśvinau`
+- `VG:RV:SAK:M08:S037:V002` — `PRAISES` → `indraḥ`
+- `VG:RV:SAK:M08:S037:V002` — `INVOLVES_SUBSTANCE` → `somaḥ`
+- `VG:RV:SAK:M08:S043:V024` — `INVOKES` → `agniḥ`
+- `VG:RV:SAK:M08:S043:V024` — `PRAISES` → `agniḥ`
+- `VG:RV:SAK:M08:S046:V021` — `REFERS_TO_NATURAL_PHENOMENON` → `morning dawn`
+- `VG:RV:SAK:M08:S051:V007` — `PRAISES` → `indraḥ`
+- `VG:RV:SAK:M08:S052:V008` — `PRAISES` → `indraḥ`
+- `VG:RV:SAK:M08:S067:V006` — `INVOKES` → `ādityāḥ`
+- `VG:RV:SAK:M08:S067:V006` — `REQUESTS` → `sheltering defense and blessing`
+- `VG:RV:SAK:M08:S073:V002` — `INVOKES` → `aśvinau`
+- `VG:RV:SAK:M08:S089:V005` — `PRAISES` → `indraḥ`
+- `VG:RV:SAK:M08:S089:V005` — `DESCRIBES_ACTION` → `slaying Vrtras and supporting earth and heaven`
+- `VG:RV:SAK:M08:S093:V001` — `DESCRIBES_ACTION` → `the Sun mounting up to meet the Hero`
+- `VG:RV:SAK:M08:S093:V005` — `PRAISES` → `indraḥ`
+- `VG:RV:SAK:M08:S093:V024` — `DESCRIBES_ACTION` → `bay steeds bringing their rider to the banquet`
+- `VG:RV:SAK:M08:S093:V024` — `INVOLVES_RITUAL` → `prepared feast`
+- `VG:RV:SAK:M08:S096:V007` — `REQUESTS` → `friendship with the Maruts and victory`
+- `VG:RV:SAK:M09:S002:V008` — `INVOKES` → `pavamānaḥ somaḥ`
+- `VG:RV:SAK:M09:S002:V008` — `PRAISES` → `pavamānaḥ somaḥ`
+- `VG:RV:SAK:M09:S002:V008` — `REQUESTS` → `joyous draught`
+- `VG:RV:SAK:M09:S004:V009` — `INVOKES` → `pavamānaḥ somaḥ`
+- `VG:RV:SAK:M09:S004:V009` — `REQUESTS` → `moral improvement`
+- `VG:RV:SAK:M09:S004:V009` — `INVOLVES_RITUAL` → `worship`
+- `VG:RV:SAK:M09:S040:V001` — `DESCRIBES` → `pavamānaḥ somaḥ`
+- `VG:RV:SAK:M09:S040:V001` — `DESCRIBES_ACTION` → `assailing enemies while being purified`
+- `VG:RV:SAK:M09:S061:V001` — `INVOKES` → `pavamānaḥ somaḥ`
+- `VG:RV:SAK:M09:S061:V001` — `INVOLVES_RITUAL` → `ritual flow of Indu`
+- `VG:RV:SAK:M09:S061:V001` — `DESCRIBES_ACTION` → `flowing onward with food`
+- `VG:RV:SAK:M09:S063:V016` — `INVOKES` → `pavamānaḥ somaḥ`
+- `VG:RV:SAK:M09:S063:V016` — `INVOLVES_RITUAL` → `flowing to the sieve`
+- `VG:RV:SAK:M09:S066:V028` — `INVOLVES_RITUAL` → `Soma purification through a fleece sieve`
+- `VG:RV:SAK:M09:S067:V004` — `INVOLVES_RITUAL` → `filtering through fleecy cloth`
+- `VG:RV:SAK:M09:S068:V010` — `INVOKES` → `dyāvāpṛthivyau`
+- `VG:RV:SAK:M09:S068:V010` — `INVOLVES_RITUAL` → `Soma pouring`
+- `VG:RV:SAK:M09:S074:V001` — `INVOKES` → `pavamānaḥ somaḥ`
+- `VG:RV:SAK:M09:S074:V001` — `REQUESTS` → `wide-spreading shelter`
+- `VG:RV:SAK:M09:S086:V004` — `INVOLVES_RITUAL` → `pouring Soma with milk into the vat`
+- `VG:RV:SAK:M09:S087:V009` — `PRAISES` → `somaḥ`
+- `VG:RV:SAK:M09:S095:V004` — `INVOLVES_RITUAL` → `draining the Soma stalk`
+- `VG:RV:SAK:M09:S095:V004` — `DESCRIBES_ACTION` → `draining the stalk and bearing Varuna aloft`
+- `VG:RV:SAK:M09:S095:V004` — `REFERS_TO_NATURAL_PHENOMENON` → `ocean`
+- `VG:RV:SAK:M09:S104:V005` — `INVOKES` → `pavamānaḥ somaḥ`
+- `VG:RV:SAK:M09:S104:V005` — `PRAISES` → `pavamānaḥ somaḥ`
+- `VG:RV:SAK:M09:S104:V005` — `REQUESTS` → `success`
+- `VG:RV:SAK:M10:S010:V014` — `REQUESTS` → `Yami's union with another partner`
+- `VG:RV:SAK:M10:S014:V001` — `DESCRIBES` → `yamaḥ`
+- `VG:RV:SAK:M10:S014:V001` — `INVOLVES_OFFERING` → `oblations for Yama`
+- `VG:RV:SAK:M10:S025:V001` — `INVOKES` → `somaḥ`
+- `VG:RV:SAK:M10:S025:V001` — `REQUESTS` → `a good mind, energy, and mental power`
+- `VG:RV:SAK:M10:S030:V003` — `INVOLVES_OFFERING` → `oblations`
+- `VG:RV:SAK:M10:S030:V003` — `REFERS_TO_PLACE` → `reservoir`
+- `VG:RV:SAK:M10:S039:V011` — `PRAISES` → `aśvinau`
+- `VG:RV:SAK:M10:S039:V011` — `DESCRIBES` → `aśvinau`
+- `VG:RV:SAK:M10:S040:V001` — `DESCRIBES_ACTION` → `radiant chariot travelling at daybreak to the sacrifice`
+- `VG:RV:SAK:M10:S045:V008` — `PRAISES` → `agniḥ`
+- `VG:RV:SAK:M10:S045:V008` — `DESCRIBES` → `agniḥ`
+- `VG:RV:SAK:M10:S058:V012` — `DESCRIBES_ACTION` → `restoring the departed spirit for life here`
+- `VG:RV:SAK:M10:S085:V028` — `INVOLVES_RITUAL` → `marriage rite`
+- `VG:RV:SAK:M10:S085:V028` — `DESCRIBES_ACTION` → `binding the husband in bonds`
+- `VG:RV:SAK:M10:S087:V025` — `REQUESTS` → `destruction of the fiends' strength`
+- `VG:RV:SAK:M10:S089:V008` — `DESCRIBES_ACTION` → `smiting those who injure the law`
+- `VG:RV:SAK:M10:S102:V002` — `DESCRIBES_ACTION` → `Mudgalani winning the chariot battle prize`
+- `VG:RV:SAK:M10:S107:V008` — `PRAISES` → `dakṣiṇā`
+- `VG:RV:SAK:M10:S107:V008` — `DESCRIBES` → `dakṣiṇā`
+- `VG:RV:SAK:M10:S108:V001` — `REFERS_TO_PLACE` → `Rasa's waters`
+- `VG:RV:SAK:M10:S118:V001` — `PRAISES` → `agniḥ`
+- `VG:RV:SAK:M10:S118:V001` — `DESCRIBES_ACTION` → `slaying the devouring fiend`
+- `VG:RV:SAK:M10:S146:V005` — `DESCRIBES` → `araṇyānī`
+
+## Interpretation
+
+The primary QA signal is zero fabricated or unsupported evidence references, combined with
+broader coverage. Any disagreement involving opaque referents, human roles, natural
+phenomena, ritual layers, or Soma/Pavamana granularity remains an expert-audit question.

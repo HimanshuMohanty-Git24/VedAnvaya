@@ -1,0 +1,146 @@
+{
+  "artifacts_preserved_unmodified": true,
+  "classification": "HISTORICAL_HEURISTIC_ARTIFACT",
+  "correction_document": "docs/architecture/SEMANTIC_V3_PROVENANCE_CORRECTION.md",
+  "registry_version": "rigveda-semantic-historical-artifact-registry-v1",
+  "runs": [
+    {
+      "artifact_mutated_by_this_registry": false,
+      "classification": "HISTORICAL_HEURISTIC_ARTIFACT",
+      "declared_model_in_artifact": "gpt-5.6-luna",
+      "declared_model_is_accurate": false,
+      "extraction_row_count": 0,
+      "forbidden_uses": [
+        "evidence of gpt-5.6-luna accuracy",
+        "evidence of gpt-5.6-luna stability or replication",
+        "any statement about model behaviour, determinism or agreement",
+        "input to a run whose provenance claims a model authored it"
+      ],
+      "note": "",
+      "path": "data/semantic/vedagraph-rigveda-semantic-codex-luna-pilot-1.0.0-rc1",
+      "permitted_uses": [
+        "typed semantic object schema testing",
+        "normalization and comparison architecture testing",
+        "evidence validator regression fixtures",
+        "operational rehearsal of batching, custody, recovery and seal",
+        "deterministic replay fixtures"
+      ],
+      "producer": "scripts/author_codex_direct_payloads.py",
+      "producer_kind": "DETERMINISTIC_HEURISTIC_BASELINE",
+      "run_id": "vedagraph-rigveda-semantic-codex-luna-pilot-1.0.0-rc1",
+      "seal_hashes": {}
+    },
+    {
+      "artifact_mutated_by_this_registry": false,
+      "classification": "HISTORICAL_HEURISTIC_ARTIFACT",
+      "declared_model_in_artifact": "gpt-5.6-luna",
+      "declared_model_is_accurate": false,
+      "extraction_row_count": 0,
+      "forbidden_uses": [
+        "evidence of gpt-5.6-luna accuracy",
+        "evidence of gpt-5.6-luna stability or replication",
+        "any statement about model behaviour, determinism or agreement",
+        "input to a run whose provenance claims a model authored it"
+      ],
+      "note": "",
+      "path": "data/semantic/vedagraph-rigveda-semantic-luna-v2-120",
+      "permitted_uses": [
+        "typed semantic object schema testing",
+        "normalization and comparison architecture testing",
+        "evidence validator regression fixtures",
+        "operational rehearsal of batching, custody, recovery and seal",
+        "deterministic replay fixtures"
+      ],
+      "producer": "scripts/author_semantic_luna_v2_payloads.py",
+      "producer_kind": "DETERMINISTIC_HEURISTIC_BASELINE",
+      "run_id": "vedagraph-rigveda-semantic-luna-v2-120",
+      "seal_hashes": {
+        "v2_output_seal.json": "4cf45d03fe1dde0753e6648d3d200fc93086e1152117e3dba3910dc527428a79"
+      }
+    },
+    {
+      "artifact_mutated_by_this_registry": false,
+      "classification": "HISTORICAL_HEURISTIC_ARTIFACT",
+      "declared_model_in_artifact": "gpt-5.6-luna",
+      "declared_model_is_accurate": false,
+      "extraction_row_count": 120,
+      "forbidden_uses": [
+        "evidence of gpt-5.6-luna accuracy",
+        "evidence of gpt-5.6-luna stability or replication",
+        "any statement about model behaviour, determinism or agreement",
+        "input to a run whose provenance claims a model authored it"
+      ],
+      "note": "",
+      "path": "data/semantic/vedagraph-rigveda-semantic-luna-v3-120",
+      "permitted_uses": [
+        "typed semantic object schema testing",
+        "normalization and comparison architecture testing",
+        "evidence validator regression fixtures",
+        "operational rehearsal of batching, custody, recovery and seal",
+        "deterministic replay fixtures"
+      ],
+      "producer": "scripts/author_semantic_luna_v3_payloads.py",
+      "producer_kind": "DETERMINISTIC_HEURISTIC_BASELINE",
+      "run_id": "vedagraph-rigveda-semantic-luna-v3-120",
+      "seal_hashes": {
+        "v3_output_seal.json": "fd49eaa3628ae568ed21bf43c5c513f91b862b7d3f97dd06d99fc1d2d26a1c53"
+      }
+    },
+    {
+      "artifact_mutated_by_this_registry": false,
+      "classification": "HISTORICAL_HEURISTIC_ARTIFACT",
+      "declared_model_in_artifact": "gpt-5.6-luna",
+      "declared_model_is_accurate": false,
+      "extraction_row_count": 508,
+      "forbidden_uses": [
+        "evidence of gpt-5.6-luna accuracy",
+        "evidence of gpt-5.6-luna stability or replication",
+        "any statement about model behaviour, determinism or agreement",
+        "input to a run whose provenance claims a model authored it"
+      ],
+      "note": "Carries the fourteen audited substring anchors (B02) and the relation-scope failures (B01). Both are now refused by the current validators.",
+      "path": "data/semantic/vedagraph-rigveda-semantic-luna-v3-508",
+      "permitted_uses": [
+        "typed semantic object schema testing",
+        "normalization and comparison architecture testing",
+        "evidence validator regression fixtures",
+        "operational rehearsal of batching, custody, recovery and seal",
+        "deterministic replay fixtures"
+      ],
+      "producer": "scripts/run_semantic_luna_v3_508.py",
+      "producer_kind": "DETERMINISTIC_HEURISTIC_BASELINE",
+      "run_id": "vedagraph-rigveda-semantic-luna-v3-508",
+      "seal_hashes": {
+        "v3_508_output_seal.json": "ad1ffe12e90a3f9aed4cf035572517f784c0f1e6383f748d52296f09692c6049"
+      }
+    },
+    {
+      "artifact_mutated_by_this_registry": false,
+      "classification": "HISTORICAL_HEURISTIC_ARTIFACT",
+      "declared_model_in_artifact": "gpt-5.6-luna",
+      "declared_model_is_accurate": false,
+      "extraction_row_count": 120,
+      "forbidden_uses": [
+        "evidence of gpt-5.6-luna accuracy",
+        "evidence of gpt-5.6-luna stability or replication",
+        "any statement about model behaviour, determinism or agreement",
+        "input to a run whose provenance claims a model authored it"
+      ],
+      "note": "Its agreement with the 120 pilot demonstrates deterministic pipeline replay, not model replication stability: the same regular expressions were run twice.",
+      "path": "data/semantic/vedagraph-rigveda-semantic-luna-v3-replication-120",
+      "permitted_uses": [
+        "typed semantic object schema testing",
+        "normalization and comparison architecture testing",
+        "evidence validator regression fixtures",
+        "operational rehearsal of batching, custody, recovery and seal",
+        "deterministic replay fixtures"
+      ],
+      "producer": "scripts/run_semantic_luna_v3_replication.py",
+      "producer_kind": "DETERMINISTIC_HEURISTIC_BASELINE",
+      "run_id": "vedagraph-rigveda-semantic-luna-v3-replication-120",
+      "seal_hashes": {
+        "v3_replication_output_seal.json": "bc3abed07adf9482996fb6d5a37d17847b500979558838d85c14cbca8d46f48c"
+      }
+    }
+  ]
+}

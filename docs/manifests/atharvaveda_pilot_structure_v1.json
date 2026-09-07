@@ -1,0 +1,310 @@
+{
+  "artifact_units": 5843,
+  "distinct_triples": 5839,
+  "pada_tokens": 11395,
+  "kanda_count": 20,
+  "sukta_total": 731,
+  "per_kanda": [
+    {
+      "kanda": 1,
+      "suktas": 35,
+      "max_sukta": 35,
+      "sukta_gaps": [],
+      "units": 153,
+      "pada_tokens": 307,
+      "single_pada_units": 0,
+      "anuvaka_markers": 0,
+      "units_with_alt_citation": 0
+    },
+    {
+      "kanda": 2,
+      "suktas": 36,
+      "max_sukta": 36,
+      "sukta_gaps": [],
+      "units": 206,
+      "pada_tokens": 378,
+      "single_pada_units": 42,
+      "anuvaka_markers": 0,
+      "units_with_alt_citation": 0
+    },
+    {
+      "kanda": 3,
+      "suktas": 31,
+      "max_sukta": 31,
+      "sukta_gaps": [],
+      "units": 230,
+      "pada_tokens": 472,
+      "single_pada_units": 0,
+      "anuvaka_markers": 4,
+      "units_with_alt_citation": 0
+    },
+    {
+      "kanda": 4,
+      "suktas": 40,
+      "max_sukta": 40,
+      "sukta_gaps": [],
+      "units": 324,
+      "pada_tokens": 658,
+      "single_pada_units": 0,
+      "anuvaka_markers": 0,
+      "units_with_alt_citation": 0
+    },
+    {
+      "kanda": 5,
+      "suktas": 31,
+      "max_sukta": 31,
+      "sukta_gaps": [],
+      "units": 376,
+      "pada_tokens": 741,
+      "single_pada_units": 35,
+      "anuvaka_markers": 0,
+      "units_with_alt_citation": 0
+    },
+    {
+      "kanda": 6,
+      "suktas": 142,
+      "max_sukta": 142,
+      "sukta_gaps": [],
+      "units": 454,
+      "pada_tokens": 909,
+      "single_pada_units": 6,
+      "anuvaka_markers": 0,
+      "units_with_alt_citation": 0
+    },
+    {
+      "kanda": 7,
+      "suktas": 118,
+      "max_sukta": 118,
+      "sukta_gaps": [],
+      "units": 286,
+      "pada_tokens": 575,
+      "single_pada_units": 1,
+      "anuvaka_markers": 0,
+      "units_with_alt_citation": 0
+    },
+    {
+      "kanda": 8,
+      "suktas": 10,
+      "max_sukta": 10,
+      "sukta_gaps": [],
+      "units": 259,
+      "pada_tokens": 529,
+      "single_pada_units": 16,
+      "anuvaka_markers": 29,
+      "units_with_alt_citation": 0
+    },
+    {
+      "kanda": 9,
+      "suktas": 10,
+      "max_sukta": 10,
+      "sukta_gaps": [],
+      "units": 302,
+      "pada_tokens": 528,
+      "single_pada_units": 88,
+      "anuvaka_markers": 28,
+      "units_with_alt_citation": 0
+    },
+    {
+      "kanda": 10,
+      "suktas": 10,
+      "max_sukta": 10,
+      "sukta_gaps": [],
+      "units": 350,
+      "pada_tokens": 746,
+      "single_pada_units": 2,
+      "anuvaka_markers": 34,
+      "units_with_alt_citation": 0
+    },
+    {
+      "kanda": 11,
+      "suktas": 10,
+      "max_sukta": 10,
+      "sukta_gaps": [],
+      "units": 313,
+      "pada_tokens": 688,
+      "single_pada_units": 39,
+      "anuvaka_markers": 30,
+      "units_with_alt_citation": 214
+    },
+    {
+      "kanda": 12,
+      "suktas": 5,
+      "max_sukta": 5,
+      "sukta_gaps": [],
+      "units": 304,
+      "pada_tokens": 545,
+      "single_pada_units": 78,
+      "anuvaka_markers": 30,
+      "units_with_alt_citation": 0
+    },
+    {
+      "kanda": 13,
+      "suktas": 4,
+      "max_sukta": 4,
+      "sukta_gaps": [],
+      "units": 188,
+      "pada_tokens": 345,
+      "single_pada_units": 56,
+      "anuvaka_markers": 20,
+      "units_with_alt_citation": 0
+    },
+    {
+      "kanda": 14,
+      "suktas": 2,
+      "max_sukta": 2,
+      "sukta_gaps": [],
+      "units": 139,
+      "pada_tokens": 280,
+      "single_pada_units": 0,
+      "anuvaka_markers": 14,
+      "units_with_alt_citation": 0
+    },
+    {
+      "kanda": 15,
+      "suktas": 18,
+      "max_sukta": 18,
+      "sukta_gaps": [],
+      "units": 141,
+      "pada_tokens": 218,
+      "single_pada_units": 98,
+      "anuvaka_markers": 0,
+      "units_with_alt_citation": 47
+    },
+    {
+      "kanda": 16,
+      "suktas": 9,
+      "max_sukta": 9,
+      "sukta_gaps": [],
+      "units": 93,
+      "pada_tokens": 147,
+      "single_pada_units": 66,
+      "anuvaka_markers": 0,
+      "units_with_alt_citation": 0
+    },
+    {
+      "kanda": 17,
+      "suktas": 1,
+      "max_sukta": 1,
+      "sukta_gaps": [],
+      "units": 30,
+      "pada_tokens": 76,
+      "single_pada_units": 0,
+      "anuvaka_markers": 3,
+      "units_with_alt_citation": 0
+    },
+    {
+      "kanda": 18,
+      "suktas": 4,
+      "max_sukta": 4,
+      "sukta_gaps": [],
+      "units": 283,
+      "pada_tokens": 547,
+      "single_pada_units": 21,
+      "anuvaka_markers": 28,
+      "units_with_alt_citation": 0
+    },
+    {
+      "kanda": 19,
+      "suktas": 72,
+      "max_sukta": 72,
+      "sukta_gaps": [],
+      "units": 453,
+      "pada_tokens": 862,
+      "single_pada_units": 69,
+      "anuvaka_markers": 0,
+      "units_with_alt_citation": 0
+    },
+    {
+      "kanda": 20,
+      "suktas": 143,
+      "max_sukta": 143,
+      "sukta_gaps": [],
+      "units": 959,
+      "pada_tokens": 1844,
+      "single_pada_units": 85,
+      "anuvaka_markers": 0,
+      "units_with_alt_citation": 0
+    }
+  ],
+  "anuvaka_markers_total": 220,
+  "single_pada_units_total": 702,
+  "units_with_alt_citation_total": 261,
+  "units_no_verse_marker": 46,
+  "units_marker_disagrees": [
+    {
+      "citation": "AVS 7.6.3",
+      "occurrence": 1,
+      "printed_marker": 1
+    },
+    {
+      "citation": "AVS 7.6.4",
+      "occurrence": 1,
+      "printed_marker": 2
+    },
+    {
+      "citation": "AVS 7.45.2",
+      "occurrence": 1,
+      "printed_marker": 1
+    },
+    {
+      "citation": "AVS 7.54.2",
+      "occurrence": 1,
+      "printed_marker": 1
+    },
+    {
+      "citation": "AVS 7.55.1",
+      "occurrence": 1,
+      "printed_marker": 2
+    },
+    {
+      "citation": "AVS 7.68.3",
+      "occurrence": 1,
+      "printed_marker": 1
+    },
+    {
+      "citation": "AVS 7.72.3",
+      "occurrence": 1,
+      "printed_marker": 1
+    },
+    {
+      "citation": "AVS 7.76.5",
+      "occurrence": 1,
+      "printed_marker": 1
+    },
+    {
+      "citation": "AVS 7.76.6",
+      "occurrence": 1,
+      "printed_marker": 2
+    },
+    {
+      "citation": "AVS 9.6.48",
+      "occurrence": 2,
+      "printed_marker": 49
+    },
+    {
+      "citation": "AVS 12.5.53",
+      "occurrence": 1,
+      "printed_marker": 1
+    },
+    {
+      "citation": "AVS 13.4.26",
+      "occurrence": 1,
+      "printed_marker": 1
+    },
+    {
+      "citation": "AVS 13.4.22",
+      "occurrence": 1,
+      "printed_marker": 2
+    }
+  ],
+  "locator_collisions": [
+    "AVS 12.5.53",
+    "AVS 13.4.26",
+    "AVS 20.96.22",
+    "AVS 9.6.48"
+  ],
+  "unaccented_units": 5843,
+  "artifact_alignment_identical": true,
+  "accented_units_detected_accented": 5843,
+  "unaccented_units_detected_accented": 0
+}

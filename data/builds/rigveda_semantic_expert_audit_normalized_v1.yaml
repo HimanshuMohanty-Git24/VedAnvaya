@@ -1,0 +1,75 @@
+config_version: rigveda-semantic-expert-audit-normalized-v1
+source_queue: rigveda-semantic-expert-audit-v2
+normalization_run_id: vedagraph-rigveda-semantic-normalization-v1
+human_gold_status: UNANNOTATED
+proposed_only: true
+cases:
+- passage_key: VG:RV:SAK:M10:S030:V003
+  question: Does the evidenced phrase denote Soma, Pavamana Soma, a Soma ritual event,
+    an offering role, a substance, or more than one of these?
+- passage_key: VG:RV:SAK:M07:S083:V009
+  question: Does the verse explicitly invoke, praise, or merely describe the referent?
+- passage_key: VG:RV:SAK:M05:S080:V002
+  question: Does the phrase explicitly refer to a natural phenomenon, a deity/personified
+    entity, or both as distinct supported relations?
+- passage_key: VG:RV:SAK:M01:S154:V006
+  question: Does the phrase denote an explicit place, only a spatial/cosmological
+    description, or an opaque referent?
+- passage_key: VG:RV:SAK:M09:S087:V009
+  question: Does the evidenced phrase denote Soma, Pavamana Soma, a Soma ritual event,
+    an offering role, a substance, or more than one of these?
+- passage_key: VG:RV:SAK:M04:S032:V015
+  question: Does the verse explicitly invoke, praise, or merely describe the referent?
+- passage_key: VG:RV:SAK:M02:S008:V006
+  question: Does the evidenced phrase denote Soma, Pavamana Soma, a Soma ritual event,
+    an offering role, a substance, or more than one of these?
+- passage_key: VG:RV:SAK:M06:S068:V006
+  question: Does the evidenced phrase denote the ritual action, the offered item in
+    its offering role, the physical substance, or more than one independently?
+- passage_key: VG:RV:SAK:M03:S035:V011
+  question: Does the verse explicitly invoke, praise, or merely describe the referent?
+- passage_key: VG:RV:SAK:M10:S085:V028
+  question: Does the evidenced phrase denote the ritual action, the offered item in
+    its offering role, the physical substance, or more than one independently?
+- passage_key: VG:RV:SAK:M01:S164:V010
+  question: Does the phrase denote an explicit place, only a spatial/cosmological
+    description, or an opaque referent?
+- passage_key: VG:RV:SAK:M09:S068:V010
+  question: Does the evidenced phrase denote Soma, Pavamana Soma, a Soma ritual event,
+    an offering role, a substance, or more than one of these?
+- passage_key: VG:RV:SAK:M08:S001:V017
+  question: Does the evidenced phrase denote Soma, Pavamana Soma, a Soma ritual event,
+    an offering role, a substance, or more than one of these?
+- passage_key: VG:RV:SAK:M10:S108:V001
+  question: Does the evidenced phrase denote the ritual action, the offered item in
+    its offering role, the physical substance, or more than one independently?
+- passage_key: VG:RV:SAK:M09:S074:V001
+  question: Does the evidenced phrase denote Soma, Pavamana Soma, a Soma ritual event,
+    an offering role, a substance, or more than one of these?
+- passage_key: VG:RV:SAK:M08:S046:V021
+  question: Does the phrase explicitly refer to a natural phenomenon, a deity/personified
+    entity, or both as distinct supported relations?
+- passage_key: VG:RV:SAK:M04:S035:V009
+  question: Does the evidenced phrase denote the ritual action, the offered item in
+    its offering role, the physical substance, or more than one independently?
+- passage_key: VG:RV:SAK:M09:S104:V005
+  question: Does the evidenced phrase denote Soma, Pavamana Soma, a Soma ritual event,
+    an offering role, a substance, or more than one of these?
+- passage_key: VG:RV:SAK:M04:S022:V006
+  question: Does the phrase explicitly refer to a natural phenomenon, a deity/personified
+    entity, or both as distinct supported relations?
+- passage_key: VG:RV:SAK:M01:S094:V013
+  question: Does the evidenced phrase denote the ritual action, the offered item in
+    its offering role, the physical substance, or more than one independently?
+- passage_key: VG:RV:SAK:M09:S063:V016
+  question: Does the evidenced phrase denote Soma, Pavamana Soma, a Soma ritual event,
+    an offering role, a substance, or more than one of these?
+- passage_key: VG:RV:SAK:M04:S033:V003
+  question: Does the evidenced phrase denote Soma, Pavamana Soma, a Soma ritual event,
+    an offering role, a substance, or more than one of these?
+- passage_key: VG:RV:SAK:M04:S034:V006
+  question: Does the evidenced phrase denote the ritual action, the offered item in
+    its offering role, the physical substance, or more than one independently?
+- passage_key: VG:RV:SAK:M10:S102:V002
+  question: Does the phrase explicitly refer to a natural phenomenon, a deity/personified
+    entity, or both as distinct supported relations?

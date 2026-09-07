@@ -1,0 +1,37 @@
+{
+  "$defs": {
+    "OntologyGapKind": {
+      "description": "A requested concept that cannot be represented by the current ontology.",
+      "enum": [
+        "NODE_TYPE",
+        "PREDICATE",
+        "OTHER"
+      ],
+      "title": "OntologyGapKind",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "A request the current ontology cannot encode; it never changes the ontology.",
+  "properties": {
+    "kind": {
+      "$ref": "#/$defs/OntologyGapKind"
+    },
+    "notes": {
+      "default": "",
+      "title": "Notes",
+      "type": "string"
+    },
+    "requested_value": {
+      "minLength": 1,
+      "title": "Requested Value",
+      "type": "string"
+    }
+  },
+  "required": [
+    "kind",
+    "requested_value"
+  ],
+  "title": "OntologyGap",
+  "type": "object"
+}

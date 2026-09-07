@@ -1,0 +1,41 @@
+# V3 508 parallel audit
+
+Engineering diagnostics, not Vedic expertise, HUMAN_GOLD, or canonical truth. All existing output stays CANDIDATE / NEEDS_REVIEW; unlocked_predicates = []. No extraction was performed in this audit.
+
+`PARALLEL_EXTRACTION_BUG_FOUND`. The issue is relation-scope failure, not an instruction to
+force textual parallels to share semantic outputs. All 11 near-different and 2 exact-partial
+pairs were inspected, including both complete packets, translations, tokens/lemmas, mentions,
+traditional metadata, immediate previous/next context, assertions and stored parallel metrics.
+The local evidence dossier preserves those exact inputs for every pair.
+
+The 38 original cases remain: exact same 4, exact partial 2, near same 11, near partial 10,
+near different 11. The 11 near-different pairs all belong to hymn 10.58, so they are correlated
+pair observations, not 11 independent model failures. Six include 10.58.1 and expose the same
+false offspring request. Five compare 10.58.7 waters/plants with other destinations and have
+text-justified differences. Missing claims in other verses are not forced into equality.
+
+The exact pairs have identical Sanskrit, identical 19-token lexical sequences and matching
+rishi/devata/metre. The supplied English switches power/wealth; only wealth is recognized by
+the regex outcome inventory. This explains partial outputs but provides no evidence of model
+stochasticity. Surrounding verses differ; the producer does not read those context fields.
+The two exact cases are primary TRANSLATION_VARIANT_EFFECT, with extraction coverage asymmetry
+as a secondary observation. A scholar need not settle the gloss before candidate creation.
+
+| Case | Left | Right | Relation | Token Jaccard | Ordered tokens | Edit similarity | Primary class | Diagnostic | Gate |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| PAR-01 | RV 4.17.21 | RV 4.22.11 | EXACT | 1.0 | 1.0 | 1.0 | TRANSLATION_VARIANT_EFFECT | Identical Sanskrit and lexical sequence; same rishi/devata/metre. 4.22.11 translates isam as wealth, others as power. Wealth is recognized as REQUESTS, power is absent from the regex outcome list. Neighbors differ but the implementation never reads them. Translation effect exposes coverage asymmetry; do not force equality or choose a Sanskrit gloss. | DOES_NOT_BLOCK_FULL_RUN |
+| PAR-02 | RV 4.22.11 | RV 4.23.11 | EXACT | 1.0 | 1.0 | 1.0 | TRANSLATION_VARIANT_EFFECT | Identical Sanskrit and lexical sequence; same rishi/devata/metre. 4.22.11 translates isam as wealth, others as power. Wealth is recognized as REQUESTS, power is absent from the regex outcome list. Neighbors differ but the implementation never reads them. Translation effect exposes coverage asymmetry; do not force equality or choose a Sanskrit gloss. | DOES_NOT_BLOCK_FULL_RUN |
+| PAR-03 | RV 10.58.1 | RV 10.58.4 | NEAR | 0.7333333333333333 | 0.8571428571428571 | 0.8343558282208589 | EXTRACTION_INCONSISTENCY | 10.58.1 emits REQUESTS offspring from Vivasvan's Son plus come in the shared return-of-spirit refrain. Son identifies Yama, not a requested child. Shared metadata and neighbors do not license that relation. The other destination wording does not request offspring either. Repeated whole-verse cue binding is an extraction bug. | BLOCKS_FULL_RUN |
+| PAR-04 | RV 10.58.1 | RV 10.58.5 | NEAR | 0.7333333333333333 | 0.8571428571428571 | 0.8834355828220859 | EXTRACTION_INCONSISTENCY | 10.58.1 emits REQUESTS offspring from Vivasvan's Son plus come in the shared return-of-spirit refrain. Son identifies Yama, not a requested child. Shared metadata and neighbors do not license that relation. The other destination wording does not request offspring either. Repeated whole-verse cue binding is an extraction bug. | BLOCKS_FULL_RUN |
+| PAR-05 | RV 10.58.1 | RV 10.58.6 | NEAR | 0.7333333333333333 | 0.8571428571428571 | 0.8888888888888888 | EXTRACTION_INCONSISTENCY | 10.58.1 emits REQUESTS offspring from Vivasvan's Son plus come in the shared return-of-spirit refrain. Son identifies Yama, not a requested child. Shared metadata and neighbors do not license that relation. The other destination wording does not request offspring either. Repeated whole-verse cue binding is an extraction bug. | BLOCKS_FULL_RUN |
+| PAR-06 | RV 10.58.1 | RV 10.58.7 | NEAR | 0.7333333333333333 | 0.8275862068965517 | 0.8395061728395061 | EXTRACTION_INCONSISTENCY | 10.58.1 emits REQUESTS offspring from Vivasvan's Son plus come in the shared return-of-spirit refrain. Son identifies Yama, not a requested child. Shared metadata and neighbors do not license that relation. The other destination wording does not request offspring either. Repeated whole-verse cue binding is an extraction bug. | BLOCKS_FULL_RUN |
+| PAR-07 | RV 10.58.1 | RV 10.58.9 | NEAR | 0.7333333333333333 | 0.8571428571428571 | 0.8641975308641975 | EXTRACTION_INCONSISTENCY | 10.58.1 emits REQUESTS offspring from Vivasvan's Son plus come in the shared return-of-spirit refrain. Son identifies Yama, not a requested child. Shared metadata and neighbors do not license that relation. The other destination wording does not request offspring either. Repeated whole-verse cue binding is an extraction bug. | BLOCKS_FULL_RUN |
+| PAR-08 | RV 10.58.1 | RV 10.58.11 | NEAR | 0.7333333333333333 | 0.8571428571428571 | 0.8695652173913043 | EXTRACTION_INCONSISTENCY | 10.58.1 emits REQUESTS offspring from Vivasvan's Son plus come in the shared return-of-spirit refrain. Son identifies Yama, not a requested child. Shared metadata and neighbors do not license that relation. The other destination wording does not request offspring either. Repeated whole-verse cue binding is an extraction bug. | BLOCKS_FULL_RUN |
+| PAR-09 | RV 10.58.4 | RV 10.58.7 | NEAR | 0.7333333333333333 | 0.8275862068965517 | 0.8695652173913043 | TEXT_VARIANT_JUSTIFIED_DIFFERENCE | 10.58.7 specifically names waters and plants (apah/osadhih); the other verse names a different destination. Water substance/phenomenon candidates reflect changed words. Shared return-of-spirit refrain does not require identical object sets. Missing other place/event candidates is separate recall uncertainty. | DOES_NOT_BLOCK_FULL_RUN |
+| PAR-10 | RV 10.58.5 | RV 10.58.7 | NEAR | 0.7333333333333333 | 0.8275862068965517 | 0.84472049689441 | TEXT_VARIANT_JUSTIFIED_DIFFERENCE | 10.58.7 specifically names waters and plants (apah/osadhih); the other verse names a different destination. Water substance/phenomenon candidates reflect changed words. Shared return-of-spirit refrain does not require identical object sets. Missing other place/event candidates is separate recall uncertainty. | DOES_NOT_BLOCK_FULL_RUN |
+| PAR-11 | RV 10.58.6 | RV 10.58.7 | NEAR | 0.7333333333333333 | 0.8275862068965517 | 0.8375 | TEXT_VARIANT_JUSTIFIED_DIFFERENCE | 10.58.7 specifically names waters and plants (apah/osadhih); the other verse names a different destination. Water substance/phenomenon candidates reflect changed words. Shared return-of-spirit refrain does not require identical object sets. Missing other place/event candidates is separate recall uncertainty. | DOES_NOT_BLOCK_FULL_RUN |
+| PAR-12 | RV 10.58.7 | RV 10.58.9 | NEAR | 0.7333333333333333 | 0.8275862068965517 | 0.8375 | TEXT_VARIANT_JUSTIFIED_DIFFERENCE | 10.58.7 specifically names waters and plants (apah/osadhih); the other verse names a different destination. Water substance/phenomenon candidates reflect changed words. Shared return-of-spirit refrain does not require identical object sets. Missing other place/event candidates is separate recall uncertainty. | DOES_NOT_BLOCK_FULL_RUN |
+| PAR-13 | RV 10.58.7 | RV 10.58.11 | NEAR | 0.7333333333333333 | 0.8275862068965517 | 0.8553459119496856 | TEXT_VARIANT_JUSTIFIED_DIFFERENCE | 10.58.7 specifically names waters and plants (apah/osadhih); the other verse names a different destination. Water substance/phenomenon candidates reflect changed words. Shared return-of-spirit refrain does not require identical object sets. Missing other place/event candidates is separate recall uncertainty. | DOES_NOT_BLOCK_FULL_RUN |
+
+Metrics are read from mantra_parallels.jsonl under rigveda-mantra-parallel-policy-v1. They measure
+text overlap, not semantic equivalence. Pair IDs and complete metric records are retained locally.

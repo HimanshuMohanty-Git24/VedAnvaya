@@ -1,0 +1,98 @@
+{
+  "abandoned_run_id": "vedagraph-rigveda-semantic-user-selected-luna-v3.2-448-new-v1",
+  "abort_cause": "Luna execution capacity exhausted before any response was authored or imported",
+  "attempt_directories": 0,
+  "classification": "ABORTED_BEFORE_IMPORT_EXECUTION_CAPACITY_EXHAUSTED",
+  "deleted_files": 0,
+  "final_report": null,
+  "final_seal": null,
+  "imported_semantic_responses": 0,
+  "partial_author_inputs": {
+    "all_contain_semantic_content": true,
+    "classification": "UNTRUSTED_ABANDONED_AUTHOR_INPUT",
+    "count": 10,
+    "files": [
+      {
+        "assertions": 2,
+        "contains_semantic_content": true,
+        "file": "author_inputs/batch_001/VG_RV_SAK_M01_S005_V003.json",
+        "sha256": "b34df56a4bb5f6bc51d3995a883a32e2abe42d19d0f1685ff6103a6f1b5886c7"
+      },
+      {
+        "assertions": 6,
+        "contains_semantic_content": true,
+        "file": "author_inputs/batch_001/VG_RV_SAK_M01_S013_V011.json",
+        "sha256": "012f20a673866aaee99da8fc9a6c8996b0e34bd811619bb48ee256afdfb77dbe"
+      },
+      {
+        "assertions": 3,
+        "contains_semantic_content": true,
+        "file": "author_inputs/batch_001/VG_RV_SAK_M01_S014_V004.json",
+        "sha256": "1e5efa79a08fb3438d7d47aff0f49a865910f923e37672d04f2bbaf700b08668"
+      },
+      {
+        "assertions": 5,
+        "contains_semantic_content": true,
+        "file": "author_inputs/batch_001/VG_RV_SAK_M01_S022_V006.json",
+        "sha256": "c8e21d07a8ad4b35e1d9788956825e61760418ed0bb216352a2967bdfa1e4616"
+      },
+      {
+        "assertions": 5,
+        "contains_semantic_content": true,
+        "file": "author_inputs/batch_001/VG_RV_SAK_M01_S022_V015.json",
+        "sha256": "f1b8ac9081272bd4328caa3143eefcfb81364441e9390c827280c39b42552d8c"
+      },
+      {
+        "assertions": 8,
+        "contains_semantic_content": true,
+        "file": "author_inputs/batch_001/VG_RV_SAK_M01_S023_V020.json",
+        "sha256": "ddd57dfb85637893f5657d72e74191dbfc9d822b8d1716fd73cb5374a1dcc181"
+      },
+      {
+        "assertions": 5,
+        "contains_semantic_content": true,
+        "file": "author_inputs/batch_001/VG_RV_SAK_M01_S023_V021.json",
+        "sha256": "13fed40dea84c7ce5ba62c842b3c6232e02a6f5543ce3cef2ecb630768a53444"
+      },
+      {
+        "assertions": 5,
+        "contains_semantic_content": true,
+        "file": "author_inputs/batch_001/VG_RV_SAK_M01_S025_V016.json",
+        "sha256": "7c3b2eecdb056e0219375b075444abb07faef4cae73dabb0c63431147bf580db"
+      },
+      {
+        "assertions": 5,
+        "contains_semantic_content": true,
+        "file": "author_inputs/batch_001/VG_RV_SAK_M01_S036_V018.json",
+        "sha256": "549c6a847ec1046ebe3fc6c94e32f0e581a96fd11f9eacf00d81da50e80cef47"
+      },
+      {
+        "assertions": 2,
+        "contains_semantic_content": true,
+        "file": "author_inputs/batch_001/VG_RV_SAK_M01_S043_V006.json",
+        "sha256": "eb8deff5c14d774051bae042957da4789070c503579cc5a3161ff0dc840da485"
+      }
+    ],
+    "imported_into_any_run": false,
+    "isolation_violation_suspected": true,
+    "read_by_any_claude_author": false,
+    "retention": "PRESERVED_FOR_FORENSIC_HISTORY_ONLY",
+    "total_assertions": 46,
+    "used_as_expected_output": false
+  },
+  "persistence_batches_prepared": 19,
+  "prepared_tasks": 448,
+  "preserved": true,
+  "raw_response_receipts": 0,
+  "record_version": "rigveda-semantic-abandoned-attempt-forensics-v1",
+  "responses_directory_exists": false,
+  "reused_by_claude_run": {
+    "packet_hashes_reverified": true,
+    "reuse_scope": "EVIDENCE_PACKET_PREPARATION_ONLY",
+    "run_id": "vedagraph-rigveda-semantic-claude-opus5-v3.2-448-new-v1",
+    "semantic_content_reused": false
+  },
+  "run_contract_model_requested": "gpt-5.6-luna",
+  "semantic_conclusions": "none",
+  "validated_responses": 0
+}

@@ -1,0 +1,113 @@
+{
+  "$defs": {
+    "EvidenceReferenceType": {
+      "description": "Kinds of deterministic ids a human may cite.",
+      "enum": [
+        "PASSAGE",
+        "TRANSLATION",
+        "TOKEN",
+        "ENTITY",
+        "TRADITIONAL_ASSERTION",
+        "PARALLEL"
+      ],
+      "title": "EvidenceReferenceType",
+      "type": "string"
+    },
+    "GoldEvidenceReference": {
+      "additionalProperties": false,
+      "description": "A human-selected deterministic evidence id, never copied evidence text.",
+      "properties": {
+        "kind": {
+          "$ref": "#/$defs/EvidenceReferenceType"
+        },
+        "note": {
+          "default": "",
+          "title": "Note",
+          "type": "string"
+        },
+        "reference_id": {
+          "minLength": 1,
+          "title": "Reference Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "reference_id"
+      ],
+      "title": "GoldEvidenceReference",
+      "type": "object"
+    },
+    "SemanticNodeType": {
+      "description": "Categories a semantic entity may belong to.\n\nChosen to be usable across the four Vedas, not tuned to the Rigveda. Adding a type\nis an ontology version bump, because every stored candidate names the version it was\nproduced under.",
+      "enum": [
+        "CONCEPT",
+        "PHILOSOPHICAL_CONCEPT",
+        "THEME",
+        "RITUAL",
+        "OFFERING",
+        "SUBSTANCE",
+        "PLANT",
+        "ANIMAL",
+        "OBJECT",
+        "PLACE",
+        "RIVER",
+        "REGION",
+        "NATURAL_PHENOMENON",
+        "COSMIC_ENTITY",
+        "ACTION",
+        "QUALITY",
+        "STATE"
+      ],
+      "title": "SemanticNodeType",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "A human semantic entity judgment.",
+  "properties": {
+    "evidence": {
+      "items": {
+        "$ref": "#/$defs/GoldEvidenceReference"
+      },
+      "title": "Evidence",
+      "type": "array"
+    },
+    "existing_entity_key": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Existing Entity Key"
+    },
+    "new_semantic_entity_candidate": {
+      "default": false,
+      "title": "New Semantic Entity Candidate",
+      "type": "boolean"
+    },
+    "node_type": {
+      "$ref": "#/$defs/SemanticNodeType"
+    },
+    "notes": {
+      "default": "",
+      "title": "Notes",
+      "type": "string"
+    },
+    "preferred_label": {
+      "minLength": 1,
+      "title": "Preferred Label",
+      "type": "string"
+    }
+  },
+  "required": [
+    "node_type",
+    "preferred_label"
+  ],
+  "title": "GoldEntityAnnotation",
+  "type": "object"
+}

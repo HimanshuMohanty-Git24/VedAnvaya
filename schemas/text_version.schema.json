@@ -3,6 +3,7 @@
     "RightsStatus": {
       "enum": [
         "PUBLIC_DOMAIN",
+        "CC0",
         "CC_BY",
         "CC_BY_SA",
         "CC_BY_NC",
@@ -39,7 +40,8 @@
         "DISPLAY_DERIVATIVE",
         "LINGUISTIC_ANNOTATION",
         "COMPARISON_ONLY",
-        "REFERENCE_ONLY"
+        "REFERENCE_ONLY",
+        "EXTRACTED_FROM_CONTAINER"
       ],
       "title": "TextRole",
       "type": "string"

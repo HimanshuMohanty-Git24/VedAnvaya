@@ -1,15 +1,346 @@
 schema_version: 1.0.0
+
+# ---------------------------------------------------------------------------
+# VedaGraph rights vocabulary.
+#
+# Owner: Agent E (rights / provenance / source archivist). Single writer.
+#
+# The `statuses` map below is the OPERATIONAL contract. The type contract lives
+# in src/vedagraph/models/enums.py::RightsStatus and is owned by Agent A. The
+# two must stay in step: every key here must exist in the enum before it may be
+# assigned to an artifact.
+#
+# CC0 was requested from Agent A and LANDED in RightsStatus on 2026-09-07, so
+# all 13 classes below are assignable. No VedaGraph artifact currently qualifies
+# for CC0: it is documented and available, but unused. It must not be applied to
+# an artifact merely because the underlying Vedic composition is ancient; see
+# policy rule RIGHTS-7.
+# ---------------------------------------------------------------------------
+
 statuses:
   PUBLIC_DOMAIN: Copyright expired or explicitly dedicated; provenance and edition still required.
+  CC0: Creative Commons CC0 1.0 public-domain dedication.
   CC_BY: Creative Commons Attribution.
   CC_BY_SA: Creative Commons Attribution-ShareAlike.
   CC_BY_NC: Creative Commons Attribution-NonCommercial.
   CC_BY_NC_SA: Creative Commons Attribution-NonCommercial-ShareAlike.
+  APACHE_2_0: Apache License 2.0; permissive, requires notice and attribution retention.
   PERMISSION_GRANTED: Written permission is recorded for the specific asset and use.
   PERMISSION_REQUIRED: Rights holder permission is required before copying or redistribution.
   RESEARCH_ONLY: Internal research use under a documented basis; never publish automatically.
   REFERENCE_ONLY: Metadata/reference use only; content is not copied.
   EXTERNAL_REFERENCE_ONLY: Store and expose only a link or external identifier.
   UNKNOWN: Rights have not been established; default to no redistribution.
+
+# ---------------------------------------------------------------------------
+# Operational meaning of each class.
+#
+# Every class answers the same five questions, so an ingestion decision never
+# depends on reading prose:
+#
+#   copy_local            may we fetch and retain an immutable raw snapshot?
+#   redistribute          may we republish the source bytes / text as-is?
+#   redistribute_derived  may we publish a DERIVED artifact (parsed JSONL,
+#                         normalized text, a graph) built from this source?
+#   mirror_public         may we host a public copy or public mirror?
+#   direct_link           may we store and expose a hyperlink / identifier?
+#
+# Values: yes | no | conditional. `conditional` always carries `conditions`.
+#
+# NOTE ON DERIVED WORK: the VedaGraph pipeline parses, NFC-normalizes, re-keys
+# and republishes text as JSONL. In copyright terms that is BOTH modification
+# and publication. A licence forbidding modification therefore blocks the normal
+# pipeline, not merely the raw redistribution step.
+# ---------------------------------------------------------------------------
+
+operational_semantics:
+  PUBLIC_DOMAIN:
+    copy_local: yes
+    redistribute: yes
+    redistribute_derived: yes
+    mirror_public: yes
+    direct_link: yes
+    attribution_required: no
+    conditions: >-
+      No legal attribution duty, but VedaGraph policy still records edition,
+      editor and retrieval provenance. A public-domain UNDERLYING work does not
+      make a modern transcription, collation or critical apparatus of it public
+      domain. Classify the artifact, not the composition.
+
+  CC0:
+    copy_local: yes
+    redistribute: yes
+    redistribute_derived: yes
+    mirror_public: yes
+    direct_link: yes
+    attribution_required: no
+    conditions: >-
+      Present in RightsStatus as of 2026-09-07. Requires an explicit CC0
+      dedication by the rights holder of THIS artifact. Never assign on the
+      grounds that the underlying composition is ancient. Currently unused.
+
+  CC_BY:
+    copy_local: yes
+    redistribute: yes
+    redistribute_derived: yes
+    mirror_public: yes
+    direct_link: yes
+    attribution_required: yes
+    conditions: Credit the named author or editor and link the licence.
+
+  CC_BY_SA:
+    copy_local: yes
+    redistribute: yes
+    redistribute_derived: conditional
+    mirror_public: yes
+    direct_link: yes
+    attribution_required: yes
+    conditions: >-
+      Derived artifacts must themselves be released under CC BY-SA. This is
+      viral: mixing CC BY-SA text into an aggregate output constrains the
+      licence of that output.
+
+  CC_BY_NC:
+    copy_local: yes
+    redistribute: conditional
+    redistribute_derived: conditional
+    mirror_public: conditional
+    direct_link: yes
+    attribution_required: yes
+    conditions: >-
+      Non-commercial use only. VedaGraph must not place this content behind a
+      paid product or a commercially sponsored API.
+
+  CC_BY_NC_SA:
+    copy_local: yes
+    redistribute: conditional
+    redistribute_derived: conditional
+    mirror_public: conditional
+    direct_link: yes
+    attribution_required: yes
+    conditions: >-
+      Non-commercial AND share-alike. Derived artifacts must be released under
+      CC BY-NC-SA. Permanently forecloses commercial licensing of any output
+      that incorporates this text.
+
+  APACHE_2_0:
+    copy_local: yes
+    redistribute: yes
+    redistribute_derived: yes
+    mirror_public: yes
+    direct_link: yes
+    attribution_required: yes
+    conditions: >-
+      Retain the LICENSE and NOTICE files and state changes made. Permissive and
+      commercial-safe. Applies to the repository contents as licensed; it does
+      not launder third-party material vendored into that repository.
+
+  PERMISSION_GRANTED:
+    copy_local: yes
+    redistribute: conditional
+    redistribute_derived: conditional
+    mirror_public: conditional
+    direct_link: yes
+    attribution_required: yes
+    conditions: >-
+      Bounded strictly by the recorded grant. The grant document, grantor, date
+      and scope must be on file. Never generalize one asset's grant to another
+      asset from the same rights holder.
+
+  PERMISSION_REQUIRED:
+    copy_local: conditional
+    redistribute: no
+    redistribute_derived: no
+    mirror_public: no
+    direct_link: yes
+    attribution_required: yes
+    conditions: >-
+      copy_local is permitted ONLY as a bounded, non-published verification
+      snapshot retained privately, and only where the site terms do not forbid
+      retrieval. No republication of the bytes, the text, or anything derived
+      from them. Cite and link instead.
+
+  RESEARCH_ONLY:
+    copy_local: yes
+    redistribute: no
+    redistribute_derived: conditional
+    mirror_public: no
+    direct_link: yes
+    attribution_required: yes
+    conditions: >-
+      Internal research and scholarly analysis under a documented basis. Derived
+      publication is permitted only as scholarly quotation crediting source,
+      editor name and revision date, never as a bulk corpus release. Typically
+      also non-commercial. Requires an explicit human release decision; there is
+      no automated publication path.
+
+  REFERENCE_ONLY:
+    copy_local: conditional
+    redistribute: no
+    redistribute_derived: no
+    mirror_public: no
+    direct_link: yes
+    attribution_required: yes
+    conditions: >-
+      The asset may be consulted and cited, and structural metadata ABOUT it
+      (counts, presence, hierarchy) may be recorded, but its content is not
+      copied into the corpus. copy_local is limited to a private verification
+      snapshot. Use when an upstream self-declares reference-only, or when a
+      downstream licence cannot be trusted because the upstream chain of title
+      is defective.
+
+  EXTERNAL_REFERENCE_ONLY:
+    copy_local: no
+    redistribute: no
+    redistribute_derived: no
+    mirror_public: no
+    direct_link: yes
+    attribution_required: yes
+    conditions: >-
+      Strictest usable class. Store only a URL or external identifier. Nothing
+      is fetched or retained, not even a verification snapshot. Correct for
+      assets whose platform terms forbid downloading, such as streaming
+      platforms.
+
+  UNKNOWN:
+    copy_local: conditional
+    redistribute: no
+    redistribute_derived: no
+    mirror_public: no
+    direct_link: yes
+    attribution_required: yes
+    conditions: >-
+      Default posture is NO REDISTRIBUTION. A private verification snapshot may
+      be retained to support the rights investigation itself. UNKNOWN is a
+      legitimate terminal answer, not a placeholder to be optimistically
+      resolved. Never upgrade UNKNOWN to a permissive class without primary
+      evidence recorded in license_statement_verbatim.
+
+# ---------------------------------------------------------------------------
+# Policy.
+# ---------------------------------------------------------------------------
+
 policy: Rights attach to each source file or asset, not merely to a host website.
 
+policy_rules:
+  - id: RIGHTS-1
+    rule: Rights attach to each source file or asset, not merely to a host website.
+    detail: >-
+      A site licence, a repository LICENSE file, or a sibling file licence is NOT
+      evidence for a given artifact. Fetch the artifact and read its own header.
+      Record what it actually says in license_statement_verbatim.
+
+  - id: RIGHTS-2
+    rule: artifact_license and site_license are recorded as separate fields.
+    detail: >-
+      When they diverge, record both and mark the divergence explicitly. Never
+      collapse them into a single value.
+
+  - id: RIGHTS-3
+    rule: On conflict, the more restrictive statement controls.
+    detail: >-
+      A downstream aggregator cannot grant rights it does not hold. Where a
+      re-publisher applies a permissive licence over an upstream statement that
+      forbids modification or redistribution, the upstream statement controls and
+      the artifact is PERMISSION_REQUIRED, RESEARCH_ONLY or REFERENCE_ONLY.
+
+  - id: RIGHTS-4
+    rule: A permissive status is never inferred, only evidenced.
+    detail: >-
+      Every permissive status requires license_statement_verbatim plus the URL it
+      was read from plus a retrieval date. Absent that, the status is UNKNOWN.
+
+  - id: RIGHTS-5
+    rule: Suitability for one Veda does not transfer to another.
+    detail: >-
+      Per-Veda files from the same host routinely carry different rights, because
+      they came from different contributors and different printed editions. Each
+      Veda artifact is adjudicated independently. See the GRETIL case in
+      docs/FOUR_VEDA_RIGHTS_MATRIX.md.
+
+  - id: RIGHTS-6
+    rule: Audio carries its own rights and never inherits them from the text source.
+    detail: >-
+      A recitation is a separate copyrightable performance and usually also a
+      separate sound-recording copyright, held by the reciter, the recordist or
+      the publishing institution. Publicly playable does not mean mirrorable.
+      Default audio posture is REFERENCE_ONLY.
+
+  - id: RIGHTS-7
+    rule: A public-domain composition does not imply a public-domain artifact.
+    detail: >-
+      The Vedic text is ancient and uncopyrightable. Modern critical editions,
+      transliterations, collations, TEI markup and OCR layers are new works with
+      their own terms. Classify the artifact in hand.
+
+  - id: RIGHTS-8
+    rule: Absence of a licence field is not a grant.
+    detail: >-
+      An archive.org item with no licenseurl and no rights field is all-rights-
+      reserved by default, not public domain. Where such an item is nonetheless
+      classified PUBLIC_DOMAIN, the justification must be the underlying work
+      publication date and the author death date, recorded explicitly, and never
+      the silence of the host.
+
+  - id: RIGHTS-9
+    rule: Chain of title is followed to its root, not to the nearest licence.
+    detail: >-
+      Where an artifact names its upstream sources, each upstream is checked. If
+      any link in the chain is in copyright or forbids modification, the defect
+      propagates downstream regardless of what the final publisher asserts.
+
+  - id: RIGHTS-10
+    rule: >-
+      A digitiser's or holding library's licence stamp is never a grant, and where it contradicts a
+      printed notice inside the same volume the PRINTED NOTICE CONTROLS.
+    detail: >-
+      GENERALISED 2026-09-07 from a Vishva-Bandhu-specific rule, because the pattern recurred five times
+      independently in the Atharvaveda survey alone. Five independent instances is a systematic practice,
+      not a coincidence: mass-digitisation projects appear to apply a blanket permissive licence AT SCAN
+      TIME, mechanically, regardless of the printed notice on the page they are scanning.
+      Digitising a book confers no rights in its contents. A scanning institution, holding library or
+      re-uploader is therefore a party WITHOUT STANDING, and its CC0, CC Public Domain Mark or permissive
+      CC tag is an ASSERTION about someone else's copyright, never a grant of it. This holds even when
+      the digitiser is reputable and even when the tag is applied in good faith.
+      OPERATIONAL TEST: read the PRINT, not the scan. Where the printed volume asserts rights, the
+      artifact is PERMISSION_REQUIRED regardless of the digital tag. Where the print is silent, fall back
+      to the author's death date under the applicable term (rule RIGHTS-7), never to the digitiser's tag.
+      A permissive scan tag is evidence of nothing.
+      CONFIRMED INSTANCES IN OUR OWN SET, all five from the Atharvaveda and Hindi research:
+      (1) Vishva Bandhu, Atharvaveda Rsi-Devata-Chando-Anukramanika, Hoshiarpur 1970, prints
+      "sarvadhikarah suraksitah" while its archive.org scan is tagged CC0 - Vishva Bandhu died 1973, so
+      it runs to 2034 in India and is URAA-restored in the US;
+      (2) an eGangotri CC0 stamp sits over Satavalekar, who died 1968 and is in copyright in India to
+      2029;
+      (3) the Trivedi Hindi bhasya prints "sarvadhikar prakashakadhin" while its scan pages carry CC-0;
+      (4) all thirteen Sri Ram Sharma Acharya items sit under an awgp.org footer reading "Copyright (c)
+      2026 SRI VEDMATA GAYATRI TRUST (TMD). All rights reserved.";
+      (5) the 1990 Pancapatalika translation, same pattern.
+      Note instances (1) and (3) are the strongest form of the defect, because the contradiction is
+      INTERNAL to the same digital object: the scanned page images themselves display an all-rights-
+      reserved notice while the item metadata wrapping them claims CC0. Where a scan contradicts its own
+      page images, the page images control.
+  - id: RIGHTS-11
+    rule: CC Public Domain Mark is an assertion of status, not a licence, and is rejected by default.
+    detail: >-
+      PD Mark states that a work is ALREADY out of copyright. It grants nothing and it is only as good as
+      the person applying it. Applied by third-party uploaders to modern sound recordings it is not
+      credible, because a 21st-century recording of living performers is not out of copyright anywhere.
+      Treat PD Mark as UNKNOWN unless the applier is demonstrably the rights holder AND the work's age
+      independently supports expiry. Never collapse PD Mark into PUBLIC_DOMAIN or CC0. In the audio survey
+      21 of 75 licensed archive.org items carried PD Mark, applied by re-uploaders to 2020 recordings; one
+      such recording appears twice on archive.org, once tagged PD Mark and once with no licence at all
+      over a byte-identical file set - the same bytes cannot be both public domain and all rights reserved.
+
+  - id: RIGHTS-12
+    rule: An unenforced access restriction is still a restriction.
+    detail: >-
+      Technical accessibility never implies permission. A file that is publicly playable, range-requestable,
+      not robots-blocked, or served with HTTP 200 despite being labelled members-only remains restricted if
+      its terms say so. Confirmed instances: TITUS labels a plain-text Atharvaveda under /private/ as "TITUS
+      Members only" and it currently returns HTTP 200 with no authentication while /private/ is Disallow'ed
+      in robots.txt - it must not be ingested; the Vedic Heritage Portal serves audio with range requests
+      enabled while setting controlsList="nodownload" and forbidding reproduction in writing; and an
+      in-copyright commercial Folkways LP streams freely from archive.org's unlockedrecordings collection.
+      A crawl permission is not a reproduction licence, and a hosting decision by a host is not a grant by
+      the owner.

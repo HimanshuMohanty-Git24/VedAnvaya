@@ -115,6 +115,16 @@ class SourceArtifact(VGModel):
 
 
 class Work(VGModel):
+    """One recension of one Veda, and the structural vocabulary it is addressed by.
+
+    ``hierarchy`` is a declared assertion about a text, so ``structure_evidence_sha256``
+    lets it point at the exact artifact that evidences it rather than resting on
+    secondary literature. ``identity_status`` is ``FINAL`` only when the key may never
+    change again; ``PROVISIONAL`` means the structure is confirmed from a source record
+    but something the key depends on is still open, and ``RESEARCH_REQUIRED`` means the
+    hierarchy itself is not yet known. See docs/FOUR_VEDA_STRUCTURAL_MODEL.md.
+    """
+
     work_id: str = Field(pattern=r"^VG:WORK:[A-Z]+:[A-Z]+$")
     abbreviation: str
     veda: str
@@ -124,6 +134,7 @@ class Work(VGModel):
     citation_pattern: str
     key_pattern: str | None = None
     identity_status: str = "FINAL"
+    structure_evidence_sha256: str | None = Field(default=None, pattern=r"^[a-f0-9]{64}$")
     notes: str | None = None
     schema_version: str = SCHEMA_VERSION
 
@@ -139,6 +150,15 @@ class Citation(VGModel):
 
 
 class Passage(VGModel):
+    """One addressable node on the generic ``Work -> container(s) -> Passage`` spine.
+
+    Depth is not fixed. Rigveda and Atharvaveda are three levels, Vajasaneyi is two,
+    Samaveda Kauthuma is five and its depth varies between arcikas. ``hierarchy``
+    therefore carries level-name -> value pairs rather than fixed columns, and
+    ``native_labels`` carries the edition's own ordered level names so no work is read
+    through another work's vocabulary. See docs/FOUR_VEDA_STRUCTURAL_MODEL.md.
+    """
+
     entity_id: UUID
     canonical_key: str = Field(pattern=r"^VG:[A-Z]+:[A-Z]+:.+$")
     canonical_urn: str = Field(pattern=r"^urn:vedagraph:")
@@ -148,8 +168,33 @@ class Passage(VGModel):
     canonical_citation: str
     parent_key: str | None = None
     sequence_in_parent: int = Field(ge=1)
+    native_labels: list[str] = Field(default_factory=list)
+    structural_path: list[str] = Field(default_factory=list)
     status: PassageStatus = PassageStatus.CANONICAL
     schema_version: str = SCHEMA_VERSION
+
+    @model_validator(mode="after")
+    def validate_native_structure(self) -> Passage:
+        """Keep the optional structural view consistent with ``hierarchy``.
+
+        Both fields default to empty, so records written before they existed are
+        unaffected. When supplied, ``native_labels`` names exactly the levels in
+        ``hierarchy`` and supplies the ordering a dict cannot guarantee, and
+        ``structural_path`` holds the matching values as strings so zero-padding and
+        non-integer level labels survive.
+        """
+        if self.native_labels:
+            lowered = [label.lower() for label in self.native_labels]
+            if len(lowered) != len(set(lowered)):
+                raise ValueError("native_labels must not repeat a level name")
+            if set(lowered) != {key.lower() for key in self.hierarchy}:
+                raise ValueError("native_labels must name exactly the levels in hierarchy")
+        if self.structural_path:
+            if not self.native_labels:
+                raise ValueError("structural_path requires native_labels to define its order")
+            if len(self.structural_path) != len(self.native_labels):
+                raise ValueError("structural_path and native_labels must be positionally aligned")
+        return self
 
 
 class TextVersion(VGModel):
@@ -425,6 +470,34 @@ class SuktaDiscoveryRecord(VGModel):
     schema_version: str = SCHEMA_VERSION
 
 
+class SectionDiscoveryRecord(VGModel):
+    """Work-agnostic structural discovery for a container at any depth.
+
+    :class:`SuktaDiscoveryRecord` is Rigveda-shaped -- it requires ``sukta_number``,
+    ``mandala_number`` and ``parent_mandala_key`` -- so works with no sukta level
+    (Vajasaneyi) or with four container levels (Samaveda) cannot use it. It is left
+    exactly as it is because the sealed Rigveda corpus contains 2,247 such records;
+    this is the additive generic form for every other work. ``section_number`` allows
+    ``0`` because Samaveda encodes an absent level as a literal zero.
+    """
+
+    work_id: str
+    canonical_section_key: str
+    section_level: str
+    section_number: int = Field(ge=0)
+    parent_key: str | None = None
+    known_child_count: int | None = Field(default=None, ge=0)
+    availability: DiscoveryAvailability
+    discovery_source: str
+    source_id: str
+    source_artifact_id: str | None = None
+    source_locator: str
+    snapshot_id: str
+    discovered_at: datetime | None = None
+    notes: str | None = None
+    schema_version: str = SCHEMA_VERSION
+
+
 class BuildSourceInput(VGModel):
     source_id: str
     role: str
@@ -446,6 +519,14 @@ class TextVersionSelection(VGModel):
 
 
 class CorpusBuildConfig(VGModel):
+    """Rigveda-specific build configuration, sliced one Mandala at a time.
+
+    ``mandala`` and ``selected_suktas`` are required and are read as plain ints
+    throughout ``vedagraph.build``, so this model cannot express a work without a
+    Mandala or a Sukta level. That is intentional and is not a defect to be relaxed:
+    other works use :class:`WorkBuildConfig`. See ADR-018.
+    """
+
     config_version: str
     dataset_id: str
     release_version: str
@@ -474,6 +555,54 @@ class CorpusBuildConfig(VGModel):
         if len(self.selected_suktas) != len(set(self.selected_suktas)):
             raise ValueError("selected_suktas must be unique")
         object.__setattr__(self, "selected_suktas", sorted(self.selected_suktas))
+        return self
+
+
+class WorkBuildConfig(VGModel):
+    """Work-agnostic build configuration for non-Rigveda works.
+
+    :class:`CorpusBuildConfig` requires ``mandala`` and ``selected_suktas`` and reads
+    them as plain ints throughout the sealed Rigveda builder, so it is Rigveda-specific
+    and is deliberately NOT loosened. This is the shared shape every other work builds
+    against, so Samaveda, Vajasaneyi and Atharvaveda do not each invent one.
+    ``section_level`` names the container the build is sliced on using the work's own
+    vocabulary; an empty ``selected_sections`` means the whole work.
+    See docs/decisions/ADR-018-per-work-build-configuration.md.
+    """
+
+    config_version: str
+    dataset_id: str
+    release_version: str
+    work_id: str = Field(pattern=r"^VG:WORK:[A-Z]+:[A-Z]+$")
+    section_level: str | None = None
+    selected_sections: list[int] = Field(default_factory=list)
+    mantra_level: str = "Mantra"
+    text_selection_policy: TextSelectionPolicy
+    primary_sanskrit: TextVersionSelection | None = None
+    parallel_sanskrit: list[TextVersionSelection] = Field(default_factory=list)
+    candidate_text_versions: list[TextVersionSelection] = Field(default_factory=list)
+    sources: list[BuildSourceInput]
+    translation_sources: list[str] = Field(default_factory=list)
+    metadata_sources: list[str] = Field(default_factory=list)
+    media_discovery_sources: list[str] = Field(default_factory=list)
+    reconciliation_policy_version: str
+    qa_policy_version: str = "corpus-qa-v1"
+    rights_policy_version: str = "artifact-and-version-rights-v1"
+    media_policy_version: str = "external-reference-only-v1"
+    translation_alignment_policy_version: str = "conservative-source-numbered-v1"
+    output_location: Path
+    staging_location: Path | None = None
+    build_timestamp: datetime
+    notes: str | None = None
+    schema_version: str = SCHEMA_VERSION
+
+    @model_validator(mode="after")
+    def validate_sections(self) -> WorkBuildConfig:
+        if len(self.selected_sections) != len(set(self.selected_sections)):
+            raise ValueError("selected_sections must be unique")
+        if self.selected_sections and self.section_level is None:
+            raise ValueError("selected_sections requires section_level to name the container")
+        object.__setattr__(self, "selected_sections", sorted(self.selected_sections))
         return self
 
 

@@ -1,0 +1,68 @@
+config_version: rigveda-semantic-v3.2-user-selected-luna-smoke-8-v1
+selection_policy_version: rigveda-semantic-user-selected-luna-smoke-8-selection-v1
+parent_selection_path: data/builds/rigveda_semantic_codex_luna_regression_v1.yaml
+parent_selection_hash: 26d2f85aec91e621d43444931d40fc81e08a7c9d533bdce820c86945c398783c
+runtime: CODEX_DIRECT
+model_requested: gpt-5.6-luna
+reasoning_requested: high
+human_gold_status: UNANNOTATED
+selection_basis: engineering_strata_and_existing_engineering_diagnostic_case_labels_only
+selection_hash: be4cccec008e824e6ceeeb319e64190eee52968c51cee5dc268b22d4d535637c
+mantra_count: 8
+stratum_counts:
+  B01_RELATION_BINDING: 4
+  B02_EVIDENCE_SPAN: 2
+  PARALLEL_CONTROL: 1
+  CLEAN_CONTROL: 1
+coverage_targets:
+  REQUESTS_sensitive: 2
+  DESCRIBES_DESCRIBES_ACTION_sensitive: 2
+  canonical_target_sensitive: 1
+  substance_ritual_offering_sensitive: 1
+  previous_emission_no_claim_risk: 1
+  clean_control: 1
+selection_notes:
+  - Selection is deterministic and uses only the frozen parent IDs, parent strata, and existing engineering diagnostic case labels.
+  - No prior semantic assertions, predicates, objects, counts, no-claim decisions, or comparisons were used to choose membership.
+  - Coverage labels are smoke-test lenses, not semantic answers or gold labels.
+mantras:
+  - passage_key: VG:RV:SAK:M04:S022:V011
+    citation: RV 4.22.11
+    stratum: PARALLEL_CONTROL
+    coverage: REQUESTS_sensitive
+    selection_reason: PAR-01 TRANSLATION_VARIANT_EFFECT engineering diagnostic; parallel-control member.
+  - passage_key: VG:RV:SAK:M10:S058:V001
+    citation: RV 10.58.1
+    stratum: B01_RELATION_BINDING
+    coverage: REQUESTS_sensitive
+    selection_reason: PAR-03 EXTRACTION_INCONSISTENCY engineering diagnostic; B01 relation-binding member.
+  - passage_key: VG:RV:SAK:M10:S018:V008
+    citation: RV 10.18.8
+    stratum: B02_EVIDENCE_SPAN
+    coverage: DESCRIBES_DESCRIBES_ACTION_sensitive
+    selection_reason: B02 evidence-span member selected for action-boundary smoke coverage.
+  - passage_key: VG:RV:SAK:M08:S036:V006
+    citation: RV 8.36.6
+    stratum: B01_RELATION_BINDING
+    coverage: DESCRIBES_DESCRIBES_ACTION_sensitive
+    selection_reason: REV-10 CANONICAL_ENTITY_RISK / predicate-boundary engineering diagnostic; B01 member.
+  - passage_key: VG:RV:SAK:M08:S035:V008
+    citation: RV 8.35.8
+    stratum: B01_RELATION_BINDING
+    coverage: canonical_target_sensitive
+    selection_reason: REV-05 CANONICAL_ENTITY_RISK engineering diagnostic; B01 member.
+  - passage_key: VG:RV:SAK:M08:S035:V009
+    citation: RV 8.35.9
+    stratum: B01_RELATION_BINDING
+    coverage: substance_ritual_offering_sensitive
+    selection_reason: REV-06 CANONICAL_ENTITY_RISK engineering diagnostic with offering-sensitive wording; B01 member.
+  - passage_key: VG:RV:SAK:M09:S004:V009
+    citation: RV 9.4.9
+    stratum: B02_EVIDENCE_SPAN
+    coverage: previous_emission_no_claim_risk
+    selection_reason: REV-02 ONTOLOGY_GAP engineering diagnostic explicitly records cautious no-claim risk; B02 member.
+  - passage_key: VG:RV:SAK:M06:S042:V004
+    citation: RV 6.42.4
+    stratum: CLEAN_CONTROL
+    coverage: clean_control
+    selection_reason: Frozen CLEAN_CONTROL member with no B01 or B02 selection record.

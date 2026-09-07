@@ -1,0 +1,209 @@
+config_version: rigveda-semantic-codex-luna-regression-v1
+selection_policy_version: rigveda-semantic-codex-luna-regression-selection-v1
+execution_version: rigveda-semantic-execution-v3.1
+run_id: vedagraph-rigveda-semantic-luna-v3.1-regression
+runtime: CODEX_DIRECT
+model_requested: gpt-5.6-luna
+reasoning_requested: high
+human_gold_status: UNANNOTATED
+unlocked_predicates: []
+candidate_status: CANDIDATE / NEEDS_REVIEW
+selection_hash: 26d2f85aec91e621d43444931d40fc81e08a7c9d533bdce820c86945c398783c
+mantra_count: 60
+stratum_counts:
+  B01_RELATION_BINDING: 24
+  B02_EVIDENCE_SPAN: 13
+  PARALLEL_CONTROL: 3
+  CLEAN_CONTROL: 20
+stratum_reasons:
+  B01_RELATION_BINDING: 'an audit record names this mantra under B01: a relation or target was bound to wording elsewhere
+    in the verse'
+  B02_EVIDENCE_SPAN: 'an audit record names this mantra under B02: a stored evidence span was not boundary-safe, or its anchors
+    were never validated'
+  PARALLEL_CONTROL: one side of an audited parallel pair; included so extraction differences between twins can be read as
+    evidence rather than guessed at
+  CLEAN_CONTROL: hash-drawn from the 508 pilot with no B01 or B02 record; included so the regression measures ordinary verses
+    too
+selection_policy: Membership is derived from the readiness audit records and a hash-ordered clean draw. No mantra was selected
+  for the semantic answer it is expected to produce, and this file carries no semantic content of any kind.
+mantras:
+- passage_key: VG:RV:SAK:M01:S024:V006
+  citation: RV 1.24.6
+  stratum: CLEAN_CONTROL
+- passage_key: VG:RV:SAK:M01:S035:V005
+  citation: RV 1.35.5
+  stratum: B02_EVIDENCE_SPAN
+- passage_key: VG:RV:SAK:M01:S051:V009
+  citation: RV 1.51.9
+  stratum: B01_RELATION_BINDING
+- passage_key: VG:RV:SAK:M01:S061:V003
+  citation: RV 1.61.3
+  stratum: B01_RELATION_BINDING
+- passage_key: VG:RV:SAK:M01:S068:V009
+  citation: RV 1.68.9
+  stratum: CLEAN_CONTROL
+- passage_key: VG:RV:SAK:M01:S122:V008
+  citation: RV 1.122.8
+  stratum: B02_EVIDENCE_SPAN
+- passage_key: VG:RV:SAK:M01:S137:V003
+  citation: RV 1.137.3
+  stratum: B01_RELATION_BINDING
+- passage_key: VG:RV:SAK:M02:S011:V013
+  citation: RV 2.11.13
+  stratum: CLEAN_CONTROL
+- passage_key: VG:RV:SAK:M02:S020:V009
+  citation: RV 2.20.9
+  stratum: CLEAN_CONTROL
+- passage_key: VG:RV:SAK:M03:S004:V008
+  citation: RV 3.4.8
+  stratum: B01_RELATION_BINDING
+- passage_key: VG:RV:SAK:M03:S011:V004
+  citation: RV 3.11.4
+  stratum: CLEAN_CONTROL
+- passage_key: VG:RV:SAK:M03:S031:V014
+  citation: RV 3.31.14
+  stratum: CLEAN_CONTROL
+- passage_key: VG:RV:SAK:M04:S001:V007
+  citation: RV 4.1.7
+  stratum: CLEAN_CONTROL
+- passage_key: VG:RV:SAK:M04:S017:V021
+  citation: RV 4.17.21
+  stratum: PARALLEL_CONTROL
+- passage_key: VG:RV:SAK:M04:S022:V011
+  citation: RV 4.22.11
+  stratum: PARALLEL_CONTROL
+- passage_key: VG:RV:SAK:M04:S023:V011
+  citation: RV 4.23.11
+  stratum: PARALLEL_CONTROL
+- passage_key: VG:RV:SAK:M04:S053:V005
+  citation: RV 4.53.5
+  stratum: CLEAN_CONTROL
+- passage_key: VG:RV:SAK:M05:S038:V003
+  citation: RV 5.38.3
+  stratum: CLEAN_CONTROL
+- passage_key: VG:RV:SAK:M05:S053:V016
+  citation: RV 5.53.16
+  stratum: CLEAN_CONTROL
+- passage_key: VG:RV:SAK:M06:S042:V004
+  citation: RV 6.42.4
+  stratum: CLEAN_CONTROL
+- passage_key: VG:RV:SAK:M06:S047:V017
+  citation: RV 6.47.17
+  stratum: B02_EVIDENCE_SPAN
+- passage_key: VG:RV:SAK:M06:S073:V002
+  citation: RV 6.73.2
+  stratum: CLEAN_CONTROL
+- passage_key: VG:RV:SAK:M07:S063:V005
+  citation: RV 7.63.5
+  stratum: CLEAN_CONTROL
+- passage_key: VG:RV:SAK:M07:S083:V009
+  citation: RV 7.83.9
+  stratum: CLEAN_CONTROL
+- passage_key: VG:RV:SAK:M08:S001:V013
+  citation: RV 8.1.13
+  stratum: CLEAN_CONTROL
+- passage_key: VG:RV:SAK:M08:S010:V006
+  citation: RV 8.10.6
+  stratum: CLEAN_CONTROL
+- passage_key: VG:RV:SAK:M08:S035:V006
+  citation: RV 8.35.6
+  stratum: B01_RELATION_BINDING
+- passage_key: VG:RV:SAK:M08:S035:V007
+  citation: RV 8.35.7
+  stratum: B01_RELATION_BINDING
+- passage_key: VG:RV:SAK:M08:S035:V008
+  citation: RV 8.35.8
+  stratum: B01_RELATION_BINDING
+- passage_key: VG:RV:SAK:M08:S035:V009
+  citation: RV 8.35.9
+  stratum: B01_RELATION_BINDING
+- passage_key: VG:RV:SAK:M08:S036:V004
+  citation: RV 8.36.4
+  stratum: B01_RELATION_BINDING
+- passage_key: VG:RV:SAK:M08:S036:V005
+  citation: RV 8.36.5
+  stratum: B01_RELATION_BINDING
+- passage_key: VG:RV:SAK:M08:S036:V006
+  citation: RV 8.36.6
+  stratum: B01_RELATION_BINDING
+- passage_key: VG:RV:SAK:M08:S046:V002
+  citation: RV 8.46.2
+  stratum: B01_RELATION_BINDING
+- passage_key: VG:RV:SAK:M08:S060:V011
+  citation: RV 8.60.11
+  stratum: B02_EVIDENCE_SPAN
+- passage_key: VG:RV:SAK:M09:S004:V009
+  citation: RV 9.4.9
+  stratum: B02_EVIDENCE_SPAN
+- passage_key: VG:RV:SAK:M09:S020:V002
+  citation: RV 9.20.2
+  stratum: B02_EVIDENCE_SPAN
+- passage_key: VG:RV:SAK:M09:S043:V003
+  citation: RV 9.43.3
+  stratum: CLEAN_CONTROL
+- passage_key: VG:RV:SAK:M09:S052:V005
+  citation: RV 9.52.5
+  stratum: B01_RELATION_BINDING
+- passage_key: VG:RV:SAK:M09:S086:V038
+  citation: RV 9.86.38
+  stratum: B02_EVIDENCE_SPAN
+- passage_key: VG:RV:SAK:M09:S087:V004
+  citation: RV 9.87.4
+  stratum: B01_RELATION_BINDING
+- passage_key: VG:RV:SAK:M09:S087:V009
+  citation: RV 9.87.9
+  stratum: B01_RELATION_BINDING
+- passage_key: VG:RV:SAK:M09:S109:V017
+  citation: RV 9.109.17
+  stratum: CLEAN_CONTROL
+- passage_key: VG:RV:SAK:M10:S014:V001
+  citation: RV 10.14.1
+  stratum: B02_EVIDENCE_SPAN
+- passage_key: VG:RV:SAK:M10:S018:V008
+  citation: RV 10.18.8
+  stratum: B02_EVIDENCE_SPAN
+- passage_key: VG:RV:SAK:M10:S025:V001
+  citation: RV 10.25.1
+  stratum: B02_EVIDENCE_SPAN
+- passage_key: VG:RV:SAK:M10:S041:V001
+  citation: RV 10.41.1
+  stratum: B01_RELATION_BINDING
+- passage_key: VG:RV:SAK:M10:S058:V001
+  citation: RV 10.58.1
+  stratum: B01_RELATION_BINDING
+- passage_key: VG:RV:SAK:M10:S058:V004
+  citation: RV 10.58.4
+  stratum: B01_RELATION_BINDING
+- passage_key: VG:RV:SAK:M10:S058:V005
+  citation: RV 10.58.5
+  stratum: B01_RELATION_BINDING
+- passage_key: VG:RV:SAK:M10:S058:V006
+  citation: RV 10.58.6
+  stratum: B01_RELATION_BINDING
+- passage_key: VG:RV:SAK:M10:S058:V007
+  citation: RV 10.58.7
+  stratum: B01_RELATION_BINDING
+- passage_key: VG:RV:SAK:M10:S058:V009
+  citation: RV 10.58.9
+  stratum: B01_RELATION_BINDING
+- passage_key: VG:RV:SAK:M10:S058:V011
+  citation: RV 10.58.11
+  stratum: B01_RELATION_BINDING
+- passage_key: VG:RV:SAK:M10:S061:V005
+  citation: RV 10.61.5
+  stratum: CLEAN_CONTROL
+- passage_key: VG:RV:SAK:M10:S102:V002
+  citation: RV 10.102.2
+  stratum: B02_EVIDENCE_SPAN
+- passage_key: VG:RV:SAK:M10:S126:V006
+  citation: RV 10.126.6
+  stratum: B02_EVIDENCE_SPAN
+- passage_key: VG:RV:SAK:M10:S170:V001
+  citation: RV 10.170.1
+  stratum: B01_RELATION_BINDING
+- passage_key: VG:RV:SAK:M10:S183:V002
+  citation: RV 10.183.2
+  stratum: B02_EVIDENCE_SPAN
+- passage_key: VG:RV:SAK:M10:S189:V002
+  citation: RV 10.189.2
+  stratum: CLEAN_CONTROL

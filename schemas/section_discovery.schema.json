@@ -1,0 +1,133 @@
+{
+  "$defs": {
+    "DiscoveryAvailability": {
+      "enum": [
+        "AVAILABLE",
+        "REFERENCE_ONLY",
+        "UNKNOWN"
+      ],
+      "title": "DiscoveryAvailability",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Work-agnostic structural discovery for a container at any depth.\n\n:class:`SuktaDiscoveryRecord` is Rigveda-shaped -- it requires ``sukta_number``,\n``mandala_number`` and ``parent_mandala_key`` -- so works with no sukta level\n(Vajasaneyi) or with four container levels (Samaveda) cannot use it. It is left\nexactly as it is because the sealed Rigveda corpus contains 2,247 such records;\nthis is the additive generic form for every other work. ``section_number`` allows\n``0`` because Samaveda encodes an absent level as a literal zero.",
+  "properties": {
+    "availability": {
+      "$ref": "#/$defs/DiscoveryAvailability"
+    },
+    "canonical_section_key": {
+      "title": "Canonical Section Key",
+      "type": "string"
+    },
+    "discovered_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Discovered At"
+    },
+    "discovery_source": {
+      "title": "Discovery Source",
+      "type": "string"
+    },
+    "known_child_count": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Known Child Count"
+    },
+    "notes": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Notes"
+    },
+    "parent_key": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Parent Key"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "section_level": {
+      "title": "Section Level",
+      "type": "string"
+    },
+    "section_number": {
+      "minimum": 0,
+      "title": "Section Number",
+      "type": "integer"
+    },
+    "snapshot_id": {
+      "title": "Snapshot Id",
+      "type": "string"
+    },
+    "source_artifact_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Source Artifact Id"
+    },
+    "source_id": {
+      "title": "Source Id",
+      "type": "string"
+    },
+    "source_locator": {
+      "title": "Source Locator",
+      "type": "string"
+    },
+    "work_id": {
+      "title": "Work Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "work_id",
+    "canonical_section_key",
+    "section_level",
+    "section_number",
+    "availability",
+    "discovery_source",
+    "source_id",
+    "source_locator",
+    "snapshot_id"
+  ],
+  "title": "SectionDiscoveryRecord",
+  "type": "object"
+}

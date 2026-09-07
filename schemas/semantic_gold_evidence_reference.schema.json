@@ -1,0 +1,40 @@
+{
+  "$defs": {
+    "EvidenceReferenceType": {
+      "description": "Kinds of deterministic ids a human may cite.",
+      "enum": [
+        "PASSAGE",
+        "TRANSLATION",
+        "TOKEN",
+        "ENTITY",
+        "TRADITIONAL_ASSERTION",
+        "PARALLEL"
+      ],
+      "title": "EvidenceReferenceType",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "A human-selected deterministic evidence id, never copied evidence text.",
+  "properties": {
+    "kind": {
+      "$ref": "#/$defs/EvidenceReferenceType"
+    },
+    "note": {
+      "default": "",
+      "title": "Note",
+      "type": "string"
+    },
+    "reference_id": {
+      "minLength": 1,
+      "title": "Reference Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "kind",
+    "reference_id"
+  ],
+  "title": "GoldEvidenceReference",
+  "type": "object"
+}

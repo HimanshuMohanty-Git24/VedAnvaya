@@ -1,0 +1,133 @@
+{
+  "additionalProperties": false,
+  "description": "Reproducibility and safety record for one silver benchmark run.",
+  "properties": {
+    "corpus_manifest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Corpus Manifest Sha256",
+      "type": "string"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "deterministic_knowledge_manifest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Deterministic Knowledge Manifest Sha256",
+      "type": "string"
+    },
+    "evidence_packet_hashes": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Evidence Packet Hashes",
+      "type": "object"
+    },
+    "human_gold_status": {
+      "const": "UNANNOTATED",
+      "default": "UNANNOTATED",
+      "title": "Human Gold Status",
+      "type": "string"
+    },
+    "lexical_manifest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Lexical Manifest Sha256",
+      "type": "string"
+    },
+    "luna_model_id": {
+      "minLength": 1,
+      "title": "Luna Model Id",
+      "type": "string"
+    },
+    "luna_pilot_run_id": {
+      "minLength": 1,
+      "title": "Luna Pilot Run Id",
+      "type": "string"
+    },
+    "output_hashes": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Output Hashes",
+      "type": "object"
+    },
+    "provenance": {
+      "const": "MODEL_REVIEWED_SILVER",
+      "default": "MODEL_REVIEWED_SILVER",
+      "title": "Provenance",
+      "type": "string"
+    },
+    "reviewed_mantra_count": {
+      "minimum": 0,
+      "title": "Reviewed Mantra Count",
+      "type": "integer"
+    },
+    "run_id": {
+      "minLength": 1,
+      "title": "Run Id",
+      "type": "string"
+    },
+    "runtime": {
+      "const": "CODEX_DIRECT",
+      "default": "CODEX_DIRECT",
+      "title": "Runtime",
+      "type": "string"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "selected_mantra_count": {
+      "minimum": 0,
+      "title": "Selected Mantra Count",
+      "type": "integer"
+    },
+    "semantic_ontology_version": {
+      "minLength": 1,
+      "title": "Semantic Ontology Version",
+      "type": "string"
+    },
+    "silver_status": {
+      "enum": [
+        "COMPLETE",
+        "READY_WITH_LIMITATIONS",
+        "NOT_READY"
+      ],
+      "title": "Silver Status",
+      "type": "string"
+    },
+    "sol_reviewer_model_id": {
+      "minLength": 1,
+      "title": "Sol Reviewer Model Id",
+      "type": "string"
+    },
+    "unlocked_predicates": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 0,
+      "title": "Unlocked Predicates",
+      "type": "array"
+    }
+  },
+  "required": [
+    "run_id",
+    "corpus_manifest_sha256",
+    "deterministic_knowledge_manifest_sha256",
+    "lexical_manifest_sha256",
+    "semantic_ontology_version",
+    "luna_pilot_run_id",
+    "luna_model_id",
+    "sol_reviewer_model_id",
+    "silver_status",
+    "selected_mantra_count",
+    "reviewed_mantra_count",
+    "evidence_packet_hashes",
+    "output_hashes",
+    "created_at"
+  ],
+  "title": "SilverBenchmarkManifest",
+  "type": "object"
+}

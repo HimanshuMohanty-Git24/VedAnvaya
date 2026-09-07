@@ -1,0 +1,82 @@
+{
+  "dataset": "VedaGraph Canonical Corpus",
+  "version": "0.1.0-pilot",
+  "built_at": "2026-09-07T00:00:00Z",
+  "works": [
+    "VG:WORK:SV:KAU"
+  ],
+  "passage_count": 102,
+  "source_snapshot_ids": [
+    "GRETIL:91c28c0394e94dccc9bad12a08224fbcde0a1194402b610df26647621ed92456"
+  ],
+  "source_artifact_ids": [
+    "GRETIL.SV.KAUTHUMA.TEI.2020"
+  ],
+  "raw_snapshot_hashes": {
+    "GRETIL:91c28c0394e94dccc9bad12a08224fbcde0a1194402b610df26647621ed92456": "91c28c0394e94dccc9bad12a08224fbcde0a1194402b610df26647621ed92456"
+  },
+  "build_config_sha256": "05298349ec9ea0055279b20a0b49908b3724fc69ec8765d6c04a4e8c40c81173",
+  "parser_versions": {
+    "GRETIL": "gretil-samaveda-arcika-v1"
+  },
+  "qa_policy_version": "corpus-qa-v1",
+  "component_manifest_hashes": {},
+  "build_config_hashes": {},
+  "rights_summary": {
+    "GRETIL.SV.KAUTHUMA.TEI.2020": "PERMISSION_REQUIRED"
+  },
+  "generated_files": [
+    {
+      "path": "citations.jsonl",
+      "record_count": 208,
+      "sha256": "6880951fc01ce0a451bfd0b1a5345344bfae56cd66cba08aa33e5a61bf78142e"
+    },
+    {
+      "path": "passages.jsonl",
+      "record_count": 139,
+      "sha256": "73913fae6e599780294e182a75b729e9e058f9ae0209bd7d373387affa3d7317"
+    },
+    {
+      "path": "source_artifacts.jsonl",
+      "record_count": 1,
+      "sha256": "6f27b7c369fba54c3f00a382fd72522f24e4175cb647a43249adbe3f22266377"
+    },
+    {
+      "path": "source_assertions.jsonl",
+      "record_count": 242,
+      "sha256": "5e42c4dddaf120d1fd3d047884fa890c3126440a0080ed922a23319b3d4ef9d0"
+    },
+    {
+      "path": "sources.jsonl",
+      "record_count": 1,
+      "sha256": "faf23ba55fefab9c1a8f9160ded0ad3bfee7c90e3a43148432e037b04273574f"
+    },
+    {
+      "path": "text_versions.jsonl",
+      "record_count": 102,
+      "sha256": "0dc410bc6ec57d088dd25d75a54801c557d83b15f46fe3087df1e82093f526ea"
+    },
+    {
+      "path": "translations.jsonl",
+      "record_count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "works.jsonl",
+      "record_count": 1,
+      "sha256": "e1f711c9c2bc785c21a71017418f33c1ec12a7f1704dbf10a7fb71ada409c7d9"
+    }
+  ],
+  "record_counts": {
+    "citations.jsonl": 208,
+    "passages.jsonl": 139,
+    "source_artifacts.jsonl": 1,
+    "source_assertions.jsonl": 242,
+    "sources.jsonl": 1,
+    "text_versions.jsonl": 102,
+    "translations.jsonl": 0,
+    "works.jsonl": 1
+  },
+  "qa_status": "NOT_RUN",
+  "schema_version": "1.0.0"
+}

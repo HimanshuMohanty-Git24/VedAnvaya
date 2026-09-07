@@ -1,0 +1,329 @@
+{
+  "$defs": {
+    "EventSignature": {
+      "additionalProperties": false,
+      "properties": {
+        "action_head": {
+          "title": "Action Head",
+          "type": "string"
+        },
+        "actor_entity_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Actor Entity Id"
+        },
+        "participants": {
+          "default": [],
+          "items": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "type": "array"
+          },
+          "title": "Participants",
+          "type": "array"
+        },
+        "patient_entity_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Patient Entity Id"
+        },
+        "qualifiers": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Qualifiers",
+          "type": "array"
+        }
+      },
+      "required": [
+        "action_head"
+      ],
+      "title": "EventSignature",
+      "type": "object"
+    },
+    "SemanticObjectKind": {
+      "description": "Occurrence-level object families; none is a canonical concept by itself.",
+      "enum": [
+        "CANONICAL_ENTITY_REF",
+        "SEMANTIC_ENTITY_REF",
+        "EVENT",
+        "REQUESTED_OUTCOME",
+        "RITUAL_EVENT",
+        "OFFERING_REF",
+        "SUBSTANCE_REF",
+        "NATURAL_PHENOMENON_REF",
+        "PLACE_REF",
+        "STATE_REF",
+        "QUALITY_REF",
+        "CONCEPT_REF",
+        "ACTION_REF",
+        "OPAQUE_REFERENT",
+        "OPAQUE_SPATIAL_REFERENT",
+        "ONTOLOGY_GAP_REF"
+      ],
+      "title": "SemanticObjectKind",
+      "type": "string"
+    },
+    "SemanticObjectSignature": {
+      "additionalProperties": false,
+      "description": "Identity-bearing structure; deliberately excludes the display label.",
+      "properties": {
+        "beneficiary_entity_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Beneficiary Entity Id"
+        },
+        "canonical_entity_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Canonical Entity Id"
+        },
+        "event": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EventSignature"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "normalized_head": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Normalized Head"
+        },
+        "object_kind": {
+          "$ref": "#/$defs/SemanticObjectKind"
+        },
+        "qualifiers": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Qualifiers",
+          "type": "array"
+        },
+        "target_entity_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Target Entity Id"
+        }
+      },
+      "required": [
+        "object_kind"
+      ],
+      "title": "SemanticObjectSignature",
+      "type": "object"
+    },
+    "SemanticPredicate": {
+      "description": "Every relation name an extraction may emit, and the ones it may not.\n\nThe forbidden members exist so that a proposal naming one is rejected as a *policy*\ndecision with a recorded reason, instead of failing schema validation as an unknown\nstring. The difference matters when reading a rejection report.",
+      "enum": [
+        "EXPRESSES",
+        "DESCRIBES",
+        "PRAISES",
+        "INVOKES",
+        "REQUESTS",
+        "ASSOCIATED_WITH",
+        "INVOLVES_RITUAL",
+        "INVOLVES_OFFERING",
+        "INVOLVES_SUBSTANCE",
+        "REFERS_TO_PLACE",
+        "REFERS_TO_NATURAL_PHENOMENON",
+        "DESCRIBES_ACTION",
+        "HAS_THEME",
+        "CONTRASTS_WITH",
+        "SYMBOLIZES",
+        "REPRESENTS",
+        "IS_GOD_OF",
+        "MEANS",
+        "CAUSES"
+      ],
+      "title": "SemanticPredicate",
+      "type": "string"
+    },
+    "StructuredComparisonCategory": {
+      "description": "Evidence-aware model-model outcomes; never human-gold verdicts.",
+      "enum": [
+        "EXACT_CANONICAL_ENTITY",
+        "EXACT_NORMALIZED_OBJECT",
+        "COMPATIBLE_OBJECT",
+        "PARTIAL_OBJECT_OVERLAP",
+        "GRANULARITY_DIFFERENCE",
+        "PREDICATE_DIFFERENCE",
+        "OBJECT_TYPE_DIFFERENCE",
+        "CONFLICTING_OBJECT",
+        "UNRESOLVED",
+        "EXPERT_REQUIRED",
+        "LEFT_ONLY",
+        "RIGHT_ONLY",
+        "NO_CLAIM_AGREEMENT"
+      ],
+      "title": "StructuredComparisonCategory",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "category": {
+      "$ref": "#/$defs/StructuredComparisonCategory"
+    },
+    "comparison_policy_version": {
+      "default": "rigveda-semantic-object-comparison-v1",
+      "title": "Comparison Policy Version",
+      "type": "string"
+    },
+    "evidence_overlap": {
+      "default": false,
+      "title": "Evidence Overlap",
+      "type": "boolean"
+    },
+    "label_equality_signal": {
+      "default": false,
+      "title": "Label Equality Signal",
+      "type": "boolean"
+    },
+    "luna_assertion_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Luna Assertion Id"
+    },
+    "luna_object_signature": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/SemanticObjectSignature"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "luna_predicate": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/SemanticPredicate"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "mantra_id": {
+      "title": "Mantra Id",
+      "type": "string"
+    },
+    "provenance": {
+      "const": "MODEL_VS_MODEL_STRUCTURED_DIAGNOSTIC",
+      "default": "MODEL_VS_MODEL_STRUCTURED_DIAGNOSTIC",
+      "title": "Provenance",
+      "type": "string"
+    },
+    "reasoning": {
+      "minLength": 1,
+      "title": "Reasoning",
+      "type": "string"
+    },
+    "sol_assertion_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Sol Assertion Id"
+    },
+    "sol_object_signature": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/SemanticObjectSignature"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "sol_predicate": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/SemanticPredicate"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    }
+  },
+  "required": [
+    "mantra_id",
+    "category",
+    "reasoning"
+  ],
+  "title": "StructuredSemanticComparison",
+  "type": "object"
+}

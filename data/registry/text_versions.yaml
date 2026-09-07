@@ -228,3 +228,346 @@ text_versions:
   upstream_rights_notes: []
   transformation_provenance: Annotation-bearing layer maintained for morphological research
   notes: Carries lemma, morphosyntax and Grassmann references per token.
+- text_version_id: GRETIL.AVS.SAUNAKA.ACCENTED
+  artifact_id: GRETIL.AV.SAUNAKA.ACCENTED.HTML
+  source_version_key: avs_accented
+  human_title: Atharvaveda-Samhita, Saunaka recension (GRETIL/TITUS lineage, accented)
+  text_type: Transmitted Samhita transcription
+  text_form: SAMHITA
+  text_role: PRIMARY_TEXT
+  recension: 'Shaunaka, PROVED FROM THE ARTIFACT by two independent witnesses rather than the filename: the document
+    title states "Atharvaveda-Samhita, Saunaka recension", and all 11395 body locators are prefixed AVS_ with the
+    palatal sibilant, e.g. (AVS_1,1.1a), so the recension marker is per-verse in the data and not only in a header
+    that could belong to a swapped file'
+  underlying_edition: Gli inni dell' Atharvaveda (Saunaka), transliteration by Chatia Orlandi, Pisa 1991, collated
+    with R. Roth and W. D. Whitney, Atharva Veda Sanhita, Berlin 1856
+  electronic_lineage: &id001
+  - 'Printed editions: Orlandi, Pisa 1991 (in copyright); Roth and Whitney, Berlin 1856 (public domain)'
+  - 'Data entry: Vladimir Petr and Petr Vavrousek'
+  - 'TITUS redaction: Jost Gippert, 31 January 1997'
+  - 'Books 11-20 improved: Arlo Griffiths, Leiden 18 May 2000; Philipp Kubisch, Bonn 13 March 2007'
+  - 'Revision: Arlo Griffiths, August 2009'
+  - 'Re-host: GRETIL, legacy HTML, no site licence'
+  language: sa
+  script: Latin
+  transliteration_scheme: TITUS conventions
+  accent_support: Accented. The file self-titles as ACCENTED TEXT; accent marks follow the TITUS conventions
+  metrical_restoration: false
+  orthographic_normalization: null
+  normalized_rights: REFERENCE_ONLY
+  license_uri: null
+  verbatim_license: THIS GRETIL TEXT FILE IS FOR REFERENCE PURPOSES ONLY! COPYRIGHT AND TERMS OF USAGE AS FOR SOURCE
+    FILE.
+  upstream_rights_notes: &id002
+  - 'Artifact-level, self-declared, extracted programmatically from the snapshot preamble: "THIS GRETIL TEXT FILE
+    IS FOR REFERENCE PURPOSES ONLY! COPYRIGHT AND TERMS OF USAGE AS FOR SOURCE FILE." That is NOT a licence - it
+    is a disclaimer DEFERRING to the upstream source file.'
+  - 'Following that pointer as policy rule RIGHTS-9 requires, the upstream is the TITUS edition, which states verbatim:
+    "This text is part of the TITUS edition of Atharva-Veda-Samhita (Saunaka). Copyright TITUS Project, Frankfurt
+    a/M, 4.3.2015. No parts of this document may be republished in any form without prior permission by the copyright
+    holder." So the deferral resolves to an EXPRESS PROHIBITION on republication, not to the milder scholarly-use
+    terms on the TITUS site page.'
+  - 'Behind TITUS sits Gli inni dell'' Atharvaveda (Saunaka), transliteration by Chatia Orlandi, Pisa: Giardini,
+    1991 - a modern scholarly transliteration STILL IN COPYRIGHT - collated with the public-domain Roth and Whitney,
+    Berlin 1856. So the root of the chain is encumbered and one TITUS permission would NOT be sufficient on its
+    own.'
+  - 'GRETIL has NO site-level licence at all: the full 1033721-byte gretil.html contains zero occurrences of licence,
+    license, copyright, terms of use, Creative Commons or public domain. There is therefore no site statement to
+    weigh against the artifact statement; the artifact statement is the only one.'
+  source_specific_restrictions: NO REDISTRIBUTION AND NO DERIVED REDISTRIBUTION. The VedaGraph pipeline parses,
+    NFC-normalizes, re-keys and republishes as JSONL, which in copyright terms is BOTH modification and publication
+    - so the TITUS no-republication clause blocks the normal pipeline, not merely the raw redistribution step. Local
+    snapshots are permitted only as bounded private verification artifacts. The blocker is a written permission
+    request to the TITUS Project AND to the Orlandi/Giardini rights holders, or a Saunaka text derived solely from
+    Roth/Whitney 1856 with no Orlandi collation.
+  transformation_provenance: 'GRETIL legacy HTML re-host of the TITUS redaction. Coverage computed from the snapshot
+    by Agent D, not quoted from a reference work: 20 kandas, 731 suktas, 5839 distinct mantras, 11395 padas.'
+  notes: 'Registered by Agent E 2026-09-07 under the ownership assignment from Agent A, endorsed by the coordinator.
+    Id read from data/canonical/atharvaveda_pilot_v1/text_versions.jsonl, not invented. NOTE THE DELIBERATE MISMATCH
+    BETWEEN ROLE AND RIGHTS, because it is the whole reason this record matters: text_role is PRIMARY_TEXT while
+    normalized_rights is REFERENCE_ONLY. Those are not in conflict - they answer different questions. The role says
+    WHAT THIS LAYER IS structurally; the rights say WHAT MAY BE DONE WITH IT. This is the best Saunaka text available
+    and it is still not redistributable. A build may legitimately read it, key it and compare against it; it may
+    NOT publish it or anything derived from it. Any pipeline treating role as a proxy for permission would ship
+    an infringement here.'
+- text_version_id: GRETIL.AVS.SAUNAKA.UNACCENTED
+  artifact_id: GRETIL.AV.SAUNAKA.UNACCENTED.HTML
+  source_version_key: avs_unaccented
+  human_title: Atharvaveda-Samhita, Saunaka recension (GRETIL/TITUS lineage, unaccented)
+  text_type: Transmitted Samhita transcription
+  text_form: SAMHITA
+  text_role: PARALLEL_TEXT
+  recension: 'Shaunaka, PROVED FROM THE ARTIFACT by two independent witnesses rather than the filename: the document
+    title states "Atharvaveda-Samhita, Saunaka recension", and all 11395 body locators are prefixed AVS_ with the
+    palatal sibilant, e.g. (AVS_1,1.1a), so the recension marker is per-verse in the data and not only in a header
+    that could belong to a swapped file'
+  underlying_edition: Gli inni dell' Atharvaveda (Saunaka), transliteration by Chatia Orlandi, Pisa 1991, collated
+    with R. Roth and W. D. Whitney, Atharva Veda Sanhita, Berlin 1856
+  electronic_lineage: *id001
+  language: sa
+  script: Latin
+  transliteration_scheme: TITUS conventions
+  accent_support: Unaccented. The file self-titles as UNACCENTED TEXT
+  metrical_restoration: false
+  orthographic_normalization: null
+  normalized_rights: REFERENCE_ONLY
+  license_uri: null
+  verbatim_license: THIS GRETIL TEXT FILE IS FOR REFERENCE PURPOSES ONLY! COPYRIGHT AND TERMS OF USAGE AS FOR SOURCE
+    FILE.
+  upstream_rights_notes: *id002
+  source_specific_restrictions: NO REDISTRIBUTION AND NO DERIVED REDISTRIBUTION. The VedaGraph pipeline parses,
+    NFC-normalizes, re-keys and republishes as JSONL, which in copyright terms is BOTH modification and publication
+    - so the TITUS no-republication clause blocks the normal pipeline, not merely the raw redistribution step. Local
+    snapshots are permitted only as bounded private verification artifacts. The blocker is a written permission
+    request to the TITUS Project AND to the Orlandi/Giardini rights holders, or a Saunaka text derived solely from
+    Roth/Whitney 1856 with no Orlandi collation.
+  transformation_provenance: 'GRETIL legacy HTML re-host of the TITUS redaction. Coverage computed from the snapshot
+    by Agent D, not quoted from a reference work: 20 kandas, 731 suktas, 5839 distinct mantras, 11395 padas.'
+  notes: 'Registered by Agent E 2026-09-07 under the ownership assignment from Agent A, endorsed by the coordinator.
+    Id read from data/canonical/atharvaveda_pilot_v1/text_versions.jsonl, not invented. NOTE THE DELIBERATE MISMATCH
+    BETWEEN ROLE AND RIGHTS, because it is the whole reason this record matters: text_role is PARALLEL_TEXT while
+    normalized_rights is REFERENCE_ONLY. Those are not in conflict - they answer different questions. The role says
+    WHAT THIS LAYER IS structurally; the rights say WHAT MAY BE DONE WITH IT. This is the best Saunaka text available
+    and it is still not redistributable. A build may legitimately read it, key it and compare against it; it may
+    NOT publish it or anything derived from it. Any pipeline treating role as a proxy for permission would ship
+    an infringement here.'
+- text_version_id: VEDAGRAPH.AVS.SEARCH_NORMALIZED
+  artifact_id: GRETIL.AV.SAUNAKA.ACCENTED.HTML
+  source_version_key: avs_search_normalized
+  human_title: Atharvaveda-Samhita, Saunaka (VedaGraph search-normalized derivative)
+  text_type: Search-normalized derivative generated by VedaGraph
+  text_form: SAMHITA
+  text_role: SEARCH_DERIVATIVE
+  recension: Shaunaka
+  underlying_edition: Gli inni dell' Atharvaveda (Saunaka), transliteration by Chatia Orlandi, Pisa 1991, collated
+    with R. Roth and W. D. Whitney, Atharva Veda Sanhita, Berlin 1856
+  electronic_lineage:
+  - 'Printed editions: Orlandi, Pisa 1991 (in copyright); Roth and Whitney, Berlin 1856 (public domain)'
+  - 'Data entry: Vladimir Petr and Petr Vavrousek'
+  - 'TITUS redaction: Jost Gippert, 31 January 1997'
+  - 'Books 11-20 improved: Arlo Griffiths, Leiden 18 May 2000; Philipp Kubisch, Bonn 13 March 2007'
+  - 'Revision: Arlo Griffiths, August 2009'
+  - 'Re-host: GRETIL, legacy HTML, no site licence'
+  - 'Search normalization: VedaGraph, derived from the accented artifact'
+  language: sa
+  script: Latin
+  transliteration_scheme: TITUS conventions, normalized for search
+  accent_support: Accents stripped for search normalization
+  metrical_restoration: false
+  orthographic_normalization: VedaGraph search normalization; accents and diacritic variants folded
+  normalized_rights: REFERENCE_ONLY
+  license_uri: null
+  verbatim_license: THIS GRETIL TEXT FILE IS FOR REFERENCE PURPOSES ONLY! COPYRIGHT AND TERMS OF USAGE AS FOR SOURCE
+    FILE.
+  upstream_rights_notes:
+  - 'Artifact-level, self-declared, extracted programmatically from the snapshot preamble: "THIS GRETIL TEXT FILE
+    IS FOR REFERENCE PURPOSES ONLY! COPYRIGHT AND TERMS OF USAGE AS FOR SOURCE FILE." That is NOT a licence - it
+    is a disclaimer DEFERRING to the upstream source file.'
+  - 'Following that pointer as policy rule RIGHTS-9 requires, the upstream is the TITUS edition, which states verbatim:
+    "This text is part of the TITUS edition of Atharva-Veda-Samhita (Saunaka). Copyright TITUS Project, Frankfurt
+    a/M, 4.3.2015. No parts of this document may be republished in any form without prior permission by the copyright
+    holder." So the deferral resolves to an EXPRESS PROHIBITION on republication, not to the milder scholarly-use
+    terms on the TITUS site page.'
+  - 'Behind TITUS sits Gli inni dell'' Atharvaveda (Saunaka), transliteration by Chatia Orlandi, Pisa: Giardini,
+    1991 - a modern scholarly transliteration STILL IN COPYRIGHT - collated with the public-domain Roth and Whitney,
+    Berlin 1856. So the root of the chain is encumbered and one TITUS permission would NOT be sufficient on its
+    own.'
+  - 'GRETIL has NO site-level licence at all: the full 1033721-byte gretil.html contains zero occurrences of licence,
+    license, copyright, terms of use, Creative Commons or public domain. There is therefore no site statement to
+    weigh against the artifact statement; the artifact statement is the only one.'
+  - 'A DERIVED LAYER CANNOT CARRY MORE RIGHTS THAN ITS SOURCE. This layer is generated by VedaGraph, so there is
+    a temptation to treat it as our own work and therefore freely licensable. That is wrong: it is a derivative
+    of a REFERENCE_ONLY artifact, and normalizing text for search does not launder the upstream restriction. Under
+    policy rule RIGHTS-9 the defect propagates downstream regardless of who performed the transformation.'
+  source_specific_restrictions: NO REDISTRIBUTION AND NO DERIVED REDISTRIBUTION. The VedaGraph pipeline parses,
+    NFC-normalizes, re-keys and republishes as JSONL, which in copyright terms is BOTH modification and publication
+    - so the TITUS no-republication clause blocks the normal pipeline, not merely the raw redistribution step. Local
+    snapshots are permitted only as bounded private verification artifacts. The blocker is a written permission
+    request to the TITUS Project AND to the Orlandi/Giardini rights holders, or a Saunaka text derived solely from
+    Roth/Whitney 1856 with no Orlandi collation.
+  transformation_provenance: 'Generated by VedaGraph from GRETIL.AV.SAUNAKA.ACCENTED.HTML. The VEDAGRAPH prefix
+    in this text_version_id names the TRANSFORMER, not a source: the artifact_id correctly points at the GRETIL
+    artifact, and there is no VEDAGRAPH Source record and must not be one - AuthorityTier has no member that could
+    truthfully describe this project.'
+  notes: 'Registered by Agent E 2026-09-07. Id read from the pilot output, not invented. THIS IS THE MOST RIGHTS-DANGEROUS
+    RECORD OF THE SEVEN and the reason it is worth registering explicitly rather than letting it resolve by default.
+    It is the only layer VedaGraph itself produces, its id begins with VEDAGRAPH, and every one of those facts invites
+    the conclusion that we own it. We do not. It inherits REFERENCE_ONLY from the artifact it was derived from.
+    Registering it is also what makes the inheritance CHECKABLE: because rights resolve through text_version_id
+    in src/vedagraph/build.py, an unregistered derivative would have had no resolvable rights at all, which is how
+    a restriction gets silently dropped at exactly the layer where a human would least expect one.'
+- text_version_id: GRETIL.SV.KAUTHUMA
+  artifact_id: GRETIL.SV.KAUTHUMA.TEI.2020
+  source_version_key: sa_sAmavedasaMhitA
+  human_title: Samavedasamhita, Kauthuma (GRETIL TEI, Pandey lineage)
+  text_type: Transmitted Samhita transcription
+  text_form: SAMHITA
+  text_role: PRIMARY_TEXT
+  recension: Kauthuma; the file body states verbatim "kauthuma sakha"
+  underlying_edition: UNIDENTIFIED. The TEI sourceDesc contains an EMPTY bibl element, so the underlying printed
+    Kauthuma edition is named nowhere in the file. This is an edition-identity defect INDEPENDENT of the rights
+    defect, and either alone disqualifies the artifact as canonical primary.
+  electronic_lineage:
+  - 'Data entry: Anshuman Pandey, updated 08 March 1998, complete edition'
+  - 'Initial normalization to legacy GRETIL formats: Reinhold Gruenendahl'
+  - 'TEI normalization by mass conversion: Maximilian Mehner, 2020-07-31'
+  - 'Parent artifact: GRETIL.SV.KAUTHUMA.LEGACY.1998.HTML (samavedu.htm), which self-declares REFERENCE PURPOSES
+    ONLY'
+  language: sa
+  script: Latin
+  transliteration_scheme: IAST with GRETIL conventions; NOT Devanagari
+  accent_support: Unaccented
+  metrical_restoration: false
+  orthographic_normalization: GRETIL normalization; apparent errors silently corrected per the header
+  normalized_rights: PERMISSION_REQUIRED
+  license_uri: null
+  verbatim_license: Copyright (C) 1998 Anshuman Pandey. This document may only be used for academic and scholarly
+    purposes. No modification of this document is in any way authorized. Any publication or other use of this document
+    requires written consent of the editor.
+  upstream_rights_notes:
+  - 'The TEI publicationStmt/availability of this file ASSERTS: "Distributed under a Creative Commons Attribution-NonCommercial-ShareAlike
+    4.0 International License." That assertion is NOT relied upon.'
+  - 'The SAME fileDesc carries notesStmt/note[@type=legacyheader] asserting: "Copyright (C) 1998 Anshuman Pandey.
+    This document may only be used for academic and scholarly purposes. No modification of this document is in any
+    way authorized. Any publication or other use of this document requires written consent of the editor." These
+    are irreconcilable - CC BY-NC-SA permits adaptation under share-alike while the contributor statement forbids
+    modification outright. Under policy rule RIGHTS-3 the more restrictive statement controls.'
+  - 'The parent artifact GRETIL.SV.KAUTHUMA.LEGACY.1998.HTML, which this file''s own notesStmt names as its upstream,
+    self-declares: "THIS GRETIL TEXT FILE IS FOR REFERENCE PURPOSES ONLY! COPYRIGHT AND TERMS OF USAGE AS FOR SOURCE
+    FILE." Reading the parent settles the contradictory child.'
+  - 'The same Pandey root was confirmed at THREE independent re-publishers: GRETIL, TITUS (svk001.htm carries "Copyright
+    (C) 1998, 1999 Anshuman Pandey" directly) and The Sanskrit Library (whose svk.html record names Pandey 1999
+    in its own source chain). Three re-publishers agreeing is the same defect three times, not corroboration.'
+  source_specific_restrictions: 'NO REDISTRIBUTION AND NO DERIVED REDISTRIBUTION. The prohibition is on MODIFICATION
+    specifically, which is stricter than a redistribution bar and blocks the pipeline itself: parsing, NFC normalization,
+    structural re-keying and JSONL republication are all modification and publication. Resolution requires written
+    consent from Anshuman Pandey, or a Kauthuma text from a genuinely independent data entry, or fresh transcription
+    from an identified public-domain printed edition.'
+  transformation_provenance: 'GRETIL TEI mass conversion dated 2020-07-31 from samavedu.htm. Coverage measured by
+    Agent B: 4 arcikas, 1868 distinct structural verse keys, 3714 verse lines. The file''s own running numbering
+    claims 1875 verses, so the structural parse is 7 short - an open reconciliation gap. CONTAINS ARCIKA/VERSE TEXT
+    ONLY, WITH ZERO GANA CONTENT (verified counts: gana 0, gramageya 0, aranyageya 0, uhya 0).'
+  notes: 'Registered by Agent E 2026-09-07. Id read from data/canonical/samaveda_pilot_v1/text_versions.jsonl, not
+    invented. text_role is PRIMARY_TEXT because that is the layer''s structural function in the pilot, while normalized_rights
+    is PERMISSION_REQUIRED - the same deliberate role/rights split as the Atharvaveda records. Registering the restrictive
+    value is the deliverable here: previously this id resolved against nothing, so a build could attach no rights
+    to 102 emitted rows over an artifact that forbids modification. SUPERSEDED FOR SELECTION PURPOSES: Agent E''s
+    adjudication selects WIKISOURCE_SA.SV.KAU.SAMHITA.DEVANAGARI (CC_BY_SA) as the Samaveda primary Sanskrit source
+    instead, because Agent B proved its independence from the Pandey lineage textually - GRETIL misplaces a pada
+    between running verses 1 and 2 while Wikisource has both whole, and a text cannot inherit from a source it does
+    not share an error with. That source also carries the GANA, which this one lacks entirely. This record exists
+    so the pilot''s existing rows have resolvable rights, NOT to endorse this layer as the selected primary.'
+- text_version_id: WIKISOURCE_SA.YV.VSM.UNACCENTED
+  artifact_id: WIKISOURCE_SA.YV.VSM.SAMHITA.DEVANAGARI
+  source_version_key: samhita_block_unaccented
+  human_title: Vajasaneyi-Samhita, Madhyandina (Sanskrit Wikisource, unaccented samhita block)
+  text_type: Community transcription of a printed samhita
+  text_form: SAMHITA
+  text_role: PARALLEL_TEXT
+  recension: Madhyandina, proved from the artifact itself, which titles itself srimad-vajasaneyi-madhyandina sukla-yajurveda-samhita
+  underlying_edition: Vajasaneyi-Madhyandina Sukla Yajurveda Samhita, ed. Vasudeva Sarma Panasikara, 2nd edition,
+    Nirnaya Sagara Press, Bombay, Saka 1850 = CE 1929, with Uvata's Mantrabhasya and Mahidhara's Vedadipa
+  electronic_lineage:
+  - 'Printed edition: Vasudeva Sarma Panasikara, Nirnaya Sagara Press, Bombay, 1929'
+  - 'Transcription: Sanskrit Wikisource contributors, collectively; per-page revision ids pinned'
+  - Edition identified from the sibling preface page, registered as artifact WIKISOURCE_SA.YV.VSM.PREFACE, sha256
+    cb13ec2ee19ba0279bfaee40077647336a78c34e3607f7aaad64d91a3e86e1bf
+  language: sa
+  script: Devanagari
+  transliteration_scheme: null
+  accent_support: Unaccented; accented readings are carried by WIKISOURCE_SA.YV.VSM.ACCENTED
+  metrical_restoration: false
+  orthographic_normalization: null
+  normalized_rights: CC_BY_SA
+  license_uri: https://creativecommons.org/licenses/by-sa/4.0/
+  verbatim_license: Creative Commons Attribution-Share Alike 4.0
+  upstream_rights_notes: &id003
+  - 'Site-wide licence retrieved AUTHORITATIVELY from the MediaWiki API endpoint action=query&meta=siteinfo&siprop=rightsinfo
+    on 2026-09-07, which returned exactly: url "https://creativecommons.org/licenses/by-sa/4.0/deed.sa", text "Creative
+    Commons Attribution-Share Alike 4.0". Taken from the API rather than a scraped footer because it is the machine-readable
+    statement the project itself publishes.'
+  - 'Relying on a SITE-level licence is justified here and is NOT a relaxation of policy rule RIGHTS-1: the underlying
+    Vedic mantra text is ancient and not copyrightable, so the community transcription is the ONLY copyrightable
+    contribution, and a Wikimedia project licenses contributions site-wide by construction. Contrast the English
+    Wikisource Griffith and Whitney pages, where the copyrightable work is a modern translation that is public domain
+    by age and the site CC BY-SA covers only an incidental transcription layer - there the ARTIFACT-level PD banner
+    is relied on and the site licence deliberately is not.'
+  - The underlying printed edition - Vasudeva Sarma Panasikara, 2nd edn, Nirnaya Sagara Press, Bombay, Saka 1850
+    = CE 1929, with Uvata's Mantrabhasya and Mahidhara's Vedadipa - is PUBLIC DOMAIN by age, identified from the
+    sibling preface page now registered as artifact WIKISOURCE_SA.YV.VSM.PREFACE. So no link in this chain is encumbered,
+    which is what distinguishes Sukla Yajurveda from Samaveda (Pandey, forbids modification) and Atharvaveda (Orlandi
+    1991, in copyright).
+  source_specific_restrictions: 'SHARE-ALIKE IS A LIVE OBLIGATION, not a formality: any distributed VedaGraph artifact
+    embedding this layer must itself be CC BY-SA compatible. This is a GRANT with a condition rather than a prohibition
+    - materially better than the alternatives for this Veda, where TITUS is PERMISSION_REQUIRED and The Sanskrit
+    Library''s bytes are unreachable.'
+  transformation_provenance: Retrieved via the MediaWiki API with rvprop=content|ids|timestamp, so every page carries
+    its own revision id and timestamp. 40 of 40 adhyayas with no gaps and 1975 of 1975 mantras, COMPUTED from the
+    records by Agent C rather than quoted. Snapshots are content-addressed under data/raw/wikisource_sa/2026-09-07/
+    with filename == sha256; all 44 re-verified identical after re-fetch under the registered source id.
+  notes: 'Registered by Agent E 2026-09-07. Id read from data/canonical/yajurveda_pilot_v1/text_versions.jsonl.
+    Agent C originally proposed WIKISOURCE_SA.YV.VSM.SAMHITA, which differed from the ARTIFACT id WIKISOURCE_SA.YV.VSM.SAMHITA.DEVANAGARI
+    by a single dotted segment; Agent E required the rename to .UNACCENTED so the id names the DISCRIMINATING PROPERTY
+    rather than colliding with an id of a different record type, and Agent C adopted it. Two record types whose
+    ids differ by one segment is the same near-collision class that produced the wrong-scope checksum defect on
+    this very artifact. REMAINING LIMITATION, and it is now the only one on this Veda''s text: authority tier is
+    COMMUNITY_TRANSCRIPTION, so fidelity to the named 1929 print is UNVERIFIED. Rights are solved and the edition
+    is named; FIDELITY is the open question.'
+- text_version_id: WIKISOURCE_SA.YV.VSM.ACCENTED
+  artifact_id: WIKISOURCE_SA.YV.VSM.SAMHITA.DEVANAGARI
+  source_version_key: accented_mula_block
+  human_title: Vajasaneyi-Samhita, Madhyandina (accented mula, isolated from the mula-bhasya page layout)
+  text_type: Accented mula readings isolated from a mula-bhasya printed layout
+  text_form: SAMHITA
+  text_role: EXTRACTED_FROM_CONTAINER
+  recension: Madhyandina
+  underlying_edition: Vajasaneyi-Madhyandina Sukla Yajurveda Samhita, ed. Vasudeva Sarma Panasikara, 2nd edition,
+    Nirnaya Sagara Press, Bombay, Saka 1850 = CE 1929, with Uvata's Mantrabhasya and Mahidhara's Vedadipa
+  electronic_lineage:
+  - 'Printed edition: Vasudeva Sarma Panasikara, Nirnaya Sagara Press, Bombay, 1929'
+  - 'Transcription: Sanskrit Wikisource contributors, collectively'
+  - 'Isolation of the mula from the surrounding Uvata-Mahidhara bhasya: VedaGraph, by Agent C''s Yajurveda adapter'
+  language: sa
+  script: Devanagari
+  transliteration_scheme: null
+  accent_support: 'ACCENTED. Measured across the retrieved corpus by Agent E: 17206 udatta (U+0951) and 24331 anudatta
+    (U+0952) combining marks, plus Devanagari Extended Vedic marks U+A8E1-U+A8E5'
+  metrical_restoration: false
+  orthographic_normalization: null
+  normalized_rights: CC_BY_SA
+  license_uri: https://creativecommons.org/licenses/by-sa/4.0/
+  verbatim_license: Creative Commons Attribution-Share Alike 4.0
+  upstream_rights_notes: *id003
+  source_specific_restrictions: 'SHARE-ALIKE IS A LIVE OBLIGATION, not a formality: any distributed VedaGraph artifact
+    embedding this layer must itself be CC BY-SA compatible. This is a GRANT with a condition rather than a prohibition
+    - materially better than the alternatives for this Veda, where TITUS is PERMISSION_REQUIRED and The Sanskrit
+    Library''s bytes are unreachable.'
+  transformation_provenance: 'DERIVED BY ISOLATION from a mula-bhasya page layout, and the IMPLEMENTATION is weaker
+    than the source structure. Agent C established that the 1929 edition uses the standard layout - ordinal header,
+    then the full accented mula closed by its own number, then the bhasya - and measured 271 ordinal-header lines
+    against 293 accented records across adhyayas 1, 3, 16, 19, 31 and 40. So the SOURCE does declare a mula boundary.
+    However the adapter does NOT read that boundary: it infers the start of each mula from ACCENT PRESENCE, which
+    is correct in 37 of 40 adhyayas and wrong in 3. The unit boundaries of this layer as PRODUCED are therefore
+    inferred, not read. Two further editorial departures in this layer are emitted by Agent C as SourceAssertion
+    records with status NEEDS_REVIEW: LEADING_INVOCATION_REMOVED at VSM 1.1 (removed "harih om") and SECOND_READING_DROPPED
+    at VSM 16.37, where the page prints the mantra twice with the readings srutyaya and satyaya and the first was
+    kept - a VARIANT-SELECTION judgement, not a mechanical deduplication.'
+  notes: 'Registered by Agent E 2026-09-07 with text_role EXTRACTED_FROM_CONTAINER, NOT PRIMARY_TEXT. Agent A landed
+    that enum member for this case at Agent E''s request and the coordinator directed its use here. AGENT C''s EVIDENCE
+    IS ACCEPTED AND IT CORRECTED MY PREMISE. I flagged this layer on Agent C''s earlier description of it as "mantra
+    quotations inside the commentary block", which implied fragments lifted out of running prose. Agent C tested
+    rather than defended and showed the mula is printed in its own right with its own number under an ordinal header
+    - a DECLARED structural level. That is a real correction and it is recorded in transformation_provenance above.
+    THE ROLE NEVERTHELESS STANDS AS EXTRACTED_FROM_CONTAINER, because the role must describe the layer AS PRODUCED,
+    not the structure the source could have supported. As produced, boundaries are inferred from accent presence
+    and are wrong in 3 of 40 adhyayas, and the layer additionally embeds two acknowledged editorial judgements including
+    a variant selection between two printed readings. A layer that silently picks one of two attested readings is
+    not a transcription of a declared boundary. EXPLICIT UPGRADE PATH, so this is a reviewable decision and not
+    a permanent verdict: if the adapter is reimplemented to read the ordinal headers that Agent C demonstrated exist,
+    and the two NEEDS_REVIEW assertions are resolved, then PRIMARY_TEXT becomes correct and Agent E will amend this
+    record on request. THE GENERAL RULE THIS PAIR OF RECORDS DEMONSTRATES: a layer''s LICENCE and its permitted
+    ROLE are INDEPENDENT. These are the SAME bytes, from the SAME artifact, under the SAME CC BY-SA licence as WIKISOURCE_SA.YV.VSM.UNACCENTED
+    - identical rights, different role - because the difference between them is not legal but epistemic: one is
+    transcribed, the other is inferred. Getting the rights right does not make a layer primary. This is the text-layer
+    analogue of the per-Veda-per-ROLE finding in docs/FOUR_VEDA_RIGHTS_MATRIX.md: clarity is never one verdict per
+    object.'

@@ -1,0 +1,188 @@
+{
+  "classification_counts": {
+    "OBJECT_GRANULARITY": 3,
+    "PARTIAL": 1,
+    "PREDICATE_DIFFERENCE": 4
+  },
+  "cross_group_pairs": 6,
+  "equality_forced": false,
+  "exact_pairs": 3,
+  "manifest_version": "rigveda-semantic-claude-opus5-v3.2-448-parallel-diagnostic-v1",
+  "near_pairs": 5,
+  "pairs": [
+    {
+      "assertion_counts": [
+        7,
+        8
+      ],
+      "citations": [
+        "RV 5.42.18",
+        "RV 5.43.17"
+      ],
+      "classification": "OBJECT_GRANULARITY",
+      "groups": [
+        "A",
+        "B"
+      ],
+      "kind": "EXACT",
+      "pair": [
+        "VG:RV:SAK:M05:S042:V018",
+        "VG:RV:SAK:M05:S043:V017"
+      ],
+      "same_group": false
+    },
+    {
+      "assertion_counts": [
+        5,
+        5
+      ],
+      "citations": [
+        "RV 3.6.11",
+        "RV 3.23.5"
+      ],
+      "classification": "PARTIAL",
+      "groups": [
+        "C",
+        "C"
+      ],
+      "kind": "EXACT",
+      "pair": [
+        "VG:RV:SAK:M03:S006:V011",
+        "VG:RV:SAK:M03:S023:V005"
+      ],
+      "same_group": true
+    },
+    {
+      "assertion_counts": [
+        4,
+        4
+      ],
+      "citations": [
+        "RV 8.32.29",
+        "RV 8.93.24"
+      ],
+      "classification": "OBJECT_GRANULARITY",
+      "groups": [
+        "D",
+        "B"
+      ],
+      "kind": "EXACT",
+      "pair": [
+        "VG:RV:SAK:M08:S032:V029",
+        "VG:RV:SAK:M08:S093:V024"
+      ],
+      "same_group": false
+    },
+    {
+      "assertion_counts": [
+        4,
+        3
+      ],
+      "citations": [
+        "RV 9.34.2",
+        "RV 9.65.20"
+      ],
+      "classification": "PREDICATE_DIFFERENCE",
+      "groups": [
+        "A",
+        "A"
+      ],
+      "kind": "NEAR",
+      "pair": [
+        "VG:RV:SAK:M09:S034:V002",
+        "VG:RV:SAK:M09:S065:V020"
+      ],
+      "same_group": true
+    },
+    {
+      "assertion_counts": [
+        11,
+        9
+      ],
+      "citations": [
+        "RV 8.35.16",
+        "RV 8.35.18"
+      ],
+      "classification": "PREDICATE_DIFFERENCE",
+      "groups": [
+        "F",
+        "A"
+      ],
+      "kind": "NEAR",
+      "pair": [
+        "VG:RV:SAK:M08:S035:V016",
+        "VG:RV:SAK:M08:S035:V018"
+      ],
+      "same_group": false
+    },
+    {
+      "assertion_counts": [
+        3,
+        5
+      ],
+      "citations": [
+        "RV 9.32.2",
+        "RV 9.38.2"
+      ],
+      "classification": "PREDICATE_DIFFERENCE",
+      "groups": [
+        "F",
+        "B"
+      ],
+      "kind": "NEAR",
+      "pair": [
+        "VG:RV:SAK:M09:S032:V002",
+        "VG:RV:SAK:M09:S038:V002"
+      ],
+      "same_group": false
+    },
+    {
+      "assertion_counts": [
+        5,
+        5
+      ],
+      "citations": [
+        "RV 1.23.20",
+        "RV 10.9.6"
+      ],
+      "classification": "PREDICATE_DIFFERENCE",
+      "groups": [
+        "F",
+        "A"
+      ],
+      "kind": "NEAR",
+      "pair": [
+        "VG:RV:SAK:M01:S023:V020",
+        "VG:RV:SAK:M10:S009:V006"
+      ],
+      "same_group": false
+    },
+    {
+      "assertion_counts": [
+        6,
+        7
+      ],
+      "citations": [
+        "RV 1.118.3",
+        "RV 3.58.3"
+      ],
+      "classification": "OBJECT_GRANULARITY",
+      "groups": [
+        "B",
+        "D"
+      ],
+      "kind": "NEAR",
+      "pair": [
+        "VG:RV:SAK:M01:S118:V003",
+        "VG:RV:SAK:M03:S058:V003"
+      ],
+      "same_group": false
+    }
+  ],
+  "pairs_evaluated": 8,
+  "parallel_similarity_is_diagnostic_not_truth": true,
+  "ran_after_seal": true,
+  "run_id": "vedagraph-rigveda-semantic-claude-opus5-v3.2-448-new-v1",
+  "seal_sha256": "cd45b1752cae62dd7d364d571235aa0db3c58ace8be829369dc9c013274465ec",
+  "statistical_power": "LOW: the 448 selection was not drawn to maximise parallel coverage, so only a handful of parallel pairs have both members inside it."
+}

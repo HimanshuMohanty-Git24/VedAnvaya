@@ -60,6 +60,40 @@ def vsm_mantra_identity(adhyaya: int, mantra: int) -> tuple[str, str, UUID]:
     return key, urn, uuid_for_urn(urn)
 
 
+def vsm_adhyaya_key(adhyaya: int) -> str:
+    _positive(adhyaya)
+    return f"VG:YV:VSM:A{adhyaya:02d}"
+
+
+def vsm_adhyaya_identity(adhyaya: int) -> tuple[str, str, UUID]:
+    """Identity for one Vajasaneyi Adhyaya, the work's only structural container."""
+    key = vsm_adhyaya_key(adhyaya)
+    urn = f"urn:vedagraph:section:yajurveda:vajasaneyi-madhyandina:adhyaya:{adhyaya}"
+    return key, urn, uuid_for_urn(urn)
+
+
+def avs_kanda_key(kanda: int) -> str:
+    _positive(kanda)
+    return f"VG:AV:SAU:K{kanda:02d}"
+
+
+def avs_sukta_key(kanda: int, sukta: int) -> str:
+    _positive(kanda, sukta)
+    return f"VG:AV:SAU:K{kanda:02d}:S{sukta:03d}"
+
+
+def avs_kanda_identity(kanda: int) -> tuple[str, str, UUID]:
+    key = avs_kanda_key(kanda)
+    urn = f"urn:vedagraph:section:atharvaveda:shaunaka:kanda:{kanda}"
+    return key, urn, uuid_for_urn(urn)
+
+
+def avs_sukta_identity(kanda: int, sukta: int) -> tuple[str, str, UUID]:
+    key = avs_sukta_key(kanda, sukta)
+    urn = f"urn:vedagraph:hymn:atharvaveda:shaunaka:kanda:{kanda}:sukta:{sukta}"
+    return key, urn, uuid_for_urn(urn)
+
+
 def avs_mantra_identity(kanda: int, sukta: int, mantra: int) -> tuple[str, str, UUID]:
     _positive(kanda, sukta, mantra)
     key = f"VG:AV:SAU:K{kanda:02d}:S{sukta:03d}:V{mantra:03d}"
@@ -67,9 +101,108 @@ def avs_mantra_identity(kanda: int, sukta: int, mantra: int) -> tuple[str, str, 
     return key, urn, uuid_for_urn(urn)
 
 
+# Samaveda Kauthuma structural levels above the verse, outermost first. The
+# selected GRETIL artifact declares this reference system in its own body:
+#   arcika | prapathaka | ardha | dasati | verse | line
+# ``line`` is a sub-verse pada label and is deliberately NOT an identity level.
+SV_CONTAINER_LEVELS: tuple[str, ...] = ("arcika", "prapathaka", "ardha", "dasati")
+
+
+def sv_mantra_identity(
+    arcika: int, prapathaka: int, ardha: int, dasati: int, verse: int
+) -> tuple[str, str, UUID]:
+    """CANDIDATE identity for one Samaveda Kauthuma verse. NOT FROZEN.
+
+    ``data/registry/works.yaml`` deliberately keeps ``key_pattern: null`` and
+    ``identity_status: RESEARCH_REQUIRED`` for this work. The single artifact that
+    evidences this structure was adjudicated unusable on both rights and edition-identity
+    grounds, and every known digital Kauthuma text descends from the same encumbered
+    lineage, so there is no independent witness against which to confirm a key. This
+    function exists so pilots are coherent and so freezing later is a purely additive
+    change. Nothing may treat its output as canonical Samaveda identity.
+
+    Samaveda is the one work whose hierarchy depth is NOT uniform. The selected
+    edition encodes an absent level as a literal ``0``: the Aranya arcika has no
+    prapathaka and no ardha, and the Mahanamnya arcika additionally has no dasati.
+    ``0`` is therefore a legitimate value here and :func:`_positive` must not be
+    applied to it -- doing so would reject 65 real verses. ``arcika`` and ``verse``
+    are still required to be positive.
+
+    The 4th slot is deliberately not given a fixed cardinality: in the Purvarcika it
+    is a true decad numbered 1-10 across the ardha, while in the Uttararcika it
+    resets inside each ardha and holds only two or three verses. Same slot, different
+    unit; the count is never assumed.
+
+    The edition's own running verse number (1..1875) is defective -- five values
+    absent, one duplicated -- and is recorded as a non-canonical ``Citation``, never
+    as identity. See docs/FOUR_VEDA_STRUCTURAL_MODEL.md.
+    """
+    _positive(arcika, verse)
+    _non_negative(prapathaka, ardha, dasati)
+    key = f"VG:SV:KAU:A{arcika}:P{prapathaka:02d}:R{ardha}:D{dasati:02d}:V{verse:02d}"
+    urn = (
+        f"urn:vedagraph:mantra:samaveda:kauthuma:arcika:{arcika}"
+        f":prapathaka:{prapathaka}:ardha:{ardha}:dasati:{dasati}:verse:{verse}"
+    )
+    return key, urn, uuid_for_urn(urn)
+
+
+def sv_container_identity(
+    arcika: int,
+    prapathaka: int | None = None,
+    ardha: int | None = None,
+    dasati: int | None = None,
+) -> tuple[str, str, UUID]:
+    """CANDIDATE identity for one Samaveda container at variable depth. NOT FROZEN.
+
+    Carries the same caveat as :func:`sv_mantra_identity`: the Samaveda key is not
+    declared in the work registry and this output is not canonical.
+
+    ``None`` means "this level is not part of this container's address" and truncates
+    the key; ``0`` means "the source encodes this level as absent in this arcika" and
+    is retained in the key so the address stays positionally parseable. The two are
+    different facts and are not conflated.
+    """
+    _positive(arcika)
+    supplied = [arcika, prapathaka, ardha, dasati]
+    depth = 1
+    for index in range(1, 4):
+        if supplied[index] is None:
+            if any(value is not None for value in supplied[index + 1 :]):
+                raise ValueError(
+                    "Samaveda container levels must be supplied outermost-first "
+                    "without gaps; use 0 for a level the source marks absent"
+                )
+            break
+        depth = index + 1
+    _non_negative(*[value for value in supplied[1:depth] if value is not None])
+    key_parts = ["VG:SV:KAU", f"A{arcika}"]
+    urn_parts = ["urn:vedagraph:section:samaveda:kauthuma", f"arcika:{arcika}"]
+    formats = ((1, "P{:02d}"), (2, "R{}"), (3, "D{:02d}"))
+    for index, template in formats:
+        if index >= depth:
+            break
+        value = supplied[index]
+        key_parts.append(template.format(value))
+        urn_parts.append(f"{SV_CONTAINER_LEVELS[index]}:{value}")
+    key = ":".join(key_parts)
+    urn = ":".join(urn_parts)
+    return key, urn, uuid_for_urn(urn)
+
+
 def _positive(*values: int) -> None:
     if any(value < 1 for value in values):
         raise ValueError("hierarchy values must be positive integers")
+
+
+def _non_negative(*values: int) -> None:
+    """Allow ``0`` for a hierarchy level the selected edition marks as absent.
+
+    Only works whose declared reference system encodes absence as ``0`` may use this;
+    Rigveda, Vajasaneyi and Atharvaveda all keep :func:`_positive`.
+    """
+    if any(value < 0 for value in values):
+        raise ValueError("hierarchy values must not be negative")
 
 
 def entity_identity(entity_type: str, slug: str) -> tuple[str, str, UUID]:

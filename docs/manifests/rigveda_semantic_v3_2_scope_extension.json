@@ -1,0 +1,21 @@
+{
+  "actual_run_size": 448,
+  "also_applies_to_abandoned_attempt": {
+    "note": "the interrupted Luna attempt pinned the same prompt at the same 448 size and never recorded this deviation",
+    "run_id": "vedagraph-rigveda-semantic-user-selected-luna-v3.2-448-new-v1"
+  },
+  "authorised_by": "explicit operator instruction to execute the 448-passage V3.2 candidate pilot",
+  "consequence": "Any future reader comparing the prompt's declared scope with this run's size will find this record rather than a silent contradiction. The prompt remains NOT approved for the full 10,552-mantra corpus.",
+  "declared_execution_scope": "BOUNDED_60_STABILITY_ONLY",
+  "declared_execution_status": "NOT_APPROVED_FOR_508_OR_FULL_CORPUS",
+  "finding": "The frozen V3.2 prompt's YAML front matter declares a narrower execution scope than this run uses.",
+  "full_corpus_10552_run_authorised": false,
+  "prompt_modified": false,
+  "prompt_path": "prompts/semantic_extraction_v3.2.md",
+  "prompt_sha256": "e4fdcd5d519d47e94a4c41b57180c81e94cb5034f40fd876dcecd4a8e6da73a1",
+  "prompt_sha256_unchanged": true,
+  "rationale": "Editing the front matter would change the prompt bytes and therefore prompt_sha256, breaking the one thing the pilot exists to test: that the frozen V3.2 extraction policy is reused byte-identically. The deviation is recorded here instead of being hidden by a rewrite.",
+  "record_version": "rigveda-semantic-v3.2-scope-extension-record-v1",
+  "resolution": "RECORDED_SCOPE_EXTENSION_PROMPT_BYTES_UNCHANGED",
+  "scope_extension_covers_full_corpus": false
+}

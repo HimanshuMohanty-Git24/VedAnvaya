@@ -1,0 +1,917 @@
+config_version: rigveda-semantic-v3.2-user-selected-luna-448-new-v1
+selection_policy_version: rigveda-semantic-user-selected-luna-448-new-selection-v1
+selection_policy: SET_DIFFERENCE_ONLY
+source_508_selection_path: data/builds/rigveda_semantic_pilot_v1.yaml
+source_508_selection_identity: rigveda-semantic-pilot-v1
+source_508_selection_file_sha256: 756acf52a5b5e5466305bad659b8989d301b06f1dce4d89ea5ea02398e26d6f9
+source_508_selection_identity_sha256: 656e807955d762aa926aba940ff6b838e7c4c719c37cdf5cc0ec718432fddea0
+excluded_60_selection_path: data/builds/rigveda_semantic_codex_luna_regression_v1.yaml
+excluded_60_selection_identity: rigveda-semantic-codex-luna-regression-v1
+excluded_60_selection_file_sha256: e36bfc458dd72cfc664525de089efade19edffc0c7a40b40c834aaa00ec1dae5
+excluded_60_selection_identity_sha256: 26d2f85aec91e621d43444931d40fc81e08a7c9d533bdce820c86945c398783c
+historical_total: 508
+excluded_total: 60
+overlap_total: 60
+result_total: 448
+result_unique: 448
+result_invalid_ids: 0
+result_frozen_overlap: 0
+result_ids_sha256: aa9538fbb18927ab4c3eeb10aee63b151af513930da8cfc7bf1b8783f1078079
+mantras:
+- passage_key: VG:RV:SAK:M01:S005:V003
+  citation: RV 1.5.3
+- passage_key: VG:RV:SAK:M01:S013:V011
+  citation: RV 1.13.11
+- passage_key: VG:RV:SAK:M01:S014:V004
+  citation: RV 1.14.4
+- passage_key: VG:RV:SAK:M01:S022:V006
+  citation: RV 1.22.6
+- passage_key: VG:RV:SAK:M01:S022:V015
+  citation: RV 1.22.15
+- passage_key: VG:RV:SAK:M01:S023:V020
+  citation: RV 1.23.20
+- passage_key: VG:RV:SAK:M01:S023:V021
+  citation: RV 1.23.21
+- passage_key: VG:RV:SAK:M01:S025:V016
+  citation: RV 1.25.16
+- passage_key: VG:RV:SAK:M01:S032:V011
+  citation: RV 1.32.11
+- passage_key: VG:RV:SAK:M01:S036:V018
+  citation: RV 1.36.18
+- passage_key: VG:RV:SAK:M01:S043:V006
+  citation: RV 1.43.6
+- passage_key: VG:RV:SAK:M01:S046:V004
+  citation: RV 1.46.4
+- passage_key: VG:RV:SAK:M01:S053:V001
+  citation: RV 1.53.1
+- passage_key: VG:RV:SAK:M01:S058:V001
+  citation: RV 1.58.1
+- passage_key: VG:RV:SAK:M01:S062:V008
+  citation: RV 1.62.8
+- passage_key: VG:RV:SAK:M01:S065:V006
+  citation: RV 1.65.6
+- passage_key: VG:RV:SAK:M01:S065:V007
+  citation: RV 1.65.7
+- passage_key: VG:RV:SAK:M01:S065:V008
+  citation: RV 1.65.8
+- passage_key: VG:RV:SAK:M01:S065:V009
+  citation: RV 1.65.9
+- passage_key: VG:RV:SAK:M01:S065:V010
+  citation: RV 1.65.10
+- passage_key: VG:RV:SAK:M01:S066:V006
+  citation: RV 1.66.6
+- passage_key: VG:RV:SAK:M01:S066:V007
+  citation: RV 1.66.7
+- passage_key: VG:RV:SAK:M01:S066:V008
+  citation: RV 1.66.8
+- passage_key: VG:RV:SAK:M01:S066:V009
+  citation: RV 1.66.9
+- passage_key: VG:RV:SAK:M01:S066:V010
+  citation: RV 1.66.10
+- passage_key: VG:RV:SAK:M01:S067:V006
+  citation: RV 1.67.6
+- passage_key: VG:RV:SAK:M01:S067:V007
+  citation: RV 1.67.7
+- passage_key: VG:RV:SAK:M01:S067:V008
+  citation: RV 1.67.8
+- passage_key: VG:RV:SAK:M01:S067:V009
+  citation: RV 1.67.9
+- passage_key: VG:RV:SAK:M01:S067:V010
+  citation: RV 1.67.10
+- passage_key: VG:RV:SAK:M01:S068:V006
+  citation: RV 1.68.6
+- passage_key: VG:RV:SAK:M01:S068:V007
+  citation: RV 1.68.7
+- passage_key: VG:RV:SAK:M01:S068:V008
+  citation: RV 1.68.8
+- passage_key: VG:RV:SAK:M01:S068:V010
+  citation: RV 1.68.10
+- passage_key: VG:RV:SAK:M01:S069:V006
+  citation: RV 1.69.6
+- passage_key: VG:RV:SAK:M01:S069:V007
+  citation: RV 1.69.7
+- passage_key: VG:RV:SAK:M01:S069:V008
+  citation: RV 1.69.8
+- passage_key: VG:RV:SAK:M01:S069:V009
+  citation: RV 1.69.9
+- passage_key: VG:RV:SAK:M01:S069:V010
+  citation: RV 1.69.10
+- passage_key: VG:RV:SAK:M01:S070:V007
+  citation: RV 1.70.7
+- passage_key: VG:RV:SAK:M01:S070:V008
+  citation: RV 1.70.8
+- passage_key: VG:RV:SAK:M01:S070:V009
+  citation: RV 1.70.9
+- passage_key: VG:RV:SAK:M01:S070:V010
+  citation: RV 1.70.10
+- passage_key: VG:RV:SAK:M01:S070:V011
+  citation: RV 1.70.11
+- passage_key: VG:RV:SAK:M01:S073:V001
+  citation: RV 1.73.1
+- passage_key: VG:RV:SAK:M01:S083:V001
+  citation: RV 1.83.1
+- passage_key: VG:RV:SAK:M01:S083:V005
+  citation: RV 1.83.5
+- passage_key: VG:RV:SAK:M01:S091:V018
+  citation: RV 1.91.18
+- passage_key: VG:RV:SAK:M01:S094:V013
+  citation: RV 1.94.13
+- passage_key: VG:RV:SAK:M01:S095:V011
+  citation: RV 1.95.11
+- passage_key: VG:RV:SAK:M01:S101:V005
+  citation: RV 1.101.5
+- passage_key: VG:RV:SAK:M01:S104:V005
+  citation: RV 1.104.5
+- passage_key: VG:RV:SAK:M01:S107:V001
+  citation: RV 1.107.1
+- passage_key: VG:RV:SAK:M01:S108:V010
+  citation: RV 1.108.10
+- passage_key: VG:RV:SAK:M01:S116:V009
+  citation: RV 1.116.9
+- passage_key: VG:RV:SAK:M01:S118:V003
+  citation: RV 1.118.3
+- passage_key: VG:RV:SAK:M01:S120:V008
+  citation: RV 1.120.8
+- passage_key: VG:RV:SAK:M01:S127:V002
+  citation: RV 1.127.2
+- passage_key: VG:RV:SAK:M01:S129:V008
+  citation: RV 1.129.8
+- passage_key: VG:RV:SAK:M01:S133:V006
+  citation: RV 1.133.6
+- passage_key: VG:RV:SAK:M01:S135:V007
+  citation: RV 1.135.7
+- passage_key: VG:RV:SAK:M01:S136:V007
+  citation: RV 1.136.7
+- passage_key: VG:RV:SAK:M01:S137:V001
+  citation: RV 1.137.1
+- passage_key: VG:RV:SAK:M01:S137:V002
+  citation: RV 1.137.2
+- passage_key: VG:RV:SAK:M01:S147:V003
+  citation: RV 1.147.3
+- passage_key: VG:RV:SAK:M01:S148:V004
+  citation: RV 1.148.4
+- passage_key: VG:RV:SAK:M01:S150:V003
+  citation: RV 1.150.3
+- passage_key: VG:RV:SAK:M01:S154:V006
+  citation: RV 1.154.6
+- passage_key: VG:RV:SAK:M01:S157:V005
+  citation: RV 1.157.5
+- passage_key: VG:RV:SAK:M01:S162:V021
+  citation: RV 1.162.21
+- passage_key: VG:RV:SAK:M01:S164:V010
+  citation: RV 1.164.10
+- passage_key: VG:RV:SAK:M01:S167:V011
+  citation: RV 1.167.11
+- passage_key: VG:RV:SAK:M01:S173:V006
+  citation: RV 1.173.6
+- passage_key: VG:RV:SAK:M01:S175:V006
+  citation: RV 1.175.6
+- passage_key: VG:RV:SAK:M01:S179:V001
+  citation: RV 1.179.1
+- passage_key: VG:RV:SAK:M01:S179:V002
+  citation: RV 1.179.2
+- passage_key: VG:RV:SAK:M01:S179:V003
+  citation: RV 1.179.3
+- passage_key: VG:RV:SAK:M01:S179:V004
+  citation: RV 1.179.4
+- passage_key: VG:RV:SAK:M01:S179:V005
+  citation: RV 1.179.5
+- passage_key: VG:RV:SAK:M01:S179:V006
+  citation: RV 1.179.6
+- passage_key: VG:RV:SAK:M01:S184:V006
+  citation: RV 1.184.6
+- passage_key: VG:RV:SAK:M01:S187:V007
+  citation: RV 1.187.7
+- passage_key: VG:RV:SAK:M02:S003:V002
+  citation: RV 2.3.2
+- passage_key: VG:RV:SAK:M02:S008:V006
+  citation: RV 2.8.6
+- passage_key: VG:RV:SAK:M02:S011:V019
+  citation: RV 2.11.19
+- passage_key: VG:RV:SAK:M02:S014:V005
+  citation: RV 2.14.5
+- passage_key: VG:RV:SAK:M02:S014:V012
+  citation: RV 2.14.12
+- passage_key: VG:RV:SAK:M02:S017:V005
+  citation: RV 2.17.5
+- passage_key: VG:RV:SAK:M02:S022:V002
+  citation: RV 2.22.2
+- passage_key: VG:RV:SAK:M02:S022:V003
+  citation: RV 2.22.3
+- passage_key: VG:RV:SAK:M02:S024:V016
+  citation: RV 2.24.16
+- passage_key: VG:RV:SAK:M02:S025:V005
+  citation: RV 2.25.5
+- passage_key: VG:RV:SAK:M02:S027:V017
+  citation: RV 2.27.17
+- passage_key: VG:RV:SAK:M02:S037:V003
+  citation: RV 2.37.3
+- passage_key: VG:RV:SAK:M02:S038:V004
+  citation: RV 2.38.4
+- passage_key: VG:RV:SAK:M02:S041:V015
+  citation: RV 2.41.15
+- passage_key: VG:RV:SAK:M03:S004:V010
+  citation: RV 3.4.10
+- passage_key: VG:RV:SAK:M03:S004:V011
+  citation: RV 3.4.11
+- passage_key: VG:RV:SAK:M03:S006:V011
+  citation: RV 3.6.11
+- passage_key: VG:RV:SAK:M03:S009:V009
+  citation: RV 3.9.9
+- passage_key: VG:RV:SAK:M03:S017:V003
+  citation: RV 3.17.3
+- passage_key: VG:RV:SAK:M03:S020:V001
+  citation: RV 3.20.1
+- passage_key: VG:RV:SAK:M03:S021:V002
+  citation: RV 3.21.2
+- passage_key: VG:RV:SAK:M03:S022:V003
+  citation: RV 3.22.3
+- passage_key: VG:RV:SAK:M03:S023:V005
+  citation: RV 3.23.5
+- passage_key: VG:RV:SAK:M03:S026:V006
+  citation: RV 3.26.6
+- passage_key: VG:RV:SAK:M03:S035:V002
+  citation: RV 3.35.2
+- passage_key: VG:RV:SAK:M03:S035:V011
+  citation: RV 3.35.11
+- passage_key: VG:RV:SAK:M03:S048:V003
+  citation: RV 3.48.3
+- passage_key: VG:RV:SAK:M03:S050:V004
+  citation: RV 3.50.4
+- passage_key: VG:RV:SAK:M03:S053:V013
+  citation: RV 3.53.13
+- passage_key: VG:RV:SAK:M03:S058:V003
+  citation: RV 3.58.3
+- passage_key: VG:RV:SAK:M03:S062:V002
+  citation: RV 3.62.2
+- passage_key: VG:RV:SAK:M04:S001:V001
+  citation: RV 4.1.1
+- passage_key: VG:RV:SAK:M04:S001:V003
+  citation: RV 4.1.3
+- passage_key: VG:RV:SAK:M04:S001:V004
+  citation: RV 4.1.4
+- passage_key: VG:RV:SAK:M04:S001:V008
+  citation: RV 4.1.8
+- passage_key: VG:RV:SAK:M04:S002:V014
+  citation: RV 4.2.14
+- passage_key: VG:RV:SAK:M04:S003:V012
+  citation: RV 4.3.12
+- passage_key: VG:RV:SAK:M04:S011:V006
+  citation: RV 4.11.6
+- passage_key: VG:RV:SAK:M04:S014:V005
+  citation: RV 4.14.5
+- passage_key: VG:RV:SAK:M04:S019:V010
+  citation: RV 4.19.10
+- passage_key: VG:RV:SAK:M04:S022:V006
+  citation: RV 4.22.6
+- passage_key: VG:RV:SAK:M04:S026:V007
+  citation: RV 4.26.7
+- passage_key: VG:RV:SAK:M04:S032:V015
+  citation: RV 4.32.15
+- passage_key: VG:RV:SAK:M04:S032:V016
+  citation: RV 4.32.16
+- passage_key: VG:RV:SAK:M04:S033:V003
+  citation: RV 4.33.3
+- passage_key: VG:RV:SAK:M04:S034:V006
+  citation: RV 4.34.6
+- passage_key: VG:RV:SAK:M04:S035:V009
+  citation: RV 4.35.9
+- passage_key: VG:RV:SAK:M04:S039:V005
+  citation: RV 4.39.5
+- passage_key: VG:RV:SAK:M04:S044:V007
+  citation: RV 4.44.7
+- passage_key: VG:RV:SAK:M05:S003:V008
+  citation: RV 5.3.8
+- passage_key: VG:RV:SAK:M05:S004:V002
+  citation: RV 5.4.2
+- passage_key: VG:RV:SAK:M05:S010:V002
+  citation: RV 5.10.2
+- passage_key: VG:RV:SAK:M05:S017:V001
+  citation: RV 5.17.1
+- passage_key: VG:RV:SAK:M05:S020:V001
+  citation: RV 5.20.1
+- passage_key: VG:RV:SAK:M05:S029:V006
+  citation: RV 5.29.6
+- passage_key: VG:RV:SAK:M05:S039:V005
+  citation: RV 5.39.5
+- passage_key: VG:RV:SAK:M05:S042:V018
+  citation: RV 5.42.18
+- passage_key: VG:RV:SAK:M05:S043:V017
+  citation: RV 5.43.17
+- passage_key: VG:RV:SAK:M05:S044:V014
+  citation: RV 5.44.14
+- passage_key: VG:RV:SAK:M05:S045:V010
+  citation: RV 5.45.10
+- passage_key: VG:RV:SAK:M05:S047:V007
+  citation: RV 5.47.7
+- passage_key: VG:RV:SAK:M05:S049:V003
+  citation: RV 5.49.3
+- passage_key: VG:RV:SAK:M05:S052:V005
+  citation: RV 5.52.5
+- passage_key: VG:RV:SAK:M05:S055:V008
+  citation: RV 5.55.8
+- passage_key: VG:RV:SAK:M05:S061:V009
+  citation: RV 5.61.9
+- passage_key: VG:RV:SAK:M05:S061:V017
+  citation: RV 5.61.17
+- passage_key: VG:RV:SAK:M05:S061:V018
+  citation: RV 5.61.18
+- passage_key: VG:RV:SAK:M05:S061:V019
+  citation: RV 5.61.19
+- passage_key: VG:RV:SAK:M05:S068:V001
+  citation: RV 5.68.1
+- passage_key: VG:RV:SAK:M05:S071:V001
+  citation: RV 5.71.1
+- passage_key: VG:RV:SAK:M05:S073:V006
+  citation: RV 5.73.6
+- passage_key: VG:RV:SAK:M05:S074:V009
+  citation: RV 5.74.9
+- passage_key: VG:RV:SAK:M05:S080:V002
+  citation: RV 5.80.2
+- passage_key: VG:RV:SAK:M05:S087:V008
+  citation: RV 5.87.8
+- passage_key: VG:RV:SAK:M06:S013:V001
+  citation: RV 6.13.1
+- passage_key: VG:RV:SAK:M06:S015:V006
+  citation: RV 6.15.6
+- passage_key: VG:RV:SAK:M06:S016:V006
+  citation: RV 6.16.6
+- passage_key: VG:RV:SAK:M06:S021:V006
+  citation: RV 6.21.6
+- passage_key: VG:RV:SAK:M06:S028:V005
+  citation: RV 6.28.5
+- passage_key: VG:RV:SAK:M06:S035:V004
+  citation: RV 6.35.4
+- passage_key: VG:RV:SAK:M06:S035:V005
+  citation: RV 6.35.5
+- passage_key: VG:RV:SAK:M06:S039:V002
+  citation: RV 6.39.2
+- passage_key: VG:RV:SAK:M06:S044:V012
+  citation: RV 6.44.12
+- passage_key: VG:RV:SAK:M06:S045:V019
+  citation: RV 6.45.19
+- passage_key: VG:RV:SAK:M06:S045:V027
+  citation: RV 6.45.27
+- passage_key: VG:RV:SAK:M06:S045:V029
+  citation: RV 6.45.29
+- passage_key: VG:RV:SAK:M06:S045:V031
+  citation: RV 6.45.31
+- passage_key: VG:RV:SAK:M06:S047:V007
+  citation: RV 6.47.7
+- passage_key: VG:RV:SAK:M06:S047:V012
+  citation: RV 6.47.12
+- passage_key: VG:RV:SAK:M06:S047:V023
+  citation: RV 6.47.23
+- passage_key: VG:RV:SAK:M06:S048:V015
+  citation: RV 6.48.15
+- passage_key: VG:RV:SAK:M06:S052:V007
+  citation: RV 6.52.7
+- passage_key: VG:RV:SAK:M06:S061:V002
+  citation: RV 6.61.2
+- passage_key: VG:RV:SAK:M06:S064:V004
+  citation: RV 6.64.4
+- passage_key: VG:RV:SAK:M06:S068:V006
+  citation: RV 6.68.6
+- passage_key: VG:RV:SAK:M06:S069:V007
+  citation: RV 6.69.7
+- passage_key: VG:RV:SAK:M06:S073:V001
+  citation: RV 6.73.1
+- passage_key: VG:RV:SAK:M06:S075:V005
+  citation: RV 6.75.5
+- passage_key: VG:RV:SAK:M06:S075:V009
+  citation: RV 6.75.9
+- passage_key: VG:RV:SAK:M07:S001:V020
+  citation: RV 7.1.20
+- passage_key: VG:RV:SAK:M07:S004:V003
+  citation: RV 7.4.3
+- passage_key: VG:RV:SAK:M07:S004:V010
+  citation: RV 7.4.10
+- passage_key: VG:RV:SAK:M07:S007:V007
+  citation: RV 7.7.7
+- passage_key: VG:RV:SAK:M07:S009:V003
+  citation: RV 7.9.3
+- passage_key: VG:RV:SAK:M07:S012:V001
+  citation: RV 7.12.1
+- passage_key: VG:RV:SAK:M07:S012:V002
+  citation: RV 7.12.2
+- passage_key: VG:RV:SAK:M07:S013:V003
+  citation: RV 7.13.3
+- passage_key: VG:RV:SAK:M07:S015:V007
+  citation: RV 7.15.7
+- passage_key: VG:RV:SAK:M07:S017:V001
+  citation: RV 7.17.1
+- passage_key: VG:RV:SAK:M07:S017:V003
+  citation: RV 7.17.3
+- passage_key: VG:RV:SAK:M07:S017:V005
+  citation: RV 7.17.5
+- passage_key: VG:RV:SAK:M07:S017:V007
+  citation: RV 7.17.7
+- passage_key: VG:RV:SAK:M07:S021:V008
+  citation: RV 7.21.8
+- passage_key: VG:RV:SAK:M07:S025:V006
+  citation: RV 7.25.6
+- passage_key: VG:RV:SAK:M07:S029:V005
+  citation: RV 7.29.5
+- passage_key: VG:RV:SAK:M07:S032:V003
+  citation: RV 7.32.3
+- passage_key: VG:RV:SAK:M07:S032:V020
+  citation: RV 7.32.20
+- passage_key: VG:RV:SAK:M07:S034:V023
+  citation: RV 7.34.23
+- passage_key: VG:RV:SAK:M07:S041:V002
+  citation: RV 7.41.2
+- passage_key: VG:RV:SAK:M07:S044:V002
+  citation: RV 7.44.2
+- passage_key: VG:RV:SAK:M07:S053:V001
+  citation: RV 7.53.1
+- passage_key: VG:RV:SAK:M07:S053:V002
+  citation: RV 7.53.2
+- passage_key: VG:RV:SAK:M07:S054:V002
+  citation: RV 7.54.2
+- passage_key: VG:RV:SAK:M07:S056:V025
+  citation: RV 7.56.25
+- passage_key: VG:RV:SAK:M07:S060:V012
+  citation: RV 7.60.12
+- passage_key: VG:RV:SAK:M07:S072:V005
+  citation: RV 7.72.5
+- passage_key: VG:RV:SAK:M07:S077:V005
+  citation: RV 7.77.5
+- passage_key: VG:RV:SAK:M07:S083:V008
+  citation: RV 7.83.8
+- passage_key: VG:RV:SAK:M07:S083:V010
+  citation: RV 7.83.10
+- passage_key: VG:RV:SAK:M07:S091:V007
+  citation: RV 7.91.7
+- passage_key: VG:RV:SAK:M07:S096:V003
+  citation: RV 7.96.3
+- passage_key: VG:RV:SAK:M07:S101:V003
+  citation: RV 7.101.3
+- passage_key: VG:RV:SAK:M07:S102:V001
+  citation: RV 7.102.1
+- passage_key: VG:RV:SAK:M07:S104:V008
+  citation: RV 7.104.8
+- passage_key: VG:RV:SAK:M08:S001:V017
+  citation: RV 8.1.17
+- passage_key: VG:RV:SAK:M08:S002:V006
+  citation: RV 8.2.6
+- passage_key: VG:RV:SAK:M08:S002:V029
+  citation: RV 8.2.29
+- passage_key: VG:RV:SAK:M08:S002:V039
+  citation: RV 8.2.39
+- passage_key: VG:RV:SAK:M08:S005:V014
+  citation: RV 8.5.14
+- passage_key: VG:RV:SAK:M08:S005:V015
+  citation: RV 8.5.15
+- passage_key: VG:RV:SAK:M08:S006:V002
+  citation: RV 8.6.2
+- passage_key: VG:RV:SAK:M08:S006:V013
+  citation: RV 8.6.13
+- passage_key: VG:RV:SAK:M08:S006:V037
+  citation: RV 8.6.37
+- passage_key: VG:RV:SAK:M08:S007:V004
+  citation: RV 8.7.4
+- passage_key: VG:RV:SAK:M08:S009:V012
+  citation: RV 8.9.12
+- passage_key: VG:RV:SAK:M08:S015:V008
+  citation: RV 8.15.8
+- passage_key: VG:RV:SAK:M08:S016:V002
+  citation: RV 8.16.2
+- passage_key: VG:RV:SAK:M08:S019:V025
+  citation: RV 8.19.25
+- passage_key: VG:RV:SAK:M08:S019:V037
+  citation: RV 8.19.37
+- passage_key: VG:RV:SAK:M08:S021:V014
+  citation: RV 8.21.14
+- passage_key: VG:RV:SAK:M08:S022:V014
+  citation: RV 8.22.14
+- passage_key: VG:RV:SAK:M08:S023:V010
+  citation: RV 8.23.10
+- passage_key: VG:RV:SAK:M08:S023:V014
+  citation: RV 8.23.14
+- passage_key: VG:RV:SAK:M08:S024:V007
+  citation: RV 8.24.7
+- passage_key: VG:RV:SAK:M08:S024:V010
+  citation: RV 8.24.10
+- passage_key: VG:RV:SAK:M08:S026:V008
+  citation: RV 8.26.8
+- passage_key: VG:RV:SAK:M08:S029:V008
+  citation: RV 8.29.8
+- passage_key: VG:RV:SAK:M08:S031:V006
+  citation: RV 8.31.6
+- passage_key: VG:RV:SAK:M08:S031:V012
+  citation: RV 8.31.12
+- passage_key: VG:RV:SAK:M08:S031:V014
+  citation: RV 8.31.14
+- passage_key: VG:RV:SAK:M08:S032:V018
+  citation: RV 8.32.18
+- passage_key: VG:RV:SAK:M08:S032:V029
+  citation: RV 8.32.29
+- passage_key: VG:RV:SAK:M08:S035:V005
+  citation: RV 8.35.5
+- passage_key: VG:RV:SAK:M08:S035:V016
+  citation: RV 8.35.16
+- passage_key: VG:RV:SAK:M08:S035:V018
+  citation: RV 8.35.18
+- passage_key: VG:RV:SAK:M08:S037:V002
+  citation: RV 8.37.2
+- passage_key: VG:RV:SAK:M08:S037:V007
+  citation: RV 8.37.7
+- passage_key: VG:RV:SAK:M08:S043:V024
+  citation: RV 8.43.24
+- passage_key: VG:RV:SAK:M08:S043:V032
+  citation: RV 8.43.32
+- passage_key: VG:RV:SAK:M08:S045:V001
+  citation: RV 8.45.1
+- passage_key: VG:RV:SAK:M08:S045:V042
+  citation: RV 8.45.42
+- passage_key: VG:RV:SAK:M08:S046:V015
+  citation: RV 8.46.15
+- passage_key: VG:RV:SAK:M08:S046:V021
+  citation: RV 8.46.21
+- passage_key: VG:RV:SAK:M08:S046:V027
+  citation: RV 8.46.27
+- passage_key: VG:RV:SAK:M08:S051:V007
+  citation: RV 8.51.7
+- passage_key: VG:RV:SAK:M08:S052:V008
+  citation: RV 8.52.8
+- passage_key: VG:RV:SAK:M08:S067:V006
+  citation: RV 8.67.6
+- passage_key: VG:RV:SAK:M08:S073:V002
+  citation: RV 8.73.2
+- passage_key: VG:RV:SAK:M08:S080:V004
+  citation: RV 8.80.4
+- passage_key: VG:RV:SAK:M08:S089:V005
+  citation: RV 8.89.5
+- passage_key: VG:RV:SAK:M08:S092:V021
+  citation: RV 8.92.21
+- passage_key: VG:RV:SAK:M08:S093:V001
+  citation: RV 8.93.1
+- passage_key: VG:RV:SAK:M08:S093:V005
+  citation: RV 8.93.5
+- passage_key: VG:RV:SAK:M08:S093:V024
+  citation: RV 8.93.24
+- passage_key: VG:RV:SAK:M08:S093:V029
+  citation: RV 8.93.29
+- passage_key: VG:RV:SAK:M08:S096:V007
+  citation: RV 8.96.7
+- passage_key: VG:RV:SAK:M08:S101:V005
+  citation: RV 8.101.5
+- passage_key: VG:RV:SAK:M09:S002:V008
+  citation: RV 9.2.8
+- passage_key: VG:RV:SAK:M09:S005:V009
+  citation: RV 9.5.9
+- passage_key: VG:RV:SAK:M09:S005:V010
+  citation: RV 9.5.10
+- passage_key: VG:RV:SAK:M09:S007:V008
+  citation: RV 9.7.8
+- passage_key: VG:RV:SAK:M09:S007:V009
+  citation: RV 9.7.9
+- passage_key: VG:RV:SAK:M09:S008:V002
+  citation: RV 9.8.2
+- passage_key: VG:RV:SAK:M09:S019:V006
+  citation: RV 9.19.6
+- passage_key: VG:RV:SAK:M09:S023:V005
+  citation: RV 9.23.5
+- passage_key: VG:RV:SAK:M09:S027:V006
+  citation: RV 9.27.6
+- passage_key: VG:RV:SAK:M09:S028:V005
+  citation: RV 9.28.5
+- passage_key: VG:RV:SAK:M09:S029:V001
+  citation: RV 9.29.1
+- passage_key: VG:RV:SAK:M09:S030:V006
+  citation: RV 9.30.6
+- passage_key: VG:RV:SAK:M09:S032:V002
+  citation: RV 9.32.2
+- passage_key: VG:RV:SAK:M09:S034:V002
+  citation: RV 9.34.2
+- passage_key: VG:RV:SAK:M09:S038:V002
+  citation: RV 9.38.2
+- passage_key: VG:RV:SAK:M09:S039:V002
+  citation: RV 9.39.2
+- passage_key: VG:RV:SAK:M09:S039:V006
+  citation: RV 9.39.6
+- passage_key: VG:RV:SAK:M09:S040:V001
+  citation: RV 9.40.1
+- passage_key: VG:RV:SAK:M09:S042:V003
+  citation: RV 9.42.3
+- passage_key: VG:RV:SAK:M09:S045:V005
+  citation: RV 9.45.5
+- passage_key: VG:RV:SAK:M09:S045:V006
+  citation: RV 9.45.6
+- passage_key: VG:RV:SAK:M09:S047:V005
+  citation: RV 9.47.5
+- passage_key: VG:RV:SAK:M09:S057:V001
+  citation: RV 9.57.1
+- passage_key: VG:RV:SAK:M09:S061:V001
+  citation: RV 9.61.1
+- passage_key: VG:RV:SAK:M09:S062:V003
+  citation: RV 9.62.3
+- passage_key: VG:RV:SAK:M09:S062:V019
+  citation: RV 9.62.19
+- passage_key: VG:RV:SAK:M09:S062:V026
+  citation: RV 9.62.26
+- passage_key: VG:RV:SAK:M09:S063:V010
+  citation: RV 9.63.10
+- passage_key: VG:RV:SAK:M09:S063:V016
+  citation: RV 9.63.16
+- passage_key: VG:RV:SAK:M09:S064:V009
+  citation: RV 9.64.9
+- passage_key: VG:RV:SAK:M09:S064:V013
+  citation: RV 9.64.13
+- passage_key: VG:RV:SAK:M09:S065:V020
+  citation: RV 9.65.20
+- passage_key: VG:RV:SAK:M09:S066:V016
+  citation: RV 9.66.16
+- passage_key: VG:RV:SAK:M09:S066:V019
+  citation: RV 9.66.19
+- passage_key: VG:RV:SAK:M09:S066:V021
+  citation: RV 9.66.21
+- passage_key: VG:RV:SAK:M09:S066:V028
+  citation: RV 9.66.28
+- passage_key: VG:RV:SAK:M09:S067:V004
+  citation: RV 9.67.4
+- passage_key: VG:RV:SAK:M09:S067:V024
+  citation: RV 9.67.24
+- passage_key: VG:RV:SAK:M09:S068:V010
+  citation: RV 9.68.10
+- passage_key: VG:RV:SAK:M09:S071:V007
+  citation: RV 9.71.7
+- passage_key: VG:RV:SAK:M09:S073:V003
+  citation: RV 9.73.3
+- passage_key: VG:RV:SAK:M09:S074:V001
+  citation: RV 9.74.1
+- passage_key: VG:RV:SAK:M09:S074:V003
+  citation: RV 9.74.3
+- passage_key: VG:RV:SAK:M09:S077:V001
+  citation: RV 9.77.1
+- passage_key: VG:RV:SAK:M09:S086:V002
+  citation: RV 9.86.2
+- passage_key: VG:RV:SAK:M09:S086:V004
+  citation: RV 9.86.4
+- passage_key: VG:RV:SAK:M09:S086:V029
+  citation: RV 9.86.29
+- passage_key: VG:RV:SAK:M09:S086:V047
+  citation: RV 9.86.47
+- passage_key: VG:RV:SAK:M09:S089:V006
+  citation: RV 9.89.6
+- passage_key: VG:RV:SAK:M09:S092:V006
+  citation: RV 9.92.6
+- passage_key: VG:RV:SAK:M09:S093:V002
+  citation: RV 9.93.2
+- passage_key: VG:RV:SAK:M09:S095:V004
+  citation: RV 9.95.4
+- passage_key: VG:RV:SAK:M09:S096:V018
+  citation: RV 9.96.18
+- passage_key: VG:RV:SAK:M09:S097:V003
+  citation: RV 9.97.3
+- passage_key: VG:RV:SAK:M09:S097:V012
+  citation: RV 9.97.12
+- passage_key: VG:RV:SAK:M09:S097:V023
+  citation: RV 9.97.23
+- passage_key: VG:RV:SAK:M09:S097:V024
+  citation: RV 9.97.24
+- passage_key: VG:RV:SAK:M09:S097:V044
+  citation: RV 9.97.44
+- passage_key: VG:RV:SAK:M09:S099:V006
+  citation: RV 9.99.6
+- passage_key: VG:RV:SAK:M09:S100:V007
+  citation: RV 9.100.7
+- passage_key: VG:RV:SAK:M09:S103:V003
+  citation: RV 9.103.3
+- passage_key: VG:RV:SAK:M09:S104:V005
+  citation: RV 9.104.5
+- passage_key: VG:RV:SAK:M09:S107:V009
+  citation: RV 9.107.9
+- passage_key: VG:RV:SAK:M09:S108:V004
+  citation: RV 9.108.4
+- passage_key: VG:RV:SAK:M09:S109:V020
+  citation: RV 9.109.20
+- passage_key: VG:RV:SAK:M09:S109:V022
+  citation: RV 9.109.22
+- passage_key: VG:RV:SAK:M09:S110:V008
+  citation: RV 9.110.8
+- passage_key: VG:RV:SAK:M09:S111:V001
+  citation: RV 9.111.1
+- passage_key: VG:RV:SAK:M09:S111:V003
+  citation: RV 9.111.3
+- passage_key: VG:RV:SAK:M09:S114:V002
+  citation: RV 9.114.2
+- passage_key: VG:RV:SAK:M10:S006:V007
+  citation: RV 10.6.7
+- passage_key: VG:RV:SAK:M10:S007:V005
+  citation: RV 10.7.5
+- passage_key: VG:RV:SAK:M10:S009:V004
+  citation: RV 10.9.4
+- passage_key: VG:RV:SAK:M10:S009:V006
+  citation: RV 10.9.6
+- passage_key: VG:RV:SAK:M10:S010:V014
+  citation: RV 10.10.14
+- passage_key: VG:RV:SAK:M10:S012:V002
+  citation: RV 10.12.2
+- passage_key: VG:RV:SAK:M10:S014:V012
+  citation: RV 10.14.12
+- passage_key: VG:RV:SAK:M10:S015:V002
+  citation: RV 10.15.2
+- passage_key: VG:RV:SAK:M10:S015:V010
+  citation: RV 10.15.10
+- passage_key: VG:RV:SAK:M10:S016:V011
+  citation: RV 10.16.11
+- passage_key: VG:RV:SAK:M10:S020:V004
+  citation: RV 10.20.4
+- passage_key: VG:RV:SAK:M10:S023:V005
+  citation: RV 10.23.5
+- passage_key: VG:RV:SAK:M10:S026:V008
+  citation: RV 10.26.8
+- passage_key: VG:RV:SAK:M10:S027:V013
+  citation: RV 10.27.13
+- passage_key: VG:RV:SAK:M10:S028:V006
+  citation: RV 10.28.6
+- passage_key: VG:RV:SAK:M10:S030:V001
+  citation: RV 10.30.1
+- passage_key: VG:RV:SAK:M10:S030:V003
+  citation: RV 10.30.3
+- passage_key: VG:RV:SAK:M10:S032:V006
+  citation: RV 10.32.6
+- passage_key: VG:RV:SAK:M10:S035:V008
+  citation: RV 10.35.8
+- passage_key: VG:RV:SAK:M10:S037:V002
+  citation: RV 10.37.2
+- passage_key: VG:RV:SAK:M10:S039:V011
+  citation: RV 10.39.11
+- passage_key: VG:RV:SAK:M10:S040:V001
+  citation: RV 10.40.1
+- passage_key: VG:RV:SAK:M10:S040:V003
+  citation: RV 10.40.3
+- passage_key: VG:RV:SAK:M10:S040:V007
+  citation: RV 10.40.7
+- passage_key: VG:RV:SAK:M10:S042:V005
+  citation: RV 10.42.5
+- passage_key: VG:RV:SAK:M10:S042:V011
+  citation: RV 10.42.11
+- passage_key: VG:RV:SAK:M10:S045:V005
+  citation: RV 10.45.5
+- passage_key: VG:RV:SAK:M10:S045:V008
+  citation: RV 10.45.8
+- passage_key: VG:RV:SAK:M10:S046:V005
+  citation: RV 10.46.5
+- passage_key: VG:RV:SAK:M10:S046:V007
+  citation: RV 10.46.7
+- passage_key: VG:RV:SAK:M10:S048:V007
+  citation: RV 10.48.7
+- passage_key: VG:RV:SAK:M10:S050:V003
+  citation: RV 10.50.3
+- passage_key: VG:RV:SAK:M10:S055:V002
+  citation: RV 10.55.2
+- passage_key: VG:RV:SAK:M10:S056:V007
+  citation: RV 10.56.7
+- passage_key: VG:RV:SAK:M10:S057:V004
+  citation: RV 10.57.4
+- passage_key: VG:RV:SAK:M10:S058:V012
+  citation: RV 10.58.12
+- passage_key: VG:RV:SAK:M10:S061:V006
+  citation: RV 10.61.6
+- passage_key: VG:RV:SAK:M10:S061:V007
+  citation: RV 10.61.7
+- passage_key: VG:RV:SAK:M10:S061:V008
+  citation: RV 10.61.8
+- passage_key: VG:RV:SAK:M10:S061:V009
+  citation: RV 10.61.9
+- passage_key: VG:RV:SAK:M10:S061:V010
+  citation: RV 10.61.10
+- passage_key: VG:RV:SAK:M10:S063:V010
+  citation: RV 10.63.10
+- passage_key: VG:RV:SAK:M10:S064:V006
+  citation: RV 10.64.6
+- passage_key: VG:RV:SAK:M10:S065:V009
+  citation: RV 10.65.9
+- passage_key: VG:RV:SAK:M10:S066:V004
+  citation: RV 10.66.4
+- passage_key: VG:RV:SAK:M10:S069:V010
+  citation: RV 10.69.10
+- passage_key: VG:RV:SAK:M10:S078:V005
+  citation: RV 10.78.5
+- passage_key: VG:RV:SAK:M10:S084:V004
+  citation: RV 10.84.4
+- passage_key: VG:RV:SAK:M10:S085:V002
+  citation: RV 10.85.2
+- passage_key: VG:RV:SAK:M10:S085:V008
+  citation: RV 10.85.8
+- passage_key: VG:RV:SAK:M10:S085:V019
+  citation: RV 10.85.19
+- passage_key: VG:RV:SAK:M10:S085:V021
+  citation: RV 10.85.21
+- passage_key: VG:RV:SAK:M10:S085:V028
+  citation: RV 10.85.28
+- passage_key: VG:RV:SAK:M10:S085:V031
+  citation: RV 10.85.31
+- passage_key: VG:RV:SAK:M10:S085:V034
+  citation: RV 10.85.34
+- passage_key: VG:RV:SAK:M10:S086:V001
+  citation: RV 10.86.1
+- passage_key: VG:RV:SAK:M10:S086:V016
+  citation: RV 10.86.16
+- passage_key: VG:RV:SAK:M10:S086:V017
+  citation: RV 10.86.17
+- passage_key: VG:RV:SAK:M10:S087:V025
+  citation: RV 10.87.25
+- passage_key: VG:RV:SAK:M10:S089:V008
+  citation: RV 10.89.8
+- passage_key: VG:RV:SAK:M10:S089:V013
+  citation: RV 10.89.13
+- passage_key: VG:RV:SAK:M10:S089:V016
+  citation: RV 10.89.16
+- passage_key: VG:RV:SAK:M10:S090:V007
+  citation: RV 10.90.7
+- passage_key: VG:RV:SAK:M10:S090:V016
+  citation: RV 10.90.16
+- passage_key: VG:RV:SAK:M10:S091:V003
+  citation: RV 10.91.3
+- passage_key: VG:RV:SAK:M10:S091:V012
+  citation: RV 10.91.12
+- passage_key: VG:RV:SAK:M10:S095:V003
+  citation: RV 10.95.3
+- passage_key: VG:RV:SAK:M10:S096:V006
+  citation: RV 10.96.6
+- passage_key: VG:RV:SAK:M10:S097:V007
+  citation: RV 10.97.7
+- passage_key: VG:RV:SAK:M10:S098:V008
+  citation: RV 10.98.8
+- passage_key: VG:RV:SAK:M10:S099:V003
+  citation: RV 10.99.3
+- passage_key: VG:RV:SAK:M10:S099:V007
+  citation: RV 10.99.7
+- passage_key: VG:RV:SAK:M10:S102:V007
+  citation: RV 10.102.7
+- passage_key: VG:RV:SAK:M10:S106:V004
+  citation: RV 10.106.4
+- passage_key: VG:RV:SAK:M10:S107:V008
+  citation: RV 10.107.8
+- passage_key: VG:RV:SAK:M10:S107:V010
+  citation: RV 10.107.10
+- passage_key: VG:RV:SAK:M10:S108:V001
+  citation: RV 10.108.1
+- passage_key: VG:RV:SAK:M10:S112:V001
+  citation: RV 10.112.1
+- passage_key: VG:RV:SAK:M10:S115:V005
+  citation: RV 10.115.5
+- passage_key: VG:RV:SAK:M10:S118:V001
+  citation: RV 10.118.1
+- passage_key: VG:RV:SAK:M10:S125:V001
+  citation: RV 10.125.1
+- passage_key: VG:RV:SAK:M10:S127:V005
+  citation: RV 10.127.5
+- passage_key: VG:RV:SAK:M10:S131:V007
+  citation: RV 10.131.7
+- passage_key: VG:RV:SAK:M10:S132:V002
+  citation: RV 10.132.2
+- passage_key: VG:RV:SAK:M10:S132:V005
+  citation: RV 10.132.5
+- passage_key: VG:RV:SAK:M10:S134:V005
+  citation: RV 10.134.5
+- passage_key: VG:RV:SAK:M10:S135:V001
+  citation: RV 10.135.1
+- passage_key: VG:RV:SAK:M10:S143:V002
+  citation: RV 10.143.2
+- passage_key: VG:RV:SAK:M10:S144:V003
+  citation: RV 10.144.3
+- passage_key: VG:RV:SAK:M10:S145:V006
+  citation: RV 10.145.6
+- passage_key: VG:RV:SAK:M10:S146:V005
+  citation: RV 10.146.5
+- passage_key: VG:RV:SAK:M10:S150:V001
+  citation: RV 10.150.1
+- passage_key: VG:RV:SAK:M10:S150:V005
+  citation: RV 10.150.5
+- passage_key: VG:RV:SAK:M10:S151:V002
+  citation: RV 10.151.2
+- passage_key: VG:RV:SAK:M10:S151:V004
+  citation: RV 10.151.4
+- passage_key: VG:RV:SAK:M10:S161:V005
+  citation: RV 10.161.5
+- passage_key: VG:RV:SAK:M10:S164:V003
+  citation: RV 10.164.3
+- passage_key: VG:RV:SAK:M10:S165:V005
+  citation: RV 10.165.5
+- passage_key: VG:RV:SAK:M10:S166:V001
+  citation: RV 10.166.1
+- passage_key: VG:RV:SAK:M10:S177:V001
+  citation: RV 10.177.1
+- passage_key: VG:RV:SAK:M10:S179:V001
+  citation: RV 10.179.1
+- passage_key: VG:RV:SAK:M10:S180:V003
+  citation: RV 10.180.3
+- passage_key: VG:RV:SAK:M10:S182:V001
+  citation: RV 10.182.1
+- passage_key: VG:RV:SAK:M10:S182:V003
+  citation: RV 10.182.3
+- passage_key: VG:RV:SAK:M10:S183:V001
+  citation: RV 10.183.1
+- passage_key: VG:RV:SAK:M10:S188:V002
+  citation: RV 10.188.2
+- passage_key: VG:RV:SAK:M10:S189:V001
+  citation: RV 10.189.1
+- passage_key: VG:RV:SAK:M10:S190:V001
+  citation: RV 10.190.1
+- passage_key: VG:RV:SAK:M10:S190:V002
+  citation: RV 10.190.2
+

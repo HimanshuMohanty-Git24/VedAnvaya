@@ -1,0 +1,402 @@
+{
+  "canonical_targets_identical": 11,
+  "classification_counts": {
+    "OBJECT_GRANULARITY": 1,
+    "PARTIAL": 3,
+    "PREDICATE_DIFFERENCE": 7,
+    "SAME": 1
+  },
+  "compared": 12,
+  "disagreement_class_counts": {
+    "CANONICAL_TARGET_VARIANCE": 1,
+    "EVIDENCE_VARIANCE": 3,
+    "OBJECT_GRANULARITY": 1,
+    "PREDICATE_BOUNDARY": 6,
+    "SAME": 1
+  },
+  "exact_assertion_set_agreement": 1,
+  "extra_calibration_tasks_used": 12,
+  "manifest_version": "rigveda-semantic-claude-opus5-v3.2-448-calibration-result-v1",
+  "mean_absolute_assertion_delta": 0.5833,
+  "mean_original_assertions": 6.4167,
+  "mean_predicate_presence_jaccard": 0.8319,
+  "mean_replica_assertions": 5.8333,
+  "missing": 0,
+  "model_self_agreement_is_accuracy": false,
+  "no_claim_agreement": 12,
+  "predicate_presence_agreement": 5,
+  "replicas_replace_originals": false,
+  "rows": [
+    {
+      "assertion_delta": 0,
+      "canonical_targets_identical": true,
+      "citation": "RV 1.43.6",
+      "classification": "PARTIAL",
+      "disagreement_class": "EVIDENCE_VARIANCE",
+      "exact_assertion_set_agreement": false,
+      "no_claim_agreement": true,
+      "object_kind_identical": true,
+      "original_assertions": 2,
+      "original_canonical_ids": [],
+      "original_group": "E",
+      "original_only_predicates": [],
+      "passage_id": "VG:RV:SAK:M01:S043:V006",
+      "predicate_presence_jaccard": 1.0,
+      "replica_assertions": 2,
+      "replica_canonical_ids": [],
+      "replica_group": "F",
+      "replica_only_predicates": [],
+      "shared_predicates": [
+        "REQUESTS"
+      ],
+      "status": "COMPARED",
+      "typed_object_agreement": true
+    },
+    {
+      "assertion_delta": -1,
+      "canonical_targets_identical": true,
+      "citation": "RV 1.62.8",
+      "classification": "PREDICATE_DIFFERENCE",
+      "disagreement_class": "PREDICATE_BOUNDARY",
+      "exact_assertion_set_agreement": false,
+      "no_claim_agreement": true,
+      "object_kind_identical": false,
+      "original_assertions": 8,
+      "original_canonical_ids": [
+        "VG:DEVATA:USAH"
+      ],
+      "original_group": "C",
+      "original_only_predicates": [],
+      "passage_id": "VG:RV:SAK:M01:S062:V008",
+      "predicate_presence_jaccard": 0.8,
+      "replica_assertions": 7,
+      "replica_canonical_ids": [
+        "VG:DEVATA:USAH"
+      ],
+      "replica_group": "D",
+      "replica_only_predicates": [
+        "CONTRASTS_WITH"
+      ],
+      "shared_predicates": [
+        "DESCRIBES",
+        "DESCRIBES_ACTION",
+        "REFERS_TO_NATURAL_PHENOMENON",
+        "REFERS_TO_PLACE"
+      ],
+      "status": "COMPARED",
+      "typed_object_agreement": false
+    },
+    {
+      "assertion_delta": -1,
+      "canonical_targets_identical": true,
+      "citation": "RV 2.11.19",
+      "classification": "OBJECT_GRANULARITY",
+      "disagreement_class": "OBJECT_GRANULARITY",
+      "exact_assertion_set_agreement": false,
+      "no_claim_agreement": true,
+      "object_kind_identical": false,
+      "original_assertions": 5,
+      "original_canonical_ids": [],
+      "original_group": "A",
+      "original_only_predicates": [],
+      "passage_id": "VG:RV:SAK:M02:S011:V019",
+      "predicate_presence_jaccard": 1.0,
+      "replica_assertions": 4,
+      "replica_canonical_ids": [],
+      "replica_group": "B",
+      "replica_only_predicates": [],
+      "shared_predicates": [
+        "DESCRIBES",
+        "DESCRIBES_ACTION",
+        "REQUESTS"
+      ],
+      "status": "COMPARED",
+      "typed_object_agreement": false
+    },
+    {
+      "assertion_delta": 0,
+      "canonical_targets_identical": true,
+      "citation": "RV 5.42.18",
+      "classification": "PARTIAL",
+      "disagreement_class": "EVIDENCE_VARIANCE",
+      "exact_assertion_set_agreement": false,
+      "no_claim_agreement": true,
+      "object_kind_identical": true,
+      "original_assertions": 7,
+      "original_canonical_ids": [
+        "VG:DEVATA:ASVINAU"
+      ],
+      "original_group": "A",
+      "original_only_predicates": [],
+      "passage_id": "VG:RV:SAK:M05:S042:V018",
+      "predicate_presence_jaccard": 1.0,
+      "replica_assertions": 7,
+      "replica_canonical_ids": [
+        "VG:DEVATA:ASVINAU"
+      ],
+      "replica_group": "B",
+      "replica_only_predicates": [],
+      "shared_predicates": [
+        "DESCRIBES",
+        "INVOKES",
+        "REQUESTS"
+      ],
+      "status": "COMPARED",
+      "typed_object_agreement": true
+    },
+    {
+      "assertion_delta": 0,
+      "canonical_targets_identical": true,
+      "citation": "RV 6.28.5",
+      "classification": "SAME",
+      "disagreement_class": "SAME",
+      "exact_assertion_set_agreement": true,
+      "no_claim_agreement": true,
+      "object_kind_identical": true,
+      "original_assertions": 5,
+      "original_canonical_ids": [],
+      "original_group": "E",
+      "original_only_predicates": [],
+      "passage_id": "VG:RV:SAK:M06:S028:V005",
+      "predicate_presence_jaccard": 1.0,
+      "replica_assertions": 5,
+      "replica_canonical_ids": [],
+      "replica_group": "F",
+      "replica_only_predicates": [],
+      "shared_predicates": [
+        "DESCRIBES",
+        "EXPRESSES",
+        "INVOLVES_SUBSTANCE"
+      ],
+      "status": "COMPARED",
+      "typed_object_agreement": true
+    },
+    {
+      "assertion_delta": -1,
+      "canonical_targets_identical": true,
+      "citation": "RV 7.56.25",
+      "classification": "PREDICATE_DIFFERENCE",
+      "disagreement_class": "PREDICATE_BOUNDARY",
+      "exact_assertion_set_agreement": false,
+      "no_claim_agreement": true,
+      "object_kind_identical": false,
+      "original_assertions": 12,
+      "original_canonical_ids": [
+        "VG:DEVATA:AGNIH",
+        "VG:DEVATA:INDRAH",
+        "VG:DEVATA:MITRAH",
+        "VG:DEVATA:VARUNAH"
+      ],
+      "original_group": "B",
+      "original_only_predicates": [
+        "REFERS_TO_NATURAL_PHENOMENON"
+      ],
+      "passage_id": "VG:RV:SAK:M07:S056:V025",
+      "predicate_presence_jaccard": 0.5,
+      "replica_assertions": 11,
+      "replica_canonical_ids": [
+        "VG:DEVATA:AGNIH",
+        "VG:DEVATA:INDRAH",
+        "VG:DEVATA:MITRAH",
+        "VG:DEVATA:VARUNAH"
+      ],
+      "replica_group": "C",
+      "replica_only_predicates": [
+        "INVOLVES_OFFERING",
+        "PRAISES"
+      ],
+      "shared_predicates": [
+        "INVOKES",
+        "REFERS_TO_PLACE",
+        "REQUESTS"
+      ],
+      "status": "COMPARED",
+      "typed_object_agreement": false
+    },
+    {
+      "assertion_delta": -1,
+      "canonical_targets_identical": true,
+      "citation": "RV 8.6.37",
+      "classification": "PREDICATE_DIFFERENCE",
+      "disagreement_class": "PREDICATE_BOUNDARY",
+      "exact_assertion_set_agreement": false,
+      "no_claim_agreement": true,
+      "object_kind_identical": false,
+      "original_assertions": 6,
+      "original_canonical_ids": [],
+      "original_group": "C",
+      "original_only_predicates": [
+        "EXPRESSES"
+      ],
+      "passage_id": "VG:RV:SAK:M08:S006:V037",
+      "predicate_presence_jaccard": 0.6667,
+      "replica_assertions": 5,
+      "replica_canonical_ids": [],
+      "replica_group": "D",
+      "replica_only_predicates": [
+        "DESCRIBES_ACTION"
+      ],
+      "shared_predicates": [
+        "DESCRIBES",
+        "INVOKES",
+        "INVOLVES_RITUAL",
+        "INVOLVES_SUBSTANCE"
+      ],
+      "status": "COMPARED",
+      "typed_object_agreement": false
+    },
+    {
+      "assertion_delta": 0,
+      "canonical_targets_identical": true,
+      "citation": "RV 8.26.8",
+      "classification": "PREDICATE_DIFFERENCE",
+      "disagreement_class": "PREDICATE_BOUNDARY",
+      "exact_assertion_set_agreement": false,
+      "no_claim_agreement": true,
+      "object_kind_identical": true,
+      "original_assertions": 5,
+      "original_canonical_ids": [],
+      "original_group": "D",
+      "original_only_predicates": [],
+      "passage_id": "VG:RV:SAK:M08:S026:V008",
+      "predicate_presence_jaccard": 0.8,
+      "replica_assertions": 5,
+      "replica_canonical_ids": [],
+      "replica_group": "E",
+      "replica_only_predicates": [
+        "ASSOCIATED_WITH"
+      ],
+      "shared_predicates": [
+        "DESCRIBES",
+        "INVOKES",
+        "INVOLVES_OFFERING",
+        "REQUESTS"
+      ],
+      "status": "COMPARED",
+      "typed_object_agreement": true
+    },
+    {
+      "assertion_delta": -1,
+      "canonical_targets_identical": true,
+      "citation": "RV 9.64.13",
+      "classification": "PREDICATE_DIFFERENCE",
+      "disagreement_class": "PREDICATE_BOUNDARY",
+      "exact_assertion_set_agreement": false,
+      "no_claim_agreement": true,
+      "object_kind_identical": false,
+      "original_assertions": 6,
+      "original_canonical_ids": [],
+      "original_group": "F",
+      "original_only_predicates": [
+        "DESCRIBES"
+      ],
+      "passage_id": "VG:RV:SAK:M09:S064:V013",
+      "predicate_presence_jaccard": 0.8,
+      "replica_assertions": 5,
+      "replica_canonical_ids": [],
+      "replica_group": "A",
+      "replica_only_predicates": [],
+      "shared_predicates": [
+        "DESCRIBES_ACTION",
+        "INVOKES",
+        "INVOLVES_SUBSTANCE",
+        "REQUESTS"
+      ],
+      "status": "COMPARED",
+      "typed_object_agreement": false
+    },
+    {
+      "assertion_delta": -1,
+      "canonical_targets_identical": true,
+      "citation": "RV 9.97.12",
+      "classification": "PREDICATE_DIFFERENCE",
+      "disagreement_class": "PREDICATE_BOUNDARY",
+      "exact_assertion_set_agreement": false,
+      "no_claim_agreement": true,
+      "object_kind_identical": false,
+      "original_assertions": 8,
+      "original_canonical_ids": [],
+      "original_group": "F",
+      "original_only_predicates": [
+        "REFERS_TO_PLACE"
+      ],
+      "passage_id": "VG:RV:SAK:M09:S097:V012",
+      "predicate_presence_jaccard": 0.75,
+      "replica_assertions": 7,
+      "replica_canonical_ids": [],
+      "replica_group": "A",
+      "replica_only_predicates": [],
+      "shared_predicates": [
+        "DESCRIBES",
+        "DESCRIBES_ACTION",
+        "INVOLVES_SUBSTANCE"
+      ],
+      "status": "COMPARED",
+      "typed_object_agreement": false
+    },
+    {
+      "assertion_delta": 0,
+      "canonical_targets_identical": true,
+      "citation": "RV 9.99.6",
+      "classification": "PARTIAL",
+      "disagreement_class": "EVIDENCE_VARIANCE",
+      "exact_assertion_set_agreement": false,
+      "no_claim_agreement": true,
+      "object_kind_identical": true,
+      "original_assertions": 6,
+      "original_canonical_ids": [
+        "VG:DEVATA:SOMAH"
+      ],
+      "original_group": "D",
+      "original_only_predicates": [],
+      "passage_id": "VG:RV:SAK:M09:S099:V006",
+      "predicate_presence_jaccard": 1.0,
+      "replica_assertions": 6,
+      "replica_canonical_ids": [
+        "VG:DEVATA:SOMAH"
+      ],
+      "replica_group": "E",
+      "replica_only_predicates": [],
+      "shared_predicates": [
+        "DESCRIBES",
+        "DESCRIBES_ACTION",
+        "INVOLVES_SUBSTANCE"
+      ],
+      "status": "COMPARED",
+      "typed_object_agreement": true
+    },
+    {
+      "assertion_delta": -1,
+      "canonical_targets_identical": false,
+      "citation": "RV 10.10.14",
+      "classification": "PREDICATE_DIFFERENCE",
+      "disagreement_class": "CANONICAL_TARGET_VARIANCE",
+      "exact_assertion_set_agreement": false,
+      "no_claim_agreement": true,
+      "object_kind_identical": false,
+      "original_assertions": 7,
+      "original_canonical_ids": [
+        "VG:DEVATA:YAMI"
+      ],
+      "original_group": "B",
+      "original_only_predicates": [
+        "INVOKES"
+      ],
+      "passage_id": "VG:RV:SAK:M10:S010:V014",
+      "predicate_presence_jaccard": 0.6667,
+      "replica_assertions": 6,
+      "replica_canonical_ids": [],
+      "replica_group": "C",
+      "replica_only_predicates": [],
+      "shared_predicates": [
+        "DESCRIBES_ACTION",
+        "REQUESTS"
+      ],
+      "status": "COMPARED",
+      "typed_object_agreement": false
+    }
+  ],
+  "run_id": "vedagraph-rigveda-semantic-claude-opus5-v3.2-448-new-v1",
+  "seal_sha256": "cd45b1752cae62dd7d364d571235aa0db3c58ace8be829369dc9c013274465ec",
+  "typed_object_agreement": 5
+}

@@ -31,7 +31,11 @@ from vedagraph.models.enums import (
     SemanticValidationCode,
 )
 from vedagraph.semantic.ontology import (
+    AdjudicationDecision,
+    EvidenceReferenceType,
     Explicitness,
+    GoldReviewStatus,
+    OntologyGapKind,
     SemanticNodeType,
     SemanticPredicate,
     SemanticSubjectKind,
@@ -335,10 +339,19 @@ class SemanticValidationResult(VGModel):
 # --------------------------------------------------------------------------------------
 
 
+class GoldEvidenceReference(VGModel):
+    """A human-selected deterministic evidence id, never copied evidence text."""
+
+    kind: EvidenceReferenceType
+    reference_id: str = Field(min_length=1)
+    note: str = Field(default="")
+
+
 class GoldRelation(VGModel):
     """One relation a human annotator says is present, or says is tempting but absent."""
 
     predicate: SemanticPredicate
+    subject: str | None = None
     object_label: str = Field(min_length=1)
     object_node_type: SemanticNodeType | None = None
     object_entity_key: str | None = None
@@ -348,6 +361,51 @@ class GoldRelation(VGModel):
     #: recall.
     rejected: bool = False
     note: str = Field(default="")
+    evidence: list[GoldEvidenceReference] = Field(default_factory=list)
+
+
+class GoldEntityAnnotation(VGModel):
+    """A human semantic entity judgment."""
+
+    node_type: SemanticNodeType
+    preferred_label: str = Field(min_length=1)
+    existing_entity_key: str | None = None
+    new_semantic_entity_candidate: bool = False
+    evidence: list[GoldEvidenceReference] = Field(default_factory=list)
+    notes: str = Field(default="")
+
+
+class OntologyGap(VGModel):
+    """A request the current ontology cannot encode; it never changes the ontology."""
+
+    kind: OntologyGapKind
+    requested_value: str = Field(min_length=1)
+    notes: str = Field(default="")
+
+
+class GoldReviewMetadata(VGModel):
+    """Auditable Stage A metadata, kept separate from semantic judgments."""
+
+    reviewer: str = Field(min_length=1)
+    reviewed_at: datetime
+    status: GoldReviewStatus
+    stage_a_locked: bool = False
+    model_revealed_at: datetime | None = None
+    gold_modified_after_model_reveal: bool = False
+    modification_reason: str = ""
+
+
+class AdjudicationRecord(VGModel):
+    """Stage B model-review data. It is deliberately not part of GoldAnnotation."""
+
+    mantra_id: str = Field(min_length=1)
+    candidate_assertion_id: str = Field(min_length=1)
+    human_decision: AdjudicationDecision
+    error_category: AdjudicationDecision | None = None
+    notes: str = ""
+    reviewer: str = Field(min_length=1)
+    timestamp: datetime
+    schema_version: str = SCHEMA_VERSION
 
 
 class GoldAnnotation(VGModel):
@@ -360,7 +418,48 @@ class GoldAnnotation(VGModel):
     entities: list[str] = Field(default_factory=list)
     relations: list[GoldRelation] = Field(default_factory=list)
     notes: str = Field(default="")
+    # Rich Stage A fields. The legacy fields above remain readable for the original
+    # worksheet and are mirrored by the review CLI when it writes a new row.
+    status: GoldReviewStatus = GoldReviewStatus.UNANNOTATED
+    review: GoldReviewMetadata | None = None
+    review_history: list[GoldReviewMetadata] = Field(default_factory=list)
+    gold_entities: list[GoldEntityAnnotation] = Field(default_factory=list)
+    gold_assertions: list[GoldRelation] = Field(default_factory=list)
+    no_claim: bool = False
+    rejected_tempting_relations: list[GoldRelation] = Field(default_factory=list)
+    ontology_gaps: list[OntologyGap] = Field(default_factory=list)
+    model_revealed_at: datetime | None = None
+    gold_modified_after_model_reveal: bool = False
+    modification_reason: str = ""
     schema_version: str = SCHEMA_VERSION
+
+    @property
+    def effective_status(self) -> GoldReviewStatus:
+        if self.status is not GoldReviewStatus.UNANNOTATED:
+            return self.status
+        return self.review.status if self.review is not None else self.status
+
+    @property
+    def effective_reviewer(self) -> str:
+        return self.review.reviewer if self.review is not None else self.annotator
+
+    @property
+    def effective_reviewed_at(self) -> datetime:
+        return self.review.reviewed_at if self.review is not None else self.annotated_at
+
+    @property
+    def effective_assertions(self) -> list[GoldRelation]:
+        # A rich review with zero assertions is meaningful (NO_SUPPORTED...); do not
+        # fall back to the legacy mirror in that case.
+        return self.gold_assertions if self.review is not None else self.relations
+
+    @property
+    def effective_entity_labels(self) -> list[str]:
+        return (
+            [item.preferred_label for item in self.gold_entities]
+            if self.review is not None
+            else self.entities
+        )
 
 
 class TokenUsage(VGModel):

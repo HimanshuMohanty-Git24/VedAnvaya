@@ -1,0 +1,78 @@
+{
+  "$defs": {
+    "AdjudicationDecision": {
+      "description": "Human classification of one model suggestion in Stage B.",
+      "enum": [
+        "ACCEPT",
+        "REJECT",
+        "PARTIALLY_CORRECT",
+        "DUPLICATE",
+        "WRONG_ENTITY",
+        "WRONG_PREDICATE",
+        "UNSUPPORTED",
+        "EVIDENCE_INVALID",
+        "OVERINTERPRETATION",
+        "OTHER"
+      ],
+      "title": "AdjudicationDecision",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Stage B model-review data. It is deliberately not part of GoldAnnotation.",
+  "properties": {
+    "candidate_assertion_id": {
+      "minLength": 1,
+      "title": "Candidate Assertion Id",
+      "type": "string"
+    },
+    "error_category": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/AdjudicationDecision"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "human_decision": {
+      "$ref": "#/$defs/AdjudicationDecision"
+    },
+    "mantra_id": {
+      "minLength": 1,
+      "title": "Mantra Id",
+      "type": "string"
+    },
+    "notes": {
+      "default": "",
+      "title": "Notes",
+      "type": "string"
+    },
+    "reviewer": {
+      "minLength": 1,
+      "title": "Reviewer",
+      "type": "string"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "timestamp": {
+      "format": "date-time",
+      "title": "Timestamp",
+      "type": "string"
+    }
+  },
+  "required": [
+    "mantra_id",
+    "candidate_assertion_id",
+    "human_decision",
+    "reviewer",
+    "timestamp"
+  ],
+  "title": "AdjudicationRecord",
+  "type": "object"
+}

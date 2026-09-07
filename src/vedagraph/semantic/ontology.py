@@ -129,6 +129,78 @@ class Explicitness(StrEnum):
     INTERPRETIVE = "INTERPRETIVE"
 
 
+class GoldReviewStatus(StrEnum):
+    """Lifecycle of a human Stage A annotation."""
+
+    UNANNOTATED = "UNANNOTATED"
+    IN_PROGRESS = "IN_PROGRESS"
+    COMPLETE = "COMPLETE"
+    NEEDS_SECOND_REVIEW = "NEEDS_SECOND_REVIEW"
+    ADJUDICATED = "ADJUDICATED"
+    SIGNED = "SIGNED"
+
+
+class EvidenceReferenceType(StrEnum):
+    """Kinds of deterministic ids a human may cite."""
+
+    PASSAGE = "PASSAGE"
+    TRANSLATION = "TRANSLATION"
+    TOKEN = "TOKEN"
+    ENTITY = "ENTITY"
+    TRADITIONAL_ASSERTION = "TRADITIONAL_ASSERTION"
+    PARALLEL = "PARALLEL"
+
+
+class AdjudicationDecision(StrEnum):
+    """Human classification of one model suggestion in Stage B."""
+
+    ACCEPT = "ACCEPT"
+    REJECT = "REJECT"
+    PARTIALLY_CORRECT = "PARTIALLY_CORRECT"
+    DUPLICATE = "DUPLICATE"
+    WRONG_ENTITY = "WRONG_ENTITY"
+    WRONG_PREDICATE = "WRONG_PREDICATE"
+    UNSUPPORTED = "UNSUPPORTED"
+    EVIDENCE_INVALID = "EVIDENCE_INVALID"
+    OVERINTERPRETATION = "OVERINTERPRETATION"
+    OTHER = "OTHER"
+
+
+class OntologyGapKind(StrEnum):
+    """A requested concept that cannot be represented by the current ontology."""
+
+    NODE_TYPE = "NODE_TYPE"
+    PREDICATE = "PREDICATE"
+    OTHER = "OTHER"
+
+
+class SilverComparisonCategory(StrEnum):
+    """Model-vs-model outcomes; none of these categories is a gold verdict."""
+
+    MATCH = "MATCH"
+    PARTIAL_MATCH = "PARTIAL_MATCH"
+    WRONG_ENTITY = "WRONG_ENTITY"
+    WRONG_PREDICATE = "WRONG_PREDICATE"
+    UNSUPPORTED = "UNSUPPORTED"
+    OVERINTERPRETATION = "OVERINTERPRETATION"
+    EVIDENCE_PROBLEM = "EVIDENCE_PROBLEM"
+    LUNA_MISSED_RELATION = "LUNA_MISSED_RELATION"
+    SOL_ONLY_RELATION = "SOL_ONLY_RELATION"
+    NO_CLAIM_AGREEMENT = "NO_CLAIM_AGREEMENT"
+    DISAGREEMENT_REQUIRES_EXPERT = "DISAGREEMENT_REQUIRES_EXPERT"
+
+
+class SilverEvidenceAssessment(StrEnum):
+    """Evidence-specific review of a Luna assertion against its supplied packet."""
+
+    SUFFICIENT = "SUFFICIENT"
+    TOKEN_REFERENCE_MISSING = "TOKEN_REFERENCE_MISSING"
+    TRANSLATION_REFERENCE_MISSING = "TRANSLATION_REFERENCE_MISSING"
+    METADATA_ONLY = "METADATA_ONLY"
+    TEXTUAL_OVERREACH = "TEXTUAL_OVERREACH"
+    AMBIGUOUS = "AMBIGUOUS"
+
+
 class SemanticSubjectKind(StrEnum):
     """Textual units a semantic assertion may be about."""
 

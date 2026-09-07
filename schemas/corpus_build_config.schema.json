@@ -77,7 +77,8 @@
         "DISPLAY_DERIVATIVE",
         "LINGUISTIC_ANNOTATION",
         "COMPARISON_ONLY",
-        "REFERENCE_ONLY"
+        "REFERENCE_ONLY",
+        "EXTRACTED_FROM_CONTAINER"
       ],
       "title": "TextRole",
       "type": "string"
@@ -128,6 +129,7 @@
     }
   },
   "additionalProperties": false,
+  "description": "Rigveda-specific build configuration, sliced one Mandala at a time.\n\n``mandala`` and ``selected_suktas`` are required and are read as plain ints\nthroughout ``vedagraph.build``, so this model cannot express a work without a\nMandala or a Sukta level. That is intentional and is not a defect to be relaxed:\nother works use :class:`WorkBuildConfig`. See ADR-018.",
   "properties": {
     "build_timestamp": {
       "format": "date-time",

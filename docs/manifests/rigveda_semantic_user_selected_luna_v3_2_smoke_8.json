@@ -1,0 +1,297 @@
+{
+  "canonical_target_results": {
+    "CONTRADICTORY_CANONICAL_TARGET": 0,
+    "OMISSION": 1,
+    "SAME_TARGET_DIFFERENT_PREDICATE": 0,
+    "details": [
+      {
+        "classification": "OMISSION",
+        "passage_id": "VG:RV:SAK:M04:S022:V011",
+        "run_a": [
+          "VG:DEVATA:INDRAH"
+        ],
+        "run_b": []
+      }
+    ]
+  },
+  "decision": "USER_SELECTED_LUNA_V3_2_SMOKE_HEALTHY",
+  "decision_explanation": "No human-gold or accuracy claim; decision is limited to execution integrity, regime smoke behaviour, canonical target contradictions, and obvious structural precision-risk flags.",
+  "evidence_packets": {
+    "duplicates": 0,
+    "expected": 8,
+    "hashes_valid": true,
+    "input_manifest_sha256": "6e1f4ad12ac37fd1228b4aefc5da2d045fa0117c8be8ab9f952e2e0db6337583",
+    "missing": 0,
+    "unique": 8
+  },
+  "final_tasks": 16,
+  "hashes": {
+    "ontology_sha256": "cddd5a20ca11cf64269d2f877ce4dbb829d0b1eb9fcd56c3718821a47ee228ce",
+    "prompt_sha256": "e4fdcd5d519d47e94a4c41b57180c81e94cb5034f40fd876dcecd4a8e6da73a1",
+    "schema_sha256": "26e554c4714bee14835534e27df02aca13d3fd1c3c7d0cb951e5984dc32820f2"
+  },
+  "human_gold_status": "UNANNOTATED",
+  "independent_runtime_model_attestation": "UNAVAILABLE",
+  "integrity": {
+    "binding_failures": 0,
+    "evidence_failures": 0,
+    "heuristic_contamination": 0,
+    "missing_final_tasks": 0,
+    "ontology_type_failures": 0,
+    "packet_hash_failures": 0,
+    "receipt_failures": 0,
+    "run_a": {
+      "binding_failures": 0,
+      "evidence_failures": 0,
+      "heuristic_contamination": 0,
+      "missing_final_tasks": 0,
+      "ontology_type_failures": 0,
+      "packet_hash_failures": 0,
+      "receipt_failures": 0,
+      "span_failures": 0
+    },
+    "run_b": {
+      "binding_failures": 0,
+      "evidence_failures": 0,
+      "heuristic_contamination": 0,
+      "missing_final_tasks": 0,
+      "ontology_type_failures": 0,
+      "packet_hash_failures": 0,
+      "receipt_failures": 0,
+      "span_failures": 0
+    },
+    "span_failures": 0
+  },
+  "manifest_sha256": "b96662eacf15b05a3f8ae478d2d56465043823e135ae1f65cd40ce965095a879",
+  "manifest_version": "rigveda-semantic-user-selected-luna-v3.2-smoke-8-comparison-v1",
+  "model_identity_separated": true,
+  "model_provenance_classification": "USER_SELECTED_MODEL_UNATTESTED",
+  "model_self_agreement_is_accuracy": false,
+  "no_human_gold_exists": true,
+  "parent_selection_hash": "26d2f85aec91e621d43444931d40fc81e08a7c9d533bdce820c86945c398783c",
+  "passage_agreement": {
+    "canonical_entity": 7,
+    "evidence_anchor": 1,
+    "exact_assertion_set": 3,
+    "no_claim": 8,
+    "passages": 8,
+    "predicate_presence": 3,
+    "rows": [
+      {
+        "a_canonical": [
+          "VG:DEVATA:INDRAH"
+        ],
+        "b_canonical": [],
+        "canonical_entity": false,
+        "evidence_anchor": false,
+        "exact_assertion_set": false,
+        "no_claim": true,
+        "passage_id": "VG:RV:SAK:M04:S022:V011",
+        "predicate_presence": false,
+        "typed_object": false
+      },
+      {
+        "a_canonical": [],
+        "b_canonical": [],
+        "canonical_entity": true,
+        "evidence_anchor": false,
+        "exact_assertion_set": true,
+        "no_claim": true,
+        "passage_id": "VG:RV:SAK:M06:S042:V004",
+        "predicate_presence": true,
+        "typed_object": true
+      },
+      {
+        "a_canonical": [
+          "VG:DEVATA:ASVINAU"
+        ],
+        "b_canonical": [
+          "VG:DEVATA:ASVINAU"
+        ],
+        "canonical_entity": true,
+        "evidence_anchor": false,
+        "exact_assertion_set": false,
+        "no_claim": true,
+        "passage_id": "VG:RV:SAK:M08:S035:V008",
+        "predicate_presence": false,
+        "typed_object": false
+      },
+      {
+        "a_canonical": [
+          "VG:DEVATA:ASVINAU"
+        ],
+        "b_canonical": [
+          "VG:DEVATA:ASVINAU"
+        ],
+        "canonical_entity": true,
+        "evidence_anchor": false,
+        "exact_assertion_set": true,
+        "no_claim": true,
+        "passage_id": "VG:RV:SAK:M08:S035:V009",
+        "predicate_presence": true,
+        "typed_object": true
+      },
+      {
+        "a_canonical": [
+          "VG:DEVATA:INDRAH"
+        ],
+        "b_canonical": [
+          "VG:DEVATA:INDRAH"
+        ],
+        "canonical_entity": true,
+        "evidence_anchor": false,
+        "exact_assertion_set": false,
+        "no_claim": true,
+        "passage_id": "VG:RV:SAK:M08:S036:V006",
+        "predicate_presence": false,
+        "typed_object": false
+      },
+      {
+        "a_canonical": [],
+        "b_canonical": [],
+        "canonical_entity": true,
+        "evidence_anchor": true,
+        "exact_assertion_set": true,
+        "no_claim": true,
+        "passage_id": "VG:RV:SAK:M09:S004:V009",
+        "predicate_presence": true,
+        "typed_object": true
+      },
+      {
+        "a_canonical": [],
+        "b_canonical": [],
+        "canonical_entity": true,
+        "evidence_anchor": false,
+        "exact_assertion_set": false,
+        "no_claim": true,
+        "passage_id": "VG:RV:SAK:M10:S018:V008",
+        "predicate_presence": false,
+        "typed_object": false
+      },
+      {
+        "a_canonical": [],
+        "b_canonical": [],
+        "canonical_entity": true,
+        "evidence_anchor": false,
+        "exact_assertion_set": false,
+        "no_claim": true,
+        "passage_id": "VG:RV:SAK:M10:S058:V001",
+        "predicate_presence": false,
+        "typed_object": false
+      }
+    ],
+    "typed_object": 3
+  },
+  "precision_risk_flags": {
+    "DESCRIBES_DESCRIBES_ACTION_redundancy": [
+      "run_a:VG:RV:SAK:M10:S018:V008",
+      "run_a:VG:RV:SAK:M10:S058:V001"
+    ],
+    "REQUESTS_over_splitting": "REVIEW_ONLY: two REQUESTS appear in RV 4.22.11 and RV 10.18.8; no obvious duplicate outcome was structurally established",
+    "broad_ASSOCIATED_WITH": "NONE",
+    "broad_HAS_THEME": "NONE",
+    "duplicate_assertion": "NONE",
+    "obvious_predicate_overlap": [
+      "run_a:VG:RV:SAK:M08:S035:V008:come thrice, O Asvins:['INVOKES', 'REQUESTS']",
+      "run_a:VG:RV:SAK:M08:S035:V009:come thrice, O Asvins:['INVOKES', 'REQUESTS']",
+      "run_b:VG:RV:SAK:M08:S035:V008:come thrice, O Asvins:['INVOKES', 'REQUESTS']",
+      "run_b:VG:RV:SAK:M08:S035:V009:come thrice, O Asvins:['INVOKES', 'REQUESTS']"
+    ],
+    "unsupported_extraction": "NONE_OBVIOUS_FROM_STRUCTURAL_INSPECTION; no exhaustive adjudication performed"
+  },
+  "prior_sol_v3_2_engineering_experiment": {
+    "assertions_run_a": 392,
+    "assertions_run_b": 388,
+    "density_run_a": 6.533333333333333,
+    "density_run_b": 6.466666666666667,
+    "no_claim_run_a": 2,
+    "no_claim_run_b": 2,
+    "provenance_bucket": "SOL_V3_2_ENGINEERING_EXPERIMENT",
+    "statistics_merged_with_current": false
+  },
+  "provider_build_metadata": "UNAVAILABLE",
+  "reasoning": "high",
+  "recommendation": "RUN_SINGLE_PASS_448_NEW_LUNA_CANDIDATE_PILOT",
+  "regimes": {
+    "catastrophic_regime_split": false,
+    "density_gap": 0.5,
+    "no_claim_gap": 0.0,
+    "one_sided_predicates": {
+      "DESCRIBES": [
+        2,
+        0
+      ],
+      "PRAISES": [
+        1,
+        0
+      ]
+    },
+    "run_a": {
+      "assertions": 27,
+      "canonical_reference_count": 4,
+      "density": 3.375,
+      "density_descriptor": "MODERATE",
+      "no_claim_count": 0,
+      "object_kind_counts": {
+        "CANONICAL_ENTITY_REF": 4,
+        "EVENT": 5,
+        "OFFERING_REF": 2,
+        "OPAQUE_REFERENT": 2,
+        "PLACE_REF": 1,
+        "REQUESTED_OUTCOME": 9,
+        "SUBSTANCE_REF": 4
+      },
+      "predicate_counts": {
+        "DESCRIBES": 2,
+        "DESCRIBES_ACTION": 5,
+        "INVOKES": 3,
+        "INVOLVES_OFFERING": 2,
+        "INVOLVES_SUBSTANCE": 4,
+        "PRAISES": 1,
+        "REFERS_TO_PLACE": 1,
+        "REQUESTS": 9
+      }
+    },
+    "run_b": {
+      "assertions": 23,
+      "canonical_reference_count": 3,
+      "density": 2.875,
+      "density_descriptor": "SPARSE",
+      "no_claim_count": 0,
+      "object_kind_counts": {
+        "CANONICAL_ENTITY_REF": 3,
+        "EVENT": 6,
+        "OFFERING_REF": 2,
+        "PLACE_REF": 1,
+        "REQUESTED_OUTCOME": 9,
+        "SUBSTANCE_REF": 2
+      },
+      "predicate_counts": {
+        "DESCRIBES_ACTION": 6,
+        "INVOKES": 3,
+        "INVOLVES_OFFERING": 2,
+        "INVOLVES_SUBSTANCE": 2,
+        "REFERS_TO_PLACE": 1,
+        "REQUESTS": 9
+      }
+    }
+  },
+  "requested_model": "gpt-5.6-luna",
+  "retries": {
+    "run_a": 2,
+    "run_b": 0,
+    "total": 2
+  },
+  "run_ids": [
+    "vedagraph-rigveda-semantic-user-selected-luna-v3.2-smoke-8-a",
+    "vedagraph-rigveda-semantic-user-selected-luna-v3.2-smoke-8-b"
+  ],
+  "run_seals": {
+    "a": "6c2106215e664e7550ded15f4074fb76b37e661d64e069b31a01b485ba092625",
+    "b": "116386f4837cc40f5b784b4ac330d2b66e68c4dc57bb06176661d738e1d3cdcd"
+  },
+  "runtime": "CODEX_DIRECT",
+  "selection_hash": "be4cccec008e824e6ceeeb319e64190eee52968c51cee5dc268b22d4d535637c",
+  "this_is_small_engineering_smoke_test": true,
+  "user_selected_model": "gpt-5.6-luna"
+}

@@ -1,0 +1,238 @@
+{
+  "$defs": {
+    "EventSignature": {
+      "additionalProperties": false,
+      "properties": {
+        "action_head": {
+          "title": "Action Head",
+          "type": "string"
+        },
+        "actor_entity_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Actor Entity Id"
+        },
+        "participants": {
+          "default": [],
+          "items": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "type": "array"
+          },
+          "title": "Participants",
+          "type": "array"
+        },
+        "patient_entity_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Patient Entity Id"
+        },
+        "qualifiers": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Qualifiers",
+          "type": "array"
+        }
+      },
+      "required": [
+        "action_head"
+      ],
+      "title": "EventSignature",
+      "type": "object"
+    },
+    "EvidenceSignature": {
+      "additionalProperties": false,
+      "properties": {
+        "references": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "References",
+          "type": "array"
+        }
+      },
+      "title": "EvidenceSignature",
+      "type": "object"
+    },
+    "SemanticObjectKind": {
+      "description": "Occurrence-level object families; none is a canonical concept by itself.",
+      "enum": [
+        "CANONICAL_ENTITY_REF",
+        "SEMANTIC_ENTITY_REF",
+        "EVENT",
+        "REQUESTED_OUTCOME",
+        "RITUAL_EVENT",
+        "OFFERING_REF",
+        "SUBSTANCE_REF",
+        "NATURAL_PHENOMENON_REF",
+        "PLACE_REF",
+        "STATE_REF",
+        "QUALITY_REF",
+        "CONCEPT_REF",
+        "ACTION_REF",
+        "OPAQUE_REFERENT",
+        "OPAQUE_SPATIAL_REFERENT",
+        "ONTOLOGY_GAP_REF"
+      ],
+      "title": "SemanticObjectKind",
+      "type": "string"
+    },
+    "SemanticObjectSignature": {
+      "additionalProperties": false,
+      "description": "Identity-bearing structure; deliberately excludes the display label.",
+      "properties": {
+        "beneficiary_entity_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Beneficiary Entity Id"
+        },
+        "canonical_entity_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Canonical Entity Id"
+        },
+        "event": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EventSignature"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "normalized_head": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Normalized Head"
+        },
+        "object_kind": {
+          "$ref": "#/$defs/SemanticObjectKind"
+        },
+        "qualifiers": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Qualifiers",
+          "type": "array"
+        },
+        "target_entity_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Target Entity Id"
+        }
+      },
+      "required": [
+        "object_kind"
+      ],
+      "title": "SemanticObjectSignature",
+      "type": "object"
+    },
+    "SemanticPredicate": {
+      "description": "Every relation name an extraction may emit, and the ones it may not.\n\nThe forbidden members exist so that a proposal naming one is rejected as a *policy*\ndecision with a recorded reason, instead of failing schema validation as an unknown\nstring. The difference matters when reading a rejection report.",
+      "enum": [
+        "EXPRESSES",
+        "DESCRIBES",
+        "PRAISES",
+        "INVOKES",
+        "REQUESTS",
+        "ASSOCIATED_WITH",
+        "INVOLVES_RITUAL",
+        "INVOLVES_OFFERING",
+        "INVOLVES_SUBSTANCE",
+        "REFERS_TO_PLACE",
+        "REFERS_TO_NATURAL_PHENOMENON",
+        "DESCRIBES_ACTION",
+        "HAS_THEME",
+        "CONTRASTS_WITH",
+        "SYMBOLIZES",
+        "REPRESENTS",
+        "IS_GOD_OF",
+        "MEANS",
+        "CAUSES"
+      ],
+      "title": "SemanticPredicate",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Subject, locked predicate, typed object structure, and deterministic evidence.",
+  "properties": {
+    "evidence_signature": {
+      "$ref": "#/$defs/EvidenceSignature"
+    },
+    "object_signature": {
+      "$ref": "#/$defs/SemanticObjectSignature"
+    },
+    "predicate": {
+      "$ref": "#/$defs/SemanticPredicate"
+    },
+    "subject_id": {
+      "title": "Subject Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "subject_id",
+    "predicate",
+    "object_signature",
+    "evidence_signature"
+  ],
+  "title": "SemanticAssertionSignature",
+  "type": "object"
+}

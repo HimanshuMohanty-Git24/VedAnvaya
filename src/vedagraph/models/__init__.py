@@ -17,6 +17,7 @@ from vedagraph.models.core import (
     QAIssue,
     RawSnapshotMetadata,
     RightsInfo,
+    SectionDiscoveryRecord,
     Source,
     SourceArtifact,
     SourceAssertion,
@@ -31,6 +32,7 @@ from vedagraph.models.core import (
     Translation,
     VHPMetadataStagingRecord,
     Work,
+    WorkBuildConfig,
 )
 from vedagraph.models.knowledge import (
     AnukramaniSegment,
@@ -75,6 +77,7 @@ __all__ = [
     "QAIssue",
     "RawSnapshotMetadata",
     "RightsInfo",
+    "SectionDiscoveryRecord",
     "Source",
     "SourceArtifact",
     "SourceAssertion",
@@ -90,4 +93,5 @@ __all__ = [
     "UnresolvedLabel",
     "VHPMetadataStagingRecord",
     "Work",
+    "WorkBuildConfig",
 ]

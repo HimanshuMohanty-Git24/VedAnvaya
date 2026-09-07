@@ -1,0 +1,97 @@
+{
+  "$defs": {
+    "Explicitness": {
+      "description": "How the model says it got there. Self-reported, and validated against evidence.",
+      "enum": [
+        "EXPLICIT",
+        "STRONG_INFERENCE",
+        "INTERPRETIVE"
+      ],
+      "title": "Explicitness",
+      "type": "string"
+    },
+    "ExplicitnessPolicyAssessment": {
+      "description": "Policy audit categories, not retrospective edits to model output.",
+      "enum": [
+        "CORRECTLY_STRONG_INFERENCE",
+        "SHOULD_HAVE_BEEN_EXPLICIT",
+        "TOO_INTERPRETIVE_TO_EMIT",
+        "SCHEMA_AMBIGUITY"
+      ],
+      "title": "ExplicitnessPolicyAssessment",
+      "type": "string"
+    },
+    "SemanticPredicate": {
+      "description": "Every relation name an extraction may emit, and the ones it may not.\n\nThe forbidden members exist so that a proposal naming one is rejected as a *policy*\ndecision with a recorded reason, instead of failing schema validation as an unknown\nstring. The difference matters when reading a rejection report.",
+      "enum": [
+        "EXPRESSES",
+        "DESCRIBES",
+        "PRAISES",
+        "INVOKES",
+        "REQUESTS",
+        "ASSOCIATED_WITH",
+        "INVOLVES_RITUAL",
+        "INVOLVES_OFFERING",
+        "INVOLVES_SUBSTANCE",
+        "REFERS_TO_PLACE",
+        "REFERS_TO_NATURAL_PHENOMENON",
+        "DESCRIBES_ACTION",
+        "HAS_THEME",
+        "CONTRASTS_WITH",
+        "SYMBOLIZES",
+        "REPRESENTS",
+        "IS_GOD_OF",
+        "MEANS",
+        "CAUSES"
+      ],
+      "title": "SemanticPredicate",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "assertion_id": {
+      "title": "Assertion Id",
+      "type": "string"
+    },
+    "legacy_explicitness": {
+      "$ref": "#/$defs/Explicitness"
+    },
+    "legacy_output_unchanged": {
+      "const": true,
+      "default": true,
+      "title": "Legacy Output Unchanged",
+      "type": "boolean"
+    },
+    "mantra_id": {
+      "title": "Mantra Id",
+      "type": "string"
+    },
+    "policy_assessment": {
+      "$ref": "#/$defs/ExplicitnessPolicyAssessment"
+    },
+    "policy_version": {
+      "default": "rigveda-semantic-explicitness-v2",
+      "title": "Policy Version",
+      "type": "string"
+    },
+    "predicate": {
+      "$ref": "#/$defs/SemanticPredicate"
+    },
+    "reason": {
+      "minLength": 1,
+      "title": "Reason",
+      "type": "string"
+    }
+  },
+  "required": [
+    "assertion_id",
+    "mantra_id",
+    "predicate",
+    "legacy_explicitness",
+    "policy_assessment",
+    "reason"
+  ],
+  "title": "ExplicitnessReview",
+  "type": "object"
+}

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import asyncio
+import json
 from pathlib import Path
 
 import typer
@@ -40,8 +41,38 @@ from vedagraph.models import (
     SourceAssertion,
 )
 from vedagraph.models.enums import EntityType, KnowledgeEntityType
+from vedagraph.models.semantic import (
+    EvidencePacket,
+    SemanticAssertionCandidate,
+    SemanticValidationResult,
+)
 from vedagraph.qa import print_qa_report
 from vedagraph.schema import export_schemas
+from vedagraph.semantic.codex_direct import (
+    EXECUTION_VERSION,
+    ExecutionStore,
+    RunContract,
+    load_run_contract,
+    prepare_task,
+)
+from vedagraph.semantic.evaluate import (
+    evaluate_against_gold,
+    load_gold_annotations,
+    write_evaluation_reports,
+)
+from vedagraph.semantic.gold import (
+    DEFAULT_ADJUDICATION_FILE,
+    DEFAULT_GOLD_FILE,
+    DEFAULT_PILOT_CONFIG,
+    DEFAULT_PILOT_RUN,
+    finalize_gold,
+    load_adjudications,
+    load_packet_index,
+    progress,
+    validate_gold_file,
+)
+from vedagraph.semantic.heuristic_baseline import BASELINE_PROVENANCE, extract_packet
+from vedagraph.semantic.review import review_gold
 from vedagraph.storage import read_jsonl, write_jsonl
 
 app = typer.Typer(help="Build and validate the provenance-aware VedaGraph canonical corpus.")
@@ -53,6 +84,11 @@ assertions_app = typer.Typer(help="Inspect persisted source assertions and confl
 text_app = typer.Typer(help="Compare Sanskrit text versions of the same passage.")
 metadata_app = typer.Typer(help="Inspect candidate traditional-metadata scopes.")
 knowledge_app = typer.Typer(help="Inspect the deterministic Rishi/Devata/Chandas knowledge layer.")
+semantic_app = typer.Typer(help="Review and evaluate model-authored semantic candidates.")
+gold_app = typer.Typer(help="Blinded human gold review and signed dataset management.")
+execute_app = typer.Typer(
+    help="CODEX_DIRECT model execution: prepare frozen tasks, import authored responses."
+)
 app.add_typer(source_app, name="source")
 app.add_typer(ingest_app, name="ingest")
 app.add_typer(corpus_app, name="corpus")
@@ -61,6 +97,9 @@ app.add_typer(assertions_app, name="assertions")
 app.add_typer(text_app, name="text")
 app.add_typer(metadata_app, name="metadata")
 app.add_typer(knowledge_app, name="knowledge")
+app.add_typer(semantic_app, name="semantic")
+semantic_app.add_typer(gold_app, name="gold")
+semantic_app.add_typer(execute_app, name="execute")
 console = Console()
 
 
@@ -436,6 +475,273 @@ def metadata_review_ranges(
     )
     console.print(f"Review report (committed, redacted): {report}")
     console.print(f"Review report (local, full source strings): {full_report}")
+
+
+@gold_app.command("review")
+def semantic_gold_review(
+    gold_file: Path = typer.Option(DEFAULT_GOLD_FILE, help="Identifier-only human gold JSONL."),  # noqa: B008
+    adjudication_file: Path = typer.Option(DEFAULT_ADJUDICATION_FILE),  # noqa: B008
+    pilot_config: Path = typer.Option(DEFAULT_PILOT_CONFIG, exists=True),  # noqa: B008
+    run_dir: Path = typer.Option(DEFAULT_PILOT_RUN, help="Local ignored pilot packet directory."),  # noqa: B008
+    reviewer: str | None = typer.Option(
+        None, help="Reviewer id; prompted and persisted if omitted."
+    ),
+) -> None:
+    """Review one local EvidencePacket at a time using blinded Stage A then Stage B."""
+    review_gold(
+        gold_path=gold_file,
+        adjudication_path=adjudication_file,
+        config_path=pilot_config,
+        run_dir=run_dir,
+        reviewer=reviewer,
+    )
+
+
+@gold_app.command("validate")
+def semantic_gold_validate(
+    gold_file: Path = typer.Option(DEFAULT_GOLD_FILE),  # noqa: B008
+    pilot_config: Path = typer.Option(DEFAULT_PILOT_CONFIG, exists=True),  # noqa: B008
+    run_dir: Path = typer.Option(DEFAULT_PILOT_RUN),  # noqa: B008
+) -> None:
+    """Validate all 120 ids, statuses, ontology values, and packet evidence references."""
+    result = validate_gold_file(
+        gold_file, config_path=pilot_config, run_dir=run_dir, require_complete=True
+    )
+    console.print(
+        f"Gold status: {result.status.value}; rows {result.present_count}/{result.expected_count}; "
+        f"complete {result.complete_count}/{result.expected_count}"
+    )
+    if result.errors:
+        for error in result.errors:
+            console.print(f"[red]ERROR[/red] {error}")
+        raise typer.Exit(code=1)
+    console.print("Gold validation passed.")
+
+
+@gold_app.command("finalize")
+def semantic_gold_finalize(
+    gold_file: Path = typer.Option(DEFAULT_GOLD_FILE),  # noqa: B008
+    pilot_config: Path = typer.Option(DEFAULT_PILOT_CONFIG, exists=True),  # noqa: B008
+    run_dir: Path = typer.Option(DEFAULT_PILOT_RUN),  # noqa: B008
+    manifest_file: Path = typer.Option(Path("data/gold/rigveda_semantic_gold_v1.manifest.json")),  # noqa: B008
+    version: str = typer.Option("vedagraph-rigveda-semantic-gold-v1"),
+) -> None:
+    """Validate complete human gold and write its signed SHA-256 manifest."""
+    try:
+        manifest = finalize_gold(
+            gold_file,
+            config_path=pilot_config,
+            run_dir=run_dir,
+            manifest_path=manifest_file,
+            version=version,
+        )
+    except ValueError as error:
+        raise typer.BadParameter(str(error)) from error
+    console.print(f"Signed gold: {manifest['version']}")
+    console.print(f"SHA-256: {manifest['gold_sha256']}")
+    console.print(f"Manifest: {manifest_file}")
+
+
+@semantic_app.command("eval")
+def semantic_eval(
+    gold_file: Path = typer.Option(DEFAULT_GOLD_FILE),  # noqa: B008
+    pilot_run: Path = typer.Option(DEFAULT_PILOT_RUN),  # noqa: B008
+    pilot_config: Path = typer.Option(DEFAULT_PILOT_CONFIG, exists=True),  # noqa: B008
+    reports_dir: Path = typer.Option(Path("docs/reports")),  # noqa: B008
+) -> None:
+    """Evaluate the unchanged pilot against signed human gold, or show safe progress only."""
+    from vedagraph.semantic.gold import expected_gold_ids
+
+    status = validate_gold_file(
+        gold_file, config_path=pilot_config, run_dir=pilot_run, require_complete=True
+    )
+    if not status.valid or status.complete_count != status.expected_count:
+        state = progress(gold_file, DEFAULT_ADJUDICATION_FILE, pilot_config)
+        console.print("GOLD_NOT_COMPLETE")
+        console.print(
+            f"Safe progress only: {state.blinded_complete}/{state.total} blinded rows complete; "
+            f"{state.remaining} remaining."
+        )
+        write_evaluation_reports(
+            output_dir=reports_dir,
+            gold_complete=False,
+            expected_count=len(expected_gold_ids(pilot_config)),
+            gold_count=state.blinded_complete,
+            adjudications=load_adjudications(DEFAULT_ADJUDICATION_FILE),
+        )
+        return
+
+    gold = load_gold_annotations(gold_file)
+    candidates_path = pilot_run / "semantic_candidates.jsonl"
+    validation_path = pilot_run / "semantic_validation.jsonl"
+    candidates = (
+        [
+            SemanticAssertionCandidate.model_validate(json.loads(line))
+            for line in candidates_path.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        ]
+        if candidates_path.exists()
+        else []
+    )
+    validations = (
+        {
+            item.candidate_assertion_id: item
+            for item in (
+                SemanticValidationResult.model_validate(json.loads(line))
+                for line in validation_path.read_text(encoding="utf-8").splitlines()
+                if line.strip()
+            )
+        }
+        if validation_path.exists()
+        else {}
+    )
+    predictions: dict[str, list[SemanticAssertionCandidate]] = {key: [] for key in gold}
+    for candidate in candidates:
+        predictions.setdefault(candidate.subject_key, []).append(candidate)
+    packets = load_packet_index(pilot_run)
+    entity_labels = {
+        key: label
+        for packet in packets.values()
+        for keys, labels in (
+            (packet.devata_keys, packet.devata_labels),
+            (packet.rishi_keys, packet.rishi_labels),
+            (packet.chandas_keys, packet.chandas_labels),
+        )
+        for key, label in zip(keys, labels, strict=True)
+    }
+    report = evaluate_against_gold(
+        gold,
+        predictions,
+        validations,
+        entity_labels=entity_labels,
+        candidate_labels={},
+    )
+    write_evaluation_reports(
+        output_dir=reports_dir,
+        gold_complete=True,
+        expected_count=status.expected_count,
+        gold_count=status.complete_count,
+        report=report,
+        gold=gold,
+        predictions=predictions,
+        adjudications=load_adjudications(DEFAULT_ADJUDICATION_FILE),
+    )
+    console.print("Gold status: COMPLETE")
+    table = Table("Predicate", "TP", "FP", "FN", "Precision", "Recall", "F1", "Support", "Unlocked")
+    for predicate, score in report.relation_scores.items():
+        table.add_row(
+            predicate.value,
+            str(score.true_positives),
+            str(score.false_positives),
+            str(score.false_negatives),
+            f"{score.precision:.3f}" if score.precision is not None else "n/a",
+            f"{score.recall:.3f}" if score.recall is not None else "n/a",
+            f"{score.f1:.3f}" if score.f1 is not None else "n/a",
+            str(score.predicted),
+            "yes" if score.meets_target else "no",
+        )
+    console.print(table)
+    console.print(f"Reports: {reports_dir}")
+
+
+DEFAULT_V3_PROMPT = Path("prompts/semantic_extraction_v3.md")
+DEFAULT_V3_SCHEMA = Path("schemas/semantic_extraction_v3.schema.json")
+DEFAULT_SEMANTIC_ONTOLOGY = Path("src/vedagraph/semantic/ontology.py")
+
+
+def _read_packets(path: Path) -> list[EvidencePacket]:
+    return [
+        EvidencePacket.model_validate_json(line)
+        for line in path.read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
+
+
+@execute_app.command("prepare")
+def semantic_execute_prepare(
+    packets: Path = typer.Option(..., exists=True, help="JSONL of built EvidencePackets."),  # noqa: B008
+    run_id: str = typer.Option(..., help="Execution run identifier."),
+    out_dir: Path = typer.Option(..., help="Task store root."),  # noqa: B008
+    model: str = typer.Option("gpt-5.6-luna", help="Model the run requests."),
+    reasoning: str = typer.Option("high", help="Reasoning effort the run requests."),
+    prompt_file: Path = typer.Option(DEFAULT_V3_PROMPT, exists=True),  # noqa: B008
+    schema_file: Path = typer.Option(DEFAULT_V3_SCHEMA, exists=True),  # noqa: B008
+    ontology_file: Path = typer.Option(DEFAULT_SEMANTIC_ONTOLOGY, exists=True),  # noqa: B008
+    execution_version: str = typer.Option(EXECUTION_VERSION),
+) -> None:
+    """Freeze one immutable model task per mantra. Writes no semantic content whatsoever."""
+    contract = load_run_contract(
+        run_id=run_id,
+        prompt_path=prompt_file,
+        schema_path=schema_file,
+        ontology_path=ontology_file,
+        model_requested=model,
+        reasoning_requested=reasoning,
+        execution_version=execution_version,
+    )
+    store = ExecutionStore(out_dir)
+    table = Table("Task", "Mantra", "Task SHA-256")
+    for packet in _read_packets(packets):
+        task = prepare_task(packet, contract)
+        store.write_task(task)
+        table.add_row(task.task_id, task.citation, task.task_sha256)
+    (out_dir / "run_contract.json").write_text(
+        json.dumps(contract.model_dump(mode="json"), indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+        newline="\n",
+    )
+    console.print(table)
+    console.print(
+        "Prepared tasks only. No predicate, object, confidence or explicitness was authored; "
+        "a model must write a response before any semantic output exists."
+    )
+
+
+@execute_app.command("import-response")
+def semantic_execute_import_response(
+    response: Path = typer.Argument(..., help="Model-authored response file."),  # noqa: B008
+    store_dir: Path = typer.Option(..., help="Task store root used by prepare."),  # noqa: B008
+) -> None:
+    """Validate and persist one model-authored response. Fails closed on any mismatch."""
+    contract_path = store_dir / "run_contract.json"
+    if not contract_path.exists():
+        raise typer.BadParameter(f"{contract_path} is missing; run prepare first")
+    contract = RunContract.model_validate_json(contract_path.read_text(encoding="utf-8"))
+    try:
+        validated = ExecutionStore(store_dir).import_response(response, contract)
+    except (FileNotFoundError, ValueError) as error:
+        console.print(f"[red]REFUSED[/red] {error}")
+        raise typer.Exit(code=1) from error
+    console.print(
+        f"Imported {validated.task.task_id} ({validated.task.citation}); "
+        f"attempt {validated.receipt.attempt_id}; "
+        f"raw receipt SHA-256 {validated.raw_response_sha256}"
+    )
+    console.print(
+        f"{len(validated.payload.assertions)} candidate assertions, "
+        f"{len(validated.payload.ontology_gaps)} ontology gaps, status CANDIDATE / NEEDS_REVIEW."
+    )
+
+
+@semantic_app.command("heuristic-baseline")
+def semantic_heuristic_baseline(
+    packets: Path = typer.Option(..., exists=True, help="JSONL of built EvidencePackets."),  # noqa: B008
+    run_id: str = typer.Option(..., help="Baseline run identifier; must not name a model."),
+    out_file: Path = typer.Option(..., help="Destination JSONL for baseline payloads."),  # noqa: B008
+) -> None:
+    """Run the deterministic cue matcher. This is not extraction by a model.
+
+    Output carries DETERMINISTIC_HEURISTIC_BASELINE provenance and is refused by the
+    full-run store, which accepts only model-authored receipts.
+    """
+    rows = []
+    for packet in _read_packets(packets):
+        payload, _ = extract_packet(packet, run_id=run_id)
+        rows.append(json.dumps(payload.model_dump(mode="json"), ensure_ascii=False, sort_keys=True))
+    out_file.parent.mkdir(parents=True, exist_ok=True)
+    out_file.write_text("\n".join(rows) + "\n", encoding="utf-8", newline="\n")
+    console.print(f"{len(rows)} baseline payloads written to {out_file}")
+    console.print(f"Provenance: {BASELINE_PROVENANCE}. Not a model run, not CODEX_DIRECT.")
 
 
 @app.callback()

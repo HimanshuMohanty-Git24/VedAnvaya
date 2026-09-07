@@ -1,0 +1,33 @@
+{
+  "additionalProperties": false,
+  "description": "An identifier inside the EvidencePacket used for the independent judgment.",
+  "properties": {
+    "kind": {
+      "enum": [
+        "PASSAGE",
+        "TRANSLATION",
+        "TOKEN",
+        "ENTITY",
+        "PARALLEL"
+      ],
+      "title": "Kind",
+      "type": "string"
+    },
+    "note": {
+      "default": "",
+      "title": "Note",
+      "type": "string"
+    },
+    "reference_id": {
+      "minLength": 1,
+      "title": "Reference Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "kind",
+    "reference_id"
+  ],
+  "title": "SilverEvidenceReference",
+  "type": "object"
+}

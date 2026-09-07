@@ -1,0 +1,541 @@
+# Sukla Yajurveda source fragment (Agent C).
+#
+# Scope: VG:WORK:YV:VSM - Vajasaneyi Samhita, Madhyandina recension.
+# Single writer: Agent C. Agent E reads this and consolidates it into the master matrix
+# and into data/registry/sources.yaml; nothing here is authoritative for other Vedas.
+#
+# RIGHTS DISCIPLINE APPLIED HERE
+#   Every `license_evidence` block below quotes text that was actually fetched, with the
+#   URL it came from and the retrieval date. Artifact-level and site-level rights are
+#   recorded SEPARATELY and a conflict is stated rather than resolved. Where an artifact
+#   carries no licence statement of its own, that absence is recorded as an absence and
+#   the status is taken from the site only when the site's terms of use genuinely govern
+#   user-contributed page content (MediaWiki), never by analogy with a sibling file.
+#
+# HEADLINE FINDING
+#   GRETIL, the source used for the Rigveda, has NO Vajasaneyi Samhita artifact at all.
+#   The best structured accented Madhyandina text (TITUS) is all-rights-reserved.
+#   The selected ingestible source is Sanskrit Wikisource under CC BY-SA 4.0.
+
+# IDENTIFIER CORRECTION, 2026-09-07
+#   This fragment originally proposed a per-Veda source id (WIKISOURCE_SA_VSM) and dotted
+#   artifact ids (WIKISOURCE.SA.VSM.*). That was wrong and Agent F's G11 gate caught it:
+#   the adhyaya pages are further ARTIFACTS of the already-registered WIKISOURCE_SA source,
+#   and inventing a per-Veda source id attaches rights at a level the rights authority never
+#   adjudicated. Now aligned to the registered ids:
+#     source   WIKISOURCE_SA
+#     artifacts WIKISOURCE_SA.YV.VSM.SAMHITA.DEVANAGARI
+#               WIKISOURCE_SA.YV.VSM.RISHISUCI
+#               WIKISOURCE_SA.YV.VSM.SARVANUKRAMANI
+#   The pilot builder now loads these from data/registry/ and raises on an unknown id
+#   rather than constructing records locally.
+#
+# OPEN DEFECT FOR AGENT E (registry, not this file)
+#   WIKISOURCE_SA.YV.VSM.SAMHITA.DEVANAGARI carries
+#   checksum_sha256: cb13ec2ee19ba0279bfaee40077647336a78c34e3607f7aaad64d91a3e86e1bf
+#   which is the hash of the PREFACE page, not of the samhita text. It came from the
+#   edition_evidence block below, where it is correct. See the message sent to Agent E.
+
+retrieval_context:
+  agent: Agent C
+  retrieved_on: 2026-09-07
+  user_agent: "VedaGraph/0.1 (+https://github.com/vedagraph/vedagraph)"
+  work_id: VG:WORK:YV:VSM
+  recension_required: Madhyandina
+  recension_confusion_risk: >-
+    Sukla YV has two recensions (Madhyandina, Kanva) and Krishna YV has four more
+    (Taittiriya, Maitrayani, Kathaka, Kapisthala). Several catalogues label a Yajurveda
+    text without stating which. Every candidate below records how its recension was
+    established, and any candidate whose recension could not be established from the
+    artifact itself is marked REJECTED_RECENSION_UNVERIFIED.
+
+# ---------------------------------------------------------------------------
+# SELECTED
+# ---------------------------------------------------------------------------
+
+sources:
+  - source_id: WIKISOURCE_SA
+    name: Sanskrit Wikisource - Sukla Yajurveda (Vajasaneyi Samhita, Madhyandina)
+    organization: Wikimedia Foundation
+    url: https://sa.wikisource.org/wiki/%E0%A4%B6%E0%A5%81%E0%A4%95%E0%A5%8D%E0%A4%B2%E0%A4%AF%E0%A4%9C%E0%A5%81%E0%A4%B0%E0%A5%8D%E0%A4%B5%E0%A5%87%E0%A4%A6%E0%A4%83
+    authority_tier: COMMUNITY_TRANSCRIPTION
+    formats: [MEDIAWIKI_WIKITEXT, JSON_API]
+    known_languages: [sa]
+    rights:
+      status: CC_BY_SA
+      license_url: https://creativecommons.org/licenses/by-sa/4.0/deed.sa
+      holder: Contributors to Sanskrit Wikisource
+      notes: >-
+        Site-level licence, retrieved from the wiki's own API rather than from a
+        human-readable footer. Applies to page content because MediaWiki page text is
+        user-contributed under the Wikimedia Terms of Use.
+    verification_roles: [PRIMARY_SANSKRIT, ACCENTED_SANSKRIT, TRADITIONAL_METADATA]
+    bulk_ingestion_status: SELECTED_FOR_INGESTION
+    notes: >-
+      Authority tier is COMMUNITY_TRANSCRIPTION because the TRANSCRIPTION is
+      community-made -- but the underlying printed edition IS identified (see
+      edition_evidence below), so this is a transcription of a named scholarly edition
+      rather than an anonymous text. The residual weakness is transcription fidelity, not
+      unknown provenance.
+
+    license_evidence:
+      site_level:
+        method: "MediaWiki API action=query&meta=siteinfo&siprop=rightsinfo"
+        url: https://sa.wikisource.org/w/api.php?action=query&meta=siteinfo&siprop=rightsinfo&format=json
+        retrieved_on: 2026-09-07
+        verbatim: |
+          {
+            "url": "https://creativecommons.org/licenses/by-sa/4.0/deed.sa",
+            "text": "Creative Commons Attribution-Share Alike 4.0"
+          }
+      artifact_level:
+        finding: NO_ARTIFACT_LEVEL_LICENCE_STATEMENT
+        verbatim: null
+        notes: >-
+          Checked. The adhyaya pages carry a {{header}} template with title/section/next
+          fields and no licence element; there is no TEI header and no per-file notice.
+          The absence is recorded as an absence. Status is therefore inherited from the
+          site licence, which is legitimate here only because the artifact IS a
+          user-contributed MediaWiki page governed by the Wikimedia Terms of Use - not by
+          analogy with any sibling file.
+      conflict: NONE
+      share_alike_warning: >-
+        CC BY-SA 4.0 is a share-alike licence. Any VedaGraph artifact that embeds this
+        text inherits the share-alike obligation. Agent E must decide whether the
+        distributed corpus can carry it.
+
+source_artifacts:
+  - artifact_id: WIKISOURCE_SA.YV.VSM.SAMHITA.DEVANAGARI
+    source_id: WIKISOURCE_SA
+    work_id: VG:WORK:YV:VSM
+    url: https://sa.wikisource.org/w/api.php
+    format: MEDIAWIKI_WIKITEXT_VIA_JSON_API
+    filename: "per-adhyaya API snapshots under data/raw/wikisource_sa/2026-09-07/"
+    retrieval_date: 2026-09-07
+    title: "शुक्लयजुर्वेदः (Sukla Yajurveda) - adhyaya 1..40"
+    recension: Madhyandina
+    encoding: "UTF-8 Devanagari"
+    language: sa
+    citation_system: "adhyaya.mantra"
+    rights_status: CC_BY_SA
+    license_url: https://creativecommons.org/licenses/by-sa/4.0/deed.sa
+    transformation_version: wikisource-sa-vsm-v1
+    edition_title: >-
+      Vajasaneyi-Madhyandina Sukla-Yajurveda-Samhita, with Uvata's Mantrabhasya and
+      Mahidhara's Vedadipa, ed. Vasudeva Sarma Panasikara (2nd edn), published by
+      Panduranga Javaji at the Nirnaya Sagara Press, Bombay, Saka 1850 = CE 1929
+    editors: ["Vasudeva Sarma Panasikara"]
+    publication_date: "1929"
+    edition_evidence:
+      locator: "शुक्लयजुर्वेदः/प्राक्कथनम्, विषयानुक्रमणिका च"
+      snapshot: "data/raw/wikisource_sa/2026-09-07/cb13ec2ee19ba0279bfaee40077647336a78c34e3607f7aaad64d91a3e86e1bf.php"
+      retrieved_on: 2026-09-07
+      verbatim: |
+        श्रीमदुवटाचार्यविरचितमन्त्रभाष्येण
+        श्रीमन्महीधरकृतवेददीपाख्यभाष्येण च संवलिता ।
+        (विविधपरिशिष्ट-मन्त्रकोशसहिता च ।)
+        पणशीकरोपाह्वविद्वद्वरलक्ष्मणशर्मतनुजनुषा वासुदेवशर्मणा
+        विद्वत्साहाय्येन संशोधिता ।
+        (द्वितीयावृत्तिः।)
+        सा चेयं
+        मुम्बय्यां
+        पाण्डुरङ्ग जावजीश्रेष्ठिना
+        स्वीये निर्णयसागराख्यमुद्रणयन्त्रालये आयसाक्षरैरानङ्क्य प्राकाश्यं नीता ।
+        शाकः १८५०, सनः १९२९.
+      note: >-
+        The wiki page reproduces the printed title page verbatim, which is how the edition
+        was identified. Saka 1850 = CE 1929, and the page states both. The 1929 print is
+        out of copyright by age; the Wikisource transcription of it is CC BY-SA 4.0.
+    provenance_notes: >-
+      40 adhyaya pages plus three apparatus pages were snapshotted through
+      PoliteFetcher on 2026-09-07. Each snapshot is one MediaWiki
+      action=query&prop=revisions&rvslots=main response, so it carries pageid, revid and
+      revision timestamp alongside the wikitext, making the snapshot self-dating.
+      Titles are requested zero-padded in Devanagari digits with redirects=1; adhyayas
+      2, 3 and 6 resolve via redirect to unpadded titles.
+    recension_evidence:
+      - locator: "शुक्लयजुर्वेदः/अध्यायः ०१, commentary block, first line"
+        verbatim: "श्रीमद्वाजसनेयिमाध्यन्दिन शुक्लयजुर्वेदसंहिता।"
+        gloss: "Srimad-Vajasaneyi-MADHYANDINA Sukla-Yajurveda-Samhita"
+        strength: DECISIVE
+        notes: The artifact names its own recension. Not inferred from a catalogue.
+      - locator: "शुक्लयजुर्वेदः/सर्वानुक्रमणी, line 2"
+        verbatim: "माध्यन्दिनीये वाजसनेयके यजुर्..."
+        gloss: "in the MADHYANDINIYA Vajasaneyaka Yajur[veda]"
+        strength: CORROBORATING
+      - locator: "शुक्लयजुर्वेदः/अध्यायः ४० samhita labels"
+        verbatim: "40.1 {ईशावा.उप. काण्व1}"
+        gloss: >-
+          "Isavasya Upanisad, KANVA 1" - the page gives the Kanva equivalent as a
+          cross-reference, which only makes sense if the base text is NOT Kanva.
+        strength: CORROBORATING
+    text_versions:
+      - text_version_id: WIKISOURCE_SA.YV.VSM.ACCENTED
+        role: PRIMARY_TEXT
+        accented: true
+        description: >-
+          Fully accented Devanagari mantra text (udatta U+0951, anudatta U+0952, Vedic
+          Extensions U+1CD0-U+1CFF), quoted inside the Uvata-Mahidhara commentary block,
+          each mantra closed by its own number in Devanagari digits between dandas.
+        selected_as_primary_because: >-
+          It preserves Vedic tone marks and it is materially more complete than the
+          unaccented block, which is truncated in adhyayas 3, 7 and 19.
+      - text_version_id: WIKISOURCE_SA.YV.VSM.UNACCENTED
+        role: PARALLEL_TEXT
+        accented: false
+        description: >-
+          Unaccented Devanagari samhita block, mantras labelled "<adhyaya>.<mantra>".
+        notes: >-
+          Cleaner labelling but incomplete. Retained in full as an independent reading;
+          it is never merged into the accented version and never overwrites it.
+
+  - artifact_id: WIKISOURCE_SA.YV.VSM.RISHISUCI
+    source_id: WIKISOURCE_SA
+    work_id: VG:WORK:YV:VSM
+    url: https://sa.wikisource.org/wiki/%E0%A4%B6%E0%A5%81%E0%A4%95%E0%A5%8D%E0%A4%B2%E0%A4%AF%E0%A4%9C%E0%A5%81%E0%A4%B0%E0%A5%8D%E0%A4%B5%E0%A5%87%E0%A4%A6%E0%A4%83/%E0%A4%8B%E0%A4%B7%E0%A4%BF%E0%A4%B8%E0%A5%82%E0%A4%9A%E0%A5%80
+    format: MEDIAWIKI_WIKITEXT_VIA_JSON_API
+    filename: "data/raw/wikisource_sa/2026-09-07/2151af3f369e21c2792b0bc7d43efce3c2242e568ad1c5725fe40fd35c743caa.php"
+    retrieval_date: 2026-09-07
+    title: "शुक्लयजुर्वेदः/ऋषिसूची (Rsi index)"
+    recension: Madhyandina
+    rights_status: CC_BY_SA
+    license_url: https://creativecommons.org/licenses/by-sa/4.0/deed.sa
+    provenance_notes: >-
+      419 lines, each "<rsi name> <adhyaya>.<mantra ranges> danda", e.g.
+      "अत्रिः ८.१५–२२, २४-३० ।" = Atri at VSM 8.15-22 and 8.24-30. Machine-parseable
+      per-mantra rsi attribution. Ranges use BOTH U+002D HYPHEN and U+2013 EN DASH, and
+      the numerals are Devanagari. This is an EDITION-SUPPLIED index, so its authority is
+      the (unidentified) edition's, not the Anukramani's directly.
+
+  - artifact_id: WIKISOURCE_SA.YV.VSM.SARVANUKRAMANI
+    source_id: WIKISOURCE_SA
+    work_id: VG:WORK:YV:VSM
+    url: https://sa.wikisource.org/wiki/%E0%A4%B6%E0%A5%81%E0%A4%95%E0%A5%8D%E0%A4%B2%E0%A4%AF%E0%A4%9C%E0%A5%81%E0%A4%B0%E0%A5%8D%E0%A4%B5%E0%A5%87%E0%A4%A6%E0%A4%83/%E0%A4%B8%E0%A4%B0%E0%A5%8D%E0%A4%B5%E0%A4%BE%E0%A4%A8%E0%A5%81%E0%A4%95%E0%A5%8D%E0%A4%B0%E0%A4%AE%E0%A4%A3%E0%A5%80
+    format: MEDIAWIKI_WIKITEXT_VIA_JSON_API
+    filename: "data/raw/wikisource_sa/2026-09-07/91203256234de6dbe6fa626c911a9bb674aebe0a6688acd2ba2a5388c0208e28.php"
+    retrieval_date: 2026-09-07
+    title: "शुक्लयजुर्वेदः/सर्वानुक्रमणी (Sarvanukramanika / Sarvanukramasutra)"
+    recension: Madhyandina
+    rights_status: CC_BY_SA
+    license_url: https://creativecommons.org/licenses/by-sa/4.0/deed.sa
+    provenance_notes: >-
+      A genuine indigenous apparatus for the Sukla YV, NOT the Rigvedic Sarvanukramani.
+      It does state rsi, devata and chandas, but as CONTINUOUS SUTRA PROSE grouped by
+      anuvaka, with liniokta ("deity stated by the characteristic mark") standing in for
+      many deities. It is machine-READABLE but not machine-INTERPRETABLE: resolving it to
+      per-mantra claims requires expert sutra parsing. It is ingested as evidence text
+      only. NO per-mantra claim is derived from it by machine, and none by LLM.
+
+# ---------------------------------------------------------------------------
+# INVESTIGATED AND NOT SELECTED
+# ---------------------------------------------------------------------------
+
+rejected_or_deferred:
+
+  - candidate_id: GRETIL_VAJASANEYI
+    verdict: DOES_NOT_EXIST
+    url: https://gretil.sub.uni-goettingen.de/gretil.html
+    retrieved_on: 2026-09-07
+    finding: >-
+      GRETIL has no Vajasaneyi Samhita artifact in either recension. The index lists the
+      title with an empty attribution and no file. Confirmed by grepping all 6,327
+      anchors of the index (zero matches for vajas/vAjas/yaju/sukla) and by direct 404
+      probes of eight plausible filenames under corpustei/ and 1_veda/1_sam/.
+      Directory listings return HTTP 403, so gretil.html is the only enumeration.
+    license_evidence:
+      artifact_level:
+        finding: NO_ARTIFACT_EXISTS
+        verbatim: null
+      site_level:
+        url: https://gretil.sub.uni-goettingen.de/gretil.html
+        verbatim: |
+          <h5 id="orge9aa8e6">White Yajurveda</h5>
+          <li>Vajasaneyi-Samhita (input by &#x2026;) <span id="VajSam"></span>
+          <ul class="org-ul">
+          <li>Restricted download / proprietary format from <a href="http://titus.uni-frankfurt.de/indexe.htm">TITUS</a></li>
+          <li>Converted file(s) not available at present</li>
+          </ul></li>
+    consequence: >-
+      The Rigveda ingestion path (GRETIL TEI) DOES NOT GENERALISE to Sukla Yajurveda.
+      Only the Maitrayani Samhita (Krishna YV, wrong recension for VG:WORK:YV:VSM) is
+      available among YV samhitas on GRETIL. GRETIL does hold the Madhyandina Satapatha
+      Brahmana, but kanda 12 is missing (sb_12_u.htm -> HTTP 404).
+
+  - candidate_id: TITUS_VS_MADHYANDINA
+    verdict: REJECTED_RIGHTS
+    url: https://titus.uni-frankfurt.de/texte/etcs/ind/aind/ved/yvw/vs/vs.htm
+    retrieved_on: 2026-09-07
+    quality: >-
+      TECHNICALLY THE BEST SOURCE FOUND. Complete: exactly 40 adhyayas, vs001.htm..
+      vs040.htm, vs041.htm returns 404. Fully accented. Explicitly Madhyandina. Structure
+      is a three-level anchor ladder YVW_VS_<adhyaya>_<mantra>_<pada>.
+    recension_evidence:
+      verbatim: |
+        Text collection: YVW    White Yajur-Veda
+        Text: VS               Vajasaneyi-Samhita
+                               Madhyandina-Recension
+        On the basis of the edition by
+        Albrecht Weber,
+        The Vajasaneyi-Samhita
+        in the Madhyandina and the Kanva-Sakha
+        with the Commentary of Mahidhara,
+        Berlin 1849 / repr. Varanasi 1972
+        (Chowkhamba Sanskrit Series, 103)
+        entered by Martin Kummel,
+        Freiburg, 1997;
+        TITUS version by Jost Gippert, Frankfurt a.M., ...
+      strength: DECISIVE
+      note: >-
+        Records Weber Berlin 1849; the commonly cited date for Weber's VS is 1852. The
+        artifact's own statement is recorded as-is, not corrected.
+    license_evidence:
+      artifact_level:
+        url: https://titus.uni-frankfurt.de/texte/etcs/ind/aind/ved/yvw/vs/vs001.htm
+        retrieved_on: 2026-09-07
+        verbatim: |
+          Copyright TITUS Project,
+          Frankfurt a/M, 2.11.2013.
+           No parts of this document may be republished in any form
+          without prior permission by the copyright holder.
+      site_level:
+        verbatim: >-
+          GRETIL independently characterises this holding as "Restricted download /
+          proprietary format".
+      conflict: NONE - both artifact and site agree the text is restricted.
+    rights_status: PERMISSION_REQUIRED
+    storage_policy: EXTERNAL_REFERENCE
+    action: >-
+      NOT mirrored into data/raw. Two pages were fetched to a scratch directory solely to
+      characterise structure, encoding and rights, and were not persisted as corpus data.
+      Used ONLY as an external count cross-check (its adhyaya 1 ends at verse 31 and its
+      adhyaya 40 at verse 17, both matching the computed counts).
+    unblock_path: >-
+      Written permission from the TITUS Project. If granted this becomes the preferred
+      primary source: it is a named scholarly edition, which the selected Wikisource
+      artifact is not. Note its encoding is TITUS-proprietary romanisation (aspirates as
+      modifier letter U+02B0, e.g. "stʰa"), NOT IAST, so it needs its own
+      transliteration mapping rather than reuse of the Rigveda tooling.
+
+  - candidate_id: SANSKRIT_LIBRARY_VS_TEI
+    verdict: DEFERRED_NO_RETRIEVAL_URL
+    url: https://sanskritlibrary.org/catalogsText/titus/vedic/vs.html
+    retrieved_on: 2026-09-07
+    finding: >-
+      A TEI XML edition of the Madhyandina VS derived from the TITUS text. Catalogue page
+      is reachable (HTTP 200) and names Editor Peter M. Scharf, TEI markup by Matthias H.
+      Ahlborn, "First XML edition", Version 0.1, Providence RI, 2010. The catalogue page
+      exposes NO download href; /TEI_MS/vs.xml and /textsSA/vs.xml both 404 and
+      textsList.html has no VS entry.
+    license_evidence:
+      artifact_level:
+        verbatim: |
+          All rights reserved other than those granted under the Creative Commons
+          Attribution Non-Commercial Share Alike license available in full at
+          http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode, and summarized at
+          http://creativecommons.org/licenses/by-nc-sa/3.0/. Permission is granted to
+          build upon this work non-commercially, as long as credit is explicitly
+          acknowledged exactly as described herein and derivative work is distributed
+          under the same license.
+    rights_status: CC_BY_NC_SA
+    action: >-
+      Not ingested: no public retrieval URL was found, so nothing could be hashed. Would
+      also impose a NON-COMMERCIAL restriction on any derived artifact, which is stricter
+      than the selected source's CC BY-SA. Agent E should decide whether NC is acceptable
+      before anyone requests the file.
+
+  - candidate_id: GRIFFITH_WHITE_YAJURVEDA
+    verdict: RESOLVED_TO_ITEM_BUT_OCR_ONLY
+    resolves_placeholder: GRIFFITH_WHITE_YAJURVEDA in data/registry/sources.yaml
+    # PREFERRED ITEM, revised 2026-09-07 after Agent E's reprint objection.
+    # Agent E rightly rejected textswhiteyajur00grifgoog because its scan is of the 1987
+    # Munshiram Manoharlal REPRINT (metadata date: 1987, publisher: New Delhi :
+    # Munshiram Manoharlal Publishers), and a modern reprint can carry its own
+    # typographic rights even where the 1899 translation is public domain.
+    # E proposed in.ernet.dli.2015.215626 instead. That item is indeed date: 1899, but it
+    # carries NO rights field at all -- no possible-copyright-status, no rights, no
+    # licenseurl, no publisher -- so by RIGHTS-1 its rights are UNRECORDED rather than
+    # affirmatively public domain.
+    # textswhiteyajur01grifgoog satisfies BOTH constraints and is therefore preferred:
+    # date: 1899 AND publisher "E.J. Lazarus and co., 1899" (the ORIGINAL Benares
+    # publisher, not a reprint) AND an explicit possible-copyright-status:
+    # NOT_IN_COPYRIGHT with copyright-region: US.
+    archive_org_identifier: textswhiteyajur01grifgoog
+    url: https://archive.org/details/textswhiteyajur01grifgoog
+    retrieved_on: 2026-09-07
+    preferred_item_evidence:
+      identifier: textswhiteyajur01grifgoog
+      verbatim_fields:
+        title: "The texts of the white Yajurveda"
+        creator: "Ralph Thomas Hotchkin Griffith"
+        date: "1899"
+        publisher: "E.J. Lazarus and co., 1899"
+        language: "English"
+        possible-copyright-status: "NOT_IN_COPYRIGHT"
+        copyright-region: "US"
+        scanner: "google"
+        contributor: "Harvard University"
+      djvu_txt: "textswhiteyajur01grifgoog_djvu.txt, 867,776 bytes"
+    alternate_items_recorded:
+      - identifier: in.ernet.dli.2015.215626
+        note: >-
+          Agent E's proposal. date 1899, title "The Texts Of The White Yajurveda",
+          creator "Griffith,ralph T.h.", DjVuTXT 971,302 bytes. Correct edition year, but
+          NO rights field of any kind is recorded on the item. Public domain by age of the
+          1899 edition, not by anything the item asserts. Retained as a second witness.
+      - identifier: textswhiteyajur00grifgoog
+        note: >-
+          My original resolution. Carries possible-copyright-status NOT_IN_COPYRIGHT and
+          the fullest metadata (translator, lccn 87904181, oclc 22279194,
+          description "Translation of: Vājasaneyīsaṃhitā"), but the SCAN is of the 1987
+          reprint. Superseded on Agent E's reprint ground. Retained as a metadata witness.
+      - identifier: textsofwhiteyaju0000unse
+        note: "DO NOT USE - ACS/LCP encrypted PDF, lending-restricted."
+    license_evidence:
+      artifact_level:
+        method: "archive.org metadata API https://archive.org/metadata/textswhiteyajur00grifgoog"
+        verbatim_fields:
+          creator: "Griffith, Ralph T. H. (Ralph Thomas Hotchkin), 1826-1906"
+          translator: "Ralph Thomas Hotchkin Griffith"
+          year: "1899"
+          date: "1987"
+          publisher: "New Delhi : Munshiram Manoharlal Publishers"
+          possible-copyright-status: "NOT_IN_COPYRIGHT"
+          copyright-region: "US"
+          contributor: "Harvard University"
+          scanner: "google"
+          description: "Translation of: Vājasaneyīsaṃhitā"
+          spine_title: "The texts of the White Yajurveda, or, Vājasaneyā saṃhita"
+          lccn: "87904181"
+          oclc-id: "22279194"
+    rights_status: PUBLIC_DOMAIN
+    recension_evidence: >-
+      archive.org's own metadata states "Translation of: Vājasaneyīsaṃhitā", and Griffith
+      translated the Madhyandina text. Recension is CORROBORATED, not decisive: the front
+      matter was not read, because only OCR text is available.
+    machine_readability: >-
+      OCR ONLY. The sole text-bearing derivative is
+      textswhiteyajur00grifgoog_djvu.txt, 862,258 bytes, sha1
+      7fd4f74e7edade39e9851d0c232a2a28b50e07e5. There is no structured transcription.
+    action: >-
+      NOT INGESTED as canonical translation records in this pilot. Reason: OCR output is
+      not corpus data, and aligning OCR verse numbers to 1,975 mantras cannot be verified
+      without human review. Recorded here so the sources.yaml placeholder can be
+      resolved to a concrete item and rights value.
+    alternatives_checked:
+      - "en.wikisource.org: NO transcription of Griffith's White Yajurveda exists. Searches for 'White Yajurveda', 'Yajurveda', 'Vajasaneyi' return only secondary literature. WARNING: en.wikisource DOES have 'The Veda of the Black Yajus School' (Keith, Taittiriya) - that is KRISHNA Yajurveda and MUST NOT be used for VG:WORK:YV:VSM."
+      - "sacred-texts.com/hin/wyv/: hosts Griffith's White Yajurveda in structured HTML but is behind Cloudflare bot interstitial - HTTP 403 on index.htm and wyvbk01.htm. Not machine-retrievable."
+      - "archive.org textsofwhiteyaju0000unse (1957 E. J. Lazarus): only ACS/LCP ENCRYPTED PDF, i.e. lending-restricted. Not usable."
+
+  - candidate_id: WEBER_VS_EDITION_SCAN
+    verdict: REFERENCE_ONLY
+    archive_org_identifier: india.history.resource.52798
+    title: "The White Yajurveda, in Three Parts"
+    creator: "Weber, Albrecht (Ed.)"
+    date: 1855
+    publisher: "Ferd. Dummler's Verlagsbuchhandlung, William and Norgate (Berlin)"
+    rights_status: PUBLIC_DOMAIN
+    note: >-
+      The printed edition underlying the TITUS text. Scan with DjVuTXT OCR. Valuable as a
+      human-verifiable reference for adjudicating counts and readings; NOT ingested,
+      because OCR of accented Devanagari/romanised Sanskrit is not corpus-grade.
+      Records the edition date as 1855 in this item, against TITUS's stated 1849 and the
+      commonly cited 1852 - three different dates for Weber's VS. Recorded as data.
+
+  - candidate_id: VEDAWEB
+    verdict: OUT_OF_SCOPE_NO_YAJURVEDA
+    url: https://vedaweb.uni-koeln.de/
+    finding: >-
+      VedaWeb serves Rigveda (and Atharvaveda/Saunaka) only. It has no Yajurveda corpus,
+      so the parallel-source pattern used for the Rigveda pilot has no VedaWeb analogue
+      here. This is why the Yajurveda pilot's "parallel" version is a second text layer
+      of the same artifact rather than a second repository.
+
+  - candidate_id: VEDIC_HERITAGE_PORTAL
+    verdict: REFERENCE_ONLY_PENDING_AGENT_E
+    url: https://vedicheritage.gov.in/samhitas/yajurveda/vajasneyi-madhyandina-samhita/
+    finding: >-
+      IGNCA / Government of India portal with a Madhyandina VS section and a large audio
+      archive. Default posture is PERMISSION_REQUIRED and therefore reference-only, per
+      Agent E's standing instruction. Not mirrored. See the audio inventory sent to
+      Agent E separately.
+    rights_status: PERMISSION_REQUIRED
+    storage_policy: EXTERNAL_REFERENCE
+
+hindi_translation:
+  verdict: NOT_AVAILABLE_UNDER_A_USABLE_LICENCE
+  finding: >-
+    No machine-readable Hindi translation of the Madhyandina VS was found under a licence
+    permitting ingestion. The well-known Hindi renderings (Satavalekar; Dayananda
+    Sarasvati's Yajurveda Bhasya; Devi Chand) are 20th-century works whose Hindi
+    translation layers are frequently still in copyright or of unclear status, and none
+    was found as structured per-mantra data. Recorded as a gap, not filled.
+
+# ---------------------------------------------------------------------------
+# COUNT RECONCILIATION (computed, not quoted from memory)
+# ---------------------------------------------------------------------------
+
+count_reconciliation:
+  method: >-
+    Counts are COMPUTED from the selected source records by the adapter over all 40
+    snapshotted adhyaya pages, never hard-coded. Per adhyaya the count is the number of
+    distinct mantra numbers the source itself labels, taken as the union of the two text
+    layers, because each layer is individually incomplete in different places.
+  computed:
+    adhyaya_count: 40
+    total_mantras: 1975
+    sum_of_accented_layer_maxima: 1973
+    sum_of_unaccented_layer_maxima: 1844
+    note: >-
+      The two layers disagree. The unaccented samhita block is badly truncated in
+      adhyaya 3 (43 of 63), adhyaya 7 (15 of 48) and adhyaya 19 (17 of 95), and has
+      single-mantra gaps in adhyayas 4, 10, 12, 13, 18 and 39. The accented layer is
+      short by one in adhyaya 6 (36 of 37) and adhyaya 23 (64 of 65). Their UNION is
+      exactly 1975 with no gaps. The layers were not merged into a single text; only the
+      structural inventory is unioned.
+  external_cross_checks:
+    - source: TITUS (reference-only)
+      total: 1974
+      divergence: "VS 2.32 absent from TITUS; present on Wikisource. TITUS therefore yields 1974."
+      verdict: "Divergence recorded as data. No source was edited to agree with another."
+    - source: Vedic Heritage Portal (reference-only)
+      total: 1974
+      divergence: "adhyaya 23 = 64 there, against 65 on Wikisource, TITUS and Griffith."
+    - source: "TITUS adhyaya 1 and 40 endpoint check"
+      result: "adhyaya 1 ends at verse 31 and adhyaya 40 at verse 17 - both match the computed counts."
+  unresolved:
+    - >-
+      One secondary source cites the Madhyandina VS as 1951 kandikas in 303 anuvakas.
+      That is an ANUVAKA-based count, not a mantra count, and is recorded as a different
+      counting system rather than as a contradiction. Not reconciled; flagged.
+
+# ---------------------------------------------------------------------------
+# NAMED BLOCKERS (not worked around)
+# ---------------------------------------------------------------------------
+
+blockers:
+  - id: NO_LAWFUL_PADAPATHA
+    statement: >-
+      There is NO lawfully reusable machine-readable padapatha for Sukla YV Madhyandina.
+      The only scholarly padapatha (Yudhisthira Mimamsaka) is a 1996 Ramlal Kapur Trust
+      edition, in copyright in India until 2081; an archive.org duplicate carries an
+      uploader-asserted CC0 that the uploader had no standing to grant. Sanskrit
+      Wikisource has a padapatha only inside Dayananda's bhasya, covering roughly 290 of
+      1975 mantras (adhyayas 1-5, 29, 30). Consequence: the Rigveda's padapatha-backed
+      lexical layer has no Yajurveda equivalent.
+  - id: NO_STRUCTURED_ENGLISH_TRANSLATION
+    statement: >-
+      Griffith 1899 is public domain but exists only as OCR. en.wikisource has no
+      transcription; sacred-texts.com is Cloudflare-blocked. No translation records were
+      created rather than creating unverifiable ones.
+  - id: SANSKRIT_LIBRARY_TEI_UNPUBLISHED
+    statement: >-
+      The TEI edition that would top the format ranking is catalogued but has no public
+      retrieval URL, and would impose CC BY-NC-SA.
+  - id: DEVANAGARI_COMPARISON_FOLDING_ABSENT
+    statement: >-
+      normalize/unicode.py TRANSCRIPTION_EQUIVALENCES folds only Latin IAST/ISO-15919
+      variants. There is no Devanagari-side folding, so the three Unicode spellings of
+      anusvara/anunasika used by these sources (U+A8F3; U+1CEA+U+0902+U+1CED; U+0902) and
+      the source's 1,538 ASCII colons standing for visarga do not fold. Every
+      Devanagari-vs-Devanagari comparison therefore falls through to UNCLASSIFIED.
+      Reported to Agent F, who owns normalize/ and compare/. NOT patched here.

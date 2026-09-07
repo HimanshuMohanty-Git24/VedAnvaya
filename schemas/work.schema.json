@@ -1,0 +1,97 @@
+{
+  "additionalProperties": false,
+  "description": "One recension of one Veda, and the structural vocabulary it is addressed by.\n\n``hierarchy`` is a declared assertion about a text, so ``structure_evidence_sha256``\nlets it point at the exact artifact that evidences it rather than resting on\nsecondary literature. ``identity_status`` is ``FINAL`` only when the key may never\nchange again; ``PROVISIONAL`` means the structure is confirmed from a source record\nbut something the key depends on is still open, and ``RESEARCH_REQUIRED`` means the\nhierarchy itself is not yet known. See docs/FOUR_VEDA_STRUCTURAL_MODEL.md.",
+  "properties": {
+    "abbreviation": {
+      "title": "Abbreviation",
+      "type": "string"
+    },
+    "citation_pattern": {
+      "title": "Citation Pattern",
+      "type": "string"
+    },
+    "hierarchy": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Hierarchy",
+      "type": "array"
+    },
+    "identity_status": {
+      "default": "FINAL",
+      "title": "Identity Status",
+      "type": "string"
+    },
+    "key_pattern": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Key Pattern"
+    },
+    "notes": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Notes"
+    },
+    "recension": {
+      "title": "Recension",
+      "type": "string"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "structure_evidence_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Structure Evidence Sha256"
+    },
+    "veda": {
+      "title": "Veda",
+      "type": "string"
+    },
+    "work_id": {
+      "pattern": "^VG:WORK:[A-Z]+:[A-Z]+$",
+      "title": "Work Id",
+      "type": "string"
+    },
+    "work_name": {
+      "title": "Work Name",
+      "type": "string"
+    }
+  },
+  "required": [
+    "work_id",
+    "abbreviation",
+    "veda",
+    "work_name",
+    "recension",
+    "hierarchy",
+    "citation_pattern"
+  ],
+  "title": "Work",
+  "type": "object"
+}

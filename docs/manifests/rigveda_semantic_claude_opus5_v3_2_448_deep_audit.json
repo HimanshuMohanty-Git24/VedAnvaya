@@ -1,0 +1,2295 @@
+{
+  "assertions_reviewed": 232,
+  "by_predicate": {
+    "ASSOCIATED_WITH": {
+      "DIRECTLY_SUPPORTED": 12,
+      "PREDICATE_AMBIGUOUS": 5
+    },
+    "CONTRASTS_WITH": {
+      "DIRECTLY_SUPPORTED": 3,
+      "PREDICATE_AMBIGUOUS": 1
+    },
+    "DESCRIBES": {
+      "DIRECTLY_SUPPORTED": 53,
+      "PREDICATE_AMBIGUOUS": 5,
+      "SUPPORTED_BUT_REDUNDANT": 2
+    },
+    "DESCRIBES_ACTION": {
+      "DIRECTLY_SUPPORTED": 34,
+      "OBJECT_GRANULARITY_AMBIGUOUS": 2,
+      "PREDICATE_AMBIGUOUS": 3,
+      "SUPPORTED_BUT_REDUNDANT": 1
+    },
+    "EXPRESSES": {
+      "DIRECTLY_SUPPORTED": 2
+    },
+    "INVOKES": {
+      "DIRECTLY_SUPPORTED": 20
+    },
+    "INVOLVES_OFFERING": {
+      "SUPPORTED_BUT_REDUNDANT": 1
+    },
+    "INVOLVES_RITUAL": {
+      "DIRECTLY_SUPPORTED": 4,
+      "PREDICATE_AMBIGUOUS": 1,
+      "WEAK_SUPPORT": 1
+    },
+    "INVOLVES_SUBSTANCE": {
+      "DIRECTLY_SUPPORTED": 8
+    },
+    "PRAISES": {
+      "DIRECTLY_SUPPORTED": 2
+    },
+    "REFERS_TO_NATURAL_PHENOMENON": {
+      "DIRECTLY_SUPPORTED": 2,
+      "SUPPORTED_BUT_REDUNDANT": 2,
+      "WEAK_SUPPORT": 1
+    },
+    "REFERS_TO_PLACE": {
+      "DIRECTLY_SUPPORTED": 5,
+      "PREDICATE_AMBIGUOUS": 1
+    },
+    "REQUESTS": {
+      "DIRECTLY_SUPPORTED": 52,
+      "OBJECT_GRANULARITY_AMBIGUOUS": 8,
+      "PREDICATE_AMBIGUOUS": 1
+    }
+  },
+  "category_counts": {
+    "DIRECTLY_SUPPORTED": 197,
+    "OBJECT_GRANULARITY_AMBIGUOUS": 10,
+    "PREDICATE_AMBIGUOUS": 17,
+    "SUPPORTED_BUT_REDUNDANT": 6,
+    "WEAK_SUPPORT": 2
+  },
+  "claude_opus_5_model_review_is_not_human_gold": true,
+  "expert_required_count": 0,
+  "fabricated_evidence": 0,
+  "failed_reviews": 0,
+  "label_for_any_rate_derived_here": "MODEL_ADJUDICATED_ENGINEERING_SUPPORT_RATE",
+  "manifest_version": "rigveda-semantic-claude-opus5-v3.2-448-deep-audit-v1",
+  "not_measured_precision": true,
+  "passage_notes": [
+    {
+      "note": "Every anchor quotes wording present verbatim in the supplied Griffith translation and no assertion binds a canonical_entity_id, so there are no fabrications or mis-bindings; the only soft spot is treating the instrumental dhī́-/\"hymn\" as a RITUAL_EVENT, and the run leaves the supplied VG:DEVATA:INDRAH key unused on INVOKES (conservative, not unsupported).",
+      "passage_id": "VG:RV:SAK:M08:S024:V007"
+    },
+    {
+      "note": "All nine assertions leave canonical_entity_id null and every RELATION anchor is a literal substring of the supplied Griffith translation, so the packet's traditional_devata_keys (VG:DEVATA:AGNIH) is never silently bound to the opaque \"unbewildered one\" / \"youth\" referents — no entity-binding or fabrication exposure in this passage.",
+      "passage_id": "VG:RV:SAK:M10:S046:V005"
+    },
+    {
+      "note": "All six anchor strings occur verbatim in the supplied translation and both canonical keys (AGNIH, MITRAH) are supplied lexical mentions; the one contract defect is assertion C32A:VG:SEMOBJ:243FF3767448BDDCA570, which binds VG:DEVATA:MITRAH with only a RELATION anchor (\"like\") and no TARGET anchor on the word \"Mitra\" — an anchor-completeness gap, not a wrong binding.",
+      "passage_id": "VG:RV:SAK:M05:S010:V002"
+    },
+    {
+      "note": "All nine anchor strings and both qualifiers appear verbatim in the supplied Griffith translation, and every canonical binding uses the one supplied key (VG:DEVATA:SARASVATI, token T005) whose NOM.F.SG agreement chain (bhadrā́, ákavārī, vājínīvatī, gr̥ṇānā́, stuvānā́) carries all four bound predications; the only structural note is that assertions 6 and 7 re-use the same manner-of-praise wording that assertion 2 already carries as qualifiers, but they bind distinct person-like objects rather than restating assertion 2's relation.",
+      "passage_id": "VG:RV:SAK:M07:S096:V003"
+    },
+    {
+      "note": "All ten anchor strings occur verbatim and uniquely in the supplied Griffith translation; the packet's own lexical-mention layer is what binds the plural common nouns agnáyaḥ (\"the fires\") and vā́yavaḥ (\"winds\") to VG:DEVATA:AGNIH and VG:DEVATA:VAYUH, so those bindings follow supplied keys rather than author judgement.",
+      "passage_id": "VG:RV:SAK:M10:S046:V007"
+    },
+    {
+      "note": "No fabricated anchor wording and no mis-bound entity anywhere in the passage; the recurring weakness is anchor hygiene — assertions 2B49 (Surya), A147 (Dawn) and 4B89 (soma) carry only a RELATION anchor on a fragment (\"of One mind with\", \"and with\", \"the presser's\") and omit the TARGET/object wording, and INVOKES anchors RELATION on \"drink\" rather than on the vocative address itself; in every case the intended referent is still unambiguous in the packet, so I treated these as anchor-precision defects rather than support failures.",
+      "passage_id": "VG:RV:SAK:M08:S035:V016"
+    },
+    {
+      "note": "Every anchor string is literal packet wording and the only canonical binding used (VG:DEVATA:ASVINAU on \"Asvins\") matches the supplied lexical mention for aśvinā (VOC M DU, T016); note that pada d carries no finite verb token in the packet, so the \"drink\" relation force rests wholly on the supplied Griffith translation, which the frozen policy expressly permits as EXPLICIT evidence.",
+      "passage_id": "VG:RV:SAK:M08:S035:V018"
+    },
+    {
+      "note": "Every anchor string is a verbatim substring of the supplied Griffith translation and both canonical bindings match the supplied lexical-mention keys (mitrāvaruṇā VOC DU = T003, agne VOC SG = T005); no fabrication or misbinding anywhere. Two anchor-hygiene weaknesses worth noting without changing the verdicts: the PRAISES assertion carries only a RELATION anchor (\"Glory\") and no anchor on the wording that identifies its bound object (Heaven), and the DESCRIBES assertion labels the descriptive content (\"the lofty habitation\") as its RELATION anchor, so neither Heaven-directed assertion has target-identifying anchor wording.",
+      "passage_id": "VG:RV:SAK:M05:S047:V007"
+    },
+    {
+      "note": "All six anchor strings occur verbatim in the supplied translation and none is fabricated; the three ASSOCIATED_WITH assertions share the single RELATION anchor \"Accordant\" with no TARGET anchor, so their target binding rests on the packet's lexical mentions and translation wording rather than on assertion-specific anchors, and the INVOKES object is left OPAQUE although the packet supplies VG:DEVATA:INDRAVARUNAU as a traditional devata key (not as a lexical mention).",
+      "passage_id": "VG:RV:SAK:M03:S062:V002"
+    },
+    {
+      "note": "All seven anchors quote wording present verbatim in the packet translation; the only entity binding used (ASVINAU) is corroborated by the supplied lexical mention on aśvínoḥ (T002) and by dual morphology (amr̥tā VOC M DU, vahatam 2 DU IMP), which the traditional viśvedevāḥ assignment does not match.",
+      "passage_id": "VG:RV:SAK:M05:S042:V018"
+    },
+    {
+      "note": "Packet morphology (amr̥tā VOC M DU, vahatam IMP 2DU, aśvínoḥ GEN M DU as the only dual referent) actively supports binding the \"Immortals\" address to the Asvins and rules out the traditional devatā (viśvedevāḥ, plural); no anchor text in this passage was fabricated.",
+      "passage_id": "VG:RV:SAK:M05:S043:V017"
+    },
+    {
+      "note": "The verse names no entity for its plural subjects, and the author correctly left them OPAQUE_REFERENT instead of binding them to the supplied traditional devatā key VG:DEVATA:MARUTAH; all five anchors are verbatim packet wording, but the treatment of similes is internally inconsistent (steeds and charioteers folded into DESCRIBES qualifiers, Angirases promoted to a standalone ASSOCIATED_WITH).",
+      "passage_id": "VG:RV:SAK:M10:S078:V005"
+    },
+    {
+      "note": "Every anchor text is literal packet wording and every canonical binding (Agni, Aditi, Indra) matches a supplied lexical mention; the systematic weakness is anchor completeness, not support — four assertions (C9313DDD..., 4C780A2D..., 116BD86A..., 3901237E...) carry a one-fragment RELATION anchor and no anchor on the wording that identifies the object, and the INVOLVES_SUBSTANCE relation anchor \"On this\" stops short of the word \"grass\" that actually names the substance.",
+      "passage_id": "VG:RV:SAK:M03:S004:V011"
+    },
+    {
+      "note": "All five outcomes hang off the single imperative kr̥dhi and its five accusative complements (r̥ṣabhám, viṣāsahím, hantā́ram, virā́jam, gópatim), so the split is one assertion per independently standing accusative predicate; no addressee or beneficiary was invented and no canonical_entity_id was bound anywhere.",
+      "passage_id": "VG:RV:SAK:M10:S166:V001"
+    },
+    {
+      "note": "Supplied Griffith translation reads \"Be sweet to India\" where the Sanskrit token is indraya (DAT, lemma indra-) with a supplied lexical mention VG:DEVATA:INDRAH; the author anchored packet wording verbatim while normalizing the head to \"indra\", which the packet supports. Several assertions carry thin single-word or request-verb RELATION anchors (\"when\", \"from\", \"Pour us\") that sit in the right clause but do not themselves carry their own relation force - anchor precision, not support. No canonical_entity_id is bound anywhere in this passage, so no binding could be wrong.",
+      "passage_id": "VG:RV:SAK:M09:S097:V044"
+    },
+    {
+      "note": "All six anchors quote packet translation wording verbatim (including the packet's own \"troubless\" typo); the only soft spot is that the INVOKES RELATION anchor reuses the request clause rather than the naming itself, but its TARGET anchor \"BRHASPATI\" carries the binding.",
+      "passage_id": "VG:RV:SAK:M10:S182:V001"
+    },
+    {
+      "note": "All four assertions leave \"him\" unbound (canonical_entity_id null) rather than importing the traditional Indra devatā key, and every anchor span is verbatim assertion-specific wording from the supplied Griffith translation; no fabrication or mis-binding found.",
+      "passage_id": "VG:RV:SAK:M08:S002:V006"
+    },
+    {
+      "note": "All seven anchors quote wording present in the supplied translation and the only canonical binding (VG:DEVATA:YAMI on \"Yami\") matches the packet's own lexical mention; the residual issues are granularity of the two reciprocal REQUESTS pairs and whether a simile vehicle and a declaratively-rendered final clause carry the asserted relation force.",
+      "passage_id": "VG:RV:SAK:M10:S010:V014"
+    },
+    {
+      "note": "All seven assertions leave canonical_entity_id null and none binds the traditional devatā key VG:DEVATA:PARJANYAH to the verse's unnamed \"he\" / eṣáḥ, which is the correct conservative handling under the policy; every anchor string is an exact substring of the supplied Griffith translation.",
+      "passage_id": "VG:RV:SAK:M07:S101:V003"
+    },
+    {
+      "note": "Every anchor string is exact packet wording and no assertion carries a canonical_entity_id, so no fabrication or misbinding is present; the only structural wobble is that the two nominative-plural participles (mádantaḥ \"rejoicing\", saṃyopáyantaḥ \"Barring the way\") are treated asymmetrically — one folded in as a qualifier, one raised to a separate REQUESTS outcome.",
+      "passage_id": "VG:RV:SAK:M10:S165:V005"
+    },
+    {
+      "note": "Two anchor/binding observations that do not change any category: the supplied Griffith translation diverges from the supplied token evidence (ákrān is lemmatised √krand- 'roar/cry', vídharmaṇi is LOC of vídharman-), so \"move to the sieve\" rests on the translation alone; and the ASSOCIATED_WITH assertion carries a canonical_entity_id with no TARGET anchor, unlike the DESCRIBES assertion on the same entity.",
+      "passage_id": "VG:RV:SAK:M09:S064:V009"
+    },
+    {
+      "note": "All anchor strings occur verbatim in the packet translation and no assertion misbinds an entity; the recurring weakness is anchor placement — the two EVENT assertions bind the canonical actor VG:DEVATA:AGNIH and the ASSOCIATED_WITH assertion binds VG:DEVATA:SURYAH with no TARGET anchor on the identifying wording, and the phenomenon assertion reuses the verb anchor of the action assertion.",
+      "passage_id": "VG:RV:SAK:M08:S043:V032"
+    },
+    {
+      "note": "Every anchor string occurs verbatim in the supplied Griffith translation and is corroborated by supplied tokens (agne VOC, yaviṣṭha VOC, abibhar, saparyán, juṣāṇáḥ, samídham, avanoḥ, pū́rvān, vrā́dhataḥ); no fabricated evidence and no misbound canonical entity anywhere in the passage — the only soft point is the residual ASSOCIATED_WITH encoding of the explicit simile.",
+      "passage_id": "VG:RV:SAK:M10:S069:V010"
+    },
+    {
+      "note": "All seven anchors quote wording present in the packet translation and every canonical_entity_id is null, so nothing here binds an entity at all — note that the packet supplies traditional_devata_keys [\"VG:DEVATA:PAVAMANAH-SOMAH\"] yet the INVOKES assertion routes the vocative to an OPAQUE_REFERENT, a conservative choice that risks no mis-binding but leaves the Object-selection rule for INVOKES unexercised.",
+      "passage_id": "VG:RV:SAK:M09:S100:V007"
+    },
+    {
+      "note": "Padas a-b carry only one finite verb in the packet tokens (nipā́si, 2sg PRS \"thou protectest\"), which Griffith renders with two English verbs (\"removest\" ... \"when thou protectest\"); the output emits one action assertion per English verb, so the redundancy question is an artefact of the supplied translation rather than a fabrication.",
+      "passage_id": "VG:RV:SAK:M04:S011:V006"
+    },
+    {
+      "note": "No fabricated anchors and no mis-bound canonical entity; the only systemic issue is that the \"waters ever flow / ever mounts the Sun\" clause is encoded three times over (DESCRIBES_ACTION, REFERS_TO_NATURAL_PHENOMENON, and one pole of CONTRASTS_WITH) off identical anchor wording.",
+      "passage_id": "VG:RV:SAK:M10:S037:V002"
+    },
+    {
+      "note": "All eight anchors quote wording that is present in the packet translation; no fabrication found. Two structural observations that do not change any category: (a) the six DESCRIBES assertions all use CANONICAL_ENTITY_REF on Agni with normalized_head null and no qualifiers, so their differentiating content lives only in display_label, which the policy says is not identity — as typed objects they are distinguishable only by their RELATION anchors; (b) the DESCRIBES_ACTION assertion carries a RELATION anchor (\"produce\") but no TARGET anchor on the wording (\"earth\") that grounds the VG:DEVATA:PRTHIVI participant binding, and it uses a Devatā key for the cosmic earth of the dyāvā/pṛthivī pair — the packet's own lexical_mentions layer supplies that key for token PD:T020, so I did not treat it as a wrong binding.",
+      "passage_id": "VG:RV:SAK:M10:S091:V003"
+    },
+    {
+      "note": "All anchor strings occur verbatim in the packet translation and the only canonical binding used (VG:DEVATA:SURYAH) matches the packet's single lexical mention (sū́ryaḥ, PB:T007); the traditional devatā Indra is correctly never bound, since he is absent from this verse. Recurring weakness: the INVOLVES_RITUAL (sacrifices), INVOLVES_OFFERING and REFERS_TO_PLACE assertions anchor RELATION on a verb (\"laid\", \"honour\") rather than on the wording that carries the object (\"by sacrifices\", \"with offerings\", \"the paths\"), which is less assertion-specific than the binding contract expects, though not fabricated.",
+      "passage_id": "VG:RV:SAK:M01:S083:V005"
+    },
+    {
+      "note": "Every anchor string is verbatim packet translation wording and the packet supplies exactly one addressee key (VG:DEVATA:INDRAH, token T003 `indra` VOC), so no binding or fabrication failure appears; note that Griffith renders two distinct Sanskrit expressions (`maháḥ` ACC PL in pāda a, `śuṣmíbhiḥ` INS PL in pāda d) with similar English (\"the mighty ones\" / \"the Mighty Ones\"), and the output keeps them in separate assertions without conflating them.",
+      "passage_id": "VG:RV:SAK:M01:S133:V006"
+    },
+    {
+      "note": "All ten distinct anchor strings are literal packet wording (no fabrication); systematic weakness is that the five DESCRIBES_ACTION assertions bind event.actor_entity_id to VG:DEVATA:INDRAH with only a RELATION anchor and no TARGET anchor on \"Indra\", so the canonical actor binding rests entirely on the shared coreference inference_step, and the packet Sanskrit for \"one share he left\" (prá īm aricyata, 3SG MED) does not itself make the verse subject the agent even though the supplied translation does.",
+      "passage_id": "VG:RV:SAK:M02:S022:V002"
+    }
+  ],
+  "passages_reviewed": 30,
+  "redundant_count": 6,
+  "run_id": "vedagraph-rigveda-semantic-claude-opus5-v3.2-448-new-v1",
+  "seal_sha256": "cd45b1752cae62dd7d364d571235aa0db3c58ace8be829369dc9c013274465ec",
+  "selection_rule": "top 30 translation-bearing rows of the risk-ranked review queue",
+  "supported_or_ambiguous": 230,
+  "supported_or_ambiguous_proportion": 0.9914,
+  "this_is_model_review_not_human_gold": true,
+  "unsupported_count": 0,
+  "verdicts": [
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:988E14F335E73B82F6E7",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M08:S024:V007",
+      "predicate": "INVOKES",
+      "reason": "The packet carries four vocatives (vr̥trahantama, úgra, praṇetar, vaso VOC) plus the 2SG imperative gahi, and the translation opens with the anchored vocative \"Chief Vrtra-slayer\", so address force and an addressee referent are both directly evidenced.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:1E53C7024DAEC8ADDDEC",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M08:S024:V007",
+      "predicate": "REQUESTS",
+      "reason": "gahi is an imperative (IMP AOR 2SG) and the translation reads \"think of all, All that concerneth us\", with naḥ (GEN PL) grounding the speaking group as beneficiary; both anchored spans appear verbatim and the single appositional outcome is correctly left unsplit under Rule 3.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:CEB2C6FE416B4B77DA02",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M08:S024:V007",
+      "predicate": "DESCRIBES",
+      "reason": "vr̥trahántama- is tagged degree SUP in the packet and renders as \"Chief Vrtra-slayer\", so foremost rank as Vrtra-slayer is an entity-level quality attributed to the addressee, distinct in relation force from the INVOKES address on the same wording.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:B544029AA922071004F6",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M08:S024:V007",
+      "predicate": "DESCRIBES",
+      "reason": "The anchored \"Excellent\" is in the translation and corresponds to vaso (vásu- VOC M SG), a vocative epithet of the addressee rather than of the requested outcome, so the quality and its binding are both directly evidenced.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:C4C17F277BAAAD1CA0EB",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M08:S024:V007",
+      "predicate": "DESCRIBES",
+      "reason": "\"Mighty Guide\" is anchored verbatim and matches the vocatives úgra and praṇetar in pada c, supporting both the \"leading role\" and \"might\" qualifiers as attributed properties of the same addressee.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:6B80D47385F5EDB559C3",
+      "category": "PREDICATE_AMBIGUOUS",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M08:S024:V007",
+      "predicate": "INVOLVES_RITUAL",
+      "reason": "The instrumental means is well evidenced (dhiyā́ INS F SG, translated \"through the hymn of Visvamanas\"), but whether that named dhī́- (\"thought/vision/prayer\") counts as a RITUAL_EVENT rather than an EXPRESSES concept or a plain ASSOCIATED_WITH is genuinely arguable, and the RELATION anchor is only the bare preposition \"through\".",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:61B6A5BAFBF17A722EB0",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M08:S024:V007",
+      "predicate": "ASSOCIATED_WITH",
+      "reason": "viśvámanasaḥ is GEN M SG attached to the hymn and the translation reads \"the hymn of Visvamanas\", with the packet's traditional_rishi_labels \"vaiyaśvo viśvamanāḥ\" corroborating a person-like referent, correctly routed to ONTOLOGY_GAP_REF / PERSON_LIKE_REFERENT_UNMODELED with no more specific allowed predicate available.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:DAF952930BCC08F5C437",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S046:V005",
+      "predicate": "DESCRIBES_ACTION",
+      "reason": "The translation states \"The foolish brought the ne'er-bewildered forward\", giving a narrated (not commanded) action with both roles the object assigns, and Sanskrit mūrā́ḥ (NOM PL) / ámūram (ACC SG) match agent and patient.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:DFA1796E53E98588225A",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S046:V005",
+      "predicate": "DESCRIBES",
+      "reason": "\"great\" stands in the translation's appositive epithet list attached to \"the ne'er-bewildered\"; the packet morphology for mahā́m is GEN PL rather than agreeing ACC SG, but Rule on explicitness permits resting the binding on the supplied translation.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:727563614F8EDDAB6F0D",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S046:V005",
+      "predicate": "DESCRIBES",
+      "reason": "\"Victor\" is in the translation's epithet list for the ne'er-bewildered and is carried by jáyantam (√ji-, ACC SG PTCP) agreeing with ámūram, an entity-level quality distinct from any action.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:BBAC191B69DA3ECDDE1E",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S046:V005",
+      "predicate": "DESCRIBES",
+      "reason": "\"Song-inspirer\" is in the translation and corresponds to vipodhā́m (ACC SG) agreeing with ámūram, so both the descriptive force and the described referent are packet-supported.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:BE24C375416C6AABAC38",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S046:V005",
+      "predicate": "DESCRIBES",
+      "reason": "\"Fort-destroyer\" is in the translation and corresponds to purā́m darmā́ṇam (GEN PL + ACC SG) in pada b, an independently anchored epithet rather than a restatement of the other three.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:E454A64CF7F85592CC1C",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S046:V005",
+      "predicate": "DESCRIBES_ACTION",
+      "reason": "\"Leading the Youth gold-bearded\" is a narrated participial action in the translation, matching náyantaḥ (NOM PL PTCP) with gárbham (ACC SG) as patient, and is a different action from the \"brought forward\" of the first assertion.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:C179744B2C60475D36E2",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S046:V005",
+      "predicate": "DESCRIBES",
+      "reason": "\"gold-bearded\" (híriśmaśrum, ACC SG) is an entity-level quality of the Youth stated independently of the leading action, so Rule 4 permits it alongside the DESCRIBES_ACTION rather than making it a duplicate.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:A4A31BFC8128429D652D",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S046:V005",
+      "predicate": "DESCRIBES_ACTION",
+      "reason": "The translation's final clause \"they turned their hymn to profit\" narrates the action, with dhíyam (ACC SG) as the patient and dhuḥ (3PL AOR INJ) as the verb; the \"to profit\" qualifier is kept in its own field rather than folded into an identity.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:CDD17FB27CFFBB440996",
+      "category": "PREDICATE_AMBIGUOUS",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S046:V005",
+      "predicate": "CONTRASTS_WITH",
+      "reason": "The named inference step is factually accurate about the packet (mūrá- 1 and its a-privative ámūra- do sit adjacent in pada b, mirrored by \"The foolish\" / \"ne'er-bewildered\"), so this stays within the one step STRONG_INFERENCE allows, but whether that juxtaposition asserts a contrast or is merely the agent-patient pairing already captured by the \"brought forward\" assertion is genuinely arguable, and the RELATION anchor \"The foolish\" covers only one pole of the claimed opposition.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:3662CC5722E0563F7D4C",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M05:S010:V002",
+      "predicate": "INVOKES",
+      "reason": "Token PA:T003 'agne' is VOC SG and the translation reads 'Ours art thou, wondrous Agni', so second-person address of the supplied key VG:DEVATA:AGNIH is direct.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:C27854C64F7D20283473",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M05:S010:V002",
+      "predicate": "DESCRIBES",
+      "reason": "'Ours art thou' plus token PA:T002 'naḥ' (DAT PL) directly attributes an entity-level relation of belonging to the addressed Agni, and the qualifier 'by wisdom and bounteousness of power' is quoted verbatim from the same clause.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:D2D5D26AC7C71E5AAE83",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M05:S010:V002",
+      "predicate": "DESCRIBES",
+      "reason": "Token PA:T004 'adbhuta' (VOC, agreeing with 'agne') and the translation 'wondrous Agni' give an entity-level quality attributed to Agni, distinct from the belonging claim in the previous assertion.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:D26FEE23DE1F03301D15",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M05:S010:V002",
+      "predicate": "DESCRIBES_ACTION",
+      "reason": "'The might of Asuras rests on thee' is narrated, not wished for (PC:T011 'aruhat' AOR IND ACT, with 'asuryàm' NOM and 'tvé' LOC), so Rule 5 is satisfied and both participant heads restate wording present in the packet.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:243FF3767448BDDCA570",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M05:S010:V002",
+      "predicate": "ASSOCIATED_WITH",
+      "reason": "The comparison particle PD:T014 'ná' with PD:T013 'mitráḥ' ('like Mitra') explicitly links the passage to the supplied key VG:DEVATA:MITRAH and no narrower allowed predicate encodes a simile, though the assertion carries no TARGET anchor on the word 'Mitra'.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:AC3776C01D7F0E05250F",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M05:S010:V002",
+      "predicate": "DESCRIBES",
+      "reason": "The supplied translation attaches the epithet to Mitra in 'like Mitra worshipful in act' (PD:T015 'yajñíyaḥ' with PD:T012 'krāṇā́'), so the quality is directly attributed to the anchored entity, even though the simile leaves open whether the epithet also characterises the compared Agni.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:EEA03DAB48A38733DE0C",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M07:S096:V003",
+      "predicate": "REQUESTS",
+      "reason": "The packet's \"So may Sarasvati auspicious send good luck\" plus the subjunctive kr̥ṇavat (SBJV, 3SG) is exactly the \"may X occur\" / sending-and-bestowing request force of Rule 2, and the OUTCOME anchor \"send good luck\" is the concise desired result rather than a copied sentence.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:C1BD540DB9647F090094",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M07:S096:V003",
+      "predicate": "PRAISES",
+      "reason": "\"When praised in Jamadagni's way and lauded as Vasistha lauds\" carries praise force, and the middle participles gr̥ṇānā́ / stuvānā́ are NOM.F.SG agreeing with sárasvatī, so the supplied Sarasvatī key is the correct praised referent and both qualifiers are verbatim packet wording.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:C4A0E6D05A6BE32DF639",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M07:S096:V003",
+      "predicate": "DESCRIBES",
+      "reason": "bhadrā́ (NOM.F.SG, token T003, rendered \"auspicious\" adjacent to \"Sarasvati\" in the translation) is an entity-level quality attributed to Sarasvatī and is distinct from the ACC.N.SG bhadrám that grounds the REQUESTS outcome, so it is not a duplicate of assertion 1.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:70A88B613117FF34DC53",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M07:S096:V003",
+      "predicate": "DESCRIBES",
+      "reason": "\"she, rich in spoil\" renders vājínīvatī (NOM.F.SG, token T008) as a standing property of the same feminine subject, which the supplied lexical mention resolves to VG:DEVATA:SARASVATI.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:8E5BB7C60A280323FD66",
+      "category": "PREDICATE_AMBIGUOUS",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M07:S096:V003",
+      "predicate": "DESCRIBES",
+      "reason": "The content is supported (\"is never niggardly in thought\" = ákavārī cetati, both bound to the NOM.F.SG subject), but the clause contains a finite 3SG present indicative of √cit- that a reasonable reader could take as a narrated action under Rule 5's DESCRIBES_ACTION rather than the predicative state the translation renders.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:7D447C43F477B8FF3C4D",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M07:S096:V003",
+      "predicate": "ASSOCIATED_WITH",
+      "reason": "\"When praised in Jamadagni's way\" (jamadagnivát, token T010) names a person-like referent that no supplied key resolves, so ONTOLOGY_GAP_REF with PERSON_LIKE_REFERENT_UNMODELED under the residual ASSOCIATED_WITH family is what the policy prescribes; the RELATION anchor is thin but points at the wording that makes the link.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:C39B471402C38158358B",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M07:S096:V003",
+      "predicate": "ASSOCIATED_WITH",
+      "reason": "\"lauded as Vasistha lauds\" (vasiṣṭhavát, token T013) names a second person-like referent for which the packet supplies only a rishi label and no bindable key, so the same ontology-gap treatment holds and it is an object distinct from assertion 6.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:1604AE8913ADD84616D1",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S046:V007",
+      "predicate": "DESCRIBES",
+      "reason": "Translation \"His are the fires, eternal\" and token ajárāsaḥ (NOM PL, pada a) attribute the quality directly to agnáyaḥ, whose supplied lexical mention key is VG:DEVATA:AGNIH.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:CB8429CE697FD18F89B3",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S046:V007",
+      "predicate": "DESCRIBES",
+      "reason": "\"purifying\" in the translation corresponds to pāvakā́ḥ (NOM PL, pada b) standing in apposition to agnáyaḥ, so both relation force and target are directly carried by the anchored wording.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:C95B567523B125897BA4",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S046:V007",
+      "predicate": "DESCRIBES",
+      "reason": "The anchor \"whose smoke is shining\" is verbatim translation wording for arcáddhūmāsaḥ (NOM PL, pada b), an entity-level quality of the same plural fires.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:361FF849919B79E83A38",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S046:V007",
+      "predicate": "DESCRIBES",
+      "reason": "\"White\" in the translation matches śvitīcáyaḥ (NOM PL, pada c) in the same nominative-plural epithet chain describing the fires.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:5EE5F66E80EDD4C66816",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S046:V007",
+      "predicate": "DESCRIBES",
+      "reason": "\"waxing in their strength\" renders śvātrā́saḥ (NOM PL, pada c), a distinct quality from the other epithets and independently anchored, so Rule 1 emission is appropriate.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:AF69C97F145627FE914C",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S046:V007",
+      "predicate": "DESCRIBES",
+      "reason": "\"for ever stirring\" corresponds to bhuraṇyávaḥ (NOM PL, pada c) and is a separate epithet from śvātrā́saḥ, not a restatement of the strength assertion.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:9C1024B97DA8EBE21290",
+      "category": "PREDICATE_AMBIGUOUS",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S046:V007",
+      "predicate": "DESCRIBES_ACTION",
+      "reason": "The content is supported by the translation clause \"that make the houses move\", but the underlying packet wording is the nominal epithet arítrāḥ with genitive damā́m in the same NOM PL epithet chain, so DESCRIBES (entity-level property) versus DESCRIBES_ACTION (narrated action) is genuinely arguable under Rules 4 and 5.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:6EA6B0722748C77F3CB3",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S046:V007",
+      "predicate": "REFERS_TO_PLACE",
+      "reason": "\"and sitting in the wood\" renders vanarṣádaḥ (NOM PL, pada d) and gives an explicit spatial referent; OPAQUE_SPATIAL_REFERENT is the conservative object kind the policy allows where place status is unclear.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:5FE729B8568C3292BC92",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S046:V007",
+      "predicate": "ASSOCIATED_WITH",
+      "reason": "The stated simile \"like winds are Somas\" (vā́yavo ná sómāḥ, tokens PD:T012-T014) directly carries a likeness relation and the packet's lexical mention binds vā́yavaḥ to VG:DEVATA:VAYUH, though this is the one assertion with no TARGET anchor on the wording that identifies its canonical entity.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:C5730805D0FB3130E528",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M08:S035:V016",
+      "predicate": "INVOKES",
+      "reason": "aśvinā is VOC.M.DU in pada d and the translation reads \"Asvins drink\", so the Asvins are directly addressed; the TARGET anchor \"Asvins\" carries the address even though the RELATION anchor \"drink\" points at the imperative rather than at the vocative itself.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:A61437F5421BD5392841",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M08:S035:V016",
+      "predicate": "DESCRIBES",
+      "reason": "sajóṣasau (NOM.M.DU) agrees with the dual addressees and the translation attributes \"Accordant, of One mind\" to the Asvins, an entity-level quality rather than an action, which is what Rule 4 assigns to DESCRIBES.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:B8798FDC41C2B77B3567",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M08:S035:V016",
+      "predicate": "REQUESTS",
+      "reason": "bráhma (ACC) with jinvatam (IMP.2.DU) and the translation \"Give spirit to our prayer\" give an imperative request force with a directly anchored desired outcome.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:28CC937FFD2BBFF0A9B1",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M08:S035:V016",
+      "predicate": "REQUESTS",
+      "reason": "the second jinvatam with dhíyaḥ (ACC.PL), coordinated by utá and rendered \"and animate our thoughts\", is an independently coordinated outcome, so the Rule 3 split from the bráhma request is correct.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:85896C3892E70E04FC0A",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M08:S035:V016",
+      "predicate": "REQUESTS",
+      "reason": "hatám (IMP.2.DU) with rákṣāṃsi (ACC.PL), translated \"slay ye the Raksasas\", is a separately stated imperative outcome and the anchors sit on exactly that wording.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:ED4D96E5413B088852F7",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M08:S035:V016",
+      "predicate": "REQUESTS",
+      "reason": "sédhatam (IMP.2.DU) with ámīvāḥ (ACC.PL), translated \"drive away disease\", is an independent imperative outcome distinct from the slaying of the Raksasas.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:D00A48F9F3171F9D3449",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M08:S035:V016",
+      "predicate": "REQUESTS",
+      "reason": "the packet translation \"the presser's Soma, Asvins drink\" carries imperative force over sómam (ACC) plus sunvatáḥ (GEN.PTCP), and Rule 5 correctly places a commanded action in REQUESTS rather than DESCRIBES_ACTION.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:2B49495433258D0BC7EA",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M08:S035:V016",
+      "predicate": "ASSOCIATED_WITH",
+      "reason": "sū́ryeṇa (INS.SG) construed with sajóṣasau, rendered \"of One mind with Surya\", directly supports an association with the entity the packet's own lexical mention keys as VG:DEVATA:SURYAH; only the TARGET anchor on \"Surya\" is missing, the binding itself is right.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:A14738B76D7C157A618A",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M08:S035:V016",
+      "predicate": "ASSOCIATED_WITH",
+      "reason": "uṣásā (INS.SG) construed with sajóṣasau, rendered \"and with Dawn\", supports the association with VG:DEVATA:USAH; the anchor \"and with\" is a thin fragment but occurs only once in the translation and points unambiguously at the Dawn conjunct.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:4B891F3410F18317C206",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M08:S035:V016",
+      "predicate": "INVOLVES_SUBSTANCE",
+      "reason": "sómam (ACC.SG) and the translation \"the presser's Soma\" evidence soma as physical material qualified by the presser, a typed role distinct from the REQUESTS assertion per Rule 6; the identification of the presser as \"the worshipper\" is a light gloss and the anchor omits the word \"Soma\" itself.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:AC963EC215AC076CFA30",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M08:S035:V016",
+      "predicate": "INVOLVES_RITUAL",
+      "reason": "sunvatáḥ is the PRS.PTCP of √su- governing sómam, so the pressing act is lexically present in the packet and the declared STRONG_INFERENCE is the single permitted step of naming that pressing as the ritual event.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:C9D1EE6943A79A8EAAFB",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M08:S035:V018",
+      "predicate": "INVOKES",
+      "reason": "The packet has aśvinā as VOC M DU (T016) resolved by the supplied key VG:DEVATA:ASVINAU, and the translation addresses them directly in \"Asvins drink\", so both the address force and the dual-vocative qualifiers are packet-grounded; the RELATION anchor \"drink\" is the imperative carrying that address rather than the vocative itself, which is thin but not misdirected.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:728A5F72DAE27EBBC9D4",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M08:S035:V018",
+      "predicate": "REQUESTS",
+      "reason": "jinvatam (2 DU IMP, T002) with dhenū́ḥ (ACC F PL, T001) is imperative request force under Rule 2, and the OUTCOME anchor \"strength unto the milch-kine\" is exact translation wording with the beneficiary correctly kept as a qualifier rather than a separate outcome.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:35E48F4BC808830DDCC3",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M08:S035:V018",
+      "predicate": "REQUESTS",
+      "reason": "A second, separately coordinated imperative jinvatam (T004) governs víśaḥ (ACC F PL, T005) and is joined by utá (T003), so Rule 3 splitting into its own desired outcome is what the packet's own coordination shows, not an over-split.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:42FEB50E2CF081369C22",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M08:S035:V018",
+      "predicate": "REQUESTS",
+      "reason": "hatám (2 DU IMP, T006) with rákṣāṃsi (ACC N PL, T007) is an independent imperative rendered \"slay ye the Raksasas\", and the outcome head \"slay the Raksasas\" is the desired resulting action rather than a bare grammatical object.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:945A1B8F6CF3B058FC07",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M08:S035:V018",
+      "predicate": "REQUESTS",
+      "reason": "sédhatam (2 DU IMP, T008) with ámīvāḥ (ACC F PL, T009) is a distinct imperative from hatám, so \"drive away disease\" stands as its own coordinated outcome under Rule 3 with both anchors on exact translation wording.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:3C6B6DAD73DAECEDB686",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M08:S035:V018",
+      "predicate": "REQUESTS",
+      "reason": "sómam (ACC M SG, T014) qualified by sunvatáḥ (GEN SG PRS PTCP, T015) plus the vocative aśvinā gives the addressee, and although pada d has no finite verb token the supplied translation states \"the presser's Soma, Asvins drink\", which the explicitness policy allows to carry the relation as EXPLICIT.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:D02768A7D4E152779C3C",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M08:S035:V018",
+      "predicate": "DESCRIBES",
+      "reason": "sajóṣasau is NOM M DU (T010) and so predicates the state of concord of the dual Asvins, with uṣásā (INS, T011) and sū́ryeṇa (INS, T012) supplying the two comitative qualifiers; this is an entity-level state, not an action, so Rule 4 places it in DESCRIBES rather than DESCRIBES_ACTION.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:3370B9AAD77EC4F77C2E",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M08:S035:V018",
+      "predicate": "DESCRIBES_ACTION",
+      "reason": "The anchor \"presser's\" is exactly sunvatáḥ, a present active participle of √su- (T015), so the pressing is an ongoing action of a human agent that is presupposed rather than commanded, keeping it outside Rule 5's exclusion, and the recorded inference step is the single named step STRONG_INFERENCE permits.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:F70765AABCBA356254A6",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M08:S035:V018",
+      "predicate": "INVOLVES_SUBSTANCE",
+      "reason": "sómam (ACC M SG, T014) is a physical material explicitly present with the supplied lexical mention VG:DEVATA:SOMAH, and the qualifiers \"pressed\" / \"in the presser's possession\" are carried by the genitive participle sunvatáḥ, so under Rule 6 the substance role is a distinct typed role rather than a duplicate of the REQUESTS outcome, though the assertion anchors only \"drink\" and never the substance wording itself.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:18997295297FD337799C",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M05:S047:V007",
+      "predicate": "INVOKES",
+      "reason": "Translation reads \"O Varuna and Mitra\" and token T003 mitrāvaruṇā is VOC DU with the supplied lexical key VG:DEVATA:MITRAVARUNAU, so both the vocative-address force and the canonical target are directly evidenced.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:CC58A5B71E985BCDB3C5",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M05:S047:V007",
+      "predicate": "INVOKES",
+      "reason": "Translation reads \"O Agni\" and token T005 agne is VOC SG carrying the supplied lexical key VG:DEVATA:AGNIH, so the vocative invocation and its canonical target are both directly evidenced.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:A27AD183073BB1880689",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M05:S047:V007",
+      "predicate": "REQUESTS",
+      "reason": "\"Be this our praise\" is an imperative wish (Sanskrit astu, IMP 3SG at T002/T010) whose desired resulting state is anchored on \"this our praise\", and the qualifier addressee is grounded by the vocative in the same clause.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:0436E5EE07AFDE9AAE6B",
+      "category": "OBJECT_GRANULARITY_AMBIGUOUS",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M05:S047:V007",
+      "predicate": "REQUESTS",
+      "reason": "\"may this be health and force to us\" is clearly request force with \"health\" (śám, T006) as an evidenced outcome, but the pair sits in a single copular clause with one subject \"this\", so a reasonable reader could take \"health and force\" as one composite desired state rather than two.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:892624D380564A364245",
+      "category": "OBJECT_GRANULARITY_AMBIGUOUS",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M05:S047:V007",
+      "predicate": "REQUESTS",
+      "reason": "Same clause as the preceding assertion: \"force\" (yós, T007) is directly evidenced as a wished-for state, but whether the coordinated \"health and force\" complement is one outcome or two is exactly the split-or-merge call Rule 3 leaves arguable here.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:4825A5F43B2A34AEDF50",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M05:S047:V007",
+      "predicate": "REQUESTS",
+      "reason": "\"May we obtain firm ground\" matches the optative aśīmáhi (OPT AOR 1PL, T012) governing the accusative gādhám (T013), giving request force and an independently standing outcome with a first-person beneficiary the wording grounds.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:E9C1C19A943FE7608EFD",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M05:S047:V007",
+      "predicate": "REQUESTS",
+      "reason": "\"room for resting\" renders the second accusative pratiṣṭhā́m (T015) explicitly coordinated by utá (T014) under the same optative, so it stands as a separately desired result rather than a modifier of \"firm ground\".",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:0933CFF5519739669FBD",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M05:S047:V007",
+      "predicate": "PRAISES",
+      "reason": "\"Glory to Heaven\" (námaḥ divé, T016/T017 with divé DAT) directly carries homage-to-an-addressee force with Heaven as recipient, and no supplied deterministic key names Heaven, so the non-canonical object kind is the correct choice; only the missing target-identifying anchor is weak, not the claim.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:FC3075F7DF9495F266B0",
+      "category": "PREDICATE_AMBIGUOUS",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M05:S047:V007",
+      "predicate": "DESCRIBES",
+      "reason": "The supplied translation's apposition \"Heaven, the lofty habitation\" attributes the property to Heaven, so the content is supported, but sā́danāya (T019, dwelling/seat) is the kind of seat-or-dwelling referent the policy routes to a spatial family, and in the Sanskrit bṛhaté/sā́danāya are N SG DAT against masculine divé, leaving epithet-of-Heaven versus separate dative recipient genuinely arguable.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:E493046CA2477606AB2B",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M03:S062:V002",
+      "predicate": "INVOKES",
+      "reason": "\"incessantly invokes you for your favour\" (johaviti, vam ACC DU, avase) carries invocation force onto a dual addressee and the qualifiers \"invoked incessantly\" and \"invoked for favour\" track that same wording; leaving the referent OPAQUE is defensible because no lexical-mention key names indravaruna in this packet.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:D345BD601EC41043B853",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M03:S062:V002",
+      "predicate": "REQUESTS",
+      "reason": "\"hear ye mine invocation\" is a 2DU imperative (srnutam) addressed to the pair, so Rule 2 request force holds, and the head \"hear my invocation\" is the desired resulting action rather than a copied sentence, with RELATION and OUTCOME anchors on the exact wording.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:E92C0C938492518CBC86",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M03:S062:V002",
+      "predicate": "DESCRIBES",
+      "reason": "\"This man, most diligent, seeking after riches\" (ayam NOM SG M, purutamah SUP, rayiyan PTCP) attributes entity-level qualities to a person-like referent that no supplied key resolves, matching the PERSON_LIKE_REFERENT_UNMODELED gap case, and the anchor \"most diligent\" carries that attribution.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:2D453E430E3AE7181FA1",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M03:S062:V002",
+      "predicate": "ASSOCIATED_WITH",
+      "reason": "\"Accordant, Indra-Varuna, with Maruts\" (sajosau NOM DU + marudbhih INS PL) states the accompaniment directly, and VG:DEVATA:MARUTAH is the packet's own lexical-mention key for token PC:T011 marudbhih, so the canonical binding is the supplied one.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:C539D12A27206C14238D",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M03:S062:V002",
+      "predicate": "ASSOCIATED_WITH",
+      "reason": "\"with Heaven and Earth\" plus prthivya (INS SG F) supports the same accompaniment relation, and VG:DEVATA:PRTHIVI is the packet's lexical-mention key for token PD:T013, so Earth is bound to the entity the anchored wording names.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:BAF7D8302655BE8EA1F1",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M03:S062:V002",
+      "predicate": "ASSOCIATED_WITH",
+      "reason": "diva (INS SG, lemma dyu- ~ div-) is rendered \"with Heaven\" in the supplied translation and sits in the same sajosau accompaniment phrase, and since no supplied key resolves Heaven the OPAQUE_REFERENT is the policy-correct object kind; merging Heaven and Earth into one paired referent is an available but less token-faithful reading.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:B313296EBD2252AB778D",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M05:S042:V018",
+      "predicate": "INVOKES",
+      "reason": "The packet has a dual vocative \"Immortals\" (amr̥tā, VOC M DU) governing a dual imperative \"Bring ... unto us\" (vahatam, 2 DU IMP), and the only dual referent named in the verse is aśvínoḥ, which the supplied lexical mention binds to VG:DEVATA:ASVINAU, so the address is a single limited step from the packet.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:E7FFD3F46302FF676A09",
+      "category": "OBJECT_GRANULARITY_AMBIGUOUS",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M05:S042:V018",
+      "predicate": "REQUESTS",
+      "reason": "The optative force and the outcome wording \"obtain the Asvins' newest favour\" (gamema OPT + ávasā nū́tanena) are directly in the packet, but the Sanskrit has one verb gamema with two uncoordinated instrumental phrases, so a reasonable reader could merge this with the guidance outcome rather than split as Griffith's \"and\" invites.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:4CE55FCF0190DAF80AC8",
+      "category": "OBJECT_GRANULARITY_AMBIGUOUS",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M05:S042:V018",
+      "predicate": "REQUESTS",
+      "reason": "\"gain their health-bestowing happy guidance\" (mayobhúvā supráṇītī, both INS SG under the same aorist optative gamema) is supported as a desired result, but it shares that single verb with the favour outcome and has no Sanskrit coordinator, so the split into two outcomes is a defensible but arguable Rule 3 call.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:AB2CAC8E419EE4D6EA2D",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M05:S042:V018",
+      "predicate": "REQUESTS",
+      "reason": "\"Bring riches hither unto us\" corresponds to ā́ naḥ rayím vahatam with an explicit imperative (vahatam, IMP) and an accusative object (rayím ACC SG), a self-standing coordinated outcome.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:C45A9CD570A8C0D41379",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M05:S042:V018",
+      "predicate": "REQUESTS",
+      "reason": "\"and heroes\" is an explicitly coordinated conjunct in both packet layers (utá vīrā́n, ACC PL) sharing the imperative vahatam, and stands on its own as a separately desired result under Rule 3.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:AE0E13AD04FD7A6F1A94",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M05:S042:V018",
+      "predicate": "REQUESTS",
+      "reason": "\"all felicity and joy\" maps to the single coordinated accusative phrase ā́ víśvāni saúbhagāni with the qualifier \"all\" carried by víśvāni, and it is kept as one outcome rather than split on the translator's doublet.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:FE9E8E7398035FB5C6DA",
+      "category": "SUPPORTED_BUT_REDUNDANT",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M05:S042:V018",
+      "predicate": "DESCRIBES",
+      "reason": "The attribution is real in the packet (\"their health-bestowing happy guidance\", with the Asvins named by aśvínoḥ GEN DU), but it re-types the exact qualifier content and anchor wording of the guidance REQUESTS assertion as an entity property without any independent local evidence elsewhere in the verse.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:4F2BB6AB31D799C5C2CE",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M05:S043:V017",
+      "predicate": "INVOKES",
+      "reason": "Direct address is carried by the 2DU imperative vahatam ('Bring') plus the dual vocative amr̥tā ('Immortals!'), and the packet's only dual nominal referent is aśvínoḥ (VG:DEVATA:ASVINAU), so the single named inferential step is fully grounded in the supplied morphology.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:8F9673BC325292AC1DF0",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M05:S043:V017",
+      "predicate": "DESCRIBES",
+      "reason": "amr̥tā (VOC M DU) is an entity-level epithet applied to the addressees, and the TARGET anchor 'the Asvins'' names the entity directly in the translation, so the quality 'immortal' is attributed with one packet-grounded step and is not a duplicate of the INVOKES address.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:2F10CF320346BA8ED220",
+      "category": "SUPPORTED_BUT_REDUNDANT",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M05:S043:V017",
+      "predicate": "DESCRIBES",
+      "reason": "Its RELATION anchor is the identical clause ('their health-bestowing happy guidance') and identical qualifier pair already carried as the requested outcome of C32A:VG:SEMOBJ:59EE620B72865D35957C, and mayobhúvā/supráṇītī qualify the guidance rather than the entity, so it re-expresses one clause rather than adding independently evidenced entity-level content.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:2555610EF649E2C822CA",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M05:S043:V017",
+      "predicate": "REQUESTS",
+      "reason": "The optative gamema rendered 'May we obtain' is explicit request force under Rule 2, and the outcome 'the Asvins' newest favour' is anchored on ávasā nū́tanena wording present verbatim in the supplied translation.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:59EE620B72865D35957C",
+      "category": "OBJECT_GRANULARITY_AMBIGUOUS",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M05:S043:V017",
+      "predicate": "REQUESTS",
+      "reason": "The split is defensible because mayobhúvā/supráṇītī (INS F SG) form a separate agreement group from ávasā (INS N SG), but the Sanskrit has a single verb sám...gamema governing all the instrumentals, so a reasonable reader would merge this outcome with C32A:VG:SEMOBJ:2555610EF649E2C822CA rather than treat Griffith's supplied second verb 'gain' as a second request.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:2358342A0D75E924CB16",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M05:S043:V017",
+      "predicate": "REQUESTS",
+      "reason": "The imperative vahatam with rayím (ACC SG) and naḥ, translated 'Bring riches hither unto us', supports both the request force and the outcome, with the beneficiary correctly kept inside the single outcome.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:524E24AC6BD67EF54987",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M05:S043:V017",
+      "predicate": "REQUESTS",
+      "reason": "vīrā́n (ACC PL) coordinated by utá ('and heroes') is an independently coordinated desired result under Rule 3, governed by the same imperative anchored as 'Bring'.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:989ED408D71E98E3D315",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M05:S043:V017",
+      "predicate": "REQUESTS",
+      "reason": "víśvāni saúbhagāni (ACC N PL), translated 'all felicity and joy', is a third coordinated outcome of the same imperative and is correctly kept as one object rather than split, since it is a single Sanskrit noun phrase.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:F49384EAC918118A2C63",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S078:V005",
+      "predicate": "DESCRIBES",
+      "reason": "The translation's \"are fleet to travel like the noblest steeds\" is verbatim packet wording and the Sanskrit tokens āśávaḥ (NOM M PL, 'swift') and jyéṣṭhāsaḥ with aśvāso ná carry an entity-level quality of the unnamed plural subject, which is the DESCRIBES case under Rule 4.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:17F42CC1C02BFD5CBD2A",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S078:V005",
+      "predicate": "DESCRIBES",
+      "reason": "\"long to obtain the prize like bounteous charioteers\" is verbatim in the packet and the token didhiṣávaḥ is a NOM M PL nominal stem predicated of the same subjects, so the desiderative reads as an entity-level state rather than a narrated action, resolving the DESCRIBES/DESCRIBES_ACTION boundary in the author's favour.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:620F74B1AA9531FBD72D",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S078:V005",
+      "predicate": "REFERS_TO_NATURAL_PHENOMENON",
+      "reason": "The phenomenon is literally in the packet — ā́paḥ with nimnaíḥ, udábhiḥ and jigatnávaḥ, rendered \"waters speeding on with their precipitous floods\" — and the object is the phenomenon itself rather than the devatā key, as the family's policy requires; the anchor stops just short of the word \"waters\" but \"precipitous floods\" still carries the claim.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:93877E3E5175D6B914EE",
+      "category": "PREDICATE_AMBIGUOUS",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S078:V005",
+      "predicate": "ASSOCIATED_WITH",
+      "reason": "The comparison to áṅgirasaḥ is explicit in both Sanskrit and translation and no supplied key resolves the referent, so ONTOLOGY_GAP_REF is defensible, but the same simile force was coded as a DESCRIBES qualifier twice in this passage, making ASSOCIATED_WITH versus DESCRIBES genuinely arguable; the anchor \"like omniform\" is packet wording and relevant though it truncates before the identifying word \"Angirases\".",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:7819A6EDEBCEC1FB8F5A",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S078:V005",
+      "predicate": "INVOLVES_RITUAL",
+      "reason": "The token sā́mabhiḥ (INS N PL) and the anchored \"with Sama-hymns\" put the chants in the packet directly, and converting the named sāmans into the event type of their chanting is exactly the one limited step the author names under STRONG_INFERENCE; the chants sit inside a simile, which a reviewer may wish to revisit, but that framing is treated the same way as the accepted waters simile and adds no further inferential step.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:7A78477586F5E1EAE8B0",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M03:S004:V011",
+      "predicate": "INVOKES",
+      "reason": "The packet has the vocative \"agne\" / \"O Agni\" with the 2SG imperative \"ā yāhi\" / \"Come thou to us\", so Agni is directly addressed and summoned, and both anchors sit on that wording.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:0DF60B72DA4013FF5D1E",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M03:S004:V011",
+      "predicate": "REQUESTS",
+      "reason": "\"Come thou ... to us\" (IMP 2SG ā yāhi) is request force under Rule 2 with arrival as the desired outcome, and both qualifiers (\"duly kindled\", \"together with the potent Gods and Indra\") are verbatim packet wording qualifying that single outcome.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:F80B04DC81BD2A1FF558",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M03:S004:V011",
+      "predicate": "REQUESTS",
+      "reason": "\"On this our grass sit Aditi\" (3SG IMP āstām with barhíḥ naḥ) is an independently coordinated desired outcome distinct from Agni's arrival; the OUTCOME anchor quotes the locative phrase rather than the seating itself, which is thin but still the wording that carries the outcome.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:DB1D31C1ECBC63D32131",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M03:S004:V011",
+      "predicate": "REQUESTS",
+      "reason": "\"let our Hail delight the Gods Immortal\" (3PL IMP CAUS mādayantām, svā́hā) is a third independent desired outcome, and the OUTCOME anchor quotes the outcome clause exactly with \"our Hail\" kept as a qualifier rather than the head.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:EAFF7C66D76699EABA58",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M03:S004:V011",
+      "predicate": "DESCRIBES",
+      "reason": "\"Aditi, happy Mother\" (áditiḥ suputrā́, both NOM SG F) attributes an entity-level quality directly to the entity named by the supplied key VG:DEVATA:ADITIH, and both RELATION and TARGET anchors point at that wording.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:D49C4854607B05F859BA",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M03:S004:V011",
+      "predicate": "DESCRIBES",
+      "reason": "\"O Agni, duly kindled\" (samidhānáḥ, NOM SG M participle agreeing with the addressee of yāhi) is an entity-level state attributed to Agni; it repeats a qualifier already carried inside the REQUESTS outcome, but as a relation it is independently evidenced and Rule 1 forbids suppressing it.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:4C780A2D4EB5B584B165",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M03:S004:V011",
+      "predicate": "DESCRIBES",
+      "reason": "\"the potent Gods\" (devaíḥ turébhiḥ, both INS PL) directly attributes the quality to the accompanying gods; the object is non-canonical so no canonical binding is at stake, though no anchor is placed on the wording \"Gods\" that identifies the described referent.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:116BD86A246125743F9F",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M03:S004:V011",
+      "predicate": "DESCRIBES",
+      "reason": "\"the Gods Immortal\" (devā́ḥ amŕ̥tāḥ, NOM PL) carries the quality directly, and it is a different quality on a differently-situated group from the \"potent Gods\" assertion, so it is not a duplicate despite the identical normalized_head.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:C9313DDD1B430161491B",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M03:S004:V011",
+      "predicate": "ASSOCIATED_WITH",
+      "reason": "\"together with the potent Gods and Indra\" (índreṇa ... sarátham, INS) supports joint approach and Indra is the entity the supplied key VG:DEVATA:INDRAH names, but the assertion carries only the RELATION anchor \"together with\" and no TARGET anchor on the wording \"Indra\", so the binding evidence is under-anchored rather than mis-bound.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:3901237E6D77E74482B2",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M03:S004:V011",
+      "predicate": "INVOLVES_SUBSTANCE",
+      "reason": "\"our grass\" (barhíḥ, ACC) is an explicitly named physical material and nothing is inferred about it being offered, but the sole anchor \"On this\" is a demonstrative fragment that does not itself name the grass — a truncated anchor on the right phrase, not unrelated wording.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:D6855F03E6C10CA416A5",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S166:V001",
+      "predicate": "REQUESTS",
+      "reason": "Imperative request force is carried by the anchored \"MAKE\" (kr̥dhi, 2SG IMP AOR) and the outcome \"a bull among my peers\" is directly anchored on r̥ṣabhám (ACC) qualified by samānā́nām (GEN PL), so both force and outcome are packet-supported.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:8059F10531128C89C7AA",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S166:V001",
+      "predicate": "REQUESTS",
+      "reason": "The anchored \"make\" carries the same imperative force and \"my rivals, conqueror\" is an exact packet span backed by viṣāsahím (ACC) plus sapátnānām (GEN PL), a distinct lexical outcome from the slaying-of-foes conjunct rather than a restatement of it.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:A70DAB1FAFDD4EABB6B9",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S166:V001",
+      "predicate": "REQUESTS",
+      "reason": "\"Make\" anchors the imperative and \"the slayer of my foes\" is directly grounded in hantā́ram (ACC) with śátrūṇām (GEN PL), a separately standing desired result under Rule 3.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:38E85544AE3FBD903C95",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S166:V001",
+      "predicate": "REQUESTS",
+      "reason": "\"a sovran ruler\" is an exact packet span corresponding to virā́jam (ACC SG), a coordinate complement of the same anchored imperative and coherent as a standalone requested outcome.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:E761B3B01327D98B6AAD",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S166:V001",
+      "predicate": "REQUESTS",
+      "reason": "\"lord of kine\" is an exact packet span matching gópatim (ACC) with gávām (GEN PL), again a distinct accusative complement of the anchored imperative and independently desirable.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:E7F9D5E7AFE8775D2154",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M09:S097:V044",
+      "predicate": "INVOKES",
+      "reason": "The packet gives \"indo\" as VOC M SG of indu- (token PC:T016) and the translation reads \"...they cleanse thee, Indu,\", so vocative address to Indu is direct; no supplied key names indu (lexical_mentions has only INDRAH), so OPAQUE_REFERENT is correct, though the RELATION anchor sits on \"Be sweet\" rather than the vocative itself.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:F47E1907A7F14B50FB1F",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M09:S097:V044",
+      "predicate": "REQUESTS",
+      "reason": "\"Pour us a fount of meath\" is verbatim in the translation and pavasva is 2SG PRS IMP MED in the packet with madhvah sudam as its object, so request force and outcome are both direct and both anchors quote packet wording.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:C01F4873B74F98892768",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M09:S097:V044",
+      "predicate": "REQUESTS",
+      "reason": "\"a spring of treasure\" is verbatim in the translation and corresponds to the separate accusative phrase vasvah utsam in pada a, so Rule 3 splitting from the meath outcome is warranted rather than over-splitting.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:5286599540015BEF1845",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M09:S097:V044",
+      "predicate": "REQUESTS",
+      "reason": "\"send us a hero son\" is verbatim and maps to viram ca nah a pavasva in pada b, an independently coordinated conjunct under a second imperative, with the beneficiary \"us\" (nah DAT PL) grounded in the packet.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:56B2FE1267D05D0B97A3",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M09:S097:V044",
+      "predicate": "REQUESTS",
+      "reason": "\"happy fortune\" is verbatim in the translation and corresponds to the separately coordinated bhagam ca in pada b, so it stands as its own desired outcome under Rule 3.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:44BCB4B13B50B947A57A",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M09:S097:V044",
+      "predicate": "REQUESTS",
+      "reason": "The packet has svadasva as a distinct 2SG IMP MED with indraya (DAT M SG) in pada c and the translation reads \"Be sweet to India\"; the anchors quote packet wording exactly and the head's \"indra\" is grounded in the indra- lemma plus the supplied lexical mention rather than invented.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:A4EDA344E7B9EB7039C8",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M09:S097:V044",
+      "predicate": "REQUESTS",
+      "reason": "\"pour down riches on us from the ocean\" is verbatim and maps to rayim ca nah a pavasva samudrat in pada d, with the \"source: the ocean\" qualifier grounded in the ABL morphology of samudrat rather than added interpretation.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:755F25F9DF0DD916D450",
+      "category": "PREDICATE_AMBIGUOUS",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M09:S097:V044",
+      "predicate": "DESCRIBES_ACTION",
+      "reason": "The cleansing content is supported by \"when they cleanse thee\" and by pavamanah (PRS MED PTCP of the same root pu- as the imperatives), and \"agents unnamed\" honestly reflects the translation, but the packet's middle participle is nominative and agrees with the addressee, so an entity-level DESCRIBES reading of pavamana is as defensible as a narrated DESCRIBES_ACTION; the sole RELATION anchor \"when\" also marks the subordinator rather than the action wording.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:F1759DD507B5716C021D",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M09:S097:V044",
+      "predicate": "INVOLVES_SUBSTANCE",
+      "reason": "madhvah (GEN of madhu-, token PA:T001) and \"a fount of meath\" give direct local evidence for a physical material in SUBSTANCE_REF, and the typed role differs from the REQUESTED_OUTCOME of the meath request so Rule 6 co-emission holds, though the RELATION anchor reuses the request verb \"Pour us\" instead of the substance wording.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:DD71E056875AEFCAEC60",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M09:S097:V044",
+      "predicate": "REFERS_TO_PLACE",
+      "reason": "samudrat is ABL M SG in pada d and the translation reads \"from the ocean\", so the spatial source referent and the \"ablative source\" qualifier are both direct, and OPAQUE_SPATIAL_REFERENT is the conservative object kind the policy prescribes where place status is unclear.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:36AA2683DA17132D8214",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S182:V001",
+      "predicate": "INVOKES",
+      "reason": "The packet names bṛhaspátiḥ (NOM SG, token PA:T001, lexical mention VG:DEVATA:BRHASPATIH) and the translation opens \"BRHASPATI lead us safely over troubless\", so a named deity is called upon to act for the speakers.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:DDFD32862DF10A18BF04",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S182:V001",
+      "predicate": "REQUESTS",
+      "reason": "Imperative nayatu with durgáhā tirás is rendered \"lead us safely over troubless\", a directly evidenced desired outcome and both anchors are verbatim packet wording.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:CB1F7BA347E776697F92",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S182:V001",
+      "predicate": "REQUESTS",
+      "reason": "púnar neṣat agháśaṃsāya mánma is translated \"turn his evil thought against the sinner\", an independently coordinated wished-for result with its own verb and dative recipient.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:405363631976438AC1C6",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S182:V001",
+      "predicate": "REQUESTS",
+      "reason": "kṣipát áśastim / \"Repel the curse\" is a separate verb-plus-object desired result that stands on its own under Rule 3.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:9F1DD54E0BC8674815D3",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S182:V001",
+      "predicate": "REQUESTS",
+      "reason": "ápa durmatím han / \"drive away ill-feeling\" is a distinct coordinated outcome with a different verb and object from the preceding curse-repelling request.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:9A17F382ACFCCFD75D07",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S182:V001",
+      "predicate": "REQUESTS",
+      "reason": "karat yájamānāya śám yós / \"give the sacrificer peace and comfort\" supports one outcome with the sacrificer correctly kept as a beneficiary qualifier rather than a separate outcome.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:033D08996E10A738E987",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M08:S002:V006",
+      "predicate": "DESCRIBES_ACTION",
+      "reason": "The translation states \"other men than we with milk chase him as hunters chase a deer\" (Sanskrit anyé asmát ... mṛgáyante, 3PL present indicative narrated as occurring), which directly supports the chase event, the agent \"other men than we\", the instrument \"with milk\", and the deer-hunter simile qualifier; the RELATION anchor \"chase him\" is verbatim and assertion-specific.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:C652773FA651F719CC32",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M08:S002:V006",
+      "predicate": "DESCRIBES_ACTION",
+      "reason": "A second, distinct narrated verb is present — \"And with their kine inveigle him\" (abhitsáranti dhenúbhiḥ, 3PL present indicative) — so this is an independently evidenced action with its own instrument, not a restatement of the chase clause, and the anchor \"inveigle him\" is verbatim.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:6CCFA4F0C97D739FA180",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M08:S002:V006",
+      "predicate": "INVOLVES_SUBSTANCE",
+      "reason": "\"with milk\" is explicit in the supplied translation and names a physical material, which Rule 6 permits to co-exist with DESCRIBES_ACTION; the anchor span is the same three words that also ground the first assertion's instrument role, so the added value is thin, but the substance relation itself carries direct local evidence.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:BC7D73F8C5151891398B",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M08:S002:V006",
+      "predicate": "CONTRASTS_WITH",
+      "reason": "\"other men than we\" (anyé NOM M PL set against asmát, ablative of the 1PL pronoun) lexically sets the speakers apart from the other group, so both the contrast force and the opaque object \"the speakers\" are grounded in the packet, though the RELATION anchor stops at \"other men than\" and omits the \"we\" that identifies the object.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:2EFCF2E05B6D13C6EBA1",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S010:V014",
+      "predicate": "INVOKES",
+      "reason": "The packet's token yamī́- is VOC F SG and the translation reads \"Embrace another, Yami\", so the speaker addresses Yamī by name, and the supplied lexical mention resolves that vocative to VG:DEVATA:YAMI; the RELATION anchor is the imperative clause in which the address sits, which is somewhat indirect but not off-topic.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:5BA3811B966B667D89AD",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S010:V014",
+      "predicate": "REQUESTS",
+      "reason": "\"Embrace another\" is an imperative directed at the addressee (Rule 2 request force) and the outcome head \"embrace another\" matches the anchored wording, with anyá- ACC M SG in the packet supporting the masculine \"another man\" in the display label.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:78C046A5ABDFCDA60CF4",
+      "category": "OBJECT_GRANULARITY_AMBIGUOUS",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S010:V014",
+      "predicate": "REQUESTS",
+      "reason": "\"let another ... enfold thee\" is genuinely wished-for and anchored, but it is the converse half of the same reciprocal embrace as the previous REQUESTS assertion and is carried in Sanskrit by the single verb pári ṣvajāte, so a reasonable reader would merge the two into one desired outcome under Rule 3.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:E515EFDE07282491A0FA",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S010:V014",
+      "predicate": "REQUESTS",
+      "reason": "\"Win thou his heart\" is an imperative in the translation and is backed by ichá (√iṣ- 2SG PRS IMP ACT) with mánaḥ ACC in the packet, and the outcome head states the desired result rather than merely copying the grammatical object.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:652FA1343D5A13B352F0",
+      "category": "OBJECT_GRANULARITY_AMBIGUOUS",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S010:V014",
+      "predicate": "REQUESTS",
+      "reason": "\"let him win thy fancy\" is anchored and wished-for, but it is the reciprocal counterpart of \"Win thou his heart\" (Sanskrit tásya vā ... sá vā táva, a paired alternative sharing one verb), so splitting versus merging the pair into a single mutual-consent outcome is genuinely arguable.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:59450C19A9D4B7A98CE6",
+      "category": "PREDICATE_AMBIGUOUS",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S010:V014",
+      "predicate": "REQUESTS",
+      "reason": "The blessed alliance is directly evidenced (saṃvídam ACC + súbhadrām ACC), but the anchored wording \"he shall form with thee a blest alliance\" is declarative in the translation, so REQUESTS rests on the packet's kr̥ṇuṣva (2SG PRS IMP MED) rather than on the anchor, leaving request force versus a stated resulting outcome genuinely arguable.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:6C7FFA490F92E9F23BA8",
+      "category": "PREDICATE_AMBIGUOUS",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S010:V014",
+      "predicate": "DESCRIBES_ACTION",
+      "reason": "The wording \"even as the woodbine rings the tree\" (líbujā NOM, iva, vr̥kṣám ACC) is in the packet and the participants are correctly read, but it occurs only as a simile vehicle qualifying the embrace request, so whether Rule 5 treats it as an action narrated as occurring or as a comparative qualifier is arguable.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:72251A97570E3704AFC9",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M07:S101:V003",
+      "predicate": "DESCRIBES",
+      "reason": "The translation states \"Now he is sterile\", an entity-level state of the unnamed masculine referent, and the RELATION anchor \"is sterile\" sits exactly on that wording with the object left as OPAQUE_REFERENT rather than bound to any entity key.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:071206A79782D183DD2B",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M07:S101:V003",
+      "predicate": "CONTRASTS_WITH",
+      "reason": "The \"Now ... now ...\" alternation in \"Now he is sterile, now begetteth offspring\" (Sanskrit u tvat ... u tvat) directly carries a contrast force between the two states, and the anchor spans exactly that alternating construction rather than the whole verse.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:755F66B9851024819DB8",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M07:S101:V003",
+      "predicate": "DESCRIBES_ACTION",
+      "reason": "\"now begetteth offspring\" (Sanskrit sū́te, present indicative) is an action narrated as occurring, and the actor/patient participants are the referent and the offspring named in that same clause.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:2D966AB513BFD0F53F29",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M07:S101:V003",
+      "predicate": "DESCRIBES_ACTION",
+      "reason": "\"even as he willeth doth he change his figure\" (Sanskrit yathāvaśám tanvàm cakre eṣáḥ) narrates the action, supplies the patient \"his figure\" and grounds the \"as he wills\" qualifier in yathāvaśám.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:82E3BC5651D4FC49A705",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M07:S101:V003",
+      "predicate": "DESCRIBES_ACTION",
+      "reason": "\"The Father's genial flow bedews the Mother\" narrates the act with both participants explicit in the supplied translation, which the policy treats as direct rather than inferential evidence even though the Sanskrit pitúḥ páyaḥ práti gr̥bhṇāti mātā́ casts the Mother as the receiving agent.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:1F5F5450B75EAF580999",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M07:S101:V003",
+      "predicate": "INVOLVES_SUBSTANCE",
+      "reason": "The substance is named independently of the act as \"the Father's genial flow\" and by the Sanskrit token páyas- (pitúḥ páyaḥ), so the material relation carries its own local evidence under Rule 6; the RELATION anchor \"bedews the Mother\" is imprecise in pointing at the verb rather than the naming phrase, but it is the predicate of that very phrase and not unrelated wording.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:0DC3732C80945F967972",
+      "category": "OBJECT_GRANULARITY_AMBIGUOUS",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M07:S101:V003",
+      "predicate": "DESCRIBES_ACTION",
+      "reason": "\"therewith the Sire, therewith the son is nourished\" (Sanskrit téna pitā́ vardhate téna putráḥ) is fully supported, but the repeated instrumental marks two coordinated predications that a reasonable reader would emit as two separate nourishment events rather than one event with two patients.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:8F1ED1E3C0974F6CD036",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S165:V005",
+      "predicate": "REQUESTS",
+      "reason": "The packet's \"Drive forth the Dove, chase it with holy verses\" (Sanskrit nudata, 2PL PRS IMP, with kapótam ACC and r̥cā́ INS) directly carries imperative request force, the driving-away outcome, and the instrumental qualifier the assertion records.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:D9B795BCE30EAA2F12C8",
+      "category": "OBJECT_GRANULARITY_AMBIGUOUS",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S165:V005",
+      "predicate": "REQUESTS",
+      "reason": "Request force and content are directly supported by \"rejoicing, bring ye hither food and cattle\" (nayadhvam 2PL IMP with íṣam and gā́m as two distinct accusatives), but under Rule 3 a reasonable reader could equally treat food and cattle as two independently coordinated desired outcomes rather than one.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:C2A3F44F24B3D9CB6C58",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S165:V005",
+      "predicate": "REQUESTS",
+      "reason": "\"Barring the way against all grief and trouble\" (saṃyopáyantaḥ, NOM PL PRS PTCP CAUS, with duritā́ni víśvā ACC PL) names a distinct desired result with its own object, and the single named step — reading the participle as dependent on the preceding imperative — is exactly the one limited inference STRONG_INFERENCE permits.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:99BC6B63B025E10CB646",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S165:V005",
+      "predicate": "REQUESTS",
+      "reason": "\"Let the swift bird fly forth\" renders prá patāt (3SG PRS SBJV of √pat-), which is the \"may X occur\" desired-result construction Rule 2 assigns to REQUESTS, and both anchor strings sit on the wording that carries it.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:CD3711277581306F3519",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S165:V005",
+      "predicate": "REQUESTS",
+      "reason": "\"and leave us vigour\" (hitvā́ naḥ ū́rjam) is a second verb phrase coordinated under the same jussive \"Let\", so it stands on its own as a separately desired result with the beneficiary correctly kept in the qualifier field rather than the head.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:B29D67976A470717C141",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S165:V005",
+      "predicate": "DESCRIBES",
+      "reason": "\"the swift bird\" (pátiṣṭhaḥ, NOM SG M, degree SUP) attributes an entity-level quality directly, which Rule 4 assigns to DESCRIBES and permits alongside the separate action request; the assertion carries no anchor on the word \"bird\" itself, but the anchored \"swift\" is the wording that carries the attribution.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:8AC38A07A6FB3725019F",
+      "category": "WEAK_SUPPORT",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S165:V005",
+      "predicate": "INVOLVES_RITUAL",
+      "reason": "The packet names verses only as an instrument of driving the bird away (\"chase it with holy verses\", r̥cā́ INS) and never states an act of utterance or a ritual, so reaching a RITUAL_EVENT of \"recitation of holy verses\" takes an inferred recitation act plus a further ritual classification the rationale does not name — and the same instrumental phrase has already been consumed as a qualifier on the drive-away request, so it carries no independent local evidence under Rule 6.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:545424DD3AC5878D1CD0",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M09:S064:V009",
+      "predicate": "INVOKES",
+      "reason": "The packet's translation reads \"O Pavamana\" and token PB:T004 pávamāna is VOC SG, so address/invocation force and the addressed referent are both directly carried by the anchored \"O\"; leaving the object OPAQUE_REFERENT rather than binding the supplied traditional devatā key is conservative, not wrong.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:3B56A73B5FCFE7DA2A6F",
+      "category": "PREDICATE_AMBIGUOUS",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M09:S064:V009",
+      "predicate": "DESCRIBES",
+      "reason": "\"Urged on\" is verbatim in the translation and attributed to the addressee, but hinvānáḥ is a present MEDIAL participle of √hi-, so whether it states an entity-level state (DESCRIBES) or a narrated action of impelling (DESCRIBES_ACTION) is genuinely arguable under Rule 4/Rule 5.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:9DC3C4189ED9CBEBA2DC",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M09:S064:V009",
+      "predicate": "DESCRIBES",
+      "reason": "The translation says \"the God Surya\" and the Sanskrit has deváḥ ná sū́ryaḥ, so god-status is directly attributed to the entity, and the TARGET anchor \"Surya\" matches the lexical mention VG:DEVATA:SURYAH on token PC:T009.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:B0C1B2966B862D1EC39D",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M09:S064:V009",
+      "predicate": "DESCRIBES_ACTION",
+      "reason": "\"thou sendest out thy voice\" corresponds to vā́cam iṣyasi with iṣyasi a 2SG PRS INDICATIVE, i.e. an action asserted as occurring rather than commanded, satisfying Rule 5, and the unbound actor/patient roles are correctly left absent.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:397E12CD337442A07050",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M09:S064:V009",
+      "predicate": "DESCRIBES_ACTION",
+      "reason": "The supplied translation states \"thou hast moved ... to the sieve\" with ákrān an aorist indicative, so a narrated action with its goal is directly carried by the anchored \"hast moved\"; the head rests on the translation rather than the token lemma √krand-, which the explicitness policy expressly permits.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:C2C5894952C888B35BDE",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M09:S064:V009",
+      "predicate": "ASSOCIATED_WITH",
+      "reason": "The anchored \"Like\" carries an explicit simile in \"Like the God Surya\" (Sanskrit ná), the bound entity matches the packet's lexical mention of sū́ryaḥ, and no more specific allowed predicate covers comparison; the only defect is that the canonical target carries no TARGET anchor.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:B299C4498374850F6DF7",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M08:S043:V032",
+      "predicate": "INVOKES",
+      "reason": "The packet has agne tagged VOC SG (token PA:T003) plus tvám NOM and the 2sg verb jighnase, and the translation reads \"So thou, O Agni\", so direct address to the supplied key VG:DEVATA:AGNIH is carried by the anchored wording.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:76798197DB327D10F346",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M08:S043:V032",
+      "predicate": "DESCRIBES",
+      "reason": "vibhā́vasuḥ (NOM SG, token PA:T004) agrees with the addressee and the translation attributes \"rich in light\" to Agni directly, which is an entity-level quality and so correctly DESCRIBES rather than DESCRIBES_ACTION under Rule 4.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:2520104C10A40B482362",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M08:S043:V032",
+      "predicate": "DESCRIBES_ACTION",
+      "reason": "\"beaming like Surya with thy rays\" (sr̥ján NOM SG PTCP agreeing with the addressee, raśmíbhiḥ INS PL) narrates an ongoing action of the addressee, so actor Agni, instrument \"rays\" and qualifier \"like Surya\" are each packet-grounded, though no anchor is placed on the wording that binds the actor.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:74B57C8FE2EC6ECDC04A",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M08:S043:V032",
+      "predicate": "DESCRIBES_ACTION",
+      "reason": "jighnase is 2SG PRS IND with támāṃsi ACC PL and śárdhan PTCP, and the translation \"Boldly demolishest the gloom\" states the action as occurring rather than wished for, so actor, patient \"gloom\" and qualifier \"boldly\" are all directly carried.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:F66B7597C521BB6C8DA8",
+      "category": "PREDICATE_AMBIGUOUS",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M08:S043:V032",
+      "predicate": "ASSOCIATED_WITH",
+      "reason": "The comparison sū́ryaḥ ná / \"like Surya\" is explicit and the Surya key is a supplied lexical mention, but whether a simile carries ASSOCIATED_WITH relation force — as opposed to remaining the \"like Surya\" qualifier already emitted on the beaming event — is genuinely arguable under the policy's review-sensitive treatment of that family, and the assertion anchors only \"like\" with no TARGET anchor on \"Surya\".",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:3E557CFE1E0B1EF0FAE6",
+      "category": "WEAK_SUPPORT",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M08:S043:V032",
+      "predicate": "REFERS_TO_NATURAL_PHENOMENON",
+      "reason": "The packet does name the darkness (támāṃsi, token PC:T010, \"the gloom\"), but the assertion's only anchor is \"demolishest\" — the verb already anchoring the DESCRIBES_ACTION assertion — so the phenomenon relation is reachable only by stepping from the anchored verb to an unanchored object, and nothing in the packet distinguishes physical darkness from a figurative gloom for the \"darkness\" head.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:5747F4DD6D8AB33D76CD",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S069:V010",
+      "predicate": "INVOKES",
+      "reason": "The packet has the direct vocative address \"O Agni\" in the translation and token PB:T007 agne (VOC SG) resolved by the supplied lexical mention to VG:DEVATA:AGNIH, so both invocation force and the bound target are directly evidenced.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:12AED970A8C9E8D116A2",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S069:V010",
+      "predicate": "DESCRIBES",
+      "reason": "\"Thou, Youngest God\" (token PC:T013 yaviṣṭha, VOC SUP) attributes an entity-level quality to the same addressee named in the vocative \"O Agni\" in the preceding pada, which is an entity quality rather than an action and so sits correctly under Rule 4 DESCRIBES.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:85AE1377E39616CF4F3E",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S069:V010",
+      "predicate": "DESCRIBES_ACTION",
+      "reason": "\"Vadhryasva bare thee in his lap\" (abibhar, upásthe LOC, vadhryaśváḥ NOM, tvā́m ACC) narrates the action as occurring, with the agent, the locative qualifier and the patient \"thee\" = the addressed Agni all directly in the packet.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:B75A0D710E145EF7DE56",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S069:V010",
+      "predicate": "DESCRIBES_ACTION",
+      "reason": "\"and served thee\" with token PB:T009 saparyán (PRS PTCP agreeing with vadhryaśváḥ NOM) narrates a distinct action from the bearing, with the same evidenced agent and the addressed Agni as patient.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:4DAB419F56E9EED3B8A5",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S069:V010",
+      "predicate": "DESCRIBES_ACTION",
+      "reason": "\"having enjoyed his fuel\" (juṣāṇáḥ AOR PTCP MED with samídham ACC) is a narrated, not commanded, action whose actor is the addressee \"Thou\" identified as Agni by the vocative in the same verse.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:579E825CC78E020EA2D1",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S069:V010",
+      "predicate": "DESCRIBES_ACTION",
+      "reason": "\"didst vanquish those of old though they were mighty\" matches avanoḥ (2SG IPRF, hence the addressee Agni), pū́rvān ACC PL as patient, and vrā́dhataḥ cit as the concessive qualifier, all present in the packet.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:42413F51E1A95C536218",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S069:V010",
+      "predicate": "INVOLVES_SUBSTANCE",
+      "reason": "\"his fuel\" / samídham ACC is an explicitly named physical material, and Rule 6 allows the substance role to co-exist with the enjoying event since a distinct typed role is expressed; the conservative SUBSTANCE_REF rather than OFFERING_REF follows the policy's warning against inferring an offered role.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:776AC9B3E8859825CF7C",
+      "category": "PREDICATE_AMBIGUOUS",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S069:V010",
+      "predicate": "ASSOCIATED_WITH",
+      "reason": "The simile \"Like as a father bears his son\" (pitā́ iva putrám abibhar) is explicit in the packet and the KINSHIP_ROLE_UNMODELED gap object is the prescribed encoding, but whether an overtly stated likeness belongs in the residual ASSOCIATED_WITH family, in HAS_THEME, or as a second DESCRIBES_ACTION on the simile clause is genuinely arguable, and the association is left without a bound counterpart entity.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:E7D55D9C96E821131BD4",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M09:S100:V007",
+      "predicate": "INVOKES",
+      "reason": "The packet's translation reads \"As cows, O Pavamana, lick\" and token T011 is pávamāna in the vocative, so direct address force and the addressed referent are both carried by the anchored wording, thin as the single-letter \"O\" anchor is.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:080043655F05DE5574E4",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M09:S100:V007",
+      "predicate": "DESCRIBES",
+      "reason": "\"caress thee Golden-coloured\" in the translation, with hárim (ACC M SG) at T004 agreeing with the accusative addressee tvā́m, attributes an entity-level quality to the addressee exactly as Rule 4 requires of DESCRIBES.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:9146C23FC7AD3DFF13EB",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M09:S100:V007",
+      "predicate": "DESCRIBES",
+      "reason": "\"The mothers, void of guiles\" plus adrúhaḥ (NOM F PL, T006) agreeing with mātáraḥ (NOM F PL, T003) states a quality of the mothers independently of the caressing action, so the separate DESCRIBES is directly evidenced and not a duplicate of the action assertion.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:89B767A11D9989140B42",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M09:S100:V007",
+      "predicate": "DESCRIBES_ACTION",
+      "reason": "\"The mothers, void of guiles, caress thee Golden-coloured, in the sieve\" narrates the act as occurring (rihanti, 3PL PRS IND ACT at T002), and both bound participants — mothers as agent, the addressed golden-coloured one as patient — are directly in the anchored clause.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:3D276D57CA8B026378CA",
+      "category": "PREDICATE_AMBIGUOUS",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M09:S100:V007",
+      "predicate": "REFERS_TO_PLACE",
+      "reason": "The spatial content is directly supported by \"in the sieve\" and pavítre (LOC N SG, T005), and OPAQUE_SPATIAL_REFERENT is the policy-sanctioned hedge, but whether a ritual filter carries REFERS_TO_PLACE force rather than an instrument/ritual reading is genuinely arguable, and the same locative already rides as the \"in the sieve\" qualifier on the DESCRIBES_ACTION event.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:3EBC984B92EE7D6CE3AE",
+      "category": "PREDICATE_AMBIGUOUS",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M09:S100:V007",
+      "predicate": "ASSOCIATED_WITH",
+      "reason": "\"As cows ... lick the new-born calf\" with ná (T009) makes the comparison and its two participants explicit, but the family is arguable: a reader could take the gnomic licking as a narrated action under DESCRIBES_ACTION, and ASSOCIATED_WITH is the review-sensitive residual predicate the policy admits only when nothing more specific fits.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:DAA9E3AAD10D4C41C9B3",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M09:S100:V007",
+      "predicate": "EXPRESSES",
+      "reason": "The translation ends \"as Law commands\", backed by vídharmaṇi (LOC N SG, T012), so the concept is named in the packet and the concise CONCEPT_REF head \"law's command\" is an evidenced head rather than a copied sentence fragment.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:76C4CFDA39A04EF03389",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M04:S011:V006",
+      "predicate": "INVOKES",
+      "reason": "The packet has vocative address wording in both languages — \"Son of Strength, Agni\" in the translation, agne and sūno both VOC in tokens PC:T014/PC:T015 — and VG:DEVATA:AGNIH is the supplied lexical-mention key for agne.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:C1553DA7A97AE9C3560B",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M04:S011:V006",
+      "predicate": "DESCRIBES",
+      "reason": "\"whom thou as God attendest\" (deváḥ NOM M SG, PD:T017, predicated of the 2sg addressee) attributes divine status to the addressee, who is named Agni by the vocative in the same verse, so the entity-level quality is stated on wording distinct from the action anchor.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:AE9D5682379641BDB0CF",
+      "category": "OBJECT_GRANULARITY_AMBIGUOUS",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M04:S011:V006",
+      "predicate": "DESCRIBES_ACTION",
+      "reason": "The action and actor are directly supported (\"Far from us thou removest...\", addressee = Agni), but the packet coordinates three separately marked evils (ámatim, áṁhaḥ, víśvāṁ durmatím, each with its own āré) and the event merges them into one head while listing only \"ill-will\" as a participant, a split/merge a reasonable reader would draw differently.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:63C740EDD2B707F29EB5",
+      "category": "SUPPORTED_BUT_REDUNDANT",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M04:S011:V006",
+      "predicate": "DESCRIBES_ACTION",
+      "reason": "\"when thou protectest\" (nipā́si, PB:T010) is the single finite verb of padas a-b and is the same predication that carries the keeping-evils-far-from-us claim already emitted as C32A:VG:SEMOBJ:AE9D5682379641BDB0CF, so \"protect the worshippers\" restates it rather than adding an independent relation.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:2BDA36A575B01FF80418",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M04:S011:V006",
+      "predicate": "DESCRIBES_ACTION",
+      "reason": "\"whom thou as God attendest for his welfare\" (sácase 2sg MED PD:T020, svastí ACC PD:T021, yám ACC M SG PD:T016) supports the narrated action, the Agni actor, the masculine attended person left unbound, and the welfare qualifier.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:DB5EB815AD277F234D01",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M04:S011:V006",
+      "predicate": "EXPRESSES",
+      "reason": "\"blest is he at evening\" is verbatim packet wording expressing a state of well-being of the man, and the concise STATE_REF head \"welfare\" matches svastí (PD:T021) in the same sentence rather than copying a sentence fragment as identity.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:3A2A6517D5158D4165CB",
+      "category": "PREDICATE_AMBIGUOUS",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M04:S011:V006",
+      "predicate": "ASSOCIATED_WITH",
+      "reason": "The temporal content is explicit (doṣā́ INS, PC:T011, \"at evening\"), but the residual review-sensitive ASSOCIATED_WITH competes with REFERS_TO_NATURAL_PHENOMENON for a time-of-day referent, and the RELATION anchor is truncated to \"blest is he\", stopping just short of the \"at evening\" wording that actually carries the association.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:5DD2A2CB9A747CDB0B02",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S037:V002",
+      "predicate": "REQUESTS",
+      "reason": "Translation \"May this my truthful speech guard me on every side\" plus the 3sg imperative pātu carries request force, and the outcome head and both qualifiers (\"on every side\" from viśvátas, speaker as beneficiary from mā ACC) are the packet's own wording, with no addressee invented.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:4346CC8903384530D9A3",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S037:V002",
+      "predicate": "DESCRIBES",
+      "reason": "\"my truthful speech\" (satyóktiḥ, F NOM SG) attributes an entity-level quality to the speaker's speech and the anchor \"truthful\" is the wording carrying it; no action is folded into the identity label.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:DF5F9991A8CCAF9AB8A7",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S037:V002",
+      "predicate": "DESCRIBES_ACTION",
+      "reason": "\"All else that is in motion finds a place of rest\" (víśvam anyát ní viśate yát éjati, present indicative) is a narrated rather than wished-for action, and the undergoer and \"in motion\" qualifier come straight from that clause.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:8B922BAA0BBE236801E2",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S037:V002",
+      "predicate": "DESCRIBES_ACTION",
+      "reason": "The supplied translation states \"the waters ever flow\" (ā́paḥ with viśvā́hā), which the policy permits as direct evidence, and the agent and \"perpetually\" qualifier match that wording.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:11C6B36D3B4BBAF9F933",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S037:V002",
+      "predicate": "DESCRIBES_ACTION",
+      "reason": "\"ever mounts the Sun\" (viśvā́hā út eti sū́ryaḥ) narrates the action, and the actor key VG:DEVATA:SURYAH is the packet's own lexical mention for token PD:T024 sū́ryaḥ, so the canonical binding is the supplied one.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:37F01F4CB80E267453DD",
+      "category": "SUPPORTED_BUT_REDUNDANT",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S037:V002",
+      "predicate": "REFERS_TO_NATURAL_PHENOMENON",
+      "reason": "The flowing of the waters is genuinely evidenced, but this restates assertion 8B922BAA in substance off the identical \"ever flow\" anchor with the same perpetual qualifier, differing only in predicate framing rather than in an independently expressed role.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:DC86F8B75C5E6DA2704D",
+      "category": "SUPPORTED_BUT_REDUNDANT",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S037:V002",
+      "predicate": "REFERS_TO_NATURAL_PHENOMENON",
+      "reason": "Sunrise as a phenomenon is evidenced by \"ever mounts the Sun\" and correctly avoids reusing the Devatā key as the phenomenon, but it duplicates assertion 11C6B36D off the same \"ever mounts\" anchor and the same perpetual qualifier.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:7F6709888A2EF19371A5",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S037:V002",
+      "predicate": "REFERS_TO_PLACE",
+      "reason": "\"wherever heaven and earth ... are spread abroad\" (yátra, dyā́vā NOM DU) supplies both the spatial relation anchor and the referent, and OPAQUE_SPATIAL_REFERENT with \"place status unclear\" is the hedge the policy prescribes when geographic status is unclear.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:BEA3F48061F52C953726",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S037:V002",
+      "predicate": "CONTRASTS_WITH",
+      "reason": "The exclusive \"All else\" (anyát) set against the immediately following \"the waters ever flow and ever mounts the Sun\" carries the contrast within the packet's own adjacent clauses and the named inference step stays inside that one limited move; binding only the motion pole is a defensible encoding of a binary contrast.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:5DE539C47A4BCCEE4C82",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S091:V003",
+      "predicate": "INVOKES",
+      "reason": "The packet has ágne as VOC SG (token PB:T006) and the translation reads \"art thou, O Agni\", so direct vocative address to the canonical entity VG:DEVATA:AGNIH is carried by the anchored wording, though the RELATION anchor \"O\" is a minimal span.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:2C3A4C48ADE603D3BF0C",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S091:V003",
+      "predicate": "DESCRIBES",
+      "reason": "\"Most sage with insight\" is verbatim in the packet translation and is predicated of the addressee via \"art thou, O Agni\" (Sanskrit sukrátuḥ with instrumental krátunā), an entity-level quality directly attributed to Agni under Rule 4.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:982990EB8B1968A17954",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S091:V003",
+      "predicate": "DESCRIBES",
+      "reason": "\"passing skillful with thy powers\" is verbatim in the translation and corresponds to the separate epithet-plus-instrumental pair sudákṣaḥ / dákṣaiḥ in the tokens, so it is an independent quality of Agni rather than a restatement of the krátu- phrase.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:91F2567B80B08CF7B6F9",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S091:V003",
+      "predicate": "DESCRIBES",
+      "reason": "\"wise with wisdom\" is verbatim in the translation and matches the distinct token pair kavíḥ / kā́vyena, an entity-level quality attributed to the addressee Agni.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:DCF72F01366071CD2945",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S091:V003",
+      "predicate": "DESCRIBES",
+      "reason": "\"knowing all\" is verbatim in the translation and corresponds to the single NOM SG token viśvavít predicated of the addressee, so the all-knowing property is directly attributed to Agni.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:90288A447064DF5C1450",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S091:V003",
+      "predicate": "DESCRIBES",
+      "reason": "\"As Vasu\" is verbatim in the translation and the token vásuḥ is NOM M SG agreeing with the 2sg subject \"thou\" (= the vocative Agni), so the designation is applied to Agni and not to a separate entity.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:AFDA3225408E6DB71EF8",
+      "category": "PREDICATE_AMBIGUOUS",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S091:V003",
+      "predicate": "DESCRIBES",
+      "reason": "The content \"thou alone art Lord of all good things\" is verbatim and clearly bound to Agni, but the underlying clause is the finite verb kṣayasi (root, PRS IND 2SG) with vásūnām, so DESCRIBES (a lordship role, per Rule 4) and DESCRIBES_ACTION (an asserted act of ruling, per Rule 5) are both defensible readings of the same wording.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:BFDA1C39544A5C74EEE7",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M10:S091:V003",
+      "predicate": "DESCRIBES_ACTION",
+      "reason": "\"of all the treasures that the heavens and earth produce\" is verbatim and the tokens give dyā́vā ca ... pṛthivī́ ca púṣyataḥ (3 DU PRS IND), an action narrated as occurring with heaven and earth as agents and the relative yā́ni (ACC N PL, the treasures) as patient; the VG:DEVATA:PRTHIVI participant key is the one the packet's own lexical_mentions layer binds to token PD:T020.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:2C1D06049650D0A2BA62",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M01:S083:V005",
+      "predicate": "DESCRIBES",
+      "reason": "The translation reads \"then, guardian of the Law, sprang up the loving Sun\" and the tokens give vratapā́ḥ and sū́ryaḥ both NOM SG M in pada b, so the epithet is directly attributed to the Sun, which the packet's lexical mention resolves to VG:DEVATA:SURYAH.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:A31A12E46AC9D3D5F235",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M01:S083:V005",
+      "predicate": "DESCRIBES",
+      "reason": "\"the loving Sun\" is explicit in the supplied translation, matching venáḥ (NOM SG M) in apposition to sū́ryaḥ, and it is a quality distinct from the \"guardian of the Law\" epithet, so it is an independent DESCRIBES rather than a duplicate.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:7C99C51AE884B7BA3158",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M01:S083:V005",
+      "predicate": "DESCRIBES",
+      "reason": "The translation says \"Yama's deathless birth\" and the tokens show amŕ̥tam agreeing with jātám (both ACC N SG) beside yamásya (GEN SG), so the quality \"deathless\" is directly predicated of the named non-canonical referent \"Yama's birth\".",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:51651A5E42FB889DEB43",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M01:S083:V005",
+      "predicate": "DESCRIBES_ACTION",
+      "reason": "\"Atharvan first by sacrifices laid the paths\" narrates the action as occurring (tate, PRF IND), and actor (átharvā NOM SG), patient (patháḥ ACC PL) and both qualifiers (prathamáḥ, yajñaíḥ INS PL) are each directly present in the packet.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:C5522322FFBB68BC928C",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M01:S083:V005",
+      "predicate": "DESCRIBES_ACTION",
+      "reason": "\"then ... sprang up the loving Sun\" narrates the event (ajani, AOR) with tátas supporting the \"then\" qualifier, and the actor binding to VG:DEVATA:SURYAH follows the packet's own lexical mention of sū́ryaḥ as the clause subject.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:616C078361F3CA1A61CB",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M01:S083:V005",
+      "predicate": "DESCRIBES_ACTION",
+      "reason": "\"Usana Kavya straightway hither drove the kine\" supplies the narrated action (ājat, IPRF ACT), the actor (uśánā kāvyáḥ), the patient (gā́ḥ ACC PL) and both qualifiers, and no canonical ID is forced onto the human-like referent.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:5650D2A2692501070720",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M01:S083:V005",
+      "predicate": "INVOLVES_RITUAL",
+      "reason": "The ritual object is directly evidenced by \"by sacrifices\" (yajñaíḥ, INS PL) in pada a, and Rule 6 licenses it beside the DESCRIBES_ACTION of laying the paths; the RELATION anchor \"laid\" is same-clause but points at the verb rather than at the sacrifice wording that actually carries the relation.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:5FA8585A8CD174A996F4",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M01:S083:V005",
+      "predicate": "INVOLVES_RITUAL",
+      "reason": "\"Let us with offerings honour Yama's deathless birth\" (yajāmahe, 1PL PRS MED) directly evidences a ritual act undertaken by the speakers, and it is a distinct ritual occurrence from Atharvan's sacrifices in pada a, with different participants and qualifiers.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:82BC850C6547426AC068",
+      "category": "SUPPORTED_BUT_REDUNDANT",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M01:S083:V005",
+      "predicate": "INVOLVES_OFFERING",
+      "reason": "\"with offerings\" is present in the supplied translation so the relation is supported, but the preceding ritual assertion already carries the identical content in its head \"honouring with offerings\" and this object names no distinct offered thing (pada d has no offering noun in the tokens, only yajāmahe), so it adds no independent relation.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:B0AB88B1E3DB10DC3DAC",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M01:S083:V005",
+      "predicate": "REFERS_TO_PLACE",
+      "reason": "\"the paths\" (patháḥ, ACC PL) is explicit in the packet and, because its geographic status is unclear, the author used OPAQUE_SPATIAL_REFERENT exactly as the policy directs for unclear place status; the RELATION anchor \"laid\" is again the verb rather than the referent wording.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:8F9139661E21AC61586B",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M01:S133:V006",
+      "predicate": "INVOKES",
+      "reason": "The packet translation reads \"O Indra, hear thou us\" and the token list has `indra` as VOC SG bound by the supplied lexical mention to VG:DEVATA:INDRAH, so both the address force and the canonical target are directly carried by the anchored wording.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:B1C87847E29C195C53DA",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M01:S133:V006",
+      "predicate": "REQUESTS",
+      "reason": "\"Tear down the mighty ones\" opens the translation and `dādr̥hí` is tagged IMP 2SG ACT with `maháḥ` ACC PL, which is request force under Rule 2 with the desired outcome anchored on its own wording.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:650CD6F3D1076AD58E89",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M01:S133:V006",
+      "predicate": "REQUESTS",
+      "reason": "\"hear thou us\" is a second, independently coordinated imperative (`śrudhí` IMP 2SG AOR with `naḥ` ACC PL), so splitting it from the tear-down request is the correct Rule 3 granularity rather than a duplicate.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:5023E5AAA73B7FDD3F50",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M01:S133:V006",
+      "predicate": "DESCRIBES",
+      "reason": "\"O Thunder-armed\" is in the translation and `adrivaḥ` appears twice as VOC SG addressed to the verse's single named addressee Indra, and the attribute is a non-evaluative property, so entity-level DESCRIBES is the fitting family; only one assertion is emitted despite the repetition, consistent with Rule 6.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:048174470D53BA66C894",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M01:S133:V006",
+      "predicate": "DESCRIBES",
+      "reason": "\"Most Mighty mid the Mighty Ones\" corresponds to `śuṣmíntamaḥ` NOM SG SUP with `śuṣmíbhiḥ` INS PL, a predicative quality attributed to the subject, which is exactly the entity-level state Rule 4 assigns to DESCRIBES.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:5A03D4F57F06D96988C7",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M01:S133:V006",
+      "predicate": "DESCRIBES",
+      "reason": "\"Not slaying men\" renders `ápūruṣaghnaḥ` NOM SG, predicated of the same subject as the 2SG `ī́yase`, so the property and its binding to the addressee are both carried by the anchored wording.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:9386099EBF9F8D643102",
+      "category": "PREDICATE_AMBIGUOUS",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M01:S133:V006",
+      "predicate": "DESCRIBES",
+      "reason": "\"unconquered Hero\" (`apratīta`, `śūra`, both VOC SG) is supported and correctly bound, but it is a valorising epithet in direct address, so PRAISES is a genuinely arguable family here rather than entity-level DESCRIBES.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:3A6B7AA329178FEE659C",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M01:S133:V006",
+      "predicate": "DESCRIBES",
+      "reason": "\"with the thrice-seven brave\" matches `sátvabhiḥ` INS PL qualified by `trisaptaíḥ`, an accompaniment property of the addressee distinct in content and anchor wording from the unconquered-hero assertion.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:B99AD81BC6261567AD28",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M01:S133:V006",
+      "predicate": "DESCRIBES_ACTION",
+      "reason": "\"thou speedest with strong bolts of death\" rests on `ī́yase` tagged IND PRS 2SG MED, i.e. a narrated rather than commanded action as Rule 5 requires, with the instrument `vadhaíḥ ugrébhiḥ` INS PL supporting the recorded participant and the 2SG addressee supporting the Indra actor binding.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:09A75583D1AB89B0C05E",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M01:S133:V006",
+      "predicate": "DESCRIBES_ACTION",
+      "reason": "\"For heaven hath glowed like earth in fear\" rests on `śuśóca` IND PRF 3SG with `dyaúḥ` NOM SG, an asserted occurrence, and both the actor head \"heaven\" and the qualifier \"like earth in fear\" are packet wording.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:4128C8C6E36FC4985B90",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M01:S133:V006",
+      "predicate": "REFERS_TO_NATURAL_PHENOMENON",
+      "reason": "\"fierce heat\" is explicit translation wording backed by `ghr̥ṇā́t` ABL SG, so the phenomenon reference stands, though the single RELATION anchor \"as dreading\" points at the adjacent fear wording (`bhīṣā́` INS) rather than at the phenomenon phrase itself.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:90D751E8448D1830BAE5",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M02:S022:V002",
+      "predicate": "DESCRIBES",
+      "reason": "The packet translation reads \"So he resplendent in the battle\" (Sanskrit tvíṣīmān, NOM SG M) and the same verse names índram, so attributing the quality to Indra takes exactly the one coreference step the rationale names.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:2CF8A04F860B6C0B5104",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M02:S022:V002",
+      "predicate": "DESCRIBES",
+      "reason": "\"true Indu Indra who is true\" in the translation and the tokens satyám (ACC) + índram (ACC) directly attribute the quality \"true\" to Indra, so EXPLICIT and the canonical binding both hold.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:5571DC35A19A19BC67E1",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M02:S022:V002",
+      "predicate": "DESCRIBES",
+      "reason": "\"true Indu\" in the translation and the tokens satyáḥ + índuḥ (both NOM) carry the relation, and since no supplied entity key resolves Indu the OPAQUE_REFERENT is the policy-correct object, though the lone \"true\" anchor does not distinguish this assertion from the Indra one.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:462B82313E1721F15818",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M02:S022:V002",
+      "predicate": "DESCRIBES_ACTION",
+      "reason": "\"overcame Krivi by might\" is narrated as occurring (krívim ACC, ójasā INS, abhavat IPRF), and Krivi is correctly left as an unbound participant rather than forced into the ontology.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:162B78B429C69D96182D",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M02:S022:V002",
+      "predicate": "DESCRIBES_ACTION",
+      "reason": "\"He with his majesty hath filled the earth and heaven\" maps token-for-token onto ā́ ródasī apr̥ṇat asya majmánā, supporting the event, its patient and the \"with his majesty\" qualifier.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:D724FF7FBC3E7E82A904",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M02:S022:V002",
+      "predicate": "DESCRIBES_ACTION",
+      "reason": "\"and waxen strong\" corresponds to the finite verb prá vāvr̥dhe (PRF MED 3SG), a narrated process rather than a static quality, so DESCRIBES_ACTION is the right family under Rule 4.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:D64A17F5E7AFE2D79C0A",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M02:S022:V002",
+      "predicate": "DESCRIBES_ACTION",
+      "reason": "\"One share of the libation hath he swallowed down\" (ádhatta anyám jaṭháre) supports the event and its patient, and the supplied translation is admissible evidence under the explicitness policy.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:C0E019FA3022F743144D",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M02:S022:V002",
+      "predicate": "DESCRIBES_ACTION",
+      "reason": "\"one share he left\" is a second, separately stated action in the packet translation, so splitting it from the swallowing is correct, although the underlying prá īm aricyata (3SG MED) does not by itself put the verse subject in the agent role.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:B5603C9B4150C5DBF3A9",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M02:S022:V002",
+      "predicate": "INVOLVES_SUBSTANCE",
+      "reason": "The translation names \"the libation\" as physical material and \"One share ... one share\" grounds the \"divided into shares\" qualifier, and the distinct SUBSTANCE_REF role makes co-emission with the swallowing event Rule-6 licensed, though the anchor sits on the verb rather than on the substance wording.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:28C3A3EC59CFB3B0BA63",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M02:S022:V002",
+      "predicate": "REFERS_TO_PLACE",
+      "reason": "\"the earth and heaven\" (ródasī, ACC DU) is an evidenced spatial referent and OPAQUE_SPATIAL_REFERENT is the policy-preferred object where world-status is unclear, so this is a distinct typed role rather than a restatement of the filling event.",
+      "wrong_entity_binding": false
+    },
+    {
+      "assertion_id": "C32A:VG:SEMOBJ:6D4198477CF561A297DF",
+      "category": "DIRECTLY_SUPPORTED",
+      "fabricated_evidence": false,
+      "passage_id": "VG:RV:SAK:M02:S022:V002",
+      "predicate": "REQUESTS",
+      "reason": "\"So may the God attend the God\" is the *may X occur* wish form Rule 2 admits, both anchors quote it exactly, and it is a single outcome so no Rule 3 split applies.",
+      "wrong_entity_binding": false
+    }
+  ],
+  "weak_support_count": 2,
+  "wrong_entity_binding": 0
+}

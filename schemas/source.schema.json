@@ -90,6 +90,7 @@
     "RightsStatus": {
       "enum": [
         "PUBLIC_DOMAIN",
+        "CC0",
         "CC_BY",
         "CC_BY_SA",
         "CC_BY_NC",

@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "status": "NOT_EXECUTED_MODEL_IDENTITY_UNVERIFIED",
+  "decision": "GENUINE_LUNA_V3_2_CALIBRATION_NOT_EXECUTED_MODEL_IDENTITY_UNVERIFIED",
+  "model_identity_separated": true,
+  "human_gold": "NONE",
+  "self_agreement_is_accuracy": false,
+  "calibration_scope": "16 passages x 2 intended independent runs",
+  "semantic_authorship_tasks_executed": 0,
+  "requested": {
+    "model": "gpt-5.6-luna",
+    "reasoning": "high",
+    "runtime": "CODEX_DIRECT",
+    "run_a": "vedagraph-rigveda-semantic-luna-v3.2-calibration-16-a",
+    "run_b": "vedagraph-rigveda-semantic-luna-v3.2-calibration-16-b"
+  },
+  "identity_evidence": {
+    "actual_model_selection": null,
+    "reported_model": null,
+    "runtime": "CODEX_DIRECT",
+    "provider_build_metadata": "UNAVAILABLE",
+    "attestation": "not externally or runtime attested",
+    "limitation": "Requested/configured model metadata cannot distinguish Luna authorship from another backend."
+  },
+  "v3_2_contract": {
+    "prompt_version": "rigveda-semantic-extraction-v3.2",
+    "prompt_sha256": "e4fdcd5d519d47e94a4c41b57180c81e94cb5034f40fd876dcecd4a8e6da73a1",
+    "schema_sha256": "26e554c4714bee14835534e27df02aca13d3fd1c3c7d0cb951e5984dc32820f2",
+    "ontology_sha256": "cddd5a20ca11cf64269d2f877ce4dbb829d0b1eb9fcd56c3718821a47ee228ce"
+  },
+  "parent_selection": {
+    "path": "data/builds/rigveda_semantic_codex_luna_regression_v1.yaml",
+    "verified_count": 60,
+    "verified_unique": true,
+    "selection_hash": "26d2f85aec91e621d43444931d40fc81e08a7c9d533bdce820c86945c398783c"
+  },
+  "calibration_selection": null,
+  "evidence_packets": null,
+  "runs": {
+    "a": {"status": "NOT_CREATED", "final_task_count": 0, "attempts": 0, "retries": 0},
+    "b": {"status": "NOT_CREATED", "final_task_count": 0, "attempts": 0, "retries": 0}
+  },
+  "comparison": null,
+  "preflight": {
+    "ruff": "passed",
+    "mypy_strict": "passed",
+    "targeted_tests": {"passed": 79, "failed": 0},
+    "api_called": false,
+    "selection_preparation": false,
+    "semantic_authorship": false
+  },
+  "report": "docs/reports/RIGVEDA_SEMANTIC_GENUINE_LUNA_V3_2_CALIBRATION_16.md"
+}

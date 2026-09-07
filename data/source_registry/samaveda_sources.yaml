@@ -1,0 +1,678 @@
+schema_version: 1.0.0
+veda: Samaveda
+work_id: VG:WORK:SV:KAU
+recension: Kauthuma
+researched_by: Agent B (Samaveda specialist)
+researched_at: 2026-09-07
+research_method: >-
+  Every rights statement below was read from the artifact or page actually fetched, at the
+  URL recorded, on the date recorded. No artifact's rights were inferred from its host
+  repository's general terms. Coverage figures marked "computed" were derived by parsing
+  the snapshot; figures marked "claimed" are the source's own assertion.
+
+# ---------------------------------------------------------------------------
+# SELECTION VERDICT
+# ---------------------------------------------------------------------------
+selection:
+  recommended_primary_sanskrit: WIKISOURCE_SA_SV_KAU
+  recommended_primary_rationale: >-
+    Only candidate that is simultaneously rights-clean for redistribution (CC BY-SA 4.0),
+    in Devanagari, carries genuine Samavedic notation on the gana pages, covers the gana
+    collections at all, and is textually correct where GRETIL is provably corrupt. Its
+    weakness is authority tier: it is a community transcription with no single named
+    printed edition, so it needs a scholarly collation before promotion to canonical.
+  pilot_primary_sanskrit: GRETIL_SV_KAUTHUMA_TEI
+  pilot_primary_rationale: >-
+    Used as the pilot's primary only because it is a single self-describing file that
+    declares its own reference system, which is what made the hierarchy adjudication
+    possible. It is NOT recommended as the canonical primary: its rights are contested,
+    its printed edition is unidentified, and cross-source comparison proved its text
+    defective. See docs/reports/SAMAVEDA_SOURCE_RESEARCH.md.
+  parallel_sanskrit: WIKISOURCE_SA_SV_KAU
+  citation_authority: TITUS_SV_KAUTHUMA          # reference only, never copied
+  collation_check: SANSKRITDOCUMENTS_SV_KAUTHUMA # research only, never redistributed
+  english_translation: SACRED_TEXTS_GRIFFITH_SV
+  hindi_translation: null
+  audio_reference: VHP_SAMAVEDA_AUDIO
+  # Corroboration strength for the adjudicated hierarchy, stated honestly.
+  # Three of the digital Kauthuma texts are ONE text: the Pandey 1998/99 e-text,
+  # re-published by GRETIL, sanskritdocuments and TITUS. Agreement among them is the same
+  # defect repeated, not corroboration.
+  witness_tally:
+    independent_textual_witnesses:
+      count: 2
+      items:
+        - WIKISOURCE_SA_SV_KAU  # independence PROVEN: corrects Pandey's pada misplacement
+        - SACRED_TEXTS_GRIFFITH_SV  # Griffith 1895 via Benfey; predates Pandey by a century
+    independent_addressing_evidence:
+      count: 1
+      items: [TITUS_SV_KAUTHUMA]  # Gippert's addressing over Pandey's text
+    same_text_republications:
+      count: 3
+      items: [GRETIL_SV_KAUTHUMA_TEI, SANSKRITDOCUMENTS_SV_KAUTHUMA, TITUS_SV_KAUTHUMA]
+    conclusion: >-
+      The hierarchy conclusion is unchanged and the level names agree across every witness,
+      but the corroboration is WEAKER than an earlier draft claimed. That draft said "four
+      independent witnesses"; the true figure is two independent textual witnesses plus one
+      independent addressing scheme.
+  blocking_issues:
+    - No source found offers an ACCENTED machine-readable arcika text. The one advertised
+      (sanskritdocuments sv-kauthuma-saswara.pdf/.itx) is a dead 404.
+    - No rights-clear machine-readable Hindi translation was found.
+    - No single source combines an identified printed edition with redistribution rights.
+
+# ---------------------------------------------------------------------------
+# SOURCES
+# ---------------------------------------------------------------------------
+sources:
+
+  - source_id: GRETIL_SV_KAUTHUMA_TEI
+    name: GRETIL Samavedasamhita (TEI)
+    organization: University of Gottingen, SUB Gottingen
+    authority_tier: SCHOLARLY_EDITION
+    url: https://gretil.sub.uni-goettingen.de/gretil/corpustei/sa_sAmavedasaMhitA.xml
+    retrieved_at: 2026-09-07
+    http_status: 200
+    format: TEI_XML
+    encoding: UTF-8
+    script: Latin
+    transliteration_scheme: IAST
+    language: sa
+    work: Samavedasamhita, arcika (verse) text only
+    recension: Kauthuma
+    edition: UNIDENTIFIED
+    edition_blocker: >-
+      sourceDesc contains an empty <bibl></bibl>. The underlying printed Kauthuma edition
+      is not named anywhere in the file. This alone disqualifies the artifact as canonical
+      primary for a work whose identity must preserve "the selected edition's" hierarchy.
+    accent_preservation: NONE
+    accent_evidence: >-
+      Zero occurrences of U+0951-U+0954, the whole U+1CD0-U+1CFF Vedic Extensions block,
+      U+030D and U+0331, over the entire body. The legacy upstream states verbatim:
+      "Unless indicated otherwise, accents have been dropped in order to facilitate word
+      search." The only suprasegmental information retained is GRETIL's in-word numeric
+      digit marking pluta/trimatra vowels (e.g. "nya3trinam"), on 74 lines.
+    structure: >-
+      No TEI structural markup at all: the body is 469 <p> elements with no div, lg, l,
+      milestone or xml:id. Structure exists only as a leading plain-text reference label
+      per line, in the system the file declares for itself.
+    declared_reference_system: "arcika | prapathaka | ardha | dasati | verse | line"
+    label_notations_observed: 2   # "1 1 1 0101a" concatenated and "4 1 1 01 01a" spaced
+    machine_readability: HIGH_BUT_UNMARKED
+    coverage:
+      claimed_total_verses: 1875
+      computed_distinct_verse_keys: 1868
+      computed_verse_lines: 3714
+      computed_verses_per_arcika: {1: 585, 2: 55, 3: 10, 4: 1218}
+      unreconciled: 7
+      covers_gana_collections: false
+    known_defects:
+      DUPLICATE_LINE_LABEL: 22
+      ZERO_VERSE_INDEX: 6
+      TRANSLITERATION_RESIDUE: 6
+      UNEXPECTED_UPPERCASE: 3
+      UNPARSEABLE_REFERENCE_LABEL: 1
+      running_numbers_absent: [1035, 1133, 1179, 1211, 1592]
+      running_numbers_duplicated: [1181]
+    text_correctness_finding: >-
+      Cross-source comparison against Sanskrit Wikisource PROVED the text defective at
+      running verses 1 and 2: GRETIL's mislabel bleeds verse 2's first pada into verse 1
+      and strips it from verse 2. Wikisource carries both correctly. This is a text
+      corruption, not merely a label problem.
+    snapshot:
+      sha256: 91c28c0394e94dccc9bad12a08224fbcde0a1194402b610df26647621ed92456
+      bytes: 272261
+      path: data/raw/gretil/2026-09-07/91c28c0394e94dccc9bad12a08224fbcde0a1194402b610df26647621ed92456.xml
+    artifact_rights:
+      status: PERMISSION_REQUIRED
+      conflict: INTRA_ARTIFACT
+      declared_licence_verbatim: >-
+        Distributed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0
+        International License.
+      declared_licence_url: https://creativecommons.org/licenses/by-nc-sa/4.0/
+      availability_verbatim: >-
+        This e-text was provided to GRETIL in good faith that no copyright rights have
+        been infringed. If anyone wishes to assert copyright over this file, please
+        contact the GRETIL management at gretil(at)sub(dot)uni-goettingen(dot)de. The
+        file will be immediately removed pending resolution of the claim.
+      contradicting_statement_verbatim: >-
+        Copyright (C) 1998 Anshuman Pandey. This document may only be used for academic
+        and scholarly purposes. No modification of this document is in any way
+        authorized. Any publication or other use of this document requires written
+        consent of the editor.
+      contradicting_statement_location: teiHeader/fileDesc/notesStmt/note[@type="legacyheader"]
+      adjudication: >-
+        The restrictive statement governs. GRETIL's own availability text concedes it only
+        assumes non-infringement and offers to remove the file on claim, so it does not
+        warrant the rights it purports to license. Everything VedaGraph does to this text
+        (TEI parse, NFC normalization, structural re-keying, JSONL republication) is both
+        modification and publication, which the contributor's notice forbids without
+        written consent. Corroborated externally: the same author's Samaveda text is
+        published on archive.org as CC BY-NC-ND 4.0, and ND forbids derivatives outright.
+      site_level_rights: NOT_ESTABLISHED_BY_AGENT_B
+    bulk_ingestion_status: PROHIBITED_PENDING_RIGHTS_RESOLUTION
+    verification_roles: [hierarchy, reference_system, edition_comparison]
+
+  - source_id: GRETIL_SV_KAUTHUMA_LEGACY_HTML
+    name: GRETIL samavedu.htm (legacy upstream of the TEI file)
+    organization: University of Gottingen, SUB Gottingen
+    authority_tier: SCHOLARLY_EDITION
+    url: https://gretil.sub.uni-goettingen.de/gretil/1_sanskr/1_veda/1_sam/samavedu.htm
+    retrieved_at: 2026-09-07
+    http_status: 200
+    format: HTML
+    parent_of: null
+    child_artifact: GRETIL_SV_KAUTHUMA_TEI
+    relationship_evidence: >-
+      The TEI file's notesStmt states it "has been created by mass conversion of GRETIL's
+      Sanskrit corpus from samavedu.htm", making this its direct upstream.
+    snapshot:
+      sha256: 8b7b45f2b0ec48511f8063e80b9e24a5f10b9a554f6c52020f0108ebc8abe059
+      bytes: 326420
+      path: data/raw/gretil/2026-09-07/8b7b45f2b0ec48511f8063e80b9e24a5f10b9a554f6c52020f0108ebc8abe059.htm
+    artifact_rights:
+      status: REFERENCE_ONLY
+      self_declaration_verbatim: >-
+        THIS GRETIL TEXT FILE IS FOR REFERENCE PURPOSES ONLY! COPYRIGHT AND TERMS OF
+        USAGE AS FOR SOURCE FILE.
+      note: >-
+        The parent self-declares reference-only while the TEI child carries CC BY-NC-SA
+        4.0. A licence cannot be created by a format conversion, which is further reason
+        the child's CC claim does not hold.
+    bulk_ingestion_status: NOT_APPROVED
+    verification_roles: [provenance_lineage]
+
+  - source_id: WIKISOURCE_SA_SV_KAU
+    # The id above is this fragment's local label. In data/registry/sources.yaml the
+    # registered source is WIKISOURCE_SA, and the registered artifact is
+    # WIKISOURCE_SA.SV.KAU.SAMHITA.DEVANAGARI. The adapter uses the REGISTERED ids.
+    registered_source_id: WIKISOURCE_SA
+    registered_artifact_id: WIKISOURCE_SA.SV.KAU.SAMHITA.DEVANAGARI
+    name: Sanskrit Wikisource, Samavedah / Kauthumiya / Samhita
+    organization: Wikimedia Foundation (community transcription)
+    authority_tier: COMMUNITY_TRANSCRIPTION
+    url: https://sa.wikisource.org/wiki/सामवेदः
+    retrieved_at: 2026-09-07
+    http_status: 200
+    format: [MediaWiki_API, wikitext]
+    encoding: UTF-8
+    script: Devanagari
+    language: sa
+    work: Samavedasamhita, BOTH arcikas AND all four gana books
+    recension: Kauthuma
+    edition: NO_SINGLE_NAMED_EDITION
+    accent_preservation: PARTIAL_AND_SECTION_DEPENDENT
+    accent_evidence: >-
+      The gana/notation pages carry genuine samana svara notation as Devanagari Extended
+      combining digits U+A8E1-U+A8E5, plus U+A8EF, U+A8F3, and Vedic Extensions U+1CD0
+      KARSHANA (51 pages), U+1CD2 PRENKHA (38), U+1CF2 ARDHAVISARGA (78). Classical
+      udatta/anudatta U+0951/U+0952 are rare (2-3 pages), which is expected because
+      Samaveda marks tone numerically rather than tonally. The plain arcika dasati pages
+      sampled for the pilot carried NO notation, so accent coverage is uneven and must be
+      verified per page, not assumed.
+    structure: >-
+      Structure is encoded in the page title path, not the body. Verse text sits inside
+      <poem> tags with verse terminators of the form "|| N ||" in Devanagari numerals.
+    structure_corroboration: >-
+      Independently corroborates the GRETIL hierarchy on two points. (1) There is no
+      ardha level: a prapathaka contains dasati 1..10 directly, consistent with GRETIL
+      numbering dasati continuously across its two ardhas, so ardha is derivable. (2) The
+      Aranya arcika has no prapathaka. It DIVERGES on one point: Wikisource nests Aranya
+      inside Purvarcika as 1.2.x, where GRETIL makes it a sibling arcika 2. That is a real
+      edition-order divergence, recorded not reconciled.
+    verse_numbering_system: RUNNING_WHOLE_SAMHITA
+    verse_numbering_note: >-
+      Verse labels are the running whole-Samhita number (1..1875), NOT a dasati-local
+      index. GRETIL uses a dasati-local index. Aligning the two by printed verse position
+      is therefore wrong and produced 19 spurious MISSING rows out of 29 before the join
+      was moved onto the running number both sources independently supply.
+    machine_readability: HIGH
+    coverage:
+      pages_under_samaveda_prefix: 908
+      pages_under_kauthuma_samhita: 840
+      purvarcika_pages: 74
+      uttararcika_pages: 32
+      gramageya_gana_pages: 190
+      aranyakageya_gana_pages: 86
+      uha_gana_pages: 362
+      uhya_gana_pages: 87
+      leaf_pages_fetched_in_research: 694
+      stub_pages_under_300_bytes: 44
+      covers_gana_collections: true
+      rigveda_cross_reference_pages: 363
+    snapshots_taken:
+      - sha256: 1b3005b62194531bb233fbaddfd9fe2da8f46114d69ed19cc043663cc4c87c76
+        bytes: 2435
+        page: सामवेदः/कौथुमीया/संहिता/पूर्वार्चिकः/छन्द आर्चिकः/1.1.1 प्रथमप्रपाठकः/1.1.1.1 प्रथमा दशतिः
+        revision_id: 274559
+      - sha256: 3ffa60f176d76e6b59c87bdbaa32d0a260f9aeb1674b0ddfb9566cc3e4535ed4
+        bytes: 3104
+        page: सामवेदः/कौथुमीया/संहिता/पूर्वार्चिकः/छन्द आर्चिकः/1.1.1 प्रथमप्रपाठकः/1.1.1.5 पञ्चमी दशतिः
+        revision_id: 401781
+      - sha256: eeffe2eeff9ab43463b4d942fe1040eb013a7e975dbb12f8c7b9db55be72d80d
+        bytes: 2681
+        page: सामवेदः/कौथुमीया/संहिता/पूर्वार्चिकः/अथारण्यार्चिकः/1.2.1 प्रथमा दशतिः
+        revision_id: 323308
+    snapshot_dir: data/raw/wikisource_sa_sv_kau/2026-09-07/
+    artifact_rights:
+      status: CC_BY_SA
+      licence_url: https://creativecommons.org/licenses/by-sa/4.0/
+      footer_verbatim: >-
+        पाठः क्रियेटिव कॉमन्स ऐट्रिब्यूशन/शेयर-अलाइक अभिज्ञापत्रस्य अन्तर्गततया उपलब्धः अस्ति
+      note: >-
+        Site-wide CC BY-SA plus GFDL. Per-page revision ids are recorded so provenance is
+        pinned to an exact revision. Attribution and share-alike obligations apply to any
+        redistribution of derived text.
+    bulk_ingestion_status: BOUNDED_PILOT_ALLOWED
+    caveats:
+      - Community transcription with no single named printed edition; needs scholarly
+        collation before promotion above COMMUNITY_TRANSCRIPTION.
+      - Accent/notation coverage is uneven across pages and must be checked per page.
+    verification_roles:
+      [parallel_text, gana_coverage, devanagari_text, notation, text_correctness_check]
+
+  - source_id: SANSKRITDOCUMENTS_SV_KAUTHUMA
+    name: sanskritdocuments.org Samaveda Samhita Kauthuma Shakha
+    organization: sanskritdocuments.org volunteers
+    authority_tier: COMMUNITY_TRANSCRIPTION
+    url: https://sanskritdocuments.org/doc_veda/sv-kauthuma.itx
+    index_url: https://sanskritdocuments.org/doc_veda/sv-kauthuma.html
+    retrieved_at: 2026-09-07
+    http_status: 200
+    format: ITRANS_TEXT
+    bytes: 259281
+    script: ITRANS
+    language: sa
+    recension: Kauthuma
+    accent_preservation: NONE
+    structure: >-
+      Carries the SAME reference system as GRETIL on every line ("1 1 1 0101a"), which is
+      a third independent artifact confirming the adjudicated hierarchy. Transliterated
+      and proofread by Anshuman Pandey, so it shares GRETIL's lineage and is NOT
+      independent evidence of textual correctness.
+    coverage:
+      claimed_total_verses: 1875
+      terminal_colophon: "|| iti sAmavedasaMhitA samAptA ||"
+      covers_gana_collections: false
+      gana_available_as: PDF_ONLY
+    artifact_rights:
+      status: RESEARCH_ONLY
+      header_verbatim: >-
+        % This text is prepared by volunteers and is to be used for personal study
+        % and research. The file is not to be copied or reposted for promotion of
+        % any website or individuals or for commercial purpose without permission.
+        % Please help to maintain respect for volunteer spirit.
+      note: Read from the .itx file header itself, not from the site's general terms.
+    bulk_ingestion_status: NOT_APPROVED
+    dead_links_found:
+      - https://sanskritdocuments.org/doc_veda/sv-kauthuma-saswara.pdf   # 404
+      - https://sanskritdocuments.org/doc_veda/sv-kauthuma-saswara.itx   # 404
+    dead_link_impact: >-
+      These were the only advertised ACCENTED Kauthuma arcika texts found anywhere. Both
+      404. There is consequently no obtainable accented machine-readable arcika text.
+    verification_roles: [collation_check, reference_system_corroboration]
+
+  - source_id: TITUS_SV_KAUTHUMA
+    name: TITUS Samaveda Kauthuma
+    organization: TITUS Project, Frankfurt am Main
+    authority_tier: SCHOLARLY_EDITION
+    url: https://titus.uni-frankfurt.de/texte/etcs/ind/aind/ved/sv/svk/svk.htm
+    retrieved_at: 2026-09-07
+    http_status: 200
+    format: HTML
+    recension: Kauthuma
+    structure: >-
+      The most granular addressing found: SV -> SVK -> Arcika (1-4) -> Prapathaka (1-6)
+      -> Ardha-Prapathaka -> Dasati -> Rca -> Pada. Confirms the level VOCABULARY and that
+      there are exactly four arcikas.
+    text_lineage: PANDEY_1998
+    text_lineage_evidence: >-
+      CORRECTION 2026-09-07. This is NOT an independent textual witness. Fetched from
+      https://titus.uni-frankfurt.de/texte/etcs/ind/aind/ved/sv/svk/svk001.htm the page
+      states verbatim: "edited by Anshuman Pandey / apandey@u.washington.edu / TITUS
+      version by Jost Gippert , / Copyright (C) 1998, 1999 Anshuman Pandey". So TITUS is a
+      third re-publication of the same Pandey e-text that GRETIL and sanskritdocuments
+      carry. The Pandey root is now read OFF THE ARTIFACT at three re-publishers rather
+      than inferred at two.
+    independence_scope: >-
+      The 8-level ADDRESSING is Gippert's own editorial analysis layered on Pandey's text,
+      so it is independent evidence of the level NAMES but not of the TEXT. An earlier
+      draft of this fragment counted TITUS as a fourth independent witness; that was
+      overstated and is corrected here.
+    artifact_rights:
+      status: PERMISSION_REQUIRED
+      verbatim: >-
+        Copyright TITUS Project , Frankfurt a/M, 1.11.2013. No parts of this document may
+        be republished in any form without prior permission by the copyright holder.
+      note: >-
+        Two copyright holders are asserted on the same artifact: the TITUS Project notice
+        above and the underlying "Copyright (C) 1998, 1999 Anshuman Pandey". Both restrict.
+    bulk_ingestion_status: PROHIBITED_WITHOUT_PERMISSION
+    verification_roles: [level_vocabulary_corroboration, citation_authority]
+
+  - source_id: SACRED_TEXTS_GRIFFITH_SV
+    name: Hymns of the Samaveda, Griffith translation
+    organization: sacred-texts.com (transcription of Griffith 1895)
+    authority_tier: HISTORICAL_TRANSLATION
+    url: https://sacred-texts.com/hin/sv.htm
+    retrieved_at: 2026-09-07
+    http_status: 403      # blocks automated agents; content confirmed via Wayback
+    wayback_snapshot: "20260718092330"
+    format: HTML
+    language: en
+    translator: Ralph T. H. Griffith
+    year: 1895
+    structure: BOOK I-IX / CHAPTER I-III / DECADE I-XII, 1-10 verses per decade
+    structure_note: >-
+      Griffith's "DECADE" is the dasati, which corroborates the fourth identity level from
+      a wholly independent 1895 translation.
+    alignment_blocker: >-
+      DO NOT ALIGN BY SEQUENCE. Griffith states in his own preface, verbatim: "I have
+      followed Benfey's text". The same preface identifies Benfey's edition as being of
+      the RANAYANIYA recension, not Kauthuma ("A translation, by Dr. Stevenson, of the
+      Ranayaniya recension ... in 1848 Professor Benfey of Gottingen brought out an
+      excellent edition of the same text"). Aligning this translation to a Kauthuma
+      Sanskrit text is therefore a cross-recension alignment and requires explicit
+      review per ADR-010.
+    artifact_rights:
+      status: PUBLIC_DOMAIN
+      basis: Griffith 1895 is public domain by age, independently of the host.
+      host_signal_verbatim: '<meta name="copyright" content="Public Domain and Creative Commons">'
+      host_signal_note: >-
+        A generic site-wide meta tag, NOT a per-artifact statement. It is recorded but
+        carries no weight; the PD status rests on the 1895 publication date.
+    bulk_ingestion_status: REVIEW_BEFORE_INGESTION
+    verification_roles: [english_translation, alternate_citation]
+
+  - source_id: WIKISOURCE_GRIFFITH_SV
+    name: The Hymns of the Samaveda (English Wikisource)
+    organization: Wikisource
+    authority_tier: HISTORICAL_TRANSLATION
+    url: https://en.wikisource.org/wiki/The_Hymns_of_the_Samaveda
+    retrieved_at: 2026-09-07
+    http_status: 200
+    format: [HTML, MediaWiki_API]
+    language: en
+    status_finding: EMPTY_OF_VERSE_TEXT
+    finding_detail: >-
+      CORRECTION TO THE EXISTING REGISTRY PLACEHOLDER. This page contains the Preface
+      only, 877 words, marked {{TextQuality|25%}}. An allpages prefix query returns
+      exactly ONE page: there are no subpages. The table of contents lists 23 titles of
+      the form "Samaveda, Part I, Book I, Chapter I" and every one of them is a RED LINK;
+      an API existence check on them returns "missing". "Samaveda" is a redirect to this
+      page. There is zero hymn text on English Wikisource.
+    snapshot:
+      sha256: 7fe81ea645c56d75e01429409a208f4295f79fe6dadb877aebaf783b987ef490
+      bytes: 5798
+      path: data/raw/wikisource_griffith_sv/2026-09-07/
+    value_retained: >-
+      Snapshotted anyway because its Preface is the primary evidence that Griffith
+      followed Benfey's Ranayaniya text, and because it documents Griffith's own Part I /
+      Part II division.
+    artifact_rights:
+      status: PUBLIC_DOMAIN
+      footer_verbatim: >-
+        Text is available under the Creative Commons Attribution-ShareAlike License;
+        additional terms may apply.
+    bulk_ingestion_status: NOT_APPROVED_NO_CONTENT
+    verification_roles: [translator_edition_provenance]
+
+  - source_id: VEDAWEB_SV
+    name: VedaWeb
+    organization: University of Cologne
+    url: https://vedaweb.uni-koeln.de/
+    retrieved_at: 2026-09-07
+    status_finding: NO_SAMAVEDA_AT_ALL
+    finding_detail: >-
+      Definitive negative. GET /api/texts (HTTP 200) returns exactly 7 texts: rv, ab, jb,
+      ms, sb, avs, avp. The string "samaveda" appears 0 times in /api/texts,
+      /api/platform, /api/platform/web-init, or the 299,964-byte /api/openapi.json.
+      Note that the legacy /rigveda/api/* REST endpoints are gone and all /rigveda/*
+      paths return an identical 9,968-byte SPA shell, so HTTP 200 on that host means
+      nothing and must not be read as an endpoint existing.
+    adjacent_holding: >-
+      VedaWeb does host the Jaiminiya Brahmana (jb), a Samaveda-school Brahmana with
+      linguistic annotation, but no Samaveda Samhita.
+    bulk_ingestion_status: NOT_APPLICABLE
+
+# ---------------------------------------------------------------------------
+# TRADITIONAL METADATA
+# ---------------------------------------------------------------------------
+traditional_metadata:
+  status: PARTIAL_AND_INSUFFICIENT
+  do_not_infer: >-
+    Rigvedic Anukramani rules must NOT be transferred to Samaveda, and missing rishi /
+    chandas / devata values must NOT be filled in by an LLM. Samaveda verses are largely
+    borrowed from the Rigveda, which makes LLM-guessed attribution especially plausible
+    and especially wrong.
+  sources_found:
+    - source_id: GRETIL_SV_KAUTHUMA_TEI
+      form: >-
+        Inline plain-text triads in the Uttararcika of the shape
+        "asitah kasyapo devalo va. gayatri. pavamanah somah." = rishi. chandas. devata.
+      machine_readable: PARTIALLY
+      coverage_computed: >-
+        Only 31 of 395 Uttararcika paragraphs carry any non-verse head line, and once
+        prapathaka/ardha headings are excluded roughly 24 triads remain. The Purvarcika
+        carries NO such triads at all. Field separators are inconsistent, alternating
+        between "." and ",". This is far too sparse to be a metadata source.
+      rights: PERMISSION_REQUIRED    # inherits the artifact's contested rights
+    - source_id: WIKISOURCE_SA_SV_KAU
+      form: >-
+        Plain-text triads such as "vasisthah . tristup . pavamanah somah", plus gana
+        performance metadata of the form "di 8 . pa 6 . ma 7".
+      machine_readable: PARTIALLY
+      rights: CC_BY_SA
+      note: >-
+        Better covered than GRETIL and rights-clean, but still plain text inside prose,
+        with no controlled vocabulary and no scope markers.
+    - source_id: VHP_SAMAVEDA
+      form: Devanagari structural headings only (kanda, adhyaya, prapathaka, ardha).
+      machine_readable: NO
+      rights: PERMISSION_REQUIRED
+      note: >-
+        VHP's Kauthuma pages use "adhyaya" as a division name alongside prapathaka/ardha.
+        This is where the earlier works.yaml guess of [Arcika, Prapathaka, Ardha, Adhyaya,
+        Khanda, Mantra] came from. Adhyaya is a real Kauthuma division but it is NOT the
+        fourth level of the selected edition's reference system, which is dasati. Adhyaya
+        therefore belongs in Citation, not in the identity tree.
+  safe_resolution_method: >-
+    1. Extract the triads verbatim from the two rights-permitting sources into
+       CandidateMetadataAssertion records with parse_status and no canonical entity id.
+    2. Attach each to the dasati or verse the source itself places it against; never widen
+       a triad to a scope the source did not state.
+    3. Require human review before any promotion to TraditionalMetadataAssertion, because
+       Samaveda scope conventions are not the Rigveda's and no verified Samaveda
+       Anukramani has been located.
+    4. Where a Samaveda verse is a known Rigveda borrowing, its Rigvedic rishi/devata/
+       chandas may be CITED as a cross-reference but must never be asserted as the
+       Samaveda verse's own traditional metadata. Sanskrit Wikisource supplies explicit
+       Rigveda cross-references on 363 pages, which makes this cross-reference tractable
+       without guessing.
+
+# ---------------------------------------------------------------------------
+# AUDIO INVENTORY  (Samaveda is the chant Veda; this matters most here)
+# ---------------------------------------------------------------------------
+audio:
+  default_posture: REFERENCE_ONLY
+  policy_note: >-
+    Publicly playable is not mirrorable. Nothing below was downloaded. Only metadata,
+    file listings and rights statements were retrieved.
+  items:
+
+    - audio_id: VHP_SAMAVEDA_AUDIO
+      veda: Samaveda
+      recension: Kauthuma
+      source_id: VHP_SAMAVEDA
+      source_url: https://vedicheritage.gov.in/samhitas/samaveda-samhitas/kauthuma-samhita/samaveda-kauthuma-poorvarchik/
+      organization: Indira Gandhi National Centre for the Arts, Ministry of Culture, Government of India
+      language: sa
+      recitation_type: VEDIC_RECITATION
+      patha_tradition: Kauthuma
+      reciter: NOT_PUBLISHED
+      reciter_note: >-
+        No reciter name appears anywhere in the HTML. Credits exist only as spoken content
+        inside the separate "_intro" tracks, so reciter attribution cannot be extracted
+        without transcribing audio. Acknowledgements name institutions only (Gita Press,
+        Vaidika Samsodhana Mandala, Ghanapati.com, "Sanskrit Document").
+      passage_scope:
+        purvarcika: 85 recitation files + 85 intro files under /Samaveda_MP3/
+        uttararcika: 73 files under /Samveda_Kautham_mp3/, organised by GANA and ritual occasion
+        uttararcika_breakdown:
+          Uha_Gaan: 49   # ekaha 8, ahina 8, dasaratra 11, samvatsara 8, sattra 6, kshudra 5, prayascitta 3
+          Rahasya_Gaan: 24
+        ranayaniya: 0
+        jaiminiya: 0
+      format: MP3
+      file_naming: "SAMKP_{f1}_{f2}_{f3}_{running}.mp3, plus a parallel _intro.mp3 per file"
+      file_naming_status: UNRESOLVED
+      file_naming_note: >-
+        The field semantics are NOT deterministically decodable from the filenames alone.
+        Observed sequences (01_01_01_001..005 then 01_01_02_006..010, and separately
+        06_01_001 with only three numeric fields) are consistent with roughly one file per
+        dasati, but the field count is inconsistent and VHP publishes no key. Alignment
+        must be adjudicated against VHP's own on-page Devanagari headings before any
+        audio-to-passage mapping is asserted.
+      alignment_granularity: FILE_LEVEL_AT_BEST
+      duration: >-
+        Not published per file. Files are large whole-section recordings
+        (SAMKP_01_01_01_001.mp3 = 18,355,977 bytes). Last-Modified 2024-02-28.
+      technically_downloadable: true
+      technically_downloadable_note: >-
+        Accept-Ranges: bytes, and the Access-Control-Allow-Origin header constrains
+        browsers only. Technical accessibility is NOT permission.
+      rights_status: PERMISSION_REQUIRED
+      rights_verbatim: >-
+        The contents of this website can not be reproduced partially or fully, without
+        written permission from Indira Gandhi National Center for the Arts or the
+        contributor (with intimate to IGNCA). If referred to as a part of another
+        publication, the source must be appropriately acknowledged. The contents of this
+        website can not be used in any misleading or objectionable context.
+      rights_url: https://vedicheritage.gov.in/copyright-policy/
+      hyperlinking_rights_verbatim: >-
+        Prior permission is required before hyperlinks are directed from any
+        website/portal to this site.
+      hyperlinking_rights_url: https://vedicheritage.gov.in/hyper-linking-policy/
+      local_mirroring_permitted: false
+      direct_link_permitted: false
+      direct_link_note: >-
+        Even deep-linking nominally requires prior written permission per the hyperlinking
+        policy, which is stricter than the usual reference-only posture.
+      storage_policy: EXTERNAL_REFERENCE
+
+    - audio_id: ARCHIVE_IGNCA_SV_KAUTHUMA
+      veda: Samaveda
+      recension: Kauthuma
+      source_url: https://archive.org/details/sAmaveda-kauthuma-ignca
+      organization: >-
+        uploaded by a third party; described only as
+        "Courtsey : IGNCA and Indian taxpayers"
+      relationship: >-
+        A PARTIAL MIRROR of VHP_SAMAVEDA_AUDIO. The filenames use the identical SAMKP_
+        scheme, so this is the same IGNCA recording set re-hosted, not an independent
+        recording.
+      language: sa
+      recitation_type: VEDIC_RECITATION
+      patha_tradition: Kauthuma
+      reciter: NOT_PUBLISHED
+      passage_scope: >-
+        PARTIAL. 38 recitation files + 49 intro files = 87 VBR MP3 total, 8.23 hours.
+        Coverage is limited to two disjoint groups (04_04/04_05 and 06_01-06_06); nothing
+        for groups 01, 02, 03 or 05. Includes samkp_06_05_panchapurishapadani_1.mp3,
+        which corresponds to the "pancha purishapadani" passage in the Mahanamnya arcika.
+      format: VBR MP3
+      total_duration_seconds: 29645
+      alignment_granularity: FILE_LEVEL_AT_BEST
+      rights_status: UNKNOWN
+      rights_evidence: >-
+        NO licenseurl and NO rights field in the item metadata. The description reads only
+        "Courtsey : IGNCA and Indian taxpayers", which is an acknowledgement, not a licence
+        grant. archive.org licence metadata is uploader-asserted in any case.
+      local_mirroring_permitted: false
+      storage_policy: EXTERNAL_REFERENCE
+      note: >-
+        Because the underlying recordings are IGNCA's, the VHP copyright policy governs
+        regardless of what a third-party re-uploader asserts.
+
+    - audio_id: WIKIMEDIA_COMMONS_SV_SAMAN
+      veda: Samaveda
+      recension: Kauthuma
+      source_url: https://sa.wikisource.org/wiki/सामवेदः
+      hosting: upload.wikimedia.org (Wikimedia Commons)
+      language: sa
+      recitation_type: VEDIC_RECITATION
+      patha_tradition: Kauthuma (saman/gana rendering)
+      reciter: >-
+        Not named per file; principal uploaders are "Seet..." (317 files) and
+        "Puranastudy" (157 files), with Credit recorded as "Own work".
+      passage_scope: 474 distinct .ogg files referenced from 444 Samhita pages
+      format: OGG_VORBIS
+      alignment_granularity: PAGE_LEVEL
+      alignment_note: >-
+        Each file is referenced from the specific Wikisource page it belongs to, so
+        alignment is page-level (typically one dasati or one gana) and is SOURCE_PROVIDED
+        rather than derived. This is the best audio alignment available for Samaveda.
+      rights_status: CC_BY_SA
+      rights_evidence: >-
+        Checked PER FILE via the Commons imageinfo/extmetadata API rather than inferred
+        from Commons' general terms: 458 files CC BY-SA 4.0, 16 files CC0, 0 missing a
+        licence. Example verbatim for File:वासिष्ठम्(वृषाशोणो) Vasishtham.ogg -
+        UsageTerms "Creative Commons Attribution-Share Alike 4.0",
+        LicenseUrl https://creativecommons.org/licenses/by-sa/4.0, Credit "Own work".
+      local_mirroring_permitted: true
+      local_mirroring_conditions: >-
+        Attribution and share-alike required; uploader and licence must be carried per
+        file. This is the ONLY Samaveda audio set found that permits local mirroring.
+      storage_policy: OBJECT_STORAGE
+      recommended_use: >-
+        Preferred audio source precisely because rights are verified per file and
+        alignment is source-provided. Note it is community-contributed, so recitation
+        authority is lower than IGNCA's.
+
+# ---------------------------------------------------------------------------
+# GANA (SONG) COLLECTIONS -- the biggest coverage gap
+# ---------------------------------------------------------------------------
+gana_coverage:
+  finding: >-
+    A Samaveda without the gana is musically incomplete, and most text candidates omit it
+    entirely. GRETIL has NO gana anywhere (string counts in the body: "gana" 0,
+    "gramageya" 0, "aranyageya" 0, "uhya" 0; the few "uha"/"stobha" hits are ordinary
+    word-forms inside mantras). sanskritdocuments has the gana only as four PDFs.
+    Sanskrit Wikisource is the ONLY source found that carries the gana as reusable text.
+  wikisource_gana_pages:
+    gramageya: 190
+    aranyakageya: 86
+    uhagana: 362
+    uhyagana: 87
+  identity_note: >-
+    Gana collections are NOT part of the arcika citation and must NOT be given a slot in
+    sv_mantra_identity. If ingested they need their own work_id. Agent A has agreed this.
+  pdf_only_elsewhere:
+    - gramageya.pdf        # 1198 ganas / 579 pp
+    - aranyakaganam.pdf    # 296 / 177
+    - uhaganam.pdf         # 936 / 515
+    - uhya-rahasyaganam.pdf # 209 / 148
+
+# ---------------------------------------------------------------------------
+# NEGATIVE FINDINGS  (recorded so they are not re-researched)
+# ---------------------------------------------------------------------------
+negative_findings:
+  - VedaWeb hosts no Samaveda at all (verified against its live /api/texts).
+  - English Wikisource has no Samaveda verse text (preface + red links only).
+  - No Samaveda TEI or JSON corpus exists on GitHub (repo search for samaveda+TEI,
+    samaveda+json and kauthuma all return total_count 0).
+  - Zenodo could NOT be verified; its API returned HTTP 403 due to traffic restriction.
+    Treat as UNCONFIRMED, not as a verified negative.
+  - vedicreserve (Maharishi) has a single 823 KB PDF and no machine-readable text.
+  - GRETIL has no gana, no Arseya-Brahmana, no Shadvimsa, no Devatadhyaya, no
+    Samhitopanishad, no Samavidhana, no Arseyakalpa, no Latyayana or Drahyayana
+    Srautasutra, no Pushpasutra, no Nidanasutra and no Samatantra. Its Vamsa-Brahmana
+    and Jaiminiya-Brahmana entries say "Converted file(s) not available at present".
+  - archive.org DLI scans of Satyavrata Samasrami's Bibliotheca Indica edition
+    (in.ernet.dli.2015.487112, .514035, .487160, .487161, .487322) have NO licenseurl,
+    NO rights and NO possible-copyright-status field. Rights are unstated; CC0 must not
+    be assumed. Note also that Griffith's preface identifies Samasrami's edition as
+    RANAYANIYA, not Kauthuma.
+  - >-
+      archive.org title metadata is unreliable. "zkbn_vajasaneya-samhita-of-sama-veda" is
+      actually Yajurveda, and "unaz_sama-veda_202406" contains no text files at all.

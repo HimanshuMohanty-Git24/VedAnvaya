@@ -1,0 +1,377 @@
+{
+  "$defs": {
+    "ActionEvent": {
+      "additionalProperties": false,
+      "description": "An occurrence-level action; absent arguments stay absent.",
+      "properties": {
+        "action_head": {
+          "minLength": 1,
+          "title": "Action Head",
+          "type": "string"
+        },
+        "actor_entity_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Actor Entity Id"
+        },
+        "other_participants": {
+          "items": {
+            "$ref": "#/$defs/EventParticipant"
+          },
+          "title": "Other Participants",
+          "type": "array"
+        },
+        "patient_entity_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Patient Entity Id"
+        },
+        "qualifiers": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Qualifiers",
+          "type": "array"
+        }
+      },
+      "required": [
+        "action_head"
+      ],
+      "title": "ActionEvent",
+      "type": "object"
+    },
+    "EventParticipant": {
+      "additionalProperties": false,
+      "description": "One evidenced event role; the role vocabulary is intentionally not canonicalized.",
+      "properties": {
+        "entity_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Entity Id"
+        },
+        "normalized_head": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Normalized Head"
+        },
+        "role": {
+          "minLength": 1,
+          "title": "Role",
+          "type": "string"
+        }
+      },
+      "required": [
+        "role"
+      ],
+      "title": "EventParticipant",
+      "type": "object"
+    },
+    "SemanticEvidenceAnchor": {
+      "additionalProperties": false,
+      "description": "Deterministic references justifying an occurrence-level semantic object.",
+      "properties": {
+        "other_evidence_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Other Evidence Ids",
+          "type": "array"
+        },
+        "passage_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Passage Ids",
+          "type": "array"
+        },
+        "source_passage_id": {
+          "minLength": 1,
+          "title": "Source Passage Id",
+          "type": "string"
+        },
+        "token_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Token Ids",
+          "type": "array"
+        },
+        "translation_record_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Translation Record Id"
+        },
+        "translation_span": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TranslationSpan"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "source_passage_id"
+      ],
+      "title": "SemanticEvidenceAnchor",
+      "type": "object"
+    },
+    "SemanticObjectKind": {
+      "description": "Occurrence-level object families; none is a canonical concept by itself.",
+      "enum": [
+        "CANONICAL_ENTITY_REF",
+        "SEMANTIC_ENTITY_REF",
+        "EVENT",
+        "REQUESTED_OUTCOME",
+        "RITUAL_EVENT",
+        "OFFERING_REF",
+        "SUBSTANCE_REF",
+        "NATURAL_PHENOMENON_REF",
+        "PLACE_REF",
+        "STATE_REF",
+        "QUALITY_REF",
+        "CONCEPT_REF",
+        "ACTION_REF",
+        "OPAQUE_REFERENT",
+        "OPAQUE_SPATIAL_REFERENT",
+        "ONTOLOGY_GAP_REF"
+      ],
+      "title": "SemanticObjectKind",
+      "type": "string"
+    },
+    "SemanticObjectNormalizationStatus": {
+      "description": "How far an occurrence has progressed toward reviewed normalization.",
+      "enum": [
+        "CANONICAL_REF",
+        "NORMALIZED_CANDIDATE",
+        "NEEDS_REVIEW",
+        "AMBIGUOUS",
+        "ONTOLOGY_GAP",
+        "UNRESOLVED_LEGACY_OBJECT"
+      ],
+      "title": "SemanticObjectNormalizationStatus",
+      "type": "string"
+    },
+    "SemanticOntologyGapCode": {
+      "description": "Specific gaps exposed without forcing an incorrect ontology type.",
+      "enum": [
+        "PERSON_LIKE_REFERENT_UNMODELED",
+        "PATRON_ROLE_UNMODELED",
+        "ANCESTOR_ROLE_UNMODELED",
+        "KINSHIP_ROLE_UNMODELED",
+        "OTHER_UNMODELED"
+      ],
+      "title": "SemanticOntologyGapCode",
+      "type": "string"
+    },
+    "TranslationSpan": {
+      "additionalProperties": false,
+      "description": "Half-open character offsets into a pinned translation record.",
+      "properties": {
+        "end": {
+          "exclusiveMinimum": 0,
+          "title": "End",
+          "type": "integer"
+        },
+        "start": {
+          "minimum": 0,
+          "title": "Start",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "title": "TranslationSpan",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "An evidenced occurrence candidate, never a global canonical semantic concept.",
+  "properties": {
+    "beneficiary_entity_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Beneficiary Entity Id"
+    },
+    "candidate_id": {
+      "pattern": "^VG:SEMOBJ:[A-F0-9]{20}$",
+      "title": "Candidate Id",
+      "type": "string"
+    },
+    "canonical_entity_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Canonical Entity Id"
+    },
+    "display_label": {
+      "minLength": 1,
+      "title": "Display Label",
+      "type": "string"
+    },
+    "event": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ActionEvent"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "evidence": {
+      "items": {
+        "$ref": "#/$defs/SemanticEvidenceAnchor"
+      },
+      "minItems": 1,
+      "title": "Evidence",
+      "type": "array"
+    },
+    "extraction_model": {
+      "minLength": 1,
+      "title": "Extraction Model",
+      "type": "string"
+    },
+    "legacy_object_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Legacy Object Id"
+    },
+    "normalization_status": {
+      "$ref": "#/$defs/SemanticObjectNormalizationStatus"
+    },
+    "normalized_head": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Normalized Head"
+    },
+    "object_kind": {
+      "$ref": "#/$defs/SemanticObjectKind"
+    },
+    "ontology_gap_code": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/SemanticOntologyGapCode"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "prompt_version": {
+      "minLength": 1,
+      "title": "Prompt Version",
+      "type": "string"
+    },
+    "qualifiers": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Qualifiers",
+      "type": "array"
+    },
+    "schema_version": {
+      "default": "rigveda-semantic-object-v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_passage_id": {
+      "minLength": 1,
+      "title": "Source Passage Id",
+      "type": "string"
+    },
+    "target_entity_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Target Entity Id"
+    }
+  },
+  "required": [
+    "candidate_id",
+    "object_kind",
+    "display_label",
+    "source_passage_id",
+    "evidence",
+    "extraction_model",
+    "prompt_version",
+    "normalization_status"
+  ],
+  "title": "SemanticObjectCandidate",
+  "type": "object"
+}

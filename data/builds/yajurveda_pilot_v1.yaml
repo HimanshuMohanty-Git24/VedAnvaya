@@ -1,0 +1,82 @@
+# Vajasaneyi Samhita (Madhyandina) representative pilot.
+#
+# NOTE ON SCHEMA: this config deliberately does NOT validate against
+# schemas/corpus_build_config.schema.json. That model requires `mandala` and
+# `selected_suktas`, which do not exist in a work whose hierarchy is [Adhyaya, Mantra].
+# Agent A has ruled CorpusBuildConfig Rigveda-specific and is landing a generic
+# WorkBuildConfig; the field names below already mirror it so the move is mechanical.
+#
+# SAMPLING RATIONALE - the four adhyayas are chosen to STRESS the parser, not to flatter
+# it. VSM's 40 adhyayas differ sharply in character, so ingesting adhyaya 1 and assuming
+# the parser generalises would be worthless:
+#   1  - early ritual formulae (darsapurnamasa). Short prose yajus, heavy avagraha use.
+#        Its accented layer is missing mantra 22, so gap handling is exercised.
+#   16 - Satarudriya / Rudra adhyaya, 66 mantras, the largest sampled. Its accented layer
+#        prints mantra 37 TWICE with a variant reading (srutyaya / satyaya), so the
+#        duplicate-collision path is exercised.
+#   31 - Purusa/Visnu sukta adhyaya, metrical rc material rather than prose yajus. Note
+#        the root TOC calls this "purusasuktadhyayah" while the page itself heads it
+#        "visnu suktam"; that divergence is recorded, not resolved.
+#   40 - Isavasya Upanisad. EVERY mantra label carries a braced cross-reference to the
+#        KANVA Upanisad numbering, e.g. "40.1 {isava.up. kanva1}". A naive
+#        r"\d+\.\d+" label rule drops this entire adhyaya in silence.
+
+config_version: 1.0.0
+dataset_id: yajurveda_pilot_v1
+release_version: 0.1.0-pilot.1
+work_id: VG:WORK:YV:VSM
+
+# Work-agnostic hierarchy declaration. VSM has NO sukta/hymn level; do not add one.
+section_level: Adhyaya
+mantra_level: Mantra
+selected_sections: [1, 16, 31, 40]
+
+# COUNT RECONCILIATION IS OVER THE WHOLE WORK, not just the ingested sample.
+# The pilot ingests 4 representative adhyayas, but a work-level mantra count computed from
+# 4 of 40 would be worthless. Listing all 40 here makes the build read all 40 snapshots, so
+# the 1975 figure lands in structure_reconciliation.jsonl and its snapshots land in the
+# manifest - i.e. the headline count is reproducible from the release rather than being a
+# number quoted in a report. Agent F's G13 manifest-vs-raw check is what surfaced the gap.
+reconciliation_sections: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+                          21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38,
+                          39, 40]
+
+# WHICH LAYER IS PRIMARY IS A BUILD DECISION, NOT A PARSER CONSTANT.
+# Passage identity derives from the citation hierarchy alone (identity.vsm_mantra_identity),
+# so swapping these entries cannot move a single mantra UUID.
+#
+# The accented layer is primary because it (a) preserves Vedic tone marks - udatta U+0951,
+# anudatta U+0952, Vedic Extensions U+1CD0-U+1CFF - and (b) is materially more complete:
+# the unaccented samhita block is truncated in adhyaya 3 (43 of 63), adhyaya 7 (15 of 48)
+# and adhyaya 19 (17 of 95). Both layers are stored in full; neither overwrites the other.
+# NOT a TextRole and NOT a canonical claim. Roles are read from
+# data/registry/text_versions.yaml, where Agent E registers ACCENTED as
+# EXTRACTED_FROM_CONTAINER and UNACCENTED as PARALLEL_TEXT -- so THIS WORK HAS NO
+# PRIMARY_TEXT LAYER, which the build reports rather than hides. "Leading" selects which
+# layer drives comparison and coverage, nothing more.
+leading_text_version: WIKISOURCE_SA.YV.VSM.ACCENTED
+parallel_text_versions:
+  - WIKISOURCE_SA.YV.VSM.UNACCENTED
+
+# IDENTIFIERS COME FROM data/registry/, NOT FROM THIS FILE.
+# The build loads its Source and SourceArtifact records via load_sources() /
+# load_source_artifacts() and fails loudly on an unknown id. Earlier revisions of this
+# pilot emitted locally-invented ids (WIKISOURCE.SA.VSM.*), which asserted provenance
+# under identifiers the rights authority had never declared. The registered ids are
+# WIKISOURCE_SA (source), WIKISOURCE_SA.YV.VSM.SAMHITA.DEVANAGARI and
+# WIKISOURCE_SA.YV.VSM.RISHISUCI (artifacts).
+#
+# Per-mantra rsi only, from the edition-supplied rsi index. devata and chandas are
+# deliberately NOT asserted - see docs/pilots/YAJURVEDA_PILOT.md.
+metadata_sources: [RISHI_INDEX]
+
+# No translation source. Griffith's White Yajurveda is public domain but exists only as
+# OCR (archive.org textswhiteyajur00grifgoog); en.wikisource has no transcription and
+# sacred-texts.com is Cloudflare-blocked. OCR is not corpus data, so translations.jsonl
+# is written empty rather than filled with unverifiable alignments.
+translation_sources: []
+
+reconciliation_policy_version: yajurveda-pilot-v1
+raw_root: data/raw/wikisource_sa
+output_location: data/canonical/yajurveda_pilot_v1
+build_timestamp: 2026-09-07T00:00:00+05:30

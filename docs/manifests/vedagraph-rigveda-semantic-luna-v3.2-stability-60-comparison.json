@@ -1,0 +1,307 @@
+{
+  "alignment_counts": {
+    "A_ONLY": 202,
+    "B_ONLY": 198,
+    "EXACT_ASSERTION": 52,
+    "OBJECT_GRANULARITY_DIFFERENCE": 48,
+    "PREDICATE_BOUNDARY_DIFFERENCE": 4,
+    "SAME_PREDICATE_COMPATIBLE_OBJECT": 0,
+    "SAME_PREDICATE_SAME_OBJECT_DIFFERENT_EVIDENCE": 79,
+    "TARGET_DIFFERENCE": 7,
+    "UNRESOLVED": 0
+  },
+  "candidate_status": "CANDIDATE_NEEDS_REVIEW",
+  "canonical_promotion": false,
+  "canonical_target_contradictions": [],
+  "final_attempt_policy": "LEXICALLY_LOWEST_VALID_ATTEMPT_ID",
+  "gate": {
+    "claim": "POLICY_STABILITY_ONLY_NOT_ACCURACY",
+    "failures": [],
+    "passed": true,
+    "thresholds": {
+      "assertion_density": 0.3,
+      "no_claim_rate": 0.2,
+      "one_sided_predicate_occurrences": 8,
+      "one_sided_skew_probability": 0.01,
+      "provenance": "engineering_default_not_truth_derived"
+    }
+  },
+  "generated_at": "2026-09-06T12:53:54.911429Z",
+  "human_gold_status": "UNANNOTATED",
+  "integrity": {
+    "binding_failures": 0,
+    "canonical_target_contradictions": 0,
+    "evidence_failures": 0,
+    "heuristic_contamination": 0,
+    "ontology_type_failures": 0,
+    "packet_hash_failures": 0,
+    "receipt_failures": 0,
+    "span_failures": 0
+  },
+  "manifest_sha256": "ee32960afef1bada834084db83e2643588484ba391cb8570d9a72dc188f657da",
+  "manifest_version": "vedagraph-real-luna-v3.2-stability-comparison-v1",
+  "model_self_agreement_is_accuracy": false,
+  "object_kind_counts": {
+    "CANONICAL_ENTITY_REF": [
+      62,
+      56
+    ],
+    "CONCEPT_REF": [
+      2,
+      3
+    ],
+    "EVENT": [
+      92,
+      93
+    ],
+    "NATURAL_PHENOMENON_REF": [
+      20,
+      21
+    ],
+    "OFFERING_REF": [
+      8,
+      8
+    ],
+    "ONTOLOGY_GAP_REF": [
+      2,
+      6
+    ],
+    "OPAQUE_REFERENT": [
+      69,
+      59
+    ],
+    "OPAQUE_SPATIAL_REFERENT": [
+      14,
+      17
+    ],
+    "PLACE_REF": [
+      14,
+      14
+    ],
+    "REQUESTED_OUTCOME": [
+      73,
+      72
+    ],
+    "RITUAL_EVENT": [
+      11,
+      12
+    ],
+    "SEMANTIC_ENTITY_REF": [
+      7,
+      5
+    ],
+    "STATE_REF": [
+      5,
+      5
+    ],
+    "SUBSTANCE_REF": [
+      13,
+      17
+    ]
+  },
+  "passage_agreement": {
+    "canonical_entity": 57,
+    "evidence_anchor": 3,
+    "exact_assertion_set": 6,
+    "no_claim": 60,
+    "passages": 60,
+    "predicate_presence": 21,
+    "typed_object": 5
+  },
+  "predicate_counts": {
+    "ASSOCIATED_WITH": [
+      19,
+      12
+    ],
+    "DESCRIBES": [
+      78,
+      71
+    ],
+    "DESCRIBES_ACTION": [
+      92,
+      93
+    ],
+    "EXPRESSES": [
+      6,
+      5
+    ],
+    "HAS_THEME": [
+      1,
+      3
+    ],
+    "INVOKES": [
+      31,
+      33
+    ],
+    "INVOLVES_OFFERING": [
+      8,
+      8
+    ],
+    "INVOLVES_RITUAL": [
+      11,
+      12
+    ],
+    "INVOLVES_SUBSTANCE": [
+      13,
+      17
+    ],
+    "PRAISES": [
+      12,
+      10
+    ],
+    "REFERS_TO_NATURAL_PHENOMENON": [
+      20,
+      21
+    ],
+    "REFERS_TO_PLACE": [
+      28,
+      31
+    ],
+    "REQUESTS": [
+      73,
+      72
+    ]
+  },
+  "regime_comparison": {
+    "density_gap": 0.06666666666666643,
+    "no_claim_rate_gap": 0.0,
+    "one_sided_predicates": [],
+    "predicate_presence_jaccard": 1.0,
+    "skew_probabilities": {
+      "ASSOCIATED_WITH": 1.0,
+      "DESCRIBES": 1.0,
+      "DESCRIBES_ACTION": 1.0,
+      "EXPRESSES": 1.0,
+      "HAS_THEME": 1.0,
+      "INVOKES": 1.0,
+      "INVOLVES_OFFERING": 1.0,
+      "INVOLVES_RITUAL": 1.0,
+      "INVOLVES_SUBSTANCE": 1.0,
+      "PRAISES": 1.0,
+      "REFERS_TO_NATURAL_PHENOMENON": 1.0,
+      "REFERS_TO_PLACE": 1.0,
+      "REQUESTS": 1.0
+    }
+  },
+  "regimes": {
+    "a": {
+      "assertions": 392,
+      "canonical_reference_count": 62,
+      "density": 6.533333333333333,
+      "no_claim_passages": 2,
+      "no_claim_rate": 0.03333333333333333,
+      "object_kind_counts": {
+        "CANONICAL_ENTITY_REF": 62,
+        "CONCEPT_REF": 2,
+        "EVENT": 92,
+        "NATURAL_PHENOMENON_REF": 20,
+        "OFFERING_REF": 8,
+        "ONTOLOGY_GAP_REF": 2,
+        "OPAQUE_REFERENT": 69,
+        "OPAQUE_SPATIAL_REFERENT": 14,
+        "PLACE_REF": 14,
+        "REQUESTED_OUTCOME": 73,
+        "RITUAL_EVENT": 11,
+        "SEMANTIC_ENTITY_REF": 7,
+        "STATE_REF": 5,
+        "SUBSTANCE_REF": 13
+      },
+      "passages": 60,
+      "predicate_counts": {
+        "ASSOCIATED_WITH": 19,
+        "DESCRIBES": 78,
+        "DESCRIBES_ACTION": 92,
+        "EXPRESSES": 6,
+        "HAS_THEME": 1,
+        "INVOKES": 31,
+        "INVOLVES_OFFERING": 8,
+        "INVOLVES_RITUAL": 11,
+        "INVOLVES_SUBSTANCE": 13,
+        "PRAISES": 12,
+        "REFERS_TO_NATURAL_PHENOMENON": 20,
+        "REFERS_TO_PLACE": 28,
+        "REQUESTS": 73
+      }
+    },
+    "b": {
+      "assertions": 388,
+      "canonical_reference_count": 56,
+      "density": 6.466666666666667,
+      "no_claim_passages": 2,
+      "no_claim_rate": 0.03333333333333333,
+      "object_kind_counts": {
+        "CANONICAL_ENTITY_REF": 56,
+        "CONCEPT_REF": 3,
+        "EVENT": 93,
+        "NATURAL_PHENOMENON_REF": 21,
+        "OFFERING_REF": 8,
+        "ONTOLOGY_GAP_REF": 6,
+        "OPAQUE_REFERENT": 59,
+        "OPAQUE_SPATIAL_REFERENT": 17,
+        "PLACE_REF": 14,
+        "REQUESTED_OUTCOME": 72,
+        "RITUAL_EVENT": 12,
+        "SEMANTIC_ENTITY_REF": 5,
+        "STATE_REF": 5,
+        "SUBSTANCE_REF": 17
+      },
+      "passages": 60,
+      "predicate_counts": {
+        "ASSOCIATED_WITH": 12,
+        "DESCRIBES": 71,
+        "DESCRIBES_ACTION": 93,
+        "EXPRESSES": 5,
+        "HAS_THEME": 3,
+        "INVOKES": 33,
+        "INVOLVES_OFFERING": 8,
+        "INVOLVES_RITUAL": 12,
+        "INVOLVES_SUBSTANCE": 17,
+        "PRAISES": 10,
+        "REFERS_TO_NATURAL_PHENOMENON": 21,
+        "REFERS_TO_PLACE": 31,
+        "REQUESTS": 72
+      }
+    }
+  },
+  "run_ids": [
+    "vedagraph-rigveda-semantic-luna-v3.2-stability-60-a",
+    "vedagraph-rigveda-semantic-luna-v3.2-stability-60-b"
+  ],
+  "run_seals": {
+    "a": {
+      "counts": {
+        "all_imported_valid_attempts": 61,
+        "assertions": 392,
+        "authored_response_files": 65,
+        "final_validated_tasks": 60,
+        "intermediate_files": 37,
+        "no_claim_passages": 2,
+        "prepared_tasks": 60,
+        "selected_final_attempts": 60,
+        "surplus_valid_attempts": 1,
+        "unimported_authored_responses": 5
+      },
+      "file_sha256": "ac5873fce24ef60cc827041dd1e3c41a63f58cb9541de2e2b72ca128b79ebdf1",
+      "path": "data/semantic/vedagraph-rigveda-semantic-luna-v3.2-stability-60-a/output_seal.json",
+      "seal_sha256": "86dbf929c2f33d74f466b91fa187d680ce11e2fc86027e8a2ec7aa9416372cd1"
+    },
+    "b": {
+      "counts": {
+        "all_imported_valid_attempts": 60,
+        "assertions": 388,
+        "authored_response_files": 62,
+        "final_validated_tasks": 60,
+        "intermediate_files": 64,
+        "no_claim_passages": 2,
+        "prepared_tasks": 60,
+        "selected_final_attempts": 60,
+        "surplus_valid_attempts": 0,
+        "unimported_authored_responses": 2
+      },
+      "file_sha256": "f94277e915e28044066aff4e4e3670a8fe5a6e9600a57823df83b3280aa04cc9",
+      "path": "data/semantic/vedagraph-rigveda-semantic-luna-v3.2-stability-60-b/output_seal.json",
+      "seal_sha256": "cdad8832972c7b61e1176b7be56993f083e524fb060458845fdb1c47bd9da69d"
+    }
+  },
+  "unlocked_predicates": []
+}

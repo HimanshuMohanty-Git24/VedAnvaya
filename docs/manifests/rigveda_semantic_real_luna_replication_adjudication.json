@@ -1,0 +1,347 @@
+{
+  "audit_scope": {
+    "description": "Engineering adjudication of two sealed real-Luna runs over the same 60 EvidencePackets",
+    "runs_compared": [
+      "vedagraph-rigveda-semantic-luna-v3.1-regression",
+      "vedagraph-rigveda-semantic-luna-v3.1-508"
+    ],
+    "excluded_truth_sources": [
+      "historical deterministic heuristic artifacts (V2/V3 pilots)",
+      "Sol silver",
+      "traditional Devata metadata as proof of a semantic relation",
+      "general pretrained Vedic knowledge",
+      "model self-agreement between the two runs"
+    ]
+  },
+  "canonical_promotion": false,
+  "human_gold": false,
+  "pair_overrides": [
+    {
+      "a_assertion_id": "V31ASSERT:VG:SEMOBJ:00000000000000000003",
+      "b_assertion_id": "VG:SEMASSERT:3DD88DDF81435E7A519B",
+      "category": "PREDICATE_BOUNDARY_DIFFERENCE",
+      "failure_mode": "PREDICATE_POLICY_AMBIGUITY",
+      "rationale": "The same clause directly supports an Indra action and an entity-focused description; V3.1 says actions are separate but does not say whether DESCRIBES must also be emitted."
+    },
+    {
+      "a_assertion_id": "V31ASSERT:VG:SEMOBJ:00000000000000000004",
+      "b_assertion_id": "VG:SEMASSERT:56D6173563446F7504AD",
+      "category": "PREDICATE_BOUNDARY_DIFFERENCE",
+      "failure_mode": "PREDICATE_POLICY_AMBIGUITY",
+      "rationale": "The words 'I offer' and 'adoration' directly support an offering event and the thing in its offered role; V3.1 gives no precedence or co-emission rule."
+    },
+    {
+      "a_assertion_id": "V31ASSERT:VG:SEMOBJ:00000000000000000012",
+      "b_assertion_id": "VG:SEMASSERT:46919AAADEBB22CC1903",
+      "category": "OBJECT_GRANULARITY_DIFFERENCE",
+      "failure_mode": "OBJECT_GRANULARITY_VARIANCE",
+      "rationale": "Both assertions bind to the exact request 'Be thou ... our guard and keeper'; one preserves the wording and one normalizes it to protection."
+    },
+    {
+      "a_assertion_id": "V31ASSERT:VG:SEMOBJ:00000000000000000044",
+      "b_assertion_id": "VG:SEMASSERT:F2B79588C6E576160CE7",
+      "category": "UNRESOLVED",
+      "failure_mode": "EXPERT_DEPENDENT_AMBIGUITY",
+      "rationale": "The packet does not settle whether filtered Soma in this occurrence should be modeled as the supplied canonical referent, a substance, or both; specialist review is required."
+    }
+  ],
+  "one_sided": {
+    "V31ASSERT:VG:SEMOBJ:00000000000000000007": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "'May ye come nigh us' directly expresses request force and outcome."
+    },
+    "VG:SEMASSERT:23F7CDB05DC0F2741F97": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "The packet directly names material Soma being milked."
+    },
+    "VG:SEMASSERT:03E90C8707D94D4CDF37": {
+      "assessment": "OBJECT_POLICY_AMBIGUITY",
+      "failure_mode": "OBJECT_GRANULARITY_VARIANCE",
+      "rationale": "The second Soma occurrence is supported, but V3.1 does not specify whether repeated mentions of the same passage-level relation/object should be separate assertions."
+    },
+    "VG:SEMASSERT:42A565C629EC42DD3F6C": {
+      "assessment": "OBJECT_POLICY_AMBIGUITY",
+      "failure_mode": "OBJECT_GRANULARITY_VARIANCE",
+      "rationale": "Children are inside the requested riches phrase, but V3.1 does not settle whether this is an independent outcome or a qualifier of riches."
+    },
+    "VG:SEMASSERT:FA132FD8894014B1CBA8": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "'Let not fortune fail us' directly expresses a desired outcome."
+    },
+    "VG:SEMASSERT:42A8B57D72E048531D71": {
+      "assessment": "EXPERT_REQUIRED",
+      "failure_mode": "EXPERT_DEPENDENT_AMBIGUITY",
+      "rationale": "The English syntax places Agni in a 'with' phrase while the request governs three goddesses; the packet alone does not safely settle whether Agni is also invoked."
+    },
+    "VG:SEMASSERT:2295246F5F5A5D081281": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "Sarasvati is one of the named goddesses governed by 'May ... come'."
+    },
+    "V31ASSERT:VG:SEMOBJ:00000000000000000013": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "Agni is explicitly named and directly described as pure, radiant, friendly, and resplendent."
+    },
+    "VG:SEMASSERT:0A77CE6B19CE631CC82F": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "'May we ... be victors ever' directly requests victory."
+    },
+    "VG:SEMASSERT:1940226115F2D3DEAB42": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "'Let wealth swell high ... to the singer' directly expresses the desired wealth outcome."
+    },
+    "VG:SEMASSERT:F229FD3E2D031AE6D8D3": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "'May we ... be victors ever' directly requests victory."
+    },
+    "VG:SEMASSERT:2D83160AE17AC9A1D2CE": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "'Let power swell high ... to the singer' directly expresses the desired power outcome."
+    },
+    "VG:SEMASSERT:AC27694B821EB657462B": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "'May we ... be victors ever' directly requests victory."
+    },
+    "V31ASSERT:VG:SEMOBJ:00000000000000000017": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "'Savitar ... protects us' directly states the action."
+    },
+    "VG:SEMASSERT:F95B4741C23B7BE1F4BA": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "Savitar is explicitly named and described as setting the heavens in motion."
+    },
+    "V31ASSERT:VG:SEMOBJ:00000000000000000021": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "Indra is explicitly named and described as victorious and long-lived."
+    },
+    "V31ASSERT:VG:SEMOBJ:00000000000000000022": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "The translation directly says Brhaspati breaks down the enemies' castles."
+    },
+    "V31ASSERT:VG:SEMOBJ:00000000000000000024": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "'We call on you ... Indra-Varuna' directly supports invocation of the opaque paired referent."
+    },
+    "V31ASSERT:VG:SEMOBJ:00000000000000000025": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "'May we be never cast aside' directly expresses request force and outcome."
+    },
+    "V31ASSERT:VG:SEMOBJ:00000000000000000026": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "The imperative 'come ... hitherward' directly expresses the requested arrival."
+    },
+    "V31ASSERT:VG:SEMOBJ:00000000000000000027": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "'Bring us strengthening food' directly expresses request force and outcome."
+    },
+    "V31ASSERT:VG:SEMOBJ:00000000000000000028": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "'Come thrice ... to our home' directly expresses the requested arrival."
+    },
+    "VG:SEMASSERT:C722161B049F2AB0FE7E": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "The translation directly names Soma as material that was shed and sought."
+    },
+    "V31ASSERT:VG:SEMOBJ:00000000000000000029": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "'Come thrice ... to our home' directly expresses the requested arrival."
+    },
+    "VG:SEMASSERT:2EEBB7D8826A9D710D95": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "The translation directly names Soma as material that was shed and sought."
+    },
+    "V31ASSERT:VG:SEMOBJ:00000000000000000030": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "'Come thrice ... to our home' directly expresses the requested arrival."
+    },
+    "VG:SEMASSERT:96F6B95CED8AC15580B7": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "The translation directly names Soma as material that was shed and sought."
+    },
+    "V31ASSERT:VG:SEMOBJ:00000000000000000031": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "'Drink Soma' directly names the substance in use."
+    },
+    "V31ASSERT:VG:SEMOBJ:00000000000000000032": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "'Drink Soma' directly names the substance in use."
+    },
+    "V31ASSERT:VG:SEMOBJ:00000000000000000033": {
+      "assessment": "PREDICATE_POLICY_AMBIGUITY",
+      "failure_mode": "PREDICATE_POLICY_AMBIGUITY",
+      "rationale": "The action 'glorify' is direct, but it is imperative rather than narrated; V3.1 does not state whether DESCRIBES_ACTION excludes requested actions."
+    },
+    "V31ASSERT:VG:SEMOBJ:00000000000000000034": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "'Drink Soma' directly names the substance in use."
+    },
+    "V31ASSERT:VG:SEMOBJ:00000000000000000036": {
+      "assessment": "PLAUSIBLE_BUT_OPTIONAL",
+      "failure_mode": "OBJECT_GRANULARITY_VARIANCE",
+      "rationale": "'Bestow on us ... that which many crave' has direct request force but an unresolved, non-concise outcome whose relation to the preceding outcomes is underspecified."
+    },
+    "VG:SEMASSERT:A0EAA94C247853303DB9": {
+      "assessment": "OBJECT_POLICY_AMBIGUITY",
+      "failure_mode": "OBJECT_GRANULARITY_VARIANCE",
+      "rationale": "Wealth is directly requested, but the other run bundled it with strengthening life; V3.1 does not define split/merge precedence for coordinated outcomes."
+    },
+    "V31ASSERT:VG:SEMOBJ:00000000000000000037": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "'Make thou us better than we are' directly expresses request force and outcome."
+    },
+    "V31ASSERT:VG:SEMOBJ:00000000000000000038": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "The translation directly states that Pavamana sends treasure to the singers."
+    },
+    "V31ASSERT:VG:SEMOBJ:00000000000000000039": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "'Soma flows on when purified' directly states the action."
+    },
+    "V31ASSERT:VG:SEMOBJ:00000000000000000040": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "Soma is explicitly named and directly described as beloved and adorned with songs."
+    },
+    "V31ASSERT:VG:SEMOBJ:00000000000000000041": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "'Pour out for us ... streams' directly expresses request force and outcome."
+    },
+    "V31ASSERT:VG:SEMOBJ:00000000000000000043": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "'May we have strength to live' directly expresses request force and outcome."
+    },
+    "V31ASSERT:VG:SEMOBJ:00000000000000000045": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "'Soma ... hath flowed into the filter' directly states the action independently of the unresolved entity/substance boundary."
+    },
+    "V31ASSERT:VG:SEMOBJ:00000000000000000046": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "'Soma ... goest round the herd' directly states the action."
+    },
+    "V31ASSERT:VG:SEMOBJ:00000000000000000047": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "'The Strong hath run' directly states the action."
+    },
+    "V31ASSERT:VG:SEMOBJ:00000000000000000048": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "'Rise, come unto the world of life' directly requests the woman's movement."
+    },
+    "V31ASSERT:VG:SEMOBJ:00000000000000000051": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "'That ... Car ... we call' directly supports an invocation candidate using the permitted review-only opaque object."
+    },
+    "VG:SEMASSERT:AA3A5B7434F4FB821228": {
+      "assessment": "PLAUSIBLE_BUT_OPTIONAL",
+      "failure_mode": "PREDICATE_POLICY_AMBIGUITY",
+      "rationale": "'Worthy of sacrifice' directly refers to sacrifice, but V3.1 does not say whether adjectival mention alone requires INVOLVES_RITUAL."
+    },
+    "V31ASSERT:VG:SEMOBJ:00000000000000000052": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "'We cause [the spirit] to come ... again' directly states an action."
+    },
+    "V31ASSERT:VG:SEMOBJ:00000000000000000053": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "'We cause [the spirit] to come ... again' directly states an action."
+    },
+    "V31ASSERT:VG:SEMOBJ:00000000000000000054": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "'We cause [the spirit] to come ... again' directly states an action."
+    },
+    "V31ASSERT:VG:SEMOBJ:00000000000000000055": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "'We cause [the spirit] to come ... again' directly states an action."
+    },
+    "V31ASSERT:VG:SEMOBJ:00000000000000000056": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "'We cause [the spirit] to come ... again' directly states an action."
+    },
+    "V31ASSERT:VG:SEMOBJ:00000000000000000057": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "'We cause [the spirit] to come ... again' directly states an action."
+    },
+    "V31ASSERT:VG:SEMOBJ:00000000000000000058": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "'We cause [the spirit] to come ... again' directly states an action."
+    },
+    "V31ASSERT:VG:SEMOBJ:00000000000000000059": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "'The woman's robe was streaming' directly states the action."
+    },
+    "V31ASSERT:VG:SEMOBJ:00000000000000000060": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "'These lead us safely ... over all troubles' directly states the action."
+    },
+    "V31ASSERT:VG:SEMOBJ:00000000000000000061": {
+      "assessment": "UNSUPPORTED_EXTRACTION",
+      "failure_mode": "UNSUPPORTED_EXTRACTION_VARIANCE",
+      "rationale": "The desired event is that the Bright God drink; the emitted object is the drink itself, so the OUTCOME anchor does not independently evidence the asserted outcome."
+    },
+    "V31ASSERT:VG:SEMOBJ:00000000000000000062": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "'Come ... rise to meet me' directly expresses the requested meeting."
+    },
+    "V31ASSERT:VG:SEMOBJ:00000000000000000063": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "'She moves along the lucid spheres' directly states the action."
+    },
+    "V31ASSERT:VG:SEMOBJ:00000000000000000064": {
+      "assessment": "SUPPORTED_OMISSION_VARIANCE",
+      "failure_mode": "EMISSION_RECALL_VARIANCE",
+      "rationale": "'The Bull shines out through all the sky' directly states the action."
+    }
+  },
+  "truth_rules": [
+    "NO HUMAN GOLD EXISTS.",
+    "MODEL SELF-AGREEMENT IS NOT ACCURACY.",
+    "Historical heuristic output and Sol silver are not truth inputs.",
+    "Traditional Devata metadata is not proof of INVOKES or PRAISES.",
+    "General pretrained Vedic knowledge was not used to settle any disagreement."
+  ]
+}

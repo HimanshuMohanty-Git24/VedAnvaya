@@ -1,0 +1,165 @@
+# Atharvaveda-Samhita (Saunaka) representative pilot - build configuration
+#
+# Declarative record of what the pilot built and why. The executable is
+# scripts/build_atharvaveda_pilot.py; this file is the auditable statement of intent,
+# pinned snapshots, and policy so that a reader can tell whether the build honoured it.
+#
+# Owner: Agent D (Atharvaveda). Rights adjudication is Agent E's; this file records what
+# was observed, not a rights ruling.
+
+config_version: atharvaveda-pilot-v2
+build_id: atharvaveda_pilot_v1
+build_version: 0.1.0-avs-pilot.1
+output_dir: data/canonical/atharvaveda_pilot_v1
+work_id: VG:WORK:AV:SAU
+work_abbreviation: AVS
+recension: Shaunaka
+hierarchy: [Kanda, Sukta, Mantra]
+identity_functions:
+  # All three already existed or were landed additively by Agent A on request; this build
+  # redesigns nothing.
+  section: avs_kanda_identity(kanda)
+  hymn: avs_sukta_identity(kanda, sukta)
+  mantra: avs_mantra_identity(kanda, sukta, mantra)
+
+parser_version: gretil-avs-saunaka-legacy-html-v1
+provenance_source: >-
+  Source and SourceArtifact records are READ FROM data/registry via load_sources() and
+  load_source_artifacts(); this build constructs neither. The registry's pinned
+  checksum_sha256 is cross-checked against the bytes actually read, so a registry edit that
+  repointed an artifact at different bytes fails the build.
+comparator_version: text-compare-v1
+
+# ---------------------------------------------------------------------------------------
+# Pinned source snapshots. Immutable, hashed, written by PoliteFetcher. Never overwritten.
+# ---------------------------------------------------------------------------------------
+inputs:
+  - source_id: GRETIL                     # registered host; NOT a per-Veda pseudo-source
+    snapshot_namespace: GRETIL_AVS        # local raw-dir namespace only, deliberately separate
+    source_artifact_id: GRETIL.AV.SAUNAKA.ACCENTED.HTML
+    role: PRIMARY_TEXT
+    url: https://gretil.sub.uni-goettingen.de/gretil/1_sanskr/1_veda/1_sam/avs_acu.htm
+    snapshot_path: data/raw/gretil_avs/2026-09-07/cd89bd1e29e6158d7c3c7bcb607b8e4eed4c7556c8c2027dec039f56736adddb.htm
+    snapshot_sha256: cd89bd1e29e6158d7c3c7bcb607b8e4eed4c7556c8c2027dec039f56736adddb
+    retrieved_at: 2026-09-07
+    byte_length: 1114524
+    text_version_id: GRETIL.AVS.SAUNAKA.ACCENTED
+    accented: true
+    script: Latin
+    transliteration_scheme: GRETIL_TITUS_LATIN_AVS
+    rights_status: REFERENCE_ONLY
+    rights_note: >-
+      The "REFERENCE PURPOSES ONLY" clause is a POINTER to TITUS, and behind TITUS sits
+      Orlandi, Pisa 1991 - a modern transliteration still in copyright. A TITUS permission
+      is necessary but NOT sufficient.
+
+  - source_id: GRETIL
+    snapshot_namespace: GRETIL_AVS
+    source_artifact_id: GRETIL.AV.SAUNAKA.UNACCENTED.HTML
+    role: PARALLEL_TEXT
+    url: https://gretil.sub.uni-goettingen.de/gretil/1_sanskr/1_veda/1_sam/avs___u.htm
+    snapshot_path: data/raw/gretil_avs/2026-09-07/7e3f74f313d1b4348bf9e1f60a80e03bb72709994b85585a4f854a51bf57272c.htm
+    snapshot_sha256: 7e3f74f313d1b4348bf9e1f60a80e03bb72709994b85585a4f854a51bf57272c
+    retrieved_at: 2026-09-07
+    byte_length: 1024198
+    text_version_id: GRETIL.AVS.SAUNAKA.UNACCENTED
+    accented: false
+    script: Latin
+    transliteration_scheme: GRETIL_TITUS_LATIN_AVS
+    rights_status: REFERENCE_ONLY
+
+derived_versions:
+  - text_version_id: VEDAGRAPH.AVS.SEARCH_NORMALIZED
+    text_role: SEARCH_DERIVATIVE
+    derived_from: GRETIL.AVS.SAUNAKA.ACCENTED
+    method: vedagraph.normalize.comparison_form(text, ComparisonForm.SEARCH_NORMALIZED)
+    note: >-
+      Derived, never authoritative, and never written back over the accented source. Present
+      so that a searchable surface exists without deleting accents from stored text.
+
+# ---------------------------------------------------------------------------------------
+# Sample. Whole suktas only, so sequence_in_parent stays contiguous inside each parent.
+# Chosen to stress the parser: every structural anomaly class found in the whole artifact
+# is represented, plus early, middle, late, prose and atypical books.
+# ---------------------------------------------------------------------------------------
+sample_unit: whole_sukta
+sample_selection_basis: >-
+  Deliberate adversarial selection, not a random or convenience draw. Kanda 1 alone would
+  have made the parser look correct while hiding the prose books, the second numbering
+  system and four locator collisions.
+kandas_sampled: [1, 4, 6, 7, 8, 13, 15, 16, 19, 20]
+kandas_not_sampled: [2, 3, 5, 9, 10, 11, 12, 14, 17, 18]
+suktas:
+  - {kanda: 1, sukta: 1, mantras: 4, rationale: "earliest kanda, short metrical hymn: the easy baseline case"}
+  - {kanda: 4, sukta: 1, mantras: 7, rationale: "early-middle kanda, ordinary metrical hymn"}
+  - {kanda: 6, sukta: 1, mantras: 3, rationale: "kanda 6 is the extreme short-hymn book (142 suktas)"}
+  - {kanda: 7, sukta: 6, mantras: 4, rationale: "label-vs-marker divergence: 7.6.3 prints ||1||, 7.6.4 prints ||2||"}
+  - {kanda: 8, sukta: 5, mantras: 22, rationale: "AVS 8.5.11 has a corrupt pada letter (retroflex d where c is meant)"}
+  - {kanda: 13, sukta: 4, mantras: 55, rationale: "paryaya prose; locator collision at 13.4.26; marker mismatch at 13.4.22"}
+  - {kanda: 15, sukta: 2, mantras: 4, rationale: "Vratya paryaya: one Roth/Whitney verse = eight Vishva Bandhu verses"}
+  - {kanda: 16, sukta: 1, mantras: 13, rationale: "prose book; every unit single-pada and non-metrical"}
+  - {kanda: 19, sukta: 1, mantras: 3, rationale: "structurally atypical supplementary book"}
+  - {kanda: 20, sukta: 96, mantras: 24, rationale: "AVS 20.96.22 is TWO verses both numbered 22, split by the [-] marker"}
+  - {kanda: 20, sukta: 127, mantras: 14, rationale: "kuntapa hymn; Rigvedic in character and NOT deduplicated"}
+
+expected_counts:
+  parsed_units: 155
+  canonical_mantra_passages: 153
+  non_canonical_duplicate_occurrences: 2
+  kanda_passages: 10
+  sukta_passages: 11
+  total_passages: 174
+  text_versions: 459
+  citations: 157
+  text_comparisons: 153
+
+# ---------------------------------------------------------------------------------------
+# Policies. Each of these is a decision that could have been made the lazy way.
+# ---------------------------------------------------------------------------------------
+policies:
+  text_immutability: >-
+    text_original is the source pada lines verbatim, joined one per line, with NOTHING
+    removed. The pada divider "|", the source's own verse marker "||18||", the anuvaka
+    marker "{12}" and the alternate-unit marker "[8]" all survive in stored text, because
+    deleting them would make the stored field a derived surface rather than the source.
+
+  duplicate_locator_resolution: >-
+    When two parsed units claim the same (kanda, sukta, mantra), keep the one whose own
+    in-text ||N|| marker agrees with its locator, if exactly one does; otherwise keep the
+    first in file order. The loser is preserved in full as a
+    NON_CANONICAL_DUPLICATE_OCCURRENCE SourceAssertion including its complete Sanskrit
+    text. No verse number is ever invented and no text is discarded.
+
+  sequence_gaps: >-
+    Reported, never filled. AVS 13.4 legitimately has no verse 1 in this artifact because
+    the first verse is mislabelled 26; the empty slot stays empty.
+
+  metrical_classification: >-
+    NOT asserted. The artifact does not mark prose, and a pada count is not a metre. Prose
+    paryaya units are ordinary Passages, and single_pada_unit is recorded as a source fact
+    with an explicit note that it is not a claim about prose or verse.
+
+  alternate_numbering: >-
+    The Vishva Bandhu (Hoshiarpur 1960-64) numbering embedded in the artifact is emitted as
+    a non-canonical Citation with system AVS_VISHVA_BANDHU_1960. Where the artifact prints
+    [-] (no counterpart), no Citation is emitted and an ALTERNATE_NUMBERING_ABSENT
+    SourceAssertion records the printed marker instead.
+
+  cross_work_parallels: >-
+    Kanda 20 overlaps the Rigveda extensively. NO deduplication against VG:WORK:RV:SAK is
+    performed and no AVS mantra is sourced from the Rigveda. A Rigvedic parallel is a
+    candidate for the derived parallels layer only.
+
+  traditional_metadata: >-
+    ZERO TraditionalMetadataAssertion records. No machine-readable per-mantra
+    rishi/devata/chandas source for AVS was located. Rigvedic Anukramani rules do NOT
+    transfer to the Atharvaveda and no metadata is inferred or generated.
+
+  translation_alignment: >-
+    Translations are independent records aligned by the translation's own printed book and
+    verse numbers, never by sequence position (ADR-010). Zero translation records in this
+    run: see the pilot report for the blocker.
+
+  determinism: >-
+    built_at is pinned to the newest snapshot retrieval timestamp, not to wall-clock time,
+    so a rebuild from the same immutable snapshots is byte-identical including manifest.json.
