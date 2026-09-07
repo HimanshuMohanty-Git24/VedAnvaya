@@ -270,27 +270,28 @@ canonical Sanskrit**, and the reason is a measurement rather than a shortfall of
 
 ### The measurement, and the mistake I made reading it
 
-Transcription was attempted at production settings. Measured over **227 units read
-independently twice** (26 leaves, kāṇḍas 1–2):
+Transcription was attempted at production settings. Measured over **249 units read
+independently twice** (kāṇḍas 1–2; 327 units in total):
 
 | Result | Count |
 |---|---|
-| `VERIFIED_EXACT` (codepoint agreement) | 123 — rate **0.542** |
-| Agree on letters; differ in accent, punctuation, numerals or spacing | 42 |
-| Differ in the **letters themselves** | 62 |
-| Units carrying any Vedic accent mark (of 313 total) | 14 |
+| `VERIFIED_EXACT` (codepoint agreement) | 130 — rate **0.522** |
+| Agree on letters; differ in accent, punctuation, numerals or spacing | 47 |
+| Differ in the **letters themselves** | 72 |
+| One reader saw a unit the other did not | 78 |
+| Units carrying any Vedic accent mark (of 327 total) | 19 |
 
 An example of a letter-level disagreement, AVS 2.19.1: one reader read `द्वेषि`, the other
 `द्वेष्टि`.
 
-**The rate moved four times as the sample grew, and every earlier figure is withdrawn:**
-0.00 on 22 units (one leaf), 0.26 on 46, 0.485 on 167, 0.505 on 204, 0.542 on 227. I recorded the first
-in a sentence that *also* said 22 units were "enough to refuse promotion and NOT enough to
-characterise the error rate" — and then stated the rate anyway. That is the one-locus
-overgeneralisation this repository has corrected four times, committed once more by the run
-correcting the others, and then repeated at 46 and again at 167. **The monotone climb is
-itself the finding:** at every sample size the measurement has been pessimistic and has not
-converged across five successive sample sizes, so 0.542 is a floor from two kāṇḍas, not a corpus rate.
+**The rate is unstable and every earlier figure is withdrawn.** Successive samples gave 0.00
+(22 units), 0.26 (46), 0.485 (167), 0.505 (204), 0.542 (227), 0.522 (249). I recorded the
+first in a sentence that *also* said 22 units were "enough to refuse promotion and NOT enough
+to characterise the error rate" — and then stated the rate anyway. Then I twice described the
+series as a **"monotone climb"** that had "risen every time" — and it fell. That is the same
+overgeneralisation the paragraph was written to correct, committed *inside* the correction,
+twice. What is supportable is only this: the value moves on every remeasurement and has not
+converged, so no single number here may be cited as a corpus rate.
 
 **The zero-accent result had a different cause than I first recorded, and the correction
 matters more than the number.** Both readers initially recorded no accent at all, which
@@ -302,17 +303,32 @@ Re-fetched at width 4000 the marks are stem-aligned and legible, the volume has 
 re-acquired at that width, and the fetch script now pins it. The IIIF `full` size returns
 only 2025px, so 4000 must be requested explicitly.
 
-**Resolution mattered — and my own reading of how much is corrected here.** From one crop of
-leaf n17 I judged the accents "unambiguously attached to their akṣara". A reader working the
-same 4000px scan line by line at up to 7× zoom disagrees: stem-aligned, yes, but still not
-reliably assignable to a specific akṣara, so they omitted accent rather than guess — which is
-what the protocol requires. **Accent remains unsolved even at 4000px** and needs a dedicated
-pass; a partially-correct accent layer would be worse than none, because it looks complete.
-What the re-fetch *did* prove is that resolution changes the base text: re-reading seven
-leaves at 4000px produced **4 substantive changes in 86 units, about 4.7%** — including
+**Resolution mattered, and two independent workers proved it on the base text.** Re-reading
+seven leaves at 4000px produced **4 substantive changes in 86 units, about 4.7%** — including
 `उपासान्` → `उपास्मान्` and `यद्गावः` → `यन्नावः` — and resolved both outstanding `[?]` marks.
+A second worker confirmed it with a different error class: on the 2000px scan they silently
+normalised the fount's single-glyph geminate (this edition prints *-cch-* as a plain `छ`) to
+the expected conjunct in six places, and caught all six only on re-reading the 4000px rescan.
+That is precisely the "smoothing a reading because it looks wrong" failure the protocol
+forbids by name — committed, then caught by the rescan.
 
-So what this records is an exact-agreement rate of 0.542 on a small sample **at the wrong
+**The accent figure measures a convention divergence, not a capability limit — and this is
+the third correction to my own reading.** Only 19 of 327 units carry any accent mark, and
+they are not scattered: they are exactly three leaves, all in stage 1 — n15 and n28/n29.
+**Every stage-2 leaf has zero.** The workers did not fail to capture accent; some captured it
+and others deliberately declined, each correctly under the protocol's own "note rather than
+guess" instruction, because **the protocol never fixed one convention**. Two consequences: no
+unit whose stage-1 reading carries accent can reach `VERIFIED_EXACT`, since its stage-2
+counterpart has none by construction; and my statement that **"accent remains unsolved even
+at 4000px" is too strong and is withdrawn**. One worker captured a full accent layer on n15
+and described a reproducible method — detect marks by dash-row depth, express each as a
+percentage position inside its printed word-group, then resolve descender-coincident
+candidates from a single montage. The real difficulty is that the anudātta dash and the
+descender of `ु/ू/ृ` occupy the *same* depth band, so nothing automatic separates them: on
+n15, 10 of 24 candidates were real accents and 14 were the bare vowel curl. Accent is a
+**dedicated pass with a known method**, not an open problem.
+
+So what this records is an exact-agreement rate of 0.522 on a small sample **at the wrong
 resolution**, with the defect fixed — the whole volume re-acquired at width 4000, 478
 leaves, 676,021,671 bytes, aggregate `4008cdca…17b6` — and the measurement **not yet
 repeated at the right one**. It is not yet evidence about what model transcription can do

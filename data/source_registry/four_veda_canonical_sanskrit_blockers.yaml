@@ -1150,50 +1150,52 @@ blockers:
       transcription_fidelity_measured: >-
         NEW, OPEN_RESEARCH. Model transcription of this source was attempted at production
         settings under the two-stage protocol and MEASURED rather than assumed.
-        MEASURED OVER 227 UNITS READ INDEPENDENTLY TWICE (26 leaves, kandas 1-2):
-          VERIFIED_EXACT 123, exact agreement rate 0.542.
-          VERIFIED_WITH_ORTHOGRAPHIC_NOTE 42 - agree on the letters, differ in accent or in
+        MEASURED OVER 249 UNITS READ INDEPENDENTLY TWICE (kandas 1-2, 327 units total):
+          VERIFIED_EXACT 130, exact agreement rate 0.522.
+          VERIFIED_WITH_ORTHOGRAPHIC_NOTE 47 - agree on the letters, differ in accent or in
           punctuation, numerals and spacing.
-          TRANSCRIPTION_UNCERTAIN 62 - differ in the letters themselves, e.g. AVS 2.19.1
+          TRANSCRIPTION_UNCERTAIN 72 - differ in the letters themselves, e.g. AVS 2.19.1
           read as "dvesi" by one reader and "dvesti" by the other.
-          14 of 313 units carry any Vedic accent mark.
-        THE RATE MOVED FOUR TIMES AS THE SAMPLE GREW AND EVERY EARLIER FIGURE IS WITHDRAWN:
-        0.00 on 22 units (one leaf), 0.26 on 46, 0.485 on 167, 0.505 on 204, 0.542 on 227.
-        The first was
-        recorded here in a sentence that ALSO said 22 units were "enough to refuse promotion
-        and NOT enough to characterise the error rate" - and then stated the rate anyway.
-        That is the one-locus overgeneralisation this registry has corrected four times,
-        committed once more by the run correcting the others, and then repeated at 46 and
-        again at 167. THE MONOTONE CLIMB IS ITSELF THE FINDING: across FIVE successive sample
-        sizes the measurement has risen every time and has not converged, so 0.542 is a FLOOR from
-        two kandas at a resolution now known to be wrong, and must not be cited as a corpus
-        rate. Anyone quoting a single number from this dimension is quoting a snapshot of an
-        unconverged series.
-        THE ACCENT RESULT HAS A DIFFERENT CAUSE THAN FIRST RECORDED, and the correction
-        matters more than the number. Both readers initially recorded ZERO accents, which
-        read as a capability failure. It was an ACQUISITION failure: the first pass fetched
-        the IIIF derivative at width 2000, and a reader stated the reason precisely - at
-        that resolution the accent marks of this fount "sit on aksara boundaries and cannot
-        be assigned to a specific aksara without guessing", so they refused to record them,
-        which is exactly what RIGHTS-13 requires. Re-fetched at width 4000 the same marks
-        are unambiguously attached to their aksara, verified visually on leaf n17. The IIIF
-        "full" size returns only 2025px, so 4000 must be requested explicitly. The volume
-        has been re-acquired at 4000 and IMAGE_WIDTH in the fetch script now pins it.
-        SO WHAT THIS DIMENSION ACTUALLY RECORDS: an exact-agreement rate of 0.542 on a
-        small sample at the WRONG resolution, with the resolution defect now fixed - the
-        whole volume re-acquired at width 4000, aggregate
-        4008cdca2886f79a37d23a1323fe2e5edec676f3e08549d23aa865088f3917b6 - and the
-        measurement NOT yet repeated at the right one. It is not yet evidence about what
-        model transcription can do from an adequate image.
-        WHAT IS STILL TRUE INDEPENDENT OF RESOLUTION: a failure both readers share is
-        invisible to a two-reader check, because agreement is its only signal. The zero-accent
-        result was caught by a separate accent_fidelity_gap measurement, not by the status
-        vocabulary, and that gap measurement is retained for exactly that reason.
-        WHAT DID NOT MOVE: the source is legible, its structure was derived from it
-        successfully and independently (20 kandas, 731 suktas from the printed running heads
-        alone), and rights are clear. Nothing here weakens the acquisition or the artifact.
-        WHAT WOULD CLOSE IT: a measured exact-agreement rate at width 4000 over a
-        statistically meaningful sample, and independent human verification of a subset.
+          PHILOLOGICAL_REVIEW_REQUIRED 78 - one reader saw a unit the other did not.
+        THE RATE IS UNSTABLE AND EVERY EARLIER FIGURE IS WITHDRAWN. Successive samples gave
+        0.00 (22 units), 0.26 (46), 0.485 (167), 0.505 (204), 0.542 (227), 0.522 (249).
+        AN EARLIER VERSION OF THIS ENTRY CALLED THAT A "MONOTONE CLIMB" AND SAID THE
+        MEASUREMENT HAD "RISEN EVERY TIME". IT THEN FELL. The monotonicity was a trend
+        asserted from five points, which is the same overgeneralisation this entry was
+        written to correct - committed inside the correction itself, for the third time in
+        one run. What is supportable is only this: the value has moved on every remeasurement
+        and has not converged, so no single number from this dimension may be cited as a
+        corpus rate.
+        THE ACCENT FIGURE MEASURES A CONVENTION DIVERGENCE, NOT A CAPABILITY LIMIT, and this
+        supersedes the reading recorded earlier in this run. Only 19 of 327 units carry any
+        accent mark, and they are not scattered - they are exactly three leaves, all in
+        stage 1: n15 (worker T1) and n28/n29 (worker T2). EVERY stage-2 leaf has zero. So
+        the workers did not fail to capture accent; SOME CAPTURED IT AND OTHERS DELIBERATELY
+        DECLINED, each correctly under the protocol's own instruction to note rather than
+        guess, because the protocol never fixed one convention. Two consequences follow.
+        First, no unit whose stage-1 reading carries accent can ever reach VERIFIED_EXACT,
+        because its stage-2 counterpart has none by construction; those units land at
+        VERIFIED_WITH_ORTHOGRAPHIC_NOTE, which is the correct classification and is why the
+        classifier tests accent equality separately. Second, "accent is unsolved at 4000px"
+        is TOO STRONG and is withdrawn: T1 captured a full accent layer on n15 and described
+        a reproducible method for it - detect marks by dash-row depth, express each as a
+        percentage position inside its printed word-group, then resolve every
+        descender-coincident candidate from a single montage. The real finding is that the
+        anudatta dash and the descender of the u/uu/r vowel signs occupy the SAME depth band,
+        so no automatic metric separates them: on n15, 10 of 24 candidates were real accents
+        and 14 were the bare vowel curl. Accent is therefore a DEDICATED PASS with a known
+        method, not an unsolved problem and not something to fold into a text pass.
+        RESOLUTION IS INDEPENDENTLY CONFIRMED TO MATTER, by a second worker and a different
+        error class: on the 2000px scan V3 silently normalised the fount's single-glyph
+        geminate (this edition prints -cch- as a plain cha) to the expected conjunct in six
+        places, and caught all six only on re-reading the 4000px rescan. That is the
+        "smoothing a reading because it looks wrong" failure the protocol forbids by name,
+        committed and then self-corrected. Together with T1's 4 substantive changes in 86
+        units, two independent workers found real base-text errors attributable to the first
+        acquisition width.
+        WHAT WOULD CLOSE IT: one fixed accent convention applied to both stages, then a
+        measured agreement rate at width 4000 over a sample large enough to converge, plus
+        independent human verification of a subset.
       transcription_channel_independence: >-
         NEW, OPEN_RIGHTS. RIGHTS-13 names an LLM assistant as the MOST LIKELY breach path
         for this project, because the agents operating it hold GRETIL and TITUS text in
