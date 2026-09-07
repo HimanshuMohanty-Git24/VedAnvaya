@@ -262,6 +262,9 @@ canonical Sanskrit**, and the reason is a measurement rather than a shortfall of
   **The mantra total is not derived and 5,839 remains unreconciled** — a running head names
   sūktas, never a mantra count, so mantra totals require reading every verse terminal,
   which *is* the transcription workload. Recorded as `null`, not estimated.
+- **Kāṇḍa 1 read twice, end to end.** Its printed colophon on p.13 states **35 sūktas,
+  153 mantras** — the first mantra count in this edition confirmed from the print itself
+  rather than carried over from the digital lineage.
 - **A written transcription protocol** (`docs/work_packets/ATHARVAVEDA_TRANSCRIPTION_PROTOCOL.md`)
   and a two-stage reconciliation harness in which no reader may certify itself.
 
@@ -295,10 +298,19 @@ read as a capability failure. It was an **acquisition** failure. A reader stated
 precisely: at the width-2000 derivative this run first fetched, the accent marks of this
 fount *"sit on akṣara boundaries and cannot be assigned to a specific akṣara without
 guessing"* — so they declined to record them, which is exactly what RIGHTS-13 requires.
-Re-fetched at width 4000 the same marks are unambiguously attached to their akṣara,
-verified visually on leaf n17. The IIIF `full` size returns only 2025px, so 4000 must be
-requested explicitly. The volume has been re-acquired at 4000 and the fetch script now pins
-it.
+Re-fetched at width 4000 the marks are stem-aligned and legible, the volume has been
+re-acquired at that width, and the fetch script now pins it. The IIIF `full` size returns
+only 2025px, so 4000 must be requested explicitly.
+
+**Resolution mattered — and my own reading of how much is corrected here.** From one crop of
+leaf n17 I judged the accents "unambiguously attached to their akṣara". A reader working the
+same 4000px scan line by line at up to 7× zoom disagrees: stem-aligned, yes, but still not
+reliably assignable to a specific akṣara, so they omitted accent rather than guess — which is
+what the protocol requires. **Accent remains unsolved even at 4000px** and needs a dedicated
+pass; a partially-correct accent layer would be worse than none, because it looks complete.
+What the re-fetch *did* prove is that resolution changes the base text: re-reading seven
+leaves at 4000px produced **4 substantive changes in 86 units, about 4.7%** — including
+`उपासान्` → `उपास्मान्` and `यद्गावः` → `यन्नावः` — and resolved both outstanding `[?]` marks.
 
 So what this records is an exact-agreement rate of 0.505 on a small sample **at the wrong
 resolution**, with the defect fixed — the whole volume re-acquired at width 4000, 478
