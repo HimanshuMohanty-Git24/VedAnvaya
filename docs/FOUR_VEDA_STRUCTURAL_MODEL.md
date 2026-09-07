@@ -2,6 +2,14 @@
 
 Status: Accepted for Rigveda, Vajasaneyi and Atharvaveda. Samaveda structure observed,
 Samaveda identity NOT declared (`RESEARCH_REQUIRED`).
+
+**Updated 2026-09-07 by `SAMAVEDA_CANONICAL_IDENTITY_FINAL_CLOSURE`.** The Samaveda **level
+list** is now additionally corroborated by the printed colophons of an identified edition, so
+`addressing_edition_independence` is `RESOLVED`. The **arity** of the top level is not: it is
+tracked as the new blocker dimension `arcika_arity`, alongside `referent_integrity`. Identity
+stays `RESEARCH_REQUIRED`, but **for different reasons than this document previously gave** —
+see §5.2 and §7 item 1, and
+[`SAMAVEDA_CANONICAL_IDENTITY_FINAL_CLOSURE.md`](reports/SAMAVEDA_CANONICAL_IDENTITY_FINAL_CLOSURE.md).
 Date: 2026-09-07
 Owner: shared-contract single writer (`identity.py`, `models/enums.py`, `models/core.py`,
 `schema.py`, `data/registry/works.yaml`).
@@ -163,7 +171,23 @@ declares its own reference system in its body (below).
 
 3. **TITUS** addresses Kauthuma at eight levels
    (`SV > SVK > Arcika > Prapathaka > Ardha-Prapathaka > Dasati > Rca > Pada`),
-   corroborating the level *vocabulary* and that there are exactly four arcikas.
+   corroborating the level *vocabulary*.
+
+   > **CORRECTED 2026-09-07 by `SAMAVEDA_CANONICAL_IDENTITY_FINAL_CLOSURE`.** This item
+   > previously also credited TITUS with corroborating *"that there are exactly four
+   > arcikas."* **It cannot** — TITUS is Pandey lineage, as the very next paragraph of this
+   > document states, so on any question of *arity* it is the **same witness** as GRETIL.
+   > Withdrawing that leaves the four-arcika claim with **1 witness, 0 independent
+   > corroborations and 6 independent contradictions.** See §7 item 1 and
+   > [`SAMAVEDA_ADDRESSING_STABILITY.md`](reports/SAMAVEDA_ADDRESSING_STABILITY.md).
+   > Two further defects in this section, both found in the same run: the **DECADE** claim
+   > for Griffith is cited to `data/raw/wikisource_griffith_sv/…7fe81ea….php`, which
+   > contains `Decad`/`ecade` **zero times** — the claim is true but the evidence lives in
+   > the unsnapshotted `sacred-texts.com/hin/sv.htm`; and `source_artifacts.yaml` asserts
+   > Griffith Part II has **six** Books against Kauthuma's nine, where the measured figure
+   > is **15 BOOK headings = 6 (Part I) + 9 (Part Second)**, so Part Second matches Kauthuma
+   > exactly. That wrong count was the sole *structural* support for the recension-mismatch
+   > verdict; the verdict still stands on Griffith's preface, but the number is withdrawn.
    **Its text is NOT independent** — the page carries
    `Copyright (C) 1998, 1999 Anshuman Pandey`, so it is a re-publication of the same
    e-text. Gippert's 8-level scheme is his own editorial analysis layered on that text.
@@ -225,8 +249,36 @@ the verse. `line` never appears in `hierarchy`, `native_labels` or `structural_p
 | 3 Mahanamnya | **absent (0)** | **absent (0)** | **absent (0)** | 10 |
 | 4 Uttararcika | 1–9 | 1–2, or 1–3 for prapathaka 6–9 | resets per ardha | 1,218 |
 
-The four arcikas are **Purvarcika, Aranya, Mahanamnya and Uttararcika** — four, not the
-two that earlier notes recorded.
+The four **blocks** are **Purvarcika, Aranya, Mahanamnya and Uttararcika**, in that order.
+
+> **CORRECTED 2026-09-07 by `SAMAVEDA_CANONICAL_IDENTITY_FINAL_CLOSURE`.** This paragraph
+> previously read *"four, not the two that earlier notes recorded."* **That inverted the
+> evidence.** The "two" was **right** as the *top-level* division, and this correction is
+> now tracked as the open blocker dimension `arcika_arity`.
+>
+> Every witness holds the **same four blocks in the same order** — that much is not in
+> dispute. They disagree on **how to bracket them**, and therefore on what number the *top
+> slot of the key* takes:
+>
+> | Arity | Witnesses |
+> |---|---|
+> | **4 flat siblings** | GRETIL, TITUS — **both Pandey lineage, i.e. ONE witness** |
+> | **2 top-level** (Chandas / Aranya / Mahanamnya being the three *sub-segments of the Purvarcika*) | Sanskrit Wikisource, Griffith 1895, Wikipedia, Vedic Heritage Portal (GoI), Vedapeetha, B. R. Sharma HOS 57 |
+> | **3** | Caland / Kashikar |
+>
+> So: **1 witness, 0 independent corroborations, 6 independent contradictions.**
+>
+> This is not academic. **Two hard coordinate collisions were verified on both sides.**
+> Tuple `(1,1,2,6)`: Wikisource `1.1.2.6` = Purvarcika / chandas / **prapathaka 2** /
+> dasati 6 = running verses **145–154**, while GRETIL `1 1 2 06` = arcika 1 /
+> **prapathaka 1** / **ardha 2** / dasati 6 = running verses **55–62** — disjoint. And slot
+> 1 value `2`: GRETIL reads Aranyarcika (55 verses), every other witness reads Uttararcika
+> (**1,225 verses**) — so Wikisource `1.2.1` = RN 586–594 while GRETIL `1 2 1` = RN 97–144,
+> **the same literal address string over disjoint passages.**
+>
+> The table above this note describes **the selected artifact's encoding**, which is
+> accurate and is retained as such. It must not be read as the settled arity. See
+> [`SAMAVEDA_ADDRESSING_STABILITY.md`](reports/SAMAVEDA_ADDRESSING_STABILITY.md) §4–§5.
 
 **Scope limit — this is not a caveat, it is a boundary.** `VG:WORK:SV:KAU` addresses the
 arcika (verse) text **only**. The Kauthuma gana collections — roughly **2,639 ganas**
@@ -491,14 +543,58 @@ array, which is why records written before they existed still validate.
    Resolution therefore requires an identified printed Kauthuma edition that is also
    redistributable — by written consent from the data-entry rights holder, by a fresh
    transcription from a public-domain printed edition, or by tracing the Wikisource pages
-   to a named edition. A separate 7-verse count gap (1,868 structural keys against the
-   edition's own 1,875 claim) also remains open, and is itself partly explained by the
-   pāda-mislabel corruption above.
+   to a named edition.
+
+   > **SUPERSEDED IN PART, 2026-09-07, by `SAMAVEDA_CANONICAL_IDENTITY_FINAL_CLOSURE`.**
+   > Read [`SAMAVEDA_CANONICAL_IDENTITY_FINAL_CLOSURE.md`](reports/SAMAVEDA_CANONICAL_IDENTITY_FINAL_CLOSURE.md)
+   > before acting on the paragraph above. Three things changed:
+   >
+   > 1. **The edition question is settled and was NOT the binding constraint.** The pinned
+   >    corpus is now shown *positively* to be a hand-keyed community transcription with no
+   >    printed antecedent — not scan-backed, no front matter (proven by enumerating all 908
+   >    titles), zero links to any Sāmaveda scan across 840+ pages, contributor testimony of
+   >    *ṭaṅkaṇam* ("typing"), and both prior candidate editions refuted. **There is no
+   >    edition to find.** A 5-volume PD printed edition *was* located (Sāmaśramī,
+   >    Bibliotheca Indica 1874–78) but its **recension is not established**, so ADR-017's
+   >    first bar is still not cleared.
+   > 2. **The governance question is answered: edition identity is NOT required to freeze
+   >    Passage identity.** Identity is mechanically source-blind, the registry's own
+   >    layering puts `source_edition` at the artifact level and `underlying_edition` at the
+   >    text_version level with **neither in `works.yaml`**, and **no** RV/YV/AV entry names
+   >    an edition while all three are `FINAL`. Requiring the Wikisource edition *in order to
+   >    freeze the ID* is a category error.
+   > 3. **The real blockers are elsewhere**, and both are new: **referent integrity** (7
+   >    addresses absorb 9 printed verses by concatenative merge; `VG:SV:KAU:A4:P04:R2:D01:V13`
+   >    denotes a verse that does not exist; repairing them moves 5 referents under
+   >    byte-identical UUIDs, undetectably) and **arcika arity** (see §5.2 above).
+   >
+   > **The count gap is no longer open.** The sentence below is retained for the audit trail
+   > and is **wrong on both counts**: the gap is `RESOLVED` with `UNRESOLVED_COUNT_RESIDUE = 0`,
+   > and the pāda-mislabel is *not* its explanation. The source prints **exactly 1,875**
+   > markers; the identity is `1875 = 1868 − 2 markerless + 9 surplus`. See
+   > [`SAMAVEDA_COUNT_RECONCILIATION.md`](reports/SAMAVEDA_COUNT_RECONCILIATION.md).
+
+   ~~A separate 7-verse count gap (1,868 structural keys against the edition's own 1,875
+   claim) also remains open, and is itself partly explained by the pāda-mislabel corruption
+   above.~~
 2. **Documents that still carry the superseded Samaveda claim** and are not owned by the
-   shared-contract writer: `docs/architecture/ID_SPEC.md` (Samaveda identity
-   "intentionally unresolved"), `docs/architecture/SOURCE_POLICY.md` (says two arcikas
-   and lists Kanda/Adhyaya/Prapathaka/Ardha), and `docs/STATUS.md` (lists Samaveda under
-   BLOCKED). These need updating by their owners to match this document.
+   shared-contract writer: `docs/STATUS.md` (lists Samaveda under BLOCKED, and its one
+   Samaveda line predates all four-Veda work).
+
+   > **CORRECTED 2026-09-07.** This item previously also named
+   > `docs/architecture/ID_SPEC.md` and `docs/architecture/SOURCE_POLICY.md`. **Both were
+   > already current** and are removed from the list: `ID_SPEC.md` correctly states
+   > `RESEARCH_REQUIRED` / `key_pattern: null` / candidate-only, and `SOURCE_POLICY.md`
+   > explicitly marks its old bullet `SUPERSEDED AS A HIERARCHY SOURCE` and gives the correct
+   > five levels. **A stale-claim list that itself goes stale is the hazard it exists to
+   > prevent** — and note the irony now recorded in §5.2: `SOURCE_POLICY.md`'s "two arcikas",
+   > cited here as an error, was **right** about the top-level division.
+   >
+   > **One document was missing from this list and carried a claim that was never true.**
+   > `docs/reports/FOUR_VEDA_QA_REPORT.md` asserted that `key_pattern` "is now set" and that
+   > `identity_status` had moved to `PROVISIONAL`. No such state exists in any commit. It is
+   > corrected in place, and the miss is analysed in
+   > [`docs/qa/STALE_FOUR_VEDA_CLAIMS.md`](qa/STALE_FOUR_VEDA_CLAIMS.md).
 3. **Sub-verse (pāda / `line`) addressing** is unmodelled by design. When an annotation
    layer needs it, it should be a separate record type keyed to a mantra, not a sixth
    hierarchy level.

@@ -1,0 +1,577 @@
+schema_version: 1.0.0
+work_id: VG:WORK:SV:KAU
+veda: Samaveda
+recension: Kauthuma
+scope: SAMAVEDA_ARCIKA_CORPUS
+run: SAMAVEDA_CANONICAL_IDENTITY_FINAL_CLOSURE
+derived_by: Agent C1
+verified_by: ["Agent F", "Agent A (coordinator)"]
+derived_on: "2026-09-07"
+starting_commit: dc160d7
+human_readable_mirror: docs/reports/SAMAVEDA_COUNT_RECONCILIATION.md
+
+artifact_sha256: 91c28c0394e94dccc9bad12a08224fbcde0a1194402b610df26647621ed92456
+artifact_id: GRETIL.SV.KAUTHUMA.TEI.2020
+artifact_role: REFERENCE_ONLY
+artifact_caveat: >-
+  This ledger is FORENSICS ON A REJECTED WITNESS. The artifact was rejected as canonical
+  primary on two independent grounds (PERMISSION_REQUIRED rights, and an empty
+  sourceDesc/bibl). Every figure below establishes that the 1868-vs-1875 gap is NOT a
+  philological fact about the Kauthuma tradition. None of it establishes anything about
+  the selected witness (Sanskrit Wikisource).
+
+method: >-
+  SamavedaGRETILAdapter.parse_structure() for addresses, plus a line-level re-read of the
+  same TEI p-element stream tolerant of the source punctuation and label variants. Every
+  claim is address-level, not unit-level. No Sanskrit text is reproduced in this file:
+  reference labels, pada labels, running numbers and counts only.
+
+# ---------------------------------------------------------------------------
+# THE FOUR-NUMBER LADDER
+# Four different counts, all correct, of four different things. Conflating any
+# two of them produces the confusion this file exists to end.
+# ---------------------------------------------------------------------------
+measured:
+  printed_verse_terminal_markers: 1875
+  markers_liftable_by_current_adapter: 1871
+  distinct_structural_addresses: 1868
+  minted_canonical_keys: 1866
+  addresses_with_no_printed_marker: 2
+  surplus_markers_on_collided_addresses: 9
+  collided_addresses: 7
+  printed_pada_lines: 3715            # 3714 label-parseable + 1 rm-prefixed, not ingested
+  addresses_failing_closed_on_verse_index_zero: 2   # (4,3,1,4,0) and (4,6,2,16,0)
+
+marker_kind_breakdown:
+  DOUBLE_DANDA_RN: 1871
+  UNPARSEABLE_LABEL_DOUBLE_DANDA_RN: 1    # RN 1035
+  SINGLE_DANDA_RN: 2                      # RN 1133, RN 1592
+  JUNK_SUFFIX_RN: 1                       # RN 1211, printed '121clsdir'
+
+equation: "1875 = 1868 - 2 markerless + 9 surplus  =>  1875 - 1868 = 9 - 2 = 7"
+unresolved_count_residue: 0
+
+# Self-verifying arithmetic. A test asserts every line of this block against the
+# ledger entries below, so the ledger cannot silently drift from its own totals.
+# This block exists because the first draft of this file summed to 6, not 7: one
+# of the nine surplus markers had been omitted. A ledger that does not check its
+# own arithmetic is exactly the drift hazard this registry was built to stop.
+axis_arithmetic:
+  count_axis_entries_with_positive_delta: 9    # the 9 surplus markers
+  count_axis_entries_with_negative_delta: 2    # the 2 genuinely markerless addresses
+  count_axis_delta_sum: 7                      # 9 - 2, and it MUST equal the gap
+  apparatus_read_axis_delta_sum: 0             # lifting failures, already booked above
+  canonical_key_defect_axis_delta_sum: 0
+  collided_addresses_surplus_sum: 9
+  gap: 7
+  never_sum_these_axes: >-
+    Summing count_axis_ledger with apparatus_read_ledger is the double count the
+    superseded record committed. The five "absent RNs" are adapter lifting failures whose
+    count effect is ALREADY captured on the count axis; that is why every one of them
+    carries count_delta 0.
+
+superseded_equation:
+  recorded_by: FOUR_VEDA_CANONICAL_SANSKRIT_BLOCKER_CLOSURE
+  statement: "5 identifiable absent RNs [1035,1133,1179,1211,1592] plus a net residue of 2"
+  arithmetic: CONFIRMED
+  characterisation: REFUTED
+  why: >-
+    The 5/2 split is an artifact of adapter regex strictness, not a property of the source.
+    Only ONE value (1179) is genuinely unprinted. Under a punctuation-tolerant read the
+    split becomes 2/5, and counting the corrupt token as its intended value makes it 1/6.
+    ONLY THE TOTAL 7 IS INVARIANT. Any record naming "5 absent RNs plus a residue of 2" is
+    publishing a parser configuration as a philological result.
+
+per_arcika:
+  - arcika: 1
+    name: purvarcika-chandas
+    addresses: 585
+    markers: 585
+    delta: 0
+    marker_range: "1..585"
+  - arcika: 2
+    name: aranya-arcika
+    addresses: 55
+    markers: 55
+    delta: 0
+    marker_range: "586..640"
+  - arcika: 3
+    name: mahanamnya-arcika
+    addresses: 10
+    markers: 10
+    delta: 0
+    marker_range: "641..650"
+  - arcika: 4
+    name: uttararcika
+    addresses: 1218
+    markers: 1225
+    delta: 7
+    marker_range: "651..1875"
+
+group_totals:
+  purvarcika_group_addresses: 650      # arcika 1+2+3
+  purvarcika_group_markers: 650
+  purvarcika_group_delta: 0
+  purvarcika_contiguity_1_to_650: COMPLETE
+  uttararcika_addresses: 1218
+  uttararcika_markers: 1225
+  traditional_split: "650 + 1225 = 1875 -> EXACT MATCH on both sides"
+  units_out_of_balance: 7
+  units_total: 464
+  purvarcika_count_clean_but_not_text_clean: >-
+    "Complete at 650" is a COUNT-axis statement only. Three Purvarcika addresses carry
+    misassigned padas: (1,1,1,1,1), (1,4,1,4,6), (1,5,2,8,9). Count-clean is not
+    text-clean and the two must never be conflated in a release note.
+
+# ---------------------------------------------------------------------------
+# COUNT AXIS. These 11 entries are the whole gap. count_delta sums to +7.
+# DO NOT SUM THIS AXIS WITH apparatus_read_ledger - that is the double count
+# the superseded table committed.
+# ---------------------------------------------------------------------------
+count_axis_ledger:
+  - rn: 666
+    structural_address: "(4,1,1,6,3)"
+    present_in_1868: true
+    count_delta: 0
+    mechanism: duplicated_numbering
+    evidence: >-
+      Labels '4 1 1 06 03a/03c' printed three times; markers 666, 667, 668. Flanking
+      units are regular V01/V02/V03: 4.1.1.05=[663,664,665], 4.1.1.07=[669,670,671].
+      Correct reading V01/V02/V03.
+    canonical_key_assignable: true
+    candidate_key: VG:SV:KAU:A4:P01:R1:D06:V03
+  - rn: 667
+    structural_address: NONE
+    present_in_1868: false
+    count_delta: 1
+    mechanism: duplicated_numbering
+    evidence: "second '4 1 1 06 03a/03c' pair, marker 667; belongs at V01 or V02"
+    canonical_key_assignable: false
+  - rn: 668
+    structural_address: NONE
+    present_in_1868: false
+    count_delta: 1
+    mechanism: duplicated_numbering
+    evidence: "third '4 1 1 06 03a/03c' pair, marker 668"
+    canonical_key_assignable: false
+  - rn: 1282
+    structural_address: NONE
+    present_in_1868: false
+    count_delta: 1
+    mechanism: editorial_structure
+    evidence: >-
+      Displaced line-block. Marker run 1280..1285 is one six-verse series; 1280/1281 sit
+      in 4.5.2.05 as V01/V02. The lines carrying 1282/1283/1284/1285 were emitted as the
+      FIRST pada-pair of dasatis 06/07/08/09 while keeping the source series verse index
+      V03/V04/V05/V06. True home (4,5,2,5,3) is VACANT.
+    canonical_key_assignable: false
+  - rn: 1283
+    structural_address: NONE
+    present_in_1868: false
+    count_delta: 1
+    mechanism: editorial_structure
+    evidence: >-
+      Label '4 5 2 07 04a/04c' with marker 1283; the genuine V04 of that dasati carries
+      marker 1295. True home (4,5,2,5,4) is VACANT.
+    canonical_key_assignable: false
+  - rn: 1284
+    structural_address: NONE
+    present_in_1868: false
+    count_delta: 1
+    mechanism: editorial_structure
+    evidence: >-
+      Label '4 5 2 08 05a/05c' with marker 1284; the genuine V05 of that dasati carries
+      marker 1302. True home (4,5,2,5,5) is VACANT.
+    canonical_key_assignable: false
+  - rn: 1308
+    structural_address: NONE
+    present_in_1868: false
+    count_delta: 1
+    mechanism: duplicated_numbering
+    evidence: >-
+      Labels '4 5 2 10 01a/01c' printed three times with markers 1307/1308/1309; flanking
+      units 4.5.2.09 and 4.5.2.11 are regular V01/V02/V03.
+    canonical_key_assignable: false
+  - rn: 1309
+    structural_address: NONE
+    present_in_1868: false
+    count_delta: 1
+    mechanism: duplicated_numbering
+    evidence: "third '4 5 2 10 01a/01c' pair, marker 1309"
+    canonical_key_assignable: false
+  - rn: 1422
+    structural_address: NONE
+    present_in_1868: false
+    count_delta: 1
+    mechanism: duplicated_numbering
+    evidence: >-
+      CONCAT labels '4 6 2 1600a/1600c' printed twice, markers 1421 and 1422. Verse index
+      00 is undefined by the declared reference system. Flanking units 4.6.2.15 and
+      4.6.2.17 are regular V01/V02/V03. Correct reading V01/V02.
+    canonical_key_assignable: false
+  - rn: 1679
+    structural_address: "(4,8,2,8,2)"
+    present_in_1868: true
+    count_delta: 1
+    mechanism: pada_label_off_by_one
+    evidence: >-
+      THE NINTH SURPLUS MARKER. Unit 4.8.2.08 prints '0801a', then '0802c' carrying marker
+      1679, then '0802a', then '0802c' carrying marker 1680. The parser therefore puts BOTH
+      1679 and 1680 on (4,8,2,8,2), making one of them surplus, while (4,8,2,8,1) is left
+      with no marker at all.
+      DELIBERATE DOUBLE BOOKING, and it is not an error: marker 1679 appears on this axis
+      TWICE - once here as a surplus marker at V02 (+1) and once below as the marker that
+      SHOULD sit on the markerless V01 (-1). It is one displaced marker, and the identity
+      1875 = 1868 - 2 + 9 requires both halves to be booked. The unit therefore nets to 0,
+      which is why a unit-level audit sees it as address-balanced 3/3 and misses it.
+    canonical_key_assignable: true
+    candidate_key: VG:SV:KAU:A4:P08:R2:D08:V02
+
+  - rn: 1127
+    structural_address: "(4,4,2,1,12)"
+    present_in_1868: true
+    count_delta: -1
+    mechanism: split_units
+    evidence: >-
+      Unit 4.4.2.01 prints label '12a' then label '13c' carrying marker 1127. The unit has
+      13 minted addresses but a 12-marker span (1116..1127). Correct reading: '12a' and
+      '13c' are the two padas of V12, so (4,4,2,1,12) has no marker of its own and
+      (4,4,2,1,13) is a PHANTOM ADDRESS.
+    canonical_key_assignable: true
+    candidate_key: VG:SV:KAU:A4:P04:R2:D01:V12
+    creates_phantom_key: VG:SV:KAU:A4:P04:R2:D01:V13
+  - rn: 1679
+    structural_address: "(4,8,2,8,1)"
+    present_in_1868: true
+    count_delta: -1
+    mechanism: split_units
+    evidence: >-
+      Unit 4.8.2.08 prints '0801a', then '0802c' carrying marker 1679, then '0802a', then
+      '0802c' carrying marker 1680. Correct reading: '0801a' and the FIRST '0802c' are the
+      two padas of V01. The unit is address-balanced 3/3 yet internally misassigned, which
+      is why a unit-level audit misses it.
+    canonical_key_assignable: true
+    candidate_key: VG:SV:KAU:A4:P08:R2:D08:V01
+
+# ---------------------------------------------------------------------------
+# APPARATUS-READ AXIS. The five "absent RNs" of the superseded record.
+# count_delta is 0 for ALL FIVE: they are adapter lifting failures, already
+# accounted for on the count axis. Four of the five ARE PRINTED in the source.
+# ---------------------------------------------------------------------------
+apparatus_read_ledger:
+  - rn: 1035
+    structural_address: "(4,4,1,2,2)"
+    present_in_1868: true
+    count_delta: 0
+    printed_in_source: true
+    mechanism: source_corruption
+    evidence: >-
+      Source line 'rm 4 4 1 02 02c ... .. 1035'. The marker is well formed; the LABEL is
+      defeated by a stray two-letter 'rm' prefix against the anchored label regex, so the
+      whole line is discarded. Neighbours: marker 1034 on (4,4,1,2,1), 1036 on (4,4,1,2,3).
+    canonical_key_assignable: true
+    candidate_key: VG:SV:KAU:A4:P04:R1:D02:V02
+    fidelity_defect: TEXT_INCOMPLETE_ONE_PADA_OF_TWO
+    severity: HIGH
+  - rn: 1133
+    structural_address: "(4,4,2,2,6)"
+    present_in_1868: true
+    count_delta: 0
+    printed_in_source: true
+    mechanism: different_counting_convention
+    evidence: >-
+      Source prints '. 1133' (SINGLE danda) where _RUNNING_NUMBER requires '..'. Sequence
+      1132 -> 1133 -> 1134 is intact and in order. The superseded record claim that the
+      apparatus "skips 1133" is FALSE.
+    canonical_key_assignable: true
+    candidate_key: VG:SV:KAU:A4:P04:R2:D02:V06
+    fidelity_defect: APPARATUS_DIGITS_INGESTED_AS_TEXT
+  - rn: 1179
+    structural_address: "(4,5,1,2,2)"
+    present_in_1868: true
+    count_delta: 0
+    printed_in_source: false
+    mechanism: duplicated_numbering
+    evidence: >-
+      THE ONLY GENUINELY UNPRINTED VALUE. Printed sequence 1178, 1181, 1180, 1181, 1182 on
+      (4,5,1,2,1..5). This is the ONLY non-increasing step in the entire 1874-value marker
+      stream, so slot 1179 is determinate by position: 1179 was typeset as 1181, and RN
+      1181 therefore appears on two addresses.
+    confidence: INFERRED_FROM_SEQUENCE
+    canonical_key_assignable: true
+    candidate_key: VG:SV:KAU:A4:P05:R1:D02:V02
+  - rn: 1211
+    structural_address: "(4,5,1,6,2)"
+    present_in_1868: true
+    count_delta: 0
+    printed_in_source: true
+    mechanism: source_corruption
+    evidence: >-
+      Apparatus token printed as '121clsdir'. 'clsdir' occurs exactly once in the
+      272,261-byte artifact and is the only digit-plus-alpha adhesion in the file that is
+      not a GRETIL in-word numeric svarita (the other 20 are all 3-prefixed accent marks).
+      Position between markers 1210 and 1212 makes slot 1211 determinate.
+    confidence: INFERRED_FROM_SEQUENCE
+    canonical_key_assignable: true
+    candidate_key: VG:SV:KAU:A4:P05:R1:D06:V02
+    fidelity_defect: MARKUP_RESIDUE_INGESTED_AS_TEXT
+  - rn: 1592
+    structural_address: "(4,7,3,10,3)"
+    present_in_1868: true
+    count_delta: 0
+    printed_in_source: true
+    mechanism: different_counting_convention
+    evidence: >-
+      Source prints '. 1592' (SINGLE danda) on label '4 7 3 1003e'. Sequence 1591 -> 1592
+      -> 1593 intact. The superseded record claim that the apparatus "skips from 1591 to
+      1593" is FALSE.
+    canonical_key_assignable: true
+    candidate_key: VG:SV:KAU:A4:P07:R3:D10:V03
+    fidelity_defect: APPARATUS_DIGITS_INGESTED_AS_TEXT
+
+# ---------------------------------------------------------------------------
+# ORTHOGONAL AXIS. Canonical-key defects. Zero count effect.
+# ---------------------------------------------------------------------------
+canonical_key_defect_ledger:
+  - rn: 903
+    structural_address: "(4,3,1,4,0)"
+    present_in_1868: true
+    count_delta: 0
+    mechanism: source_corruption
+    evidence: >-
+      CONCAT labels '4 3 1 04 00a/00c' with a single marker 903, a clean 1:1. Unit 4.3.1.04
+      is address-balanced 6/6. Contributes NOTHING to the count gap - an earlier per-item
+      table wrongly listed it as a gap item and that is corrected here. sv_mantra_identity
+      fails closed on verse index 0, so no key is minted.
+    canonical_key_assignable: false
+    probable_correct_reading: V06
+  - rn: 1421
+    structural_address: "(4,6,2,16,0)"
+    present_in_1868: true
+    count_delta: 0
+    mechanism: source_corruption
+    evidence: >-
+      Labels '4 6 2 1600a/1600c' printed twice; verse index 00 is undefined by the declared
+      reference system. Its +1 sibling marker 1422 is booked on the count axis. No key is
+      minted (fails closed).
+    canonical_key_assignable: false
+
+# ---------------------------------------------------------------------------
+# COLLIDED ADDRESSES - the identity hazard, not merely a counting one.
+# The merge is CONCATENATIVE: every matching line is appended and verse_text()
+# joins all of them, so the address holds neither the first nor the last
+# constituent but a welded composite.
+# ---------------------------------------------------------------------------
+collided_addresses:
+  - address: "(4,1,1,6,3)"
+    key: VG:SV:KAU:A4:P01:R1:D06:V03
+    markers: [666, 667, 668]
+    surplus: 2
+    pada_labels: [a, c, a, c, a, c]
+    notation: SPACED
+    mechanism: verse_index_field_stuck_at_03
+    merged_length: 197
+    constituent_lengths: {666: 64, 667: 64, 668: 66}
+    referent_after_repair: 668
+    referent_moves: true
+    materialized_in_pilot: true
+  - address: "(4,5,2,6,3)"
+    key: VG:SV:KAU:A4:P05:R2:D06:V03
+    markers: [1282, 1288]
+    surplus: 1
+    pada_labels: [a, c, a, c]
+    notation: SPACED
+    mechanism: displaced_line_block
+    referent_after_repair: 1288
+    referent_moves: true
+    materialized_in_pilot: true
+  - address: "(4,5,2,7,4)"
+    key: VG:SV:KAU:A4:P05:R2:D07:V04
+    markers: [1283, 1295]
+    surplus: 1
+    pada_labels: [a, c, a, c]
+    notation: SPACED
+    mechanism: displaced_line_block
+    referent_after_repair: 1295
+    referent_moves: true
+  - address: "(4,5,2,8,5)"
+    key: VG:SV:KAU:A4:P05:R2:D08:V05
+    markers: [1284, 1302]
+    surplus: 1
+    pada_labels: [a, c, a, c]
+    notation: SPACED
+    mechanism: displaced_line_block
+    referent_after_repair: 1302
+    referent_moves: true
+  - address: "(4,5,2,10,1)"
+    key: VG:SV:KAU:A4:P05:R2:D10:V01
+    markers: [1307, 1308, 1309]
+    surplus: 2
+    pada_labels: [a, c, a, c, a, c]
+    notation: SPACED
+    mechanism: verse_index_field_stuck_at_01
+    referent_after_repair: 1307
+    referent_moves: false      # narrows; head preserved
+    materialized_in_pilot: true
+  - address: "(4,6,2,16,0)"
+    key: null                  # fails closed on verse index 0
+    markers: [1421, 1422]
+    surplus: 1
+    pada_labels: [a, c, a, c]
+    notation: CONCAT
+    mechanism: verse_index_field_stuck_at_00
+    referent_after_repair: "V01 / V02"
+    referent_moves: false      # additive, no key exists today
+  - address: "(4,8,2,8,2)"
+    key: VG:SV:KAU:A4:P08:R2:D08:V02
+    markers: [1679, 1680]
+    surplus: 1
+    pada_labels: [c, a, c]
+    notation: CONCAT
+    mechanism: pada_label_off_by_one
+    referent_after_repair: 1680
+    referent_moves: true
+
+referent_migration_summary:
+  referents_that_move_under_an_unchanged_uuid: 5
+  detectable_by_any_existing_gate: false
+  why_undetectable: >-
+    Passage carries NO text field (13 fields, verified by execution). qa/checks.py
+    references text_original exactly once and it is a UTF-8 encodability assert.
+    stable_uuid_deterministic recomputes uuid_for_urn(canonical_urn) from the URN ALONE, so
+    it passes identically before and after a referent swap. Nothing anywhere binds a
+    canonical key to its text. Renumbering is at least visible; referent migration is not.
+
+phantom_canonical_keys:
+  - key: VG:SV:KAU:A4:P04:R2:D01:V13
+    address: "(4,4,2,1,13)"
+    pada_labels: [c]
+    marker: 1127
+    why_phantom: >-
+      Dasati (4,4,2,1) prints markers 1116..1127 = 12 verses but VedaGraph mints 13
+      addresses. Pada labels '12a' and '13c' are the two padas of ONE verse (marker 1127).
+      This key identifies a verse that does not exist, and marker 1127 is split across two
+      IDs.
+    invisible_because: >-
+      The two pada labels land in DIFFERENT verse buckets, so DUPLICATE_LINE_LABEL never
+      fires. The corpus-wide shortage (-9) and this local surplus (+1) cancel in the total,
+      which is why a 1868-vs-1875 check cannot see either.
+    retraction_requires: >-
+      Deleting a minted canonical key. Per ID_SPEC that demands a versioned migration and
+      an explicit mapping - which is precisely what freezing is meant to make unnecessary.
+
+addresses_whose_first_pada_label_is_not_a:
+  - address: "(1,1,1,1,2)"
+    pada_labels: [c]
+    markers: [2]
+    note: the documented 0101a pada-bleed
+  - address: "(1,3,1,1,8)"
+    pada_labels: [c, a]
+    markers: [201]
+  - address: "(4,4,2,1,13)"
+    pada_labels: [c]
+    markers: [1127]
+    note: PHANTOM
+  - address: "(4,8,2,8,2)"
+    pada_labels: [c, a, c]
+    markers: [1679, 1680]
+
+duplicate_line_label_reconciliation:
+  total_records: 22
+  on_the_7_collided_addresses: 17
+  on_addresses_carrying_exactly_one_marker: 5
+  benign_five: ["(1,1,1,1,1)", "(1,4,1,4,6)", "(1,5,2,8,9)", "(4,6,3,10,2)", "(4,6,3,10,3)"]
+  benign_five_note: >-
+    Zero count effect; pure text-fidelity defects. (1,1,1,1,1) is the known verse-1/verse-2
+    pada bleed that the project cites as proof of Wikisource textual independence.
+
+apparatus_vs_text_verdict:
+  verdict: APPARATUS_ONLY
+  text_defects_causing_the_gap: 0
+  grounds:
+    - "The artifact prints exactly 1875 verse-terminal markers, measured not inferred, with zero orphan markers and zero values outside 1..1875."
+    - "The per-arcika split is exactly 650 + 1225, matching the traditional Kauthuma split independently on both sides of the boundary."
+    - "Every one of the 7 net units has a determinate correct reading recoverable from the artifact alone; no external collation was needed."
+    - "No verse text is absent. All 1875 markers sit on a printed pada line."
+  travels_with_a_source_change: PREDICTED_NO
+  travels_with_a_source_change_confidence: >-
+    PREDICTION, NOT MEASUREMENT. Every mechanism is a defect in the GRETIL label field or in
+    the adapter regexes; none is a statement about the Kauthuma tradition. Confirming it
+    requires fetching the Wikisource pages covering RN 1035, 1133, 1179, 1211 and 1592.
+    None is pinned. Verdict stands as: demonstrated for the GRETIL artifact, predicted for
+    the corpus.
+
+wikisource_cross_check_availability:
+  pinned_verses: 29
+  corpus_verses: 1875
+  coverage_fraction: 0.0155
+  running_number_coverage: ["1..10", "45..54", "586..594"]
+  gap_region_coverage: 0
+  uttararcika_coverage: 0
+  all_pinned_pages_in_purvarcika_group: true
+  overlap_with_the_16_defect_running_numbers: 0
+  verdict: CROSS_CHECK_NOT_AVAILABLE_FOR_THE_GAP_REGION
+  note: >-
+    All three pinned pages sit in the Purvarcika group, which is the ONE region with zero
+    defects. The 1.55% that is pinned is exactly the part where the two sources cannot
+    disagree. Furthermore the join is NOT independent: it uses the GRETIL printed apparatus
+    as its bridge, so Wikisource cannot corroborate coordinates anywhere that apparatus is
+    defective.
+  what_it_does_establish: >-
+    Exact set-equality of running numbers with GRETIL on every pinned page - 1..10 vs unit
+    (1,1,1,1); 45..54 vs (1,1,1,5); 586..594 vs (2,0,0,1); and live 145..154 vs (1,2,.,6).
+    Each a contiguous run, each an exact match, across two lineages proved textually
+    independent - in the defect-free region only.
+
+traditional_total_corroboration:
+  value: 1875
+  independent_of_gretil: true
+  witnesses:
+    - "Sanskrit Wikisource root page: purvarcika (1-650) / uttararcika (651-1875)"
+    - "Kannada essay on sambhashanam:samavedah/ranayaniya, 2013: rk = 1875, sama = 2639"
+    - "Wikipedia and the Vedic Heritage Portal (GoI): 650 + 1225 = 1875"
+  running_number_corroborated_by_a_printed_edition: false
+  running_number_negative: >-
+    The Samasrami print (Bibliotheca Indica 1874-78) does NOT carry a continuous 1..1875
+    series. It prints a local verse number plus a second number that RESETS PER SECTION
+    (p. 316 gives 14/15 where p. 260 gives 96), and insource:"1875" in Devanagari returns 0
+    hits across the scans. The continuous running number is attested only by the hand-keyed
+    wiki text and by GRETIL. This independently vindicates Refusal 3: the running number is
+    a non-canonical Citation and must stay one.
+
+adapter_repairs_recommended:
+  - id: SV-ADAPTER-1
+    change: "_RUNNING_NUMBER should accept a single danda as well as a double."
+    recovers: [1133, 1592]
+    also_fixes: APPARATUS_DIGITS_INGESTED_AS_TEXT
+  - id: SV-ADAPTER-2
+    change: "The label match should tolerate a leading junk token rather than discard the line."
+    recovers: [1035]
+    also_fixes: TEXT_INCOMPLETE_ONE_PADA_OF_TWO
+  - id: SV-ADAPTER-3
+    change: "A corrupt apparatus token should raise a defect rather than be ingested as text."
+    recovers: [1211]
+    also_fixes: MARKUP_RESIDUE_INGESTED_AS_TEXT
+  - id: SV-ADAPTER-4
+    change: >-
+      Emit a defect when an address's first pada label is not 'a', and when a dasati mints
+      more addresses than its marker span AND some address inside it has an incomplete pada
+      set. Either check catches the phantom V13.
+    recovers: []
+    also_fixes: PHANTOM_CANONICAL_KEY
+    refinement_found_by_implementing_the_check: >-
+      THE NAIVE SPAN CHECK HAS A FALSE POSITIVE, found by writing the test rather than by
+      reasoning about it, and recorded so the check is not shipped in its naive form.
+      "Flag a dasati that mints more addresses than its marker span" flags TWO units:
+        (4,4,2,1)  - the GENUINE phantom. Pada sets are {1, 2}: V12=[a] and V13=[c] are one
+                     verse split across two addresses. This is the signature.
+        (4,7,3,10) - a FALSE POSITIVE. Pada sets are {3}: all three addresses carry complete
+                     [a,c,e] triads. The span only LOOKS short because printed marker 1592 is
+                     unliftable under the single-danda defect. Nothing is over-minted.
+      Two equivalent sound forms: require that some address in the unit have an incomplete
+      pada set, OR run the span check only AFTER SV-ADAPTER-1 has repaired single-danda
+      lifting. Pinned by
+      tests/unit/test_samaveda_referent_integrity.py::test_the_naive_over_minting_detector_has_exactly_one_false_positive
+      NOTE THE GENERAL SHAPE OF THIS ERROR: a check that compares a MINTED count against a
+      LIFTED count measures the adapter against itself, and inherits every lifting defect as a
+      phantom report. Compare against what the SOURCE PRINTS.

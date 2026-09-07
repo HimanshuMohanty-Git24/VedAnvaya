@@ -259,10 +259,24 @@ anywhere (verified — 0 occurrences of U+0951–U+0954, the whole U+1CD0–U+1C
 U+0331), and its upstream says accents were dropped. `text_original == text_nfc` here is
 faithful preservation, not stripping. Reporting PASSED would have been a vacuous pass.
 
-Samaveda identity is **PROVISIONAL**, not FINAL: `key_pattern` is now set and
-`identity_status` moved `RESEARCH_REQUIRED -> PROVISIONAL`, but the artifact's printed edition
-is unidentified and its rights are contested. These are candidate keys and the report should
-be read that way.
+> **CORRECTION, 2026-09-07, by the `SAMAVEDA_CANONICAL_IDENTITY_FINAL_CLOSURE` run.** This
+> paragraph previously read: *"Samaveda identity is **PROVISIONAL**, not FINAL: `key_pattern` is
+> now set and `identity_status` moved `RESEARCH_REQUIRED -> PROVISIONAL` …"*
+> **That claim was never true.** `git log --all -S PROVISIONAL -- data/registry/works.yaml`
+> returns nothing: no such state has existed in any commit. It was not a stale record of a
+> change later reverted — it was false when written, and it survived because
+> `docs/qa/STALE_FOUR_VEDA_CLAIMS.md` **certified the absence of exactly this claim** while it
+> was live in this file, inside that audit's own declared scope.
+
+Samaveda identity is **`RESEARCH_REQUIRED`**, and `key_pattern` is **`null`** — the values in
+`data/registry/works.yaml`, asserted by `tests/unit/test_registry.py`. `sv_mantra_identity` and
+`sv_container_identity` produce **candidate** keys only, and this report should be read that way.
+
+Identity remains unfrozen, but **not** for the reason this paragraph used to give. The
+source-edition question was settled in the 2026-09-07 closure run and shown *not* to be the
+binding constraint; the real blockers are **referent integrity** (7 collided addresses, 1 phantom
+canonical key) and **arcika arity**. See
+[`SAMAVEDA_CANONICAL_IDENTITY_FINAL_CLOSURE.md`](SAMAVEDA_CANONICAL_IDENTITY_FINAL_CLOSURE.md).
 
 ### 5.3 Yajurveda — 2 levels, the decisive case
 

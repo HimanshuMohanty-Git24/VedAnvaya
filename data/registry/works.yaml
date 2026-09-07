@@ -35,8 +35,21 @@ works:
       dasati is a decad numbered 1-10 across the ardha, while an Uttararcika dasati resets
       inside each ardha and holds two or three verses.
       Identity is NOT reduced to a running mantra number, as originally required. The
-      edition does print a running verse number 1..1875, but it is defective (five values
-      absent, one duplicated) and is recorded only as a non-canonical Citation. The named
+      artifact prints a running verse number 1..1875 and it is recorded only as a
+      non-canonical Citation.
+      CORRECTED 2026-09-07 by SAMAVEDA_CANONICAL_IDENTITY_FINAL_CLOSURE: this note
+      previously described that apparatus as "defective (five values absent, one
+      duplicated)". THE SOURCE PRINTS EXACTLY 1875 VERSE-TERMINAL MARKERS, measured
+      directly. Only ONE value (1179) is genuinely unprinted, typeset as 1181. The other
+      four are printed and lost to adapter regex strictness: 1133 and 1592 carry a SINGLE
+      danda where the parser requires a double, 1211 is printed corrupt as "121clsdir", and
+      1035 is defeated by a stray "rm" label prefix. The "five absent" figure was a PARSER
+      CONFIGURATION, not a property of the source: under a punctuation-tolerant read it
+      becomes two, then one. Only the total gap of 7 is invariant. The refusal to use the
+      running number as identity is UNAFFECTED and is independently strengthened - the
+      Samasrami printed edition carries no continuous 1..1875 series at all, only a
+      per-section counter that resets. See docs/reports/SAMAVEDA_COUNT_RECONCILIATION.md and
+      data/source_registry/samaveda_count_ledger.yaml. The named
       kanda division (agneya, aindra, saumya-pavamana, aranya) cannot be a tree level
       because its colophons cut across prapathaka/ardha boundaries; it is an alternate
       Citation system. The artifact contains no gana collection, so no gana slot exists;
@@ -44,14 +57,40 @@ works:
       Corroboration, counted exactly: the hierarchy rests on the selected source's own
       declared reference system, plus TWO independent textual witnesses and ONE independent
       addressing scheme. The two textual witnesses are Sanskrit Wikisource (840 CC BY-SA
-      4.0 pages under samavedah/kauthumiya/samhita, whose independence is PROVEN rather
-      than argued because it CORRECTS the Pandey text where that text is corrupt: GRETIL
+      4.0 pages under samavedah/kauthumiya/samhita - of which only ~106 are ARCIKA, the
+      other 725 being GANA and out of scope for this work_id, so "840 pages" must never be
+      cited as this work's coverage - whose independence is graded NOT_A_VERBATIM_COPY
+      rather than PROVEN (downgraded 2026-09-07 by the sole rights authority: the maxim
+      "a text cannot inherit from a source it does not share an error with" is invalid as a
+      universal, it excludes only verbatim UNCORRECTED inheritance, and the claim rests on
+      ONE locus whose defect is conspicuous enough to be exactly what a copyist would
+      repair; not load-bearing for identity, load-bearing for text redistribution) because
+      it CORRECTS the Pandey text where that text is corrupt: GRETIL
       mislabels verse 2's first pada as 0101a, bleeding the pada into verse 1 and stripping
       it from verse 2, while Wikisource has both verses whole) and Griffith 1895 translating
       Benfey, which predates Pandey by a century and uses DECADE as the fourth level. The
       addressing scheme is TITUS's 8-level Kauthuma address, which corroborates the level
-      vocabulary and that there are exactly four arcikas, but whose TEXT is NOT independent:
-      the page carries "Copyright (C) 1998, 1999 Anshuman Pandey".
+      vocabulary, but whose TEXT is NOT independent: the page carries
+      "Copyright (C) 1998, 1999 Anshuman Pandey".
+      CORRECTED 2026-09-07 by SAMAVEDA_CANONICAL_IDENTITY_FINAL_CLOSURE: this sentence
+      previously also credited TITUS with corroborating "that there are exactly four
+      arcikas". IT CANNOT. TITUS is Pandey lineage, which this very note concedes in its
+      next clause, so it is the SAME WITNESS as GRETIL on any question of arity. That
+      withdrawal leaves the four-arcika claim with ONE witness, ZERO independent
+      corroborations, and SIX independent contradictions: Sanskrit Wikisource, Griffith
+      1895, Wikipedia, the Vedic Heritage Portal (Government of India), Vedapeetha and
+      B. R. Sharma HOS 57 all read TWO top-level arcikas, with Chandas / Aranya /
+      Mahanamnya as the three SUB-SEGMENTS of the Purvarcika; Caland/Kashikar read three.
+      THIS IS THE SAME OVERSTATEMENT PATTERN THIS NOTE ALREADY CORRECTS BELOW, ONE LAYER
+      DEEPER: the earlier correction fixed the TEXTUAL witness count and left the ARITY
+      claim resting on the identical defect.
+      All witnesses hold the SAME FOUR BLOCKS IN THE SAME ORDER, so this is a BRACKETING
+      dispute, not a dispute about the text - but the bracketing determines what number the
+      TOP SLOT of the candidate key takes, and two hard coordinate collisions were verified
+      because of it. Tracked as the new blocker dimension arcika_arity
+      (OPEN_PHILOLOGICAL_REVIEW). The hierarchy LEVEL LIST is unaffected and is now
+      additionally corroborated by the printed colophons of an identified edition. See
+      docs/reports/SAMAVEDA_ADDRESSING_STABILITY.md.
       GRETIL, sanskritdocuments and TITUS are THREE re-publications of ONE Pandey 1998/99
       e-text, so their agreement is NOT corroboration. An earlier version of this note
       claimed four independent witnesses; that overstated the evidence and is corrected

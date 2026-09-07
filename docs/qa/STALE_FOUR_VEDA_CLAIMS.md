@@ -26,8 +26,26 @@ records rather than duplicates that flag.
 Recorded so a future session does not re-check the same list without cause (per the example
 categories named in the session brief):
 
-- **"Samaveda already having frozen canonical IDs"** — not found anywhere. Every reference
-  correctly states `RESEARCH_REQUIRED` / candidate-only.
+- ~~**"Samaveda already having frozen canonical IDs"** — not found anywhere. Every reference
+  correctly states `RESEARCH_REQUIRED` / candidate-only.~~
+  **THIS ENTRY WAS WRONG. Corrected 2026-09-07 by the
+  `SAMAVEDA_CANONICAL_IDENTITY_FINAL_CLOSURE` run.** The claim *was* being asserted as current,
+  in [`docs/reports/FOUR_VEDA_QA_REPORT.md`](../reports/FOUR_VEDA_QA_REPORT.md) §5.2:
+  *"Samaveda identity is **PROVISIONAL**, not FINAL: `key_pattern` is now set and
+  `identity_status` moved `RESEARCH_REQUIRED -> PROVISIONAL`."*
+  Worse than stale — **it was never true.** `git log --all -S PROVISIONAL -- data/registry/works.yaml`
+  returns nothing: no such state has existed in any commit. Now corrected in place, with the
+  correction recorded above the replacement text rather than by silent deletion.
+  **Why this audit missed it — a second, distinct scope gap.** The earlier miss recorded below
+  was a *file-type* gap: the audit searched `docs/` and not the YAML registries. This one is
+  different and more uncomfortable: `docs/reports/FOUR_VEDA_QA_REPORT.md` **is** a `docs/`
+  markdown file, squarely inside the declared scope. The miss came from searching for the claim
+  in the vocabulary the *auditor* expected ("frozen", "FINAL") rather than the vocabulary the
+  defect actually used (`PROVISIONAL`). **A closed-vocabulary field must be audited by
+  enumerating every value the field can take, not by grepping for the value you expect to find
+  wrongly asserted.** The correct probe is a search for each member of the `identity_status`
+  vocabulary — and note that `identity_status` is not an enum in the schema, so its value space
+  is unbounded, which is itself a defect recorded in the closure report.
 - **"GRETIL containing Vājasaneyi"** — not claimed anywhere current; in fact
   `FOUR_VEDA_SOURCE_ADJUDICATION.md` §3.3 explicitly documents the opposite (`NO_ARTIFACT_EXISTS`,
   verified by exhaustive index search), and flags GRETIL's `maitrs_*` files as the

@@ -2,6 +2,10 @@
 
 **Compiled:** 2026-09-07 · **Checkpoint:** `dc7d202` (feat: establish four-Veda ingestion
 architecture and remaining corpus pilots)
+**Last updated:** 2026-09-07 from `dc160d7` by `SAMAVEDA_CANONICAL_IDENTITY_FINAL_CLOSURE`,
+which rewrote §2 (SV). That run closed the Sāmaveda source-edition question and then found it
+was **not** the binding constraint; two new SV dimensions carry the real blocker
+(`referent_integrity`, `arcika_arity`). §1 (YV) and §3 (AV) are unchanged and were not reopened.
 **Machine-readable mirror:** `data/source_registry/four_veda_canonical_sanskrit_blockers.yaml`
 (moved from the originally-scoped `data/qa/` path, which is gitignored build-output space —
 see the note in the YAML file)
@@ -131,8 +135,8 @@ in `tests/unit/test_yajurveda_primary_text.py`.
 | Dasati correction exists | **CONFIRMED** — supersedes the earlier VHP-derived guess `[Arcika, Prapathaka, Ardha, Adhyaya, Khanda, Mantra]`; the fourth level is `Dasati`, there is no `Adhyaya`/`Khanda` identity level (`works.yaml` note, `FOUR_VEDA_STRUCTURAL_MODEL.md` §2, §5.2) |
 | Canonical identity/key not final | **CONFIRMED** — `identity_status: RESEARCH_REQUIRED`, `key_pattern: null`; `sv_mantra_identity`/`sv_container_identity` produce **candidate** keys only, explicitly not frozen |
 | Wikisource rights position better than Pandey/GRETIL/TITUS lineage | **CONFIRMED** — Sanskrit Wikisource (`CC_BY_SA`, 840 pages) proved textually independent of the Pandey 1998/99 e-text that GRETIL, TITUS and Sanskrit Library all republish under contradictory or self-negating licences |
-| Edition identity/provenance remains the key issue | **CONFIRMED** — the blocker is no longer "no witness exists"; it is that no witness combines an **identified printed edition** with **redistribution rights**. Wikisource clears rights, not edition; GRETIL clears neither |
-| Structural count discrepancy ~1,868 vs 1,875 | **CONFIRMED, UNRECONCILED** — 1,868 computed verse keys vs the edition's own printed running-number claim of 1,875; a 7-verse gap, partly explained (one line lost to `UNPARSEABLE_REFERENCE_LABEL`, one verse index of 0 fails closed) but not fully accounted for |
+| ~~Edition identity/provenance remains the key issue~~ | **SUPERSEDED 2026-09-07.** It was *not* the key issue. Edition identity is settled as an established negative and shown **not** to gate Passage identity at all — a category error, since nothing edition-valued reaches a UUID and no RV/YV/AV entry names an edition either. The key issues are **referent integrity** and **arcika arity**, both discovered in the final closure run. The "no witness combines an identified printed edition with redistribution rights" framing remains true as a statement about *witnesses*, and is the ADR-017 bar; it is simply not what blocks the key |
+| Structural count discrepancy ~1,868 vs 1,875 | **RECONCILED EXACTLY** (2026-09-07) — `UNRESOLVED_COUNT_RESIDUE = 0`. The source prints **exactly 1,875** verse-terminal markers, so `1875 = 1868 distinct addresses − 2 markerless + 9 surplus`. Four counts are all correct of four different things: printed markers **1875**, markers the adapter can lift **1871**, distinct addresses **1868**, canonical keys minted **1866**. Verdict: **100% apparatus, 0% text** |
 | Gāna must not be forgotten | **CONFIRMED as explicit scope limit, not yet addressed** — `VG:WORK:SV:KAU` addresses the arcika (verse) text only; ~2,639 gānas vs 1,875 arcika verses is a **larger**, parallel body requiring its own future `work_id`. Sanskrit Wikisource carries all four gāna books as reusable text |
 | Audio inventory contains a mirrorable Commons path | **CONFIRMED** — 474 Wikimedia Commons files (458 `CC_BY_SA`, 16 `CC0`), verified per file; the **only** mirrorable audio across all four Vedas |
 
@@ -142,18 +146,46 @@ canonical witness and freeze stable passage identity?*
 | Dimension | State | Note |
 |---|---|---|
 | Rights | `RESOLVED` (for primary Sanskrit + audio) | Wikisource `CC_BY_SA` cleared by proven textual independence; 474 Commons audio files cleared per-file |
-| Source/edition identity | `OPEN_RESEARCH` | **THE SOLE REMAINING BLOCKER.** Now an *established negative*, not an unexamined gap: four independent search routes exhausted (top-level page, edit histories from 2011, targeted web search, category page → HTTP 404). No preface, bibliography or edition citation anywhere in the tree; zero edit summaries reference a printed book. Two candidates surfaced (Narayanaswami; Bansal), neither confirmable. Contrast YV, where the same search *did* find a sibling preface page (CORR-4) — that rescue was looked for here and does not exist |
-| Structural count | **`RESOLVED`** (was `OPEN_RESEARCH`) | 1,868/1,875 accounted for exactly. Verified independently: 5 identifiable absent RNs `[1035,1133,1179,1211,1592]` + a **net residue of 2** (collision surplus +9, zero-RN −6, duplicate RN 1181 −1) = 7. `RESOLVED` means *accounted for*, not closed to zero — the source may legitimately hold 1,868 units |
+| Source/edition identity | **`RESOLVED`** (was `OPEN_RESEARCH`) | **`RESOLVED` = the investigation is closed and the answer is NEGATIVE.** No edition was identified, and there is **none to find**: the pinned corpus is *positively* shown to be hand-keyed — not scan-backed (0 templates, 0 `पृष्ठम्:` links), no front matter anywhere across all **908** enumerated titles, **0 links to any Sāmaveda scan across 840+ pages**, and contributor testimony of `टंकणम्` ("typing"). **Both candidates refuted** — `बन्सल` returns **0 hits wiki-wide**. A prior route was a **false negative by construction**: it probed `चर्चा:`, the *Hindi* talk prefix, on a wiki that uses `सम्भाषणम्:` |
+| **Printed-edition recension** | **`OPEN_RESEARCH`** (NEW) | A 5-volume PD edition was **located** — Sāmaśramī, Bibliotheca Indica, 1874–78, with Sāyaṇa's bhāṣya — via the `अनुक्रमणिका:` namespace no prior route probed. Does **not** close the blocker: unproofread raw OCR, vols 4–5 not on Commons, **recension not established** (Griffith's preface assigns it to Rāṇāyanīya). **Exact action:** fetch vol 1 pp. 1–9 from `in.ernet.dli.2015.487112` and have a specialist read the title page |
+| **Addressing edition-independence** | **`RESOLVED`** (NEW, positively) | **All five levels are printed in the colophons of an identified edition.** `इति चतुर्थस्यार्धः प्रपाठकः` (vol 1 p. 693) settles **ardha** as printed, not editorial. Uttarārcika ardha fingerprint `[2,2,2,2,2,3,3,3,3]` from 5 witnesses / 3 lineages; **21/21** ardha closing boundaries identical GRETIL vs Wikisource. Wikisource's omission of ardha in the Pūrvārcika is an **economy, not a denial** — it drops exactly the derivable copy |
+| Structural count | `RESOLVED`, mechanism **corrected** | Gap accounted for exactly; `UNRESOLVED_COUNT_RESIDUE = 0`. **The recorded mechanism was refuted:** the source prints **exactly 1,875** markers, so `1875 = 1868 − 2 markerless + 9 surplus`. Only **1179** is genuinely unprinted (typeset as 1181); **1035, 1133, 1211 and 1592 ARE printed** and lost to regex strictness. The old "5 + 2" split becomes 2/5 then 1/6 under tolerant regexes — **only the 7 is invariant** |
+| **Referent integrity** | **`OPEN_ENGINEERING`** (NEW) | **PRIMARY BINDING BLOCKER.** 7 addresses absorb 9 printed verses by **concatenative merge**, and `VG:SV:KAU:A4:P04:R2:D01:V13` **denotes a verse that does not exist**. Repair moves **5 of 7 referents** while key, URN and UUID stay byte-identical — and **no gate can detect it**: `Passage` has no text field, `qa/checks.py` touches `text_original` once (an encoding assert), and `stable_uuid_deterministic` recomputes from the URN alone. **3 affected keys are already materialized** at `status: CANONICAL` |
+| **Arcika arity** | **`OPEN_PHILOLOGICAL_REVIEW`** (NEW) | Second binding blocker. The key's **top slot** encodes Pandey arity on **1 witness, 0 independent corroborations, 6 contradictions**. **2 hard collisions verified:** tuple `(1,1,2,6)` = RN 145–154 (Wikisource) vs RN 55–62 (GRETIL); slot-1 value `2` = Āraṇyārcika (55 verses) vs Uttarārcika (**1,225 verses**) |
 | Engineering (parser/hierarchy) | `RESOLVED` | Parser and hierarchy discovery work and are independently corroborated |
 | Engineering (re-point to Wikisource) | `OPEN_ENGINEERING` | Now **demonstrated feasible**, not asserted: the 3 pinned snapshots parse with 29 verses / 0 unparsed. Remaining: running→local index conversion, and an 840-page fetch **pinning per-page revision ids** (CC BY-SA attribution requires it) |
 | English translation | `DEFERRED_NONBLOCKING` for this closure, but recorded — a GAP, not a blocker for Sanskrit identity (Wikisource Griffith is empty; sacred-texts Griffith is the wrong recension, Rāṇāyanīya) |
 | Gāna coverage | `DEFERRED_NONBLOCKING` — explicit future `work_id`, not required to close the arcika canonical-Sanskrit question |
 
-**Answer as of the closure run:** rights solved, hierarchy corroborated, **count gap now
-accounted for**, re-pointing demonstrated feasible. The blocker has narrowed to exactly one missing
-external fact — *which printed edition the Wikisource community transcribed from*. That is an
-external dependency, not further engineering, so identity stays unfrozen: `identity_status:
-RESEARCH_REQUIRED`, `key_pattern: null`.
+**Answer as of the final closure run (2026-09-07):
+`SAMAVEDA_CANONICAL_IDENTITY_RESEARCH_REQUIRED`.** `identity_status` stays
+`RESEARCH_REQUIRED` and `key_pattern` stays `null` — **but not for the reason the session was
+convened to address.**
+
+The session was framed around one missing external fact: *which printed edition the Wikisource
+community transcribed from*. It **settled** that question and then established that **it was
+never the binding constraint.** Two newly discovered grounds forbid the freeze, either
+sufficient alone: **referent integrity** and **arcika arity**. Agent E approved on rights;
+**Agent F returned `DO_NOT_FREEZE`**, and the identity policy required both limbs.
+
+**The governance question is answered and should not be re-litigated.** Exact printed-edition
+identification is **not** required to freeze Passage identity. Identity is mechanically
+source-blind (`uuid_for_urn` takes one string; `Passage` has no source, URL or edition field
+under `extra="forbid"`); the registry's own layering puts `source_edition` at the **artifact**
+level and `underlying_edition` at the **text_version** level with **neither in `works.yaml`**;
+and **no** RV/YV/AV entry names an edition while all three are `FINAL` — AV being `FINAL` with
+`REFERENCE_ONLY` text, **zero Sanskrit transcribed**, and counts still unreconciled. Requiring
+the Wikisource edition *in order to freeze the Passage ID* is a **category error**.
+
+**This is a better position than before, not a worse one.** The blocker moved from
+`OPEN_RESEARCH` on an *external dependency* to `OPEN_ENGINEERING` against a *pinned artifact*
+plus one narrow recorded human decision. Neither remaining item needs a new source, new rights,
+or another search campaign.
+
+Full detail:
+[`SAMAVEDA_CANONICAL_IDENTITY_FINAL_CLOSURE.md`](reports/SAMAVEDA_CANONICAL_IDENTITY_FINAL_CLOSURE.md) ·
+[`SAMAVEDA_COUNT_RECONCILIATION.md`](reports/SAMAVEDA_COUNT_RECONCILIATION.md) ·
+[`SAMAVEDA_ADDRESSING_STABILITY.md`](reports/SAMAVEDA_ADDRESSING_STABILITY.md)
 
 **Two findings carried forward to whoever does the re-point:**
 

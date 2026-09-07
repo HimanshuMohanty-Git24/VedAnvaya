@@ -42,7 +42,7 @@ selection:
     independent_textual_witnesses:
       count: 2
       items:
-        - WIKISOURCE_SA_SV_KAU  # independence PROVEN: corrects Pandey's pada misplacement
+        - WIKISOURCE_SA_SV_KAU  # independence graded NOT_A_VERBATIM_COPY, not PROVEN - see below
         - SACRED_TEXTS_GRIFFITH_SV  # Griffith 1895 via Benfey; predates Pandey by a century
     independent_addressing_evidence:
       count: 1
@@ -55,6 +55,35 @@ selection:
       but the corroboration is WEAKER than an earlier draft claimed. That draft said "four
       independent witnesses"; the true figure is two independent textual witnesses plus one
       independent addressing scheme.
+    independence_grade_correction: >-
+      DOWNGRADED 2026-09-07 by SAMAVEDA_CANONICAL_IDENTITY_FINAL_CLOSURE, on the sole
+      rights authority's finding. The Wikisource independence claim was recorded across this
+      registry as PROVEN. Its true grade is NOT_A_VERBATIM_COPY.
+      The inference "a text cannot inherit from a source it does not share an error with" is
+      NOT VALID AS A UNIVERSAL. It excludes only verbatim UNCORRECTED inheritance. It does
+      not exclude copy-then-correct or copy-then-collate, both of which are ordinary wiki
+      practice and both of which leave exactly this signature - and the defect it turns on
+      (verse 2 reduced to a bare fragment while verse 1 runs long) is CONSPICUOUS, i.e.
+      precisely the kind of error a copyist notices and repairs. The claim rests on ONE
+      locus, running verses 1-2; zero further loci are cited anywhere.
+      The differing numbering system (running whole-samhita vs dasati-local) is BETTER
+      evidence than the pada correction, because a wholesale renumbering is harder to
+      explain as light-touch correction.
+      A SECOND, PROCEDURAL DEFECT IN THE SAME CLAIM: the published comparison in
+      docs/reports/SAMAVEDA_SOURCE_RESEARCH.md is IAST-versus-IAST, while this artifact is
+      Devanagari (language sa-Deva). The Wikisource side therefore passed through
+      AGENT-PERFORMED TRANSLITERATION of a passage the model holds memorised in the target
+      script - a RIGHTS-13-class channel that RIGHTS-13 does not currently name, because
+      cross-script rendering FEELS mechanical and is in fact generative. The pinned
+      Devanagari bytes make this checkable, so it is a VERIFICATION GAP, not a demonstrated
+      breach.
+      SCOPE OF THE DOWNGRADE: independence is NOT load-bearing for an identity freeze, since
+      a structural address scheme is derived from no lineage's expression. It IS load-bearing
+      for TEXT REDISTRIBUTION. Consequence: re-verify at CODEPOINT LEVEL against the pinned
+      Devanagari, at more than two loci, BEFORE any bulk text release.
+      Honest restatement to use in future records: "not a verbatim copy of the Pandey text at
+      the one locus tested, and using a different numbering system; full independence of
+      descent is unestablished."
   blocking_issues:
     - No source found offers an ACCENTED machine-readable arcika text. The one advertised
       (sanskritdocuments sv-kauthuma-saswara.pdf/.itx) is a dead 404.
@@ -112,8 +141,30 @@ sources:
       TRANSLITERATION_RESIDUE: 6
       UNEXPECTED_UPPERCASE: 3
       UNPARSEABLE_REFERENCE_LABEL: 1
-      running_numbers_absent: [1035, 1133, 1179, 1211, 1592]
+      # CORRECTED 2026-09-07 by SAMAVEDA_CANONICAL_IDENTITY_FINAL_CLOSURE.
+      # running_numbers_absent previously read [1035, 1133, 1179, 1211, 1592]. That was a
+      # PARSER CONFIGURATION recorded as a source property. The artifact prints exactly
+      # 1875 verse-terminal markers. Only 1179 is genuinely unprinted.
+      running_numbers_absent_from_source: [1179]
+      running_numbers_printed_but_unliftable_by_current_adapter:
+        1035: "stray 'rm' label prefix defeats the anchored label regex; whole line dropped"
+        1133: "single danda where _RUNNING_NUMBER requires a double"
+        1211: "printed corrupt as '121clsdir', a leaked control token"
+        1592: "single danda where _RUNNING_NUMBER requires a double"
       running_numbers_duplicated: [1181]
+      running_numbers_duplicated_note: >-
+        1181 is printed on both (4,5,1,2,2) and (4,5,1,2,4) because 1179 was typeset as
+        1181. Determinate: the entire 1874-value marker stream contains EXACTLY ONE
+        non-increasing step, at that position.
+      printed_verse_terminal_markers: 1875
+      distinct_structural_addresses: 1868
+      minted_canonical_keys: 1866
+      collided_addresses: 7
+      surplus_markers_absorbed: 9
+      addresses_genuinely_without_a_marker: ["(4,4,2,1,12)", "(4,8,2,8,1)"]
+      phantom_canonical_keys: ["VG:SV:KAU:A4:P04:R2:D01:V13"]
+      count_equation: "1875 = 1868 - 2 markerless + 9 surplus  =>  gap = 7"
+      full_ledger: data/source_registry/samaveda_count_ledger.yaml
     text_correctness_finding: >-
       Cross-source comparison against Sanskrit Wikisource PROVED the text defective at
       running verses 1 and 2: GRETIL's mislabel bleeds verse 2's first pada into verse 1
