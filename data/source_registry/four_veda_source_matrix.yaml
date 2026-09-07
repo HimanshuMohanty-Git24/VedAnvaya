@@ -111,6 +111,26 @@ corrections_applied:
       exactly the rule Agent E was enforcing on everyone else - RIGHTS-1 - and
       note the direction: here the SITE page was the more PERMISSIVE of the two,
       so relying on it was not merely incomplete but wrong in our favour.
+    applied_to_rows: true
+    applied_run: FOUR_VEDA_CANONICAL_SANSKRIT_BLOCKER_CLOSURE
+    applied_date: "2026-09-07"
+    applied_note: >-
+      CORRECTION HAD NOT ACTUALLY BEEN APPLIED TO THE ROWS UNTIL THIS RUN. From
+      the session that recorded it until now, this entry existed only as an audit
+      record while all three TITUS rows still carried rights_status
+      RESEARCH_ONLY and artifact_license "NONE at file level". Any consumer
+      reading rights_status programmatically would have seen the PERMISSIVE
+      pre-correction value, which is precisely the failure mode CORR-1 was
+      raised about - so the correction reproduced its own bug one layer down.
+      Found by the independent rights reviewer on re-inspection, applied by the
+      single-writer coordinator. Three rows changed: Samaveda (svk), Shukla
+      Yajurveda (vs), Atharvaveda (avs). Each row's rights_status is now
+      PERMISSION_REQUIRED, each artifact_license now records the verbatim
+      per-page notice, and each license_conflict is now true with the RIGHTS-3
+      resolution stated. THE LESSON, recorded because it generalises: a
+      corrections_applied block is a claim about the data, not a mutation of it,
+      and nothing in the schema forced the two to agree. Future corrections must
+      carry this applied_to_rows flag.
   - id: CORR-2
     severity: COVERAGE_INVALIDATES_SELECTION
     subject: Samaveda english_translation
@@ -128,6 +148,16 @@ corrections_applied:
       Kauthuma text without producing a silently wrong cross-recension
       alignment. Samaveda therefore has NO rights-clear, coverage-complete,
       recension-correct English translation.
+    applied_to_rows: true
+    applied_run: FOUR_VEDA_CANONICAL_SANSKRIT_BLOCKER_CLOSURE
+    applied_date: "2026-09-07"
+    applied_note: >-
+      NOT APPLIED UNTIL THIS RUN. The WIKISOURCE_GRIFFITH_SV english_translation
+      row still read selection SELECTED, with coverage_exact asserting "Complete
+      translation per the page header" and a reason field explaining that
+      alignment merely awaited the Kauthuma hierarchy. All three are now
+      corrected to GAP. The file had been contradicting itself:
+      role_coverage_summary already said GAP while the row said SELECTED.
   - id: CORR-3
     severity: BLOCKER_CLEARED
     subject: Samaveda primary_sanskrit
@@ -142,6 +172,22 @@ corrections_applied:
       (725 pages), which the GRETIL text lacks entirely. The Samaveda problem is
       therefore NOT "no independent witness exists" - it is "no witness combines
       an identified printed edition WITH redistribution rights".
+    applied_to_rows: true
+    applied_run: FOUR_VEDA_CANONICAL_SANSKRIT_BLOCKER_CLOSURE
+    applied_date: "2026-09-07"
+    applied_note: >-
+      NOT APPLIED UNTIL THIS RUN. The WIKISOURCE_SA primary_sanskrit Samaveda row
+      still read selection DEFERRED, with both original sub-blockers still listed
+      as open ("INDEPENDENCE - must confirm ..." and "COVERAGE - only 3 pages
+      retrieved; gana presence unknown") and a reason field stating "Not
+      selected, because independence is exactly the thing that has not been
+      verified." Both sub-blockers had in fact been cleared. Row now reads
+      SELECTED with edition identity as the sole remaining blocker.
+      IMPORTANT DISTINCTION preserved in the row: SELECTED here is a SOURCE
+      decision. It does NOT freeze canonical identity - works.yaml keeps
+      identity_status RESEARCH_REQUIRED and key_pattern null, because the edition
+      is still unnamed. Selection and identity are separate commitments and this
+      correction moves only the first.
   - id: CORR-4
     severity: GAP_FILLED
     subject: Sukla Yajurveda edition identity
@@ -156,6 +202,21 @@ corrections_applied:
       page rather than in the artifact header, so an empty header is not proof
       the edition is unknown - unlike the GRETIL Samaveda TEI, whose
       sourceDesc/bibl is affirmatively empty with no sibling page to rescue it.
+    applied_to_rows: true
+    applied_run: FOUR_VEDA_CANONICAL_SANSKRIT_BLOCKER_CLOSURE
+    applied_date: "2026-09-07"
+    applied_note: >-
+      LIKE CORR-1, THIS HAD NOT BEEN APPLIED TO THE ROWS UNTIL THIS RUN. The
+      WIKISOURCE_SA primary_sanskrit Yajurveda row still carried edition
+      "UNIDENTIFIED", a blocking_item of "EDITION IDENTITY", and a reason field
+      asserting this artifact "carries the same edition-identity defect that
+      independently disqualified the GRETIL Samaveda TEI" - the exact claim
+      CORR-4 reversed. Scope of application: the samhita row's edition,
+      blocking_item and reason are corrected; the traditional_metadata row
+      (sarvanukramani, rishisuci) is NOT silently corrected with it, because
+      CORR-4's evidence is the preface page reproducing the samhita title page
+      and does not by itself establish the apparatus pages' edition. That row now
+      states the question as open rather than inheriting the answer.
   - id: CORR-5
     severity: VERDICT_REVERSED
     subject: audio, all four Vedas
@@ -168,6 +229,27 @@ corrections_applied:
       artifacts in the registry - the enum member requested from Agent A was
       unused until they arrived. Everything else across every other host
       remains REFERENCE_ONLY, PERMISSION_REQUIRED or UNKNOWN.
+    applied_to_rows: true
+    applied_run: FOUR_VEDA_CANONICAL_SANSKRIT_BLOCKER_CLOSURE
+    applied_date: "2026-09-07"
+    applied_note: >-
+      NOT APPLIED TO THE MATRIX ROWS UNTIL THIS RUN, though it HAD been applied
+      correctly in data/registry/sources.yaml (WIKIMEDIA_COMMONS) and in
+      role_coverage_summary. The Samaveda audio row still read DEFERRED /
+      REFERENCE_ONLY / mirror_local false / redistribute false, and closed with
+      "Agent B's inventory was requested and had not arrived at compile time" -
+      directly contradicted by fragment_intake in this same file, which records
+      that fragment as RECEIVED_AND_CONSOLIDATED. Row now reads SELECTED /
+      CC_BY_SA / mirrorable, with the per-file licence split recorded.
+      ALSO FIXED, same class: the Rigveda, Yajurveda and Atharvaveda audio rows
+      each still carried "not consolidated at compile time" and an equivalent
+      "inventory had not arrived" clause. Those three remain REFERENCE_ONLY on
+      the merits - only the stale never-arrived claim was removed - and the
+      Rigveda row now carries an explicit warning against generalising its
+      REFERENCE_ONLY verdict into a blanket audio policy, since the Samaveda row
+      in the same file is mirrorable. The Atharvaveda row records the Vedavani
+      APACHE_2_0 lead without promoting it, that being a rights call outside this
+      run's scope.
   - id: CORR-6
     severity: NEW_CONSTRAINT
     subject: VHP direct linking, affects ALL FOUR Vedas
@@ -183,6 +265,29 @@ corrections_applied:
       Consequence: for VHP even the LINK-ONLY fallback is not clean, which is
       unusual and affects every Veda because VHP is the verification source for
       all four. Framing is separately prohibited.
+    applied_to_rows: false
+    applied_run: FOUR_VEDA_CANONICAL_SANSKRIT_BLOCKER_CLOSURE
+    applied_date: "2026-09-07"
+    applied_note: >-
+      DELIBERATELY NOT APPLIED - BLOCKED ON A SCHEMA DECISION, not overlooked.
+      All four VHP rows still carry direct_link true, and rights.yaml still has
+      direct_link yes under PERMISSION_REQUIRED with no VHP override.
+      WHY IT CANNOT BE APPLIED AS WRITTEN: this correction's "now" value is
+      CONTESTED, which is OUTSIDE the declared value domain. rights.yaml states
+      the domain as "yes | no | conditional", and this file states that
+      direct_link is RESOLVED FROM rights.yaml operational_semantics for the
+      recorded rights_status - it is a derived field, not a per-row free value.
+      Writing CONTESTED literally would both introduce an out-of-domain enum and
+      break the derivation rule.
+      RECOMMENDED RESOLUTION for whoever picks this up: express it as
+      direct_link conditional plus a conditions field quoting BOTH contradictory
+      IGNCA pages verbatim, since the schema already requires conditional to
+      carry conditions. That stays in-domain and preserves the finding. The
+      alternative - adding CONTESTED to the domain - is a wider schema change
+      affecting every source and should not be made incidentally.
+      ALSO OUT OF SCOPE HERE: VHP is a verification_reference, not a
+      canonical-Sanskrit primary source, so this does not gate any of the three
+      blockers this run was opened to close. Flagged rather than forced.
   - id: CORR-7
     severity: AGENT_E_ERROR
     subject: Atharvaveda english_translation, Kanda 20
@@ -196,6 +301,27 @@ corrections_applied:
       same Roth/Whitney numbering spine as our Sanskrit. Found by Agent D.
       Recorded defects: AVS 2.20-2.23 missing, some corrupted verse anchors,
       Latin-appendix passages absent.
+    applied_to_rows: PARTIAL
+    applied_run: FOUR_VEDA_CANONICAL_SANSKRIT_BLOCKER_CLOSURE
+    applied_date: "2026-09-07"
+    applied_note: >-
+      PARTIALLY APPLIED, and the unapplied half is a MISSING ROW rather than a
+      wrong field. Already correct elsewhere: the artifact
+      GRIFFITH.AV.1896.SACREDTEXTS is fully registered in
+      data/registry/source_artifacts.yaml as PUBLIC_DOMAIN with its numbering
+      spine and audited defects, SACRED_TEXTS exists in sources.yaml, and both
+      verdict_note and role_coverage_summary record the closure.
+      WHAT IS MISSING: the Atharvaveda sources block contains NO Griffith row at
+      all. Its only english_translation row is WIKISOURCE_WHITNEY_AV, unchanged,
+      whose coverage_exact does not mention the Kanda 20 gap. Net effect:
+      role_coverage_summary advertises a translation source that the sources
+      block it summarises does not contain, so a consumer iterating
+      vedas[].sources[] sees only the incomplete Whitney translation.
+      NOT FIXED HERE, deliberately: adding a whole new source row is a larger
+      change than correcting a field, it concerns english_translation rather than
+      canonical Sanskrit, and it therefore falls outside this run's stated scope.
+      Recorded precisely so the next session adds the row instead of
+      re-discovering the discrepancy.
   - id: CORR-8
     severity: DISAGREEMENT_RESOLVED_AGAINST_A_PEER
     subject: archive.org atharvaveda_202107 audio
@@ -210,6 +336,24 @@ corrections_applied:
       the same bytes cannot be both public domain and all rights reserved.
       Generalised into rights.yaml as RIGHTS-11. Recorded openly so the
       disagreement is auditable rather than silent.
+    applied_to_rows: true
+    applied_run: FOUR_VEDA_CANONICAL_SANSKRIT_BLOCKER_CLOSURE
+    applied_date: "2026-09-07"
+    applied_note: >-
+      VERIFIED ALREADY APPLIED - the only one of the nine that was. Confirmed in
+      all three places it was owed: source_artifacts.yaml
+      (ARCHIVE.AV.CHANTING.PDMARK.202107, rights_status UNKNOWN, with the
+      overrule reasoning in notes), atharvaveda_sources.yaml (selected false,
+      rights_status_recommended UNKNOWN, mirroring_permitted false, plus a
+      rights_recommendation_history preserving the superseded CC0
+      recommendation), and rights.yaml RIGHTS-11. No stale prose found anywhere.
+      WHY THIS ONE SURVIVED WHEN THE OTHER EIGHT DID NOT, since the pattern is
+      the actionable part: CORR-8 is the ONLY correction whose subject lives in
+      source_artifacts.yaml rather than in a vedas[].sources[] row of this file.
+      Every correction targeting a matrix ROW was written into the header
+      narrative, verdict_note and/or role_coverage_summary but not into the row.
+      The failure is structural and specific to this file's row block, not a
+      lapse by any one agent.
   - id: CORR-9
     severity: AGENT_E_ERROR_CATEGORY_CONFUSION
     subject: Shukla Yajurveda primary_sanskrit
@@ -605,7 +749,9 @@ vedas:
         edition: n/a
         location: see docs/FOUR_VEDA_AUDIO_SOURCE_INVENTORY.md
         format: audio
-        coverage_exact: not consolidated at compile time
+        coverage_exact: >-
+          Consolidated; see docs/FOUR_VEDA_AUDIO_SOURCE_INVENTORY.md for the
+          per-asset inventory. Supersedes "not consolidated at compile time".
         rights_status: REFERENCE_ONLY
         artifact_license: per asset; see the audio inventory
         site_license: per host; see the audio inventory
@@ -619,6 +765,11 @@ vedas:
           DEFERRED at REFERENCE_ONLY, which is the default audio posture under
           RIGHTS-6. VHP hosts Rigveda recitation but is PERMISSION_REQUIRED, so
           its audio is reference-only regardless of being publicly playable.
+          REFERENCE_ONLY HERE IS A PER-VEDA FINDING, NOT A BLANKET AUDIO POLICY.
+          The Samaveda audio row in this same file is SELECTED and mirrorable
+          (474 Commons files); see CORR-5. Do not generalise this row's verdict
+          to the other Vedas - audio rights were adjudicated per Veda and came
+          out differently.
 
   # =========================================================================
   # SAMAVEDA - KAUTHUMA
@@ -802,10 +953,13 @@ vedas:
         format: HTML
         coverage_exact: NOT ESTABLISHED - endpoint confirmed live (HTTP 200) but not parsed
         retrieval_date: 2026-09-07
-        rights_status: RESEARCH_ONLY
+        rights_status: PERMISSION_REQUIRED
         artifact_license: >-
-          NONE at file level. No per-file licence statement was found on the
-          text pages.
+          PER-PAGE NOTICE PRESENT, verbatim: "Copyright TITUS Project, Frankfurt
+          a/M, 2.11.2013. No parts of this document may be republished in any
+          form without prior permission by the copyright holder." Verified on
+          svk001.htm. An earlier revision of this row recorded "NONE at file
+          level"; that was wrong and is the substance of CORR-1.
         site_license: >-
           Project-wide, verbatim: "Those texts that can be downloaded via http
           can be used freely for scholarly purposes, provided that they are
@@ -813,13 +967,21 @@ vedas:
           last changes are indicated in publications. The texts must not be used
           for any kind of commercial usage." Source
           https://titus.uni-frankfurt.de/texte/texte2.htm, retrieved 2026-09-07.
-        license_conflict: false
+        license_conflict: true
         license_conflict_note: >-
-          A second INVERSE case worth naming: here the SITE level is the only
-          level at which terms exist, and relying on it is safe ONLY because the
-          site terms are RESTRICTIVE. Inferring a restriction from a site is
-          conservative; inferring a permission from a site is what RIGHTS-1
-          forbids. The direction of the inference is what matters.
+          SITE AND ARTIFACT CONFLICT, and the artifact is the stricter of the
+          two. The site grants free scholarly use with attribution; the per-page
+          notice forbids republication in any form without prior permission.
+          Under RIGHTS-3 the more restrictive statement controls, so this row is
+          PERMISSION_REQUIRED, not RESEARCH_ONLY.
+          The earlier revision of this row recorded the inverse claim - that the
+          site was the ONLY level at which terms exist - and reasoned that
+          relying on it was safe because site terms were restrictive. That
+          reasoning was structurally sound but factually wrong: an artifact-level
+          notice did exist and had not been read. Note the direction of the
+          error, which is why CORR-1 is graded AGENT_E_ERROR rather than a
+          clerical fix: the site page was the more PERMISSIVE of the two levels,
+          so relying on it was not merely incomplete, it erred in our own favour.
         attribution_requirements: >-
           Quote as source, name the editor(s) - Jost Gippert - and state the
           date of last changes. Non-commercial.
@@ -834,20 +996,43 @@ vedas:
 
       - source_id: WIKISOURCE_SA
         role: primary_sanskrit
-        selection: DEFERRED
+        selection: SELECTED
         work: Samavedah / Kauthumiya / Samhita
         recension: Kauthuma
-        edition: UNIDENTIFIED (empty header fields, as with the Yajurveda pages)
+        edition: >-
+          UNIDENTIFIED, and this is now the ONLY remaining blocker on this Veda's
+          canonical identity. Searched specifically in the closure run: page
+          histories from 2011 onward, edit summaries, talk pages and sibling
+          pages. NO preface page, bibliography or edition citation exists
+          anywhere in the tree, and zero edit summaries reference a printed book.
+          An earlier revision read "empty header fields, as with the Yajurveda
+          pages". That comparison is now MISLEADING and is withdrawn: the
+          Yajurveda pages' edition WAS recovered from a sibling preface page
+          (CORR-4), so the two cases are no longer alike. This one was searched
+          for the same rescue and none exists. The absence is now an established
+          negative finding, not an unexamined gap.
         location: https://sa.wikisource.org/wiki/%E0%A4%B8%E0%A4%BE%E0%A4%AE%E0%A4%B5%E0%A5%87%E0%A4%A6%E0%A4%83
         artifact_id: WIKISOURCE_SA.SV.KAU.SAMHITA.DEVANAGARI
         format: MEDIAWIKI_TRANSCRIPTION
         encoding: UTF-8 Devanagari
         coverage_exact: >-
-          ONLY 3 PAGES SAMPLED of an unknown total. Sampled titles confirm a full
-          traditional hierarchy is encoded in the page titles, e.g.
+          840 pages under samavedah/kauthumiya/, and the GANA COLLECTIONS ARE
+          PRESENT - all four gana books carry reusable text. Supersedes the
+          earlier "ONLY 3 PAGES SAMPLED of an unknown total ... whether the GANA
+          collections are present is UNKNOWN".
+          Page titles encode the full traditional hierarchy, e.g.
           Samavedah/Kauthumiya/Samhita/Purvarcikah/Chanda Arcikah/1.1.1
           Prathamaprapathakah/1.1.1.1 Prathama Dasatih (pageid 4998, revid
-          274559). Whether the GANA collections are present is UNKNOWN.
+          274559).
+          THREE OF THOSE PAGES ARE PINNED ON DISK and were re-parsed in the
+          closure run: 29 verses, ZERO unparsed remainder. That run also
+          established that this source labels verses with the edition's RUNNING
+          numbers (1..1875), not dasati-local indices - the fifth dasati of
+          prapathaka 1 yields verses 45-54 and Aranya 1.2.1 yields 586-594 - so
+          any mapping onto a local V{verse} key slot must convert running to
+          local explicitly.
+          SCOPE: the 840 pages cover arcika AND gana, but VG:WORK:SV:KAU ingests
+          the ARCIKA ONLY. Gana needs its own work_id and is not in scope.
         retrieval_date: 2026-09-07
         rights_status: CC_BY_SA
         artifact_license: No per-page banner; project-wide CC BY-SA 4.0 applies.
@@ -859,37 +1044,64 @@ vedas:
         direct_link: true
         mirror_local: true
         blocking_item: >-
-          (1) INDEPENDENCE - must confirm the transcription was not itself keyed
-          from a Pandey-derived e-text. A CC BY-SA label applied to a
-          Pandey-derived text would be the same laundering defect a THIRD time.
-          (2) COVERAGE - only 3 pages retrieved; gana presence unknown.
+          EDITION IDENTITY ONLY. Both original sub-blockers are CLEARED:
+          (1) INDEPENDENCE - CLEARED, and PROVED rather than assumed. Wikisource
+          CORRECTS the Pandey text where that text is corrupt: GRETIL mislabels
+          verse 2's first pada as 0101a, bleeding it into verse 1 and stripping
+          it from verse 2, while Wikisource has both verses whole. A text cannot
+          inherit from a source it does not share an error with, so this is a
+          textual proof of non-derivation, not a provenance argument.
+          (2) COVERAGE - CLEARED. 840 pages, gana present.
+          WHAT REMAINS: no named printed edition. Note this does NOT block
+          selection or use - it blocks freezing canonical IDENTITY, which is why
+          works.yaml keeps identity_status RESEARCH_REQUIRED and key_pattern
+          null while this row is SELECTED. Selection and identity are different
+          commitments.
         reason: >-
-          DEFERRED, but POTENTIALLY THE MOST CONSEQUENTIAL SAMAVEDA FINDING,
-          because it may break the Pandey monopoly. Every other digital Kauthuma
-          text located - GRETIL, TITUS, The Sanskrit Library - descends from the
-          SAME Anshuman Pandey 1998/1999 data entry whose terms forbid
-          modification, which left this Veda with no usable primary text AND no
-          independent parallel witness. This transcription shows no Pandey
-          lineage and is CC BY-SA 4.0, so if it is genuinely independent it
-          supplies BOTH at once. Not selected, because independence is exactly
+          SELECTED, AND THIS IS THE MOST CONSEQUENTIAL SAMAVEDA FINDING, because
+          it breaks the Pandey monopoly. Every other digital Kauthuma text
+          located - GRETIL, TITUS, The Sanskrit Library - descends from the SAME
+          Anshuman Pandey 1998/1999 data entry whose terms forbid modification,
+          which left this Veda with no usable primary text AND no independent
+          parallel witness. This transcription has no Pandey lineage and is
+          CC BY-SA 4.0, so it supplies BOTH at once.
+          An earlier revision read "Not selected, because independence is exactly
           the thing that has not been verified and assuming it would repeat the
-          error this matrix was built to catch. Note the page-title hierarchy
-          Arcika/Prapathaka/Dasati independently corroborates the hierarchy
-          Agent A adopted for VG:WORK:SV:KAU.
+          error this matrix was built to catch." That caution was right at the
+          time and is now DISCHARGED ON EVIDENCE rather than waived - see the
+          pada-correction proof in blocking_item. The distinction matters: this
+          row moved to SELECTED because the test was RUN and passed, not because
+          the requirement was relaxed.
+          The page-title hierarchy Arcika/Prapathaka/Dasati independently
+          corroborates the hierarchy adopted for VG:WORK:SV:KAU.
+          ENGINEERING STATUS: re-pointing the build from GRETIL to this source is
+          straightforward engineering, demonstrated not asserted - the adapter
+          parses the pinned snapshots with zero unparsed remainder. Outstanding
+          work is the running-to-local index mapping and a full 840-page fetch.
 
       - source_id: WIKISOURCE_GRIFFITH_SV
         role: english_translation
-        selection: SELECTED
+        selection: GAP
         work: The Hymns of the Samaveda
         recension: n/a (translation)
         edition: Ralph T. H. Griffith, 1895
         location: https://en.wikisource.org/wiki/The_Sama_Veda
         format: MEDIAWIKI_TRANSCRIPTION
         coverage_exact: >-
-          Complete translation per the page header. Page-level revision IDs not
-          yet captured; transcription progress is flagged "25%" in the page
-          categories, so the transcription layer may be incomplete even though
-          the underlying translation is not.
+          EMPTY. THE PAGE HAS NO VERSE TEXT AT ALL. Measured: 5615 characters,
+          934 words, TextQuality 25%, 33 chapter links of which ZERO resolve, and
+          an allpages prefix query returns exactly ONE page. It is a PREFACE, not
+          a translation.
+          An earlier revision of this row read "Complete translation per the page
+          header ... the transcription layer may be incomplete even though the
+          underlying translation is not." That was exactly backwards and is the
+          substance of CORR-2: the header advertises a complete work and there is
+          nothing behind it.
+          WHY EVERY RIGHTS CHECK PASSED ANYWAY, which is the transferable lesson:
+          this artifact is genuinely public domain and cleanly tagged, so all
+          rights gates went green. No rights check detects an EMPTY artifact.
+          Coverage must be measured independently of rights, or a well-licensed
+          void will pass review.
         retrieval_date: 2026-09-07
         rights_status: PUBLIC_DOMAIN
         artifact_license: >-
@@ -909,11 +1121,22 @@ vedas:
         direct_link: true
         mirror_local: true
         reason: >-
-          SELECTED. Rights are clear and verified first-hand. Two corrections to
-          the prior registry entry, both from direct inspection: the work is
-          titled "The Hymns of the Samaveda", and the year is 1895, not
-          unspecified. Alignment must still wait for the Kauthuma hierarchy to be
-          fixed - a sequencing constraint, not a rights constraint.
+          GAP, not SELECTED. Rights are clear and verified first-hand, and two
+          bibliographic details from direct inspection stand: the work is titled
+          "The Hymns of the Samaveda" and the year is 1895, not unspecified.
+          NEITHER OF THOSE MAKES IT USABLE. There is no verse text on the page,
+          so there is nothing to align and the earlier "alignment must wait for
+          the Kauthuma hierarchy" framing described a sequencing constraint that
+          does not exist - the blocker is absence of content, not ordering.
+          NO SUBSTITUTE IS AVAILABLE, and this is why the role is GAP rather than
+          DEFERRED: the only COMPLETE Griffith Samaveda (sacred-texts.com) is the
+          RANAYANIYA recension - Griffith's own preface says "I have followed
+          Benfey's text" and Benfey is Ranayaniya - so aligning it to a Kauthuma
+          Sanskrit text would produce a silently wrong cross-recension mapping,
+          which is the ADR-010 error in its most damaging form. English
+          translation for VG:WORK:SV:KAU is therefore an OPEN GAP with no
+          identified candidate, and must be reported as such rather than as
+          pending work.
 
       - source_id: VHP
         role: verification_reference
@@ -1009,28 +1232,51 @@ vedas:
 
       - source_id: null
         role: audio
-        selection: DEFERRED
-        work: Samaveda gana recitation
+        selection: SELECTED
+        work: Samaveda saman/gana recitation
         recension: Kauthuma
         edition: n/a
-        location: see docs/FOUR_VEDA_AUDIO_SOURCE_INVENTORY.md
-        format: audio
-        coverage_exact: not consolidated at compile time
-        rights_status: REFERENCE_ONLY
-        artifact_license: per asset
-        site_license: per host
-        license_conflict: unknown
-        attribution_requirements: per asset
-        redistribute: false
-        redistribute_derived: false
+        location: >-
+          Wikimedia Commons; full per-file inventory in
+          docs/FOUR_VEDA_AUDIO_SOURCE_INVENTORY.md and source
+          WIKIMEDIA_COMMONS in data/registry/sources.yaml
+        format: audio (Ogg)
+        coverage_exact: >-
+          474 Ogg files, licence-checked PER FILE via the Commons imageinfo API:
+          458 CC BY-SA 4.0, 16 CC0, 0 missing. Superseded "not consolidated at
+          compile time" - the inventory did arrive and is consolidated.
+        rights_status: CC_BY_SA
+        artifact_license: >-
+          Per file, verified individually rather than assumed from the host:
+          458 CC BY-SA 4.0 and 16 CC0. The 16 CC0 files are the FIRST AND ONLY
+          CC0 artifacts anywhere in this registry.
+        site_license: Wikimedia Commons; per-file licensing governs, not a site default.
+        license_conflict: false
+        attribution_requirements: >-
+          Per file. CC BY-SA files require attribution to the uploading
+          contributor and share-alike; the 16 CC0 files require none, but
+          VedaGraph records provenance for all 474 regardless.
+        redistribute: true
+        redistribute_derived: true
         direct_link: true
-        mirror_local: false
+        mirror_local: true
         reason: >-
-          DEFERRED at REFERENCE_ONLY. Highest-value audio of the four Vedas,
-          because Samaveda is defined by its melodic gana realization and the
-          available TEXT explicitly lacks the gana collections. Audio is
-          therefore not supplementary here but carries content the text does not.
-          Agent B's inventory was requested and had not arrived at compile time.
+          SELECTED, and THIS IS THE ONLY MIRRORABLE AUDIO ACROSS ALL FOUR VEDAS.
+          An earlier revision of this row read DEFERRED / REFERENCE_ONLY /
+          mirror_local false, closing with "Agent B's inventory was requested and
+          had not arrived at compile time." The inventory did arrive; that clause
+          was stale and is the substance of CORR-5.
+          Highest-value audio of the four Vedas, because Samaveda is defined by
+          its melodic gana realization and the available TEXT explicitly lacks
+          the gana collections. Audio is therefore not supplementary here but
+          carries content the text does not - it is the only route by which the
+          sung dimension enters the corpus at all until a gana text work_id
+          exists.
+          SCOPE NOTE: mirroring these files is cleared and is NOT gated on the
+          Samaveda canonical-identity decision, since audio provenance is
+          per-file and does not depend on the arcika passage key. It should not
+          be silently skipped once identity closes, because it is the one
+          clearly actionable "yes" in this Veda's rights picture.
 
   # =========================================================================
   # SUKLA YAJURVEDA - VAJASANEYI, MADHYANDINA
@@ -1111,8 +1357,13 @@ vedas:
           marked up to Paragraph / Verse / Sentence granularity. Total adhyaya
           and mantra counts NOT YET MEASURED.
         retrieval_date: 2026-09-07
-        rights_status: RESEARCH_ONLY
-        artifact_license: NONE at file level; no per-file licence statement on the text pages.
+        rights_status: PERMISSION_REQUIRED
+        artifact_license: >-
+          PER-PAGE NOTICE PRESENT, verbatim: "Copyright TITUS Project, Frankfurt
+          a/M, 2.11.2013. No parts of this document may be republished in any
+          form without prior permission by the copyright holder." Verified on
+          vs001.htm. An earlier revision of this row recorded "NONE at file
+          level"; that was wrong and is the substance of CORR-1.
         site_license: >-
           Project-wide, verbatim: "Those texts that can be downloaded via http
           can be used freely for scholarly purposes, provided that they are
@@ -1121,13 +1372,20 @@ vedas:
           for any kind of commercial usage." Also: "Downloading of some texts is
           restricted to members of the TITUS project." Source
           https://titus.uni-frankfurt.de/texte/texte2.htm, retrieved 2026-09-07.
-        license_conflict: false
+        license_conflict: true
         license_conflict_note: >-
-          No conflict, but note the chain is CLEAN at the root: Weber 1849 is
-          public domain by age, so unlike the Samaveda case there is no
-          encumbered modern edition upstream. The restriction here is TITUS's own
-          terms over its own data entry, which TITUS is entitled to impose. A
-          restriction that can be negotiated with a known party, not a defect.
+          SITE AND ARTIFACT CONFLICT, resolved to the stricter under RIGHTS-3:
+          the site grants free scholarly use, the per-page notice forbids
+          republication without prior permission. Hence PERMISSION_REQUIRED.
+          THE CHAIN IS NEVERTHELESS CLEAN AT THE ROOT, and that remains the
+          distinguishing fact about this row: Weber 1849 is public domain by age,
+          so unlike the Samaveda row (Pandey 1999) and the Atharvaveda row
+          (Orlandi 1991) there is NO encumbered modern edition upstream. The
+          restriction here is TITUS's own terms over its own data entry, which
+          TITUS is entitled to impose. That makes this a restriction negotiable
+          with a single known party rather than a defect in the chain of title -
+          a materially better position than the other two TITUS rows, even though
+          all three now carry the same rights_status.
         attribution_requirements: >-
           Quote as source, name the editor(s) - M. Kuemmel for data entry, Jost
           Gippert for TITUS redaction - and state the date of last changes.
@@ -1288,9 +1546,21 @@ vedas:
         work: Shuklayajurvedah (Shukla Yajurveda Samhita)
         recension: Madhyandina
         edition: >-
-          UNIDENTIFIED. The page header carries EMPTY year, notes, author and
-          translator fields. Rights are clear; the printed edition behind the
-          transcription is not.
+          IDENTIFIED per CORR-4: Vasudeva Sarma Panasikara, 2nd edn, Nirnaya
+          Sagara Press, Bombay, Saka 1850 = CE 1929, with Uvata's Mantrabhasya
+          and Mahidhara's Vedadipa. Public domain by age.
+          The per-adhyaya page headers DO carry empty year, notes, author and
+          translator fields, and an earlier revision of this row concluded from
+          that alone that the edition was UNIDENTIFIED. That conclusion was
+          wrong: the wiki's separate PREFACE page reproduces the printed title
+          page verbatim, and is registered as artifact
+          WIKISOURCE_SA.YV.VSM.PREFACE, sha256
+          cb13ec2ee19ba0279bfaee40077647336a78c34e3607f7aaad64d91a3e86e1bf.
+          THE GENERALISABLE RULE: edition identity may live on a SIBLING PAGE
+          rather than in the artifact header, so an empty header is not proof
+          the edition is unknown. Contrast the GRETIL Samaveda TEI, whose
+          sourceDesc/bibl is affirmatively empty with no sibling page to rescue
+          it - that is a genuine identity defect and this was not.
         location: https://sa.wikisource.org/wiki/%E0%A4%B6%E0%A5%81%E0%A4%95%E0%A5%8D%E0%A4%B2%E0%A4%AF%E0%A4%9C%E0%A5%81%E0%A4%B0%E0%A5%8D%E0%A4%B5%E0%A5%87%E0%A4%A6%E0%A4%83
         artifact_id: WIKISOURCE_SA.YV.VSM.SAMHITA.DEVANAGARI
         format: MEDIAWIKI_TRANSCRIPTION
@@ -1339,29 +1609,45 @@ vedas:
           be CC BY-SA compatible. Note this is a GRANT with a condition, not a
           prohibition - materially better than the TITUS alternative.
         blocking_item: >-
-          EDITION IDENTITY, not rights. The printed edition is unidentified and
-          transcription accuracy is unverified, so this must be validated against
-          an identified printed edition before being treated as canonical.
+          TRANSCRIPTION FIDELITY, not rights and no longer edition identity.
+          The edition is now identified (CORR-4, see the edition field above), so
+          the earlier form of this blocker is closed. What remains is that
+          authority tier is COMMUNITY_TRANSCRIPTION: fidelity of the Wikisource
+          text to the named 1929 Nirnaya Sagara print is UNVERIFIED, because no
+          page-image collation has been performed. Rights are solved, the edition
+          is named, FIDELITY is the open question.
         reason: >-
           SELECTED, and this row MATERIALLY CHANGES THE YAJURVEDA VERDICT. It is
           the only located Madhyandina text that is BOTH accented Devanagari AND
           carries a licence permitting redistribution and derivation. Compare
           every alternative: GRETIL does not host this Veda at all; TITUS is
-          RESEARCH_ONLY and grants no redistribution; The Sanskrit Library is
-          CC BY-NC-SA 3.0 but its bytes are unreachable. This one is retrievable,
-          complete, accented, revision-pinned and redistributable. The honest
-          caveat is authority: it is a COMMUNITY transcription, not a scholarly
-          edition, and it carries the same edition-identity defect that
-          independently disqualified the GRETIL Samaveda TEI. So rights are
-          SOLVED for this role and provenance is NOT - which is exactly the kind
-          of split verdict this matrix exists to express.
+          PERMISSION_REQUIRED and grants no redistribution; The Sanskrit Library
+          is CC BY-NC-SA 3.0 but its bytes are unreachable. This one is
+          retrievable, complete, accented, revision-pinned and redistributable.
+          The honest caveat is authority: it is a COMMUNITY transcription, not a
+          scholarly edition. It does NOT, however, share the edition-identity
+          defect that independently disqualified the GRETIL Samaveda TEI - an
+          earlier revision of this row said it did, and CORR-4 reversed that.
+          So rights are SOLVED for this role, edition identity is SOLVED, and
+          transcription fidelity is NOT - which is exactly the kind of split
+          verdict this matrix exists to express.
 
       - source_id: WIKISOURCE_SA
         role: traditional_metadata
         selection: SELECTED
         work: Shuklayajurvedah sarvanukramani and rishisuci
         recension: Madhyandina
-        edition: UNIDENTIFIED (same empty-header defect as the samhita pages)
+        edition: >-
+          UNIDENTIFIED for these two apparatus pages specifically. An earlier
+          revision said "same empty-header defect as the samhita pages", which is
+          now misleading in both directions: the samhita pages' edition WAS
+          resolved by CORR-4 via the sibling preface page, so there is no shared
+          unresolved defect to point at. Whether that same 1929 Nirnaya Sagara
+          preface also governs the sarvanukramani and rishisuci pages is PLAUSIBLE
+          BUT UNVERIFIED - they are apparatus of the same printed edition, but
+          that has not been checked against the preface, and inferring it would
+          repeat the reasoning-from-resemblance that CORR-4 warns against.
+          Treated as an open question, not as an inherited answer.
         location: https://sa.wikisource.org/wiki/%E0%A4%B6%E0%A5%81%E0%A4%95%E0%A5%8D%E0%A4%B2%E0%A4%AF%E0%A4%9C%E0%A5%81%E0%A4%B0%E0%A5%8D%E0%A4%B5%E0%A5%87%E0%A4%A6%E0%A4%83/%E0%A4%B8%E0%A4%B0%E0%A5%8D%E0%A4%B5%E0%A4%BE%E0%A4%A8%E0%A5%81%E0%A4%95%E0%A5%8D%E0%A4%B0%E0%A4%AE%E0%A4%A3%E0%A5%80
         artifact_id: WIKISOURCE_SA.YV.VSM.SARVANUKRAMANI, WIKISOURCE_SA.YV.VSM.RISHISUCI
         format: MEDIAWIKI_TRANSCRIPTION
@@ -1440,7 +1726,9 @@ vedas:
         edition: n/a
         location: see docs/FOUR_VEDA_AUDIO_SOURCE_INVENTORY.md
         format: audio
-        coverage_exact: not consolidated at compile time
+        coverage_exact: >-
+          Consolidated; see docs/FOUR_VEDA_AUDIO_SOURCE_INVENTORY.md. Supersedes
+          "not consolidated at compile time".
         rights_status: REFERENCE_ONLY
         artifact_license: per asset
         site_license: per host
@@ -1451,8 +1739,14 @@ vedas:
         direct_link: true
         mirror_local: false
         reason: >-
-          DEFERRED at REFERENCE_ONLY. Agent C's inventory was requested and had
-          not arrived at compile time.
+          DEFERRED at REFERENCE_ONLY. An earlier revision closed with "Agent C's
+          inventory was requested and had not arrived at compile time"; the
+          inventory did arrive and that clause was stale (CORR-5).
+          VHP is the only authentic Madhyandina audio located, and it is
+          PERMISSION_REQUIRED, so its audio is reference-only regardless of being
+          publicly playable. archive.org alternatives for this Veda are either
+          UNKNOWN rights or the wrong recension - the recension trap applies to
+          audio exactly as it does to text.
 
   # =========================================================================
   # ATHARVAVEDA - SAUNAKA
@@ -1642,15 +1936,28 @@ vedas:
         format: HTML
         coverage_exact: NOT ESTABLISHED - endpoint confirmed live (HTTP 200) but not parsed
         retrieval_date: 2026-09-07
-        rights_status: RESEARCH_ONLY
-        artifact_license: NONE at file level
+        rights_status: PERMISSION_REQUIRED
+        artifact_license: >-
+          PER-PAGE NOTICE PRESENT, verbatim: "Copyright TITUS Project, Frankfurt
+          a/M, 2.11.2013. No parts of this document may be republished in any
+          form without prior permission by the copyright holder." Verified on
+          avs001.htm. An earlier revision of this row recorded "NONE at file
+          level"; that was wrong and is the substance of CORR-1.
         site_license: >-
           Project-wide, verbatim: "Those texts that can be downloaded via http
           can be used freely for scholarly purposes, provided that they are
           quoted as sources and the name(s) of the editor(s) and the date of
           last changes are indicated in publications. The texts must not be used
           for any kind of commercial usage."
-        license_conflict: false
+        license_conflict: true
+        license_conflict_note: >-
+          SITE AND ARTIFACT CONFLICT, resolved to the stricter under RIGHTS-3.
+          This row is the one where the correction matters most operationally:
+          these TITUS terms are exactly what GRETIL's Atharvaveda files mean by
+          "COPYRIGHT AND TERMS OF USAGE AS FOR SOURCE FILE", so understating this
+          row as RESEARCH_ONLY understated the GRETIL AV artifacts by transitivity.
+          The Orlandi 1991 encumbrance sits behind TITUS in addition, so a single
+          TITUS permission would NOT clear this chain on its own.
         attribution_requirements: Quote as source; name Jost Gippert and the date of last changes; non-commercial.
         redistribute: false
         redistribute_derived: conditional
@@ -1731,32 +2038,103 @@ vedas:
         mirror_local: false
         reason: SELECTED_RESTRICTED as traditional cross-check and audio discovery. Never ingested.
 
-      - source_id: null
+      - source_id: BSB_MDZ
         role: parallel_sanskrit
-        selection: DEFERRED
-        work: Atharva Veda Sanhita, Roth and Whitney
+        selection: SELECTED_RESTRICTED
+        work: Atharva Veda Sanhita, Erster Band, Text
         recension: Shaunaka
-        edition: R. Roth and W. D. Whitney, Berlin, Duemmler, 1856
-        location: null
-        format: SCAN (item not yet identified)
-        coverage_exact: NOT ESTABLISHED
-        rights_status: UNKNOWN
-        artifact_license: NOT ESTABLISHED
-        site_license: NOT ESTABLISHED
-        license_conflict: unknown
-        attribution_requirements: NOT ESTABLISHED
-        redistribute: false
-        redistribute_derived: false
+        edition: >-
+          R. Roth and W. D. Whitney, Atharva Veda Sanhita, Erster Band. Text.
+          Berlin: Ferd. Duemmler's Verlagsbuchhandlung, 1856. 458 pages,
+          Devanagari. "No more published" - the promised second volume of notes
+          was never completed, but the TEXT volume is complete.
+        location: https://www.digitale-sammlungen.de/view/bsb10219750
+        urn: "urn:nbn:de:bvb:12-bsb10219750-9"
+        physical_copy: BSB Muenchen, call number 4 A.or. 2840-1
+        alternate_location: https://archive.org/details/AtharvaVedaSanhitaTextVolume1
+        format: SCAN
+        coverage_exact: >-
+          ALL 20 KANDAS, VERIFIED VISUALLY rather than from the preface. Three
+          leaves of the archive.org copy were downloaded and read as images in
+          the closure run: leaf n30 = printed p.16, header "atharvavede 2 | 4-6";
+          leaf n300 = printed p.287, header "atharvavede 12 | 5" (prose paryaya);
+          leaf n420 = printed p.407, header "atharvavede 20 | 35. 36".
+          KANDA 20 IS PRESENT AND UNABRIDGED - confirmed from body text, not from
+          the preface statement. This matters because Kanda 20 is ~16% of the
+          Veda and is exactly the portion the Whitney/Lanman translation leaves
+          untranslated, so a quietly abridged source would have been hard to
+          detect downstream. Text is ACCENTED and legible at 600 PPI, including
+          individually resolvable anudatta and udatta marks.
+        retrieval_date: 2026-09-07
+        rights_status: PUBLIC_DOMAIN
+        rights_basis: >-
+          PD DERIVES FROM THE WORK, NOT FROM ANY STAMP: published 1856, Whitney
+          died 1894, Roth died 1895 (rule RIGHTS-7). No digitiser or holding
+          library has standing to establish this, and none is relied upon for it.
+        artifact_license: >-
+          BSB declares "Kein Urheberrechtsschutz". THE PRECISE FUNCTION OF THAT
+          DECLARATION MATTERS and is easy to get wrong: it is NOT the basis for
+          the text's public-domain status (see rights_basis - that comes from
+          1856 plus the author death dates). What it uniquely supplies is a
+          DISCLAIMER OF THE SCAN-LAYER RIGHT. Under German law a faithful
+          reproduction photograph may attract a thin neighbouring right (UrhG
+          s.72 Lichtbildschutz), and BSB is the one party in this chain with
+          standing to assert or waive that right over its own digitisation. It
+          has waived it. A party without standing to GRANT rights in the text
+          does have standing to WAIVE a right it could itself assert.
+        license_conflict: false
+        attribution_requirements: >-
+          None legally required. VedaGraph records Roth and Whitney, Berlin 1856,
+          and the BSB URN.
+        redistribute: true
+        redistribute_derived: true
         direct_link: true
-        mirror_local: false
+        mirror_local: true
+        conditions: >-
+          Any transcription derived from this scan is governed by RIGHTS-13: it
+          must be derived SOLELY from the page images, with no Orlandi-derived
+          reading admitted through any channel, including transcriber recall, a
+          parallel edition, or an LLM assistant. Unclear characters are marked
+          [?] and ship as PHILOLOGICAL_REVIEW_REQUIRED, never silently completed.
+          LICENCE OF THE OUTPUT MUST BE SPLIT, or the combined artifact
+          overclaims: the TRANSCRIBED TEXT is CC0/public domain, because there is
+          no copyright in it to license and asserting one would be the same
+          copyfraud RIGHTS-10 condemns in others; only VedaGraph's own STRUCTURAL
+          APPARATUS (keying, JSONL schema, alignment, SourceAssertions) carries a
+          VedaGraph licence. CC0 text inside a CC BY-SA artifact composes upward,
+          so this does not conflict with the live Yajurveda and Samaveda
+          share-alike obligations.
+        alternate_location_note: >-
+          THE ARCHIVE.ORG COPY IS A CONVENIENCE MIRROR ONLY, and its metadata is
+          actively misleading. It is tagged CC BY 3.0 by uploading account
+          "drvgaikwad" (June 2011), but every sampled leaf carries a "Digitized
+          by Google" watermark: it is a GOOGLE BOOKS RE-UPLOAD and the tagger is
+          not even the digitiser. That tag is VOID FOR WANT OF STANDING twice
+          over - the uploader holds neither the text right nor the scan-layer
+          right - and is recorded as the sixth instance of RIGHTS-10, a new
+          sub-type detectable only by inspecting a page margin rather than by
+          reading the print. Its scan layer is additionally UNDISCLAIMED, since
+          Google has waived nothing. Prefer BSB.
+          The Deutsche Digitale Bibliothek record carries "Nur nicht
+          kommerzielle Nutzung erlaubt". That restriction is STRUCTURALLY WITHOUT
+          STANDING, not a metadata glitch: DDB is an AGGREGATOR downstream of
+          BSB, and under RIGHTS-9 the chain resolves to its root, which is BSB
+          plus the 1856 print. An aggregator has no more standing to IMPOSE a
+          restriction the holder released than to GRANT one the holder withheld.
         reason: >-
-          DEFERRED and STRATEGICALLY IMPORTANT. Roth and Whitney 1856 is public
-          domain by age and is the ONLY identified route to a rights-clear
-          Shaunaka Sanskrit text, because it bypasses the Orlandi 1991
-          encumbrance entirely. A fresh transcription or OCR from an 1856 scan
-          would yield a Shaunaka text VedaGraph could actually redistribute. No
-          specific scan item has been identified yet, so rights are recorded
-          UNKNOWN rather than assumed.
+          SELECTED_RESTRICTED and STRATEGICALLY DECISIVE - this row is the reason
+          the Atharvaveda blocker moved. Roth and Whitney 1856 is the ONLY
+          identified route to a rights-clear Shaunaka Sanskrit text, because it
+          bypasses the Orlandi 1991 encumbrance entirely rather than seeking
+          permission through it. An earlier revision read "No specific scan item
+          has been identified yet, so rights are recorded UNKNOWN rather than
+          assumed"; two items are now identified, inspected and adjudicated.
+          SELECTED_RESTRICTED rather than SELECTED because the posture is
+          narrower than ingestion: the scan is acquired and cleared, but no
+          transcription exists yet. What stands between this row and a usable
+          Shaunaka primary text is bounded transcription LABOUR under RIGHTS-13,
+          not unresolved research or unresolved rights. That is the whole
+          distinction between this Veda's old status and its new one.
 
       - source_id: null
         role: hindi_translation
@@ -1810,7 +2188,12 @@ vedas:
         edition: n/a
         location: see docs/FOUR_VEDA_AUDIO_SOURCE_INVENTORY.md
         format: audio
-        coverage_exact: not consolidated at compile time
+        coverage_exact: >-
+          Consolidated; see docs/FOUR_VEDA_AUDIO_SOURCE_INVENTORY.md. Supersedes
+          "not consolidated at compile time". NOTE, because it constrains any
+          future audio schema for this Veda: Atharvaveda pada/krama/jata/ghana
+          patha recordings DO NOT EXIST - only samhita-patha - so patha_type must
+          read SAMHITA or UNKNOWN and must never be defaulted to a patha variant.
         rights_status: REFERENCE_ONLY
         artifact_license: per asset
         site_license: per host
@@ -1821,8 +2204,20 @@ vedas:
         direct_link: true
         mirror_local: false
         reason: >-
-          DEFERRED at REFERENCE_ONLY. Agent D's inventory was requested and had
-          not arrived at compile time.
+          DEFERRED at REFERENCE_ONLY for the VHP per-sukta audio this row covers.
+          An earlier revision closed with "Agent D's inventory was requested and
+          had not arrived at compile time"; the inventory did arrive and that
+          clause was stale (CORR-5).
+          THIS ROW IS NOT THE WHOLE ATHARVAVEDA AUDIO PICTURE. The consolidated
+          inventory also identifies a Vedavani HuggingFace dataset carrying
+          per-mantra audio plus transcription under APACHE_2_0, summarised in
+          role_coverage_summary as MIRRORABLE_WITH_RISK - unaccented, no AVS
+          reference labels, and a residual chain-of-title risk. That candidate is
+          deliberately NOT promoted into this row by the present run, because
+          Atharvaveda audio is outside the canonical-Sanskrit blocker scope and
+          its rights classification belongs to the rights authority, not to a
+          coordinator applying a recorded correction. Recorded here so the next
+          session finds the lead instead of re-discovering it.
 
 # ===========================================================================
 # ROLE COVERAGE SUMMARY

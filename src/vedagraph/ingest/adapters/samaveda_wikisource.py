@@ -146,7 +146,33 @@ class SamavedaWikisourceAdapter(SourceAdapter):
             unparsed_remainder=remainder,
         )
 
-    def parse(
+    def parse(self, snapshot_path: Path, *, snapshot_id: str) -> list[StagingTextRecord]:
+        """Not available for this adapter. Use :meth:`parse_at_address` instead.
+
+        This override exists to KEEP the base-class contract rather than to fulfil it.
+        ``SourceAdapter.parse`` promises that a snapshot alone is enough to produce
+        staging records, and for this source that promise cannot be kept honestly: a
+        record needs a five-level address, the Wikisource page tree supplies only four
+        levels, and inventing the missing ``ardha`` is precisely the kind of silent
+        structural guess this project forbids. See :meth:`parse_at_address`.
+
+        Previously this class overrode ``parse`` with four EXTRA REQUIRED keyword
+        arguments. That was not merely a typing defect -- it broke
+        ``SourceAdapter.to_staging_records``, which calls
+        ``self.parse(snapshot_path, snapshot_id=...)`` generically and would therefore
+        raise ``TypeError`` on this adapter at runtime. Failing loudly and specifically
+        here is better than failing on an argument-count mismatch that says nothing
+        about why.
+        """
+        raise NotImplementedError(
+            "SamavedaWikisourceAdapter cannot parse from a snapshot alone. Its records "
+            "require an explicit (arcika, prapathaka, ardha, dasati) address, because "
+            "the Wikisource page tree has no ardha level and the mapping onto the "
+            "selected edition's five-level address is a declared alignment decision, "
+            "not something this parser may infer. Call parse_at_address() instead."
+        )
+
+    def parse_at_address(
         self,
         snapshot_path: Path,
         *,
@@ -161,6 +187,13 @@ class SamavedaWikisourceAdapter(SourceAdapter):
         The coordinates are supplied rather than derived: the Wikisource page tree has
         no ardha level, so the mapping onto the selected edition's five-level address is
         a declared alignment decision and not something this parser may invent.
+
+        NOTE ON VERSE NUMBERING, verified against the three pinned snapshots: the verse
+        numbers this adapter reads are the edition's RUNNING numbers (1..1875), not
+        dasati-local indices -- the fifth dasati of prapathaka 1 yields verses 45-54, and
+        Aranya 1.2.1 yields 586-594. Any caller mapping these onto a local ``V{verse:02d}``
+        key slot must convert running -> local explicitly, and must never use page-local
+        ordinal or sequence position to do it.
         """
         page = self.parse_dasati(snapshot_path)
         return [

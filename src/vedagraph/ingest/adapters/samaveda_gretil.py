@@ -181,7 +181,15 @@ def _paragraph_texts(snapshot_path: Path) -> list[str]:
     body = etree.parse(str(snapshot_path)).getroot().find(f".//{TEI}body")
     if body is None:
         raise ValueError(f"no TEI body in {snapshot_path}")
-    return ["".join(paragraph.itertext()) for paragraph in body.findall(f"{TEI}p")]
+    # lxml types itertext() as yielding str | bytes because the parser can run in bytes
+    # mode. This document is parsed from a path in text mode, so every part is str.
+    # Filtering on isinstance rather than coercing with str() is deliberate: str(b"...")
+    # would silently produce the literal "b'...'" and corrupt the text if the bytes case
+    # ever did arise, whereas skipping is inert in the case that actually occurs.
+    return [
+        "".join(part for part in paragraph.itertext() if isinstance(part, str))
+        for paragraph in body.findall(f"{TEI}p")
+    ]
 
 
 def _strip_running_number(text: str) -> tuple[str, int | None]:

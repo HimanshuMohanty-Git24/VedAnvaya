@@ -542,16 +542,36 @@ text_versions:
     embedding this layer must itself be CC BY-SA compatible. This is a GRANT with a condition rather than a prohibition
     - materially better than the alternatives for this Veda, where TITUS is PERMISSION_REQUIRED and The Sanskrit
     Library''s bytes are unreachable.'
-  transformation_provenance: 'DERIVED BY ISOLATION from a mula-bhasya page layout, and the IMPLEMENTATION is weaker
-    than the source structure. Agent C established that the 1929 edition uses the standard layout - ordinal header,
-    then the full accented mula closed by its own number, then the bhasya - and measured 271 ordinal-header lines
-    against 293 accented records across adhyayas 1, 3, 16, 19, 31 and 40. So the SOURCE does declare a mula boundary.
-    However the adapter does NOT read that boundary: it infers the start of each mula from ACCENT PRESENCE, which
-    is correct in 37 of 40 adhyayas and wrong in 3. The unit boundaries of this layer as PRODUCED are therefore
-    inferred, not read. Two further editorial departures in this layer are emitted by Agent C as SourceAssertion
-    records with status NEEDS_REVIEW: LEADING_INVOCATION_REMOVED at VSM 1.1 (removed "harih om") and SECOND_READING_DROPPED
-    at VSM 16.37, where the page prints the mantra twice with the readings srutyaya and satyaya and the first was
-    kept - a VARIANT-SELECTION judgement, not a mechanical deduplication.'
+  transformation_provenance: 'DERIVED BY ISOLATION from a mula-bhasya page layout. SUBSTANTIALLY IMPROVED
+    2026-09-07 by the FOUR_VEDA_CANONICAL_SANSKRIT_BLOCKER_CLOSURE run, and the improvement is real but does
+    NOT reach PRIMARY_TEXT - see notes.
+    WHAT THE SOURCE DECLARES: the 1929 edition uses the standard layout - ordinal header, then the full accented
+    mula closed by its own number, then the bhasya.
+    WHAT THE ADAPTER NOW DOES (parser wikisource-sa-vsm-v2, superseding v1): it READS those declared ordinal
+    headers as the primary mula-start signal, with accent-presence retained only as a confirming fallback.
+    Coverage moved from 1958/1975 to 1975/1975 - VERIFIED INDEPENDENTLY by re-parsing all 40 pinned snapshots:
+    accented 1975, unaccented 1836, union 1975, zero addresses missing from the accented layer.
+    BOUNDARY PROVENANCE, WHICH IS THE FIGURE THAT GOVERNS THE ROLE: 1939 of 1975 units are read from a declared
+    ordinal header; 36 fall back to accent-presence inference and are REPORTED as ParseFailure
+    ORDINAL_HEADER_ABSENT rather than passing silently. Agent F root-caused all 36: 9 are PARSER-attributable
+    (8 where a correct ordinal header is present but the source omits its trailing danda so the regex rejects it -
+    proved by the ordinal word naming exactly the resolved mantra number in 8 of 8 cases; 1 where an intervening
+    Bhavisya Purana rsi/chandas citation resets the state machine) and 27 are SOURCE properties (22 where the
+    header was consumed by the preceding mula, 3 with no header within six preceding lines).
+    A DEFECT IN v1 WAS FOUND AND FIXED, and it inverts an earlier claim in this record: U+0966 falls inside the
+    adapter''s Devanagari word class, so v1 tokenised the commentator sigla "u0"/"m0"/"maa0" as ordinal words and
+    read Uvata''s and Mahidhara''s PROSE as mula. Measured: the v1 inline rule matched 39 accented lines of which
+    34 were siglum-initial false positives; the v2 rule matches 1, the genuine one. The "second readings" v1
+    reported were therefore largely manufactured out of commentary, not variant readings in the print.
+    EDITORIAL DEPARTURES, both still NEEDS_REVIEW and both still unresolved: LEADING_INVOCATION_REMOVED at
+    VSM 1.1 (removed "harih om"); and at VSM 16.37 the page prints the mantra twice with the readings srutyaya
+    and satyaya. THE 16.37 HANDLING CHANGED: v1 recorded SECOND_READING_DROPPED, keeping the first and discarding
+    the second. v2 keeps the first as the record and PRESERVES THE SECOND IN FULL as an EditorialIntervention
+    kind=SECOND_READING status=NEEDS_REVIEW. Verified: the canonical record contains srutyaya and the retained
+    intervention contains satyaya, untruncated. The variant-selection judgement is deferred to recorded human
+    review, not made by the parser.
+    Deterministic rebuild re-confirmed across three separate OS processes, hashing records, failures, collisions
+    and interventions over all 40 adhyayas: identical digest three times.'
   notes: 'Registered by Agent E 2026-09-07 with text_role EXTRACTED_FROM_CONTAINER, NOT PRIMARY_TEXT. Agent A landed
     that enum member for this case at Agent E''s request and the coordinator directed its use here. AGENT C''s EVIDENCE
     IS ACCEPTED AND IT CORRECTED MY PREMISE. I flagged this layer on Agent C''s earlier description of it as "mantra
@@ -565,7 +585,38 @@ text_versions:
     not a transcription of a declared boundary. EXPLICIT UPGRADE PATH, so this is a reviewable decision and not
     a permanent verdict: if the adapter is reimplemented to read the ordinal headers that Agent C demonstrated exist,
     and the two NEEDS_REVIEW assertions are resolved, then PRIMARY_TEXT becomes correct and Agent E will amend this
-    record on request. THE GENERAL RULE THIS PAIR OF RECORDS DEMONSTRATES: a layer''s LICENCE and its permitted
+    record on request.
+    THAT UPGRADE PATH WAS EXERCISED ON 2026-09-07 AND THE ROLE STILL DOES NOT CHANGE. The adapter WAS reimplemented
+    to read the ordinal headers (parser v2, coverage 1975/1975, independently verified), and the role REMAINS
+    EXTRACTED_FROM_CONTAINER. Agent E gave rights clearance in advance and correctly noted the upgrade has zero
+    rights consequence, then deferred the decision to the fidelity gate; Agent F ruled against the upgrade on three
+    independent grounds and the coordinator accepted the ruling.
+    Ground 1: condition (a) is literally unmet. Of the 36 inference-derived boundaries, 8 have a correct declared
+    ordinal header present in the source that the regex rejects only because the trailing danda is omitted. Headers
+    that demonstrably exist are still not read.
+    Ground 2: condition (b) is unmet and unmeetable in an automated run. Neither NEEDS_REVIEW assertion is resolved,
+    and VSM 16.37 is a genuine choice between two attested printed readings that requires recorded HUMAN
+    philological review - no agent may make it.
+    Ground 3, AND THIS IS THE ONE THAT SURVIVES EVERY AVAILABLE FIX, so it decides the question permanently rather
+    than deferring it again: this enum member''s own definition makes BOUNDARY PROVENANCE the discriminator - a
+    layer is EXTRACTED_FROM_CONTAINER where "each unit begins and ends is an editorial judgement rather than a
+    boundary the source declared", and such a layer "must never be selected as primary_sanskrit: doing so would
+    make an interpretive segmentation canonical". Even after fixing all 9 parser-attributable cases, 27 units would
+    STILL have no source-declared header, because the source does not declare one at those points. A blanket
+    layer-level PRIMARY_TEXT would make interpretive segmentation canonical for those 27. So the honest answer to
+    "will this become PRIMARY_TEXT once the regex is fixed?" is NO, not "not yet".
+    THE RECOMMENDED RESOLUTION IS PER-RECORD, NOT PER-LAYER, and it preserves the real gains instead of flattening
+    them into one optimistic label: carry boundary provenance on each accented record (header-declared vs
+    inference-derived), leaving the LAYER role permanently and accurately EXTRACTED_FROM_CONTAINER - the mula
+    genuinely is quoted inside the Uvata-Mahidhara bhasya - while letting a consumer select the ~1939 (post-fix
+    ~1948) header-declared units with full confidence. Not implemented in this run; specified for the next.
+    A VALIDATED FIX FOR 8 OF THE 9 PARSER CASES EXISTS and was tested end-to-end by Agent F, recorded so it is not
+    re-derived: a naive "make the danda optional" is unsafe in both obvious forms (with the v2 lookbehind it breaks
+    280 working headers; without it, it admits 339 false lines including "adhyayah 3" and mantra fragments). The
+    safe form is two-pass and self-calibrating - harvest the ordinal vocabulary from lines that already match WITH
+    a danda (490 strings), then accept a danda-less line only if its exact text is in that harvested vocabulary.
+    Measured: 8 lines accepted, all 8 targets covered, ZERO false positives.
+    THE GENERAL RULE THIS PAIR OF RECORDS DEMONSTRATES: a layer''s LICENCE and its permitted
     ROLE are INDEPENDENT. These are the SAME bytes, from the SAME artifact, under the SAME CC BY-SA licence as WIKISOURCE_SA.YV.VSM.UNACCENTED
     - identical rights, different role - because the difference between them is not legal but epistemic: one is
     transcribed, the other is inferred. Getting the rights right does not make a layer primary. This is the text-layer

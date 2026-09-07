@@ -521,3 +521,53 @@ sources:
   - scan_discovery
   - audio_discovery
   - edition_comparison
+- authority_tier: SCHOLARLY_EDITION
+  bulk_ingestion_status: PD_SCAN_CLEARED_TRANSCRIPTION_NOT_YET_PERFORMED
+  formats:
+  - SCAN
+  - JP2
+  - PDF
+  known_languages:
+  - sa
+  - de
+  name: Muenchener DigitalisierungsZentrum, Bayerische Staatsbibliothek
+  notes: 'Registered by Agent A 2026-09-07 under Agent E''s rights adjudication in the
+    FOUR_VEDA_CANONICAL_SANSKRIT_BLOCKER_CLOSURE run. Registered because the Atharvaveda
+    parallel_sanskrit row needed a real source_id and constructing one locally in the matrix
+    would have repeated the invented-id defect that has already been found three times in this
+    repository (the Yajurveda pilot artifact ids, SV-1/SV-2, and the AV GRETIL_AVS/VEDAWEB_AVS
+    records). Holds the citable scan of Roth and Whitney, Atharva Veda Sanhita, Erster Band,
+    Text, Berlin 1856, urn:nbn:de:bvb:12-bsb10219750-9, physical copy 4 A.or. 2840-1. THIS IS
+    THE IDENTIFIED CLEAN ROUTE FOR THE SHAUNAKA SANSKRIT TEXT: it bypasses the Orlandi 1991
+    encumbrance entirely rather than seeking permission through it. Coverage verified visually
+    across three sampled leaves (printed pages 16, 287, 407) - all 20 kandas present, Kanda 20
+    unabridged, text accented and legible. Any transcription from this scan is governed by
+    RIGHTS-13 and its output licence must be SPLIT: transcribed text CC0/public domain,
+    VedaGraph structural apparatus under VedaGraph''s own licence.'
+  organization: Bayerische Staatsbibliothek
+  rights:
+    license_url: https://www.digitale-sammlungen.de/view/bsb10219750
+    notes: 'PUBLIC_DOMAIN DERIVES FROM THE WORK, NOT FROM THE DIGITISER''S STAMP, and the
+      distinction is the whole point of this record. Under policy rule RIGHTS-10 no digitiser or
+      holding library has standing to establish the copyright status of what it scans, and BSB is
+      no exception - it is as much a party without standing over the 1856 text as any re-uploader.
+      The operative basis is rule RIGHTS-7: published 1856, Whitney died 1894, Roth died 1895.
+      WHAT BSB UNIQUELY SUPPLIES is a DISCLAIMER OF THE SCAN-LAYER RIGHT. Its declaration "Kein
+      Urheberrechtsschutz" matters because German law may attach a thin neighbouring right to a
+      faithful reproduction photograph (UrhG s.72 Lichtbildschutz), and BSB is the one party in
+      this chain with standing to assert or waive that right over its own digitisation. It has
+      waived it. A party without standing to GRANT rights in a text still has standing to WAIVE a
+      right it could itself assert - which is why BSB is preferred over the archive.org copy,
+      whose Google-produced scan layer is undisclaimed and whose CC BY 3.0 tag was applied by an
+      uploader who is not even the digitiser (sixth recorded instance of RIGHTS-10). The Deutsche
+      Digitale Bibliothek non-commercial tag on the same item is structurally without standing
+      under RIGHTS-9, DDB being an aggregator downstream of BSB. This is a project rights posture
+      on documented evidence, not a legal opinion.'
+    status: PUBLIC_DOMAIN
+    verified_at: 2026-09-07
+  source_id: BSB_MDZ
+  url: https://www.digitale-sammlungen.de/
+  verification_roles:
+  - public_domain_scan_acquisition
+  - atharvaveda_shaunaka_clean_route
+  - edition_comparison

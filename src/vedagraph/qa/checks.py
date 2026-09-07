@@ -1076,10 +1076,11 @@ def _wiki_page_identity(url: str) -> str | None:
         title = unquote(parsed.path[len("/wiki/") :])
     else:
         query = parse_qs(parsed.query)
-        raw_title = (query.get("page") or query.get("titles") or [None])[0]
-        if raw_title is None:
+        # Both spellings occur: action=parse uses "page", action=query uses "titles".
+        values = query.get("page") or query.get("titles")
+        if not values:
             return None
-        title = unquote(raw_title)
+        title = unquote(values[0])
     return title.replace("_", " ").strip()
 
 

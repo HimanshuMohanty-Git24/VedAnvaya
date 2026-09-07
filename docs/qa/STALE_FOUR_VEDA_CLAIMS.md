@@ -32,8 +32,26 @@ categories named in the session brief):
   `FOUR_VEDA_SOURCE_ADJUDICATION.md` §3.3 explicitly documents the opposite (`NO_ARTIFACT_EXISTS`,
   verified by exhaustive index search), and flags GRETIL's `maitrs_*` files as the
   easily-confused-for-it Kṛṣṇa Yajurveda.
-- **"Yajurveda edition unidentified"** — was true in an earlier state but is corrected
-  (CORR-4) everywhere it now appears; no doc found still asserting it as current.
+- ~~**"Yajurveda edition unidentified"** — was true in an earlier state but is corrected
+  (CORR-4) everywhere it now appears; no doc found still asserting it as current.~~
+  **THIS ENTRY WAS WRONG. Corrected 2026-09-07 by the
+  `FOUR_VEDA_CANONICAL_SANSKRIT_BLOCKER_CLOSURE` run.** The claim *was* still being asserted as
+  current, in `data/source_registry/four_veda_source_matrix.yaml`, in three places on the
+  `WIKISOURCE_SA` / `primary_sanskrit` / Śukla Yajurveda row: `edition: "UNIDENTIFIED. The page
+  header carries EMPTY year, notes, author and translator fields."`, `blocking_item: "EDITION
+  IDENTITY, not rights. The printed edition is unidentified…"`, and a `reason:` field asserting
+  the artifact "carries the same edition-identity defect that independently disqualified the
+  GRETIL Samaveda TEI" — the exact claim CORR-4 reversed. All three are now fixed.
+  **Why this audit missed it — a scope gap worth fixing, not a slip.** Per the method note below,
+  this audit grepped **`docs/` only**. The stale claim lived in `data/`, in the *machine-readable
+  registry* — which is the more authoritative surface of the two, and the one a build actually
+  reads. An audit scoped to prose cannot certify a repository whose operative claims are in YAML.
+  **The deeper pattern, found by the same run:** `four_veda_source_matrix.yaml` has a
+  `corrections_applied:` block, and a correction being *recorded* there did **not** mean it had
+  been *applied* to the data rows. CORR-1 (TITUS `RESEARCH_ONLY` → `PERMISSION_REQUIRED`) and
+  CORR-4 (this entry) were **both** recorded-but-unapplied. So this audit's "no doc found
+  asserting it" was doubly defeated: it read the wrong surface, and on that surface the audit
+  trail disagreed with the data it described. Corrections now carry an `applied_to_rows:` flag.
 - **"Yajurveda traditional metadata unavailable"** — not current; the pilot has 203 `HAS_RISHI`
   assertions and traditional metadata is `CLEAR (SA)` per the rights matrix. No stale instance
   found.

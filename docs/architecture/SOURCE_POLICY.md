@@ -11,10 +11,24 @@ guarantees. Adapters must consume snapshots, and live integration checks are opt
   Chandas `Gayatri`, and `RIGSS_01_001.mp4`.
 - Structure: Rigveda Shakala is exposed as Mandala → Sukta → Mantra; Mandala 1 discovery lists
   Suktas 001–191.
-- Samaveda finding: Kauthuma is divided into Purvarcika and Uttararcika. The pages expose nested
-  Kanda/Adhyaya/Prapathaka/Ardha groupings and local plus parenthesized numbering. Uttararcika
-  also includes split labels such as `05(a)` and `05(b)`. A single running ID would lose edition
-  structure, so Samaveda identity remains open.
+- Samaveda finding — **SUPERSEDED AS A HIERARCHY SOURCE; DO NOT IMPLEMENT AGAINST THIS BULLET.**
+  What this bullet records is how *the VHP pages present* Samaveda, and as an observation of VHP's
+  own navigation it stands: those pages do expose nested Kanda/Adhyaya/Prapathaka/Ardha groupings,
+  local plus parenthesized numbering, and Uttararcika split labels such as `05(a)` and `05(b)`.
+  What it must no longer be read as is VedaGraph's structural model. The canonical hierarchy was
+  later established from the selected source's *own declared reference system* and is
+  **`[Arcika, Prapathaka, Ardha, Dasati, Verse]`** — five levels, variable depth, absent levels
+  encoded as a literal `0`. Three corrections against the text above:
+  - There are **four** arcikas (Purvarcika, Aranya, Mahanamnya, Uttararcika), not two.
+  - The fourth level is **Dasati**. There is no `Adhyaya` and no `Khanda` *identity* level; the
+    VHP grouping labels are presentation, not identity. A test asserts the superseded names
+    cannot re-enter the code.
+  - `Kanda` (agneya, aindra, saumya-pavamana, aranya) cannot be a tree level at all, because its
+    colophons cut across prapathaka/ardha boundaries. It is an alternate Citation system.
+  The one claim here that survives unchanged is the last one, and it is the reason the rest was
+  investigated: a single running ID would indeed lose edition structure. Authoritative statement
+  of the hierarchy lives in `data/registry/works.yaml` (`VG:WORK:SV:KAU`) and
+  `docs/FOUR_VEDA_STRUCTURAL_MODEL.md` §2; those govern, not this bullet.
 - Rights: the [copyright policy](https://vedicheritage.gov.in/copyright-policy/) requires written
   permission for partial or full reproduction. Bulk ingestion is prohibited pending permission.
 - Strategy: bounded verification, hierarchy/metadata QA, and external audio discovery only.

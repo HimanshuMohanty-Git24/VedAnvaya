@@ -320,6 +320,19 @@ policy_rules:
       INTERNAL to the same digital object: the scanned page images themselves display an all-rights-
       reserved notice while the item metadata wrapping them claims CC0. Where a scan contradicts its own
       page images, the page images control.
+      SIXTH INSTANCE, added 2026-09-07, AND IT IS A NEW SUB-TYPE: archive.org item
+      AtharvaVedaSanhitaTextVolume1 (Roth and Whitney, Atharva Veda Sanhita, Berlin 1856) is tagged
+      CC BY 3.0 by uploading account "drvgaikwad" (June 2011). Every sampled leaf carries a "Digitized by
+      Google" watermark in the bottom margin, so the item is a GOOGLE BOOKS RE-UPLOAD and the tagger is NOT
+      EVEN THE DIGITISER. The tag is void for want of standing twice over: the uploader holds neither the
+      text right (1856, PD) nor the scan-layer right (Google's, if any).
+      WHY THIS SUB-TYPE MATTERS OPERATIONALLY: instances (1) to (5) are all permissive-tag-over-restrictive-
+      PRINT, and RIGHTS-10's operational test - "read the print" - catches every one of them. This one is
+      permissive-tag-applied-by-a-party-who-is-not-the-digitiser, and reading the print does NOT catch it,
+      because the print is genuinely public domain and says nothing relevant. It is caught only by reading
+      the PAGE MARGIN FOR A DIGITISER WATERMARK. It survived a full source-research pass and surfaced only
+      when actual page images were opened rather than metadata read. SO THE TEST IS EXTENDED: when relying
+      on a scan, look at a page image and identify who actually digitised it, not merely who uploaded it.
   - id: RIGHTS-11
     rule: CC Public Domain Mark is an assertion of status, not a licence, and is rejected by default.
     detail: >-
@@ -344,3 +357,36 @@ policy_rules:
       in-copyright commercial Folkways LP streams freely from archive.org's unlockedrecordings collection.
       A crawl permission is not a reproduction licence, and a hosting decision by a host is not a grant by
       the owner.
+  - id: RIGHTS-13
+    rule: >-
+      An independence firewall covers EVERY channel by which an encumbered text can reach a fresh
+      transcription, including channels that leave no artifact.
+    detail: >-
+      Where a transcription's redistribution basis depends on being derived SOLELY from a public-domain
+      source, the firewall is breached by ANY contact with the encumbered text - not merely by opening its
+      file. Artifact channels (the encumbered file, a site, an API) are the obvious ones and are already
+      covered by RIGHTS-9. The dangerous channels are the ones that leave NO EVIDENCE: the transcriber's own
+      recall of a parallel passage; a colleague's verbal correction; another edition open on the desk; IME or
+      autocomplete suggestions; AND AN LLM ASSISTANT, which will answer a "what does this say?" question from
+      training data that includes the very corpus the firewall exists to exclude.
+      FOR VEDAGRAPH SPECIFICALLY THE LLM CHANNEL IS THE MOST LIKELY BREACH PATH, because this project is
+      operated by agents that have GRETIL and TITUS text in training and will complete an unclear reading
+      helpfully and silently if asked. An agent asked to "fill in the missing aksara" is not performing
+      transcription, it is performing recall from an encumbered corpus, and the output is a derivative of
+      that corpus no matter which scan was on screen.
+      OPERATIONAL TEST: transcribe what is ON THE PAGE, including anything that looks wrong. Where a
+      character is genuinely unclear, mark it [?] and move on. NEVER fill it from recall, from a known
+      parallel, from another edition, or by asking any model. Ambiguities resolve ONLY by a second pass at
+      higher zoom on the same scan, a second independent public-domain witness, or a second human reading the
+      same image. Passages retaining unresolved [?] ship as PHILOLOGICAL_REVIEW_REQUIRED and are never
+      silently completed.
+      WHY THIS IS A RIGHTS RULE AND NOT A QA RULE: a breach makes the transcription a silent derivative of an
+      encumbered work, which collapses the entire public-domain redistribution basis. The consequence is
+      legal, not editorial. It is also UNDETECTABLE AFTER THE FACT, which is precisely why it must be a
+      numbered rule the tooling and the humans both read, rather than guidance inside one report.
+      SCOPE IS ALL FOUR VEDAS, NOT ONLY ATHARVAVEDA. It governs any future transcription from a
+      public-domain print, including the Weber 1849 route recorded as the only path to a genuine Sukla
+      Yajurveda parallel witness, and any fresh Samaveda transcription from a public-domain Kauthuma edition.
+      DISCOVERED 2026-09-07 reading leaf n420 of the Roth and Whitney 1856 Atharvaveda scan, when AVS 20.36.1
+      was recognised as the Rigveda parallel RV 6.19.1. Kanda 20 is largely Rigvedic, so the temptation
+      recurs across a large fraction of its 959 units.
