@@ -1150,15 +1150,16 @@ blockers:
       transcription_fidelity_measured: >-
         NEW, OPEN_RESEARCH. Model transcription of this source was attempted at production
         settings under the two-stage protocol and MEASURED rather than assumed.
-        MEASURED OVER 249 UNITS READ INDEPENDENTLY TWICE (kandas 1-2, 327 units total):
-          VERIFIED_EXACT 130, exact agreement rate 0.522.
+        MEASURED OVER 272 UNITS READ INDEPENDENTLY TWICE (kandas 1-2, 360 units total):
+          VERIFIED_EXACT 136, exact agreement rate 0.500.
           VERIFIED_WITH_ORTHOGRAPHIC_NOTE 47 - agree on the letters, differ in accent or in
           punctuation, numerals and spacing.
           TRANSCRIPTION_UNCERTAIN 72 - differ in the letters themselves, e.g. AVS 2.19.1
           read as "dvesi" by one reader and "dvesti" by the other.
           PHILOLOGICAL_REVIEW_REQUIRED 78 - one reader saw a unit the other did not.
         THE RATE IS UNSTABLE AND EVERY EARLIER FIGURE IS WITHDRAWN. Successive samples gave
-        0.00 (22 units), 0.26 (46), 0.485 (167), 0.505 (204), 0.542 (227), 0.522 (249).
+        0.00 (22 units), 0.26 (46), 0.485 (167), 0.505 (204), 0.542 (227), 0.522 (249),
+        0.500 (272). It has now FALLEN TWICE.
         AN EARLIER VERSION OF THIS ENTRY CALLED THAT A "MONOTONE CLIMB" AND SAID THE
         MEASUREMENT HAD "RISEN EVERY TIME". IT THEN FELL. The monotonicity was a trend
         asserted from five points, which is the same overgeneralisation this entry was

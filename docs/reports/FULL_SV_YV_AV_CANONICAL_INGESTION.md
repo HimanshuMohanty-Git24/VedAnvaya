@@ -271,21 +271,22 @@ canonical Sanskrit**, and the reason is a measurement rather than a shortfall of
 ### The measurement, and the mistake I made reading it
 
 Transcription was attempted at production settings. Measured over **249 units read
-independently twice** (kāṇḍas 1–2; 327 units in total):
+independently twice** (kāṇḍas 1–2; 360 units in total):
 
 | Result | Count |
 |---|---|
-| `VERIFIED_EXACT` (codepoint agreement) | 130 — rate **0.522** |
+| `VERIFIED_EXACT` (codepoint agreement) | 136 — rate **0.500** |
 | Agree on letters; differ in accent, punctuation, numerals or spacing | 47 |
 | Differ in the **letters themselves** | 72 |
 | One reader saw a unit the other did not | 78 |
-| Units carrying any Vedic accent mark (of 327 total) | 19 |
+| Units carrying any Vedic accent mark (of 360 total) | 27 |
 
 An example of a letter-level disagreement, AVS 2.19.1: one reader read `द्वेषि`, the other
 `द्वेष्टि`.
 
 **The rate is unstable and every earlier figure is withdrawn.** Successive samples gave 0.00
-(22 units), 0.26 (46), 0.485 (167), 0.505 (204), 0.542 (227), 0.522 (249). I recorded the
+(22 units), 0.26 (46), 0.485 (167), 0.505 (204), 0.542 (227), 0.522 (249), 0.500 (272)
+— it has now fallen twice. I recorded the
 first in a sentence that *also* said 22 units were "enough to refuse promotion and NOT enough
 to characterise the error rate" — and then stated the rate anyway. Then I twice described the
 series as a **"monotone climb"** that had "risen every time" — and it fell. That is the same
@@ -328,7 +329,7 @@ descender of `ु/ू/ृ` occupy the *same* depth band, so nothing automatic se
 n15, 10 of 24 candidates were real accents and 14 were the bare vowel curl. Accent is a
 **dedicated pass with a known method**, not an open problem.
 
-So what this records is an exact-agreement rate of 0.522 on a small sample **at the wrong
+So what this records is an exact-agreement rate of 0.500 on a small sample **at the wrong
 resolution**, with the defect fixed — the whole volume re-acquired at width 4000, 478
 leaves, 676,021,671 bytes, aggregate `4008cdca…17b6` — and the measurement **not yet
 repeated at the right one**. It is not yet evidence about what model transcription can do

@@ -1,28 +1,28 @@
 {
-  "accent_fidelity_gap": 308,
+  "accent_fidelity_gap": 333,
   "accent_fidelity_note": "The printed source marks accent throughout. Units carrying none have dropped a real feature of the page, which two agreeing readers cannot detect between them. This figure is the accent-reproduction gap and is NOT covered by VERIFIED_EXACT.",
-  "exact_agreement_rate_over_units_read_by_both": 0.5221,
+  "exact_agreement_rate_over_units_read_by_both": 0.5,
   "kandas_present": [
     1,
     2
   ],
-  "leaves_reconciled": 27,
-  "leaves_stage1": 20,
-  "leaves_stage2": 27,
+  "leaves_reconciled": 29,
+  "leaves_stage1": 22,
+  "leaves_stage2": 29,
   "note": "VERIFIED_EXACT is assigned only by agreement between two independent readings of the same page image. No reading is ever synthesised from two disagreeing ones: under RIGHTS-13 a merged reading has no traceable source.",
   "policy": "bsb-1856-devanagari-v1",
-  "release_eligible_units": 19,
+  "release_eligible_units": 27,
   "status_counts": {
-    "PHILOLOGICAL_REVIEW_REQUIRED": 78,
-    "TRANSCRIPTION_UNCERTAIN": 72,
-    "VERIFIED_EXACT": 130,
-    "VERIFIED_WITH_ORTHOGRAPHIC_NOTE": 47
+    "PHILOLOGICAL_REVIEW_REQUIRED": 88,
+    "TRANSCRIPTION_UNCERTAIN": 80,
+    "VERIFIED_EXACT": 136,
+    "VERIFIED_WITH_ORTHOGRAPHIC_NOTE": 56
   },
   "unclear_marks_total": 0,
-  "units_carrying_any_vedic_accent": 19,
-  "units_read_by_both": 249,
-  "units_read_by_one_only": 78,
-  "units_stage1": 249,
-  "units_stage2": 327,
-  "units_total": 327
+  "units_carrying_any_vedic_accent": 27,
+  "units_read_by_both": 272,
+  "units_read_by_one_only": 88,
+  "units_stage1": 272,
+  "units_stage2": 360,
+  "units_total": 360
 }
