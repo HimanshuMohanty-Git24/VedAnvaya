@@ -1,0 +1,135 @@
+schema_version: 1.0.0
+compiled: "2026-09-07"
+checkpoint_commit: dc7d202
+purpose: >-
+  Consolidated, non-authoritative snapshot of the three open canonical-Sanskrit blockers
+  (YV, SV, AV) for the FOUR_VEDA_CANONICAL_SANSKRIT_BLOCKER_CLOSURE session. Authoritative
+  detail lives in docs/FOUR_VEDA_RIGHTS_MATRIX.md, docs/FOUR_VEDA_SOURCE_ADJUDICATION.md and
+  docs/FOUR_VEDA_STRUCTURAL_MODEL.md. This file restates, it does not decide.
+human_readable_mirror: docs/FOUR_VEDA_CANONICAL_SANSKRIT_BLOCKERS.md
+note: >-
+  Originally scoped to data/qa/, moved here because data/qa/** is gitignored
+  build-output space (gate results, comparison TSVs) and this is hand-authored,
+  committed registry content, matching data/source_registry/four_veda_source_matrix.yaml's
+  role rather than a generated QA artifact.
+
+blocker_states:
+  - OPEN_RESEARCH
+  - OPEN_ENGINEERING
+  - OPEN_RIGHTS
+  - OPEN_PHILOLOGICAL_REVIEW
+  - RESOLVED
+  - DEFERRED_NONBLOCKING
+
+blockers:
+  - work_id: VG:WORK:YV:VSM
+    veda: Shukla Yajurveda
+    recension: Madhyandina
+    primary_blocker_question: >-
+      Can we deterministically produce a faithful 1975/1975 PRIMARY_TEXT layer from the
+      already-approved artifact without making philological guesses?
+    dimensions:
+      rights: RESOLVED
+      source_identity: RESOLVED
+      engineering: OPEN_ENGINEERING
+      philological_review: OPEN_PHILOLOGICAL_REVIEW
+      metadata_schema: OPEN_ENGINEERING
+    known_facts:
+      adhyayas: 40
+      mantra_addresses: 1975
+      faithful_layer_coverage: "1836/1975"
+      complete_layer_coverage: "1958/1975"
+      complete_layer_role: EXTRACTED_FROM_CONTAINER
+      edition: "Vasudeva Sarma Panasikara, 2nd edn, Nirnaya Sagara Press, Bombay, Saka 1850 = CE 1929"
+      variant_requiring_review: "VSM 16.37 (srutyaya vs satyaya)"
+      projected_rishi_assertions_at_full_scale: 2106
+      rishi_assertions_in_pilot: 203
+      devata_chandas_claims_invented: false
+    exit_criteria:
+      - "1975/1975 primary Sanskrit passages as PRIMARY_TEXT, or explicit recorded evidence it cannot be produced from approved sources"
+      - "No silent variant selection (VSM 16.37 resolved by recorded human review)"
+      - "Deterministic byte-identical rebuild maintained"
+      - "Passage IDs stable across pilot-to-full-corpus scale-up"
+    forbidden_shortcuts:
+      - "Selecting a text_role in build code instead of data/registry/text_versions.yaml"
+      - "Resolving the VSM 16.37 variant unilaterally without recorded human review"
+      - "Inventing devata/chandas values not supported by the Sarvanukramana-sutra"
+
+  - work_id: VG:WORK:SV:KAU
+    veda: Samaveda
+    recension: Kauthuma
+    primary_blocker_question: >-
+      Can we establish a redistributable, edition-defensible Kauthuma canonical witness and
+      freeze stable passage identity?
+    dimensions:
+      rights: RESOLVED
+      source_edition_identity: OPEN_RESEARCH
+      structural_count_discrepancy: OPEN_RESEARCH
+      engineering_parser_hierarchy: RESOLVED
+      engineering_repoint_to_wikisource: OPEN_ENGINEERING
+      english_translation: DEFERRED_NONBLOCKING
+      gana_coverage: DEFERRED_NONBLOCKING
+    known_facts:
+      hierarchy: [Arcika, Prapathaka, Ardha, Dasati, Verse]
+      identity_status: RESEARCH_REQUIRED
+      key_pattern: null
+      computed_verse_keys: 1868
+      edition_claimed_verse_count: 1875
+      count_gap: 7
+      selected_primary_source: "Sanskrit Wikisource (CC_BY_SA, 840 pages)"
+      rejected_primary_source: "GRETIL Kauthuma TEI 2020 (PERMISSION_REQUIRED, Pandey lineage)"
+      mirrorable_audio_files: 474
+      mirrorable_audio_licenses: ["CC_BY_SA: 458", "CC0: 16"]
+      gana_count_estimate: 2639
+      arcika_verse_count: 1875
+    exit_criteria:
+      - "Canonical witness/source decision recorded in data/registry/works.yaml"
+      - "Recension Kauthuma re-confirmed against the selected witness"
+      - "Edition/provenance decision recorded (named edition, or explicit frozen-without-edition statement)"
+      - "1868/1875 discrepancy explained"
+      - "Stable identity/key frozen (identity_status: FINAL)"
+      - "Arcika vs gana coverage distinction stated explicitly in any release note"
+      - "Deterministic rebuild maintained after any source re-pointing"
+    forbidden_shortcuts:
+      - "Treating two Pandey-lineage re-publishers (GRETIL, TITUS, Sanskrit Library) agreeing as corroboration"
+      - "Claiming Samaveda coverage while holding only the arcika, silently omitting gana"
+      - "Freezing key_pattern before an edition decision is made"
+
+  - work_id: VG:WORK:AV:SAU
+    veda: Atharvaveda
+    recension: Shaunaka
+    primary_blocker_question: >-
+      Can we obtain/build a legally clean, provenance-explicit Saunaka primary Sanskrit
+      layer without laundering the modern Orlandi-derived digital text?
+    dimensions:
+      rights: OPEN_RIGHTS
+      source_identity_recension: RESOLVED
+      engineering: RESOLVED
+      structural_count_reconciliation: OPEN_RESEARCH
+      clean_source_acquisition: OPEN_RESEARCH
+    known_facts:
+      kandas: 20
+      suktas_computed: 731
+      suktas_commonly_cited: 730
+      mantras_computed: 5839
+      mantras_commonly_cited_approx: 5977
+      units_with_locator_collisions: 4
+      encumbered_lineage: ["GRETIL avs_acu.htm/avs___u.htm", "TITUS", "VedaWeb AVS Sanskrit"]
+      encumbered_lineage_same_text: true
+      encumbered_root: "Orlandi, Pisa: Giardini, 1991 (in copyright)"
+      clean_route_identified: "Roth & Whitney, Berlin 1856 (public domain by age)"
+      clean_route_acquired: false
+      permission_route: "Written permission from the TITUS Project (unlocks TITUS + GRETIL + VedaWeb)"
+      permission_sought: false
+      paippalada_recension_excluded_by: assert_saunaka_recension()
+    exit_criteria:
+      - "Saunaka source confirmed via two independent in-artifact witnesses for any new source"
+      - "Redistributable or otherwise project-approved rights for primary Sanskrit"
+      - "Source lineage independent of the Orlandi/TITUS/GRETIL/VedaWeb encumbered chain"
+      - "731-sukta and 5839-mantra structural counts reconciled against or explained relative to a second complete edition"
+      - "Deterministic passage identity preserved (hierarchy stays FINAL, unchanged)"
+      - "Deterministic rebuild maintained"
+    forbidden_shortcuts:
+      - "Using the existing REFERENCE_ONLY digital text as the hidden basis of a supposedly independent PD transcription"
+      - "Substituting Paippalada text for Shaunaka"
+      - "Treating GRETIL's REFERENCE PURPOSES ONLY pointer as a rights grant"
