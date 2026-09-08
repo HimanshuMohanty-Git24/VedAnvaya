@@ -380,7 +380,12 @@ class TestGeometricAccentExtraction:
     ground truth in the project that more than one reader has ever confirmed.
     """
 
-    GROUND_TRUTH_LINE_12: ClassVar[dict[str, int]] = {"anudatta": 7, "svarita": 3}
+    # canvas n32 line 12 confirmed by three readers, line 19 by two, each
+    # working alone from a 1:1 rendering of that line and nothing else.
+    GROUND_TRUTH: ClassVar[dict[int, dict[str, int]]] = {
+        12: {"anudatta": 7, "svarita": 3},
+        19: {"anudatta": 7, "svarita": 4},
+    }
 
     def test_the_two_marks_have_separate_shape_profiles(self) -> None:
         """One size rule cannot cover both, and assuming it could cost a pass.
@@ -416,17 +421,32 @@ class TestGeometricAccentExtraction:
         from PIL import Image
 
         blank = Image.new("L", (400, 120), color=255)
-        result = extract.extract_line(blank, 20, 100)
+        result = extract.extract_line(blank, 20, 100, 120.0)
         assert result["marks"] == []
 
-    def test_it_reproduces_the_reading_three_readers_agreed_on(self) -> None:
+    def test_bands_are_placed_off_pitch_not_off_a_line_s_own_height(self) -> None:
+        """A line's measured height is not a stable ruler.
+
+        Whether the anudatta bars merge into the body's ink run varies line to
+        line: on canvas n32 that made line 19's run 160px against line 12's
+        121, so a band derived from the run bottom searched the empty space
+        below line 19's bars and found none of its seven.
+        """
+        extract = _load("extract_atharvaveda_accents")
+        assert extract.line_pitch([(0, 100), (170, 270), (340, 440)]) == 170.0
+        assert extract.ANUDATTA_BAND[0] > 0, "the anudatta band sits below the rule"
+        assert extract.SVARITA_BAND[0] < 0, "the svarita band sits above the rule"
+
+    @pytest.mark.parametrize("line_index", sorted(GROUND_TRUTH))
+    def test_it_reproduces_the_reading_the_readers_agreed_on(self, line_index: int) -> None:
         extract = _load("extract_atharvaveda_accents")
         crop = _load("crop_atharvaveda_leaf")
         if not crop.leaf_path(32).exists():
             pytest.skip("1856 scan not present in this checkout")
-        result = extract.extract(32, 12)["lines"][0]
-        assert result["anudatta_count"] == self.GROUND_TRUTH_LINE_12["anudatta"]
-        assert result["svarita_count"] == self.GROUND_TRUTH_LINE_12["svarita"]
+        expected = self.GROUND_TRUTH[line_index]
+        result = extract.extract(32, line_index)["lines"][0]
+        assert result["anudatta_count"] == expected["anudatta"]
+        assert result["svarita_count"] == expected["svarita"]
 
     def test_the_running_head_carries_no_accents(self) -> None:
         """Line 0 of n32 is the running head, which this print does not accent."""

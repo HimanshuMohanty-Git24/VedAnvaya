@@ -143,10 +143,19 @@ def classify(
     width, height = x1 - x0 + 1, y1 - y0 + 1
 
     # Material entering from the top of either band belongs to the line above,
-    # which is the attribution error this whole exercise exists to avoid. A
-    # svarita, by contrast, legitimately runs down to the rule and so touches
-    # the bottom of its band; only the top edge is disqualifying.
+    # which is the attribution error this whole exercise exists to avoid.
     if y0 <= band[0]:
+        return None
+    # An anudatta floats free in the gutter, so a blob that also runs out of
+    # the bottom is a descender or a danda passing through. A svarita is the
+    # exception: it legitimately runs down to the rule and so must be allowed
+    # to touch the bottom of its band.
+    #
+    # This matters more than it sounds. A vocalic-r descender clipped by the
+    # band edge presents as a broad flat dash and passes every shape test --
+    # it is exactly the false positive all three readers rejected by hand
+    # under kr and pr.
+    if kind == "anudatta" and y1 >= band[1] - 1:
         return None
 
     shape = SHAPES[kind]
@@ -166,7 +175,31 @@ def classify(
     }
 
 
-def extract_line(block: Image.Image, top: int, bottom: int) -> dict:
+def line_pitch(lines: list[tuple[int, int]]) -> float:
+    """Median distance between consecutive line tops.
+
+    The bands are placed as fractions of this rather than of a line's own
+    measured height, because a line's height is not stable: whether the
+    anudatta bars merge into the body's ink run or stand apart from it varies
+    line to line. On canvas n32 that made line 19's run 160px against line
+    12's 121, and a band derived from the run bottom then searched the empty
+    space *below* the bars. Pitch does not move.
+    """
+    if len(lines) < 2:
+        return 0.0
+    gaps = sorted(lines[i + 1][0] - lines[i][0] for i in range(len(lines) - 1))
+    return float(gaps[len(gaps) // 2])
+
+
+# Where the two marks sit relative to the top of the sirorekha, in units of
+# line pitch. Measured on canvas n32 lines 12 and 19, whose bars fall at
+# 0.61-0.70 and 0.58-0.63 of pitch below the rule respectively, and
+# corroborated by three readers who each described the same fixed banding.
+ANUDATTA_BAND = (0.50, 0.80)
+SVARITA_BAND = (-0.25, 0.0)
+
+
+def extract_line(block: Image.Image, top: int, bottom: int, pitch: float) -> dict:
     pad = round((bottom - top) * VERTICAL_PAD)
     crop_top = max(0, top - pad)
     line = block.crop((0, crop_top, block.width, min(block.height, bottom + pad)))
@@ -180,12 +213,18 @@ def extract_line(block: Image.Image, top: int, bottom: int) -> dict:
     rule_top, rule_bottom = (body_top + v for v in find_headline_band(core))
     headline = body_top + find_headline(core)
 
-    # Svarita stands clear above the rule; anudatta sits below the glyph body,
-    # in the gutter before the next line. Both bands stop short of the rule
-    # itself, or a flood fill escapes along it.
-    height = body_bottom - body_top
-    svarita_band = (max(0, rule_top - round(height * 0.45)), rule_top - 2)
-    anudatta_band = (body_bottom, min(h, body_bottom + round(height * 0.35)))
+    # Both bands are placed off the rule, at fractions of line pitch. The
+    # svarita band stops two rows short of the rule, or a flood fill escapes
+    # along it and swallows every svarita into one line-long component.
+    span = pitch if pitch else float(body_bottom - body_top)
+    svarita_band = (
+        max(0, rule_top + round(span * SVARITA_BAND[0])),
+        rule_top - 2,
+    )
+    anudatta_band = (
+        min(h, rule_top + round(span * ANUDATTA_BAND[0])),
+        min(h, rule_top + round(span * ANUDATTA_BAND[1])),
+    )
 
     marks: list[dict] = []
     for band, kind in ((svarita_band, "svarita"), (anudatta_band, "anudatta")):
@@ -214,6 +253,7 @@ def extract(canvas_index: int, line_index: int | None = None) -> dict:
     image = Image.open(leaf_path(canvas_index)).convert("L")
     block = image.crop(find_text_block(image))
     lines = find_lines(block)
+    pitch = line_pitch(lines)
     wanted = range(len(lines)) if line_index is None else [line_index]
 
     out = []
@@ -221,10 +261,15 @@ def extract(canvas_index: int, line_index: int | None = None) -> dict:
         if not 0 <= index < len(lines):
             raise SystemExit(f"leaf {canvas_index} has {len(lines)} lines; no line {index}")
         top, bottom = lines[index]
-        result = extract_line(block, top, bottom)
+        result = extract_line(block, top, bottom, pitch)
         result["line_index"] = index
         out.append(result)
-    return {"canvas_index": canvas_index, "lines_detected": len(lines), "lines": out}
+    return {
+        "canvas_index": canvas_index,
+        "lines_detected": len(lines),
+        "line_pitch": pitch,
+        "lines": out,
+    }
 
 
 def main() -> None:

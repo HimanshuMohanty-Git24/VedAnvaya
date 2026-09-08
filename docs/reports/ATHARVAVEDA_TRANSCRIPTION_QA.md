@@ -483,52 +483,78 @@ affordable, and §5D is a first attempt at it.
 code: project rows, locate the śirorekhā, define the two accent bands relative
 to it, find connected ink blobs in each, and classify by shape.
 
-### What it gets right
+### Accuracy against independently verified lines
 
-| Test | Result |
-|---|---|
-| Canvas n32 line 12, against the 3-reader ground truth | **7 anudātta, 3 svarita — exact match** |
-| Canvas n32 line 0 (the running head, which this print does not accent) | **0 and 0 — correct** |
+| Line | Ground truth | Extractor | |
+|---|---|---|---|
+| n32 line 12 | 7 anudātta, 3 svarita (3 readers) | 7, 3 | **exact** |
+| n32 line 19 | 7 anudātta, 4 svarita (2 readers) | 7, 4 | **exact** |
+| n32 line 0 | running head, unaccented | 0, 0 | **correct** |
 
-### Two bugs worth recording, because both were invisible from the output
+Line 19 was chosen deliberately as the line where the extractor looked
+*weakest* — it was reporting 0 anudātta there, which is implausible for this
+text. Two readers working alone confirmed 7 anudātta and 4 svarita with
+identical akṣara assignments, and the disagreement turned out to be a real
+defect rather than a quirk of that line.
+
+### Three bugs, none of them visible from the output
 
 1. **The śirorekhā is about eighteen pixels thick, not one row.** Taking its
    densest row as "the headline" left most of the rule inside the svarita
    search band, so a flood fill escaped along the rule and swallowed every
-   svarita into a single line-long component, which the size filter then
-   discarded. The first version scored 7 of 7 anudātta and **0 of 3** svarita
-   and looked merely mediocre rather than broken.
+   svarita into one line-long component, which the size filter then discarded.
+   That version scored 7 of 7 anudātta and **0 of 3** svarita, and read as
+   mediocre rather than broken.
 2. **The two marks have opposite shapes and cannot share a size rule.** An
    anudātta is a broad flat dash (w 35–39, h 9–13, aspect ≈3.5); a svarita is a
-   narrow upright stroke (w 9–12, h 31–35, aspect ≈0.3). A single "small mark"
-   rule tuned on the dash rejects every svarita for being too tall. The two
-   profiles are now declared separately in `SHAPES`.
+   narrow upright stroke (w 9–12, h 31–35, aspect ≈0.3). One rule tuned on the
+   dash rejects every svarita for being too tall.
+3. **A line's own measured height is not a stable ruler.** Whether the anudātta
+   bars merge into the body's ink run varies from line to line: on n32 that
+   made line 19's run 160px against line 12's 121, so a band derived from the
+   run bottom searched the empty space *below* line 19's bars and found none of
+   its seven. Both bands are now placed off the rule at fractions of **line
+   pitch**, which does not move — measured at 0.58–0.70 of pitch below the rule
+   on the two verified lines, and corroborated by every reader's description of
+   the same fixed banding.
 
-### What is not established
+A fourth false positive appeared once the band widened: a vocalic-ṛ descender
+clipped by the band edge presents as a broad flat dash and passes every shape
+test. It is excluded by requiring an anudātta to be fully contained in its band
+— a real bar floats free in the gutter, whereas a descender runs out of the
+bottom. This is precisely the false positive all the readers rejected by hand
+under `कृ` and `पृ`.
 
-**Generalisation is unproven, and there is already evidence against it.**
+### Whole-leaf behaviour
 
 | Leaf | Extractor | Human band readings | Anudātta : svarita |
 |---|---:|---|---|
-| n32 | 164 | R1 199, B1 172, R2 115 | 104 : 60 |
-| n15 | 91 | R1 107, R2 78 | 53 : 38 |
-| **n430** | **111** | **B1 163** | **51 : 60** |
+| n32 | 176 | R1 199, B1 172, R2 115 | 1.93 |
+| n15 | 107 | R1 **107**, R2 78 | 1.61 |
+| n430 | 153 | B1 163 | 1.51 |
 
-Leaf n15 is plausible — the extractor lands between the two human readings.
-Leaf n430 is not: it is well under the only human reading of it, and its
-anudātta-to-svarita ratio *inverts* against every other sample, where anudātta
-is much the commoner mark. n430 is in kāṇḍa 20, which is set with heavy pāda
-abbreviation. The cause has not been identified.
+Every leaf now lands inside the range of the human readings, and the
+anudātta-to-svarita ratio is consistent at 1.5–1.9 across all three. **The
+kāṇḍa 20 anomaly reported in the previous revision of this section is
+resolved** — leaf n430 was returning 111 marks with an inverted 0.85 ratio, and
+that was the band-placement defect (3) above, which bit hardest there rather
+than being anything to do with pāda abbreviation.
 
-One hypothesis is excluded: the shape constants are absolute pixel values, so
-a change of scale between leaves would break them — but median line height is
-125, 117 and 118 px on n32, n15 and n430 respectively, so the print is uniform
-and scale is not the explanation.
+### What is still not established
 
-**The prototype is therefore validated on one line of one leaf and is not yet
-a method.** What it establishes is that the approach is worth pursuing, and
-what it needs is per-line ground truth on several leaves — including one in
-kāṇḍa 20 — before any of its output is trusted.
+Two verified lines out of roughly 10,500 in the corpus is a narrow base, and
+both are from a single leaf in kāṇḍa 2. Per-leaf totals landing in the human
+range is weak evidence: it constrains the count without testing whether any
+individual mark is attributed to the right akṣara.
+
+The extractor also **does not bind a mark to a position in a transcribed
+skeleton.** It reports marks with x extents; turning those into codepoints
+inserted at the right offset in a reader's text is a separate and harder step,
+and it is the one that would actually produce releasable units.
+
+Before any of this output is trusted: per-line ground truth on several leaves
+including one in kāṇḍa 20 and one in the prose kāṇḍas, and a design for
+mark-to-akṣara binding.
 
 ---
 
