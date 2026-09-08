@@ -375,6 +375,23 @@ def reconcile(r1_dir: pathlib.Path, r2_dir: pathlib.Path, out_dir: pathlib.Path)
         "exact_agreement_rate_over_units_read_by_both": (
             round(status_counts["VERIFIED_EXACT"] / both, 4) if both else None
         ),
+        # VERIFIED_EXACT means identical *and* accent-bearing, so on a skeleton run
+        # -- where readers are told to leave the accent layer to the geometric
+        # pipeline -- it is 0 by construction and the rate above reads as total
+        # disagreement. This is the number that actually answers "did the two
+        # readers produce the same codepoints".
+        "codepoint_identical_rate_over_units_read_by_both": (
+            round(
+                (status_counts["VERIFIED_EXACT"] + status_counts["VERIFIED_WITH_ORTHOGRAPHIC_NOTE"])
+                / both,
+                4,
+            )
+            if both
+            else None
+        ),
+        "codepoint_identical_units": (
+            status_counts["VERIFIED_EXACT"] + status_counts["VERIFIED_WITH_ORTHOGRAPHIC_NOTE"]
+        ),
         "character_disagreement_rate_over_units": (
             round(char_disagree / both, 4) if both else None
         ),

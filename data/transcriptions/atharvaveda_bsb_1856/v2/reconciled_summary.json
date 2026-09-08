@@ -1,0 +1,30 @@
+{
+  "accent_bearing_units_read_by_both": 0,
+  "accent_disagreement_rate_over_accent_bearing_units": null,
+  "accent_reproduction_gap": 31,
+  "accent_reproduction_gap_note": "The printed source marks accent throughout. A unit carrying none has dropped a real feature of the page, which two agreeing readers cannot detect between them.",
+  "boundary_disagreement_rate_over_units": 0.0,
+  "character_disagreement_rate_over_skeleton_chars": 0.0065,
+  "character_disagreement_rate_over_units": 0.3226,
+  "exact_agreement_rate_over_units_read_by_both": 0.0,
+  "leaves": 2,
+  "merge_policy": "No reading is synthesised from two disagreeing ones; a merged reading has no traceable source.",
+  "policy": "bsb-1856-devanagari-v2",
+  "provenance_policy": "A reading performed by a model is recorded as MODEL_VISUAL_READ. HUMAN_REVIEWED is reserved for material an actual human reviewed and is never inferred from a model reading. A unit whose two readings do not both carry complete provenance is withheld from release even when the readings agree.",
+  "reader_kinds_seen": [
+    "MODEL_VISUAL_READ"
+  ],
+  "release_eligible_units": 21,
+  "status_counts": {
+    "CHARACTER_UNCERTAIN": 10,
+    "VERIFIED_WITH_ORTHOGRAPHIC_NOTE": 21
+  },
+  "units_aligned_across_an_unstated_coordinate": 1,
+  "units_carrying_any_vedic_accent": 0,
+  "units_read_by_both": 31,
+  "units_read_by_one_only": 0,
+  "units_total": 31,
+  "units_with_complete_provenance": 31,
+  "units_withheld_for_incomplete_provenance": 0,
+  "unstated_coordinate_note": "Pairs the readers agreed on as units, but where one of them recorded a structural coordinate the page does not print. Counted here so the alignment is never silent; the coordinate disagreement is not evidence about the text and is graded only on the text."
+}
