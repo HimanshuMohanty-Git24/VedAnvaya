@@ -1,0 +1,25 @@
+{
+  "accent_bearing_units_read_by_both": 21,
+  "accent_disagreement_rate_over_accent_bearing_units": 1.0,
+  "accent_reproduction_gap": 0,
+  "accent_reproduction_gap_note": "The printed source marks accent throughout. A unit carrying none has dropped a real feature of the page, which two agreeing readers cannot detect between them.",
+  "boundary_disagreement_rate_over_units": 0.0476,
+  "character_disagreement_rate_over_skeleton_chars": 0.0707,
+  "character_disagreement_rate_over_units": 0.8571,
+  "exact_agreement_rate_over_units_read_by_both": 0.0,
+  "leaves": 2,
+  "merge_policy": "No reading is synthesised from two disagreeing ones; a merged reading has no traceable source.",
+  "policy": "bsb-1856-devanagari-v2",
+  "release_eligible_units": 0,
+  "status_counts": {
+    "ACCENT_UNCERTAIN": 2,
+    "BOUNDARY_UNCERTAIN": 1,
+    "CHARACTER_UNCERTAIN": 18
+  },
+  "units_aligned_across_an_unstated_coordinate": 8,
+  "units_carrying_any_vedic_accent": 21,
+  "units_read_by_both": 21,
+  "units_read_by_one_only": 0,
+  "units_total": 21,
+  "unstated_coordinate_note": "Pairs the readers agreed on as units, but where one of them recorded a structural coordinate the page does not print. Counted here so the alignment is never silent; the coordinate disagreement is not evidence about the text and is graded only on the text."
+}

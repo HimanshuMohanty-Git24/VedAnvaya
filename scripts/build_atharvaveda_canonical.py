@@ -279,6 +279,21 @@ def assert_no_contamination(versions: list[TextVersion]) -> None:
             )
 
 
+def qa_status(rows: list[dict[str, Any]], units: list[dict[str, Any]]) -> QAStatus:
+    """The release's QA verdict, read off the reconciliation rather than asserted.
+
+    A build that stamps PASSED on itself regardless of what two readers
+    actually produced is the vacuous pass this project's QA rule forbids. The
+    verdict here is derived: nothing reconciled is NOT_RUN, nothing released is
+    FAILED, and a release that leaves units behind says so.
+    """
+    if not rows:
+        return QAStatus.NOT_RUN
+    if not units:
+        return QAStatus.FAILED
+    return QAStatus.PASSED if len(units) == len(rows) else QAStatus.PASSED_WITH_WARNINGS
+
+
 def write_backlog(rows: list[dict[str, Any]]) -> int:
     """Every unit that did not reach release, with its leaf and its reason."""
     backlog = [row for row in rows if not row["release_eligible"]]
@@ -309,6 +324,12 @@ def write_backlog(rows: list[dict[str, Any]]) -> int:
                         "mantra": row["mantra"],
                         "transcription_status": row["transcription_status"],
                         "reconciliation_detail": row["reconciliation_detail"],
+                        "coordinate_note": row.get("coordinate_note"),
+                        # Both readings travel with the item. Without them the
+                        # backlog states a verdict an adjudicator cannot act on
+                        # without going back to the reconciled file by hand.
+                        "r1_text": row.get("r1_text"),
+                        "r2_text": row.get("r2_text"),
                         "source_image": (
                             f"data/raw/bsb_mdz/2026-09-07/{BSB_ID}/{row['mdz_image_id']}.jpg"
                         ),
@@ -394,7 +415,7 @@ def build(reconciled_dir: Path = RECONCILED_DIR) -> dict[str, Any]:
         source_artifact_ids=[ARTIFACT_ID],
         parser_versions={TEXT_VERSION_ID: PARSER_VERSION},
         rights_summary={ARTIFACT_ID: "PUBLIC_DOMAIN"},
-        qa_status=QAStatus.PASS,
+        qa_status=qa_status(rows, units),
         reconciliation_policy_version=PARSER_VERSION,
     )
     backlog_count = write_backlog(rows)

@@ -228,6 +228,92 @@ class TestReconciliationOutput:
         assert first == second
 
 
+class TestAlignmentAcrossAnUnstatedCoordinate:
+    """Leaf n15 prints no running head.
+
+    One reader recorded `kanda: null` because the page does not print it; the
+    other carried the kanda over and wrote `1`. They had in fact read the same
+    eight units identically. Keying on the raw tuple turned that into sixteen
+    one-sided units and measured nothing, so alignment tolerates a coordinate
+    one reader left unstated — and nothing else.
+    """
+
+    @staticmethod
+    def _align(left: dict, right: dict) -> list:
+        return reconcile.align(
+            {reconcile.unit_key(left): left}, {reconcile.unit_key(right): right}
+        )
+
+    def test_a_null_coordinate_does_not_split_two_readings_of_one_unit(self) -> None:
+        aligned = self._align(
+            unit(15, 1, "क", kanda=None, sukta=1), unit(15, 1, "क", kanda=1, sukta=1)
+        )
+        assert len(aligned) == 1
+        _, a, b, note = aligned[0]
+        assert a is not None and b is not None
+        assert note is not None and "unstated coordinate" in note
+
+    def test_the_stated_coordinate_is_the_one_carried(self) -> None:
+        aligned = self._align(
+            unit(15, 1, "क", kanda=None, sukta=1), unit(15, 1, "क", kanda=1, sukta=1)
+        )
+        assert aligned[0][0] == (15, 1, 1, 1)
+
+    def test_two_readers_who_state_different_coordinates_do_not_align(self) -> None:
+        """A null is 'not printed here'. Two different numbers is a real disagreement."""
+        aligned = self._align(
+            unit(15, 1, "क", kanda=1, sukta=1), unit(15, 1, "क", kanda=2, sukta=1)
+        )
+        assert len(aligned) == 2
+        assert all(a is None or b is None for _, a, b, _ in aligned)
+
+    def test_an_ambiguous_rescue_is_refused(self) -> None:
+        """Two candidates means the null cannot be resolved, so it stays unpaired."""
+        left = unit(15, 1, "क", kanda=None, sukta=1)
+        r2_rows = {}
+        for kanda in (1, 2):
+            row = unit(15, 1, "क", kanda=kanda, sukta=1)
+            r2_rows[reconcile.unit_key(row)] = row
+        aligned = reconcile.align({reconcile.unit_key(left): left}, r2_rows)
+        assert all(a is None or b is None for _, a, b, _ in aligned)
+
+    def test_a_genuinely_one_sided_unit_is_still_one_sided(self) -> None:
+        left = unit(15, 1, "क", kanda=1, sukta=1)
+        other = unit(15, 2, "ख", kanda=1, sukta=1)
+        aligned = reconcile.align(
+            {reconcile.unit_key(left): left, reconcile.unit_key(other): other},
+            {reconcile.unit_key(left): left},
+        )
+        one_sided = [item for item in aligned if item[1] is None or item[2] is None]
+        assert len(one_sided) == 1
+
+    def test_the_rescue_is_counted_so_it_is_never_silent(self, tmp_path: Path) -> None:
+        r1, r2, out = tmp_path / "R1", tmp_path / "R2", tmp_path / "out"
+        for directory, kanda in ((r1, None), (r2, 1)):
+            directory.mkdir(parents=True)
+            row = unit(15, 1, f"क{SVARITA}", kanda=kanda, sukta=1)
+            (directory / "leaf_00015.jsonl").write_text(
+                json.dumps(row, ensure_ascii=False) + "\n", encoding="utf-8"
+            )
+        summary = reconcile.reconcile(r1, r2, out)
+        assert summary["units_aligned_across_an_unstated_coordinate"] == 1
+        assert summary["units_read_by_both"] == 1
+        assert summary["units_total"] == 1
+
+    def test_rescued_pairs_are_still_graded_on_their_text(self, tmp_path: Path) -> None:
+        """Tolerating a null coordinate must not tolerate a text disagreement."""
+        r1, r2, out = tmp_path / "R1", tmp_path / "R2", tmp_path / "out"
+        for directory, kanda, text in ((r1, None, "दशवृक्ष"), (r2, 1, "दशवृख्ष")):
+            directory.mkdir(parents=True)
+            row = unit(15, 1, text, kanda=kanda, sukta=1)
+            (directory / "leaf_00015.jsonl").write_text(
+                json.dumps(row, ensure_ascii=False) + "\n", encoding="utf-8"
+            )
+        summary = reconcile.reconcile(r1, r2, out)
+        assert summary["release_eligible_units"] == 0
+        assert summary["status_counts"]["CHARACTER_UNCERTAIN"] == 1
+
+
 class TestContaminationFirewall:
     def test_the_prohibited_source_list_covers_every_named_edition(self) -> None:
         build = _load("build_atharvaveda_canonical")
@@ -242,6 +328,32 @@ class TestContaminationFirewall:
     def test_the_build_timestamp_is_fixed_rather_than_read_from_the_clock(self) -> None:
         build = _load("build_atharvaveda_canonical")
         assert build.BUILD_TIMESTAMP.endswith("Z")
+
+
+class TestReleaseQAStatusIsDerived:
+    """The release must not stamp a verdict on itself.
+
+    The build previously passed a hardcoded pass to `write_release`, so a
+    corpus where two readers agreed on nothing would still have been published
+    carrying a passing QA status.
+    """
+
+    @staticmethod
+    def _status(reconciled: int, released: int):
+        build = _load("build_atharvaveda_canonical")
+        return build.qa_status([{}] * reconciled, [{}] * released)
+
+    def test_a_release_that_freed_nothing_is_failed_not_passed(self) -> None:
+        assert self._status(21, 0) == "FAILED"
+
+    def test_nothing_reconciled_is_not_run_rather_than_a_pass(self) -> None:
+        assert self._status(0, 0) == "NOT_RUN"
+
+    def test_a_partial_release_says_so(self) -> None:
+        assert self._status(21, 8) == "PASSED_WITH_WARNINGS"
+
+    def test_only_a_wholly_released_reconciliation_passes(self) -> None:
+        assert self._status(21, 21) == "PASSED"
 
 
 class TestSourceLocators:

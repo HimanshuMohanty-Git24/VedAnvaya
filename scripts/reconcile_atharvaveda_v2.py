@@ -62,12 +62,88 @@ def edit_distance(a: str, b: str) -> int:
     return previous[-1]
 
 
+COORDINATE_NAMES = ("canvas_index", "kanda", "sukta", "mantra")
+
+
 def unit_key(row: dict) -> tuple:
     return (row["canvas_index"], row.get("kanda"), row.get("sukta"), row.get("mantra"))
 
 
 def sort_key(key: tuple) -> tuple:
     return tuple(-1 if part is None else part for part in key)
+
+
+def keys_compatible(a: tuple, b: tuple) -> bool:
+    """True when two keys differ only where one reader left a coordinate unstated.
+
+    A leaf that prints no running head leaves a reader nothing to read the
+    kanda off, and the brief tells them to record `null`. A second reader who
+    carries the kanda over from the previous leaf writes the number. Both are
+    honest readings of the same unit, so a null must not by itself split them.
+
+    Two readers who each state a coordinate and state it *differently* are a
+    real structural disagreement and stay incompatible.
+    """
+    return all(x == y or x is None or y is None for x, y in zip(a, b, strict=True))
+
+
+def merge_keys(a: tuple, b: tuple) -> tuple:
+    """The key carrying whichever coordinate the readers actually stated."""
+    return tuple(x if x is not None else y for x, y in zip(a, b, strict=True))
+
+
+def coordinate_note(a: tuple, b: tuple) -> str | None:
+    unstated = [
+        name
+        for name, x, y in zip(COORDINATE_NAMES, a, b, strict=True)
+        if (x is None) != (y is None)
+    ]
+    if not unstated:
+        return None
+    return (
+        "aligned across an unstated coordinate (" + ", ".join(unstated) + "): one reader read "
+        "it off the page and the other recorded that the page does not print it. The unit is "
+        "the same unit; the coordinate is carried from the reader who stated it."
+    )
+
+
+def align(
+    r1: dict[tuple, dict], r2: dict[tuple, dict]
+) -> list[tuple[tuple, dict | None, dict | None, str | None]]:
+    """Pair the two readers' units.
+
+    Exact key matches first. A leftover pair is rescued only when the keys
+    differ solely where one reader left a coordinate unstated *and* the match
+    is unique from both sides. Anything ambiguous stays unpaired, so it
+    surfaces as a structural disagreement instead of becoming a guess.
+    """
+    aligned: list[tuple[tuple, dict | None, dict | None, str | None]] = []
+    matched_1: set[tuple] = set()
+    matched_2: set[tuple] = set()
+
+    for key in r1:
+        if key in r2:
+            aligned.append((key, r1[key], r2[key], None))
+            matched_1.add(key)
+            matched_2.add(key)
+
+    for key1 in [k for k in r1 if k not in matched_1]:
+        candidates = [k for k in r2 if k not in matched_2 and keys_compatible(key1, k)]
+        if len(candidates) != 1:
+            continue
+        key2 = candidates[0]
+        rematch = [k for k in r1 if k not in matched_1 and keys_compatible(k, key2)]
+        if len(rematch) != 1:
+            continue
+        matched_1.add(key1)
+        matched_2.add(key2)
+        aligned.append(
+            (merge_keys(key1, key2), r1[key1], r2[key2], coordinate_note(key1, key2))
+        )
+
+    aligned.extend((key, r1[key], None, None) for key in r1 if key not in matched_1)
+    aligned.extend((key, None, r2[key], None) for key in r2 if key not in matched_2)
+    return sorted(aligned, key=lambda item: sort_key(item[0]))
 
 
 def load_reader(directory: pathlib.Path) -> dict[tuple, dict]:
@@ -138,7 +214,7 @@ def grade(left: dict | None, right: dict | None) -> tuple[str, str]:
 
 def reconcile(r1_dir: pathlib.Path, r2_dir: pathlib.Path, out_dir: pathlib.Path) -> dict:
     r1, r2 = load_reader(r1_dir), load_reader(r2_dir)
-    keys = sorted(set(r1) | set(r2), key=sort_key)
+    aligned = align(r1, r2)
 
     out_dir.mkdir(parents=True, exist_ok=True)
     by_leaf: dict[int, list[dict]] = collections.defaultdict(list)
@@ -146,11 +222,12 @@ def reconcile(r1_dir: pathlib.Path, r2_dir: pathlib.Path, out_dir: pathlib.Path)
     status_counts: collections.Counter[str] = collections.Counter()
     both = char_disagree = accent_disagree = boundary_disagree = 0
     skeleton_chars = skeleton_edits = 0
-    accent_bearing = 0
+    accent_bearing = rescued = 0
 
-    for key in keys:
-        left, right = r1.get(key), r2.get(key)
+    for key, left, right, note in aligned:
         status, detail = grade(left, right)
+        if note is not None:
+            rescued += 1
         status_counts[status] += 1
         source = left or right
         assert source is not None
@@ -188,6 +265,7 @@ def reconcile(r1_dir: pathlib.Path, r2_dir: pathlib.Path, out_dir: pathlib.Path)
             "r2_text": right["text_devanagari"] if right else None,
             "transcription_status": status,
             "reconciliation_detail": detail,
+            "coordinate_note": note,
             "release_eligible": agreed,
             "accent_marks_present": bool(accent_signature(source["text_devanagari"])),
             "spans_canvases": source.get("spans_canvases"),
@@ -206,13 +284,20 @@ def reconcile(r1_dir: pathlib.Path, r2_dir: pathlib.Path, out_dir: pathlib.Path)
 
     every = [record for records in by_leaf.values() for record in records]
     accent_reproduced = sum(1 for record in every if record["accent_marks_present"])
-    total = len(keys)
+    total = len(aligned)
     return {
         "policy": POLICY,
         "leaves": len(by_leaf),
         "units_total": total,
         "units_read_by_both": both,
         "units_read_by_one_only": total - both,
+        "units_aligned_across_an_unstated_coordinate": rescued,
+        "unstated_coordinate_note": (
+            "Pairs the readers agreed on as units, but where one of them recorded a "
+            "structural coordinate the page does not print. Counted here so the "
+            "alignment is never silent; the coordinate disagreement is not evidence "
+            "about the text and is graded only on the text."
+        ),
         "status_counts": dict(sorted(status_counts.items())),
         "release_eligible_units": sum(1 for record in every if record["release_eligible"]),
         "exact_agreement_rate_over_units_read_by_both": (
