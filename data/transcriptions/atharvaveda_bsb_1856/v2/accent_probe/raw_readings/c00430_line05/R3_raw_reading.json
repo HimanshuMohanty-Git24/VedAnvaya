@@ -1,0 +1,103 @@
+{
+  "reader": "R3",
+  "canvas_index": 430,
+  "line_index": 5,
+  "text_devanagari": "ए॒वा अ॑स्य॒ काम्या॒ स्तोम॑ उ॒क्थं च॒ शंस्या॑ । इन्द्रा॑य॒ सोम॑पीतये ॥ ६ ॥",
+  "anudatta_count": 6,
+  "svarita_count": 5,
+  "accent_count": 11,
+  "unclear_count": 1,
+  "y_bands": "All y in leaf-text-block coordinates (block bbox (292,332,3508,5158) of the 4000px leaf jpg; block = 3216x4826), from a row-ink projection over the full 3216px width, ink threshold <128. Line pitch here is ~174px (line4 top 823 -> line5 top 997). LINE ABOVE (line 4): body 823-935; its descenders / u-matras 936-961; ITS ANUDATTA BAR BAND 962-974 (ten dashes plus one curl); then a clean white gap 975-994 with zero ink. MY LINE (line 5): my svarita / upper-matra band 995-1028 (34 rows, zero ink above it); my sirorekha 1029-1046 (row ink 2164-2310, about seven times the band values); my glyph bodies 1047-1112; my descenders and letter tails 1113-1126; white gap 1127-1133; MY OWN ANUDATTA BAR BAND 1134-1146 (six dashes). My bar band sits exactly 172px below the line-above bar band, one full line pitch, which is what fixes ownership. Then zero ink from 1147 to 1344; the NEXT inked line (line 6) starts at 1345, so nothing from below reaches my bands. Every mark I report was measured inside 995-1028 (svarita) or 1134-1146 (anudatta); I rejected ten dashes in 962-974 solely because they sit one pitch too high.",
+  "carriers": [
+    {
+      "x_global": 362,
+      "type": "anudatta",
+      "word": "ए॒वा",
+      "aksara": "ए",
+      "word_index": 0,
+      "aksara_index": 0
+    },
+    {
+      "x_global": 648,
+      "type": "svarita",
+      "word": "अ॑स्य॒",
+      "aksara": "अ",
+      "word_index": 1,
+      "aksara_index": 0
+    },
+    {
+      "x_global": 753,
+      "type": "anudatta",
+      "word": "अ॑स्य॒",
+      "aksara": "स्य",
+      "word_index": 1,
+      "aksara_index": 1
+    },
+    {
+      "x_global": 1040,
+      "type": "anudatta",
+      "word": "काम्या॒",
+      "aksara": "म्या",
+      "word_index": 2,
+      "aksara_index": 1
+    },
+    {
+      "x_global": 1362,
+      "type": "svarita",
+      "word": "स्तोम॑",
+      "aksara": "म",
+      "word_index": 3,
+      "aksara_index": 1
+    },
+    {
+      "x_global": 1479,
+      "type": "anudatta",
+      "word": "उ॒क्थं",
+      "aksara": "उ",
+      "word_index": 4,
+      "aksara_index": 0
+    },
+    {
+      "x_global": 1760,
+      "type": "anudatta",
+      "word": "च॒",
+      "aksara": "च",
+      "word_index": 5,
+      "aksara_index": 0
+    },
+    {
+      "x_global": 2002,
+      "type": "svarita",
+      "word": "शंस्या॑",
+      "aksara": "स्या",
+      "word_index": 6,
+      "aksara_index": 1
+    },
+    {
+      "x_global": 2304,
+      "type": "svarita",
+      "word": "इन्द्रा॑य॒",
+      "aksara": "न्द्रा",
+      "word_index": 7,
+      "aksara_index": 1
+    },
+    {
+      "x_global": 2408,
+      "type": "anudatta",
+      "word": "इन्द्रा॑य॒",
+      "aksara": "य",
+      "word_index": 7,
+      "aksara_index": 2
+    },
+    {
+      "x_global": 2652,
+      "type": "svarita",
+      "word": "सोम॑पीतये",
+      "aksara": "म",
+      "word_index": 8,
+      "aksara_index": 1
+    }
+  ],
+  "boundary_interpretation": "Word boundaries were taken from breaks in the sirorekha, measured as column runs with >=8 inked rows in the headline band y1033-1043. That gives 13 groups: 341-534, 575-783, 822-1110, 1149-1383, 1422-1661, 1698-1787, 1828-2065, 2107-2124 (single danda), 2166-2437, 2472-2922, 2984-3025 (double danda), 3050-3116 (numeral), 3142-3181 (double danda). Inter-group gaps are 35-42px at every word break and only 4-15px inside a word, so the split is unambiguous. word_index counts WORDS ONLY, left to right, skipping punctuation groups: 0 eva, 1 asya, 2 kamya, 3 stoma, 4 uktham, 5 ca, 6 samsya, 7 indraya, 8 somapitaye; the danda between samsya and indraya gets no index. Aksara cells inside each word were cut at the full-height white channels between stems, measured row by row. Marks sitting near a boundary, and my reasons: (a) x648 svarita in word 1: the stroke stands directly over the full-height stem at x640-662, and a white channel that persists from y1047 to y1111 separates x578-662 from x676-783, so the stroke is over the first aksara and not over s-ya. (b) x753 anudatta in word 1: bar spans 734-772, wholly inside s-ya (676-783); the first aksara ends at 662. (c) x1040 anudatta in kamya: bar spans 1021-1059, entirely right of the ka+a cell which ends at 940, so it is on m-ya and not on ka. (d) x1479 anudatta in uktham: bar spans 1461-1497; the u cell is 1425-1497 and k-tha begins at 1508. Centre and body both lie under u, so u it is, although the bar's right edge comes within 11px of the cell edge - this is the one bar on the line whose aksara assignment is close. (e) x1362 svarita in stoma: over ma's right stem (1356-1377). The o-matra it could be confused with is a separate 69px-wide run at 1215-1283. (f) x2002 svarita in samsya: over the ya stem (1994-2015) inside the s-ya-a cell (1907-2051); the anusvara sits far to the left at 1881-1901 over sa's stem. (g) x2304 svarita in indraya: inside the n-d-r ligature block (2241-2313); the a-matra at 2334-2355 belongs to the same aksara and ya only begins at 2379. (h) x2408 anudatta in indraya: under ya (2379-2437), 60px right of that a-matra. (i) x2652 svarita in somapitaye: directly over ma's right stem (2646-2664); pa begins at 2671, so the mark is on ma, not on pa.",
+  "notes": "MAGNIFICATION: the two supplied 1568px segments, then my own 4-segment crops from scripts/crop_atharvaveda_line.py, then my own PIL crops of single aksaras at 5x-13x, and finally direct measurement of the leaf jpg (row and column ink profiles, connected-run extents and ASCII ink maps at thresholds 128 and 150). Every accept or reject below is from the measurements; the crops only served to name letters. REJECTED FALSE POSITIVES. (1) Ten dashes at x344-381, 740-778, 973-1007, 1024-1036, 1237-1274, 1591-1628, 2092-2129, 2294-2331, 2653-2691, plus a 57x18 curl at 2762-2818: all lie in y962-974, one full line pitch (172px) above my own bar band, so they are line 4's anudatta layer. Two of them are almost exactly column-aligned with marks of mine - 2294-2331 over my svarita at 2299-2309, and 2653-2691 over my svarita at 2646-2658 - which is the trap the brief names; the y band, not the x, decided them. (2) Wide curved matras above my own headline, rejected on width: 1215-1283 (69px, the o of sto), 2509-2576 (68px, the o of so), 2851-2911 (61px, the e of ye), and 2711-2767 (57px wide, 29 tall, the i-matra arch of pi - one connected arch whose two legs run down into the sirorekha, not a narrow stroke). (3) Two round lens-shaped blobs above the headline, 1628-1650 (23x25) and 1881-1901 (21x23): about as wide as tall and tapering to points at top and bottom, i.e. the anusvara of uktham and of samsya, not upright strokes. For contrast, my five accepted svaritas are all 11-13px wide and 32-33 rows tall. (4) A 40x21 round blob with a stem at 3059-3095: the upper loop of the verse numeral, not a mark. (5) Two runs only 1 row tall at 1506-1528 and 1543-1557 in the upper-band scan: the top fringe of my own sirorekha at y1028, not marks. (6) Below the line no candidate was a vocalic-r hook or a halanta tail: all six bars are 37-39px wide and 10-12px tall, wider than tall, and sit isolated in y1134-1146 with zero ink in y1127-1133, so none of them touches a descender, and none is a danda slice (no ink leaves the band at either end). READ AGAINST MY FIRST INSTINCT - the one unclear aksara: the first cell of word 1 (x578-662). At high magnification it reads to a modern eye like 'ha with something subjoined', and my memory wanted hy-asya. The ink does not support ha. I found a certain ha on this same leaf (line 6, x2256-2313, in the word ending -him) and measured it: this fount's ha is only 58px wide and is a pure curl with NO full-height right vertical - its right side breaks off partway down. My glyph is 83px wide and carries a 23px vertical that hangs from the sirorekha at x640-662 and runs unbroken to y1109. I also excluded ka (x829-907 on this same line): ka is solid at the top and splits at the bottom, the inverse of my glyph. My glyph's skeleton is: an upper-left curl separated from a full-height right stem by a white channel at x630-638 that persists from y1047 to y1074; a solid crossbar y1075-1091 joining curl to stem; then a lower-left curl that leaves the body at y1096 and sweeps down-right from x594 to x634, ending below the baseline at y1111. That is the skeleton of Devanagari a (U+0905), and its descending lower curl is exactly what the brief's fount note describes as reading like vocalic-r or shra. So I read the word as a-sya and counted 1 unclear aksara. The accent attribution is unaffected either way: the svarita stands over that first cell and the anudatta under the second. The verse numeral was confirmed as 6 by comparing it with the numerals that close lines 3 and 4 of the same leaf (4 and 5, so the sequence runs 4, 5, 6) and with the '61' at the head of line 6, which uses the identical sort. Nothing else on the line was doubtful."
+}

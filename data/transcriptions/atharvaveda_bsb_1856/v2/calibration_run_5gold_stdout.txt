@@ -1,0 +1,140 @@
+========================================================================
+AV ACCENT CALIBRATION RUN
+Calibration set: D:\VedaGraph\data\transcriptions\atharvaveda_bsb_1856\v2\calibration_set.json
+Total lines: 81
+
+PASS/FAIL THRESHOLDS (declared before metrics):
+  detection_recall: 0.9
+  detection_precision: 0.85
+  class_accuracy: 1.0
+  word_binding_acc: 0.95
+  auto_promote_frac: 0.5
+  source_ambiguous_gold: 0
+  extractor_success_rate: 0.95
+========================================================================
+
+c032/l00  OK                 NO_GOLD      anu=0 sva=0 spans=8  [running_head]
+c032/l12  OK                 RAN          anu=7 sva=3 spans=12  [gold_verified]
+c032/l19  OK                 RAN          anu=7 sva=4 spans=12  [gold_verified]
+c015/l02  OK                 NO_GOLD      anu=0 sva=0 spans=15  [early_kandas]
+c015/l09  OK                 NO_GOLD      anu=5 sva=2 spans=8  [early_kandas]
+c015/l17  OK                 NO_GOLD      anu=2 sva=3 spans=6  [early_kandas]
+c033/l02  OK                 NO_GOLD      anu=4 sva=3 spans=7  [early_kandas]
+c033/l09  OK                 NO_GOLD      anu=6 sva=5 spans=10  [early_kandas]
+c033/l17  OK                 NO_GOLD      anu=5 sva=4 spans=11  [early_kandas]
+c051/l02  OK                 NO_GOLD      anu=4 sva=4 spans=5  [early_kandas]
+c051/l09  OK                 NO_GOLD      anu=6 sva=5 spans=13  [early_kandas]
+c051/l17  OK                 NO_GOLD      anu=4 sva=2 spans=12  [early_kandas]
+c069/l02  OK                 NO_GOLD      anu=5 sva=3 spans=9  [early_kandas]
+c069/l09  OK                 NO_GOLD      anu=6 sva=3 spans=9  [early_kandas]
+c069/l17  OK                 NO_GOLD      anu=6 sva=1 spans=7  [early_kandas]
+c087/l02  OK                 NO_GOLD      anu=4 sva=3 spans=8  [early_kandas]
+c087/l09  OK                 NO_GOLD      anu=4 sva=4 spans=10  [early_kandas]
+c087/l17  OK                 NO_GOLD      anu=3 sva=2 spans=8  [early_kandas]
+c105/l02  OK                 NO_GOLD      anu=4 sva=3 spans=10  [early_kandas]
+c105/l09  OK                 NO_GOLD      anu=5 sva=3 spans=6  [early_kandas]
+c105/l17  OK                 NO_GOLD      anu=5 sva=2 spans=4  [early_kandas]
+c123/l02  OK                 NO_GOLD      anu=6 sva=3 spans=9  [middle_kandas]
+c123/l09  OK                 NO_GOLD      anu=7 sva=1 spans=9  [middle_kandas]
+c123/l17  OK                 NO_GOLD      anu=5 sva=3 spans=8  [middle_kandas]
+c141/l02  OK                 NO_GOLD      anu=3 sva=3 spans=10  [middle_kandas]
+c141/l09  OK                 NO_GOLD      anu=6 sva=4 spans=7  [middle_kandas]
+c141/l17  OK                 NO_GOLD      anu=4 sva=3 spans=10  [middle_kandas]
+c159/l02  OK                 RAN          anu=6 sva=4 spans=13  [middle_kandas]
+c159/l09  OK                 NO_GOLD      anu=7 sva=3 spans=10  [middle_kandas]
+c159/l17  EXTRACTOR_ERROR                 anu=- sva=- spans=-  [middle_kandas]
+c177/l02  OK                 NO_GOLD      anu=8 sva=5 spans=10  [middle_kandas]
+c177/l09  OK                 NO_GOLD      anu=3 sva=3 spans=13  [middle_kandas]
+c177/l17  OK                 NO_GOLD      anu=4 sva=4 spans=12  [middle_kandas]
+c195/l02  OK                 NO_GOLD      anu=7 sva=1 spans=13  [middle_kandas]
+c195/l09  OK                 NO_GOLD      anu=5 sva=2 spans=10  [middle_kandas]
+c195/l17  OK                 NO_GOLD      anu=6 sva=2 spans=6  [middle_kandas]
+c213/l02  OK                 NO_GOLD      anu=3 sva=3 spans=10  [middle_kandas]
+c213/l09  OK                 NO_GOLD      anu=4 sva=3 spans=8  [middle_kandas]
+c213/l17  OK                 NO_GOLD      anu=7 sva=5 spans=11  [middle_kandas]
+c231/l02  OK                 NO_GOLD      anu=4 sva=2 spans=9  [middle_kandas]
+c231/l09  OK                 NO_GOLD      anu=7 sva=4 spans=17  [middle_kandas]
+c231/l17  OK                 NO_GOLD      anu=3 sva=1 spans=6  [middle_kandas]
+c249/l02  OK                 NO_GOLD      anu=5 sva=3 spans=6  [middle_kandas]
+c249/l09  OK                 NO_GOLD      anu=5 sva=3 spans=10  [middle_kandas]
+c249/l17  OK                 NO_GOLD      anu=6 sva=3 spans=14  [middle_kandas]
+c267/l02  OK                 NO_GOLD      anu=4 sva=4 spans=12  [late_kandas]
+c267/l09  OK                 NO_GOLD      anu=7 sva=2 spans=9  [late_kandas]
+c267/l17  OK                 NO_GOLD      anu=3 sva=4 spans=11  [late_kandas]
+c285/l02  OK                 NO_GOLD      anu=5 sva=3 spans=11  [late_kandas]
+c285/l09  OK                 NO_GOLD      anu=6 sva=5 spans=9  [late_kandas]
+c285/l17  OK                 NO_GOLD      anu=5 sva=2 spans=11  [late_kandas]
+c303/l02  OK                 NO_GOLD      anu=7 sva=4 spans=12  [late_kandas]
+c303/l09  OK                 NO_GOLD      anu=8 sva=4 spans=10  [late_kandas]
+c303/l17  OK                 NO_GOLD      anu=6 sva=5 spans=13  [late_kandas]
+c321/l02  OK                 NO_GOLD      anu=2 sva=1 spans=7  [late_kandas]
+c321/l09  OK                 NO_GOLD      anu=4 sva=3 spans=7  [late_kandas]
+c321/l17  OK                 NO_GOLD      anu=5 sva=5 spans=9  [late_kandas]
+c339/l02  OK                 NO_GOLD      anu=5 sva=4 spans=13  [late_kandas]
+c339/l09  OK                 NO_GOLD      anu=8 sva=5 spans=10  [late_kandas]
+c339/l17  OK                 NO_GOLD      anu=4 sva=5 spans=15  [late_kandas]
+c357/l02  OK                 NO_GOLD      anu=6 sva=3 spans=11  [late_kandas]
+c357/l09  OK                 NO_GOLD      anu=5 sva=2 spans=14  [late_kandas]
+c357/l17  OK                 NO_GOLD      anu=2 sva=1 spans=10  [late_kandas]
+c375/l02  OK                 NO_GOLD      anu=7 sva=4 spans=6  [late_kandas]
+c375/l09  OK                 NO_GOLD      anu=6 sva=4 spans=12  [late_kandas]
+c375/l17  OK                 NO_GOLD      anu=6 sva=3 spans=8  [late_kandas]
+c393/l02  OK                 NO_GOLD      anu=6 sva=2 spans=12  [kanda19_area]
+c393/l09  OK                 NO_GOLD      anu=8 sva=6 spans=8  [kanda19_area]
+c393/l17  OK                 NO_GOLD      anu=6 sva=2 spans=9  [kanda19_area]
+c411/l02  OK                 NO_GOLD      anu=6 sva=1 spans=9  [kanda19_area]
+c411/l09  OK                 RAN          anu=6 sva=5 spans=13  [kanda19_area]
+c411/l17  OK                 NO_GOLD      anu=8 sva=3 spans=11  [kanda19_area]
+c429/l02  OK                 NO_GOLD      anu=4 sva=3 spans=8  [kanda19_area]
+c429/l09  OK                 NO_GOLD      anu=3 sva=4 spans=8  [kanda19_area]
+c429/l17  OK                 NO_GOLD      anu=5 sva=3 spans=9  [kanda19_area]
+c447/l02  OK                 NO_GOLD      anu=5 sva=3 spans=13  [kanda20_area]
+c447/l09  OK                 NO_GOLD      anu=4 sva=2 spans=6  [kanda20_area]
+c447/l17  OK                 NO_GOLD      anu=2 sva=3 spans=7  [kanda20_area]
+c015/l00  OK                 NO_GOLD      anu=0 sva=0 spans=12  [running_head]
+c430/l05  OK                 RAN          anu=6 sva=5 spans=13  [kanda20_area]
+c430/l12  OK                 NO_GOLD      anu=2 sva=2 spans=6  [kanda20_area]
+
+========================================================================
+AGGREGATE METRICS
+
+Lines in set:        81
+Leaves on disk:      81
+Extractor OK:        80
+Gold lines (binder): 5
+
+Mean marks/line:     8.0
+
+PER-STRATUM EXTRACTOR COUNTS:
+  early_kandas           n=18  mean_marks=7.2  mean_spans=8.8
+  gold_verified          n= 2  mean_marks=10.5  mean_spans=12.0
+  kanda19_area           n= 9  mean_marks=9.0  mean_spans=9.7
+  kanda20_area           n= 5  mean_marks=6.8  mean_spans=9.0
+  late_kandas            n=21  mean_marks=8.8  mean_spans=10.5
+  middle_kandas          n=23  mean_marks=8.2  mean_spans=10.0
+  running_head           n= 2  mean_marks=0.0  mean_spans=10.0
+
+GOLD-LINE BINDER METRICS:
+  c032/l12:  recall=1.0  prec=1.0  class_acc=1.0  word_acc=1.0  auto_frac=0.8  exact=True
+  c032/l19:  recall=1.0  prec=1.0  class_acc=1.0  word_acc=1.0  auto_frac=0.7273  exact=False
+  c159/l02:  recall=1.0  prec=1.0  class_acc=1.0  word_acc=1.0  auto_frac=0.8  exact=False
+  c411/l09:  recall=0.9167  prec=1.0  class_acc=1.0  word_acc=0.2727  auto_frac=1.0  exact=False
+  c430/l05:  recall=1.0  prec=1.0  class_acc=1.0  word_acc=1.0  auto_frac=0.9091  exact=False
+
+  Gold readers:       3, 2, 3, 3, 3
+  Gold agreement:     mark_positions_agree, split, mark_positions_agree, mark_positions_agree, mark_positions_agree
+
+GATE VERDICTS:
+  [PASS] detection_recall: 0.9833399999999999 (threshold 0.9)
+  [PASS] detection_precision: 1.0 (threshold 0.85)
+  [PASS] class_accuracy: 1.0 (threshold 1.0)
+  [FAIL] word_binding_acc: 0.8545400000000001 (threshold 0.95)
+  [PASS] auto_promote_frac: 0.8472799999999999 (threshold 0.5)
+  [PASS] source_ambiguous_gold (must be 0): 0 (threshold 0)
+  [PASS] extractor_success_rate: 0.9876543209876543 (threshold 0.95)
+  ACCENTED_LINE_EXACT_MATCH_RATE: 0.2000 (1/5)
+
+PIPELINE DECISION: NEEDS_REVISION
+  Failed gates: word_binding_acc
+
+Full results written to D:\VedaGraph\data\transcriptions\atharvaveda_bsb_1856\v2\calibration_run_result.json

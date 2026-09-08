@@ -459,6 +459,122 @@ class TestGeometricAccentExtraction:
         assert result["svarita_count"] == 0
 
 
+class TestWordSpansSplitOnGapsNotOnRunWidth:
+    """A word gap is the blank run between two inked runs, not a narrow run.
+
+    `_WORD_GAP_MIN_PX` is documented as a minimum *gap*, but was once applied
+    to the width of the inked run instead. Canvas n32 cannot tell the two
+    apart -- its rule never breaks inside a word -- so the error survived a
+    calibration that had only n32 gold, and surfaced only when three further
+    lines were read by three readers each: the cast rule breaks by 2px inside
+    one word on n411 line 9, by 11px after the avagraha on n159 line 2, and by
+    5px in the double danda on n430 line 5.
+
+    The cost was not cosmetic. Spans are paired to skeleton tokens left to
+    right by position, so each spurious break moved every carrier after it one
+    word along -- n159 line 2 bound three of its ten marks to the danda
+    instead of the word before it. On n411 line 9 the extra spans pushed the
+    token/span mismatch past the alignment guard and the whole line came back
+    SOURCE_AMBIGUOUS, failing a zero-tolerance gate.
+    """
+
+    @staticmethod
+    def _rule_band(inked: list[bool]) -> tuple[list[bool], int]:
+        """A one-row rule band in which column x is inked iff `inked[x]`."""
+        return list(inked), len(inked)
+
+    def test_a_gap_narrower_than_the_minimum_does_not_split_a_word(self) -> None:
+        extract = _load("extract_atharvaveda_accents")
+        mask, w = self._rule_band([True] * 40 + [False] * 2 + [True] * 40)
+        assert extract._word_spans_from_rule(mask, w, 0, 0) == [(0, 81)]
+
+    def test_a_gap_at_the_minimum_splits_into_two_words(self) -> None:
+        extract = _load("extract_atharvaveda_accents")
+        gap = extract._WORD_GAP_MIN_PX
+        mask, w = self._rule_band([True] * 40 + [False] * gap + [True] * 40)
+        assert extract._word_spans_from_rule(mask, w, 0, 0) == [
+            (0, 39),
+            (40 + gap, 79 + gap),
+        ]
+
+    def test_an_inked_run_narrower_than_the_minimum_is_still_a_span(self) -> None:
+        """The width test deleted any short run -- a danda stroke, for one."""
+        extract = _load("extract_atharvaveda_accents")
+        gap = extract._WORD_GAP_MIN_PX
+        mask, w = self._rule_band([True] * 40 + [False] * gap + [True] * 8)
+        spans = extract._word_spans_from_rule(mask, w, 0, 0)
+        assert spans == [(0, 39), (40 + gap, 47 + gap)]
+
+    @pytest.mark.parametrize(
+        ("canvas", "line"), [(32, 12), (32, 19), (159, 2), (411, 9), (430, 5)]
+    )
+    def test_no_two_spans_sit_closer_than_the_minimum_gap(
+        self, canvas: int, line: int
+    ) -> None:
+        """The invariant, asserted on every line the gold set has readers for."""
+        extract = _load("extract_atharvaveda_accents")
+        crop = _load("crop_atharvaveda_leaf")
+        if not crop.leaf_path(canvas).exists():
+            pytest.skip("1856 scan not present in this checkout")
+        spans = extract.extract(canvas, line)["lines"][0]["word_spans"]
+        gaps = [spans[i + 1][0] - spans[i][1] - 1 for i in range(len(spans) - 1)]
+        assert all(g >= extract._WORD_GAP_MIN_PX for g in gaps), (
+            f"c{canvas}/l{line} still splits on a sub-threshold gap: {gaps}"
+        )
+
+    # Whitespace token count of each line's adjudicated three-reader gold.
+    GOLD_TOKENS: ClassVar[dict[tuple[int, int], int]] = {
+        (32, 12): 12,
+        (32, 19): 12,
+        (159, 2): 13,
+        (430, 5): 13,
+    }
+
+    @pytest.mark.parametrize(("canvas", "line"), sorted(GOLD_TOKENS))
+    def test_span_count_equals_the_token_count_of_the_adjudicated_gold(
+        self, canvas: int, line: int
+    ) -> None:
+        """The two-sided check: over-splitting and over-merging both show here.
+
+        Bridging narrow gaps could in principle swallow a real word boundary,
+        which the invariant test above cannot see -- it only asserts that no
+        gap survives below the threshold, which the bridging loop guarantees
+        by construction. This one can fail in both directions: a spurious
+        break makes spans exceed tokens, and a swallowed word gap makes spans
+        fall short. n411 line 9 is excluded and pinned separately, because its
+        two free-standing visarga dot-pairs are real rule spans that carry no
+        whitespace token of their own.
+        """
+        extract = _load("extract_atharvaveda_accents")
+        crop = _load("crop_atharvaveda_leaf")
+        if not crop.leaf_path(canvas).exists():
+            pytest.skip("1856 scan not present in this checkout")
+        spans = extract.extract(canvas, line)["lines"][0]["word_spans"]
+        assert len(spans) == self.GOLD_TOKENS[(canvas, line)]
+
+    def test_the_line_that_tripped_the_alignment_guard_now_clears_it(self) -> None:
+        """n411 line 9 read 17 spans against 11 tokens; the guard allows 5.
+
+        Asserted against the guard rather than against a span count, because
+        the residual excess is the two visarga spans: a later fix that binds
+        them to their own word should drive the mismatch to zero, and must not
+        have to edit this test to do it.
+        """
+        extract = _load("extract_atharvaveda_accents")
+        crop = _load("crop_atharvaveda_leaf")
+        if not crop.leaf_path(411).exists():
+            pytest.skip("1856 scan not present in this checkout")
+        binder = pytest.importorskip("vedagraph.ingest.av_accent_binder")
+        spans = extract.extract(411, 9)["lines"][0]["word_spans"]
+        tokens = 11  # the adjudicated three-reader gold for this line
+        allowed = max(
+            1, round(max(tokens, len(spans)) * binder.MAX_TOKEN_SPAN_MISMATCH)
+        )
+        assert abs(tokens - len(spans)) <= allowed, (
+            f"{len(spans)} spans against {tokens} tokens still trips the guard"
+        )
+
+
 class TestLeafRendering:
     def test_bands_stay_landscape_so_the_accent_layer_survives_downsampling(self) -> None:
         """The reader caps the long edge.

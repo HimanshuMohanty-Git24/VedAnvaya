@@ -237,6 +237,7 @@ def extract_line(block: Image.Image, top: int, bottom: int, pitch: float) -> dic
                 marks.append(found)
 
     marks.sort(key=lambda m: m["x0"])
+    word_spans = _word_spans_from_rule(mask, w, rule_top, rule_bottom)
     return {
         "headline": headline,
         "rule": [rule_top, rule_bottom],
@@ -246,7 +247,60 @@ def extract_line(block: Image.Image, top: int, bottom: int, pitch: float) -> dic
         "marks": marks,
         "anudatta_count": sum(1 for m in marks if m["type"] == "anudatta"),
         "svarita_count": sum(1 for m in marks if m["type"] == "svarita"),
+        "word_spans": word_spans,
     }
+
+
+# Minimum gap width (pixels) to be treated as a word boundary rather than
+# intra-word ink variation. Measured on canvas n32: word gaps are 28-60px;
+# intra-word dark spots never exceed 8px.
+#
+# This is a minimum *gap*, and it has to be applied to the blank run between
+# two inked runs. It was once applied to the width of the inked run instead,
+# which is a different measurement and let any narrow break split a word.
+# Canvas n32 never showed the difference -- its rule does not break inside a
+# word -- but the sirorekha is a cast bar and elsewhere it does: 2px inside
+# sadhriicii-rvishvaa on n411 line 9, 11px after the avagraha on n159 line 2,
+# 5px in the double danda on n430 line 5. Splitting there put one extra span
+# ahead of the marks and shifted every carrier assignment after it by a word.
+_WORD_GAP_MIN_PX = 14
+
+
+def _word_spans_from_rule(
+    mask: list[bool], w: int, rule_top: int, rule_bottom: int
+) -> list[tuple[int, int]]:
+    """Word-level x spans from sirorekha column ink profile.
+
+    The sirorekha (headline bar) runs continuously across every aksara within
+    a word and breaks between words. A blank run of at least _WORD_GAP_MIN_PX
+    columns is a word gap; anything narrower is a break in the cast rule and
+    is bridged. Returns (x0, x1) in the same coordinate space as mark x0/x1.
+    """
+    col_ink = [
+        sum(1 for y in range(rule_top, rule_bottom + 1) if mask[y * w + x])
+        for x in range(w)
+    ]
+    threshold = 1  # any ink at all counts as rule present
+    runs: list[tuple[int, int]] = []
+    start: int | None = None
+    for x, v in enumerate(col_ink):
+        if v >= threshold and start is None:
+            start = x
+        elif v < threshold and start is not None:
+            runs.append((start, x - 1))
+            start = None
+    if start is not None:
+        runs.append((start, w - 1))
+
+    # Bridge the narrow breaks. The test is on the blank run *between* two
+    # inked runs, which is what a word gap actually is.
+    spans: list[list[int]] = []
+    for x0, x1 in runs:
+        if spans and x0 - spans[-1][1] - 1 < _WORD_GAP_MIN_PX:
+            spans[-1][1] = x1
+        else:
+            spans.append([x0, x1])
+    return [(x0, x1) for x0, x1 in spans]
 
 
 def extract(canvas_index: int, line_index: int | None = None) -> dict:

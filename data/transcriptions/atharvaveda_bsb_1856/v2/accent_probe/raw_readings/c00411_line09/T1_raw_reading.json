@@ -1,0 +1,111 @@
+{
+  "reader": "T1",
+  "canvas_index": 411,
+  "line_index": 9,
+  "text_devanagari": "अच्छा॑ म॒ इन्द्रं॑ म॒तयः॑ स्व॒र्विदः॑ स॒ध्रीची॒र्विश्वा॑ उश॒तीर॑नूषत । ॥ १७ ॥",
+  "anudatta_count": 6,
+  "svarita_count": 6,
+  "accent_count": 12,
+  "unclear_count": 0,
+  "y_bands": "All y values are leaf-block rows (block = 3226 x 5006, from find_text_block on canvas 411); line 9 itself is block y 1890-2011. Measured by full-width row-ink projection (threshold 128) plus connected-component extents. LINE-ABOVE (line 8) BAR BAND: y 1673-1694 (line 8 bodies end y~1660; its descender plateau y 1661-1672; its bars peak at 253 inked px in row 1681). CLEAN GUTTER: rows 1695-1883 carry ZERO inked pixels across all 3226 columns - line 9 opens a new hymn after a 189-row blank, so there is no line-above bar contamination anywhere in my upper gutter. MY SVARITA BAND: y 1883-1924 (stroke tops 1883-1886 on the left of the line, 1893-1895 on the right; each stroke foot merges into the sirorekha). MY SIROREKHA: top edge = 0.0047*x + 1918 (y 1918 at x=200 rising to y 1930 at x=2500; the whole line slopes down to the right by ~14 px over 3226 px), thickness ~17 px; peak headline rows y 1930-1934 (2100-2122 inked px per row). MY GLYPH BODY: y ~1936-2008 (baseline ~2003 at x=200, ~2013 at x=2600). MY DESCENDER PLATEAU (not accent): y 2009-2026, only 30-50 inked px per row - the foot of da in vidah, the uu hook of nuu, and stem serifs. MY OWN ANUDATTA BAR BAND: y 2027-2047; individual bars y 2027-2036 at x=507 drifting to y 2037-2047 at x=2211, following the same line slope; each bar 10-11 px tall and 37-39 px wide. LOWER GUTTER: rows 2048-2058 carry ZERO ink across all columns. NEXT LINE (line 10): its above-headline band starts y 2059; its sirorekha y 2094-2110; its body from y 2110. Because both gutters (1695-1883 above, 2048-2058 below) are completely blank, every mark I report is unambiguously inside line 9's own two accent bands.",
+  "carriers": [
+    {
+      "x_global": 327,
+      "type": "svarita",
+      "word": "अच्छा",
+      "aksara": "च्छा",
+      "word_index": 0,
+      "aksara_index": 1
+    },
+    {
+      "x_global": 507,
+      "type": "anudatta",
+      "word": "म",
+      "aksara": "म",
+      "word_index": 1,
+      "aksara_index": 0
+    },
+    {
+      "x_global": 694,
+      "type": "svarita",
+      "word": "इन्द्रं",
+      "aksara": "न्द्रं",
+      "word_index": 2,
+      "aksara_index": 1
+    },
+    {
+      "x_global": 821,
+      "type": "anudatta",
+      "word": "मतयः",
+      "aksara": "म",
+      "word_index": 3,
+      "aksara_index": 0
+    },
+    {
+      "x_global": 964,
+      "type": "svarita",
+      "word": "मतयः",
+      "aksara": "यः",
+      "word_index": 3,
+      "aksara_index": 2
+    },
+    {
+      "x_global": 1173,
+      "type": "anudatta",
+      "word": "स्वर्विदः",
+      "aksara": "स्व",
+      "word_index": 4,
+      "aksara_index": 0
+    },
+    {
+      "x_global": 1358,
+      "type": "svarita",
+      "word": "स्वर्विदः",
+      "aksara": "दः",
+      "word_index": 4,
+      "aksara_index": 2
+    },
+    {
+      "x_global": 1525,
+      "type": "anudatta",
+      "word": "सध्रीचीर्विश्वा",
+      "aksara": "स",
+      "word_index": 5,
+      "aksara_index": 0
+    },
+    {
+      "x_global": 1715,
+      "type": "anudatta",
+      "word": "सध्रीचीर्विश्वा",
+      "aksara": "ची",
+      "word_index": 5,
+      "aksara_index": 2
+    },
+    {
+      "x_global": 1970,
+      "type": "svarita",
+      "word": "सध्रीचीर्विश्वा",
+      "aksara": "श्वा",
+      "word_index": 5,
+      "aksara_index": 4
+    },
+    {
+      "x_global": 2211,
+      "type": "anudatta",
+      "word": "उशतीरनूषत",
+      "aksara": "श",
+      "word_index": 6,
+      "aksara_index": 1
+    },
+    {
+      "x_global": 2366,
+      "type": "svarita",
+      "word": "उशतीरनूषत",
+      "aksara": "र",
+      "word_index": 6,
+      "aksara_index": 3
+    }
+  ],
+  "boundary_interpretation": "WORD BOUNDARIES. I found them by projecting ink only inside a 19-row window that tracks the fitted sirorekha (y = 0.0047*x + 1918 .. +16) and taking runs of >=8 inked rows per column. The headline runs are: 182-406 | 446-529 | 571-726 | 764-985 | 1084-1379 | 1471-1584 + 1589-1743 + 1746-2032 | 2073-2597 | 2649-2664 (danda) | 2933-3184 (double danda, numeral, double danda). Inter-word headline gaps are 38-58 px (40, 42, 38, 58, 52, 41, 52). The two gaps of 5 px and 3 px inside 1471-2032 are ink breaks in a single 562-px-long headline, an order of magnitude below any real word gap, so 1471-2032 is ONE printed word (sadhriicii-rvishvaa). The two visargas (1007-1027 and 1398-1419) are free-standing dot pairs, not headline-joined; I attached each to the word on its left, whose headline ends 19-23 px earlier. That gives 7 text words, then the danda, then the flush-right numeral group. Word indices 0-6 are the text words; 7 = danda, 8 = first double danda, 9 = the numeral 17, 10 = closing double danda. AKSARA BOUNDARIES. Inside each word I segmented on a second projection taken 19-86 rows BELOW the fitted sirorekha, i.e. the glyph bodies only, where aksaras separate even though their headlines are joined. The body runs are: 184-277 | 285-366 | 377-393 || 453-523 || 578-721 || 768-838 | 854-907 | 924-981 | 1007-1027 || 1088-1191 | 1215-1232 | 1255-1309 | 1324-1378 | 1398-1419 || 1473-1542 | 1556-1614 | 1630-1649 | 1668-1734 | 1755-1772 | 1794-1811 | 1835-1891 | 1907-1983 | 2003-2021 || 2078-2144 | 2156-2226 | 2238-2291 | 2310-2329 | 2346-2452 | 2467-2520 | 2535-2589. CALIBRATION THAT RESOLVES THE NEAR-BOUNDARY MARKS. All six anudatta bars sit with their RIGHT edge within 2 px of the right edge of one glyph body: 525/523, 839/838, 1191/1191, 1543/1542, 1733/1734, 2230/2226. That is a fixed fount offset (the bar is cut under the right two thirds of the aksara), so each bar has exactly one candidate body and none of them is genuinely ambiguous. All six svarita strokes sit with their centre INSIDE one glyph body span: 327 in 285-366, 694 in 578-721, 964 in 924-981, 1358 in 1324-1378, 1970 in 1907-1983, 2366 in 2346-2393. INDIVIDUAL CALLS. (1) The bar at 821 in matayah looks as if it straddles ma/ta at band scale; it does not - it spans 802-839, ma's body is 768-838 and ta's body starts at 854, so it stops 15 px short of ta. Assigned to ma (aksara 0). (2) The bar at 1173 lies under the -va half of the s+va conjunct (body 1088-1191, two humps in the column profile). s and va are one aksara, so it is assigned to the conjunct sva (aksara 0), not to a separate va. (3) The bar at 1525 spans 1507-1543; sa's body is 1473-1542 and dhra's body starts at 1556, so it is sa (aksara 0), not dhrii. (4) The bar at 1715 spans 1697-1733; the ca body is 1668-1734 and its ii stem is 1755-1772, so it belongs to the aksara cii (aksara 2). (5) The svarita at 327 sits between a (body 184-277) and the aa stem (377-393); its centre is 2 px off the centre of the 285-366 body and it is 50 px clear of a's right edge, so it is on the c-cha-aa aksara (index 1), not on the initial a. (6) The svarita at 2366 falls inside the merged body run 2346-2452; the column profile and a 6x crop split that run into ra (2346-2393) and na (2393-2452, carrying the uu hook at 2412-2480). 2360-2371 is wholly inside ra, so it is assigned to ra (aksara 3), not to nuu. (7) The svarita at 694 in indram is 4 px from the anusvara dot and merges with it into one ink blob at every threshold; I separated them by shape - the stroke is x 689-698 by y 1883-1920 (10 wide, 37 tall) and the dot is x 698-720 by y 1899-1921 (22 by 22). The stroke is on the n-d-ra-anusvara cluster (aksara 1). (8) The svaritas at 964 and 1358 each sit over a body (ya 924-981, da 1324-1378) that is followed by a free-standing visarga; I read the visarga as part of the same aksara, so they are aksara 2 in both words.",
+  "notes": "MAGNIFICATION AND METHOD. I started from the two supplied 1568-px segment crops, then rendered my own slices of the same line at 2.7x, 4x, 6x, 7x, 10x and 20x of the native block pixels, binarised at thresholds 110/118/128/145. All positions and sizes are measured, not eyeballed: full-width row-ink projections, per-column ink profiles in a window that tracks the fitted sirorekha, and 8-connected component extents. I repeated the component analysis of both accent bands at thresholds 110, 128 and 145; the mark inventory is identical at all three (6 flat bars, 6 upright strokes) and only the measured widths move by 1-2 px. THE SIX ANUDATTA. Centres 507, 821, 1173, 1525, 1715, 2211; extents (thr 128) 489-525, 802-839, 1155-1191, 1507-1543, 1697-1733, 2192-2230; each 37-39 px wide and 10-11 px tall, all inside y 2027-2047, all with clear white above them and 11+ rows of white below the band. Distinctly wider than tall, as the print specifies. THE SIX SVARITA. Centres 327, 694, 964, 1358, 1970, 2366; extents 322-332, 689-698, 958-969, 1352-1363, 1964-1976, 2360-2371; each 9-15 px wide and 28-37 px tall, tops at y 1883-1895, standing clear above the sirorekha. Distinctly taller than wide. FALSE POSITIVES I REJECTED, BY SHAPE. (a) uu-matra hook of nuu at x 2412-2480, y 2014-2046: 69 px wide, 33 px tall, a curved hook running straight out of the na body - three times the height of a bar; rejected. (b) Foot of da in vidah at x 1374-1387, y 2014-2021: 14 px wide and continuous with the da body above it, so neither isolated nor bar-shaped; rejected. (c) Subscript ra (ra-phala) diagonals under d-ra in indram (~x 700-727), under dh-ra in dhrii (~x 1590-1614), the tail of half-sa in sva (~x 1100-1150) and the tail of the initial i: all slanted strokes joined to their own glyph bodies, none a free flat dash. (d) Six wide curved shapes above the headline, which are the trap for svarita: x 1216-1301 (i-matra curl plus repha of -rvi- in svarvidah, 84 px across), 1591-1644 (ii of dhrii, 54), 1715-1770 (ii of cii, 55), 1794-1840 (i of -rvi-, 46), 1844-1883 (the repha itself, 40), 2271-2326 (ii of tii, 56). Each is 39-86 px wide with 0.54-0.72 fill and, at 9-12x, resolves into loops or hooks; I opened every one of them and confirmed there is no narrow upright stroke hidden inside. Real svarita on this line are 9-15 px wide. (e) Two visargas, x 1007-1027 (yah) and 1398-1419 (dah): each two round dots about 21 wide by 24 tall stacked across the body band, not upright strokes. (f) One anusvara, x 698-720, y 1899-1921, 22 by 22 - as wide as tall, and it merges into the same ink blob as the indram svarita; separated by shape as described in boundary_interpretation. (g) The danda at x 2649-2666 and the four danda strokes of the numeral group (2933-2952, 2956-2974, 3146-3162, 3164-3184) are 16-21 px wide and 71-74 tall and stop at y ~2013; they never reach the bar band, so no danda slice was mistaken for a mark. (h) Line 8's own bar band, y 1673-1694, is 189 completely blank rows above my svarita band - I verified zero inked pixels in rows 1695-1883 across all 3226 columns - so on this particular line the line-attribution trap does not bite at all. Line 9 is the indented opening line of a new hymn and sits after an unusually large 229-row vertical break. READING DIFFICULTIES. (1) Word 0 aksara 1 was the only glyph I had to argue about. It is 82 px wide (285-366) with THREE enclosed counters (x 301-314, 329-338, 308-331) and a descending tail at 345-367. Its column profile shows TWO humps before the final stem, exactly like the known conjuncts s-va (104 px, two humps) and sh-va (77 px, two humps), and unlike the single consonants on this same line - ca is 67 px with ONE hump and ONE counter, sha is 71 px with one hump plus a thin connector and ONE counter. Every single-consonant body on this line measures 47-71 px. So the ink says this is a two-consonant conjunct carrying aa, and I read it as c-cha-aa. A reader who read it as a bare chha would still put the svarita on the same aksara, so the accent record is unaffected either way. I template-matched this glyph against the whole leaf; it does not recur (best non-self Jaccard 0.70, i.e. background), so no further internal evidence was available. I followed the fount note and read the first glyph, which looks like vocalic r or shra, as a. (2) The numeral. I built a numeral inventory from the other numerals printed on this same leaf: 1, 2, 3, 4, 5, 6, 7, 8, 9 and 0 all occur here. Line 9's first digit is the loop-plus-straight-stem form that appears alone as 1 elsewhere on the leaf; its second digit (x 3058-3121) is the ring with a teardrop counter at upper right and a hook leaving at mid left, which matches the 7 printed on line 22 and is clearly not the 9 on line 2 (counter upper left, tail sweeping to lower right) nor the open 3 on line 14. So I read the numeral as 17. Note that it is NOT a running verse number on this page: the preceding line ends 12 and the following lines run 1, 2, 3, 4, 5, 6, 7, 8, so the flush-right 17 on line 9 behaves like the number of the hymn that line 9 opens. I recorded the digits as printed and did not adjust them. (3) Nothing else was left unresolved, so unclear_count is 0. I consulted no text, edition, translation, database or web resource, and I did not read the detector scripts, the transcription directory, or any other reader's work."
+}

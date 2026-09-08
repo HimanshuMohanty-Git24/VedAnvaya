@@ -1,0 +1,504 @@
+{
+  "lines": [
+    {
+      "canvas_index": 32,
+      "line_index": 0,
+      "note": "line 0 always unaccented — baseline check",
+      "stratum": "running_head"
+    },
+    {
+      "canvas_index": 32,
+      "line_index": 12,
+      "note": "P1/P2/P3 three-reader gold: 7 anudatta 3 svarita",
+      "stratum": "gold_verified"
+    },
+    {
+      "canvas_index": 32,
+      "line_index": 19,
+      "note": "Q1/Q2 two-reader gold: 7 anudatta 4 svarita",
+      "stratum": "gold_verified"
+    },
+    {
+      "canvas_index": 15,
+      "line_index": 2,
+      "note": "stratified_sample",
+      "stratum": "early_kandas"
+    },
+    {
+      "canvas_index": 15,
+      "line_index": 9,
+      "note": "stratified_sample",
+      "stratum": "early_kandas"
+    },
+    {
+      "canvas_index": 15,
+      "line_index": 17,
+      "note": "stratified_sample",
+      "stratum": "early_kandas"
+    },
+    {
+      "canvas_index": 33,
+      "line_index": 2,
+      "note": "stratified_sample",
+      "stratum": "early_kandas"
+    },
+    {
+      "canvas_index": 33,
+      "line_index": 9,
+      "note": "stratified_sample",
+      "stratum": "early_kandas"
+    },
+    {
+      "canvas_index": 33,
+      "line_index": 17,
+      "note": "stratified_sample",
+      "stratum": "early_kandas"
+    },
+    {
+      "canvas_index": 51,
+      "line_index": 2,
+      "note": "stratified_sample",
+      "stratum": "early_kandas"
+    },
+    {
+      "canvas_index": 51,
+      "line_index": 9,
+      "note": "stratified_sample",
+      "stratum": "early_kandas"
+    },
+    {
+      "canvas_index": 51,
+      "line_index": 17,
+      "note": "stratified_sample",
+      "stratum": "early_kandas"
+    },
+    {
+      "canvas_index": 69,
+      "line_index": 2,
+      "note": "stratified_sample",
+      "stratum": "early_kandas"
+    },
+    {
+      "canvas_index": 69,
+      "line_index": 9,
+      "note": "stratified_sample",
+      "stratum": "early_kandas"
+    },
+    {
+      "canvas_index": 69,
+      "line_index": 17,
+      "note": "stratified_sample",
+      "stratum": "early_kandas"
+    },
+    {
+      "canvas_index": 87,
+      "line_index": 2,
+      "note": "stratified_sample",
+      "stratum": "early_kandas"
+    },
+    {
+      "canvas_index": 87,
+      "line_index": 9,
+      "note": "stratified_sample",
+      "stratum": "early_kandas"
+    },
+    {
+      "canvas_index": 87,
+      "line_index": 17,
+      "note": "stratified_sample",
+      "stratum": "early_kandas"
+    },
+    {
+      "canvas_index": 105,
+      "line_index": 2,
+      "note": "stratified_sample",
+      "stratum": "early_kandas"
+    },
+    {
+      "canvas_index": 105,
+      "line_index": 9,
+      "note": "stratified_sample",
+      "stratum": "early_kandas"
+    },
+    {
+      "canvas_index": 105,
+      "line_index": 17,
+      "note": "stratified_sample",
+      "stratum": "early_kandas"
+    },
+    {
+      "canvas_index": 123,
+      "line_index": 2,
+      "note": "stratified_sample",
+      "stratum": "middle_kandas"
+    },
+    {
+      "canvas_index": 123,
+      "line_index": 9,
+      "note": "stratified_sample",
+      "stratum": "middle_kandas"
+    },
+    {
+      "canvas_index": 123,
+      "line_index": 17,
+      "note": "stratified_sample",
+      "stratum": "middle_kandas"
+    },
+    {
+      "canvas_index": 141,
+      "line_index": 2,
+      "note": "stratified_sample",
+      "stratum": "middle_kandas"
+    },
+    {
+      "canvas_index": 141,
+      "line_index": 9,
+      "note": "stratified_sample",
+      "stratum": "middle_kandas"
+    },
+    {
+      "canvas_index": 141,
+      "line_index": 17,
+      "note": "stratified_sample",
+      "stratum": "middle_kandas"
+    },
+    {
+      "canvas_index": 159,
+      "line_index": 2,
+      "note": "stratified_sample",
+      "stratum": "middle_kandas"
+    },
+    {
+      "canvas_index": 159,
+      "line_index": 9,
+      "note": "stratified_sample",
+      "stratum": "middle_kandas"
+    },
+    {
+      "canvas_index": 159,
+      "line_index": 17,
+      "note": "stratified_sample",
+      "stratum": "middle_kandas"
+    },
+    {
+      "canvas_index": 177,
+      "line_index": 2,
+      "note": "stratified_sample",
+      "stratum": "middle_kandas"
+    },
+    {
+      "canvas_index": 177,
+      "line_index": 9,
+      "note": "stratified_sample",
+      "stratum": "middle_kandas"
+    },
+    {
+      "canvas_index": 177,
+      "line_index": 17,
+      "note": "stratified_sample",
+      "stratum": "middle_kandas"
+    },
+    {
+      "canvas_index": 195,
+      "line_index": 2,
+      "note": "stratified_sample",
+      "stratum": "middle_kandas"
+    },
+    {
+      "canvas_index": 195,
+      "line_index": 9,
+      "note": "stratified_sample",
+      "stratum": "middle_kandas"
+    },
+    {
+      "canvas_index": 195,
+      "line_index": 17,
+      "note": "stratified_sample",
+      "stratum": "middle_kandas"
+    },
+    {
+      "canvas_index": 213,
+      "line_index": 2,
+      "note": "stratified_sample",
+      "stratum": "middle_kandas"
+    },
+    {
+      "canvas_index": 213,
+      "line_index": 9,
+      "note": "stratified_sample",
+      "stratum": "middle_kandas"
+    },
+    {
+      "canvas_index": 213,
+      "line_index": 17,
+      "note": "stratified_sample",
+      "stratum": "middle_kandas"
+    },
+    {
+      "canvas_index": 231,
+      "line_index": 2,
+      "note": "stratified_sample",
+      "stratum": "middle_kandas"
+    },
+    {
+      "canvas_index": 231,
+      "line_index": 9,
+      "note": "stratified_sample",
+      "stratum": "middle_kandas"
+    },
+    {
+      "canvas_index": 231,
+      "line_index": 17,
+      "note": "stratified_sample",
+      "stratum": "middle_kandas"
+    },
+    {
+      "canvas_index": 249,
+      "line_index": 2,
+      "note": "stratified_sample",
+      "stratum": "middle_kandas"
+    },
+    {
+      "canvas_index": 249,
+      "line_index": 9,
+      "note": "stratified_sample",
+      "stratum": "middle_kandas"
+    },
+    {
+      "canvas_index": 249,
+      "line_index": 17,
+      "note": "stratified_sample",
+      "stratum": "middle_kandas"
+    },
+    {
+      "canvas_index": 267,
+      "line_index": 2,
+      "note": "stratified_sample",
+      "stratum": "late_kandas"
+    },
+    {
+      "canvas_index": 267,
+      "line_index": 9,
+      "note": "stratified_sample",
+      "stratum": "late_kandas"
+    },
+    {
+      "canvas_index": 267,
+      "line_index": 17,
+      "note": "stratified_sample",
+      "stratum": "late_kandas"
+    },
+    {
+      "canvas_index": 285,
+      "line_index": 2,
+      "note": "stratified_sample",
+      "stratum": "late_kandas"
+    },
+    {
+      "canvas_index": 285,
+      "line_index": 9,
+      "note": "stratified_sample",
+      "stratum": "late_kandas"
+    },
+    {
+      "canvas_index": 285,
+      "line_index": 17,
+      "note": "stratified_sample",
+      "stratum": "late_kandas"
+    },
+    {
+      "canvas_index": 303,
+      "line_index": 2,
+      "note": "stratified_sample",
+      "stratum": "late_kandas"
+    },
+    {
+      "canvas_index": 303,
+      "line_index": 9,
+      "note": "stratified_sample",
+      "stratum": "late_kandas"
+    },
+    {
+      "canvas_index": 303,
+      "line_index": 17,
+      "note": "stratified_sample",
+      "stratum": "late_kandas"
+    },
+    {
+      "canvas_index": 321,
+      "line_index": 2,
+      "note": "stratified_sample",
+      "stratum": "late_kandas"
+    },
+    {
+      "canvas_index": 321,
+      "line_index": 9,
+      "note": "stratified_sample",
+      "stratum": "late_kandas"
+    },
+    {
+      "canvas_index": 321,
+      "line_index": 17,
+      "note": "stratified_sample",
+      "stratum": "late_kandas"
+    },
+    {
+      "canvas_index": 339,
+      "line_index": 2,
+      "note": "stratified_sample",
+      "stratum": "late_kandas"
+    },
+    {
+      "canvas_index": 339,
+      "line_index": 9,
+      "note": "stratified_sample",
+      "stratum": "late_kandas"
+    },
+    {
+      "canvas_index": 339,
+      "line_index": 17,
+      "note": "stratified_sample",
+      "stratum": "late_kandas"
+    },
+    {
+      "canvas_index": 357,
+      "line_index": 2,
+      "note": "stratified_sample",
+      "stratum": "late_kandas"
+    },
+    {
+      "canvas_index": 357,
+      "line_index": 9,
+      "note": "stratified_sample",
+      "stratum": "late_kandas"
+    },
+    {
+      "canvas_index": 357,
+      "line_index": 17,
+      "note": "stratified_sample",
+      "stratum": "late_kandas"
+    },
+    {
+      "canvas_index": 375,
+      "line_index": 2,
+      "note": "stratified_sample",
+      "stratum": "late_kandas"
+    },
+    {
+      "canvas_index": 375,
+      "line_index": 9,
+      "note": "stratified_sample",
+      "stratum": "late_kandas"
+    },
+    {
+      "canvas_index": 375,
+      "line_index": 17,
+      "note": "stratified_sample",
+      "stratum": "late_kandas"
+    },
+    {
+      "canvas_index": 393,
+      "line_index": 2,
+      "note": "stratified_sample",
+      "stratum": "kanda19_area"
+    },
+    {
+      "canvas_index": 393,
+      "line_index": 9,
+      "note": "stratified_sample",
+      "stratum": "kanda19_area"
+    },
+    {
+      "canvas_index": 393,
+      "line_index": 17,
+      "note": "stratified_sample",
+      "stratum": "kanda19_area"
+    },
+    {
+      "canvas_index": 411,
+      "line_index": 2,
+      "note": "stratified_sample",
+      "stratum": "kanda19_area"
+    },
+    {
+      "canvas_index": 411,
+      "line_index": 9,
+      "note": "stratified_sample",
+      "stratum": "kanda19_area"
+    },
+    {
+      "canvas_index": 411,
+      "line_index": 17,
+      "note": "stratified_sample",
+      "stratum": "kanda19_area"
+    },
+    {
+      "canvas_index": 429,
+      "line_index": 2,
+      "note": "stratified_sample",
+      "stratum": "kanda19_area"
+    },
+    {
+      "canvas_index": 429,
+      "line_index": 9,
+      "note": "stratified_sample",
+      "stratum": "kanda19_area"
+    },
+    {
+      "canvas_index": 429,
+      "line_index": 17,
+      "note": "stratified_sample",
+      "stratum": "kanda19_area"
+    },
+    {
+      "canvas_index": 447,
+      "line_index": 2,
+      "note": "stratified_sample",
+      "stratum": "kanda20_area"
+    },
+    {
+      "canvas_index": 447,
+      "line_index": 9,
+      "note": "stratified_sample",
+      "stratum": "kanda20_area"
+    },
+    {
+      "canvas_index": 447,
+      "line_index": 17,
+      "note": "stratified_sample",
+      "stratum": "kanda20_area"
+    },
+    {
+      "canvas_index": 15,
+      "line_index": 0,
+      "note": "first content leaf running head",
+      "stratum": "running_head"
+    },
+    {
+      "canvas_index": 430,
+      "line_index": 5,
+      "note": "leaf 430 was in v2 calib B1 set",
+      "stratum": "kanda20_area"
+    },
+    {
+      "canvas_index": 430,
+      "line_index": 12,
+      "note": "leaf 430 middle area",
+      "stratum": "kanda20_area"
+    }
+  ],
+  "mandatory_reference_lines": 3,
+  "policy": "FROZEN_BEFORE_CALIBRATION — this list was committed before any calibration metrics were computed; changing it afterwards would invalidate the calibration.",
+  "schema_version": "1.0.0",
+  "source": "BSB_MDZ_bsb10219750",
+  "strata": {
+    "early_kandas": 18,
+    "gold_verified": 2,
+    "kanda19_area": 9,
+    "kanda20_area": 5,
+    "late_kandas": 21,
+    "middle_kandas": 24,
+    "running_head": 2
+  },
+  "total_lines": 81
+}

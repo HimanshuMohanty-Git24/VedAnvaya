@@ -1,0 +1,111 @@
+{
+  "reader": "T2",
+  "canvas_index": 411,
+  "line_index": 9,
+  "text_devanagari": "अच्छा॑ म॒ इन्द्रं॑ म॒तयः॑ स्व॒र्विदः॑ स॒धीची॒र्विश्वा॑ उश॒तीर॑नूषत । ॥१७॥",
+  "anudatta_count": 6,
+  "svarita_count": 6,
+  "accent_count": 12,
+  "unclear_count": 1,
+  "y_bands": "All y in leaf-text-block coordinates (block = crop 412,382-3638,5388 of the 4000x5900 leaf; block 3226x5006). From a full-width row-ink projection plus a per-column sirorekha-top locator: LINE ABOVE (line 8) body ends y~1657, its descender zone y 1658-1672, ITS OWN ANUDATTA BAR BAND y 1673-1694; then a completely blank gutter y 1695-1883 (zero inked pixels at threshold 128 across all 3226 columns). Line 9 sits two line pitches below line 8 (line-9 ink top 1884 vs line-8 top ~1520; measured pitch on this leaf 175 px), so on THIS line the line-above trap is physically absent - no line-8 mark can reach my bands. MY SVARITA BAND y 1882-1926 (stroke tops 1882 at x~320 sloping to 1893 at x~2366; stroke feet meet the headline at 1916-1926). MY SIROREKHA: top edge y 1919 at x=250 sloping to y 1930 at x=2550 (page skew +11 px over 2300 px, slope 0.0048); rule core y ~1919-1945, thickness 15-20 px; row-ink peak 2122 inked px at y 1933. MY GLYPH BODY y ~1940-2007 (baseline 2003-2009), with legitimate descenders (subscript ra of न्द्र, subscript va of स्व, the uu-matra of नू, the da tail of विदः) reaching y 2019 at most. MY OWN ANUDATTA BAR BAND y 2026-2050 (2026-2038 at x=507, 2036-2049 at x=2211 - the same +11 px skew as my own sirorekha, which is the check that these bars are mine and not a neighbour's). Then blank y 2051-2058; NEXT LINE (line 10) upper accent/matra band y 2059-2093, its sirorekha from y 2094. Both of my accent bands carry the identical skew as my own headline and are fenced from the neighbouring lines by all-white rows, so no attribution crosses a band.",
+  "carriers": [
+    {
+      "x_global": 327,
+      "type": "svarita",
+      "word": "अच्छा",
+      "aksara": "च्छा",
+      "word_index": 0,
+      "aksara_index": 1
+    },
+    {
+      "x_global": 507,
+      "type": "anudatta",
+      "word": "म",
+      "aksara": "म",
+      "word_index": 1,
+      "aksara_index": 0
+    },
+    {
+      "x_global": 693,
+      "type": "svarita",
+      "word": "इन्द्रं",
+      "aksara": "न्द्रं",
+      "word_index": 2,
+      "aksara_index": 1
+    },
+    {
+      "x_global": 821,
+      "type": "anudatta",
+      "word": "मतयः",
+      "aksara": "म",
+      "word_index": 3,
+      "aksara_index": 0
+    },
+    {
+      "x_global": 964,
+      "type": "svarita",
+      "word": "मतयः",
+      "aksara": "यः",
+      "word_index": 3,
+      "aksara_index": 2
+    },
+    {
+      "x_global": 1173,
+      "type": "anudatta",
+      "word": "स्वर्विदः",
+      "aksara": "स्व",
+      "word_index": 4,
+      "aksara_index": 0
+    },
+    {
+      "x_global": 1358,
+      "type": "svarita",
+      "word": "स्वर्विदः",
+      "aksara": "दः",
+      "word_index": 4,
+      "aksara_index": 2
+    },
+    {
+      "x_global": 1525,
+      "type": "anudatta",
+      "word": "सधीचीर्विश्वा",
+      "aksara": "स",
+      "word_index": 5,
+      "aksara_index": 0
+    },
+    {
+      "x_global": 1716,
+      "type": "anudatta",
+      "word": "सधीचीर्विश्वा",
+      "aksara": "ची",
+      "word_index": 5,
+      "aksara_index": 2
+    },
+    {
+      "x_global": 1970,
+      "type": "svarita",
+      "word": "सधीचीर्विश्वा",
+      "aksara": "श्वा",
+      "word_index": 5,
+      "aksara_index": 4
+    },
+    {
+      "x_global": 2211,
+      "type": "anudatta",
+      "word": "उशतीरनूषत",
+      "aksara": "श",
+      "word_index": 6,
+      "aksara_index": 1
+    },
+    {
+      "x_global": 2366,
+      "type": "svarita",
+      "word": "उशतीरनूषत",
+      "aksara": "र",
+      "word_index": 6,
+      "aksara_index": 3
+    }
+  ],
+  "boundary_interpretation": "WORD BOUNDARIES: from breaks in the sirorekha, measured as gaps between the x-extents of the headline-joined connected components. Seven clusters: 182-407, 446-530, 570-728, 763-1028 (incl. visarga 1007-1028), 1083-1421 (incl. visarga 1399-1421), 1471-2033, 2072-2598; then the danda at 2649-2667 and the sign group 2933-3185. The six inter-word gaps are 39, 40, 35, 55, 50 and 39 px - far wider than the largest within-word headline nick (13 px, between अ and च्छा at 274-285, and 2 px between म and त of मतयः at 845-847), so the word split is unambiguous. AKSARA BOUNDARIES: from the column-ink profile of the body zone only (from headline_top+22 down to y 2005), which isolates each consonant's stem block. Body runs: अ 184-274 | च्छ 285-367 + aa-matra 377-394 || म 453-524 || इ 579-640, न्द्र 640-722 || म 769-839, त 854-907, य 925-981 || स्व 1088-1192, र्वि 1255-1310, द 1325-1376 || स 1473-1542, ध 1558-1615 + ii-stem 1630-1650, च 1668-1735 + ii-stem 1755-1773, र्वि 1794-1891, श्व 1909-1983 + aa 2004-2022 || उ 2078-2145, श 2158-2227, त 2238-2291 + ii-stem 2311-2330, र 2346-2383, न 2387-2452, ष 2468-2521, त 2535-2589. PLACEMENT RULE, calibrated on the uncontested marks and then applied to the contested ones: this fount sets the anudatta bar under the RIGHT PORTION of its aksara, with the bar's right edge flush (+/-6 px) with the right edge of that aksara's consonant body, and sets the svarita stroke 13-29 px LEFT of that same right edge. Calibrated on the isolated one-aksara word म (word 1): body 453-524, bar 488-527, delta +3. MARKS NEAR A BOUNDARY, and the side I assigned each to: (1) bar at 821 (span 801-841), between म (769-839) and त (854-907) of मतयः - assigned to म: the bar lies wholly inside म's span, its right edge 841 is flush with म's 839, and it does not reach त. (2) bar at 1173 (span 1154-1193), between स्व (1088-1192) and र्वि (1255-1310) of स्वर्विदः - assigned to स्व: right edges 1193 vs 1192, flush; the 1192-1216 body gap lies to its right. (3) bar at 1716 (span 1696-1736), between the च of ची (1668-1735) and that aksara's own ii-stem (1755-1773) - assigned to ची: right edges 1736 vs 1735, flush, and the ii-matra belongs to the same aksara, so nothing crosses an aksara boundary. (4) bar at 2211 (span 2191-2232), between श (2158-2227) and ती (2238-2291) of उशतीरनूषत - assigned to श: right edge 2232 is flush with श's 2227 and stops 6 px short of त's left edge 2238. (5) stroke at 2366 (span 2359-2374), sitting over the र/न junction of ...तीरनूषत where there is a visible 4 px headline nick at 2383-2387 - assigned to र: the stroke is entirely inside र's body span 2346-2383, 17 px left of र's right edge, matching the svarita offset measured on the uncontested strokes (य 22, दः 18, श्वा 13); न starts 13 px right of the stroke. (6) stroke at 1970 (span 1962-1979) - assigned to श्वा (body 1909-1983), not to र्वि: it is 79 px right of र्वि's व (ends 1891) and 13 px left of श्व's right edge. (7) stroke at 693 (span 686-700) in इन्द्रं - the one mark that touches another mark: at threshold 128 it labels as a single blob 688-720. A pixel map shows two elements fusing only at y~1900: a 12 px wide upright x 687-698 running y 1882-1918, and a round blob x 702-722 / y 1897-1919 measuring 20x22. This line's two visargas measure 21x24 and 21x24, so the round blob is a printed dot - the anusvara of इन्द्रं - and only the left element is the svarita. Assigned to the aksara न्द्रं, which carries both. (8) stroke at 327 in अच्छा - the only within-word headline break there is at 274-285, between अ and च्छा; the stroke at 322-333 is 48 px right of that break and centred over the च्छ bowl, so it is on च्छा, not on अ.",
+  "notes": "MAGNIFICATION AND METHOD. (a) Read the two supplied 2-segment crops. (b) Re-rendered the same line with scripts/crop_atharvaveda_line.py 411 --line 9 --segments 4. (c) Measured the source raster directly with PIL/numpy on the leaf text block (crop 412,382-3638,5388 of bsb10219750_00411.jpg, 4000x5900): full-width row-ink projections at thresholds 110/128/145/160/175; a per-column sirorekha-top locator (41 px horizontal run test) which measured the page skew as +11 px over 2300 px; skew-corrected connected-component extraction in the above-headline band and in the below-body band; per-word column-ink profiles of the body zone; and raw pixel maps. (d) Rendered my own 5x-12x zooms of every word and every candidate mark - plain, autocontrast-sharpened, and binarised. STABILITY. The mark set is identical at thresholds 110, 128, 145, 160 and 175. In the bar band there are exactly six components, w 37-42 px, h 10-15 px (h/w 0.26-0.36, distinctly wider than tall). Above the headline there are exactly six narrow uprights, w 11-17 px, h 30-36 px (h/w 2.0-2.8). The two populations do not overlap on any measure, and the six of each kind are near-identical in size, as type-set marks should be. FALSE POSITIVES REJECTED, BY SHAPE. (1) x 2411-2483, y 2008-2049 (w 71, h 41): a curved hook running continuously up into the न of नूषत - the u/uu-matra of नू, not a dash; the only thing in the gutter taller than 15 px. (2) x 1365-1389, y 2008-2023 (w 24, h 15): the curved tail of the द of विदः - above the bar band and curved, not a flat dash. (3) Four stubs confined to y 2008-2015 (x 634-646, 2381-2396, 3030-3048, 3072-3104): bottoms of descenders, the danda and the numerals leaking into the band, each connecting upward into its glyph with no white gap. (4) Above the headline, five wide curved shapes, w 56-104 px, h/w 0.26-0.55: x 1589-1662 (ii-matra of धी), 1700-1778 (ii-matra of ची), 1790-1928 (i-matra plus repha of र्वि in चीर्विश्वा), 1212-1305 (i-matra plus repha of र्वि in स्वर्विदः), 2217-2334 (ii-matra of ती) - matras and repha, not narrow strokes. (5) The round dot x 702-722 above इन्द्रं: anusvara, 20x22, as wide as tall, sized exactly like this line's visarga dots (21x24). (6) x 2941-2956 and 3009-3032, y 1911-1929: tops of the double danda and of the numeral १, not free-standing strokes. (7) No danda or double-danda slice crosses either band - the single danda 2649-2667 and the sign group 2933-3185 both stop above y 2020. (8) The 2-5 px high slivers that appear only at threshold 175 (x 453-512, 573-624, 774-809, 842-955, 1474-1510, 2001-2028, 2078-2126, 2139-2208, 2539-2564) are the fuzzy upper edge of my own sirorekha. (9) No vocalic-ri hook is present anywhere in the gutter of this line: nothing in the bar band exceeds 15 px in height, and the 21-33 px curved hooks the brief warns about are simply absent here. NO LINE-ABOVE CONTAMINATION. On this line the classic trap cannot fire: lines 8 and 9 are two pitches apart and y 1695-1883 is completely blank, so line 8's bar band (1673-1694) lies 332 px above mine (2026-2050). I checked the converse too - line 10's upper matra band starts at y 2059, nine blank rows below my bar band's floor, and all six of my bars sit at 2026-2049 carrying MY sirorekha's skew, not line 10's. READINGS I HAD TO SETTLE FROM THE INK. (i) Word 5, aksara 1: I read धी, not ध्री. The glyph's ink bottoms at y 2003, the same as this line's plain consonants (च 2003, स 2004, त 2005, श 2007), whereas the one certain subscript-ra on the line - the द्र of इन्द्रं - reaches y 2012 and shows its subscript as a separate descending diagonal. No such diagonal exists under this ध at any threshold. My memory of the Rigvedic parallel suggested a -dhri- form; the ink does not support a subscript ra here, so I followed the ink and print सधीचीर्विश्वा. (ii) The verse sign is a single danda, then a ~265 px gap, then ॥ १ ७ ॥: the first numeral has a closed upper bowl with a straight vertical descender on its right (१); the second is an all-curl closed loop entered by a hook from the lower left with no straight descender (७). Read as ॥१७॥. (iii) The word-initial glyph of word 0 is the fount's अ, which looks like ऋ or श्र; read as अ per the established fount note. UNRESOLVED (unclear_count = 1). Word 0, aksara 1: the 82 px bowl-form conjunct I transcribe च्छा. Its width places it firmly in this line's conjunct class (न्द्र 82, स्व 104) and outside the single-consonant class (त 53, ष 53, य 56, च 67, श 69, स 69, म 70-71), and it carries a short lower-right subscript diagonal reaching y 2003, so it is certainly a conjunct plus aa-matra; but at 2024 px the individual half-consonant inside the bowl is not separately resolvable, so I could not read the first member from its shape alone. This does not affect the accent record: the svarita at x 327 sits over that aksara whatever its identity, and its aksara index (1) is fixed by the अ/च्छा headline break at 274-285. CONFIDENCE. High on the accent layer, on two independent internal checks: both accent bands carry my own sirorekha's skew (so all twelve marks are line 9's), and the placement rule derived from the isolated one-aksara word म (bar right edge flush with the aksara body's right edge; svarita 13-29 px left of it) holds for all twelve marks with no exception."
+}
