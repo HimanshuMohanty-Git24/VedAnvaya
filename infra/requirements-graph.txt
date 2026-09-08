@@ -1,0 +1,12 @@
+# Neo4j graph layer dependency.
+#
+# Declared here rather than in pyproject.toml on purpose: the sealed Rigveda
+# semantic V3.2 freeze (data/manifests/rigveda_semantic_execution_v3_1_freeze.draft.json)
+# hashes pyproject.toml as a reproducibility input, and no session may reissue that
+# freeze while the full corpus run is blocked. Adding a dependency group there trips
+# tests/unit/test_semantic_full_run.py. Move this into pyproject.toml's optional
+# dependencies at the same time the freeze is legitimately reissued.
+#
+# Install with:  pip install -r infra/requirements-graph.txt
+
+neo4j>=5.27
