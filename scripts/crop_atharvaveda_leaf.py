@@ -20,7 +20,12 @@ import pathlib
 
 from PIL import Image
 
-SCAN_DIR = pathlib.Path("data/raw/bsb_mdz/2026-09-07/bsb10219750")
+# Anchored to the repository rather than the working directory. As a relative
+# path this resolved against the CWD, so running the calibration from anywhere
+# but the repo root reported LEAF_ABSENT for all 81 lines and the gate emitted
+# NEEDS_REVISION for want of a scan that was on disk the whole time.
+_REPO = pathlib.Path(__file__).resolve().parents[1]
+SCAN_DIR = _REPO / "data/raw/bsb_mdz/2026-09-07/bsb10219750"
 BSB_ID = "bsb10219750"
 # The reader downsamples to this long edge; bands are cut so that the
 # post-downsample line height stays above what the accent marks need.

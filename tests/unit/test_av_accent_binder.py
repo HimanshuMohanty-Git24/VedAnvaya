@@ -20,6 +20,16 @@ from pathlib import Path
 
 import pytest
 
+from vedagraph.ingest.av_accent_binder import (
+    AUTO_PROMOTE,
+    Binding,
+    _filter_artifact_spans,
+    aksara_clusters,
+    bind_line,
+    binding_summary,
+    strip_accents,
+)
+
 REPO = Path(__file__).resolve().parents[2]
 
 
@@ -32,21 +42,10 @@ def _load(name: str):
     return mod
 
 
-from vedagraph.ingest.av_accent_binder import (
-    AUTO_PROMOTE,
-    Binding,
-    BindingState,
-    _filter_artifact_spans,
-    aksara_clusters,
-    bind_line,
-    binding_summary,
-    strip_accents,
-)
-
-
 # ---------------------------------------------------------------------------
 # aksara_clusters
 # ---------------------------------------------------------------------------
+
 
 class TestAksaraClusters:
     def test_pure_vowel_word(self) -> None:
@@ -108,6 +107,7 @@ class TestAksaraClusters:
 # strip_accents
 # ---------------------------------------------------------------------------
 
+
 class TestStripAccents:
     ANUDATTA = "॒"
     SVARITA = "॑"
@@ -126,7 +126,7 @@ class TestStripAccents:
         assert strip_accents("") == ""
 
     def test_vedic_extensions_stripped(self) -> None:
-        # A reader might use Vedic Extension range U+1CD0–U+1CFF
+        # A reader might use Vedic Extension range U+1CD0-U+1CFF
         text = "᳐क"
         assert strip_accents(text) == "क"
 
@@ -135,6 +135,7 @@ class TestStripAccents:
 # _filter_artifact_spans
 # ---------------------------------------------------------------------------
 
+
 class TestFilterArtifactSpans:
     def test_passes_through_normal_spans(self) -> None:
         spans = [(0, 362), (400, 693), (731, 859), (887, 1221)]
@@ -142,7 +143,7 @@ class TestFilterArtifactSpans:
 
     def test_removes_isolated_tiny_span_in_large_gap(self) -> None:
         # The 22-px artifact from leaf 32 line 19 should be removed when both
-        # neighbours are 25× wider.
+        # neighbours are 25x wider.
         spans = [(564, 1109), (1113, 1135), (1171, 1766)]
         filtered = _filter_artifact_spans(spans)
         # Only the two large spans remain
@@ -150,7 +151,7 @@ class TestFilterArtifactSpans:
         assert len(filtered) == 2
 
     def test_keeps_small_danda_with_moderate_neighbours(self) -> None:
-        # A 14-px danda surrounded by 206-px and 248-px spans (ratio ~14–17x,
+        # A 14-px danda surrounded by 206-px and 248-px spans (ratio ~14-17x,
         # below the threshold of 20x) must be kept.
         spans = [(2162, 2368), (2399, 2413), (2451, 2699)]
         filtered = _filter_artifact_spans(spans)
@@ -168,6 +169,7 @@ class TestFilterArtifactSpans:
 # bind_line — unit tests against fabricated inputs
 # ---------------------------------------------------------------------------
 
+
 class TestBindLine:
     def test_empty_marks_returns_empty(self) -> None:
         bindings = bind_line([], "अ ब", [(0, 100), (120, 220)])
@@ -184,12 +186,17 @@ class TestBindLine:
         bindings = bind_line([mark], "अ", [(0, 100)])
         assert bindings[0].state == "MARK_CLASS_UNCERTAIN"
 
-    def test_single_aksara_word_is_bound_exact(self) -> None:
-        # A one-aksara word has no cell boundary to be uncertain about; the
-        # binder returns BOUND_EXACT since n=1 is unambiguously the only carrier.
+    def test_single_aksara_word_is_bound_unambiguous(self) -> None:
+        # A one-aksara word has no cell boundary to be uncertain about, but
+        # "the only cell it could be" is a weaker claim than a centred hit in
+        # a multi-cell word, so it reports BOUND_UNAMBIGUOUS rather than
+        # BOUND_EXACT. Both are auto-promotable; the distinction exists so the
+        # state is reachable at all — it previously was not, because n == 1
+        # returned BOUND_EXACT and nothing else could produce it.
         mark = {"type": "anudatta", "x0": 40, "x1": 78}
         bindings = bind_line([mark], "ते", [(0, 100)])
-        assert bindings[0].state == "BOUND_EXACT"
+        assert bindings[0].state == "BOUND_UNAMBIGUOUS"
+        assert bindings[0].state in AUTO_PROMOTE
         assert bindings[0].aksara_cluster == "ते"
 
     def test_severe_token_span_mismatch_yields_source_ambiguous(self) -> None:
@@ -229,7 +236,7 @@ class TestBindLine:
     def test_two_marks_in_same_word(self) -> None:
         # Both marks in "अनागसं" over a single span
         marks = [
-            {"type": "anudatta", "x0": 10, "x1": 48},   # center=29 → 'अ'
+            {"type": "anudatta", "x0": 10, "x1": 48},  # center=29 → 'अ'
             {"type": "anudatta", "x0": 100, "x1": 138},  # center=119 → 'ना'
         ]
         bindings = bind_line(marks, "अनागसं", [(0, 360)])
@@ -249,6 +256,7 @@ class TestBindLine:
 # ---------------------------------------------------------------------------
 # bind_line — calibration gold tests (require the 1856 scan on disk)
 # ---------------------------------------------------------------------------
+
 
 class TestBindLineGold:
     """Verify the binder against the three-reader calibration gold.
@@ -287,19 +295,27 @@ class TestBindLineGold:
             assert b.state != "SOURCE_AMBIGUOUS"
             assert b.state != "NO_VALID_CARRIER"
 
-    def test_line12_exact_marks_have_correct_aksara(self) -> None:
+    def test_line12_promoted_marks_have_correct_aksara(self) -> None:
         bindings, _, _ = self._bind(12, self.LINE12_TEXT)
-        # Map by mark type + approximate center for lookup
-        exact = {b.aksara_cluster for b in bindings if b.state == "BOUND_EXACT"}
-        # P1/P2/P3 confirmed these aksara carriers; all should appear in EXACT
-        assert "ना" in exact   # 2nd aksara of अनागसं
-        assert "सं" in exact   # 4th aksara of अनागसं
-        assert "ह्म" in exact  # svarita over ह्म of ब्रह्मणा
-        assert "ते" in exact   # anudatta over ते
-        assert "वा" in exact   # svarita over वा of द्यावापृथिवी
-        assert "थि" in exact   # anudatta over थि of पृथिवी
-        assert "उ" in exact    # anudatta over उ of उभे
-        assert "स्ता" in exact # svarita over स्ता of स्ताम्
+        promoted = {b.aksara_cluster for b in bindings if b.state in AUTO_PROMOTE}
+        # P1/P2/P3 confirmed these aksara carriers; all should be promotable.
+        # ते is the single-aksara token, so it lands in BOUND_UNAMBIGUOUS
+        # rather than BOUND_EXACT — the assertion is on promotability, which
+        # is what governs whether the mark ships without review.
+        assert "ना" in promoted  # 2nd aksara of अनागसं
+        assert "सं" in promoted  # 4th aksara of अनागसं
+        assert "ह्म" in promoted  # svarita over ह्म of ब्रह्मणा
+        assert "ते" in promoted  # anudatta over ते
+        assert "वा" in promoted  # svarita over वा of द्यावापृथिवी
+        assert "थि" in promoted  # anudatta over थि of पृथिवी
+        assert "उ" in promoted  # anudatta over उ of उभे
+        assert "स्ता" in promoted  # svarita over स्ता of स्ताम्
+
+    def test_line12_single_aksara_token_is_unambiguous_not_exact(self) -> None:
+        bindings, _, _ = self._bind(12, self.LINE12_TEXT)
+        by_cluster = {b.aksara_cluster: b for b in bindings}
+        assert by_cluster["ते"].state == "BOUND_UNAMBIGUOUS"
+        assert by_cluster["ह्म"].state == "BOUND_EXACT"
 
     def test_line12_all_marks_in_correct_word(self) -> None:
         bindings, _, _ = self._bind(12, self.LINE12_TEXT)
@@ -331,7 +347,6 @@ class TestBindLineGold:
 
     def test_line19_correct_word_for_all_marks(self) -> None:
         bindings, _, _ = self._bind(19, self.LINE19_TEXT)
-        tok_map = {b.mark_x0: b.word_token for b in bindings}
         skel = strip_accents(self.LINE19_TEXT)
         toks = skel.split()
         # Q1/Q2: anu at ~443 in अहा, sva at ~683 in अरातिमविदः
@@ -361,6 +376,7 @@ class TestBindLineGold:
 # ---------------------------------------------------------------------------
 # Alignment guards
 # ---------------------------------------------------------------------------
+
 
 class TestAlignmentGuards:
     def test_null_kanda_mismatch_does_not_affect_binder(self) -> None:

@@ -2,6 +2,7 @@
 
 Thresholds are declared here, before metrics are run, as required by the
 spec (§15). Changing them after seeing results would invalidate the gate.
+They are unchanged from the run that produced calibration_run_result.json.
 
     PASS/FAIL thresholds (gold lines only):
         DETECTION_RECALL     ≥ 0.90   (gold marks found by extractor)
@@ -14,11 +15,14 @@ spec (§15). Changing them after seeing results would invalidate the gate.
 
 Usage:
     python scripts/run_av_calibration.py [--calibration-set PATH]
+                                         [--enumeration-order normal|reversed|shuffled]
+                                         [--no-write]
 """
 
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import pathlib
 import sys
@@ -30,16 +34,38 @@ from crop_atharvaveda_leaf import leaf_path
 from extract_atharvaveda_accents import extract
 
 from vedagraph.ingest.av_accent_binder import (
-    AUTO_PROMOTE,
-    aksara_clusters,
-    bind_line,
+    bind_line_detailed,
     binding_summary,
-    strip_accents,
+)
+from vedagraph.ingest.av_gold import (
+    ERROR_CATEGORIES,
+    line_exactness,
+    load_gold_record,
+    parse_gold_marks,
+    predicted_marks,
+    score_line,
 )
 
 REPO = pathlib.Path(__file__).resolve().parents[1]
-DEFAULT_CALIB = REPO / "data/transcriptions/atharvaveda_bsb_1856/v2/calibration_set.json"
-PROBE_DIR = REPO / "data/transcriptions/atharvaveda_bsb_1856/v2/accent_probe"
+
+
+def _repo_relative(path: pathlib.Path) -> str:
+    """Repo-relative POSIX path, or the bare name if the path is outside it.
+
+    Never raises: the artifact has to stay byte-comparable across machines,
+    and a --calibration-set from elsewhere on disk should not abort the run
+    after every line has already been scored.
+    """
+    try:
+        return path.resolve().relative_to(REPO.resolve()).as_posix()
+    except ValueError:
+        return path.name
+
+
+AV_V2 = REPO / "data/transcriptions/atharvaveda_bsb_1856/v2"
+DEFAULT_CALIB = AV_V2 / "calibration_set.json"
+PROBE_DIR = AV_V2 / "accent_probe"
+ADJUDICATION_DIR = AV_V2 / "adjudication"
 
 # ── Pass/fail thresholds (declared BEFORE running) ────────────────────────
 THRESHOLD = {
@@ -52,67 +78,23 @@ THRESHOLD = {
     "extractor_success_rate": 0.95,
 }
 
-_ANUDATTA = "॒"
-_SVARITA = "॑"
-
-
-# ── Gold parsing ───────────────────────────────────────────────────────────
-
-def _parse_gold_marks(text: str) -> list[tuple[int, int, str]]:
-    """Return list of (word_idx, aksara_idx, mark_type) from accentuated text."""
-    result = []
-    for wi, word in enumerate(text.split()):
-        for ci, ch in enumerate(word):
-            if ch not in (_ANUDATTA, _SVARITA):
-                continue
-            prefix = strip_accents(word[:ci])
-            clusters = aksara_clusters(prefix)
-            ak_idx = max(0, len(clusters) - 1)
-            mark_type = "anudatta" if ch == _ANUDATTA else "svarita"
-            result.append((wi, ak_idx, mark_type))
-    return result
-
-
-def _load_gold_probes(canvas: int, line: int) -> list[dict]:
-    """Load all probe JSON files that match this (canvas, line)."""
-    probes = []
-    for p in PROBE_DIR.glob("*.json"):
-        try:
-            data = json.loads(p.read_text(encoding="utf-8"))
-        except Exception:
-            continue
-        if data.get("canvas_index") == canvas and data.get("line_index") == line:
-            probes.append(data)
-    return probes
-
-
-def _reconcile_gold(probes: list[dict]) -> dict | None:
-    """Check reader agreement; return agreed text or None if split."""
-    if not probes:
-        return None
-    texts = {p["text_devanagari"] for p in probes}
-    if len(texts) == 1:
-        return {"text": next(iter(texts)), "readers": len(probes), "agreement": "exact"}
-    # Soft agreement: compare mark positions rather than exact Unicode
-    mark_sets = []
-    for p in probes:
-        marks = frozenset(_parse_gold_marks(p["text_devanagari"]))
-        mark_sets.append(marks)
-    if all(s == mark_sets[0] for s in mark_sets):
-        return {
-            "text": probes[0]["text_devanagari"],
-            "readers": len(probes),
-            "agreement": "mark_positions_agree",
-        }
-    return {
-        "text": probes[0]["text_devanagari"],
-        "readers": len(probes),
-        "agreement": "split",
-        "all_texts": list(texts),
-    }
+# Which way each gate is read. source_ambiguous_gold is a ceiling, not a
+# floor: the previous runner compared every gate with ">=", so a "must be 0"
+# gate printed PASS at any value whatsoever. That is a reporting defect, not
+# a threshold change — the threshold below is untouched.
+GATE_DIRECTION = {
+    "detection_recall": "min",
+    "detection_precision": "min",
+    "class_accuracy": "min",
+    "word_binding_acc": "min",
+    "auto_promote_frac": "min",
+    "source_ambiguous_gold": "max",
+    "extractor_success_rate": "min",
+}
 
 
 # ── Per-line runner ───────────────────────────────────────────────────────
+
 
 def _run_line(entry: dict) -> dict:
     """Run extractor + binder (if gold available) on one calibration line."""
@@ -138,7 +120,7 @@ def _run_line(entry: dict) -> dict:
 
     ln = ext["lines"][0]
     marks = ln["marks"]
-    word_spans = ln["word_spans"]
+    word_spans = [(int(a), int(b)) for a, b in ln["word_spans"]]
     result["status"] = "OK"
     result["anudatta_detected"] = ln["anudatta_count"]
     result["svarita_detected"] = ln["svarita_count"]
@@ -146,104 +128,140 @@ def _run_line(entry: dict) -> dict:
     result["word_spans_count"] = len(word_spans)
     result["line_pitch"] = ext["line_pitch"]
 
-    # Binder — only runs when gold skeleton is available
-    probes = _load_gold_probes(canvas, li)
-    gold = _reconcile_gold(probes)
-    if gold is None:
-        result["binder_status"] = "NO_GOLD"
+    gold = load_gold_record(canvas, li, PROBE_DIR, ADJUDICATION_DIR, REPO)
+    result["gold_status"] = gold.status
+    result["gold_source"] = gold.source
+    result["gold_records"] = list(gold.record_paths)
+    result["gold_readers"] = list(gold.readers)
+    result["gold_dissent"] = list(gold.dissent)
+    result["gold_note"] = gold.note
+    if not gold.usable:
+        result["binder_status"] = "NO_GOLD" if gold.status == "GOLD_ABSENT" else gold.status
         return result
 
-    result["gold_readers"] = gold["readers"]
-    result["gold_agreement"] = gold["agreement"]
-
-    gold_marks = _parse_gold_marks(gold["text"])
-    gold_anu = sum(1 for _, _, t in gold_marks if t == "anudatta")
-    gold_sva = sum(1 for _, _, t in gold_marks if t == "svarita")
-    result["gold_anudatta"] = gold_anu
-    result["gold_svarita"] = gold_sva
+    gold_marks = parse_gold_marks(gold.text)
+    result["gold_anudatta"] = sum(1 for g in gold_marks if g.mark_type == "anudatta")
+    result["gold_svarita"] = sum(1 for g in gold_marks if g.mark_type == "svarita")
     result["gold_total"] = len(gold_marks)
 
-    # Detection metrics
-    tp_anu = min(ln["anudatta_count"], gold_anu)
-    tp_sva = min(ln["svarita_count"], gold_sva)
-    total_gold = len(gold_marks)
-    total_detected = len(marks)
-    recall = (tp_anu + tp_sva) / total_gold if total_gold else None
-    precision = (tp_anu + tp_sva) / total_detected if total_detected else None
-    # Class accuracy: fraction of detected marks assigned to the right class
-    # With no false class assignments (anudatta<→svarita swap), class_acc = 1.0
-    # Heuristic: if counts match perfectly, class_acc = 1.0; else degraded
-    class_acc: float | None = None
-    if total_gold > 0 and total_detected > 0:
-        misclassified = abs(ln["anudatta_count"] - gold_anu) + abs(ln["svarita_count"] - gold_sva)
-        misclassified = misclassified // 2  # each swap is counted twice above
-        class_acc = max(0.0, 1.0 - misclassified / total_gold)
-    result["detection_recall"] = round(recall, 4) if recall is not None else None
-    result["detection_precision"] = round(precision, 4) if precision is not None else None
-    result["class_accuracy"] = round(class_acc, 4) if class_acc is not None else None
-
-    # Binder
-    skeleton = strip_accents(gold["text"])
-    bindings = bind_line(marks, skeleton, word_spans)
+    skeleton = gold.skeleton
+    bindings, alignment = bind_line_detailed(marks, skeleton, word_spans)
     summary = binding_summary(bindings)
     result["binder_summary"] = summary
     result["binder_status"] = "RAN"
-
-    # Source-ambiguous count
     result["source_ambiguous"] = summary["by_state"].get("SOURCE_AMBIGUOUS", 0)
-
-    # Word-binding accuracy: fraction of marks bound to the expected word token
-    # Compare binder word_index assignment against gold_marks (word_idx, ak_idx, type)
-    # Marks are in x-order from extractor; gold_marks are in text order (also x-order).
-    # Zip by position and check word_index agreement.
-    word_binding_correct = 0
-    aksara_binding_correct = 0
-    exact_aksara = 0
-    for i, b in enumerate(bindings):
-        if i >= len(gold_marks):
-            break
-        gw, gak, _ = gold_marks[i]
-        if b.token_offset is not None and b.token_offset == gw:
-            word_binding_correct += 1
-            if b.aksara_index is not None and b.aksara_index == gak:
-                aksara_binding_correct += 1
-                if b.state in AUTO_PROMOTE:
-                    exact_aksara += 1
-    paired = min(len(bindings), len(gold_marks))
-    result["word_binding_acc"] = round(word_binding_correct / paired, 4) if paired else None
-    result["aksara_binding_acc"] = round(aksara_binding_correct / paired, 4) if paired else None
     result["auto_promote_frac"] = summary["promotable_fraction"]
 
-    # ACCENTED_LINE_EXACT_MATCH_RATE: the fully re-assembled accentuated line
-    # matches the gold text exactly (after Unicode normalisation).
-    # For now: 1.0 only if all marks detected with correct counts and no binder failures.
-    if (
-        ln["anudatta_count"] == gold_anu
-        and ln["svarita_count"] == gold_sva
-        and summary["by_state"].get("SOURCE_AMBIGUOUS", 0) == 0
-        and summary["by_state"].get("NO_VALID_CARRIER", 0) == 0
-        and aksara_binding_correct == len(gold_marks)
-    ):
-        result["accented_line_exact_match"] = True
+    if alignment is None:
+        result["alignment"] = {"line_safe": False, "note": "count guard tripped"}
+        unaligned = 0
     else:
-        result["accented_line_exact_match"] = False
+        unaligned = len(alignment.unaligned_spans)
+        result["alignment"] = {
+            "token_count": alignment.token_count,
+            "span_count": alignment.span_count,
+            "total_cost": alignment.total_cost,
+            "cost_per_token": alignment.cost_per_token,
+            "safe_token_fraction": alignment.safe_token_fraction,
+            "unresolved_ops": alignment.unresolved_ops,
+            "many_to_one_ops": alignment.many_to_one_ops,
+            "one_to_many_ops": alignment.one_to_many_ops,
+            "unaligned_spans": list(alignment.unaligned_spans),
+            "line_safe": alignment.line_safe,
+            "note": alignment.line_note,
+            "scale": alignment.scale,
+            "states": dict(
+                sorted(
+                    {
+                        s: sum(1 for t in alignment.tokens if t.state == s)
+                        for s in {t.state for t in alignment.tokens}
+                    }.items()
+                )
+            ),
+            # No filter. The old `if t.margin` dropped margin == 0, and
+            # since a gap reading is always a rival assignment, 0 means one
+            # thing only: an exact tie between two readings of the ink. The
+            # single worst case was the one being filtered out of the
+            # reported minimum.
+            "min_margin": min((t.margin for t in alignment.tokens), default=0),
+        }
 
+    pred = predicted_marks(marks, word_spans)
+    metrics = score_line(bindings, pred, gold_marks, gold.source, unaligned)
+    exact = line_exactness(gold.text, gold.skeleton, skeleton, bindings, metrics)
+
+    def _r(v: float | None) -> float | None:
+        return None if v is None else round(v, 4)
+
+    result["detection_recall"] = _r(metrics.detection_recall)
+    result["detection_precision"] = _r(metrics.detection_precision)
+    result["class_accuracy"] = _r(metrics.class_accuracy)
+    result["word_binding_acc"] = _r(metrics.word_binding_acc)
+    result["aksara_binding_acc"] = _r(metrics.aksara_binding_acc)
+    # Stricter denominators, reported beside the gated ones. `matched` is not
+    # robust to a mark escaping correspondence altogether; these divide by
+    # every gold mark, so an escaped mark counts against them. Diagnostics.
+    result["word_binding_acc_over_gold"] = _r(metrics.word_binding_acc_over_gold)
+    result["aksara_binding_acc_over_gold"] = _r(metrics.aksara_binding_acc_over_gold)
+    result["match_margin_safe"] = metrics.match_margin_safe
+    result["promoted_aksara_acc"] = _r(metrics.promoted_aksara_acc)
+    result["marks_matched"] = metrics.matched
+    result["false_negatives"] = metrics.false_negatives
+    result["false_positives"] = metrics.false_positives
+    result["promoted_marks"] = metrics.promoted
+    result["promoted_aksara_correct"] = metrics.promoted_aksara_correct
+    result["promoted_word_correct"] = metrics.promoted_word_correct
+    result["gold_match_margin"] = metrics.match_margin
+    result["error_decomposition"] = dict(metrics.errors)
+    result["error_detail"] = list(metrics.error_detail)
+    result["skeleton_exact"] = exact.skeleton_exact
+    result["accent_set_exact"] = exact.accent_set_exact
+    result["carrier_exact"] = exact.carrier_exact
+    result["accented_line_exact_match"] = exact.full_accented_line_exact
     return result
 
 
 # ── Aggregate and report ───────────────────────────────────────────────────
 
-def _verdict(value: float | int | None, threshold: float | int, label: str) -> str:
+
+def _verdict(value: float | int | None, name: str) -> tuple[str, bool]:
+    threshold = THRESHOLD[name]
     if value is None:
-        return f"  {label}: N/A (no data)"
-    ok = value >= threshold
-    symbol = "PASS" if ok else "FAIL"
-    return f"  [{symbol}] {label}: {value} (threshold {threshold})"
+        return f"  {name}: N/A (no data)", True
+    ok = value >= threshold if GATE_DIRECTION[name] == "min" else value <= threshold
+    relation = "≥" if GATE_DIRECTION[name] == "min" else "≤"
+    return (
+        f"  [{'PASS' if ok else 'FAIL'}] {name}: {value} (threshold {relation} {threshold})",
+        ok,
+    )
+
+
+def _order_lines(lines: list[dict], order: str) -> list[dict]:
+    """Deliberately perturb enumeration order; metrics must not move."""
+    if order == "reversed":
+        return list(reversed(lines))
+    if order == "shuffled":
+        # Deterministic shuffle: sort on a stable digest of the line identity,
+        # so the order is reproducible but unrelated to the declared order.
+        return sorted(
+            lines,
+            key=lambda e: hashlib.sha256(
+                f"{e['canvas_index']}:{e['line_index']}".encode()
+            ).hexdigest(),
+        )
+    return list(lines)
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--calibration-set", default=str(DEFAULT_CALIB))
+    parser.add_argument(
+        "--enumeration-order",
+        default="normal",
+        choices=("normal", "reversed", "shuffled"),
+        help="perturb the order lines are processed in; output must not change",
+    )
+    parser.add_argument("--no-write", action="store_true")
     args = parser.parse_args()
 
     calib_path = pathlib.Path(args.calibration_set)
@@ -255,28 +273,32 @@ def main() -> None:
 
     print("=" * 72)
     print("AV ACCENT CALIBRATION RUN")
-    print(f"Calibration set: {calib_path}")
+    print(f"Calibration set: {_repo_relative(calib_path)}")
     print(f"Total lines: {len(lines)}")
+    print(f"Enumeration order: {args.enumeration_order}")
     print()
     print("PASS/FAIL THRESHOLDS (declared before metrics):")
     for k, v in THRESHOLD.items():
-        print(f"  {k}: {v}")
+        relation = "≥" if GATE_DIRECTION[k] == "min" else "≤"
+        print(f"  {k}: {relation} {v}")
     print("=" * 72)
     print()
 
-    results = []
-    for entry in lines:
+    # Results are always reported in the declared order of the calibration
+    # set, whatever order they were computed in.
+    by_key: dict[tuple[int, int], dict] = {}
+    for entry in _order_lines(lines, args.enumeration_order):
         r = _run_line(entry)
-        results.append(r)
-        status = r.get("status", "?")
-        bstatus = r.get("binder_status", "")
-        anu = r.get("anudatta_detected", "-")
-        sva = r.get("svarita_detected", "-")
-        spans = r.get("word_spans_count", "-")
+        by_key[(r["canvas_index"], r["line_index"])] = r
+    results = [by_key[(e["canvas_index"], e["line_index"])] for e in lines]
+
+    for r in results:
         print(
             f"c{r['canvas_index']:03d}/l{r['line_index']:02d}  "
-            f"{status:<18} {bstatus:<12} "
-            f"anu={anu} sva={sva} spans={spans}  [{r['stratum']}]"
+            f"{r.get('status', '?'):<18} {r.get('binder_status', ''):<20} "
+            f"anu={r.get('anudatta_detected', '-')} "
+            f"sva={r.get('svarita_detected', '-')} "
+            f"spans={r.get('word_spans_count', '-')}  [{r['stratum']}]"
         )
 
     print()
@@ -287,156 +309,219 @@ def main() -> None:
     attempted = [r for r in results if r.get("status") != "LEAF_ABSENT"]
     ok = [r for r in attempted if r.get("status") == "OK"]
     gold_lines = [r for r in ok if r.get("binder_status") == "RAN"]
+    withheld = [
+        r
+        for r in ok
+        if r.get("binder_status") in ("GOLD_UNADJUDICATED", "GOLD_MULTIPLE_ADJUDICATED")
+    ]
 
     extractor_success_rate = len(ok) / len(attempted) if attempted else None
     print(f"Lines in set:        {len(lines)}")
     print(f"Leaves on disk:      {len(attempted)}")
     print(f"Extractor OK:        {len(ok)}")
     print(f"Gold lines (binder): {len(gold_lines)}")
+    print(f"Gold withheld:       {len(withheld)}")
+    for r in withheld:
+        print(
+            f"  c{r['canvas_index']:03d}/l{r['line_index']:02d}: "
+            f"{r['binder_status']} — {r.get('gold_note', '')}"
+        )
     print()
 
-    # Extractor-level (all OK lines)
     if ok:
-        mean_marks = sum(r["marks_detected"] for r in ok) / len(ok)
-        print(f"Mean marks/line:     {mean_marks:.1f}")
+        print(f"Mean marks/line:     {sum(r['marks_detected'] for r in ok) / len(ok):.1f}")
 
     print()
     print("PER-STRATUM EXTRACTOR COUNTS:")
-    strata_results: dict[str, list[dict]] = {}
+    strata: dict[str, list[dict]] = {}
     for r in ok:
-        s = r["stratum"]
-        strata_results.setdefault(s, []).append(r)
-    for stratum, rs in sorted(strata_results.items()):
+        strata.setdefault(r["stratum"], []).append(r)
+    for stratum, rs in sorted(strata.items()):
         mean_m = sum(r["marks_detected"] for r in rs) / len(rs)
         mean_s = sum(r["word_spans_count"] for r in rs) / len(rs)
         print(f"  {stratum:<22} n={len(rs):2d}  mean_marks={mean_m:.1f}  mean_spans={mean_s:.1f}")
 
     print()
     print("GOLD-LINE BINDER METRICS:")
+    aggregate: dict[str, float | int | None] = {}
+    fails: list[str] = []
     if not gold_lines:
         print("  (no gold lines ran — metrics unavailable)")
     else:
-        def _nonnull(key: str) -> list[float]:
-            return [r[key] for r in gold_lines if r.get(key) is not None]
 
-        recalls = _nonnull("detection_recall")
-        precisions = _nonnull("detection_precision")
-        class_accs = _nonnull("class_accuracy")
-        word_accs = _nonnull("word_binding_acc")
-        auto_fracs = _nonnull("auto_promote_frac")
+        def _mean(key: str) -> float | None:
+            vals = [r[key] for r in gold_lines if r.get(key) is not None]
+            return sum(vals) / len(vals) if vals else None
+
         src_ambs = sum(r.get("source_ambiguous", 0) for r in gold_lines)
-
-        avg_recall = sum(recalls) / len(recalls) if recalls else None
-        avg_precision = sum(precisions) / len(precisions) if precisions else None
-        avg_class_acc = sum(class_accs) / len(class_accs) if class_accs else None
-        avg_word_acc = sum(word_accs) / len(word_accs) if word_accs else None
-        avg_auto_frac = sum(auto_fracs) / len(auto_fracs) if auto_fracs else None
-
-        exact_matches = sum(1 for r in gold_lines if r.get("accented_line_exact_match"))
-        exact_match_rate = exact_matches / len(gold_lines)
+        aggregate = {
+            "detection_recall": _mean("detection_recall"),
+            "detection_precision": _mean("detection_precision"),
+            "class_accuracy": _mean("class_accuracy"),
+            "word_binding_acc": _mean("word_binding_acc"),
+            "auto_promote_frac": _mean("auto_promote_frac"),
+            "source_ambiguous_gold": src_ambs,
+            "extractor_success_rate": extractor_success_rate,
+        }
 
         for r in gold_lines:
-            print(f"  c{r['canvas_index']:03d}/l{r['line_index']:02d}:  "
-                  f"recall={r.get('detection_recall')}  "
-                  f"prec={r.get('detection_precision')}  "
-                  f"class_acc={r.get('class_accuracy')}  "
-                  f"word_acc={r.get('word_binding_acc')}  "
-                  f"auto_frac={r.get('auto_promote_frac')}  "
-                  f"exact={r.get('accented_line_exact_match')}")
+            print(
+                f"  c{r['canvas_index']:03d}/l{r['line_index']:02d}:  "
+                f"recall={r.get('detection_recall')}  "
+                f"prec={r.get('detection_precision')}  "
+                f"class_acc={r.get('class_accuracy')}  "
+                f"word_acc={r.get('word_binding_acc')}  "
+                f"aks_acc={r.get('aksara_binding_acc')}  "
+                f"auto_frac={r.get('auto_promote_frac')}  "
+                f"exact={r.get('accented_line_exact_match')}"
+            )
         print()
-        readers_str = ", ".join(str(r.get("gold_readers")) for r in gold_lines)
-        agree_str = ", ".join(str(r.get("gold_agreement")) for r in gold_lines)
-        print(f"  Gold readers:       {readers_str}")
-        print(f"  Gold agreement:     {agree_str}")
+        print("  GOLD PROVENANCE (deterministic selection):")
+        for r in gold_lines:
+            print(
+                f"    c{r['canvas_index']:03d}/l{r['line_index']:02d}: "
+                f"{r['gold_source']:<17} readers={','.join(r['gold_readers'])} "
+                f"<- {';'.join(r['gold_records'])}"
+            )
+        print()
+        print("  ALIGNMENT HEALTH:")
+        for r in gold_lines:
+            a = r.get("alignment", {})
+            print(
+                f"    c{r['canvas_index']:03d}/l{r['line_index']:02d}: "
+                f"tokens={a.get('token_count')} spans={a.get('span_count')} "
+                f"safe_frac={a.get('safe_token_fraction')} "
+                f"unresolved={a.get('unresolved_ops')} "
+                f"m2o={a.get('many_to_one_ops')} o2m={a.get('one_to_many_ops')} "
+                f"cost/tok={a.get('cost_per_token')} "
+                f"min_margin={a.get('min_margin')} "
+                f"LINE_SAFE={a.get('line_safe')}"
+            )
 
         print()
         print("GATE VERDICTS:")
-        print(_verdict(avg_recall, THRESHOLD["detection_recall"], "detection_recall"))
-        print(_verdict(avg_precision, THRESHOLD["detection_precision"], "detection_precision"))
-        print(_verdict(avg_class_acc, THRESHOLD["class_accuracy"], "class_accuracy"))
-        print(_verdict(avg_word_acc, THRESHOLD["word_binding_acc"], "word_binding_acc"))
-        print(_verdict(avg_auto_frac, THRESHOLD["auto_promote_frac"], "auto_promote_frac"))
-        print(_verdict(
-            0 if src_ambs == 0 else src_ambs,
-            THRESHOLD["source_ambiguous_gold"],
-            "source_ambiguous_gold (must be 0)",
-        ))
-        print(_verdict(
-            extractor_success_rate,
-            THRESHOLD["extractor_success_rate"],
-            "extractor_success_rate",
-        ))
-        print(
-            f"  ACCENTED_LINE_EXACT_MATCH_RATE: "
-            f"{exact_match_rate:.4f} ({exact_matches}/{len(gold_lines)})"
-        )
-
-        fails = []
-        for name, threshold in THRESHOLD.items():
-            if name == "source_ambiguous_gold":
-                if src_ambs > threshold:
-                    fails.append(name)
-            elif name == "extractor_success_rate":
-                if extractor_success_rate is not None and extractor_success_rate < threshold:
-                    fails.append(name)
-            elif name == "detection_recall":
-                if avg_recall is not None and avg_recall < threshold:
-                    fails.append(name)
-            elif name == "detection_precision":
-                if avg_precision is not None and avg_precision < threshold:
-                    fails.append(name)
-            elif name == "class_accuracy":
-                if avg_class_acc is not None and avg_class_acc < threshold:
-                    fails.append(name)
-            elif name == "word_binding_acc":
-                if avg_word_acc is not None and avg_word_acc < threshold:
-                    fails.append(name)
-            elif name == "auto_promote_frac":
-                if avg_auto_frac is not None and avg_auto_frac < threshold:
-                    fails.append(name)
+        for name in THRESHOLD:
+            text, passed = _verdict(
+                round(aggregate[name], 5)
+                if isinstance(aggregate.get(name), float)
+                else aggregate.get(name),
+                name,
+            )
+            print(text)
+            if not passed:
+                fails.append(name)
 
         print()
-        if attempted and not gold_lines:
-            print("PIPELINE DECISION: NEEDS_REVISION")
-            print("  Reason: No gold lines ran (scan absent or binder has no data).")
-        elif not attempted:
-            print("PIPELINE DECISION: NEEDS_REVISION")
-            print("  Reason: No leaves available on disk; cannot run calibration.")
-        elif fails:
-            print("PIPELINE DECISION: NEEDS_REVISION")
-            print(f"  Failed gates: {', '.join(fails)}")
+        print("STRICTER DENOMINATORS (reported, not gated):")
+        print("  The gated word/aksara accuracies divide by matched pairs. That is not robust to a")
+        print("  mark escaping correspondence, so the same numbers over every gold mark follow.")
+        for r in gold_lines:
+            print(
+                f"    c{r['canvas_index']:03d}/l{r['line_index']:02d}: "
+                f"word {r.get('word_binding_acc')} -> "
+                f"{r.get('word_binding_acc_over_gold')}   "
+                f"aksara {r.get('aksara_binding_acc')} -> "
+                f"{r.get('aksara_binding_acc_over_gold')}   "
+                f"match_margin={r.get('gold_match_margin')} "
+                f"safe={r.get('match_margin_safe')}"
+            )
+        for key in ("word_binding_acc_over_gold", "aksara_binding_acc_over_gold"):
+            vals = [r[key] for r in gold_lines if r.get(key) is not None]
+            if vals:
+                print(f"  mean {key}: {sum(vals) / len(vals):.5f}")
+
+        print()
+        print("FULL-LINE EXACTNESS (reported, not gated):")
+        for key in (
+            "skeleton_exact",
+            "accent_set_exact",
+            "carrier_exact",
+            "accented_line_exact_match",
+        ):
+            hits = sum(1 for r in gold_lines if r.get(key))
+            print(f"  {key:<28} {hits}/{len(gold_lines)} = {hits / len(gold_lines):.4f}")
+        print(
+            "  note: skeleton_exact is true by construction in calibration — the"
+            " skeleton IS the gold skeleton, so it is not evidence."
+        )
+
+        print()
+        print("RESIDUAL ERROR DECOMPOSITION (every incorrect binding classified):")
+        totals = dict.fromkeys(ERROR_CATEGORIES, 0)
+        for r in gold_lines:
+            for k, v in r.get("error_decomposition", {}).items():
+                totals[k] += v
+        total_errors = sum(totals.values())
+        matched = sum(r.get("marks_matched", 0) for r in gold_lines)
+        gold_total = sum(r.get("gold_total", 0) for r in gold_lines)
+        print(f"  gold marks: {gold_total}   matched: {matched}")
+        for k in ERROR_CATEGORIES:
+            share = totals[k] / total_errors if total_errors else 0.0
+            print(f"  {k:<28} {totals[k]:3d}  ({share:.4f} of residual)")
+        print(f"  {'TOTAL':<28} {total_errors:3d}")
+        for r in gold_lines:
+            for detail in r.get("error_detail", []):
+                print(f"    c{r['canvas_index']:03d}/l{r['line_index']:02d}  {detail}")
+        promoted = sum(r.get("promoted_marks", 0) for r in gold_lines)
+        promoted_ok = sum(r.get("promoted_aksara_correct", 0) for r in gold_lines)
+        print()
+        if promoted:
+            print(
+                f"  auto-promoted marks: {promoted}, of which carrier-correct: "
+                f"{promoted_ok} ({promoted_ok / promoted:.4f})"
+            )
+            print(
+                "  This is the number a full-corpus run would ship without human"
+                " review; the residual above is what the state model withholds."
+            )
         else:
-            # All thresholds pass — check whether gold coverage is sufficient
-            if len(gold_lines) < 5:
-                print("PIPELINE DECISION: READY_WITH_TARGETED_REVIEW")
-                n = len(gold_lines)
-                print(f"  All thresholds PASS on {n} gold line(s), but coverage is narrow.")
-                print(
-                    "  Obtain gold for at least 5 lines across strata "
-                    "before PRODUCTION_READY."
-                )
-            else:
-                print("PIPELINE DECISION: PRODUCTION_READY")
-                print("  All thresholds pass with sufficient gold coverage.")
+            print("  auto-promoted marks: 0")
 
     print()
-    out_path = calib_path.parent / "calibration_run_result.json"
-    out_path.write_text(
-        json.dumps(
-            {
-                "schema_version": "1.0.0",
-                "calibration_set": str(calib_path),
-                "thresholds": THRESHOLD,
-                "results": results,
-            },
-            ensure_ascii=False,
-            indent=2,
-            sort_keys=True,
-        ) + "\n",
-        encoding="utf-8",
-        newline="\n",
-    )
-    print(f"Full results written to {out_path}")
+    if not attempted:
+        decision = "NEEDS_REVISION"
+        reason = "No leaves available on disk; cannot run calibration."
+    elif not gold_lines:
+        decision = "NEEDS_REVISION"
+        reason = "No gold lines ran (scan absent or gold not adjudicated)."
+    elif fails:
+        decision = "NEEDS_REVISION"
+        reason = f"Failed gates: {', '.join(fails)}"
+    elif len(gold_lines) < 5:
+        decision = "READY_WITH_TARGETED_REVIEW"
+        reason = (
+            f"All thresholds PASS on {len(gold_lines)} gold line(s), but coverage "
+            "is narrower than the 5-line minimum for PRODUCTION_READY."
+        )
+    else:
+        decision = "PRODUCTION_READY"
+        reason = "All thresholds pass with sufficient gold coverage."
+    print(f"PIPELINE DECISION: {decision}")
+    print(f"  Reason: {reason}")
+
+    payload = {
+        "schema_version": "2.0.0",
+        "calibration_set": _repo_relative(calib_path),
+        "thresholds": THRESHOLD,
+        "gate_direction": GATE_DIRECTION,
+        "aggregate": {
+            k: (round(v, 5) if isinstance(v, float) else v) for k, v in aggregate.items()
+        },
+        "decision": decision,
+        "decision_reason": reason,
+        "failed_gates": fails,
+        "gold_line_count": len(gold_lines),
+        "results": results,
+    }
+    canonical = json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+    digest = hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+    print()
+    print(f"RESULT HASH (sha256 of canonical payload): {digest}")
+
+    if not args.no_write:
+        out_path = calib_path.parent / "calibration_run_result.json"
+        out_path.write_text(canonical, encoding="utf-8", newline="\n")
+        print(f"Full results written to {_repo_relative(out_path)}")
 
 
 if __name__ == "__main__":
