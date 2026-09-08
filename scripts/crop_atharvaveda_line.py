@@ -27,6 +27,7 @@ from __future__ import annotations
 
 import argparse
 import pathlib
+from typing import cast
 
 from crop_atharvaveda_leaf import READER_LONG_EDGE, find_text_block, leaf_path
 from PIL import Image
@@ -52,11 +53,11 @@ def find_lines(block: Image.Image, min_height: float = 0.5) -> list[tuple[int, i
     """
     w, h = block.size
     scale = PROJECTION_WIDTH / w
-    thumb = block.resize(
-        (PROJECTION_WIDTH, max(1, round(h * scale))), Image.BILINEAR
-    )
+    thumb = block.resize((PROJECTION_WIDTH, max(1, round(h * scale))), Image.Resampling.BILINEAR)
     tw, th = thumb.size
-    pixels = list(thumb.get_flattened_data())
+    # The stub allows per-pixel tuples for multi-band images. This thumb is
+    # single-band "L", so the flattened data really is a flat run of ints.
+    pixels = cast("list[int]", list(thumb.get_flattened_data()))
 
     inked = []
     for y in range(th):
@@ -107,9 +108,7 @@ def render_line(
 
     top, bottom = lines[line_index]
     pad = round((bottom - top) * VERTICAL_PAD)
-    line = block.crop(
-        (0, max(0, top - pad), block.width, min(block.height, bottom + pad))
-    )
+    line = block.crop((0, max(0, top - pad), block.width, min(block.height, bottom + pad)))
 
     outdir.mkdir(parents=True, exist_ok=True)
     written: list[pathlib.Path] = []
@@ -125,7 +124,7 @@ def render_line(
         if piece.width != READER_LONG_EDGE:
             scale = READER_LONG_EDGE / piece.width
             piece = piece.resize(
-                (READER_LONG_EDGE, max(1, round(piece.height * scale))), Image.LANCZOS
+                (READER_LONG_EDGE, max(1, round(piece.height * scale))), Image.Resampling.LANCZOS
             )
         path = outdir / f"leaf_{canvas_index:05d}_line{line_index:02d}_seg{index + 1}.png"
         piece.save(path)
@@ -151,9 +150,7 @@ def main() -> None:
             print(f"  line {index:2d}: y {top:5d}-{bottom:5d}  height {bottom - top}")
         return
 
-    for path in render_line(
-        args.canvas_index, args.line, pathlib.Path(args.outdir), args.segments
-    ):
+    for path in render_line(args.canvas_index, args.line, pathlib.Path(args.outdir), args.segments):
         print(path)
 
 

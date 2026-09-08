@@ -52,6 +52,9 @@ def unit(canvas: int, mantra: int, text: str, **extra) -> dict:
         "spans_canvases": None,
         "structural_marker": "running head",
         "reader": "R1",
+        "reader_kind": "MODEL_VISUAL_READ",
+        "reader_identity": "claude-opus-5/agent:test",
+        "run_id": "TEST_RUN",
         "transcription_policy": "bsb-1856-devanagari-v2",
     }
     row.update(extra)
@@ -183,9 +186,7 @@ class TestReconciliationOutput:
     def test_both_readings_are_kept_so_the_disagreement_stays_auditable(
         self, tmp_path: Path
     ) -> None:
-        _, records = self._run(
-            tmp_path, [unit(32, 1, "क")], [unit(32, 1, "ख")]
-        )
+        _, records = self._run(tmp_path, [unit(32, 1, "क")], [unit(32, 1, "ख")])
         assert records[0]["r1_text"] == "क"
         assert records[0]["r2_text"] == "ख"
 
@@ -241,9 +242,7 @@ class TestAlignmentAcrossAnUnstatedCoordinate:
 
     @staticmethod
     def _align(left: dict, right: dict) -> list:
-        return reconcile.align(
-            {reconcile.unit_key(left): left}, {reconcile.unit_key(right): right}
-        )
+        return reconcile.align({reconcile.unit_key(left): left}, {reconcile.unit_key(right): right})
 
     def test_a_null_coordinate_does_not_split_two_readings_of_one_unit(self) -> None:
         aligned = self._align(
@@ -505,12 +504,8 @@ class TestWordSpansSplitOnGapsNotOnRunWidth:
         spans = extract._word_spans_from_rule(mask, w, 0, 0)
         assert spans == [(0, 39), (40 + gap, 47 + gap)]
 
-    @pytest.mark.parametrize(
-        ("canvas", "line"), [(32, 12), (32, 19), (159, 2), (411, 9), (430, 5)]
-    )
-    def test_no_two_spans_sit_closer_than_the_minimum_gap(
-        self, canvas: int, line: int
-    ) -> None:
+    @pytest.mark.parametrize(("canvas", "line"), [(32, 12), (32, 19), (159, 2), (411, 9), (430, 5)])
+    def test_no_two_spans_sit_closer_than_the_minimum_gap(self, canvas: int, line: int) -> None:
         """The invariant, asserted on every line the gold set has readers for."""
         extract = _load("extract_atharvaveda_accents")
         crop = _load("crop_atharvaveda_leaf")
@@ -567,9 +562,7 @@ class TestWordSpansSplitOnGapsNotOnRunWidth:
         binder = pytest.importorskip("vedagraph.ingest.av_accent_binder")
         spans = extract.extract(411, 9)["lines"][0]["word_spans"]
         tokens = 11  # the adjudicated three-reader gold for this line
-        allowed = max(
-            1, round(max(tokens, len(spans)) * binder.MAX_TOKEN_SPAN_MISMATCH)
-        )
+        allowed = max(1, round(max(tokens, len(spans)) * binder.MAX_TOKEN_SPAN_MISMATCH))
         assert abs(tokens - len(spans)) <= allowed, (
             f"{len(spans)} spans against {tokens} tokens still trips the guard"
         )
@@ -595,3 +588,106 @@ class TestLeafRendering:
             with Image.open(path) as band:
                 assert band.width >= band.height
                 assert band.width <= crop.READER_LONG_EDGE
+
+
+class TestProvenanceIsTruthful:
+    """A reading is evidence only if the record says who produced it.
+
+    The specific falsehood these tests exist to prevent is a model reading
+    released as though a human had reviewed it. Every reading in this corpus so
+    far was performed by a model looking at a scan, and the release provenance
+    has to say so, because rights, reliability, and every downstream claim about
+    review depend on the difference.
+    """
+
+    def _run(self, tmp_path: Path, left: list[dict], right: list[dict]) -> list[dict]:
+        r1, r2, out = tmp_path / "R1", tmp_path / "R2", tmp_path / "out"
+        for directory, rows in ((r1, left), (r2, right)):
+            directory.mkdir(parents=True)
+            with (directory / "leaf_00032.jsonl").open("w", encoding="utf-8") as handle:
+                for row in rows:
+                    handle.write(json.dumps(row, ensure_ascii=False) + "\n")
+        reconcile.reconcile(r1, r2, out)
+        return [
+            json.loads(line)
+            for line in (out / "leaf_00032.jsonl").read_text(encoding="utf-8").splitlines()
+        ]
+
+    def test_a_model_reading_is_labelled_model_not_human(self) -> None:
+        assert reconcile.MODEL_VISUAL_READ == "MODEL_VISUAL_READ"
+        assert reconcile.MODEL_VISUAL_READ != reconcile.HUMAN_REVIEWED
+        assert reconcile.HUMAN_REVIEWED not in {reconcile.MODEL_VISUAL_READ}
+
+    def test_agreeing_readings_release_with_provenance(self, tmp_path: Path) -> None:
+        text = f"दश{SVARITA}व"
+        records = self._run(tmp_path, [unit(32, 1, text)], [unit(32, 1, text)])
+        assert records[0]["release_eligible"] is True
+        assert records[0]["provenance_complete"] is True
+        assert records[0]["r1_provenance"]["reader_kind"] == "MODEL_VISUAL_READ"
+        assert records[0]["r2_provenance"]["reader_kind"] == "MODEL_VISUAL_READ"
+
+    @pytest.mark.parametrize("missing", ["reader", "reader_kind", "reader_identity", "run_id"])
+    def test_agreeing_readings_are_withheld_when_provenance_is_incomplete(
+        self, tmp_path: Path, missing: str
+    ) -> None:
+        """Agreement is not enough. An unattributable reading stays unreleased."""
+        text = f"दश{SVARITA}व"
+        blind = unit(32, 1, text)
+        del blind[missing]
+        records = self._run(tmp_path, [blind], [unit(32, 1, text)])
+        assert records[0]["transcription_status"] == "VERIFIED_EXACT"
+        assert records[0]["release_eligible"] is False
+        assert records[0]["provenance_complete"] is False
+        assert records[0]["r1_provenance"] is None
+
+    def test_an_unrecognised_reader_kind_does_not_release(self, tmp_path: Path) -> None:
+        text = f"दश{SVARITA}व"
+        records = self._run(
+            tmp_path,
+            [unit(32, 1, text, reader_kind="TRANSCRIBED_BY_SOMEONE")],
+            [unit(32, 1, text)],
+        )
+        assert records[0]["release_eligible"] is False
+
+
+class TestEveryLeafIsAccountedFor:
+    """478 canvases in, 478 canvases out.
+
+    A leaf that was never assigned and a leaf that has no text on it look
+    identical in a report that only counts what it read, so the ledger has to
+    enumerate the artifact rather than the work done.
+    """
+
+    ledger: ClassVar = _load("av_production_ledger")
+
+    def test_the_ledger_covers_every_canvas_in_the_artifact(self) -> None:
+        payload = json.loads(self.ledger.LEDGER.read_text(encoding="utf-8"))
+        assert payload["leaves_available"] == 478
+        assert len(payload["leaves"]) == 478
+        assert sum(payload["leaves_by_classification"].values()) == 478
+        assert [row["canvas_index"] for row in payload["leaves"]] == list(range(1, 479))
+
+    def test_front_and_back_matter_are_not_counted_as_outstanding_work(self) -> None:
+        payload = json.loads(self.ledger.LEDGER.read_text(encoding="utf-8"))
+        first, last = payload["samhita_text_canvas_range"]
+        assert (first, last) == (15, 472)
+        assert payload["text_candidate_leaves"] == last - first + 1
+        outside = [
+            row["canvas_index"]
+            for row in payload["leaves"]
+            if row["classification"] == self.ledger.OUT_OF_RANGE
+        ]
+        assert outside == list(range(1, first)) + list(range(last + 1, 479))
+
+    def test_a_gutter_shadow_does_not_hide_a_page_of_type(self) -> None:
+        """Canvas 200 is a dense text page whose binding shadow inks every row.
+
+        Profiling the full block width merges its lines into one run and demotes
+        it to front matter; 52 leaves were lost that way before the line profile
+        was narrowed to the middle of the leaf.
+        """
+        payload = json.loads(self.ledger.LEDGER.read_text(encoding="utf-8"))
+        rows = {row["canvas_index"]: row for row in payload["leaves"]}
+        for canvas in (200, 220, 260):
+            assert rows[canvas]["classification"] == self.ledger.TEXT_CANDIDATE
+            assert rows[canvas]["located_lines"] >= 20

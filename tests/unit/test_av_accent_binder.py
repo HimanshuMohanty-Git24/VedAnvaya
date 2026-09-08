@@ -139,30 +139,46 @@ class TestStripAccents:
 class TestFilterArtifactSpans:
     def test_passes_through_normal_spans(self) -> None:
         spans = [(0, 362), (400, 693), (731, 859), (887, 1221)]
-        assert _filter_artifact_spans(spans) == spans
+        assert _filter_artifact_spans(spans) == (spans, [])
 
     def test_removes_isolated_tiny_span_in_large_gap(self) -> None:
         # The 22-px artifact from leaf 32 line 19 should be removed when both
         # neighbours are 25x wider.
         spans = [(564, 1109), (1113, 1135), (1171, 1766)]
-        filtered = _filter_artifact_spans(spans)
+        filtered, _ = _filter_artifact_spans(spans)
         # Only the two large spans remain
         assert (1113, 1135) not in filtered
         assert len(filtered) == 2
+
+    def test_every_removal_is_reported(self) -> None:
+        """The threshold is fragile, so a firing may never be invisible.
+
+        A dropped span shifts every later token assignment on its line, and in
+        the output that is indistinguishable from a mistranscribed line.
+        """
+        spans = [(564, 1109), (1113, 1135), (1171, 1766)]
+        _, removed = _filter_artifact_spans(spans)
+        assert len(removed) == 1
+        assert removed[0]["x0"] == 1113
+        assert removed[0]["x1"] == 1135
+        assert removed[0]["width"] == 22
+        assert removed[0]["reason"] == "ARTIFACT_RATIO"
+        assert removed[0]["ratio"] > 20.0
 
     def test_keeps_small_danda_with_moderate_neighbours(self) -> None:
         # A 14-px danda surrounded by 206-px and 248-px spans (ratio ~14-17x,
         # below the threshold of 20x) must be kept.
         spans = [(2162, 2368), (2399, 2413), (2451, 2699)]
-        filtered = _filter_artifact_spans(spans)
+        filtered, removed = _filter_artifact_spans(spans)
         assert (2399, 2413) in filtered
+        assert removed == []
 
     def test_short_list_returned_unchanged(self) -> None:
         spans = [(0, 100), (200, 300)]
-        assert _filter_artifact_spans(spans) == spans
+        assert _filter_artifact_spans(spans) == (spans, [])
 
     def test_empty_list(self) -> None:
-        assert _filter_artifact_spans([]) == []
+        assert _filter_artifact_spans([]) == ([], [])
 
 
 # ---------------------------------------------------------------------------

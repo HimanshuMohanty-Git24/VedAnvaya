@@ -17,6 +17,7 @@ from __future__ import annotations
 import argparse
 import math
 import pathlib
+from typing import cast
 
 from PIL import Image
 
@@ -45,9 +46,11 @@ def find_text_block(image: Image.Image) -> tuple[int, int, int, int]:
     """
     full_w, full_h = image.size
     scale = 400 / full_w
-    thumb = image.resize((400, max(1, round(full_h * scale))), Image.BILINEAR)
+    thumb = image.resize((400, max(1, round(full_h * scale))), Image.Resampling.BILINEAR)
     w, h = thumb.size
-    pixels = list(thumb.get_flattened_data())
+    # The stub allows per-pixel tuples for multi-band images. This thumb is
+    # single-band "L", so the flattened data really is a flat run of ints.
+    pixels = cast("list[int]", list(thumb.get_flattened_data()))
 
     # Ignore the scanner's dark gutter and page edges before projecting.
     inset_v, inset_h = int(h * 0.02), int(w * 0.02)
@@ -101,7 +104,9 @@ def render(canvas_index: int, outdir: pathlib.Path, bands: int | None = None) ->
         )
         if band.width > READER_LONG_EDGE:
             scale = READER_LONG_EDGE / band.width
-            band = band.resize((READER_LONG_EDGE, round(band.height * scale)), Image.LANCZOS)
+            band = band.resize(
+                (READER_LONG_EDGE, round(band.height * scale)), Image.Resampling.LANCZOS
+            )
         path = outdir / f"leaf_{canvas_index:05d}_band{index + 1}.png"
         band.save(path)
         written.append(path)

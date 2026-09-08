@@ -275,22 +275,47 @@ _ARTIFACT_RATIO = 20.0
 
 def _filter_artifact_spans(
     spans: list[tuple[int, int]],
-) -> list[tuple[int, int]]:
-    """Remove isolated tiny spans whose both neighbours are ARTIFACT_RATIO times wider."""
+) -> tuple[list[tuple[int, int]], list[dict[str, object]]]:
+    """Remove isolated tiny spans whose both neighbours are ARTIFACT_RATIO times wider.
+
+    Returns the surviving spans and a record of every span dropped. The threshold
+    is known to be fragile, so a removal is never allowed to be invisible: a
+    dropped span shifts every later token assignment on its line, and a filter
+    that silently deletes a real word is indistinguishable in the output from a
+    line the reader mistranscribed. The removals are carried out to the caller
+    and land in the line's alignment guard, so a production run can be asked how
+    often the filter fired and on what.
+    """
     if len(spans) < 3:
-        return spans
+        return spans, []
     widths = [x1 - x0 for x0, x1 in spans]
     result = []
+    removed: list[dict[str, object]] = []
     for i, s in enumerate(spans):
         w = widths[i]
         if w <= 0:
+            removed.append(
+                {"span_index": i, "x0": s[0], "x1": s[1], "width": w, "reason": "EMPTY_SPAN"}
+            )
             continue
         left_w = widths[i - 1] if i > 0 else widths[i + 1]
         right_w = widths[i + 1] if i < len(spans) - 1 else widths[i - 1]
-        if min(left_w, right_w) / w > _ARTIFACT_RATIO:
-            continue  # both neighbours are >RATIO x wider — artifact
+        ratio = min(left_w, right_w) / w
+        if ratio > _ARTIFACT_RATIO:
+            # both neighbours are >RATIO x wider — artifact
+            removed.append(
+                {
+                    "span_index": i,
+                    "x0": s[0],
+                    "x1": s[1],
+                    "width": w,
+                    "ratio": round(ratio, 2),
+                    "reason": "ARTIFACT_RATIO",
+                }
+            )
+            continue
         result.append(s)
-    return result
+    return result, removed
 
 
 def _source_ambiguous_bindings(marks: list[dict[str, Any]], note: str) -> list[Binding]:
@@ -334,7 +359,7 @@ def bind_line_detailed(
     tokens = _tokenise(skeleton)
     # Filter isolated artifact spans before alignment so a small ink blob in
     # a large word gap cannot shift every subsequent token assignment.
-    effective_spans = _filter_artifact_spans(word_spans)
+    effective_spans, artifact_removals = _filter_artifact_spans(word_spans)
     n_tokens, n_spans = len(tokens), len(effective_spans)
 
     max_mismatch = max(1, round(max(n_tokens, n_spans, 1) * MAX_TOKEN_SPAN_MISMATCH))
@@ -347,6 +372,11 @@ def bind_line_detailed(
 
     token_aksaras: list[list[str]] = [aksara_clusters(t) for t in tokens]
     alignment = align_line(effective_spans, token_aksaras)
+    # Instrumentation, not a decision: the guard dict already carries this line's
+    # diagnostics, and the artifact filter's firings belong with them.
+    alignment.guard["artifact_spans_removed"] = len(artifact_removals)
+    if artifact_removals:
+        alignment.guard["artifact_ratio_threshold"] = _ARTIFACT_RATIO
 
     char_offset_at: list[int] = []
     offset = 0
