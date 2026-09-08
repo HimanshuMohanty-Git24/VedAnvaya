@@ -287,7 +287,86 @@ are moot until §1 is resolved.
 
 ---
 
-## 6. What has to happen next
+## 5A. The source artifact is 2024px, not 4000px
+
+**Severity: overturns a recorded project claim. Found 2026-09-08.**
+
+`scripts/fetch_atharvaveda_bsb_scan.py` carried this justification for its
+`IMAGE_WIDTH = 4000`:
+
+> At width 2000 the Vedic accent marks of this fount sit on akṣara BOUNDARIES
+> and cannot be assigned to a specific akṣara without guessing […] At width
+> 4000 the same marks are unambiguously attached to their akṣara. The IIIF
+> 'full' size is only 2025px, so the width must be requested explicitly; 4000
+> is a real derivative, not an upscale.
+
+**The last sentence is false, and it is load-bearing.** The IIIF service
+reports canvas n32 as `"width": 2024, "height": 2992`, lists no size above
+2024, and advertises `sizeAboveFull` — which is precisely why a request for
+4000 returns an image instead of an error.
+
+Measured, not inferred:
+
+| Comparison | Mean absolute difference |
+|---|---|
+| Stored 4000px, downscaled to 2024, vs native 2024 | 1.48 / 255 (0.6%) |
+| **Native 2024, Lanczos-upscaled to 4000, vs stored 4000** | **1.51 / 255 (0.6%)** |
+
+The second row is decisive. Had the 4000px file held real optical detail beyond
+2024, a plain upscale of the native rendering could not have reproduced it to
+within JPEG noise. **The entire 458-leaf 4000px corpus is a server-side upscale
+of a 2024px master and carries no additional information.**
+
+### Consequences
+
+1. **2024px is the resolution ceiling of this artifact.** At that scale the
+   text block is roughly 1592 px wide carrying about 40 lines, so an accent
+   mark is a few pixels. Whatever the accent layer's true legibility is, this
+   is all of it there is.
+2. **The prior diagnosis was wrong about its own cause.** The v1 accent failure
+   was attributed to acquisition resolution and declared fixed by re-fetching
+   at 4000. No acquisition improvement occurred. Any gain between the 2000px
+   and 4000px passes was interpolation plus the genuine perceptual benefit of
+   rendering glyphs larger — not recovered detail.
+3. **Option (b) cannot be delivered from this artifact.** Accent fidelity
+   cannot be raised by re-fetching or re-cropping `bsb10219750`. Raising it
+   requires a *different and higher-resolution digitisation* of the 1856
+   edition. That is a source-acquisition task, and it is now the critical path.
+4. Magnification still helps *perceptually* — attributing a bar to a line is a
+   spatial judgement, and larger glyphs make it easier at fixed information
+   content. §5B tests how much that alone is worth.
+
+`IMAGE_WIDTH` is left at 4000 so the pinned `2026-09-07` snapshot stays
+byte-stable, with the constant now documenting that it buys resolution which
+does not exist.
+
+---
+
+## 6. Decisions taken by the project owner, 2026-09-08
+
+Both open questions below were put to the project owner and are now settled.
+They are recorded here as decisions, not recommendations.
+
+| Question | Decision |
+|---|---|
+| What to do with the accent layer | **Fix accents first, then release.** Nothing is released until accent fidelity is raised and re-measured on the calibration leaves. The corpus lands complete or not at all. |
+| Readings per leaf in production | **Three independent readings, majority adjudication.** Two passes detect disagreement without resolving it; the third reading is what made this calibration interpretable. |
+
+**Consequences that follow directly:**
+
+- Skeleton-only release (former option (a)) is **rejected**. The 9.5–54%
+  partial corpus will not be published.
+- The binding open risk is now **whether accent fidelity can be raised at
+  all.** That is unproven. Nothing in this calibration shows the 1856 accent
+  layer is readable to agreement by any method; it shows only that the current
+  method cannot. This must be established on a small sample before any
+  commitment to 458 leaves.
+- Production cost rises to three bounded reads per leaf, ~210k tokens/leaf,
+  ~96M for the corpus — but only after the accent question is answered, since
+  a three-pass run against an unreadable accent layer fails three times as
+  expensively.
+
+### 6.1 Superseded guidance
 
 1. **Move to three readings per leaf, or accept that disagreements cannot be
    resolved.** This is the firmest recommendation in the report and it is not

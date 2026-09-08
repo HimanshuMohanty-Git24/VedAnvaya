@@ -46,15 +46,22 @@ SNAPSHOT_ID = "2026-09-07"
 # leaf n(P+14); this offset is verified in the leaf manifest rather than assumed by any
 # consumer, because a transcription that cites the wrong leaf is unfalsifiable.
 CANVAS_COUNT = 478
-# 4000px, not 2000. MEASURED, and the first pass got this wrong in a way that produced a
-# false conclusion. At width 2000 the Vedic accent marks of this fount sit on aksara
-# BOUNDARIES and cannot be assigned to a specific aksara without guessing, so readers
-# correctly refused to record them under RIGHTS-13 -- and the resulting corpus-wide
-# absence of accent read as a transcription-capability failure when it was an
-# ACQUISITION-RESOLUTION failure. At width 4000 the same marks are unambiguously
-# attached to their aksara. The IIIF 'full' size is only 2025px, so the width must be
-# requested explicitly; 4000 is a real derivative, not an upscale.
+# CORRECTED 2026-09-08. This constant used to carry a claim that 4000 was "a real
+# derivative, not an upscale" and that at 4000 the accent marks are "unambiguously
+# attached to their aksara". Both are false, and they were load-bearing.
+#
+# The IIIF service reports this image's full size as 2024x2992 and offers nothing
+# larger; it advertises 'sizeAboveFull', which is why a request for 4000 succeeds at
+# all. Measured on canvas n32: upscaling the native 2024 rendering to 4000 with plain
+# Lanczos differs from the stored 4000 file by a mean of 1.51/255 (0.6%), i.e. JPEG
+# noise. The stored corpus therefore carries no optical detail beyond 2024px.
+#
+# 2024px is the resolution ceiling of this artifact. Accent fidelity cannot be raised
+# by re-fetching or re-cropping it -- see docs/reports/ATHARVAVEDA_TRANSCRIPTION_QA.md.
+# 4000 is retained only so the on-disk snapshot stays byte-stable for the pinned
+# 2026-09-07 snapshot id; it buys resolution that does not exist.
 IMAGE_WIDTH = 4000
+NATIVE_IIIF_WIDTH = 2024
 USER_AGENT = "VedaGraph/1.0 (canonical corpus research; h.mohanty@accenture.com)"
 
 RAW_DIR = REPO / "data" / "raw" / "bsb_mdz" / SNAPSHOT_ID / BSB_ID
