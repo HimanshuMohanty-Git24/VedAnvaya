@@ -1,13 +1,11 @@
 {
   "aggregate": {
-    "mantras_all_works": 14524,
-    "passages_all_works": 16121,
+    "mantras_all_works": 20210,
+    "passages_all_works": 22537,
     "works_missing": [],
-    "works_on_a_pilot_fallback": [
-      "VG:WORK:AV:SAU"
-    ],
+    "works_on_a_pilot_fallback": [],
     "works_released": 4,
-    "works_with_a_production_release": 3
+    "works_with_a_production_release": 4
   },
   "counting_rule": "Every figure is counted from the JSONL a release emitted. A layer a release does not emit is 0 with the release named; a work with no release is present:false, which is a different state from zero coverage.",
   "cross_veda_identity_audit": {
@@ -16,9 +14,9 @@
     "cross_work_canonical_urn_collisions": {},
     "cross_work_entity_id_collisions": {},
     "intra_work_duplicate_keys": {},
-    "passages_examined": 16121,
+    "passages_examined": 22537,
     "passages_per_work": {
-      "VG:WORK:AV:SAU": 174,
+      "VG:WORK:AV:SAU": 6590,
       "VG:WORK:RV:SAK": 11590,
       "VG:WORK:SV:KAU": 2342,
       "VG:WORK:YV:VSM": 2015
@@ -30,42 +28,42 @@
       "audio_recordings": 0,
       "audio_segments": 0,
       "chandas_coverage": 0,
-      "container_count": 21,
+      "container_count": 751,
       "devata_coverage": 0,
-      "english_coverage": 115,
+      "english_coverage": 4878,
       "has_primary_text_layer": true,
       "hindi_coverage": 0,
-      "is_production_release": false,
+      "is_production_release": true,
       "label": "Atharvaveda Shaunaka",
-      "mantra_count": 153,
-      "passage_count_total": 174,
+      "mantra_count": 5839,
+      "passage_count_total": 6590,
       "present": true,
       "qa_issues_by_severity": {
-        "INFO": 1,
-        "WARNING": 1
+        "INFO": 3,
+        "WARNING": 6
       },
-      "qa_issues_total": 2,
-      "release_dir": "atharvaveda_pilot_v1",
-      "release_kind": "PILOT_FALLBACK",
-      "rights_restricted_text_records": 459,
+      "qa_issues_total": 9,
+      "release_dir": "atharvaveda_saunaka_digital_working_v1",
+      "release_kind": "PRODUCTION",
+      "rights_restricted_text_records": 17517,
       "rights_statuses_present": {
-        "REFERENCE_ONLY": 459
+        "REFERENCE_ONLY": 17517
       },
       "rishi_coverage": 0,
-      "sanskrit_any_canonical_layer_coverage": 153,
-      "sanskrit_parallel_coverage": 153,
-      "sanskrit_primary_coverage": 153,
+      "sanskrit_any_canonical_layer_coverage": 5839,
+      "sanskrit_parallel_coverage": 5839,
+      "sanskrit_primary_coverage": 5839,
       "sanskrit_source_faithful_fallback_coverage": 0,
       "text_records_by_role": {
-        "PARALLEL_TEXT": 153,
-        "PRIMARY_TEXT": 153,
-        "SEARCH_DERIVATIVE": 153
+        "PARALLEL_TEXT": 5839,
+        "PRIMARY_TEXT": 5839,
+        "SEARCH_DERIVATIVE": 5839
       },
       "traditional_metadata_records": 0,
       "translation_records_by_language": {
-        "en": 115
+        "en": 4878
       },
-      "unresolved_structural_qa": 1,
+      "unresolved_structural_qa": 3,
       "unresolved_textual_qa": 0,
       "work_id": "VG:WORK:AV:SAU"
     },
@@ -207,7 +205,7 @@
   "report_version": "four-veda-completeness-v1",
   "samaveda_scope_warning": "The Samaveda figures cover the Kauthuma ARCIKA corpus ONLY. The gana collections are a parallel and larger body that this work_id does not address. 'Complete Samaveda' is never a correct description of this release.",
   "source_assertion_completeness": {
-    "assertions_examined": 26693,
+    "assertions_examined": 33113,
     "clean": true,
     "orphan_claims": {},
     "orphan_count": 0

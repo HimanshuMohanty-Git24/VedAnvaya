@@ -1,0 +1,173 @@
+# Atharvaveda-Samhita (Saunaka) WORKING PRIVATE corpus - build configuration
+#
+# Declarative record of what this build produced and why. The executable is
+# scripts/build_atharvaveda_working_v1.py; this file is the auditable statement of intent,
+# pinned snapshots and policy, so a reader can tell whether the build honoured it.
+#
+# This is a DEVELOPMENT corpus. It is not a scholarly critical edition and does not claim
+# to be one. See `honesty:` below, which is the most important block in this file.
+
+config_version: atharvaveda-digital-working-v1
+build_id: atharvaveda_saunaka_digital_working_v1
+build_version: 1.0.0-avs-digital-working.1
+working_corpus_id: ATHARVAVEDA_SAUNAKA_DIGITAL_WORKING_V1
+status: WORKING_PRIVATE
+output_dir: data/canonical/atharvaveda_saunaka_digital_working_v1
+work_id: VG:WORK:AV:SAU
+work_abbreviation: AVS
+recension: Shaunaka
+hierarchy: [Kanda, Sukta, Mantra]
+scope: FULL_CORPUS
+
+identity_functions:
+  # Unchanged from the pilot. This build redesigns no key, URN or UUID rule.
+  section: avs_kanda_identity(kanda)
+  hymn: avs_sukta_identity(kanda, sukta)
+  mantra: avs_mantra_identity(kanda, sukta, mantra)
+identity_derivation: canonical key -> canonical URN -> uuid5(namespace, URN). Never a text hash.
+
+parser_version: gretil-avs-saunaka-legacy-html-v1
+comparator_version: text-compare-v1
+provenance_source: >-
+  Source and SourceArtifact records are READ FROM data/registry via load_sources() and
+  load_source_artifacts(); this build constructs neither. The registry's pinned
+  checksum_sha256 is cross-checked against the bytes actually read, so a registry edit that
+  repointed an artifact at different bytes fails the build.
+
+# ---------------------------------------------------------------------------------------
+# HONESTY. Read this before citing anything built here.
+# ---------------------------------------------------------------------------------------
+honesty:
+  is_independent_roth_whitney_1856_transcription: false
+  actual_lineage: >-
+    Gli inni dell' Atharvaveda (Saunaka), transliteration by Chatia Orlandi, Pisa 1991,
+    collated with R. Roth and W. D. Whitney, Atharva Veda Sanhita, Berlin 1856; input by
+    Vladimir Petr and Petr Vavrousek; TITUS redaction by Jost Gippert 1997; books 11-20
+    improved by Arlo Griffiths 2000 and Philipp Kubisch 2007, revised by Arlo Griffiths
+    2009; re-hosted by GRETIL as legacy HTML.
+  roth_whitney_1856_role: >-
+    A COLLATION BASIS inside the Orlandi/TITUS lineage. It is not the text this corpus was
+    read from, and no record here may be described as a Roth/Whitney transcription.
+  supersedes: >-
+    data/canonical/atharvaveda_saunaka_1856_provisional and the cancelled image-based
+    transcription pipeline (scripts/build_atharvaveda_canonical.py). Those outputs are
+    stale. This build neither reads nor regenerates them. It supersedes them as the AV
+    WORKING corpus only; it does not supersede them as a scholarly edition, because it
+    makes no scholarly-edition claim.
+  publication_authorised: false
+
+# ---------------------------------------------------------------------------------------
+# Pinned source snapshots. Immutable, hashed, written by PoliteFetcher. Never overwritten.
+# ---------------------------------------------------------------------------------------
+inputs:
+  - source_id: GRETIL                     # registered host; NOT a per-Veda pseudo-source
+    snapshot_namespace: GRETIL_AVS        # local raw-dir namespace only, deliberately separate
+    source_artifact_id: GRETIL.AV.SAUNAKA.ACCENTED.HTML
+    role: PRIMARY_TEXT
+    url: https://gretil.sub.uni-goettingen.de/gretil/1_sanskr/1_veda/1_sam/avs_acu.htm
+    snapshot_path: data/raw/gretil_avs/2026-09-07/cd89bd1e29e6158d7c3c7bcb607b8e4eed4c7556c8c2027dec039f56736adddb.htm
+    snapshot_sha256: cd89bd1e29e6158d7c3c7bcb607b8e4eed4c7556c8c2027dec039f56736adddb
+    retrieved_at: 2026-09-07
+    byte_length: 1114524
+    text_version_id: GRETIL.AVS.SAUNAKA.ACCENTED
+    accented: true
+    script: Latin
+    transliteration_scheme: GRETIL_TITUS_LATIN_AVS
+    rights_status: REFERENCE_ONLY
+
+  - source_id: GRETIL
+    snapshot_namespace: GRETIL_AVS
+    source_artifact_id: GRETIL.AV.SAUNAKA.UNACCENTED.HTML
+    role: PARALLEL_TEXT
+    url: https://gretil.sub.uni-goettingen.de/gretil/1_sanskr/1_veda/1_sam/avs___u.htm
+    snapshot_path: data/raw/gretil_avs/2026-09-07/7e3f74f313d1b4348bf9e1f60a80e03bb72709994b85585a4f854a51bf57272c.htm
+    snapshot_sha256: 7e3f74f313d1b4348bf9e1f60a80e03bb72709994b85585a4f854a51bf57272c
+    retrieved_at: 2026-09-07
+    byte_length: 1024198
+    text_version_id: GRETIL.AVS.SAUNAKA.UNACCENTED
+    accented: false
+    script: Latin
+    transliteration_scheme: GRETIL_TITUS_LATIN_AVS
+    rights_status: REFERENCE_ONLY
+
+  - source_id: VEDAWEB
+    snapshot_namespace: VEDAWEB_AVS
+    source_artifact_id: VEDAWEB.AVS.WHITNEY_LANMAN_1905.PLAINTEXT.L2
+    role: TRANSLATION
+    url: https://vedaweb.uni-koeln.de/api/contents?res=696f42266f50da42570ad040&limit=6000
+    stage_path: data/staged/atharvaveda_translation_stage_full_v1.json
+    stage_version: atharvaveda-translation-stage-full-v1
+    language: en
+    rights_status: PUBLIC_DOMAIN
+    rights_note: >-
+      Underlying work Harvard Oriental Series 7-8, 1905, public domain in the US. The
+      VedaWeb digital layer declares "license": null for this resource and carries no
+      restrictive clause, unlike VedaWeb's AVS Sanskrit resource which reproduces the TITUS
+      no-republication clause.
+
+derived_versions:
+  - text_version_id: VEDAGRAPH.AVS.SEARCH_NORMALIZED
+    text_role: SEARCH_DERIVATIVE
+    derived_from: GRETIL.AVS.SAUNAKA.ACCENTED
+    method: vedagraph.normalize.comparison_form(text, ComparisonForm.SEARCH_NORMALIZED)
+    note: >-
+      Derived, never authoritative, and never written back over the accented source. Present
+      so that a searchable surface exists without deleting accents from stored text.
+
+# ---------------------------------------------------------------------------------------
+# Policies. Identical to the pilot's wherever the pilot had one; the pilot's builders are
+# imported directly rather than reimplemented, so these are not a parallel set of rules.
+# ---------------------------------------------------------------------------------------
+policies:
+  text_immutability: >-
+    text_original is the source pada lines verbatim, joined one per line, with NOTHING
+    removed. The pada divider "|", the source's own verse marker "||18||", the anuvaka
+    marker "{12}" and the alternate-unit marker "[8]" all survive in stored text, because
+    deleting them would make the stored field a derived surface rather than the source.
+
+  duplicate_locator_resolution: >-
+    When two parsed units claim the same (kanda, sukta, mantra), keep the one whose own
+    in-text ||N|| marker agrees with its locator, if exactly one does; otherwise keep the
+    first in file order. The loser is preserved in full as a
+    NON_CANONICAL_DUPLICATE_OCCURRENCE SourceAssertion including its complete Sanskrit
+    text. No verse number is ever invented and no text is discarded.
+
+  sequence_gaps: >-
+    Reported, never filled. Every gap in this corpus is a gap in the edition's own
+    numbering and stays visible in qa_issues.jsonl.
+
+  metrical_classification: >-
+    NOT asserted. The artifact does not mark prose, and a pada count is not a metre. Prose
+    paryaya units are ordinary Passages, and single_pada_unit is recorded as a source fact
+    with an explicit note that it is not a claim about prose or verse. Classifying the
+    paryaya material of kandas 15 and 16 is open backlog, not a build output.
+
+  alternate_numbering: >-
+    The Vishva Bandhu (Hoshiarpur 1960-64) numbering embedded in the artifact is emitted as
+    a non-canonical Citation with system AVS_VISHVA_BANDHU_1960. Where the artifact prints
+    [-] (no counterpart), no Citation is emitted and an ALTERNATE_NUMBERING_ABSENT
+    SourceAssertion records the printed marker instead.
+
+  cross_work_parallels: >-
+    Kanda 20 overlaps the Rigveda extensively. NO deduplication against VG:WORK:RV:SAK is
+    performed and no AVS mantra is sourced from the Rigveda. A Rigvedic parallel is a
+    candidate for the derived parallels layer only.
+
+  traditional_metadata: >-
+    ZERO TraditionalMetadataAssertion records. The artifact carries no rishi, devata or
+    chandas field anywhere. Rigvedic Anukramani rules do NOT transfer to the Atharvaveda
+    and no metadata is inferred or generated.
+
+  translation_alignment: >-
+    Translations are independent records aligned by the translation's own printed
+    book.hymn.stanza alias, never by sequence position (ADR-010). A staged verse whose
+    printed citation has no passage in this corpus produces a
+    TRANSLATION_HAS_NO_CANONICAL_PASSAGE assertion and is never re-attached to a neighbour.
+
+  determinism: >-
+    built_at is pinned to the newest snapshot retrieval timestamp, not to wall-clock time,
+    so a rebuild from the same immutable snapshots is byte-identical including manifest.json.
+
+  audio: >-
+    Out of scope. No AV audio records are emitted and none are required for the working
+    corpus.

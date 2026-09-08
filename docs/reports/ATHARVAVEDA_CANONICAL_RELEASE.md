@@ -1,5 +1,22 @@
 # Atharvaveda canonical release — state as of 2026-09-08
 
+> **SUPERSEDED AND CANCELLED (2026-09-08).** The image-based independent
+> transcription project this report describes was cancelled and its 478-leaf
+> BSB/MDZ scan cache was removed. Do not restart it and do not redownload the
+> scans. The working Atharvaveda corpus is now
+> `data/canonical/atharvaveda_saunaka_digital_working_v1/`, built from the
+> existing GRETIL/TITUS digital Sanskrit and documented in
+> `ATHARVAVEDA_WORKING_CORPUS.md`. That corpus is explicitly labelled
+> `WORKING_PRIVATE` and is explicitly NOT an independent Roth & Whitney 1856
+> transcription. The `atharvaveda_saunaka_1856_provisional` and
+> `atharvaveda_saunaka_1856_v1` directories are stale output of the cancelled
+> pipeline; nothing reads them.
+>
+> The report below is retained unchanged as the record of why the transcription
+> route was abandoned.
+
+---
+
 **Work:** Atharvaveda Saṃhitā, Śaunaka recension (`VG:WORK:AV:SAU`)  
 **Artifact:** `BSB.AV.SAUNAKA.ROTH_WHITNEY.1856.SCAN`  
 **Text version:** `VEDAGRAPH.AVS.ROTH_WHITNEY_1856.TRANSCRIPTION`  

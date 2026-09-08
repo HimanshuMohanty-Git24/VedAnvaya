@@ -43,7 +43,15 @@ RELEASE_CANDIDATES: dict[str, tuple[str, ...]] = {
     "VG:WORK:RV:SAK": ("rigveda_full_v1",),
     "VG:WORK:SV:KAU": ("samaveda_arcika_v1", "samaveda_pilot_v1"),
     "VG:WORK:YV:VSM": ("yajurveda_vsm_v1", "yajurveda_pilot_v1"),
-    "VG:WORK:AV:SAU": ("atharvaveda_saunaka_v1", "atharvaveda_pilot_v1"),
+    # atharvaveda_saunaka_digital_working_v1 is the WORKING PRIVATE full-corpus build from
+    # the GRETIL/TITUS digital Sanskrit. The image-based independent-transcription project
+    # that would have produced atharvaveda_saunaka_v1 was cancelled and never released, so
+    # that name is kept only so a future release would take precedence over the pilot.
+    "VG:WORK:AV:SAU": (
+        "atharvaveda_saunaka_digital_working_v1",
+        "atharvaveda_saunaka_v1",
+        "atharvaveda_pilot_v1",
+    ),
 }
 
 VEDA_LABEL = {
