@@ -15,8 +15,15 @@ PASSED because a build is absent, empty, or plausible.
 
 ## 1. Verdict
 
-**The transcription method is not yet fit to produce a canonical corpus, and
-the accent layer alone is what makes it unfit.**
+> **Superseded in part by §5C.** Sections 1–4 report the calibration as run,
+> against whole-leaf band crops, and their measurements stand. The conclusion
+> that the accent layer is *unreadable* does not: presenting one line at a time
+> raised accent agreement from 0.098–0.306 to **1.000** across three
+> independent readers. The blocker is presentation, not legibility and not
+> resolution. Read §5C before acting on §1.
+
+**The transcription method as calibrated is not fit to produce a canonical
+corpus, and the accent layer alone is what makes it unfit.**
 
 The designated two-pass reconciliation over two calibration leaves produced
 **zero release-eligible units out of 21**. Across every pairing of every
@@ -328,17 +335,145 @@ of a 2024px master and carries no additional information.**
    at 4000. No acquisition improvement occurred. Any gain between the 2000px
    and 4000px passes was interpolation plus the genuine perceptual benefit of
    rendering glyphs larger — not recovered detail.
-3. **Option (b) cannot be delivered from this artifact.** Accent fidelity
-   cannot be raised by re-fetching or re-cropping `bsb10219750`. Raising it
-   requires a *different and higher-resolution digitisation* of the 1856
-   edition. That is a source-acquisition task, and it is now the critical path.
+3. ~~Option (b) cannot be delivered from this artifact.~~ **This inference was
+   wrong and §5C disproves it.** It is struck rather than deleted because it
+   was written here as a consequence of the resolution measurement, and the
+   distinction between what was measured and what was inferred from it is the
+   whole point of this document. The resolution ceiling is real; the conclusion
+   drawn from it was not tested when it was written, and when tested it failed.
 4. Magnification still helps *perceptually* — attributing a bar to a line is a
    spatial judgement, and larger glyphs make it easier at fixed information
-   content. §5B tests how much that alone is worth.
+   content. §5C set out to measure how much that alone is worth. The answer
+   turned out to be: it is the whole problem.
 
 `IMAGE_WIDTH` is left at 4000 so the pinned `2026-09-07` snapshot stays
 byte-stable, with the constant now documenting that it buys resolution which
 does not exist.
+
+## 5B. A higher-resolution digitisation of the same edition exists
+
+Since §5A puts the accent question on the critical path as a source-acquisition
+task, the obvious next question is whether a better scan exists at all. One
+does.
+
+| Digitisation | Native page size | Tone | Notes |
+|---|---|---|---|
+| BSB/MDZ `bsb10219750` (currently pinned) | 2024 × 2992 | greyscale | stored as a 4000px upscale (§5A) |
+| **archive.org `AtharvaVedaSanhitaTextVolume1`** (Google-digitised) | **3971 × 6075** | **bitonal** | ~3.9× the pixel count |
+
+Measured from each service's IIIF `info.json`, not inferred. The archive.org
+copy is roughly double the linear resolution of the BSB master — and almost
+exactly the nominal size our upscaled files pretend to be. A real 4000px scan
+of this edition was available the whole time.
+
+**This is not yet a recommendation to switch, for three reasons.**
+
+1. **It is binarised.** A visual check of a native-scale strip shows crisp,
+   well-formed glyphs and solid anudātta bars, but pure black on pure white
+   with no grey. Binarisation is exactly the process that can delete a faint
+   accent stroke outright, and the greyscale BSB master may preserve marks this
+   one has thresholded away. More pixels does not automatically mean more
+   accents. This must be tested on the *same printed page* in both scans before
+   either is preferred.
+2. **Edition identity is not established.** Title and creators match Roth &
+   Whitney, and the sampled page carries the same Devanagari fount and the
+   colophon form `॥ द्वितीयो ऽनुवाकः ॥`, which is consistent with this edition.
+   But the archive.org metadata carries no date, publisher, or volume
+   statement, so the printing has not been confirmed from its own title page.
+   Under this project's provenance rules that confirmation is required before
+   the artifact could be pinned, not after.
+3. **Rights are unexamined.** An 1856 work is public domain by age, but the
+   Google-scan provenance and archive.org terms have not been reviewed against
+   `docs/architecture/RIGHTS_POLICY.md`.
+
+**Recommended next step**, and the cheapest decisive one: locate the page in
+the archive.org scan corresponding to BSB canvas n32, render the same printed
+line from both at native scale, and re-run the §5C probe against each. That
+answers "is the accent layer recoverable from *any* available scan" for a few
+hundred thousand tokens, before anything is re-pinned or re-fetched.
+
+---
+
+## 5C. The accent layer is readable — one line at a time
+
+**This is the most important result in this report, and it overturns §1.**
+
+Three readers were given the *same single printed line* (canvas n32, line 12)
+rendered at 1:1 with the source pixels in two segments, and asked to transcribe
+it with accents. They could not see each other's work or any other edition.
+
+| Reader | Marks | `[?]` | Reading |
+|---|---:|---:|---|
+| P1 | 10 | 0 | `अ॒ना॒गसं॒ ब्रह्म॑णा त्वा कृणोमि शि॒वे ते॒ द्यावा॑पृथि॒वी उ॒भे स्ता॑म् ॥ १ ॥` |
+| P2 | 10 | 0 | `… ॥ ९ ॥` |
+| P3 | 10 | 0 | `… ॥ १ ॥` |
+
+| Pairing | Accent agreement (union) | Skeleton | Grade |
+|---|---:|---|---|
+| P1 × P2 | **1.000** (10/10) | 1 char | `CHARACTER_UNCERTAIN` |
+| P1 × P3 | **1.000** (10/10) | identical | **`VERIFIED_EXACT`** |
+| P2 × P3 | **1.000** (10/10) | 1 char | `CHARACTER_UNCERTAIN` |
+
+**Accent agreement went from 0.098–0.306 at band presentation to 1.000.** Not
+one mark differed in position or type across three independent readings. The
+single disagreement anywhere is the terminal numeral, `१` against `९`, which
+two of the three readers flagged as their only residual doubt. Under the
+majority adjudication adopted in §6, `१` carries and the unit releases as
+`VERIFIED_EXACT` **with its accent layer intact** — the first Atharvaveda unit
+in this project ever to do so.
+
+### Why it works, in the readers' own terms
+
+All three independently arrived at the same method, which is the strongest part
+of the evidence. This print is metrically regular, so at line scale the accent
+marks form *bands* at fixed vertical offsets:
+
+> "the middle line's baseline sits at y≈180, its own bars form a tight band at
+> y≈205–225, while a second bar band at y≈38–55 is a full line-pitch too high
+> and belongs to the line above — no bar was borderline" (P1)
+
+> "seg1: above-line bars at y41–53, middle-line bars at y211–224, blank rows
+> between" (P3)
+
+At band presentation a reader sees ~20 lines at once at half native scale, and
+every bar has several plausible parents. At line presentation there are exactly
+two candidate bands, a full line-pitch apart, with blank rows between them.
+Attribution stops being a judgement call and becomes geometry.
+
+All three also rejected the same false positives by shape rather than position:
+the vocalic-ṛ descenders under `कृ` and `पृ` (curved, 21–33px) against the
+anudātta dash (straight, ~10px), and P3 additionally the halanta of `म्`. P2
+separately rejected the anusvāra dot over `सं` as not a svarita.
+
+### The catch: cost
+
+| | |
+|---|---|
+| Mean tokens per reader per **line** | ~81,000 (24–32 tool calls) |
+| Lines on leaf n32 | 23 |
+| Corpus | 458 leaves ≈ 10,500 lines |
+| **Three readers, full corpus** | **~2.5 billion tokens** |
+
+Even a production protocol ten times leaner would need ~250M. **Line-at-a-time
+reading by a language model solves the accent problem and cannot be afforded at
+corpus scale.**
+
+### The way through
+
+The method the readers used is not linguistic. Projecting rows, locating the
+bar band, and assigning each bar to the nearest headline above it is
+deterministic image processing — the same row-projection this repository
+already implements in `crop_atharvaveda_line.py` to find lines at all. The
+promising design is therefore:
+
+- extract the **accent layer geometrically, in code**, from the printed bands;
+- have readers transcribe only the **skeleton**, which already agrees to 98.7%
+  at band presentation and needs no per-line magnification;
+- reconcile the two independently.
+
+That converts the expensive part from a per-line model read into a per-leaf
+image operation. It is unproven and it is the natural next experiment, but it
+is the first route that is both accurate and affordable.
 
 ---
 
@@ -356,17 +491,25 @@ They are recorded here as decisions, not recommendations.
 
 - Skeleton-only release (former option (a)) is **rejected**. The 9.5–54%
   partial corpus will not be published.
-- The binding open risk is now **whether accent fidelity can be raised at
-  all.** That is unproven. Nothing in this calibration shows the 1856 accent
-  layer is readable to agreement by any method; it shows only that the current
-  method cannot. This must be established on a small sample before any
-  commitment to 458 leaves.
-- Production cost rises to three bounded reads per leaf, ~210k tokens/leaf,
-  ~96M for the corpus — but only after the accent question is answered, since
-  a three-pass run against an unreadable accent layer fails three times as
-  expensively.
+- Both decisions are **vindicated by §5C**, which was run to test the first of
+  them. Accent fidelity *can* be raised — to 1.000 agreement — and the
+  three-reader majority is exactly what turns the one residual disagreement
+  (`१` against `९`) into a released unit rather than a backlog item. Had the
+  two-pass protocol been kept, that unit would have stalled.
+- The binding open risk has **moved from feasibility to cost**. The accent
+  layer is readable; reading it this way for 458 leaves is not affordable
+  (~2.5B tokens, §5C). The next experiment is geometric extraction of the
+  accent layer in code, which is the only identified route that is both
+  accurate and affordable.
+- Production must not start until that experiment reports. Three readers at
+  band presentation would cost ~96M tokens and still release nothing, because
+  band presentation is precisely what §5C shows to be the defect.
 
 ### 6.1 Superseded guidance
+
+*Retained for the record only. This is what was recommended to the owner before
+the decisions above were taken and before §5C was run; the decisions in §6
+supersede it. Do not act on this subsection.*
 
 1. **Move to three readings per leaf, or accept that disagreements cannot be
    resolved.** This is the firmest recommendation in the report and it is not
