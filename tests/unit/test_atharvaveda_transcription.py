@@ -15,6 +15,7 @@ import json
 import sys
 import unicodedata
 from pathlib import Path
+from typing import ClassVar
 
 import pytest
 
@@ -368,6 +369,74 @@ class TestSourceLocators:
         build = _load("build_atharvaveda_canonical")
         locator = build.source_locator({"canvas_index": 3, "printed_page": None})
         assert "unpaginated" in locator
+
+
+class TestGeometricAccentExtraction:
+    """The accent layer read by image geometry rather than by a model.
+
+    Three readers given canvas n32 line 12 one line at a time agreed exactly
+    on its accents: seven anudatta and three svarita. That reading is the
+    fixture these tests measure against, because it is the only accent
+    ground truth in the project that more than one reader has ever confirmed.
+    """
+
+    GROUND_TRUTH_LINE_12: ClassVar[dict[str, int]] = {"anudatta": 7, "svarita": 3}
+
+    def test_the_two_marks_have_separate_shape_profiles(self) -> None:
+        """One size rule cannot cover both, and assuming it could cost a pass.
+
+        An anudatta is a broad flat dash and a svarita a narrow upright
+        stroke. A single 'small mark' rule tuned on the dash rejects every
+        svarita for being too tall, which is exactly what the first version
+        of the extractor did.
+        """
+        extract = _load("extract_atharvaveda_accents")
+        anudatta, svarita = extract.SHAPES["anudatta"], extract.SHAPES["svarita"]
+        assert anudatta["aspect"][0] > 1.0, "an anudatta is wider than it is tall"
+        assert svarita["aspect"][1] < 1.0, "a svarita is taller than it is wide"
+        assert svarita["h"][1] > anudatta["h"][1], "a svarita is the taller mark"
+        assert anudatta["w"][0] > svarita["w"][1], "an anudatta is the wider mark"
+
+    def test_the_headline_band_is_the_whole_rule_not_its_densest_row(self) -> None:
+        """The sirorekha is many pixels thick.
+
+        Taking only its peak row leaves most of the rule inside the svarita
+        band, where a flood fill escapes along it and swallows every svarita
+        into one line-long component.
+        """
+        extract = _load("extract_atharvaveda_accents")
+        rows = [0, 0, 5, 5, 100, 300, 400, 300, 100, 5, 5, 0]
+        top, bottom = extract.find_headline_band(rows)
+        peak = extract.find_headline(rows)
+        assert top < peak < bottom
+        assert (bottom - top) > 1
+
+    def test_a_blank_line_yields_no_marks(self) -> None:
+        extract = _load("extract_atharvaveda_accents")
+        from PIL import Image
+
+        blank = Image.new("L", (400, 120), color=255)
+        result = extract.extract_line(blank, 20, 100)
+        assert result["marks"] == []
+
+    def test_it_reproduces_the_reading_three_readers_agreed_on(self) -> None:
+        extract = _load("extract_atharvaveda_accents")
+        crop = _load("crop_atharvaveda_leaf")
+        if not crop.leaf_path(32).exists():
+            pytest.skip("1856 scan not present in this checkout")
+        result = extract.extract(32, 12)["lines"][0]
+        assert result["anudatta_count"] == self.GROUND_TRUTH_LINE_12["anudatta"]
+        assert result["svarita_count"] == self.GROUND_TRUTH_LINE_12["svarita"]
+
+    def test_the_running_head_carries_no_accents(self) -> None:
+        """Line 0 of n32 is the running head, which this print does not accent."""
+        extract = _load("extract_atharvaveda_accents")
+        crop = _load("crop_atharvaveda_leaf")
+        if not crop.leaf_path(32).exists():
+            pytest.skip("1856 scan not present in this checkout")
+        result = extract.extract(32, 0)["lines"][0]
+        assert result["anudatta_count"] == 0
+        assert result["svarita_count"] == 0
 
 
 class TestLeafRendering:

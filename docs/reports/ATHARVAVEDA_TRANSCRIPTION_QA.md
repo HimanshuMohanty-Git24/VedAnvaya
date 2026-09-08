@@ -472,8 +472,63 @@ promising design is therefore:
 - reconcile the two independently.
 
 That converts the expensive part from a per-line model read into a per-leaf
-image operation. It is unproven and it is the natural next experiment, but it
-is the first route that is both accurate and affordable.
+image operation. It is the first route identified that is both accurate and
+affordable, and §5D is a first attempt at it.
+
+---
+
+## 5D. Geometric accent extraction — prototype
+
+`scripts/extract_atharvaveda_accents.py` implements the readers' own method in
+code: project rows, locate the śirorekhā, define the two accent bands relative
+to it, find connected ink blobs in each, and classify by shape.
+
+### What it gets right
+
+| Test | Result |
+|---|---|
+| Canvas n32 line 12, against the 3-reader ground truth | **7 anudātta, 3 svarita — exact match** |
+| Canvas n32 line 0 (the running head, which this print does not accent) | **0 and 0 — correct** |
+
+### Two bugs worth recording, because both were invisible from the output
+
+1. **The śirorekhā is about eighteen pixels thick, not one row.** Taking its
+   densest row as "the headline" left most of the rule inside the svarita
+   search band, so a flood fill escaped along the rule and swallowed every
+   svarita into a single line-long component, which the size filter then
+   discarded. The first version scored 7 of 7 anudātta and **0 of 3** svarita
+   and looked merely mediocre rather than broken.
+2. **The two marks have opposite shapes and cannot share a size rule.** An
+   anudātta is a broad flat dash (w 35–39, h 9–13, aspect ≈3.5); a svarita is a
+   narrow upright stroke (w 9–12, h 31–35, aspect ≈0.3). A single "small mark"
+   rule tuned on the dash rejects every svarita for being too tall. The two
+   profiles are now declared separately in `SHAPES`.
+
+### What is not established
+
+**Generalisation is unproven, and there is already evidence against it.**
+
+| Leaf | Extractor | Human band readings | Anudātta : svarita |
+|---|---:|---|---|
+| n32 | 164 | R1 199, B1 172, R2 115 | 104 : 60 |
+| n15 | 91 | R1 107, R2 78 | 53 : 38 |
+| **n430** | **111** | **B1 163** | **51 : 60** |
+
+Leaf n15 is plausible — the extractor lands between the two human readings.
+Leaf n430 is not: it is well under the only human reading of it, and its
+anudātta-to-svarita ratio *inverts* against every other sample, where anudātta
+is much the commoner mark. n430 is in kāṇḍa 20, which is set with heavy pāda
+abbreviation. The cause has not been identified.
+
+One hypothesis is excluded: the shape constants are absolute pixel values, so
+a change of scale between leaves would break them — but median line height is
+125, 117 and 118 px on n32, n15 and n430 respectively, so the print is uniform
+and scale is not the explanation.
+
+**The prototype is therefore validated on one line of one leaf and is not yet
+a method.** What it establishes is that the approach is worth pursuing, and
+what it needs is per-line ground truth on several leaves — including one in
+kāṇḍa 20 — before any of its output is trusted.
 
 ---
 
