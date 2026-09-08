@@ -1,0 +1,45 @@
+{
+  "artifact_id": "BSB.AV.SAUNAKA.ROTH_WHITNEY.1856.SCAN",
+  "prohibited_markers": [
+    "GRETIL",
+    "TITUS",
+    "VEDAWEB",
+    "ORLANDI",
+    "SACRED_TEXTS",
+    "SACRED-TEXTS",
+    "PAIPPALADA"
+  ],
+  "prohibited_corpora_on_disk": [
+    "data/raw/gretil_avs",
+    "data/raw/vedaweb_avs"
+  ],
+  "code_audit": {
+    "files_examined": 9,
+    "findings": []
+  },
+  "brief_audit": {
+    "brief_present": true,
+    "markers_named": [
+      "GRETIL",
+      "TITUS",
+      "VEDAWEB",
+      "ORLANDI"
+    ],
+    "clean": true
+  },
+  "record_audit": {
+    "records_examined": 0,
+    "findings": []
+  },
+  "text_overlap_audit": {
+    "prohibited_corpora_present": true,
+    "suspicious_run_length": 40,
+    "units_compared": 0,
+    "units_with_a_suspicious_run": 0,
+    "examples": [],
+    "interpretation": "This edition and the prohibited ones witness the same text, so short agreement is expected and is not contamination. A shared run of 40 aksaras with no intervening difference is longer than independent reading of a 1856 fount comfortably explains and is worth inspecting by hand; it is evidence, not a verdict."
+  },
+  "AV_PROHIBITED_SOURCE_CONTAMINATION": 0,
+  "verdict": "CLEAN",
+  "scope_note": "A reader recalling a prohibited edition from memory rather than opening it leaves no trace in code, paths or records. The text overlap check is the only instrument pointed at that failure, and it is a detector rather than a proof."
+}
