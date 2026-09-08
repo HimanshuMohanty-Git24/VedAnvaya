@@ -188,7 +188,10 @@ def build_passages(units: list[dict[str, Any]]) -> tuple[list[Passage], dict[tup
                     canonical_citation=f"AVS {kanda}.{sukta}",
                     parent_key=key,
                     sequence_in_parent=order,
-                    native_labels=["Sukta"],
+                    # native_labels names every level in `hierarchy`, in order -- it is
+                    # the ordering a dict cannot guarantee, not a label for this level
+                    # alone.
+                    native_labels=["Kanda", "Sukta"],
                     structural_path=[str(kanda), str(sukta)],
                     status=PassageStatus.CANONICAL,
                 )
@@ -208,8 +211,12 @@ def build_passages(units: list[dict[str, Any]]) -> tuple[list[Passage], dict[tup
                 "sukta": sukta,
                 "mantra": mantra,
             }
+            labels = ["Kanda", "Sukta", "Mantra"]
+            path = [str(kanda), str(sukta), str(mantra)]
             if row.get("paryaya") is not None:
                 hierarchy["paryaya"] = row["paryaya"]
+                labels.append("Paryaya")
+                path.append(str(row["paryaya"]))
             passages.append(
                 Passage(
                     entity_id=mentity,
@@ -221,8 +228,8 @@ def build_passages(units: list[dict[str, Any]]) -> tuple[list[Passage], dict[tup
                     canonical_citation=f"AVS {kanda}.{sukta}.{mantra}",
                     parent_key=parent_key,
                     sequence_in_parent=order,
-                    native_labels=["Mantra"],
-                    structural_path=[str(kanda), str(sukta), str(mantra)],
+                    native_labels=labels,
+                    structural_path=path,
                     status=PassageStatus.CANONICAL,
                 )
             )
