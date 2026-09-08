@@ -118,12 +118,24 @@ failure this whole process exists to prevent.
 ## Permitted
 
 - Viewing your packet images with the Read tool.
-- Re-cropping the **same** leaf yourself for more magnification:
-  `python scripts/av_reader_packet.py <canvas> <your_own_outdir> --mode lines`
-  or `python scripts/crop_atharvaveda_line.py <canvas> <outdir> --line N --segments 2`.
-  Remember this adds no information beyond native resolution; it only makes the
-  type appear larger.
 - Measuring the image with PIL.
+- Re-cropping the **same** leaf for more magnification, **for at most three
+  individual lines you could not otherwise resolve**:
+  `python scripts/crop_atharvaveda_line.py <canvas> <outdir> --line N --segments 2`
+
+  Do **not** render a whole leaf line by line. Your `halves` images are already
+  at the resolution of the real IIIF master, which is the information ceiling
+  for this scan: a line crop only makes the type appear larger, it adds no
+  detail. Rendering and reading forty line crops has stalled readers outright
+  and is the single most common way this task fails. Read the halves, and reach
+  for a line crop only where a specific aksara defeats you.
+
+## Write as you go
+
+Write each leaf's JSONL file **as soon as you finish that leaf**, before
+starting the next one. Do not hold all your readings until the end. Readers on
+this task have been lost to network failures after an hour of work, and a leaf
+written to disk survives that while a leaf held in context does not.
 
 ## Deliverable
 
