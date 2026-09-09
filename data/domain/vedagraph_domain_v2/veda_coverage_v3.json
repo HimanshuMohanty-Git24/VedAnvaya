@@ -1,0 +1,385 @@
+{
+ "derived_metrics": {
+  "ANIMAL_MENTION_DISTRIBUTION": 46,
+  "ATTRIBUTION_PRECISION_BY_VEDA": 10,
+  "CONDITION_TREATMENT_DISTRIBUTION": 23,
+  "CROP_MENTION_DISTRIBUTION": 10,
+  "DEVATA_ACTION_DISTRIBUTION": 441,
+  "DEVATA_RELATIVE_FREQUENCY_BY_VEDA": 153,
+  "DEVATA_REQUESTED_ACTION_DISTRIBUTION": 224,
+  "EVIDENCE_BASIS_BY_VEDA": 15,
+  "HUMAN_CONCERN_DISTRIBUTION": 20,
+  "METAL_MENTION_DISTRIBUTION": 11,
+  "RITUAL_ENTITY_DENSITY": 31,
+  "THEONYM_CERTAINTY_BY_VEDA": 8
+ },
+ "dimensions": [
+  "devata_attribution",
+  "devata_ascription_index",
+  "rishi_attribution",
+  "chandas_attribution",
+  "theonym_mention",
+  "entity_mention",
+  "concept_salience",
+  "formula",
+  "cross_veda_reuse",
+  "agentive_assertion",
+  "model_semantic_assertion",
+  "human_concern",
+  "translation"
+ ],
+ "vedas": {
+  "AV": {
+   "coverage_score": 51.6,
+   "dimensions": {
+    "agentive_assertion": {
+     "covered_mantras": 0,
+     "reason": "Derived from a morphological annotation that covers the Rigveda only.",
+     "share": 0.0,
+     "status": "ABSENT_FROM_SOURCE"
+    },
+    "chandas_attribution": {
+     "covered_mantras": 4075,
+     "reason": "",
+     "share": 0.6979,
+     "status": "PRESENT"
+    },
+    "concept_salience": {
+     "covered_mantras": 3820,
+     "reason": "",
+     "share": 0.6542,
+     "status": "PRESENT"
+    },
+    "cross_veda_reuse": {
+     "covered_mantras": 1332,
+     "reason": "",
+     "share": 0.2281,
+     "status": "PRESENT"
+    },
+    "devata_ascription_index": {
+     "covered_mantras": 4163,
+     "reason": "",
+     "share": 0.713,
+     "status": "PRESENT"
+    },
+    "devata_attribution": {
+     "covered_mantras": 0,
+     "reason": "Whitney's Brhatsarvanukramani excerpts ascribe an adjectival DESCRIPTOR, not a deity name -- `agneyam` is 'belonging to Agni'. The Atharvaveda's index-based deity layer is real and is carried by HAS_DEVATA_ASCRIPTION, measured as its own dimension. A zero here means the source names no deities, not that the graph lost any.",
+     "share": 0.0,
+     "status": "ABSENT_FROM_SOURCE"
+    },
+    "entity_mention": {
+     "covered_mantras": 4291,
+     "reason": "",
+     "share": 0.7349,
+     "status": "PRESENT"
+    },
+    "formula": {
+     "covered_mantras": 2946,
+     "reason": "",
+     "share": 0.5045,
+     "status": "PRESENT"
+    },
+    "human_concern": {
+     "covered_mantras": 734,
+     "reason": "",
+     "share": 0.1257,
+     "status": "PRESENT"
+    },
+    "model_semantic_assertion": {
+     "covered_mantras": 144,
+     "reason": "",
+     "share": 0.0247,
+     "status": "PRESENT"
+    },
+    "rishi_attribution": {
+     "covered_mantras": 4542,
+     "reason": "",
+     "share": 0.7779,
+     "status": "PRESENT"
+    },
+    "theonym_mention": {
+     "covered_mantras": 2216,
+     "reason": "",
+     "share": 0.3795,
+     "status": "PRESENT"
+    },
+    "translation": {
+     "covered_mantras": 4878,
+     "reason": "",
+     "share": 0.8354,
+     "status": "PRESENT"
+    }
+   },
+   "dimensions_absent_from_graph": [],
+   "dimensions_absent_from_source": 2,
+   "dimensions_scored": 11,
+   "mantras": 5839,
+   "work_id": "VG:WORK:AV:SAU"
+  },
+  "RV": {
+   "coverage_score": 60.3,
+   "dimensions": {
+    "agentive_assertion": {
+     "covered_mantras": 2228,
+     "reason": "",
+     "share": 0.2111,
+     "status": "PRESENT"
+    },
+    "chandas_attribution": {
+     "covered_mantras": 10518,
+     "reason": "",
+     "share": 0.9968,
+     "status": "PRESENT"
+    },
+    "concept_salience": {
+     "covered_mantras": 8226,
+     "reason": "",
+     "share": 0.7796,
+     "status": "PRESENT"
+    },
+    "cross_veda_reuse": {
+     "covered_mantras": 2814,
+     "reason": "",
+     "share": 0.2667,
+     "status": "PRESENT"
+    },
+    "devata_ascription_index": {
+     "covered_mantras": 0,
+     "reason": "The Anukramani names deities directly; no descriptor layer exists.",
+     "share": 0.0,
+     "status": "ABSENT_FROM_SOURCE"
+    },
+    "devata_attribution": {
+     "covered_mantras": 10552,
+     "reason": "",
+     "share": 1.0,
+     "status": "PRESENT"
+    },
+    "entity_mention": {
+     "covered_mantras": 8141,
+     "reason": "",
+     "share": 0.7715,
+     "status": "PRESENT"
+    },
+    "formula": {
+     "covered_mantras": 5103,
+     "reason": "",
+     "share": 0.4836,
+     "status": "PRESENT"
+    },
+    "human_concern": {
+     "covered_mantras": 207,
+     "reason": "",
+     "share": 0.0196,
+     "status": "PRESENT"
+    },
+    "model_semantic_assertion": {
+     "covered_mantras": 398,
+     "reason": "",
+     "share": 0.0377,
+     "status": "PRESENT"
+    },
+    "rishi_attribution": {
+     "covered_mantras": 10534,
+     "reason": "",
+     "share": 0.9983,
+     "status": "PRESENT"
+    },
+    "theonym_mention": {
+     "covered_mantras": 7099,
+     "reason": "",
+     "share": 0.6728,
+     "status": "PRESENT"
+    },
+    "translation": {
+     "covered_mantras": 10502,
+     "reason": "",
+     "share": 0.9953,
+     "status": "PRESENT"
+    }
+   },
+   "dimensions_absent_from_graph": [],
+   "dimensions_absent_from_source": 1,
+   "dimensions_scored": 12,
+   "mantras": 10552,
+   "work_id": "VG:WORK:RV:SAK"
+  },
+  "SV": {
+   "coverage_score": 60.3,
+   "dimensions": {
+    "agentive_assertion": {
+     "covered_mantras": 0,
+     "reason": "Derived from a morphological annotation that covers the Rigveda only.",
+     "share": 0.0,
+     "status": "ABSENT_FROM_SOURCE"
+    },
+    "chandas_attribution": {
+     "covered_mantras": 0,
+     "reason": "The Samaveda's identity is melody rather than metre; a borrowed metre would misdescribe the one Veda whose form is not metrical.",
+     "share": 0.0,
+     "status": "ABSENT_FROM_SOURCE"
+    },
+    "concept_salience": {
+     "covered_mantras": 1322,
+     "reason": "",
+     "share": 0.7169,
+     "status": "PRESENT"
+    },
+    "cross_veda_reuse": {
+     "covered_mantras": 1677,
+     "reason": "",
+     "share": 0.9094,
+     "status": "PRESENT"
+    },
+    "devata_ascription_index": {
+     "covered_mantras": 0,
+     "reason": "No attribution index reaches this corpus.",
+     "share": 0.0,
+     "status": "ABSENT_FROM_SOURCE"
+    },
+    "devata_attribution": {
+     "covered_mantras": 0,
+     "reason": "The Kauthuma school's Devatadhyaya Brahmana is keyed to samans in the gana collections, which this corpus does not contain: the join key exists for 7.7% of verses.",
+     "share": 0.0,
+     "status": "ABSENT_FROM_SOURCE"
+    },
+    "entity_mention": {
+     "covered_mantras": 1306,
+     "reason": "",
+     "share": 0.7082,
+     "status": "PRESENT"
+    },
+    "formula": {
+     "covered_mantras": 1311,
+     "reason": "",
+     "share": 0.711,
+     "status": "PRESENT"
+    },
+    "human_concern": {
+     "covered_mantras": 20,
+     "reason": "",
+     "share": 0.0108,
+     "status": "PRESENT"
+    },
+    "model_semantic_assertion": {
+     "covered_mantras": 0,
+     "reason": "No semantic extraction run has covered the Samaveda. It is also the one Veda with no translation at all, which is what every run so far has anchored its evidence to.",
+     "share": 0.0,
+     "status": "ABSENT_FROM_SOURCE"
+    },
+    "rishi_attribution": {
+     "covered_mantras": 0,
+     "reason": "The Arseya Brahmana is keyed to samans in the gana collections, absent from this corpus.",
+     "share": 0.0,
+     "status": "ABSENT_FROM_SOURCE"
+    },
+    "theonym_mention": {
+     "covered_mantras": 1035,
+     "reason": "",
+     "share": 0.5613,
+     "status": "PRESENT"
+    },
+    "translation": {
+     "covered_mantras": 0,
+     "reason": "No complete translation of the Kauthuma arcika is ingested; the only one located is Ranayaniya and does not align.",
+     "share": 0.0,
+     "status": "ABSENT_FROM_SOURCE"
+    }
+   },
+   "dimensions_absent_from_graph": [],
+   "dimensions_absent_from_source": 7,
+   "dimensions_scored": 6,
+   "mantras": 1844,
+   "work_id": "VG:WORK:SV:KAU"
+  },
+  "YV": {
+   "coverage_score": 54.9,
+   "dimensions": {
+    "agentive_assertion": {
+     "covered_mantras": 0,
+     "reason": "Derived from a morphological annotation that covers the Rigveda only.",
+     "share": 0.0,
+     "status": "ABSENT_FROM_SOURCE"
+    },
+    "chandas_attribution": {
+     "covered_mantras": 0,
+     "reason": "No metre index is machine-resolvable; the absence is source-stated.",
+     "share": 0.0,
+     "status": "ABSENT_FROM_SOURCE"
+    },
+    "concept_salience": {
+     "covered_mantras": 1282,
+     "reason": "",
+     "share": 0.6491,
+     "status": "PRESENT"
+    },
+    "cross_veda_reuse": {
+     "covered_mantras": 687,
+     "reason": "",
+     "share": 0.3478,
+     "status": "PRESENT"
+    },
+    "devata_ascription_index": {
+     "covered_mantras": 0,
+     "reason": "No devata index is machine-resolvable.",
+     "share": 0.0,
+     "status": "ABSENT_FROM_SOURCE"
+    },
+    "devata_attribution": {
+     "covered_mantras": 0,
+     "reason": "The Madhyandina Sarvanukramana-sutra is pratika-keyed sutra prose. Machine resolution is refused, not deferred, so the Yajurveda keeps a source-stated absence of devata rather than a borrowed presence.",
+     "share": 0.0,
+     "status": "ABSENT_FROM_SOURCE"
+    },
+    "entity_mention": {
+     "covered_mantras": 1358,
+     "reason": "",
+     "share": 0.6876,
+     "status": "PRESENT"
+    },
+    "formula": {
+     "covered_mantras": 1214,
+     "reason": "",
+     "share": 0.6147,
+     "status": "PRESENT"
+    },
+    "human_concern": {
+     "covered_mantras": 57,
+     "reason": "",
+     "share": 0.0289,
+     "status": "PRESENT"
+    },
+    "model_semantic_assertion": {
+     "covered_mantras": 191,
+     "reason": "",
+     "share": 0.0967,
+     "status": "PRESENT"
+    },
+    "rishi_attribution": {
+     "covered_mantras": 1960,
+     "reason": "",
+     "share": 0.9924,
+     "status": "PRESENT"
+    },
+    "theonym_mention": {
+     "covered_mantras": 1102,
+     "reason": "",
+     "share": 0.558,
+     "status": "PRESENT"
+    },
+    "translation": {
+     "covered_mantras": 1903,
+     "reason": "",
+     "share": 0.9635,
+     "status": "PRESENT"
+    }
+   },
+   "dimensions_absent_from_graph": [],
+   "dimensions_absent_from_source": 4,
+   "dimensions_scored": 9,
+   "mantras": 1975,
+   "work_id": "VG:WORK:YV:VSM"
+  }
+ }
+}

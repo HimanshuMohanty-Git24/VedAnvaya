@@ -23,6 +23,34 @@ ambiguous_aliases:
     the boundary between OJAS-MIGHT and VAJA-PRIZE. Retained here rather than assigned, because assigning
     it would put ~750 Rigvedic passages on one side of a distinction the translation does not make.
 concepts:
+- concept_id: VG:CONCEPT:ABHICARA-SORCEROUS-ATTACK
+  preferred_label_sa: abhicāra
+  preferred_label_en: sorcerous attack
+  node_type: CONDITION
+  definition: Sorcery directed at a person, named in the two Atharvavedic verses where the apāmārga plant
+    spoils it and the varaṇá tree shields against it.
+  aliases_sa:
+  - abhicāriṇaḥ
+  - abhicārād
+  aliases_en: []
+  broader: []
+  related_devatas: []
+- concept_id: VG:CONCEPT:ABHISASTI-CALUMNY
+  preferred_label_sa: abhiśasti
+  preferred_label_en: imprecation
+  node_type: CONDITION
+  definition: 'Imprecation and calumny, and the epithet abhiśastipā́ "protector against imprecation" that
+    names it. Unlike the rest of this group it is not Atharvavedic property: 10 of its 18 token occurrences
+    are Rigvedic or Yajurvedic.'
+  aliases_sa:
+  - abhiśaster
+  - abhiśastim
+  - abhiśastiṃ
+  - abhiśastyā
+  - abhiśastipā
+  aliases_en: []
+  broader: []
+  related_devatas: []
 - concept_id: VG:CONCEPT:ADHVAN-PATH
   preferred_label_sa: adhvan
   preferred_label_en: path
@@ -62,6 +90,24 @@ concepts:
   broader:
   - VG:CONCEPT:HOTR-PRIEST
   related_devatas: []
+- concept_id: VG:CONCEPT:AGNI-CITI-FIRE-PILING
+  preferred_label_sa: citi
+  preferred_label_en: fire altar piling
+  node_type: RITUAL
+  definition: 'The piling up of Agni out of bricks, named by the Samhita as an act and not by a rite-name:
+    Agni is addressed as `cīyamānaḥ`, "while thou art being piled" (VS 13.41, VS 13.47), the sacrificer
+    as `cinvānaḥ`, "piling" (VS 13.47 and four parallels), and the bricks are addressed as bricks and
+    called milch-cows at VS 17.2. The name `agnicayana` is absent from all four Samhitas and is not used
+    here. `cinvānas` is read evidence but not an alias: it occurs only across a token boundary (`cinvānas
+    tanvo`), and SANDHI_MATCH_VEDAS restricts the production substring pass to the Samaveda, so the string
+    would fire nowhere.'
+  aliases_sa:
+  - cīyamānaḥ
+  aliases_en: []
+  broader:
+  - VG:CONCEPT:YAJNA-SACRIFICE
+  related_devatas:
+  - VG:DEVATA:AGNIH
 - concept_id: VG:CONCEPT:AGNI-FIRE
   preferred_label_sa: agni
   preferred_label_en: fire
@@ -73,8 +119,6 @@ concepts:
   - agnir
   - agnim
   - agniṃ
-  - agne
-  - agna
   - agniṣ
   - agnaye
   - agnayaḥ
@@ -82,9 +126,6 @@ concepts:
   - agninā
   - agnibhiḥ
   - agnī
-  - jātavedaḥ
-  - jātavedasam
-  - jātavedase
   - arciṣā
   - arcayaḥ
   - śociṣā
@@ -104,6 +145,21 @@ concepts:
   - VG:DEVATA:PAVAMANO-AGNIH
   - VG:DEVATA:RAKSOHAGNIH
   - VG:DEVATA:AGNERATMA
+- concept_id: VG:CONCEPT:AGNIDH-FIRE-KINDLER
+  preferred_label_sa: agnīdh
+  preferred_label_en: fire kindler
+  node_type: RITUAL_ROLE
+  definition: 'The officiant who kindles the fire. Two attestations, in two Vedas, and both were read:
+    RV 2.1.2 and RV 10.91.10, where Agni is told "tvam agnid ṛtāyataḥ" (Griffith''s "Kindler for the pious
+    man"), and VS 7.15, where the kindler is addressed in the vocative at the close of the offering formula,
+    `yāḍ agnīt`. The stems `agnīdh` and `agnīdhraḥ` match nothing anywhere in the corpus.'
+  aliases_sa:
+  - agnid
+  - yāḍagnīt
+  aliases_en: []
+  broader:
+  - VG:CONCEPT:HOTR-PRIEST
+  related_devatas: []
 - concept_id: VG:CONCEPT:AGNIHOTRA
   preferred_label_sa: agnihotra
   preferred_label_en: fire oblation
@@ -172,6 +228,39 @@ concepts:
   broader:
   - VG:CONCEPT:PASU-LIVESTOCK
   related_devatas: []
+- concept_id: VG:CONCEPT:AJASRNGI-PLANT
+  preferred_label_sa: ajaśṛṅgī
+  preferred_label_en: ajashringi
+  node_type: PLANT
+  definition: The goat-horned plant, also called arāṭakī́, whose smell is said to expel the Apsarases
+    and Gandharvas in AVS 4.37.
+  aliases_sa:
+  - ajaśṛṅgy
+  aliases_en: []
+  broader:
+  - VG:CONCEPT:OSADHI-PLANTS
+  related_devatas:
+  - VG:DEVATA:OSADHAYAH
+- concept_id: VG:CONCEPT:AMIVA-AFFLICTION
+  preferred_label_sa: amīvā
+  preferred_label_en: affliction
+  node_type: CONDITION
+  definition: 'Amīvā: sickness in general, the affliction a god is asked to smite or expel rather than
+    a named complaint. The one member of this group that is a four-Veda word -- Soma, Brahmaṇaspati and
+    Vāstoṣpati are each called amīvahán, "slayer of amīvā".'
+  aliases_sa:
+  - amīvā
+  - amīvāḥ
+  - amīvāṃ
+  - amīvāś
+  - amīvahā
+  - amīvacātanīḥ
+  - amīvacātanaḥ
+  - amīvacātanam
+  - amīvacātanaṃ
+  aliases_en: []
+  broader: []
+  related_devatas: []
 - concept_id: VG:CONCEPT:AMRTA-IMMORTALITY
   preferred_label_sa: amṛta
   preferred_label_en: immortality
@@ -194,6 +283,42 @@ concepts:
   - immortal
   - immortality
   - immortals
+  broader: []
+  related_devatas: []
+- concept_id: VG:CONCEPT:ANGABHEDA-LIMB-SPLITTING
+  preferred_label_sa: aṅgabheda
+  preferred_label_en: limb-splitting
+  node_type: CONDITION
+  definition: The limb-splitter, paired in both its occurrences with the limb-waster and with heart-ache,
+    in the two charms that expel head-disease by incantation.
+  aliases_sa:
+  - aṅgabhedo
+  - aṅgabhedam
+  aliases_en: []
+  broader:
+  - VG:CONCEPT:YAKSMA-DISEASE
+  related_devatas: []
+- concept_id: VG:CONCEPT:ANJANA-OINTMENT
+  preferred_label_sa: āñjana
+  preferred_label_en: ointment
+  node_type: SUBSTANCE
+  definition: 'The āñjana, the salve of the three-peaked mountain: addressed in the second person in AVS
+    4.9 and 19.44-45 as a protection that grinds up demons and sorceresses, told that fever, balāsa and
+    the snake are its three slaves, and rubbed on by wives at a funeral. Its two names, traikakudá "of
+    the three-peaked mountain" and "of the Yamunā", are folded in here because AVS 4.9.10 says they are
+    both its names.'
+  aliases_sa:
+  - āñjana
+  - āñjanaṃ
+  - āñjanam
+  - āñjanena
+  - āñjanasya
+  - traikakudam
+  - traikakudaṃ
+  - traikakuda
+  aliases_en:
+  - ointment
+  - salve
   broader: []
   related_devatas: []
 - concept_id: VG:CONCEPT:ANNA-FOOD
@@ -260,6 +385,8 @@ concepts:
   - udnaḥ
   - salilam
   - salile
+  - āpaḥ
+  - āpo
   aliases_en:
   - waters
   - water
@@ -267,6 +394,23 @@ concepts:
   related_devatas:
   - VG:DEVATA:APAH
   - VG:DEVATA:APAM-NAPAT
+- concept_id: VG:CONCEPT:APACIT-SWELLINGS
+  preferred_label_sa: apacit
+  preferred_label_en: apacit swellings
+  node_type: CONDITION
+  definition: 'The apacíts: swellings counted off in fives, sevens and nines over the nape, neck, shoulders
+    and sides, and told to fly away like a bird from its nest. Left untranslated beyond "swellings" because
+    the corpus gives their sites and their colours and not their nature.'
+  aliases_sa:
+  - apacitām
+  - apacitaḥ
+  - apacit
+  - apacitāṃ
+  - apacito
+  aliases_en: []
+  broader:
+  - VG:CONCEPT:YAKSMA-DISEASE
+  related_devatas: []
 - concept_id: VG:CONCEPT:APAMARGA-PLANT
   preferred_label_sa: apāmārga
   preferred_label_en: apamarga
@@ -280,6 +424,23 @@ concepts:
   - VG:CONCEPT:OSADHI-PLANTS
   related_devatas:
   - VG:DEVATA:OSADHAYAH
+- concept_id: VG:CONCEPT:ARAYA-MALIGNANT-SPRITE
+  preferred_label_sa: arāya
+  preferred_label_en: malignant sprite
+  node_type: CONDITION
+  definition: 'The arāyá: a noxious sprite blamed for wasting a person and for attacks on a woman, smitten
+    away by a herb or an amulet. Whitney renders it variously "niggard", "sorceress" and "wizard (? arā́ya-)",
+    which is recorded here because the inconsistency is his and not this file''s.'
+  aliases_sa:
+  - arāyyaḥ
+  - arāyān
+  - arāyam
+  - arāyebhyo
+  - arāyakṣayaṇam
+  - arāyacātanaṃ
+  aliases_en: []
+  broader: []
+  related_devatas: []
 - concept_id: VG:CONCEPT:ARUNDHATI-PLANT
   preferred_label_sa: arundhatī
   preferred_label_en: arundhati
@@ -295,6 +456,24 @@ concepts:
   - VG:CONCEPT:OSADHI-PLANTS
   related_devatas:
   - VG:DEVATA:OSADHAYAH
+- concept_id: VG:CONCEPT:ASAT-NONEXISTENCE
+  preferred_label_sa: asat
+  preferred_label_en: non-existence
+  node_type: PHILOSOPHICAL_CONCEPT
+  definition: 'Non-existence: the asat of "there was neither non-existence nor existence then" (RV 10.129.1).
+    Unlike sat it is already a noun in its own right -- the Rigvedic annotation lemmatises it asant-,
+    separately from the root -- and existence is twice said to have sprung from it (RV 10.72.2-3). In
+    the Atharvaveda it is one pole of a paired cosmological formula (AVS 4.1.1, 10.7.10, 17.1.19). Not
+    filed under VG:CONCEPT:SAT-EXISTENCE: non-existence is not a kind of existence.'
+  aliases_sa:
+  - nāsad
+  - asac
+  - asati
+  aliases_en:
+  - non-existent
+  - non-existence
+  broader: []
+  related_devatas: []
 - concept_id: VG:CONCEPT:ASMAN-PRESSING-STONE
   preferred_label_sa: grāvan
   preferred_label_en: stone
@@ -365,6 +544,39 @@ concepts:
   - VG:DEVATA:ASHVAH
   - VG:DEVATA:ASHVAAH
   - VG:DEVATA:VAJINAH
+- concept_id: VG:CONCEPT:ASVAMEDHA-HORSE-SACRIFICE
+  preferred_label_sa: aśvamedha
+  preferred_label_en: horse sacrifice
+  node_type: RITUAL
+  definition: 'The immolation of the horse, whose formulary is VS 22-25: the horse addressed by every
+    one of its names and consecrated "for the sacrifice" (VS 22.19), told to prepare its own body (VS
+    23.15), and finally apportioned part by part (VS 25.1, VS 25.41). The compound itself occurs once,
+    at VS 18.22, where elision of the initial a- spells it `''śvamedhaś ca me` and is why an earlier pass
+    recorded it as absent.'
+  aliases_sa:
+  - śvamedhaśca
+  aliases_en: []
+  broader:
+  - VG:CONCEPT:YAJNA-SACRIFICE
+  related_devatas: []
+- concept_id: VG:CONCEPT:ASVATTHA-TREE
+  preferred_label_sa: aśvattha
+  preferred_label_en: ashvattha
+  node_type: PLANT
+  definition: 'The aśvatthá, the holy fig: born out of the khadira and told to crush the speaker''s foes
+    in AVS 3.6 and 8.8, named as the seat of the gods in the third heaven where they won the kuṣṭha, and
+    the home of the herbs at RV 10.97.5.'
+  aliases_sa:
+  - aśvattha
+  - aśvattho
+  - aśvatthāt
+  - aśvattham
+  - aśvatthe
+  aliases_en: []
+  broader:
+  - VG:CONCEPT:VANASPATI-TREE
+  related_devatas:
+  - VG:DEVATA:VANASPATIH
 - concept_id: VG:CONCEPT:ATMAN-SELF
   preferred_label_sa: ātman
   preferred_label_en: self
@@ -383,6 +595,36 @@ concepts:
   broader: []
   related_devatas:
   - VG:DEVATA:ATMA
+- concept_id: VG:CONCEPT:AUDUMBARA-AMULET
+  preferred_label_sa: audumbara
+  preferred_label_en: udumbara amulet
+  node_type: OBJECT
+  definition: The amulet of udumbara wood, worn in AVS 19.31 for prosperity, cattle and fatness in the
+    cow-stall, and addressed as prosperity itself. All seven occurrences are in that one hymn.
+  aliases_sa:
+  - audumbaro
+  - audumbareṇa
+  - audumbarasya
+  - audumbaraṃ
+  - audumbaraḥ
+  aliases_en: []
+  broader:
+  - VG:CONCEPT:MANI-AMULET
+  related_devatas: []
+- concept_id: VG:CONCEPT:AVABHRTHA-CONCLUDING-BATH
+  preferred_label_sa: avabhṛtha
+  preferred_label_en: concluding bath
+  node_type: ACTION
+  definition: 'The bath that ends a soma rite, addressed in the vocative as a power in its own right:
+    "avabhṛtha nicumpuṇa ... with the Gods may I wash out the sin that I have sinned against the Gods,
+    with men the sin against mankind" (VS 3.48, VS 8.27, VS 20.18). Its place in the rite is stated rather
+    than inferred: VS 19.28 closes its chain of means with "sāmnāvabhṛtha āpyate", by the Saman the concluding
+    bath is reached.'
+  aliases_sa:
+  - avabhṛtha
+  aliases_en: []
+  broader: []
+  related_devatas: []
 - concept_id: VG:CONCEPT:AVAS-HELP
   preferred_label_sa: avas
   preferred_label_en: help
@@ -448,7 +690,7 @@ concepts:
 - concept_id: VG:CONCEPT:AYUDHA-WEAPON
   preferred_label_sa: āyudha
   preferred_label_en: weapon
-  node_type: OBJECT
+  node_type: WEAPON
   definition: 'Weapons generally: bow, arrow and the gear a warrior or a god is armed with.'
   aliases_sa:
   - āyudhā
@@ -534,6 +776,20 @@ concepts:
   broader: []
   related_devatas:
   - VG:DEVATA:BARHIH
+- concept_id: VG:CONCEPT:BHANGA-HEMP
+  preferred_label_sa: bhaṅga
+  preferred_label_en: hemp
+  node_type: PLANT
+  definition: Hemp, named once, in the list of the five kingdoms of plants at AVS 11.6.15 -- darbhá, hemp,
+    barley and sáha -- asked together to free the speaker from distress. One occurrence, and the reason
+    the bare stem is not an alias is that bhaṅg- is otherwise the root "to break".
+  aliases_sa:
+  - bhaṅgo
+  aliases_en: []
+  broader:
+  - VG:CONCEPT:OSADHI-PLANTS
+  related_devatas:
+  - VG:DEVATA:OSADHAYAH
 - concept_id: VG:CONCEPT:BHARATA-TRIBE
   preferred_label_sa: bharata
   preferred_label_en: Bharatas
@@ -776,6 +1032,37 @@ concepts:
   aliases_en: []
   broader: []
   related_devatas: []
+- concept_id: VG:CONCEPT:DIRGHAYUTVA-LONG-LIFE
+  preferred_label_sa: dīrghāyutva
+  preferred_label_en: length of life
+  node_type: HUMAN_CONCERN
+  definition: 'Length of life, as the stated purpose of an act: the dative dīrghāyutvā́ya, "in order to
+    length of life", is what an amulet is bound on for, what a patient is enclosed in red colours for,
+    and what a husband is wished. That dative accounts for 15 of the entity''s 20 token occurrences, and
+    14 of those 15 are Atharvavedic.'
+  aliases_sa:
+  - dīrghāyutvāya
+  - dīrghāyur
+  - dīrghāyutvam
+  aliases_en: []
+  broader:
+  - VG:CONCEPT:AYUS-LIFE
+  related_devatas: []
+- concept_id: VG:CONCEPT:DRONAKALASA-WOODEN-TUB
+  preferred_label_sa: droṇakalaśa
+  preferred_label_en: wooden soma tub
+  node_type: OBJECT
+  definition: 'The trough-shaped wooden vessel the pressed soma is collected in. Named in the apparatus
+    inventory at VS 18.21, gained by the Vayu cups at VS 19.27, and listed with the kettles and the drinking-vessels
+    at AVS 9.6.17. The VS 18.21 attestation is read evidence but not an alias: there the word sits inside
+    `droṇakalaśaśca`, reachable only by the substring pass, which production runs on the Samaveda alone.'
+  aliases_sa:
+  - droṇakalaśam
+  - droṇakalaśāḥ
+  aliases_en: []
+  broader:
+  - VG:CONCEPT:KALASA-JAR
+  related_devatas: []
 - concept_id: VG:CONCEPT:DUNDUBHI-DRUM
   preferred_label_sa: dundubhi
   preferred_label_en: drum
@@ -791,6 +1078,21 @@ concepts:
   broader: []
   related_devatas:
   - VG:DEVATA:DUNDUBHIH
+- concept_id: VG:CONCEPT:DURHARD-MALEVOLENT
+  preferred_label_sa: durhārd
+  preferred_label_en: the malevolent
+  node_type: CONDITION
+  definition: 'The evil-hearted: the hostile person as the Atharvaveda''s charms treat him -- an affliction
+    to be warded off, burnt against by darbha grass, gored by Agni''s horns, and kept from a bride. All
+    26 token occurrences are Atharvavedic.'
+  aliases_sa:
+  - durhārdo
+  - durhārdaḥ
+  - durhārdaś
+  - durhārdam
+  aliases_en: []
+  broader: []
+  related_devatas: []
 - concept_id: VG:CONCEPT:DURNAMAN-ILL-NAMED-BEINGS
   preferred_label_sa: durṇāman
   preferred_label_en: ill-named beings
@@ -975,6 +1277,38 @@ concepts:
   related_devatas:
   - VG:DEVATA:GAVAH
   - VG:DEVATA:GAUH
+- concept_id: VG:CONCEPT:GRAHA-SOMA-DRAWING
+  preferred_label_sa: graha
+  preferred_label_en: soma cup drawing
+  node_type: RITUAL
+  definition: 'The drawing and dedication of the soma draughts, cup by cup and deity by deity: the act
+    the Vajasaneyi Samhita''s seventh and eighth adhyayas are the formulary for, whose spoken words are
+    "upayāmagṛhīto ''si" -- thou art taken with a support -- fifty-one times, all of them Yajurvedic.
+    Distinct from the pressing, which is VG:CONCEPT:SOMA-PRESSING: VS 18.21 inventories the pressing gear
+    and VS 18.19-20 inventories the twenty-four drawn cups, and the corpus keeps the two lists apart.'
+  aliases_sa:
+  - upayāmagṛhīto
+  - grahā
+  - grahaiḥ
+  - grahān
+  aliases_en: []
+  broader:
+  - VG:CONCEPT:SOMA-PRESSING
+  related_devatas: []
+- concept_id: VG:CONCEPT:GRAHANA-RITUAL-TAKING-UP
+  preferred_label_sa: grahaṇa
+  preferred_label_en: ritual taking up
+  node_type: ACTION
+  definition: 'The act of taking an implement or an offering in hand, spoken in the first person while
+    it is done: "gṛhṇāmi", I take. Twenty passages, twelve Yajurvedic, eight Atharvavedic and not one
+    Rigvedic, which is what a formulary looks like measured against a hymn collection. The full formula
+    is at VS 1.10 -- "by the impulse of god Savitar, with the arms of the Asvins, with the hands of Pusan,
+    acceptable to Agni, I take thee".'
+  aliases_sa:
+  - gṛhṇāmi
+  aliases_en: []
+  broader: []
+  related_devatas: []
 - concept_id: VG:CONCEPT:GRAHI-SEIZURE
   preferred_label_sa: grāhi
   preferred_label_en: seizure
@@ -1090,6 +1424,20 @@ concepts:
   - golden
   broader: []
   related_devatas: []
+- concept_id: VG:CONCEPT:HOMA-POURING-INTO-FIRE
+  preferred_label_sa: homa
+  preferred_label_en: pouring into the fire
+  node_type: ACTION
+  definition: 'The pouring of the oblation into the fire, spoken as it is done: "juhomi", I pour (28 passages),
+    and "juhota", pour ye (11). VS 7.26 puts the act, the caller''s cry and the strainer in one line:
+    "whatever drop of thine leaps forth, from the adhvaryu''s hand or from the filter, that I pour with
+    my mind, made with the vasat-call, svaha".'
+  aliases_sa:
+  - juhomi
+  - juhota
+  aliases_en: []
+  broader: []
+  related_devatas: []
 - concept_id: VG:CONCEPT:HOTR-PRIEST
   preferred_label_sa: hotṛ
   preferred_label_en: priest
@@ -1134,6 +1482,33 @@ concepts:
   - hearts
   broader: []
   related_devatas: []
+- concept_id: VG:CONCEPT:HRDDYOTA-HEART-BURN
+  preferred_label_sa: hṛddyota
+  preferred_label_en: heart-burn
+  node_type: CONDITION
+  definition: Burning of the heart, sent up to the sun together with yellowness in the jaundice hymn,
+    and the thing the heavenly waters are asked for a remedy for at AVS 6.24.
+  aliases_sa:
+  - hṛddyoto
+  - hṛddyotabheṣajam
+  aliases_en: []
+  broader:
+  - VG:CONCEPT:YAKSMA-DISEASE
+  related_devatas:
+  - VG:DEVATA:APAH
+- concept_id: VG:CONCEPT:ISTAKA-BRICK
+  preferred_label_sa: iṣṭakā
+  preferred_label_en: ritual brick
+  node_type: OBJECT
+  definition: 'The brick the fire is piled out of, addressed directly and only in the Yajurveda: "imā
+    me agna iṣṭakā dhenavaḥ santu", let these bricks of mine, Agni, be milch-cows (VS 17.2). Token-matched
+    once and read once; its four substring hits are 40% intrusions and are not relied on.'
+  aliases_sa:
+  - iṣṭakā
+  aliases_en: []
+  broader: []
+  related_devatas:
+  - VG:DEVATA:AGNIH
 - concept_id: VG:CONCEPT:JANA-PEOPLE
   preferred_label_sa: jana
   preferred_label_en: people
@@ -1217,6 +1592,22 @@ concepts:
   - VG:DEVATA:VISVAKARMA
   - VG:DEVATA:PURUSAH
   - VG:DEVATA:KAH
+- concept_id: VG:CONCEPT:JAYANYA-DISEASE
+  preferred_label_sa: jāyānya
+  preferred_label_en: jayanya
+  node_type: CONDITION
+  definition: Jāyānya, a winged sickness that "flies and enters into a man", crushes the breast-bone and
+    descends to the sole; named beside jaundice and visalpaka as something the ointment drives out. Untranslated
+    for the same reason as balasa.
+  aliases_sa:
+  - jāyānya
+  - jāyānyam
+  - jāyānyaḥ
+  - jāyānyo
+  aliases_en: []
+  broader:
+  - VG:CONCEPT:YAKSMA-DISEASE
+  related_devatas: []
 - concept_id: VG:CONCEPT:JYA-BOWSTRING
   preferred_label_sa: jyā
   preferred_label_en: bowstring
@@ -1282,6 +1673,7 @@ concepts:
     principle.'
   aliases_sa:
   - kāmaḥ
+  - kāmas
   - kāmam
   - kāmaṃ
   - kāmena
@@ -1293,6 +1685,18 @@ concepts:
   - desire
   - wish
   broader: []
+  related_devatas: []
+- concept_id: VG:CONCEPT:KARNASULA-EARACHE
+  preferred_label_sa: karṇaśūla
+  preferred_label_en: earache
+  node_type: CONDITION
+  definition: Ear-pain, named twice in the head-disease charm of AVS 9.8 and nowhere else in the four
+    Saṃhitās.
+  aliases_sa:
+  - karṇaśūlaṃ
+  aliases_en: []
+  broader:
+  - VG:CONCEPT:YAKSMA-DISEASE
   related_devatas: []
 - concept_id: VG:CONCEPT:KASA-COUGH
   preferred_label_sa: kāsa
@@ -1310,6 +1714,40 @@ concepts:
   broader:
   - VG:CONCEPT:YAKSMA-DISEASE
   related_devatas: []
+- concept_id: VG:CONCEPT:KHADIRA-TREE
+  preferred_label_sa: khadira
+  preferred_label_en: khadira
+  node_type: PLANT
+  definition: 'The khadirá, the hard-wooded acacia: the tree the aśvattha is born from, the wood of an
+    amulet in AVS 10.6, one of the six trees the healing plant of AVS 5.5 arises from, and the timber
+    a chariot axle is asked to be firm as at RV 3.53.19.'
+  aliases_sa:
+  - khadirād
+  - khadiram
+  - khadirasya
+  - khadirājiram
+  aliases_en: []
+  broader:
+  - VG:CONCEPT:VANASPATI-TREE
+  related_devatas:
+  - VG:DEVATA:VANASPATIH
+- concept_id: VG:CONCEPT:KILASA-LEUCODERMA
+  preferred_label_sa: kilāsa
+  preferred_label_en: leprous spot
+  node_type: CONDITION
+  definition: The white or pale skin patch, treated by a night-born dark herb told to give the skin back
+    its own colour; the corpus distinguishes the bone-born from the body-born kind and from the kind "made
+    by the spoiler".
+  aliases_sa:
+  - kilāsaṃ
+  - kilāsasya
+  - kilāsabheṣajam
+  - kilāsanāśanam
+  aliases_en: []
+  broader:
+  - VG:CONCEPT:YAKSMA-DISEASE
+  related_devatas:
+  - VG:DEVATA:OSADHAYAH
 - concept_id: VG:CONCEPT:KRATU-RESOLVE
   preferred_label_sa: kratu
   preferred_label_en: resolve
@@ -1426,6 +1864,18 @@ concepts:
   - VG:CONCEPT:YAKSMA-DISEASE
   related_devatas:
   - VG:DEVATA:YAKSMANASANAH
+- concept_id: VG:CONCEPT:KSIPTA-BRUISE
+  preferred_label_sa: kṣipta
+  preferred_label_en: bruise
+  node_type: CONDITION
+  definition: What is struck or bruised, named at AVS 6.109 only inside the compound that says the pippalī
+    berry is its remedy, and once in the genitive beside the wind-ailment.
+  aliases_sa:
+  - kṣiptabheṣajy
+  - kṣiptasya
+  aliases_en: []
+  broader: []
+  related_devatas: []
 - concept_id: VG:CONCEPT:KUSTHA-PLANT
   preferred_label_sa: kuṣṭha
   preferred_label_en: kushtha
@@ -1440,6 +1890,21 @@ concepts:
   - kuṣṭhā
   - kuṣṭhasya
   - kuṣṭhābhyām
+  aliases_en: []
+  broader:
+  - VG:CONCEPT:OSADHI-PLANTS
+  related_devatas:
+  - VG:DEVATA:OSADHAYAH
+- concept_id: VG:CONCEPT:LAKSA-PLANT
+  preferred_label_sa: lākṣā
+  preferred_label_en: laksha
+  node_type: PLANT
+  definition: The healing plant of AVS 5.5, which that hymn names twice over -- silācī́ in verses 1 and
+    8, lā́kṣā in verse 7 -- and which it addresses alongside arundhatī for the closing of wounds. Two
+    names for one addressee, so one entity, on the hymn's own authority rather than on a botanical identification.
+  aliases_sa:
+  - silācī
+  - lākṣe
   aliases_en: []
   broader:
   - VG:CONCEPT:OSADHI-PLANTS
@@ -1493,6 +1958,36 @@ concepts:
   broader:
   - VG:CONCEPT:ANNA-FOOD
   related_devatas: []
+- concept_id: VG:CONCEPT:MADHYANDINA-SAVANA-MIDDAY-PRESSING
+  preferred_label_sa: mādhyandina savana
+  preferred_label_en: midday pressing
+  node_type: ACTION
+  definition: The second of the day's three soma pressings, named by its time of day at RV 3.28.4, RV
+    3.32.3, RV 5.40.4, AVS 7.76.6 and AVS 20.12.7, and by its ordinal at AVS 6.47.2 -- "asmin dvitīye
+    savane", "at this second libation". VS 19.26 assigns it to Indra.
+  aliases_sa:
+  - mādhyaṃdine
+  - mādhyandine
+  - mādhyaṃndinam
+  aliases_en: []
+  broader:
+  - VG:CONCEPT:SOMA-PRESSING
+  related_devatas:
+  - VG:DEVATA:INDRAH
+- concept_id: VG:CONCEPT:MADUGHA-PLANT
+  preferred_label_sa: madugha
+  preferred_label_en: honey-plant
+  node_type: PLANT
+  definition: 'The madúgha or honey-plant, named in the Atharvaveda''s two love charms only: once as the
+    thing the speaker claims to be sweeter than, once among the substances that make up a means of subjection.'
+  aliases_sa:
+  - madughān
+  - madughasya
+  aliases_en: []
+  broader:
+  - VG:CONCEPT:OSADHI-PLANTS
+  related_devatas:
+  - VG:DEVATA:OSADHAYAH
 - concept_id: VG:CONCEPT:MAHISA-BUFFALO
   preferred_label_sa: mahiṣa
   preferred_label_en: buffalo
@@ -1661,6 +2156,21 @@ concepts:
   - adoration
   broader: []
   related_devatas: []
+- concept_id: VG:CONCEPT:NESTR-LEADER
+  preferred_label_sa: neṣṭṛ
+  preferred_label_en: nestar priest
+  node_type: RITUAL_ROLE
+  definition: The officiant who leads or conducts, Griffith's "Leader", and the cup drawn from his station.
+    The office at RV 2.1.2 and RV 10.91.10 ("tava neṣṭraṃ"), the cup at RV 1.15.9, RV 2.37.3 and RV 2.37.4,
+    and in the Vajasaneyi Samhita at VS 26.22, "neṣṭrād ṛtubhir iṣyata".
+  aliases_sa:
+  - neṣṭraṃ
+  - neṣṭrād
+  - neṣṭrāt
+  aliases_en: []
+  broader:
+  - VG:CONCEPT:HOTR-PRIEST
+  related_devatas: []
 - concept_id: VG:CONCEPT:OJAS-MIGHT
   preferred_label_sa: ojas
   preferred_label_en: might
@@ -1714,6 +2224,49 @@ concepts:
   broader: []
   related_devatas:
   - VG:DEVATA:OSADHAYAH
+- concept_id: VG:CONCEPT:PALITA-GREYING
+  preferred_label_sa: palita
+  preferred_label_en: pallor
+  node_type: CONDITION
+  definition: What is pale, named twice in the kilasa hymn beside the leprous spot and removed by the
+    same herb. Kept apart from palitá "hoary" said of a man, which is the same string and a different
+    thing.
+  aliases_sa:
+  - palitaṃ
+  aliases_en: []
+  broader:
+  - VG:CONCEPT:YAKSMA-DISEASE
+  related_devatas: []
+- concept_id: VG:CONCEPT:PARIPANA-DEFENCE
+  preferred_label_sa: paripāṇa
+  preferred_label_en: defence
+  node_type: HUMAN_CONCERN
+  definition: 'Paripā́ṇa, defence round about: asked for in the bare formula "protection art thou; protection
+    mayest thou give me: hail!" and predicated of the ointment, of the reverting amulet and of the jaṅgiḍá.
+    Every token occurrence is Atharvavedic.'
+  aliases_sa:
+  - paripāṇaṃ
+  - paripāṇam
+  - paripāṇaḥ
+  - paripāṇāya
+  - paripāṇād
+  - paripāṇo
+  aliases_en: []
+  broader:
+  - VG:CONCEPT:SARMAN-PROTECTION
+  related_devatas: []
+- concept_id: VG:CONCEPT:PARISRUT-FERMENTED-DRAUGHT
+  preferred_label_sa: parisrut
+  preferred_label_en: fermented draught
+  node_type: SUBSTANCE
+  definition: 'The draught that has flowed round, poured beside milk, ghee and honey in the sautramani:
+    "payaḥ somaḥ parisrutā ghṛtaṃ madhu" (VS 21.30, VS 21.31), "somaṃ śukraṃ parisrutā sarasvatī" (VS
+    20.59). Eighteen passages, every one Yajurvedic and not one anywhere else in the corpus.'
+  aliases_sa:
+  - parisrutā
+  aliases_en: []
+  broader: []
+  related_devatas: []
 - concept_id: VG:CONCEPT:PARUSNI-RIVER
   preferred_label_sa: paruṣṇī
   preferred_label_en: Parushni
@@ -1827,6 +2380,21 @@ concepts:
   broader:
   - VG:CONCEPT:ANNA-FOOD
   related_devatas: []
+- concept_id: VG:CONCEPT:PIPPALI-PLANT
+  preferred_label_sa: pippalī
+  preferred_label_en: pippali
+  node_type: PLANT
+  definition: The pippalī berry, called in its own hymn a remedy for what is bruised and for what is pierced,
+    and made by the gods sufficient for life. Kept apart from pippalá, the sweet berry of the two eagles
+    on the cosmic tree.
+  aliases_sa:
+  - pippalī
+  - pippalyaḥ
+  aliases_en: []
+  broader:
+  - VG:CONCEPT:OSADHI-PLANTS
+  related_devatas:
+  - VG:DEVATA:OSADHAYAH
 - concept_id: VG:CONCEPT:PITARAH-ANCESTORS
   preferred_label_sa: pitaraḥ
   preferred_label_en: ancestors
@@ -1864,6 +2432,26 @@ concepts:
   related_devatas:
   - VG:DEVATA:PITRMEDHAH
   - VG:DEVATA:PITARAH
+- concept_id: VG:CONCEPT:POTR-PURIFIER
+  preferred_label_sa: potṛ
+  preferred_label_en: potar priest
+  node_type: RITUAL_ROLE
+  definition: The officiant who purifies, and the cup drawn from his station. The office is named at RV
+    2.1.2 and RV 1.94.6 (Griffith's "Cleanser", "Purifier"), the officiant sits down as potar at RV 4.9.3,
+    and the Potar's cup is drunk from at RV 1.15.2, RV 2.36.2, RV 2.37.2 and RV 2.37.4 and in the Atharvavedic
+    parallels AVS 20.2.1, 20.2.4, 20.67.4 and 20.67.7. In the Rigvedic instances the potar is Agni; at
+    VS 19.42 he is Soma the purifier, "yaḥ potā sa punātu mā".
+  aliases_sa:
+  - potā
+  - potram
+  - potraṃ
+  - potrāt
+  - potrād
+  aliases_en: []
+  broader:
+  - VG:CONCEPT:HOTR-PRIEST
+  related_devatas:
+  - VG:DEVATA:AGNIH
 - concept_id: VG:CONCEPT:PRAJA-OFFSPRING
   preferred_label_sa: prajā
   preferred_label_en: offspring
@@ -1918,6 +2506,21 @@ concepts:
   - breaths
   broader: []
   related_devatas: []
+- concept_id: VG:CONCEPT:PRASASTR-DIRECTOR
+  preferred_label_sa: praśāstṛ
+  preferred_label_en: directing priest
+  node_type: RITUAL_ROLE
+  definition: The officiant who directs the rite, Griffith's "Director". Named as an agent at RV 1.94.6
+    ("praśāstā potā januṣā purohitaḥ") and RV 2.5.4 ("as Director was he born"), and as an office at RV
+    2.1.2 and RV 10.91.10 ("tava praśāstraṃ"). Agni holds it in all four.
+  aliases_sa:
+  - praśāstā
+  - praśāstraṃ
+  aliases_en: []
+  broader:
+  - VG:CONCEPT:HOTR-PRIEST
+  related_devatas:
+  - VG:DEVATA:AGNIH
 - concept_id: VG:CONCEPT:PRASUTI-CHILDBIRTH
   preferred_label_sa: sūṣā
   preferred_label_en: childbirth
@@ -1938,6 +2541,55 @@ concepts:
   broader: []
   related_devatas:
   - VG:DEVATA:GARBHASMADHANARUPO-ARTHAH
+- concept_id: VG:CONCEPT:PRATAHSAVANA-MORNING-PRESSING
+  preferred_label_sa: prātaḥsavana
+  preferred_label_en: morning pressing
+  node_type: ACTION
+  definition: The first of the day's three soma pressings, named by its time of day. RV 3.28.1 and RV
+    3.52.4 offer the cake "prātaḥsāve"; AVS 6.47.1 has Agni protect us "prātaḥsavane"; and RV 10.112.1
+    calls it the first draught outright -- "prātaḥsāvas tava hi pūrvapītiḥ", Griffith's "thy first draught
+    is early morn's libation".
+  aliases_sa:
+  - prātaḥsāve
+  - prātaḥsavane
+  - prātaḥsāvas
+  aliases_en: []
+  broader:
+  - VG:CONCEPT:SOMA-PRESSING
+  related_devatas: []
+- concept_id: VG:CONCEPT:PRDAKU-ADDER
+  preferred_label_sa: pṛdāku
+  preferred_label_en: adder
+  node_type: ANIMAL
+  definition: The pṛ́dāku, a named venomous snake of the Atharvaveda's snake charms, listed beside the
+    cross-lined one, the black snake and the kasarṇī́la, and once set as the guardian of the western quarter.
+    Every occurrence is Atharvavedic.
+  aliases_sa:
+  - pṛdākavaḥ
+  - pṛdākūr
+  - pṛdākvas
+  - pṛdākū
+  - pṛdākau
+  - pṛdākoḥ
+  aliases_en:
+  - adder
+  broader:
+  - VG:CONCEPT:AHI-SERPENT
+  related_devatas: []
+- concept_id: VG:CONCEPT:PRSNIPARNI-PLANT
+  preferred_label_sa: pṛśniparṇī
+  preferred_label_en: prshniparni
+  node_type: PLANT
+  definition: 'The spotted-leaf, "weal for us, woe for Nirṛti": a grinder-up of the kaṇvas and a hewer
+    of the heads of the ill-named ones, invoked against the embryo-eating demon.'
+  aliases_sa:
+  - pṛśniparṇy
+  - pṛśniparṇi
+  aliases_en: []
+  broader:
+  - VG:CONCEPT:OSADHI-PLANTS
+  related_devatas:
+  - VG:DEVATA:OSADHAYAH
 - concept_id: VG:CONCEPT:PRTHIVI-EARTH
   preferred_label_sa: pṛthivī
   preferred_label_en: earth
@@ -1950,7 +2602,6 @@ concepts:
   - pṛthivyā
   - pṛthivyāḥ
   - pṛthivyām
-  - pṛthivi
   - pṛthivyai
   - bhūmiḥ
   - bhūmir
@@ -2067,7 +2718,7 @@ concepts:
 - concept_id: VG:CONCEPT:RAKSAS-DEMON
   preferred_label_sa: rakṣas
   preferred_label_en: demon
-  node_type: CONCEPT
+  node_type: CONDITION
   definition: The non-human hostile being -- rakshas, yatudhana, pishacha -- against whom whole Atharvavedic
     hymns are directed.
   aliases_sa:
@@ -2092,6 +2743,21 @@ concepts:
   related_devatas:
   - VG:DEVATA:RAKSOHAGNIH
   - VG:DEVATA:DUHSVAPNANASANAH
+- concept_id: VG:CONCEPT:RAPAS-BODILY-HURT
+  preferred_label_sa: rapas
+  preferred_label_en: bodily hurt
+  node_type: CONDITION
+  definition: 'Rapas: bodily hurt, blemish and defect -- the thing the wind is asked to blow away at AVS
+    4.13 and the thing Rudra is asked to carry one over at RV 2.33. Distinct from the root rap- "to prate",
+    which is the same string in four other forms.'
+  aliases_sa:
+  - rapaḥ
+  - rapas
+  - rapasā
+  - rapaso
+  aliases_en: []
+  broader: []
+  related_devatas: []
 - concept_id: VG:CONCEPT:RATHA-CHARIOT
   preferred_label_sa: ratha
   preferred_label_en: chariot
@@ -2174,6 +2840,25 @@ concepts:
   - ṛtāvānam
   aliases_en:
   - law
+  broader: []
+  related_devatas: []
+- concept_id: VG:CONCEPT:SABHA-ASSEMBLY
+  preferred_label_sa: sabhā
+  preferred_label_en: assembly
+  node_type: SOCIAL_RITE
+  definition: 'The assembly and the gathering, "the two daughters of Prajāpati", as an occasion a man
+    needs help at: to be favoured in, to be fit for, to speak what is pleasant in, and to have the witchcraft
+    made against him there undone. sabhā́ and sámiti are folded together because AVS 7.12.1 and 15.9.2
+    name them as a pair.'
+  aliases_sa:
+  - sabhā
+  - sabhāyāṃ
+  - sabhāsadaḥ
+  - sabhāsu
+  - samitiḥ
+  - samitiś
+  aliases_en:
+  - assembly
   broader: []
   related_devatas: []
 - concept_id: VG:CONCEPT:SAKHYA-FRIENDSHIP
@@ -2301,6 +2986,20 @@ concepts:
   broader:
   - VG:CONCEPT:AP-WATERS
   related_devatas: []
+- concept_id: VG:CONCEPT:SAPATHA-IMPRECATION
+  preferred_label_sa: śapatha
+  preferred_label_en: curse
+  node_type: CONDITION
+  definition: The spoken curse -- a rival's, a sister's, a priest's in fury -- sent back to the curser
+    rather than cured, and the thing an amulet or a herb is said to keep off.
+  aliases_sa:
+  - śapatho
+  - śapathaś
+  - śapathaḥ
+  - śapathyād
+  aliases_en: []
+  broader: []
+  related_devatas: []
 - concept_id: VG:CONCEPT:SAPATNA-RIVAL-OVERCOMING
   preferred_label_sa: sapatna
   preferred_label_en: overcoming rivals
@@ -2329,6 +3028,23 @@ concepts:
   related_devatas:
   - VG:DEVATA:SAPATNAGHNARUPO-ARTHAH
   - VG:DEVATA:SAPATNIBADHANARUPO-ARTHAH
+- concept_id: VG:CONCEPT:SARASVATI-RIVER
+  preferred_label_sa: sarasvatī
+  preferred_label_en: Sarasvati river
+  node_type: RIVER
+  definition: 'The Sarasvatī as a place on the ground, on the only two occasions in the four Saṃhitās
+    where the grammar says so: the barley the gods ploughed on it (AVS 6.30.1) and the rivers Agni is
+    asked to shine on (RV 3.23.4). The goddess is VG:DEVATA:SARASVATI and is not this node; the river
+    hymns belong to her, because their case forms do not distinguish the two.'
+  aliases_sa:
+  - sarasvatyām
+  - sarasvatyāṃ
+  aliases_en: []
+  broader:
+  - VG:CONCEPT:SINDHU-RIVER
+  related_devatas:
+  - VG:DEVATA:SARASVATI
+  - VG:DEVATA:NADYAH
 - concept_id: VG:CONCEPT:SARAYU-RIVER
   preferred_label_sa: sarayu
   preferred_label_en: Sarayu
@@ -2370,6 +3086,22 @@ concepts:
   related_devatas:
   - VG:DEVATA:VARMA
   - VG:DEVATA:SVASTAYAH
+- concept_id: VG:CONCEPT:SAT-EXISTENCE
+  preferred_label_sa: sat
+  preferred_label_en: existence
+  node_type: PHILOSOPHICAL_CONCEPT
+  definition: 'The existent, what is, as against what is not. In this corpus still a substantivised neuter
+    participle of as- ''to be'' and not yet a settled noun: it is predicated of things and asked after,
+    as in the one Being the sages call by many names (RV 1.164.46), and it is not the Upanishadic Being.
+    Distinct from satya ''truth'', which is a different stem with its own entity, VG:CONCEPT:SATYA-TRUTH;
+    the two alias sets are disjoint and neither leaks into the other.'
+  aliases_sa:
+  - sad
+  - sac
+  aliases_en:
+  - existent
+  broader: []
+  related_devatas: []
 - concept_id: VG:CONCEPT:SATRU-ENEMY
   preferred_label_sa: śatru
   preferred_label_en: enemy
@@ -2425,6 +3157,36 @@ concepts:
   - truth
   broader: []
   related_devatas: []
+- concept_id: VG:CONCEPT:SAUTRAMANI
+  preferred_label_sa: sautrāmaṇī
+  preferred_label_en: sautramani rite
+  node_type: RITUAL
+  definition: The rite in which sura, the fermented liquor, is offered beside the soma. Named twice in
+    the four Samhitas -- VS 19.31, "all this he gains, when juice is shed, in the Sautramani sacrifice",
+    and AVS 3.3.2, Whitney's "with the sāutrāmaṇī́ (ceremony)" -- and supplied with its materials by VS
+    19-21, which name the liquor, the ram, the jujube, the young shoots and the milk in one verse.
+  aliases_sa:
+  - sautrāmaṇī
+  - sautrāmaṇyā
+  aliases_en: []
+  broader:
+  - VG:CONCEPT:YAJNA-SACRIFICE
+  related_devatas:
+  - VG:DEVATA:SARASVATI
+- concept_id: VG:CONCEPT:SEDI-DEBILITY
+  preferred_label_sa: sedi
+  preferred_label_en: debility
+  node_type: CONDITION
+  definition: 'Sedí, debility or failure: housed in an enemy''s dwelling with the hags, wished onto an
+    opposing army beside hunger and fear, and trodden down underfoot by the ploughman. Every token occurrence
+    is Atharvavedic.'
+  aliases_sa:
+  - sedir
+  - sedim
+  - sediṃ
+  aliases_en: []
+  broader: []
+  related_devatas: []
 - concept_id: VG:CONCEPT:SINDHU-RIVER
   preferred_label_sa: sindhu
   preferred_label_en: river
@@ -2454,6 +3216,23 @@ concepts:
   - VG:CONCEPT:AP-WATERS
   related_devatas:
   - VG:DEVATA:NADYAH
+- concept_id: VG:CONCEPT:SIRSAKTI-HEADACHE
+  preferred_label_sa: śīrṣakti
+  preferred_label_en: headache
+  node_type: CONDITION
+  definition: 'Head-pain, in the two words the corpus uses for it: śīrṣakti the ache and śīrṣāmaya the
+    head-ailment, both expelled by incantation at AVS 9.8.1 and both wiped off onto lead and onto a pillow
+    at AVS 12.2.'
+  aliases_sa:
+  - śīrṣaktim
+  - śīrṣaktiṃ
+  - śīrṣaktir
+  - śīrṣāmayam
+  - śīrṣāmayaṃ
+  aliases_en: []
+  broader:
+  - VG:CONCEPT:YAKSMA-DISEASE
+  related_devatas: []
 - concept_id: VG:CONCEPT:SISA-LEAD
   preferred_label_sa: sīsa
   preferred_label_en: lead
@@ -2473,7 +3252,6 @@ concepts:
   definition: The pressed plant and the juice made from it, drunk by the gods and by the sacrificer; the
     substance, not the deity of the same name.
   aliases_sa:
-  - soma
   - somaṃ
   - somam
   - somasya
@@ -2628,6 +3406,20 @@ concepts:
   related_devatas:
   - VG:DEVATA:DANASTUTIH
   - VG:DEVATA:RAJASTUTIH
+- concept_id: VG:CONCEPT:SURA-SPIRITUOUS-LIQUOR
+  preferred_label_sa: surā
+  preferred_label_en: spirituous liquor
+  node_type: SUBSTANCE
+  definition: 'The fermented liquor offered beside the soma in the sautramani: "surayā somaḥ suta āsuto
+    madāya" (VS 19.5), "somasya śuṣmaḥ surayā sutasya" (VS 19.33). Griffith renders it "Wine". The bare
+    stem `surā` is deliberately not an alias: at four characters it is below the sandhi floor, its 116
+    substring hits are 47% intrusions, and three of its six token hits are the dicing-and-drinking topos
+    of AVS 6.70.1 and RV 7.86.6 rather than an offering.'
+  aliases_sa:
+  - surayā
+  aliases_en: []
+  broader: []
+  related_devatas: []
 - concept_id: VG:CONCEPT:SURYA-SUN
   preferred_label_sa: sūrya
   preferred_label_en: sun
@@ -2643,7 +3435,6 @@ concepts:
   - sūryeṇa
   - sūryāya
   - sūryāt
-  - sūrya
   aliases_en:
   - sun
   broader: []
@@ -2678,6 +3469,34 @@ concepts:
   - hatchet
   broader:
   - VG:CONCEPT:AYUDHA-WEAPON
+  related_devatas: []
+- concept_id: VG:CONCEPT:SVAHAKARA-OFFERING-CALL
+  preferred_label_sa: svāhā
+  preferred_label_en: offering call
+  node_type: ACTION
+  definition: 'The cry uttered at the moment the oblation is released, svaha, and its counterpart the
+    vasat-call. 326 passages carry it: 155 in the Yajurveda and 157 in the Atharvaveda against 14 in the
+    Rigveda and none at all in the Samaveda, which makes it the sharpest single lexical signature of a
+    formulary in the corpus. VS 25.1 fires it twice in one breath, "śuklāya svāhā kṛṣṇāya svāhā".'
+  aliases_sa:
+  - svāhā
+  - vaṣaṭkṛtaṃ
+  aliases_en: []
+  broader: []
+  related_devatas: []
+- concept_id: VG:CONCEPT:SVAJA-CONSTRICTOR
+  preferred_label_sa: svaja
+  preferred_label_en: constrictor
+  node_type: ANIMAL
+  definition: The svajá, the snake that coils, named in AVS 10.4 as one of the two things the young physician
+    grinds up. Kept apart from the imperative of svaj- "to embrace", which is the same string at AVS 5.14.10
+    and 12.3.12.
+  aliases_sa:
+  - svajasya
+  - svajaṃ
+  aliases_en: []
+  broader:
+  - VG:CONCEPT:AHI-SERPENT
   related_devatas: []
 - concept_id: VG:CONCEPT:SVAN-DOG
   preferred_label_sa: śvan
@@ -2720,6 +3539,28 @@ concepts:
   related_devatas:
   - VG:DEVATA:SVASTAYAH
   - VG:DEVATA:PATHYASVASTIH
+- concept_id: VG:CONCEPT:TAKMAN-FEVER
+  preferred_label_sa: takman
+  preferred_label_en: fever
+  node_type: CONDITION
+  definition: 'Takman, the Atharvaveda''s fever: addressed in the second person, classified by its period
+    (tertian, quartan, constant), by its season (autumnal, cold, hot, of the rainy season) and by its
+    colour, and sent away to named foreign peoples. It has its own hymns -- AVS 1.25, 5.22, 6.20 -- and
+    occurs nowhere outside the Atharvaveda.'
+  aliases_sa:
+  - takman
+  - takmane
+  - takmann
+  - takmanaḥ
+  - takmanā
+  - takmā
+  - takmānaṃ
+  - takmānam
+  - takmanāśana
+  - takmanāśanam
+  aliases_en: []
+  broader: []
+  related_devatas: []
 - concept_id: VG:CONCEPT:TAMAS-DARKNESS
   preferred_label_sa: tamas
   preferred_label_en: darkness
@@ -2792,6 +3633,25 @@ concepts:
   broader:
   - VG:CONCEPT:OSADHI-PLANTS
   related_devatas: []
+- concept_id: VG:CONCEPT:TRTIYA-SAVANA-THIRD-PRESSING
+  preferred_label_sa: tṛtīya savana
+  preferred_label_en: third pressing
+  node_type: ACTION
+  definition: 'The third of the day''s three soma pressings, and the one the corpus numbers most often:
+    "tṛtīye savane" at RV 3.28.5, "idaṃ tṛtīyaṃ savanaṃ kavīnām" at AVS 6.47.3, "tṛtīye savana ṛbhūṇām"
+    at AVS 9.1.13, and the Rbhus'' third libation at RV 4.34.4, RV 4.35.9 and RV 8.57.1. All six were
+    read and all six are this act -- and none of them is reachable, because the third pressing is the
+    only one of the three the corpus never writes as one word. The morning has prātaḥsāva and the midday
+    has mādhyaṃdina; the third has only the phrase tṛtīya + savana, and SANDHI_MATCH_VEDAS restricts the
+    production substring pass to the Samaveda. The one alias is therefore VS 19.26''s single token, `tṛtīyamāptaṃṃ`,
+    whose doubled anusvara is an artefact of this corpus''s VSM transliteration and is recorded as such
+    in the report: it is brittle by construction and will need replacing if that transliteration is normalised.'
+  aliases_sa:
+  - tṛtīyamāptaṃṃ
+  aliases_en: []
+  broader:
+  - VG:CONCEPT:SOMA-PRESSING
+  related_devatas: []
 - concept_id: VG:CONCEPT:TRTSU-TRIBE
   preferred_label_sa: tṛtsu
   preferred_label_en: Trtsus
@@ -2819,6 +3679,20 @@ concepts:
   broader:
   - VG:CONCEPT:JANA-PEOPLE
   related_devatas: []
+- concept_id: VG:CONCEPT:UDGATR-CHANTER
+  preferred_label_sa: udgātṛ
+  preferred_label_en: chanter priest
+  node_type: RITUAL_ROLE
+  definition: 'The priest who chants the Saman. Named exactly once in the four Samhitas, and in a simile:
+    at RV 2.43.2 a bird is told "udgāteva śakune sāma gāyasi", "thou like the chanter-priest chantest
+    the Sama". The Rigveda''s manual annotation confirms the form as udgātár-, nominative singular masculine.
+    The office does not occur in the Samaveda, whose chant it exists to sing.'
+  aliases_sa:
+  - udgāteva
+  aliases_en: []
+  broader:
+  - VG:CONCEPT:HOTR-PRIEST
+  related_devatas: []
 - concept_id: VG:CONCEPT:ULUKHALA-MORTAR
   preferred_label_sa: ulūkhala
   preferred_label_en: mortar
@@ -2837,6 +3711,18 @@ concepts:
   related_devatas:
   - VG:DEVATA:ULUKHALAM
   - VG:DEVATA:ULUKHALAMUSALE
+- concept_id: VG:CONCEPT:UNMADA-MADNESS
+  preferred_label_sa: unmāda
+  preferred_label_en: madness
+  node_type: CONDITION
+  definition: 'Being crazed, in the one Atharvavedic verse that names it: crazed from sin against the
+    gods or crazed from a demon, with the speaker declaring he knows the remedy.'
+  aliases_sa:
+  - unmaditam
+  - unmattam
+  aliases_en: []
+  broader: []
+  related_devatas: []
 - concept_id: VG:CONCEPT:USAS-DAWN
   preferred_label_sa: uṣas
   preferred_label_en: dawn
@@ -2850,7 +3736,6 @@ concepts:
   - uṣasaḥ
   - uṣaso
   - uṣasā
-  - uṣo
   - uṣasam
   - uṣasi
   - uṣasām
@@ -2920,7 +3805,7 @@ concepts:
 - concept_id: VG:CONCEPT:VAJRA-THUNDERBOLT
   preferred_label_sa: vajra
   preferred_label_en: thunderbolt
-  node_type: OBJECT
+  node_type: WEAPON
   definition: The bolt, Indra's weapon, treated as a distinct object rather than as lightning.
   aliases_sa:
   - vajraḥ
@@ -2968,6 +3853,20 @@ concepts:
   - VG:DEVATA:VANASPATIH
   - VG:DEVATA:ARANYANI
   - VG:DEVATA:YUPAH
+- concept_id: VG:CONCEPT:VARCAS-SPLENDOUR
+  preferred_label_sa: varcas
+  preferred_label_en: splendour
+  node_type: HUMAN_CONCERN
+  definition: 'Varcas, the lustre a person is quickened with or bound into an amulet for; the Atharvaveda''s
+    commonest single request word after wellbeing. Only the instrumental and dative are aliases: the bare
+    stem sits inside brāhmaṇavarcasá and hastivarcasá, which are other people''s splendour, and inside
+    hatavarcasáḥ, which is its loss.'
+  aliases_sa:
+  - varcasā
+  - varcase
+  aliases_en: []
+  broader: []
+  related_devatas: []
 - concept_id: VG:CONCEPT:VARMAN-ARMOUR
   preferred_label_sa: varman
   preferred_label_en: armour
@@ -3052,6 +3951,34 @@ concepts:
   related_devatas:
   - VG:DEVATA:VAYUH
   - VG:DEVATA:INDRAVAYU
+- concept_id: VG:CONCEPT:VATIKRTA-WIND-AILMENT
+  preferred_label_sa: vātīkṛta
+  preferred_label_en: wind-caused ailment
+  node_type: CONDITION
+  definition: 'The vātī́kṛta, "made by wind": an ailment named only in the two compounds the corpus prints
+    for its remedies -- the viṣāṇakā herb that effaces it and the pippalī that is a remedy for it.'
+  aliases_sa:
+  - vātīkṛtasya
+  - vātīkṛtanāśanī
+  aliases_en: []
+  broader:
+  - VG:CONCEPT:YAKSMA-DISEASE
+  related_devatas: []
+- concept_id: VG:CONCEPT:VAYAVYA-VAYU-CUP
+  preferred_label_sa: vāyavya
+  preferred_label_en: vayu cup
+  node_type: OBJECT
+  definition: 'The cups belonging to Vayu, drawn in the soma rite. Two attestations, in two Vedas, both
+    read: "camasāś ca me vāyavyāni ca me" in the apparatus inventory at VS 18.21, and Whitney''s "the
+    drinking-vessels those of Vāyu" at AVS 9.6.17. The bare stem `vāyavya` is refused: one of its three
+    substring hits is `sakthyor vāyavyaḥ`, an anatomical term inside the horse''s dismemberment.'
+  aliases_sa:
+  - vāyavyāni
+  aliases_en: []
+  broader:
+  - VG:CONCEPT:CAMASA-CUP
+  related_devatas:
+  - VG:DEVATA:VAYUH
 - concept_id: VG:CONCEPT:VEDI-ALTAR
   preferred_label_sa: vedi
   preferred_label_en: altar
@@ -3093,6 +4020,19 @@ concepts:
   - VG:DEVATA:SAKUNTAH
   - VG:DEVATA:SYENAH
   - VG:DEVATA:TARKSYAH
+- concept_id: VG:CONCEPT:VIDRADHA-ABSCESS
+  preferred_label_sa: vidradha
+  preferred_label_en: abscess
+  node_type: CONDITION
+  definition: The vidradhá, an internal swelling or abscess, named with the red balāsa and the visalpaka
+    as things a forest tree and a herb are told not to leave a bit of.
+  aliases_sa:
+  - vidradhasya
+  - vidradhaṃ
+  aliases_en: []
+  broader:
+  - VG:CONCEPT:YAKSMA-DISEASE
+  related_devatas: []
 - concept_id: VG:CONCEPT:VIDYUT-LIGHTNING
   preferred_label_sa: vidyut
   preferred_label_en: lightning
@@ -3165,6 +4105,35 @@ concepts:
   - poisonous
   broader: []
   related_devatas: []
+- concept_id: VG:CONCEPT:VISALPAKA-AILMENT
+  preferred_label_sa: visalpaka
+  preferred_label_en: visalpaka
+  node_type: CONDITION
+  definition: A named Atharvavedic ailment of the limbs, ears and eyes, ejected together with the abscess
+    and the heart-disease; left untranslated because the corpus gives its sites and its remedy and not
+    its nature.
+  aliases_sa:
+  - visalpakam
+  - visalpakaḥ
+  - visalpakaṃ
+  - visalpasya
+  aliases_en: []
+  broader:
+  - VG:CONCEPT:YAKSMA-DISEASE
+  related_devatas: []
+- concept_id: VG:CONCEPT:VISANAKA-PLANT
+  preferred_label_sa: viṣāṇakā
+  preferred_label_en: vishanaka
+  node_type: PLANT
+  definition: '"Horny" by name, called Rudra''s urine and the navel of the immortal, and declared in its
+    single occurrence to be an effacer of the wind-caused ailment.'
+  aliases_sa:
+  - viṣāṇakā
+  aliases_en: []
+  broader:
+  - VG:CONCEPT:OSADHI-PLANTS
+  related_devatas:
+  - VG:DEVATA:RUDRAH
 - concept_id: VG:CONCEPT:VISKANDHA-AFFLICTION
   preferred_label_sa: viṣkandha
   preferred_label_en: viskandha
@@ -3269,6 +4238,21 @@ concepts:
   broader:
   - VG:CONCEPT:PASU-LIVESTOCK
   related_devatas: []
+- concept_id: VG:CONCEPT:VRSCIKA-SCORPION
+  preferred_label_sa: vṛścika
+  preferred_label_en: scorpion
+  node_type: ANIMAL
+  definition: The scorpion or stinger, slain with a club at AVS 10.4.9, ground up with the constrictor
+    at 10.4.15, and told at RV 1.191.16 that its venom is weak.
+  aliases_sa:
+  - vṛścikam
+  - vṛścikasya
+  - vṛścikas
+  - vṛścika
+  aliases_en:
+  - scorpion
+  broader: []
+  related_devatas: []
 - concept_id: VG:CONCEPT:VRSTI-RAIN
   preferred_label_sa: vṛṣṭi
   preferred_label_en: rain
@@ -3355,24 +4339,33 @@ concepts:
   - VG:DEVATA:YAJNAYAJAMANAU
 - concept_id: VG:CONCEPT:YAKSMA-DISEASE
   preferred_label_sa: yakṣma
-  preferred_label_en: disease
-  node_type: STATE
-  definition: Sickness as an affliction to be driven out, including the named fevers of the Atharvaveda.
+  preferred_label_en: consumption
+  node_type: CONDITION
+  definition: 'Yakṣma: the wasting, consuming sickness that is drawn out of a patient limb by limb in
+    the Atharvaveda''s ejection charms and flies away like a bird. Not fever, which is takman, and not
+    affliction in general, which is amīvā.'
   aliases_sa:
   - yakṣmam
   - yakṣmaṃ
   - yakṣmaḥ
   - yakṣmo
-  - takman
-  - takmānam
-  - takmā
-  - amīvā
-  - amīvāḥ
-  - rapaḥ
+  - yakṣma
+  - yakṣmā
+  - yakṣmān
+  - yakṣmāt
+  - yakṣmād
+  - yakṣmāso
+  - yakṣmasya
+  - yakṣmeṇa
+  - yakṣmāṇāṃ
+  - yakṣmanāśanīḥ
+  - rājayakṣmāt
+  - rājayakṣmas
+  - rājayakṣmo
+  - ajñātayakṣmād
   aliases_en:
-  - disease
-  - sickness
-  - fever
+  - consumption
+  - wasting
   broader: []
   related_devatas:
   - VG:DEVATA:YAKSMANASANAH

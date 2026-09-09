@@ -1,0 +1,454 @@
+# The procedural world of the four Vedas: rites the text performs, the acts it names while
+# performing them, the offices it addresses, and the vessels it takes up.
+#
+# This file is a MERGE FRAGMENT for data/registry/concepts.yaml, in that file's entry shape,
+# adding nothing to its vocabulary except node types already present in
+# vedagraph.domain.ontology.DomainNodeType (RITUAL_ROLE) and in the frozen
+# SemanticNodeType (RITUAL, ACTION, OBJECT, SUBSTANCE). It adds 21 entities. With the 163
+# in the merged V2 registry the total is 184, against MAX_CONCEPT_NODES = 260.
+#
+# ---------------------------------------------------------------------------
+# The evidence rule, which is domain_entities_material.yaml's rule
+# ---------------------------------------------------------------------------
+# Every Sanskrit alias below was probed against all 20,210 mantras with
+# scripts/probe_domain_aliases.py and then READ, with scripts/show_passage.py, in the verse
+# that produced the hit. 197 candidate forms were measured; 40 are written below.
+# Everything rejected is recorded, with the passage that rejected it, in
+# docs/reports/RITUAL_KNOWLEDGE_V3.md. A probe count with no read verse is not evidence and
+# is not in this file.
+#
+# The Samhitas are not read through the Brahmanas. Where a rite's name exists only in the
+# later systematisation, the node is named from what the Samhita actually says -- hence
+# AGNI-CITI-FIRE-PILING and not "agnicayana", because `agnicayana` token-matches nothing in
+# any of the four Samhitas while `ciyamanah` ("while being piled") matches twice and was
+# read both times. Where a structural field would only be fillable from that later system
+# it is left EMPTY in rituals_v3.yaml and the omission is stated in `basis`.
+#
+# ---------------------------------------------------------------------------
+# The four rejections that matter most
+# ---------------------------------------------------------------------------
+#   graha, grahaḥ  Both token-match exactly one passage, VG:YV:VSM:A07:V003, and that
+#                  passage is the one contaminated record in the Vajasaneyi Samhita: 1,140
+#                  characters against a VSM median of 102, carrying Uvata/Mahidhara
+#                  commentary inline in the `source` field ("iti śeṣaḥ", "iti śrutiḥ",
+#                  "yakāralopaḥ", "ḍalayor ekatvāt"). The string `grahaḥ` occurs there
+#                  inside the commentator's own Brahmana quotation, "prāṇo vā asyaiṣa
+#                  grahaḥ ... iti śrutiḥ". Accepting it would have imported a Brahmana
+#                  sentence into the Samhita layer through a corpus defect, which is exactly
+#                  what this project's ritual discipline exists to prevent.
+#                  GRAHA-SOMA-DRAWING therefore rests on grahā / grahaiḥ / grahān and on the
+#                  51-passage formula `upayāmagṛhīto`, none of which touch VS 7.3.
+#   hotārā         "The two Hotars", 22 token hits, and unusable for a human office: the
+#                  phrase is `daivyā hotārā`, the divine invoker-pair, at RV 1.13.8
+#                  (Griffith "The two Invokers I invite, the wise, divine"), RV 1.142.8,
+#                  RV 1.188.7 and AVS 5.12.7. The registry already carries them as
+#                  VG:DEVATA:DAIVYAU-HOTARAU and VG:DEVATA:DEVYAU-HOTARAU. A RitualRole
+#                  claiming this string would assert "a human priest is named here" of
+#                  twenty-two passages naming a deity pair.
+#   gṛhapati       "Master of the house", 12 token hits, refused as a ritual office because
+#                  in eleven of them the master of the house is Agni: RV 6.15.13 "agnir
+#                  hotā gṛhapatiḥ sa rājā", RV 5.8.1, RV 5.8.2, RV 7.1.1, and RV 2.1.2
+#                  "brahmā cāsi gṛhapatiś ca no dame". It is an epithet the corpus gives a
+#                  god, not an office it gives a man, and the one human instance
+#                  (AVS 19.31.13, "make me master of the house") is a wish, not a role.
+#   brahman        Refused as an alias, and for the collision this pass was warned about.
+#                  `bráhman-` (neuter, the formulation) and `brahmán-` (masculine, the
+#                  priest) fold to one string. Measured against the Rigveda's manual
+#                  morphological annotation, the folded token `brahman` is 1 masculine
+#                  against 2 neuter and `brahmaṇaḥ` is 2 masculine against 54 neuter. Only
+#                  five folded surfaces are 100% masculine across every Rigvedic token --
+#                  brahmā, brahmāṇam, brahmāṇaḥ, brahmāṇā, brahmabhyaḥ: 43 tokens, zero
+#                  neuter -- and `brahmā` is already held by VG:CONCEPT:BRAHMAN-PRIEST. The
+#                  full table, and the sandhi hazard that still sits on `brahmā`, are in the
+#                  report.
+#
+# ---------------------------------------------------------------------------
+# What is deliberately NOT here
+# ---------------------------------------------------------------------------
+# hotṛ        There is no new hotṛ node, and its absence is a blocker, not a decision.
+#             VG:CONCEPT:HOTR-PRIEST already holds hotā (213 token hits), hotāraṃ (43) and
+#             hotāram (33) -- the 321 mentions an external evaluator called "untyped" --
+#             and its node_type is CONCEPT, so REL_PERFORMED_BY (Ritual -> RitualRole)
+#             cannot reach it. load_concepts() raises on a folded alias claimed by two
+#             concepts, so a second hotṛ node here would make the merged registry fail to
+#             load rather than fix anything. The fix is one field on one existing line in
+#             data/registry/concepts.yaml (`node_type: CONCEPT` -> `RITUAL_ROLE`), and that
+#             file is outside this pass's write scope. It is filed as a named one-line
+#             change request in the report instead of being worked around.
+# ṛtvij       No separate node. `ṛtvijam` (7 hits) and `ṛtvijaḥ` (4) are already held by
+#             HOTR-PRIEST, and ṛtvij is the generic "officiant", which is what that node
+#             means when it is read as "priest". The one unclaimed form, `ṛtvijo` (6 hits,
+#             AVS 19.11.5 "ye devānām ṛtvijo yajñiyāso"), would make a node whose alias set
+#             is the leftovers of another node's.
+# rājasūya    Not a ritual node. `rājasūya` and `abhiṣeka` token-match nothing in any of the
+#             four Samhitas; `abhiṣiñcāmi` has three hits, all Atharvavedic and none royal
+#             (AVS 6.122.5, 10.9.27, 11.1.27, Whitney "with what desire I here sprinkle
+#             you"). The royal material of VS 9-10 and of VS 22.22 ("ā brahman brāhmaṇo
+#             brahmavarcasī jāyatām ā rāṣṭre rājanyaḥ śūraḥ") is real and stays reachable
+#             through VG:CONCEPT:RAJAN-KINGSHIP and the rāṣṭra vocabulary, exactly as V2
+#             made the horse sacrifice reachable without a node.
+# udgātṛ      There IS a node below. The earlier finding that there was nothing to make one
+#             from was right about the forms it tested and wrong about the corpus: udgātā,
+#             udgātāram, udgātre, udgātāraḥ and udgātṛ all match nothing, but the office is
+#             named once, at RV 2.43.2, where sandhi with the following `iva` spells it
+#             `udgāteva`.
+
+concepts:
+
+  # -------------------------------------------------------------------------
+  # Rites the Samhita text itself supports
+  #
+  # RITUAL, so that USES_OFFERING / USES_SUBSTANCE / USES_OBJECT / INVOKES_DEVATA /
+  # PERFORMED_BY / PERFORMED_FOR / HAS_STEP / DESCRIBED_IN may reach them. The structure of
+  # each is authored in rituals_v3.yaml, not here.
+  # -------------------------------------------------------------------------
+
+  - concept_id: VG:CONCEPT:GRAHA-SOMA-DRAWING
+    preferred_label_sa: graha
+    preferred_label_en: soma cup drawing
+    node_type: RITUAL
+    definition: >-
+      The drawing and dedication of the soma draughts, cup by cup and deity by deity: the
+      act the Vajasaneyi Samhita's seventh and eighth adhyayas are the formulary for, whose
+      spoken words are "upayāmagṛhīto 'si" -- thou art taken with a support -- fifty-one
+      times, all of them Yajurvedic. Distinct from the pressing, which is
+      VG:CONCEPT:SOMA-PRESSING: VS 18.21 inventories the pressing gear and VS 18.19-20
+      inventories the twenty-four drawn cups, and the corpus keeps the two lists apart.
+    aliases_sa: [upayāmagṛhīto, grahā, grahaiḥ, grahān]
+    aliases_en: []
+    broader: [VG:CONCEPT:SOMA-PRESSING]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:SAUTRAMANI
+    preferred_label_sa: sautrāmaṇī
+    preferred_label_en: sautramani rite
+    node_type: RITUAL
+    definition: >-
+      The rite in which sura, the fermented liquor, is offered beside the soma. Named twice
+      in the four Samhitas -- VS 19.31, "all this he gains, when juice is shed, in the
+      Sautramani sacrifice", and AVS 3.3.2, Whitney's "with the sāutrāmaṇī́ (ceremony)" --
+      and supplied with its materials by VS 19-21, which name the liquor, the ram, the
+      jujube, the young shoots and the milk in one verse.
+    aliases_sa: [sautrāmaṇī, sautrāmaṇyā]
+    aliases_en: []
+    broader: [VG:CONCEPT:YAJNA-SACRIFICE]
+    related_devatas: [VG:DEVATA:SARASVATI]
+
+  - concept_id: VG:CONCEPT:ASVAMEDHA-HORSE-SACRIFICE
+    preferred_label_sa: aśvamedha
+    preferred_label_en: horse sacrifice
+    node_type: RITUAL
+    definition: >-
+      The immolation of the horse, whose formulary is VS 22-25: the horse addressed by every
+      one of its names and consecrated "for the sacrifice" (VS 22.19), told to prepare its
+      own body (VS 23.15), and finally apportioned part by part (VS 25.1, VS 25.41). The
+      compound itself occurs once, at VS 18.22, where elision of the initial a- spells it
+      `'śvamedhaś ca me` and is why an earlier pass recorded it as absent.
+    aliases_sa: [śvamedhaśca]
+    aliases_en: []
+    broader: [VG:CONCEPT:YAJNA-SACRIFICE]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:AGNI-CITI-FIRE-PILING
+    preferred_label_sa: citi
+    preferred_label_en: fire altar piling
+    node_type: RITUAL
+    definition: >-
+      The piling up of Agni out of bricks, named by the Samhita as an act and not by a
+      rite-name: Agni is addressed as `cīyamānaḥ`, "while thou art being piled" (VS 13.41,
+      VS 13.47), the sacrificer as `cinvānaḥ`, "piling" (VS 13.47 and four parallels), and
+      the bricks are addressed as bricks and called milch-cows at VS 17.2. The name
+      `agnicayana` is absent from all four Samhitas and is not used here. `cinvānas` is read
+      evidence but not an alias: it occurs only across a token boundary (`cinvānas tanvo`),
+      and SANDHI_MATCH_VEDAS restricts the production substring pass to the Samaveda, so
+      the string would fire nowhere.
+    aliases_sa: [cīyamānaḥ]
+    aliases_en: []
+    broader: [VG:CONCEPT:YAJNA-SACRIFICE]
+    related_devatas: [VG:DEVATA:AGNIH]
+
+  # -------------------------------------------------------------------------
+  # Priestly offices
+  #
+  # RITUAL_ROLE, because PERFORMED_BY may only point at a RitualRole. Five offices, and one
+  # fact common to nearly all of them that a reader must not lose: the corpus names these
+  # offices chiefly by saying that AGNI holds them. RV 2.1.2 is the master verse -- thine is
+  # the hotra, thine the potra, thine the neṣṭra, thou art the agnid, thine the praśāstra,
+  # thou art adhvaryu, thou art brahman and master of the house -- and RV 1.94.6 is its
+  # twin. The office vocabulary is therefore well attested and the office-HOLDERS in the
+  # verses are mostly gods. Every definition below says so.
+  # -------------------------------------------------------------------------
+
+  - concept_id: VG:CONCEPT:POTR-PURIFIER
+    preferred_label_sa: potṛ
+    preferred_label_en: potar priest
+    node_type: RITUAL_ROLE
+    definition: >-
+      The officiant who purifies, and the cup drawn from his station. The office is named at
+      RV 2.1.2 and RV 1.94.6 (Griffith's "Cleanser", "Purifier"), the officiant sits down as
+      potar at RV 4.9.3, and the Potar's cup is drunk from at RV 1.15.2, RV 2.36.2,
+      RV 2.37.2 and RV 2.37.4 and in the Atharvavedic parallels AVS 20.2.1, 20.2.4, 20.67.4
+      and 20.67.7. In the Rigvedic instances the potar is Agni; at VS 19.42 he is Soma the
+      purifier, "yaḥ potā sa punātu mā".
+    aliases_sa: [potā, potram, potraṃ, potrāt, potrād]
+    aliases_en: []
+    broader: [VG:CONCEPT:HOTR-PRIEST]
+    related_devatas: [VG:DEVATA:AGNIH]
+
+  - concept_id: VG:CONCEPT:PRASASTR-DIRECTOR
+    preferred_label_sa: praśāstṛ
+    preferred_label_en: directing priest
+    node_type: RITUAL_ROLE
+    definition: >-
+      The officiant who directs the rite, Griffith's "Director". Named as an agent at
+      RV 1.94.6 ("praśāstā potā januṣā purohitaḥ") and RV 2.5.4 ("as Director was he born"),
+      and as an office at RV 2.1.2 and RV 10.91.10 ("tava praśāstraṃ"). Agni holds it in all
+      four.
+    aliases_sa: [praśāstā, praśāstraṃ]
+    aliases_en: []
+    broader: [VG:CONCEPT:HOTR-PRIEST]
+    related_devatas: [VG:DEVATA:AGNIH]
+
+  - concept_id: VG:CONCEPT:NESTR-LEADER
+    preferred_label_sa: neṣṭṛ
+    preferred_label_en: nestar priest
+    node_type: RITUAL_ROLE
+    definition: >-
+      The officiant who leads or conducts, Griffith's "Leader", and the cup drawn from his
+      station. The office at RV 2.1.2 and RV 10.91.10 ("tava neṣṭraṃ"), the cup at RV 1.15.9,
+      RV 2.37.3 and RV 2.37.4, and in the Vajasaneyi Samhita at VS 26.22, "neṣṭrād ṛtubhir
+      iṣyata".
+    aliases_sa: [neṣṭraṃ, neṣṭrād, neṣṭrāt]
+    aliases_en: []
+    broader: [VG:CONCEPT:HOTR-PRIEST]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:AGNIDH-FIRE-KINDLER
+    preferred_label_sa: agnīdh
+    preferred_label_en: fire kindler
+    node_type: RITUAL_ROLE
+    definition: >-
+      The officiant who kindles the fire. Two attestations, in two Vedas, and both were
+      read: RV 2.1.2 and RV 10.91.10, where Agni is told "tvam agnid ṛtāyataḥ" (Griffith's
+      "Kindler for the pious man"), and VS 7.15, where the kindler is addressed in the
+      vocative at the close of the offering formula, `yāḍ agnīt`. The stems `agnīdh` and
+      `agnīdhraḥ` match nothing anywhere in the corpus.
+    aliases_sa: [agnid, yāḍagnīt]
+    aliases_en: []
+    broader: [VG:CONCEPT:HOTR-PRIEST]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:UDGATR-CHANTER
+    preferred_label_sa: udgātṛ
+    preferred_label_en: chanter priest
+    node_type: RITUAL_ROLE
+    definition: >-
+      The priest who chants the Saman. Named exactly once in the four Samhitas, and in a
+      simile: at RV 2.43.2 a bird is told "udgāteva śakune sāma gāyasi", "thou like the
+      chanter-priest chantest the Sama". The Rigveda's manual annotation confirms the form
+      as udgātár-, nominative singular masculine. The office does not occur in the Samaveda,
+      whose chant it exists to sing.
+    aliases_sa: [udgāteva]
+    aliases_en: []
+    broader: [VG:CONCEPT:HOTR-PRIEST]
+    related_devatas: []
+
+  # -------------------------------------------------------------------------
+  # Ritual acts
+  #
+  # ACTION, which is the only thing REL_HAS_STEP may point at (Ritual -> Action), and which
+  # before this file had five members, none of them a ritual act. These seven are named by
+  # the corpus in the first person or the imperative -- the words spoken while the thing is
+  # done -- or by an ordinal that fixes their place. Three of them are the three pressings,
+  # and they are the only ordered steps in this layer; see rituals_v3.yaml.
+  # -------------------------------------------------------------------------
+
+  - concept_id: VG:CONCEPT:PRATAHSAVANA-MORNING-PRESSING
+    preferred_label_sa: prātaḥsavana
+    preferred_label_en: morning pressing
+    node_type: ACTION
+    definition: >-
+      The first of the day's three soma pressings, named by its time of day. RV 3.28.1 and
+      RV 3.52.4 offer the cake "prātaḥsāve"; AVS 6.47.1 has Agni protect us "prātaḥsavane";
+      and RV 10.112.1 calls it the first draught outright -- "prātaḥsāvas tava hi
+      pūrvapītiḥ", Griffith's "thy first draught is early morn's libation".
+    aliases_sa: [prātaḥsāve, prātaḥsavane, prātaḥsāvas]
+    aliases_en: []
+    broader: [VG:CONCEPT:SOMA-PRESSING]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:MADHYANDINA-SAVANA-MIDDAY-PRESSING
+    preferred_label_sa: mādhyandina savana
+    preferred_label_en: midday pressing
+    node_type: ACTION
+    definition: >-
+      The second of the day's three soma pressings, named by its time of day at RV 3.28.4,
+      RV 3.32.3, RV 5.40.4, AVS 7.76.6 and AVS 20.12.7, and by its ordinal at AVS 6.47.2 --
+      "asmin dvitīye savane", "at this second libation". VS 19.26 assigns it to Indra.
+    aliases_sa: [mādhyaṃdine, mādhyandine, mādhyaṃndinam]
+    aliases_en: []
+    broader: [VG:CONCEPT:SOMA-PRESSING]
+    related_devatas: [VG:DEVATA:INDRAH]
+
+  - concept_id: VG:CONCEPT:TRTIYA-SAVANA-THIRD-PRESSING
+    preferred_label_sa: tṛtīya savana
+    preferred_label_en: third pressing
+    node_type: ACTION
+    definition: >-
+      The third of the day's three soma pressings, and the one the corpus numbers most
+      often: "tṛtīye savane" at RV 3.28.5, "idaṃ tṛtīyaṃ savanaṃ kavīnām" at AVS 6.47.3,
+      "tṛtīye savana ṛbhūṇām" at AVS 9.1.13, and the Rbhus' third libation at RV 4.34.4,
+      RV 4.35.9 and RV 8.57.1. All six were read and all six are this act -- and none of them
+      is reachable, because the third pressing is the only one of the three the corpus never
+      writes as one word. The morning has prātaḥsāva and the midday has mādhyaṃdina; the
+      third has only the phrase tṛtīya + savana, and SANDHI_MATCH_VEDAS restricts the
+      production substring pass to the Samaveda. The one alias is therefore VS 19.26's single
+      token, `tṛtīyamāptaṃṃ`, whose doubled anusvara is an artefact of this corpus's VSM
+      transliteration and is recorded as such in the report: it is brittle by construction
+      and will need replacing if that transliteration is normalised.
+    aliases_sa: [tṛtīyamāptaṃṃ]
+    aliases_en: []
+    broader: [VG:CONCEPT:SOMA-PRESSING]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:GRAHANA-RITUAL-TAKING-UP
+    preferred_label_sa: grahaṇa
+    preferred_label_en: ritual taking up
+    node_type: ACTION
+    definition: >-
+      The act of taking an implement or an offering in hand, spoken in the first person
+      while it is done: "gṛhṇāmi", I take. Twenty passages, twelve Yajurvedic, eight
+      Atharvavedic and not one Rigvedic, which is what a formulary looks like measured
+      against a hymn collection. The full formula is at VS 1.10 -- "by the impulse of god
+      Savitar, with the arms of the Asvins, with the hands of Pusan, acceptable to Agni, I
+      take thee".
+    aliases_sa: [gṛhṇāmi]
+    aliases_en: []
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:HOMA-POURING-INTO-FIRE
+    preferred_label_sa: homa
+    preferred_label_en: pouring into the fire
+    node_type: ACTION
+    definition: >-
+      The pouring of the oblation into the fire, spoken as it is done: "juhomi", I pour
+      (28 passages), and "juhota", pour ye (11). VS 7.26 puts the act, the caller's cry and
+      the strainer in one line: "whatever drop of thine leaps forth, from the adhvaryu's
+      hand or from the filter, that I pour with my mind, made with the vasat-call, svaha".
+    aliases_sa: [juhomi, juhota]
+    aliases_en: []
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:SVAHAKARA-OFFERING-CALL
+    preferred_label_sa: svāhā
+    preferred_label_en: offering call
+    node_type: ACTION
+    definition: >-
+      The cry uttered at the moment the oblation is released, svaha, and its counterpart the
+      vasat-call. 326 passages carry it: 155 in the Yajurveda and 157 in the Atharvaveda
+      against 14 in the Rigveda and none at all in the Samaveda, which makes it the sharpest
+      single lexical signature of a formulary in the corpus. VS 25.1 fires it twice in one
+      breath, "śuklāya svāhā kṛṣṇāya svāhā".
+    aliases_sa: [svāhā, vaṣaṭkṛtaṃ]
+    aliases_en: []
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:AVABHRTHA-CONCLUDING-BATH
+    preferred_label_sa: avabhṛtha
+    preferred_label_en: concluding bath
+    node_type: ACTION
+    definition: >-
+      The bath that ends a soma rite, addressed in the vocative as a power in its own right:
+      "avabhṛtha nicumpuṇa ... with the Gods may I wash out the sin that I have sinned
+      against the Gods, with men the sin against mankind" (VS 3.48, VS 8.27, VS 20.18). Its
+      place in the rite is stated rather than inferred: VS 19.28 closes its chain of means
+      with "sāmnāvabhṛtha āpyate", by the Saman the concluding bath is reached.
+    aliases_sa: [avabhṛtha]
+    aliases_en: []
+    broader: []
+    related_devatas: []
+
+  # -------------------------------------------------------------------------
+  # Substances offered
+  # -------------------------------------------------------------------------
+
+  - concept_id: VG:CONCEPT:SURA-SPIRITUOUS-LIQUOR
+    preferred_label_sa: surā
+    preferred_label_en: spirituous liquor
+    node_type: SUBSTANCE
+    definition: >-
+      The fermented liquor offered beside the soma in the sautramani: "surayā somaḥ suta
+      āsuto madāya" (VS 19.5), "somasya śuṣmaḥ surayā sutasya" (VS 19.33). Griffith renders
+      it "Wine". The bare stem `surā` is deliberately not an alias: at four characters it is
+      below the sandhi floor, its 116 substring hits are 47% intrusions, and three of its
+      six token hits are the dicing-and-drinking topos of AVS 6.70.1 and RV 7.86.6 rather
+      than an offering.
+    aliases_sa: [surayā]
+    aliases_en: []
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:PARISRUT-FERMENTED-DRAUGHT
+    preferred_label_sa: parisrut
+    preferred_label_en: fermented draught
+    node_type: SUBSTANCE
+    definition: >-
+      The draught that has flowed round, poured beside milk, ghee and honey in the
+      sautramani: "payaḥ somaḥ parisrutā ghṛtaṃ madhu" (VS 21.30, VS 21.31), "somaṃ śukraṃ
+      parisrutā sarasvatī" (VS 20.59). Eighteen passages, every one Yajurvedic and not one
+      anywhere else in the corpus.
+    aliases_sa: [parisrutā]
+    aliases_en: []
+    broader: []
+    related_devatas: []
+
+  # -------------------------------------------------------------------------
+  # Vessels and materials the formulary handles
+  # -------------------------------------------------------------------------
+
+  - concept_id: VG:CONCEPT:DRONAKALASA-WOODEN-TUB
+    preferred_label_sa: droṇakalaśa
+    preferred_label_en: wooden soma tub
+    node_type: OBJECT
+    definition: >-
+      The trough-shaped wooden vessel the pressed soma is collected in. Named in the
+      apparatus inventory at VS 18.21, gained by the Vayu cups at VS 19.27, and listed with
+      the kettles and the drinking-vessels at AVS 9.6.17. The VS 18.21 attestation is read
+      evidence but not an alias: there the word sits inside `droṇakalaśaśca`, reachable only
+      by the substring pass, which production runs on the Samaveda alone.
+    aliases_sa: [droṇakalaśam, droṇakalaśāḥ]
+    aliases_en: []
+    broader: [VG:CONCEPT:KALASA-JAR]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:VAYAVYA-VAYU-CUP
+    preferred_label_sa: vāyavya
+    preferred_label_en: vayu cup
+    node_type: OBJECT
+    definition: >-
+      The cups belonging to Vayu, drawn in the soma rite. Two attestations, in two Vedas,
+      both read: "camasāś ca me vāyavyāni ca me" in the apparatus inventory at VS 18.21, and
+      Whitney's "the drinking-vessels those of Vāyu" at AVS 9.6.17. The bare stem `vāyavya`
+      is refused: one of its three substring hits is `sakthyor vāyavyaḥ`, an anatomical term
+      inside the horse's dismemberment.
+    aliases_sa: [vāyavyāni]
+    aliases_en: []
+    broader: [VG:CONCEPT:CAMASA-CUP]
+    related_devatas: [VG:DEVATA:VAYUH]
+
+  - concept_id: VG:CONCEPT:ISTAKA-BRICK
+    preferred_label_sa: iṣṭakā
+    preferred_label_en: ritual brick
+    node_type: OBJECT
+    definition: >-
+      The brick the fire is piled out of, addressed directly and only in the Yajurveda:
+      "imā me agna iṣṭakā dhenavaḥ santu", let these bricks of mine, Agni, be milch-cows
+      (VS 17.2). Token-matched once and read once; its four substring hits are 40%
+      intrusions and are not relied on.
+    aliases_sa: [iṣṭakā]
+    aliases_en: []
+    broader: []
+    related_devatas: [VG:DEVATA:AGNIH]

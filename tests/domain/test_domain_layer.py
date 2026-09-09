@@ -18,8 +18,11 @@ edges.
 
 from __future__ import annotations
 
+import io
 import os
 import pathlib
+import sys
+import warnings
 
 import pytest
 
@@ -545,6 +548,39 @@ def test_live_typed_labels_exist_for_the_flattened_types() -> None:
         driver.close()  # type: ignore[attr-defined]
 
 
+def _merged_concern_whitelists() -> dict[str, list[str]]:
+    """The concern whitelist as the builder assembles it: V1 + V3 + promotions.
+
+    Imported from the build script rather than reimplemented, so this test cannot drift
+    from the merge it is checking. That mattered: an earlier copy of the merge rule here
+    omitted the promotions block and turned a correct projection into a test failure.
+    """
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location(
+        "_build_domain_v2_for_test", PROJECT_ROOT / "scripts" / "build_domain_v2.py"
+    )
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    saved = sys.stdout
+    try:
+        # The script rebinds sys.stdout at import time; give it a throwaway.
+        sys.stdout = io.TextIOWrapper(io.BytesIO(), encoding="utf-8")
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            spec.loader.exec_module(module)
+    finally:
+        sys.stdout = saved
+
+    domain_dir = PROJECT_ROOT / "data" / "domain" / "vedagraph_domain_v2"
+    return dict(
+        module._merge_concern_lists(
+            module._read_yaml(domain_dir / "concern_predicates.yaml"),
+            module._read_yaml(domain_dir / "concern_predicates_v3.yaml"),
+        )
+    )
+
+
 @pytest.mark.live
 @_LIVE
 def test_live_typed_concern_predicates_only_reach_whitelisted_entities() -> None:
@@ -553,15 +589,16 @@ def test_live_typed_concern_predicates_only_reach_whitelisted_entities() -> None
     The whitelist is shorter than the entity list on purpose: an entity absent from it
     stays a mention, and emitting a typed edge for it would be wrong rather than
     generous. This checks the projector honoured that.
-    """
-    import yaml
 
-    path = (
-        PROJECT_ROOT / "data" / "domain" / "vedagraph_domain_v2" / "concern_predicates.yaml"
-    )
-    if not path.exists():
-        pytest.skip("concern predicates not authored")
-    lists = yaml.safe_load(path.read_text(encoding="utf-8"))
+    **The whitelist is the merged one, not the V1 file.** V3 adds
+    ``concern_predicates_v3.yaml`` (declared ``merge_semantics: union_with_v1``) plus a
+    ``promotions`` block, and the projector honours all three. Reading only the V1 file
+    here made this test fail with "ADDRESSES_CONCERN reached an entity outside the
+    whitelist" on 107 edges that are, in fact, whitelisted -- the test was measuring a
+    subset of the contract and reporting the difference as a violation. It now reads the
+    same merge the builder uses, so the two cannot disagree.
+    """
+    lists = _merged_concern_whitelists()
     driver = _session()
     try:
         with driver.session() as session:  # type: ignore[attr-defined]

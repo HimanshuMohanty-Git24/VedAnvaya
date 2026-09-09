@@ -1,0 +1,200 @@
+# The bounded action-predicate vocabulary. Closed set; no free-form predicates.
+#
+# Authority: this file is the architect's contract for the agentive layer. A root that
+# does not map into one of these classes is recorded as UNMAPPED_ROOT and produces no
+# predicate edge. Adding a class is a deliberate ontology change, not something an
+# extractor may do because a verse needed it.
+#
+# ---------------------------------------------------------------------------------------
+# Why this list is not the list in the brief
+#
+# The brief offers 39 candidate predicates and says to prune them into a bounded
+# vocabulary. Pruning was done against what the corpus's 662 annotated verbal roots
+# actually support, and the result differs from the offered list in three ways, each
+# recorded here because a silent divergence would look like an oversight:
+#
+# * **Six offered predicates are dropped for want of a root.** WIELDS, RIDES, MARRIES,
+#   BURIES, CREMATES and CONSECRATES have no distinct Rigvedic verbal root behind them.
+#   The acts exist in the corpus but are expressed by nominal phrases, not by a verb this
+#   layer can key on. Declaring them and leaving them empty would misreport an absence of
+#   *evidence* as an absence of *modelling*.
+# * **REQUESTS_FROM is not a predicate here.** It is a grammatical *frame*, not a verb
+#   class: a second-person imperative addressed to a vocative deity is a request, and the
+#   thing requested is whatever the verb means. Modelling it as a predicate would force
+#   every request to lose its content ("Indra REQUESTS_FROM ???"). It is carried instead
+#   as the assertion's `frame`, orthogonal to the predicate -- so "Indra is asked to COME"
+#   and "Indra COMES" share a predicate and differ in frame, which is the distinction a
+#   researcher actually wants.
+# * **Eleven predicates are added.** Motion, perception, speech, shining, flowing and
+#   dwelling are among the highest-frequency verb classes in the Rigveda and the offered
+#   list has no home for them. Dropping them would discard roughly a third of all
+#   agentive evidence in the corpus -- including "bringing dawn", "coming to the
+#   sacrifice" and "the waters flowing", all three of which the brief names elsewhere as
+#   things the graph must answer.
+#
+# ---------------------------------------------------------------------------------------
+# Fields
+#
+#   predicate      the controlled name, used as the Action entity key suffix
+#   gloss          what it asserts, in one line
+#   argument_frame which roles are expected; a role absent from the verse is absent from
+#                  the assertion, never guessed
+#   note           the judgement call, where there was one
+
+version: vedagraph-action-predicates-v1
+model_version: vedagraph-knowledge-model-v3
+
+roles:
+  AGENT: the being that acts. From a nominative in agreement with a finite verb, or a
+    vocative addressed by a second-person verb.
+  PATIENT: what is acted upon. From an accusative in the same metrical line.
+  BENEFICIARY: for whom the act is done. From a dative.
+  INSTRUMENT: with what. From an instrumental.
+  LOCATION: where. From a locative.
+
+frames:
+  ASSERTED: the verse states that the agent does this. Third-person finite verb with an
+    agreeing nominative agent, or a second-person indicative addressed to the agent.
+  REQUESTED: the verse asks the agent to do this. Second-person imperative, optative,
+    subjunctive, injunctive or precative addressed to a vocative agent. This is a
+    grammatical fact about the verse, not a reading of it.
+
+predicates:
+  # --- offered by the brief and supported by the corpus ------------------------------
+  - predicate: INVOKES
+    gloss: calls a divine being to attend
+    argument_frame: [AGENT, PATIENT]
+  - predicate: PRAISES
+    gloss: sings, extols or magnifies
+    argument_frame: [AGENT, PATIENT]
+  - predicate: GRANTS
+    gloss: gives, bestows or confers
+    argument_frame: [AGENT, PATIENT, BENEFICIARY]
+  - predicate: PROTECTS
+    gloss: guards, shields or keeps safe
+    argument_frame: [AGENT, PATIENT]
+  - predicate: HEALS
+    gloss: cures, mends or makes whole
+    argument_frame: [AGENT, PATIENT]
+    note: thin in the Rigveda and central in the Atharvaveda, where this layer has no
+      annotation to derive from. Expect a low Rigvedic count and say so.
+  - predicate: SLAYS
+    gloss: kills or strikes down
+    argument_frame: [AGENT, PATIENT, INSTRUMENT]
+  - predicate: DEFEATS
+    gloss: overcomes or subdues without necessarily killing
+    argument_frame: [AGENT, PATIENT]
+  - predicate: RELEASES
+    gloss: sets free, lets loose, unpens
+    argument_frame: [AGENT, PATIENT]
+    note: the root sr̥j carries the release of the waters and of cattle alike; the
+      distinction is in the patient, not the predicate.
+  - predicate: BINDS
+    gloss: fetters, holds fast, restrains
+    argument_frame: [AGENT, PATIENT]
+  - predicate: DRINKS
+    gloss: drinks
+    argument_frame: [AGENT, PATIENT]
+  - predicate: OFFERS
+    gloss: sacrifices, pours an oblation, presents to a deity
+    argument_frame: [AGENT, PATIENT, BENEFICIARY]
+  - predicate: RECEIVES_OFFERING
+    gloss: accepts or enjoys what is offered
+    argument_frame: [AGENT, PATIENT]
+  - predicate: CREATES
+    gloss: makes, fashions, generates, begets
+    argument_frame: [AGENT, PATIENT, INSTRUMENT]
+  - predicate: DESTROYS
+    gloss: shatters, consumes, brings to nothing
+    argument_frame: [AGENT, PATIENT]
+  - predicate: CARRIES
+    gloss: bears, conveys, brings
+    argument_frame: [AGENT, PATIENT, BENEFICIARY]
+  - predicate: LEADS
+    gloss: guides or drives forward
+    argument_frame: [AGENT, PATIENT]
+  - predicate: SEEKS
+    gloss: looks for, strives after, wins
+    argument_frame: [AGENT, PATIENT]
+  - predicate: DESIRES
+    gloss: wants, longs for, takes pleasure in
+    argument_frame: [AGENT, PATIENT]
+  - predicate: BLESSES
+    gloss: favours, is gracious to, helps
+    argument_frame: [AGENT, PATIENT]
+  - predicate: CURSES
+    gloss: imprecates against
+    argument_frame: [AGENT, PATIENT]
+  - predicate: PRESSES
+    gloss: presses out, expresses juice
+    argument_frame: [AGENT, PATIENT]
+  - predicate: POURS
+    gloss: pours, sheds, sprinkles
+    argument_frame: [AGENT, PATIENT, LOCATION]
+  - predicate: BURNS
+    gloss: burns, scorches, blazes
+    argument_frame: [AGENT, PATIENT]
+  - predicate: PURIFIES
+    gloss: cleanses, clarifies, makes bright
+    argument_frame: [AGENT, PATIENT]
+  - predicate: ESTABLISHES
+    gloss: sets in place, fixes, founds, upholds
+    argument_frame: [AGENT, PATIENT, LOCATION]
+  - predicate: MEASURES
+    gloss: measures, apportions, marks out
+    argument_frame: [AGENT, PATIENT]
+  - predicate: BUILDS
+    gloss: fashions by craft, hews, joins
+    argument_frame: [AGENT, PATIENT]
+
+  # --- added because the corpus requires them ----------------------------------------
+  - predicate: MOVES_TO
+    gloss: goes, comes, approaches, drives to
+    argument_frame: [AGENT, LOCATION, BENEFICIARY]
+    note: the single largest verb class in the corpus. "Come to our sacrifice" is the
+      commonest thing said to a Vedic god and there is no other predicate for it.
+  - predicate: FLOWS
+    gloss: flows, streams, gushes
+    argument_frame: [AGENT, LOCATION]
+    note: carries the Soma pressing and the release of the waters, both of which the
+      brief names as required answers.
+  - predicate: SHINES
+    gloss: shines, gleams, dawns, kindles into brightness
+    argument_frame: [AGENT, LOCATION]
+  - predicate: HEARS
+    gloss: hears, listens, gives ear
+    argument_frame: [AGENT, PATIENT]
+  - predicate: SEES
+    gloss: sees, beholds, looks upon
+    argument_frame: [AGENT, PATIENT]
+  - predicate: SPEAKS
+    gloss: speaks, utters, proclaims
+    argument_frame: [AGENT, PATIENT, BENEFICIARY]
+  - predicate: PERCEIVES
+    gloss: thinks, knows, notices, has in mind
+    argument_frame: [AGENT, PATIENT]
+  - predicate: DWELLS
+    gloss: sits, abides, takes a seat
+    argument_frame: [AGENT, LOCATION]
+  - predicate: STRENGTHENS
+    gloss: increases, swells, makes grow, invigorates
+    argument_frame: [AGENT, PATIENT]
+  - predicate: EXHILARATES
+    gloss: gladdens, intoxicates, revels
+    argument_frame: [AGENT, PATIENT]
+  - predicate: RULES
+    gloss: rules, has power over, is master of
+    argument_frame: [AGENT, PATIENT]
+  - predicate: RESCUES
+    gloss: carries across, delivers out of straits
+    argument_frame: [AGENT, PATIENT]
+
+  # --- classes that exist so that honest non-classification has a home ---------------
+  - predicate: IS_OR_BECOMES
+    gloss: copular and existential predication
+    argument_frame: [AGENT]
+    note: >-
+      as-1 and bhu are the second and fourth commonest roots in the corpus and neither
+      asserts an action. They are classed rather than mapped into a real predicate so
+      that "Indra is" never appears in an action profile, while the assertion still
+      exists and remains countable. Excluded from action profiles by default.

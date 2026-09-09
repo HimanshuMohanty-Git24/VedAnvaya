@@ -1,0 +1,5533 @@
+# The Rigvedic verbal roots mapped onto the closed action-predicate vocabulary.
+#
+# Source of the roots: the University of Zurich manual morphosyntactic annotation of Lubotsky's
+# Rigveda text, as carried in data/knowledge/rigveda_lexical_v1/tokens.jsonl -- 32,029 tokens whose
+# part_of_speech is 'root', over 702 distinct lemma labels. This file is keyed on lemma_label and
+# lemma_id, NOT on root_folded, because the fold collapses 37 sets of homonymous roots. See
+# recommendations.key_hazard.
+#
+# Every mapping was decided from what the root means as a verb in Rigvedic usage. 75 roots were
+# checked against the Sanskrit and Griffith's English in real verses before being written down, and
+# every such root carries its verse citations in its note. Where a root spans two predicates, one was
+# chosen and the loss is recorded in the note; a secondary_predicate is given only where the split is
+# systematic and a disambiguation signal could be stated.
+
+version: vedagraph-action-root-map-v1
+predicate_vocabulary: vedagraph-action-predicates-v1
+annotation_layer_id: VEDAWEB.ZURICH
+adjudicator: MODEL_ADJUDICATED
+adjudicator_model: claude-opus-5
+adjudication_method: >-
+  every root with tokens >= 5 was adjudicated individually; 7 roots below that floor were rescued for
+  religious centrality and are flagged in their notes; the remaining sub-floor roots are UNMAPPED_ROOT under
+  the stated bulk rule.
+frequency_floor: 5
+sub_floor_rule: >-
+  a root with fewer than 5 tokens is UNMAPPED_ROOT and produces no predicate edge, unless it is named in
+  rescued_below_floor. 258 lemmas totalling 488 tokens (1.52% of the corpus) fall under this rule. They are
+  not listed individually.
+rescued_below_floor: ["√gr̥h-", "√mah- ?", "√śruṣ-", "√gup-", "√bhiṣaj-", "√bhiṣajy-", "√gopāy-"]
+coverage:
+  roots_mapped: 342
+  roots_unmapped: 360
+  roots_unmapped_adjudicated: 102
+  roots_unmapped_below_floor: 258
+  root_tokens_mapped: 29665
+  root_tokens_unmapped: 2364
+  root_tokens_total: 32029
+  token_coverage: 0.9262
+  distinct_lemma_labels_in_annotation: 702
+  distinct_folded_keys: 662
+predicate_distribution:
+  INVOKES: 473
+  PRAISES: 1143
+  GRANTS: 1083
+  PROTECTS: 520
+  HEALS: 4
+  SLAYS: 504
+  DEFEATS: 649
+  RELEASES: 326
+  BINDS: 644
+  DRINKS: 421
+  OFFERS: 719
+  RECEIVES_OFFERING: 275
+  CREATES: 1824
+  DESTROYS: 575
+  CARRIES: 916
+  LEADS: 734
+  SEEKS: 1109
+  DESIRES: 641
+  BLESSES: 501
+  CURSES: 35
+  PRESSES: 737
+  POURS: 204
+  BURNS: 346
+  PURIFIES: 748
+  ESTABLISHES: 1587
+  MEASURES: 95
+  BUILDS: 235
+  MOVES_TO: 3768
+  FLOWS: 387
+  SHINES: 631
+  HEARS: 370
+  SEES: 422
+  SPEAKS: 931
+  PERCEIVES: 1057
+  DWELLS: 950
+  STRENGTHENS: 822
+  EXHILARATES: 426
+  RULES: 212
+  RESCUES: 352
+  IS_OR_BECOMES: 2289
+predicates_with_no_root: []
+recommendations:
+  consult_secondary_conjugation: ["√vanⁱ-", "√naś- 2", "√sthā-", "√vr̥dh-", "√dhr̥-", "√budh-", "√śak-", "√śru- 1", "√mr̥ḍ-", "√vr̥t-", "√sad-", "√mad-", "√randh-", "√yu- 2", "√dhā- 2", "√svap-", "√han-"]
+  consult_secondary_conjugation_note: >-
+    2,237 root tokens carry a secondary conjugation (CAUS 793, DEN 680, INT 442, DES 322). It changes the
+    PREDICATE for exactly one root of consequence: vanⁱ-, whose desiderative 'vivāsati' is the lexicalised
+    'invites a god' (INVOKES) rather than the simplex 'wins' (SEEKS), affecting 55 of its 182 tokens. It
+    changes the predicate for sthā- (CAUS 'sthāpaya-' = ESTABLISHES, not DWELLS) and inverts the argument
+    frame without changing the predicate for vr̥dh-, dhr̥-, sad-, vr̥t-, naś-2, dhā-2 and randh-. It must
+    NOT be read as 'wants to X' by rule: śak- is 64% DES and mr̥ḍ- is 45% CAUS, and in both the marked form
+    is the ordinary lexical meaning. INT never changes a predicate in this map. The 680 DEN tokens are
+    separate lemmas here, not markings on a base root.
+  consult_local_particle: ["√vr̥- 1", "√sthā-", "√tr̥̄-", "√i- 1", "√gam-", "√idh- 1", "√sad-", "√ruh-", "√vr̥t-", "√dhā- 1", "√bhr̥-", "√hu-", "√sr̥j-", "√tan-", "√vī-", "√yam-", "√viś-", "√rāj-", "√bhūṣ-", "√muc-", "√cakṣ-", "√jñā-", "√dās-", "√jūrv-"]
+  consult_local_particle_note: >-
+    preverbs are not in the lemma: 2,177 root tokens carry the 'local particle' morphological flag and the
+    particle is a separate token in the same pada, so 'ā-gam' (come) and 'gam' (go) share the root gam. THE
+    ONE PLACE WHERE THE PREDICATE INVERTS is vr̥-1: bare vr̥- closes (BINDS) and apa-vr̥- opens (RELEASES),
+    and 47 of its 179 tokens carry a particle. The mappings materially improved by the particle are sthā-
+    (ā-sthā mount, ud-sthā rise, vi-sthā spread), tr̥̄- (pra-tira prolong vs ati-tar cross), idh-1 (sam-idh,
+    94 of 185 tokens), i-1 (ā-i come vs i go, 132 tokens), sad- (ni-sad, ā-sad, 78 tokens) and vī- (apa-vī
+    drive off). The mappings UNAFFECTED are the ones whose predicate is a property of the act itself and not
+    of its direction: as-1, bhū, su- (press), pū- (purify), stu-, gr̥̄-1, r̥c-, hū-, juṣ-, mad-, īś-, vaś-,
+    iṣ-2, mr̥ḍ-, śak-, arṣ-, kṣar-, sru-, takṣ-, mā-1 -- none of which carries a particle on more than a
+    handful of tokens. Record the particle as a qualifier on the assertion; do not try to derive a new
+    predicate from it except for vr̥-1.
+  key_hazard: >-
+    root_folded MUST NOT be used as the join key. 37 folded keys carry two or three distinct scholarly
+    lemmas each, and 82 keys contain an invisible private-use sentinel in place of a vocalic r, a lateral or
+    an anusvara -- √r̥- folds to a bare U+E000 with no letter at all. Join on lemma_id (the VedaWeb lemma
+    identifier, unique across the annotation) or on lemma_label (also unique). root_folded is retained in
+    each entry only so that a consumer of the older 662-root inventory can see which of its rows this entry
+    belongs to.
+  notes: >-
+    READ THIS BEFORE WIRING THE EXTRACTOR. (1) KEY ON lemma_id OR lemma_label, NEVER ON root_folded.
+    root_folded is the fold of the annotation's normalized_lemma and it destroys the scholarly sense number:
+    37 sets of homonymous roots collapse onto one folded key, including every case the brief warned about.
+    pā-1 'protect' (261 tokens) and pā-2 'drink' (405) both fold to 'pā'; vid-1 'find' (211) and vid-2
+    'know' (391) both fold to 'vid'; as-1 'be' (1366) and as-2 'throw' (32) both fold to 'as'; yā-1 'go'
+    (572) and yā-2 'implore' (150) both fold to 'yā'. The supplied 662-root inventory is built on that key,
+    and its single 'pā' entry of 666 tokens is labelled '√pā- 2' with 'piba' and 'pāhi' side by side in its
+    examples -- so consuming that inventory directly would file all Soma-drinking and all divine protection
+    under one predicate. (2) root_folded is not even always legible. The fold replaces vocalic r̥/r̥̄, the
+    lateral series and every spelling of the anusvara with private-use sentinels, so 82 of these 444 entries
+    have a root_folded value containing an invisible U+E000-range character. √r̥- (146 tokens) folds to a
+    BARE U+E000 with no letter at all, and √r̥c- folds to U+E000 followed by 'c'. Every root_folded value in
+    this file is therefore emitted as a double-quoted YAML scalar with the sentinels written out as \uXXXX
+    escapes, so that they survive a round trip and stay visible to a reader. A tool that prints these keys
+    to a terminal will appear to show an empty or truncated key; that is a display artefact, not a missing
+    value, and it is how the emptiness of √r̥- was initially misdiagnosed here. (3) THE BRIEF INVERTS vid-1
+    AND vid-2. It states vid-1 = 'know' and vid-2 = 'find'; the Zurich annotation has vid-1 = find (vindati)
+    and vid-2 = know (veda). Verified against RV 1.6.5 and RV 1.4.3. (4) VOICE MATTERS MORE THAN SECONDARY
+    CONJUGATION for role assignment. idh-1, pū-, janⁱ- and vr̥dh- all keep one predicate while the voice or
+    the stem decides whether the nominative is the actor or the undergoer. An extractor that assigns AGENT
+    from any nominative will make the fire kindle the priest. (5) THE FRAME DOES NOT CARRY DESIDERATIVE
+    INTENT. A DES form of han- ('jighāṃsati', seeks to slay) will surface as an ASSERTED slaying, because
+    the vocabulary's two frames are ASSERTED and REQUESTED only. Roughly 322 DES tokens are affected
+    corpus-wide. (6) THREE PREDICATES REST ON ALMOST NOTHING. HEALS exists only because two sub-floor roots
+    (bhiṣaj-, bhiṣajy-, 4 tokens together) were rescued; without them it would be empty. CURSES has 5 roots
+    and 32 tokens. HEALS and CURSES should be reported with their token counts attached, never as bare
+    categories. (7) THREE CLASSES ARE MISSING FROM THE VOCABULARY and their absence is visible as unmapped
+    mass: there is no EATS (ad-, aśⁱ-, ghas-, bhas-, gras-, gr̥̄-2, bhuj-2 = 132 tokens, and Agni is the
+    eater of oblations); no ANOINTS or ADORNS (añj- alone is 112 tokens of a core ritual act); and no
+    VOCALIZES, so ten roaring and thundering roots totalling 268 tokens are filed under SPEAKS with the
+    articulacy invented. (8) DO NOT PRESENT A PREDICATE EDGE AS A PARSE. This map assigns a verb class to a
+    lemma. It says nothing about which nominative in the pada is the subject of which verb, and the
+    annotation it rests on is morphological, with no dependency parse and no clause boundary.
+roots:
+  - lemma_label: "√as- 1"
+    lemma_id: "lemma_as_1305"
+    root_folded: "as"
+    tokens: 1366
+    predicate: IS_OR_BECOMES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S001:V004, VG:RV:SAK:M01:S004:V006]
+    gloss: "to be, exist"
+    note: null
+  - lemma_label: "√kr̥-"
+    lemma_id: "lemma_kf_2645"
+    root_folded: "k\uE000"
+    tokens: 1207
+    predicate: CREATES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 2
+    examples: [VG:RV:SAK:M01:S001:V006, VG:RV:SAK:M01:S061:V016]
+    gloss: "to do, make, perform"
+    note: >-
+      ONE OF THE THREE LOWEST-CONFIDENCE MAPPINGS, and the commonest content root in the corpus at 1,207
+      tokens. kr̥- is a light verb. RV 1.1.6 'yad aṅga dāśuṣe tvam agne bhadraṁ kariṣyasi' is 'whatever good
+      thou wilt do for the worshipper', which Griffith renders 'wilt grant'; RV 1.61.16 'akran' is 'have
+      brought their prayers'. HONEST STATEMENT OF INFORMATION CARRIED: almost none. A CREATES edge derived
+      from kr̥- asserts only that the agent brought some state about. It does not assert making, fashioning
+      or generating, and a large share of the tokens are fixed collocations (namas kr̥- 'do homage', araṁ
+      kr̥- 'make ready', ādhāraṁ kr̥-) where the predicate belongs to the noun and not to the verb.
+      RECOMMENDATION: exclude kr̥- from action profiles by default, exactly as IS_OR_BECOMES is excluded, or
+      surface it behind an explicit low-information flag. Mapping it rather than leaving it UNMAPPED_ROOT is
+      a deliberate choice to keep the evidence countable, not a claim that the predicate is informative.
+  - lemma_label: "√dhā- 1"
+    lemma_id: "lemma_DA_4664"
+    root_folded: "dhā"
+    tokens: 1046
+    predicate: ESTABLISHES
+    secondary_predicate: GRANTS
+    disambiguation: >-
+      A dative beneficiary in the same pada with an abstract good as patient (rayi, vāja, śravas, dyumna) ->
+      GRANTS; a locative in the same pada -> ESTABLISHES. Where both are present, prefer ESTABLISHES.
+    confidence: MEDIUM
+    verses_read: 6
+    examples: [VG:RV:SAK:M01:S064:V014, VG:RV:SAK:M01:S002:V009, VG:RV:SAK:M01:S073:V004]
+    gloss: "to put, place, set, establish"
+    note: >-
+      THE HARDEST HIGH-FREQUENCY DECISION, settled by measurement rather than by intuition. Over all 1,046
+      tokens a locative is present in 30.6% of their padas (2.8x the 11.1% corpus baseline) but a dative in
+      only 19.3% (1.6x the 12.2% baseline). The three unambiguous GRANTS roots show the mirror profile: dā-1
+      38.4% DAT / 6.5% LOC, rā-1 48.6 / 5.5, maṃh- 72.3 / 6.4. Comparable transitive non-giving roots sit
+      near the baseline for LOC (kr̥- 9.9%, bhr̥- 9.6%, janⁱ- 10.3%), so dhā-1's locative enrichment is
+      specific to it. dhā-1 therefore patterns with placement, not giving, and ESTABLISHES is primary.
+      Griffith nonetheless renders it 'give' at RV 1.64.14 ('to the worshippers give glorious strength') and
+      'vouchsafe' at RV 1.2.9, so a real bestowal sense exists and is demoted to secondary rather than
+      denied. WHAT IS LOST: roughly a fifth of these tokens are genuine acts of bestowal that a
+      single-predicate reading records as placement.
+  - lemma_label: "√bhū-"
+    lemma_id: "lemma_BU_6403"
+    root_folded: "bhū"
+    tokens: 854
+    predicate: IS_OR_BECOMES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S001:V009, VG:RV:SAK:M01:S004:V008]
+    gloss: "to become, come to be"
+    note: null
+  - lemma_label: "√i- 1"
+    lemma_id: "lemma_i_1675"
+    root_folded: "i"
+    tokens: 794
+    predicate: MOVES_TO
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 2
+    examples: [VG:RV:SAK:M01:S001:V007, VG:RV:SAK:M01:S113:V008]
+    gloss: "to go, come"
+    note: null
+  - lemma_label: "√gam-"
+    lemma_id: "lemma_gam_2902"
+    root_folded: "gam"
+    tokens: 632
+    predicate: MOVES_TO
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 2
+    examples: [VG:RV:SAK:M01:S001:V004, VG:RV:SAK:M01:S091:V010]
+    gloss: "to go, come, arrive"
+    note: null
+  - lemma_label: "√pū-"
+    lemma_id: "lemma_pU_5681"
+    root_folded: "pū"
+    tokens: 591
+    predicate: PURIFIES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 2
+    examples: [VG:RV:SAK:M01:S003:V004, VG:RV:SAK:M09:S005:V009]
+    gloss: "to purify, clarify"
+    note: >-
+      591 tokens, most of them 'pavate / pavamāna' in Mandala 9, where Griffith renders the middle as the
+      Soma flowing clear (RV 1.3.4 'Thus by fine fingers purified'). The self-clarifying stream is a
+      purification and a flowing at once, and FLOWS is lost. Voice is the signal -- MED = the Soma clarifies
+      itself, ACT = the priests purify it -- but the predicate is the same either way; only the AGENT
+      changes.
+  - lemma_label: "√su-"
+    lemma_id: "lemma_su_9701"
+    root_folded: "su"
+    tokens: 589
+    predicate: PRESSES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 2
+    examples: [VG:RV:SAK:M01:S130:V002, VG:RV:SAK:M01:S002:V004]
+    gloss: "to press out (Soma)"
+    note: >-
+      The Soma-pressing root. 'sutaḥ' (pressed) is its commonest form and Mandala 9's central verb. RV
+      1.130.2 'drink the Soma juice pressed out with stones'.
+  - lemma_label: "√janⁱ-"
+    lemma_id: "lemma_jan_3389"
+    root_folded: "janⁱ"
+    tokens: 581
+    predicate: CREATES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 2
+    examples: [VG:RV:SAK:M01:S005:V006, VG:RV:SAK:M01:S151:V001]
+    gloss: "to beget, bring forth, be born"
+    note: >-
+      581 tokens split between two incompatible argument frames with NO annotation to separate them.
+      'janayan / ajījanat / jī́janan' = X begets Y, a real CREATES with AGENT and PATIENT (RV 1.151.1 'the
+      wise brought forth with power'). 'jāyate / jātaḥ / ajāyata / jajñānaḥ' = X is born, which has no agent
+      at all, and 150 of the tokens are PTCP-ta 'born' (RV 1.5.6 'wast born to drink the Soma juice'). The
+      annotation marks no secondary conjugation on any of them, so an extractor must read the stem off the
+      surface: -aya- and reduplicated-aorist stems are agentive, -ya- and -ta- forms are not. Left as one
+      mapping because the annotation gives one lemma, but the AGENT slot must be left empty for the
+      passive-inchoative forms or the graph will claim that Indra begot himself.
+  - lemma_label: "√yā- 1"
+    lemma_id: "lemma_yA_7091"
+    root_folded: "yā"
+    tokens: 572
+    predicate: MOVES_TO
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 2
+    examples: [VG:RV:SAK:M01:S002:V001, VG:RV:SAK:M01:S117:V010]
+    gloss: "to go, drive, travel"
+    note: null
+  - lemma_label: "√bhr̥-"
+    lemma_id: "lemma_Bf_6437"
+    root_folded: "bh\uE000"
+    tokens: 519
+    predicate: CARRIES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 2
+    examples: [VG:RV:SAK:M01:S136:V001, VG:RV:SAK:M01:S001:V007]
+    gloss: "to bear, bring, carry"
+    note: >-
+      A dative is present in 27.0% of its padas (2.2x baseline) because 'bhara naḥ' ('bring us wealth') is
+      formulaic, so the boundary with GRANTS is genuinely soft; the vocabulary's CARRIES gloss ('bears,
+      conveys, brings') is what settles it. RV 1.136.1 'BRING adoration ample and most excellent'; RV 1.1.7
+      'Bringing thee reverence, we come'. 52 of 519 tokens carry a particle, mostly ā- ('ābhr̥tam').
+  - lemma_label: "√hū-"
+    lemma_id: "lemma_hU_10718"
+    root_folded: "hū"
+    tokens: 473
+    predicate: INVOKES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 2
+    examples: [VG:RV:SAK:M01:S101:V006, VG:RV:SAK:M01:S002:V007]
+    gloss: "to call, invoke, summon"
+    note: >-
+      The core invocation root. RV 1.101.6 'havāmahe' -- 'him girt by Maruts we invoke to be our Friend'; RV
+      1.2.7 'huve' -- 'Mitra, of holy strength, I call'. 32 of 473 tokens are INT with no change of class.
+  - lemma_label: "√han-"
+    lemma_id: "lemma_han_10541"
+    root_folded: "han"
+    tokens: 411
+    predicate: SLAYS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 2
+    examples: [VG:RV:SAK:M01:S023:V009, VG:RV:SAK:M01:S162:V011]
+    gloss: "to smite, slay, strike down"
+    note: >-
+      The Indra-Vr̥tra root. SLAYS, not DEFEATS: RV 1.23.9 'hatá vr̥tram' -- 'With conquering Indra for
+      ally, strike Vr̥tra down'. BOTH ARE NOT NEEDED. DEFEATS is left to the corpus's dedicated subduing
+      roots (ji-1 'conquer', sah- 'prevail over', tūrv- 'overpower', randh- 'subdue'), and han- in the
+      Rigveda asserts a kill rather than a victory. The 16 DES tokens ('jighāṃsati', seeks to slay) are
+      intent rather than act, and neither the predicate nor the ASSERTED/REQUESTED frame records that
+      difference -- a desiderative han- will appear as an asserted killing.
+  - lemma_label: "√pā- 2"
+    lemma_id: "lemma_pA_5405"
+    root_folded: "pā"
+    tokens: 405
+    predicate: DRINKS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 4
+    examples: [VG:RV:SAK:M01:S002:V001, VG:RV:SAK:M02:S011:V010, VG:RV:SAK:M01:S108:V010]
+    gloss: "to drink"
+    note: >-
+      RESOLVED AGAINST VERSES. This is the DRINK root: piba, pibati, pibatam, papivān, pītvā, pātave, apām.
+      RV 1.2.1 'ime somā araṁkr̥tāḥ | teṣām pāhi śrudhī havam' -- 'these Soma drops have been prepared:
+      Drink of them, hearken to our call.' RV 2.11.10 'papivān sutasya' -- 'having drunk his fill of flowing
+      Soma'. HAZARD: the imperative 'pāhi' occurs under BOTH pā-2 and pā-1, so the surface form can never
+      disambiguate; only the annotation's lemma id can. Mapping the merged folded key 'pā' to DRINKS would
+      have put 261 protection tokens under DRINKS, and to PROTECTS would have put 405 Soma-drinking tokens
+      under PROTECTS.
+  - lemma_label: "√sthā-"
+    lemma_id: "lemma_sTA_10268"
+    root_folded: "sthā"
+    tokens: 402
+    predicate: DWELLS
+    secondary_predicate: ESTABLISHES
+    disambiguation: >-
+      secondary_conjugation CAUS ('sthāpaya-', make stand, set up) -> ESTABLISHES; otherwise DWELLS.
+    confidence: MEDIUM
+    verses_read: 6
+    examples: [VG:RV:SAK:M01:S006:V001, VG:RV:SAK:M01:S164:V003, VG:RV:SAK:M01:S135:V001]
+    gloss: "to stand, take a stand"
+    note: >-
+      402 tokens. DWELLS is chosen for its 'abides' sense, but sthā- is not sitting, and with a particle it
+      is often not rest at all: ā-sthā 'mount the chariot' (RV 1.164.3 'the seven who on the seven-wheeled
+      car are mounted'), ud-sthā 'rise up' (RV 1.135.1 'the drops have raised themselves'), pari-sthā 'stand
+      around' (RV 1.6.1), vi-sthā 'spread out' (RV 1.94.11). 57 tokens carry a particle and several of those
+      are motion. This is the mapping most improved by consulting the adjacent local particle.
+  - lemma_label: "√vid- 2"
+    lemma_id: "lemma_vid_7999"
+    root_folded: "vid"
+    tokens: 391
+    predicate: PERCEIVES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 3
+    examples: [VG:RV:SAK:M01:S004:V003, VG:RV:SAK:M01:S105:V015, VG:RV:SAK:M01:S152:V006]
+    gloss: "to know"
+    note: >-
+      VERIFIED AND CONTRARY TO THE BRIEF. vid-2 is KNOW (veda, vidvān, vidmá, vidúḥ, vittám, vidyāma) and is
+      the commoner of the pair at 391 tokens against 211. RV 1.4.3 'vidyāma' -- 'So may we be acquainted
+      with thine innermost benevolence'; RV 1.105.15 'vittám' -- 'Mark this my woe, ye Earth and Heaven'.
+  - lemma_label: "√vah-"
+    lemma_id: "lemma_vah_7833"
+    root_folded: "vah"
+    tokens: 382
+    predicate: CARRIES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S001:V002, VG:RV:SAK:M01:S012:V003]
+    gloss: "to convey, drive, draw (a car)"
+    note: >-
+      The horses' and Agni's conveying root: 'ā vaha devān' ('bring the gods hither').
+  - lemma_label: "√dā- 1"
+    lemma_id: "lemma_dA_4164"
+    root_folded: "dā"
+    tokens: 372
+    predicate: GRANTS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S008:V003, VG:RV:SAK:M01:S015:V008]
+    gloss: "to give, bestow"
+    note: >-
+      The give root proper. A dative is present in 38.4% of its padas against a 12.2% corpus baseline.
+  - lemma_label: "√vr̥dh-"
+    lemma_id: "lemma_vfD_8385"
+    root_folded: "v\uE000dh"
+    tokens: 367
+    predicate: STRENGTHENS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 2
+    examples: [VG:RV:SAK:M02:S017:V004, VG:RV:SAK:M01:S001:V008]
+    gloss: "to grow, increase, strengthen"
+    note: >-
+      Consult secondary_conjugation here, but not to change the predicate: the 63 CAUS tokens
+      ('vardhayanti', they strengthen him) and the non-causative ('vāvr̥dhe', he has waxed great, RV 2.17.4
+      'strong in vital power waxed great above them all') are both STRENGTHENS, yet the nominative is the
+      GROWER in one and the GROWER-MAKER in the other. An extractor that ignores CAUS here assigns the wrong
+      role, not the wrong predicate.
+  - lemma_label: "√śru- 1"
+    lemma_id: "lemma_Sru_8985"
+    root_folded: "śru"
+    tokens: 366
+    predicate: HEARS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 1
+    examples: [VG:RV:SAK:M01:S002:V001]
+    gloss: "to hear, listen"
+    note: >-
+      'śrudhī havam' ('hear our call') is the second commonest request in the corpus after 'come'. The 9
+      CAUS tokens ('śrāvaya', cause to hear, proclaim) are a different act with no class; that reading is
+      lost.
+  - lemma_label: "√sad-"
+    lemma_id: "lemma_sad_9208"
+    root_folded: "sad"
+    tokens: 336
+    predicate: DWELLS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S005:V001, VG:RV:SAK:M01:S012:V004]
+    gloss: "to sit, be seated"
+    note: >-
+      'barhiṣi sīda' ('be seated on the sacred grass') is the standard invitation to a god. The 17 CAUS
+      tokens ('sādaya', seat him) do not change the predicate but move the sitter into PATIENT. 78 of 336
+      tokens carry a particle (ni-sad 'sit down', ā-sad 'sit upon').
+  - lemma_label: "√yam-"
+    lemma_id: "lemma_yam_7053"
+    root_folded: "yam"
+    tokens: 309
+    predicate: GRANTS
+    secondary_predicate: BINDS
+    disambiguation: >-
+      ni-yam, or an accusative that is a rein, a bow or a living thing being held -> BINDS; a dative
+      beneficiary with a gift as patient -> GRANTS.
+    confidence: MEDIUM
+    verses_read: 3
+    examples: [VG:RV:SAK:M03:S013:V004, VG:RV:SAK:M01:S010:V001, VG:RV:SAK:M01:S135:V006]
+    gloss: "to hold out, extend, present"
+    note: >-
+      A dative is present in 36.2% of its padas, the same profile as dā-1 (38.4%), and Griffith renders
+      'yachatu' as 'grant' (RV 3.13.4 'may the gracious Agni grant most goodly shelter'). The root sense is
+      'hold, extend', so 'restrain' and ud-yam 'raise up' (RV 1.10.1 'The priests have raised thee up on
+      high') are lost.
+  - lemma_label: "√avⁱ-"
+    lemma_id: "lemma_av_1101"
+    root_folded: "avⁱ"
+    tokens: 304
+    predicate: BLESSES
+    secondary_predicate: PROTECTS
+    disambiguation: >-
+      An accusative patient in danger (a warrior in battle, a besieged fort, a threatened people) ->
+      PROTECTS; a worshipper, a prayer or a sacrifice as patient -> BLESSES.
+    confidence: MEDIUM
+    verses_read: 3
+    examples: [VG:RV:SAK:M01:S004:V008, VG:RV:SAK:M01:S112:V014, VG:RV:SAK:M01:S166:V013]
+    gloss: "to favour, further, help"
+    note: >-
+      Griffith gives both 'Helpest the warrior in the fray' (RV 1.4.8) and 'ye guarded well great Atithigva'
+      (RV 1.112.14). BLESSES was chosen because the vocabulary's gloss for it -- 'favours, is gracious to,
+      helps' -- is a near-exact match for av-'s root sense of furthering, whereas PROTECTS implies a threat
+      that most of these 304 tokens do not name.
+  - lemma_label: "√yaj-"
+    lemma_id: "lemma_yaj_6994"
+    root_folded: "yaj"
+    tokens: 291
+    predicate: OFFERS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S013:V001, VG:RV:SAK:M01:S013:V006]
+    gloss: "to sacrifice, worship with oblation"
+    note: null
+  - lemma_label: "√stu-"
+    lemma_id: "lemma_stu_10237"
+    root_folded: "stu"
+    tokens: 265
+    predicate: PRAISES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S012:V007, VG:RV:SAK:M01:S012:V011]
+    gloss: "to praise, extol"
+    note: null
+  - lemma_label: "√pā- 1"
+    lemma_id: "lemma_pA_5404"
+    root_folded: "pā"
+    tokens: 261
+    predicate: PROTECTS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 4
+    examples: [VG:RV:SAK:M01:S018:V005, VG:RV:SAK:M02:S003:V008, VG:RV:SAK:M01:S143:V008]
+    gloss: "to protect, guard, preserve"
+    note: >-
+      RESOLVED AGAINST VERSES. This is the PROTECT root: pāti, pātu, pānti, pāta, pāsi. RV 1.18.5 'dakṣiṇā
+      pātv aṁhasaḥ' -- 'Daksina, Preserve that mortal from distress.' RV 2.3.8 'barhir edam achidram pāntu'
+      -- 'protect this holy Grass, our flawless refuge!' RV 1.143.8 'pari pāhi no jāḥ' -- 'O Helper, keep
+      our children.' Note that the supplied root inventory carried a single 'pā' entry of 666 tokens
+      labelled '√pā- 2', whose example surfaces already mixed 'piba' with 'pāhi'.
+  - lemma_label: "√mad-"
+    lemma_id: "lemma_mad_6533"
+    root_folded: "mad"
+    tokens: 236
+    predicate: EXHILARATES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S009:V001, VG:RV:SAK:M01:S009:V003]
+    gloss: "to exhilarate, be intoxicated, revel"
+    note: >-
+      The Soma-joy root. 64 of 236 tokens are CAUS ('mādayasva', gladden thyself) with no change of
+      predicate.
+  - lemma_label: "√juṣ-"
+    lemma_id: "lemma_juz_3541"
+    root_folded: "juṣ"
+    tokens: 233
+    predicate: RECEIVES_OFFERING
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 3
+    examples: [VG:RV:SAK:M01:S003:V009, VG:RV:SAK:M03:S044:V001, VG:RV:SAK:M02:S039:V008]
+    gloss: "to take pleasure in, accept graciously"
+    note: null
+  - lemma_label: "√cit-"
+    lemma_id: "lemma_cit_3290"
+    root_folded: "cit"
+    tokens: 230
+    predicate: PERCEIVES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 2
+    examples: [VG:RV:SAK:M01:S002:V005, VG:RV:SAK:M02:S027:V011]
+    gloss: "to perceive, notice, understand"
+    note: null
+  - lemma_label: "√gr̥̄- 1"
+    lemma_id: "lemma_gir_2973"
+    root_folded: "g\uE001"
+    tokens: 225
+    predicate: PRAISES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 2
+    examples: [VG:RV:SAK:M04:S017:V021, VG:RV:SAK:M01:S009:V009]
+    gloss: "to sing, praise, invoke"
+    note: >-
+      RV 4.17.21 'gr̥ṇānáḥ' -- 'Now, Indra! lauded, glorified with praises'; RV 1.9.9 'Praising with songs
+      the praise-worthy'. A different root from gr̥̄-2 'swallow', which folds to the same key.
+  - lemma_label: "√sr̥j-"
+    lemma_id: "lemma_sfj_10132"
+    root_folded: "s\uE000j"
+    tokens: 222
+    predicate: RELEASES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 2
+    examples: [VG:RV:SAK:M01:S009:V002, VG:RV:SAK:M04:S053:V004]
+    gloss: "to let loose, release, pour forth"
+    note: >-
+      The vocabulary's own RELEASES note names this root. RV 1.9.2 'ā sr̥jata' is 'pour ye forth the juice',
+      so POURS is an adjacent reading; the architect's note settles it on the patient, not the predicate.
+  - lemma_label: "√carⁱ-"
+    lemma_id: "lemma_car_3243"
+    root_folded: "carⁱ"
+    tokens: 215
+    predicate: MOVES_TO
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S006:V001, VG:RV:SAK:M01:S010:V003]
+    gloss: "to move about, roam, fare"
+    note: null
+  - lemma_label: "√vac-"
+    lemma_id: "lemma_vac_7568"
+    root_folded: "vac"
+    tokens: 213
+    predicate: SPEAKS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S004:V006, VG:RV:SAK:M01:S025:V017]
+    gloss: "to speak, say"
+    note: null
+  - lemma_label: "√vid- 1"
+    lemma_id: "lemma_vid_7998"
+    root_folded: "vid"
+    tokens: 211
+    predicate: SEEKS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 3
+    examples: [VG:RV:SAK:M01:S006:V005, VG:RV:SAK:M04:S001:V016, VG:RV:SAK:M02:S022:V004]
+    gloss: "to find, obtain"
+    note: >-
+      VERIFIED AND CONTRARY TO THE BRIEF. In this annotation vid-1 is FIND (vindati, avindat, vidat,
+      avindan), not 'know'. RV 1.6.5 'anu avindaḥ' -- 'Foundest the kine even in the cave'; RV 4.1.16 --
+      'they found the Mother's thrice-seven noblest titles'; RV 2.22.4 -- 'find for us strength and food'.
+      The brief states vid-1 = know and vid-2 = find; the Zurich annotation assigns them the other way
+      round. The two lemmas were kept apart as instructed, but under the corrected senses.
+  - lemma_label: "√yuj-"
+    lemma_id: "lemma_yuj_7133"
+    root_folded: "yuj"
+    tokens: 211
+    predicate: BINDS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 2
+    examples: [VG:RV:SAK:M01:S006:V001, VG:RV:SAK:M03:S001:V001]
+    gloss: "to yoke, harness, join"
+    note: >-
+      211 tokens, nearly all of yoking horses to a god's car (RV 1.6.1 'yuñjánti' -- 'harness the bright,
+      the ruddy Steed'). BINDS is the only structural home, but yoking is a relation of harnessed service,
+      not restraint. THIS IS THE LARGEST SINGLE LOSS IN THE MAP AFTER kr̥-: a query for 'who binds what'
+      will return the Bay Horses of Indra.
+  - lemma_label: "√tr̥̄-"
+    lemma_id: "lemma_tar_3685"
+    root_folded: "t\uE001"
+    tokens: 197
+    predicate: RESCUES
+    secondary_predicate: STRENGTHENS
+    disambiguation: >-
+      Local particle pra- with āyu or a life-span as patient ('pra tira') -> STRENGTHENS (prolong); ati- or
+      no particle with a strait, a foe or an affliction -> RESCUES.
+    confidence: MEDIUM
+    verses_read: 3
+    examples: [VG:RV:SAK:M05:S045:V011, VG:RV:SAK:M01:S010:V011, VG:RV:SAK:M03:S017:V002]
+    gloss: "to carry across, pass beyond"
+    note: >-
+      RV 5.45.11 'through this our hymn pass safe beyond affliction' against RV 1.10.11 and RV 3.17.2
+      'Prolong our life anew'. 14 tokens carry a particle.
+  - lemma_label: "√vr̥t-"
+    lemma_id: "lemma_vft_8361"
+    root_folded: "v\uE000t"
+    tokens: 187
+    predicate: MOVES_TO
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 2
+    examples: [VG:RV:SAK:M05:S053:V007, VG:RV:SAK:M01:S035:V002]
+    gloss: "to turn, roll, revolve"
+    note: >-
+      RV 5.53.7 'the bursting streams have spread abroad'; RV 1.35.2 'ā vartamānaḥ', 'Borne in his golden
+      chariot he cometh'. The 53 CAUS tokens ('vartaya', roll or bring hither) keep the same predicate but
+      move the mover into the PATIENT slot.
+  - lemma_label: "√idh- 1"
+    lemma_id: "lemma_iD_1701"
+    root_folded: "idh"
+    tokens: 185
+    predicate: BURNS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 2
+    examples: [VG:RV:SAK:M04:S015:V004, VG:RV:SAK:M01:S012:V006]
+    gloss: "to kindle, be kindled"
+    note: >-
+      Active 'indhate' = the priests kindle Agni, with AGENT = priest; passive 'idhyate / samiddhaḥ' = Agni
+      is kindled, with no agent (RV 4.15.4 'He who is kindled eastward'; RV 1.12.6 'By Agni Agni is
+      inflamed'). 94 of 185 tokens carry a local particle, nearly always sam-. Voice decides who the agent
+      is, and an extractor that ignores it will make the fire kindle the priests.
+  - lemma_label: "√vanⁱ-"
+    lemma_id: "lemma_van_7614"
+    root_folded: "vanⁱ"
+    tokens: 182
+    predicate: SEEKS
+    secondary_predicate: INVOKES
+    disambiguation: >-
+      secondary_conjugation DES ('vivāsati', 'āvivāsati', 55 of 182 tokens) with a deity patient -> INVOKES;
+      otherwise SEEKS.
+    confidence: MEDIUM
+    verses_read: 2
+    examples: [VG:RV:SAK:M05:S044:V007, VG:RV:SAK:M01:S003:V002]
+    gloss: "to win, gain; to seek to win over"
+    note: >-
+      THE STRONGEST CASE FOR CONSULTING secondary_conjugation. The desiderative 'āvivāsati' is not 'wishes
+      to win' but the lexicalised 'invites, seeks to win over (a god)', which is a different predicate from
+      the simplex 'vanate' (wins). 30% of this root's tokens are affected -- the largest DES-driven
+      predicate change in the map.
+  - lemma_label: "√vr̥- 1"
+    lemma_id: "lemma_vf_8335"
+    root_folded: "v\uE000"
+    tokens: 179
+    predicate: BINDS
+    secondary_predicate: RELEASES
+    disambiguation: >-
+      Local particle apa- or vi- ('apa avr̥ṇot', uncovered, opened) -> RELEASES; no particle, or ā-/sam- ->
+      BINDS.
+    confidence: MEDIUM
+    verses_read: 3
+    examples: [VG:RV:SAK:M03:S034:V003, VG:RV:SAK:M01:S173:V005, VG:RV:SAK:M01:S005:V004]
+    gloss: "to cover, enclose, shut in"
+    note: >-
+      THE CLEAREST PREVERB INVERSION IN THE CORPUS: bare vr̥- closes, apa-vr̥- opens. 47 of 179 tokens carry
+      a particle and the predicate flips on it. RV 3.34.3 'Indra encompassed Vr̥tra' and RV 1.173.5 'who
+      kills enclosing darkness' stand against the Vala myth's uncovering of the cow-pen. An extractor that
+      ignores the particle here will report Indra as binding the very waters he released -- the single most
+      consequential particle dependency in this map.
+  - lemma_label: "√naś- 1"
+    lemma_id: "lemma_naS_4888"
+    root_folded: "naś"
+    tokens: 175
+    predicate: SEEKS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 2
+    examples: [VG:RV:SAK:M01:S008:V006, VG:RV:SAK:M06:S021:V003]
+    gloss: "to attain, reach, obtain"
+    note: >-
+      RV 1.8.6 'ā́śata' -- 'Which aideth those to win them sons'. The 25 DES tokens ('íyakṣati') are 'seek
+      to attain', which SEEKS already covers, so DES does not change the class here. A different root from
+      naś-2 'perish'.
+  - lemma_label: "√nī-"
+    lemma_id: "lemma_nI_5054"
+    root_folded: "nī"
+    tokens: 167
+    predicate: LEADS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S031:V004, VG:RV:SAK:M01:S031:V018]
+    gloss: "to lead, guide"
+    note: null
+  - lemma_label: "√hi-"
+    lemma_id: "lemma_hi_10644"
+    root_folded: "hi"
+    tokens: 162
+    predicate: LEADS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 2
+    examples: [VG:RV:SAK:M09:S012:V007, VG:RV:SAK:M01:S018:V004]
+    gloss: "to impel, urge forward, send"
+    note: null
+  - lemma_label: "√ji- 1"
+    lemma_id: "lemma_ji_3500"
+    root_folded: "ji"
+    tokens: 161
+    predicate: DEFEATS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S008:V003, VG:RV:SAK:M01:S010:V008]
+    gloss: "to conquer, win, be victorious"
+    note: null
+  - lemma_label: "√sac-"
+    lemma_id: "lemma_sac_9133"
+    root_folded: "sac"
+    tokens: 161
+    predicate: MOVES_TO
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 2
+    examples: [VG:RV:SAK:M01:S001:V009, VG:RV:SAK:M04:S041:V010]
+    gloss: "to accompany, attend, follow"
+    note: >-
+      ONE OF THE THREE LOWEST-CONFIDENCE MAPPINGS. sac- is association, not displacement: RV 1.1.9 'sácasva'
+      is 'Agni, be with us for our weal', and RV 4.41.10 'sacantām' is 'may they bring riches to us'. Mapped
+      to MOVES_TO only because no predicate in the vocabulary expresses accompaniment, so 161 tokens of
+      companionship are reported as motion. A researcher must not read a sac- edge as travel; the devotional
+      force is closer to BLESSES, which was rejected because sac- asserts no benefit.
+  - lemma_label: "√vaś-"
+    lemma_id: "lemma_vaS_7772"
+    root_folded: "vaś"
+    tokens: 153
+    predicate: DESIRES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S002:V004, VG:RV:SAK:M01:S003:V010]
+    gloss: "to desire, will, be eager for"
+    note: null
+  - lemma_label: "√yā- 2"
+    lemma_id: "lemma_i_1675"
+    root_folded: "yā"
+    tokens: 150
+    predicate: SEEKS
+    secondary_predicate: INVOKES
+    disambiguation: >-
+      Accusative patient is a deity -> INVOKES; accusative patient is a good (rayi, ūti, vāja, rādhas) ->
+      SEEKS.
+    confidence: MEDIUM
+    verses_read: 6
+    examples: [VG:RV:SAK:M01:S006:V010, VG:RV:SAK:M07:S094:V009, VG:RV:SAK:M03:S002:V015]
+    gloss: "to beg, implore, ask for"
+    note: >-
+      A different root from yā-1 'go' that folds to the same key; its surfaces are 'īmahe / iyānaḥ / yāmi',
+      and its VedaWeb lemma id (lemma_i_1675) is not even in the yā- family. RV 1.6.10 'Indra we seek to
+      give us help'; RV 7.94.9 'Whatever wealth we crave of you'; RV 3.2.15 'Agni the Friend of men we ever
+      seek for wealth'. This root is the pure case of what the vocabulary's header calls a frame rather than
+      a predicate: its content is whatever is being asked for, which is exactly why a secondary predicate is
+      unavoidable here.
+  - lemma_label: "√spaś-"
+    lemma_id: "lemma_spaS_10296"
+    root_folded: "spaś"
+    tokens: 149
+    predicate: SEES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S010:V002, VG:RV:SAK:M01:S018:V009]
+    gloss: "to see, behold (paśyati)"
+    note: null
+  - lemma_label: "√duh-"
+    lemma_id: "lemma_duh_4377"
+    root_folded: "duh"
+    tokens: 148
+    predicate: PRESSES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 2
+    examples: [VG:RV:SAK:M06:S070:V002, VG:RV:SAK:M01:S033:V010]
+    gloss: "to milk, draw out (milk, bounty)"
+    note: >-
+      Structurally identical to su- -- extract liquid from a source -- but here the source is the accusative
+      patient. This MERGES cow-milking and the metaphorical milking of heaven with Soma-pressing, so anyone
+      counting PRESSES must filter on the patient. RV 6.70.2 'pour fatness for the pious man'; RV 1.33.10
+      'with its light milked cows from out the darkness'.
+  - lemma_label: "√vr̥- 2"
+    lemma_id: "lemma_vf_8336"
+    root_folded: "v\uE000"
+    tokens: 147
+    predicate: DESIRES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 3
+    examples: [VG:RV:SAK:M01:S012:V001, VG:RV:SAK:M04:S031:V011, VG:RV:SAK:M07:S018:V012]
+    gloss: "to choose, elect, prefer"
+    note: >-
+      ONE OF THE THREE LOWEST-CONFIDENCE MAPPINGS. 147 tokens of a real and specifically ritual act -- the
+      election of the divine priest. RV 1.12.1 'agniṁ dūtaṁ vr̥ṇīmahe' -- 'WE choose Agni the messenger, the
+      herald, master of all wealth'; RV 4.31.11 'vr̥ṇīṣva' -- 'Do thou elect us this place for friendship'.
+      The vocabulary has no class for choosing, and DESIRES reaches it only through 'prefers'. WHAT IS LOST:
+      choosing is a performative appointment, not an appetite, and a DESIRES edge misreports it. The
+      alternative was UNMAPPED_ROOT, which would silently delete the hotr̥-election from the graph; that was
+      judged the worse error, but it is a close call and an architect may reasonably reverse it.
+  - lemma_label: "√īś-"
+    lemma_id: "lemma_IS_1836"
+    root_folded: "īś"
+    tokens: 147
+    predicate: RULES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S005:V002, VG:RV:SAK:M01:S005:V010]
+    gloss: "to be master of, have power over"
+    note: null
+  - lemma_label: "√r̥-"
+    lemma_id: "lemma_ar_954"
+    root_folded: "\uE000"
+    tokens: 146
+    predicate: MOVES_TO
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 2
+    examples: [VG:RV:SAK:M01:S004:V005, VG:RV:SAK:M05:S031:V008]
+    gloss: "to move, rise, set in motion"
+    note: >-
+      RV 1.4.5 'nis ārata' -- 'Depart unto another place'; RV 5.31.8 'sam āranta'. ITS root_folded KEY IS A
+      BARE PRIVATE-USE SENTINEL (U+E000) WITH NO LETTER, because the fold replaces the vocalic r̥ with a
+      sentinel and nothing else remains. 146 tokens hang on a key that prints as nothing. See
+      recommendations.key_hazard.
+  - lemma_label: "√r̥c-"
+    lemma_id: "lemma_arc_1033"
+    root_folded: "\uE000c"
+    tokens: 142
+    predicate: PRAISES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S006:V008, VG:RV:SAK:M01:S009:V010]
+    gloss: "to sing, praise"
+    note: null
+  - lemma_label: "√sanⁱ-"
+    lemma_id: "lemma_san_9251"
+    root_folded: "sanⁱ"
+    tokens: 137
+    predicate: SEEKS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S005:V009, VG:RV:SAK:M01:S017:V006]
+    gloss: "to win, gain, acquire"
+    note: null
+  - lemma_label: "√tan-"
+    lemma_id: "lemma_tan_3635"
+    root_folded: "tan"
+    tokens: 137
+    predicate: ESTABLISHES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 2
+    examples: [VG:RV:SAK:M06:S021:V003, VG:RV:SAK:M01:S019:V008]
+    gloss: "to stretch, extend, spread out"
+    note: >-
+      'yajñaṁ tan-' (to extend, i.e. perform, the sacrifice), 'to stretch the bow' and 'to weave' are one
+      root. RV 6.21.3 'He hath made pathways... throughout the darkness that extended pathless'; RV 1.19.8
+      'Who with their bright beams spread them forth over the ocean'. ESTABLISHES catches the ritual sense
+      only, and 25 of 137 tokens carry a particle.
+  - lemma_label: "√gā-"
+    lemma_id: "lemma_gA_2947"
+    root_folded: "gā"
+    tokens: 135
+    predicate: MOVES_TO
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S002:V003, VG:RV:SAK:M01:S031:V016]
+    gloss: "to go, stride"
+    note: null
+  - lemma_label: "√vadⁱ-"
+    lemma_id: "lemma_vad_7595"
+    root_folded: "vadⁱ"
+    tokens: 135
+    predicate: SPEAKS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S011:V006, VG:RV:SAK:M01:S028:V005]
+    gloss: "to speak, utter"
+    note: null
+  - lemma_label: "√brū-"
+    lemma_id: "lemma_brU_6279"
+    root_folded: "brū"
+    tokens: 134
+    predicate: SPEAKS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S004:V005, VG:RV:SAK:M01:S023:V020]
+    gloss: "to speak, declare"
+    note: null
+  - lemma_label: "√man- 1"
+    lemma_id: "lemma_man_6585"
+    root_folded: "man"
+    tokens: 133
+    predicate: PERCEIVES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S024:V001, VG:RV:SAK:M01:S024:V002]
+    gloss: "to think, deem, have in mind"
+    note: null
+  - lemma_label: "√arṣ-"
+    lemma_id: "lemma_arz_1090"
+    root_folded: "arṣ"
+    tokens: 131
+    predicate: FLOWS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S105:V012, VG:RV:SAK:M01:S125:V005]
+    gloss: "to flow, stream"
+    note: null
+  - lemma_label: "√dhr̥-"
+    lemma_id: "lemma_Df_4738"
+    root_folded: "dh\uE000"
+    tokens: 127
+    predicate: ESTABLISHES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 2
+    examples: [VG:RV:SAK:M07:S066:V002, VG:RV:SAK:M01:S020:V008]
+    gloss: "to hold, uphold, sustain"
+    note: >-
+      88 of 127 tokens are CAUS 'dhāraya-', the lexicalised transitive 'uphold'; the causative does not
+      change the predicate here. RV 7.66.2 'whom the gods ordained for lordship'.
+  - lemma_label: "√dr̥ś-"
+    lemma_id: "lemma_dfS_4406"
+    root_folded: "d\uE000ś"
+    tokens: 125
+    predicate: SEES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S006:V007, VG:RV:SAK:M01:S023:V021]
+    gloss: "to see, appear"
+    note: null
+  - lemma_label: "√hu-"
+    lemma_id: "lemma_hu_10713"
+    root_folded: "hu"
+    tokens: 118
+    predicate: OFFERS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S015:V009, VG:RV:SAK:M01:S026:V006]
+    gloss: "to pour an oblation into the fire"
+    note: >-
+      Structurally a pouring, but its patient is always the oblation and its beneficiary a god, so OFFERS
+      rather than POURS. 52 of 118 tokens carry a particle, nearly always ā- ('āhuta', offered).
+  - lemma_label: "√mr̥j-"
+    lemma_id: "lemma_mfj_6920"
+    root_folded: "m\uE000j"
+    tokens: 117
+    predicate: PURIFIES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S034:V011, VG:RV:SAK:M01:S060:V005]
+    gloss: "to wipe clean, polish, groom"
+    note: >-
+      Used of the Soma being cleansed and of horses being groomed; the grooming sense is lost. 24 of 117
+      tokens are INT ('marmr̥jyánte') and 17 CAUS, neither changing the class.
+  - lemma_label: "√īr-"
+    lemma_id: "lemma_Ir_1831"
+    root_folded: "īr"
+    tokens: 117
+    predicate: MOVES_TO
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S006:V004, VG:RV:SAK:M01:S007:V003]
+    gloss: "to set in motion, rise, stir"
+    note: null
+  - lemma_label: "√añj-"
+    lemma_id: "lemma_aYj_208"
+    root_folded: "añj"
+    tokens: 112
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits, and this is the largest single unmapped block. 112 tokens, the 66th commonest
+      root, and a core ritual act: RV 9.45.3 'We balm thee, red of hue, with milk to fit thee for the
+      rapturous joy'; RV 1.61.5 'with my tongue I deck... my hymn'. POURS is the nearest class and is wrong,
+      because anointing is application to a surface rather than shedding. The vocabulary has no ANOINTS or
+      ADORNS class.
+    verses_read: 2
+    examples: [VG:RV:SAK:M09:S045:V003, VG:RV:SAK:M01:S061:V005]
+    gloss: "to anoint, smear, adorn"
+  - lemma_label: "√aś-"
+    lemma_id: "lemma_aS_1210"
+    root_folded: "aś"
+    tokens: 111
+    predicate: SEEKS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S001:V003, VG:RV:SAK:M01:S002:V008]
+    gloss: "to attain, reach"
+    note: null
+  - lemma_label: "√rā- 1"
+    lemma_id: "lemma_rA_7355"
+    root_folded: "rā"
+    tokens: 109
+    predicate: GRANTS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S046:V006, VG:RV:SAK:M01:S061:V001]
+    gloss: "to grant, bestow"
+    note: >-
+      Dative in 48.6% of padas.
+  - lemma_label: "√śaṃs-"
+    lemma_id: "lemma_SaMs_8557"
+    root_folded: "śa\uE003s"
+    tokens: 108
+    predicate: PRAISES
+    secondary_predicate: SPEAKS
+    disambiguation: >-
+      A recited formula (uktha, brahman, vacas) as patient -> SPEAKS; a deity as patient -> PRAISES.
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S021:V002, VG:RV:SAK:M01:S029:V001]
+    gloss: "to recite, proclaim, laud"
+    note: >-
+      śaṃs- is recitation whose default content is praise ('praśastam', praised).
+  - lemma_label: "√pr̥-"
+    lemma_id: "lemma_par_5261"
+    root_folded: "p\uE000"
+    tokens: 107
+    predicate: RESCUES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 3
+    examples: [VG:RV:SAK:M07:S023:V002, VG:RV:SAK:M04:S002:V008, VG:RV:SAK:M01:S022:V013]
+    gloss: "to carry over, bring safely across"
+    note: >-
+      RV 7.23.2 'ati parṣi' -- 'bear us in safety over these our troubles'; RV 4.2.8 'pīparaḥ' -- 'rescue
+      him from distress'. 17 of 107 tokens are CAUS with no change of class.
+  - lemma_label: "√vī-"
+    lemma_id: "lemma_vI_8287"
+    root_folded: "vī"
+    tokens: 106
+    predicate: DESIRES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 5
+    examples: [VG:RV:SAK:M08:S004:V017, VG:RV:SAK:M01:S035:V009, VG:RV:SAK:M07:S006:V003]
+    gloss: "to strive after, pursue, long for"
+    note: >-
+      Griffith gives 'I long to win thy love' (RV 8.4.17 'vemi') but also 'hath Agni chased those Dasyus'
+      (RV 7.6.3) and 'Drives away sickness' (RV 1.35.9). Pursuit and desire are one root, and its dative
+      rate (11.3%) and locative rate (5.7%) are both at or below baseline, so no case frame separates them.
+      'vīhi havyā' (partake of the oblations), which would be RECEIVES_OFFERING, is lost.
+  - lemma_label: "√śak-"
+    lemma_id: "lemma_Sak_8560"
+    root_folded: "śak"
+    tokens: 106
+    predicate: BLESSES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 3
+    examples: [VG:RV:SAK:M08:S024:V011, VG:RV:SAK:M06:S028:V002, VG:RV:SAK:M01:S010:V006]
+    gloss: "to be able, help, assist"
+    note: >-
+      64% of tokens (68 of 106) are marked DES, but the desiderative 'śikṣati' has lexicalised as 'helps,
+      teaches' rather than 'wishes to be able'. RV 8.24.11 'So help us, Maghavan, with thine assistance
+      now'; RV 6.28.2 'Indra aids him who offers sacrifice and gifts'. The predicate is unchanged by the DES
+      marking, which is itself worth knowing: a rule that treats every DES as 'wants to X' would misread
+      this root two thirds of the time.
+  - lemma_label: "√viś-"
+    lemma_id: "lemma_viS_8139"
+    root_folded: "viś"
+    tokens: 104
+    predicate: MOVES_TO
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S005:V007, VG:RV:SAK:M01:S015:V001]
+    gloss: "to enter, settle into"
+    note: null
+  - lemma_label: "√pr̥̄-"
+    lemma_id: "lemma_par_5260"
+    root_folded: "p\uE001"
+    tokens: 103
+    predicate: GRANTS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 2
+    examples: [VG:RV:SAK:M01:S016:V009, VG:RV:SAK:M07:S062:V003]
+    gloss: "to fill, fulfil, satisfy"
+    note: >-
+      RV 1.16.9 'ā pr̥ṇa' -- 'Fulfil, O Satakratu, all our wish with horses and with kine'; RV 7.62.3 'grant
+      us all our wishes'. The spatial 'fill' sense belongs to prā-, which is left UNMAPPED; the split
+      between the two is evidenced from verses, not assumed.
+  - lemma_label: "√rakṣⁱ-"
+    lemma_id: "lemma_rakz_7207"
+    root_folded: "rakṣⁱ"
+    tokens: 103
+    predicate: PROTECTS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S018:V003, VG:RV:SAK:M01:S031:V012]
+    gloss: "to guard, watch over"
+    note: null
+  - lemma_label: "√bhaj-"
+    lemma_id: "lemma_Baj_6293"
+    root_folded: "bhaj"
+    tokens: 99
+    predicate: GRANTS
+    secondary_predicate: SEEKS
+    disambiguation: >-
+      Middle voice ('bhajemahi', 'bhakṣīya', 'bhejire') -> SEEKS, the worshipper obtaining a share; active
+      imperative addressed to a deity ('bhaja') -> GRANTS.
+    confidence: MEDIUM
+    verses_read: 3
+    examples: [VG:RV:SAK:M08:S040:V006, VG:RV:SAK:M01:S020:V008, VG:RV:SAK:M05:S057:V005]
+    gloss: "to apportion, share out; to obtain a share"
+    note: >-
+      RV 8.40.6 'May we with Indra's help divide the treasure'; RV 1.20.8 'by pious acts they won themselves
+      a share in sacrifice with Gods'. Overlaps MEASURES, whose gloss also says 'apportions'. GRANTS was
+      chosen because the devotional frame is 'give us a share', not 'mete out'.
+  - lemma_label: "√ruc-"
+    lemma_id: "lemma_ruc_7432"
+    root_folded: "ruc"
+    tokens: 97
+    predicate: SHINES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S006:V001, VG:RV:SAK:M01:S043:V005]
+    gloss: "to shine, be bright"
+    note: null
+  - lemma_label: "√īḍ- ~ īḷ-"
+    lemma_id: "lemma_Iq_1824"
+    root_folded: "īḍ ~ ī\uE002"
+    tokens: 97
+    predicate: PRAISES
+    secondary_predicate: INVOKES
+    disambiguation: >-
+      A vocative deity with a second-person imperative -> INVOKES; a third-person accusative deity ->
+      PRAISES.
+    confidence: HIGH
+    verses_read: 1
+    examples: [VG:RV:SAK:M01:S001:V001]
+    gloss: "to laud, implore"
+    note: >-
+      RV 1.1.1 'agnim īḷe' -- the first verb in the Rigveda. Praise and invocation are one act here.
+  - lemma_label: "√nu- ~ nū-"
+    lemma_id: "lemma_nu_5076"
+    root_folded: "nu ~ nū"
+    tokens: 96
+    predicate: PRAISES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S006:V006, VG:RV:SAK:M01:S007:V001]
+    gloss: "to shout, praise aloud"
+    note: null
+  - lemma_label: "√dī- 1"
+    lemma_id: "lemma_dI_4255"
+    root_folded: "dī"
+    tokens: 95
+    predicate: SHINES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S012:V005, VG:RV:SAK:M01:S012:V010]
+    gloss: "to shine, gleam"
+    note: null
+  - lemma_label: "√sah-"
+    lemma_id: "lemma_sah_9505"
+    root_folded: "sah"
+    tokens: 95
+    predicate: DEFEATS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S008:V004, VG:RV:SAK:M01:S042:V001]
+    gloss: "to overcome, prevail over"
+    note: null
+  - lemma_label: "√krand-"
+    lemma_id: "lemma_krand_2736"
+    root_folded: "krand"
+    tokens: 94
+    predicate: SPEAKS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S036:V008, VG:RV:SAK:M01:S054:V001]
+    gloss: "to roar, neigh, cry out"
+    note: >-
+      Inarticulate vocalisation -- thunder, the bull's roar, the horse's neigh -- forced into SPEAKS because
+      the vocabulary has no VOCALIZES class. The utterance is real; the articulacy is not. 268 root tokens
+      are affected across the ten roots carrying this note. See the report.
+  - lemma_label: "√pat- 1"
+    lemma_id: "lemma_pat_5186"
+    root_folded: "pat"
+    tokens: 94
+    predicate: MOVES_TO
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S024:V006, VG:RV:SAK:M01:S025:V004]
+    gloss: "to fly, fall"
+    note: >-
+      Flying and falling share one root and the direction is not recoverable from the lemma. A different
+      root from pat-2 'rule', which folds to the same key.
+  - lemma_label: "√mā- 1"
+    lemma_id: "lemma_mA_6755"
+    root_folded: "mā"
+    tokens: 90
+    predicate: MEASURES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 2
+    examples: [VG:RV:SAK:M08:S041:V010, VG:RV:SAK:M01:S038:V014]
+    gloss: "to measure, mete out"
+    note: >-
+      RV 8.41.10 'Who measured out the ancient seat, who pillared both the worlds apart'.
+  - lemma_label: "√vas- 2"
+    lemma_id: "lemma_vas_7783"
+    root_folded: "vas"
+    tokens: 89
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: dressing and being clothed. 89 tokens, including Varuna 'wearing golden
+      mail... clad him in a shining robe' (RV 1.25.13) and Soma 'clothed him in the robe of rivers' (RV
+      9.89.2) -- a frequent and vivid image with no home in the vocabulary. One of three vas- roots folding
+      to the same key.
+    verses_read: 2
+    examples: [VG:RV:SAK:M01:S025:V013, VG:RV:SAK:M09:S089:V002]
+    gloss: "to clothe oneself, wear, put on"
+  - lemma_label: "√budh-"
+    lemma_id: "lemma_buD_6217"
+    root_folded: "budh"
+    tokens: 87
+    predicate: PERCEIVES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 3
+    examples: [VG:RV:SAK:M01:S012:V004, VG:RV:SAK:M08:S009:V003, VG:RV:SAK:M05:S047:V001]
+    gloss: "to wake, be awake, take notice"
+    note: >-
+      RV 8.9.3 'bodhatam' -- 'who have thought upon your wondrous deeds'. The 18 CAUS tokens ('vi bodhaya',
+      RV 1.12.4 'Wake up the willing Gods') are causing another to wake, which PERCEIVES does not express.
+      There is no AWAKENS class and that reading is lost.
+  - lemma_label: "√muc-"
+    lemma_id: "lemma_muc_6870"
+    root_folded: "muc"
+    tokens: 87
+    predicate: RELEASES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S024:V009, VG:RV:SAK:M01:S024:V012]
+    gloss: "to release, set free, unloose"
+    note: null
+  - lemma_label: "√cakṣ-"
+    lemma_id: "lemma_cakz_3190"
+    root_folded: "cakṣ"
+    tokens: 86
+    predicate: SEES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S024:V012, VG:RV:SAK:M01:S092:V009]
+    gloss: "to look, behold"
+    note: null
+  - lemma_label: "√pī- 1"
+    lemma_id: "lemma_pi_5468"
+    root_folded: "pī"
+    tokens: 85
+    predicate: STRENGTHENS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S063:V008, VG:RV:SAK:M01:S073:V006]
+    gloss: "to swell, be full, overflow"
+    note: null
+  - lemma_label: "√sic-"
+    lemma_id: "lemma_sic_9672"
+    root_folded: "sic"
+    tokens: 85
+    predicate: POURS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S030:V001, VG:RV:SAK:M01:S071:V008]
+    gloss: "to pour, shed"
+    note: null
+  - lemma_label: "√vas- 1"
+    lemma_id: "lemma_vas_7782"
+    root_folded: "vas"
+    tokens: 85
+    predicate: SHINES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 2
+    examples: [VG:RV:SAK:M07:S075:V005, VG:RV:SAK:M01:S046:V001]
+    gloss: "to dawn, shine forth (of Uṣas)"
+    note: >-
+      'uchati' is Dawn's own verb and the vocabulary's SHINES gloss names dawning explicitly. RV 7.75.5
+      'lauded by priests rich Dawn shines out refulgent'; RV 1.46.1 'Now Morning with her earliest light
+      shines forth'. One of three vas- roots that fold to the same key.
+  - lemma_label: "√yu- 2"
+    lemma_id: "lemma_yu_7125"
+    root_folded: "yu"
+    tokens: 84
+    predicate: PROTECTS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 2
+    examples: [VG:RV:SAK:M01:S005:V010, VG:RV:SAK:M08:S086:V002]
+    gloss: "to keep away, ward off, separate"
+    note: >-
+      'yavaya' -- 'keep Slaughter far from us, for thou canst' (RV 1.5.10). Warding off is protection by
+      removal; the bare separation sense has no class, and 'vi yauṣṭam' ('come and set me free', RV 8.86.2)
+      would be RELEASES and is lost. 11 of 84 tokens are CAUS with no change of class.
+  - lemma_label: "√mand-"
+    lemma_id: "lemma_mand_6636"
+    root_folded: "mand"
+    tokens: 82
+    predicate: EXHILARATES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S026:V005, VG:RV:SAK:M01:S051:V011]
+    gloss: "to gladden, rejoice"
+    note: null
+  - lemma_label: "√bādhⁱ-"
+    lemma_id: "lemma_bAD_6193"
+    root_folded: "bādhⁱ"
+    tokens: 81
+    predicate: DEFEATS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 2
+    examples: [VG:RV:SAK:M01:S024:V009, VG:RV:SAK:M10:S037:V004]
+    gloss: "to press hard, drive off, repel"
+    note: >-
+      RV 1.24.9 'Far from us, far away drive thou Destruction'; RV 10.37.4 'drive away disease and every
+      evil dream'. Overlaps PROTECTS (warding off) exactly as yu-2 does; DEFEATS was chosen because bādh-
+      takes the enemy as its patient, not the protected party.
+  - lemma_label: "√śri-"
+    lemma_id: "lemma_Sri_8979"
+    root_folded: "śri"
+    tokens: 80
+    predicate: ESTABLISHES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S013:V006, VG:RV:SAK:M01:S032:V002]
+    gloss: "to lean, rest, set in place"
+    note: null
+  - lemma_label: "√śuc-"
+    lemma_id: "lemma_Suc_8828"
+    root_folded: "śuc"
+    tokens: 80
+    predicate: SHINES
+    secondary_predicate: BURNS
+    disambiguation: >-
+      An accusative patient that is consumed (a foe, wood) -> BURNS; no patient, or a locative -> SHINES.
+    confidence: MEDIUM
+    verses_read: 3
+    examples: [VG:RV:SAK:M01:S036:V009, VG:RV:SAK:M06:S016:V045, VG:RV:SAK:M10:S004:V006]
+    gloss: "to blaze, flame, be bright"
+    note: >-
+      Agni's brightness and Agni's combustion are one root. RV 6.16.45 'blaze high with everlasting might,
+      Shine forth and gleam'; RV 1.36.9 'shine, best entertainer of the Gods'. 25 of 80 tokens are INT
+      ('śóśucat'), intensifying the brightness without changing the class.
+  - lemma_label: "√takṣ-"
+    lemma_id: "lemma_takz_3616"
+    root_folded: "takṣ"
+    tokens: 78
+    predicate: BUILDS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 2
+    examples: [VG:RV:SAK:M04:S035:V005, VG:RV:SAK:M01:S020:V002]
+    gloss: "to fashion, hew, form by craft"
+    note: >-
+      The R̥bhu root. RV 4.35.5 'the cup, for Gods to drink, ye formed with cunning; With cunning, R̥bhus,
+      fashioned the two swift Tawny Steeds who carry Indra'; RV 1.20.2 'they formed horses harnessed by a
+      word'.
+  - lemma_label: "√iṣ- 2"
+    lemma_id: "lemma_iz_1777"
+    root_folded: "iṣ"
+    tokens: 77
+    predicate: DESIRES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 3
+    examples: [VG:RV:SAK:M01:S025:V016, VG:RV:SAK:M10:S129:V004, VG:RV:SAK:M10:S102:V004]
+    gloss: "to seek, wish, desire"
+    note: >-
+      A different root from iṣ-1 'impel' that folds to the same key. RV 1.25.16 'ichántīḥ' -- 'Yearning for
+      the wide-seeing One'; RV 10.129.4's kāma verse uses this root.
+  - lemma_label: "√mr̥ḍ-"
+    lemma_id: "lemma_mfq_6921"
+    root_folded: "m\uE000ḍ"
+    tokens: 77
+    predicate: BLESSES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 3
+    examples: [VG:RV:SAK:M10:S034:V014, VG:RV:SAK:M01:S012:V009, VG:RV:SAK:M10:S108:V006]
+    gloss: "to be gracious, show mercy, spare"
+    note: >-
+      RV 10.34.14 'Make me your friend: show us some little mercy'; RV 1.12.9 'O Purifier, favour him'; RV
+      10.108.6 'Br̥haspati in neither case will spare you'. 35 of 77 tokens are CAUS with no change of sense
+      -- the causative is lexicalised.
+  - lemma_label: "√gr̥bhⁱ-"
+    lemma_id: "lemma_graB_3103"
+    root_folded: "g\uE000bhⁱ"
+    tokens: 76
+    predicate: BINDS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 2
+    examples: [VG:RV:SAK:M04:S007:V002, VG:RV:SAK:M08:S023:V003]
+    gloss: "to seize, grasp, hold fast"
+    note: null
+  - lemma_label: "√mī-"
+    lemma_id: "lemma_mI_6861"
+    root_folded: "mī"
+    tokens: 75
+    predicate: DESTROYS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S024:V006, VG:RV:SAK:M01:S025:V001]
+    gloss: "to damage, violate, transgress"
+    note: >-
+      'na minanti' ('they do not violate the laws') is transgression, not destruction. A real loss: the
+      commonest use of this root is a denial that r̥ta has been infringed.
+  - lemma_label: "√ruh-"
+    lemma_id: "lemma_ruh_7465"
+    root_folded: "ruh"
+    tokens: 75
+    predicate: MOVES_TO
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S007:V003, VG:RV:SAK:M01:S010:V002]
+    gloss: "to ascend, mount, climb"
+    note: >-
+      ā-ruh 'mount (the chariot)' against ud-ruh 'rise': the direction is in the particle, not the root. 8
+      of 75 tokens carry one, and 8 more are CAUS ('rohaya', cause to ascend) with the same predicate.
+  - lemma_label: "√vidh- 1"
+    lemma_id: "lemma_viD_8028"
+    root_folded: "vidh"
+    tokens: 75
+    predicate: OFFERS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S036:V002, VG:RV:SAK:M01:S073:V001]
+    gloss: "to worship, do homage with an offering"
+    note: null
+  - lemma_label: "√bhā-"
+    lemma_id: "lemma_BA_6342"
+    root_folded: "bhā"
+    tokens: 74
+    predicate: SHINES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S048:V009, VG:RV:SAK:M01:S049:V004]
+    gloss: "to shine, be radiant"
+    note: null
+  - lemma_label: "√iṣ- 1"
+    lemma_id: "lemma_iz_1776"
+    root_folded: "iṣ"
+    tokens: 73
+    predicate: LEADS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 3
+    examples: [VG:RV:SAK:M09:S069:V001, VG:RV:SAK:M06:S001:V008, VG:RV:SAK:M08:S001:V021]
+    gloss: "to impel, send, set in motion"
+    note: >-
+      A different root from iṣ-2 'desire' that folds to the same key. RV 9.69.1 'iṣyate' -- 'the Soma is
+      impelled to this man's holy rites'; RV 6.1.8 'iṣáyantam', 'the sender down of blessings'.
+  - lemma_label: "√sr̥-"
+    lemma_id: "lemma_sf_10129"
+    root_folded: "s\uE000"
+    tokens: 73
+    predicate: MOVES_TO
+    secondary_predicate: FLOWS
+    disambiguation: >-
+      AGENT is a water noun (āpaḥ, sindhu, nadī) -> FLOWS; a chariot, steed or person -> MOVES_TO.
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S032:V012, VG:RV:SAK:M01:S052:V005]
+    gloss: "to run, flow"
+    note: >-
+      Used of both chariots and rivers with no morphological difference between them.
+  - lemma_label: "√ah-"
+    lemma_id: "lemma_ah_1397"
+    root_folded: "ah"
+    tokens: 72
+    predicate: SPEAKS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S024:V012, VG:RV:SAK:M01:S074:V005]
+    gloss: "to say"
+    note: null
+  - lemma_label: "√pinv-"
+    lemma_id: "lemma_pinv_5491"
+    root_folded: "pinv"
+    tokens: 72
+    predicate: STRENGTHENS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 2
+    examples: [VG:RV:SAK:M09:S068:V003, VG:RV:SAK:M07:S034:V003]
+    gloss: "to swell, make swell, fill full"
+    note: >-
+      The brief offers this root as a case where the causative changes the predicate. IT DOES NOT APPLY:
+      pinv- carries NO secondary-conjugation marking at all in the annotation, and both the intransitive
+      'the broad waters swell their flood for him' (RV 7.34.3) and the transitive 'fills full with milk' (RV
+      9.68.3) map to STRENGTHENS. The transitivity alternation lives in the stem and is invisible to
+      secondary_conjugation, so consulting that field would return nothing for this root.
+  - lemma_label: "√jñā-"
+    lemma_id: "lemma_jYA_3571"
+    root_folded: "jñā"
+    tokens: 71
+    predicate: PERCEIVES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S051:V008, VG:RV:SAK:M01:S068:V008]
+    gloss: "to know, recognise"
+    note: null
+  - lemma_label: "√bhid-"
+    lemma_id: "lemma_Bid_6370"
+    root_folded: "bhid"
+    tokens: 70
+    predicate: DESTROYS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S032:V001, VG:RV:SAK:M01:S032:V008]
+    gloss: "to split, shatter"
+    note: null
+  - lemma_label: "√dr̥h-"
+    lemma_id: "lemma_dfh_4417"
+    root_folded: "d\uE000h"
+    tokens: 70
+    predicate: ESTABLISHES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S033:V012, VG:RV:SAK:M01:S051:V011]
+    gloss: "to make firm, fix fast"
+    note: null
+  - lemma_label: "√jīv-"
+    lemma_id: "lemma_jIv_3526"
+    root_folded: "jīv"
+    tokens: 69
+    predicate: IS_OR_BECOMES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S025:V021, VG:RV:SAK:M01:S036:V014]
+    gloss: "to live, be alive"
+    note: null
+  - lemma_label: "√vr̥j-"
+    lemma_id: "lemma_vfj_8351"
+    root_folded: "v\uE000j"
+    tokens: 69
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: torsion. 'apa vr̥ṇaktu' (may he turn evil away) is adjacent to PROTECTS, but
+      the root asserts the twisting rather than the shielding, and 69 tokens are too many to place on a
+      guess.
+    verses_read: 0
+    gloss: "to twist, wrest, turn aside"
+  - lemma_label: "√rāj-"
+    lemma_id: "lemma_rAj_7358"
+    root_folded: "rāj"
+    tokens: 67
+    predicate: SHINES
+    secondary_predicate: RULES
+    disambiguation: >-
+      A genitive or accusative naming a domain or a people -> RULES; otherwise SHINES.
+    confidence: MEDIUM
+    verses_read: 3
+    examples: [VG:RV:SAK:M01:S188:V004, VG:RV:SAK:M05:S081:V005, VG:RV:SAK:M01:S003:V012]
+    gloss: "to be resplendent; to rule as king"
+    note: >-
+      Genuinely two senses in the RV: 'Whereon, Adityas, ye shine forth' (RV 1.188.4) and 'Over all
+      generation thou art Lord alone... thou hast domination over all this world' (RV 5.81.5). The signal is
+      weak because vi-rāj carries both. Splendour and sovereignty are not reliably separable per token from
+      this annotation, and this is the least secure of the secondary-predicate splits.
+  - lemma_label: "√dāś-"
+    lemma_id: "lemma_dAS_4202"
+    root_folded: "dāś"
+    tokens: 66
+    predicate: OFFERS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S036:V004, VG:RV:SAK:M01:S068:V006]
+    gloss: "to make offering, serve the gods"
+    note: null
+  - lemma_label: "√dhr̥ṣ-"
+    lemma_id: "lemma_Dfz_4742"
+    root_folded: "dh\uE000ṣ"
+    tokens: 65
+    predicate: DEFEATS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S039:V004, VG:RV:SAK:M01:S052:V005]
+    gloss: "to dare, venture against, assail"
+    note: null
+  - lemma_label: "√kṣar-"
+    lemma_id: "lemma_kzar_2789"
+    root_folded: "kṣar"
+    tokens: 65
+    predicate: FLOWS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S027:V006, VG:RV:SAK:M01:S033:V011]
+    gloss: "to flow, glide"
+    note: null
+  - lemma_label: "√riṣ-"
+    lemma_id: "lemma_riz_7416"
+    root_folded: "riṣ"
+    tokens: 65
+    predicate: DESTROYS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S012:V005, VG:RV:SAK:M01:S018:V004]
+    gloss: "to injure, be hurt"
+    note: >-
+      There is no HARMS class. 'riṣāma' ('may we not be harmed') is a wish about injury, not annihilation,
+      and DESTROYS overstates it. The same overstatement applies to riṣaṇy-, mr̥c-, dhūrv- and dambh-.
+  - lemma_label: "√śā- ~ śī-"
+    lemma_id: "lemma_SA_8729"
+    root_folded: "śā ~ śī"
+    tokens: 65
+    predicate: BUILDS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S036:V016, VG:RV:SAK:M01:S042:V009]
+    gloss: "to sharpen, whet"
+    note: null
+  - lemma_label: "√gr̥-"
+    lemma_id: "lemma_gar_2913"
+    root_folded: "g\uE000"
+    tokens: 64
+    predicate: PERCEIVES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S021:V006, VG:RV:SAK:M01:S022:V021]
+    gloss: "to be awake, be watchful (jāgr̥-)"
+    note: null
+  - lemma_label: "√kramⁱ-"
+    lemma_id: "lemma_kram_2742"
+    root_folded: "kramⁱ"
+    tokens: 64
+    predicate: MOVES_TO
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S022:V016, VG:RV:SAK:M01:S022:V017]
+    gloss: "to stride, step"
+    note: null
+  - lemma_label: "√ās-"
+    lemma_id: "lemma_As_1647"
+    root_folded: "ās"
+    tokens: 64
+    predicate: DWELLS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S019:V006, VG:RV:SAK:M01:S025:V009]
+    gloss: "to sit, be seated"
+    note: null
+  - lemma_label: "√prathⁱ-"
+    lemma_id: "lemma_praT_5904"
+    root_folded: "prathⁱ"
+    tokens: 63
+    predicate: STRENGTHENS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S055:V001, VG:RV:SAK:M01:S062:V005]
+    gloss: "to spread, extend, become broad"
+    note: null
+  - lemma_label: "√i- 2"
+    lemma_id: "lemma_inv_1753"
+    root_folded: "i"
+    tokens: 62
+    predicate: LEADS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S010:V008, VG:RV:SAK:M01:S018:V007]
+    gloss: "to send, impel"
+    note: null
+  - lemma_label: "√cud-"
+    lemma_id: "lemma_cud_3318"
+    root_folded: "cud"
+    tokens: 57
+    predicate: LEADS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S009:V005, VG:RV:SAK:M01:S009:V006]
+    gloss: "to impel, incite, urge on"
+    note: null
+  - lemma_label: "√praś-"
+    lemma_id: "lemma_pfC_5738"
+    root_folded: "praś"
+    tokens: 56
+    predicate: SPEAKS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S004:V004, VG:RV:SAK:M01:S098:V002]
+    gloss: "to ask, enquire"
+    note: null
+  - lemma_label: "√gā(y)-"
+    lemma_id: "lemma_gA_2948"
+    root_folded: "gā y"
+    tokens: 55
+    predicate: PRAISES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S004:V010, VG:RV:SAK:M01:S005:V001]
+    gloss: "to sing"
+    note: null
+  - lemma_label: "√puṣ-"
+    lemma_id: "lemma_puz_5666"
+    root_folded: "puṣ"
+    tokens: 55
+    predicate: STRENGTHENS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S064:V013, VG:RV:SAK:M01:S064:V014]
+    gloss: "to thrive, make prosper"
+    note: null
+  - lemma_label: "√kṣi-"
+    lemma_id: "lemma_kzi_2795"
+    root_folded: "kṣi"
+    tokens: 53
+    predicate: DWELLS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S064:V013, VG:RV:SAK:M01:S073:V003]
+    gloss: "to dwell, abide"
+    note: null
+  - lemma_label: "√yudh-"
+    lemma_id: "lemma_yuD_7139"
+    root_folded: "yudh"
+    tokens: 53
+    predicate: DEFEATS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S032:V013, VG:RV:SAK:M01:S033:V006]
+    gloss: "to fight, do battle"
+    note: null
+  - lemma_label: "√sū- 1"
+    lemma_id: "lemma_sU_10079"
+    root_folded: "sū"
+    tokens: 52
+    predicate: LEADS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S053:V008, VG:RV:SAK:M01:S104:V001]
+    gloss: "to impel, vivify, set in motion"
+    note: >-
+      Savitar's root ('prasūtaḥ', impelled). 'Vivify' is a divine act that the LEADS gloss thins out. One of
+      two sū- roots folding to the same key; sū-2 is 'give birth'.
+  - lemma_label: "√ji- 2 ~ jinv-"
+    lemma_id: "lemma_ji_3501"
+    root_folded: "ji ~ jinv"
+    tokens: 51
+    predicate: STRENGTHENS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S064:V008, VG:RV:SAK:M01:S071:V001]
+    gloss: "to quicken, invigorate"
+    note: null
+  - lemma_label: "√yat-"
+    lemma_id: "lemma_yat_7027"
+    root_folded: "yat"
+    tokens: 51
+    predicate: SEEKS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S033:V006, VG:RV:SAK:M01:S064:V004]
+    gloss: "to strive, exert oneself"
+    note: null
+  - lemma_label: "√śī-"
+    lemma_id: "lemma_SI_8805"
+    root_folded: "śī"
+    tokens: 51
+    predicate: DWELLS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S032:V005, VG:RV:SAK:M01:S032:V007]
+    gloss: "to lie down, rest"
+    note: null
+  - lemma_label: "√bhūṣ-"
+    lemma_id: "lemma_BUz_6436"
+    root_folded: "bhūṣ"
+    tokens: 50
+    predicate: OFFERS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 2
+    examples: [VG:RV:SAK:M08:S066:V008, VG:RV:SAK:M05:S075:V001]
+    gloss: "to attend upon, be zealous for"
+    note: >-
+      'ā-bhūṣati' is 'waits upon (a god)' (RV 8.66.8 'So graciously accepting, Indra, this our praise').
+      Ritual attendance is the best available reading; 'be ready' and 'adorn' are lost.
+  - lemma_label: "√devay-"
+    lemma_id: "lemma_devay_4453"
+    root_folded: "devay"
+    tokens: 50
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: a denominative of deva- asserting piety as a standing attitude. There is no
+      deity patient and no act -- 'devayantaḥ' means 'the god-serving men'. At 50 tokens this is the largest
+      unmapped denominative, and the loss is real: the devotee-to-god relation is exactly what the graph
+      wants, but this root states a disposition, not an event.
+    verses_read: 0
+    gloss: "to be devout, be given to the gods"
+  - lemma_label: "√dhāv- 1"
+    lemma_id: "lemma_DAv_4691"
+    root_folded: "dhāv"
+    tokens: 50
+    predicate: MOVES_TO
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S088:V005, VG:RV:SAK:M01:S101:V006]
+    gloss: "to run"
+    note: null
+  - lemma_label: "√bhī-"
+    lemma_id: "lemma_BI_6377"
+    root_folded: "bhī"
+    tokens: 49
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: fear is a state, and its bearer is not an agent acting on a patient.
+    verses_read: 0
+    gloss: "to fear, be afraid"
+  - lemma_label: "√pr̥c-"
+    lemma_id: "lemma_pfc_5736"
+    root_folded: "p\uE000c"
+    tokens: 49
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: mixing.
+    verses_read: 0
+    gloss: "to mix, mingle, fill up"
+  - lemma_label: "√sru-"
+    lemma_id: "lemma_sru_10358"
+    root_folded: "sru"
+    tokens: 49
+    predicate: FLOWS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S032:V014, VG:RV:SAK:M01:S129:V006]
+    gloss: "to flow"
+    note: null
+  - lemma_label: "√dr̥- ~ dr̥̄-"
+    lemma_id: "lemma_dar_4104"
+    root_folded: "d\uE000 ~ d\uE001"
+    tokens: 48
+    predicate: DESTROYS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S053:V004, VG:RV:SAK:M01:S062:V004]
+    gloss: "to split, burst open, tear"
+    note: null
+  - lemma_label: "√khyā-"
+    lemma_id: "lemma_KyA_2878"
+    root_folded: "khyā"
+    tokens: 48
+    predicate: SEES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S004:V003, VG:RV:SAK:M01:S035:V005]
+    gloss: "to see, look out"
+    note: null
+  - lemma_label: "√maṃh-"
+    lemma_id: "lemma_maMh_6479"
+    root_folded: "ma\uE003h"
+    tokens: 47
+    predicate: GRANTS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S011:V003, VG:RV:SAK:M01:S094:V016]
+    gloss: "to be liberal, bestow generously"
+    note: >-
+      Dative in 72.3% of padas -- the highest enrichment measured on any root in the corpus.
+  - lemma_label: "√nam-"
+    lemma_id: "lemma_nam_4841"
+    root_folded: "nam"
+    tokens: 47
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: the physical bending and the reverential bowing share one lemma and no class
+      covers both. The reverential sense is carried separately by namasy-, which is mapped to PRAISES.
+    verses_read: 0
+    gloss: "to bend, bow"
+  - lemma_label: "√tap-"
+    lemma_id: "lemma_tap_3661"
+    root_folded: "tap"
+    tokens: 47
+    predicate: BURNS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S105:V008, VG:RV:SAK:M01:S112:V007]
+    gloss: "to burn, scorch, heat"
+    note: null
+  - lemma_label: "√śās-"
+    lemma_id: "lemma_SAs_8750"
+    root_folded: "śās"
+    tokens: 47
+    predicate: SPEAKS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S024:V011, VG:RV:SAK:M01:S030:V010]
+    gloss: "to instruct, command, chastise"
+    note: null
+  - lemma_label: "√ad-"
+    lemma_id: "lemma_ad_267"
+    root_folded: "ad"
+    tokens: 46
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits. DRINKS is lexically drink-only and RECEIVES_OFFERING would over-read the many
+      mundane uses. The vocabulary has DRINKS but no EATS, and Agni is the eater of oblations, so this is a
+      substantive gap rather than a lexical accident.
+    verses_read: 0
+    gloss: "to eat"
+  - lemma_label: "√aj-"
+    lemma_id: "lemma_aj_169"
+    root_folded: "aj"
+    tokens: 46
+    predicate: LEADS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S023:V013, VG:RV:SAK:M01:S033:V003]
+    gloss: "to drive, drive on"
+    note: null
+  - lemma_label: "√ranⁱ-"
+    lemma_id: "lemma_ran_7296"
+    root_folded: "ranⁱ"
+    tokens: 46
+    predicate: EXHILARATES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S010:V005, VG:RV:SAK:M01:S038:V002]
+    gloss: "to rejoice, delight in"
+    note: null
+  - lemma_label: "√śubh-"
+    lemma_id: "lemma_SuB_8857"
+    root_folded: "śubh"
+    tokens: 45
+    predicate: SHINES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S021:V002, VG:RV:SAK:M01:S022:V008]
+    gloss: "to be radiant, beautify"
+    note: null
+  - lemma_label: "√hā- 2"
+    lemma_id: "lemma_hA_10639"
+    root_folded: "hā"
+    tokens: 44
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: abandonment. RV 8.7.31 'since ye left Indra all alone'; RV 10.18.5 'as each
+      successor fails not his foregoer'. RELEASES is about setting free, which is a different act. A
+      different root from hā-1, which folds to the same key.
+    verses_read: 2
+    examples: [VG:RV:SAK:M08:S007:V031, VG:RV:SAK:M10:S018:V005]
+    gloss: "to leave, abandon, forsake"
+  - lemma_label: "√nakṣ-"
+    lemma_id: "lemma_nakz_4803"
+    root_folded: "nakṣ"
+    tokens: 44
+    predicate: MOVES_TO
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S030:V020, VG:RV:SAK:M01:S033:V014]
+    gloss: "to approach, attain to"
+    note: null
+  - lemma_label: "√rī-"
+    lemma_id: "lemma_ri_7400"
+    root_folded: "rī"
+    tokens: 44
+    predicate: FLOWS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S030:V002, VG:RV:SAK:M01:S056:V006]
+    gloss: "to flow, make flow, release"
+    note: null
+  - lemma_label: "√sapary-"
+    lemma_id: "lemma_sapary_9309"
+    root_folded: "sapary"
+    tokens: 44
+    predicate: OFFERS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S012:V008, VG:RV:SAK:M01:S058:V007]
+    gloss: "to worship, honour"
+    note: null
+  - lemma_label: "√cyu-"
+    lemma_id: "lemma_cyu_3347"
+    root_folded: "cyu"
+    tokens: 43
+    predicate: MOVES_TO
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S037:V011, VG:RV:SAK:M01:S037:V012]
+    gloss: "to stir, shake, move from its place"
+    note: null
+  - lemma_label: "√dyut-"
+    lemma_id: "lemma_dyut_4517"
+    root_folded: "dyut"
+    tokens: 43
+    predicate: SHINES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S113:V014, VG:RV:SAK:M01:S122:V015]
+    gloss: "to flash, shine forth"
+    note: null
+  - lemma_label: "√randh-"
+    lemma_id: "lemma_raD_7291"
+    root_folded: "randh"
+    tokens: 43
+    predicate: DEFEATS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 2
+    examples: [VG:RV:SAK:M03:S030:V016, VG:RV:SAK:M01:S051:V009]
+    gloss: "to subject, deliver over, make subject"
+    note: >-
+      RV 3.30.16 'Rend them from under, crush them and subdue them'; RV 1.51.9 'Indra gives up the lawless
+      to the pious man'. 25 of 43 tokens are CAUS with the same predicate.
+  - lemma_label: "√ric-"
+    lemma_id: "lemma_ric_7404"
+    root_folded: "ric"
+    tokens: 43
+    predicate: DEFEATS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S059:V005, VG:RV:SAK:M01:S061:V009]
+    gloss: "to surpass, leave behind"
+    note: null
+  - lemma_label: "√sā- ~ si-"
+    lemma_id: "lemma_SA_9603"
+    root_folded: "sā ~ si"
+    tokens: 43
+    predicate: BINDS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S025:V003, VG:RV:SAK:M01:S032:V015]
+    gloss: "to bind, fetter"
+    note: null
+  - lemma_label: "√vakṣ-"
+    lemma_id: "lemma_vakz_7552"
+    root_folded: "vakṣ"
+    tokens: 43
+    predicate: STRENGTHENS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S036:V019, VG:RV:SAK:M01:S061:V009]
+    gloss: "to grow strong, wax"
+    note: null
+  - lemma_label: "√ruj-"
+    lemma_id: "lemma_ruj_7435"
+    root_folded: "ruj"
+    tokens: 42
+    predicate: DESTROYS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S051:V005, VG:RV:SAK:M01:S056:V006]
+    gloss: "to break, shatter"
+    note: null
+  - lemma_label: "√vaj-"
+    lemma_id: "lemma_vaj_7578"
+    root_folded: "vaj"
+    tokens: 42
+    predicate: LEADS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S004:V009, VG:RV:SAK:M01:S030:V001]
+    gloss: "to urge to speed, race"
+    note: null
+  - lemma_label: "√dah-"
+    lemma_id: "lemma_dah_4163"
+    root_folded: "dah"
+    tokens: 41
+    predicate: BURNS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S012:V005, VG:RV:SAK:M01:S033:V007]
+    gloss: "to burn, consume with fire"
+    note: null
+  - lemma_label: "√sādh- ~ sidh-"
+    lemma_id: "lemma_SAD_9620"
+    root_folded: "sādh ~ sidh"
+    tokens: 41
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      meaning too broad: bringing to accomplishment, with no specific act asserted.
+    verses_read: 0
+    gloss: "to succeed, accomplish, make straight"
+  - lemma_label: "√nabh-"
+    lemma_id: "lemma_naB_4828"
+    root_folded: "nabh"
+    tokens: 40
+    predicate: DESTROYS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M08:S039:V001, VG:RV:SAK:M08:S039:V002]
+    gloss: "to burst"
+    note: >-
+      All 40 tokens are the single formula 'nábhantām' ('let the bowstrings of the others burst'),
+      intransitive and imprecatory. It arguably belongs with CURSES; neither class is right, and a single
+      refrain is carrying the whole lemma.
+  - lemma_label: "√vadhⁱ-"
+    lemma_id: "lemma_vaD_7598"
+    root_folded: "vadhⁱ"
+    tokens: 40
+    predicate: SLAYS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S033:V004, VG:RV:SAK:M01:S033:V012]
+    gloss: "to slay, strike dead"
+    note: null
+  - lemma_label: "√prā-"
+    lemma_id: "lemma_prA_6034"
+    root_folded: "prā"
+    tokens: 39
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: spatial pervasion. RV 1.115.1 'the Sun hath filled the air and earth and
+      heaven'; RV 10.89.1 'Who hath filled all with width'. Distinct from pr̥̄- 'fulfil (a wish)', which is
+      mapped to GRANTS on verse evidence, so this split is measured rather than assumed.
+    verses_read: 2
+    examples: [VG:RV:SAK:M01:S115:V001, VG:RV:SAK:M10:S089:V001]
+    gloss: "to fill, pervade (space)"
+  - lemma_label: "√dhū-"
+    lemma_id: "lemma_DU_4727"
+    root_folded: "dhū"
+    tokens: 38
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: shaking.
+    verses_read: 0
+    gloss: "to shake, shake off"
+  - lemma_label: "√yu- 1"
+    lemma_id: "lemma_yu_7124"
+    root_folded: "yu"
+    tokens: 37
+    predicate: BINDS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 2
+    examples: [VG:RV:SAK:M01:S144:V003, VG:RV:SAK:M06:S062:V001]
+    gloss: "to draw to oneself, attach"
+    note: null
+  - lemma_label: "√hā- 1"
+    lemma_id: "lemma_hA_10638"
+    root_folded: "hā"
+    tokens: 36
+    predicate: MOVES_TO
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 2
+    examples: [VG:RV:SAK:M08:S020:V006, VG:RV:SAK:M10:S059:V003]
+    gloss: "to give way, start forth, yield"
+    note: >-
+      Griffith renders it 'heaven high and higher still gives way' (RV 8.20.6) and 'Let Nirr̥ti depart to
+      distant places' (RV 10.59.3). Recession, not approach; MOVES_TO over-reads the goal.
+  - lemma_label: "√rej-"
+    lemma_id: "lemma_rej_7473"
+    root_folded: "rej"
+    tokens: 36
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: trembling.
+    verses_read: 0
+    gloss: "to tremble, shake"
+  - lemma_label: "√uruṣy-"
+    lemma_id: "lemma_uruzy_2046"
+    root_folded: "uruṣy"
+    tokens: 36
+    predicate: PROTECTS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S058:V008, VG:RV:SAK:M01:S058:V009]
+    gloss: "to protect, make wide room for, save"
+    note: null
+  - lemma_label: "√viṣ- 2"
+    lemma_id: "lemma_viz_8235"
+    root_folded: "viṣ"
+    tokens: 36
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      meaning too broad: undifferentiated activity. A different root from viṣ-1, which folds to the same
+      key.
+    verses_read: 0
+    gloss: "to be active, be busy, serve"
+  - lemma_label: "√guh-"
+    lemma_id: "lemma_guh_2998"
+    root_folded: "guh"
+    tokens: 35
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: concealment.
+    verses_read: 0
+    gloss: "to hide, conceal"
+  - lemma_label: "√ram-"
+    lemma_id: "lemma_ram_7320"
+    root_folded: "ram"
+    tokens: 35
+    predicate: DWELLS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S056:V003, VG:RV:SAK:M01:S061:V011]
+    gloss: "to come to rest, be still; to delight in"
+    note: null
+  - lemma_label: "√trā-"
+    lemma_id: "lemma_trA_3919"
+    root_folded: "trā"
+    tokens: 35
+    predicate: RESCUES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S106:V007, VG:RV:SAK:M01:S128:V005]
+    gloss: "to rescue, deliver, protect"
+    note: null
+  - lemma_label: "√vyā-"
+    lemma_id: "lemma_vyA_8522"
+    root_folded: "vyā"
+    tokens: 35
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: enveloping. The same gap as vas-2.
+    verses_read: 0
+    gloss: "to cover, wrap, envelop"
+  - lemma_label: "√dhanv-"
+    lemma_id: "lemma_Danv_4642"
+    root_folded: "dhanv"
+    tokens: 34
+    predicate: FLOWS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M02:S005:V003, VG:RV:SAK:M03:S031:V001]
+    gloss: "to run, course (of Soma)"
+    note: >-
+      Literally 'to run', but in the RV almost always of the Soma stream, so FLOWS rather than MOVES_TO.
+  - lemma_label: "√dhī-"
+    lemma_id: "lemma_DI_4709"
+    root_folded: "dhī"
+    tokens: 33
+    predicate: PERCEIVES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S113:V010, VG:RV:SAK:M01:S163:V012]
+    gloss: "to think, meditate on"
+    note: null
+  - lemma_label: "√hr̥- 2"
+    lemma_id: "lemma_hary_10584"
+    root_folded: "h\uE000"
+    tokens: 33
+    predicate: DESIRES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S040:V006, VG:RV:SAK:M01:S057:V004]
+    gloss: "to take pleasure in, long for"
+    note: null
+  - lemma_label: "√stambhⁱ-"
+    lemma_id: "lemma_staB_10220"
+    root_folded: "stambhⁱ"
+    tokens: 33
+    predicate: ESTABLISHES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S067:V005, VG:RV:SAK:M01:S121:V002]
+    gloss: "to prop, support"
+    note: null
+  - lemma_label: "√vandⁱ-"
+    lemma_id: "lemma_vand_7646"
+    root_folded: "vandⁱ"
+    tokens: 33
+    predicate: PRAISES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S024:V011, VG:RV:SAK:M01:S027:V001]
+    gloss: "to praise, extol, greet"
+    note: null
+  - lemma_label: "√as- 2"
+    lemma_id: "lemma_as_1306"
+    root_folded: "as"
+    tokens: 32
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits. A different root from as-1 'to be' that folds to the same key. The patient of
+      as-2 is the weapon hurled, not the victim struck, so SLAYS would attach the wrong argument; contrast
+      vyadh- 'pierce', which is mapped to SLAYS because its patient is the victim.
+    verses_read: 0
+    gloss: "to throw, shoot, hurl"
+  - lemma_label: "√rū-"
+    lemma_id: "lemma_ru_7425"
+    root_folded: "rū"
+    tokens: 32
+    predicate: SPEAKS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S010:V004, VG:RV:SAK:M01:S054:V001]
+    gloss: "to roar, bellow"
+    note: >-
+      Inarticulate vocalisation -- thunder, the bull's roar, the horse's neigh -- forced into SPEAKS because
+      the vocabulary has no VOCALIZES class. The utterance is real; the articulacy is not. 268 root tokens
+      are affected across the ten roots carrying this note. See the report.
+  - lemma_label: "√vāś-"
+    lemma_id: "lemma_vAS_7935"
+    root_folded: "vāś"
+    tokens: 32
+    predicate: SPEAKS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S031:V004, VG:RV:SAK:M01:S062:V003]
+    gloss: "to bellow, low"
+    note: >-
+      Inarticulate vocalisation -- thunder, the bull's roar, the horse's neigh -- forced into SPEAKS because
+      the vocabulary has no VOCALIZES class. The utterance is real; the articulacy is not. 268 root tokens
+      are affected across the ten roots carrying this note. See the report.
+  - lemma_label: "√śamⁱ-"
+    lemma_id: "lemma_Sam_8659"
+    root_folded: "śamⁱ"
+    tokens: 32
+    predicate: OFFERS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S024:V004, VG:RV:SAK:M01:S085:V012]
+    gloss: "to labour at the rite, toil in worship"
+    note: >-
+      'śaśamānaḥ' is the worshipper who has toiled. Ritual labour, not a material offering.
+  - lemma_label: "√dabh-"
+    lemma_id: "lemma_daB_4084"
+    root_folded: "dabh"
+    tokens: 31
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: deception.
+    verses_read: 0
+    gloss: "to deceive, beguile"
+  - lemma_label: "√daśasy-"
+    lemma_id: "lemma_daSasy_4141"
+    root_folded: "daśasy"
+    tokens: 31
+    predicate: GRANTS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S061:V011, VG:RV:SAK:M01:S139:V005]
+    gloss: "to be liberal, grant"
+    note: null
+  - lemma_label: "√dru-"
+    lemma_id: "lemma_dru_4564"
+    root_folded: "dru"
+    tokens: 31
+    predicate: MOVES_TO
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M02:S030:V003, VG:RV:SAK:M03:S014:V003]
+    gloss: "to run, hasten"
+    note: null
+  - lemma_label: "√rih-"
+    lemma_id: "lemma_rih_7421"
+    root_folded: "rih"
+    tokens: 31
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: licking.
+    verses_read: 0
+    gloss: "to lick"
+  - lemma_label: "√r̥j-"
+    lemma_id: "lemma_fYj_2175"
+    root_folded: "\uE000j"
+    tokens: 31
+    predicate: SEEKS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S006:V009, VG:RV:SAK:M01:S037:V003]
+    gloss: "to stretch toward, strive after"
+    note: null
+  - lemma_label: "√sidh-"
+    lemma_id: "lemma_siD_9674"
+    root_folded: "sidh"
+    tokens: 31
+    predicate: PROTECTS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S023:V015, VG:RV:SAK:M01:S032:V013]
+    gloss: "to drive away, repel"
+    note: null
+  - lemma_label: "√pat- 2"
+    lemma_id: "lemma_pat_5187"
+    root_folded: "pat"
+    tokens: 30
+    predicate: RULES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 2
+    examples: [VG:RV:SAK:M03:S054:V008, VG:RV:SAK:M08:S001:V026]
+    gloss: "to be lord of, rule over"
+    note: >-
+      A different root from pat-1 'fly, fall', and the folded key 'pat' cannot tell them apart. RV 3.54.8
+      'patyate' -- 'One All is Lord of what is fixed and moving'.
+  - lemma_label: "√str̥̄-"
+    lemma_id: "lemma_star_10223"
+    root_folded: "st\uE001"
+    tokens: 30
+    predicate: ESTABLISHES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S013:V005, VG:RV:SAK:M01:S108:V004]
+    gloss: "to strew, spread out (the barhis)"
+    note: >-
+      The ritual strewing of the sacred grass ('barhiḥ str̥ṇītá'). 'Sets in place' fits; the ritual
+      specificity is lost.
+  - lemma_label: "√svar-"
+    lemma_id: "lemma_svar_10433"
+    root_folded: "svar"
+    tokens: 30
+    predicate: SPEAKS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S010:V004, VG:RV:SAK:M01:S151:V005]
+    gloss: "to sound, resound, sing out"
+    note: >-
+      Inarticulate vocalisation -- thunder, the bull's roar, the horse's neigh -- forced into SPEAKS because
+      the vocabulary has no VOCALIZES class. The utterance is real; the articulacy is not. 268 root tokens
+      are affected across the ten roots carrying this note. See the report.
+  - lemma_label: "√śrī-"
+    lemma_id: "lemma_SrI_8982"
+    root_folded: "śrī"
+    tokens: 30
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: the ritual blending of Soma with milk. A named ritual act with no predicate
+      class, alongside añj-.
+    verses_read: 0
+    gloss: "to blend, mix (Soma with milk)"
+  - lemma_label: "√diś-"
+    lemma_id: "lemma_diS_4250"
+    root_folded: "diś"
+    tokens: 29
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: indication.
+    verses_read: 0
+    gloss: "to point out, show, assign"
+  - lemma_label: "√tuj-"
+    lemma_id: "lemma_tuj_3783"
+    root_folded: "tuj"
+    tokens: 29
+    predicate: LEADS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S003:V006, VG:RV:SAK:M01:S011:V005]
+    gloss: "to thrust, impel, urge"
+    note: null
+  - lemma_label: "√vyadh-"
+    lemma_id: "lemma_vyaD_8516"
+    root_folded: "vyadh"
+    tokens: 29
+    predicate: SLAYS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S033:V012, VG:RV:SAK:M01:S061:V007]
+    gloss: "to pierce, transfix, strike"
+    note: >-
+      'strikes down' in the SLAYS gloss covers piercing (RV 1.61.7 'transfixed the wild boar'). Contrast
+      as-2 'to shoot', left UNMAPPED because there the patient is the weapon, not the victim.
+  - lemma_label: "√day-"
+    lemma_id: "lemma_day_12411"
+    root_folded: "day"
+    tokens: 28
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      two unrelated senses with no signal between them, and neither has a class.
+    verses_read: 0
+    gloss: "to divide, share out; to have compassion"
+  - lemma_label: "√jr̥̄- ~ jūr-"
+    lemma_id: "lemma_jar_3429"
+    root_folded: "j\uE001 ~ jūr"
+    tokens: 28
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: ageing.
+    verses_read: 0
+    gloss: "to grow old, waste away"
+  - lemma_label: "√kanⁱ-"
+    lemma_id: "lemma_kan_2409"
+    root_folded: "kanⁱ"
+    tokens: 28
+    predicate: DESIRES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S033:V014, VG:RV:SAK:M01:S051:V008]
+    gloss: "to be pleased with, delight in"
+    note: null
+  - lemma_label: "√prī-"
+    lemma_id: "lemma_prI_6085"
+    root_folded: "prī"
+    tokens: 28
+    predicate: EXHILARATES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S066:V004, VG:RV:SAK:M01:S069:V005]
+    gloss: "to please, gladden"
+    note: null
+  - lemma_label: "√rabh-"
+    lemma_id: "lemma_raB_7310"
+    root_folded: "rabh"
+    tokens: 28
+    predicate: BINDS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S024:V005, VG:RV:SAK:M01:S034:V002]
+    gloss: "to take hold of, grasp"
+    note: null
+  - lemma_label: "√vr̥śc-"
+    lemma_id: "lemma_vraSc_8544"
+    root_folded: "v\uE000śc"
+    tokens: 28
+    predicate: DESTROYS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S032:V005, VG:RV:SAK:M01:S051:V007]
+    gloss: "to hew down, cut off"
+    note: null
+  - lemma_label: "√bhrāj-"
+    lemma_id: "lemma_BrAj_6463"
+    root_folded: "bhrāj"
+    tokens: 27
+    predicate: SHINES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S044:V012, VG:RV:SAK:M01:S050:V003]
+    gloss: "to blaze, shine"
+    note: null
+  - lemma_label: "√tūr(v)- ~ tur-"
+    lemma_id: "lemma_tUrv_3864"
+    root_folded: "tūr v ~ tur"
+    tokens: 27
+    predicate: DEFEATS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S100:V005, VG:RV:SAK:M05:S009:V006]
+    gloss: "to overpower, overcome"
+    note: null
+  - lemma_label: "√vap- 2"
+    lemma_id: "lemma_vap_7661"
+    root_folded: "vap"
+    tokens: 27
+    predicate: POURS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S031:V009, VG:RV:SAK:M01:S092:V004]
+    gloss: "to strew, scatter, sow"
+    note: null
+  - lemma_label: "√vā-"
+    lemma_id: "lemma_vA_7842"
+    root_folded: "vā"
+    tokens: 27
+    predicate: FLOWS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S028:V006, VG:RV:SAK:M01:S058:V005]
+    gloss: "to blow (of wind)"
+    note: null
+  - lemma_label: "√āp-"
+    lemma_id: "lemma_Ap_1532"
+    root_folded: "āp"
+    tokens: 27
+    predicate: SEEKS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S024:V006, VG:RV:SAK:M01:S030:V014]
+    gloss: "to reach, obtain"
+    note: null
+  - lemma_label: "√īṣ-"
+    lemma_id: "lemma_Iz_1838"
+    root_folded: "īṣ"
+    tokens: 27
+    predicate: MOVES_TO
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S039:V008, VG:RV:SAK:M01:S084:V017]
+    gloss: "to move quickly, glide away"
+    note: null
+  - lemma_label: "√ci- 1"
+    lemma_id: "lemma_ci_3282"
+    root_folded: "ci"
+    tokens: 26
+    predicate: BUILDS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S087:V002, VG:RV:SAK:M01:S090:V004]
+    gloss: "to gather, pile up, arrange"
+    note: null
+  - lemma_label: "√naś- 2"
+    lemma_id: "lemma_naS_4887"
+    root_folded: "naś"
+    tokens: 26
+    predicate: DESTROYS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S023:V013, VG:RV:SAK:M01:S050:V011]
+    gloss: "to perish; (CAUS) to destroy"
+    note: >-
+      The 8 CAUS tokens ('nāśayāmasi', 'nāśaya') have an agent destroying a patient; the non-causative
+      tokens ('naśyati', 'naṣṭam', 'nanāśa') are intransitive perishing with no patient at all. Same
+      predicate, incompatible argument frames -- consult secondary_conjugation before assigning roles. A
+      different root from naś-1 'attain', which folds to the same key.
+  - lemma_label: "√arh-"
+    lemma_id: "lemma_arh_1093"
+    root_folded: "arh"
+    tokens: 25
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: worth is a property, not an act.
+    verses_read: 0
+    gloss: "to deserve, be worthy of"
+  - lemma_label: "√dhamⁱ-"
+    lemma_id: "lemma_Dam_4649"
+    root_folded: "dhamⁱ"
+    tokens: 25
+    predicate: BURNS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S033:V005, VG:RV:SAK:M01:S033:V009]
+    gloss: "to blow (upon a fire)"
+    note: null
+  - lemma_label: "√nud-"
+    lemma_id: "lemma_nud_5080"
+    root_folded: "nud"
+    tokens: 25
+    predicate: DEFEATS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S039:V002, VG:RV:SAK:M01:S085:V010]
+    gloss: "to thrust away, push back"
+    note: null
+  - lemma_label: "√pac-"
+    lemma_id: "lemma_pac_5163"
+    root_folded: "pac"
+    tokens: 25
+    predicate: BURNS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S135:V008, VG:RV:SAK:M01:S162:V010]
+    gloss: "to cook, bake, ripen"
+    note: null
+  - lemma_label: "√uh-"
+    lemma_id: "lemma_Uh_2134"
+    root_folded: "uh"
+    tokens: 25
+    predicate: PERCEIVES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S030:V004, VG:RV:SAK:M01:S176:V004]
+    gloss: "to consider, heed"
+    note: null
+  - lemma_label: "√vr̥ṣ-"
+    lemma_id: "lemma_vfz_8393"
+    root_folded: "v\uE000ṣ"
+    tokens: 25
+    predicate: POURS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S104:V009, VG:RV:SAK:M01:S108:V003]
+    gloss: "to rain, shower down"
+    note: null
+  - lemma_label: "√hr̥ṣ-"
+    lemma_id: "lemma_hfz_10733"
+    root_folded: "h\uE000ṣ"
+    tokens: 24
+    predicate: EXHILARATES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S051:V007, VG:RV:SAK:M01:S052:V002]
+    gloss: "to be excited, thrill"
+    note: null
+  - lemma_label: "√kā-"
+    lemma_id: "lemma_kA_2508"
+    root_folded: "kā"
+    tokens: 24
+    predicate: DESIRES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S025:V019, VG:RV:SAK:M01:S040:V002]
+    gloss: "to desire, love"
+    note: null
+  - lemma_label: "√kṣā-"
+    lemma_id: "lemma_kzi_2795"
+    root_folded: "kṣā"
+    tokens: 24
+    predicate: RULES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S024:V014, VG:RV:SAK:M01:S032:V015]
+    gloss: "to possess, rule over"
+    note: null
+  - lemma_label: "√vr̥h-"
+    lemma_id: "lemma_barh_6156"
+    root_folded: "v\uE000h"
+    tokens: 24
+    predicate: DESTROYS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S130:V009, VG:RV:SAK:M01:S174:V005]
+    gloss: "to tear out, pluck up"
+    note: null
+  - lemma_label: "√jū-"
+    lemma_id: "lemma_jU_3547"
+    root_folded: "jū"
+    tokens: 23
+    predicate: LEADS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S027:V007, VG:RV:SAK:M01:S071:V006]
+    gloss: "to impel, speed on"
+    note: null
+  - lemma_label: "√pad-"
+    lemma_id: "lemma_pad_5225"
+    root_folded: "pad"
+    tokens: 23
+    predicate: MOVES_TO
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S038:V006, VG:RV:SAK:M01:S079:V011]
+    gloss: "to step, set foot, fall"
+    note: null
+  - lemma_label: "√tr̥p-"
+    lemma_id: "lemma_tfp_3877"
+    root_folded: "t\uE000p"
+    tokens: 23
+    predicate: RECEIVES_OFFERING
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S017:V003, VG:RV:SAK:M01:S023:V007]
+    gloss: "to be satisfied, drink one's fill"
+    note: null
+  - lemma_label: "√ukṣ-"
+    lemma_id: "lemma_ukz_1855"
+    root_folded: "ukṣ"
+    tokens: 23
+    predicate: POURS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S087:V002, VG:RV:SAK:M01:S157:V002]
+    gloss: "to sprinkle, moisten"
+    note: null
+  - lemma_label: "√jar-"
+    lemma_id: "lemma_jar_3427"
+    root_folded: "jar"
+    tokens: 22
+    predicate: PRAISES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S002:V002, VG:RV:SAK:M01:S094:V014]
+    gloss: "to sing, invoke"
+    note: null
+  - lemma_label: "√krīḍ-"
+    lemma_id: "lemma_krIq_2757"
+    root_folded: "krīḍ"
+    tokens: 22
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: play, though it is the Maruts' characteristic verb (RV 'krī́ḷan').
+    verses_read: 0
+    gloss: "to play, sport"
+  - lemma_label: "√stanⁱ-"
+    lemma_id: "lemma_stan_10214"
+    root_folded: "stanⁱ"
+    tokens: 22
+    predicate: SPEAKS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S058:V002, VG:RV:SAK:M01:S064:V006]
+    gloss: "to thunder, roar"
+    note: >-
+      Inarticulate vocalisation -- thunder, the bull's roar, the horse's neigh -- forced into SPEAKS because
+      the vocabulary has no VOCALIZES class. The utterance is real; the articulacy is not. 268 root tokens
+      are affected across the ten roots carrying this note. See the report.
+  - lemma_label: "√duvasy-"
+    lemma_id: "lemma_duvasy_4356"
+    root_folded: "duvasy"
+    tokens: 21
+    predicate: OFFERS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S062:V010, VG:RV:SAK:M01:S078:V002]
+    gloss: "to honour, worship"
+    note: null
+  - lemma_label: "√mr̥-"
+    lemma_id: "lemma_mf_6907"
+    root_folded: "m\uE000"
+    tokens: 21
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: dying. SLAYS is transitive and has an agent; mr̥- has neither, and 'mr̥tasya'
+      is the dead man, not an actor.
+    verses_read: 0
+    gloss: "to die"
+  - lemma_label: "√panⁱ-"
+    lemma_id: "lemma_pan_5235"
+    root_folded: "panⁱ"
+    tokens: 21
+    predicate: PRAISES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S087:V003, VG:RV:SAK:M01:S180:V007]
+    gloss: "to admire, praise"
+    note: null
+  - lemma_label: "√piś-"
+    lemma_id: "lemma_piS_5500"
+    root_folded: "piś"
+    tokens: 21
+    predicate: BUILDS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S068:V010, VG:RV:SAK:M01:S110:V008]
+    gloss: "to shape, carve, adorn"
+    note: null
+  - lemma_label: "√rad-"
+    lemma_id: "lemma_rad_7289"
+    root_folded: "rad"
+    tokens: 21
+    predicate: BUILDS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S061:V012, VG:RV:SAK:M01:S116:V007]
+    gloss: "to cut a channel, furrow"
+    note: null
+  - lemma_label: "√sas-"
+    lemma_id: "lemma_sas_9493"
+    root_folded: "sas"
+    tokens: 21
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: sleeping. DWELLS is spatial abiding, not sleep.
+    verses_read: 0
+    gloss: "to sleep"
+  - lemma_label: "√sū- 2"
+    lemma_id: "lemma_sU_10080"
+    root_folded: "sū"
+    tokens: 21
+    predicate: CREATES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S135:V008, VG:RV:SAK:M01:S164:V017]
+    gloss: "to give birth to, generate"
+    note: null
+  - lemma_label: "√sūd-"
+    lemma_id: "lemma_sUd_10089"
+    root_folded: "sūd"
+    tokens: 21
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      meaning too broad.
+    verses_read: 0
+    gloss: "to set right, make sweet, make succeed"
+  - lemma_label: "√śardh-"
+    lemma_id: "lemma_SarD_8691"
+    root_folded: "śardh"
+    tokens: 21
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: a disposition, not an act.
+    verses_read: 0
+    gloss: "to be defiant, bold"
+  - lemma_label: "√bhuj- 2"
+    lemma_id: "lemma_Buj_6387"
+    root_folded: "bhuj"
+    tokens: 20
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits; RECEIVES_OFFERING would over-read the non-ritual uses, which predominate. A
+      different root from bhuj-1, which folds to the same key.
+    verses_read: 0
+    gloss: "to enjoy, consume, benefit from"
+  - lemma_label: "√nādh-"
+    lemma_id: "lemma_nAD_4908"
+    root_folded: "nādh"
+    tokens: 20
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: distress as a state. 'nādhamāna' is the suppliant, not an act.
+    verses_read: 0
+    gloss: "to be in distress, seek help"
+  - lemma_label: "√tr̥d-"
+    lemma_id: "lemma_tfd_3875"
+    root_folded: "t\uE000d"
+    tokens: 20
+    predicate: DESTROYS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S032:V001, VG:RV:SAK:M02:S015:V003]
+    gloss: "to bore through, split open"
+    note: null
+  - lemma_label: "√tr̥ṣ-"
+    lemma_id: "lemma_tfz_3884"
+    root_folded: "t\uE000ṣ"
+    tokens: 20
+    predicate: DESIRES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S016:V005, VG:RV:SAK:M01:S031:V007]
+    gloss: "to thirst, be athirst"
+    note: null
+  - lemma_label: "√śr̥̄-"
+    lemma_id: "lemma_Sar_8678"
+    root_folded: "ś\uE001"
+    tokens: 20
+    predicate: DESTROYS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S164:V013, VG:RV:SAK:M01:S174:V006]
+    gloss: "to crush, break"
+    note: null
+  - lemma_label: "√śudh-"
+    lemma_id: "lemma_SuD_8849"
+    root_folded: "śudh"
+    tokens: 20
+    predicate: PURIFIES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S164:V040, VG:RV:SAK:M06:S028:V007]
+    gloss: "to be clean, purify"
+    note: null
+  - lemma_label: "√śvasⁱ-"
+    lemma_id: "lemma_Svas_9030"
+    root_folded: "śvasⁱ"
+    tokens: 20
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: respiration.
+    verses_read: 0
+    gloss: "to breathe, snort, hiss"
+  - lemma_label: "√śū-"
+    lemma_id: "lemma_SU_8884"
+    root_folded: "śū"
+    tokens: 20
+    predicate: STRENGTHENS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S054:V007, VG:RV:SAK:M01:S064:V015]
+    gloss: "to swell, be strong"
+    note: null
+  - lemma_label: "√mahay-"
+    lemma_id: "lemma_mah_6707"
+    root_folded: "mahay"
+    tokens: 19
+    predicate: PRAISES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S052:V001, VG:RV:SAK:M01:S054:V002]
+    gloss: "to magnify, glorify"
+    note: null
+  - lemma_label: "√mr̥ś-"
+    lemma_id: "lemma_mfS_6935"
+    root_folded: "m\uE000ś"
+    tokens: 19
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: contact.
+    verses_read: 0
+    gloss: "to touch, stroke, grope"
+  - lemma_label: "√namasy-"
+    lemma_id: "lemma_namasy_4846"
+    root_folded: "namasy"
+    tokens: 19
+    predicate: PRAISES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S033:V002, VG:RV:SAK:M01:S036:V019]
+    gloss: "to do homage, revere"
+    note: null
+  - lemma_label: "√svad-"
+    lemma_id: "lemma_svad_10381"
+    root_folded: "svad"
+    tokens: 19
+    predicate: RECEIVES_OFFERING
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S119:V002, VG:RV:SAK:M01:S188:V010]
+    gloss: "to relish, find savoury"
+    note: null
+  - lemma_label: "√syand-"
+    lemma_id: "lemma_syad_10332"
+    root_folded: "syand"
+    tokens: 19
+    predicate: FLOWS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S032:V002, VG:RV:SAK:M02:S013:V002]
+    gloss: "to flow, stream"
+    note: null
+  - lemma_label: "√śnathⁱ-"
+    lemma_id: "lemma_SnaT_8930"
+    root_folded: "śnathⁱ"
+    tokens: 19
+    predicate: SLAYS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S051:V009, VG:RV:SAK:M01:S063:V005]
+    gloss: "to pierce, strike down"
+    note: null
+  - lemma_label: "√aśⁱ-"
+    lemma_id: "lemma_aS_1211"
+    root_folded: "aśⁱ"
+    tokens: 18
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: eating. As ad-.
+    verses_read: 0
+    gloss: "to eat"
+  - lemma_label: "√bandh-"
+    lemma_id: "lemma_banD_6142"
+    root_folded: "bandh"
+    tokens: 18
+    predicate: BINDS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S024:V013, VG:RV:SAK:M01:S028:V004]
+    gloss: "to bind, fasten"
+    note: null
+  - lemma_label: "√chand-"
+    lemma_id: "lemma_Cad_3351"
+    root_folded: "chand"
+    tokens: 18
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: seeming, poised between appearance and pleasing.
+    verses_read: 0
+    gloss: "to seem good, please, appear"
+  - lemma_label: "√kl̥p-"
+    lemma_id: "lemma_kalp_2477"
+    root_folded: "k\uE002p"
+    tokens: 18
+    predicate: ESTABLISHES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S170:V002, VG:RV:SAK:M08:S058:V001]
+    gloss: "to order, arrange, ordain"
+    note: null
+  - lemma_label: "√r̥dh-"
+    lemma_id: "lemma_fD_2235"
+    root_folded: "\uE000dh"
+    tokens: 18
+    predicate: STRENGTHENS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S017:V009, VG:RV:SAK:M01:S018:V008]
+    gloss: "to thrive, make thrive"
+    note: null
+  - lemma_label: "√svap-"
+    lemma_id: "lemma_svap_10401"
+    root_folded: "svap"
+    tokens: 18
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: sleeping. The 6 CAUS tokens ('svāpaya', put to sleep) are a genuine act, but
+      on no available class.
+    verses_read: 0
+    gloss: "to sleep; (CAUS) to lull to sleep"
+  - lemma_label: "√ghuṣ-"
+    lemma_id: "lemma_Guz_3140"
+    root_folded: "ghuṣ"
+    tokens: 17
+    predicate: SPEAKS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S083:V006, VG:RV:SAK:M01:S139:V008]
+    gloss: "to sound aloud, proclaim"
+    note: >-
+      Inarticulate vocalisation -- thunder, the bull's roar, the horse's neigh -- forced into SPEAKS because
+      the vocabulary has no VOCALIZES class. The utterance is real; the articulacy is not. 268 root tokens
+      are affected across the ten roots carrying this note. See the report.
+  - lemma_label: "√rudh- 1"
+    lemma_id: "lemma_ruD_7442"
+    root_folded: "rudh"
+    tokens: 17
+    predicate: BINDS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S008:V002, VG:RV:SAK:M01:S032:V011]
+    gloss: "to obstruct, pen in, confine"
+    note: null
+  - lemma_label: "√spr̥dh-"
+    lemma_id: "lemma_spfD_10304"
+    root_folded: "sp\uE000dh"
+    tokens: 17
+    predicate: DEFEATS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S033:V005, VG:RV:SAK:M01:S061:V015]
+    gloss: "to contend with, vie against"
+    note: null
+  - lemma_label: "√u- 2"
+    lemma_id: "lemma_vA_7844"
+    root_folded: "u"
+    tokens: 17
+    predicate: BUILDS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S061:V008, VG:RV:SAK:M01:S122:V002]
+    gloss: "to weave"
+    note: null
+  - lemma_label: "√ven-"
+    lemma_id: "lemma_ven_8470"
+    root_folded: "ven"
+    tokens: 17
+    predicate: DESIRES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S025:V006, VG:RV:SAK:M01:S043:V009]
+    gloss: "to long for, yearn after"
+    note: null
+  - lemma_label: "√śrathⁱ-"
+    lemma_id: "lemma_SraT_8951"
+    root_folded: "śrathⁱ"
+    tokens: 17
+    predicate: RELEASES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S024:V014, VG:RV:SAK:M01:S128:V006]
+    gloss: "to loosen, slacken"
+    note: null
+  - lemma_label: "√dhā- 2"
+    lemma_id: "lemma_DA_4665"
+    root_folded: "dhā"
+    tokens: 16
+    predicate: DRINKS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S095:V001, VG:RV:SAK:M01:S096:V005]
+    gloss: "to suck, suckle"
+    note: >-
+      A different root from dhā-1 'place' that folds to the same key. The 4 CAUS tokens ('dhāpayete') mean
+      'give suck', which inverts the roles: the causative agent is the giver, not the drinker.
+  - lemma_label: "√ej-"
+    lemma_id: "lemma_ej_2290"
+    root_folded: "ej"
+    tokens: 16
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits.
+    verses_read: 0
+    gloss: "to stir, tremble"
+  - lemma_label: "√mr̥̄-"
+    lemma_id: "lemma_mfR_6924"
+    root_folded: "m\uE001"
+    tokens: 16
+    predicate: DESTROYS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S029:V005, VG:RV:SAK:M01:S133:V005]
+    gloss: "to crush, grind down"
+    note: null
+  - lemma_label: "√mā- 2 ~ mī-"
+    lemma_id: "lemma_mA_6756"
+    root_folded: "mā ~ mī"
+    tokens: 16
+    predicate: SPEAKS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S038:V008, VG:RV:SAK:M01:S162:V002]
+    gloss: "to bellow, low (of cattle)"
+    note: >-
+      Inarticulate vocalisation -- thunder, the bull's roar, the horse's neigh -- forced into SPEAKS because
+      the vocabulary has no VOCALIZES class. The utterance is real; the articulacy is not. 268 root tokens
+      are affected across the ten roots carrying this note. See the report.
+  - lemma_label: "√ribh-"
+    lemma_id: "lemma_riB_7411"
+    root_folded: "ribh"
+    tokens: 16
+    predicate: PRAISES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S105:V009, VG:RV:SAK:M01:S120:V006]
+    gloss: "to sing, chant"
+    note: null
+  - lemma_label: "√spr̥ś-"
+    lemma_id: "lemma_spfS_10306"
+    root_folded: "sp\uE000ś"
+    tokens: 16
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: contact.
+    verses_read: 0
+    gloss: "to touch"
+  - lemma_label: "√vanuṣ(y)-"
+    lemma_id: "lemma_vanuzy_7640"
+    root_folded: "vanuṣ y"
+    tokens: 16
+    predicate: DEFEATS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S132:V001, VG:RV:SAK:M02:S025:V001]
+    gloss: "to assail, be eager against"
+    note: null
+  - lemma_label: "√bhas-"
+    lemma_id: "lemma_Bas_6339"
+    root_folded: "bhas"
+    tokens: 15
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: eating.
+    verses_read: 0
+    gloss: "to chew, devour"
+  - lemma_label: "√ci- 3"
+    lemma_id: "lemma_ci_3283"
+    root_folded: "ci"
+    tokens: 15
+    predicate: PERCEIVES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S105:V018, VG:RV:SAK:M01:S164:V038]
+    gloss: "to observe, discern"
+    note: null
+  - lemma_label: "√das-"
+    lemma_id: "lemma_das_4150"
+    root_folded: "das"
+    tokens: 15
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: exhaustion.
+    verses_read: 0
+    gloss: "to waste away, be exhausted"
+  - lemma_label: "√gavy-"
+    lemma_id: "lemma_gavy_2937"
+    root_folded: "gavy"
+    tokens: 15
+    predicate: DESIRES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S033:V001, VG:RV:SAK:M01:S131:V003]
+    gloss: "to desire cattle"
+    note: null
+  - lemma_label: "√hr̥- 1"
+    lemma_id: "lemma_hf_10720"
+    root_folded: "h\uE000"
+    tokens: 15
+    predicate: CARRIES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S061:V001, VG:RV:SAK:M01:S162:V012]
+    gloss: "to bear, carry off"
+    note: null
+  - lemma_label: "√hr̥̄-"
+    lemma_id: "lemma_har_10550"
+    root_folded: "h\uE001"
+    tokens: 15
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits.
+    verses_read: 0
+    gloss: "to be crooked, lead astray"
+  - lemma_label: "√manthⁱ-"
+    lemma_id: "lemma_maT_6527"
+    root_folded: "manthⁱ"
+    tokens: 15
+    predicate: CREATES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M03:S023:V001, VG:RV:SAK:M03:S023:V002]
+    gloss: "to churn out (fire by friction)"
+    note: null
+  - lemma_label: "√myakṣ-"
+    lemma_id: "lemma_myakz_6974"
+    root_folded: "myakṣ"
+    tokens: 15
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits.
+    verses_read: 0
+    gloss: "to be fixed on, cling to"
+  - lemma_label: "√piṣ-"
+    lemma_id: "lemma_piz_5511"
+    root_folded: "piṣ"
+    tokens: 15
+    predicate: DESTROYS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S032:V006, VG:RV:SAK:M01:S191:V002]
+    gloss: "to crush, grind"
+    note: null
+  - lemma_label: "√pr̥tany-"
+    lemma_id: "lemma_pftany_5751"
+    root_folded: "p\uE000tany"
+    tokens: 15
+    predicate: DEFEATS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S008:V004, VG:RV:SAK:M01:S032:V007]
+    gloss: "to fight against"
+    note: null
+  - lemma_label: "√sap-"
+    lemma_id: "lemma_sap_9305"
+    root_folded: "sap"
+    tokens: 15
+    predicate: OFFERS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S067:V008, VG:RV:SAK:M01:S068:V004]
+    gloss: "to serve, attend upon (a god)"
+    note: null
+  - lemma_label: "√vip-"
+    lemma_id: "lemma_vip_8043"
+    root_folded: "vip"
+    tokens: 15
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: trembling.
+    verses_read: 0
+    gloss: "to tremble, quiver"
+  - lemma_label: "√vyac-"
+    lemma_id: "lemma_vyac_8507"
+    root_folded: "vyac"
+    tokens: 15
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits.
+    verses_read: 0
+    gloss: "to encompass, extend over"
+  - lemma_label: "√ghas-"
+    lemma_id: "lemma_Gas_3138"
+    root_folded: "ghas"
+    tokens: 14
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: eating.
+    verses_read: 0
+    gloss: "to eat, devour"
+  - lemma_label: "√gr̥bhāy-"
+    lemma_id: "lemma_gfBAy_3019"
+    root_folded: "g\uE000bhāy"
+    tokens: 14
+    predicate: BINDS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S081:V007, VG:RV:SAK:M01:S091:V004]
+    gloss: "to seize, grasp"
+    note: null
+  - lemma_label: "√kāś-"
+    lemma_id: "lemma_kAS_2542"
+    root_folded: "kāś"
+    tokens: 14
+    predicate: SEES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S024:V010, VG:RV:SAK:M01:S164:V020]
+    gloss: "to look, gaze, appear"
+    note: null
+  - lemma_label: "√dagh-"
+    lemma_id: "lemma_daG_4061"
+    root_folded: "dagh"
+    tokens: 13
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits; sense too faint to place with SEEKS.
+    verses_read: 0
+    gloss: "to reach, attain to"
+  - lemma_label: "√dī- 2"
+    lemma_id: "lemma_dI_4254"
+    root_folded: "dī"
+    tokens: 13
+    predicate: MOVES_TO
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S180:V001, VG:RV:SAK:M02:S035:V014]
+    gloss: "to fly"
+    note: null
+  - lemma_label: "√gāh-"
+    lemma_id: "lemma_gAh_2971"
+    root_folded: "gāh"
+    tokens: 13
+    predicate: MOVES_TO
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S127:V004, VG:RV:SAK:M02:S007:V003]
+    gloss: "to plunge into, dive"
+    note: null
+  - lemma_label: "√iṣaṇy-"
+    lemma_id: "lemma_izaRy_1782"
+    root_folded: "iṣaṇy"
+    tokens: 13
+    predicate: LEADS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S134:V005, VG:RV:SAK:M03:S050:V003]
+    gloss: "to impel"
+    note: null
+  - lemma_label: "√mr̥dh-"
+    lemma_id: "lemma_mfD_6929"
+    root_folded: "m\uE000dh"
+    tokens: 13
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: neglect.
+    verses_read: 0
+    gloss: "to neglect, be remiss, slight"
+  - lemma_label: "√spr̥-"
+    lemma_id: "lemma_spf_10303"
+    root_folded: "sp\uE000"
+    tokens: 13
+    predicate: RESCUES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S161:V005, VG:RV:SAK:M05:S003:V009]
+    gloss: "to deliver, set free from"
+    note: null
+  - lemma_label: "√śravasy-"
+    lemma_id: "lemma_Sravasy_8969"
+    root_folded: "śravasy"
+    tokens: 13
+    predicate: SEEKS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S128:V001, VG:RV:SAK:M01:S131:V005]
+    gloss: "to seek glory"
+    note: null
+  - lemma_label: "√bhur-"
+    lemma_id: "lemma_Bur_6393"
+    root_folded: "bhur"
+    tokens: 12
+    predicate: MOVES_TO
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S119:V004, VG:RV:SAK:M01:S140:V010]
+    gloss: "to quiver, stir rapidly"
+    note: null
+  - lemma_label: "√br̥h-"
+    lemma_id: "lemma_bfh_6227"
+    root_folded: "b\uE000h"
+    tokens: 12
+    predicate: DESTROYS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S053:V006, VG:RV:SAK:M01:S053:V007]
+    gloss: "to tear out, uproot"
+    note: null
+  - lemma_label: "√gr̥̄- 2"
+    lemma_id: "lemma_gir_2974"
+    root_folded: "g\uE001"
+    tokens: 12
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: swallowing. A different root from gr̥̄-1 'praise', which folds to the same
+      key.
+    verses_read: 0
+    gloss: "to swallow, devour"
+  - lemma_label: "√kr̥p-"
+    lemma_id: "lemma_krap_2741"
+    root_folded: "k\uE000p"
+    tokens: 12
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: lamentation.
+    verses_read: 0
+    gloss: "to lament, mourn"
+  - lemma_label: "√kr̥̄- 2"
+    lemma_id: "lemma_kir_2558"
+    root_folded: "k\uE001"
+    tokens: 12
+    predicate: PRAISES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S104:V005, VG:RV:SAK:M01:S131:V005]
+    gloss: "to commemorate, celebrate"
+    note: null
+  - lemma_label: "√kr̥ṣ-"
+    lemma_id: "lemma_karz_2471"
+    root_folded: "k\uE000ṣ"
+    tokens: 12
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: ploughing.
+    verses_read: 0
+    gloss: "to plough, drag"
+  - lemma_label: "√mi- 1"
+    lemma_id: "lemma_mi_6817"
+    root_folded: "mi"
+    tokens: 12
+    predicate: ESTABLISHES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S173:V003, VG:RV:SAK:M02:S015:V003]
+    gloss: "to fix, set up, erect"
+    note: null
+  - lemma_label: "√mikṣ-"
+    lemma_id: "lemma_mih_6859"
+    root_folded: "mikṣ"
+    tokens: 12
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: mixing.
+    verses_read: 0
+    gloss: "to mix, stir together"
+  - lemma_label: "√muṣⁱ-"
+    lemma_id: "lemma_muz_6882"
+    root_folded: "muṣⁱ"
+    tokens: 12
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: theft, though Indra's theft of the Soma is a named myth.
+    verses_read: 0
+    gloss: "to steal, rob, carry off"
+  - lemma_label: "√nad-"
+    lemma_id: "lemma_nad_4813"
+    root_folded: "nad"
+    tokens: 12
+    predicate: SPEAKS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S030:V016, VG:RV:SAK:M01:S064:V008]
+    gloss: "to roar, sound"
+    note: >-
+      Inarticulate vocalisation -- thunder, the bull's roar, the horse's neigh -- forced into SPEAKS because
+      the vocabulary has no VOCALIZES class. The utterance is real; the articulacy is not. 268 root tokens
+      are affected across the ten roots carrying this note. See the report.
+  - lemma_label: "√nas-"
+    lemma_id: "lemma_nas_4892"
+    root_folded: "nas"
+    tokens: 12
+    predicate: MOVES_TO
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S186:V007, VG:RV:SAK:M02:S016:V008]
+    gloss: "to approach, join"
+    note: null
+  - lemma_label: "√r̥tāy-"
+    lemma_id: "lemma_ftAy_2211"
+    root_folded: "\uE000tāy"
+    tokens: 12
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: conformity to cosmic order is not an act on a patient.
+    verses_read: 0
+    gloss: "to act in accordance with r̥ta"
+  - lemma_label: "√svaj-"
+    lemma_id: "lemma_svaj_10375"
+    root_folded: "svaj"
+    tokens: 12
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: embracing.
+    verses_read: 0
+    gloss: "to embrace"
+  - lemma_label: "√dviṣ-"
+    lemma_id: "lemma_dviz_4617"
+    root_folded: "dviṣ"
+    tokens: 11
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: hatred as a state. CURSES would assert an utterance that dviṣ- does not make.
+    verses_read: 0
+    gloss: "to hate, be hostile to"
+  - lemma_label: "√irajy-"
+    lemma_id: "lemma_raj_7232"
+    root_folded: "irajy"
+    tokens: 11
+    predicate: RULES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S007:V009, VG:RV:SAK:M01:S055:V003]
+    gloss: "to rule over, be master of"
+    note: null
+  - lemma_label: "√nah-"
+    lemma_id: "lemma_nah_4895"
+    root_folded: "nah"
+    tokens: 11
+    predicate: BINDS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S116:V024, VG:RV:SAK:M01:S164:V037]
+    gloss: "to bind, tie fast"
+    note: null
+  - lemma_label: "√raṃh-"
+    lemma_id: "lemma_raMh_7204"
+    root_folded: "ra\uE003h"
+    tokens: 11
+    predicate: MOVES_TO
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S085:V005, VG:RV:SAK:M01:S134:V001]
+    gloss: "to hasten, speed"
+    note: null
+  - lemma_label: "√skambhⁱ-"
+    lemma_id: "lemma_skaB_10204"
+    root_folded: "skambhⁱ"
+    tokens: 11
+    predicate: ESTABLISHES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S034:V002, VG:RV:SAK:M01:S039:V002]
+    gloss: "to prop, buttress"
+    note: null
+  - lemma_label: "√skand-"
+    lemma_id: "lemma_skad_10201"
+    root_folded: "skand"
+    tokens: 11
+    predicate: MOVES_TO
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M05:S052:V003, VG:RV:SAK:M07:S033:V011]
+    gloss: "to leap, spring"
+    note: null
+  - lemma_label: "√tvíṣ-"
+    lemma_id: "lemma_tviz_4008"
+    root_folded: "tviṣ"
+    tokens: 11
+    predicate: SHINES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S052:V006, VG:RV:SAK:M01:S102:V007]
+    gloss: "to be stirred into brightness, glitter"
+    note: null
+  - lemma_label: "√ud-"
+    lemma_id: "lemma_ud_1892"
+    root_folded: "ud"
+    tokens: 11
+    predicate: POURS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S038:V009, VG:RV:SAK:M01:S085:V005]
+    gloss: "to wet, moisten"
+    note: null
+  - lemma_label: "√vañc-"
+    lemma_id: "lemma_vaYc_7587"
+    root_folded: "vañc"
+    tokens: 11
+    predicate: MOVES_TO
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S046:V003, VG:RV:SAK:M01:S142:V004]
+    gloss: "to move crookedly, sway"
+    note: null
+  - lemma_label: "√śramⁱ-"
+    lemma_id: "lemma_Sram_8960"
+    root_folded: "śramⁱ"
+    tokens: 11
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: weariness. The ritual-labour sense is carried by śamⁱ-, which is mapped to
+      OFFERS.
+    verses_read: 0
+    gloss: "to toil, grow weary"
+  - lemma_label: "√amⁱ-"
+    lemma_id: "lemma_am_853"
+    root_folded: "amⁱ"
+    tokens: 10
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits; too faint to place with the DESTROYS group.
+    verses_read: 0
+    gloss: "to press, harm, injure"
+  - lemma_label: "√cat-"
+    lemma_id: "lemma_cat_3199"
+    root_folded: "cat"
+    tokens: 10
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits; the 5 CAUS tokens ('cātayasva', drive away) are adjacent to PROTECTS but the
+      simplex is disappearance.
+    verses_read: 0
+    gloss: "to hide away; (CAUS) to drive off"
+  - lemma_label: "√idh- 2"
+    lemma_id: "lemma_eD_2304"
+    root_folded: "idh"
+    tokens: 10
+    predicate: STRENGTHENS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S041:V002, VG:RV:SAK:M02:S025:V005]
+    gloss: "to prosper, thrive"
+    note: null
+  - lemma_label: "√mr̥ṣ-"
+    lemma_id: "lemma_mfz_6936"
+    root_folded: "m\uE000ṣ"
+    tokens: 10
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: forgetting.
+    verses_read: 0
+    gloss: "to forget, neglect, overlook"
+  - lemma_label: "√mud-"
+    lemma_id: "lemma_mud_6873"
+    root_folded: "mud"
+    tokens: 10
+    predicate: EXHILARATES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M02:S005:V006, VG:RV:SAK:M05:S047:V006]
+    gloss: "to rejoice, be glad"
+    note: null
+  - lemma_label: "√muṣāy-"
+    lemma_id: "lemma_muzAy_6883"
+    root_folded: "muṣāy"
+    tokens: 10
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: theft.
+    verses_read: 0
+    gloss: "to rob, steal"
+  - lemma_label: "√sphr̥̄-"
+    lemma_id: "lemma_sPur_10316"
+    root_folded: "sph\uE001"
+    tokens: 10
+    predicate: MOVES_TO
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S084:V008, VG:RV:SAK:M02:S011:V009]
+    gloss: "to jerk, kick, quiver"
+    note: null
+  - lemma_label: "√sr̥p-"
+    lemma_id: "lemma_sfp_10137"
+    root_folded: "s\uE000p"
+    tokens: 10
+    predicate: MOVES_TO
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S161:V012, VG:RV:SAK:M08:S014:V014]
+    gloss: "to creep, glide"
+    note: null
+  - lemma_label: "√tuś-"
+    lemma_id: "lemma_tuS_3852"
+    root_folded: "tuś"
+    tokens: 10
+    predicate: FLOWS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M04:S038:V001, VG:RV:SAK:M08:S015:V011]
+    gloss: "to trickle, ooze"
+    note: null
+  - lemma_label: "√uṣ-"
+    lemma_id: "lemma_uz_2075"
+    root_folded: "uṣ"
+    tokens: 10
+    predicate: BURNS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S130:V008, VG:RV:SAK:M01:S130:V008]
+    gloss: "to burn"
+    note: null
+  - lemma_label: "√vrādh-"
+    lemma_id: "lemma_vrAD_8552"
+    root_folded: "vrādh"
+    tokens: 10
+    predicate: STRENGTHENS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S100:V009, VG:RV:SAK:M01:S122:V010]
+    gloss: "to be exalted, wax great"
+    note: null
+  - lemma_label: "√aghāy-"
+    lemma_id: "lemma_aGAy_117"
+    root_folded: "aghāy"
+    tokens: 9
+    predicate: CURSES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S091:V008, VG:RV:SAK:M01:S131:V007]
+    gloss: "to plot evil against"
+    note: null
+  - lemma_label: "√anⁱ-"
+    lemma_id: "lemma_an_392"
+    root_folded: "anⁱ"
+    tokens: 9
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: respiration.
+    verses_read: 0
+    gloss: "to breathe"
+  - lemma_label: "√kṣip-"
+    lemma_id: "lemma_kzip_2800"
+    root_folded: "kṣip"
+    tokens: 9
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: hurling. As as-2.
+    verses_read: 0
+    gloss: "to throw, hurl, fling"
+  - lemma_label: "√mahīy-"
+    lemma_id: "lemma_mahIy_6753"
+    root_folded: "mahīy"
+    tokens: 9
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: the passive counterpart of mahay-, with no agent.
+    verses_read: 0
+    gloss: "to be exalted, be magnified"
+  - lemma_label: "√nid-"
+    lemma_id: "lemma_nid_4967"
+    root_folded: "nid"
+    tokens: 9
+    predicate: CURSES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 2
+    examples: [VG:RV:SAK:M06:S052:V003, VG:RV:SAK:M01:S161:V005]
+    gloss: "to revile, blame, scorn"
+    note: >-
+      RV 6.52.3 'Why then beholdest thou how men revile us?'; RV 1.161.5 'these men who have reviled the
+      chalice'. Reviling is hostile speech rather than imprecation; CURSES was chosen because SPEAKS would
+      drop the hostility, which is the whole content.
+  - lemma_label: "√r̥d-"
+    lemma_id: "lemma_ard_1059"
+    root_folded: "\uE000d"
+    tokens: 9
+    predicate: DESTROYS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S187:V001, VG:RV:SAK:M02:S023:V014]
+    gloss: "to crush, distress"
+    note: null
+  - lemma_label: "√stabhāy-"
+    lemma_id: "lemma_staBAy_10221"
+    root_folded: "stabhāy"
+    tokens: 9
+    predicate: ESTABLISHES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S062:V005, VG:RV:SAK:M01:S164:V025]
+    gloss: "to prop up"
+    note: null
+  - lemma_label: "√stubh-"
+    lemma_id: "lemma_stuB_10244"
+    root_folded: "stubh"
+    tokens: 9
+    predicate: PRAISES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S080:V009, VG:RV:SAK:M01:S088:V006]
+    gloss: "to chant, praise"
+    note: null
+  - lemma_label: "√taṃs-"
+    lemma_id: "lemma_taMs_3607"
+    root_folded: "ta\uE003s"
+    tokens: 9
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits.
+    verses_read: 0
+    gloss: "to shake, move to and fro"
+  - lemma_label: "√tud-"
+    lemma_id: "lemma_tud_3790"
+    root_folded: "tud"
+    tokens: 9
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits; LEADS would over-read goading as guidance.
+    verses_read: 0
+    gloss: "to push, goad, thrust"
+  - lemma_label: "√uc-"
+    lemma_id: "lemma_uc_1870"
+    root_folded: "uc"
+    tokens: 9
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      sense uncertain: the annotation separates √uc- from √vac-, and the verse evidence (RV 5.81.4 'thou
+      combinest thee', RV 8.82.2 'even as thou art wont') supports neither speech nor desire cleanly.
+    verses_read: 2
+    examples: [VG:RV:SAK:M05:S081:V004, VG:RV:SAK:M08:S082:V002]
+    gloss: "to be accustomed to, be pleased with"
+  - lemma_label: "√varivasy-"
+    lemma_id: "lemma_varivasy_7712"
+    root_folded: "varivasy"
+    tokens: 9
+    predicate: BLESSES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S122:V003, VG:RV:SAK:M01:S122:V014]
+    gloss: "to make room for, grant relief"
+    note: null
+  - lemma_label: "√vas- 3"
+    lemma_id: "lemma_vas_7784"
+    root_folded: "vas"
+    tokens: 9
+    predicate: DWELLS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 2
+    examples: [VG:RV:SAK:M02:S010:V003, VG:RV:SAK:M08:S029:V008]
+    gloss: "to dwell, spend the night"
+    note: null
+  - lemma_label: "√vij-"
+    lemma_id: "lemma_vij_7973"
+    root_folded: "vij"
+    tokens: 9
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits.
+    verses_read: 0
+    gloss: "to tremble, start away, flee"
+  - lemma_label: "√vr̥ṣāy- 2"
+    lemma_id: "lemma_vfzAy_8438"
+    root_folded: "v\uE000ṣāy"
+    tokens: 9
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: comportment.
+    verses_read: 0
+    gloss: "to act the bull, be lusty"
+  - lemma_label: "√vīḍ- ~ vīḷ-"
+    lemma_id: "lemma_vIq_8292"
+    root_folded: "vīḍ ~ vī\uE002"
+    tokens: 9
+    predicate: ESTABLISHES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M02:S021:V004, VG:RV:SAK:M02:S024:V003]
+    gloss: "to make firm, strengthen"
+    note: null
+  - lemma_label: "√yāc-"
+    lemma_id: "lemma_yAc_7092"
+    root_folded: "yāc"
+    tokens: 9
+    predicate: SEEKS
+    secondary_predicate: INVOKES
+    disambiguation: >-
+      As yā-2: a deity patient -> INVOKES, otherwise SEEKS.
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M08:S001:V020, VG:RV:SAK:M08:S001:V020]
+    gloss: "to beg, ask for"
+    note: null
+  - lemma_label: "√śad-"
+    lemma_id: "lemma_Sad_8645"
+    root_folded: "śad"
+    tokens: 9
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: eminence as a state.
+    verses_read: 0
+    gloss: "to prevail, be eminent"
+  - lemma_label: "√dhanⁱ-"
+    lemma_id: "lemma_Dan_4626"
+    root_folded: "dhanⁱ"
+    tokens: 8
+    predicate: MOVES_TO
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S071:V003, VG:RV:SAK:M01:S088:V003]
+    gloss: "to run"
+    note: null
+  - lemma_label: "√dhāv- 2"
+    lemma_id: "lemma_DAv_4692"
+    root_folded: "dhāv"
+    tokens: 8
+    predicate: PURIFIES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S109:V004, VG:RV:SAK:M05:S064:V007]
+    gloss: "to rinse, wash"
+    note: null
+  - lemma_label: "√dās-"
+    lemma_id: "lemma_dAs_4208"
+    root_folded: "dās"
+    tokens: 8
+    predicate: CURSES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S079:V011, VG:RV:SAK:M06:S005:V004]
+    gloss: "to plot against, attack (abhi-dās-)"
+    note: null
+  - lemma_label: "√jyā-"
+    lemma_id: "lemma_jyA_3580"
+    root_folded: "jyā"
+    tokens: 8
+    predicate: DEFEATS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M03:S059:V002, VG:RV:SAK:M04:S025:V005]
+    gloss: "to overpower, deprive of"
+    note: null
+  - lemma_label: "√jūrv-"
+    lemma_id: "lemma_jUrv_3554"
+    root_folded: "jūrv"
+    tokens: 8
+    predicate: BURNS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 2
+    examples: [VG:RV:SAK:M08:S060:V007, VG:RV:SAK:M10:S187:V003]
+    gloss: "to consume by fire"
+    note: >-
+      RV 8.60.7 'as thou burnest down to earth even high-grown underwood, so burn him who injures us'; RV
+      10.187.3 'who utterly consumes the fiends'.
+  - lemma_label: "√kam-"
+    lemma_id: "lemma_kam_2430"
+    root_folded: "kam"
+    tokens: 8
+    predicate: DESIRES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M02:S014:V008, VG:RV:SAK:M05:S036:V001]
+    gloss: "to love, desire"
+    note: null
+  - lemma_label: "√kr̥t- 1"
+    lemma_id: "lemma_kft_2651"
+    root_folded: "k\uE000t"
+    tokens: 8
+    predicate: DESTROYS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S057:V006, VG:RV:SAK:M01:S063:V004]
+    gloss: "to cut, cut off"
+    note: null
+  - lemma_label: "√pruṣāy-"
+    lemma_id: "lemma_pruzAy_6090"
+    root_folded: "pruṣāy"
+    tokens: 8
+    predicate: POURS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S121:V002, VG:RV:SAK:M01:S139:V003]
+    gloss: "to sprinkle"
+    note: null
+  - lemma_label: "√pyā-"
+    lemma_id: "lemma_pyA_5833"
+    root_folded: "pyā"
+    tokens: 8
+    predicate: STRENGTHENS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S091:V016, VG:RV:SAK:M01:S091:V017]
+    gloss: "to swell, be full"
+    note: null
+  - lemma_label: "√rap-"
+    lemma_id: "lemma_rap_7304"
+    root_folded: "rap"
+    tokens: 8
+    predicate: SPEAKS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S119:V009, VG:RV:SAK:M01:S174:V007]
+    gloss: "to talk, chatter"
+    note: >-
+      Inarticulate vocalisation -- thunder, the bull's roar, the horse's neigh -- forced into SPEAKS because
+      the vocabulary has no VOCALIZES class. The utterance is real; the articulacy is not. 268 root tokens
+      are affected across the ten roots carrying this note. See the report.
+  - lemma_label: "√r̥ghāy-"
+    lemma_id: "lemma_fGAy_2144"
+    root_folded: "\uE000ghāy"
+    tokens: 8
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits.
+    verses_read: 0
+    gloss: "to rage, tremble with fury"
+  - lemma_label: "√sakhīy-"
+    lemma_id: "lemma_saKIy_9116"
+    root_folded: "sakhīy"
+    tokens: 8
+    predicate: DESIRES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S128:V001, VG:RV:SAK:M01:S131:V005]
+    gloss: "to seek friendship"
+    note: null
+  - lemma_label: "√smi-"
+    lemma_id: "lemma_smi_10328"
+    root_folded: "smi"
+    tokens: 8
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits.
+    verses_read: 0
+    gloss: "to smile"
+  - lemma_label: "√str̥-"
+    lemma_id: "lemma_star_10223"
+    root_folded: "st\uE000"
+    tokens: 8
+    predicate: DESTROYS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S129:V004, VG:RV:SAK:M01:S129:V004]
+    gloss: "to lay low, overthrow"
+    note: null
+  - lemma_label: "√tvāy-"
+    lemma_id: "lemma_tvAy_12403"
+    root_folded: "tvāy"
+    tokens: 8
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: devotion as a state.
+    verses_read: 0
+    gloss: "to be devoted to thee"
+  - lemma_label: "√ubj-"
+    lemma_id: "lemma_ubj_2008"
+    root_folded: "ubj"
+    tokens: 8
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits.
+    verses_read: 0
+    gloss: "to force down, press down"
+  - lemma_label: "√vat-"
+    lemma_id: "lemma_vat_7590"
+    root_folded: "vat"
+    tokens: 8
+    predicate: PERCEIVES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S128:V002, VG:RV:SAK:M01:S165:V013]
+    gloss: "to apprehend, be inspired with"
+    note: null
+  - lemma_label: "√vājay-"
+    lemma_id: "lemma_vAjay_7867"
+    root_folded: "vājay"
+    tokens: 8
+    predicate: LEADS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M02:S011:V007, VG:RV:SAK:M02:S019:V007]
+    gloss: "to urge to speed, incite"
+    note: null
+  - lemma_label: "√ścut-"
+    lemma_id: "lemma_Scut_8929"
+    root_folded: "ścut"
+    tokens: 8
+    predicate: FLOWS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S087:V002, VG:RV:SAK:M03:S001:V008]
+    gloss: "to drip, trickle"
+    note: null
+  - lemma_label: "√ūrjay-"
+    lemma_id: "lemma_Urjay_2103"
+    root_folded: "ūrjay"
+    tokens: 8
+    predicate: STRENGTHENS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M02:S013:V008, VG:RV:SAK:M02:S035:V007]
+    gloss: "to be vigorous, invigorate"
+    note: null
+  - lemma_label: "√adhvarīy-"
+    lemma_id: "lemma_aDvarIy_386"
+    root_folded: "adhvarīy"
+    tokens: 7
+    predicate: OFFERS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S023:V016, VG:RV:SAK:M01:S181:V001]
+    gloss: "to perform the adhvara rite"
+    note: null
+  - lemma_label: "√bhikṣ-"
+    lemma_id: "lemma_Bikz_6368"
+    root_folded: "bhikṣ"
+    tokens: 7
+    predicate: SEEKS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S152:V006, VG:RV:SAK:M01:S171:V001]
+    gloss: "to beg, request"
+    note: null
+  - lemma_label: "√bhuraṇy-"
+    lemma_id: "lemma_BuraRy_6396"
+    root_folded: "bhuraṇy"
+    tokens: 7
+    predicate: MOVES_TO
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S050:V006, VG:RV:SAK:M01:S155:V005]
+    gloss: "to stir, be in motion"
+    note: null
+  - lemma_label: "√ghr̥-"
+    lemma_id: "lemma_Gar_3129"
+    root_folded: "gh\uE000"
+    tokens: 7
+    predicate: POURS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M02:S010:V004, VG:RV:SAK:M02:S010:V005]
+    gloss: "to besprinkle"
+    note: null
+  - lemma_label: "√gras-"
+    lemma_id: "lemma_gras_3107"
+    root_folded: "gras"
+    tokens: 7
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: eating.
+    verses_read: 0
+    gloss: "to devour, swallow"
+  - lemma_label: "√khanⁱ-"
+    lemma_id: "lemma_Kan_2849"
+    root_folded: "khanⁱ"
+    tokens: 7
+    predicate: BUILDS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S117:V005, VG:RV:SAK:M01:S117:V012]
+    gloss: "to dig"
+    note: null
+  - lemma_label: "√kṣī-"
+    lemma_id: "lemma_kzi_2796"
+    root_folded: "kṣī"
+    tokens: 7
+    predicate: DESTROYS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S062:V012, VG:RV:SAK:M02:S009:V005]
+    gloss: "to waste away, destroy"
+    note: null
+  - lemma_label: "√miṣ-"
+    lemma_id: "lemma_miz_6858"
+    root_folded: "miṣ"
+    tokens: 7
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits; SEES would over-read a physiological act.
+    verses_read: 0
+    gloss: "to open the eyes, blink"
+  - lemma_label: "√nij-"
+    lemma_id: "lemma_nij_4955"
+    root_folded: "nij"
+    tokens: 7
+    predicate: PURIFIES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M08:S002:V002, VG:RV:SAK:M09:S069:V004]
+    gloss: "to wash, cleanse"
+    note: null
+  - lemma_label: "√pruthⁱ-"
+    lemma_id: "lemma_pruT_6088"
+    root_folded: "pruthⁱ"
+    tokens: 7
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits.
+    verses_read: 0
+    gloss: "to snort, puff"
+  - lemma_label: "√rādh-"
+    lemma_id: "lemma_rAD_7380"
+    root_folded: "rādh"
+    tokens: 7
+    predicate: GRANTS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S041:V007, VG:RV:SAK:M01:S070:V008]
+    gloss: "to grant, accomplish for"
+    note: null
+  - lemma_label: "√r̥ṣ-"
+    lemma_id: "lemma_fz_2250"
+    root_folded: "\uE000ṣ"
+    tokens: 7
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits; sense too faint to place with SLAYS.
+    verses_read: 0
+    gloss: "to thrust, pierce (ni-r̥ṣ-)"
+  - lemma_label: "√vyath-"
+    lemma_id: "lemma_vyaT_8513"
+    root_folded: "vyath"
+    tokens: 7
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits.
+    verses_read: 0
+    gloss: "to waver, totter"
+  - lemma_label: "√īṅkhay-"
+    lemma_id: "lemma_INKay_1822"
+    root_folded: "īṅkhay"
+    tokens: 7
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits.
+    verses_read: 0
+    gloss: "to swing, set swinging"
+  - lemma_label: "√śvit-"
+    lemma_id: "lemma_Svit_9041"
+    root_folded: "śvit"
+    tokens: 7
+    predicate: SHINES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S092:V012, VG:RV:SAK:M01:S113:V015]
+    gloss: "to be white, gleam"
+    note: null
+  - lemma_label: "√añc-"
+    lemma_id: "lemma_ac_144"
+    root_folded: "añc"
+    tokens: 6
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits.
+    verses_read: 0
+    gloss: "to bend, curve"
+  - lemma_label: "√brahmaṇy-"
+    lemma_id: "lemma_brahmaRy_6264"
+    root_folded: "brahmaṇy"
+    tokens: 6
+    predicate: SPEAKS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M02:S019:V001, VG:RV:SAK:M02:S019:V008]
+    gloss: "to formulate a brahman, make prayer"
+    note: null
+  - lemma_label: "√ci- 2"
+    lemma_id: "lemma_ci_3282"
+    root_folded: "ci"
+    tokens: 6
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: requital. One of three ci- roots folding to the same key.
+    verses_read: 0
+    gloss: "to avenge, requite, punish"
+  - lemma_label: "√dad-"
+    lemma_id: "lemma_dA_4164"
+    root_folded: "dad"
+    tokens: 6
+    predicate: GRANTS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S024:V007, VG:RV:SAK:M01:S041:V009]
+    gloss: "to give"
+    note: null
+  - lemma_label: "√dambh-"
+    lemma_id: "lemma_daB_4084"
+    root_folded: "dambh"
+    tokens: 6
+    predicate: DESTROYS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S054:V006, VG:RV:SAK:M06:S018:V010]
+    gloss: "to crush, destroy"
+    note: null
+  - lemma_label: "√dhraj-"
+    lemma_id: "lemma_Draj_4764"
+    root_folded: "dhraj"
+    tokens: 6
+    predicate: MOVES_TO
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S149:V001, VG:RV:SAK:M01:S165:V002]
+    gloss: "to sweep along, glide"
+    note: null
+  - lemma_label: "√dhvanⁱ-"
+    lemma_id: "lemma_Dvan_4780"
+    root_folded: "dhvanⁱ"
+    tokens: 6
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      two unrelated senses under one lemma and no class for either.
+    verses_read: 0
+    gloss: "to become dark; to sound"
+  - lemma_label: "√hīḍ- ~ hīḷ-"
+    lemma_id: "lemma_hIq_10711"
+    root_folded: "hīḍ ~ hī\uE002"
+    tokens: 6
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: anger as a state.
+    verses_read: 0
+    gloss: "to be angry, be offended"
+  - lemma_label: "√iṣay-"
+    lemma_id: "lemma_izay_1784"
+    root_folded: "iṣay"
+    tokens: 6
+    predicate: STRENGTHENS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S183:V003, VG:RV:SAK:M01:S185:V009]
+    gloss: "to refresh, be vigorous"
+    note: null
+  - lemma_label: "√krudh-"
+    lemma_id: "lemma_kruD_2763"
+    root_folded: "krudh"
+    tokens: 6
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: anger as a state.
+    verses_read: 0
+    gloss: "to be angry"
+  - lemma_label: "√kr̥̄- 1"
+    lemma_id: "lemma_kir_2559"
+    root_folded: "k\uE001"
+    tokens: 6
+    predicate: POURS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S032:V013, VG:RV:SAK:M04:S038:V007]
+    gloss: "to scatter, pour out"
+    note: null
+  - lemma_label: "√mathⁱ-"
+    lemma_id: "lemma_maT_6527"
+    root_folded: "mathⁱ"
+    tokens: 6
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits; the fire-churning sense is carried by manthⁱ-, which is mapped to CREATES.
+    verses_read: 0
+    gloss: "to churn, stir up"
+  - lemma_label: "√mih-"
+    lemma_id: "lemma_mih_6859"
+    root_folded: "mih"
+    tokens: 6
+    predicate: POURS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S064:V006, VG:RV:SAK:M01:S157:V004]
+    gloss: "to shed water, rain down"
+    note: null
+  - lemma_label: "√nr̥t-"
+    lemma_id: "lemma_nft_5088"
+    root_folded: "n\uE000t"
+    tokens: 6
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: dancing, though Indra is called nr̥tú.
+    verses_read: 0
+    gloss: "to dance"
+  - lemma_label: "√pruṣⁱ-"
+    lemma_id: "lemma_pruz_6089"
+    root_folded: "pruṣⁱ"
+    tokens: 6
+    predicate: POURS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S058:V002, VG:RV:SAK:M01:S168:V008]
+    gloss: "to sprinkle"
+    note: null
+  - lemma_label: "√riṣaṇy-"
+    lemma_id: "lemma_rizaRy_7418"
+    root_folded: "riṣaṇy"
+    tokens: 6
+    predicate: DESTROYS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M02:S011:V001, VG:RV:SAK:M02:S023:V012]
+    gloss: "to harm"
+    note: null
+  - lemma_label: "√r̥jūy-"
+    lemma_id: "lemma_fjUy_2169"
+    root_folded: "\uE000jūy"
+    tokens: 6
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: rectitude as a state.
+    verses_read: 0
+    gloss: "to be straight, act uprightly"
+  - lemma_label: "√tij-"
+    lemma_id: "lemma_tij_3755"
+    root_folded: "tij"
+    tokens: 6
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits.
+    verses_read: 0
+    gloss: "to be sharp; (DES) to endure"
+  - lemma_label: "√tū-"
+    lemma_id: "lemma_tu_3773"
+    root_folded: "tū"
+    tokens: 6
+    predicate: STRENGTHENS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S094:V002, VG:RV:SAK:M02:S020:V005]
+    gloss: "to be strong"
+    note: null
+  - lemma_label: "√vraj-"
+    lemma_id: "lemma_vraj_8531"
+    root_folded: "vraj"
+    tokens: 6
+    predicate: MOVES_TO
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S058:V005, VG:RV:SAK:M01:S116:V004]
+    gloss: "to proceed, go forth"
+    note: null
+  - lemma_label: "√ār-"
+    lemma_id: "lemma_Ar_1583"
+    root_folded: "ār"
+    tokens: 6
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits; sense too faint.
+    verses_read: 0
+    gloss: "to injure, hurt"
+  - lemma_label: "√arthay-"
+    lemma_id: "lemma_arTay_1057"
+    root_folded: "arthay"
+    tokens: 5
+    predicate: SEEKS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S082:V001, VG:RV:SAK:M02:S013:V013]
+    gloss: "to strive for"
+    note: null
+  - lemma_label: "√aśvāy-"
+    lemma_id: "lemma_aSvAy_1286"
+    root_folded: "aśvāy"
+    tokens: 5
+    predicate: DESIRES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M04:S017:V016, VG:RV:SAK:M06:S045:V026]
+    gloss: "to desire horses"
+    note: null
+  - lemma_label: "√aśāy-"
+    lemma_id: "lemma_aSAy_12129"
+    root_folded: "aśāy"
+    tokens: 5
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: eating.
+    verses_read: 0
+    gloss: "to eat, take food"
+  - lemma_label: "√bhañj-"
+    lemma_id: "lemma_BaYj_6295"
+    root_folded: "bhañj"
+    tokens: 5
+    predicate: DESTROYS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M06:S068:V006, VG:RV:SAK:M08:S004:V005]
+    gloss: "to break, shatter"
+    note: null
+  - lemma_label: "√chid-"
+    lemma_id: "lemma_Cid_3365"
+    root_folded: "chid"
+    tokens: 5
+    predicate: DESTROYS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S109:V003, VG:RV:SAK:M01:S116:V015]
+    gloss: "to cut off, sever"
+    note: null
+  - lemma_label: "√dhvaṃs-"
+    lemma_id: "lemma_Dvas_4784"
+    root_folded: "dhva\uE003s"
+    tokens: 5
+    predicate: DESTROYS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S140:V003, VG:RV:SAK:M01:S140:V005]
+    gloss: "to scatter, fall to dust"
+    note: null
+  - lemma_label: "√dhūrv-"
+    lemma_id: "lemma_DUrv_4735"
+    root_folded: "dhūrv"
+    tokens: 5
+    predicate: DESTROYS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M05:S012:V005, VG:RV:SAK:M06:S075:V019]
+    gloss: "to injure"
+    note: null
+  - lemma_label: "√druh-"
+    lemma_id: "lemma_druh_4570"
+    root_folded: "druh"
+    tokens: 5
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: deception. The Druh is a named adversary, but the verb asserts treachery
+      rather than an act on a patient.
+    verses_read: 0
+    gloss: "to be hostile, deceive"
+  - lemma_label: "√drā- 1"
+    lemma_id: "lemma_drA_4555"
+    root_folded: "drā"
+    tokens: 5
+    predicate: MOVES_TO
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S062:V011, VG:RV:SAK:M04:S019:V005]
+    gloss: "to run"
+    note: null
+  - lemma_label: "√dā- 2"
+    lemma_id: "lemma_dA_4165"
+    root_folded: "dā"
+    tokens: 5
+    predicate: MEASURES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S065:V008, VG:RV:SAK:M02:S033:V005]
+    gloss: "to divide, apportion"
+    note: null
+  - lemma_label: "√dā- 3"
+    lemma_id: "lemma_da_4166"
+    root_folded: "dā"
+    tokens: 5
+    predicate: BINDS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S025:V003, VG:RV:SAK:M01:S139:V001]
+    gloss: "to bind"
+    note: null
+  - lemma_label: "√hiṃs-"
+    lemma_id: "lemma_hiMs_10646"
+    root_folded: "hi\uE003s"
+    tokens: 5
+    predicate: SLAYS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M06:S034:V003, VG:RV:SAK:M10:S015:V006]
+    gloss: "to injure, slay"
+    note: null
+  - lemma_label: "√hvr̥- ~ hru-"
+    lemma_id: "lemma_hvf_10777"
+    root_folded: "hv\uE000 ~ hru"
+    tokens: 5
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits.
+    verses_read: 0
+    gloss: "to go crookedly, lead astray"
+  - lemma_label: "√jambh- 2"
+    lemma_id: "lemma_jaB_3419"
+    root_folded: "jambh"
+    tokens: 5
+    predicate: DESTROYS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S029:V007, VG:RV:SAK:M01:S182:V004]
+    gloss: "to crush (with the jaws)"
+    note: null
+  - lemma_label: "√jas-"
+    lemma_id: "lemma_jas_3459"
+    root_folded: "jas"
+    tokens: 5
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: exhaustion.
+    verses_read: 0
+    gloss: "to be exhausted, faint"
+  - lemma_label: "√jeh-"
+    lemma_id: "lemma_jeh_3562"
+    root_folded: "jeh"
+    tokens: 5
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits.
+    verses_read: 0
+    gloss: "to pant, gasp"
+  - lemma_label: "√kṣam-"
+    lemma_id: "lemma_kzam_2784"
+    root_folded: "kṣam"
+    tokens: 5
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: forbearance as a state.
+    verses_read: 0
+    gloss: "to be patient, forbear"
+  - lemma_label: "√mr̥c-"
+    lemma_id: "lemma_mfc_6918"
+    root_folded: "m\uE000c"
+    tokens: 5
+    predicate: DESTROYS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S147:V004, VG:RV:SAK:M01:S147:V004]
+    gloss: "to injure, harm"
+    note: null
+  - lemma_label: "√niṃs-"
+    lemma_id: "lemma_niMs_4939"
+    root_folded: "ni\uE003s"
+    tokens: 5
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits.
+    verses_read: 0
+    gloss: "to kiss, touch with the mouth"
+  - lemma_label: "√riś-"
+    lemma_id: "lemma_riS_7413"
+    root_folded: "riś"
+    tokens: 5
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits.
+    verses_read: 0
+    gloss: "to tear, bite, pluck"
+  - lemma_label: "√skabhāy-"
+    lemma_id: "lemma_skaBAy_10205"
+    root_folded: "skabhāy"
+    tokens: 5
+    predicate: ESTABLISHES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S154:V001, VG:RV:SAK:M05:S029:V004]
+    gloss: "to prop"
+    note: null
+  - lemma_label: "√snā-"
+    lemma_id: "lemma_snA_10288"
+    root_folded: "snā"
+    tokens: 5
+    predicate: PURIFIES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S104:V003, VG:RV:SAK:M02:S015:V005]
+    gloss: "to bathe"
+    note: null
+  - lemma_label: "√sumanasy-"
+    lemma_id: "lemma_sumanasy_9899"
+    root_folded: "sumanasy"
+    tokens: 5
+    predicate: BLESSES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M06:S074:V004, VG:RV:SAK:M06:S075:V008]
+    gloss: "to be benevolent toward"
+    note: null
+  - lemma_label: "√svanⁱ-"
+    lemma_id: "lemma_svan_10393"
+    root_folded: "svanⁱ"
+    tokens: 5
+    predicate: SPEAKS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S044:V012, VG:RV:SAK:M02:S004:V006]
+    gloss: "to sound, resound"
+    note: >-
+      Inarticulate vocalisation -- thunder, the bull's roar, the horse's neigh -- forced into SPEAKS because
+      the vocabulary has no VOCALIZES class. The utterance is real; the articulacy is not. 268 root tokens
+      are affected across the ten roots carrying this note. See the report.
+  - lemma_label: "√tak-"
+    lemma_id: "lemma_tak_3608"
+    root_folded: "tak"
+    tokens: 5
+    predicate: MOVES_TO
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M06:S032:V005, VG:RV:SAK:M09:S016:V001]
+    gloss: "to rush, dart"
+    note: null
+  - lemma_label: "√tsar-"
+    lemma_id: "lemma_tsar_4025"
+    root_folded: "tsar"
+    tokens: 5
+    predicate: MOVES_TO
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S071:V005, VG:RV:SAK:M01:S145:V004]
+    gloss: "to creep stealthily, steal up on"
+    note: null
+  - lemma_label: "√ubh-"
+    lemma_id: "lemma_uB_2009"
+    root_folded: "ubh"
+    tokens: 5
+    predicate: BINDS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S063:V004, VG:RV:SAK:M02:S013:V009]
+    gloss: "to confine, press together"
+    note: null
+  - lemma_label: "√yup-"
+    lemma_id: "lemma_yup_7147"
+    root_folded: "yup"
+    tokens: 5
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits.
+    verses_read: 0
+    gloss: "to obstruct, efface, confound"
+  - lemma_label: "√yād-"
+    lemma_id: "lemma_yAd_7104"
+    root_folded: "yād"
+    tokens: 5
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      sense uncertain.
+    verses_read: 0
+    gloss: "to unite, be joined"
+  - lemma_label: "√śap-"
+    lemma_id: "lemma_Sap_8651"
+    root_folded: "śap"
+    tokens: 5
+    predicate: CURSES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 2
+    examples: [VG:RV:SAK:M10:S087:V013, VG:RV:SAK:M01:S023:V022]
+    gloss: "to curse, imprecate; to swear"
+    note: >-
+      RV 10.87.13 'Agni, what curse the pair this day have uttered, what heated word the worshippers have
+      spoken'. Only 5 tokens, and 1 of the 5 (RV 1.23.22 'If I have lied or falsely sworn') is the oath
+      sense rather than the curse sense, so a fifth of this root's evidence is misclassified by design.
+  - lemma_label: "√śatrūy-"
+    lemma_id: "lemma_SatrUy_8643"
+    root_folded: "śatrūy"
+    tokens: 5
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits: hostility as a state.
+    verses_read: 0
+    gloss: "to be hostile, act as an enemy"
+  - lemma_label: "√śrā-"
+    lemma_id: "lemma_SrA_8975"
+    root_folded: "śrā"
+    tokens: 5
+    predicate: BURNS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: LOW
+    verses_read: 0
+    examples: [VG:RV:SAK:M08:S099:V003, VG:RV:SAK:M10:S179:V001]
+    gloss: "to cook, boil"
+    note: null
+  - lemma_label: "√śvañc-"
+    lemma_id: "lemma_SvaYc_9024"
+    root_folded: "śvañc"
+    tokens: 5
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits.
+    verses_read: 0
+    gloss: "to spread open, gape"
+  - lemma_label: "√ūh-"
+    lemma_id: "lemma_Uh_2133"
+    root_folded: "ūh"
+    tokens: 5
+    predicate: UNMAPPED_ROOT
+    unmapped_reason: >-
+      no predicate class fits.
+    verses_read: 0
+    gloss: "to push aside, shove"
+  - lemma_label: "√gr̥h-"
+    lemma_id: "lemma_garh_2927"
+    root_folded: "g\uE000h"
+    tokens: 4
+    predicate: CURSES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M04:S003:V005, VG:RV:SAK:M05:S032:V012]
+    gloss: "to revile, censure"
+    note: >-
+      RESCUED below the floor (4 tokens) so that CURSES does not rest on śap- and nid- alone. CURSES remains
+      the thinnest mapped class in this file: 5 roots, 32 tokens, 0.1% of the corpus.
+  - lemma_label: "√mah- ?"
+    lemma_id: "lemma_mah_6707"
+    root_folded: "mah"
+    tokens: 4
+    predicate: PRAISES
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M01:S094:V001, VG:RV:SAK:M01:S111:V003]
+    gloss: "to magnify, honour"
+    note: >-
+      RESCUED below the floor (4 tokens). The annotation itself marks this lemma with a question mark; that
+      uncertainty is inherited by the mapping and should not be laundered away.
+  - lemma_label: "√śruṣ-"
+    lemma_id: "lemma_Sruz_9000"
+    root_folded: "śruṣ"
+    tokens: 4
+    predicate: HEARS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 2
+    examples: [VG:RV:SAK:M07:S051:V001, VG:RV:SAK:M03:S008:V010]
+    gloss: "to give ear, hearken, obey"
+    note: >-
+      RESCUED below the frequency floor (4 tokens): a distinct root for ritual hearing. RV 7.51.1 'May they,
+      the Mighty, giving ear, establish this sacrifice, to make us free and sinless.'
+  - lemma_label: "√gup-"
+    lemma_id: "lemma_gup_2994"
+    root_folded: "gup"
+    tokens: 3
+    predicate: PROTECTS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: MEDIUM
+    verses_read: 0
+    examples: [VG:RV:SAK:M07:S103:V009, VG:RV:SAK:M10:S085:V004]
+    gloss: "to guard, protect"
+    note: >-
+      RESCUED below the floor (3 tokens), on the same ground as gopāy-.
+  - lemma_label: "√bhiṣaj-"
+    lemma_id: "lemma_Bizaj_6374"
+    root_folded: "bhiṣaj"
+    tokens: 2
+    predicate: HEALS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 2
+    examples: [VG:RV:SAK:M08:S079:V002, VG:RV:SAK:M10:S131:V005]
+    gloss: "to heal, cure, physic"
+    note: >-
+      RESCUED below the floor (2 tokens) AND ONE OF ONLY TWO SOURCES OF THE HEALS CLASS. RV 8.79.2: 'All
+      that is bare he covers o'er, all that is sick he medicines; The blind man sees, the cripple walks.'
+      Without this rescue HEALS would have had no root at all and would have been an empty predicate.
+  - lemma_label: "√bhiṣajy-"
+    lemma_id: "lemma_Bizajy_6376"
+    root_folded: "bhiṣajy"
+    tokens: 2
+    predicate: HEALS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 0
+    examples: [VG:RV:SAK:M08:S009:V006, VG:RV:SAK:M08:S022:V010]
+    gloss: "to act as physician, heal"
+    note: >-
+      RESCUED below the floor (2 tokens), the denominative of bhiṣaj-. The second and last of the HEALS
+      roots.
+  - lemma_label: "√gopāy-"
+    lemma_id: "lemma_gopAy_3061"
+    root_folded: "gopāy"
+    tokens: 2
+    predicate: PROTECTS
+    secondary_predicate: null
+    disambiguation: null
+    confidence: HIGH
+    verses_read: 2
+    examples: [VG:RV:SAK:M06:S074:V004, VG:RV:SAK:M10:S154:V005]
+    gloss: "to guard, act as herdsman to"
+    note: >-
+      RESCUED below the floor (2 tokens): RV 6.74.4 'keep us from sorrow, in your tender loving-kindness';
+      RV 10.154.5 'the sages who protect the Sun'. A distinct protection root and the verbal form of gopā-,
+      too central to Vedic religion to discard on frequency.

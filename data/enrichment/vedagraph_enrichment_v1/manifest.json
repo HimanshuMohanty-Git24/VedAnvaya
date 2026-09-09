@@ -6,15 +6,15 @@
     "YV": 1975
   },
   "counts": {
-    "concept_assertions": 47542,
-    "concepts": 89,
+    "concept_assertions": 46508,
+    "concepts": 91,
     "cross_veda_parallels": 6271,
     "formula_occurrences": 22686,
     "formulas": 4825
   },
   "digests": {
-    "concept_assertions.jsonl": "737dcb3b3e5e7abfe0064cfdd8615af86030bacbd84f1d5970b34833fd9db58f",
-    "concepts.jsonl": "263906151c833c9b835ace34305e4aab16271f7ec1e0cf9ad9bdcaf5a6c3129c",
+    "concept_assertions.jsonl": "fd593e24baaeace7c4473fe6958a8d7a6a04a974f566e7e9a174c49afc87516f",
+    "concepts.jsonl": "e87b7233a8059b183930070916dd070a31377474e727bdd062a4c9ade573b8ff",
     "cross_veda_parallels.jsonl": "13f1c256aab0f40f76010d12dbd8735a655a30af55dea82bd6a51922e4ed1674",
     "formula_occurrences.jsonl": "0d489c093e6bf26572e724079992420c9ebd44dec7f63596079db78f909f0e01",
     "formulas.jsonl": "da9378647ca6ac583bd27c8508a2fd96593ee6e5cdeaad358ecee43232fcf52e"
@@ -77,11 +77,11 @@
         "run_id": "vedagraph-graph-enrichment-v1:crossveda-parallels:5bf3c9ce73209098",
         "surface_contract": "893 of 1,975 Yajurveda mantras write visarga as an ASCII colon. vedagraph.enrich.surfaces folds it to U+0903 before transliterating; without that fold the identical cross-Veda total is 1,404 rather than 1,538.",
         "timings": {
-          "candidate_seconds": 9.059,
-          "guard_seconds": 0.018,
-          "identity_seconds": 0.144,
-          "scoring_seconds": 0.718,
-          "total_seconds": 10.408
+          "candidate_seconds": 10.071,
+          "guard_seconds": 0.029,
+          "identity_seconds": 0.109,
+          "scoring_seconds": 1.163,
+          "total_seconds": 12.153
         }
       },
       "produced": 6271,
@@ -157,65 +157,65 @@
     },
     {
       "capped": {
-        "concepts_per_passage": 5208,
-        "concepts_per_passage:AV": 594,
-        "concepts_per_passage:RV": 3952,
-        "concepts_per_passage:SV": 17,
-        "concepts_per_passage:YV": 645
+        "concepts_per_passage": 4859,
+        "concepts_per_passage:AV": 569,
+        "concepts_per_passage:RV": 3657,
+        "concepts_per_passage:SV": 14,
+        "concepts_per_passage:YV": 619
       },
       "notes": {
         "aliases": {
-          "english": 250,
-          "sanskrit_sandhi": 624,
-          "sanskrit_token": 955
+          "english": 253,
+          "sanskrit_sandhi": 620,
+          "sanskrit_token": 954
         },
         "assertions_by_evidence_path": {
-          "english": 34261,
-          "sanskrit-sandhi": 473,
-          "sanskrit-token": 25823
+          "english": 34593,
+          "sanskrit-sandhi": 476,
+          "sanskrit-token": 24493
         },
-        "concepts": 89,
+        "concepts": 91,
         "coverage_by_veda": {
           "AV": {
-            "coverage": 0.8178,
+            "coverage": 0.813,
             "mantras": 5839,
-            "with_concept": 4775,
+            "with_concept": 4747,
             "with_translation": 4878
           },
           "RV": {
-            "coverage": 0.9613,
+            "coverage": 0.9567,
             "mantras": 10552,
-            "with_concept": 10144,
+            "with_concept": 10095,
             "with_translation": 10500
           },
           "SV": {
-            "coverage": 0.7169,
+            "coverage": 0.6871,
             "mantras": 1844,
-            "with_concept": 1322,
+            "with_concept": 1267,
             "with_translation": 0
           },
           "YV": {
-            "coverage": 0.922,
+            "coverage": 0.9154,
             "mantras": 1975,
-            "with_concept": 1821,
+            "with_concept": 1808,
             "with_translation": 1903
           }
         },
-        "distinct_concepts_used": 89,
+        "distinct_concepts_used": 91,
         "sandhi_match_vedas": [
           "SV"
         ]
       },
-      "produced": 47542,
+      "produced": 46508,
       "rejected": {},
       "stage": "concepts"
     }
   ],
   "timings_seconds": {
-    "analytics": 0.18,
-    "concepts": 1.9,
-    "cross_veda_parallels": 10.47,
-    "formulas": 5.56,
-    "load_corpus": 5.22
+    "analytics": 0.1,
+    "concepts": 3.96,
+    "cross_veda_parallels": 12.31,
+    "formulas": 7.41,
+    "load_corpus": 5.55
   }
 }

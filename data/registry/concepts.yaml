@@ -23,6 +23,36 @@
 # alias would make the concept node a duplicate of the devata node with worse evidence.
 #
 # ---------------------------------------------------------------------------
+# V3 REFINEMENT: the vocative is the one case where Sanskrit DOES separate them.
+# ---------------------------------------------------------------------------
+# The rule above is right about `agním` and wrong about `agne`, and the difference is not
+# a matter of degree. You cannot address a thing that is not a being. A vocative is an
+# address, so a vocative of a name that is also a common noun is the god and not the
+# noun -- which makes it the one form an appellative entity must never claim.
+#
+# This was measured, not reasoned. Against the University of Zurich morphological
+# annotation of the Rigveda:
+#
+#   agne     852 of 852 annotated tokens are agni- VOCATIVE SINGULAR   (100.0%)
+#   soma     247 of 247 annotated tokens are soma- VOCATIVE SINGULAR   (100.0%)
+#   surya     21 of  26 are surya- VOCATIVE SINGULAR, 5 are surya- the bride  (80.8%)
+#   uso            the pre-vocalic vocative of usas-
+#   prthivi   the short-i form is the vocative; long-i prthivi is 71% NOMINATIVE
+#   agna      the pre-vocalic vocative of agni-, by abhinihita sandhi
+#
+# `agne` alone matched 915 mantras across all four Vedas on VG:CONCEPT:AGNI-FIRE, an
+# entity whose own definition reads "NOT the deity Agni". Every one of those 915 was an
+# address to the god, asserted onto the impersonal element. The V2 pass found this,
+# reported it as its worst finding, and fixed the *flag* that failed to detect it while
+# leaving the alias in place -- so the edges it describes were still being created.
+#
+# The forms are not lost. They are the strongest evidence in the four-Veda theonym layer
+# (`data/registry/theonym_forms.yaml`), where a vocative is exactly what earns TIER_A.
+#
+# Deity EPITHETS are removed on the same principle: `jatavedah` and its cases are an
+# epithet of Agni-the-god, and an epithet is a name.
+#
+# ---------------------------------------------------------------------------
 # Fields
 # ---------------------------------------------------------------------------
 #   concept_id          pinned identity, VG:CONCEPT:<UPPER-KEBAB>. Never renumbered.
@@ -211,7 +241,7 @@ concepts:
     definition: >-
       The pressed plant and the juice made from it, drunk by the gods and by the
       sacrificer; the substance, not the deity of the same name.
-    aliases_sa: [soma, somaṃ, somam, somasya, somaḥ, somo, some, somāya, somāsaḥ, somaiḥ, somebhiḥ,
+    aliases_sa: [somaṃ, somam, somasya, somaḥ, somo, some, somāya, somāsaḥ, somaiḥ, somebhiḥ,
                  somapītaye, induḥ, indur, indavaḥ, indavo, indum, andhasaḥ, andhaso, andhasā,
                  aṃśuḥ, aṃśum]
     aliases_en: [juice, juices, sap, stalk]
@@ -384,6 +414,161 @@ concepts:
     broader: []
     related_devatas: []
 
+  # -------------------------------------------------------------------------
+  # Being and non-being
+  # -------------------------------------------------------------------------
+  # These two entities exist because the Nasadiya -- RV 10.129, the corpus's most cited
+  # cosmogony, whose first line is `na asad asin no sad asit` -- carried no conceptual
+  # edge of any kind. They are also the hardest aliasing problem in this file, because
+  # `sat-` is the present participle of as- 'to be' and its inflections mean "being,
+  # existing, good, real, faithful" far more often than they mean "the Existent".
+  #
+  # Every candidate form was resolved against the University of Zurich manual
+  # morphological annotation of the Rigveda (data/knowledge/rigveda_lexical_v1/
+  # tokens.jsonl), which states the lemma, gender and non-finite status of every Rigvedic
+  # token, and then READ in all four Vedas -- 107 verses read across 15 candidate Sanskrit
+  # surfaces and 4 candidate English tokens. Six aliases stand; nine were rejected.
+  #
+  # THE FACT THAT DECIDES THE PAIR. The annotation gives `asat` its own nominal lemma,
+  # `asant-` (7 Rigvedic tokens in 7 passages, every one of them the philosophical word),
+  # while `sat` is annotated as a participle of `as- 1` (156 tokens in 149 passages, only
+  # 42 of them neuter). The two words are therefore NOT symmetrical in this corpus:
+  # non-existence is already a noun and existence is still a substantivised participle,
+  # and the alias sets have to reflect that rather than mirror each other.
+  #
+  # NO ALIAS HERE CLEARS THE SANDHI FLOOR. All six folded aliases are 3-5 characters,
+  # under MIN_SANDHI_ALIAS_CHARS (6), so none of them ever reaches the Samavedic substring
+  # path. Every match below is a whole folded token. That is deliberate: `asatah` was the
+  # one candidate that cleared the floor, and it was dropped for exactly that reason (see
+  # the rejections).
+  #
+  # ACCEPTED, with hits / read / true / rejected hosts:
+  #   sad          8 / 8 / 5   RV 10.129.1, RV 10.72.2, RV 10.72.3, RV 1.164.46 (`ekam
+  #                            sad vipra bahudha vadanti`), AVS 9.10.28. Hosts: RV 6.18.4
+  #                            `sad id dhi te sahah` and RV 6.27.2 `sad asya made` (x4),
+  #                            where the neuter participle is predicative "real, faithful"
+  #                            and Griffith renders it "true"; AVS 5.19.9 `brahmanasya sad
+  #                            dhanam`, an ordinary relative-clause participle. The
+  #                            retroflex sandhi does most of the work for free: `sad` folds
+  #                            distinctly from `sad` after `anti`/`abhi`, so the 18 verses
+  #                            of RV 8.73 whose refrain is `anti sad bhutu vam avah` ("let
+  #                            your help be NEAR") and RV 2.41.10, 4.5.10, 9.61.10 are all
+  #                            outside this alias without needing a suppression.
+  #   sac          6 / 6 / 4   AVS 8.4.12, AVS 10.7.10, RV 7.104.12, RV 10.5.7 -- all four
+  #                            the `sac ca asac ca` paired formula. Hosts: RV 5.44.3 `sacate
+  #                            sac ca dhatu`, the participle "present (and to come)", in a
+  #                            line that also contains the unrelated root sac- 'accompany';
+  #                            RV 6.24.5, where the annotation shows the `sac` token is the
+  #                            ELIDED `'sac` = asat, not sat (that verse does also contain a
+  #                            genuine `sat`, so it is a mis-attributed alias rather than a
+  #                            mis-topiced edge).
+  #   nasad        1 / 1 / 1   RV 10.129.1 and nowhere else in 20,210 mantras. The glue of
+  #                            `na` + `asat`. This is the alias that closes the measured gap.
+  #   asac         3 / 3 / 2   AVS 10.7.10, RV 10.5.7. Host: AVS 3.23.5 `yas tubhyam sam
+  #                            asac`, the 3sg subjunctive.
+  #   asati        4 / 4 / 2   AVS 17.1.19 (`asati sat pratisthitam`) and RV 10.129.4
+  #                            (`sato bandhum asati`) -- the two clearest asat/sat
+  #                            statements in the corpus. NAMED RESIDUAL: the other two hits,
+  #                            RV 1.124.11 and RV 6.23.9, are both the 3sg present
+  #                            subjunctive of as-. Kept at a measured 0.50 because the hit
+  #                            set is closed at four verses, all four are read, and both
+  #                            wrong ones are named here; delete this one alias if that
+  #                            trade is not wanted, and RV 10.129.4 loses its asat edge.
+  #   non-existent 12 / 12 / 11  English. AVS 4.1.1, 4.19.6, 5.6.1, 8.4.8, 10.7.10, 10.7.21,
+  #                            10.7.25, 17.1.19, RV 10.129.1, RV 10.129.4, VSM 13.3. Host:
+  #                            AVS 7.76.1 "more non-existent than the non-existent ones",
+  #                            which is the word asat used as a comparative of worthlessness
+  #                            in a wart charm, not the cosmological pole.
+  #   non-existence 2 / 2 / 2  English, RV 10.72.2 and RV 10.72.3 only. This alias earns its
+  #                            place by reaching the two verses the SANSKRIT cannot: see the
+  #                            `satah` rejection below.
+  #   existent    14 / 14 / 10  English. AVS 4.1.1, 5.6.1, 10.7.9, 10.7.10, 10.7.21, 17.1.19,
+  #                            RV 6.24.5, RV 10.129.1, RV 10.129.4, VSM 13.3 -- and it is the
+  #                            only reach this entity has into the Vena and Skambha
+  #                            cosmogonies, which have no morphological annotation. Hosts:
+  #                            AVS 8.9.18 "the existent thing (bhuta)" and VSM 17.17 "all
+  #                            things existent", which are bhuta-; AVS 10.7.31 "nothing else
+  #                            existent" and RV 10.183.3 "in all existent beings", generic.
+  #
+  # REJECTED. Every one of these was probed and read; they are recorded because the
+  # absence is a decision.
+  #   sat        7 hits, 1 true (AVS 17.1.19). VSM 2.33 `yatheha puruso sat` and VSM 17.24
+  #              `yatha sat` are the subjunctive "so that there may be"; VSM 32.9 `guha sat`
+  #              (x2) is "hidden"; RV 6.27.2 is the predicative "faithful". The bare word is
+  #              not usable, and this is the single most important refusal here.
+  #   satah      9 hits, 0 true for existence, and it fails in the WORST possible direction.
+  #              Five hits (RV 3.31.8, 9.21.7, 9.86.5, 9.86.6, SV UTTARA 3.1.1.2/3.1.1.3) are
+  #              the masculine participle "of him who is / the good man". The other three --
+  #              RV 10.72.2, RV 10.72.3, AVS 10.7.25 -- are `asatah` with its initial a-
+  #              elided after a preceding -e/-o, so on the surface `satah` there MEANS
+  #              NON-EXISTENCE. A surface probe would have filed the two verses that say
+  #              "existence sprang from non-existence" under existence, on the evidence of
+  #              the word for non-existence. Only the annotation shows this; it is why those
+  #              two verses are reached through the English `non-existence` instead.
+  #   sato       15 hits, 2 true (RV 10.129.4, RV 7.87.6). Thirteen are the masculine
+  #              genitive participle: `mahas te sato` "thee who art great" (RV 1.36.3,
+  #              8.101.11, and its SV and YV parallels), `ghorasya sato`, `svayudhasya te
+  #              sato`. 13% is not an alias.
+  #   asat       25 hits, 1 true (AVS 8.4.12). The annotation is unanimous on the other 24:
+  #              all 13 Rigvedic hits are the 3sg present SUBJUNCTIVE of as- ("may it be"),
+  #              and the AV and YV hits read the same way -- "that this man may be free from
+  #              complaints" (AVS 4.13.4), "may she be in the favor of Bhaga" (AVS 14.2.15).
+  #              4% precision. This is the trap the whole probe existed to find.
+  #   asan       12 hits, 0 true. Subjunctive or the aorist injunctive of as- 2.
+  #   asann      7 hits, 2 true (AVS 8.4.8, RV 7.104.8). The other five are the subjunctive.
+  #   asatah     REJECTED FOR A DIFFERENT REASON, and the only one: 1 hit, 1 true
+  #              (AVS 8.4.8, "let the speaker of what is not be himself non-existent").
+  #              At 6 folded characters it is the sole candidate that clears
+  #              MIN_SANDHI_ALIAS_CHARS, and on the Samavedic substring path it matches
+  #              SV UTTARA 3.1.1.2 inside the glue of `dhruvasya satah` -- the masculine
+  #              participle again. Keeping it would require an entry in
+  #              vedagraph.enrich.concepts.SANDHI_SUPPRESSED_ALIASES, and one true positive
+  #              is not worth making this file depend on a code change. AVS 8.4.8 is still
+  #              reached through the English `non-existent`.
+  #   satam, sate, sata   0 true between them; all masculine/plural participles ("of the
+  #              existing ones", "to him who is"). RV 2.1.3 `vrsabhah satam asi` is
+  #              Griffith's "Hero of Heroes".
+  #   existence  English, 68 hits, 2 true (RV 10.72.2, 10.72.3, already reached by
+  #              `non-existence`). It is Whitney's word for bhuta-/bhuvana- ("lord of
+  #              existence", "shepherd of all existence") and Griffith's for ayus- ("prolong
+  #              our existence"), so it would take passages from BHUTA and AYUS-LIFE. 3%.
+  #
+  # WHAT WAS NOT MODELLED, deliberately: no entity for the pair-as-a-pair. `sac ca asac ca`
+  # is a real formula and it is answerable as the intersection of these two entities, which
+  # is a query rather than a node.
+
+  - concept_id: VG:CONCEPT:SAT-EXISTENCE
+    preferred_label_sa: sat
+    preferred_label_en: existence
+    node_type: PHILOSOPHICAL_CONCEPT
+    definition: >-
+      The existent, what is, as against what is not. In this corpus still a substantivised
+      neuter participle of as- 'to be' and not yet a settled noun: it is predicated of
+      things and asked after, as in the one Being the sages call by many names (RV
+      1.164.46), and it is not the Upanishadic Being. Distinct from satya 'truth', which is
+      a different stem with its own entity, VG:CONCEPT:SATYA-TRUTH; the two alias sets are
+      disjoint and neither leaks into the other.
+    aliases_sa: [sad, sac]
+    aliases_en: [existent]
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:ASAT-NONEXISTENCE
+    preferred_label_sa: asat
+    preferred_label_en: non-existence
+    node_type: PHILOSOPHICAL_CONCEPT
+    definition: >-
+      Non-existence: the asat of "there was neither non-existence nor existence then" (RV
+      10.129.1). Unlike sat it is already a noun in its own right -- the Rigvedic
+      annotation lemmatises it asant-, separately from the root -- and existence is twice
+      said to have sprung from it (RV 10.72.2-3). In the Atharvaveda it is one pole of a
+      paired cosmological formula (AVS 4.1.1, 10.7.10, 17.1.19). Not filed under
+      VG:CONCEPT:SAT-EXISTENCE: non-existence is not a kind of existence.
+    aliases_sa: [nāsad, asac, asati]
+    aliases_en: [non-existent, non-existence]
+    broader: []
+    related_devatas: []
+
   - concept_id: VG:CONCEPT:VRATA-ORDINANCE
     preferred_label_sa: vrata
     preferred_label_en: ordinance
@@ -429,8 +614,8 @@ concepts:
     node_type: COSMIC_ENTITY
     definition: >-
       The earth as the lower world and as the broad surface that bears living things.
-    aliases_sa: [pṛthivī, pṛthivīṃ, pṛthivīm, pṛthivyā, pṛthivyāḥ, pṛthivyām, pṛthivi, pṛthivyai,
-                 bhūmiḥ, bhūmir, bhūmiṃ, bhūmim, bhūmyāḥ, bhūmyām]
+    aliases_sa: [pṛthivī, pṛthivīṃ, pṛthivīm, pṛthivyā, pṛthivyāḥ, pṛthivyām, pṛthivyai, bhūmiḥ,
+                 bhūmir, bhūmiṃ, bhūmim, bhūmyāḥ, bhūmyām]
     aliases_en: [earth]
     broader: [VG:CONCEPT:LOKA-WORLD]
     related_devatas: [VG:DEVATA:PRTHIVI, VG:DEVATA:DYAVAPRTHIVYAU]
@@ -452,7 +637,7 @@ concepts:
     node_type: NATURAL_PHENOMENON
     definition: >-
       The sun as the visible luminary that crosses the sky and measures the day.
-    aliases_sa: [sūryaḥ, sūryo, sūryam, sūryaṃ, sūryasya, sūrye, sūryeṇa, sūryāya, sūryāt, sūrya]
+    aliases_sa: [sūryaḥ, sūryo, sūryam, sūryaṃ, sūryasya, sūrye, sūryeṇa, sūryāya, sūryāt]
     aliases_en: [sun]
     broader: []
     related_devatas: [VG:DEVATA:SURYAH, VG:DEVATA:SAVITA, VG:DEVATA:SAVITRI-SURYA]
@@ -475,7 +660,7 @@ concepts:
     definition: >-
       Daybreak, and the recurring arrival of light that the hymns treat as a daily
       renewal of the world.
-    aliases_sa: [uṣāḥ, uṣā, uṣas, uṣasaḥ, uṣaso, uṣasā, uṣo, uṣasam, uṣasi, uṣasām, uṣāsā]
+    aliases_sa: [uṣāḥ, uṣā, uṣas, uṣasaḥ, uṣaso, uṣasā, uṣasam, uṣasi, uṣasām, uṣāsā]
     aliases_en: [dawn, dawns, morning]
     broader: []
     related_devatas: [VG:DEVATA:USAH, VG:DEVATA:USASANAKTA, VG:DEVATA:ADITYOSASAH]
@@ -535,9 +720,8 @@ concepts:
       Fire as the ritual and natural phenomenon: the flame kindled on the altar and the
       burning that consumes, warms and carries. NOT the deity Agni, which is
       VG:DEVATA:AGNIH.
-    aliases_sa: [agniḥ, agnir, agnim, agniṃ, agne, agna, agniṣ, agnaye, agnayaḥ, agnau, agninā,
-                 agnibhiḥ, agnī, jātavedaḥ, jātavedasam, jātavedase, arciṣā, arcayaḥ, śociṣā, śocis,
-                 śociṣe, dhūma]
+    aliases_sa: [agniḥ, agnir, agnim, agniṃ, agniṣ, agnaye, agnayaḥ, agnau, agninā, agnibhiḥ,
+                 agnī, arciṣā, arcayaḥ, śociṣā, śocis, śociṣe, dhūma]
     aliases_en: [fire, fires, flame, flames, blaze]
     broader: []
     related_devatas: [VG:DEVATA:AGNIH, VG:DEVATA:JATAVEDA-AGNIH, VG:DEVATA:PAVAMANO-AGNIH,
@@ -554,7 +738,7 @@ concepts:
     definition: >-
       The waters as a plural collective: rivers, rain and the primeval flood, invoked as
       mothers and as healers.
-    aliases_sa: [apaḥ, apo, apām, apsu, apsv, apaś, udakam, udnaḥ, salilam, salile]
+    aliases_sa: [apaḥ, apo, apām, apsu, apsv, apaś, udakam, udnaḥ, salilam, salile, āpaḥ, āpo]
     aliases_en: [waters, water]
     broader: []
     related_devatas: [VG:DEVATA:APAH, VG:DEVATA:APAM-NAPAT]
@@ -1179,7 +1363,16 @@ concepts:
     definition: >-
       Wanting: the wish a rite is performed to fulfil, and in a few late hymns a cosmic
       first principle.
-    aliases_sa: [kāmaḥ, kāmam, kāmaṃ, kāmena, kāmāya, kāmasya, kāmān, kāmāḥ]
+    # `kāmas` is the sandhi form of the nominative before a following consonant, and its
+    # absence was load-bearing: RV 10.129.4 -- `kāmas tad agre sam avartata`, "desire
+    # arose first of all", the Rigveda's desire-cosmogony -- spells it this way, so
+    # without the alias the single most important kāma verse in the corpus reached this
+    # concept only through Griffith's English. Probed before adding: exactly 2
+    # whole-token hits in 20,210 mantras, RV 10.129.4 and its Atharvavedic parallel
+    # AVS 19.52.1, both genuine. It cannot leak into `kāmasya` (genitive) or
+    # `apakāmasya` (a different word) because alias matching is over whitespace tokens
+    # and the folded form is 5 characters, below MIN_SANDHI_ALIAS_CHARS.
+    aliases_sa: [kāmaḥ, kāmas, kāmam, kāmaṃ, kāmena, kāmāya, kāmasya, kāmān, kāmāḥ]
     aliases_en: [desire, wish]
     broader: []
     related_devatas: []

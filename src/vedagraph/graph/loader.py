@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 import pathlib
+import uuid
 from collections.abc import Iterator
 from typing import Any
 
@@ -204,7 +205,10 @@ def _merge_entity_nodes(session: Any, project_root: pathlib.Path) -> dict[str, i
             UNWIND $rows AS row
             MERGE (r:Rishi {entity_key: row.entity_key})
             SET r.preferred_label = row.preferred_label,
-                r.occurrence_count = row.occurrence_count
+                r.occurrence_count = row.occurrence_count,
+                r.registry_namespace = row.registry_namespace,
+                r.label_iast = row.label_iast,
+                r.normalized_name = row.normalized_name
             """,
             rows=batch,
         )
@@ -234,7 +238,10 @@ def _merge_entity_nodes(session: Any, project_root: pathlib.Path) -> dict[str, i
             """
             UNWIND $rows AS row
             MERGE (c:Chandas {entity_key: row.entity_key})
-            SET c.preferred_label = row.preferred_label
+            SET c.preferred_label = row.preferred_label,
+                c.registry_namespace = row.registry_namespace,
+                c.label_iast = row.label_iast,
+                c.normalized_name = row.normalized_name
             """,
             rows=batch,
         )
@@ -413,6 +420,14 @@ def _merge_rdc_rels(session: Any, project_root: pathlib.Path) -> dict[str, int]:
     duplicate_rows: dict[str, int] = {k: 0 for k in counts}
     batches: dict[str, list[dict[str, Any]]] = {k: [] for k in counts}
 
+    # Stamped and swept. This function is the only writer of all three predicates, so the
+    # layer owns every one of them -- and without a sweep, correcting the *source* index
+    # changes nothing in the graph. That was measured: cleaning eight OCR-corrupt
+    # Atharvavedic metre labels out of the registry left all eight nodes and their edges in
+    # place, still asserting metres the corrected index no longer prints, because MERGE
+    # adds and never retracts. A registry whose corrections cannot reach the graph is a
+    # registry nobody can fix.
+    build_pass = uuid.uuid4().hex
     queries = {
         "HAS_RISHI": """
             UNWIND $rows AS row
@@ -422,7 +437,8 @@ def _merge_rdc_rels(session: Any, project_root: pathlib.Path) -> dict[str, int]:
             SET rel.confidence = row.confidence,
                 rel.provenance_class = row.provenance_class,
                 rel.scope_origin = row.scope_origin,
-                rel.source_id = row.source_id
+                rel.source_id = row.source_id,
+                rel.build_pass = $build_pass
         """,
         "HAS_DEVATA": """
             UNWIND $rows AS row
@@ -432,7 +448,8 @@ def _merge_rdc_rels(session: Any, project_root: pathlib.Path) -> dict[str, int]:
             SET rel.confidence = row.confidence,
                 rel.provenance_class = row.provenance_class,
                 rel.scope_origin = row.scope_origin,
-                rel.source_id = row.source_id
+                rel.source_id = row.source_id,
+                rel.build_pass = $build_pass
         """,
         "HAS_CHANDAS": """
             UNWIND $rows AS row
@@ -442,7 +459,8 @@ def _merge_rdc_rels(session: Any, project_root: pathlib.Path) -> dict[str, int]:
             SET rel.confidence = row.confidence,
                 rel.provenance_class = row.provenance_class,
                 rel.scope_origin = row.scope_origin,
-                rel.source_id = row.source_id
+                rel.source_id = row.source_id,
+                rel.build_pass = $build_pass
         """,
     }
 
@@ -450,7 +468,7 @@ def _merge_rdc_rels(session: Any, project_root: pathlib.Path) -> dict[str, int]:
         b = batches[pred]
         if not b:
             return
-        session.run(queries[pred], rows=b)
+        session.run(queries[pred], rows=b, build_pass=build_pass)
         batches[pred] = []
 
     for rel in iter_rishi_devata_chandas_rels(project_root):
@@ -470,8 +488,36 @@ def _merge_rdc_rels(session: Any, project_root: pathlib.Path) -> dict[str, int]:
     for pred in list(batches):
         _flush(pred)
 
+    # Sweep, then drop whatever the sweep orphaned. The node deletion is scoped to nodes
+    # with no remaining attribution edge, so a rsi or metre still asserted anywhere
+    # survives; only an entity the corrected index no longer references at all is removed.
+    # Both counts are returned alongside the merge counts, because a rebuild that silently
+    # deleted rows would be worse than one that silently kept them.
+    for pred in ("HAS_RISHI", "HAS_DEVATA", "HAS_CHANDAS"):
+        retired = session.run(
+            f"""
+            MATCH (:Passage)-[rel:{pred}]->()
+            WHERE rel.build_pass IS NULL OR rel.build_pass <> $build_pass
+            DELETE rel
+            RETURN count(*) AS c
+            """,
+            build_pass=build_pass,
+        ).single()["c"]
+        counts[f"retired_{pred}"] = int(retired)
+
+    for label, incoming in (("Rishi", "HAS_RISHI"), ("Chandas", "HAS_CHANDAS")):
+        orphaned = session.run(
+            f"""
+            MATCH (n:{label})
+            WHERE NOT (n)<-[:{incoming}]-()
+            DELETE n
+            RETURN count(*) AS c
+            """
+        ).single()["c"]
+        counts[f"retired_orphan_{label}"] = int(orphaned)
+
     for pred, count in counts.items():
-        if duplicate_rows[pred]:
+        if duplicate_rows.get(pred):
             logger.info(
                 "Merged %d %s relationships (%d duplicate source rows collapsed)",
                 count,

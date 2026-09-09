@@ -82,10 +82,19 @@ from vedagraph.enrich.surfaces import render_for_display
 #: avoid. The first is the worst: it moved fourteen Samavedic passages from the formulation
 #: entity to the priest entity, so the leak was between two entities of *this same lexicon*.
 V2_SANDHI_SUPPRESSED_ALIASES: Final[dict[str, str]] = {
+    # One entry, two independent measurements, deliberately merged. This key was listed
+    # twice -- once for the V2 lexicon and once by the V3 ritual specialist, who
+    # re-measured it without reference to the first -- and because a later dict literal
+    # key silently overwrites an earlier one, the V2 rationale was being discarded at
+    # import. The suppression itself never changed; only the reason for it was lost, which
+    # is exactly the evidence someone would need before daring to remove the suppression.
     "brahmā": (
         "inside brahmāṇi and brahmaṇaḥ, which are aliases of "
         "VG:CONCEPT:BRAHMAN-FORMULATION: 18 Samavedic substring hits against 4 genuine "
-        "token hits, so the priest entity took fourteen passages from the formulation one"
+        "token hits, so the priest entity took fourteen passages from the formulation "
+        "one. Independently re-measured by the V3 ritual specialist at 64 substring hits "
+        "inside brahmāṇi ('prayers', neuter plural) in the one Veda where the substring "
+        "pass runs -- two measurements, same conclusion"
     ),
     "āyasam": "inside viśvadhāyasam and bhūridhāyasam ('all-nourishing'): 2 hits, 0 genuine",
     "āyasaḥ": "inside jyāyasaḥ ('greater') and viśvadhāyasaḥ",
@@ -94,6 +103,27 @@ V2_SANDHI_SUPPRESSED_ALIASES: Final[dict[str, str]] = {
         "a different entity in this lexicon"
     ),
     "avīnām": "inside kavīnām, 'of the poets'",
+    # ---- V3 -------------------------------------------------------------------------
+    # Each measured against the corpus by the specialist who needed it, with the host word
+    # named. The first is the most instructive: it was already live on
+    # VG:CONCEPT:YAKSMA-DISEASE, so this is an existing defect being closed rather than a
+    # new risk being avoided.
+    "amīvāḥ": (
+        "inside anamīvāḥ ('free from disease'), whose sense is the exact opposite; 5 of "
+        "15 sandhi hits are the negation or a word-boundary glue"
+    ),
+    "rapaso": "inside nārīrapaso, the glue of nā́rīr apáso ('women, active ones')",
+    "apacit": (
+        "inside apacitiṃ ('requital', RV 4.28.4) and inside a Yajurvedic glue at VSM 12.97"
+    ),
+    "arāyam": "7 of 8 sandhi hits are word-boundary glue rather than the sprite",
+    "sarasvatyām": (
+        "inside the glue of sárasvatyā plus an m-initial word -- AVS 5.7.5 sarasvatyā "
+        "manoyujā, VSM 21.46 and 21.47 sarasvatyā meṣasya -- all three of which are the "
+        "goddess. Without this the new River entity acquires three goddess passages and "
+        "falls to 40% precision, which is why the specialist made the node conditional "
+        "on this suppression"
+    ),
 }
 
 _STAGE: Final = "domain-mentions"

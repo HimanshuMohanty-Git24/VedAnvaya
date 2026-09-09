@@ -4,6 +4,9 @@ Each stage needs the same things -- mantras, their primary Sanskrit, their trans
 their traditional metadata -- and each stage transliterating and normalizing the corpus
 again would dominate the runtime. This module reads once and hands out an immutable view.
 
+Traditional attribution is read here too, and which Vedas have any is a per-corpus fact
+recorded in :data:`KNOWLEDGE_ARTIFACTS` rather than assumed.
+
 The awkward part it hides is that "the primary Sanskrit text" is not spelled the same way
 in all four datasets. The Rigveda, Samaveda and Atharvaveda mark their principal reading
 ``PRIMARY_TEXT``; the Vajasaneyi Yajurveda marks its accented layer
@@ -106,26 +109,63 @@ def _translations_by_passage(corpus_dir: pathlib.Path) -> dict[str, list[str]]:
     return grouped
 
 
+#: Deterministic knowledge-layer artifacts holding traditional attribution, by Veda.
+#:
+#: There is one entry per Veda that has one, and the absences are as load-bearing as the
+#: presences -- so they are written here rather than left implicit in a path.
+#:
+#: This map replaces a hard-coded single Rigvedic path whose docstring asserted that "the
+#: other three sources carry no anukramani at all". That was false and expensive: the
+#: Vajasaneyi corpus had carried 2,240 source-stated rsi assertions covering 1,960 of its
+#: 1,975 mantras since ingestion, and nothing read them, so every report in this
+#: repository that said attribution was Rigveda-only was measuring the reader rather than
+#: the data. A missing directory here is skipped silently *by design* -- an artifact under
+#: construction must not break the corpus loader -- which is exactly why the absence has
+#: to be documented in this table instead of discovered from a stack trace.
+KNOWLEDGE_ARTIFACTS: Final[dict[str, str | None]] = {
+    "RV": "rigveda_deterministic_v1",
+    "YV": "yajurveda_deterministic_v1",
+    "AV": "atharvaveda_deterministic_v1",
+    # The Kauthuma arcika has no attainable attribution layer. Its school's own indices
+    # -- the Arseya and Devatadhyaya Brahmanas -- are keyed to samans in the gana
+    # collections, which this corpus does not contain, so the join key exists for 7.7% of
+    # verses. Transferring Rigvedic attribution along the 90.1% of Samavedic verses that
+    # have a Rigvedic parallel was measured, considered and refused: no provenance class
+    # in this graph is true of it. See docs/reports/NON_RV_ATTRIBUTION_ACQUISITION_V3.md.
+    "SV": None,
+}
+
+#: Predicates read from the knowledge layer into the corpus view.
+ATTRIBUTION_PREDICATES: Final[frozenset[str]] = frozenset(
+    {"HAS_RISHI", "HAS_DEVATA", "HAS_CHANDAS"}
+)
+
+
 def _resolved_metadata(project_root: pathlib.Path) -> dict[str, dict[str, list[str]]]:
     """Resolved Rishi/Devata/Chandas entity keys per passage canonical key.
 
-    Read from the deterministic knowledge layer, not from
-    ``canonical/*/traditional_metadata.jsonl``. The canonical file holds 9 raw VHP
-    strings; the knowledge layer holds the 31,646 resolved assertions the graph is
-    actually built from, already mapped to registry entity keys. Only the Rigveda has any
-    -- the other three sources carry no anukramani at all -- and that gap is reported by
-    the analytics stage rather than papered over.
+    Read from the deterministic knowledge layer rather than from
+    ``canonical/*/traditional_metadata.jsonl``, because the canonical files hold raw
+    source strings and the knowledge layer holds them resolved to registry entity keys.
+
+    Every artifact in :data:`KNOWLEDGE_ARTIFACTS` that exists is read. The Rigveda
+    contributes rsi, devata and chandas; the Yajurveda contributes rsi only, and its
+    absence of metre is a source-stated absence rather than a gap to be filled from
+    Rigvedic practice.
     """
-    path = project_root / "data" / "knowledge" / "rigveda_deterministic_v1"
     grouped: dict[str, dict[str, list[str]]] = {}
-    for record in iter_jsonl(path / "knowledge_assertions.jsonl"):
-        predicate = str(record.get("predicate", ""))
-        if predicate not in {"HAS_RISHI", "HAS_DEVATA", "HAS_CHANDAS"}:
+    root = project_root / "data" / "knowledge"
+    for dirname in KNOWLEDGE_ARTIFACTS.values():
+        if dirname is None:
             continue
-        key = record.get("subject_key")
-        value = record.get("object_key")
-        if key and value:
-            grouped.setdefault(str(key), {}).setdefault(predicate, []).append(str(value))
+        for record in iter_jsonl(root / dirname / "knowledge_assertions.jsonl"):
+            predicate = str(record.get("predicate", ""))
+            if predicate not in ATTRIBUTION_PREDICATES:
+                continue
+            key = record.get("subject_key")
+            value = record.get("object_key")
+            if key and value:
+                grouped.setdefault(str(key), {}).setdefault(predicate, []).append(str(value))
     return grouped
 
 

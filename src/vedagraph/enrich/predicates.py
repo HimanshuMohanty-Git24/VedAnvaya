@@ -169,6 +169,25 @@ SIGNATURES: Final[dict[str, Signature]] = {
     ),
 }
 
+#: Enrichment predicates that are declared and deliberately carry zero edges.
+#:
+#: Kept as *data*, not only as a docstring on the enum member, because the emptiness is
+#: observed from the graph: an audit enumerating ``db.relationshipTypes()`` found a type
+#: with no rows and correctly reported it as an undocumented dead filter option -- the
+#: rationale existed, in a place nothing querying the database would look. The ontology
+#: reference reads this map together with the domain layer's own.
+UNPOPULATED_BY_DESIGN: Final[dict[str, str]] = {
+    str(TextualPredicate.SHARES_FORMULA_WITH): (
+        "The Formula hub already carries this relation losslessly: "
+        "(a)-[:USES_FORMULA]->(f)<-[:USES_FORMULA]-(b) is the same fact in two hops. "
+        "Materialising it would defeat the point of the hub -- the widest formula spans "
+        "93 passages, so that one node alone would emit 4,278 edges and the layer would "
+        "add 87,296 edges in place of 27,511. V3's FormulaFamily layer supersedes it "
+        "further, grouping the formulas themselves rather than joining their passages."
+    ),
+}
+
+
 #: Where each predicate the enrichment brief named actually ended up. Kept as data so a
 #: reader can check the mapping instead of trusting a summary of it.
 BRIEF_PREDICATE_MAPPING: Final[dict[str, str]] = {

@@ -49,6 +49,10 @@ MERGED_REGISTRY_PATH: Final = DOMAIN_DIR / "domain_registry.yaml"
 FRAGMENT_FILES: Final[tuple[pathlib.Path, ...]] = (
     DOMAIN_DIR / "domain_entities_material.yaml",
     DOMAIN_DIR / "domain_entities_concern.yaml",
+    # V3. Merge order matters only for reporting: the loader refuses a duplicate id or a
+    # folded alias claimed twice rather than letting a later fragment win.
+    DOMAIN_DIR / "domain_entities_ritual_v3.yaml",
+    DOMAIN_DIR / "domain_entities_concern_v3.yaml",
 )
 
 
@@ -58,7 +62,69 @@ FRAGMENT_FILES: Final[tuple[pathlib.Path, ...]] = (
 #: else in this package: the V1 artifact must stay reproducible from the V1 registry. The
 #: narrow type always implies the broad one -- ``METAL`` carries ``Substance`` -- so a
 #: retype can only add a way to find the entity, never remove one.
+#: Base entities a V3 fragment **replaces** rather than sits beside, with the reason.
+#:
+#: Merging is the default and superseding is the exception, because superseding drops a
+#: hand-authored entity and that must never happen by accident. So it is declared here in
+#: code, not inferred from the data: the merge honours exactly this list and refuses
+#: anything else that collides.
+#:
+#: The one entry is the case that forced the mechanism to exist. ``YAKSMA-DISEASE`` had
+#: four distinct afflictions folded into a single ``State``-labelled node -- *takman*
+#: (the Atharvaveda's specific fever, with its own hymns), *yakṣma* (consumption),
+#: *amīvā* (general affliction) and *rapas* (bodily hurt) -- and ``State`` accepts no
+#: concern predicate at all. Measured against the live graph: 15 of 33 fever mantras
+#: arrived labelled "disease", 8 arrived nowhere, and **none carried an affliction edge**,
+#: so "what does the Atharvaveda say about fever?" was unanswerable. The four are now
+#: separate ``Condition`` entities and the base entry's alias set claims six of their
+#: forms, so a merge raises six collisions and is correctly refused. Replacing it is the
+#: only honest resolution: the old entity was not a coarser version of the new ones, it
+#: was a conflation of them.
+SUPERSEDED_BY_FRAGMENT: Final[dict[str, str]] = {
+    "VG:CONCEPT:YAKSMA-DISEASE": (
+        "Conflated takman, yaksma, amiva and rapas into one STATE-typed node that no "
+        "concern predicate could reach. Split into four CONDITION entities by "
+        "domain_entities_concern_v3.yaml, which claims six of this entry's aliases. Two "
+        "corpus-internal witnesses justify the split rather than a retype: AVS 5.4.9 and "
+        "5.30.16 name takman and yaksma contrastively in one line, and the Anukramani "
+        "ascribes AVS 5.22 as takmanasanadevatyam, distinct from its yaksmanasana- "
+        "ascriptions."
+    ),
+}
+
+
 NODE_TYPE_OVERRIDES: Final[dict[str, tuple[str, str]]] = {
+    # ---- V3 retypes, each declared by the fragment that needs it ---------------------
+    # A predicate can only reach an entity whose label is in its declared range, so a
+    # mis-typed entity is not a cosmetic problem: it makes a whole question unanswerable
+    # and the failure is silent, because the rows simply do not match.
+    "VG:CONCEPT:AYUDHA-WEAPON": (
+        "WEAPON",
+        "Typed OBJECT, so `MATCH (:Weapon)` returned only bowstring, noose and axe and "
+        "the corpus's principal weapon word was invisible to the question the Weapon "
+        "label exists to answer. WEAPON carries Object, so nothing is lost.",
+    ),
+    "VG:CONCEPT:VAJRA-THUNDERBOLT": (
+        "WEAPON",
+        "As AYUDHA-WEAPON. Indra's vajra is the single most-cited weapon in the corpus "
+        "and was not reachable as one.",
+    ),
+    "VG:CONCEPT:RAKSAS-DEMON": (
+        "CONDITION",
+        "Typed CONCEPT, which is outside PROTECTS_FROM's declared range, so the demon "
+        "nobody can be protected from was a modelling artefact rather than a finding. "
+        "CONDITION follows the V1 precedent already used for DURNAMAN and KRTYA, which "
+        "are hostile agents typed as conditions for exactly this reason.",
+    ),
+    "VG:CONCEPT:YAKSMA-DISEASE": (
+        "CONDITION",
+        "Typed STATE, which accepts no concern predicate at all. This is the node that "
+        "had folded takman, yaksma, amiva and rapah into one: 15 of 33 fever mantras "
+        "arrived labelled 'disease', 8 arrived nowhere, and none carried an affliction "
+        "edge. The four are split into separate Condition entities by "
+        "domain_entities_concern_v3.yaml; this retype is what lets any of them carry an "
+        "edge.",
+    ),
     "VG:CONCEPT:HIRANYA-GOLD": (
         "METAL",
         "V1 typed gold as SUBSTANCE, which was reasonable before METAL existed. It left "
@@ -80,6 +146,9 @@ class MergeReport:
     alias_collisions: list[str] = field(default_factory=list)
     by_node_type: dict[str, int] = field(default_factory=dict)
     retyped: dict[str, dict[str, Any]] = field(default_factory=dict)
+    #: Base entities a fragment replaced, with the reason. Non-empty is normal; a
+    #: *silent* replacement would not be.
+    superseded: dict[str, str] = field(default_factory=dict)
 
     @property
     def clean(self) -> bool:
@@ -95,6 +164,7 @@ class MergeReport:
             "alias_collisions": sorted(self.alias_collisions),
             "by_node_type": dict(sorted(self.by_node_type.items())),
             "retyped": self.retyped,
+            "superseded": dict(sorted(self.superseded.items())),
             "clean": self.clean,
         }
 
@@ -119,12 +189,33 @@ def merge_registry(project_root: pathlib.Path) -> MergeReport:
     base_entries = list(base.get("concepts") or [])
     report.base_entities = len(base_entries)
 
-    merged: list[dict[str, Any]] = list(base_entries)
+    # Superseded base entries are dropped before anything else, so their aliases never
+    # enter the claim table and the fragment that replaces them does not read as a
+    # collision. Reported, so a dropped hand-authored entity is visible in the merge
+    # report rather than only in this constant.
+    kept_base = [
+        entry
+        for entry in base_entries
+        if str(entry.get("concept_id")) not in SUPERSEDED_BY_FRAGMENT
+    ]
+    report.superseded = {
+        str(entry.get("concept_id")): SUPERSEDED_BY_FRAGMENT[str(entry.get("concept_id"))]
+        for entry in base_entries
+        if str(entry.get("concept_id")) in SUPERSEDED_BY_FRAGMENT
+    }
+    declared_but_absent = sorted(set(SUPERSEDED_BY_FRAGMENT) - set(report.superseded))
+    if declared_but_absent:
+        raise ConceptRegistryError(
+            "SUPERSEDED_BY_FRAGMENT names entities the base registry does not contain, "
+            "so the supersede would silently do nothing: " + ", ".join(declared_but_absent)
+        )
+
+    merged: list[dict[str, Any]] = list(kept_base)
     origin: dict[str, str] = {
-        str(entry.get("concept_id")): str(CONCEPT_REGISTRY_PATH) for entry in base_entries
+        str(entry.get("concept_id")): str(CONCEPT_REGISTRY_PATH) for entry in kept_base
     }
     claimed: dict[str, tuple[str, str]] = {}
-    for entry in base_entries:
+    for entry in kept_base:
         for alias in entry.get("aliases_sa") or []:
             claimed[fold_alias(str(alias))] = (
                 str(entry.get("concept_id")),

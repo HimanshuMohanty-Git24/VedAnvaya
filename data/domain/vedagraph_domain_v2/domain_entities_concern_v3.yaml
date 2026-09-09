@@ -1,0 +1,913 @@
+# Atharvavedic practical knowledge, V3: the fever split, three re-typings, and the
+# conditions, plants, substances, agents, concerns and rites the V1 pass left out.
+#
+# ADDITIVE MERGE FRAGMENT. This file is never loaded alone and never edits another file.
+# It uses the entry shape of domain_entities_material.yaml exactly; read that file's
+# header first, because every rule stated there applies here and is not restated.
+#
+# ===========================================================================
+# HOW THE ALIASES WERE CHOSEN -- the standard this file had to meet
+# ===========================================================================
+# Every Sanskrit alias below was probed against all 20,210 mantras and then READ: for
+# each alias at least one witness passage per Veda in which it occurs was printed with
+# its translation and judged. Across the pass: 165 Sanskrit aliases stand; 42 candidate
+# forms were read and REJECTED, each with the passage that rejected it; 23 candidate
+# words token-matched nothing anywhere in the corpus and are recorded as absent rather
+# than as rejected. 152 of the surviving and borderline forms additionally went through
+# the full two-pass host/intrusion probe, which is what caught the five sandhi hazards
+# named below. Every rejection is tabulated in
+# docs/reports/ATHARVAVEDA_CONCERN_MODEL_V3.md. The four that matter most:
+#
+#   palitasya  Grey hair and a grey priest are the same string. RV 1.164.1 "this
+#              benignant Priest, with eld grey-coloured" and AVS 9.9.1 "this pleasant
+#              hoary invoker" are both the hoary man, not the ailment AVS 1.23 removes.
+#              PALITA-GREYING rests on `palitaṃ` alone, 2 of 2 in the kilasa hymn.
+#   aruṣ       Not the wound. `aruṣ-` as probed matches 90 occurrences of aruṣá
+#              'ruddy', the colour of Agni's horses (RV 3.15.3, RV 4.58.7). No wound
+#              entity was authored; the only genuine token is `arusrāṇam` (AVS 2.3.3,
+#              2.3.5), two hits of a compound.
+#   pāmán      In the translation, not in the text. Whitney renders AVS 5.22.12 "thy
+#              cousin the scab (pāmán)", but the stored Sanskrit surface of that mantra
+#              reads `pāpmā́` -- pāpman, 'evil'. `pāman`, `pāmnā` and `pāpman` all
+#              token-match nothing. The scab is Whitney's reading of a word the corpus
+#              does not have there, so no entity was authored for it.
+#   vidradhe   RV 4.32.23 "Like two slight images of girls, unrobed, upon a new-wrought
+#              post" -- not the abscess of AVS 6.127. VIDRADHA-ABSCESS keeps
+#              `vidradhasya` and `vidradhaṃ`, 3 of 3 Atharvavedic.
+#
+# ===========================================================================
+# BLOCKER: five aliases here need a companion sandhi suppression
+# ===========================================================================
+# MIN_SANDHI_ALIAS_CHARS is 6, so an alias of six characters or more is matched anywhere
+# in the boundary-free surface as well as as a whole word. Five aliases below clear that
+# floor and were measured to be wrong on the sandhi path. They are correct on the token
+# path and are kept, but until they are added to
+# vedagraph.enrich.concepts.SANDHI_SUPPRESSED_ALIASES -- an edit this fragment is
+# forbidden to make -- they will produce the false positives named:
+#
+#   amīvāḥ       sits inside `anamīvāḥ` ('free from disease'), whose sense is the exact
+#                opposite; 5 of 15 sandhi hits are the negation or a word-boundary glue.
+#                NOTE: `amīvāḥ` is ALREADY a live alias of VG:CONCEPT:YAKSMA-DISEASE, so
+#                this is a defect in the shipped registry and not only a risk here.
+#   rapaso       inside `nārīrapaso`, the glue of nā́rīr apáso ('women, active ones').
+#   apacit       inside `apacitiṃ` (RV 4.28.4 'took great vengeance') and
+#                `dadhadindriyamūrjamapacitiṃṃ`; apaciti 'requital' is a different word.
+#   arāyam       7 of its 8 sandhi hits are word-boundary glue, not the sprite; the
+#                token pass finds 1.
+#   sarasvatyām  inside the glue of sárasvatyā + a m-initial word: AVS 5.7.5
+#                `sarasvatyā manoyujā` and VSM 21.46 / 21.47 `sarasvatyā meṣasya`, all
+#                three of which are the GODDESS. This is the one that matters most,
+#                because it is the whole basis of the new River node.
+#
+# ===========================================================================
+# MERGE ORDER IS NOT OPTIONAL
+# ===========================================================================
+# Probed with scripts/probe_domain_aliases.py --collisions, six aliases below are
+# currently claimed by VG:CONCEPT:YAKSMA-DISEASE: takman, takmā, takmānam, amīvā,
+# amīvāḥ, rapaḥ. That is the fold this file exists to undo. The `retypings` block below
+# carries a FULL REPLACEMENT entry for YAKSMA-DISEASE with those six removed; if the
+# merge inserts the new entities without applying that replacement, load_concepts will
+# refuse the registry with six alias_collisions. The refusal is correct. Apply the
+# replacement.
+#
+# `rāṣṭraṃ` and `rāṣṭram` collide with VG:CONCEPT:RAJAN-KINGSHIP. No dominion entity was
+# authored -- see `refusals`. Nothing else in this file collides.
+#
+# Merged count: 89 (registry) + 45 (material) + 29 (concern V1) + 41 (here) = 204,
+# against MAX_CONCEPT_NODES 260.
+
+policy_version: vedagraph-concern-lexicon-v3
+
+# ---------------------------------------------------------------------------
+# RE-TYPINGS AND REPLACEMENTS
+# ---------------------------------------------------------------------------
+# Declarative, because vedagraph.domain.registry.NODE_TYPE_OVERRIDES is the established
+# mechanism and lives in src/, which this fragment may not touch. `kind: retype` needs
+# only a NODE_TYPE_OVERRIDES row; `kind: replace` needs the entry under `concepts` below
+# to supersede the base registry's entry of the same concept_id.
+retypings:
+
+  - concept_id: VG:CONCEPT:AYUDHA-WEAPON
+    kind: retype
+    from_node_type: OBJECT
+    to_node_type: WEAPON
+    verified_live: >-
+      labels are [Concept, DomainEntity, Object]; MATCH (n:Weapon) returns 3 nodes --
+      bowstring, noose, axe -- and none of them is the weapon word itself.
+    reason: >-
+      V1 typed the generic weapon word OBJECT, which was reasonable before WEAPON
+      existed. The consequence measured in the live graph is that `MATCH (:Weapon)`
+      answers "which weapons occur in the corpus" with the bowstring, the noose and the
+      axe, and omits the bow, the arrow and the word āyudha itself. WEAPON carries the
+      Object label through SUPERLABELS, so the retype cannot make any existing question
+      harder to ask.
+
+  - concept_id: VG:CONCEPT:VAJRA-THUNDERBOLT
+    kind: retype
+    from_node_type: OBJECT
+    to_node_type: WEAPON
+    verified_live: labels are [Concept, DomainEntity, Object].
+    reason: >-
+      Indra's bolt is the most frequently named weapon in the corpus and was invisible to
+      the Weapon label. Its own `broader` already points at AYUDHA-WEAPON, so the two
+      retypes have to happen together or the taxonomy asserts that a Weapon's parent is a
+      plain Object.
+
+  - concept_id: VG:CONCEPT:RAKSAS-DEMON
+    kind: retype
+    from_node_type: CONCEPT
+    to_node_type: CONDITION
+    verified_live: >-
+      labels are [Concept, DomainEntity]; PROTECTS_FROM has range {Condition,
+      HumanConcern}, so no protective edge to it can be emitted today.
+    reason: >-
+      This is the retype that closes the evaluator's closest miss. The demon is what the
+      Atharvavedic charm asks protection FROM, and the model had no way to say so: the
+      endpoint signature of PROTECTS_FROM admits Condition and HumanConcern only, and a
+      projector that emitted Passage->Concept would fail the contract check. CONDITION is
+      the right home and the precedent is already inside the V1 concern file, which types
+      DURNAMAN-ILL-NAMED-BEINGS and KRTYA-SORCERY as CONDITION and says in its own header
+      that "worms, poison, sorcery, evil dream and the ill-named beings are causes or
+      agents rather than kinds of sickness". A demon is an agent of the same kind. Its
+      alias set was re-read and is uniformly hostile beings -- rakṣas, piśāca,
+      yātudhāna -- with no ethnonym in it.
+
+  - concept_id: VG:CONCEPT:YAKSMA-DISEASE
+    kind: replace
+    from_node_type: STATE
+    to_node_type: CONDITION
+    verified_live: >-
+      One State-labelled node carries yakṣmam, yakṣmaṃ, yakṣmaḥ, yakṣmo, takman,
+      takmānam, takmā, amīvā, amīvāḥ and rapaḥ, and 15 of the 33 mantras that contain a
+      takman- form reach it as "disease (yakṣma)". Four distinct afflictions, one node,
+      and the label of the node is the name of only one of them.
+    reason: >-
+      See the takman section below. The replacement entry under `concepts` keeps the
+      yakṣma- paradigm, adds the two yakṣma compounds the V1 alias set had missed
+      (rājayakṣma "royal yakṣma", ajñātayakṣma "unknown yakṣma"), and hands takman-,
+      amīvā- and rapas- to three new sibling entities. Type moves STATE -> CONDITION so
+      that consumption can take a protective edge at all; STATE takes none of the four
+      concern predicates.
+
+# ---------------------------------------------------------------------------
+# The takman split, and why it is four nodes and not two
+# ---------------------------------------------------------------------------
+# The V1 concern file recorded a deliberate refusal to split takman out, on the ground
+# that YAKSMA-DISEASE already claimed three takman- forms holding "22 of the 36
+# Atharvaveda mantras that carry any takman- form", so a sibling built on the remainder
+# would hold about 39% of the evidence. That arithmetic was right and the conclusion
+# followed from it, but the premise was that the split had to be made on the UNCLAIMED
+# remainder. It does not: the whole paradigm can move, and this file moves it.
+#
+# Measured, by enumerating every folded token beginning takman- and takmā-:
+#   10 distinct forms, 36 occurrences, 33 distinct mantras, 33 of 33 Atharvaveda.
+#   Zero occurrences in the Rigveda, Samaveda or Yajurveda. Zero rejections: every one
+#   of the 36 is Whitney's "fever".
+#   12 hymns, concentrated: AVS 5.22 (13 mantras), 1.25 (4), 5.4 (3), 6.20 (3),
+#   11.2 (2), 19.39 (2), and one each in 4.9, 5.30, 9.8, 11.4, 12.5, 19.34.
+#
+# Two independent witnesses that the corpus itself treats takman and yakṣma as different
+# things, neither of which is an inference:
+#   (1) AVS 5.4.9 names both in one line -- "both do thou efface all yákṣma, and do thou
+#       make the fever sapless" -- and AVS 5.30.16 does it again: "by it I have exorcised
+#       the yákṣma and the hundred pangs of the fever."
+#   (2) The Anukramaṇī's own deity ascription for the whole of AVS 5.22 is
+#       VG:ASCRIPTION:AV:TAKMANACANADEVATYAM-7B6D, takmanāçanadevatyam, "having
+#       fever-destruction as its deity" -- a distinct ascription from the yakṣmanāçana-
+#       ones on AVS 1.25 and 6.20. The tradition indexed these hymns under fever before
+#       this repository existed.
+#
+# What the old node's edges should become, stated per edge type because they do not all
+# move the same way. Measured on the live graph: VG:CONCEPT:YAKSMA-DISEASE currently
+# carries 92 MENTIONS_ENTITY, 180 ABOUT_CONCEPT and 3 DESCRIBES in-edges, and no TREATS
+# or PROTECTS_FROM, because a State cannot be their object.
+#   MENTIONS_ENTITY  Do not repoint by hand. Every one of the 92 is derived from an alias
+#                    match, so re-running the concept enrichment against the replaced
+#                    registry regenerates all of them correctly and splits them four ways
+#                    by construction. Repointing them individually would be guessing
+#                    which alias produced which edge, and the mention_id is the only
+#                    thing that records it.
+#   ABOUT_CONCEPT    Same: derived, regenerate.
+#   DESCRIBES        3 edges, from Ritual or SocialRite nodes. These were authored, not
+#                    derived, so they must be re-read one at a time; a rite described as
+#                    being about "disease" is about yakṣma unless its passage carries a
+#                    takman- form, and none of the three does.
+#   BROADER_THAN     The V1 file files seven CONDITION entities under YAKSMA-DISEASE via
+#                    `broader`: jaundice, kṣetriya, balāsa, viṣkandha, grāhi, āsrāva,
+#                    kāsa. All seven stay, and eleven more are added below.
+#   DEVATA_ASSOCIATED_WITH
+#                    VG:DEVATA:YAKSMANASANAH exists in the graph with the display label
+#                    "the destruction of consumption". It stays on YAKSMA-DISEASE and is
+#                    deliberately NOT copied to TAKMAN-FEVER: consumption-destruction is
+#                    not fever-destruction, and copying it would re-create the conflation
+#                    in the deity layer having just removed it from the condition layer.
+#                    TAKMAN-FEVER therefore takes `related_devatas: []`, because the
+#                    honest target -- takmanāçanadevatyam -- is a DEVATA_ASCRIPTION row
+#                    in data/registry/devata_ascriptions_av.yaml and is not a Devata node
+#                    in the graph. Measured: the Atharvaveda has 0 HAS_DEVATA edges.
+
+concepts:
+
+  # -------------------------------------------------------------------------
+  # CONDITION -- the four afflictions that were one node
+  # -------------------------------------------------------------------------
+
+  - concept_id: VG:CONCEPT:YAKSMA-DISEASE
+    preferred_label_sa: yakṣma
+    preferred_label_en: consumption
+    node_type: CONDITION
+    definition: >-
+      Yakṣma: the wasting, consuming sickness that is drawn out of a patient limb by limb
+      in the Atharvaveda's ejection charms and flies away like a bird. Not fever, which
+      is takman, and not affliction in general, which is amīvā.
+    aliases_sa: [yakṣmam, yakṣmaṃ, yakṣmaḥ, yakṣmo, yakṣma, yakṣmā, yakṣmān, yakṣmāt,
+                 yakṣmād, yakṣmāso, yakṣmasya, yakṣmeṇa, yakṣmāṇāṃ, yakṣmanāśanīḥ,
+                 rājayakṣmāt, rājayakṣmas, rājayakṣmo, ajñātayakṣmād]
+    aliases_en: [consumption, wasting]
+    broader: []
+    related_devatas: [VG:DEVATA:YAKSMANASANAH]
+
+  - concept_id: VG:CONCEPT:TAKMAN-FEVER
+    preferred_label_sa: takman
+    preferred_label_en: fever
+    node_type: CONDITION
+    definition: >-
+      Takman, the Atharvaveda's fever: addressed in the second person, classified by its
+      period (tertian, quartan, constant), by its season (autumnal, cold, hot, of the
+      rainy season) and by its colour, and sent away to named foreign peoples. It has its
+      own hymns -- AVS 1.25, 5.22, 6.20 -- and occurs nowhere outside the Atharvaveda.
+    aliases_sa: [takman, takmane, takmann, takmanaḥ, takmanā, takmā, takmānaṃ, takmānam,
+                 takmanāśana, takmanāśanam]
+    aliases_en: []
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:AMIVA-AFFLICTION
+    preferred_label_sa: amīvā
+    preferred_label_en: affliction
+    node_type: CONDITION
+    definition: >-
+      Amīvā: sickness in general, the affliction a god is asked to smite or expel rather
+      than a named complaint. The one member of this group that is a four-Veda word --
+      Soma, Brahmaṇaspati and Vāstoṣpati are each called amīvahán, "slayer of amīvā".
+    aliases_sa: [amīvā, amīvāḥ, amīvāṃ, amīvāś, amīvahā, amīvacātanīḥ, amīvacātanaḥ,
+                 amīvacātanam, amīvacātanaṃ]
+    aliases_en: []
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:RAPAS-BODILY-HURT
+    preferred_label_sa: rapas
+    preferred_label_en: bodily hurt
+    node_type: CONDITION
+    definition: >-
+      Rapas: bodily hurt, blemish and defect -- the thing the wind is asked to blow away
+      at AVS 4.13 and the thing Rudra is asked to carry one over at RV 2.33. Distinct
+      from the root rap- "to prate", which is the same string in four other forms.
+    aliases_sa: [rapaḥ, rapas, rapasā, rapaso]
+    aliases_en: []
+    broader: []
+    related_devatas: []
+
+  # -------------------------------------------------------------------------
+  # CONDITION -- named ailments the V1 pass did not reach
+  # -------------------------------------------------------------------------
+
+  - concept_id: VG:CONCEPT:APACIT-SWELLINGS
+    preferred_label_sa: apacit
+    preferred_label_en: apacit swellings
+    node_type: CONDITION
+    definition: >-
+      The apacíts: swellings counted off in fives, sevens and nines over the nape, neck,
+      shoulders and sides, and told to fly away like a bird from its nest. Left
+      untranslated beyond "swellings" because the corpus gives their sites and their
+      colours and not their nature.
+    aliases_sa: [apacitām, apacitaḥ, apacit, apacitāṃ, apacito]
+    aliases_en: []
+    broader: [VG:CONCEPT:YAKSMA-DISEASE]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:JAYANYA-DISEASE
+    preferred_label_sa: jāyānya
+    preferred_label_en: jayanya
+    node_type: CONDITION
+    definition: >-
+      Jāyānya, a winged sickness that "flies and enters into a man", crushes the
+      breast-bone and descends to the sole; named beside jaundice and visalpaka as
+      something the ointment drives out. Untranslated for the same reason as balasa.
+    aliases_sa: [jāyānya, jāyānyam, jāyānyaḥ, jāyānyo]
+    aliases_en: []
+    broader: [VG:CONCEPT:YAKSMA-DISEASE]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:KILASA-LEUCODERMA
+    preferred_label_sa: kilāsa
+    preferred_label_en: leprous spot
+    node_type: CONDITION
+    definition: >-
+      The white or pale skin patch, treated by a night-born dark herb told to give the
+      skin back its own colour; the corpus distinguishes the bone-born from the body-born
+      kind and from the kind "made by the spoiler".
+    aliases_sa: [kilāsaṃ, kilāsasya, kilāsabheṣajam, kilāsanāśanam]
+    aliases_en: []
+    broader: [VG:CONCEPT:YAKSMA-DISEASE]
+    related_devatas: [VG:DEVATA:OSADHAYAH]
+
+  - concept_id: VG:CONCEPT:PALITA-GREYING
+    preferred_label_sa: palita
+    preferred_label_en: pallor
+    node_type: CONDITION
+    definition: >-
+      What is pale, named twice in the kilasa hymn beside the leprous spot and removed by
+      the same herb. Kept apart from palitá "hoary" said of a man, which is the same
+      string and a different thing.
+    aliases_sa: [palitaṃ]
+    aliases_en: []
+    broader: [VG:CONCEPT:YAKSMA-DISEASE]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:VIDRADHA-ABSCESS
+    preferred_label_sa: vidradha
+    preferred_label_en: abscess
+    node_type: CONDITION
+    definition: >-
+      The vidradhá, an internal swelling or abscess, named with the red balāsa and the
+      visalpaka as things a forest tree and a herb are told not to leave a bit of.
+    aliases_sa: [vidradhasya, vidradhaṃ]
+    aliases_en: []
+    broader: [VG:CONCEPT:YAKSMA-DISEASE]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:SIRSAKTI-HEADACHE
+    preferred_label_sa: śīrṣakti
+    preferred_label_en: headache
+    node_type: CONDITION
+    definition: >-
+      Head-pain, in the two words the corpus uses for it: śīrṣakti the ache and
+      śīrṣāmaya the head-ailment, both expelled by incantation at AVS 9.8.1 and both
+      wiped off onto lead and onto a pillow at AVS 12.2.
+    aliases_sa: [śīrṣaktim, śīrṣaktiṃ, śīrṣaktir, śīrṣāmayam, śīrṣāmayaṃ]
+    aliases_en: []
+    broader: [VG:CONCEPT:YAKSMA-DISEASE]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:KARNASULA-EARACHE
+    preferred_label_sa: karṇaśūla
+    preferred_label_en: earache
+    node_type: CONDITION
+    definition: >-
+      Ear-pain, named twice in the head-disease charm of AVS 9.8 and nowhere else in the
+      four Saṃhitās.
+    aliases_sa: [karṇaśūlaṃ]
+    aliases_en: []
+    broader: [VG:CONCEPT:YAKSMA-DISEASE]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:ANGABHEDA-LIMB-SPLITTING
+    preferred_label_sa: aṅgabheda
+    preferred_label_en: limb-splitting
+    node_type: CONDITION
+    definition: >-
+      The limb-splitter, paired in both its occurrences with the limb-waster and with
+      heart-ache, in the two charms that expel head-disease by incantation.
+    aliases_sa: [aṅgabhedo, aṅgabhedam]
+    aliases_en: []
+    broader: [VG:CONCEPT:YAKSMA-DISEASE]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:VISALPAKA-AILMENT
+    preferred_label_sa: visalpaka
+    preferred_label_en: visalpaka
+    node_type: CONDITION
+    definition: >-
+      A named Atharvavedic ailment of the limbs, ears and eyes, ejected together with the
+      abscess and the heart-disease; left untranslated because the corpus gives its sites
+      and its remedy and not its nature.
+    aliases_sa: [visalpakam, visalpakaḥ, visalpakaṃ, visalpasya]
+    aliases_en: []
+    broader: [VG:CONCEPT:YAKSMA-DISEASE]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:HRDDYOTA-HEART-BURN
+    preferred_label_sa: hṛddyota
+    preferred_label_en: heart-burn
+    node_type: CONDITION
+    definition: >-
+      Burning of the heart, sent up to the sun together with yellowness in the jaundice
+      hymn, and the thing the heavenly waters are asked for a remedy for at AVS 6.24.
+    aliases_sa: [hṛddyoto, hṛddyotabheṣajam]
+    aliases_en: []
+    broader: [VG:CONCEPT:YAKSMA-DISEASE]
+    related_devatas: [VG:DEVATA:APAH]
+
+  - concept_id: VG:CONCEPT:VATIKRTA-WIND-AILMENT
+    preferred_label_sa: vātīkṛta
+    preferred_label_en: wind-caused ailment
+    node_type: CONDITION
+    definition: >-
+      The vātī́kṛta, "made by wind": an ailment named only in the two compounds the
+      corpus prints for its remedies -- the viṣāṇakā herb that effaces it and the
+      pippalī that is a remedy for it.
+    aliases_sa: [vātīkṛtasya, vātīkṛtanāśanī]
+    aliases_en: []
+    broader: [VG:CONCEPT:YAKSMA-DISEASE]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:KSIPTA-BRUISE
+    preferred_label_sa: kṣipta
+    preferred_label_en: bruise
+    node_type: CONDITION
+    definition: >-
+      What is struck or bruised, named at AVS 6.109 only inside the compound that says
+      the pippalī berry is its remedy, and once in the genitive beside the wind-ailment.
+    aliases_sa: [kṣiptabheṣajy, kṣiptasya]
+    aliases_en: []
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:UNMADA-MADNESS
+    preferred_label_sa: unmāda
+    preferred_label_en: madness
+    node_type: CONDITION
+    definition: >-
+      Being crazed, in the one Atharvavedic verse that names it: crazed from sin against
+      the gods or crazed from a demon, with the speaker declaring he knows the remedy.
+    aliases_sa: [unmaditam, unmattam]
+    aliases_en: []
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:SEDI-DEBILITY
+    preferred_label_sa: sedi
+    preferred_label_en: debility
+    node_type: CONDITION
+    definition: >-
+      Sedí, debility or failure: housed in an enemy's dwelling with the hags, wished onto
+      an opposing army beside hunger and fear, and trodden down underfoot by the
+      ploughman. Every token occurrence is Atharvavedic.
+    aliases_sa: [sedir, sedim, sediṃ]
+    aliases_en: []
+    broader: []
+    related_devatas: []
+
+  # -------------------------------------------------------------------------
+  # CONDITION -- hostile agency, on the V1 precedent that a cause is a Condition
+  # -------------------------------------------------------------------------
+
+  - concept_id: VG:CONCEPT:ARAYA-MALIGNANT-SPRITE
+    preferred_label_sa: arāya
+    preferred_label_en: malignant sprite
+    node_type: CONDITION
+    definition: >-
+      The arāyá: a noxious sprite blamed for wasting a person and for attacks on a woman,
+      smitten away by a herb or an amulet. Whitney renders it variously "niggard",
+      "sorceress" and "wizard (? arā́ya-)", which is recorded here because the
+      inconsistency is his and not this file's.
+    aliases_sa: [arāyyaḥ, arāyān, arāyam, arāyebhyo, arāyakṣayaṇam, arāyacātanaṃ]
+    aliases_en: []
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:DURHARD-MALEVOLENT
+    preferred_label_sa: durhārd
+    preferred_label_en: the malevolent
+    node_type: CONDITION
+    definition: >-
+      The evil-hearted: the hostile person as the Atharvaveda's charms treat him -- an
+      affliction to be warded off, burnt against by darbha grass, gored by Agni's horns,
+      and kept from a bride. All 26 token occurrences are Atharvavedic.
+    aliases_sa: [durhārdo, durhārdaḥ, durhārdaś, durhārdam]
+    aliases_en: []
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:SAPATHA-IMPRECATION
+    preferred_label_sa: śapatha
+    preferred_label_en: curse
+    node_type: CONDITION
+    definition: >-
+      The spoken curse -- a rival's, a sister's, a priest's in fury -- sent back to the
+      curser rather than cured, and the thing an amulet or a herb is said to keep off.
+    aliases_sa: [śapatho, śapathaś, śapathaḥ, śapathyād]
+    aliases_en: []
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:ABHISASTI-CALUMNY
+    preferred_label_sa: abhiśasti
+    preferred_label_en: imprecation
+    node_type: CONDITION
+    definition: >-
+      Imprecation and calumny, and the epithet abhiśastipā́ "protector against
+      imprecation" that names it. Unlike the rest of this group it is not Atharvavedic
+      property: 10 of its 18 token occurrences are Rigvedic or Yajurvedic.
+    aliases_sa: [abhiśaster, abhiśastim, abhiśastiṃ, abhiśastyā, abhiśastipā]
+    aliases_en: []
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:ABHICARA-SORCEROUS-ATTACK
+    preferred_label_sa: abhicāra
+    preferred_label_en: sorcerous attack
+    node_type: CONDITION
+    definition: >-
+      Sorcery directed at a person, named in the two Atharvavedic verses where the
+      apāmārga plant spoils it and the varaṇá tree shields against it.
+    aliases_sa: [abhicāriṇaḥ, abhicārād]
+    aliases_en: []
+    broader: []
+    related_devatas: []
+
+  # -------------------------------------------------------------------------
+  # ANIMAL -- the named biters of the snake and poison charms
+  # -------------------------------------------------------------------------
+
+  - concept_id: VG:CONCEPT:PRDAKU-ADDER
+    preferred_label_sa: pṛdāku
+    preferred_label_en: adder
+    node_type: ANIMAL
+    definition: >-
+      The pṛ́dāku, a named venomous snake of the Atharvaveda's snake charms, listed
+      beside the cross-lined one, the black snake and the kasarṇī́la, and once set as the
+      guardian of the western quarter. Every occurrence is Atharvavedic.
+    aliases_sa: [pṛdākavaḥ, pṛdākūr, pṛdākvas, pṛdākū, pṛdākau, pṛdākoḥ]
+    aliases_en: [adder]
+    broader: [VG:CONCEPT:AHI-SERPENT]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:SVAJA-CONSTRICTOR
+    preferred_label_sa: svaja
+    preferred_label_en: constrictor
+    node_type: ANIMAL
+    definition: >-
+      The svajá, the snake that coils, named in AVS 10.4 as one of the two things the
+      young physician grinds up. Kept apart from the imperative of svaj- "to embrace",
+      which is the same string at AVS 5.14.10 and 12.3.12.
+    aliases_sa: [svajasya, svajaṃ]
+    aliases_en: []
+    broader: [VG:CONCEPT:AHI-SERPENT]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:VRSCIKA-SCORPION
+    preferred_label_sa: vṛścika
+    preferred_label_en: scorpion
+    node_type: ANIMAL
+    definition: >-
+      The scorpion or stinger, slain with a club at AVS 10.4.9, ground up with the
+      constrictor at 10.4.15, and told at RV 1.191.16 that its venom is weak.
+    aliases_sa: [vṛścikam, vṛścikasya, vṛścikas, vṛścika]
+    aliases_en: [scorpion]
+    broader: []
+    related_devatas: []
+
+  # -------------------------------------------------------------------------
+  # PLANT -- named herbs and trees, filed under OSADHI-PLANTS or VANASPATI-TREE
+  # -------------------------------------------------------------------------
+
+  - concept_id: VG:CONCEPT:PIPPALI-PLANT
+    preferred_label_sa: pippalī
+    preferred_label_en: pippali
+    node_type: PLANT
+    definition: >-
+      The pippalī berry, called in its own hymn a remedy for what is bruised and for what
+      is pierced, and made by the gods sufficient for life. Kept apart from pippalá, the
+      sweet berry of the two eagles on the cosmic tree.
+    aliases_sa: [pippalī, pippalyaḥ]
+    aliases_en: []
+    broader: [VG:CONCEPT:OSADHI-PLANTS]
+    related_devatas: [VG:DEVATA:OSADHAYAH]
+
+  - concept_id: VG:CONCEPT:PRSNIPARNI-PLANT
+    preferred_label_sa: pṛśniparṇī
+    preferred_label_en: prshniparni
+    node_type: PLANT
+    definition: >-
+      The spotted-leaf, "weal for us, woe for Nirṛti": a grinder-up of the kaṇvas and a
+      hewer of the heads of the ill-named ones, invoked against the embryo-eating demon.
+    aliases_sa: [pṛśniparṇy, pṛśniparṇi]
+    aliases_en: []
+    broader: [VG:CONCEPT:OSADHI-PLANTS]
+    related_devatas: [VG:DEVATA:OSADHAYAH]
+
+  - concept_id: VG:CONCEPT:AJASRNGI-PLANT
+    preferred_label_sa: ajaśṛṅgī
+    preferred_label_en: ajashringi
+    node_type: PLANT
+    definition: >-
+      The goat-horned plant, also called arāṭakī́, whose smell is said to expel the
+      Apsarases and Gandharvas in AVS 4.37.
+    aliases_sa: [ajaśṛṅgy]
+    aliases_en: []
+    broader: [VG:CONCEPT:OSADHI-PLANTS]
+    related_devatas: [VG:DEVATA:OSADHAYAH]
+
+  - concept_id: VG:CONCEPT:LAKSA-PLANT
+    preferred_label_sa: lākṣā
+    preferred_label_en: laksha
+    node_type: PLANT
+    definition: >-
+      The healing plant of AVS 5.5, which that hymn names twice over -- silācī́ in verses
+      1 and 8, lā́kṣā in verse 7 -- and which it addresses alongside arundhatī for the
+      closing of wounds. Two names for one addressee, so one entity, on the hymn's own
+      authority rather than on a botanical identification.
+    aliases_sa: [silācī, lākṣe]
+    aliases_en: []
+    broader: [VG:CONCEPT:OSADHI-PLANTS]
+    related_devatas: [VG:DEVATA:OSADHAYAH]
+
+  - concept_id: VG:CONCEPT:MADUGHA-PLANT
+    preferred_label_sa: madugha
+    preferred_label_en: honey-plant
+    node_type: PLANT
+    definition: >-
+      The madúgha or honey-plant, named in the Atharvaveda's two love charms only: once
+      as the thing the speaker claims to be sweeter than, once among the substances that
+      make up a means of subjection.
+    aliases_sa: [madughān, madughasya]
+    aliases_en: []
+    broader: [VG:CONCEPT:OSADHI-PLANTS]
+    related_devatas: [VG:DEVATA:OSADHAYAH]
+
+  - concept_id: VG:CONCEPT:VISANAKA-PLANT
+    preferred_label_sa: viṣāṇakā
+    preferred_label_en: vishanaka
+    node_type: PLANT
+    definition: >-
+      "Horny" by name, called Rudra's urine and the navel of the immortal, and declared
+      in its single occurrence to be an effacer of the wind-caused ailment.
+    aliases_sa: [viṣāṇakā]
+    aliases_en: []
+    broader: [VG:CONCEPT:OSADHI-PLANTS]
+    related_devatas: [VG:DEVATA:RUDRAH]
+
+  - concept_id: VG:CONCEPT:BHANGA-HEMP
+    preferred_label_sa: bhaṅga
+    preferred_label_en: hemp
+    node_type: PLANT
+    definition: >-
+      Hemp, named once, in the list of the five kingdoms of plants at AVS 11.6.15 --
+      darbhá, hemp, barley and sáha -- asked together to free the speaker from distress.
+      One occurrence, and the reason the bare stem is not an alias is that bhaṅg- is
+      otherwise the root "to break".
+    aliases_sa: [bhaṅgo]
+    aliases_en: []
+    broader: [VG:CONCEPT:OSADHI-PLANTS]
+    related_devatas: [VG:DEVATA:OSADHAYAH]
+
+  - concept_id: VG:CONCEPT:ASVATTHA-TREE
+    preferred_label_sa: aśvattha
+    preferred_label_en: ashvattha
+    node_type: PLANT
+    definition: >-
+      The aśvatthá, the holy fig: born out of the khadira and told to crush the speaker's
+      foes in AVS 3.6 and 8.8, named as the seat of the gods in the third heaven where
+      they won the kuṣṭha, and the home of the herbs at RV 10.97.5.
+    aliases_sa: [aśvattha, aśvattho, aśvatthāt, aśvattham, aśvatthe]
+    aliases_en: []
+    broader: [VG:CONCEPT:VANASPATI-TREE]
+    related_devatas: [VG:DEVATA:VANASPATIH]
+
+  - concept_id: VG:CONCEPT:KHADIRA-TREE
+    preferred_label_sa: khadira
+    preferred_label_en: khadira
+    node_type: PLANT
+    definition: >-
+      The khadirá, the hard-wooded acacia: the tree the aśvattha is born from, the wood
+      of an amulet in AVS 10.6, one of the six trees the healing plant of AVS 5.5 arises
+      from, and the timber a chariot axle is asked to be firm as at RV 3.53.19.
+    aliases_sa: [khadirād, khadiram, khadirasya, khadirājiram]
+    aliases_en: []
+    broader: [VG:CONCEPT:VANASPATI-TREE]
+    related_devatas: [VG:DEVATA:VANASPATIH]
+
+  # -------------------------------------------------------------------------
+  # SUBSTANCE and OBJECT
+  # -------------------------------------------------------------------------
+
+  - concept_id: VG:CONCEPT:ANJANA-OINTMENT
+    preferred_label_sa: āñjana
+    preferred_label_en: ointment
+    node_type: SUBSTANCE
+    definition: >-
+      The āñjana, the salve of the three-peaked mountain: addressed in the second person
+      in AVS 4.9 and 19.44-45 as a protection that grinds up demons and sorceresses, told
+      that fever, balāsa and the snake are its three slaves, and rubbed on by wives at a
+      funeral. Its two names, traikakudá "of the three-peaked mountain" and "of the
+      Yamunā", are folded in here because AVS 4.9.10 says they are both its names.
+    aliases_sa: [āñjana, āñjanaṃ, āñjanam, āñjanena, āñjanasya, traikakudam, traikakudaṃ,
+                 traikakuda]
+    aliases_en: [ointment, salve]
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:AUDUMBARA-AMULET
+    preferred_label_sa: audumbara
+    preferred_label_en: udumbara amulet
+    node_type: OBJECT
+    definition: >-
+      The amulet of udumbara wood, worn in AVS 19.31 for prosperity, cattle and fatness
+      in the cow-stall, and addressed as prosperity itself. All seven occurrences are in
+      that one hymn.
+    aliases_sa: [audumbaro, audumbareṇa, audumbarasya, audumbaraṃ, audumbaraḥ]
+    aliases_en: []
+    broader: [VG:CONCEPT:MANI-AMULET]
+    related_devatas: []
+
+  # -------------------------------------------------------------------------
+  # HUMAN_CONCERN -- what the charm asks for
+  # -------------------------------------------------------------------------
+
+  - concept_id: VG:CONCEPT:PARIPANA-DEFENCE
+    preferred_label_sa: paripāṇa
+    preferred_label_en: defence
+    node_type: HUMAN_CONCERN
+    definition: >-
+      Paripā́ṇa, defence round about: asked for in the bare formula "protection art thou;
+      protection mayest thou give me: hail!" and predicated of the ointment, of the
+      reverting amulet and of the jaṅgiḍá. Every token occurrence is Atharvavedic.
+    aliases_sa: [paripāṇaṃ, paripāṇam, paripāṇaḥ, paripāṇāya, paripāṇād, paripāṇo]
+    aliases_en: []
+    broader: [VG:CONCEPT:SARMAN-PROTECTION]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:DIRGHAYUTVA-LONG-LIFE
+    preferred_label_sa: dīrghāyutva
+    preferred_label_en: length of life
+    node_type: HUMAN_CONCERN
+    definition: >-
+      Length of life, as the stated purpose of an act: the dative dīrghāyutvā́ya, "in
+      order to length of life", is what an amulet is bound on for, what a patient is
+      enclosed in red colours for, and what a husband is wished. That dative accounts for
+      15 of the entity's 20 token occurrences, and 14 of those 15 are Atharvavedic.
+    aliases_sa: [dīrghāyutvāya, dīrghāyur, dīrghāyutvam]
+    aliases_en: []
+    broader: [VG:CONCEPT:AYUS-LIFE]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:VARCAS-SPLENDOUR
+    preferred_label_sa: varcas
+    preferred_label_en: splendour
+    node_type: HUMAN_CONCERN
+    definition: >-
+      Varcas, the lustre a person is quickened with or bound into an amulet for; the
+      Atharvaveda's commonest single request word after wellbeing. Only the instrumental
+      and dative are aliases: the bare stem sits inside brāhmaṇavarcasá and
+      hastivarcasá, which are other people's splendour, and inside hatavarcasáḥ, which
+      is its loss.
+    aliases_sa: [varcasā, varcase]
+    aliases_en: []
+    broader: []
+    related_devatas: []
+
+  # -------------------------------------------------------------------------
+  # SOCIAL_RITE
+  # -------------------------------------------------------------------------
+
+  - concept_id: VG:CONCEPT:SABHA-ASSEMBLY
+    preferred_label_sa: sabhā
+    preferred_label_en: assembly
+    node_type: SOCIAL_RITE
+    definition: >-
+      The assembly and the gathering, "the two daughters of Prajāpati", as an occasion a
+      man needs help at: to be favoured in, to be fit for, to speak what is pleasant in,
+      and to have the witchcraft made against him there undone. sabhā́ and sámiti are
+      folded together because AVS 7.12.1 and 15.9.2 name them as a pair.
+    aliases_sa: [sabhā, sabhāyāṃ, sabhāsadaḥ, sabhāsu, samitiḥ, samitiś]
+    aliases_en: [assembly]
+    broader: []
+    related_devatas: []
+
+  # -------------------------------------------------------------------------
+  # RIVER -- the Sarasvati decision, reversed with evidence
+  # -------------------------------------------------------------------------
+  # domain_entities_material.yaml records, under "What is deliberately NOT here", that
+  # there is no Sarasvatī River node because "its forms token-match 172 mantras ... and
+  # the great majority are the goddess". Re-measured here over all 37 folded forms
+  # beginning sarasvat-: 206 mantras, RV 69, SV 3, YV 99, AV 35. The share is not the
+  # issue and never was; the reason that decision was right is that the aliases it would
+  # have to be built on -- sarasvatī, sarasvatīm, sarasvaty -- are the goddess in the
+  # large majority of their own occurrences, and a node claiming them would assert "this
+  # passage is about a river" of more than a hundred passages about a deity.
+  #
+  # What changes the answer is that ONE form is not like the others. The locative
+  # singular is river in 2 of 2 occurrences corpus-wide, and it is river for a reason
+  # that is grammatical rather than statistical: the locative of a river name means "on
+  # it", and a goddess is not something one ploughs on or shines on.
+  #     AVS 6.30.1  sarasvatyām  "the gods plowed much on the Sarasvatī"      RIVER
+  #     RV  3.23.4  sarasvatyāṃ  "on the rivers Drsadvati, Sarasvati, shine"  RIVER
+  # Two token hits is the same standard the rest of the river set already meets, and
+  # PARUSNI-RIVER already rests on exactly this device: its second alias is `paruṣṇyām`,
+  # the locative. Measured token hits for the six existing River nodes: gaṅge 1;
+  # yamunā 1, yamune 1; sarayuḥ 2; paruṣṇī 1, paruṣṇyām 1; vipāṭ 1, vipāśam 1;
+  # śutudri 1. So this entity is neither the weakest nor a new kind of evidence.
+  #
+  # It is deliberately narrow. It does NOT claim the river hymns RV 6.61, 7.95 and 7.96,
+  # which are reachable through VG:DEVATA:SARASVATI and its HAS_DEVATA edges; those hymns
+  # praise a being who is both, and the folded surface cannot separate the readings. What
+  # a researcher gets from this node is the two passages where the *form* settles it.
+
+  - concept_id: VG:CONCEPT:SARASVATI-RIVER
+    preferred_label_sa: sarasvatī
+    preferred_label_en: Sarasvati river
+    node_type: RIVER
+    definition: >-
+      The Sarasvatī as a place on the ground, on the only two occasions in the four
+      Saṃhitās where the grammar says so: the barley the gods ploughed on it (AVS 6.30.1)
+      and the rivers Agni is asked to shine on (RV 3.23.4). The goddess is
+      VG:DEVATA:SARASVATI and is not this node; the river hymns belong to her, because
+      their case forms do not distinguish the two.
+    aliases_sa: [sarasvatyām, sarasvatyāṃ]
+    aliases_en: []
+    broader: [VG:CONCEPT:SINDHU-RIVER]
+    related_devatas: [VG:DEVATA:SARASVATI, VG:DEVATA:NADYAH]
+
+# ---------------------------------------------------------------------------
+# Companion changes this fragment cannot make itself
+# ---------------------------------------------------------------------------
+required_companion_changes:
+
+  sandhi_suppressions:
+    file: src/vedagraph/enrich/concepts.py
+    symbol: SANDHI_SUPPRESSED_ALIASES
+    entries:
+      amīvāḥ: >-
+        inside anamīvāḥ ('free from disease'), whose sense is the opposite; 5 of 15
+        sandhi hits are the negation or a boundary glue. Already live on
+        VG:CONCEPT:YAKSMA-DISEASE, so this is an existing defect and not only a risk here.
+      rapaso: inside nārīrapaso, the glue of nā́rīr apáso ('women, active ones').
+      apacit: >-
+        inside apacitiṃ (RV 4.28.4, apaciti 'requital') and
+        dadhadindriyamūrjamapacitiṃṃ (VSM 12.97).
+      arāyam: 7 of 8 sandhi hits are word-boundary glue rather than the sprite.
+      sarasvatyām: >-
+        inside the glue of sárasvatyā + m-initial word -- AVS 5.7.5 sarasvatyā manoyujā,
+        VSM 21.46 and 21.47 sarasvatyā meṣasya -- all three of which are the goddess.
+        Without this suppression the River node acquires three goddess passages.
+
+  node_type_overrides:
+    file: src/vedagraph/domain/registry.py
+    symbol: NODE_TYPE_OVERRIDES
+    entries:
+      VG:CONCEPT:AYUDHA-WEAPON: WEAPON
+      VG:CONCEPT:VAJRA-THUNDERBOLT: WEAPON
+      VG:CONCEPT:RAKSAS-DEMON: CONDITION
+      VG:CONCEPT:YAKSMA-DISEASE: CONDITION
+
+  registry_replacement:
+    note: >-
+      VG:CONCEPT:YAKSMA-DISEASE must be superseded by the entry in this file, not merged
+      beside it. Its base alias set claims takman, takmā, takmānam, amīvā, amīvāḥ and
+      rapaḥ, which now belong to four separate entities; merging without the replacement
+      raises six alias_collisions and the merge is refused.
+
+# ---------------------------------------------------------------------------
+# What was measured and refused
+# ---------------------------------------------------------------------------
+refusals:
+  VG:CONCEPT:SATRU-ENEMY: >-
+    NOT re-typed to CONDITION and NOT given a PROTECTS_FROM edge, although that is part
+    of the evaluator's finding. Its alias set mixes hostile-intent words (śatru, amitra,
+    arāti) with ethnonyms (dāsa, dāsī, dasyu), and several of those aliases match
+    Rigvedic passages that describe peoples. "This passage protects from the Dāsa" would
+    then be asserted of RV 4.28.4 and its like, which is a claim about a people and not
+    about a charm. The demon half of the gap is closed by re-typing RAKSAS-DEMON; the
+    rival half by adding SAPATNA-RIVAL-OVERCOMING to protects_from; the human-enemy half
+    is closed narrowly and honestly by DURHARD-MALEVOLENT, which is 26 of 26
+    Atharvavedic and contains no ethnonym.
+  rastra_dominion: >-
+    No dominion or kingdom entity. rāṣṭraṃ and rāṣṭram are already claimed by
+    VG:CONCEPT:RAJAN-KINGSHIP, which also holds kṣatra and samrāj. A sibling built on the
+    unclaimed rāṣṭre would hold 13 of 55 token hits under a near-synonymous label, which
+    is precisely the fold this file exists to undo. Royal concerns are answered through
+    RAJAN-KINGSHIP and, for the occasion, through SABHA-ASSEMBLY.
+  paman_scab: >-
+    No scab entity. Whitney has "thy cousin the scab (pāmán)" at AVS 5.22.12, but the
+    stored Sanskrit surface of that mantra reads pāpmā́ (pāpman, 'evil'), and pāman,
+    pāmnā and pāpman token-match nothing in the corpus.
+  udyuga: >-
+    No entity. Its single occurrence, AVS 5.22.11, is rendered by Whitney as "the udyugá
+    (?)"; he does not identify it, and this file does not invent an identification.
+  taimata_snake: >-
+    No entity. taimātasya occurs twice and Whitney renders it "the Timātan (?) black
+    serpent"; his own query mark is the reason. The two passages remain reachable through
+    AHI-SERPENT and VISA-POISON.
+  arus_wound: >-
+    No wound entity. See the header: aruṣ- as probed is aruṣá 'ruddy', 90 occurrences,
+    mostly Rigvedic horses. The genuine wound token is arusrāṇam, twice, at AVS 2.3.3
+    and 2.3.5 -- too little to name an affliction on.
+  vilohita_anaemia: >-
+    No entity. AVS 9.8.1 has Whitney's "anæmia (? vilohitá)", but three of the word's
+    five occurrences are Yajurvedic purushamedha victims (VSM 16.7, 16.52, 16.58) where
+    it is a colour, so the alias set would be more wrong than right.
+  nirrti_calamity: >-
+    Deferred, not refused. nirṛti- has 94 occurrences, Atharvaveda-heavy, and Whitney
+    renders it "perdition". It is a personified power with a Devatā counterpart, so
+    whether it is a Condition or a Devatā is a modelling question this fragment should
+    not settle alone. Recorded here so the gap is visible.
+  bala_strength: >-
+    No entity. balaṃ/balam have 69 token hits and would duplicate
+    VG:CONCEPT:OJAS-MIGHT, which already carries the strength axis.
+  khadiro: >-
+    Alias rejected, entity kept. `khadiro` token-matches only AVS 20.131.14, which has no
+    stored translation, so it could not be read. The alias discipline is that an alias
+    that cannot be read is not written down, even when the entity it would join is sound.

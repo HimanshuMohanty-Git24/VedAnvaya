@@ -1,48 +1,14 @@
 {
   "concept_by_veda": [
     {
-      "concept_id": "VG:CONCEPT:AGNI-FIRE",
-      "cross_veda": true,
-      "total": 2206,
-      "veda_counts": {
-        "AV": 507,
-        "RV": 1404,
-        "SV": 127,
-        "YV": 168
-      },
-      "vedas": [
-        "AV",
-        "RV",
-        "SV",
-        "YV"
-      ]
-    },
-    {
-      "concept_id": "VG:CONCEPT:SOMA-DRINK",
-      "cross_veda": true,
-      "total": 1841,
-      "veda_counts": {
-        "AV": 218,
-        "RV": 1260,
-        "SV": 246,
-        "YV": 117
-      },
-      "vedas": [
-        "AV",
-        "RV",
-        "SV",
-        "YV"
-      ]
-    },
-    {
       "concept_id": "VG:CONCEPT:DYAUS-HEAVEN",
       "cross_veda": true,
-      "total": 1659,
+      "total": 1661,
       "veda_counts": {
-        "AV": 368,
-        "RV": 1039,
+        "AV": 367,
+        "RV": 1043,
         "SV": 73,
-        "YV": 179
+        "YV": 178
       },
       "vedas": [
         "AV",
@@ -54,12 +20,12 @@
     {
       "concept_id": "VG:CONCEPT:VASU-WEALTH",
       "cross_veda": true,
-      "total": 1601,
+      "total": 1616,
       "veda_counts": {
-        "AV": 208,
-        "RV": 1139,
-        "SV": 93,
-        "YV": 161
+        "AV": 210,
+        "RV": 1152,
+        "SV": 91,
+        "YV": 163
       },
       "vedas": [
         "AV",
@@ -71,12 +37,29 @@
     {
       "concept_id": "VG:CONCEPT:YAJNA-SACRIFICE",
       "cross_veda": true,
-      "total": 1570,
+      "total": 1577,
       "veda_counts": {
-        "AV": 311,
-        "RV": 899,
+        "AV": 312,
+        "RV": 908,
         "SV": 70,
-        "YV": 290
+        "YV": 287
+      },
+      "vedas": [
+        "AV",
+        "RV",
+        "SV",
+        "YV"
+      ]
+    },
+    {
+      "concept_id": "VG:CONCEPT:SOMA-DRINK",
+      "cross_veda": true,
+      "total": 1495,
+      "veda_counts": {
+        "AV": 202,
+        "RV": 1038,
+        "SV": 156,
+        "YV": 99
       },
       "vedas": [
         "AV",
@@ -88,12 +71,12 @@
     {
       "concept_id": "VG:CONCEPT:STOMA-PRAISE",
       "cross_veda": true,
-      "total": 1367,
+      "total": 1390,
       "veda_counts": {
-        "AV": 77,
-        "RV": 1150,
+        "AV": 79,
+        "RV": 1172,
         "SV": 42,
-        "YV": 98
+        "YV": 97
       },
       "vedas": [
         "AV",
@@ -105,11 +88,28 @@
     {
       "concept_id": "VG:CONCEPT:GO-CATTLE",
       "cross_veda": true,
-      "total": 1339,
+      "total": 1342,
       "veda_counts": {
-        "AV": 375,
+        "AV": 377,
         "RV": 802,
         "SV": 76,
+        "YV": 87
+      },
+      "vedas": [
+        "AV",
+        "RV",
+        "SV",
+        "YV"
+      ]
+    },
+    {
+      "concept_id": "VG:CONCEPT:AGNI-FIRE",
+      "cross_veda": true,
+      "total": 1229,
+      "veda_counts": {
+        "AV": 349,
+        "RV": 741,
+        "SV": 53,
         "YV": 86
       },
       "vedas": [
@@ -122,12 +122,12 @@
     {
       "concept_id": "VG:CONCEPT:PRTHIVI-EARTH",
       "cross_veda": true,
-      "total": 1206,
+      "total": 1210,
       "veda_counts": {
-        "AV": 352,
-        "RV": 634,
+        "AV": 349,
+        "RV": 642,
         "SV": 35,
-        "YV": 185
+        "YV": 184
       },
       "vedas": [
         "AV",
@@ -139,10 +139,10 @@
     {
       "concept_id": "VG:CONCEPT:OJAS-MIGHT",
       "cross_veda": true,
-      "total": 1044,
+      "total": 1053,
       "veda_counts": {
         "AV": 153,
-        "RV": 746,
+        "RV": 755,
         "SV": 42,
         "YV": 103
       },
@@ -154,14 +154,14 @@
       ]
     },
     {
-      "concept_id": "VG:CONCEPT:ASVA-HORSE",
+      "concept_id": "VG:CONCEPT:AP-WATERS",
       "cross_veda": true,
-      "total": 918,
+      "total": 983,
       "veda_counts": {
-        "AV": 93,
-        "RV": 723,
-        "SV": 19,
-        "YV": 83
+        "AV": 318,
+        "RV": 539,
+        "SV": 20,
+        "YV": 106
       },
       "vedas": [
         "AV",
@@ -171,14 +171,14 @@
       ]
     },
     {
-      "concept_id": "VG:CONCEPT:AP-WATERS",
+      "concept_id": "VG:CONCEPT:ASVA-HORSE",
       "cross_veda": true,
-      "total": 900,
+      "total": 936,
       "veda_counts": {
-        "AV": 284,
-        "RV": 505,
-        "SV": 13,
-        "YV": 98
+        "AV": 96,
+        "RV": 737,
+        "SV": 19,
+        "YV": 84
       },
       "vedas": [
         "AV",
@@ -190,10 +190,10 @@
     {
       "concept_id": "VG:CONCEPT:AVAS-HELP",
       "cross_veda": true,
-      "total": 895,
+      "total": 902,
       "veda_counts": {
         "AV": 79,
-        "RV": 731,
+        "RV": 738,
         "SV": 27,
         "YV": 58
       },
@@ -207,12 +207,12 @@
     {
       "concept_id": "VG:CONCEPT:VAC-SPEECH",
       "cross_veda": true,
-      "total": 824,
+      "total": 828,
       "veda_counts": {
         "AV": 157,
-        "RV": 513,
+        "RV": 516,
         "SV": 80,
-        "YV": 74
+        "YV": 75
       },
       "vedas": [
         "AV",
@@ -224,12 +224,12 @@
     {
       "concept_id": "VG:CONCEPT:HAVIS-OBLATION",
       "cross_veda": true,
-      "total": 813,
+      "total": 824,
       "veda_counts": {
-        "AV": 233,
-        "RV": 449,
+        "AV": 234,
+        "RV": 458,
         "SV": 17,
-        "YV": 114
+        "YV": 115
       },
       "vedas": [
         "AV",
@@ -241,12 +241,12 @@
     {
       "concept_id": "VG:CONCEPT:SAKHYA-FRIENDSHIP",
       "cross_veda": true,
-      "total": 781,
+      "total": 790,
       "veda_counts": {
         "AV": 88,
-        "RV": 572,
+        "RV": 580,
         "SV": 69,
-        "YV": 52
+        "YV": 53
       },
       "vedas": [
         "AV",
@@ -258,12 +258,12 @@
     {
       "concept_id": "VG:CONCEPT:SARMAN-PROTECTION",
       "cross_veda": true,
-      "total": 775,
+      "total": 787,
       "veda_counts": {
-        "AV": 231,
-        "RV": 420,
+        "AV": 230,
+        "RV": 430,
         "SV": 16,
-        "YV": 108
+        "YV": 111
       },
       "vedas": [
         "AV",
@@ -275,10 +275,10 @@
     {
       "concept_id": "VG:CONCEPT:JANMAN-BIRTH",
       "cross_veda": true,
-      "total": 763,
+      "total": 777,
       "veda_counts": {
-        "AV": 280,
-        "RV": 372,
+        "AV": 281,
+        "RV": 385,
         "SV": 35,
         "YV": 76
       },
@@ -292,11 +292,11 @@
     {
       "concept_id": "VG:CONCEPT:JANA-PEOPLE",
       "cross_veda": true,
-      "total": 761,
+      "total": 763,
       "veda_counts": {
         "AV": 153,
-        "RV": 526,
-        "SV": 36,
+        "RV": 527,
+        "SV": 37,
         "YV": 46
       },
       "vedas": [
@@ -309,12 +309,12 @@
     {
       "concept_id": "VG:CONCEPT:SATRU-ENEMY",
       "cross_veda": true,
-      "total": 757,
+      "total": 762,
       "veda_counts": {
         "AV": 247,
-        "RV": 454,
+        "RV": 458,
         "SV": 10,
-        "YV": 46
+        "YV": 47
       },
       "vedas": [
         "AV",
@@ -324,14 +324,14 @@
       ]
     },
     {
-      "concept_id": "VG:CONCEPT:SURYA-SUN",
+      "concept_id": "VG:CONCEPT:DHI-INSIGHT",
       "cross_veda": true,
-      "total": 746,
+      "total": 729,
       "veda_counts": {
-        "AV": 209,
-        "RV": 395,
-        "SV": 58,
-        "YV": 84
+        "AV": 74,
+        "RV": 530,
+        "SV": 53,
+        "YV": 72
       },
       "vedas": [
         "AV",
@@ -358,29 +358,12 @@
       ]
     },
     {
-      "concept_id": "VG:CONCEPT:DHI-INSIGHT",
-      "cross_veda": true,
-      "total": 721,
-      "veda_counts": {
-        "AV": 74,
-        "RV": 524,
-        "SV": 53,
-        "YV": 70
-      },
-      "vedas": [
-        "AV",
-        "RV",
-        "SV",
-        "YV"
-      ]
-    },
-    {
       "concept_id": "VG:CONCEPT:DANA-LIBERALITY",
       "cross_veda": true,
-      "total": 708,
+      "total": 716,
       "veda_counts": {
         "AV": 37,
-        "RV": 621,
+        "RV": 629,
         "SV": 11,
         "YV": 39
       },
@@ -394,10 +377,10 @@
     {
       "concept_id": "VG:CONCEPT:RATHA-CHARIOT",
       "cross_veda": true,
-      "total": 702,
+      "total": 704,
       "veda_counts": {
-        "AV": 90,
-        "RV": 549,
+        "AV": 91,
+        "RV": 550,
         "SV": 38,
         "YV": 25
       },
@@ -411,12 +394,29 @@
     {
       "concept_id": "VG:CONCEPT:ANNA-FOOD",
       "cross_veda": true,
-      "total": 691,
+      "total": 700,
       "veda_counts": {
-        "AV": 106,
-        "RV": 483,
+        "AV": 105,
+        "RV": 492,
         "SV": 10,
-        "YV": 92
+        "YV": 93
+      },
+      "vedas": [
+        "AV",
+        "RV",
+        "SV",
+        "YV"
+      ]
+    },
+    {
+      "concept_id": "VG:CONCEPT:SURYA-SUN",
+      "cross_veda": true,
+      "total": 693,
+      "veda_counts": {
+        "AV": 189,
+        "RV": 381,
+        "SV": 44,
+        "YV": 79
       },
       "vedas": [
         "AV",
@@ -431,9 +431,9 @@
       "total": 691,
       "veda_counts": {
         "AV": 198,
-        "RV": 396,
+        "RV": 395,
         "SV": 38,
-        "YV": 59
+        "YV": 60
       },
       "vedas": [
         "AV",
@@ -445,10 +445,10 @@
     {
       "concept_id": "VG:CONCEPT:GRHA-HOUSE",
       "cross_veda": true,
-      "total": 681,
+      "total": 683,
       "veda_counts": {
         "AV": 121,
-        "RV": 462,
+        "RV": 464,
         "SV": 6,
         "YV": 92
       },
@@ -462,12 +462,12 @@
     {
       "concept_id": "VG:CONCEPT:JYOTIS-LIGHT",
       "cross_veda": true,
-      "total": 670,
+      "total": 676,
       "veda_counts": {
         "AV": 97,
-        "RV": 435,
+        "RV": 440,
         "SV": 44,
-        "YV": 94
+        "YV": 95
       },
       "vedas": [
         "AV",
@@ -479,12 +479,29 @@
     {
       "concept_id": "VG:CONCEPT:SVASTI-WELLBEING",
       "cross_veda": true,
-      "total": 632,
+      "total": 635,
       "veda_counts": {
-        "AV": 172,
-        "RV": 384,
+        "AV": 168,
+        "RV": 390,
         "SV": 9,
-        "YV": 67
+        "YV": 68
+      },
+      "vedas": [
+        "AV",
+        "RV",
+        "SV",
+        "YV"
+      ]
+    },
+    {
+      "concept_id": "VG:CONCEPT:SINDHU-RIVER",
+      "cross_veda": true,
+      "total": 619,
+      "veda_counts": {
+        "AV": 76,
+        "RV": 492,
+        "SV": 15,
+        "YV": 36
       },
       "vedas": [
         "AV",
@@ -511,29 +528,12 @@
       ]
     },
     {
-      "concept_id": "VG:CONCEPT:SINDHU-RIVER",
-      "cross_veda": true,
-      "total": 614,
-      "veda_counts": {
-        "AV": 78,
-        "RV": 486,
-        "SV": 14,
-        "YV": 36
-      },
-      "vedas": [
-        "AV",
-        "RV",
-        "SV",
-        "YV"
-      ]
-    },
-    {
       "concept_id": "VG:CONCEPT:RTA-ORDER",
       "cross_veda": true,
-      "total": 596,
+      "total": 598,
       "veda_counts": {
         "AV": 85,
-        "RV": 446,
+        "RV": 448,
         "SV": 21,
         "YV": 44
       },
@@ -547,10 +547,10 @@
     {
       "concept_id": "VG:CONCEPT:AYUS-LIFE",
       "cross_veda": true,
-      "total": 594,
+      "total": 593,
       "veda_counts": {
         "AV": 188,
-        "RV": 301,
+        "RV": 300,
         "SV": 12,
         "YV": 93
       },
@@ -564,10 +564,10 @@
     {
       "concept_id": "VG:CONCEPT:PRAJA-OFFSPRING",
       "cross_veda": true,
-      "total": 588,
+      "total": 591,
       "veda_counts": {
         "AV": 200,
-        "RV": 300,
+        "RV": 303,
         "SV": 7,
         "YV": 81
       },
@@ -581,12 +581,12 @@
     {
       "concept_id": "VG:CONCEPT:HOTR-PRIEST",
       "cross_veda": true,
-      "total": 579,
+      "total": 586,
       "veda_counts": {
         "AV": 65,
-        "RV": 392,
+        "RV": 398,
         "SV": 41,
-        "YV": 81
+        "YV": 82
       },
       "vedas": [
         "AV",
@@ -598,10 +598,10 @@
     {
       "concept_id": "VG:CONCEPT:VAJA-PRIZE",
       "cross_veda": true,
-      "total": 548,
+      "total": 549,
       "veda_counts": {
         "AV": 49,
-        "RV": 406,
+        "RV": 407,
         "SV": 60,
         "YV": 33
       },
@@ -613,29 +613,12 @@
       ]
     },
     {
-      "concept_id": "VG:CONCEPT:USAS-DAWN",
-      "cross_veda": true,
-      "total": 511,
-      "veda_counts": {
-        "AV": 59,
-        "RV": 405,
-        "SV": 18,
-        "YV": 29
-      },
-      "vedas": [
-        "AV",
-        "RV",
-        "SV",
-        "YV"
-      ]
-    },
-    {
       "concept_id": "VG:CONCEPT:YUDH-BATTLE",
       "cross_veda": true,
-      "total": 509,
+      "total": 512,
       "veda_counts": {
         "AV": 38,
-        "RV": 427,
+        "RV": 430,
         "SV": 8,
         "YV": 36
       },
@@ -647,12 +630,29 @@
       ]
     },
     {
+      "concept_id": "VG:CONCEPT:USAS-DAWN",
+      "cross_veda": true,
+      "total": 499,
+      "veda_counts": {
+        "AV": 57,
+        "RV": 397,
+        "SV": 16,
+        "YV": 29
+      },
+      "vedas": [
+        "AV",
+        "RV",
+        "SV",
+        "YV"
+      ]
+    },
+    {
       "concept_id": "VG:CONCEPT:SRAVAS-FAME",
       "cross_veda": true,
-      "total": 480,
+      "total": 487,
       "veda_counts": {
         "AV": 44,
-        "RV": 366,
+        "RV": 373,
         "SV": 31,
         "YV": 39
       },
@@ -666,10 +666,10 @@
     {
       "concept_id": "VG:CONCEPT:LOKA-WORLD",
       "cross_veda": true,
-      "total": 478,
+      "total": 479,
       "veda_counts": {
-        "AV": 186,
-        "RV": 220,
+        "AV": 185,
+        "RV": 222,
         "YV": 72
       },
       "vedas": [
@@ -681,10 +681,10 @@
     {
       "concept_id": "VG:CONCEPT:ADHVAN-PATH",
       "cross_veda": true,
-      "total": 475,
+      "total": 476,
       "veda_counts": {
         "AV": 79,
-        "RV": 342,
+        "RV": 343,
         "SV": 9,
         "YV": 45
       },
@@ -698,10 +698,10 @@
     {
       "concept_id": "VG:CONCEPT:MANAS-MIND",
       "cross_veda": true,
-      "total": 472,
+      "total": 471,
       "veda_counts": {
         "AV": 162,
-        "RV": 230,
+        "RV": 229,
         "SV": 14,
         "YV": 66
       },
@@ -715,10 +715,10 @@
     {
       "concept_id": "VG:CONCEPT:AMRTA-IMMORTALITY",
       "cross_veda": true,
-      "total": 459,
+      "total": 463,
       "veda_counts": {
         "AV": 116,
-        "RV": 282,
+        "RV": 286,
         "SV": 20,
         "YV": 41
       },
@@ -732,10 +732,10 @@
     {
       "concept_id": "VG:CONCEPT:NAMAS-HOMAGE",
       "cross_veda": true,
-      "total": 424,
+      "total": 426,
       "veda_counts": {
         "AV": 165,
-        "RV": 169,
+        "RV": 171,
         "SV": 12,
         "YV": 78
       },
@@ -749,10 +749,10 @@
     {
       "concept_id": "VG:CONCEPT:PAYAS-MILK",
       "cross_veda": true,
-      "total": 416,
+      "total": 419,
       "veda_counts": {
-        "AV": 109,
-        "RV": 242,
+        "AV": 110,
+        "RV": 244,
         "SV": 10,
         "YV": 55
       },
@@ -800,10 +800,10 @@
     {
       "concept_id": "VG:CONCEPT:OSADHI-PLANTS",
       "cross_veda": true,
-      "total": 386,
+      "total": 387,
       "veda_counts": {
         "AV": 193,
-        "RV": 124,
+        "RV": 125,
         "SV": 4,
         "YV": 65
       },
@@ -819,8 +819,8 @@
       "cross_veda": true,
       "total": 377,
       "veda_counts": {
-        "AV": 77,
-        "RV": 236,
+        "AV": 78,
+        "RV": 235,
         "SV": 26,
         "YV": 38
       },
@@ -851,12 +851,12 @@
     {
       "concept_id": "VG:CONCEPT:VANASPATI-TREE",
       "cross_veda": true,
-      "total": 350,
+      "total": 349,
       "veda_counts": {
-        "AV": 102,
-        "RV": 190,
+        "AV": 101,
+        "RV": 189,
         "SV": 7,
-        "YV": 51
+        "YV": 52
       },
       "vedas": [
         "AV",
@@ -868,10 +868,10 @@
     {
       "concept_id": "VG:CONCEPT:GHRTA-CLARIFIED-BUTTER",
       "cross_veda": true,
-      "total": 344,
+      "total": 345,
       "veda_counts": {
         "AV": 122,
-        "RV": 119,
+        "RV": 120,
         "SV": 13,
         "YV": 90
       },
@@ -885,10 +885,10 @@
     {
       "concept_id": "VG:CONCEPT:AYUDHA-WEAPON",
       "cross_veda": true,
-      "total": 336,
+      "total": 338,
       "veda_counts": {
         "AV": 127,
-        "RV": 160,
+        "RV": 162,
         "SV": 8,
         "YV": 41
       },
@@ -902,9 +902,9 @@
     {
       "concept_id": "VG:CONCEPT:ANTARIKSA-MIDSPACE",
       "cross_veda": true,
-      "total": 328,
+      "total": 329,
       "veda_counts": {
-        "AV": 180,
+        "AV": 181,
         "RV": 114,
         "SV": 5,
         "YV": 29
@@ -936,10 +936,10 @@
     {
       "concept_id": "VG:CONCEPT:SAMUDRA-OCEAN",
       "cross_veda": true,
-      "total": 315,
+      "total": 313,
       "veda_counts": {
-        "AV": 87,
-        "RV": 167,
+        "AV": 86,
+        "RV": 166,
         "SV": 19,
         "YV": 42
       },
@@ -953,10 +953,10 @@
     {
       "concept_id": "VG:CONCEPT:AHAN-DAY",
       "cross_veda": true,
-      "total": 302,
+      "total": 304,
       "veda_counts": {
         "AV": 56,
-        "RV": 213,
+        "RV": 215,
         "SV": 9,
         "YV": 24
       },
@@ -970,10 +970,10 @@
     {
       "concept_id": "VG:CONCEPT:HIRANYA-GOLD",
       "cross_veda": true,
-      "total": 297,
+      "total": 300,
       "veda_counts": {
-        "AV": 66,
-        "RV": 190,
+        "AV": 67,
+        "RV": 192,
         "SV": 6,
         "YV": 35
       },
@@ -1038,10 +1038,10 @@
     {
       "concept_id": "VG:CONCEPT:KAMA-DESIRE",
       "cross_veda": true,
-      "total": 265,
+      "total": 266,
       "veda_counts": {
         "AV": 77,
-        "RV": 153,
+        "RV": 154,
         "SV": 4,
         "YV": 31
       },
@@ -1055,9 +1055,9 @@
     {
       "concept_id": "VG:CONCEPT:MRTYU-DEATH",
       "cross_veda": true,
-      "total": 265,
+      "total": 266,
       "veda_counts": {
-        "AV": 136,
+        "AV": 137,
         "RV": 106,
         "SV": 2,
         "YV": 21
@@ -1072,10 +1072,10 @@
     {
       "concept_id": "VG:CONCEPT:RATRI-NIGHT",
       "cross_veda": true,
-      "total": 261,
+      "total": 264,
       "veda_counts": {
         "AV": 83,
-        "RV": 134,
+        "RV": 137,
         "SV": 5,
         "YV": 39
       },
@@ -1089,10 +1089,10 @@
     {
       "concept_id": "VG:CONCEPT:VI-BIRD",
       "cross_veda": true,
-      "total": 256,
+      "total": 255,
       "veda_counts": {
         "AV": 60,
-        "RV": 157,
+        "RV": 156,
         "SV": 15,
         "YV": 24
       },
@@ -1106,10 +1106,10 @@
     {
       "concept_id": "VG:CONCEPT:PARVATA-MOUNTAIN",
       "cross_veda": true,
-      "total": 238,
+      "total": 236,
       "veda_counts": {
         "AV": 53,
-        "RV": 164,
+        "RV": 162,
         "SV": 2,
         "YV": 19
       },
@@ -1123,10 +1123,10 @@
     {
       "concept_id": "VG:CONCEPT:SATYA-TRUTH",
       "cross_veda": true,
-      "total": 230,
+      "total": 229,
       "veda_counts": {
         "AV": 56,
-        "RV": 136,
+        "RV": 135,
         "SV": 12,
         "YV": 26
       },
@@ -1140,10 +1140,10 @@
     {
       "concept_id": "VG:CONCEPT:ASMAN-PRESSING-STONE",
       "cross_veda": true,
-      "total": 221,
+      "total": 219,
       "veda_counts": {
-        "AV": 27,
-        "RV": 162,
+        "AV": 26,
+        "RV": 161,
         "SV": 22,
         "YV": 10
       },
@@ -1191,9 +1191,9 @@
     {
       "concept_id": "VG:CONCEPT:VRSTI-RAIN",
       "cross_veda": true,
-      "total": 212,
+      "total": 211,
       "veda_counts": {
-        "AV": 50,
+        "AV": 49,
         "RV": 136,
         "SV": 8,
         "YV": 18
@@ -1240,14 +1240,14 @@
       ]
     },
     {
-      "concept_id": "VG:CONCEPT:VIDYUT-LIGHTNING",
+      "concept_id": "VG:CONCEPT:ENAS-SIN",
       "cross_veda": true,
       "total": 200,
       "veda_counts": {
-        "AV": 27,
-        "RV": 152,
-        "SV": 5,
-        "YV": 16
+        "AV": 74,
+        "RV": 107,
+        "SV": 1,
+        "YV": 18
       },
       "vedas": [
         "AV",
@@ -1257,14 +1257,14 @@
       ]
     },
     {
-      "concept_id": "VG:CONCEPT:ENAS-SIN",
+      "concept_id": "VG:CONCEPT:VIDYUT-LIGHTNING",
       "cross_veda": true,
-      "total": 199,
+      "total": 200,
       "veda_counts": {
-        "AV": 74,
-        "RV": 106,
-        "SV": 1,
-        "YV": 18
+        "AV": 27,
+        "RV": 152,
+        "SV": 5,
+        "YV": 16
       },
       "vedas": [
         "AV",
@@ -1306,14 +1306,14 @@
       ]
     },
     {
-      "concept_id": "VG:CONCEPT:SAMAN-CHANT",
+      "concept_id": "VG:CONCEPT:SAMIDH-FUEL",
       "cross_veda": true,
-      "total": 147,
+      "total": 148,
       "veda_counts": {
-        "AV": 37,
-        "RV": 79,
-        "SV": 10,
-        "YV": 21
+        "AV": 39,
+        "RV": 78,
+        "SV": 12,
+        "YV": 19
       },
       "vedas": [
         "AV",
@@ -1323,14 +1323,14 @@
       ]
     },
     {
-      "concept_id": "VG:CONCEPT:SAMIDH-FUEL",
+      "concept_id": "VG:CONCEPT:SAMAN-CHANT",
       "cross_veda": true,
       "total": 147,
       "veda_counts": {
-        "AV": 38,
-        "RV": 78,
-        "SV": 12,
-        "YV": 19
+        "AV": 37,
+        "RV": 79,
+        "SV": 10,
+        "YV": 21
       },
       "vedas": [
         "AV",
@@ -1393,10 +1393,10 @@
     {
       "concept_id": "VG:CONCEPT:TAPAS-FERVOUR",
       "cross_veda": true,
-      "total": 98,
+      "total": 99,
       "veda_counts": {
         "AV": 67,
-        "RV": 16,
+        "RV": 17,
         "SV": 1,
         "YV": 14
       },
@@ -1427,9 +1427,9 @@
     {
       "concept_id": "VG:CONCEPT:CANDRAMAS-MOON",
       "cross_veda": true,
-      "total": 85,
+      "total": 86,
       "veda_counts": {
-        "AV": 48,
+        "AV": 49,
         "RV": 21,
         "SV": 1,
         "YV": 15
@@ -1506,55 +1506,85 @@
         "SV",
         "YV"
       ]
+    },
+    {
+      "concept_id": "VG:CONCEPT:SAT-EXISTENCE",
+      "cross_veda": true,
+      "total": 24,
+      "veda_counts": {
+        "AV": 11,
+        "RV": 11,
+        "YV": 2
+      },
+      "vedas": [
+        "AV",
+        "RV",
+        "YV"
+      ]
+    },
+    {
+      "concept_id": "VG:CONCEPT:ASAT-NONEXISTENCE",
+      "cross_veda": true,
+      "total": 18,
+      "veda_counts": {
+        "AV": 10,
+        "RV": 7,
+        "YV": 1
+      },
+      "vedas": [
+        "AV",
+        "RV",
+        "YV"
+      ]
     }
   ],
   "concept_connection_matrix": {
-    "AV-RV": 89,
+    "AV-RV": 91,
     "AV-SV": 86,
-    "AV-YV": 89,
+    "AV-YV": 91,
     "RV-SV": 86,
-    "RV-YV": 89,
+    "RV-YV": 91,
     "SV-YV": 86
   },
   "coverage": {
-    "concepts_defined": 89,
+    "concepts_defined": 91,
     "known_source_gaps": {
       "SV": "no English translation in any source, so English-evidence concept assertions are impossible; Sanskrit evidence only",
       "SV/YV/AV": "no anukramani in any source, so Rishi, Devata and Chandas tables are Rigveda-only and their zeros are source gaps, not enrichment failures"
     },
     "per_veda": {
       "AV": {
-        "concept_assertions": 10715,
-        "concept_coverage": 0.8178,
+        "concept_assertions": 10577,
+        "concept_coverage": 0.813,
         "mantras": 5839,
-        "mantras_with_a_concept": 4775,
+        "mantras_with_a_concept": 4747,
         "translation_coverage": 0.8354,
         "with_traditional_metadata": 0,
         "with_translation": 4878
       },
       "RV": {
-        "concept_assertions": 29713,
-        "concept_coverage": 0.9613,
+        "concept_assertions": 29071,
+        "concept_coverage": 0.9567,
         "mantras": 10552,
-        "mantras_with_a_concept": 10144,
+        "mantras_with_a_concept": 10095,
         "translation_coverage": 0.9951,
         "with_traditional_metadata": 10552,
         "with_translation": 10500
       },
       "SV": {
-        "concept_assertions": 2200,
-        "concept_coverage": 0.7169,
+        "concept_assertions": 2027,
+        "concept_coverage": 0.6871,
         "mantras": 1844,
-        "mantras_with_a_concept": 1322,
+        "mantras_with_a_concept": 1267,
         "translation_coverage": 0.0,
         "with_traditional_metadata": 0,
         "with_translation": 0
       },
       "YV": {
-        "concept_assertions": 4914,
-        "concept_coverage": 0.922,
+        "concept_assertions": 4833,
+        "concept_coverage": 0.9154,
         "mantras": 1975,
-        "mantras_with_a_concept": 1821,
+        "mantras_with_a_concept": 1808,
         "translation_coverage": 0.9635,
         "with_traditional_metadata": 0,
         "with_translation": 1903
@@ -1965,404 +1995,404 @@
   ],
   "devata_concept_top": [
     {
-      "lift": 2.570879,
+      "lift": 2.403742,
       "object": "VG:CONCEPT:AGNI-FIRE",
-      "object_total": 1404,
+      "object_total": 741,
       "subject": "VG:DEVATA:AGNIH",
-      "subject_total": 6159,
-      "support": 1100
+      "subject_total": 5764,
+      "support": 508
     },
     {
-      "lift": 2.531732,
-      "object": "VG:CONCEPT:SOMA-DRINK",
-      "object_total": 1261,
-      "subject": "VG:DEVATA:PAVAMANAH-SOMAH",
-      "subject_total": 2912,
-      "support": 460
-    },
-    {
-      "lift": 0.930281,
+      "lift": 0.909503,
       "object": "VG:CONCEPT:STOMA-PRAISE",
+      "object_total": 1174,
+      "subject": "VG:DEVATA:INDRAH",
+      "subject_total": 7836,
+      "support": 414
+    },
+    {
+      "lift": 0.968102,
+      "object": "VG:CONCEPT:SOMA-DRINK",
+      "object_total": 1039,
+      "subject": "VG:DEVATA:INDRAH",
+      "subject_total": 7836,
+      "support": 390
+    },
+    {
+      "lift": 0.788065,
+      "object": "VG:CONCEPT:VASU-WEALTH",
       "object_total": 1152,
       "subject": "VG:DEVATA:INDRAH",
-      "subject_total": 7845,
-      "support": 416
+      "subject_total": 7836,
+      "support": 352
     },
     {
-      "lift": 0.819224,
-      "object": "VG:CONCEPT:SOMA-DRINK",
-      "object_total": 1261,
-      "subject": "VG:DEVATA:INDRAH",
-      "subject_total": 7845,
-      "support": 401
-    },
-    {
-      "lift": 0.807454,
-      "object": "VG:CONCEPT:VASU-WEALTH",
-      "object_total": 1139,
-      "subject": "VG:DEVATA:INDRAH",
-      "subject_total": 7845,
-      "support": 357
-    },
-    {
-      "lift": 1.153403,
+      "lift": 1.140963,
       "object": "VG:CONCEPT:OJAS-MIGHT",
-      "object_total": 746,
+      "object_total": 755,
       "subject": "VG:DEVATA:INDRAH",
-      "subject_total": 7845,
+      "subject_total": 7836,
       "support": 334
     },
     {
-      "lift": 1.153409,
+      "lift": 1.270435,
       "object": "VG:CONCEPT:YAJNA-SACRIFICE",
-      "object_total": 899,
+      "object_total": 908,
       "subject": "VG:DEVATA:AGNIH",
-      "subject_total": 6159,
-      "support": 316
+      "subject_total": 5764,
+      "support": 329
     },
     {
-      "lift": 0.969145,
+      "lift": 2.083829,
+      "object": "VG:CONCEPT:SOMA-DRINK",
+      "object_total": 1039,
+      "subject": "VG:DEVATA:PAVAMANAH-SOMAH",
+      "subject_total": 2791,
+      "support": 299
+    },
+    {
+      "lift": 0.961055,
       "object": "VG:CONCEPT:AVAS-HELP",
-      "object_total": 731,
+      "object_total": 738,
       "subject": "VG:DEVATA:INDRAH",
-      "subject_total": 7845,
+      "subject_total": 7836,
       "support": 275
     },
     {
-      "lift": 0.862999,
+      "lift": 0.86399,
       "object": "VG:CONCEPT:GO-CATTLE",
       "object_total": 803,
       "subject": "VG:DEVATA:INDRAH",
-      "subject_total": 7845,
+      "subject_total": 7836,
       "support": 269
     },
     {
-      "lift": 1.4217,
+      "lift": 1.428684,
       "object": "VG:CONCEPT:SOMA-PRESSING",
       "object_total": 482,
       "subject": "VG:DEVATA:INDRAH",
-      "subject_total": 7845,
-      "support": 266
+      "subject_total": 7836,
+      "support": 267
     },
     {
-      "lift": 0.855158,
+      "lift": 0.751773,
+      "object": "VG:CONCEPT:VASU-WEALTH",
+      "object_total": 1152,
+      "subject": "VG:DEVATA:AGNIH",
+      "subject_total": 5764,
+      "support": 247
+    },
+    {
+      "lift": 0.843376,
       "object": "VG:CONCEPT:ASVA-HORSE",
-      "object_total": 723,
+      "object_total": 737,
       "subject": "VG:DEVATA:INDRAH",
-      "subject_total": 7845,
-      "support": 240
+      "subject_total": 7836,
+      "support": 241
     },
     {
-      "lift": 0.584591,
+      "lift": 0.58302,
       "object": "VG:CONCEPT:DYAUS-HEAVEN",
-      "object_total": 1040,
+      "object_total": 1044,
       "subject": "VG:DEVATA:INDRAH",
-      "subject_total": 7845,
+      "subject_total": 7836,
       "support": 236
     },
     {
-      "lift": 0.668375,
-      "object": "VG:CONCEPT:VASU-WEALTH",
-      "object_total": 1139,
-      "subject": "VG:DEVATA:AGNIH",
-      "subject_total": 6159,
-      "support": 232
-    },
-    {
-      "lift": 1.022358,
+      "lift": 1.013862,
       "object": "VG:CONCEPT:SAKHYA-FRIENDSHIP",
-      "object_total": 572,
+      "object_total": 580,
       "subject": "VG:DEVATA:INDRAH",
-      "subject_total": 7845,
-      "support": 227
+      "subject_total": 7836,
+      "support": 228
     },
     {
-      "lift": 1.33333,
-      "object": "VG:CONCEPT:YUDH-BATTLE",
-      "object_total": 427,
-      "subject": "VG:DEVATA:INDRAH",
-      "subject_total": 7845,
+      "lift": 1.982174,
+      "object": "VG:CONCEPT:HOTR-PRIEST",
+      "object_total": 398,
+      "subject": "VG:DEVATA:AGNIH",
+      "subject_total": 5764,
+      "support": 225
+    },
+    {
+      "lift": 0.660034,
+      "object": "VG:CONCEPT:STOMA-PRAISE",
+      "object_total": 1174,
+      "subject": "VG:DEVATA:AGNIH",
+      "subject_total": 5764,
       "support": 221
     },
     {
-      "lift": 1.833218,
-      "object": "VG:CONCEPT:HOTR-PRIEST",
-      "object_total": 392,
-      "subject": "VG:DEVATA:AGNIH",
-      "subject_total": 6159,
-      "support": 219
+      "lift": 1.319551,
+      "object": "VG:CONCEPT:YUDH-BATTLE",
+      "object_total": 430,
+      "subject": "VG:DEVATA:INDRAH",
+      "subject_total": 7836,
+      "support": 220
     },
     {
-      "lift": 0.842127,
+      "lift": 0.832372,
       "object": "VG:CONCEPT:DANA-LIBERALITY",
-      "object_total": 621,
+      "object_total": 629,
       "subject": "VG:DEVATA:INDRAH",
-      "subject_total": 7845,
+      "subject_total": 7836,
       "support": 203
     },
     {
-      "lift": 0.572532,
-      "object": "VG:CONCEPT:STOMA-PRAISE",
-      "object_total": 1152,
-      "subject": "VG:DEVATA:AGNIH",
-      "subject_total": 6159,
-      "support": 201
-    },
-    {
-      "lift": 2.19084,
+      "lift": 2.193356,
       "object": "VG:CONCEPT:VAJRA-THUNDERBOLT",
       "object_total": 234,
       "subject": "VG:DEVATA:INDRAH",
-      "subject_total": 7845,
+      "subject_total": 7836,
       "support": 199
     },
     {
-      "lift": 0.564775,
-      "object": "VG:CONCEPT:DYAUS-HEAVEN",
-      "object_total": 1040,
-      "subject": "VG:DEVATA:AGNIH",
-      "subject_total": 6159,
-      "support": 179
-    },
-    {
-      "lift": 1.007818,
+      "lift": 1.000182,
       "object": "VG:CONCEPT:SATRU-ENEMY",
-      "object_total": 455,
+      "object_total": 459,
       "subject": "VG:DEVATA:INDRAH",
-      "subject_total": 7845,
+      "subject_total": 7836,
       "support": 178
     },
     {
-      "lift": 0.821244,
-      "object": "VG:CONCEPT:JANA-PEOPLE",
-      "object_total": 527,
-      "subject": "VG:DEVATA:INDRAH",
-      "subject_total": 7845,
+      "lift": 0.597808,
+      "object": "VG:CONCEPT:DYAUS-HEAVEN",
+      "object_total": 1044,
+      "subject": "VG:DEVATA:AGNIH",
+      "subject_total": 5764,
+      "support": 178
+    },
+    {
+      "lift": 1.286134,
+      "object": "VG:CONCEPT:HAVIS-OBLATION",
+      "object_total": 458,
+      "subject": "VG:DEVATA:AGNIH",
+      "subject_total": 5764,
       "support": 168
     },
     {
-      "lift": 1.16931,
-      "object": "VG:CONCEPT:HAVIS-OBLATION",
-      "object_total": 449,
-      "subject": "VG:DEVATA:AGNIH",
-      "subject_total": 6159,
-      "support": 160
+      "lift": 0.82063,
+      "object": "VG:CONCEPT:JANA-PEOPLE",
+      "object_total": 528,
+      "subject": "VG:DEVATA:INDRAH",
+      "subject_total": 7836,
+      "support": 168
     },
     {
-      "lift": 0.996201,
+      "lift": 0.994895,
       "object": "VG:CONCEPT:VAJA-PRIZE",
-      "object_total": 406,
+      "object_total": 407,
       "subject": "VG:DEVATA:INDRAH",
-      "subject_total": 7845,
+      "subject_total": 7836,
       "support": 157
     },
     {
-      "lift": 0.971337,
-      "object": "VG:CONCEPT:JANA-PEOPLE",
-      "object_total": 527,
-      "subject": "VG:DEVATA:AGNIH",
-      "subject_total": 6159,
+      "lift": 2.295969,
+      "object": "VG:CONCEPT:SINDHU-RIVER",
+      "object_total": 492,
+      "subject": "VG:DEVATA:PAVAMANAH-SOMAH",
+      "subject_total": 2791,
       "support": 156
     },
     {
-      "lift": 2.170612,
-      "object": "VG:CONCEPT:SINDHU-RIVER",
-      "object_total": 486,
-      "subject": "VG:DEVATA:PAVAMANAH-SOMAH",
-      "subject_total": 2912,
-      "support": 152
+      "lift": 1.035936,
+      "object": "VG:CONCEPT:JANA-PEOPLE",
+      "object_total": 528,
+      "subject": "VG:DEVATA:AGNIH",
+      "subject_total": 5764,
+      "support": 156
     },
     {
-      "lift": 0.617629,
+      "lift": 0.746462,
+      "object": "VG:CONCEPT:AP-WATERS",
+      "object_total": 539,
+      "subject": "VG:DEVATA:INDRAH",
+      "subject_total": 7836,
+      "support": 156
+    },
+    {
+      "lift": 0.610633,
       "object": "VG:CONCEPT:PRTHIVI-EARTH",
-      "object_total": 634,
+      "object_total": 642,
       "subject": "VG:DEVATA:INDRAH",
-      "subject_total": 7845,
+      "subject_total": 7836,
       "support": 152
     },
     {
-      "lift": 0.982325,
+      "lift": 0.985943,
       "object": "VG:CONCEPT:BRAHMAN-FORMULATION",
-      "object_total": 396,
+      "object_total": 395,
       "subject": "VG:DEVATA:INDRAH",
-      "subject_total": 7845,
+      "subject_total": 7836,
       "support": 151
     },
     {
-      "lift": 0.749893,
-      "object": "VG:CONCEPT:AP-WATERS",
-      "object_total": 505,
-      "subject": "VG:DEVATA:INDRAH",
-      "subject_total": 7845,
+      "lift": 0.682673,
+      "object": "VG:CONCEPT:OJAS-MIGHT",
+      "object_total": 755,
+      "subject": "VG:DEVATA:AGNIH",
+      "subject_total": 5764,
       "support": 147
     },
     {
-      "lift": 0.409779,
+      "lift": 0.403343,
       "object": "VG:CONCEPT:YAJNA-SACRIFICE",
-      "object_total": 899,
+      "object_total": 908,
       "subject": "VG:DEVATA:INDRAH",
-      "subject_total": 7845,
-      "support": 143
+      "subject_total": 7836,
+      "support": 142
     },
     {
-      "lift": 0.615808,
-      "object": "VG:CONCEPT:OJAS-MIGHT",
-      "object_total": 746,
+      "lift": 1.050362,
+      "object": "VG:CONCEPT:GRHA-HOUSE",
+      "object_total": 464,
       "subject": "VG:DEVATA:AGNIH",
-      "subject_total": 6159,
-      "support": 140
+      "subject_total": 5764,
+      "support": 139
     },
     {
-      "lift": 2.782097,
+      "lift": 2.777039,
       "object": "VG:CONCEPT:RATHA-CHARIOT",
-      "object_total": 549,
+      "object_total": 550,
       "subject": "VG:DEVATA:ASVINAU",
       "subject_total": 1826,
       "support": 138
     },
     {
-      "lift": 0.951741,
-      "object": "VG:CONCEPT:GRHA-HOUSE",
-      "object_total": 462,
-      "subject": "VG:DEVATA:AGNIH",
-      "subject_total": 6159,
-      "support": 134
-    },
-    {
-      "lift": 0.671607,
-      "object": "VG:CONCEPT:VAC-SPEECH",
-      "object_total": 514,
-      "subject": "VG:DEVATA:INDRAH",
-      "subject_total": 7845,
-      "support": 134
-    },
-    {
-      "lift": 0.62879,
-      "object": "VG:CONCEPT:RATHA-CHARIOT",
-      "object_total": 549,
-      "subject": "VG:DEVATA:INDRAH",
-      "subject_total": 7845,
-      "support": 134
-    },
-    {
-      "lift": 0.854184,
-      "object": "VG:CONCEPT:DYAUS-HEAVEN",
-      "object_total": 1040,
-      "subject": "VG:DEVATA:PAVAMANAH-SOMAH",
-      "subject_total": 2912,
-      "support": 128
-    },
-    {
-      "lift": 0.671071,
+      "lift": 0.752533,
       "object": "VG:CONCEPT:DANA-LIBERALITY",
-      "object_total": 621,
+      "object_total": 629,
       "subject": "VG:DEVATA:AGNIH",
-      "subject_total": 6159,
-      "support": 127
+      "subject_total": 5764,
+      "support": 135
     },
     {
-      "lift": 1.045791,
+      "lift": 0.668476,
+      "object": "VG:CONCEPT:VAC-SPEECH",
+      "object_total": 517,
+      "subject": "VG:DEVATA:INDRAH",
+      "subject_total": 7836,
+      "support": 134
+    },
+    {
+      "lift": 0.628368,
+      "object": "VG:CONCEPT:RATHA-CHARIOT",
+      "object_total": 550,
+      "subject": "VG:DEVATA:INDRAH",
+      "subject_total": 7836,
+      "support": 134
+    },
+    {
+      "lift": 1.199027,
+      "object": "VG:CONCEPT:JANMAN-BIRTH",
+      "object_total": 386,
+      "subject": "VG:DEVATA:AGNIH",
+      "subject_total": 5764,
+      "support": 132
+    },
+    {
+      "lift": 0.901674,
+      "object": "VG:CONCEPT:DYAUS-HEAVEN",
+      "object_total": 1044,
+      "subject": "VG:DEVATA:PAVAMANAH-SOMAH",
+      "subject_total": 2791,
+      "support": 130
+    },
+    {
+      "lift": 1.100147,
       "object": "VG:CONCEPT:GO-CATTLE",
       "object_total": 803,
       "subject": "VG:DEVATA:PAVAMANAH-SOMAH",
-      "subject_total": 2912,
-      "support": 121
+      "subject_total": 2791,
+      "support": 122
     },
     {
-      "lift": 9.831535,
-      "object": "VG:CONCEPT:USAS-DAWN",
-      "object_total": 405,
-      "subject": "VG:DEVATA:USAH",
-      "subject_total": 604,
-      "support": 119
-    },
-    {
-      "lift": 1.038076,
-      "object": "VG:CONCEPT:JANMAN-BIRTH",
-      "object_total": 373,
+      "lift": 0.915694,
+      "object": "VG:CONCEPT:RTA-ORDER",
+      "object_total": 448,
       "subject": "VG:DEVATA:AGNIH",
-      "subject_total": 6159,
-      "support": 118
+      "subject_total": 5764,
+      "support": 117
     },
     {
-      "lift": 0.614887,
+      "lift": 0.608086,
       "object": "VG:CONCEPT:SINDHU-RIVER",
-      "object_total": 486,
+      "object_total": 492,
       "subject": "VG:DEVATA:INDRAH",
-      "subject_total": 7845,
+      "subject_total": 7836,
       "support": 116
     },
     {
-      "lift": 0.846095,
-      "object": "VG:CONCEPT:RTA-ORDER",
-      "object_total": 446,
+      "lift": 1.404942,
+      "object": "VG:CONCEPT:AMRTA-IMMORTALITY",
+      "object_total": 287,
       "subject": "VG:DEVATA:AGNIH",
-      "subject_total": 6159,
+      "subject_total": 5764,
       "support": 115
     },
     {
-      "lift": 0.560463,
-      "object": "VG:CONCEPT:DHI-INSIGHT",
-      "object_total": 524,
-      "subject": "VG:DEVATA:INDRAH",
-      "subject_total": 7845,
+      "lift": 0.779919,
+      "object": "VG:CONCEPT:VAC-SPEECH",
+      "object_total": 517,
+      "subject": "VG:DEVATA:AGNIH",
+      "subject_total": 5764,
+      "support": 115
+    },
+    {
+      "lift": 0.812423,
+      "object": "VG:CONCEPT:ANNA-FOOD",
+      "object_total": 492,
+      "subject": "VG:DEVATA:AGNIH",
+      "subject_total": 5764,
       "support": 114
     },
     {
-      "lift": 1.287042,
-      "object": "VG:CONCEPT:AMRTA-IMMORTALITY",
-      "object_total": 283,
-      "subject": "VG:DEVATA:AGNIH",
-      "subject_total": 6159,
-      "support": 111
-    },
-    {
-      "lift": 0.708624,
-      "object": "VG:CONCEPT:VAC-SPEECH",
-      "object_total": 514,
-      "subject": "VG:DEVATA:AGNIH",
-      "subject_total": 6159,
-      "support": 111
-    },
-    {
-      "lift": 0.664168,
+      "lift": 0.71657,
       "object": "VG:CONCEPT:VASU-WEALTH",
-      "object_total": 1139,
+      "object_total": 1152,
       "subject": "VG:DEVATA:PAVAMANAH-SOMAH",
-      "subject_total": 2912,
+      "subject_total": 2791,
+      "support": 114
+    },
+    {
+      "lift": 0.554755,
+      "object": "VG:CONCEPT:DHI-INSIGHT",
+      "object_total": 530,
+      "subject": "VG:DEVATA:INDRAH",
+      "subject_total": 7836,
+      "support": 114
+    },
+    {
+      "lift": 0.900468,
+      "object": "VG:CONCEPT:JYOTIS-LIGHT",
+      "object_total": 440,
+      "subject": "VG:DEVATA:AGNIH",
+      "subject_total": 5764,
+      "support": 113
+    },
+    {
+      "lift": 0.671023,
+      "object": "VG:CONCEPT:SAKHYA-FRIENDSHIP",
+      "object_total": 580,
+      "subject": "VG:DEVATA:AGNIH",
+      "subject_total": 5764,
+      "support": 111
+    },
+    {
+      "lift": 9.232681,
+      "object": "VG:CONCEPT:USAS-DAWN",
+      "object_total": 397,
+      "subject": "VG:DEVATA:USAH",
+      "subject_total": 601,
       "support": 109
     },
     {
-      "lift": 0.807143,
-      "object": "VG:CONCEPT:JYOTIS-LIGHT",
-      "object_total": 435,
+      "lift": 0.589836,
+      "object": "VG:CONCEPT:PRTHIVI-EARTH",
+      "object_total": 642,
       "subject": "VG:DEVATA:AGNIH",
-      "subject_total": 6159,
-      "support": 107
-    },
-    {
-      "lift": 0.72693,
-      "object": "VG:CONCEPT:ANNA-FOOD",
-      "object_total": 483,
-      "subject": "VG:DEVATA:AGNIH",
-      "subject_total": 6159,
-      "support": 107
-    },
-    {
-      "lift": 0.608087,
-      "object": "VG:CONCEPT:SAKHYA-FRIENDSHIP",
-      "object_total": 572,
-      "subject": "VG:DEVATA:AGNIH",
-      "subject_total": 6159,
-      "support": 106
-    },
-    {
-      "lift": 0.554702,
-      "object": "VG:CONCEPT:ANNA-FOOD",
-      "object_total": 483,
-      "subject": "VG:DEVATA:INDRAH",
-      "subject_total": 7845,
-      "support": 104
+      "subject_total": 5764,
+      "support": 108
     }
   ],
   "formula_by_veda": [

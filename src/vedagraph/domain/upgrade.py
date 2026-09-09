@@ -47,7 +47,7 @@ from vedagraph.domain.ontology import (
     labels_for_node_type,
 )
 from vedagraph.domain.schema import all_domain_schema_cypher
-from vedagraph.domain.tiers import grade_edge
+from vedagraph.domain.tiers import LAYER_OWNED_GRADES, grade_edge
 
 
 class Session(Protocol):
@@ -168,7 +168,10 @@ def project_entity_types(session: Session) -> StepReport:
 #: corpus was built to preserve.
 _DISPLAY_SOURCES: tuple[tuple[str, tuple[str, ...], str], ...] = (
     ("Devata", ("label_en", "label_iast", "preferred_label"), "'Devata'"),
-    ("Rishi", ("preferred_label",), "'Rishi'"),
+    # label_iast first because the two rsi registries are written in different scripts:
+    # the Rigvedic one in IAST, the Yajurvedic index verbatim in Devanagari. Preferring
+    # the transliteration makes one leaderboard readable instead of half of it.
+    ("Rishi", ("label_iast", "preferred_label"), "'Rishi'"),
     ("Chandas", ("preferred_label",), "'Chandas'"),
     ("Formula", ("display_form", "normalized"), "'Formula'"),
     ("Lemma", ("lemma", "normalized_lemma"), "'Lemma'"),
@@ -271,9 +274,15 @@ def stamp_grades(session: Session) -> StepReport:
     per_precision: dict[str, int] = {}
     per_evidence: dict[str, int] = {}
 
+    skipped: dict[str, int] = {}
     for signature in signatures:
         rel_type = str(signature["rel_type"])
         edges = int(signature["edges"])
+        # A layer that computes a grade the generic rules cannot derive owns it. See
+        # vedagraph.domain.tiers.LAYER_OWNED_GRADES.
+        if rel_type in LAYER_OWNED_GRADES:
+            skipped[rel_type] = skipped.get(rel_type, 0) + edges
+            continue
         properties = {
             name: signature[name] for name in _SIGNATURE_FIELDS if signature[name] != ""
         }
@@ -308,6 +317,7 @@ def stamp_grades(session: Session) -> StepReport:
     ).single()["c"]
     report.detail = {
         "signatures": len(signatures),
+        "layer_owned_grades_skipped": skipped,
         "by_tier": dict(sorted(per_tier.items())),
         "by_precision": dict(sorted(per_precision.items())),
         "by_evidence_basis": dict(sorted(per_evidence.items())),

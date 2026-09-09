@@ -75,9 +75,22 @@ class EvidenceBasis(StrEnum):
     TRANSLATION = "TRANSLATION"
     #: Both paths fired independently, which is the only genuinely corroborated case.
     MIXED = "MIXED"
-    #: The corpus structure itself, or a registry statement: no text was matched.
+    #: The corpus structure itself: the edition prints this hymn containing this verse.
     STRUCTURAL = "STRUCTURAL"
-    #: No method string, or one this function was not taught to read.
+    #: A traditional index or registry states it. No text of the passage was matched, and
+    #: that is the point: the Anukramaṇī's ascription is a statement *about* the verse by
+    #: a later tradition, not a feature of the verse. Split out from ``STRUCTURAL`` in V3,
+    #: which had been carrying both and therefore could not distinguish "the edition
+    #: prints it this way" from "the index says so".
+    SOURCE_METADATA = "SOURCE_METADATA"
+    #: A model asserted it without citing any span of text. Distinct from ``TRANSLATION``,
+    #: which is what a model citing a translation span rests on: that claim is checkable
+    #: against a quote and this one is not.
+    MODEL_INTERPRETATION = "MODEL_INTERPRETATION"
+    #: No method string, or one this function was not taught to read. **A live
+    #: UNSPECIFIED is a defect, not a category.** It stood at 61,861 edges — 25.5% of the
+    #: graph, every one of them product knowledge rather than plumbing — because this
+    #: function knew four method vocabularies and the pipeline wrote seven.
     UNSPECIFIED = "UNSPECIFIED"
 
 
@@ -102,26 +115,72 @@ class Grade:
         }
 
 
+#: Method-string fragments that identify a Sanskrit-derived enrichment path, for methods
+#: that do not spell the word "sanskrit".
+#:
+#: This table is the fix for the largest explainability defect in the V2 graph. The
+#: original classifier looked for the literal substrings ``sanskrit``, ``english``,
+#: ``translation`` and ``registry``, which the concept layer happens to write and **no
+#: other layer does**. So 22,686 formula occurrences matched on a folded Sanskrit surface,
+#: 6,596 cross-Veda parallels compared between two Sanskrit texts, and 31,646 Anukramaṇī
+#: attributions all graded ``UNSPECIFIED`` — and the two evidence-mode audits a researcher
+#: would run ("which conclusions rest only on a translation?", "which survive
+#: Sanskrit-only filtering?") were wrong in opposite directions as a result.
+#:
+#: Matched as substrings of the lowercased method, most specific first.
+_SANSKRIT_METHOD_MARKERS: Final[tuple[str, ...]] = (
+    "sanskrit",
+    # formula-occurrence-word-aligned-v1, formula-occurrence-sandhi-substring-v1
+    "formula-occurrence",
+    # crossveda-parallels:identity:SCRIPT_FOLDED, :near:minhash-char4+lcs:..., :reuse:...
+    "crossveda-parallels",
+    # theonym-mention-v1:rv-lemma-annotation, :sanskrit-surface-token, :...-sandhi
+    "theonym-mention",
+    "lemma-annotation",
+    # every surface name the comparison layer can reach a match on
+    "script_folded",
+    "sandhi_insensitive",
+    "accent_insensitive",
+    "unicode_normalized",
+    "source_exact",
+    "punctuation_normalized",
+)
+
+#: Method fragments identifying a model that read a *translation* span. The V3.2 semantic
+#: runs anchor every assertion to a ``translation_record_id`` plus character offsets in
+#: Griffith or Whitney, so the evidence is checkable and it is English.
+_TRANSLATION_METHOD_MARKERS: Final[tuple[str, ...]] = (
+    "english",
+    "translation",
+    "semantic-extraction",
+)
+
+
 def classify_evidence(method: str) -> EvidenceBasis:
     """Read an edge's ``method`` string for which text its evidence came from.
 
-    The enrichment layer encodes its evidence paths in the method -- for example
-    ``concept-alias-v1:english+sanskrit-token`` -- so the information is already stored and
-    only needs surfacing.
+    The enrichment layer encodes its evidence path in the method -- for example
+    ``concept-alias-v1:english+sanskrit-token`` -- so for that layer the information is
+    already stored and only needs surfacing. For every *other* layer the method names an
+    algorithm rather than a text, and those are resolved through
+    :data:`_SANSKRIT_METHOD_MARKERS` and :data:`_TRANSLATION_METHOD_MARKERS`.
+
+    Returns ``UNSPECIFIED`` only when there is genuinely no method to read. A caller that
+    knows the layer should treat that as its cue to supply a basis, not as an answer.
     """
     if not method:
         return EvidenceBasis.UNSPECIFIED
     lowered = method.lower()
-    sanskrit = "sanskrit" in lowered
-    english = "english" in lowered or "translation" in lowered
+    sanskrit = any(marker in lowered for marker in _SANSKRIT_METHOD_MARKERS)
+    english = any(marker in lowered for marker in _TRANSLATION_METHOD_MARKERS)
     if sanskrit and english:
         return EvidenceBasis.MIXED
     if sanskrit:
         return EvidenceBasis.SANSKRIT
     if english:
         return EvidenceBasis.TRANSLATION
-    if "registry" in lowered:
-        return EvidenceBasis.STRUCTURAL
+    if "registry" in lowered or "lexicon" in lowered:
+        return EvidenceBasis.SOURCE_METADATA
     return EvidenceBasis.UNSPECIFIED
 
 
@@ -153,47 +212,281 @@ _DIAGNOSTIC_RELS: Final[frozenset[str]] = frozenset({"HAS_QA_ISSUE"})
 #: edge as a whole is a derivation over an annotation rather than a source statement.
 _LEXICAL_RELS: Final[frozenset[str]] = frozenset({"MENTIONS_LEMMA", "MENTIONS_ENTITY"})
 
+#: Relationship types whose evidence is, by construction, a comparison between two
+#: Sanskrit texts. Used to supply a basis where the edge's own method string is absent.
+_SANSKRIT_TEXT_RELS: Final[frozenset[str]] = frozenset(
+    {
+        "EXACT_PARALLEL_OF",
+        "NEAR_PARALLEL_OF",
+        "PARALLEL_TO",
+        "VARIANT_OF",
+        "REUSES_TEXT_FROM",
+        "USES_FORMULA",
+    }
+)
 
-#: V2 predicates whose tier follows from the predicate itself, because they carry no
-#: enrichment envelope of their own. Listed here rather than set by each loader so that the
-#: grading table stays the single source of truth: ``stamp_grades`` runs before the domain
-#: loaders, so a tier the loader applied only ``ON CREATE`` was silently overwritten on
-#: every rebuild and the edge ended up graded by the fall-through default.
+
+#: V2 and V3 predicates whose grade follows from the predicate itself, because they carry
+#: no enrichment envelope of their own. Listed here rather than set by each loader so that
+#: the grading table stays the single source of truth: ``stamp_grades`` runs before the
+#: domain loaders, so a tier the loader applied only ``ON CREATE`` was silently overwritten
+#: on every rebuild and the edge ended up graded by the fall-through default.
 #:
 #: The split is the claim. ``ADDRESSES_CONCERN`` and ``USED_FOR_RITE`` assert no more than
 #: the mention they derive from -- naming what you want is wanting it, and the rite
 #: vocabulary occurs nowhere but the occasion -- so they are TIER_B. ``TREATS`` and
 #: ``PROTECTS_FROM`` assert a *function*, that the passage acts on the affliction rather
 #: than naming it, which is a reading of the charm. Everything curated is TIER_D.
-_V2_PREDICATE_GRADE: Final[dict[str, tuple[KnowledgeLayer, QualityTier]]] = {
+#:
+#: Each entry now names its own **evidence basis** as a third element. It used to be
+#: inferred from the tier -- TIER_B meant SANSKRIT and anything else meant STRUCTURAL --
+#: which told a reader that a hand-authored deity axis rested on "the corpus structure as
+#: printed by the edition". A curated registry statement and a printed hymn boundary are
+#: not the same kind of evidence, and the whole purpose of this axis is that a reader can
+#: tell them apart.
+_V2_PREDICATE_GRADE: Final[dict[str, tuple[KnowledgeLayer, QualityTier, EvidenceBasis]]] = {
     # Derived from a deterministic mention plus a curated whitelist.
-    "ADDRESSES_CONCERN": (KnowledgeLayer.L2_DETERMINISTIC_DERIVED, QualityTier.TIER_B),
-    "USED_FOR_RITE": (KnowledgeLayer.L2_DETERMINISTIC_DERIVED, QualityTier.TIER_B),
+    "ADDRESSES_CONCERN": (
+        KnowledgeLayer.L2_DETERMINISTIC_DERIVED,
+        QualityTier.TIER_B,
+        EvidenceBasis.SANSKRIT,
+    ),
+    "USED_FOR_RITE": (
+        KnowledgeLayer.L2_DETERMINISTIC_DERIVED,
+        QualityTier.TIER_B,
+        EvidenceBasis.SANSKRIT,
+    ),
     # Structural decomposition of a dual or plural label: follows from its morphology.
-    "COMPOSED_OF": (KnowledgeLayer.L2_DETERMINISTIC_DERIVED, QualityTier.TIER_B),
+    "COMPOSED_OF": (
+        KnowledgeLayer.L2_DETERMINISTIC_DERIVED,
+        QualityTier.TIER_B,
+        EvidenceBasis.SOURCE_METADATA,
+    ),
     # Reproducible aggregation over edges that already exist.
-    "MEASURES": (KnowledgeLayer.L2_DETERMINISTIC_DERIVED, QualityTier.TIER_B),
+    "MEASURES": (
+        KnowledgeLayer.L2_DETERMINISTIC_DERIVED,
+        QualityTier.TIER_B,
+        EvidenceBasis.STRUCTURAL,
+    ),
+    # ---- V3: the reified assertion layer -------------------------------------------
+    # The spine edges assert nothing about the corpus. "This assertion was read off this
+    # passage" and "this assertion predicates this vocabulary member" are bookkeeping about
+    # the layer, so they are graded as the derivation they are and carry STRUCTURAL
+    # evidence. The *assertions* carry the claim and carry their own grade.
+    "HAS_SEMANTIC_ASSERTION": (
+        KnowledgeLayer.L2_DETERMINISTIC_DERIVED,
+        QualityTier.TIER_B,
+        EvidenceBasis.STRUCTURAL,
+    ),
+    "ASSERTION_PREDICATE": (
+        KnowledgeLayer.L2_DETERMINISTIC_DERIVED,
+        QualityTier.TIER_B,
+        EvidenceBasis.STRUCTURAL,
+    ),
+    # An assertion's agent and target are read from the same morphological annotation the
+    # assertion is, so they are exactly as good as it and no better.
+    "ASSERTION_AGENT": (
+        KnowledgeLayer.L2_DETERMINISTIC_DERIVED,
+        QualityTier.TIER_B,
+        EvidenceBasis.SANSKRIT,
+    ),
+    "ASSERTION_TARGET": (
+        KnowledgeLayer.L2_DETERMINISTIC_DERIVED,
+        QualityTier.TIER_B,
+        EvidenceBasis.SANSKRIT,
+    ),
+    # One-hop aggregates, rebuilt from the assertion nodes on every load.
+    "PERFORMS_ACTION": (
+        KnowledgeLayer.L2_DETERMINISTIC_DERIVED,
+        QualityTier.TIER_B,
+        EvidenceBasis.SANSKRIT,
+    ),
+    "IS_ASKED_TO": (
+        KnowledgeLayer.L2_DETERMINISTIC_DERIVED,
+        QualityTier.TIER_B,
+        EvidenceBasis.SANSKRIT,
+    ),
+    # A descriptor derived from a deity name by vrddhi is a morphological fact about the
+    # index's own wording.
+    "ASCRIBES_TO_DEVATA": (
+        KnowledgeLayer.L2_DETERMINISTIC_DERIVED,
+        QualityTier.TIER_B,
+        EvidenceBasis.SOURCE_METADATA,
+    ),
+    # Concept-lexicon structure. Both were falling through to the TIER_D "ungraded"
+    # default -- 39 edges each -- because they carry no provenance vocabulary at all.
+    # They are curated registry statements, which is what the lexicon is for, so they
+    # grade as the registry does rather than as an unread edge.
+    "BROADER_THAN": (
+        KnowledgeLayer.L2_DETERMINISTIC_DERIVED,
+        QualityTier.TIER_B,
+        EvidenceBasis.SOURCE_METADATA,
+    ),
+    "DEVATA_ASSOCIATED_WITH": (
+        KnowledgeLayer.L4_INTERPRETIVE_CLAIM,
+        QualityTier.TIER_D,
+        EvidenceBasis.SOURCE_METADATA,
+    ),
     # Asserts a function beyond naming.
-    "TREATS": (KnowledgeLayer.L4_INTERPRETIVE_CLAIM, QualityTier.TIER_D),
-    "PROTECTS_FROM": (KnowledgeLayer.L4_INTERPRETIVE_CLAIM, QualityTier.TIER_D),
+    "TREATS": (KnowledgeLayer.L4_INTERPRETIVE_CLAIM, QualityTier.TIER_D, EvidenceBasis.SANSKRIT),
+    "PROTECTS_FROM": (
+        KnowledgeLayer.L4_INTERPRETIVE_CLAIM,
+        QualityTier.TIER_D,
+        EvidenceBasis.SANSKRIT,
+    ),
     # Curated deity and ritual structure.
-    "HAS_AXIS": (KnowledgeLayer.L4_INTERPRETIVE_CLAIM, QualityTier.TIER_D),
-    "HAS_EPITHET": (KnowledgeLayer.L4_INTERPRETIVE_CLAIM, QualityTier.TIER_D),
-    "MEMBER_OF": (KnowledgeLayer.L4_INTERPRETIVE_CLAIM, QualityTier.TIER_D),
-    "USES_OFFERING": (KnowledgeLayer.L4_INTERPRETIVE_CLAIM, QualityTier.TIER_D),
-    "USES_SUBSTANCE": (KnowledgeLayer.L4_INTERPRETIVE_CLAIM, QualityTier.TIER_D),
-    "USES_OBJECT": (KnowledgeLayer.L4_INTERPRETIVE_CLAIM, QualityTier.TIER_D),
-    "INVOKES_DEVATA": (KnowledgeLayer.L4_INTERPRETIVE_CLAIM, QualityTier.TIER_D),
-    "PERFORMED_BY": (KnowledgeLayer.L4_INTERPRETIVE_CLAIM, QualityTier.TIER_D),
-    "PERFORMED_FOR": (KnowledgeLayer.L4_INTERPRETIVE_CLAIM, QualityTier.TIER_D),
-    "DESCRIBED_IN": (KnowledgeLayer.L4_INTERPRETIVE_CLAIM, QualityTier.TIER_D),
+    "HAS_AXIS": (
+        KnowledgeLayer.L4_INTERPRETIVE_CLAIM,
+        QualityTier.TIER_D,
+        EvidenceBasis.SOURCE_METADATA,
+    ),
+    "HAS_EPITHET": (
+        KnowledgeLayer.L4_INTERPRETIVE_CLAIM,
+        QualityTier.TIER_D,
+        EvidenceBasis.SOURCE_METADATA,
+    ),
+    "MEMBER_OF": (
+        KnowledgeLayer.L4_INTERPRETIVE_CLAIM,
+        QualityTier.TIER_D,
+        EvidenceBasis.SOURCE_METADATA,
+    ),
+    "USES_OFFERING": (
+        KnowledgeLayer.L4_INTERPRETIVE_CLAIM,
+        QualityTier.TIER_D,
+        EvidenceBasis.SOURCE_METADATA,
+    ),
+    "USES_SUBSTANCE": (
+        KnowledgeLayer.L4_INTERPRETIVE_CLAIM,
+        QualityTier.TIER_D,
+        EvidenceBasis.SOURCE_METADATA,
+    ),
+    "USES_OBJECT": (
+        KnowledgeLayer.L4_INTERPRETIVE_CLAIM,
+        QualityTier.TIER_D,
+        EvidenceBasis.SOURCE_METADATA,
+    ),
+    "INVOKES_DEVATA": (
+        KnowledgeLayer.L4_INTERPRETIVE_CLAIM,
+        QualityTier.TIER_D,
+        EvidenceBasis.SOURCE_METADATA,
+    ),
+    "PERFORMED_BY": (
+        KnowledgeLayer.L4_INTERPRETIVE_CLAIM,
+        QualityTier.TIER_D,
+        EvidenceBasis.SOURCE_METADATA,
+    ),
+    "PERFORMED_FOR": (
+        KnowledgeLayer.L4_INTERPRETIVE_CLAIM,
+        QualityTier.TIER_D,
+        EvidenceBasis.SOURCE_METADATA,
+    ),
+    # These two differ from the apparatus predicates above, and the difference is which
+    # artefact the evidence lives in. `USES_OBJECT` and its siblings point at an *entity*
+    # and rest on the curated registry's assembled picture of the rite as an institution,
+    # so SOURCE_METADATA is right for them: no single verse says "the yajna uses the
+    # ladle". `DESCRIBED_IN` and `HAS_STEP` point at a *passage* and rest on its Sanskrit
+    # -- the sautramani is named at VS 19.31, and the morning pressing is called the
+    # first draught at RV 10.112.1 in the text's own words. Grading those SOURCE_METADATA
+    # would claim a traditional index states them, and none does; the reading is ours,
+    # which is what TIER_D already says. So the tier stays and the basis is corrected.
+    "DESCRIBED_IN": (
+        KnowledgeLayer.L4_INTERPRETIVE_CLAIM,
+        QualityTier.TIER_D,
+        EvidenceBasis.SANSKRIT,
+    ),
+    "HAS_STEP": (
+        KnowledgeLayer.L4_INTERPRETIVE_CLAIM,
+        QualityTier.TIER_D,
+        EvidenceBasis.SANSKRIT,
+    ),
     # The interpretive layer's own edges.
-    "SUPPORTED_BY": (KnowledgeLayer.L4_INTERPRETIVE_CLAIM, QualityTier.TIER_D),
-    "SUPPORTED_BY_STATISTIC": (KnowledgeLayer.L4_INTERPRETIVE_CLAIM, QualityTier.TIER_D),
-    "CONCERNS": (KnowledgeLayer.L4_INTERPRETIVE_CLAIM, QualityTier.TIER_D),
-    "CONTRADICTS": (KnowledgeLayer.L4_INTERPRETIVE_CLAIM, QualityTier.TIER_D),
-    "ASSERTED_BY": (KnowledgeLayer.L4_INTERPRETIVE_CLAIM, QualityTier.TIER_D),
+    "SUPPORTED_BY": (
+        KnowledgeLayer.L4_INTERPRETIVE_CLAIM,
+        QualityTier.TIER_D,
+        EvidenceBasis.STRUCTURAL,
+    ),
+    "SUPPORTED_BY_STATISTIC": (
+        KnowledgeLayer.L4_INTERPRETIVE_CLAIM,
+        QualityTier.TIER_D,
+        EvidenceBasis.STRUCTURAL,
+    ),
+    "CONCERNS": (
+        KnowledgeLayer.L4_INTERPRETIVE_CLAIM,
+        QualityTier.TIER_D,
+        EvidenceBasis.STRUCTURAL,
+    ),
+    "CONTRADICTS": (
+        KnowledgeLayer.L4_INTERPRETIVE_CLAIM,
+        QualityTier.TIER_D,
+        EvidenceBasis.STRUCTURAL,
+    ),
+    "ASSERTED_BY": (
+        KnowledgeLayer.L4_INTERPRETIVE_CLAIM,
+        QualityTier.TIER_D,
+        EvidenceBasis.STRUCTURAL,
+    ),
 }
+
+
+#: Predicates whose **owning layer** computes the grade, so the bulk stamper must not
+#: touch them.
+#:
+#: ``MENTIONS_DEVATA`` is the case that forced this. Its grade is not derivable from the
+#: generic rules: a Rigvedic row earns TIER_A because a manual scholarly annotation states
+#: the lemma, a homonym's non-vocative row earns TIER_B because the same annotation does
+#: *not* state the deity reading, and every row carries
+#: ``attribution_precision = TEXTUAL_MENTION`` because naming a god in the text is not the
+#: Anukramani ascribing a hymn to one. Re-deriving it from ``trust`` alone would flatten
+#: all three distinctions and silently rewrite TEXTUAL_MENTION to PER_PASSAGE, which is
+#: the one value the layer exists to keep separate.
+#: ``CO_OCCURS_WITH`` is owned because its grade is a statement about *how it was
+#: computed*, not about any source's provenance envelope. It is a count over the mention
+#: layer -- recomputable, therefore TIER_B, therefore SANSKRIT -- and it carries no
+#: ``method`` vocabulary the generic classifier knows, so the stamper graded all 292 edges
+#: ``UNSPECIFIED`` and wrote its own complaint into their ``grade_basis``.
+#:
+#: The twelve candidate predicates are owned for a sharper reason: **their grade is the
+#: output of an independent review, and no provenance signature can reproduce it.** All
+#: twelve are written by the model extraction layer with ``trust = LLM_EXTRACTED``, so the
+#: generic rule above correctly grades an *unreviewed* one TIER_D. But 587 of them were
+#: then adjudicated one at a time against the passage and accepted, which is the
+#: definition of TIER_C -- and re-deriving the grade from ``trust`` immediately demoted
+#: every one of them back to TIER_D. That was measured: a post-load regrade silently
+#: erased all 587 promotions in one pass. The review verdict lives on the edge
+#: (``review_verdict``, ``review_state``) and in
+#: :mod:`vedagraph.domain.candidate_review`; the stamper has no access to either and must
+#: not guess.
+#: ``HAS_SEMANTIC_ASSERTION`` is owned because its grade is the grade of the *node it
+#: points at*, and the stamper cannot see across an edge. The ``:SemanticAssertion`` label
+#: holds two layers of unequal strength -- rule-over-manual-annotation at TIER_B/SANSKRIT
+#: and unreviewed model extraction at TIER_D/TRANSLATION -- and the generic rule graded
+#: every edge into both ``TIER_B``/``STRUCTURAL``, which made the documented
+#: "filter by quality_tier to exclude model output" recipe silently fail.
+#: :func:`vedagraph.domain.v3_loader.reconcile_assertion_edge_grades` owns it instead.
+#:
+#: ``MEMBER_OF_FAMILY`` is owned because its tier depends on *which derivation produced
+#: the row*: containment-derived rows are TIER_B and the four similarity-threshold rows
+#: are TIER_D, and no provenance signature distinguishes them.
+LAYER_OWNED_GRADES: Final[frozenset[str]] = frozenset(
+    {
+        "MENTIONS_DEVATA",
+        "CO_OCCURS_WITH",
+        "HAS_SEMANTIC_ASSERTION",
+        "MEMBER_OF_FAMILY",
+        "CONTRASTS_WITH",
+        "DESCRIBES",
+        "DESCRIBES_ACTION",
+        "HAS_THEME",
+        "INVOKES",
+        "INVOLVES_OFFERING",
+        "INVOLVES_RITUAL",
+        "INVOLVES_SUBSTANCE",
+        "PRAISES",
+        "REFERS_TO_NATURAL_PHENOMENON",
+        "REFERS_TO_PLACE",
+        "REQUESTS",
+    }
+)
 
 
 def grade_edge(rel_type: str, properties: Mapping[str, Any]) -> Grade:
@@ -247,7 +540,40 @@ def grade_edge(rel_type: str, properties: Mapping[str, Any]) -> Grade:
             tier=tier,
             precision=precision,
             basis=detail,
-            evidence_basis=evidence or EvidenceBasis.STRUCTURAL,
+            # An Anukramaṇī ascription is a traditional index's statement about the verse,
+            # not a feature of the verse's text. Was `evidence or STRUCTURAL`, which never
+            # reached the fallback: `EvidenceBasis.UNSPECIFIED` is a non-empty string and
+            # therefore truthy, so 31,646 attribution edges kept UNSPECIFIED while the
+            # code read as though it handled them.
+            evidence_basis=(
+                EvidenceBasis.SOURCE_METADATA
+                if evidence is EvidenceBasis.UNSPECIFIED
+                else evidence
+            ),
+        )
+
+    # A `provenance_class` holding a *trust* value: 256 RV-internal EXACT_PARALLEL_OF and
+    # 69 PARALLEL_TO edges carry `provenance_class = 'DETERMINISTIC_DERIVED'`, a value from
+    # the enrichment envelope's vocabulary written into the knowledge layer's field. They
+    # matched neither branch and fell through to the TIER_D default, so exact parallels
+    # with `similarity = 1.0` and five concurring detection methods were graded
+    # "interpretive". Read rather than dropped, because the alternative is to misgrade
+    # them: this module's job is to read the graph as it is.
+    if isinstance(provenance_class, str) and provenance_class in _LAYER_BY_TRUST:
+        layer = _LAYER_BY_TRUST[provenance_class]
+        return Grade(
+            layer=layer,
+            tier=TIER_BY_LAYER[layer],
+            precision=AttributionPrecision.PER_PASSAGE,
+            basis=(
+                f"provenance_class={provenance_class}, which is a trust-vocabulary value "
+                "recorded in the knowledge layer's field by an earlier pipeline"
+            ),
+            evidence_basis=(
+                EvidenceBasis.SANSKRIT
+                if rel_type in _SANSKRIT_TEXT_RELS or rel_type in _LEXICAL_RELS
+                else evidence
+            ),
         )
 
     if rel_type in _STRUCTURAL_RELS:
@@ -270,17 +596,13 @@ def grade_edge(rel_type: str, properties: Mapping[str, Any]) -> Grade:
 
     v2 = _V2_PREDICATE_GRADE.get(rel_type)
     if v2 is not None:
-        layer, tier = v2
+        layer, tier, declared_basis = v2
         return Grade(
             layer=layer,
             tier=tier,
             precision=AttributionPrecision.PER_PASSAGE,
-            basis=f"{rel_type}: tier follows from the predicate (V2 domain layer)",
-            evidence_basis=(
-                EvidenceBasis.SANSKRIT
-                if tier is QualityTier.TIER_B
-                else EvidenceBasis.STRUCTURAL
-            ),
+            basis=f"{rel_type}: grade follows from the predicate (domain layer)",
+            evidence_basis=declared_basis,
         )
 
     if rel_type in _DIAGNOSTIC_RELS:

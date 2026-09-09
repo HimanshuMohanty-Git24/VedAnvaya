@@ -1,0 +1,293 @@
+# Typed edges for the Atharvavedic concern model, V3.
+#
+# ADDITIVE. domain_entities_concern_v3.yaml says what exists; this says how a passage may
+# be joined to it. Same shape and same discipline as concern_predicates.yaml: each list is
+# a WHITELIST, an entity absent from every list may be attached only as a mention, and a
+# projector that emits a typed edge for it is wrong rather than merely generous.
+#
+# The four lists below contain ONLY the additions. They are to be unioned with the V1
+# lists, not to replace them; every V1 membership stands unchanged except where the
+# `promotions` block says otherwise, and there is exactly one such row.
+#
+# ===========================================================================
+# The tier split is inherited, not re-argued
+# ===========================================================================
+# vedagraph.domain.loader._CONCERN_EDGES grades these four predicates and V3 keeps that
+# grading exactly:
+#
+#   ADDRESSES_CONCERN  TIER_B  L2_DETERMINISTIC_DERIVED
+#   USED_FOR_RITE      TIER_B  L2_DETERMINISTIC_DERIVED
+#       Naming what you want is wanting it, and the rite vocabulary occurs nowhere but
+#       the occasion. The typed edge asserts no more than the mention it derives from.
+#   TREATS             TIER_D  L4_INTERPRETIVE_CLAIM
+#   PROTECTS_FROM      TIER_D  L4_INTERPRETIVE_CLAIM
+#       These assert a FUNCTION -- that the passage acts on the affliction rather than
+#       naming it. That is a reading of the charm, and no amount of alias evidence turns
+#       it into a lexical fact. Nothing in this file is promoted out of TIER_D, and the
+#       last section of docs/reports/ATHARVAVEDA_CONCERN_MODEL_V3.md states what a
+#       researcher must therefore not conclude from a TREATS edge.
+#
+# ===========================================================================
+# BLOCKER: the edges this brief asked for that the ontology cannot express
+# ===========================================================================
+# The brief asks for USES_PLANT / USES_SUBSTANCE and INVOKES_DEVATA alongside the four
+# concern predicates. Measured against vedagraph.domain.ontology.RELATIONSHIP_SIGNATURES
+# as it stands:
+#
+#   USES_PLANT        does not exist. There is no such relationship type.
+#   USES_SUBSTANCE    exists, but its signature is Ritual -> {Substance, Plant}. Its
+#                     domain is not Passage and not Condition, and there are 4 Ritual
+#                     nodes in the whole graph.
+#   USES_OBJECT       exists, Ritual -> Object. Same restriction.
+#   INVOKES_DEVATA    exists, but its signature is Ritual -> Devata. A Passage cannot be
+#                     its subject, and separately the Atharvaveda has 0 HAS_DEVATA edges
+#                     in the live graph, so there is no Devatā to reach from an AV charm
+#                     by any route at all.
+#
+# Endpoint violations fail the build, so none of those three edges can be authored here.
+# There is also NO relationship type anywhere in RELATIONSHIP_SIGNATURES with a Condition
+# endpoint other than TREATS and PROTECTS_FROM, both of which take Passage as subject. So
+# there is no legal way today to say "kuṣṭha treats takman" as a direct edge.
+#
+# That is not a gap this file routes around, and it should not be routed around: the
+# passage IS the shared evidence, and joining a herb to an ailment because both are named
+# in one charm is an inference about which of two co-mentioned entities acts on the other.
+# The V1 notes already refuse exactly that inference and the refusal still holds. What the
+# fever worked example demonstrates instead is that the two-hop join through the passage
+# --   (:Condition)<-[:TREATS]-(:Passage)-[:MENTIONS_ENTITY]->(:Plant)   -- answers the
+# question with the evidence attached, which the direct edge would have thrown away.
+#
+# If the architect wants the one-hop convenience edge, the honest shape is a reified
+# assertion in the V3 layer (LABEL_SEMANTIC_ASSERTION), where the instrument role has
+# somewhere to live and the passage stays attached. Named here, not built here.
+
+version: vedagraph-concern-model-v3
+merge_semantics: union_with_v1
+
+# ---------------------------------------------------------------------------
+# Passage -[:ADDRESSES_CONCERN]-> HumanConcern     TIER_B
+# ---------------------------------------------------------------------------
+# All three new HUMAN_CONCERN entities, on the same test the V1 file applied: there is no
+# reading on which the word appears without the passage being about the wish.
+#   PARIPANA-DEFENCE       AVS 2.17.7 is nothing but the wish -- "Protection art thou;
+#                          protection mayest thou give me: hail!" -- and all 14 token
+#                          occurrences are Atharvavedic.
+#   DIRGHAYUTVA-LONG-LIFE  the alias carrying 15 of the entity's 20 hits is the dative of purpose,
+#                          dīrghāyutvā́ya, "in order to length of life"; a dative of
+#                          purpose is a statement of purpose.
+#   VARCAS-SPLENDOUR       both aliases are the instrumental and dative of the thing
+#                          asked for or conferred: "let it quicken me with splendour",
+#                          "that I bind for thee, in order to life, splendour, strength".
+addresses_concern:
+  - VG:CONCEPT:PARIPANA-DEFENCE
+  - VG:CONCEPT:DIRGHAYUTVA-LONG-LIFE
+  - VG:CONCEPT:VARCAS-SPLENDOUR
+
+# ---------------------------------------------------------------------------
+# Passage -[:USED_FOR_RITE]-> SocialRite           TIER_B
+# ---------------------------------------------------------------------------
+# One addition. SABHA-ASSEMBLY is lexically anchored the way the V1 four are: sabhā́ and
+# sámiti name the occasion and nothing else, AVS 7.12 is the charm for it, and 14 of its
+# 16 token hits are Atharvavedic. The predicate claims the passage belongs to the
+# occasion, not that it is the liturgy for it.
+used_for_rite:
+  - VG:CONCEPT:SABHA-ASSEMBLY
+
+# ---------------------------------------------------------------------------
+# Passage -[:TREATS]-> Condition                   TIER_D
+# ---------------------------------------------------------------------------
+# The strongest predicate in the file and still the shortest list. An entity is here only
+# if it met one of the two V1 tests, unchanged:
+#
+#   (1) an explicit remedy-or-destroyer compound printed in the corpus itself, which is
+#       the text saying "this passage is a treatment for X" rather than an inference; or
+#   (2) a full match set small enough to have been read to the end, with every match
+#       found to sit inside a charm directed at the ailment.
+#
+# Which test each entity passed, and on what:
+#   TAKMAN-FEVER          BOTH. (1) takmanāśana / takmanāśanam, "effacer of takman", are
+#                         printed at AVS 5.4.1 and 5.4.2. (2) 36 occurrences in 33
+#                         mantras were read individually; 33 of 33 are Atharvavedic and
+#                         every one sits in a fever charm. Zero rejections.
+#   KILASA-LEUCODERMA     (1) kilāsabheṣajam AND kilāsanāśanam, both printed in the one
+#                         line AVS 1.24.2: "this remedy for leprous spot, this effacer of
+#                         leprous spot".
+#   HRDDYOTA-HEART-BURN   (1) hṛddyotabheṣajam, AVS 6.24.1, "that remedy for heart-burn".
+#   VATIKRTA-WIND-AILMENT (1) vātīkṛtanāśanī, AVS 6.44.3, "an effacer of the vātī́kṛta",
+#                         plus AVS 6.109.3 "a remedy for the vātī́kṛta".
+#   KSIPTA-BRUISE         (1) kṣiptabheṣajy, AVS 6.109.1, "remedy for what is bruised".
+#   PALITA-GREYING        (2) 2 of 2, both AVS 1.23, the hymn whose whole business is
+#                         removing it, and both alongside kilāsa which passed test (1).
+#   APACIT-SWELLINGS      (2) 8 token occurrences, all read, 8 of 8 Atharvavedic, all in
+#                         AVS 6.25 / 6.83 / 7.74 / 7.76, which are the swelling charms.
+#   JAYANYA-DISEASE       (2) 4 of 4, all read, all Atharvavedic, AVS 7.76 and 19.44.
+#   VIDRADHA-ABSCESS      (2) 3 of 3 after rejecting vidradhe; AVS 6.127 and 9.8.20.
+#   SIRSAKTI-HEADACHE     (2) 5 of 5, all Atharvavedic; AVS 9.8.1 says "do we expel out
+#                         [of thee] by incantation".
+#   KARNASULA-EARACHE     (2) 2 of 2, both inside that same AVS 9.8 charm.
+#   ANGABHEDA-LIMB-SPLITTING (2) 2 of 2, AVS 5.30.9 and 9.8.5, both ejection charms.
+#   VISALPAKA-AILMENT     (2) 5 of 5, all Atharvavedic, AVS 6.127 and 9.8.
+#   UNMADA-MADNESS        (2) 2 of 2, and they are the same verse, AVS 6.111.3, in which
+#                         the speaker says "I, knowing, make a remedy".
+treats:
+  - VG:CONCEPT:TAKMAN-FEVER
+  - VG:CONCEPT:KILASA-LEUCODERMA
+  - VG:CONCEPT:PALITA-GREYING
+  - VG:CONCEPT:HRDDYOTA-HEART-BURN
+  - VG:CONCEPT:VATIKRTA-WIND-AILMENT
+  - VG:CONCEPT:KSIPTA-BRUISE
+  - VG:CONCEPT:APACIT-SWELLINGS
+  - VG:CONCEPT:JAYANYA-DISEASE
+  - VG:CONCEPT:VIDRADHA-ABSCESS
+  - VG:CONCEPT:SIRSAKTI-HEADACHE
+  - VG:CONCEPT:KARNASULA-EARACHE
+  - VG:CONCEPT:ANGABHEDA-LIMB-SPLITTING
+  - VG:CONCEPT:VISALPAKA-AILMENT
+  - VG:CONCEPT:UNMADA-MADNESS
+
+# ---------------------------------------------------------------------------
+# Passage -[:PROTECTS_FROM]-> Condition | HumanConcern     TIER_D
+# ---------------------------------------------------------------------------
+# The weaker of the two affliction predicates, and where everything doubtful went. Two
+# groups, and the second is the answer to the evaluator's closest miss.
+#
+# Group one -- afflictions that failed a TREATS test, and why:
+#   YAKSMA-DISEASE   Newly eligible: as a STATE it could take no concern predicate at
+#                    all, and the retype to CONDITION is what gives it one. It has the
+#                    printed remedy compound yakṣmanāśanīḥ (AVS 3.12.9, 9.3.23) and so
+#                    could be argued into `treats` on test (1) -- but 92 occurrences in 88 mantras
+#                    across all four Vedas were NOT read one by one, and some are plainly
+#                    descriptive rather than therapeutic (AVS 14.2.10, the yakṣmas that
+#                    go to the bride's car). Where both predicates could be argued the
+#                    weaker one is chosen; that is the V1 rule and it decides this.
+#   AMIVA-AFFLICTION 31 occurrences, 21 of them outside the Atharvaveda, including four
+#                    where amīvahán is an epithet of a god rather than a charm's target.
+#   RAPAS-BODILY-HURT 18 token occurrences, 14 outside the Atharvaveda; RV 7.34.13 "our
+#                    bodies' sin" and RV 8.18.16 "iniquity" are descriptive.
+#   SEDI-DEBILITY    Atharvavedic throughout, but what the charms do to it is house it in
+#                    an enemy's dwelling and wish it onto an army, which is warding, not
+#                    medicating.
+#   ARAYA-MALIGNANT-SPRITE  Has the destroyer compounds arāyakṣayaṇam and arāyacātanaṃ
+#                    printed at AVS 2.18.3, so it nearly passes test (1) -- but Whitney
+#                    renders the base word three different ways ("niggard", "sorceress",
+#                    "wizard (?)") and an entity whose translator is unsure what it is
+#                    does not get the file's strongest predicate.
+#   SAPATHA-IMPRECATION  What the charm does to a curse is send it back to the curser
+#                    (AVS 5.14.5, 10.1.5), which is turning aside, not curing.
+#   ABHISASTI-CALUMNY  10 of 18 token occurrences are Rigvedic or Yajurvedic and were not
+#                    read one by one.
+#   ABHICARA-SORCEROUS-ATTACK  2 occurrences, and both are shieldings: the varaṇá "shall
+#                    shield thee", the apāmārga is a "spoiler of witchcraft".
+#
+# Group two -- the śatru / rakṣas / sapatna directional gap. What the evaluator found is
+# that protection had no directional edge to the enemy, the demon or the rival. Answered
+# three different ways, because the three words are not in the same evidential position:
+#   RAKSAS-DEMON     SUPPORTED, once re-typed CONDITION. Its alias set was re-read and is
+#                    uniformly hostile beings -- rakṣas, piśāca, yātudhāna -- with no
+#                    ethnonym in it, and the Atharvaveda's demon hymns (AVS 1.7, 1.8,
+#                    8.3, and RV 10.87) ask expressly to be guarded from them. Requires
+#                    the NODE_TYPE_OVERRIDES row; without it the edge is an endpoint
+#                    violation and the build is right to fail.
+#   SAPATNA-RIVAL-OVERCOMING  SUPPORTED with no change at all, which is the part that was
+#                    simply missed: it is already HUMAN_CONCERN, so it is already inside
+#                    PROTECTS_FROM's declared range, and it was listed under
+#                    addresses_concern only. The rival charms ask to be freed from and to
+#                    put down the rival (AVS 1.29, 8.5.1 "heroic, rival-slaying"), so
+#                    both predicates are true of them and neither is stronger than the
+#                    other. This is the `promotions` row below.
+#   DURHARD-MALEVOLENT  SUPPORTED as a new entity, and it is what carries the human
+#                    enemy. 26 of 26 token occurrences are Atharvavedic, the word means
+#                    "evil-hearted", and it contains no ethnonym, so "this passage
+#                    protects from the malevolent" is true of every passage it matches.
+#   SATRU-ENEMY      REFUSED, and the refusal is the point. Its alias set mixes
+#                    hostile-intent words with ethnonyms -- dāsa, dāsī, dasyu -- so the
+#                    edge would assert "this passage protects from the Dāsa" of Rigvedic
+#                    passages that describe peoples. That is a claim about a people, not
+#                    about a charm, and it is the same class of error as folding four
+#                    afflictions into one node. Recorded in the entities file's
+#                    `refusals`.
+protects_from:
+  - VG:CONCEPT:YAKSMA-DISEASE
+  - VG:CONCEPT:AMIVA-AFFLICTION
+  - VG:CONCEPT:RAPAS-BODILY-HURT
+  - VG:CONCEPT:SEDI-DEBILITY
+  - VG:CONCEPT:ARAYA-MALIGNANT-SPRITE
+  - VG:CONCEPT:DURHARD-MALEVOLENT
+  - VG:CONCEPT:SAPATHA-IMPRECATION
+  - VG:CONCEPT:ABHISASTI-CALUMNY
+  - VG:CONCEPT:ABHICARA-SORCEROUS-ATTACK
+  - VG:CONCEPT:RAKSAS-DEMON
+
+# ---------------------------------------------------------------------------
+# Changes to a V1 membership
+# ---------------------------------------------------------------------------
+# Exactly one, so that the union above is otherwise purely additive.
+promotions:
+  - concept_id: VG:CONCEPT:SAPATNA-RIVAL-OVERCOMING
+    from: [addresses_concern]
+    to: [addresses_concern, protects_from]
+    tier_unchanged: >-
+      it keeps TIER_B on ADDRESSES_CONCERN and takes TIER_D on PROTECTS_FROM; the two
+      predicates are graded separately by _CONCERN_EDGES and neither grade moves.
+    reason: >-
+      Already inside PROTECTS_FROM's declared range as a HumanConcern, and the rival
+      charms both name the wish and ask to be delivered from the rival. Adding the second
+      membership closes one third of the evaluator's directional gap with no retype, no
+      new entity and no new relationship type.
+
+# ---------------------------------------------------------------------------
+# Entities that get NO typed edge, listed so the omission is a decision
+# ---------------------------------------------------------------------------
+# The rule is the V1 rule. A plant, an animal, a substance, an amulet or a river is not a
+# Condition and not a SocialRite, and naming it supports no claim beyond the mention the
+# matcher already emits. In particular ANJANA-OINTMENT is not "used_for_rite" and is not
+# a Condition: AVS 4.9.8 says fever, balāsa and the snake are the ointment's three
+# slaves, and the ointment, the fever and the snake are three separate entities that the
+# same passage matches separately. Joining them inside the passage would be an inference
+# about which of three co-mentioned entities acts on the others, and nothing in the
+# stored text licenses it.
+no_typed_edge:
+  - VG:CONCEPT:PRDAKU-ADDER
+  - VG:CONCEPT:SVAJA-CONSTRICTOR
+  - VG:CONCEPT:VRSCIKA-SCORPION
+  - VG:CONCEPT:PIPPALI-PLANT
+  - VG:CONCEPT:PRSNIPARNI-PLANT
+  - VG:CONCEPT:AJASRNGI-PLANT
+  - VG:CONCEPT:LAKSA-PLANT
+  - VG:CONCEPT:MADUGHA-PLANT
+  - VG:CONCEPT:VISANAKA-PLANT
+  - VG:CONCEPT:BHANGA-HEMP
+  - VG:CONCEPT:ASVATTHA-TREE
+  - VG:CONCEPT:KHADIRA-TREE
+  - VG:CONCEPT:ANJANA-OINTMENT
+  - VG:CONCEPT:AUDUMBARA-AMULET
+  - VG:CONCEPT:SARASVATI-RIVER
+  - VG:CONCEPT:AYUDHA-WEAPON
+  - VG:CONCEPT:VAJRA-THUNDERBOLT
+
+notes: >-
+  Three things this file is careful about, and they are the same three the V1 file was.
+
+  First, TREATS is never asserted from a bare lexical match on the ailment's own name.
+  14 of the 23 CONDITION entities added by V3 are in `treats`, and each earned it either
+  by a remedy compound the corpus itself prints -- takmanāśana, kilāsabheṣajam,
+  hṛddyotabheṣajam, vātīkṛtanāśanī, kṣiptabheṣajy -- or by a match set small enough to
+  have been read to the end and found to be Atharvavedic and charm-internal without
+  exception. The nine that earned neither are in `protects_from`, and YAKSMA-DISEASE is
+  there despite having a printed remedy compound, because 88 occurrences across four
+  Vedas were not read individually.
+
+  Second, the fever entity is the only one in this file whose whole evidence base was
+  read, and it is worth saying what that bought and what it did not. It bought certainty
+  that the alias set is clean: 36 occurrences, 33 mantras, 33 of 33 Atharvavedic, zero
+  rejections, and two verses (AVS 5.4.9, 5.30.16) in which the corpus itself sets takman
+  beside yakṣma as a different thing. It did NOT buy a promotion out of TIER_D. TREATS
+  on AVS 5.22.7 still means "this verse is a charm directed at fever", and that verse
+  sends the fever to the Mūjavants and the Balhikas. Reading more evidence makes the
+  reading better supported; it does not turn the reading into an observation.
+
+  Third, an entity absent from all four lists is not an oversight. Nine plants, three
+  snakes, an ointment, an amulet and a river are in `no_typed_edge` on purpose, and the
+  fever worked example is built entirely out of TREATS plus plain MENTIONS_ENTITY hops
+  through the passage, which is what an evidence graph looks like when it refuses to
+  guess.

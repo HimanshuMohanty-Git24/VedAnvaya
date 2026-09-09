@@ -1,0 +1,438 @@
+# Ritual structure, V3: four new rites, four existing rites given the text they are in, and
+# the first HAS_STEP edges in the graph.
+#
+# ADDITIVE. rituals.yaml is not edited and not superseded. Entries here carry `mode`:
+#
+#   mode: new       The ritual_id is a RITUAL-typed entity added by
+#                   domain_entities_ritual_v3.yaml. Every structural key is authored.
+#   mode: augment   The ritual_id already has an entry in rituals.yaml. Only the keys this
+#                   pass has new evidence for appear, and every other key is ABSENT rather
+#                   than empty, so that concatenating the two files cannot silently
+#                   overwrite a V1 list with a shorter one. An absent key means "not
+#                   restated here"; an empty list means "the corpus does not support one".
+#                   Those two are different facts and the file distinguishes them.
+#
+# ---------------------------------------------------------------------------
+# The rule, unchanged from rituals.yaml
+# ---------------------------------------------------------------------------
+# The Samhitas are not read through the Brahmanas. Every list below is a CURATED statement
+# with its basis and its confidence, and every item in it is named in a verse that was read.
+# Where a field would only be fillable from Brahmana or Sutra systematisation it is EMPTY
+# and the omission is stated in `basis`, because an empty list is a fact about the corpus
+# and a plausible list is a fabrication.
+#
+# Three things were considered from the later literature and refused, and are recorded here
+# so that a later reader can see they were refused rather than missed:
+#   - The sixteen-priest establishment (the four groups of four, each with its assistants)
+#     is Brahmana and Sutra. What the Samhitas have is an office vocabulary, mostly in two
+#     verses (RV 2.1.2, RV 1.94.6), with no statement of how many officiate at once. No
+#     rite below claims a priest the corpus does not name in that rite's own verses.
+#   - The agnicayana's five layers, its 10,800 bricks and its falcon shape are Brahmana.
+#     VG:CONCEPT:AGNI-CITI-FIRE-PILING claims a brick, an act of piling and a hundred years
+#     of life, which is what VS 13.41, VS 13.47 and VS 17.2 say.
+#   - The aśvamedha's year-long release of the horse, its three days and its queens are
+#     Brahmana and Sutra. VS 22-25 gives a horse consecrated for the immolation, an axe, a
+#     post and a prayer for the kingdom, and that is all this file takes.
+#
+# ---------------------------------------------------------------------------
+# Two loader changes this file needs, which it is not allowed to make
+# ---------------------------------------------------------------------------
+# 1. `has_step` and `described_in` have no entry in
+#    vedagraph.domain.loader._RITUAL_EDGES, so no existing code path reads them. Both are
+#    declared in DOMAIN_RELATIONSHIP_TYPES with signatures (HAS_STEP: Ritual -> Action,
+#    DESCRIBED_IN: Ritual|SocialRite -> Passage) and both are at zero edges in the live
+#    graph. `described_in` is a plain list of passage keys and fits the existing
+#    (key, rel_type, labels) tuple shape as ("described_in", "DESCRIBED_IN", ("Passage",)).
+#    `has_step` deliberately does NOT: it is a list of mappings, because a step relation
+#    that cannot carry its order is not worth writing, and the order has to land on the
+#    edge. See the HAS_STEP note below.
+# 2. DESCRIBED_IN's signature already admits SocialRite, but load_rituals() matches
+#    `(rt:Ritual {entity_key: ...})`, so the four SOCIAL_RITE entities in
+#    domain_entities_concern.yaml -- VIVAHA-MARRIAGE, PRASUTI-CHILDBIRTH,
+#    PITRYANA-FUNERARY-RITE, SALA-HOUSE-BUILDING -- cannot receive one. They are the
+#    obvious next candidates and they are not in this file, because putting them here would
+#    produce rows that silently land nothing. Widening that MATCH is the architect's call.
+#
+# ---------------------------------------------------------------------------
+# HAS_STEP: what these edges claim, and what they do not
+# ---------------------------------------------------------------------------
+# HAS_STEP is populated for exactly ONE rite, VG:CONCEPT:SOMA-PRESSING, with three steps,
+# and is EMPTY for every other rite in this file and in rituals.yaml. The reasoning:
+#
+# *The predicate's range is Action, not Ritual.* RELATIONSHIP_SIGNATURES says
+# HAS_STEP: (Ritual -> Action). A step is therefore a kind of act, not a sub-rite, and
+# before this pass there were five ACTION-typed entities in the whole registry and not one
+# of them was a ritual act. Seven are added in domain_entities_ritual_v3.yaml.
+#
+# *Adjacency was refused.* The Vajasaneyi Samhita's adhyayas do follow ritual order, and
+# that ordering is a real and citable fact about the text. It is not a step relation. An
+# edge derived from "verse 4 comes after verse 3" would assert of the rite what is only
+# true of the manuscript, and the difference is invisible once the edge exists. No HAS_STEP
+# edge below is derived from position in the text.
+#
+# *What was accepted is an ordinal the corpus states in words.* The three soma pressings
+# are numbered by the corpus itself, in three independent places, and the numbering is
+# lexical rather than positional:
+#   - RV 10.112.1 calls the morning pressing the FIRST draught: "prātaḥsāvas tava hi
+#     pūrvapītiḥ", Griffith's "thy first draught is early morn's libation".
+#   - AVS 6.47.2 calls the midday pressing the SECOND: "asmin dvitīye savane".
+#   - AVS 6.47.3 calls the last one the THIRD: "idaṃ tṛtīyaṃ savanaṃ kavīnām"; so does
+#     RV 3.28.5 ("tṛtīye savane") and AVS 9.1.13.
+#   - RV 3.28 runs all three across one hymn to one deity with one offering -- the cake to
+#     Agni at prātaḥsāve (v1), at mādhyaṃdine savane (v4), at tṛtīye savane (v5) -- and
+#     VS 19.26 states all three in a single verse with a deity for each.
+# The words "first", "second", "third", "morning" and "midday" are in the text. The order
+# is read off those words, not off where the verses sit.
+#
+# *What a HAS_STEP edge here claims:* that the corpus names this act as a numbered or
+# time-fixed stage of this rite, and that `order` is the number or time the corpus gives it.
+# *What it does not claim:* that the three stages are exhaustive, that nothing happens
+# between them, that any other rite in the graph has stages, or that the elaborate stage
+# sequences of the srauta manuals -- upasads, pravargya, sutya, avabhrtha as an ordered
+# programme -- are in the Samhitas. They are not, and HAS_STEP is empty everywhere else for
+# that reason.
+#
+# *What would fill it further.* Two things, both already visible and both stopping short.
+# (a) VS 19.26-31 is a chain of stated means: "yajurbhir āpyante grahāḥ, grahaiḥ stomāś ca
+# viṣṭutīḥ, chandobhir ukthaśastrāṇi, sāmnāvabhṛtha āpyate" (VS 19.28) and "vratena dīkṣām
+# āpnoti, dīkṣayāpnoti dakṣiṇām, dakṣiṇayā śraddhām āpnoti, śraddhayā satyam āpyate"
+# (VS 19.30). That is a dependency chain, in the instrumental of means, and it is genuine
+# source-stated sequence -- but its members are grahas, stomas, metres, vows and virtues,
+# and only two of them (the graha, the avabhrtha) exist as nodes. Filling it needs an
+# ACTION or RITUAL entity per link, each probed and read, which is the next pass's work.
+# (b) RV 2.37 numbers the priestly cups: the Hotar's (v1), the Potar's (v2), the Nestar's
+# (v3), and then "turīyaṃ pātram", the FOURTH cup (v4). That is an ordinal too, and it would
+# make four steps of VG:CONCEPT:GRAHA-SOMA-DRAWING -- but only if the fourth cup can be
+# identified, and RV 2.37.4 does not name it.
+
+version: vedagraph-ritual-model-v3
+supersedes: nothing
+merges_with: rituals.yaml
+
+rituals:
+
+  # =========================================================================
+  # NEW RITES
+  # =========================================================================
+
+  - ritual_id: VG:CONCEPT:GRAHA-SOMA-DRAWING
+    mode: new
+    uses_offering: [VG:CONCEPT:HAVIS-OBLATION]
+    uses_substance: [VG:CONCEPT:SOMA-DRINK]
+    uses_object: [VG:CONCEPT:CAMASA-CUP, VG:CONCEPT:SRUC-LADLE,
+                  VG:CONCEPT:DRONAKALASA-WOODEN-TUB, VG:CONCEPT:VAYAVYA-VAYU-CUP,
+                  VG:CONCEPT:ASMAN-PRESSING-STONE, VG:CONCEPT:PAVITRA-STRAINER,
+                  VG:CONCEPT:VEDI-ALTAR, VG:CONCEPT:BARHIS-SACRED-GRASS]
+    invokes_devata: [VG:DEVATA:INDRAH, VG:DEVATA:VAYUH, VG:DEVATA:MITRAVARUNAU,
+                     VG:DEVATA:ASVINAU]
+    performed_by: [VG:CONCEPT:ADHVARYU-PRIEST, VG:CONCEPT:POTR-PURIFIER,
+                   VG:CONCEPT:NESTR-LEADER]
+    performed_for: []
+    has_step: []
+    described_in: [VG:YV:VSM:A07:V001, VG:YV:VSM:A07:V004, VG:YV:VSM:A07:V008,
+                   VG:YV:VSM:A07:V009, VG:YV:VSM:A07:V011, VG:YV:VSM:A07:V026,
+                   VG:YV:VSM:A09:V004, VG:YV:VSM:A18:V019, VG:YV:VSM:A18:V020,
+                   VG:YV:VSM:A18:V021, VG:YV:VSM:A19:V027, VG:YV:VSM:A19:V028,
+                   VG:YV:VSM:A38:V026, VG:RV:SAK:M10:S114:V005, VG:AV:SAU:K11:S007:V018]
+    basis: >-
+      The apparatus list is one verse. VS 18.21 inventories it in order -- "srucaś ca me
+      camasāś ca me vāyavyāni ca me droṇakalaśaś ca me grāvāṇaś ca me dhiṣavaṇe ca me
+      pūtabhṛc ca ma ādhavanīyaś ca me vediś ca me barhiś ca me" -- ladles, cups, Vayu
+      vessels, the wooden tub, the pressing stones, the two pressing boards, the purified
+      store, the vessel to be shaken, the altar and the grass. Six of those ten have nodes
+      and are listed; dhiṣavaṇa, pūtabhṛt and ādhavanīya do not, because each is attested
+      only inside a `-ś ca` token and the production substring pass runs on the Samaveda
+      alone, so a node for them could never be reached. The strainer is added from VS 7.26,
+      "from the adhvaryu's hand or from the filter". invokes_devata is not inferred either:
+      the cups carry their deities in their own names at VS 18.19 -- aindravayava,
+      maitravaruna, asvina -- and the dedications say the same thing in the vocative and the
+      dative at VS 7.8 (vāyava), VS 7.9 (mitrāvaruṇābhyāṃ), VS 7.11 (aśvibhyāṃ) and VS 9.4
+      (indrāya tvā). performed_by is the three officiants whose stations the corpus names as
+      the source of a draught: the adhvaryu at VS 7.26, the Potar at RV 2.37.2 and the
+      Nestar at RV 2.37.3. The hotar belongs in that list, is named in exactly the same
+      construction at RV 2.37.1 ("hotrāt somaṃ draviṇodaḥ piba"), and is missing for a
+      reason that is not evidential: see the note on PERFORMED_BY at the end of this file.
+      uses_offering rests on two verses that put the cups and the oblation in one list --
+      VS 9.4 "grahā ūrjāhutayaḥ", the cups are strength-giving oblations, and AVS 11.7.18
+      "iḍā praiṣā grahā haviḥ". performed_for is EMPTY on purpose: the graha formulas
+      dedicate, they do not petition. The one apparent exception, VS 9.4's "mingle me with
+      what is good, part me from evil", is a benediction appended to the formula, and one
+      verse will not carry a claim about what the rite is for.
+      VG:YV:VSM:A07:V003 is deliberately NOT in described_in although it is the passage in
+      which the word `graha` appears: it is the one contaminated record in the VSM and its
+      occurrence of the word is inside a Brahmana sentence quoted by a commentator. See the
+      header of domain_entities_ritual_v3.yaml.
+    confidence: HIGH
+
+  - ritual_id: VG:CONCEPT:SAUTRAMANI
+    mode: new
+    uses_offering: []
+    uses_substance: [VG:CONCEPT:SURA-SPIRITUOUS-LIQUOR,
+                     VG:CONCEPT:PARISRUT-FERMENTED-DRAUGHT, VG:CONCEPT:SOMA-DRINK,
+                     VG:CONCEPT:PAYAS-MILK, VG:CONCEPT:GHRTA-CLARIFIED-BUTTER,
+                     VG:CONCEPT:MADHU-HONEY]
+    uses_object: [VG:CONCEPT:DRONAKALASA-WOODEN-TUB]
+    invokes_devata: [VG:DEVATA:SARASVATI, VG:DEVATA:ASVINAU, VG:DEVATA:INDRAH,
+                     VG:DEVATA:AGNIH]
+    performed_by: [VG:CONCEPT:YAJAMANA-SACRIFICER]
+    performed_for: [VG:CONCEPT:BHESAJA-HEALING]
+    has_step: []
+    described_in: [VG:YV:VSM:A19:V005, VG:YV:VSM:A19:V016, VG:YV:VSM:A19:V026,
+                   VG:YV:VSM:A19:V030, VG:YV:VSM:A19:V031, VG:YV:VSM:A19:V032,
+                   VG:YV:VSM:A19:V033, VG:YV:VSM:A19:V042, VG:YV:VSM:A20:V018,
+                   VG:YV:VSM:A20:V059, VG:YV:VSM:A21:V030, VG:YV:VSM:A21:V031,
+                   VG:YV:VSM:A21:V058, VG:AV:SAU:K03:S003:V002]
+    basis: >-
+      The substance list is one verse twice over. VS 21.30 and VS 21.31 read "surayā
+      bheṣajaṃ meṣaḥ sarasvatī bhiṣag ... badarair upavākābhir bheṣajaṃ tokmabhiḥ payaḥ
+      somaḥ parisrutā ghṛtaṃ madhu": the liquor as medicine, the ram, jujubes, upavaka
+      shoots, young sprouts, milk, soma, the fermented draught, ghee, honey. Six of those
+      have nodes and are listed. Three do not and are named here instead of being invented:
+      the ram (meṣaḥ, VS 21.31 and VS 24.38) has no node and could not be attached if it
+      did, because ANIMAL is outside every USES_ range in RELATIONSHIP_SIGNATURES; badara
+      and tokma have two attestations each and were left for a plant pass. invokes_devata is
+      one verse and not a survey: VS 19.33, "tena jinva yajamānaṃ madena sarasvatīm aśvināv
+      indram agnim" -- with that gladdening juice quicken the sacrificer, Sarasvati, the
+      Asvins, Indra, Agni. performed_for is Sarasvati's own function in that list: VS 21.31
+      calls the liquor bheṣajam and Sarasvati bhiṣak, medicine and physician, in one line,
+      which is a statement about what the rite is for and not a reading of it. uses_object
+      is only the wooden tub, from VS 19.27's "śatena droṇakalaśam kumbhībhyām ambhṛṇau".
+      The liquor-jar of VS 19.16 -- "kumbhī surādhānī", the jar that holds the sura -- is
+      NOT modelled: `kumbhī` has four token hits and two of them are the earth-as-cooking-pot
+      figure of AVS 11.3.11 and AVS 12.3.23, so a vessel node claiming it would be half
+      wrong. performed_by names only the sacrificer, whom the rite's own verses name three
+      times (VS 19.5 "rasenānnaṃ yajamānāya dhehi", VS 19.32 "mademendraṃ yajamānāḥ",
+      VS 19.33 "jinva yajamānaṃ"). The officiant those verses actually put to work is the
+      HOTAR -- VS 21.30, VS 21.31 and VS 21.58 all run on "hotā yakṣat", let the Hotar
+      worship, and VS 21.58 has "agnir agninā hotā hotre sviṣṭakṛt" -- and he is absent from
+      performed_by for a reason that is not evidential. See the note at the end of this file.
+      has_step is EMPTY even though VS 19.26-31 is the corpus's clearest stated sequence,
+      because the links in that chain are grahas, stomas, metres, vows and virtues, and
+      only two of them exist as nodes; see the HAS_STEP note in the header.
+    confidence: MEDIUM
+
+  - ritual_id: VG:CONCEPT:ASVAMEDHA-HORSE-SACRIFICE
+    mode: new
+    uses_offering: []
+    uses_substance: []
+    uses_object: [VG:CONCEPT:SVADHITI-AXE, VG:CONCEPT:YUPA-SACRIFICIAL-POST]
+    invokes_devata: [VG:DEVATA:SARASVATI, VG:DEVATA:VARUNAH]
+    performed_by: [VG:CONCEPT:BRAHMAN-PRIEST]
+    performed_for: [VG:CONCEPT:RAJAN-KINGSHIP, VG:CONCEPT:PRAJA-OFFSPRING,
+                    VG:CONCEPT:VIRA-HERO]
+    has_step: []
+    described_in: [VG:YV:VSM:A18:V022, VG:YV:VSM:A22:V019, VG:YV:VSM:A22:V022,
+                   VG:YV:VSM:A23:V015, VG:YV:VSM:A24:V038, VG:YV:VSM:A25:V001,
+                   VG:YV:VSM:A25:V029, VG:YV:VSM:A25:V037, VG:YV:VSM:A25:V041,
+                   VG:RV:SAK:M01:S162:V006, VG:RV:SAK:M01:S162:V015,
+                   VG:RV:SAK:M01:S162:V018]
+    basis: >-
+      This entry corrects a recorded decision rather than adding to one. V2 wrote that the
+      horse sacrifice is "not a ritual node" because the word's single token hit, RV 5.27.5,
+      is the patron Asvamedha. The reasoning about RV 5.27.5 was right and the conclusion
+      was wrong for a reason V2's own header names elsewhere: the elision of an initial a-.
+      At VS 18.22 the compound is written `'śvamedhaś ca me` and folds to `śvamedhaśca`, so
+      no probe of `aśvamedha` could ever have found it. The corpus names the rite.
+      uses_object is two objects, both read in the rite's own verses: the axe at VS 22.19
+      ("dhṛtir iha svadhitiḥ svāhā") and VS 25.41 ("vaṅkrīr aśvasya svadhitiḥ sam eti", the
+      axe goes to the horse's ribs), and the post at VS 25.29, "yūpavraskā uta ye
+      yūpavāhāś caṣāla ye aśvayūpāya takṣati" -- the hewers of the post, those who carry it,
+      those who carve the knob for the horse's stake. Note that VG:CONCEPT:YUPA-SACRIFICIAL-POST
+      holds none of those strings, so the mention layer does not reach VS 25.29; this edge
+      is curated by entity id and stands on the reading, which is the difference between a
+      structural edge and a mention.
+      The victim itself is NOT attached, and its absence is an ontology gap, not a judgement
+      about the evidence: VG:CONCEPT:ASVA-HORSE is ANIMAL, and ANIMAL appears in the range of
+      RECEIVES_OFFERING (Devata -> Animal) and in no USES_ predicate at all. There is
+      therefore no edge in RELATIONSHIP_SIGNATURES that can say the horse sacrifice offers a
+      horse. Recorded rather than worked around; the fix is a predicate, and a predicate is
+      not this file's to add.
+      performed_by is one vocative: VS 22.22 opens "ā brahman", O Brahman, and asks for the
+      kingdom. performed_for is that same verse read as what it says -- "let there be born
+      in the kingdom the brahman of holy lustre, the prince, the hero, the archer ... a hero
+      son to this sacrificer" -- which is kingship, offspring and heroes, in the text's own
+      order. invokes_devata is deliberately two and not twenty: VS 25.1 apportions the
+      horse's parts to deities one clause at a time and names Sarasvati explicitly
+      ("sarasvatyā agrajihvam"), and VS 24.38 assigns the wild ram to Nirrti and Varuna. A
+      complete deity list for VS 24-25 is a per-verse job the Devata layer already does and
+      restating it here would double-count it. Nirrti has no node.
+      What is refused: the year-long release of the horse, the three pressing days, the
+      queens, and the horse's identification with the year. All Brahmana and Sutra. VS 22-25
+      has a consecrated horse, an axe, a post, a dismemberment and a prayer for the realm.
+    confidence: MEDIUM
+
+  - ritual_id: VG:CONCEPT:AGNI-CITI-FIRE-PILING
+    mode: new
+    uses_offering: []
+    uses_substance: []
+    uses_object: [VG:CONCEPT:ISTAKA-BRICK]
+    invokes_devata: [VG:DEVATA:AGNIH]
+    performed_by: []
+    performed_for: [VG:CONCEPT:AYUS-LIFE]
+    has_step: []
+    described_in: [VG:YV:VSM:A13:V041, VG:YV:VSM:A13:V047, VG:YV:VSM:A17:V002]
+    basis: >-
+      Three verses, and the node claims nothing beyond them. VS 17.2 addresses the bricks as
+      bricks: "imā me agna iṣṭakā dhenavaḥ santu", let these bricks of mine, Agni, be
+      milch-cows. VS 13.41 gives the purpose in the same breath as the act: "śatāyuṣaṃ
+      kṛṇuhi cīyamānaḥ", make him live a hundred years while thou art being piled -- which
+      is why performed_for names AYUS-LIFE and nothing else. VS 13.47 gives the act again
+      and adds the victim: "sahasrākṣo medhāya cīyamānaḥ ... tena cinvānas tanvo ni ṣīda",
+      thousand-eyed, being piled for the immolation; piling, settle into the bodies.
+      performed_by is EMPTY because none of the three verses names an officiant. uses_substance
+      is EMPTY because the earth, water and clay of the brick-making are Brahmana; the
+      Samhita gives a brick, already made. The five layers, the count of bricks and the
+      falcon shape are Brahmana and Sutra and are not here.
+    confidence: MEDIUM
+
+  # =========================================================================
+  # AUGMENTS to rituals.yaml. Only keys with new evidence appear.
+  # =========================================================================
+
+  - ritual_id: VG:CONCEPT:SOMA-PRESSING
+    mode: augment
+    has_step:
+      - action: VG:CONCEPT:PRATAHSAVANA-MORNING-PRESSING
+        order: 1
+        order_basis: SOURCE_STATED_ORDINAL
+        passages: [VG:RV:SAK:M03:S028:V001, VG:RV:SAK:M03:S052:V004,
+                   VG:RV:SAK:M10:S112:V001, VG:AV:SAU:K06:S047:V001,
+                   VG:YV:VSM:A19:V026]
+        basis: >-
+          Numbered by the corpus, not by position: RV 10.112.1 calls it the first draught,
+          "prātaḥsāvas tava hi pūrvapītiḥ". Named by time of day at RV 3.28.1, RV 3.52.4,
+          AVS 6.47.1 and VS 19.26, and assigned to the Asvins by VS 19.26.
+      - action: VG:CONCEPT:MADHYANDINA-SAVANA-MIDDAY-PRESSING
+        order: 2
+        order_basis: SOURCE_STATED_ORDINAL
+        passages: [VG:RV:SAK:M03:S028:V004, VG:RV:SAK:M03:S032:V003,
+                   VG:RV:SAK:M05:S040:V004, VG:AV:SAU:K06:S047:V002,
+                   VG:YV:VSM:A19:V026]
+        basis: >-
+          AVS 6.47.2 numbers it outright, "asmin dvitīye savane", at this second libation.
+          Named by time of day at RV 3.28.4, RV 3.32.3, RV 5.40.4 and VS 19.26, and assigned
+          to Indra by VS 19.26.
+      - action: VG:CONCEPT:TRTIYA-SAVANA-THIRD-PRESSING
+        order: 3
+        order_basis: SOURCE_STATED_ORDINAL
+        passages: [VG:RV:SAK:M03:S028:V005, VG:RV:SAK:M04:S034:V004,
+                   VG:RV:SAK:M04:S035:V009, VG:RV:SAK:M08:S057:V001,
+                   VG:AV:SAU:K06:S047:V003, VG:AV:SAU:K09:S001:V013,
+                   VG:YV:VSM:A19:V026]
+        basis: >-
+          The ordinal is in the text seven times: "tṛtīye savane" (RV 3.28.5), "idaṃ
+          tṛtīyaṃ savanaṃ kavīnām" (AVS 6.47.3), "tṛtīye savana ṛbhūṇām" (AVS 9.1.13), the
+          Rbhus' third libation (RV 4.34.4, RV 4.35.9, RV 8.57.1), and "tṛtīyam āptaṃ
+          savanam" assigned to Sarasvati and the Visve Devas at VS 19.26.
+    described_in: [VG:RV:SAK:M03:S028:V001, VG:RV:SAK:M03:S028:V004,
+                   VG:RV:SAK:M03:S028:V005, VG:RV:SAK:M03:S052:V004,
+                   VG:RV:SAK:M10:S112:V001, VG:AV:SAU:K06:S047:V001,
+                   VG:AV:SAU:K06:S047:V002, VG:AV:SAU:K06:S047:V003,
+                   VG:AV:SAU:K09:S001:V013, VG:YV:VSM:A19:V026,
+                   VG:RV:SAK:M02:S037:V001, VG:RV:SAK:M02:S037:V002,
+                   VG:RV:SAK:M02:S037:V003, VG:RV:SAK:M02:S037:V004,
+                   VG:RV:SAK:M01:S028:V001]
+    basis: >-
+      This is the only rite in the graph with steps, and the only one the corpus numbers.
+      RV 3.28 is the decisive passage: one hymn, one deity, one offering, and the same cake
+      offered at the morning pressing (v1), the midday pressing (v4) and the third
+      pressing (v5). AVS 6.47 is the same structure in three verses with the ordinals said
+      out loud, and VS 19.26 compresses all three into one verse with a deity each. Nothing
+      here is inferred from adjacency; the ordinals and the time words are lexical. The
+      described_in list adds RV 2.37, which is the priestly-cup hymn and is here rather than
+      under GRAHA-SOMA-DRAWING as well because it is about the pressed drink being drunk,
+      and RV 1.28, which rituals.yaml already cites as the hymn that runs the whole
+      apparatus.
+    confidence: HIGH
+
+  - ritual_id: VG:CONCEPT:YAJNA-SACRIFICE
+    mode: augment
+    performed_by: [VG:CONCEPT:POTR-PURIFIER, VG:CONCEPT:PRASASTR-DIRECTOR,
+                   VG:CONCEPT:NESTR-LEADER, VG:CONCEPT:AGNIDH-FIRE-KINDLER,
+                   VG:CONCEPT:UDGATR-CHANTER]
+    described_in: [VG:RV:SAK:M02:S001:V002, VG:RV:SAK:M01:S094:V006,
+                   VG:RV:SAK:M10:S091:V010, VG:RV:SAK:M02:S043:V002,
+                   VG:YV:VSM:A19:V017, VG:YV:VSM:A18:V063, VG:YV:VSM:A18:V021,
+                   VG:RV:SAK:M01:S084:V018]
+    basis: >-
+      The five offices are added to the general sacrifice rather than to any particular
+      rite because that is where the corpus puts them. RV 2.1.2 names six of them in one
+      verse -- "tavāgne hotraṃ tava potram ṛtviyaṃ tava neṣṭraṃ tvam agnid ṛtāyataḥ tava
+      praśāstraṃ tvam adhvarīyasi brahmā cāsi gṛhapatiś ca no dame" -- and RV 1.94.6 is its
+      twin, "tvam adhvaryur uta hotāsi pūrvyaḥ praśāstā potā januṣā purohitaḥ". RV 10.91.10
+      repeats RV 2.1.2 verbatim. The chanter is added from RV 2.43.2, where a bird sings
+      "like an Udgatar", and is the fifth office rather than a sixth because the hotar is
+      not here: see the note below.
+      A reader must hold one thing about this list. In every one of those verses the holder
+      of the office is AGNI. The corpus's fullest statement of the priestly establishment is
+      a hymn telling a god he is all of it, and these PERFORMED_BY edges therefore assert
+      that the office belongs to the sacrifice, not that a named human held it. The
+      exceptions where a human does the work are RV 2.37.1-4 (the cups drawn from the
+      Hotar's, Potar's and Nestar's stations) and VS 26.22 ("neṣṭrād ṛtubhir iṣyata"), and
+      both are cited above under GRAHA-SOMA-DRAWING.
+      Two candidate offices were refused and are recorded in
+      domain_entities_ritual_v3.yaml: gṛhapati, which is an Agni epithet in eleven of its
+      twelve hits, and the pair `brahman` / `brahmā`, which collides with the neuter
+      formulation.
+    confidence: MEDIUM
+
+  - ritual_id: VG:CONCEPT:AGNIHOTRA
+    mode: augment
+    described_in: [VG:AV:SAU:K11:S007:V009]
+    basis: >-
+      One passage, and it is the same one passage the V1 entry rests on: AVS 11.7.9, where
+      the fire-offering is one item in a list of things set together in the remnant, beside
+      faith, the vasat-call, the vow, penance and the priestly fee. DESCRIBED_IN with a
+      single member is the honest shape of this rite in this corpus, and it is worth writing
+      precisely because a reader who sees an agnihotra node with no text behind it will
+      supply the Brahmanas' twice-daily milk offering from memory. This edge says: here is
+      the only verse there is.
+    confidence: LOW
+
+  - ritual_id: VG:CONCEPT:DIKSA-CONSECRATION
+    mode: augment
+    described_in: [VG:YV:VSM:A19:V030, VG:AV:SAU:K11:S007:V008,
+                   VG:AV:SAU:K12:S005:V003]
+    basis: >-
+      The three passages the V1 entry already reasons from, now attached. VS 19.30 puts the
+      consecration in a chain of means, "vratena dīkṣām āpnoti dīkṣayāpnoti dakṣiṇām";
+      AVS 11.7.8 lists it beside the establishing of the fire; AVS 12.5.3 has a thing
+      "guarded by consecration". No has_step, although VS 19.30 is a stated sequence: its
+      links are a vow, a fee, faith and truth, and VG:CONCEPT:VRATA-ORDINANCE and
+      VG:CONCEPT:DAKSINA-PRIESTLY-GIFT are typed CONCEPT and OFFERING, so HAS_STEP's Action
+      range cannot reach either. The sequence is real, cited, and unrepresentable; that is a
+      more useful thing to record than an edge bent to fit.
+    confidence: MEDIUM
+
+# ---------------------------------------------------------------------------
+# The PERFORMED_BY note, which is this layer's one real blocker
+# ---------------------------------------------------------------------------
+# The hotar is the officiant this corpus names most -- `hotā` alone token-matches 213
+# passages, and with hotāraṃ and hotāram the office reaches 281 -- and he appears in no
+# PERFORMED_BY edge in either rituals.yaml or this file. That is not an evidential gap. It
+# is a type error one field wide.
+#
+# VG:CONCEPT:HOTR-PRIEST in data/registry/concepts.yaml is declared `node_type: CONCEPT`.
+# PERFORMED_BY's signature is (Ritual -> RitualRole). A Concept-labelled node cannot be the
+# object of that edge, so load_rituals()' per-label MATCH finds nothing and the row lands
+# silently. Every rite in this file that the corpus staffs with a hotar -- the sautramani
+# most obviously, whose formulary at VS 21.29-31 and VS 21.58 is built on the phrase "hotā
+# yakṣat", let the Hotar worship -- therefore has a performed_by list with the wrong head.
+#
+# This pass could not fix it additively. load_concepts() raises when one folded alias is
+# claimed by two concepts, so a second hotar node here would not add an office, it would
+# stop the merged registry loading. The fix is:
+#
+#   data/registry/concepts.yaml, VG:CONCEPT:HOTR-PRIEST:  node_type: CONCEPT -> RITUAL_ROLE
+#
+# and then, in this file, adding VG:CONCEPT:HOTR-PRIEST to the performed_by of
+# SAUTRAMANI (VS 21.30, VS 21.31, VS 21.58), GRAHA-SOMA-DRAWING (RV 2.37.1) and
+# YAJNA-SACRIFICE (RV 2.1.2, RV 1.94.6).
+#
+# One further thing the architect should decide at the same time, and not later. That node's
+# alias list is a portmanteau: it holds hotā, hotāraṃ, hotāram, hotur, hotre and hotrāt,
+# which are the hotar; ṛtvijam and ṛtvijaḥ, which are any officiant; and adhvaryuḥ,
+# adhvaryavaḥ and adhvaryo, which are the adhvaryu -- an office that already has its own
+# RITUAL_ROLE node three files away, holding adhvaryavo and adhvaryubhiḥ. Retyping the node
+# without splitting it produces a RitualRole that answers "which rites does the adhvaryu
+# officiate at" twice, differently.

@@ -1,0 +1,216 @@
+# Deities offered to the theonym mention layer, with the Rigvedic lemma each is to be
+# adjudicated against. Input to scripts/build_theonym_dossier.py.
+#
+# This file selects candidates. It accepts nothing. Acceptance happens per form in
+# data/registry/theonym_forms.yaml, after the dossier has been read.
+#
+# `lemma_stem` is the VedaWeb normalized lemma, written with the precomposed vocalic
+# characters this repository uses elsewhere; the dossier folds the annotation's
+# COMBINING RING BELOW spelling onto it. A stem that does not resolve to an annotated
+# lemma is not an error -- it is the finding that this deity has no Rigvedic annotation
+# to ground it, and the dossier reports that explicitly.
+#
+# `group` records why the candidate is here and what is expected to go wrong with it.
+# It is documentation for the adjudicator, not a decision:
+#
+#   PRIMARY_THEONYM         the name is first of all a god's name
+#   HOMONYM_THEONYM         the name is also an ordinary noun in the same corpus
+#                           (agni/fire, soma/juice, surya/sun, vac/speech, mitra/friend,
+#                           usas/dawn, prthivi/earth, apas/waters, yama/twin, ratri/night)
+#   GEOGRAPHIC_HOMONYM      the name is also a place, and morphology cannot separate them
+#   DUAL_OR_GROUP           a dual or collective label; may or may not be lemmatized
+#   COMMON_NOUN_DEIFICATION the Anukramani deifies an ordinary object or pronoun. Expected
+#                           to be REJECTED from the theonym layer: lemma identity here
+#                           would assert a deity on every passage that mentions the thing.
+#   TOO_GENERIC             a collective so broad that a mention edge carries no information
+
+targets:
+  # ---- PRIMARY_THEONYM ---------------------------------------------------------------
+  - entity_key: VG:DEVATA:INDRAH
+    lemma_stem: indra
+    group: PRIMARY_THEONYM
+  - entity_key: VG:DEVATA:VARUNAH
+    lemma_stem: varuṇa
+    group: PRIMARY_THEONYM
+  - entity_key: VG:DEVATA:RUDRAH
+    lemma_stem: rudra
+    group: PRIMARY_THEONYM
+  - entity_key: VG:DEVATA:VISNUH
+    lemma_stem: viṣṇu
+    group: PRIMARY_THEONYM
+  - entity_key: VG:DEVATA:ASVINAU
+    lemma_stem: aśvin
+    group: PRIMARY_THEONYM
+  - entity_key: VG:DEVATA:MARUTAH
+    lemma_stem: marut
+    group: PRIMARY_THEONYM
+  - entity_key: VG:DEVATA:SAVITA
+    lemma_stem: savitar
+    group: PRIMARY_THEONYM
+  - entity_key: VG:DEVATA:PUSA
+    lemma_stem: pūṣan
+    group: PRIMARY_THEONYM
+  - entity_key: VG:DEVATA:BRHASPATIH
+    lemma_stem: bṛhaspati
+    group: PRIMARY_THEONYM
+  - entity_key: VG:DEVATA:VAYUH
+    lemma_stem: vāyu
+    group: PRIMARY_THEONYM
+  - entity_key: VG:DEVATA:TVASTA
+    lemma_stem: tvaṣṭar
+    group: PRIMARY_THEONYM
+  - entity_key: VG:DEVATA:PARJANYAH
+    lemma_stem: parjanya
+    group: PRIMARY_THEONYM
+  - entity_key: VG:DEVATA:RBHAVAH
+    lemma_stem: ṛbhu
+    group: PRIMARY_THEONYM
+  - entity_key: VG:DEVATA:NIRRTIH
+    lemma_stem: nirṛti
+    group: PRIMARY_THEONYM
+  - entity_key: VG:DEVATA:ADITIH
+    lemma_stem: aditi
+    group: PRIMARY_THEONYM
+  - entity_key: VG:DEVATA:ADITYAH
+    lemma_stem: āditya
+    group: PRIMARY_THEONYM
+  - entity_key: VG:DEVATA:VISVAKARMA
+    lemma_stem: viśvakarman
+    group: PRIMARY_THEONYM
+  - entity_key: VG:DEVATA:ARANYANI
+    lemma_stem: araṇyāni- ~ araṇyānī
+    group: PRIMARY_THEONYM
+
+  # ---- HOMONYM_THEONYM ---------------------------------------------------------------
+  # Vedic Sanskrit has one word for the god and for the thing. The vocative is the only
+  # form that certainly means the god; everything else is genuinely undecided and must be
+  # recorded as such rather than resolved by preference.
+  - entity_key: VG:DEVATA:AGNIH
+    lemma_stem: agni
+    group: HOMONYM_THEONYM
+    homonym_sense: fire as the physical element and as the ritual medium
+  - entity_key: VG:DEVATA:SOMAH
+    lemma_stem: soma
+    group: HOMONYM_THEONYM
+    homonym_sense: the pressed plant and its juice
+  - entity_key: VG:DEVATA:SURYAH
+    lemma_stem: sūrya
+    group: HOMONYM_THEONYM
+    homonym_sense: the sun as a visible body
+  - entity_key: VG:DEVATA:MITRAH
+    lemma_stem: mitra
+    group: HOMONYM_THEONYM
+    homonym_sense: a friend, an ally, a contract
+  - entity_key: VG:DEVATA:VAK
+    lemma_stem: vāc
+    group: HOMONYM_THEONYM
+    homonym_sense: speech, an utterance, the voice
+  - entity_key: VG:DEVATA:USAH
+    lemma_stem: uṣas
+    group: HOMONYM_THEONYM
+    homonym_sense: dawn as a time of day
+  - entity_key: VG:DEVATA:PRTHIVI
+    lemma_stem: pṛthivī
+    group: HOMONYM_THEONYM
+    homonym_sense: the earth as ground
+  - entity_key: VG:DEVATA:APAH
+    lemma_stem: ap
+    group: HOMONYM_THEONYM
+    homonym_sense: water, the waters
+  - entity_key: VG:DEVATA:YAMAH
+    lemma_stem: yama
+    group: HOMONYM_THEONYM
+    homonym_sense: a twin, a restrainer; two accented lemmas share this normalization
+  - entity_key: VG:DEVATA:RATRIH
+    lemma_stem: rātrī
+    group: HOMONYM_THEONYM
+    homonym_sense: night as a period
+  - entity_key: VG:DEVATA:MANYUH
+    lemma_stem: manyu
+    group: HOMONYM_THEONYM
+    homonym_sense: wrath, zeal
+  - entity_key: VG:DEVATA:PURUSAH
+    lemma_stem: puruṣa
+    group: HOMONYM_THEONYM
+    homonym_sense: a man, a person
+  - entity_key: VG:DEVATA:AHIH
+    lemma_stem: ahi
+    group: HOMONYM_THEONYM
+    homonym_sense: a snake; also the adversary slain by Indra
+
+  # ---- GEOGRAPHIC_HOMONYM ------------------------------------------------------------
+  - entity_key: VG:DEVATA:SARASVATI
+    lemma_stem: sarasvant
+    group: GEOGRAPHIC_HOMONYM
+    homonym_sense: >-
+      the river Sarasvati. The annotation lemmatizes the goddess, the river and the
+      masculine Sarasvan under one stem, and gender separates only the last of the three.
+
+  # ---- DUAL_OR_GROUP -----------------------------------------------------------------
+  - entity_key: VG:DEVATA:INDRAGNI
+    lemma_stem: indrāgni
+    group: DUAL_OR_GROUP
+  - entity_key: VG:DEVATA:MITRAVARUNAU
+    lemma_stem: mitrāvaruṇa
+    group: DUAL_OR_GROUP
+  - entity_key: VG:DEVATA:INDRAVAYU
+    lemma_stem: indra-vāyu
+    group: DUAL_OR_GROUP
+  - entity_key: VG:DEVATA:DYAVAPRTHIVYAU
+    lemma_stem: dyāvāpṛthivī
+    group: DUAL_OR_GROUP
+  - entity_key: VG:DEVATA:VISVEDEVAH
+    lemma_stem: viśvedeva
+    group: DUAL_OR_GROUP
+    note: expected to have no lemma of its own; written as two words in the annotation
+  - entity_key: VG:DEVATA:BRAHMANASPATIH
+    lemma_stem: brahmaṇaspati
+    group: DUAL_OR_GROUP
+    note: expected to be two tokens, a genitive plus a noun
+  - entity_key: VG:DEVATA:APAM-NAPAT
+    lemma_stem: apāṃnapāt
+    group: DUAL_OR_GROUP
+    note: expected to be two tokens; tanūnapāt is lemmatized but this is not
+  - entity_key: VG:DEVATA:PAVAMANAH-SOMAH
+    lemma_stem: pavamāna
+    group: DUAL_OR_GROUP
+    note: an epithet-plus-name label; the epithet may be lemmatized separately
+
+  # ---- COMMON_NOUN_DEIFICATION -------------------------------------------------------
+  # Carried into the dossier deliberately, so the number of passages a naive lemma-identity
+  # layer would have mislabelled is measured and published rather than merely asserted.
+  - entity_key: VG:DEVATA:RATHAH
+    lemma_stem: ratha
+    group: COMMON_NOUN_DEIFICATION
+  - entity_key: VG:DEVATA:KAH
+    lemma_stem: ka
+    group: COMMON_NOUN_DEIFICATION
+  - entity_key: VG:DEVATA:HARIH
+    lemma_stem: hari
+    group: COMMON_NOUN_DEIFICATION
+  - entity_key: VG:DEVATA:ASHVAH
+    lemma_stem: aśva
+    group: COMMON_NOUN_DEIFICATION
+  - entity_key: VG:DEVATA:ATMA
+    lemma_stem: ātman
+    group: COMMON_NOUN_DEIFICATION
+  - entity_key: VG:DEVATA:SRADDHA
+    lemma_stem: śraddhā
+    group: COMMON_NOUN_DEIFICATION
+  - entity_key: VG:DEVATA:MRTYUH
+    lemma_stem: mṛtyu
+    group: COMMON_NOUN_DEIFICATION
+  - entity_key: VG:DEVATA:VANASPATIH
+    lemma_stem: vanaspati
+    group: COMMON_NOUN_DEIFICATION
+  - entity_key: VG:DEVATA:CANDRAMAH
+    lemma_stem: candramas
+    group: COMMON_NOUN_DEIFICATION
+  - entity_key: VG:DEVATA:PITARAH
+    lemma_stem: pitar
+    group: COMMON_NOUN_DEIFICATION
+
+  # ---- TOO_GENERIC -------------------------------------------------------------------
+  - entity_key: VG:DEVATA:DEVAH
+    lemma_stem: deva
+    group: TOO_GENERIC

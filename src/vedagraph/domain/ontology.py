@@ -123,6 +123,78 @@ LABEL_CROP: Final = "Crop"                       # Q9,  sublabel of Plant
 LABEL_METAL: Final = "Metal"                     # Q10, sublabel of Substance
 LABEL_WEAPON: Final = "Weapon"                   # Q40, sublabel of Object
 
+# ---------------------------------------------------------------------------
+# V3: the reified assertion layer
+# ---------------------------------------------------------------------------
+
+#: One assertion, with its own evidence. The V3 answer to a question the brief poses as a
+#: design choice: carry passage-level evidence on multiple relationships, or reify.
+#:
+#: **Reified, with derived one-hop edges on top.** Measured against both requirements:
+#:
+#: *Evidence.* An agentive fact has up to six parts -- agent, predicate, patient,
+#: instrument, beneficiary, location -- plus the verb form and morphology that licensed
+#: it. A plain ``(Devata)-[:SLAYS]->(Entity)`` edge can hold two of them and has nowhere
+#: to put the other four, so the roles would have to be flattened into edge properties on
+#: an edge whose endpoints already chose two of the roles as privileged. Reifying keeps
+#: all six as first-class and lets a query ask for the instrument.
+#:
+#: *Explosion.* The rule fires 2,362 times over the Rigveda and the sealed model artifact
+#: adds 2,474, so the node count is four thousand-ish rather than a million. Reification
+#: is affordable here precisely because the layer is evidence-bound and therefore small.
+#:
+#: *Traversal.* Reification alone costs a hop, and "which actions does Indra perform" is
+#: the commonest question this layer exists to answer. So the aggregate is *also* written,
+#: as ``PERFORMS_ACTION`` and ``IS_ASKED_TO`` from the deity straight to the predicate,
+#: carrying the assertion and passage counts and derived from the assertion nodes rather
+#: than authored beside them. One hop for the leaderboard, two for the evidence, and the
+#: aggregate cannot drift from its assertions because it is rebuilt from them.
+LABEL_SEMANTIC_ASSERTION: Final = "SemanticAssertion"
+
+#: An Anukramaṇī ascription that is **not** a deity name.
+#:
+#: Whitney's Bṛhatsarvānukramaṇī excerpts ascribe an Atharvavedic hymn with an adjectival
+#: *descriptor*: ``āgneyam`` "belonging to Agni", ``mantroktadevatyam`` "having the deity
+#: named in the mantra", ``bhāiṣajyāyuṣyam uta mantroktāuṣadhidevatākam``. There are 324 of
+#: them and they are the Atharvaveda's entire deity-attribution layer. (356 before the
+#: harvest was filtered: the printed bracket interleaves verse counts and pāda addresses
+#: with the ascriptions, so the graph once asserted that AVS 18.4's deity-ascription was
+#: ``ekonanavati``, eighty-nine. The rejections are recorded in the generated registry.)
+#:
+#: They get their own label because the alternative is worse in both directions. Projected
+#: as ``:Devata`` they would add 324 spurious gods, and "how many deities does this graph
+#: know?" would stop being answerable. Dropped, the Atharvaveda would keep a deity
+#: attribution rate of zero while its own index ascribes 507 hymns. So the descriptor is
+#: modelled as what it is, and ``derived_devata_key`` carries the deity for the subset
+#: where the derivation is a plain morphological fact rather than a reading.
+LABEL_DEVATA_ASCRIPTION: Final = "DevataAscription"
+
+#: One member of the closed action-predicate vocabulary in
+#: ``data/registry/action_predicates.yaml``. Deliberately **not** the existing
+#: :data:`LABEL_ACTION`, which holds registry *nouns* -- five of them, reached by a
+#: mention edge. "The act of pressing soma" as a concept and ``PRESSES`` as a predicate
+#: are different ontological things, and merging them is the flattening V2 spent a pass
+#: undoing.
+LABEL_ACTION_PREDICATE: Final = "ActionPredicate"
+
+#: One family of formulas related by containment: a core phrase, the longer phrases that
+#: contain it, and its spelling variants.
+#:
+#: This label exists because 1,103 of 4,825 ``Formula`` nodes are strict substrings of
+#: another one on the surface that defines formula identity, so the flat formula layer
+#: answers "which formulas does this passage use?" with a core phrase and its expansions
+#: listed as unrelated peers. A reader counting formulas counts the same phrase several
+#: times, and a reader looking for the *shared* phrase behind a group of near-identical
+#: ones has no node to look at.
+#:
+#: Grouping is by containment on the collapsed identity form, which is the same surface
+#: ``formula_id`` is derived from -- not by similarity. That matters: containment is a
+#: decidable relation over the stored strings, so the layer is deterministic and
+#: reproducible, and no threshold was chosen. Formulas in no family stay unfamilied
+#: rather than being forced into singletons, because a singleton family asserts a grouping
+#: that was never found.
+LABEL_FORMULA_FAMILY: Final = "FormulaFamily"
+
 class DomainNodeType(StrEnum):
     """Entity types V2 adds, on top of the frozen semantic seventeen.
 
@@ -235,6 +307,10 @@ PRODUCT_LABELS: Final[frozenset[str]] = frozenset(
         LABEL_CROP,
         LABEL_METAL,
         LABEL_WEAPON,
+        LABEL_SEMANTIC_ASSERTION,
+        LABEL_ACTION_PREDICATE,
+        LABEL_DEVATA_ASCRIPTION,
+        LABEL_FORMULA_FAMILY,
     }
 )
 
@@ -397,6 +473,13 @@ class AttributionPrecision(StrEnum):
     PER_PASSAGE = "PER_PASSAGE"
     #: Inherited from the enclosing sūkta's label by a scope rule.
     CONTAINER_INHERITED = "CONTAINER_INHERITED"
+    #: The passage *names* the entity in its own text. Not an attribution at all in the
+    #: Anukramaṇī's sense, and kept as a distinct value rather than folded into
+    #: ``PER_PASSAGE`` because the two answer different questions and a reader must be
+    #: able to choose. "How many mantras invoke Indra?" has at least four honest answers
+    #: — strict source-stated, container-inherited, textual mention, and semantic
+    #: invocation — and collapsing any pair of them makes one of the four unaskable.
+    TEXTUAL_MENTION = "TEXTUAL_MENTION"
 
 
 #: ``provenance_class`` in the knowledge layer, graded. ``SOURCE_DERIVED_SCOPE`` is a
@@ -470,6 +553,12 @@ REL_PERFORMED_BY: Final = "PERFORMED_BY"
 REL_HAS_STEP: Final = "HAS_STEP"
 REL_DESCRIBED_IN: Final = "DESCRIBED_IN"
 
+#: ``Formula`` -> ``FormulaFamily``. Carries ``role`` (``CORE``, ``EXPANSION``,
+#: ``VARIANT``), so the direction of the containment is recoverable from the edge and a
+#: query can ask for the core phrase alone. Not symmetric and not a similarity edge: the
+#: role is what distinguishes "this is the shared phrase" from "this contains it".
+REL_MEMBER_OF_FAMILY: Final = "MEMBER_OF_FAMILY"
+
 # Human concerns, chiefly but not only Atharvavedic.
 REL_ADDRESSES_CONCERN: Final = "ADDRESSES_CONCERN"
 REL_TREATS: Final = "TREATS"
@@ -493,6 +582,94 @@ REL_ASSERTED_BY: Final = "ASSERTED_BY"
 REL_CONCERNS: Final = "CONCERNS"
 REL_CONTRADICTS: Final = "CONTRADICTS"
 REL_MEASURES: Final = "MEASURES"
+
+# ---------------------------------------------------------------------------
+# The two concept layers, reconciled
+# ---------------------------------------------------------------------------
+#
+# V2 shipped two predicates answering overlapping questions with different numbers, and
+# named the reconciliation as unfinished business. V3 measured the overlap and it is not
+# an overlap at all -- it is exact containment:
+#
+#   evidence_basis   ABOUT_CONCEPT edges   also carried by MENTIONS_ENTITY
+#   SANSKRIT                     13,281                    13,281  (100.0%)
+#   MIXED                        13,015                    13,015  (100.0%)
+#   TRANSLATION                  21,246                         0  (  0.0%)
+#
+# So the layers were never rivals. Every Sanskrit-grounded aboutness assertion is a
+# mention assertion, and ABOUT_CONCEPT's only independent content was 21,246 edges resting
+# on an English word in Griffith 1896 with no Sanskrit evidence whatsoever.
+#
+# Those 21,246 are retired in V3. The instruction not to create an aboutness edge "merely
+# because an English translation contains one keyword" describes them exactly, and the bias
+# they carried is worse than their weakness: the Samaveda has **no translations at all**,
+# so it contributed **zero** translation-only edges and was silently penalised on every
+# cross-Veda conceptual comparison the layer was used for.
+#
+# What survives is defined, narrowly:
+#
+#   MENTIONS_ENTITY  -- this passage NAMES this entity. Lexical, uncapped, Sanskrit only.
+#                       The claim is about the text.
+#   ABOUT_CONCEPT    -- of the entities this passage names, these are the (at most four)
+#                       it is substantively about. A **salience ranking over the mention
+#                       layer**, not an independent claim, and now provably a subset of it:
+#                       after the retirement the two cannot disagree, because one is
+#                       contained in the other by construction.
+#
+# The evidence-basis axis stays filterable on both, as required, so a reader can still ask
+# for Sanskrit-grounded, translation-grounded or corroborated evidence separately -- there
+# is simply no longer a translation-only aboutness claim to ask for.
+
+# ---------------------------------------------------------------------------
+# V3 predicates
+# ---------------------------------------------------------------------------
+
+#: This passage names this god, in its own Sanskrit. **Not an attribution**, and that is
+#: why it is a separate predicate rather than more ``HAS_DEVATA``: the Anukramaṇī saying a
+#: sūkta belongs to Indra and the verse saying ``índra`` are different facts, and a reader
+#: asking "how many mantras invoke Indra?" is entitled to choose which one they mean.
+#: Carries ``attribution_precision = TEXTUAL_MENTION``.
+#:
+#: It also supersedes and replaces the V2 arrangement in which ``MENTIONS_ENTITY`` reached
+#: ``:Devata`` for 9,000 Rigveda-only edges that duplicated ``MENTIONS_LEMMA`` fact for
+#: fact -- identical per-passage counts on all 6,560 passages, empty symmetric difference
+#: in both directions.
+REL_MENTIONS_DEVATA: Final = "MENTIONS_DEVATA"
+
+#: Passage to the assertions read off it. The reified layer's spine.
+REL_HAS_SEMANTIC_ASSERTION: Final = "HAS_SEMANTIC_ASSERTION"
+
+#: The being that acts, or is asked to act.
+REL_ASSERTION_AGENT: Final = "ASSERTION_AGENT"
+
+#: Which member of the closed vocabulary this assertion predicates.
+REL_ASSERTION_PREDICATE: Final = "ASSERTION_PREDICATE"
+
+#: What the assertion is about besides its agent: the patient of an action, or the entity
+#: a model-extracted assertion resolved to. One predicate rather than one per role, with
+#: the role on the edge, because the roles are an open set the corpus keeps extending and
+#: a new role must not need an ontology change to be recorded.
+REL_ASSERTION_TARGET: Final = "ASSERTION_TARGET"
+
+#: Aggregate: this deity is stated to do this. Derived from the assertion nodes, never
+#: authored separately. Declared and empty in V2; populated in V3.
+#: (``REL_PERFORMS_ACTION`` is already defined above with the V2 predicates.)
+
+#: Aggregate: this deity is *asked* to do this. The counterpart of
+#: ``PERFORMS_ACTION``, and a distinct predicate rather than a property because "Indra
+#: slays Vṛtra" and "Indra, slay Vṛtra!" are different claims about the corpus and the
+#: commonest thing said to a Vedic god is a request.
+REL_IS_ASKED_TO: Final = "IS_ASKED_TO"
+
+#: This passage is ascribed by a traditional index to a deity *descriptor*. A separate
+#: predicate from ``HAS_DEVATA`` because the object is not a deity: see
+#: :data:`LABEL_DEVATA_ASCRIPTION`. Keeping them apart is what lets the Atharvaveda have an
+#: index-based deity layer without the deity census absorbing 324 adjectives.
+REL_HAS_DEVATA_ASCRIPTION: Final = "HAS_DEVATA_ASCRIPTION"
+
+#: The deity a descriptor is derived from, where the derivation is a morphological fact --
+#: ``āgneyam`` is the vrddhi derivative of ``agni``. Absent where it would be a reading.
+REL_ASCRIBES_TO_DEVATA: Final = "ASCRIBES_TO_DEVATA"
 
 
 #: Relationship types V2 introduces or re-scopes. Anything not here and not already
@@ -521,6 +698,7 @@ DOMAIN_RELATIONSHIP_TYPES: Final[frozenset[str]] = frozenset(
         REL_PERFORMED_BY,
         REL_HAS_STEP,
         REL_DESCRIBED_IN,
+        REL_MEMBER_OF_FAMILY,
         REL_ADDRESSES_CONCERN,
         REL_TREATS,
         REL_PROTECTS_FROM,
@@ -535,6 +713,15 @@ DOMAIN_RELATIONSHIP_TYPES: Final[frozenset[str]] = frozenset(
         REL_CONCERNS,
         REL_CONTRADICTS,
         REL_MEASURES,
+        # V3
+        REL_MENTIONS_DEVATA,
+        REL_HAS_SEMANTIC_ASSERTION,
+        REL_ASSERTION_AGENT,
+        REL_ASSERTION_PREDICATE,
+        REL_ASSERTION_TARGET,
+        REL_IS_ASKED_TO,
+        REL_HAS_DEVATA_ASCRIPTION,
+        REL_ASCRIBES_TO_DEVATA,
     }
 )
 
@@ -547,6 +734,12 @@ UNPOPULATED_BY_DESIGN: Final[dict[str, str]] = {
         "one later does not require reinterpreting existing textual-reuse edges."
     ),
 }
+# This map is **domain predicates only**, and a test enforces that every key is in
+# `DOMAIN_RELATIONSHIP_TYPES`. The enrichment layer has its own deliberately-empty
+# predicate (`SHARES_FORMULA_WITH`) and declares it in
+# `vedagraph.enrich.predicates.UNPOPULATED_BY_DESIGN`, because a domain-layer constant
+# claiming authority over an enrichment-layer predicate is the kind of cross-layer reach
+# that makes both harder to reason about. The ontology reference reads both.
 
 
 #: What each V2 predicate may connect. Enforced at build time, because the fastest way
@@ -591,7 +784,6 @@ RELATIONSHIP_SIGNATURES: Final[dict[str, tuple[frozenset[str], frozenset[str]]]]
         frozenset({LABEL_DEVATA}),
         frozenset({LABEL_OFFERING, LABEL_SUBSTANCE, LABEL_ANIMAL, LABEL_PLANT}),
     ),
-    REL_PERFORMS_ACTION: (frozenset({LABEL_DEVATA}), frozenset({LABEL_ACTION})),
     REL_CO_OCCURS_WITH: (frozenset({LABEL_DEVATA}), frozenset({LABEL_DEVATA})),
     REL_USES_OFFERING: (frozenset({LABEL_RITUAL}), frozenset({LABEL_OFFERING})),
     REL_USES_SUBSTANCE: (
@@ -609,6 +801,10 @@ RELATIONSHIP_SIGNATURES: Final[dict[str, tuple[frozenset[str], frozenset[str]]]]
     REL_DESCRIBED_IN: (
         frozenset({LABEL_RITUAL, LABEL_SOCIAL_RITE}),
         frozenset({LABEL_PASSAGE}),
+    ),
+    REL_MEMBER_OF_FAMILY: (
+        frozenset({LABEL_FORMULA}),
+        frozenset({LABEL_FORMULA_FAMILY}),
     ),
     REL_ADDRESSES_CONCERN: (frozenset({LABEL_PASSAGE}), frozenset({LABEL_HUMAN_CONCERN})),
     REL_TREATS: (frozenset({LABEL_PASSAGE}), frozenset({LABEL_CONDITION})),
@@ -645,10 +841,46 @@ RELATIONSHIP_SIGNATURES: Final[dict[str, tuple[frozenset[str], frozenset[str]]]]
         frozenset({LABEL_DERIVED_METRIC}),
         frozenset({LABEL_DEVATA, LABEL_CONCEPT, LABEL_WORK, LABEL_DOMAIN_ENTITY}),
     ),
+    # ---- V3 -------------------------------------------------------------------------
+    REL_MENTIONS_DEVATA: (frozenset({LABEL_PASSAGE}), frozenset({LABEL_DEVATA})),
+    REL_HAS_SEMANTIC_ASSERTION: (
+        frozenset({LABEL_PASSAGE}),
+        frozenset({LABEL_SEMANTIC_ASSERTION}),
+    ),
+    REL_ASSERTION_AGENT: (
+        frozenset({LABEL_SEMANTIC_ASSERTION}),
+        frozenset({LABEL_DEVATA, LABEL_DOMAIN_ENTITY}),
+    ),
+    REL_ASSERTION_PREDICATE: (
+        frozenset({LABEL_SEMANTIC_ASSERTION}),
+        frozenset({LABEL_ACTION_PREDICATE}),
+    ),
+    REL_ASSERTION_TARGET: (
+        frozenset({LABEL_SEMANTIC_ASSERTION}),
+        frozenset({LABEL_DEVATA, LABEL_DOMAIN_ENTITY}),
+    ),
+    # Widened in V3, and declared once. It was V2's `Devata -> Action` and is now
+    # `Devata -> {ActionPredicate, Action}`, because the aggregate points at a member of
+    # the closed predicate vocabulary while the five V2 `Action` registry nouns remain
+    # reachable. A second entry was briefly left in the V2 block above; two entries for
+    # one key is not a widening, it is a silent precedence rule.
+    REL_PERFORMS_ACTION: (
+        frozenset({LABEL_DEVATA}),
+        frozenset({LABEL_ACTION_PREDICATE, LABEL_ACTION}),
+    ),
+    REL_IS_ASKED_TO: (frozenset({LABEL_DEVATA}), frozenset({LABEL_ACTION_PREDICATE})),
+    REL_HAS_DEVATA_ASCRIPTION: (
+        frozenset({LABEL_PASSAGE}),
+        frozenset({LABEL_DEVATA_ASCRIPTION}),
+    ),
+    REL_ASCRIBES_TO_DEVATA: (
+        frozenset({LABEL_DEVATA_ASCRIPTION}),
+        frozenset({LABEL_DEVATA}),
+    ),
 }
 
 assert set(RELATIONSHIP_SIGNATURES) == DOMAIN_RELATIONSHIP_TYPES, (
-    "every V2 relationship type needs an endpoint signature"
+    "every declared relationship type needs an endpoint signature"
 )
 
 

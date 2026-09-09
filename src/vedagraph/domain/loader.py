@@ -493,10 +493,18 @@ def load_rituals(session: Session, rituals: Sequence[dict[str, Any]]) -> LoadRep
     uses the ladle" is a statement about the rite as an institution, assembled from
     passages, and no single passage says it. The passages themselves remain reachable as
     mentions at TIER_B.
+
+    Every edge this function writes carries ``build_pass``, and anything carrying the
+    property from an earlier pass is swept. Without that, removing a rite's apparatus item
+    from the YAML leaves the edge in the graph forever: MERGE adds and never forgets, so
+    the registry's *retractions* would be advisory rather than effective. This is the same
+    defect that once left seven ``SVAN-DOG`` mentions asserting dogs where the lexicon had
+    deliberately dropped the alias.
     """
     report = LoadReport(step="rituals", sent=0)
     if not rituals:
         return report
+    build_pass = uuid.uuid4().hex
 
     for key, rel_type, labels in _RITUAL_EDGES:
         rows = [
@@ -520,17 +528,152 @@ def load_rituals(session: Session, rituals: Sequence[dict[str, Any]]) -> LoadRep
                 MERGE (rt)-[r:{rel_type}]->(t)
                 ON CREATE SET r.knowledge_layer = $layer, r.quality_tier = $tier,
                               r.grade_basis = 'curated ritual structure, V2 overlay'
+                SET r.build_pass = $build_pass
                 """,
                 rows,
                 layer=str(KnowledgeLayer.L4_INTERPRETIVE_CLAIM),
                 tier=str(QualityTier.TIER_D),
+                build_pass=build_pass,
             )
         landed = session.run(
-            f"MATCH (:Ritual)-[r:{rel_type}]->() RETURN count(r) AS c"
+            f"MATCH (:Ritual)-[r:{rel_type}]->() WHERE r.build_pass = $build_pass "
+            "RETURN count(r) AS c",
+            build_pass=build_pass,
         ).single()["c"]
         report.landed += landed
         report.detail[rel_type] = {"sent": len(rows), "landed": landed}
+
+    report.detail["DESCRIBED_IN"] = _load_ritual_described_in(
+        session, rituals, build_pass
+    )
+    report.sent += int(report.detail["DESCRIBED_IN"]["sent"])
+    report.landed += int(report.detail["DESCRIBED_IN"]["landed"])
+
+    report.detail["HAS_STEP"] = _load_ritual_steps(session, rituals, build_pass)
+    report.sent += int(report.detail["HAS_STEP"]["sent"])
+    report.landed += int(report.detail["HAS_STEP"]["landed"])
+
+    swept = 0
+    for _key, rel_type, _labels in (
+        *_RITUAL_EDGES,
+        ("described_in", "DESCRIBED_IN", ()),
+        ("has_step", "HAS_STEP", ()),
+    ):
+        # `IS NULL OR <>`, not `IS NOT NULL AND <>`. This function is the only writer of
+        # these relationship types out of a :Ritual, so the layer owns every one of them
+        # and an edge with no stamp is an edge from a build that predates the stamping --
+        # exactly the stale row the sweep exists to remove. Requiring the property to be
+        # present would make the first stamped run permanently unable to retract anything
+        # written before it.
+        swept += session.run(
+            f"""
+            MATCH (:Ritual)-[r:{rel_type}]->()
+            WHERE r.build_pass IS NULL OR r.build_pass <> $build_pass
+            DELETE r
+            RETURN count(*) AS c
+            """,
+            build_pass=build_pass,
+        ).single()["c"]
+    report.detail["retired_stale"] = {"sent": 0, "landed": swept}
     return report
+
+
+def _load_ritual_described_in(
+    session: Session, rituals: Sequence[dict[str, Any]], build_pass: str
+) -> dict[str, int]:
+    """Link each rite to the passages that describe it.
+
+    ``DESCRIBED_IN`` is the edge that makes a rite readable rather than merely declared: a
+    ``Ritual`` node with an apparatus list and no passages is an assertion with nowhere to
+    check it. It stays TIER_D because "this passage describes this rite" is a reading --
+    the Samhita names acts, not rite-names, for most of these -- but the locator it hands
+    back is exact, so the reading is falsifiable by anyone who opens the verse.
+    """
+    rows = [
+        {"ritual_id": str(r["ritual_id"]), "passage_key": key}
+        for r in rituals
+        for key in (r.get("described_in") or [])
+    ]
+    if not rows:
+        return {"sent": 0, "landed": 0}
+    _write(
+        session,
+        """
+        UNWIND $rows AS row
+        MATCH (rt:Ritual {entity_key: row.ritual_id})
+        MATCH (p:Passage {canonical_key: row.passage_key})
+        MERGE (rt)-[r:DESCRIBED_IN]->(p)
+        ON CREATE SET r.knowledge_layer = $layer, r.quality_tier = $tier,
+                      r.evidence_basis = 'SANSKRIT',
+                      r.attribution_precision = $precision,
+                      r.grade_basis = 'curated ritual description, V3 overlay'
+        SET r.build_pass = $build_pass
+        """,
+        rows,
+        layer=str(KnowledgeLayer.L4_INTERPRETIVE_CLAIM),
+        tier=str(QualityTier.TIER_D),
+        precision=str(AttributionPrecision.PER_PASSAGE),
+        build_pass=build_pass,
+    )
+    landed = session.run(
+        "MATCH (:Ritual)-[r:DESCRIBED_IN]->(:Passage) WHERE r.build_pass = $build_pass "
+        "RETURN count(r) AS c",
+        build_pass=build_pass,
+    ).single()["c"]
+    return {"sent": len(rows), "landed": landed}
+
+
+def _load_ritual_steps(
+    session: Session, rituals: Sequence[dict[str, Any]], build_pass: str
+) -> dict[str, int]:
+    """Link a rite to its ordered acts, carrying the *basis* for the order.
+
+    ``order`` is only meaningful because ``order_basis`` travels with it. A step numbered
+    by the text itself (RV 10.112.1 calls the morning pressing the *first* draught) and a
+    step numbered by where it happens to sit in a list are not the same claim, and a graph
+    that stored the integer without the basis would let a reader mistake the second for
+    the first. So the property is written, and a step whose order the source does not
+    state is admitted with its basis saying exactly that.
+    """
+    rows = [
+        {
+            "ritual_id": str(r["ritual_id"]),
+            "action": step["action"],
+            "order": step.get("order"),
+            "order_basis": step.get("order_basis", "UNSTATED"),
+            "basis": step.get("basis", ""),
+            "passages": list(step.get("passages") or []),
+        }
+        for r in rituals
+        for step in (r.get("has_step") or [])
+    ]
+    if not rows:
+        return {"sent": 0, "landed": 0}
+    _write(
+        session,
+        """
+        UNWIND $rows AS row
+        MATCH (rt:Ritual {entity_key: row.ritual_id})
+        MATCH (a:Action {entity_key: row.action})
+        MERGE (rt)-[r:HAS_STEP]->(a)
+        ON CREATE SET r.knowledge_layer = $layer, r.quality_tier = $tier,
+                      r.evidence_basis = 'SANSKRIT',
+                      r.grade_basis = 'curated ritual sequence, V3 overlay'
+        SET r.step_order = row.order, r.order_basis = row.order_basis,
+            r.order_evidence = row.basis, r.evidence_passages = row.passages,
+            r.build_pass = $build_pass
+        """,
+        rows,
+        layer=str(KnowledgeLayer.L4_INTERPRETIVE_CLAIM),
+        tier=str(QualityTier.TIER_D),
+        build_pass=build_pass,
+    )
+    landed = session.run(
+        "MATCH (:Ritual)-[r:HAS_STEP]->(:Action) WHERE r.build_pass = $build_pass "
+        "RETURN count(r) AS c",
+        build_pass=build_pass,
+    ).single()["c"]
+    return {"sent": len(rows), "landed": landed}
 
 
 #: Concern whitelist key -> (relationship type, object labels, tier).

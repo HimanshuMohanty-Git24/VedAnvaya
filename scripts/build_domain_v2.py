@@ -84,6 +84,99 @@ def _write_jsonl(path: pathlib.Path, rows: list[dict[str, Any]]) -> None:
             handle.write(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n")
 
 
+#: List-valued keys on a ritual record. Scalars (``mode``, ``confidence``, ``basis``) are
+#: metadata about the authoring decision and are not merged: the V3 record's own value
+#: wins, because it is the one that describes the merged result.
+_RITUAL_LIST_KEYS: tuple[str, ...] = (
+    "uses_offering",
+    "uses_substance",
+    "uses_object",
+    "invokes_devata",
+    "performed_by",
+    "performed_for",
+    "described_in",
+    "has_step",
+)
+
+
+def _merge_rituals(base: list[dict[str, Any]], v3: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Union the V3 ritual fragment onto the V1 file, per rite, per list.
+
+    ``rituals_v3.yaml`` declares ``merges_with: rituals.yaml`` and ``supersedes: nothing``,
+    so a V3 record for a rite that already exists *adds* apparatus rather than replacing
+    it -- four of its eight rites are declared ``mode: augment`` for exactly that reason.
+    Letting the V3 record win outright would silently drop the V1 apparatus of the yajna,
+    the soma pressing, the agnihotra and the consecration, which is the failure mode the
+    ``mode`` field exists to prevent.
+
+    Order is preserved and duplicates are dropped, so the merge is deterministic and
+    running it twice changes nothing.
+    """
+    merged: dict[str, dict[str, Any]] = {}
+    for record in (*base, *v3):
+        ritual_id = str(record["ritual_id"])
+        target = merged.setdefault(ritual_id, {"ritual_id": ritual_id})
+        for key, value in record.items():
+            if key == "ritual_id":
+                continue
+            if key not in _RITUAL_LIST_KEYS:
+                target[key] = value
+                continue
+            existing = target.setdefault(key, [])
+            for item in value or []:
+                # `has_step` items are dicts and unhashable, so identity is by content.
+                if item not in existing:
+                    existing.append(item)
+    return [merged[key] for key in sorted(merged)]
+
+
+def _merge_concern_lists(
+    base: dict[str, Any], v3: dict[str, Any]
+) -> dict[str, list[str]]:
+    """Union the V3 concern whitelists onto the V1 ones.
+
+    ``concern_predicates_v3.yaml`` declares ``merge_semantics: union_with_v1``. The
+    promotion it records -- ``SAPATNA-RIVAL-OVERCOMING`` gaining ``protects_from`` while
+    keeping ``addresses_concern`` -- is expressible *only* as a union: replacing the V1
+    list would revoke the membership the promotion is meant to keep.
+
+    ``no_typed_edge`` and the other prose keys are not whitelists and are excluded by the
+    predicate-name filter rather than by a blocklist, so a new prose key cannot
+    accidentally become an edge type.
+
+    **The ``promotions`` block is applied, not just read.** It records that
+    ``SAPATNA-RIVAL-OVERCOMING`` gains ``protects_from`` while keeping
+    ``addresses_concern`` -- and that concept is deliberately *not* repeated in the V3
+    ``protects_from`` list, because the promotion block is where the decision lives. A
+    union over the four predicate keys alone therefore silently dropped it: measured
+    against the live graph, the concept had 101 ``ADDRESSES_CONCERN`` edges and **zero**
+    ``PROTECTS_FROM``, so a recorded, justified decision had no effect on the data. That is
+    the same drift this repository has already been bitten by once, where 8 of 9 recorded
+    corrections were never written into the rows they described. The lesson is to read the
+    row, not the audit block -- so here the audit block is turned into rows.
+    """
+    predicate_keys = ("addresses_concern", "used_for_rite", "treats", "protects_from")
+    merged: dict[str, list[str]] = {}
+    for key in predicate_keys:
+        seen: list[str] = []
+        for source in (base, v3):
+            for item in source.get(key) or []:
+                if isinstance(item, str) and item not in seen:
+                    seen.append(item)
+        merged[key] = seen
+
+    for promotion in v3.get("promotions") or []:
+        if not isinstance(promotion, dict):
+            continue
+        concept_id = promotion.get("concept_id")
+        if not isinstance(concept_id, str):
+            continue
+        for key in promotion.get("to") or []:
+            if key in merged and concept_id not in merged[key]:
+                merged[key].append(concept_id)
+    return merged
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -114,14 +207,16 @@ def main() -> int:
     print("\n[2/6] loading the Devata overlay and interpretive claims")
     taxonomy, taxonomy_summary = load_taxonomy(PROJECT_ROOT)
     claims = load_claims(PROJECT_ROOT)
-    rituals = list(_read_yaml(PROJECT_ROOT / DOMAIN_DIR / "rituals.yaml").get("rituals") or [])
-    concern_lists = {
-        key: list(value)
-        for key, value in _read_yaml(
-            PROJECT_ROOT / DOMAIN_DIR / "concern_predicates.yaml"
-        ).items()
-        if isinstance(value, list)
-    }
+    rituals = _merge_rituals(
+        list(_read_yaml(PROJECT_ROOT / DOMAIN_DIR / "rituals.yaml").get("rituals") or []),
+        list(
+            _read_yaml(PROJECT_ROOT / DOMAIN_DIR / "rituals_v3.yaml").get("rituals") or []
+        ),
+    )
+    concern_lists = _merge_concern_lists(
+        _read_yaml(PROJECT_ROOT / DOMAIN_DIR / "concern_predicates.yaml"),
+        _read_yaml(PROJECT_ROOT / DOMAIN_DIR / "concern_predicates_v3.yaml"),
+    )
     manifest["devata_taxonomy"] = taxonomy_summary.as_dict()
     manifest["claims"] = claim_summary(claims)
     print(
@@ -212,6 +307,28 @@ def main() -> int:
             for report in load_reports:
                 flag = "ok " if report.complete else "!! "
                 print(f"      {flag}{report.step:<26} sent={report.sent:<8} landed={report.landed}")
+
+            # Grade AFTER projecting, not only before. `upgrade()` stamps grades in step
+            # [5/6], but every edge the projection above creates is written in step [6/6],
+            # so on a clean database the newest edges were never graded at all: 1,890 of
+            # them -- mentions, concern predicates, ritual structure and registry
+            # hierarchy -- sat with a null `evidence_basis`. It looked healthy only
+            # because a *second* run stamps what the first one left, which is the worst
+            # kind of latent defect: correct in the steady state a developer sees and
+            # wrong on the rebuild a release depends on. Stamping is idempotent and
+            # signature-driven, so running it twice costs one pass and closes the window.
+            regrade = domain_upgrade.stamp_grades(session)
+            upgrade_reports.append(regrade)
+            print(
+                f"      ok {'stamp_grades (post-load)':<26} sent={regrade.sent:<8}"
+                f" landed={regrade.landed}"
+            )
+            ungraded_basis = session.run(
+                "MATCH ()-[r]->() WHERE r.knowledge_layer IS NOT NULL "
+                "AND r.evidence_basis IS NULL RETURN count(r) AS c"
+            ).single()["c"]
+            manifest["ungraded_evidence_basis_after_load"] = ungraded_basis
+            print(f"      ungraded evidence_basis after regrade: {ungraded_basis}")
 
             _write_jsonl(out / "devata_profiles.jsonl", [p.as_row() for p in profiles])
             _write_jsonl(out / "derived_metrics.jsonl", [m.as_row() for m in metrics])

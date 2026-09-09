@@ -37,6 +37,7 @@ from vedagraph.domain.ontology import (
     LABEL_DERIVED_METRIC,
     LABEL_DOMAIN_ENTITY,
     LABEL_EPITHET,
+    LABEL_FORMULA_FAMILY,
     LABEL_INTERPRETIVE_CLAIM,
     LABEL_RISHI_FAMILY,
 )
@@ -57,6 +58,8 @@ DOMAIN_CONSTRAINTS: Final[list[str]] = [
     f"FOR (n:{LABEL_INTERPRETIVE_CLAIM}) REQUIRE n.claim_id IS UNIQUE",
     f"CREATE CONSTRAINT derived_metric_id_unique IF NOT EXISTS "
     f"FOR (n:{LABEL_DERIVED_METRIC}) REQUIRE n.metric_id IS UNIQUE",
+    f"CREATE CONSTRAINT formula_family_id_unique IF NOT EXISTS "
+    f"FOR (n:{LABEL_FORMULA_FAMILY}) REQUIRE n.family_id IS UNIQUE",
 ]
 
 #: Node indexes. ``display_type`` is indexed because it is the property that answers the
@@ -71,6 +74,14 @@ DOMAIN_NODE_INDEXES: Final[list[str]] = [
     f"FOR (n:{LABEL_DERIVED_METRIC}) ON (n.metric_name)",
     f"CREATE INDEX interpretive_claim_status IF NOT EXISTS "
     f"FOR (n:{LABEL_INTERPRETIVE_CLAIM}) ON (n.status)",
+    # Both support the questions the family layer exists to answer: "which formula
+    # families span three or four Vedas?" and "which families are largest?".
+    f"CREATE INDEX formula_family_cross_veda IF NOT EXISTS "
+    f"FOR (n:{LABEL_FORMULA_FAMILY}) ON (n.cross_veda)",
+    f"CREATE INDEX formula_family_veda_span IF NOT EXISTS "
+    f"FOR (n:{LABEL_FORMULA_FAMILY}) ON (n.veda_span)",
+    f"CREATE INDEX formula_family_member_count IF NOT EXISTS "
+    f"FOR (n:{LABEL_FORMULA_FAMILY}) ON (n.member_count)",
 ]
 
 #: Relationship property indexes for the unified grade. Without these, "show me only
@@ -87,6 +98,8 @@ DOMAIN_REL_INDEXES: Final[list[str]] = [
     "FOR ()-[r:HAS_CHANDAS]-() ON (r.quality_tier)",
     "CREATE INDEX rel_quality_tier_mentions IF NOT EXISTS "
     "FOR ()-[r:MENTIONS_ENTITY]-() ON (r.quality_tier)",
+    "CREATE INDEX rel_member_of_family_role IF NOT EXISTS "
+    "FOR ()-[r:MEMBER_OF_FAMILY]-() ON (r.role)",
 ]
 
 
