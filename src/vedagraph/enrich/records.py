@@ -134,6 +134,10 @@ class ConceptRow:
     broader: tuple[str, ...]
     definition: str
     related_devatas: tuple[str, ...]
+    #: Only ``CONDITION`` entities carry this; empty string everywhere else. Required and
+    #: validated for conditions in :func:`vedagraph.enrich.concepts.load_concepts`, because
+    #: a condition with no kind is what made "which diseases?" answer with demons.
+    condition_kind: str = ""
 
     def as_row(self) -> dict[str, Any]:
         return {
@@ -146,6 +150,7 @@ class ConceptRow:
             "broader": list(self.broader),
             "definition": self.definition,
             "related_devatas": list(self.related_devatas),
+            "condition_kind": self.condition_kind,
         }
 
 

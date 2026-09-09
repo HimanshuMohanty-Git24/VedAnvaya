@@ -47,7 +47,12 @@ from vedagraph.domain.ontology import (
     labels_for_node_type,
 )
 from vedagraph.domain.schema import all_domain_schema_cypher
-from vedagraph.domain.tiers import LAYER_OWNED_GRADES, grade_edge
+from vedagraph.domain.tiers import (
+    ATTRIBUTION_CONTRACT,
+    LAYER_OWNED_GRADES,
+    UncontractedRelationshipError,
+    grade_edge,
+)
 
 
 class Session(Protocol):
@@ -376,3 +381,117 @@ def summarise(reports: Sequence[StepReport]) -> dict[str, Any]:
         "steps": [report.as_dict() for report in reports],
         "all_complete": all(report.complete for report in reports),
     }
+
+
+def apply_attribution_contract(session: Session) -> StepReport:
+    """Set ``attribution_precision`` from :data:`ATTRIBUTION_CONTRACT`, per relationship type.
+
+    **Why this is a step of its own, and why it must run last.** The attribution axis is
+    the one grade that is a property of the *relationship type* rather than of the edge:
+    whether ``CONTAINS`` can carry a per-verse attribution is settled by what ``CONTAINS``
+    means, and no property on any individual edge can witness it. Every other axis --
+    layer, tier, evidence basis -- is genuinely per-edge and is derived by the owning layer
+    from what that edge records.
+
+    Treating the attribution axis as layer-owned is what produced the V3.1 defect. Three
+    separate mechanisms wrote it and they disagreed: ``stamp_grades`` derived it generically
+    but skips :data:`LAYER_OWNED_GRADES`; each layer wrote its own literal; and the layers
+    run in an order in which later ones re-MERGE edges that earlier ones had already graded.
+    ``PERFORMS_ACTION`` is the clean example -- it is rebuilt from the assertion nodes on
+    every V3 projection, after the domain build's ``stamp_grades`` has finished, so whatever
+    that step decided was overwritten by a literal a few hundred lines away.
+
+    So the contract is applied once, at the end, over the whole graph. A layer may still own
+    its tier and its evidence; none of them owns this.
+
+    **MIXED types are not touched.** The four in the contract with value ``None`` --
+    ``HAS_DEVATA``, ``HAS_RISHI``, ``HAS_CHANDAS``, ``USED_FOR_RITE`` -- legitimately hold
+    both ``PER_PASSAGE`` and ``CONTAINER_INHERITED``, decided per edge from ``scope_origin``.
+    Sweeping them to one value is not a hypothetical hazard: a generic pass once flattened
+    all 529 ``USED_FOR_RITE`` edges and turned 419 book-locus priors into per-verse
+    statements, which is why that type is in ``LAYER_OWNED_GRADES`` at all.
+
+    **One type per statement.** ``MATCH ()-[r]->()`` without a type label is how this
+    repository once created 39,461 bogus edges, so the type is interpolated into the pattern
+    and every statement is scoped to it.
+    """
+    report = StepReport(step="apply_attribution_contract")
+    live = [
+        str(record["t"]) for record in session.run("MATCH ()-[r]->() RETURN DISTINCT type(r) AS t")
+    ]
+    uncontracted = sorted(set(live) - set(ATTRIBUTION_CONTRACT))
+    if uncontracted:
+        raise UncontractedRelationshipError(
+            f"live relationship types with no entry in ATTRIBUTION_CONTRACT: "
+            f"{uncontracted}. Classify them before projecting."
+        )
+
+    changed: dict[str, int] = {}
+    mixed: list[str] = []
+    for rel_type in sorted(live):
+        target = ATTRIBUTION_CONTRACT[rel_type]
+        if target is None:
+            mixed.append(rel_type)
+            continue
+        # Counted before the write and re-counted after, rather than trusting the write to
+        # have done what it said. `sent` here is "edges not already correct".
+        n = int(
+            session.run(
+                f"MATCH ()-[r:{rel_type}]->() "
+                "WHERE r.attribution_precision IS NULL "
+                "   OR r.attribution_precision <> $target "
+                "RETURN count(r) AS c",
+                target=str(target),
+            ).single()["c"]
+        )
+        if not n:
+            continue
+        session.run(
+            f"MATCH ()-[r:{rel_type}]->() "
+            "WHERE r.attribution_precision IS NULL "
+            "   OR r.attribution_precision <> $target "
+            "SET r.attribution_precision = $target",
+            target=str(target),
+        )
+        changed[rel_type] = n
+        report.sent += n
+
+    # Landed is measured as "edges now holding exactly what the contract says", recomputed
+    # from the graph rather than accumulated from the writes above.
+    report.landed = sum(
+        int(
+            session.run(
+                f"MATCH ()-[r:{rel_type}]->() WHERE r.attribution_precision = $target "
+                "RETURN count(r) AS c",
+                target=str(ATTRIBUTION_CONTRACT[rel_type]),
+            ).single()["c"]
+        )
+        for rel_type in changed
+    )
+    report.detail = {
+        "changed_by_type": dict(sorted(changed.items(), key=lambda kv: -kv[1])),
+        "mixed_left_to_scope_origin": sorted(mixed),
+        "by_value_after": {
+            str(record["p"]): int(record["n"])
+            for record in session.run(
+                "MATCH ()-[r]->() RETURN coalesce(r.attribution_precision, '<NULL>') AS p, "
+                "count(*) AS n ORDER BY n DESC"
+            )
+        },
+        # The independent check: an edge may only claim a real attribution if it actually
+        # touches a passage. Verified against the endpoints, not against the table above,
+        # so the contract cannot certify itself.
+        "attribution_claimed_with_no_passage_endpoint": int(
+            session.run(
+                "MATCH (a)-[r]->(b) WHERE NOT (a:Passage OR b:Passage) AND "
+                "r.attribution_precision IN ['PER_PASSAGE', 'CONTAINER_INHERITED', "
+                "'TEXTUAL_MENTION'] RETURN count(r) AS c"
+            ).single()["c"]
+        ),
+        "null_after": int(
+            session.run(
+                "MATCH ()-[r]->() WHERE r.attribution_precision IS NULL RETURN count(r) AS c"
+            ).single()["c"]
+        ),
+    }
+    return report

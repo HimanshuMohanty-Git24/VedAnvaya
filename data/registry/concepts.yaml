@@ -986,6 +986,7 @@ concepts:
     preferred_label_sa: yakṣma
     preferred_label_en: disease
     node_type: STATE
+    condition_kind: AFFLICTION
     definition: >-
       Sickness as an affliction to be driven out, including the named fevers of the
       Atharvaveda.
@@ -1066,6 +1067,7 @@ concepts:
     preferred_label_sa: rakṣas
     preferred_label_en: demon
     node_type: CONCEPT
+    condition_kind: THREAT
     definition: >-
       The non-human hostile being -- rakshas, yatudhana, pishacha -- against whom whole
       Atharvavedic hymns are directed.

@@ -205,8 +205,17 @@ entries:
   structure: PAIR
   axes: [FIRE_MEDIUM, ATMOSPHERIC]
   label_iast: agnāmarutaḥ
-  label_en: "Agni and the Maruts"
-  short_description: "A variant source label pairing Agni with the Maruts."
+  # Disambiguated in V3.2. This label and VG:DEVATA:AGNIH-MARUTAH both rendered exactly
+  # "Agni and the Maruts", so a product query printed two identical rows for what a reader
+  # could only read as one entity. They are NOT merged: both are well-formed and different
+  # source labels -- RV 1.19 prints the hyphenated `agniḥ-marutaḥ`, where the hyphen is the
+  # co-ordination marker of the WSC2023 editors, while RV 8.103.14 prints this one solid as
+  # a devatā-dvandva on the compositional stem agnā- (compare agnāviṣṇū). They never
+  # co-occur in a hymn. Classified COMPOSITE_DISTINCT, so the disambiguation is in the
+  # display and the distinctness is preserved.
+  label_en: "Agni and the Maruts (agnāmarutaḥ)"
+  short_description: "A variant source label pairing Agni with the Maruts, printed as a
+    solid dvandva on the stem agna- rather than as the editors' hyphenated pair."
   aliases_iast: []
   epithets: []
   member_of: []
@@ -835,7 +844,14 @@ entries:
   structure: PAIR
   axes: [TERRESTRIAL]
   label_iast: dyāvābhūmī
-  label_en: "Heaven and Earth"
+  # Disambiguated in V3.2, as agnāmarutaḥ above and for the same reason: this rendered
+  # exactly "Heaven and Earth", identical to VG:DEVATA:DYAVAPRTHIVYAU. The two are the same
+  # divine pair under two different second members -- RV 6.48.22 prints `dyāvābhūmī` with
+  # bhūmi, eleven hymns print `dyāvāpṛthivyau` with pṛthivī -- and both are real Sanskrit
+  # words rather than a spelling slip, so COMPOSITE_DISTINCT rather than an orthographic
+  # variant. Note their `label_iast` already differed, so this pair never appeared on that
+  # surface; display_label was the only place the collision showed.
+  label_en: "Heaven and Earth (dyāvābhūmī)"
   short_description: "The dual pair Heaven-and-Earth, in the bhumi variant of the name."
   aliases_iast: []
   epithets: []

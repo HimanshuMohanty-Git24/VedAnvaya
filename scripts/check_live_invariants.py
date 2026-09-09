@@ -131,27 +131,59 @@ INVARIANTS: tuple[Invariant, ...] = (
         "WHERE NOT r.referent_certainty IN "
         "['DEITY_CERTAIN', 'DEITY_PROBABLE', 'DEITY_AMBIGUOUS'] RETURN count(r) AS c",
     ),
-    # Scoped to edges with a Passage endpoint, because the unscoped form encodes a false
-    # universal. `attribution_precision` is defined over PASSAGES -- whether a source named
-    # this verse, inherited the claim from its hymn, or the verse names the entity itself --
-    # so on a Formula-to-FormulaFamily edge it is a category error, and an earlier build of
-    # that layer really did stamp `TEXTUAL_MENTION` there, making a membership edge claim
-    # something about textual attribution. The formula layer now explicitly REMOVEs the
-    # property for that reason.
+    # V3.2 replaced the passage-scoped check with a whole-graph one, which the note below
+    # explains is only now safe to write.
     #
-    # The unscoped check reported 4,074 and this integrator "fixed" it by setting
-    # PER_PASSAGE on both formula twins -- which the next reproducible projection correctly
-    # reverted, because the loader is the source of truth and the loader had reasoned its
-    # way to removing the property. The check was wrong, not the graph. Two lessons, both
-    # earned here: an ad-hoc SET outside a loader is not a fix, and an invariant asserting
-    # that EVERY edge carries a property must first be able to say what the property means
-    # on every edge.
+    # The history is the argument. `attribution_precision` is defined over PASSAGES --
+    # whether a source named this verse, inherited the claim from its hymn, or the verse
+    # names the entity itself -- so on a Formula-to-FormulaFamily edge it was a category
+    # error, and an earlier build of that layer really did stamp `TEXTUAL_MENTION` there,
+    # making a membership edge claim something about textual attribution. An unscoped check
+    # then reported 4,074 and an integrator "fixed" it by setting PER_PASSAGE on both
+    # formula twins -- which the next reproducible projection correctly reverted, because
+    # the loader is the source of truth and the loader had reasoned its way to REMOVING the
+    # property. The check was wrong, not the graph.
+    #
+    # The lesson recorded at the time was: an invariant asserting that EVERY edge carries a
+    # property must first be able to say what the property means on every edge. That was
+    # right, and V3.2 satisfies it rather than repealing it. AttributionPrecision now has a
+    # NOT_AN_ATTRIBUTION member and ATTRIBUTION_CONTRACT says what the property means on all
+    # 65 relationship types, so the universal form is finally a true universal.
+    #
+    # Scoping to passage-touching edges was itself never sound: CONTAINS, HAS_TEXT_VERSION
+    # and QA_ISSUE_ON all touch a Passage and none of them attributes anything to it, so the
+    # old check demanded a value from 84,000-odd edges that had no business holding one, and
+    # got PER_PASSAGE.
     Invariant(
-        "passage_edges_without_attribution_precision",
-        "an edge touching a passage that does not say whether it is per-verse or "
-        "container-inherited",
-        "MATCH (a)-[r]->(b) WHERE (a:Passage OR b:Passage) "
-        "AND r.attribution_precision IS NULL RETURN count(r) AS c",
+        "edges_without_attribution_precision",
+        "an edge that does not say whether it is per-verse, container-inherited, a "
+        "textual mention, or not an attribution at all -- a NULL is now unambiguously a "
+        "bug, because every relationship type has a declared answer",
+        "MATCH ()-[r]->() WHERE r.attribution_precision IS NULL RETURN count(r) AS c",
+    ),
+    # The check whose absence let REGISTRY_STATED sit on 6 EPITHET_VARIANT_OF edges through
+    # three adversarial passes: nothing anywhere enforced that the stored value was a member
+    # of the enum, so an undeclared string was indistinguishable from a declared one.
+    Invariant(
+        "attribution_precision_outside_the_declared_enum",
+        "an edge whose attribution_precision is not a member of AttributionPrecision -- "
+        "an undeclared value no consumer can filter on and no reader can interpret",
+        "MATCH ()-[r]->() WHERE r.attribution_precision IS NOT NULL AND NOT "
+        "r.attribution_precision IN ['PER_PASSAGE', 'CONTAINER_INHERITED', "
+        "'TEXTUAL_MENTION', 'NOT_AN_ATTRIBUTION'] RETURN count(r) AS c",
+    ),
+    # Endpoint-level truth, checked independently of the contract table so that the table
+    # cannot certify itself. If a relationship carries a real attribution value, one of its
+    # endpoints must be a Passage -- otherwise the edge is claiming something about a verse
+    # it does not touch. This is the invariant that would have caught BELONGS_TO_FAMILY
+    # asserting CONTAINER_INHERITED between a Rishi and a RishiFamily.
+    Invariant(
+        "attribution_claimed_on_an_edge_with_no_passage",
+        "an edge asserting a per-verse, inherited or textual-mention attribution when "
+        "neither endpoint is a Passage, so there is no verse for it to be precise about",
+        "MATCH (a)-[r]->(b) WHERE NOT (a:Passage OR b:Passage) AND "
+        "r.attribution_precision IN ['PER_PASSAGE', 'CONTAINER_INHERITED', "
+        "'TEXTUAL_MENTION'] RETURN count(r) AS c",
     ),
     Invariant(
         "family_member_count_disagrees_with_edges",

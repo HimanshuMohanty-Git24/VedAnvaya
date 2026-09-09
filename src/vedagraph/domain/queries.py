@@ -1198,13 +1198,28 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
     DomainQuery(
         name="conditions_treated",
         question="Which afflictions do passages address, and in which Veda?",
+        # Filtered on `condition_kind`, NOT on the [:TREATS] predicate, and the difference
+        # matters. TREATS and PROTECTS_FROM are whitelists graded on evidence strength --
+        # whether the corpus prints an explicit remedy compound, or whether the match set
+        # was small enough to read to the end -- not on what kind of thing the target is.
+        # So PROTECTS_FROM carries 181 affliction edges over six entities, and filtering by
+        # predicate here would drop yaksma, amiva, rapas, grahi, sedi and the evil dream:
+        # consumption, the corpus's most-attested disease, among them.
         cypher="""
         MATCH (p:Passage)-[:MENTIONS_ENTITY]->(c:Condition)
-        RETURN c.display_label AS condition, p.veda AS veda,
+        WHERE c.condition_kind = 'AFFLICTION'
+        RETURN c.display_label AS condition, c.condition_kind AS kind, p.veda AS veda,
                count(DISTINCT p) AS mantras
         ORDER BY condition, mantras DESC
         """,
         caveat=(
+            "CORRECTED IN V3.2: this query asked an affliction question and answered it "
+            "with demons. Of the 718 MENTIONS_ENTITY edges reaching a Condition, 314 "
+            "reached a THREAT and 88 a PATHOGEN_OR_CAUSE, so rakshas, sorcery, curses, "
+            "worms and poison were all ranking as diseases. The 8 THREAT and 2 "
+            "PATHOGEN_OR_CAUSE conditions are now excluded here by `condition_kind` and "
+            "remain reachable through passages_protecting_against and "
+            "condition_neighbourhood, both of which stay deliberately broad. "
             "Naming an affliction is weaker than treating it. CORRECTED IN V3.1: this "
             "caveat read 'There is deliberately no separate fever entity: takman- "
             "forms sit in YAKSMA-DISEASE'. That is no longer true -- "
@@ -1230,7 +1245,8 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
         RETURN p.canonical_citation AS passage,
                collect(DISTINCT pl.display_label) AS plants,
                collect(DISTINCT ob.display_label) AS objects,
-               collect(DISTINCT other.display_label) AS other_conditions
+               collect(DISTINCT other.display_label) AS other_conditions,
+               collect(DISTINCT other.condition_kind) AS other_condition_kinds
         ORDER BY passage LIMIT 25
         """,
         parameters={"condition": "VG:CONCEPT:VISA-POISON"},
@@ -1260,14 +1276,26 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
     DomainQuery(
         name="medicinal_plants",
         question="Which plants are named, and alongside which afflictions?",
+        # Split rather than filtered. The question says afflictions, but a plant co-named
+        # with a demon is a real finding for the counter-witchcraft herbs -- apamarga and
+        # darbha are named against sorcery, not against a cough -- so dropping the threat
+        # column would answer a narrower question than the corpus supports. Two columns
+        # keep the affliction reading exact and the apotropaic reading visible.
         cypher="""
         MATCH (p:Passage)-[:MENTIONS_ENTITY]->(pl:Plant)
         OPTIONAL MATCH (p)-[:MENTIONS_ENTITY]->(c:Condition)
         RETURN pl.display_label AS plant, p.veda AS veda, count(DISTINCT p) AS mantras,
-               collect(DISTINCT c.display_label) AS co_conditions
+               collect(DISTINCT CASE WHEN c.condition_kind = 'AFFLICTION'
+                                     THEN c.display_label END) AS co_afflictions,
+               collect(DISTINCT CASE WHEN c.condition_kind IN ['THREAT',
+                                                               'PATHOGEN_OR_CAUSE']
+                                     THEN c.display_label END) AS co_threats
         ORDER BY mantras DESC
         """,
-        caveat="Co-occurrence, not pharmacology.",
+        caveat=(
+            "Co-occurrence, not pharmacology. The condition column was split in V3.2: it "
+            "previously returned demons and sorcery under a heading that said afflictions."
+        ),
         serves=(47,),
     ),
     DomainQuery(
@@ -1276,6 +1304,7 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
         cypher="""
         MATCH (p:Passage)-[r:PROTECTS_FROM]->(threat)
         RETURN threat.display_label AS threat, threat.display_type AS kind,
+               threat.condition_kind AS condition_kind,
                p.veda AS veda, count(DISTINCT p) AS passages,
                collect(DISTINCT r.quality_tier) AS tiers
         ORDER BY passages DESC, threat LIMIT 30
@@ -1302,6 +1331,7 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
         WITH target, type(r) AS predicate, r.quality_tier AS tier, p.veda AS veda,
              count(DISTINCT p) AS passages
         RETURN target.display_label AS target, target.display_type AS kind,
+               target.condition_kind AS condition_kind,
                predicate, tier, collect([veda, passages]) AS by_veda,
                sum(passages) AS passages
         ORDER BY passages DESC, target, predicate LIMIT 30

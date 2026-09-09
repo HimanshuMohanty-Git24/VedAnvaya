@@ -127,6 +127,11 @@ def load_entities(session: Session, entities: Sequence[ConceptRow]) -> LoadRepor
                     else entity.preferred_label_en or entity.preferred_label_sa
                 ),
                 "display_type": labels[0],
+                # Empty on the ~200 non-Condition entities and set on all 36 Conditions.
+                # Written unconditionally rather than only when non-empty, because SET e +=
+                # row leaves an unmentioned key in place: omitting it would let a node keep
+                # a stale kind through a retype out of CONDITION.
+                "condition_kind": entity.condition_kind,
                 "domain_model_version": DOMAIN_MODEL_VERSION,
             }
         )
@@ -235,8 +240,17 @@ ON MATCH SET  m.build_pass = $build_pass,
               m.domain_model_version = row.domain_model_version,
               m.knowledge_layer = coalesce(m.knowledge_layer, $layer),
               m.quality_tier = coalesce(m.quality_tier, $tier),
-              m.attribution_precision = coalesce(m.attribution_precision, $precision)
+              m.attribution_precision = $precision
 """
+# `attribution_precision` is deliberately NOT wrapped in `coalesce` on the ON MATCH branch,
+# unlike `knowledge_layer` and `quality_tier` beside it. Those two are coalesced because a
+# stronger layer may legitimately have upgraded them and this one must not demote them. The
+# attribution axis is not like that: it is fixed by the relationship type, no other layer is
+# entitled to a different answer, and a coalesce there would have preserved every one of the
+# 28,223 stale PER_PASSAGE values straight through the V3.2 rebuild while the projection
+# reported sent == landed. That is the same shape as the stale TEXTUAL_MENTION the formula
+# layer needed an explicit REMOVE to clear.
+#
 # ON MATCH refreshes the fields this layer computes, and only those.
 #
 # The first version coalesced everything, on the reasoning that an existing edge might
@@ -280,7 +294,7 @@ def load_mentions(session: Session, rows: Sequence[dict[str, Any]]) -> LoadRepor
             rows=batch,
             layer=str(KnowledgeLayer.L2_DETERMINISTIC_DERIVED),
             tier=str(QualityTier.TIER_B),
-            precision=str(AttributionPrecision.PER_PASSAGE),
+            precision=str(AttributionPrecision.TEXTUAL_MENTION),
             build_pass=build_pass,
         )
 

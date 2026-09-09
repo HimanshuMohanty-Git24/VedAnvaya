@@ -502,6 +502,34 @@ class AttributionPrecision(StrEnum):
     #: invocation — and collapsing any pair of them makes one of the four unaskable.
     TEXTUAL_MENTION = "TEXTUAL_MENTION"
 
+    #: This edge is not an attribution at all. Either no endpoint is a ``:Passage``, or
+    #: both are, or the edge is the corpus's own structure rather than a claim attached to
+    #: a passage — so "did a source say this of THIS verse, or of the sūkta it sits in?" is
+    #: not a well-formed question about it.
+    #:
+    #: **Declared rather than left absent, and the repository is the argument.** V3.1 tried
+    #: absence twice and could not hold it. ``MEMBER_OF_FAMILY`` needed an explicit
+    #: ``REMOVE`` because MERGE plus SET leaves an unmentioned property in place, and 2,037
+    #: edges kept a stale ``TEXTUAL_MENTION`` through a rebuild that reported success.
+    #: Then ``BELONGS_TO_FAMILY`` — ``Rishi -> RishiFamily``, the identical category error
+    #: 500 lines further down the same module — reached the opposite verdict, conceding
+    #: that "the property should be absent" and then overruling it because "the invariant
+    #: that every edge in this graph carries full grading metadata wins, and once the
+    #: property has to hold something the only safe value is the inherited one". It
+    #: therefore asserts ``CONTAINER_INHERITED`` on an edge with no container and no
+    #: passage. This member is the option that comment was reaching for: the invariant is
+    #: kept, and no false inherited claim has to be minted to keep it.
+    #:
+    #: The contract this establishes: **every edge carries ``attribution_precision``, and a
+    #: live NULL is a defect.** That makes the validator one query with one right answer,
+    #: and it makes a new relationship type whose producer forgot the property fail loudly
+    #: instead of defaulting to looking correct.
+    #:
+    #: Retires ``REGISTRY_STATED``, which was found live on 6 ``EPITHET_VARIANT_OF`` edges
+    #: and was never a member of this enum. Nothing caught it, because until V3.2 there was
+    #: no closed-world check on this property anywhere in the codebase.
+    NOT_AN_ATTRIBUTION = "NOT_AN_ATTRIBUTION"
+
 
 #: ``provenance_class`` in the knowledge layer, graded. ``SOURCE_DERIVED_SCOPE`` is a
 #: derivation *from* a source-explicit statement about a larger unit, so it is TIER_B: the
@@ -511,6 +539,58 @@ KNOWLEDGE_TIER_BY_PROVENANCE: Final[dict[str, QualityTier]] = {
     "SOURCE_EXPLICIT": QualityTier.TIER_A,
     "SOURCE_DERIVED_SCOPE": QualityTier.TIER_B,
 }
+
+class ConditionKind(StrEnum):
+    """What sort of thing a ``:Condition`` is: borne, carried, or aimed at the patient.
+
+    The V1 and V3 concern fragments typed afflictions and hostile agents with one label,
+    on the stated precedent "that a cause is a Condition". That is defensible as an entity
+    type — a charm against a demon and a charm against a cough are the same *kind of text*
+    — but it makes one question unanswerable. "Which diseases does the corpus name?" was
+    answering with demons, sorcery, curses, worms and poison: of the 718 ``MENTIONS_ENTITY``
+    edges reaching a ``:Condition``, 314 reach a threat and 88 a pathogen. Benchmark Q15
+    names the defect in terms, requiring "causes (sorcery, ill-named beings) typed
+    separately from afflictions".
+
+    **Three values, not five.** ``STATE`` and ``UNSPECIFIED`` were both considered and both
+    refused, each with zero members. ``STATE`` had three candidates — greying, madness and
+    debility — and all three lose on their own definitions: the corpus prints a remedy
+    compound for the first two and the third is borne by a body. It would also collide with
+    the live ``:State`` label and the live ``STATE`` node type, putting two unrelated
+    meanings on one token in one graph. ``UNSPECIFIED`` is refused on the precedent recorded
+    at :mod:`vedagraph.domain.tiers` — a live ``UNSPECIFIED`` there reached 61,861 edges,
+    25.5% of the graph, because a declared shrug is always used. Instead this field is
+    **required** on every ``CONDITION`` entity and the registry load fails without it, so a
+    new condition with no kind breaks the build rather than landing in a bucket.
+
+    ``condition_kind`` is orthogonal to the ``TREATS`` / ``PROTECTS_FROM`` split and must
+    not be reconciled with it. Those two predicates are whitelists graded on *evidence
+    strength* — whether the corpus prints an explicit remedy compound, or whether the match
+    set was small enough to read to the end — not on what kind of thing the target is. That
+    is why ``PROTECTS_FROM`` reaches 181 affliction edges over six entities, consumption
+    among them, and why a narrowed disease query must filter on this field rather than on
+    the predicate: filtering by predicate would drop the corpus's most-attested disease.
+    """
+
+    #: A sickness, pain, injury or disorder borne by the patient's own body or mind. The
+    #: thing that is *in* the person. 26 of the 36.
+    AFFLICTION = "AFFLICTION"
+    #: A material or living thing inside or on the patient that produces the trouble but is
+    #: not itself a state of the body — worms and poison. Removing it removes a thing
+    #: rather than curing a state, and both are what the V1 fragment's own header separates
+    #: out as causes. Two members, kept rather than folded: collapsing either into
+    #: ``AFFLICTION`` reinstates the exact defect this enum exists to fix.
+    PATHOGEN_OR_CAUSE = "PATHOGEN_OR_CAUSE"
+    #: An external hostile agent — a being or a person — or a hostile act such as a spell
+    #: or a curse, directed at the patient from outside. Warded off, turned back or driven
+    #: away, never cured. 8 of the 36.
+    THREAT = "THREAT"
+
+
+#: The closed value space of ``Condition.condition_kind``. Required on every ``CONDITION``
+#: entity; see :class:`ConditionKind` for why there is no ``UNSPECIFIED`` to fall back on.
+CONDITION_KINDS: Final[frozenset[str]] = frozenset(str(kind) for kind in ConditionKind)
+
 
 PRECISION_BY_SCOPE_ORIGIN: Final[dict[str, AttributionPrecision]] = {
     "SINGLE_MANTRA": AttributionPrecision.PER_PASSAGE,

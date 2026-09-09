@@ -69,6 +69,7 @@ from vedagraph.domain import (  # noqa: E402
     entity_centrality,
     entity_overlap,
     profiles,
+    upgrade,
     v3_loader,
     work_scope,
 )
@@ -165,6 +166,16 @@ LAYERS: Final[tuple[str, ...]] = (
     # and ABOUT_CONCEPT whole. It also writes the rank correlation between the two concept
     # layers, which is only meaningful once both have finished moving.
     "entity_centrality",
+    # Strictly last, and the ordering is load-bearing. `attribution_precision` is a fact
+    # about the RELATIONSHIP TYPE, not about the edge, so it is applied once over the whole
+    # graph from ATTRIBUTION_CONTRACT after every layer above has finished writing. It used
+    # to be written by three mechanisms that disagreed -- the generic `stamp_grades`, which
+    # skips LAYER_OWNED_GRADES; a literal in each layer; and whichever layer re-MERGEd an
+    # edge last. PERFORMS_ACTION is the clean case: it is rebuilt from the assertion nodes
+    # on every V3 projection, long after the domain build's `stamp_grades` ran, so that
+    # step's answer was silently overwritten by a literal. Running the contract last is what
+    # makes the axis single-valued.
+    "attribution_contract",
 )
 
 
@@ -444,6 +455,7 @@ def main() -> int:
                     review_rows,
                     review_run="semantic-candidate-review-v3",
                 ),
+                "attribution_contract": lambda: upgrade.apply_attribution_contract(session),
             }
 
             reports: list[Any] = []

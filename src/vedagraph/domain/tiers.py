@@ -42,7 +42,7 @@ ungraded edge can never be mistaken for a strong one by accident.
 from __future__ import annotations
 
 from collections.abc import Mapping
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from enum import StrEnum
 from typing import Any, Final
 
@@ -538,8 +538,15 @@ LAYER_OWNED_GRADES: Final[frozenset[str]] = frozenset(
 )
 
 
-def grade_edge(rel_type: str, properties: Mapping[str, Any]) -> Grade:
+def _grade_edge_uncontracted(rel_type: str, properties: Mapping[str, Any]) -> Grade:
     """Derive the unified grade for one edge from whatever it already records.
+
+    Do not call directly. :func:`grade_edge` wraps this and applies
+    :data:`ATTRIBUTION_CONTRACT` to the attribution axis afterwards. Every ``precision``
+    written below is therefore provisional; the layer, tier, basis and evidence axes are
+    final. The split exists because those axes are derived from what the edge *records*
+    (its method, trust and provenance vocabulary), while the attribution axis is a fact
+    about the edge's *endpoints* that no property on the edge can witness.
 
     Ordered most-specific first. The enrichment envelope is checked before the relationship
     type, because a relationship type can be produced by two layers -- ``MENTIONS_ENTITY``
@@ -670,6 +677,203 @@ def grade_edge(rel_type: str, properties: Mapping[str, Any]) -> Grade:
         basis=f"ungraded: {rel_type} records no recognised provenance vocabulary",
         evidence_basis=evidence,
     )
+
+
+
+#: Which relationships carry an attribution at all, and which value each may hold.
+#:
+#: THE DEFECT THIS CLOSES. ``_grade_edge_uncontracted`` has eight return sites and seven of
+#: them hardcode ``PER_PASSAGE``; only the ``scope_origin`` branch consults
+#: :data:`PRECISION_BY_SCOPE_ORIGIN`. Every edge the Anukramaṇī did not produce therefore
+#: got ``PER_PASSAGE`` **by construction, whatever it was**, and
+#: :func:`vedagraph.domain.upgrade.stamp_grades` discovers relationship types from the live
+#: graph and propagated that value graph-wide. The result: ``CONTAINS`` claimed per-passage
+#: attribution over the corpus's own containment tree, ``QA_ISSUE_ON`` claimed it over this
+#: repository's self-audit, ``SHARES_ENTITY_VOCABULARY_WITH`` claimed it over a symmetric
+#: analytics edge with no subject, and ``HAS_TEXT_VERSION`` claimed it over the edition's
+#: own typesetting. 190,731 of 265,289 edges held a value that did not mean what it said.
+#:
+#: THE DEFINING TEST, applied mechanically to all 65 live types:
+#:
+#:   An edge is attribution-bearing if and only if one endpoint is a ``:Passage``, and the
+#:   edge attaches a claim to that passage which could *in principle* have arrived from the
+#:   enclosing sūkta instead -- so that "did a source say this of THIS verse, or of the
+#:   container it sits in, or does the verse's own Sanskrit say it?" is a well-formed
+#:   question with more than one possible answer.
+#:
+#: Five rules follow, and each is cited on the rows it decides:
+#:
+#: * **R1** no ``:Passage`` endpoint -> not an attribution. The value space is *defined*
+#:   over passages (see :class:`~vedagraph.domain.ontology.AttributionPrecision`).
+#: * **R2** *both* endpoints are ``:Passage`` -> not an attribution. An attribution has one
+#:   subject and one attributed thing; a passage-to-passage edge has two subjects, so "about
+#:   which unit?" is ill-formed. A symmetric pair has no subject to be precise about.
+#: * **R3** the other endpoint is the passage's own physical text -> not an attribution.
+#:   Nobody *claims* a verse has a text; ``CONTAINER_INHERITED`` is inconceivable there, so
+#:   the property would be a constant carrying zero bits.
+#: * **R4** the other endpoint is something the passage's own Sanskrit **names** ->
+#:   ``TEXTUAL_MENTION``, which is that value's own definition.
+#: * **R5** otherwise a source, curator or model attached a claim -> ``PER_PASSAGE``, or
+#:   ``None`` below where the layer legitimately holds both halves.
+#:
+#: ``None`` means MIXED: the type carries both ``PER_PASSAGE`` and ``CONTAINER_INHERITED``
+#: and the ``scope_origin`` branch decides per edge. The four MIXED types must never be
+#: swept to a single value -- ``USED_FOR_RITE`` is in :data:`LAYER_OWNED_GRADES` precisely
+#: because a generic sweep once flattened all 529 of them and turned 419 book-locus priors
+#: into per-verse statements.
+#:
+#: A relationship type absent from this table **raises**. That is deliberate and is the
+#: whole point of preferring a sentinel to an absent property: ``stamp_grades`` auto-enrols
+#: every new type the moment it exists, so a new type nobody classified must fail the build
+#: loudly rather than default to looking correct.
+ATTRIBUTION_CONTRACT: Final[dict[str, AttributionPrecision | None]] = {
+    # -- R5. A source, curator or model attached a claim to this verse. -----------------
+    # MIXED: both halves are real and scope_origin decides. Never sweep these.
+    "HAS_DEVATA": None,
+    "HAS_RISHI": None,
+    "HAS_CHANDAS": None,
+    "USED_FOR_RITE": None,
+    "HAS_DEVATA_ASCRIPTION": AttributionPrecision.CONTAINER_INHERITED,
+    "HAS_SEMANTIC_ASSERTION": AttributionPrecision.PER_PASSAGE,
+    "ADDRESSES_CONCERN": AttributionPrecision.PER_PASSAGE,
+    "PROTECTS_FROM": AttributionPrecision.PER_PASSAGE,
+    "TREATS": AttributionPrecision.PER_PASSAGE,
+    "INVOKES": AttributionPrecision.PER_PASSAGE,
+    "DESCRIBES": AttributionPrecision.PER_PASSAGE,
+    "DESCRIBES_ACTION": AttributionPrecision.PER_PASSAGE,
+    "PRAISES": AttributionPrecision.PER_PASSAGE,
+    "REQUESTS": AttributionPrecision.PER_PASSAGE,
+    "HAS_THEME": AttributionPrecision.PER_PASSAGE,
+    "CONTRASTS_WITH": AttributionPrecision.PER_PASSAGE,
+    "INVOLVES_OFFERING": AttributionPrecision.PER_PASSAGE,
+    "INVOLVES_RITUAL": AttributionPrecision.PER_PASSAGE,
+    "INVOLVES_SUBSTANCE": AttributionPrecision.PER_PASSAGE,
+    "REFERS_TO_NATURAL_PHENOMENON": AttributionPrecision.PER_PASSAGE,
+    "REFERS_TO_PLACE": AttributionPrecision.PER_PASSAGE,
+    # The Passage is the OBJECT here, not the subject (Ritual -> Passage,
+    # InterpretiveClaim -> Passage). Kept attribution-bearing because the claim really is
+    # attached to that verse and could in principle have been attached to its sukta. A
+    # stricter "the subject must be the passage" reading would move these two to the
+    # sentinel; it is defensible and it is not the reading taken here.
+    "DESCRIBED_IN": AttributionPrecision.PER_PASSAGE,
+    "SUPPORTED_BY": AttributionPrecision.PER_PASSAGE,
+    # -- R4. The verse's own Sanskrit names the thing. ----------------------------------
+    # MENTIONS_DEVATA already held TEXTUAL_MENTION. The other four are the same kind of
+    # fact and were graded PER_PASSAGE, which is the incoherence at the centre of this
+    # table: MENTIONS_ENTITY is the generalisation of MENTIONS_DEVATA to every domain
+    # entity, and the two were describing one act of naming with two different words.
+    "MENTIONS_DEVATA": AttributionPrecision.TEXTUAL_MENTION,
+    "MENTIONS_ENTITY": AttributionPrecision.TEXTUAL_MENTION,
+    "MENTIONS_LEMMA": AttributionPrecision.TEXTUAL_MENTION,
+    "USES_FORMULA": AttributionPrecision.TEXTUAL_MENTION,
+    # The judgement call of the table. ABOUT_CONCEPT is not literally a naming, so this is
+    # a slight stretch of TEXTUAL_MENTION -- but it is a salience ranking computed over the
+    # mention layer and provably a subset of it, and grading a subset differently from its
+    # superset is exactly the drift the table exists to stop. PER_PASSAGE was the one
+    # indefensible option, because no source states a concept of a verse.
+    "ABOUT_CONCEPT": AttributionPrecision.TEXTUAL_MENTION,
+    # -- R3. The edition's own layout, not a claim. -------------------------------------
+    "HAS_TEXT_VERSION": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "HAS_TRANSLATION": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    # -- R2. Passage to passage: two subjects, so no subject. ---------------------------
+    "CONTAINS": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "EXACT_PARALLEL_OF": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "NEAR_PARALLEL_OF": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "PARALLEL_TO": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "REUSES_TEXT_FROM": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "VARIANT_OF": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "SHARES_ENTITY_VOCABULARY_WITH": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    # -- R1. No passage endpoint at all. ------------------------------------------------
+    # Entity-to-entity, reification spokes, derived analytics, taxonomy, and this
+    # repository's own self-audit. None of these has a verse to be precise about.
+    "ASSERTION_AGENT": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "ASSERTION_PREDICATE": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "ASSERTION_TARGET": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "BELONGS_TO_FAMILY": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "BROADER_THAN": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "COMPOSED_OF": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "CONCERNS": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "CONTRADICTS": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "CO_OCCURS_WITH": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "DEVATA_ASSOCIATED_WITH": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "EPITHET_VARIANT_OF": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "HAS_AXIS": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "HAS_EPITHET": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "HAS_FORMULA": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "HAS_STEP": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "INVOKES_DEVATA": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "IS_ASKED_TO": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "MEASURES": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "MEMBER_OF": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "MEMBER_OF_FAMILY": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "PERFORMED_BY": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "PERFORMED_FOR": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "PERFORMS_ACTION": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "QA_ISSUE_ON": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "SUPPORTED_BY_STATISTIC": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "USES_OBJECT": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "USES_OFFERING": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "USES_SUBSTANCE": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    # -- Declared but not yet populated. --------------------------------------------------
+    # These carry no live edges, so the V3.2 survey of the graph did not see them. They are
+    # classified here anyway, from their declared endpoint signatures, because the grader
+    # raises on an unknown type: leaving them out would turn "someone finally populated this
+    # layer" into a build failure with a confusing message. Every one of them is
+    # entity-to-entity or passage-to-passage, so R1 or R2 decides all but one.
+    "ASCRIBES_TO_DEVATA": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "ASSERTED_BY": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "ASSOCIATED_WITH_CONCEPT": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "ASSOCIATED_WITH_PHENOMENON": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "ASSOCIATED_WITH_SUBSTANCE": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "MUSICALIZED_AS": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "PERSONIFIES": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "RECEIVES_OFFERING": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "TEXTUALLY_REUSED_AS": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    "WIELDS": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    # The one exception, and the only heterogeneous subject in the vocabulary: this
+    # signature admits Passage, Rishi AND RishiFamily as the subject, so whether an edge of
+    # it is an attribution depends on the edge and not only on its type. MIXED defers to the
+    # per-edge scope_origin branch. Whoever populates this layer must set the value per
+    # edge; a Rishi -> Tribe edge that claims one anyway is caught independently by the
+    # `attribution_claimed_on_an_edge_with_no_passage` live invariant.
+    "ASSOCIATED_WITH_TRIBE": None,
+}
+
+
+class UncontractedRelationshipError(KeyError):
+    """A relationship type reached the grader with no entry in the attribution contract.
+
+    Raised rather than defaulted. ``stamp_grades`` discovers types from the live graph, so
+    a new relationship auto-enrols the moment one edge of it exists; without this the new
+    type would silently acquire whatever the cascade happened to return, which is how
+    ``PER_PASSAGE`` reached 190,731 edges that were not attributions.
+    """
+
+
+def grade_edge(rel_type: str, properties: Mapping[str, Any]) -> Grade:
+    """Grade one edge, with the attribution axis decided by :data:`ATTRIBUTION_CONTRACT`.
+
+    The layer, tier, basis and evidence axes come from what the edge records about its own
+    provenance. The attribution axis does not: it is a fact about the edge's *endpoints*,
+    which no property on the edge witnesses, so it is looked up by relationship type and
+    overrides whatever the cascade provisionally returned.
+
+    ``MIXED`` types (contract value ``None``) keep the cascade's answer, because for those
+    four the ``scope_origin`` branch is the correct decision procedure and is already
+    per-edge.
+    """
+    grade = _grade_edge_uncontracted(rel_type, properties)
+    if rel_type not in ATTRIBUTION_CONTRACT:
+        raise UncontractedRelationshipError(
+            f"{rel_type} has no entry in ATTRIBUTION_CONTRACT. Classify it against the "
+            f"defining test in that table before it can be graded: an edge is "
+            f"attribution-bearing only if one endpoint is a Passage and the claim could "
+            f"in principle have been inherited from its container instead."
+        )
+    contracted = ATTRIBUTION_CONTRACT[rel_type]
+    if contracted is None or contracted is grade.precision:
+        return grade
+    return replace(grade, precision=contracted)
 
 
 def is_per_passage(properties: Mapping[str, Any]) -> bool:

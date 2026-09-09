@@ -131,6 +131,7 @@ concepts:
     preferred_label_sa: krimi
     preferred_label_en: worms
     node_type: CONDITION
+    condition_kind: PATHOGEN_OR_CAUSE
     definition: >-
       Worms and internal vermin, addressed as living enemies to be crushed and named by
       colour and habitat in the Atharvaveda's worm hymns.
@@ -144,6 +145,7 @@ concepts:
     preferred_label_sa: viṣa
     preferred_label_en: poison
     node_type: CONDITION
+    condition_kind: PATHOGEN_OR_CAUSE
     definition: >-
       Poison as a substance in the body, whether from a snake, an insect, a plant or a
       poisoned arrow, and the thing charms declare to be sapless.
@@ -156,6 +158,7 @@ concepts:
     preferred_label_sa: hariman
     preferred_label_en: jaundice
     node_type: CONDITION
+    condition_kind: AFFLICTION
     definition: >-
       The yellow sickness, treated by transferring the patient's yellowness to yellow
       birds and taking the red of a bull in exchange.
@@ -168,6 +171,7 @@ concepts:
     preferred_label_sa: kṣetriya
     preferred_label_en: hereditary disease
     node_type: CONDITION
+    condition_kind: AFFLICTION
     definition: >-
       The inherited or field-borne affliction, a disease category with no counterpart
       outside the Atharvaveda.
@@ -181,6 +185,7 @@ concepts:
     preferred_label_sa: balāsa
     preferred_label_en: balasa
     node_type: CONDITION
+    condition_kind: AFFLICTION
     definition: >-
       A named Atharvavedic sickness of the joints and limbs, left untranslated here
       because the corpus describes its treatment and not its symptoms.
@@ -194,6 +199,7 @@ concepts:
     preferred_label_sa: viṣkandha
     preferred_label_en: viskandha
     node_type: CONDITION
+    condition_kind: AFFLICTION
     definition: >-
       A named Atharvavedic affliction warded off by amulets, chiefly the jangida and the
       thousand-powered amulet; left untranslated for the same reason as balasa.
@@ -207,6 +213,7 @@ concepts:
     preferred_label_sa: grāhi
     preferred_label_en: seizure
     node_type: CONDITION
+    condition_kind: AFFLICTION
     definition: >-
       Grahi, the Seizer: a seizing sickness personified as a female power whose fetters a
       patient is released from.
@@ -219,6 +226,7 @@ concepts:
     preferred_label_sa: āsrāva
     preferred_label_en: flux
     node_type: CONDITION
+    condition_kind: AFFLICTION
     definition: >-
       A flowing or discharging complaint, named in the Atharvaveda beside the plants and
       reeds used to stanch it.
@@ -231,6 +239,7 @@ concepts:
     preferred_label_sa: kāsa
     preferred_label_en: cough
     node_type: CONDITION
+    condition_kind: AFFLICTION
     definition: >-
       Cough, listed among the ailments to be sent flying away from a patient's joints.
     aliases_sa: [kāsa, kāsam, kāse, kāsikā, kāsikayā]
@@ -242,6 +251,7 @@ concepts:
     preferred_label_sa: kṛtyā
     preferred_label_en: witchcraft
     node_type: CONDITION
+    condition_kind: THREAT
     definition: >-
       Witchcraft as a thing done to a person: the hostile spell, its maker, and the
       counter-charm that turns it back on him.
@@ -256,6 +266,7 @@ concepts:
     preferred_label_sa: duṣvapnya
     preferred_label_en: evil dream
     node_type: CONDITION
+    condition_kind: AFFLICTION
     definition: >-
       The evil dream, treated as an affliction with an owner: it is dispatched to an enemy
       rather than merely dispelled.
@@ -268,6 +279,7 @@ concepts:
     preferred_label_sa: durṇāman
     preferred_label_en: ill-named beings
     node_type: CONDITION
+    condition_kind: THREAT
     definition: >-
       The durnaman, "the ill-named": a class of noxious beings blamed for attacks on
       pregnant women and infants, distinct from the rakshas of the demon hymns.

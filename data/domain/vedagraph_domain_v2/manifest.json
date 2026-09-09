@@ -83,11 +83,11 @@
   },
   "graph_after": {
     "nodes": 108777,
-    "relationships": 266762
+    "relationships": 265291
   },
   "graph_before": {
     "nodes": 108777,
-    "relationships": 266762
+    "relationships": 265294
   },
   "label_readability": {
     "product_nodes": 36263,
@@ -197,7 +197,7 @@
             "sent": 11
           },
           "retired_stale": {
-            "landed": 0,
+            "landed": 3,
             "sent": 0
           }
         },
@@ -772,22 +772,24 @@
         "complete": true,
         "detail": {
           "by_evidence_basis": {
-            "MIXED": 13081,
-            "SANSKRIT": 85581,
-            "SOURCE_METADATA": 50842,
+            "MIXED": 13054,
+            "SANSKRIT": 83616,
+            "SOURCE_METADATA": 50845,
             "STRUCTURAL": 85109
           },
           "by_precision": {
             "CONTAINER_INHERITED": 39290,
-            "PER_PASSAGE": 195323
+            "NOT_AN_ATTRIBUTION": 96360,
+            "PER_PASSAGE": 12096,
+            "TEXTUAL_MENTION": 84878
           },
           "by_tier": {
             "TIER_A": 95088,
-            "TIER_B": 138151,
-            "TIER_C": 6,
-            "TIER_D": 1368
+            "TIER_B": 136154,
+            "TIER_C": 11,
+            "TIER_D": 1371
           },
-          "layer_owned_edges_excluded_from_landed": 32149,
+          "layer_owned_edges_excluded_from_landed": 32670,
           "layer_owned_grades_skipped": {
             "ASSERTION_PREDICATE": 2672,
             "BELONGS_TO_FAMILY": 305,
@@ -808,12 +810,13 @@
             "REFERS_TO_NATURAL_PHENOMENON": 5,
             "REFERS_TO_PLACE": 1,
             "REQUESTS": 89,
-            "SHARES_ENTITY_VOCABULARY_WITH": 2149
+            "SHARES_ENTITY_VOCABULARY_WITH": 2141,
+            "USED_FOR_RITE": 529
           },
           "signatures": 93
         },
-        "landed": 234613,
-        "sent": 234613,
+        "landed": 232624,
+        "sent": 232624,
         "skipped": "",
         "step": "stamp_grades"
       },
@@ -821,22 +824,24 @@
         "complete": true,
         "detail": {
           "by_evidence_basis": {
-            "MIXED": 13081,
-            "SANSKRIT": 85581,
+            "MIXED": 13054,
+            "SANSKRIT": 83616,
             "SOURCE_METADATA": 50842,
             "STRUCTURAL": 85109
           },
           "by_precision": {
             "CONTAINER_INHERITED": 39290,
-            "PER_PASSAGE": 195323
+            "NOT_AN_ATTRIBUTION": 96357,
+            "PER_PASSAGE": 12096,
+            "TEXTUAL_MENTION": 84878
           },
           "by_tier": {
             "TIER_A": 95088,
-            "TIER_B": 138151,
-            "TIER_C": 6,
+            "TIER_B": 136154,
+            "TIER_C": 11,
             "TIER_D": 1368
           },
-          "layer_owned_edges_excluded_from_landed": 32149,
+          "layer_owned_edges_excluded_from_landed": 32670,
           "layer_owned_grades_skipped": {
             "ASSERTION_PREDICATE": 2672,
             "BELONGS_TO_FAMILY": 305,
@@ -857,12 +862,13 @@
             "REFERS_TO_NATURAL_PHENOMENON": 5,
             "REFERS_TO_PLACE": 1,
             "REQUESTS": 89,
-            "SHARES_ENTITY_VOCABULARY_WITH": 2149
+            "SHARES_ENTITY_VOCABULARY_WITH": 2141,
+            "USED_FOR_RITE": 529
           },
           "signatures": 93
         },
-        "landed": 234613,
-        "sent": 234613,
+        "landed": 232621,
+        "sent": 232621,
         "skipped": "",
         "step": "stamp_grades"
       }

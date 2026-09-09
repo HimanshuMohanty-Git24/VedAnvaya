@@ -49,7 +49,12 @@ from vedagraph.domain.ontology import (
 from vedagraph.domain.queries import QUERIES, QUERIES_BY_NAME, questions_served
 from vedagraph.domain.registry import load_domain_entities, merge_registry
 from vedagraph.domain.taxonomy import load_taxonomy, registry_keys
-from vedagraph.domain.tiers import grade_edge, is_per_passage
+from vedagraph.domain.tiers import (
+    ATTRIBUTION_CONTRACT,
+    UncontractedRelationshipError,
+    grade_edge,
+    is_per_passage,
+)
 from vedagraph.enrich.provenance import ACCEPTABLE_WITHOUT_REVIEW, TrustClass
 from vedagraph.semantic.ontology import SemanticNodeType
 
@@ -195,8 +200,46 @@ def test_unreviewed_model_output_is_not_tier_c() -> None:
 
 
 def test_an_unrecognised_edge_grades_weakest_not_strongest() -> None:
-    """Defaulting upward would let an ungraded edge pass for a strong one."""
-    assert grade_edge("SOMETHING_NEW", {}).tier is QualityTier.TIER_D
+    """Defaulting upward would let an ungraded edge pass for a strong one.
+
+    Asserted on a type that IS in the attribution contract but records no provenance
+    vocabulary, so the tier cascade still reaches its weakest-by-default branch. The
+    defaulting-downward property is what this test has always been about, and V3.2 does
+    not change it; what changed is that the contract is consulted first, so a type with no
+    entry never reaches here at all. That path is asserted separately below.
+    """
+    assert grade_edge("CONCERNS", {}).tier is QualityTier.TIER_D
+
+
+def test_a_relationship_absent_from_the_attribution_contract_raises() -> None:
+    """A new relationship type must fail the build, not acquire a plausible default.
+
+    This is the whole reason V3.2 chose a NOT_AN_ATTRIBUTION sentinel over leaving the
+    property absent on non-attributions. ``stamp_grades`` discovers relationship types from
+    the live graph, so a new type auto-enrols the moment one edge of it exists. Under an
+    absence contract it would arrive with no property and be indistinguishable from a
+    correctly-classified non-attribution -- a silent default-to-correct. Here it stops the
+    build until someone classifies it.
+    """
+    with pytest.raises(UncontractedRelationshipError):
+        grade_edge("SOMETHING_NEW", {})
+
+
+def test_the_attribution_contract_covers_every_declared_relationship() -> None:
+    """The contract must not drift behind the controlled relationship vocabulary."""
+    missing = sorted(
+        rel for rel in ontology.RELATIONSHIP_SIGNATURES if rel not in ATTRIBUTION_CONTRACT
+    )
+    assert missing == [], (
+        f"declared in RELATIONSHIP_SIGNATURES but absent from ATTRIBUTION_CONTRACT: "
+        f"{missing}"
+    )
+
+
+def test_no_contract_row_claims_an_attribution_it_cannot_have() -> None:
+    """Every value in the contract is a real member of the enum, sentinel included."""
+    for rel, precision in ATTRIBUTION_CONTRACT.items():
+        assert precision is None or isinstance(precision, AttributionPrecision), rel
 
 
 def test_structural_corpus_edges_are_source_explicit() -> None:

@@ -229,6 +229,62 @@ VARIANT_REGISTRY: Final = pathlib.Path("data") / "registry" / "devata_variants.y
 #: registry so that the absence of an edge is a decision, and they must not create one.
 _VARIANT_ASSERTED: Final = "ASSERTED"
 
+#: The closed value space of ``relation`` on an ``EPITHET_VARIANT_OF`` edge, enumerated
+#: rather than left open. A registry row whose ``relation`` is outside this set is a typo
+#: that would otherwise land as a live edge property no consumer knows how to filter, and
+#: the failure would be silent: the loader MERGEs on the endpoints, not on the relation.
+#:
+#: ``ORTHOGRAPHIC_VARIANT`` is the V3.2 addition and is the only one of the four that is
+#: not a semantic qualification at all -- it records that two pinned entities are one
+#: being under two spellings of one source label. It shares this edge rather than getting
+#: its own type because every consumer uses the edge for exactly one thing, resolving a
+#: node to its canonical base before counting, and that is what an orthographic variant
+#: needs too. See the long note in ``devata_variants.yaml``.
+_VARIANT_RELATIONS: Final = frozenset(
+    {"EPITHET_QUALIFIED", "PART_OF_DEITY", "NUMBER_VARIANT", "ORTHOGRAPHIC_VARIANT"}
+)
+
+
+def _validate_variant_rows(rows: list[dict[str, str]]) -> None:
+    """Refuse a variant registry that a one-hop resolver would silently mis-answer.
+
+    Three checks, each for a failure that is invisible in the loaded graph rather than
+    loud. An unknown ``relation`` is a typo that still produces an edge. A variant
+    asserted to two different bases makes ``coalesce(base, dv)`` return whichever row the
+    planner reached first, so the same query gives different answers on different runs.
+    And a base that is itself an asserted variant forms a chain, which matters because
+    every consumer resolves exactly **one** hop: ``natural_phenomena_personified``,
+    ``deities_by_axis`` and ``deity_widest_range`` all write ``coalesce(base, dv)`` and
+    none of them walks ``EPITHET_VARIANT_OF*``. A two-link chain would therefore resolve
+    to the middle node and still double-count, while looking resolved.
+    """
+    unknown = sorted({row["relation"] for row in rows if row["relation"] not in _VARIANT_RELATIONS})
+    if unknown:
+        raise ValueError(
+            f"devata_variants.yaml: relation values outside the closed set: {unknown}. "
+            f"Permitted: {sorted(_VARIANT_RELATIONS)}."
+        )
+
+    by_variant: dict[str, set[str]] = {}
+    for row in rows:
+        by_variant.setdefault(row["variant_entity_id"], set()).add(row["base_entity_id"])
+    forked = sorted(key for key, bases in by_variant.items() if len(bases) > 1)
+    if forked:
+        raise ValueError(
+            f"devata_variants.yaml: these variants are ASSERTED to more than one base, "
+            f"which makes one-hop resolution non-deterministic: {forked}."
+        )
+
+    bases = {row["base_entity_id"] for row in rows}
+    chained = sorted(bases & set(by_variant))
+    if chained:
+        raise ValueError(
+            f"devata_variants.yaml: these keys are both an asserted variant and an "
+            f"asserted base, forming a resolution chain that every consumer's one-hop "
+            f"coalesce would leave half-resolved: {chained}."
+        )
+
+
 _VARIANT_QUERY: Final = """
 UNWIND $rows AS row
 MATCH (v:Devata {entity_key: row.variant_entity_id})
@@ -240,7 +296,7 @@ SET r.relation = row.relation,
     r.quality_tier = 'TIER_C',
     r.knowledge_layer = 'L3_LLM_EXTRACTED',
     r.evidence_basis = 'SANSKRIT',
-    r.attribution_precision = 'REGISTRY_STATED',
+    r.attribution_precision = 'NOT_AN_ATTRIBUTION',
     r.method = 'devata-variant-registry-v1',
     r.review_state = 'UNREVIEWED',
     r.domain_model_version = $model_version,
@@ -297,6 +353,7 @@ def load_devata_variants(session: Session, project_root: pathlib.Path) -> LoadRe
         for row in all_rows
         if str(row.get("review_status")) == _VARIANT_ASSERTED
     ]
+    _validate_variant_rows(asserted)
     report.sent = len(asserted)
     if not asserted:
         return report
@@ -1004,7 +1061,7 @@ def _rebuild_action_aggregates(session: Session) -> dict[str, int]:
                 r.frame = $frame,
                 r.quality_tier = 'TIER_B',
                 r.knowledge_layer = 'L2_DETERMINISTIC_DERIVED',
-                r.attribution_precision = 'PER_PASSAGE',
+                r.attribution_precision = 'NOT_AN_ATTRIBUTION',
                 r.evidence_basis = 'SANSKRIT',
                 r.grade_basis =
                   'aggregated from evidence-bound agentive assertions over the ' +
@@ -1057,7 +1114,7 @@ def _sealed_link_query(rel: str, label: str, key: str) -> str:
     MERGE (s)-[r:{rel} {{role: row.role}}]->(t)
     SET r.quality_tier = 'TIER_D',
         r.knowledge_layer = 'L3_LLM_EXTRACTED',
-        r.attribution_precision = 'PER_PASSAGE',
+        r.attribution_precision = 'NOT_AN_ATTRIBUTION',
         r.evidence_basis = 'TRANSLATION',
         r.state = 'CANDIDATE',
         r.grade_basis = 'entity resolved by the sealed run, unreviewed'
@@ -1548,7 +1605,7 @@ def _apply_performed_by(
             MERGE (rt)-[r:PERFORMED_BY]->(office)
             SET r.quality_tier = 'TIER_D',
                 r.knowledge_layer = 'L4_INTERPRETIVE_CLAIM',
-                r.attribution_precision = 'PER_PASSAGE',
+                r.attribution_precision = 'NOT_AN_ATTRIBUTION',
                 r.evidence_basis = 'SANSKRIT',
                 r.grade_basis =
                   'curated ritual structure; the rite artifact cites the verse that names '
@@ -1958,7 +2015,7 @@ SET r.quality_tier = coalesce(s.quality_tier, 'TIER_D'),
     r.review_state = s.review_state,
     r.state = coalesce(s.state, 'CANDIDATE'),
     r.knowledge_layer = coalesce(s.knowledge_layer, 'L3_LLM_EXTRACTED'),
-    r.attribution_precision = 'PER_PASSAGE',
+    r.attribution_precision = 'NOT_AN_ATTRIBUTION',
     r.grade_basis =
       'inherited from the assertion this edge starts from; the label carries two layers '
       + 'of unequal strength and reach and the edge must not flatten them'
@@ -2200,14 +2257,22 @@ SET r.membership_id = row.membership_id,
     r.state = row.state,
     r.pipeline_version = row.pipeline_version,
     r.run_id = row.run_id,
+    r.attribution_precision = 'NOT_AN_ATTRIBUTION',
     r.build_pass = $build_pass
-REMOVE r.attribution_precision
 """
-# The REMOVE is not redundant with simply not setting the property. An earlier build of
-# this layer wrote `attribution_precision = 'TEXTUAL_MENTION'` here, and MERGE finds that
-# edge and SET leaves any property it does not mention in place -- so dropping the
-# assignment cleaned up new edges and left 2,037 old ones asserting a category error.
-# Unsetting a property that should never have existed has to be explicit.
+# V3.2: the REMOVE became a SET of the sentinel, and the reason the REMOVE existed is the
+# reason the sentinel is better. An earlier build of this layer wrote
+# `attribution_precision = 'TEXTUAL_MENTION'` here, and MERGE finds that edge and SET
+# leaves any property it does not mention in place -- so dropping the assignment cleaned up
+# new edges and left 2,037 old ones asserting a category error. Unsetting a property that
+# should never have existed had to be explicit, and every future casualty would have had to
+# be remembered by name. An ordinary SET cannot fail that way.
+#
+# The absence contract is superseded rather than abandoned. It was never held consistently:
+# `BELONGS_TO_FAMILY`, 500 lines below, is the identical category error and resolved it the
+# opposite way, minting a false CONTAINER_INHERITED because "once the property has to hold
+# something the only safe value is the inherited one". Both sites now say the same true
+# thing instead of two different false ones.
 
 #: No ``attribution_precision``. The axis is defined over *passages* -- whether a source
 #: named this verse, inherited the claim from its hymn, or the verse names the entity
@@ -2722,7 +2787,7 @@ SET m.source_label = row.source_label,
     m.quality_tier = 'TIER_B',
     m.evidence_basis = 'SOURCE_METADATA',
     m.provenance_class = 'SOURCE_DERIVED_SCOPE',
-    m.attribution_precision = 'CONTAINER_INHERITED',
+    m.attribution_precision = 'NOT_AN_ATTRIBUTION',
     m.scope_origin = 'SUKTA_WIDE',
     m.confidence = 1.0,
     m.grade_basis = {_RISHI_MEMBER_BASIS_CASE},
@@ -2730,14 +2795,23 @@ SET m.source_label = row.source_label,
     m.build_pass = $build_pass
 """
 
-#: ``attribution_precision = 'CONTAINER_INHERITED'``, and the value is deliberately the
-#: weaker of the two available.
+#: ``attribution_precision = 'NOT_AN_ATTRIBUTION'`` since V3.2, and the safeguard that the
+#: old value was standing in for now rests on ``scope_origin`` where it belongs.
 #:
-#: Neither endpoint of this edge is a passage, so a purist reading says the axis does not
-#: apply and the property should be absent -- which is the argument the formula membership
-#: edge originally made. The invariant that every edge in this graph carries full grading
-#: metadata wins, and once the property has to hold *something* the only safe value is the
-#: inherited one. Every one of the three ṛṣi indices states its patronymic at
+#: Neither endpoint of this edge is a passage, so the axis does not apply and this used to
+#: read ``CONTAINER_INHERITED`` -- chosen, in as many words, because "the invariant that
+#: every edge in this graph carries full grading metadata wins, and once the property has
+#: to hold *something* the only safe value is the inherited one". That argument was sound
+#: and its conclusion was still false: it minted an inheritance claim about a container
+#: this edge does not have. The sentinel is the option it was missing. The invariant is
+#: kept in full, and nothing has to be asserted to keep it.
+#:
+#: **The safeguard is not lost, and this is the part worth checking rather than trusting.**
+#: The reason the weaker value was wanted is that a ``Passage -> HAS_RISHI -> Rishi ->
+#: BELONGS_TO_FAMILY -> RishiFamily`` walk can never be more precise than the sūkta-wide
+#: attribution it starts from. That fact is carried by ``scope_origin = 'SUKTA_WIDE'``,
+#: which every one of the 305 edges holds and which this change does not touch. Every one
+#: of the three ṛṣi indices states its patronymic at
 #: **container** level and never inside a verse: the Ṛgvedic Sarvānukramaṇī labels a sūkta
 #: (10,093 of the RV's 10,565 ``HAS_RISHI`` edges are inherited), the Atharvavedic index
 #: labels a sūkta in **all** 5,084 cases, and the Yajurvedic ṛṣisūcī is an index over the

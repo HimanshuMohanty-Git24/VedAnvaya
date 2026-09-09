@@ -216,6 +216,7 @@ concepts:
     preferred_label_sa: yakṣma
     preferred_label_en: consumption
     node_type: CONDITION
+    condition_kind: AFFLICTION
     definition: >-
       Yakṣma: the wasting, consuming sickness that is drawn out of a patient limb by limb
       in the Atharvaveda's ejection charms and flies away like a bird. Not fever, which
@@ -231,6 +232,7 @@ concepts:
     preferred_label_sa: takman
     preferred_label_en: fever
     node_type: CONDITION
+    condition_kind: AFFLICTION
     definition: >-
       Takman, the Atharvaveda's fever: addressed in the second person, classified by its
       period (tertian, quartan, constant), by its season (autumnal, cold, hot, of the
@@ -246,6 +248,7 @@ concepts:
     preferred_label_sa: amīvā
     preferred_label_en: affliction
     node_type: CONDITION
+    condition_kind: AFFLICTION
     definition: >-
       Amīvā: sickness in general, the affliction a god is asked to smite or expel rather
       than a named complaint. The one member of this group that is a four-Veda word --
@@ -260,6 +263,7 @@ concepts:
     preferred_label_sa: rapas
     preferred_label_en: bodily hurt
     node_type: CONDITION
+    condition_kind: AFFLICTION
     definition: >-
       Rapas: bodily hurt, blemish and defect -- the thing the wind is asked to blow away
       at AVS 4.13 and the thing Rudra is asked to carry one over at RV 2.33. Distinct
@@ -277,6 +281,7 @@ concepts:
     preferred_label_sa: apacit
     preferred_label_en: apacit swellings
     node_type: CONDITION
+    condition_kind: AFFLICTION
     definition: >-
       The apacíts: swellings counted off in fives, sevens and nines over the nape, neck,
       shoulders and sides, and told to fly away like a bird from its nest. Left
@@ -291,6 +296,7 @@ concepts:
     preferred_label_sa: jāyānya
     preferred_label_en: jayanya
     node_type: CONDITION
+    condition_kind: AFFLICTION
     definition: >-
       Jāyānya, a winged sickness that "flies and enters into a man", crushes the
       breast-bone and descends to the sole; named beside jaundice and visalpaka as
@@ -304,6 +310,7 @@ concepts:
     preferred_label_sa: kilāsa
     preferred_label_en: leprous spot
     node_type: CONDITION
+    condition_kind: AFFLICTION
     definition: >-
       The white or pale skin patch, treated by a night-born dark herb told to give the
       skin back its own colour; the corpus distinguishes the bone-born from the body-born
@@ -317,6 +324,7 @@ concepts:
     preferred_label_sa: palita
     preferred_label_en: pallor
     node_type: CONDITION
+    condition_kind: AFFLICTION
     definition: >-
       What is pale, named twice in the kilasa hymn beside the leprous spot and removed by
       the same herb. Kept apart from palitá "hoary" said of a man, which is the same
@@ -330,6 +338,7 @@ concepts:
     preferred_label_sa: vidradha
     preferred_label_en: abscess
     node_type: CONDITION
+    condition_kind: AFFLICTION
     definition: >-
       The vidradhá, an internal swelling or abscess, named with the red balāsa and the
       visalpaka as things a forest tree and a herb are told not to leave a bit of.
@@ -342,6 +351,7 @@ concepts:
     preferred_label_sa: śīrṣakti
     preferred_label_en: headache
     node_type: CONDITION
+    condition_kind: AFFLICTION
     definition: >-
       Head-pain, in the two words the corpus uses for it: śīrṣakti the ache and
       śīrṣāmaya the head-ailment, both expelled by incantation at AVS 9.8.1 and both
@@ -355,6 +365,7 @@ concepts:
     preferred_label_sa: karṇaśūla
     preferred_label_en: earache
     node_type: CONDITION
+    condition_kind: AFFLICTION
     definition: >-
       Ear-pain, named twice in the head-disease charm of AVS 9.8 and nowhere else in the
       four Saṃhitās.
@@ -367,6 +378,7 @@ concepts:
     preferred_label_sa: aṅgabheda
     preferred_label_en: limb-splitting
     node_type: CONDITION
+    condition_kind: AFFLICTION
     definition: >-
       The limb-splitter, paired in both its occurrences with the limb-waster and with
       heart-ache, in the two charms that expel head-disease by incantation.
@@ -379,6 +391,7 @@ concepts:
     preferred_label_sa: visalpaka
     preferred_label_en: visalpaka
     node_type: CONDITION
+    condition_kind: AFFLICTION
     definition: >-
       A named Atharvavedic ailment of the limbs, ears and eyes, ejected together with the
       abscess and the heart-disease; left untranslated because the corpus gives its sites
@@ -392,6 +405,7 @@ concepts:
     preferred_label_sa: hṛddyota
     preferred_label_en: heart-burn
     node_type: CONDITION
+    condition_kind: AFFLICTION
     definition: >-
       Burning of the heart, sent up to the sun together with yellowness in the jaundice
       hymn, and the thing the heavenly waters are asked for a remedy for at AVS 6.24.
@@ -404,6 +418,7 @@ concepts:
     preferred_label_sa: vātīkṛta
     preferred_label_en: wind-caused ailment
     node_type: CONDITION
+    condition_kind: AFFLICTION
     definition: >-
       The vātī́kṛta, "made by wind": an ailment named only in the two compounds the
       corpus prints for its remedies -- the viṣāṇakā herb that effaces it and the
@@ -417,6 +432,7 @@ concepts:
     preferred_label_sa: kṣipta
     preferred_label_en: bruise
     node_type: CONDITION
+    condition_kind: AFFLICTION
     definition: >-
       What is struck or bruised, named at AVS 6.109 only inside the compound that says
       the pippalī berry is its remedy, and once in the genitive beside the wind-ailment.
@@ -429,6 +445,7 @@ concepts:
     preferred_label_sa: unmāda
     preferred_label_en: madness
     node_type: CONDITION
+    condition_kind: AFFLICTION
     definition: >-
       Being crazed, in the one Atharvavedic verse that names it: crazed from sin against
       the gods or crazed from a demon, with the speaker declaring he knows the remedy.
@@ -441,6 +458,7 @@ concepts:
     preferred_label_sa: sedi
     preferred_label_en: debility
     node_type: CONDITION
+    condition_kind: AFFLICTION
     definition: >-
       Sedí, debility or failure: housed in an enemy's dwelling with the hags, wished onto
       an opposing army beside hunger and fear, and trodden down underfoot by the
@@ -458,6 +476,7 @@ concepts:
     preferred_label_sa: arāya
     preferred_label_en: malignant sprite
     node_type: CONDITION
+    condition_kind: THREAT
     definition: >-
       The arāyá: a noxious sprite blamed for wasting a person and for attacks on a woman,
       smitten away by a herb or an amulet. Whitney renders it variously "niggard",
@@ -472,6 +491,7 @@ concepts:
     preferred_label_sa: durhārd
     preferred_label_en: the malevolent
     node_type: CONDITION
+    condition_kind: THREAT
     definition: >-
       The evil-hearted: the hostile person as the Atharvaveda's charms treat him -- an
       affliction to be warded off, burnt against by darbha grass, gored by Agni's horns,
@@ -485,6 +505,7 @@ concepts:
     preferred_label_sa: śapatha
     preferred_label_en: curse
     node_type: CONDITION
+    condition_kind: THREAT
     definition: >-
       The spoken curse -- a rival's, a sister's, a priest's in fury -- sent back to the
       curser rather than cured, and the thing an amulet or a herb is said to keep off.
@@ -497,6 +518,7 @@ concepts:
     preferred_label_sa: abhiśasti
     preferred_label_en: imprecation
     node_type: CONDITION
+    condition_kind: THREAT
     definition: >-
       Imprecation and calumny, and the epithet abhiśastipā́ "protector against
       imprecation" that names it. Unlike the rest of this group it is not Atharvavedic
@@ -510,6 +532,7 @@ concepts:
     preferred_label_sa: abhicāra
     preferred_label_en: sorcerous attack
     node_type: CONDITION
+    condition_kind: THREAT
     definition: >-
       Sorcery directed at a person, named in the two Atharvavedic verses where the
       apāmārga plant spoils it and the varaṇá tree shields against it.

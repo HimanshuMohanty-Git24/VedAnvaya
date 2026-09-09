@@ -29,7 +29,11 @@ from typing import Any, Final
 
 import yaml
 
-from vedagraph.domain.ontology import ALL_NODE_TYPE_NAMES, DOMAIN_MODEL_VERSION
+from vedagraph.domain.ontology import (
+    ALL_NODE_TYPE_NAMES,
+    CONDITION_KINDS,
+    DOMAIN_MODEL_VERSION,
+)
 from vedagraph.enrich.concepts import (
     CONCEPT_REGISTRY_PATH,
     ConceptRegistryError,
@@ -303,11 +307,52 @@ def merge_registry(project_root: pathlib.Path) -> MergeReport:
 
 def load_domain_entities(project_root: pathlib.Path) -> tuple[ConceptRow, ...]:
     """Load and fully validate the merged registry under the V2 type vocabulary."""
-    return load_concepts(
+    rows = load_concepts(
         project_root,
         allowed_node_types=ALL_NODE_TYPE_NAMES,
         registry_path=MERGED_REGISTRY_PATH,
     )
+    _require_condition_kinds(rows)
+    return rows
+
+
+def _require_condition_kinds(rows: Sequence[ConceptRow]) -> None:
+    """Every ``CONDITION`` must declare a ``condition_kind``, and it must be a real one.
+
+    Checked here rather than in :func:`vedagraph.enrich.concepts.load_concepts` because
+    this is the first point at which an entity's type is final. ``RAKSAS-DEMON`` is
+    authored ``node_type: CONCEPT`` in the base registry and retyped to ``CONDITION`` by
+    :data:`NODE_TYPE_OVERRIDES` during the merge, so a check against the authored type
+    would wave through the demon -- the single entity whose misclassification made
+    "which diseases does the corpus name?" answer with a demon in the first place.
+
+    There is deliberately no default and no ``UNSPECIFIED`` to fall back on, so a new
+    condition added without a kind fails the build instead of landing in a bucket. See
+    :class:`vedagraph.domain.ontology.ConditionKind` for why that value does not exist.
+    """
+    missing: list[str] = []
+    invalid: list[str] = []
+    for row in rows:
+        if row.node_type != "CONDITION":
+            if row.condition_kind:
+                invalid.append(
+                    f"{row.concept_id} is {row.node_type}, not CONDITION, but declares "
+                    f"condition_kind={row.condition_kind!r}"
+                )
+            continue
+        if not row.condition_kind:
+            missing.append(row.concept_id)
+        elif row.condition_kind not in CONDITION_KINDS:
+            invalid.append(
+                f"{row.concept_id}: condition_kind={row.condition_kind!r} is not one of "
+                f"{sorted(CONDITION_KINDS)}"
+            )
+    problems = [f"{cid}: CONDITION with no condition_kind" for cid in sorted(missing)]
+    problems.extend(sorted(invalid))
+    if problems:
+        raise ConceptRegistryError(
+            "condition_kind contract violated:\n  " + "\n  ".join(problems)
+        )
 
 
 def entities_by_node_type(entities: Sequence[ConceptRow]) -> dict[str, int]:

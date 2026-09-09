@@ -180,3 +180,337 @@ variants:
   relation: NUMBER_VARIANT
   evidence: NOT_IN_SCOPE, as gāvaḥ/gauḥ above.
   review_status: NOT_IN_SCOPE
+
+# ===========================================================================
+# V3.2 CLOSURE. Bounded sweep of all 214 Devatā for the same defect class as
+# the Agni rows above: an INDIVIDUAL-structure node whose printed label is a
+# registered base label (or a regular sandhi/case form of it) plus a
+# qualifier, left unlinked to its base.
+# ===========================================================================
+#
+# METHOD, so a reviewer can rerun it. For every Devatā label, test whether any
+# OTHER Devatā's preferred_label -- or a diacritic-folded / nominative-stripped
+# form of it -- occurs inside it, either as the final compound member or as a
+# space-or-hyphen-delimited whole token. Across the 72 INDIVIDUAL nodes the
+# strict test returns eight hits. Five are the rows already asserted above. Two
+# are pure orthographic accidents: `puruṣaḥ` ends in the letters of `uṣāḥ`, and
+# `rātriḥ` ends in the letters of the ṛṣi `atriḥ`. That leaves exactly ONE new
+# assertable row, and it is the one the V3.1 report named.
+#
+# THE ORTHOGRAPHIC RULE THIS SWEEP ESTABLISHED, and which decides two rows.
+#
+# The sweep went to the printed source rather than to the graph labels, because
+# the evidence rule of this file is the SOURCE LABEL. The Anukramaṇī data is at
+# data/raw/wsc2023/2026-09-04/*.txt, ten files, one per maṇḍala, in the format
+# `hymn.verses.seer.divinity.meter`. Parsing all ten yields 212 distinct
+# divinity tokens against 214 node labels -- effectively 1:1.
+#
+# In that source the hyphen is the editors' CO-ORDINATION MARKER between
+# separate names, and it is never an epithet join. The complete inventory of
+# hyphenated divinity tokens is ten strings, and nine are unambiguously lists of
+# distinct deities or patrons: `iḻā-sarasvatī-mahī`, `sarasvatī-iḻā-bhāratī`,
+# `sarasvati-iḻā-bhāratī`, `indrāṇī-varuṇānī-agnāyī`, `vāk-āpaḥ`,
+# `indraḥ-marutaḥ`, `agniḥ-marutaḥ`, `agniḥ-mitrāvaruṇau-rātriḥ-savitā`, and a
+# five-member list of human patrons. Meanwhile EVERY epithet-qualified label in
+# the same source is printed with a space (`jātavedā agniḥ`, `pavamāno agniḥ`,
+# `pavamānaḥ somaḥ`, `sasarparī vāk`, `sāvitrī sūryā`) or solid (`rakṣohāgniḥ`,
+# `marutvānindraḥ`). Space or solid means epithet plus name; a hyphen means two
+# co-ordinated names. That is a label-only test, which is the evidence class
+# this file demands, and it is what places `aptṛṇaḥ-sūryaḥ` out of scope below.
+
+- variant_entity_id: VG:DEVATA:MARUTVANINDRAH
+  base_entity_id: VG:DEVATA:INDRAH
+  relation: EPITHET_QUALIFIED
+  evidence: >-
+    The label `marutvānindraḥ` is marutvān- "accompanied by the Maruts" compounded
+    with the base label `indraḥ`, which is present unaltered as the compound's
+    second member: the substring a reviewer must check is the final `indraḥ` of
+    `marutvānindraḥ`. The join needs no sandhi adjustment at all, because
+    marutvān already ends in a long -ān. This is the same evidence class as the
+    `rakṣohāgniḥ` row above -- the base is a compound member, not a separate
+    word, so a whole-word test cannot see it -- except that here not even a vowel
+    is lengthened. The Anukramaṇī prints the label solid, and in this source
+    solid or space-separated means epithet plus name while a hyphen means two
+    co-ordinated names; `marutvānindraḥ` carries no hyphen.
+  review_status: ASSERTED
+  notes: >-
+    The defect named in the V3.1 report ("Indra accompanied by the Maruts"). 19
+    Anukramaṇī attributions, from RV 1.165 and RV 1.171. Both entities stay
+    separate: Indra carries 2,869 attributions of his own. Deliberately NOT
+    linked to VG:DEVATA:MARUTAH as well -- marutvān- is a possessive derivative
+    (marut-vant-) functioning as the qualifier, and the Maruts are the thing
+    Indra is accompanied BY, not a second base this label names. RV 1.171 prints
+    `(1-2)marutaḥ,(3-6)marutvānindraḥ` in one hymn, so the editors themselves
+    keep the Maruts and Marutvān-Indra apart.
+
+# --- V3.2 refusals. Recorded so the absence of an edge is a decision, not an
+# --- oversight. Where the refusal is about the instrument rather than about the
+# --- identity -- that is, where the two labels DO name one being but this file
+# --- is the wrong place to say so -- the row says which mechanism owns it.
+
+- variant_entity_id: VG:DEVATA:INDRASYASVAU
+  base_entity_id: VG:DEVATA:INDRAH
+  relation: PART_OF_DEITY
+  evidence: >-
+    REFUSED. The label `indrasyāśvau` does contain a regular case form of the
+    base: the substring `indrasya` is the genitive singular of `indraḥ`. But
+    `aśvau` "the two horses" replaces rather than qualifies -- the label names two
+    creatures belonging to Indra, not Indra under an epithet. It is not parallel
+    to the `agnerātmā` row above, which was admitted as PART_OF_DEITY because
+    "the self of Agni" is not a second personification of fire; two horses are
+    their own referent, and the registry already holds a separate deified steed
+    at VG:DEVATA:HARIH. The source confirms the editors read them as a separate
+    addressee: RV 4.32 prints `(1-22)indraḥ,(23-24)indrasyāśvau`, assigning Indra
+    and the horses to disjoint verse ranges of one hymn.
+  review_status: REFUSED
+  notes: >-
+    Recorded as a close call. If a later reviewer decides PART_OF_DEITY should
+    cover possession as well as aspect, this is the row that flips, and only this
+    row. Nothing downstream depends on it either way: `structure: PAIR` already
+    excludes it from any count of individual personifications.
+
+- variant_entity_id: VG:DEVATA:APAM-NAPAT
+  base_entity_id: VG:DEVATA:APAH
+  relation: PART_OF_DEITY
+  evidence: >-
+    REFUSED. The label `apāṁ napāt` contains `apāṁ`, the regular genitive plural
+    of the base `āpaḥ`, so the base is present in a case form. But `napāt`
+    "descendant" replaces rather than qualifies: the label names the child OF the
+    Waters, a figure with his own whole-hymn assignment at RV 2.35 and 15
+    attributions, not the Waters under an epithet. Identifying Apāṁ Napāt with
+    anything else is a claim about mythology, which is what this file refuses to
+    act on.
+  review_status: REFUSED
+
+- variant_entity_id: VG:DEVATA:SARASVAN
+  base_entity_id: VG:DEVATA:SARASVATI
+  relation: EPITHET_QUALIFIED
+  evidence: >-
+    REFUSED, and refused for exactly the reason `sāvitrī sūryā` is refused above.
+    The labels `sarasvān` and `sarasvatī` differ in gender and stem, not by a
+    qualifier: `sarasvān` is not `sarasvatī` plus anything, and neither contains
+    the other as a printed substring (`sarasvān` ends -vān, `sarasvatī` ends
+    -vatī). The source treats them as two addressees within a single hymn -- RV
+    7.95 prints `(1-2,4-6)sarasvatī,(3)sarasvān` and RV 7.96 prints
+    `(1-3)sarasvatī,(4-6)sarasvān`.
+  review_status: REFUSED
+
+- variant_entity_id: VG:DEVATA:SAVITRI-SURYA
+  base_entity_id: VG:DEVATA:SAVITA
+  relation: EPITHET_QUALIFIED
+  evidence: >-
+    REFUSED. A second refusal for `sāvitrī sūryā`, against a different base. The
+    label's first member `sāvitrī` shares five letters with the base label
+    `savitā`, but it is the vṛddhi patronymic "daughter of Savitṛ", not `savitā`
+    with a qualifier: the base label is not present, the derived form is. The row
+    exists because the string similarity is obvious enough that a reader who
+    accepted the SURYAH refusal above might still reach for this one.
+  review_status: REFUSED
+
+- variant_entity_id: VG:DEVATA:BRAHMANASPATIH
+  base_entity_id: VG:DEVATA:BRAHMA
+  relation: EPITHET_QUALIFIED
+  evidence: >-
+    REFUSED. The label `brahmaṇaspatiḥ` contains `brahmaṇas`, the genitive of the
+    base label `brahma`, but `patiḥ` "lord of" replaces rather than qualifies --
+    "the lord of brahman" is not brahman under an epithet, in the same way
+    `kṣetrapatiḥ` is not a field and `vāstoṣpatiḥ` is not a dwelling.
+    Brahmaṇaspati carries 48 attributions of his own against one for `brahma`.
+  review_status: REFUSED
+  notes: >-
+    Do not reach for brahmaṇaspatiḥ / bṛhaspatiḥ either. The two are widely
+    identified in the secondary literature and share no printed substring, so
+    that identification is out of reach of this file's evidence rule.
+
+- variant_entity_id: VG:DEVATA:RATHAGOPAH
+  base_entity_id: VG:DEVATA:RATHAH
+  relation: EPITHET_QUALIFIED
+  evidence: >-
+    REFUSED. `rathagopāḥ` contains the base stem `ratha-` as its first compound
+    member, but `gopāḥ` "guardian" replaces rather than qualifies: the label names
+    the chariot's protector, not the chariot. Same structure as the `patiḥ`
+    compounds above.
+  review_status: REFUSED
+
+- variant_entity_id: VG:DEVATA:YAMAH
+  base_entity_id: VG:DEVATA:YAMI
+  relation: EPITHET_QUALIFIED
+  evidence: >-
+    REFUSED. `yamaḥ` and `yamī` share the stem yama-, and the strict sweep does
+    not even flag them (neither printed label contains the other); only a loose
+    three-letter stem match does. They are a masculine/feminine pair of distinct
+    figures who speak to each other in RV 10.10, and the difference between the
+    labels is gender, not a qualifier -- the `sāvitrī sūryā` rule exactly.
+    Recorded because the shared stem is the kind of thing a later automated pass
+    will propose again.
+  review_status: REFUSED
+
+# ===========================================================================
+# V3.2. ORTHOGRAPHIC_VARIANT -- a fourth relation value, and why it was added
+# ===========================================================================
+#
+# THE DEFECT. Six pairs of Devatā nodes render an identical `display_label`. The
+# reproducing query is
+#
+#   MATCH (v:Devata)
+#   WITH toLower(trim(v.display_label)) AS lbl, collect(v.entity_key) AS keys,
+#        count(*) AS n
+#   WHERE n > 1 AND lbl IS NOT NULL
+#   RETURN lbl, n, keys ORDER BY n DESC, lbl;
+#
+# `preferred_label` yields zero collisions and `label_iast` yields a different
+# four, so `display_label` is the surface that carries this defect and the other
+# two are not substitutes for it.
+#
+# THE ROOT CAUSE, worth stating because it will recur. The entity_key slug folds
+# diacritics but preserves ASCII letter identity and word boundaries. So a
+# source-side spelling slip MERGES silently when it differs only in a diacritic,
+# and FORKS into a second pinned entity when it differs in an ASCII letter or a
+# word boundary. The proof is `sarasvati-iḻā-bhāratī`: it is the one source
+# divinity token with no matching node label, because it merged into
+# `sarasvatī-iḻā-bhāratī` on the macron alone. Four of the six pairs are that
+# same mechanism caught on the other side of the fold.
+#
+# WHY A NEW RELATION VALUE RATHER THAN ONE OF THE THREE ALREADY HERE.
+# EPITHET_QUALIFIED is simply false of these rows: there is no qualifier.
+# `dadhikrā` and `dadhikrāḥ` differ by a visarga, not by an epithet, and
+# asserting EPITHET_QUALIFIED would record a qualifier no reviewer could find in
+# the label. PART_OF_DEITY is false for the same reason, and NUMBER_VARIANT is
+# false because these are not singular/plural contrasts -- `structure` is
+# identical on both sides of every pair, which is exactly what distinguishes them
+# from the gāvaḥ/gauḥ rows recorded NOT_IN_SCOPE above.
+#
+# WHY THE EPITHET_VARIANT_OF EDGE IS NEVERTHELESS THE RIGHT CARRIER. The job of
+# this edge in every consumer is "resolve me to my canonical base before
+# counting" -- `natural_phenomena_personified`, `deities_by_axis` and
+# `deity_widest_range` all use it that way and nothing else does. The `relation`
+# property exists precisely so a consumer can narrow: the PART_OF_DEITY row above
+# is already not an epithet, and its note says "a consumer that wants only
+# epithets can filter on the relation". This is that mechanism used a second
+# time, not a new one.
+#
+# NOTHING IS MERGED, exactly as above. Both nodes keep their entity_key, their
+# attributions and their mentions. entity_key is pinned identity in this project
+# and no row in this file removes a node.
+#
+# WHAT THE ALTERNATIVE WOULD HAVE COST. Without these four rows the counts stay
+# inflated by 10 + 1 + 7 + 4 = 22 Anukramaṇī attributions across four pairs. A
+# distinct `display_label` alone would hide the doubled string while leaving the
+# doubled count, which is the worse of the two failures: it makes the defect
+# invisible without making it false.
+
+- variant_entity_id: VG:DEVATA:VISVE-DEVAH
+  base_entity_id: VG:DEVATA:VISVEDEVAH
+  relation: ORTHOGRAPHIC_VARIANT
+  evidence: >-
+    The source prints `viśvedevāḥ` in 86 hymn lines and `viṣve devāḥ` in exactly
+    one, RV 4.55, with a retroflex ṣ for the palatal ś AND a word split. The two
+    entities forked only because the entity_key slug preserves the space; the ṣ/ś
+    difference alone would have folded them together. The lemmatiser of this
+    project already assigns BOTH nodes `label_iast: viśve devāḥ`, so the pipeline
+    has already decided these are one lemma. The substring a reviewer must check
+    is the whole label on each side.
+  review_status: ASSERTED
+  notes: >-
+    The highest-impact row of the four: 10 attributions sitting unresolved beside
+    805. Direction chosen so the base is the better-attested node.
+
+- variant_entity_id: VG:DEVATA:DEVYAU-HOTARAU
+  base_entity_id: VG:DEVATA:DAIVYAU-HOTARAU
+  relation: ORTHOGRAPHIC_VARIANT
+  evidence: >-
+    Slot 7 of the fixed Āprī sequence. The whole sequence is printed identically
+    around this slot in all ten Āprī hymns -- agniḥ, barhiḥ, devīrdvāraḥ,
+    uṣāsānaktā, then the slot, then sarasvatī-iḻā-bhāratī, tvaṣṭā, vanaspatiḥ,
+    svāhākṛtayaḥ -- and nine of the ten print `daivyau hotārau`. RV 3.4 alone
+    prints `devyau hotārau`. The positional evidence is therefore as strong as
+    this file can get: the same slot, in the same list, in the same order.
+  review_status: ASSERTED
+  notes: >-
+    That same RV 3.4 source line also carries `sarasvati-iḻā-bhāratī`, the only
+    other misspelling in the corpus. One defective line, two slips -- which is
+    what makes this a source erratum rather than a variant reading.
+
+- variant_entity_id: VG:DEVATA:BHAVAVRTTHAM
+  base_entity_id: VG:DEVATA:BHAVAVRTTAM
+  relation: ORTHOGRAPHIC_VARIANT
+  evidence: >-
+    One Anukramaṇī category, one aspirate apart. The source prints `bhāvavṛttam`
+    at RV 10.130, 10.154 and 10.190 and `bhāvavṛttham` at RV 10.129 only, all four
+    in the same maṇḍala file. `bhāvavṛttha-` is not a Sanskrit formation, so the
+    variant side is the erroneous one. The substring a reviewer must check is the
+    `tth` against `tt`.
+  review_status: ASSERTED
+  notes: >-
+    Both sides are `structure: ABSTRACT`, so this pair never polluted a
+    personification count. The exposure it closes is a count of distinct devatā
+    categories, not Q86.
+
+- variant_entity_id: VG:DEVATA:DADHIKRAH
+  base_entity_id: VG:DEVATA:DADHIKRA
+  relation: ORTHOGRAPHIC_VARIANT
+  evidence: >-
+    The printed labels `dadhikrāḥ` (RV 4.38-4.40) and `dadhikrā` (RV 7.44) differ
+    by a final visarga and nothing else. Both nodes carry `structure: INDIVIDUAL`,
+    so this is NOT the gāvaḥ/gauḥ number case this file declines above -- the
+    singular/plural question does not arise. The lemmatiser already assigns BOTH
+    `label_iast: dadhikrā`.
+  review_status: ASSERTED
+  notes: >-
+    Direction is the one exception to the better-attested rule used elsewhere in
+    this file. The base is `dadhikrā` (4 attributions) rather than `dadhikrāḥ`
+    (19), because `dadhikrā` is the correct nominative singular of the stem and
+    the visarga form is the slip. Canonical form wins over frequency when the two
+    disagree, and this is the only row where they do.
+
+# --- V3.2. Out of scope, recorded so a reader does not read the gap as an
+# --- oversight. Both rows are owned by devata_components.yaml and both are
+# --- blocked there on an unregistered component.
+
+- variant_entity_id: VG:DEVATA:APTRNAH-SURYAH
+  base_entity_id: VG:DEVATA:SURYAH
+  relation: EPITHET_QUALIFIED
+  evidence: >-
+    NOT_IN_SCOPE. The label `aptṛṇaḥ-sūryaḥ` does contain the base label `sūryaḥ`
+    as a whole printed word, so on a substring test it is the strongest-looking
+    new candidate in the corpus. It is placed out of scope on the orthography of
+    the source itself, stated in the V3.2 header above: in the WSC2023 divinity
+    field a hyphen is the co-ordination marker the editors use between separate
+    names, and never an epithet join. Nine of the other nine hyphenated tokens
+    are lists of distinct deities or patrons. So this label is a composite, and
+    composites belong to devata_components.yaml, not here.
+  review_status: NOT_IN_SCOPE
+  notes: >-
+    THE ONE UNRESOLVED VARIANT IN THE V3.2 SWEEP, and it reverses a standing
+    project decision, so it is flagged rather than quietly applied. The
+    display_label of the node reads "Surya, with the epithet aptrna" and
+    devata_taxonomy.yaml stores `label_iast: aptṛṇaḥ sūrya` with a SPACE -- the
+    taxonomy normalised away the hyphen that carries the evidence. That gloss is
+    a project reading and not a source label, so it cannot be evidence here, but
+    a reader should know the two disagree. Both readings nevertheless agree on
+    the operational outcome -- keep the entity separate, assert no edge -- which
+    is why this row changes nothing and destroys nothing. It would be
+    NEEDS_REVIEW in devata_components.yaml with an empty component list, because
+    `sūryaḥ` is registered but `aptṛṇaḥ` is not (VG:DEVATA:APTRNAH does not
+    exist, checked). WHAT WOULD SETTLE IT: the printed devatā slot for RV 1.191
+    in an edition other than WSC2023, showing whether the reading is a dvandva or
+    a bahuvrīhi epithet. 16 attributions ride on it. The residual while it stays
+    open: `deities_by_axis` reports it as a third INDIVIDUAL deity on the solar
+    axis beside `sūryaḥ` and `sāvitrī sūryā`.
+
+- variant_entity_id: VG:DEVATA:AGNISURYANILAH
+  base_entity_id: VG:DEVATA:AGNIH
+  relation: EPITHET_QUALIFIED
+  evidence: >-
+    NOT_IN_SCOPE. `agnisūryānilāḥ` contains the base stem `agni-` as its first
+    member and `sūryā-` as its second, but it is a plural dvandva of three --
+    Agni, Sūrya and Anila (wind) -- not one deity under a qualifier, and its
+    `structure: GROUP` already says so. Composites are handled in
+    devata_components.yaml.
+  review_status: NOT_IN_SCOPE
+  notes: >-
+    Would be NEEDS_REVIEW there rather than ACCEPTED: Agni and Sūrya are
+    registered, but Anila is not (VG:DEVATA:ANILAH and VG:DEVATA:ANILA both
+    absent, checked), so the decomposition would be two-thirds of one. Same shape
+    as the dyāvāpṛthivyau row that waits on VG:DEVATA:DYAUH. 1 attribution,
+    RV 8.18.9.

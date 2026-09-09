@@ -502,6 +502,15 @@ def load_concepts(
                 broader=tuple(sorted(broader)),
                 definition=_require_text(concept_id, "definition", entry.get("definition")),
                 related_devatas=tuple(sorted(related)),
+                # Carried through, not validated here. A CONDITION must have a kind, but
+                # whether an entity IS a condition is not settled until
+                # vedagraph.domain.registry applies NODE_TYPE_OVERRIDES: RAKSAS-DEMON is
+                # authored CONCEPT and retyped to CONDITION there. Validating on the
+                # authored type would let exactly the demon through -- which is the entity
+                # the taxonomy exists to keep out of the disease list. The check therefore
+                # lives at the point where the retype is known, and this layer keeps
+                # depending only on the semantic ontology.
+                condition_kind=str(entry.get("condition_kind", "") or "").strip(),
             )
         )
 
