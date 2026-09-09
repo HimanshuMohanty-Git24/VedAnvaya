@@ -12,7 +12,14 @@ services:
       # Neo4j env-var convention: "_" becomes ".", "__" becomes "_".
       # The setting is server.memory.pagecache.size, so every separator is a single "_".
       NEO4J_server_memory_pagecache_size: "512m"
-      NEO4J_PLUGINS: '["apoc"]'
+      # graph-data-science is optional: the enrichment analytics layer computes PageRank,
+      # Louvain communities, degree centrality and bridge scores deterministically in
+      # Python and does not need it. GDS is enabled here as an independent cross-check of
+      # those numbers. Neo4j must still start if the plugin cannot be fetched, so nothing
+      # in the pipeline may depend on it -- see vedagraph.enrich.analytics.
+      NEO4J_PLUGINS: '["apoc","graph-data-science"]'
+      NEO4J_dbms_security_procedures_unrestricted: "apoc.*,gds.*"
+      NEO4J_dbms_security_procedures_allowlist: "apoc.*,gds.*"
     volumes:
       - neo4j_data:/data
       - neo4j_logs:/logs

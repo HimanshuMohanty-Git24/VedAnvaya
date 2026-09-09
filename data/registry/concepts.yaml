@@ -1,0 +1,1287 @@
+# Reviewed CONCEPT registry for the graph enrichment layer.
+#
+# A concept answers one question only: "is this passage ABOUT this idea?" It is a
+# reusable knowledge node -- fire, sacrifice, cosmic order, cattle -- and it is not a
+# lexicon entry, not a deity, and not a translation gloss.
+#
+# ---------------------------------------------------------------------------
+# THE RULE THAT MATTERS MOST: a Devata is not a Concept.
+# ---------------------------------------------------------------------------
+# VG:CONCEPT:AGNI-FIRE is the ritual and natural fire. VG:DEVATA:AGNIH is the god. They
+# are related and they are NOT the same node, they are never merged, and no process in
+# this repository may collapse one into the other. The only edge between the two
+# ontologies is DEVATA_ASSOCIATED_WITH, generated from `related_devatas` below, which
+# records the association without asserting the identity. The frozen semantic ontology
+# already refuses REPRESENTS and IS_GOD_OF by name for the same reason: "Agni is fire" is
+# a commentarial reading, not a fact the corpus states.
+#
+# One consequence is visible in the alias lists. Vedic Sanskrit does not separate the
+# appellative from the theonym -- `agním` is fire and the fire-god in the same breath --
+# so `aliases_sa` keeps the stem. English does separate them: Griffith writes the proper
+# name "Agni" with a capital and the substance "fire" without one, so `aliases_en`
+# excludes every deity proper name. Including "Agni", "Soma" or "Indra" as an English
+# alias would make the concept node a duplicate of the devata node with worse evidence.
+#
+# ---------------------------------------------------------------------------
+# Fields
+# ---------------------------------------------------------------------------
+#   concept_id          pinned identity, VG:CONCEPT:<UPPER-KEBAB>. Never renumbered.
+#   preferred_label_sa  IAST, unaccented stem or nominative singular.
+#   preferred_label_en  the plain English label, lower case.
+#   node_type           a member of vedagraph.semantic.ontology.SemanticNodeType. Load
+#                       fails on any other value; this file may not invent a type.
+#   definition          one honest sentence. Not a dictionary entry and not a claim
+#                       about what the concept "really means".
+#   aliases_sa          IAST surface forms that ACTUALLY OCCUR in the four corpora.
+#                       Every entry here was checked against the corpus token index
+#                       before it was written down; unattested forms were deleted rather
+#                       than kept "for completeness". Matching folds these through
+#                       ComparisonForm.SEARCH_NORMALIZED, the same pipeline that built
+#                       the search surface, so what is written here is IAST and what is
+#                       compared is the folded form.
+#   aliases_en          single English tokens that Griffith (RV, YV) or Whitney (AV)
+#                       actually uses. Hyphenated compounds count as one token, so
+#                       "life-time" is listed separately from "life".
+#   broader             parent concept ids, ONLY where the narrower term is genuinely a
+#                       kind of the broader one. Not "related to", not "part of": the
+#                       heart is part of the body and is therefore NOT filed under it.
+#   related_devatas     entity keys from data/registry/devatas.yaml. Validated on load;
+#                       a typo'd key raises rather than creating an orphan edge.
+#
+# ---------------------------------------------------------------------------
+# Aliases deliberately NOT listed, with the reason
+# ---------------------------------------------------------------------------
+# These were measured against the corpus and rejected. They are recorded because the
+# absence is a decision, and an absence with no recorded reason gets "fixed" later by
+# someone who did not measure it.
+#
+#   "order"    268 English hits, and in Whitney's Atharvaveda the overwhelming majority
+#              are the preposition "in order to". Adding it to RTA-ORDER would have made
+#              the corpus's single most philosophically loaded concept the noisiest.
+#   "self"     Whitney hyphenates constantly ("self-giving", "self-yoked"). Hyphen-aware
+#              tokenisation removes most of it, but the residue is still an adjective
+#              prefix rather than atman.
+#   "song"     460 passages, and Griffith uses it for saman, stoma, uktha and rc without
+#              distinction. Assigning it to any one of them would be a labelling choice
+#              dressed as evidence, so no concept claims it.
+#   "power"    638 passages, spread across maya, kratu, savas, ojas, bala and sahas.
+#              Same problem as "song"; OJAS-MIGHT keeps only "strength" and "might".
+#   "mighty"   1,055 passages and almost always an epithet of a god, not a claim that the
+#              passage is about might.
+#   "men"      1,170 passages. Griffith's default rendering of nara, jana, manusya,
+#              martya and vira alike; useless as a discriminator.
+#   "son"      445 passages, and Griffith's "Son of Strength" / "Son of Vigour" are Agni
+#              epithets, not statements about offspring.
+#   "hero"     Removed after measurement, not before it: of 509 occurrences, 215 (42%) are
+#              the vocative epithet "O Hero" / "the Hero" addressed to Indra. "heroes" is
+#              26% the same. That is the devata/concept confusion this file exists to
+#              prevent, arriving through the translation instead of through the lexicon.
+#              VIRA-HERO keeps its Sanskrit forms and the single English token "heroism".
+#   "day"      636 occurrences, 209 (33%) adverbial -- "this day" meaning today, and "day
+#              by day". AHAN-DAY keeps "days" and its Sanskrit forms.
+#   "vasavah"  Sanskrit. Vocative plural of the Vasus, a class of gods, not vasu 'goods'.
+#              Found in the precision sample: RV 3.57.2 "O Vasus" had been filed under
+#              VASU-WEALTH.
+#   "jatavedah" Sanskrit, in JANMAN-BIRTH. Jatavedas is Agni's epithet and belongs to
+#              AGNI-FIRE, where it is listed; the birth concept was matching the name.
+#   "krstayah" Sanskrit. Means 'peoples', not 'fields', despite the root krs- 'to till'.
+#              It had been filed under KSETRA-FIELD.
+#   "dasuse"   Sanskrit. 'to the one who offers' -- an epithet of the sacrificer, not an
+#              instance of liberality. Removed from DANA-LIBERALITY.
+#   "ketuh"    Sanskrit. Found in the precision sample: RV 3.8.8 "adhvarasya ketum" is the
+#              sacrifice's *banner*, which Griffith renders "ensign". ketu- is beacon,
+#              banner and brightness at once; JYOTIS-LIGHT keeps jyotis, rocana and bhanu.
+#
+# Known residual, measured and left in place: Griffith renders manas as "heart" often
+# enough that HRD-HEART takes a share of what MANAS-MIND should have (RV 10.37.12,
+# "thoughtlessness of heart", is manasah prayuti). Splitting them would need the Sanskrit,
+# which the English path by definition does not have. It is one of the two errors in the
+# 40-assertion audit sample and is recorded rather than hidden.
+#   "apas"     Sanskrit. The folded surface drops the accent that separates apas 'work'
+#              from apas 'waters', so the two words become one string. AP-WATERS keeps
+#              apah / apo / apam / apsu, which are unambiguous.
+#   "rte"      Sanskrit. rte 'without, except' is spelled identically to the locative of
+#              rta once accents are folded away.
+#   "pahi"     Sanskrit. Imperative of both pa- 'protect' and pa- 'drink'; "somam pahi"
+#              is drinking, "agne pahi" is protecting, and nothing on the folded surface
+#              separates them. SARMAN-PROTECTION uses sarman / trata / varutha instead.
+#   "raksa"    Sanskrit. Imperative "protect" vs. the neuter noun "demon". RAKSAS-DEMON
+#              keeps only raksamsi / raksasah / rakso, which cannot be the verb.
+#   "sahasra"  Sanskrit. 'thousand', not sahas 'strength'; excluded from OJAS-MIGHT by
+#              listing sahasa / sahasah explicitly rather than a sahas- stem.
+#   "asvin"    Sanskrit. Every asvin- form is the Asvin twins, a deity, not a horse.
+#   "visva"    Sanskrit. 'all', not vis 'clan'. JANA-PEOPLE lists visah / visam / viso.
+#   "vayah"    Sanskrit. 'vigour' and 'birds' are the same folded string.
+#
+#   Removed after adversarial QA measured them against the passages they matched. Each
+#   number is the share of that alias's assertions whose evidence span does not support the
+#   concept, counted by hand or by an explicit pattern over the evidence:
+#   "realm"    English. 82.9% wrong for RAJAN-KINGSHIP. "the realm of the gods" and "Yama's
+#              realm" are domains, not kingship. Sole evidence on 30 of 35, so most of the
+#              damage was unrecoverable from the row.
+#   "stone"    English. ~62% wrong for ASMAN-PRESSING-STONE. "make thyself a stone" and
+#              "stand on the stone" are hardness images and ritual furniture, not the soma
+#              press.
+#   "way"      English. 23% adverbial or idiomatic -- "turners this way", "the way of
+#              righteousness" -- rather than ADHVAN-PATH the road.
+#   "bow"      English. 21% is the verb: "let the four directions bow to me", "bow down the
+#              pride of every foe", not AYUDHA-WEAPON the bow.
+#   The Sanskrit aliases for all four concepts are kept, so each concept survives with
+#   better precision rather than being dropped.
+#
+# ---------------------------------------------------------------------------
+# ambiguous_aliases
+# ---------------------------------------------------------------------------
+# An alias string may not be claimed by two concepts: an ambiguous alias is a silent
+# precision killer, because whichever concept happens to be listed first wins and the
+# reader cannot see that a choice was made. Load fails if two concepts share one. Where a
+# string is genuinely wanted by more than one concept it goes here instead and is
+# excluded from matching everywhere, so the ambiguity is visible rather than resolved by
+# accident.
+policy_version: vedagraph-concept-lexicon-v1
+
+ambiguous_aliases:
+  - alias: madhu
+    kind: sa
+    reason: >-
+      Claimed by MADHU-HONEY as the substance and by SOMA-DRINK, whose juice is called
+      madhu throughout Mandala 9. 178 passages, and no deterministic rule separates the
+      readings. Both concepts keep their unambiguous forms; neither gets this one.
+  - alias: sweet
+    kind: en
+    reason: >-
+      Griffith's rendering of madhu, madhumat and svadu alike, used for soma, milk,
+      speech and rain. Wanted by MADHU-HONEY and SOMA-DRINK; given to neither.
+  - alias: strength
+    kind: en
+    reason: >-
+      955 passages. Griffith uses it for ojas, savas, sahas, bala, tavas AND vaja, which
+      is exactly the boundary between OJAS-MIGHT and VAJA-PRIZE. Retained here rather
+      than assigned, because assigning it would put ~750 Rigvedic passages on one side of
+      a distinction the translation does not make.
+
+concepts:
+
+  # -------------------------------------------------------------------------
+  # Sacrifice and its apparatus
+  # -------------------------------------------------------------------------
+
+  - concept_id: VG:CONCEPT:YAJNA-SACRIFICE
+    preferred_label_sa: yajña
+    preferred_label_en: sacrifice
+    node_type: RITUAL
+    definition: >-
+      The sacrificial rite itself, the act of worship offered to the gods with fire,
+      speech and oblation.
+    aliases_sa: [yajña, yajñaṃ, yajñam, yajñasya, yajño, yajñena, yajñe, yajñeṣu, yajñaiḥ, yajñāya,
+                 adhvaram, adhvarasya, adhvare, adhvarāṇām]
+    aliases_en: [sacrifice, sacrifices, worship, rite, rites]
+    broader: []
+    related_devatas: [VG:DEVATA:YAJAMANAH, VG:DEVATA:YAJNAYAJAMANAU]
+
+  - concept_id: VG:CONCEPT:HAVIS-OBLATION
+    preferred_label_sa: havis
+    preferred_label_en: oblation
+    node_type: OFFERING
+    definition: >-
+      What is poured or placed in the fire for the gods, considered as the offered
+      material rather than as the rite.
+    aliases_sa: [haviḥ, havir, haviṣā, haviṣaḥ, haviṣmān, havyam, havyaṃ, havyā, havyāni]
+    aliases_en: [oblation, oblations, offering, offerings]
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:GHRTA-CLARIFIED-BUTTER
+    preferred_label_sa: ghṛta
+    preferred_label_en: clarified butter
+    node_type: SUBSTANCE
+    definition: >-
+      Melted butter, the commonest liquid oblation and a standing image for anything
+      rich, streaming or nourishing.
+    aliases_sa: [ghṛtam, ghṛtaṃ, ghṛta, ghṛtena, ghṛtasya, ghṛte, ghṛtāt, ghṛtavat, ghṛtācī, ājyam,
+                 ājyena]
+    aliases_en: [butter, ghee]
+    broader: [VG:CONCEPT:HAVIS-OBLATION]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:SOMA-DRINK
+    preferred_label_sa: soma
+    preferred_label_en: soma juice
+    node_type: SUBSTANCE
+    definition: >-
+      The pressed plant and the juice made from it, drunk by the gods and by the
+      sacrificer; the substance, not the deity of the same name.
+    aliases_sa: [soma, somaṃ, somam, somasya, somaḥ, somo, some, somāya, somāsaḥ, somaiḥ, somebhiḥ,
+                 somapītaye, induḥ, indur, indavaḥ, indavo, indum, andhasaḥ, andhaso, andhasā,
+                 aṃśuḥ, aṃśum]
+    aliases_en: [juice, juices, sap, stalk]
+    broader: [VG:CONCEPT:HAVIS-OBLATION]
+    related_devatas: [VG:DEVATA:SOMAH, VG:DEVATA:PAVAMANAH-SOMAH, VG:DEVATA:PAVAMANAH]
+
+  - concept_id: VG:CONCEPT:SOMA-PRESSING
+    preferred_label_sa: savana
+    preferred_label_en: soma pressing
+    node_type: RITUAL
+    definition: >-
+      The act and occasion of pressing out the soma, the rite around which most of the
+      Rigvedic liturgy is organised.
+    aliases_sa: [sutaḥ, sutasya, sute, sutam, sutaṃ, suto, sutā, sutāsaḥ, suteṣu, sunvataḥ,
+                 sunvanti, sunvate, savanam, savane, savanā, savaneṣu, savanasya]
+    aliases_en: [pressed]
+    broader: [VG:CONCEPT:YAJNA-SACRIFICE]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:ASMAN-PRESSING-STONE
+    preferred_label_sa: grāvan
+    # Labelled "stone", not "pressing stone", because the definition deliberately covers
+    # stone generally and the aliases (asmana, adri-) reach passages like AVS 12.1.26
+    # "rock is earth, stone, dust" that are nothing to do with the soma press. Adversarial
+    # QA measured roughly 60% of the assertions under the narrower label as not about
+    # pressing, which made the label the defect rather than the matches. The concept_id is
+    # pinned identity and is not renamed.
+    preferred_label_en: stone
+    node_type: OBJECT
+    definition: >-
+      Stone as a substance and as ritual equipment: the pressing stones that crush the soma
+      stalks, and stone generally as the hard thing a god splits or a press works with.
+    aliases_sa: [grāvāṇaḥ, grāvāṇo, grāvā, grāvṇā, aśmanā, adriḥ, adrim, adreḥ, adribhiḥ, adrivaḥ]
+    aliases_en: [stones, press-stones]
+    broader: []
+    related_devatas: [VG:DEVATA:GRAVANAH]
+
+  - concept_id: VG:CONCEPT:BARHIS-SACRED-GRASS
+    preferred_label_sa: barhis
+    preferred_label_en: sacred grass
+    node_type: OBJECT
+    definition: >-
+      The strewn grass on which the gods are invited to sit at the sacrifice.
+    aliases_sa: [barhiḥ, barhir, barhiṣi, barhiṣaḥ, barhiṣā, barhiṣe]
+    aliases_en: [grass]
+    broader: []
+    related_devatas: [VG:DEVATA:BARHIH]
+
+  - concept_id: VG:CONCEPT:SAMIDH-FUEL
+    preferred_label_sa: samidh
+    preferred_label_en: kindling
+    node_type: OBJECT
+    definition: >-
+      The wood with which the sacrificial fire is kindled, and the state of being
+      kindled.
+    aliases_sa: [samidhā, samidhaḥ, samidham, samiddhaḥ, samiddho, idhmam]
+    aliases_en: [fuel]
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:HOTR-PRIEST
+    preferred_label_sa: hotṛ
+    preferred_label_en: priest
+    node_type: CONCEPT
+    definition: >-
+      The officiant who invokes and offers, named by office rather than as an individual.
+    aliases_sa: [hotā, hotāraṃ, hotāram, hotur, hotre, hotrāt, ṛtvijam, ṛtvijaḥ, adhvaryuḥ,
+                 adhvaryavaḥ, adhvaryo]
+    aliases_en: [priest, priests, hotar]
+    broader: []
+    related_devatas: [VG:DEVATA:DAIVYAU-HOTARAU, VG:DEVATA:DEVYAU-HOTARAU]
+
+  - concept_id: VG:CONCEPT:DAKSINA-PRIESTLY-GIFT
+    preferred_label_sa: dakṣiṇā
+    preferred_label_en: priestly fee
+    node_type: OFFERING
+    definition: >-
+      The fee paid to the officiants, treated in the hymns as itself a meritorious act.
+    aliases_sa: [dakṣiṇā, dakṣiṇām, dakṣiṇāṃ, dakṣiṇābhiḥ, dakṣiṇāvān, dakṣiṇāvantaḥ]
+    aliases_en: [guerdon]
+    broader: []
+    related_devatas: [VG:DEVATA:DAKSINA]
+
+  - concept_id: VG:CONCEPT:STOMA-PRAISE
+    preferred_label_sa: stoma
+    preferred_label_en: praise
+    node_type: ACTION
+    definition: >-
+      The act of praising a god, and the composed praise-song as an offering in its own
+      right.
+    aliases_sa: [stoma, stomaṃ, stomam, stomo, stomebhiḥ, stomebhir, stomāsaḥ, stomaiḥ, stotram,
+                 stotāraḥ, stotṛbhyaḥ, stotṛbhyo, stuvate, stuṣe, stuhi, stavāma, uktham, ukthaṃ,
+                 ukthā, ukthaiḥ, ukthebhiḥ]
+    aliases_en: [praise, praises, laud, lauds, extol, hymn, hymns]
+    broader: []
+    related_devatas: [VG:DEVATA:DANASTUTIH, VG:DEVATA:RAJASTUTIH]
+
+  - concept_id: VG:CONCEPT:SAMAN-CHANT
+    preferred_label_sa: sāman
+    preferred_label_en: chant
+    node_type: CONCEPT
+    definition: >-
+      The sung melody to which a verse is set, as distinct from the words of the verse.
+    aliases_sa: [sāma, sāman, sāmnā, sāmabhiḥ, arkaḥ, arkam, arkaiḥ, arkeṇa, arkasya, gāyatram,
+                 gāyatreṇa]
+    aliases_en: [chant, chants, melody]
+    broader: [VG:CONCEPT:STOMA-PRAISE]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:BRAHMAN-FORMULATION
+    preferred_label_sa: brahman
+    preferred_label_en: sacred formulation
+    node_type: PHILOSOPHICAL_CONCEPT
+    definition: >-
+      The formulated sacred utterance and the power in it, before the word acquired its
+      later Upanishadic sense.
+    aliases_sa: [brahma, brahmaṇā, brahmaṇaḥ, brahmaṇas, brahmaṇe, brahmāṇi, brahmabhiḥ]
+    aliases_en: [prayer, prayers, devotion]
+    broader: []
+    related_devatas: [VG:DEVATA:BRAHMANASPATIH, VG:DEVATA:BRAHMA]
+
+  - concept_id: VG:CONCEPT:NAMAS-HOMAGE
+    preferred_label_sa: namas
+    preferred_label_en: homage
+    node_type: ACTION
+    definition: >-
+      Reverence offered in words and posture, the verbal accompaniment of an offering.
+    aliases_sa: [namaḥ, namas, namasā, namobhiḥ, namasvinaḥ, namasyanta]
+    aliases_en: [homage, reverence, adoration]
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:VAC-SPEECH
+    preferred_label_sa: vāc
+    preferred_label_en: speech
+    node_type: PHILOSOPHICAL_CONCEPT
+    definition: >-
+      Speech as a power: the voice that carries the hymn and, in some hymns, a cosmic
+      agent in her own right.
+    aliases_sa: [vāk, vācam, vācaṃ, vācā, vāco, vācaḥ, vācas, vāci, giraḥ, girā, giro, gīrbhiḥ,
+                 gīrbhir, gira]
+    aliases_en: [speech, voice, word, words]
+    broader: []
+    related_devatas: [VG:DEVATA:VAK, VG:DEVATA:SASARPARI-VAK, VG:DEVATA:VAK-APAH]
+
+  # -------------------------------------------------------------------------
+  # Order, truth, obligation
+  # -------------------------------------------------------------------------
+
+  - concept_id: VG:CONCEPT:RTA-ORDER
+    preferred_label_sa: ṛta
+    preferred_label_en: cosmic order
+    node_type: PHILOSOPHICAL_CONCEPT
+    definition: >-
+      The right ordering of the world, of the seasons and of the rite, which gods and
+      men are said to follow rather than to legislate.
+    aliases_sa: [ṛtam, ṛtaṃ, ṛtasya, ṛtena, ṛtāya, ṛtāvā, ṛtāvarī, ṛtāvānam]
+    aliases_en: [law]
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:SATYA-TRUTH
+    preferred_label_sa: satya
+    preferred_label_en: truth
+    node_type: PHILOSOPHICAL_CONCEPT
+    definition: >-
+      What is real and holds good, said of gods, of speech and of a promise.
+    aliases_sa: [satyam, satyaṃ, satyā, satyaḥ, satyo, satyena, satyasya, satyāni]
+    aliases_en: [truth]
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:VRATA-ORDINANCE
+    preferred_label_sa: vrata
+    preferred_label_en: ordinance
+    node_type: CONCEPT
+    definition: >-
+      A fixed observance or commandment, the particular rule as against the general
+      order.
+    aliases_sa: [vratam, vrataṃ, vratā, vratāni, vratena, vratāya, vrateṣu, dharmaṇā, dharmāṇi]
+    aliases_en: [ordinance, ordinances, statute, vow]
+    broader: [VG:CONCEPT:RTA-ORDER]
+    related_devatas: []
+
+  # -------------------------------------------------------------------------
+  # Cosmos
+  # -------------------------------------------------------------------------
+
+  - concept_id: VG:CONCEPT:LOKA-WORLD
+    preferred_label_sa: loka
+    preferred_label_en: world
+    node_type: COSMIC_ENTITY
+    definition: >-
+      A world or region of space, including the free room a person is asked to be given.
+    aliases_sa: [lokam, lokaṃ, loke, lokāḥ, lokān, lokāya, lokeṣu]
+    aliases_en: [world, worlds]
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:DYAUS-HEAVEN
+    preferred_label_sa: dyaus
+    preferred_label_en: heaven
+    node_type: COSMIC_ENTITY
+    definition: >-
+      The sky as the upper world, father of the pair Heaven-and-Earth.
+    aliases_sa: [dyauḥ, dyaur, dyām, divaḥ, divo, divi, dive, divas, divam, divaś, divyā, divyaḥ,
+                 divyam]
+    aliases_en: [heaven, sky]
+    broader: [VG:CONCEPT:LOKA-WORLD]
+    related_devatas: [VG:DEVATA:DYAVAPRTHIVYAU, VG:DEVATA:DYAVABHUMI]
+
+  - concept_id: VG:CONCEPT:PRTHIVI-EARTH
+    preferred_label_sa: pṛthivī
+    preferred_label_en: earth
+    node_type: COSMIC_ENTITY
+    definition: >-
+      The earth as the lower world and as the broad surface that bears living things.
+    aliases_sa: [pṛthivī, pṛthivīṃ, pṛthivīm, pṛthivyā, pṛthivyāḥ, pṛthivyām, pṛthivi, pṛthivyai,
+                 bhūmiḥ, bhūmir, bhūmiṃ, bhūmim, bhūmyāḥ, bhūmyām]
+    aliases_en: [earth]
+    broader: [VG:CONCEPT:LOKA-WORLD]
+    related_devatas: [VG:DEVATA:PRTHIVI, VG:DEVATA:DYAVAPRTHIVYAU]
+
+  - concept_id: VG:CONCEPT:ANTARIKSA-MIDSPACE
+    preferred_label_sa: antarikṣa
+    preferred_label_en: midspace
+    node_type: COSMIC_ENTITY
+    definition: >-
+      The space between heaven and earth, where wind, cloud and the Maruts move.
+    aliases_sa: [antarikṣam, antarikṣaṃ, antarikṣe, antarikṣasya, antarikṣāt, antarikṣeṇa]
+    aliases_en: [atmosphere, firmament, mid-air]
+    broader: [VG:CONCEPT:LOKA-WORLD]
+    related_devatas: [VG:DEVATA:PRTHIVYANTARIKSE]
+
+  - concept_id: VG:CONCEPT:SURYA-SUN
+    preferred_label_sa: sūrya
+    preferred_label_en: sun
+    node_type: NATURAL_PHENOMENON
+    definition: >-
+      The sun as the visible luminary that crosses the sky and measures the day.
+    aliases_sa: [sūryaḥ, sūryo, sūryam, sūryaṃ, sūryasya, sūrye, sūryeṇa, sūryāya, sūryāt, sūrya]
+    aliases_en: [sun]
+    broader: []
+    related_devatas: [VG:DEVATA:SURYAH, VG:DEVATA:SAVITA, VG:DEVATA:SAVITRI-SURYA]
+
+  - concept_id: VG:CONCEPT:CANDRAMAS-MOON
+    preferred_label_sa: candramas
+    preferred_label_en: moon
+    node_type: NATURAL_PHENOMENON
+    definition: >-
+      The moon, named chiefly where the corpus lists the lights of the sky together.
+    aliases_sa: [candramāḥ, candramā, candramasi]
+    aliases_en: [moon]
+    broader: []
+    related_devatas: [VG:DEVATA:CANDRAMAH]
+
+  - concept_id: VG:CONCEPT:USAS-DAWN
+    preferred_label_sa: uṣas
+    preferred_label_en: dawn
+    node_type: NATURAL_PHENOMENON
+    definition: >-
+      Daybreak, and the recurring arrival of light that the hymns treat as a daily
+      renewal of the world.
+    aliases_sa: [uṣāḥ, uṣā, uṣas, uṣasaḥ, uṣaso, uṣasā, uṣo, uṣasam, uṣasi, uṣasām, uṣāsā]
+    aliases_en: [dawn, dawns, morning]
+    broader: []
+    related_devatas: [VG:DEVATA:USAH, VG:DEVATA:USASANAKTA, VG:DEVATA:ADITYOSASAH]
+
+  - concept_id: VG:CONCEPT:RATRI-NIGHT
+    preferred_label_sa: rātri
+    preferred_label_en: night
+    node_type: NATURAL_PHENOMENON
+    definition: >-
+      Night as a division of time and as the interval the sacrificer asks to pass safely
+      through.
+    aliases_sa: [rātrī, rātrīm, rātrīṃ, rātryā, rātrīḥ, rātrīṇām, naktam, naktā, kṣapaḥ, kṣapā]
+    aliases_en: [night, nights]
+    broader: []
+    related_devatas: [VG:DEVATA:RATRIH]
+
+  - concept_id: VG:CONCEPT:AHAN-DAY
+    preferred_label_sa: ahan
+    preferred_label_en: day
+    node_type: NATURAL_PHENOMENON
+    definition: >-
+      The day as a unit of time, and the days as the succession a life is counted in.
+    aliases_sa: [ahaḥ, ahar, ahan, ahāni, ahnaḥ, ahabhiḥ, divā, dyubhiḥ]
+    aliases_en: [days]
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:JYOTIS-LIGHT
+    preferred_label_sa: jyotis
+    preferred_label_en: light
+    node_type: NATURAL_PHENOMENON
+    definition: >-
+      Light as such: the brightness a god makes, finds or gives, distinct from the body
+      that emits it.
+    aliases_sa: [jyotiḥ, jyotir, jyotiṣā, jyotīṃṣi, jyotiṣe, jyotiṣmantam, rocanā, rocane, rocanam,
+                 bhānuḥ, bhānunā, bhānum]
+    aliases_en: [light]
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:TAMAS-DARKNESS
+    preferred_label_sa: tamas
+    preferred_label_en: darkness
+    node_type: NATURAL_PHENOMENON
+    definition: >-
+      Darkness, both the night's and the hostile obscurity that light is asked to break.
+    aliases_sa: [tamaḥ, tamas, tamo, tamāṃsi, tamasaḥ, tamasā, tamasi]
+    aliases_en: [darkness, gloom]
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:AGNI-FIRE
+    preferred_label_sa: agni
+    preferred_label_en: fire
+    node_type: NATURAL_PHENOMENON
+    definition: >-
+      Fire as the ritual and natural phenomenon: the flame kindled on the altar and the
+      burning that consumes, warms and carries. NOT the deity Agni, which is
+      VG:DEVATA:AGNIH.
+    aliases_sa: [agniḥ, agnir, agnim, agniṃ, agne, agna, agniṣ, agnaye, agnayaḥ, agnau, agninā,
+                 agnibhiḥ, agnī, jātavedaḥ, jātavedasam, jātavedase, arciṣā, arcayaḥ, śociṣā, śocis,
+                 śociṣe, dhūma]
+    aliases_en: [fire, fires, flame, flames, blaze]
+    broader: []
+    related_devatas: [VG:DEVATA:AGNIH, VG:DEVATA:JATAVEDA-AGNIH, VG:DEVATA:PAVAMANO-AGNIH,
+                      VG:DEVATA:RAKSOHAGNIH, VG:DEVATA:AGNERATMA]
+
+  # -------------------------------------------------------------------------
+  # Water, weather, landscape
+  # -------------------------------------------------------------------------
+
+  - concept_id: VG:CONCEPT:AP-WATERS
+    preferred_label_sa: āpaḥ
+    preferred_label_en: waters
+    node_type: NATURAL_PHENOMENON
+    definition: >-
+      The waters as a plural collective: rivers, rain and the primeval flood, invoked as
+      mothers and as healers.
+    aliases_sa: [apaḥ, apo, apām, apsu, apsv, apaś, udakam, udnaḥ, salilam, salile]
+    aliases_en: [waters, water]
+    broader: []
+    related_devatas: [VG:DEVATA:APAH, VG:DEVATA:APAM-NAPAT]
+
+  - concept_id: VG:CONCEPT:SINDHU-RIVER
+    preferred_label_sa: sindhu
+    preferred_label_en: river
+    node_type: RIVER
+    definition: >-
+      A flowing river, named generically; the specific named rivers stay in the place
+      layer rather than here.
+    aliases_sa: [sindhuḥ, sindhur, sindhum, sindhuṃ, sindhavaḥ, sindhavo, sindhūn, sindhuṣu,
+                 sindhoḥ, nadyaḥ, nadyo, nadī, nadīnām]
+    aliases_en: [river, rivers, stream, streams]
+    broader: [VG:CONCEPT:AP-WATERS]
+    related_devatas: [VG:DEVATA:NADYAH]
+
+  - concept_id: VG:CONCEPT:SAMUDRA-OCEAN
+    preferred_label_sa: samudra
+    preferred_label_en: ocean
+    node_type: NATURAL_PHENOMENON
+    definition: >-
+      The sea or great gathered water, also used of the vat into which pressed soma
+      streams.
+    aliases_sa: [samudraḥ, samudro, samudram, samudraṃ, samudre, samudrāt, samudrasya, arṇavam,
+                 arṇavaḥ]
+    aliases_en: [ocean, sea]
+    broader: [VG:CONCEPT:AP-WATERS]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:VRSTI-RAIN
+    preferred_label_sa: vṛṣṭi
+    preferred_label_en: rain
+    node_type: NATURAL_PHENOMENON
+    definition: >-
+      Rainfall, asked for as the release of the waters held in the sky.
+    aliases_sa: [vṛṣṭiḥ, vṛṣṭim, vṛṣṭiṃ, vṛṣṭyā, vṛṣṭibhiḥ, varṣam, abhram, abhrāṇi]
+    aliases_en: [rain, cloud]
+    broader: [VG:CONCEPT:AP-WATERS]
+    related_devatas: [VG:DEVATA:PARJANYAH]
+
+  - concept_id: VG:CONCEPT:VATA-WIND
+    preferred_label_sa: vāta
+    preferred_label_en: wind
+    node_type: NATURAL_PHENOMENON
+    definition: >-
+      The wind as a moving natural force, blowing, healing and driving the clouds.
+    aliases_sa: [vātaḥ, vāto, vātam, vātaṃ, vātasya, vāte, vātena, vātāḥ, vāyuḥ, vāyur, vāyuṃ,
+                 vāyum, vāyave, vāyo, vāyavaḥ, vāyavo]
+    aliases_en: [wind, winds]
+    broader: []
+    related_devatas: [VG:DEVATA:VAYUH, VG:DEVATA:INDRAVAYU]
+
+  - concept_id: VG:CONCEPT:VIDYUT-LIGHTNING
+    preferred_label_sa: vidyut
+    preferred_label_en: lightning
+    node_type: NATURAL_PHENOMENON
+    definition: >-
+      Lightning and thunder, the audible and visible violence of the storm.
+    aliases_sa: [vidyut, vidyutaḥ, vidyuto, vidyutā, stanayitnuḥ, aśaniḥ, aśanim]
+    aliases_en: [lightning, thunder]
+    broader: []
+    related_devatas: [VG:DEVATA:PARJANYAH, VG:DEVATA:MARUTAH]
+
+  - concept_id: VG:CONCEPT:PARVATA-MOUNTAIN
+    preferred_label_sa: parvata
+    preferred_label_en: mountain
+    node_type: PLACE
+    definition: >-
+      A mountain or rock mass, including the one Indra splits to free the cows and the
+      waters.
+    aliases_sa: [parvataḥ, parvato, parvatāḥ, parvatam, parvate, parvatānām, parvatasya,
+                 parvatebhyaḥ, girim, gireḥ, girau, girīn]
+    aliases_en: [mountain, mountains, hill]
+    broader: []
+    related_devatas: [VG:DEVATA:INDRAPARVATAU]
+
+  # -------------------------------------------------------------------------
+  # Body, breath, mind, life
+  # -------------------------------------------------------------------------
+
+  - concept_id: VG:CONCEPT:PRANA-BREATH
+    preferred_label_sa: prāṇa
+    preferred_label_en: breath
+    node_type: CONCEPT
+    definition: >-
+      Breath as the vital current, in the Atharvaveda already treated as the thing whose
+      departure is death.
+    aliases_sa: [prāṇaḥ, prāṇo, prāṇam, prāṇaṃ, prāṇena, prāṇāḥ, prāṇāya, prāṇasya, apānaḥ, vyānam]
+    aliases_en: [breath, breaths]
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:ATMAN-SELF
+    preferred_label_sa: ātman
+    preferred_label_en: self
+    node_type: PHILOSOPHICAL_CONCEPT
+    definition: >-
+      The self or animating principle of a being, still concrete in this corpus and not
+      yet the Upanishadic absolute.
+    aliases_sa: [ātmā, ātman, ātmani, ātmanā, ātmānam, ātmane]
+    aliases_en: [soul]
+    broader: []
+    related_devatas: [VG:DEVATA:ATMA]
+
+  - concept_id: VG:CONCEPT:TANU-BODY
+    preferred_label_sa: tanū
+    preferred_label_en: body
+    node_type: CONCEPT
+    definition: >-
+      The body or bodily person, what is protected, healed, or offered along with the
+      offering.
+    aliases_sa: [tanūḥ, tanūṃ, tanvam, tanvaṃ, tanvaḥ, tanvā, tanvo, tanve, tanūbhiḥ, śarīram,
+                 śarīrāṇi]
+    aliases_en: [body, bodies]
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:MANAS-MIND
+    preferred_label_sa: manas
+    preferred_label_en: mind
+    node_type: PHILOSOPHICAL_CONCEPT
+    definition: >-
+      Mind as the seat of intention and attention, something that can go away and be
+      called back.
+    aliases_sa: [manaḥ, manas, manasā, manaso, manasi, manāṃsi, manase, cetaḥ, cittam]
+    aliases_en: [mind, minds]
+    broader: []
+    related_devatas: [VG:DEVATA:AVARTAMANAM-MANAH]
+
+  - concept_id: VG:CONCEPT:DHI-INSIGHT
+    preferred_label_sa: dhī
+    preferred_label_en: insight
+    node_type: PHILOSOPHICAL_CONCEPT
+    definition: >-
+      Visionary thought, the poet's insight that produces the hymn rather than ordinary
+      reasoning.
+    aliases_sa: [dhīḥ, dhiyaḥ, dhiyā, dhiyo, dhiya, dhībhiḥ, dhībhir, dhīmahi, matiḥ, matim, matī,
+                 matibhiḥ, manīṣā, manīṣayā, manīṣām, medhā, medhām]
+    aliases_en: [thought, thoughts, wisdom, insight]
+    broader: [VG:CONCEPT:MANAS-MIND]
+    related_devatas: [VG:DEVATA:JNANAM]
+
+  - concept_id: VG:CONCEPT:KRATU-RESOLVE
+    preferred_label_sa: kratu
+    preferred_label_en: resolve
+    node_type: QUALITY
+    definition: >-
+      Effective mental force: the capacity to form a plan and carry it out, attributed
+      to gods and asked for by men.
+    aliases_sa: [kratum, kratuṃ, kratunā, kratvā, kratubhiḥ, kratve, kratuḥ, kratvaḥ]
+    aliases_en: []
+    broader: [VG:CONCEPT:MANAS-MIND]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:HRD-HEART
+    preferred_label_sa: hṛd
+    preferred_label_en: heart
+    node_type: CONCEPT
+    definition: >-
+      The heart as the inward place where a hymn is formed and an intention is held.
+    aliases_sa: [hṛdā, hṛdi, hṛdaḥ, hṛdayam, hṛdayaṃ, hṛdaye, hṛdayasya, hṛdayāt]
+    aliases_en: [heart, hearts]
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:AYUS-LIFE
+    preferred_label_sa: āyus
+    preferred_label_en: lifespan
+    node_type: CONCEPT
+    definition: >-
+      The span of life granted or asked for, counted in autumns rather than lived as an
+      abstraction.
+    aliases_sa: [āyuḥ, āyur, āyuṣā, āyuṣe, āyūṃṣi, āyuṣaḥ, jīvase, jīvāḥ, jīvatu, jīvā, jīvanti]
+    aliases_en: [life, life-time]
+    broader: []
+    related_devatas: [VG:DEVATA:SUBANDHOJIVAH]
+
+  - concept_id: VG:CONCEPT:MRTYU-DEATH
+    preferred_label_sa: mṛtyu
+    preferred_label_en: death
+    node_type: CONCEPT
+    definition: >-
+      Death as an event and as a power that binds, chiefly something to be kept away.
+    aliases_sa: [mṛtyuḥ, mṛtyur, mṛtyum, mṛtyuṃ, mṛtyave, mṛtyoḥ, mṛtyunā, mṛtyubhyaḥ, mṛtasya,
+                 mamāra]
+    aliases_en: [death, dead, die]
+    broader: []
+    related_devatas: [VG:DEVATA:MRTYUH, VG:DEVATA:YAMAH, VG:DEVATA:NIRRTIH]
+
+  - concept_id: VG:CONCEPT:AMRTA-IMMORTALITY
+    preferred_label_sa: amṛta
+    preferred_label_en: immortality
+    node_type: PHILOSOPHICAL_CONCEPT
+    definition: >-
+      Deathlessness, the condition of the gods and the thing the sacrificer hopes the
+      rite will extend to him.
+    aliases_sa: [amṛtam, amṛtaṃ, amṛtasya, amṛtā, amṛtāḥ, amṛtatvam, amṛtatvaṃ, amṛte, amṛtāya,
+                 amṛtaḥ, amṛto]
+    aliases_en: [immortal, immortality, immortals]
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:BHESAJA-HEALING
+    preferred_label_sa: bheṣaja
+    preferred_label_en: healing
+    node_type: CONCEPT
+    definition: >-
+      Remedy and cure, the act of making whole, overwhelmingly an Atharvavedic concern.
+    aliases_sa: [bheṣajam, bheṣajaṃ, bheṣajā, bheṣajāni, bheṣajīḥ, bhiṣak, bhiṣajā]
+    aliases_en: [remedy, medicine, healing, heal]
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:YAKSMA-DISEASE
+    preferred_label_sa: yakṣma
+    preferred_label_en: disease
+    node_type: STATE
+    definition: >-
+      Sickness as an affliction to be driven out, including the named fevers of the
+      Atharvaveda.
+    aliases_sa: [yakṣmam, yakṣmaṃ, yakṣmaḥ, yakṣmo, takman, takmānam, takmā, amīvā, amīvāḥ, rapaḥ]
+    aliases_en: [disease, sickness, fever]
+    broader: []
+    related_devatas: [VG:DEVATA:YAKSMANASANAH]
+
+  # -------------------------------------------------------------------------
+  # Society, conflict, obligation
+  # -------------------------------------------------------------------------
+
+  - concept_id: VG:CONCEPT:RAJAN-KINGSHIP
+    preferred_label_sa: rājan
+    preferred_label_en: kingship
+    node_type: CONCEPT
+    definition: >-
+      Rule: the king, his realm and the sovereign authority attributed equally to men and
+      to Varuna.
+    aliases_sa: [rājā, rājan, rājānam, rājñaḥ, rājñe, rājānaḥ, rājāno, rāṣṭram, rāṣṭraṃ, rāṣṭrasya,
+                 kṣatram, kṣatraṃ, kṣatrasya, samrāṭ, samrājam]
+    aliases_en: [king, kings, sovran, kingship]
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:JANA-PEOPLE
+    preferred_label_sa: jana
+    preferred_label_en: people
+    node_type: CONCEPT
+    definition: >-
+      The people as a body: the clan, the tribe, the settled folk on whose behalf the
+      rite is performed.
+    aliases_sa: [janāḥ, janāsaḥ, janāsa, janānām, janāya, janam, jane, janā, janān, janebhyaḥ,
+                 viśaḥ, viśām, viśo, viśe, viśi, kṣitīnām, carṣaṇīnām, mānuṣāḥ, mānuṣān]
+    aliases_en: [people, folk, tribes, clans]
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:VIRA-HERO
+    preferred_label_sa: vīra
+    preferred_label_en: hero
+    node_type: CONCEPT
+    definition: >-
+      The able man: the fighting son whose presence is itself counted among a
+      household's goods.
+    aliases_sa: [vīraḥ, vīro, vīram, vīrāḥ, vīrān, vīraiḥ, vīravat, vīrasya, vīreṇa, vīryam,
+                 vīryāṇi]
+    aliases_en: [heroism]
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:YUDH-BATTLE
+    preferred_label_sa: yudh
+    preferred_label_en: battle
+    node_type: ACTION
+    definition: >-
+      Armed conflict, from the raid for cattle to the set battle in which a god is asked
+      to take a side.
+    aliases_sa: [yudhi, yudhā, yudhaḥ, yudhaye, yudhyate, pṛtanāsu, pṛtanāḥ, pṛtsu, samaraṇe]
+    aliases_en: [battle, war, fight, combat]
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:SATRU-ENEMY
+    preferred_label_sa: śatru
+    preferred_label_en: enemy
+    node_type: CONCEPT
+    definition: >-
+      The human adversary: rival, hostile tribe, or the Dasa and Dasyu the hymns set
+      against the sacrificer.
+    aliases_sa: [śatrum, śatruṃ, śatravaḥ, śatrūn, śatroḥ, śatrūṇām, amitrān, amitrāḥ, amitram,
+                 arātīḥ, arātayaḥ, arātim, dasyum, dasyūn, dasyavaḥ, dasyave, dāsam, dāsasya, dāsīḥ]
+    aliases_en: [foe, foes, enemy, enemies, rival, rivals]
+    broader: []
+    related_devatas: [VG:DEVATA:SAPATNAGHNARUPO-ARTHAH, VG:DEVATA:PANAYAH]
+
+  - concept_id: VG:CONCEPT:RAKSAS-DEMON
+    preferred_label_sa: rakṣas
+    preferred_label_en: demon
+    node_type: CONCEPT
+    definition: >-
+      The non-human hostile being -- rakshas, yatudhana, pishacha -- against whom whole
+      Atharvavedic hymns are directed.
+    aliases_sa: [rakṣāṃsi, rakṣasaḥ, rakṣaso, rakṣo, rakṣasā, rakṣasām, yātudhānān, yātudhānaḥ,
+                 yātudhānam, yātudhānyaḥ, piśācāḥ, piśācān]
+    aliases_en: [demon, demons, fiend, fiends]
+    broader: []
+    related_devatas: [VG:DEVATA:RAKSOHAGNIH, VG:DEVATA:DUHSVAPNANASANAH]
+
+  - concept_id: VG:CONCEPT:SARMAN-PROTECTION
+    preferred_label_sa: śarman
+    preferred_label_en: protection
+    node_type: CONCEPT
+    definition: >-
+      Shelter and defence asked of a god, the covering under which a household is safe.
+    aliases_sa: [śarma, śarman, śarmaṇi, śarmaṇā, varūtham, varūthyaḥ, trātā, trātāram, abhayam,
+                 abhayaṃ, chardiḥ, chardir]
+    aliases_en: [protect, protection, shelter, refuge, guard, defend]
+    broader: []
+    related_devatas: [VG:DEVATA:VARMA, VG:DEVATA:SVASTAYAH]
+
+  - concept_id: VG:CONCEPT:SAKHYA-FRIENDSHIP
+    preferred_label_sa: sakhya
+    preferred_label_en: friendship
+    node_type: CONCEPT
+    definition: >-
+      The bond of comradeship, invoked between the worshipper and the god as a claim
+      rather than a sentiment.
+    aliases_sa: [sakhā, sakhāyaḥ, sakhāyo, sakhāya, sakhyam, sakhyaṃ, sakhye, sakhyā, sakhyāya,
+                 sakhibhiḥ, sakhīnām, sakhāyam]
+    aliases_en: [friend, friends, friendship, ally]
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:ENAS-SIN
+    preferred_label_sa: enas
+    preferred_label_en: sin
+    node_type: CONCEPT
+    definition: >-
+      Fault or offence incurred against gods or men, thought of as something one is
+      loosed from rather than forgiven for.
+    aliases_sa: [enaḥ, enas, enasaḥ, āgaḥ, agham, aghāni, aghasya, druhaḥ, druho]
+    aliases_en: [sin, guilt, transgression]
+    broader: []
+    related_devatas: [VG:DEVATA:ABHISAPAH]
+
+  - concept_id: VG:CONCEPT:SRADDHA-FAITH
+    preferred_label_sa: śraddhā
+    preferred_label_en: faith
+    node_type: PHILOSOPHICAL_CONCEPT
+    definition: >-
+      Trust that the rite and the god will hold good; in RV 10.151 a power addressed in
+      its own right.
+    aliases_sa: [śraddhā, śraddhām, śraddhāṃ, śraddhayā]
+    aliases_en: [faith]
+    broader: []
+    related_devatas: [VG:DEVATA:SRADDHA]
+
+  # -------------------------------------------------------------------------
+  # Goods, livestock, household
+  # -------------------------------------------------------------------------
+
+  - concept_id: VG:CONCEPT:VASU-WEALTH
+    preferred_label_sa: rayi
+    preferred_label_en: wealth
+    node_type: CONCEPT
+    definition: >-
+      Goods and riches asked for from the gods, counted in cattle, horses, gold and
+      heroes rather than in money.
+    aliases_sa: [rayiḥ, rayim, rayiṃ, rayīṇām, vasu, vasūni, vasūnām, vasoḥ, rādhaḥ, rādho, rādhase,
+                 rādhasā, draviṇam, draviṇaṃ, draviṇodāḥ, dhanam, dhanaṃ, dhanāni, dhanānām,
+                 dhanasya]
+    aliases_en: [wealth, riches, treasure]
+    broader: []
+    related_devatas: [VG:DEVATA:DRAVINODAH, VG:DEVATA:DHANANNADANAM]
+
+  - concept_id: VG:CONCEPT:DANA-LIBERALITY
+    preferred_label_sa: dāna
+    preferred_label_en: liberality
+    node_type: ACTION
+    definition: >-
+      Giving as a virtue and as a transaction: the patron's gift, praised in the
+      danastuti verses appended to many hymns.
+    aliases_sa: [dānam, dānāya, rātiḥ, rātim, rātayaḥ, maghāni, maghāya, maghavadbhyaḥ]
+    aliases_en: [gift, gifts, bounty, liberal]
+    broader: []
+    related_devatas: [VG:DEVATA:RATIH, VG:DEVATA:DANASTUTIH]
+
+  - concept_id: VG:CONCEPT:VAJA-PRIZE
+    preferred_label_sa: vāja
+    preferred_label_en: prize
+    node_type: CONCEPT
+    definition: >-
+      The prize or booty won in a contest, and by metonymy the vigour that wins it.
+    aliases_sa: [vājam, vājaṃ, vājasya, vājeṣu, vājebhiḥ, vājasātaye, vājasātau, vājān, vājaiḥ,
+                 vājāya]
+    aliases_en: [booty, spoil]
+    broader: []
+    related_devatas: [VG:DEVATA:VAJINAH]
+
+  - concept_id: VG:CONCEPT:ANNA-FOOD
+    preferred_label_sa: anna
+    preferred_label_en: food
+    node_type: SUBSTANCE
+    definition: >-
+      Food as sustenance and as what the gods are given, distinct from the oblation
+      offered in the fire.
+    aliases_sa: [annam, annaṃ, annasya, annāni, iṣam, iṣaḥ, iṣe, iṣā, pituṃ, pitum, ūrjam, ūrjaṃ,
+                 ūrjā]
+    aliases_en: [food, viands, nourishment]
+    broader: []
+    related_devatas: [VG:DEVATA:ANNAM]
+
+  - concept_id: VG:CONCEPT:PAYAS-MILK
+    preferred_label_sa: payas
+    preferred_label_en: milk
+    node_type: SUBSTANCE
+    definition: >-
+      Milk, both the cow's and the figurative milk of clouds, plants and the earth.
+    aliases_sa: [payaḥ, payas, payasā, payasvatī, kṣīram, kṣīreṇa, dugdham]
+    aliases_en: [milk]
+    broader: [VG:CONCEPT:ANNA-FOOD]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:MADHU-HONEY
+    preferred_label_sa: madhu
+    preferred_label_en: honey
+    node_type: SUBSTANCE
+    definition: >-
+      Honey, and the honeyed quality attributed to soma, milk and speech alike.
+    aliases_sa: [madhunā, madhoḥ, madhumantam, madhumat, madhumattamam, madhvaḥ]
+    aliases_en: [honey, mead, meath]
+    broader: [VG:CONCEPT:ANNA-FOOD]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:PASU-LIVESTOCK
+    preferred_label_sa: paśu
+    preferred_label_en: livestock
+    node_type: ANIMAL
+    definition: >-
+      Domestic animals taken together, the standing measure of a household's substance.
+    aliases_sa: [paśuḥ, paśum, paśavaḥ, paśūn, paśūnām, paśubhiḥ, paśave]
+    aliases_en: [beasts]
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:GO-CATTLE
+    preferred_label_sa: go
+    preferred_label_en: cattle
+    node_type: ANIMAL
+    definition: >-
+      Cows and cattle, the principal wealth of the corpus and the object of the raid that
+      several central myths retell.
+    aliases_sa: [gāvaḥ, gāvo, gāva, gavām, gobhiḥ, gobhir, goṣu, goṣv, goḥ, gor, gām, gāḥ, gomantam,
+                 gomataḥ, gomad, dhenuḥ, dhenavaḥ, dhenum, usriyāḥ, usriyā, vaśā]
+    aliases_en: [cow, cows, cattle, kine]
+    broader: [VG:CONCEPT:PASU-LIVESTOCK]
+    related_devatas: [VG:DEVATA:GAVAH, VG:DEVATA:GAUH]
+
+  - concept_id: VG:CONCEPT:ASVA-HORSE
+    preferred_label_sa: aśva
+    preferred_label_en: horse
+    node_type: ANIMAL
+    definition: >-
+      The horse as draught animal, racer and sacrificial victim.
+    aliases_sa: [aśvaḥ, aśvo, aśvam, aśvaṃ, aśvasya, aśvā, aśvān, aśvāsaḥ, aśvaiḥ, aśvāvat,
+                 arvantam, arvataḥ, arvanto, atyam, atyaḥ, atyā]
+    aliases_en: [horse, horses, steed, steeds]
+    broader: [VG:CONCEPT:PASU-LIVESTOCK]
+    related_devatas: [VG:DEVATA:ASHVAH, VG:DEVATA:ASHVAAH, VG:DEVATA:VAJINAH]
+
+  - concept_id: VG:CONCEPT:RATHA-CHARIOT
+    preferred_label_sa: ratha
+    preferred_label_en: chariot
+    node_type: OBJECT
+    definition: >-
+      The chariot, the vehicle of gods and warriors and the standing image for a
+      well-made hymn.
+    aliases_sa: [rathaḥ, ratho, ratham, rathaṃ, rathe, rathasya, rathena, rathāḥ, rathaiḥ, rathānām]
+    aliases_en: [chariot, car]
+    broader: []
+    related_devatas: [VG:DEVATA:RATHAH, VG:DEVATA:RATHANGANI]
+
+  - concept_id: VG:CONCEPT:AYUDHA-WEAPON
+    preferred_label_sa: āyudha
+    preferred_label_en: weapon
+    node_type: OBJECT
+    definition: >-
+      Weapons generally: bow, arrow and the gear a warrior or a god is armed with.
+    aliases_sa: [āyudhā, āyudhāni, āyudham, iṣuḥ, iṣum, iṣavaḥ, dhanuḥ, dhanur, dhanvanā, dhanvanaḥ,
+                 śaravyā]
+    aliases_en: [weapon, weapons, arrow, arrows, shaft]
+    broader: []
+    related_devatas: [VG:DEVATA:ISAVAH, VG:DEVATA:DHANUH, VG:DEVATA:ISUDHIH]
+
+  - concept_id: VG:CONCEPT:VAJRA-THUNDERBOLT
+    preferred_label_sa: vajra
+    preferred_label_en: thunderbolt
+    node_type: OBJECT
+    definition: >-
+      The bolt, Indra's weapon, treated as a distinct object rather than as lightning.
+    aliases_sa: [vajraḥ, vajro, vajram, vajraṃ, vajreṇa, vajrī, vajrin, vajrasya, vajrabāhuḥ,
+                 vajrivaḥ]
+    aliases_en: [thunderbolt, bolt]
+    broader: [VG:CONCEPT:AYUDHA-WEAPON]
+    related_devatas: [VG:DEVATA:INDRAH]
+
+  - concept_id: VG:CONCEPT:HIRANYA-GOLD
+    preferred_label_sa: hiraṇya
+    preferred_label_en: gold
+    node_type: SUBSTANCE
+    definition: >-
+      Gold, both as an object of wealth and as the colour of anything radiant.
+    aliases_sa: [hiraṇyam, hiraṇyaṃ, hiraṇyena, hiraṇyaiḥ, hiraṇyayaḥ, hiraṇyayī, hiraṇyayam,
+                 hiraṇyayena, hiraṇyavarṇāḥ]
+    aliases_en: [gold, golden]
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:GRHA-HOUSE
+    preferred_label_sa: gṛha
+    preferred_label_en: house
+    node_type: PLACE
+    definition: >-
+      The dwelling as a place and as the unit whose safety the rite secures.
+    aliases_sa: [gṛhe, gṛham, gṛhaṃ, gṛhāḥ, gṛheṣu, gṛhān, dame, duroṇe, duroṇam, harmye, astam]
+    aliases_en: [house, home, dwelling]
+    broader: []
+    related_devatas: [VG:DEVATA:VASTOSPATIH]
+
+  - concept_id: VG:CONCEPT:KSETRA-FIELD
+    preferred_label_sa: kṣetra
+    preferred_label_en: field
+    node_type: PLACE
+    definition: >-
+      Ploughed land and the work done on it, a small but distinct strand in the corpus.
+    aliases_sa: [kṣetram, kṣetraṃ, kṣetrasya, kṣetre, kṣetrāṇi, kṛṣim, urvarā, sītā, lāṅgalam]
+    aliases_en: [field, fields, plough, furrow]
+    broader: []
+    related_devatas: [VG:DEVATA:KSETRAPATIH, VG:DEVATA:KRSIH, VG:DEVATA:SITA,
+                      VG:DEVATA:SUNASIRAU]
+
+  - concept_id: VG:CONCEPT:PRAJA-OFFSPRING
+    preferred_label_sa: prajā
+    preferred_label_en: offspring
+    node_type: CONCEPT
+    definition: >-
+      Progeny and continuity of the line, one of the two things (with cattle) most often
+      asked for.
+    aliases_sa: [prajāḥ, prajā, prajām, prajāṃ, prajayā, prajābhiḥ, prajānām, prajābhyaḥ, tokāya,
+                 tokam, tokasya, tanayam, tanayāya, tanayasya, apatyam, sūnuḥ, sūnave, sūnavaḥ]
+    aliases_en: [offspring, progeny, children]
+    broader: []
+    related_devatas: [VG:DEVATA:GARBHASMADHANARUPO-ARTHAH]
+
+  - concept_id: VG:CONCEPT:PITARAH-ANCESTORS
+    preferred_label_sa: pitaraḥ
+    preferred_label_en: ancestors
+    node_type: CONCEPT
+    definition: >-
+      The dead forefathers as a class, receiving their own offerings and their own
+      hymns.
+    aliases_sa: [pitaraḥ, pitaro, pitṝn, pitṛbhyaḥ, pitṛbhiḥ, pitṝṇām, pitṛbhyo]
+    aliases_en: [fathers, forefathers]
+    broader: []
+    related_devatas: [VG:DEVATA:PITARAH, VG:DEVATA:PITRMEDHAH]
+
+  - concept_id: VG:CONCEPT:JANMAN-BIRTH
+    preferred_label_sa: janman
+    preferred_label_en: birth
+    node_type: ACTION
+    definition: >-
+      Coming into being: birth, begetting and the generation of the world in the
+      cosmogonic hymns.
+    aliases_sa: [janma, janmani, janimā, jātaḥ, jāto, jātam, jātaṃ, jātā, jajāna, ajanayat,
+                 ajanayan, janayanta, janitā, janiṣṭa]
+    aliases_en: [born, birth, engendered, begotten, generated]
+    broader: []
+    related_devatas: [VG:DEVATA:VISVAKARMA, VG:DEVATA:PURUSAH, VG:DEVATA:KAH]
+
+  # -------------------------------------------------------------------------
+  # Qualities and states
+  # -------------------------------------------------------------------------
+
+  - concept_id: VG:CONCEPT:OJAS-MIGHT
+    preferred_label_sa: ojas
+    preferred_label_en: might
+    node_type: QUALITY
+    definition: >-
+      Physical force and overpowering vigour, the quality by which a god prevails.
+    aliases_sa: [ojaḥ, ojas, ojasā, ojiṣṭham, ojiṣṭhaḥ, śavaḥ, śavasā, śavase, śavasaḥ, sahaḥ,
+                 sahasā, sahaso, sahasaḥ, balam, balaṃ, balena, tavasam, tavasā]
+    aliases_en: [might, vigour]
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:SRAVAS-FAME
+    preferred_label_sa: śravas
+    preferred_label_en: fame
+    node_type: QUALITY
+    definition: >-
+      Renown that outlasts a life, what a patron buys with liberality and a poet confers.
+    aliases_sa: [śravaḥ, śravas, śravasā, śravāṃsi, śravase, śravasyā, yaśaḥ, yaśas, yaśasā,
+                 yaśasam, kīrtim]
+    aliases_en: [glory, fame, renown]
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:SVASTI-WELLBEING
+    preferred_label_sa: svasti
+    preferred_label_en: wellbeing
+    node_type: STATE
+    definition: >-
+      Being well and getting through safely; the closing wish of a great many hymns.
+    aliases_sa: [svasti, svastibhiḥ, svastaye, kṣemam, kṣeme, śivam, śivā, subhagā]
+    aliases_en: [weal, welfare, happiness, prosperity, bliss, blessing]
+    broader: []
+    related_devatas: [VG:DEVATA:SVASTAYAH, VG:DEVATA:PATHYASVASTIH]
+
+  - concept_id: VG:CONCEPT:KAMA-DESIRE
+    preferred_label_sa: kāma
+    preferred_label_en: desire
+    node_type: CONCEPT
+    definition: >-
+      Wanting: the wish a rite is performed to fulfil, and in a few late hymns a cosmic
+      first principle.
+    aliases_sa: [kāmaḥ, kāmam, kāmaṃ, kāmena, kāmāya, kāmasya, kāmān, kāmāḥ]
+    aliases_en: [desire, wish]
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:TAPAS-FERVOUR
+    preferred_label_sa: tapas
+    preferred_label_en: ascetic heat
+    node_type: PHILOSOPHICAL_CONCEPT
+    definition: >-
+      Heat generated by austerity, treated as a productive power rather than as
+      self-denial.
+    aliases_sa: [tapaḥ, tapas, tapasā, tapase, tapasaḥ, tapasvān]
+    aliases_en: [fervour, penance]
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:MAYA-WILE
+    preferred_label_sa: māyā
+    preferred_label_en: wile
+    node_type: PHILOSOPHICAL_CONCEPT
+    definition: >-
+      Transformative craft, admirable in a god and treacherous in an enemy, with the same
+      word for both.
+    aliases_sa: [māyā, māyām, māyāṃ, māyābhiḥ, māyayā, māyāḥ, māyinam, māyinaḥ]
+    aliases_en: [guile, magic, wiles]
+    broader: []
+    related_devatas: [VG:DEVATA:MAYABHEDAH]
+
+  - concept_id: VG:CONCEPT:ADHVAN-PATH
+    preferred_label_sa: adhvan
+    preferred_label_en: path
+    node_type: CONCEPT
+    definition: >-
+      The road travelled, literal and figurative, including the paths of order the gods
+      keep to.
+    aliases_sa: [pathaḥ, pathā, pathibhiḥ, panthām, pathyā, adhvanaḥ, adhvani, adhvānam, gātum,
+                 gātuḥ]
+    aliases_en: [path, paths, ways, road]
+    broader: []
+    related_devatas: [VG:DEVATA:PATHYASVASTIH]
+
+  - concept_id: VG:CONCEPT:AVAS-HELP
+    preferred_label_sa: avas
+    preferred_label_en: help
+    node_type: CONCEPT
+    definition: >-
+      The aid a god is asked to bring, the single most frequent request in the corpus.
+    aliases_sa: [avase, avaḥ, avasā, ūtaye, ūtibhiḥ, ūtī, avobhiḥ]
+    aliases_en: [help, aid, succour, favour]
+    broader: []
+    related_devatas: []
+
+  # -------------------------------------------------------------------------
+  # Plants and animals
+  # -------------------------------------------------------------------------
+
+  - concept_id: VG:CONCEPT:OSADHI-PLANTS
+    preferred_label_sa: oṣadhi
+    preferred_label_en: plants
+    node_type: PLANT
+    definition: >-
+      Herbs and plants, addressed collectively and chiefly as healers.
+    aliases_sa: [oṣadhīḥ, oṣadhīr, oṣadhe, oṣadhayaḥ, oṣadhībhiḥ, oṣadhīnām, oṣadhīṣu, vīrudhaḥ,
+                 vīrudho, vīrudhām]
+    aliases_en: [plants, herbs, plant, herb]
+    broader: []
+    related_devatas: [VG:DEVATA:OSADHAYAH]
+
+  - concept_id: VG:CONCEPT:VANASPATI-TREE
+    preferred_label_sa: vanaspati
+    preferred_label_en: tree
+    node_type: PLANT
+    definition: >-
+      Trees and the wood taken from them, including the sacrificial post and the forest
+      as a place.
+    aliases_sa: [vanaspatiḥ, vanaspate, vanaspatīn, vanaspatim, vṛkṣam, vṛkṣāḥ, vṛkṣe, vṛkṣasya,
+                 vanam, vanāni, vaneṣu, vanaspatayaḥ]
+    aliases_en: [tree, trees, forest, wood]
+    broader: []
+    related_devatas: [VG:DEVATA:VANASPATIH, VG:DEVATA:ARANYANI, VG:DEVATA:YUPAH]
+
+  - concept_id: VG:CONCEPT:VI-BIRD
+    preferred_label_sa: vi
+    preferred_label_en: bird
+    node_type: ANIMAL
+    definition: >-
+      Birds, from the omen-bird of the Atharvaveda to the eagle that brings the soma
+      down.
+    aliases_sa: [śakunaḥ, patatriṇaḥ, suparṇaḥ, suparṇo, suparṇam, śyenaḥ, śyeno, śyenam, śyenāya,
+                 vayāṃsi]
+    aliases_en: [bird, birds, eagle, falcon]
+    broader: []
+    related_devatas: [VG:DEVATA:SAKUNTAH, VG:DEVATA:SYENAH, VG:DEVATA:TARKSYAH]
+
+  - concept_id: VG:CONCEPT:AHI-SERPENT
+    preferred_label_sa: ahi
+    preferred_label_en: serpent
+    node_type: ANIMAL
+    definition: >-
+      The snake, both the animal charmed against in the Atharvaveda and the dragon Indra
+      kills.
+    aliases_sa: [ahiḥ, ahim, ahiṃ, ahaye, ahinā, sarpān]
+    aliases_en: [serpent, snake, dragon]
+    broader: []
+    related_devatas: [VG:DEVATA:AHIH, VG:DEVATA:AHIRBUDHNYAH]

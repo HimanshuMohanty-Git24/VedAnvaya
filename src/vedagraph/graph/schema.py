@@ -19,6 +19,7 @@ LABEL_RISHI: Final = "Rishi"
 LABEL_DEVATA: Final = "Devata"
 LABEL_CHANDAS: Final = "Chandas"
 LABEL_LEMMA: Final = "Lemma"
+LABEL_QA_ISSUE: Final = "QAIssue"
 
 # ---------------------------------------------------------------------------
 # Relationship types
@@ -36,6 +37,7 @@ REL_EXACT_PARALLEL_OF: Final = "EXACT_PARALLEL_OF"
 REL_PARALLEL_TO: Final = "PARALLEL_TO"
 REL_EXTRACTED_FROM_CONTAINER: Final = "EXTRACTED_FROM_CONTAINER"
 REL_ASSERTED_BY_SOURCE: Final = "ASSERTED_BY_SOURCE"
+REL_HAS_QA_ISSUE: Final = "HAS_QA_ISSUE"
 
 
 # ---------------------------------------------------------------------------
@@ -67,6 +69,8 @@ CONSTRAINTS: Final[list[str]] = [
     # 243 groups collide (e.g. atrá- / ā́tra / ā́tra- all normalize to "atra"), so
     # constraining on it would silently collapse 246 distinct lemmas.
     "CREATE CONSTRAINT lemma_unique IF NOT EXISTS FOR (n:Lemma) REQUIRE n.lemma IS UNIQUE",
+    # QAIssue - the corpus's own caveats, so a query can see them without reading a file
+    "CREATE CONSTRAINT qa_issue_id_unique IF NOT EXISTS FOR (n:QAIssue) REQUIRE n.issue_id IS UNIQUE",  # noqa: E501
 ]
 
 
@@ -91,6 +95,9 @@ INDEXES: Final[list[str]] = [
     "CREATE INDEX passage_parent_key IF NOT EXISTS FOR (n:Passage) ON (n.parent_key)",
     # Lemma search: many-to-one, so this is an index rather than a constraint
     "CREATE INDEX lemma_normalized IF NOT EXISTS FOR (n:Lemma) ON (n.normalized_lemma)",
+    # QA triage by severity and by which corpus raised it
+    "CREATE INDEX qa_issue_severity IF NOT EXISTS FOR (n:QAIssue) ON (n.severity)",
+    "CREATE INDEX qa_issue_veda IF NOT EXISTS FOR (n:QAIssue) ON (n.veda)",
 ]
 
 

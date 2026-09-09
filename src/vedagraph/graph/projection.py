@@ -4,9 +4,12 @@ from __future__ import annotations
 
 import pathlib
 from collections.abc import Iterator
+from hashlib import sha256
 from typing import Any
 
 import orjson
+
+from vedagraph.graph.corrections import CorrectionApplier, load_corrections
 
 # ---------------------------------------------------------------------------
 # Canonical dataset directories (relative to data root)
@@ -147,14 +150,42 @@ def iter_text_version_nodes(
 # ---------------------------------------------------------------------------
 
 
+def _passage_key_maps(project_root: pathlib.Path) -> tuple[dict[str, str], dict[str, str]]:
+    """Return (canonical_key by passage UUID, passage UUID by canonical_key)."""
+    key_by_id: dict[str, str] = {}
+    id_by_key: dict[str, str] = {}
+    data_root = _data_root(project_root)
+    for _veda, dirname in CANONICAL_DIRS.items():
+        for rec in _iter_jsonl(data_root / dirname / "passages.jsonl"):
+            key_by_id[rec["entity_id"]] = rec["canonical_key"]
+            id_by_key[rec["canonical_key"]] = rec["entity_id"]
+    return key_by_id, id_by_key
+
+
+def build_correction_applier(project_root: pathlib.Path) -> CorrectionApplier:
+    """Construct the applier for declared upstream corrections."""
+    key_by_id, id_by_key = _passage_key_maps(project_root)
+    return CorrectionApplier(load_corrections(project_root), key_by_id, id_by_key)
+
+
 def iter_translation_nodes(
     project_root: pathlib.Path,
+    applier: CorrectionApplier | None = None,
 ) -> Iterator[dict[str, Any]]:
-    """Yield Translation node dicts for all four Vedas."""
+    """Yield Translation node dicts for all four Vedas.
+
+    Upstream verse-number corrections are applied on the way past, which is what makes all
+    17,283 corpus rows representable: two of them carry a colliding ``translation_id``
+    because a Wikisource page printed one verse number twice, and without the correction
+    the loader's MERGE silently discards one of each pair. See
+    :mod:`vedagraph.graph.corrections`.
+    """
+    applier = applier or build_correction_applier(project_root)
     data_root = _data_root(project_root)
     for _veda, dirname in CANONICAL_DIRS.items():
         path = data_root / dirname / "translations.jsonl"
-        for rec in _iter_jsonl(path):
+        for raw in _iter_jsonl(path):
+            rec = applier.apply(raw)
             yield {
                 "translation_id": rec["translation_id"],
                 "passage_id": rec["passage_id"],
@@ -168,6 +199,8 @@ def iter_translation_nodes(
                 "source_id": rec.get("source_id", ""),
                 "source_artifact_id": rec.get("source_artifact_id", ""),
                 "work_edition": rec.get("work_edition", ""),
+                "upstream_correction_id": rec.get("upstream_correction_id", ""),
+                "upstream_correction_reason": rec.get("upstream_correction_reason", ""),
             }
 
 
@@ -259,17 +292,73 @@ def iter_has_text_version_rels(
 
 def iter_has_translation_rels(
     project_root: pathlib.Path,
+    applier: CorrectionApplier | None = None,
 ) -> Iterator[dict[str, Any]]:
-    """Yield HAS_TRANSLATION relationship dicts keyed by passage UUID."""
+    """Yield HAS_TRANSLATION relationship dicts keyed by passage UUID.
+
+    Reads through the same corrections as :func:`iter_translation_nodes`; if it did not,
+    a corrected Translation node would be attached to the mantra its mis-printed verse
+    number named rather than the one it belongs to.
+    """
+    applier = applier or build_correction_applier(project_root)
     data_root = _data_root(project_root)
     for _veda, dirname in CANONICAL_DIRS.items():
         path = data_root / dirname / "translations.jsonl"
-        for rec in _iter_jsonl(path):
+        for raw in _iter_jsonl(path):
+            rec = applier.apply(raw)
             yield {
                 "passage_entity_id": rec["passage_id"],
                 "translation_id": rec["translation_id"],
                 "language": rec.get("language", "en"),
                 "translator": rec.get("translator", ""),
+            }
+
+
+# ---------------------------------------------------------------------------
+# QA issue nodes
+# ---------------------------------------------------------------------------
+
+
+def iter_qa_issue_nodes(project_root: pathlib.Path) -> Iterator[dict[str, Any]]:
+    """Yield QAIssue node dicts for all four corpora.
+
+    These are the caveats each corpus records about itself: a numbering gap the edition
+    prints, a locator the source uses twice, a metrical classification the source declines
+    to make. They were previously visible only in a JSONL file next to the corpus, which
+    meant a graph query could return AV 9.6.49 as an ordinary mantra with no hint that its
+    own corpus flags the surrounding sequence as gapped.
+
+    Projected for all four Vedas rather than the Atharvaveda alone. The brief asks only for
+    the ten Atharvaveda items, but a Veda-specific branch here would be *more* code than
+    the uniform pass and would leave the Rigveda's 842 findings invisible for no reason.
+    Most carry no ``entity_id``, so they attach to the Work; the few that name an entity
+    also attach to that Passage.
+    """
+    data_root = _data_root(project_root)
+    for veda, dirname in CANONICAL_DIRS.items():
+        path = data_root / dirname / "qa_issues.jsonl"
+        for index, rec in enumerate(_iter_jsonl(path)):
+            details = rec.get("details", {})
+            # Identity is content-derived: the corpus writes these without stable ids for
+            # the unscoped ones, and an index alone would renumber on any corpus change.
+            fingerprint = orjson.dumps(
+                [rec.get("check_id", ""), rec.get("message", ""), details],
+                option=orjson.OPT_SORT_KEYS,
+            )
+            issue_id = rec.get("issue_id") or (
+                f"VG:QA:{veda}:{sha256(fingerprint).hexdigest()[:16]}"
+            )
+            yield {
+                "issue_id": str(issue_id),
+                "veda": veda,
+                "work_id": _WORK_IDS[veda],
+                "check_id": rec.get("check_id", ""),
+                "severity": rec.get("severity", ""),
+                "message": rec.get("message", ""),
+                "details": orjson.dumps(details, option=orjson.OPT_SORT_KEYS).decode(),
+                "entity_id": rec.get("entity_id") or "",
+                "scope_key": str(details.get("parent", "")),
+                "sequence": index,
             }
 
 

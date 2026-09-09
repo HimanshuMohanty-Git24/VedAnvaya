@@ -7,6 +7,8 @@ import pathlib
 from collections.abc import Iterator
 from typing import Any
 
+from vedagraph.graph.corrections import CorrectionApplier
+
 logger = logging.getLogger(__name__)
 
 _BATCH_SIZE = 500
@@ -137,11 +139,13 @@ def _merge_text_versions(session: Any, project_root: pathlib.Path) -> int:
     return total
 
 
-def _merge_translations(session: Any, project_root: pathlib.Path) -> int:
+def _merge_translations(
+    session: Any, project_root: pathlib.Path, applier: CorrectionApplier
+) -> int:
     from vedagraph.graph.projection import iter_translation_nodes
 
     total = 0
-    for batch in _batched(iter_translation_nodes(project_root), _BATCH_SIZE):
+    for batch in _batched(iter_translation_nodes(project_root, applier), _BATCH_SIZE):
         session.run(
             """
             UNWIND $rows AS row
@@ -155,7 +159,9 @@ def _merge_translations(session: Any, project_root: pathlib.Path) -> int:
                 t.quality_status = row.quality_status,
                 t.rights_status = row.rights_status,
                 t.source_id = row.source_id,
-                t.work_edition = row.work_edition
+                t.work_edition = row.work_edition,
+                t.upstream_correction_id = row.upstream_correction_id,
+                t.upstream_correction_reason = row.upstream_correction_reason
             """,
             rows=batch,
         )
@@ -261,6 +267,39 @@ def _merge_lemmas(session: Any, project_root: pathlib.Path) -> int:
     return total
 
 
+def _merge_qa_issues(session: Any, project_root: pathlib.Path) -> int:
+    """Merge QAIssue nodes and attach them to the Work that raised them.
+
+    A caveat the corpus records about itself is only useful where the data is. Kept as a
+    node rather than a property so one finding can attach to a Work and to the Passage it
+    names without being duplicated, and so severity is filterable.
+    """
+    from vedagraph.graph.projection import iter_qa_issue_nodes
+
+    total = 0
+    for batch in _batched(iter_qa_issue_nodes(project_root), _BATCH_SIZE):
+        session.run(
+            """
+            UNWIND $rows AS row
+            MERGE (q:QAIssue {issue_id: row.issue_id})
+            SET q.veda = row.veda,
+                q.check_id = row.check_id,
+                q.severity = row.severity,
+                q.message = row.message,
+                q.details = row.details,
+                q.scope_key = row.scope_key,
+                q.sequence = row.sequence
+            WITH q, row
+            MATCH (w:Work {work_id: row.work_id})
+            MERGE (w)-[:HAS_QA_ISSUE]->(q)
+            """,
+            rows=batch,
+        )
+        total += len(batch)
+    logger.info("Merged %d QAIssue nodes", total)
+    return total
+
+
 def _merge_contains_rels(session: Any, project_root: pathlib.Path) -> int:
     from vedagraph.graph.projection import iter_contains_rels
 
@@ -339,11 +378,13 @@ def _merge_text_version_rels(session: Any, project_root: pathlib.Path) -> int:
     return total
 
 
-def _merge_translation_rels(session: Any, project_root: pathlib.Path) -> int:
+def _merge_translation_rels(
+    session: Any, project_root: pathlib.Path, applier: CorrectionApplier
+) -> int:
     from vedagraph.graph.projection import iter_has_translation_rels
 
     total = 0
-    for batch in _batched(iter_has_translation_rels(project_root), _BATCH_SIZE):
+    for batch in _batched(iter_has_translation_rels(project_root, applier), _BATCH_SIZE):
         session.run(
             """
             UNWIND $rows AS row
@@ -362,7 +403,14 @@ def _merge_translation_rels(session: Any, project_root: pathlib.Path) -> int:
 def _merge_rdc_rels(session: Any, project_root: pathlib.Path) -> dict[str, int]:
     from vedagraph.graph.entities import iter_rishi_devata_chandas_rels
 
+    # Counted as distinct (subject, object) pairs, not as rows read. The knowledge layer
+    # legitimately emits one assertion twice when two overlapping anukramani range scopes
+    # cover the same mantra -- RV 8.46.25-28 Pragathah is asserted by two ranges -- and
+    # MERGE collapses them. Reporting rows read would show 10,527 HAS_CHANDAS against
+    # 10,523 edges in the database and read as four silently lost edges.
     counts: dict[str, int] = {"HAS_RISHI": 0, "HAS_DEVATA": 0, "HAS_CHANDAS": 0}
+    seen: dict[str, set[tuple[str, str]]] = {k: set() for k in counts}
+    duplicate_rows: dict[str, int] = {k: 0 for k in counts}
     batches: dict[str, list[dict[str, Any]]] = {k: [] for k in counts}
 
     queries = {
@@ -409,6 +457,11 @@ def _merge_rdc_rels(session: Any, project_root: pathlib.Path) -> dict[str, int]:
         pred = rel["predicate"]
         if pred not in batches:
             continue
+        pair = (rel["subject_key"], rel["object_key"])
+        if pair in seen[pred]:
+            duplicate_rows[pred] += 1
+            continue
+        seen[pred].add(pair)
         batches[pred].append(rel)
         counts[pred] += 1
         if len(batches[pred]) >= _BATCH_SIZE:
@@ -418,7 +471,15 @@ def _merge_rdc_rels(session: Any, project_root: pathlib.Path) -> dict[str, int]:
         _flush(pred)
 
     for pred, count in counts.items():
-        logger.info("Merged %d %s relationships", count, pred)
+        if duplicate_rows[pred]:
+            logger.info(
+                "Merged %d %s relationships (%d duplicate source rows collapsed)",
+                count,
+                pred,
+                duplicate_rows[pred],
+            )
+        else:
+            logger.info("Merged %d %s relationships", count, pred)
     return counts
 
 
@@ -499,7 +560,11 @@ def _merge_parallel_rels(session: Any, project_root: pathlib.Path) -> dict[str, 
         """,
     }
 
+    # Distinct-pair counting, for the same reason as in _merge_rdc_rels: the reported
+    # number must be the number of edges in the database, not the number of rows read.
     counts: dict[str, int] = {"EXACT_PARALLEL_OF": 0, "PARALLEL_TO": 0}
+    seen: dict[str, set[tuple[str, str]]] = {k: set() for k in counts}
+    duplicate_rows: dict[str, int] = {k: 0 for k in counts}
     batches: dict[str, list[dict[str, Any]]] = {k: [] for k in counts}
 
     def _flush(pred: str) -> None:
@@ -512,6 +577,11 @@ def _merge_parallel_rels(session: Any, project_root: pathlib.Path) -> dict[str, 
         if pred not in batches:
             logger.warning("Skipping unknown parallel predicate %r", pred)
             continue
+        pair = (rel["subject_key"], rel["object_key"])
+        if pair in seen[pred]:
+            duplicate_rows[pred] += 1
+            continue
+        seen[pred].add(pair)
         batches[pred].append(rel)
         counts[pred] += 1
         if len(batches[pred]) >= _BATCH_SIZE:
@@ -521,13 +591,29 @@ def _merge_parallel_rels(session: Any, project_root: pathlib.Path) -> dict[str, 
         _flush(pred)
 
     for pred, count in counts.items():
-        logger.info("Merged %d %s relationships", count, pred)
+        if duplicate_rows[pred]:
+            logger.info(
+                "Merged %d %s relationships (%d duplicate source rows collapsed)",
+                count,
+                pred,
+                duplicate_rows[pred],
+            )
+        else:
+            logger.info("Merged %d %s relationships", count, pred)
     return counts
 
 
 def load_all(session: Any, project_root: pathlib.Path) -> dict[str, Any]:
     """Full graph load pipeline. Returns counts dict."""
+    from vedagraph.graph.corrections import verify_corrections_applied
+    from vedagraph.graph.projection import build_correction_applier
+
     counts: dict[str, Any] = {}
+
+    # One applier for the whole load: the Translation nodes and the HAS_TRANSLATION edges
+    # must be corrected identically, and sharing the instance is also what lets the run
+    # assert afterwards that every declared correction actually reached a row.
+    applier = build_correction_applier(project_root)
 
     # Schema
     apply_schema(session)
@@ -536,18 +622,19 @@ def load_all(session: Any, project_root: pathlib.Path) -> dict[str, Any]:
     counts["Work"] = _merge_works(session, project_root)
     counts["Passage"] = _merge_passages(session, project_root)
     counts["TextVersion"] = _merge_text_versions(session, project_root)
-    counts["Translation"] = _merge_translations(session, project_root)
+    counts["Translation"] = _merge_translations(session, project_root, applier)
     counts["Source"] = _merge_sources(session, project_root)
 
     entity_counts = _merge_entity_nodes(session, project_root)
     counts.update(entity_counts)
 
     counts["Lemma"] = _merge_lemmas(session, project_root)
+    counts["QAIssue"] = _merge_qa_issues(session, project_root)
 
     # Relationships
     counts["CONTAINS"] = _merge_contains_rels(session, project_root)
     counts["HAS_TEXT_VERSION"] = _merge_text_version_rels(session, project_root)
-    counts["HAS_TRANSLATION"] = _merge_translation_rels(session, project_root)
+    counts["HAS_TRANSLATION"] = _merge_translation_rels(session, project_root, applier)
 
     rdc_counts = _merge_rdc_rels(session, project_root)
     counts.update(rdc_counts)
@@ -555,5 +642,8 @@ def load_all(session: Any, project_root: pathlib.Path) -> dict[str, Any]:
     counts["MENTIONS_LEMMA"] = _merge_mentions_lemma_rels(session, project_root)
     counts["MENTIONS_ENTITY"] = _merge_mentions_entity_rels(session, project_root)
     counts.update(_merge_parallel_rels(session, project_root))
+
+    verify_corrections_applied(applier)
+    counts["upstream_corrections_applied"] = len(applier.outcomes)
 
     return counts

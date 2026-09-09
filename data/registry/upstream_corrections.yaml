@@ -1,0 +1,92 @@
+# Upstream source defects, corrected at projection time rather than in the corpus.
+#
+# WHY THIS FILE EXISTS AT ALL
+#
+# The canonical corpus records what its sources say. When a source contains a plain
+# typographical error, the corpus faithfully reproduces it -- that is the point of a
+# provenance-first corpus, and rewriting the source text in place would destroy the only
+# evidence that the error was upstream and not ours.
+#
+# But a faithful reproduction of an upstream error can still be unrepresentable in the
+# graph. Two Griffith verses carry the same printed verse number on the Wikisource page
+# they were parsed from, so both were assigned to the same mantra, so both derived the
+# same translation_id, so one of them silently vanished on load into a MERGE. The corpus
+# is correct and the graph is wrong, and no amount of care in the loader fixes that.
+#
+# So corrections live here: declared, evidenced, versioned, and applied by the projection
+# layer on read. Stored corpus bytes are never touched.
+#
+# WHY NOT FIX THE CORPUS
+#
+# data/canonical/rigveda_full_v1/translations.jsonl is a hashed input of the sealed
+# Rigveda semantic V3.2 execution freeze (docs/manifests/
+# rigveda_semantic_execution_v3_1_freeze.draft.json). Rewriting it changes that hash, and
+# tests/unit/test_semantic_full_run.py asserts exactly which inputs have drifted. No
+# session may reissue that freeze while the full-corpus semantic run is blocked, so the
+# corpus stays byte-identical and the correction is applied downstream. Fold these into
+# the corpus builder at the same time the freeze is legitimately reissued -- the same
+# deferral, and for the same reason, as the neo4j dependency in
+# infra/requirements-graph.txt.
+#
+# EVIDENCE STANDARD
+#
+# A correction is only admissible here when the source itself proves the error. "The
+# number is wrong" is not enough; the surrounding numbering must be intact, the claimed
+# correct number must be absent from the page, and the affected text must be identifiable
+# by content rather than by the ambiguous identifier. Both entries below meet that bar and
+# state how. A correction that requires scholarly judgement about which reading is right
+# does not belong in this file.
+
+version: upstream-corrections-v1
+
+translation_verse_number:
+  # Each entry re-targets one translation row from the mantra its mis-printed verse number
+  # pointed at to the mantra it actually belongs to. `text_prefix` disambiguates which of
+  # the two colliding rows is meant, because translation_id cannot: that both rows share
+  # one is the defect.
+  - correction_id: WIKISOURCE_GRIFFITH_RV_1_91_18_PRINTED_AS_16
+    source_id: WIKISOURCE_GRIFFITH_RV
+    source_artifact_id: GRETIL.RV.1896.WIKISOURCE
+    source_page_title: The Hymns of the Rigveda/Book 1/Hymn 91
+    source_page_id: 15485
+    source_revision_id: 14396913
+    wrong_passage_key: VG:RV:SAK:M01:S091:V016
+    correct_passage_key: VG:RV:SAK:M01:S091:V018
+    text_prefix: "In thee be juicy nutriments united"
+    reason: >-
+      The Wikisource page prints the verse number 16 twice. The page's numbering is
+      otherwise complete and monotonic from 1 to 23, verse 18 is absent from it entirely,
+      and the second "16." sits in document order between 17 and 19. The affected text
+      is Griffith's rendering of RV 1.91.18.
+    evidence:
+      printed_sequence: "... 15. 16. 17. 16. 19. 20. ..."
+      missing_number: 18
+      duplicate_number: 16
+      hymn_verse_count: 23
+      verified_against: data/raw/wikisource_griffith_rv/2026-09-04 (revision 14396913)
+    effect: >-
+      RV 1.91.18 gains the Griffith translation it never had, and RV 1.91.16 keeps only
+      its own.
+
+  - correction_id: WIKISOURCE_GRIFFITH_RV_5_44_14_PRINTED_AS_11
+    source_id: WIKISOURCE_GRIFFITH_RV
+    source_artifact_id: GRETIL.RV.1896.WIKISOURCE
+    source_page_title: The Hymns of the Rigveda/Book 5/Hymn 44
+    source_page_id: 18097
+    source_revision_id: 14397334
+    wrong_passage_key: VG:RV:SAK:M05:S044:V011
+    correct_passage_key: VG:RV:SAK:M05:S044:V014
+    text_prefix: "The sacred hymns love him who wakes and watches"
+    reason: >-
+      The same defect on a different page: the number 11 is printed twice, verse 14 is
+      absent, and the second "11." sits in document order between 13 and 15. The affected
+      text is Griffith's rendering of RV 5.44.14.
+    evidence:
+      printed_sequence: "... 12. 13. 11. 15."
+      missing_number: 14
+      duplicate_number: 11
+      hymn_verse_count: 15
+      verified_against: data/raw/wikisource_griffith_rv/2026-09-04 (revision 14397334)
+    effect: >-
+      RV 5.44.14 gains the Griffith translation it never had, and RV 5.44.11 keeps only
+      its own.

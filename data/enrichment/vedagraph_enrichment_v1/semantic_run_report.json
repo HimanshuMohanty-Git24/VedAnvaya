@@ -1,0 +1,14 @@
+{
+  "stage": "semantic_candidates",
+  "produced": 736,
+  "rejected": {},
+  "capped": {},
+  "notes": {
+    "packets": 400,
+    "proposals": 736,
+    "ontology_version": "rigveda-semantic-ontology-v1",
+    "packet_version": "vedagraph-enrichment-semantic-packet-v1",
+    "model": "claude-opus-5",
+    "rejected_examples": {}
+  }
+}

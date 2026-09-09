@@ -1,6 +1,6 @@
 # Project status
 
-Updated: 2026-09-04 (Rigveda deterministic lexical & cross-mantra layer)
+Updated: 2026-09-09 (Neo4j graph enrichment V1)
 
 ## DONE
 
@@ -468,3 +468,53 @@ to review. Full-corpus extraction is not authorised.
 
 The pilot made **0 API calls** and incurred **$0 direct API cost**. No API cost or
 full-corpus projection is reported for this run.
+
+---
+
+# GRAPH ENRICHMENT V1
+
+Built on **`fc6076a`** (`feat: add the Neo4j graph projection layer for all four Vedas`).
+
+Status: **`VEDAGRAPH_GRAPH_ENRICHMENT_V1_READY`**.
+Report: [GRAPH_ENRICHMENT_V1.md](reports/GRAPH_ENRICHMENT_V1.md).
+Adversarial QA: [GRAPH_ENRICHMENT_V1_ADVERSARIAL_QA.md](reports/GRAPH_ENRICHMENT_V1_ADVERSARIAL_QA.md).
+
+The graph is now a discovery graph rather than a corpus graph: 100,584 nodes and 212,336
+relationships, up from 94,753 and 134,065.
+
+| layer | result |
+|---|---|
+| cross-Veda identical pairs | 1,538 (750 EXACT_PARALLEL_OF, 788 VARIANT_OF) |
+| cross-Veda near parallels | 3,049 |
+| directed reuse (SV from RV) | 1,684 |
+| Formula nodes / occurrences | 4,825 / 22,686; 236 formulas in all four Vedas |
+| Concept nodes / assertions | 89 / 47,542 |
+| semantic candidates | 736, all LLM_EXTRACTED / CANDIDATE |
+| QAIssue nodes | 915 (RV 842, SV 39, YV 25, AV 9) |
+
+## Graph backlog, closed
+
+- **The two colliding `translation_id`s** were an upstream Wikisource typo: the Griffith
+  pages for RV 1.91 and RV 5.44 each print one verse number twice. Corrected by an overlay
+  in `data/registry/upstream_corrections.yaml` applied at projection time, because
+  `data/canonical/rigveda_full_v1/translations.jsonl` is inside the sealed semantic freeze.
+  The live graph now holds all 17,283 translations, and RV 1.91.18 and RV 5.44.14 have
+  English for the first time.
+- **neo4j stays in `infra/requirements-graph.txt`.** Re-verified empirically this session:
+  adding it to `pyproject.toml` fails the freeze guard test.
+- **QA issues are projected** for all four Vedas, not the Atharvaveda alone.
+
+## What is NOT resolved
+
+- The 736 semantic candidates are candidates. None may be accepted without human review.
+- The concept ontology has measured gaps — Prajāpati, Bhaga, the Vasus, sleep, marriage,
+  fear, Aśvamedha — enumerated with citations in the report.
+- 1,103 of 4,825 formulas are strict substrings of another surviving formula.
+- The avagraha residual in `vedagraph.normalize` needs a notation-aware fold.
+- The Rigveda semantic V3.2 layer is untouched and remains sealed and blocked on human gold.
+
+## NEXT
+
+`NEXT_PROJECT_PHASE = FASTAPI_SEARCH_AND_GRAPH_API`. Every enrichment edge already carries
+the full provenance envelope the API needs to answer "why are these connected?" from the
+edge alone.
