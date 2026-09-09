@@ -9,6 +9,29 @@ works:
     citation_pattern: "RV {mandala}.{sukta}.{mantra}"
     key_pattern: "VG:RV:SAK:M{mandala:02d}:S{sukta:03d}:V{mantra:03d}"
     identity_status: FINAL
+    scope: >-
+      SAMHITA ONLY, Sakala recension. This work_id addresses the 10,552 mantras of the
+      Rigveda Samhita in the Sakala recension and nothing else. It does not address a
+      second Rigvedic recension, nor any post-samhita layer: no Brahmana, no Aranyaka and
+      no Upanisad are held. Padapatha and the accented samhitapatha are carried as text
+      versions of these same mantras, not as separate works.
+    completeness: >-
+      10,552 of 10,552 attested mantras carry a canonical key and a canonical citation
+      (100.0%). 10,502 of 10,552 carry a translation (99.5%). No shortfall in addressing.
+    excluded_corpora:
+      - SECOND_RIGVEDIC_RECENSION
+      - RIGVEDIC_BRAHMANA
+      - RIGVEDIC_ARANYAKA
+      - UPANISAD
+    rights: >-
+      Per data/canonical/rigveda_full_v1/manifest.json rights_summary:
+      GRETIL.RV.AUFRECHT CC_BY_NC_SA; VEDAWEB.AUFRECHT CC_BY_NC_SA;
+      GRIFFITH.RV.1896 PUBLIC_DOMAIN; VHP PERMISSION_REQUIRED_REFERENCE_ONLY.
+      Recorded verbatim from the manifest, not adjudicated here.
+    scope_evidence: >-
+      Coverage figures measured in docs/reports/KNOWLEDGE_MODEL_V3_WORLD_CLASS_SCORECARD.md
+      section A. The absence of a second recension and of every post-samhita layer is
+      recorded in the same section's "why not 4" paragraph.
 
   - work_id: VG:WORK:SV:KAU
     abbreviation: SV
@@ -21,6 +44,43 @@ works:
     urn_pattern: "urn:vedagraph:mantra:samaveda:kauthuma:{collection_lower}[:prapathaka:{prapathaka}][:ardha:{ardha}][:dasati:{dasati}]:verse:{verse}"
     identity_status: FINAL
     coverage_status: INCOMPLETE_BOUNDED
+    scope: >-
+      ARCIKA ONLY. THIS IS NOT THE COMPLETE SAMAVEDA. This work_id addresses the Kauthuma
+      arcika verse corpus and cannot address the gana collections: the gramageya,
+      aranyakageya, uhagana and uhyagana books are a PARALLEL AND LARGER body (roughly
+      2,639 ganas against 1,875 arcika verses) which requires its own work_id. The sung
+      dimension is not a decoration on the verse skeleton; it is the reason the Samaveda
+      is a distinct Veda rather than a Rigveda excerpt. Any claim that VedaGraph "has the
+      Samaveda" while holding only the arcika is FALSE. No second recension and no
+      post-samhita layer are held.
+    completeness: >-
+      1,844 of the traditional 1,875 verses carry a canonical key (98.3%). The 31 without
+      one are enumerated with causes: 2 running numbers the selected witness does not
+      print, 9 verses in one Uttararcika dasati whose printed run is non-contiguous, and
+      21 verses in four Uttararcika dasati groups where two witnesses disagree about the
+      partition. ZERO translations are released (0.0%) -- an SV zero in any
+      translation-derived layer is an absent layer, not an absent text.
+    excluded_corpora:
+      - SAMAVEDA_GRAMAGEYA_GANA
+      - SAMAVEDA_ARANYAKAGEYA_GANA
+      - SAMAVEDA_UHAGANA
+      - SAMAVEDA_UHYAGANA
+      - SECOND_SAMAVEDIC_RECENSION
+      - SAMAVEDIC_BRAHMANA
+      - UPANISAD
+    rights: >-
+      Per data/canonical/samaveda_arcika_v1/manifest.json rights_summary:
+      WIKISOURCE_SA.SV.KAU.ARCIKA_MULA CC_BY_SA; translations NONE_RELEASED;
+      audio NONE_RELEASED; CC BY-SA 4.0 share-alike is a live obligation and is one-way
+      incompatible with CC0. Recorded verbatim from the manifest, not adjudicated here.
+    display_label_override: "Samaveda Samhita - Kauthuma arcika only (gana corpus NOT included)"
+    scope_evidence: >-
+      The scope sentence is the manifest's own rights_summary.scope field in
+      data/canonical/samaveda_arcika_v1/manifest.json, quoted rather than paraphrased. The
+      1,875 = 1,844 + 29 + 2 reconciliation is at
+      docs/reports/FULL_INGESTION_RELEASE_QA.md:411. The SCOPE LIMIT paragraph in this
+      entry's own notes states the same fact and predates this property; the property
+      exists because the notes field is not queryable as data.
     notes: >-
       FROZEN 2026-09-07 by SAMAVEDA_REFERENT_INTEGRITY_REPAIR. The key names the
       COLLECTION and never numbers it, and it carries only the levels that collection
@@ -247,6 +307,37 @@ works:
     citation_pattern: "VSM {adhyaya}.{mantra}"
     key_pattern: "VG:YV:VSM:A{adhyaya:02d}:V{mantra:03d}"
     identity_status: FINAL
+    scope: >-
+      SAMHITA ONLY, and only the SHUKLA (White) Yajurveda in the Vajasaneyi Madhyandina
+      recension: 1,975 mantras. The KRISHNA (Black) Yajurveda is NOT HELD AT ALL -- no
+      Taittiriya, no Kathaka, no Maitrayani, no Kapisthala samhita is present. This is the
+      exclusion most likely to mislead, because "the Yajurveda" in ordinary use covers
+      both and the Krishna recensions carry prose brahmana passages interleaved with the
+      mantras that have no counterpart here. The Kanva recension of the Shukla Yajurveda
+      is also absent, as is the Satapatha Brahmana.
+    completeness: >-
+      1,975 of 1,975 attested mantras carry a canonical key and a canonical citation
+      (100.0%). 1,903 of 1,975 carry a translation (96.4%). No shortfall in addressing.
+      Every one of this work's 2,240 seer attributions is source-stated rather than
+      container-inherited, which is the opposite of the Atharvavedic pattern.
+    excluded_corpora:
+      - KRISHNA_YAJURVEDA_TAITTIRIYA
+      - KRISHNA_YAJURVEDA_KATHAKA
+      - KRISHNA_YAJURVEDA_MAITRAYANI
+      - KRISHNA_YAJURVEDA_KAPISTHALA
+      - SHUKLA_YAJURVEDA_KANVA_RECENSION
+      - SATAPATHA_BRAHMANA
+      - UPANISAD
+    rights: >-
+      Per data/canonical/yajurveda_vsm_v1/manifest.json rights_summary:
+      WIKISOURCE_SA.YV.VSM.ACCENTED CC_BY_SA; WIKISOURCE_SA.YV.VSM.UNACCENTED CC_BY_SA.
+      Recorded verbatim from the manifest, not adjudicated here.
+    display_label_override: "Vajasaneyi Samhita - Shukla Yajurveda, Madhyandina recension (Krishna Yajurveda NOT included)"
+    scope_evidence: >-
+      Coverage measured in docs/reports/KNOWLEDGE_MODEL_V3_WORLD_CLASS_SCORECARD.md
+      section A. The Kanva, Taittiriya, Kathaka, Maitrayani and Satapatha bodies are named
+      as known-and-not-held in data/source_registry/yajurveda_sources.yaml and in the same
+      scorecard section's "why not 4" paragraph.
 
   - work_id: VG:WORK:AV:SAU
     abbreviation: AVS
@@ -257,4 +348,35 @@ works:
     citation_pattern: "AVS {kanda}.{sukta}.{mantra}"
     key_pattern: "VG:AV:SAU:K{kanda:02d}:S{sukta:03d}:V{mantra:03d}"
     identity_status: FINAL
+    scope: >-
+      SAMHITA ONLY, Saunaka recension, held as a WORKING_PRIVATE digital corpus: 5,839
+      mantras. The PAIPPALADA recension is NOT HELD, and it is not a minor variant -- it
+      is a substantially different collection with its own hymn order, so an
+      Atharvavedic absence measured here is an absence from the Saunaka recension only.
+      The Gopatha Brahmana is not held. Every one of this work's 5,084 seer attributions
+      is a sukta label projected downward onto its mantras rather than a per-verse
+      statement, so a per-verse Atharvavedic seer claim cannot be made from this corpus.
+    completeness: >-
+      5,839 mantras carry a canonical key and a canonical citation against an attested
+      total of approximately 5,977 (97.7%). 4,878 of 5,839 carry a translation (83.5%).
+      The divergence from the attested total is OPEN_RESEARCH, attributed to
+      edition-relative verse totals, with one candidate mechanism raised and falsified.
+    excluded_corpora:
+      - ATHARVAVEDA_PAIPPALADA_RECENSION
+      - GOPATHA_BRAHMANA
+      - UPANISAD
+    rights: >-
+      Per data/canonical/atharvaveda_saunaka_digital_working_v1/manifest.json
+      rights_summary: GRETIL.AV.SAUNAKA.ACCENTED.HTML REFERENCE_ONLY;
+      GRETIL.AV.SAUNAKA.UNACCENTED.HTML REFERENCE_ONLY. The corpus release status is
+      WORKING_PRIVATE per docs/reports/ATHARVAVEDA_WORKING_CORPUS.md. Recorded verbatim,
+      not adjudicated here.
+    display_label_override: "Atharvaveda Samhita - Saunaka recension, working corpus (Paippalada NOT included)"
+    scope_evidence: >-
+      Coverage measured in docs/reports/KNOWLEDGE_MODEL_V3_WORLD_CLASS_SCORECARD.md
+      section A; the 97.7% shortfall cause is recorded at
+      docs/FOUR_VEDA_CANONICAL_SANSKRIT_BLOCKERS.md:228 as OPEN_RESEARCH. The Paippalada
+      recension is named as known-and-not-held in
+      data/source_registry/atharvaveda_sources.yaml. The all-inherited seer pattern is
+      measured in the module docstring of src/vedagraph/domain/queries.py.
 

@@ -386,7 +386,14 @@ concepts:
       below the sandhi floor, its 116 substring hits are 47% intrusions, and three of its
       six token hits are the dicing-and-drinking topos of AVS 6.70.1 and RV 7.86.6 rather
       than an offering.
-    aliases_sa: [surayā]
+    # surāyāṃ added, and the bare stem `surā` deliberately still not added. The
+    # exclusion above was re-verified in the V3.1 recall audit and it holds: `surā` is
+    # four characters with a 47% intrusion share, dominated by `asurā`. `surāyāṃ` is a
+    # different case and not a relaxation of the same judgement -- seven characters,
+    # three token hits, one host (itself), 0% intrusion, at AVS 6.69.1, AVS 9.1.18 and
+    # AVS 14.1.35, each of them the liquor being poured. It moves this entity off a
+    # Yajurveda-only reading that was a recall artefact, not a fact about the corpus.
+    aliases_sa: [surayā, surāyāṃ]
     aliases_en: []
     broader: []
     related_devatas: []

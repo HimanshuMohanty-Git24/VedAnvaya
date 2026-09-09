@@ -82,20 +82,20 @@
     "WEAPON": 5
   },
   "graph_after": {
-    "nodes": 108689,
-    "relationships": 269666
+    "nodes": 108777,
+    "relationships": 266762
   },
   "graph_before": {
-    "nodes": 108689,
-    "relationships": 269666
+    "nodes": 108777,
+    "relationships": 266762
   },
   "label_readability": {
-    "product_nodes": 36214,
+    "product_nodes": 36263,
     "unknown_label_rate": 0.0,
     "without_meaningful_label": 0
   },
   "load": {
-    "all_complete": false,
+    "all_complete": true,
     "steps": [
       {
         "complete": true,
@@ -135,15 +135,15 @@
       {
         "complete": true,
         "detail": {
-          "carrying_mention_id": 28227,
-          "edges_after": 28227,
-          "edges_before": 28227,
+          "carrying_mention_id": 28223,
+          "edges_after": 28223,
+          "edges_before": 28223,
           "newly_created": 0,
           "retired_stale": 0,
           "theonym_ambiguous": 2514
         },
-        "landed": 28227,
-        "sent": 28227,
+        "landed": 28223,
+        "sent": 28223,
         "step": "mentions"
       },
       {
@@ -224,7 +224,7 @@
             "tier": "TIER_D"
           },
           "USED_FOR_RITE": {
-            "edges": 110,
+            "edges": 529,
             "entities": 5,
             "tier": "TIER_B"
           }
@@ -235,18 +235,132 @@
       },
       {
         "complete": true,
-        "detail": {},
+        "detail": {
+          "devatas_with_any_profile": 30,
+          "profiled": [
+            "VG:DEVATA:INDRAH",
+            "VG:DEVATA:AGNIH",
+            "VG:DEVATA:PAVAMANAH-SOMAH",
+            "VG:DEVATA:VISVEDEVAH",
+            "VG:DEVATA:ASVINAU",
+            "VG:DEVATA:MARUTAH",
+            "VG:DEVATA:MITRAVARUNAU",
+            "VG:DEVATA:USAH",
+            "VG:DEVATA:INDRAGNI",
+            "VG:DEVATA:ADITYAH",
+            "VG:DEVATA:VARUNAH",
+            "VG:DEVATA:RBHAVAH",
+            "VG:DEVATA:SAVITA",
+            "VG:DEVATA:SOMAH",
+            "VG:DEVATA:PUSA",
+            "VG:DEVATA:BRHASPATIH",
+            "VG:DEVATA:INDRAVARUNAU",
+            "VG:DEVATA:SURYAH",
+            "VG:DEVATA:VAYUH",
+            "VG:DEVATA:DANASTUTIH",
+            "VG:DEVATA:BRAHMANASPATIH",
+            "VG:DEVATA:DYAVAPRTHIVYAU",
+            "VG:DEVATA:APAH",
+            "VG:DEVATA:RUDRAH",
+            "VG:DEVATA:ASHVAH"
+          ],
+          "with_absent_dimensions": {
+            "VG:DEVATA:AGNIH": [
+              "co_devatas"
+            ],
+            "VG:DEVATA:APAH": [
+              "co_devatas"
+            ],
+            "VG:DEVATA:ASHVAH": [
+              "co_devatas",
+              "co_mentioned",
+              "mentions",
+              "top_actions",
+              "top_objects",
+              "top_requested_actions"
+            ],
+            "VG:DEVATA:ASVINAU": [
+              "co_devatas"
+            ],
+            "VG:DEVATA:BRAHMANASPATIH": [
+              "co_devatas",
+              "co_mentioned",
+              "top_actions",
+              "top_requested_actions"
+            ],
+            "VG:DEVATA:BRHASPATIH": [
+              "co_devatas"
+            ],
+            "VG:DEVATA:DANASTUTIH": [
+              "co_devatas",
+              "co_mentioned",
+              "mentions",
+              "top_actions",
+              "top_objects",
+              "top_requested_actions"
+            ],
+            "VG:DEVATA:DYAVAPRTHIVYAU": [
+              "co_devatas"
+            ],
+            "VG:DEVATA:INDRAGNI": [
+              "co_devatas"
+            ],
+            "VG:DEVATA:INDRAVARUNAU": [
+              "co_devatas",
+              "co_mentioned",
+              "mentions",
+              "top_actions",
+              "top_objects",
+              "top_requested_actions"
+            ],
+            "VG:DEVATA:PAVAMANAH-SOMAH": [
+              "co_devatas",
+              "top_actions",
+              "top_requested_actions"
+            ],
+            "VG:DEVATA:PUSA": [
+              "co_devatas"
+            ],
+            "VG:DEVATA:RBHAVAH": [
+              "co_devatas"
+            ],
+            "VG:DEVATA:RUDRAH": [
+              "co_devatas"
+            ],
+            "VG:DEVATA:SAVITA": [
+              "co_devatas"
+            ],
+            "VG:DEVATA:SOMAH": [
+              "co_devatas"
+            ],
+            "VG:DEVATA:USAH": [
+              "co_devatas"
+            ],
+            "VG:DEVATA:VARUNAH": [
+              "co_devatas"
+            ],
+            "VG:DEVATA:VAYUH": [
+              "co_devatas"
+            ],
+            "VG:DEVATA:VISVEDEVAH": [
+              "co_devatas",
+              "co_mentioned",
+              "top_actions",
+              "top_requested_actions"
+            ]
+          }
+        },
         "landed": 25,
         "sent": 25,
         "step": "profiles"
       },
       {
-        "complete": false,
+        "complete": true,
         "detail": {
           "measures_edges": 76,
-          "metrics_without_subject_node": 995
+          "metrics_without_subject_node": 996
         },
-        "landed": 1071,
+        "landed": 79,
         "sent": 79,
         "step": "metrics"
       },
@@ -272,20 +386,20 @@
     "capped": {},
     "notes": {
       "aliases": {
-        "sandhi_aliases": 1094,
+        "sandhi_aliases": 1093,
         "theonym_aliases": 65,
-        "token_aliases": 1530
+        "token_aliases": 1529
       },
       "coverage_by_veda": {
         "AV": {
-          "coverage": 0.7349,
+          "coverage": 0.7347,
           "mantras": 5839,
-          "with_mention": 4291
+          "with_mention": 4290
         },
         "RV": {
-          "coverage": 0.7718,
+          "coverage": 0.7717,
           "mantras": 10552,
-          "with_mention": 8144
+          "with_mention": 8143
         },
         "SV": {
           "coverage": 0.7082,
@@ -302,11 +416,11 @@
       "entities": 227,
       "mentions_by_path": {
         "sanskrit-sandhi": 514,
-        "sanskrit-token": 27713
+        "sanskrit-token": 27709
       },
       "theonym_ambiguous": 2514
     },
-    "produced": 28227,
+    "produced": 28223,
     "rejected": {},
     "stage": "domain-mentions"
   },
@@ -376,13 +490,13 @@
   },
   "ungraded_evidence_basis_after_load": 0,
   "upgrade": {
-    "all_complete": false,
+    "all_complete": true,
     "steps": [
       {
         "complete": true,
         "detail": {},
-        "landed": 22,
-        "sent": 22,
+        "landed": 24,
+        "sent": 24,
         "skipped": "",
         "step": "schema"
       },
@@ -439,16 +553,16 @@
               "Concept",
               "DomainEntity"
             ],
-            "landed": 24,
-            "nodes": 24
+            "landed": 23,
+            "nodes": 23
           },
           "CONDITION": {
             "labels": [
               "Condition",
               "DomainEntity"
             ],
-            "landed": 34,
-            "nodes": 34
+            "landed": 36,
+            "nodes": 36
           },
           "COSMIC_ENTITY": {
             "labels": [
@@ -481,8 +595,8 @@
               "Substance",
               "DomainEntity"
             ],
-            "landed": 4,
-            "nodes": 4
+            "landed": 5,
+            "nodes": 5
           },
           "NATURAL_PHENOMENON": {
             "labels": [
@@ -497,8 +611,8 @@
               "Object",
               "DomainEntity"
             ],
-            "landed": 20,
-            "nodes": 20
+            "landed": 18,
+            "nodes": 18
           },
           "OFFERING": {
             "labels": [
@@ -579,16 +693,16 @@
               "State",
               "DomainEntity"
             ],
-            "landed": 3,
-            "nodes": 3
+            "landed": 2,
+            "nodes": 2
           },
           "SUBSTANCE": {
             "labels": [
               "Substance",
               "DomainEntity"
             ],
-            "landed": 9,
-            "nodes": 9
+            "landed": 8,
+            "nodes": 8
           },
           "TRIBE": {
             "labels": [
@@ -604,8 +718,8 @@
               "Object",
               "DomainEntity"
             ],
-            "landed": 3,
-            "nodes": 3
+            "landed": 5,
+            "nodes": 5
           }
         },
         "landed": 227,
@@ -655,28 +769,33 @@
         "step": "set_display_properties"
       },
       {
-        "complete": false,
+        "complete": true,
         "detail": {
           "by_evidence_basis": {
             "MIXED": 13081,
-            "SANSKRIT": 94160,
+            "SANSKRIT": 85581,
             "SOURCE_METADATA": 50842,
-            "STRUCTURAL": 87515
+            "STRUCTURAL": 85109
           },
           "by_precision": {
             "CONTAINER_INHERITED": 39290,
-            "PER_PASSAGE": 206308
+            "PER_PASSAGE": 195323
           },
           "by_tier": {
             "TIER_A": 95088,
-            "TIER_B": 149142,
+            "TIER_B": 138151,
+            "TIER_C": 6,
             "TIER_D": 1368
           },
+          "layer_owned_edges_excluded_from_landed": 32149,
           "layer_owned_grades_skipped": {
+            "ASSERTION_PREDICATE": 2672,
+            "BELONGS_TO_FAMILY": 305,
             "CONTRASTS_WITH": 8,
-            "CO_OCCURS_WITH": 292,
+            "CO_OCCURS_WITH": 306,
             "DESCRIBES": 199,
             "DESCRIBES_ACTION": 35,
+            "HAS_FORMULA": 2037,
             "HAS_SEMANTIC_ASSERTION": 4865,
             "HAS_THEME": 8,
             "INVOKES": 207,
@@ -684,42 +803,48 @@
             "INVOLVES_RITUAL": 9,
             "INVOLVES_SUBSTANCE": 3,
             "MEMBER_OF_FAMILY": 2037,
-            "MENTIONS_DEVATA": 16261,
+            "MENTIONS_DEVATA": 17165,
             "PRAISES": 38,
             "REFERS_TO_NATURAL_PHENOMENON": 5,
             "REFERS_TO_PLACE": 1,
-            "REQUESTS": 89
+            "REQUESTS": 89,
+            "SHARES_ENTITY_VOCABULARY_WITH": 2149
           },
-          "signatures": 84
+          "signatures": 93
         },
-        "landed": 269666,
-        "sent": 245598,
+        "landed": 234613,
+        "sent": 234613,
         "skipped": "",
         "step": "stamp_grades"
       },
       {
-        "complete": false,
+        "complete": true,
         "detail": {
           "by_evidence_basis": {
             "MIXED": 13081,
-            "SANSKRIT": 94160,
+            "SANSKRIT": 85581,
             "SOURCE_METADATA": 50842,
-            "STRUCTURAL": 87515
+            "STRUCTURAL": 85109
           },
           "by_precision": {
             "CONTAINER_INHERITED": 39290,
-            "PER_PASSAGE": 206308
+            "PER_PASSAGE": 195323
           },
           "by_tier": {
             "TIER_A": 95088,
-            "TIER_B": 149142,
+            "TIER_B": 138151,
+            "TIER_C": 6,
             "TIER_D": 1368
           },
+          "layer_owned_edges_excluded_from_landed": 32149,
           "layer_owned_grades_skipped": {
+            "ASSERTION_PREDICATE": 2672,
+            "BELONGS_TO_FAMILY": 305,
             "CONTRASTS_WITH": 8,
-            "CO_OCCURS_WITH": 292,
+            "CO_OCCURS_WITH": 306,
             "DESCRIBES": 199,
             "DESCRIBES_ACTION": 35,
+            "HAS_FORMULA": 2037,
             "HAS_SEMANTIC_ASSERTION": 4865,
             "HAS_THEME": 8,
             "INVOKES": 207,
@@ -727,16 +852,17 @@
             "INVOLVES_RITUAL": 9,
             "INVOLVES_SUBSTANCE": 3,
             "MEMBER_OF_FAMILY": 2037,
-            "MENTIONS_DEVATA": 16261,
+            "MENTIONS_DEVATA": 17165,
             "PRAISES": 38,
             "REFERS_TO_NATURAL_PHENOMENON": 5,
             "REFERS_TO_PLACE": 1,
-            "REQUESTS": 89
+            "REQUESTS": 89,
+            "SHARES_ENTITY_VOCABULARY_WITH": 2149
           },
-          "signatures": 84
+          "signatures": 93
         },
-        "landed": 269666,
-        "sent": 245598,
+        "landed": 234613,
+        "sent": 234613,
         "skipped": "",
         "step": "stamp_grades"
       }

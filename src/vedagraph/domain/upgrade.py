@@ -178,7 +178,12 @@ _DISPLAY_SOURCES: tuple[tuple[str, tuple[str, ...], str], ...] = (
     # canonical_citation is "RV 1.1.1": already the form a reader cites, so nothing is
     # constructed here that the corpus did not already settle.
     ("Passage", ("canonical_citation", "canonical_key"), "coalesce(n.entity_type, 'Passage')"),
-    ("Work", ("work_name", "abbreviation"), "'Work'"),
+    # ``display_label_override`` comes first because a Work's traditional name can be a
+    # true statement and a misleading label at the same time: the Samavedic corpus really
+    # is called Samaveda Samhita and really is only the Kauthuma arcika. See
+    # vedagraph.domain.work_scope, which writes the override; listing it here is what
+    # makes the two loaders order-independent.
+    ("Work", ("display_label_override", "work_name", "abbreviation"), "'Work'"),
 )
 
 
@@ -191,9 +196,7 @@ def set_display_properties(session: Session) -> StepReport:
     """
     report = StepReport(step="set_display_properties")
 
-    sent = session.run(
-        f"MATCH (n:{LABEL_DOMAIN_ENTITY}) RETURN count(n) AS c"
-    ).single()["c"]
+    sent = session.run(f"MATCH (n:{LABEL_DOMAIN_ENTITY}) RETURN count(n) AS c").single()["c"]
     session.run(
         f"""
         MATCH (n:{LABEL_DOMAIN_ENTITY})
@@ -283,16 +286,10 @@ def stamp_grades(session: Session) -> StepReport:
         if rel_type in LAYER_OWNED_GRADES:
             skipped[rel_type] = skipped.get(rel_type, 0) + edges
             continue
-        properties = {
-            name: signature[name] for name in _SIGNATURE_FIELDS if signature[name] != ""
-        }
+        properties = {name: signature[name] for name in _SIGNATURE_FIELDS if signature[name] != ""}
         grade = grade_edge(rel_type, properties)
-        conditions = " AND ".join(
-            f"coalesce(r.{name}, '') = ${name}" for name in _SIGNATURE_FIELDS
-        )
-        parameters: dict[str, Any] = {
-            name: signature[name] for name in _SIGNATURE_FIELDS
-        }
+        conditions = " AND ".join(f"coalesce(r.{name}, '') = ${name}" for name in _SIGNATURE_FIELDS)
+        parameters: dict[str, Any] = {name: signature[name] for name in _SIGNATURE_FIELDS}
         parameters.update(grade.as_edge_properties())
         session.run(
             f"""
@@ -312,12 +309,22 @@ def stamp_grades(session: Session) -> StepReport:
         key = str(grade.evidence_basis)
         per_evidence[key] = per_evidence.get(key, 0) + edges
 
+    # Counted over the populations this step actually regraded, which means EXCLUDING the
+    # layer-owned types skipped above. The previous form counted every graded edge in the
+    # graph, so `landed` (266,769) exceeded `sent` (234,620) by exactly the skipped total
+    # and `complete` -- which requires sent == landed -- was permanently False. A
+    # completeness flag that is always False is not a gate: a real quiet failure would
+    # have been indistinguishable from the standing mismatch, which is the whole reason
+    # this repository reports sent and landed separately.
     report.landed = session.run(
-        "MATCH ()-[r]->() WHERE r.quality_tier IS NOT NULL RETURN count(r) AS c"
+        "MATCH ()-[r]->() WHERE r.quality_tier IS NOT NULL "
+        "AND NOT type(r) IN $layer_owned RETURN count(r) AS c",
+        layer_owned=sorted(LAYER_OWNED_GRADES),
     ).single()["c"]
     report.detail = {
         "signatures": len(signatures),
         "layer_owned_grades_skipped": skipped,
+        "layer_owned_edges_excluded_from_landed": sum(skipped.values()),
         "by_tier": dict(sorted(per_tier.items())),
         "by_precision": dict(sorted(per_precision.items())),
         "by_evidence_basis": dict(sorted(per_evidence.items())),

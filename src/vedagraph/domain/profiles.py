@@ -36,6 +36,13 @@ from vedagraph.domain.ontology import (
     LABEL_DERIVED_METRIC,
     AttributionPrecision,
 )
+from vedagraph.domain.theonyms import (
+    AMBIGUOUS,
+    CERTAIN,
+    DEFAULT_REFERENT_TIERS,
+    PROBABLE,
+    mention_verdict,
+)
 
 #: Vedas whose mantras carry an Anukramaṇī deity/ṛṣi/metre attribution. Measured, not
 #: assumed: see the module docstring for the counts.
@@ -43,6 +50,12 @@ ATTRIBUTION_VEDAS: tuple[str, ...] = ("RV",)
 
 #: All four, for the layers that do span the corpus.
 ALL_VEDAS: tuple[str, ...] = ("RV", "SV", "YV", "AV")
+
+#: The mention tiers a profile counts as *findings* rather than as candidates. Imported
+#: from the layer that defines them so the profile cannot drift from the product default:
+#: a profile that counted a wider set than the default query returns would describe a
+#: deity the product never shows.
+PROFILE_MENTION_TIERS: frozenset[str] = DEFAULT_REFERENT_TIERS
 
 #: How many entries a top-N list keeps. Small on purpose: these are denormalised onto the
 #: node for display, and a display property holding fifty items is a second copy of the
@@ -65,15 +78,43 @@ class DevataProfile:
     #: The subset the source states of the mantra itself, not of its enclosing sūkta.
     attributed_per_passage: int = 0
     attributed_inherited: int = 0
-    #: Lexical mentions by Veda. Spans four Vedas where deity aliases exist.
+    #: Textual mentions by Veda, at every referent-certainty tier. Spans four Vedas.
     mentions: dict[str, int] = field(default_factory=dict)
+    #: The same mentions split three ways, keyed Veda -> count, one dict per tier. Kept as
+    #: three separate figures rather than one total plus a confidence score, because the
+    #: requirement on every deity answer is that it can *report* its ambiguity instead of
+    #: absorbing it: 51.4% of this layer was ``DEITY_AMBIGUOUS`` before the split and a
+    #: single mention count would still be quietly carrying most of that.
+    mentions_certain: dict[str, int] = field(default_factory=dict)
+    mentions_probable: dict[str, int] = field(default_factory=dict)
+    mentions_ambiguous: dict[str, int] = field(default_factory=dict)
     #: Structural spread, e.g. {"1": 300, "2": 40, ...} by maṇḍala.
     by_division: dict[str, int] = field(default_factory=dict)
     top_rishis: list[tuple[str, int]] = field(default_factory=list)
     top_chandas: list[tuple[str, int]] = field(default_factory=list)
     top_concepts: list[tuple[str, int]] = field(default_factory=list)
+    #: The same ranking computed over ``attribution_precision = PER_PASSAGE`` edges only.
+    #: Stored **beside** the inherited-inclusive ranking rather than instead of it, because
+    #: a single stored ranking whose precision basis is not in its name is a trap: for
+    #: Varuṇa, ranks 2-8 change completely between the two, and `pāśa` -- the noose, his
+    #: defining instrument -- is rank 2 strictly and absent from the inherited list.
+    #: Materialising only one of them takes away the reader's ability to recompute.
+    top_concepts_strict: list[tuple[str, int]] = field(default_factory=list)
     co_devatas: list[tuple[str, int]] = field(default_factory=list)
     formula_count: int = 0
+    #: Actions the agentive layer records this deity as *performing*, and separately the
+    #: ones it is *asked* to perform. The two are never merged: "Indra slays Vrtra" and
+    #: "slay Vrtra, Indra" are a statement and a request, and the frame distinction is the
+    #: agentive layer's whole point.
+    top_actions: list[tuple[str, int]] = field(default_factory=list)
+    top_requested_actions: list[tuple[str, int]] = field(default_factory=list)
+    #: Objects and substances, counted over the passages that *mention* the deity rather
+    #: than over the Rigveda-only attribution layer, so this dimension spans four Vedas.
+    top_objects: list[tuple[str, int]] = field(default_factory=list)
+    #: Co-mentioned deities from the four-Veda mention layer, as against
+    #: :attr:`co_devatas`, which is co-*attribution* and therefore Rigveda-only. A profile
+    #: that offered only the second would show Agni with no companions outside the Rigveda.
+    co_mentioned: list[tuple[str, int]] = field(default_factory=list)
 
     @property
     def attribution_scope(self) -> tuple[str, ...]:
@@ -87,6 +128,69 @@ class DevataProfile:
     @property
     def total_attributed(self) -> int:
         return sum(self.attributed_mantras.values())
+
+    @property
+    def mention_scope(self) -> tuple[str, ...]:
+        """Vedas in which this deity is mentioned at all, at any tier.
+
+        Distinct from :attr:`attribution_scope`, which names the Vedas the *attribution*
+        layer covers and is ``("RV",)`` for every deity. Reading one for the other is the
+        specific misreading this pair of properties exists to prevent.
+        """
+        return tuple(veda for veda in ALL_VEDAS if self.mentions.get(veda))
+
+    @property
+    def mentions_total(self) -> int:
+        return sum(self.mentions.values())
+
+    @property
+    def mentions_default_scope(self) -> int:
+        """Mentions the product default admits: certain plus probable, all four Vedas."""
+        return sum(self.mentions_certain.values()) + sum(self.mentions_probable.values())
+
+    @property
+    def mention_verdict_by_veda(self) -> dict[str, str]:
+        """Per Veda, whether the default scope may state a count at all.
+
+        This is the property that stops a zero being read as an absence. See
+        :func:`vedagraph.domain.theonyms.mention_verdict` for the measurement that made it
+        necessary -- ``DEITY_CERTAIN`` was effectively "came from the Rigvedic annotation",
+        so the cautious filter returned wrong zeros for exactly the deities most present in
+        the unannotated corpora.
+        """
+        return {
+            veda: mention_verdict(
+                self.mentions_certain.get(veda, 0),
+                self.mentions_probable.get(veda, 0),
+                self.mentions_ambiguous.get(veda, 0),
+            )
+            for veda in ALL_VEDAS
+        }
+
+    @property
+    def absent_dimensions(self) -> tuple[str, ...]:
+        """Dimensions this deity has no evidence for, named rather than left blank.
+
+        A profile with an honest hole is usable and a profile with an invented value is
+        not, so the holes are a stored, queryable property. Almost all of them have one
+        cause and it is structural rather than a gap in this deity's record: every
+        dimension counted over ``HAS_DEVATA`` is empty for a deity the Anukramani never
+        ascribes a passage to, because that layer covers the Rigveda alone.
+        """
+        empty = {
+            "attributed_mantras": not self.attributed_mantras,
+            "top_rishis": not self.top_rishis,
+            "top_chandas": not self.top_chandas,
+            "top_concepts": not self.top_concepts,
+            "co_devatas": not self.co_devatas,
+            "co_mentioned": not self.co_mentioned,
+            "top_actions": not self.top_actions,
+            "top_requested_actions": not self.top_requested_actions,
+            "top_objects": not self.top_objects,
+            "formula_count": not self.formula_count,
+            "mentions": not self.mentions,
+        }
+        return tuple(name for name, is_empty in sorted(empty.items()) if is_empty)
 
     @property
     def per_passage_share(self) -> float:
@@ -105,12 +209,25 @@ class DevataProfile:
             "per_passage_share": self.per_passage_share,
             "attribution_scope": list(self.attribution_scope),
             "mentions": dict(sorted(self.mentions.items())),
+            "mentions_certain": dict(sorted(self.mentions_certain.items())),
+            "mentions_probable": dict(sorted(self.mentions_probable.items())),
+            "mentions_ambiguous": dict(sorted(self.mentions_ambiguous.items())),
+            "mentions_total": self.mentions_total,
+            "mentions_default_scope": self.mentions_default_scope,
+            "mention_scope": list(self.mention_scope),
+            "mention_verdict_by_veda": dict(sorted(self.mention_verdict_by_veda.items())),
             "by_division": dict(sorted(self.by_division.items())),
             "top_rishis": [list(item) for item in self.top_rishis],
             "top_chandas": [list(item) for item in self.top_chandas],
             "top_concepts": [list(item) for item in self.top_concepts],
+            "top_concepts_strict": [list(item) for item in self.top_concepts_strict],
             "co_devatas": [list(item) for item in self.co_devatas],
+            "co_mentioned": [list(item) for item in self.co_mentioned],
+            "top_actions": [list(item) for item in self.top_actions],
+            "top_requested_actions": [list(item) for item in self.top_requested_actions],
+            "top_objects": [list(item) for item in self.top_objects],
             "formula_count": self.formula_count,
+            "absent_dimensions": list(self.absent_dimensions),
             "domain_model_version": DOMAIN_MODEL_VERSION,
         }
 
@@ -157,14 +274,40 @@ def compute_profile(session: Session, entity_key: str) -> DevataProfile:
         profile.attributed_per_passage += int(record["exact"])
     profile.attributed_inherited = profile.total_attributed - profile.attributed_per_passage
 
+    # MENTIONS_DEVATA, not MENTIONS_ENTITY. **This is a fix, not a preference.** V3's
+    # ``retire_superseded_devata_mentions`` deleted every ``MENTIONS_ENTITY`` edge onto a
+    # ``:Devata`` -- there are 0 left -- so this loop used to run, match nothing and leave
+    # ``mentions`` empty while the profile still reported success and landed. Every deity
+    # profile computed after that retirement silently claimed the deity was mentioned
+    # nowhere, and the counts already written to
+    # ``data/domain/vedagraph_domain_v2/devata_profiles.jsonl`` are the pre-retirement
+    # values, so the artifact looked right and could no longer be reproduced. The
+    # replacement layer also spans four Vedas rather than one, which is the whole reason
+    # the retirement happened.
     for record in session.run(
         """
-        MATCH (p:Passage)-[:MENTIONS_ENTITY]->(:Devata {entity_key: $key})
-        RETURN p.veda AS veda, count(*) AS n
+        MATCH (p:Passage)-[m:MENTIONS_DEVATA]->(:Devata {entity_key: $key})
+        RETURN p.veda AS veda, m.referent_certainty AS certainty, count(*) AS n
         """,
         key=entity_key,
     ):
-        profile.mentions[str(record["veda"])] = int(record["n"])
+        veda, certainty, n = str(record["veda"]), str(record["certainty"]), int(record["n"])
+        profile.mentions[veda] = profile.mentions.get(veda, 0) + n
+        bucket = {
+            CERTAIN: profile.mentions_certain,
+            PROBABLE: profile.mentions_probable,
+            AMBIGUOUS: profile.mentions_ambiguous,
+        }.get(certainty)
+        if bucket is None:
+            # A tier this module does not know about is a contract break, not a row to
+            # quietly fold into a total: the three reported figures would stop summing to
+            # the mention count and the discrepancy would be invisible.
+            known = sorted(DEFAULT_REFERENT_TIERS | {AMBIGUOUS})
+            raise ValueError(
+                f"{entity_key}: MENTIONS_DEVATA carries unknown referent_certainty "
+                f"{certainty!r}; profiles report exactly {known}"
+            )
+        bucket[veda] = bucket.get(veda, 0) + n
 
     # Maṇḍala for the Rigveda; the key name differs per Veda, so the hierarchy map is read
     # rather than a column assumed.
@@ -220,6 +363,19 @@ def compute_profile(session: Session, entity_key: str) -> DevataProfile:
         key=entity_key,
         limit=TOP_N,
     )
+    profile.top_concepts_strict = _pairs(
+        session,
+        """
+        MATCH (p:Passage)-[r:HAS_DEVATA]->(:Devata {entity_key: $key})
+        WHERE r.attribution_precision = $per_passage
+        MATCH (p)-[:ABOUT_CONCEPT]->(c)
+        RETURN coalesce(c.display_label, c.concept_id) AS label, count(*) AS n
+        ORDER BY n DESC, label LIMIT $limit
+        """,
+        key=entity_key,
+        per_passage=str(AttributionPrecision.PER_PASSAGE),
+        limit=TOP_N,
+    )
     profile.co_devatas = _pairs(
         session,
         """
@@ -230,6 +386,52 @@ def compute_profile(session: Session, entity_key: str) -> DevataProfile:
         ORDER BY n DESC, label LIMIT $limit
         """,
         key=entity_key,
+        limit=TOP_N,
+    )
+    profile.co_mentioned = _pairs(
+        session,
+        """
+        MATCH (:Devata {entity_key: $key})-[r:CO_OCCURS_WITH]-(other:Devata)
+        RETURN coalesce(other.display_label, other.preferred_label) AS label,
+               coalesce(r.passage_count, 0) AS n
+        ORDER BY n DESC, label LIMIT $limit
+        """,
+        key=entity_key,
+        limit=TOP_N,
+    )
+    for relationship, target in (
+        ("PERFORMS_ACTION", "top_actions"),
+        ("IS_ASKED_TO", "top_requested_actions"),
+    ):
+        # The relationship type is interpolated rather than parameterised because Cypher
+        # does not parameterise it; the two values are literals in this tuple and never
+        # reach here from a caller.
+        setattr(
+            profile,
+            target,
+            _pairs(
+                session,
+                f"""
+                MATCH (:Devata {{entity_key: $key}})-[r:{relationship}]->(a:ActionPredicate)
+                RETURN coalesce(a.display_label, a.action_id, a.predicate) AS label,
+                       coalesce(r.passage_count, r.assertion_count, 0) AS n
+                ORDER BY n DESC, label LIMIT $limit
+                """,
+                key=entity_key,
+                limit=TOP_N,
+            ),
+        )
+    profile.top_objects = _pairs(
+        session,
+        """
+        MATCH (p:Passage)-[m:MENTIONS_DEVATA]->(:Devata {entity_key: $key})
+        WHERE m.referent_certainty IN $tiers
+        MATCH (p)-[:ABOUT_CONCEPT]->(c:DomainEntity)
+        RETURN coalesce(c.display_label, c.concept_id) AS label, count(*) AS n
+        ORDER BY n DESC, label LIMIT $limit
+        """,
+        key=entity_key,
+        tiers=sorted(PROFILE_MENTION_TIERS),
         limit=TOP_N,
     )
     record = session.run(
@@ -263,8 +465,40 @@ def _has_apoc(session: Session) -> bool:
     return _APOC_CHECKED["apoc"]
 
 
+def top_devatas_by_mention(session: Session, limit: int = 20) -> list[tuple[str, int]]:
+    """Deity keys ordered by mentions the product default admits, with the count.
+
+    **Why this exists next to :func:`top_devatas`.** That function ranks by ``HAS_DEVATA``,
+    and the attribution layer is Rigveda-only, so it answers "which deities does the
+    Anukramani name most" and not "which deities does the corpus talk about most". Using
+    it to choose which profiles to complete builds a Rigvedic top list and calls it a
+    four-Veda one. Ranking by the mention layer at the default certainty tiers spans all
+    four Vedas and matches what a default deity query will actually return, which is the
+    property that makes a completed profile worth completing.
+
+    Both orders are reported side by side wherever a top-N selection is justified, because
+    they disagree and the disagreement is itself a finding.
+    """
+    return [
+        (str(record["key"]), int(record["n"]))
+        for record in session.run(
+            """
+            MATCH (:Passage)-[m:MENTIONS_DEVATA]->(dv:Devata)
+            WHERE m.referent_certainty IN $tiers
+            RETURN dv.entity_key AS key, count(*) AS n
+            ORDER BY n DESC, key LIMIT $limit
+            """,
+            tiers=sorted(PROFILE_MENTION_TIERS),
+            limit=limit,
+        )
+    ]
+
+
 def top_devatas(session: Session, limit: int = 20) -> list[str]:
-    """Deity keys ordered by attribution count, for choosing what to profile."""
+    """Deity keys ordered by attribution count, for choosing what to profile.
+
+    Rigveda-only, because ``HAS_DEVATA`` is. See :func:`top_devatas_by_mention`.
+    """
     return [
         str(record["key"])
         for record in session.run(

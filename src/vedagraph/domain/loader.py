@@ -18,6 +18,7 @@ from one Veda to four must not cost the provenance of the one that was already r
 
 from __future__ import annotations
 
+import json
 import uuid
 from collections.abc import Sequence
 from dataclasses import dataclass, field
@@ -37,7 +38,11 @@ from vedagraph.domain.ontology import (
     QualityTier,
     labels_for_node_type,
 )
-from vedagraph.domain.profiles import DerivedMetric, DevataProfile
+from vedagraph.domain.profiles import (
+    PROFILE_MENTION_TIERS,
+    DerivedMetric,
+    DevataProfile,
+)
 from vedagraph.domain.taxonomy import DevataTaxonomyEntry, axis_row, group_row
 from vedagraph.enrich.records import ConceptRow
 
@@ -77,9 +82,7 @@ def _batches(rows: Sequence[dict[str, Any]]) -> list[list[dict[str, Any]]]:
     return [list(rows[i : i + BATCH_SIZE]) for i in range(0, len(rows), BATCH_SIZE)]
 
 
-def _write(
-    session: Session, query: str, rows: Sequence[dict[str, Any]], **parameters: Any
-) -> None:
+def _write(session: Session, query: str, rows: Sequence[dict[str, Any]], **parameters: Any) -> None:
     for batch in _batches(rows):
         session.run(query, rows=batch, **parameters)
 
@@ -178,8 +181,7 @@ def load_entities(session: Session, entities: Sequence[ConceptRow]) -> LoadRepor
     )
 
     report.landed = session.run(
-        f"MATCH (e:{LABEL_DOMAIN_ENTITY}) WHERE e.entity_key IS NOT NULL "
-        "RETURN count(e) AS c"
+        f"MATCH (e:{LABEL_DOMAIN_ENTITY}) WHERE e.entity_key IS NOT NULL RETURN count(e) AS c"
     ).single()["c"]
     report.detail = {
         "label_sets": {":".join(labels): len(rows) for labels, rows in sorted(grouped.items())},
@@ -270,8 +272,7 @@ def load_mentions(session: Session, rows: Sequence[dict[str, Any]]) -> LoadRepor
         return report
     build_pass = uuid.uuid4().hex
     before = session.run(
-        f"MATCH (:Passage)-[m:MENTIONS_ENTITY]->(:{LABEL_DOMAIN_ENTITY}) "
-        "RETURN count(m) AS c"
+        f"MATCH (:Passage)-[m:MENTIONS_ENTITY]->(:{LABEL_DOMAIN_ENTITY}) RETURN count(m) AS c"
     ).single()["c"]
     for batch in _batches(rows):
         session.run(
@@ -297,8 +298,7 @@ def load_mentions(session: Session, rows: Sequence[dict[str, Any]]) -> LoadRepor
         build_pass=build_pass,
     ).single()["retired"]
     after = session.run(
-        f"MATCH (:Passage)-[m:MENTIONS_ENTITY]->(:{LABEL_DOMAIN_ENTITY}) "
-        "RETURN count(m) AS c"
+        f"MATCH (:Passage)-[m:MENTIONS_ENTITY]->(:{LABEL_DOMAIN_ENTITY}) RETURN count(m) AS c"
     ).single()["c"]
     stamped = session.run(
         f"MATCH (:Passage)-[m:MENTIONS_ENTITY]->(:{LABEL_DOMAIN_ENTITY}) "
@@ -324,9 +324,7 @@ def load_mentions(session: Session, rows: Sequence[dict[str, Any]]) -> LoadRepor
 # ---------------------------------------------------------------------------
 
 
-def load_devata_taxonomy(
-    session: Session, entries: Sequence[DevataTaxonomyEntry]
-) -> LoadReport:
+def load_devata_taxonomy(session: Session, entries: Sequence[DevataTaxonomyEntry]) -> LoadReport:
     """Apply the overlay: Devatā properties, axis/epithet/group nodes, and their edges."""
     report = LoadReport(step="devata_taxonomy", sent=len(entries))
     if not entries:
@@ -335,8 +333,7 @@ def load_devata_taxonomy(
     axes = sorted({axis for entry in entries for axis in entry.axes}, key=str)
     _write(
         session,
-        f"UNWIND $rows AS row MERGE (a:{LABEL_DEITY_AXIS} {{axis_key: row.axis_key}}) "
-        "SET a += row",
+        f"UNWIND $rows AS row MERGE (a:{LABEL_DEITY_AXIS} {{axis_key: row.axis_key}}) SET a += row",
         [axis_row(axis) for axis in axes],
     )
     groups = sorted({key for entry in entries for key in entry.member_of})
@@ -347,9 +344,7 @@ def load_devata_taxonomy(
         [group_row(key) for key in groups],
     )
     epithets = {
-        epithet.epithet_key: epithet.as_row()
-        for entry in entries
-        for epithet in entry.epithets
+        epithet.epithet_key: epithet.as_row() for entry in entries for epithet in entry.epithets
     }
     _write(
         session,
@@ -443,9 +438,7 @@ def load_devata_taxonomy(
         ("MEMBER_OF", QualityTier.TIER_D),
         ("COMPOSED_OF", QualityTier.TIER_B),
     ):
-        session.run(
-            f"MATCH ()-[r:{rel_type}]->() SET r.quality_tier = $tier", tier=str(tier)
-        )
+        session.run(f"MATCH ()-[r:{rel_type}]->() SET r.quality_tier = $tier", tier=str(tier))
 
     report.landed = session.run(
         "MATCH (dv:Devata) WHERE dv.structure IS NOT NULL RETURN count(dv) AS c"
@@ -454,15 +447,15 @@ def load_devata_taxonomy(
         "axis_nodes": len(axes),
         "group_nodes": len(groups),
         "epithet_nodes": len(epithets),
-        "has_axis_edges": session.run(
-            "MATCH ()-[r:HAS_AXIS]->() RETURN count(r) AS c"
-        ).single()["c"],
+        "has_axis_edges": session.run("MATCH ()-[r:HAS_AXIS]->() RETURN count(r) AS c").single()[
+            "c"
+        ],
         "has_epithet_edges": session.run(
             "MATCH ()-[r:HAS_EPITHET]->() RETURN count(r) AS c"
         ).single()["c"],
-        "member_of_edges": session.run(
-            "MATCH ()-[r:MEMBER_OF]->() RETURN count(r) AS c"
-        ).single()["c"],
+        "member_of_edges": session.run("MATCH ()-[r:MEMBER_OF]->() RETURN count(r) AS c").single()[
+            "c"
+        ],
         "composed_of_edges": session.run(
             "MATCH ()-[r:COMPOSED_OF]->() RETURN count(r) AS c"
         ).single()["c"],
@@ -543,9 +536,7 @@ def load_rituals(session: Session, rituals: Sequence[dict[str, Any]]) -> LoadRep
         report.landed += landed
         report.detail[rel_type] = {"sent": len(rows), "landed": landed}
 
-    report.detail["DESCRIBED_IN"] = _load_ritual_described_in(
-        session, rituals, build_pass
-    )
+    report.detail["DESCRIBED_IN"] = _load_ritual_described_in(session, rituals, build_pass)
     report.sent += int(report.detail["DESCRIBED_IN"]["sent"])
     report.landed += int(report.detail["DESCRIBED_IN"]["landed"])
 
@@ -697,9 +688,7 @@ _CONCERN_EDGES: tuple[tuple[str, str, tuple[str, ...], QualityTier], ...] = (
 )
 
 
-def load_concern_predicates(
-    session: Session, whitelists: dict[str, list[str]]
-) -> LoadReport:
+def load_concern_predicates(session: Session, whitelists: dict[str, list[str]]) -> LoadReport:
     """Type the Atharvavedic mentions the whitelist admits, and only those.
 
     A typed edge is derived from a mention plus membership of a curated whitelist. The
@@ -737,9 +726,9 @@ def load_concern_predicates(
                 ),
                 tier=str(tier),
             )
-        edges = session.run(
-            f"MATCH (:Passage)-[r:{rel_type}]->() RETURN count(r) AS c"
-        ).single()["c"]
+        edges = session.run(f"MATCH (:Passage)-[r:{rel_type}]->() RETURN count(r) AS c").single()[
+            "c"
+        ]
         report.landed += len(keys)
         report.detail[rel_type] = {
             "entities": len(keys),
@@ -760,6 +749,20 @@ def load_profiles(session: Session, profiles: Sequence[DevataProfile]) -> LoadRe
     Only summaries. The underlying counts stay in the graph, and a display property is
     never the authority for anything -- it is a cache with a short list in it, so that an
     explorer can render a deity page without twelve aggregations.
+
+    **The three mention figures are separate properties on purpose.** A profile is allowed
+    to be a cache, but it is not allowed to launder a confidence tier into a total: 51.4%
+    of the mention layer was ``DEITY_AMBIGUOUS`` before the three-way split, and a single
+    ``profile_mentions`` count would still be carrying most of that silently. So
+    ``profile_mentions_certain``, ``profile_mentions_probable`` and
+    ``profile_mentions_ambiguous`` are landed side by side and the total is landed with
+    them, so any consumer can check that they sum.
+
+    **``profile_absent_dimensions`` is a value, not a gap.** It names the dimensions this
+    deity has no evidence for. An empty display list is unreadable -- it could mean "no
+    ṛṣis recorded" or "this deity is outside the layer that records ṛṣis" -- and almost
+    every hole here has the second cause, because every ``HAS_DEVATA``-derived dimension
+    is empty for a deity the Rigveda-only Anukramaṇī never ascribes a passage to.
     """
     report = LoadReport(step="profiles", sent=len(profiles))
     if not profiles:
@@ -774,9 +777,42 @@ def load_profiles(session: Session, profiles: Sequence[DevataProfile]) -> LoadRe
             "profile_top_rishis": [label for label, _ in profile.top_rishis],
             "profile_top_chandas": [label for label, _ in profile.top_chandas],
             "profile_top_concepts": [label for label, _ in profile.top_concepts],
+            "profile_top_concepts_strict": [label for label, _ in profile.top_concepts_strict],
             "profile_co_devatas": [label for label, _ in profile.co_devatas],
             "profile_formula_count": profile.formula_count,
             "profile_attribution_scope": list(profile.attribution_scope),
+            "profile_mentions_total": profile.mentions_total,
+            "profile_mentions_default_scope": profile.mentions_default_scope,
+            "profile_mentions_certain": sum(profile.mentions_certain.values()),
+            "profile_mentions_probable": sum(profile.mentions_probable.values()),
+            "profile_mentions_ambiguous": sum(profile.mentions_ambiguous.values()),
+            # Per-Veda, JSON-encoded: Neo4j has no nested-map property and four scalars per
+            # tier would be twelve properties whose names a reader has to guess.
+            "profile_mentions_by_veda": json.dumps(
+                dict(sorted(profile.mentions.items())), ensure_ascii=False
+            ),
+            "profile_mentions_by_veda_certainty": json.dumps(
+                {
+                    "DEITY_CERTAIN": dict(sorted(profile.mentions_certain.items())),
+                    "DEITY_PROBABLE": dict(sorted(profile.mentions_probable.items())),
+                    "DEITY_AMBIGUOUS": dict(sorted(profile.mentions_ambiguous.items())),
+                },
+                ensure_ascii=False,
+            ),
+            "profile_mention_scope": list(profile.mention_scope),
+            # Per Veda: ATTESTED, INSUFFICIENT_EVIDENCE or NOT_IN_LAYER. Landed as a
+            # property rather than computed per query, because the caller who renders a
+            # deity page from the denormalised profile is exactly the caller who would
+            # otherwise print a 0 where the honest answer is "the evidence does not decide".
+            "profile_mention_verdict_by_veda": json.dumps(
+                dict(sorted(profile.mention_verdict_by_veda.items())), ensure_ascii=False
+            ),
+            "profile_co_mentioned": [label for label, _ in profile.co_mentioned],
+            "profile_top_actions": [label for label, _ in profile.top_actions],
+            "profile_top_requested_actions": [label for label, _ in profile.top_requested_actions],
+            "profile_top_objects": [label for label, _ in profile.top_objects],
+            "profile_absent_dimensions": list(profile.absent_dimensions),
+            "profile_mention_default_tiers": sorted(PROFILE_MENTION_TIERS),
         }
         for profile in profiles
     ]
@@ -785,10 +821,30 @@ def load_profiles(session: Session, profiles: Sequence[DevataProfile]) -> LoadRe
         "UNWIND $rows AS row MATCH (dv:Devata {entity_key: row.entity_key}) SET dv += row",
         rows,
     )
+    # Counted over the keys sent, not over every Devatā carrying a profile. The old count
+    # was the second thing, so ``landed`` was a corpus-wide total that already exceeded
+    # ``sent`` before this loader ran: it could land nothing at all and still report
+    # complete. Diffing rows sent against rows landed only works if the two count the same
+    # set.
     report.landed = session.run(
-        "MATCH (dv:Devata) WHERE dv.profile_attributed_total IS NOT NULL "
-        "RETURN count(dv) AS c"
+        """
+        MATCH (dv:Devata) WHERE dv.entity_key IN $keys
+          AND dv.profile_mentions_total IS NOT NULL
+        RETURN count(dv) AS c
+        """,
+        keys=[profile.entity_key for profile in profiles],
     ).single()["c"]
+    report.detail = {
+        "profiled": [profile.entity_key for profile in profiles],
+        "with_absent_dimensions": {
+            profile.entity_key: list(profile.absent_dimensions)
+            for profile in profiles
+            if profile.absent_dimensions
+        },
+        "devatas_with_any_profile": session.run(
+            "MATCH (dv:Devata) WHERE dv.profile_attributed_total IS NOT NULL RETURN count(dv) AS c"
+        ).single()["c"],
+    }
     return report
 
 
@@ -812,8 +868,7 @@ def load_metrics(session: Session, metrics: Sequence[DerivedMetric]) -> LoadRepo
     # passages as well as the Work. Label-scoping is not an optimisation here; it is the
     # difference between one correct edge and two thousand wrong ones.
     subjects = [
-        {"metric_id": metric.metric_id, "subject_key": metric.subject_key}
-        for metric in metrics
+        {"metric_id": metric.metric_id, "subject_key": metric.subject_key} for metric in metrics
     ]
     for match_clause in (
         f"MATCH (s:{LABEL_DOMAIN_ENTITY} {{entity_key: row.subject_key}})",
@@ -834,16 +889,23 @@ def load_metrics(session: Session, metrics: Sequence[DerivedMetric]) -> LoadRepo
         "MATCH ()-[r:MEASURES]->() SET r.quality_tier = $tier",
         tier=str(QualityTier.TIER_B),
     )
+    # Counted over the ids this call actually sent, not over every DerivedMetric in the
+    # graph. The previous form was `count(m)` across the whole label, which returned 1,072
+    # against 79 sent -- so the step could land nothing and still report a landed figure
+    # larger than its own input, and `complete` (which requires sent == landed) was
+    # permanently False for a reason unrelated to whether the write worked. Diffing
+    # rows-sent against rows-landed is the only thing that catches a quiet failure, and it
+    # only works if both sides count the same population.
     report.landed = session.run(
-        f"MATCH (m:{LABEL_DERIVED_METRIC}) RETURN count(m) AS c"
+        f"MATCH (m:{LABEL_DERIVED_METRIC}) WHERE m.metric_id IN $ids RETURN count(m) AS c",
+        ids=[metric.metric_id for metric in metrics],
     ).single()["c"]
     report.detail = {
-        "measures_edges": session.run(
-            "MATCH ()-[r:MEASURES]->() RETURN count(r) AS c"
-        ).single()["c"],
+        "measures_edges": session.run("MATCH ()-[r:MEASURES]->() RETURN count(r) AS c").single()[
+            "c"
+        ],
         "metrics_without_subject_node": session.run(
-            f"MATCH (m:{LABEL_DERIVED_METRIC}) WHERE NOT (m)-[:MEASURES]->() "
-            "RETURN count(m) AS c"
+            f"MATCH (m:{LABEL_DERIVED_METRIC}) WHERE NOT (m)-[:MEASURES]->() RETURN count(m) AS c"
         ).single()["c"],
     }
     return report
@@ -866,11 +928,7 @@ def load_claims(session: Session, claims: Sequence[InterpretiveClaim]) -> LoadRe
             "SUPPORTED_BY",
             "MATCH (t:Passage {canonical_key: row.target})",
             "t",
-            [
-                {"claim_id": c.claim_id, "target": key}
-                for c in claims
-                for key in c.supported_by
-            ],
+            [{"claim_id": c.claim_id, "target": key} for c in claims for key in c.supported_by],
         ),
         (
             "SUPPORTED_BY_STATISTIC",
@@ -891,41 +949,25 @@ def load_claims(session: Session, claims: Sequence[InterpretiveClaim]) -> LoadRe
             "CONCERNS",
             f"MATCH (t:{LABEL_DOMAIN_ENTITY} {{entity_key: row.target}})",
             "t",
-            [
-                {"claim_id": c.claim_id, "target": key}
-                for c in claims
-                for key in c.concerns
-            ],
+            [{"claim_id": c.claim_id, "target": key} for c in claims for key in c.concerns],
         ),
         (
             "CONCERNS",
             "MATCH (t:Devata {entity_key: row.target})",
             "t",
-            [
-                {"claim_id": c.claim_id, "target": key}
-                for c in claims
-                for key in c.concerns
-            ],
+            [{"claim_id": c.claim_id, "target": key} for c in claims for key in c.concerns],
         ),
         (
             "CONCERNS",
             "MATCH (t:Work {work_id: row.target})",
             "t",
-            [
-                {"claim_id": c.claim_id, "target": key}
-                for c in claims
-                for key in c.concerns
-            ],
+            [{"claim_id": c.claim_id, "target": key} for c in claims for key in c.concerns],
         ),
         (
             "CONTRADICTS",
             f"MATCH (t:{LABEL_INTERPRETIVE_CLAIM} {{claim_id: row.target}})",
             "t",
-            [
-                {"claim_id": c.claim_id, "target": key}
-                for c in claims
-                for key in c.contradicts
-            ],
+            [{"claim_id": c.claim_id, "target": key} for c in claims for key in c.contradicts],
         ),
     ]
     landed: dict[str, int] = {}

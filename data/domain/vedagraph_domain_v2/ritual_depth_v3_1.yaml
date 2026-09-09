@@ -1,0 +1,393 @@
+# Ritual-layer depth, V3.1. Three additive blocks, each answering a named benchmark
+# question and none of them adding a rite, an offering or a procedure the repository does
+# not already state.
+#
+# ADDITIVE. No file is edited or superseded by this one except data/registry/concepts.yaml,
+# whose HOTR-PRIEST entry is retyped in place because the type is the defect (see block 1)
+# and a second hotar node is impossible: load_concepts() raises when one folded alias is
+# claimed by two concepts, so a duplicate would stop the merged registry loading rather
+# than add an office.
+#
+# ---------------------------------------------------------------------------
+# The evidence rule, inherited from domain_entities_ritual_v3.yaml and not relaxed
+# ---------------------------------------------------------------------------
+# Every assertion below rests on something already in this repository: a verse cited in an
+# existing curated artifact, or an edge already in the graph. NOTHING here rests on a
+# ritual manual, a Brahmana, a Sutra or anything read outside the repository. Where the
+# only available basis would have been external systematisation, the entry is REFUSED and
+# the refusal is written down with its reason.
+#
+# The loader (vedagraph.domain.v3_loader.load_ritual_depth) treats every `witness` below as
+# a claim to be CHECKED, not as a licence. A witness naming an edge that is not in the
+# graph produces no label and is reported as `unwitnessed`, so this file cannot assert a
+# type the graph does not already support. That is deliberate: the failure mode for a
+# curated typing file is a plausible entry nobody re-measured.
+
+version: vedagraph-ritual-depth-v3.1
+model_version: vedagraph-knowledge-model-v3
+
+# ===========================================================================
+# BLOCK 1 -- the hotar type error
+# QUESTION_UNLOCKED: 90
+# ===========================================================================
+#
+# This block is not a discovery. It is the fix that
+# data/domain/vedagraph_domain_v2/rituals_v3.yaml already wrote down, verbatim, in its
+# closing "PERFORMED_BY note, which is this layer's one real blocker":
+#
+#     "The hotar is the officiant this corpus names most ... and he appears in no
+#      PERFORMED_BY edge in either rituals.yaml or this file. That is not an evidential
+#      gap. It is a type error one field wide. ... The fix is:
+#        data/registry/concepts.yaml, VG:CONCEPT:HOTR-PRIEST: node_type: CONCEPT ->
+#        RITUAL_ROLE
+#      and then, in this file, adding VG:CONCEPT:HOTR-PRIEST to the performed_by of
+#      SAUTRAMANI (VS 21.30, VS 21.31, VS 21.58), GRAHA-SOMA-DRAWING (RV 2.37.1) and
+#      YAJNA-SACRIFICE (RV 2.1.2, RV 1.94.6)."
+#
+# Both halves are done here. The verses are that file's, read by its author under its own
+# read-the-verse rule; this pass adds no verse of its own and re-cites theirs.
+#
+# Why the omission inverts an answer rather than shortening one: `ritual_roles` returns the
+# yajamana, the brahman and the adhvaryu and never the hotar, so a reader concludes the
+# adhvaryu or the patron is the central Vedic officiant. The hotar has 321 mention edges,
+# five times the next office.
+#
+# ---------------------------------------------------------------------------
+# The alias split, which the same note demanded and which is NOT optional
+# ---------------------------------------------------------------------------
+# That note closes: "One further thing the architect should decide at the same time, and
+# not later. That node's alias list is a portmanteau ... Retyping the node without
+# splitting it produces a RitualRole that answers 'which rites does the adhvaryu
+# officiate at' twice, differently."
+#
+# Measured per alias against the live graph before touching anything, because this project
+# has been embarrassed by a row-level sample that read 97% while one alias was 82.9% wrong:
+#
+#     hotā       213  |  hotāraṃ  45  |  hotāram  37  |  hotur  3  |  hotre  3
+#     hotrāt       1  -> 302 edges, the hotar
+#     adhvaryo     9  |  adhvaryavaḥ  4  |  adhvaryuḥ  1  -> 14 edges, the ADHVARYU
+#     ṛtvijam      7  |  ṛtvijaḥ      4                  -> 11 edges, ANY officiant
+#
+# So 25 of the 321 edges (7.8%) are not the hotar. The split below is therefore a
+# correction to a measured error, not tidying.
+ritual_role_typing:
+  - concept_id: VG:CONCEPT:HOTR-PRIEST
+    retype_from: CONCEPT
+    retype_to: RITUAL_ROLE
+    add_label: RitualRole
+    # Checked by the loader: the label is applied only if this many mention edges are
+    # actually present, so a registry drift that emptied the node cannot silently promote
+    # an unmentioned office into the priestly-role table.
+    witness:
+      kind: MENTION_COUNT
+      concept_id: VG:CONCEPT:HOTR-PRIEST
+      at_least: 250
+    measured_mention_edges: 321
+    measured_mention_edges_by_veda: {RV: 208, YV: 50, SV: 41, AV: 22}
+    # After the alias split below, this is what the office is left holding.
+    # 302 is the sum of the hotar aliases' own edge counts; the live figure is 296
+    # because an edge matching two aliases is counted once, and the loader recomputes
+    # it rather than trusting this line. Measured alias purity: 0.9221.
+    measured_own_alias_edges: 296
+    basis: >-
+      rituals_v3.yaml's PERFORMED_BY note states the required change and this is it. The
+      label is additive: the ten existing RitualRole nodes all carry
+      ["Concept","DomainEntity","RitualRole"], so :Concept is kept and the node's 320
+      ABOUT_CONCEPT and 8 BROADER_THAN edges are untouched.
+    confidence: HIGH
+
+alias_reassignment:
+  - from_concept_id: VG:CONCEPT:HOTR-PRIEST
+    to_concept_id: VG:CONCEPT:ADHVARYU-PRIEST
+    aliases_sa: [adhvaryuḥ, adhvaryavaḥ, adhvaryo]
+    measured_edges_moved: 14
+    basis: >-
+      These are the adhvaryu, an office that already has its own RITUAL_ROLE node holding
+      adhvaryavo and adhvaryubhiḥ. No folded surface collides: the receiving node holds
+      neither of these three. Left on the hotar they make the priestly-role table answer
+      "which rites does the adhvaryu officiate at" twice, differently -- which is the
+      defect rituals_v3.yaml warned about.
+    confidence: HIGH
+
+alias_withdrawal:
+  - from_concept_id: VG:CONCEPT:HOTR-PRIEST
+    aliases_sa: [ṛtvijam, ṛtvijaḥ]
+    measured_edges_withdrawn: 11
+    no_replacement_node: true
+    basis: >-
+      ṛtvij- is any officiant "who sacrifices in season", not the hotar, so these 11 edges
+      are a generic-noun count sitting inside a specific office. Withdrawn rather than
+      moved: NO generic-officiant RitualRole node is minted, because the question this
+      block exists to fix (Q90) is precisely a priestly-role census, and a generic
+      "officiant" node would enter that census as a competing office and re-inflate the
+      table this pass is correcting. The same reasoning the diagnosis applies to `sindhu`
+      as the generic word for "river" in a hydronym table applies here. Recorded as
+      backlog: if a generic-office node is ever wanted it needs an `is_generic_office`
+      flag and a query default that excludes it, which is an ontology change.
+    confidence: HIGH
+
+# The performed_by additions. Same shape as rituals.yaml / rituals_v3.yaml so
+# vedagraph.domain.loader._RITUAL_EDGES reads them unchanged, and `mode: augment` for the
+# same reason that file gives: an absent key means "not restated here", so these entries
+# add to each rite's officiant list and cannot shorten it.
+rituals:
+  - ritual_id: VG:CONCEPT:SAUTRAMANI
+    mode: augment
+    performed_by: [VG:CONCEPT:HOTR-PRIEST]
+    basis: >-
+      rituals_v3.yaml's own entry says it: "The officiant those verses actually put to work
+      is the HOTAR -- VS 21.30, VS 21.31 and VS 21.58 all run on 'hotā yakṣat', let the
+      Hotar worship -- and he is absent from performed_by for a reason that is not
+      evidential." This supplies the missing head of that list. The yajamana stays, because
+      VS 19.5, 19.32 and 19.33 name him and this file cannot shorten a list.
+    confidence: HIGH
+
+  - ritual_id: VG:CONCEPT:GRAHA-SOMA-DRAWING
+    mode: augment
+    performed_by: [VG:CONCEPT:HOTR-PRIEST]
+    basis: >-
+      rituals_v3.yaml: "The hotar belongs in that list, is named in exactly the same
+      construction at RV 2.37.1 ('hotrāt somaṃ draviṇodaḥ piba'), and is missing for a
+      reason that is not evidential." The adhvaryu, Potar and Nestar stay; the hotar joins
+      them in the one construction that produced all four.
+    confidence: HIGH
+
+  - ritual_id: VG:CONCEPT:YAJNA-SACRIFICE
+    mode: augment
+    performed_by: [VG:CONCEPT:HOTR-PRIEST]
+    basis: >-
+      The two verses rituals_v3.yaml names for this rite, RV 2.1.2 and RV 1.94.6, are the
+      corpus's office vocabulary verses -- RV 2.1.2 runs through hotar, potar, nestar,
+      agnidh, praśāstṛ, brahman and gṛhapati in one breath. The generic sacrifice is the
+      one rite whose officiant list the corpus states directly.
+    confidence: HIGH
+
+# ===========================================================================
+# BLOCK 2 -- the two-node offering class
+# QUESTION_UNLOCKED: 100
+# ===========================================================================
+#
+# `Offering` holds two nodes, havis and dakṣiṇā. Q4's frozen criterion says in those words
+# that two nodes is not an offering vocabulary, and Q100's four-dimension join returns 3
+# rows over 2 passages because of it.
+#
+# The diagnosis names the fix and it is a TYPING fix, not an acquisition: "the
+# INVOLVES_OFFERING predicate already reaches ghṛta, anna, paśu, aśva, go, soma -- those
+# targets are typed Substance, not Offering, which is the whole defect".
+#
+# So every addition below is a node the repository ALREADY asserts is offered, by one or
+# more of three witnesses that are already in the graph:
+#
+#   TAXONOMIC          the registry declares `broader: VG:CONCEPT:HAVIS-OBLATION`, i.e.
+#                      curation has already said this thing is a kind of oblation
+#   CORPUS_ASSERTED    the semantic layer has an INVOLVES_OFFERING edge onto it, i.e. a
+#                      passage was read as involving it as an offering
+#   RITUAL_APPARATUS   a curated rite lists it under uses_offering
+#
+# The label is ADDED, never substituted. ghṛta stays a :Substance and becomes also an
+# :Offering, because clarified butter is both and the graph has to answer both "what
+# substances does the corpus name" and "what does it offer" without one erasing the other.
+# Substituting would have broken USES_SUBSTANCE, which is the mirror of the error being
+# fixed.
+#
+# `witness_count` is carried per node and is the honest strength signal: ghṛta has three
+# independent witnesses and one INVOLVES_OFFERING edge count of 3; aśva and paśu rest on a
+# single edge each. A consumer ranking offerings must be able to see that difference, so
+# the loader stores it on the node rather than flattening every addition to "is an
+# offering".
+offering_typing:
+  - concept_id: VG:CONCEPT:GHRTA-CLARIFIED-BUTTER
+    add_label: Offering
+    keep_labels: [Concept, DomainEntity, Substance]
+    witness:
+      kind: OFFERING_WITNESS
+      taxonomic_broader: VG:CONCEPT:HAVIS-OBLATION
+      involves_offering_edges: 3
+    basis: >-
+      Both the strongest witnesses at once: the registry declares ghṛta narrower than
+      havis, and three passages carry INVOLVES_OFFERING onto it. Clarified butter is the
+      archetypal Vedic oblation and it was not in the offering class.
+    confidence: HIGH
+
+  - concept_id: VG:CONCEPT:SOMA-DRINK
+    add_label: Offering
+    keep_labels: [Concept, DomainEntity, Substance]
+    witness:
+      kind: OFFERING_WITNESS
+      taxonomic_broader: VG:CONCEPT:HAVIS-OBLATION
+      involves_offering_edges: 2
+    basis: >-
+      Declared narrower than havis by the registry -- rituals.yaml relies on exactly this
+      when it leaves the soma pressing's uses_offering empty, "because SOMA-DRINK already
+      declares HAVIS-OBLATION as its broader concept and repeating it here would
+      double-count one fact". That reliance only holds if the taxonomy is projected, and
+      until now it was not.
+    confidence: HIGH
+
+  - concept_id: VG:CONCEPT:ANNA-FOOD
+    add_label: Offering
+    keep_labels: [Concept, DomainEntity, Substance]
+    witness:
+      kind: OFFERING_WITNESS
+      involves_offering_edges: 1
+    basis: >-
+      One corpus-asserted edge. Weak on its own and labelled as weak by witness_count = 1;
+      included because food-as-oblation is the commonest thing the concern layer's
+      thriving and long-life concerns are asked for, which is the join Q100 runs.
+    confidence: LOW
+
+  - concept_id: VG:CONCEPT:GO-CATTLE
+    add_label: Offering
+    keep_labels: [Concept, DomainEntity, Animal]
+    witness:
+      kind: OFFERING_WITNESS
+      involves_offering_edges: 1
+    basis: One corpus-asserted INVOLVES_OFFERING edge. witness_count = 1.
+    confidence: LOW
+
+  - concept_id: VG:CONCEPT:PASU-LIVESTOCK
+    add_label: Offering
+    keep_labels: [Concept, DomainEntity, Animal]
+    witness:
+      kind: OFFERING_WITNESS
+      involves_offering_edges: 1
+    basis: One corpus-asserted INVOLVES_OFFERING edge. witness_count = 1.
+    confidence: LOW
+
+  - concept_id: VG:CONCEPT:ASVA-HORSE
+    add_label: Offering
+    keep_labels: [Concept, DomainEntity, Animal]
+    witness:
+      kind: OFFERING_WITNESS
+      involves_offering_edges: 1
+    basis: >-
+      One corpus-asserted edge, and the one addition with a rite behind it as well: the
+      aśvamedha is in the Ritual class and VS 22-25 is its formulary. Kept at LOW anyway,
+      because the single INVOLVES_OFFERING edge is the only per-passage witness and the
+      rite connection is institutional rather than per-verse.
+    confidence: LOW
+
+# ---------------------------------------------------------------------------
+# REFUSED in block 2, with reasons
+# ---------------------------------------------------------------------------
+# purodāśa, puroḍāśa (the rice-cake oblation)  -- refused: not in the registry as an
+#   entity at all, so adding it is an acquisition, not a typing fix. No alias was probed
+#   and no verse was read for it in this pass, and this file's rule forbids a probe count
+#   with no read verse.
+# madhu (honey), payas (milk), dadhi (curds), tila (sesame) -- refused for the same
+#   reason: each is a plausible Vedic oblation and none has an entity node or a witness in
+#   this repository. Naming them from general knowledge of the ritual tradition is exactly
+#   what "import no external ritual manual" forbids.
+# VG:CONCEPT:VRATA-ORDINANCE -- refused: rituals_v3.yaml wanted it as a HAS_STEP link and
+#   recorded that its type cannot reach; it is not an offering and is not made one here.
+# The `Offering` class after this block is 8 nodes. That is still not a Vedic offering
+# vocabulary and the loader says so in `class_is_complete: false`, so a low row count on a
+# join through it cannot be read as a small phenomenon.
+
+# ===========================================================================
+# BLOCK 3 -- rite-layer recall, measured
+# QUESTION_UNLOCKED: 13, 60
+# ===========================================================================
+#
+# Q13 and Q60 are misleading for one reason: an unmeasured lower bound is presented where
+# the criteria demand a measured recall figure. 25 AV passages present themselves as the
+# Atharvaveda's marriage verse set; AV Kanda 14 alone has 141 passages and is entirely
+# about marriage, and only 14 of them are tagged. Q60 then squares that probe -- its 788
+# `vivāha` cross-Veda pairs are the cross-product of 25 AV x 16 RV tagged passages in both
+# directions -- so improving recall makes the headline number grow quadratically.
+#
+# ---------------------------------------------------------------------------
+# What this block does NOT do, and why, because it is the whole design decision
+# ---------------------------------------------------------------------------
+# The obvious fix is to tag all 141 K14 passages as marriage verses. That is refused. It
+# would make recall against K14 exactly 100% *by construction*, which is a circular
+# measurement and destroys the only honest number on the table -- and it would assert of
+# 127 individual verses that they are used in the marriage rite, which no source in this
+# repository says.
+#
+# So the strict verse-level layer is left ALONE, at its measured recall, and the recall is
+# computed and published. The book-level prior is projected as a SEPARATE, explicitly
+# inherited layer (attribution_precision: CONTAINER_INHERITED, TIER_D, state CANDIDATE) so
+# a reader can have the book-level answer while being told it is the book's claim and not
+# the verse's -- exactly how this graph already carries the Anukramani's sukta-wide deity
+# labels rather than pretending they are per-verse.
+#
+# ---------------------------------------------------------------------------
+# The locus is MEASURED from the graph, not supplied from outside
+# ---------------------------------------------------------------------------
+# The diagnosis suggests seeding from "the AV's own kanda structure (K14 = marriage,
+# K18 = funerary)". K14 = marriage is confirmed by the graph's own tag distribution and is
+# accepted. K18 = funerary is NOT, and is refused -- see below. The test applied to every
+# (rite, book) pair is enrichment of the strict tag rate inside the book against the rate
+# outside it:
+#
+#   rite            book  tagged/size    rate     rest-of-corpus rate   enrichment
+#   vivāha (marriage) K14  14/141        9.93%    11/6449 = 0.17%       ~58x
+#   śālā (house)      K09  19/311        6.11%    11/6278 = 0.18%       ~35x
+#   sūṣā (childbirth) K01   6/189        3.17%     5/6401 = 0.08%       ~41x
+#
+# Two thresholds are chosen here and are therefore declared, and everything resting on
+# them is TIER_D for that reason alone -- a chosen threshold is not a decidable relation,
+# which is the same grading rule this repository applies to the four similarity-derived
+# formula VARIANT rows:
+#
+#   min_enrichment: 20
+#   min_tagged_in_book: 5
+rite_loci:
+  - rite_id: VG:CONCEPT:VIVAHA-MARRIAGE
+    veda: AV
+    locus_book: K14
+    measured:
+      book_passages: 141
+      strict_tagged_in_book: 14
+      strict_tagged_in_veda: 25
+      rate_in_book: 0.0993
+      rate_outside_book: 0.0017
+      enrichment: 58.21
+      strict_recall_against_locus: 0.0993
+    basis: >-
+      The graph's own tags concentrate 14 of the AV's 25 marriage tags into one kanda of
+      141 verses out of 6,590 -- a 58-fold enrichment. That is the corpus asserting the
+      book's subject through this repository's own data, so the prior needs no external
+      authority. The published recall figure is 9.93%: fourteen verses of one hundred and
+      forty-one, in the one book that is about nothing else.
+    confidence: MEDIUM
+
+  - rite_id: VG:CONCEPT:SALA-HOUSE-BUILDING
+    veda: AV
+    locus_book: K09
+    measured:
+      book_passages: 311
+      strict_tagged_in_book: 19
+      strict_tagged_in_veda: 30
+      rate_in_book: 0.0611
+      rate_outside_book: 0.0018
+      enrichment: 34.87
+      strict_recall_against_locus: 0.0611
+    basis: >-
+      19 of 30 house-building tags fall in K09, 35-fold enriched. Included because the
+      same measurement that justifies K14 justifies this, and excluding it would have made
+      the marriage figure look like a special case rather than an instance of a rule.
+    confidence: MEDIUM
+
+# ---------------------------------------------------------------------------
+# REFUSED in block 3, with reasons
+# ---------------------------------------------------------------------------
+# K18 = funerary (pitṛyāṇa) -- REFUSED, against the diagnosis's own suggestion. The graph's
+#   tag distribution does not support it: of 9 AV funerary tags, K18 holds ONE, against 2
+#   in K15 and 2 in K05. Enrichment is ~0.8x, i.e. K18 is very slightly DEPLETED. That the
+#   Atharvaveda's eighteenth kanda is its funeral book is a true statement about the
+#   Atharvaveda and it is not a statement this repository's data makes, so seeding from it
+#   would be importing outside knowledge under the cover of a measurement. Recorded as a
+#   real gap: either the funerary alias list has ~1/20th the recall of the marriage one, or
+#   the tagger is missing K18 systematically. Both are worth a pass and neither is this
+#   pass's to guess.
+# sabhā (assembly) -- refused: 12 AV tags spread over 10 kandas with no concentration
+#   above the threshold. There is no locus, which is the correct answer for a rite that is
+#   an occasion rather than a book.
+# sūṣā (childbirth) K01 -- refused on the count floor, not the enrichment: 41x enriched but
+#   only 6 tagged passages in the book, under min_tagged_in_book = 5... it passes the floor
+#   and is refused for a different reason, stated here so the omission is not read as an
+#   oversight: K01 is the Atharvaveda's opening miscellany, not a childbirth book, so the
+#   enrichment is 6 verses clustering rather than a book's subject. Accepting it would make
+#   CONTAINER_INHERITED assert 189 childbirth verses on the strength of six.

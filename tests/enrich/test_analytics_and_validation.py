@@ -223,7 +223,7 @@ def test_every_controlled_predicate_is_covered_by_the_live_relationship_checks()
     from vedagraph.enrich.predicates import CONTROLLED_PREDICATES, StructuralPredicate
     from vedagraph.enrich.validate import _ENRICHMENT_TYPES
 
-    expected = CONTROLLED_PREDICATES - {str(StructuralPredicate.HAS_QA_ISSUE)}
+    expected = CONTROLLED_PREDICATES - {str(StructuralPredicate.QA_ISSUE_ON)}
     assert set(_ENRICHMENT_TYPES) == expected
     for semantic in ("DESCRIBES", "INVOKES", "REQUESTS", "PRAISES", "CONTRASTS_WITH"):
         assert semantic in _ENRICHMENT_TYPES

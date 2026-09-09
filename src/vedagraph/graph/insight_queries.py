@@ -507,7 +507,7 @@ QUERIES: Final[tuple[InsightQuery, ...]] = (
         "corpus_caveats_in_the_graph",
         "The QA findings each corpus records about itself.",
         """
-        MATCH (w:Work)-[:HAS_QA_ISSUE]->(q:QAIssue)
+        MATCH (q:QAIssue)-[:QA_ISSUE_ON]->(w:Work)
         RETURN w.veda AS veda, q.severity AS severity, q.check_id AS check_id,
                count(*) AS findings
         ORDER BY veda ASC, severity ASC, findings DESC

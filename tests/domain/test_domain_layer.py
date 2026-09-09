@@ -447,9 +447,17 @@ def test_no_query_returns_internal_nodes_unfiltered() -> None:
 
 
 def test_queries_cover_a_substantial_share_of_the_killer_questions() -> None:
+    """The benchmark is 100 questions, not 50, and the bound was never widened.
+
+    ``max(served) <= 50`` was correct while the benchmark was
+    ``VEDAGRAPH_50_KILLER_QUESTIONS``. The frozen V3 benchmark is Q1-Q100, so the old
+    bound made serving any question above 50 a test failure -- which is why the V3.1
+    audit found Q51-Q100 with no named query at all while this test stayed green. A
+    guard that forbids the work it is meant to encourage is worse than no guard.
+    """
     served = questions_served()
-    assert len(served) >= 30, f"only {len(served)} of 50 questions have a query"
-    assert max(served) <= 50 and min(served) >= 1
+    assert len(served) >= 30, f"only {len(served)} of 100 questions have a query"
+    assert max(served) <= 100 and min(served) >= 1
 
 
 # ---------------------------------------------------------------------------
@@ -540,9 +548,7 @@ def test_live_typed_labels_exist_for_the_flattened_types() -> None:
     try:
         with driver.session() as session:  # type: ignore[attr-defined]
             for label in ("Animal", "River", "Crop", "Metal", "Condition", "Ritual"):
-                count = session.run(
-                    f"MATCH (n:{label}) RETURN count(n) AS c"
-                ).single()["c"]
+                count = session.run(f"MATCH (n:{label}) RETURN count(n) AS c").single()["c"]
                 assert count > 0, f"no :{label} nodes in the live graph"
     finally:
         driver.close()  # type: ignore[attr-defined]
@@ -637,10 +643,22 @@ def test_live_treats_is_interpretive_and_addresses_concern_is_derived() -> None:
                 ("PROTECTS_FROM", "TIER_D"),
             ):
                 tiers = session.run(
-                    f"MATCH ()-[r:{rel_type}]->() "
-                    "RETURN collect(DISTINCT r.quality_tier) AS tiers"
+                    f"MATCH ()-[r:{rel_type}]->() RETURN collect(DISTINCT r.quality_tier) AS tiers"
                 ).single()["tiers"]
                 if tiers:
+                    # USED_FOR_RITE carries TWO populations by design and must not be
+                    # collapsed to one tier: 110 source-stated verse-level tags at TIER_B
+                    # and 419 book locus priors at TIER_D. The prior is a CANDIDATE
+                    # interpretive claim -- the book makes the claim, not the verse, and
+                    # the enrichment that identified the book rests on a chosen threshold.
+                    # This assertion previously read `tiers == [expected]` and passed only
+                    # because the generic regrade was flattening the priors to TIER_B,
+                    # presenting 419 candidate priors as Sanskrit-grounded facts. Once
+                    # USED_FOR_RITE became layer-owned the flattening stopped and this
+                    # test caught the difference, which is what it is for.
+                    if rel_type == "USED_FOR_RITE":
+                        assert tiers == ["TIER_B", "TIER_D"], f"{rel_type} graded {tiers}"
+                        continue
                     assert tiers == [expected], f"{rel_type} graded {tiers}"
     finally:
         driver.close()  # type: ignore[attr-defined]

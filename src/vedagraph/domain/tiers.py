@@ -11,7 +11,7 @@ knowledge            ``provenance_class``, ``scope_origin``, ``confidence``
 lexical              ``provenance_class``, ``annotation_layer_id``
 enrichment           ``trust``, ``method``, ``score``, ``evidence``, ``state``
 semantic             the enrichment envelope, plus ``model`` and ``prompt_policy``
-diagnostic           nothing (``HAS_QA_ISSUE`` carries no properties)
+diagnostic           nothing (``QA_ISSUE_ON`` carries no properties)
 ===================  ==========================================================
 
 Each vocabulary is right for its layer, and together they make the one question a reader
@@ -32,7 +32,7 @@ that way. They are graded ``TIER_B`` and marked ``CONTAINER_INHERITED``, so a re
 wants only per-verse attribution can have it -- and a reader who does not ask still sees
 a count that is not quietly overstated.
 
-**An unannotated edge is graded, not excused.** ``CONTAINS`` and ``HAS_QA_ISSUE`` say
+**An unannotated edge is graded, not excused.** ``CONTAINS`` and ``QA_ISSUE_ON`` say
 nothing about themselves. Rather than defaulting them to something flattering, they are
 graded from what the layer is known to be, and an edge whose layer is unknown grades
 :attr:`~vedagraph.domain.ontology.QualityTier.TIER_D` -- the weakest tier, so an
@@ -205,7 +205,7 @@ _STRUCTURAL_RELS: Final[frozenset[str]] = frozenset(
 
 #: Relationship types that are facts about this repository. Graded so that nothing is
 #: ungraded, but they are excluded from product traversal anyway.
-_DIAGNOSTIC_RELS: Final[frozenset[str]] = frozenset({"HAS_QA_ISSUE"})
+_DIAGNOSTIC_RELS: Final[frozenset[str]] = frozenset({"QA_ISSUE_ON"})
 
 #: Lexical mention edges. The Rigvedic morphology behind them is manual scholarly
 #: annotation, but the *entity* attached to a lemma is this project's alias table, so the
@@ -261,6 +261,15 @@ _V2_PREDICATE_GRADE: Final[dict[str, tuple[KnowledgeLayer, QualityTier, Evidence
         KnowledgeLayer.L2_DETERMINISTIC_DERIVED,
         QualityTier.TIER_B,
         EvidenceBasis.SOURCE_METADATA,
+    ),
+    # Identity of an epithet-qualified label with its base deity. Read off the source label
+    # and nothing else, but read by a model rather than derived: `rakṣohāgniḥ` needs the
+    # sandhi seen through, and `sāvitrī sūryā` is refused precisely because the string
+    # invites the identification and the grammar denies it. That is adjudication, so L3/C.
+    "EPITHET_VARIANT_OF": (
+        KnowledgeLayer.L3_LLM_EXTRACTED,
+        QualityTier.TIER_C,
+        EvidenceBasis.SANSKRIT,
     ),
     # Reproducible aggregation over edges that already exist.
     "MEASURES": (
@@ -467,12 +476,52 @@ _V2_PREDICATE_GRADE: Final[dict[str, tuple[KnowledgeLayer, QualityTier, Evidence
 #: ``MEMBER_OF_FAMILY`` is owned because its tier depends on *which derivation produced
 #: the row*: containment-derived rows are TIER_B and the four similarity-threshold rows
 #: are TIER_D, and no provenance signature distinguishes them.
+#:
+#: ``HAS_FORMULA`` is owned for the same reason and one more: it is a *mirror* of
+#: ``MEMBER_OF_FAMILY``, so its grade must be byte-identical to its inbound twin's. Letting
+#: the generic rules re-derive it would let the two directions of one membership disagree,
+#: which is worse than either grade being wrong -- a query would get a different tier
+#: depending on which way it walked.
+#:
+#: ``ASSERTION_PREDICATE`` is owned because, like ``HAS_SEMANTIC_ASSERTION``, its grade is
+#: the grade of the *assertion it starts from* and the stamper cannot see across an edge.
+#: The generic rules graded every edge in the type ``TIER_B``/``STRUCTURAL`` on the
+#: reasoning that "this assertion predicates this vocabulary member" is structural. That is
+#: the identical mistake the ``HAS_SEMANTIC_ASSERTION`` note above describes: once the
+#: sealed model layer also reaches ``:ActionPredicate``, a uniform ``TIER_B`` makes
+#: "predicates asserted at TIER_B" return unreviewed extraction over Griffith's English
+#: next to Zurich morphology, with nothing on the edge to separate them.
+#: :func:`vedagraph.domain.v3_loader.load_sealed_predicate_edges` owns it instead, and
+#: grades **both** populations from their source assertion rather than only the rows it
+#: created -- a reconciler that graded only its own additions would leave the older half
+#: dependent on a pass outside the V3 projection for its grade.
+#:
+#: ``BELONGS_TO_FAMILY`` is owned because, like ``MEMBER_OF_FAMILY``, its ``grade_basis``
+#: depends on which derivation produced the row and no provenance signature distinguishes
+#: them: 290 rows read a patronymic the Anukramaṇī printed as its own word, 14 read one
+#: this layer split out of a sandhi-fused token, and the second warrant is weaker in a way
+#: the generic rules cannot see. All 305 are TIER_B, so a re-grade would not change the
+#: tier -- it would overwrite the sentence that says which of the two the reader is
+#: looking at, which is the only thing on that edge worth reading.
 LAYER_OWNED_GRADES: Final[frozenset[str]] = frozenset(
     {
+        "BELONGS_TO_FAMILY",
         "MENTIONS_DEVATA",
         "CO_OCCURS_WITH",
         "HAS_SEMANTIC_ASSERTION",
         "MEMBER_OF_FAMILY",
+        "HAS_FORMULA",
+        "SHARES_ENTITY_VOCABULARY_WITH",
+        # Layer-owned because the rite layer holds TWO populations that the generic
+        # signature cannot tell apart: 110 source-stated verse-level tags and 419 book
+        # locus priors, the latter marked by `derivation = 'BOOK_LOCUS_PRIOR'`. That
+        # property is not one of _SIGNATURE_FIELDS, so the generic grader saw one
+        # signature, graded both alike, and flattened all 529 to PER_PASSAGE -- turning a
+        # book's claim about its verses into 419 per-verse statements, which is the
+        # inherited-as-per-verse shape the frozen benchmark names first among misleading
+        # answers. Caught by a live test, not by a count.
+        "USED_FOR_RITE",
+        "ASSERTION_PREDICATE",
         "CONTRASTS_WITH",
         "DESCRIBES",
         "DESCRIBES_ACTION",
@@ -546,9 +595,7 @@ def grade_edge(rel_type: str, properties: Mapping[str, Any]) -> Grade:
             # therefore truthy, so 31,646 attribution edges kept UNSPECIFIED while the
             # code read as though it handled them.
             evidence_basis=(
-                EvidenceBasis.SOURCE_METADATA
-                if evidence is EvidenceBasis.UNSPECIFIED
-                else evidence
+                EvidenceBasis.SOURCE_METADATA if evidence is EvidenceBasis.UNSPECIFIED else evidence
             ),
         )
 

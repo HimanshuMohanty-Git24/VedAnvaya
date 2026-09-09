@@ -1,0 +1,182 @@
+# Epithet-qualified Devatā labels resolved to the base deity they qualify.
+#
+# WHAT THIS FILE IS FOR, AND THE DEFECT THAT MADE IT NECESSARY
+#
+# Benchmark Q86 asks which natural phenomena are personified as deities, and
+# `DEVATA_ASSOCIATED_WITH` answered "fire (agni)" with FIVE personifications:
+# Agni, Agni Jātavedas, Agni Pavamāna, Agni the slayer of demons, and the self
+# of Agni. Those are one god under four epithets. The Anukramaṇī's devatā slot
+# records the qualified form the hymn uses, the registry pins each distinct slot
+# value as its own entity because entity_key is pinned identity and must not be
+# recomputed, and nothing then said that four of the five are the same being. So
+# a count of personifications counted labels.
+#
+# QUESTION_UNLOCKED = Q86 (personified natural phenomena, currently MISLEADING:
+# the class membership of the answer is wrong because the count is inflated by
+# unresolved duplicates). It also gives Q38 the exclusion it needs.
+#
+# WHAT COUNTS AS EVIDENCE HERE
+#
+# One thing only: the SOURCE LABEL. A row is asserted when the qualified label
+# contains the base deity's own registered label, or a regular sandhi or case
+# form of it, plus a qualifier that qualifies rather than replaces. That is the
+# same evidence class as the hyphen-joined composites in devata_components.yaml
+# -- read off the label the editors printed, not inferred from religion.
+#
+# WHAT IS REFUSED, AND WHY THE REFUSALS ARE IN THE FILE
+#
+# A shared string is not identity. `sāvitrī sūryā` is Sūryā the daughter of
+# Savitṛ, a feminine figure who marries the Aśvins; she is not Sūrya the sun
+# with an epithet, and her label differs from his in gender, not in qualifier.
+# `ahirbudhnyaḥ` is the serpent of the deep, a distinct Rigvedic figure whose
+# identification with `ahiḥ` (Vṛtra's snake) is a claim about mythology. Both
+# are recorded as REFUSED so the absence of an edge is a decision.
+#
+# Number variants (`gauḥ`/`gāvaḥ`, `aśvaḥ`/`aśvāḥ`) are NOT handled here. They
+# are a different relation -- singular and plural of the same deified object,
+# which the registry already distinguishes by `structure` -- and merging them
+# would need a decision about whether a plural collective is the same devatā as
+# its singular. That decision is not made in this file and the cases are listed
+# as NOT_IN_SCOPE.
+#
+# Composite and pair labels are not handled here either: `dyāvāpṛthivyau` is not
+# an epithet variant of Pṛthivī, it is a compound, and it is already recorded in
+# devata_components.yaml. Excluding composites from a personification count is
+# `structure`-based and needs no edge.
+#
+# PROVENANCE
+#
+# adjudicator: MODEL_ADJUDICATED. No human has reviewed this file. It is graded
+# TIER_C / L3_MODEL_ADJUDICATED for that reason and never TIER_B, and every row
+# states the label substring a reviewer has to check.
+policy_version: vedagraph-devata-variant-policy-v1
+adjudicator: MODEL_ADJUDICATED
+
+variants:
+
+# --- Agni. The Q86 failure, in full.
+
+- variant_entity_id: VG:DEVATA:JATAVEDA-AGNIH
+  base_entity_id: VG:DEVATA:AGNIH
+  relation: EPITHET_QUALIFIED
+  evidence: >-
+    The label `jātavedā agniḥ` is the base label `agniḥ` preceded by the epithet
+    jātavedas- "knowing the generations", which the Rigveda applies to Agni
+    throughout. The base label is present as a whole printed word.
+  review_status: ASSERTED
+
+- variant_entity_id: VG:DEVATA:PAVAMANO-AGNIH
+  base_entity_id: VG:DEVATA:AGNIH
+  relation: EPITHET_QUALIFIED
+  evidence: >-
+    The label `pavamāno agniḥ` is the base label `agniḥ` preceded by the
+    participle pavamāna- "being clarified". The base label is present as a whole
+    printed word.
+  review_status: ASSERTED
+
+- variant_entity_id: VG:DEVATA:RAKSOHAGNIH
+  base_entity_id: VG:DEVATA:AGNIH
+  relation: EPITHET_QUALIFIED
+  evidence: >-
+    The label `rakṣohāgniḥ` is rakṣohan- "demon-slaying" compounded with agniḥ,
+    with the regular lengthening of the initial a- of the second member after
+    the -a of the first. The base label is present as the compound's second
+    member rather than as a separate word, which is why this row exists: a
+    whole-word test cannot see it and a reviewer checking the file can.
+  review_status: ASSERTED
+
+- variant_entity_id: VG:DEVATA:AGNERATMA
+  base_entity_id: VG:DEVATA:AGNIH
+  relation: PART_OF_DEITY
+  evidence: >-
+    The label `agnerātmā` is the genitive agneḥ "of Agni" plus ātmā "self", so it
+    names something belonging to Agni rather than Agni under an epithet. It is
+    related to the base by the genitive the label itself carries, which is
+    weaker than the three rows above and is typed differently for that reason.
+  review_status: ASSERTED
+  notes: >-
+    Relation PART_OF_DEITY, not EPITHET_QUALIFIED. It is included because leaving
+    it out leaves Q86 reporting two personifications of fire instead of one, and
+    "the self of Agni" is not a second personification of fire on any reading.
+    A consumer that wants only epithets can filter on the relation.
+
+# --- Soma.
+
+- variant_entity_id: VG:DEVATA:PAVAMANAH-SOMAH
+  base_entity_id: VG:DEVATA:SOMAH
+  relation: EPITHET_QUALIFIED
+  evidence: >-
+    The label `pavamānaḥ somaḥ` is the base label `somaḥ` preceded by the
+    participle pavamāna-, the standard designation of Soma in the ninth maṇḍala's
+    pavamāna hymns. The base label is present as a whole printed word.
+  review_status: ASSERTED
+  notes: >-
+    The two entities stay separate, as with the composites: this deity carries
+    1,087 Anukramaṇī attributions of its own against Soma's 80, so collapsing
+    them would destroy the maṇḍala 9 signal. The edge lets a personification
+    count resolve them without merging them.
+
+# --- Vac.
+
+- variant_entity_id: VG:DEVATA:SASARPARI-VAK
+  base_entity_id: VG:DEVATA:VAK
+  relation: EPITHET_QUALIFIED
+  evidence: >-
+    The label `sasarparī vāk` is the base label `vāk` preceded by sasarparī, an
+    epithet of Speech at RV 3.53.15-16. The base label is present as a whole
+    printed word.
+  review_status: ASSERTED
+
+# --- Explicitly refused. Listed so the absence of an edge is a decision.
+
+- variant_entity_id: VG:DEVATA:SAVITRI-SURYA
+  base_entity_id: VG:DEVATA:SURYAH
+  relation: EPITHET_QUALIFIED
+  evidence: >-
+    REFUSED. `sāvitrī sūryā` is the feminine Sūryā, daughter of Savitṛ and bride
+    of the Aśvins (RV 10.85). Her label differs from `sūryaḥ` in gender, not by a
+    qualifier, so the base label is NOT present: sūryā is a different word from
+    sūryaḥ. Identifying them would be a claim about mythology, and the string
+    similarity that suggests it is exactly what this file refuses to act on.
+  review_status: REFUSED
+
+- variant_entity_id: VG:DEVATA:AHIRBUDHNYAH
+  base_entity_id: VG:DEVATA:AHIH
+  relation: EPITHET_QUALIFIED
+  evidence: >-
+    REFUSED. `ahirbudhnyaḥ` contains `ahiḥ` as its first member, but Ahi Budhnya,
+    "the serpent of the deep", is a distinct figure invoked among the gods, while
+    `ahiḥ` in this registry is the serpent Indra slays. Treating the compound as
+    an epithet of the base would assert an identification the source does not
+    make.
+  review_status: REFUSED
+
+- variant_entity_id: VG:DEVATA:PAVAMANAH
+  base_entity_id: VG:DEVATA:SOMAH
+  relation: EPITHET_QUALIFIED
+  evidence: >-
+    REFUSED on the evidence rule, not on the reading. `pavamānaḥ` alone almost
+    certainly denotes Soma, but the label contains no form of `somaḥ`, so the
+    identification rests on knowing what pavamāna- refers to rather than on the
+    label. theonym_forms.yaml records that the same form means wind, breath and
+    an abstract purifier in the Atharvaveda, which is precisely why it is not
+    self-identifying.
+  review_status: REFUSED
+
+# --- Out of scope, recorded so a reader does not read the gap as an oversight.
+
+- variant_entity_id: VG:DEVATA:GAVAH
+  base_entity_id: VG:DEVATA:GAUH
+  relation: NUMBER_VARIANT
+  evidence: >-
+    NOT_IN_SCOPE. `gāvaḥ` is the plural of `gauḥ` and the registry already marks
+    the difference as `structure: GROUP` against `INDIVIDUAL`. Whether a deified
+    plural collective is the same devatā as its deified singular is a decision
+    this file does not make; the same question governs aśvaḥ/aśvāḥ/vājinaḥ.
+  review_status: NOT_IN_SCOPE
+
+- variant_entity_id: VG:DEVATA:ASHVAAH
+  base_entity_id: VG:DEVATA:ASHVAH
+  relation: NUMBER_VARIANT
+  evidence: NOT_IN_SCOPE, as gāvaḥ/gauḥ above.
+  review_status: NOT_IN_SCOPE

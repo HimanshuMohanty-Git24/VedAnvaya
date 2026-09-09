@@ -46,6 +46,31 @@ components:
   evidence: dvandva of Indra and Bṛhaspati, both separately registered Devatās.
   review_status: ACCEPTED
 
+- composite_entity_id: VG:DEVATA:INDRAVARUNAU
+  component_entity_ids: [VG:DEVATA:INDRAH, VG:DEVATA:VARUNAH]
+  evidence: >-
+    indrāvaruṇau is the nominative dual of the devatā-dvandva indrā́váruṇa-, and it meets
+    the same two conditions as every other ACCEPTED row in this dvandva block, checked
+    against the graph rather than read off the ending: both members exist as separately
+    registered canonical Devatā entities (VG:DEVATA:INDRAH, VG:DEVATA:VARUNAH), and the
+    Anukramaṇī separately assigns the pair and each member -- 70 mantras to the pair, 2,869
+    to Indra and 99 to Varuṇa. The pair is the seventeenth most frequently assigned devatā
+    in the corpus.
+  review_status: NEEDS_REVIEW
+  notes: >-
+    Staged, not accepted, and the distinction is deliberate. ACCEPTED in this file carries
+    provenance_class HUMAN_REVIEWED -- models/lexical.py refuses a ComponentAssertion that
+    claims otherwise -- and this row was assembled by a model run, so marking it ACCEPTED
+    would forge the one property the whole file exists to guarantee. What is resolved here
+    is the evidence, not the review: the gap was previously recorded only as prose in the
+    devata_taxonomy.yaml curation_note ("devata_components.yaml has no row for it at all
+    ... the missing row is reported instead of quietly filled in"), and it is now a row
+    with its criterion checked and its counts stated. Nothing was inferred from the dual
+    ending, which this file's policy forbids and which would have licensed a dozen other
+    duals it deliberately leaves alone. A reviewer who agrees flips this one field to
+    ACCEPTED and adds the same two components to this entity's composed_of in
+    data/domain/vedagraph_domain_v2/devata_taxonomy.yaml; no other change is needed.
+
 - composite_entity_id: VG:DEVATA:INDRAVAYU
   component_entity_ids: [VG:DEVATA:INDRAH, VG:DEVATA:VAYUH]
   evidence: dvandva of Indra and Vāyu, both separately registered Devatās.

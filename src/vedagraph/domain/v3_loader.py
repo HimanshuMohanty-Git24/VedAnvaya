@@ -41,20 +41,33 @@ them out of product traversal and available to a query that asks for them by nam
 
 from __future__ import annotations
 
+import pathlib
 import uuid
 from collections.abc import Iterator, Sequence
 from dataclasses import dataclass, field
 from typing import Any, Final, Protocol
 
 import orjson
+import yaml
 
 from vedagraph.domain.ontology import (
+    DOMAIN_MODEL_VERSION,
     LABEL_ACTION_PREDICATE,
+    LABEL_CONCEPT,
     LABEL_DEVATA_ASCRIPTION,
     LABEL_FORMULA,
     LABEL_FORMULA_FAMILY,
     LABEL_INTERNAL,
+    LABEL_OFFERING,
+    LABEL_PASSAGE,
+    LABEL_RISHI,
+    LABEL_RISHI_FAMILY,
+    LABEL_RITUAL,
+    LABEL_RITUAL_ROLE,
     LABEL_SEMANTIC_ASSERTION,
+    LABEL_SOCIAL_RITE,
+    REL_BELONGS_TO_FAMILY,
+    REL_HAS_FORMULA,
     REL_MEMBER_OF_FAMILY,
 )
 from vedagraph.domain.sealed_semantics import SealedProjection
@@ -122,6 +135,7 @@ SET m.mention_id = row.mention_id,
     m.matched_forms = row.matched_forms,
     m.occurrences = row.occurrences,
     m.referent_certainty = row.referent_certainty,
+    m.referent_basis = row.referent_basis,
     m.attribution_support = row.attribution_support,
     m.attribution_precision = row.attribution_precision,
     m.evidence_basis = row.evidence_basis,
@@ -182,6 +196,17 @@ def load_theonym_mentions(session: Session, rows: Sequence[dict[str, Any]]) -> L
                 "RETURN m.quality_tier AS tier, count(*) AS n ORDER BY n DESC"
             )
         },
+        "by_referent_basis": {
+            record["b"]: record["n"]
+            for record in session.run(
+                "MATCH ()-[m:MENTIONS_DEVATA]->() "
+                "RETURN m.referent_basis AS b, count(*) AS n ORDER BY n DESC"
+            )
+        },
+        # Counted after the load, not derived from the rows sent. A three-way split that
+        # reports itself from its own input would not notice a SET clause that never
+        # reached the property -- which is the failure mode that once left 28,675 edges
+        # carrying a stale ambiguity flag through a rebuild that reported success.
         "by_certainty": {
             record["c"]: record["n"]
             for record in session.run(
@@ -190,6 +215,276 @@ def load_theonym_mentions(session: Session, rows: Sequence[dict[str, Any]]) -> L
             )
         },
     }
+    return report
+
+
+#: The reviewed authority for componenthood, and the file whose ``review_status:
+#: ACCEPTED`` rows are the only licence for a ``COMPOSED_OF`` edge.
+COMPONENT_REGISTRY: Final = pathlib.Path("data") / "registry" / "devata_components.yaml"
+
+#: Epithet-qualified deity labels resolved to the base deity they qualify.
+VARIANT_REGISTRY: Final = pathlib.Path("data") / "registry" / "devata_variants.yaml"
+
+#: Only these rows produce an edge. ``REFUSED`` and ``NOT_IN_SCOPE`` are recorded in the
+#: registry so that the absence of an edge is a decision, and they must not create one.
+_VARIANT_ASSERTED: Final = "ASSERTED"
+
+_VARIANT_QUERY: Final = """
+UNWIND $rows AS row
+MATCH (v:Devata {entity_key: row.variant_entity_id})
+MATCH (b:Devata {entity_key: row.base_entity_id})
+MERGE (v)-[r:EPITHET_VARIANT_OF]->(b)
+SET r.relation = row.relation,
+    r.evidence = row.evidence,
+    r.grade_basis = row.grade_basis,
+    r.quality_tier = 'TIER_C',
+    r.knowledge_layer = 'L3_LLM_EXTRACTED',
+    r.evidence_basis = 'SANSKRIT',
+    r.attribution_precision = 'REGISTRY_STATED',
+    r.method = 'devata-variant-registry-v1',
+    r.review_state = 'UNREVIEWED',
+    r.domain_model_version = $model_version,
+    r.build_pass = $build_pass
+"""
+
+
+def load_devata_variants(session: Session, project_root: pathlib.Path) -> LoadReport:
+    """Link epithet-qualified deity labels to the base deity, from the stated registry.
+
+    ``QUESTION_UNLOCKED = Q86`` (which natural phenomena are personified as deities;
+    currently graded MISLEADING). **The defect, measured.** ``DEVATA_ASSOCIATED_WITH``
+    reports "fire (agni)" with five personifications -- ``Agni``, ``Agni Jātavedas``,
+    ``Agni Pavamāna``, ``Agni the slayer of demons`` and ``the self of Agni`` -- because the
+    Anukramaṇī's devatā slot records the *qualified* label a hymn uses, the registry
+    correctly pins each distinct slot value as its own entity, and nothing then said that
+    four of the five are one god. A count of personifications was counting labels. The
+    benchmark criterion names this failure in terms.
+
+    **Why a new relationship type rather than reusing one.** ``COMPOSED_OF`` is the wrong
+    relation and asserting it here would be a real error: ``jātavedā agniḥ`` is not made
+    *of* Agni the way ``mitrāvaruṇau`` is made of Mitra and Varuṇa, and a consumer walking
+    ``COMPOSED_OF`` to enumerate a compound's members would start returning Agni as a
+    member of himself. ``HAS_EPITHET`` is also wrong: it points at an ``:Epithet`` node,
+    and these are ``:Devata`` nodes with attributions, mentions and axes of their own that
+    must not be collapsed into an epithet string.
+
+    **Nothing is merged.** The variant keeps its own identity, its own attributions and its
+    own mentions -- ``VG:DEVATA:PAVAMANAH-SOMAH`` carries 1,087 Anukramaṇī attributions
+    against Soma's 80, and collapsing the two would destroy the maṇḍala 9 signal. The edge
+    only lets a query that must not double-count resolve to the base first.
+
+    **Graded for what it is.** ``TIER_C`` / ``L3_LLM_EXTRACTED``, because no human has
+    reviewed the registry. The three ``REFUSED`` rows -- ``sāvitrī sūryā``, which is a
+    different figure and not Sūrya under an epithet; ``ahirbudhnyaḥ``; and ``pavamānaḥ``
+    alone, refused on the evidence rule rather than on the reading -- create nothing, which
+    is why they are in the file: a shared substring is not identity, and the refusals are
+    the record that stops someone acting on one.
+    """
+    report = LoadReport(step="devata_variants")
+    document = yaml.safe_load((project_root / VARIANT_REGISTRY).read_text(encoding="utf-8"))
+    all_rows = list((document or {}).get("variants", []))
+    asserted = [
+        {
+            "variant_entity_id": str(row["variant_entity_id"]),
+            "base_entity_id": str(row["base_entity_id"]),
+            "relation": str(row["relation"]),
+            "evidence": " ".join(str(row["evidence"]).split()),
+            "grade_basis": (
+                "devata_variants.yaml states this qualified label resolves to this base "
+                "deity, on the evidence of the source label alone"
+            ),
+        }
+        for row in all_rows
+        if str(row.get("review_status")) == _VARIANT_ASSERTED
+    ]
+    report.sent = len(asserted)
+    if not asserted:
+        return report
+    build_pass = uuid.uuid4().hex
+    session.run(
+        _VARIANT_QUERY,
+        rows=asserted,
+        build_pass=build_pass,
+        model_version=DOMAIN_MODEL_VERSION,
+    )
+    # Sweep by build_pass, so a row downgraded from ASSERTED to REFUSED in the registry
+    # loses its edge on the next run. MERGE alone never forgets a superseded value, and a
+    # refusal that leaves its edge behind is worse than never having recorded it.
+    retired = _count(
+        session,
+        """
+        MATCH (:Devata)-[r:EPITHET_VARIANT_OF]->(:Devata)
+        WHERE r.build_pass IS NULL OR r.build_pass <> $build_pass
+        DELETE r RETURN count(*) AS c
+        """,
+        build_pass=build_pass,
+    )
+    report.landed = _count(
+        session,
+        """
+        MATCH (:Devata)-[r:EPITHET_VARIANT_OF]->(:Devata)
+        WHERE r.build_pass = $build_pass
+        RETURN count(r) AS c
+        """,
+        build_pass=build_pass,
+    )
+    report.detail = {
+        "retired_stale": retired,
+        "by_relation": {
+            record["rel"]: record["n"]
+            for record in session.run(
+                "MATCH ()-[r:EPITHET_VARIANT_OF]->() "
+                "RETURN r.relation AS rel, count(*) AS n ORDER BY n DESC"
+            )
+        },
+        "registry_rows": len(all_rows),
+        "not_asserted": {
+            str(row["variant_entity_id"]): str(row.get("review_status"))
+            for row in all_rows
+            if str(row.get("review_status")) != _VARIANT_ASSERTED
+        },
+        # The number Q86 turns on: how many distinct *base* deities the inflated
+        # personification classes collapse to once variants resolve.
+        "personifications_before_and_after": [
+            {
+                "phenomenon": record["phenomenon"],
+                "labels": record["labels"],
+                "distinct_bases": record["bases"],
+            }
+            for record in session.run(
+                """
+                MATCH (dv:Devata)-[:DEVATA_ASSOCIATED_WITH]->(c)
+                OPTIONAL MATCH (dv)-[:EPITHET_VARIANT_OF]->(base:Devata)
+                WITH c, dv, coalesce(base, dv) AS resolved
+                WITH coalesce(c.display_label, c.concept_id) AS phenomenon,
+                     count(DISTINCT dv) AS labels,
+                     count(DISTINCT resolved) AS bases
+                WHERE labels > bases
+                RETURN phenomenon, labels, bases ORDER BY labels DESC
+                """
+            )
+        ],
+    }
+    return report
+
+
+def _accepted_components(project_root: pathlib.Path) -> dict[str, list[str]]:
+    """Composite -> components, for ``ACCEPTED`` rows of the component registry only."""
+    document = yaml.safe_load((project_root / COMPONENT_REGISTRY).read_text(encoding="utf-8"))
+    return {
+        str(row["composite_entity_id"]): [str(k) for k in row.get("component_entity_ids") or []]
+        for row in (document or {}).get("components", [])
+        if str(row.get("review_status")) == "ACCEPTED"
+    }
+
+
+def reconcile_devata_composition(
+    session: Session, project_root: pathlib.Path | None = None
+) -> LoadReport:
+    """Make ``Devata.is_composite`` agree with the reviewed decomposition in the graph.
+
+    **The contradiction this resolves, measured.** 14 ``:Devata`` nodes carry
+    ``COMPOSED_OF`` edges projected from the ``review_status: ACCEPTED`` rows of
+    ``data/registry/devata_components.yaml``, which the taxonomy overlay names as "the
+    reviewed authority for componenthood". Every one of those 14 nodes also carried
+    ``is_composite = false``, and so did the other 200: **0 of 214 deities were flagged
+    composite while 14 were decomposed.** So the graph simultaneously stated that
+    ``VG:DEVATA:MITRAVARUNAU`` is Mitra and Varuṇa and that it is not a compound, and the
+    navigation question "which deities are compounds?" returned nothing at all.
+
+    The cause is that ``is_composite`` comes from ``is_composite_label``, a deliberate
+    label-shape heuristic that looks for the source editors' hyphen and documents that it
+    will *not* recognise a dual such as ``mitrāvaruṇau`` because doing so needs morphology.
+    That restraint is right for a label heuristic and wrong as the final value of the
+    property, because a reviewed decomposition is exactly the evidence the heuristic said
+    it was waiting for. This step therefore derives the flag from the reviewed edges rather
+    than from the spelling.
+
+    **The flag is written on every deity, not only on the composites.** A ``false`` here
+    means "no ACCEPTED decomposition exists for this deity", which is a decision the
+    registry records -- ``VG:DEVATA:VISVEDEVAH`` is ``REJECTED`` and
+    ``VG:DEVATA:DYAVAPRTHIVYAU`` is ``NEEDS_REVIEW`` -- and leaving the property absent
+    would make the decision look like an oversight. ``component_count`` is landed beside it
+    so a consumer never has to trust the boolean alone.
+
+    **It also diffs the graph against the registry, because the two can diverge and did.**
+    ``COMPOSED_OF`` is not projected from ``data/registry/devata_components.yaml`` -- the
+    file the taxonomy overlay itself names as "the reviewed authority for componenthood".
+    It is projected from a *second* copy of the same data, the ``composed_of`` field of
+    ``data/domain/vedagraph_domain_v2/devata_taxonomy.yaml``, which the overlay maintains by
+    hand. Two files holding one fact means a row can be added to the authority and never
+    reach the graph, with every loader reporting success. So the delta is measured here and
+    named in ``registry_only`` / ``graph_only`` rather than left to be discovered later.
+
+    Nothing is inferred and nothing new is decomposed: the flag reads ``COMPOSED_OF``, and
+    the diff reads the registry without writing from it -- an ACCEPTED row this step found
+    missing is reported for review, never MERGEd, because creating the edge here would make
+    this loader a second decomposition authority and there are already two too many.
+    """
+    report = LoadReport(step="devata_composition")
+    report.sent = _count(session, "MATCH (dv:Devata) RETURN count(dv) AS c")
+    session.run(
+        """
+        MATCH (dv:Devata)
+        OPTIONAL MATCH (dv)-[:COMPOSED_OF]->(part:Devata)
+        WITH dv, count(part) AS components
+        SET dv.component_count = components,
+            dv.is_composite = components > 0
+        """
+    )
+    report.landed = _count(
+        session, "MATCH (dv:Devata) WHERE dv.component_count IS NOT NULL RETURN count(dv) AS c"
+    )
+    composite = _count(session, "MATCH (dv:Devata) WHERE dv.is_composite RETURN count(dv) AS c")
+    decomposed = _count(
+        session, "MATCH (dv:Devata) WHERE (dv)-[:COMPOSED_OF]->() RETURN count(DISTINCT dv) AS c"
+    )
+    report.detail = {
+        "flagged_composite": composite,
+        "with_composed_of_edges": decomposed,
+        # These two must be equal. They are reported rather than asserted because a
+        # loader's job here is to make the discrepancy visible, and the discrepancy this
+        # step was written for was 0 against 14.
+        "agrees": composite == decomposed,
+        "contradictions_before": _count(
+            session,
+            """
+            MATCH (dv:Devata)-[:COMPOSED_OF]->(:Devata)
+            WHERE dv.is_composite = false
+            RETURN count(DISTINCT dv) AS c
+            """,
+        ),
+        "undecomposed_pair_or_group": _count(
+            session,
+            """
+            MATCH (dv:Devata)
+            WHERE dv.structure IN ['PAIR', 'GROUP'] AND NOT (dv)-[:COMPOSED_OF]->()
+            RETURN count(dv) AS c
+            """,
+        ),
+    }
+    if project_root is not None:
+        accepted = _accepted_components(project_root)
+        in_graph = {
+            str(record["k"]): sorted(str(part) for part in record["parts"])
+            for record in session.run(
+                """
+                MATCH (whole:Devata)-[:COMPOSED_OF]->(part:Devata)
+                RETURN whole.entity_key AS k, collect(part.entity_key) AS parts
+                """
+            )
+        }
+        report.detail["registry_diff"] = {
+            "accepted_rows": len(accepted),
+            "composites_in_graph": len(in_graph),
+            "registry_only": sorted(set(accepted) - set(in_graph)),
+            "graph_only": sorted(set(in_graph) - set(accepted)),
+            "component_set_differs": sorted(
+                key
+                for key in set(accepted) & set(in_graph)
+                if sorted(accepted[key]) != in_graph[key]
+            ),
+        }
     return report
 
 
@@ -243,9 +538,7 @@ def mark_orphan_lemmas_internal(session: Session) -> LoadReport:
     )
     report.sent = to_mark
     if to_mark:
-        session.run(
-            f"MATCH (l:Lemma) WHERE NOT l:{LABEL_INTERNAL} SET l:{LABEL_INTERNAL}"
-        )
+        session.run(f"MATCH (l:Lemma) WHERE NOT l:{LABEL_INTERNAL} SET l:{LABEL_INTERNAL}")
     report.landed = to_mark - _count(
         session,
         f"MATCH (l:Lemma) WHERE NOT l:{LABEL_INTERNAL} RETURN count(l) AS c",
@@ -541,9 +834,7 @@ def reconcile_about_concept(session: Session) -> LoadReport:
     share of survivors corroborated by a mention.
     """
     report = LoadReport(step="about_concept_reconciliation")
-    before = _count(
-        session, "MATCH ()-[r:ABOUT_CONCEPT]->() RETURN count(r) AS c"
-    )
+    before = _count(session, "MATCH ()-[r:ABOUT_CONCEPT]->() RETURN count(r) AS c")
     if not before:
         return report
 
@@ -585,8 +876,7 @@ def reconcile_about_concept(session: Session) -> LoadReport:
         "surviving_by_method": {
             record["m"]: record["n"]
             for record in session.run(
-                "MATCH ()-[r:ABOUT_CONCEPT]->() "
-                "RETURN r.method AS m, count(*) AS n ORDER BY n DESC"
+                "MATCH ()-[r:ABOUT_CONCEPT]->() RETURN r.method AS m, count(*) AS n ORDER BY n DESC"
             )
         },
         "corroborated_by_a_mention": corroborated,
@@ -611,8 +901,7 @@ def reconcile_about_concept(session: Session) -> LoadReport:
         },
         "translation_only_remaining": _count(
             session,
-            "MATCH ()-[r:ABOUT_CONCEPT]->() WHERE r.method = $method "
-            "RETURN count(r) AS c",
+            "MATCH ()-[r:ABOUT_CONCEPT]->() WHERE r.method = $method RETURN count(r) AS c",
             method=_TRANSLATION_ONLY_ABOUTNESS,
         ),
     }
@@ -1019,6 +1308,786 @@ def load_devata_ascriptions(
 
 
 # ---------------------------------------------------------------------------
+# Ritual-layer depth (V3.1)
+# ---------------------------------------------------------------------------
+
+#: The chosen thresholds behind :func:`load_ritual_depth`'s book-level rite priors, named
+#: here because they are *chosen*. A threshold is a parameter someone picked rather than a
+#: decidable relation, which is why every edge resting on one is ``TIER_D`` -- the same
+#: grading rule this module already applies to the four similarity-derived formula
+#: ``VARIANT`` rows. Declared as constants so a reader can see what they are without
+#: reading the query, and so a test can pin them.
+RITE_LOCUS_MIN_ENRICHMENT: Final = 20.0
+RITE_LOCUS_MIN_TAGGED: Final = 5
+
+#: Grade for the book-level rite prior. ``CONTAINER_INHERITED`` is the load-bearing value:
+#: it says the *book* makes this claim, not the verse. The graph already carries the
+#: Anukramaṇī's sūkta-wide deity labels this way rather than pretending they are per-verse,
+#: and a rite prior over a kāṇḍa is the identical shape. A reader filtering to
+#: ``PER_PASSAGE`` never sees these edges, which is the point.
+_RITE_PRIOR_GRADE: Final = {
+    "quality_tier": "TIER_D",
+    "attribution_precision": "CONTAINER_INHERITED",
+    "evidence_basis": "STRUCTURAL",
+    "knowledge_layer": "L4_INTERPRETIVE_CLAIM",
+    "state": "CANDIDATE",
+    "derivation": "BOOK_LOCUS_PRIOR",
+    "grade_basis": (
+        "the book this passage sits in is the measured locus of this rite; the book makes "
+        "the claim, not the verse, and the enrichment that identified the book rests on a "
+        "chosen threshold"
+    ),
+}
+
+
+def load_ritual_depth(session: Session, spec: dict[str, Any]) -> LoadReport:
+    """Deepen the ritual layer where the repository already states the depth.
+
+    Three blocks, three benchmark questions, and one rule shared by all of them: every
+    assertion is checked against the graph before it is written. ``ritual_depth_v3_1.yaml``
+    declares a witness for each typing claim -- a mention count, a taxonomic parent, an
+    ``INVOLVES_OFFERING`` edge -- and a declaration whose witness is not in the graph
+    produces **no label** and is reported under ``unwitnessed``. A curated typing file's
+    characteristic failure is a plausible entry nobody re-measured, and the only defence is
+    to make the loader disbelieve the file.
+
+    **Block 1, Q90 -- the hotar.** ``VG:CONCEPT:HOTR-PRIEST`` is declared ``node_type:
+    CONCEPT``, and ``PERFORMED_BY``'s signature is ``Ritual -> RitualRole``, so the rite
+    loader's per-label ``MATCH`` found nothing and every officiant row naming the hotar
+    landed silently. The office with 321 mention edges -- five times the next -- was absent
+    from the priestly-role table, which does not shorten the answer, it inverts it: a
+    reader concludes the adhvaryu or the patron is the central Vedic officiant. Adding
+    ``:RitualRole`` is additive; the ten existing role nodes all carry ``:Concept`` too, so
+    the node's 320 ``ABOUT_CONCEPT`` edges are untouched.
+
+    **Block 2, Q100 -- the two-node offering class.** ``:Offering`` held ``havis`` and
+    ``dakṣiṇā``. Nothing is acquired here: the label is added to nodes the repository
+    already asserts are offered, and it is *added*, never substituted, because ghṛta is a
+    substance and an offering both and substituting would break ``USES_SUBSTANCE`` -- the
+    mirror of the error being fixed. ``witness_count`` rides on each node so a consumer can
+    see that ghṛta has three witnesses and aśva has one.
+
+    **Block 3, Q13/Q60 -- rite-layer recall.** The strict verse-level tags are left exactly
+    as they are and their recall against each rite's measured locus book is computed and
+    stored *on the rite node*, so a query can return it as a column rather than as a caveat
+    the reader never reads. Tagging the whole locus book was refused: it would make recall
+    100% by construction, which is circular, and would assert of 127 individual K14 verses
+    something no source here says. The book-level prior is a separate
+    ``CONTAINER_INHERITED`` layer instead.
+
+    Every locus is **re-measured live** and compared against the figure the artifact
+    records. A drifted figure is reported rather than trusted, because a stored measurement
+    that no longer matches the rows is this repository's most repeated defect.
+    """
+    report = LoadReport(step="ritual_depth")
+    build_pass = uuid.uuid4().hex
+    detail: dict[str, Any] = {}
+
+    detail["ritual_roles"] = _apply_ritual_role_typing(
+        session, list(spec.get("ritual_role_typing") or [])
+    )
+    detail["hotr_alias_purity"] = _stamp_alias_purity(
+        session,
+        list(spec.get("alias_reassignment") or []),
+        list(spec.get("alias_withdrawal") or []),
+    )
+    detail["officiants"] = _apply_performed_by(session, list(spec.get("rituals") or []), build_pass)
+    detail["offerings"] = _apply_offering_typing(session, list(spec.get("offering_typing") or []))
+    detail["rite_loci"] = _apply_rite_loci(session, list(spec.get("rite_loci") or []), build_pass)
+
+    report.sent = (
+        len(spec.get("ritual_role_typing") or [])
+        + len(spec.get("rituals") or [])
+        + len(spec.get("offering_typing") or [])
+        + len(spec.get("rite_loci") or [])
+    )
+    report.landed = (
+        detail["ritual_roles"]["labelled"]
+        + detail["officiants"]["landed"]
+        + detail["offerings"]["labelled"]
+        + detail["rite_loci"]["loci_measured"]
+    )
+    report.detail = detail
+    return report
+
+
+def _apply_ritual_role_typing(session: Session, rows: Sequence[dict[str, Any]]) -> dict[str, Any]:
+    """Add ``:RitualRole`` where the registry retype says so and the graph bears it out."""
+    labelled = 0
+    unwitnessed: list[str] = []
+    for row in rows:
+        concept_id = str(row["concept_id"])
+        witness = dict(row.get("witness") or {})
+        # The witness is a mention count, and it is checked rather than trusted: a registry
+        # drift that emptied this node must not silently promote an unmentioned office into
+        # a priestly-role census.
+        observed = _count(
+            session,
+            f"MATCH (:{LABEL_PASSAGE})-[r:MENTIONS_ENTITY]->"
+            f"(c:{LABEL_CONCEPT} {{concept_id: $cid}}) RETURN count(r) AS c",
+            cid=concept_id,
+        )
+        if observed < int(witness.get("at_least", 0)):
+            unwitnessed.append(f"{concept_id}: {observed} mention edges")
+            continue
+        labelled += _count(
+            session,
+            f"""
+            MATCH (c:{LABEL_CONCEPT} {{concept_id: $cid}})
+            SET c:{LABEL_RITUAL_ROLE},
+                c.ritual_role_typed_by = 'vedagraph-ritual-depth-v3.1',
+                c.question_unlocked = 90
+            RETURN count(c) AS c
+            """,
+            cid=concept_id,
+        )
+    return {
+        "sent": len(rows),
+        "labelled": labelled,
+        "unwitnessed": unwitnessed,
+        "ritual_role_nodes": _count(session, f"MATCH (n:{LABEL_RITUAL_ROLE}) RETURN count(n) AS c"),
+    }
+
+
+def _stamp_alias_purity(
+    session: Session,
+    reassignments: Sequence[dict[str, Any]],
+    withdrawals: Sequence[dict[str, Any]],
+) -> dict[str, Any]:
+    """Measure and store what fraction of a role's mention edges are really that role's.
+
+    **This is a measurement, not a correction, and the distinction is deliberate.** The
+    mention layer is built from the registry by ``scripts/build_domain_v2.py``; the alias
+    split lives in ``data/registry/concepts.yaml`` and lands when that builder next runs.
+    Rewriting 25 ``MENTIONS_ENTITY`` edges from here would be a second code path writing
+    another layer's edges, and with several passes sharing one database that is how two
+    conventions get established for one fact.
+
+    So the corrected figure is published instead of imposed. ``hotṛ``'s alias list is a
+    portmanteau -- 302 of its 321 edges are the hotar, 14 are the adhvaryu (an office with
+    its own node three files away) and 11 are ``ṛtvij-``, any officiant at all -- and every
+    one of those numbers is now on the node, so the priestly-role query can return the
+    office's own count and its purity in the row. A role table that reported 321 would be
+    7.8% wrong in favour of the very office this pass is promoting.
+    """
+    out: dict[str, Any] = {}
+    for row in list(reassignments) + list(withdrawals):
+        concept_id = str(row["from_concept_id"])
+        foreign = [str(a) for a in (row.get("aliases_sa") or [])]
+        measured = _count(
+            session,
+            f"""
+            MATCH (:{LABEL_PASSAGE})-[r:MENTIONS_ENTITY]->
+                  (c:{LABEL_CONCEPT} {{concept_id: $cid}})
+            WHERE any(a IN r.matched_aliases WHERE a IN $foreign)
+            RETURN count(r) AS c
+            """,
+            cid=concept_id,
+            foreign=foreign,
+        )
+        entry = out.setdefault(concept_id, {"foreign_alias_edges": 0, "foreign_aliases": []})
+        entry["foreign_alias_edges"] += measured
+        entry["foreign_aliases"].extend(foreign)
+
+    for concept_id, entry in out.items():
+        total = _count(
+            session,
+            f"MATCH (:{LABEL_PASSAGE})-[r:MENTIONS_ENTITY]->"
+            f"(c:{LABEL_CONCEPT} {{concept_id: $cid}}) RETURN count(r) AS c",
+            cid=concept_id,
+        )
+        own = total - int(entry["foreign_alias_edges"])
+        entry["mention_edges_total"] = total
+        entry["mention_edges_own_alias"] = own
+        entry["alias_purity"] = round(own / total, 4) if total else 0.0
+        session.run(
+            f"""
+            MATCH (c:{LABEL_CONCEPT} {{concept_id: $cid}})
+            SET c.mention_edges_total = $total,
+                c.mention_edges_own_alias = $own,
+                c.mention_edges_foreign_alias = $foreign_n,
+                c.alias_purity = $purity,
+                c.alias_purity_basis =
+                  'measured per alias against the live mention layer; the foreign aliases '
+                  + 'are split off in data/registry/concepts.yaml and land in the graph on '
+                  + 'the next build_domain_v2 run'
+            """,
+            cid=concept_id,
+            total=total,
+            own=own,
+            foreign_n=int(entry["foreign_alias_edges"]),
+            purity=entry["alias_purity"],
+        ).consume()
+    return out
+
+
+def _apply_performed_by(
+    session: Session, rituals: Sequence[dict[str, Any]], build_pass: str
+) -> dict[str, Any]:
+    """Attach the officiant edges the rite artifacts already cite verses for.
+
+    Only ``PERFORMED_BY``, and only ``Ritual -> RitualRole``. The rite loader in
+    :mod:`vedagraph.domain.loader` owns the other five ritual edge types and sweeps them by
+    ``build_pass``; reaching into them from here would put two passes in charge of one
+    sweep. This adds the one edge type that was unreachable because its object had the
+    wrong label, and leaves the rest to their owner.
+    """
+    rows = [
+        {"ritual_id": str(r["ritual_id"]), "target": str(t)}
+        for r in rituals
+        for t in (r.get("performed_by") or [])
+    ]
+    if not rows:
+        return {"sent": 0, "landed": 0}
+    for batch in _batches(rows):
+        session.run(
+            f"""
+            UNWIND $rows AS row
+            MATCH (rt:{LABEL_RITUAL} {{entity_key: row.ritual_id}})
+            MATCH (office:{LABEL_RITUAL_ROLE} {{entity_key: row.target}})
+            MERGE (rt)-[r:PERFORMED_BY]->(office)
+            SET r.quality_tier = 'TIER_D',
+                r.knowledge_layer = 'L4_INTERPRETIVE_CLAIM',
+                r.attribution_precision = 'PER_PASSAGE',
+                r.evidence_basis = 'SANSKRIT',
+                r.grade_basis =
+                  'curated ritual structure; the rite artifact cites the verse that names '
+                  + 'this office in this rite',
+                r.question_unlocked = 90,
+                r.build_pass = $build_pass
+            """,
+            rows=batch,
+            build_pass=build_pass,
+        ).consume()
+    landed = _count(
+        session,
+        f"MATCH (:{LABEL_RITUAL})-[r:PERFORMED_BY]->(:{LABEL_RITUAL_ROLE}) "
+        "WHERE r.build_pass = $build_pass RETURN count(r) AS c",
+        build_pass=build_pass,
+    )
+    return {
+        "sent": len(rows),
+        "landed": landed,
+        "performed_by_total": _count(session, "MATCH ()-[r:PERFORMED_BY]->() RETURN count(r) AS c"),
+    }
+
+
+def _apply_offering_typing(session: Session, rows: Sequence[dict[str, Any]]) -> dict[str, Any]:
+    """Add ``:Offering`` to nodes the repository already asserts are offered.
+
+    The witness is recomputed from the graph for every row, and a row whose witness the
+    graph does not bear out gets no label. Two witness kinds count: a registry-declared
+    ``BROADER_THAN`` from ``havis``, and an ``INVOLVES_OFFERING`` edge from a passage. Both
+    are already in the graph, so this is a typing pass and not an acquisition -- which is
+    what makes it legitimate under "invent no ritual procedure".
+    """
+    labelled = 0
+    unwitnessed: list[str] = []
+    per_node: dict[str, Any] = {}
+    for row in rows:
+        concept_id = str(row["concept_id"])
+        record = session.run(
+            f"""
+            MATCH (c:{LABEL_CONCEPT} {{concept_id: $cid}})
+            OPTIONAL MATCH (h:{LABEL_CONCEPT} {{concept_id: $havis}})-[:BROADER_THAN]->(c)
+            OPTIONAL MATCH (:{LABEL_PASSAGE})-[io:INVOLVES_OFFERING]->(c)
+            RETURN count(DISTINCT h) AS taxonomic, count(io) AS corpus_asserted
+            """,
+            cid=concept_id,
+            havis="VG:CONCEPT:HAVIS-OBLATION",
+        ).single()
+        if record is None:
+            unwitnessed.append(f"{concept_id}: node absent")
+            continue
+        taxonomic = int(record["taxonomic"])
+        corpus = int(record["corpus_asserted"])
+        witnesses = (1 if taxonomic else 0) + (1 if corpus else 0)
+        if witnesses == 0:
+            unwitnessed.append(f"{concept_id}: no taxonomic parent and no corpus edge")
+            continue
+        labelled += _count(
+            session,
+            f"""
+            MATCH (c:{LABEL_CONCEPT} {{concept_id: $cid}})
+            SET c:{LABEL_OFFERING},
+                c.offering_witness_count = $witnesses,
+                c.offering_witness_taxonomic = $taxonomic,
+                c.offering_witness_corpus_edges = $corpus,
+                c.offering_typed_by = 'vedagraph-ritual-depth-v3.1',
+                c.question_unlocked = 100
+            RETURN count(c) AS c
+            """,
+            cid=concept_id,
+            witnesses=witnesses,
+            taxonomic=bool(taxonomic),
+            corpus=corpus,
+        )
+        per_node[concept_id] = {
+            "witness_count": witnesses,
+            "taxonomic": bool(taxonomic),
+            "corpus_asserted_edges": corpus,
+        }
+    total = _count(session, f"MATCH (n:{LABEL_OFFERING}) RETURN count(n) AS c")
+    return {
+        "sent": len(rows),
+        "labelled": labelled,
+        "unwitnessed": unwitnessed,
+        "per_node": per_node,
+        "offering_nodes": total,
+        # Reported on every run, and deliberately not a boolean the caller can forget to
+        # read: eight nodes is not a Vedic offering vocabulary, and a join through this
+        # class that returns few rows must not be read as a small phenomenon.
+        "class_is_complete": False,
+        "class_completeness_note": (
+            f"{total} Offering nodes. Sufficient to stop the four-dimension join "
+            "collapsing; not a corpus-scale offering vocabulary. Any ranking or row count "
+            "through this class must publish this figure alongside it."
+        ),
+    }
+
+
+def _apply_rite_loci(
+    session: Session, rows: Sequence[dict[str, Any]], build_pass: str
+) -> dict[str, Any]:
+    """Re-measure each rite's locus book, publish its recall, and project the book prior.
+
+    The measurement is the deliverable. ``strict_recall_against_locus`` lands **on the rite
+    node**, because the criterion these questions fail is that a frequency or coverage
+    claim must be accompanied by a measured figure, and a caveat in prose is read by nobody
+    who runs the obvious query. A column in the row is read by everybody.
+
+    Every figure the artifact records is recomputed here and compared, and a mismatch is
+    reported rather than corrected. A stored count that has drifted from the rows it
+    summarises is the defect class this repository has hit most often, and the only way the
+    audit stays honest is if the loader reads the rows and not the stored block.
+    """
+    measured: list[dict[str, Any]] = []
+    drift: list[dict[str, Any]] = []
+    prior_edges = 0
+    for row in rows:
+        rite_id = str(row["rite_id"])
+        veda = str(row["veda"])
+        book = str(row["locus_book"])
+        record = session.run(
+            f"""
+            MATCH (p:{LABEL_PASSAGE} {{veda: $veda}})
+            WHERE p.canonical_key CONTAINS ':' + $book + ':'
+            WITH collect(p) AS book_passages
+            MATCH (q:{LABEL_PASSAGE} {{veda: $veda}})-[qr:USED_FOR_RITE]->
+                  (:{LABEL_SOCIAL_RITE} {{entity_key: $rite}})
+            // ONLY the strict verse-level layer. Counting this pass's own book priors
+            // here made the loader non-idempotent and, worse, circular: on the second run
+            // tagged_in_book was 141 of 141 and the recall figure this layer exists to
+            // publish read 100%. The prior must never be its own denominator.
+            WHERE qr.attribution_precision = 'PER_PASSAGE'
+            WITH book_passages, collect(q) AS tagged
+            RETURN size(book_passages) AS book_size,
+                   size(tagged) AS tagged_in_veda,
+                   size([x IN tagged WHERE x IN book_passages]) AS tagged_in_book
+            """,
+            veda=veda,
+            book=book,
+            rite=rite_id,
+        ).single()
+        if record is None:
+            continue
+        book_size = int(record["book_size"])
+        tagged_in_book = int(record["tagged_in_book"])
+        tagged_in_veda = int(record["tagged_in_veda"])
+        veda_size = _count(
+            session,
+            f"MATCH (p:{LABEL_PASSAGE} {{veda: $veda}}) RETURN count(p) AS c",
+            veda=veda,
+        )
+        outside_size = veda_size - book_size
+        outside_tagged = tagged_in_veda - tagged_in_book
+        rate_in = tagged_in_book / book_size if book_size else 0.0
+        rate_out = outside_tagged / outside_size if outside_size else 0.0
+        enrichment = round(rate_in / rate_out, 2) if rate_out else 0.0
+        recall = round(rate_in, 4)
+
+        entry = {
+            "rite_id": rite_id,
+            "locus_book": book,
+            "book_size": book_size,
+            "tagged_in_book": tagged_in_book,
+            "tagged_in_veda": tagged_in_veda,
+            "rate_in_book": round(rate_in, 4),
+            "rate_outside_book": round(rate_out, 4),
+            "enrichment": enrichment,
+            "strict_recall_against_locus": recall,
+            "passes_thresholds": (
+                enrichment >= RITE_LOCUS_MIN_ENRICHMENT and tagged_in_book >= RITE_LOCUS_MIN_TAGGED
+            ),
+        }
+        measured.append(entry)
+
+        declared = dict(row.get("measured") or {})
+        for field_name, live in (
+            ("book_passages", book_size),
+            ("strict_tagged_in_book", tagged_in_book),
+            ("strict_tagged_in_veda", tagged_in_veda),
+        ):
+            if field_name in declared and int(declared[field_name]) != live:
+                drift.append(
+                    {
+                        "rite_id": rite_id,
+                        "field": field_name,
+                        "declared": declared[field_name],
+                        "live": live,
+                    }
+                )
+
+        if not entry["passes_thresholds"]:
+            continue
+
+        # The recall figure goes on the rite node so a query returns it as a column.
+        session.run(
+            f"""
+            MATCH (s:{LABEL_SOCIAL_RITE} {{entity_key: $rite}})
+            SET s.locus_veda = $veda,
+                s.locus_book = $book,
+                s.locus_book_passages = $book_size,
+                s.locus_tagged_passages = $tagged_in_book,
+                s.strict_recall_against_locus = $recall,
+                s.locus_enrichment = $enrichment,
+                s.strict_tagged_passages_in_veda = $tagged_in_veda,
+                s.recall_basis =
+                  'strict verse-level USED_FOR_RITE tags counted against the measured '
+                  + 'locus book. The locus is the book whose tag rate is most enriched '
+                  + 'over the rest of the Veda; the enrichment threshold is chosen, so '
+                  + 'the locus is TIER_D even though the recall figure itself is a count.',
+                s.recall_is_measured = true,
+                s.question_unlocked = '13,60'
+            """,
+            rite=rite_id,
+            veda=veda,
+            book=book,
+            book_size=book_size,
+            tagged_in_book=tagged_in_book,
+            recall=recall,
+            enrichment=enrichment,
+            tagged_in_veda=tagged_in_veda,
+        ).consume()
+
+        # The book-level prior, as a separate CONTAINER_INHERITED layer. Untagged passages
+        # only: an existing verse-level tag is stronger evidence and must not be
+        # overwritten with an inherited one.
+        #
+        # The "already tagged" test keys on `derivation IS NULL` -- the strict layer's own
+        # marker -- and NOT on `attribution_precision = 'PER_PASSAGE'`, because precision
+        # is a property another pass can overwrite and one did. The shared domain rebuild
+        # regrades every edge whose type is not in tiers.LAYER_OWNED_GRADES, and
+        # USED_FOR_RITE was not in that set, so all 529 edges were flattened to
+        # PER_PASSAGE. The priors then LOOKED like strict tags to this guard, none were
+        # rewritten, and the sweep below deleted all 419 -- a two-step cascade from one
+        # flattened property to a deleted layer. USED_FOR_RITE is now layer-owned, and
+        # this guard no longer depends on a property it does not itself write.
+        prior_edges += _count(
+            session,
+            f"""
+            MATCH (p:{LABEL_PASSAGE} {{veda: $veda}})
+            WHERE p.canonical_key CONTAINS ':' + $book + ':'
+              AND NOT EXISTS {{
+                MATCH (p)-[strict:USED_FOR_RITE]->
+                      (:{LABEL_SOCIAL_RITE} {{entity_key: $rite}})
+                WHERE strict.derivation IS NULL
+              }}
+            MATCH (s:{LABEL_SOCIAL_RITE} {{entity_key: $rite}})
+            // Keyed on the derivation, so a prior is a distinct edge from a strict tag and
+            // can never silently absorb one. Without the key, MERGE matched the prior it
+            // wrote last run and the sweep then deleted it, so the layer oscillated
+            // between 419 edges and 0.
+            MERGE (p)-[r:USED_FOR_RITE {{derivation: 'BOOK_LOCUS_PRIOR'}}]->(s)
+            SET r += $grade,
+                r.locus_book = $book,
+                r.question_unlocked = '13,60',
+                r.build_pass = $build_pass
+            RETURN count(r) AS c
+            """,
+            veda=veda,
+            book=book,
+            rite=rite_id,
+            grade=_RITE_PRIOR_GRADE,
+            build_pass=build_pass,
+        )
+
+    # Mark and sweep the prior layer only. The strict PER_PASSAGE tags carry no build_pass
+    # from this pass and must survive it untouched -- which is exactly why the sweep is
+    # keyed on the derivation as well as the pass.
+    swept = _count(
+        session,
+        f"""
+        MATCH (:{LABEL_PASSAGE})-[r:USED_FOR_RITE]->(:{LABEL_SOCIAL_RITE})
+        WHERE r.derivation = 'BOOK_LOCUS_PRIOR'
+          AND (r.build_pass IS NULL OR r.build_pass <> $build_pass)
+        DELETE r
+        RETURN count(*) AS c
+        """,
+        build_pass=build_pass,
+    )
+    return {
+        "loci_measured": len(measured),
+        "measurements": measured,
+        "declared_vs_live_drift": drift,
+        "book_prior_edges": prior_edges,
+        "retired_stale_priors": swept,
+        "thresholds": {
+            "min_enrichment": RITE_LOCUS_MIN_ENRICHMENT,
+            "min_tagged_in_book": RITE_LOCUS_MIN_TAGGED,
+        },
+        "strict_layer_untouched": _count(
+            session,
+            f"MATCH (:{LABEL_PASSAGE})-[r:USED_FOR_RITE]->(:{LABEL_SOCIAL_RITE}) "
+            "WHERE r.attribution_precision = 'PER_PASSAGE' RETURN count(r) AS c",
+        ),
+    }
+
+
+# ---------------------------------------------------------------------------
+# The sealed layer's predicate axis
+# ---------------------------------------------------------------------------
+
+#: Sealed ``semantic_predicate`` -> closed action-predicate vocabulary, and it is short on
+#: purpose.
+#:
+#: The measured gap was that 2,459 of 4,865 ``:SemanticAssertion`` nodes -- the whole
+#: ``MODEL_EXTRACTION`` half -- carry their predicate as a node *property* and reach no
+#: ``:ActionPredicate`` node, so predicate-level traversal saw one layer and reported it as
+#: the layer. Closing that gap by mapping the property onto the vocabulary looked like
+#: bookkeeping. It is not, because **the two halves do not share a predicate axis.**
+#:
+#: The sealed run's ``semantic_predicate`` is a closed set of 13 values, every one of them
+#: a *discourse relation between a passage and a referent*: ``DESCRIBES`` (734),
+#: ``DESCRIBES_ACTION`` (553), ``REQUESTS`` (395), ``INVOKES`` (211), ``REFERS_TO_PLACE``
+#: (122), ``INVOLVES_SUBSTANCE`` (117), ``REFERS_TO_NATURAL_PHENOMENON`` (100),
+#: ``INVOLVES_RITUAL`` (78), ``PRAISES`` (55), ``INVOLVES_OFFERING`` (46), ``EXPRESSES``
+#: (27), ``ASSOCIATED_WITH`` (17), ``CONTRASTS_WITH`` (4). ``:ActionPredicate`` is a closed
+#: set of 40 *verbal-root action classes* from ``data/registry/action_predicates.yaml``,
+#: each with an ``argument_frame`` over morphological cases, whose header states the
+#: contract: "a root that does not map into one of these classes is recorded as
+#: UNMAPPED_ROOT and produces no predicate edge. Adding a class is a deliberate ontology
+#: change, not something an extractor may do because a verse needed it."
+#:
+#: Exactly two names appear in both sets, and for both the registry gloss and the sealed
+#: usage agree, so both are mapped:
+#:
+#: * ``INVOKES`` -- registry gloss "calls a divine being to attend"; 211 sealed assertions,
+#:   overwhelmingly with ``object_kind`` ``CANONICAL_ENTITY_REF`` resolving to a deity.
+#: * ``PRAISES`` -- registry gloss "sings, extols or magnifies"; 55 sealed assertions.
+#:
+#: The other eleven get **no predicate node minted**, and the residual is reported rather
+#: than closed. Three separate reasons, none of them a shortage of effort:
+_SEALED_PREDICATE_MAP: Final[dict[str, str]] = {
+    "INVOKES": "INVOKES",
+    "PRAISES": "PRAISES",
+}
+
+#: Why each unmapped sealed predicate stays unmapped, keyed by the value it appears as.
+#: Recorded in the loader and echoed into the run report, because "not mapped" and "nobody
+#: looked" are indistinguishable in a coverage number and only one of them is acceptable.
+_SEALED_PREDICATE_WITHHELD: Final[dict[str, str]] = {
+    "REQUESTS": (
+        "The registry rules on this one by name and rules against it: REQUESTS_FROM 'is "
+        "not a predicate here. It is a grammatical frame, not a verb class ... Modelling "
+        "it as a predicate would force every request to lose its content (Indra "
+        "REQUESTS_FROM ???)'. The agentive layer carries the same fact as frame = "
+        "REQUESTED, orthogonal to the predicate. Minting a REQUESTS predicate node would "
+        "reintroduce the exact confusion the registry documents rejecting."
+    ),
+    "DESCRIBES_ACTION": (
+        "These are the 553 assertions whose object_kind is EVENT and whose verb is a "
+        "free-text action_head. sealed_semantics records a reasoned refusal to map them: "
+        "'502 distinct action heads for 559 events ... The mapping would be a fresh "
+        "interpretation of frozen output, which is exactly what do not reopen the freeze "
+        "to make it fit forbids.' Mapping them here would overturn that refusal from a "
+        "loader, which is not where that decision belongs."
+    ),
+    "DESCRIBES": (
+        "Not an action. A passage-to-referent aboutness relation with no verbal root and "
+        "no argument frame; there is no registry class it is a weaker or stronger form of."
+    ),
+    "REFERS_TO_PLACE": "Not an action: a passage-to-referent reference relation.",
+    "INVOLVES_SUBSTANCE": "Not an action: a passage-to-referent reference relation.",
+    "REFERS_TO_NATURAL_PHENOMENON": ("Not an action: a passage-to-referent reference relation."),
+    "INVOLVES_RITUAL": "Not an action: a passage-to-referent reference relation.",
+    "INVOLVES_OFFERING": "Not an action: a passage-to-referent reference relation.",
+    "EXPRESSES": "Not an action: a passage-to-referent reference relation.",
+    "ASSOCIATED_WITH": (
+        "Not an action, and the vaguest of the thirteen. The relation this graph spent a "
+        "V2 pass splitting into ASSOCIATED_WITH_CONCEPT, _PHENOMENON and _SUBSTANCE; "
+        "giving it a predicate node would re-flatten that."
+    ),
+    "CONTRASTS_WITH": "Not an action: a passage-to-passage rhetorical relation.",
+}
+
+#: Deliberately **not** a ``MERGE`` on the predicate node. Both endpoints are matched, so a
+#: sealed value whose registry node is missing lands nothing and shows up in the residual,
+#: rather than quietly minting a 42nd ``:ActionPredicate`` and enlarging a closed
+#: vocabulary from inside a projection.
+_SEALED_PREDICATE_EDGE_QUERY: Final = f"""
+UNWIND $rows AS row
+MATCH (s:{LABEL_SEMANTIC_ASSERTION} {{assertion_node_id: row.node_id}})
+MATCH (a:{LABEL_ACTION_PREDICATE} {{predicate: row.predicate}})
+MERGE (s)-[r:ASSERTION_PREDICATE]->(a)
+SET r.build_pass = $build_pass
+"""
+
+#: Every ``ASSERTION_PREDICATE`` edge inherits the grade of the assertion it starts from,
+#: both halves, in one statement.
+#:
+#: The generic stamper graded the whole type ``TIER_B``/``STRUCTURAL`` on the reasoning that
+#: "this assertion predicates this vocabulary member" is a structural fact about the graph.
+#: That was harmless while only the rule layer reached ``:ActionPredicate`` and it stops
+#: being harmless the moment the sealed layer does: ``derivation`` and ``quality_tier`` are
+#: the documented way to keep the two apart, and a uniform ``TIER_B`` would hand back
+#: unreviewed extraction over Griffith's English under a filter that promises Zurich
+#: morphology. That is the same defect
+#: :func:`reconcile_assertion_edge_grades` was written to fix one edge type over, and the
+#: fix is the same: read the grade off the node, do not re-derive it from the type.
+#:
+#: Both populations are regraded, not only the rows this pass added. Grading only the new
+#: edges would leave the older 2,406 depending on ``vedagraph.domain.upgrade`` -- a pass
+#: outside this projection -- for a grade the projection is now responsible for.
+_SEALED_PREDICATE_GRADE_QUERY: Final = f"""
+MATCH (s:{LABEL_SEMANTIC_ASSERTION})-[r:ASSERTION_PREDICATE]->
+      (:{LABEL_ACTION_PREDICATE})
+SET r.quality_tier = coalesce(s.quality_tier, 'TIER_D'),
+    r.evidence_basis = coalesce(s.evidence_basis, 'MODEL_INTERPRETATION'),
+    r.derivation = s.derivation,
+    r.review_state = s.review_state,
+    r.state = coalesce(s.state, 'CANDIDATE'),
+    r.knowledge_layer = coalesce(s.knowledge_layer, 'L3_LLM_EXTRACTED'),
+    r.attribution_precision = 'PER_PASSAGE',
+    r.grade_basis =
+      'inherited from the assertion this edge starts from; the label carries two layers '
+      + 'of unequal strength and reach and the edge must not flatten them'
+RETURN count(r) AS c
+"""
+
+
+def load_sealed_predicate_edges(session: Session) -> LoadReport:
+    """Give the sealed model layer a predicate edge where the vocabulary honestly allows.
+
+    ``ASSERTION_PREDICATE`` reached 2,406 of 4,865 assertions, and the 2,459 it missed were
+    not a random shortfall -- they were precisely the ``MODEL_EXTRACTION`` layer, which
+    stores its predicate as a node property. So "which predicates does this graph assert?"
+    answered from the edges described the rule layer and called it the graph.
+
+    What this does **not** do is close that gap to zero, and the reason is the point. The
+    sealed layer's 13 predicates and the registry's 40 are two different axes: discourse
+    relations between a passage and a referent, against verbal-root action classes with
+    morphological argument frames. Two names occur in both with agreeing glosses and are
+    mapped (``INVOKES``, ``PRAISES`` -- 266 assertions). The other eleven are left
+    unlinked and named in ``detail`` with a reason each, because the registry reserves
+    adding a class to a deliberate ontology change and because forcing 2,193 assertions
+    onto classes that do not mean the same thing would have bought a coverage number with
+    a wrong graph. See :data:`_SEALED_PREDICATE_WITHHELD`.
+
+    The layers stay separable, which is the hard constraint on this change. The rule layer
+    spreads 2,406 assertions over 2,228 passages and the model layer packs 2,459 into 398;
+    summing them is the misleading answer this graph exists to refuse. Every
+    ``ASSERTION_PREDICATE`` edge -- old and new -- now carries ``derivation``,
+    ``quality_tier``, ``evidence_basis``, ``state`` and ``review_state`` copied from its
+    assertion, so a query filters the halves apart on the edge without reaching the node.
+
+    Nothing sealed is written. The mapping is a read of a projected node property against a
+    registry file; no file under ``data/semantic`` is opened, and the assertion nodes
+    themselves are not modified.
+    """
+    report = LoadReport(step="sealed_predicate_edges")
+    candidates = [
+        {"node_id": record["node_id"], "predicate": record["predicate"]}
+        for record in session.run(
+            f"""
+            MATCH (s:{LABEL_SEMANTIC_ASSERTION})
+            WHERE s.derivation = 'MODEL_EXTRACTION'
+              AND s.semantic_predicate IN $mapped
+              AND s.assertion_node_id IS NOT NULL
+            RETURN s.assertion_node_id AS node_id,
+                   $map[s.semantic_predicate] AS predicate
+            """,
+            mapped=sorted(_SEALED_PREDICATE_MAP),
+            map=_SEALED_PREDICATE_MAP,
+        )
+    ]
+    report.sent = len(candidates)
+    build_pass = uuid.uuid4().hex
+    for batch in _batches(candidates):
+        session.run(_SEALED_PREDICATE_EDGE_QUERY, rows=batch, build_pass=build_pass).consume()
+    report.landed = _count(
+        session,
+        f"""
+        MATCH (s:{LABEL_SEMANTIC_ASSERTION})-[r:ASSERTION_PREDICATE]->
+              (:{LABEL_ACTION_PREDICATE})
+        WHERE r.build_pass = $build_pass AND s.derivation = 'MODEL_EXTRACTION'
+        RETURN count(r) AS c
+        """,
+        build_pass=build_pass,
+    )
+    graded = _count(session, _SEALED_PREDICATE_GRADE_QUERY)
+
+    unmapped = {
+        record["p"]: record["n"]
+        for record in session.run(
+            f"""
+            MATCH (s:{LABEL_SEMANTIC_ASSERTION})
+            WHERE s.derivation = 'MODEL_EXTRACTION'
+              AND NOT (s)-[:ASSERTION_PREDICATE]->(:{LABEL_ACTION_PREDICATE})
+            RETURN s.semantic_predicate AS p, count(*) AS n ORDER BY n DESC
+            """
+        )
+    }
+    report.detail = {
+        "predicate_edges": {"sent": report.sent, "landed": report.landed},
+        "edges_regraded": graded,
+        "mapped_vocabulary": dict(_SEALED_PREDICATE_MAP),
+        "unmapped_by_predicate": unmapped,
+        "unmapped_total": sum(unmapped.values()),
+        "withheld_reasons": {
+            predicate: _SEALED_PREDICATE_WITHHELD[predicate]
+            for predicate in unmapped
+            if predicate in _SEALED_PREDICATE_WITHHELD
+        },
+        # A sealed predicate that is neither mapped nor explicitly withheld means the
+        # sealed vocabulary grew and nobody adjudicated the new value. Reported so it
+        # cannot arrive silently inside the residual.
+        "unadjudicated_predicates": sorted(
+            predicate for predicate in unmapped if predicate not in _SEALED_PREDICATE_WITHHELD
+        ),
+        # The reach asymmetry, restated from the edges after the change. These two numbers
+        # are what makes summing the layers wrong, so they are measured here rather than
+        # trusted from the close-out report.
+        "reach_by_derivation": {
+            f"{record['d']}": {
+                "assertions": record["n"],
+                "passages": record["p"],
+                "predicates": record["k"],
+            }
+            for record in session.run(
+                f"""
+                MATCH (s:{LABEL_SEMANTIC_ASSERTION})-[r:ASSERTION_PREDICATE]->
+                      (a:{LABEL_ACTION_PREDICATE})
+                RETURN r.derivation AS d, count(r) AS n,
+                       count(DISTINCT s.passage_key) AS p,
+                       count(DISTINCT a.predicate) AS k
+                ORDER BY n DESC
+                """
+            )
+        },
+        "edges_ungraded": _count(
+            session,
+            f"""
+            MATCH ()-[r:ASSERTION_PREDICATE]->(:{LABEL_ACTION_PREDICATE})
+            WHERE r.quality_tier IS NULL OR r.derivation IS NULL
+            RETURN count(r) AS c
+            """,
+        ),
+    }
+    return report
+
+
+# ---------------------------------------------------------------------------
 # Formula families
 # ---------------------------------------------------------------------------
 
@@ -1150,6 +2219,231 @@ _MEMBER_ASSERTS: Final = (
     "formula contains, or is contained by, the family's representative: check "
     "contains_representative for that."
 )
+
+
+#: The outward mirror, and every property comes from the inbound edge by assignment rather
+#: than by being restated here. ``h = properties(m)`` is a *replacing* assignment, not an
+#: additive one, so a property the inbound edge stops carrying disappears from the mirror
+#: on the next pass instead of lingering -- the same hazard the ``REMOVE
+#: r.attribution_precision`` above exists for, solved structurally rather than by
+#: remembering to unset each casualty by name.
+#:
+#: Both ``MATCH`` clauses are labelled and both endpoints are keyed. An unlabelled
+#: ``MATCH`` in a mutation is how this repository once created 39,461 bogus edges, and the
+#: mirror is the exact shape where it would be tempting: the rows to copy are "every
+#: membership edge", which invites ``MATCH ()-[m:MEMBER_OF_FAMILY]->()``.
+#:
+#: ``build_pass`` is overwritten *after* the copy, on purpose. The inbound edge's own
+#: ``build_pass`` arrives inside ``properties(m)``, and leaving it there would make the
+#: mirror claim it was written by the membership pass -- so the sweep below could never
+#: tell a mirror this pass wrote from one left by a previous one.
+_FAMILY_OUTWARD_QUERY: Final = f"""
+MATCH (f:{LABEL_FORMULA})-[m:{REL_MEMBER_OF_FAMILY}]->(fam:{LABEL_FORMULA_FAMILY})
+MERGE (fam)-[h:{REL_HAS_FORMULA}]->(f)
+SET h = properties(m),
+    h.asserts = $outward_asserts,
+    h.mirrors = '{REL_MEMBER_OF_FAMILY}',
+    h.build_pass = $build_pass
+RETURN count(h) AS c
+"""
+
+#: The inbound edge's ``asserts`` is written from the formula's side ("this formula belongs
+#: to this component"), and read off the outward edge it would be the wrong way round. It
+#: is the one property the mirror restates, because ``asserts`` is prose meant to be read
+#: by whoever hit the edge and grading parity does not extend to a sentence whose subject
+#: changed. Every graded field -- ``quality_tier``, ``evidence_basis``, ``grade_basis``,
+#: ``knowledge_layer``, ``role``, ``trust``, ``score``, ``state`` -- is copied untouched.
+_OUTWARD_ASSERTS: Final = (
+    "This containment component includes this formula, with its part in the component on "
+    "role. It does NOT assert that the family's representative contains, or is contained "
+    "by, this formula: check contains_representative for that. Mirror of "
+    "MEMBER_OF_FAMILY; the two directions of one membership are graded identically by "
+    "construction."
+)
+
+
+def load_formula_family_outward(session: Session) -> LoadReport:
+    """Mirror ``MEMBER_OF_FAMILY`` outward as ``HAS_FORMULA``, and audit the counts block.
+
+    The family layer landed navigable in one direction. Cypher will walk a relationship
+    either way, so nothing was *unreachable* -- but every surface that reads the graph as a
+    directed thing saw ``:FormulaFamily`` as a sink: the generated ontology reference
+    listed no outward predicate for it, and the four questions this unblocks all start at a
+    family and ask for its formulas. Reachable is not navigable, and the fix is a mirror.
+
+    It is a **mirror, not a derivation**, and the distinction is the whole design. Nothing
+    is recomputed from ``formula_family_members.jsonl``: the rows copied are the
+    ``MEMBER_OF_FAMILY`` edges that pass already landed, so the outward edge cannot
+    disagree with the inbound one about ``role``, tier or basis even if the artifact and
+    the graph have drifted. Re-deriving would have produced a second opinion about
+    membership, and a second opinion is exactly what a directionality repair must not
+    introduce. Run it after :func:`load_formula_families` -- against a graph with no
+    membership edges it correctly writes nothing rather than failing.
+
+    The counts audit rides along rather than living in its own step, because it is only
+    answerable once both directions exist and it is the one question the mirror makes
+    cheap: ``member_count``, ``core_count`` and ``variant_count`` are recorded *on the
+    family node* and summarise edges stored elsewhere, which is the shape that has drifted
+    from its rows before in this repository. Any family whose recorded numbers disagree
+    with the edges that actually landed is named in ``detail``, not counted and forgotten.
+    """
+    report = LoadReport(step="formula_family_outward")
+    # `sent` is the number of inbound edges to mirror, read live. Deliberately not
+    # `len(members)` from the artifact: the mirror's contract is with the graph, and
+    # reconciling against the artifact would hide a membership pass that landed short.
+    report.sent = _count(
+        session,
+        f"MATCH (:{LABEL_FORMULA})-[r:{REL_MEMBER_OF_FAMILY}]->"
+        f"(:{LABEL_FORMULA_FAMILY}) RETURN count(r) AS c",
+    )
+    if not report.sent:
+        return report
+    build_pass = uuid.uuid4().hex
+    session.run(
+        _FAMILY_OUTWARD_QUERY,
+        build_pass=build_pass,
+        outward_asserts=_OUTWARD_ASSERTS,
+    ).consume()
+    report.landed = _count(
+        session,
+        f"MATCH (:{LABEL_FORMULA_FAMILY})-[r:{REL_HAS_FORMULA}]->(:{LABEL_FORMULA}) "
+        "WHERE r.build_pass = $build_pass RETURN count(r) AS c",
+        build_pass=build_pass,
+    )
+
+    # Mark and sweep, for the same reason the membership pass has one: MERGE adds and never
+    # retracts, so a membership that disappears upstream must take its mirror with it.
+    stale = _count(
+        session,
+        f"""
+        MATCH (:{LABEL_FORMULA_FAMILY})-[r:{REL_HAS_FORMULA}]->(:{LABEL_FORMULA})
+        WHERE r.build_pass IS NULL OR r.build_pass <> $build_pass
+        DELETE r
+        RETURN count(*) AS c
+        """,
+        build_pass=build_pass,
+    )
+
+    report.detail = {
+        "outward_edges": {"sent": report.sent, "landed": report.landed},
+        "retired_stale_mirrors": stale,
+        # Zero is the only acceptable value and it is reported rather than asserted: a
+        # mirror that has lost grading parity with its twin is a silent failure, because
+        # both directions still traverse.
+        "grading_parity_failures": _count(
+            session,
+            f"""
+            MATCH (f:{LABEL_FORMULA})-[m:{REL_MEMBER_OF_FAMILY}]->
+                  (fam:{LABEL_FORMULA_FAMILY})-[h:{REL_HAS_FORMULA}]->(f)
+            WHERE h.role <> m.role
+               OR h.quality_tier <> m.quality_tier
+               OR h.evidence_basis <> m.evidence_basis
+               OR h.grade_basis <> m.grade_basis
+               OR h.knowledge_layer <> m.knowledge_layer
+               OR h.membership_id <> m.membership_id
+            RETURN count(*) AS c
+            """,
+        ),
+        "ungraded_mirrors": _count(
+            session,
+            f"MATCH ()-[r:{REL_HAS_FORMULA}]->() "
+            "WHERE r.quality_tier IS NULL OR r.grade_basis IS NULL "
+            "RETURN count(r) AS c",
+        ),
+        "families_reachable_outward": _count(
+            session,
+            f"MATCH (fam:{LABEL_FORMULA_FAMILY}) "
+            f"WHERE (fam)-[:{REL_HAS_FORMULA}]->(:{LABEL_FORMULA}) "
+            "RETURN count(fam) AS c",
+        ),
+        "outward_by_role": {
+            record["role"]: record["n"]
+            for record in session.run(
+                f"MATCH (:{LABEL_FORMULA_FAMILY})-[r:{REL_HAS_FORMULA}]->"
+                f"(:{LABEL_FORMULA}) RETURN r.role AS role, count(*) AS n ORDER BY n DESC"
+            )
+        },
+        "outward_by_tier": {
+            record["tier"]: record["n"]
+            for record in session.run(
+                f"MATCH (:{LABEL_FORMULA_FAMILY})-[r:{REL_HAS_FORMULA}]->"
+                f"(:{LABEL_FORMULA}) RETURN r.quality_tier AS tier, count(*) AS n "
+                "ORDER BY n DESC"
+            )
+        },
+        # The representative is the family's headline and it is stored as a bare id, so a
+        # family whose representative is not among its own members would render a label
+        # for a formula the family does not contain.
+        "representatives_unresolvable": _count(
+            session,
+            f"""
+            MATCH (fam:{LABEL_FORMULA_FAMILY})
+            WHERE NOT EXISTS {{
+                MATCH (fam)-[:{REL_HAS_FORMULA}]->
+                      (rep:{LABEL_FORMULA} {{formula_id: fam.representative_formula_id}})
+            }}
+            RETURN count(fam) AS c
+            """,
+        ),
+        "counts_block_drift": _counts_block_drift(session),
+    }
+    return report
+
+
+#: Which recorded count each role is supposed to summarise. ``secondary_core_count`` and
+#: ``expansion_count`` are not checked here: ``SECONDARY_CORE`` is not a stored ``role``
+#: value, so the node field and the edge field are not the same partition and a mismatch
+#: between them would not be drift.
+_FAMILY_COUNT_FIELDS: Final[tuple[tuple[str, str | None], ...]] = (
+    ("member_count", None),
+    ("core_count", "CORE"),
+    ("variant_count", "VARIANT"),
+)
+
+
+def _counts_block_drift(session: Session) -> dict[str, Any]:
+    """Compare each family's recorded counts against the edges that actually landed.
+
+    Measured against the outward mirror rather than the inbound edge, because the mirror is
+    what a reader who started at the family will count, and the point of the audit is that
+    the number on the node and the number a reader gets are the same number.
+
+    Reported per field with the offending ``family_id``s, capped, rather than as a single
+    total. "Eight of nine recorded corrections were never written into the data" happened
+    in this repository because an audit block was read instead of the rows; a drift report
+    that says only *how many* families disagree repeats that mistake one level up.
+    """
+    out: dict[str, Any] = {}
+    for field_name, role in _FAMILY_COUNT_FIELDS:
+        role_filter = "" if role is None else " {role: $role}"
+        rows = list(
+            session.run(
+                f"""
+                MATCH (fam:{LABEL_FORMULA_FAMILY})
+                OPTIONAL MATCH (fam)-[r:{REL_HAS_FORMULA}{role_filter}]->(:{LABEL_FORMULA})
+                WITH fam, count(r) AS landed
+                WHERE coalesce(fam.{field_name}, -1) <> landed
+                RETURN fam.family_id AS family_id,
+                       fam.{field_name} AS recorded,
+                       landed AS landed
+                ORDER BY abs(coalesce(fam.{field_name}, -1) - landed) DESC, family_id
+                LIMIT 20
+                """,
+                role=role,
+            )
+        )
+        out[field_name] = {
+            "families_disagreeing": len(rows),
+            "examples": [
+                {
+                    "family_id": record["family_id"],
+                    "recorded": record["recorded"],
+                    "landed": record["landed"],
+                }
+                for record in rows
+            ],
+        }
+    return out
 
 
 def _property_safe(row: dict[str, Any]) -> dict[str, Any]:
@@ -1361,8 +2655,265 @@ def load_formula_families(
         ),
         "cross_veda_families": _count(
             session,
-            f"MATCH (fam:{LABEL_FORMULA_FAMILY}) WHERE fam.cross_veda "
-            "RETURN count(fam) AS c",
+            f"MATCH (fam:{LABEL_FORMULA_FAMILY}) WHERE fam.cross_veda RETURN count(fam) AS c",
+        ),
+    }
+    return report
+
+
+# ---------------------------------------------------------------------------
+# Ṛṣi families
+# ---------------------------------------------------------------------------
+
+_RISHI_FAMILY_NODE_QUERY = f"""
+UNWIND $rows AS row
+MERGE (fam:{LABEL_RISHI_FAMILY} {{family_key: row.family_key}})
+SET fam.display_label = row.display_label,
+    fam.display_type = 'RishiFamily',
+    fam.patronymic_iast = row.patronymic_iast,
+    fam.eponym_iast = row.eponym_iast,
+    fam.vrddhi_derivation = row.vrddhi_derivation,
+    fam.source_variants = row.source_variants,
+    fam.member_count = row.member_count,
+    fam.namespaces = row.namespaces,
+    fam.derivation_method = $derivation_method,
+    fam.knowledge_layer = 'L2_DETERMINISTIC_DERIVED',
+    fam.quality_tier = 'TIER_B',
+    fam.evidence_basis = 'SOURCE_METADATA',
+    fam.grade_basis =
+      'one Anukramaṇī-stated vṛddhi patronymic, matched by equality against a ' +
+      'hand-listed table of stems and their eponyms; recomputable from the registry',
+    fam.build_pass = $build_pass
+"""
+
+#: The two derivations are recorded separately on the edge because they are not equally
+#: direct, even though both are deterministic and both earn ``TIER_B``. Token equality
+#: reads a patronymic the Anukramaṇī printed as its own word. A fused split reads one the
+#: Anukramaṇī printed joined to the personal name by sandhi, so the *word boundary* is
+#: supplied by this layer rather than by the source. All 16 splits over the three
+#: registries were checked individually and all 16 were right -- but "checked by hand once"
+#: is a different warrant from "printed as a separate word", and a reader filtering for
+#: the stronger evidence must be able to.
+_RISHI_MEMBER_BASIS_CASE: Final = """CASE row.method
+      WHEN 'patronymic-token-equality-v1'
+        THEN 'the source prints this patronymic as its own word; membership is equality ' +
+             'against a hand-listed stem table, no similarity and no prefix matching'
+      WHEN 'patronymic-fused-token-split-v1'
+        THEN 'the source prints the patronymic fused to the personal name by sandhi; ' +
+             'the word boundary is supplied by this layer, the patronymic surface is not'
+      ELSE 'the label states descent in words (a -putra compound) rather than by vṛddhi'
+    END"""
+
+_RISHI_MEMBER_QUERY = f"""
+UNWIND $rows AS row
+MATCH (r:{LABEL_RISHI} {{entity_key: row.entity_key}})
+MATCH (fam:{LABEL_RISHI_FAMILY} {{family_key: row.family_key}})
+MERGE (r)-[m:{REL_BELONGS_TO_FAMILY}]->(fam)
+SET m.source_label = row.source_label,
+    m.source_token = row.source_token,
+    m.evidence = row.source_label,
+    m.evidence_count = 1,
+    m.patronymic_iast = row.family_stem,
+    m.derivation = row.derivation,
+    m.method = row.method,
+    m.registry_namespace = row.namespace,
+    m.source_id = row.source_id,
+    m.knowledge_layer = 'L2_DETERMINISTIC_DERIVED',
+    m.quality_tier = 'TIER_B',
+    m.evidence_basis = 'SOURCE_METADATA',
+    m.provenance_class = 'SOURCE_DERIVED_SCOPE',
+    m.attribution_precision = 'CONTAINER_INHERITED',
+    m.scope_origin = 'SUKTA_WIDE',
+    m.confidence = 1.0,
+    m.grade_basis = {_RISHI_MEMBER_BASIS_CASE},
+    m.asserts = $member_asserts,
+    m.build_pass = $build_pass
+"""
+
+#: ``attribution_precision = 'CONTAINER_INHERITED'``, and the value is deliberately the
+#: weaker of the two available.
+#:
+#: Neither endpoint of this edge is a passage, so a purist reading says the axis does not
+#: apply and the property should be absent -- which is the argument the formula membership
+#: edge originally made. The invariant that every edge in this graph carries full grading
+#: metadata wins, and once the property has to hold *something* the only safe value is the
+#: inherited one. Every one of the three ṛṣi indices states its patronymic at
+#: **container** level and never inside a verse: the Ṛgvedic Sarvānukramaṇī labels a sūkta
+#: (10,093 of the RV's 10,565 ``HAS_RISHI`` edges are inherited), the Atharvavedic index
+#: labels a sūkta in **all** 5,084 cases, and the Yajurvedic ṛṣisūcī is an index over the
+#: whole Vājasaneyi Saṁhitā. So a leaderboard that walks Passage -> HAS_RISHI -> Rishi ->
+#: BELONGS_TO_FAMILY can never be more precise than sūkta-wide, and stamping
+#: ``PER_PASSAGE`` here would let a query advertising per-verse strictness quietly include
+#: container-inherited evidence. ``scope_origin = 'SUKTA_WIDE'`` records the same fact in
+#: the vocabulary ``PRECISION_BY_SCOPE_ORIGIN`` maps from, so the two cannot drift apart.
+_RISHI_MEMBER_ASSERTS: Final = (
+    "The Anukramaṇī states this patronymic for this seer, so he is of this gotra. It does "
+    "NOT assert a generation, a birth order, or that two ṛṣis carrying one patronymic in "
+    "different Vedas are the same man."
+)
+
+#: The Q2 decomposition, written onto the ``Rishi`` node itself rather than onto the
+#: membership edge, because it is true of the *label* whether or not a family was created:
+#: 57 theonymic and 14 titular patronymics are decomposed here and deliberately reify no
+#: family. Q2's acceptance criterion asks for the seer name split into patronymic and
+#: personal name, and half of that answer would be missing if it lived only on edges.
+_RISHI_DECOMPOSITION_QUERY = f"""
+UNWIND $rows AS row
+MATCH (r:{LABEL_RISHI} {{entity_key: row.entity_key}})
+SET r.patronymics_iast = row.patronymics,
+    r.personal_names_iast = row.personal_names,
+    r.patronymic_iast =
+      CASE WHEN size(row.patronymics) > 0 THEN row.patronymics[0] ELSE null END,
+    r.personal_name_iast =
+      CASE WHEN size(row.personal_names) > 0 THEN row.personal_names[0] ELSE null END,
+    r.decomposition_method = row.method,
+    r.family_assignment_class = row.unassigned_class,
+    r.non_seer_kind = row.non_seer_kind,
+    r.is_seer = row.non_seer_kind IS NULL,
+    r.decomposition_build_pass = $build_pass
+"""
+
+#: ``is_seer`` exists because a measured defect needed it: the strict per-passage ṛṣi
+#: leaderboard's rank-1 entry was ``devāḥ`` -- "the gods" -- so a query enumerating the
+#: Ṛgveda's most prolific poets was returning a deity group first. 113 of the 729 registry
+#: rows are not people at all (deities, deity groups, abstractions, mythic beings, two
+#: animals, an offering-ladle and the Atharvavedic hymn-class ``cātana``), and no property
+#: on the node said so. It is stored as a boolean *and* as ``non_seer_kind`` so a query can
+#: either exclude them in one predicate or ask what they are; the ṛṣi rows are **not**
+#: deleted, because the tradition really does ascribe those hymns to those beings and
+#: deleting the ascription would remove a true fact about the corpus.
+
+
+def load_rishi_families(
+    session: Session,
+    families: Sequence[dict[str, Any]],
+    memberships: Sequence[dict[str, Any]],
+    decompositions: Sequence[dict[str, Any]],
+) -> LoadReport:
+    """Land the ``RishiFamily`` layer over the 729 existing ``Rishi`` nodes.
+
+    Additive over ``Rishi``: not one node is created here and not one ``HAS_RISHI`` edge
+    is touched. Every ``MATCH`` is on a label *and* a pinned ``entity_key``, which is not
+    stylistic -- an unlabelled ``MATCH`` in a mutation once created 39,461 bogus edges in
+    this graph, and a ``Rishi`` matched by name rather than key would silently pick up the
+    Yajurvedic homonym of a Ṛgvedic seer and assert they are one man.
+
+    ``sent`` counts family nodes plus membership edges plus decomposed ``Rishi`` nodes,
+    and ``landed`` re-counts all three from the graph by ``build_pass`` rather than
+    trusting the driver's summary counters: a loader in this repository has reported
+    success while landing nothing, and a MERGE that finds an existing row reports no
+    counter at all.
+
+    The decomposition pass writes to *every* ṛṣi, including the 426 with no family, so
+    that ``family_assignment_class`` is present on all 729 and "why does this seer have no
+    family?" is answerable from the node instead of from a report file.
+    """
+    report = LoadReport(
+        step="rishi_families",
+        sent=len(families) + len(memberships) + len(decompositions),
+    )
+    if not families:
+        return report
+    build_pass = uuid.uuid4().hex
+    derivation_method = "anukramani-patronymic-v1"
+
+    for batch in _batches(list(families)):
+        session.run(
+            _RISHI_FAMILY_NODE_QUERY,
+            rows=batch,
+            build_pass=build_pass,
+            derivation_method=derivation_method,
+        )
+    for batch in _batches(list(memberships)):
+        session.run(
+            _RISHI_MEMBER_QUERY,
+            rows=batch,
+            build_pass=build_pass,
+            member_asserts=_RISHI_MEMBER_ASSERTS,
+        )
+    for batch in _batches(list(decompositions)):
+        session.run(_RISHI_DECOMPOSITION_QUERY, rows=batch, build_pass=build_pass)
+
+    family_nodes = _count(
+        session,
+        f"MATCH (fam:{LABEL_RISHI_FAMILY}) WHERE fam.build_pass = $build_pass "
+        "RETURN count(fam) AS c",
+        build_pass=build_pass,
+    )
+    member_edges = _count(
+        session,
+        f"MATCH (:{LABEL_RISHI})-[m:{REL_BELONGS_TO_FAMILY}]->(:{LABEL_RISHI_FAMILY}) "
+        "WHERE m.build_pass = $build_pass RETURN count(m) AS c",
+        build_pass=build_pass,
+    )
+    decomposed = _count(
+        session,
+        f"MATCH (r:{LABEL_RISHI}) WHERE r.decomposition_build_pass = $build_pass "
+        "RETURN count(r) AS c",
+        build_pass=build_pass,
+    )
+    report.landed = family_nodes + member_edges + decomposed
+
+    # Mark and sweep. A patronymic removed from the table, or a stem whose reading
+    # changed, has to *disappear*: MERGE adds and never retracts, so without this a
+    # rebuilt layer would be the union of every table this project ever had -- and the one
+    # thing a deliberately conservative layer must not do is accumulate the memberships it
+    # later decided it could not support.
+    stale_edges = _count(
+        session,
+        f"""
+        MATCH (:{LABEL_RISHI})-[m:{REL_BELONGS_TO_FAMILY}]->(:{LABEL_RISHI_FAMILY})
+        WHERE m.build_pass IS NULL OR m.build_pass <> $build_pass
+        DELETE m
+        RETURN count(*) AS c
+        """,
+        build_pass=build_pass,
+    )
+    stale_nodes = _count(
+        session,
+        f"""
+        MATCH (fam:{LABEL_RISHI_FAMILY})
+        WHERE fam.build_pass IS NULL OR fam.build_pass <> $build_pass
+        DETACH DELETE fam
+        RETURN count(*) AS c
+        """,
+        build_pass=build_pass,
+    )
+
+    report.detail = {
+        "build_pass": build_pass,
+        "family_nodes": family_nodes,
+        "membership_edges": member_edges,
+        "rishis_decomposed": decomposed,
+        "stale_edges_deleted": stale_edges,
+        "stale_families_deleted": stale_nodes,
+        # The denominator, reported next to the numerator so coverage cannot be quoted
+        # without it. 729 ṛṣis exist; a minority of them state a gotra patronymic.
+        "rishi_nodes": _count(session, f"MATCH (r:{LABEL_RISHI}) RETURN count(r) AS c"),
+        "rishis_with_a_family": _count(
+            session,
+            f"MATCH (r:{LABEL_RISHI}) WHERE (r)-[:{REL_BELONGS_TO_FAMILY}]->() "
+            "RETURN count(r) AS c",
+        ),
+        # Per method, because the fused split is the weaker of the two derivations and its
+        # count is the number a sceptical reader should want to see.
+        "memberships_by_method": {
+            method: _count(
+                session,
+                f"MATCH ()-[m:{REL_BELONGS_TO_FAMILY}]->() WHERE m.method = $method "
+                "RETURN count(m) AS c",
+                method=method,
+            )
+            for method in sorted({str(row["method"]) for row in memberships})
+        },
+        # The graph-wide invariant this layer must not break: every edge carries full
+        # grading metadata. Measured on this layer's own edges, after the write.
+        "edges_missing_grading": _count(
+            session,
+            f"MATCH ()-[m:{REL_BELONGS_TO_FAMILY}]->() "
+            "WHERE m.quality_tier IS NULL OR m.knowledge_layer IS NULL "
+            "OR m.grade_basis IS NULL OR m.evidence_basis IS NULL "
+            "RETURN count(m) AS c",
         ),
     }
     return report

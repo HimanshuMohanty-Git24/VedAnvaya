@@ -37,7 +37,12 @@ REL_EXACT_PARALLEL_OF: Final = "EXACT_PARALLEL_OF"
 REL_PARALLEL_TO: Final = "PARALLEL_TO"
 REL_EXTRACTED_FROM_CONTAINER: Final = "EXTRACTED_FROM_CONTAINER"
 REL_ASSERTED_BY_SOURCE: Final = "ASSERTED_BY_SOURCE"
-REL_HAS_QA_ISSUE: Final = "HAS_QA_ISSUE"
+# Reversed relative to V3, where it read Work->QAIssue and hung 915 engineering
+# findings off the four product Work nodes -- adversarial finding M-2. A QA issue is a
+# fact about this repository, not a property of the Rigveda, and "this finding is on
+# that work" is the truthful direction as well as the safe one: outward traversal from
+# a Work can no longer reach the diagnostic layer at all.
+REL_QA_ISSUE_ON: Final = "QA_ISSUE_ON"
 
 
 # ---------------------------------------------------------------------------

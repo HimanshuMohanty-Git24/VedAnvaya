@@ -104,24 +104,24 @@ LABEL_STATE: Final = "State"
 
 # Added by V2. Each one is here because it unblocks a named killer question; a label that
 # only sounded interesting was left out.
-LABEL_HUMAN_CONCERN: Final = "HumanConcern"      # Q13-16, 32, 47, 48
-LABEL_CONDITION: Final = "Condition"             # Q12, 15, 47 -- disease, fever, poison
-LABEL_EPITHET: Final = "Epithet"                 # Q42
-LABEL_DEITY_GROUP: Final = "DeityGroup"          # Q23, 41
-LABEL_DEITY_AXIS: Final = "DeityAxis"            # Q20, 38, 45, 46
-LABEL_SOCIAL_RITE: Final = "SocialRite"          # Q13, 14
-LABEL_RITUAL_ROLE: Final = "RitualRole"          # Q32, 39 -- hotar, adhvaryu, udgatar
-LABEL_RISHI_FAMILY: Final = "RishiFamily"        # Q2, 19, 24, 35
-LABEL_TRIBE: Final = "Tribe"                     # Q26
+LABEL_HUMAN_CONCERN: Final = "HumanConcern"  # Q13-16, 32, 47, 48
+LABEL_CONDITION: Final = "Condition"  # Q12, 15, 47 -- disease, fever, poison
+LABEL_EPITHET: Final = "Epithet"  # Q42
+LABEL_DEITY_GROUP: Final = "DeityGroup"  # Q23, 41
+LABEL_DEITY_AXIS: Final = "DeityAxis"  # Q20, 38, 45, 46
+LABEL_SOCIAL_RITE: Final = "SocialRite"  # Q13, 14
+LABEL_RITUAL_ROLE: Final = "RitualRole"  # Q32, 39 -- hotar, adhvaryu, udgatar
+LABEL_RISHI_FAMILY: Final = "RishiFamily"  # Q2, 19, 24, 35
+LABEL_TRIBE: Final = "Tribe"  # Q26
 LABEL_INTERPRETIVE_CLAIM: Final = "InterpretiveClaim"  # Q28, 29, 30
-LABEL_DERIVED_METRIC: Final = "DerivedMetric"    # Q30, 36, 43, 44
+LABEL_DERIVED_METRIC: Final = "DerivedMetric"  # Q30, 36, 43, 44
 
 # Sublabels: narrower views of a broader family, applied in addition to it. A crop is a
 # plant and answers "which plants" as well as "which crops"; splitting them into
 # unrelated labels would make the general question unanswerable.
-LABEL_CROP: Final = "Crop"                       # Q9,  sublabel of Plant
-LABEL_METAL: Final = "Metal"                     # Q10, sublabel of Substance
-LABEL_WEAPON: Final = "Weapon"                   # Q40, sublabel of Object
+LABEL_CROP: Final = "Crop"  # Q9,  sublabel of Plant
+LABEL_METAL: Final = "Metal"  # Q10, sublabel of Substance
+LABEL_WEAPON: Final = "Weapon"  # Q40, sublabel of Object
 
 # ---------------------------------------------------------------------------
 # V3: the reified assertion layer
@@ -194,6 +194,7 @@ LABEL_ACTION_PREDICATE: Final = "ActionPredicate"
 #: rather than being forced into singletons, because a singleton family asserts a grouping
 #: that was never found.
 LABEL_FORMULA_FAMILY: Final = "FormulaFamily"
+
 
 class DomainNodeType(StrEnum):
     """Entity types V2 adds, on top of the frozen semantic seventeen.
@@ -328,6 +329,26 @@ INTERNAL_LABELS: Final[frozenset[str]] = frozenset(
 )
 
 assert PRODUCT_LABELS.isdisjoint(INTERNAL_LABELS), "a label cannot be both"
+
+#: Product labels this project has DELIBERATELY DEMOTED by marking every node
+#: ``:Internal``, as distinct from labels that are internal by nature.
+#:
+#: ``Lemma`` is the only member and the distinction is load-bearing. A lemma is a real
+#: lexical object and belongs in :data:`PRODUCT_LABELS` on its merits -- which is why the
+#: disjointness assertion above is correct and must not be "fixed" by moving it. But V3's
+#: fix to adversarial finding M-1 marked the WHOLE layer ``:Internal``, because 39 deity
+#: lemmas carrying ``MENTIONS_LEMMA`` edges were surfacing in product traversal looking
+#: like deities while carrying none of a Devatā's profile.
+#:
+#: That decision was never written down anywhere a checker could read, and V3.1 measured
+#: the consequence: ``internal_leakage_check`` compared the live graph against a
+#: hard-coded copy of :data:`INTERNAL_LABELS` and reported **10,031 Lemma nodes as
+#: leaked** -- a false positive large enough to be believed, in the query whose entire
+#: job is to be trusted about the product boundary. The V3 close-out's claim that the
+#: check "returns 0 rows (its pass condition)" was measured before that marking landed.
+#:
+#: Anything marked ``:Internal`` that is in neither set is a genuine leak.
+INTERNAL_MARKED_LABELS: Final[frozenset[str]] = INTERNAL_LABELS | frozenset({"Lemma"})
 
 #: The one place the product/internal boundary is written as Cypher. Every product query
 #: interpolates this instead of naming excluded labels itself.
@@ -534,6 +555,13 @@ REL_HAS_AXIS: Final = "HAS_AXIS"
 REL_HAS_EPITHET: Final = "HAS_EPITHET"
 REL_MEMBER_OF: Final = "MEMBER_OF"
 REL_COMPOSED_OF: Final = "COMPOSED_OF"
+#: An epithet-qualified deity label resolved to the base deity it qualifies. Not
+#: ``COMPOSED_OF``: `jātavedā agniḥ` is not made *of* Agni the way `mitrāvaruṇau` is made
+#: of Mitra and Varuṇa, and a consumer enumerating a compound's members through
+#: ``COMPOSED_OF`` would start returning Agni as a member of himself. Not ``HAS_EPITHET``
+#: either: that points at an ``:Epithet`` node, and these are ``:Devata`` nodes with
+#: attributions and mentions of their own. QUESTION_UNLOCKED = Q86.
+REL_EPITHET_VARIANT_OF: Final = "EPITHET_VARIANT_OF"
 REL_PERSONIFIES: Final = "PERSONIFIES"
 REL_ASSOCIATED_WITH_CONCEPT: Final = "ASSOCIATED_WITH_CONCEPT"
 REL_ASSOCIATED_WITH_PHENOMENON: Final = "ASSOCIATED_WITH_PHENOMENON"
@@ -558,6 +586,41 @@ REL_DESCRIBED_IN: Final = "DESCRIBED_IN"
 #: query can ask for the core phrase alone. Not symmetric and not a similarity edge: the
 #: role is what distinguishes "this is the shared phrase" from "this contains it".
 REL_MEMBER_OF_FAMILY: Final = "MEMBER_OF_FAMILY"
+
+#: ``FormulaFamily`` -> ``Formula``, the outward twin of :data:`REL_MEMBER_OF_FAMILY`.
+#:
+#: Declared because the family layer landed with membership pointing *inward only*, and
+#: two things follow from that which are easy to miss. Cypher can walk a relationship in
+#: either direction, so ``(fam)<-[:MEMBER_OF_FAMILY]-(f)`` always worked -- but every
+#: consumer that reads the graph through a **directed** surface could not: the ontology
+#: reference generated from :data:`RELATIONSHIP_SIGNATURES` reported ``FormulaFamily`` as
+#: a sink with no outward predicate, and a reader asking "what can I do from a family?"
+#: was told, correctly, nothing. The family was reachable and not navigable.
+#:
+#: Named ``HAS_FORMULA`` and not ``FORMULA_MEMBER_OF``. The V3 close-out report names the
+#: missing predicate ``FORMULA_MEMBER_OF``, which reads subject-first as *"the formula is
+#: a member of"* -- the direction that already exists. A name whose plain reading is the
+#: opposite of its declared signature is the kind of thing that gets a query written
+#: backwards, so the close-out's name is not adopted. ``HAS_FORMULA`` reads in the
+#: direction it points, and matches the ``HAS_``-prefix convention every other
+#: container-to-contained predicate here already uses.
+#:
+#: **Mirrored, never re-derived.** Every property is copied from the inbound edge by
+#: :func:`vedagraph.domain.v3_loader.load_formula_family_outward`, so ``role``,
+#: ``quality_tier`` and ``grade_basis`` cannot disagree between the two directions. The
+#: four similarity-derived ``VARIANT`` rows stay ``TIER_D`` outward exactly as they are
+#: inward; a mirror that regraded would be a second opinion, and this layer is not
+#: entitled to one.
+REL_HAS_FORMULA: Final = "HAS_FORMULA"
+
+#: Named for what it MEASURES and not for what a reader would like it to mean. Two
+#: passages joined by this edge mention the same registry entities; whether they express
+#: the same idea is an interpretation this graph does not make. The V3.1 benchmark
+#: diagnosis graded Q22 and Q49 MISLEADING because an entity-overlap measure was presented
+#: as an answer to a conceptual-similarity question, and both frozen criteria exclude
+#: lexical overlap in terms -- so calling this ``CONCEPTUALLY_SIMILAR_TO`` would have
+#: re-shipped the defect under a new predicate. QUESTION_UNLOCKED = Q22, Q49, Q81.
+REL_SHARES_ENTITY_VOCABULARY_WITH: Final = "SHARES_ENTITY_VOCABULARY_WITH"
 
 # Human concerns, chiefly but not only Atharvavedic.
 REL_ADDRESSES_CONCERN: Final = "ADDRESSES_CONCERN"
@@ -682,6 +745,7 @@ DOMAIN_RELATIONSHIP_TYPES: Final[frozenset[str]] = frozenset(
         REL_HAS_EPITHET,
         REL_MEMBER_OF,
         REL_COMPOSED_OF,
+        REL_EPITHET_VARIANT_OF,
         REL_PERSONIFIES,
         REL_ASSOCIATED_WITH_CONCEPT,
         REL_ASSOCIATED_WITH_PHENOMENON,
@@ -699,6 +763,8 @@ DOMAIN_RELATIONSHIP_TYPES: Final[frozenset[str]] = frozenset(
         REL_HAS_STEP,
         REL_DESCRIBED_IN,
         REL_MEMBER_OF_FAMILY,
+        REL_HAS_FORMULA,
+        REL_SHARES_ENTITY_VOCABULARY_WITH,
         REL_ADDRESSES_CONCERN,
         REL_TREATS,
         REL_PROTECTS_FROM,
@@ -758,6 +824,7 @@ RELATIONSHIP_SIGNATURES: Final[dict[str, tuple[frozenset[str], frozenset[str]]]]
     REL_HAS_EPITHET: (frozenset({LABEL_DEVATA}), frozenset({LABEL_EPITHET})),
     REL_MEMBER_OF: (frozenset({LABEL_DEVATA}), frozenset({LABEL_DEITY_GROUP})),
     REL_COMPOSED_OF: (frozenset({LABEL_DEVATA}), frozenset({LABEL_DEVATA})),
+    REL_EPITHET_VARIANT_OF: (frozenset({LABEL_DEVATA}), frozenset({LABEL_DEVATA})),
     REL_PERSONIFIES: (
         frozenset({LABEL_DEVATA}),
         frozenset(
@@ -805,6 +872,14 @@ RELATIONSHIP_SIGNATURES: Final[dict[str, tuple[frozenset[str], frozenset[str]]]]
     REL_MEMBER_OF_FAMILY: (
         frozenset({LABEL_FORMULA}),
         frozenset({LABEL_FORMULA_FAMILY}),
+    ),
+    REL_HAS_FORMULA: (
+        frozenset({LABEL_FORMULA_FAMILY}),
+        frozenset({LABEL_FORMULA}),
+    ),
+    REL_SHARES_ENTITY_VOCABULARY_WITH: (
+        frozenset({LABEL_PASSAGE}),
+        frozenset({LABEL_PASSAGE}),
     ),
     REL_ADDRESSES_CONCERN: (frozenset({LABEL_PASSAGE}), frozenset({LABEL_HUMAN_CONCERN})),
     REL_TREATS: (frozenset({LABEL_PASSAGE}), frozenset({LABEL_CONDITION})),

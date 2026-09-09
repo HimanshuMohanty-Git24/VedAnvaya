@@ -376,10 +376,10 @@ def validate_artifacts(
 #: cries wolf is worse than one check short: it teaches the reader to skim past the one
 #: time it is right. Deriving the tuple means a new predicate cannot be forgotten here.
 #:
-#: ``HAS_QA_ISSUE`` is excluded because it is a corpus projection rather than an enrichment
+#: ``QA_ISSUE_ON`` is excluded because it is a corpus projection rather than an enrichment
 #: assertion and carries no provenance envelope.
 _ENRICHMENT_TYPES: tuple[str, ...] = tuple(
-    sorted(CONTROLLED_PREDICATES - {str(StructuralPredicate.HAS_QA_ISSUE)})
+    sorted(CONTROLLED_PREDICATES - {str(StructuralPredicate.QA_ISSUE_ON)})
 )
 
 

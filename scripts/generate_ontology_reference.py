@@ -645,7 +645,7 @@ def build(session: Any) -> str:
     declared = set(DOMAIN_RELATIONSHIP_TYPES)
     live_types = set(live)
     undocumented = sorted(declared - set(DEFINITIONS))
-    undeclared_live = sorted(live_types - declared - {"HAS_QA_ISSUE"})
+    undeclared_live = sorted(live_types - declared - {"QA_ISSUE_ON"})
     declared_empty = sorted(declared - live_types)
 
     out: list[str] = []
@@ -683,7 +683,7 @@ def build(session: Any) -> str:
 
     add("\n## Relationship types\n")
     for name in sorted(declared | live_types):
-        if name == "HAS_QA_ISSUE":
+        if name == "QA_ISSUE_ON":
             continue
         info = DEFINITIONS.get(name)
         stats = live.get(name)

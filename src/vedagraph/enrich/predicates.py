@@ -102,7 +102,7 @@ class StructuralPredicate(StrEnum):
     #: is not the same node as it.
     DEVATA_ASSOCIATED_WITH = "DEVATA_ASSOCIATED_WITH"
     #: Work to its own QA findings, so a corpus caveat is visible in the graph.
-    HAS_QA_ISSUE = "HAS_QA_ISSUE"
+    QA_ISSUE_ON = "QA_ISSUE_ON"
 
 
 #: Semantic predicates this layer may write. Exactly the frozen whitelist -- not a subset

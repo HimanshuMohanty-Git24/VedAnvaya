@@ -146,6 +146,24 @@ class Work(VGModel):
     # and referent-stable while some verses still lack an address, and conflating the two
     # would either block a sound freeze or overstate coverage.
     coverage_status: str = "COMPLETE"
+    # What this work_id addresses and what it does not, as a machine-readable property
+    # rather than a warning in a manifest on disk. The distinction is load-bearing: the
+    # Samaveda work is the Kauthuma *arcika* only, its own source manifest says "Never
+    # describe this dataset as the complete Samaveda", and until that statement reached
+    # the graph a consumer querying `work_name` read "Samaveda Samhita" and was misled by
+    # the most misleading string in the product graph. ``scope`` is prose for a reader,
+    # ``excluded_corpora`` is the same fact as a list a query can filter on, and
+    # ``completeness`` is the *measured* figure -- deliberately separate from
+    # ``coverage_status``, which is a status verdict and cannot carry the numbers that
+    # justify it. ``display_label_override`` exists because ``work_name`` is the work's
+    # traditional name and is fixed by a hashed canonical artifact; the honest product
+    # label is therefore an overlay, never an edit to the artifact.
+    scope: str | None = None
+    completeness: str | None = None
+    excluded_corpora: list[str] = Field(default_factory=list)
+    rights: str | None = None
+    display_label_override: str | None = None
+    scope_evidence: str | None = None
     structure_evidence_sha256: str | None = Field(default=None, pattern=r"^[a-f0-9]{64}$")
     notes: str | None = None
     schema_version: str = SCHEMA_VERSION

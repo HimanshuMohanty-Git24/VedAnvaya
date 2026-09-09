@@ -9,14 +9,34 @@
 # Every claim must cite a passage or a computed metric, and `falsifier` is mandatory: a
 # claim nobody can imagine being wrong is a slogan, not a claim.
 #
-# CLAIM-005 and CLAIM-006 deliberately contradict each other. That is not an oversight to
-# be resolved -- it is what the state of the question looks like, and a graph that stored
-# only the winner would be misrepresenting a live scholarly disagreement as settled.
+# `about` is mandatory and is the V3.1 addition. It separates a claim about the VEDIC TEXT
+# from a claim about THIS DATASET from a claim about the received TRADITIONAL APPARATUS,
+# because without it a query for "where do competing interpretations exist" returned a
+# methodological argument about this project's build and a reader would reasonably read it
+# as scholarly disagreement about the Vedas. Every value carries an `about_basis` saying
+# why, since the classification is a judgement and must be auditable.
+#
+# CORRECTED 2026-09-09: this header previously read "CLAIM-005 and CLAIM-006 deliberately
+# contradict each other ... a graph that stored only the winner would be misrepresenting a
+# live scholarly disagreement as settled". The second half of that is right in principle
+# and wrong about this pair. SV-PREDOMINANTLY-RV-REUSE is `about: DATASET` -- 1,662 of
+# 1,844 mantras measured in this build -- and SV-IDENTITY-IS-MELODIC is
+# `about: VEDIC_TEXT`. They are in dialogue, but a measurement and an interpretation of a
+# tradition cannot contradict each other, and presenting them as a "live scholarly
+# disagreement" is exactly the scope confusion `about` exists to prevent. The pair is
+# retained and is now typed as a CROSS-CATEGORY disagreement about what textual overlap
+# implies. There is currently NO pair of rival readings of the Vedic text in this
+# registry, and the catalogue now says so rather than offering this pair instead.
 
 version: vedagraph-interpretive-claims-v1
 
 claims:
   - claim_id: VG:CLAIM:ANUKRAMANI-ATTRIBUTION-IS-SUKTA-SCOPED
+    about: TRADITIONAL_APPARATUS
+    about_basis: >-
+      Its subject is how the Anukramani itself operates -- at sukta scale rather than mantra
+      scale. The consequence it draws is about this project's scope rule, but the claim being
+      made is about the received apparatus.
     claim_text: >-
       The traditional attribution apparatus for the Rigveda operates at the scale of the
       sukta rather than the individual mantra, so a per-verse reading of deity, seer and
@@ -40,6 +60,11 @@ claims:
       the inherited edges source-explicit rather than derived.
 
   - claim_id: VG:CLAIM:RISHI-ATTRIBUTION-LEAST-VERSE-SPECIFIC
+    about: DATASET
+    about_basis: >-
+      The numbers it compares (95.5% against 59.6%) are inheritance rates of THIS graph's
+      projection, not properties the Anukramani states. It reads as a philological finding and
+      is a measurement of a build.
     claim_text: >-
       Among the three Anukramani dimensions, seer attribution is the least verse-specific
       and metre the most: 95.5% of seer attributions are inherited from the sukta against
@@ -64,6 +89,11 @@ claims:
       corpus's sources.
 
   - claim_id: VG:CLAIM:AGNI-LEXICALLY-UNDIFFERENTIATED
+    about: VEDIC_TEXT
+    about_basis: >-
+      Its subject is the text: the corpus does not lexically distinguish the deity from the
+      fire. That is a claim about Vedic usage which happens to have a consequence for this
+      graph's modelling.
     claim_text: >-
       The corpus does not lexically distinguish Agni the deity from agni the ritual and
       natural fire; both are the word agni. The graph's separation of VG:DEVATA:AGNIH from
@@ -95,6 +125,10 @@ claims:
       without recourse to context.
 
   - claim_id: VG:CLAIM:CONCEPT-LAYER-LEANS-ON-TRANSLATION
+    about: DATASET
+    about_basis: >-
+      Entirely about this project's V1 concept layer and its evidence basis. Names no property
+      of the Vedic text at all.
     claim_text: >-
       The V1 concept layer's apparent coverage substantially overstates its Sanskrit
       grounding: 21,246 of its 47,542 assertions (44.7%) rest on no Sanskrit evidence at
@@ -120,6 +154,11 @@ claims:
       the evidence path a technicality rather than a limit.
 
   - claim_id: VG:CLAIM:SV-PREDOMINANTLY-RV-REUSE
+    about: DATASET
+    about_basis: >-
+      Its own wording scopes it -- 'as represented in this corpus' -- and its evidence is
+      1,662 of 1,844 mantras measured in this build. A different Samavedic corpus could give a
+      different figure without the Samaveda having changed.
     claim_text: >-
       The Samaveda Kauthuma Arcika, as represented in this corpus, is predominantly a
       re-presentation of Rigvedic verse material rather than an independent body of text:
@@ -150,6 +189,14 @@ claims:
       that the shared verses are a common inheritance rather than SV borrowing from RV.
 
   - claim_id: VG:CLAIM:SV-IDENTITY-IS-MELODIC
+    about: VEDIC_TEXT
+    about_basis: >-
+      A scholarly position about where the Samaveda's identity lies, which this project did
+      not derive and cannot measure. It is in dialogue with VG:CLAIM:SV-PREDOMINANTLY-RV-REUSE
+      but does not contradict it: one is a measurement of a corpus and the other an
+      interpretation of a tradition, so the pair is a CROSS-CATEGORY methodological
+      disagreement about what textual overlap implies, not two rival readings of the Vedic
+      text.
     claim_text: >-
       Textual dependence on the Rigveda understates the Samaveda's independence, because
       the Samaveda's identity lies in its melodic realisation (gana) rather than in its

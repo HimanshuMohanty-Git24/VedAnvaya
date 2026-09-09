@@ -298,7 +298,7 @@ def _merge_qa_issues(session: Any, project_root: pathlib.Path) -> int:
                 q.sequence = row.sequence
             WITH q, row
             MATCH (w:Work {work_id: row.work_id})
-            MERGE (w)-[:HAS_QA_ISSUE]->(q)
+            MERGE (q)-[:QA_ISSUE_ON]->(w)
             """,
             rows=batch,
         )

@@ -20,9 +20,13 @@ and AV (5,797). At mantra level, 10,534 of the RV's 10,552, 4,542 of the AV's 5,
 A zero therefore still has to be read carefully, but now in both directions. A caveat
 saying "SV/YV/AV have no attribution layer" *understates* what is answerable, and telling
 a researcher a question is unanswerable when it is answerable is the same class of defect
-as the reverse, not a safe default. ``MENTIONS_DEVATA`` (16,261 edges: RV 10,284, AV
-2,861, YV 1,781, SV 1,335) is the four-Veda route to "does this passage name this
-deity?", and is the only deity predicate that reaches the whole corpus.
+as the reverse, not a safe default. ``MENTIONS_DEVATA`` is the four-Veda route to
+"does this passage name this deity?", and is the only deity predicate that reaches the
+whole corpus. Its edge counts are NOT written here: every figure the caveats quote
+now lives in :mod:`vedagraph.domain.layer_figures` and is asserted against the live
+graph by ``tests/domain/test_layer_figures.py``, because the hand-written versions
+drifted -- this docstring said 16,261 against a live 17,165, and the ambiguous share
+said 8,485 against 8,825.
 
 **Most attribution is inherited, not stated.** 8,329 of 10,558 ``HAS_DEVATA`` edges,
 15,177 of 17,889 ``HAS_RISHI`` and 10,388 of 16,320 ``HAS_CHANDAS`` arrive by projecting a
@@ -67,7 +71,23 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any, Final
 
-from vedagraph.domain.ontology import LABEL_INTERNAL
+from vedagraph.domain import layer_figures as figures
+from vedagraph.domain.ontology import INTERNAL_MARKED_LABELS, LABEL_INTERNAL
+from vedagraph.domain.theonyms import (
+    DEFAULT_REFERENT_TIERS,
+    EXPLORATORY_REFERENT_TIERS,
+    STRICT_REFERENT_TIERS,
+)
+
+#: The product default: CERTAIN plus PROBABLE, AMBIGUOUS excluded. Interpolated as a
+#: parameter rather than written into each query, because the V3.1 deity pass measured
+#: what happens when a query hard-codes the strict tier -- filtering to DEITY_CERTAIN
+#: returns ZERO non-Rigvedic mentions for Agni, Soma, Surya, Mitra, Savitr, Usas,
+#: Vayu, Apah and Prthivi, so the cautious analyst got a worse answer than the
+#: careless one and a reader would read those zeros as absence from the text.
+_DEFAULT_TIERS: Final = sorted(DEFAULT_REFERENT_TIERS)
+_EXPLORATORY_TIERS: Final = sorted(EXPLORATORY_REFERENT_TIERS)
+_STRICT_TIERS: Final = sorted(STRICT_REFERENT_TIERS)
 
 #: Default parameters, so every query is runnable as written with no arguments.
 INDRA: Final = "VG:DEVATA:INDRAH"
@@ -102,7 +122,8 @@ _SCOPE_CAVEAT = (
     "HAS_DEVATA is Rigveda-only: 10,558 edges, every one on the RV. A zero for SV/YV/AV "
     "means those corpora carry no Anukramani deity ascription, not that the deity is "
     "absent from them. MENTIONS_DEVATA answers 'is this deity named here?' across all "
-    "four (16,261 edges: RV 10,284, AV 2,861, YV 1,781, SV 1,335)."
+    f"four ({figures.PREDICATE_TOTALS['MENTIONS_DEVATA']:,} edges: "
+    f"{figures.veda_breakdown(figures.MENTIONS_DEVATA_BY_VEDA)})."
 )
 _INHERIT_CAVEAT = (
     "Counts include CONTAINER_INHERITED attributions: a sukta's label projected onto each "
@@ -113,8 +134,10 @@ _INHERIT_CAVEAT = (
 #: is why it exists, but it does so by two different instruments, and a row that sums them
 #: averages a hand-annotated lemma against a string match without saying so.
 _MENTION_LAYER_CAVEAT = (
-    "MENTIONS_DEVATA spans all four Vedas (16,261 edges: RV 10,284, AV 2,861, YV 1,781, "
-    "SV 1,335) but not by one method: the RV's come from the manual scholarly lemma "
+    f"MENTIONS_DEVATA spans all four Vedas "
+    f"({figures.PREDICATE_TOTALS['MENTIONS_DEVATA']:,} edges: "
+    f"{figures.veda_breakdown(figures.MENTIONS_DEVATA_BY_VEDA)}) but not by one "
+    "method: the RV's come from the manual scholarly lemma "
     "annotation (extraction_path = 'rv-lemma-annotation') and the other 5,977 from surface "
     "token or sandhi matching, which has no morphology behind it. Compare rows as shares "
     "of their corpus (RV 10,552 mantras, AV 5,839, YV 1,975, SV 1,844), not as totals."
@@ -123,7 +146,9 @@ _MENTION_LAYER_CAVEAT = (
 #: Attached where a MENTIONS_DEVATA query does not filter referent_certainty. The flag is
 #: on the edge, so a query that ignores it is choosing to, and should say so.
 _CERTAINTY_CAVEAT = (
-    "Unfiltered on referent_certainty: 8,485 of 16,261 mention edges are DEITY_AMBIGUOUS, "
+    f"Unfiltered on referent_certainty: "
+    f"{figures.REFERENT_CERTAINTY['DEITY_AMBIGUOUS']:,} of "
+    f"{figures.PREDICATE_TOTALS['MENTIONS_DEVATA']:,} mention edges are DEITY_AMBIGUOUS, "
     "because agni is also fire, soma also the pressed drink, surya also the sun and vac "
     "also speech. Deities whose name is an ordinary noun are flattered accordingly, and "
     "the ambiguous share is the majority in every corpus except the Rigveda."
@@ -207,13 +232,91 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
         question="Which deities occupy a given functional role?",
         cypher="""
         MATCH (dv:Devata)-[:HAS_AXIS]->(ax:DeityAxis)
-        RETURN ax.axis AS axis, count(dv) AS deities,
-               collect(dv.display_label)[0..12] AS examples
-        ORDER BY deities DESC, axis
+        WHERE ax.axis <> 'UNSPECIFIED'
+        OPTIONAL MATCH (dv)-[:EPITHET_VARIANT_OF]->(base:Devata)
+        WITH ax.axis AS axis, dv,
+             coalesce(base.display_label, dv.display_label) AS resolved_label
+        WITH axis,
+             count(DISTINCT CASE WHEN dv.structure = 'INDIVIDUAL' THEN resolved_label END)
+               AS individual_deities,
+             count(CASE WHEN dv.structure = 'INDIVIDUAL' THEN dv END) AS individual_subjects,
+             count(CASE WHEN dv.structure = 'PAIR' THEN dv END) AS pair_subjects,
+             count(CASE WHEN dv.structure = 'GROUP' THEN dv END) AS group_subjects,
+             count(CASE WHEN NOT dv.structure IN ['INDIVIDUAL', 'PAIR', 'GROUP']
+                        THEN dv END) AS other_subjects,
+             count(dv) AS all_subjects,
+             collect(CASE WHEN dv.structure = 'INDIVIDUAL' THEN dv.display_label END)[0..12]
+               AS individual_examples,
+             collect(CASE WHEN dv.structure <> 'INDIVIDUAL' THEN dv.display_label END)[0..8]
+               AS non_individual_examples
+        RETURN axis, individual_deities, individual_subjects, all_subjects,
+               pair_subjects, group_subjects, other_subjects,
+               individual_examples, non_individual_examples
+        ORDER BY individual_deities DESC, axis
+        UNION ALL
+        MATCH (dv:Devata)-[:HAS_AXIS]->(:DeityAxis {axis: 'UNSPECIFIED'})
+        RETURN 'NO_AXIS_ASSIGNED (not an axis; reported so the 214 reconcile)' AS axis,
+               count(DISTINCT CASE WHEN dv.structure = 'INDIVIDUAL'
+                                   THEN dv.display_label END) AS individual_deities,
+               count(CASE WHEN dv.structure = 'INDIVIDUAL' THEN dv END)
+                 AS individual_subjects,
+               count(dv) AS all_subjects,
+               count(CASE WHEN dv.structure = 'PAIR' THEN dv END) AS pair_subjects,
+               count(CASE WHEN dv.structure = 'GROUP' THEN dv END) AS group_subjects,
+               count(CASE WHEN NOT dv.structure IN ['INDIVIDUAL', 'PAIR', 'GROUP']
+                          THEN dv END) AS other_subjects,
+               collect(CASE WHEN dv.structure = 'INDIVIDUAL' THEN dv.display_label END)[0..12]
+                 AS individual_examples,
+               collect(CASE WHEN dv.structure <> 'INDIVIDUAL' THEN dv.display_label END)[0..8]
+                 AS non_individual_examples
         """,
         caveat=(
-            "Axes are curated interpretation (TIER_D), not source statements. 101 of 214 "
-            "deities are deliberately [UNSPECIFIED] and do not appear here."
+            "Axes are curated interpretation (TIER_D), not source statements. "
+            "`individual_deities` counts DISTINCT RESOLVED DEITIES, not rows: it "
+            "collapses epithet variants onto their base through EPITHET_VARIANT_OF and "
+            "collapses the six duplicate-label node pairs at the same time, because both "
+            "are the same error -- one entity counted twice. Before that resolution "
+            "FIRE_MEDIUM read 5 individual deities and is 2, Agni having been counted four "
+            "times as Agni, Agni Jatavedas, Agni Pavamana and Agni the slayer of demons. "
+            "`individual_subjects` is kept beside it as the unresolved row count so the "
+            "gap between them is visible rather than silently corrected. "
+            "This was the THIRD stratum of one question -- what counts as a deity -- found "
+            "in three successive adversarial passes: the unranked UNSPECIFIED bucket, then "
+            "composite double-counting beneath it, then epithet variants beneath that. "
+            "Unlike the first two, correcting this one does NOT change the top-ranked "
+            "member: the top six are identical before and after, so it was a wrong count "
+            "rather than a wrong answer. "
+            "RANKED ON `individual_deities`, NOT on `all_subjects`, and the two differ "
+            "enough to invert the answer. `all_subjects` counts every Anukramani "
+            "addressee carrying the axis, which DOUBLE-COUNTS a deity through every "
+            "dyad and group he appears in: WARRIOR reads 20 subjects of which only 3 "
+            "are individual deities -- 14 are PAIRs, 2 GROUPs, 1 abstraction -- and 13 "
+            "of the 20 are `Indra and X`, so the 20 is substantially Indra counted "
+            "eleven times. Ranked on individual deities, WARRIOR is not in the top "
+            "eight at all: TERRESTRIAL 7, ABSTRACT_PERSONIFICATION 6, "
+            "COSMIC_SOVEREIGN 6, SOLAR 6, then four at 5, and WARRIOR 3. "
+            "The V3.1 adversarial re-attack found this UNDERNEATH the UNSPECIFIED "
+            "defect: the first fix excluded the unranked bucket and left the composite "
+            "inflation, so the query still ranked on a number its own caveat told the "
+            "reader not to use, and returned `collect(DISTINCT structure)` -- a set, "
+            "not counts -- so the corrected ranking could not be recovered from the "
+            "output. Every component count is now a column. "
+            "DO NOT filter on `is_composite` for this: it means "
+            "'has a recorded decomposition', not 'is a compound', and it is false on "
+            "five genuine PAIRs such as `Indra and Parvata`. `structure` is the "
+            "reliable discriminator, and it is what `deity_widest_range` uses, so the "
+            "two queries now agree on what a deity is. "
+            "UNSPECIFIED is excluded from the ranking and returned as a final "
+            "NO_AXIS_ASSIGNED row so the 214 reconcile: 113 subjects carry a real axis "
+            "and 101 do not, and no subject carries both. For a genuine deity the "
+            "registry declines to characterise, UNSPECIFIED is a POSITIVE STATEMENT "
+            "rather than a gap -- but the bucket is not only that. Of the 101: 29 "
+            "ABSTRACT, 22 HUMAN, 22 INDIVIDUAL, 16 GROUP, 7 PATRON_PRAISE, 4 PAIR and "
+            "1 whose `structure` is itself UNSPECIFIED. The Devata label covers every "
+            "subject the Anukramani names as a hymn's addressee, which includes human "
+            "patrons (`Asamati, a patron`, `Brbu the carpenter`) and abstractions "
+            "(`Ka, the Who`) -- the same distinction the risi layer draws with "
+            "`is_seer`, where 113 of 729 rows are not seers."
         ),
         serves=(20, 38, 41, 46),
     ),
@@ -222,7 +325,8 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
         question="Which deities have the widest functional range?",
         cypher="""
         MATCH (dv:Devata)-[:HAS_AXIS]->(ax:DeityAxis)
-        WHERE ax.axis <> 'UNSPECIFIED'
+        WHERE ax.axis <> 'UNSPECIFIED' AND dv.structure = 'INDIVIDUAL'
+          AND NOT (dv)-[:EPITHET_VARIANT_OF]->(:Devata)
         WITH dv, count(ax) AS axis_count, collect(ax.axis) AS axes
         RETURN dv.display_label AS deity, axis_count, axes,
                coalesce(dv.profile_attributed_total, 0) AS attributed
@@ -332,9 +436,13 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
         question="Which natural phenomena does the corpus treat as deities?",
         cypher="""
         MATCH (dv:Devata)-[:DEVATA_ASSOCIATED_WITH]->(n:NaturalPhenomenon)
-        RETURN dv.display_label AS deity, dv.axes AS axes,
-               collect(n.display_label) AS phenomena
-        ORDER BY deity
+        OPTIONAL MATCH (dv)-[:EPITHET_VARIANT_OF]->(base:Devata)
+        WITH n, coalesce(base, dv) AS resolved
+        WHERE resolved.structure = 'INDIVIDUAL'
+        RETURN n.display_label AS phenomenon,
+               count(DISTINCT resolved) AS personifications,
+               collect(DISTINCT resolved.display_label) AS deities
+        ORDER BY personifications DESC, phenomenon
         """,
         caveat=(
             "Association, not identity. The registry refuses IS_GOD_OF and REPRESENTS by "
@@ -361,18 +469,45 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
         MATCH (p:Passage)-[m:MENTIONS_DEVATA]->(dv:Devata)
         WITH dv, p.veda AS veda, count(DISTINCT p) AS passages,
              count(DISTINCT CASE WHEN m.referent_certainty = 'DEITY_CERTAIN' THEN p END)
-               AS certain
-        WITH dv, collect([veda, passages, certain]) AS per_veda,
+               AS certain,
+             count(DISTINCT CASE WHEN m.referent_certainty = 'DEITY_PROBABLE' THEN p END)
+               AS probable,
+             count(DISTINCT CASE WHEN m.referent_certainty = 'DEITY_AMBIGUOUS' THEN p END)
+               AS ambiguous,
+             count(DISTINCT CASE WHEN m.referent_certainty IN $tiers THEN p END)
+               AS default_scope
+        WITH dv, collect([veda, passages, certain, probable, ambiguous, default_scope])
+               AS per_veda,
              count(veda) AS vedas, sum(passages) AS total,
-             sum(certain) AS total_certain
+             sum(certain) AS total_certain, sum(probable) AS total_probable,
+             sum(ambiguous) AS total_ambiguous, sum(default_scope) AS total_default_scope
         WHERE vedas = 4
         RETURN dv.display_label AS deity, total AS passages_naming,
-               total_certain AS deity_certain, per_veda
-        ORDER BY passages_naming DESC, deity
+               total_default_scope AS default_scope, total_certain AS deity_certain,
+               total_probable AS deity_probable, total_ambiguous AS deity_ambiguous,
+               per_veda
+        ORDER BY default_scope DESC, passages_naming DESC, deity
         """,
+        parameters={"tiers": _DEFAULT_TIERS},
         caveat=(
             "Complete, not a top-N: every deity naming all four corpora is returned. "
-            "`per_veda` rows are [veda, passages, deity_certain]. " + _MENTION_LAYER_CAVEAT
+            "`per_veda` rows are [veda, passages, certain, probable, ambiguous, "
+            "default_scope]. "
+            "RANKED ON `default_scope`, WHICH IS CERTAIN + PROBABLE. This query previously "
+            "reported only the CERTAIN column, and the V3.1 adversarial pass showed what "
+            "that does: Agni read AV 476 passages against **0** certain, beside Indra's "
+            "635 / 635 -- because the old two-way certainty split was a function of "
+            "extraction path, so CERTAIN effectively meant 'came from the Rigvedic lemma "
+            "annotation' and no non-Rigvedic mention of a deity whose name is also an "
+            "ordinary noun could ever reach it. A reader comparing the certain columns "
+            "would conclude Agni is absent from the Atharvaveda. All three tiers are now "
+            "returned so no single column can be read as presence or absence on its own. "
+            "Where the honest answer for a corpus is neither a count nor a zero, the "
+            "per-deity profile carries `profile_mention_verdict_by_veda`, which returns "
+            "INSUFFICIENT_EVIDENCE for 21 (deity, Veda) cells rather than a 0. Apah and "
+            "Vac are the two deities the PROBABLE tier does NOT rescue -- gold scores them "
+            "0.2500 and 0.0000 -- and they must not be rescued by widening a tier. "
+            + _MENTION_LAYER_CAVEAT
         ),
         serves=(1, 21, 34, 36, 44),
     ),
@@ -381,7 +516,7 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
         question="How much of the deity-mention layer is certain, per Veda and per method?",
         # One MATCH pattern, so count(*) here is a count of mention edges and is the
         # intended figure; count(DISTINCT p) is returned beside it because the two differ
-        # (16,261 edges over fewer passages) and only the pair shows by how much.
+        # (17,165 edges over fewer passages) and only the pair shows by how much.
         cypher="""
         MATCH (p:Passage)-[m:MENTIONS_DEVATA]->(:Devata)
         RETURN m.veda AS veda, m.extraction_path AS extraction_path,
@@ -476,7 +611,8 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
             "Complete, not a top-N: all 70 of the 292 pairs whose evidence is majority "
             "non-Rigvedic. This is the one deity question on which the later corpora "
             "outvote the Rigveda, and it is worth reading against the fact that the "
-            "Rigveda contributes 10,284 of the 16,261 mention edges: a pair that still "
+            f"Rigveda contributes {figures.MENTIONS_DEVATA_BY_VEDA['RV']:,} of the "
+            f"{figures.PREDICATE_TOTALS['MENTIONS_DEVATA']:,} mention edges: a pair that still "
             "comes out non-RV-majority against that weighting is a real Yajurvedic or "
             "Atharvavedic association. `per_veda_counts` is ordered [RV, SV, YV, AV]. "
             + _MENTION_LAYER_CAVEAT
@@ -511,6 +647,8 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
         RETURN m.veda AS veda, m.extraction_path AS extraction_path,
                count(DISTINCT CASE WHEN m.referent_certainty = 'DEITY_CERTAIN' THEN p END)
                  AS deity_certain,
+               count(DISTINCT CASE WHEN m.referent_certainty = 'DEITY_PROBABLE' THEN p END)
+                 AS deity_probable,
                count(DISTINCT CASE WHEN m.referent_certainty = 'DEITY_AMBIGUOUS' THEN p END)
                  AS ambiguous,
                count(DISTINCT p) AS passages
@@ -518,6 +656,13 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
         """,
         parameters={"key": SOMA},
         caveat=(
+            "ALL THREE TIERS ARE RETURNED and the columns reconcile against `passages`. "
+            "This query previously returned certain and ambiguous only, which did not "
+            "contrast two tiers -- it OMITTED one: Samavedic Soma read 0 certain and 116 "
+            "ambiguous beside 213 passages, so 97 PROBABLE mentions, 46% of SV Soma and "
+            "its largest probable count anywhere, sat in no column and the row did not add "
+            "up. A row whose parts do not sum to its own total is worse than a missing "
+            "column, because it looks complete. "
             "Defaults to Soma, where the ambiguity is not a defect in the matcher but the "
             "subject matter: soma is the god and the pressed drink and the plant, and the "
             "corpus does not lexically separate them. See soma_deity_versus_substance for "
@@ -542,7 +687,7 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
                      AS outer_total
         }
         MATCH (p:Passage:Mantra {veda: 'RV'})-[m:MENTIONS_DEVATA]->(dv:Devata)
-        WHERE m.referent_certainty = 'DEITY_CERTAIN'
+        WHERE m.referent_certainty IN $tiers
         WITH family_total, outer_total, dv,
              count(DISTINCT CASE WHEN substring(p.canonical_key, 10, 3) IN $family
                                  THEN p END) AS family_books,
@@ -557,6 +702,7 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
         parameters={
             "family": ["M02", "M03", "M04", "M05", "M06", "M07"],
             "outer": ["M01", "M08", "M09", "M10"],
+            "tiers": _DEFAULT_TIERS,
         },
         caveat=(
             "A top-25 of the deities with at least 20 certain mentions. The family-book / "
@@ -564,8 +710,16 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
             "is an interpretation imported by this query, not a property in the graph: "
             "Passage carries no layer, period or date, so this is the nearest the corpus "
             "comes to a diachronic question and it substitutes book order for time. "
-            "Restricted to DEITY_CERTAIN so the comparison is not driven by the ambiguous "
-            "common-noun aliases, which would move both columns together anyway."
+            "Restricted to the product DEFAULT referent tiers -- DEITY_CERTAIN plus "
+            "DEITY_PROBABLE -- so the comparison is not driven by the ambiguous "
+            "common-noun aliases, which would move both columns together anyway. It "
+            "previously hard-coded DEITY_CERTAIN, which silently dropped the Rigveda's "
+            "1,007 PROBABLE mentions; pass tiers=" + repr(_STRICT_TIERS) + " for the "
+            "strict comparison or " + repr(_EXPLORATORY_TIERS) + " for exploratory mode. "
+            "DEITY_PROBABLE carries a measured Wilson lower bound of 0.90 on 55 gold rows, "
+            "and its worst alias is `surya` for VG:DEVATA:SURYAH at 2 of 3, where a "
+            "recorded VOCATIVE can be a sandhi-reduced nominative -- a caller who needs "
+            "Surya specifically should read referent_basis rather than trust the tier."
         ),
         serves=(24, 30, 36),
     ),
@@ -648,6 +802,10 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
         MATCH (dv:Devata)-[r:PERFORMS_ACTION|IS_ASKED_TO]->(ap:ActionPredicate)
         RETURN ap.predicate AS action, ap.argument_frame AS argument_frame,
                count(DISTINCT dv) AS deities,
+               count(DISTINCT CASE WHEN dv.structure = 'INDIVIDUAL' THEN dv END)
+                 AS individual_deities,
+               count(DISTINCT CASE WHEN dv.structure <> 'INDIVIDUAL' THEN dv END)
+                 AS pair_group_and_other_subjects,
                count(DISTINCT CASE WHEN type(r) = 'PERFORMS_ACTION' THEN dv END)
                  AS deities_asserted,
                count(DISTINCT CASE WHEN type(r) = 'IS_ASKED_TO' THEN dv END)
@@ -701,9 +859,7 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
                r.assertion_count AS assertions, r.roots AS verbal_roots
         ORDER BY assertions DESC, action, deity LIMIT 30
         """,
-        parameters={
-            "actions": ["HEALS", "PROTECTS", "RESCUES", "BLESSES", "RELEASES", "PURIFIES"]
-        },
+        parameters={"actions": ["HEALS", "PROTECTS", "RESCUES", "BLESSES", "RELEASES", "PURIFIES"]},
         caveat=(
             "A top-30. HEALS is deliberately in the filter and contributes almost nothing: "
             "the predicate exists, its vocabulary covers 2 roots, and the whole Rigveda "
@@ -913,9 +1069,7 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
                count(DISTINCT p) AS mantras
         ORDER BY mantras DESC LIMIT 20
         """,
-        parameters={
-            "wealth": ["VG:CONCEPT:VASU-WEALTH", "VG:CONCEPT:HIRANYA-GOLD"]
-        },
+        parameters={"wealth": ["VG:CONCEPT:VASU-WEALTH", "VG:CONCEPT:HIRANYA-GOLD"]},
         caveat=(
             "Co-occurrence in one mantra, not a stated relation. Cattle-as-wealth is a "
             "real Vedic association, but this query measures adjacency only."
@@ -983,17 +1137,46 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
         name="rivers_and_tribes",
         question="Which rivers occur with which tribes or clans?",
         cypher="""
-        MATCH (p:Passage)-[:MENTIONS_ENTITY]->(r:River)
-        MATCH (p)-[:MENTIONS_ENTITY]->(t:Tribe)
-        RETURN r.display_label AS river, t.display_label AS tribe,
-               count(DISTINCT p) AS mantras, collect(p.canonical_citation)[0..4] AS examples
-        ORDER BY mantras DESC LIMIT 20
+        CALL () {
+            MATCH (p:Passage)-[:MENTIONS_ENTITY]->(r:River)
+            MATCH (p)-[:MENTIONS_ENTITY]->(t:Tribe)
+            RETURN r.display_label AS river, t.display_label AS tribe,
+                   count(DISTINCT p) AS mantras,
+                   collect(p.canonical_citation)[0..4] AS examples
+            ORDER BY mantras DESC LIMIT 20
+        }
+        RETURN river, tribe, mantras, examples, NULL AS census
+        UNION ALL
+        CALL () {
+            MATCH (p:Passage)-[:MENTIONS_ENTITY]->(r:River)
+            RETURN count(DISTINCT p) AS river_passages, count(DISTINCT r) AS rivers
+        }
+        CALL () {
+            MATCH (p:Passage)-[:MENTIONS_ENTITY]->(t:Tribe)
+            RETURN count(DISTINCT p) AS tribe_passages, count(DISTINCT t) AS tribes
+        }
+        CALL () {
+            MATCH (p:Passage)-[:MENTIONS_ENTITY]->(:River)
+            MATCH (p)-[:MENTIONS_ENTITY]->(:Tribe)
+            RETURN count(DISTINCT p) AS both
+        }
+        RETURN NULL AS river, NULL AS tribe, both AS mantras, [] AS examples,
+               'MEASURED AT QUERY TIME: ' + toString(rivers) + ' rivers over '
+               + toString(river_passages) + ' passages; ' + toString(tribes)
+               + ' tribes over ' + toString(tribe_passages) + ' passages; '
+               + toString(both) + ' passages naming one of each' AS census
         """,
         caveat=(
-            "Returns nothing, and that is a measured result rather than a missing "
-            "feature: 42 tribe mentions and 12 river mentions exist, and no mantra "
-            "carries one of each. Question 26 is therefore not answerable by "
-            "co-occurrence in this corpus. See tribes_mentioned and rivers_mentioned."
+            "The co-occurrence result is EMPTY, and that is a measured finding rather than "
+            "a missing feature: no mantra in this corpus names both a river and a tribe, "
+            "so Q26 is not answerable by co-occurrence here. The final row carries the "
+            "census MEASURED AT QUERY TIME, which is the V3.1 correction: this caveat "
+            "previously asserted '12 river mentions' against a live 249 edges over 243 "
+            "passages and 8 rivers, because a later lexicon pass grew the river layer "
+            "twentyfold and the hand-written figure was never revisited. The conclusion "
+            "survived the drift and the number did not, which is exactly why a figure a "
+            "reader might act on belongs in a row rather than in a caveat. See "
+            "tribes_mentioned and rivers_mentioned."
         ),
         serves=(26,),
     ),
@@ -1022,10 +1205,16 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
         ORDER BY condition, mantras DESC
         """,
         caveat=(
-            "Naming an affliction is weaker than treating it. There is deliberately no "
-            "separate 'fever' entity: takman- forms sit in YAKSMA-DISEASE because "
-            "splitting them would have put 39% of the paradigm under 'fever' and 61% "
-            "under 'disease' invisibly."
+            "Naming an affliction is weaker than treating it. CORRECTED IN V3.1: this "
+            "caveat read 'There is deliberately no separate fever entity: takman- "
+            "forms sit in YAKSMA-DISEASE'. That is no longer true -- "
+            "VG:CONCEPT:TAKMAN-FEVER exists and carries 33 mentions -- so the caveat "
+            "was denying the existence of an entity the same database returns. The "
+            "reason it originally gave still matters, and is now a live hazard rather "
+            "than a settled policy: the takman- paradigm is split across two "
+            "entities, so a query filtering on either alone undercounts fever. Read "
+            "TAKMAN-FEVER and YAKSMA-DISEASE together, and treat the split as "
+            "unmeasured until someone reconciles the paradigm."
         ),
         serves=(12, 15, 47),
     ),
@@ -1161,6 +1350,9 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
         OPTIONAL MATCH (r)-[:USES_OBJECT]->(ob:Object)
         OPTIONAL MATCH (r)-[:INVOKES_DEVATA]->(dv:Devata)
         RETURN r.display_label AS ritual, count(DISTINCT p) AS mantras,
+               'RANK WITHIN 8 NAMED RITUALS: the Ritual class holds 8 nodes against a '
+               + 'corpus naming considerably more, so this is not a corpus-wide ranking'
+                 AS inventory_coverage,
                collect(DISTINCT off.display_label) AS offerings,
                collect(DISTINCT sub.display_label) AS substances,
                collect(DISTINCT ob.display_label) AS objects,
@@ -1169,31 +1361,62 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
         """,
         caveat=(
             "Ritual structure is curated and thin by design: elaborate procedure is "
-            "largely post-Samhita and was not imported into Samhita passages."
+            "largely post-Samhita and was not imported into Samhita passages. The "
+            "`inventory_coverage` column states the binding limit in every row rather "
+            "than only here: Ritual holds 8 nodes, so a rank in this table is a rank "
+            "within 8 and not a statement about the corpus's rites. Offering was "
+            "expanded from 2 to 8 nodes in V3.1 and is still marked incomplete; "
+            "HumanConcern at 7 nodes is now the binding dimension for the four-way "
+            "ritual join."
         ),
-        serves=(5, 32, 39),
+        serves=(5, 32, 39, 56),
     ),
     DomainQuery(
         name="agni_and_indra_together",
         question="Which passages address both Agni and Indra?",
         cypher="""
-        MATCH (p:Passage)-[:HAS_DEVATA]->(:Devata {entity_key: $dual})
-        RETURN 'dual entity indragni' AS route, count(DISTINCT p) AS mantras,
+        MATCH (dual:Devata {entity_key: $dual})
+        OPTIONAL MATCH (p:Passage)-[:HAS_DEVATA]->(dual)
+        RETURN 'attributed to the dual deity indragni' AS route, 'RV' AS veda,
+               count(DISTINCT p) AS mantras, 'HAS_DEVATA (Anukramani ascription)' AS layer,
                collect(p.canonical_citation)[0..6] AS examples
         UNION ALL
-        MATCH (p:Passage)-[:HAS_DEVATA]->(:Devata {entity_key: $a})
-        MATCH (p)-[:HAS_DEVATA]->(:Devata {entity_key: $b})
-        RETURN 'both singly attributed' AS route, count(DISTINCT p) AS mantras,
+        MATCH (ag:Devata {entity_key: $a}), (ind:Devata {entity_key: $b})
+        OPTIONAL MATCH (p:Passage)-[:HAS_DEVATA]->(ag)
+        WHERE (p)-[:HAS_DEVATA]->(ind)
+        RETURN 'both singly ascribed in one mantra' AS route, 'RV' AS veda,
+               count(DISTINCT p) AS mantras, 'HAS_DEVATA (Anukramani ascription)' AS layer,
                collect(p.canonical_citation)[0..6] AS examples
+        UNION ALL
+        MATCH (p:Passage)-[:MENTIONS_DEVATA]->(:Devata {entity_key: $a})
+        MATCH (p)-[:MENTIONS_DEVATA]->(:Devata {entity_key: $b})
+        RETURN 'both NAMED in the same verse' AS route, p.veda AS veda,
+               count(DISTINCT p) AS mantras, 'MENTIONS_DEVATA (textual mention)' AS layer,
+               collect(p.canonical_citation)[0..6] AS examples
+        ORDER BY route, mantras DESC
         """,
         parameters={"a": AGNI, "b": INDRA, "dual": "VG:DEVATA:INDRAGNI"},
         caveat=(
-            "The second route returns zero, and that is the finding rather than a gap: "
-            "only 6 of 10,552 Rigvedic mantras carry more than one attributed deity, "
-            "because the Anukramani names one addressee per mantra. Where the tradition "
-            "means the pair it uses a dual deity, which is why VG:DEVATA:INDRAGNI exists "
-            "as its own entity, so co-attribution asks the wrong question of this "
-            "apparatus. " + _SCOPE_CAVEAT
+            "Two different questions, and the rows keep them apart because conflating "
+            "them is how this query previously misled. ASCRIBED: the Anukramani names "
+            f"one addressee per mantra, so only {figures.MULTI_DEVATA_MANTRAS} of "
+            f"{figures.CORPUS_MANTRAS['RV']:,} Rigvedic mantras carry more than one "
+            "ascribed deity, and where the tradition means the pair it uses the dual "
+            "deity VG:DEVATA:INDRAGNI instead. That near-zero is a property of the "
+            "ascription apparatus, NOT of the text. NAMED: the four-Veda mention layer "
+            "shows Agni and Indra named in the same verse in "
+            f"{sum(figures.AGNI_INDRA_CO_MENTION_BY_VEDA.values())} passages "
+            f"({figures.veda_breakdown(figures.AGNI_INDRA_CO_MENTION_BY_VEDA)}). "
+            "This caveat previously read 'the second route returns zero, and that is the "
+            "finding rather than a gap', which the same database disproves; it was "
+            "written against HAS_DEVATA and never revised when the mention layer landed. "
+            "It also could not be checked by running the query, because a UNION "
+            "branch whose MATCH finds nothing returns NO ROW rather than a zero: "
+            "the ascribed-pair route was invisible, not visibly empty. Both "
+            "ascription routes now use OPTIONAL MATCH so a structural zero is "
+            "shown as a zero. "
+            "The mention route is unfiltered on referent_certainty, so the impersonal "
+            "readings of agni are included. " + _SCOPE_CAVEAT
         ),
         serves=(5, 33),
     ),
@@ -1202,10 +1425,29 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
         question="Which priestly offices does the corpus name?",
         cypher="""
         MATCH (p:Passage)-[:MENTIONS_ENTITY]->(rr:RitualRole)
-        RETURN rr.display_label AS role, p.veda AS veda, count(DISTINCT p) AS mantras
-        ORDER BY role, mantras DESC
+        RETURN rr.display_label AS role, p.veda AS veda, count(DISTINCT p) AS mantras,
+               rr.alias_purity AS alias_purity,
+               rr.mention_edges_own_alias AS edges_own_alias,
+               rr.mention_edges_foreign_alias AS edges_foreign_alias
+        ORDER BY mantras DESC, role
         """,
-        caveat="Lexical mentions only.",
+        caveat=(
+            "Lexical mentions only, and the alias columns are not decoration. Until V3.1 "
+            "hotr carried no RitualRole label at all despite 321 mentions, so this table "
+            "omitted the principal officiant of the Rigveda -- a typed-label query "
+            "missing the most important member of the class it enumerates, which is one "
+            "of the three canonical misleading shapes in the frozen benchmark. It is now "
+            "present and heads the table. Its alias list was ALSO wrong in the other "
+            "direction and that has been corrected: of the original 321 edges, 14 were "
+            "adhvaryu forms and 11 were rtvij-, which names any officiant rather than an "
+            "office. The adhvaryu forms moved to their own node and the generic ones were "
+            "withdrawn without minting a catch-all office, which would have re-inflated "
+            "the very census this fixes. Measured alias purity is now 1.0 on 300 edges, "
+            "and it is published per role rather than assumed, so a role whose purity is "
+            "below 1.0 can be read as such: prefer `edges_own_alias` to `mantras` "
+            "whenever the office itself matters. Roles other than hotr carry no purity "
+            "figure yet, and a null there means unmeasured, not clean."
+        ),
         serves=(32, 39),
     ),
     DomainQuery(
@@ -1304,20 +1546,42 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
         question="Which passages are used for marriage, childbirth, funerals or assembly?",
         cypher="""
         MATCH (p:Passage)-[u:USED_FOR_RITE]->(rite:SocialRite)
+        WHERE u.attribution_precision IN $precision
         RETURN rite.display_label AS rite, p.veda AS veda, count(DISTINCT p) AS passages,
                collect(DISTINCT u.quality_tier) AS tiers,
+               collect(DISTINCT u.attribution_precision) AS precision,
+               rite.strict_recall_against_locus AS strict_recall_against_locus,
+               rite.locus_book AS locus_book,
+               rite.locus_tagged_passages AS locus_tagged_passages,
+               rite.locus_book_passages AS locus_book_passages,
                collect(p.canonical_citation)[0..5] AS examples
         ORDER BY rite, passages DESC
         """,
+        parameters={"precision": ["PER_PASSAGE"]},
         caveat=(
-            "Complete: all 110 edges over 6 rites. TIER_B, so stronger than PROTECTS_FROM "
-            "and TREATS, but it is still a derived reading of a lexical mention rather than "
-            "a rubric: recall on the gold-standard book is low, and AV Kanda 14 -- the "
-            "marriage book, 141 passages -- contributes only a minority of the marriage "
-            "rows. The RV rows are not noise: AV 14 redacts RV 10.85. `examples` is capped "
-            "at 5 with the true total in `passages`."
+            "DEFAULTS TO STRICT: 110 source-stated PER_PASSAGE edges over 6 rites. The "
+            "419 CONTAINER_INHERITED edges added in V3.1 are the locus BOOK's claim "
+            "projected onto its verses, not a statement about each verse, and they are "
+            "reachable only by passing "
+            "precision=['PER_PASSAGE','CONTAINER_INHERITED'] explicitly. "
+            "RECALL IS A COLUMN, NOT A CAVEAT, because the frozen criterion requires the "
+            "figure and the reader who runs the obvious query never sees a caveat. It is "
+            "LOW and is not softened: marriage tags 14 of the 141 passages of AV Kanda 14 "
+            "(9.93%), house-building 19 of 311 in AV Kanda 9 (6.11%). Enrichment against "
+            "the corpus baseline is nonetheless 58x and 35x, so the edges that do exist "
+            "are strongly non-random -- the layer is precise and thin, not noisy. "
+            "The locus book was deliberately NOT tagged wholesale: that would make recall "
+            "100% by construction and would assert of 127 Kanda 14 verses what no source "
+            "in this repository says. For the same reason no funerary locus is declared -- "
+            "of 9 Atharvavedic funerary tags Kanda 18 holds only one, so seeding from the "
+            "traditional identification would be external knowledge under cover of a "
+            "measurement. "
+            "TIER_B, so stronger than PROTECTS_FROM and TREATS, but still a derived "
+            "reading of a lexical mention rather than a rubric. The RV rows are not "
+            "noise: AV 14 redacts RV 10.85. `examples` is capped at 5 with the true total "
+            "in `passages`."
         ),
-        serves=(13, 14, 32),
+        serves=(13, 14, 32, 60),
     ),
     # ------------------------------------------------------------- cross-Veda
     DomainQuery(
@@ -1478,22 +1742,207 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
         serves=(8, 27, 50),
     ),
     DomainQuery(
-        name="conceptually_similar_not_reused",
-        question="Which cross-Veda passages share ideas without sharing text?",
+        name="entity_vocabulary_overlap_candidates",
+        question=(
+            "Which cross-Veda passages share entity vocabulary, rather than ideas, "
+            "without sharing text?"
+        ),
         cypher="""
-        MATCH (a:Passage)-[:MENTIONS_ENTITY]->(e:DomainEntity)<-[:MENTIONS_ENTITY]-(b:Passage)
-        WHERE a.veda < b.veda
-        WITH a, b, count(DISTINCT e) AS shared WHERE shared >= 3
-        AND NOT (a)-[:EXACT_PARALLEL_OF|NEAR_PARALLEL_OF|REUSES_TEXT_FROM]-(b)
-        RETURN a.canonical_citation AS passage_a, b.canonical_citation AS passage_b,
-               a.veda AS veda_a, b.veda AS veda_b, shared AS shared_entities
-        ORDER BY shared_entities DESC LIMIT 25
+        MATCH (a:Passage)-[r:SHARES_ENTITY_VOCABULARY_WITH]->(b:Passage)
+        RETURN 'ENTITY_VOCABULARY_OVERLAP' AS measure,
+               a.canonical_citation AS passage_a, b.canonical_citation AS passage_b,
+               r.veda_pair AS veda_pair, r.shared_entities AS shared_entities,
+               r.shared_entity_keys AS shared_entity_keys,
+               r.distinctiveness AS distinctiveness,
+               r.rarest_shared_df AS rarest_shared_passages,
+               'NOT_BUILT' AS semantic_resemblance_population,
+               'INSUFFICIENT_EVIDENCE for conceptual similarity: no non-lexical '
+               + 'resemblance measure exists in this graph' AS conceptual_similarity
+        ORDER BY distinctiveness DESC, shared_entities DESC LIMIT 25
         """,
         caveat=(
-            "Shared vocabulary is a weak proxy for shared idea, and high-frequency "
-            "entities dominate. Treat as a candidate list, not a finding."
+            "THIS QUERY DOES NOT ANSWER THE CONCEPTUAL-SIMILARITY QUESTION, and the "
+            "`conceptual_similarity` column says so in every row rather than leaving it "
+            "to this caveat. What it measures is entity-vocabulary overlap: both passages "
+            "mention the same registry entities. No non-lexical resemblance measure "
+            "exists anywhere in this graph -- no embedding, no vector index, no asserted "
+            "resemblance -- so `semantic_resemblance_population` is NOT_BUILT, and that "
+            "structural zero is typed rather than returned as a 0 a reader would read as "
+            "'no such resemblance in the corpus'. "
+            "It was renamed from `conceptually_similar_not_reused` in V3.1. Under the old "
+            "name it returned 25 confident-looking cross-Veda pairs ranked on a raw "
+            "shared-entity count, and the V3.1 benchmark diagnosis graded Q22 and Q49 "
+            "MISLEADING for it: both frozen criteria exclude lexical overlap in terms, and "
+            "a caveat is not sufficient because the reader who runs the obvious query "
+            "never sees the caveat. "
+            "RANK ON `distinctiveness`, NOT ON `shared_entities`. Three shared entities "
+            "are weak evidence when they are heaven, sacrifice and soma, which between "
+            "them touch a large share of the corpus, and strong evidence when one is "
+            "altar (vedi), which appears in 17 passages. `distinctiveness` is the "
+            "inverse-document-frequency sum over the shared entities and "
+            "`rarest_shared_passages` is the document frequency of the rarest one. "
+            "The layer is materialised, which is also why it is fast: computed online it "
+            "was an exact all-pairs self-join over a hub-skewed degree distribution "
+            "(maximum 1,206) taking 5.3 s, and it exceeded the 1.4 GiB transaction memory "
+            "limit and died outright as soon as the shared entities were collected. "
+            "Pairs already joined by EXACT_PARALLEL_OF, NEAR_PARALLEL_OF or "
+            "REUSES_TEXT_FROM are excluded, because the questions ask for resemblance "
+            "WITHOUT shared text."
         ),
-        serves=(22, 49),
+        serves=(22, 49, 81),
+    ),
+    DomainQuery(
+        name="confidence_is_a_pipeline_constant",
+        question=(
+            "Where is the graph uncertain, and is the confidence field a calibrated measurement?"
+        ),
+        cypher="""
+        MATCH ()-[r]->()
+        WHERE r.confidence IS NOT NULL
+        WITH type(r) AS predicate, r.confidence AS value, count(*) AS edges
+        WITH predicate, collect({value: value, edges: edges}) AS spread,
+             sum(edges) AS predicate_total
+        WITH predicate, predicate_total, spread,
+             reduce(top = 0, s IN spread | CASE WHEN s.edges > top THEN s.edges ELSE top END)
+               AS modal_edges
+        RETURN predicate, predicate_total, size(spread) AS distinct_values,
+               modal_edges,
+               round(1000.0 * modal_edges / predicate_total) / 10 AS modal_share_pct,
+               CASE WHEN size(spread) = 1 THEN 'SINGLE_CONSTANT'
+                    WHEN modal_edges * 2 > predicate_total THEN 'MAJORITY_ONE_CONSTANT'
+                    ELSE 'DISTRIBUTED' END AS guard_verdict,
+               'PIPELINE_PRIOR, NOT A CALIBRATED CONFIDENCE' AS what_this_field_is,
+               'NONE: no labelled evaluation set and no reliability curve exist in this '
+               + 'graph' AS calibration_evidence
+        ORDER BY predicate_total DESC
+        """,
+        caveat=(
+            "THE FIELD IS NAMED `confidence` AND IS NOT ONE. It is a pipeline prior: a "
+            "constant stamped per branch. Measured, 75,997 of 77,518 confidence-bearing "
+            "edges -- 98.0% -- sit at exactly one of three values (1.0 on 50,468, 0.85 on "
+            "12,809, 0.80 on 12,720). A researcher who filters `confidence >= 0.8` "
+            "believes they have raised precision and has selected a set of pipeline "
+            "branches. This got WORSE in V3, not better: the baseline's 0.42 cluster was "
+            "replaced by a 1.0 cluster of 50,468 edges. "
+            "`guard_verdict` is the constant-value guard, and it is returned per row "
+            "rather than described here: SINGLE_CONSTANT means the value carries no "
+            "information at all for that predicate, MAJORITY_ONE_CONSTANT means one value "
+            "covers over half of it. "
+            "There is NO calibrated uncertainty in this graph. There is no labelled "
+            "evaluation set and no reliability diagram; `human_gold_status` is "
+            "UNANNOTATED on 2,459 SemanticAssertion nodes and null on the other 2,406, "
+            "and `review_state` is UNREVIEWED on all of them. Calibration is HUMAN_BLOCKED "
+            "and cannot be produced by a model run. "
+            "For real per-edge uncertainty use `quality_tier`, `evidence_basis` and "
+            "`attribution_precision`, which are derived from what the edge actually rests "
+            "on. The field SHOULD be renamed to `pipeline_prior`; that rename is bounded "
+            "backlog rather than done, because `confidence` appears in 38 source files "
+            "and one of them, src/vedagraph/semantic/ontology.py, is inside the semantic "
+            "hash seal, where the same word means a model's own output rather than a "
+            "pipeline constant. A blanket rename would break the seal and conflate two "
+            "different quantities, so it needs a scoped pass over the edge writers alone."
+        ),
+        serves=(77,),
+    ),
+    DomainQuery(
+        name="entity_centrality_ranked",
+        question="Which entities are most central, and on which layer was that measured?",
+        cypher="""
+        MATCH (e:DomainEntity)
+        WHERE e.centrality_degree IS NOT NULL AND NOT e:Internal
+        RETURN e.display_label AS entity, e.display_type AS kind,
+               e.centrality_degree AS passages, e.centrality_share AS share_of_mentions,
+               e.centrality_measure AS measure, e.centrality_layer AS authoritative_layer,
+               e.centrality_bridging AS bridge_centrality
+        ORDER BY passages DESC LIMIT 30
+        """,
+        caveat=(
+            "The score is STORED, and that is the point. Nothing in this graph carried a "
+            "centrality value before V3.1, so a researcher asking this question wrote a "
+            "GDS projection -- and the natural projection over Passage/DomainEntity with "
+            "MENTIONS_ENTITY is DIRECTED and BIPARTITE, on which betweenness is 0.0 for "
+            "every node. The default thing a competent user does returned a full, "
+            "sortable ranking of zeros. A stored score cannot be silently mis-projected. "
+            "The layer is DECLARED: MENTIONS_ENTITY is authoritative and ABOUT_CONCEPT is "
+            "the rival, because 'which layer' was previously a coin flip that changed the "
+            "answer. What the choice costs is measured, not asserted -- Spearman rho "
+            "between the two rankings is 0.964 over 91 shared members, and the rival "
+            "layer's membership is a strict subset of the authoritative one "
+            "(only_in_rival = 0). See concept_layer_rank_correlation. "
+            "The measure is DEGREE over passage co-mention: how many passages name the "
+            "entity. BRIDGE centrality is NOT reported and the bridge_centrality column "
+            "says NOT_BUILT rather than 0, because there is no community structure in "
+            "this graph -- no Louvain, no modularity, no stored partition -- so bridging "
+            "between communities is not computable here and a zero column would read as "
+            "a ranking. Degree centrality also flatters ordinary nouns: heaven, soma and "
+            "fire lead partly because their words are common, which is a fact about "
+            "vocabulary as much as about prominence."
+        ),
+        serves=(37, 96),
+    ),
+    DomainQuery(
+        name="concept_layer_rank_correlation",
+        question=("Is the entity ranking robust to which concept layer it is computed on?"),
+        cypher="""
+        MATCH (m:DerivedMetric {metric_name: 'CONCEPT_LAYER_RANK_CORRELATION'})
+        RETURN m.subject_key AS authoritative_layer, m.values_json AS correlation,
+               m.method AS method, m.grade_basis AS why_this_layer,
+               m.interpretation AS interpretation
+        """,
+        caveat=(
+            "This is the robustness clause of the centrality questions, answered with a "
+            "number rather than a reassurance. A centrality answer computed on an "
+            "undeclared layer is a statement about annotation history, not about the "
+            "corpus. rho = 0.964 over 91 shared members means the two layers agree "
+            "closely, so the declared choice costs little -- but the 135 entities present "
+            "only in the authoritative layer are not evidence of disagreement, they are "
+            "membership difference, and the row reports them separately for that reason. "
+            "The correlation is computed over the two layers' only shared vocabulary, the "
+            "Sanskrit preferred label; entities with no Sanskrit label are dropped rather "
+            "than joined on English, because a rho over a bad join would read as the "
+            "layers disagreeing when it would really mean the join failed."
+        ),
+        serves=(96, 37),
+    ),
+    DomainQuery(
+        name="cross_veda_relatedness_method_census",
+        question=(
+            "Which cross-Veda connections come from literal reuse and which from "
+            "semantic resemblance?"
+        ),
+        cypher="""
+        UNWIND [
+          {method: 'EXACT_PARALLEL_OF', kind: 'LITERAL_TEXTUAL_REUSE'},
+          {method: 'NEAR_PARALLEL_OF', kind: 'LITERAL_TEXTUAL_REUSE'},
+          {method: 'REUSES_TEXT_FROM', kind: 'LITERAL_TEXTUAL_REUSE'},
+          {method: 'VARIANT_OF', kind: 'LITERAL_TEXTUAL_REUSE'},
+          {method: 'SHARES_ENTITY_VOCABULARY_WITH', kind: 'ENTITY_VOCABULARY_OVERLAP'}
+        ] AS spec
+        CALL (spec) {
+            MATCH (a:Passage)-[r]->(b:Passage)
+            WHERE type(r) = spec.method AND a.veda <> b.veda
+            RETURN count(r) AS edges
+        }
+        RETURN spec.kind AS resemblance_kind, spec.method AS method, edges,
+               'BUILT' AS population_status
+        UNION ALL
+        RETURN 'SEMANTIC_RESEMBLANCE' AS resemblance_kind,
+               'no measure implemented' AS method, 0 AS edges,
+               'NOT_BUILT' AS population_status
+        """,
+        caveat=(
+            "A METHOD CENSUS, not a finding about the corpus. The distinction is the "
+            "whole point of this query: the literal/semantic partition of cross-Veda "
+            "relatedness in this graph is 100/0, and read as a finding that would say "
+            "Vedic cross-corpus relatedness is purely textual. It says nothing of the "
+            "kind. It says no semantic-resemblance measure was ever built, which is why "
+            "the semantic row is typed NOT_BUILT rather than returned as a zero beside "
+            "the built populations. PARALLEL_TO is deliberately absent: all 69 of its "
+            "edges are within a single Veda, so it does not enter a cross-Veda partition "
+            "at all. SHARES_ENTITY_VOCABULARY_WITH is listed under its own kind and NOT "
+            "as semantic resemblance -- see entity_vocabulary_overlap_candidates."
+        ),
+        serves=(81, 22, 49),
     ),
     DomainQuery(
         name="concepts_bridging_vedas",
@@ -1532,7 +1981,8 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
         OPTIONAL MATCH (c)-[:SUPPORTED_BY]->(p:Passage)
         OPTIONAL MATCH (c)-[:SUPPORTED_BY_STATISTIC]->(m:DerivedMetric)
         OPTIONAL MATCH (c)-[:CONTRADICTS]->(other:InterpretiveClaim)
-        RETURN c.claim_id AS claim, c.status AS status, c.confidence AS confidence,
+        RETURN c.claim_id AS claim, c.about AS about, c.about_basis AS about_basis,
+               c.status AS status, c.confidence AS confidence,
                c.quality_tier AS tier, c.claim_text AS text, c.falsifier AS falsifier,
                collect(DISTINCT p.canonical_citation) AS passages,
                collect(DISTINCT {metric: m.metric_name, values: m.values_json}) AS statistics,
@@ -1552,11 +2002,50 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
         cypher="""
         MATCH (a:InterpretiveClaim)-[:CONTRADICTS]->(b:InterpretiveClaim)
         WHERE a.claim_id < b.claim_id
-        RETURN a.claim_id AS claim_a, a.status AS status_a, a.confidence AS confidence_a,
-               b.claim_id AS claim_b, b.status AS status_b, b.confidence AS confidence_b
+        WITH a, b,
+             CASE WHEN a.about = b.about AND a.about = 'VEDIC_TEXT'
+                  THEN 'RIVAL_READINGS_OF_THE_VEDIC_TEXT'
+                  WHEN a.about = b.about THEN 'SAME_CATEGORY_DISAGREEMENT_ABOUT_' + a.about
+                  ELSE 'CROSS_CATEGORY__' + a.about + '_VERSUS_' + b.about END
+               AS disagreement_kind
+        RETURN disagreement_kind,
+               a.claim_id AS claim_a, a.about AS about_a, a.status AS status_a,
+               a.confidence AS confidence_a,
+               b.claim_id AS claim_b, b.about AS about_b, b.status AS status_b,
+               b.confidence AS confidence_b
+        UNION ALL
+        MATCH (c:InterpretiveClaim)
+        WITH count(CASE WHEN c.about = 'VEDIC_TEXT' THEN 1 END) AS text_claims,
+             count(c) AS all_claims
+        WITH text_claims, all_claims,
+             size([(x:InterpretiveClaim)-[:CONTRADICTS]->(y:InterpretiveClaim)
+                   WHERE x.about = 'VEDIC_TEXT' AND y.about = 'VEDIC_TEXT' | x]) AS rival
+        WHERE rival = 0
+        RETURN 'INSUFFICIENT_EVIDENCE: this graph records no pair of RIVAL SCHOLARLY '
+               + 'READINGS of the Vedic text. It holds ' + toString(all_claims)
+               + ' interpretive claims, of which ' + toString(text_claims)
+               + ' are about the Vedic text, and no two of those contradict each other.'
+               AS disagreement_kind,
+               NULL AS claim_a, NULL AS about_a, NULL AS status_a, NULL AS confidence_a,
+               NULL AS claim_b, NULL AS about_b, NULL AS status_b, NULL AS confidence_b
         """,
-        caveat="Neither side is marked as winning.",
-        serves=(28,),
+        caveat=(
+            "Neither side is marked as winning, and -- the V3.1 correction -- the rows now "
+            "say WHAT KIND of disagreement each pair is. This query previously returned "
+            "one pair with no such marker, which a researcher would reasonably read as "
+            "recorded scholarly disagreement about the Vedas. It is not: all six "
+            "InterpretiveClaim nodes carry an `about` discriminator, and the single "
+            "CONTRADICTS pair is CROSS-CATEGORY -- SV-IDENTITY-IS-MELODIC is about the "
+            "VEDIC_TEXT and SV-PREDOMINANTLY-RV-REUSE is about the DATASET (1,662 of "
+            "1,844 mantras measured in this build). A measurement and an interpretation "
+            "of a tradition are in dialogue but cannot contradict each other. The final "
+            "row states INSUFFICIENT_EVIDENCE explicitly: this graph records NO pair of "
+            "rival scholarly readings of the Vedic text, and twelve attributed "
+            "commentarial positions would be the acquisition that changes that. Each "
+            "claim's `about_basis` records why it was classified as it was, because the "
+            "classification is a judgement and a query filters on it."
+        ),
+        serves=(28, 30, 72),
     ),
     DomainQuery(
         name="textual_versus_interpretive",
@@ -1568,6 +2057,15 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
         ORDER BY tier, edges DESC
         """,
         caveat=(
+            "A WHOLE-GRAPH CENSUS, and the slowest query in the catalogue for that reason: "
+            "`MATCH ()-[r]->()` touches every one of the 265,289 relationships, so its "
+            "cost is proportional to the graph and cannot be indexed away. Measured across "
+            "repeated runs it varies 222-361 ms with page-cache state, so it sits ON the "
+            "300 ms boundary rather than under it -- the V3.1 adversarial re-attack timed "
+            "it over in 5 of 7 runs, and the claim that all 90 queries are under 300 ms is "
+            "therefore false and is not made. It is well under the 1 s threshold at which "
+            "this project requires a batch label. Every other query in the catalogue is "
+            "under 240 ms and the median is 4.4 ms. "
             "TIER_C is empty by construction: the 736 model-extracted candidates are all "
             "state=CANDIDATE because there is no human gold to accept them against."
         ),
@@ -1797,11 +2295,30 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
                      AS source_stated,
                    collect(DISTINCT p.veda) AS vedas
         }
+        CALL (dv) {
+            MATCH (p:Passage)-[m:MENTIONS_DEVATA]->(dv)
+            RETURN p.veda AS veda, count(DISTINCT p) AS named_in,
+                   sum(CASE WHEN m.referent_certainty = 'DEITY_CERTAIN' THEN 1 ELSE 0 END)
+                     AS certain,
+                   sum(CASE WHEN m.referent_certainty = 'DEITY_PROBABLE' THEN 1 ELSE 0 END)
+                     AS probable,
+                   sum(CASE WHEN m.referent_certainty = 'DEITY_AMBIGUOUS' THEN 1 ELSE 0 END)
+                     AS ambiguous
+        }
+        WITH dv, axes, attributed_mantras, source_stated, vedas,
+             collect({veda: veda, named_in: named_in,
+                      per_1k_mantras:
+                        round(1000.0 * named_in / $corpus_mantras[veda] * 100) / 100,
+                      certain: certain, probable: probable,
+                      ambiguous: ambiguous}) AS named_by_veda
         RETURN dv.display_label AS deity, dv.structure AS structure, axes,
                dv.short_description AS description, attributed_mantras, source_stated,
-               vedas
+               vedas AS ascribed_vedas,
+               'HAS_DEVATA is the RV-only Anukramani layer: a non-RV zero here is LAYER '
+               + 'ABSENT, not deity absent' AS ascription_zero_means,
+               named_by_veda
         """,
-        parameters={"key": RUDRA},
+        parameters={"key": RUDRA, "corpus_mantras": dict(figures.CORPUS_MANTRAS)},
         caveat=(
             "No Siva identification is asserted anywhere in the graph. Rudra's later "
             "identification with Siva is post-Vedic and recording it here would dress a "
@@ -1810,7 +2327,15 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
             "MATCHes in one scope, the axis pattern multiplied the passage pattern, and "
             "`source_stated` -- a sum over rows rather than a count of distinct passages "
             "-- came back as 16 for Rudra's 8 source-stated edges, once per axis. "
-            + _SCOPE_CAVEAT
+            "The four-Veda block is the V3.1 correction: this query returned "
+            "vedas=['RV'] and 38 attributed mantras while the same database had Rudra "
+            "NAMED in all four corpora, and normalised for corpus size he is DENSER in "
+            "the Yajurveda than in the Rigveda -- the Satarudriya effect, which the "
+            "HAS_DEVATA-only view made invisible. Read per_1k_mantras, not named_in: the "
+            f"Rigveda is {figures.CORPUS_MANTRAS['RV'] / figures.CORPUS_MANTRAS['YV']:.1f}x "
+            "the Yajurveda by mantra count, so raw counts flatter it. The certainty "
+            "columns are reported rather than filtered because filtering to "
+            "DEITY_CERTAIN re-imposes the Rigveda-only answer this fix removes. " + _SCOPE_CAVEAT
         ),
         serves=(43,),
     ),
@@ -1834,12 +2359,22 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
         cypher=f"""
         MATCH (n:{LABEL_INTERNAL})
         UNWIND labels(n) AS label
-        WITH label WHERE NOT label IN
-          ['{LABEL_INTERNAL}', 'QAIssue', 'TextVersion', 'Translation', 'Source',
-           'SourceArtifact']
+        WITH label WHERE NOT label IN $internal_marked_labels
         RETURN label, count(*) AS leaked_nodes
         """,
-        caveat="An empty result is the pass condition.",
+        parameters={"internal_marked_labels": sorted(INTERNAL_MARKED_LABELS)},
+        caveat=(
+            "An empty result is the pass condition. The allow-list is DERIVED from "
+            "ontology.INTERNAL_MARKED_LABELS rather than restated here, because a "
+            "hard-coded copy of it drifted and this query -- whose entire job is to be "
+            "trusted about the product boundary -- reported 10,031 Lemma nodes as leaked. "
+            "They are not leaked: V3's fix to adversarial finding M-1 deliberately marked "
+            "the whole Lemma layer :Internal, because 39 deity lemmas were surfacing in "
+            "product traversal looking like deities while carrying none of a Devata's "
+            "profile. That decision was never written anywhere a checker could read. Note "
+            "also that the V3 close-out's claim that this check 'returns 0 rows (its pass "
+            "condition)' was measured BEFORE the marking landed."
+        ),
         serves=(),
     ),
     DomainQuery(

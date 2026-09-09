@@ -139,9 +139,62 @@ _ACCEPTING_VERDICTS: Final[frozenset[str]] = frozenset(
 #: name that is also an ordinary noun.
 ROLE_VOCATIVE: Final = "VOCATIVE"
 
-#: Referent certainty, recorded per edge.
+#: Referent certainty, recorded per edge. Three tiers, ordered by the *kind* of evidence
+#: behind them rather than by any measured rate -- see :func:`refine_referent_certainty`.
 CERTAIN: Final = "DEITY_CERTAIN"
+PROBABLE: Final = "DEITY_PROBABLE"
 AMBIGUOUS: Final = "DEITY_AMBIGUOUS"
+
+#: Certainty tiers in descending strength. The order is the contract: a consumer that
+#: wants "at least PROBABLE" slices this tuple rather than hard-coding two strings and
+#: silently missing a tier added later.
+REFERENT_TIERS: Final[tuple[str, ...]] = (CERTAIN, PROBABLE, AMBIGUOUS)
+
+#: **The product default for deity analytics.** Measured against
+#: ``data/gold/theonym_mention_gold_v1.jsonl``: CERTAIN 0.9712 (135/139) and PROBABLE
+#: 0.9818 (54/55) give 0.9742 (189/194) together, against 0.6142 (121/197) for what is
+#: left in AMBIGUOUS and 0.7928 for the unfiltered layer. Excluding AMBIGUOUS is therefore
+#: not a nicety: on the gold sample every asserted mention of ``VG:DEVATA:VAK`` is the
+#: common noun "speech", and this filter is the only thing between that deity and a
+#: confidently wrong answer.
+DEFAULT_REFERENT_TIERS: Final[frozenset[str]] = frozenset({CERTAIN, PROBABLE})
+
+#: Exploratory mode, which a caller must ask for by name. It buys recall over a bucket
+#: measured at 0.6142 precision, so it is for candidate generation and never for an
+#: answer presented as fact.
+EXPLORATORY_REFERENT_TIERS: Final[frozenset[str]] = frozenset(REFERENT_TIERS)
+
+#: The one tier a strict caller should use when a single wrong row costs more than a
+#: missing one.
+STRICT_REFERENT_TIERS: Final[frozenset[str]] = frozenset({CERTAIN})
+
+#: Morphological roles that presuppose a *person*, and are therefore the promotion
+#: evidence for :data:`PROBABLE`. A vocative is an address and one addresses a being, not
+#: a substance; a dative theonym in this corpus is the beneficiary of an offering, and a
+#: substance is not a beneficiary. Both spellings of each role are listed because the two
+#: paths label roles differently -- the Rigvedic path carries the annotation's case
+#: abbreviations, the surface paths carry the registry's own words.
+_ADDRESS_ROLES: Final[frozenset[str]] = frozenset({ROLE_VOCATIVE, "VOC"})
+_DEDICATION_ROLES: Final[frozenset[str]] = frozenset({"DATIVE", "DAT"})
+
+#: Roles that *veto* promotion however strong the other evidence, because the theonym sits
+#: inside a compound and a compound need not denote its members: soma-prsthaya ... agnaye
+#: at VSM 20.78 is an offering to *Agni* "soma-backed", and apsusadam ... vyomasadam at
+#: VSM 9.2 is "water-seated", not the Waters. The gold set measures the edges this vetoes
+#: at 0.5789 (11/19), which is AMBIGUOUS territory, and only 6 live edges are actually
+#: held back by it -- a cheap guard against a named error class.
+_COMPOUND_ROLES: Final[frozenset[str]] = frozenset({"COMPOUND_INITIAL", "COMPOUND_FINAL"})
+
+#: Bases recorded in ``referent_basis`` so a reader can see *which* rule moved an edge and
+#: audit that rule on its own rather than the bucket as a whole. This project has been
+#: embarrassed by an audit that sampled rows and reported 97%+ while one alias was 82.9%
+#: wrong, so the per-rule and per-alias breakdown is a stored property, not a report.
+BASIS_CERTAIN: Final = "certain"
+BASIS_ANUKRAMANI: Final = "R1_anukramani_corroboration"
+BASIS_ADDRESS: Final = "R2_address_morphology"
+BASIS_DEDICATION: Final = "R3_dedication_morphology"
+BASIS_COMPOUND_HOLD: Final = "compound_internal_hold"
+BASIS_IDENTITY_ONLY: Final = "identity_only"
 
 #: Deity-level ambiguity classes that make a non-vocative occurrence undecided.
 _HOMONYM_CLASSES: Final[frozenset[str]] = frozenset(
@@ -151,6 +204,149 @@ _HOMONYM_CLASSES: Final[frozenset[str]] = frozenset(
 
 class TheonymRegistryError(ValueError):
     """The theonym registry is unusable. Raised rather than degraded."""
+
+
+def refine_referent_certainty(
+    certainty: str,
+    roles: Iterable[str],
+    attribution_support: bool,
+) -> tuple[str, str]:
+    """Split the two-way certainty into three tiers, and record which rule did it.
+
+    **The defect this fixes.** :func:`_grade` produces two values, and 8,825 of 17,165
+    edges -- 51.4% of the deity mention layer -- landed in ``DEITY_AMBIGUOUS``. That is a
+    bucket a product cannot use: including it costs precision (measured 0.6142 against the
+    gold set) and excluding it discards half the layer, so default deity analytics had to
+    choose between a known-wrong answer and half an answer. Splitting it is worth more
+    than any improvement to detection, because detection is already measured at 0.9949 on
+    *which word*; what fails is *which sense*.
+
+    **What promotion may rest on, and what it may not.** Everything here is consumption
+    semantics over evidence already on the edge. Nothing re-derives the mention layer and
+    nothing consults a new source. A row is promoted only on an **independent positive
+    indication that the personal referent is meant** -- never on lemma or string identity,
+    which is exactly the evidence that produced the ambiguity in the first place. Three
+    such indications exist on these edges:
+
+    ``R1`` The Anukramani independently ascribes this passage to this deity
+        (``attribution_support``). Two sources agreeing about one passage is the strongest
+        thing available short of observed morphology. This module refuses to let it promote
+        a row to ``CERTAIN`` -- an ascription is about the passage, not about the word --
+        and ``PROBABLE`` is what it is for. Measured 1.0000 (8/8).
+    ``R2`` The matched form is a vocative. Refused as ``CERTAIN`` outside the Rigveda for a
+        reason that still stands: for a thematic a-stem the vocative singular and the
+        sandhi-reduced nominative singular are the same Samhita string, and the
+        pre-consonantal share runs from effectively 100% for ``agne`` down to 47% for
+        ``surya``. The address reading is therefore *available* and not *observed*, which
+        is the definition of this tier. Measured 0.9737 (37/38), and the cost of the
+        residual is visible and named: the only false positive in the whole ``PROBABLE``
+        gold slice is ``TMG-0427``, ``surya ivopadrk`` "like the sun in appearance", where
+        the recorded ``VOCATIVE`` is a reduced nominative -- the exact failure this
+        docstring predicts, on the exact form it predicts it on.
+    ``R3`` The matched form is a dative, the recipient of an offering. Measured 1.0000
+        (9/9).
+
+    **Signals considered and refused**, with the measurement that refused them, because a
+    reader should see what was rejected and not only what was kept. ``NOMINATIVE`` 0.8571
+    (24/28) and ``SANDHI_FUSED`` 0.8000 (20/25) are respectable but are not indications of
+    *personhood* -- a nominative Soma is exactly the "the soma flows" case -- and admitting
+    them would pull the tier below the 0.95 that makes a default worth having.
+    ``extraction_path = 'rv-lemma-annotation'`` was expected to be the strongest signal
+    here and **measures 0.5745 (27/47), the weakest of all of them**: the Rigvedic
+    vocatives were already taken into ``CERTAIN`` by :func:`_grade`, so what is left on
+    that path is pure oblique-case homonym residue. Promoting the annotated path as a class
+    would have been the intuitive move, and the measurement says it is wrong.
+
+    Returns the tier and the basis. ``CERTAIN`` passes through untouched: this function
+    never demotes a row :func:`_grade` settled, because that would relitigate the
+    morphology that settled it.
+    """
+    if certainty == CERTAIN:
+        return CERTAIN, BASIS_CERTAIN
+    role_set = set(roles)
+    if role_set & _COMPOUND_ROLES:
+        return AMBIGUOUS, BASIS_COMPOUND_HOLD
+    if attribution_support:
+        return PROBABLE, BASIS_ANUKRAMANI
+    if role_set & _ADDRESS_ROLES:
+        return PROBABLE, BASIS_ADDRESS
+    if role_set & _DEDICATION_ROLES:
+        return PROBABLE, BASIS_DEDICATION
+    return AMBIGUOUS, BASIS_IDENTITY_ONLY
+
+
+#: The three states a deity-presence answer may return. ``ATTESTED`` and ``NOT_IN_LAYER``
+#: are ordinary; ``INSUFFICIENT_EVIDENCE`` is the one that had to be added, and
+#: :func:`mention_verdict` explains why.
+VERDICT_ATTESTED: Final = "ATTESTED"
+VERDICT_INSUFFICIENT: Final = "INSUFFICIENT_EVIDENCE"
+VERDICT_ABSENT: Final = "NOT_IN_LAYER"
+
+
+def mention_verdict(certain: int, probable: int, ambiguous: int) -> str:
+    """What a deity-presence answer is allowed to say, given the three tier counts.
+
+    **The defect this closes is a zero that reads as an absence, and it is measured.**
+    Before the three-way split, ``referent_certainty`` was in practice a function of
+    *extraction path* rather than of context: :func:`_grade` returns ``CERTAIN`` outside the
+    Rigveda only when the deity's name is not also a common noun, and only the Rigveda has
+    the Zurich annotation that can settle a homonym. The consequence is exact and was
+    verified per deity, not per aggregate: of the 2,440 non-Rigvedic ``DEITY_CERTAIN``
+    edges, **zero** belong to Agni, Soma, Sūrya, Mitra, Savitṛ, Uṣas, Vāyu, Āpaḥ, Pṛthivī
+    or Vāc; they belong entirely to the seventeen deities whose names are not common nouns
+    (Indra 1,261, Bṛhaspati 197, Varuṇa 197, ...). So an analyst who applied the cautious
+    filter got **a worse answer than one who applied none**: "Agni: Yajurveda 0" for a
+    deity named on 276 Yajurvedic verses.
+
+    The ``PROBABLE`` tier removes that for eight of those ten deities in all three
+    unannotated corpora -- Agni SV 82 / YV 97 / AV 170, Soma 97 / 36 / 26, Sūrya 14 / 21 /
+    51, Mitra 5 / 5 / 10, Savitṛ 1 / 14 / 13, Vāyu 7 / 15 / 10, Pṛthivī 0 / 18 / 19, Uṣas
+    2 / 0 / 3 -- all of which were zero before. It does **not** remove it for Āpaḥ or Vāc,
+    and 21 (deity, Veda) cells corpus-wide still have mentions and nothing in the default
+    scope.
+
+    Widening ``CERTAIN`` to make those cells non-empty was available and is refused: it
+    would make the numbers look better by making the tier mean less, and for Āpaḥ (gold
+    precision 0.2500) and Vāc (0.0000 on ten rows) a zero in the default scope is the
+    *correct* result. What is wrong is not the zero, it is a zero **typed as a count**. So
+    the residual is typed instead:
+
+    ``ATTESTED``
+        The default scope has evidence. Return the count.
+    ``INSUFFICIENT_EVIDENCE``
+        The deity is named in this slice, and no mention reaches the default scope. This is
+        a statement about the *evidence*, not about the text, and it must never be rendered
+        as ``0``. The ambiguous count is reported beside it so the caller can see how much
+        is being withheld and can ask for exploratory mode.
+    ``NOT_IN_LAYER``
+        No mention at any tier. Still not "absent from the corpus" -- the mention layer's
+        measured recall is 0.8857 -- but it is the strongest absence this layer can state.
+    """
+    if certain + probable > 0:
+        return VERDICT_ATTESTED
+    if ambiguous > 0:
+        return VERDICT_INSUFFICIENT
+    return VERDICT_ABSENT
+
+
+def referent_tiers_for_mode(mode: str) -> frozenset[str]:
+    """The tiers a caller in ``mode`` may read. This is the stated product contract.
+
+    ``"default"`` is ``CERTAIN`` + ``PROBABLE``, ``"strict"`` is ``CERTAIN`` alone and
+    ``"exploratory"`` is everything. An unknown mode raises rather than falling back to the
+    widest set, because a typo silently widening a filter is how an ambiguous row reaches a
+    user as a fact.
+    """
+    modes = {
+        "default": DEFAULT_REFERENT_TIERS,
+        "strict": STRICT_REFERENT_TIERS,
+        "exploratory": EXPLORATORY_REFERENT_TIERS,
+    }
+    if mode not in modes:
+        raise TheonymRegistryError(
+            f"unknown referent-certainty mode {mode!r}; expected one of {sorted(modes)}"
+        )
+    return modes[mode]
 
 
 @dataclass(frozen=True)
@@ -463,6 +659,9 @@ class TheonymMentionRow:
     matched_forms: tuple[str, ...]
     occurrences: int
     referent_certainty: str
+    #: Which rule in :func:`refine_referent_certainty` settled the tier. Stored so the
+    #: bucket can be audited one rule at a time instead of as an average.
+    referent_basis: str
     attribution_support: bool
     quality_tier: QualityTier
     provenance: Provenance
@@ -483,6 +682,7 @@ class TheonymMentionRow:
             "matched_forms": list(self.matched_forms),
             "occurrences": self.occurrences,
             "referent_certainty": self.referent_certainty,
+            "referent_basis": self.referent_basis,
             "attribution_support": self.attribution_support,
             "attribution_precision": "TEXTUAL_MENTION",
             "evidence_basis": "SANSKRIT",
@@ -686,7 +886,8 @@ def extract_theonym_mentions(
     per_veda: dict[str, int] = {}
     covered: dict[str, set[str]] = {}
     path_counts: dict[str, int] = {PATH_ANNOTATION: 0, PATH_TOKEN: 0, PATH_SANDHI: 0}
-    certainty_counts: dict[str, int] = {CERTAIN: 0, AMBIGUOUS: 0}
+    certainty_counts: dict[str, int] = dict.fromkeys(REFERENT_TIERS, 0)
+    basis_counts: dict[str, int] = {}
     support_counts: dict[str, int] = {"supported": 0, "unsupported": 0}
 
     for mantra in corpus.mantras:
@@ -709,8 +910,9 @@ def extract_theonym_mentions(
         for devata_id, (path, occurrence) in sorted(hits.items()):
             deity = index.deities[devata_id]
             roles = tuple(sorted(occurrence.roles))
-            tier, basis, certainty = _grade(deity, path, roles)
+            tier, basis, base_certainty = _grade(deity, path, roles)
             support = devata_id in mantra.devatas
+            certainty, referent_basis = refine_referent_certainty(base_certainty, roles, support)
             provenance = Provenance(
                 trust=(
                     TrustClass.SOURCE_EXPLICIT
@@ -746,6 +948,7 @@ def extract_theonym_mentions(
                     matched_forms=tuple(sorted(occurrence.forms)),
                     occurrences=occurrence.count,
                     referent_certainty=certainty,
+                    referent_basis=referent_basis,
                     attribution_support=support,
                     quality_tier=tier,
                     provenance=provenance,
@@ -755,6 +958,7 @@ def extract_theonym_mentions(
             covered.setdefault(mantra.veda, set()).add(mantra.passage_key)
             path_counts[path] += 1
             certainty_counts[certainty] += 1
+            basis_counts[referent_basis] = basis_counts.get(referent_basis, 0) + 1
             support_counts["supported" if support else "unsupported"] += 1
 
     rows.sort(key=lambda row: (row.passage_key, row.devata_id))
@@ -763,6 +967,7 @@ def extract_theonym_mentions(
         "registry": index.counts,
         "mentions_by_path": dict(sorted(path_counts.items())),
         "referent_certainty": dict(sorted(certainty_counts.items())),
+        "referent_basis": dict(sorted(basis_counts.items())),
         "anukramani_attribution_support": dict(sorted(support_counts.items())),
         "tier": {
             str(tier): sum(1 for row in rows if row.quality_tier is tier)

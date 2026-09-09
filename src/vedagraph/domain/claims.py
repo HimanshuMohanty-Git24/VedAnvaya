@@ -93,6 +93,17 @@ class InterpretiveClaim:
     #: What would have to be true for this claim to be wrong. Mandatory: a claim nobody
     #: can imagine being wrong is not a claim, it is a slogan.
     falsifier: str
+    #: What the claim is a claim ABOUT: ``VEDIC_TEXT``, ``DATASET`` or
+    #: ``TRADITIONAL_APPARATUS``. Mandatory, and the discriminator that keeps a query for
+    #: "where do competing interpretations exist" from returning an argument about this
+    #: project's build to a reader who asked about the Vedas. Every one of the six claims
+    #: in the registry names a passage of Vedic text somewhere in its wording, so the
+    #: distinction cannot be drawn from the text and has to be declared.
+    about: str
+    #: Why this claim carries the ``about`` value it carries. Mandatory because the
+    #: classification is a judgement, and an unaudited judgement in a field a query
+    #: filters on is how a scope rule becomes invisible.
+    about_basis: str
 
     @property
     def provenance(self) -> Provenance:
@@ -121,6 +132,8 @@ class InterpretiveClaim:
             "confidence": self.confidence,
             "method": self.method,
             "falsifier": self.falsifier,
+            "about": self.about,
+            "about_basis": self.about_basis,
             "asserted_by": self.asserted_by,
             "quality_tier": str(QualityTier.TIER_D),
             "evidence_passages": len(self.supported_by),
@@ -130,6 +143,21 @@ class InterpretiveClaim:
             "short_description": self.claim_text,
             "domain_model_version": DOMAIN_MODEL_VERSION,
         }
+
+
+#: The only values ``about`` may take. A closed set, so a typo fails the load rather than
+#: creating a fourth category no query filters on.
+CLAIM_ABOUT_VALUES: tuple[str, ...] = ("VEDIC_TEXT", "DATASET", "TRADITIONAL_APPARATUS")
+
+
+def _about(claim_id: str, value: object) -> str:
+    """``about``, refusing anything outside the closed set."""
+    text = str(value or "").strip()
+    if text not in CLAIM_ABOUT_VALUES:
+        raise ClaimRegistryError(
+            f"{claim_id}: about must be one of {CLAIM_ABOUT_VALUES}, got {value!r}"
+        )
+    return text
 
 
 def _text(claim_id: str, field: str, value: object) -> str:
@@ -196,9 +224,7 @@ def load_claims(
             )
 
         supported_by = _keys(claim_id, "supported_by", entry.get("supported_by"))
-        statistics = _keys(
-            claim_id, "supported_by_statistic", entry.get("supported_by_statistic")
-        )
+        statistics = _keys(claim_id, "supported_by_statistic", entry.get("supported_by_statistic"))
         if not supported_by and not statistics:
             raise ClaimRegistryError(
                 f"{claim_id}: cites neither a passage nor a metric. An interpretation "
@@ -225,6 +251,8 @@ def load_claims(
                 claim_type=_text(claim_id, "claim_type", entry.get("claim_type")),
                 status=ClaimStatus(status),
                 scope=_text(claim_id, "scope", entry.get("scope")),
+                about=_about(claim_id, entry.get("about")),
+                about_basis=_text(claim_id, "about_basis", entry.get("about_basis")),
                 supported_by=supported_by,
                 supported_by_statistic=statistics,
                 concerns=_keys(claim_id, "concerns", entry.get("concerns")),
@@ -240,9 +268,7 @@ def load_claims(
     for claim in claims:
         for other in claim.contradicts:
             if other not in known:
-                raise ClaimRegistryError(
-                    f"{claim.claim_id}: contradicts unknown claim {other!r}"
-                )
+                raise ClaimRegistryError(f"{claim.claim_id}: contradicts unknown claim {other!r}")
     return tuple(sorted(claims, key=lambda claim: claim.claim_id))
 
 
@@ -255,9 +281,7 @@ def claim_summary(claims: Sequence[InterpretiveClaim]) -> dict[str, Any]:
         "claims": len(claims),
         "with_passage_evidence": sum(1 for c in claims if c.supported_by),
         "with_statistical_evidence": sum(1 for c in claims if c.supported_by_statistic),
-        "with_both": sum(
-            1 for c in claims if c.supported_by and c.supported_by_statistic
-        ),
+        "with_both": sum(1 for c in claims if c.supported_by and c.supported_by_statistic),
         "with_external_source": sum(1 for c in claims if c.asserted_by),
         "by_status": dict(sorted(by_status.items())),
     }

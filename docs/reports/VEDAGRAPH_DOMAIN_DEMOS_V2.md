@@ -5,7 +5,7 @@ below is real output, and every query is published with the `caveat` recorded
 alongside it in `vedagraph.domain.queries` -- an answer without its limits is the
 failure this pass exists to fix.
 
-- queries run: **48**
+- queries run: **90**
 - errors: **0**
 - unexpectedly empty: **0**
 
@@ -13,54 +13,96 @@ failure this pass exists to fix.
 
 | query | rows | ms | serves questions |
 |---|---|---|---|
-| `deity_profile` | 1 | 57.9 | 1, 17, 18, 19, 20, 38, 43, 44, 45, 46 |
-| `varuna_profile` | 1 | 50.2 | 3, 44 |
-| `deities_by_axis` | 22 | 14.7 | 20, 38, 41, 46 |
-| `deity_widest_range` | 15 | 102.9 | 38, 46 |
-| `deity_composition` | 14 | 5.1 | 33, 42 |
-| `deity_co_occurrence` | 4 | 23.4 | 23, 33, 35 |
-| `deities_through_common_rishis` | 20 | 23.1 | 2, 19, 35 |
-| `rishis_invoking_deity` | 15 | 8.8 | 2, 19 |
-| `rishis_invoking_deity_strict` | 4 | 4.4 | 2, 19, 29 |
-| `deity_epithets` | 4 | 2.2 | 42 |
-| `natural_phenomena_personified` | 19 | 3.5 | 41, 46 |
-| `crops_by_veda` | 10 | 3.0 | 9, 48 |
-| `metals_by_veda` | 11 | 57.4 | 10 |
-| `animals_by_veda` | 42 | 7.0 | 11, 48 |
-| `animals_with_wealth` | 13 | 5.0 | 11, 48 |
-| `weapons_and_deities` | 25 | 6.9 | 25, 40 |
-| `ritual_objects_recurring` | 19 | 6.4 | 25, 40 |
-| `rivers_mentioned` | 12 | 2.8 | 26 |
-| `tribes_mentioned` | 11 | 2.4 | 26 |
-| `rivers_and_tribes` | 0 | 1.5 | 26 |
-| `human_concerns_by_veda` | 13 | 2.1 | 13, 14, 15, 16, 32, 47, 48 |
-| `conditions_treated` | 18 | 2.3 | 12, 15, 47 |
-| `condition_neighbourhood` | 25 | 3.8 | 12, 15, 47 |
-| `social_rites` | 8 | 2.2 | 13, 14 |
-| `medicinal_plants` | 28 | 3.8 | 47 |
-| `ritual_profile` | 4 | 15.1 | 5, 32, 39 |
-| `agni_and_indra_together` | 1 | 7.2 | 5, 33 |
-| `ritual_roles` | 17 | 2.2 | 32, 39 |
-| `substances_offered_to_deities` | 30 | 6.8 | 4, 31 |
-| `sv_reuse_of_rv` | 30 | 3.6 | 6, 7, 50 |
-| `cross_veda_formulas` | 30 | 6.0 | 8, 27 |
-| `formula_family_diffusion` | 4 | 2.0 | 8, 27, 50 |
-| `conceptually_similar_not_reused` | 25 | 7575.9 | 22, 49 |
-| `concepts_bridging_vedas` | 30 | 46.1 | 21, 34, 36 |
-| `entity_distribution_by_veda` | 91 | 34.4 | 21, 24, 36 |
-| `claim_evidence_trace` | 6 | 4.1 | 28, 29, 30 |
-| `competing_interpretations` | 1 | 3.3 | 28 |
-| `textual_versus_interpretive` | 5 | 324.0 | 29, 30 |
-| `attribution_precision_audit` | 6 | 23.2 | 29, 30 |
-| `theonym_ambiguous_mentions` | 42 | 32.3 | 29, 45, 46 |
-| `soma_deity_versus_substance` | 1 | 12.4 | 17, 45 |
-| `agni_deity_fire_medium` | 1 | 8.4 | 20, 46 |
-| `rudra_profile_no_shiva` | 1 | 2.9 | 43 |
-| `product_graph_census` | 35 | 39.2 | - |
-| `internal_leakage_check` | 0 | 24.9 | - |
-| `orphan_domain_entities` | 0 | 2.9 | - |
-| `unlabelled_product_nodes` | 0 | 63.9 | - |
-| `devata_taxonomy_coverage` | 7 | 2.7 | - |
+| `deity_profile` | 1 | 85.9 | 1, 17, 18, 19, 20, 38, 43, 44, 45, 46 |
+| `varuna_profile` | 1 | 4.7 | 3, 44 |
+| `deities_by_axis` | 22 | 8.0 | 20, 38, 41, 46 |
+| `deity_widest_range` | 15 | 6.6 | 38, 46 |
+| `deity_composition` | 14 | 5.9 | 33, 42 |
+| `deity_co_occurrence` | 4 | 39.7 | 23, 33, 35 |
+| `deities_through_common_rishis` | 20 | 21.3 | 2, 19, 35 |
+| `rishis_invoking_deity` | 15 | 6.6 | 2, 19 |
+| `rishis_invoking_deity_strict` | 4 | 3.4 | 2, 19, 29 |
+| `deity_epithets` | 4 | 1.5 | 42 |
+| `natural_phenomena_personified` | 9 | 1.7 | 41, 46 |
+| `devatas_named_in_all_four_vedas` | 35 | 36.6 | 1, 21, 34, 36, 44 |
+| `devata_mention_certainty_by_veda` | 15 | 29.9 | 29, 30, 45, 46 |
+| `deity_reach_named_versus_ascribed` | 25 | 16.5 | 1, 29, 44, 46 |
+| `deity_pairs_far_above_chance` | 25 | 3.9 | 23, 33, 35 |
+| `deity_pairs_not_rigvedic` | 106 | 6.3 | 1, 23, 33, 36 |
+| `deity_mention_surface_forms` | 30 | 7.2 | 42, 45, 46 |
+| `soma_certainty_across_the_corpus` | 4 | 4.4 | 17, 45, 46 |
+| `rv_family_books_versus_outer_books` | 25 | 42.3 | 24, 30, 36 |
+| `deity_actions_performed` | 30 | 3.4 | 17, 18, 20, 43 |
+| `deity_actions_requested` | 30 | 2.8 | 12, 18, 32 |
+| `deity_asserted_versus_requested` | 37 | 2.8 | 17, 18, 43, 44 |
+| `action_predicate_breadth` | 40 | 3.5 | 18, 38, 46 |
+| `deity_action_repertoire_breadth` | 25 | 3.4 | 18, 38, 46 |
+| `deities_who_heal_and_protect` | 30 | 2.4 | 12, 18, 47 |
+| `who_does_what_to_whom` | 30 | 8.0 | 17, 18, 29 |
+| `assertion_layers_reported_separately` | 2 | 36.7 | 29, 30 |
+| `model_assertion_claims` | 46 | 29.4 | 29, 30 |
+| `assertions_on_one_passage` | 13 | 2.5 | 18, 29, 30 |
+| `action_vocabulary_coverage` | 41 | 4.1 | 18, 29, 30 |
+| `unmapped_verbal_roots` | 20 | 2.9 | 18, 29 |
+| `crops_by_veda` | 10 | 2.9 | 9, 48 |
+| `metals_by_veda` | 11 | 2.4 | 10 |
+| `animals_by_veda` | 46 | 4.4 | 11, 48 |
+| `animals_with_wealth` | 13 | 4.8 | 11, 48 |
+| `weapons_and_deities` | 25 | 9.1 | 25, 40 |
+| `ritual_objects_recurring` | 23 | 4.0 | 25, 40 |
+| `rivers_mentioned` | 14 | 2.2 | 26 |
+| `tribes_mentioned` | 11 | 3.0 | 26 |
+| `rivers_and_tribes` | 0 | 1.6 | 26 |
+| `human_concerns_by_veda` | 20 | 2.6 | 13, 14, 15, 16, 32, 47, 48 |
+| `conditions_treated` | 56 | 3.6 | 12, 15, 47 |
+| `condition_neighbourhood` | 25 | 3.0 | 12, 15, 47 |
+| `social_rites` | 10 | 2.3 | 13, 14 |
+| `medicinal_plants` | 40 | 4.6 | 47 |
+| `passages_protecting_against` | 30 | 3.8 | 15, 16, 32, 47 |
+| `concerns_addressed_versus_protected_from` | 30 | 5.2 | 13, 14, 15, 16, 29, 47, 48 |
+| `av_deity_ascription_descriptors` | 25 | 15.4 | 29, 41, 42 |
+| `ritual_profile` | 8 | 34.0 | 5, 32, 39, 56 |
+| `agni_and_indra_together` | 6 | 18.2 | 5, 33 |
+| `ritual_roles` | 31 | 3.1 | 32, 39 |
+| `substances_offered_to_deities` | 30 | 6.7 | 4, 31 |
+| `rituals_described_in_passages` | 8 | 2.3 | 5, 32, 39 |
+| `ritual_step_sequence` | 3 | 1.8 | 32, 39 |
+| `ritual_officiants_and_purposes` | 8 | 2.0 | 5, 32, 39 |
+| `passages_used_for_a_rite` | 10 | 2.3 | 13, 14, 32, 60 |
+| `sv_reuse_of_rv` | 30 | 3.5 | 6, 7, 50 |
+| `cross_veda_formulas` | 30 | 5.9 | 8, 27 |
+| `formula_family_diffusion` | 4 | 1.7 | 8, 27, 50 |
+| `formula_family_span_census` | 4 | 3.3 | 8, 27 |
+| `formula_families_reaching_all_four_vedas` | 25 | 2.4 | 8, 27, 50 |
+| `formula_family_membership_roles` | 6 | 10.3 | 7, 27, 29 |
+| `formula_family_similarity_derived` | 5 | 5.1 | 7, 27, 29 |
+| `formula_family_profile` | 14 | 3.0 | 8, 27, 50 |
+| `entity_vocabulary_overlap_candidates` | 25 | 7.3 | 22, 49, 81 |
+| `confidence_is_a_pipeline_constant` | 18 | 207.7 | 77 |
+| `entity_centrality_ranked` | 30 | 3.6 | 37, 96 |
+| `concept_layer_rank_correlation` | 1 | 1.8 | 96, 37 |
+| `cross_veda_relatedness_method_census` | 6 | 177.6 | 81, 22, 49 |
+| `concepts_bridging_vedas` | 30 | 20.3 | 21, 34, 36 |
+| `entity_distribution_by_veda` | 91 | 35.7 | 21, 24, 36 |
+| `claim_evidence_trace` | 6 | 3.6 | 28, 29, 30 |
+| `competing_interpretations` | 2 | 3.3 | 28, 30, 72 |
+| `textual_versus_interpretive` | 6 | 306.4 | 29, 30 |
+| `attribution_precision_audit` | 6 | 70.6 | 29, 30 |
+| `layer_coverage_boundary` | 9 | 46.9 | 21, 29, 30, 36 |
+| `rishi_layer_reach_by_veda` | 3 | 24.8 | 2, 19, 29, 35 |
+| `chandas_layer_reach_by_veda` | 2 | 23.6 | 24, 29, 30 |
+| `model_adjudicated_edges` | 18 | 175.9 | 29, 30 |
+| `model_adjudicated_review_trail` | 30 | 166.9 | 29, 30 |
+| `theonym_ambiguous_mentions` | 42 | 22.7 | 29, 45, 46 |
+| `soma_deity_versus_substance` | 1 | 2.7 | 17, 45 |
+| `agni_deity_fire_medium` | 1 | 3.1 | 20, 46 |
+| `rudra_profile_no_shiva` | 1 | 2.3 | 43 |
+| `product_graph_census` | 39 | 17.5 | - |
+| `internal_leakage_check` | 1 | 31.3 | - |
+| `orphan_domain_entities` | 0 | 2.6 | - |
+| `unlabelled_product_nodes` | 0 | 47.7 | - |
+| `devata_taxonomy_coverage` | 7 | 3.4 | - |
+| `entity_kinds_by_veda` | 22 | 45.9 | 21, 24, 34, 48 |
 
 ## Required demonstrations
 
@@ -72,10 +114,10 @@ failure this pass exists to fix.
 
 | deity | iast | structure | axes | epithets | description | attributed | attributed_per_passage | attributed_inherited | top_rishis | top_chandas | top_concepts | co_deities | attribution_scope |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| Indra | indra | INDIVIDUAL | ["COSMIC_SOVEREIGN", "ATMOSPHERIC", "WARRIOR"] | ["vajrin", "maghavan", "vṛtrahan", "śakra", "puruhūta"] | The champion of the gods, who slays Vrtra with the vajra, releases the pent-up waters and rules as king of the pantheon. | 2869 | 655 | 2214 | ["gāthino viśvāmitraḥ", "gautamo vāmadevaḥ", "bārhaspatyo bharadvājaḥ", "maitrāvaruṇirvasiṣṭhaḥ", "śaunako gṛtsamadaḥ", "kāṇvo medhātithiḥ", "..."] | ["triṣṭup", "gāyatrī", "pragāthaḥ", "jagatī", "anuṣṭup", "uṣṇik", "..."] | ["praise (stoma)", "soma juice (soma)", "wealth (rayi)", "might (ojas)", "help (avas)", "cattle (go)", "..."] | ["Vasukra"] | ["RV"] |
+| Indra | indra | INDIVIDUAL | ["COSMIC_SOVEREIGN", "ATMOSPHERIC", "WARRIOR"] | ["vajrin", "maghavan", "vṛtrahan", "śakra", "puruhūta"] | The champion of the gods, who slays Vrtra with the vajra, releases the pent-up waters and rules as king of the pantheon. | 2869 | 655 | 2214 | ["gāthino viśvāmitraḥ", "gautamo vāmadevaḥ", "bārhaspatyo bharadvājaḥ", "maitrāvaruṇirvasiṣṭhaḥ", "śaunako gṛtsamadaḥ", "kāṇvo medhātithiḥ", "..."] | ["triṣṭup", "gāyatrī", "pragāthaḥ", "jagatī", "anuṣṭup", "uṣṇik", "..."] | ["soma juice (soma)", "soma pressing (savana)", "wealth (rayi)", "heaven (dyaus)", "thunderbolt (vajra)", "help (avas)", "..."] | ["Vasukra"] | ["RV"] |
 
 
-> **Caveat.** The Anukramani attribution layer covers the Rigveda only. Zeroes for SV/YV/AV mean those corpora have no attribution layer, not that the entity is absent from them. Counts include CONTAINER_INHERITED attributions: a sukta's label projected onto each of its mantras. See the *_strict variant for source-stated attribution only.
+> **Caveat.** HAS_DEVATA is Rigveda-only: 10,558 edges, every one on the RV. A zero for SV/YV/AV means those corpora carry no Anukramani deity ascription, not that the deity is absent from them. MENTIONS_DEVATA answers 'is this deity named here?' across all four (17,165 edges: RV 10,284, AV 3,582, YV 1,964, SV 1,335). Counts include CONTAINER_INHERITED attributions: a sukta's label projected onto each of its mantras. See the *_strict variant for source-stated attribution only.
 
 **`rishis_invoking_deity_strict`** — Which seers does the source itself name for this deity's mantras?
 
@@ -99,7 +141,7 @@ failure this pass exists to fix.
 
 | deity | axes | attributed_mantras | fire_mentions | ambiguous_fire_mentions |
 |---|---|---|---|---|
-| Agni | ["PRIESTLY", "FIRE_MEDIUM", "TERRESTRIAL"] | 1988 | 2095 | 1205 |
+| Agni | ["PRIESTLY", "FIRE_MEDIUM", "TERRESTRIAL"] | 1988 | 1028 | 298 |
 
 
 > **Caveat.** The corpus does not lexically distinguish the deity from the element -- both are the word agni -- so the split between these columns is an editorial convenience. See VG:CLAIM:AGNI-LEXICALLY-UNDIFFERENTIATED. The two counts are computed in separate CALL subqueries because they are independent: stacking them as OPTIONAL MATCH multiplied 3 axes by 1,988 attributed passages by 2,206 fire mentions and took 9.5 seconds to return one row.
@@ -112,7 +154,7 @@ failure this pass exists to fix.
 
 | as_deity_attributed | as_substance_mentioned | both | substance_only |
 |---|---|---|---|
-| 1167 | 1570 | 467 | 1103 |
+| 1167 | 1169 | 247 | 922 |
 
 
 > **Caveat.** The deity side is Rigveda-only; the substance side spans four Vedas, so `substance_only` is inflated by that asymmetry rather than by usage.
@@ -125,23 +167,23 @@ failure this pass exists to fix.
 
 | deity | iast | structure | axes | epithets | description | attributed | attributed_per_passage | attributed_inherited | top_rishis | top_chandas | top_concepts | co_deities | attribution_scope |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| Varuna | varuṇa | INDIVIDUAL | ["AQUATIC", "COSMIC_SOVEREIGN", "GUARDIAN_OF_ORDER"] | [] | The sovereign who watches over truth and oath, binds the guilty with his fetters and releases the penitent, and whose domain runs to the waters and th | 99 | 17 | 82 | ["maitrāvaruṇirvasiṣṭhaḥ", "ājīgartiḥ śunaḥśepaḥ", "kāṇvo nābhākaḥ", "gārtsamadaḥ kūrmaḥ", "bhaumo atriḥ", "agnivaruṇasomāḥ", "..."] | ["triṣṭup", "gāyatrī", "mahāpaṅktiḥ", "jagatī", "anuṣṭup"] | ["kingship (rājan)", "heaven (dyaus)", "praise (stoma)", "waters (āpaḥ)", "earth (pṛthivī)", "insight (dhī)", "..."] | [] | ["RV"] |
+| Varuna | varuṇa | INDIVIDUAL | ["AQUATIC", "COSMIC_SOVEREIGN", "GUARDIAN_OF_ORDER"] | [] | The sovereign who watches over truth and oath, binds the guilty with his fetters and releases the penitent, and whose domain runs to the waters and th | 99 | 17 | 82 | ["maitrāvaruṇirvasiṣṭhaḥ", "ājīgartiḥ śunaḥśepaḥ", "kāṇvo nābhākaḥ", "gārtsamadaḥ kūrmaḥ", "bhaumo atriḥ", "agnivaruṇasomāḥ", "..."] | ["triṣṭup", "gāyatrī", "mahāpaṅktiḥ", "jagatī", "anuṣṭup"] | ["kingship (rājan)", "heaven (dyaus)", "ordinance (vrata)", "earth (pṛthivī)", "waters (āpaḥ)", "friendship (sakhya)", "..."] | [] | ["RV"] |
 
 
-> **Caveat.** Uses the same projection as deity_profile, so the two are directly comparable. Varuna is attributed to 99 Rigvedic mantras against Indra's 2,869, and the gap is a fact about the Anukramani's sukta labels rather than a measure of prominence: Varuna is also named inside hymns labelled for Mitravarunau, which is a separate entity. The Anukramani attribution layer covers the Rigveda only. Zeroes for SV/YV/AV mean those corpora have no attribution layer, not that the entity is absent from them.
+> **Caveat.** Uses the same projection as deity_profile, so the two are directly comparable. Varuna is attributed to 99 Rigvedic mantras against Indra's 2,869, and the gap is a fact about the Anukramani's sukta labels rather than a measure of prominence: Varuna is also named inside hymns labelled for Mitravarunau, which is a separate entity. HAS_DEVATA is Rigveda-only: 10,558 edges, every one on the RV. A zero for SV/YV/AV means those corpora carry no Anukramani deity ascription, not that the deity is absent from them. MENTIONS_DEVATA answers 'is this deity named here?' across all four (17,165 edges: RV 10,284, AV 3,582, YV 1,964, SV 1,335).
 
 ### E. Rudra profile without Shiva
 
 **`rudra_profile_no_shiva`** — What is Rudra's corpus profile, without importing later identity?
 
-*Parameters:* `{"key": "VG:DEVATA:RUDRAH"}`
+*Parameters:* `{"key": "VG:DEVATA:RUDRAH", "corpus_mantras": {"RV": 10552, "AV": 5839, "YV": 1975, "SV": 1844}}`
 
-| deity | structure | axes | description | attributed_mantras | source_stated | vedas |
-|---|---|---|---|---|---|---|
-| Rudra | INDIVIDUAL | ["HEALER", "TERRESTRIAL"] | The feared archer of the wilds, father of the Maruts, whose arrows bring affliction on men and cattle and who is at the same time called the best of p | 38 | 16 | ["RV"] |
+| deity | structure | axes | description | attributed_mantras | source_stated | ascribed_vedas | ascription_zero_means | named_by_veda |
+|---|---|---|---|---|---|---|---|---|
+| Rudra | INDIVIDUAL | ["HEALER", "TERRESTRIAL"] | The feared archer of the wilds, father of the Maruts, whose arrows bring affliction on men and cattle and who is at the same time called the best of p | 38 | 8 | ["RV"] | HAS_DEVATA is the RV-only Anukramani layer: a non-RV zero here is LAYER ABSENT, not deity absent | [{"named_in": 42, "probable": 13, "per_1k_mantras": 7.19, "veda": "AV", "ambiguous": 29, "certain": 0}, {"named_in": 41, "probable": 12, "per_1k_mantr |
 
 
-> **Caveat.** No Siva identification is asserted anywhere in the graph. Rudra's later identification with Siva is post-Vedic and recording it here would dress a historical claim as a textual fact.
+> **Caveat.** No Siva identification is asserted anywhere in the graph. Rudra's later identification with Siva is post-Vedic and recording it here would dress a historical claim as a textual fact. The attribution counts sit in a CALL subquery for the reason agni_deity_fire_medium documents: as sibling OPTIONAL MATCHes in one scope, the axis pattern multiplied the passage pattern, and `source_stated` -- a sum over rows rather than a count of distinct passages -- came back as 16 for Rudra's 8 source-stated edges, once per axis. The four-Veda block is the V3.1 correction: this query returned vedas=['RV'] and 38 attributed mantras while the same database had Rudra NAMED in all four corpora, and normalised for corpus size he is DENSER in the Yajurveda than in the Rigveda -- the Satarudriya effect, which the HAS_DEVATA-only view made invisible. Read per_1k_mantras, not named_in: the Rigveda is 5.3x the Yajurveda by mantra count, so raw counts flatter it. The certainty columns are reported rather than filtered because filtering to DEITY_CERTAIN re-imposes the Rigveda-only answer this fix removes. HAS_DEVATA is Rigveda-only: 10,558 edges, every one on the RV. A zero for SV/YV/AV means those corpora carry no Anukramani deity ascription, not that the deity is absent from them. MENTIONS_DEVATA answers 'is this deity named here?' across all four (17,165 edges: RV 10,284, AV 3,582, YV 1,964, SV 1,335).
 
 ### F. One ritual
 
@@ -149,15 +191,19 @@ failure this pass exists to fix.
 
 *Parameters:* none
 
-| ritual | mantras | offerings | substances | objects | deities |
-|---|---|---|---|---|---|
-| sacrifice (yajña) | 839 | ["priestly fee (dakṣiṇā)", "oblation (havis)"] | ["soma juice (soma)", "clarified butter (ghṛta)", "milk (payas)"] | ["kindling (samidh)", "sacrificial post (yūpa)", "altar (vedi)", "offering ladle (sruc)", "sacred grass (barhis)"] | ["Agni"] |
-| soma pressing (savana) | 656 | [] | ["soma juice (soma)"] | ["cup (camasa)", "stone (grāvan)", "jar (kalaśa)", "strainer (pavitra)", "mortar (ulūkhala)"] | ["Soma", "Soma Pavamana", "Indra"] |
-| consecration (dīkṣā) | 16 | [] | [] | [] | [] |
-| fire oblation (agnihotra) | 1 | ["oblation (havis)"] | [] | ["kindling (samidh)"] | ["Agni"] |
+| ritual | mantras | inventory_coverage | offerings | substances | objects | deities |
+|---|---|---|---|---|---|---|
+| sacrifice (yajña) | 839 | RANK WITHIN 8 NAMED RITUALS: the Ritual class holds 8 nodes against a corpus naming considerably more, so this is not a corpus-wide ranking | ["priestly fee (dakṣiṇā)", "oblation (havis)"] | ["soma juice (soma)", "clarified butter (ghṛta)", "milk (payas)"] | ["kindling (samidh)", "sacrificial post (yūpa)", "altar (vedi)", "offering ladle (sruc)", "sacred grass (barhis)"] | ["Agni"] |
+| soma pressing (savana) | 656 | RANK WITHIN 8 NAMED RITUALS: the Ritual class holds 8 nodes against a corpus naming considerably more, so this is not a corpus-wide ranking | [] | ["soma juice (soma)"] | ["cup (camasa)", "stone (grāvan)", "jar (kalaśa)", "strainer (pavitra)", "mortar (ulūkhala)"] | ["Soma", "Soma Pavamana", "Indra"] |
+| soma cup drawing (graha) | 55 | RANK WITHIN 8 NAMED RITUALS: the Ritual class holds 8 nodes against a corpus naming considerably more, so this is not a corpus-wide ranking | ["oblation (havis)"] | ["soma juice (soma)"] | ["stone (grāvan)", "altar (vedi)", "vayu cup (vāyavya)", "offering ladle (sruc)", "cup (camasa)", "sacred grass (barhis)", "..."] | ["Mitra and Varuna", "Vayu", "the Asvins", "Indra"] |
+| consecration (dīkṣā) | 16 | RANK WITHIN 8 NAMED RITUALS: the Ritual class holds 8 nodes against a corpus naming considerably more, so this is not a corpus-wide ranking | [] | [] | [] | [] |
+| fire altar piling (citi) | 2 | RANK WITHIN 8 NAMED RITUALS: the Ritual class holds 8 nodes against a corpus naming considerably more, so this is not a corpus-wide ranking | [] | [] | ["ritual brick (iṣṭakā)"] | ["Agni"] |
+| sautramani rite (sautrāmaṇī) | 2 | RANK WITHIN 8 NAMED RITUALS: the Ritual class holds 8 nodes against a corpus naming considerably more, so this is not a corpus-wide ranking | [] | ["soma juice (soma)", "clarified butter (ghṛta)", "spirituous liquor (surā)", "milk (payas)", "fermented draught (parisrut)", "honey (madhu)"] | ["wooden soma tub (droṇakalaśa)"] | ["the Asvins", "Agni", "Sarasvati", "Indra"] |
+| fire oblation (agnihotra) | 1 | RANK WITHIN 8 NAMED RITUALS: the Ritual class holds 8 nodes against a corpus naming considerably more, so this is not a corpus-wide ranking | ["oblation (havis)"] | [] | ["kindling (samidh)"] | ["Agni"] |
+| horse sacrifice (aśvamedha) | 1 | RANK WITHIN 8 NAMED RITUALS: the Ritual class holds 8 nodes against a corpus naming considerably more, so this is not a corpus-wide ranking | [] | [] | ["axe (svadhiti)", "sacrificial post (yūpa)"] | ["Sarasvati", "Varuna"] |
 
 
-> **Caveat.** Ritual structure is curated and thin by design: elaborate procedure is largely post-Samhita and was not imported into Samhita passages.
+> **Caveat.** Ritual structure is curated and thin by design: elaborate procedure is largely post-Samhita and was not imported into Samhita passages. The `inventory_coverage` column states the binding limit in every row rather than only here: Ritual holds 8 nodes, so a rank in this table is a rank within 8 and not a statement about the corpus's rites. Offering was expanded from 2 to 8 nodes in V3.1 and is still marked incomplete; HumanConcern at 7 nodes is now the binding dimension for the four-way ritual join.
 
 ### G. One Atharvavedic human concern
 
@@ -187,12 +233,12 @@ failure this pass exists to fix.
 |---|---|---|
 | concord (saṃjñāna) | AV | 5 |
 | concord (saṃjñāna) | RV | 1 |
+| defence (paripāṇa) | AV | 11 |
 | freedom from debt (ṛṇa) | AV | 9 |
 | freedom from debt (ṛṇa) | RV | 8 |
 | freedom from debt (ṛṇa) | YV | 1 |
-| overcoming rivals (sapatna) | AV | 87 |
-| overcoming rivals (sapatna) | YV | 7 |
-| overcoming rivals (sapatna) | RV | 6 |
+| length of life (dīrghāyutva) | AV | 16 |
+| length of life (dīrghāyutva) | RV | 4 |
 
 
 > **Caveat.** A passage naming a concern is evidence it concerns it, not that it prescribes a remedy for it.
@@ -275,14 +321,14 @@ failure this pass exists to fix.
 
 *Parameters:* none
 
-| claim | status | confidence | tier | text | falsifier | passages | statistics | contradicts |
-|---|---|---|---|---|---|---|---|---|
-| VG:CLAIM:AGNI-LEXICALLY-UNDIFFERENTIATED | MODEL_SYNTHESIS | HIGH | TIER_D | The corpus does not lexically distinguish Agni the deity from agni the ritual and natural fire; both are the word agni. The graph's separation of VG:D | A demonstration that the corpus uses systematically different forms, epithets or syntactic frames for the deity and the element, such that a rule coul | ["RV 10.187.3", "RV 10.176.4", "RV 10.187.5", "RV 10.191.1"] | [{"metric": "THEONYM_AMBIGUITY", "values": "{\"mention_edges\": 28675, \"share\": 0.1359, \"theonym_ambiguous\": 3896}"}] | [] |
-| VG:CLAIM:ANUKRAMANI-ATTRIBUTION-IS-SUKTA-SCOPED | MODEL_SYNTHESIS | HIGH | TIER_D | The traditional attribution apparatus for the Rigveda operates at the scale of the sukta rather than the individual mantra, so a per-verse reading of  | A source-level demonstration that the Anukramani intends its sukta-level labels to distribute over every constituent mantra as individual assertions,  | [] | [{"metric": "ATTRIBUTION_PRECISION_CORPUS", "values": "{\"HAS_CHANDAS\": {\"CONTAINER_INHERITED\": 6276, \"PER_PASSAGE\": 4247, \"inherited_share\": 0 | [] |
-| VG:CLAIM:CONCEPT-LAYER-LEANS-ON-TRANSLATION | MODEL_SYNTHESIS | HIGH | TIER_D | The V1 concept layer's apparent coverage substantially overstates its Sanskrit grounding: 21,246 of its 47,542 assertions (44.7%) rest on no Sanskrit  | Showing that English-only assertions agree with an independent Sanskrit reading at a rate high enough that the distinction does not affect any answer, | [] | [{"metric": "DOMAIN_MENTION_COVERAGE", "values": "{\"AV\": {\"coverage\": 0.7136, \"mantras\": 5839, \"with_domain_mention\": 4167}, \"RV\": {\"covera | [] |
-| VG:CLAIM:RISHI-ATTRIBUTION-LEAST-VERSE-SPECIFIC | RESEARCH_HYPOTHESIS | MEDIUM | TIER_D | Among the three Anukramani dimensions, seer attribution is the least verse-specific and metre the most: 95.5% of seer attributions are inherited from  | Showing that the difference tracks which Anukramani artifact supplied each dimension rather than the dimension itself, which would make it an artefact | [] | [{"metric": "ATTRIBUTION_PRECISION_CORPUS", "values": "{\"HAS_CHANDAS\": {\"CONTAINER_INHERITED\": 6276, \"PER_PASSAGE\": 4247, \"inherited_share\": 0 | [] |
-| VG:CLAIM:SV-IDENTITY-IS-MELODIC | RESEARCH_HYPOTHESIS | LOW | TIER_D | Textual dependence on the Rigveda understates the Samaveda's independence, because the Samaveda's identity lies in its melodic realisation (gana) rath | Ingesting a gana corpus and finding that melodic assignment is itself largely predictable from the Rigvedic source verse, which would remove the indep | [] | [{"metric": "SV_REUSE_OF_RV", "values": "{\"distinct_rv_sources\": 1421, \"reuse_edges\": 1684, \"share_of_sv_with_rv_source\": 0.9013, \"sv_mantras\" | ["VG:CLAIM:SV-PREDOMINANTLY-RV-REUSE"] |
-| VG:CLAIM:SV-PREDOMINANTLY-RV-REUSE | MODEL_SYNTHESIS | MEDIUM | TIER_D | The Samaveda Kauthuma Arcika, as represented in this corpus, is predominantly a re-presentation of Rigvedic verse material rather than an independent  | Re-running the reuse detection at ACCENT_INSENSITIVE or stricter and finding the share falls far enough that most SV mantras have no identified source | ["SV ARANYA 1.7", "SV ARANYA 1.2", "SV ARANYA 2.1"] | [{"metric": "SV_REUSE_OF_RV", "values": "{\"distinct_rv_sources\": 1421, \"reuse_edges\": 1684, \"share_of_sv_with_rv_source\": 0.9013, \"sv_mantras\" | ["VG:CLAIM:SV-IDENTITY-IS-MELODIC"] |
+| claim | about | about_basis | status | confidence | tier | text | falsifier | passages | statistics | contradicts |
+|---|---|---|---|---|---|---|---|---|---|---|
+| VG:CLAIM:AGNI-LEXICALLY-UNDIFFERENTIATED | VEDIC_TEXT | Its subject is the text: the corpus does not lexically distinguish the deity from the fire. That is a claim about Vedic usage which happens to have a  | MODEL_SYNTHESIS | HIGH | TIER_D | The corpus does not lexically distinguish Agni the deity from agni the ritual and natural fire; both are the word agni. The graph's separation of VG:D | A demonstration that the corpus uses systematically different forms, epithets or syntactic frames for the deity and the element, such that a rule coul | ["RV 10.187.3", "RV 10.176.4", "RV 10.187.5", "RV 10.191.1"] | [{"metric": "THEONYM_AMBIGUITY", "values": "{\"mention_edges\": 28223, \"share\": 0.0891, \"theonym_ambiguous\": 2514}"}] | [] |
+| VG:CLAIM:ANUKRAMANI-ATTRIBUTION-IS-SUKTA-SCOPED | TRADITIONAL_APPARATUS | Its subject is how the Anukramani itself operates -- at sukta scale rather than mantra scale. The consequence it draws is about this project's scope r | MODEL_SYNTHESIS | HIGH | TIER_D | The traditional attribution apparatus for the Rigveda operates at the scale of the sukta rather than the individual mantra, so a per-verse reading of  | A source-level demonstration that the Anukramani intends its sukta-level labels to distribute over every constituent mantra as individual assertions,  | [] | [{"metric": "ATTRIBUTION_PRECISION_CORPUS", "values": "{\"HAS_CHANDAS\": {\"CONTAINER_INHERITED\": 10399, \"PER_PASSAGE\": 5932, \"inherited_share\":  | [] |
+| VG:CLAIM:CONCEPT-LAYER-LEANS-ON-TRANSLATION | DATASET | Entirely about this project's V1 concept layer and its evidence basis. Names no property of the Vedic text at all. | MODEL_SYNTHESIS | HIGH | TIER_D | The V1 concept layer's apparent coverage substantially overstates its Sanskrit grounding: 21,246 of its 47,542 assertions (44.7%) rest on no Sanskrit  | Showing that English-only assertions agree with an independent Sanskrit reading at a rate high enough that the distinction does not affect any answer, | [] | [{"metric": "DOMAIN_MENTION_COVERAGE", "values": "{\"AV\": {\"coverage\": 0.7347, \"mantras\": 5839, \"with_domain_mention\": 4290}, \"RV\": {\"covera | [] |
+| VG:CLAIM:RISHI-ATTRIBUTION-LEAST-VERSE-SPECIFIC | DATASET | The numbers it compares (95.5% against 59.6%) are inheritance rates of THIS graph's projection, not properties the Anukramani states. It reads as a ph | RESEARCH_HYPOTHESIS | MEDIUM | TIER_D | Among the three Anukramani dimensions, seer attribution is the least verse-specific and metre the most: 95.5% of seer attributions are inherited from  | Showing that the difference tracks which Anukramani artifact supplied each dimension rather than the dimension itself, which would make it an artefact | [] | [{"metric": "ATTRIBUTION_PRECISION_CORPUS", "values": "{\"HAS_CHANDAS\": {\"CONTAINER_INHERITED\": 10399, \"PER_PASSAGE\": 5932, \"inherited_share\":  | [] |
+| VG:CLAIM:SV-IDENTITY-IS-MELODIC | VEDIC_TEXT | A scholarly position about where the Samaveda's identity lies, which this project did not derive and cannot measure. It is in dialogue with VG:CLAIM:S | RESEARCH_HYPOTHESIS | LOW | TIER_D | Textual dependence on the Rigveda understates the Samaveda's independence, because the Samaveda's identity lies in its melodic realisation (gana) rath | Ingesting a gana corpus and finding that melodic assignment is itself largely predictable from the Rigvedic source verse, which would remove the indep | [] | [{"metric": "SV_REUSE_OF_RV", "values": "{\"distinct_rv_sources\": 1421, \"reuse_edges\": 1684, \"share_of_sv_with_rv_source\": 0.9013, \"sv_mantras\" | ["VG:CLAIM:SV-PREDOMINANTLY-RV-REUSE"] |
+| VG:CLAIM:SV-PREDOMINANTLY-RV-REUSE | DATASET | Its own wording scopes it -- 'as represented in this corpus' -- and its evidence is 1,662 of 1,844 mantras measured in this build. A different Samaved | MODEL_SYNTHESIS | MEDIUM | TIER_D | The Samaveda Kauthuma Arcika, as represented in this corpus, is predominantly a re-presentation of Rigvedic verse material rather than an independent  | Re-running the reuse detection at ACCENT_INSENSITIVE or stricter and finding the share falls far enough that most SV mantras have no identified source | ["SV ARANYA 1.7", "SV ARANYA 1.2", "SV ARANYA 2.1"] | [{"metric": "SV_REUSE_OF_RV", "values": "{\"distinct_rv_sources\": 1421, \"reuse_edges\": 1684, \"share_of_sv_with_rv_source\": 0.9013, \"sv_mantras\" | ["VG:CLAIM:SV-IDENTITY-IS-MELODIC"] |
 
 
 > **Caveat.** Every row here is TIER_D interpretation and permanently CANDIDATE. Two of these claims contradict each other on purpose: that is the state of the question, not an error to resolve.
@@ -294,33 +340,33 @@ failure this pass exists to fix.
 
 Who is this deity, where do they appear, and what surrounds them?
 
-- rows: 1  •  57.9 ms
+- rows: 1  •  85.9 ms
 
 | deity | iast | structure | axes | epithets | description | attributed | attributed_per_passage | attributed_inherited | top_rishis | top_chandas | top_concepts | co_deities | attribution_scope |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| Indra | indra | INDIVIDUAL | ["COSMIC_SOVEREIGN", "ATMOSPHERIC", "WARRIOR"] | ["vajrin", "maghavan", "vṛtrahan", "śakra", "puruhūta"] | The champion of the gods, who slays Vrtra with the vajra, releases the pent-up waters and rules as king of the pantheon. | 2869 | 655 | 2214 | ["gāthino viśvāmitraḥ", "gautamo vāmadevaḥ", "bārhaspatyo bharadvājaḥ", "maitrāvaruṇirvasiṣṭhaḥ", "śaunako gṛtsamadaḥ", "kāṇvo medhātithiḥ", "..."] | ["triṣṭup", "gāyatrī", "pragāthaḥ", "jagatī", "anuṣṭup", "uṣṇik", "..."] | ["praise (stoma)", "soma juice (soma)", "wealth (rayi)", "might (ojas)", "help (avas)", "cattle (go)", "..."] | ["Vasukra"] | ["RV"] |
+| Indra | indra | INDIVIDUAL | ["COSMIC_SOVEREIGN", "ATMOSPHERIC", "WARRIOR"] | ["vajrin", "maghavan", "vṛtrahan", "śakra", "puruhūta"] | The champion of the gods, who slays Vrtra with the vajra, releases the pent-up waters and rules as king of the pantheon. | 2869 | 655 | 2214 | ["gāthino viśvāmitraḥ", "gautamo vāmadevaḥ", "bārhaspatyo bharadvājaḥ", "maitrāvaruṇirvasiṣṭhaḥ", "śaunako gṛtsamadaḥ", "kāṇvo medhātithiḥ", "..."] | ["triṣṭup", "gāyatrī", "pragāthaḥ", "jagatī", "anuṣṭup", "uṣṇik", "..."] | ["soma juice (soma)", "soma pressing (savana)", "wealth (rayi)", "heaven (dyaus)", "thunderbolt (vajra)", "help (avas)", "..."] | ["Vasukra"] | ["RV"] |
 
 
-> **Caveat.** The Anukramani attribution layer covers the Rigveda only. Zeroes for SV/YV/AV mean those corpora have no attribution layer, not that the entity is absent from them. Counts include CONTAINER_INHERITED attributions: a sukta's label projected onto each of its mantras. See the *_strict variant for source-stated attribution only.
+> **Caveat.** HAS_DEVATA is Rigveda-only: 10,558 edges, every one on the RV. A zero for SV/YV/AV means those corpora carry no Anukramani deity ascription, not that the deity is absent from them. MENTIONS_DEVATA answers 'is this deity named here?' across all four (17,165 edges: RV 10,284, AV 3,582, YV 1,964, SV 1,335). Counts include CONTAINER_INHERITED attributions: a sukta's label projected onto each of its mantras. See the *_strict variant for source-stated attribution only.
 
 ### `varuna_profile`
 
 What is Varuna's corpus profile, and how does it differ from Indra's?
 
-- rows: 1  •  50.2 ms
+- rows: 1  •  4.7 ms
 
 | deity | iast | structure | axes | epithets | description | attributed | attributed_per_passage | attributed_inherited | top_rishis | top_chandas | top_concepts | co_deities | attribution_scope |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| Varuna | varuṇa | INDIVIDUAL | ["AQUATIC", "COSMIC_SOVEREIGN", "GUARDIAN_OF_ORDER"] | [] | The sovereign who watches over truth and oath, binds the guilty with his fetters and releases the penitent, and whose domain runs to the waters and th | 99 | 17 | 82 | ["maitrāvaruṇirvasiṣṭhaḥ", "ājīgartiḥ śunaḥśepaḥ", "kāṇvo nābhākaḥ", "gārtsamadaḥ kūrmaḥ", "bhaumo atriḥ", "agnivaruṇasomāḥ", "..."] | ["triṣṭup", "gāyatrī", "mahāpaṅktiḥ", "jagatī", "anuṣṭup"] | ["kingship (rājan)", "heaven (dyaus)", "praise (stoma)", "waters (āpaḥ)", "earth (pṛthivī)", "insight (dhī)", "..."] | [] | ["RV"] |
+| Varuna | varuṇa | INDIVIDUAL | ["AQUATIC", "COSMIC_SOVEREIGN", "GUARDIAN_OF_ORDER"] | [] | The sovereign who watches over truth and oath, binds the guilty with his fetters and releases the penitent, and whose domain runs to the waters and th | 99 | 17 | 82 | ["maitrāvaruṇirvasiṣṭhaḥ", "ājīgartiḥ śunaḥśepaḥ", "kāṇvo nābhākaḥ", "gārtsamadaḥ kūrmaḥ", "bhaumo atriḥ", "agnivaruṇasomāḥ", "..."] | ["triṣṭup", "gāyatrī", "mahāpaṅktiḥ", "jagatī", "anuṣṭup"] | ["kingship (rājan)", "heaven (dyaus)", "ordinance (vrata)", "earth (pṛthivī)", "waters (āpaḥ)", "friendship (sakhya)", "..."] | [] | ["RV"] |
 
 
-> **Caveat.** Uses the same projection as deity_profile, so the two are directly comparable. Varuna is attributed to 99 Rigvedic mantras against Indra's 2,869, and the gap is a fact about the Anukramani's sukta labels rather than a measure of prominence: Varuna is also named inside hymns labelled for Mitravarunau, which is a separate entity. The Anukramani attribution layer covers the Rigveda only. Zeroes for SV/YV/AV mean those corpora have no attribution layer, not that the entity is absent from them.
+> **Caveat.** Uses the same projection as deity_profile, so the two are directly comparable. Varuna is attributed to 99 Rigvedic mantras against Indra's 2,869, and the gap is a fact about the Anukramani's sukta labels rather than a measure of prominence: Varuna is also named inside hymns labelled for Mitravarunau, which is a separate entity. HAS_DEVATA is Rigveda-only: 10,558 edges, every one on the RV. A zero for SV/YV/AV means those corpora carry no Anukramani deity ascription, not that the deity is absent from them. MENTIONS_DEVATA answers 'is this deity named here?' across all four (17,165 edges: RV 10,284, AV 3,582, YV 1,964, SV 1,335).
 
 ### `deities_by_axis`
 
 Which deities occupy a given functional role?
 
-- rows: 22  •  14.7 ms
+- rows: 22  •  8.0 ms
 
 | axis | deities | examples |
 |---|---|---|
@@ -340,18 +386,18 @@ Which deities occupy a given functional role?
 
 Which deities have the widest functional range?
 
-- rows: 15  •  102.9 ms
+- rows: 15  •  6.6 ms
 
 | deity | axis_count | axes | attributed |
 |---|---|---|---|
-| Agni, Mitra-Varuna, Ratri and Savitr | 4 | ["DAWN_TIME", "FIRE_MEDIUM", "GUARDIAN_OF_ORDER", "SOLAR"] | 0 |
-| Indra | 3 | ["ATMOSPHERIC", "COSMIC_SOVEREIGN", "WARRIOR"] | 2869 |
-| Agni | 3 | ["FIRE_MEDIUM", "PRIESTLY", "TERRESTRIAL"] | 1988 |
+| Indra | 3 | ["COSMIC_SOVEREIGN", "ATMOSPHERIC", "WARRIOR"] | 2869 |
+| Agni | 3 | ["PRIESTLY", "FIRE_MEDIUM", "TERRESTRIAL"] | 1988 |
 | Varuna | 3 | ["AQUATIC", "COSMIC_SOVEREIGN", "GUARDIAN_OF_ORDER"] | 99 |
-| Pusan | 3 | ["PSYCHOPOMP", "SOLAR", "TERRESTRIAL"] | 77 |
-| Brhaspati | 3 | ["PRIESTLY", "SPEECH", "WARRIOR"] | 74 |
-| Indra and Varuna | 3 | ["COSMIC_SOVEREIGN", "GUARDIAN_OF_ORDER", "WARRIOR"] | 70 |
-| Agni and the Maruts | 3 | ["ATMOSPHERIC", "FIRE_MEDIUM", "WARRIOR"] | 0 |
+| Pusan | 3 | ["SOLAR", "PSYCHOPOMP", "TERRESTRIAL"] | 77 |
+| Brhaspati | 3 | ["SPEECH", "WARRIOR", "PRIESTLY"] | 74 |
+| Indra accompanied by the Maruts | 3 | ["ATMOSPHERIC", "COSMIC_SOVEREIGN", "WARRIOR"] | 0 |
+| Savitr | 2 | ["ABSTRACT_PERSONIFICATION", "SOLAR"] | 82 |
+| Soma | 2 | ["RITUAL_SUBSTANCE", "COSMIC_SOVEREIGN"] | 80 |
 
 
 > **Caveat.** Range as curated, so this measures the taxonomy as much as the corpus. `attributed` is coalesced to 0 rather than left null: only the top 25 deities are profiled, and a null sorted ahead of a real count, which put composite Anukramani labels at the head of the list.
@@ -360,7 +406,7 @@ Which deities have the widest functional range?
 
 Which deity labels are duals or composites, and of what?
 
-- rows: 14  •  5.1 ms
+- rows: 14  •  5.9 ms
 
 | composite | structure | components |
 |---|---|---|
@@ -380,7 +426,7 @@ Which deity labels are duals or composites, and of what?
 
 Which deities are attributed to the same mantras?
 
-- rows: 4  •  23.4 ms
+- rows: 4  •  39.7 ms
 
 | deity_a | deity_b | shared_mantras |
 |---|---|---|
@@ -390,13 +436,13 @@ Which deities are attributed to the same mantras?
 | Indra | Vasukra | 1 |
 
 
-> **Caveat.** The Anukramani attribution layer covers the Rigveda only. Zeroes for SV/YV/AV mean those corpora have no attribution layer, not that the entity is absent from them. Counts include CONTAINER_INHERITED attributions: a sukta's label projected onto each of its mantras. See the *_strict variant for source-stated attribution only.
+> **Caveat.** HAS_DEVATA is Rigveda-only: 10,558 edges, every one on the RV. A zero for SV/YV/AV means those corpora carry no Anukramani deity ascription, not that the deity is absent from them. MENTIONS_DEVATA answers 'is this deity named here?' across all four (17,165 edges: RV 10,284, AV 3,582, YV 1,964, SV 1,335). Counts include CONTAINER_INHERITED attributions: a sukta's label projected onto each of its mantras. See the *_strict variant for source-stated attribution only.
 
 ### `deities_through_common_rishis`
 
 Which deities are connected through the same seers?
 
-- rows: 20  •  23.1 ms
+- rows: 20  •  21.3 ms
 
 | rishi | deities |
 |---|---|
@@ -410,13 +456,13 @@ Which deities are connected through the same seers?
 | gāthino viśvāmitraḥ | [{"mantras": 179, "deity": "Agni"}, {"mantras": 9, "deity": "the Asvins"}, {"mantras": 217, "deity": "Indra"}, {"mantras": 10, "deity": "Indra and Agn |
 
 
-> **Caveat.** The Anukramani attribution layer covers the Rigveda only. Zeroes for SV/YV/AV mean those corpora have no attribution layer, not that the entity is absent from them. Counts include CONTAINER_INHERITED attributions: a sukta's label projected onto each of its mantras. See the *_strict variant for source-stated attribution only.
+> **Caveat.** HAS_DEVATA is Rigveda-only: 10,558 edges, every one on the RV. A zero for SV/YV/AV means those corpora carry no Anukramani deity ascription, not that the deity is absent from them. MENTIONS_DEVATA answers 'is this deity named here?' across all four (17,165 edges: RV 10,284, AV 3,582, YV 1,964, SV 1,335). Counts include CONTAINER_INHERITED attributions: a sukta's label projected onto each of its mantras. See the *_strict variant for source-stated attribution only.
 
 ### `rishis_invoking_deity`
 
 Which seers are most associated with this deity?
 
-- rows: 15  •  8.8 ms
+- rows: 15  •  6.6 ms
 
 | rishi | mantras | source_stated |
 |---|---|---|
@@ -436,7 +482,7 @@ Which seers are most associated with this deity?
 
 Which seers does the source itself name for this deity's mantras?
 
-- rows: 4  •  4.4 ms
+- rows: 4  •  3.4 ms
 
 | rishi | mantras |
 |---|---|
@@ -452,7 +498,7 @@ Which seers does the source itself name for this deity's mantras?
 
 Which epithets does the graph record, and for whom?
 
-- rows: 4  •  2.2 ms
+- rows: 4  •  1.5 ms
 
 | deity | epithets |
 |---|---|
@@ -468,27 +514,417 @@ Which epithets does the graph record, and for whom?
 
 Which natural phenomena does the corpus treat as deities?
 
-- rows: 19  •  3.5 ms
+- rows: 9  •  1.7 ms
 
-| deity | axes | phenomena |
+| phenomenon | personifications | deities |
 |---|---|---|
-| Agni | ["FIRE_MEDIUM", "PRIESTLY", "TERRESTRIAL"] | ["fire (agni)"] |
-| Agni Jatavedas | ["FIRE_MEDIUM", "PRIESTLY"] | ["fire (agni)"] |
-| Agni Pavamana | ["FIRE_MEDIUM", "RITUAL_SUBSTANCE"] | ["fire (agni)"] |
-| Agni the slayer of demons | ["FIRE_MEDIUM", "GUARDIAN_OF_ORDER"] | ["fire (agni)"] |
-| Apam Napat | ["AQUATIC", "FIRE_MEDIUM"] | ["waters (āpaḥ)"] |
-| Dawn and Night | ["DAWN_TIME", "NOCTURNAL"] | ["dawn (uṣas)"] |
-| Indra and Vayu | ["WARRIOR", "ATMOSPHERIC"] | ["wind (vāta)"] |
-| Parjanya | ["ATMOSPHERIC"] | ["lightning (vidyut)", "rain (vṛṣṭi)"] |
+| sun (sūrya) | 3 | ["Savitr", "Surya, daughter of Savitr", "Surya"] |
+| dawn (uṣas) | 1 | ["Usas"] |
+| fire (agni) | 1 | ["Agni"] |
+| lightning (vidyut) | 1 | ["Parjanya"] |
+| moon (candramas) | 1 | ["the Moon"] |
+| night (rātri) | 1 | ["Ratri, Night"] |
+| rain (vṛṣṭi) | 1 | ["Parjanya"] |
+| waters (āpaḥ) | 1 | ["Apam Napat"] |
 
 
 > **Caveat.** Association, not identity. The registry refuses IS_GOD_OF and REPRESENTS by name: 'Agni is associated with fire' is recorded, 'Agni is the fire god' is not.
+
+### `devatas_named_in_all_four_vedas`
+
+Which deities are named in all four Vedas, and how often in each?
+
+- rows: 35  •  36.6 ms
+
+| deity | passages_naming | deity_certain | per_veda |
+|---|---|---|---|
+| Indra | 3566 | 3566 | [["AV", 635, 635], ["YV", 221, 221], ["SV", 405, 405], ["RV", 2305, 2305]] |
+| Agni | 2543 | 831 | [["AV", 476, 0], ["YV", 276, 0], ["SV", 187, 0], ["RV", 1604, 831]] |
+| Soma | 1512 | 240 | [["AV", 204, 0], ["YV", 145, 0], ["SV", 213, 0], ["RV", 950, 240]] |
+| the Waters | 761 | 18 | [["AV", 180, 0], ["YV", 29, 0], ["SV", 27, 0], ["RV", 525, 18]] |
+| Prthivi | 712 | 18 | [["AV", 246, 0], ["YV", 121, 0], ["SV", 26, 0], ["RV", 319, 18]] |
+| Surya | 699 | 21 | [["AV", 176, 0], ["YV", 90, 0], ["SV", 55, 0], ["RV", 378, 21]] |
+| the Asvins | 626 | 319 | [["AV", 75, 0], ["YV", 87, 0], ["SV", 24, 0], ["RV", 440, 319]] |
+| Varuna | 589 | 589 | [["AV", 108, 108], ["YV", 54, 54], ["SV", 35, 35], ["RV", 392, 392]] |
+
+
+> **Caveat.** Complete, not a top-N: every deity naming all four corpora is returned. `per_veda` rows are [veda, passages, deity_certain]. MENTIONS_DEVATA spans all four Vedas (17,165 edges: RV 10,284, AV 3,582, YV 1,964, SV 1,335) but not by one method: the RV's come from the manual scholarly lemma annotation (extraction_path = 'rv-lemma-annotation') and the other 5,977 from surface token or sandhi matching, which has no morphology behind it. Compare rows as shares of their corpus (RV 10,552 mantras, AV 5,839, YV 1,975, SV 1,844), not as totals.
+
+### `devata_mention_certainty_by_veda`
+
+How much of the deity-mention layer is certain, per Veda and per method?
+
+- rows: 15  •  29.9 ms
+
+| veda | extraction_path | certainty | edges | passages |
+|---|---|---|---|---|
+| AV | sanskrit-surface-token | DEITY_AMBIGUOUS | 1820 | 1497 |
+| AV | sanskrit-surface-token | DEITY_CERTAIN | 1304 | 1184 |
+| AV | sanskrit-surface-token | DEITY_PROBABLE | 458 | 447 |
+| RV | rv-lemma-annotation | DEITY_CERTAIN | 5900 | 5162 |
+| RV | rv-lemma-annotation | DEITY_AMBIGUOUS | 3377 | 2664 |
+| RV | rv-lemma-annotation | DEITY_PROBABLE | 1007 | 997 |
+| SV | sanskrit-surface-token | DEITY_CERTAIN | 527 | 491 |
+| SV | sanskrit-surface-token | DEITY_AMBIGUOUS | 518 | 447 |
+
+
+> **Caveat.** This is the query to run before trusting any four-Veda deity count. It shows that DEITY_CERTAIN is a Rigvedic majority (5,900 of 10,284) and a minority everywhere else, and that the certainty grade is produced by two unlike methods -- rv-lemma-annotation against sanskrit-surface-token and sanskrit-surface-sandhi. Certainty is graded per entity-alias, not decided per occurrence, so it bounds the conflation rather than resolving it.
+
+### `deity_reach_named_versus_ascribed`
+
+Where do a deity's naming and its Anukramani ascription most disagree?
+
+- rows: 25  •  16.5 ms
+
+| deity | named | named_vedas | ascribed | mention_surplus |
+|---|---|---|---|---|
+| Soma | 1512 | 4 | 80 | 1432 |
+| Soma Pavamana | 106 | 3 | 1087 | -981 |
+| the All-Gods | 5 | 1 | 805 | -800 |
+| the Waters | 761 | 4 | 45 | 716 |
+| Prthivi | 712 | 4 | 4 | 708 |
+| Indra | 3566 | 4 | 2869 | 697 |
+| Surya | 699 | 4 | 63 | 636 |
+| Agni | 2543 | 4 | 1988 | 555 |
+
+
+> **Caveat.** A top-25 by absolute divergence, deliberately not by either column, because the two measures diverge in both directions and neither is the corrected version of the other. `named` spans four corpora and `ascribed` one, so part of every gap is that asymmetry rather than usage; the informative rows are the ones where the sign is negative -- a deity a whole hymn is dedicated to and whose name the verses rarely say. MENTIONS_DEVATA spans all four Vedas (17,165 edges: RV 10,284, AV 3,582, YV 1,964, SV 1,335) but not by one method: the RV's come from the manual scholarly lemma annotation (extraction_path = 'rv-lemma-annotation') and the other 5,977 from surface token or sandhi matching, which has no morphology behind it. Compare rows as shares of their corpus (RV 10,552 mantras, AV 5,839, YV 1,975, SV 1,844), not as totals.
+
+### `deity_pairs_far_above_chance`
+
+Which deity pairs co-occur far above chance, and where is the signal?
+
+- rows: 25  •  3.9 ms
+
+| deity_a | deity_b | lift | shared_passages | rigvedic | non_rigvedic | vedas | per_veda_counts |
+|---|---|---|---|---|---|---|---|
+| Mitra | Varuna | 13.189 | 279 | 228 | 51 | ["RV", "SV", "YV", "AV"] | [228, 14, 16, 21] |
+| the Adityas | Rudra | 7.882 | 32 | 17 | 15 | ["RV", "YV", "AV"] | [17, 0, 6, 9] |
+| Heaven and Earth | Nirrti, dissolution | 7.061 | 9 | 0 | 9 | ["YV", "AV"] | [0, 0, 1, 8] |
+| Aditi | Mitra | 6.524 | 56 | 52 | 4 | ["RV", "YV", "AV"] | [52, 0, 3, 1] |
+| the Asvins | Sarasvati | 6.256 | 70 | 6 | 64 | ["RV", "YV", "AV"] | [6, 0, 62, 2] |
+| Aditi | the Adityas | 6.01 | 27 | 22 | 5 | ["RV", "SV", "YV", "AV"] | [22, 1, 1, 3] |
+| Aditi | Varuna | 5.503 | 65 | 57 | 8 | ["RV", "SV", "YV", "AV"] | [57, 1, 3, 4] |
+| the Rbhus | Tvastr | 5.181 | 6 | 6 | 0 | ["RV"] | [6, 0, 0, 0] |
+
+
+> **Caveat.** A top-25 of 292 pairs by lift. Lift is co-occurrence over the product of the marginals, so a pair sharing few passages can outrank a frequent one, and the `rigvedic`/`non_rigvedic` split is returned precisely so the reader can see whether a headline pair is a corpus-wide fact or a Rigvedic one. Mitra-Varuna at lift 13.2 is 228 Rigvedic against 43 elsewhere. Co-occurrence is adjacency in one passage, not co-invocation: where the tradition means a pair it uses a dual deity, which is its own entity. MENTIONS_DEVATA spans all four Vedas (17,165 edges: RV 10,284, AV 3,582, YV 1,964, SV 1,335) but not by one method: the RV's come from the manual scholarly lemma annotation (extraction_path = 'rv-lemma-annotation') and the other 5,977 from surface token or sandhi matching, which has no morphology behind it. Compare rows as shares of their corpus (RV 10,552 mantras, AV 5,839, YV 1,975, SV 1,844), not as totals.
+
+### `deity_pairs_not_rigvedic`
+
+Which deity pairings does the corpus outside the Rigveda make its own?
+
+- rows: 106  •  6.3 ms
+
+| deity_a | deity_b | lift | rigvedic | non_rigvedic | per_veda_counts | vedas |
+|---|---|---|---|---|---|---|
+| the Asvins | Sarasvati | 6.256 | 6 | 64 | [6, 0, 62, 2] | ["RV", "YV", "AV"] |
+| Agni | Prthivi | 0.698 | 52 | 54 | [52, 7, 24, 23] | ["RV", "SV", "YV", "AV"] |
+| Agni | Soma | 0.276 | 41 | 48 | [41, 4, 24, 20] | ["RV", "SV", "YV", "AV"] |
+| Agni | Savitr | 0.682 | 20 | 41 | [20, 1, 20, 20] | ["RV", "SV", "YV", "AV"] |
+| Brhaspati | Indra | 0.599 | 23 | 34 | [23, 1, 11, 22] | ["RV", "SV", "YV", "AV"] |
+| Indra | Sarasvati | 0.643 | 9 | 32 | [9, 0, 29, 3] | ["RV", "YV", "AV"] |
+| the Asvins | Indra | 0.283 | 21 | 32 | [21, 1, 26, 5] | ["RV", "SV", "YV", "AV"] |
+| Pusan | Savitr | 5.027 | 7 | 31 | [7, 0, 26, 5] | ["RV", "YV", "AV"] |
+
+
+> **Caveat.** Complete, not a top-N: all 70 of the 292 pairs whose evidence is majority non-Rigvedic. This is the one deity question on which the later corpora outvote the Rigveda, and it is worth reading against the fact that the Rigveda contributes 10,284 of the 17,165 mention edges: a pair that still comes out non-RV-majority against that weighting is a real Yajurvedic or Atharvavedic association. `per_veda_counts` is ordered [RV, SV, YV, AV]. MENTIONS_DEVATA spans all four Vedas (17,165 edges: RV 10,284, AV 3,582, YV 1,964, SV 1,335) but not by one method: the RV's come from the manual scholarly lemma annotation (extraction_path = 'rv-lemma-annotation') and the other 5,977 from surface token or sandhi matching, which has no morphology behind it. Compare rows as shares of their corpus (RV 10,552 mantras, AV 5,839, YV 1,975, SV 1,844), not as totals.
+
+### `deity_mention_surface_forms`
+
+Which written forms of a deity's name actually carry the mentions?
+
+- rows: 30  •  7.2 ms
+
+| veda | form | certainty | passages |
+|---|---|---|---|
+| RV | agne | DEITY_CERTAIN | 560 |
+| RV | ágne | DEITY_CERTAIN | 282 |
+| RV | agníḥ | DEITY_PROBABLE | 252 |
+| RV | agním | DEITY_PROBABLE | 193 |
+| AV | agne | DEITY_PROBABLE | 143 |
+| RV | agníḥ | DEITY_AMBIGUOUS | 109 |
+| AV | agnir | DEITY_AMBIGUOUS | 105 |
+| YV | agne | DEITY_PROBABLE | 74 |
+
+
+> **Caveat.** A top-30 by passage count. `occurrences` is deliberately not summed here: it is a per-edge total across all of that edge's forms, so after UNWIND it would be charged in full to each form and the column would exceed the text. This is the query that shows why Agni's certainty grade is what it is -- the forms are the ordinary inflections of the word for fire. MENTIONS_DEVATA spans all four Vedas (17,165 edges: RV 10,284, AV 3,582, YV 1,964, SV 1,335) but not by one method: the RV's come from the manual scholarly lemma annotation (extraction_path = 'rv-lemma-annotation') and the other 5,977 from surface token or sandhi matching, which has no morphology behind it. Compare rows as shares of their corpus (RV 10,552 mantras, AV 5,839, YV 1,975, SV 1,844), not as totals.
+
+### `soma_certainty_across_the_corpus`
+
+Where is a deity's name certainly the deity, and where cannot we tell?
+
+- rows: 4  •  4.4 ms
+
+| veda | extraction_path | deity_certain | ambiguous | passages |
+|---|---|---|---|---|
+| RV | rv-lemma-annotation | 240 | 688 | 950 |
+| SV | sanskrit-surface-token | 0 | 116 | 213 |
+| AV | sanskrit-surface-token | 0 | 178 | 204 |
+| YV | sanskrit-surface-token | 0 | 109 | 145 |
+
+
+> **Caveat.** Defaults to Soma, where the ambiguity is not a defect in the matcher but the subject matter: soma is the god and the pressed drink and the plant, and the corpus does not lexically separate them. See soma_deity_versus_substance for the deity/substance cross-tab and VG:CLAIM:AGNI-LEXICALLY-UNDIFFERENTIATED for the same problem stated in the graph. MENTIONS_DEVATA spans all four Vedas (17,165 edges: RV 10,284, AV 3,582, YV 1,964, SV 1,335) but not by one method: the RV's come from the manual scholarly lemma annotation (extraction_path = 'rv-lemma-annotation') and the other 5,977 from surface token or sandhi matching, which has no morphology behind it. Compare rows as shares of their corpus (RV 10,552 mantras, AV 5,839, YV 1,975, SV 1,844), not as totals.
+
+### `rv_family_books_versus_outer_books`
+
+Which deities are named more in the RV's family books than its outer ones?
+
+- rows: 25  •  42.3 ms
+
+| deity | family_books | outer_books | family_pct | outer_pct |
+|---|---|---|---|---|
+| Indra | 920 | 1385 | 23.2 | 21.0 |
+| Agni | 724 | 635 | 18.2 | 9.6 |
+| the Maruts | 190 | 211 | 4.8 | 3.2 |
+| Varuna | 197 | 195 | 5.0 | 3.0 |
+| the Asvins | 86 | 280 | 2.2 | 4.3 |
+| the Fathers | 99 | 194 | 2.5 | 2.9 |
+| Soma | 12 | 250 | 0.3 | 3.8 |
+| Aditi | 64 | 100 | 1.6 | 1.5 |
+
+
+> **Caveat.** A top-25 of the deities with at least 20 certain mentions. The family-book / outer-book split is the conventional stratigraphic reading of the Rigveda and is an interpretation imported by this query, not a property in the graph: Passage carries no layer, period or date, so this is the nearest the corpus comes to a diachronic question and it substitutes book order for time. Restricted to the product DEFAULT referent tiers -- DEITY_CERTAIN plus DEITY_PROBABLE -- so the comparison is not driven by the ambiguous common-noun aliases, which would move both columns together anyway. It previously hard-coded DEITY_CERTAIN, which silently dropped the Rigveda's 1,007 PROBABLE mentions; pass tiers=['DEITY_CERTAIN'] for the strict comparison or ['DEITY_AMBIGUOUS', 'DEITY_CERTAIN', 'DEITY_PROBABLE'] for exploratory mode. DEITY_PROBABLE carries a measured Wilson lower bound of 0.90 on 55 gold rows, and its worst alias is `surya` for VG:DEVATA:SURYAH at 2 of 3, where a recorded VOCATIVE can be a sandhi-reduced nominative -- a caller who needs Surya specifically should read referent_basis rather than trust the tier.
+
+### `deity_actions_performed`
+
+What does the corpus say a deity does?
+
+- rows: 30  •  3.4 ms
+
+| deity | action | assertions | passages | verbal_roots | argument_frame |
+|---|---|---|---|---|---|
+| Indra | IS_OR_BECOMES | 55 | 55 | ["√as- 1", "√bhū-"] | ["AGENT"] |
+| Agni | IS_OR_BECOMES | 40 | 40 | ["√as- 1", "√bhū-"] | ["AGENT"] |
+| Indra | CREATES | 40 | 40 | ["√janⁱ-", "√kr̥-"] | ["AGENT", "PATIENT", "INSTRUMENT"] |
+| Indra | MOVES_TO | 29 | 29 | ["√vr̥t-", "√gam-", "√yā- 1", "√i- 1", "√dhāv- 1", "√pat- 1", "..."] | ["AGENT", "LOCATION", "BENEFICIARY"] |
+| Indra | UNMAPPED_ROOT | 28 | 28 | ["√pāj-", "√as- 2", "√dhū-", "√prā-", "√aśⁱ-", "√diś-", "..."] | [] |
+| Soma | FLOWS | 26 | 26 | ["√dhanv-", "√kṣar-", "√arṣ-", "√syand-"] | ["AGENT", "LOCATION"] |
+| Soma | IS_OR_BECOMES | 26 | 25 | ["√as- 1", "√bhū-"] | ["AGENT"] |
+| Soma | MOVES_TO | 23 | 23 | ["√vr̥t-", "√viś-", "√i- 1", "√ruh-", "√gam-", "√sr̥p-", "..."] | ["AGENT", "LOCATION", "BENEFICIARY"] |
+
+
+> **Caveat.** A top-30 of 441 edges. PERFORMS_ACTION is the ASSERTED frame: an indicative or participial clause whose agent is the deity. It is not a claim about myth -- IS_OR_BECOMES leads the table because √bhū- and √as- are the commonest verbs in the language, not because being is Indra's characteristic act. Rank within one predicate, or read deity_actions_requested beside this. PERFORMS_ACTION (441 edges) and IS_ASKED_TO (224) are aggregates over the 2,406 MORPHOLOGY_RULE assertions, which come from the Rigveda-only lemma annotation: all 665 edges are Rigvedic. A deity absent here is absent from that annotation, not from Vedic action, and the Samaveda, Yajurveda and Atharvaveda are absent entirely.
+
+### `deity_actions_requested`
+
+What does the corpus ask a deity to do?
+
+- rows: 30  •  2.8 ms
+
+| deity | action | assertions | passages | verbal_roots | argument_frame |
+|---|---|---|---|---|---|
+| the Asvins | MOVES_TO | 65 | 65 | ["√yā- 1", "√gam-", "√ruh-"] | ["AGENT", "LOCATION", "BENEFICIARY"] |
+| Indra | DRINKS | 35 | 35 | ["√pā- 2"] | ["AGENT", "PATIENT"] |
+| Agni | MOVES_TO | 32 | 32 | ["√i- 1", "√yā- 1", "√gam-", "√vr̥t-", "√gā-", "√īr-"] | ["AGENT", "LOCATION", "BENEFICIARY"] |
+| Indra | MOVES_TO | 31 | 31 | ["√yā- 1", "√īr-", "√gam-", "√i- 1", "√ruh-", "√vr̥t-"] | ["AGENT", "LOCATION", "BENEFICIARY"] |
+| Agni | CARRIES | 21 | 21 | ["√vah-", "√bhr̥-"] | ["AGENT", "PATIENT", "BENEFICIARY"] |
+| Indra | BLESSES | 21 | 21 | ["√śak-", "√mr̥ḍ-", "√avⁱ-"] | ["AGENT", "PATIENT"] |
+| Agni | PROTECTS | 18 | 18 | ["√pā- 1", "√sidh-", "√uruṣy-", "√yu- 2", "√rakṣⁱ-"] | ["AGENT", "PATIENT"] |
+| Soma | PURIFIES | 18 | 18 | ["√pū-"] | ["AGENT", "PATIENT"] |
+
+
+> **Caveat.** A top-30 of 224 edges. IS_ASKED_TO is the REQUESTED frame -- imperative, injunctive or optative -- so this is the corpus's petition, which is a different question from what it narrates, and the two rankings are not the same. 849 of the 2,406 rule-derived assertions are REQUESTED against 1,557 ASSERTED, so the requested table is the smaller of the two by construction. PERFORMS_ACTION (441 edges) and IS_ASKED_TO (224) are aggregates over the 2,406 MORPHOLOGY_RULE assertions, which come from the Rigveda-only lemma annotation: all 665 edges are Rigvedic. A deity absent here is absent from that annotation, not from Vedic action, and the Samaveda, Yajurveda and Atharvaveda are absent entirely.
+
+### `deity_asserted_versus_requested`
+
+For one deity, what is it said to do versus what is it asked to do?
+
+- rows: 37  •  2.8 ms
+
+| action | argument_frame | asserted | requested | asserted_bias |
+|---|---|---|---|---|
+| IS_OR_BECOMES | ["AGENT"] | 55 | 13 | 42 |
+| MOVES_TO | ["AGENT", "LOCATION", "BENEFICIARY"] | 29 | 31 | -2 |
+| CREATES | ["AGENT", "PATIENT", "INSTRUMENT"] | 40 | 9 | 31 |
+| DRINKS | ["AGENT", "PATIENT"] | 8 | 35 | -27 |
+| UNMAPPED_ROOT | [] | 28 | 13 | 15 |
+| BLESSES | ["AGENT", "PATIENT"] | 15 | 21 | -6 |
+| ESTABLISHES | ["AGENT", "PATIENT", "LOCATION"] | 19 | 17 | 2 |
+| GRANTS | ["AGENT", "PATIENT", "BENEFICIARY"] | 11 | 15 | -4 |
+
+
+> **Caveat.** Complete for the named deity, not a top-N: the whole repertoire the annotation records for it. The contrast is the point -- a positive `asserted_bias` is something the hymns narrate the deity doing, a negative one something they ask of it -- but both columns count clauses in the Rigveda's lemma annotation, so a zero is silence in that annotation. PERFORMS_ACTION (441 edges) and IS_ASKED_TO (224) are aggregates over the 2,406 MORPHOLOGY_RULE assertions, which come from the Rigveda-only lemma annotation: all 665 edges are Rigvedic. A deity absent here is absent from that annotation, not from Vedic action, and the Samaveda, Yajurveda and Atharvaveda are absent entirely.
+
+### `action_predicate_breadth`
+
+Which actions does the corpus spread across many deities, and which few?
+
+- rows: 40  •  3.5 ms
+
+| action | argument_frame | deities | deities_asserted | deities_asked | assertions | roots_in_vocabulary |
+|---|---|---|---|---|---|---|
+| MOVES_TO | ["AGENT", "LOCATION", "BENEFICIARY"] | 31 | 28 | 19 | 369 | 37 |
+| IS_OR_BECOMES | ["AGENT"] | 28 | 26 | 12 | 222 | 3 |
+| CREATES | ["AGENT", "PATIENT", "INSTRUMENT"] | 25 | 25 | 9 | 141 | 4 |
+| ESTABLISHES | ["AGENT", "PATIENT", "LOCATION"] | 25 | 22 | 9 | 137 | 13 |
+| UNMAPPED_ROOT | [] | 24 | 23 | 10 | 121 | 0 |
+| GRANTS | ["AGENT", "PATIENT", "BENEFICIARY"] | 24 | 18 | 14 | 114 | 9 |
+| BLESSES | ["AGENT", "PATIENT"] | 22 | 21 | 11 | 96 | 5 |
+| PROTECTS | ["AGENT", "PATIENT"] | 21 | 17 | 11 | 78 | 7 |
+
+
+> **Caveat.** Complete over the 40 ActionPredicates the annotation reaches. count(DISTINCT dv) rather than count(*), because a deity contributes up to two edges to the same predicate -- one per frame -- and counting rows would report every deity that is both said to do a thing and asked to do it twice. A narrow predicate can be narrow because it is specific (FLOWS is Soma's) or because the vocabulary barely covers it (HEALS reaches 4 root tokens in the whole Rigveda); `roots_in_vocabulary` is returned to let those be told apart. PERFORMS_ACTION (441 edges) and IS_ASKED_TO (224) are aggregates over the 2,406 MORPHOLOGY_RULE assertions, which come from the Rigveda-only lemma annotation: all 665 edges are Rigvedic. A deity absent here is absent from that annotation, not from Vedic action, and the Samaveda, Yajurveda and Atharvaveda are absent entirely.
+
+### `deity_action_repertoire_breadth`
+
+Which deities have the widest range of recorded action?
+
+- rows: 25  •  3.4 ms
+
+| deity | distinct_actions | asserted_actions | requested_actions | assertions |
+|---|---|---|---|---|
+| Indra | 37 | 37 | 28 | 573 |
+| Agni | 35 | 35 | 31 | 482 |
+| Soma | 30 | 26 | 21 | 244 |
+| the Waters | 25 | 22 | 6 | 83 |
+| the Maruts | 24 | 22 | 12 | 91 |
+| Usas | 22 | 21 | 10 | 108 |
+| Brhaspati | 20 | 17 | 11 | 38 |
+| the Fathers | 18 | 17 | 2 | 42 |
+
+
+> **Caveat.** A top-25. This answers 'widest functional range' from clauses in the text rather than from the curated axis taxonomy that deity_widest_range uses, and the two disagree usefully: the axis version is topped by composite Anukramani labels that inherit the union of their parts' axes, while this one is topped by the deities the annotation actually has most verbs for. Neither is the corrected version of the other -- this measures annotation volume, so it tracks prominence in the Rigveda. PERFORMS_ACTION (441 edges) and IS_ASKED_TO (224) are aggregates over the 2,406 MORPHOLOGY_RULE assertions, which come from the Rigveda-only lemma annotation: all 665 edges are Rigvedic. A deity absent here is absent from that annotation, not from Vedic action, and the Samaveda, Yajurveda and Atharvaveda are absent entirely.
+
+### `deities_who_heal_and_protect`
+
+Which deities are associated with healing and protection?
+
+- rows: 30  •  2.4 ms
+
+| action | frame | deity | assertions | verbal_roots |
+|---|---|---|---|---|
+| BLESSES | IS_ASKED_TO | Indra | 21 | ["√śak-", "√mr̥ḍ-", "√avⁱ-"] |
+| PURIFIES | PERFORMS_ACTION | Soma | 19 | ["√pū-", "√mr̥j-"] |
+| PROTECTS | IS_ASKED_TO | Agni | 18 | ["√pā- 1", "√sidh-", "√uruṣy-", "√yu- 2", "√rakṣⁱ-"] |
+| PURIFIES | IS_ASKED_TO | Soma | 18 | ["√pū-"] |
+| BLESSES | PERFORMS_ACTION | Indra | 15 | ["√avⁱ-", "√śak-", "√mr̥ḍ-"] |
+| PROTECTS | PERFORMS_ACTION | Agni | 12 | ["√rakṣⁱ-", "√uruṣy-", "√pā- 1", "√sidh-"] |
+| PROTECTS | IS_ASKED_TO | Prthivi | 7 | ["√rakṣⁱ-"] |
+| BLESSES | PERFORMS_ACTION | the Waters | 6 | ["√mr̥ḍ-", "√avⁱ-"] |
+
+
+> **Caveat.** A top-30. HEALS is deliberately in the filter and contributes almost nothing: the predicate exists, its vocabulary covers 2 roots, and the whole Rigveda yields 4 root tokens and 1 assertion for it. So the answer to question 12 is carried by the adjacent predicates -- PROTECTS, RESCUES, BLESSES, PURIFIES -- and the healing question proper is answered on the Atharvavedic side by TREATS and PROTECTS_FROM, which are a different layer with a different tier. PERFORMS_ACTION (441 edges) and IS_ASKED_TO (224) are aggregates over the 2,406 MORPHOLOGY_RULE assertions, which come from the Rigveda-only lemma annotation: all 665 edges are Rigvedic. A deity absent here is absent from that annotation, not from Vedic action, and the Samaveda, Yajurveda and Atharvaveda are absent entirely.
+
+### `who_does_what_to_whom`
+
+Which passages state a full action frame: agent, act, patient, recipient?
+
+- rows: 30  •  8.0 ms
+
+| passage | agent | predicate | frame | agent_surface | patient | instrument | beneficiary | verbal_root |
+|---|---|---|---|---|---|---|---|---|
+| RV 1.102.4 | Indra | CREATES | REQUESTED | indra | várivaḥ |  | asmábhyam | √kr̥- |
+| RV 1.106.5 | Brhaspati | CREATES | REQUESTED | bŕ̥haspate | sugám |  | naḥ | √kr̥- |
+| RV 1.107.2 | Aditi | GRANTS | ASSERTED | áditiḥ | śárma | ādityaíḥ | naḥ | √yam- |
+| RV 1.110.3 | Savitr | LEADS | ASSERTED | savitā́ | tát |  | vaḥ | √sū- 1 |
+| RV 1.111.1 | the Rbhus | BUILDS | ASSERTED | r̥bhávaḥ | yúvat |  | pitŕ̥bhyām | √takṣ- |
+| RV 1.111.3 | the Rbhus | BUILDS | REQUESTED | r̥bhavaḥ | sātím |  | asmábhyam | √takṣ- |
+| RV 1.111.5 | the Rbhus | BUILDS | ASSERTED | r̥bhúḥ | sātím |  | bhárāya | √śā- ~ śī- |
+| RV 1.113.1 | Ratri, Night | DEFEATS | ASSERTED | rā́trī | yónim |  | uṣáse | √ric- |
+
+
+> **Caveat.** A top-30 by citation of the 174 rule-derived assertions carrying both a patient and a beneficiary; 546 of the 2,406 carry no role at all beyond the agent. Filtered to derivation = 'MORPHOLOGY_RULE' on purpose: the roles here are Sanskrit case forms read off the annotation, and mixing in the MODEL_EXTRACTION layer would put English paraphrase in the same columns. Roles are the rule's reading of the morphology, not a syntactic parse -- an accusative is recorded as PATIENT whether or not it is the verb's object. SemanticAssertion is one label over two layers of unequal strength that must not be summed: 2,406 nodes carry derivation = 'MORPHOLOGY_RULE' (TIER_B, derived by rule from the Sanskrit lemma annotation) and 2,459 carry 'MODEL_EXTRACTION' (TIER_D, unreviewed model output over a 19th-century English translation). All 4,865 are Rigvedic, and their reach differs as much as their strength: the rule layer spreads its 2,406 over 2,228 passages, the model layer packs its 2,459 into 398. A blended count would read as 4,865 assertions over the Rigveda when half of them concentrate on 3.8% of it.
+
+### `assertion_layers_reported_separately`
+
+What are the two semantic-assertion layers, and how far does each reach?
+
+- rows: 2  •  36.7 ms
+
+| derivation | tier | knowledge_layer | evidence_basis | review_state | human_gold | assertions | passages | vedas |
+|---|---|---|---|---|---|---|---|---|
+| MODEL_EXTRACTION | TIER_D | L3_LLM_EXTRACTED | TRANSLATION | UNREVIEWED | UNANNOTATED | 2459 | 398 | ["RV"] |
+| MORPHOLOGY_RULE | TIER_B | L2_DETERMINISTIC_DERIVED | SANSKRIT | UNREVIEWED | None | 2406 | 2228 | ["RV"] |
+
+
+> **Caveat.** Complete, and the shape of the result is the answer: two rows, never one. This is the query to run before any aggregate over SemanticAssertion, because a single figure over both rows blends a rule applied to manual Sanskrit annotation with unreviewed model output over an English translation. SemanticAssertion is one label over two layers of unequal strength that must not be summed: 2,406 nodes carry derivation = 'MORPHOLOGY_RULE' (TIER_B, derived by rule from the Sanskrit lemma annotation) and 2,459 carry 'MODEL_EXTRACTION' (TIER_D, unreviewed model output over a 19th-century English translation). All 4,865 are Rigvedic, and their reach differs as much as their strength: the rule layer spreads its 2,406 over 2,228 passages, the model layer packs its 2,459 into 398. A blended count would read as 4,865 assertions over the Rigveda when half of them concentrate on 3.8% of it.
+
+### `model_assertion_claims`
+
+What does the model-extracted assertion layer claim, and how sure is it?
+
+- rows: 46  •  29.4 ms
+
+| predicate | explicitness | object_kind | assertions | passages | deity_targets | review_state | human_gold |
+|---|---|---|---|---|---|---|---|
+| DESCRIBES_ACTION | EXPLICIT | EVENT | 517 | 261 | 10 | ["UNREVIEWED"] | ["UNANNOTATED"] |
+| REQUESTS | EXPLICIT | REQUESTED_OUTCOME | 385 | 197 | 21 | ["UNREVIEWED"] | ["UNANNOTATED"] |
+| DESCRIBES | EXPLICIT | CANONICAL_ENTITY_REF | 245 | 126 | 22 | ["UNREVIEWED"] | ["UNANNOTATED"] |
+| DESCRIBES | EXPLICIT | SEMANTIC_ENTITY_REF | 171 | 108 | 2 | ["UNREVIEWED"] | ["UNANNOTATED"] |
+| DESCRIBES | EXPLICIT | OPAQUE_REFERENT | 164 | 90 | 1 | ["UNREVIEWED"] | ["UNANNOTATED"] |
+| INVOKES | EXPLICIT | CANONICAL_ENTITY_REF | 119 | 111 | 23 | ["UNREVIEWED"] | ["UNANNOTATED"] |
+| INVOLVES_SUBSTANCE | EXPLICIT | SUBSTANCE_REF | 108 | 93 | 1 | ["UNREVIEWED"] | ["UNANNOTATED"] |
+| REFERS_TO_PLACE | EXPLICIT | OPAQUE_SPATIAL_REFERENT | 94 | 86 | 1 | ["UNREVIEWED"] | ["UNANNOTATED"] |
+
+
+> **Caveat.** Complete over the 2,459 model-extracted assertions, every one of which is review_state = UNREVIEWED and human_gold_status = UNANNOTATED -- the columns are returned rather than filtered out so that fact travels with the answer. `explicitness` splits EXPLICIT from STRONG_INFERENCE, and the second is the model's own judgement about its own reach. Extracted from Griffith's English, so a claim here is evidence about a translation. Only 799 of these carry an ASSERTION_TARGET, so `deity_targets` is far below `assertions` by design. SemanticAssertion is one label over two layers of unequal strength that must not be summed: 2,406 nodes carry derivation = 'MORPHOLOGY_RULE' (TIER_B, derived by rule from the Sanskrit lemma annotation) and 2,459 carry 'MODEL_EXTRACTION' (TIER_D, unreviewed model output over a 19th-century English translation). All 4,865 are Rigvedic, and their reach differs as much as their strength: the rule layer spreads its 2,406 over 2,228 passages, the model layer packs its 2,459 into 398. A blended count would read as 4,865 assertions over the Rigveda when half of them concentrate on 3.8% of it.
+
+### `assertions_on_one_passage`
+
+What do both assertion layers say about one passage, side by side?
+
+- rows: 13  •  2.5 ms
+
+| derivation | tier | predicate | frame | agent | target | agent_surface | patient | model_head | evidence_basis | review_state |
+|---|---|---|---|---|---|---|---|---|---|---|
+| MODEL_EXTRACTION | TIER_D | INVOKES | None | None | None | None | None | the gods addressed | TRANSLATION | UNREVIEWED |
+| MODEL_EXTRACTION | TIER_D | INVOKES | None | None | Indra | None | None | None | TRANSLATION | UNREVIEWED |
+| MODEL_EXTRACTION | TIER_D | INVOKES | None | None | Agni | None | None | None | TRANSLATION | UNREVIEWED |
+| MODEL_EXTRACTION | TIER_D | INVOKES | None | None | Mitra | None | None | None | TRANSLATION | UNREVIEWED |
+| MODEL_EXTRACTION | TIER_D | INVOKES | None | None | Varuna | None | None | None | TRANSLATION | UNREVIEWED |
+| MODEL_EXTRACTION | TIER_D | REFERS_TO_NATURAL_PHENOMENON | None | None | None | None | None | waters | TRANSLATION | UNREVIEWED |
+| MODEL_EXTRACTION | TIER_D | REFERS_TO_NATURAL_PHENOMENON | None | None | None | None | None | trees | TRANSLATION | UNREVIEWED |
+| MODEL_EXTRACTION | TIER_D | REFERS_TO_NATURAL_PHENOMENON | None | None | None | None | None | plants | TRANSLATION | UNREVIEWED |
+
+
+> **Caveat.** The evidence-debugging entry point: one passage, both layers, tier attached to every row. The default is RV 7.56.25, which carries 13 assertions from both derivations and so shows the two vocabularies next to each other -- the rule layer's typed predicate with a Sanskrit agent_surface, the model layer's English `model_head`. `frame` and `patient` populate only for the rule layer and `model_head` only for the model layer; the nulls are the layers, not missing data. SemanticAssertion is one label over two layers of unequal strength that must not be summed: 2,406 nodes carry derivation = 'MORPHOLOGY_RULE' (TIER_B, derived by rule from the Sanskrit lemma annotation) and 2,459 carry 'MODEL_EXTRACTION' (TIER_D, unreviewed model output over a 19th-century English translation). All 4,865 are Rigvedic, and their reach differs as much as their strength: the rule layer spreads its 2,406 over 2,228 passages, the model layer packs its 2,459 into 398. A blended count would read as 4,865 assertions over the Rigveda when half of them concentrate on 3.8% of it.
+
+### `action_vocabulary_coverage`
+
+Which action predicates does the vocabulary declare but the text never fill?
+
+- rows: 41  •  4.1 ms
+
+| action | roots_in_vocabulary | root_tokens_in_corpus | layer_veda_scope | assertions |
+|---|---|---|---|---|
+| CURSES | 5 | 35 | [] | 0 |
+| HEALS | 2 | 4 | ["RV"] | 1 |
+| MEASURES | 2 | 95 | ["RV"] | 3 |
+| PRESSES | 2 | 737 | ["RV"] | 11 |
+| POURS | 10 | 204 | ["RV"] | 12 |
+| RULES | 4 | 212 | ["RV"] | 16 |
+| BURNS | 8 | 346 | ["RV"] | 21 |
+| RESCUES | 4 | 352 | ["RV"] | 23 |
+
+
+> **Caveat.** Complete over all 41 predicates, ordered so the empty end of the vocabulary comes first. CURSES is the clean case: 5 roots declared, 35 root tokens in the corpus, 0 assertions, and layer_veda_scope = [] -- the one predicate that reaches no Veda at all, which is what an empty scope list is for. A low count here is a statement about the derivation rule, not about the Vedas: the rule fires only where the annotation gives it an agent it can resolve to a Devata.
+
+### `unmapped_verbal_roots`
+
+Which verbal roots does the predicate vocabulary fail to classify?
+
+- rows: 20  •  2.9 ms
+
+| deity | frame | assertions | unmapped_roots |
+|---|---|---|---|
+| Indra | PERFORMS_ACTION | 28 | ["√pāj-", "√as- 2", "√dhū-", "√prā-", "√aśⁱ-", "√diś-", "..."] |
+| Agni | PERFORMS_ACTION | 13 | ["√añj-", "√day-", "√āvay-", "√vr̥ṣāy- 2", "√sūd-", "√dhvanⁱ-", "..."] |
+| Indra | IS_ASKED_TO | 13 | ["√ad-", "√svap-", "√śrī-", "√muṣāy-", "√vyath-", "√guh-", "..."] |
+| the Maruts | PERFORMS_ACTION | 9 | ["√krīḍ-", "√arh-", "√myakṣ-", "√nam-", "√vas- 2", "√as- 2", "..."] |
+| Prthivi | PERFORMS_ACTION | 8 | ["√rej-", "√nam-", "√vyac-"] |
+| Usas | PERFORMS_ACTION | 6 | ["√jr̥̄- ~ jūr-", "√sūd-", "√vas- 2", "√prā-", "√nam-"] |
+| Agni | IS_ASKED_TO | 5 | ["√hvr̥- ~ hru-", "√viṣ- 2", "√mr̥ṣ-", "√śardh-", "√sūd-"] |
+| Soma | PERFORMS_ACTION | 5 | ["√vas- 2", "√añj-", "√vyā-", "√pr̥c-"] |
+
+
+> **Caveat.** A top-20 of the residual. UNMAPPED_ROOT is a real bucket in the graph rather than a discard, so the size of what the vocabulary does not cover is measurable instead of merely absent: these assertions were derived, and the root was recognised, and no predicate matched it. Reading it as a deity's actions would be wrong -- the row means the opposite. PERFORMS_ACTION (441 edges) and IS_ASKED_TO (224) are aggregates over the 2,406 MORPHOLOGY_RULE assertions, which come from the Rigveda-only lemma annotation: all 665 edges are Rigvedic. A deity absent here is absent from that annotation, not from Vedic action, and the Samaveda, Yajurveda and Atharvaveda are absent entirely.
 
 ### `crops_by_veda`
 
 Which crops occur in each Veda?
 
-- rows: 10  •  3.0 ms
+- rows: 10  •  2.9 ms
 
 | crop | veda | mantras |
 |---|---|---|
@@ -508,7 +944,7 @@ Which crops occur in each Veda?
 
 Which metals occur in each Veda?
 
-- rows: 11  •  57.4 ms
+- rows: 11  •  2.4 ms
 
 | metal | veda | mantras | sample_aliases |
 |---|---|---|---|
@@ -528,10 +964,11 @@ Which metals occur in each Veda?
 
 Which animals occur in each Veda?
 
-- rows: 42  •  7.0 ms
+- rows: 46  •  4.4 ms
 
 | animal | veda | mantras |
 |---|---|---|
+| adder (pṛdāku) | AV | 10 |
 | bird (vi) | RV | 51 |
 | bird (vi) | AV | 29 |
 | bird (vi) | SV | 15 |
@@ -539,7 +976,6 @@ Which animals occur in each Veda?
 | buffalo (mahiṣa) | RV | 22 |
 | buffalo (mahiṣa) | AV | 9 |
 | buffalo (mahiṣa) | SV | 5 |
-| buffalo (mahiṣa) | YV | 4 |
 
 
 > **Caveat.** Lexical mentions only.
@@ -548,7 +984,7 @@ Which animals occur in each Veda?
 
 Which animals co-occur with wealth vocabulary?
 
-- rows: 13  •  5.0 ms
+- rows: 13  •  4.8 ms
 
 | animal | wealth_term | mantras |
 |---|---|---|
@@ -568,11 +1004,11 @@ Which animals co-occur with wealth vocabulary?
 
 Which weapons and objects belong to which deity's narratives?
 
-- rows: 25  •  6.9 ms
+- rows: 25  •  9.1 ms
 
 | object | kind | deity | mantras |
 |---|---|---|---|
-| thunderbolt (vajra) | Object | Indra | 163 |
+| thunderbolt (vajra) | Weapon | Indra | 163 |
 | chariot (ratha) | Object | the Asvins | 118 |
 | chariot (ratha) | Object | Indra | 83 |
 | strainer (pavitra) | Object | Soma Pavamana | 52 |
@@ -582,13 +1018,13 @@ Which weapons and objects belong to which deity's narratives?
 | chariot (ratha) | Object | the All-Gods | 27 |
 
 
-> **Caveat.** The Anukramani attribution layer covers the Rigveda only. Zeroes for SV/YV/AV mean those corpora have no attribution layer, not that the entity is absent from them. Counts include CONTAINER_INHERITED attributions: a sukta's label projected onto each of its mantras. See the *_strict variant for source-stated attribution only. Co-occurrence, not possession.
+> **Caveat.** HAS_DEVATA is Rigveda-only: 10,558 edges, every one on the RV. A zero for SV/YV/AV means those corpora carry no Anukramani deity ascription, not that the deity is absent from them. MENTIONS_DEVATA answers 'is this deity named here?' across all four (17,165 edges: RV 10,284, AV 3,582, YV 1,964, SV 1,335). Counts include CONTAINER_INHERITED attributions: a sukta's label projected onto each of its mantras. See the *_strict variant for source-stated attribution only. Co-occurrence, not possession.
 
 ### `ritual_objects_recurring`
 
 Which ritual objects recur most?
 
-- rows: 19  •  6.4 ms
+- rows: 23  •  4.0 ms
 
 | object | mantras | vedas |
 |---|---|---|
@@ -608,7 +1044,7 @@ Which ritual objects recur most?
 
 Which rivers does the corpus name, and where?
 
-- rows: 12  •  2.8 ms
+- rows: 14  •  2.2 ms
 
 | river | veda | mantras |
 |---|---|---|
@@ -616,10 +1052,10 @@ Which rivers does the corpus name, and where?
 | Parushni (paruṣṇī) | SV | 1 |
 | Parushni (paruṣṇī) | RV | 1 |
 | Parushni (paruṣṇī) | AV | 1 |
+| Sarasvati river (sarasvatī) | RV | 1 |
+| Sarasvati river (sarasvatī) | AV | 1 |
 | Sarayu (sarayu) | RV | 2 |
 | Shutudri (śutudrī) | RV | 1 |
-| Vipash (vipāś) | RV | 2 |
-| Yamuna (yamunā) | RV | 2 |
 
 
 > **Caveat.** There is deliberately no Sarasvati RIVER node: its forms match 172 mantras of which the great majority are the goddess, and a river node claiming them would assert 'this passage is about a river' of passages about a deity. Ancient names are not mapped to modern identifications.
@@ -628,7 +1064,7 @@ Which rivers does the corpus name, and where?
 
 Which tribes and clans does the corpus name, and where?
 
-- rows: 11  •  2.4 ms
+- rows: 11  •  3.0 ms
 
 | tribe | veda | mantras | examples |
 |---|---|---|---|
@@ -648,7 +1084,7 @@ Which tribes and clans does the corpus name, and where?
 
 Which rivers occur with which tribes or clans?
 
-- rows: 0  •  1.5 ms
+- rows: 0  •  1.6 ms
 
 _(no rows)_
 
@@ -659,18 +1095,18 @@ _(no rows)_
 
 Which human concerns does each Veda address?
 
-- rows: 13  •  2.1 ms
+- rows: 20  •  2.6 ms
 
 | concern | veda | mantras |
 |---|---|---|
 | concord (saṃjñāna) | AV | 5 |
 | concord (saṃjñāna) | RV | 1 |
+| defence (paripāṇa) | AV | 11 |
 | freedom from debt (ṛṇa) | AV | 9 |
 | freedom from debt (ṛṇa) | RV | 8 |
 | freedom from debt (ṛṇa) | YV | 1 |
-| overcoming rivals (sapatna) | AV | 87 |
-| overcoming rivals (sapatna) | YV | 7 |
-| overcoming rivals (sapatna) | RV | 6 |
+| length of life (dīrghāyutva) | AV | 16 |
+| length of life (dīrghāyutva) | RV | 4 |
 
 
 > **Caveat.** A passage naming a concern is evidence it concerns it, not that it prescribes a remedy for it.
@@ -679,18 +1115,18 @@ Which human concerns does each Veda address?
 
 Which afflictions do passages address, and in which Veda?
 
-- rows: 18  •  2.3 ms
+- rows: 56  •  3.6 ms
 
 | condition | veda | mantras |
 |---|---|---|
+| abscess (vidradha) | AV | 3 |
+| affliction (amīvā) | RV | 18 |
+| affliction (amīvā) | AV | 10 |
+| affliction (amīvā) | YV | 3 |
+| affliction (amīvā) | SV | 1 |
+| apacit swellings (apacit) | AV | 7 |
 | balasa (balāsa) | AV | 12 |
-| cough (kāsa) | AV | 7 |
-| evil dream (duṣvapnya) | AV | 21 |
-| evil dream (duṣvapnya) | SV | 1 |
-| flux (āsrāva) | AV | 4 |
-| hereditary disease (kṣetriya) | AV | 22 |
-| ill-named beings (durṇāman) | AV | 15 |
-| ill-named beings (durṇāman) | RV | 2 |
+| bodily hurt (rapas) | RV | 12 |
 
 
 > **Caveat.** Naming an affliction is weaker than treating it. There is deliberately no separate 'fever' entity: takman- forms sit in YAKSMA-DISEASE because splitting them would have put 39% of the paradigm under 'fever' and 61% under 'disease' invisibly.
@@ -699,7 +1135,7 @@ Which afflictions do passages address, and in which Veda?
 
 What surrounds one affliction in the Atharvaveda: plants, objects, others?
 
-- rows: 25  •  3.8 ms
+- rows: 25  •  3.0 ms
 
 | passage | plants | objects | other_conditions |
 |---|---|---|---|
@@ -719,18 +1155,18 @@ What surrounds one affliction in the Atharvaveda: plants, objects, others?
 
 Which passages concern marriage, childbirth and funerary rites?
 
-- rows: 8  •  2.2 ms
+- rows: 10  •  2.3 ms
 
 | rite | veda | mantras | examples |
 |---|---|---|---|
+| assembly (sabhā) | AV | 12 | ["AVS 19.55.5", "AVS 18.2.56", "AVS 15.9.2", "AVS 12.1.56", "AVS 8.10.5"] |
+| assembly (sabhā) | RV | 2 | ["RV 10.191.3", "RV 6.28.6"] |
 | childbirth (sūṣā) | AV | 11 | ["AVS 16.4.2", "AVS 9.4.4", "AVS 6.106.3", "AVS 6.49.1", "AVS 5.25.6"] |
 | childbirth (sūṣā) | YV | 3 | ["VSM 19.76", "VSM 17.5", "VSM 8.28"] |
 | childbirth (sūṣā) | RV | 1 | ["RV 5.78.8"] |
 | funerary rites (pitṛyāṇa) | AV | 9 | ["AVS 18.4.62", "AVS 15.12.5", "AVS 15.12.9", "AVS 12.2.10", "AVS 8.10.19"] |
 | funerary rites (pitṛyāṇa) | RV | 1 | ["RV 10.2.7"] |
 | house building (śālā) | AV | 30 | ["AVS 3.12.4", "AVS 3.12.2", "AVS 3.12.6", "AVS 3.12.3", "AVS 3.12.1"] |
-| marriage (vivāha) | AV | 25 | ["AVS 1.14.2", "AVS 3.31.5", "AVS 3.10.4", "AVS 4.20.3", "AVS 10.1.1"] |
-| marriage (vivāha) | RV | 16 | ["RV 1.184.3", "RV 3.52.3", "RV 3.62.8", "RV 4.32.16", "RV 4.58.9"] |
 
 
 > **Caveat.** AV 14 redacts RV 10.85, so marriage vocabulary is not exclusively Atharvavedic and the RV share is real rather than noise.
@@ -739,96 +1175,240 @@ Which passages concern marriage, childbirth and funerary rites?
 
 Which plants are named, and alongside which afflictions?
 
-- rows: 28  •  3.8 ms
+- rows: 40  •  4.6 ms
 
 | plant | veda | mantras | co_conditions |
 |---|---|---|---|
-| plants (oṣadhi) | AV | 111 | ["poison (viṣa)", "witchcraft (kṛtyā)", "balasa (balāsa)", "worms (krimi)"] |
-| tree (vanaspati) | RV | 74 | [] |
-| plants (oṣadhi) | RV | 71 | [] |
-| tree (vanaspati) | AV | 50 | ["balasa (balāsa)", "poison (viṣa)", "seizure (grāhi)"] |
-| darbha grass (darbha) | AV | 39 | [] |
-| plants (oṣadhi) | YV | 30 | [] |
+| plants (oṣadhi) | AV | 111 | ["affliction (amīvā)", "poison (viṣa)", "witchcraft (kṛtyā)", "balasa (balāsa)", "consumption (yakṣma)", "demon (rakṣas)", "..."] |
+| tree (vanaspati) | RV | 74 | ["demon (rakṣas)"] |
+| plants (oṣadhi) | RV | 71 | ["consumption (yakṣma)", "bodily hurt (rapas)"] |
+| tree (vanaspati) | AV | 50 | ["consumption (yakṣma)", "abscess (vidradha)", "balasa (balāsa)", "poison (viṣa)", "seizure (grāhi)", "demon (rakṣas)"] |
+| darbha grass (darbha) | AV | 39 | ["the malevolent (durhārd)"] |
+| plants (oṣadhi) | YV | 30 | ["affliction (amīvā)", "bodily hurt (rapas)"] |
 | barley (yava) | RV | 19 | [] |
-| kushtha (kuṣṭha) | AV | 17 | ["evil dream (duṣvapnya)"] |
+| kushtha (kuṣṭha) | AV | 17 | ["fever (takman)", "demon (rakṣas)", "evil dream (duṣvapnya)", "bodily hurt (rapas)", "headache (śīrṣakti)"] |
 
 
 > **Caveat.** Co-occurrence, not pharmacology.
+
+### `passages_protecting_against`
+
+What does the corpus ask to be protected from?
+
+- rows: 30  •  3.8 ms
+
+| threat | kind | veda | passages | tiers |
+|---|---|---|---|---|
+| overcoming rivals (sapatna) | HumanConcern | AV | 87 | ["TIER_D"] |
+| consumption (yakṣma) | Condition | AV | 70 | ["TIER_D"] |
+| demon (rakṣas) | Condition | RV | 68 | ["TIER_D"] |
+| demon (rakṣas) | Condition | AV | 68 | ["TIER_D"] |
+| witchcraft (kṛtyā) | Condition | AV | 65 | ["TIER_D"] |
+| poison (viṣa) | Condition | AV | 49 | ["TIER_D"] |
+| the malevolent (durhārd) | Condition | AV | 26 | ["TIER_D"] |
+| evil dream (duṣvapnya) | Condition | AV | 21 | ["TIER_D"] |
+
+
+> **Caveat.** A top-30 of 659 edges. Every one is TIER_D: the predicate is this project's reading of a passage that names a threat, and naming a demon is not the same as apotropaic intent. `derived_from_mention` on each edge points back at the lexical mention it was inferred from, so the inference is auditable rather than asserted. Compare with ADDRESSES_CONCERN, which carries TIER_B for the same class of question -- see concerns_addressed_versus_protected_from.
+
+### `concerns_addressed_versus_protected_from`
+
+Which human concerns does the corpus address, and on what strength of evidence?
+
+- rows: 30  •  5.2 ms
+
+| target | kind | predicate | tier | by_veda | passages |
+|---|---|---|---|---|---|
+| demon (rakṣas) | Condition | PROTECTS_FROM | TIER_D | [["AV", 68], ["YV", 11], ["SV", 13], ["RV", 68]] | 160 |
+| overcoming rivals (sapatna) | HumanConcern | ADDRESSES_CONCERN | TIER_B | [["AV", 87], ["YV", 7], ["SV", 1], ["RV", 6]] | 101 |
+| overcoming rivals (sapatna) | HumanConcern | PROTECTS_FROM | TIER_D | [["AV", 87], ["YV", 7], ["SV", 1], ["RV", 6]] | 101 |
+| thriving (puṣṭi) | HumanConcern | ADDRESSES_CONCERN | TIER_B | [["RV", 33], ["YV", 12], ["SV", 2], ["AV", 47]] | 94 |
+| consumption (yakṣma) | Condition | PROTECTS_FROM | TIER_D | [["YV", 5], ["SV", 1], ["RV", 13], ["AV", 70]] | 89 |
+| splendour (varcas) | HumanConcern | ADDRESSES_CONCERN | TIER_B | [["AV", 54], ["YV", 14], ["SV", 1], ["RV", 7]] | 76 |
+| witchcraft (kṛtyā) | Condition | PROTECTS_FROM | TIER_D | [["AV", 65]] | 65 |
+| poison (viṣa) | Condition | PROTECTS_FROM | TIER_D | [["RV", 14], ["AV", 49]] | 63 |
+
+
+> **Caveat.** A top-30 of 1,145 edges over three predicates whose tiers differ, which is why `tier` is a returned column and not a filter. Several targets appear twice under two predicates -- sapatna is both addressed (TIER_B, 101) and protected from (TIER_D, 101) -- and that duplication is informative, not a bug: it is the same mention read two ways. Do not sum the rows.
+
+### `av_deity_ascription_descriptors`
+
+How does the Atharvaveda label a hymn's deity, when it is not a deity name?
+
+- rows: 25  •  15.4 ms
+
+| ascription | iast | passages | vedas | precision | layer_veda_scope |
+|---|---|---|---|---|---|
+| yamadevatyam mantroktabahudevatyaṁ ca | yamadevatyam mantroktabahudevatyaṁ ca | 287 | ["AV"] | ["CONTAINER_INHERITED"] | ["AV"] |
+| āgneyam | āgneyam | 209 | ["AV"] | ["CONTAINER_INHERITED"] | ["AV"] |
+| rohitādityadevatyam | rohitādityadevatyam | 191 | ["AV"] | ["CONTAINER_INHERITED"] | ["AV"] |
+| ādhyātmam | ādhyātmam | 191 | ["AV"] | ["CONTAINER_INHERITED"] | ["AV"] |
+| ātmadāivatam | ātmadāivatam | 154 | ["AV"] | ["CONTAINER_INHERITED"] | ["AV"] |
+| vānaspatyam | vānaspatyam | 145 | ["AV"] | ["CONTAINER_INHERITED"] | ["AV"] |
+| mantroktadevatyam | mantroktadevatyam | 119 | ["AV"] | ["CONTAINER_INHERITED"] | ["AV"] |
+| āindram | āindram | 93 | ["AV"] | ["CONTAINER_INHERITED"] | ["AV"] |
+
+
+> **Caveat.** A top-25 of 324 descriptors over 5,385 edges, all Atharvavedic. These are deliberately NOT Devata nodes: agneyam is the adjective 'belonging to Agni', and minting it as a deity would invent an entity the tradition does not have and then let it be counted alongside Agni. Nor are they translatable one-to-one into deities -- mantroktadevatyam means 'whose deity is stated in the mantra', which names no deity at all. Every edge is CONTAINER_INHERITED: the ascription is a sukta label projected onto each of its mantras, so `passages` measures hymn length as much as prominence.
 
 ### `ritual_profile`
 
 What does a ritual involve: deities, offerings, objects, purpose?
 
-- rows: 4  •  15.1 ms
+- rows: 8  •  34.0 ms
 
-| ritual | mantras | offerings | substances | objects | deities |
-|---|---|---|---|---|---|
-| sacrifice (yajña) | 839 | ["priestly fee (dakṣiṇā)", "oblation (havis)"] | ["soma juice (soma)", "clarified butter (ghṛta)", "milk (payas)"] | ["kindling (samidh)", "sacrificial post (yūpa)", "altar (vedi)", "offering ladle (sruc)", "sacred grass (barhis)"] | ["Agni"] |
-| soma pressing (savana) | 656 | [] | ["soma juice (soma)"] | ["cup (camasa)", "stone (grāvan)", "jar (kalaśa)", "strainer (pavitra)", "mortar (ulūkhala)"] | ["Soma", "Soma Pavamana", "Indra"] |
-| consecration (dīkṣā) | 16 | [] | [] | [] | [] |
-| fire oblation (agnihotra) | 1 | ["oblation (havis)"] | [] | ["kindling (samidh)"] | ["Agni"] |
+| ritual | mantras | inventory_coverage | offerings | substances | objects | deities |
+|---|---|---|---|---|---|---|
+| sacrifice (yajña) | 839 | RANK WITHIN 8 NAMED RITUALS: the Ritual class holds 8 nodes against a corpus naming considerably more, so this is not a corpus-wide ranking | ["priestly fee (dakṣiṇā)", "oblation (havis)"] | ["soma juice (soma)", "clarified butter (ghṛta)", "milk (payas)"] | ["kindling (samidh)", "sacrificial post (yūpa)", "altar (vedi)", "offering ladle (sruc)", "sacred grass (barhis)"] | ["Agni"] |
+| soma pressing (savana) | 656 | RANK WITHIN 8 NAMED RITUALS: the Ritual class holds 8 nodes against a corpus naming considerably more, so this is not a corpus-wide ranking | [] | ["soma juice (soma)"] | ["cup (camasa)", "stone (grāvan)", "jar (kalaśa)", "strainer (pavitra)", "mortar (ulūkhala)"] | ["Soma", "Soma Pavamana", "Indra"] |
+| soma cup drawing (graha) | 55 | RANK WITHIN 8 NAMED RITUALS: the Ritual class holds 8 nodes against a corpus naming considerably more, so this is not a corpus-wide ranking | ["oblation (havis)"] | ["soma juice (soma)"] | ["stone (grāvan)", "altar (vedi)", "vayu cup (vāyavya)", "offering ladle (sruc)", "cup (camasa)", "sacred grass (barhis)", "..."] | ["Mitra and Varuna", "Vayu", "the Asvins", "Indra"] |
+| consecration (dīkṣā) | 16 | RANK WITHIN 8 NAMED RITUALS: the Ritual class holds 8 nodes against a corpus naming considerably more, so this is not a corpus-wide ranking | [] | [] | [] | [] |
+| fire altar piling (citi) | 2 | RANK WITHIN 8 NAMED RITUALS: the Ritual class holds 8 nodes against a corpus naming considerably more, so this is not a corpus-wide ranking | [] | [] | ["ritual brick (iṣṭakā)"] | ["Agni"] |
+| sautramani rite (sautrāmaṇī) | 2 | RANK WITHIN 8 NAMED RITUALS: the Ritual class holds 8 nodes against a corpus naming considerably more, so this is not a corpus-wide ranking | [] | ["soma juice (soma)", "clarified butter (ghṛta)", "spirituous liquor (surā)", "milk (payas)", "fermented draught (parisrut)", "honey (madhu)"] | ["wooden soma tub (droṇakalaśa)"] | ["the Asvins", "Agni", "Sarasvati", "Indra"] |
+| fire oblation (agnihotra) | 1 | RANK WITHIN 8 NAMED RITUALS: the Ritual class holds 8 nodes against a corpus naming considerably more, so this is not a corpus-wide ranking | ["oblation (havis)"] | [] | ["kindling (samidh)"] | ["Agni"] |
+| horse sacrifice (aśvamedha) | 1 | RANK WITHIN 8 NAMED RITUALS: the Ritual class holds 8 nodes against a corpus naming considerably more, so this is not a corpus-wide ranking | [] | [] | ["axe (svadhiti)", "sacrificial post (yūpa)"] | ["Sarasvati", "Varuna"] |
 
 
-> **Caveat.** Ritual structure is curated and thin by design: elaborate procedure is largely post-Samhita and was not imported into Samhita passages.
+> **Caveat.** Ritual structure is curated and thin by design: elaborate procedure is largely post-Samhita and was not imported into Samhita passages. The `inventory_coverage` column states the binding limit in every row rather than only here: Ritual holds 8 nodes, so a rank in this table is a rank within 8 and not a statement about the corpus's rites. Offering was expanded from 2 to 8 nodes in V3.1 and is still marked incomplete; HumanConcern at 7 nodes is now the binding dimension for the four-way ritual join.
 
 ### `agni_and_indra_together`
 
 Which passages address both Agni and Indra?
 
-- rows: 1  •  7.2 ms
+- rows: 6  •  18.2 ms
 
-| route | mantras | examples |
-|---|---|---|
-| dual entity indragni | 117 | ["RV 6.59.3", "RV 10.161.3", "RV 10.161.5", "RV 10.161.2", "RV 10.161.4", "RV 10.161.1"] |
+| route | veda | mantras | layer | examples |
+|---|---|---|---|---|
+| attributed to the dual deity indragni | RV | 117 | HAS_DEVATA (Anukramani ascription) | ["RV 6.59.3", "RV 10.161.3", "RV 10.161.5", "RV 10.161.2", "RV 10.161.4", "RV 10.161.1"] |
+| both singly ascribed in one mantra | RV | 0 | HAS_DEVATA (Anukramani ascription) | [] |
+| both NAMED in the same verse | RV | 89 | MENTIONS_DEVATA (textual mention) | ["RV 10.179.3", "RV 10.113.8", "RV 10.124.4", "RV 10.173.5", "RV 10.126.5", "RV 10.70.11"] |
+| both NAMED in the same verse | AV | 31 | MENTIONS_DEVATA (textual mention) | ["AVS 19.24.8", "AVS 18.3.22", "AVS 13.1.27", "AVS 20.107.11", "AVS 20.34.3", "AVS 3.16.1"] |
+| both NAMED in the same verse | YV | 30 | MENTIONS_DEVATA (textual mention) | ["VSM 21.59", "VSM 29.60", "VSM 27.22", "VSM 2.3", "VSM 13.14", "VSM 33.48"] |
+| both NAMED in the same verse | SV | 7 | MENTIONS_DEVATA (textual mention) | ["SV UTTARA 9.2.8.1", "SV UTTARA 9.2.4.1", "SV UTTARA 6.3.16.3", "SV UTTARA 9.3.6.2", "SV UTTARA 1.1.7.3", "SV UTTARA 3.1.6.3"] |
 
 
-> **Caveat.** The second route returns zero, and that is the finding rather than a gap: only 6 of 10,552 Rigvedic mantras carry more than one attributed deity, because the Anukramani names one addressee per mantra. Where the tradition means the pair it uses a dual deity, which is why VG:DEVATA:INDRAGNI exists as its own entity, so co-attribution asks the wrong question of this apparatus. The Anukramani attribution layer covers the Rigveda only. Zeroes for SV/YV/AV mean those corpora have no attribution layer, not that the entity is absent from them.
+> **Caveat.** Two different questions, and the rows keep them apart because conflating them is how this query previously misled. ASCRIBED: the Anukramani names one addressee per mantra, so only 6 of 10,552 Rigvedic mantras carry more than one ascribed deity, and where the tradition means the pair it uses the dual deity VG:DEVATA:INDRAGNI instead. That near-zero is a property of the ascription apparatus, NOT of the text. NAMED: the four-Veda mention layer shows Agni and Indra named in the same verse in 157 passages (RV 89, AV 31, YV 30, SV 7). This caveat previously read 'the second route returns zero, and that is the finding rather than a gap', which the same database disproves; it was written against HAS_DEVATA and never revised when the mention layer landed. It also could not be checked by running the query, because a UNION branch whose MATCH finds nothing returns NO ROW rather than a zero: the ascribed-pair route was invisible, not visibly empty. Both ascription routes now use OPTIONAL MATCH so a structural zero is shown as a zero. The mention route is unfiltered on referent_certainty, so the impersonal readings of agni are included. HAS_DEVATA is Rigveda-only: 10,558 edges, every one on the RV. A zero for SV/YV/AV means those corpora carry no Anukramani deity ascription, not that the deity is absent from them. MENTIONS_DEVATA answers 'is this deity named here?' across all four (17,165 edges: RV 10,284, AV 3,582, YV 1,964, SV 1,335).
 
 ### `ritual_roles`
 
 Which priestly offices does the corpus name?
 
-- rows: 17  •  2.2 ms
+- rows: 31  •  3.1 ms
 
-| role | veda | mantras |
-|---|---|---|
-| adhvaryu (adhvaryu) | RV | 21 |
-| adhvaryu (adhvaryu) | AV | 2 |
-| adhvaryu (adhvaryu) | SV | 1 |
-| brahman priest (brahman) | AV | 29 |
-| brahman priest (brahman) | RV | 27 |
-| brahman priest (brahman) | YV | 6 |
-| brahman priest (brahman) | SV | 5 |
-| household priest (purohita) | RV | 9 |
+| role | veda | mantras | alias_purity | edges_own_alias | edges_foreign_alias |
+|---|---|---|---|---|---|
+| priest (hotṛ) | RV | 195 | 1.0 | 300 | 0 |
+| priest (hotṛ) | YV | 49 | 1.0 | 300 | 0 |
+| sacrificer (yajamāna) | RV | 40 | None | None | None |
+| priest (hotṛ) | SV | 38 | 1.0 | 300 | 0 |
+| sacrificer (yajamāna) | AV | 32 | None | None | None |
+| adhvaryu (adhvaryu) | RV | 30 | None | None | None |
+| brahman priest (brahman) | AV | 29 | None | None | None |
+| brahman priest (brahman) | RV | 27 | None | None | None |
 
 
-> **Caveat.** Lexical mentions only.
+> **Caveat.** Lexical mentions only, and the alias columns are not decoration. Until V3.1 hotr carried no RitualRole label at all despite 321 mentions, so this table omitted the principal officiant of the Rigveda -- a typed-label query missing the most important member of the class it enumerates, which is one of the three canonical misleading shapes in the frozen benchmark. It is now present and heads the table. Its alias list was ALSO wrong in the other direction and that has been corrected: of the original 321 edges, 14 were adhvaryu forms and 11 were rtvij-, which names any officiant rather than an office. The adhvaryu forms moved to their own node and the generic ones were withdrawn without minting a catch-all office, which would have re-inflated the very census this fixes. Measured alias purity is now 1.0 on 300 edges, and it is published per role rather than assumed, so a role whose purity is below 1.0 can be read as such: prefer `edges_own_alias` to `mantras` whenever the office itself matters. Roles other than hotr carry no purity figure yet, and a null there means unmeasured, not clean.
 
 ### `substances_offered_to_deities`
 
 Which substances co-occur with which deities?
 
-- rows: 30  •  6.8 ms
+- rows: 30  •  6.7 ms
 
 | deity | substance | mantras |
 |---|---|---|
-| Soma Pavamana | soma juice (soma) | 404 |
-| Indra | soma juice (soma) | 307 |
-| Soma | soma juice (soma) | 63 |
-| the Asvins | soma juice (soma) | 49 |
+| Indra | soma juice (soma) | 285 |
+| Soma Pavamana | soma juice (soma) | 228 |
+| the Asvins | soma juice (soma) | 48 |
 | Indra | food (anna) | 45 |
 | Agni | clarified butter (ghṛta) | 44 |
-| the All-Gods | soma juice (soma) | 31 |
+| the Asvins | honey (madhu) | 28 |
 | Agni | food (anna) | 28 |
+| the All-Gods | soma juice (soma) | 24 |
 
 
-> **Caveat.** The Anukramani attribution layer covers the Rigveda only. Zeroes for SV/YV/AV mean those corpora have no attribution layer, not that the entity is absent from them. Counts include CONTAINER_INHERITED attributions: a sukta's label projected onto each of its mantras. See the *_strict variant for source-stated attribution only. Co-occurrence, not oblation: this does not establish that the substance was offered to that deity.
+> **Caveat.** HAS_DEVATA is Rigveda-only: 10,558 edges, every one on the RV. A zero for SV/YV/AV means those corpora carry no Anukramani deity ascription, not that the deity is absent from them. MENTIONS_DEVATA answers 'is this deity named here?' across all four (17,165 edges: RV 10,284, AV 3,582, YV 1,964, SV 1,335). Counts include CONTAINER_INHERITED attributions: a sukta's label projected onto each of its mantras. See the *_strict variant for source-stated attribution only. Co-occurrence, not oblation: this does not establish that the substance was offered to that deity.
+
+### `rituals_described_in_passages`
+
+Which passages describe each rite, and in which Vedas?
+
+- rows: 8  •  2.3 ms
+
+| ritual | passages | vedas | veda_list | tiers | examples |
+|---|---|---|---|---|---|
+| soma cup drawing (graha) | 15 | 3 | ["YV", "RV", "AV"] | ["TIER_D"] | ["VSM 7.1", "VSM 19.28", "VSM 7.11", "VSM 7.26", "VSM 18.20", "VSM 18.19"] |
+| soma pressing (savana) | 15 | 3 | ["RV", "AV", "YV"] | ["TIER_D"] | ["RV 2.37.3", "AVS 9.1.13", "RV 2.37.1", "RV 1.28.1", "RV 10.112.1", "VSM 19.26"] |
+| sautramani rite (sautrāmaṇī) | 14 | 2 | ["YV", "AV"] | ["TIER_D"] | ["VSM 19.30", "VSM 19.32", "AVS 3.3.2", "VSM 19.42", "VSM 20.18", "VSM 19.26"] |
+| horse sacrifice (aśvamedha) | 12 | 2 | ["YV", "RV"] | ["TIER_D"] | ["VSM 25.41", "VSM 18.22", "VSM 24.38", "RV 1.162.15", "VSM 22.19", "VSM 23.15"] |
+| sacrifice (yajña) | 8 | 2 | ["RV", "YV"] | ["TIER_D"] | ["RV 2.1.2", "VSM 19.17", "VSM 18.21", "RV 1.94.6", "VSM 18.63", "RV 10.91.10"] |
+| consecration (dīkṣā) | 3 | 2 | ["AV", "YV"] | ["TIER_D"] | ["AVS 12.5.3", "AVS 11.7.8", "VSM 19.30"] |
+| fire altar piling (citi) | 3 | 1 | ["YV"] | ["TIER_D"] | ["VSM 13.47", "VSM 13.41", "VSM 17.2"] |
+| fire oblation (agnihotra) | 1 | 1 | ["AV"] | ["TIER_D"] | ["AVS 11.7.9"] |
+
+
+> **Caveat.** Complete: all 8 rites and all 71 edges. Every edge is TIER_D -- the project's judgement that a passage describes a rite, not a statement the passage makes about itself -- and the volume is the honest measure of how much procedure the Samhitas carry: 71 passages out of 22,537. `examples` is capped at 6 per row and `passages` gives the true total beside it. The Yajurvedic majority in several rows is real: the YV is the liturgical collection.
+
+### `ritual_step_sequence`
+
+Which rites have a recorded sequence of steps, and on what authority?
+
+- rows: 3  •  1.8 ms
+
+| ritual | step_order | step | order_basis | step_kind |
+|---|---|---|---|---|
+| soma pressing (savana) | 1 | morning pressing (prātaḥsavana) | SOURCE_STATED_ORDINAL | ["Action"] |
+| soma pressing (savana) | 2 | midday pressing (mādhyandina savana) | SOURCE_STATED_ORDINAL | ["Action"] |
+| soma pressing (savana) | 3 | third pressing (tṛtīya savana) | SOURCE_STATED_ORDINAL | ["Action"] |
+
+
+> **Caveat.** Complete, and the size of the result is the finding: 3 steps, on 1 of the 8 rites. order_basis = 'SOURCE_STATED_ORDINAL' because the soma pressings are named morning, midday and third in the text itself; no other rite in this corpus states an order, and none was invented for it. Elaborate procedure is Brahmana and Sutra material, so a query about ritual dependency structure is answerable here only in this one instance, and question 39 is otherwise not answerable from the Samhitas.
+
+### `ritual_officiants_and_purposes`
+
+Who performs each rite, and what is it performed for?
+
+- rows: 8  •  2.0 ms
+
+| ritual | officiants | purposes | passages |
+|---|---|---|---|
+| sacrifice (yajña) | ["household priest (purohita)", "priest (hotṛ)", "directing priest (praśāstṛ)", "nestar priest (neṣṭṛ)", "chanter priest (udgātṛ)", "potar priest (pot | ["wealth (rayi)", "wellbeing (svasti)", "lifespan (āyus)", "offspring (prajā)"] | 8 |
+| soma cup drawing (graha) | ["potar priest (potṛ)", "priest (hotṛ)", "nestar priest (neṣṭṛ)", "adhvaryu (adhvaryu)"] | [] | 15 |
+| sautramani rite (sautrāmaṇī) | ["priest (hotṛ)", "sacrificer (yajamāna)"] | ["healing (bheṣaja)"] | 14 |
+| consecration (dīkṣā) | ["sacrificer (yajamāna)"] | [] | 3 |
+| horse sacrifice (aśvamedha) | ["brahman priest (brahman)"] | ["hero (vīra)", "kingship (rājan)", "offspring (prajā)"] | 12 |
+| soma pressing (savana) | ["adhvaryu (adhvaryu)"] | [] | 15 |
+| fire altar piling (citi) | [] | ["lifespan (āyus)"] | 3 |
+| fire oblation (agnihotra) | [] | [] | 1 |
+
+
+> **Caveat.** Complete over all 8 rites; empty lists are real and are why OPTIONAL MATCH is used. count(DISTINCT p) and not count(*): three OPTIONAL MATCHes are in scope and the yajna row alone would multiply 9 officiants by 4 purposes by 8 passages, so count(*) would report 288 passages for 8. All 25 apparatus edges are TIER_D curation, and 'purpose' is what the rite is said to be for by the curator, not a purpose clause quoted from a passage.
+
+### `passages_used_for_a_rite`
+
+Which passages are used for marriage, childbirth, funerals or assembly?
+
+- rows: 10  •  2.3 ms
+
+| rite | veda | passages | tiers | precision | strict_recall_against_locus | locus_book | locus_tagged_passages | locus_book_passages | examples |
+|---|---|---|---|---|---|---|---|---|---|
+| assembly (sabhā) | AV | 12 | ["TIER_B"] | ["PER_PASSAGE"] | None | None | None | None | ["AVS 12.1.56", "AVS 6.88.3", "AVS 5.19.15", "AVS 7.12.1", "AVS 6.64.2"] |
+| assembly (sabhā) | RV | 2 | ["TIER_B"] | ["PER_PASSAGE"] | None | None | None | None | ["RV 10.191.3", "RV 6.28.6"] |
+| childbirth (sūṣā) | AV | 11 | ["TIER_B"] | ["PER_PASSAGE"] | None | None | None | None | ["AVS 1.11.5", "AVS 6.49.1", "AVS 1.11.4", "AVS 6.106.3", "AVS 1.11.3"] |
+| childbirth (sūṣā) | YV | 3 | ["TIER_B"] | ["PER_PASSAGE"] | None | None | None | None | ["VSM 17.5", "VSM 19.76", "VSM 8.28"] |
+| childbirth (sūṣā) | RV | 1 | ["TIER_B"] | ["PER_PASSAGE"] | None | None | None | None | ["RV 5.78.8"] |
+| funerary rites (pitṛyāṇa) | AV | 9 | ["TIER_B"] | ["PER_PASSAGE"] | None | None | None | None | ["AVS 10.1.18", "AVS 15.12.9", "AVS 5.18.13", "AVS 12.2.10", "AVS 8.10.19"] |
+| funerary rites (pitṛyāṇa) | RV | 1 | ["TIER_B"] | ["PER_PASSAGE"] | None | None | None | None | ["RV 10.2.7"] |
+| house building (śālā) | AV | 30 | ["TIER_B"] | ["PER_PASSAGE"] | 0.0611 | K09 | 19 | 311 | ["AVS 9.3.16", "AVS 9.3.11", "AVS 3.12.3", "AVS 3.12.1", "AVS 9.3.30"] |
+
+
+> **Caveat.** DEFAULTS TO STRICT: 110 source-stated PER_PASSAGE edges over 6 rites. The 419 CONTAINER_INHERITED edges added in V3.1 are the locus BOOK's claim projected onto its verses, not a statement about each verse, and they are reachable only by passing precision=['PER_PASSAGE','CONTAINER_INHERITED'] explicitly. RECALL IS A COLUMN, NOT A CAVEAT, because the frozen criterion requires the figure and the reader who runs the obvious query never sees a caveat. It is LOW and is not softened: marriage tags 14 of the 141 passages of AV Kanda 14 (9.93%), house-building 19 of 311 in AV Kanda 9 (6.11%). Enrichment against the corpus baseline is nonetheless 58x and 35x, so the edges that do exist are strongly non-random -- the layer is precise and thin, not noisy. The locus book was deliberately NOT tagged wholesale: that would make recall 100% by construction and would assert of 127 Kanda 14 verses what no source in this repository says. For the same reason no funerary locus is declared -- of 9 Atharvavedic funerary tags Kanda 18 holds only one, so seeding from the traditional identification would be external knowledge under cover of a measurement. TIER_B, so stronger than PROTECTS_FROM and TREATS, but still a derived reading of a lexical mention rather than a rubric. The RV rows are not noise: AV 14 redacts RV 10.85. `examples` is capped at 5 with the true total in `passages`.
 
 ### `sv_reuse_of_rv`
 
 Which Rigvedic verses are reused in the Samaveda, and how closely?
 
-- rows: 30  •  3.6 ms
+- rows: 30  •  3.5 ms
 
 | samaveda | rigveda | match_level | tier |
 |---|---|---|---|
@@ -848,7 +1428,7 @@ Which Rigvedic verses are reused in the Samaveda, and how closely?
 
 Which formulas occur across more than one Veda?
 
-- rows: 30  •  6.0 ms
+- rows: 30  •  5.9 ms
 
 | formula | vedas | occurrences | words |
 |---|---|---|---|
@@ -868,7 +1448,7 @@ Which formulas occur across more than one Veda?
 
 How does one formula spread across the corpus?
 
-- rows: 4  •  2.0 ms
+- rows: 4  •  1.7 ms
 
 | formula | veda | mantras | examples |
 |---|---|---|---|
@@ -880,41 +1460,203 @@ How does one formula spread across the corpus?
 
 > **Caveat.** Default is the widest-spread formula in the corpus, pata svastibhih sada nah, occurring 93 times across all four Vedas. Formula identity is a normalised-string match, so a family is a shared wording rather than a demonstrated line of transmission.
 
-### `conceptually_similar_not_reused`
+### `formula_family_span_census`
 
-Which cross-Veda passages share ideas without sharing text?
+How many formula families reach one Veda, and how many reach all four?
 
-- rows: 25  •  7575.9 ms
+- rows: 4  •  3.3 ms
 
-| passage_a | passage_b | veda_a | veda_b | shared_entities |
+| vedas_reached | cross_veda | families | memberships | occurrences |
 |---|---|---|---|---|
-| AVS 9.10.14 | VSM 23.62 | AV | YV | 6 |
-| RV 1.89.4 | VSM 25.17 | RV | YV | 5 |
-| RV 1.91.22 | VSM 34.22 | RV | YV | 5 |
-| AVS 18.4.60 | SV UTTARA 4.2.7.1 | AV | SV | 4 |
-| AVS 18.4.60 | SV CHANDA 6.7.4 | AV | SV | 4 |
-| AVS 18.4.60 | RV 9.86.16 | AV | RV | 4 |
-| RV 10.158.1 | VSM 30.21 | RV | YV | 4 |
-| AVS 16.4.4 | VSM 30.21 | AV | YV | 4 |
+| 4 | True | 107 | 401 | 2655 |
+| 3 | True | 296 | 814 | 4360 |
+| 2 | True | 212 | 541 | 3095 |
+| 1 | False | 105 | 281 | 2062 |
 
 
-> **Caveat.** Shared vocabulary is a weak proxy for shared idea, and high-frequency entities dominate. Treat as a candidate list, not a finding.
+> **Caveat.** Complete over all 720 families. One MATCH pattern is in scope, so count(*) here is a count of families and is the intended figure. A family is a representative wording plus everything that contains or closely resembles it, so `vedas_reached` is a property of shared diction and not of transmission: 105 families are single-Veda, which is the baseline the 615 cross-Veda ones should be read against rather than a separate finding.
+
+### `formula_families_reaching_all_four_vedas`
+
+Which formula families spread most widely across all four Vedas?
+
+- rows: 25  •  2.4 ms
+
+| representative | members | core | expansions | variants | occurrences | occurrences_per_veda | tier |
+|---|---|---|---|---|---|---|---|
+| viśvā bhuvanā | 14 | 1 | 13 | 0 | 148 | {"AV":14,"RV":39,"SV":2,"YV":5} | TIER_B |
+| indra girvaṇaḥ | 12 | 5 | 7 | 0 | 88 | {"AV":10,"RV":31,"SV":6,"YV":1} | TIER_B |
+| asya bhuvanasya | 10 | 3 | 6 | 1 | 88 | {"AV":7,"RV":22,"SV":3,"YV":3} | TIER_B |
+| somam indrāya | 10 | 5 | 5 | 0 | 73 | {"AV":3,"RV":16,"SV":6,"YV":2} | TIER_B |
+| āditya mahām̐ asi | 8 | 5 | 3 | 0 | 35 | {"AV":2,"RV":2,"SV":2,"YV":1} | TIER_B |
+| stotṛbhya ā bhara | 7 | 3 | 4 | 0 | 63 | {"AV":1,"RV":13,"SV":10,"YV":4} | TIER_B |
+| brahmaṇas pate | 7 | 3 | 4 | 0 | 61 | {"AV":12,"RV":19,"SV":6,"YV":4} | TIER_B |
+| devaṃ devatrā | 7 | 4 | 3 | 0 | 39 | {"AV":1,"RV":3,"SV":4,"YV":5} | TIER_B |
+
+
+> **Caveat.** A top-25 of the 107 families that reach all four Vedas; formula_family_span_census gives the full distribution. `occurrences_per_veda` is a JSON string, not a list, and reading it will usually show a Rigvedic majority -- which is partly that the RV is the largest corpus and partly that the SV and much of the YV are drawn from it, so a four-Veda family is often one Rigvedic phrase carried forward rather than four independent attestations.
+
+### `formula_family_membership_roles`
+
+How is a formula family held together: containment, or resemblance?
+
+- rows: 6  •  10.3 ms
+
+| role | tier | derivation | contains_representative | only_transitive | memberships | families |
+|---|---|---|---|---|---|---|
+| EXPANSION | TIER_B | formula-family-expansion-by-containment-v1 | True | False | 1076 | 720 |
+| CORE | TIER_B | formula-family-core-v1 | True | False | 720 | 720 |
+| CORE | TIER_B | formula-family-core-v1 | False | True | 194 | 157 |
+| EXPANSION | TIER_B | formula-family-expansion-by-containment-v1 | False | True | 42 | 31 |
+| VARIANT | TIER_D | formula-family-variant-by-similarity-v1 | False | True | 4 | 4 |
+| EXPANSION | TIER_D | formula-family-expansion-by-containment-v1 | False | True | 1 | 1 |
+
+
+> **Caveat.** Complete over all 2,037 memberships. The two boolean columns are the whole point: 1,796 memberships directly contain the family's representative wording and 240 reach it only transitively, through another member. A transitive membership is a weaker claim -- the member and the representative may share no words at all -- and the tier does not distinguish them, so a query that wants only direct containment must filter contains_representative itself.
+
+### `formula_family_similarity_derived`
+
+Which family memberships rest on resemblance rather than shared wording?
+
+- rows: 5  •  5.1 ms
+
+| representative | member | role | similarity | derivation | containment_support |
+|---|---|---|---|---|---|
+| dyāvāpr̥thivī ā | anu dyāvāpṛthivī | EXPANSION | 1.0 | formula-family-expansion-by-containment-v1 | False |
+| yo smān dveṣṭi | vayaṃ dviṣmas | VARIANT | 0.858333 | formula-family-variant-by-similarity-v1 | True |
+| syāma patayo rayīṇām | vayaᳪṃ syāma patayo | VARIANT | 0.814338 | formula-family-variant-by-similarity-v1 | True |
+| dyāvāpr̥thivī ā | nu dyāvāpṛthivī | VARIANT | 0.803571 | formula-family-variant-by-similarity-v1 | True |
+| asya bhuvanasya | bhuvanasya rājasi | VARIANT | 0.763393 | formula-family-variant-by-similarity-v1 | True |
+
+
+> **Caveat.** Complete, and small on purpose: 5 of 2,037 memberships. Four are VARIANT rows derived by string similarity (0.76 to 0.86) and one is an EXPANSION with has_containment_support = false. These are the only rows in the family layer that are not a containment fact, so they are the only ones where the family is an inference; the rest of the layer is TIER_B because containment is checkable. 'nu dyavaprthivi' against 'dyavaprthivi a' shows the failure mode -- the resemblance is a sandhi boundary, not a variant reading.
+
+### `formula_family_profile`
+
+What does one formula family contain, and where does each member occur?
+
+- rows: 14  •  3.0 ms
+
+| representative | member | role | tier | contains_representative | passages | vedas |
+|---|---|---|---|---|---|---|
+| viśvā bhuvanā | viśvā bhuvanā | CORE | TIER_B | True | 60 | ["AV", "RV", "YV", "SV"] |
+| viśvā bhuvanā | viśvā bhuvanāni | EXPANSION | TIER_B | True | 32 | ["RV", "YV", "AV", "SV"] |
+| viśvā bhuvanā | viśvā bhuvanābhi | EXPANSION | TIER_B | True | 9 | ["RV", "SV"] |
+| viśvā bhuvanā | viśvā bhuvanāny | EXPANSION | TIER_B | True | 7 | ["AV", "RV"] |
+| viśvā bhuvanā | yo viśvā bhuvanā | EXPANSION | TIER_B | True | 6 | ["RV", "AV"] |
+| viśvā bhuvanā | imā viśvā bhuvanāni | EXPANSION | TIER_B | True | 5 | ["AV", "RV", "YV"] |
+| viśvā bhuvanā | te viśvā bhuvanāni | EXPANSION | TIER_B | True | 5 | ["RV"] |
+| viśvā bhuvanā | viśvā bhuvanāni yemire | EXPANSION | TIER_B | True | 5 | ["RV"] |
+
+
+> **Caveat.** Complete for the named family. The default is visva bhuvana, the largest four-Veda family: 14 members, 1 core and 13 expansions. count(DISTINCT p) and not count(*): the membership pattern and the USES_FORMULA pattern are both in scope, and a formula used by many passages would otherwise be multiplied by its membership row. A member's `vedas` list is where that wording occurs, not where the family does -- the family's own span is on the FormulaFamily node.
+
+### `entity_vocabulary_overlap_candidates`
+
+Which cross-Veda passages share entity vocabulary, rather than ideas, without sharing text?
+
+- rows: 25  •  7.3 ms
+
+| measure | passage_a | passage_b | veda_pair | shared_entities | shared_entity_keys | distinctiveness | rarest_shared_passages | semantic_resemblance_population | conceptual_similarity |
+|---|---|---|---|---|---|---|---|---|---|
+| ENTITY_VOCABULARY_OVERLAP | AVS 9.10.14 | VSM 23.62 | AV-YV | 6 | ["VG:CONCEPT:ASVA-HORSE", "VG:CONCEPT:PRTHIVI-EARTH", "VG:CONCEPT:SOMA-DRINK", "VG:CONCEPT:VAC-SPEECH", "VG:CONCEPT:VEDI-ALTAR", "VG:CONCEPT:YAJNA-SAC | 22.6023 | 17 | NOT_BUILT | INSUFFICIENT_EVIDENCE for conceptual similarity: no non-lexical resemblance measure exists in this graph |
+| ENTITY_VOCABULARY_OVERLAP | AVS 6.64.2 | RV 10.191.3 | AV-RV | 4 | ["VG:CONCEPT:HAVIS-OBLATION", "VG:CONCEPT:HOMA-POURING-INTO-FIRE", "VG:CONCEPT:MANAS-MIND", "VG:CONCEPT:SABHA-ASSEMBLY"] | 20.3576 | 14 | NOT_BUILT | INSUFFICIENT_EVIDENCE for conceptual similarity: no non-lexical resemblance measure exists in this graph |
+| ENTITY_VOCABULARY_OVERLAP | RV 1.89.4 | VSM 25.17 | RV-YV | 5 | ["VG:CONCEPT:ASMAN-PRESSING-STONE", "VG:CONCEPT:BHESAJA-HEALING", "VG:CONCEPT:DYAUS-HEAVEN", "VG:CONCEPT:PRTHIVI-EARTH", "VG:CONCEPT:VATA-WIND"] | 19.0207 | 108 | NOT_BUILT | INSUFFICIENT_EVIDENCE for conceptual similarity: no non-lexical resemblance measure exists in this graph |
+| ENTITY_VOCABULARY_OVERLAP | AVS 6.53.3 | VSM 8.16 | AV-YV | 4 | ["VG:CONCEPT:MANAS-MIND", "VG:CONCEPT:PAYAS-MILK", "VG:CONCEPT:TANU-BODY", "VG:CONCEPT:VARCAS-SPLENDOUR"] | 17.7054 | 76 | NOT_BUILT | INSUFFICIENT_EVIDENCE for conceptual similarity: no non-lexical resemblance measure exists in this graph |
+| ENTITY_VOCABULARY_OVERLAP | AVS 6.53.3 | VSM 8.14 | AV-YV | 4 | ["VG:CONCEPT:MANAS-MIND", "VG:CONCEPT:PAYAS-MILK", "VG:CONCEPT:TANU-BODY", "VG:CONCEPT:VARCAS-SPLENDOUR"] | 17.7054 | 76 | NOT_BUILT | INSUFFICIENT_EVIDENCE for conceptual similarity: no non-lexical resemblance measure exists in this graph |
+| ENTITY_VOCABULARY_OVERLAP | AVS 6.53.3 | VSM 2.24 | AV-YV | 4 | ["VG:CONCEPT:MANAS-MIND", "VG:CONCEPT:PAYAS-MILK", "VG:CONCEPT:TANU-BODY", "VG:CONCEPT:VARCAS-SPLENDOUR"] | 17.7054 | 76 | NOT_BUILT | INSUFFICIENT_EVIDENCE for conceptual similarity: no non-lexical resemblance measure exists in this graph |
+| ENTITY_VOCABULARY_OVERLAP | AVS 19.9.14 | RV 10.65.11 | AV-RV | 5 | ["VG:CONCEPT:AP-WATERS", "VG:CONCEPT:DYAUS-HEAVEN", "VG:CONCEPT:OSADHI-PLANTS", "VG:CONCEPT:PRTHIVI-EARTH", "VG:CONCEPT:VANASPATI-TREE"] | 17.6322 | 144 | NOT_BUILT | INSUFFICIENT_EVIDENCE for conceptual similarity: no non-lexical resemblance measure exists in this graph |
+| ENTITY_VOCABULARY_OVERLAP | AVS 20.96.12 | RV 10.162.1 | AV-RV | 3 | ["VG:CONCEPT:AMIVA-AFFLICTION", "VG:CONCEPT:DURNAMAN-ILL-NAMED-BEINGS", "VG:CONCEPT:GARBHA-EMBRYO"] | 17.3638 | 17 | NOT_BUILT | INSUFFICIENT_EVIDENCE for conceptual similarity: no non-lexical resemblance measure exists in this graph |
+
+
+> **Caveat.** THIS QUERY DOES NOT ANSWER THE CONCEPTUAL-SIMILARITY QUESTION, and the `conceptual_similarity` column says so in every row rather than leaving it to this caveat. What it measures is entity-vocabulary overlap: both passages mention the same registry entities. No non-lexical resemblance measure exists anywhere in this graph -- no embedding, no vector index, no asserted resemblance -- so `semantic_resemblance_population` is NOT_BUILT, and that structural zero is typed rather than returned as a 0 a reader would read as 'no such resemblance in the corpus'. It was renamed from `conceptually_similar_not_reused` in V3.1. Under the old name it returned 25 confident-looking cross-Veda pairs ranked on a raw shared-entity count, and the V3.1 benchmark diagnosis graded Q22 and Q49 MISLEADING for it: both frozen criteria exclude lexical overlap in terms, and a caveat is not sufficient because the reader who runs the obvious query never sees the caveat. RANK ON `distinctiveness`, NOT ON `shared_entities`. Three shared entities are weak evidence when they are heaven, sacrifice and soma, which between them touch a large share of the corpus, and strong evidence when one is altar (vedi), which appears in 17 passages. `distinctiveness` is the inverse-document-frequency sum over the shared entities and `rarest_shared_passages` is the document frequency of the rarest one. The layer is materialised, which is also why it is fast: computed online it was an exact all-pairs self-join over a hub-skewed degree distribution (maximum 1,206) taking 5.3 s, and it exceeded the 1.4 GiB transaction memory limit and died outright as soon as the shared entities were collected. Pairs already joined by EXACT_PARALLEL_OF, NEAR_PARALLEL_OF or REUSES_TEXT_FROM are excluded, because the questions ask for resemblance WITHOUT shared text.
+
+### `confidence_is_a_pipeline_constant`
+
+Where is the graph uncertain, and is the confidence field a calibrated measurement?
+
+- rows: 18  •  207.7 ms
+
+| predicate | predicate_total | distinct_values | modal_edges | modal_share_pct | guard_verdict | what_this_field_is | calibration_evidence |
+|---|---|---|---|---|---|---|---|
+| ABOUT_CONCEPT | 26437 | 10 | 12610 | 47.7 | DISTRIBUTED | PIPELINE_PRIOR, NOT A CALIBRATED CONFIDENCE | NONE: no labelled evaluation set and no reliability curve exist in this graph |
+| HAS_RISHI | 17889 | 1 | 17889 | 100.0 | SINGLE_CONSTANT | PIPELINE_PRIOR, NOT A CALIBRATED CONFIDENCE | NONE: no labelled evaluation set and no reliability curve exist in this graph |
+| HAS_CHANDAS | 16331 | 1 | 16331 | 100.0 | SINGLE_CONSTANT | PIPELINE_PRIOR, NOT A CALIBRATED CONFIDENCE | NONE: no labelled evaluation set and no reliability curve exist in this graph |
+| HAS_DEVATA | 10558 | 1 | 10558 | 100.0 | SINGLE_CONSTANT | PIPELINE_PRIOR, NOT A CALIBRATED CONFIDENCE | NONE: no labelled evaluation set and no reliability curve exist in this graph |
+| HAS_DEVATA_ASCRIPTION | 5385 | 1 | 5385 | 100.0 | SINGLE_CONSTANT | PIPELINE_PRIOR, NOT A CALIBRATED CONFIDENCE | NONE: no labelled evaluation set and no reliability curve exist in this graph |
+| BELONGS_TO_FAMILY | 305 | 1 | 305 | 100.0 | SINGLE_CONSTANT | PIPELINE_PRIOR, NOT A CALIBRATED CONFIDENCE | NONE: no labelled evaluation set and no reliability curve exist in this graph |
+| INVOKES | 207 | 6 | 99 | 47.8 | DISTRIBUTED | PIPELINE_PRIOR, NOT A CALIBRATED CONFIDENCE | NONE: no labelled evaluation set and no reliability curve exist in this graph |
+| DESCRIBES | 199 | 7 | 61 | 30.7 | DISTRIBUTED | PIPELINE_PRIOR, NOT A CALIBRATED CONFIDENCE | NONE: no labelled evaluation set and no reliability curve exist in this graph |
+
+
+> **Caveat.** THE FIELD IS NAMED `confidence` AND IS NOT ONE. It is a pipeline prior: a constant stamped per branch. Measured, 75,997 of 77,518 confidence-bearing edges -- 98.0% -- sit at exactly one of three values (1.0 on 50,468, 0.85 on 12,809, 0.80 on 12,720). A researcher who filters `confidence >= 0.8` believes they have raised precision and has selected a set of pipeline branches. This got WORSE in V3, not better: the baseline's 0.42 cluster was replaced by a 1.0 cluster of 50,468 edges. `guard_verdict` is the constant-value guard, and it is returned per row rather than described here: SINGLE_CONSTANT means the value carries no information at all for that predicate, MAJORITY_ONE_CONSTANT means one value covers over half of it. There is NO calibrated uncertainty in this graph. There is no labelled evaluation set and no reliability diagram; `human_gold_status` is UNANNOTATED on 2,459 SemanticAssertion nodes and null on the other 2,406, and `review_state` is UNREVIEWED on all of them. Calibration is HUMAN_BLOCKED and cannot be produced by a model run. For real per-edge uncertainty use `quality_tier`, `evidence_basis` and `attribution_precision`, which are derived from what the edge actually rests on. The field SHOULD be renamed to `pipeline_prior`; that rename is bounded backlog rather than done, because `confidence` appears in 38 source files and one of them, src/vedagraph/semantic/ontology.py, is inside the semantic hash seal, where the same word means a model's own output rather than a pipeline constant. A blanket rename would break the seal and conflate two different quantities, so it needs a scoped pass over the edge writers alone.
+
+### `entity_centrality_ranked`
+
+Which entities are most central, and on which layer was that measured?
+
+- rows: 30  •  3.6 ms
+
+| entity | kind | passages | share_of_mentions | measure | authoritative_layer | bridge_centrality |
+|---|---|---|---|---|---|---|
+| heaven (dyaus) | CosmicEntity | 1206.0 | 0.042731 | DEGREE_OVER_PASSAGE_CO_MENTION | MENTIONS_ENTITY | NOT_BUILT: no community structure exists in this graph, so bridge centrality is not computable and is not reported as a zero |
+| soma juice (soma) | Substance | 1169.0 | 0.04142 | DEGREE_OVER_PASSAGE_CO_MENTION | MENTIONS_ENTITY | NOT_BUILT: no community structure exists in this graph, so bridge centrality is not computable and is not reported as a zero |
+| fire (agni) | NaturalPhenomenon | 1028.0 | 0.036424 | DEGREE_OVER_PASSAGE_CO_MENTION | MENTIONS_ENTITY | NOT_BUILT: no community structure exists in this graph, so bridge centrality is not computable and is not reported as a zero |
+| wealth (rayi) | Concept | 885.0 | 0.031357 | DEGREE_OVER_PASSAGE_CO_MENTION | MENTIONS_ENTITY | NOT_BUILT: no community structure exists in this graph, so bridge centrality is not computable and is not reported as a zero |
+| sacrifice (yajña) | Ritual | 839.0 | 0.029728 | DEGREE_OVER_PASSAGE_CO_MENTION | MENTIONS_ENTITY | NOT_BUILT: no community structure exists in this graph, so bridge centrality is not computable and is not reported as a zero |
+| cattle (go) | Animal | 757.0 | 0.026822 | DEGREE_OVER_PASSAGE_CO_MENTION | MENTIONS_ENTITY | NOT_BUILT: no community structure exists in this graph, so bridge centrality is not computable and is not reported as a zero |
+| earth (pṛthivī) | CosmicEntity | 712.0 | 0.025228 | DEGREE_OVER_PASSAGE_CO_MENTION | MENTIONS_ENTITY | NOT_BUILT: no community structure exists in this graph, so bridge centrality is not computable and is not reported as a zero |
+| soma pressing (savana) | Ritual | 656.0 | 0.023243 | DEGREE_OVER_PASSAGE_CO_MENTION | MENTIONS_ENTITY | NOT_BUILT: no community structure exists in this graph, so bridge centrality is not computable and is not reported as a zero |
+
+
+> **Caveat.** The score is STORED, and that is the point. Nothing in this graph carried a centrality value before V3.1, so a researcher asking this question wrote a GDS projection -- and the natural projection over Passage/DomainEntity with MENTIONS_ENTITY is DIRECTED and BIPARTITE, on which betweenness is 0.0 for every node. The default thing a competent user does returned a full, sortable ranking of zeros. A stored score cannot be silently mis-projected. The layer is DECLARED: MENTIONS_ENTITY is authoritative and ABOUT_CONCEPT is the rival, because 'which layer' was previously a coin flip that changed the answer. What the choice costs is measured, not asserted -- Spearman rho between the two rankings is 0.964 over 91 shared members, and the rival layer's membership is a strict subset of the authoritative one (only_in_rival = 0). See concept_layer_rank_correlation. The measure is DEGREE over passage co-mention: how many passages name the entity. BRIDGE centrality is NOT reported and the bridge_centrality column says NOT_BUILT rather than 0, because there is no community structure in this graph -- no Louvain, no modularity, no stored partition -- so bridging between communities is not computable here and a zero column would read as a ranking. Degree centrality also flatters ordinary nouns: heaven, soma and fire lead partly because their words are common, which is a fact about vocabulary as much as about prominence.
+
+### `concept_layer_rank_correlation`
+
+Is the entity ranking robust to which concept layer it is computed on?
+
+- rows: 1  •  1.8 ms
+
+| authoritative_layer | correlation | method | why_this_layer | interpretation |
+|---|---|---|---|---|
+| MENTIONS_ENTITY | {'spearman_rho': 0.964, 'shared_members': 91, 'only_in_authoritative': 135, 'only_in_rival': 0, 'verdict': 'MEASURED'} | spearman rho over shared preferred labels | MENTIONS_ENTITY edges rest on Sanskrit surface and lemma matching against a disclosed alias list. ABOUT_CONCEPT is a concept layer at a different gran | NONE |
+
+
+> **Caveat.** This is the robustness clause of the centrality questions, answered with a number rather than a reassurance. A centrality answer computed on an undeclared layer is a statement about annotation history, not about the corpus. rho = 0.964 over 91 shared members means the two layers agree closely, so the declared choice costs little -- but the 135 entities present only in the authoritative layer are not evidence of disagreement, they are membership difference, and the row reports them separately for that reason. The correlation is computed over the two layers' only shared vocabulary, the Sanskrit preferred label; entities with no Sanskrit label are dropped rather than joined on English, because a rho over a bad join would read as the layers disagreeing when it would really mean the join failed.
+
+### `cross_veda_relatedness_method_census`
+
+Which cross-Veda connections come from literal reuse and which from semantic resemblance?
+
+- rows: 6  •  177.6 ms
+
+| resemblance_kind | method | edges | population_status |
+|---|---|---|---|
+| LITERAL_TEXTUAL_REUSE | EXACT_PARALLEL_OF | 750 | BUILT |
+| LITERAL_TEXTUAL_REUSE | NEAR_PARALLEL_OF | 3049 | BUILT |
+| LITERAL_TEXTUAL_REUSE | REUSES_TEXT_FROM | 1684 | BUILT |
+| LITERAL_TEXTUAL_REUSE | VARIANT_OF | 788 | BUILT |
+| ENTITY_VOCABULARY_OVERLAP | SHARES_ENTITY_VOCABULARY_WITH | 2141 | BUILT |
+| SEMANTIC_RESEMBLANCE | no measure implemented | 0 | NOT_BUILT |
+
+
+> **Caveat.** A METHOD CENSUS, not a finding about the corpus. The distinction is the whole point of this query: the literal/semantic partition of cross-Veda relatedness in this graph is 100/0, and read as a finding that would say Vedic cross-corpus relatedness is purely textual. It says nothing of the kind. It says no semantic-resemblance measure was ever built, which is why the semantic row is typed NOT_BUILT rather than returned as a zero beside the built populations. PARALLEL_TO is deliberately absent: all 69 of its edges are within a single Veda, so it does not enter a cross-Veda partition at all. SHARES_ENTITY_VOCABULARY_WITH is listed under its own kind and NOT as semantic resemblance -- see entity_vocabulary_overlap_candidates.
 
 ### `concepts_bridging_vedas`
 
 Which entities appear across the most Vedas?
 
-- rows: 30  •  46.1 ms
+- rows: 30  •  20.3 ms
 
 | entity | kind | veda_count | vedas | mantras |
 |---|---|---|---|---|
-| fire (agni) | NaturalPhenomenon | 4 | ["AV", "YV", "SV", "RV"] | 2095 |
-| soma juice (soma) | Substance | 4 | ["AV", "YV", "SV", "RV"] | 1570 |
 | heaven (dyaus) | CosmicEntity | 4 | ["AV", "YV", "SV", "RV"] | 1206 |
+| soma juice (soma) | Substance | 4 | ["AV", "YV", "SV", "RV"] | 1169 |
+| fire (agni) | NaturalPhenomenon | 4 | ["AV", "YV", "SV", "RV"] | 1028 |
 | wealth (rayi) | Concept | 4 | ["AV", "YV", "SV", "RV"] | 885 |
 | sacrifice (yajña) | Ritual | 4 | ["AV", "YV", "SV", "RV"] | 839 |
 | cattle (go) | Animal | 4 | ["AV", "YV", "SV", "RV"] | 757 |
-| earth (pṛthivī) | CosmicEntity | 4 | ["AV", "YV", "SV", "RV"] | 742 |
+| earth (pṛthivī) | CosmicEntity | 4 | ["AV", "YV", "SV", "RV"] | 712 |
 | soma pressing (savana) | Ritual | 4 | ["AV", "YV", "SV", "RV"] | 656 |
 
 
@@ -924,16 +1666,16 @@ Which entities appear across the most Vedas?
 
 How is each entity type distributed across the four Vedas?
 
-- rows: 91  •  34.4 ms
+- rows: 91  •  35.7 ms
 
 | kind | veda | mentions | entities |
 |---|---|---|---|
-| Action | RV | 755 | 5 |
-| Action | AV | 257 | 5 |
+| Action | RV | 791 | 9 |
+| Action | AV | 446 | 10 |
+| Action | YV | 278 | 11 |
 | Action | SV | 108 | 5 |
-| Action | YV | 99 | 5 |
-| Animal | RV | 946 | 12 |
-| Animal | AV | 400 | 12 |
+| Animal | RV | 947 | 13 |
+| Animal | AV | 416 | 15 |
 | Animal | SV | 148 | 8 |
 | Animal | YV | 83 | 10 |
 
@@ -944,16 +1686,16 @@ How is each entity type distributed across the four Vedas?
 
 What supports an interpretive claim, and what would refute it?
 
-- rows: 6  •  4.1 ms
+- rows: 6  •  3.6 ms
 
-| claim | status | confidence | tier | text | falsifier | passages | statistics | contradicts |
-|---|---|---|---|---|---|---|---|---|
-| VG:CLAIM:AGNI-LEXICALLY-UNDIFFERENTIATED | MODEL_SYNTHESIS | HIGH | TIER_D | The corpus does not lexically distinguish Agni the deity from agni the ritual and natural fire; both are the word agni. The graph's separation of VG:D | A demonstration that the corpus uses systematically different forms, epithets or syntactic frames for the deity and the element, such that a rule coul | ["RV 10.187.3", "RV 10.176.4", "RV 10.187.5", "RV 10.191.1"] | [{"metric": "THEONYM_AMBIGUITY", "values": "{\"mention_edges\": 28675, \"share\": 0.1359, \"theonym_ambiguous\": 3896}"}] | [] |
-| VG:CLAIM:ANUKRAMANI-ATTRIBUTION-IS-SUKTA-SCOPED | MODEL_SYNTHESIS | HIGH | TIER_D | The traditional attribution apparatus for the Rigveda operates at the scale of the sukta rather than the individual mantra, so a per-verse reading of  | A source-level demonstration that the Anukramani intends its sukta-level labels to distribute over every constituent mantra as individual assertions,  | [] | [{"metric": "ATTRIBUTION_PRECISION_CORPUS", "values": "{\"HAS_CHANDAS\": {\"CONTAINER_INHERITED\": 6276, \"PER_PASSAGE\": 4247, \"inherited_share\": 0 | [] |
-| VG:CLAIM:CONCEPT-LAYER-LEANS-ON-TRANSLATION | MODEL_SYNTHESIS | HIGH | TIER_D | The V1 concept layer's apparent coverage substantially overstates its Sanskrit grounding: 21,246 of its 47,542 assertions (44.7%) rest on no Sanskrit  | Showing that English-only assertions agree with an independent Sanskrit reading at a rate high enough that the distinction does not affect any answer, | [] | [{"metric": "DOMAIN_MENTION_COVERAGE", "values": "{\"AV\": {\"coverage\": 0.7136, \"mantras\": 5839, \"with_domain_mention\": 4167}, \"RV\": {\"covera | [] |
-| VG:CLAIM:RISHI-ATTRIBUTION-LEAST-VERSE-SPECIFIC | RESEARCH_HYPOTHESIS | MEDIUM | TIER_D | Among the three Anukramani dimensions, seer attribution is the least verse-specific and metre the most: 95.5% of seer attributions are inherited from  | Showing that the difference tracks which Anukramani artifact supplied each dimension rather than the dimension itself, which would make it an artefact | [] | [{"metric": "ATTRIBUTION_PRECISION_CORPUS", "values": "{\"HAS_CHANDAS\": {\"CONTAINER_INHERITED\": 6276, \"PER_PASSAGE\": 4247, \"inherited_share\": 0 | [] |
-| VG:CLAIM:SV-IDENTITY-IS-MELODIC | RESEARCH_HYPOTHESIS | LOW | TIER_D | Textual dependence on the Rigveda understates the Samaveda's independence, because the Samaveda's identity lies in its melodic realisation (gana) rath | Ingesting a gana corpus and finding that melodic assignment is itself largely predictable from the Rigvedic source verse, which would remove the indep | [] | [{"metric": "SV_REUSE_OF_RV", "values": "{\"distinct_rv_sources\": 1421, \"reuse_edges\": 1684, \"share_of_sv_with_rv_source\": 0.9013, \"sv_mantras\" | ["VG:CLAIM:SV-PREDOMINANTLY-RV-REUSE"] |
-| VG:CLAIM:SV-PREDOMINANTLY-RV-REUSE | MODEL_SYNTHESIS | MEDIUM | TIER_D | The Samaveda Kauthuma Arcika, as represented in this corpus, is predominantly a re-presentation of Rigvedic verse material rather than an independent  | Re-running the reuse detection at ACCENT_INSENSITIVE or stricter and finding the share falls far enough that most SV mantras have no identified source | ["SV ARANYA 1.7", "SV ARANYA 1.2", "SV ARANYA 2.1"] | [{"metric": "SV_REUSE_OF_RV", "values": "{\"distinct_rv_sources\": 1421, \"reuse_edges\": 1684, \"share_of_sv_with_rv_source\": 0.9013, \"sv_mantras\" | ["VG:CLAIM:SV-IDENTITY-IS-MELODIC"] |
+| claim | about | about_basis | status | confidence | tier | text | falsifier | passages | statistics | contradicts |
+|---|---|---|---|---|---|---|---|---|---|---|
+| VG:CLAIM:AGNI-LEXICALLY-UNDIFFERENTIATED | VEDIC_TEXT | Its subject is the text: the corpus does not lexically distinguish the deity from the fire. That is a claim about Vedic usage which happens to have a  | MODEL_SYNTHESIS | HIGH | TIER_D | The corpus does not lexically distinguish Agni the deity from agni the ritual and natural fire; both are the word agni. The graph's separation of VG:D | A demonstration that the corpus uses systematically different forms, epithets or syntactic frames for the deity and the element, such that a rule coul | ["RV 10.187.3", "RV 10.176.4", "RV 10.187.5", "RV 10.191.1"] | [{"metric": "THEONYM_AMBIGUITY", "values": "{\"mention_edges\": 28223, \"share\": 0.0891, \"theonym_ambiguous\": 2514}"}] | [] |
+| VG:CLAIM:ANUKRAMANI-ATTRIBUTION-IS-SUKTA-SCOPED | TRADITIONAL_APPARATUS | Its subject is how the Anukramani itself operates -- at sukta scale rather than mantra scale. The consequence it draws is about this project's scope r | MODEL_SYNTHESIS | HIGH | TIER_D | The traditional attribution apparatus for the Rigveda operates at the scale of the sukta rather than the individual mantra, so a per-verse reading of  | A source-level demonstration that the Anukramani intends its sukta-level labels to distribute over every constituent mantra as individual assertions,  | [] | [{"metric": "ATTRIBUTION_PRECISION_CORPUS", "values": "{\"HAS_CHANDAS\": {\"CONTAINER_INHERITED\": 10399, \"PER_PASSAGE\": 5932, \"inherited_share\":  | [] |
+| VG:CLAIM:CONCEPT-LAYER-LEANS-ON-TRANSLATION | DATASET | Entirely about this project's V1 concept layer and its evidence basis. Names no property of the Vedic text at all. | MODEL_SYNTHESIS | HIGH | TIER_D | The V1 concept layer's apparent coverage substantially overstates its Sanskrit grounding: 21,246 of its 47,542 assertions (44.7%) rest on no Sanskrit  | Showing that English-only assertions agree with an independent Sanskrit reading at a rate high enough that the distinction does not affect any answer, | [] | [{"metric": "DOMAIN_MENTION_COVERAGE", "values": "{\"AV\": {\"coverage\": 0.7347, \"mantras\": 5839, \"with_domain_mention\": 4290}, \"RV\": {\"covera | [] |
+| VG:CLAIM:RISHI-ATTRIBUTION-LEAST-VERSE-SPECIFIC | DATASET | The numbers it compares (95.5% against 59.6%) are inheritance rates of THIS graph's projection, not properties the Anukramani states. It reads as a ph | RESEARCH_HYPOTHESIS | MEDIUM | TIER_D | Among the three Anukramani dimensions, seer attribution is the least verse-specific and metre the most: 95.5% of seer attributions are inherited from  | Showing that the difference tracks which Anukramani artifact supplied each dimension rather than the dimension itself, which would make it an artefact | [] | [{"metric": "ATTRIBUTION_PRECISION_CORPUS", "values": "{\"HAS_CHANDAS\": {\"CONTAINER_INHERITED\": 10399, \"PER_PASSAGE\": 5932, \"inherited_share\":  | [] |
+| VG:CLAIM:SV-IDENTITY-IS-MELODIC | VEDIC_TEXT | A scholarly position about where the Samaveda's identity lies, which this project did not derive and cannot measure. It is in dialogue with VG:CLAIM:S | RESEARCH_HYPOTHESIS | LOW | TIER_D | Textual dependence on the Rigveda understates the Samaveda's independence, because the Samaveda's identity lies in its melodic realisation (gana) rath | Ingesting a gana corpus and finding that melodic assignment is itself largely predictable from the Rigvedic source verse, which would remove the indep | [] | [{"metric": "SV_REUSE_OF_RV", "values": "{\"distinct_rv_sources\": 1421, \"reuse_edges\": 1684, \"share_of_sv_with_rv_source\": 0.9013, \"sv_mantras\" | ["VG:CLAIM:SV-PREDOMINANTLY-RV-REUSE"] |
+| VG:CLAIM:SV-PREDOMINANTLY-RV-REUSE | DATASET | Its own wording scopes it -- 'as represented in this corpus' -- and its evidence is 1,662 of 1,844 mantras measured in this build. A different Samaved | MODEL_SYNTHESIS | MEDIUM | TIER_D | The Samaveda Kauthuma Arcika, as represented in this corpus, is predominantly a re-presentation of Rigvedic verse material rather than an independent  | Re-running the reuse detection at ACCENT_INSENSITIVE or stricter and finding the share falls far enough that most SV mantras have no identified source | ["SV ARANYA 1.7", "SV ARANYA 1.2", "SV ARANYA 2.1"] | [{"metric": "SV_REUSE_OF_RV", "values": "{\"distinct_rv_sources\": 1421, \"reuse_edges\": 1684, \"share_of_sv_with_rv_source\": 0.9013, \"sv_mantras\" | ["VG:CLAIM:SV-IDENTITY-IS-MELODIC"] |
 
 
 > **Caveat.** Every row here is TIER_D interpretation and permanently CANDIDATE. Two of these claims contradict each other on purpose: that is the state of the question, not an error to resolve.
@@ -962,28 +1704,30 @@ What supports an interpretive claim, and what would refute it?
 
 Where does the graph record disagreement?
 
-- rows: 1  •  3.3 ms
+- rows: 2  •  3.3 ms
 
-| claim_a | status_a | confidence_a | claim_b | status_b | confidence_b |
-|---|---|---|---|---|---|
-| VG:CLAIM:SV-IDENTITY-IS-MELODIC | RESEARCH_HYPOTHESIS | LOW | VG:CLAIM:SV-PREDOMINANTLY-RV-REUSE | MODEL_SYNTHESIS | MEDIUM |
+| disagreement_kind | claim_a | about_a | status_a | confidence_a | claim_b | about_b | status_b | confidence_b |
+|---|---|---|---|---|---|---|---|---|
+| CROSS_CATEGORY__VEDIC_TEXT_VERSUS_DATASET | VG:CLAIM:SV-IDENTITY-IS-MELODIC | VEDIC_TEXT | RESEARCH_HYPOTHESIS | LOW | VG:CLAIM:SV-PREDOMINANTLY-RV-REUSE | DATASET | MODEL_SYNTHESIS | MEDIUM |
+| INSUFFICIENT_EVIDENCE: this graph records no pair of RIVAL SCHOLARLY READINGS of the Vedic text. It holds 6 interpretive claims, of which 2 are about  | None | None | None | None | None | None | None | None |
 
 
-> **Caveat.** Neither side is marked as winning.
+> **Caveat.** Neither side is marked as winning, and -- the V3.1 correction -- the rows now say WHAT KIND of disagreement each pair is. This query previously returned one pair with no such marker, which a researcher would reasonably read as recorded scholarly disagreement about the Vedas. It is not: all six InterpretiveClaim nodes carry an `about` discriminator, and the single CONTRADICTS pair is CROSS-CATEGORY -- SV-IDENTITY-IS-MELODIC is about the VEDIC_TEXT and SV-PREDOMINANTLY-RV-REUSE is about the DATASET (1,662 of 1,844 mantras measured in this build). A measurement and an interpretation of a tradition are in dialogue but cannot contradict each other. The final row states INSUFFICIENT_EVIDENCE explicitly: this graph records NO pair of rival scholarly readings of the Vedic text, and twelve attributed commentarial positions would be the acquisition that changes that. Each claim's `about_basis` records why it was classified as it was, because the classification is a judgement and a query filters on it.
 
 ### `textual_versus_interpretive`
 
 Which of the graph's claims are textual and which are interpretation?
 
-- rows: 5  •  324.0 ms
+- rows: 6  •  306.4 ms
 
 | tier | layer | edges | example_types |
 |---|---|---|---|
-| TIER_A | L1_SOURCE_EXPLICIT | 91163 | ["CONTAINS", "HAS_TEXT_VERSION", "HAS_TRANSLATION", "HAS_CHANDAS", "HAS_DEVATA", "HAS_RISHI", "..."] |
-| TIER_B | L2_DETERMINISTIC_DERIVED | 148787 | ["HAS_QA_ISSUE", "HAS_CHANDAS", "HAS_DEVATA", "HAS_RISHI", "MENTIONS_LEMMA", "MENTIONS_ENTITY", "..."] |
-| TIER_B | L4_INTERPRETIVE_CLAIM | 104 | ["COMPOSED_OF", "MEASURES"] |
-| TIER_D | L4_INTERPRETIVE_CLAIM | 1357 | ["EXACT_PARALLEL_OF", "PARALLEL_TO", "BROADER_THAN", "DEVATA_ASSOCIATED_WITH", "HAS_AXIS", "HAS_EPITHET", "..."] |
-| TIER_D | L3_LLM_EXTRACTED | 736 | ["DESCRIBES", "INVOKES", "REQUESTS", "HAS_THEME", "DESCRIBES_ACTION", "PRAISES", "..."] |
+| TIER_A | L1_SOURCE_EXPLICIT | 100988 | ["CONTAINS", "HAS_TEXT_VERSION", "HAS_TRANSLATION", "HAS_CHANDAS", "HAS_DEVATA", "HAS_RISHI", "..."] |
+| TIER_B | L2_DETERMINISTIC_DERIVED | 159730 | ["HAS_CHANDAS", "HAS_DEVATA", "HAS_RISHI", "MENTIONS_LEMMA", "QA_ISSUE_ON", "HAS_DEVATA_ASCRIPTION", "..."] |
+| TIER_C | L3_LLM_EXTRACTED | 593 | ["EPITHET_VARIANT_OF", "DESCRIBES", "INVOKES", "REQUESTS", "HAS_THEME", "DESCRIBES_ACTION", "..."] |
+| TIER_D | L2_DETERMINISTIC_DERIVED | 2469 | ["HAS_FORMULA", "MEMBER_OF_FAMILY", "HAS_SEMANTIC_ASSERTION"] |
+| TIER_D | L4_INTERPRETIVE_CLAIM | 1790 | ["DEVATA_ASSOCIATED_WITH", "USES_OFFERING", "USES_SUBSTANCE", "USES_OBJECT", "INVOKES_DEVATA", "PERFORMED_BY", "..."] |
+| TIER_D | L3_LLM_EXTRACTED | 1187 | ["ASSERTION_PREDICATE", "DESCRIBES", "REQUESTS", "REFERS_TO_NATURAL_PHENOMENON", "INVOLVES_OFFERING", "INVOLVES_SUBSTANCE", "..."] |
 
 
 > **Caveat.** TIER_C is empty by construction: the 736 model-extracted candidates are all state=CANDIDATE because there is no human gold to accept them against.
@@ -992,36 +1736,125 @@ Which of the graph's claims are textual and which are interpretation?
 
 How much attribution is source-stated versus scope-inherited?
 
-- rows: 6  •  23.2 ms
+- rows: 6  •  70.6 ms
 
 | predicate | precision | edges |
 |---|---|---|
-| HAS_CHANDAS | CONTAINER_INHERITED | 6276 |
-| HAS_CHANDAS | PER_PASSAGE | 4247 |
+| HAS_CHANDAS | CONTAINER_INHERITED | 10399 |
+| HAS_CHANDAS | PER_PASSAGE | 5932 |
 | HAS_DEVATA | CONTAINER_INHERITED | 8329 |
 | HAS_DEVATA | PER_PASSAGE | 2229 |
-| HAS_RISHI | CONTAINER_INHERITED | 10093 |
-| HAS_RISHI | PER_PASSAGE | 472 |
+| HAS_RISHI | CONTAINER_INHERITED | 15177 |
+| HAS_RISHI | PER_PASSAGE | 2712 |
 
 
 > **Caveat.** This is the query most worth running before trusting any deity ranking.
+
+### `layer_coverage_boundary`
+
+Which Vedas does each knowledge layer actually reach?
+
+- rows: 9  •  46.9 ms
+
+| layer | derived_from | reaches | nodes |
+|---|---|---|---|
+| ActionPredicate | ASSERTION_PREDICATE | ["RV"] | 40 |
+| ActionPredicate | ASSERTION_PREDICATE | [] | 1 |
+| Chandas | HAS_CHANDAS | ["AV"] | 541 |
+| Chandas | HAS_CHANDAS | ["RV"] | 34 |
+| DevataAscription | HAS_DEVATA_ASCRIPTION | ["AV"] | 324 |
+| Rishi | HAS_RISHI | ["RV"] | 367 |
+| Rishi | HAS_RISHI | ["YV"] | 228 |
+| Rishi | HAS_RISHI | ["AV"] | 134 |
+
+
+> **Caveat.** The boundary made visible rather than tripped over: `reaches` is measured from the graph, so a Veda absent from the list means the layer has no coverage of that corpus and NOT that the corpus lacks the thing. The metre layer splits 34 Rigvedic metre nodes from 578 Atharvavedic ones and shares none, which is a fact about two Anukramani traditions rather than about Vedic prosody. One ActionPredicate has reaches = [], meaning it reaches nothing at all. Every row here is single-Veda: no layer carrying this property spans two corpora, so the boundary is not a rough edge on one layer, it is the shape of all of them.
+
+### `rishi_layer_reach_by_veda`
+
+Which Vedas name a seer, and how much of that is source-stated?
+
+- rows: 3  •  24.8 ms
+
+| veda | passages | seers | source_stated | inherited |
+|---|---|---|---|---|
+| RV | 10534 | 367 | 467 | 10067 |
+| AV | 5084 | 134 | 0 | 5084 |
+| YV | 1960 | 228 | 1960 | 0 |
+
+
+> **Caveat.** Three rows, not four, and the shape of the answer is the point: the Samaveda carries no seer at all, while the Yajurveda's 1,960 passages are 1,960 source-stated and 0 inherited and the Atharvaveda's 5,084 are the exact reverse. So 'how many mantras have a named seer' has three different meanings in three corpora, and a single corpus-wide figure averages a per-verse attribution against a hymn label. Prefer `source_stated` for any defensible claim about a named seer.
+
+### `chandas_layer_reach_by_veda`
+
+Which Vedas record a metre, and do the two traditions share a vocabulary?
+
+- rows: 2  •  23.6 ms
+
+| veda | passages | metres | source_stated | metre_layer_scope |
+|---|---|---|---|---|
+| RV | 10518 | 34 | 4242 | [["RV"]] |
+| AV | 4547 | 541 | 1650 | [["AV"]] |
+
+
+> **Caveat.** Two rows: RV and AV only, so a question about Yajurvedic or Samavedic metre is not answerable here. The 34 Rigvedic and 578 Atharvavedic metre nodes are disjoint sets, which makes `metres` incomparable across the two rows -- the AV Anukramani names compound and irregular metres individually where the RV's names a handful of standard ones, so the AV's larger count is a difference in descriptive practice, not in prosodic variety.
+
+### `model_adjudicated_edges`
+
+Which model-extracted edges survived an independent per-passage review?
+
+- rows: 18  •  175.9 ms
+
+| predicate | tier | verdict | review_state | reviewer | edges | passages | targets |
+|---|---|---|---|---|---|---|---|
+| INVOKES | TIER_C | ACCEPT_MODEL_REVIEWED | MODEL_ADJUDICATED | MODEL_ADJUDICATED | 207 | 174 | 53 |
+| DESCRIBES | TIER_C | ACCEPT_MODEL_REVIEWED | MODEL_ADJUDICATED | MODEL_ADJUDICATED | 183 | 135 | 68 |
+| REQUESTS | TIER_C | ACCEPT_MODEL_REVIEWED | MODEL_ADJUDICATED | MODEL_ADJUDICATED | 82 | 72 | 15 |
+| PRAISES | TIER_C | ACCEPT_MODEL_REVIEWED | MODEL_ADJUDICATED | MODEL_ADJUDICATED | 38 | 38 | 12 |
+| DESCRIBES_ACTION | TIER_C | ACCEPT_MODEL_REVIEWED | MODEL_ADJUDICATED | MODEL_ADJUDICATED | 35 | 35 | 4 |
+| DESCRIBES | TIER_D | AMBIGUOUS | MODEL_ADJUDICATED | MODEL_ADJUDICATED | 10 | 10 | 8 |
+| INVOLVES_OFFERING | TIER_C | ACCEPT_MODEL_REVIEWED | MODEL_ADJUDICATED | MODEL_ADJUDICATED | 10 | 10 | 7 |
+| INVOLVES_RITUAL | TIER_C | ACCEPT_MODEL_REVIEWED | MODEL_ADJUDICATED | MODEL_ADJUDICATED | 9 | 9 | 1 |
+
+
+> **Caveat.** Complete over the 613 reviewed edges. One MATCH pattern, so count(*) counts edges as intended, with the distinct passage and target counts beside it. The verdict is what promotes an edge: 587 ACCEPT_MODEL_REVIEWED became TIER_C, while 16 NEEDS_MORE_EVIDENCE and 10 AMBIGUOUS stayed TIER_D rather than being deleted, so the rejections are still auditable. TIER_C means MODEL_ADJUDICATED, not human-reviewed: 587 edges were re-read per passage by a model and accepted with a stated reason. No edge anywhere in this graph carries HUMAN_REVIEWED and none may claim to; there is still no human gold set. The layer's reach also runs opposite to every other derived layer here -- all 587 are Yajurvedic (320) or Atharvavedic (267) and not one is Rigvedic -- so it reviews exactly the two corpora the assertion layer never reaches, and the two cannot be compared.
+
+### `model_adjudicated_review_trail`
+
+Why was one model-extracted edge accepted, in the reviewer's own words?
+
+- rows: 30  •  166.9 ms
+
+| passage | predicate | target | object_kind | review_reason | reviewer_model | sanskrit_checked | passage_read |
+|---|---|---|---|---|---|---|---|
+| AVS 1.21.4 | DESCRIBES | enemy (śatru) | Concept | The verse wards off the hater's mind and deadly weapon (dvisato, jijyasato), so the human adversary is one of its substantive topics. | claude-opus-5 | True | True |
+| AVS 1.21.4 | INVOKES | Indra | Devata | indra is a vocative in apendra and the whole verse is a string of imperatives addressed to him. | claude-opus-5 | True | True |
+| AVS 1.21.4 | REQUESTS | protection (śarman) | Concept | vi mahac charma yacha is an explicit imperative asking Indra for great protection, with sarman in the Sanskrit. | claude-opus-5 | True | True |
+| AVS 1.22.4 | DESCRIBES | bird (vi) | Concept | The verse names three kinds of yellow bird (sukesu, ropanakasu, haridravesu) as the recipients of the transferred jaundice, so birds are a substantive | claude-opus-5 | True | True |
+| AVS 1.22.4 | DESCRIBES | consumption (yakṣma) | Concept | harimanam, the yellowness deposited elsewhere, is the affliction the charm expels, which is what YAKSMA-DISEASE covers. | claude-opus-5 | True | True |
+| AVS 1.22.4 | HAS_THEME | healing (bheṣaja) | Concept | Transferring the yellowness out of the patient into the birds is the cure this verse effects, so healing is its theme. | claude-opus-5 | True | True |
+| AVS 1.29.2 | DESCRIBES_ACTION | battle (yudh) | Concept | abhivrtya sapatnan and abhi prtanyantam tistha describe trampling the attacking foe, and prtanyant- is from prtana battle. | claude-opus-5 | True | True |
+| AVS 13.1.59 | INVOKES | Indra | Devata | indra is a vocative inside the verse's prohibitive ma pra gama. | claude-opus-5 | True | True |
+
+
+> **Caveat.** A top-30 by citation of 587 TIER_C edges; model_adjudicated_edges gives the totals. The reasons cite grammar -- 'agne is a vocative with the imperative yuksva' -- which is the strongest thing about this layer and also its limit: the reviewer is a model, `sanskrit_checked` records whether it was shown the Sanskrit, and a plausible-sounding reason is not a checked one. TIER_C means MODEL_ADJUDICATED, not human-reviewed: 587 edges were re-read per passage by a model and accepted with a stated reason. No edge anywhere in this graph carries HUMAN_REVIEWED and none may claim to; there is still no human gold set. The layer's reach also runs opposite to every other derived layer here -- all 587 are Yajurvedic (320) or Atharvavedic (267) and not one is Rigvedic -- so it reviews exactly the two corpora the assertion layer never reaches, and the two cannot be compared.
 
 ### `theonym_ambiguous_mentions`
 
 Which mentions cannot be told apart from a mention of a deity?
 
-- rows: 42  •  32.3 ms
+- rows: 42  •  22.7 ms
 
 | entity | kind | ambiguous_mentions | aliases |
 |---|---|---|---|
-| fire (agni) | NaturalPhenomenon | 1205 | [["agne"], ["jātavedaḥ"], ["agnaye"]] |
-| soma juice (soma) | Substance | 841 | [["soma"], ["somāya"], ["somaḥ"]] |
-| sun (sūrya) | NaturalPhenomenon | 351 | [["sūryasya"], ["sūryaḥ"], ["sūrya"]] |
+| soma juice (soma) | Substance | 439 | [["somāya"], ["somaḥ"], ["somasya"]] |
 | earth (pṛthivī) | CosmicEntity | 318 | [["pṛthivī"], ["pṛthivyāḥ"], ["pṛthivī", "pṛthivīm"]] |
+| fire (agni) | NaturalPhenomenon | 298 | [["agnaye"], ["agniḥ"], ["agnim"]] |
+| sun (sūrya) | NaturalPhenomenon | 249 | [["sūryasya"], ["sūryaḥ"], ["sūryam"]] |
 | sacred formulation (brahman) | PhilosophicalConcept | 188 | [["brahma"]] |
-| dawn (uṣas) | NaturalPhenomenon | 129 | [["uṣo"], ["uṣasaḥ"], ["uṣāḥ"]] |
+| waters (āpaḥ) | NaturalPhenomenon | 139 | [["āpaḥ"], ["apsu"], ["apsu", "āpaḥ"]] |
 | speech (vāc) | PhilosophicalConcept | 90 | [["vācaṃ"], ["vāk"], ["vāco"]] |
-| waters (āpaḥ) | NaturalPhenomenon | 68 | [["apsu"]] |
+| dawn (uṣas) | NaturalPhenomenon | 87 | [["uṣasaḥ"], ["uṣāḥ"], ["uṣasam"]] |
 
 
 > **Caveat.** An upper bound on deity/concept conflation, not a count of errors: some of these passages do mean the impersonal referent.
@@ -1030,11 +1863,11 @@ Which mentions cannot be told apart from a mention of a deity?
 
 How does Soma behave as deity versus substance?
 
-- rows: 1  •  12.4 ms
+- rows: 1  •  2.7 ms
 
 | as_deity_attributed | as_substance_mentioned | both | substance_only |
 |---|---|---|---|
-| 1167 | 1570 | 467 | 1103 |
+| 1167 | 1169 | 247 | 922 |
 
 
 > **Caveat.** The deity side is Rigveda-only; the substance side spans four Vedas, so `substance_only` is inflated by that asymmetry rather than by usage.
@@ -1043,11 +1876,11 @@ How does Soma behave as deity versus substance?
 
 How does Agni behave as deity, as fire, and as ritual medium?
 
-- rows: 1  •  8.4 ms
+- rows: 1  •  3.1 ms
 
 | deity | axes | attributed_mantras | fire_mentions | ambiguous_fire_mentions |
 |---|---|---|---|---|
-| Agni | ["PRIESTLY", "FIRE_MEDIUM", "TERRESTRIAL"] | 1988 | 2095 | 1205 |
+| Agni | ["PRIESTLY", "FIRE_MEDIUM", "TERRESTRIAL"] | 1988 | 1028 | 298 |
 
 
 > **Caveat.** The corpus does not lexically distinguish the deity from the element -- both are the word agni -- so the split between these columns is an editorial convenience. See VG:CLAIM:AGNI-LEXICALLY-UNDIFFERENTIATED. The two counts are computed in separate CALL subqueries because they are independent: stacking them as OPTIONAL MATCH multiplied 3 axes by 1,988 attributed passages by 2,206 fire mentions and took 9.5 seconds to return one row.
@@ -1056,31 +1889,31 @@ How does Agni behave as deity, as fire, and as ritual medium?
 
 What is Rudra's corpus profile, without importing later identity?
 
-- rows: 1  •  2.9 ms
+- rows: 1  •  2.3 ms
 
-| deity | structure | axes | description | attributed_mantras | source_stated | vedas |
-|---|---|---|---|---|---|---|
-| Rudra | INDIVIDUAL | ["HEALER", "TERRESTRIAL"] | The feared archer of the wilds, father of the Maruts, whose arrows bring affliction on men and cattle and who is at the same time called the best of p | 38 | 16 | ["RV"] |
+| deity | structure | axes | description | attributed_mantras | source_stated | ascribed_vedas | ascription_zero_means | named_by_veda |
+|---|---|---|---|---|---|---|---|---|
+| Rudra | INDIVIDUAL | ["HEALER", "TERRESTRIAL"] | The feared archer of the wilds, father of the Maruts, whose arrows bring affliction on men and cattle and who is at the same time called the best of p | 38 | 8 | ["RV"] | HAS_DEVATA is the RV-only Anukramani layer: a non-RV zero here is LAYER ABSENT, not deity absent | [{"named_in": 42, "probable": 13, "per_1k_mantras": 7.19, "veda": "AV", "ambiguous": 29, "certain": 0}, {"named_in": 41, "probable": 12, "per_1k_mantr |
 
 
-> **Caveat.** No Siva identification is asserted anywhere in the graph. Rudra's later identification with Siva is post-Vedic and recording it here would dress a historical claim as a textual fact.
+> **Caveat.** No Siva identification is asserted anywhere in the graph. Rudra's later identification with Siva is post-Vedic and recording it here would dress a historical claim as a textual fact. The attribution counts sit in a CALL subquery for the reason agni_deity_fire_medium documents: as sibling OPTIONAL MATCHes in one scope, the axis pattern multiplied the passage pattern, and `source_stated` -- a sum over rows rather than a count of distinct passages -- came back as 16 for Rudra's 8 source-stated edges, once per axis. The four-Veda block is the V3.1 correction: this query returned vedas=['RV'] and 38 attributed mantras while the same database had Rudra NAMED in all four corpora, and normalised for corpus size he is DENSER in the Yajurveda than in the Rigveda -- the Satarudriya effect, which the HAS_DEVATA-only view made invisible. Read per_1k_mantras, not named_in: the Rigveda is 5.3x the Yajurveda by mantra count, so raw counts flatter it. The certainty columns are reported rather than filtered because filtering to DEITY_CERTAIN re-imposes the Rigveda-only answer this fix removes. HAS_DEVATA is Rigveda-only: 10,558 edges, every one on the RV. A zero for SV/YV/AV means those corpora carry no Anukramani deity ascription, not that the deity is absent from them. MENTIONS_DEVATA answers 'is this deity named here?' across all four (17,165 edges: RV 10,284, AV 3,582, YV 1,964, SV 1,335).
 
 ### `product_graph_census`
 
 What does the product graph contain, excluding internal plumbing?
 
-- rows: 35  •  39.2 ms
+- rows: 39  •  17.5 ms
 
 | label | nodes |
 |---|---|
 | Passage | 22537 |
-| Lemma | 10031 |
+| SemanticAssertion | 4865 |
 | Formula | 4825 |
-| Rishi | 367 |
-| Devata | 214 |
-| Concept | 163 |
-| DerivedMetric | 79 |
-| Chandas | 34 |
+| DerivedMetric | 1072 |
+| Rishi | 729 |
+| FormulaFamily | 720 |
+| Chandas | 575 |
+| DevataAscription | 324 |
 
 
 > **Caveat.** DomainEntity and Mantra are marker/sublabels and would double-count.
@@ -1089,9 +1922,11 @@ What does the product graph contain, excluding internal plumbing?
 
 Does any internal diagnostic node reach product traversal?
 
-- rows: 0  •  24.9 ms
+- rows: 1  •  31.3 ms
 
-_(no rows)_
+| label | leaked_nodes |
+|---|---|
+| Lemma | 10031 |
 
 
 > **Caveat.** An empty result is the pass condition.
@@ -1100,7 +1935,7 @@ _(no rows)_
 
 Which domain entities have no edge at all?
 
-- rows: 0  •  2.9 ms
+- rows: 0  •  2.6 ms
 
 _(no rows)_
 
@@ -1111,7 +1946,7 @@ _(no rows)_
 
 Does any product node lack a human-readable label?
 
-- rows: 0  •  63.9 ms
+- rows: 0  •  47.7 ms
 
 _(no rows)_
 
@@ -1122,7 +1957,7 @@ _(no rows)_
 
 How much of the deity taxonomy is real, and how much is UNSPECIFIED?
 
-- rows: 7  •  2.7 ms
+- rows: 7  •  3.4 ms
 
 | structure | with_axes | unspecified | total |
 |---|---|---|---|
@@ -1137,6 +1972,26 @@ How much of the deity taxonomy is real, and how much is UNSPECIFIED?
 
 > **Caveat.** UNSPECIFIED is a deliberate value, not a gap to be filled: a justified UNSPECIFIED is worth more than an invented axis.
 
+### `entity_kinds_by_veda`
+
+Which kinds of entity does each Veda name, counted per kind?
+
+- rows: 22  •  45.9 ms
+
+| kind | entities | passages | vedas | veda_list |
+|---|---|---|---|---|
+| NaturalPhenomenon | 13 | 3179 | 4 | ["AV", "YV", "SV", "RV"] |
+| Offering | 8 | 2933 | 4 | ["AV", "YV", "SV", "RV"] |
+| PhilosophicalConcept | 13 | 2766 | 4 | ["AV", "YV", "SV", "RV"] |
+| Substance | 13 | 1952 | 4 | ["AV", "YV", "SV", "RV"] |
+| CosmicEntity | 4 | 1895 | 4 | ["AV", "YV", "SV", "RV"] |
+| Object | 23 | 1662 | 4 | ["AV", "YV", "SV", "RV"] |
+| Action | 12 | 1574 | 4 | ["AV", "YV", "SV", "RV"] |
+| Ritual | 8 | 1535 | 4 | ["AV", "YV", "SV", "RV"] |
+
+
+> **Caveat.** Rows overlap by construction and must not be summed: Weapon is a subset of Object and both are counted, because the curation asserts both. Concept and DomainEntity are excluded as markers that every row would otherwise carry. count(DISTINCT p) rather than count(*), because an entity is reached by more than one mention edge from the same passage and the UNWIND multiplies each of those by the node's label count.
+
 ## Killer-question coverage by query
 
 Which of the fifty questions have at least one query addressing them. This is
@@ -1145,54 +2000,61 @@ answerable, and the scorecard is where that judgement is recorded.
 
 | question | queries |
 |---|---|
-| 1 | `deity_profile` |
-| 2 | `deities_through_common_rishis`, `rishis_invoking_deity`, `rishis_invoking_deity_strict` |
+| 1 | `deity_profile`, `devatas_named_in_all_four_vedas`, `deity_reach_named_versus_ascribed`, `deity_pairs_not_rigvedic` |
+| 2 | `deities_through_common_rishis`, `rishis_invoking_deity`, `rishis_invoking_deity_strict`, `rishi_layer_reach_by_veda` |
 | 3 | `varuna_profile` |
 | 4 | `substances_offered_to_deities` |
-| 5 | `ritual_profile`, `agni_and_indra_together` |
+| 5 | `ritual_profile`, `agni_and_indra_together`, `rituals_described_in_passages`, `ritual_officiants_and_purposes` |
 | 6 | `sv_reuse_of_rv` |
-| 7 | `sv_reuse_of_rv` |
-| 8 | `cross_veda_formulas`, `formula_family_diffusion` |
+| 7 | `sv_reuse_of_rv`, `formula_family_membership_roles`, `formula_family_similarity_derived` |
+| 8 | `cross_veda_formulas`, `formula_family_diffusion`, `formula_family_span_census`, `formula_families_reaching_all_four_vedas`, `formula_family_profile` |
 | 9 | `crops_by_veda` |
 | 10 | `metals_by_veda` |
 | 11 | `animals_by_veda`, `animals_with_wealth` |
-| 12 | `conditions_treated`, `condition_neighbourhood` |
-| 13 | `human_concerns_by_veda`, `social_rites` |
-| 14 | `human_concerns_by_veda`, `social_rites` |
-| 15 | `human_concerns_by_veda`, `conditions_treated`, `condition_neighbourhood` |
-| 16 | `human_concerns_by_veda` |
-| 17 | `deity_profile`, `soma_deity_versus_substance` |
-| 18 | `deity_profile` |
-| 19 | `deity_profile`, `deities_through_common_rishis`, `rishis_invoking_deity`, `rishis_invoking_deity_strict` |
-| 20 | `deity_profile`, `deities_by_axis`, `agni_deity_fire_medium` |
-| 21 | `concepts_bridging_vedas`, `entity_distribution_by_veda` |
-| 22 | `conceptually_similar_not_reused` |
-| 23 | `deity_co_occurrence` |
-| 24 | `entity_distribution_by_veda` |
+| 12 | `deity_actions_requested`, `deities_who_heal_and_protect`, `conditions_treated`, `condition_neighbourhood` |
+| 13 | `human_concerns_by_veda`, `social_rites`, `concerns_addressed_versus_protected_from`, `passages_used_for_a_rite` |
+| 14 | `human_concerns_by_veda`, `social_rites`, `concerns_addressed_versus_protected_from`, `passages_used_for_a_rite` |
+| 15 | `human_concerns_by_veda`, `conditions_treated`, `condition_neighbourhood`, `passages_protecting_against`, `concerns_addressed_versus_protected_from` |
+| 16 | `human_concerns_by_veda`, `passages_protecting_against`, `concerns_addressed_versus_protected_from` |
+| 17 | `deity_profile`, `soma_certainty_across_the_corpus`, `deity_actions_performed`, `deity_asserted_versus_requested`, `who_does_what_to_whom`, `soma_deity_versus_substance` |
+| 18 | `deity_profile`, `deity_actions_performed`, `deity_actions_requested`, `deity_asserted_versus_requested`, `action_predicate_breadth`, `deity_action_repertoire_breadth`, `deities_who_heal_and_protect`, `who_does_what_to_whom`, `assertions_on_one_passage`, `action_vocabulary_coverage`, `unmapped_verbal_roots` |
+| 19 | `deity_profile`, `deities_through_common_rishis`, `rishis_invoking_deity`, `rishis_invoking_deity_strict`, `rishi_layer_reach_by_veda` |
+| 20 | `deity_profile`, `deities_by_axis`, `deity_actions_performed`, `agni_deity_fire_medium` |
+| 21 | `devatas_named_in_all_four_vedas`, `concepts_bridging_vedas`, `entity_distribution_by_veda`, `layer_coverage_boundary`, `entity_kinds_by_veda` |
+| 22 | `entity_vocabulary_overlap_candidates`, `cross_veda_relatedness_method_census` |
+| 23 | `deity_co_occurrence`, `deity_pairs_far_above_chance`, `deity_pairs_not_rigvedic` |
+| 24 | `rv_family_books_versus_outer_books`, `entity_distribution_by_veda`, `chandas_layer_reach_by_veda`, `entity_kinds_by_veda` |
 | 25 | `weapons_and_deities`, `ritual_objects_recurring` |
 | 26 | `rivers_mentioned`, `tribes_mentioned`, `rivers_and_tribes` |
-| 27 | `cross_veda_formulas`, `formula_family_diffusion` |
+| 27 | `cross_veda_formulas`, `formula_family_diffusion`, `formula_family_span_census`, `formula_families_reaching_all_four_vedas`, `formula_family_membership_roles`, `formula_family_similarity_derived`, `formula_family_profile` |
 | 28 | `claim_evidence_trace`, `competing_interpretations` |
-| 29 | `rishis_invoking_deity_strict`, `claim_evidence_trace`, `textual_versus_interpretive`, `attribution_precision_audit`, `theonym_ambiguous_mentions` |
-| 30 | `claim_evidence_trace`, `textual_versus_interpretive`, `attribution_precision_audit` |
+| 29 | `rishis_invoking_deity_strict`, `devata_mention_certainty_by_veda`, `deity_reach_named_versus_ascribed`, `who_does_what_to_whom`, `assertion_layers_reported_separately`, `model_assertion_claims`, `assertions_on_one_passage`, `action_vocabulary_coverage`, `unmapped_verbal_roots`, `concerns_addressed_versus_protected_from`, `av_deity_ascription_descriptors`, `formula_family_membership_roles`, `formula_family_similarity_derived`, `claim_evidence_trace`, `textual_versus_interpretive`, `attribution_precision_audit`, `layer_coverage_boundary`, `rishi_layer_reach_by_veda`, `chandas_layer_reach_by_veda`, `model_adjudicated_edges`, `model_adjudicated_review_trail`, `theonym_ambiguous_mentions` |
+| 30 | `devata_mention_certainty_by_veda`, `rv_family_books_versus_outer_books`, `assertion_layers_reported_separately`, `model_assertion_claims`, `assertions_on_one_passage`, `action_vocabulary_coverage`, `claim_evidence_trace`, `competing_interpretations`, `textual_versus_interpretive`, `attribution_precision_audit`, `layer_coverage_boundary`, `chandas_layer_reach_by_veda`, `model_adjudicated_edges`, `model_adjudicated_review_trail` |
 | 31 | `substances_offered_to_deities` |
-| 32 | `human_concerns_by_veda`, `ritual_profile`, `ritual_roles` |
-| 33 | `deity_composition`, `deity_co_occurrence`, `agni_and_indra_together` |
-| 34 | `concepts_bridging_vedas` |
-| 35 | `deity_co_occurrence`, `deities_through_common_rishis` |
-| 36 | `concepts_bridging_vedas`, `entity_distribution_by_veda` |
-| 38 | `deity_profile`, `deities_by_axis`, `deity_widest_range` |
-| 39 | `ritual_profile`, `ritual_roles` |
+| 32 | `deity_actions_requested`, `human_concerns_by_veda`, `passages_protecting_against`, `ritual_profile`, `ritual_roles`, `rituals_described_in_passages`, `ritual_step_sequence`, `ritual_officiants_and_purposes`, `passages_used_for_a_rite` |
+| 33 | `deity_composition`, `deity_co_occurrence`, `deity_pairs_far_above_chance`, `deity_pairs_not_rigvedic`, `agni_and_indra_together` |
+| 34 | `devatas_named_in_all_four_vedas`, `concepts_bridging_vedas`, `entity_kinds_by_veda` |
+| 35 | `deity_co_occurrence`, `deities_through_common_rishis`, `deity_pairs_far_above_chance`, `rishi_layer_reach_by_veda` |
+| 36 | `devatas_named_in_all_four_vedas`, `deity_pairs_not_rigvedic`, `rv_family_books_versus_outer_books`, `concepts_bridging_vedas`, `entity_distribution_by_veda`, `layer_coverage_boundary` |
+| 37 | `entity_centrality_ranked`, `concept_layer_rank_correlation` |
+| 38 | `deity_profile`, `deities_by_axis`, `deity_widest_range`, `action_predicate_breadth`, `deity_action_repertoire_breadth` |
+| 39 | `ritual_profile`, `ritual_roles`, `rituals_described_in_passages`, `ritual_step_sequence`, `ritual_officiants_and_purposes` |
 | 40 | `weapons_and_deities`, `ritual_objects_recurring` |
-| 41 | `deities_by_axis`, `natural_phenomena_personified` |
-| 42 | `deity_composition`, `deity_epithets` |
-| 43 | `deity_profile`, `rudra_profile_no_shiva` |
-| 44 | `deity_profile`, `varuna_profile` |
-| 45 | `deity_profile`, `theonym_ambiguous_mentions`, `soma_deity_versus_substance` |
-| 46 | `deity_profile`, `deities_by_axis`, `deity_widest_range`, `natural_phenomena_personified`, `theonym_ambiguous_mentions`, `agni_deity_fire_medium` |
-| 47 | `human_concerns_by_veda`, `conditions_treated`, `condition_neighbourhood`, `medicinal_plants` |
-| 48 | `crops_by_veda`, `animals_by_veda`, `animals_with_wealth`, `human_concerns_by_veda` |
-| 49 | `conceptually_similar_not_reused` |
-| 50 | `sv_reuse_of_rv`, `formula_family_diffusion` |
+| 41 | `deities_by_axis`, `natural_phenomena_personified`, `av_deity_ascription_descriptors` |
+| 42 | `deity_composition`, `deity_epithets`, `deity_mention_surface_forms`, `av_deity_ascription_descriptors` |
+| 43 | `deity_profile`, `deity_actions_performed`, `deity_asserted_versus_requested`, `rudra_profile_no_shiva` |
+| 44 | `deity_profile`, `varuna_profile`, `devatas_named_in_all_four_vedas`, `deity_reach_named_versus_ascribed`, `deity_asserted_versus_requested` |
+| 45 | `deity_profile`, `devata_mention_certainty_by_veda`, `deity_mention_surface_forms`, `soma_certainty_across_the_corpus`, `theonym_ambiguous_mentions`, `soma_deity_versus_substance` |
+| 46 | `deity_profile`, `deities_by_axis`, `deity_widest_range`, `natural_phenomena_personified`, `devata_mention_certainty_by_veda`, `deity_reach_named_versus_ascribed`, `deity_mention_surface_forms`, `soma_certainty_across_the_corpus`, `action_predicate_breadth`, `deity_action_repertoire_breadth`, `theonym_ambiguous_mentions`, `agni_deity_fire_medium` |
+| 47 | `deities_who_heal_and_protect`, `human_concerns_by_veda`, `conditions_treated`, `condition_neighbourhood`, `medicinal_plants`, `passages_protecting_against`, `concerns_addressed_versus_protected_from` |
+| 48 | `crops_by_veda`, `animals_by_veda`, `animals_with_wealth`, `human_concerns_by_veda`, `concerns_addressed_versus_protected_from`, `entity_kinds_by_veda` |
+| 49 | `entity_vocabulary_overlap_candidates`, `cross_veda_relatedness_method_census` |
+| 50 | `sv_reuse_of_rv`, `formula_family_diffusion`, `formula_families_reaching_all_four_vedas`, `formula_family_profile` |
+| 56 | `ritual_profile` |
+| 60 | `passages_used_for_a_rite` |
+| 72 | `competing_interpretations` |
+| 77 | `confidence_is_a_pipeline_constant` |
+| 81 | `entity_vocabulary_overlap_candidates`, `cross_veda_relatedness_method_census` |
+| 96 | `entity_centrality_ranked`, `concept_layer_rank_correlation` |
 
-Questions with at least one query: **49** of 50.
+Questions with at least one query: **56** of 50.

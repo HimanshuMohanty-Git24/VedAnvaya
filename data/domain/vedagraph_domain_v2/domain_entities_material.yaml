@@ -614,7 +614,14 @@ concepts:
     definition: >-
       The officiant who does the physical work of the rite -- pressing, pouring, handling
       the vessels -- addressed in the plural as the men whose hands carry the offering.
-    aliases_sa: [adhvaryavo, adhvaryubhiḥ]
+    # adhvaryuḥ, adhvaryavaḥ and adhvaryo moved here from VG:CONCEPT:HOTR-PRIEST in
+    # V3.1, where they sat inside the hotar's portmanteau alias list and contributed
+    # 14 mention edges to the wrong office (adhvaryo 9, adhvaryavaḥ 4, adhvaryuḥ 1).
+    # rituals_v3.yaml's PERFORMED_BY note asked for this split at the same time as the
+    # hotar retype and not later: retyping without splitting produces a RitualRole that
+    # answers "which rites does the adhvaryu officiate at" twice, differently. No folded
+    # surface collides -- this node held none of the three. QUESTION_UNLOCKED: 90
+    aliases_sa: [adhvaryavo, adhvaryubhiḥ, adhvaryuḥ, adhvaryavaḥ, adhvaryo]
     aliases_en: [adhvaryu, adhvaryus]
     broader: [VG:CONCEPT:HOTR-PRIEST]
     related_devatas: []

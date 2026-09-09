@@ -92,14 +92,24 @@ DOMAIN_REL_INDEXES: Final[list[str]] = [
     "FOR ()-[r:HAS_DEVATA]-() ON (r.quality_tier)",
     "CREATE INDEX rel_precision_devata IF NOT EXISTS "
     "FOR ()-[r:HAS_DEVATA]-() ON (r.attribution_precision)",
-    "CREATE INDEX rel_quality_tier_rishi IF NOT EXISTS "
-    "FOR ()-[r:HAS_RISHI]-() ON (r.quality_tier)",
+    "CREATE INDEX rel_quality_tier_rishi IF NOT EXISTS FOR ()-[r:HAS_RISHI]-() ON (r.quality_tier)",
     "CREATE INDEX rel_quality_tier_chandas IF NOT EXISTS "
     "FOR ()-[r:HAS_CHANDAS]-() ON (r.quality_tier)",
     "CREATE INDEX rel_quality_tier_mentions IF NOT EXISTS "
     "FOR ()-[r:MENTIONS_ENTITY]-() ON (r.quality_tier)",
     "CREATE INDEX rel_member_of_family_role IF NOT EXISTS "
     "FOR ()-[r:MEMBER_OF_FAMILY]-() ON (r.role)",
+    # The outward mirror carries the same ``role``, and the family-to-formula direction is
+    # the one a reader browses ("show me this family's core phrase"), so it needs the index
+    # at least as much as the inbound edge does.
+    "CREATE INDEX rel_has_formula_role IF NOT EXISTS FOR ()-[r:HAS_FORMULA]-() ON (r.role)",
+    # Indexed on ``method`` and not on ``quality_tier``, because every one of the 306 ṛṣi
+    # memberships is TIER_B and the tier therefore partitions nothing. ``method`` is the
+    # property that does: it separates the 291 patronymics the Anukramaṇī printed as their
+    # own word from the 15 where this layer supplied the word boundary, which is the filter
+    # a sceptical reader actually wants.
+    "CREATE INDEX rel_belongs_to_family_method IF NOT EXISTS "
+    "FOR ()-[r:BELONGS_TO_FAMILY]-() ON (r.method)",
 ]
 
 

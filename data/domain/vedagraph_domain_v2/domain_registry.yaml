@@ -84,6 +84,9 @@ concepts:
   aliases_sa:
   - adhvaryavo
   - adhvaryubhiḥ
+  - adhvaryuḥ
+  - adhvaryavaḥ
+  - adhvaryo
   aliases_en:
   - adhvaryu
   - adhvaryus
@@ -1450,11 +1453,6 @@ concepts:
   - hotur
   - hotre
   - hotrāt
-  - ṛtvijam
-  - ṛtvijaḥ
-  - adhvaryuḥ
-  - adhvaryavaḥ
-  - adhvaryo
   aliases_en:
   - priest
   - priests
@@ -3417,6 +3415,7 @@ concepts:
     of AVS 6.70.1 and RV 7.86.6 rather than an offering.'
   aliases_sa:
   - surayā
+  - surāyāṃ
   aliases_en: []
   broader: []
   related_devatas: []

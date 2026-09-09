@@ -302,14 +302,43 @@ concepts:
     broader: []
     related_devatas: []
 
+  # node_type stays CONCEPT and that is a BLOCKER, not a decision. Measured: 321 mentions
+  # across all four Vedas and no RitualRole label, so REL_PERFORMED_BY (Ritual ->
+  # RitualRole) cannot reach the Rigveda's principal officiant and the priestly-role query
+  # enumerates nine lesser offices without him. The V3 close-out filed this as "one field
+  # on one existing line"; it is not. Setting RITUAL_ROLE here raises
+  # ConceptRegistryError, because load_concepts() validates this file against the frozen
+  # SemanticNodeType whitelist on every caller that does not pass allowed_node_types --
+  # enrich/build.py, probe_domain_aliases.py, run_semantic_extraction.py and two test
+  # modules -- and that enum has no RITUAL_ROLE and is sealed. See
+  # docs/reports/V3_1_RISHI_FAMILY_AND_MATERIAL.md for the two candidate fixes.
   - concept_id: VG:CONCEPT:HOTR-PRIEST
     preferred_label_sa: hotṛ
     preferred_label_en: priest
     node_type: CONCEPT
     definition: >-
       The officiant who invokes and offers, named by office rather than as an individual.
-    aliases_sa: [hotā, hotāraṃ, hotāram, hotur, hotre, hotrāt, ṛtvijam, ṛtvijaḥ, adhvaryuḥ,
-                 adhvaryavaḥ, adhvaryo]
+    # The alias list was a portmanteau of three different offices, and splitting it is not
+    # tidying -- rituals_v3.yaml's PERFORMED_BY note warned that "retyping the node without
+    # splitting it produces a RitualRole that answers 'which rites does the adhvaryu
+    # officiate at' twice, differently". Measured per alias against the live mention layer
+    # before the split, because a row-level sample here once read 97% while one alias was
+    # 82.9% wrong:
+    #
+    #   the hotar   hotā 213 · hotāraṃ 45 · hotāram 37 · hotur 3 · hotre 3 · hotrāt 1
+    #               = 302 of 321 edges
+    #   MOVED to VG:CONCEPT:ADHVARYU-PRIEST (a RITUAL_ROLE already, and holding neither
+    #               form, so no folded surface collides):
+    #               adhvaryo 9 · adhvaryavaḥ 4 · adhvaryuḥ 1 = 14 edges
+    #   WITHDRAWN, no replacement node: ṛtvijam 7 · ṛtvijaḥ 4 = 11 edges. ṛtvij- is any
+    #               officiant "who sacrifices in season", not the hotar. No generic-office
+    #               node is minted: Q90 is a priestly-role census and a generic office
+    #               would enter that census as a competing role and re-inflate the very
+    #               table this change corrects -- the reasoning the diagnosis applies to
+    #               `sindhu`, the generic word for "river", in a hydronym table.
+    #
+    # So 25 of 321 edges (7.8%) were the wrong office. QUESTION_UNLOCKED: 90
+    aliases_sa: [hotā, hotāraṃ, hotāram, hotur, hotre, hotrāt]
     aliases_en: [priest, priests, hotar]
     broader: []
     related_devatas: [VG:DEVATA:DAIVYAU-HOTARAU, VG:DEVATA:DEVYAU-HOTARAU]
