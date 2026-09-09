@@ -1,0 +1,123 @@
+# Structural facts about rites: what a rite uses, whom it invokes, who performs it.
+#
+# Four rituals, not fourteen. Everything here is a CURATED statement, so every entry
+# carries the basis that produced it and a confidence, and the rule applied throughout is
+# that the Saṃhitās are not read through the Brāhmaṇas. The developed śrauta procedures --
+# the twice-daily agnihotra of milk, the dīkṣā's sequence of observances, the full
+# aśvamedha -- are Brāhmaṇa and Sūtra systematisation. Where a field would only be
+# fillable from that later system it is left EMPTY and the omission is stated in `basis`,
+# because an empty list is a fact about the corpus and a plausible list is not.
+#
+# Endpoint types are constrained by vedagraph.domain.ontology.RELATIONSHIP_SIGNATURES and
+# every key below was checked against it:
+#   uses_offering   RITUAL -> Offering
+#   uses_substance  RITUAL -> Substance | Plant   (METAL carries Substance, CROP carries Plant)
+#   uses_object     RITUAL -> Object              (WEAPON carries Object)
+#   invokes_devata  RITUAL -> Devata
+#   performed_by    RITUAL -> RitualRole
+#   performed_for   RITUAL -> HumanConcern | Concept | State
+#
+# Two of the four ritual_ids are the RITUAL-typed entities added in
+# domain_entities_material.yaml (AGNIHOTRA, DIKSA-CONSECRATION); two are RITUAL-typed
+# entities that data/registry/concepts.yaml already carries (YAJNA-SACRIFICE,
+# SOMA-PRESSING). Including the two existing ones is deliberate: the soma pressing is the
+# rite the Rigveda is largely about, and a ritual model that omitted it to stay inside one
+# new file would be a worse model.
+#
+# A known modelling limitation, recorded rather than worked around: PERFORMED_BY is the
+# only edge from a rite to a person, so it carries both "officiates at" and "is the patron
+# of". VG:CONCEPT:YAJAMANA-SACRIFICER appears under `performed_by` for that reason and not
+# because the corpus says the patron does the work. Splitting the two needs a
+# COMMISSIONED_BY predicate, which is an ontology change and not this file's to make.
+
+version: vedagraph-ritual-model-v1
+
+rituals:
+
+  - ritual_id: VG:CONCEPT:YAJNA-SACRIFICE
+    uses_offering: [VG:CONCEPT:HAVIS-OBLATION, VG:CONCEPT:DAKSINA-PRIESTLY-GIFT]
+    uses_substance: [VG:CONCEPT:GHRTA-CLARIFIED-BUTTER, VG:CONCEPT:SOMA-DRINK,
+                     VG:CONCEPT:PAYAS-MILK]
+    uses_object: [VG:CONCEPT:BARHIS-SACRED-GRASS, VG:CONCEPT:SAMIDH-FUEL,
+                  VG:CONCEPT:VEDI-ALTAR, VG:CONCEPT:SRUC-LADLE,
+                  VG:CONCEPT:YUPA-SACRIFICIAL-POST]
+    invokes_devata: [VG:DEVATA:AGNIH]
+    performed_by: [VG:CONCEPT:ADHVARYU-PRIEST, VG:CONCEPT:BRAHMAN-PRIEST,
+                   VG:CONCEPT:PUROHITA-CHAPLAIN, VG:CONCEPT:YAJAMANA-SACRIFICER]
+    performed_for: [VG:CONCEPT:VASU-WEALTH, VG:CONCEPT:PRAJA-OFFSPRING,
+                    VG:CONCEPT:SVASTI-WELLBEING, VG:CONCEPT:AYUS-LIFE]
+    basis: >-
+      The apparatus list is not inferred: each item is named in the same verses as the
+      rite. VS 19.17 puts altar, sacred grass and post in one line ("Altar by Altar is
+      produced, power, holy grass by holy grass. The stake is by the stake obtained"); VS
+      18.63 lists fencing-wood, spoon, altar and grass together; RV 1.84.18 has the
+      oblation, the butter and the ladle in one sentence. Only AGNIH is listed under
+      invokes_devata, although the sacrifice invokes every god in the pantheon, because
+      Agni is the one deity every oblation passes through by definition rather than by
+      selection; the general question "which deity does this passage invoke" is already
+      answered by the Devatā layer and does not need restating here. performed_for is the
+      four things the corpus asks for oftenest in the same breath as the rite.
+    confidence: HIGH
+
+  - ritual_id: VG:CONCEPT:SOMA-PRESSING
+    uses_offering: []
+    uses_substance: [VG:CONCEPT:SOMA-DRINK]
+    uses_object: [VG:CONCEPT:ASMAN-PRESSING-STONE, VG:CONCEPT:ULUKHALA-MORTAR,
+                  VG:CONCEPT:PAVITRA-STRAINER, VG:CONCEPT:KALASA-JAR,
+                  VG:CONCEPT:CAMASA-CUP]
+    invokes_devata: [VG:DEVATA:INDRAH, VG:DEVATA:SOMAH, VG:DEVATA:PAVAMANAH-SOMAH]
+    performed_by: [VG:CONCEPT:ADHVARYU-PRIEST]
+    performed_for: []
+    basis: >-
+      Every object listed appears in the pressing hymns themselves. RV 1.28 runs through
+      the whole set in nine verses -- the broad-based stone, the mortar ("the droppings
+      which the mortar sheds", ulūkhalasutānām), the pestle's rise and fall, and "the Soma
+      on the filter pour... take up in beakers what remains"; Mandala 9 adds the jar
+      (kalaśe, kalaśeṣu, 28 passages) and the wool filter (pavitre, 51 passages, of which
+      19 are Sāmavedic). performed_by is the adhvaryu because he is the officiant the
+      hymns address while the pressing is going on (RV 1.153.1, RV 2.37.2, and Griffith's
+      "from the Adhvaryu's hand or from the filter", VS 7.26). uses_offering is empty on
+      purpose: the pressed juice is an offering, but SOMA-DRINK already declares
+      HAVIS-OBLATION as its broader concept and repeating it here would double-count one
+      fact.
+    confidence: HIGH
+
+  - ritual_id: VG:CONCEPT:AGNIHOTRA
+    uses_offering: [VG:CONCEPT:HAVIS-OBLATION]
+    uses_substance: []
+    uses_object: [VG:CONCEPT:SAMIDH-FUEL]
+    invokes_devata: [VG:DEVATA:AGNIH]
+    performed_by: []
+    performed_for: []
+    basis: >-
+      The word occurs exactly once in the four Saṃhitās, at AVS 11.7.9, where it is one
+      item in a list of things that entered the remnant of the offering, beside faith, the
+      vaṣaṭ-call, the vow and penance. That verse supports the two entries made here and
+      nothing else: an oblation (hotrá) into the fire (agní), which is what the compound
+      says, and the kindling the fire needs. It supports no substances, no officiant and
+      no purpose. The familiar agnihotra -- the twice-daily offering of milk, with the
+      adhvaryu offering and a fixed order of libations -- is described in the Brāhmaṇas,
+      not here, so uses_substance and performed_by are empty rather than filled with
+      PAYAS-MILK and ADHVARYU-PRIEST. Read this entry as "the corpus names the rite" and
+      not as "the corpus describes the rite".
+    confidence: LOW
+
+  - ritual_id: VG:CONCEPT:DIKSA-CONSECRATION
+    uses_offering: []
+    uses_substance: []
+    uses_object: []
+    invokes_devata: []
+    performed_by: [VG:CONCEPT:YAJAMANA-SACRIFICER]
+    performed_for: []
+    basis: >-
+      16 passages carry the word, and what they state is a position in a sequence rather
+      than a procedure. VS 19.30 is explicit: "He gains by vow of fasting Consecration, by
+      Consecration gains the priestly guerdon" -- vrata, then dīkṣā, then dakṣiṇā -- and
+      AVS 11.7.8 lists it beside the establishing of the fire. AVS 12.5.3 has a thing
+      "surrounded with faith, guarded by consecration, standing firm in the offering". The
+      one structural fact those verses will carry is that the consecration is undergone by
+      the man who is to sacrifice, so performed_by names the sacrificer and every other
+      field is empty. DAKSINA-PRIESTLY-GIFT is deliberately NOT listed under
+      uses_offering: VS 19.30 says the fee follows the consecration, which is a sequence,
+      and USES_OFFERING would restate it as equipment.
+    confidence: MEDIUM

@@ -94,9 +94,17 @@ MAX_FORMULA_EDGES: Final = 120_000
 # Concepts
 # ---------------------------------------------------------------------------
 
-#: The concept layer is deliberately small. A concept that needs a hundred siblings to be
+#: The registry is deliberately small. An entity that needs a hundred siblings to be
 #: expressed is a lexicon entry, and the Lemma layer already is one.
-MAX_CONCEPT_NODES: Final = 150
+#:
+#: Raised from 150 to 260 by Knowledge Model V2, which widened what this file is for. In
+#: V1 it held 89 abstract concepts; in V2 it is the domain entity registry and carries the
+#: crops, metals, animals, implements, rivers, conditions and human concerns that the
+#: killer questions ask about by name. The cap's purpose is unchanged -- it exists to stop
+#: this becoming a full lexicon -- and it still serves that purpose at 260, since the
+#: Rigveda alone has 10,031 distinct lemmas. Anything approaching this ceiling should be
+#: expressed as lemmas, not as registry entities.
+MAX_CONCEPT_NODES: Final = 260
 
 #: Concepts attached to one passage. A mantra about everything is about nothing; past four
 #: the weakest are dropped, counted, and left to the lexical layer to express.

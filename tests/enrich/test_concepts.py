@@ -121,7 +121,7 @@ def test_duplicate_concept_id_is_rejected(tmp_path: Path) -> None:
 
 def test_node_type_must_be_a_semantic_node_type(tmp_path: Path) -> None:
     root = _write_registry(tmp_path, [_concept("VG:CONCEPT:AGNI-FIRE", node_type="ELEMENT")])
-    _expect(root, "is not a SemanticNodeType")
+    _expect(root, "is not an allowed entity type")
 
 
 def test_every_node_type_in_the_real_registry_is_a_member() -> None:

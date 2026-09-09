@@ -282,7 +282,9 @@ def _devata_keys(project_root: Path) -> frozenset[str]:
     return frozenset(keys)
 
 
-def load_ambiguous_aliases(project_root: Path) -> dict[tuple[str, str], str]:
+def load_ambiguous_aliases(
+    project_root: Path, *, registry_path: Path | None = None
+) -> dict[tuple[str, str], str]:
     """Alias strings the registry declares ambiguous, mapped to the recorded reason.
 
     Keyed by ``(kind, alias)`` where kind is ``"sa"`` or ``"en"``. These are excluded from
@@ -290,7 +292,7 @@ def load_ambiguous_aliases(project_root: Path) -> dict[tuple[str, str], str]:
     that is the whole point of the list. An ambiguous alias that is simply deleted looks
     like an oversight; one recorded here is a decision with a reason attached.
     """
-    document = _read_yaml(project_root / CONCEPT_REGISTRY_PATH)
+    document = _read_yaml(project_root / (registry_path or CONCEPT_REGISTRY_PATH))
     declared = document.get("ambiguous_aliases") or []
     if not isinstance(declared, list):
         raise ConceptRegistryError("ambiguous_aliases must be a list")
@@ -365,8 +367,20 @@ def _check_acyclic(parents: Mapping[str, tuple[str, ...]]) -> None:
                 stack.append((parent, 0))
 
 
-def load_concepts(project_root: Path) -> tuple[ConceptRow, ...]:
+def load_concepts(
+    project_root: Path,
+    *,
+    allowed_node_types: frozenset[str] | None = None,
+    registry_path: Path | None = None,
+) -> tuple[ConceptRow, ...]:
     """Parse and validate ``data/registry/concepts.yaml``.
+
+    ``allowed_node_types`` defaults to the frozen
+    :class:`~vedagraph.semantic.ontology.SemanticNodeType` whitelist. Knowledge Model V2
+    passes a wider set, because it adds entity types the frozen enum deliberately does not
+    grow to hold -- ``HUMAN_CONCERN``, ``CONDITION``, ``CROP`` and the rest. It is injected
+    rather than imported so that the enrichment layer keeps depending only on the semantic
+    ontology, and a V2 type cannot leak into a V1 rebuild by accident.
 
     Every check below exists because the failure it catches is silent otherwise. A
     misspelled ``node_type`` produces a node the ontology does not know; an unresolvable
@@ -378,19 +392,24 @@ def load_concepts(project_root: Path) -> tuple[ConceptRow, ...]:
     Returned sorted by ``concept_id``, with each row's alias lists sorted, so two runs over
     the same file produce byte-identical rows regardless of how the file is arranged.
     """
-    document = _read_yaml(project_root / CONCEPT_REGISTRY_PATH)
+    path = registry_path or CONCEPT_REGISTRY_PATH
+    document = _read_yaml(project_root / path)
     entries = document.get("concepts")
     if not isinstance(entries, list) or not entries:
-        raise ConceptRegistryError(f"{CONCEPT_REGISTRY_PATH}: no concepts defined")
+        raise ConceptRegistryError(f"{path}: no concepts defined")
     if len(entries) > MAX_CONCEPT_NODES:
         raise ConceptRegistryError(
             f"{len(entries)} concepts exceeds MAX_CONCEPT_NODES={MAX_CONCEPT_NODES}. "
             "The concept layer is deliberately small; a lexicon belongs in the Lemma layer."
         )
 
-    ambiguous = load_ambiguous_aliases(project_root)
+    ambiguous = load_ambiguous_aliases(project_root, registry_path=path)
     devata_keys = _devata_keys(project_root)
-    node_types = {str(member) for member in SemanticNodeType}
+    node_types = (
+        set(allowed_node_types)
+        if allowed_node_types
+        else {str(member) for member in SemanticNodeType}
+    )
 
     rows: list[ConceptRow] = []
     ids: set[str] = set()
@@ -413,7 +432,7 @@ def load_concepts(project_root: Path) -> tuple[ConceptRow, ...]:
         node_type = str(entry.get("node_type", ""))
         if node_type not in node_types:
             raise ConceptRegistryError(
-                f"{concept_id}: node_type {node_type!r} is not a SemanticNodeType. "
+                f"{concept_id}: node_type {node_type!r} is not an allowed entity type. "
                 f"Allowed: {', '.join(sorted(node_types))}"
             )
 

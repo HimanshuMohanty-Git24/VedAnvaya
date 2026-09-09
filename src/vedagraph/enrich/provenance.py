@@ -53,6 +53,12 @@ class TrustClass(StrEnum):
     #: A source states it outright. Reserved for enrichment lifted from an edition's own
     #: apparatus rather than computed.
     SOURCE_EXPLICIT = "SOURCE_EXPLICIT"
+    #: A reading of the corpus rather than a report of it, held either by this project or
+    #: by a named commentator. Added by Knowledge Model V2 so that an interpretation has
+    #: somewhere to live that is not a textual fact -- previously the only way to record
+    #: "the Yajurveda reflects a more settled ritual environment" was to dress it as one of
+    #: the four classes above. Deliberately absent from :data:`ACCEPTABLE_WITHOUT_REVIEW`.
+    INTERPRETIVE_CLAIM = "INTERPRETIVE_CLAIM"
 
 
 class AssertionState(StrEnum):

@@ -1,0 +1,2885 @@
+version: vedagraph-devata-taxonomy-v1
+
+# Devata display and classification overlay.
+#
+# This file is an OVERLAY on data/registry/devatas.yaml. It adds nothing to
+# identity: every entity_key here is copied byte for byte from that registry,
+# which states that entity_key is pinned identity and must not be recomputed.
+# The registry is generated from commit-pinned Anukramani artifacts and is not
+# edited by this work.
+#
+# ---------------------------------------------------------------------------
+# TWO KINDS OF CLAIM, KEPT APART
+# ---------------------------------------------------------------------------
+#
+# `structure` is SOURCE-SETTLED. It records what the label itself already
+# decides, mostly by Sanskrit morphology, and a reviewer can check it without
+# knowing any Vedic religion:
+#
+#   INDIVIDUAL     a single named deity or single deified thing
+#   PAIR           a dual: endings -au / -i (asvinau, mitravarunau, dampati)
+#   GROUP          a plural collective addressed as one devata (marutah,
+#                  adityah, gravanah). Objects count; humans do not - see below
+#   PATRON_PRAISE  a danastuti, or a label naming a patron and his gift
+#   ABSTRACT       a noun, act, event or phrase rather than a being
+#                  (jnanam, mrtyuh, sapatnaghnarupo arthah, bhavavrttam)
+#   HUMAN          a named human rishi, king or patron standing as addressee,
+#                  singular or plural. HUMAN takes precedence over GROUP: a
+#                  human collective is still human (vasisthaputrah, kesinah)
+#   UNSPECIFIED    the label genuinely does not settle it. Used twice in this
+#                  file, both times because the form is ambiguous in number
+#
+# `axes` are INTERPRETIVE. A deity holds several at once, which is the whole
+# point of replacing the old single devata_subtype: Agni no longer has to be
+# either a god or a fire or a ritual medium, he is FIRE_MEDIUM and PRIESTLY and
+# TERRESTRIAL together. Every axis assignment is a reading of the text and is
+# defended in that entry's curation_note.
+#
+# `axes: [UNSPECIFIED]` is a POSITIVE STATEMENT, not a gap. It means: this
+# entity was examined and no axis in the closed vocabulary applies to it. A
+# justified UNSPECIFIED is better than invented taxonomy, so it is used freely
+# and always with a reason. Four recurring reasons are named in the notes:
+#
+#   * deified animals - the vocabulary has no term for them
+#   * implements of war from the weapons hymn - RITUAL_OBJECT means an
+#     implement of the sacrifice, and a bow is not one
+#   * charm-purpose labels - the slot names the act, not an agent with a domain
+#   * lunar and generally celestial bodies - there is no lunar axis, and both
+#     SOLAR and ATMOSPHERIC would be wrong
+#
+# `confidence` grades the AXES only, never the structure. On an
+# `axes: [UNSPECIFIED]` entry, HIGH means confident that no axis applies.
+#
+# ---------------------------------------------------------------------------
+# WHAT THIS FILE REFUSES TO DO
+# ---------------------------------------------------------------------------
+#
+# * No post-Vedic identifications. Rudra is not given Siva's attributes, Yama
+#   is not given an underworld, Ka is not identified with Prajapati, and Visnu
+#   is not given Puranic sovereignty. Each refusal is stated in its entry.
+# * No decomposition is invented. `composed_of` is copied only from
+#   data/registry/devata_components.yaml rows with review_status ACCEPTED.
+#   Where that file says NEEDS_REVIEW or REJECTED, or is silent, composed_of is
+#   empty and the note says which of those it is.
+# * No alias that matches nothing. Every alias listed was probed with
+#   scripts/probe_domain_aliases.py against all four Vedas. Forms with zero
+#   token hits were dropped even when they are the conventional stem - this
+#   removed `agni`, `brhaspati`, `vayu`, `aditi`, `rbhu`, `indu`, `visvedevah`,
+#   `aranyani`, `satakratu`, `ganapati`, `samraj`, `vivasvat` and `yami`. Where
+#   a deity ends up with no safe alias, aliases_iast is empty and the note says
+#   why.
+# * `member_of` uses two DeityGroup keys minted by this overlay,
+#   VG:DEITYGROUP:ADITYAH and VG:DEITYGROUP:APRIDEVATAH. They have no registry
+#   entities behind them yet and are assigned sparingly.
+#
+# Entries are in registry order so the two files can be read side by side.
+
+entries:
+
+- entity_key: VG:DEVATA:ABHISAPAH
+  structure: ABSTRACT
+  axes: [UNSPECIFIED]
+  label_iast: abhiśāpa
+  label_en: "the curse"
+  short_description: "A curse, or the imputation of guilt, named as the subject of the verse."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "An abstract noun in the devata slot with nothing personified. The label names a condition, not an agent with a domain."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:ADHYETRSTUTIH
+  structure: ABSTRACT
+  axes: [UNSPECIFIED]
+  label_iast: adhyetṛstuti
+  label_en: "praise of the reciter"
+  short_description: "Praise of the one who recites or studies the text, rather than of any deity."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "PATRON_PRAISE is withheld because no patron and no gift are named; this is praise of a reciter. No axis applies."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:ADITIH
+  structure: INDIVIDUAL
+  axes: [ABSTRACT_PERSONIFICATION]
+  label_iast: aditi
+  label_en: Aditi
+  short_description: "The goddess whose name means boundlessness, invoked for release from constraint and named as the mother of the Adityas."
+  aliases_iast: [aditiḥ, aditiṃ]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "Her name is the abstraction unboundedness, which is what ABSTRACT_PERSONIFICATION records. Her central role as mother of the Adityas has no counterpart in the vocabulary: ANCESTRAL denotes the Fathers, not divine parentage, so it is not used. The bare stem aditi scores zero token hits and is not listed."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:AGNERATMA
+  structure: ABSTRACT
+  axes: [FIRE_MEDIUM]
+  label_iast: agnerātmā
+  label_en: "the self of Agni"
+  short_description: "An aspect label: the atman, or self, of Agni taken as the subject of the verse."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "The label is explicitly an aspect of Agni, which carries FIRE_MEDIUM across. The vocabulary has no term for aspect-of-a-deity, which is what this label actually is, so confidence is MEDIUM."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:AGNISURYANILAH
+  structure: GROUP
+  axes: [FIRE_MEDIUM, SOLAR, ATMOSPHERIC]
+  label_iast: agnisūryānila
+  label_en: "Agni, Surya and Anila"
+  short_description: "A three-way composite naming the fire, the sun and the wind together."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "Axes are the union read straight off the three names in the label, which is why confidence is HIGH without any interpretation. devata_components.yaml asserts no decomposition for this label, and Anila has no registry entity of its own and is not the same word as vayu, so composed_of is empty."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:AGNISUYAU
+  structure: PAIR
+  axes: [FIRE_MEDIUM, SOLAR]
+  label_iast: agnisūyau
+  label_en: "Agni and Surya"
+  short_description: "A dual label pairing Agni with the sun."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "The dual ending settles PAIR. The axes depend on reading agnisuyau as a variant of agnisuryau, which is a judgement about the source form rather than about the religion, so confidence is MEDIUM. No decomposition is asserted by devata_components.yaml."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:AGNIH
+  structure: INDIVIDUAL
+  axes: [FIRE_MEDIUM, PRIESTLY, TERRESTRIAL]
+  label_iast: agni
+  label_en: Agni
+  short_description: "The sacrificial fire, at once the carrier of the offering up to the gods and the divine priest who performs the rite."
+  aliases_iast: [agniḥ, agnim, agne, agnaye, agneḥ]
+  epithets:
+    - iast: jātavedas
+      en: knower of all that is born
+    - iast: vaiśvānara
+      en: belonging to all men
+    - iast: havyavāhana
+      en: carrier of the oblation
+    - iast: tanūnapāt
+      en: son of his own body
+  member_of: []
+  composed_of: []
+  curation_note: "FIRE_MEDIUM and PRIESTLY are the two roles the hymns state outright: he conveys the oblation and he is the hotr. TERRESTRIAL places him in the standard triad of Agni on earth, Indra in the midspace, Surya in heaven. The bare stem agni was probed and scores zero token hits in all four Vedas, so it is not an alias; the corpus uses agnih, agnim and the vocative agne, which alone carries 915 mantras. The form agnina was rejected at 52 percent intrusion."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:AGNIH-MARUTAH
+  structure: PAIR
+  axes: [FIRE_MEDIUM, ATMOSPHERIC, WARRIOR]
+  label_iast: agniḥ-marutaḥ
+  label_en: "Agni and the Maruts"
+  short_description: "Agni invoked jointly with the Marut troop."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: [VG:DEVATA:AGNIH, VG:DEVATA:MARUTAH]
+  curation_note: "Decomposition copied from devata_components.yaml, review_status ACCEPTED, where the hyphen is the source editors own compositional marker. Axes are the union of the two members."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:AGNIH-MITRAVARUNAU-RATRIH-SAVITA
+  structure: GROUP
+  axes: [FIRE_MEDIUM, GUARDIAN_OF_ORDER, DAWN_TIME, SOLAR]
+  label_iast: agniḥ-mitrāvaruṇau-rātriḥ-savitā
+  label_en: "Agni, Mitra-Varuna, Ratri and Savitr"
+  short_description: "A four-way composite naming Agni, the Mitra-Varuna pair, Night and Savitr."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "Axes are the union of the four named members. All four exist as registry entities, but devata_components.yaml does not assert this decomposition and its policy forbids inferring one from a hyphenated label alone, so composed_of is empty. Confidence is MEDIUM only because a union of four axis sets is a blunt description of any one verse."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:AGNAMARUTAH
+  structure: PAIR
+  axes: [FIRE_MEDIUM, ATMOSPHERIC]
+  label_iast: agnāmarutaḥ
+  label_en: "Agni and the Maruts"
+  short_description: "A variant source label pairing Agni with the Maruts."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "Reads as a variant of agnih-marutah but is a separately pinned entity and is deliberately not merged with it. devata_components.yaml asserts no decomposition for this form, so composed_of is empty even though the parallel label has one."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:AGNINDRAU
+  structure: PAIR
+  axes: [FIRE_MEDIUM, WARRIOR]
+  label_iast: agnīndrau
+  label_en: "Agni and Indra"
+  short_description: "The dual of Agni and Indra, named in that order."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: [VG:DEVATA:AGNIH, VG:DEVATA:INDRAH]
+  curation_note: "Decomposition from devata_components.yaml, ACCEPTED. The registry keeps this separate from indragni, which names the same two gods in the other order, and that separation is preserved here rather than collapsed."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:AGNISOMAU
+  structure: PAIR
+  axes: [FIRE_MEDIUM, RITUAL_SUBSTANCE]
+  label_iast: agnīṣomau
+  label_en: "Agni and Soma"
+  short_description: "The dual of Agni and Soma, the fire and the pressed draught."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: [VG:DEVATA:AGNIH, VG:DEVATA:SOMAH]
+  curation_note: "Decomposition from devata_components.yaml, ACCEPTED, which notes the regular retroflex s of the compound."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:AHIRBUDHNYAH
+  structure: INDIVIDUAL
+  axes: [CHTHONIC, AQUATIC]
+  label_iast: ahi budhnya
+  label_en: "Ahi Budhnya"
+  short_description: "The serpent of the depths, a benign figure invoked beside Apam Napat and the waters."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "Named for the budhna, the deep or the bottom, which is the basis for CHTHONIC; his standing invocation alongside the waters is the basis for AQUATIC. He is not the adversary serpent, and no WARRIOR-adjacent axis is applied."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:AHIH
+  structure: INDIVIDUAL
+  axes: [CHTHONIC]
+  label_iast: ahi
+  label_en: "the serpent"
+  short_description: "The serpent named as the subject of the verse."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "The bare label is ambiguous between the adversary Ahi, that is Vrtra, and the benign Ahi Budhnya. CHTHONIC holds on either reading, so it is asserted and nothing further is."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:AKSAKITAVANINDA
+  structure: ABSTRACT
+  axes: [UNSPECIFIED]
+  label_iast: akṣakitavanindā
+  label_en: "censure of the dice and the gambler"
+  short_description: "The reproach of dice and of the gambler, the theme of the gambler hymn."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A theme rather than an addressee. No axis applies."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:AKSAH
+  structure: GROUP
+  axes: [UNSPECIFIED]
+  label_iast: akṣa
+  label_en: "the dice"
+  short_description: "The dice of the gambler hymn, addressed collectively as a power over the player."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A plural collective of objects, hence GROUP. RITUAL_OBJECT was considered and rejected: in this vocabulary it means an implement of the sacrifice, and these are gaming dice."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:ALAKSMIGHNAH
+  structure: ABSTRACT
+  axes: [UNSPECIFIED]
+  label_iast: alakṣmīghna
+  label_en: "the dispelling of ill fortune"
+  short_description: "A charm label: the driving away of alaksmi, bad fortune."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "One of the charm-purpose labels. The Anukramani names the purpose of the charm, not an agent with a domain, so no axis is asserted."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:ANNAM
+  structure: ABSTRACT
+  axes: [RITUAL_SUBSTANCE]
+  label_iast: anna
+  label_en: "food"
+  short_description: "Food itself praised as the subject of the verse."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "Food in the Vedic cult is the oblation, which is what RITUAL_SUBSTANCE records. The label is nonetheless a common noun rather than a named deity, so confidence is MEDIUM."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:APTRNAH-SURYAH
+  structure: INDIVIDUAL
+  axes: [SOLAR]
+  label_iast: aptṛṇaḥ sūrya
+  label_en: "Surya, with the epithet aptrna"
+  short_description: "A Surya label carrying the obscure qualifier aptrna."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "The label is a qualified Surya, so SOLAR carries over. The qualifier aptrna is obscure and is deliberately not interpreted. Kept as its own entity, as the registry pins it, rather than folded into VG:DEVATA:SURYAH."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:APAM-NAPAT
+  structure: INDIVIDUAL
+  axes: [AQUATIC, FIRE_MEDIUM]
+  label_iast: apāṃ napāt
+  label_en: "Apam Napat"
+  short_description: "The Child of the Waters, hymned as a radiant being who grows and shines within the waters."
+  aliases_iast: [napāt]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "AQUATIC is in the name itself. FIRE_MEDIUM records the standard reading of Apam Napat as the fire that dwells in the waters, which is an interpretation rather than a statement of the text, so confidence is MEDIUM. The alias apam was not listed: at 100 token hits it is the ordinary genitive plural of ap, water, and matches passages that have nothing to do with this deity."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:ARANYANI
+  structure: INDIVIDUAL
+  axes: [TERRESTRIAL]
+  label_iast: araṇyānī
+  label_en: Aranyani
+  short_description: "The goddess of the wild forest, praised in the single hymn addressed to her."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A deity of the uncultivated land, which is what TERRESTRIAL covers. Both aranyani and the vocative aranyani with short final i were probed and score zero token hits, so no alias is listed rather than listing a form that matches nothing."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:ASAMATIH
+  structure: HUMAN
+  axes: [UNSPECIFIED]
+  label_iast: asamāti
+  label_en: "Asamati, a patron"
+  short_description: "A named human patron standing as the addressee of the verse."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A named human standing in the devata slot; no divine axis applies."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:ASANGAH
+  structure: HUMAN
+  axes: [UNSPECIFIED]
+  label_iast: asaṅga
+  label_en: "Asanga, a patron"
+  short_description: "A named human patron praised for his liberality."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A named human standing in the devata slot; no divine axis applies."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:ASUNITIH
+  structure: ABSTRACT
+  axes: [PSYCHOPOMP]
+  label_iast: asunīti
+  label_en: "the conducting of the life-breath"
+  short_description: "The leading onward of the asu, the life-breath, after death."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "The label literally names the conducting of the departed life, which is exactly what PSYCHOPOMP denotes. It is an act rather than an agent, so confidence is MEDIUM."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:ATRIH
+  structure: HUMAN
+  axes: [UNSPECIFIED]
+  label_iast: atri
+  label_en: Atri
+  short_description: "The rishi Atri, standing as the addressee of the verse."
+  aliases_iast: [atriḥ]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A named human rishi in the devata slot; no divine axis applies."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:ASHVAH
+  structure: INDIVIDUAL
+  axes: [UNSPECIFIED]
+  label_iast: aśva
+  label_en: "the horse"
+  short_description: "The sacrificial horse, addressed as the victim of the horse rite."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A deified animal. The vocabulary has no term for animals held sacred, and RITUAL_SUBSTANCE would describe the victim yield rather than the creature addressed, so no axis is asserted."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:ASVINAU
+  structure: PAIR
+  axes: [HEALER, DAWN_TIME]
+  label_iast: aśvin
+  label_en: "the Asvins"
+  short_description: "The twin horsemen who arrive at daybreak in their chariot and act as the physicians and rescuers of gods and men."
+  aliases_iast: [aśvinā, aśvinoḥ]
+  epithets:
+    - iast: nāsatyā
+      en: the two Nasatyas
+    - iast: dasrā
+      en: the two wondrous ones
+    - iast: rudravartanī
+      en: of the ruddy course
+  member_of: []
+  composed_of: []
+  curation_note: "HEALER is stated outright across their rescue legends. DAWN_TIME records the company they are actually invoked in, at the turn of night ahead of Usas. SOLAR was considered and rejected as an over-reading of their descent from Dyaus. The registry label form asvinau was probed and returns a single token hit at 83 percent intrusion, so it is not listed as an alias: the corpus uses the Vedic dual asvina, at 377 mantras. No individual twin is a registry entity, so composed_of is empty."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:ASHVAAH
+  structure: GROUP
+  axes: [UNSPECIFIED]
+  label_iast: aśva
+  label_en: "the horses"
+  short_description: "The horses addressed collectively as the subject of the verse."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A deified animal collective; see VG:DEVATA:ASHVAH. No axis in the vocabulary covers sacred animals."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:BANDHVADINAM-HASTAH
+  structure: ABSTRACT
+  axes: [UNSPECIFIED]
+  label_iast: bandhvādīnāṃ hastāḥ
+  label_en: "the hands of Bandhu and the others"
+  short_description: "A phrase label naming the hands of the rishi Bandhu and his companions."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A possessed body part in a genitive phrase, not a being, which is why ABSTRACT is used rather than GROUP despite the plural. No axis applies."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:BARHIH
+  structure: INDIVIDUAL
+  axes: [RITUAL_OBJECT]
+  label_iast: barhis
+  label_en: "the sacred grass"
+  short_description: "The strewn grass on which the gods are seated at the offering, and a fixed member of the apri sequence."
+  aliases_iast: [barhiḥ]
+  epithets: []
+  member_of: [VG:DEITYGROUP:APRIDEVATAH]
+  composed_of: []
+  curation_note: "An implement of the sacrifice in the strict sense, which is what RITUAL_OBJECT is for. member_of records the apri sequence of the animal offering, a fixed and recurring list, using a DeityGroup key minted by this overlay."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:BHAVAVRTTAM
+  structure: ABSTRACT
+  axes: [UNSPECIFIED]
+  label_iast: bhāvavṛtta
+  label_en: "the course of becoming"
+  short_description: "A cosmogonic theme label: the coming-to-be of things."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A theme of the verse rather than an addressee. No axis applies."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:BHAVAVRTTHAM
+  structure: ABSTRACT
+  axes: [UNSPECIFIED]
+  label_iast: bhāvavṛttha
+  label_en: "the course of becoming"
+  short_description: "An orthographic variant of the bhavavrtta theme label."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A spelling variant of VG:DEVATA:BHAVAVRTTAM, kept as a separate entry because entity_key is pinned identity and this overlay may not merge registry entities. No axis applies."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:BRAHMA
+  structure: ABSTRACT
+  axes: [SPEECH]
+  label_iast: brahman
+  label_en: "the sacred formulation"
+  short_description: "The formulated sacred utterance itself, taken as the subject of the verse."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "Neuter brahman is the potent formulation, which is why SPEECH is used. This is the boundary case of that axis: elsewhere in this file SPEECH is reserved for deities whose domain is speech, and bare ritual utterances such as svahakrtayah get no axis at all. Deliberately not the later masculine Brahma the creator, who is post-Vedic."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:BRAHMANASPATIH
+  structure: INDIVIDUAL
+  axes: [PRIESTLY, SPEECH]
+  label_iast: brahmaṇaspati
+  label_en: Brahmanaspati
+  short_description: "The Lord of the sacred formulation, the divine embodiment of priestly utterance."
+  aliases_iast: [brahmaṇaspatiḥ, brahmaṇaspate]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "The name states both axes directly. The tradition largely identifies him with Brhaspati; the registry pins them as two entities and this overlay keeps them apart rather than asserting the identification. The bare stem brahmanaspati scores zero token hits and is not listed."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:BRAHMANAPITRSOMADYAVAPRTHIVIPUSANAH
+  structure: GROUP
+  axes: [ANCESTRAL, RITUAL_SUBSTANCE, TERRESTRIAL]
+  label_iast: brāhmaṇapitṛsomadyāvāpṛthivīpūṣāṇaḥ
+  label_en: "the Brahmana, the Fathers, Soma, Heaven-and-Earth and Pusan"
+  short_description: "A long composite label naming five parties invoked together."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "Axes are the union of the members that have clear ones: the Fathers give ANCESTRAL, Soma gives RITUAL_SUBSTANCE, Dyavaprthivi gives TERRESTRIAL. The axes of Pusan are deliberately not carried across because they are themselves only MEDIUM. devata_components.yaml asserts no decomposition, so composed_of is empty."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:BRBUSTAKSA
+  structure: HUMAN
+  axes: [UNSPECIFIED]
+  label_iast: bṛbus takṣan
+  label_en: "Brbu the carpenter"
+  short_description: "A human patron, named as a carpenter, praised for his generosity."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "ARTISAN was considered and rejected: in this vocabulary it denotes the divine craftsmen Tvastr and the Rbhus, not a human carpenter. A named human in the devata slot takes no divine axis."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:BRHASPATIH
+  structure: INDIVIDUAL
+  axes: [PRIESTLY, SPEECH, WARRIOR]
+  label_iast: bṛhaspati
+  label_en: Brhaspati
+  short_description: "The divine priest and lord of prayer, whose formulated word splits open the Vala cave and releases the imprisoned cows."
+  aliases_iast: [bṛhaspatiḥ, bṛhaspatim]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "PRIESTLY and SPEECH are his standing character as the brahman of the gods. WARRIOR is not padding: the splitting of Vala by his roar is one of the two myths he is defined by, and it is an act of force. The bare stem brhaspati scores zero token hits and is not listed. No epithets are given: ganapati was probed and returns zero token hits, and brahmanaspati is a separate registry entity rather than an epithet slot."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:CANDRAMAH
+  structure: INDIVIDUAL
+  axes: [LUNAR]
+  label_iast: candramas
+  label_en: "the Moon"
+  short_description: "The moon as a celestial body, taken as the subject of the verse."
+  aliases_iast: [candramāḥ]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A justified UNSPECIFIED, and the clearest case of it in this file. The vocabulary has no lunar or generally celestial term. SOLAR would be plainly wrong, and ATMOSPHERIC would put the moon in the midspace with the wind and the Maruts, so no axis is asserted rather than a wrong one."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:CAYAMANASYABHYAVARTINO-DANAM
+  structure: PATRON_PRAISE
+  axes: [UNSPECIFIED]
+  label_iast: cāyamānasyābhyāvartino dānam
+  label_en: "the gift of Abhyavartin son of Cayamana"
+  short_description: "Praise of the gift made by the named patron Abhyavartin Cayamana."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "Praise directed at a human patron and his gift, not at a deity; no interpretive axis applies."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:DADHIKRA
+  structure: INDIVIDUAL
+  axes: [DAWN_TIME]
+  label_iast: dadhikrā
+  label_en: Dadhikra
+  short_description: "The divine racehorse, praised at daybreak alongside Usas and the Asvins."
+  aliases_iast: [dadhikrā, dadhikrāvṇaḥ]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "DAWN_TIME records the company he is actually invoked in. SOLAR was considered and left off: reading the divine steed as the sun is a later interpretation and not something the hymns state. The deified-animal reservation applies too, which is why only the one axis is given."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:DADHIKRAH
+  structure: INDIVIDUAL
+  axes: [DAWN_TIME]
+  label_iast: dadhikrā
+  label_en: Dadhikra
+  short_description: "A variant source label for the divine racehorse Dadhikra."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A place where the mechanical structure rule misfires: the ending looks like a nominative plural and would mechanically give GROUP, but this is a variant label for one horse, so INDIVIDUAL is used. Flagged in the report as a judgement call."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:DAIVYAU-HOTARAU
+  structure: PAIR
+  axes: [PRIESTLY]
+  label_iast: daivyau hotārau
+  label_en: "the two divine Hotrs"
+  short_description: "The pair of divine invoking priests, a fixed member of the apri sequence."
+  aliases_iast: []
+  epithets: []
+  member_of: [VG:DEITYGROUP:APRIDEVATAH]
+  composed_of: []
+  curation_note: "Priesthood is the entire content of the name, so PRIESTLY is asserted at HIGH. Neither individual hotr is a registry entity, so composed_of is empty."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:DAKSINA
+  structure: ABSTRACT
+  axes: [ABSTRACT_PERSONIFICATION]
+  label_iast: dakṣiṇā
+  label_en: "Daksina, the priestly fee"
+  short_description: "The sacrificial fee or largesse, addressed as a giving power in her own right."
+  aliases_iast: [dakṣiṇā]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "Structure is ABSTRACT because the label is the ordinary noun for the fee, but the hymn to her does treat her as an acting agent, which is what ABSTRACT_PERSONIFICATION records. The two fields disagreeing here is the taxonomy working as intended, not a defect."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:DAMPATYASIPAH
+  structure: ABSTRACT
+  axes: [UNSPECIFIED]
+  label_iast: dampatyāśipaḥ
+  label_en: "the blessings of the married pair"
+  short_description: "The wishes or benedictions of husband and wife."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A ritual utterance, not an agent. SPEECH is reserved for deities whose domain is speech, so no axis is asserted."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:DAMPATI
+  structure: PAIR
+  axes: [UNSPECIFIED]
+  label_iast: dampatī
+  label_en: "the married pair"
+  short_description: "Husband and wife addressed together as a dual."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "The dual ending settles PAIR, and the dual morphology is the stronger source fact here, so HUMAN is not used even though the referents are human. No interpretive axis applies."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:DEVAPATNYAH
+  structure: GROUP
+  axes: [UNSPECIFIED]
+  label_iast: devapatnī
+  label_en: "the wives of the gods"
+  short_description: "The consorts of the gods, invoked as a collective."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A divine collective, but the vocabulary has no axis for consortship and the group has no shared domain, so none is asserted."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:DEVYAU-HOTARAU
+  structure: PAIR
+  axes: [PRIESTLY]
+  label_iast: devyau hotārau
+  label_en: "the two divine Hotrs"
+  short_description: "A variant label for the pair of divine invoking priests."
+  aliases_iast: []
+  epithets: []
+  member_of: [VG:DEITYGROUP:APRIDEVATAH]
+  composed_of: []
+  curation_note: "A variant of daivyau hotarau, kept separate as a pinned entity. Confidence is MEDIUM rather than HIGH only because the variant reading is assumed."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:DEVYAH
+  structure: GROUP
+  axes: [UNSPECIFIED]
+  label_iast: devī
+  label_en: "the goddesses"
+  short_description: "The goddesses addressed as an undifferentiated collective."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A generic plural with no single domain, so no axis is asserted."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:DEVAH
+  structure: GROUP
+  axes: [UNSPECIFIED]
+  label_iast: deva
+  label_en: "the gods"
+  short_description: "The gods addressed as an undifferentiated collective."
+  aliases_iast: [devāḥ]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A generic plural, and a separate entity from the named collective Visvedevah. No single axis characterises the whole pantheon, so none is asserted."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:DEVIRDVARAH
+  structure: GROUP
+  axes: [RITUAL_OBJECT]
+  label_iast: devīr dvāraḥ
+  label_en: "the divine doors"
+  short_description: "The doors of the sacrificial enclosure, a fixed member of the apri sequence."
+  aliases_iast: []
+  epithets: []
+  member_of: [VG:DEITYGROUP:APRIDEVATAH]
+  composed_of: []
+  curation_note: "An implement of the sacrifice in the strict sense, and part of the recurring apri list."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:DHANUH
+  structure: INDIVIDUAL
+  axes: [UNSPECIFIED]
+  label_iast: dhanus
+  label_en: "the bow"
+  short_description: "The bow, addressed in the hymn to the weapons of war."
+  aliases_iast: [dhanuḥ]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A deified implement of war. RITUAL_OBJECT in this vocabulary means an implement of the sacrifice, such as the barhis or the pressing stones, and a bow is not one, so no axis is asserted."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:DHANANNADANAM
+  structure: PATRON_PRAISE
+  axes: [UNSPECIFIED]
+  label_iast: dhanānnadāna
+  label_en: "the giving of wealth and food"
+  short_description: "Praise of a gift of wealth and food."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A gift label rather than a deity; no interpretive axis applies. PATRON_PRAISE is used even though no patron is named, because the label names the gift."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:DHATA
+  structure: INDIVIDUAL
+  axes: [ABSTRACT_PERSONIFICATION, GUARDIAN_OF_ORDER]
+  label_iast: dhātṛ
+  label_en: Dhatr
+  short_description: "The Establisher, a late-Vedic ordaining god whose name is the agent noun for the one who sets things in place."
+  aliases_iast: [dhātā]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "His name is an agent noun built on the act of establishing, which ABSTRACT_PERSONIFICATION records; GUARDIAN_OF_ORDER records the ordinances he is said to set. Both are readings of the name more than of a developed mythology, so confidence is MEDIUM."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:DRAVINODAH
+  structure: INDIVIDUAL
+  axes: [UNSPECIFIED]
+  label_iast: draviṇodas
+  label_en: "the bestower of goods"
+  short_description: "An epithet standing as a deity name in its own right, the giver of wealth."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "Most often applied to Agni, but the label stands alone here and this overlay does not assert the identification, so no axis is carried over from Agni. Naming the referent is exactly the kind of guess an UNSPECIFIED is meant to avoid."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:DUNDUBHIH
+  structure: INDIVIDUAL
+  axes: [UNSPECIFIED]
+  label_iast: dundubhi
+  label_en: "the war drum"
+  short_description: "The battle drum, addressed as a power that routs the enemy."
+  aliases_iast: [dundubhiḥ]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A deified implement of war; the same reservation as the bow and the arrows applies, so no axis is asserted."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:DUHSVAPNANASANAH
+  structure: ABSTRACT
+  axes: [UNSPECIFIED]
+  label_iast: duḥsvapnanāśana
+  label_en: "the dispelling of bad dreams"
+  short_description: "A charm label: the destruction of evil dreams."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A charm-purpose label. The slot names the act, not an agent with a domain, so no axis is asserted."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:DYUBHUMYASVINAH
+  structure: GROUP
+  axes: [TERRESTRIAL, HEALER]
+  label_iast: dyubhūmyaśvin
+  label_en: "Heaven, Earth and the Asvins"
+  short_description: "A composite label naming heaven, earth and the Asvin twins together."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "Axes are the union: TERRESTRIAL from Earth, HEALER from the Asvins. Nothing is asserted for Dyaus, which has no registry entity at all. devata_components.yaml asserts no decomposition here, so composed_of is empty."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:DYAVABHUMI
+  structure: PAIR
+  axes: [TERRESTRIAL]
+  label_iast: dyāvābhūmī
+  label_en: "Heaven and Earth"
+  short_description: "The dual pair Heaven-and-Earth, in the bhumi variant of the name."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "The dual ending settles PAIR. Neither Dyaus nor Bhumi is a registry entity in its own right, so composed_of is empty: half a decomposition is not one."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:DYAVAPRTHIVYAU
+  structure: PAIR
+  axes: [TERRESTRIAL]
+  label_iast: dyāvāpṛthivī
+  label_en: "Heaven and Earth"
+  short_description: "The dual pair Heaven-and-Earth, invoked together as a single parental deity."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "devata_components.yaml records this composite with an empty component list and review_status NEEDS_REVIEW, because Prthivi is a registered entity but Dyaus is not. composed_of is therefore empty, exactly as that file decided, and will populate itself if a reviewed Dyaus entity is ever added."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:DANASTUTIH
+  structure: PATRON_PRAISE
+  axes: [UNSPECIFIED]
+  label_iast: dānastuti
+  label_en: "praise of a patron's gift"
+  short_description: "The generic label for verses that praise a patron's liberality rather than any deity."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "The registry already classifies this as an abstract class rather than a deity, and its own note says the patron is unnamed. Praise of a human gift takes no interpretive axis."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:DARBHYAH-RATHAVITIH
+  structure: HUMAN
+  axes: [UNSPECIFIED]
+  label_iast: rathavīti dārbhya
+  label_en: "Rathaviti Darbhya"
+  short_description: "A named human patron standing as the addressee of the verse."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A named human in the devata slot; no divine axis applies."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:GARBHASMADHANARUPO-ARTHAH
+  structure: ABSTRACT
+  axes: [UNSPECIFIED]
+  label_iast: garbhasmādhānarūpo arthaḥ
+  label_en: "the matter in the form of implanting an embryo"
+  short_description: "A charm label naming conception as the subject of the verse."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A charm-purpose label; the slot names the act, not an agent, so no axis is asserted."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:GAUH
+  structure: INDIVIDUAL
+  axes: [UNSPECIFIED]
+  label_iast: go
+  label_en: "the cow"
+  short_description: "The cow, praised as a being in her own right."
+  aliases_iast: [gauḥ]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A deified animal. RITUAL_SUBSTANCE would describe her milk and ghee, not her, and the vocabulary has no term for sacred animals, so no axis is asserted."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:GRAVANAH
+  structure: GROUP
+  axes: [RITUAL_OBJECT]
+  label_iast: grāvan
+  label_en: "the pressing stones"
+  short_description: "The stones that crush the soma stalks, addressed as a speaking collective."
+  aliases_iast: [grāvāṇaḥ]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "An implement of the sacrifice in the strict sense; a plural collective of objects, hence GROUP."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:GAVAH
+  structure: GROUP
+  axes: [UNSPECIFIED]
+  label_iast: go
+  label_en: "the cows"
+  short_description: "The cows addressed collectively."
+  aliases_iast: [gāvaḥ]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A deified animal collective; see VG:DEVATA:GAUH. No axis in the vocabulary covers sacred animals."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:HARIH
+  structure: INDIVIDUAL
+  axes: [UNSPECIFIED]
+  label_iast: hari
+  label_en: "the tawny one"
+  short_description: "A label meaning the tawny or bay one, used as a deity name."
+  aliases_iast: [hariḥ]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "Ambiguous between the bay steeds of Indra and the tawny soma draught. Because the referent is unsettled, no axis is asserted rather than guessing between WARRIOR and RITUAL_SUBSTANCE."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:HASTAGHNAH
+  structure: INDIVIDUAL
+  axes: [UNSPECIFIED]
+  label_iast: hastaghna
+  label_en: "the archer's hand-guard"
+  short_description: "The guard protecting the archer's forearm from the bowstring, addressed in the weapons hymn."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A deified implement of war; the same reservation as the bow applies, so no axis is asserted."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:HAVIRDHANE-SAKATE
+  structure: PAIR
+  axes: [RITUAL_OBJECT]
+  label_iast: havirdhāne śakaṭe
+  label_en: "the two oblation carts"
+  short_description: "The pair of carts that carry the soma and the oblations to the offering ground."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "Implements of the sacrifice in the strict sense, and the dual ending settles PAIR."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:HOTRASISAH
+  structure: ABSTRACT
+  axes: [UNSPECIFIED]
+  label_iast: hotrāśis
+  label_en: "the benedictions of the Hotr"
+  short_description: "The blessings uttered by the invoking priest."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A ritual utterance, not a deity of speech. SPEECH is reserved in this file for deities whose domain is speech, such as Vac, so no axis is asserted here. PRIESTLY was also considered and rejected: the utterance is not itself a priest."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:INDRASYASVAU
+  structure: PAIR
+  axes: [UNSPECIFIED]
+  label_iast: indrasyāśvau
+  label_en: "the two horses of Indra"
+  short_description: "The pair of bay steeds belonging to Indra, addressed as the subject."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "Deified animals, and a possessive phrase rather than a deity name. The dual ending settles PAIR. No axis is asserted, and Indra's own axes are deliberately not inherited by his horses."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:INDRAVAYU
+  structure: PAIR
+  axes: [WARRIOR, ATMOSPHERIC]
+  label_iast: indravāyū
+  label_en: "Indra and Vayu"
+  short_description: "The dual of Indra and Vayu, the champion and the wind."
+  aliases_iast: [indravāyū]
+  epithets: []
+  member_of: []
+  composed_of: [VG:DEVATA:INDRAH, VG:DEVATA:VAYUH]
+  curation_note: "Decomposition copied from devata_components.yaml, ACCEPTED. Axes are the union of the two members, and both members are ATMOSPHERIC in their own right."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:INDRAH
+  structure: INDIVIDUAL
+  axes: [WARRIOR, COSMIC_SOVEREIGN, ATMOSPHERIC]
+  label_iast: indra
+  label_en: Indra
+  short_description: "The champion of the gods, who slays Vrtra with the vajra, releases the pent-up waters and rules as king of the pantheon."
+  aliases_iast: [indra, indraḥ, indraṃ, indram, indrasya, indreṇa, indrāya]
+  epithets:
+    - iast: vṛtrahan
+      en: slayer of Vrtra
+    - iast: maghavan
+      en: the bountiful one
+    - iast: vajrin
+      en: wielder of the vajra
+    - iast: puruhūta
+      en: much-invoked
+    - iast: śakra
+      en: the mighty one
+  member_of: []
+  composed_of: []
+  curation_note: "The three axes are the three things the hymns say constantly: he fights, he rules, and he acts in the midspace with thunder and rain. All seven aliases and all five epithets were probed against the four-Veda corpus. The worst intrusion figure among them is 20 percent on indraya, and every intruding host there is a sandhi merge such as somamindraya, that is the right word with the preceding boundary erased, not a different word."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:INDRAH-MARUTAH
+  structure: PAIR
+  axes: [WARRIOR, ATMOSPHERIC]
+  label_iast: indraḥ-marutaḥ
+  label_en: "Indra and the Maruts"
+  short_description: "Indra invoked jointly with the Marut troop who ride with him."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: [VG:DEVATA:INDRAH, VG:DEVATA:MARUTAH]
+  curation_note: "Decomposition copied from devata_components.yaml, ACCEPTED. Axes are the union of the two members."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:INDROSASAU
+  structure: PAIR
+  axes: [WARRIOR, DAWN_TIME]
+  label_iast: indroṣasau
+  label_en: "Indra and Usas"
+  short_description: "The dual of Indra and the Dawn."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "Axes are the union of the two members. Both Indra and Usas are registry entities, but devata_components.yaml does not assert this decomposition and its policy forbids inferring one from a dual ending, so composed_of is empty."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:INDRABRAHMANASPATI
+  structure: PAIR
+  axes: [WARRIOR, PRIESTLY, SPEECH]
+  label_iast: indrābrahmaṇaspatī
+  label_en: "Indra and Brahmanaspati"
+  short_description: "The dual of Indra and the Lord of the sacred formulation."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: [VG:DEVATA:INDRAH, VG:DEVATA:BRAHMANASPATIH]
+  curation_note: "Decomposition from devata_components.yaml, ACCEPTED. Axes are the union of the two members."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:INDRABRHASPATI
+  structure: PAIR
+  axes: [WARRIOR, PRIESTLY, SPEECH]
+  label_iast: indrābṛhaspatī
+  label_en: "Indra and Brhaspati"
+  short_description: "The dual of Indra and Brhaspati, the champion and the divine priest."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: [VG:DEVATA:INDRAH, VG:DEVATA:BRHASPATIH]
+  curation_note: "Decomposition from devata_components.yaml, ACCEPTED. Axes are the union of the two members."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:INDRAGNI
+  structure: PAIR
+  axes: [WARRIOR, FIRE_MEDIUM]
+  label_iast: indrāgnī
+  label_en: "Indra and Agni"
+  short_description: "The dual of Indra and Agni, one of the most frequently invoked pairs in the corpus."
+  aliases_iast: [indrāgnī]
+  epithets: []
+  member_of: []
+  composed_of: [VG:DEVATA:INDRAH, VG:DEVATA:AGNIH]
+  curation_note: "Decomposition from devata_components.yaml, ACCEPTED. Axes are the union of the two members. The alias indragni with short final i was probed and returns zero token hits, so only the long-vowel dual indragni is listed."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:INDRAPARVATAU
+  structure: PAIR
+  axes: [WARRIOR, TERRESTRIAL]
+  label_iast: indrāparvatau
+  label_en: "Indra and Parvata"
+  short_description: "The dual of Indra and Parvata, the mountain."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "TERRESTRIAL comes from Parvata, the mountain. Parvata has no registry entity of its own, so composed_of would be half a decomposition and is left empty, following the policy devata_components.yaml states for Dyavaprthivi."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:INDRAPUSANAU
+  structure: PAIR
+  axes: [WARRIOR, TERRESTRIAL]
+  label_iast: indrāpūṣaṇau
+  label_en: "Indra and Pusan"
+  short_description: "The dual of Indra and Pusan, the champion and the guardian of the roads and herds."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: [VG:DEVATA:INDRAH, VG:DEVATA:PUSA]
+  curation_note: "Decomposition from devata_components.yaml, ACCEPTED. Only the firmest of Pusan's own axes, TERRESTRIAL, is carried across; his PSYCHOPOMP and SOLAR axes are MEDIUM on his own entry and are not propagated into a pair."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:INDRASOMAU
+  structure: PAIR
+  axes: [WARRIOR, RITUAL_SUBSTANCE]
+  label_iast: indrāsomau
+  label_en: "Indra and Soma"
+  short_description: "The dual of Indra and Soma, the drinker and the draught."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: [VG:DEVATA:INDRAH, VG:DEVATA:SOMAH]
+  curation_note: "Decomposition from devata_components.yaml, ACCEPTED. Axes are the union of the two members."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:INDRAVARUNAU
+  structure: PAIR
+  axes: [WARRIOR, COSMIC_SOVEREIGN, GUARDIAN_OF_ORDER]
+  label_iast: indrāvaruṇā
+  label_en: "Indra and Varuna"
+  short_description: "The dual of Indra and Varuna, the champion and the sovereign keeper of the ordinances."
+  aliases_iast: [indrāvaruṇā]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A notable gap rather than an oversight: Indra and Varuna are both registered entities and this is the seventeenth most frequent devata in the corpus, but devata_components.yaml has no row for it at all. Its policy forbids inferring a decomposition from a dual ending, so composed_of is empty and the missing row is reported instead of quietly filled in. Axes are the union of the two members."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:INDRAVISNU
+  structure: PAIR
+  axes: [WARRIOR, SOLAR]
+  label_iast: indrāviṣṇū
+  label_en: "Indra and Visnu"
+  short_description: "The dual of Indra and Visnu."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "Axes are the union of the two members, and SOLAR inherits the MEDIUM confidence it carries on Visnu's own entry. Both members are registered, but devata_components.yaml asserts no decomposition, so composed_of is empty."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:INDRANI-VARUNANI-AGNAYI
+  structure: GROUP
+  axes: [UNSPECIFIED]
+  label_iast: indrāṇī-varuṇānī-agnāyī
+  label_en: "Indrani, Varunani and Agnayi"
+  short_description: "The three consort goddesses named from Indra, Varuna and Agni."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "Their names are feminine derivatives of three gods, but that is a fact about the names, not a domain of their own. The vocabulary has no axis for consortship, and inheriting the axes of Indra, Varuna and Agni would attribute warriorhood and priesthood to figures the text does not describe that way. None of the three is a registry entity, so composed_of is empty."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:ILA-SARASVATI-MAHI
+  structure: GROUP
+  axes: [SPEECH]
+  label_iast: iḻā-sarasvatī-mahī
+  label_en: "Ila, Sarasvati and Mahi"
+  short_description: "The three goddesses invoked together in the apri sequence, associated with nourishment and with inspired speech."
+  aliases_iast: []
+  epithets: []
+  member_of: [VG:DEITYGROUP:APRIDEVATAH]
+  composed_of: []
+  curation_note: "SPEECH rests on the standing role of this triad as the goddesses of the sacrificial utterance, which is interpretive, so confidence is MEDIUM. RITUAL_SUBSTANCE was considered for Ila, the libation, and left off rather than applied to the whole triad. Sarasvati is a registry entity but Ila and Mahi are not, so composed_of would be a third of a decomposition and is left empty."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:ISAVAH
+  structure: GROUP
+  axes: [UNSPECIFIED]
+  label_iast: iṣu
+  label_en: "the arrows"
+  short_description: "The arrows, addressed in the hymn to the weapons of war."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "Deified implements of war; the same reservation as the bow applies, so no axis is asserted."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:ISUDHIH
+  structure: INDIVIDUAL
+  axes: [UNSPECIFIED]
+  label_iast: iṣudhi
+  label_en: "the quiver"
+  short_description: "The quiver, addressed in the hymn to the weapons of war."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A deified implement of war; no axis is asserted."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:JYA
+  structure: INDIVIDUAL
+  axes: [UNSPECIFIED]
+  label_iast: jyā
+  label_en: "the bowstring"
+  short_description: "The bowstring, addressed in the hymn to the weapons of war."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A deified implement of war; no axis is asserted."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:JNANAM
+  structure: ABSTRACT
+  axes: [UNSPECIFIED]
+  label_iast: jñāna
+  label_en: "knowledge"
+  short_description: "Knowledge itself, named as the subject of the verse."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "An abstract noun with no personification in the text. ABSTRACT_PERSONIFICATION is reserved for abstractions the hymns actually address as agents, such as Sraddha and Daksina, and this is not one of them."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:JATAVEDA-AGNIH
+  structure: INDIVIDUAL
+  axes: [FIRE_MEDIUM, PRIESTLY]
+  label_iast: jātavedā agni
+  label_en: "Agni Jatavedas"
+  short_description: "Agni under the epithet Jatavedas, the knower of all that is born."
+  aliases_iast: [jātavedaḥ, jātavedas]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "An epithet-qualified Agni label, so his FIRE_MEDIUM and PRIESTLY axes carry across. TERRESTRIAL is left off because the epithet emphasises his omniscience rather than his station. Kept as its own entity, as the registry pins it, rather than folded into VG:DEVATA:AGNIH."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:KAH
+  structure: ABSTRACT
+  axes: [UNSPECIFIED]
+  label_iast: ka
+  label_en: "Ka, the Who"
+  short_description: "The interrogative pronoun who, standing as a deity name in the cosmogonic hymn that asks to which god the oblation should be offered."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A deliberate refusal. The Brahmanas answer the question by identifying Ka with Prajapati, and it would be easy to import that answer here, but it is post-Rigvedic exegesis and asserting it would dress a later reading as a textual fact. The label is left as what it is, an interrogative in the deity slot, with no axis."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:KESINAH
+  structure: HUMAN
+  axes: [UNSPECIFIED]
+  label_iast: keśin
+  label_en: "the long-haired ones"
+  short_description: "The long-haired ascetics of the muni hymn, who fly through the air and drink poison with Rudra."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "HUMAN rather than GROUP by the precedence rule stated in the header: a human collective is still human. They are ecstatics, not deities, and the vocabulary has no axis for them."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:KRSIH
+  structure: ABSTRACT
+  axes: [TERRESTRIAL]
+  label_iast: kṛṣi
+  label_en: "ploughing"
+  short_description: "Agriculture itself, named as the subject of the agricultural verses."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "An activity rather than an agent, hence ABSTRACT. TERRESTRIAL is asserted because the whole content of the label is the working of the land, but it describes a domain rather than a deity, so confidence is MEDIUM."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:KSETRAPATIH
+  structure: INDIVIDUAL
+  axes: [TERRESTRIAL]
+  label_iast: kṣetrapati
+  label_en: Ksetrapati
+  short_description: "The Lord of the Field, invoked in the agricultural verses for a good yield of crops and cattle."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "The name states the axis: he is the master of the tilled field. The probe found ksetrasya rather than any nominative of this compound, so no alias is listed."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:LINGOKTAH
+  structure: ABSTRACT
+  axes: [UNSPECIFIED]
+  label_iast: liṅgokta
+  label_en: "the deities indicated by the wording"
+  short_description: "An Anukramani bookkeeping label meaning that the deity is whichever one the verse itself names."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "This is metadata, not a deity: the index is deferring to the wording of the verse rather than assigning an addressee. It occupies a Devata node because the source put it in that column, and no axis can apply to it."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:MAITRATITHIRUPAMASRAVAH
+  structure: HUMAN
+  axes: [UNSPECIFIED]
+  label_iast: maitrātithir upamaśravas
+  label_en: "Upamasravas son of Mitratithi"
+  short_description: "A named human patron standing as the addressee of the verse."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A named human in the devata slot; no divine axis applies."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:MANYUH
+  structure: ABSTRACT
+  axes: [ABSTRACT_PERSONIFICATION, WARRIOR]
+  label_iast: manyu
+  label_en: "Manyu, battle-fury"
+  short_description: "Wrath or battle-fury, addressed in the Atharvavedic hymns as a war god in his own right."
+  aliases_iast: [manyuḥ]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "Structure is ABSTRACT because the label is the common noun for wrath, but the Atharvavedic hymns address him as an armed ally who goes before the fighter, which is the basis for WARRIOR alongside ABSTRACT_PERSONIFICATION. Confidence is MEDIUM because the martial reading rests on the Atharvaveda rather than on the Rigveda."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:MARUDRUDRAVISNAVAH
+  structure: GROUP
+  axes: [ATMOSPHERIC, WARRIOR, HEALER]
+  label_iast: marudrudraviṣṇu
+  label_en: "the Maruts, Rudra and Visnu"
+  short_description: "A composite label naming the Marut troop, Rudra and Visnu together."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "Axes are the union of the three named members. SOLAR is not carried across from Visnu because that axis is only MEDIUM on his own entry. All three members are registry entities, but devata_components.yaml asserts no decomposition, so composed_of is empty."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:MARUTAH
+  structure: GROUP
+  axes: [ATMOSPHERIC, WARRIOR]
+  label_iast: marut
+  label_en: "the Maruts"
+  short_description: "The storm troop, sons of Rudra, who ride the winds in glittering armour and bring the rain."
+  aliases_iast: [marutaḥ, marutāṃ, marudbhiḥ, marutas]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "ATMOSPHERIC and WARRIOR are both stated constantly: they are the storm and they are an armed host. composed_of is empty on the explicit authority of devata_components.yaml, whose row for the Maruts is REJECTED with the reasoning that a plural ending is not evidence of componenthood and the troop has no enumerated members. No epithet is listed because the recurring descriptions of them are phrases rather than single-word epithets."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:MARUTVANINDRAH
+  structure: INDIVIDUAL
+  axes: [WARRIOR, COSMIC_SOVEREIGN, ATMOSPHERIC]
+  label_iast: marutvān indra
+  label_en: "Indra accompanied by the Maruts"
+  short_description: "Indra under the epithet marutvan, the one attended by the Marut troop."
+  aliases_iast: [marutvān]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "Structure is INDIVIDUAL, not PAIR, on a morphological ground: marutvan is a possessive adjective qualifying Indra, so the label is one qualified god and not a dvandva of two. For the same reason composed_of is empty even though Indra and the Maruts are both registered. Axes are Indra's own."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:MANDUKAH
+  structure: GROUP
+  axes: [UNSPECIFIED]
+  label_iast: maṇḍūka
+  label_en: "the frogs"
+  short_description: "The frogs whose croaking at the first rains is compared to priests chanting."
+  aliases_iast: [maṇḍūkāḥ]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "Deified animals, so no axis is asserted. PRIESTLY is tempting because the hymn itself compares them to brahmans reciting, but that is a simile inside the poem and not a role the frogs hold, so it is refused."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:MITRAH
+  structure: INDIVIDUAL
+  axes: [GUARDIAN_OF_ORDER, COSMIC_SOVEREIGN]
+  label_iast: mitra
+  label_en: Mitra
+  short_description: "The god of the binding contract and of alliance, who together with Varuna upholds the ordinances and makes men keep their agreements."
+  aliases_iast: [mitra, mitraḥ, mitrasya]
+  epithets: []
+  member_of: [VG:DEITYGROUP:ADITYAH]
+  composed_of: []
+  curation_note: "GUARDIAN_OF_ORDER is his defining function and COSMIC_SOVEREIGN records the kingship he shares with Varuna. SOLAR was considered, on the strength of the hymn that has him marshal men and the daylight association, and left off: Mitra's identification with the sun is largely later exegesis, and this file does not assert those. Kept strictly separate from VG:DEVATA:MITRAVARUNAU."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:MITRAVARUNAU
+  structure: PAIR
+  axes: [GUARDIAN_OF_ORDER, COSMIC_SOVEREIGN]
+  label_iast: mitrāvaruṇā
+  label_en: "Mitra and Varuna"
+  short_description: "The sovereign pair, invoked together as the joint keepers of the ordinances and of the truth."
+  aliases_iast: [mitrāvaruṇā, mitrāvaruṇau, mitrāvaruṇayoḥ]
+  epithets: []
+  member_of: []
+  composed_of: [VG:DEVATA:MITRAH, VG:DEVATA:VARUNAH]
+  curation_note: "The two registry files disagree about this entity and the disagreement is reported rather than smoothed over. devatas.yaml says it is a dual deliberately not decomposed into Mitra and Varuna; devata_components.yaml carries a row for it with components Mitra and Varuna and review_status ACCEPTED. This overlay follows the component file, because that file is the reviewed authority for componenthood and its row is explicitly ACCEPTED. The entity itself stays separate from its two members, which is what the devatas.yaml note is really protecting."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:MAYABHEDAH
+  structure: ABSTRACT
+  axes: [UNSPECIFIED]
+  label_iast: māyābheda
+  label_en: "the piercing of illusion"
+  short_description: "The breaking through of maya, deceptive appearance, named as the theme of the verse."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A theme rather than an addressee. No axis applies."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:MRTYUH
+  structure: ABSTRACT
+  axes: [ABSTRACT_PERSONIFICATION]
+  label_iast: mṛtyu
+  label_en: "Death"
+  short_description: "Death itself, addressed in the funeral verses as a power to be sent away along its own separate path."
+  aliases_iast: [mṛtyuḥ]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "CHTHONIC and PSYCHOPOMP were both considered and refused. Mrtyu is addressed as a power to be turned aside, not as a ruler of an underworld and not as a guide of the dead, and giving him either axis would import a later infernal picture that these verses do not have."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:NADYAH
+  structure: GROUP
+  axes: [AQUATIC]
+  label_iast: nadī
+  label_en: "the rivers"
+  short_description: "The rivers, addressed as a collective in the dialogue with the poet who asks them to be fordable."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "The single axis is the whole content of the label. The probe found no safe nominative alias for the plural, so none is listed."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:NIRRTIH
+  structure: ABSTRACT
+  axes: [ABSTRACT_PERSONIFICATION, CHTHONIC]
+  label_iast: nirṛti
+  label_en: "Nirrti, dissolution"
+  short_description: "The goddess of dissolution and misfortune, associated with the region below and away from the world of the living."
+  aliases_iast: [nirṛtiḥ]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "Her name is the abstraction of undoing, which ABSTRACT_PERSONIFICATION records. CHTHONIC records her association with the nether region, which is stated in the later Vedic prose more firmly than in the Rigveda, so confidence is MEDIUM."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:OSADHAYAH
+  structure: GROUP
+  axes: [HEALER, TERRESTRIAL]
+  label_iast: oṣadhi
+  label_en: "the healing plants"
+  short_description: "The medicinal herbs, addressed collectively as mothers and goddesses who drive out disease."
+  aliases_iast: [oṣadhayaḥ, oṣadhīḥ]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "HEALER is the explicit function in the hymn addressed to them, and TERRESTRIAL is where they grow. Both are stated rather than inferred."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:PAIJAVANASYA-SUDASO-DANASTUTIH
+  structure: PATRON_PRAISE
+  axes: [UNSPECIFIED]
+  label_iast: paijavanasya sudāso dānastuti
+  label_en: "praise of the gift of Sudas son of Pijavana"
+  short_description: "Praise of the liberality of the king Sudas, named with his patronymic."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A danastuti with the patron named; no interpretive axis applies."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:PARJANYAH
+  structure: INDIVIDUAL
+  axes: [ATMOSPHERIC]
+  label_iast: parjanya
+  label_en: Parjanya
+  short_description: "The rain cloud as a god, who thunders, sheds the rain and quickens the plants and the seed."
+  aliases_iast: [parjanya, parjanyaḥ]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "TERRESTRIAL was considered, since his hymn dwells on his fertilising of the earth, and left off: the deity is the rain cloud itself, and adding a second axis for what his rain does to the ground would be padding."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:PATHYASVASTIH
+  structure: ABSTRACT
+  axes: [ABSTRACT_PERSONIFICATION]
+  label_iast: pathyā svasti
+  label_en: "Pathya Svasti, well-being on the road"
+  short_description: "Prosperity on the journey, addressed as a goddess of safe passage."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A personified abstraction, so ABSTRACT_PERSONIFICATION applies. There is no axis for travel or for the road; PSYCHOPOMP means the conducting of the dead and would be badly wrong here, so it is refused."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:PAVAMANAH
+  structure: INDIVIDUAL
+  axes: [RITUAL_SUBSTANCE]
+  label_iast: pavamāna
+  label_en: "Pavamana, the one being clarified"
+  short_description: "The soma in the act of being strained, named by that participle alone without the word soma."
+  aliases_iast: [pavamāna, pavamānaḥ]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A separate pinned entity from VG:DEVATA:PAVAMANAH-SOMAH and deliberately not merged with it, even though the referent is the same process. The axis is the pressed and filtered draught."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:PAVAMANAH-SOMAH
+  structure: INDIVIDUAL
+  axes: [RITUAL_SUBSTANCE]
+  label_iast: pavamāna soma
+  label_en: "Soma Pavamana"
+  short_description: "Soma in the act of being purified through the woollen filter, the addressee of the whole Pavamana cycle and the third most frequent devata in the corpus."
+  aliases_iast: [pavamāna, pavamānaḥ]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "Held strictly separate from VG:DEVATA:SOMAH, and the separation is given content rather than just preserved: this entity is the draught under the aspect of its clarification, so it carries RITUAL_SUBSTANCE alone, while the Soma entry additionally carries COSMIC_SOVEREIGN for the kingship language that belongs to the god and not to the process. Aliases are restricted to the pavamana forms for the same reason; the general soma forms are assigned to VG:DEVATA:SOMAH so that the two do not silently collect each other's mantras."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:PAVAMANO-AGNIH
+  structure: INDIVIDUAL
+  axes: [FIRE_MEDIUM, RITUAL_SUBSTANCE]
+  label_iast: pavamāno agni
+  label_en: "Agni Pavamana"
+  short_description: "Agni named with the clarifying participle that normally belongs to soma."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "FIRE_MEDIUM from Agni, RITUAL_SUBSTANCE from the pavamana participle. The crossing of the two vocabularies is what the label is, and it is recorded rather than resolved."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:PANAYAH
+  structure: GROUP
+  axes: [UNSPECIFIED]
+  label_iast: paṇi
+  label_en: "the Panis"
+  short_description: "The niggardly ones who hoard the cows and refuse the sacrifice, the adversaries in the dialogue with Sarama."
+  aliases_iast: [paṇayaḥ]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "Adversaries rather than deities. They occupy the devata slot only because they are the party addressed in a dialogue hymn, and no axis in the vocabulary applies to them."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:PITARAH
+  structure: GROUP
+  axes: [ANCESTRAL]
+  label_iast: pitṛ
+  label_en: "the Fathers"
+  short_description: "The ancestral dead, invoked to come to their offering and sit on the strewn grass beside the living."
+  aliases_iast: [pitaraḥ]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "The single axis is exactly what the vocabulary provides for. CHTHONIC is refused: in these verses the Fathers dwell with Yama in the far heaven, not underground."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:PITRMEDHAH
+  structure: ABSTRACT
+  axes: [ANCESTRAL]
+  label_iast: pitṛmedha
+  label_en: "the rite for the Fathers"
+  short_description: "The funerary offering made to the ancestral dead, named as the subject of the verses."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "Structure is ABSTRACT because the label names a rite, not a being. ANCESTRAL is asserted because the rite has no other content, but it describes the addressees of the rite rather than the label itself, so confidence is MEDIUM."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:PRATODAH
+  structure: INDIVIDUAL
+  axes: [UNSPECIFIED]
+  label_iast: pratoda
+  label_en: "the goad"
+  short_description: "The driver's goad, addressed in the hymn to the weapons and gear of the chariot."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A deified implement of war; no axis is asserted."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:PURUSAH
+  structure: INDIVIDUAL
+  axes: [ABSTRACT_PERSONIFICATION, RITUAL_SUBSTANCE]
+  label_iast: puruṣa
+  label_en: "Purusa, the cosmic Person"
+  short_description: "The thousand-headed Person who is dismembered in the primal sacrifice and from whose body the worlds, the creatures and the social orders are made."
+  aliases_iast: [puruṣaḥ]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "The two axes are an unobvious pairing and are argued here. ABSTRACT_PERSONIFICATION because he is Person as a principle rather than a named god with a mythology. RITUAL_SUBSTANCE because in his hymn he is the oblation itself, the victim the gods offer. COSMIC_SOVEREIGN was considered and refused: he is the material of the world, not its ruler."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:PURURAVAH
+  structure: HUMAN
+  axes: [UNSPECIFIED]
+  label_iast: purūravas
+  label_en: Pururavas
+  short_description: "The mortal king who pleads with the departing nymph Urvasi in the dialogue hymn."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A named mortal in the devata slot; no divine axis applies."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:PUSA
+  structure: INDIVIDUAL
+  axes: [TERRESTRIAL, PSYCHOPOMP, SOLAR]
+  label_iast: pūṣan
+  label_en: Pusan
+  short_description: "The guardian of roads and herds, who finds what is lost, protects the traveller, and conducts the dead along the path to the Fathers."
+  aliases_iast: [pūṣā, pūṣan, pūṣṇaḥ]
+  epithets: []
+  member_of: [VG:DEITYGROUP:ADITYAH]
+  composed_of: []
+  curation_note: "TERRESTRIAL for the paths and the cattle he watches, which is his commonest role. PSYCHOPOMP for the funeral verses that ask him to lead the dead on the far path, which is explicit. SOLAR is the weak one and is flagged: it rests on his membership among the Adityas and on the epithet aghrni, glowing, rather than on any statement that he is the sun. His member_of is likewise MEDIUM, since Aditya membership varies between passages. The epithet aghrni is not listed because the probe returns zero token hits for it."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:PRTHIVYANTARIKSE
+  structure: PAIR
+  axes: [TERRESTRIAL, ATMOSPHERIC]
+  label_iast: pṛthivyantarikṣe
+  label_en: "Earth and the midspace"
+  short_description: "The earth and the intervening air, addressed together as a pair of regions."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "Axes are read straight off the two named regions. Prthivi is a registry entity but antariksa is not, so composed_of would be half a decomposition and is left empty."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:PRTHIVI
+  structure: INDIVIDUAL
+  axes: [TERRESTRIAL]
+  label_iast: pṛthivī
+  label_en: Prthivi
+  short_description: "The Earth as a goddess, the broad one, most often invoked as the mother beside Dyaus the father."
+  aliases_iast: [pṛthivī, pṛthivīm, pṛthivyāḥ]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "The alias prthivi carries a named hazard and is kept with the hazard recorded. Its token pass is clean at 182 mantras, but on the boundary-free pass 205 of its hits sit inside dyavaprthivi, the dual Heaven-and-Earth, which is a different registry entity. That is compound-final containment rather than homonymy, so the matched word is still the right word, but any consumer that uses the sandhi pass will pull Dyavaprthivi mantras into Prthivi. Reported as a judgement call."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:RAKSOHAGNIH
+  structure: INDIVIDUAL
+  axes: [FIRE_MEDIUM, GUARDIAN_OF_ORDER]
+  label_iast: rakṣohāgni
+  label_en: "Agni the slayer of demons"
+  short_description: "Agni under the epithet rakso-han, who burns away the demons that would spoil the offering."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "FIRE_MEDIUM carries over from Agni. GUARDIAN_OF_ORDER is used for his protection of the rite against what would break it; that stretches an axis whose central sense is the upholding of rta, so confidence is MEDIUM. WARRIOR was considered and refused, since the enemy here is ritual pollution rather than a battlefield foe."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:RATHAGOPAH
+  structure: INDIVIDUAL
+  axes: [UNSPECIFIED]
+  label_iast: rathagopa
+  label_en: "the guardian of the chariot"
+  short_description: "The protector of the war chariot, addressed in the verses on the gear of battle."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "Belongs to the war-gear group. GUARDIAN_OF_ORDER is refused: that axis means the keeping of the cosmic ordinances, not the guarding of a vehicle."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:RATHAH
+  structure: INDIVIDUAL
+  axes: [UNSPECIFIED]
+  label_iast: ratha
+  label_en: "the chariot"
+  short_description: "The war chariot, addressed as a power in the verses on the gear of battle."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A deified implement of war; no axis is asserted."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:RATHANGANI
+  structure: GROUP
+  axes: [UNSPECIFIED]
+  label_iast: rathāṅga
+  label_en: "the parts of the chariot"
+  short_description: "The components of the chariot, addressed collectively."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A plural collective of objects, hence GROUP. A deified implement of war; no axis is asserted."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:RATIH
+  structure: ABSTRACT
+  axes: [UNSPECIFIED]
+  label_iast: rati
+  label_en: "the granting, or delight"
+  short_description: "An abstract noun covering both giving and pleasure, named as the subject of the verse."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "The word carries both senses and the label does not choose between them, so no axis is asserted."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:ROMASA
+  structure: HUMAN
+  axes: [UNSPECIFIED]
+  label_iast: romaśā
+  label_en: Romasa
+  short_description: "A woman who speaks in her own person in a short dialogue verse."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A named human speaker in the devata slot; no divine axis applies."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:RUDRAH
+  structure: INDIVIDUAL
+  axes: [HEALER, TERRESTRIAL]
+  label_iast: rudra
+  label_en: Rudra
+  short_description: "The feared archer of the wilds, father of the Maruts, whose arrows bring affliction on men and cattle and who is at the same time called the best of physicians."
+  aliases_iast: [rudra, rudraḥ, rudrasya, rudrāya]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "Vedic axes only, and the exclusion is deliberate. Rudra's later identification with Siva is post-Vedic; importing Siva's attributes here would dress a historical development as a textual fact, so none of them appear, and the epithet tryambaka, which the later tradition leans on, was probed and returns zero token hits in any case. HEALER is asserted on the strength of the verses that call him the most healing of healers and ask for his soothing remedies. TERRESTRIAL places him in the mountains and the wilderness where the hymns put him. WARRIOR was considered and refused: his archery is directed at men and herds as affliction to be averted, not at cosmic enemies in the way Indra's is."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:RAJASTUTIH
+  structure: PATRON_PRAISE
+  axes: [UNSPECIFIED]
+  label_iast: rājastuti
+  label_en: "praise of a king"
+  short_description: "Praise of a royal patron rather than of a deity."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A king is a patron, so PATRON_PRAISE is used even though the word danastuti does not appear in the label. No interpretive axis applies."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:RAKA
+  structure: INDIVIDUAL
+  axes: [LUNAR]
+  label_iast: rākā
+  label_en: Raka
+  short_description: "The goddess of the night of the full moon, invoked with the other goddesses of the lunar days for offspring and wealth."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "The same vocabulary gap as Candramas and Sinivali: there is no lunar or calendrical axis. DAWN_TIME denotes the dawn specifically and would misplace a full-moon goddess, so no axis is asserted."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:RATRIH
+  structure: INDIVIDUAL
+  axes: [NOCTURNAL]
+  label_iast: rātrī
+  label_en: "Ratri, Night"
+  short_description: "Night as a goddess, who fills the wide spaces with darkness and stars and is asked to pass harmlessly by."
+  aliases_iast: [rātrī, rātriḥ]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A frank stretch of the vocabulary, flagged as such. DAWN_TIME is the only division-of-the-day axis available and it is used here for Night as the counterpart of Dawn, with whom she is regularly paired. A reviewer who thinks the axis should be renamed to something like DIURNAL_TIME would be right, and this entry is the evidence for that."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:SAPATNAGHNARUPO-ARTHAH
+  structure: ABSTRACT
+  axes: [UNSPECIFIED]
+  label_iast: sapatnaghnarūpo arthaḥ
+  label_en: "the matter in the form of slaying a rival"
+  short_description: "A charm label: the purpose of the verse is the destruction of a rival."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A charm-purpose label; the slot names the intended effect, not an agent, so no axis is asserted."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:SAPATNIBADHANARUPO-ARTHAH
+  structure: ABSTRACT
+  axes: [UNSPECIFIED]
+  label_iast: sapatnībādhanarūpo arthaḥ
+  label_en: "the matter in the form of subduing a co-wife"
+  short_description: "A charm label: the purpose of the verse is the suppression of a rival wife."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A charm-purpose label; the slot names the intended effect, not an agent, so no axis is asserted."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:SARAMA
+  structure: INDIVIDUAL
+  axes: [UNSPECIFIED]
+  label_iast: saramā
+  label_en: Sarama
+  short_description: "The divine bitch sent by Indra as his envoy to the Panis, who finds the hidden cows and refuses their bribe."
+  aliases_iast: [saramā]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A deified animal, and the vocabulary has no axis for a messenger either, which is her actual function. Rather than force her into GUARDIAN_OF_ORDER or PSYCHOPOMP, neither of which she is, no axis is asserted."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:SARASVATI
+  structure: INDIVIDUAL
+  axes: [AQUATIC, SPEECH]
+  label_iast: sarasvatī
+  label_en: Sarasvati
+  short_description: "The great river as a goddess, best of rivers and best of mothers, who also comes to stand for inspired and eloquent speech."
+  aliases_iast: [sarasvatī, sarasvatīm, sarasvatyā]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "AQUATIC is her primary and unmistakable Rigvedic character. SPEECH is the softer claim and is the reason confidence is MEDIUM: it rests on her place in the apri triad beside Ila and Bharati, on her being invoked for the poet's inspiration, and on her progressive identification with Vac, which is a development rather than a single statement."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:SARASVATI-ILA-BHARATI
+  structure: GROUP
+  axes: [SPEECH]
+  label_iast: sarasvatī-iḻā-bhāratī
+  label_en: "Sarasvati, Ila and Bharati"
+  short_description: "The triad of goddesses invoked together in the apri sequence, in the ordering that names Bharati third."
+  aliases_iast: []
+  epithets: []
+  member_of: [VG:DEITYGROUP:APRIDEVATAH]
+  composed_of: []
+  curation_note: "The same triad as VG:DEVATA:ILA-SARASVATI-MAHI under a different ordering and with Bharati in place of Mahi, kept separate as a pinned entity. Sarasvati alone is a registry entity, so composed_of would be a third of a decomposition and is left empty."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:SARASVAN
+  structure: INDIVIDUAL
+  axes: [AQUATIC]
+  label_iast: sarasvān
+  label_en: Sarasvan
+  short_description: "The masculine counterpart of Sarasvati, invoked in a small number of verses."
+  aliases_iast: [sarasvān]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "The watery axis carries over from the name. SPEECH is not carried over: the speech association belongs to the feminine Sarasvati and there is nothing to support extending it here. The alias returns a single token hit, which is consistent with how rarely he is named."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:SARANYUH
+  structure: INDIVIDUAL
+  axes: [UNSPECIFIED]
+  label_iast: saraṇyū
+  label_en: Saranyu
+  short_description: "The daughter of Tvastr, named in the genealogical verses as a mother of divine twins."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "Known almost entirely through her parentage and her offspring, which is a genealogical fact rather than a domain. No axis in the vocabulary applies, so none is asserted."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:SASARPARI-VAK
+  structure: INDIVIDUAL
+  axes: [SPEECH]
+  label_iast: sasarparī vāk
+  label_en: "Sasarpari, the Voice"
+  short_description: "A figure of inspired speech, brought to the poets and said to bring them renown."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "The label carries the word vak, speech, so the axis is on the label's own authority. The name sasarpari itself is obscure and is not interpreted."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:SAVITA
+  structure: INDIVIDUAL
+  axes: [SOLAR, ABSTRACT_PERSONIFICATION]
+  label_iast: savitṛ
+  label_en: Savitr
+  short_description: "The Impeller, the vivifying power of the sun that sets gods and men in motion at the day's beginning and end, invoked in the most repeated verse of the tradition."
+  aliases_iast: [savitā, savituḥ, savitaḥ]
+  epithets: []
+  member_of: [VG:DEITYGROUP:ADITYAH]
+  composed_of: []
+  curation_note: "Deliberately NOT the same deity as VG:DEVATA:SURYAH, and the axes are chosen to make the difference legible instead of leaving two identical rows. Surya is the visible disc that crosses the sky; Savitr is the impelling and quickening power, and his name is an agent noun meaning the one who impels, which is why ABSTRACT_PERSONIFICATION sits beside SOLAR here and not on Surya. The two are separately hymned, separately registered and separately keyed, and this file asserts no identification between them. His member_of among the Adityas is MEDIUM, since that membership varies between passages."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:SANJNANAM
+  structure: ABSTRACT
+  axes: [UNSPECIFIED]
+  label_iast: sañjñāna
+  label_en: "concord"
+  short_description: "Agreement of mind, the theme of the closing verses that ask the assembly to think as one."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A theme rather than an addressee, and not personified anywhere in the verses, so ABSTRACT_PERSONIFICATION is refused as well."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:SAMVATSARAKALACAKRAM
+  structure: ABSTRACT
+  axes: [UNSPECIFIED]
+  label_iast: saṃvatsarakālacakra
+  label_en: "the wheel of the year"
+  short_description: "The turning year as a wheel of time, the theme of the riddle verses on the twelve-spoked wheel."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A cosmological figure, not an agent. There is no axis for time or the calendar; DAWN_TIME is the division of the day and would be wrong for the year, so no axis is asserted."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:SINIVALI
+  structure: INDIVIDUAL
+  axes: [LUNAR]
+  label_iast: sinīvālī
+  label_en: Sinivali
+  short_description: "The goddess of the night of the new moon, invoked with the other goddesses of the lunar days for offspring."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "The same vocabulary gap as Raka and Candramas: no lunar or calendrical axis exists, so none is asserted."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:SOMARKAU
+  structure: PAIR
+  axes: [RITUAL_SUBSTANCE, SOLAR]
+  label_iast: somārkau
+  label_en: "Soma and the Sun"
+  short_description: "A dual pairing the soma draught with arka, the sun or the ray."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "The dual ending settles PAIR. SOLAR depends on reading arka as the sun rather than as the chant, which the word can also mean, so confidence is MEDIUM. Arka has no registry entity, so composed_of is left empty."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:SOMAVARUNAU
+  structure: PAIR
+  axes: [RITUAL_SUBSTANCE, GUARDIAN_OF_ORDER, COSMIC_SOVEREIGN]
+  label_iast: somavaruṇau
+  label_en: "Soma and Varuna"
+  short_description: "The dual of Soma and Varuna."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: [VG:DEVATA:SOMAH, VG:DEVATA:VARUNAH]
+  curation_note: "Decomposition from devata_components.yaml, ACCEPTED. Axes are the union of the two members; AQUATIC is not carried across from Varuna because that axis is his weakest."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:SOMAH
+  structure: INDIVIDUAL
+  axes: [RITUAL_SUBSTANCE, COSMIC_SOVEREIGN]
+  label_iast: soma
+  label_en: Soma
+  short_description: "The pressed plant and its exhilarating juice, the offering that is itself a god, addressed as king of plants and lord of the rite."
+  aliases_iast: [soma, somaḥ, somam, somasya, somāya, somāsaḥ]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "RITUAL_SUBSTANCE is the whole basis of his cult. COSMIC_SOVEREIGN records the kingship language applied to him, soma the king, which is well attested but is a title rather than a described function, so confidence is MEDIUM. This is the axis that distinguishes him from VG:DEVATA:PAVAMANAH-SOMAH, which is the same substance under the aspect of its clarification and carries RITUAL_SUBSTANCE alone. The epithet indu was probed and returns zero token hits, so it is not listed."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:SOMAPUSANAU
+  structure: PAIR
+  axes: [RITUAL_SUBSTANCE, TERRESTRIAL]
+  label_iast: somāpūṣāṇau
+  label_en: "Soma and Pusan"
+  short_description: "The dual of Soma and Pusan."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: [VG:DEVATA:SOMAH, VG:DEVATA:PUSA]
+  curation_note: "Decomposition from devata_components.yaml, ACCEPTED. Only the firmest of Pusan's axes is carried across, on the same reasoning as VG:DEVATA:INDRAPUSANAU."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:SOMARUDRAU
+  structure: PAIR
+  axes: [RITUAL_SUBSTANCE, HEALER]
+  label_iast: somārudrau
+  label_en: "Soma and Rudra"
+  short_description: "The dual of Soma and Rudra, invoked together for healing and for release from affliction."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: [VG:DEVATA:SOMAH, VG:DEVATA:RUDRAH]
+  curation_note: "Decomposition from devata_components.yaml, ACCEPTED. HEALER comes from Rudra and suits the joint invocation, which asks the pair for remedies. No Siva-derived attribute is imported here either."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:SUBANDHOJIVAH
+  structure: ABSTRACT
+  axes: [UNSPECIFIED]
+  label_iast: subandhojīva
+  label_en: "the reviving of Subandhu"
+  short_description: "The restoration to life of the man Subandhu, named as the purpose of the verses."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A purpose label built on a personal name, so ABSTRACT rather than HUMAN: the addressee is the act of revival, not the man. HEALER was considered and refused for the same reason it is refused on the disease-charm labels."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:SVANAYAMYA-DANASTUTIH
+  structure: PATRON_PRAISE
+  axes: [UNSPECIFIED]
+  label_iast: svanayamya dānastuti
+  label_en: "praise of the gift of Svanaya"
+  short_description: "Praise of the liberality of the patron Svanaya."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A danastuti with the patron named; no interpretive axis applies."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:SVANAYO-BHAVAYAVYAH
+  structure: HUMAN
+  axes: [UNSPECIFIED]
+  label_iast: svanayo bhāvayavya
+  label_en: "Svanaya Bhavayavya"
+  short_description: "The patron Svanaya named with his patronymic, standing as the addressee."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "HUMAN rather than PATRON_PRAISE, because this label names the man himself and not his gift, unlike the danastuti label for the same patron. No divine axis applies."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:SVASTAYAH
+  structure: ABSTRACT
+  axes: [UNSPECIFIED]
+  label_iast: svasti
+  label_en: "the blessings of well-being"
+  short_description: "Wishes for safety and well-being, named collectively as the subject of the verses."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A plural of abstract nouns, which by the header rule is ABSTRACT and not GROUP, since GROUP is for collectives of beings or objects. No axis applies."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:SVAHAKRTAYAH
+  structure: ABSTRACT
+  axes: [UNSPECIFIED]
+  label_iast: svāhākṛti
+  label_en: "the svaha calls"
+  short_description: "The ritual exclamations svaha that accompany the pouring of the oblation."
+  aliases_iast: []
+  epithets: []
+  member_of: [VG:DEITYGROUP:APRIDEVATAH]
+  composed_of: []
+  curation_note: "A ritual utterance, and the file's boundary line is applied consistently: SPEECH belongs to deities whose domain is speech, not to the utterances themselves, so no axis is asserted here even though the apri sequence treats these calls as an addressee."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:SADHYAH
+  structure: GROUP
+  axes: [UNSPECIFIED]
+  label_iast: sādhya
+  label_en: "the Sadhyas"
+  short_description: "A class of ancient divine beings named as having performed the sacrifice in the earliest time."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "Almost nothing is said about them beyond their antiquity and their sacrificing, so there is no domain to record. ANCESTRAL was considered and refused: they are primordial gods, not the human dead, and that axis is for the Fathers."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:SAHADEVYAH-SOMAKAH
+  structure: HUMAN
+  axes: [UNSPECIFIED]
+  label_iast: sāhadevyaḥ somaka
+  label_en: "Somaka son of Sahadeva"
+  short_description: "A named human patron standing as the addressee of the verse."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A named human in the devata slot; no divine axis applies."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:SARAMEYAU-SVANAU
+  structure: PAIR
+  axes: [PSYCHOPOMP]
+  label_iast: sārameyau śvānau
+  label_en: "the two dogs of Sarama"
+  short_description: "The two four-eyed dogs, sons of Sarama, who guard the road to Yama and are asked to let the dead pass safely."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "An exception to this file's rule that deified animals take no axis, and the exception is earned: the funeral verses give these two an explicit office on the path of the dead, which is exactly what PSYCHOPOMP denotes. Sarama is a registry entity but the two dogs are not registered individually, so composed_of is empty."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:SARATHIH-RASMAYAH
+  structure: GROUP
+  axes: [UNSPECIFIED]
+  label_iast: sārathiḥ-raśmayaḥ
+  label_en: "the charioteer and the reins"
+  short_description: "The driver of the chariot together with the reins he holds, addressed jointly."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "GROUP because it is a joint address to more than one party, one of them an agent and one a set of objects, which is neither a clean dual nor a class. Belongs with the chariot and war-gear labels, so no axis is asserted."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:SARNJAYASYA-PRASTOKASYA-DANASTUTIH
+  structure: PATRON_PRAISE
+  axes: [UNSPECIFIED]
+  label_iast: sārñjayasya prastokasya dānastuti
+  label_en: "praise of the gift of Prastoka Sarnjaya"
+  short_description: "Praise of the liberality of the patron Prastoka, named with his patronymic."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A danastuti with the patron named; no interpretive axis applies."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:SAVITRI-SURYA
+  structure: INDIVIDUAL
+  axes: [SOLAR]
+  label_iast: sāvitrī sūryā
+  label_en: "Surya, daughter of Savitr"
+  short_description: "The feminine Surya, the Sun-maiden, whose marriage procession is described in the long wedding hymn."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "Three separate entities must be kept apart here and this note states the distinctions explicitly. She is the feminine Surya, not the masculine sun god of VG:DEVATA:SURYAH; and her patronymic savitri names Savitr as her father, which is a statement of parentage and emphatically not an identification with VG:DEVATA:SAVITA. Nothing beyond SOLAR is asserted, since the hymn is about her wedding rather than about any function she performs."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:SITA
+  structure: INDIVIDUAL
+  axes: [TERRESTRIAL, ABSTRACT_PERSONIFICATION]
+  label_iast: sītā
+  label_en: "Sita, the Furrow"
+  short_description: "The furrow of the ploughed field personified, invoked in the agricultural verses to be propitious and to yield milk and grain."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "Her name is the common noun for a furrow, which ABSTRACT_PERSONIFICATION records, and TERRESTRIAL is the field itself. She is not the heroine of the later epic, and no attribute of that figure is imported."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:SURYAH
+  structure: INDIVIDUAL
+  axes: [SOLAR]
+  label_iast: sūrya
+  label_en: Surya
+  short_description: "The sun as a god, the visible disc that crosses the sky drawn by his horses and is called the eye of Mitra and Varuna."
+  aliases_iast: [sūrya, sūryaḥ, sūryam, sūryasya]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "One axis only, and the restraint is the point. Surya is the sun as a body and a course; the impelling and quickening power is Savitr, who is a separate deity with a separate registry entity and a deliberately different axis set. Conflating the two is a known error and this file does not commit it. The epithet vivasvat was probed and returns zero token hits, so it is not listed."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:SURYAVIVAHAH
+  structure: ABSTRACT
+  axes: [UNSPECIFIED]
+  label_iast: sūryāvivāha
+  label_en: "the wedding of Surya"
+  short_description: "The marriage of the Sun-maiden, named as the event the verses narrate."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "An event, not a deity, which is what ABSTRACT is for. SOLAR is refused: the label names the wedding, and the bride already has her own entity in VG:DEVATA:SAVITRI-SURYA."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:TARANTAMAHISI-SASIYASI
+  structure: HUMAN
+  axes: [UNSPECIFIED]
+  label_iast: tarantamahiṣī śaśīyasī
+  label_en: "Sasiyasi, queen of Taranta"
+  short_description: "A named human patroness, identified as the chief queen of Taranta."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A named human in the devata slot; no divine axis applies."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:TVASTA
+  structure: INDIVIDUAL
+  axes: [ARTISAN]
+  label_iast: tvaṣṭṛ
+  label_en: Tvastr
+  short_description: "The divine craftsman who fashions forms and shapes the vajra for Indra, and who is invoked for the granting of offspring."
+  aliases_iast: [tvaṣṭā, tvaṣṭāram, tvaṣṭuḥ]
+  epithets: []
+  member_of: [VG:DEITYGROUP:APRIDEVATAH]
+  composed_of: []
+  curation_note: "One axis, which is his entire character; the vocabulary provides ARTISAN precisely for him and the Rbhus. ABSTRACT_PERSONIFICATION was considered, since his name is the agent noun for a fashioner, and refused: unlike Dhatr he has a real mythology, so the name is not the only thing there is to record."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:TARKSYAH
+  structure: INDIVIDUAL
+  axes: [UNSPECIFIED]
+  label_iast: tārkṣya
+  label_en: Tarksya
+  short_description: "A divine swift being, described as a horse or a bird of victory and invoked for speed and success."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A deified animal, and the sources differ on whether he is a steed or a bird, so no axis is asserted."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:ULUKHALAM
+  structure: INDIVIDUAL
+  axes: [RITUAL_OBJECT]
+  label_iast: ulūkhala
+  label_en: "the mortar"
+  short_description: "The wooden mortar in which the soma stalks are pounded, addressed as an agent of the rite."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "An implement of the sacrifice in the strict sense. The probe found only one token hit for the stem, so no alias is listed."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:ULUKHALAMUSALE
+  structure: PAIR
+  axes: [RITUAL_OBJECT]
+  label_iast: ulūkhalamusale
+  label_en: "the mortar and pestle"
+  short_description: "The mortar together with the pestle, addressed as a working pair."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "The dual ending settles PAIR. The mortar has a registry entity of its own but the pestle does not, so composed_of would be half a decomposition and is left empty."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:URVASI
+  structure: INDIVIDUAL
+  axes: [UNSPECIFIED]
+  label_iast: urvaśī
+  label_en: Urvasi
+  short_description: "The nymph who has lived among mortals and is departing, the speaker opposite Pururavas in the dialogue hymn."
+  aliases_iast: [urvaśī]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "An apsaras, and the vocabulary has no axis for that class of being. Nothing she does in the dialogue corresponds to any available axis, so none is asserted."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:USASANAKTA
+  structure: PAIR
+  axes: [DAWN_TIME, NOCTURNAL]
+  label_iast: uṣāsānaktā
+  label_en: "Dawn and Night"
+  short_description: "The dual of Dawn and Night, the two sisters who follow one another in turn."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "composed_of is empty on the explicit authority of devata_components.yaml, whose row for this composite is NEEDS_REVIEW: it holds the decomposition back because equating the nakta of the compound with the registry's ratrih is an identification across two different words rather than a decomposition, and needs a human decision. That reasoning is followed rather than overridden."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:USAH
+  structure: INDIVIDUAL
+  axes: [DAWN_TIME]
+  label_iast: uṣas
+  label_en: Usas
+  short_description: "The Dawn as a goddess, daughter of heaven, who uncovers the light, rouses the sleeping and is praised in some of the most admired hymns in the corpus."
+  aliases_iast: [uṣas, uṣāḥ, uṣasaḥ, uṣasaṃ, uṣasam, uṣasā, uṣo]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "One axis, which the vocabulary provides for her directly. SOLAR was considered, since she goes before the sun and is called his sister and wife, and refused as an over-reading: she is the dawn light, not the sun. Seven aliases are listed and all were probed; the vocative uso carries 44 mantras and is sandhi-blocked at three characters, so its high containment figure cannot reach the matcher. No epithet is listed because the recurring descriptions of her are phrases such as daughter of heaven rather than single words."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:VAIDADASCIH-PURUMILHAH
+  structure: HUMAN
+  axes: [UNSPECIFIED]
+  label_iast: vaidadaściḥ purumīḻha
+  label_en: "Purumilha Vaidadasvi"
+  short_description: "A named human patron standing as the addressee of the verse."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A named human in the devata slot; no divine axis applies."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:VAIDADASCIH-TARANTAH
+  structure: HUMAN
+  axes: [UNSPECIFIED]
+  label_iast: vaidadaściḥ taranta
+  label_en: "Taranta Vaidadasvi"
+  short_description: "A named human patron standing as the addressee of the verse."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A named human in the devata slot; no divine axis applies."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:VANASPATIH
+  structure: INDIVIDUAL
+  axes: [RITUAL_OBJECT]
+  label_iast: vanaspati
+  label_en: Vanaspati
+  short_description: "The Lord of the Forest, that is the tree and the sacrificial post cut from it, a fixed member of the apri sequence."
+  aliases_iast: [vanaspatiḥ]
+  epithets: []
+  member_of: [VG:DEITYGROUP:APRIDEVATAH]
+  composed_of: []
+  curation_note: "In the apri sequence he is the post that ties the victim, which is why RITUAL_OBJECT is asserted rather than TERRESTRIAL. TERRESTRIAL was considered on the strength of the name meaning lord of the wood, and left off because in this slot he is the implement."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:VARMA
+  structure: INDIVIDUAL
+  axes: [UNSPECIFIED]
+  label_iast: varman
+  label_en: "the armour"
+  short_description: "The body armour, addressed in the hymn to the weapons of war."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A deified implement of war; no axis is asserted."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:VARUNAH
+  structure: INDIVIDUAL
+  axes: [COSMIC_SOVEREIGN, GUARDIAN_OF_ORDER, AQUATIC]
+  label_iast: varuṇa
+  label_en: Varuna
+  short_description: "The sovereign who watches over truth and oath, binds the guilty with his fetters and releases the penitent, and whose domain runs to the waters and the encompassing sea."
+  aliases_iast: [varuṇa, varuṇaḥ, varuṇam, varuṇasya]
+  epithets: []
+  member_of: [VG:DEITYGROUP:ADITYAH]
+  composed_of: []
+  curation_note: "COSMIC_SOVEREIGN and GUARDIAN_OF_ORDER are his two constant characters, the king and the keeper of the ordinances, and both are stated repeatedly. AQUATIC is the third and weakest: it is present in the Rigveda but becomes his dominant character only in the later Vedic material, so it is asserted with that qualification recorded here rather than silently."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:VASISTHAH
+  structure: HUMAN
+  axes: [UNSPECIFIED]
+  label_iast: vasiṣṭha
+  label_en: Vasistha
+  short_description: "The rishi Vasistha, seer of the seventh book, standing as the addressee of the verse."
+  aliases_iast: [vasiṣṭha]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A named human rishi in the devata slot; no divine axis applies. The registry spells the label vasisthah, with th where the usual orthography has stha; that is the source form and is preserved untouched, while label_iast gives the standard spelling."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:VASISTHAPUTRAH
+  structure: HUMAN
+  axes: [UNSPECIFIED]
+  label_iast: vasiṣṭhaputra
+  label_en: "the sons of Vasistha"
+  short_description: "The descendants of Vasistha, named collectively as the addressees."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "HUMAN rather than GROUP by the precedence rule stated in the header: the plural is real, but a human collective is still human, and that is the more informative fact for a reader. No divine axis applies."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:VASUKRAH
+  structure: HUMAN
+  axes: [UNSPECIFIED]
+  label_iast: vasukra
+  label_en: Vasukra
+  short_description: "The rishi Vasukra, standing as the addressee of the verse."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A named human rishi in the devata slot; no divine axis applies."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:VENAH
+  structure: INDIVIDUAL
+  axes: [UNSPECIFIED]
+  label_iast: vena
+  label_en: Vena
+  short_description: "An obscure luminous figure of the higher regions, described in a single difficult hymn in terms drawn from the Gandharvas and the waters."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "The hymn is genuinely obscure and the interpretations of him differ widely. Any axis here would be a guess dressed as a reading, so none is asserted."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:VIVAVAHAMANTRAH
+  structure: ABSTRACT
+  axes: [UNSPECIFIED]
+  label_iast: vivāhamantra
+  label_en: "the wedding verses"
+  short_description: "The mantras recited at a marriage, named as the subject of the passage."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "The verses themselves, not a deity of speech. SPEECH is reserved for deities whose domain is speech, so no axis is asserted, consistently with the svaha calls and the Hotr's benedictions."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:VISVAKARMA
+  structure: INDIVIDUAL
+  axes: [ARTISAN, COSMIC_SOVEREIGN]
+  label_iast: viśvakarman
+  label_en: Visvakarman
+  short_description: "The All-maker, the architect of the cosmos who names the worlds and offers up the whole of creation."
+  aliases_iast: [viśvakarmā, viśvakarman]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "ARTISAN from the name and the fashioning language of his hymns, alongside Tvastr. COSMIC_SOVEREIGN because his hymns give him the highest place and the naming of the worlds, which is more than craftsmanship; that second axis is the interpretive one, so confidence is MEDIUM."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:VISVEDEVAH
+  structure: GROUP
+  axes: [UNSPECIFIED]
+  label_iast: viśve devāḥ
+  label_en: "the All-Gods"
+  short_description: "The gods invoked as a single collective addressee, the fourth most frequent devata in the corpus."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "Two refusals, both deliberate. composed_of is empty on the explicit authority of devata_components.yaml, whose row for this entity is REJECTED with the reasoning that the All-Gods are a collective and not an abbreviation for the set of every registered deity, and that expanding it would fabricate thousands of edges. axes are UNSPECIFIED because no single axis characterises the entire pantheon, and picking any would be arbitrary. aliases_iast is empty for a measured reason: the compound visvedevah scores zero token hits, and so does visvedeva, because the corpus writes the name as two words, so there is no single-token alias that is both safe and non-trivial. The bare word visve is far too general to use."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:VISVAMITRAH
+  structure: HUMAN
+  axes: [UNSPECIFIED]
+  label_iast: viśvāmitra
+  label_en: Visvamitra
+  short_description: "The rishi Visvamitra, seer of the third book, standing as the addressee of the verse."
+  aliases_iast: [viśvāmitra]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A named human rishi in the devata slot; no divine axis applies. Worth noting for anyone extending the aliases: visvamitrasya turns up as a containment hit under Mitra's alias mitrasya, so the two entities can contaminate each other and the mitra forms must never be attached here."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:VISVAMITROPADHYAYAH
+  structure: HUMAN
+  axes: [UNSPECIFIED]
+  label_iast: viśvāmitropādhyāya
+  label_en: "Visvamitra as teacher"
+  short_description: "Visvamitra in the role of instructor, named as the addressee."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A named human in the devata slot, kept separate from VG:DEVATA:VISVAMITRAH as the registry pins it. No divine axis applies."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:VISVE-DEVAH
+  structure: GROUP
+  axes: [UNSPECIFIED]
+  label_iast: viśve devāḥ
+  label_en: "the All-Gods"
+  short_description: "A source-spelling variant of the All-Gods collective, written with a retroflex sibilant."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "An orthographic variant of VG:DEVATA:VISVEDEVAH, kept as a separate entry because entity_key is pinned identity and this overlay may not merge registry entities. The same two refusals apply as on that entry."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:VISNUH
+  structure: INDIVIDUAL
+  axes: [SOLAR]
+  label_iast: viṣṇu
+  label_en: Visnu
+  short_description: "The wide-strider who measures out the spaces in three steps, the third of which passes beyond where mortals can follow."
+  aliases_iast: [viṣṇuḥ, viṣṇoḥ]
+  epithets:
+    - iast: śipiviṣṭa
+      en: the one clothed in rays
+  member_of: []
+  composed_of: []
+  curation_note: "One axis, and both what is included and what is excluded need saying. SOLAR records the standard reading of the three strides as the course of the sun, which is an interpretation rather than a statement of the text, so confidence is MEDIUM. No spatial axis is used, because the three strides deliberately span earth, midspace and heaven and no single region fits. COSMIC_SOVEREIGN is refused outright: the supremacy Visnu holds in the Puranic tradition is a later development, and asserting it here would be the same category of error as importing Siva into Rudra."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:VAJINAH
+  structure: GROUP
+  axes: [UNSPECIFIED]
+  label_iast: vājin
+  label_en: "the steeds"
+  short_description: "The swift horses, addressed collectively as prize-winners."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "Deified animals; no axis in the vocabulary covers them."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:VAK
+  structure: INDIVIDUAL
+  axes: [SPEECH, ABSTRACT_PERSONIFICATION]
+  label_iast: vāc
+  label_en: "Vac, Speech"
+  short_description: "Speech as a goddess, who declares in her own voice that she moves with all the gods and that whoever she loves becomes mighty."
+  aliases_iast: [vāk, vācaṃ, vāco]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "The clearest case in the file for pairing the two axes: her domain is speech and she is speech, so SPEECH and ABSTRACT_PERSONIFICATION both apply without strain, and she is the reason SPEECH exists in the vocabulary at all. The alias vak has an 82 percent containment figure but is three characters, well under the six-character sandhi threshold, so only its 17 clean token hits can ever match; the same reasoning covers vaco at four characters."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:VAK-APAH
+  structure: PAIR
+  axes: [SPEECH, AQUATIC]
+  label_iast: vāk-āpaḥ
+  label_en: "Vac and the Waters"
+  short_description: "Speech and the Waters addressed jointly."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "Axes are the union of the two named members. Both Vac and the Waters are registry entities, but devata_components.yaml does not assert this decomposition and its policy forbids reading one off a hyphen, so composed_of is empty."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:VAMADEVAH
+  structure: HUMAN
+  axes: [UNSPECIFIED]
+  label_iast: vāmadeva
+  label_en: Vamadeva
+  short_description: "The rishi Vamadeva, seer of the fourth book, standing as the addressee of the verse."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A named human rishi in the devata slot; no divine axis applies. The probe returns a single token hit for the name, so no alias is listed."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:VASTOSPATIH
+  structure: INDIVIDUAL
+  axes: [UNSPECIFIED]
+  label_iast: vāstoṣpati
+  label_en: Vastospati
+  short_description: "The Lord of the Dwelling, the tutelary spirit of the house, asked to grant a favourable entry and to keep sickness away."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A justified UNSPECIFIED on a real deity, which is worth being explicit about. GUARDIAN_OF_ORDER was the obvious candidate and is refused: in this vocabulary it denotes the upholders of rta, Mitra and Varuna, not the protection of a building, and stretching it to cover household tutelage would blur the one axis in the set that currently has a sharp meaning. TERRESTRIAL was also considered and refused, since a house is not a region of the world."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:VAYUH
+  structure: INDIVIDUAL
+  axes: [ATMOSPHERIC]
+  label_iast: vāyu
+  label_en: Vayu
+  short_description: "The wind as a god, called first to the pressed soma and drawn by his team through the midspace."
+  aliases_iast: [vāyuḥ, vāyum, vāyo]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "One axis, which is the whole of him. The bare stem vayu was probed and returns zero token hits, so it is not listed; the vocative vayo carries 39 mantras at 6 percent containment and is the best alias he has. The form vayavah was rejected at one token hit and 86 percent containment."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:YAJAMANAPATNI
+  structure: HUMAN
+  axes: [UNSPECIFIED]
+  label_iast: yajamānapatnī
+  label_en: "the sacrificer's wife"
+  short_description: "The wife of the man who commissions the sacrifice, standing as the addressee."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A human role rather than a name, but human all the same, so HUMAN is used. No divine axis applies."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:YAJAMANAH
+  structure: HUMAN
+  axes: [UNSPECIFIED]
+  label_iast: yajamāna
+  label_en: "the sacrificer"
+  short_description: "The man who commissions and pays for the sacrifice, standing as the addressee."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A human role rather than a name, but human all the same. PRIESTLY is refused: the yajamana is the patron of the rite, not one of its officiants."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:YAJNAYAJAMANAU
+  structure: PAIR
+  axes: [UNSPECIFIED]
+  label_iast: yajñayajamānau
+  label_en: "the sacrifice and the sacrificer"
+  short_description: "The rite together with the man who commissions it, addressed as a dual."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "The dual ending settles PAIR. The two members are an event and a human, neither of which takes an axis in this vocabulary, so none is asserted."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:YAKSMANASANAH
+  structure: ABSTRACT
+  axes: [UNSPECIFIED]
+  label_iast: yakṣmanāśana
+  label_en: "the destruction of consumption"
+  short_description: "A charm label: the driving out of the wasting disease yaksma."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "HEALER was seriously considered here, since the whole content of the label is the removal of disease. It is refused for consistency with the other charm-purpose labels: the slot names the intended act, not an agent who possesses a healing power, and the healers proper in this file are Rudra, the Asvins, the plants and the Waters. A reviewer who disagrees should change all the charm labels together, not this one alone."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:YAMAH
+  structure: INDIVIDUAL
+  axes: [PSYCHOPOMP, ANCESTRAL]
+  label_iast: yama
+  label_en: Yama
+  short_description: "The first mortal to die and so the first to find the path, who now rules the assembly of the Fathers and receives the newly dead."
+  aliases_iast: [yama, yamaḥ, yamasya]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "The refusal here matters as much as the assignments. CHTHONIC is deliberately withheld: in these verses Yama's seat is in the far or highest heaven where he drinks with the gods, and the infernal Yama who presides over a hell is post-Vedic, so giving him an underworld would be the same class of error as importing Siva into Rudra. PSYCHOPOMP records that the dead go to him along the path he found; ANCESTRAL records his lordship over the Fathers. The epithet vaivasvata was probed and returns zero token hits, so it is not listed."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:YAMI
+  structure: INDIVIDUAL
+  axes: [UNSPECIFIED]
+  label_iast: yamī
+  label_en: Yami
+  short_description: "The twin sister of Yama, who argues with him for union and is refused in the dialogue hymn."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "She has no domain outside the one dialogue, so no axis is asserted. Her name was probed as an alias and returns zero token hits at 67 percent containment, so aliases_iast is empty rather than carrying a form that cannot match."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:YUPAH
+  structure: INDIVIDUAL
+  axes: [RITUAL_OBJECT]
+  label_iast: yūpa
+  label_en: "the sacrificial post"
+  short_description: "The post to which the victim is tied, anointed and addressed as a participant in the rite."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "An implement of the sacrifice in the strict sense. The probe returns a single token hit for the nominative, so no alias is listed."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:ADITYOSASAH
+  structure: GROUP
+  axes: [DAWN_TIME]
+  label_iast: ādityoṣas
+  label_en: "the Adityas and the Dawns"
+  short_description: "A composite label naming the Aditya gods together with the dawns."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "Only DAWN_TIME is asserted, from the usas member. The axes of the Adityas are not carried across, because the compound is ambiguous between a plural of Adityas and a single Aditya, and stacking sovereignty onto an uncertain reading would be exactly the kind of padding this file avoids. No decomposition is asserted by devata_components.yaml."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:ADITYAH
+  structure: GROUP
+  axes: [COSMIC_SOVEREIGN, GUARDIAN_OF_ORDER]
+  label_iast: āditya
+  label_en: "the Adityas"
+  short_description: "The sons of Aditi, the sovereign gods led by Mitra and Varuna who keep watch over the ordinances."
+  aliases_iast: [ādityāḥ, ādityānāṃ, āditya]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "Both axes come from the character of the group as their hymns describe it, led by Mitra and Varuna, who carry the same two axes individually. Confidence is MEDIUM because the group's own membership is not fixed: devata_components.yaml records this entity as REJECTED for decomposition precisely because membership varies between passages and between later enumerations, and no source in this repository fixes the list. composed_of is empty on that authority. This overlay uses VG:DEITYGROUP:ADITYAH on only four members, Mitra, Varuna, Savitr and Pusan, and every one of those is qualified as uncertain in its own note."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:APAH
+  structure: GROUP
+  axes: [AQUATIC, HEALER]
+  label_iast: āpas
+  label_en: "the Waters"
+  short_description: "The Waters as goddesses, mothers who purify and who are asked for the remedy that they carry."
+  aliases_iast: [āpaḥ, apsu]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "AQUATIC is the name. HEALER is not an inference either: the verses to them state outright that they bring the remedy and are asked for it, which is why both axes are HIGH."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:ARTNI
+  structure: PAIR
+  axes: [UNSPECIFIED]
+  label_iast: ārtnī
+  label_en: "the two bow-tips"
+  short_description: "The two ends of the bow where the string is fastened, addressed in the weapons hymn."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "The dual ending settles PAIR. A deified implement of war; no axis is asserted."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:ATMA
+  structure: ABSTRACT
+  axes: [UNSPECIFIED]
+  label_iast: ātman
+  label_en: "the self"
+  short_description: "The self or breath-soul, named as the subject of the verse."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "An abstract noun and a philosophical term, not personified in the verse. No axis applies."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:AVARTAMANAM-MANAH
+  structure: ABSTRACT
+  axes: [UNSPECIFIED]
+  label_iast: āvartamānam manaḥ
+  label_en: "the returning mind"
+  short_description: "A charm label: the calling back of a mind that has strayed or departed."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A charm-purpose label; the slot names the act, not an agent, so no axis is asserted."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:SACI
+  structure: ABSTRACT
+  axes: [UNSPECIFIED]
+  label_iast: śacī
+  label_en: "Saci, might"
+  short_description: "Might or effective power, standing as the subject of the verse."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "Ambiguous between the abstract noun for power, which is the sense behind Indra's epithet sacipati, and the later personified consort of that name. Because the referent is unsettled, no axis is asserted and the structure follows the plainer reading of the word."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:SAKUNTAH
+  structure: INDIVIDUAL
+  axes: [UNSPECIFIED]
+  label_iast: śakunta
+  label_en: "the bird"
+  short_description: "The bird whose call is read as an omen and which is asked to speak only what is auspicious."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A deified animal; no axis in the vocabulary covers them."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:SRADDHA
+  structure: ABSTRACT
+  axes: [ABSTRACT_PERSONIFICATION]
+  label_iast: śraddhā
+  label_en: "Sraddha, Faith"
+  short_description: "Faith or trust addressed as a goddess, invoked at morning, noon and sunset to be placed in the worshipper."
+  aliases_iast: [śraddhā]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "One of the clearest personified abstractions in the corpus: the label is a common noun, which is why structure is ABSTRACT, but the hymn addresses her directly and asks her to enter the worshipper, which is what the axis records."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:SUNAH
+  structure: UNSPECIFIED
+  axes: [UNSPECIFIED]
+  label_iast: śvan
+  label_en: "the dog"
+  short_description: "The dog, named as the subject of the verse."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "One of only two entries in this file with an UNSPECIFIED structure, and the reason is grammatical rather than religious: sunah is ambiguous between the genitive singular and the nominative plural of svan, so the label does not settle number and neither INDIVIDUAL nor GROUP can be read off it. A deified animal in either case, so no axis is asserted."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:SUNASIRAU
+  structure: PAIR
+  axes: [TERRESTRIAL]
+  label_iast: śunāsīrau
+  label_en: "Suna and Sira"
+  short_description: "The paired deities of the ploughshare and the plough, invoked in the agricultural verses for a good crop."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "The dual ending settles PAIR. TERRESTRIAL for the tilled land, the only thing the pair is concerned with. RITUAL_OBJECT was considered, since the two are implements, and refused: they are farming tools, not implements of the sacrifice, which is the same line drawn for the weapons. Neither member has a registry entity, so composed_of is empty."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:SYENAH
+  structure: INDIVIDUAL
+  axes: [UNSPECIFIED]
+  label_iast: śyena
+  label_en: "the falcon"
+  short_description: "The falcon that carried the soma down from heaven, named as the subject of the verse."
+  aliases_iast: [śyenaḥ]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "A deified animal. RITUAL_SUBSTANCE is refused even though his one famous act is the fetching of the soma: he is the carrier, not the draught."
+  confidence: MEDIUM
+
+- entity_key: VG:DEVATA:RBHAVAH
+  structure: GROUP
+  axes: [ARTISAN]
+  label_iast: ṛbhu
+  label_en: "the Rbhus"
+  short_description: "The three craftsmen who won immortality by their skill, having made the chariot of the Asvins, the bay horses of Indra and a cow from a hide."
+  aliases_iast: [ṛbhavaḥ, ṛbhūṇāṃ]
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "One axis, which the vocabulary provides for them and Tvastr; their whole story is a series of feats of craft. Both the stem rbhu and the nominative singular rbhuh were probed and return zero token hits, so only the plural forms are listed. No individual Rbhu is a registry entity, so composed_of is empty."
+  confidence: HIGH
+
+- entity_key: VG:DEVATA:RNANCAYENDRAU
+  structure: PAIR
+  axes: [WARRIOR]
+  label_iast: ṛṇañcayendrau
+  label_en: "Rnancaya and Indra"
+  short_description: "A dual joining the patron Rnancaya with Indra."
+  aliases_iast: []
+  epithets: []
+  member_of: []
+  composed_of: []
+  curation_note: "An unusual label in that it pairs a human patron with a god in one dual, which the dual ending settles as PAIR. WARRIOR carries over from Indra alone. Rnancaya has no registry entity, so composed_of would be half a decomposition and is left empty."
+  confidence: MEDIUM

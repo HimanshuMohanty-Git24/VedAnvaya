@@ -1,0 +1,669 @@
+# The material and ritual world of the four Vedas: crops, metals, animals, weapons,
+# ritual implements, named rivers, tribes, rites and priestly offices.
+#
+# This file is a MERGE FRAGMENT for data/registry/concepts.yaml. It uses that file's entry
+# shape exactly and adds nothing to its vocabulary except node types:
+#
+#   19 of the 45 entities below declare CROP, METAL, WEAPON, TRIBE or RITUAL_ROLE, which
+#   live in vedagraph.domain.ontology.DomainNodeType rather than in the frozen
+#   SemanticNodeType. load_concepts() takes them only when the caller passes
+#   `allowed_node_types=ALL_NODE_TYPE_NAMES`; its default is still the frozen whitelist and
+#   would reject this file. CROP carries the Plant label as well, METAL carries Substance,
+#   WEAPON carries Object (domain.ontology.SUPERLABELS), so the narrow type never makes the
+#   broad question harder to ask.
+#
+# 45 entities, which is the authoring budget. With the 89 in data/registry/concepts.yaml and
+# the 29 in domain_entities_concern.yaml the merged V2 registry comes to 163, against
+# MAX_CONCEPT_NODES, which Knowledge Model V2 raised from 150 to 260 with a recorded reason.
+#
+# ---------------------------------------------------------------------------
+# How the aliases were chosen
+# ---------------------------------------------------------------------------
+# Every Sanskrit alias below was probed against all 20,210 mantras with
+# scripts/probe_domain_aliases.py and then READ: for each alias, one witness passage per
+# Veda was printed with its translation and judged. 370 candidate Sanskrit forms and 95
+# candidate English tokens were measured in the first sweep, plus 4 and 10 follow-ups;
+# 157 Sanskrit and 53 English survived. Everything rejected is recorded, with the
+# passage that rejected it, in
+# docs/reports/MATERIAL_CULTURE_LEXICON_V1.md. The rejections are the evidence that this
+# file was measured rather than recalled, and the four that matter most are:
+#
+#   ayas       The metal word is a trap, as warned. Bare `ayas` token-matches nothing and
+#              substring-matches 645 times inside payasā / mādayasva / trayastriṃśat. What
+#              is listed here instead is six inflected forms that occur as whole words and
+#              were each read: ayasā, ayaso, ayasi, āyasam, āyasaḥ, āyasī. `ayaḥ` and `ayo`
+#              were tested too and dropped -- `ayo` is the participle of i- 'to go' in four
+#              of its six hits.
+#   śvā        'Dog', and unusable: the elision of initial a- makes aśvā ('horse', 'mare')
+#              spell itself śvā, so RV 6.75.7 and YV 21.33, which Griffith renders "Horses"
+#              and "A mare with a foal", both matched. `śvānam` went too, for a different
+#              reason: it clears the six-character sandhi floor and sits inside
+#              mātariśvānam, a name of Agni, which gave it five Sāmavedic substring hits
+#              against two genuine Rigvedic ones. DOG rests on śvānaḥ / śunaḥ / śunā.
+#   ajā, ajasya  The goat and the Unborn are the same string. RV 1.164.6 "the Unborn's
+#              image" and RV 10.82.6 "the Unborn's navel" are a-ja, and `sám ajā` is the
+#              imperative of aj- 'to drive'. GOAT keeps ajaḥ / ajam / ajām / ajena, which
+#              were read one at a time and are all animals.
+#   jar        English, and a failure mode this repository had not recorded: Whitney
+#              parenthesises IAST inside his translation, and ENGLISH_TOKEN_PATTERN's
+#              [a-z]+ cuts `jarā́yu` into the token `jar`. Same mechanism retired `ram`,
+#              which matched Whitney's gloss of the root ram- at AVS 1.17.3.
+#
+# ---------------------------------------------------------------------------
+# What is deliberately NOT here
+# ---------------------------------------------------------------------------
+# sarasvatī  There is no SARASVATI-RIVER node. Its forms token-match 172 mantras
+#            (RV 41, SV 3, YV 44, AV 15) and the great majority are the goddess invoked
+#            for wealth and inspiration -- Griffith's "bright Sarasvati", Whitney's
+#            "divine Sarasvatī" -- not a river. A RIVER node claiming them would assert
+#            "this passage is about a river" of well over a hundred passages that are
+#            about a deity, which is the exact confusion the registry header exists to
+#            prevent. The deity is VG:DEVATA:SARASVATI and already exists; the river needs
+#            a disambiguation the folded surface does not provide. This is the one gap in
+#            the river set and it is a decision, not an oversight.
+# aśvamedha  Not a ritual node. The word's single token hit, RV 5.27.5, is the PATRON
+#            Aśvamedha -- "the gifts of Asvamedha" -- not the horse sacrifice. The rite
+#            itself is in the corpus (RV 1.162-163, YV 22-25) and is reachable through
+#            ASVA-HORSE, YUPA-SACRIFICIAL-POST and SVADHITI-AXE, which those hymns use.
+# gharma     Not an offering node. It is the hot milk draught, the cauldron it is heated
+#            in, and plain warmth, in one word: Whitney has "unfailing heat" at AVS 6.36.1
+#            and Griffith "Heaven-like is Warmth" at VS 18.50.
+
+concepts:
+
+  # -------------------------------------------------------------------------
+  # Crops and grain
+  # -------------------------------------------------------------------------
+
+  - concept_id: VG:CONCEPT:YAVA-BARLEY
+    preferred_label_sa: yava
+    preferred_label_en: barley
+    node_type: CROP
+    definition: >-
+      Barley, the one cereal the corpus names constantly: ploughed, reaped, eaten, and
+      offered, and the crop against which hunger is measured.
+    aliases_sa: [yavaṃ, yavam, yavena, yavasya, yavān]
+    aliases_en: [barley]
+    broader: [VG:CONCEPT:OSADHI-PLANTS]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:VRIHI-RICE
+    preferred_label_sa: vrīhi
+    preferred_label_en: rice
+    node_type: CROP
+    definition: >-
+      Rice, as the standing grain and as the husked grain of the cooked offering; almost
+      entirely an Atharvavedic and Yajurvedic word.
+    aliases_sa: [vrīhim, taṇḍulaḥ, taṇḍulāḥ]
+    aliases_en: [rice]
+    broader: [VG:CONCEPT:OSADHI-PLANTS]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:TILA-SESAME
+    preferred_label_sa: tila
+    preferred_label_en: sesame
+    node_type: CROP
+    definition: >-
+      Sesame, eaten, pressed for oil, and scattered mixed with grain for the dead.
+    aliases_sa: [tilam, tilasya, tilamiśrā, tilamiśrāḥ]
+    aliases_en: [sesame]
+    broader: [VG:CONCEPT:OSADHI-PLANTS]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:MASA-BEAN
+    preferred_label_sa: māṣa
+    preferred_label_en: beans
+    node_type: CROP
+    definition: >-
+      The bean, named in the short lists of cultivated foods rather than described.
+    aliases_sa: [māṣam, māṣāḥ]
+    aliases_en: [beans]
+    broader: [VG:CONCEPT:OSADHI-PLANTS]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:DHANYA-GRAIN
+    preferred_label_sa: dhānya
+    preferred_label_en: grain
+    node_type: CROP
+    definition: >-
+      Grain in general, and specifically the parched or roasted grain (dhānā) set out for
+      Indra's horses and scattered for the dead.
+    aliases_sa: [dhānyam, dhānyaṃ, dhānyasya, dhānā, dhānāḥ]
+    aliases_en: [grain, grains]
+    broader: [VG:CONCEPT:ANNA-FOOD]
+    related_devatas: []
+
+  # -------------------------------------------------------------------------
+  # Metals
+  # -------------------------------------------------------------------------
+
+  - concept_id: VG:CONCEPT:AYAS-METAL
+    preferred_label_sa: ayas
+    preferred_label_en: metal
+    node_type: METAL
+    definition: >-
+      Metal, and specifically the dark metal the translators render "iron": the substance
+      of Indra's bolt, of a fort, of a hook and of a blade.
+    aliases_sa: [ayasā, ayaso, ayasi, āyasam, āyasaḥ, āyasī]
+    aliases_en: [iron, metal]
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:RAJATA-SILVER
+    preferred_label_sa: rajata
+    preferred_label_en: silver
+    node_type: METAL
+    definition: >-
+      Silver, named beside gold and iron in the short metal lists and in the amulet
+      charms.
+    aliases_sa: [rajate, rajatā]
+    aliases_en: [silver]
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:LOHA-COPPER
+    preferred_label_sa: loha
+    preferred_label_en: copper
+    node_type: METAL
+    definition: >-
+      Copper or bronze, attested once: VS 18.13 asks that "my copper and my lead and my
+      tin" prosper by sacrifice, in the corpus's one enumeration of the metals.
+    aliases_sa: [lohaṃ]
+    aliases_en: []
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:SISA-LEAD
+    preferred_label_sa: sīsa
+    preferred_label_en: lead
+    node_type: METAL
+    definition: >-
+      Lead, used in the Atharvaveda as the material with which a demon is pierced and in
+      the Yajurveda as one of the metals of the sacrifice.
+    aliases_sa: [sīsaṃ, sīsena]
+    aliases_en: []
+    broader: []
+    related_devatas: []
+
+  # -------------------------------------------------------------------------
+  # Animals
+  # -------------------------------------------------------------------------
+
+  - concept_id: VG:CONCEPT:VRSABHA-BULL
+    preferred_label_sa: vṛṣabha
+    preferred_label_en: bull
+    node_type: ANIMAL
+    definition: >-
+      The bull and the draught ox: the animal itself, and the same word used of a god
+      whose strength is being praised, which the corpus does not distinguish.
+    aliases_sa: [vṛṣabhaḥ, vṛṣabho, vṛṣabham, vṛṣabhaṃ, vṛṣabhasya, vṛṣabhāya, vṛṣabhāḥ,
+                 vṛṣabheṇa, ukṣā, anaḍvān]
+    aliases_en: [ox, oxen]
+    broader: [VG:CONCEPT:PASU-LIVESTOCK]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:AJA-GOAT
+    preferred_label_sa: aja
+    preferred_label_en: goat
+    node_type: ANIMAL
+    definition: >-
+      The goat: the victim led before the horse at the horse sacrifice, the animal cooked
+      with five rice-dishes, and a head of ordinary livestock.
+    aliases_sa: [ajaḥ, ajam, ajām, ajena]
+    aliases_en: [goat, goats]
+    broader: [VG:CONCEPT:PASU-LIVESTOCK]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:AVI-SHEEP
+    preferred_label_sa: avi
+    preferred_label_en: sheep
+    node_type: ANIMAL
+    definition: >-
+      Sheep, ewe and ram, and the fleece taken from them -- which is why this concept
+      reaches Mandala 9, where the soma runs through a filter of sheep's wool.
+    aliases_sa: [aviḥ, avim, avīnām, avyā, avye, avyaye, ūrṇā, meṣaḥ, meṣam, meṣī]
+    aliases_en: [sheep, ewe, wool]
+    broader: [VG:CONCEPT:PASU-LIVESTOCK]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:SVAN-DOG
+    preferred_label_sa: śvan
+    preferred_label_en: dog
+    node_type: ANIMAL
+    definition: >-
+      The dog: the household animal that is told to sleep in the two burglary charms, the
+      hound that wakes the Ṛbhus, and one of the hundred gifts of a patron.
+    aliases_sa: [śvānaḥ, śunaḥ, śunā]
+    aliases_en: [dog, dogs]
+    broader: []
+    related_devatas: [VG:DEVATA:SARAMEYAU-SVANAU]
+
+  - concept_id: VG:CONCEPT:MAHISA-BUFFALO
+    preferred_label_sa: mahiṣa
+    preferred_label_en: buffalo
+    node_type: ANIMAL
+    definition: >-
+      The buffalo, dressed three hundred at a time in RV 5.29.7, and the same word applied
+      to any bellowing power.
+    aliases_sa: [mahiṣaḥ, mahiṣam, mahiṣaṃ, mahiṣā, mahiṣasya]
+    aliases_en: [buffalo]
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:MANDUKA-FROG
+    preferred_label_sa: maṇḍūka
+    preferred_label_en: frog
+    node_type: ANIMAL
+    definition: >-
+      The frog, whose croaking at the first rains is a whole hymn (RV 7.103) and a
+      Yajurvedic sacrificial animal.
+    aliases_sa: [maṇḍūkā, maṇḍūkāḥ, maṇḍūkam]
+    aliases_en: [frog, frogs]
+    broader: []
+    related_devatas: [VG:DEVATA:MANDUKAH]
+
+  - concept_id: VG:CONCEPT:MRGA-WILD-BEAST
+    preferred_label_sa: mṛga
+    preferred_label_en: wild animal
+    node_type: ANIMAL
+    definition: >-
+      The wild animal as against the herd animal: the deer or beast of the waste, hunted,
+      snared, and used as the image of anything that roams.
+    aliases_sa: [mṛgaḥ, mṛgo, mṛgam, mṛgāḥ, mṛgasya, mṛgāya, mṛgāṇām]
+    aliases_en: [deer]
+    broader: []
+    related_devatas: []
+
+  # -------------------------------------------------------------------------
+  # Weapons
+  # -------------------------------------------------------------------------
+
+  - concept_id: VG:CONCEPT:PASA-NOOSE
+    preferred_label_sa: pāśa
+    preferred_label_en: noose
+    node_type: WEAPON
+    definition: >-
+      The noose or snare, above all Varuṇa's and Death's: the binding weapon a hymn asks
+      to be released from rather than one it asks to be given.
+    aliases_sa: [pāśaḥ, pāśam, pāśān, pāśāḥ, pāśinaḥ, pāśaiḥ, pāśāt]
+    aliases_en: [noose, nooses, snares, fetters]
+    broader: [VG:CONCEPT:AYUDHA-WEAPON]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:SVADHITI-AXE
+    preferred_label_sa: svadhiti
+    preferred_label_en: axe
+    node_type: WEAPON
+    definition: >-
+      The axe or hatchet: the tool that fells the tree and the blade that jointed the
+      sacrificial horse.
+    aliases_sa: [svadhitiḥ, svadhitau, svadhitinā]
+    aliases_en: [axe, hatchet]
+    broader: [VG:CONCEPT:AYUDHA-WEAPON]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:JYA-BOWSTRING
+    preferred_label_sa: jyā
+    preferred_label_en: bowstring
+    node_type: WEAPON
+    definition: >-
+      The bowstring, addressed in its own right in the weapon hymns and the standing image
+      for anything drawn taut.
+    aliases_sa: [jyā, jyām]
+    aliases_en: [bowstring]
+    broader: [VG:CONCEPT:AYUDHA-WEAPON]
+    related_devatas: [VG:DEVATA:JYA, VG:DEVATA:DHANUH, VG:DEVATA:ARTNI]
+
+  # -------------------------------------------------------------------------
+  # Objects: war gear, ritual implements, vessels
+  # -------------------------------------------------------------------------
+
+  # VG:CONCEPT:VARMAN-ARMOUR was authored here and, independently and identically, in
+  # domain_entities_concern.yaml -- same id, same OBJECT type, same related deity. The
+  # registry merge refused both files rather than letting file order decide. Kept in the
+  # concern fragment, which had probed six inflected forms against this one's two.
+
+  - concept_id: VG:CONCEPT:ULUKHALA-MORTAR
+    preferred_label_sa: ulūkhala
+    preferred_label_en: mortar
+    node_type: OBJECT
+    definition: >-
+      The wooden mortar and its pestle, the household pair that pounds grain and presses
+      soma and is addressed as a divinity in RV 1.28.
+    aliases_sa: [ulūkhale, ulūkhalam, ulūkhalasutānām, musale]
+    aliases_en: [mortar, pestle]
+    broader: []
+    related_devatas: [VG:DEVATA:ULUKHALAM, VG:DEVATA:ULUKHALAMUSALE]
+
+  - concept_id: VG:CONCEPT:YUPA-SACRIFICIAL-POST
+    preferred_label_sa: yūpa
+    preferred_label_en: sacrificial post
+    node_type: OBJECT
+    definition: >-
+      The post to which the animal victim is tied, and the svaru splinter cut from it that
+      is offered with the victim.
+    aliases_sa: [yūpaḥ, yūpe, yūpān, svaravaḥ]
+    aliases_en: []
+    broader: []
+    related_devatas: [VG:DEVATA:YUPAH]
+
+  - concept_id: VG:CONCEPT:VEDI-ALTAR
+    preferred_label_sa: vedi
+    preferred_label_en: altar
+    node_type: OBJECT
+    definition: >-
+      The excavated altar ground on which the grass is strewn and the offering set; in
+      RV 1.164.35 the earth's own outermost limit.
+    aliases_sa: [vediḥ, vedim, vediṃ, vedyām]
+    aliases_en: [altar]
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:CAMASA-CUP
+    preferred_label_sa: camasa
+    preferred_label_en: cup
+    node_type: OBJECT
+    definition: >-
+      The drinking cup of the sacrifice, the one the Ṛbhus made fourfold and the one the
+      gods are asked to drink from.
+    aliases_sa: [camasaḥ, camasam, camasā, camase]
+    aliases_en: [cup, cups]
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:SRUC-LADLE
+    preferred_label_sa: sruc
+    preferred_label_en: offering ladle
+    node_type: OBJECT
+    definition: >-
+      The offering ladle and spoon -- sruc, sruva -- with which butter is lifted and
+      poured into the fire.
+    aliases_sa: [srucaḥ, srucā, sruveṇa]
+    aliases_en: [ladle, spoon]
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:KALASA-JAR
+    preferred_label_sa: kalaśa
+    preferred_label_en: jar
+    node_type: OBJECT
+    definition: >-
+      The jar or pitcher into which the pressed soma runs and out of which it is drunk;
+      the commonest vessel of Mandala 9.
+    aliases_sa: [kalaśaḥ, kalaśam, kalaśe, kalaśeṣu, kalaśasya, kalaśā]
+    aliases_en: [pitcher]
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:PAVITRA-STRAINER
+    preferred_label_sa: pavitra
+    preferred_label_en: strainer
+    node_type: OBJECT
+    definition: >-
+      The woollen filter through which the pressed soma is strained clean, and the
+      purifying it performs.
+    aliases_sa: [pavitram, pavitre, pavitreṇa, pavitrasya]
+    aliases_en: [strainer, filter, sieve]
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:DUNDUBHI-DRUM
+    preferred_label_sa: dundubhi
+    preferred_label_en: drum
+    node_type: OBJECT
+    definition: >-
+      The war drum, addressed directly in the battle charms and told to roar the enemy
+      away.
+    aliases_sa: [dundubhiḥ, dundubhim, dundubhe, dundubhinā]
+    aliases_en: [drum]
+    broader: []
+    related_devatas: [VG:DEVATA:DUNDUBHIH]
+
+  # -------------------------------------------------------------------------
+  # Named rivers
+  #
+  # Each is a kind of SINDHU-RIVER, so "which rivers" and "which named rivers" are both
+  # answerable. All are thinly attested -- one or two passages each -- and that thinness
+  # is the finding: outside the Sarasvatī, the corpus names its rivers in a handful of
+  # geographical verses (RV 3.33, RV 10.75, RV 7.18) and nowhere else.
+  # -------------------------------------------------------------------------
+
+  - concept_id: VG:CONCEPT:GANGA-RIVER
+    preferred_label_sa: gaṅgā
+    preferred_label_en: Ganges
+    node_type: RIVER
+    definition: >-
+      The Ganges, named once in the river litany of RV 10.75 and nowhere else in the four
+      Saṃhitās.
+    aliases_sa: [gaṅge]
+    aliases_en: []
+    broader: [VG:CONCEPT:SINDHU-RIVER]
+    related_devatas: [VG:DEVATA:NADYAH]
+
+  - concept_id: VG:CONCEPT:YAMUNA-RIVER
+    preferred_label_sa: yamunā
+    preferred_label_en: Yamuna
+    node_type: RIVER
+    definition: >-
+      The Yamunā, named in the river litany of RV 10.75 and among the allies of the Tṛtsus
+      in RV 7.18.
+    aliases_sa: [yamunā, yamune]
+    aliases_en: []
+    broader: [VG:CONCEPT:SINDHU-RIVER]
+    related_devatas: [VG:DEVATA:NADYAH]
+
+  - concept_id: VG:CONCEPT:SARAYU-RIVER
+    preferred_label_sa: sarayu
+    preferred_label_en: Sarayu
+    node_type: RIVER
+    definition: >-
+      The Sarayu, named among the waters that might hold a traveller back.
+    aliases_sa: [sarayuḥ]
+    aliases_en: []
+    broader: [VG:CONCEPT:SINDHU-RIVER]
+    related_devatas: [VG:DEVATA:NADYAH]
+
+  - concept_id: VG:CONCEPT:PARUSNI-RIVER
+    preferred_label_sa: paruṣṇī
+    preferred_label_en: Parushni
+    node_type: RIVER
+    definition: >-
+      The Paruṣṇī, the river of the battle of ten kings, and in AVS 6.12 one of the
+      streams said to run with honey.
+    aliases_sa: [paruṣṇī, paruṣṇyām]
+    aliases_en: []
+    broader: [VG:CONCEPT:SINDHU-RIVER]
+    related_devatas: [VG:DEVATA:NADYAH]
+
+  - concept_id: VG:CONCEPT:VIPAS-RIVER
+    preferred_label_sa: vipāś
+    preferred_label_en: Vipash
+    node_type: RIVER
+    definition: >-
+      The Vipāś, one of the two rivers Viśvāmitra addresses and asks to be forded in
+      RV 3.33.
+    aliases_sa: [vipāṭ, vipāśam]
+    aliases_en: []
+    broader: [VG:CONCEPT:SINDHU-RIVER]
+    related_devatas: [VG:DEVATA:NADYAH]
+
+  - concept_id: VG:CONCEPT:SUTUDRI-RIVER
+    preferred_label_sa: śutudrī
+    preferred_label_en: Shutudri
+    node_type: RIVER
+    definition: >-
+      The Śutudrī, the Vipāś's companion in RV 3.33 and a name in the litany of RV 10.75.
+    aliases_sa: [śutudri]
+    aliases_en: []
+    broader: [VG:CONCEPT:SINDHU-RIVER]
+    related_devatas: [VG:DEVATA:NADYAH]
+
+  # -------------------------------------------------------------------------
+  # Tribes
+  #
+  # A tribe is a kind of JANA-PEOPLE. Only names that verified as names are here: druhyu,
+  # anu and pañcajana were probed and match nothing, and ārya was dropped on intrusion.
+  # -------------------------------------------------------------------------
+
+  - concept_id: VG:CONCEPT:BHARATA-TRIBE
+    preferred_label_sa: bharata
+    preferred_label_en: Bharatas
+    node_type: TRIBE
+    definition: >-
+      The Bharatas, the people for whom Agni is kindled in Mandala 3 and who ford the
+      rivers in RV 3.33.
+    aliases_sa: [bharatāḥ, bharatasya, bharatebhyaḥ]
+    aliases_en: [bharatas]
+    broader: [VG:CONCEPT:JANA-PEOPLE]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:PURU-TRIBE
+    preferred_label_sa: pūru
+    preferred_label_en: Purus
+    node_type: TRIBE
+    definition: >-
+      The Pūrus, for whom Indra breaks open forts and makes room.
+    aliases_sa: [pūravaḥ, pūrave]
+    aliases_en: [purus]
+    broader: [VG:CONCEPT:JANA-PEOPLE]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:YADU-TRIBE
+    preferred_label_sa: yadu
+    preferred_label_en: Yadu
+    node_type: TRIBE
+    definition: >-
+      The Yadus, named almost always in one breath with the Turvaśas as a distant people
+      Indra brought or held back.
+    aliases_sa: [yadum, yadave]
+    aliases_en: [yadu, yadus]
+    broader: [VG:CONCEPT:JANA-PEOPLE]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:TURVASA-TRIBE
+    preferred_label_sa: turvaśa
+    preferred_label_en: Turvasha
+    node_type: TRIBE
+    definition: >-
+      The Turvaśas, the Yadus' constant pair; the one tribe name of this set that the
+      Sāmaveda also carries.
+    aliases_sa: [turvaśaṃ, turvaśam]
+    aliases_en: []
+    broader: [VG:CONCEPT:JANA-PEOPLE]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:TRTSU-TRIBE
+    preferred_label_sa: tṛtsu
+    preferred_label_en: Trtsus
+    node_type: TRIBE
+    definition: >-
+      The Tṛtsus, Sudās's people in the battle of ten kings, confined to RV 7.18 and 7.83.
+    aliases_sa: [tṛtsavaḥ, tṛtsūnām, tṛtsubhiḥ]
+    aliases_en: [trtsus]
+    broader: [VG:CONCEPT:JANA-PEOPLE]
+    related_devatas: []
+
+  # -------------------------------------------------------------------------
+  # Named rites
+  #
+  # Two, not seven. rājasūya, vājapeya and agniṣṭoma occur once or twice each and all three
+  # in one verse, AVS 11.7.7; darśapūrṇamāsa, sattra, pravargya, puruṣamedha and agniṣṭoma
+  # token-match nothing at all. The elaborate procedures those names carry are Brāhmaṇa and
+  # Sūtra systematisation, and a node per name would import that systematisation into the
+  # Saṃhitās on the strength of a list.
+  # -------------------------------------------------------------------------
+
+  - concept_id: VG:CONCEPT:AGNIHOTRA
+    preferred_label_sa: agnihotra
+    preferred_label_en: fire oblation
+    node_type: RITUAL
+    definition: >-
+      The offering poured into the fire, named as such exactly once in the four Saṃhitās
+      (AVS 11.7.9, beside faith, the vaṣaṭ-call and the vow).
+    aliases_sa: [agnihotraṃ]
+    aliases_en: []
+    broader: [VG:CONCEPT:YAJNA-SACRIFICE]
+    related_devatas: [VG:DEVATA:AGNIH]
+
+  - concept_id: VG:CONCEPT:DIKSA-CONSECRATION
+    preferred_label_sa: dīkṣā
+    preferred_label_en: consecration
+    node_type: RITUAL
+    definition: >-
+      The consecration that makes a man fit to sacrifice, treated in the Atharvaveda as a
+      power in its own right and in VS 19.30 as what a vow earns.
+    aliases_sa: [dīkṣā, dīkṣām, dīkṣayā]
+    aliases_en: []
+    broader: []
+    related_devatas: []
+
+  # -------------------------------------------------------------------------
+  # Priestly offices
+  #
+  # RITUAL_ROLE, not CONCEPT, because PERFORMED_BY may only point at a RitualRole.
+  # VG:CONCEPT:HOTR-PRIEST already exists as the generic "priest" and already claims hotā,
+  # hotāram, ṛtvijam and the principal adhvaryu forms; nothing here re-claims a string it
+  # holds. There is deliberately no udgātar node: udgātā and udgātāraḥ match nothing in any
+  # of the four Saṃhitās.
+  # -------------------------------------------------------------------------
+
+  - concept_id: VG:CONCEPT:ADHVARYU-PRIEST
+    preferred_label_sa: adhvaryu
+    preferred_label_en: adhvaryu
+    node_type: RITUAL_ROLE
+    definition: >-
+      The officiant who does the physical work of the rite -- pressing, pouring, handling
+      the vessels -- addressed in the plural as the men whose hands carry the offering.
+    aliases_sa: [adhvaryavo, adhvaryubhiḥ]
+    aliases_en: [adhvaryu, adhvaryus]
+    broader: [VG:CONCEPT:HOTR-PRIEST]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:BRAHMAN-PRIEST
+    preferred_label_sa: brahman
+    preferred_label_en: brahman priest
+    node_type: RITUAL_ROLE
+    definition: >-
+      The brahman as a person: the priest who holds the formulation, and the class of men
+      who do. NOT the formulation itself, which is
+      VG:CONCEPT:BRAHMAN-FORMULATION.
+    aliases_sa: [brahmā, brāhmaṇam, brāhmaṇāḥ, brāhmaṇasya]
+    aliases_en: [brahmans]
+    broader: [VG:CONCEPT:HOTR-PRIEST]
+    related_devatas: [VG:DEVATA:BRAHMA]
+
+  - concept_id: VG:CONCEPT:PUROHITA-CHAPLAIN
+    preferred_label_sa: purohita
+    preferred_label_en: household priest
+    node_type: RITUAL_ROLE
+    definition: >-
+      The priest "placed in front" of a household or a king, an office the corpus attributes
+      to men and to Agni in the same words.
+    aliases_sa: [purohitaḥ, purohitam, purohita]
+    aliases_en: [household-priest, house-priest]
+    broader: [VG:CONCEPT:HOTR-PRIEST]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:YAJAMANA-SACRIFICER
+    preferred_label_sa: yajamāna
+    preferred_label_en: sacrificer
+    node_type: RITUAL_ROLE
+    definition: >-
+      The man on whose behalf and at whose cost the rite is performed: not an officiant,
+      and the party most of the corpus's requests are made for.
+    aliases_sa: [yajamānaḥ, yajamānam, yajamānasya, yajamānāya]
+    aliases_en: [sacrificer]
+    broader: []
+    related_devatas: [VG:DEVATA:YAJAMANAH, VG:DEVATA:YAJAMANAPATNI]
+
+  - concept_id: VG:CONCEPT:BRAHMACARIN-STUDENT
+    preferred_label_sa: brahmacārin
+    preferred_label_en: vedic student
+    node_type: RITUAL_ROLE
+    definition: >-
+      The student under the discipline of study and chastity, the subject of AVS 11.5 and
+      of RV 10.109.5.
+    aliases_sa: [brahmacārī, brahmacaryeṇa]
+    aliases_en: [student]
+    broader: []
+    related_devatas: []

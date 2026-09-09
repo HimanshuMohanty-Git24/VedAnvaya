@@ -1,0 +1,122 @@
+# Typed edges for the Atharvavedic concern model.
+#
+# domain_entities_concern.yaml says what exists. This says how a passage may be joined to
+# it. The concept matcher's own output is a mention with evidence -- "this passage's text
+# contains this entity's alias" -- and that is a weaker fact than any of the four
+# predicates below. Each list is therefore a whitelist: an entity absent from every list
+# may be attached ONLY as a mention, and a projector that emits a typed edge for it is
+# wrong, not merely generous.
+
+version: vedagraph-concern-model-v1
+
+# Passage -[:ADDRESSES_CONCERN]-> HumanConcern
+# Naming what you want IS wanting it. These four entities have no reading on which the
+# word appears without the passage being about the wish, so the mention and the predicate
+# carry the same strength and every HUMAN_CONCERN entity is listed.
+addresses_concern:
+  - VG:CONCEPT:PUSTI-THRIVING
+  - VG:CONCEPT:SAPATNA-RIVAL-OVERCOMING
+  - VG:CONCEPT:RNA-DEBT-FREEDOM
+  - VG:CONCEPT:SAMJNANA-CONCORD
+
+# Passage -[:TREATS]-> Condition
+# The strongest predicate in the file, and the shortest list on purpose. An entity is here
+# only if one of two tests was met:
+#   (1) its alias set contains an explicit remedy-or-destroyer compound printed in the
+#       corpus itself -- ksetriyanasany "destroying ksetriya", balasanasanih,
+#       viskandhadusanam, asravabhesajam -- which is the text saying "this passage is a
+#       treatment for X", not an inference; or
+#   (2) its full match set is small enough to have been read, and every match was found
+#       to sit inside a charm directed at the ailment. HARIMAN-JAUNDICE qualifies on this
+#       test: it has 4 matches in the whole corpus (AV 1.22.4, AV 9.8.9, RV 1.50.11,
+#       RV 1.50.12) and all four are the yellowness-transfer charm.
+# KRIMI-WORMS and KASA-COUGH are here on test (1) by their AV-exclusive distribution:
+# every krimi- and kasa- form in the corpus occurs in the Atharvaveda only, in the
+# worm-crushing and ailment-dispatching charms, and no Rigvedic or Yajurvedic descriptive
+# use exists to dilute them.
+treats:
+  - VG:CONCEPT:KRIMI-WORMS
+  - VG:CONCEPT:HARIMAN-JAUNDICE
+  - VG:CONCEPT:KSETRIYA-HEREDITARY-DISEASE
+  - VG:CONCEPT:BALASA-DISEASE
+  - VG:CONCEPT:VISKANDHA-AFFLICTION
+  - VG:CONCEPT:ASRAVA-FLUX
+  - VG:CONCEPT:KASA-COUGH
+
+# Passage -[:PROTECTS_FROM]-> Condition | HumanConcern
+# The weaker of the two affliction predicates, and where anything doubtful was sent. These
+# are the afflictions the corpus wards off, turns back or asks release from rather than
+# medicates: sorcery is returned to its maker, the evil dream is dispatched to an enemy,
+# Grahi's fetters are loosed, poison is declared sapless. VISA-POISON is here rather than
+# under `treats` because its 52 matches include 13 outside the Atharvaveda that were not
+# read one by one; PROTECTS_FROM is true of the charm passages and is not false of the
+# descriptive ones in the way TREATS would be.
+protects_from:
+  - VG:CONCEPT:VISA-POISON
+  - VG:CONCEPT:GRAHI-SEIZURE
+  - VG:CONCEPT:KRTYA-SORCERY
+  - VG:CONCEPT:DUSVAPNYA-BAD-DREAM
+  - VG:CONCEPT:DURNAMAN-ILL-NAMED-BEINGS
+
+# Passage -[:USED_FOR_RITE]-> SocialRite
+# Every SOCIAL_RITE entity. Each of the four is lexically anchored in words that occur
+# nowhere but the occasion: vadhu/vahatu at a wedding, jarayu and susa at a delivery,
+# pitryana and smasana at a funeral, sala addressed in the second person at a
+# house-raising. The predicate claims the passage belongs to the occasion, not that it is
+# the whole liturgy for it.
+used_for_rite:
+  - VG:CONCEPT:VIVAHA-MARRIAGE
+  - VG:CONCEPT:PRASUTI-CHILDBIRTH
+  - VG:CONCEPT:PITRYANA-FUNERARY-RITE
+  - VG:CONCEPT:SALA-HOUSE-BUILDING
+
+# Entities that get NO typed edge, listed so the omission is a decision rather than a gap.
+# These are things the corpus names -- a state, six herbs, two worn objects -- and naming
+# them supports no claim beyond the mention the matcher already emits. In particular
+# MANI-AMULET is not a Condition and is not "used_for_rite": an amulet hymn is about the
+# amulet, and the affliction it is worn against is a separate entity that the same passage
+# will also match.
+no_typed_edge:
+  - VG:CONCEPT:GARBHA-EMBRYO
+  - VG:CONCEPT:KUSTHA-PLANT
+  - VG:CONCEPT:APAMARGA-PLANT
+  - VG:CONCEPT:ARUNDHATI-PLANT
+  - VG:CONCEPT:JANGIDA-PLANT
+  - VG:CONCEPT:DARBHA-PLANT
+  - VG:CONCEPT:GULGULU-PLANT
+  - VG:CONCEPT:MANI-AMULET
+  - VG:CONCEPT:VARMAN-ARMOUR
+
+notes: >-
+  A passage NAMING a condition is not a passage PRESCRIBING a treatment for it, and the
+  deterministic matcher cannot tell the two apart: it reports that a folded alias equals a
+  token of the stored text, which is a fact about the wording and nothing more. Three rules
+  follow, and they are what this file encodes.
+
+  First, TREATS is never asserted from a bare lexical match on the ailment's own name.
+  Seven of the twelve CONDITION entities are in `treats`, and each one earned it by
+  evidence outside the bare name: an explicit remedy compound printed in the corpus
+  (ksetriyanasany, balasanasanih, viskandhadusanam, asravabhesajam), or a match set small
+  enough to be read to the end (jaundice, 4 of 4 verified), or an attested distribution
+  that exists only inside the charms (krimi and kasa, 100% Atharvaveda on the Sanskrit
+  path). The five that earned none of that are in `protects_from` instead.
+
+  Second, where both predicates could be argued, the weaker one was chosen. VISA-POISON is
+  the clearest case: 29 of its 52 matches are the Atharvavedic poison charms, but 13 are
+  Rigvedic or Yajurvedic and were not read individually, so it takes PROTECTS_FROM. The
+  same reasoning keeps KRTYA-SORCERY out of `treats` even though its counter-witchcraft
+  hymns are as therapeutic in intent as any remedy: what those hymns do to a spell is turn
+  it back, not cure it.
+
+  Third, an entity absent from all four lists is not a modelling oversight. The six PLANT
+  entities are not conditions and not rites; a passage matching KUSTHA-PLANT tells you the
+  herb is named there, and the ailment it is named against is a separate entity that the
+  same passage matches separately. Joining herb to ailment inside one passage would be an
+  inference about which of two co-mentioned entities acts on the other, and nothing in the
+  stored text licenses it. That edge belongs to a reviewed extraction, not to this layer.
+
+  One consequence to expect when this is projected: a single Atharvavedic charm commonly
+  matches an ailment, the herb used on it and the amulet it is bound in, and will therefore
+  carry a TREATS or PROTECTS_FROM edge alongside two plain mentions. That is the intended
+  shape. MAX_CONCEPTS_PER_PASSAGE is 4, so on the densest charms the weakest matches will
+  be dropped and counted; the drop is reported by the enrichment run and is not silent.

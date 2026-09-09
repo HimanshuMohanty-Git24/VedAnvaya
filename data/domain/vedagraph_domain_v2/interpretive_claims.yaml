@@ -1,0 +1,176 @@
+# Interpretive claims: readings of the corpus, kept apart from reports of it.
+#
+# Nothing in this file is a textual fact. Every entry is a node in the graph, never an
+# edge, so that walking a deity's relationships cannot traverse into an interpretation by
+# accident. Each is TIER_D and permanently CANDIDATE -- the INTERPRETIVE_CLAIM trust class
+# is excluded from ACCEPTABLE_WITHOUT_REVIEW, so the provenance envelope itself refuses to
+# promote one however well evidenced it is.
+#
+# Every claim must cite a passage or a computed metric, and `falsifier` is mandatory: a
+# claim nobody can imagine being wrong is a slogan, not a claim.
+#
+# CLAIM-005 and CLAIM-006 deliberately contradict each other. That is not an oversight to
+# be resolved -- it is what the state of the question looks like, and a graph that stored
+# only the winner would be misrepresenting a live scholarly disagreement as settled.
+
+version: vedagraph-interpretive-claims-v1
+
+claims:
+  - claim_id: VG:CLAIM:ANUKRAMANI-ATTRIBUTION-IS-SUKTA-SCOPED
+    claim_text: >-
+      The traditional attribution apparatus for the Rigveda operates at the scale of the
+      sukta rather than the individual mantra, so a per-verse reading of deity, seer and
+      metre attributions in this graph reflects a scope rule applied by this project more
+      often than a statement made by the Anukramani.
+    claim_type: CORPUS_APPARATUS
+    status: MODEL_SYNTHESIS
+    scope: Rigveda, Sakala recension, WSC2023 Anukramani artifacts
+    confidence: HIGH
+    method: >-
+      Read directly off the attribution_precision distribution: 8,329 of 10,558
+      HAS_DEVATA, 10,093 of 10,565 HAS_RISHI and 6,276 of 10,523 HAS_CHANDAS edges are
+      CONTAINER_INHERITED.
+    supported_by_statistic:
+      - VG:METRIC:ATTRIBUTION_PRECISION_CORPUS:VG:CORPUS:FOUR-VEDA
+    concerns:
+      - VG:WORK:RV:SAK
+    falsifier: >-
+      A source-level demonstration that the Anukramani intends its sukta-level labels to
+      distribute over every constituent mantra as individual assertions, which would make
+      the inherited edges source-explicit rather than derived.
+
+  - claim_id: VG:CLAIM:RISHI-ATTRIBUTION-LEAST-VERSE-SPECIFIC
+    claim_text: >-
+      Among the three Anukramani dimensions, seer attribution is the least verse-specific
+      and metre the most: 95.5% of seer attributions are inherited from the sukta against
+      59.6% of metre attributions.
+    claim_type: CORPUS_APPARATUS
+    status: RESEARCH_HYPOTHESIS
+    scope: Rigveda, Sakala recension
+    confidence: MEDIUM
+    method: >-
+      Inherited share per predicate from ATTRIBUTION_PRECISION_CORPUS. Stated as a
+      hypothesis rather than a synthesis because the pattern is clear but its cause is
+      not: metre is recoverable from the verse itself by counting syllables, so a higher
+      per-verse rate may reflect the tradition's ability to check it rather than a
+      difference in what the tradition meant to claim.
+    supported_by_statistic:
+      - VG:METRIC:ATTRIBUTION_PRECISION_CORPUS:VG:CORPUS:FOUR-VEDA
+    concerns:
+      - VG:WORK:RV:SAK
+    falsifier: >-
+      Showing that the difference tracks which Anukramani artifact supplied each
+      dimension rather than the dimension itself, which would make it an artefact of this
+      corpus's sources.
+
+  - claim_id: VG:CLAIM:AGNI-LEXICALLY-UNDIFFERENTIATED
+    claim_text: >-
+      The corpus does not lexically distinguish Agni the deity from agni the ritual and
+      natural fire; both are the word agni. The graph's separation of VG:DEVATA:AGNIH from
+      VG:CONCEPT:AGNI-FIRE is therefore an editorial imposition that helps a reader
+      navigate, not a distinction the text draws.
+    claim_type: DEITY_SEMANTICS
+    status: MODEL_SYNTHESIS
+    scope: All four Vedas
+    confidence: HIGH
+    method: >-
+      Established from the alias structure rather than from reading: 30 of 89 registry
+      entities carry at least one Sanskrit alias that is also a Devata label form, and the
+      mention layer flags every edge whose entire alias evidence is theonymous. The four
+      cited passages each carry both a HAS_DEVATA edge to Agni and an ABOUT_CONCEPT edge
+      to fire, from the same word.
+    supported_by:
+      - VG:RV:SAK:M10:S187:V005
+      - VG:RV:SAK:M10:S176:V004
+      - VG:RV:SAK:M10:S187:V003
+      - VG:RV:SAK:M10:S191:V001
+    supported_by_statistic:
+      - VG:METRIC:THEONYM_AMBIGUITY:VG:CORPUS:FOUR-VEDA
+    concerns:
+      - VG:DEVATA:AGNIH
+      - VG:CONCEPT:AGNI-FIRE
+    falsifier: >-
+      A demonstration that the corpus uses systematically different forms, epithets or
+      syntactic frames for the deity and the element, such that a rule could separate them
+      without recourse to context.
+
+  - claim_id: VG:CLAIM:CONCEPT-LAYER-LEANS-ON-TRANSLATION
+    claim_text: >-
+      The V1 concept layer's apparent coverage substantially overstates its Sanskrit
+      grounding: 21,246 of its 47,542 assertions (44.7%) rest on no Sanskrit evidence at
+      all, having matched a word in a nineteenth-century English translation.
+    claim_type: GRAPH_METHOD
+    status: MODEL_SYNTHESIS
+    scope: >-
+      data/enrichment/vedagraph_enrichment_v1 concept assertions; affects RV, YV and AV
+      only, since the Samaveda has no translation and its coverage was already
+      Sanskrit-only.
+    confidence: HIGH
+    method: >-
+      Counted assertions whose recorded method string contains no sanskrit path. Compared
+      against the V2 mention layer, which admits Sanskrit evidence only and reaches 78.0%
+      of Rigvedic mantras where the concept layer reported 96.1%.
+    supported_by_statistic:
+      - VG:METRIC:DOMAIN_MENTION_COVERAGE:VG:CORPUS:FOUR-VEDA
+    concerns:
+      - VG:CORPUS:FOUR-VEDA
+    falsifier: >-
+      Showing that English-only assertions agree with an independent Sanskrit reading at a
+      rate high enough that the distinction does not affect any answer, which would make
+      the evidence path a technicality rather than a limit.
+
+  - claim_id: VG:CLAIM:SV-PREDOMINANTLY-RV-REUSE
+    claim_text: >-
+      The Samaveda Kauthuma Arcika, as represented in this corpus, is predominantly a
+      re-presentation of Rigvedic verse material rather than an independent body of text:
+      1,662 of its 1,844 mantras (90.1%) have an identified Rigvedic source.
+    claim_type: CORPUS_RELATION
+    status: MODEL_SYNTHESIS
+    scope: Samaveda Kauthuma Arcika against the Sakala Rigveda
+    confidence: MEDIUM
+    method: >-
+      Distinct SV passages carrying at least one REUSES_TEXT_FROM edge, over all SV
+      mantras. Confidence is MEDIUM rather than HIGH because the match is reached on
+      comparison surfaces down to SANDHI_INSENSITIVE, the weakest available and the only
+      one on which a Devanagari SV text and a Latin RV text can be compared at all.
+    supported_by:
+      - VG:SV:KAU:ARANYA:D01:V02
+      - VG:SV:KAU:ARANYA:D01:V07
+      - VG:SV:KAU:ARANYA:D02:V01
+    supported_by_statistic:
+      - VG:METRIC:SV_REUSE_OF_RV:VG:WORK:SV:KAU
+    concerns:
+      - VG:WORK:SV:KAU
+      - VG:WORK:RV:SAK
+    contradicts:
+      - VG:CLAIM:SV-IDENTITY-IS-MELODIC
+    falsifier: >-
+      Re-running the reuse detection at ACCENT_INSENSITIVE or stricter and finding the
+      share falls far enough that most SV mantras have no identified source; or showing
+      that the shared verses are a common inheritance rather than SV borrowing from RV.
+
+  - claim_id: VG:CLAIM:SV-IDENTITY-IS-MELODIC
+    claim_text: >-
+      Textual dependence on the Rigveda understates the Samaveda's independence, because
+      the Samaveda's identity lies in its melodic realisation (gana) rather than in its
+      verse text. A near-total textual overlap is compatible with a wholly distinct
+      tradition.
+    claim_type: CORPUS_RELATION
+    status: RESEARCH_HYPOTHESIS
+    scope: Samaveda Kauthuma tradition
+    confidence: LOW
+    method: >-
+      Stated as the standing alternative reading of the same measurement, and deliberately
+      recorded as unsupported by this graph. No gana or Saman melodic corpus is ingested,
+      so the evidence that would bear on it is absent by construction. The MUSICALIZED_AS
+      relationship type exists and is empty for exactly this reason.
+    supported_by_statistic:
+      - VG:METRIC:SV_REUSE_OF_RV:VG:WORK:SV:KAU
+    concerns:
+      - VG:WORK:SV:KAU
+    contradicts:
+      - VG:CLAIM:SV-PREDOMINANTLY-RV-REUSE
+    falsifier: >-
+      Ingesting a gana corpus and finding that melodic assignment is itself largely
+      predictable from the Rigvedic source verse, which would remove the independence the
+      claim rests on.

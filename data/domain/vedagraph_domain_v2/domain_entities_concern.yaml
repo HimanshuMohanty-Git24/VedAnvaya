@@ -1,0 +1,449 @@
+# Atharvavedic human-concern, condition and rite entities, for merge into
+# data/registry/concepts.yaml.
+#
+# This fragment follows the entry shape and the alias discipline of
+# data/registry/concepts.yaml exactly; read that file's header first, because every rule
+# stated there applies here and is not restated. Evidence for every alias below --
+# per-Veda token counts, substring hosts, intrusion share, verdict -- is in
+# docs/reports/ATHARVAVEDA_CONCERN_MODEL_V1.md, together with every candidate that was
+# measured and dropped.
+#
+# ---------------------------------------------------------------------------
+# Type vocabulary: this fragment is V2-only, by construction
+# ---------------------------------------------------------------------------
+# `HUMAN_CONCERN`, `CONDITION` and `SOCIAL_RITE` are members of
+# vedagraph.domain.ontology.DomainNodeType, NOT of the deliberately frozen
+# vedagraph.semantic.ontology.SemanticNodeType. They therefore load only through the V2
+# path -- vedagraph.domain.registry.load_domain_entities, which passes
+# ALL_NODE_TYPE_NAMES as `allowed_node_types` -- and a bare V1 `load_concepts(root)` will
+# raise on them, which is the intended behaviour and not a defect to route around: the
+# frozen enum must not grow, because 448 sealed semantic extractions record the ontology
+# version they were produced under.
+# `PLANT`, `OBJECT` and `STATE` below are frozen-enum members and load either way.
+#
+# Verified, not assumed: merging this fragment with data/registry/concepts.yaml (89) and
+# domain_entities_material.yaml (44) yields 162 entities against MAX_CONCEPT_NODES 260,
+# with `duplicate_ids: []` and `alias_collisions: []` -- so none of the 224 Sanskrit or 27
+# English aliases here collides with the base registry OR with the material fragment.
+# The four predicates in concern_predicates.yaml match the V2 relationship signatures in
+# vedagraph.domain.ontology exactly: ADDRESSES_CONCERN -> HumanConcern, TREATS ->
+# Condition, PROTECTS_FROM -> {Condition, HumanConcern}, USED_FOR_RITE -> SocialRite.
+#
+# ---------------------------------------------------------------------------
+# What is deliberately NOT here, because it already exists
+# ---------------------------------------------------------------------------
+# Healing (VG:CONCEPT:BHESAJA-HEALING), protection (VG:CONCEPT:SARMAN-PROTECTION),
+# progeny (VG:CONCEPT:PRAJA-OFFSPRING), lifespan (VG:CONCEPT:AYUS-LIFE), wellbeing
+# (VG:CONCEPT:SVASTI-WELLBEING), wealth (VG:CONCEPT:VASU-WEALTH), guilt
+# (VG:CONCEPT:ENAS-SIN), demons (VG:CONCEPT:RAKSAS-DEMON), human enemies
+# (VG:CONCEPT:SATRU-ENEMY) and herbs collectively (VG:CONCEPT:OSADHI-PLANTS) are all in
+# the registry already. Re-declaring any of them would be a duplicate node with worse
+# evidence, and the six PLANT entities below are filed under OSADHI-PLANTS rather than
+# beside it.
+#
+# ---------------------------------------------------------------------------
+# takman / yaksma: fever is left with VG:CONCEPT:YAKSMA-DISEASE, on purpose
+# ---------------------------------------------------------------------------
+# VG:CONCEPT:YAKSMA-DISEASE already claims `takman`, `takmanam` and `takma`. Measured over
+# the corpus, those three tokens are 22 of the 36 Atharvaveda mantras that carry any
+# takman- form; the unclaimed remainder is takmane (6), takmann (2), takmanah (1),
+# takmana (1), takmams (1), takmanasana (1), takmanasanam (1), plus ruraḥ (1) and ruraṃ
+# (1). A sibling TAKMAN-FEVER built on that remainder would hold ~39% of the evidence
+# while carrying the label "fever", and VG:CONCEPT:YAKSMA-DISEASE would keep the larger
+# 61% share under the label "disease" -- the specific reading of every passage would then
+# depend on which of two nodes happened to win, and the split would be invisible to a
+# reader of either. So option (a) was taken: no fever entity is added here.
+# The correct fix is a single edit to data/registry/concepts.yaml, which this fragment is
+# forbidden to make: move the whole takman- paradigm out of YAKSMA-DISEASE into one new
+# TAKMAN-FEVER entity, leaving yaksma-, amiva- and rapas in YAKSMA-DISEASE. Recorded here
+# so the decision is a choice with a reason and not an oversight.
+#
+# Consumption/yaksma itself is likewise untouched. The seven CONDITION entities that are
+# genuinely kinds of sickness (jaundice, ksetriya, balasa, viskandha, grahi, asrava,
+# kasa) are filed under YAKSMA-DISEASE via `broader`; worms, poison, sorcery, evil dream
+# and the ill-named beings are causes or agents rather than kinds of sickness, and take
+# no parent.
+
+policy_version: vedagraph-concern-lexicon-v1
+
+concepts:
+
+  # -------------------------------------------------------------------------
+  # HUMAN_CONCERN -- what the speaker wants
+  # -------------------------------------------------------------------------
+
+  - concept_id: VG:CONCEPT:PUSTI-THRIVING
+    preferred_label_sa: puṣṭi
+    preferred_label_en: thriving
+    node_type: HUMAN_CONCERN
+    definition: >-
+      Thriving and increase asked for a household and its livestock, the fattening growth
+      of what one already has rather than the acquisition of new goods.
+    aliases_sa: [puṣṭiṃ, puṣṭim, puṣṭir, puṣṭiḥ, puṣṭyā, puṣṭyai, puṣṭīr, puṣṭaye, puṣṭikāmāya,
+                 puṣṭapatir, puṣṭapatiṃ, poṣaṃ, poṣam, poṣeṇa, poṣāya, poṣair, poṣaiḥ, poṣe, poṣā]
+    aliases_en: []
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:SAPATNA-RIVAL-OVERCOMING
+    preferred_label_sa: sapatna
+    preferred_label_en: overcoming rivals
+    node_type: HUMAN_CONCERN
+    definition: >-
+      The wish to put down a rival -- a competitor for rank, a rival claimant, a co-wife --
+      as distinct from defeating an enemy in war.
+    aliases_sa: [sapatnān, sapatnahā, sapatnā, sapatnīṃ, sapatnānt, sapatnānāṃ, sapatnānām,
+                 sapatno, sapatnāṃ, sapatnās, sapatnebhyaḥ, sapatnakṣayaṇo, sapatnakṣayaṇam,
+                 sapatnadambhanaṃ, sapatnacātanaṃ, sapatnakarśano]
+    aliases_en: []
+    broader: []
+    related_devatas: [VG:DEVATA:SAPATNAGHNARUPO-ARTHAH, VG:DEVATA:SAPATNIBADHANARUPO-ARTHAH]
+
+  - concept_id: VG:CONCEPT:RNA-DEBT-FREEDOM
+    preferred_label_sa: ṛṇa
+    preferred_label_en: freedom from debt
+    node_type: HUMAN_CONCERN
+    definition: >-
+      Debt and the wish to be quit of it, owed to men, to the gods and to Death, and asked
+      to be discharged rather than forgiven.
+    aliases_sa: [ṛṇam, ṛṇaṃ, ṛṇā, ṛṇān, ṛṇāni, anṛṇo, anṛṇāḥ, anṛṇā]
+    aliases_en: [debt, debts]
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:SAMJNANA-CONCORD
+    preferred_label_sa: saṃjñāna
+    preferred_label_en: concord
+    node_type: HUMAN_CONCERN
+    definition: >-
+      Agreement of mind within a household or an assembly, asked for as a positive good
+      between kin and strangers alike.
+    aliases_sa: [saṃjñānam, saṃjñānaṃ, sāṃmanasyam]
+    aliases_en: [concord, harmony, like-minded]
+    broader: []
+    related_devatas: [VG:DEVATA:SANJNANAM]
+
+  # -------------------------------------------------------------------------
+  # CONDITION -- the affliction itself
+  # -------------------------------------------------------------------------
+
+  - concept_id: VG:CONCEPT:KRIMI-WORMS
+    preferred_label_sa: krimi
+    preferred_label_en: worms
+    node_type: CONDITION
+    definition: >-
+      Worms and internal vermin, addressed as living enemies to be crushed and named by
+      colour and habitat in the Atharvaveda's worm hymns.
+    aliases_sa: [krimīn, krimayo, krimayaḥ, krimiṃ, krimir, krimiḥ, krimer, krimīṇāṃ, krimīṇām,
+                 krimīnām, kṛmiḥ]
+    aliases_en: [worm, worms]
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:VISA-POISON
+    preferred_label_sa: viṣa
+    preferred_label_en: poison
+    node_type: CONDITION
+    definition: >-
+      Poison as a substance in the body, whether from a snake, an insect, a plant or a
+      poisoned arrow, and the thing charms declare to be sapless.
+    aliases_sa: [viṣam, viṣaṃ, viṣasya, viṣadūṣaṇam, viṣavan]
+    aliases_en: [poison, poisons, poisonous]
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:HARIMAN-JAUNDICE
+    preferred_label_sa: hariman
+    preferred_label_en: jaundice
+    node_type: CONDITION
+    definition: >-
+      The yellow sickness, treated by transferring the patient's yellowness to yellow
+      birds and taking the red of a bull in exchange.
+    aliases_sa: [harimāṇaṃ, harimā]
+    aliases_en: [jaundice, yellowness]
+    broader: [VG:CONCEPT:YAKSMA-DISEASE]
+    related_devatas: [VG:DEVATA:YAKSMANASANAH]
+
+  - concept_id: VG:CONCEPT:KSETRIYA-HEREDITARY-DISEASE
+    preferred_label_sa: kṣetriya
+    preferred_label_en: hereditary disease
+    node_type: CONDITION
+    definition: >-
+      The inherited or field-borne affliction, a disease category with no counterpart
+      outside the Atharvaveda.
+    aliases_sa: [kṣetriyam, kṣetriyaṃ, kṣetriyān, kṣetriyāt, kṣetriyasya, kṣetriyāṇāṃ,
+                 kṣetriyanāśany]
+    aliases_en: []
+    broader: [VG:CONCEPT:YAKSMA-DISEASE]
+    related_devatas: [VG:DEVATA:YAKSMANASANAH]
+
+  - concept_id: VG:CONCEPT:BALASA-DISEASE
+    preferred_label_sa: balāsa
+    preferred_label_en: balasa
+    node_type: CONDITION
+    definition: >-
+      A named Atharvavedic sickness of the joints and limbs, left untranslated here
+      because the corpus describes its treatment and not its symptoms.
+    aliases_sa: [balāsa, balāsam, balāsaṃ, balāso, balāsena, balāsasya, balāsinaḥ, balāsetaḥ,
+                 balāsanāśanīḥ]
+    aliases_en: []
+    broader: [VG:CONCEPT:YAKSMA-DISEASE]
+    related_devatas: [VG:DEVATA:YAKSMANASANAH]
+
+  - concept_id: VG:CONCEPT:VISKANDHA-AFFLICTION
+    preferred_label_sa: viṣkandha
+    preferred_label_en: viskandha
+    node_type: CONDITION
+    definition: >-
+      A named Atharvavedic affliction warded off by amulets, chiefly the jangida and the
+      thousand-powered amulet; left untranslated for the same reason as balasa.
+    aliases_sa: [viṣkandhaṃ, viṣkandham, viṣkandhād, viṣkandhāni, viṣkandhadūṣaṇam,
+                 viṣkandhadūṣaṇaṃ]
+    aliases_en: []
+    broader: [VG:CONCEPT:YAKSMA-DISEASE]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:GRAHI-SEIZURE
+    preferred_label_sa: grāhi
+    preferred_label_en: seizure
+    node_type: CONDITION
+    definition: >-
+      Grahi, the Seizer: a seizing sickness personified as a female power whose fetters a
+      patient is released from.
+    aliases_sa: [grāhir, grāhiṃ, grāhyā, grāhyāḥ, grāhyāś]
+    aliases_en: []
+    broader: [VG:CONCEPT:YAKSMA-DISEASE]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:ASRAVA-FLUX
+    preferred_label_sa: āsrāva
+    preferred_label_en: flux
+    node_type: CONDITION
+    definition: >-
+      A flowing or discharging complaint, named in the Atharvaveda beside the plants and
+      reeds used to stanch it.
+    aliases_sa: [āsrāvasya, āsrāvabheṣajaṃ]
+    aliases_en: [flux]
+    broader: [VG:CONCEPT:YAKSMA-DISEASE]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:KASA-COUGH
+    preferred_label_sa: kāsa
+    preferred_label_en: cough
+    node_type: CONDITION
+    definition: >-
+      Cough, listed among the ailments to be sent flying away from a patient's joints.
+    aliases_sa: [kāsa, kāsam, kāse, kāsikā, kāsikayā]
+    aliases_en: [cough]
+    broader: [VG:CONCEPT:YAKSMA-DISEASE]
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:KRTYA-SORCERY
+    preferred_label_sa: kṛtyā
+    preferred_label_en: witchcraft
+    node_type: CONDITION
+    definition: >-
+      Witchcraft as a thing done to a person: the hostile spell, its maker, and the
+      counter-charm that turns it back on him.
+    aliases_sa: [kṛtyā, kṛtyāṃ, kṛtyām, kṛtyāḥ, kṛtye, kṛtyābhir, kṛtyākṛtaṃ, kṛtyākṛtam,
+                 kṛtyākṛte, kṛtyākṛto, kṛtyākṛtā, kṛtyākṛtaḥ, kṛtyākṛtaś, kṛtyākṛn, kṛtyādūṣir,
+                 kṛtyādūṣaṇīś, kṛtyādūṣaṇaṃ]
+    aliases_en: [witchcraft, sorcery]
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:DUSVAPNYA-BAD-DREAM
+    preferred_label_sa: duṣvapnya
+    preferred_label_en: evil dream
+    node_type: CONDITION
+    definition: >-
+      The evil dream, treated as an affliction with an owner: it is dispatched to an enemy
+      rather than merely dispelled.
+    aliases_sa: [duṣvapnyaṃ, duṣvapnyam, duṣvapnyāt, duṣvapnyād, duḥṣvapnyaṃ]
+    aliases_en: []
+    broader: []
+    related_devatas: [VG:DEVATA:DUHSVAPNANASANAH]
+
+  - concept_id: VG:CONCEPT:DURNAMAN-ILL-NAMED-BEINGS
+    preferred_label_sa: durṇāman
+    preferred_label_en: ill-named beings
+    node_type: CONDITION
+    definition: >-
+      The durnaman, "the ill-named": a class of noxious beings blamed for attacks on
+      pregnant women and infants, distinct from the rakshas of the demon hymns.
+    aliases_sa: [durṇāmā, durṇāmāna, durṇāmnaḥ, durṇāmnīḥ, durṇāmnāṃ, durṇāmnīnāṃ, durṇāmahā,
+                 durṇāmacātanam, durṇāmacātanaḥ]
+    aliases_en: []
+    broader: []
+    related_devatas: []
+
+  # -------------------------------------------------------------------------
+  # SOCIAL_RITE -- the life-cycle occasion
+  # -------------------------------------------------------------------------
+
+  - concept_id: VG:CONCEPT:VIVAHA-MARRIAGE
+    preferred_label_sa: vivāha
+    preferred_label_en: marriage
+    node_type: SOCIAL_RITE
+    definition: >-
+      The wedding: the bride, the bridal procession that conveys her, and the marriage
+      occasion itself.
+    aliases_sa: [vivāhe, vivāhāṃ, vadhūr, vadhūm, vadhūḥ, vadhūyur, vadhūyor, vadhūpatham,
+                 vahatuṃ, vahatum, vahatunā]
+    aliases_en: [bride, bridegroom, wedding, marriage]
+    broader: []
+    related_devatas: [VG:DEVATA:SURYAVIVAHAH]
+
+  - concept_id: VG:CONCEPT:PRASUTI-CHILDBIRTH
+    preferred_label_sa: sūṣā
+    preferred_label_en: childbirth
+    node_type: SOCIAL_RITE
+    definition: >-
+      Delivery as an occasion needing ritual help: the birth itself, the afterbirth, and
+      the charm for causing conception.
+    aliases_sa: [sūṣā, sūṣaṇe, jarāyu, jarāyuṇā, jarāyuṇāva, jarāyujaḥ, jarāyubhir, garbhakaraṇaṃ]
+    aliases_en: [afterbirth]
+    broader: []
+    related_devatas: [VG:DEVATA:GARBHASMADHANARUPO-ARTHAH]
+
+  - concept_id: VG:CONCEPT:PITRYANA-FUNERARY-RITE
+    preferred_label_sa: pitṛyāṇa
+    preferred_label_en: funerary rites
+    node_type: SOCIAL_RITE
+    definition: >-
+      The disposal of the dead and the road they take: the cremation ground and the
+      fathers' path, as against the ancestors themselves.
+    aliases_sa: [pitṛyāṇaṃ, pitṛyāṇam, pitṛyāṇaiḥ, pitṛyāṇaś, śmaśāne]
+    aliases_en: []
+    broader: []
+    related_devatas: [VG:DEVATA:PITRMEDHAH, VG:DEVATA:PITARAH]
+
+  - concept_id: VG:CONCEPT:SALA-HOUSE-BUILDING
+    preferred_label_sa: śālā
+    preferred_label_en: house building
+    node_type: SOCIAL_RITE
+    definition: >-
+      The raising and occupation of a dwelling as a ritual act, addressed to the hut in
+      the second person; the building, not the house as a place.
+    aliases_sa: [śāle, śālā, śālām, śālāṃ, śālāyā, śālāyāṃ, śālāḥ, śālāpataye, vāstu, vāstuṣu]
+    aliases_en: []
+    broader: []
+    related_devatas: [VG:DEVATA:VASTOSPATIH]
+
+  # -------------------------------------------------------------------------
+  # STATE
+  # -------------------------------------------------------------------------
+
+  - concept_id: VG:CONCEPT:GARBHA-EMBRYO
+    preferred_label_sa: garbha
+    preferred_label_en: embryo
+    node_type: STATE
+    definition: >-
+      The embryo or germ in the womb; the corpus applies the same word to the germ of
+      fire in the waters, so this is the word's range and not only human pregnancy.
+    aliases_sa: [garbham, garbhaṃ, garbho, garbhe, garbha, garbhaḥ, garbhas, garbhaś, garbhān,
+                 garbhasya, garbhāya, garbhād, garbhatvam]
+    aliases_en: [embryo]
+    broader: []
+    related_devatas: [VG:DEVATA:GARBHASMADHANARUPO-ARTHAH]
+
+  # -------------------------------------------------------------------------
+  # PLANT -- named medicinal herbs, filed under OSADHI-PLANTS
+  # -------------------------------------------------------------------------
+
+  - concept_id: VG:CONCEPT:KUSTHA-PLANT
+    preferred_label_sa: kuṣṭha
+    preferred_label_en: kushtha
+    node_type: PLANT
+    definition: >-
+      Kushtha, a herb said to come down from the Himalaya, used against fever.
+    aliases_sa: [kuṣṭha, kuṣṭhaṃ, kuṣṭham, kuṣṭho, kuṣṭhas, kuṣṭhā, kuṣṭhasya, kuṣṭhābhyām]
+    aliases_en: []
+    broader: [VG:CONCEPT:OSADHI-PLANTS]
+    related_devatas: [VG:DEVATA:OSADHAYAH]
+
+  - concept_id: VG:CONCEPT:APAMARGA-PLANT
+    preferred_label_sa: apāmārga
+    preferred_label_en: apamarga
+    node_type: PLANT
+    definition: >-
+      Apamarga, "the wiper-off", the plant of the counter-witchcraft hymns.
+    aliases_sa: [apāmārga, apāmārgo]
+    aliases_en: []
+    broader: [VG:CONCEPT:OSADHI-PLANTS]
+    related_devatas: [VG:DEVATA:OSADHAYAH]
+
+  - concept_id: VG:CONCEPT:ARUNDHATI-PLANT
+    preferred_label_sa: arundhatī
+    preferred_label_en: arundhati
+    node_type: PLANT
+    definition: >-
+      Arundhati, a climbing herb invoked for the healing of fractures and wounds.
+    aliases_sa: [arundhati, arundhatī, arundhatīm, arundhate]
+    aliases_en: []
+    broader: [VG:CONCEPT:OSADHI-PLANTS]
+    related_devatas: [VG:DEVATA:OSADHAYAH]
+
+  - concept_id: VG:CONCEPT:JANGIDA-PLANT
+    preferred_label_sa: jaṅgiḍa
+    preferred_label_en: jangida
+    node_type: PLANT
+    definition: >-
+      Jangida, worn as an amulet against viskandha and other seizing afflictions.
+    aliases_sa: [jaṅgiḍaḥ, jaṅgiḍo, jaṅgiḍas, jaṅgiḍaṃ, jaṅgiḍaś, jaṅgiḍena, jaṅgiḍasya,
+                 jaṅgiḍāmatim]
+    aliases_en: []
+    broader: [VG:CONCEPT:OSADHI-PLANTS]
+    related_devatas: [VG:DEVATA:OSADHAYAH]
+
+  - concept_id: VG:CONCEPT:DARBHA-PLANT
+    preferred_label_sa: darbha
+    preferred_label_en: darbha grass
+    node_type: PLANT
+    definition: >-
+      Darbha grass, addressed in its own hymns as an amulet that splits the heart of a
+      rival; not the strewn barhis of the sacrifice.
+    aliases_sa: [darbha, darbhaḥ, darbho, darbhaṃ, darbhā, darbhena, darbheṇa, darbheṣv, darbhāsaḥ]
+    aliases_en: []
+    broader: [VG:CONCEPT:OSADHI-PLANTS]
+    related_devatas: [VG:DEVATA:OSADHAYAH]
+
+  - concept_id: VG:CONCEPT:GULGULU-PLANT
+    preferred_label_sa: gulgulu
+    preferred_label_en: gulgulu
+    node_type: PLANT
+    definition: >-
+      Gulgulu, the aromatic resin (later guggulu) named among the substances whose smell
+      drives sickness off.
+    aliases_sa: [gulgulu, gulgulv, gulgulūḥ, gulguloḥ]
+    aliases_en: []
+    broader: [VG:CONCEPT:OSADHI-PLANTS]
+    related_devatas: [VG:DEVATA:OSADHAYAH]
+
+  # -------------------------------------------------------------------------
+  # OBJECT
+  # -------------------------------------------------------------------------
+
+  - concept_id: VG:CONCEPT:MANI-AMULET
+    preferred_label_sa: maṇi
+    preferred_label_en: amulet
+    node_type: OBJECT
+    definition: >-
+      The amulet: a bead, shell, plant or metal object bound on a person and addressed as
+      the active agent of the charm.
+    aliases_sa: [maṇiḥ, maṇiṃ, maṇir, maṇim, maṇis, maṇinā, parṇamaṇir]
+    aliases_en: [amulet, amulets]
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:VARMAN-ARMOUR
+    preferred_label_sa: varman
+    preferred_label_en: armour
+    node_type: OBJECT
+    definition: >-
+      Armour as a worn thing, literal mail and the figurative armour an amulet or a god is
+      said to be; the object, not the shelter asked for.
+    aliases_sa: [varma, varmaṇā, varmāṇi, varmasu, varmaṇo, varmaitad]
+    aliases_en: [armour, armor, mail]
+    broader: []
+    related_devatas: [VG:DEVATA:VARMA]

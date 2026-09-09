@@ -1,0 +1,652 @@
+{
+  "claims": {
+    "by_status": {
+      "MODEL_SYNTHESIS": 4,
+      "RESEARCH_HYPOTHESIS": 2
+    },
+    "claims": 6,
+    "with_both": 2,
+    "with_external_source": 0,
+    "with_passage_evidence": 2,
+    "with_statistical_evidence": 6
+  },
+  "devata_taxonomy": {
+    "aliases": 136,
+    "axes_unspecified": 101,
+    "by_axis": {
+      "ABSTRACT_PERSONIFICATION": 12,
+      "ANCESTRAL": 4,
+      "AQUATIC": 8,
+      "ARTISAN": 3,
+      "ATMOSPHERIC": 12,
+      "CHTHONIC": 3,
+      "COSMIC_SOVEREIGN": 10,
+      "DAWN_TIME": 8,
+      "FIRE_MEDIUM": 14,
+      "GUARDIAN_OF_ORDER": 9,
+      "HEALER": 7,
+      "LUNAR": 3,
+      "NOCTURNAL": 2,
+      "PRIESTLY": 8,
+      "PSYCHOPOMP": 4,
+      "RITUAL_OBJECT": 8,
+      "RITUAL_SUBSTANCE": 13,
+      "SOLAR": 11,
+      "SPEECH": 11,
+      "TERRESTRIAL": 18,
+      "UNSPECIFIED": 101,
+      "WARRIOR": 20
+    },
+    "by_structure": {
+      "ABSTRACT": 41,
+      "GROUP": 33,
+      "HUMAN": 22,
+      "INDIVIDUAL": 72,
+      "PAIR": 38,
+      "PATRON_PRAISE": 7,
+      "UNSPECIFIED": 1
+    },
+    "classified_with_axes": 113,
+    "deity_groups": 2,
+    "epithets": 13,
+    "missing_from_overlay": [],
+    "overlay_entries": 214,
+    "registry_entities": 214,
+    "structure_unspecified": 1,
+    "unknown_taxonomy_rate": 0.471963
+  },
+  "domain_model_version": "vedagraph-knowledge-model-v2",
+  "entities_by_node_type": {
+    "ACTION": 5,
+    "ANIMAL": 12,
+    "CONCEPT": 24,
+    "CONDITION": 12,
+    "COSMIC_ENTITY": 4,
+    "CROP": 5,
+    "HUMAN_CONCERN": 4,
+    "METAL": 5,
+    "NATURAL_PHENOMENON": 13,
+    "OBJECT": 16,
+    "OFFERING": 2,
+    "PHILOSOPHICAL_CONCEPT": 11,
+    "PLACE": 3,
+    "PLANT": 8,
+    "QUALITY": 3,
+    "RITUAL": 4,
+    "RITUAL_ROLE": 5,
+    "RIVER": 7,
+    "SOCIAL_RITE": 4,
+    "STATE": 3,
+    "SUBSTANCE": 5,
+    "TRIBE": 5,
+    "WEAPON": 3
+  },
+  "graph_after": {
+    "nodes": 100780,
+    "relationships": 242147
+  },
+  "graph_before": {
+    "nodes": 100780,
+    "relationships": 242147
+  },
+  "label_readability": {
+    "product_nodes": 38297,
+    "unknown_label_rate": 0.0,
+    "without_meaningful_label": 0
+  },
+  "load": {
+    "all_complete": true,
+    "steps": [
+      {
+        "complete": true,
+        "detail": {
+          "broader_than_edges": 57,
+          "devata_associated_edges": 140,
+          "label_sets": {
+            "Action:DomainEntity": 5,
+            "Animal:DomainEntity": 12,
+            "Concept:DomainEntity": 24,
+            "Condition:DomainEntity": 12,
+            "CosmicEntity:DomainEntity": 4,
+            "Crop:Plant:DomainEntity": 5,
+            "HumanConcern:DomainEntity": 4,
+            "Metal:Substance:DomainEntity": 5,
+            "NaturalPhenomenon:DomainEntity": 13,
+            "Object:DomainEntity": 16,
+            "Offering:DomainEntity": 2,
+            "PhilosophicalConcept:Concept:DomainEntity": 11,
+            "Place:DomainEntity": 3,
+            "Plant:DomainEntity": 8,
+            "Quality:DomainEntity": 3,
+            "Ritual:DomainEntity": 4,
+            "RitualRole:DomainEntity": 5,
+            "River:Place:DomainEntity": 7,
+            "SocialRite:DomainEntity": 4,
+            "State:DomainEntity": 3,
+            "Substance:DomainEntity": 5,
+            "Tribe:DomainEntity": 5,
+            "Weapon:Object:DomainEntity": 3
+          }
+        },
+        "landed": 163,
+        "sent": 163,
+        "step": "entities"
+      },
+      {
+        "complete": true,
+        "detail": {
+          "carrying_mention_id": 28675,
+          "edges_after": 28675,
+          "edges_before": 28675,
+          "newly_created": 0,
+          "retired_stale": 0,
+          "theonym_ambiguous": 3896
+        },
+        "landed": 28675,
+        "sent": 28675,
+        "step": "mentions"
+      },
+      {
+        "complete": true,
+        "detail": {
+          "axis_nodes": 22,
+          "composed_of_edges": 28,
+          "epithet_nodes": 13,
+          "group_nodes": 2,
+          "has_axis_edges": 289,
+          "has_epithet_edges": 13,
+          "member_of_edges": 13
+        },
+        "landed": 214,
+        "sent": 214,
+        "step": "devata_taxonomy"
+      },
+      {
+        "complete": true,
+        "detail": {
+          "INVOKES_DEVATA": {
+            "landed": 5,
+            "sent": 5
+          },
+          "PERFORMED_BY": {
+            "landed": 6,
+            "sent": 6
+          },
+          "PERFORMED_FOR": {
+            "landed": 4,
+            "sent": 4
+          },
+          "USES_OBJECT": {
+            "landed": 11,
+            "sent": 11
+          },
+          "USES_OFFERING": {
+            "landed": 3,
+            "sent": 3
+          },
+          "USES_SUBSTANCE": {
+            "landed": 4,
+            "sent": 4
+          }
+        },
+        "landed": 33,
+        "sent": 33,
+        "step": "rituals"
+      },
+      {
+        "complete": true,
+        "detail": {
+          "ADDRESSES_CONCERN": {
+            "edges": 219,
+            "entities": 4,
+            "tier": "TIER_B"
+          },
+          "PROTECTS_FROM": {
+            "edges": 182,
+            "entities": 5,
+            "tier": "TIER_D"
+          },
+          "TREATS": {
+            "edges": 87,
+            "entities": 7,
+            "tier": "TIER_D"
+          },
+          "USED_FOR_RITE": {
+            "edges": 96,
+            "entities": 4,
+            "tier": "TIER_B"
+          }
+        },
+        "landed": 20,
+        "sent": 20,
+        "step": "concern_predicates"
+      },
+      {
+        "complete": true,
+        "detail": {},
+        "landed": 25,
+        "sent": 25,
+        "step": "profiles"
+      },
+      {
+        "complete": true,
+        "detail": {
+          "measures_edges": 76,
+          "metrics_without_subject_node": 3
+        },
+        "landed": 79,
+        "sent": 79,
+        "step": "metrics"
+      },
+      {
+        "complete": true,
+        "detail": {
+          "CONCERNS": 7,
+          "CONCERNS_sent": 8,
+          "CONTRADICTS": 2,
+          "CONTRADICTS_sent": 2,
+          "SUPPORTED_BY": 7,
+          "SUPPORTED_BY_STATISTIC": 6,
+          "SUPPORTED_BY_STATISTIC_sent": 6,
+          "SUPPORTED_BY_sent": 7
+        },
+        "landed": 6,
+        "sent": 6,
+        "step": "claims"
+      }
+    ]
+  },
+  "mentions": {
+    "capped": {},
+    "notes": {
+      "aliases": {
+        "sandhi_aliases": 918,
+        "theonym_aliases": 69,
+        "token_aliases": 1336
+      },
+      "coverage_by_veda": {
+        "AV": {
+          "coverage": 0.7136,
+          "mantras": 5839,
+          "with_mention": 4167
+        },
+        "RV": {
+          "coverage": 0.7937,
+          "mantras": 10552,
+          "with_mention": 8375
+        },
+        "SV": {
+          "coverage": 0.7364,
+          "mantras": 1844,
+          "with_mention": 1358
+        },
+        "YV": {
+          "coverage": 0.6684,
+          "mantras": 1975,
+          "with_mention": 1320
+        }
+      },
+      "distinct_entities_used": 163,
+      "entities": 163,
+      "mentions_by_path": {
+        "sanskrit-sandhi": 511,
+        "sanskrit-token": 28164
+      },
+      "theonym_ambiguous": 3896
+    },
+    "produced": 28675,
+    "rejected": {},
+    "stage": "domain-mentions"
+  },
+  "registry": {
+    "alias_collisions": [],
+    "base_entities": 89,
+    "by_node_type": {
+      "ACTION": 5,
+      "ANIMAL": 12,
+      "CONCEPT": 24,
+      "CONDITION": 12,
+      "COSMIC_ENTITY": 4,
+      "CROP": 5,
+      "HUMAN_CONCERN": 4,
+      "METAL": 5,
+      "NATURAL_PHENOMENON": 13,
+      "OBJECT": 16,
+      "OFFERING": 2,
+      "PHILOSOPHICAL_CONCEPT": 11,
+      "PLACE": 3,
+      "PLANT": 8,
+      "QUALITY": 3,
+      "RITUAL": 4,
+      "RITUAL_ROLE": 5,
+      "RIVER": 7,
+      "SOCIAL_RITE": 4,
+      "STATE": 3,
+      "SUBSTANCE": 5,
+      "TRIBE": 5,
+      "WEAPON": 3
+    },
+    "clean": true,
+    "duplicate_ids": [],
+    "fragment_entities": {
+      "data\\domain\\vedagraph_domain_v2\\domain_entities_concern.yaml": 29,
+      "data\\domain\\vedagraph_domain_v2\\domain_entities_material.yaml": 45
+    },
+    "merged_entities": 163,
+    "missing_fragments": [],
+    "retyped": {
+      "VG:CONCEPT:HIRANYA-GOLD": {
+        "from": "SUBSTANCE",
+        "reason": "V1 typed gold as SUBSTANCE, which was reasonable before METAL existed. It left `MATCH (:Metal)` answering 'which metals occur in each Veda' without the commonest metal in the corpus. METAL also carries Substance, so nothing is lost.",
+        "to": "METAL"
+      }
+    }
+  },
+  "upgrade": {
+    "all_complete": true,
+    "steps": [
+      {
+        "complete": true,
+        "detail": {},
+        "landed": 17,
+        "sent": 17,
+        "skipped": "",
+        "step": "schema"
+      },
+      {
+        "complete": true,
+        "detail": {
+          "QAIssue": {
+            "newly_marked": 0,
+            "total": 915
+          },
+          "Source": {
+            "newly_marked": 0,
+            "total": 9
+          },
+          "SourceArtifact": {
+            "newly_marked": 0,
+            "total": 0
+          },
+          "TextVersion": {
+            "newly_marked": 0,
+            "total": 44276
+          },
+          "Translation": {
+            "newly_marked": 0,
+            "total": 17283
+          }
+        },
+        "landed": 0,
+        "sent": 0,
+        "skipped": "",
+        "step": "mark_internal"
+      },
+      {
+        "complete": true,
+        "detail": {
+          "ACTION": {
+            "labels": [
+              "Action",
+              "DomainEntity"
+            ],
+            "landed": 5,
+            "nodes": 5
+          },
+          "ANIMAL": {
+            "labels": [
+              "Animal",
+              "DomainEntity"
+            ],
+            "landed": 12,
+            "nodes": 12
+          },
+          "CONCEPT": {
+            "labels": [
+              "Concept",
+              "DomainEntity"
+            ],
+            "landed": 24,
+            "nodes": 24
+          },
+          "CONDITION": {
+            "labels": [
+              "Condition",
+              "DomainEntity"
+            ],
+            "landed": 12,
+            "nodes": 12
+          },
+          "COSMIC_ENTITY": {
+            "labels": [
+              "CosmicEntity",
+              "DomainEntity"
+            ],
+            "landed": 4,
+            "nodes": 4
+          },
+          "CROP": {
+            "labels": [
+              "Crop",
+              "Plant",
+              "DomainEntity"
+            ],
+            "landed": 5,
+            "nodes": 5
+          },
+          "HUMAN_CONCERN": {
+            "labels": [
+              "HumanConcern",
+              "DomainEntity"
+            ],
+            "landed": 4,
+            "nodes": 4
+          },
+          "METAL": {
+            "labels": [
+              "Metal",
+              "Substance",
+              "DomainEntity"
+            ],
+            "landed": 5,
+            "nodes": 5
+          },
+          "NATURAL_PHENOMENON": {
+            "labels": [
+              "NaturalPhenomenon",
+              "DomainEntity"
+            ],
+            "landed": 13,
+            "nodes": 13
+          },
+          "OBJECT": {
+            "labels": [
+              "Object",
+              "DomainEntity"
+            ],
+            "landed": 16,
+            "nodes": 16
+          },
+          "OFFERING": {
+            "labels": [
+              "Offering",
+              "DomainEntity"
+            ],
+            "landed": 2,
+            "nodes": 2
+          },
+          "PHILOSOPHICAL_CONCEPT": {
+            "labels": [
+              "PhilosophicalConcept",
+              "Concept",
+              "DomainEntity"
+            ],
+            "landed": 11,
+            "nodes": 11
+          },
+          "PLACE": {
+            "labels": [
+              "Place",
+              "DomainEntity"
+            ],
+            "landed": 3,
+            "nodes": 3
+          },
+          "PLANT": {
+            "labels": [
+              "Plant",
+              "DomainEntity"
+            ],
+            "landed": 8,
+            "nodes": 8
+          },
+          "QUALITY": {
+            "labels": [
+              "Quality",
+              "DomainEntity"
+            ],
+            "landed": 3,
+            "nodes": 3
+          },
+          "RITUAL": {
+            "labels": [
+              "Ritual",
+              "DomainEntity"
+            ],
+            "landed": 4,
+            "nodes": 4
+          },
+          "RITUAL_ROLE": {
+            "labels": [
+              "RitualRole",
+              "DomainEntity"
+            ],
+            "landed": 5,
+            "nodes": 5
+          },
+          "RIVER": {
+            "labels": [
+              "River",
+              "Place",
+              "DomainEntity"
+            ],
+            "landed": 7,
+            "nodes": 7
+          },
+          "SOCIAL_RITE": {
+            "labels": [
+              "SocialRite",
+              "DomainEntity"
+            ],
+            "landed": 4,
+            "nodes": 4
+          },
+          "STATE": {
+            "labels": [
+              "State",
+              "DomainEntity"
+            ],
+            "landed": 3,
+            "nodes": 3
+          },
+          "SUBSTANCE": {
+            "labels": [
+              "Substance",
+              "DomainEntity"
+            ],
+            "landed": 5,
+            "nodes": 5
+          },
+          "TRIBE": {
+            "labels": [
+              "Tribe",
+              "DomainEntity"
+            ],
+            "landed": 5,
+            "nodes": 5
+          },
+          "WEAPON": {
+            "labels": [
+              "Weapon",
+              "Object",
+              "DomainEntity"
+            ],
+            "landed": 3,
+            "nodes": 3
+          }
+        },
+        "landed": 163,
+        "sent": 163,
+        "skipped": "",
+        "step": "project_entity_types"
+      },
+      {
+        "complete": true,
+        "detail": {
+          "Chandas": {
+            "landed": 34,
+            "nodes": 34
+          },
+          "Devata": {
+            "landed": 214,
+            "nodes": 214
+          },
+          "DomainEntity": {
+            "landed": 163,
+            "nodes": 163
+          },
+          "Formula": {
+            "landed": 4825,
+            "nodes": 4825
+          },
+          "Lemma": {
+            "landed": 10031,
+            "nodes": 10031
+          },
+          "Passage": {
+            "landed": 22537,
+            "nodes": 22537
+          },
+          "Rishi": {
+            "landed": 367,
+            "nodes": 367
+          },
+          "Work": {
+            "landed": 4,
+            "nodes": 4
+          }
+        },
+        "landed": 38175,
+        "sent": 38175,
+        "skipped": "",
+        "step": "set_display_properties"
+      },
+      {
+        "complete": true,
+        "detail": {
+          "by_evidence_basis": {
+            "MIXED": 13015,
+            "SANSKRIT": 60375,
+            "STRUCTURAL": 85650,
+            "TRANSLATION": 21246,
+            "UNSPECIFIED": 61861
+          },
+          "by_precision": {
+            "CONTAINER_INHERITED": 24698,
+            "PER_PASSAGE": 217449
+          },
+          "by_tier": {
+            "TIER_A": 91163,
+            "TIER_B": 149206,
+            "TIER_D": 1778
+          },
+          "signatures": 67
+        },
+        "landed": 242147,
+        "sent": 242147,
+        "skipped": "",
+        "step": "stamp_grades"
+      }
+    ]
+  }
+}
