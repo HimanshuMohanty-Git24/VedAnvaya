@@ -173,6 +173,37 @@ concepts:
     broader: []
     related_devatas: []
 
+  - concept_id: VG:CONCEPT:TRAPU-TIN
+    preferred_label_sa: trapu
+    preferred_label_en: tin
+    node_type: METAL
+    definition: >-
+      Tin, named in the Atharvaveda's material description at AVS 11.3.8. The exact
+      Sanskrit token is registered because the stored text already attests it; this entry
+      does not infer metal absence from Vedas where that token is not matched.
+    aliases_sa: [trapu]
+    aliases_en: []
+    broader: []
+    related_devatas: []
+
+  - concept_id: VG:CONCEPT:SYAMA-DARK-METAL
+    preferred_label_sa: śyāma
+    preferred_label_en: dark metal
+    node_type: METAL
+    definition: >-
+      The dark metal named at VSM 18.13, standing inside that verse's metal enumeration
+      between ayas and loha. The registry records the attested token and its position in
+      that list; it does not assert a modern metallurgical identification, for which the
+      traditional readings (iron, or a dark copper alloy) disagree. Only the exact
+      inflected forms are registered: the bare stem token-matches the unrelated verb form
+      śyāma at RV 6.5.7 and substring-matches 22 times inside aśyāma. `śyāmaṃ` is the
+      Yajurvedic witness at VSM 18.13 and `śyāmam` the Atharvavedic one at AVS 11.3.7,
+      one verse before the trapu witness in the same hymn.
+    aliases_sa: [śyāmaṃ, śyāmam]
+    aliases_en: []
+    broader: []
+    related_devatas: []
+
   - concept_id: VG:CONCEPT:SISA-LEAD
     preferred_label_sa: sīsa
     preferred_label_en: lead

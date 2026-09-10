@@ -357,18 +357,58 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
         serves=(33, 42),
     ),
     DomainQuery(
+        name="deity_community_capability",
+        question="What deity communities emerge from the corpus?",
+        cypher="""
+        CALL () {
+            MATCH (:Devata)-[r:CO_OCCURS_WITH]-(:Devata)
+            RETURN count(r) / 2 AS pairwise_edges
+        }
+        MATCH (d:Devata)
+        WHERE coalesce(d.structure, 'UNSPECIFIED') <> 'HUMAN'
+        WITH pairwise_edges, count(d) AS eligible_deities,
+             sum(CASE WHEN any(key IN ['community', 'louvain', 'partition']
+                               WHERE properties(d)[key] IS NOT NULL)
+                      THEN 1 ELSE 0 END)
+               AS assigned_deities
+        RETURN CASE WHEN assigned_deities = 0 THEN 'INSUFFICIENT_EVIDENCE'
+                    ELSE 'COMMUNITY_ASSIGNMENTS_AVAILABLE' END AS status,
+               assigned_deities, eligible_deities, pairwise_edges,
+               'PAIRWISE_CO_OCCURRENCE_IS_NOT_A_COMMUNITY_PARTITION' AS evidence_scope
+        """,
+        caveat=(
+            "This is a capability result, not a claim that Vedic deity communities do "
+            "not exist. INSUFFICIENT_EVIDENCE means the graph has pairwise co-occurrence "
+            "but no stored or computed community assignment; absence of that graph layer "
+            "is not absence in the Vedas. `eligible_deities` is the Devata registry minus "
+            "the 22 entries typed structure='HUMAN'; it is a denominator, not a census of "
+            "gods, and still carries 7 danastuti topic labels and one non-divine subject "
+            "that the Anukramani names as a verse's devata. Dual labels are not decomposed "
+            "into communities."
+        ),
+        serves=(23,),
+    ),
+    DomainQuery(
         name="deity_co_occurrence",
         question="Which deities are attributed to the same mantras?",
         cypher="""
         MATCH (p:Passage)-[:HAS_DEVATA]->(a:Devata)
         MATCH (p)-[:HAS_DEVATA]->(b:Devata)
         WHERE a.entity_key < b.entity_key
+          AND coalesce(a.structure, 'UNSPECIFIED') <> 'HUMAN'
+          AND coalesce(b.structure, 'UNSPECIFIED') <> 'HUMAN'
         RETURN a.display_label AS deity_a, b.display_label AS deity_b,
                count(DISTINCT p) AS shared_mantras
         ORDER BY shared_mantras DESC LIMIT 25
         """,
-        caveat=_SCOPE_CAVEAT + " " + _INHERIT_CAVEAT,
-        serves=(23, 33, 35),
+        caveat=(
+            _SCOPE_CAVEAT
+            + " "
+            + _INHERIT_CAVEAT
+            + " Human patrons carried in the source Devata registry are excluded; this "
+            "is a pair table, not a community partition."
+        ),
+        serves=(33, 35),
     ),
     DomainQuery(
         name="deities_through_common_rishis",
@@ -577,6 +617,8 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
         cypher="""
         MATCH (a:Devata)-[r:CO_OCCURS_WITH]-(b:Devata)
         WHERE a.entity_key < b.entity_key
+          AND coalesce(a.structure, 'UNSPECIFIED') <> 'HUMAN'
+          AND coalesce(b.structure, 'UNSPECIFIED') <> 'HUMAN'
         RETURN a.display_label AS deity_a, b.display_label AS deity_b,
                r.lift AS lift, r.passage_count AS shared_passages,
                r.rv_passage_count AS rigvedic, r.non_rv_passage_count AS non_rigvedic,
@@ -592,7 +634,7 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
             "in one passage, not co-invocation: where the tradition means a pair it uses a "
             "dual deity, which is its own entity. " + _MENTION_LAYER_CAVEAT
         ),
-        serves=(23, 33, 35),
+        serves=(33, 35),
     ),
     DomainQuery(
         name="deity_pairs_not_rigvedic",
@@ -600,6 +642,8 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
         cypher="""
         MATCH (a:Devata)-[r:CO_OCCURS_WITH]-(b:Devata)
         WHERE a.entity_key < b.entity_key
+          AND coalesce(a.structure, 'UNSPECIFIED') <> 'HUMAN'
+          AND coalesce(b.structure, 'UNSPECIFIED') <> 'HUMAN'
           AND r.non_rv_passage_count > r.rv_passage_count
         RETURN a.display_label AS deity_a, b.display_label AS deity_b,
                r.lift AS lift, r.rv_passage_count AS rigvedic,
@@ -617,7 +661,7 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
             "Atharvavedic association. `per_veda_counts` is ordered [RV, SV, YV, AV]. "
             + _MENTION_LAYER_CAVEAT
         ),
-        serves=(1, 23, 33, 36),
+        serves=(1, 33, 36),
     ),
     DomainQuery(
         name="deity_mention_surface_forms",
@@ -1035,15 +1079,37 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
         name="metals_by_veda",
         question="Which metals occur in each Veda?",
         cypher="""
-        MATCH (p:Passage)-[m:MENTIONS_ENTITY]->(x:Metal)
-        RETURN x.display_label AS metal, p.veda AS veda, count(DISTINCT p) AS mantras,
-               collect(DISTINCT m.matched_aliases)[0..3] AS sample_aliases
-        ORDER BY metal, mantras DESC
+        MATCH (m:Mantra)
+        WITH m.veda AS veda, count(*) AS corpus_mantras
+        MATCH (x:Metal)
+        OPTIONAL MATCH (p:Passage)-[mn:MENTIONS_ENTITY]->(x)
+          WHERE p.veda = veda
+        WITH veda, corpus_mantras, x,
+             count(DISTINCT p) AS mantras,
+             collect(DISTINCT mn.matched_aliases)[0..3] AS sample_aliases
+        RETURN x.display_label AS metal, veda, mantras,
+               round(1000.0 * mantras / corpus_mantras, 3) AS per_1000_mantras,
+               corpus_mantras, sample_aliases,
+               CASE WHEN mantras = 0 THEN 'NO_LEXICAL_MATCH'
+                    ELSE 'LEXICAL_MATCH_MINIMUM' END AS evidence_status
+        ORDER BY metal, per_1000_mantras DESC
         """,
         caveat=(
-            "The bare stem `ayas` was rejected as an alias: it token-matches nothing and "
-            "substring-matches 645 times inside payasa/madayasva. Only inflected forms "
-            "that occur as whole words are used, so recall is deliberately conservative."
+            "Every metal is returned against every Veda, so a cell that found nothing says "
+            "NO_LEXICAL_MATCH in its own row rather than going missing: absence here is a "
+            "fact about the matcher, never about the text. That distinction is load-bearing "
+            "and there is a known false cell. The Yajurveda names ayas at VSM 18.13, where "
+            "the Devanagari source writes it with avagraha elision (`me `yas ca me`) and it "
+            "folds to the token `yasca`, which is the relative pronoun in 11 of its 12 "
+            "corpus occurrences; registering it would land 11 wrong-sense mentions, so ayas "
+            "reads NO_LEXICAL_MATCH for YV although that verse names it. `ayo` was rejected "
+            "on the same precision test -- 6 token hits, of which only about half are the "
+            "metal. Aliases are whole-word inflections only: the bare stem `ayas` "
+            "substring-matches 645 times inside payasa/madayasva, and the bare `syama` "
+            "token-matches a verb form at RV 6.5.7 and sits inside asyama 22 times, so only "
+            "the attested `syamam`/`syamam` forms are admitted. Counts are lower bounds. "
+            "`per_1000_mantras` is the figure to compare Vedas on, and it reorders the raw "
+            "counts: gold is RV 38 against AV 34 raw but 3.601 against 5.823 normalised."
         ),
         serves=(10,),
     ),
@@ -1087,19 +1153,41 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
         ORDER BY mantras DESC LIMIT 25
         """,
         caveat=_SCOPE_CAVEAT + " " + _INHERIT_CAVEAT + " Co-occurrence, not possession.",
-        serves=(25, 40),
+        serves=(40,),
     ),
     DomainQuery(
         name="ritual_objects_recurring",
-        question="Which ritual objects recur most?",
+        question="Which curated ritual implements have recurring lexical matches?",
         cypher="""
-        MATCH (p:Passage)-[:MENTIONS_ENTITY]->(o:Object)
-        RETURN o.display_label AS object, count(DISTINCT p) AS mantras,
-               count(DISTINCT p.veda) AS vedas
-        ORDER BY mantras DESC
+        MATCH (r:Ritual)-[:USES_OBJECT]->(o:Object)
+        MATCH (p:Passage)-[:MENTIONS_ENTITY]->(o)
+        RETURN o.display_label AS ritual_implement, o.display_type AS registry_type,
+               count(DISTINCT p) AS matched_mantras_minimum,
+               count(DISTINCT p.veda) AS vedas_with_matches,
+               count(DISTINCT r) AS curated_rituals,
+               'PARTIAL_ALIAS_RECALL' AS evidence_status
+        ORDER BY matched_mantras_minimum DESC
         """,
-        caveat="Lexical mentions only.",
-        serves=(25, 40),
+        caveat=(
+            "Ritual implement means an Object explicitly used by a curated Ritual via "
+            "USES_OBJECT; it is not the flat Object class, so chariots and thunderbolts "
+            "are not silently ranked as ritual apparatus. `registry_type` is shown because "
+            "one implement (the axe) is registered as a Weapon and is a ritual tool anyway. "
+            "Counts are conservative Sanskrit lexical-match minima over the four Samhitas, "
+            "not complete frequencies, and the shortfall is measured rather than assumed. "
+            "Eleven mantras carry a yupa-word (one of them the place-name Hariyupiya); this "
+            "query reaches 6, of which only 3 are yupa forms and 3 arrive through the "
+            "`svaravah` alias, and it reaches neither Yajurvedic witness (VSM 19.17, 25.29) "
+            "because both are compounds or inflections not registered, so `vedas_with_"
+            "matches` for yupa reads 2 where the text attests 3. Ranking therefore tracks "
+            "alias coverage as much as textual frequency. Separately, the corpus itself is "
+            "the ceiling for the srauta apparatus: the Brahmana and Srautasutra prose that "
+            "describes it is not in the corpus at all. A low or absent count must not be "
+            "read as absence from a Veda. The class is also the curated one -- amulet "
+            "(mani, 86 mentions), drum (dundubhi, 17) and the udumbara amulet are genuine "
+            "ritual objects absent here only because no Ritual was wired to them."
+        ),
+        serves=(25,),
     ),
     DomainQuery(
         name="rivers_mentioned",

@@ -54,10 +54,12 @@ PREDICATE_TOTALS: Final[dict[str, int]] = {
     "HAS_SEMANTIC_ASSERTION": 4_865,
     "PERFORMS_ACTION": 441,
     "IS_ASKED_TO": 224,
-    # 28,223 and not 28,227: the V3.1 ritual pass withdrew 11 rtvij- edges from hotr
+    # 28,227 and not 28,223: the V3.1 ritual pass withdrew 11 rtvij- edges from hotr
     # (a generic officiant is not an office) and moved 14 adhvaryu forms to their own
-    # node, while the material-culture pass added 5 aliases that matched 7 verses.
-    "MENTIONS_ENTITY": 28_223,
+    # node, while the material-culture pass added 5 aliases that matched 7 verses. V3.3
+    # adds the four exact witnesses whose omission made Q10 misleading: two trapu and
+    # two syama, all four inside metal enumerations the corpus already stored.
+    "MENTIONS_ENTITY": 28_227,
     # 24,969 and not 26,437: adversarial finding F-7 retired 1,468 edges that sat
     # under a second run_id whose output no committed artifact asserts. The figure now
     # reconciles exactly against the artifact: 46,508 rows minus 21,539 english-only

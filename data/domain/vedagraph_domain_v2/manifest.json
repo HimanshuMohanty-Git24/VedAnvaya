@@ -64,7 +64,7 @@
     "COSMIC_ENTITY": 4,
     "CROP": 5,
     "HUMAN_CONCERN": 7,
-    "METAL": 5,
+    "METAL": 7,
     "NATURAL_PHENOMENON": 13,
     "OBJECT": 18,
     "OFFERING": 2,
@@ -82,15 +82,15 @@
     "WEAPON": 5
   },
   "graph_after": {
-    "nodes": 108777,
-    "relationships": 265291
+    "nodes": 108779,
+    "relationships": 265295
   },
   "graph_before": {
-    "nodes": 108777,
-    "relationships": 265294
+    "nodes": 108779,
+    "relationships": 265295
   },
   "label_readability": {
-    "product_nodes": 36263,
+    "product_nodes": 36265,
     "unknown_label_rate": 0.0,
     "without_meaningful_label": 0
   },
@@ -110,7 +110,7 @@
             "CosmicEntity:DomainEntity": 4,
             "Crop:Plant:DomainEntity": 5,
             "HumanConcern:DomainEntity": 7,
-            "Metal:Substance:DomainEntity": 5,
+            "Metal:Substance:DomainEntity": 7,
             "NaturalPhenomenon:DomainEntity": 13,
             "Object:DomainEntity": 18,
             "Offering:DomainEntity": 2,
@@ -128,22 +128,22 @@
             "Weapon:Object:DomainEntity": 5
           }
         },
-        "landed": 227,
-        "sent": 227,
+        "landed": 229,
+        "sent": 229,
         "step": "entities"
       },
       {
         "complete": true,
         "detail": {
-          "carrying_mention_id": 28223,
-          "edges_after": 28223,
-          "edges_before": 28223,
+          "carrying_mention_id": 28227,
+          "edges_after": 28227,
+          "edges_before": 28227,
           "newly_created": 0,
           "retired_stale": 0,
           "theonym_ambiguous": 2514
         },
-        "landed": 28223,
-        "sent": 28223,
+        "landed": 28227,
+        "sent": 28227,
         "step": "mentions"
       },
       {
@@ -197,7 +197,7 @@
             "sent": 11
           },
           "retired_stale": {
-            "landed": 3,
+            "landed": 0,
             "sent": 0
           }
         },
@@ -386,15 +386,15 @@
     "capped": {},
     "notes": {
       "aliases": {
-        "sandhi_aliases": 1093,
+        "sandhi_aliases": 1095,
         "theonym_aliases": 65,
-        "token_aliases": 1529
+        "token_aliases": 1532
       },
       "coverage_by_veda": {
         "AV": {
-          "coverage": 0.7347,
+          "coverage": 0.7351,
           "mantras": 5839,
-          "with_mention": 4290
+          "with_mention": 4292
         },
         "RV": {
           "coverage": 0.7717,
@@ -412,15 +412,15 @@
           "with_mention": 1358
         }
       },
-      "distinct_entities_used": 227,
-      "entities": 227,
+      "distinct_entities_used": 229,
+      "entities": 229,
       "mentions_by_path": {
         "sanskrit-sandhi": 514,
-        "sanskrit-token": 27709
+        "sanskrit-token": 27713
       },
       "theonym_ambiguous": 2514
     },
-    "produced": 28223,
+    "produced": 28227,
     "rejected": {},
     "stage": "domain-mentions"
   },
@@ -435,7 +435,7 @@
       "COSMIC_ENTITY": 4,
       "CROP": 5,
       "HUMAN_CONCERN": 7,
-      "METAL": 5,
+      "METAL": 7,
       "NATURAL_PHENOMENON": 13,
       "OBJECT": 18,
       "OFFERING": 2,
@@ -457,10 +457,10 @@
     "fragment_entities": {
       "data\\domain\\vedagraph_domain_v2\\domain_entities_concern.yaml": 29,
       "data\\domain\\vedagraph_domain_v2\\domain_entities_concern_v3.yaml": 42,
-      "data\\domain\\vedagraph_domain_v2\\domain_entities_material.yaml": 45,
+      "data\\domain\\vedagraph_domain_v2\\domain_entities_material.yaml": 47,
       "data\\domain\\vedagraph_domain_v2\\domain_entities_ritual_v3.yaml": 21
     },
-    "merged_entities": 227,
+    "merged_entities": 229,
     "missing_fragments": [],
     "retyped": {
       "VG:CONCEPT:AYUDHA-WEAPON": {
@@ -595,8 +595,8 @@
               "Substance",
               "DomainEntity"
             ],
-            "landed": 5,
-            "nodes": 5
+            "landed": 7,
+            "nodes": 7
           },
           "NATURAL_PHENOMENON": {
             "labels": [
@@ -722,8 +722,8 @@
             "nodes": 5
           }
         },
-        "landed": 227,
-        "sent": 227,
+        "landed": 229,
+        "sent": 229,
         "skipped": "",
         "step": "project_entity_types"
       },
@@ -739,8 +739,8 @@
             "nodes": 214
           },
           "DomainEntity": {
-            "landed": 227,
-            "nodes": 227
+            "landed": 229,
+            "nodes": 229
           },
           "Formula": {
             "landed": 4825,
@@ -763,8 +763,8 @@
             "nodes": 4
           }
         },
-        "landed": 39142,
-        "sent": 39142,
+        "landed": 39144,
+        "sent": 39144,
         "skipped": "",
         "step": "set_display_properties"
       },
@@ -773,59 +773,7 @@
         "detail": {
           "by_evidence_basis": {
             "MIXED": 13054,
-            "SANSKRIT": 83616,
-            "SOURCE_METADATA": 50845,
-            "STRUCTURAL": 85109
-          },
-          "by_precision": {
-            "CONTAINER_INHERITED": 39290,
-            "NOT_AN_ATTRIBUTION": 96360,
-            "PER_PASSAGE": 12096,
-            "TEXTUAL_MENTION": 84878
-          },
-          "by_tier": {
-            "TIER_A": 95088,
-            "TIER_B": 136154,
-            "TIER_C": 11,
-            "TIER_D": 1371
-          },
-          "layer_owned_edges_excluded_from_landed": 32670,
-          "layer_owned_grades_skipped": {
-            "ASSERTION_PREDICATE": 2672,
-            "BELONGS_TO_FAMILY": 305,
-            "CONTRASTS_WITH": 8,
-            "CO_OCCURS_WITH": 306,
-            "DESCRIBES": 199,
-            "DESCRIBES_ACTION": 35,
-            "HAS_FORMULA": 2037,
-            "HAS_SEMANTIC_ASSERTION": 4865,
-            "HAS_THEME": 8,
-            "INVOKES": 207,
-            "INVOLVES_OFFERING": 11,
-            "INVOLVES_RITUAL": 9,
-            "INVOLVES_SUBSTANCE": 3,
-            "MEMBER_OF_FAMILY": 2037,
-            "MENTIONS_DEVATA": 17165,
-            "PRAISES": 38,
-            "REFERS_TO_NATURAL_PHENOMENON": 5,
-            "REFERS_TO_PLACE": 1,
-            "REQUESTS": 89,
-            "SHARES_ENTITY_VOCABULARY_WITH": 2141,
-            "USED_FOR_RITE": 529
-          },
-          "signatures": 93
-        },
-        "landed": 232624,
-        "sent": 232624,
-        "skipped": "",
-        "step": "stamp_grades"
-      },
-      {
-        "complete": true,
-        "detail": {
-          "by_evidence_basis": {
-            "MIXED": 13054,
-            "SANSKRIT": 83616,
+            "SANSKRIT": 83620,
             "SOURCE_METADATA": 50842,
             "STRUCTURAL": 85109
           },
@@ -833,11 +781,11 @@
             "CONTAINER_INHERITED": 39290,
             "NOT_AN_ATTRIBUTION": 96357,
             "PER_PASSAGE": 12096,
-            "TEXTUAL_MENTION": 84878
+            "TEXTUAL_MENTION": 84882
           },
           "by_tier": {
             "TIER_A": 95088,
-            "TIER_B": 136154,
+            "TIER_B": 136158,
             "TIER_C": 11,
             "TIER_D": 1368
           },
@@ -867,8 +815,60 @@
           },
           "signatures": 93
         },
-        "landed": 232621,
-        "sent": 232621,
+        "landed": 232625,
+        "sent": 232625,
+        "skipped": "",
+        "step": "stamp_grades"
+      },
+      {
+        "complete": true,
+        "detail": {
+          "by_evidence_basis": {
+            "MIXED": 13054,
+            "SANSKRIT": 83620,
+            "SOURCE_METADATA": 50842,
+            "STRUCTURAL": 85109
+          },
+          "by_precision": {
+            "CONTAINER_INHERITED": 39290,
+            "NOT_AN_ATTRIBUTION": 96357,
+            "PER_PASSAGE": 12096,
+            "TEXTUAL_MENTION": 84882
+          },
+          "by_tier": {
+            "TIER_A": 95088,
+            "TIER_B": 136158,
+            "TIER_C": 11,
+            "TIER_D": 1368
+          },
+          "layer_owned_edges_excluded_from_landed": 32670,
+          "layer_owned_grades_skipped": {
+            "ASSERTION_PREDICATE": 2672,
+            "BELONGS_TO_FAMILY": 305,
+            "CONTRASTS_WITH": 8,
+            "CO_OCCURS_WITH": 306,
+            "DESCRIBES": 199,
+            "DESCRIBES_ACTION": 35,
+            "HAS_FORMULA": 2037,
+            "HAS_SEMANTIC_ASSERTION": 4865,
+            "HAS_THEME": 8,
+            "INVOKES": 207,
+            "INVOLVES_OFFERING": 11,
+            "INVOLVES_RITUAL": 9,
+            "INVOLVES_SUBSTANCE": 3,
+            "MEMBER_OF_FAMILY": 2037,
+            "MENTIONS_DEVATA": 17165,
+            "PRAISES": 38,
+            "REFERS_TO_NATURAL_PHENOMENON": 5,
+            "REFERS_TO_PLACE": 1,
+            "REQUESTS": 89,
+            "SHARES_ENTITY_VOCABULARY_WITH": 2141,
+            "USED_FOR_RITE": 529
+          },
+          "signatures": 93
+        },
+        "landed": 232625,
+        "sent": 232625,
         "skipped": "",
         "step": "stamp_grades"
       }
