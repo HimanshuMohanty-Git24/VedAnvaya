@@ -40,9 +40,24 @@ RUN_ID = "vedagraph-rigveda-semantic-luna-v3-508"
 FULL_RUN_ID = "vedagraph-rigveda-semantic-luna-v3.1-full-1.0.0-rc1"
 LEGACY_FULL_RUN_ID = "vedagraph-rigveda-semantic-luna-v3-full-1.0.0-rc1"
 
-#: The frozen inputs the v3.2 policy revision moved. No full run was ever dispatched under
-#: the v3.1 draft, so nothing is invalidated; the draft simply now names older bytes.
-V3_2_MOVED_INPUTS = (
+#: Sealed inputs that have legitimately moved since the v3.1 draft was taken, in the order
+#: the draft lists them. The staleness test below asserts the drift set is EXACTLY this, so
+#: an unexplained change still fails the suite: this ledger records why each known move was
+#: allowed, it does not switch the check off. No full run was ever dispatched under the v3.1
+#: draft, so nothing is invalidated; the draft simply now names older bytes.
+#:
+#: ``pyproject.toml`` moved in the FastAPI Product-V1 phase, which had to declare fastapi,
+#: uvicorn, neo4j and pydantic-settings as real dependencies and register the ``neo4j``
+#: pytest marker. It is inside the seal because the extraction contract depends on the
+#: installed package set, and that dependency is real -- but the API is a read-only consumer
+#: of the projected graph and runs no extraction, so the declaration cannot change what an
+#: extraction would produce. The alternative was to leave four load-bearing imports
+#: undeclared, which is the defect the ``neo4j`` entry in that file was added to fix.
+#:
+#: The other two moved in the v3.2 prompt-policy revision, which changed the execution
+#: contract and the batch operations file.
+MOVED_SEALED_INPUTS = (
+    "pyproject.toml",
     "src/vedagraph/semantic/codex_direct.py",
     "src/vedagraph/semantic/full_run.py",
 )
@@ -250,7 +265,7 @@ def test_the_preserved_v3_1_draft_freeze_detects_the_v3_2_contract_change() -> N
     """A stale draft is the freeze mechanism working, not a defect to be papered over."""
     draft = freeze_draft()
     assert [name for name, value in draft.files.items() if file_hash(Path(name)) != value] == list(
-        V3_2_MOVED_INPUTS
+        MOVED_SEALED_INPUTS
     )
     with pytest.raises(ValueError, match="require new extraction version"):
         draft.verify(Path.cwd(), list(draft.passage_ids))

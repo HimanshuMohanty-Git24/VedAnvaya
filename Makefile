@@ -1,4 +1,4 @@
-.PHONY: install format lint typecheck test check schemas pilot rigveda lineage knowledge lexical semantic-config semantic-dry-run semantic-batches
+.PHONY: install format lint typecheck test check schemas pilot rigveda lineage knowledge lexical semantic-config semantic-dry-run semantic-batches api api-demos
 
 install:
 	uv sync --extra dev
@@ -51,3 +51,12 @@ semantic-dry-run:
 
 semantic-batches:
 	uv run python scripts/build_semantic_batches.py
+
+# Serves the product API against the local Neo4j named in .env. Read-only: the API
+# never writes to the graph.
+api:
+	uv run uvicorn vedagraph.api.app:app --host 127.0.0.1 --port 8000 --reload
+
+# Walks the Product-V1 acceptance demos and times every route. Needs the loaded graph.
+api-demos:
+	uv run python scripts/api_product_demos.py

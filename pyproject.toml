@@ -12,9 +12,13 @@ license = { text = "License undecided; see README.md and docs/architecture/RIGHT
 authors = [{ name = "VedaGraph contributors" }]
 dependencies = [
   "beautifulsoup4>=4.12",
+  "fastapi>=0.115",
   "httpx>=0.27",
   "indic-transliteration>=2.3",
   "lxml>=5.3",
+  # Was an undeclared import: installed in the environment and used by scripts and tests
+  # since the first projection, but never in this list. The API makes it load-bearing.
+  "neo4j>=5.26",
   "orjson>=3.10",
   "pydantic>=2.10",
   "pydantic-settings>=2.7",
@@ -22,6 +26,7 @@ dependencies = [
   "rich>=13.9",
   "tenacity>=9.0",
   "typer>=0.15",
+  "uvicorn[standard]>=0.34",
 ]
 
 [project.optional-dependencies]
@@ -71,6 +76,9 @@ testpaths = ["tests"]
 markers = [
   "live: requires internet access and is disabled unless explicitly selected",
   "api: calls a paid LLM API and is disabled unless explicitly selected",
+  # Deliberately not called "api": that marker already means "costs money". These tests
+  # cost nothing and need a loaded local Neo4j, which is a different reason to skip.
+  "neo4j: requires the local Neo4j instance loaded with the frozen graph",
 ]
 
 [tool.coverage.run]
