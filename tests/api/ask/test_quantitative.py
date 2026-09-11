@@ -331,3 +331,67 @@ def test_the_summary_is_readable_and_names_no_internals() -> None:
     assert "quantitative" in summary.lower()
     assert "E1" not in summary
     assert "UNIVERSAL" not in summary
+
+
+# ---------------------------------------------------------------------------
+# EXACT_COUNT
+# ---------------------------------------------------------------------------
+
+COUNTS = "Counts — RV: 19 verses; AV: 7 verses."
+
+
+def test_a_restated_figure_that_is_in_no_cited_row_fails() -> None:
+    assert rules("The term occurs in 18 verses [E1].", packet(COUNTS)) == ["EXACT_COUNT"]
+
+
+def test_a_restated_figure_that_matches_a_cited_row_passes() -> None:
+    assert validate("The term occurs in 19 verses [E1].", packet(COUNTS)).ok
+
+
+def test_a_total_of_the_cited_rows_is_arithmetic_not_a_contradiction() -> None:
+    """19 + 7. Flagging a correct sum would be a false positive about the evidence."""
+    assert validate("The term occurs in 26 verses in all [E1].", packet(COUNTS)).ok
+
+
+def test_a_figure_in_a_unit_the_rows_do_not_count_is_not_judged() -> None:
+    """No verse count to compare against, so the rule stays silent."""
+    assert validate("The hymn has 12 stanzas [E1].", packet(COUNTS)).ok
+
+
+@pytest.mark.parametrize("written", ["1,359", "1 359", "1\u00a0359", "1\u202f359"])
+def test_a_thousands_separator_is_not_read_as_a_smaller_figure(written: str) -> None:
+    """Six of the sixty graded answers write their figures this way.
+
+    Parsed naively, "1,359 verses" is the figure 359, which is in no row -- so every one
+    of those answers was flagged EXACT_COUNT until the separator was joined first. A
+    validator whose findings are mostly false positives is one its reader learns to skip.
+    """
+    pkt = packet("Counts — RV: 1359 verses; AV: 170 verses.")
+    assert validate(f"Agni is mentioned in {written} verses [E1].", pkt).ok
+
+
+def test_joining_separators_does_not_merge_a_list_of_numbers() -> None:
+    """ "mandalas 1, 8 and 10" is three numbers, not one. Three digits are required."""
+    pkt = packet('SPREAD: {"1": 493, "8": 862, "10": 402}', item_type=EvidenceItemType.METRIC)
+    assert validate("The heaviest are mandalas 1, 8 and 10 [E1].", pkt).ok
+
+
+@pytest.mark.parametrize(
+    "claim",
+    [
+        "There are more than 100 verses in each group [E1].",
+        "There are fewer than 100 verses in some groups [E1].",
+        "There are at least 100 verses somewhere [E1].",
+    ],
+)
+def test_a_comparison_bound_is_not_read_as_a_restated_count(claim: str) -> None:
+    """ "more than 100" states a threshold. Only the comparison rule may judge it."""
+    pkt = packet("Counts — A: 118 verses; B: 195 verses; C: 138 verses; D: 149 verses.")
+    assert QuantitativeRule.EXACT_COUNT not in [f.rule for f in validate(claim, pkt).findings]
+
+
+@pytest.mark.parametrize("hedge", ["about", "roughly", "approximately", "nearly", "around"])
+def test_a_hedged_figure_is_not_held_to_exactness(hedge: str) -> None:
+    """A refusal to state a precise count is the caution the product asks for."""
+    pkt = packet("Counts — RV: 19 verses; AV: 7 verses.")
+    assert validate(f"The term occurs in {hedge} 20 verses [E1].", pkt).ok

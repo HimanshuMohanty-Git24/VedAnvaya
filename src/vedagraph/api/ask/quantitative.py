@@ -280,8 +280,17 @@ _NOT_A_QUANTITY: Final = re.compile(
 )
 
 
+#: A thousands separator between digit groups: "1,359", "1 359", "1 359" (thin space).
+#: Joined before any rule reads the sentence, because reading "1,359 verses" as the
+#: figure 359 is how a correct answer gets flagged. Six of the sixty already-graded
+#: answers write their figures this way, and every one of them was a false positive until
+#: this ran first. Exactly three trailing digits are required, so "mandalas 1, 8 and 10"
+#: stays three numbers.
+_DIGIT_GROUPING: Final = re.compile(r"(?<=\d)[,\u00a0\u202f\u2009 ](?=\d{3}\b)")
+
+
 def _maskable(sentence: str) -> str:
-    return _NOT_A_QUANTITY.sub(" ", sentence)
+    return _DIGIT_GROUPING.sub("", _NOT_A_QUANTITY.sub(" ", sentence))
 
 
 def _values(facts: list[NumericFact], unit: str | None) -> list[int]:
@@ -303,6 +312,72 @@ def _values(facts: list[NumericFact], unit: str | None) -> list[int]:
 # ---------------------------------------------------------------------------
 # The rules
 # ---------------------------------------------------------------------------
+
+
+#: A figure written with the noun it counts: "18 verses", "3 hymns". The unit is what
+#: makes the check possible -- it says which cited rows the figure claims to restate.
+_COUNTED_NOUN: Final = re.compile(r"\b(?P<n>\d{1,9})\s+(?P<unit>[A-Za-z][A-Za-z-]{2,24})")
+
+
+#: A figure the sentence does not claim to be exact. "about 20", "roughly 100", "nearly
+#: 40" -- a hedge is a refusal to state a precise count, so holding it to one would flag
+#: the very caution the product asks for.
+_HEDGE: Final = re.compile(
+    r"\b(?:about|around|roughly|approximately|nearly|almost|some|up to|circa|c\.)\s+\d{1,9}\b",
+    re.IGNORECASE,
+)
+
+
+def _bounded_spans(sentence: str) -> list[tuple[int, int]]:
+    """Character ranges holding a figure that is a bound or a hedge, not a count.
+
+    "more than 100 verses" states a threshold and is the comparison rule's business; read
+    as a restated count it is a figure in no row, and EXACT_COUNT flagged it. The two
+    rules must not both claim the same number.
+    """
+    return [m.span() for pattern in (_NUM_COMPARISON, _HEDGE) for m in pattern.finditer(sentence)]
+
+
+def _check_exact_count(
+    sentence: str, facts: list[NumericFact], ids: list[str]
+) -> QuantitativeFinding | None:
+    """A figure restated with a unit the cited rows carry, at a value they do not.
+
+    Only fires where the unit is one the cited rows actually count in, and only where
+    the figure appears under *no* unit in those rows. Both guards matter: an answer
+    totalling two rows writes a number that is in neither of them, and flagging that
+    would be a false positive about arithmetic the evidence supports.
+    """
+    if not facts:
+        return None
+    all_values = {f.value for f in facts}
+    bounded = _bounded_spans(sentence)
+    for m in _COUNTED_NOUN.finditer(sentence):
+        if any(start <= m.start("n") < end for start, end in bounded):
+            continue
+        unit = _singular(m.group("unit"))
+        same_unit = [f.value for f in facts if f.unit == unit]
+        if not same_unit:
+            continue
+        claimed = int(m.group("n"))
+        if claimed in all_values:
+            continue
+        # A plausible sum or difference of the cited figures is arithmetic over the
+        # evidence, not a contradiction of it.
+        if any(a + b == claimed for a in same_unit for b in same_unit):
+            continue
+        if sum(same_unit) == claimed:
+            continue
+        return QuantitativeFinding(
+            rule=QuantitativeRule.EXACT_COUNT,
+            claim=sentence.strip(),
+            detail=(
+                f"'{claimed} {m.group('unit')}' appears in none of the cited rows, which "
+                f"give {', '.join(str(v) for v in sorted(set(same_unit))[:8])}."
+            ),
+            evidence_ids=ids,
+        )
+    return None
 
 
 def _check_magnitude(
@@ -650,6 +725,7 @@ def validate(answer: str, packet: EvidencePacket) -> QuantitativeAudit:
         for finding in (
             _check_magnitude(masked, facts, ids),
             _check_counted_universal(masked, facts, ids),
+            _check_exact_count(masked, facts, ids),
             _check_numeric_comparison(masked, facts, ids),
             _check_group_ordering(masked, facts, ids),
             _check_superlative(masked, facts, ids),

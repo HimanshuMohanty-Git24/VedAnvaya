@@ -15,7 +15,7 @@ import pathlib
 
 import pytest
 
-from vedagraph.api.ask.citation import audit, extract_cited_ids
+from vedagraph.api.ask.citation import audit, extract_cited_ids, verify_quotes
 from vedagraph.api.ask.evidence import EvidencePacket
 from vedagraph.api.ask.matching import token_match
 from vedagraph.api.ask.models import EvidenceItem, EvidenceItemType
@@ -557,3 +557,46 @@ def test_scope_does_not_deny_the_arcika_section_it_cites() -> None:
 
     assert "Aranyaka-genre text" in SYSTEM_PROMPT
     assert "SV ARANYA locus is arcika verse text that IS in this corpus" in SYSTEM_PROMPT
+
+
+# -- benchmark closure: a verbatim quotation reported as possibly fabricated ----------
+
+
+def _verse_item() -> EvidenceItem:
+    """A two-pada mantra held with the verse's own line break, as the graph stores it."""
+    return EvidenceItem(
+        id="E1",
+        type=EvidenceItemType.PASSAGE,
+        citation="RV 1.1.1",
+        sanskrit="agním īḷe puróhitaṃ\nyajñásya devám ṛtvíjam",
+    )
+
+
+def test_trailing_whitespace_does_not_make_a_quotation_unverified() -> None:
+    """The defect, found in the Q34 delta answer.
+
+    The Devanagari pattern admits whitespace *inside* a run, because a verse's own line
+    breaks belong to the quotation. The edge-trim set held a space character and no
+    newline, so a run ending at a paragraph break kept its ``\n\n`` and failed its
+    containment check -- and the reader was told a byte-exact copy of SV ARANYA 1.1
+    "may not be a quotation from this corpus at all".
+    """
+    answer = "SV ARANYA 1.1 contains:\n\nagním īḷe puróhitaṃ\n\n[E1]"
+    assert verify_quotes(answer, [_verse_item()]) == []
+
+
+def test_a_reflowed_verse_still_matches_the_stored_line_break() -> None:
+    """A model quoting a two-line verse writes it as one line. That is the same verse."""
+    answer = "The verse reads agním īḷe puróhitaṃ yajñásya devám ṛtvíjam [E1]."
+    assert verify_quotes(answer, [_verse_item()]) == []
+
+
+def test_the_relaxed_comparison_still_catches_invented_sanskrit() -> None:
+    """Fixing a false alarm must not silence the true one."""
+    answer = "The verse reads sómasya mádhumattamaḥ [E1]."
+    assert verify_quotes(answer, [_verse_item()]) == ["sómasya mádhumattamaḥ"]
+
+
+def test_a_run_mixing_real_and_invented_words_is_still_unverified() -> None:
+    answer = "The verse reads agním īḷe kāmasya [E1]."
+    assert verify_quotes(answer, [_verse_item()]) == ["agním īḷe kāmasya"]

@@ -81,6 +81,9 @@ def extract_cited_ids(text: str) -> list[str]:
 
 
 #: A run of Devanagari, long enough to be a quotation rather than a stray sign.
+#: Any run of whitespace, collapsed before comparison. See :func:`_normalise`.
+_WHITESPACE: Final = re.compile(r"\s+")
+
 _DEVANAGARI_RUN: Final = re.compile(r"[ऀ-ॿ][ऀ-ॿ\s॑-॔]{3,}")
 
 #: The IAST diacritics that mark a Latin word as transliterated Sanskrit.
@@ -168,8 +171,16 @@ def _normalise(text: str) -> str:
 
     Only tone marks are folded. Diacritics that distinguish phonemes -- ``ṛ``, ``ṣ``,
     ``ā`` -- survive, so a genuinely different word still fails to match.
+
+    Whitespace is collapsed for the same reason and it is not cosmetic either. The stored
+    Sanskrit keeps the verse's own line breaks -- a two-pada mantra is held with a newline
+    between the padas -- while a model quoting it reflows the two lines into one. Compared
+    literally, a verbatim quotation of a two-line verse fails on the newline alone, and
+    the reader is told the Sanskrit "may not be a quotation from this corpus at all"
+    about text copied out of the corpus.
     """
-    return strip_vedic_accents(unicodedata.normalize("NFC", text)).lower()
+    folded = strip_vedic_accents(unicodedata.normalize("NFC", text)).lower()
+    return _WHITESPACE.sub(" ", folded).strip()
 
 
 def _describe(item: EvidenceItem) -> str:
@@ -193,13 +204,24 @@ def _quotable_text(items: list[EvidenceItem]) -> str:
     )
 
 
+#: Trimmed from the ends of a matched run before it is compared or reported.
+#:
+#: Whitespace is in this set because the Devanagari pattern admits ``\s`` inside a run --
+#: a verse's own line breaks belong to the quotation -- so a match ending at a paragraph
+#: break carries the newlines with it. A set containing the space character does not
+#: remove a newline, and the surviving ``\n\n`` made a byte-exact quotation of
+#: SV ARANYA 1.1 fail its containment check: the answer was told to distrust the verse it
+#: had copied correctly out of the evidence.
+_RUN_EDGE_CHARS: Final = " \t\r\n.,;:!?-\u2013\u2014"
+
+
 def _sanskrit_runs(answer: str) -> list[str]:
     runs: list[str] = []
     for pattern in (_DEVANAGARI_RUN, _IAST_RUN):
         for match in pattern.finditer(answer):
-            # Stripping a *set* of trailing punctuation characters is the intent here,
-            # not a prefix/suffix substring, so the multi-character argument is correct.
-            run = match.group(0).strip(" .,;:!?—-—")  # noqa: B005
+            # Stripping a *set* of edge characters is the intent here, not a
+            # prefix/suffix substring, so the multi-character argument is correct.
+            run = match.group(0).strip(_RUN_EDGE_CHARS)
             if len(run) >= 4:
                 runs.append(run)
     return list(dict.fromkeys(runs))
