@@ -10,7 +10,14 @@ import time
 from collections.abc import Iterator
 from typing import Any, Final, cast
 
-from vedagraph.llm.base import LLMCapabilities, LLMProvider, LLMRequest, LLMResponse, LLMUsage
+from vedagraph.llm.base import (
+    LLMCapabilities,
+    LLMProvider,
+    LLMRequest,
+    LLMResponse,
+    LLMUsage,
+    normalise_finish_reason,
+)
 from vedagraph.llm.errors import (
     LLMAuthenticationError,
     LLMConfigurationError,
@@ -255,7 +262,7 @@ class OpenAICompatProvider(LLMProvider):
                     raise LLMProviderUnavailableError(provider=self._provider_name)
 
                 text = choice.message.content or ""
-                finish_reason = (choice.finish_reason or "stop").lower()
+                finish_reason = normalise_finish_reason(choice.finish_reason)
 
                 if finish_reason == "content_filter":
                     raise LLMContentBlockedError(provider=self._provider_name)

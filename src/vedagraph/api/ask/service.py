@@ -38,12 +38,22 @@ from vedagraph.api.ask.models import (
     EvidenceItemType,
     LLMInfo,
     RetrievalSummary,
+    SupportLevel,
 )
 from vedagraph.api.models.common import CaveatView, KnowledgeStatus
 from vedagraph.api.repositories.neo4j_repository import Neo4jRepository
 from vedagraph.llm.base import LLMProvider
 
 logger = logging.getLogger(__name__)
+
+#: Support levels worst-first, so a downgrade can be taken as a minimum rather than an
+#: assignment. Writing ``support_level = LIMITED`` would *raise* an INSUFFICIENT grade.
+_SUPPORT_ORDER: Final[tuple[SupportLevel, ...]] = (
+    SupportLevel.INSUFFICIENT,
+    SupportLevel.LIMITED,
+    SupportLevel.MODERATE,
+    SupportLevel.STRONG,
+)
 
 #: Follow-up questions are offered per intent rather than generated. A second model call
 #: to invent them doubles the latency and the bill of every request, and the useful next
@@ -147,7 +157,18 @@ class AskService:
             degraded=synthesis.degraded,
         )
 
-        caveats = self._caveats(plan, retrieval, packet, audited, status)
+        # Two ways an answer can be well-cited and still not be a finished, faithful
+        # one. Neither is visible to citation grading, and both were shipped silently
+        # before: a summary that contradicted its own figures was returned SUPPORTED,
+        # and four benchmark answers stopped at the output cap with nothing saying so.
+        # Grading is the last thing to move so it sees the outcome of every check.
+        if status is KnowledgeStatus.SUPPORTED and (
+            not synthesis.quantitative.ok or synthesis.generation_truncated
+        ):
+            status = KnowledgeStatus.PARTIAL
+            support_level = min(support_level, SupportLevel.LIMITED, key=_SUPPORT_ORDER.index)
+
+        caveats = self._caveats(plan, retrieval, packet, audited, status, synthesis)
         subject = resolved[0].label if resolved else None
 
         total_ms = (time.monotonic() - started) * 1000
@@ -212,8 +233,31 @@ class AskService:
         packet: evidence_stage.EvidencePacket,
         audited: citation_stage.CitationAudit,
         status: KnowledgeStatus,
+        synthesis: synthesis_stage.SynthesisResult,
     ) -> list[CaveatView]:
         caveats: list[CaveatView] = []
+
+        if synthesis.generation_truncated:
+            # Deliberately says nothing about finish reasons or token caps. The reader
+            # needs to know the text stops early and the evidence does not.
+            caveats.append(
+                CaveatView(
+                    text=(
+                        "The generated response reached its output limit and may be "
+                        "incomplete. The supporting VedaGraph evidence remains available "
+                        "below."
+                    ),
+                    source="generation_truncated",
+                )
+            )
+
+        if not synthesis.quantitative.ok:
+            caveats.append(
+                CaveatView(
+                    text=synthesis.quantitative.summary(),
+                    source="quantitative_audit",
+                )
+            )
 
         if audited.invented_ids:
             caveats.append(

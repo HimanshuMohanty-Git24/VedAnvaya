@@ -36,6 +36,13 @@ from typing import Final
 from vedagraph.api.ask.citation import extract_cited_ids
 from vedagraph.api.ask.evidence import EvidencePacket
 from vedagraph.api.ask.models import AskMode, QueryIntent, SupportLevel
+from vedagraph.api.ask.quantitative import (
+    REPAIR_INSTRUCTION,
+    QuantitativeAudit,
+)
+from vedagraph.api.ask.quantitative import (
+    validate as validate_quantities,
+)
 from vedagraph.api.models.common import KnowledgeStatus
 from vedagraph.llm.base import LLMMessage, LLMProvider, LLMRequest
 from vedagraph.llm.errors import (
@@ -62,10 +69,13 @@ _SCOPE: Final = (
     "Samaveda (arcika only -- the gana corpus is absent), Shukla Yajurveda in the "
     "Madhyandina recension, and a working Saunaka Atharvaveda. It contains NO Brahmana, "
     "Aranyaka-genre text, Upanisad, Sutra, Purana or epic, and no post-Vedic material. "
-    "The Samavedic arcika's own sections are cited SV ARANYA, SV UTTARA, SV CHANDA and "
-    "SV MAHANAMNYA: an SV ARANYA locus is arcika verse text that IS in this corpus, and "
-    "must never be refused as an Aranyaka. Never let an "
-    "answer imply these four texts are the whole of Vedic or Hindu tradition."
+    "The Kauthuma arcika's own four sections are cited SV ARANYA, SV UTTARA, SV CHANDA "
+    "and SV MAHANAMNYA. Read those two sentences together and in both directions. An "
+    "SV ARANYA locus is arcika verse text that IS in this corpus and must never be "
+    "refused as an Aranyaka; and equally, its presence is NOT a claim that VedaGraph "
+    "holds a separate or complete Aranyaka corpus, which it does not. ARANYA here names "
+    "a structural section of the modelled arcika, not the forest-treatise genre. Never "
+    "let an answer imply these four texts are the whole of Vedic or Hindu tradition."
 )
 
 SYSTEM_PROMPT: Final = f"""You are the synthesis stage of VedaGraph, a Vedic knowledge \
@@ -204,6 +214,16 @@ class SynthesisResult:
     degraded: bool = False
     """True when the provider failed and the answer is a stated failure, not a synthesis."""
 
+    generation_truncated: bool = False
+    """The provider stopped at the output cap. The prose is a fragment, not an answer."""
+
+    quantitative: QuantitativeAudit = field(default_factory=QuantitativeAudit)
+    """Numbers in the prose checked against numbers in the packet. See
+    :mod:`vedagraph.api.ask.quantitative`."""
+
+    repair_attempted: bool = False
+    """A first draft failed the quantitative check and was sent back once."""
+
 
 def assess_support(
     packet: EvidencePacket, cited_ids: list[str], *, degraded: bool = False
@@ -319,6 +339,50 @@ def synthesize(
         )
 
     answer = response.text.strip()
+    quantitative = validate_quantities(answer, packet)
+    repair_attempted = False
+    input_tokens = response.usage.input_tokens
+    output_tokens = response.usage.output_tokens
+
+    if not quantitative.ok:
+        # One retry, and only one. The instruction is generic and names neither the
+        # question nor the offending figure: telling the model which number to change
+        # teaches it to patch a sentence, and this check exists because a patched
+        # sentence is exactly what passed every other gate last time.
+        repair_attempted = True
+        logger.info(
+            "ask: quantitative check failed on first draft (%d finding(s)), retrying once",
+            len(quantitative.findings),
+        )
+        repair_messages = [
+            *messages,
+            LLMMessage(role="assistant", content=answer),
+            LLMMessage(role="user", content=REPAIR_INSTRUCTION),
+        ]
+        try:
+            repaired = provider.generate(
+                LLMRequest(
+                    messages=repair_messages,
+                    system=SYSTEM_PROMPT,
+                    temperature=0.1,
+                    max_output_tokens=max_output_tokens,
+                )
+            )
+        except LLMError:
+            # The draft stands, still flagged. A failed repair must not discard an
+            # answer that was retrieved and cited correctly apart from one figure.
+            logger.warning("ask: quantitative repair retry failed", exc_info=True)
+        else:
+            repaired_answer = repaired.text.strip()
+            repaired_audit = validate_quantities(repaired_answer, packet)
+            input_tokens = _add(input_tokens, repaired.usage.input_tokens)
+            output_tokens = _add(output_tokens, repaired.usage.output_tokens)
+            # Keep the rewrite unless it is strictly worse. It was written under the
+            # stricter instruction, so a tie goes to it; a rewrite that introduced more
+            # contradictions than it fixed is discarded rather than shipped.
+            if len(repaired_audit.findings) <= len(quantitative.findings):
+                response, answer, quantitative = repaired, repaired_answer, repaired_audit
+
     cited = extract_cited_ids(answer)
     status, level = assess_support(packet, cited)
 
@@ -330,6 +394,16 @@ def synthesize(
         synthesis_ms=(time.monotonic() - start) * 1000,
         provider=response.provider,
         model=response.model,
-        input_tokens=response.usage.input_tokens,
-        output_tokens=response.usage.output_tokens,
+        input_tokens=input_tokens,
+        output_tokens=output_tokens,
+        generation_truncated=response.generation_truncated,
+        quantitative=quantitative,
+        repair_attempted=repair_attempted,
     )
+
+
+def _add(a: int | None, b: int | None) -> int | None:
+    """Token counts summed across a draft and its repair, so the bill stays truthful."""
+    if a is None:
+        return b
+    return a if b is None else a + b

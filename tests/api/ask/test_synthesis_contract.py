@@ -370,3 +370,156 @@ def test_a_misconfiguration_propagates() -> None:
 
     with pytest.raises(LLMConfigurationError):
         synthesize("Who is Agni?", packet(item("E1")), [], provider)
+
+
+# ---------------------------------------------------------------------------
+# Truncation and the quantitative repair retry
+# ---------------------------------------------------------------------------
+
+
+class ScriptedProvider(LLMProvider):
+    """Answers a different line per call, so a repair retry can be observed."""
+
+    def __init__(self, *texts: str, finish_reason: str = "stop") -> None:
+        self._texts = list(texts)
+        self._finish_reason = finish_reason
+        self.calls: list[LLMRequest] = []
+
+    @property
+    def name(self) -> str:
+        return "stub"
+
+    @property
+    def model(self) -> str:
+        return "stub-1"
+
+    def generate(self, request: LLMRequest) -> LLMResponse:
+        self.calls.append(request)
+        text = self._texts[min(len(self.calls) - 1, len(self._texts) - 1)]
+        return LLMResponse(
+            text=text,
+            finish_reason=self._finish_reason,
+            provider="stub",
+            model="stub-1",
+            usage=LLMUsage(input_tokens=10, output_tokens=5),
+        )
+
+
+def counted_packet() -> EvidencePacket:
+    """One CORPUS_DISTRIBUTION row whose smallest figure is well under a hundred."""
+    return EvidencePacket(
+        items=[
+            EvidenceItem(
+                id="E1",
+                type=EvidenceItemType.CORPUS_DISTRIBUTION,
+                fact="Counts — AV: 18 verses; RV: 195 verses; SV: 38 verses; YV: 49 verses.",
+                knowledge_status="SUPPORTED",
+            )
+        ]
+    )
+
+
+OVERSTATED = "It appears in hundreds of verses in each corpus [E1]."
+ACCURATE = "It appears in 18 AV, 195 RV, 38 SV and 49 YV verses [E1]."
+
+
+def test_a_truncated_generation_is_reported_as_truncated() -> None:
+    stub = ScriptedProvider("Agni is invoked [E1].", finish_reason="length")
+
+    result = synthesize("Who is Agni?", packet(item("E1")), [], stub)
+
+    assert result.generation_truncated is True
+
+
+def test_a_completed_generation_is_not_reported_as_truncated() -> None:
+    stub = ScriptedProvider("Agni is invoked [E1].", finish_reason="stop")
+
+    result = synthesize("Who is Agni?", packet(item("E1")), [], stub)
+
+    assert result.generation_truncated is False
+
+
+def test_an_unsupported_magnitude_is_sent_back_once_and_accepted_when_fixed() -> None:
+    stub = ScriptedProvider(OVERSTATED, ACCURATE)
+
+    result = synthesize("How is it distributed?", counted_packet(), [], stub)
+
+    assert len(stub.calls) == 2, "exactly one repair retry"
+    assert result.repair_attempted is True
+    assert result.answer == ACCURATE
+    assert result.quantitative.ok
+
+
+def test_the_repair_prompt_carries_the_generic_instruction_and_the_draft() -> None:
+    stub = ScriptedProvider(OVERSTATED, ACCURATE)
+
+    synthesize("How is it distributed?", counted_packet(), [], stub)
+
+    retry = stub.calls[1]
+    roles = [m.role for m in retry.messages]
+    assert roles[-2:] == ["assistant", "user"]
+    assert retry.messages[-2].content == OVERSTATED
+    assert "not supported by the retrieved metrics" in retry.messages[-1].content
+    # The system prompt is re-sent: a repair turn that drops the binding rules invites a
+    # second answer that is arithmetically clean and ungrounded.
+    assert retry.system == SYSTEM_PROMPT
+
+
+def test_a_still_failing_answer_is_never_returned_as_clean() -> None:
+    """Two bad drafts. One retry, then the finding stands rather than being dropped."""
+    stub = ScriptedProvider(OVERSTATED, OVERSTATED)
+
+    result = synthesize("How is it distributed?", counted_packet(), [], stub)
+
+    assert len(stub.calls) == 2, "the retry is not a loop"
+    assert not result.quantitative.ok
+    assert result.quantitative.findings
+
+
+def test_a_clean_first_draft_is_never_retried() -> None:
+    stub = ScriptedProvider(ACCURATE)
+
+    result = synthesize("How is it distributed?", counted_packet(), [], stub)
+
+    assert len(stub.calls) == 1
+    assert result.repair_attempted is False
+
+
+def test_a_repair_that_is_worse_is_discarded() -> None:
+    """The rewrite is kept only if it is not strictly worse than the draft it replaced."""
+    # Keeps the original overstatement and inverts the ordering as well: two findings
+    # against the draft's one.
+    worse = "It appears in hundreds of verses in each corpus [E1]. AV has more than RV [E1]."
+    stub = ScriptedProvider(OVERSTATED, worse)
+
+    result = synthesize("How is it distributed?", counted_packet(), [], stub)
+
+    assert result.answer == OVERSTATED
+
+
+def test_tokens_are_summed_across_the_draft_and_its_repair() -> None:
+    stub = ScriptedProvider(OVERSTATED, ACCURATE)
+
+    result = synthesize("How is it distributed?", counted_packet(), [], stub)
+
+    assert result.input_tokens == 20
+    assert result.output_tokens == 10
+
+
+def test_a_failed_repair_call_keeps_the_flagged_draft() -> None:
+    """A provider that dies on the retry must not cost the answer already in hand."""
+
+    class DiesOnRetry(ScriptedProvider):
+        def generate(self, request: LLMRequest) -> LLMResponse:
+            if self.calls:
+                self.calls.append(request)
+                raise LLMProviderUnavailableError(provider="stub")
+            return super().generate(request)
+
+    stub = DiesOnRetry(OVERSTATED)
+
+    result = synthesize("How is it distributed?", counted_packet(), [], stub)
+
+    assert result.answer == OVERSTATED
+    assert result.repair_attempted is True
+    assert not result.quantitative.ok

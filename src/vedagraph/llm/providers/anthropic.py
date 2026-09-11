@@ -9,7 +9,14 @@ import time
 from collections.abc import Iterator
 from typing import Any
 
-from vedagraph.llm.base import LLMCapabilities, LLMProvider, LLMRequest, LLMResponse, LLMUsage
+from vedagraph.llm.base import (
+    LLMCapabilities,
+    LLMProvider,
+    LLMRequest,
+    LLMResponse,
+    LLMUsage,
+    normalise_finish_reason,
+)
 from vedagraph.llm.errors import (
     LLMAuthenticationError,
     LLMConfigurationError,
@@ -129,9 +136,10 @@ class AnthropicProvider(LLMProvider):
                 text_blocks = [b.text for b in response.content if hasattr(b, "text")]
                 text = "".join(text_blocks)
 
-                stop_reason = (response.stop_reason or "stop").lower()
-                if stop_reason == "end_turn":
-                    stop_reason = "stop"
+                # Anthropic says "max_tokens" where the contract says "length". Mapped
+                # through the shared table rather than here, so the three adapters
+                # cannot disagree about what a truncated generation is called.
+                stop_reason = normalise_finish_reason(response.stop_reason)
 
                 usage = LLMUsage(
                     input_tokens=getattr(response.usage, "input_tokens", None),

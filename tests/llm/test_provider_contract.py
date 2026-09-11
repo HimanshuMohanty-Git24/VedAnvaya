@@ -13,6 +13,7 @@ the adapter under test is the real one.
 
 from __future__ import annotations
 
+import json as json_module
 from types import SimpleNamespace
 from typing import Any
 
@@ -23,6 +24,7 @@ from vedagraph.llm.base import (
     LLMMessage,
     LLMRequest,
     LLMResponse,
+    normalise_finish_reason,
 )
 from vedagraph.llm.errors import (
     LLMAuthenticationError,
@@ -232,6 +234,98 @@ def test_vendor_finish_reason_spellings_do_not_survive(
     assert raw.stop_reason == "end_turn"
     claude = make_anthropic(monkeypatch, raw)
     assert claude.generate(request()).finish_reason == "stop"
+
+
+# ---------------------------------------------------------------------------
+# Truncation: one flag, three vendor spellings
+# ---------------------------------------------------------------------------
+
+
+def test_a_normal_completion_is_not_truncated(monkeypatch: pytest.MonkeyPatch) -> None:
+    for name in PROVIDER_NAMES:
+        response = happy_provider(name, monkeypatch).generate(request())
+        assert response.finish_reason == "stop"
+        assert response.generation_truncated is False, name
+
+
+def test_openai_compatible_length_normalises_to_truncated(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """The spelling OpenRouter returned for the four capped benchmark answers."""
+    raw = openai_response()
+    raw.choices[0].finish_reason = "length"
+    provider = make_openai_compat(monkeypatch, raw)
+
+    response = provider.generate(request())
+
+    assert response.finish_reason == "length"
+    assert response.generation_truncated is True
+
+
+def test_gemini_max_tokens_normalises_to_truncated(monkeypatch: pytest.MonkeyPatch) -> None:
+    body = json_module.loads(json_module.dumps(GEMINI_BODY))
+    body["candidates"][0]["finishReason"] = "MAX_TOKENS"
+    provider, _ = make_gemini(monkeypatch, body=body)
+
+    response = provider.generate(request())
+
+    assert response.finish_reason == "length"
+    assert response.generation_truncated is True
+
+
+def test_anthropic_max_tokens_normalises_to_truncated(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """The gap this test exists for.
+
+    Anthropic says ``max_tokens``; the contract says ``length``. The adapter mapped
+    ``end_turn`` and left every other spelling alone, so a Claude answer that hit the
+    cap arrived carrying a finish reason nothing downstream tested for -- indistinguish-
+    able, to the rest of the product, from a finished one.
+    """
+    raw = anthropic_response()
+    raw.stop_reason = "max_tokens"
+    provider = make_anthropic(monkeypatch, raw)
+
+    response = provider.generate(request())
+
+    assert response.finish_reason == "length"
+    assert response.generation_truncated is True
+
+
+def test_an_unknown_finish_reason_is_not_reported_as_truncated(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """A vendor string nobody has seen is an unknown, not a fault and not a cut-off."""
+    raw = openai_response()
+    raw.choices[0].finish_reason = "some_new_vendor_reason"
+    provider = make_openai_compat(monkeypatch, raw)
+
+    response = provider.generate(request())
+
+    assert response.generation_truncated is False
+
+
+@pytest.mark.parametrize(
+    ("raw", "expected"),
+    [
+        (None, "stop"),
+        ("", "stop"),
+        ("STOP", "stop"),
+        ("end_turn", "stop"),
+        ("stop_sequence", "stop"),
+        ("length", "length"),
+        ("LENGTH", "length"),
+        ("max_tokens", "length"),
+        ("MAX_TOKENS", "length"),
+        ("  Max_Tokens  ", "length"),
+        ("model_length", "length"),
+        ("SAFETY", "content_filter"),
+        ("content_filter", "content_filter"),
+    ],
+)
+def test_finish_reason_normalisation_table(raw: str | None, expected: str) -> None:
+    assert normalise_finish_reason(raw) == expected
 
 
 def test_provider_info_is_the_pair_the_response_reports(

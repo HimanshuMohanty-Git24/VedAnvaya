@@ -9,7 +9,7 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from collections.abc import Iterator
 from dataclasses import dataclass, field
-from typing import Any
+from typing import Any, Final
 
 
 @dataclass(frozen=True)
@@ -44,6 +44,52 @@ class LLMUsage:
     output_tokens: int | None = None
 
 
+#: Canonical finish reasons. Every adapter normalises to these four before returning, so
+#: no caller has to know which vendor answered.
+FINISH_STOP: Final = "stop"
+FINISH_LENGTH: Final = "length"
+FINISH_ERROR: Final = "error"
+FINISH_CONTENT_FILTER: Final = "content_filter"
+
+#: Vendor spellings of "I ran out of output budget". Anthropic says ``max_tokens``,
+#: Gemini says ``MAX_TOKENS``, the OpenAI-compatible family says ``length``, and gateways
+#: in front of them invent their own. They mean one thing and the product needs one flag:
+#: an answer that stopped mid-sentence must not be presented as a finished one. Before
+#: this table, four answers in a 60-question benchmark hit the cap and every one of them
+#: was returned looking complete, because only two of the three adapters happened to emit
+#: the spelling the rest of the code tested for.
+_FINISH_ALIASES: Final[dict[str, str]] = {
+    "end_turn": FINISH_STOP,
+    "stop": FINISH_STOP,
+    "stop_sequence": FINISH_STOP,
+    "complete": FINISH_STOP,
+    "completed": FINISH_STOP,
+    "eos": FINISH_STOP,
+    "length": FINISH_LENGTH,
+    "max_tokens": FINISH_LENGTH,
+    "maxtokens": FINISH_LENGTH,
+    "max_output_tokens": FINISH_LENGTH,
+    "model_length": FINISH_LENGTH,
+    "token_limit": FINISH_LENGTH,
+    "safety": FINISH_CONTENT_FILTER,
+    "recitation": FINISH_CONTENT_FILTER,
+    "content_filter": FINISH_CONTENT_FILTER,
+}
+
+
+def normalise_finish_reason(raw: str | None) -> str:
+    """A vendor's stop reason as one of the four canonical values.
+
+    An unrecognised value is passed through lower-cased rather than forced to ``error``.
+    A new vendor string is not a failed generation, and silently recording it as one
+    would turn an unknown into a fault report.
+    """
+    if not raw:
+        return FINISH_STOP
+    key = raw.strip().lower()
+    return _FINISH_ALIASES.get(key, key)
+
+
 @dataclass(frozen=True)
 class LLMResponse:
     text: str
@@ -57,6 +103,16 @@ class LLMResponse:
     @property
     def provider_info(self) -> dict[str, str]:
         return {"provider": self.provider, "model": self.model}
+
+    @property
+    def generation_truncated(self) -> bool:
+        """The model stopped because it ran out of output budget, not because it finished.
+
+        Derived rather than stored so it cannot drift from ``finish_reason``: two fields
+        saying different things about the same generation is how a truncated answer gets
+        presented as a complete one.
+        """
+        return self.finish_reason == FINISH_LENGTH
 
 
 class LLMProvider(ABC):

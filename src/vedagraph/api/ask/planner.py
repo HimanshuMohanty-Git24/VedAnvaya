@@ -26,13 +26,31 @@ from vedagraph.api.ask.models import AskMode, QueryIntent
 #: texts" -- about a passage this graph stores.
 #:
 #: A fourth numeric group is allowed for the same reason: Uttararcika loci are four deep.
-#: Two numeric parts remain the minimum, so a bare "RV 10" is still not read as a locus.
+#:
+#: How many numeric parts are required depends on whether a section was named, and that
+#: asymmetry is the point. With no section, two parts are the minimum, so a bare "RV 10"
+#: stays a book number rather than becoming a locus. *With* a section, one part is
+#: enough -- because the Mahanamnya arcika is flat. Its eleven verses are cited
+#: "SV MAHANAMNYA 1" through "SV MAHANAMNYA 10" and have no second number to give, so a
+#: blanket two-part minimum left that whole section unreachable through Ask's passage
+#: lookup even after the section token itself was admitted. The reader endpoint resolves
+#: those same keys correctly, which is what made the gap easy to miss: one citation,
+#: working in one surface and returning nothing in the other. The section token removes
+#: the ambiguity the minimum guards against, so it also removes the need for it.
+#: The separator before the section token is as tolerant as the one before the locus, so
+#: ``sv_aranya_1.1`` reaches the same passage as ``SV ARANYA 1.1``. The reader endpoint's
+#: own normaliser has always accepted the underscored form; requiring whitespace here
+#: meant one pasted citation resolved in the reading surface and returned nothing in Ask.
 _PASSAGE_KEY_RE: Final = re.compile(
-    r"\b(RV|AV|AVS|SV|YV|VS|VSM)\s*"
-    r"(?:(ARANYA|UTTARA|CHANDA|MAHANAMNYA)\s+)?"
-    r"[\.\s_-]?\s*(\d+)[\.\s_-](\d+)(?:[\.\s_-](\d+))?(?:[\.\s_-](\d+))?\b",
+    r"\b(?P<veda>RV|AV|AVS|SV|YV|VS|VSM)[\.\s_-]{0,2}"
+    r"(?:(?P<section>ARANYA|UTTARA|CHANDA|MAHANAMNYA)[\.\s_-]{1,2})?"
+    r"\s*(?P<locus>\d+(?:[\.\s_-]\d+){0,3})\b",
     re.IGNORECASE,
 )
+
+#: Numeric parts a citation needs before it is read as a passage locus when no arcika
+#: section was named. See :data:`_PASSAGE_KEY_RE`.
+_MIN_LOCUS_PARTS: Final = 2
 
 # Major Vedic entities — used for entity detection
 _KNOWN_DEITIES: Final[frozenset[str]] = frozenset(
@@ -435,9 +453,11 @@ def _detect_passage_key(question: str) -> str | None:
     m = _PASSAGE_KEY_RE.search(question)
     if not m:
         return None
-    veda_prefix = m.group(1).upper()
-    section = m.group(2)
-    parts = [g for g in m.groups()[2:] if g is not None]
+    veda_prefix = m.group("veda").upper()
+    section = m.group("section")
+    parts = [part for part in re.split(r"[\.\s_-]+", m.group("locus")) if part]
+    if section is None and len(parts) < _MIN_LOCUS_PARTS:
+        return None
     locus = ".".join(parts)
     # The graph cites a sectioned locus as "SV ARANYA 1.1" and the lookup matches
     # canonical_citation, so the section travels inside the key rather than being dropped.

@@ -496,10 +496,54 @@ def test_sectioned_samavedic_locus_is_a_passage_key(question: str, expected: str
 
 
 def test_a_bare_veda_and_number_is_still_not_a_locus() -> None:
-    """Two numeric parts remain the minimum, so widening the pattern cannot over-match."""
+    """Without a section, two numeric parts remain the minimum."""
     assert plan("Which Veda has the most mentions of Indra?").passage_key is None
     assert plan("Does the Samaveda mention Varuna?").passage_key is None
     assert plan("What is in RV 10?").passage_key is None
+
+
+@pytest.mark.parametrize(
+    ("question", "expected"),
+    [
+        ("What does SV MAHANAMNYA 3 contain?", "SV MAHANAMNYA 3"),
+        ("What is in SV MAHANAMNYA 10?", "SV MAHANAMNYA 10"),
+        ("sv_mahanamnya_1", "SV MAHANAMNYA 1"),
+    ],
+)
+def test_a_flat_arcika_section_needs_only_one_numeric_part(question: str, expected: str) -> None:
+    """The residual left by the first fix, found while verifying it.
+
+    Admitting the section token was necessary and not sufficient. The Mahanamnya arcika
+    is flat -- its eleven verses are cited "SV MAHANAMNYA 1" to "SV MAHANAMNYA 10", with
+    no second number to give -- so a two-part minimum kept that whole section out of Ask
+    even once ARANYA and UTTARA worked. The reader endpoint resolved the same keys
+    correctly throughout, which is what made it easy to miss.
+    """
+    assert plan(question).passage_key == expected
+
+
+def test_the_section_token_is_what_licenses_the_shorter_locus() -> None:
+    """One numeric part is admitted by the section, not by relaxing the rule."""
+    assert plan("What is in SV 3?").passage_key is None
+    assert plan("What is in AV 7?").passage_key is None
+
+
+def test_scope_denies_neither_the_section_nor_the_absent_genre() -> None:
+    """The fix must not over-correct into the opposite false claim.
+
+    Telling the model "SV ARANYA is present" without also telling it what that does not
+    mean invites the mirror-image error: a graph holding four Samhitas announcing that it
+    holds an Aranyaka corpus. Both halves are asserted here because only the pair is
+    true.
+    """
+    from vedagraph.api.ask.synthesizer import SYSTEM_PROMPT
+
+    assert "NOT a claim that VedaGraph holds a separate or complete Aranyaka corpus" in (
+        SYSTEM_PROMPT
+    )
+    assert "structural section of the modelled arcika" in SYSTEM_PROMPT
+    # The Gana exclusion is a standing safety contract and must survive every edit here.
+    assert "the gana corpus is absent" in SYSTEM_PROMPT
 
 
 def test_scope_does_not_deny_the_arcika_section_it_cites() -> None:

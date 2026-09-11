@@ -33,6 +33,7 @@ from vedagraph.llm.base import (
     LLMRequest,
     LLMResponse,
     LLMUsage,
+    normalise_finish_reason,
 )
 from vedagraph.llm.errors import (
     LLMAuthenticationError,
@@ -252,7 +253,7 @@ class GeminiProvider(LLMProvider):
 
         candidate = candidates[0]
         raw_finish = str(candidate.get("finishReason") or "STOP").upper()
-        finish_reason = _FINISH_REASONS.get(raw_finish, "stop")
+        finish_reason = normalise_finish_reason(_FINISH_REASONS.get(raw_finish, raw_finish))
 
         if finish_reason == "content_filter":
             raise LLMContentBlockedError(provider=_PROVIDER_NAME)

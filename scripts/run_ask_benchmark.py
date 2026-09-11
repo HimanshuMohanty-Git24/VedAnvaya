@@ -386,6 +386,11 @@ def _record(
         "uncited_sanskrit_runs": uncited_runs,
         "answers_flagged_for_quotes": caveat_sources.count("quote_audit"),
         "uncited_answer": "uncited_answer" in caveat_sources,
+        # Read off the caveat list because that is the observable contract: these two
+        # checks are *defined* by what they tell the reader, and a boolean recorded from
+        # anywhere else could disagree with the answer that shipped.
+        "generation_truncated": "generation_truncated" in caveat_sources,
+        "quantitative_flagged": "quantitative_audit" in caveat_sources,
         "input_tokens": usage.last_input_tokens,
         "output_tokens": usage.last_output_tokens,
         "latency_ms": round(elapsed_ms, 1),
