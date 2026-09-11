@@ -17,6 +17,20 @@ written into the checkpoint and re-checked on every resume. Change any of them a
 script refuses to append, because merging two providers' answers into one score would
 report a number that describes neither. Start a new run id instead.
 
+**A momentary outage waits rather than ending the batch.** A free-tier gateway drops
+requests for minutes at a time, and the adapter's retry ladder is sized for an HTTP
+request -- seconds, because a live Ask call must not hang. A batch has the opposite
+budget: nobody is waiting on question 34, so when the provider goes transiently dark
+this script sleeps on a lengthening ladder and re-asks *the same* question, rather than
+exiting and making a human notice and retype the command. The counter resets on every
+answered question, so an hour of intermittent blips costs waiting, not attention.
+
+What is never waited out is a fault that waiting cannot fix: a bad key, a blown context
+window, a content filter, or a *daily* quota -- where each attempt is itself metered
+against the allowance being waited for. Those stop the batch on the first occurrence.
+The distinction is read from ``LLMError.retryable``, so this script still names no
+provider.
+
 Which provider answers is read from the environment alone -- ``VEDAGRAPH_LLM_PROVIDER``,
 ``VEDAGRAPH_LLM_MODEL``, ``VEDAGRAPH_LLM_API_KEY``. This script contains no provider
 name and no per-provider branch, so a Gemini run and a Groq run execute identical code.
@@ -26,6 +40,7 @@ Usage::
     python scripts/run_ask_benchmark.py                 # start or resume
     python scripts/run_ask_benchmark.py --status        # what is left, answer nothing
     python scripts/run_ask_benchmark.py --pace 3.0
+    python scripts/run_ask_benchmark.py --max-stalls 12 # ride out a longer outage
 """
 
 from __future__ import annotations
@@ -51,12 +66,7 @@ from vedagraph.api.repositories.neo4j_repository import Neo4jRepository
 from vedagraph.llm import get_llm_provider
 from vedagraph.llm.base import LLMProvider, LLMRequest, LLMResponse
 from vedagraph.llm.config import get_llm_settings
-from vedagraph.llm.errors import (
-    LLMAuthenticationError,
-    LLMProviderUnavailableError,
-    LLMRateLimitError,
-    LLMTimeoutError,
-)
+from vedagraph.llm.errors import LLMError, LLMProviderUnavailableError
 
 BENCHMARK = Path("data/gold/ask_benchmark_v1.jsonl")
 CHECKPOINT_DIR = Path("data/gold/ask_benchmark_runs")
@@ -80,15 +90,35 @@ _DEGRADED_OPENINGS: tuple[str, ...] = (
     "The synthesis backend's content filter rejected",
 )
 
-#: Provider faults that end a batch rather than failing one question. Retrying an
-#: exhausted daily allowance is not merely futile, it is metered -- each attempt spends
-#: the headroom the resumed batch needs.
-_STOP_THE_RUN = (
-    LLMRateLimitError,
-    LLMAuthenticationError,
-    LLMProviderUnavailableError,
-    LLMTimeoutError,
-)
+#: Consecutive transient faults ridden out before the batch gives up on a question.
+#: Reset by every answered question, so this bounds one outage rather than the run.
+DEFAULT_MAX_STALLS = 5
+
+#: First wait after a transient fault. Subsequent waits double.
+DEFAULT_STALL_WAIT_SECONDS = 60.0
+
+#: Ceiling on one wait. Past five minutes the ladder stops growing and simply repeats,
+#: because a longer single sleep buys nothing a further attempt would not: the question
+#: is whether the provider is back, and that is cheap to test.
+_MAX_STALL_WAIT_SECONDS = 300.0
+
+
+def _stall_seconds(base: float, stall: int) -> float:
+    """Wait before re-asking, doubling per consecutive stall and capped."""
+    return min(base * 2.0 ** (stall - 1), _MAX_STALL_WAIT_SECONDS)
+
+
+def _waiting_can_help(fault: BaseException) -> bool:
+    """Whether sleeping and asking again could plausibly clear this fault.
+
+    Delegated entirely to ``LLMError.retryable`` so this script keeps no list of
+    provider failure modes. That flag already carries the distinction that matters most
+    to a batch: :class:`LLMRateLimitError` reports a *daily* allowance as non-retryable,
+    because retrying one is not merely futile but metered -- each attempt spends the
+    headroom the resumed batch needs. A per-minute limit, a 5xx and a timeout all stay
+    retryable and are waited out here.
+    """
+    return isinstance(fault, LLMError) and fault.retryable
 
 
 def _sha(text: str) -> str:
@@ -187,17 +217,25 @@ def build_identity(provider: LLMProvider, question_set_hash: str) -> RunIdentity
 
 
 class UsageRecordingProvider(LLMProvider):
-    """Delegates to the real provider and remembers the last call's token usage.
+    """Delegates to the real provider, remembering the last call's usage and fault.
 
     A wrapper rather than a new field on ``AskResponse``: token spend is a fact about
     this batch run, not part of the product's answer contract, and the application
     layers stay provider-agnostic because this only ever sees the normalised types.
+
+    The fault is recorded for a sharper reason. The synthesizer deliberately converts a
+    provider failure into a *degraded answer* rather than an exception, which is right
+    for a live request -- one blip should not 500 a reader -- but it discards the cause,
+    and the batch's whole stall policy turns on that cause. Catching it here, at the one
+    seam that still sees the typed error, lets the runner tell a 5xx worth waiting out
+    from a daily quota that is over, without the product layers growing a batch concern.
     """
 
     def __init__(self, inner: LLMProvider) -> None:
         self._inner = inner
         self.last_input_tokens: int | None = None
         self.last_output_tokens: int | None = None
+        self.last_fault: BaseException | None = None
 
     @property
     def name(self) -> str:
@@ -207,8 +245,16 @@ class UsageRecordingProvider(LLMProvider):
     def model(self) -> str:
         return self._inner.model
 
+    def clear_fault(self) -> None:
+        """Forget the previous question's fault, so a stale one is never re-read."""
+        self.last_fault = None
+
     def generate(self, request: LLMRequest) -> LLMResponse:
-        response = self._inner.generate(request)
+        try:
+            response = self._inner.generate(request)
+        except BaseException as exc:
+            self.last_fault = exc
+            raise
         self.last_input_tokens = response.usage.input_tokens
         self.last_output_tokens = response.usage.output_tokens
         return response
@@ -339,6 +385,21 @@ def main() -> None:
     parser.add_argument(
         "--limit", type=int, default=None, help="Answer at most N unanswered questions."
     )
+    parser.add_argument(
+        "--max-stalls",
+        type=int,
+        default=DEFAULT_MAX_STALLS,
+        help=(
+            "Consecutive transient provider faults to ride out before stopping. "
+            "Reset by every answered question. 0 restores fail-fast."
+        ),
+    )
+    parser.add_argument(
+        "--stall-wait",
+        type=float,
+        default=DEFAULT_STALL_WAIT_SECONDS,
+        help="Seconds to wait after the first transient fault. Doubles, capped at 300.",
+    )
     args = parser.parse_args()
 
     logging.disable(logging.WARNING)
@@ -366,36 +427,83 @@ def main() -> None:
     repo = Neo4jRepository(get_api_settings())
     service = AskService(repo, provider)
     answered = 0
+    index = 0
+    stalls = 0
+    # Nothing to pace against before the first question, and a stall wait has already
+    # paced the retry that follows it far past anything --pace would add.
+    skip_pace = True
     try:
-        for index, case in enumerate(remaining, start=1):
-            if index > 1:
+        while index < len(remaining):
+            case = remaining[index]
+            if not skip_pace:
                 time.sleep(args.pace)
+            skip_pace = False
+
+            provider.clear_fault()
             started = time.monotonic()
+            fault: BaseException | None = None
+            record: dict[str, Any] | None = None
             try:
                 response = service.ask(AskRequest(question=case["question"], **case["context"]))
-            except _STOP_THE_RUN as exc:
-                print(f"\nSTOPPING cleanly at {case['id']}: {type(exc).__name__}")
-                print(f"  {exc.detail}")
-                print(f"  {len(done) + answered}/{len(cases)} answered and checkpointed.")
-                print("  Re-run this command when the window refills to continue.")
-                return
+            except LLMError as exc:
+                # Reached the runner un-degraded: an auth or configuration fault the
+                # synthesizer re-raises rather than answering around.
+                fault = exc
             except Exception as exc:
                 print(f"[{case['id']}] ERROR {type(exc).__name__}: {str(exc)[:120]}")
+                index += 1
+                continue
+            else:
+                record = _record(
+                    case, response, identity, provider, (time.monotonic() - started) * 1000
+                )
+                if record["degraded"]:
+                    # The provider, not the pipeline, failed. Never checkpointed: a
+                    # degraded row scored as a correct refusal would flatter the run, and
+                    # on resume it would never be retried. The cause is not in the
+                    # response -- the synthesizer swallowed it -- so read it off the
+                    # wrapper that saw it thrown. The fallback is not decoration: a
+                    # degraded answer this script cannot attribute is still the backend
+                    # failing to answer, and inferring nothing would either crash the
+                    # batch or, worse, let an unattributed degradation look like success.
+                    fault = provider.last_fault or LLMProviderUnavailableError(
+                        provider=provider.name
+                    )
+                    record = None
+
+            if fault is not None:
+                detail = getattr(fault, "detail", str(fault)) or type(fault).__name__
+                if not _waiting_can_help(fault):
+                    print(f"\nSTOPPING at {case['id']}: {type(fault).__name__}")
+                    print(f"  {detail}")
+                    print(f"  {len(done) + answered}/{len(cases)} answered and checkpointed.")
+                    print("  Waiting will not clear this. Re-run once it is resolved.")
+                    return
+                stalls += 1
+                if stalls > args.max_stalls:
+                    print(f"\nSTOPPING at {case['id']}: still failing after {args.max_stalls}")
+                    print(f"  consecutive waits. Last fault: {detail}")
+                    print(f"  {len(done) + answered}/{len(cases)} answered and checkpointed.")
+                    print("  Re-run this command when the provider recovers.")
+                    return
+                wait = _stall_seconds(args.stall_wait, stalls)
+                resume_at = time.strftime("%H:%M:%S", time.localtime(time.time() + wait))
+                print(
+                    f"   .. {case['id']} {type(fault).__name__}: waiting {wait:.0f}s "
+                    f"(stall {stalls}/{args.max_stalls}, retry at {resume_at})",
+                    flush=True,
+                )
+                time.sleep(wait)
+                skip_pace = True
                 continue
 
-            record = _record(
-                case, response, identity, provider, (time.monotonic() - started) * 1000
-            )
-            if record["degraded"]:
-                # The provider, not the pipeline, failed. Not checkpointed: a degraded
-                # row scored as a correct refusal would flatter the run, and on resume
-                # it would never be retried.
-                print(f"\nSTOPPING at {case['id']}: provider returned a degraded answer.")
-                print(f"  {len(done) + answered}/{len(cases)} answered and checkpointed.")
-                return
-
+            assert record is not None  # no fault means _record ran
             append_checkpoint(identity, record)
             answered += 1
+            index += 1
+            # An answered question means the provider is back; the next outage starts
+            # its ladder from the bottom rather than inheriting an old one's impatience.
+            stalls = 0
             print(
                 f"[{len(done) + answered:>2}/{len(cases)}] {record['status']:<22}"
                 f" cites={record['citation_count']:<2}"
@@ -403,6 +511,13 @@ def main() -> None:
                 f" {record['latency_ms']:>6.0f}ms  {case['question'][:42]}",
                 flush=True,
             )
+    except KeyboardInterrupt:
+        # Ctrl-C during a multi-minute stall wait is the expected way to abandon a batch.
+        # Every answered question is already flushed, so this loses nothing and should
+        # read as a clean exit rather than a traceback.
+        print(f"\nInterrupted. {len(done) + answered}/{len(cases)} answered and checkpointed.")
+        print("  Re-run this command to continue.")
+        return
     finally:
         repo.close()
 

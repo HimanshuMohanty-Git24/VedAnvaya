@@ -26,15 +26,32 @@ class LLMAuthenticationError(LLMError):
 
 
 class LLMRateLimitError(LLMError):
-    """Provider rate limit hit. Retryable with backoff."""
+    """Provider rate limit hit. Retryable with backoff unless the *daily* cap is gone.
 
-    def __init__(self, *, provider: str, retry_after_seconds: float | None = None) -> None:
+    ``daily_exhausted`` separates the two limits that share this one status code. A
+    per-minute window refills while a caller waits; a per-day allowance does not, and
+    every attempt against it is itself metered -- so a batch that sleeps and asks again
+    spends the headroom it is waiting for. Only the adapter can tell them apart, because
+    the period appears solely in the provider's prose, so the finding is recorded here
+    rather than re-derived by each caller. ``retryable`` follows from it, which is what
+    makes the distinction reach retry ladders that never heard of a daily quota.
+    """
+
+    def __init__(
+        self,
+        *,
+        provider: str,
+        retry_after_seconds: float | None = None,
+        daily_exhausted: bool = False,
+    ) -> None:
+        suffix = " The daily allowance is exhausted; waiting will not clear it."
         super().__init__(
-            f"Rate limit reached for provider '{provider}'.",
+            f"Rate limit reached for provider '{provider}'." + (suffix if daily_exhausted else ""),
             provider=provider,
-            retryable=True,
+            retryable=not daily_exhausted,
         )
         self.retry_after_seconds = retry_after_seconds
+        self.daily_exhausted = daily_exhausted
 
 
 class LLMTimeoutError(LLMError):

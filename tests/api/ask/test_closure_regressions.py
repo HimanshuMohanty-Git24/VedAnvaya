@@ -349,3 +349,122 @@ def test_a_checkpoint_filename_carries_no_path_metacharacters(run_id: str) -> No
     assert not set(name) & set(r':/\<>"|?*'), name
     # Still distinguishes runs that differ only in the sanitised characters.
     assert safe_filename("a:b") != safe_filename("a:c")
+
+
+# -- a momentary outage must not cost a human a retyped command -------------------
+
+
+def _bench_module() -> object:
+    """Load the benchmark runner by path; scripts/ is not a package."""
+    import importlib.util
+    import sys
+
+    spec = importlib.util.spec_from_file_location(
+        "_bench", pathlib.Path(__file__).parents[3] / "scripts" / "run_ask_benchmark.py"
+    )
+    assert spec and spec.loader
+    module = importlib.util.module_from_spec(spec)
+    sys.modules["_bench"] = module
+    spec.loader.exec_module(module)
+    return module
+
+
+def test_a_transient_fault_is_waited_out_and_a_daily_one_is_not() -> None:
+    """The batch's stall policy must read the distinction, not guess at it.
+
+    Observed twice on one resume: OpenRouter's free tier returned an empty 200, the run
+    stopped, and a human had to notice and retype the command. Waiting is the right
+    answer there. It is the wrong answer to an exhausted daily allowance, where every
+    probe is metered against the headroom being waited for -- so the two must not be
+    conflated into "the provider errored".
+    """
+    from vedagraph.llm.errors import (
+        LLMAuthenticationError,
+        LLMContentBlockedError,
+        LLMProviderUnavailableError,
+        LLMRateLimitError,
+        LLMTimeoutError,
+    )
+
+    waiting_can_help = _bench_module()._waiting_can_help  # type: ignore[attr-defined]
+
+    assert waiting_can_help(LLMProviderUnavailableError(provider="openrouter"))
+    assert waiting_can_help(LLMTimeoutError(provider="openrouter", timeout_seconds=60))
+    assert waiting_can_help(LLMRateLimitError(provider="openrouter"))
+
+    assert not waiting_can_help(LLMRateLimitError(provider="openrouter", daily_exhausted=True)), (
+        "a daily allowance does not refill while a batch sleeps"
+    )
+    assert not waiting_can_help(LLMAuthenticationError(provider="openrouter"))
+    assert not waiting_can_help(LLMContentBlockedError(provider="openrouter"))
+
+
+def test_the_stall_ladder_grows_and_then_stops_growing() -> None:
+    """Doubling rides out a longer outage; the cap keeps the probe cheap.
+
+    Past five minutes a longer single sleep buys nothing another attempt would not --
+    the only question is whether the provider is back, and asking is cheap.
+    """
+    module = _bench_module()
+    stall_seconds = module._stall_seconds  # type: ignore[attr-defined]
+    cap = module._MAX_STALL_WAIT_SECONDS  # type: ignore[attr-defined]
+
+    assert stall_seconds(60.0, 1) == 60.0
+    assert stall_seconds(60.0, 2) == 120.0
+    assert stall_seconds(60.0, 3) == 240.0
+    assert stall_seconds(60.0, 4) == cap
+    assert stall_seconds(60.0, 99) == cap
+
+
+def test_the_wrapper_keeps_the_fault_the_synthesizer_swallows() -> None:
+    """Without this the runner cannot tell *why* an answer came back degraded.
+
+    Degrading rather than raising is correct for a live request -- one provider blip
+    should not 500 a reader -- but it discards the cause, and the whole stall policy
+    turns on the cause. The wrapper is the last seam that still sees the typed error.
+    """
+    from vedagraph.llm.base import LLMProvider, LLMResponse, LLMUsage
+    from vedagraph.llm.errors import LLMProviderUnavailableError
+
+    module = _bench_module()
+
+    class _Blip(LLMProvider):
+        def __init__(self) -> None:
+            self.fail = True
+
+        @property
+        def name(self) -> str:
+            return "openrouter"
+
+        @property
+        def model(self) -> str:
+            return "free-model"
+
+        def generate(self, request: LLMRequest) -> LLMResponse:
+            if self.fail:
+                raise LLMProviderUnavailableError(provider="openrouter")
+            return LLMResponse(
+                text="ok",
+                finish_reason="stop",
+                provider="openrouter",
+                model="free-model",
+                usage=LLMUsage(input_tokens=5, output_tokens=2),
+            )
+
+        def stream(self, request: LLMRequest):  # type: ignore[no-untyped-def]
+            raise NotImplementedError
+
+    inner = _Blip()
+    wrapped = module.UsageRecordingProvider(inner)  # type: ignore[attr-defined]
+    req = LLMRequest(messages=[LLMMessage(role="user", content="q")])
+
+    with pytest.raises(LLMProviderUnavailableError):
+        wrapped.generate(req)
+    assert isinstance(wrapped.last_fault, LLMProviderUnavailableError)
+
+    # And a stale fault is never re-read against the next question.
+    wrapped.clear_fault()
+    inner.fail = False
+    wrapped.generate(req)
+    assert wrapped.last_fault is None
+    assert wrapped.last_input_tokens == 5

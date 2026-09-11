@@ -277,14 +277,33 @@ class OpenAICompatProvider(LLMProvider):
                     provider_request_id=response.id,
                 )
 
-            except LLMError:
+            except LLMError as normalised:
+                # Already normalised, so it must not pass through _map_error a second
+                # time -- but it must still honour `retryable`, and for a long time it
+                # did not. The empty-choice branch above raises LLMProviderUnavailableError
+                # *precisely* so this ladder answers it, and an unconditional re-raise
+                # here silently denied it every attempt: the branch's own comment
+                # described behaviour the code did not implement. A free-tier gateway
+                # returning one empty 200 ended a 60-question batch on the spot, which is
+                # the exact failure that branch was written to prevent. Non-retryable
+                # normalised errors -- a content filter, a blown context window -- still
+                # surface on the first occurrence.
+                if normalised.retryable and attempt < self._max_retries:
+                    time.sleep(self._backoff_seconds(normalised, attempt))
+                    continue
                 raise
             except Exception as e:
                 mapped = self._map_error(e)
                 if isinstance(mapped, LLMRateLimitError) and _is_exhausted_for_the_day(e):
                     # A daily allowance does not recover within the life of this request,
-                    # and every retry is itself metered against it. Surface it now.
-                    raise mapped from e
+                    # and every retry is itself metered against it. Surface it now, marked
+                    # so callers further out make the same distinction instead of sleeping
+                    # through an allowance that will not return until tomorrow.
+                    raise LLMRateLimitError(
+                        provider=self._provider_name,
+                        retry_after_seconds=mapped.retry_after_seconds,
+                        daily_exhausted=True,
+                    ) from e
                 if mapped.retryable and attempt < self._max_retries:
                     time.sleep(self._backoff_seconds(mapped, attempt))
                     continue

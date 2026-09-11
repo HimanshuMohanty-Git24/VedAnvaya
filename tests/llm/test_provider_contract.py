@@ -475,3 +475,154 @@ def test_a_long_retry_after_is_capped_rather_than_honoured() -> None:
     huge = LLMRateLimitError(provider="groq", retry_after_seconds=900)
 
     assert OpenAICompatProvider._backoff_seconds(huge, 0) == _MAX_BACKOFF_SECONDS
+
+
+# ---------------------------------------------------------------------------
+# Transient faults reach the retry ladder; daily ones do not
+# ---------------------------------------------------------------------------
+
+
+def _sequenced_openai(
+    monkeypatch: pytest.MonkeyPatch, results: list[Any], *, max_retries: int = 3
+) -> tuple[OpenAICompatProvider, list[int]]:
+    """An adapter whose client returns each result in turn. Sleeps are not slept."""
+    pytest.importorskip("openai")
+    provider = OpenAICompatProvider(
+        provider_name="openrouter",
+        api_key=FAKE_KEY,
+        model="free-model",
+        base_url="https://example.invalid/v1",
+        max_retries=max_retries,
+    )
+    calls = {"n": 0}
+    slept: list[int] = []
+
+    def create(**kwargs: Any) -> Any:
+        result = results[min(calls["n"], len(results) - 1)]
+        calls["n"] += 1
+        if isinstance(result, Exception):
+            raise result
+        return result
+
+    monkeypatch.setattr(
+        provider,
+        "_client",
+        SimpleNamespace(chat=SimpleNamespace(completions=SimpleNamespace(create=create))),
+    )
+    monkeypatch.setattr(
+        "vedagraph.llm.providers.openai_compat.time.sleep", lambda s: slept.append(s)
+    )
+    provider._calls = calls  # type: ignore[attr-defined]
+    return provider, slept
+
+
+def _empty_200() -> SimpleNamespace:
+    """A 200 carrying no choice: the gateway accepted, the upstream produced nothing."""
+    return SimpleNamespace(choices=[], usage=None, model="free-model", id="resp-empty")
+
+
+def test_an_empty_200_is_retried_rather_than_ending_the_caller(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """The defect this file exists to pin: the ladder was promised and never ran.
+
+    ``generate`` raises ``LLMProviderUnavailableError`` on an empty ``choices`` *so that
+    the retry ladder answers it* -- the branch says so in a comment. But the handler
+    below it caught every already-normalised ``LLMError`` and re-raised unconditionally,
+    so the blip got zero of its three attempts. A free-tier gateway returning one empty
+    200 ended a 60-question benchmark batch on the spot, twice, while the very next call
+    to the same model succeeded.
+    """
+    provider, slept = _sequenced_openai(monkeypatch, [_empty_200(), openai_response()])
+
+    response = provider.generate(request())
+
+    assert response.text == "hello"
+    assert provider._calls["n"] == 2, "the empty 200 must cost one retry, not the batch"
+    assert slept == [1.0], "and it must back off before asking again"
+
+
+def test_an_unavailable_provider_still_fails_once_the_ladder_is_spent(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Retrying is bounded. Four empty 200s with max_retries=3 is still a failure."""
+    provider, slept = _sequenced_openai(monkeypatch, [_empty_200()])
+
+    with pytest.raises(LLMProviderUnavailableError):
+        provider.generate(request())
+
+    assert provider._calls["n"] == 4, "one attempt plus three retries"
+    assert slept == [1.0, 2.0, 4.0]
+
+
+def test_a_content_filter_is_not_retried(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Making normalised errors retryable must not make *every* normalised error retry.
+
+    A safety filter returns the same verdict however many times it is asked, and each
+    ask is metered.
+    """
+    blocked = SimpleNamespace(
+        choices=[
+            SimpleNamespace(message=SimpleNamespace(content=""), finish_reason="content_filter")
+        ],
+        usage=None,
+        model="free-model",
+        id="resp-blocked",
+    )
+    provider, slept = _sequenced_openai(monkeypatch, [blocked])
+
+    with pytest.raises(LLMContentBlockedError):
+        provider.generate(request())
+
+    assert provider._calls["n"] == 1
+    assert slept == []
+
+
+def test_a_daily_quota_is_marked_and_never_waited_out(monkeypatch: pytest.MonkeyPatch) -> None:
+    """A per-day ceiling must reach the caller as non-retryable.
+
+    A batch runner that sleeps five minutes and asks again spends the very allowance it
+    is waiting for. The period is legible only in the provider's prose, so the adapter
+    that read it records the finding on the error rather than leaving each caller to
+    re-derive it.
+    """
+    import httpx
+
+    sdk = pytest.importorskip("openai")
+    daily = sdk.RateLimitError(
+        "Rate limit reached on requests per day (RPD): Limit 50, Used 50",
+        response=httpx.Response(
+            429, request=httpx.Request("POST", "https://example.invalid/v1/chat/completions")
+        ),
+        body=None,
+    )
+    provider, slept = _sequenced_openai(monkeypatch, [daily])
+
+    with pytest.raises(LLMRateLimitError) as caught:
+        provider.generate(request())
+
+    assert caught.value.daily_exhausted is True
+    assert caught.value.retryable is False
+    assert provider._calls["n"] == 1, "a daily allowance is not probed three more times"
+    assert slept == []
+
+
+def test_a_per_minute_quota_stays_retryable(monkeypatch: pytest.MonkeyPatch) -> None:
+    """The distinction must not swallow the limit that *does* clear by waiting."""
+    import httpx
+
+    sdk = pytest.importorskip("openai")
+    per_minute = sdk.RateLimitError(
+        "Rate limit reached on tokens per minute (TPM): Limit 6000",
+        response=httpx.Response(
+            429, request=httpx.Request("POST", "https://example.invalid/v1/chat/completions")
+        ),
+        body=None,
+    )
+    provider, _ = _sequenced_openai(monkeypatch, [per_minute], max_retries=0)
+
+    with pytest.raises(LLMRateLimitError) as caught:
+        provider.generate(request())
+
+    assert caught.value.daily_exhausted is False
+    assert caught.value.retryable is True

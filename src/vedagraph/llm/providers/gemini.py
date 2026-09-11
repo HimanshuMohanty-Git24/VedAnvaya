@@ -333,7 +333,9 @@ class GeminiProvider(LLMProvider):
                         quota_body = None
                     if _is_exhausted_for_the_day(quota_body):
                         raise LLMRateLimitError(
-                            provider=_PROVIDER_NAME, retry_after_seconds=None
+                            provider=_PROVIDER_NAME,
+                            retry_after_seconds=None,
+                            daily_exhausted=True,
                         ) from None
                 if retryable and may_retry(attempt):
                     time.sleep(min(2**attempt, 8))
