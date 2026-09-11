@@ -34,6 +34,7 @@ import argparse
 import hashlib
 import json
 import logging
+import re
 import subprocess
 import time
 from collections.abc import Iterator
@@ -222,8 +223,30 @@ def load_questions() -> tuple[list[dict[str, Any]], str]:
     return rows, _sha(raw)
 
 
+#: Characters a run id may contain that a filename may not. Model ids carry several:
+#: ``nvidia/nemotron-3-ultra-550b-a55b:free`` has both a slash and a colon.
+_FILENAME_UNSAFE = re.compile(r'[:/\\<>"|?*]')
+
+
+def safe_filename(run_id: str) -> str:
+    """A filesystem-safe container name for a run id.
+
+    Sanitising the *filename* only, never the run id itself: the id is the identity
+    written into every row and compared on resume, and quietly rewriting it would make
+    two different configurations look like one.
+
+    The colon is why this exists and it fails silently on Windows rather than loudly.
+    ``a55b:free-<hash>.jsonl`` is not a filename there -- it is an NTFS alternate data
+    stream attached to a zero-byte file called ``a55b``. Writes appear to succeed, the
+    bytes are readable back through the exact same path so resume still works, and the
+    data is invisible to ``glob``, uncommittable by git, and lost by any ordinary copy.
+    A benchmark that cannot be committed or graded is not a result.
+    """
+    return _FILENAME_UNSAFE.sub("_", run_id)
+
+
 def checkpoint_path(identity: RunIdentity) -> Path:
-    return CHECKPOINT_DIR / f"{identity.run_id}.jsonl"
+    return CHECKPOINT_DIR / f"{safe_filename(identity.run_id)}.jsonl"
 
 
 def load_checkpoint(identity: RunIdentity) -> dict[str, dict[str, Any]]:
@@ -312,9 +335,7 @@ def _record(
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--pace", type=float, default=DEFAULT_PACE_SECONDS)
-    parser.add_argument(
-        "--status", action="store_true", help="Report progress and answer nothing."
-    )
+    parser.add_argument("--status", action="store_true", help="Report progress and answer nothing.")
     parser.add_argument(
         "--limit", type=int, default=None, help="Answer at most N unanswered questions."
     )
@@ -358,11 +379,13 @@ def main() -> None:
                 print(f"  {len(done) + answered}/{len(cases)} answered and checkpointed.")
                 print("  Re-run this command when the window refills to continue.")
                 return
-            except Exception as exc:  # noqa: BLE001 - one bad question must not end a batch
+            except Exception as exc:
                 print(f"[{case['id']}] ERROR {type(exc).__name__}: {str(exc)[:120]}")
                 continue
 
-            record = _record(case, response, identity, provider, (time.monotonic() - started) * 1000)
+            record = _record(
+                case, response, identity, provider, (time.monotonic() - started) * 1000
+            )
             if record["degraded"]:
                 # The provider, not the pipeline, failed. Not checkpointed: a degraded
                 # row scored as a correct refusal would flatter the run, and on resume

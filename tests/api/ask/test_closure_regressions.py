@@ -11,6 +11,8 @@ so the acceptance surface stays runnable in CI where neither exists.
 
 from __future__ import annotations
 
+import pathlib
+
 import pytest
 
 from vedagraph.api.ask.citation import audit, extract_cited_ids
@@ -19,6 +21,7 @@ from vedagraph.api.ask.matching import token_match
 from vedagraph.api.ask.models import EvidenceItem, EvidenceItemType
 from vedagraph.api.ask.planner import plan
 from vedagraph.api.ask.resolver import _ALIAS_PROPS, _LABEL_PROPS
+from vedagraph.llm.base import LLMMessage, LLMRequest
 from vedagraph.llm.providers.gemini import _is_exhausted_for_the_day
 from vedagraph.llm.providers.openai_compat import (
     _is_exhausted_for_the_day as _compat_exhausted,
@@ -270,3 +273,79 @@ def test_a_corpus_distribution_labels_the_relationship_behind_every_count() -> N
     # No bare repeated "AV: n verses" that a reader could only read as one measurement.
     assert "AV: 68 verses; AV: 68 verses" not in item.fact
     assert item.qualifier is not None and "must not be added" in item.qualifier
+
+
+# -- a transient empty completion must not end a batch ----------------------------
+
+
+def test_an_empty_choices_response_is_retryable_not_permanent() -> None:
+    """A 200 carrying no choice is the upstream failing behind the gateway.
+
+    OpenRouter returned one on the fifth question of a 60-question benchmark and the
+    adapter classified it as a permanent LLMResponseError, ending the batch -- while the
+    very next call to the same model succeeded. It is now raised as unavailable so the
+    existing retry ladder applies.
+    """
+    from types import SimpleNamespace
+
+    from vedagraph.llm.errors import LLMProviderUnavailableError, LLMResponseError
+    from vedagraph.llm.providers.openai_compat import OpenAICompatProvider
+
+    provider = OpenAICompatProvider(
+        provider_name="openrouter", api_key="k", model="m", max_retries=0
+    )
+
+    class _Client:
+        def __init__(self) -> None:
+            self.calls = 0
+            self.chat = SimpleNamespace(completions=SimpleNamespace(create=self._create))
+
+        def _create(self, **_: object) -> SimpleNamespace:
+            self.calls += 1
+            return SimpleNamespace(choices=[], usage=None, id="x", model="m")
+
+    provider._client = _Client()  # type: ignore[assignment]
+
+    with pytest.raises(LLMProviderUnavailableError) as caught:
+        provider.generate(LLMRequest(messages=[LLMMessage(role="user", content="hi")]))
+    assert caught.value.retryable is True
+    # And specifically not the permanent classification that stopped the run.
+    assert not isinstance(caught.value, LLMResponseError)
+
+
+# -- a run id is not always a legal filename --------------------------------------
+
+
+@pytest.mark.parametrize(
+    "run_id",
+    [
+        "openrouter-nvidia_nemotron-3-ultra-550b-a55b:free-2845e1ab",
+        "openai_compatible-vendor/model:tag-abc123",
+    ],
+)
+def test_a_checkpoint_filename_carries_no_path_metacharacters(run_id: str) -> None:
+    """The colon fails silently on Windows, which is why it needs a test.
+
+    ``a55b:free-<hash>.jsonl`` is not a file there, it is an NTFS alternate data stream
+    on a zero-byte file named ``a55b``. Writes succeed, reads through the identical path
+    succeed, so resume still works -- and the data is invisible to glob, uncommittable,
+    and destroyed by any ordinary copy. A benchmark that cannot be committed is not a
+    result.
+    """
+    # scripts/ is not a package, so the module is loaded by path.
+    import importlib.util
+    import sys
+
+    spec = importlib.util.spec_from_file_location(
+        "_bench", pathlib.Path(__file__).parents[3] / "scripts" / "run_ask_benchmark.py"
+    )
+    assert spec and spec.loader
+    module = importlib.util.module_from_spec(spec)
+    sys.modules["_bench"] = module
+    spec.loader.exec_module(module)
+    safe_filename = module.safe_filename
+
+    name = safe_filename(run_id)
+    assert not set(name) & set(r':/\<>"|?*'), name
+    # Still distinguishes runs that differ only in the sanitised characters.
+    assert safe_filename("a:b") != safe_filename("a:c")

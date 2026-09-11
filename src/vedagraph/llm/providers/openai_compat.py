@@ -244,10 +244,15 @@ class OpenAICompatProvider(LLMProvider):
 
                 choice = response.choices[0] if response.choices else None
                 if not choice:
-                    raise LLMResponseError(
-                        provider=self._provider_name,
-                        detail="No choices returned.",
-                    )
+                    # A 200 carrying no choice means the gateway accepted the request and
+                    # the upstream model produced nothing -- capacity, an upstream
+                    # timeout, or a routed provider failing behind the gateway. That is
+                    # transient, and classifying it as a permanent response error ended a
+                    # whole 60-question benchmark batch on the fifth question while the
+                    # very next call to the same model succeeded. Raised as unavailable
+                    # so the existing retry ladder gets its attempts; exhausting them
+                    # still fails, just not on the first blip.
+                    raise LLMProviderUnavailableError(provider=self._provider_name)
 
                 text = choice.message.content or ""
                 finish_reason = (choice.finish_reason or "stop").lower()
