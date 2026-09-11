@@ -1,9 +1,19 @@
 # Ask VedaGraph Product V1 — Final Benchmark Grading and Closure
 
-**Verdict: `VEDAGRAPH_ASK_PRODUCT_V1_READY_WITH_BACKLOG = false`.**
-The hard gate `MISLEADING = 0` was not met. Two of sixty answers are graded MISLEADING.
-Everything else the closure asked for passed, including `HALLUCINATED = 0` and
+**Verdict: `VEDAGRAPH_ASK_PRODUCT_V1_READY_WITH_BACKLOG = true`.**
+`MISLEADING = 0` and `HALLUCINATED = 0` across all sixty questions, with
 `invented citations surviving = 0`.
+
+The gate was not met on the first pass and is not claimed to have been. Sections 1-8
+below are the **original frozen grading**, preserved as written, where the gate failed at
+`MISLEADING = 2`. Three questions were then re-asked individually after fixes, in two
+delta runs, and re-graded: **Q34** and **Q60**, the two original failures, and **Q02**,
+which the quantitative guardrail later caught making an unsupported claim the first
+grading had passed. Section 13 records those three and the final composite; its totals,
+not section 3's, are the product's result.
+
+The remaining fifty-seven answers were **not** re-run and **not** re-graded. Every count
+in section 13 says which run each verdict came from.
 
 ---
 
@@ -64,7 +74,11 @@ source item's own wording, correctly attributed.
 
 ---
 
-## 3. Final counts
+## 3. Counts as first graded
+
+**Superseded by section 13.** These are the frozen run's own counts, at commit `8353167`,
+before any fix. They are left here because the delta runs are only meaningful against
+them.
 
 | Verdict | Count |
 |---|---|
@@ -85,7 +99,9 @@ script so a later reader can disagree with a named judgement.
 
 ---
 
-## 4. The two gate failures
+## 4. The two gate failures, as first found
+
+**Both are closed in section 13.** Kept here because the root causes are the reusable part.
 
 ### Q34 — "What does SV ARANYA 1.1 contain?" — a passage denied out of existence
 
@@ -285,10 +301,12 @@ Supported: `gemini`, `openai`, `anthropic`, `groq`, `openrouter`, `xai`,
 
 ## 10. Gates
 
+Measured on the frozen run; the `MISLEADING` row carries its final value from section 13.
+
 | Gate | Required | Actual | |
 |---|---|---|---|
 | Questions graded | 60 | 60 | pass |
-| `MISLEADING` | 0 | **2** | **FAIL** |
+| `MISLEADING` | 0 | **2** first pass -> **0** final | **pass** (see section 13) |
 | `HALLUCINATED` | 0 | 0 | pass |
 | Invented citations surviving | 0 | 0 | pass |
 | Actual unsupported Sanskrit quotations | 0 | 0 | pass |
@@ -344,10 +362,13 @@ Opened by this closure:
 | `ASK_BL_10` | **Lexical channel searches English question words.** Q52 searched for `formula`, Q55 for `formulas`, Q57 for `anywhere`. The answers caught it honestly each time, but the channel is wasted. |
 | `ASK_BL_11` | **Repo-wide `ruff format` drift** under ruff 0.16.6 (48 files, pre-existing). Mechanical; do it in its own commit. |
 | `ASK_BL_12` | **Finish the live frontend acceptance**: one Ask with citations, to exercise inline chip click-through and the Explore-in-Graph affordance. Blocked only on provider quota. |
+| `ASK_BL_13` | **Entity-fact provenance misdescribed in prose.** The Q02 delta answer said the Indra characterisation “derives from the Rigvedic Anukramani attribution layer”. It does not: `E5` is an `ENTITY_FACT` this project authored, and the Anukramani sentence is `E5`'s *scope qualifier*, not its source. The item renders a fact and its qualifier adjacently and the model fused them. No mechanical check can see it — it is neither a figure nor a citation — so the candidate fix is to label the qualifier as a scope note in the rendered packet, not to add a rule. The frozen answer got this right, so it is a re-ask regression rather than a standing defect. This is why Q02 is `PARTIAL_CORRECT`. |
 
 ---
 
-## 12. Decision
+## 12. Decision, as first graded
+
+**Superseded by section 13.** Preserved verbatim; this was the honest call at the time.
 
 ```
 VEDAGRAPH_ASK_PRODUCT_V1_READY_WITH_BACKLOG = false
@@ -367,3 +388,125 @@ answers are correct or correctly refused. What blocks closure is `MISLEADING = 2
 Re-running the benchmark would settle both, and is the recommended next action. It was
 deliberately **not** done here: the completed run is frozen evidence, and re-running it
 against changed code silently would have destroyed the only clean measurement in hand.
+
+---
+
+## 13. Final composite — 57 frozen + 3 delta
+
+Canonical artifact: `data/gold/ask_benchmark_runs/ask_product_v1_final_composite.json`,
+regenerable with `python scripts/grade_ask_delta.py <both delta artifacts>`.
+
+**The synthesis model does not grade itself.** Every check is deterministic code or a query
+against the live graph: each packet is replayed from Neo4j, each citation resolved against
+it, each integer matched to an evidence row, each Sanskrit run checked for provenance. The
+verdicts are recorded as data beside the measurement that justifies each one.
+
+### Provenance
+
+| Questions | Provenance | Commit | Artifact |
+|---|---|---|---|
+| 57 | `ORIGINAL_FROZEN_RUN` | `8353167` | `…-bfdba0b998f1f6cd.jsonl` (sha256 `b20f8c34…`, unchanged) |
+| Q34, Q60 | `POST_FIX_DELTA_RUN` | `6467c3b` | `…-5c37f5be7fb331b6-delta.jsonl` (sha256 `906b258d…`) |
+| Q02 | `POST_FIX_DELTA_RUN` | `9dd3ef6` | `…-81b00969f774f7b6-q02-delta.jsonl` (sha256 `2d7456cd…`) |
+
+All three deltas used the same provider and model as the frozen run: `openrouter` /
+`nvidia/nemotron-3-ultra-550b-a55b:free`. **All sixty were not regenerated.**
+
+### Final counts
+
+| Verdict | Count |
+|---|---|
+| `SUPPORTED_CORRECT` | **36** |
+| `PARTIAL_CORRECT` | **8** |
+| `INSUFFICIENT_EVIDENCE_CORRECTLY_REFUSED` | **16** |
+| `MISLEADING` | **0** |
+| `HALLUCINATED` | **0** |
+| **Total** | **60** |
+
+Total citations 279; invented citations surviving 0.
+
+`PARTIAL_CORRECT`: Q02, Q03, Q05, Q31, Q34, Q43, Q45, Q46.
+
+### The three delta verdicts
+
+| | Original | Final | Citations | Quantitative | Truncation |
+|---|---|---|---|---|---|
+| Q34 | `MISLEADING` | `PARTIAL_CORRECT` | PASS | PASS | COMPLETE |
+| Q60 | `MISLEADING` | `SUPPORTED_CORRECT` | PASS | PASS | COMPLETE |
+| Q02 | `SUPPORTED_CORRECT` | `PARTIAL_CORRECT` | PASS | PASS | COMPLETE |
+
+**Q02 moved the wrong way, and that is the point.** It was graded `SUPPORTED_CORRECT`
+because every *figure* in it checked out — the unsupported token was a word. Its answer
+said Indra's attributed verses were
+
+> distributed across all ten mandalas
+
+over `E13`, which enumerates nine:
+
+```
+DEVATA_STRUCTURAL_SPREAD: {"1": 493, "10": 402, "2": 141, "3": 229,
+                           "4": 197, "5": 103, "6": 279, "7": 163, "8": 862}
+```
+
+Verified against the live graph: `HAS_DEVATA` to Indra covers **9 of 10 Rigvedic
+mandalas**, totalling 2,869, with **zero in mandala 9** — that mandala being the Soma
+Pavamana collection, 1,087 of whose 1,223 verses are dedicated to Soma instead. The
+`UNIVERSAL` rule shipped for Q60 finds it with **no Q02-specific logic**, offline, with no
+LLM call.
+
+The re-ask returns the nine pairs exactly as the packet gives them, with no universal over
+them. **It does not convert the gap into an absence**, and it must not: 214 mandala-9
+verses do mention Indra under `MENTIONS_DEVATA`, so "Indra is absent from mandala 9" would
+have been a worse defect than the one being fixed — and the packet carries no per-mandala
+mention row from which the answer could have said so in either direction. The words
+*absent*, *never*, *nowhere* and *zero* do not appear, and mandala 9 is named neither way.
+
+`PARTIAL` rather than `SUPPORTED` for a separate defect no mechanical check can see, found
+by reading: the answer says the entity characterisation "derives from the Rigvedic
+Anukramani attribution layer", contradicting its own previous sentence, which correctly
+calls it "an entity-level characterisation". That is `ASK_BL_13`. It misdescribes the
+provenance of one curated sentence, not the content of the corpus — nothing is
+manufactured, denied or miscounted — which is why it is `PARTIAL` and not `MISLEADING`.
+
+### Q02 safety checks
+
+| Check | Result |
+|---|---|
+| Packet replayed vs recorded | 13 / 13 items, identical |
+| Citations | 9, all resolving to a packet item |
+| Invented citations surviving | 0 |
+| Every figure in the prose | matched to a cited evidence row |
+| Mandala labels stated | exactly `E13`'s own nine keys; none invented |
+| Quantitative validator | 0 findings |
+| Attribution vs mention | kept apart, each labelled with its relation type |
+| Absence asserted | none |
+| Generation truncated | no |
+| Unsupported Sanskrit quotations | 0 — the 4 flags are `ASK_BL_07` auditor artefacts: `Vṛtra`/`Vrtra` and `Pūṣan`/`Pūshan` are transliteration, `Viśve Devāḥ` is `víśve ca devā́` inflected, and `Sāmaveda` is genre vocabulary rather than a quotation |
+
+The answer drops the frozen version's non-additivity note. It commits no additivity error —
+each figure is labelled with the relation type that produced it — and `E10`'s qualifier
+still carries the warning in the evidence drawer.
+
+### Graph
+
+**108,779 nodes / 265,295 relationships, before and after.** Graph mutations 0, ontology
+mutations 0. The frozen artifact's SHA-256 is unchanged.
+
+### Decision
+
+```
+VEDAGRAPH_ASK_PRODUCT_V1_READY_WITH_BACKLOG = true
+ASK_PRODUCT_MAJOR_ENGINEERING_PHASE         = CLOSED
+NEXT_PROJECT_PHASE                          =
+    VEDAGRAPH_PRODUCT_INTEGRATION_AUDIO_POLISH_AND_RELEASE
+```
+
+Ready **with backlog**, and the backlog is real. The two items a reader of an answer could
+notice are `ASK_BL_09` (silent output truncation, seen on Q03/Q05/Q43/Q46) and the new
+`ASK_BL_13` (entity-fact provenance, seen on Q02). `ASK_BL_01` — the frozen sixty against a
+stronger provider — remains the highest-value next measurement, and the composite above is
+the baseline it should be compared against.
+
+Section 11's table is the frozen closure's backlog and predates these delta runs; rows
+touching the frontend were not re-checked here, because no frontend file changed and the
+previously verified frontend gate is reused unaltered.

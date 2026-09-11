@@ -87,6 +87,68 @@ def test_the_guardrail_names_no_question_and_no_figure() -> None:
     assert not any(character.isdigit() for character in REPAIR_INSTRUCTION)
 
 
+#: The real E13 from the Q02 evidence packet, copied from the live graph. Nine keys,
+#: because Indra holds no HAS_DEVATA attribution in mandala 9 at all -- that mandala is
+#: the Soma Pavamana collection, 1,087 of whose verses are dedicated to Soma.
+Q02_SPREAD_FACT = (
+    'DEVATA_STRUCTURAL_SPREAD: {"1": 493, "10": 402, "2": 141, "3": 229, "4": 197, '
+    '"5": 103, "6": 279, "7": 163, "8": 862}'
+)
+
+#: The sentence the frozen run returned. Graded SUPPORTED_CORRECT at the time, because
+#: every *figure* in it checks out; the unsupported word is "ten".
+Q02_FROZEN_SENTENCE = (
+    "These attributed verses are distributed across all ten mandalas, with the heaviest "
+    "concentrations in mandalas 1, 8 and 10 [E1]."
+)
+
+#: What the delta run returned once the rule was in place: the nine pairs, as given.
+Q02_DELTA_SENTENCE = (
+    "Within the Ṛgveda the structural spread by mandala is: 1: 493, 2: 141, 3: 229, "
+    "4: 197, 5: 103, 6: 279, 7: 163, 8: 862, 10: 402 [E1]."
+)
+
+
+def test_the_q02_overstatement_is_caught() -> None:
+    """ "all ten mandalas" over an enumeration of nine, on the real packet row."""
+    audit = validate(
+        Q02_FROZEN_SENTENCE, packet(Q02_SPREAD_FACT, item_type=EvidenceItemType.METRIC)
+    )
+
+    assert not audit.ok
+    assert audit.findings[0].rule is QuantitativeRule.UNIVERSAL
+    # The finding must show its arithmetic: ten asserted against nine enumerated.
+    assert "10 groups" in audit.findings[0].detail
+    assert "enumerate 9" in audit.findings[0].detail
+
+
+def test_the_q02_delta_formulation_passes() -> None:
+    """The corrected answer must not trip the rule that caught the original.
+
+    The twin of the test above, and the one that matters for a guardrail: reciting the
+    nine pairs the packet gave, with no universal over them, is exactly the evidence-
+    faithful formulation, and a validator that flagged it would be unusable.
+    """
+    assert validate(
+        Q02_DELTA_SENTENCE, packet(Q02_SPREAD_FACT, item_type=EvidenceItemType.METRIC)
+    ).ok
+
+
+def test_the_q02_spread_is_not_read_as_claiming_mandala_nine() -> None:
+    """Absence of a row is not a zero, and the rule must not invent one either way.
+
+    The distinction the product turns on: mandala 9 carries no HAS_DEVATA attribution to
+    Indra, and 214 of its verses still mention him. A sentence that reports the nine
+    attributed mandalas is true; one that reported Indra absent from mandala 9 would not
+    be, and neither statement is something this module may derive from the row.
+    """
+    audit = validate(
+        "Indra is attested in nine mandalas [E1].",
+        packet(Q02_SPREAD_FACT, item_type=EvidenceItemType.METRIC),
+    )
+    assert audit.ok
+
+
 # ---------------------------------------------------------------------------
 # MAGNITUDE and UNIVERSAL
 # ---------------------------------------------------------------------------

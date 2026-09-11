@@ -3,11 +3,26 @@
   "frozen_run_artifact": "data\\gold\\ask_benchmark_runs\\openrouter-nvidia_nemotron-3-ultra-550b-a55b_free-bfdba0b998f1f6cd.jsonl",
   "frozen_run_sha256": "b20f8c34802b56c23a1811ee99544814ae855ad97e4cb6af2315ca79a091a625",
   "frozen_run_sha256_matches_graded": true,
-  "delta_run_artifact": "data\\gold\\ask_benchmark_runs\\openrouter-nvidia_nemotron-3-ultra-550b-a55b_free-5c37f5be7fb331b6-delta.jsonl",
-  "delta_run_sha256": "906b258d6a570c29d340469fda0a51e0ce086262ef7c3e099fd4b205e5f195b3",
+  "delta_run_artifacts": [
+    {
+      "artifact": "data\\gold\\ask_benchmark_runs\\openrouter-nvidia_nemotron-3-ultra-550b-a55b_free-5c37f5be7fb331b6-delta.jsonl",
+      "sha256": "906b258d6a570c29d340469fda0a51e0ce086262ef7c3e099fd4b205e5f195b3",
+      "question_ids": [
+        "Q34",
+        "Q60"
+      ]
+    },
+    {
+      "artifact": "data\\gold\\ask_benchmark_runs\\openrouter-nvidia_nemotron-3-ultra-550b-a55b_free-81b00969f774f7b6-q02-delta.jsonl",
+      "sha256": "2d7456cd00b1b841940c9b2d0e92d263ebb000021e129d59b59004473993aadf",
+      "question_ids": [
+        "Q02"
+      ]
+    }
+  ],
   "totals": {
-    "SUPPORTED_CORRECT": 37,
-    "PARTIAL_CORRECT": 7,
+    "SUPPORTED_CORRECT": 36,
+    "PARTIAL_CORRECT": 8,
     "CORRECTLY_REFUSED": 16,
     "MISLEADING": 0,
     "HALLUCINATED": 0
@@ -46,9 +61,124 @@
         "runtime_support_level": "LIMITED",
         "figures_in_answer": [],
         "figures_in_packet": [],
-        "figures_not_in_packet": []
+        "figures_not_in_packet": [],
+        "group_labels_in_packet": [],
+        "stated_as_a_packet_group_label": []
       },
       "answer": "SV ARANYA 1.1 contains the following Sanskrit verse:\n\nइन्द्र ज्येष्ठं न आ भर ओजिष्ठं पुपुरि श्रवः । यद्दिधृक्षेम वज्रहस्त रोदसी ओभे सुशिप्र पप्राः [E1]"
+    },
+    {
+      "question_id": "Q02",
+      "question": "Who is Indra?",
+      "provenance": "POST_FIX_DELTA_RUN",
+      "code_commit": "9dd3ef6",
+      "original_verdict": "SUPPORTED_CORRECT",
+      "root_cause": "SYNTHESIS_QUANTITATIVE_OVERSTATEMENT over a row that prints only its positive keys. E13 gives DEVATA_STRUCTURAL_SPREAD as nine mandala keys -- 1-8 and 10 -- because Indra holds no HAS_DEVATA attribution in mandala 9 at all, that mandala being the Soma Pavamana collection, 1,087 of whose verses are dedicated to Soma instead. The answer rounded nine keys up to 'all ten mandalas'. Nothing caught it: every figure in the sentence was real and correctly cited, so the citation audit passed and the figure check passed; the unsupported token was the word 'ten'. It was graded SUPPORTED_CORRECT on exactly that reasoning, and the grading note recorded that every figure matched -- which was true, and not the question.",
+      "fix": "None specific to this question, and that is the point: the UNIVERSAL rule shipped for Q60 already covers a counted universal asserted over an enumeration of fewer groups, and it found this one offline by being run across all sixty frozen answers. The re-ask verifies the guardrail on the answer that motivated no part of it.",
+      "new_runtime_status": "SUPPORTED",
+      "final_verdict": "PARTIAL_CORRECT",
+      "citation_validation": "PASS",
+      "quantitative_validation": "PASS",
+      "truncation_status": "COMPLETE",
+      "reason": "The overstatement is gone and nothing was substituted for it: the answer now recites E13's nine pairs exactly as the packet gives them -- 1: 493, 2: 141, 3: 229, 4: 197, 5: 103, 6: 279, 7: 163, 8: 862, 10: 402 -- with no universal over them and no mandala the row does not carry. Critically it does NOT convert the gap into an absence: the words absent, never, nowhere and zero do not occur, and mandala 9 is named in neither direction. That restraint is correct rather than merely cautious, because 214 mandala-9 verses do mention Indra under MENTIONS_DEVATA, so 'Indra is absent from mandala 9' would have been a second, worse defect -- and the packet carries no per-mandala mention row from which the answer could have said so either way. Every figure is verified against the replayed packet and the live graph, the quantitative validator returns no finding, nine citations all resolve, none is invented, and the generation was not truncated. PARTIAL rather than SUPPORTED for a defect the mechanical checks cannot see, found by reading the answer: the second paragraph says the entity description 'derives from the Rigvedic Anukramani attribution layer'. It does not. E5 is an ENTITY_FACT, a characterisation this project authored, and E5's qualifier -- about the Anukramani layer covering the Rigveda only -- is a scope note travelling with the item, not the description's source. The answer's own preceding sentence calls it 'an entity-level characterisation' and then contradicts itself. The frozen answer had this right ('from the project's entity layer, not from a quoted verse'), so it is a regression in the re-ask, not a standing product defect. It misdescribes the provenance of one curated sentence rather than the content of the corpus -- no data is manufactured, denied or miscounted -- which is why it is PARTIAL and not MISLEADING. Recorded as ASK_BL_13. The answer also drops the frozen version's non-additivity note, though it commits no additivity error, labelling each figure with the relation type that produced it.",
+      "checks": {
+        "packet_items_replayed": 13,
+        "packet_items_recorded": 13,
+        "citations_in_answer": [
+          "E1",
+          "E2",
+          "E3",
+          "E4",
+          "E5",
+          "E10",
+          "E11",
+          "E12",
+          "E13"
+        ],
+        "citations_not_in_packet": [],
+        "invented_citations_surviving": [],
+        "sanskrit_absent_from_packet": [
+          "Pūṣan",
+          "Viśve Devāḥ",
+          "Vṛtra",
+          "Sāmaveda"
+        ],
+        "sanskrit_in_packet_but_uncited": [],
+        "quantitative_findings": [],
+        "generation_truncated": false,
+        "runtime_status": "SUPPORTED",
+        "runtime_support_level": "STRONG",
+        "figures_in_answer": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          10,
+          103,
+          141,
+          163,
+          197,
+          221,
+          229,
+          279,
+          402,
+          405,
+          493,
+          635,
+          655,
+          862,
+          2214,
+          2305,
+          2869
+        ],
+        "figures_in_packet": [
+          0,
+          103,
+          141,
+          163,
+          197,
+          221,
+          229,
+          279,
+          402,
+          405,
+          493,
+          635,
+          655,
+          862,
+          2214,
+          2305,
+          2869
+        ],
+        "figures_not_in_packet": [],
+        "group_labels_in_packet": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          10
+        ],
+        "stated_as_a_packet_group_label": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          10
+        ]
+      },
+      "answer": "Indra appears across all four Vedic corpora in VedaGraph as a principal deity invoked in ritual contexts. The Atharvaveda passages show him addressed alongside Agni, Varuṇa, Mitra, Pūṣan, the Vasus, the Ādityas and the Viśve Devāḥ, petitioned to ward off missiles, welcome oblations, bestow protective lead, and maintain the sacrificer in superior light [E1][E2][E3][E4]. In each case the referent is graded CERTAIN as the deity, not the common noun.\n\nThe knowledge graph records an entity-level characterisation: Indra is \"the champion of the gods, who slays Vṛtra with the vajra, releases the pent-up waters and rules as king of the pantheon\" [E5]. This description derives from the Rigvedic Anukramani attribution layer, which covers the Ṛgveda only; its absence from the other Vedas reflects a missing annotation layer, not absence of the deity [E5].\n\nMentions (MENTIONS_DEVATA, CERTAIN) are counted as 2,305 verses in the Ṛgveda, 635 in the Atharvaveda, 405 in the Sāmaveda (arcika) and 221 in the Yajurveda [E10]. The Anukramani attribution layer (HAS_DEVATA) exists for the Ṛgveda only and records 2,869 attributed verses [E11], of which 655 are per-passage assignments and 2,214 are container-inherited from the hymn level [E12]. Within the Ṛgveda the structural spread by mandala is: 1: 493, 2: 141, 3: 229, 4: 197, 5: 103, 6: 279, 7: 163, 8: 862, 10: 402 [E13]."
     },
     {
       "question_id": "Q60",
@@ -115,7 +245,9 @@
           470,
           473
         ],
-        "figures_not_in_packet": []
+        "figures_not_in_packet": [],
+        "group_labels_in_packet": [],
+        "stated_as_a_packet_group_label": []
       },
       "answer": "The hotṛ is the officiant who invokes and offers in the sacrifice, \"named by office rather than as an individual\" [E5]. The sacrifice (yajña) is \"the sacrificial rite itself, the act of worship offered to the gods with fire, speech and oblation\" [E6]. In the Atharvavedic passages retrieved, the hotṛ (or Agni identified as hotṛ) performs the invocatory speech that drives the rite: at a birth rite Aryaman as hotṛ utters the sacrificial call *váṣaṭ* [E1], and Agni as hotṛ, \"knowing the ways,\" bespeaks the births of the gods [E2].\n\nThe corpus distributions give the following per-corpus verse counts for the two concepts. For priest (hotṛ) [E7]: AV — MENTIONS_ENTITY 18, ABOUT_CONCEPT 21; RV — MENTIONS_ENTITY 195, ABOUT_CONCEPT 208; SV — MENTIONS_ENTITY 38, ABOUT_CONCEPT 41; YV — MENTIONS_ENTITY 49, ABOUT_CONCEPT 50. For sacrifice (yajña) [E8]: AV — MENTIONS_ENTITY 180, ABOUT_CONCEPT 176; RV — MENTIONS_ENTITY 473, ABOUT_CONCEPT 470; SV — MENTIONS_ENTITY 70, ABOUT_CONCEPT 70; YV — MENTIONS_ENTITY 116, ABOUT_CONCEPT 116. The evidence establishes the hotṛ's role as the invoking/offering priest within the sacrificial act, but does not elaborate further on the structural or procedural relationship between the two beyond these characterisations."
     }
@@ -133,9 +265,9 @@
     {
       "question_id": "Q02",
       "question": "Who is Indra?",
-      "provenance": "ORIGINAL_FROZEN_RUN",
-      "code_commit": "8353167",
-      "final_verdict": "SUPPORTED_CORRECT",
+      "provenance": "POST_FIX_DELTA_RUN",
+      "code_commit": "9dd3ef6",
+      "final_verdict": "PARTIAL_CORRECT",
       "runtime_status": "SUPPORTED",
       "citation_validation": "PASS"
     },

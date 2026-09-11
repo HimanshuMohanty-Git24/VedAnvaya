@@ -7,16 +7,23 @@ Sanskrit run is checked for provenance. The verdicts are recorded below as data,
 measurement that justifies each one, so a reader can disagree with the judgement while
 checking the arithmetic.
 
-**The composite is 58 + 2, and says so per question.** Fifty-eight verdicts come from the
-frozen run and are copied unchanged; two come from the delta. Nothing here re-grades an
-untouched answer, even where a later check finds something in one -- Q02's unsupported
-"all ten mandalas" is reported in the backlog and its frozen verdict stands, because
-re-grading fifty-eight answers against rules that did not exist when they were graded
+**The composite is 57 + 3, and says so per question.** Fifty-seven verdicts come from the
+frozen run and are copied unchanged; three come from delta runs, in two artifacts made at
+two commits. Nothing here re-grades an *untouched* answer: a frozen verdict is replaced
+only for a question that was actually re-asked and re-measured.
+
+Q02 is the third. Its frozen answer said Indra's attributed verses were "distributed
+across all ten mandalas" over a row enumerating nine, and it had been graded
+SUPPORTED_CORRECT because every *figure* in it checked out -- the unsupported word was
+"ten". That is the class this guardrail was built for, so the question was re-asked rather
+than left in the backlog with a verdict its own product now contradicts.
+
+The remaining fifty-seven are still not re-graded against rules that postdate them: that
 would produce a number describing neither run.
 
 Usage::
 
-    python scripts/grade_ask_delta.py <delta-artifact.jsonl>
+    python scripts/grade_ask_delta.py <delta-artifact.jsonl> [<more-artifacts.jsonl> ...]
 """
 
 from __future__ import annotations
@@ -108,6 +115,61 @@ VERDICTS: Final[tuple[Verdict, ...]] = (
         ),
     ),
     Verdict(
+        question_id="Q02",
+        original_verdict="SUPPORTED_CORRECT",
+        root_cause=(
+            "SYNTHESIS_QUANTITATIVE_OVERSTATEMENT over a row that prints only its "
+            "positive keys. E13 gives DEVATA_STRUCTURAL_SPREAD as nine mandala keys -- "
+            "1-8 and 10 -- because Indra holds no HAS_DEVATA attribution in mandala 9 at "
+            "all, that mandala being the Soma Pavamana collection, 1,087 of whose verses "
+            "are dedicated to Soma instead. The answer rounded nine keys up to 'all ten "
+            "mandalas'. Nothing caught it: every figure in the sentence was real and "
+            "correctly cited, so the citation audit passed and the figure check passed; "
+            "the unsupported token was the word 'ten'. It was graded SUPPORTED_CORRECT "
+            "on exactly that reasoning, and the grading note recorded that every figure "
+            "matched -- which was true, and not the question."
+        ),
+        fix=(
+            "None specific to this question, and that is the point: the UNIVERSAL rule "
+            "shipped for Q60 already covers a counted universal asserted over an "
+            "enumeration of fewer groups, and it found this one offline by being run "
+            "across all sixty frozen answers. The re-ask verifies the guardrail on the "
+            "answer that motivated no part of it."
+        ),
+        final_verdict="PARTIAL_CORRECT",
+        reason=(
+            "The overstatement is gone and nothing was substituted for it: the answer "
+            "now recites E13's nine pairs exactly as the packet gives them -- 1: 493, "
+            "2: 141, 3: 229, 4: 197, 5: 103, 6: 279, 7: 163, 8: 862, 10: 402 -- with no "
+            "universal over them and no mandala the row does not carry. Critically it "
+            "does NOT convert the gap into an absence: the words absent, never, nowhere "
+            "and zero do not occur, and mandala 9 is named in neither direction. That "
+            "restraint is correct rather than merely cautious, because 214 mandala-9 "
+            "verses do mention Indra under MENTIONS_DEVATA, so 'Indra is absent from "
+            "mandala 9' would have been a second, worse defect -- and the packet carries "
+            "no per-mandala mention row from which the answer could have said so either "
+            "way. Every figure is verified against the replayed packet and the live "
+            "graph, the quantitative validator returns no finding, nine citations all "
+            "resolve, none is invented, and the generation was not truncated. "
+            "PARTIAL rather than SUPPORTED for a defect the mechanical checks cannot "
+            "see, found by reading the answer: the second paragraph says the entity "
+            "description 'derives from the Rigvedic Anukramani attribution layer'. It "
+            "does not. E5 is an ENTITY_FACT, a characterisation this project authored, "
+            "and E5's qualifier -- about the Anukramani layer covering the Rigveda only "
+            "-- is a scope note travelling with the item, not the description's source. "
+            "The answer's own preceding sentence calls it 'an entity-level "
+            "characterisation' and then contradicts itself. The frozen answer had this "
+            "right ('from the project's entity layer, not from a quoted verse'), so it "
+            "is a regression in the re-ask, not a standing product defect. It "
+            "misdescribes the provenance of one curated sentence rather than the content "
+            "of the corpus -- no data is manufactured, denied or miscounted -- which is "
+            "why it is PARTIAL and not MISLEADING. Recorded as ASK_BL_13. The answer "
+            "also drops the frozen version's non-additivity note, though it commits no "
+            "additivity error, labelling each figure with the relation type that "
+            "produced it."
+        ),
+    ),
+    Verdict(
         question_id="Q60",
         original_verdict="MISLEADING",
         root_cause=(
@@ -181,21 +243,46 @@ def _figure_check(answer: str, packet: evidence_stage.EvidencePacket) -> dict[st
 
     Stricter than the shipped validator on purpose: this is the audit, so it reports
     *every* unmatched figure rather than only the ones a named rule fires on.
+
+    One thing it must not do is report an *identifier* as an unmatched figure. A metric
+    row labels its values with numbers -- ``DEVATA_STRUCTURAL_SPREAD: {"1": 493, "8":
+    862}`` means mandala 1 and mandala 8 -- so an answer that recites the row states 1
+    and 8 as labels and 493 and 862 as counts. Pooling all four into one set and
+    subtracting made this report read ``figures_not_in_packet: [1, 2, 3, ...]`` over an
+    answer that had quoted the row exactly, which is the audit itself manufacturing a
+    fabrication claim. Labels are matched against the packet's own group strings and
+    reported under their own name, so the two kinds stay distinguishable and neither is
+    hidden. Verse loci are already dropped upstream by ``_NOT_A_COUNT`` for the same
+    reason.
     """
-    available: set[int] = {fact.value for item in packet.items for fact in numeric_facts(item)}
+    values: set[int] = set()
+    labels: set[int] = set()
+    for item in packet.items:
+        for fact in numeric_facts(item):
+            values.add(fact.value)
+            if fact.group:
+                labels.update(int(m.group(1)) for m in _INTEGER.finditer(fact.group))
     masked = _NOT_A_COUNT.sub(" ", answer)
     masked = _DIGIT_GROUPING.sub("", masked)
-    stated = [int(m.group(1)) for m in _INTEGER.finditer(masked)]
+    stated = {int(m.group(1)) for m in _INTEGER.finditer(masked)}
     return {
-        "figures_in_answer": sorted(set(stated)),
-        "figures_in_packet": sorted(available),
-        "figures_not_in_packet": sorted({n for n in stated if n not in available}),
+        "figures_in_answer": sorted(stated),
+        "figures_in_packet": sorted(values),
+        "figures_not_in_packet": sorted(stated - values - labels),
+        "group_labels_in_packet": sorted(labels),
+        "stated_as_a_packet_group_label": sorted((stated - values) & labels),
     }
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("artifact", type=Path)
+    parser.add_argument(
+        "artifacts",
+        type=Path,
+        nargs="+",
+        help="Delta artifacts, in any order. A question re-asked twice is an error "
+        "rather than a last-one-wins, because the composite must name one measurement.",
+    )
     parser.add_argument(
         "--out",
         type=Path,
@@ -203,14 +290,29 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    delta = {row["id"]: row for row in _rows(args.artifact)}
+    # Which artifact supplied which question is recorded, not inferred: the composite
+    # names three delta verdicts made at two commits, and a reader must be able to
+    # check each one against the file it actually came from.
+    delta: dict[str, dict[str, Any]] = {}
+    delta_source: dict[str, Path] = {}
+    for artifact in args.artifacts:
+        for row in _rows(artifact):
+            if row["id"] in delta:
+                raise SystemExit(
+                    f"{row['id']} appears in both {delta_source[row['id']]} and "
+                    f"{artifact}; the composite would have to pick one silently"
+                )
+            delta[row["id"]] = row
+            delta_source[row["id"]] = artifact
     frozen_eval = {row["question_id"]: row for row in _rows(FROZEN_EVALUATION)}
     frozen_run = {row["id"]: row for row in _rows(FROZEN_RUN)}
 
     frozen_sha = _sha(FROZEN_RUN)
     print(f"frozen artifact sha256 : {frozen_sha}")
     print(f"matches the graded run : {frozen_sha == FROZEN_SHA}")
-    print(f"delta artifact sha256  : {_sha(args.artifact)}\n")
+    for artifact in args.artifacts:
+        print(f"delta artifact sha256  : {_sha(artifact)}  {artifact}")
+    print()
 
     repo = Neo4jRepository(get_api_settings())
     graded: list[dict[str, Any]] = []
@@ -274,7 +376,7 @@ def main() -> None:
     finally:
         repo.close()
 
-    # -- composite: 58 untouched + 2 delta -----------------------------------
+    # -- composite: 57 untouched + 3 delta -----------------------------------
     replaced = {v.question_id for v in VERDICTS}
     composite: list[dict[str, Any]] = []
     for qid, row in frozen_eval.items():
@@ -360,8 +462,17 @@ def main() -> None:
                 "frozen_run_artifact": str(FROZEN_RUN),
                 "frozen_run_sha256": frozen_sha,
                 "frozen_run_sha256_matches_graded": frozen_sha == FROZEN_SHA,
-                "delta_run_artifact": str(args.artifact),
-                "delta_run_sha256": _sha(args.artifact),
+                "delta_run_artifacts": [
+                    {
+                        "artifact": str(artifact),
+                        "sha256": _sha(artifact),
+                        "question_ids": sorted(
+                            (q for q, a in delta_source.items() if a == artifact),
+                            key=lambda q: int(q[1:]),
+                        ),
+                    }
+                    for artifact in args.artifacts
+                ],
                 "totals": buckets,
                 "total_questions": len(composite),
                 "total_citations": total_citations,
