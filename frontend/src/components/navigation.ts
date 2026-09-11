@@ -5,6 +5,7 @@ export type NavItem = {
 };
 
 export const PRIMARY_NAV: NavItem[] = [
+    { href: "/ask", label: "Ask", description: "Put a research question to the graph" },
     { href: "/vedas", label: "Vedas", description: "Browse each collection by its own hierarchy" },
     { href: "/explore", label: "Explore", description: "Curated lenses on the corpus" },
     { href: "/devatas", label: "Deities", description: "Who is invoked, and where" },

@@ -66,6 +66,14 @@ TAGS_METADATA: Final[list[dict[str, Any]]] = [
     {"name": "Graph", "description": "Neighbourhoods, relationship explanations and paths."},
     {"name": "Insights", "description": "Deterministic, evidence-aware aggregate views."},
     {"name": "Stats", "description": "Product-level corpus statistics."},
+    {
+        "name": "Ask",
+        "description": "Evidence-grounded question answering. Retrieval runs first and "
+        "the model sees only what it found, so every factual claim carries a citation "
+        "into the graph and an unanswerable question returns INSUFFICIENT_EVIDENCE "
+        "rather than a confident denial. The synthesis backend is a configuration "
+        "choice; no credential is ever returned.",
+    },
 ]
 
 
@@ -286,6 +294,7 @@ def _mount_v1_routers(app: FastAPI) -> None:
     vedagraph.api.app`` for every consumer, including the test collector.
     """
     from vedagraph.api.routes import (
+        ask,
         devatas,
         entities,
         formulas,
@@ -309,6 +318,7 @@ def _mount_v1_routers(app: FastAPI) -> None:
         graph,
         insights,
         stats,
+        ask,
     ):
         app.include_router(module.router, prefix=API_V1)
 

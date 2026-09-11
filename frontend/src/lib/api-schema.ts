@@ -1058,6 +1058,68 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/ask": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Ask VedaGraph
+         * @description Ask a research question in natural language and receive an answer built from retrieved
+         *     VedaGraph evidence, with every factual claim carrying a citation into the graph.
+         *
+         *     **This is not a chat model answering from memory.** The pipeline is
+         *     question → intent plan → entity resolution → multi-channel graph retrieval → frozen
+         *     evidence packet → synthesis. The model sees only what retrieval found, and
+         *     `retrieval_summary` reports which channels ran. An answer whose claims are not in the
+         *     evidence packet is a defect, not a feature: every `[E1]`-style reference in `answer` is
+         *     checked against the packet before the response is returned, and an unverifiable one is
+         *     removed with a caveat saying so.
+         *
+         *     **Absence is never asserted.** A question the graph cannot answer returns
+         *     `INSUFFICIENT_EVIDENCE` and says which dimension was not reached. It does not return a
+         *     confident denial. The Yajurveda's lexical recovery limit is the worked example: the graph
+         *     records that its Sanskrit is present only as text extracted from printed containers, so a
+         *     term not found there has not been shown absent from the Yajurveda.
+         *
+         *     **Interpretation is labelled.** Where an answer draws on an `InterpretiveClaim`,
+         *     `interpretive_content_present` is true and the prose attributes the reading rather than
+         *     stating it as what the text says.
+         *
+         *     **The synthesis backend is a configuration choice.** `llm.provider` and `llm.model`
+         *     report which one served the request. No credential is ever returned.
+         */
+        post: operations["ask_endpoint_api_v1_ask_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/ask/health": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Ask readiness
+         * @description Whether Ask VedaGraph can serve: which provider and model are configured and whether a credential is present. Never returns the credential itself.
+         */
+        get: operations["ask_health_endpoint_api_v1_ask_health_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -1119,6 +1181,55 @@ export interface components {
             evidence_basis?: string | null;
             /** Knowledge Layer */
             knowledge_layer?: string | null;
+        };
+        /**
+         * AskMode
+         * @enum {string}
+         */
+        AskMode: "AUTO" | "TEXTUAL" | "GRAPH" | "COMPARATIVE" | "RESEARCH";
+        /** AskRequest */
+        AskRequest: {
+            /** Question */
+            question: string;
+            /** Veda */
+            veda?: string | null;
+            /** Passage Context */
+            passage_context?: string | null;
+            /** Entity Context */
+            entity_context?: string | null;
+            /** Conversation Context */
+            conversation_context?: components["schemas"]["ConversationTurn"][] | null;
+            /** @default AUTO */
+            mode: components["schemas"]["AskMode"];
+            /**
+             * Debug
+             * @default false
+             */
+            debug: boolean;
+        };
+        /** AskResponse */
+        AskResponse: {
+            /** Answer */
+            answer: string;
+            status: components["schemas"]["KnowledgeStatus"];
+            support_level: components["schemas"]["SupportLevel"];
+            /** Citations */
+            citations?: components["schemas"]["CitationRef"][];
+            /** Evidence */
+            evidence?: components["schemas"]["EvidenceItem"][];
+            /** Entities */
+            entities?: components["schemas"]["EntityMention"][];
+            /** Related Questions */
+            related_questions?: string[];
+            /** Caveats */
+            caveats?: components["schemas"]["CaveatView"][];
+            retrieval_summary: components["schemas"]["RetrievalSummary"];
+            /**
+             * Interpretive Content Present
+             * @default false
+             */
+            interpretive_content_present: boolean;
+            llm: components["schemas"]["LLMInfo"];
         };
         /**
          * AssertionModality
@@ -1563,6 +1674,17 @@ export interface components {
             /** Bridging Note */
             bridging_note?: string | null;
         };
+        /** CitationRef */
+        CitationRef: {
+            /** Id */
+            id: string;
+            /** Citation */
+            citation: string;
+            /** Passage Key */
+            passage_key?: string | null;
+            /** Veda */
+            veda?: string | null;
+        };
         /**
          * CivilizationDataRow
          * @description A measured attestation. The strongest kind of row in the civilization view.
@@ -1706,6 +1828,13 @@ export interface components {
          * @enum {string}
          */
         ConfidenceBasis: "PIPELINE_CONSTANT" | "VARIES_WITHIN_PREDICATE" | "ABSENT";
+        /** ConversationTurn */
+        ConversationTurn: {
+            /** Role */
+            role: string;
+            /** Content */
+            content: string;
+        };
         /**
          * CorpusFigure
          * @description One corpus-level count with the denominator that makes it comparable.
@@ -2518,6 +2647,34 @@ export interface components {
             non_seer_kind?: string | null;
         };
         /**
+         * EntityMention
+         * @description A name the question used, and what the graph made of it.
+         */
+        EntityMention: {
+            /** Label */
+            label: string;
+            /** Entity Key */
+            entity_key?: string | null;
+            /** Entity Type */
+            entity_type?: string | null;
+            /**
+             * Resolved
+             * @description False means the graph has no entity under this name. Reported rather than dropped: 'VedaGraph has no Devata called Shiva' answers a question about Shiva, and a silently shortened list hides it.
+             * @default false
+             */
+            resolved: boolean;
+            /**
+             * Asked As
+             * @description The spelling the question used, before folding.
+             */
+            asked_as?: string | null;
+            /**
+             * Match Rank
+             * @description How the name reached the node: EXACT_LABEL, EXACT_ALIAS or TOKEN_IN_LABEL. A token match is weaker and the response says so.
+             */
+            match_rank?: string | null;
+        };
+        /**
          * EntityProfile
          * @description The generic detail payload for any non-deity knowledge type.
          *
@@ -2683,6 +2840,60 @@ export interface components {
          * @enum {string}
          */
         EvidenceBasis: "SOURCE_STATED" | "CONTAINER_INHERITED" | "DETERMINISTIC_DERIVED" | "MODEL_EXTRACTION" | "MODEL_ADJUDICATED" | "TEXTUAL_MENTION" | "UNKNOWN";
+        /**
+         * EvidenceItem
+         * @description One citable unit of retrieved evidence.
+         */
+        EvidenceItem: {
+            /**
+             * Id
+             * @description Stable within one response: E1, E2, E3 ...
+             */
+            id: string;
+            type: components["schemas"]["EvidenceItemType"];
+            /** Passage Key */
+            passage_key?: string | null;
+            /** Citation */
+            citation?: string | null;
+            /** Veda */
+            veda?: string | null;
+            /** Sanskrit */
+            sanskrit?: string | null;
+            /** Translation */
+            translation?: string | null;
+            /** Entity Label */
+            entity_label?: string | null;
+            /** Entity Type */
+            entity_type?: string | null;
+            /** Entity Key */
+            entity_key?: string | null;
+            /** Fact */
+            fact?: string | null;
+            /** Relationship Type */
+            relationship_type?: string | null;
+            /** Source Label */
+            source_label?: string | null;
+            /** Target Label */
+            target_label?: string | null;
+            /** Claim Text */
+            claim_text?: string | null;
+            /** Claim Source */
+            claim_source?: string | null;
+            /** Evidence Basis */
+            evidence_basis?: string | null;
+            /** Knowledge Status */
+            knowledge_status?: string | null;
+            /**
+             * Qualifier
+             * @description What this item does NOT establish, travelling with the item rather than in a preamble. A translation is not the Sanskrit, an AMBIGUOUS mention is not a deity occurrence, an inherited attribution is not a per-verse statement, and a shared formula is not a claim of reuse. Rendered inline in the synthesis prompt so it is the nearest line to whatever the model writes next.
+             */
+            qualifier?: string | null;
+        };
+        /**
+         * EvidenceItemType
+         * @enum {string}
+         */
+        EvidenceItemType: "PASSAGE" | "ENTITY_FACT" | "GRAPH_PATH" | "METRIC" | "INTERPRETIVE_CLAIM" | "FORMULA_FAMILY" | "TEXTUAL_REUSE" | "ATTRIBUTION" | "CORPUS_DISTRIBUTION" | "LEXICAL_PRESENCE";
         /**
          * EvidenceSpanView
          * @description One quoted witness for an assertion.
@@ -3371,6 +3582,13 @@ export interface components {
          * @enum {string}
          */
         KnowledgeStatus: "SUPPORTED" | "PARTIAL" | "INSUFFICIENT_EVIDENCE" | "NOT_BUILT";
+        /** LLMInfo */
+        LLMInfo: {
+            /** Provider */
+            provider: string;
+            /** Model */
+            model: string;
+        };
         /**
          * LayerAvailability
          * @description Whether one knowledge layer reaches one corpus, with the figure behind the verdict.
@@ -4476,6 +4694,52 @@ export interface components {
          * @enum {string}
          */
         RelationshipIdBasis: "DOMAIN_ID" | "ENDPOINT_TRIPLE";
+        /** RetrievalSummary */
+        RetrievalSummary: {
+            /** Channels Used */
+            channels_used?: string[];
+            /**
+             * Channels Empty
+             * @description Channels that ran and returned nothing. Distinct from a channel that was never selected: searched-and-empty is evidence, unexamined is not.
+             */
+            channels_empty?: string[];
+            /** Intents */
+            intents?: string[];
+            /** Entities Resolved */
+            entities_resolved?: string[];
+            /** Entities Unresolved */
+            entities_unresolved?: string[];
+            /**
+             * Veda Scope
+             * @default ALL
+             */
+            veda_scope: string;
+            /**
+             * Evidence Count
+             * @default 0
+             */
+            evidence_count: number;
+            /**
+             * Planner Ms
+             * @default 0
+             */
+            planner_ms: number;
+            /**
+             * Retrieval Ms
+             * @default 0
+             */
+            retrieval_ms: number;
+            /**
+             * Synthesis Ms
+             * @default 0
+             */
+            synthesis_ms: number;
+            /**
+             * Total Ms
+             * @default 0
+             */
+            total_ms: number;
+        };
         /**
          * ReuseWitnessRow
          * @description One Samavedic verse and the Rigvedic verse it is measured to reuse.
@@ -4998,6 +5262,11 @@ export interface components {
          * @enum {string}
          */
         StoredDirection: "THIS_PASSAGE_IS_SUBJECT" | "THIS_PASSAGE_IS_OBJECT" | "NOT_STORED_AS_AN_EDGE";
+        /**
+         * SupportLevel
+         * @enum {string}
+         */
+        SupportLevel: "STRONG" | "MODERATE" | "LIMITED" | "INSUFFICIENT";
         /**
          * SurfaceCoverageView
          * @description One surface and the corpus it measurably reaches.
@@ -7512,6 +7781,120 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["StatsResponse"];
+                };
+            };
+            /** @description The request is well-formed but unsupported. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description No such passage, entity or work. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A parameter failed validation. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description The knowledge graph is unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    ask_endpoint_api_v1_ask_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AskRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AskResponse"];
+                };
+            };
+            /** @description The request is well-formed but unsupported. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description No such passage, entity or work. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A parameter failed validation. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description The graph or the synthesis backend is unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    ask_health_endpoint_api_v1_ask_health_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
                 };
             };
             /** @description The request is well-formed but unsupported. */

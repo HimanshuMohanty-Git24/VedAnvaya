@@ -2,6 +2,7 @@ import { ArrowRight, ArrowsLeftRight, CirclesThreePlus } from "@phosphor-icons/r
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { AskAboutButton } from "@/components/ask/ask-about-button";
 import { DerivedMetricCard } from "@/components/derived-metric";
 import { LoadFailure, NothingHere } from "@/components/empty-state";
 import { MeasureChart, RankedFacts, type MeasureRow } from "@/components/measure";
@@ -140,6 +141,10 @@ export default async function DevataPage({ params }: Params) {
                         <CirclesThreePlus size={18} aria-hidden="true" />
                         Explore connections
                     </Link>
+                    <AskAboutButton
+                        entityLabel={deity.display_label ?? deity.preferred_label ?? decodedId}
+                        label={`Ask about ${deity.display_label ?? "this deity"}`}
+                    />
                 </div>
             </div>
 

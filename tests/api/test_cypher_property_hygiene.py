@@ -48,7 +48,13 @@ _CYPHER_CLAUSE: Final = re.compile(r"\b(MATCH|RETURN|WITH|UNWIND|CALL|WHERE|SHOW
 #: Scoped by *alias* rather than by property name on purpose. Excusing the names -- ``rel``,
 #: ``node``, ``near``, ``far`` -- would also excuse a genuine typo that happened to collide
 #: with one of them, and the whole value of this test is that it does not excuse typos.
-MAP_ALIASES: Final[frozenset[str]] = frozenset({"item", "row", "hop", "entry", "pair", "step"})
+#: ``candidate`` is the Ask resolver's ``UNWIND $candidates AS candidate``: a list of
+#: ``{asked, folded, rung}`` maps the *caller* builds in Python and binds as a parameter.
+#: Its keys are request data, not graph schema, so they are correctly absent from
+#: ``db.propertyKeys()``.
+MAP_ALIASES: Final[frozenset[str]] = frozenset(
+    {"item", "row", "hop", "entry", "pair", "step", "candidate"}
+)
 
 #: Identifiers that are not graph properties: Python attribute access that survived the
 #: string extraction, Cypher procedure namespaces, and names of map keys the queries

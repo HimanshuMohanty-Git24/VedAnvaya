@@ -34,6 +34,14 @@ dependencies = [
 # validation, acceptance, evaluation, cost - runs offline against RecordedProvider,
 # so the default install has no LLM dependency at all.
 llm = ["openai>=1.60"]
+# Ask VedaGraph: provider-agnostic LLM layer. Switching providers is an ENV change, so
+# the adapters for every provider a deployment might select must be installable together.
+#
+# Gemini is absent on purpose: its adapter speaks the public v1beta REST contract over
+# httpx, which is already a core dependency. The vendor's own clients are a poor trade
+# here -- google-generativeai is end-of-life, and google-genai pulls protobuf, google-auth
+# and websockets to wrap three response fields.
+ask = ["openai>=1.60", "anthropic>=0.40"]
 dev = [
   "lxml-stubs>=0.5",
   "mypy>=1.14",
@@ -68,6 +76,12 @@ plugins = ["pydantic.mypy"]
 # Optional dependency: the semantic extractor imports it lazily and the package is not
 # installed unless the 'llm' extra is.
 module = ["openai"]
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+# Ask VedaGraph provider adapters: optional extras, imported lazily by the factory so
+# that a deployment installs only the provider it configured.
+module = ["anthropic", "anthropic.*"]
 ignore_missing_imports = true
 
 [tool.pytest.ini_options]

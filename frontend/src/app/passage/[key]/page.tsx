@@ -7,6 +7,7 @@ import {
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { AskAboutButton } from "@/components/ask/ask-about-button";
 import { CopyButton } from "@/components/copy-button";
 import { LoadFailure } from "@/components/empty-state";
 import { PassageKnowledge } from "@/components/passage-knowledge";
@@ -238,6 +239,10 @@ export default async function PassagePage({ params }: Params) {
                         </span>
                         <ArrowRight size={16} aria-hidden="true" />
                     </Link>
+                    <AskAboutButton
+                        passageKey={reader.canonical_key}
+                        label="Ask about this mantra"
+                    />
                 </aside>
             </div>
 

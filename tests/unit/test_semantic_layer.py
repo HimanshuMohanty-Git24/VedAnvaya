@@ -12,6 +12,7 @@ The one test that would call the API is marked ``api`` and is deselected by defa
 from __future__ import annotations
 
 import json
+import os
 from datetime import UTC, datetime
 from pathlib import Path
 from uuid import UUID
@@ -618,8 +619,18 @@ def test_actual_usage_is_read_off_the_reply_never_estimated():
 
 @pytest.mark.api
 def test_live_luna_extraction_is_schema_conformant():  # pragma: no cover - opt-in only
-    """Deselected by default. Run with `pytest -m api` and a key, and it will cost money."""
+    """Deselected by default. Run with `pytest -m api` and a key, and it will cost money.
+
+    Skips on a missing *key*, not merely a missing package. The distinction was latent
+    until the Ask work installed ``openai`` for the OpenAI-compatible provider adapter:
+    the ``importorskip`` below had been the only thing keeping this out of a default run,
+    so a bare ``pytest`` began attempting a paid live call and failing on the absent
+    credential. The marker never deselected anything -- ``addopts`` carries no
+    ``-m "not api"`` -- so the guard has to be here.
+    """
     pytest.importorskip("openai")
+    if not os.environ.get("OPENAI_API_KEY"):
+        pytest.skip("OPENAI_API_KEY is not set; this test calls a paid API.")
     provider = OpenAILunaProvider(ExtractionConfig())
     result = provider.extract(make_packet(), load_system_prompt())
     assert result.ok
