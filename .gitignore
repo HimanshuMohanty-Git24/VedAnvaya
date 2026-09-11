@@ -49,3 +49,6 @@ scratch_av_lines/
 # content digest of every artifact, and they are the record that lets a later build be
 # checked against this one without regenerating it.
 data/enrichment/**/*.jsonl
+
+# local scratch (API logs, ad-hoc probes)
+.tmp/
