@@ -133,7 +133,20 @@ _INT: Final = re.compile(r"(?<![\d.])(\d{1,9})(?![\d.])")
 #: A group label is whatever preceded the colon, once the sentence lead-in is dropped.
 _GROUP_LABEL: Final = re.compile(r"^\s*(?:[^:]*?\bfor\b\s*)?(?P<label>[^:]{1,60}?)\s*:")
 
-_UNIT_AFTER: Final = re.compile(r"\d+\s+(?P<unit>[A-Za-z][A-Za-z-]{2,24})")
+#: Letters a noun may contain. Not ASCII, because this product's own prose is full of
+#: diacritics -- "Samhitas" is written Saṃhitās and "hotr" hotṛ -- and a
+#: word class that stops at the first mark stops checking the sentences actually
+#: written. Observed: "all four Saṃhitās" was skipped by the counted-universal
+#: rule entirely, because the noun after "four" did not match. It happened to be a true
+#: claim; the rule had no way to know that.
+_LETTER: Final = (
+    "A-Za-z\u0101\u012b\u016b\u1e5b\u1e5d\u1e37\u1e39\u1e45\u00f1"
+    "\u1e47\u1e43\u1e41\u1e6d\u1e0d\u1e25\u015b\u1e63\u0113\u014d"
+)
+
+_NOUN: Final = f"[{_LETTER}][{_LETTER}-]{{2,24}}"
+
+_UNIT_AFTER: Final = re.compile(rf"\d+\s+(?P<unit>{_NOUN})")
 
 
 def _singular(word: str) -> str:
@@ -232,7 +245,7 @@ _MAGNITUDES: Final[dict[str, int]] = {
     "millions": 1_000_000,
 }
 _MAGNITUDE_RE: Final = re.compile(
-    r"\b(?P<word>hundreds|thousands|millions)\b(?:\s+of\s+(?P<unit>[A-Za-z][A-Za-z-]{2,24}))?",
+    rf"\b(?P<word>hundreds|thousands|millions)\b(?:\s+of\s+(?P<unit>{_NOUN}))?",
     re.IGNORECASE,
 )
 
@@ -316,7 +329,7 @@ def _values(facts: list[NumericFact], unit: str | None) -> list[int]:
 
 #: A figure written with the noun it counts: "18 verses", "3 hymns". The unit is what
 #: makes the check possible -- it says which cited rows the figure claims to restate.
-_COUNTED_NOUN: Final = re.compile(r"\b(?P<n>\d{1,9})\s+(?P<unit>[A-Za-z][A-Za-z-]{2,24})")
+_COUNTED_NOUN: Final = re.compile(rf"\b(?P<n>\d{{1,9}})\s+(?P<unit>{_NOUN})")
 
 
 #: A figure the sentence does not claim to be exact. "about 20", "roughly 100", "nearly
@@ -436,7 +449,7 @@ _NUMBER_WORDS: Final[dict[str, int]] = {
 _COUNTED_UNIVERSAL: Final = re.compile(
     r"\b(?:all|every one of the|each of the)\s+(?:the\s+)?"
     r"(?P<count>\d{1,2}|" + "|".join(_NUMBER_WORDS) + r")\s+"
-    r"(?P<noun>[A-Za-z][A-Za-z-]{2,24})",
+    rf"(?P<noun>{_NOUN})",
     re.IGNORECASE,
 )
 
@@ -534,7 +547,9 @@ def _group_position(sentence: str, group: str) -> int:
     groups. Corpus codes are written "RV", "AV" in both the packet and the prose, so the
     stricter match costs nothing where it matters.
     """
-    tokens = sorted(re.findall(r"[A-Za-z][A-Za-z0-9_]{0,30}", group), key=len, reverse=True)
+    tokens = sorted(
+        re.findall(rf"[{_LETTER}][{_LETTER}0-9_]{{0,30}}", group), key=len, reverse=True
+    )
     for token in tokens:
         flags = re.IGNORECASE if len(token) > 2 else re.NOFLAG
         m = re.search(rf"\b{re.escape(token)}\b", sentence, flags)

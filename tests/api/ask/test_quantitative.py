@@ -395,3 +395,41 @@ def test_a_hedged_figure_is_not_held_to_exactness(hedge: str) -> None:
     """A refusal to state a precise count is the caution the product asks for."""
     pkt = packet("Counts — RV: 19 verses; AV: 7 verses.")
     assert validate(f"The term occurs in {hedge} 20 verses [E1].", pkt).ok
+
+
+# ---------------------------------------------------------------------------
+# Diacritics
+# ---------------------------------------------------------------------------
+
+SAMHITAS = "Saṃhitās"
+
+
+def test_a_diacritic_noun_does_not_escape_the_counted_universal_rule() -> None:
+    """The rule read an ASCII word class, and this product writes Saṃhitās.
+
+    Observed in the Q60 delta answer: "all four Saṃhitās" was skipped entirely,
+    because the noun after "four" matched nothing. That claim happened to be true; the
+    rule had no way to know it.
+    """
+    spread = 'SPREAD: {"RV": 195, "AV": 18}'
+    claim = f"It is attested in all four {SAMHITAS} [E1]."
+
+    assert rules(claim, packet(spread, item_type=EvidenceItemType.METRIC)) == ["UNIVERSAL"]
+
+
+def test_a_diacritic_noun_is_checked_and_can_pass() -> None:
+    spread = 'SPREAD: {"RV": 195, "AV": 18, "SV": 38, "YV": 49}'
+    claim = f"It is attested in all four {SAMHITAS} [E1]."
+
+    assert validate(claim, packet(spread, item_type=EvidenceItemType.METRIC)).ok
+
+
+def test_a_magnitude_over_a_diacritic_unit_is_checked() -> None:
+    claim = f"It fills hundreds of {SAMHITAS} in each corpus [E1]."
+    assert rules(claim, packet(f"Counts — A: 18 {SAMHITAS}; B: 20 {SAMHITAS}.")) == ["UNIVERSAL"]
+
+
+def test_a_group_label_carrying_a_diacritic_is_still_locatable() -> None:
+    """Tokenised on ASCII, "priest (hotṛ)" yielded "hot", which matches nothing."""
+    counts = "Counts — hotṛ: 10 verses; yajña: 20 verses."
+    assert rules("hotṛ has more than yajña [E1].", packet(counts)) == ["COMPARISON"]
