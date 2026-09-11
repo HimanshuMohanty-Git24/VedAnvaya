@@ -49,11 +49,22 @@ logger = logging.getLogger(__name__)
 
 #: What the four corpora in this graph are, stated to the model because the most
 #: confident wrong answers come from treating "the Vedas" as all of Sanskrit literature.
+#:
+#: The Samavedic sentence carries a name collision that cost a correct answer. "Aranyaka"
+#: names two different things here: the *genre* of forest treatise, which this graph does
+#: not hold, and ARANYA, one of the four sections of the Kauthuma arcika, which it does --
+#: cited to the reader as ``SV ARANYA 1.1``. Told only that the corpus contains "NO
+#: Aranyaka", a model asked about ``SV ARANYA 1.1`` correctly obeyed the scope line and
+#: denied that a passage this graph stores exists at all. Naming both senses is what stops
+#: a true statement about the genre from being read as a false one about the section.
 _SCOPE: Final = (
     "VedaGraph contains four Samhitas, one recension each: Sakala Rigveda, Kauthuma "
     "Samaveda (arcika only -- the gana corpus is absent), Shukla Yajurveda in the "
     "Madhyandina recension, and a working Saunaka Atharvaveda. It contains NO Brahmana, "
-    "Aranyaka, Upanisad, Sutra, Purana or epic, and no post-Vedic material. Never let an "
+    "Aranyaka-genre text, Upanisad, Sutra, Purana or epic, and no post-Vedic material. "
+    "The Samavedic arcika's own sections are cited SV ARANYA, SV UTTARA, SV CHANDA and "
+    "SV MAHANAMNYA: an SV ARANYA locus is arcika verse text that IS in this corpus, and "
+    "must never be refused as an Aranyaka. Never let an "
     "answer imply these four texts are the whole of Vedic or Hindu tradition."
 )
 

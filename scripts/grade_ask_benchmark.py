@@ -25,6 +25,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import sys
 from collections import Counter
 from pathlib import Path
 from typing import Any
@@ -110,6 +111,15 @@ def provisional_verdict(row: dict[str, Any]) -> str:
 
 
 def main() -> None:
+    # Every answer in a Vedic benchmark carries IAST, and a Windows console defaults to
+    # cp1252, which cannot encode it. Printing the first flagged answer killed the whole
+    # grading run with UnicodeEncodeError -- the report died at the one place it had
+    # something to say. Reconfiguring here keeps the fix with the tool rather than in a
+    # shell variable every caller has to remember.
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(encoding="utf-8", errors="replace")
+
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--run", type=str, default=None, help="run_id; default newest")
     args = parser.parse_args()
@@ -133,6 +143,7 @@ def main() -> None:
     caught = sum(r["invalid_citations_caught"] for r in rows)
     surviving = [cid for r in rows for cid in r["invented_citations_surviving"]]
     bad_quotes = sum(r["invalid_sanskrit_quotes"] for r in rows)
+    flagged_answers = sum(r.get("answers_flagged_for_quotes", 0) for r in rows)
     uncited = [r["id"] for r in rows if r["uncited_answer"]]
     degraded = [r["id"] for r in rows if r.get("degraded")]
     tok_in = sum(r["input_tokens"] or 0 for r in rows)
@@ -142,7 +153,13 @@ def main() -> None:
     print(f"  citation_count                {citations}")
     print(f"  invalid_citations_caught      {caught}")
     print(f"  invented_citations_surviving  {len(surviving)}  {surviving or ''}")
-    print(f"  invalid_sanskrit_quotes       {bad_quotes}")
+    # Checkpoints written before the field split recorded *flagged answers* under the
+    # name "invalid_sanskrit_quotes". Say so rather than printing a confident 0.
+    if any("answers_flagged_for_quotes" in r for r in rows):
+        print(f"  unverified Sanskrit runs      {bad_quotes}")
+        print(f"  answers carrying that flag    {flagged_answers}")
+    else:
+        print(f"  answers flagged for quotes    {bad_quotes}  (legacy field: answers, not runs)")
     print(f"  uncited answers (ASK_BL_02)   {len(uncited)}  {uncited or ''}")
     print(f"  degraded (provider failure)   {len(degraded)}  {degraded or ''}")
     print(f"  tokens in/out                 {tok_in}/{tok_out}")

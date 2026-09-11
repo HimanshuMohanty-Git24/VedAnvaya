@@ -13,9 +13,24 @@ from typing import Final
 
 from vedagraph.api.ask.models import AskMode, QueryIntent
 
-# Passage key pattern: RV 1.1.1, AV 2.3.4, SV 1.1, YV 1.1, etc.
+#: Passage key pattern: ``RV 1.1.1``, ``AV 2.3.4``, ``VSM 1.1``, and the Samaveda's
+#: section-named citations ``SV ARANYA 1.1`` and ``SV UTTARA 9.2.10.1``.
+#:
+#: The section token is not decoration, and omitting it was not a cosmetic gap. Every
+#: Samavedic citation this graph emits carries one -- the Kauthuma arcika is held as
+#: ARANYA, UTTARA, CHANDA and MAHANAMNYA -- so a pattern expecting digits immediately
+#: after the Veda code matched *none* of the 1,844 Samavedic mantras. Passage lookup then
+#: never ran, the packet came back empty, and synthesis was asked about a verse that is
+#: present in the corpus while holding no evidence that it exists. Observed live: "What
+#: does SV ARANYA 1.1 contain?" was answered "VedaGraph does not contain any Aranyaka
+#: texts" -- about a passage this graph stores.
+#:
+#: A fourth numeric group is allowed for the same reason: Uttararcika loci are four deep.
+#: Two numeric parts remain the minimum, so a bare "RV 10" is still not read as a locus.
 _PASSAGE_KEY_RE: Final = re.compile(
-    r"\b(RV|AV|AVS|SV|YV|VS|VSM)\s*[\.\s_-]?\s*(\d+)[\.\s_-](\d+)(?:[\.\s_-](\d+))?\b",
+    r"\b(RV|AV|AVS|SV|YV|VS|VSM)\s*"
+    r"(?:(ARANYA|UTTARA|CHANDA|MAHANAMNYA)\s+)?"
+    r"[\.\s_-]?\s*(\d+)[\.\s_-](\d+)(?:[\.\s_-](\d+))?(?:[\.\s_-](\d+))?\b",
     re.IGNORECASE,
 )
 
@@ -421,8 +436,14 @@ def _detect_passage_key(question: str) -> str | None:
     if not m:
         return None
     veda_prefix = m.group(1).upper()
-    parts = [g for g in m.groups()[1:] if g is not None]
-    return f"{veda_prefix} {'.'.join(parts)}"
+    section = m.group(2)
+    parts = [g for g in m.groups()[2:] if g is not None]
+    locus = ".".join(parts)
+    # The graph cites a sectioned locus as "SV ARANYA 1.1" and the lookup matches
+    # canonical_citation, so the section travels inside the key rather than being dropped.
+    if section:
+        return f"{veda_prefix} {section.upper()} {locus}"
+    return f"{veda_prefix} {locus}"
 
 
 def _detect_lexical_terms(question: str, entities: list[str]) -> list[str]:

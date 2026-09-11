@@ -468,3 +468,48 @@ def test_the_wrapper_keeps_the_fault_the_synthesizer_swallows() -> None:
     wrapped.generate(req)
     assert wrapped.last_fault is None
     assert wrapped.last_input_tokens == 5
+
+
+# -- benchmark closure: the Samavedic locus that was denied out of existence ----------
+
+
+@pytest.mark.parametrize(
+    ("question", "expected"),
+    [
+        # The defect: every Samavedic citation carries a section token, and the pattern
+        # expected digits straight after the Veda code. All 1,844 Samavedic mantras were
+        # unreachable by passage lookup, so "What does SV ARANYA 1.1 contain?" retrieved
+        # nothing and was answered "VedaGraph does not contain any Aranyaka texts" about a
+        # passage the graph stores.
+        ("What does SV ARANYA 1.1 contain?", "SV ARANYA 1.1"),
+        ("Tell me about SV UTTARA 9.2.10.1", "SV UTTARA 9.2.10.1"),
+        ("SV CHANDA 1.1", "SV CHANDA 1.1"),
+        ("sv mahanamnya 1.2 please", "SV MAHANAMNYA 1.2"),
+        # Unsectioned loci must keep parsing exactly as before.
+        ("What does RV 10.129.1 say?", "RV 10.129.1"),
+        ("Summarise AVS 1.1.1.", "AVS 1.1.1"),
+        ("What is VSM 1.1 about?", "VSM 1.1"),
+    ],
+)
+def test_sectioned_samavedic_locus_is_a_passage_key(question: str, expected: str) -> None:
+    assert plan(question).passage_key == expected
+
+
+def test_a_bare_veda_and_number_is_still_not_a_locus() -> None:
+    """Two numeric parts remain the minimum, so widening the pattern cannot over-match."""
+    assert plan("Which Veda has the most mentions of Indra?").passage_key is None
+    assert plan("Does the Samaveda mention Varuna?").passage_key is None
+    assert plan("What is in RV 10?").passage_key is None
+
+
+def test_scope_does_not_deny_the_arcika_section_it_cites() -> None:
+    """ "Aranyaka" names a genre this graph lacks *and* a section it holds.
+
+    Stated only as "contains NO Aranyaka", the scope line licensed a refusal of
+    ``SV ARANYA 1.1``. Both senses must be named for the true statement about the genre
+    not to be read as a false one about the section.
+    """
+    from vedagraph.api.ask.synthesizer import SYSTEM_PROMPT
+
+    assert "Aranyaka-genre text" in SYSTEM_PROMPT
+    assert "SV ARANYA locus is arcika verse text that IS in this corpus" in SYSTEM_PROMPT

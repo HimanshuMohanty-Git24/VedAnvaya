@@ -57,7 +57,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from vedagraph.api.ask.citation import extract_cited_ids
+from vedagraph.api.ask.citation import classify_quotes, extract_cited_ids
 from vedagraph.api.ask.models import AskRequest
 from vedagraph.api.ask.service import AskService
 from vedagraph.api.ask.synthesizer import SYSTEM_PROMPT
@@ -341,6 +341,18 @@ def _record(
     # in the packet is an invented citation that survived, whatever the audit reported.
     surviving = [cid for cid in extract_cited_ids(response.answer) if cid not in packet_ids]
     caveat_sources = [c.source for c in response.caveats]
+
+    # Recomputed rather than counted off the caveat list. ``caveat_sources.count(
+    # "quote_audit")`` is at most 1 per answer -- one caveat is raised however many runs
+    # were flagged, and it names only the first three -- so a field called
+    # "invalid_sanskrit_quotes" was reporting *answers carrying a flag*, not quotes. The
+    # completed 60-question run recorded 32 under that name where the true run count was
+    # 49. A gate metric must count the thing it is named after.
+    by_id = {item.id: item for item in response.evidence}
+    cited_items = [by_id[c.id] for c in response.citations if c.id in by_id]
+    absent_runs, uncited_runs = classify_quotes(
+        response.answer, cited_items, list(response.evidence)
+    )
     return {
         **identity.as_dict(),
         "id": case["id"],
@@ -369,7 +381,10 @@ def _record(
         "caveat_sources": caveat_sources,
         "caveats": [{"source": c.source, "text": c.text} for c in response.caveats],
         "invalid_citations_caught": caveat_sources.count("citation_audit"),
-        "invalid_sanskrit_quotes": caveat_sources.count("quote_audit"),
+        "invalid_sanskrit_quotes": len(absent_runs),
+        "unverified_sanskrit_runs": absent_runs,
+        "uncited_sanskrit_runs": uncited_runs,
+        "answers_flagged_for_quotes": caveat_sources.count("quote_audit"),
         "uncited_answer": "uncited_answer" in caveat_sources,
         "input_tokens": usage.last_input_tokens,
         "output_tokens": usage.last_output_tokens,
