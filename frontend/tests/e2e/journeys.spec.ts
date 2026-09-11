@@ -385,6 +385,43 @@ test.describe("knowledge-status regressions", () => {
     });
 });
 
+test.describe("seer and entity profiles", () => {
+    const RISHI = encodeURIComponent("VG:RISHI:VAISVAMITRO-MADHUCCHANDAH");
+
+    test("a row that was not established never carries a supported chip", async ({ page }) => {
+        await page.goto(`/entities/rishi/${RISHI}`);
+        const rows = page.locator("figure.measure tbody tr");
+        const count = await rows.count();
+        expect(count).toBeGreaterThan(0);
+        for (let index = 0; index < count; index += 1) {
+            const row = rows.nth(index);
+            const unestablished = await row.locator(".measure-null").count();
+            if (unestablished > 0) {
+                await expect(row.locator('[data-tone="supported"]')).toHaveCount(0);
+            }
+        }
+    });
+
+    test("no stray zero leaks from an empty collection", async ({ page }) => {
+        await page.goto(`/entities/rishi/${RISHI}`);
+        const strays = await page
+            .locator(".sticky-aside > *")
+            .evaluateAll(
+                (nodes) => nodes.filter((n) => (n.textContent ?? "").trim() === "0").length,
+            );
+        expect(strays).toBe(0);
+    });
+
+    test("a seer keeps stated and inherited attribution apart", async ({ page }) => {
+        await page.goto(`/entities/rishi/${RISHI}`);
+        await expect(page.getByRole("rowheader", { name: "Stated by the source" })).toBeVisible();
+        await expect(
+            page.getByRole("rowheader", { name: "Inherited from the hymn" }),
+        ).toBeVisible();
+        await expect(page.getByText(/The two are never summed/i)).toBeVisible();
+    });
+});
+
 test.describe("accessibility sanity", () => {
     test("the skip link reaches main content", async ({ page }) => {
         await page.goto("/");

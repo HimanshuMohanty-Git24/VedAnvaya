@@ -54,7 +54,9 @@ export default async function EntityPage({ params }: Params) {
             key: code,
             label: vedaNames[code.toUpperCase()] ?? code.toUpperCase(),
             value: typeof byVeda?.[code] === "number" ? byVeda[code] : null,
-            status: byVeda?.status ?? "INSUFFICIENT_EVIDENCE",
+            // A null cell was not reached by the predicates counted here. The block's
+            // own status describes the layer, not this row, and must not be reused.
+            status: "INSUFFICIENT_EVIDENCE",
         }));
     const anyReach = reachRows.some((row) => row.value != null);
 
@@ -168,7 +170,7 @@ export default async function EntityPage({ params }: Params) {
                         )}
                     </div>
 
-                    {(entity.aliases_sa?.length || entity.aliases_en?.length) && (
+                    {Boolean(entity.aliases_sa?.length || entity.aliases_en?.length) && (
                         <div className="panel">
                             <h3>Other names</h3>
                             <div className="chip-row is-static">
