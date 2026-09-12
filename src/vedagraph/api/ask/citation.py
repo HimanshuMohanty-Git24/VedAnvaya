@@ -87,7 +87,19 @@ _WHITESPACE: Final = re.compile(r"\s+")
 _DEVANAGARI_RUN: Final = re.compile(r"[ऀ-ॿ][ऀ-ॿ\s॑-॔]{3,}")
 
 #: The IAST diacritics that mark a Latin word as transliterated Sanskrit.
-_IAST_MARKS: Final = "āīūṛṝḷḹṅñṇṃṁṭḍḥśṣēō"
+#:
+#: Both cases, and the uppercase half is *derived* rather than typed out. A hand-written
+#: second list is how this drifted in the first place: the class held only lowercase, so
+#: every Sanskrit word that begins with a capitalised diacritic -- which is most proper
+#: nouns a reader would quote -- behaved wrongly in two different ways at once.
+#: ``Āraṇyaka`` was reported as the fragment ``raṇyaka``, because matching could not begin
+#: at the capital and started at the next letter instead; and ``Ṛgvedic`` and ``Śaunaka``
+#: were not audited *at all*, because after excluding the capital nothing left in the word
+#: carried a mark. The first is a false alarm a reader sees named in a caveat; the second
+#: is a silent gap in coverage, which is worse. ``ç`` is included for the older
+#: transliteration of ``ś`` that some editions use.
+_IAST_MARKS_LOWER: Final = "āīūṛṝḷḹṅñṇṃṁṭḍḥśṣēōç"
+_IAST_MARKS: Final = _IAST_MARKS_LOWER + _IAST_MARKS_LOWER.upper()
 
 #: Vedic pitch accents, which the transmitted Rigvedic and Atharvavedic Sanskrit carries
 #: *inline*: all 10,552 Rigvedic and all 5,839 Atharvavedic primary texts are accented.

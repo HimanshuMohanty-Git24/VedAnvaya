@@ -17,7 +17,9 @@ from __future__ import annotations
 import pytest
 
 from vedagraph.api.ask.citation import (
+    _IAST_MARKS,
     _rewrite_citations,
+    _sanskrit_runs,
     audit,
     extract_cited_ids,
     verify_quotes,
@@ -347,3 +349,62 @@ def test_sanskrit_absent_from_the_whole_packet_is_an_alarm() -> None:
     assert result.unverified_quotes
     assert not result.uncited_quotes
     assert result.is_clean is False
+
+
+# ---------------------------------------------------------------------------
+# ASK_BL_07: the tokenizer's character class held only lowercase diacritics
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.parametrize(
+    "word",
+    [
+        "Āraṇyaka",
+        "Ṛgvedic",
+        "Śaunaka",
+        "Ṣaḍja",
+        "Ūrdhva",
+        "Ṇakāra",
+    ],
+)
+def test_a_capitalised_diacritic_does_not_split_the_word(word: str) -> None:
+    """The word a reader wrote must be reported whole, or not reported at all.
+
+    With a lowercase-only class, matching could not begin at the capital, so it began at
+    the next letter: ``Āraṇyaka`` came back as ``raṇyaka``. That fragment is then named
+    verbatim in a user-facing caveat, telling a reader their citation is suspect and
+    quoting a word they never wrote.
+    """
+    runs = _sanskrit_runs(f"the {word} tradition")
+    assert runs == [word], f"expected the whole word, got {runs}"
+
+
+@pytest.mark.parametrize("word", ["Ṛgvedic", "Śaunaka", "Ṭīkā"])
+def test_a_word_whose_only_diacritic_is_capitalised_is_still_audited(word: str) -> None:
+    """The silent half, and the worse one.
+
+    ``Śaunaka`` carries exactly one diacritic and it is the capital. Excluding capitals
+    left nothing in the word to match, so the auditor did not skip a *character* -- it
+    skipped the word, and reported no run at all. A quote auditor that silently declines
+    to audit is worse than none, because its silence reads as a pass.
+    """
+    assert _sanskrit_runs(f"quoted from the {word} recension") == [word]
+
+
+def test_the_diacritic_class_covers_both_cases() -> None:
+    """Derived, not typed twice. A hand-written second list is how this drifted."""
+    for lower in "āīūṛṝḷḹṅñṇṃṁṭḍḥśṣēōç":
+        assert lower in _IAST_MARKS
+        assert lower.upper() in _IAST_MARKS
+
+
+def test_plain_english_still_yields_no_run() -> None:
+    """Widening the class must not start matching English, which would flag every answer."""
+    assert _sanskrit_runs("The hymn is addressed to Agni and Indra by the seer") == []
+    assert _sanskrit_runs("A plain English sentence about ritual and fire") == []
+
+
+def test_a_capitalised_quote_verifies_against_its_cited_item() -> None:
+    """End to end: the fix must make a real quotation pass, not merely tokenize better."""
+    cited = [item("E1", sanskrit="āraṇyaka kāṇḍa")]
+    assert verify_quotes("The Āraṇyaka kāṇḍa is cited here [E1].", cited) == []

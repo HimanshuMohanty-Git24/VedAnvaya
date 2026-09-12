@@ -48,6 +48,7 @@ from vedagraph.product.audio.models import (
     VEDA_RECENSIONS,
     AudioRecord,
     AudioScope,
+    AudioType,
     Availability,
     MappingConfidence,
     PlaybackMode,
@@ -328,30 +329,68 @@ class AudioService:
             caveats=caveats,
         )
 
+    def _stats_caveats(self) -> Iterable[CaveatView]:
+        """Say what the counts mean, reading it off the catalog rather than asserting it.
+
+        An earlier version of this method wrote the units into prose -- "a Rigvedic figure
+        counts suktas and a Yajurvedic one counts adhyayas" -- which was true of the
+        source in use at the time and became false when the catalog moved to one recording
+        per verse. Worse, it then told a reader *not* to read the counts as a share of
+        verses with their own recording, which is exactly what they had become. Derived
+        text cannot drift that way.
+        """
+        catalog = self._catalog
+        if not len(catalog):
+            return
+
+        scopes = {record.scope_type for record in catalog}
+        if scopes == {AudioScope.MANTRA}:
+            yield CaveatView(
+                text=(
+                    "Every count here is a count of verses, each with its own recording. "
+                    "They are not a share of the corpus: a Veda's verses without a "
+                    "recording are simply absent from these totals, and "
+                    "`mapped_scope_keys_by_veda` beside each figure is what to compare "
+                    "against that Veda's verse count."
+                ),
+                source="measured",
+            )
+        else:
+            named = ", ".join(sorted(scope_plural(scope) for scope in scopes))
+            yield CaveatView(
+                text=(
+                    f"These counts mix recording levels -- {named} -- so a single figure "
+                    f"is not a count of verses. A recording of a wider span plays from the "
+                    f"start of that span, not from the verse a reader is reading."
+                ),
+                source="measured",
+            )
+
+        samavedic = catalog.for_veda("SV")
+        if not samavedic:
+            yield CaveatView(
+                text=(
+                    "No Samavedic recording is catalogued at all. The Samaveda is the one "
+                    "Veda defined by its sung realisation, so this is the most "
+                    "conspicuous gap in the layer -- and it is a gap in what has been "
+                    "published, not a statement about the tradition."
+                ),
+                source="measured",
+            )
+        elif any(record.audio_type is AudioType.SAMAGANA for record in samavedic):
+            yield CaveatView(
+                text=(
+                    "Some Samavedic entries are samagana -- the sung realisation -- which "
+                    "this corpus's arcika text does not contain. Their presence is not "
+                    "evidence that the gana corpus is held here."
+                ),
+                source="measured",
+            )
+
     def stats(self) -> AudioStatsResponse:
         catalog = self._catalog
         cached = sum(1 for record in catalog if self.cached_path(record) is not None)
-        caveats = [
-            CaveatView(
-                text=(
-                    "Coverage is counted in structural spans, not mantras. A Rigvedic "
-                    "figure counts suktas and a Yajurvedic one counts adhyayas, each "
-                    "covering many verses, and no source located for this corpus "
-                    "publishes per-verse timings. Do not read these counts as a share of "
-                    "verses with their own recording."
-                ),
-                source="measured",
-            ),
-            CaveatView(
-                text=(
-                    "The Samavedic entries are collection-level references and name no "
-                    "verse. One of them is samagana -- the sung realisation -- which this "
-                    "corpus's arcika text does not contain. Its presence is not evidence "
-                    "that the gana corpus is held here."
-                ),
-                source="measured",
-            ),
-        ]
+        caveats = list(self._stats_caveats())
         return AudioStatsResponse(
             total_records=len(catalog),
             by_veda=catalog.counts_by("veda"),

@@ -195,9 +195,9 @@ export function RecitationPlayer({ track }: { track: AudioTrack }) {
                 <video
                     ref={mediaRef as React.RefObject<HTMLVideoElement>}
                     src={src}
-                    // The portal serves these as MP4 with a static frame. Kept off-screen
-                    // rather than rendered: the reader wants the recitation, and a video
-                    // panel would displace the Sanskrit, which stays primary.
+                    // A source may serve MP4 with a static frame. Kept off-screen rather
+                    // than rendered: the reader wants the recitation, and a video panel
+                    // would displace the Sanskrit, which stays primary.
                     className="recitation-media"
                     preload="none"
                     playsInline
@@ -212,6 +212,12 @@ export function RecitationPlayer({ track }: { track: AudioTrack }) {
                 <audio
                     ref={mediaRef as React.RefObject<HTMLAudioElement>}
                     src={src}
+                    // Same off-screen class as the video branch. A `controls`-less <audio>
+                    // has no intrinsic size, so omitting it looked harmless -- but the two
+                    // branches then disagreed about whether the element is positioned, and
+                    // the class is what keeps it out of the layout if controls are ever
+                    // added.
+                    className="recitation-media"
                     preload="none"
                     onPlay={() => setPlaying(true)}
                     onPause={() => setPlaying(false)}

@@ -589,3 +589,73 @@ def test_work_audio_for_a_veda_with_nothing_is_not_built(verse_client: TestClien
 
 def test_an_unknown_work_is_a_404(verse_client: TestClient) -> None:
     assert verse_client.get("/api/v1/works/VG:WORK:XX:YY/audio").status_code == 404
+
+
+# ---------------------------------------------------------------------------
+# Stats caveats are derived, because a written-down one went stale
+# ---------------------------------------------------------------------------
+
+
+def test_a_per_verse_catalog_says_its_counts_are_verses(verse_client: TestClient) -> None:
+    """The defect this replaced: prose asserting the counts were suktas and adhyayas.
+
+    It was true of the source in use when it was written and false afterwards, and it told
+    the reader *not* to read the counts as a share of verses with their own recording --
+    which by then was exactly what they were.
+    """
+    caveats = " ".join(c["text"] for c in verse_client.get("/api/v1/audio/stats").json()["caveats"])
+    assert "count of verses" in caveats
+    assert "suktas" not in caveats
+    assert "adhyayas" not in caveats
+
+
+def test_a_mixed_scope_catalog_says_its_counts_are_not_all_verses() -> None:
+    """The other branch: a coarser record present must change the sentence."""
+    records = [verse_record(), hymn_record()]
+    app, client, repository = client_for(AudioCatalog(records))
+    with client:
+        app.state.repository = repository
+        app.state.audio_catalog = AudioCatalog(records)
+        caveats = " ".join(c["text"] for c in client.get("/api/v1/audio/stats").json()["caveats"])
+    assert "mix recording levels" in caveats
+    assert "hymns" in caveats
+
+
+def test_an_absent_samaveda_is_named_rather_than_left_as_a_zero(
+    verse_client: TestClient,
+) -> None:
+    """A Samavedic zero is the layer's most conspicuous gap and must say whose gap it is."""
+    caveats = " ".join(c["text"] for c in verse_client.get("/api/v1/audio/stats").json()["caveats"])
+    assert "No Samavedic recording" in caveats
+    assert "not a statement about the tradition" in caveats
+
+
+def test_a_samagana_record_is_flagged_when_one_exists() -> None:
+    """The gana/arcika warning must appear only when there is gana to warn about."""
+    gana = verse_record(
+        audio_id="TEST:SV:gana",
+        veda="SV",
+        recension="KAU",
+        scope_type=AudioScope.WORK,
+        scope_key=None,
+        audio_type=AudioType.SAMAGANA,
+        mapping_confidence=MappingConfidence.EXTERNAL_ONLY,
+        playback_mode=PlaybackMode.EXTERNAL_LINK,
+        media_url=None,
+        source_reference=None,
+        text_verified=False,
+    )
+    app, client, repository = client_for(AudioCatalog([verse_record(), gana]))
+    with client:
+        app.state.repository = repository
+        app.state.audio_catalog = AudioCatalog([verse_record(), gana])
+        caveats = " ".join(c["text"] for c in client.get("/api/v1/audio/stats").json()["caveats"])
+    assert "samagana" in caveats
+    assert "not evidence that the gana corpus is held here" in caveats
+
+
+def test_an_empty_catalog_asserts_nothing_about_coverage(silent_client: TestClient) -> None:
+    """No records means no claims -- not a claim that coverage is zero everywhere."""
+    payload = silent_client.get("/api/v1/audio/stats").json()
+    assert payload["caveats"] == []
+    assert payload["data_status"] == "NOT_BUILT"

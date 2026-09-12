@@ -84,9 +84,9 @@ _RANGE_RE: Final = re.compile(r"^bytes=(\d*)-(\d*)$")
 #: Attached wherever a track is returned for a passage it does not individually cover.
 _CONTAINER_SCOPE_CAVEAT: Final = CaveatView(
     text=(
-        "This recording covers a whole structural span, not this verse alone. No source "
-        "located for this corpus publishes per-verse timings, so the audio is offered at "
-        "the level the publisher recorded it and the scope block states that level. Do not "
+        "This recording covers a whole structural span, not this verse alone. It is "
+        "offered at the level its publisher recorded it, and the scope block states that "
+        "level; playback begins at the start of the span rather than at this verse. Do not "
         "present it as a recording of one mantra."
     ),
     source="measured",
