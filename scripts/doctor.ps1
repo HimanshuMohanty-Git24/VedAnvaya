@@ -255,16 +255,15 @@ if (Test-Path $cache) {
 
 function Test-PortFree {
     param([int]$Port)
-    $listener = $null
-    try {
-        $listener = New-Object System.Net.Sockets.TcpListener([System.Net.IPAddress]::Loopback, $Port)
-        $listener.Start()
-        return $true
-    } catch {
-        return $false
-    } finally {
-        if ($listener) { $listener.Stop() }
-    }
+    # Asks the OS which ports are listening rather than trying to bind one.
+    #
+    # The obvious implementation -- bind a TcpListener on 127.0.0.1 and see whether it
+    # throws -- reports a port FREE while a server is serving on it. A process listening on
+    # 0.0.0.0 or on the IPv6 wildcard does not conflict with a fresh loopback-only bind on
+    # Windows, so the probe succeeds and the check lies. It did: this script reported port
+    # 3000 free while Next.js was answering requests on it.
+    $listening = @(Get-NetTCPConnection -State Listen -LocalPort $Port -ErrorAction SilentlyContinue)
+    return ($listening.Count -eq 0)
 }
 
 $apiPort = Get-Setting $envMap 'API_PORT'

@@ -20,6 +20,10 @@
     cross-Veda, audio -- works entirely without one, and Ask VedaGraph reports
     NOT_CONFIGURED rather than taking the product down with it.
 
+    Both servers are launched detached, through a generated .cmd shim. See Start-Detached
+    for why: PowerShell's own output redirection keeps this script alive for as long as the
+    server writes, which means it never returns to the prompt.
+
 .PARAMETER SkipDoctor
     Start without the preflight checks.
 
@@ -45,6 +49,57 @@ $root = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
 $runDir = Join-Path $root '.tmp'
 $null = New-Item -ItemType Directory -Force -Path $runDir
 
+function Start-Detached {
+    <#
+        Launch a long-lived server without tying this script's lifetime to it.
+
+        `Start-Process -RedirectStandardOutput` makes PowerShell hold the child's output
+        handles and then wait for them to close, so a script that starts `next dev` that way
+        never returns to the prompt even though the server is up and answering. Measured:
+        the API alone returned fine, the dev server did not.
+
+        So the command and its redirection are written into a .cmd shim and cmd.exe is
+        launched on that. cmd owns the pipe, the log file still gets written, and this
+        script keeps no handle at all. Writing a shim rather than passing a quoted `/c`
+        string also avoids a layer of PowerShell-to-cmd quote escaping that is easy to get
+        subtly wrong for paths containing spaces.
+
+        The pid returned is cmd's, not the server's -- which is why stop-product.ps1 sweeps
+        by command line instead of trusting the recorded pid alone.
+    #>
+    param(
+        [string]$Name,
+        [string]$Command,
+        [string]$WorkingDirectory,
+        [string]$LogPath
+    )
+    $shim = Join-Path $runDir "$Name.cmd"
+    $lines = @(
+        '@echo off',
+        "cd /d `"$WorkingDirectory`"",
+        "$Command > `"$LogPath`" 2>&1"
+    )
+    Set-Content -LiteralPath $shim -Value $lines -Encoding ascii
+    return Start-Process -FilePath $env:ComSpec `
+        -ArgumentList @('/c', $shim) `
+        -WorkingDirectory $WorkingDirectory `
+        -PassThru -WindowStyle Hidden
+}
+
+function Test-Endpoint {
+    param([string]$Url, [int]$Attempts = 40)
+    for ($attempt = 1; $attempt -le $Attempts; $attempt++) {
+        Start-Sleep -Milliseconds 500
+        try {
+            $response = Invoke-WebRequest -Uri $Url -UseBasicParsing -TimeoutSec 5
+            if ($response.StatusCode -eq 200) { return $true }
+        } catch {
+            # Not up yet. Keep waiting; the caller reports the timeout.
+        }
+    }
+    return $false
+}
+
 if (-not $SkipDoctor) {
     Write-Host 'Preflight...' -ForegroundColor Cyan
     & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $root 'scripts\doctor.ps1')
@@ -65,37 +120,20 @@ if (-not (Test-Path $python)) {
 
 $apiLog = Join-Path $runDir 'api.log'
 Write-Host 'Starting the API on http://127.0.0.1:8000 ...' -ForegroundColor Cyan
-$api = Start-Process -FilePath $python `
-    -ArgumentList @('-m', 'uvicorn', 'vedagraph.api.app:app', '--host', '127.0.0.1', '--port', '8000') `
+$api = Start-Detached -Name 'api' `
+    -Command "`"$python`" -m uvicorn vedagraph.api.app:app --host 127.0.0.1 --port 8000" `
     -WorkingDirectory $root `
-    -RedirectStandardOutput $apiLog `
-    -RedirectStandardError (Join-Path $runDir 'api.err.log') `
-    -PassThru -WindowStyle Hidden
+    -LogPath $apiLog
 Set-Content -LiteralPath (Join-Path $runDir 'api.pid') -Value $api.Id -Encoding ascii
 
 # Poll /ready rather than sleeping a fixed interval. /ready checks connectivity, the
 # ontology version and the four works, so a 200 here means the product can actually answer
 # rather than merely that a port opened.
-$ready = $false
-for ($attempt = 1; $attempt -le 40; $attempt++) {
-    Start-Sleep -Milliseconds 500
-    try {
-        $response = Invoke-WebRequest -Uri 'http://127.0.0.1:8000/ready' -UseBasicParsing -TimeoutSec 4
-        if ($response.StatusCode -eq 200) { $ready = $true; break }
-    } catch {
-        if ($api.HasExited) { break }
-    }
-}
-
-if ($ready) {
+if (Test-Endpoint -Url 'http://127.0.0.1:8000/ready') {
     Write-Host '  API ready.' -ForegroundColor Green
-} elseif ($api.HasExited) {
-    Write-Host '  API exited during startup. Last lines of its log:' -ForegroundColor Red
-    if (Test-Path $apiLog) { Get-Content -LiteralPath $apiLog -Tail 15 }
-    if (Test-Path (Join-Path $runDir 'api.err.log')) { Get-Content -LiteralPath (Join-Path $runDir 'api.err.log') -Tail 15 }
-    exit 1
 } else {
-    Write-Host '  API did not report ready in 20s. It may still be starting; see .tmp\api.log' -ForegroundColor Yellow
+    Write-Host '  API did not report ready in 20s. Last lines of its log:' -ForegroundColor Yellow
+    if (Test-Path $apiLog) { Get-Content -LiteralPath $apiLog -Tail 20 }
 }
 
 if ($ApiOnly) {
@@ -109,16 +147,28 @@ if ($ApiOnly) {
 # --- Frontend --------------------------------------------------------------
 
 $frontend = Join-Path $root 'frontend'
-$pnpm = Get-Command pnpm -ErrorAction SilentlyContinue
-if (-not $pnpm) {
+
+# Resolve something that can actually be launched. `Get-Command pnpm` returns the PowerShell
+# shim (pnpm.ps1) first on a standard Node install, and Start-Process refuses it with
+# "%1 is not a valid Win32 application" -- so prefer an Application-type command, and the
+# .cmd shim where several exist.
+$pnpmCandidates = @(Get-Command pnpm -All -ErrorAction SilentlyContinue |
+    Where-Object { $_.CommandType -eq 'Application' })
+$pnpmPath = $null
+foreach ($candidate in $pnpmCandidates) {
+    if ($candidate.Source -like '*.cmd') { $pnpmPath = $candidate.Source; break }
+}
+if (-not $pnpmPath -and $pnpmCandidates.Count -gt 0) { $pnpmPath = $pnpmCandidates[0].Source }
+if (-not $pnpmPath) {
     Write-Host 'pnpm is not on PATH; the API is running but the frontend was not started.' -ForegroundColor Yellow
+    Write-Host '  Install it with: npm install -g pnpm' -ForegroundColor DarkGray
     exit 1
 }
 
 if ($Production) {
     Write-Host 'Building the frontend...' -ForegroundColor Cyan
     Push-Location $frontend
-    & pnpm build
+    & $pnpmPath build
     $buildCode = $LASTEXITCODE
     Pop-Location
     if ($buildCode -ne 0) {
@@ -131,32 +181,20 @@ if ($Production) {
 }
 
 Write-Host "Starting the frontend on http://localhost:3000 (pnpm $script) ..." -ForegroundColor Cyan
-$web = Start-Process -FilePath $pnpm.Source `
-    -ArgumentList @($script) `
+$web = Start-Detached -Name 'frontend' `
+    -Command "`"$pnpmPath`" $script" `
     -WorkingDirectory $frontend `
-    -RedirectStandardOutput (Join-Path $runDir 'frontend.log') `
-    -RedirectStandardError (Join-Path $runDir 'frontend.err.log') `
-    -PassThru -WindowStyle Hidden
+    -LogPath (Join-Path $runDir 'frontend.log')
 Set-Content -LiteralPath (Join-Path $runDir 'frontend.pid') -Value $web.Id -Encoding ascii
 
-$webUp = $false
-for ($attempt = 1; $attempt -le 60; $attempt++) {
-    Start-Sleep -Milliseconds 500
-    try {
-        $response = Invoke-WebRequest -Uri 'http://localhost:3000' -UseBasicParsing -TimeoutSec 4
-        if ($response.StatusCode -eq 200) { $webUp = $true; break }
-    } catch {
-        if ($web.HasExited) { break }
-    }
-}
+$webUp = Test-Endpoint -Url 'http://localhost:3000' -Attempts 90
 
 Write-Host ''
 if ($webUp) {
     Write-Host '  VedaGraph  http://localhost:3000' -ForegroundColor Green
-} elseif ($web.HasExited) {
-    Write-Host '  The frontend exited during startup. See .tmp\frontend.err.log' -ForegroundColor Red
 } else {
     Write-Host '  Frontend still compiling. It will answer on http://localhost:3000 shortly.' -ForegroundColor Yellow
+    Write-Host '  If it does not, see .tmp\frontend.log' -ForegroundColor DarkGray
 }
 Write-Host '  API        http://127.0.0.1:8000' -ForegroundColor Green
 Write-Host '  API docs   http://127.0.0.1:8000/docs' -ForegroundColor Green
