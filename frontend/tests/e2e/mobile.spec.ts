@@ -85,3 +85,37 @@ test.describe("mobile search", () => {
         expect(overflow).toBeLessThanOrEqual(1);
     });
 });
+
+test.describe("mobile recitation", () => {
+    test("the player fits 390px and its controls stay usable", async ({ page }) => {
+        await page.goto(`/passage/${RV_1_1_1}`);
+        const recitation = page.locator("section.recitation");
+        await expect(recitation).toBeVisible();
+        await expect(recitation).toContainText("Recitation of this verse");
+
+        // The transport wraps rather than crushing the seek bar to a few pixels.
+        const overflow = await page.evaluate(
+            () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+        );
+        expect(overflow).toBeLessThanOrEqual(1);
+
+        // The play control keeps a real touch target.
+        const play = page.getByRole("button", { name: /^Play / });
+        const box = await play.boundingBox();
+        expect(box).not.toBeNull();
+        expect(box!.width).toBeGreaterThanOrEqual(36);
+        expect(box!.height).toBeGreaterThanOrEqual(36);
+
+        // The seek bar takes the full width on its own row rather than sharing one.
+        const seek = page.getByRole("slider", { name: /Seek within this recitation/ });
+        const seekBox = await seek.boundingBox();
+        expect(seekBox).not.toBeNull();
+        expect(seekBox!.width).toBeGreaterThan(180);
+    });
+
+    test("a verse with no recitation reads normally on mobile", async ({ page }) => {
+        await page.goto(`/passage/${encodeURIComponent("VG:SV:KAU:ARANYA:D01:V01")}`);
+        await expect(page.locator(".sanskrit").first()).toBeVisible();
+        await expect(page.locator("section.recitation")).toHaveCount(0);
+    });
+});

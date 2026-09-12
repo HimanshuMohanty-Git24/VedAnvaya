@@ -6154,3 +6154,231 @@ a.ask-entity:hover small {
         width: 100%;
     }
 }
+
+/* ---------------------------------------------------------------------------
+   Recitation player
+   ---------------------------------------------------------------------------
+   Deliberately quieter than the mantra block above it. The Sanskrit is the primary
+   object on the reading page; the recitation is an aid to it, so this sits on the sunk
+   surface with no border of its own and never competes for the eye.
+
+   The <video>/<audio> element is off-screen rather than display:none -- a hidden media
+   element still plays, but several browsers refuse to play one that has been removed
+   from the layout entirely. */
+.recitation {
+    margin-top: 14px;
+    padding: 14px 16px;
+    border-radius: var(--radius-sm);
+    background: var(--surface-sunk);
+    border: 1px solid var(--line);
+}
+
+.recitation-media {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.recitation-scope {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin: 0 0 12px;
+    font-size: 0.83rem;
+    line-height: 1.5;
+    color: var(--muted);
+}
+
+.recitation-scope svg {
+    flex: 0 0 auto;
+    margin-top: 2px;
+    color: var(--accent);
+}
+
+.recitation-transport {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.recitation-play {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    /* 40px is the touch target floor, not a visual choice. */
+    width: 40px;
+    height: 40px;
+    flex: 0 0 auto;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--accent);
+    cursor: pointer;
+    transition: background 120ms ease, border-color 120ms ease;
+}
+
+.recitation-play:hover {
+    background: var(--accent-soft);
+    border-color: var(--accent);
+}
+
+.recitation-seek {
+    flex: 1 1 auto;
+    min-width: 0;
+    accent-color: var(--accent);
+    height: 22px;
+    cursor: pointer;
+}
+
+.recitation-seek:disabled {
+    cursor: default;
+    opacity: 0.45;
+}
+
+.recitation-time {
+    flex: 0 0 auto;
+    font-size: 0.76rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--faint);
+}
+
+.recitation-speed select {
+    flex: 0 0 auto;
+    padding: 5px 7px;
+    font-size: 0.76rem;
+    color: var(--ink-soft);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+}
+
+.recitation-loading {
+    font-size: 0.74rem;
+    color: var(--faint);
+}
+
+.recitation-failed {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.recitation-failed svg {
+    flex: 0 0 auto;
+    margin-top: 2px;
+    color: var(--muted);
+}
+
+.recitation-failed strong {
+    display: block;
+    font-size: 0.86rem;
+    font-weight: 600;
+}
+
+.recitation-failed small {
+    display: block;
+    margin-top: 3px;
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: var(--muted);
+}
+
+.recitation-source-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.78rem;
+    color: var(--accent);
+    text-decoration: none;
+}
+
+.recitation-source-link:hover {
+    text-decoration: underline;
+}
+
+.recitation-provenance {
+    margin-top: 12px;
+    border-top: 1px solid var(--line);
+    padding-top: 10px;
+}
+
+.recitation-provenance > summary {
+    font-size: 0.76rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--faint);
+    cursor: pointer;
+}
+
+.recitation-provenance dl {
+    display: grid;
+    grid-template-columns: minmax(0, 9rem) minmax(0, 1fr);
+    gap: 5px 14px;
+    margin: 12px 0 0;
+    font-size: 0.8rem;
+    line-height: 1.5;
+}
+
+.recitation-provenance dt {
+    color: var(--faint);
+}
+
+.recitation-provenance dd {
+    margin: 0;
+    color: var(--ink-soft);
+    overflow-wrap: anywhere;
+}
+
+.recitation-note {
+    margin: 12px 0 10px;
+    font-size: 0.79rem;
+    line-height: 1.55;
+    color: var(--muted);
+}
+
+.recitation.is-external .recitation-scope {
+    margin-bottom: 10px;
+}
+
+@media (max-width: 760px) {
+    .recitation-transport {
+        /* The seek bar needs the full width at 390px; the transport wraps beneath it
+           rather than shrinking the slider to a few unusable pixels. */
+        flex-wrap: wrap;
+        row-gap: 10px;
+    }
+
+    .recitation-seek {
+        order: 4;
+        flex-basis: 100%;
+    }
+
+    .recitation-provenance dl {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 2px;
+    }
+
+    .recitation-provenance dt {
+        margin-top: 8px;
+    }
+}
+
+/* A second-order note inside a panel: present for the reader who wants it, quiet enough
+   not to compete with the figure above it. */
+.panel-note-faint {
+    color: var(--faint);
+    font-size: 0.76rem;
+    line-height: 1.5;
+}
+
+/* The recitation panel's heading carries an icon, so it needs the same baseline
+   alignment the other panel headings get implicitly from being text only. */
+.panel h3 svg {
+    vertical-align: -3px;
+    margin-right: 5px;
+    color: var(--accent);
+}

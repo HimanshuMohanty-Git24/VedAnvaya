@@ -52,3 +52,9 @@ data/enrichment/**/*.jsonl
 
 # local scratch (API logs, ad-hoc probes)
 .tmp/
+
+# Cached third-party audio. The catalog that describes each file is committed; the media
+# is not. Binary recitation audio is large, it is reproducible from the catalog's URLs,
+# and most of it belongs to a publisher who permits streaming rather than redistribution.
+data/audio/cache/**
+!data/audio/cache/.gitkeep

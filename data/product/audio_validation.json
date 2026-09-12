@@ -1,0 +1,182 @@
+{
+  "catalog": "D:\\VedaGraph\\data\\product\\audio_catalog.jsonl",
+  "graph_checked": true,
+  "checks": [
+    {
+      "name": "provenance_complete",
+      "severity": "FAIL",
+      "status": "PASS",
+      "detail": "Every record carries source_name, source_page, title and mapping_method.",
+      "offenders": [],
+      "offender_count": 0
+    },
+    {
+      "name": "recension_matches_corpus",
+      "severity": "FAIL",
+      "status": "PASS",
+      "detail": "Every record's recension is the one this corpus holds (RV/SAK, SV/KAU, YV/VSM, AV/SAU).",
+      "offenders": [],
+      "offender_count": 0
+    },
+    {
+      "name": "scope_type_matches_key_depth",
+      "severity": "FAIL",
+      "status": "PASS",
+      "detail": "No record claims a scope its key's depth contradicts.",
+      "offenders": [],
+      "offender_count": 0
+    },
+    {
+      "name": "samagana_never_bound_to_arcika_verse",
+      "severity": "FAIL",
+      "status": "PASS",
+      "detail": "No SAMAGANA record is attached to a passage below WORK scope.",
+      "offenders": [],
+      "offender_count": 0
+    },
+    {
+      "name": "one_url_one_passage",
+      "severity": "FAIL",
+      "status": "PASS",
+      "detail": "No media URL is mapped to more than one passage.",
+      "offenders": [],
+      "offender_count": 0
+    },
+    {
+      "name": "one_record_per_passage_per_source",
+      "severity": "WARN",
+      "status": "PASS",
+      "detail": "No passage carries two recordings from the same source.",
+      "offenders": [],
+      "offender_count": 0
+    },
+    {
+      "name": "strong_mapping_states_evidence",
+      "severity": "FAIL",
+      "status": "PASS",
+      "detail": "Every EXACT or HIGH mapping records a substantive mapping_method.",
+      "offenders": [],
+      "offender_count": 0
+    },
+    {
+      "name": "no_offsets_without_exact_mapping",
+      "severity": "FAIL",
+      "status": "PASS",
+      "detail": "No record carries verse offsets without an EXACT or HIGH mapping to justify them.",
+      "offenders": [],
+      "offender_count": 0
+    },
+    {
+      "name": "exact_mapping_is_text_verified",
+      "severity": "FAIL",
+      "status": "PASS",
+      "detail": "Every EXACT mapping was confirmed by comparing the recited text with this corpus.",
+      "offenders": [],
+      "offender_count": 0
+    },
+    {
+      "name": "proxied_records_name_their_source_item",
+      "severity": "FAIL",
+      "status": "PASS",
+      "detail": "Every PROXIED_STREAM record names the source item to fetch.",
+      "offenders": [],
+      "offender_count": 0
+    },
+    {
+      "name": "playback_mode_has_its_url",
+      "severity": "FAIL",
+      "status": "PASS",
+      "detail": "Every playback mode carries the URL it needs.",
+      "offenders": [],
+      "offender_count": 0
+    },
+    {
+      "name": "cached_files_exist_inside_root",
+      "severity": "FAIL",
+      "status": "PASS",
+      "detail": "Every local_cache_path resolves to a real file inside the cache directory.",
+      "offenders": [],
+      "offender_count": 0
+    },
+    {
+      "name": "available_records_dated",
+      "severity": "WARN",
+      "status": "PASS",
+      "detail": "Every AVAILABLE record carries the date it was measured.",
+      "offenders": [],
+      "offender_count": 0
+    },
+    {
+      "name": "no_dangling_passage_identity",
+      "severity": "FAIL",
+      "status": "PASS",
+      "detail": "All 16834 distinct scope keys exist as Passage nodes.",
+      "offenders": [],
+      "offender_count": 0
+    },
+    {
+      "name": "record_veda_matches_key_veda",
+      "severity": "FAIL",
+      "status": "PASS",
+      "detail": "No record names a Veda its own key does not belong to.",
+      "offenders": [],
+      "offender_count": 0
+    },
+    {
+      "name": "scope_type_matches_node_type",
+      "severity": "FAIL",
+      "status": "PASS",
+      "detail": "Every scope_type is legal for the node type its key resolves to (a SUKTA scope over a HYMN node, never over a MANTRA).",
+      "offenders": [],
+      "offender_count": 0
+    },
+    {
+      "name": "coverage_within_corpus_size",
+      "severity": "FAIL",
+      "status": "PASS",
+      "detail": "No Veda maps more spans than the corpus contains.",
+      "offenders": [],
+      "offender_count": 0
+    }
+  ],
+  "failures": 0,
+  "metrics": {
+    "tracks_discovered": 16834,
+    "tracks_mapped": 16834,
+    "exact_mappings": 16834,
+    "high_mappings": 0,
+    "structural_mappings": 0,
+    "external_only": 0,
+    "coverage_by_veda": {
+      "AV": 4680,
+      "RV": 10402,
+      "YV": 1752
+    },
+    "coverage_by_granularity": {
+      "MANTRA": 16834
+    },
+    "coverage_by_veda_and_granularity": {
+      "AV/MANTRA": 4680,
+      "RV/MANTRA": 10402,
+      "YV/MANTRA": 1752
+    },
+    "by_availability": {
+      "AVAILABLE": 16834
+    },
+    "by_audio_type": {
+      "RECITATION": 16834
+    },
+    "by_playback_mode": {
+      "PROXIED_STREAM": 16834
+    },
+    "distinct_mapped_keys_by_veda": {
+      "AV": 4680,
+      "RV": 10402,
+      "SV": 0,
+      "YV": 1752
+    },
+    "locally_cached": 0,
+    "remote": 16834,
+    "external_link_or_embed": 0
+  }
+}

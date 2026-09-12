@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { LoadFailure } from "@/components/empty-state";
 import { PageHeading } from "@/components/page-heading";
 import { StructureBrowser } from "@/components/structure-browser";
+import { VedaAudioPanel } from "@/components/veda-audio-panel";
 import { Caveat, CaveatList, KnowledgeStatus } from "@/components/status";
 import {
     encoded,
@@ -13,6 +14,7 @@ import {
     vedaNames,
     workIds,
     type DevatasResponse,
+    type WorkAudio,
     type WorkRoot,
     type WorksResponse,
 } from "@/lib/api";
@@ -79,6 +81,9 @@ export default async function VedaPage({ params }: Params) {
     const boundary = BOUNDARY[code];
 
     const deitiesResult = await load<DevatasResponse>("/devatas?limit=8");
+    // Coverage figures come from the catalog on every request. A written-down number here
+    // would drift the moment a recording is added or a publisher withdraws one.
+    const audioResult = await load<WorkAudio>(`/works/${encoded(workId)}/audio?limit=1`);
     const deities = deitiesResult.ok ? (deitiesResult.data.items ?? []) : [];
 
     return (
@@ -127,6 +132,13 @@ export default async function VedaPage({ params }: Params) {
                         </div>
                         <p>{SCOPE_NOTE[code]}</p>
                     </div>
+
+                    {audioResult.ok && (
+                        <VedaAudioPanel
+                            audio={audioResult.data}
+                            verseTotal={work.mantra_count}
+                        />
+                    )}
 
                     <div className="panel">
                         <h3>Start somewhere</h3>

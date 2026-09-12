@@ -307,6 +307,116 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/passages/{key}/audio": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Recitation audio for one passage
+         * @description Recordings covering this passage, nearest structural level first.
+         *
+         *     The normal answer for a mantra is its **hymn's** recitation, with `scope.covers_requested_passage=false` and a ready-made `scope.scope_note`. Render `scope_note` verbatim and the label cannot overstate what the audio is.
+         *
+         *     `data_status` is `NOT_BUILT` when nothing is mapped. That is a supported state, not an error, and the client should render no player at all rather than a disabled one.
+         */
+        get: operations["passage_audio_api_v1_passages__key__audio_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/works/{work_id}/audio": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Every recording for one Samhita
+         * @description All catalogued recordings for the Veda this work addresses, with coverage counted live from the catalog.
+         *
+         *     `mapped_scope_count` is distinct canonical keys with a recording -- not tracks and not mantras. For the Rigveda it is a count of suktas; a client that rendered it as a share of mantras would overstate coverage by an order of magnitude.
+         */
+        get: operations["work_audio_api_v1_works__work_id__audio_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/audio/stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Catalog-wide audio figures
+         * @description Every figure derived from the catalog on this request, so nothing here can drift from what the catalog says.
+         *
+         *     `by_availability` is reported beside the coverage counts on purpose: a catalog whose records were last measured unreachable is a different product state from one whose records answer, and omitting it would read as full coverage.
+         */
+        get: operations["audio_stats_api_v1_audio_stats_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/audio/{audio_id}/stream": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Stream a locally cached recording
+         * @description Serves bytes for a catalog record that holds a local copy, with correct HTTP Range support so seeking works.
+         *
+         *     Only catalog ids are accepted. There is no parameter that takes a URL, so this endpoint cannot be used as an open proxy, and a record whose audio is remote returns 409 naming the publisher's URL to use instead.
+         */
+        get: operations["stream_audio_api_v1_audio__audio_id__stream_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/audio/{audio_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * One catalogued recording
+         * @description One record with its full provenance: where it came from, what it claims to be, what this product mapped it to, and how certain that mapping is.
+         */
+        get: operations["audio_detail_api_v1_audio__audio_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/devatas": {
         parameters: {
             query?: never;
@@ -1462,6 +1572,232 @@ export interface components {
              */
             note: string;
         };
+        /**
+         * AudioPlaybackView
+         * @description How the client should sound this record, and what it may not assume.
+         *
+         *     Exactly one of the URL fields is populated for a playable mode. A client that finds
+         *     them all null is looking at an :attr:`PlaybackMode.EXTERNAL_LINK` record and must
+         *     offer the source page rather than a player.
+         */
+        AudioPlaybackView: {
+            mode: components["schemas"]["PlaybackMode"];
+            /**
+             * Stream Url
+             * @description This API's own streaming route, for records held in the local cache. Addresses a catalog id; no filesystem path is ever exposed and no arbitrary URL is ever proxied.
+             */
+            stream_url?: string | null;
+            /**
+             * Media Url
+             * @description The publisher's direct media URL, streamed as-is.
+             */
+            media_url?: string | null;
+            /** Embed Url */
+            embed_url?: string | null;
+            /**
+             * Supports Seek
+             * @description Whether ranged requests are known to work, which is what makes scrubbing function. False means unverified, not broken.
+             * @default false
+             */
+            supports_seek: boolean;
+            /**
+             * Media Kind
+             * @description 'audio' or 'video'. Two of the three portal series are served as MP4, so a client that assumed audio would fail silently on them.
+             */
+            media_kind?: string | null;
+        };
+        /**
+         * AudioScope
+         * @description What structural span one recording actually covers.
+         *
+         *     The tradition's vocabulary rather than the graph's, because this field records the
+         *     publisher's claim about the file. Values are deliberately coarse: there is no
+         *     half-verse or pada value, since no located source segments below the verse.
+         * @enum {string}
+         */
+        AudioScope: "MANTRA" | "SUKTA" | "SECTION" | "ADHYAYA" | "KANDA" | "COLLECTION" | "WORK" | "UNKNOWN";
+        /**
+         * AudioScopeView
+         * @description What span the recording covers, relative to what the client asked about.
+         *
+         *     The whole point of this block is that ``covers_requested_passage=false`` is the normal
+         *     answer and must be rendered, not treated as an error.
+         */
+        AudioScopeView: {
+            scope_type: components["schemas"]["AudioScope"];
+            /**
+             * Scope Key
+             * @description The canonical key the recording is attached to.
+             */
+            scope_key?: string | null;
+            /**
+             * Scope Citation
+             * @description Human citation of that key, e.g. 'RV 1.1'.
+             */
+            scope_citation?: string | null;
+            /**
+             * Covers Requested Passage
+             * @description True only when the recording is of exactly the passage requested. False means it covers a container and the label must say so.
+             */
+            covers_requested_passage: boolean;
+            /**
+             * Levels Above
+             * @description How far above the requested passage the recording sits. 0 is the passage itself; 1 is its immediate container.
+             */
+            levels_above: number;
+            /**
+             * Scope Note
+             * @description Reader-facing prose for this scope, safe to render verbatim. For a hymn recording asked about from a verse this reads 'Recitation of this hymn (RV 1.1), which contains this verse' -- never 'play this mantra'.
+             */
+            scope_note: string;
+        };
+        /**
+         * AudioSourceView
+         * @description Where the recording came from, and what it is called there.
+         */
+        AudioSourceView: {
+            /**
+             * Name
+             * @description The publishing body or archive.
+             */
+            name: string;
+            /**
+             * Page
+             * @description A page a reader can open to see the source's own labelling.
+             */
+            page: string;
+            /**
+             * Licence
+             * @description The per-file licence where the source states one. Never a collection default: a set that is partly CC BY-SA and partly CC0 would be misstated by one.
+             */
+            licence?: string | null;
+            /** Attribution */
+            attribution?: string | null;
+            /**
+             * Open In New Window
+             * @description Always true. Several sources' terms prohibit being loaded into a frame, so the product never embeds a source page in one.
+             * @default true
+             */
+            open_in_new_window: boolean;
+        };
+        /**
+         * AudioStatsResponse
+         * @description Catalog-wide figures, all derived.
+         *
+         *     Deliberately reports ``by_availability`` beside the coverage counts. A catalog of 1,801
+         *     records of which most were last measured as unreachable is a different product state
+         *     from one where they answer, and a stats block that omitted it would read as full
+         *     coverage.
+         */
+        AudioStatsResponse: {
+            /** Total Records */
+            total_records: number;
+            /** By Veda */
+            by_veda?: {
+                [key: string]: number;
+            };
+            /** By Scope Type */
+            by_scope_type?: {
+                [key: string]: number;
+            };
+            /** By Audio Type */
+            by_audio_type?: {
+                [key: string]: number;
+            };
+            /** By Mapping Confidence */
+            by_mapping_confidence?: {
+                [key: string]: number;
+            };
+            /** By Availability */
+            by_availability?: {
+                [key: string]: number;
+            };
+            /** By Playback Mode */
+            by_playback_mode?: {
+                [key: string]: number;
+            };
+            /** Mapped Scope Keys By Veda */
+            mapped_scope_keys_by_veda?: {
+                [key: string]: number;
+            };
+            /**
+             * Locally Cached
+             * @default 0
+             */
+            locally_cached: number;
+            /** @default SUPPORTED */
+            data_status: components["schemas"]["KnowledgeStatus"];
+            /** Caveats */
+            caveats?: components["schemas"]["CaveatView"][];
+        };
+        /**
+         * AudioTrackView
+         * @description One recording, everything a reader needs to judge it, and nothing more.
+         */
+        AudioTrackView: {
+            /** Audio Id */
+            audio_id: string;
+            /** Title */
+            title: string;
+            /** @description SAMAGANA marks a Samavedic melodic performance, which is NOT the arcika text this corpus holds. */
+            audio_type: components["schemas"]["AudioType"];
+            scope: components["schemas"]["AudioScopeView"];
+            /**
+             * Performer
+             * @description Null where the source names none. The Vedic Heritage Portal names no reciter on any page reached, so these are null and the UI says 'not stated' rather than inventing a tradition.
+             */
+            performer?: string | null;
+            /** Tradition */
+            tradition?: string | null;
+            /** Location */
+            location?: string | null;
+            /**
+             * Duration Seconds
+             * @description Measured where measured; null is unmeasured, not zero.
+             */
+            duration_seconds?: number | null;
+            /** Start Seconds */
+            start_seconds?: number | null;
+            /** End Seconds */
+            end_seconds?: number | null;
+            availability: components["schemas"]["Availability"];
+            mapping_confidence: components["schemas"]["MappingConfidence"];
+            /**
+             * Mapping Method
+             * @description How this recording came to be attached to this passage, in one reproducible phrase. Carried in the payload so provenance does not depend on the reader finding a document.
+             */
+            mapping_method: string;
+            /**
+             * Text Verified
+             * @description Whether the text the source says this recording recites was compared against this corpus's own text for the passage, and matched. Exposed because the difference between a checked mapping and a plausible one is exactly what a reader cannot hear until it is wrong.
+             * @default false
+             */
+            text_verified: boolean;
+            source: components["schemas"]["AudioSourceView"];
+            playback: components["schemas"]["AudioPlaybackView"];
+            /** Notes */
+            notes?: string | null;
+        };
+        /**
+         * AudioType
+         * @description What kind of vocal performance the recording is.
+         *
+         *     Small on purpose. This is product metadata, not a musicology ontology, and every
+         *     value here answers exactly one question a reader can be misled about.
+         * @enum {string}
+         */
+        AudioType: "RECITATION" | "CHANT" | "SAMAGANA" | "PADAPATHA" | "OTHER_VEDIC_RECITATION";
+        /**
+         * Availability
+         * @description Whether the media answered when last checked.
+         *
+         *     ``BROKEN`` is deliberately hard to reach: a single timeout is
+         *     ``TEMPORARILY_UNAVAILABLE``, because the Vedic Heritage Portal times out under
+         *     ordinary polite load and treating that as proof the recording never existed would
+         *     delete real coverage from the catalog.
+         * @enum {string}
+         */
+        Availability: "AVAILABLE" | "TEMPORARILY_UNAVAILABLE" | "BROKEN" | "EXTERNAL_ONLY";
         /**
          * BreadcrumbView
          * @description One step of a passage's position in its Veda's own structure.
@@ -3626,6 +3962,16 @@ export interface components {
             note?: string | null;
         };
         /**
+         * MappingConfidence
+         * @description How the recording came to be attached to this passage.
+         *
+         *     Ordered from strongest to weakest. The product renders different copy for each, so
+         *     weakening a record's confidence to widen coverage changes what the reader is told
+         *     rather than hiding the change.
+         * @enum {string}
+         */
+        MappingConfidence: "EXACT" | "HIGH" | "STRUCTURAL" | "EXTERNAL_ONLY";
+        /**
          * MatchType
          * @description Why this row matched, in descending rank order.
          *
@@ -4289,6 +4635,25 @@ export interface components {
             evidence?: components["schemas"]["EvidenceView"] | null;
         };
         /**
+         * PassageAudioResponse
+         * @description The answer to "is there a recording for this passage?".
+         *
+         *     ``data_status`` is :attr:`KnowledgeStatus.NOT_BUILT` when the catalog holds nothing for
+         *     this passage, because that absence is about this product's coverage and not about the
+         *     tradition. No audio is a supported state and never an error.
+         */
+        PassageAudioResponse: {
+            /** Passage Key */
+            passage_key: string;
+            /** Citation */
+            citation?: string | null;
+            /** Tracks */
+            tracks?: components["schemas"]["AudioTrackView"][];
+            data_status: components["schemas"]["KnowledgeStatus"];
+            /** Caveats */
+            caveats?: components["schemas"]["CaveatView"][];
+        };
+        /**
          * PassageDetail
          * @description The full passage payload (spec section 9).
          */
@@ -4484,6 +4849,12 @@ export interface components {
             /** Caveats */
             caveats?: components["schemas"]["CaveatView"][];
         };
+        /**
+         * PlaybackMode
+         * @description How the product is allowed to play this record.
+         * @enum {string}
+         */
+        PlaybackMode: "REMOTE_DIRECT" | "LOCAL_CACHE" | "EXTERNAL_EMBED" | "EXTERNAL_LINK" | "PROXIED_STREAM";
         /**
          * ReaderPayload
          * @description Everything needed to render one mantra in a single call (spec section 11).
@@ -5481,6 +5852,42 @@ export interface components {
             certainty?: components["schemas"]["ReferentCertaintyCounts"] | null;
         };
         /**
+         * WorkAudioResponse
+         * @description Every recording for one Samhita, with live coverage figures.
+         *
+         *     Coverage is counted from the catalog on each request rather than stored, so a figure
+         *     in the product cannot drift from the catalog the way a written-down number would.
+         */
+        WorkAudioResponse: {
+            /** Work Id */
+            work_id: string;
+            /** Veda */
+            veda: string;
+            /** Recension */
+            recension: string;
+            /** Tracks */
+            tracks?: components["schemas"]["AudioTrackView"][];
+            /**
+             * Mapped Scope Count
+             * @description Distinct canonical keys with a recording, for this Veda.
+             */
+            mapped_scope_count: number;
+            /**
+             * Playable Scope Count
+             * @description Of those, the keys whose recording the publisher still serves.
+             *
+             *     Reported separately because the two differ and the difference is user-visible: the portal maps all 1,028 Rigvedic suktas and serves 1,017 of them, having never published the eleven Valakhilya hymns. A surface that rendered only `mapped_scope_count` would promise a recitation for eleven passages that offer no player.
+             */
+            playable_scope_count: number;
+            /** Scope Type Counts */
+            scope_type_counts?: {
+                [key: string]: number;
+            };
+            data_status: components["schemas"]["KnowledgeStatus"];
+            /** Caveats */
+            caveats?: components["schemas"]["CaveatView"][];
+        };
+        /**
          * WorkDetail
          * @description A work with its scope statement, structure and measured layer availability.
          */
@@ -5751,8 +6158,26 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorBody"];
                 };
             };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
             /** @description A parameter failed validation. */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -5810,8 +6235,26 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorBody"];
                 };
             };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
             /** @description A parameter failed validation. */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -5872,8 +6315,26 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorBody"];
                 };
             };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
             /** @description A parameter failed validation. */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -5934,8 +6395,26 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorBody"];
                 };
             };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
             /** @description A parameter failed validation. */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -5993,8 +6472,26 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorBody"];
                 };
             };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
             /** @description A parameter failed validation. */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -6057,8 +6554,26 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorBody"];
                 };
             };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
             /** @description A parameter failed validation. */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -6121,8 +6636,26 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorBody"];
                 };
             };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
             /** @description A parameter failed validation. */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -6183,8 +6716,26 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorBody"];
                 };
             };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
             /** @description A parameter failed validation. */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -6249,8 +6800,26 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorBody"];
                 };
             };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
             /** @description A parameter failed validation. */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -6318,8 +6887,410 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorBody"];
                 };
             };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
             /** @description A parameter failed validation. */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description The knowledge graph is unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    passage_audio_api_v1_passages__key__audio_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A canonical key, a citation (RV 1.1.1) or a canonical URN. */
+                key: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PassageAudioResponse"];
+                };
+            };
+            /** @description The request is well-formed but unsupported. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description No such passage, entity or work. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A parameter failed validation. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description The knowledge graph is unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    work_audio_api_v1_works__work_id__audio_get: {
+        parameters: {
+            query?: {
+                limit?: number;
+                offset?: number;
+            };
+            header?: never;
+            path: {
+                work_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WorkAudioResponse"];
+                };
+            };
+            /** @description The request is well-formed but unsupported. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description No such passage, entity or work. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A parameter failed validation. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description The knowledge graph is unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    audio_stats_api_v1_audio_stats_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AudioStatsResponse"];
+                };
+            };
+            /** @description The request is well-formed but unsupported. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description No such passage, entity or work. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A parameter failed validation. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description The knowledge graph is unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    stream_audio_api_v1_audio__audio_id__stream_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                Range?: string | null;
+            };
+            path: {
+                /** @description A catalog audio id. */
+                audio_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description The request is well-formed but unsupported. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description No such passage, entity or work. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A parameter failed validation. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description The knowledge graph is unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    audio_detail_api_v1_audio__audio_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A catalog audio id. */
+                audio_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AudioTrackView"];
+                };
+            };
+            /** @description The request is well-formed but unsupported. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description No such passage, entity or work. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A parameter failed validation. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -6387,8 +7358,26 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorBody"];
                 };
             };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
             /** @description A parameter failed validation. */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -6453,8 +7442,26 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorBody"];
                 };
             };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
             /** @description A parameter failed validation. */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -6525,8 +7532,26 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorBody"];
                 };
             };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
             /** @description A parameter failed validation. */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -6587,8 +7612,26 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorBody"];
                 };
             };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
             /** @description A parameter failed validation. */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -6643,8 +7686,26 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorBody"];
                 };
             };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
             /** @description A parameter failed validation. */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -6709,8 +7770,26 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorBody"];
                 };
             };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
             /** @description A parameter failed validation. */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -6770,8 +7849,26 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorBody"];
                 };
             };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
             /** @description A parameter failed validation. */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -6829,8 +7926,26 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorBody"];
                 };
             };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
             /** @description A parameter failed validation. */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -6891,8 +8006,26 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorBody"];
                 };
             };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
             /** @description A parameter failed validation. */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -6950,8 +8083,26 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorBody"];
                 };
             };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
             /** @description A parameter failed validation. */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -7009,8 +8160,26 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorBody"];
                 };
             };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
             /** @description A parameter failed validation. */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -7081,8 +8250,26 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorBody"];
                 };
             };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
             /** @description A parameter failed validation. */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -7140,8 +8327,26 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorBody"];
                 };
             };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
             /** @description A parameter failed validation. */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -7203,8 +8408,26 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorBody"];
                 };
             };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
             /** @description A parameter failed validation. */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -7259,8 +8482,26 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorBody"];
                 };
             };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
             /** @description A parameter failed validation. */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -7323,8 +8564,26 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorBody"];
                 };
             };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
             /** @description A parameter failed validation. */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -7386,8 +8645,26 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorBody"];
                 };
             };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
             /** @description A parameter failed validation. */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -7447,8 +8724,26 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorBody"];
                 };
             };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
             /** @description A parameter failed validation. */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -7508,8 +8803,26 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorBody"];
                 };
             };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
             /** @description A parameter failed validation. */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -7569,8 +8882,26 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorBody"];
                 };
             };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
             /** @description A parameter failed validation. */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -7630,8 +8961,26 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorBody"];
                 };
             };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
             /** @description A parameter failed validation. */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -7686,8 +9035,26 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorBody"];
                 };
             };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
             /** @description A parameter failed validation. */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -7745,8 +9112,26 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorBody"];
                 };
             };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
             /** @description A parameter failed validation. */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -7801,8 +9186,26 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorBody"];
                 };
             };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
             /** @description A parameter failed validation. */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -7861,8 +9264,26 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorBody"];
                 };
             };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
             /** @description A parameter failed validation. */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -7915,8 +9336,26 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorBody"];
                 };
             };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
             /** @description A parameter failed validation. */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
                 headers: {
                     [name: string]: unknown;
                 };

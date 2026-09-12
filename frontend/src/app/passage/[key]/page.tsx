@@ -11,12 +11,14 @@ import { AskAboutButton } from "@/components/ask/ask-about-button";
 import { CopyButton } from "@/components/copy-button";
 import { LoadFailure } from "@/components/empty-state";
 import { PassageKnowledge } from "@/components/passage-knowledge";
+import { RecitationPlayer } from "@/components/recitation-player";
 import { Caveat, KnowledgeStatus } from "@/components/status";
 import {
     routeId,
     encoded,
     load,
     type ParallelsResponse,
+    type PassageAudio,
     type Reader,
     workSlugs,
     vedaNames,
@@ -49,6 +51,11 @@ export default async function PassagePage({ params }: Params) {
     }
     const reader = result.data;
     const parallels = await load<ParallelsResponse>(`/passages/${encoded(key)}/parallels?limit=25`);
+    const audio = await load<PassageAudio>(`/passages/${encoded(key)}/audio`);
+    // No audio is a supported state, so an unmapped passage renders no player at all
+    // rather than a disabled one. A failed request is treated the same way: the reader
+    // loses a control it may never have had, and keeps the text.
+    const recitation = audio.ok ? (audio.data.tracks ?? [])[0] : undefined;
 
     const primary = reader.primary_text;
     const alternates = (reader.text.surfaces ?? []).filter(
@@ -110,6 +117,13 @@ export default async function PassagePage({ params }: Params) {
                         </section>
                     ) : (
                         <KnowledgeStatus status={reader.text.data_status} />
+                    )}
+
+                    {recitation && (
+                        <RecitationPlayer
+                            key={recitation.audio_id}
+                            track={recitation}
+                        />
                     )}
 
                     {alternates.length > 0 && (

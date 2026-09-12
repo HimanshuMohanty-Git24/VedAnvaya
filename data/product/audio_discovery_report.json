@@ -1,0 +1,40 @@
+{
+  "harvest": "data/derived/vedsearch_harvest.json",
+  "by_veda": {
+    "RV": {
+      "exact_text": 9360,
+      "mapped": 10402,
+      "near_text": 1042,
+      "source_has_no_audio": 70,
+      "no_source_verse": 80,
+      "our_verses": 10552,
+      "source_verses": 10472
+    },
+    "SV": {
+      "source_verses_with_audio": 0,
+      "no_source_match": 1844,
+      "our_verses": 1844,
+      "source_verses": 1865
+    },
+    "YV": {
+      "near_text": 1094,
+      "mapped": 1752,
+      "exact_text": 658,
+      "text_mismatch": 33,
+      "source_has_no_audio": 190,
+      "our_verses": 1975,
+      "source_verses": 1975
+    },
+    "AV": {
+      "exact_text": 3881,
+      "mapped": 4680,
+      "near_text": 799,
+      "no_source_verse": 420,
+      "text_mismatch": 495,
+      "source_has_no_audio": 244,
+      "our_verses": 5839,
+      "source_verses": 5916
+    }
+  },
+  "total_records": 16834
+}

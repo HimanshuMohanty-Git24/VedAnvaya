@@ -4,8 +4,8 @@ build-backend = "hatchling.build"
 
 [project]
 name = "vedagraph"
-version = "0.1.0"
-description = "Provenance-aware canonical corpus tooling for the Vedas"
+version = "1.0.0"
+description = "VedaGraph Product V1: a provenance-aware knowledge graph of the four Vedas"
 readme = "README.md"
 requires-python = ">=3.12"
 license = { text = "License undecided; see README.md and docs/architecture/RIGHTS_POLICY.md" }

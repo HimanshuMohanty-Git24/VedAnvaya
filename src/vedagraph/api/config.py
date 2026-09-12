@@ -14,6 +14,7 @@ Nothing here is ever returned to a client. :func:`ApiSettings.safe_summary` exis
 from __future__ import annotations
 
 from functools import lru_cache
+from pathlib import Path
 from typing import Any, Final
 
 from pydantic import Field, SecretStr
@@ -59,6 +60,12 @@ class ApiSettings(BaseSettings):
     api_host: str = "127.0.0.1"
     api_port: int = Field(default=8000, ge=1, le=65535)
     api_debug: bool = False
+
+    #: Root of the committed data tree. The API reads exactly two things from it -- the
+    #: audio catalog and its optional media cache -- and never the corpus, which reaches
+    #: this process only through Neo4j. Named without the ``VEDAGRAPH_`` prefix like the
+    #: rest of this object because it is a deployment path, not an ingestion setting.
+    data_dir: Path = Path("data")
 
     #: Seconds before a Cypher call is abandoned. A product read that takes longer than
     #: this is a defect, not a slow query worth waiting for.

@@ -16,6 +16,7 @@ from fastapi.responses import JSONResponse
 from pydantic import Field
 from starlette.middleware.base import BaseHTTPMiddleware, RequestResponseEndpoint
 
+from vedagraph import __version__
 from vedagraph.api.config import (
     EXPECTED_DOMAIN_MODEL_VERSION,
     EXPECTED_WORK_IDS,
@@ -67,6 +68,13 @@ TAGS_METADATA: Final[list[dict[str, Any]]] = [
     {"name": "Insights", "description": "Deterministic, evidence-aware aggregate views."},
     {"name": "Stats", "description": "Product-level corpus statistics."},
     {
+        "name": "Audio",
+        "description": "Recitation audio, as a product content layer beside the graph. "
+        "Every located source records a whole sukta or adhyaya and none publishes per-verse "
+        "timings, so a verse's answer is its hymn's recording and the scope block says so. "
+        "No audio is a supported state, not an error.",
+    },
+    {
         "name": "Ask",
         "description": "Evidence-grounded question answering. Retrieval runs first and "
         "the model sees only what it found, so every factual claim carries a citation "
@@ -101,6 +109,11 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     repository = Neo4jRepository(settings)
     app.state.repository = repository
     app.state.settings = settings
+    # Where the audio catalog and its optional cache live. Set here rather than read from
+    # the environment per request so that a test can point the audio layer at a fixture
+    # directory without touching the process environment.
+    app.state.data_dir = settings.data_dir
+    app.state.audio_catalog = None
     # Deliberately not connecting here. A database that is down at boot must produce a
     # process that starts and answers /health, so an orchestrator can distinguish "the app
     # is broken" from "the app is fine and its dependency is not".
@@ -233,7 +246,7 @@ def create_app() -> FastAPI:
     settings = get_api_settings()
     app = FastAPI(
         title="VedaGraph API",
-        version="1.0.0",
+        version=__version__,
         description=DESCRIPTION,
         openapi_tags=TAGS_METADATA,
         lifespan=lifespan,
@@ -251,7 +264,7 @@ def create_app() -> FastAPI:
         response_model=HealthResponse,
     )
     def health_endpoint() -> HealthResponse:
-        return HealthResponse(status="ok", service="vedagraph-api", api_version="1.0.0")
+        return HealthResponse(status="ok", service="vedagraph-api", api_version=__version__)
 
     @health.get(
         "/ready",
@@ -295,6 +308,7 @@ def _mount_v1_routers(app: FastAPI) -> None:
     """
     from vedagraph.api.routes import (
         ask,
+        audio,
         devatas,
         entities,
         formulas,
@@ -311,6 +325,7 @@ def _mount_v1_routers(app: FastAPI) -> None:
         works,
         passages,
         search,
+        audio,
         devatas,
         entities,
         rituals,

@@ -86,12 +86,42 @@ class GraphUnavailableError(ApiError):
     code = "KNOWLEDGE_GRAPH_UNAVAILABLE"
 
 
+class AudioNotStreamableError(ApiError):
+    """The recording exists in the catalog but this product holds no bytes for it.
+
+    A 409 and not a 404: the id is real and the record is real, and the client's mistake
+    was asking this API to serve media that is streamed from the publisher instead. The
+    hint carries the URL that does work, because the alternative -- a 404 -- would suggest
+    the recording does not exist and send a client looking for a different id.
+    """
+
+    status_code = status.HTTP_409_CONFLICT
+    code = "AUDIO_NOT_STREAMABLE"
+
+
+class AudioUpstreamError(ApiError):
+    """A catalogued recording's own source could not be reached or returned nothing usable.
+
+    502 and not 503: this product is answering fine, and the graph is fine -- a third party
+    is not. Distinguishing them matters because the reader's recourse differs, and because a
+    503 here would make an audio outage look like a knowledge-graph outage.
+    """
+
+    status_code = status.HTTP_502_BAD_GATEWAY
+    code = "AUDIO_SOURCE_UNAVAILABLE"
+
+
 #: Documented on every route, so the generated OpenAPI shows the failure modes rather than
 #: FastAPI's bare default of "422 Validation Error".
 COMMON_ERROR_RESPONSES: Final[dict[int | str, dict[str, Any]]] = {
     400: {"model": ErrorBody, "description": "The request is well-formed but unsupported."},
     404: {"model": ErrorBody, "description": "No such passage, entity or work."},
+    409: {
+        "model": ErrorBody,
+        "description": "The record exists but this product holds no bytes for it.",
+    },
     422: {"model": ErrorBody, "description": "A parameter failed validation."},
+    502: {"model": ErrorBody, "description": "A third-party media source did not answer."},
     503: {"model": ErrorBody, "description": "The knowledge graph is unavailable."},
 }
 

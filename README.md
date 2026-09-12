@@ -1,11 +1,192 @@
 # VedaGraph
 
-VedaGraph is a provenance-aware, versioned data foundation for a future multilingual,
-multimodal knowledge graph of the four Vedas. The canonical corpus—not a graph database—is the
-source of truth.
+**A knowledge graph of the four Vedas, with the evidence and the limits attached to every
+answer.** Read the Saṃhitās verse by verse with recitation audio, explore deities and seers
+as a graph, trace wording reused across Vedas, and ask questions in English that are
+answered only from what the graph can actually support.
 
 > Text is immutable. Metadata is provenanced. Deterministic facts are separated from
 > interpretation. LLM output never becomes canonical source data.
+
+**Version 1.0.0 — Product V1, for local use.** Scope, coverage and limitations are stated
+in [`PRODUCT_V1_SCOPE.md`](PRODUCT_V1_SCOPE.md). Read that before treating any count here
+as a statement about "the Vedas": the corpus is four Saṃhitās in one recension each, and
+three of the four are partial in ways their traditional names do not reveal.
+
+---
+
+## Quick start
+
+You need **Python 3.12+**, [**uv**](https://docs.astral.sh/uv/), **Node 20+**, **pnpm**, and
+a **Neo4j** holding the built graph.
+
+```powershell
+uv sync --extra dev                 # Python environment
+cd frontend; pnpm install; cd ..    # frontend dependencies
+copy .env.example .env              # then set NEO4J_PASSWORD
+
+powershell -ExecutionPolicy Bypass -File scripts\doctor.ps1          # check everything
+powershell -ExecutionPolicy Bypass -File scripts\start-product.ps1   # run it
+```
+
+Then open **<http://localhost:3000>**. The API is on <http://127.0.0.1:8000>, with
+interactive docs at `/docs`. Stop it with `scripts\stop-product.ps1`.
+
+`doctor.ps1` checks the Python environment, the frontend install, Neo4j connectivity *and
+whether the corpus is actually loaded*, the LLM configuration, the audio catalog and the
+ports — and names whichever one is wrong. It never prints a secret value; where a
+credential matters it reports only that it is set and how long it is.
+
+### Starting without everything
+
+The product degrades rather than failing. **No LLM key** — browsing, search, the graph,
+cross-Veda comparison and audio all work, and Ask VedaGraph reports `NOT_CONFIGURED`
+instead of taking the product down. **No audio catalog** — the reader omits the player and
+nothing else changes. **Neo4j down** — the API still starts and answers `/health`, and
+knowledge routes return 503 with a body that names no hostname.
+
+Neo4j itself is never started or migrated by these scripts. It is managed outside this
+repository (see [`infra/docker-compose.neo4j.yml`](infra/docker-compose.neo4j.yml)) and the
+graph is treated as frozen.
+
+---
+
+## What you get
+
+| Surface | What it does |
+|---|---|
+| **Reader** | Any verse of the four Saṃhitās, with accented Sanskrit, alternate witnesses, translation where one exists, and its own recitation audio |
+| **Structure browser** | Navigate each Veda's native hierarchy — maṇḍala/sūkta, kāṇḍa/sūkta, adhyāya, Samavedic collections |
+| **Deities and entities** | Profiles for deities, seers, rituals, conditions, places, substances and more, each with graded evidence |
+| **Interactive graph** | Cytoscape neighbourhoods with a *Why* panel that explains any edge from its stored evidence |
+| **Cross-Veda** | Wording that recurs across Vedas, and formula families with their occurrences |
+| **Search** | One ladder across Sanskrit text, translations, dictionary headwords and entity names |
+| **Ask VedaGraph** | Evidence-grounded question answering: retrieval first, every claim cited, `INSUFFICIENT_EVIDENCE` instead of a confident guess |
+
+### The corpus
+
+Four Saṃhitās, one recension each: **Rigveda Śākala** (10,552 mantras), **Samaveda Kauthuma
+ārcika** (1,844 — the gāna corpus is *not* held), **Śukla Yajurveda Vājasaneyi-Mādhyandina**
+(1,975), **Atharvaveda Śaunaka** (5,839). No Brāhmaṇa, Āraṇyaka or Upaniṣad. The graph is
+**108,779 nodes / 265,295 relationships**, and it is frozen.
+
+### Absence means something specific
+
+This is the discipline the whole product is built around. `NOT_BUILT` means a layer does
+not exist here and the silence is ours. `INSUFFICIENT_EVIDENCE` means evidence exists and
+cannot support the claim — it is **not** a zero. `PARTIAL` means a real answer over part of
+the corpus. An empty list that claimed `SUPPORTED` raises rather than renders.
+
+---
+
+## Recitation audio
+
+**16,834 recordings, one per verse**, from [VedSearch](https://vedsearch.org/): Rigveda
+10,402 of 10,552 · Atharvaveda 4,680 of 5,839 · Yajurveda 1,752 of 1,975 · **Samaveda 0**
+(none is published anywhere — see the scope document).
+
+Audio is a **product content layer**, not knowledge. It lives in
+`data/product/audio_catalog.jsonl` keyed by canonical passage identity, entirely outside the
+frozen graph and ontology.
+
+**Every mapping is verified, not assumed.** A record exists only when the coordinate
+transform places our key in the source's numbering *and* the text the source says that
+recording recites matches this corpus's own text. That matters concretely: VedSearch numbers
+Rigvedic Mandala 8 in Griffith's order, so a key-for-key mapping would attach the wrong
+recitation to 55 hymns. The transform corrects it and the text check proves it — 0 text
+mismatches across 10,402 Rigvedic recordings. Where the text does not match, the mapping is
+**refused** and recorded as a gap.
+
+```bash
+# Rebuild the catalog (harvest once, then align offline against the graph)
+python scripts/audio/harvest_vedsearch.py
+python scripts/audio/discover_vedsearch.py --verify-audio 30
+
+# 17 checks against the live graph: dangling keys, wrong Veda, wrong scope, unverified EXACT
+python scripts/audio/validate_catalog.py
+
+# Optional: pre-download a Veda for offline playback (gitignored, ~45 KB per verse)
+python scripts/audio/cache_audio.py --veda RV
+```
+
+The source serves audio as base64 inside JSON, which no browser can play, so the API's own
+streaming route decodes it and serves real bytes with HTTP Range support. It is addressed by
+catalog id and takes **no URL parameter**, so it cannot be used as an open proxy. Nothing is
+stored unless the cache tool is run.
+
+---
+
+## Configuring Ask VedaGraph
+
+The LLM provider is an **environment choice, with no code change**. Set two variables in
+`.env`:
+
+```bash
+VEDAGRAPH_LLM_PROVIDER=gemini     # or openai, anthropic, groq, openrouter, xai, openai_compatible
+VEDAGRAPH_LLM_MODEL=gemini-2.5-flash
+VEDAGRAPH_LLM_API_KEY=...
+```
+
+`openai_compatible` additionally needs `VEDAGRAPH_LLM_BASE_URL`, which covers any
+OpenAI-shaped endpoint. Installing the adapters: `uv sync --extra ask`. Gemini needs no
+vendor SDK — its adapter speaks the public REST contract over `httpx`. No credential is ever
+returned by the API or written to a log. See `.env.example` for every variable and which are
+optional.
+
+**What a citation means.** Retrieval runs first and the model sees only what retrieval
+found, so every factual claim carries a citation into the graph and an unanswerable question
+returns `INSUFFICIENT_EVIDENCE` rather than a confident denial. A citation is evidence that
+*the graph records something*, not that the tradition asserts it. Final benchmark over 60
+questions: 36 supported-correct, 8 partial, 16 correctly refused, **0 misleading, 0
+hallucinated**, 279 citations, 0 invented citations surviving.
+
+---
+
+## Development
+
+```bash
+make check          # ruff format --check, ruff check, mypy, pytest
+make api            # the API alone, with reload
+
+cd frontend
+pnpm test           # unit tests
+pnpm typecheck
+pnpm lint
+pnpm build
+pnpm test:e2e       # Playwright
+```
+
+Backend tests are offline by default. Tests needing a live graph are marked `neo4j` and
+**skip** rather than fail when it is absent, so the suite stays green on a machine with no
+database. Checks that can only be made against a populated graph live in scripts instead:
+`scripts/check_live_invariants.py` and `scripts/audio/validate_catalog.py`.
+
+Regenerate the frontend's API types after changing a response model:
+
+```bash
+pnpm exec openapi-typescript http://127.0.0.1:8000/openapi.json -o src/lib/api-schema.ts
+```
+
+---
+
+## Documentation
+
+- [`PRODUCT_V1_SCOPE.md`](PRODUCT_V1_SCOPE.md) — **start here.** Corpus, coverage, audio and
+  Ask semantics, and every limitation, in one place.
+- [`docs/STATUS.md`](docs/STATUS.md) — build history and current state.
+- [`docs/architecture/`](docs/architecture/) — data architecture, corpus schema, identity
+  spec, source and rights policy.
+- [`docs/decisions/`](docs/decisions/) — ADRs, including
+  [ADR-014](docs/decisions/ADR-014-llm-output-is-candidate-only.md) on LLM output being
+  candidate-only.
+
+---
+
+## How it was built
+
+The sections below are the engineering record: how the corpus was assembled, what was
+pinned, and what was deliberately left out at each stage. They describe provenance rather
+than product behaviour, and the product above does not depend on reading them.
 
 ## Current implementation
 
@@ -141,32 +322,18 @@ Evidence: [`RIGVEDA_MORPHOLOGY_SOURCE.md`](docs/architecture/RIGVEDA_MORPHOLOGY_
 [`RIGVEDA_PARALLEL_REVIEW.md`](docs/reports/RIGVEDA_PARALLEL_REVIEW.md) and
 [ADR-013](docs/decisions/ADR-013-lexical-mention-is-not-traditional-assignment.md).
 
-## Explicitly not implemented
+## Corpus-building environment
 
-There is no Neo4j driver, Cypher, GraphRAG, embedding pipeline, frontend, LLM API, semantic
-extraction, mass corpus crawl, or audio download. The RV 1.1 pilot is infrastructure validation,
-not a publication-ready text edition.
-
-The deterministic predicate whitelist is exactly `HAS_RISHI`, `HAS_DEVATA`, `HAS_CHANDAS`
-(traditional metadata) plus `MENTIONS_ENTITY`, `EXACT_PARALLEL_OF`, `PARALLEL_TO` and
-`HAS_COMPONENT` (lexical and cross-mantra). `SYMBOLIZES`, `EXPRESSES`, `RELATED_TO` and `THEME`
-belong to a later interpretive layer that does not exist.
-
-No Ṛṣi genealogy edges exist either: the pinned Anukramaṇī has no family, gotra or ancestor
-field, and the lineage visible in a name like `vaiśvāmitro madhucchandāḥ` is Sanskrit grammar
-rather than data. The honest output is no edges, and that is what was produced.
-
-## Install
-
-Requirements: Python 3.12+ and [uv](https://docs.astral.sh/uv/).
+The same install as the Quick start above; this section and the CLI below concern rebuilding
+the corpus from sources rather than running the product.
 
 ```bash
 uv sync --extra dev
 uv run vedagraph --help
 ```
 
-Copy `.env.example` to `.env` only when local overrides are needed. Provide a contact email before
-running repeat source retrieval. Never commit `.env`.
+Provide a contact email in `.env` before running repeat source retrieval, so fetches identify
+themselves. Never commit `.env`.
 
 ## CLI
 
@@ -295,30 +462,6 @@ make check
 ```
 
 CI performs the same locked, secret-free checks and never crawls sources.
-
-## Next milestone
-
-The Rigveda deterministic lexical and cross-mantra layer is built:
-`RIGVEDA_DETERMINISTIC_LEXICAL_READY_WITH_LIMITATIONS`. Alignment, token identity, precision,
-reproducibility and QA all pass. The limitations are deliberate: mention coverage is partial
-(40 accepted aliases of 214 Devatā entities), Ṛṣi lexical mentions await a source that can
-decompose patronymic labels, and Ṛṣi genealogy has no sufficient deterministic source at all.
-Mention policy v2 added feature-conditioned aliases and a lemma-identity rule, taking the
-detectable false-positive rate from 0.34% to 0.01% and recovering Sarasvatī and Sarasvant
-from one shared annotated lemma.
-
-The **semantic candidate layer** is built and tested offline, and the 508-mantra
-Codex-direct pilot is complete:
-`RIGVEDA_SEMANTIC_PILOT_COMPLETE_AWAITING_HUMAN_GOLD`. A closed ontology of 17 node types and
-14 predicates, a deterministic evidence packet, strict Structured Outputs against
-`gpt-5.6-luna`, a structural validator that rejects fabricated citations, and a per-predicate
-acceptance policy that auto-accepts nothing until a hand-annotated gold set has measured it.
-Its output is candidate assertions only, and it never alters the canonical corpus, the
-traditional metadata, the lexical mentions or the deterministic parallels. The 120-mantra
-gold subset remains unannotated, so no predicate is unlocked and no semantic assertion is
-accepted. Decision:
-[ADR-014](docs/decisions/ADR-014-llm-output-is-candidate-only.md). Only after that comes
-Neo4j as a derived database, then GraphRAG.
 
 Progress and blockers are maintained in [`docs/STATUS.md`](docs/STATUS.md); the generated build
 summaries are [`RIGVEDA_FULL_BUILD.md`](docs/reports/RIGVEDA_FULL_BUILD.md),

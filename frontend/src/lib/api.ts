@@ -40,6 +40,10 @@ export type GraphEdge = S["GraphEdgeView"];
 export type RelationshipExplanation = S["RelationshipExplanation"];
 export type EntityRef = S["EntityRef"];
 export type CaveatView = S["CaveatView"];
+export type PassageAudio = S["PassageAudioResponse"];
+export type WorkAudio = S["WorkAudioResponse"];
+export type AudioTrack = S["AudioTrackView"];
+export type AudioStats = S["AudioStatsResponse"];
 
 export class ApiError extends Error {
     constructor(
