@@ -1,0 +1,161 @@
+{
+  "sampled": 19,
+  "confirmed": 19,
+  "wrong": 0,
+  "unreachable": 0,
+  "seed": 4242,
+  "rows": [
+    {
+      "key": "VG:RV:SAK:M08:S048:V001",
+      "source_item": "8.48.1",
+      "file": "rigved.8.48.1.sanskrit.mp3",
+      "similarity": 1.0,
+      "named_correctly": true,
+      "verdict": "CONFIRMED"
+    },
+    {
+      "key": "VG:RV:SAK:M08:S060:V001",
+      "source_item": "8.49.1",
+      "file": "rigved.8.49.1.sanskrit.mp3",
+      "similarity": 1.0,
+      "named_correctly": true,
+      "verdict": "CONFIRMED"
+    },
+    {
+      "key": "VG:RV:SAK:M08:S071:V001",
+      "source_item": "8.60.1",
+      "file": "rigved.8.60.1.sanskrit.mp3",
+      "similarity": 1.0,
+      "named_correctly": true,
+      "verdict": "CONFIRMED"
+    },
+    {
+      "key": "VG:RV:SAK:M08:S092:V001",
+      "source_item": "8.81.1",
+      "file": "rigved.8.81.1.sanskrit.mp3",
+      "similarity": 1.0,
+      "named_correctly": true,
+      "verdict": "CONFIRMED"
+    },
+    {
+      "key": "VG:RV:SAK:M08:S103:V001",
+      "source_item": "8.92.1",
+      "file": "rigved.8.92.1.sanskrit.mp3",
+      "similarity": 1.0,
+      "named_correctly": true,
+      "verdict": "CONFIRMED"
+    },
+    {
+      "key": "VG:RV:SAK:M01:S001:V001",
+      "source_item": "1.1.1",
+      "file": "rigved.1.1.1.sanskrit.mp3",
+      "similarity": 1.0,
+      "named_correctly": true,
+      "verdict": "CONFIRMED"
+    },
+    {
+      "key": "VG:RV:SAK:M10:S191:V004",
+      "source_item": "10.191.4",
+      "file": "rigved.10.191.4.sanskrit.mp3",
+      "similarity": 1.0,
+      "named_correctly": true,
+      "verdict": "CONFIRMED"
+    },
+    {
+      "key": "VG:RV:SAK:M06:S069:V004",
+      "source_item": "6.69.4",
+      "file": "rigved.6.69.4.sanskrit.mp3",
+      "similarity": 0.9949,
+      "named_correctly": true,
+      "verdict": "CONFIRMED"
+    },
+    {
+      "key": "VG:RV:SAK:M10:S111:V004",
+      "source_item": "10.111.4",
+      "file": "rigved.10.111.4.sanskrit.mp3",
+      "similarity": 1.0,
+      "named_correctly": true,
+      "verdict": "CONFIRMED"
+    },
+    {
+      "key": "VG:RV:SAK:M01:S136:V004",
+      "source_item": "1.136.4",
+      "file": "rigved.1.136.4.sanskrit.mp3",
+      "similarity": 1.0,
+      "named_correctly": true,
+      "verdict": "CONFIRMED"
+    },
+    {
+      "key": "VG:RV:SAK:M09:S072:V002",
+      "source_item": "9.72.2",
+      "file": "rigved.9.72.2.sanskrit.mp3",
+      "similarity": 1.0,
+      "named_correctly": true,
+      "verdict": "CONFIRMED"
+    },
+    {
+      "key": "VG:AV:SAU:K03:S014:V006",
+      "source_item": "3.14.6",
+      "file": "atharved.3.14.6.sanskrit.mp3",
+      "similarity": 1.0,
+      "named_correctly": true,
+      "verdict": "CONFIRMED"
+    },
+    {
+      "key": "VG:AV:SAU:K20:S094:V001",
+      "source_item": "20.94.1",
+      "file": "atharved.20.94.1.sanskrit.mp3",
+      "similarity": 1.0,
+      "named_correctly": true,
+      "verdict": "CONFIRMED"
+    },
+    {
+      "key": "VG:AV:SAU:K20:S025:V007",
+      "source_item": "20.25.7",
+      "file": "atharved.20.25.7.sanskrit.mp3",
+      "similarity": 1.0,
+      "named_correctly": true,
+      "verdict": "CONFIRMED"
+    },
+    {
+      "key": "VG:AV:SAU:K20:S011:V007",
+      "source_item": "20.11.7",
+      "file": "atharved.20.11.7.sanskrit.mp3",
+      "similarity": 1.0,
+      "named_correctly": true,
+      "verdict": "CONFIRMED"
+    },
+    {
+      "key": "VG:YV:VSM:A15:V040",
+      "source_item": "15.1.40",
+      "file": "yajurved.15.1.40.sanskrit.mp3",
+      "similarity": 1.0,
+      "named_correctly": true,
+      "verdict": "CONFIRMED"
+    },
+    {
+      "key": "VG:YV:VSM:A25:V033",
+      "source_item": "25.1.33",
+      "file": "yajurved.25.1.33.sanskrit.mp3",
+      "similarity": 0.995,
+      "named_correctly": true,
+      "verdict": "CONFIRMED"
+    },
+    {
+      "key": "VG:YV:VSM:A24:V028",
+      "source_item": "24.1.28",
+      "file": "yajurved.24.1.28.sanskrit.mp3",
+      "similarity": 0.9822,
+      "named_correctly": true,
+      "verdict": "CONFIRMED"
+    },
+    {
+      "key": "VG:YV:VSM:A10:V027",
+      "source_item": "10.1.27",
+      "file": "yajurved.10.1.27.sanskrit.mp3",
+      "similarity": 0.9903,
+      "named_correctly": true,
+      "verdict": "CONFIRMED"
+    }
+  ]
+}

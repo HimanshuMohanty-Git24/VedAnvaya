@@ -105,6 +105,9 @@ python scripts/audio/discover_vedsearch.py --verify-audio 30
 # 17 checks against the live graph: dangling keys, wrong Veda, wrong scope, unverified EXACT
 python scripts/audio/validate_catalog.py
 
+# Independent confirmation: ask each audio file what IT recites and compare with our text
+python scripts/audio/audit_mappings.py
+
 # Optional: pre-download a Veda for offline playback (gitignored, ~45 KB per verse)
 python scripts/audio/cache_audio.py --veda RV
 ```

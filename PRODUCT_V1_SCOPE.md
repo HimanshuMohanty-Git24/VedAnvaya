@@ -179,6 +179,11 @@ review.
   graph on demand: that every key exists, that its Veda matches, that its node type is
   legal for the claimed scope, that no two verses share a recording, and that no `EXACT`
   mapping lacks its text verification. 17 checks, each phrased as the defect it prevents.
+- **`scripts/audio/audit_mappings.py`** confirms mappings by a second, independent route:
+  it asks the *audio* endpoint what the file itself recites and compares that against this
+  corpus, rather than re-reading the listing the catalog was built from. Its sample always
+  includes the five Mandala 8 keys where a permutation error would hide. Last run: **31 of
+  31 confirmed, 0 wrong**, median similarity 1.000.
 
 ## 5. Ask VedaGraph: what a citation means
 
