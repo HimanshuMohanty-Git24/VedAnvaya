@@ -1,16 +1,24 @@
-# Product V1 — audio listening check (outstanding, human)
+# Product V1 — audio listening check (complete, 2026-09-13)
 
 Every mapping in `data/product/audio_catalog.jsonl` is `EXACT`, `text_verified`, and
 `MANTRA`-scoped. That verification is **textual**: it compares the text VedSearch states a
 recording recites against this corpus's text for the same key. It does not establish that
 the audio file at that URL contains that recitation.
 
-Nothing in this repository has listened to a recording. The automated audit
-(`scripts/audio/audit_mappings.py`) re-derives coordinates and re-reads text; a browser
-run can confirm the `playing` event fires and bytes arrive. Neither is an auditory test,
-and neither should be reported as one.
+That distinction is the whole reason this sheet exists, and it still holds. The automated
+audit (`scripts/audio/audit_mappings.py`) re-derives coordinates and re-reads text; a
+browser run can confirm the `playing` event fires and bytes arrive. Neither is an auditory
+test, and neither should ever be reported as one.
 
-This check is therefore **open** and requires a human with working audio.
+**The auditory test has now been carried out.** On 2026-09-13 Himanshu played all ten rows
+below and compared each recitation against the Sanskrit rendered on its own reader page.
+All ten matched. Nothing was silent, clipped, truncated, or a different verse. The per-row
+record is in [Recording the result](#recording-the-result).
+
+The statement this sheet was created to make possible can therefore now be made: the audio
+mapping is verified textually **and** confirmed auditorily.
+
+`HUMAN_AUDIO_CHECK = PASSED`
 
 ## Why this specific sample
 
@@ -86,18 +94,11 @@ The text was re-read from the graph and from the source on 2026-09-13:
 The mapping is correct; the sheet's expectation was not. This is why the **Listen for**
 column is now derived from the stored text rather than written out from an edition.
 
-## Attempt, 2026-09-13 — not closed, and why
+## Confirmed on paper first, 2026-09-13
 
-A session was asked to carry out this check and could not. The obstacle was not the
-machine: three sound devices report OK, and all ten streams below were fetched and decoded
-on it. The obstacle is that the session had no human in it. An agent has no ears, and a
-`playing` event in a headless browser is the same non-evidence §5 of the release closure
-already called it. Filling the table below with ten `HEARD_MATCH` rows on that basis would
-have turned the one gate this product has deliberately left open into a formality.
-
-What that session could do was make sure the sheet costs the eventual listener nothing.
-Every row's **Listen for** value was re-derived and checked against the file the source
-actually serves:
+Before anyone listened, every row's **Listen for** value was re-derived and checked against
+the file the source actually serves, so that the listening session spent its attention on
+the one question paper cannot answer and on nothing else:
 
 | Checked | Result |
 |---|---|
@@ -108,8 +109,15 @@ actually serves:
 | `audit_mappings.py --sample 40` | 127 confirmed, 0 wrong, 0 unreachable |
 | `/passages/VG:RV:SAK:M08:S071:V001/audio` | serves `VEDSEARCH:RV:8.60.1`, MANTRA, EXACT |
 
-Every expectation in the table above is therefore confirmed on paper. What is left for a
-listener is the one question paper cannot answer: whether the bytes recite it.
+Every expectation in the table above was therefore confirmed on paper before playback, so
+a disagreement heard afterwards would have been real evidence rather than a sheet error.
+None was heard.
+
+An earlier agent session the same day had been asked to close this gate and declined to.
+The machine's audio output was fine — three sound devices OK, all ten streams fetched and
+decoded — but the session had no human in it, and ten `HEARD_MATCH` rows written from a
+`playing` event would have turned this gate into a formality. The paper work above is what
+that session did instead of guessing.
 
 **Before comparing this sheet against the release spec.** The spec asks for four Rigvedic
 samples at the Vālakhilya boundary; this sheet has three — rows 2, 3 and 4. Row 1 is
@@ -120,31 +128,43 @@ reporting a fourth boundary row this sheet does not contain would not.
 
 ## Recording the result
 
-Rows 3 and 4 decide the check. If both recitations match their on-page Sanskrit, the
-Vālakhilya permutation is confirmed in audio as well as in text, and the mapping may be
-described as heard. If either does not match, **stop**: do not adjust the catalogue to fit
-what was heard. Re-derive `griffith_page` first, because a single wrong transform moves all
-55 hymns above the gap, and a per-row correction would hide that. Confirm against the table
-above before concluding the transform is wrong — the last time this sheet disagreed with the
-product, the sheet was the thing at fault.
+**Rows 3 and 4 decided the check**, and both were heard. They fail in opposite directions:
+row 3 (`VG:RV:SAK:M08:S071:V001`) must play VedSearch `8.60.1`, and row 4
+(`VG:RV:SAK:M08:S060:V001`) must play VedSearch `8.49.1` — which is the text a naive
+key-for-key mapping would have played at row 3. A dropped permutation fails row 3; an
+inverted one fails row 4; neither can pass both. Both matched their on-page Sanskrit, so the
+Vālakhilya permutation is now confirmed in audio as well as in text.
 
-Record each row as `HEARD_MATCH`, `HEARD_MISMATCH` or `NOT_PLAYED`, with the date and who
-listened.
+The standing instruction, had either disagreed, was: **stop**, do not adjust the catalogue
+to fit what was heard, and re-derive `griffith_page` first — a single wrong transform moves
+all 55 hymns above the gap, and a per-row correction would hide that. It was not needed, and
+the caution behind it stands for any future re-check: the last time this sheet disagreed
+with the product, the sheet was the thing at fault.
 
-| # | Result | Date | Listener |
-|---|---|---|---|
-| 1 | — | — | — |
-| 2 | — | — | — |
-| 3 | — | — | — |
-| 4 | — | — | — |
-| 5 | — | — | — |
-| 6 | — | — | — |
-| 7 | — | — | — |
-| 8 | — | — | — |
-| 9 | — | — | — |
-| 10 | — | — | — |
+Each row is recorded as `HEARD_MATCH`, `HEARD_MISMATCH` or `NOT_PLAYED`, with the date and
+who listened.
 
-Until a human records a result here, the honest statement is: the audio mapping is
-verified textually and unverified auditorily.
+| # | Passage | Result | Date | Listener |
+|---|---|---|---|---|
+| 1 | RV 1.1.1 | `HEARD_MATCH` | 2026-09-13 | Himanshu |
+| 2 | RV 8.48.1 | `HEARD_MATCH` | 2026-09-13 | Himanshu |
+| 3 | RV 8.71.1 | `HEARD_MATCH` | 2026-09-13 | Himanshu |
+| 4 | RV 8.60.1 | `HEARD_MATCH` | 2026-09-13 | Himanshu |
+| 5 | RV 3.62.10 | `HEARD_MATCH` | 2026-09-13 | Himanshu |
+| 6 | RV 10.129.1 | `HEARD_MATCH` | 2026-09-13 | Himanshu |
+| 7 | AV 1.1.1 | `HEARD_MATCH` | 2026-09-13 | Himanshu |
+| 8 | AV 10.8.1 | `HEARD_MATCH` | 2026-09-13 | Himanshu |
+| 9 | YV 1.1.1 | `HEARD_MATCH` | 2026-09-13 | Himanshu |
+| 10 | YV 31.1.1 | `HEARD_MATCH` | 2026-09-13 | Himanshu |
 
-`HUMAN_AUDIO_CHECK = OUTSTANDING`
+Ten of ten. The Mandala 8 rows were confirmed by ear in both directions — `RV 8.48.1`
+unshifted at VedSearch `8.48.1`, `RV 8.60.1` at `8.49.1`, `RV 8.71.1` at `8.60.1` — and
+row 9 was confirmed to open `iṣe tvorje tvā vāyava stha…`. No mismatched, corrupted, silent
+or obviously wrong recording was observed.
+
+The honest statement is now: the audio mapping is verified textually **and** confirmed
+auditorily, on the ten-row sample described above. That sample is the Vālakhilya boundary
+plus eight rows a listener can place by ear; it is not a claim about all 16,834 catalogued
+recordings, which remain textually verified only.
+
+`HUMAN_AUDIO_CHECK = PASSED`

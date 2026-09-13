@@ -213,18 +213,19 @@ the card system, and every surface the sweep found clean.
 
 ---
 
-## 5. Audio listening — still open
+## 5. Audio listening — closed 2026-09-13
 
 Textual verification is complete and strong: 16,834 catalogued recordings, all `EXACT`,
 `text_verified`, `MANTRA`-scoped; 17/17 catalogue checks pass; 127 mappings independently
 re-derived with 0 wrong and 0 unreachable.
 
-**Nothing has been listened to.** See
+**When this section was written, nothing had been listened to.** See
 [PRODUCT_V1_AUDIO_LISTENING_CHECK.md](PRODUCT_V1_AUDIO_LISTENING_CHECK.md) for the sample,
 which is loaded at the Vālakhilya boundary where a mapping error is silent rather than
-loud. The mapping for the critical case is confirmed on paper —
+loud. The mapping for the critical case was confirmed on paper —
 `VG:RV:SAK:M08:S071:V001` → VedSearch `8.60.1`, and `VG:RV:SAK:M08:S048:V001` → `8.48.1`
-unshifted — but confirmed on paper is not confirmed by ear.
+unshifted — but confirmed on paper is not confirmed by ear. It has since been confirmed by
+ear too: Himanshu played all ten rows on 2026-09-13 and all ten matched.
 
 **Correction, 2026-09-13.** The sheet itself was wrong on the row it calls decisive. It told
 the listener to expect `agna ā yāhy agnibhir hotāraṁ tvā vṛṇīmahe` at
@@ -236,7 +237,8 @@ following the old sheet would have heard a correct recitation, called it a misma
 re-derived a transform that was already right. The sheet's expectations are now taken from
 the stored text, the sample is extended to ten rows (4 RV at and around the boundary, 2 more
 RV outside Mandala 8, 2 AV, 2 YV), and every row was checked against the file the source
-actually serves. The auditory gate itself remains `HUMAN_AUDIO_CHECK = OUTSTANDING`.
+actually serves. The auditory gate itself was closed later the same day, on the corrected sheet:
+`HUMAN_AUDIO_CHECK = PASSED`.
 
 ---
 
