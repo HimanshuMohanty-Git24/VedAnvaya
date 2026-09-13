@@ -13,7 +13,7 @@
     --ink: #172025;
     --ink-soft: #3d484c;
     --muted: #5b686d;
-    --faint: #8b9599;
+    --faint: #5f6b70;
     --line: #d5dbd5;
     --line-strong: #bec6bf;
     --accent: #b04728;
@@ -44,7 +44,7 @@
     --ink: #e8eeec;
     --ink-soft: #c6d1ce;
     --muted: #9fadab;
-    --faint: #7b8a89;
+    --faint: #9ba9a6;
     --line: #2c383c;
     --line-strong: #3c494d;
     --accent: #e58163;
@@ -1782,6 +1782,9 @@ table {
 .tree-row button {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
     border: 0;
     background: transparent;
     color: var(--muted);
@@ -1790,6 +1793,10 @@ table {
 
 .tree-row .branch-label,
 .tree-row a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 44px;
     flex: 1;
     text-align: left;
     color: var(--ink);
@@ -2724,6 +2731,10 @@ table {
     display: flex;
     align-items: center;
     gap: 10px;
+    /* The pill is the visual control, so it carries the touch height and the input
+       stretches to fill it. Left alone, the bare input measured 23.5px -- under the
+       24px floor WCAG 2.5.8 sets, on the only entry point this page has. */
+    min-height: 44px;
     padding: 7px 8px 7px 14px;
     border: 1px solid var(--line-strong);
     border-radius: 999px;
@@ -2737,6 +2748,7 @@ table {
 
 .graph-toolbar input {
     flex: 1;
+    align-self: stretch;
     border: 0;
     background: transparent;
     outline: none;
@@ -2745,6 +2757,7 @@ table {
 }
 
 .graph-toolbar form button {
+    min-height: 30px;
     padding: 6px 15px;
     border-radius: 999px;
     border: 0;
@@ -2835,28 +2848,31 @@ table {
     color: var(--accent);
 }
 
+/* These six carry category meaning at 12.6px, so each clears 4.5:1 on --surface.
+   The hues are the originals scaled toward black; the graph's node colours are
+   unchanged, only the legend text that has to be read. */
 .legend-chip.group-passage {
-    color: #9b8462;
+    color: #847053;
 }
 
 .legend-chip.group-person {
-    color: #607d92;
+    color: #5a768a;
 }
 
 .legend-chip.group-idea {
-    color: #6c8f83;
+    color: #5c7a70;
 }
 
 .legend-chip.group-rite {
-    color: #8a6f9b;
+    color: #846a94;
 }
 
 .legend-chip.group-thing {
-    color: #7d7969;
+    color: #787464;
 }
 
 .legend-chip.group-wording {
-    color: #4f7f8f;
+    color: #4b7886;
 }
 
 .legend-chip i[data-shape="vee"] {
@@ -4066,13 +4082,13 @@ table {
     background: var(--surface);
 }
 
-.formula-stats strong {
+.formula-stats > div:not(.knowledge-status) > strong {
     display: block;
     font-family: var(--font-reading), serif;
     font-size: 1.7rem;
 }
 
-.formula-stats span {
+.formula-stats > div:not(.knowledge-status) > span {
     font-size: 0.8rem;
     color: var(--muted);
 }
@@ -5311,6 +5327,13 @@ table {
     font-size: 0.84rem;
 }
 
+.ask-mode-note {
+    max-width: 30ch;
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.5;
+}
+
 .ask-submit-row {
     display: flex;
     align-items: center;
@@ -6207,9 +6230,8 @@ a.ask-entity:hover small {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    /* 40px is the touch target floor, not a visual choice. */
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     flex: 0 0 auto;
     border: 1px solid var(--line-strong);
     border-radius: 999px;
@@ -6228,7 +6250,7 @@ a.ask-entity:hover small {
     flex: 1 1 auto;
     min-width: 0;
     accent-color: var(--accent);
-    height: 22px;
+    height: 44px;
     cursor: pointer;
 }
 
@@ -6246,6 +6268,7 @@ a.ask-entity:hover small {
 
 .recitation-speed select {
     flex: 0 0 auto;
+    min-height: 44px;
     padding: 5px 7px;
     font-size: 0.76rem;
     color: var(--ink-soft);

@@ -64,7 +64,7 @@ export default async function VedasPage() {
                                         {total > 0 && (
                                             <small>
                                                 {" "}
-                                                ({Math.round((translated / total) * 100)}%)
+                                                ({((translated / total) * 100).toFixed(1)}%)
                                             </small>
                                         )}
                                     </span>

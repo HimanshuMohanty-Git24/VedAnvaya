@@ -21,9 +21,8 @@ import { AskAnswer } from "./ask-answer";
 import { AskEvidenceDrawer } from "./ask-evidence-drawer";
 
 /**
- * The request takes seconds because it is three stages, not one. Naming the stage that
- * is running is the honest indicator: a spinner implies one opaque wait, and a reader
- * who knows retrieval has finished also knows the graph was reached.
+ * The response is not streamed, so elapsed-time phases are estimates, not backend
+ * telemetry. The pending copy states this explicitly.
  */
 const PHASES = [
     { at: 0, label: "Reading the question", note: "Classifying intent and resolving names" },
@@ -253,14 +252,18 @@ export function AskExperience({
                             <span>Retrieval mode</span>
                             <select
                                 value={mode}
+                                aria-describedby="ask-mode-note"
                                 onChange={(event) => setMode(event.target.value as AskMode)}
                             >
                                 {ASK_MODES.map((item) => (
                                     <option key={item.value} value={item.value}>
-                                        {item.label} — {item.note}
+                                        {item.label}
                                     </option>
                                 ))}
                             </select>
+                            <small className="ask-mode-note" id="ask-mode-note">
+                                {ASK_MODES.find((item) => item.value === mode)?.note}
+                            </small>
                         </label>
                     </div>
 
@@ -355,8 +358,8 @@ export function AskExperience({
                         })}
                     </ol>
                     <p className="ask-pending-note">
-                        {phase.label}. This normally takes three to ten seconds; nothing is written
-                        until retrieval has finished.
+                        Progress is estimated. The answer appears when retrieval and synthesis
+                        finish. Response time varies with the question and synthesis provider.
                     </p>
                     <div className="skeleton" style={{ height: 14, width: "88%" }} />
                     <div className="skeleton" style={{ height: 14, width: "94%" }} />
