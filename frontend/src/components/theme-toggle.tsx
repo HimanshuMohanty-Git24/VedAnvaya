@@ -12,13 +12,13 @@ export function ThemeToggle() {
     const { resolvedTheme, setTheme } = useTheme();
     return (
         <button
-            className="icon-button theme-toggle"
+            className="va-icon-button va-theme-toggle"
             type="button"
             onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
             aria-label="Switch between light and dark theme"
         >
-            <Moon size={18} className="theme-icon-light" aria-hidden="true" />
-            <Sun size={18} className="theme-icon-dark" aria-hidden="true" />
+            <Moon size={18} className="va-theme-icon-light" aria-hidden="true" />
+            <Sun size={18} className="va-theme-icon-dark" aria-hidden="true" />
         </button>
     );
 }

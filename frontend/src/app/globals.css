@@ -1,68 +1,85 @@
 @import "tailwindcss";
 
+/* VedAnvaya token layer. Imported ahead of the stylesheet below, which is the
+   VedaGraph design system being migrated away from. The two coexist on purpose:
+   everything below is unlayered and therefore wins, so landing the tokens cannot
+   move a surface that has not been rebuilt yet. */
+@import "../styles/tokens.css";
+@import "../styles/theme.css";
+@import "../styles/base.css";
+@import "../styles/shell.css";
+
 /* ============================================================
    VedaGraph design system
    An atlas, not a dashboard: warm paper, ink, hairlines, one accent.
    ============================================================ */
 
 :root {
-    --bg: #f4f5f2;
-    --surface: #fbfcf9;
-    --surface-sunk: #edefea;
-    --surface-strong: #e6e9e3;
-    --ink: #172025;
-    --ink-soft: #3d484c;
-    --muted: #5b686d;
-    --faint: #5f6b70;
-    --line: #d5dbd5;
-    --line-strong: #bec6bf;
-    --accent: #b04728;
-    --accent-ink: #fff8f3;
-    --accent-soft: #f3ded5;
-    --tone-supported: #2f6b55;
-    --tone-supported-bg: #e4efe9;
-    --tone-partial: #8a5a16;
-    --tone-partial-bg: #f5ebdb;
-    --tone-insufficient: #99452b;
-    --tone-insufficient-bg: #f6e2db;
-    --tone-not-built: #4f5b62;
-    --tone-not-built-bg: #e6eaec;
-    --tone-unknown: #5b686d;
-    --tone-unknown-bg: #e9ecea;
-    --shadow-sm: 0 1px 2px rgb(35 47 43 / 0.05);
-    --shadow: 0 18px 46px -24px rgb(35 47 43 / 0.35);
-    --radius: 14px;
-    --radius-sm: 9px;
-    --measure: 68ch;
+    /* ------------------------------------------------------------------------
+       The VedaGraph token names, re-pointed at the VedAnvaya tokens.
+
+       Every one of the 952 rule blocks below still asks for --bg, --ink, --line
+       and the rest. Rewriting them all at once is the change most likely to
+       break something silently, so instead the old names are kept and aliased.
+       The whole application adopts the new palette, the new type and the new
+       radii in one edit, and each surface then drops its alias as it is rebuilt.
+
+       Three of the old names disappear here rather than being mapped, because
+       they were mistakes rather than decisions:
+
+       --faint was #5f6b70 against --muted's #5b686d, a difference of 4, 11 and 3
+       in RGB across 224 declarations. They were the same colour written twice,
+       so both now point at one token.
+
+       --tone-unknown was byte-identical to --muted. It is gone; "unknown" and
+       "not built" are different claims and the new layer gives them different
+       tokens.
+
+       --tone-supported becomes --va-tone-evidenced. The old name echoed an API
+       enum, so a rename in the backend would have left the CSS describing
+       something that no longer existed.
+       ------------------------------------------------------------------------ */
+    --bg: var(--va-surface-page);
+    --surface: var(--va-surface-raised);
+    --surface-sunk: var(--va-surface-sunk);
+    --surface-strong: var(--va-surface-strong);
+    --ink: var(--va-text-primary);
+    --ink-soft: var(--va-carbon-700);
+    --muted: var(--va-text-secondary);
+    --faint: var(--va-text-tertiary);
+    --line: var(--va-line-hairline);
+    --line-strong: var(--va-line-strong);
+    --accent: var(--va-accent-base);
+    --accent-ink: var(--va-text-on-accent);
+    --accent-soft: var(--va-accent-soft);
+    --tone-supported: var(--va-tone-evidenced);
+    --tone-supported-bg: var(--va-tone-evidenced-surface);
+    --tone-partial: var(--va-tone-partial);
+    --tone-partial-bg: var(--va-tone-partial-surface);
+    --tone-insufficient: var(--va-tone-insufficient);
+    --tone-insufficient-bg: var(--va-tone-insufficient-surface);
+    --tone-not-built: var(--va-tone-unbuilt);
+    --tone-not-built-bg: var(--va-tone-unbuilt-surface);
+    --tone-unknown: var(--va-tone-neutral);
+    --tone-unknown-bg: var(--va-tone-neutral-surface);
+    --shadow-sm: var(--va-elevation-floating);
+    --shadow: var(--va-elevation-overlay);
+    --radius: var(--va-radius-md);
+    --radius-sm: var(--va-radius-sm);
+    --measure: var(--va-measure);
+
+    /* The old font variables. --font-reading pointed at Newsreader, which the
+       audit measured as failing a third of the IAST characters in this corpus,
+       and --font-devanagari at Noto Sans Devanagari. Both are re-pointed rather
+       than deleted: deleting them makes `font-family: var(--font-reading),
+       Georgia, serif` invalid at computed-value time, which silently drops every
+       heading on every surface that has not been rebuilt to the inherited body
+       face. That is exactly what happened on the first attempt at this. */
+    --font-ui: var(--va-font-ui);
+    --font-reading: var(--va-font-display);
+    --font-devanagari: var(--va-font-deva);
 }
 
-.dark {
-    --bg: #10161a;
-    --surface: #171f23;
-    --surface-sunk: #131a1e;
-    --surface-strong: #1f292d;
-    --ink: #e8eeec;
-    --ink-soft: #c6d1ce;
-    --muted: #9fadab;
-    --faint: #9ba9a6;
-    --line: #2c383c;
-    --line-strong: #3c494d;
-    --accent: #e58163;
-    --accent-ink: #1c0e09;
-    --accent-soft: #3b241d;
-    --tone-supported: #86c4a8;
-    --tone-supported-bg: #1a2c26;
-    --tone-partial: #d9ab6b;
-    --tone-partial-bg: #2e2618;
-    --tone-insufficient: #e29175;
-    --tone-insufficient-bg: #33201a;
-    --tone-not-built: #9aa8ae;
-    --tone-not-built-bg: #1e262a;
-    --tone-unknown: #9fadab;
-    --tone-unknown-bg: #1c2427;
-    --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.3);
-    --shadow: 0 22px 52px -26px rgb(0 0 0 / 0.75);
-}
 
 @theme inline {
     --color-background: var(--bg);
@@ -186,19 +203,41 @@ table {
 
 /* ---------- Sanskrit and reading typography ---------- */
 
+/*
+ * The reading surface, corrected.
+ *
+ * This rule previously asked for --font-reading, which was Newsreader. Measured against
+ * the corpus's own bytes, Newsreader fails about a third of the IAST character occurrences
+ * in it, and the Google Fonts CDN does not serve U+0331, U+030D or U+0325 for any Latin
+ * font at all, so every Vedic accent in every Rigvedic and Atharvavedic verse on this site
+ * has been drawn by an unpredictable system fallback and positioned by a shaper that had
+ * lost the run. It looked approximately right, which is why it survived.
+ *
+ * The IAST default is now the self-hosted subset of Charis SIL, which carries all six marks
+ * this corpus uses and has the GPOS mark and mkmk tables to place them. Devanagari, which
+ * is the Samavedic and Yajurvedic text, stays with Noto Serif Devanagari.
+ *
+ * letter-spacing goes to 0 rather than 0.004em. Tracking cuts visible gaps in the
+ * sirorekha, the headline stroke that binds a Devanagari word together, so the previous
+ * value was fragmenting every conjunct on the SV and YV surfaces by a small amount.
+ */
 .sanskrit {
-    font-family: var(--font-reading), var(--font-devanagari), Georgia, serif;
-    font-size: clamp(1.18rem, 0.95rem + 0.9vw, 1.65rem);
-    line-height: 1.95;
-    letter-spacing: 0.004em;
+    font-family: var(--va-font-iast);
+    font-size: var(--va-text-sanskrit);
+    line-height: var(--va-leading-verse);
+    letter-spacing: 0;
+    font-variant-ligatures: normal;
     color: var(--ink);
     overflow-wrap: break-word;
     hyphens: none;
 }
 
+.sanskrit.devanagari,
 .devanagari {
-    font-family: var(--font-devanagari), sans-serif;
-    line-height: 2.1;
+    font-family: var(--va-font-deva);
+    line-height: var(--va-leading-verse);
+    letter-spacing: 0;
+    font-variant-ligatures: normal;
 }
 
 .skip-link {

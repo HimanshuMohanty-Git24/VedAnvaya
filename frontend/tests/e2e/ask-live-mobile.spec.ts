@@ -19,7 +19,7 @@ test.describe("Ask, live, 390px", () => {
 
     test("the journey is usable at 390px without horizontal scroll", async ({ page }) => {
         await page.goto("/ask");
-        await expect(page.getByRole("heading", { name: "Ask VedaGraph", level: 1 })).toBeVisible();
+        await expect(page.getByRole("heading", { name: "Ask VedAnvaya", level: 1 })).toBeVisible();
 
         const noSideScroll = async (where: string) => {
             const overflow = await page.evaluate(
@@ -33,7 +33,7 @@ test.describe("Ask, live, 390px", () => {
         await expect(composer).toBeVisible();
         await composer.fill(QUESTION);
 
-        const submit = page.getByRole("button", { name: "Ask VedaGraph" });
+        const submit = page.getByRole("button", { name: "Ask VedAnvaya" });
         await expect(submit).toBeEnabled();
         await submit.click();
 

@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { absentHere } from "./guards";
 
 /**
  * The recitation surface, at the two things a reader can actually be misled about:
@@ -115,7 +116,10 @@ test.describe("recitation across the Valakhilya boundary", () => {
         await expect(page.getByRole("heading", { level: 1 })).toHaveText("RV 8.49.1");
         // The text is unaffected; only the player is absent.
         await expect(page.locator(".sanskrit").first()).toBeVisible();
-        await expect(page.locator("section.recitation")).toHaveCount(0);
+        await absentHere(page, "section.recitation", {
+            controlUrl: `/passage/${RV_1_1_1}`,
+            controlHint: "RV 1.1.1, which does have a recitation",
+        });
     });
 });
 
@@ -123,9 +127,15 @@ test.describe("absent recitation is not an error", () => {
     test("a Samavedic verse reads normally with no player", async ({ page }) => {
         await page.goto(`/passage/${SV_VERSE}`);
         await expect(page.locator(".sanskrit").first()).toBeVisible();
-        await expect(page.locator("section.recitation")).toHaveCount(0);
+        await absentHere(page, "section.recitation", {
+            controlUrl: `/passage/${RV_1_1_1}`,
+            controlHint: "RV 1.1.1, which does have a recitation",
+        });
         // No broken control, and no claim that no recitation of this text exists.
-        await expect(page.getByRole("button", { name: /^Play / })).toHaveCount(0);
+        await absentHere(page, 'button:text-matches("^Play ")', {
+            controlUrl: `/passage/${RV_1_1_1}`,
+            controlHint: "RV 1.1.1, whose player offers a play button",
+        });
     });
 });
 

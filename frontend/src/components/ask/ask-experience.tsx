@@ -289,7 +289,7 @@ export function AskExperience({
                             disabled={!trimmed || overLimit || pending}
                         >
                             <ArrowUp size={17} aria-hidden="true" />
-                            {pending ? "Asking…" : "Ask VedaGraph"}
+                            {pending ? "Asking…" : "Ask VedAnvaya"}
                         </button>
                     </div>
                 </div>

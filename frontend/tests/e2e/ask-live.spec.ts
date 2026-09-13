@@ -26,7 +26,7 @@ test.describe("Ask, live", () => {
         await page.goto("/ask");
 
         // -- the page and its contract ------------------------------------
-        await expect(page.getByRole("heading", { name: "Ask VedaGraph", level: 1 })).toBeVisible();
+        await expect(page.getByRole("heading", { name: "Ask VedAnvaya", level: 1 })).toBeVisible();
         await expect(page.getByRole("heading", { name: "What it refuses to do" })).toBeVisible();
 
         // -- the composer --------------------------------------------------
@@ -34,7 +34,7 @@ test.describe("Ask, live", () => {
         await expect(composer).toBeVisible();
         await composer.fill(QUESTION);
 
-        const submit = page.getByRole("button", { name: "Ask VedaGraph" });
+        const submit = page.getByRole("button", { name: "Ask VedAnvaya" });
         await expect(submit).toBeEnabled();
         await submit.click();
 

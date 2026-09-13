@@ -1,23 +1,72 @@
 import type { Metadata } from "next";
-import { Geist, Noto_Sans_Devanagari, Newsreader } from "next/font/google";
-import Link from "next/link";
+import { Fraunces, Inter, Noto_Serif_Devanagari } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
-import { SiteHeader } from "@/components/site-header";
-import { SECONDARY_NAV } from "@/components/navigation";
+import { SiteFooter } from "@/components/shell/site-footer";
+import { SiteHeader } from "@/components/shell/site-header";
 import { ThemeProvider } from "@/components/theme-provider";
 
-const geist = Geist({ variable: "--font-ui", subsets: ["latin"], display: "swap" });
-const newsreader = Newsreader({ variable: "--font-reading", subsets: ["latin"], display: "swap" });
-const devanagari = Noto_Sans_Devanagari({
-    variable: "--font-devanagari",
-    subsets: ["devanagari"],
+/**
+ * Fraunces sets English display type. Its optical-size axis is requested so the browser can
+ * apply `font-optical-sizing: auto` from the rendered size, which is the difference between a
+ * 64px hero that looks drawn for 64px and one that looks like body copy enlarged.
+ *
+ * SOFT and WONK are not requested. Both default to 0, which is the institutional end of the
+ * family, and naming an axis by hand in `font-variation-settings` is what would stop the
+ * optical sizing working.
+ */
+const fraunces = Fraunces({
+    variable: "--font-fraunces",
+    subsets: ["latin", "latin-ext"],
+    /* No `weight` here: next/font only allows `axes` on a font left variable, and the
+       variable range is what we want anyway. The system uses 400, 500 and 600 and refuses
+       700, which is a rule in tokens.css rather than a restriction on the file. */
+    axes: ["opsz"],
     display: "swap",
 });
 
+const inter = Inter({
+    variable: "--font-inter",
+    subsets: ["latin", "latin-ext"],
+    display: "swap",
+});
+
+/** Devanagari verse, which is the Samaveda and the Yajurveda. */
+const notoDevanagari = Noto_Serif_Devanagari({
+    variable: "--font-noto-deva",
+    subsets: ["devanagari"],
+    weight: ["400", "500"],
+    display: "swap",
+});
+
+/**
+ * IAST verse, which is the Rigveda and the Atharvaveda, and therefore four fifths of the
+ * corpus's Sanskrit.
+ *
+ * Self-hosted because it has to be. The Google Fonts CDN serves none of U+0331, U+030D or
+ * U+0325 for any Latin font, and those are the combining marks this corpus writes its Vedic
+ * accents with. Vendored and subsetted by `scripts/build_web_fonts.py`: 3,857 glyphs to
+ * 1,381, 293 KB to 78 KB, with the `mark` and `mkmk` tables kept so a mark landing on a
+ * letter that already carries one is placed rather than stacked at the origin. Rasterised
+ * against the upstream release on RV 1.1.1 the subset differs by zero pixels.
+ */
+const charis = localFont({
+    variable: "--font-charis",
+    display: "swap",
+    src: [
+        { path: "../fonts/charis-regular.woff2", weight: "400", style: "normal" },
+        { path: "../fonts/charis-italic.woff2", weight: "400", style: "italic" },
+    ],
+});
+
 export const metadata: Metadata = {
-    title: { default: "VedaGraph — a digital atlas of the Vedas", template: "%s | VedaGraph" },
+    title: {
+        default: "VedAnvaya: the Vedas, connected",
+        template: "%s | VedAnvaya",
+    },
     description:
-        "Read the four Vedic Samhitas as one connected corpus: mantras, deities, seers, rites and shared wording, with the evidence behind every connection.",
+        "Read the four Vedic Samhitas as one connected corpus. Mantras, deities, seers, rites and shared wording, with the evidence behind every connection and a plain statement of what is not held.",
+    applicationName: "VedAnvaya",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -25,34 +74,16 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <html
             lang="en"
             suppressHydrationWarning
-            className={`${geist.variable} ${newsreader.variable} ${devanagari.variable}`}
+            className={`${fraunces.variable} ${inter.variable} ${notoDevanagari.variable} ${charis.variable}`}
         >
             <body>
                 <ThemeProvider>
-                    <a className="skip-link" href="#main">
+                    <a className="va-skip-link" href="#main">
                         Skip to content
                     </a>
                     <SiteHeader />
                     <main id="main">{children}</main>
-                    <footer className="site-footer">
-                        <div className="shell">
-                            <div>
-                                <span className="footer-brand">VedaGraph</span>
-                                <p>
-                                    Four Samhitas, read as one connected corpus. Every count on this
-                                    site describes what this build holds, never what the Vedas
-                                    contain.
-                                </p>
-                            </div>
-                            <nav aria-label="About this atlas">
-                                {SECONDARY_NAV.map((item) => (
-                                    <Link href={item.href} key={item.href}>
-                                        {item.label}
-                                    </Link>
-                                ))}
-                            </nav>
-                        </div>
-                    </footer>
+                    <SiteFooter />
                 </ThemeProvider>
             </body>
         </html>

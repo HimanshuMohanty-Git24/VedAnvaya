@@ -58,7 +58,7 @@ export class ApiError extends Error {
 export const API_BASE = process.env.VEDAGRAPH_API_URL ?? "http://127.0.0.1:8000";
 
 const NOT_FOUND = "This atlas entry is not held in the current corpus.";
-const UNAVAILABLE = "The VedaGraph knowledge service did not respond.";
+const UNAVAILABLE = "The VedAnvaya knowledge service did not respond.";
 const REFUSED = "The knowledge service could not answer this request.";
 
 export async function apiGet<T>(

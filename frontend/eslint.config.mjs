@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
         "out/**",
         "build/**",
         "next-env.d.ts",
+        // Local scratch: ad-hoc probes, font specimens and screenshot drivers. Gitignored,
+        // never shipped, and not worth holding to the product's lint rules.
+        ".tmp/**",
     ]),
 ]);
 

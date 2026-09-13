@@ -1,0 +1,224 @@
+/* ============================================================================
+   VedAnvaya tier 1: primitives.
+   Raw values, theme-independent. A component must never reference this tier.
+   It exists so that tier 2 (theme.css) has something to point at, and so the
+   palette can be reasoned about as a palette rather than as 300 literals.
+   ============================================================================ */
+
+/* Tailwind v4's built-in `dark:` variant keys on prefers-color-scheme, which ignores
+   an explicit user choice. next-themes writes a class, so the variant has to key on
+   the class or the theme toggle silently stops reaching any utility. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme static {
+    /* --- Ivory. The paper. ------------------------------------------------ */
+    --va-ivory-50: #fbf9f4;
+    --va-ivory-100: #f4f0e7; /* brand anchor: manuscript ivory */
+    --va-ivory-200: #ebe5d8;
+    --va-ivory-300: #dfd7c6;
+    --va-ivory-400: #cfc5af;
+    --va-ivory-line: #e3dccc;
+
+    /* --- Carbon. The ink. -------------------------------------------------- */
+    --va-carbon-900: #171815; /* brand anchor: carbon ink */
+    --va-carbon-700: #3a3b36;
+    --va-carbon-500: #5c5e56;
+    --va-carbon-400: #676960;
+    --va-carbon-300: #8a8c82;
+
+    /* --- Rubric. The accent, and the one colour with a job in the manuscript.
+       In a Sanskrit codex red is not decoration: it marks dandas, headings,
+       invocations and section divisions. That is the licence for using it, and
+       also the limit on it. --------------------------------------------------- */
+    --va-rubric-700: #8e3720;
+    --va-rubric-600: #a14026;
+    --va-rubric-500: #b64a2e; /* brand anchor: rubric red */
+    --va-rubric-400: #c9694f;
+    --va-rubric-300: #dfa08c;
+    --va-rubric-100: #f2dfd8;
+    --va-rubric-950: #2e1c16;
+
+    /* --- Gold. Rules and ornament, and the partial/caution family. ---------- */
+    --va-gold-700: #74602f;
+    --va-gold-500: #b49a62; /* brand anchor: aged gold */
+    --va-gold-400: #c9b486;
+    --va-gold-100: #efe6d1;
+    --va-gold-950: #2a2418;
+
+    /* --- Indigo. Structural and secondary. ---------------------------------- */
+    --va-indigo-800: #1a2632;
+    --va-indigo-700: #26364a; /* brand anchor: indigo ink */
+    --va-indigo-600: #35495f;
+    --va-indigo-300: #8ba3be;
+    --va-indigo-100: #dce4ec;
+    --va-indigo-950: #1b242e;
+
+    /* --- Verdigris. Derived, for "evidenced".
+       The five brand anchors cannot carry five epistemic states, and this one
+       is pulled toward the ivory's warmth so it reads as aged copper rather
+       than as a dashboard's success green. ------------------------------------ */
+    --va-verdigris-700: #2e5e4b;
+    --va-verdigris-300: #7fb39c;
+    --va-verdigris-100: #dfeae2;
+    --va-verdigris-950: #1b2a24;
+
+    /* --- Slate. Derived, for "not built". ----------------------------------- */
+    --va-slate-700: #4c5660;
+    --va-slate-300: #9ba6b0;
+    --va-slate-100: #e4e7ea;
+    --va-slate-950: #1e242a;
+
+    /* --- Night. The dark paper.
+       Warm, not blue. #131410 is carbon ink pulled down, not a cool black, so
+       dark mode stays inside the manuscript metaphor instead of becoming a
+       different product at night. This is the decision most likely to be
+       second-guessed later, so it is written down here. ----------------------- */
+    --va-night-900: #0f100c;
+    --va-night-800: #131410;
+    --va-night-700: #1c1d17;
+    --va-night-600: #26271f;
+    --va-night-line: #2e3028;
+    --va-night-line-strong: #40423a;
+
+    /* ========================================================================
+       Type.
+
+       Four families, and the composition of each is measured rather than
+       preferred. See docs/design/research/08-typography-coverage-test.md.
+
+       **Fraunces sets English and nothing else.** It has no GPOS `mark` table,
+       so a mark that should be placed is drawn at the glyph origin, and it is
+       missing anusvara and n-with-dot-above. A missing glyph does not fail
+       locally: Chromium re-resolves mark attachment across the fallback break,
+       so rendering RV 1.1.1 in it lifts the macron off the a in `visva` and
+       drops it between the words, and `Vayu` puts the macron over the y. It is
+       not in the Sanskrit stack at any size.
+
+       **IAST is set in Charis SIL, self-hosted.** The Rigveda and Atharvaveda,
+       16,391 of 20,210 mantras, are held in romanised IAST, and their accents
+       are combining marks on Latin bases: U+0331, U+030D, U+0301, U+0325,
+       U+0310. The Google Fonts CDN serves none of the first, second or fourth
+       for any Latin font, so `next/font/google` cannot deliver a working verse
+       face at all. That is why the build this replaces set verses in
+       Newsreader, which fails a third of the IAST in this corpus, and why it
+       looked fine: the browser falls back per character and the marks appear,
+       drawn by whatever answered and positioned by a shaper that has lost the
+       run.
+
+       **Devanagari is set in Noto Serif Devanagari**, which the brand board
+       named and which measurement confirms: it covers every Vedic mark this
+       corpus uses and the CDN serves it correctly. No verse here mixes scripts,
+       so one font per verse still holds with two faces.
+
+       Charis SIL sits at the end of the display and UI stacks as well. Neither
+       should ever be handed Sanskrit, but if one is, a designed serif with real
+       mark positioning is a better place to land than Times New Roman.
+       ======================================================================== */
+    --va-font-display: var(--font-fraunces), var(--font-charis), "Iowan Old Style", Georgia, serif;
+    --va-font-ui: var(--font-inter), var(--font-charis), system-ui, -apple-system, "Segoe UI",
+        sans-serif;
+    --va-font-iast: var(--font-charis), "Charis SIL", Georgia, serif;
+    --va-font-deva: var(--font-noto-deva), "Noto Serif Devanagari", serif;
+    --va-font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+    /* Nine steps, replacing the 57 distinct sizes the audit counted. The two
+       fluid steps share a ratio so h1 and h2 stay in proportion at every width. */
+    --va-text-2xs: 0.6875rem;
+    --va-text-xs: 0.75rem;
+    --va-text-sm: 0.8125rem;
+    --va-text-base: 0.875rem;
+    --va-text-md: 1rem;
+    --va-text-lg: 1.125rem;
+    --va-text-xl: 1.375rem;
+    --va-text-2xl: clamp(1.5rem, 1.25rem + 1.1vw, 2rem);
+    --va-text-3xl: clamp(2rem, 1.55rem + 2.2vw, 3rem);
+    --va-text-display: clamp(2.5rem, 1.8rem + 3.4vw, 4rem);
+
+    /* Reading sizes are separate because verse needs its own optical treatment. */
+    --va-text-sanskrit: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+    --va-text-sanskrit-inline: 1.0625rem;
+    --va-text-reading: 1.1875rem;
+
+    --va-leading-flat: 1.1;
+    --va-leading-tight: 1.25;
+    --va-leading-snug: 1.45;
+    --va-leading-normal: 1.6;
+    --va-leading-prose: 1.75;
+    /* Verse leading, both scripts. Anudatta sits below the baseline and svarita
+       above the headline, and both can land on one aksara, so the usual 1.5
+       clips them. The same applies to stacked IAST marks. */
+    --va-leading-verse: 2.05;
+
+    /* 700 is deliberately not in the system. Headings take their weight from
+       size, family and colour. Losing that is the easiest way to make this look
+       like every other site. */
+    --va-weight-regular: 400;
+    --va-weight-medium: 500;
+    --va-weight-semibold: 600;
+
+    --va-tracking-display: -0.02em;
+    --va-tracking-tight: -0.01em;
+    --va-tracking-normal: 0;
+    --va-tracking-eyebrow: 0.09em;
+    --va-tracking-wide: 0.14em;
+
+    /* --- Space. 4px base, 12 steps. ---------------------------------------- */
+    --va-space-3xs: 0.125rem;
+    --va-space-2xs: 0.25rem;
+    --va-space-xs: 0.375rem;
+    --va-space-sm: 0.5rem;
+    --va-space-md: 0.75rem;
+    --va-space-lg: 1rem;
+    --va-space-xl: 1.5rem;
+    --va-space-2xl: 2rem;
+    --va-space-3xl: 2.5rem;
+    --va-space-4xl: 3.5rem;
+    --va-space-5xl: 4.5rem;
+    --va-space-6xl: 6rem;
+
+    /* --- Layout constants, named so they stop being magic numbers. ---------- */
+    --va-shell-max: 82.5rem;
+    --va-shell-gutter: 2rem;
+    --va-header-height: 4rem;
+
+    /* Measure. Latin wants 62 to 68 characters. Devanagari wants materially
+       less, because the sirorekha is a continuous horizontal stroke and a long
+       line of it degrades the return sweep. */
+    --va-measure-tight: 46ch;
+    --va-measure: 66ch;
+    --va-measure-wide: 84ch;
+    --va-measure-deva: 42ch;
+
+    /* --- Radii. Even steps so nested radii are computable: an inner surface
+       inside a 12px card is 8px, and 12 - 4 = 8 holds. ------------------------ */
+    --va-radius-xs: 4px;
+    --va-radius-sm: 8px;
+    --va-radius-md: 12px;
+    --va-radius-lg: 18px;
+    --va-radius-pill: 999px;
+
+    --va-border-width: 1px;
+    --va-border-width-accent: 3px;
+
+    /* --- Motion. ------------------------------------------------------------ */
+    --va-duration-instant: 100ms;
+    --va-duration-fast: 160ms;
+    --va-duration-base: 240ms;
+    --va-duration-slow: 400ms;
+    --va-duration-shimmer: 1.5s;
+    --va-duration-spin: 800ms;
+    --va-duration-pulse: 1100ms;
+
+    --va-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+    --va-ease-enter: cubic-bezier(0.05, 0.7, 0.1, 1);
+    --va-ease-exit: cubic-bezier(0.3, 0, 0.8, 0.15);
+
+    /* --- Z-index. Six rungs. No component may write a numeric z-index. ------ */
+    --va-z-base: 0;
+    --va-z-raised: 10;
+    --va-z-sticky: 100;
+    --va-z-overlay: 200;
+    --va-z-modal: 210;
+    --va-z-toast: 300;
+    --va-z-skip: 400;
+}

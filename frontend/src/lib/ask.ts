@@ -1,5 +1,5 @@
 /**
- * The Ask VedaGraph contract, and the words a reader sees for each of its codes.
+ * The Ask VedAnvaya contract, and the words a reader sees for each of its codes.
  *
  * Hand-written rather than taken from `api-schema.ts`: the generated schema is
  * regenerated from the served OpenAPI document, and these routes were added after the
@@ -129,7 +129,7 @@ export class AskError extends Error {
     }
 }
 
-const UNREACHABLE = "The VedaGraph knowledge service could not be reached.";
+const UNREACHABLE = "The VedAnvaya knowledge service could not be reached.";
 
 /**
  * Ask one question. Runs in the browser against the `/backend` rewrite, so the API base

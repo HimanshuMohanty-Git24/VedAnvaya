@@ -1,5 +1,6 @@
 import { expect, test, type Page } from "@playwright/test";
 import { OFFLINE_BASE } from "../../playwright.config";
+import { absentHere, textAbsentHere } from "./guards";
 
 const RV_1_1_1 = encodeURIComponent("VG:RV:SAK:M01:S001:V001");
 const INDRA = encodeURIComponent("VG:DEVATA:INDRAH");
@@ -260,7 +261,13 @@ test.describe("journey 7 — a Rigvedic verse reused in the Samaveda", () => {
         ).toBeVisible();
 
         // No fake musical notation anywhere on a Samaveda surface.
-        await expect(page.locator("svg.notation, .musical-notation")).toHaveCount(0);
+        //
+        // This was written as `svg.notation, .musical-notation` and had never once run: no
+        // such class exists in the stylesheet, so the guard matched nothing whatever the page
+        // did. What it is actually for is the claim that the Samaveda's sung dimension is not
+        // held, and the honest way to check that is to look for the claim rather than for
+        // markup nobody writes.
+        await expect(page.getByText(/gana|sung|musical/i)).toHaveCount(0);
     });
 });
 
@@ -317,12 +324,15 @@ test.describe("journey 10 — the API is offline", () => {
         await expect(alert).toContainText(/did not respond/i);
         await expect(alert).toContainText(/No corpus data has been changed/i);
         // An outage is not dressed up as a knowledge limit.
-        await expect(page.getByText(/Insufficient evidence/i)).toHaveCount(0);
+        await textAbsentHere(page, /Insufficient evidence/i, {
+            controlUrl: "/limits",
+            controlHint: "the limits page, which names the evidence states in full",
+        });
     });
 
     test("the shell still navigates while the API is down", async ({ page }) => {
         await page.goto(`${OFFLINE_BASE}/devatas`);
-        await expect(page.getByRole("link", { name: "VedaGraph, home" })).toBeVisible();
+        await expect(page.getByRole("link", { name: "VedAnvaya, home" })).toBeVisible();
         await page.getByRole("link", { name: "Explore", exact: true }).click();
         await expect(page.getByRole("heading", { level: 1 })).toContainText("Lenses");
     });
@@ -356,7 +366,7 @@ test.describe("knowledge-status regressions", () => {
     test("default deity analytics exclude ambiguous mentions", async ({ page }) => {
         await page.goto(`/devatas/${AGNI}`);
         const chart = page.locator("figure.measure", { hasText: "Named in the text" });
-        await expect(chart).toContainText(/Certain and probable mentions are included|/);
+        await expect(chart).toContainText(/Certain and probable mentions are included/);
         await expect(page.getByText(/ambiguous ones are held back/i)).toBeVisible();
 
         const ambiguous = page.locator(".certainty-split .is-ambiguous");
@@ -468,7 +478,10 @@ test.describe("search behaviour", () => {
     test("slow search is not reported as an error", async ({ page }) => {
         await page.goto("/search?q=agni");
         await expect(page.locator(".search-results li").first()).toBeVisible({ timeout: 20_000 });
-        await expect(page.locator(".search-error")).toHaveCount(0);
+        await absentHere(page, ".search-error", {
+            controlUrl: `${OFFLINE_BASE}/search?q=agni`,
+            controlHint: "a search against the offline backend, which does report an error",
+        });
     });
 
     test("IAST diacritics survive the round trip", async ({ page }) => {

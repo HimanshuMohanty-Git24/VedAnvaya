@@ -1,0 +1,651 @@
+/* ============================================================================
+   The VedAnvaya app shell: header, navigation, sheet, footer.
+
+   Unlayered on purpose. These are new classes with a `va-` prefix, so they do
+   not collide with the stylesheet being migrated away from, and they need to
+   take effect now rather than lose to it.
+   ============================================================================ */
+
+.va-shell {
+    width: min(100% - (2 * var(--va-shell-gutter)), var(--va-shell-max));
+    margin-inline: auto;
+}
+
+/* ---------------------------------------------------------------- wordmark - */
+
+.va-wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--va-space-md);
+    color: var(--va-text-primary);
+}
+
+.va-wordmark-emblem {
+    height: 1.55em;
+    width: auto;
+    flex: none;
+}
+
+.va-wordmark-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15em;
+    min-width: 0;
+}
+
+.va-wordmark-name {
+    font-family: var(--va-font-display);
+    font-size: 1.28rem;
+    font-weight: var(--va-weight-medium);
+    letter-spacing: var(--va-tracking-tight);
+    line-height: 1;
+    white-space: nowrap;
+    /* Fraunces carries an optical-size axis and the browser applies it from the
+       rendered size when it is left to. Do not add font-variation-settings here:
+       naming any axis by hand is what stops that happening. */
+    font-optical-sizing: auto;
+}
+
+.va-wordmark-diamond {
+    display: inline-block;
+    width: 0.3em;
+    height: 0.3em;
+    margin-inline: 0.14em;
+    vertical-align: 0.28em;
+    color: var(--va-rubric);
+}
+
+.va-wordmark-diamond svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.va-wordmark-tagline {
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-regular);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+    white-space: nowrap;
+}
+
+/* ------------------------------------------------------------------ header - */
+
+.va-header {
+    position: sticky;
+    top: 0;
+    z-index: var(--va-z-sticky);
+    background: color-mix(in srgb, var(--va-surface-page) 88%, transparent);
+    backdrop-filter: saturate(1.4) blur(10px);
+    border-bottom: var(--va-border-hairline);
+}
+
+/* Without backdrop-filter the translucent header would let text scroll visibly
+   through it, so the fallback is simply opaque. */
+@supports not (backdrop-filter: blur(1px)) {
+    .va-header {
+        background: var(--va-surface-page);
+    }
+}
+
+.va-header-inner {
+    width: min(100% - (2 * var(--va-shell-gutter)), var(--va-shell-max));
+    margin-inline: auto;
+    min-height: var(--va-header-height);
+    display: flex;
+    align-items: stretch;
+    gap: var(--va-space-xl);
+}
+
+.va-header-brand {
+    display: flex;
+    align-items: center;
+    flex: none;
+    color: inherit;
+    text-decoration: none;
+    border-radius: var(--va-radius-xs);
+}
+
+.va-header-routes {
+    display: flex;
+    align-items: stretch;
+    flex: 1;
+    min-width: 0;
+}
+
+.va-header-tools {
+    display: flex;
+    align-items: center;
+    gap: var(--va-space-sm);
+    flex: none;
+}
+
+/* -------------------------------------------------------------- navigation - */
+
+.va-nav,
+.va-overflow {
+    display: flex;
+    align-items: stretch;
+}
+
+.va-nav-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--va-space-2xs);
+    padding-inline: var(--va-space-md);
+    font-size: var(--va-text-base);
+    font-weight: var(--va-weight-medium);
+    letter-spacing: var(--va-tracking-normal);
+    color: var(--va-text-secondary);
+    text-decoration: none;
+    background: none;
+    border: 0;
+    white-space: nowrap;
+    transition: var(--va-transition-colors);
+}
+
+.va-nav-link:hover {
+    color: var(--va-text-primary);
+}
+
+.va-nav-link[aria-current="page"] {
+    color: var(--va-text-primary);
+}
+
+/*
+ * The active mark: a rubricated segment of the header's own bottom rule.
+ *
+ * It sits at -1px so it lands exactly on the border rather than beside it, and
+ * it is inset by the link's own padding so the segment measures the word and
+ * not the hit area. Hover draws the same segment in ink so the mechanism is
+ * legible before it is used.
+ */
+.va-nav-link::after {
+    content: "";
+    position: absolute;
+    inset-inline: var(--va-space-md);
+    bottom: -1px;
+    height: 2px;
+    background: var(--va-line-focus);
+    opacity: 0;
+    transform: scaleX(0.4);
+    transform-origin: center;
+    transition:
+        opacity var(--va-duration-fast) var(--va-ease-standard),
+        transform var(--va-duration-fast) var(--va-ease-standard);
+}
+
+.va-nav-link:hover::after {
+    opacity: 0.28;
+    background: var(--va-text-primary);
+    transform: scaleX(1);
+}
+
+.va-nav-link[aria-current="page"]::after {
+    opacity: 1;
+    background: var(--va-line-focus);
+    transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .va-nav-link::after {
+        transition: none;
+        transform: scaleX(1);
+    }
+}
+
+/* ---------------------------------------------------------------- overflow - */
+
+.va-overflow {
+    position: relative;
+}
+
+.va-overflow-trigger {
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.va-overflow-trigger svg {
+    transition: var(--va-transition-transform);
+}
+
+.va-overflow-trigger[aria-expanded="true"] svg {
+    transform: rotate(180deg);
+}
+
+.va-overflow-panel {
+    position: absolute;
+    top: calc(100% + var(--va-space-2xs));
+    inset-inline-start: var(--va-space-2xs);
+    z-index: var(--va-z-modal);
+    min-width: 19rem;
+    padding: var(--va-space-2xs);
+    display: flex;
+    flex-direction: column;
+    background: var(--va-surface-raised);
+    border: var(--va-border-hairline);
+    border-radius: var(--va-radius-md);
+    box-shadow: var(--va-elevation-overlay);
+}
+
+.va-overflow-link {
+    display: grid;
+    gap: 1px;
+    padding: var(--va-space-sm) var(--va-space-md);
+    border-radius: var(--va-radius-sm);
+    color: inherit;
+    text-decoration: none;
+    transition: var(--va-transition-colors);
+}
+
+.va-overflow-link:hover {
+    background: var(--va-surface-sunk);
+}
+
+.va-overflow-link[aria-current="page"] {
+    background: var(--va-accent-soft);
+}
+
+.va-overflow-label {
+    font-size: var(--va-text-base);
+    font-weight: var(--va-weight-medium);
+    color: var(--va-text-primary);
+}
+
+.va-overflow-note {
+    font-size: var(--va-text-xs);
+    color: var(--va-text-tertiary);
+    line-height: var(--va-leading-snug);
+}
+
+/* ------------------------------------------------------- search and toggle - */
+
+.va-header-search {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--va-space-sm);
+    padding: var(--va-space-xs) var(--va-space-sm) var(--va-space-xs) var(--va-space-md);
+    font-size: var(--va-text-sm);
+    color: var(--va-text-secondary);
+    text-decoration: none;
+    background: var(--va-surface-sunk);
+    border: var(--va-border-hairline);
+    border-radius: var(--va-radius-pill);
+    transition: var(--va-transition-colors);
+}
+
+.va-header-search:hover {
+    color: var(--va-text-primary);
+    border-color: var(--va-line-strong);
+}
+
+.va-header-search kbd {
+    font-family: var(--va-font-mono);
+    font-size: var(--va-text-2xs);
+    line-height: 1;
+    padding: 3px 5px;
+    color: var(--va-text-tertiary);
+    background: var(--va-surface-raised);
+    border: var(--va-border-hairline);
+    border-radius: var(--va-radius-xs);
+}
+
+.va-icon-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    /* 40px, which clears the 24px minimum for a pointer target with room for the
+       focus ring to sit outside the glyph rather than on it. */
+    width: 2.5rem;
+    height: 2.5rem;
+    color: var(--va-text-secondary);
+    background: none;
+    border: var(--va-border-width) solid transparent;
+    border-radius: var(--va-radius-pill);
+    cursor: pointer;
+    transition: var(--va-transition-colors);
+}
+
+.va-icon-button:hover {
+    color: var(--va-text-primary);
+    background: var(--va-surface-sunk);
+}
+
+.va-mobile-trigger {
+    display: none;
+}
+
+/* --------------------------------------------------------------- the sheet - */
+
+.va-sheet-scrim {
+    position: fixed;
+    inset: 0;
+    z-index: var(--va-z-overlay);
+    background: var(--va-scrim);
+}
+
+.va-sheet {
+    position: fixed;
+    inset-block: 0;
+    inset-inline-end: 0;
+    z-index: var(--va-z-modal);
+    width: min(23rem, 92vw);
+    display: flex;
+    flex-direction: column;
+    background: var(--va-surface-page);
+    border-inline-start: var(--va-border-hairline);
+    box-shadow: var(--va-elevation-overlay);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+.va-sheet-head {
+    position: sticky;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--va-space-lg);
+    min-height: var(--va-header-height);
+    padding-inline: var(--va-space-lg) var(--va-space-sm);
+    background: var(--va-surface-page);
+    border-bottom: var(--va-border-hairline);
+}
+
+.va-sheet-title {
+    margin: 0;
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-sheet-nav {
+    display: flex;
+    flex-direction: column;
+    padding: var(--va-space-sm) var(--va-space-sm) var(--va-space-3xl);
+}
+
+.va-sheet-link {
+    display: grid;
+    gap: 2px;
+    padding: var(--va-space-md);
+    border-radius: var(--va-radius-sm);
+    color: inherit;
+    text-decoration: none;
+}
+
+.va-sheet-link:hover {
+    background: var(--va-surface-sunk);
+}
+
+.va-sheet-link[aria-current="page"] {
+    background: var(--va-accent-soft);
+}
+
+.va-sheet-link-label {
+    font-size: var(--va-text-md);
+    font-weight: var(--va-weight-medium);
+    color: var(--va-text-primary);
+}
+
+.va-sheet-link.is-secondary .va-sheet-link-label {
+    font-size: var(--va-text-base);
+    color: var(--va-text-secondary);
+}
+
+.va-sheet-link-note {
+    font-size: var(--va-text-xs);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-tertiary);
+}
+
+.va-sheet-thread {
+    margin-block: var(--va-space-lg);
+    padding-inline: var(--va-space-md);
+}
+
+/* ----------------------------------------------------------------- thread - */
+
+.va-thread {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    color: var(--va-line-strong);
+}
+
+.va-thread-rule {
+    flex: 1;
+    height: 1px;
+    background: currentColor;
+}
+
+.va-thread-mark {
+    flex: none;
+    display: block;
+}
+
+/* The break in the broken thread is the whole point, so it is spaced rather than
+   left to the mark's own bearing. */
+.va-thread.is-broken .va-thread-rule {
+    margin-inline: calc(var(--va-thread-size) * 0.7);
+}
+
+/* ------------------------------------------------------------------ footer - */
+
+/*
+ * The footer carries the manuscript plate, but only its top half.
+ *
+ * The plate's own drafting geometry is concentrated near its lower edge: a heavy horizontal
+ * rule, tick marks and corner squares. Laid full-bleed with `cover` that rule lands wherever
+ * the footer's height happens to put it, and at 1440 it landed exactly on the closing line,
+ * which read as a collision rather than as artwork. Rather than chase the position at every
+ * width, the plate is drawn on a pseudo-element and masked so it fades out before the
+ * closing line begins. What survives is the paper and the framing marks at the top, which is
+ * the part worth having.
+ */
+.va-footer {
+    position: relative;
+    isolation: isolate;
+    margin-top: var(--va-space-6xl);
+    padding-bottom: var(--va-space-3xl);
+    background-color: var(--va-surface-sunk);
+    border-top: var(--va-border-hairline);
+}
+
+.va-footer::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: image-set(
+        url("/brand/textures/footer-light-1920.avif") type("image/avif"),
+        url("/brand/textures/footer-light-1920.webp") type("image/webp")
+    );
+    background-size: cover;
+    background-position: center top;
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 46%, transparent 82%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 46%, transparent 82%);
+}
+
+/* The plate is paper, so it belongs only to the light theme. Dark mode gets the flat sunk
+   surface rather than a lightened photograph of somebody else's paper. */
+.dark .va-footer::before {
+    display: none;
+}
+
+.va-footer-thread {
+    width: min(100% - (2 * var(--va-shell-gutter)), var(--va-shell-max));
+    margin-inline: auto;
+    padding-top: var(--va-space-3xl);
+}
+
+.va-footer-inner {
+    width: min(100% - (2 * var(--va-shell-gutter)), var(--va-shell-max));
+    margin-inline: auto;
+    padding-top: var(--va-space-3xl);
+    display: grid;
+    grid-template-columns: minmax(16rem, 1.4fr) repeat(3, minmax(0, 1fr));
+    gap: var(--va-space-3xl) var(--va-space-xl);
+}
+
+.va-footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: var(--va-space-md);
+    max-width: var(--va-measure-tight);
+}
+
+.va-footer-brand p {
+    margin: 0;
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-tertiary);
+}
+
+.va-footer-column {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: var(--va-space-sm);
+}
+
+.va-footer-heading {
+    margin: 0 0 var(--va-space-2xs);
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-footer-column a {
+    font-size: var(--va-text-sm);
+    color: var(--va-text-secondary);
+    text-decoration: none;
+    transition: var(--va-transition-colors);
+}
+
+.va-footer-column a:hover {
+    color: var(--va-accent-text);
+}
+
+.va-footer-close {
+    width: min(100% - (2 * var(--va-shell-gutter)), var(--va-shell-max));
+    margin: var(--va-space-3xl) auto 0;
+    padding-top: var(--va-space-lg);
+    border-top: var(--va-rule-feature);
+    text-align: center;
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+/* ------------------------------------------------------------- responsive - */
+
+@media (max-width: 61.99rem) {
+    .va-header-routes,
+    .va-header-search span,
+    .va-header-search kbd {
+        display: none;
+    }
+
+    .va-header-tools {
+        margin-inline-start: auto;
+    }
+
+    .va-header-search {
+        width: 2.5rem;
+        height: 2.5rem;
+        padding: 0;
+        justify-content: center;
+        background: none;
+        border-color: transparent;
+    }
+
+    .va-mobile-trigger {
+        display: inline-flex;
+    }
+
+    .va-footer-inner {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 47.99rem) {
+    :root {
+        --va-shell-gutter: 1.25rem;
+    }
+
+    .va-wordmark-name {
+        font-size: 1.15rem;
+    }
+
+    .va-footer-inner {
+        grid-template-columns: minmax(0, 1fr);
+        gap: var(--va-space-2xl);
+    }
+
+    .va-footer-brand {
+        max-width: none;
+    }
+}
+
+/* ------------------------------------------------------------- skip link - */
+
+.va-skip-link {
+    position: absolute;
+    inset-inline-start: var(--va-space-lg);
+    top: var(--va-space-sm);
+    z-index: var(--va-z-skip);
+    padding: var(--va-space-sm) var(--va-space-lg);
+    font-size: var(--va-text-sm);
+    font-weight: var(--va-weight-medium);
+    color: var(--va-text-on-accent);
+    background: var(--va-accent-base);
+    border-radius: var(--va-radius-sm);
+    text-decoration: none;
+    /* Moved out of view rather than hidden, so it is still in the tab order and still
+       announced. `display: none` would take it out of both. */
+    transform: translateY(-160%);
+    transition: var(--va-transition-transform);
+}
+
+.va-skip-link:focus-visible {
+    transform: translateY(0);
+}
+
+/* ----------------------------------------------------------- theme toggle - */
+
+/*
+ * Both glyphs are always in the DOM and CSS chooses which is visible, keyed on the class
+ * next-themes writes to <html>. The alternative, rendering one glyph from a mounted flag,
+ * makes the control appear a frame late on every load and is the usual cause of a theme
+ * button that flickers on hydration.
+ */
+.va-theme-toggle {
+    display: grid;
+    place-items: center;
+}
+
+.va-theme-toggle svg {
+    grid-area: 1 / 1;
+}
+
+.va-theme-icon-dark,
+.dark .va-theme-icon-light {
+    display: none;
+}
+
+.dark .va-theme-icon-dark {
+    display: block;
+}

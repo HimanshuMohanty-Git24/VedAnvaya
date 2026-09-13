@@ -3,7 +3,7 @@ import Link from "next/link";
 
 /** The API did not answer at all. Distinct from a knowledge limit. */
 export function ServiceUnavailable({
-    message = "The interface is ready, but the VedaGraph knowledge service did not respond.",
+    message = "The interface is ready, but the VedAnvaya knowledge service did not respond.",
 }: {
     message?: string;
 }) {

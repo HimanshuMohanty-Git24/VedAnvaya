@@ -105,7 +105,7 @@ export function AskAnswer({
                     Inspect all {summary.evidence_count} evidence items
                 </button>
                 <p className="ask-provenance">
-                    Retrieved from the VedaGraph graph, synthesised by {result.llm.provider} /{" "}
+                    Retrieved from the VedAnvaya graph, synthesised by {result.llm.provider} /{" "}
                     {result.llm.model}. The model saw only the retrieved evidence.
                 </p>
             </div>
@@ -153,7 +153,7 @@ export function AskAnswer({
                     {unresolved.length > 0 && (
                         <div className="ask-unresolved">
                             <p>
-                                <b>Not found in VedaGraph.</b> These names were read out of the
+                                <b>Not found in VedAnvaya.</b> These names were read out of the
                                 question and no entity in this build answers to them. That is a
                                 fact about this graph, not about the Vedas.
                             </p>

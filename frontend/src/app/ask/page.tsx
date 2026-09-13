@@ -2,7 +2,7 @@ import { AskExperience } from "@/components/ask/ask-experience";
 import { PageHeading } from "@/components/page-heading";
 
 export const metadata = {
-    title: "Ask VedaGraph",
+    title: "Ask VedAnvaya",
     description:
         "Ask a research question in natural language and read an answer built only from retrieved graph evidence, with every claim carrying a citation you can open.",
 };
@@ -19,12 +19,12 @@ export default async function AskPage({
     const seeded =
         q ||
         (passage ? `What is ${passage} about?` : "") ||
-        (entity ? `What does VedaGraph record about ${entity}?` : "");
+        (entity ? `What does VedAnvaya record about ${entity}?` : "");
 
     return (
         <div className="shell page ask-page">
             <PageHeading
-                title="Ask VedaGraph"
+                title="Ask VedAnvaya"
                 description="A research instrument, not a chat model. Your question is classified, named entities are resolved against the graph, a fixed catalogue of retrieval channels runs, and only what those channels returned is used to write the answer."
             />
 

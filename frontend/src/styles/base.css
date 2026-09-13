@@ -1,0 +1,123 @@
+/* ============================================================================
+   VedAnvaya base layer.
+
+   Everything here sits in `@layer base`, which is deliberate. The stylesheet
+   this is migrating away from is 6,407 unlayered lines, and unlayered rules
+   beat layered ones regardless of order, so nothing in this file can regress a
+   surface that has not been rebuilt yet. As each surface is rewritten its old
+   rules are deleted and these become the defaults.
+   ============================================================================ */
+
+@layer base {
+    html {
+        -webkit-text-size-adjust: 100%;
+    }
+
+    /* The old base sets `body { font-size: 15px }`. It is left alone on purpose:
+       `rem` resolves against the root, not the body, so the token scale is
+       already correct, and changing the body default would resize every surface
+       that has not been rebuilt. It goes when the last of those does. */
+    body {
+        margin: 0;
+        background: var(--va-surface-page);
+        color: var(--va-text-primary);
+        font-family: var(--va-font-ui);
+        line-height: var(--va-leading-normal);
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+    }
+
+    /* Smooth scrolling is opt-in rather than global, because a global
+       `scroll-behavior: smooth` also animates programmatic focus moves, which
+       is disorienting for anyone navigating by keyboard. */
+    @media (prefers-reduced-motion: no-preference) {
+        html:focus-within {
+            scroll-behavior: smooth;
+        }
+    }
+
+    :focus-visible {
+        outline: 2px solid var(--va-line-focus);
+        outline-offset: 3px;
+        border-radius: var(--va-radius-xs);
+    }
+}
+
+/* ============================================================================
+   Sanskrit.
+
+   Three CSS defaults silently damage Devanagari, and all three are things a
+   utility framework or a reset will hand you without asking. They are set here
+   explicitly so that no surface has to remember them.
+
+   1. `letter-spacing` fragments the sirorekha. The headline stroke that binds a
+      word together is a continuous line, and tracking cuts visible gaps in it.
+      It must be exactly 0, never inherited from a heading rule.
+   2. Disabling ligatures destroys conjuncts, which are implemented as
+      substitutions rather than as separate glyphs.
+   3. Ordinary leading clips Vedic accents. Anudatta sits below the baseline and
+      svarita above the headline and both can land on one aksara.
+
+   Justification and hyphenation are off for the same family of reasons: neither
+   has a correct implementation for Devanagari in any browser, and a hyphen
+   inserted into a conjunct is not a word break, it is an error.
+   ============================================================================ */
+
+/*
+ * Which face a verse takes is decided by its script, not by a default.
+ *
+ * The corpus is split: the Rigveda and the Atharvaveda are held in romanised IAST, the
+ * Samaveda and the Yajurveda in Devanagari, and no passage carries both. So there is no
+ * mixed-script verse to compromise for, and each gets the face that actually covers it.
+ * The API states the script per surface, so the reader sets `data-script` and the choice
+ * follows the data rather than the Veda.
+ */
+.va-sanskrit {
+    font-family: var(--va-font-iast);
+    font-size: var(--va-text-sanskrit);
+    line-height: var(--va-leading-verse);
+    letter-spacing: 0;
+    font-variant-ligatures: normal;
+    font-feature-settings: normal;
+    text-align: start;
+    text-wrap: pretty;
+    hyphens: none;
+    overflow-wrap: break-word;
+    max-inline-size: var(--va-measure);
+    /* A verse is not justified. Vedic metre is quantitative and the line breaks are the
+       poem's own; stretching word spaces to a flush edge makes the interface assert a line
+       length the text does not have. */
+    text-align-last: start;
+}
+
+.va-sanskrit[data-script="DEVANAGARI"] {
+    font-family: var(--va-font-deva);
+    max-inline-size: var(--va-measure-deva);
+}
+
+/* Sanskrit set inside a row of UI, where it shares a baseline with Latin metadata rather
+   than leading a block. */
+.va-sanskrit-inline {
+    font-family: var(--va-font-iast);
+    font-size: var(--va-text-sanskrit-inline);
+    line-height: var(--va-leading-snug);
+    letter-spacing: 0;
+    font-variant-ligatures: normal;
+}
+
+.va-sanskrit-inline[data-script="DEVANAGARI"] {
+    font-family: var(--va-font-deva);
+}
+
+/* Devanagari used as a label beside a Latin one. The size is raised relative to the Latin
+   it sits with, because Devanagari's body height is a smaller share of its em and matching
+   the nominal size makes it read as smaller than its neighbour. */
+.va-deva-label {
+    font-family: var(--va-font-deva);
+    font-size: 1.18em;
+    line-height: 1;
+    letter-spacing: 0;
+    font-variant-ligatures: normal;
+    /* Never track a Devanagari label, whatever the eyebrow rule says. */
+    text-transform: none;
+}

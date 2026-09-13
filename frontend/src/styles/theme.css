@@ -1,0 +1,219 @@
+/* ============================================================================
+   VedAnvaya tier 2: aliases.
+
+   A role mapped to a primitive. This is the only tier the theme switches, and
+   the only tier a component is allowed to reference.
+
+   Every contrast ratio below was computed against the surface the token is
+   actually painted on, not against white. Where a pair is stated, it is the
+   foreground against its own named surface.
+   ============================================================================ */
+
+:root {
+    /* --- Surfaces ----------------------------------------------------------- */
+    --va-surface-page: var(--va-ivory-100);
+    --va-surface-raised: var(--va-ivory-50);
+    --va-surface-sunk: var(--va-ivory-200);
+    --va-surface-strong: var(--va-ivory-300);
+    --va-surface-inverse: var(--va-indigo-700);
+
+    /* --- Text.
+       The old palette carried --muted #5b686d and --faint #5f6b70 as separate
+       tokens across 224 declarations. They differ by 4, 11 and 3 in RGB, which
+       is to say they were the same colour twice. These two are not. ----------- */
+    --va-text-primary: var(--va-carbon-900); /* 15.68:1 on page, AAA */
+    --va-text-secondary: var(--va-carbon-500); /* 5.79:1, AA */
+    --va-text-tertiary: var(--va-carbon-400); /* 4.90:1, AA */
+    --va-text-inverse: var(--va-ivory-50); /* 11.68:1 on inverse, AAA */
+    --va-text-on-accent: var(--va-ivory-50); /* 4.98:1 on accent, AA */
+
+    /* --- Lines. This design expresses depth through hairlines rather than
+       shadow, so these carry the weight that box-shadow usually would. -------- */
+    --va-line-hairline: var(--va-ivory-line);
+    --va-line-strong: var(--va-ivory-400);
+    --va-line-focus: var(--va-rubric-500);
+
+    /* --- Accent ------------------------------------------------------------- */
+    --va-accent-base: var(--va-rubric-500); /* 4.61:1, AA */
+    --va-accent-text: var(--va-rubric-600); /* 5.64:1, AA */
+    --va-accent-hover: var(--va-rubric-600);
+    --va-accent-soft: var(--va-rubric-100);
+    /* Read by the brand marks, which default to rubric when the variable is
+       absent so they still look right outside the app shell. */
+    --va-rubric: var(--va-rubric-500);
+
+    /* --- Epistemic tones.
+
+       These are not decoration. They carry the product's central distinction,
+       which is between what a source states, what was derived, what the
+       evidence cannot settle, and what was never built. The names say what the
+       colour means rather than echoing an API enum, so the CSS stays true if
+       the enum is renamed. ---------------------------------------------------- */
+    --va-tone-evidenced: var(--va-verdigris-700); /* 6.55:1, AA */
+    --va-tone-evidenced-surface: var(--va-verdigris-100); /* pair 6.03:1, AA */
+    --va-tone-partial: var(--va-gold-700); /* 5.34:1, AA */
+    --va-tone-partial-surface: var(--va-gold-100); /* pair 4.89:1, AA */
+    --va-tone-insufficient: var(--va-rubric-700);
+    --va-tone-insufficient-surface: var(--va-rubric-100); /* pair 4.98:1, AA */
+    --va-tone-unbuilt: var(--va-slate-700);
+    --va-tone-unbuilt-surface: var(--va-slate-100);
+    --va-tone-neutral: var(--va-text-secondary);
+    --va-tone-neutral-surface: var(--va-ivory-200);
+
+    /* --- Borders.
+
+       The dashed and dotted styles are semantic, not decorative. Dashed means
+       "not established"; dotted means "derived, not stated". The old stylesheet
+       already encoded that in eight places and nowhere said so, which made it
+       impossible to check that every weak-evidence surface actually carried it.
+
+       This is also how the accent/error collision is resolved. In the old
+       palette --tone-insufficient and --accent shared a hue, so an error and a
+       link looked alike. The answer here is depth plus shape, two steps darker
+       and a required dashed edge, rather than a sixth hue that would fight the
+       manuscript palette. ----------------------------------------------------- */
+    --va-border-hairline: var(--va-border-width) solid var(--va-line-hairline);
+    --va-border-strong: var(--va-border-width) solid var(--va-line-strong);
+    --va-border-dashed: var(--va-border-width) dashed var(--va-line-strong);
+    --va-border-dotted: var(--va-border-width) dotted var(--va-line-strong);
+
+    /* Gold earns its keep as an editorial rule and almost nowhere else. */
+    --va-rule-quiet: var(--va-border-width) solid var(--va-line-hairline);
+    --va-rule-feature: var(--va-border-width) solid
+        color-mix(in srgb, var(--va-gold-500) 45%, transparent);
+
+    /* --- Elevation. Three of the four steps are not shadows. ---------------- */
+    --va-elevation-flat: none;
+    --va-elevation-raised: none;
+    --va-elevation-floating: 0 1px 2px color-mix(in srgb, var(--va-carbon-900) 6%, transparent);
+    --va-elevation-overlay: 0 18px 46px -24px
+        color-mix(in srgb, var(--va-carbon-900) 34%, transparent);
+
+    --va-scrim: color-mix(in srgb, var(--va-carbon-900) 42%, transparent);
+
+    /* --- Motion composites, so no component assembles its own. -------------- */
+    --va-transition-colors:
+        color var(--va-duration-fast) var(--va-ease-standard),
+        background-color var(--va-duration-fast) var(--va-ease-standard),
+        border-color var(--va-duration-fast) var(--va-ease-standard);
+    --va-transition-transform: transform var(--va-duration-base) var(--va-ease-standard);
+    --va-transition-opacity: opacity var(--va-duration-base) var(--va-ease-standard);
+
+    /* --- Graph colour.
+
+       One table, in CSS, read from TypeScript. The old build declared eleven
+       graph colours twice, once as node fills in TypeScript and once as legend
+       text in CSS, with different values and nothing tying them together, so
+       the legend did not describe the picture it labelled. ------------------- */
+    --va-group-deity-fill: #b64a2e;
+    --va-group-deity-text: #a14026;
+    --va-group-passage-fill: #74602f;
+    --va-group-passage-text: #74602f;
+    --va-group-idea-fill: #2e5e4b;
+    --va-group-idea-text: #2e5e4b;
+    --va-group-rite-fill: #35495f;
+    --va-group-rite-text: #26364a;
+    --va-group-person-fill: #8e3720;
+    --va-group-person-text: #8e3720;
+    --va-group-thing-fill: #6b6252;
+    --va-group-thing-text: #5c5e56;
+    --va-group-measure-fill: #4c5660;
+    --va-group-measure-text: #4c5660;
+    --va-group-other-fill: #8a8c82;
+    --va-group-other-text: #676960;
+}
+
+.dark {
+    --va-surface-page: var(--va-night-800);
+    --va-surface-raised: var(--va-night-700);
+    --va-surface-sunk: var(--va-night-900);
+    --va-surface-strong: var(--va-night-600);
+    --va-surface-inverse: var(--va-ivory-100);
+
+    --va-text-primary: var(--va-ivory-100); /* 16.26:1, AAA */
+    --va-text-secondary: #b0afa3; /* 7.68:1 on raised, AAA */
+    --va-text-tertiary: #9c9b90; /* 6.61:1, AA */
+    --va-text-inverse: var(--va-carbon-900);
+    --va-text-on-accent: var(--va-carbon-900); /* 4.77:1, AA */
+
+    --va-line-hairline: var(--va-night-line);
+    --va-line-strong: var(--va-night-line-strong);
+    --va-line-focus: var(--va-rubric-400);
+
+    --va-accent-base: var(--va-rubric-400); /* 4.95:1, AA */
+    --va-accent-text: var(--va-rubric-300); /* 8.41:1, AAA */
+    --va-accent-hover: var(--va-rubric-300);
+    --va-accent-soft: var(--va-rubric-950);
+    --va-rubric: var(--va-rubric-400);
+
+    --va-tone-evidenced: var(--va-verdigris-300); /* 7.78:1, AAA */
+    --va-tone-evidenced-surface: var(--va-verdigris-950); /* pair 6.29:1, AA */
+    --va-tone-partial: var(--va-gold-400); /* 9.12:1, AAA */
+    --va-tone-partial-surface: var(--va-gold-950); /* pair 7.59:1, AA */
+    --va-tone-insufficient: var(--va-rubric-300);
+    --va-tone-insufficient-surface: var(--va-rubric-950); /* pair 7.38:1, AA */
+    --va-tone-unbuilt: var(--va-slate-300);
+    --va-tone-unbuilt-surface: var(--va-slate-950);
+    --va-tone-neutral: var(--va-text-secondary);
+    --va-tone-neutral-surface: var(--va-night-900);
+
+    --va-elevation-floating: 0 1px 2px rgb(0 0 0 / 0.4);
+    /* A 1px light ring rather than a bigger blur. A 52px black shadow on a
+       near-black page reads as nothing at all, which is what the old dark mode
+       did and why its drawers had no edge. */
+    --va-elevation-overlay:
+        0 0 0 1px var(--va-night-line-strong), 0 24px 56px -28px rgb(0 0 0 / 0.8);
+    --va-scrim: color-mix(in srgb, #000 62%, transparent);
+
+    --va-group-deity-fill: #c9694f;
+    --va-group-deity-text: #dfa08c;
+    --va-group-passage-fill: #c9b486;
+    --va-group-passage-text: #c9b486;
+    --va-group-idea-fill: #7fb39c;
+    --va-group-idea-text: #7fb39c;
+    --va-group-rite-fill: #8ba3be;
+    --va-group-rite-text: #8ba3be;
+    --va-group-person-fill: #dfa08c;
+    --va-group-person-text: #dfa08c;
+    --va-group-thing-fill: #b0a894;
+    --va-group-thing-text: #b0afa3;
+    --va-group-measure-fill: #9ba6b0;
+    --va-group-measure-text: #9ba6b0;
+    --va-group-other-fill: #8a8c82;
+    --va-group-other-text: #9c9b90;
+}
+
+/* Hand the aliases to Tailwind so the utility escape hatch exists without
+   writing any utilities. `inline` rather than plain `@theme` is load-bearing:
+   plain @theme resolves the variable at the :root where it was declared, so a
+   .dark redefinition would not reach the generated utility. With `inline` the
+   utility literally says var(--va-...) and picks up whatever is in scope. */
+@theme inline {
+    --color-page: var(--va-surface-page);
+    --color-raised: var(--va-surface-raised);
+    --color-sunk: var(--va-surface-sunk);
+    --color-strong: var(--va-surface-strong);
+    --color-inverse: var(--va-surface-inverse);
+
+    --color-ink: var(--va-text-primary);
+    --color-ink-secondary: var(--va-text-secondary);
+    --color-ink-tertiary: var(--va-text-tertiary);
+    --color-accent: var(--va-accent-base);
+    --color-accent-text: var(--va-accent-text);
+    --color-hairline: var(--va-line-hairline);
+    --color-line-strong: var(--va-line-strong);
+
+    --font-display: var(--va-font-display);
+    --font-ui: var(--va-font-ui);
+    --font-sanskrit: var(--va-font-sanskrit);
+    --font-mono: var(--va-font-mono);
+
+    --radius-xs: var(--va-radius-xs);
+    --radius-sm: var(--va-radius-sm);
+    --radius-md: var(--va-radius-md);
+    --radius-lg: var(--va-radius-lg);
+
+    --ease-standard: var(--va-ease-standard);
+    --ease-enter: var(--va-ease-enter);
+    --ease-exit: var(--va-ease-exit);
+}
