@@ -679,7 +679,6 @@ def _grade_edge_uncontracted(rel_type: str, properties: Mapping[str, Any]) -> Gr
     )
 
 
-
 #: Which relationships carry an attribution at all, and which value each may hold.
 #:
 #: THE DEFECT THIS CLOSES. ``_grade_edge_uncontracted`` has eight return sites and seven of

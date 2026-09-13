@@ -100,9 +100,7 @@ def find_headline_band(rows: list[int], share: float = 0.35) -> tuple[int, int]:
     return top, bottom
 
 
-def components(
-    mask: list[bool], w: int, top: int, bottom: int
-) -> list[tuple[int, int, int, int]]:
+def components(mask: list[bool], w: int, top: int, bottom: int) -> list[tuple[int, int, int, int]]:
     """Connected ink blobs within a horizontal band, as (x0, y0, x1, y1).
 
     Iterative flood fill: a band is at most a few tens of rows, so this stays
@@ -136,9 +134,7 @@ def components(
     return boxes
 
 
-def classify(
-    box: tuple[int, int, int, int], kind: str, band: tuple[int, int]
-) -> dict | None:
+def classify(box: tuple[int, int, int, int], kind: str, band: tuple[int, int]) -> dict | None:
     x0, y0, x1, y1 = box
     width, height = x1 - x0 + 1, y1 - y0 + 1
 
@@ -277,8 +273,7 @@ def _word_spans_from_rule(
     is bridged. Returns (x0, x1) in the same coordinate space as mark x0/x1.
     """
     col_ink = [
-        sum(1 for y in range(rule_top, rule_bottom + 1) if mask[y * w + x])
-        for x in range(w)
+        sum(1 for y in range(rule_top, rule_bottom + 1) if mask[y * w + x]) for x in range(w)
     ]
     threshold = 1  # any ink at all counts as rule present
     runs: list[tuple[int, int]] = []

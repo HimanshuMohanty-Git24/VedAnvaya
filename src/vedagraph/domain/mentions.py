@@ -1,4 +1,4 @@
-""""This passage names this entity" -- Sanskrit-grounded, uncapped, across four Vedas.
+""" "This passage names this entity" -- Sanskrit-grounded, uncapped, across four Vedas.
 
 This layer exists because the V1 concept layer answers a different question than the one
 the domain graph needs, and answering both with one edge type made each answer worse.
@@ -113,9 +113,7 @@ V2_SANDHI_SUPPRESSED_ALIASES: Final[dict[str, str]] = {
         "15 sandhi hits are the negation or a word-boundary glue"
     ),
     "rapaso": "inside nārīrapaso, the glue of nā́rīr apáso ('women, active ones')",
-    "apacit": (
-        "inside apacitiṃ ('requital', RV 4.28.4) and inside a Yajurvedic glue at VSM 12.97"
-    ),
+    "apacit": ("inside apacitiṃ ('requital', RV 4.28.4) and inside a Yajurvedic glue at VSM 12.97"),
     "arāyam": "7 of 8 sandhi hits are word-boundary glue rather than the sprite",
     "sarasvatyām": (
         "inside the glue of sárasvatyā plus an m-initial word -- AVS 5.7.5 sarasvatyā "
@@ -188,9 +186,7 @@ def devata_label_forms(devata_labels: Iterable[str]) -> frozenset[str]:
     return frozenset(forms)
 
 
-def build_index(
-    entities: Sequence[ConceptRow], devata_labels: Iterable[str] = ()
-) -> MentionIndex:
+def build_index(entities: Sequence[ConceptRow], devata_labels: Iterable[str] = ()) -> MentionIndex:
     """Invert the lexicon, and mark which aliases are also deity names."""
     theonym_forms = devata_label_forms(devata_labels)
     token: dict[str, str] = {}
@@ -210,9 +206,7 @@ def build_index(
                 and alias not in V2_SANDHI_SUPPRESSED_ALIASES
             ):
                 sandhi.append((folded, entity.concept_id))
-    return MentionIndex(
-        token=token, sandhi=tuple(sorted(sandhi)), theonyms=frozenset(theonyms)
-    )
+    return MentionIndex(token=token, sandhi=tuple(sorted(sandhi)), theonyms=frozenset(theonyms))
 
 
 @dataclass
@@ -267,16 +261,12 @@ def _token_hits(mantra: MantraRecord, index: MentionIndex) -> dict[str, _Hit]:
         entity_key = index.token.get(token)
         if entity_key is None:
             continue
-        window = tokens[
-            max(0, position - _CONTEXT_TOKENS) : position + _CONTEXT_TOKENS + 1
-        ]
+        window = tokens[max(0, position - _CONTEXT_TOKENS) : position + _CONTEXT_TOKENS + 1]
         found.setdefault(entity_key, _Hit()).add(token, " ".join(window), "script_folded")
     return found
 
 
-def _sandhi_hits(
-    mantra: MantraRecord, index: MentionIndex, already: set[str]
-) -> dict[str, _Hit]:
+def _sandhi_hits(mantra: MantraRecord, index: MentionIndex, already: set[str]) -> dict[str, _Hit]:
     """Substring pass over the boundary-free surface, Sāmaveda only.
 
     Restricted to entities the token pass missed, so the two Sanskrit paths never both
@@ -292,9 +282,7 @@ def _sandhi_hits(
         if position < 0:
             continue
         quote = text[
-            max(0, position - _SANDHI_CONTEXT_CHARS) : position
-            + len(alias)
-            + _SANDHI_CONTEXT_CHARS
+            max(0, position - _SANDHI_CONTEXT_CHARS) : position + len(alias) + _SANDHI_CONTEXT_CHARS
         ]
         found.setdefault(entity_key, _Hit()).add(alias, quote, "sandhi_insensitive")
     return found
@@ -342,9 +330,7 @@ def extract_mentions(
             )
         for entity_key, hit in sorted(sandhi_hits.items()):
             built.append(
-                _build_row(
-                    mantra, entity_key, hit, _PATH_SANDHI, _SANDHI_SCORE, index, identity
-                )
+                _build_row(mantra, entity_key, hit, _PATH_SANDHI, _SANDHI_SCORE, index, identity)
             )
 
         if len(built) > max_per_passage:
@@ -415,8 +401,7 @@ def _build_row(
         ),
         state=AssertionState.ACCEPTED,
         run_id=identity,
-        notes="matched aliases: "
-        + ", ".join(render_for_display(alias) for alias in aliases),
+        notes="matched aliases: " + ", ".join(render_for_display(alias) for alias in aliases),
     )
     return MentionRow(
         passage_key=mantra.passage_key,

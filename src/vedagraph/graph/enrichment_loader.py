@@ -369,8 +369,7 @@ def _merge_grouped_rels(
                 reason = REFUSED_PREDICATES.get(predicate)
                 detail = f": {reason}" if reason else ""
                 raise UncontrolledPredicateError(
-                    f"{artifact}: {predicate!r} is not a controlled enrichment "
-                    f"predicate{detail}"
+                    f"{artifact}: {predicate!r} is not a controlled enrichment predicate{detail}"
                 )
             raise UncontrolledPredicateError(
                 f"{artifact}: {predicate!r} is a controlled predicate but has no loader "

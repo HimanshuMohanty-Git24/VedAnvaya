@@ -627,8 +627,7 @@ def build_index(concepts: Iterable[ConceptRow]) -> ConceptIndex:
             folded = fold_alias(alias)
             token[folded] = concept.concept_id
             eligible = (
-                len(folded) >= MIN_SANDHI_ALIAS_CHARS
-                and alias not in SANDHI_SUPPRESSED_ALIASES
+                len(folded) >= MIN_SANDHI_ALIAS_CHARS and alias not in SANDHI_SUPPRESSED_ALIASES
             )
             if eligible:
                 sandhi.append((folded, concept.concept_id))
@@ -693,9 +692,7 @@ def _sanskrit_sandhi_hits(
         if position < 0:
             continue
         quote = text[
-            max(0, position - _SANDHI_CONTEXT_CHARS) : position
-            + len(alias)
-            + _SANDHI_CONTEXT_CHARS
+            max(0, position - _SANDHI_CONTEXT_CHARS) : position + len(alias) + _SANDHI_CONTEXT_CHARS
         ]
         hits = found.get(concept_id)
         if hits is None:
@@ -867,9 +864,7 @@ def assign_concepts(
         report.cap("global_assertion_cap", len(scored) - MAX_CONCEPT_ASSERTIONS)
         scored = scored[:MAX_CONCEPT_ASSERTIONS]
 
-    rows = sorted(
-        (row for _, row in scored), key=lambda row: (row.passage_key, row.concept_id)
-    )
+    rows = sorted((row for _, row in scored), key=lambda row: (row.passage_key, row.concept_id))
     report.produced = len(rows)
     report.notes = {
         "concepts": len(concepts),

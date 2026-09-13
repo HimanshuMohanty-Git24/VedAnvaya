@@ -130,9 +130,7 @@ def _merge_rituals(base: list[dict[str, Any]], v3: list[dict[str, Any]]) -> list
     return [merged[key] for key in sorted(merged)]
 
 
-def _merge_concern_lists(
-    base: dict[str, Any], v3: dict[str, Any]
-) -> dict[str, list[str]]:
+def _merge_concern_lists(base: dict[str, Any], v3: dict[str, Any]) -> dict[str, list[str]]:
     """Union the V3 concern whitelists onto the V1 ones.
 
     ``concern_predicates_v3.yaml`` declares ``merge_semantics: union_with_v1``. The
@@ -209,9 +207,7 @@ def main() -> int:
     claims = load_claims(PROJECT_ROOT)
     rituals = _merge_rituals(
         list(_read_yaml(PROJECT_ROOT / DOMAIN_DIR / "rituals.yaml").get("rituals") or []),
-        list(
-            _read_yaml(PROJECT_ROOT / DOMAIN_DIR / "rituals_v3.yaml").get("rituals") or []
-        ),
+        list(_read_yaml(PROJECT_ROOT / DOMAIN_DIR / "rituals_v3.yaml").get("rituals") or []),
     )
     concern_lists = _merge_concern_lists(
         _read_yaml(PROJECT_ROOT / DOMAIN_DIR / "concern_predicates.yaml"),
@@ -233,15 +229,11 @@ def main() -> int:
     corpus = load_corpus(PROJECT_ROOT)
     # Every form that is a deity's name, not just the stem. Passing stems alone disabled
     # the theonym check on the vocative -- see devata_name_forms for the measurement.
-    devata_labels = devata_name_forms(PROJECT_ROOT, taxonomy) or registry_label_forms(
-        PROJECT_ROOT
-    )
+    devata_labels = devata_name_forms(PROJECT_ROOT, taxonomy) or registry_label_forms(PROJECT_ROOT)
     mention_rows, mention_report = extract_mentions(corpus, entities, devata_labels)
     manifest["mentions"] = mention_report.as_dict()
     print(f"      mentions={len(mention_rows)}")
-    for veda, info in sorted(
-        mention_report.notes.get("coverage_by_veda", {}).items()
-    ):
+    for veda, info in sorted(mention_report.notes.get("coverage_by_veda", {}).items()):
         print(
             f"      {veda}: {info['with_mention']}/{info['mantras']} "
             f"mantras ({info['coverage']:.1%})"
@@ -270,8 +262,7 @@ def main() -> int:
     try:
         with driver.session() as session:
             before = session.run(
-                "MATCH (n) WITH count(n) AS nodes "
-                "MATCH ()-[r]->() RETURN nodes, count(r) AS rels"
+                "MATCH (n) WITH count(n) AS nodes MATCH ()-[r]->() RETURN nodes, count(r) AS rels"
             ).single()
             manifest["graph_before"] = {
                 "nodes": before["nodes"],
@@ -334,8 +325,7 @@ def main() -> int:
             _write_jsonl(out / "derived_metrics.jsonl", [m.as_row() for m in metrics])
 
             after = session.run(
-                "MATCH (n) WITH count(n) AS nodes "
-                "MATCH ()-[r]->() RETURN nodes, count(r) AS rels"
+                "MATCH (n) WITH count(n) AS nodes MATCH ()-[r]->() RETURN nodes, count(r) AS rels"
             ).single()
             manifest["graph_after"] = {
                 "nodes": after["nodes"],

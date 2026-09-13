@@ -602,9 +602,7 @@ def _assemble(
             continue
         splits = scan.splits.get(collapsed, {})
         best_split = (
-            min(splits.items(), key=lambda item: (-item[1], item[0]))[0]
-            if splits
-            else (collapsed,)
+            min(splits.items(), key=lambda item: (-item[1], item[0]))[0] if splits else (collapsed,)
         )
         spellings = scan.spellings.get(collapsed, {})
         latin = scan.latin_spellings.get(collapsed, set())
@@ -664,18 +662,12 @@ def _apply_maximality(formulas: list[_Formula], report: RunReport) -> list[_Form
             if not formula.emit:
                 continue
             container = next(
-                (
-                    other
-                    for other in group[position + 1 :]
-                    if formula.collapsed in other.collapsed
-                ),
+                (other for other in group[position + 1 :] if formula.collapsed in other.collapsed),
                 None,
             )
             if container is not None:
                 report.reject(
-                    "subsumed_by_maximal_formula"
-                    if container.emit
-                    else "truncated_by_word_ceiling"
+                    "subsumed_by_maximal_formula" if container.emit else "truncated_by_word_ceiling"
                 )
                 continue
             survivors.append(formula)
@@ -818,16 +810,10 @@ def discover_formulas(
                     source_form=quote,
                     provenance=Provenance(
                         trust=TrustClass.DETERMINISTIC_DERIVED,
-                        method=(
-                            OCCURRENCE_METHOD_WORD if aligned else OCCURRENCE_METHOD_SANDHI
-                        ),
-                        score=(
-                            WORD_ALIGNED_CONFIDENCE if aligned else SANDHI_SUBSTRING_CONFIDENCE
-                        ),
+                        method=(OCCURRENCE_METHOD_WORD if aligned else OCCURRENCE_METHOD_SANDHI),
+                        score=(WORD_ALIGNED_CONFIDENCE if aligned else SANDHI_SUBSTRING_CONFIDENCE),
                         evidence=(
-                            EvidenceSpan(
-                                locator=view.passage_key, surface=str(level), quote=quote
-                            ),
+                            EvidenceSpan(locator=view.passage_key, surface=str(level), quote=quote),
                         ),
                         state=AssertionState.ACCEPTED,
                         run_id=identifier,

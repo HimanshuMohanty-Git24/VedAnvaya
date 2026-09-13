@@ -36,17 +36,20 @@ OUT_PATH = REPO / "data/transcriptions/atharvaveda_bsb_1856/v2/calibration_set.j
 # ── Mandatory reference lines (verified by multi-reader gold) ──────────────
 MANDATORY = [
     {
-        "canvas_index": 32, "line_index": 0,
+        "canvas_index": 32,
+        "line_index": 0,
         "stratum": "running_head",
         "note": "line 0 always unaccented - baseline check",
     },
     {
-        "canvas_index": 32, "line_index": 12,
+        "canvas_index": 32,
+        "line_index": 12,
         "stratum": "gold_verified",
         "note": "P1/P2/P3 three-reader gold: 7 anudatta 3 svarita",
     },
     {
-        "canvas_index": 32, "line_index": 19,
+        "canvas_index": 32,
+        "line_index": 19,
         "stratum": "gold_verified",
         "note": "Q1/Q2 two-reader gold: 7 anudatta 4 svarita",
     },
@@ -66,6 +69,7 @@ MANDATORY = [
 # The strata are: early (leaves 15-109), middle (110-260), late (261-390),
 # kanda19_area (391-440), kanda20_area (441-478), kanda20_late (over 460).
 # This is an approximation; it will be corrected once structural data exists.
+
 
 def _stratum(canvas: int) -> str:
     if canvas <= 109:
@@ -87,17 +91,20 @@ _SAMPLE_LINES = [2, 9, 17]
 # Extra deliberately-difficult lines (section boundaries, unusual typography)
 _EXTRA = [
     {
-        "canvas_index": 15, "line_index": 0,
+        "canvas_index": 15,
+        "line_index": 0,
         "stratum": "running_head",
         "note": "first content leaf running head",
     },
     {
-        "canvas_index": 430, "line_index": 5,
+        "canvas_index": 430,
+        "line_index": 5,
         "stratum": "kanda20_area",
         "note": "leaf 430 was in v2 calib B1 set",
     },
     {
-        "canvas_index": 430, "line_index": 12,
+        "canvas_index": 430,
+        "line_index": 12,
         "stratum": "kanda20_area",
         "note": "leaf 430 middle area",
     },
@@ -121,12 +128,14 @@ def build_candidate_lines() -> list[dict]:
     for canvas in _SAMPLE_CANVASES:
         stratum = _stratum(canvas)
         for li in _SAMPLE_LINES:
-            _add({
-                "canvas_index": canvas,
-                "line_index": li,
-                "stratum": stratum,
-                "note": "stratified_sample",
-            })
+            _add(
+                {
+                    "canvas_index": canvas,
+                    "line_index": li,
+                    "stratum": stratum,
+                    "note": "stratified_sample",
+                }
+            )
 
     for entry in _EXTRA:
         _add(entry)
@@ -181,8 +190,8 @@ def main() -> None:
         "schema_version": "1.0.0",
         "source": "BSB_MDZ_bsb10219750",
         "policy": "FROZEN_BEFORE_CALIBRATION — this list was committed before any "
-                  "calibration metrics were computed; changing it afterwards would "
-                  "invalidate the calibration.",
+        "calibration metrics were computed; changing it afterwards would "
+        "invalidate the calibration.",
         "mandatory_reference_lines": 3,
         "total_lines": len(results),
         "strata": strata,

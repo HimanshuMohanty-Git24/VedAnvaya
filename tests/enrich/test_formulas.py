@@ -61,8 +61,7 @@ def _tag(ordinal: int) -> str:
 def _filler(count: int) -> list[str]:
     """Mantras that cannot repeat anything, in each other or in the test phrases."""
     return [
-        f"nasvara{_tag(i)} pravāha{_tag(i)} hutama{_tag(i)} sadhrī{_tag(i)}"
-        for i in range(count)
+        f"nasvara{_tag(i)} pravāha{_tag(i)} hutama{_tag(i)} sadhrī{_tag(i)}" for i in range(count)
     ]
 
 
@@ -98,10 +97,7 @@ def test_a_repeated_single_word_is_not_a_formula() -> None:
     corpus = _corpus(
         {
             "RV": _filler(FILLER)
-            + [
-                f"agnim hotāra{_tag(i)} vahni{_tag(i)}"
-                for i in range(MIN_FORMULA_OCCURRENCES + 2)
-            ]
+            + [f"agnim hotāra{_tag(i)} vahni{_tag(i)}" for i in range(MIN_FORMULA_OCCURRENCES + 2)]
         }
     )
     rows, _, _ = discover_formulas(corpus)
@@ -176,10 +172,7 @@ def test_the_corpus_share_cap_is_measured_per_veda() -> None:
 def test_maximality_keeps_only_the_longest_span_of_one_phrase() -> None:
     """One phrase, one node -- not one node per sub-span that goes nowhere else."""
     corpus = _corpus(
-        {
-            "RV": _filler(FILLER)
-            + [f"indraṃ vardhantu no giraḥ pada{_tag(i)}" for i in range(3)]
-        }
+        {"RV": _filler(FILLER) + [f"indraṃ vardhantu no giraḥ pada{_tag(i)}" for i in range(3)]}
     )
     rows, occurrences, report = discover_formulas(corpus)
     assert _normalized(rows) == {"indraṃ vardhantu no giraḥ"}

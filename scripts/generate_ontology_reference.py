@@ -112,8 +112,7 @@ DEFINITIONS: Final[dict[str, dict[str, str]]] = {
         "evidence": "Whitney's printed Brhatsarvanukramani excerpts, per hymn.",
         "trust": "TIER_B, CONTAINER_INHERITED: the ascription is the hymn's, not the verse's.",
         "example": (
-            "AVS 1.1 is ascribed `mantroktadevatyam`, 'having the deity named in the "
-            "mantra'."
+            "AVS 1.1 is ascribed `mantroktadevatyam`, 'having the deity named in the mantra'."
         ),
         "counterexample": (
             "The object is NOT a deity and must never be unioned with :Devata. There are "
@@ -656,8 +655,10 @@ def build(session: Any) -> str:
         "`vedagraph.domain.ontology` and the live database. Every count below is measured, "
         "not typed. Re-run it rather than editing it.\n"
     )
-    add(f"**Live graph:** {total_nodes:,} nodes, {total_rels:,} relationships, "
-        f"{len(live_types)} relationship types in use, {len(declared)} declared.\n")
+    add(
+        f"**Live graph:** {total_nodes:,} nodes, {total_rels:,} relationships, "
+        f"{len(live_types)} relationship types in use, {len(declared)} declared.\n"
+    )
 
     add("\n## How to read a tier\n")
     add(
@@ -714,12 +715,14 @@ def build(session: Any) -> str:
             )
 
     add("\n## Product and internal labels\n")
-    add(f"Product labels ({len(PRODUCT_LABELS)}): "
+    add(
+        f"Product labels ({len(PRODUCT_LABELS)}): "
         + ", ".join(
             f"`{label}` ({node_counts.get(label, 0):,})" for label in sorted(PRODUCT_LABELS)
         )
     )
-    add(f"\n\nInternal labels ({len(INTERNAL_LABELS)}), excluded from knowledge traversal by "
+    add(
+        f"\n\nInternal labels ({len(INTERNAL_LABELS)}), excluded from knowledge traversal by "
         "the single filter `vedagraph.domain.ontology.PRODUCT_NODE_FILTER`: "
         + ", ".join(
             f"`{label}` ({node_counts.get(label, 0):,})" for label in sorted(INTERNAL_LABELS)
@@ -727,14 +730,20 @@ def build(session: Any) -> str:
     )
 
     add("\n\n## Contract self-audit\n")
-    add(f"- relationship types declared but **not populated**: {len(declared_empty)} "
-        f"{'— ' + ', '.join(f'`{x}`' for x in declared_empty) if declared_empty else ''}")
-    add(f"- relationship types **live but not declared** by the V2/V3 contract: "
+    add(
+        f"- relationship types declared but **not populated**: {len(declared_empty)} "
+        f"{'— ' + ', '.join(f'`{x}`' for x in declared_empty) if declared_empty else ''}"
+    )
+    add(
+        f"- relationship types **live but not declared** by the V2/V3 contract: "
         f"{len(undeclared_live)} "
-        f"{'— ' + ', '.join(f'`{x}`' for x in undeclared_live) if undeclared_live else ''}")
-    add(f"- declared types with **no prose definition** in this document: "
+        f"{'— ' + ', '.join(f'`{x}`' for x in undeclared_live) if undeclared_live else ''}"
+    )
+    add(
+        f"- declared types with **no prose definition** in this document: "
         f"{len(undocumented)} "
-        f"{'— ' + ', '.join(f'`{x}`' for x in undocumented) if undocumented else ''}")
+        f"{'— ' + ', '.join(f'`{x}`' for x in undocumented) if undocumented else ''}"
+    )
     add(
         "\nThe undeclared-but-live types are the corpus, lexical, enrichment and semantic "
         "predicates that predate the V2 contract. They are graded and filterable like "

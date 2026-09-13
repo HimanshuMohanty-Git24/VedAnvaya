@@ -234,9 +234,7 @@ def structural_audit(
         "mantras": len(ordered),
         "padas": sum(len(unit.pada_texts) for unit in units),
         "parsed_units": len(units),
-        "duplicate_locator_triples": sorted(
-            f"{u.kanda}.{u.sukta}.{u.mantra}" for u in divergences
-        ),
+        "duplicate_locator_triples": sorted(f"{u.kanda}.{u.sukta}.{u.mantra}" for u in divergences),
         "sukta_number_gaps": sukta_gaps,
         "mantra_number_gaps": mantra_gaps,
         "label_vs_printed_marker_disagreements": sorted(
@@ -248,9 +246,7 @@ def structural_audit(
             1 for u in canonical.values() if u.source_verse_marker is None
         ),
         "single_pada_units": sum(single_pada_by_kanda.values()),
-        "single_pada_units_by_kanda": {
-            str(k): v for k, v in sorted(single_pada_by_kanda.items())
-        },
+        "single_pada_units_by_kanda": {str(k): v for k, v in sorted(single_pada_by_kanda.items())},
         "units_by_kanda": {str(k): v for k, v in sorted(units_by_kanda.items())},
         "units_with_alternate_numbering": sum(
             1 for u in canonical.values() if u.alternate_citation_label is not None
@@ -336,8 +332,7 @@ def _structural_qa_issues(audit: dict[str, Any], stage: dict[str, Any]) -> list[
         add(
             "av_translation_layer_absent",
             "WARNING",
-            "no staged translation payload was found, so this build emits zero Translation "
-            "records",
+            "no staged translation payload was found, so this build emits zero Translation records",
             expected_path=str(TRANSLATION_STAGE),
         )
     for key in ("kanda_alias_misses", "sukta_alias_misses", "truncated_stanza_pages"):

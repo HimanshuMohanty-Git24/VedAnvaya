@@ -85,9 +85,7 @@ assertion `(?<=[ीा])`. This prevents false matches on prose openers such as
 ### Terminal Pattern
 
 ```python
-_ACCENTED_TERMINAL = re.compile(
-    r"[।॥]{1,2}\s*(?P<mantra>[०-९]+(?:\s+[०-९]+)*)\s*[।॥\s]*$"
-)
+_ACCENTED_TERMINAL = re.compile(r"[।॥]{1,2}\s*(?P<mantra>[०-९]+(?:\s+[०-९]+)*)\s*[।॥\s]*$")
 ```
 
 The trailing `[।॥\s]*$` (dandas and whitespace interleaved) handles all five

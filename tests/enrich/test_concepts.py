@@ -291,9 +291,7 @@ def test_ambiguous_alias_without_a_reason_is_rejected(tmp_path: Path) -> None:
 
 
 def test_concept_with_no_usable_alias_is_rejected(tmp_path: Path) -> None:
-    root = _write_registry(
-        tmp_path, [_concept("VG:CONCEPT:A", aliases_sa=[], aliases_en=[])]
-    )
+    root = _write_registry(tmp_path, [_concept("VG:CONCEPT:A", aliases_sa=[], aliases_en=[])])
     _expect(root, "no usable alias")
 
 
@@ -412,9 +410,7 @@ def corpus() -> Corpus:
 
 
 @pytest.fixture(scope="module")
-def assigned(
-    corpus: Corpus, concepts: tuple[ConceptRow, ...]
-) -> tuple[list[Any], dict[str, Any]]:
+def assigned(corpus: Corpus, concepts: tuple[ConceptRow, ...]) -> tuple[list[Any], dict[str, Any]]:
     rows, report = assign_concepts(corpus, concepts)
     return rows, report.as_dict()
 
@@ -472,12 +468,8 @@ def test_sanskrit_evidence_always_outranks_english_evidence(
 ) -> None:
     rows, _ = assigned
     english_only = [r.confidence for r in rows if r.provenance.method.endswith(":english")]
-    token_only = [
-        r.confidence for r in rows if r.provenance.method.endswith(":sanskrit-token")
-    ]
-    sandhi_only = [
-        r.confidence for r in rows if r.provenance.method.endswith(":sanskrit-sandhi")
-    ]
+    token_only = [r.confidence for r in rows if r.provenance.method.endswith(":sanskrit-token")]
+    sandhi_only = [r.confidence for r in rows if r.provenance.method.endswith(":sanskrit-sandhi")]
     assert max(english_only) < min(sandhi_only)
     assert max(sandhi_only) < min(token_only)
 
@@ -625,9 +617,6 @@ def test_every_english_alias_is_attested_in_a_translation(
         for translation in mantra.translations:
             words.update(ENGLISH_TOKEN_PATTERN.findall(translation.lower()))
     unattested = sorted(
-        alias
-        for concept in concepts
-        for alias in concept.aliases_en
-        if alias not in words
+        alias for concept in concepts for alias in concept.aliases_en if alias not in words
     )
     assert unattested == []

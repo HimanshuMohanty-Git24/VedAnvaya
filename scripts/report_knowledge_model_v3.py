@@ -189,8 +189,7 @@ def collect(session: Any) -> dict[str, Any]:
         ),
         "by_tier": _table(
             session,
-            "MATCH ()-[r:MENTIONS_DEVATA]->() "
-            "RETURN r.quality_tier AS t, count(*) AS c ORDER BY t",
+            "MATCH ()-[r:MENTIONS_DEVATA]->() RETURN r.quality_tier AS t, count(*) AS c ORDER BY t",
         ),
         "deities_covered": _one(
             session,
@@ -206,9 +205,7 @@ def collect(session: Any) -> dict[str, Any]:
     report["attribution"] = {}
     for rel in ("HAS_DEVATA", "HAS_RISHI", "HAS_CHANDAS", "HAS_DEVATA_ASCRIPTION"):
         report["attribution"][rel] = {
-            "total": _one(
-                session, f"MATCH ()-[r:{rel}]->() RETURN count(r) AS c"
-            ),
+            "total": _one(session, f"MATCH ()-[r:{rel}]->() RETURN count(r) AS c"),
             "by_veda": _table(
                 session,
                 f"MATCH (p:Passage)-[r:{rel}]->() "
@@ -224,33 +221,23 @@ def collect(session: Any) -> dict[str, Any]:
     # --- action / agentive -------------------------------------------------------
     report["agentive"] = {
         "action_predicates_declared": _declared_predicates(),
-        "action_predicate_nodes": _one(
-            session, "MATCH (a:ActionPredicate) RETURN count(a) AS c"
-        ),
+        "action_predicate_nodes": _one(session, "MATCH (a:ActionPredicate) RETURN count(a) AS c"),
         "predicates_with_zero_assertions": _one(
             session,
             "MATCH (a:ActionPredicate) WHERE NOT (a)<-[:ASSERTION_PREDICATE]-() "
             "RETURN count(a) AS c",
         ),
-        "assertions_total": _one(
-            session, "MATCH (s:SemanticAssertion) RETURN count(s) AS c"
-        ),
+        "assertions_total": _one(session, "MATCH (s:SemanticAssertion) RETURN count(s) AS c"),
         "assertions_by_derivation": _table(
             session,
-            "MATCH (s:SemanticAssertion) RETURN s.derivation AS d, count(*) AS c "
-            "ORDER BY c DESC",
+            "MATCH (s:SemanticAssertion) RETURN s.derivation AS d, count(*) AS c ORDER BY c DESC",
         ),
         "assertions_by_tier": _table(
             session,
-            "MATCH (s:SemanticAssertion) RETURN s.quality_tier AS t, count(*) AS c "
-            "ORDER BY t",
+            "MATCH (s:SemanticAssertion) RETURN s.quality_tier AS t, count(*) AS c ORDER BY t",
         ),
-        "performs_action": _one(
-            session, "MATCH ()-[r:PERFORMS_ACTION]->() RETURN count(r) AS c"
-        ),
-        "is_asked_to": _one(
-            session, "MATCH ()-[r:IS_ASKED_TO]->() RETURN count(r) AS c"
-        ),
+        "performs_action": _one(session, "MATCH ()-[r:PERFORMS_ACTION]->() RETURN count(r) AS c"),
+        "is_asked_to": _one(session, "MATCH ()-[r:IS_ASKED_TO]->() RETURN count(r) AS c"),
     }
 
     # --- candidate adjudication --------------------------------------------------
@@ -280,9 +267,7 @@ def collect(session: Any) -> dict[str, Any]:
     # --- concepts, formulas, rituals, concerns -----------------------------------
     report["concepts"] = {
         "nodes": _one(session, "MATCH (c:Concept) RETURN count(c) AS c"),
-        "about_concept_edges": _one(
-            session, "MATCH ()-[r:ABOUT_CONCEPT]->() RETURN count(r) AS c"
-        ),
+        "about_concept_edges": _one(session, "MATCH ()-[r:ABOUT_CONCEPT]->() RETURN count(r) AS c"),
         "mentions_entity_edges": _one(
             session, "MATCH ()-[r:MENTIONS_ENTITY]->() RETURN count(r) AS c"
         ),
@@ -299,13 +284,10 @@ def collect(session: Any) -> dict[str, Any]:
     report["formulas"] = {
         "formula_nodes": _one(session, "MATCH (f:Formula) RETURN count(f) AS c"),
         "family_nodes": _one(session, "MATCH (f:FormulaFamily) RETURN count(f) AS c"),
-        "membership_edges": _one(
-            session, "MATCH ()-[r:MEMBER_OF_FAMILY]->() RETURN count(r) AS c"
-        ),
+        "membership_edges": _one(session, "MATCH ()-[r:MEMBER_OF_FAMILY]->() RETURN count(r) AS c"),
         "members_by_role": _table(
             session,
-            "MATCH ()-[r:MEMBER_OF_FAMILY]->() RETURN r.role AS r, count(*) AS c "
-            "ORDER BY c DESC",
+            "MATCH ()-[r:MEMBER_OF_FAMILY]->() RETURN r.role AS r, count(*) AS c ORDER BY c DESC",
         ),
         "members_by_tier": _table(
             session,
@@ -337,9 +319,7 @@ def collect(session: Any) -> dict[str, Any]:
         "described_in": _one(
             session, "MATCH (:Ritual)-[r:DESCRIBED_IN]->(:Passage) RETURN count(r) AS c"
         ),
-        "has_step": _one(
-            session, "MATCH (:Ritual)-[r:HAS_STEP]->(:Action) RETURN count(r) AS c"
-        ),
+        "has_step": _one(session, "MATCH (:Ritual)-[r:HAS_STEP]->(:Action) RETURN count(r) AS c"),
         "structure_edges": _one(
             session,
             "MATCH (:Ritual)-[r]->() WHERE type(r) IN "
@@ -351,9 +331,7 @@ def collect(session: Any) -> dict[str, Any]:
         "conditions": _one(session, "MATCH (c:Condition) RETURN count(c) AS c"),
         "human_concerns": _one(session, "MATCH (c:HumanConcern) RETURN count(c) AS c"),
         "treats": _one(session, "MATCH ()-[r:TREATS]->() RETURN count(r) AS c"),
-        "protects_from": _one(
-            session, "MATCH ()-[r:PROTECTS_FROM]->() RETURN count(r) AS c"
-        ),
+        "protects_from": _one(session, "MATCH ()-[r:PROTECTS_FROM]->() RETURN count(r) AS c"),
         "addresses_concern": _one(
             session, "MATCH ()-[r:ADDRESSES_CONCERN]->() RETURN count(r) AS c"
         ),
@@ -371,20 +349,13 @@ def collect(session: Any) -> dict[str, Any]:
         )
     }
     report["analytics"] = {
-        "derived_metrics": _one(
-            session, "MATCH (m:DerivedMetric) RETURN count(m) AS c"
-        ),
+        "derived_metrics": _one(session, "MATCH (m:DerivedMetric) RETURN count(m) AS c"),
         "metric_families": _table(
             session,
-            "MATCH (m:DerivedMetric) RETURN m.metric_name AS n, count(*) AS c "
-            "ORDER BY c DESC",
+            "MATCH (m:DerivedMetric) RETURN m.metric_name AS n, count(*) AS c ORDER BY c DESC",
         ),
-        "cooccurrence_edges": _one(
-            session, "MATCH ()-[r:CO_OCCURS_WITH]->() RETURN count(r) AS c"
-        ),
-        "interpretive_claims": _one(
-            session, "MATCH (c:InterpretiveClaim) RETURN count(c) AS c"
-        ),
+        "cooccurrence_edges": _one(session, "MATCH ()-[r:CO_OCCURS_WITH]->() RETURN count(r) AS c"),
+        "interpretive_claims": _one(session, "MATCH (c:InterpretiveClaim) RETURN count(c) AS c"),
     }
     coverage_path = DOMAIN / "veda_coverage_v3.json"
     if coverage_path.exists():
@@ -410,8 +381,7 @@ def collect(session: Any) -> dict[str, Any]:
         ),
         "product_nodes_without_display_label": _one(
             session,
-            "MATCH (n) WHERE NOT n:Internal AND n.display_label IS NULL "
-            "RETURN count(n) AS c",
+            "MATCH (n) WHERE NOT n:Internal AND n.display_label IS NULL RETURN count(n) AS c",
         ),
     }
 

@@ -114,9 +114,7 @@ SET r.passage_count = row.passage_count,
 #: Passed as parameters rather than inlined. Cypher has no implicit concatenation of
 #: adjacent string literals, so a prose property long enough to need wrapping cannot be
 #: written inline without either an explicit `+` chain or a very long line.
-_GRADE_BASIS: Final = (
-    "counted over the theonym mention layer; recomputable from the graph"
-)
+_GRADE_BASIS: Final = "counted over the theonym mention layer; recomputable from the graph"
 _ASSERTS: Final = (
     "Both deities are named in this many of the same mantras, at this lift. A count, "
     "not a claim that the deities are associated."
@@ -175,18 +173,13 @@ def rebuild(session: Session) -> CooccurrenceReport:
     not the same statement as "we replaced it and every row matched".
     """
     report = CooccurrenceReport()
-    before = _count(
-        session, "MATCH (:Devata)-[r:CO_OCCURS_WITH]->(:Devata) RETURN count(r) AS c"
-    )
+    before = _count(session, "MATCH (:Devata)-[r:CO_OCCURS_WITH]->(:Devata) RETURN count(r) AS c")
     baseline = _count(session, _BASELINE_QUERY)
     if not baseline:
         report.detail = {"skipped": "no theonym mention layer present"}
         return report
 
-    totals = {
-        record["key"]: int(record["c"])
-        for record in session.run(_MENTION_TOTALS_QUERY)
-    }
+    totals = {record["key"]: int(record["c"]) for record in session.run(_MENTION_TOTALS_QUERY)}
 
     rows: list[dict[str, Any]] = []
     for record in session.run(_PAIR_QUERY, min_shared=MIN_SHARED_PASSAGES):

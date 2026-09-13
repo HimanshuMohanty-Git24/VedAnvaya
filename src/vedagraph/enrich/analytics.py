@@ -132,9 +132,7 @@ def devata_chandas(corpus: Corpus) -> list[PairStat]:
     return _pair_stats(pairs, universe=len(corpus.mantras))
 
 
-def devata_concept(
-    corpus: Corpus, assertions: Sequence[ConceptAssertionRow]
-) -> list[PairStat]:
+def devata_concept(corpus: Corpus, assertions: Sequence[ConceptAssertionRow]) -> list[PairStat]:
     """Which concepts appear in passages addressed to which deities.
 
     Distinct from the curated ``DEVATA_ASSOCIATED_WITH`` link in the concept registry, and
@@ -159,9 +157,7 @@ def concept_by_veda(assertions: Sequence[ConceptAssertionRow]) -> list[dict[str,
     by_concept: dict[str, Counter[str]] = defaultdict(Counter)
     for assertion in assertions:
         by_concept[assertion.concept_id][assertion.veda] += 1
-    ranked = sorted(
-        by_concept.items(), key=lambda item: (-sum(item[1].values()), item[0])
-    )
+    ranked = sorted(by_concept.items(), key=lambda item: (-sum(item[1].values()), item[0]))
     return [
         {
             "concept_id": concept_id,

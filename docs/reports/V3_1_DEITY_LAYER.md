@@ -576,9 +576,14 @@ I did not edit the query module. Everything below is available as an import from
 
 ```python
 from vedagraph.domain.theonyms import (
-    AMBIGUOUS, CERTAIN, PROBABLE,
-    DEFAULT_REFERENT_TIERS, EXPLORATORY_REFERENT_TIERS, STRICT_REFERENT_TIERS,
-    referent_tiers_for_mode, mention_verdict,
+    AMBIGUOUS,
+    CERTAIN,
+    PROBABLE,
+    DEFAULT_REFERENT_TIERS,
+    EXPLORATORY_REFERENT_TIERS,
+    STRICT_REFERENT_TIERS,
+    referent_tiers_for_mode,
+    mention_verdict,
 )
 ```
 

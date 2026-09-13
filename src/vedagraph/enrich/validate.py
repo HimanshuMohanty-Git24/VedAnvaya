@@ -230,8 +230,8 @@ def validate_artifacts(
             texts.append(spans)
         for field_text in texts:
             if contains_private_use(str(field_text)):
-                row_id = row.get("parallel_id") or row.get("assertion_id") or row.get(
-                    "candidate_id"
+                row_id = (
+                    row.get("parallel_id") or row.get("assertion_id") or row.get("candidate_id")
                 )
                 leaked.append(f"{row_id}: {field_text[:60]}")
                 break
@@ -345,9 +345,7 @@ def validate_artifacts(
         "too many formula occurrence edges",
     )
 
-    per_passage: Counter[str] = Counter(
-        str(row.get("passage_key")) for row in concept_assertions
-    )
+    per_passage: Counter[str] = Counter(str(row.get("passage_key")) for row in concept_assertions)
     over_concept = [
         f"{key} ({n})" for key, n in per_passage.items() if n > MAX_CONCEPTS_PER_PASSAGE
     ]
@@ -426,9 +424,7 @@ def validate_live(session: Any, expected: dict[str, int]) -> ValidationResult:
         severity="WARNING",
     )
 
-    orphan_formulas = scalar(
-        "MATCH (f:Formula) WHERE NOT (f)<-[:USES_FORMULA]-() RETURN count(f)"
-    )
+    orphan_formulas = scalar("MATCH (f:Formula) WHERE NOT (f)<-[:USES_FORMULA]-() RETURN count(f)")
     result.add("no_orphan_formulas", orphan_formulas, "Formula nodes with no occurrence")
 
     # --- evidence on every enrichment edge -------------------------------------
@@ -457,9 +453,7 @@ def validate_live(session: Any, expected: dict[str, int]) -> ValidationResult:
     result.add("live_trust_classes_wellformed", len(bad), "unknown trust class in the graph", bad)
 
     # --- concept assertions resolve --------------------------------------------
-    dangling = scalar(
-        "MATCH ()-[r:ABOUT_CONCEPT]->(c) WHERE NOT c:Concept RETURN count(r)"
-    )
+    dangling = scalar("MATCH ()-[r:ABOUT_CONCEPT]->(c) WHERE NOT c:Concept RETURN count(r)")
     result.add(
         "live_concept_assertions_resolve", dangling, "ABOUT_CONCEPT not pointing at a Concept"
     )
@@ -488,9 +482,7 @@ def validate_live(session: Any, expected: dict[str, int]) -> ValidationResult:
     )
 
     # --- no enrichment edge dangles into a non-existent node -------------------
-    self_loops = scalar(
-        "MATCH (a)-[r]->(a) WHERE r.pipeline_version IS NOT NULL RETURN count(r)"
-    )
+    self_loops = scalar("MATCH (a)-[r]->(a) WHERE r.pipeline_version IS NOT NULL RETURN count(r)")
     result.add("no_enrichment_self_loops", self_loops, "an enrichment edge from a node to itself")
 
     return result

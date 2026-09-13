@@ -38,11 +38,11 @@ unchanged; only a docstring is added saying so. It is not renamed, because
 A new additive model, `WorkBuildConfig`, is the shared shape for every other work:
 
 ```python
-work_id: str                      # ^VG:WORK:[A-Z]+:[A-Z]+$
-section_level: str | None         # the container this build slices on, in the work's own
-                                  # vocabulary: "Adhyaya", "Prapathaka", "Kanda"
-selected_sections: list[int]      # empty means the whole work
-mantra_level: str = "Mantra"      # "Verse" for Samaveda
+work_id: str  # ^VG:WORK:[A-Z]+:[A-Z]+$
+section_level: str | None  # the container this build slices on, in the work's own
+# vocabulary: "Adhyaya", "Prapathaka", "Kanda"
+selected_sections: list[int]  # empty means the whole work
+mantra_level: str = "Mantra"  # "Verse" for Samaveda
 ```
 
 plus the policy-version, source, text-selection and output fields mirroring

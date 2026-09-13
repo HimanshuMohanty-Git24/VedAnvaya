@@ -105,12 +105,8 @@ def iter_passage_nodes(
                 "status": rec.get("status", "CANONICAL"),
                 "parent_key": parent_key,
                 # SV/YV/AV extras
-                "structural_path": orjson.dumps(
-                    rec.get("structural_path", [])
-                ).decode(),
-                "native_labels": orjson.dumps(
-                    rec.get("native_labels", [])
-                ).decode(),
+                "structural_path": orjson.dumps(rec.get("structural_path", [])).decode(),
+                "native_labels": orjson.dumps(rec.get("native_labels", [])).decode(),
             }
             yield node
 

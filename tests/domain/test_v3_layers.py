@@ -169,6 +169,8 @@ def _literal_case_assignments(text: str) -> list[tuple[str, str, str]]:
             continue
         out.append((alias, prop, body))
     return out
+
+
 _ASSIGN_RE = re.compile(r"(\w+)\.(\w+) = ")
 _PATH_RE = re.compile(r"MATCH \((\w*):?(\w*)\)-\[(\w+):(\w+)\]->\((\w*):?(\w*)\)")
 _AGG_RE = re.compile(r"RETURN (\w+)\.(\w+) AS (\w+), count\(\*\) AS n")
@@ -365,9 +367,7 @@ class FakeGraph:
         return _Result([{"c": len(selected)}])
 
     @staticmethod
-    def _predicate(
-        text: str, alias: str, entity: dict[str, Any], params: dict[str, Any]
-    ) -> bool:
+    def _predicate(text: str, alias: str, entity: dict[str, Any], params: dict[str, Any]) -> bool:
         stale = re.search(rf"WHERE {alias}\.(\w+) IS NULL OR {alias}\.\w+ <> \$(\w+)", text)
         if stale is not None:
             prop, param = stale.groups()
@@ -627,9 +627,7 @@ def test_every_member_has_a_sibling_it_directly_contains_or_is_contained_by() ->
     for rows in _members_by_family().values():
         for row in rows:
             mine = _identity(row["normalized"])
-            siblings = [
-                _identity(other["normalized"]) for other in rows if other is not row
-            ]
+            siblings = [_identity(other["normalized"]) for other in rows if other is not row]
             assert any(_related(sibling, mine) for sibling in siblings), (
                 f"{row['formula_id']} has no containment sibling in {row['family_id']}"
             )
@@ -669,8 +667,7 @@ def test_no_containment_membership_rests_only_on_a_similarity_candidate() -> Non
             siblings = [
                 other
                 for other in rows
-                if other is not row
-                and _related(_identity(other["normalized"]), mine)
+                if other is not row and _related(_identity(other["normalized"]), mine)
             ]
             if siblings and all("similarity" in str(s["method"]) for s in siblings):
                 # Anchored only to a candidate. Permitted -- the relationship is real --
@@ -1423,9 +1420,7 @@ def test_merge_concern_lists_unions_both_files_without_duplicates() -> None:
 
     for key, items in merged.items():
         base = list(v1.get(key) or [])
-        expected = base + [
-            item for item in (v3.get(key) or []) if item not in base
-        ]
+        expected = base + [item for item in (v3.get(key) or []) if item not in base]
         expected += [item for item in promoted.get(key, []) if item not in expected]
         assert items == expected, key
         assert len(items) == len(set(items)), key
@@ -1503,8 +1498,11 @@ def test_live_every_formula_family_has_a_unique_family_id() -> None:
             )
             assert total == distinct == len(_families())
             assert (
-                _scalar(session, "MATCH (f:FormulaFamily) WHERE f.family_id IS NULL "
-                        "RETURN count(f) AS c") == 0
+                _scalar(
+                    session,
+                    "MATCH (f:FormulaFamily) WHERE f.family_id IS NULL RETURN count(f) AS c",
+                )
+                == 0
             )
     finally:
         driver.close()
@@ -1516,11 +1514,14 @@ def test_live_every_membership_edge_lands_on_a_real_formula() -> None:
     driver = _driver()
     try:
         with driver.session() as session:
-            assert _scalar(
-                session,
-                "MATCH (a)-[r:MEMBER_OF_FAMILY]->(b) "
-                "WHERE NOT a:Formula OR NOT b:FormulaFamily RETURN count(r) AS c",
-            ) == 0
+            assert (
+                _scalar(
+                    session,
+                    "MATCH (a)-[r:MEMBER_OF_FAMILY]->(b) "
+                    "WHERE NOT a:Formula OR NOT b:FormulaFamily RETURN count(r) AS c",
+                )
+                == 0
+            )
             assert _scalar(
                 session,
                 "MATCH (:Formula)-[r:MEMBER_OF_FAMILY]->(:FormulaFamily) RETURN count(r) AS c",
@@ -1528,8 +1529,7 @@ def test_live_every_membership_edge_lands_on_a_real_formula() -> None:
             tiers = {
                 record["c"]
                 for record in session.run(
-                    "MATCH ()-[r:MEMBER_OF_FAMILY]->() "
-                    "RETURN DISTINCT r.quality_tier AS c"
+                    "MATCH ()-[r:MEMBER_OF_FAMILY]->() RETURN DISTINCT r.quality_tier AS c"
                 )
             }
             assert tiers <= {"TIER_B", "TIER_D"}, tiers
@@ -1603,11 +1603,14 @@ def test_live_ritual_descriptions_and_steps_are_the_counts_the_yaml_authors() ->
                 session, "MATCH (:Ritual)-[r:HAS_STEP]->(:Action) RETURN count(r) AS c"
             ) == sum(len(r.get("has_step") or []) for r in _merged_rituals())
             for rel_type, label in ((REL_DESCRIBED_IN, "Passage"), (REL_HAS_STEP, "Action")):
-                assert _scalar(
-                    session,
-                    f"MATCH (a)-[r:{rel_type}]->(b) WHERE NOT a:Ritual OR NOT b:{label} "
-                    "RETURN count(r) AS c",
-                ) == 0
+                assert (
+                    _scalar(
+                        session,
+                        f"MATCH (a)-[r:{rel_type}]->(b) WHERE NOT a:Ritual OR NOT b:{label} "
+                        "RETURN count(r) AS c",
+                    )
+                    == 0
+                )
     finally:
         driver.close()
 
@@ -1618,16 +1621,22 @@ def test_live_every_step_edge_states_the_basis_for_its_order() -> None:
     driver = _driver()
     try:
         with driver.session() as session:
-            assert _scalar(
-                session,
-                "MATCH ()-[r:HAS_STEP]->() WHERE r.step_order IS NOT NULL AND "
-                "(r.order_basis IS NULL OR trim(toString(r.order_basis)) = '') "
-                "RETURN count(r) AS c",
-            ) == 0
-            assert _scalar(
-                session,
-                "MATCH ()-[r:HAS_STEP]->() WHERE r.quality_tier <> 'TIER_D' "
-                "RETURN count(r) AS c",
-            ) == 0
+            assert (
+                _scalar(
+                    session,
+                    "MATCH ()-[r:HAS_STEP]->() WHERE r.step_order IS NOT NULL AND "
+                    "(r.order_basis IS NULL OR trim(toString(r.order_basis)) = '') "
+                    "RETURN count(r) AS c",
+                )
+                == 0
+            )
+            assert (
+                _scalar(
+                    session,
+                    "MATCH ()-[r:HAS_STEP]->() WHERE r.quality_tier <> 'TIER_D' "
+                    "RETURN count(r) AS c",
+                )
+                == 0
+            )
     finally:
         driver.close()

@@ -1,4 +1,5 @@
 """Test configuration: make scripts/ importable for scan-dependent tests."""
+
 import sys
 from pathlib import Path
 

@@ -149,8 +149,10 @@ def main() -> None:
         return
     if args.ingest:
         if not args.model:
-            logger.error("--model is required for --ingest: an LLM row without a model id "
-                         "cannot be attributed and provenance refuses it")
+            logger.error(
+                "--model is required for --ingest: an LLM row without a model id "
+                "cannot be attributed and provenance refuses it"
+            )
             sys.exit(1)
         ingest(pathlib.Path(args.ingest), args.model)
         return

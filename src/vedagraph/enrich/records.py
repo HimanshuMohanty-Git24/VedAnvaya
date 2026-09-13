@@ -39,9 +39,7 @@ class ParallelRow:
 
     def as_row(self) -> dict[str, Any]:
         return {
-            "parallel_id": stable_id(
-                "parallel", self.predicate, self.subject_key, self.object_key
-            ),
+            "parallel_id": stable_id("parallel", self.predicate, self.subject_key, self.object_key),
             "predicate": self.predicate,
             "subject_key": self.subject_key,
             "object_key": self.object_key,

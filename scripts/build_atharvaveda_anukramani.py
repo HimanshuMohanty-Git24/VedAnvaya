@@ -222,30 +222,109 @@ DEVATA_MARKER = re.compile(r"devat|d[āa]ivat|devy|d[āa]ivy")
 #: than by a compound parser: the vocabulary is 79 strings on the real data and a parser
 #: would silently invent values for the irregular ones.
 NUMERAL_WORDS: dict[str, int] = {
-    "ekarcam": 1, "dvyṛcam": 2, "dvyrcam": 2, "tṛcam": 3, "trika": 3,
-    "trikam": 3, "trayam": 3, "caturṛcam": 4, "caturrcam": 4, "catvāri": 4,
-    "catvāri vāi vacanāni": 4, "pañcarcam": 5, "pañcakam": 5, "pañcaka": 5,
-    "pañcatam": 5, "pañca": 5, "ṣaḍṛcam": 6, "ṣadṛcam": 6, "ṣaṭ": 6, "ṣaṭka": 6,
-    "ṣaṭkam": 6, "saptarcam": 7, "saptakam": 7, "saptaka": 7, "sapta": 7,
-    "aṣṭarcam": 8, "aṣṭakam": 8, "aṣṭaka": 8, "aṣṭāu": 8, "navarcam": 9,
-    "navakam": 9, "navaka": 9, "daçarcam": 10, "daçakam": 10, "daçaka": 10,
-    "daçaham": 10, "daça": 10, "ekādaçarcam": 11, "ekādaçakam": 11, "ekādaçaka": 11,
-    "ekādaça": 11, "dvādaçarcam": 12, "dvādaçakam": 12, "dvādaça": 12,
-    "trayodaçarcam": 13, "trayodaçakam": 13, "trayodaça": 13, "caturdaçarcam": 14,
-    "caturdaçakam": 14, "caturdaça": 14, "pañcadaçarcam": 15, "pañcadaçakam": 15,
-    "pañcadaça": 15, "ṣoḍaçarcam": 16, "ṣoḍaçakam": 16, "ṣoḍaça": 16,
-    "saptadaçarcam": 17, "saptadaçakam": 17, "saptadaça": 17, "aṣṭādaçarcam": 18,
-    "aṣṭādaçakam": 18, "aṣṭādaça": 18, "dvyūnā viṅçati": 18, "viṅçati": 20,
-    "viṅçakam": 20, "ekaviṅçakam": 21, "ekaviṅçati": 21, "dvāviṅçakam": 22,
-    "dvāviṅçam": 22, "trayoviṅçakam": 23, "trayoviṅçam": 23, "caturviṅçakam": 24,
-    "caturviṅçam": 24, "caturviṅçarcam": 24, "pañcaviṅçakam": 25, "pañcaviṅçam": 25,
-    "ṣaḍviṅçakam": 26, "ṣaḍviṅçam": 26, "ṣaḍviṅçati": 26, "ṣaḍviṅçaḥ": 26,
-    "saptaviṅçakam": 27, "saptaviṅçati": 27, "aṣṭāviṅçakam": 28, "aṣṭāviṅçam": 28,
-    "dvyūnā triṅçat": 28, "navaviṅçakam": 29, "triṅçat": 30, "triṅçakam": 30,
-    "ekatriṅçat": 31, "ekatriṅçatkam": 31, "dvātriṅçat": 32, "trayastriṅçat": 33,
-    "catustriṅçat": 34, "pañcatriṅçat": 35, "ṣaṭtriṅçat": 36, "saptatriṅçat": 37,
-    "aṣṭātriṅçat": 38, "catvāriṅçat": 40, "catuçcatvāriṅçat": 44, "pañcāçat": 50,
-    "tripañcāçat": 53, "pañcapañcāçat": 55, "ṣaṣṭi": 60,
+    "ekarcam": 1,
+    "dvyṛcam": 2,
+    "dvyrcam": 2,
+    "tṛcam": 3,
+    "trika": 3,
+    "trikam": 3,
+    "trayam": 3,
+    "caturṛcam": 4,
+    "caturrcam": 4,
+    "catvāri": 4,
+    "catvāri vāi vacanāni": 4,
+    "pañcarcam": 5,
+    "pañcakam": 5,
+    "pañcaka": 5,
+    "pañcatam": 5,
+    "pañca": 5,
+    "ṣaḍṛcam": 6,
+    "ṣadṛcam": 6,
+    "ṣaṭ": 6,
+    "ṣaṭka": 6,
+    "ṣaṭkam": 6,
+    "saptarcam": 7,
+    "saptakam": 7,
+    "saptaka": 7,
+    "sapta": 7,
+    "aṣṭarcam": 8,
+    "aṣṭakam": 8,
+    "aṣṭaka": 8,
+    "aṣṭāu": 8,
+    "navarcam": 9,
+    "navakam": 9,
+    "navaka": 9,
+    "daçarcam": 10,
+    "daçakam": 10,
+    "daçaka": 10,
+    "daçaham": 10,
+    "daça": 10,
+    "ekādaçarcam": 11,
+    "ekādaçakam": 11,
+    "ekādaçaka": 11,
+    "ekādaça": 11,
+    "dvādaçarcam": 12,
+    "dvādaçakam": 12,
+    "dvādaça": 12,
+    "trayodaçarcam": 13,
+    "trayodaçakam": 13,
+    "trayodaça": 13,
+    "caturdaçarcam": 14,
+    "caturdaçakam": 14,
+    "caturdaça": 14,
+    "pañcadaçarcam": 15,
+    "pañcadaçakam": 15,
+    "pañcadaça": 15,
+    "ṣoḍaçarcam": 16,
+    "ṣoḍaçakam": 16,
+    "ṣoḍaça": 16,
+    "saptadaçarcam": 17,
+    "saptadaçakam": 17,
+    "saptadaça": 17,
+    "aṣṭādaçarcam": 18,
+    "aṣṭādaçakam": 18,
+    "aṣṭādaça": 18,
+    "dvyūnā viṅçati": 18,
+    "viṅçati": 20,
+    "viṅçakam": 20,
+    "ekaviṅçakam": 21,
+    "ekaviṅçati": 21,
+    "dvāviṅçakam": 22,
+    "dvāviṅçam": 22,
+    "trayoviṅçakam": 23,
+    "trayoviṅçam": 23,
+    "caturviṅçakam": 24,
+    "caturviṅçam": 24,
+    "caturviṅçarcam": 24,
+    "pañcaviṅçakam": 25,
+    "pañcaviṅçam": 25,
+    "ṣaḍviṅçakam": 26,
+    "ṣaḍviṅçam": 26,
+    "ṣaḍviṅçati": 26,
+    "ṣaḍviṅçaḥ": 26,
+    "saptaviṅçakam": 27,
+    "saptaviṅçati": 27,
+    "aṣṭāviṅçakam": 28,
+    "aṣṭāviṅçam": 28,
+    "dvyūnā triṅçat": 28,
+    "navaviṅçakam": 29,
+    "triṅçat": 30,
+    "triṅçakam": 30,
+    "ekatriṅçat": 31,
+    "ekatriṅçatkam": 31,
+    "dvātriṅçat": 32,
+    "trayastriṅçat": 33,
+    "catustriṅçat": 34,
+    "pañcatriṅçat": 35,
+    "ṣaṭtriṅçat": 36,
+    "saptatriṅçat": 37,
+    "aṣṭātriṅçat": 38,
+    "catvāriṅçat": 40,
+    "catuçcatvāriṅçat": 44,
+    "pañcāçat": 50,
+    "tripañcāçat": 53,
+    "pañcapañcāçat": 55,
+    "ṣaṣṭi": 60,
     # Added after an enumeration of the whole emitted devatā value space found these
     # printed verse counts sitting in the DEVATĀ slot -- the graph was asserting that the
     # deity-ascription of AVS 18.4 is the number eighty-nine. Each one is confirmed against
@@ -253,8 +332,12 @@ NUMERAL_WORDS: dict[str, int] = {
     # safe to route to the verse gate rather than merely dropped: 18.4=89, 18.3=73,
     # 19.69=4, 19.42=4, 19.51=2, 16.6=11, 12.1=63, 12.3=60, 18.1=61, 18.2=60.
     "dve": 2,
-    "catasraḥ": 4, "catasras": 4,
-    "ṣaṣṭiḥ": 60, "ekaṣaṣṭi": 61, "triṣaṣṭih": 63, "triṣaṣṭiḥ": 63,
+    "catasraḥ": 4,
+    "catasras": 4,
+    "ṣaṣṭiḥ": 60,
+    "ekaṣaṣṭi": 61,
+    "triṣaṣṭih": 63,
+    "triṣaṣṭiḥ": 63,
     "saptatis tryadhikā": 73,  # saptati + try-adhika, "seventy with three over"
     "ekonanavati": 89,  # eka-ūna-navati, "ninety less one"
     "etādaça": 11,  # the scan's `t` for `k` in `ekādaça`; AVS 16.6 has exactly 11 mantras
@@ -356,6 +439,7 @@ def mask_parentheticals(text: str) -> tuple[str, dict[str, str]]:
     editorial comment. Neither belongs in an emitted value.
     """
     spans: dict[str, str] = {}
+
     def swallow(open_char: str, close_char: str, source: str) -> str:
         out: list[str] = []
         depth = 0
@@ -545,9 +629,7 @@ def split_head_tokens(head: str) -> list[str]:
     the deity namespace as a 357th "ascription".
     """
     return [
-        token.strip(" .*")
-        for token in re.split(r"\.[*†‡]?[\]⌋]?\s+", head)
-        if token.strip(" .*")
+        token.strip(" .*") for token in re.split(r"\.[*†‡]?[\]⌋]?\s+", head) if token.strip(" .*")
     ]
 
 
@@ -838,10 +920,7 @@ DJVU = {1: "Atharva-Veda samhita.djvu", 2: "Atharva-Veda samhita volume 2.djvu"}
 
 
 def locator(item: Bracket) -> str:
-    return (
-        f"Page:{DJVU[item.volume]}/{item.page}"
-        f" (AVS {item.kanda}.{item.hymn} Anukr. bracket)"
-    )
+    return f"Page:{DJVU[item.volume]}/{item.page} (AVS {item.kanda}.{item.hymn} Anukr. bracket)"
 
 
 def assertion(

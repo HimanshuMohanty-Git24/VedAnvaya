@@ -540,6 +540,7 @@ KNOWLEDGE_TIER_BY_PROVENANCE: Final[dict[str, QualityTier]] = {
     "SOURCE_DERIVED_SCOPE": QualityTier.TIER_B,
 }
 
+
 class ConditionKind(StrEnum):
     """What sort of thing a ``:Condition`` is: borne, carried, or aimed at the patient.
 

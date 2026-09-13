@@ -117,9 +117,7 @@ def probe(alias: str, corpus: Corpus) -> AliasReport:
             if len(report.examples) < _MAX_EXAMPLES:
                 position = tokens.index(folded)
                 window = tokens[max(0, position - 2) : position + 3]
-                report.examples.append(
-                    (mantra.passage_key, render_for_display(" ".join(window)))
-                )
+                report.examples.append((mantra.passage_key, render_for_display(" ".join(window))))
         # The sandhi pass is reported for every alias regardless of eligibility, so the
         # length floor can be seen to be doing something rather than assumed to.
         if folded in mantra.surfaces.sandhi_insensitive:

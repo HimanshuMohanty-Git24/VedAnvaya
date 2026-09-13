@@ -187,9 +187,7 @@ def test_parsing_is_deterministic(parses: dict[int, AdhyayaParse]) -> None:
         assert [r.text_original for r in parse.accented] == [
             r.text_original for r in other.accented
         ]
-        assert [r.text_original for r in parse.samhita] == [
-            r.text_original for r in other.samhita
-        ]
+        assert [r.text_original for r in parse.samhita] == [r.text_original for r in other.samhita]
         assert [f.reason for f in parse.failures] == [f.reason for f in other.failures]
 
 

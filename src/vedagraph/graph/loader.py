@@ -360,8 +360,12 @@ def _merge_contains_rels(session: Any, project_root: pathlib.Path) -> int:
     _flush_work(work_batch)
     _flush_passage(passage_batch)
     total = total_work + total_passage
-    logger.info("Merged %d CONTAINS relationships (%d Work→Passage, %d Passage→Passage)",
-                total, total_work, total_passage)
+    logger.info(
+        "Merged %d CONTAINS relationships (%d Work→Passage, %d Passage→Passage)",
+        total,
+        total_work,
+        total_passage,
+    )
     return total
 
 

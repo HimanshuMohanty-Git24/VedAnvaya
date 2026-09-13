@@ -350,9 +350,7 @@ def _require_condition_kinds(rows: Sequence[ConceptRow]) -> None:
     problems = [f"{cid}: CONDITION with no condition_kind" for cid in sorted(missing)]
     problems.extend(sorted(invalid))
     if problems:
-        raise ConceptRegistryError(
-            "condition_kind contract violated:\n  " + "\n  ".join(problems)
-        )
+        raise ConceptRegistryError("condition_kind contract violated:\n  " + "\n  ".join(problems))
 
 
 def entities_by_node_type(entities: Sequence[ConceptRow]) -> dict[str, int]:

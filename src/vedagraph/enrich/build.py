@@ -107,9 +107,7 @@ def build_enrichment(project_root: pathlib.Path) -> dict[str, Any]:
     logger.info("Concepts: %d nodes, %d assertions", len(concepts), len(assertions))
 
     digests = {
-        PARALLELS_FILE: write_jsonl(
-            release / PARALLELS_FILE, [row.as_row() for row in parallels]
-        ),
+        PARALLELS_FILE: write_jsonl(release / PARALLELS_FILE, [row.as_row() for row in parallels]),
         FORMULAS_FILE: write_jsonl(release / FORMULAS_FILE, [row.as_row() for row in formulas]),
         FORMULA_OCCURRENCES_FILE: write_jsonl(
             release / FORMULA_OCCURRENCES_FILE, [row.as_row() for row in occurrences]
@@ -168,9 +166,7 @@ def build_analytics(
         "coverage": coverage_report(corpus, concepts, assertions),
         "rishi_devata_top": [stat.as_row() for stat in rishi_devata(corpus)[:50]],
         "devata_chandas_top": [stat.as_row() for stat in devata_chandas(corpus)[:50]],
-        "devata_concept_top": [
-            stat.as_row() for stat in devata_concept(corpus, assertions)[:50]
-        ],
+        "devata_concept_top": [stat.as_row() for stat in devata_concept(corpus, assertions)[:50]],
         "concept_by_veda": concept_by_veda(assertions)[:150],
         "formula_by_veda": formula_by_veda(formulas)[:100],
     }

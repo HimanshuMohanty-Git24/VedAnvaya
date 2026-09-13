@@ -231,8 +231,7 @@ def test_the_attribution_contract_covers_every_declared_relationship() -> None:
         rel for rel in ontology.RELATIONSHIP_SIGNATURES if rel not in ATTRIBUTION_CONTRACT
     )
     assert missing == [], (
-        f"declared in RELATIONSHIP_SIGNATURES but absent from ATTRIBUTION_CONTRACT: "
-        f"{missing}"
+        f"declared in RELATIONSHIP_SIGNATURES but absent from ATTRIBUTION_CONTRACT: {missing}"
     )
 
 

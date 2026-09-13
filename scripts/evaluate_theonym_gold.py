@@ -62,9 +62,7 @@ BOLT_AUTH: Final = ("neo4j", "vedagraph_dev")
 LABEL_MENTION: Final = "MENTION"
 LABEL_NO_MENTION: Final = "NO_MENTION"
 LABEL_AMBIGUOUS: Final = "AMBIGUOUS"
-VALID_LABELS: Final[frozenset[str]] = frozenset(
-    {LABEL_MENTION, LABEL_NO_MENTION, LABEL_AMBIGUOUS}
-)
+VALID_LABELS: Final[frozenset[str]] = frozenset({LABEL_MENTION, LABEL_NO_MENTION, LABEL_AMBIGUOUS})
 
 PATH_ANNOTATION: Final = "rv-lemma-annotation"
 SURFACE_PATHS: Final[frozenset[str]] = frozenset(
@@ -341,9 +339,7 @@ def reconcile(rows: Sequence[GoldRow], live: set[tuple[str, str]]) -> list[str]:
     ]
 
 
-def refresh_from_live(
-    rows: Sequence[GoldRow], live: set[tuple[str, str]]
-) -> list[GoldRow]:
+def refresh_from_live(rows: Sequence[GoldRow], live: set[tuple[str, str]]) -> list[GoldRow]:
     """Re-point every row's ``graph_asserts`` at the live graph, keeping its gold label.
 
     **Which half of a gold row is frozen, and which is not.** The ``gold_label`` is a
@@ -362,9 +358,7 @@ def refresh_from_live(
     historical figure available without making it the one a reader sees by accident.
     """
     return [
-        dataclasses.replace(
-            row, graph_asserts=(row.passage_key, row.devata_id) in live
-        )
+        dataclasses.replace(row, graph_asserts=(row.passage_key, row.devata_id) in live)
         for row in rows
     ]
 
@@ -433,19 +427,13 @@ def build_report(rows: Sequence[GoldRow], live: set[tuple[str, str]] | None) -> 
                 "gold_mention": sum(1 for row in group if row.gold_positive),
             }
             for name, group in sorted(
-                
-                    (name, [row for row in rows if row.stratum == name])
-                    for name in {row.stratum for row in rows}
-                
+                (name, [row for row in rows if row.stratum == name])
+                for name in {row.stratum for row in rows}
             )
         },
         "overall": score_rows(scorable).as_dict(),
-        "overall_name_lemma_target": score_rows(
-            scorable, target="name_lemma_present"
-        ).as_dict(),
-        "by_path": {
-            name: score_rows(group).as_dict() for name, group in sorted(by_path.items())
-        },
+        "overall_name_lemma_target": score_rows(scorable, target="name_lemma_present").as_dict(),
+        "by_path": {name: score_rows(group).as_dict() for name, group in sorted(by_path.items())},
         "by_path_name_lemma_target": {
             name: score_rows(group, target="name_lemma_present").as_dict()
             for name, group in sorted(by_path.items())
@@ -453,10 +441,8 @@ def build_report(rows: Sequence[GoldRow], live: set[tuple[str, str]] | None) -> 
         "by_extraction_path_positives_only": {
             name: score_rows(group).as_dict()
             for name, group in sorted(
-                
-                    (name, [row for row in scorable if row.extraction_path == name])
-                    for name in {row.extraction_path for row in scorable if row.graph_asserts}
-                
+                (name, [row for row in scorable if row.extraction_path == name])
+                for name in {row.extraction_path for row in scorable if row.graph_asserts}
             )
         },
     }
@@ -478,9 +464,7 @@ def build_report(rows: Sequence[GoldRow], live: set[tuple[str, str]] | None) -> 
     ambiguous_nouns = [row for row in scorable if row.is_ambiguous_common_noun]
     asserted_ambiguous = [row for row in ambiguous_nouns if row.graph_asserts]
     wrong_sense = [
-        row
-        for row in asserted_ambiguous
-        if not row.gold_positive and row.name_lemma_present
+        row for row in asserted_ambiguous if not row.gold_positive and row.name_lemma_present
     ]
     report["ambiguity_failure"] = {
         "rows_on_ambiguous_common_nouns": len(ambiguous_nouns),
@@ -657,8 +641,10 @@ def print_report(report: dict[str, Any]) -> None:
         )
 
     print("\n--- Excluding every row flagged borderline ---")
-    show(f"OVERALL ({report['excluding_borderline']['rows']} rows)",
-         report["excluding_borderline"]["overall"])
+    show(
+        f"OVERALL ({report['excluding_borderline']['rows']} rows)",
+        report["excluding_borderline"]["overall"],
+    )
     for name, blob in report["excluding_borderline"]["by_path"].items():
         show(f"path: {name}", blob)
 
@@ -668,13 +654,17 @@ def print_report(report: dict[str, Any]) -> None:
         f"{len(errors['false_negatives'])} false negatives ---"
     )
     for row in errors["false_positives"][:15]:
-        print(f"  FP {row['row_id']} {row['citation']:<18} "
-              f"{row['devata_id'].replace('VG:DEVATA:', ''):<20} "
-              f"{row['referent_certainty'].replace('DEITY_', ''):<10} {row['surface_form']}")
+        print(
+            f"  FP {row['row_id']} {row['citation']:<18} "
+            f"{row['devata_id'].replace('VG:DEVATA:', ''):<20} "
+            f"{row['referent_certainty'].replace('DEITY_', ''):<10} {row['surface_form']}"
+        )
     for row in errors["false_negatives"][:15]:
-        print(f"  FN {row['row_id']} {row['citation']:<18} "
-              f"{row['devata_id'].replace('VG:DEVATA:', ''):<20} "
-              f"{row['ambiguity_class']:<20} {row['surface_form']}")
+        print(
+            f"  FN {row['row_id']} {row['citation']:<18} "
+            f"{row['devata_id'].replace('VG:DEVATA:', ''):<20} "
+            f"{row['ambiguity_class']:<20} {row['surface_form']}"
+        )
 
 
 def main(argv: Sequence[str] | None = None) -> int:

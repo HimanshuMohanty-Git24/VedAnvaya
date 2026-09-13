@@ -108,10 +108,7 @@ def test_precision_recall_f1_on_a_hand_computed_fixture() -> None:
             _row(row_id=f"T-2{i:02d}", graph_asserts=True, gold_label="NO_MENTION")
             for i in range(2)
         ]
-        + [
-            _row(row_id=f"T-3{i:02d}", graph_asserts=False, gold_label="MENTION")
-            for i in range(3)
-        ]
+        + [_row(row_id=f"T-3{i:02d}", graph_asserts=False, gold_label="MENTION") for i in range(3)]
     )
     score = EV.score_rows(rows)
     assert score.precision == pytest.approx(0.75)
@@ -149,9 +146,7 @@ def test_undefined_rates_are_none_not_zero() -> None:
     assert empty.f1 is None
     assert empty.specificity is None
 
-    no_prediction = EV.score_rows(
-        [_row(row_id="T-701", graph_asserts=False, gold_label="MENTION")]
-    )
+    no_prediction = EV.score_rows([_row(row_id="T-701", graph_asserts=False, gold_label="MENTION")])
     assert no_prediction.precision is None
     assert no_prediction.recall == 0.0
     assert no_prediction.f1 is None
@@ -166,14 +161,16 @@ def test_name_lemma_target_scores_a_different_claim() -> None:
     # The layer asserts an edge; the name-word is in the verse but denotes the common
     # noun. That is a false positive on the strict target and a true positive on the
     # weaker one, which is exactly the distinction the two targets exist to draw.
-    rows = [_row(row_id="T-801", graph_asserts=True, gold_label="NO_MENTION",
-                 name_lemma_present=True)]
+    rows = [
+        _row(row_id="T-801", graph_asserts=True, gold_label="NO_MENTION", name_lemma_present=True)
+    ]
     assert EV.score_rows(rows).fp == 1
     assert EV.score_rows(rows, target="name_lemma_present").tp == 1
 
     # Host intrusion: the word is not a form of the deity's name at all. Wrong on both.
-    hosts = [_row(row_id="T-802", graph_asserts=True, gold_label="NO_MENTION",
-                  name_lemma_present=False)]
+    hosts = [
+        _row(row_id="T-802", graph_asserts=True, gold_label="NO_MENTION", name_lemma_present=False)
+    ]
     assert EV.score_rows(hosts).fp == 1
     assert EV.score_rows(hosts, target="name_lemma_present").fp == 1
 
@@ -247,18 +244,30 @@ def test_low_support_groups_are_withheld_rather_than_printed() -> None:
 def test_ambiguity_failure_rate_counts_only_wrong_sense() -> None:
     rows = [
         # asserted, name-word present, wrong sense -> counts as an ambiguity failure
-        _row(row_id="T-C01", graph_asserts=True, gold_label="NO_MENTION",
-             name_lemma_present=True, is_ambiguous_common_noun=True),
+        _row(
+            row_id="T-C01",
+            graph_asserts=True,
+            gold_label="NO_MENTION",
+            name_lemma_present=True,
+            is_ambiguous_common_noun=True,
+        ),
         # asserted and right -> not a failure
-        _row(row_id="T-C02", graph_asserts=True, gold_label="MENTION",
-             is_ambiguous_common_noun=True),
+        _row(
+            row_id="T-C02", graph_asserts=True, gold_label="MENTION", is_ambiguous_common_noun=True
+        ),
         # asserted but the word is not the deity's name at all -> an attachment error,
         # not a sense error, so it must not inflate the ambiguity rate
-        _row(row_id="T-C03", graph_asserts=True, gold_label="NO_MENTION",
-             name_lemma_present=False, is_ambiguous_common_noun=True),
+        _row(
+            row_id="T-C03",
+            graph_asserts=True,
+            gold_label="NO_MENTION",
+            name_lemma_present=False,
+            is_ambiguous_common_noun=True,
+        ),
         # not asserted -> outside the denominator
-        _row(row_id="T-C04", graph_asserts=False, gold_label="MENTION",
-             is_ambiguous_common_noun=True),
+        _row(
+            row_id="T-C04", graph_asserts=False, gold_label="MENTION", is_ambiguous_common_noun=True
+        ),
     ]
     failure = EV.build_report(rows, None)["ambiguity_failure"]
     assert failure["rows_on_ambiguous_common_nouns"] == 4
@@ -312,9 +321,7 @@ def test_load_gold_refuses_a_claim_of_human_review(tmp_path: pathlib.Path) -> No
         {"sanskrit": ""},
     ],
 )
-def test_load_gold_refuses_malformed_rows(
-    tmp_path: pathlib.Path, mutation: dict[str, str]
-) -> None:
+def test_load_gold_refuses_malformed_rows(tmp_path: pathlib.Path, mutation: dict[str, str]) -> None:
     first = json.loads(GOLD.read_text(encoding="utf-8").splitlines()[0])
     first.update(mutation)
     path = tmp_path / "bad.jsonl"
@@ -352,8 +359,7 @@ def test_load_gold_refuses_a_second_sample_seed(tmp_path: pathlib.Path) -> None:
 
 def test_the_sample_seed_is_recorded_and_single() -> None:
     seeds = {
-        json.loads(line)["sample_seed"]
-        for line in GOLD.read_text(encoding="utf-8").splitlines()
+        json.loads(line)["sample_seed"] for line in GOLD.read_text(encoding="utf-8").splitlines()
     }
     assert seeds == {EXPECTED_SEED}
 

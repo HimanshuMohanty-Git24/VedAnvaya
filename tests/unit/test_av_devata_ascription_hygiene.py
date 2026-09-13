@@ -82,9 +82,7 @@ def _assertions() -> tuple[dict[str, Any], ...]:
 
 @functools.cache
 def _ascriptions() -> tuple[dict[str, Any], ...]:
-    return tuple(
-        row for row in _assertions() if row["predicate"] == "HAS_DEVATA_ASCRIPTION"
-    )
+    return tuple(row for row in _assertions() if row["predicate"] == "HAS_DEVATA_ASCRIPTION")
 
 
 @functools.cache
@@ -122,23 +120,101 @@ def _builder() -> Any:
 #: ``viṅçati``, so both spellings are listed.
 NUMERAL_MORPHEMES: frozenset[str] = frozenset(
     {
-        "eka", "ekā", "ek", "dvi", "dvy", "dva", "dvā", "dve", "tri", "try", "tṛ",
-        "traya", "trayo", "ādaça", "ādaśa",
-        "catur", "catus", "catuç", "catvāri", "catasr", "pañca", "pan̄ca", "ṣaṣ", "ṣaṭ",
-        "ṣaḍ", "ṣoḍa", "ṣoḍaça", "ṣoḍaśa",
-        "sapta", "aṣṭa", "aṣṭā", "nava", "daça", "daśa", "viṅçati", "viṅça",
-        "viṃśati", "triṅçat", "triṅça", "triṃśat", "catvāriṅçat", "pañcāçat", "pañcāça",
-        "ṣaṣṭi", "saptati", "açīti", "aśīti", "navati", "çata", "śata", "sahasra",
+        "eka",
+        "ekā",
+        "ek",
+        "dvi",
+        "dvy",
+        "dva",
+        "dvā",
+        "dve",
+        "tri",
+        "try",
+        "tṛ",
+        "traya",
+        "trayo",
+        "ādaça",
+        "ādaśa",
+        "catur",
+        "catus",
+        "catuç",
+        "catvāri",
+        "catasr",
+        "pañca",
+        "pan̄ca",
+        "ṣaṣ",
+        "ṣaṭ",
+        "ṣaḍ",
+        "ṣoḍa",
+        "ṣoḍaça",
+        "ṣoḍaśa",
+        "sapta",
+        "aṣṭa",
+        "aṣṭā",
+        "nava",
+        "daça",
+        "daśa",
+        "viṅçati",
+        "viṅça",
+        "viṃśati",
+        "triṅçat",
+        "triṅça",
+        "triṃśat",
+        "catvāriṅçat",
+        "pañcāçat",
+        "pañcāça",
+        "ṣaṣṭi",
+        "saptati",
+        "açīti",
+        "aśīti",
+        "navati",
+        "çata",
+        "śata",
+        "sahasra",
         # joiners and count-word stems
-        "adhika", "adhikā", "ūna", "ona", "vāi", "ca", "vihita", "vihitam", "ṛca", "rca",
-        "ṛcam", "vacanāni", "sūktānām", "paryāya", "paryāyāḥ", "tri­guṇāni", "triguṇāni",
-        "tathā", "param", "ham",
+        "adhika",
+        "adhikā",
+        "ūna",
+        "ona",
+        "vāi",
+        "ca",
+        "vihita",
+        "vihitam",
+        "ṛca",
+        "rca",
+        "ṛcam",
+        "vacanāni",
+        "sūktānām",
+        "paryāya",
+        "paryāyāḥ",
+        "tri­guṇāni",
+        "triguṇāni",
+        "tathā",
+        "param",
+        "ham",
     }
 )
 #: Endings a printed count word takes. Stripped before morpheme decomposition.
 COUNT_ENDINGS: tuple[str, ...] = (
-    "ṛcam", "ṛca", "rcam", "kam", "ka", "am", "aḥ", "as", "āḥ", "ā", "aṁ", "a", "i", "ī",
-    "s", "ḥ", "at", "ti", "m",
+    "ṛcam",
+    "ṛca",
+    "rcam",
+    "kam",
+    "ka",
+    "am",
+    "aḥ",
+    "as",
+    "āḥ",
+    "ā",
+    "aṁ",
+    "a",
+    "i",
+    "ī",
+    "s",
+    "ḥ",
+    "at",
+    "ti",
+    "m",
 )
 #: The tradition's own "having X as deity" suffixes. A value carrying one is an ascription
 #: whatever numeral morpheme it also contains -- ``dvidevatyam`` is "two-deitied".
@@ -189,8 +265,8 @@ def test_the_numeral_detector_recognises_the_numerals_that_reached_the_graph() -
     Without this, a numeral test that flags nothing proves nothing.
     """
     for numeral in (
-        "ekonanavati",          # 89, stood on 90 AVS 18.4 passages
-        "saptatis tryadhikā",   # 73, stood on 74 AVS 18.3 passages
+        "ekonanavati",  # 89, stood on 90 AVS 18.4 passages
+        "saptatis tryadhikā",  # 73, stood on 74 AVS 18.3 passages
         "catasraḥ",
         "catasras",
         "dve",
@@ -317,9 +393,7 @@ def test_no_two_ascriptions_are_scan_variants_of_one_another() -> None:
     """
     known = set(_labels())
     collisions = sorted(
-        (value, sorted(_repairs(value) & known))
-        for value in known
-        if _repairs(value) & known
+        (value, sorted(_repairs(value) & known)) for value in known if _repairs(value) & known
     )
     assert collisions == [], (
         "these ascription entities are scan variants of one another and should be one "
@@ -381,9 +455,9 @@ def _numeral_is_gated(value: str) -> bool:
     what proves it is a verse count and not a deity, so the builder spends it on the
     alignment gate. Either record satisfies "the rejection is on file".
     """
-    for line in (CORPUS / "traditional_metadata_provenance.jsonl").read_text(
-        encoding="utf-8"
-    ).splitlines():
+    for line in (
+        (CORPUS / "traditional_metadata_provenance.jsonl").read_text(encoding="utf-8").splitlines()
+    ):
         if not line.strip():
             continue
         record = json.loads(line)

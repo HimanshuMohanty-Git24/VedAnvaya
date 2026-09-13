@@ -439,9 +439,7 @@ def test_each_unordered_pair_is_emitted_once_per_predicate() -> None:
     )
     rows, _ = discover_cross_veda_parallels(corpus)
 
-    seen = Counter(
-        (row.predicate, frozenset({row.subject_key, row.object_key})) for row in rows
-    )
+    seen = Counter((row.predicate, frozenset({row.subject_key, row.object_key})) for row in rows)
     assert set(seen.values()) == {1}
     # Four mantras, four Vedas, all identical: six unordered pairs plus the one SV->RV
     # borrowing.
@@ -605,9 +603,7 @@ class TestFullCorpusSlow:
         self, discovered: list[ParallelRow]
     ) -> None:
         reuse = [
-            row
-            for row in discovered
-            if row.predicate == str(TextualPredicate.REUSES_TEXT_FROM)
+            row for row in discovered if row.predicate == str(TextualPredicate.REUSES_TEXT_FROM)
         ]
         assert reuse
         assert {(row.subject_veda, row.object_veda) for row in reuse} == {("SV", "RV")}

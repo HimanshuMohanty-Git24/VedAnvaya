@@ -138,9 +138,7 @@ def _members_of(
 
 
 def test_a_formula_in_no_containment_relation_is_left_unfamilied() -> None:
-    formulas, occurrences = _artifact(
-        {"agnim ile": _rv(1, 2, 3), "somam pibatu": _rv(4, 5, 6)}
-    )
+    formulas, occurrences = _artifact({"agnim ile": _rv(1, 2, 3), "somam pibatu": _rv(4, 5, 6)})
     families, members, report = build_formula_families(formulas, occurrences)
     assert families == []
     assert members == []
@@ -396,9 +394,7 @@ def test_a_single_veda_family_is_never_corroborated() -> None:
 # ---------------------------------------------------------------------------
 
 
-def _payload(
-    families: list[FormulaFamilyRow], members: list[FormulaFamilyMemberRow]
-) -> bytes:
+def _payload(families: list[FormulaFamilyRow], members: list[FormulaFamilyMemberRow]) -> bytes:
     rows = [row.as_row() for row in families] + [row.as_row() for row in members]
     return b"".join(orjson.dumps(row, option=orjson.OPT_SORT_KEYS) + b"\n" for row in rows)
 
@@ -438,9 +434,7 @@ def test_the_representative_does_not_depend_on_input_order() -> None:
     for permutation in itertools.permutations(range(len(formulas))):
         permuted = [formulas[index] for index in permutation]
         families, members, _ = build_formula_families(permuted, occurrences)
-        assert families[0].representative_normalized == (
-            baseline[0][0].representative_normalized
-        )
+        assert families[0].representative_normalized == (baseline[0][0].representative_normalized)
         assert _payload(families, members) == _payload(baseline[0], baseline[1])
 
 
@@ -544,18 +538,14 @@ def test_the_recommendation_never_touches_a_longer_formula() -> None:
 
 def test_indra_is_deliberately_absent_from_the_closed_class_set() -> None:
     assert "indra" not in CLOSED_CLASS_ABOVE_GRAMMAR_LINE
-    assert {"ā", "na", "te", "tvā", "ca", "no", "pra", "sa"} == set(
-        CLOSED_CLASS_ABOVE_GRAMMAR_LINE
-    )
+    assert {"ā", "na", "te", "tvā", "ca", "no", "pra", "sa"} == set(CLOSED_CLASS_ABOVE_GRAMMAR_LINE)
 
 
 def test_the_recommendation_is_returned_and_never_applied() -> None:
     families, members, report = _real()
     recommended = {
         item.formula_id
-        for item in recommend_removals(
-            read_artifact(PROJECT_ROOT, FORMULAS_FILE), {}, _shares()
-        )
+        for item in recommend_removals(read_artifact(PROJECT_ROOT, FORMULAS_FILE), {}, _shares())
     }
     assert recommended
     still_present = {row.formula_id for row in members} & recommended
@@ -584,9 +574,7 @@ def _shares() -> dict[str, float]:
 
 
 @pytest.fixture(scope="module")
-def _real_artifact() -> tuple[
-    list[FormulaFamilyRow], list[FormulaFamilyMemberRow], Any
-]:
+def _real_artifact() -> tuple[list[FormulaFamilyRow], list[FormulaFamilyMemberRow], Any]:
     formulas = read_artifact(PROJECT_ROOT, FORMULAS_FILE)
     occurrences = read_artifact(PROJECT_ROOT, FORMULA_OCCURRENCES_FILE)
     if not formulas:
@@ -610,9 +598,7 @@ def _real() -> tuple[list[FormulaFamilyRow], list[FormulaFamilyMemberRow], Any]:
         if not formulas:
             pytest.skip("enrichment artifacts not built")
         parallels = read_artifact(PROJECT_ROOT, PARALLELS_FILE)
-        _CACHE["built"] = build_formula_families(
-            formulas, occurrences, parallels, _shares()
-        )
+        _CACHE["built"] = build_formula_families(formulas, occurrences, parallels, _shares())
     result = _CACHE["built"]
     assert isinstance(result, tuple)
     return result

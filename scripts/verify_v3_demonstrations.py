@@ -156,8 +156,7 @@ DEMONSTRATIONS: Final[dict[str, tuple[Facet, ...]]] = {
         ),
         Facet(
             "functional_axes",
-            "MATCH (:Devata {entity_key:$k})-[:HAS_AXIS]->(a:DeityAxis) "
-            "RETURN a.axis AS axis",
+            "MATCH (:Devata {entity_key:$k})-[:HAS_AXIS]->(a:DeityAxis) RETURN a.axis AS axis",
             {"k": INDRA},
         ),
     ),
@@ -350,8 +349,7 @@ DEMONSTRATIONS: Final[dict[str, tuple[Facet, ...]]] = {
         ),
         Facet(
             "derived_metrics_carry_no_interpretation",
-            "MATCH (m:DerivedMetric) WHERE m.metric_name IS NOT NULL "
-            "RETURN count(m) AS metrics",
+            "MATCH (m:DerivedMetric) WHERE m.metric_name IS NOT NULL RETURN count(m) AS metrics",
         ),
         Facet(
             "interpretation_lives_only_in_claims",

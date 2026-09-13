@@ -124,13 +124,11 @@ def measure(session: Any) -> dict[str, Any]:
     out["trust_coverage"] = round(out["edges_with_trust"] / total, 4)
     out["by_tier"] = _rows(
         session,
-        "MATCH ()-[r]->() RETURN r.quality_tier AS tier, count(r) AS edges "
-        "ORDER BY tier",
+        "MATCH ()-[r]->() RETURN r.quality_tier AS tier, count(r) AS edges ORDER BY tier",
     )
     out["by_layer"] = _rows(
         session,
-        "MATCH ()-[r]->() RETURN r.knowledge_layer AS layer, count(r) AS edges "
-        "ORDER BY layer",
+        "MATCH ()-[r]->() RETURN r.knowledge_layer AS layer, count(r) AS edges ORDER BY layer",
     )
     out["by_precision"] = _rows(
         session,
@@ -310,9 +308,7 @@ def measure(session: Any) -> dict[str, Any]:
             violations.append({"predicate": predicate, "violations": bad})
     out["signature_violations"] = violations
 
-    declared = DOMAIN_RELATIONSHIP_TYPES | {
-        row["type"] for row in out["relationship_types"]
-    }
+    declared = DOMAIN_RELATIONSHIP_TYPES | {row["type"] for row in out["relationship_types"]}
     out["undeclared_rel_types"] = sorted(
         row["type"]
         for row in out["relationship_types"]
@@ -354,8 +350,7 @@ def render(m: dict[str, Any]) -> str:
         f"| relationships | {BASELINE['relationships']:,} | {m['relationships_total']:,} | "
         f"{m['relationships_total'] - BASELINE['relationships']:+,} |",
         f"| product nodes | — | {m['nodes_product']:,} | — |",
-        f"| internal nodes | 0 (unmarked) | {m['nodes_internal']:,} | "
-        f"+{m['nodes_internal']:,} |",
+        f"| internal nodes | 0 (unmarked) | {m['nodes_internal']:,} | +{m['nodes_internal']:,} |",
         f"| domain entities | {BASELINE['domain_entities']} | {m['domain_entities']} | "
         f"{m['domain_entities'] - BASELINE['domain_entities']:+} |",
         f"| typed domain labels | {BASELINE['typed_domain_labels']} | "
@@ -399,7 +394,7 @@ def render(m: dict[str, Any]) -> str:
         "### Attribution precision — the single most important table here",
         "",
         "The Anukramaṇī names a deity for a *sūkta*. Projecting that onto each of its",
-        "mantras is what makes \"the mantras of Indra\" answerable at all, and it is also",
+        'mantras is what makes "the mantras of Indra" answerable at all, and it is also',
         "not something the source said about any of those mantras.",
         "",
         "| predicate | source-stated | container-inherited | inherited share |",
@@ -419,8 +414,7 @@ def render(m: dict[str, Any]) -> str:
         "|---|---|---|",
         f"| UNKNOWN_LABEL_RATE | {BASELINE['unknown_label_rate']:.1%} | "
         f"**{m['unknown_label_rate']:.2%}** |",
-        f"| product nodes without a readable label | 22,541 | "
-        f"**{m['nodes_without_label']}** |",
+        f"| product nodes without a readable label | 22,541 | **{m['nodes_without_label']}** |",
         f"| product nodes with `display_type` | 0 | {m['nodes_with_display_type']:,} |",
         "",
         "## 4. Devatā model",
@@ -585,7 +579,7 @@ def render(m: dict[str, Any]) -> str:
         "A second reconciliation gap was found the same way: removing an alias from the",
         "lexicon left the edges it had produced in place, still carrying full evidence. The",
         "mention loader now mark-and-sweeps, which retired 7 `SVAN-DOG` edges whose alias",
-        "`śvā` had been dropped for matching `aśvā` (\"mare\").",
+        '`śvā` had been dropped for matching `aśvā` ("mare").',
         "",
     ]
     return "\n".join(lines)

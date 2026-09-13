@@ -117,10 +117,10 @@ _ACCENTED_TERMINAL = re.compile(
 _DEV_WORD = r"(?:[ऀ-ॐ]|[ॕ-ॿ])+"
 
 _ORDINAL_HEADER = re.compile(
-    r"^(?:तत्र\s+)?"   # optional "tatra" prefix
+    r"^(?:तत्र\s+)?"  # optional "tatra" prefix
     r"(?:" + _DEV_WORD + r")"  # first Devanagari word (the ordinal itself)
     r"(?:\s+" + _DEV_WORD + r")?"  # optional second word (compound ordinals)
-    r"\s*।\s*$",        # ends with single danda — ॥ excluded
+    r"\s*।\s*$",  # ends with single danda — ॥ excluded
     re.UNICODE,
 )
 
@@ -140,8 +140,8 @@ _ORDINAL_HEADER = re.compile(
 _ORDINAL_HEADER_PREFIX = re.compile(
     r"^(?:तत्र\s+)?"
     r"(?:" + _DEV_WORD + r")"  # the ordinal word, greedily consumed
-    r"(?<=[ीा])"               # lookbehind: last char must be ī (U+0940) or ā (U+093E)
-    r"\s*।\s+",                # danda followed by whitespace + more content
+    r"(?<=[ीा])"  # lookbehind: last char must be ī (U+0940) or ā (U+093E)
+    r"\s*।\s+",  # danda followed by whitespace + more content
     re.UNICODE,
 )
 
@@ -740,8 +740,7 @@ class YajurvedaWikisourceAdapter(SourceAdapter):
                                         line_number=line_number,
                                         line=" ".join(pending_mula_buffer)[:120],
                                         reason=(
-                                            "accented run ended without a "
-                                            "numbered terminal marker"
+                                            "accented run ended without a numbered terminal marker"
                                         ),
                                     )
                                 )
@@ -891,7 +890,7 @@ class YajurvedaWikisourceAdapter(SourceAdapter):
             if not buffer and not ordinal_header_seen:
                 inline_match = _ORDINAL_HEADER_PREFIX.match(stripped)
                 if inline_match and len(inline_match.group(0)) <= _ORDINAL_MAX_LENGTH:
-                    mantra_part = stripped[inline_match.end():].strip()
+                    mantra_part = stripped[inline_match.end() :].strip()
                     if mantra_part:
                         # The ordinal prefix identified this run as a mūla; start
                         # fresh with the prefix stripped.

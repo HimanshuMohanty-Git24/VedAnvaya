@@ -297,7 +297,9 @@ def main() -> None:
         + seal_b["integrity"]["missing_final_tasks"],
     }
     catastrophic_regime_split = (
-        (density_a >= 5 and density_b < 3) or (density_b >= 5 and density_a < 3) or len(one_sided) >= 3
+        (density_a >= 5 and density_b < 3)
+        or (density_b >= 5 and density_a < 3)
+        or len(one_sided) >= 3
     )
     obvious_precision_flags = {
         "unsupported_extraction": "NONE_OBVIOUS_FROM_STRUCTURAL_INSPECTION; no exhaustive adjudication performed",

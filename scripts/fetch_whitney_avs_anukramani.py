@@ -139,9 +139,7 @@ async def _fetch_volume(fetcher: PoliteFetcher, volume: int) -> list[dict[str, o
         titles = [f"Page:{djvu}/{page}" for page in pages]
         result = await fetcher.fetch(SNAPSHOT_SOURCE_ID, _content_url(titles))
         payload = orjson.loads(result.content_path.read_bytes())
-        returned = {
-            item["title"]: item for item in payload.get("query", {}).get("pages", []) or []
-        }
+        returned = {item["title"]: item for item in payload.get("query", {}).get("pages", []) or []}
         missing = [title for title in titles if title not in returned]
         if missing:
             raise RuntimeError(f"API omitted {len(missing)} titles, first={missing[0]}")

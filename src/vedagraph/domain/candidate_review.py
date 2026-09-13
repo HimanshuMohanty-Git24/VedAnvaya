@@ -65,9 +65,7 @@ KNOWN_VERDICTS: Final[frozenset[str]] = frozenset(
 )
 
 #: Verdicts that leave the edge in place at TIER_D rather than promoting or deleting it.
-VERDICT_RETAINED: Final[frozenset[str]] = frozenset(
-    {VERDICT_AMBIGUOUS, VERDICT_NEEDS_EVIDENCE}
-)
+VERDICT_RETAINED: Final[frozenset[str]] = frozenset({VERDICT_AMBIGUOUS, VERDICT_NEEDS_EVIDENCE})
 
 #: Never ``HUMAN_REVIEWED``. The adjudicator is a model and the artifact says so; writing
 #: the stronger word would make the graph claim a kind of scrutiny it has not had.
@@ -239,9 +237,7 @@ _TYPE_FILTER: Final = " OR ".join(f"r:{name}" for name in CANDIDATE_PREDICATES)
 #: Sanskrit-checked acceptance earns it and an unchecked one stays ``TRANSLATION``. This is
 #: the one place where a review legitimately changes the evidence basis rather than only
 #: the tier, because the review *added* evidence.
-_BASIS_CASE: Final = (
-    "CASE WHEN row.sanskrit_checked THEN 'MIXED' ELSE 'TRANSLATION' END"
-)
+_BASIS_CASE: Final = "CASE WHEN row.sanskrit_checked THEN 'MIXED' ELSE 'TRANSLATION' END"
 
 _PROMOTE_QUERY: Final = f"""
 UNWIND $rows AS row
@@ -318,9 +314,7 @@ def apply_review(
     else in this package.
     """
     report = ReviewReport(rows=len(rows))
-    report.verdicts = dict(
-        sorted(collections.Counter(row["verdict"] for row in rows).items())
-    )
+    report.verdicts = dict(sorted(collections.Counter(row["verdict"] for row in rows).items()))
     if not rows:
         return report
 
@@ -332,9 +326,7 @@ def apply_review(
     # the delete would otherwise make its own targets look like they were never there.
     present = {
         record["cid"]
-        for record in session.run(
-            _PRESENT_QUERY, ids=[row["candidate_id"] for row in rows]
-        )
+        for record in session.run(_PRESENT_QUERY, ids=[row["candidate_id"] for row in rows])
     }
     # A *rejected* candidate that is absent from the graph is the goal, not a mismatch:
     # after the first run it has been deleted, and on every run after that its absence is
@@ -383,8 +375,7 @@ def apply_review(
     )
     still_live = _count(
         session,
-        f"MATCH ()-[r]->() WHERE ({_TYPE_FILTER}) AND r.candidate_id IN $ids "
-        "RETURN count(r) AS c",
+        f"MATCH ()-[r]->() WHERE ({_TYPE_FILTER}) AND r.candidate_id IN $ids RETURN count(r) AS c",
         ids=[row["candidate_id"] for row in rejected],
     )
     report.deleted = report.deleted_sent - still_live

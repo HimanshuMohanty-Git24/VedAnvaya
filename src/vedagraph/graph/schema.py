@@ -10,7 +10,7 @@ from typing import Final
 
 LABEL_WORK: Final = "Work"
 LABEL_PASSAGE: Final = "Passage"
-LABEL_MANTRA: Final = "Mantra"         # sublabel for leaf MANTRA passages
+LABEL_MANTRA: Final = "Mantra"  # sublabel for leaf MANTRA passages
 LABEL_TEXT_VERSION: Final = "TextVersion"
 LABEL_TRANSLATION: Final = "Translation"
 LABEL_SOURCE: Final = "Source"

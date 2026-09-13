@@ -614,8 +614,9 @@ one name only.
 every `USES_FORMULA` evidence quote as:
 
 ```python
-iast = comparison_form(to_iast(surfaces.source, surfaces.script),
-                       ComparisonForm.ACCENT_STRIPPED_COMPARISON)
+iast = comparison_form(
+    to_iast(surfaces.source, surfaces.script), ComparisonForm.ACCENT_STRIPPED_COMPARISON
+)
 ```
 
 It omits `fold_devanagari_source_conventions`. That omission is the exact failure `surfaces.py`

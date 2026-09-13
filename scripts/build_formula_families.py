@@ -124,8 +124,7 @@ def main() -> None:
     parallels = read_artifact(PROJECT_ROOT, PARALLELS_FILE)
     if not formulas:
         raise SystemExit(
-            f"no formulas in {RELEASE_DIR / FORMULAS_FILE}; "
-            "run scripts/build_enrichment.py first"
+            f"no formulas in {RELEASE_DIR / FORMULAS_FILE}; run scripts/build_enrichment.py first"
         )
     logger.info(
         "read %d formulas, %d occurrence rows, %d parallel rows",
@@ -169,9 +168,7 @@ def main() -> None:
 
     release = PROJECT_ROOT / RELEASE_DIR
     digests = {
-        FAMILIES_FILE: write_jsonl(
-            release / FAMILIES_FILE, [row.as_row() for row in families]
-        ),
+        FAMILIES_FILE: write_jsonl(release / FAMILIES_FILE, [row.as_row() for row in families]),
         FAMILY_MEMBERS_FILE: write_jsonl(
             release / FAMILY_MEMBERS_FILE, [row.as_row() for row in members]
         ),

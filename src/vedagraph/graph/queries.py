@@ -62,9 +62,7 @@ def fetch_passages_by_devata(
     )
 
 
-def fetch_passages_by_rishi(
-    session: Any, rishi_key: str, limit: int = 100
-) -> list[dict[str, Any]]:
+def fetch_passages_by_rishi(session: Any, rishi_key: str, limit: int = 100) -> list[dict[str, Any]]:
     """Fetch the first ``limit`` Passages ascribed to a Rishi, in citation order.
 
     Three-Veda, not four: ``HAS_RISHI`` has 17,889 edges over the RV (10,565), AV (5,084)
@@ -114,9 +112,7 @@ def fetch_passages_by_chandas(
     )
 
 
-def fetch_passage_with_translation(
-    session: Any, canonical_key: str
-) -> list[dict[str, Any]]:
+def fetch_passage_with_translation(session: Any, canonical_key: str) -> list[dict[str, Any]]:
     """Fetch a Passage and its Translations."""
     return _run(
         session,
@@ -181,9 +177,7 @@ def fetch_near_parallels(session: Any, canonical_key: str) -> list[dict[str, Any
     )
 
 
-def fetch_sv_passages_related_to_rv(
-    session: Any, rv_key: str
-) -> list[dict[str, Any]]:
+def fetch_sv_passages_related_to_rv(session: Any, rv_key: str) -> list[dict[str, Any]]:
     """Fetch Samaveda passages that are exact parallels of a given RV passage."""
     return _run(
         session,

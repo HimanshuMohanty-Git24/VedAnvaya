@@ -194,17 +194,21 @@ def test_lemma_constraint_targets_the_unique_field() -> None:
     assert "normalized_lemma" not in lemma_constraints[0]
 
 
-@pytest.mark.parametrize("veda,expected_mantra_type", [
-    ("RV", "MANTRA"),
-    ("SV", "MANTRA"),
-    ("YV", "MANTRA"),
-    ("AV", "MANTRA"),
-])
+@pytest.mark.parametrize(
+    "veda,expected_mantra_type",
+    [
+        ("RV", "MANTRA"),
+        ("SV", "MANTRA"),
+        ("YV", "MANTRA"),
+        ("AV", "MANTRA"),
+    ],
+)
 def test_leaf_passages_are_mantras(veda: str, expected_mantra_type: str) -> None:
     from vedagraph.graph.projection import iter_passage_nodes, manifest_mantra_count
 
     mantras = [
-        p for p in iter_passage_nodes(PROJECT_ROOT)
+        p
+        for p in iter_passage_nodes(PROJECT_ROOT)
         if p["veda"] == veda and p["entity_type"] == expected_mantra_type
     ]
     assert len(mantras) == manifest_mantra_count(veda)

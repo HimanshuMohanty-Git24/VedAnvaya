@@ -186,7 +186,7 @@ are 28-60px; intra-word dark spots never exceed 8px"* — but the code applied i
 width of the **inked run**:
 
 ```python
-if x - start >= _WORD_GAP_MIN_PX:   # x - start is the SPAN's width, not the gap
+if x - start >= _WORD_GAP_MIN_PX:  # x - start is the SPAN's width, not the gap
     spans.append((start, x - 1))
 ```
 

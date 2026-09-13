@@ -446,9 +446,11 @@ live graph with their own default `parameters`, three repetitions each. Harness:
 
 ```python
 from vedagraph.domain.queries import QUERIES
+
 for q in QUERIES:
     for _ in range(3):
-        t0 = time.perf_counter(); rows = list(session.run(q.cypher, **q.parameters))
+        t0 = time.perf_counter()
+        rows = list(session.run(q.cypher, **q.parameters))
 ```
 
 `QUERIES` has 48 entries, 48 distinct names. **All 48 executed with zero errors.**

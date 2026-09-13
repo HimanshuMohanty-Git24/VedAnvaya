@@ -571,9 +571,7 @@ def _containment_pairs(members: Sequence[_Member]) -> tuple[tuple[str, str], ...
         for contained in sorted(by_length[length]):
             if contained not in haystack:
                 continue
-            pairs.extend(
-                (contained, container) for container in longer if contained in container
-            )
+            pairs.extend((contained, container) for container in longer if contained in container)
     pairs.sort()
     return tuple(pairs)
 
@@ -656,9 +654,7 @@ def _containment_depth(identities: Sequence[str], pairs: Sequence[tuple[str, str
         cached = memo.get(identity)
         if cached is not None:
             return cached
-        memo[identity] = 1 + max(
-            (longest(nxt) for nxt in successors.get(identity, ())), default=0
-        )
+        memo[identity] = 1 + max((longest(nxt) for nxt in successors.get(identity, ())), default=0)
         return memo[identity]
 
     return max((longest(identity) for identity in sorted(inside)), default=1)
@@ -709,10 +705,7 @@ def _assign_roles(
     cores: list[_Member] = []
     for member in ordered:
         score, nearest = max(
-            (
-                (_similarity(member.identity, core.identity), core.formula_id)
-                for core in cores
-            ),
+            ((_similarity(member.identity, core.identity), core.formula_id) for core in cores),
             default=(0.0, member.formula_id),
         )
         if cores and score >= VARIANT_SIMILARITY_FLOOR:
@@ -721,9 +714,7 @@ def _assign_roles(
             continue
         roles[member.formula_id] = MemberRole.CORE
         links[member.formula_id] = (
-            (member.formula_id, CONTAINMENT_CONFIDENCE)
-            if not cores
-            else (nearest, score)
+            (member.formula_id, CONTAINMENT_CONFIDENCE) if not cores else (nearest, score)
         )
         if cores:
             report.reject("secondary_core_below_variant_similarity_floor")
@@ -992,9 +983,7 @@ def build_formula_families(
                 veda_span=len(vedas),
                 cross_veda=len(vedas) > 1,
                 representative_coverage=coverage,
-                parallel_corroborated=(
-                    len(vedas) > 1 and _corroborated(family.mantras, index)
-                ),
+                parallel_corroborated=(len(vedas) > 1 and _corroborated(family.mantras, index)),
                 derivation_method=DERIVATION_METHOD,
                 provenance=Provenance(
                     trust=TrustClass.DETERMINISTIC_DERIVED,
@@ -1081,9 +1070,7 @@ def build_formula_families(
         "families_produced": len(family_rows),
         "family_members": len(member_rows),
         "members_by_role": dict(sorted(role_totals.items())),
-        "families_with_a_secondary_core": sum(
-            1 for row in family_rows if row.secondary_core_count
-        ),
+        "families_with_a_secondary_core": sum(1 for row in family_rows if row.secondary_core_count),
         "secondary_cores": sum(row.secondary_core_count for row in family_rows),
         "formulas_unfamilied": unfamilied,
         "formulas_accounted_for": len(member_rows) + unfamilied,
@@ -1108,8 +1095,6 @@ def build_formula_families(
         "removal_recommendation_occurrence_rows": sum(
             item.occurrence_count for item in recommendations
         ),
-        "removal_recommendation_cross_veda": sum(
-            1 for item in recommendations if item.cross_veda
-        ),
+        "removal_recommendation_cross_veda": sum(1 for item in recommendations if item.cross_veda),
     }
     return family_rows, member_rows, report

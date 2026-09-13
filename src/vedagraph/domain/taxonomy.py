@@ -164,9 +164,7 @@ class TaxonomySummary:
         """
         if not self.registry_entities:
             return 0.0
-        return round(
-            (self.registry_entities - self.classified) / self.registry_entities, 6
-        )
+        return round((self.registry_entities - self.classified) / self.registry_entities, 6)
 
     def as_dict(self) -> dict[str, Any]:
         return {
@@ -192,9 +190,7 @@ def registry_keys(project_root: pathlib.Path) -> frozenset[str]:
     entities = document.get("entities") if isinstance(document, dict) else None
     if not isinstance(entities, list) or not entities:
         raise TaxonomyError(f"{DEVATA_REGISTRY_PATH}: no entities")
-    return frozenset(
-        str(entity["entity_key"]) for entity in entities if "entity_key" in entity
-    )
+    return frozenset(str(entity["entity_key"]) for entity in entities if "entity_key" in entity)
 
 
 def _strings(entity_key: str, field_name: str, value: object) -> tuple[str, ...]:
@@ -276,9 +272,7 @@ def load_taxonomy(
                 f"Allowed: {', '.join(sorted(structures))}"
             )
 
-        declared = _strings(entity_key, "axes", raw.get("axes")) or (
-            str(DeityAxis.UNSPECIFIED),
-        )
+        declared = _strings(entity_key, "axes", raw.get("axes")) or (str(DeityAxis.UNSPECIFIED),)
         for axis in declared:
             if axis not in axis_names:
                 raise TaxonomyError(
@@ -302,8 +296,7 @@ def load_taxonomy(
         for component in composed_of:
             if component not in known:
                 raise TaxonomyError(
-                    f"{entity_key}: composed_of names {component!r}, which is not a "
-                    "registry Devata"
+                    f"{entity_key}: composed_of names {component!r}, which is not a registry Devata"
                 )
         member_of = _strings(entity_key, "member_of", raw.get("member_of"))
         groups.update(member_of)
@@ -315,9 +308,7 @@ def load_taxonomy(
                 axes=tuple(DeityAxis(axis) for axis in declared),
                 label_iast=str(raw.get("label_iast", "") or "").strip(),
                 label_en=label_en,
-                short_description=" ".join(
-                    str(raw.get("short_description", "") or "").split()
-                ),
+                short_description=" ".join(str(raw.get("short_description", "") or "").split()),
                 aliases_iast=_strings(entity_key, "aliases_iast", raw.get("aliases_iast")),
                 epithets=_epithets(entity_key, raw.get("epithets")),
                 member_of=member_of,

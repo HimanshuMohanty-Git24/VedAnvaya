@@ -279,9 +279,7 @@ def ingest_extractions(
             ingest.reject("object_type_unknown", extraction.object_type)
             continue
         if node_type not in rule.object_types:
-            ingest.reject(
-                "object_type_invalid_for_predicate", f"{predicate} <- {node_type}"
-            )
+            ingest.reject("object_type_invalid_for_predicate", f"{predicate} <- {node_type}")
             continue
 
         quote = extraction.evidence_quote.strip()

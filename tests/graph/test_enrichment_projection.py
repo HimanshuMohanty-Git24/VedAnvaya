@@ -169,9 +169,7 @@ PARALLEL_ROWS: list[dict[str, Any]] = [
         # Evidence already encoded as a JSON string, which is the shape
         # Provenance.as_edge_properties produces. Both shapes must survive the reader.
         **_provenance(
-            evidence=json.dumps(
-                [{"locator": "VG:RV:1.2.3", "surface": "IAST", "quote": "indra"}]
-            )
+            evidence=json.dumps([{"locator": "VG:RV:1.2.3", "surface": "IAST", "quote": "indra"}])
         ),
     },
 ]
@@ -529,9 +527,7 @@ def test_a_controlled_predicate_in_the_wrong_artifact_is_rejected(
 def test_an_unknown_semantic_object_kind_is_rejected(tmp_path: pathlib.Path) -> None:
     row = dict(SEMANTIC_ROWS[0])
     row["object_kind"] = "Lemma"
-    _write_jsonl(
-        enrichment.enrichment_dir(tmp_path) / enrichment.SEMANTIC_CANDIDATES_FILE, [row]
-    )
+    _write_jsonl(enrichment.enrichment_dir(tmp_path) / enrichment.SEMANTIC_CANDIDATES_FILE, [row])
     session = FakeSession()
     with pytest.raises(UnknownObjectKindError):
         enrichment_loader.merge_semantic_candidate_rels(session, tmp_path)
