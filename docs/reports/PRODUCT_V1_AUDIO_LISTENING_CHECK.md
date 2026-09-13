@@ -86,6 +86,38 @@ The text was re-read from the graph and from the source on 2026-09-13:
 The mapping is correct; the sheet's expectation was not. This is why the **Listen for**
 column is now derived from the stored text rather than written out from an edition.
 
+## Attempt, 2026-09-13 — not closed, and why
+
+A session was asked to carry out this check and could not. The obstacle was not the
+machine: three sound devices report OK, and all ten streams below were fetched and decoded
+on it. The obstacle is that the session had no human in it. An agent has no ears, and a
+`playing` event in a headless browser is the same non-evidence §5 of the release closure
+already called it. Filling the table below with ten `HEARD_MATCH` rows on that basis would
+have turned the one gate this product has deliberately left open into a formality.
+
+What that session could do was make sure the sheet costs the eventual listener nothing.
+Every row's **Listen for** value was re-derived and checked against the file the source
+actually serves:
+
+| Checked | Result |
+|---|---|
+| Ten rows: catalogue record, VedSearch ref, corpus text vs. the served file's `audio_text` | 10/10 agree, similarity 0.997–1.000 |
+| Ten rows: the filename the source returns | names the requested coordinate in all ten |
+| Ten `/stream` URLs | 200 `audio/mpeg`, `ID3` framing, 9.1–41.9 s decoded |
+| `griffith_page(8, ·)` | `48→48`, `60→49`, `71→60`, `103→92`, and `49–59 → 93–103` |
+| `audit_mappings.py --sample 40` | 127 confirmed, 0 wrong, 0 unreachable |
+| `/passages/VG:RV:SAK:M08:S071:V001/audio` | serves `VEDSEARCH:RV:8.60.1`, MANTRA, EXACT |
+
+Every expectation in the table above is therefore confirmed on paper. What is left for a
+listener is the one question paper cannot answer: whether the bytes recite it.
+
+**Before comparing this sheet against the release spec.** The spec asks for four Rigvedic
+samples at the Vālakhilya boundary; this sheet has three — rows 2, 3 and 4. Row 1 is
+`RV 1.1.1`, a control outside Mandala 8, and says so. The two remaining boundary cases,
+`8.92 → 8.81` and `8.103 → 8.92`, are in `audit_mappings.py`'s `ALWAYS_AUDIT` and are
+re-checked textually on every run. Adding them here as rows 11 and 12 would be reasonable;
+reporting a fourth boundary row this sheet does not contain would not.
+
 ## Recording the result
 
 Rows 3 and 4 decide the check. If both recitations match their on-page Sanskrit, the
