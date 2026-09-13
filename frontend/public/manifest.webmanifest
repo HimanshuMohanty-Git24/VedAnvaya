@@ -1,0 +1,16 @@
+{
+  "name": "VedAnvaya",
+  "short_name": "VedAnvaya",
+  "description": "The four Vedic Samhitas read as one connected corpus, with the evidence behind every connection and a plain statement of what is not held.",
+  "lang": "en",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#F4F0E7",
+  "theme_color": "#F4F0E7",
+  "icons": [
+    { "src": "/brand/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/brand/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/brand/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

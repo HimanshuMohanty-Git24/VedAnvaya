@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Fraunces, Inter, Noto_Serif_Devanagari } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
@@ -62,7 +62,18 @@ const charis = localFont({
     src: [{ path: "../fonts/charis-regular.woff2", weight: "400", style: "normal" }],
 });
 
+/**
+ * The browser identity.
+ *
+ * Next's App Router picks up `favicon.ico`, `icon.png` and `apple-icon.png` from this
+ * directory by convention and emits the link tags itself, so the only things declared here
+ * are the ones convention cannot infer: the manifest, the theme colour and the social card.
+ *
+ * `metadataBase` is required for the OpenGraph image to resolve to an absolute URL. Without
+ * it Next warns and emits a relative path, which every social scraper ignores.
+ */
 export const metadata: Metadata = {
+    metadataBase: new URL(process.env.VEDANVAYA_SITE_URL ?? "http://localhost:3000"),
     title: {
         default: "VedAnvaya: the Vedas, connected",
         template: "%s | VedAnvaya",
@@ -70,6 +81,28 @@ export const metadata: Metadata = {
     description:
         "Read the four Vedic Samhitas as one connected corpus. Mantras, deities, seers, rites and shared wording, with the evidence behind every connection and a plain statement of what is not held.",
     applicationName: "VedAnvaya",
+    manifest: "/manifest.webmanifest",
+    openGraph: {
+        type: "website",
+        siteName: "VedAnvaya",
+        title: "VedAnvaya: the Vedas, connected",
+        description:
+            "Four Samhitas, one corpus, and the evidence behind every connection.",
+        images: [{ url: "/brand/og.png", width: 1200, height: 630, alt: "VedAnvaya" }],
+    },
+    twitter: { card: "summary_large_image" },
+};
+
+export const viewport: Viewport = {
+    /*
+     * Two colours, because the browser chrome should match the page it is framing rather than
+     * always the light one. Declared here rather than in metadata: Next moved themeColor to
+     * the viewport export and warns on the old location.
+     */
+    themeColor: [
+        { media: "(prefers-color-scheme: light)", color: "#F4F0E7" },
+        { media: "(prefers-color-scheme: dark)", color: "#131410" },
+    ],
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
