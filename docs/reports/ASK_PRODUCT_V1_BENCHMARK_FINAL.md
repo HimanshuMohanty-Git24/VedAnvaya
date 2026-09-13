@@ -364,6 +364,10 @@ Opened by this closure:
 | `ASK_BL_12` | **Finish the live frontend acceptance**: one Ask with citations, to exercise inline chip click-through and the Explore-in-Graph affordance. Blocked only on provider quota. |
 | `ASK_BL_13` | **Entity-fact provenance misdescribed in prose.** The Q02 delta answer said the Indra characterisation “derives from the Rigvedic Anukramani attribution layer”. It does not: `E5` is an `ENTITY_FACT` this project authored, and the Anukramani sentence is `E5`'s *scope qualifier*, not its source. The item renders a fact and its qualifier adjacently and the model fused them. No mechanical check can see it — it is neither a figure nor a citation — so the candidate fix is to label the qualifier as a scope note in the rendered packet, not to add a rule. The frozen answer got this right, so it is a re-ask regression rather than a standing defect. This is why Q02 is `PARTIAL_CORRECT`. |
 
+> **Status since, 2026-09-13.** `ASK_BL_07` was closed by `5a95a69` and `ASK_BL_09`
+> by `6823827`. This table records what this closure *opened* and is left as graded;
+> the current backlog lives in `PRODUCT_V1_RELEASE_CLOSURE.md`.
+
 ---
 
 ## 12. Decision, as first graded

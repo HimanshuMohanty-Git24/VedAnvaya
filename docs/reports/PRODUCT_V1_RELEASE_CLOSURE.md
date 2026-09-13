@@ -126,6 +126,11 @@ It was **not** made to pass. Raising the budget or adding a warm-up would conver
 measurement into a formality, and the honest state is that this gate is red. Recorded as
 **`TEST_BL_01`**.
 
+**Resolved 2026-09-13 — see §7.** The "earlier run today | pass" row above was the clue and
+was not followed at the time. The test was measuring the coverage tracer rather than the
+endpoint, which is why the same assertion could return 769 ms and 365 ms on two runs of the
+same tests. The budget stayed at 400 ms, no warm-up was added, and the full suite is green.
+
 ### Ask — the wait is entirely the provider
 
 Measured on the reader's real path (browser → Next rewrite → API) and directly against the
@@ -221,6 +226,18 @@ loud. The mapping for the critical case is confirmed on paper —
 `VG:RV:SAK:M08:S071:V001` → VedSearch `8.60.1`, and `VG:RV:SAK:M08:S048:V001` → `8.48.1`
 unshifted — but confirmed on paper is not confirmed by ear.
 
+**Correction, 2026-09-13.** The sheet itself was wrong on the row it calls decisive. It told
+the listener to expect `agna ā yāhy agnibhir hotāraṁ tvā vṛṇīmahe` at
+`VG:RV:SAK:M08:S071:V001`; that is the text of this corpus's **8.60.1**, which is precisely
+what a *broken* key-for-key mapping would have played there. The corpus reads
+`tvaṁ no agne mahobhiḥ pāhi viśvasyā arāteḥ`, and VedSearch's own `audio_text` for `8.60.1`
+is the same verse — re-read from both the graph and the source on 2026-09-13. A human
+following the old sheet would have heard a correct recitation, called it a mismatch, and
+re-derived a transform that was already right. The sheet's expectations are now taken from
+the stored text, the sample is extended to ten rows (4 RV at and around the boundary, 2 more
+RV outside Mandala 8, 2 AV, 2 YV), and every row was checked against the file the source
+actually serves. The auditory gate itself remains `HUMAN_AUDIO_CHECK = OUTSTANDING`.
+
 ---
 
 ## 6. Backlog opened or carried by this closure
@@ -229,16 +246,113 @@ unshifted — but confirmed on paper is not confirmed by ear.
 |---|---|
 | `PERF_BACKLOG_01` | **Ask latency is provider-bound: 29.7–248.7s end-to-end, of which ≤1.2s is VedaGraph.** Not a retrieval or graph problem. Addressed by choosing a faster provider (Groq is already supported and configured by env alone), by `ASK_BL_04` streaming so the reader sees progress, or by lowering `VEDAGRAPH_LLM_MAX_RETRIES`. If either LLM setting changes, `frontend/next.config.ts`'s `proxyTimeout` must still exceed `(retries + 1) × timeout + retries × 30s`; `tests/product/test_ask_proxy_ceiling.py` enforces this. |
 | `UI_BL_01` | **`--faint` and `--muted` have converged in the light theme.** Meeting AA left the two tokens near-identical. Either consolidate them or re-establish the step on a surface that can carry it. |
-| `TEST_BL_01` | **`TestLivePerformance` depth-2 median fails inside the full suite and nowhere else** — 817–850 ms in a full run, 8/8 pass isolated, 183–210 ms against the live API server. Pre-existing; it failed at 802 ms before this closure and no `src/` file changed here. Diagnose why the in-process `TestClient` path degrades partway through a run before touching the budget. Do not raise the number to clear it. |
+| ~~`TEST_BL_01`~~ | **CLOSED 2026-09-13.** `TestLivePerformance` depth-2 was measuring the coverage tracer, not the endpoint. See §7 below. The 400 ms budget is unchanged. |
 
-`ASK_BL_11` (ruff format drift) is **closed** by this closure. `TEST_BL_01` is why the
-backend suite gate is red and why this closure does not promote the release label. `ASK_BL_08`, `ASK_BL_13`,
-`ASK_BL_01`, `ASK_BL_03`, `ASK_BL_04`, `ASK_BL_05`, `ASK_BL_07`, `ASK_BL_09`, `ASK_BL_10`
-and `ASK_BL_12` remain post-V1 and were not touched.
+`ASK_BL_11` (ruff format drift) is **closed** by this closure. `TEST_BL_01` was why the
+backend suite gate was red; it is closed in §7 and the gate is green.
+
+**Correction, 2026-09-13.** The sentence that stood here also listed `ASK_BL_07` and
+`ASK_BL_09` as untouched. Both were already closed when it was written, by commits this
+same report describes elsewhere, and the list was assembled from the benchmark report's
+*opened by this closure* table rather than from the state of the tree:
+
+| Id | Actual status | Closed by | Evidence in the tree |
+|---|---|---|---|
+| `ASK_BL_07` | **CLOSED** | `5a95a69` *fix: close ASK_BL_07 and the stale audio caveats it shares a cause with* | `_IAST_MARKS` in `src/vedagraph/api/ask/citation.py` is now derived as `_IAST_MARKS_LOWER + _IAST_MARKS_LOWER.upper()` and includes the older cedilla transliteration; `tests/api/ask/test_citation.py` asserts both cases of every mark and that a word whose only diacritic is capitalised is audited rather than silently skipped. |
+| `ASK_BL_09` | **CLOSED** | `6823827` *fix: close Ask VedaGraph final truthfulness gaps* | One finish-reason alias table in `src/vedagraph/llm/base.py`; `LLMResponse.generation_truncated` derives from it; `AskService._caveats` attaches a plain truncation caveat and the status rule in `src/vedagraph/api/ask/service.py` forbids a truncated answer from staying `SUPPORTED`. |
+
+Neither is reopened here: the closing commits are in this branch's history and the
+behaviour they describe is present and tested.
+
+The authoritative remaining backlog is therefore `ASK_BL_01`, `ASK_BL_02`, `ASK_BL_03`,
+`ASK_BL_04`, `ASK_BL_05`, `ASK_BL_08`, `ASK_BL_10`, `ASK_BL_12`, `ASK_BL_13`,
+`ASK_BL_AGENTROUTER_01`, `PERF_BACKLOG_01` and `UI_BL_01`. `ASK_BL_02` is carried for
+reporting polish only -- the behaviour it names works, and Q03 was caught by it.
 
 ---
 
-## 7. Method note
+## 7. `TEST_BL_01` — the depth-2 latency gate, diagnosed and closed
+
+**Root cause: the benchmark was pricing `sys.settrace`, not the endpoint.**
+`addopts` in `pyproject.toml` carries `--cov=vedagraph` with `branch = true`, so every
+in-process request in this suite ran under coverage's C tracer. That tax is proportional to
+the Python executed per request, and depth-2 does more of it than any other route here --
+two Cypher round trips and then a `node_view`/`edge_view` per row over a 300-edge budget.
+
+The measurement that settles it was taken **inside one full-suite process**, at the same
+1.84-million-object heap and on the same connection pool, by pausing and resuming the
+coverage controller between samples of the identical request:
+
+| Same request, same process, same instant | Median |
+|---|---|
+| coverage running | 459 ms, then 360 ms on a repeat |
+| **coverage paused** | **185 ms** |
+| coverage paused, GC frozen *and* disabled | 185 ms |
+
+Garbage collection was not involved: freezing and disabling the collector at 1.84 million
+live objects moved nothing. Neither was the heap itself -- paused at 1.84 M objects is
+185 ms, and paused at 121 K objects is 195 ms.
+
+### Timing matrix
+
+| Mode | n | Median | Min | Max | Result |
+|---|---|---|---|---|---|
+| Isolated, one param, `--no-cov` | 5 × 3 runs | 122–141 ms | 110 | 211 | pass |
+| Isolated, one param, coverage on | 5 × 3 runs | 287–367 ms | 256 | 650 | pass |
+| Class, coverage on | 5 × 2 runs | 282–393 ms | 258 | 475 | pass |
+| Module (109 tests), coverage on | 5 × 2 runs | 275–399 ms | 259 | 462 | pass |
+| **Full suite, coverage on, before the fix** | 5 × 2 runs | **769 ms / 365 ms** | 314 | 956 | **1 fail, 1 pass** |
+| Full suite, after the fix | 5 × 2 runs | 103 ms / 163 ms | 101 | 220 | pass |
+| Live uvicorn over a socket | 9 | 149 ms | 104 | 198 | — |
+
+The pre-fix full-suite row is the finding: the same assertion returned 769 ms and 365 ms on
+two runs of the same tests. It was not merely pessimistic, it was **non-deterministic**,
+because the quantity it measured was not a property of the product.
+
+**Does the test measure the same unit of work as the live endpoint?** Before the fix, no.
+It measured the endpoint *plus* a line-and-branch tracer that the product never loads. It
+also skips the socket and the HTTP parse that the live endpoint pays, so the two errors ran
+in opposite directions and neither was visible in the number.
+
+### The fix
+
+`tests/api/conftest.py::untraced_measurement` is a context manager that pauses the coverage
+controller around the timed block only, asserts that no tracer or profiler is installed
+while the clock runs, and resumes afterwards. Five tests use it -- the graph, formula,
+deity, entity and ritual latency budgets. Warm-up calls and status assertions stay outside
+the block and stay traced.
+
+Two things this deliberately is not: the 400 ms budget was not touched, and no warm-up was
+added to `test_median_latency`. Its loop is still five samples with the first one cold, and
+the traced re-issue that keeps those routes in the coverage report runs *after* the
+measurement, never before it.
+
+**A second defect found while fixing the first.** Pausing coverage is a one-way door for
+threads that already exist: `Coverage.start()` installs a tracer on the calling thread and
+arranges one for threads created later, but does not reach back into a running thread -- and
+the live `TestClient` is session-scoped, so every live request in this suite is served on
+one long-lived anyio portal thread. One paused test therefore blinded coverage for every
+live request after it. Measured on the same 160 tests, ordered two ways:
+
+| Order | `graph_service` statements unmeasured |
+|---|---|
+| `test_devatas.py test_graph.py` (pause first) | 373 |
+| `test_graph.py test_devatas.py` (pause last) | 55 |
+
+`tests/conftest.py::pytest_collection_modifyitems` closes it by running every test that uses
+the fixture at the end of the session. With it, coverage over the full suite is identical to
+the run before the fixture existed: **4,901 statements missed, 79%, and not one module
+changed**. That also means the depth-2 budget is now asserted at the *end* of a full
+session, which is the harder case rather than an easier one.
+
+**Note for anyone tempted by `pytest.mark.no_cover`.** pytest-cov's own marker does the same
+pause, but under `--no-cov` its controller is `None` and the marker hook dereferences it
+anyway, so `pytest --no-cov` fails with `AttributeError` on every marked test. The fixture
+checks for the absent controller; the marker is not used.
+
+---
+
+## 8. Method note
 
 Three findings in this closure were measurement artifacts, not defects, and each was
 withdrawn only after being checked against the running product:
