@@ -1,0 +1,1094 @@
+/* ============================================================================
+   The VedAnvaya homepage.
+
+   Ten sections, ten layout families, one shared measure. The rhythm between
+   them is deliberately unequal: three section-spacing steps that never repeat
+   twice in a row, so the page reads as composed rather than as a stack.
+   ============================================================================ */
+
+.va-hero,
+.va-section,
+.va-plate {
+    --va-page: min(100% - (2 * var(--va-shell-gutter)), var(--va-shell-max));
+}
+
+/* ------------------------------------------------------------------- hero - */
+
+.va-hero {
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+    padding-block: var(--va-space-5xl) var(--va-space-4xl);
+}
+
+/*
+ * The hero plate.
+ *
+ * Set on a pseudo-element rather than as a background on the section, so it can be masked
+ * independently of the content and so it costs nothing in the DOM. It is anchored to the
+ * right, where the artwork's drafting geometry lives, and faded toward the left, where the
+ * headline sits. Type over an unmasked texture is the difference between a manuscript and a
+ * scrapbook.
+ */
+.va-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image: image-set(
+        url("/brand/textures/hero-light-1920.avif") type("image/avif"),
+        url("/brand/textures/hero-light-1920.webp") type("image/webp")
+    );
+    background-size: cover;
+    background-position: right center;
+    opacity: 0.9;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 46%, #000 100%);
+    mask-image: linear-gradient(to right, transparent 0%, #000 46%, #000 100%);
+}
+
+.dark .va-hero::before {
+    background-image: image-set(
+        url("/brand/textures/hero-dark-1920.avif") type("image/avif"),
+        url("/brand/textures/hero-dark-1920.webp") type("image/webp")
+    );
+    opacity: 0.85;
+}
+
+.va-hero-inner {
+    width: var(--va-page);
+    margin-inline: auto;
+    display: grid;
+    /*
+     * Not a half-and-half split. The type column is wider than the figure and the two are
+     * separated by a column of nothing, so the composition reads as a page with a margin
+     * rather than as two panes. 1.15fr against 0.85fr with a 4xl gutter is the asymmetry.
+     */
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    gap: var(--va-space-4xl);
+    align-items: center;
+}
+
+.va-hero-brand {
+    margin: 0 0 var(--va-space-lg);
+    font-family: var(--va-font-deva);
+    font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.15rem);
+    line-height: 1.5;
+    letter-spacing: 0;
+    color: var(--va-accent-text);
+}
+
+.va-hero-headline {
+    margin: 0;
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-display);
+    font-weight: var(--va-weight-regular);
+    line-height: var(--va-leading-flat);
+    letter-spacing: var(--va-tracking-display);
+    color: var(--va-text-primary);
+    text-wrap: balance;
+    font-optical-sizing: auto;
+    /* The second line is the qualification, and it is set a step quieter so the eye reads
+       the claim first and the condition second, which is the order they matter in. */
+    max-width: 18ch;
+}
+
+
+
+.va-hero-lede {
+    margin: var(--va-space-xl) 0 0;
+    max-width: var(--va-measure-tight);
+    font-size: var(--va-text-lg);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-secondary);
+}
+
+.va-hero-actions {
+    margin-top: var(--va-space-2xl);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--va-space-xl);
+}
+
+/* No max-width. Constrained to the lede's measure the three figures broke after the second
+   separator and left a dangling middle dot at the end of the line. */
+.va-hero-signal {
+    margin: var(--va-space-2xl) 0 0;
+    padding-top: var(--va-space-md);
+    border-top: var(--va-rule-quiet);
+    max-width: max-content;
+    font-size: var(--va-text-xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+    font-variant-numeric: tabular-nums;
+}
+
+/* ------------------------------------------------------------- the button - */
+
+/*
+ * The only filled button on the page. Everything else is a ruled link, so that the primary
+ * action is the one object shaped like a control and the reader never has to work out which
+ * of nine identical pills is the important one.
+ *
+ * It is a rectangle with a small radius rather than a pill: a pill is the most generic shape
+ * in contemporary interface design, and this page is trying not to look like every other one.
+ */
+.va-button {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--va-space-sm);
+    padding: 0.7rem 1.4rem;
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-base);
+    font-weight: var(--va-weight-medium);
+    color: var(--va-text-on-accent);
+    background: var(--va-accent-base);
+    border: var(--va-border-width) solid var(--va-accent-base);
+    border-radius: var(--va-radius-xs);
+    text-decoration: none;
+    transition: var(--va-transition-colors);
+}
+
+.va-button:hover {
+    background: var(--va-accent-hover);
+    border-color: var(--va-accent-hover);
+}
+
+.va-action {
+    display: inline-grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+    gap: var(--va-space-sm);
+    padding-bottom: 3px;
+    font-size: var(--va-text-base);
+    font-weight: var(--va-weight-medium);
+    color: var(--va-accent-text);
+    text-decoration: none;
+    border-bottom: var(--va-border-width) solid
+        color-mix(in srgb, var(--va-accent-text) 34%, transparent);
+    transition: var(--va-transition-colors);
+}
+
+.va-action:hover {
+    color: var(--va-text-primary);
+    border-bottom-color: var(--va-text-primary);
+}
+
+.va-action svg {
+    transition: var(--va-transition-transform);
+}
+
+.va-action:hover svg {
+    transform: translateX(3px);
+}
+
+.va-action-note {
+    grid-column: 1 / -1;
+    font-size: var(--va-text-xs);
+    font-weight: var(--va-weight-regular);
+    color: var(--va-text-tertiary);
+}
+
+/* ------------------------------------------------------------ constellation - */
+
+.va-constellation-panel {
+    position: relative;
+    /*
+     * The palm-leaf proportion, from the Archive Plates artwork and from the object itself.
+     * A Vedic manuscript folio is far wider than it is tall, and using that ratio here makes
+     * the panel sit in the page as a plate rather than as a widget.
+     */
+    aspect-ratio: 5 / 4;
+    border-radius: var(--va-radius-sm);
+    overflow: hidden;
+    background: var(--va-night-800);
+    border: var(--va-border-width) solid var(--va-night-line-strong);
+    --va-constellation-ink: #b8b1a0;
+    --va-constellation-line: #3a3b33;
+    --va-constellation-accent: #c9694f;
+    --va-constellation-gold: #b49a62;
+}
+
+.va-constellation,
+.va-constellation-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/*
+ * The readout sits over the field, so it carries its own scrim. Without one it collided with
+ * the node labels on a narrow panel, where the text wraps to two lines and the field has
+ * nowhere to move to.
+ */
+.va-constellation-readout {
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    margin: 0;
+    padding: var(--va-space-2xl) var(--va-space-lg) var(--va-space-lg);
+    background: linear-gradient(to top, var(--va-night-800) 38%, transparent);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--va-space-sm);
+    pointer-events: none;
+}
+
+.va-constellation-name {
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-lg);
+    color: #efe9dc;
+}
+
+.va-constellation-kind {
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: #8f887a;
+}
+
+.va-constellation-link {
+    position: absolute;
+    top: var(--va-space-lg);
+    inset-inline-end: var(--va-space-lg);
+    padding: var(--va-space-2xs) var(--va-space-sm);
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: #cdc6b6;
+    text-decoration: none;
+    border: var(--va-border-width) solid #3a3b33;
+    border-radius: var(--va-radius-xs);
+    background: color-mix(in srgb, #131410 76%, transparent);
+    transition: var(--va-transition-colors);
+}
+
+.va-constellation-link:hover {
+    color: #f4f0e7;
+    border-color: #57584d;
+}
+
+.va-constellation-absent {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    display: grid;
+    place-items: center;
+    padding: var(--va-space-2xl);
+    text-align: center;
+    font-size: var(--va-text-sm);
+    color: #8f887a;
+}
+
+/* ---------------------------------------------------------------- sections - */
+
+.va-section {
+    position: relative;
+    padding-block: var(--va-space-5xl);
+}
+
+/*
+ * Unequal rhythm, set per section rather than by nth-of-type. The generated-layout tell is a
+ * page whose sections are all the same height apart; this varies the gap deliberately, and
+ * doing it by an explicit modifier means the sequence survives a section being inserted.
+ */
+.va-section.is-tight {
+    padding-block: var(--va-space-3xl);
+}
+
+.va-section.is-open {
+    padding-block: var(--va-space-6xl);
+}
+
+.va-section-inner {
+    position: relative;
+    z-index: 1;
+    width: var(--va-page);
+    margin-inline: auto;
+}
+
+.va-section.is-sunk {
+    background: var(--va-surface-sunk);
+    border-block: var(--va-border-hairline);
+}
+
+.va-section-rule {
+    width: var(--va-page);
+    margin: 0 auto;
+    padding-block: var(--va-space-2xl);
+}
+
+.va-kicker {
+    margin: 0 0 var(--va-space-md);
+    display: flex;
+    align-items: baseline;
+    gap: var(--va-space-sm);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-kicker .va-deva-label {
+    font-size: 1.6em;
+    font-weight: var(--va-weight-regular);
+    letter-spacing: 0;
+    color: var(--va-accent-text);
+}
+
+.va-heading {
+    max-width: var(--va-measure);
+}
+
+.va-heading-title {
+    margin: 0;
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-2xl);
+    font-weight: var(--va-weight-regular);
+    line-height: var(--va-leading-tight);
+    letter-spacing: var(--va-tracking-tight);
+    color: var(--va-text-primary);
+    text-wrap: balance;
+    font-optical-sizing: auto;
+}
+
+.va-heading-lede {
+    margin: var(--va-space-lg) 0 0;
+    font-size: var(--va-text-md);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-secondary);
+}
+
+/* ------------------------------------------------------------- the ledger - */
+
+.va-ledger-section .va-heading {
+    margin-bottom: var(--va-space-2xl);
+}
+
+.va-ledger {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--va-text-sm);
+}
+
+.va-ledger th,
+.va-ledger td {
+    padding: var(--va-space-lg) var(--va-space-lg) var(--va-space-lg) 0;
+    text-align: start;
+    vertical-align: baseline;
+    border-bottom: var(--va-rule-quiet);
+}
+
+.va-ledger thead th {
+    padding-block: var(--va-space-sm);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+    border-bottom: var(--va-border-width) solid var(--va-line-strong);
+}
+
+.va-ledger .is-num {
+    text-align: end;
+    font-variant-numeric: tabular-nums;
+    padding-right: 0;
+    white-space: nowrap;
+}
+
+.va-ledger tbody th {
+    font-weight: var(--va-weight-regular);
+}
+
+.va-ledger tbody th a {
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--va-space-sm);
+    color: inherit;
+    text-decoration: none;
+}
+
+.va-ledger-name {
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-xl);
+    color: var(--va-text-primary);
+    transition: var(--va-transition-colors);
+}
+
+.va-ledger tbody th a:hover .va-ledger-name {
+    color: var(--va-accent-text);
+}
+
+.va-ledger tbody th .va-deva-label {
+    color: var(--va-text-tertiary);
+}
+
+.va-ledger-absent {
+    color: var(--va-text-tertiary);
+    max-width: 30ch;
+}
+
+/* A real zero, marked as one. It is the most informative cell in the table and printing it
+   as "0" alongside four-figure counts makes it look like a rounding artefact. */
+.va-ledger-zero {
+    color: var(--va-tone-unbuilt);
+    border-bottom: var(--va-border-dashed);
+    padding-bottom: 1px;
+}
+
+.va-ledger-note {
+    margin: var(--va-space-xl) 0 var(--va-space-2xl);
+    max-width: var(--va-measure);
+    font-size: var(--va-text-sm);
+    color: var(--va-text-secondary);
+}
+
+/* --------------------------------------------------------------- the split - */
+
+.va-split .va-section-inner {
+    display: grid;
+    gap: var(--va-space-3xl);
+}
+
+@media (min-width: 62rem) {
+    .va-split .va-section-inner {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: var(--va-space-4xl);
+        align-items: center;
+    }
+
+    /* Reversing by order rather than by source keeps the figure first in the DOM, where it
+       belongs: the copy refers to it, so a screen reader should meet it first either way. */
+    .va-split.is-reversed .va-split-figure {
+        order: 2;
+    }
+}
+
+.va-split-copy p {
+    margin: var(--va-space-lg) 0 0;
+    max-width: var(--va-measure);
+    color: var(--va-text-secondary);
+}
+
+.va-split-copy .va-action {
+    margin-top: var(--va-space-xl);
+}
+
+/* ---------------------------------------------------------- the verse frame - */
+
+.va-verse-frame {
+    position: relative;
+    padding: var(--va-space-2xl);
+    background: var(--va-surface-raised);
+    border: var(--va-border-hairline);
+    border-radius: var(--va-radius-sm);
+}
+
+/*
+ * The corner ornament, as two rules rather than as the supplied artwork.
+ *
+ * The manuscript corner in the asset library is a 76 KB raster with black ink baked in. What
+ * it is a picture of is a ruled corner with a marked intersection, and that is four lines of
+ * CSS which take the ink colour in dark mode and cost nothing.
+ */
+.va-verse-frame::before {
+    content: "";
+    position: absolute;
+    top: var(--va-space-md);
+    left: var(--va-space-md);
+    width: 22px;
+    height: 22px;
+    border-top: var(--va-border-width) solid var(--va-accent-base);
+    border-left: var(--va-border-width) solid var(--va-accent-base);
+}
+
+.va-verse-citation {
+    margin: 0 0 var(--va-space-lg);
+    font-family: var(--va-font-mono);
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-verse-frame .va-sanskrit {
+    margin: 0;
+    font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.3rem);
+    color: var(--va-text-primary);
+}
+
+.va-verse-apparatus {
+    margin: var(--va-space-2xl) 0 0;
+    padding-top: var(--va-space-lg);
+    border-top: var(--va-rule-quiet);
+    display: grid;
+    gap: var(--va-space-md);
+    font-size: var(--va-text-xs);
+}
+
+.va-verse-apparatus div {
+    display: grid;
+    grid-template-columns: 8.5rem minmax(0, 1fr);
+    gap: var(--va-space-md);
+}
+
+/*
+ * Sentence case, not the tracked uppercase used for section kickers.
+ *
+ * A sweep of the rendered page counted twenty-one separate uppercase tracked labels: three
+ * section kickers, which are budgeted, and eighteen table headers, definition terms and panel
+ * readouts that had drifted into the same treatment. The eye stops distinguishing them, and
+ * the kickers stop being emphatic. Uppercase is now reserved for the kicker, the table head
+ * and the two panel readouts; a definition list inside a frame does not need it.
+ */
+.va-verse-apparatus dt {
+    color: var(--va-text-tertiary);
+}
+
+.va-verse-apparatus dd {
+    margin: 0;
+    color: var(--va-text-secondary);
+}
+
+/* ----------------------------------------------------------------- the bars - */
+
+.va-bars {
+    margin: var(--va-space-3xl) 0 0;
+    display: grid;
+    gap: var(--va-space-xl);
+}
+
+.va-bar-row {
+    display: grid;
+    grid-template-columns: 9rem minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--va-space-lg);
+}
+
+.va-bar-label {
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-lg);
+    color: var(--va-text-primary);
+}
+
+.va-bar-track {
+    position: relative;
+    height: 10px;
+}
+
+/* The ghost is the corpus, the fill is what is recited. Drawing the denominator as a
+   hairline outline rather than as a filled track keeps the comparison honest: the eye reads
+   the gap as unrecited verses rather than as empty chrome. */
+.va-bar-ghost {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    border: var(--va-border-width) solid var(--va-line-strong);
+}
+
+.va-bar-fill {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    background: var(--va-accent-base);
+    z-index: 1;
+}
+
+.va-bar-figure {
+    font-size: var(--va-text-sm);
+    font-variant-numeric: tabular-nums;
+    color: var(--va-text-primary);
+    white-space: nowrap;
+}
+
+.va-bar-figure span {
+    color: var(--va-text-tertiary);
+}
+
+.va-bar-row.is-absent {
+    grid-template-columns: 9rem minmax(0, 1fr);
+    align-items: start;
+}
+
+.va-bar-absence {
+    margin: 0;
+    max-width: var(--va-measure);
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-secondary);
+    padding-inline-start: var(--va-space-lg);
+    border-inline-start: var(--va-border-width-accent) solid var(--va-tone-unbuilt);
+}
+
+.va-bar-absence strong {
+    color: var(--va-text-primary);
+    font-weight: var(--va-weight-medium);
+}
+
+/* ---------------------------------------------------------------- the chain - */
+
+.va-chain {
+    display: grid;
+    gap: var(--va-space-xl);
+    padding-inline-start: var(--va-space-xl);
+    border-inline-start: var(--va-border-width) solid var(--va-line-hairline);
+}
+
+.va-chain li {
+    position: relative;
+    display: grid;
+    gap: var(--va-space-2xs);
+}
+
+.va-chain-mark {
+    position: absolute;
+    inset-inline-start: calc(var(--va-space-xl) * -1 - 4px);
+    top: 0.45em;
+    width: 7px;
+    height: 7px;
+    background: var(--va-accent-base);
+    rotate: 45deg;
+}
+
+.va-chain-label {
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-lg);
+    color: var(--va-text-primary);
+}
+
+.va-chain-note {
+    font-size: var(--va-text-sm);
+    color: var(--va-text-tertiary);
+}
+
+/* ------------------------------------------------------------------- ask --- */
+
+/*
+ * The Thread of Inquiry, as this section's ground.
+ *
+ * The artwork is a line travelling left to right through a series of drafting constructions
+ * and arriving at a rubric diamond, which is the shape of what Ask actually does: a question
+ * goes in, retrieval runs over a fixed set of channels, and an answer comes out carrying its
+ * evidence. It is the one section that was otherwise two columns of prose under two small
+ * labels, and it looked it.
+ *
+ * Held at 22% and masked from both ends, so it reads as a watermark under the type rather
+ * than as an illustration the type is sitting on.
+ */
+.va-ask {
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+}
+
+/* Above the section's own sunk background, below its content. A negative z-index would put
+   it behind that background, which on a section that paints one means invisible: the hero
+   gets away with -1 only because it has no background of its own. */
+.va-ask::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: image-set(
+        url("/brand/textures/inquiry-light-1600.avif") type("image/avif"),
+        url("/brand/textures/inquiry-light-1600.webp") type("image/webp")
+    );
+    background-size: cover;
+    background-position: center;
+    opacity: 0.22;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 30%, #000 70%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, #000 30%, #000 70%, transparent);
+}
+
+/* Paper again: it cannot be inverted, so on carbon the section keeps its own ground. */
+.dark .va-ask::before {
+    display: none;
+}
+
+.va-ask-pair {
+    margin: var(--va-space-3xl) 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    gap: var(--va-space-3xl);
+}
+
+.va-ask-pair h3 {
+    margin: 0 0 var(--va-space-md);
+    padding-bottom: var(--va-space-sm);
+    border-bottom: var(--va-border-width) solid var(--va-line-strong);
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-ask-pair p {
+    margin: 0;
+    color: var(--va-text-secondary);
+}
+
+/* The right-hand panel is the refusal, and it carries the dashed edge the token layer
+   reserves for "this is where the product stops". */
+.va-ask-pair div:last-child h3 {
+    border-bottom-style: dashed;
+}
+
+/* ------------------------------------------------------------- the plate --- */
+
+.va-plate {
+    position: relative;
+    isolation: isolate;
+    margin-block: var(--va-space-4xl);
+    padding-block: var(--va-space-5xl);
+    display: grid;
+    place-items: center;
+    overflow: clip;
+}
+
+.va-plate-ground {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.85;
+}
+
+.dark .va-plate-ground {
+    /* The plate is a photograph of paper and cannot be inverted. On carbon it is dropped and
+       the section keeps its type on the page's own ground. */
+    display: none;
+}
+
+.va-plate-inner {
+    width: min(100% - (2 * var(--va-shell-gutter)), 58rem);
+    margin: 0;
+    text-align: center;
+}
+
+.va-plate .va-kicker {
+    justify-content: center;
+}
+
+.va-plate-verse {
+    margin: var(--va-space-xl) 0 0;
+    max-width: none;
+    font-size: clamp(1.2rem, 0.95rem + 1.1vw, 1.7rem);
+    color: var(--va-text-primary);
+    text-align: center;
+}
+
+.va-plate-translation {
+    margin: var(--va-space-2xl) auto 0;
+    max-width: 46ch;
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-lg);
+    line-height: var(--va-leading-prose);
+    color: var(--va-text-secondary);
+    font-optical-sizing: auto;
+}
+
+.va-plate-caption {
+    margin-top: var(--va-space-2xl);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--va-space-lg);
+    font-size: var(--va-text-xs);
+    color: var(--va-text-tertiary);
+}
+
+.va-plate-caption a {
+    color: var(--va-accent-text);
+    text-decoration: none;
+    border-bottom: var(--va-border-width) solid
+        color-mix(in srgb, var(--va-accent-text) 34%, transparent);
+}
+
+/* ---------------------------------------------------------------- absence - */
+
+.va-absence {
+    text-align: center;
+}
+
+/*
+ * The one centred section on the page, and the measure is the whole difficulty. At 22ch this
+ * headline broke to eight lines of one and two words, which reads as a poster rather than as
+ * a sentence. 34ch gives it two lines at every width the page supports.
+ */
+.va-absence .va-heading {
+    max-width: 34ch;
+    margin-inline: auto;
+}
+
+.va-absence .va-heading-title {
+    font-size: var(--va-text-2xl);
+}
+
+.va-absence-list {
+    margin: var(--va-space-3xl) auto 0;
+    max-width: 46rem;
+    display: grid;
+    gap: var(--va-space-lg);
+    text-align: start;
+}
+
+.va-absence-list div {
+    display: grid;
+    grid-template-columns: 13rem minmax(0, 1fr);
+    gap: var(--va-space-lg);
+    padding-bottom: var(--va-space-lg);
+    border-bottom: var(--va-rule-quiet);
+}
+
+.va-absence-list dt {
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-lg);
+    color: var(--va-text-primary);
+}
+
+.va-absence-list dd {
+    margin: 0;
+    color: var(--va-text-secondary);
+}
+
+.va-absence-close {
+    margin: var(--va-space-2xl) auto var(--va-space-xl);
+    max-width: var(--va-measure);
+    font-size: var(--va-text-sm);
+    color: var(--va-text-tertiary);
+}
+
+/* ------------------------------------------------------------- start here - */
+
+.va-start-list {
+    margin: var(--va-space-2xl) 0 0;
+    border-top: var(--va-border-width) solid var(--va-line-strong);
+}
+
+.va-start-list li {
+    border-bottom: var(--va-rule-quiet);
+}
+
+.va-start-list a {
+    display: grid;
+    grid-template-columns: 3rem minmax(0, 22rem) minmax(0, 1fr);
+    align-items: baseline;
+    gap: var(--va-space-lg);
+    padding-block: var(--va-space-lg);
+    color: inherit;
+    text-decoration: none;
+    transition: var(--va-transition-colors);
+}
+
+.va-start-index {
+    font-family: var(--va-font-mono);
+    font-size: var(--va-text-2xs);
+    color: var(--va-text-tertiary);
+    font-variant-numeric: tabular-nums;
+}
+
+.va-start-title {
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-xl);
+    color: var(--va-text-primary);
+    transition: var(--va-transition-colors);
+}
+
+.va-start-note {
+    font-size: var(--va-text-sm);
+    color: var(--va-text-tertiary);
+}
+
+/*
+ * The hover: a rubric rule extends from the left margin and the title takes the accent. No
+ * lift, no shadow, no background fill. The row is an index entry, and an index entry that
+ * rises off the page when you look at it is a card pretending to be an index entry.
+ */
+.va-start-list a::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: 0;
+    width: 0;
+    height: var(--va-border-width-accent);
+    background: var(--va-accent-base);
+    transition: width var(--va-duration-base) var(--va-ease-standard);
+}
+
+.va-start-list li {
+    position: relative;
+}
+
+.va-start-list a:hover::before,
+.va-start-list a:focus-visible::before {
+    width: var(--va-space-2xl);
+}
+
+.va-start-list a:hover .va-start-title,
+.va-start-list a:focus-visible .va-start-title {
+    color: var(--va-accent-text);
+}
+
+.va-start-close {
+    margin: var(--va-space-2xl) 0 0;
+    max-width: var(--va-measure);
+    font-size: var(--va-text-sm);
+    color: var(--va-text-tertiary);
+}
+
+.va-start-close a {
+    color: var(--va-accent-text);
+    text-decoration: none;
+    border-bottom: var(--va-border-width) solid
+        color-mix(in srgb, var(--va-accent-text) 34%, transparent);
+}
+
+/* ------------------------------------------------------------- responsive - */
+
+@media (max-width: 61.99rem) {
+    .va-hero {
+        padding-block: var(--va-space-3xl) var(--va-space-2xl);
+    }
+
+    .va-hero-inner {
+        grid-template-columns: minmax(0, 1fr);
+        gap: var(--va-space-3xl);
+    }
+
+    /* The plate is anchored right and faded left for a two-column hero. In one column there
+       is no left to fade to, so it becomes a quiet full-width ground instead. */
+    .va-hero::before {
+        background-position: right top;
+        opacity: 0.5;
+        -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 78%);
+        mask-image: linear-gradient(to bottom, #000 0%, transparent 78%);
+    }
+
+    .va-hero-headline {
+        max-width: none;
+    }
+
+    .va-section,
+    .va-section:nth-of-type(even) {
+        padding-block: var(--va-space-3xl);
+    }
+
+    .va-bar-row {
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: var(--va-space-sm) var(--va-space-lg);
+    }
+
+    .va-bar-label {
+        grid-column: 1 / -1;
+    }
+
+    .va-bar-row.is-absent {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .va-absence-list div,
+    .va-verse-apparatus div {
+        grid-template-columns: minmax(0, 1fr);
+        gap: var(--va-space-2xs);
+    }
+
+    .va-start-list a {
+        grid-template-columns: 2.4rem minmax(0, 1fr);
+        row-gap: var(--va-space-2xs);
+    }
+
+    .va-start-note {
+        grid-column: 2;
+    }
+}
+
+@media (max-width: 47.99rem) {
+    .va-hero-break {
+        display: none;
+    }
+
+    /*
+     * A step down from the fluid display size. At the clamp's floor the headline set five
+     * lines and pushed the primary action below an 844px viewport, so the first thing a
+     * phone visitor saw had no way out of it. This keeps the type emphatic and gets the
+     * action back above the fold.
+     */
+    .va-hero-headline {
+        font-size: clamp(2rem, 1.1rem + 4.6vw, 2.5rem);
+    }
+
+    .va-hero-lede {
+        font-size: var(--va-text-md);
+    }
+
+    .va-constellation-readout {
+        padding-inline: var(--va-space-md);
+        font-size: var(--va-text-2xs);
+    }
+
+    .va-constellation-panel {
+        aspect-ratio: 4 / 3;
+    }
+
+    /*
+     * The ledger becomes a stack of records on a phone. Six columns cannot be read at 390px
+     * and a horizontally scrolling table is a way of saying the layout gave up. Each row's
+     * cells take their own label from the header, carried in a data attribute.
+     */
+    .va-ledger,
+    .va-ledger tbody,
+    .va-ledger tr,
+    .va-ledger td,
+    .va-ledger tbody th {
+        display: block;
+        width: auto;
+    }
+
+    .va-ledger thead {
+        display: none;
+    }
+
+    .va-ledger tr {
+        padding-block: var(--va-space-xl);
+        border-bottom: var(--va-border-width) solid var(--va-line-strong);
+    }
+
+    .va-ledger tbody th,
+    .va-ledger td {
+        padding: 0 0 var(--va-space-sm);
+        border-bottom: 0;
+    }
+
+    .va-ledger td::before {
+        content: attr(data-label) " ";
+        display: block;
+        font-size: var(--va-text-2xs);
+        letter-spacing: var(--va-tracking-eyebrow);
+        text-transform: uppercase;
+        color: var(--va-text-tertiary);
+    }
+
+    .va-ledger .is-num {
+        text-align: start;
+    }
+
+    .va-ledger-absent {
+        max-width: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .va-action svg,
+    .va-start-list a::before {
+        transition: none;
+    }
+}

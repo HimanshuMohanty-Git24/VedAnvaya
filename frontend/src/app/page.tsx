@@ -1,250 +1,685 @@
-import {
-    ArrowRight,
-    BookOpenText,
-    CirclesThreePlus,
-    FirstAidKit,
-    Flask,
-    MagnifyingGlass,
-    Repeat,
-    Sparkle,
-} from "@phosphor-icons/react/dist/ssr";
+import { readFile } from "node:fs/promises";
+import path from "node:path";
+import Image from "next/image";
 import Link from "next/link";
+import { ConstellationPanel } from "@/components/home/constellation-panel";
+import { Action, Heading, Kicker, Section, SectionRule } from "@/components/home/sections";
 import { ServiceUnavailable } from "@/components/empty-state";
-import { HomeNetwork } from "@/components/home-network";
-import { Caveat } from "@/components/status";
 import {
     encoded,
     load,
+    vedaNames,
     vedaOrder,
     workSlugs,
-    type GraphData,
+    type Loaded,
     type Stats,
     type WorksResponse,
 } from "@/lib/api";
 
-const VEDA_BLURB: Record<string, string> = {
-    RV: "Hymns arranged in ten mandalas, held with accented text and near-complete translation coverage.",
-    SV: "The Kauthuma arcika verse collection, drawn largely from the Rigveda and rearranged for chanting.",
-    YV: "The Vajasaneyi Madhyandina recension of the Shukla Yajurveda, the liturgist's book of formulae.",
-    AV: "The Saunaka recension, turned towards healing, protection, the household and the concerns of a life.",
+/**
+ * The VedAnvaya homepage.
+ *
+ * Ten sections and ten different layout families. That constraint is doing real work: the
+ * failure mode of a long marketing page is that every section becomes a heading, a
+ * paragraph and three cards, and the reader stops seeing sections at all. Here the ledger is
+ * a table, the recitation figures are bars, the cross-Veda material is the live matrix, the
+ * constellation is full-bleed, the featured verse is a plate, and the closing list is a
+ * contents page. No two neighbours are shaped alike.
+ *
+ * Every figure on the page is read from the API at request time. None is hard-coded, with
+ * one deliberate exception noted at the Ask section, and one figure is deliberately never
+ * printed anywhere: the graph's own relationship total, which the API withholds because most
+ * of its edges are one annotation layer's projection of a container label onto the passages
+ * inside it. A headline built from that number would measure the build and not the corpus.
+ */
+
+export const revalidate = 300;
+
+type AudioStats = {
+    total_records: number;
+    mapped_scope_keys_by_veda: Record<string, number>;
 };
 
-const VEDA_BOUNDARY: Record<string, string | undefined> = {
-    SV: "Gana collections and musical information are not included.",
-    YV: "The Krishna Yajurveda is not included.",
-    AV: "The Paippalada recension is not included.",
+type Capabilities = { limits?: unknown[] };
+type FormulaDiffusion = { coverage?: { measured?: Record<string, number> } };
+
+type PassageSurface = {
+    script: string;
+    accented: boolean;
+    text: string;
+    witness_id: string;
+};
+type Passage = {
+    canonical_citation: string;
+    canonical_key: string;
+    text: { surfaces: PassageSurface[]; devanagari: string };
+    translations: {
+        items: Array<{ text: string; translator: string; year: number | null }>;
+    };
 };
 
-const DISCOVERIES = [
-    {
-        href: `/devatas/${encoded("VG:DEVATA:INDRAH")}`,
-        icon: Sparkle,
-        title: "Explore Indra across the Vedas",
-        note: "What one deity does, and where it is named",
-    },
+/** One row of `/works`, once the optional list has been narrowed. */
+type Collection = NonNullable<WorksResponse["items"]>[number];
+
+type ConstellationSlice = {
+    nodes: Array<{ id: string; type: string; label: string; deity: boolean; degree: number }>;
+    edges: Array<{ s: string; t: string; p: string }>;
+};
+
+/** A recension whose ordinary name promises more than this build holds. */
+const NOT_HELD: Record<string, string> = {
+    RV: "The Ashvalayana recension. No Brahmana, Aranyaka or Upanisad.",
+    SV: "The gana collections, which are the larger body. Jaiminiya and Ranayaniya.",
+    YV: "The whole of the Krishna Yajurveda. The Kanva recension.",
+    AV: "The Paippalada recension.",
+};
+
+const RECENSION: Record<string, string> = {
+    RV: "Śākala",
+    SV: "Kauthuma, ārcika only",
+    YV: "Śukla, Vājasaneyi Mādhyandina",
+    AV: "Śaunaka",
+};
+
+const SANSKRIT_NAME: Record<string, string> = {
+    RV: "ऋग्वेद",
+    SV: "सामवेद",
+    YV: "यजुर्वेद",
+    AV: "अथर्ववेद",
+};
+
+const START_HERE = [
     {
         href: `/passage/${encoded("VG:RV:SAK:M01:S001:V001")}`,
-        icon: BookOpenText,
-        title: "Read the first verse of the Rigveda",
-        note: "Sanskrit, translation, context and provenance",
+        title: "The first verse of the Rigveda",
+        note: "Sanskrit, recitation, translation, and where each of them came from",
     },
     {
-        href: "/connections",
-        icon: Repeat,
-        title: "See Rigvedic verses reappear in the Samaveda",
-        note: "Reuse and formula relationships, kept distinct",
+        href: `/devatas/${encoded("VG:DEVATA:INDRAH")}`,
+        title: "Indra across the four collections",
+        note: "Named in thousands of verses. The apparatus assigns him in one collection only",
     },
     {
         href: `/devatas/${encoded("VG:DEVATA:SOMAH")}`,
-        icon: Flask,
-        title: "Explore Soma as deity and as substance",
-        note: "One word, two records, both linked",
+        title: "Soma, as a deity and as a substance",
+        note: "One word, two records, both linked, neither merged",
+    },
+    {
+        href: "/connections",
+        title: "Rigvedic wording in the Samaveda",
+        note: "The only corpus pair for which directed reuse was established",
     },
     {
         href: "/explore/atharvaveda",
-        icon: FirstAidKit,
-        title: "Explore Atharvavedic healing",
-        note: "Afflictions, threats and what the texts address",
+        title: "What the Atharvaveda addresses",
+        note: "Fever, rivals, household life. Counts are lexical minima, never diagnoses",
     },
     {
         href: "/formulas",
-        icon: CirclesThreePlus,
-        title: "Follow a formula through four collections",
-        note: "Shared wording, traced where it travels",
+        title: "A formula through four collections",
+        note: "Shared wording, traced to every collection it reaches",
     },
 ];
 
-export default async function Home() {
-    const [statsResult, worksResult, graphResult] = await Promise.all([
-        load<Stats>("/stats"),
-        load<WorksResponse>("/works"),
-        load<GraphData>(
-            `/graph/neighborhood/${encoded("VG:DEVATA:INDRAH")}?depth=1&limit_per_type=3`,
-        ),
-    ]);
+const number = (value: number | null | undefined) =>
+    typeof value === "number" ? value.toLocaleString("en-GB") : null;
 
-    if (!statsResult.ok || !worksResult.ok) {
+async function readConstellation(): Promise<ConstellationSlice | null> {
+    /*
+     * Read from disk rather than fetched over HTTP. It is a build artifact that ships in
+     * `public/`, so on the server the file is already there; fetching it from our own origin
+     * would add a network round trip to render a file we are sitting on.
+     */
+    try {
+        const file = path.join(process.cwd(), "public", "data", "home-constellation.json");
+        return JSON.parse(await readFile(file, "utf8")) as ConstellationSlice;
+    } catch {
+        return null;
+    }
+}
+
+export default async function Home() {
+    const [works, stats, audio, capabilities, diffusion, featured, opening, constellation] =
+        await Promise.all([
+            load<WorksResponse>("/works"),
+            load<Stats>("/stats"),
+            load<AudioStats>("/audio/stats"),
+            load<Capabilities>("/insights/capabilities"),
+            load<FormulaDiffusion>("/insights/formula-diffusion"),
+            load<Passage>(`/passages/${encoded("VG:RV:SAK:M10:S129:V007")}`),
+            load<Passage>(`/passages/${encoded("VG:RV:SAK:M01:S001:V001")}`),
+            readConstellation(),
+        ]);
+
+    if (!works.ok || !stats.ok) {
         return (
             <div className="shell page">
                 <ServiceUnavailable />
             </div>
         );
     }
-    const stats = statsResult.data;
-    const works = [...(worksResult.data.items ?? [])].sort(
+
+    const collections = [...(works.data.items ?? [])].sort(
         (a, b) => (vedaOrder[a.veda ?? ""] ?? 9) - (vedaOrder[b.veda ?? ""] ?? 9),
     );
-
-    const mantras = stats.corpus?.find((item) => item.name === "mantras")?.total ?? 0;
-    const formulas =
-        stats.entity_populations?.find((item) => item.name === "formula_families")?.total ?? 0;
+    const recited = audio.ok ? audio.data.mapped_scope_keys_by_veda : {};
+    const verses = stats.data.corpus?.find((c) => c.name === "mantras")?.total ?? null;
+    const translations = stats.data.corpus?.find((c) => c.name === "translations")?.total ?? null;
+    const recitations = audio.ok ? audio.data.total_records : null;
+    const limits = capabilities.ok ? (capabilities.data.limits?.length ?? null) : null;
+    const reachingAll = diffusion.ok
+        ? (diffusion.data.coverage?.measured?.reaching_all_four ?? null)
+        : null;
 
     return (
         <>
-            <section className="shell hero">
-                <div className="hero-copy">
-                    <p className="hero-kicker">A digital atlas of the Vedas</p>
-                    <h1>Four collections, read as one connected corpus.</h1>
-                    <p className="hero-lede">
-                        Read a mantra, follow its deity across the four Samhitas, trace its wording
-                        into another collection, and ask any connection to show you its evidence.
+            <Hero
+                collections={collections.length}
+                recitations={recitations}
+                verses={verses}
+                constellation={constellation}
+            />
+
+            <Ledger collections={collections} recited={recited} />
+
+            <SectionRule />
+
+            <Reading passage={opening} />
+
+            <Recitation collections={collections} recited={recited} total={recitations} />
+
+            <Connections reachingAll={reachingAll} />
+
+            <Ask />
+
+            <SectionRule />
+
+            <FeaturedVerse featured={featured} />
+
+            <Absence limits={limits} />
+
+            <StartHere translations={translations} />
+        </>
+    );
+}
+
+/* ------------------------------------------------------------------ S1 hero - */
+
+function Hero({
+    collections,
+    recitations,
+    verses,
+    constellation,
+}: {
+    collections: number;
+    recitations: number | null;
+    verses: number | null;
+    constellation: ConstellationSlice | null;
+}) {
+    /*
+     * The signal line is institutional proof, not a growth metric, so it is set at the size
+     * of a caption and placed below the actions rather than above the headline. Four figures
+     * would start to read as a dashboard; three do not.
+     */
+    const signals = [
+        collections ? `${collections} Samhitas` : null,
+        verses ? `${number(verses)} verses` : null,
+        recitations ? `${number(recitations)} recitations` : null,
+    ].filter(Boolean) as string[];
+
+    return (
+        <section className="va-hero">
+            <div className="va-hero-inner">
+                <div className="va-hero-type">
+                    <p className="va-hero-brand" lang="sa">
+                        वेदान्वय
                     </p>
-                    <div className="hero-actions">
-                        <Link className="button primary" href="/vedas">
-                            <BookOpenText size={18} aria-hidden="true" />
-                            Explore the Vedas
+                    <h1 className="va-hero-headline">
+                        {/* The explicit space survives the line break being hidden on a
+                            phone, where the headline sets as one paragraph. Without it the
+                            two clauses ran together as "one corpus,and the". */}
+                        Four Samhitas, one corpus,{" "}
+                        <br className="va-hero-break" />
+                        and the evidence behind every connection.
+                    </h1>
+                    <p className="va-hero-lede">
+                        Read any verse with its recitation, follow a deity across the four
+                        collections, and see what is missing.
+                    </p>
+                    <div className="va-hero-actions">
+                        <Link className="va-button" href="/vedas">
+                            Read the Vedas
                         </Link>
-                        <Link className="button secondary" href="/search">
-                            <MagnifyingGlass size={18} aria-hidden="true" />
-                            Search the corpus
-                        </Link>
-                        <Link className="button secondary" href="/graph">
-                            <CirclesThreePlus size={18} aria-hidden="true" />
-                            Open the knowledge graph
-                        </Link>
+                        <Action href="/graph">Open the graph</Action>
                     </div>
+                    {signals.length ? (
+                        <p className="va-hero-signal">{signals.join(" · ")}</p>
+                    ) : null}
                 </div>
-                <div className="hero-visual">
-                    {graphResult.ok ? (
-                        <HomeNetwork data={graphResult.data} />
-                    ) : (
-                        <div className="graph-frame compact is-empty">
-                            <p>The live neighbourhood could not be read just now.</p>
-                        </div>
-                    )}
-                </div>
-            </section>
 
-            <section className="shell metric-strip" aria-label="What this atlas holds">
-                <div className="metric">
-                    <strong>{mantras.toLocaleString()}</strong>
-                    <span>mantras addressed</span>
+                <div className="va-hero-figure">
+                    <ConstellationPanel slice={constellation} />
                 </div>
-                <div className="metric">
-                    <strong>{works.length}</strong>
-                    <span>Samhita collections</span>
-                </div>
-                <div className="metric">
-                    <strong>{formulas.toLocaleString()}</strong>
-                    <span>formula families</span>
-                </div>
-                <div className="metric">
-                    <strong>{stats.deities?.resolved_deities?.toLocaleString() ?? "—"}</strong>
-                    <span>resolved deities</span>
-                </div>
-            </section>
+            </div>
+        </section>
+    );
+}
 
-            <section className="shell section">
-                <div className="section-heading">
-                    <h2>Four collections, each with its own shape.</h2>
-                    <p>
-                        Every collection keeps its native hierarchy, its stated scope and its
-                        declared boundaries. None of them is flattened into a common template.
-                    </p>
-                </div>
-                <div className="veda-grid">
-                    {works.map((work) => {
+/* ------------------------------------------------------- S2 the four Vedas - */
+
+function Ledger({
+    collections,
+    recited,
+}: {
+    collections: Collection[];
+    recited: Record<string, number>;
+}) {
+    return (
+        <Section tone="sunk" className="va-ledger-section is-open">
+            <Kicker sanskrit="श्रुति">The Vedas</Kicker>
+            <Heading
+                lede="Three of the four are partial in ways their traditional names do not reveal. Each row says which part, before it says how much."
+            >
+                Four Samhitas, one recension each.
+            </Heading>
+
+            <table className="va-ledger">
+                <caption className="sr-only">
+                    The four collections held, with the recension of each, its verse count, how
+                    many verses carry a translation and a recitation, and what is not held.
+                </caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Collection</th>
+                        <th scope="col">Recension held</th>
+                        <th className="is-num" scope="col">
+                            Verses
+                        </th>
+                        <th className="is-num" scope="col">
+                            Translated
+                        </th>
+                        <th className="is-num" scope="col">
+                            Recited
+                        </th>
+                        <th scope="col">Not held</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {collections.map((work) => {
                         const code = work.veda ?? "RV";
+                        const audio = recited[code];
+                        const translated = work.translated_mantra_count ?? null;
                         return (
-                            <Link
-                                className="veda-card"
-                                href={`/vedas/${workSlugs[code]}`}
-                                key={work.work_id}
-                            >
-                                <div>
-                                    <div className="veda-card-top">
-                                        <span className="veda-code">{code}</span>
-                                        <ArrowRight size={20} aria-hidden="true" />
-                                    </div>
-                                    <h3>{work.traditional_name}</h3>
-                                    <p>{VEDA_BLURB[code]}</p>
-                                </div>
-                                <div className="veda-card-bottom">
-                                    <div className="veda-count">
-                                        {work.mantra_count?.toLocaleString()}
-                                        <span>mantras</span>
-                                    </div>
-                                    {VEDA_BOUNDARY[code] && (
-                                        <div className="scope-warning">{VEDA_BOUNDARY[code]}</div>
+                            <tr key={work.work_id}>
+                                <th scope="row">
+                                    <Link href={`/vedas/${workSlugs[code]}`}>
+                                        <span className="va-ledger-name">{vedaNames[code]}</span>
+                                        <span className="va-deva-label" lang="sa">
+                                            {SANSKRIT_NAME[code]}
+                                        </span>
+                                    </Link>
+                                </th>
+                                <td data-label="Recension held">{RECENSION[code]}</td>
+                                <td className="is-num" data-label="Verses">
+                                    {number(work.mantra_count)}
+                                </td>
+                                <td className="is-num" data-label="Translated">
+                                    {translated === 0 ? (
+                                        /* A zero here is a real zero and it is the most
+                                           informative cell in the table, so it is marked
+                                           rather than printed as an ordinary figure. */
+                                        <span className="va-ledger-zero">none</span>
+                                    ) : (
+                                        number(translated)
                                     )}
-                                </div>
-                            </Link>
+                                </td>
+                                <td className="is-num" data-label="Recited">
+                                    {audio === 0 ? (
+                                        <span className="va-ledger-zero">none</span>
+                                    ) : (
+                                        (number(audio) ?? "—")
+                                    )}
+                                </td>
+                                <td className="va-ledger-absent" data-label="Not held">
+                                    {NOT_HELD[code]}
+                                </td>
+                            </tr>
                         );
                     })}
-                </div>
-                <Caveat title="What this atlas holds">
-                    Four Samhitas and nothing beyond them. No Brahmana, Aranyaka, Upanisad, Sutra or
-                    second recension is present, so an absence measured here is an absence from
-                    these four collections only.{" "}
-                    <Link className="text-link" href="/limits">
-                        See every recorded limit
-                    </Link>
-                </Caveat>
-            </section>
+                </tbody>
+            </table>
 
-            <section className="shell section discovery-layout">
-                <div className="section-heading">
-                    <h2>Enter through a question.</h2>
-                    <p>
-                        Move from text to entity, relationship and exact evidence without learning
-                        the database underneath.
+            <p className="va-ledger-note">
+                The Yajurveda row is the one most likely to mislead, because &ldquo;the
+                Yajurveda&rdquo; ordinarily means both the White and the Black. The Black is not
+                held at all.
+            </p>
+            <Action href="/vedas">Read the Vedas</Action>
+        </Section>
+    );
+}
+
+/* ---------------------------------------------------- S3 reading a verse --- */
+
+/*
+ * The reader preview shows the corpus's opening verse, not the verse the plate shows further
+ * down. A first pass fed both sections the same passage, so the page printed RV 10.129.7
+ * twice and this section's "Open this passage" led somewhere the reader had not been shown.
+ */
+function Reading({ passage }: { passage: Loaded<Passage> }) {
+    const iast = passage.ok
+        ? passage.data.text.surfaces.find((s) => s.script === "IAST")
+        : undefined;
+
+    return (
+        <Section className="va-split is-tight">
+            <div className="va-split-figure">
+                <div className="va-verse-frame">
+                    <p className="va-verse-citation">
+                        {passage.ok ? passage.data.canonical_citation : "RV 1.1.1"}
                     </p>
+                    {iast ? (
+                        <p className="va-sanskrit" data-script="IAST" lang="sa">
+                            {iast.text}
+                        </p>
+                    ) : null}
+                    <dl className="va-verse-apparatus">
+                        <div>
+                            <dt>Script held</dt>
+                            <dd>Romanised, accented. No Devanagari for this collection.</dd>
+                        </div>
+                        <div>
+                            <dt>Witness</dt>
+                            <dd>{iast?.witness_id ?? "not read"}</dd>
+                        </div>
+                        <div>
+                            <dt>Translation</dt>
+                            <dd>
+                                {passage.ok && passage.data.translations.items[0]
+                                    ? `${passage.data.translations.items[0].translator}, ${passage.data.translations.items[0].year}`
+                                    : "not read"}
+                            </dd>
+                        </div>
+                    </dl>
                 </div>
-                <div className="discovery-list">
-                    {DISCOVERIES.map((item) => (
-                        <Link className="discovery-link" href={item.href} key={item.href}>
-                            <span className="icon">
-                                <item.icon size={20} weight="duotone" aria-hidden="true" />
-                            </span>
-                            <span>
-                                <strong>{item.title}</strong>
-                                <small>{item.note}</small>
-                            </span>
-                            <ArrowRight size={18} aria-hidden="true" />
-                        </Link>
-                    ))}
-                </div>
-            </section>
+            </div>
+            <div className="va-split-copy">
+                <Heading>A verse, and everything standing behind it.</Heading>
+                <p>
+                    The Sanskrit, the recitation, the translation where one exists, the seer and
+                    the deity the traditional index assigns, the words the verse actually
+                    contains, and the wording it shares with another collection.
+                </p>
+                <p>
+                    Each of those comes from a named layer, and each says how it was established.
+                    An assignment made by the index is never shown as a statement the Sanskrit
+                    makes.
+                </p>
+                <Action
+                    href={`/passage/${encoded(passage.ok ? passage.data.canonical_key : "VG:RV:SAK:M01:S001:V001")}`}
+                >
+                    Open this passage
+                </Action>
+            </div>
+        </Section>
+    );
+}
 
-            <section className="shell section evidence-pitch">
+/* --------------------------------------------------------- S4 recitation --- */
+
+function Recitation({
+    collections,
+    recited,
+    total,
+}: {
+    collections: Collection[];
+    recited: Record<string, number>;
+    total: number | null;
+}) {
+    const widest = Math.max(...collections.map((w) => w.mantra_count ?? 0), 1);
+
+    return (
+        <Section tone="sunk">
+            <Heading
+                lede="One recording per verse, from VedSearch. A recording is attached only when our canonical key lands in the source's numbering and the text that source says it recites matches this corpus's text for that key. Where they disagree the mapping is refused and recorded as a gap."
+            >
+                {total ? `${number(total)} verses, each with its own recitation.` : "Recitation."}
+            </Heading>
+
+            <ul className="va-bars">
+                {collections.map((work) => {
+                    const code = work.veda ?? "RV";
+                    const have = recited[code] ?? 0;
+                    const of = work.mantra_count ?? 0;
+                    /*
+                     * The Samavedic row is not a zero-length bar. A bar of length zero sits in
+                     * the same visual sentence as the other three and reads as "almost none",
+                     * which is a different claim from "none exists anywhere". It gets a typed
+                     * statement at the same weight as the bars instead.
+                     */
+                    if (have === 0) {
+                        return (
+                            <li className="va-bar-row is-absent" key={work.work_id}>
+                                <span className="va-bar-label">{vedaNames[code]}</span>
+                                <p className="va-bar-absence">
+                                    <strong>No recording exists.</strong> The source publishes
+                                    Samavedic verse text and no Samavedic audio, and no other
+                                    source located offers ārcika recitation mapped to individual
+                                    verses. This is the Veda defined by its sung realisation. The
+                                    gap is in what has been published anywhere.
+                                </p>
+                            </li>
+                        );
+                    }
+                    return (
+                        <li className="va-bar-row" key={work.work_id}>
+                            <span className="va-bar-label">{vedaNames[code]}</span>
+                            <span className="va-bar-track">
+                                <span
+                                    className="va-bar-fill"
+                                    style={{ width: `${(have / widest) * 100}%` }}
+                                />
+                                <span
+                                    className="va-bar-ghost"
+                                    style={{ width: `${(of / widest) * 100}%` }}
+                                />
+                            </span>
+                            <span className="va-bar-figure">
+                                {number(have)} <span>of {number(of)}</span>
+                            </span>
+                        </li>
+                    );
+                })}
+            </ul>
+        </Section>
+    );
+}
+
+/* ------------------------------------------------------- S5 connections ---- */
+
+function Connections({ reachingAll }: { reachingAll: number | null }) {
+    return (
+        <Section className="va-split is-reversed">
+            <div className="va-split-copy">
+                <Kicker sanskrit="अन्वय">Connections</Kicker>
+                <Heading>The same wording stands in more than one collection.</Heading>
+                <p>
+                    Cross-corpus connections are built in five kinds, never as one similarity
+                    score: exact parallel, near parallel, variant, shared formula, shared entity
+                    vocabulary. Which kind a connection is decides what it can be used to argue.
+                </p>
+                <p>
+                    Some pairs are empty on purpose. Directed reuse was established for the
+                    Rigveda and Samaveda only, which is a fact about what was built. Non-lexical
+                    resemblance was never built at all, so that row reads as unbuilt rather than
+                    as zero.
+                </p>
+                <Action href="/connections">
+                    {reachingAll
+                        ? `Follow the wording, including ${number(reachingAll)} families that reach all four`
+                        : "Follow the wording"}
+                </Action>
+            </div>
+            <div className="va-split-figure">
+                <ol className="va-chain">
+                    <li>
+                        <span className="va-chain-mark" aria-hidden="true" />
+                        <span className="va-chain-label">A Rigvedic verse</span>
+                        <span className="va-chain-note">RV 1.1.1, the text as GRETIL prints it</span>
+                    </li>
+                    <li>
+                        <span className="va-chain-mark" aria-hidden="true" />
+                        <span className="va-chain-label">stands again in the Samaveda</span>
+                        <span className="va-chain-note">
+                            Matched on wording, classified, and kept distinct from mere reuse
+                        </span>
+                    </li>
+                    <li>
+                        <span className="va-chain-mark" aria-hidden="true" />
+                        <span className="va-chain-label">and the difference is shown</span>
+                        <span className="va-chain-note">
+                            Both texts side by side, with what each witness actually reads
+                        </span>
+                    </li>
+                </ol>
+            </div>
+        </Section>
+    );
+}
+
+/* ---------------------------------------------------------------- S6 ask --- */
+
+function Ask() {
+    return (
+        <Section tone="sunk" className="va-ask is-tight">
+            <Heading lede="Retrieval runs first, over a fixed catalogue of channels, and the model sees only what retrieval returned.">
+                Ask a question. Check the answer.
+            </Heading>
+            <div className="va-ask-pair">
                 <div>
-                    <h2>Every connection can explain itself.</h2>
+                    <h3>What it does</h3>
                     <p>
-                        Select any relationship in the graph and the atlas answers in plain
-                        language: what the relationship is, how it was established, which passage
-                        carries it, and what it does not establish. Where the evidence cannot settle
-                        a question, the interface says so rather than filling the gap with a zero.
+                        Every factual sentence carries a citation you can open: the retrieved
+                        item, its Sanskrit, its translation and its canonical citation. The
+                        evidence is the answer&rsquo;s working, not a reading list attached
+                        afterwards.
                     </p>
-                    <div className="hero-actions">
-                        <Link className="button secondary" href="/insights">
-                            Evidence and interpretation
-                        </Link>
-                        <Link className="button secondary" href="/limits">
-                            What this atlas cannot answer
-                        </Link>
-                    </div>
                 </div>
-            </section>
-        </>
+                <div>
+                    <h3>What it refuses to do</h3>
+                    <p>
+                        A question this build cannot answer returns insufficient evidence and
+                        names the dimension it could not reach. It does not guess, and it does
+                        not turn a gap in the graph into a confident denial about the Vedas.
+                    </p>
+                </div>
+            </div>
+            <Action href="/ask">Ask a question</Action>
+        </Section>
+    );
+}
+
+/* ------------------------------------------------------ S7 featured verse -- */
+
+function FeaturedVerse({ featured }: { featured: Loaded<Passage> }) {
+    if (!featured.ok) return null;
+    const iast = featured.data.text.surfaces.find((s) => s.script === "IAST");
+    const translation = featured.data.translations.items[0];
+    if (!iast || !translation) return null;
+
+    return (
+        <section className="va-plate">
+            <Image
+                alt=""
+                aria-hidden="true"
+                className="va-plate-ground"
+                height={1086}
+                sizes="100vw"
+                src="/brand/textures/quote-light-1280.webp"
+                width={1448}
+            />
+            <figure className="va-plate-inner">
+                <p className="va-kicker">
+                    <span className="va-deva-label" lang="sa">
+                        मन्त्र
+                    </span>
+                    <span>{featured.data.canonical_citation}</span>
+                </p>
+                <blockquote className="va-sanskrit va-plate-verse" data-script="IAST" lang="sa">
+                    {iast.text}
+                </blockquote>
+                <p className="va-plate-translation">{translation.text}</p>
+                <figcaption className="va-plate-caption">
+                    <span>
+                        Translated by {translation.translator}
+                        {translation.year ? `, ${translation.year}` : ""}
+                    </span>
+                    <Link href={`/passage/${encoded(featured.data.canonical_key)}`}>
+                        Open this passage
+                    </Link>
+                </figcaption>
+            </figure>
+        </section>
+    );
+}
+
+/* ------------------------------------------------------------ S8 absence --- */
+
+function Absence({ limits }: { limits: number | null }) {
+    return (
+        <Section className="va-absence is-open">
+            <Heading level={2}>When there is nothing to show, we say whose nothing it is.</Heading>
+            <dl className="va-absence-list">
+                <div>
+                    <dt>Not built</dt>
+                    <dd>The layer does not exist here. The silence is ours.</dd>
+                </div>
+                <div>
+                    <dt>Insufficient evidence</dt>
+                    <dd>Evidence exists and cannot support the claim. This is not a zero.</dd>
+                </div>
+                <div>
+                    <dt>Partial</dt>
+                    <dd>
+                        A real answer over part of the corpus, one collection, or one kind of
+                        evidence.
+                    </dd>
+                </div>
+            </dl>
+            <p className="va-absence-close">
+                {limits
+                    ? `${limits} limits are catalogued with the measurement behind each one and a better question to ask instead. The catalogue is not exhaustive, and it says so: a question absent from it is not thereby answerable.`
+                    : "Every recorded limit carries the measurement behind it and a better question to ask instead."}
+            </p>
+            <Action href="/limits">See what is not held</Action>
+        </Section>
+    );
+}
+
+/* --------------------------------------------------------- S9 start here --- */
+
+function StartHere({ translations }: { translations: number | null }) {
+    return (
+        <Section tone="sunk" className="va-start">
+            <Heading>Where to start.</Heading>
+            <ol className="va-start-list">
+                {START_HERE.map((item, i) => (
+                    <li key={item.href}>
+                        <Link href={item.href}>
+                            <span className="va-start-index" aria-hidden="true">
+                                {String(i + 1).padStart(2, "0")}
+                            </span>
+                            <span className="va-start-title">{item.title}</span>
+                            <span className="va-start-note">{item.note}</span>
+                        </Link>
+                    </li>
+                ))}
+            </ol>
+            <p className="va-start-close">
+                Built by one person over the sources named on the sources page
+                {translations ? `, across ${number(translations)} translated verses` : ""}.{" "}
+                <Link href="/about">About this project</Link>
+            </p>
+        </Section>
     );
 }

@@ -53,10 +53,13 @@ const notoDevanagari = Noto_Serif_Devanagari({
 const charis = localFont({
     variable: "--font-charis",
     display: "swap",
-    src: [
-        { path: "../fonts/charis-regular.woff2", weight: "400", style: "normal" },
-        { path: "../fonts/charis-italic.woff2", weight: "400", style: "italic" },
-    ],
+    /*
+     * Regular only. The italic was vendored alongside it and measured 82 KB downloaded on
+     * every page and used on none: next/font preloads a declared face whether or not
+     * anything asks for it, and no surface sets Sanskrit in italic. It is still produced by
+     * scripts/build_web_fonts.py, so adding it back is one line if a surface ever needs it.
+     */
+    src: [{ path: "../fonts/charis-regular.woff2", weight: "400", style: "normal" }],
 });
 
 export const metadata: Metadata = {

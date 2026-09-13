@@ -22,8 +22,16 @@
        tokens across 224 declarations. They differ by 4, 11 and 3 in RGB, which
        is to say they were the same colour twice. These two are not. ----------- */
     --va-text-primary: var(--va-carbon-900); /* 15.68:1 on page, AAA */
+    /* One step down from primary, for long prose that should not shout. Themed, unlike the
+       primitive it points at: aliasing a primitive here is what left the old --ink-soft at
+       near-black on the carbon page, at 1.69:1, on every dark-mode surface that used it. */
+    --va-text-strong: var(--va-carbon-700);
     --va-text-secondary: var(--va-carbon-500); /* 5.79:1, AA */
-    --va-text-tertiary: var(--va-carbon-400); /* 4.90:1, AA */
+    /* carbon-400 #676960 was here, stated as 4.90:1. That ratio was against the page alone.
+       On the sunk surface the same token is 4.44 and on the strong surface 3.90, which is how
+       eight unrelated assertions went red at once. scripts/audit-contrast.mjs now checks every
+       token against every ground it can be painted on, and this value clears all four. */
+    --va-text-tertiary: #5d5f56; /* worst ground 4.53:1, AA */
     --va-text-inverse: var(--va-ivory-50); /* 11.68:1 on inverse, AAA */
     --va-text-on-accent: var(--va-ivory-50); /* 4.98:1 on accent, AA */
 
@@ -35,7 +43,7 @@
 
     /* --- Accent ------------------------------------------------------------- */
     --va-accent-base: var(--va-rubric-500); /* 4.61:1, AA */
-    --va-accent-text: var(--va-rubric-600); /* 5.64:1, AA */
+    --va-accent-text: #9f3f26; /* worst ground 4.57:1, AA */
     --va-accent-hover: var(--va-rubric-600);
     --va-accent-soft: var(--va-rubric-100);
     /* Read by the brand marks, which default to rubric when the variable is
@@ -105,22 +113,39 @@
        graph colours twice, once as node fills in TypeScript and once as legend
        text in CSS, with different values and nothing tying them together, so
        the legend did not describe the picture it labelled. ------------------- */
-    --va-group-deity-fill: #b64a2e;
-    --va-group-deity-text: #a14026;
-    --va-group-passage-fill: #74602f;
-    --va-group-passage-text: #74602f;
-    --va-group-idea-fill: #2e5e4b;
-    --va-group-idea-text: #2e5e4b;
-    --va-group-rite-fill: #35495f;
-    --va-group-rite-text: #26364a;
-    --va-group-person-fill: #8e3720;
-    --va-group-person-text: #8e3720;
-    --va-group-thing-fill: #6b6252;
-    --va-group-thing-text: #5c5e56;
-    --va-group-measure-fill: #4c5660;
-    --va-group-measure-text: #4c5660;
-    --va-group-other-fill: #8a8c82;
-    --va-group-other-text: #676960;
+    /* Eleven semantic groups, each with the colour its node is filled with and the colour
+       its legend label is set in. They differ on purpose: a fill sits against a dark canvas
+       at 20 to 40 pixels across and a label is 12.6px text on paper, and one value cannot
+       serve both. Every -text value clears 4.5:1 on all four light surfaces, checked by
+       scripts/audit-contrast.mjs.
+
+       This replaces two tables that disagreed. The node fills lived in TypeScript and the
+       legend colours in CSS, with different values and nothing tying them together, so the
+       legend did not describe the picture it labelled. It also broke on contact with the new
+       palette: the legend hexes had been tuned against the old cool-grey surface, and a
+       warmer ivory dropped idea, rite and thing to 4.46, 4.47 and 4.45. */
+    --va-group-deity-fill: #bd4f32;
+    --va-group-deity-text: #9b4129;
+    --va-group-unresolved-deity-fill: #b59a8f;
+    --va-group-unresolved-deity-text: #695953;
+    --va-group-passage-fill: #9b8462;
+    --va-group-passage-text: #695a43;
+    --va-group-person-fill: #607d92;
+    --va-group-person-text: #495f6f;
+    --va-group-idea-fill: #6c8f83;
+    --va-group-idea-text: #496159;
+    --va-group-rite-fill: #8a6f9b;
+    --va-group-rite-text: #6a5577;
+    --va-group-thing-fill: #7d7969;
+    --va-group-thing-text: #605d51;
+    --va-group-wording-fill: #4f7f8f;
+    --va-group-wording-text: #3d626e;
+    --va-group-derived-fill: #8d8d8d;
+    --va-group-derived-text: #5d5d5d;
+    --va-group-record-fill: #8c9490;
+    --va-group-record-text: #585d5b;
+    --va-group-other-fill: #8c9490;
+    --va-group-other-text: #585d5b;
 }
 
 .dark {
@@ -131,6 +156,7 @@
     --va-surface-inverse: var(--va-ivory-100);
 
     --va-text-primary: var(--va-ivory-100); /* 16.26:1, AAA */
+    --va-text-strong: #d9d6c8;
     --va-text-secondary: #b0afa3; /* 7.68:1 on raised, AAA */
     --va-text-tertiary: #9c9b90; /* 6.61:1, AA */
     --va-text-inverse: var(--va-carbon-900);
@@ -165,22 +191,28 @@
         0 0 0 1px var(--va-night-line-strong), 0 24px 56px -28px rgb(0 0 0 / 0.8);
     --va-scrim: color-mix(in srgb, #000 62%, transparent);
 
-    --va-group-deity-fill: #c9694f;
-    --va-group-deity-text: #dfa08c;
-    --va-group-passage-fill: #c9b486;
-    --va-group-passage-text: #c9b486;
-    --va-group-idea-fill: #7fb39c;
-    --va-group-idea-text: #7fb39c;
-    --va-group-rite-fill: #8ba3be;
-    --va-group-rite-text: #8ba3be;
-    --va-group-person-fill: #dfa08c;
-    --va-group-person-text: #dfa08c;
-    --va-group-thing-fill: #b0a894;
-    --va-group-thing-text: #b0afa3;
-    --va-group-measure-fill: #9ba6b0;
-    --va-group-measure-text: #9ba6b0;
-    --va-group-other-fill: #8a8c82;
-    --va-group-other-text: #9c9b90;
+    --va-group-deity-fill: #e07858;
+    --va-group-deity-text: #e07858;
+    --va-group-unresolved-deity-fill: #9b807a;
+    --va-group-unresolved-deity-text: #a48881;
+    --va-group-passage-fill: #c7ab7e;
+    --va-group-passage-text: #c7ab7e;
+    --va-group-person-fill: #86a6bb;
+    --va-group-person-text: #86a6bb;
+    --va-group-idea-fill: #8fb3a6;
+    --va-group-idea-text: #8fb3a6;
+    --va-group-rite-fill: #ab8ec0;
+    --va-group-rite-text: #ab8ec0;
+    --va-group-thing-fill: #a5a08c;
+    --va-group-thing-text: #a5a08c;
+    --va-group-wording-fill: #77a9b8;
+    --va-group-wording-text: #77a9b8;
+    --va-group-derived-fill: #a8a8a8;
+    --va-group-derived-text: #a8a8a8;
+    --va-group-record-fill: #9faaa5;
+    --va-group-record-text: #9faaa5;
+    --va-group-other-fill: #9faaa5;
+    --va-group-other-text: #9faaa5;
 }
 
 /* Hand the aliases to Tailwind so the utility escape hatch exists without

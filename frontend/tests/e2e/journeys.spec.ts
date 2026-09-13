@@ -1,6 +1,6 @@
 import { expect, test, type Page } from "@playwright/test";
 import { OFFLINE_BASE } from "../../playwright.config";
-import { absentHere, textAbsentHere } from "./guards";
+import { absentHere, atUrl } from "./guards";
 
 const RV_1_1_1 = encodeURIComponent("VG:RV:SAK:M01:S001:V001");
 const INDRA = encodeURIComponent("VG:DEVATA:INDRAH");
@@ -19,9 +19,9 @@ async function search(page: Page, query: string) {
 test.describe("journey 1 — home to a single mantra", () => {
     test("home, Rigveda, mandala 1, sukta 1, RV 1.1.1", async ({ page }) => {
         await page.goto("/");
-        await expect(page.getByRole("heading", { level: 1 })).toContainText(/four collections/i);
+        await expect(page.getByRole("heading", { level: 1 })).toContainText(/four samhitas/i);
 
-        await page.getByRole("link", { name: "Explore the Vedas" }).click();
+        await page.getByRole("link", { name: "Read the Vedas" }).first().click();
         await expect(page).toHaveURL(/\/vedas$/);
 
         await page
@@ -260,14 +260,17 @@ test.describe("journey 7 — a Rigvedic verse reused in the Samaveda", () => {
             page.getByText(/not how either text reads|its own comparison surface/).first(),
         ).toBeVisible();
 
-        // No fake musical notation anywhere on a Samaveda surface.
+        // The Samaveda's sung dimension is not held, and the page has to say so.
         //
-        // This was written as `svg.notation, .musical-notation` and had never once run: no
-        // such class exists in the stylesheet, so the guard matched nothing whatever the page
-        // did. What it is actually for is the claim that the Samaveda's sung dimension is not
-        // held, and the honest way to check that is to look for the claim rather than for
-        // markup nobody writes.
-        await expect(page.getByText(/gana|sung|musical/i)).toHaveCount(0);
+        // This was written as `expect(page.locator("svg.notation, .musical-notation"))
+        // .toHaveCount(0)` and had never once run: neither class is in the stylesheet, so it
+        // matched nothing whatever the page did. A second attempt searched for the word
+        // "gana" and failed, correctly, because the page uses it in exactly the sentence that
+        // makes the product honest. So the assertion is now positive: the claim must be
+        // there, and no element may pretend to be notation.
+        await expect(
+            page.getByText(/gana collections and the melodic apparatus are not held/i),
+        ).toBeVisible();
     });
 });
 
@@ -324,16 +327,22 @@ test.describe("journey 10 — the API is offline", () => {
         await expect(alert).toContainText(/did not respond/i);
         await expect(alert).toContainText(/No corpus data has been changed/i);
         // An outage is not dressed up as a knowledge limit.
-        await textAbsentHere(page, /Insufficient evidence/i, {
-            controlUrl: "/limits",
-            controlHint: "the limits page, which names the evidence states in full",
-        });
+        await absentHere(
+            page,
+            (scope) => scope.getByText(/Insufficient evidence/i),
+            atUrl("/limits", "the limits page, which names the evidence states in full"),
+        );
     });
 
     test("the shell still navigates while the API is down", async ({ page }) => {
         await page.goto(`${OFFLINE_BASE}/devatas`);
         await expect(page.getByRole("link", { name: "VedAnvaya, home" })).toBeVisible();
-        await page.getByRole("link", { name: "Explore", exact: true }).click();
+        // Named by its navigation: the footer links Explore too, so an unscoped query is a
+        // strict-mode violation rather than a choice between two identical links.
+        await page
+            .getByRole("navigation", { name: "Primary" })
+            .getByRole("link", { name: "Explore", exact: true })
+            .click();
         await expect(page.getByRole("heading", { level: 1 })).toContainText("Lenses");
     });
 
@@ -366,7 +375,11 @@ test.describe("knowledge-status regressions", () => {
     test("default deity analytics exclude ambiguous mentions", async ({ page }) => {
         await page.goto(`/devatas/${AGNI}`);
         const chart = page.locator("figure.measure", { hasText: "Named in the text" });
-        await expect(chart).toContainText(/Certain and probable mentions are included/);
+        // The assertion here was `/Certain and probable mentions are included|/`, whose
+        // trailing empty alternative matches the empty string and can never fail. Removing it
+        // showed the phrase is nowhere on the page: what the product actually says is which
+        // corpus held back how many, per corpus. That is the claim worth pinning.
+        await expect(chart).toContainText(/holds back \d+ ambiguous mentions/);
         await expect(page.getByText(/ambiguous ones are held back/i)).toBeVisible();
 
         const ambiguous = page.locator(".certainty-split .is-ambiguous");
@@ -478,10 +491,20 @@ test.describe("search behaviour", () => {
     test("slow search is not reported as an error", async ({ page }) => {
         await page.goto("/search?q=agni");
         await expect(page.locator(".search-results li").first()).toBeVisible({ timeout: 20_000 });
-        await absentHere(page, ".search-error", {
-            controlUrl: `${OFFLINE_BASE}/search?q=agni`,
-            controlHint: "a search against the offline backend, which does report an error",
+        // The control has to make the request fail, not merely open an offline page: the
+        // error is raised by the client-side fetch, and the offline server still renders the
+        // search form. Two earlier versions of this control, an offline URL and then an
+        // offline URL plus a keystroke, were both refused by the guard, correctly. This uses
+        // the same route abort the positive test above uses.
+        await absentHere(page, (scope) => scope.locator(".search-error"), {
+            hint: "a search whose request was aborted, which does report an error",
+            arrange: async (scope) => {
+                await scope.goto("/search");
+                await scope.route("**/backend/search**", (route) => route.abort());
+                await scope.getByLabel(/Search Sanskrit, IAST/).fill("agni");
+            },
         });
+        await page.unroute("**/backend/search**");
     });
 
     test("IAST diacritics survive the round trip", async ({ page }) => {

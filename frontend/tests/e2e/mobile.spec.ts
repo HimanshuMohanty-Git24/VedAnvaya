@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { absentHere } from "./guards";
+import { absentHere, atUrl } from "./guards";
 
 const RV_1_1_1 = encodeURIComponent("VG:RV:SAK:M01:S001:V001");
 const INDRA = encodeURIComponent("VG:DEVATA:INDRAH");
@@ -117,9 +117,10 @@ test.describe("mobile recitation", () => {
     test("a verse with no recitation reads normally on mobile", async ({ page }) => {
         await page.goto(`/passage/${encodeURIComponent("VG:SV:KAU:ARANYA:D01:V01")}`);
         await expect(page.locator(".sanskrit").first()).toBeVisible();
-        await absentHere(page, "section.recitation", {
-            controlUrl: `/passage/${RV_1_1_1}`,
-            controlHint: "RV 1.1.1, which does have a recitation",
-        });
+        await absentHere(
+            page,
+            (scope) => scope.locator("section.recitation"),
+            atUrl(`/passage/${RV_1_1_1}`, "RV 1.1.1, which does have a recitation"),
+        );
     });
 });

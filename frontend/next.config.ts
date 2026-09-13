@@ -19,6 +19,15 @@ const nextConfig: NextConfig = {
     // away or asks again, whereas a proxy cutting first states something untrue about the
     // corpus. Raise this if either LLM setting rises. The latency itself is PERF_BACKLOG_01.
     experimental: { proxyTimeout: 345_000 },
+
+    // Development only. `next dev` binds to localhost and treats a request arriving on
+    // 127.0.0.1 as cross-origin, which blocks /_next/hmr and, with it, the client bundle:
+    // the page server-renders and then never hydrates, so every button is inert and nothing
+    // reports an error. Screenshot and e2e drivers reach the server by IP, so they hit this.
+    //
+    // This is a dev-server allowlist and has no effect on a production build, which does not
+    // serve /_next/hmr at all and does no origin checking of its own here.
+    allowedDevOrigins: ["127.0.0.1", "localhost"],
     async rewrites() {
         const apiBase = process.env.VEDAGRAPH_API_URL ?? "http://127.0.0.1:8000";
         return [{ source: "/backend/:path*", destination: `${apiBase}/api/v1/:path*` }];

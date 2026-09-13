@@ -8,6 +8,7 @@
 @import "../styles/theme.css";
 @import "../styles/base.css";
 @import "../styles/shell.css";
+@import "../styles/home.css";
 
 /* ============================================================
    VedaGraph design system
@@ -44,7 +45,7 @@
     --surface-sunk: var(--va-surface-sunk);
     --surface-strong: var(--va-surface-strong);
     --ink: var(--va-text-primary);
-    --ink-soft: var(--va-carbon-700);
+    --ink-soft: var(--va-text-strong);
     --muted: var(--va-text-secondary);
     --faint: var(--va-text-tertiary);
     --line: var(--va-line-hairline);
@@ -291,7 +292,7 @@ table {
 
 .button.secondary:hover {
     border-color: var(--accent);
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 .button:disabled {
@@ -316,14 +317,14 @@ table {
 
 .icon-button:hover {
     border-color: var(--accent);
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 .text-link {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    color: var(--accent);
+    color: var(--va-accent-text);
     font-weight: 500;
     border-bottom: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
     padding-bottom: 1px;
@@ -353,7 +354,7 @@ table {
 
 .chip-row a:hover {
     border-color: var(--accent);
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 .chip-row.is-static span {
@@ -397,7 +398,7 @@ table {
     height: 32px;
     border-radius: 9px;
     background: var(--accent-soft);
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 .desktop-nav {
@@ -448,7 +449,7 @@ table {
 
 .search-action:hover {
     border-color: var(--accent);
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 .search-action kbd {
@@ -509,7 +510,7 @@ table {
 }
 
 .site-footer nav a:hover {
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 /* ---------- Home ---------- */
@@ -526,7 +527,7 @@ table {
     text-transform: uppercase;
     letter-spacing: 0.14em;
     font-size: 0.72rem;
-    color: var(--accent);
+    color: var(--va-accent-text);
     margin-bottom: 18px;
 }
 
@@ -642,7 +643,7 @@ table {
 .veda-code {
     font-size: 0.72rem;
     letter-spacing: 0.16em;
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 .veda-card h3 {
@@ -713,7 +714,7 @@ table {
     height: 40px;
     border-radius: 11px;
     background: var(--surface-sunk);
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 .discovery-link strong {
@@ -768,7 +769,7 @@ table {
 }
 
 .back-link:hover {
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 /* ---------- Knowledge status, caveats, interpretation ---------- */
@@ -1310,7 +1311,7 @@ table {
 }
 
 .reader-breadcrumbs a:hover {
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 .reader-breadcrumbs a + a::before {
@@ -1358,7 +1359,7 @@ table {
     font-size: 0.72rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 .mantra-block {
@@ -1396,7 +1397,7 @@ table {
 
 .copy-button:hover {
     border-color: var(--accent);
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 .witness-block {
@@ -1477,7 +1478,7 @@ table {
 }
 
 .reuse-callout svg:first-child {
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 .reader-nav {
@@ -1496,7 +1497,7 @@ table {
 }
 
 .reader-nav a:hover {
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 .reader-nav small {
@@ -1717,7 +1718,7 @@ table {
 .basis-list span {
     display: block;
     font-size: 0.78rem;
-    color: var(--accent);
+    color: var(--va-accent-text);
     margin-top: 2px;
 }
 
@@ -1772,7 +1773,7 @@ table {
 }
 
 .graph-entry > svg:first-child {
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 /* ---------- Structure browser ---------- */
@@ -1844,7 +1845,7 @@ table {
 
 .tree-row a:hover,
 .tree-row .branch-label:hover {
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 .tree-row > div > span:last-child {
@@ -1921,7 +1922,7 @@ table {
 }
 
 .panel-links a:hover {
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 .collection-metrics {
@@ -1968,7 +1969,7 @@ table {
 .work-code {
     font-family: var(--font-reading), serif;
     font-size: 1.6rem;
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 .work-row h2 {
@@ -2171,7 +2172,7 @@ table {
 }
 
 .refreshing {
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 .search-results {
@@ -2226,7 +2227,7 @@ table {
 .result-veda {
     font-size: 0.72rem;
     letter-spacing: 0.08em;
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 .result-skeleton > div:last-child {
@@ -2364,7 +2365,7 @@ table {
 .type-grid span {
     font-family: var(--font-reading), serif;
     font-size: 1.3rem;
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 .type-grid h3 {
@@ -2460,7 +2461,7 @@ table {
     display: block;
     font-family: var(--font-reading), var(--font-devanagari), serif;
     font-size: 1.14rem;
-    color: var(--accent);
+    color: var(--va-accent-text);
     margin: 10px 0 4px;
 }
 
@@ -2883,70 +2884,55 @@ table {
     clip-path: polygon(0 0, 72% 0, 100% 50%, 72% 100%, 0 100%);
 }
 
+/* The legend reads the one colour table in theme.css. Previously these were eight
+   hard-coded hexes tuned against a surface that no longer exists. */
+
 .legend-chip.group-deity {
-    color: var(--accent);
+    color: var(--va-group-deity-text);
 }
 
-/* These six carry category meaning at 12.6px, so each clears 4.5:1 on --surface.
-   The hues are the originals scaled toward black; the graph's node colours are
-   unchanged, only the legend text that has to be read. */
+.legend-chip.group-unresolved-deity {
+    color: var(--va-group-unresolved-deity-text);
+}
+
 .legend-chip.group-passage {
-    color: #847053;
+    color: var(--va-group-passage-text);
 }
 
 .legend-chip.group-person {
-    color: #5a768a;
+    color: var(--va-group-person-text);
 }
 
 .legend-chip.group-idea {
-    color: #5c7a70;
+    color: var(--va-group-idea-text);
 }
 
 .legend-chip.group-rite {
-    color: #846a94;
+    color: var(--va-group-rite-text);
 }
 
 .legend-chip.group-thing {
-    color: #787464;
+    color: var(--va-group-thing-text);
 }
 
 .legend-chip.group-wording {
-    color: #4b7886;
+    color: var(--va-group-wording-text);
+}
+
+.legend-chip.group-derived {
+    color: var(--va-group-derived-text);
+}
+
+.legend-chip.group-record {
+    color: var(--va-group-record-text);
+}
+
+.legend-chip.group-other {
+    color: var(--va-group-other-text);
 }
 
 .legend-chip i[data-shape="vee"] {
     clip-path: polygon(0 0, 50% 60%, 100% 0, 100% 40%, 50% 100%, 0 40%);
-}
-
-.legend-chip.group-unresolved-deity,
-.legend-chip.group-derived,
-.legend-chip.group-record,
-.legend-chip.group-other {
-    color: var(--muted);
-}
-
-.dark .legend-chip.group-passage {
-    color: #c7ab7e;
-}
-
-.dark .legend-chip.group-person {
-    color: #86a6bb;
-}
-
-.dark .legend-chip.group-idea {
-    color: #8fb3a6;
-}
-
-.dark .legend-chip.group-rite {
-    color: #ab8ec0;
-}
-
-.dark .legend-chip.group-thing {
-    color: #a5a08c;
-}
-
-.dark .legend-chip.group-wording {
-    color: #77a9b8;
 }
 
 .graph-workspace {
@@ -3086,7 +3072,7 @@ table {
     font-size: 0.7rem;
     letter-spacing: 0.09em;
     text-transform: uppercase;
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 .node-type.group-unresolved-deity,
@@ -3229,7 +3215,7 @@ table {
     font-size: 0.7rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 .evidence-drawer h2 {
@@ -3268,13 +3254,13 @@ table {
 }
 
 .evidence-triple a:hover strong {
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 .evidence-triple i {
     font-style: normal;
     font-size: 0.82rem;
-    color: var(--accent);
+    color: var(--va-accent-text);
     padding-left: 14px;
     border-left: 2px solid var(--accent-soft);
 }
@@ -3448,7 +3434,7 @@ table {
 }
 
 .material-table tbody th a:hover {
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 .cell strong {
@@ -3538,7 +3524,7 @@ table {
 }
 
 .reuse-row > svg {
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 .census-grid {
@@ -3599,7 +3585,7 @@ table {
     font-size: 0.7rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 .comparison-banner h2 {
@@ -3613,7 +3599,7 @@ table {
 
 .comparison-banner h2 i {
     font-style: normal;
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 .comparison-banner p {
@@ -3653,7 +3639,7 @@ table {
 }
 
 .comparison-head a:hover {
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 .comparison-column .copy-button {
@@ -3778,7 +3764,7 @@ table {
 }
 
 .av-section-title svg {
-    color: var(--accent);
+    color: var(--va-accent-text);
     margin-top: 3px;
 }
 
@@ -3930,7 +3916,7 @@ table {
 .ritual-grid > a > span {
     font-family: var(--font-reading), serif;
     font-size: 0.92rem;
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 .ritual-grid h2 {
@@ -4028,7 +4014,7 @@ table {
     height: 30px;
     border-radius: 50%;
     background: var(--accent-soft);
-    color: var(--accent);
+    color: var(--va-accent-text);
     font-size: 0.84rem;
 }
 
@@ -4231,7 +4217,7 @@ table {
     font-size: 0.7rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 .insight-section h2 {
@@ -4350,7 +4336,7 @@ table {
     height: 44px;
     border-radius: 12px;
     background: var(--accent-soft);
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 .lens-card h2 {
@@ -4389,7 +4375,7 @@ table {
     align-items: center;
     gap: 7px;
     font-size: 0.86rem;
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 .limits-page {
@@ -4490,7 +4476,7 @@ table {
     font-variant-numeric: tabular-nums;
     text-align: right;
     white-space: nowrap;
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 .limit-measurements td:last-child {
@@ -4851,7 +4837,7 @@ table {
 
 .tree-more:hover {
     border-color: var(--accent);
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 /* ---------- Overflow containment ----------
@@ -5181,7 +5167,7 @@ table {
 }
 
 .ask-contract > div:last-child h2 {
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 .ask-experience {
@@ -5249,7 +5235,7 @@ table {
     font-size: 0.68rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 .ask-context strong {
@@ -5427,7 +5413,7 @@ table {
 
 .ask-clear:hover {
     border-color: var(--accent);
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 /* ---------- Example and related-question chips ---------- */
@@ -5471,7 +5457,7 @@ table {
 
 .ask-chip-row button:hover {
     border-color: var(--accent);
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 /* ---------- Progressive loading ---------- */
@@ -5687,7 +5673,7 @@ table {
     border: 1px solid var(--accent);
     border-radius: 5px;
     background: var(--accent-soft);
-    color: var(--accent);
+    color: var(--va-accent-text);
     font-family: var(--font-ui), sans-serif;
     font-size: 0.68rem;
     font-weight: 600;
@@ -5792,11 +5778,11 @@ table {
 
 a.ask-entity:hover {
     border-color: var(--accent);
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 a.ask-entity:hover small {
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 .ask-unresolved {
@@ -5866,7 +5852,7 @@ a.ask-entity:hover small {
 }
 
 .ask-retrieval > summary:hover {
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 .ask-retrieval > summary span {
@@ -6015,7 +6001,7 @@ a.ask-entity:hover small {
     border: 1px solid var(--accent);
     border-radius: 5px;
     background: var(--accent-soft);
-    color: var(--accent);
+    color: var(--va-accent-text);
     font-size: 0.68rem;
     font-weight: 600;
 }
@@ -6067,7 +6053,7 @@ a.ask-entity:hover small {
 
 .ask-evidence-relation i {
     font-style: normal;
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 .ask-evidence-meta {
@@ -6151,7 +6137,7 @@ a.ask-entity:hover small {
 }
 
 .ask-about-quiet:hover {
-    color: var(--accent);
+    color: var(--va-accent-text);
     border-color: var(--accent);
 }
 
@@ -6256,7 +6242,7 @@ a.ask-entity:hover small {
 .recitation-scope svg {
     flex: 0 0 auto;
     margin-top: 2px;
-    color: var(--accent);
+    color: var(--va-accent-text);
 }
 
 .recitation-transport {
@@ -6275,7 +6261,7 @@ a.ask-entity:hover small {
     border: 1px solid var(--line-strong);
     border-radius: 999px;
     background: var(--surface);
-    color: var(--accent);
+    color: var(--va-accent-text);
     cursor: pointer;
     transition: background 120ms ease, border-color 120ms ease;
 }
@@ -6354,7 +6340,7 @@ a.ask-entity:hover small {
     align-items: center;
     gap: 6px;
     font-size: 0.78rem;
-    color: var(--accent);
+    color: var(--va-accent-text);
     text-decoration: none;
 }
 
@@ -6442,5 +6428,5 @@ a.ask-entity:hover small {
 .panel h3 svg {
     vertical-align: -3px;
     margin-right: 5px;
-    color: var(--accent);
+    color: var(--va-accent-text);
 }

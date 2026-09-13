@@ -1,0 +1,310 @@
+{
+ "note": "A representative slice of the entity graph for the homepage teaser, cut by scripts/build_home_constellation.py. Not the whole graph and not a sample of it in any statistical sense: the busiest deities and the entities they reach.",
+ "nodes": [
+  {
+   "id": "VG:DEVATA:PITARAH",
+   "type": "DEVATA",
+   "label": "the Fathers",
+   "deity": true,
+   "degree": 2
+  },
+  {
+   "id": "VG:DEVATA:VISNUH",
+   "type": "DEVATA",
+   "label": "Visnu",
+   "deity": true,
+   "degree": 3
+  },
+  {
+   "id": "VG:DEVATA:INDRAGNI",
+   "type": "DEVATA",
+   "label": "Indra and Agni",
+   "deity": true,
+   "degree": 2
+  },
+  {
+   "id": "VG:DEITYAXIS:WARRIOR",
+   "type": "DEITY_AXIS",
+   "label": "warrior",
+   "deity": false,
+   "degree": 1
+  },
+  {
+   "id": "VG:CONCEPT:SAUTRAMANI",
+   "type": "RITUAL",
+   "label": "sautramani rite (sautrāmaṇī)",
+   "deity": false,
+   "degree": 1
+  },
+  {
+   "id": "VG:DEVATA:INDRAH",
+   "type": "DEVATA",
+   "label": "Indra",
+   "deity": true,
+   "degree": 3
+  },
+  {
+   "id": "VG:DEVATA:USAH",
+   "type": "DEVATA",
+   "label": "Usas",
+   "deity": true,
+   "degree": 3
+  },
+  {
+   "id": "VG:DEVATA:SOMAH",
+   "type": "DEVATA",
+   "label": "Soma",
+   "deity": true,
+   "degree": 3
+  },
+  {
+   "id": "VG:DEVATA:ADITIH",
+   "type": "DEVATA",
+   "label": "Aditi",
+   "deity": true,
+   "degree": 3
+  },
+  {
+   "id": "VG:DEVATA:VARUNAH",
+   "type": "DEVATA",
+   "label": "Varuna",
+   "deity": true,
+   "degree": 3
+  },
+  {
+   "id": "VG:CONCEPT:AGNI-CITI-FIRE-PILING",
+   "type": "RITUAL",
+   "label": "fire altar piling (citi)",
+   "deity": false,
+   "degree": 1
+  },
+  {
+   "id": "VG:DEVATA:TVASTA",
+   "type": "DEVATA",
+   "label": "Tvastr",
+   "deity": true,
+   "degree": 1
+  },
+  {
+   "id": "VG:DEVATA:BRHASPATIH",
+   "type": "DEVATA",
+   "label": "Brhaspati",
+   "deity": true,
+   "degree": 3
+  },
+  {
+   "id": "VG:CONCEPT:PITARAH-ANCESTORS",
+   "type": "CONCEPT",
+   "label": "ancestors (pitaraḥ)",
+   "deity": false,
+   "degree": 1
+  },
+  {
+   "id": "VG:CONCEPT:SOMA-PRESSING",
+   "type": "RITUAL",
+   "label": "soma pressing (savana)",
+   "deity": false,
+   "degree": 3
+  },
+  {
+   "id": "VG:CONCEPT:POTR-PURIFIER",
+   "type": "RITUAL_ROLE",
+   "label": "potar priest (potṛ)",
+   "deity": false,
+   "degree": 1
+  },
+  {
+   "id": "VG:DEVATA:MITRAVARUNAU",
+   "type": "DEVATA",
+   "label": "Mitra and Varuna",
+   "deity": true,
+   "degree": 3
+  },
+  {
+   "id": "VG:CONCEPT:SOMA-DRINK",
+   "type": "OFFERING",
+   "label": "soma juice (soma)",
+   "deity": false,
+   "degree": 3
+  },
+  {
+   "id": "VG:DEVATA:MARUTAH",
+   "type": "DEVATA",
+   "label": "the Maruts",
+   "deity": true,
+   "degree": 3
+  },
+  {
+   "id": "VG:CONCEPT:ISTAKA-BRICK",
+   "type": "OBJECT",
+   "label": "ritual brick (iṣṭakā)",
+   "deity": false,
+   "degree": 1
+  },
+  {
+   "id": "VG:DEVATA:AGNIH",
+   "type": "DEVATA",
+   "label": "Agni",
+   "deity": true,
+   "degree": 3
+  },
+  {
+   "id": "VG:CONCEPT:MADHYANDINA-SAVANA-MIDDAY-PRESSING",
+   "type": "CONCEPT",
+   "label": "midday pressing (mādhyandina savana)",
+   "deity": false,
+   "degree": 1
+  },
+  {
+   "id": "VG:CONCEPT:GRAHA-SOMA-DRAWING",
+   "type": "RITUAL",
+   "label": "soma cup drawing (graha)",
+   "deity": false,
+   "degree": 3
+  },
+  {
+   "id": "VG:DEVATA:ASVINAU",
+   "type": "DEVATA",
+   "label": "the Asvins",
+   "deity": true,
+   "degree": 3
+  }
+ ],
+ "edges": [
+  {
+   "s": "VG:DEVATA:AGNIH",
+   "t": "VG:DEVATA:INDRAH",
+   "p": "CO_OCCURS_WITH"
+  },
+  {
+   "s": "VG:DEVATA:AGNIH",
+   "t": "VG:DEVATA:SOMAH",
+   "p": "CO_OCCURS_WITH"
+  },
+  {
+   "s": "VG:DEVATA:INDRAH",
+   "t": "VG:DEVATA:SOMAH",
+   "p": "CO_OCCURS_WITH"
+  },
+  {
+   "s": "VG:DEVATA:AGNIH",
+   "t": "VG:DEVATA:MARUTAH",
+   "p": "CO_OCCURS_WITH"
+  },
+  {
+   "s": "VG:DEVATA:INDRAH",
+   "t": "VG:DEVATA:MARUTAH",
+   "p": "CO_OCCURS_WITH"
+  },
+  {
+   "s": "VG:DEVATA:MARUTAH",
+   "t": "VG:DEVATA:SOMAH",
+   "p": "CO_OCCURS_WITH"
+  },
+  {
+   "s": "VG:DEVATA:ASVINAU",
+   "t": "VG:DEVATA:VARUNAH",
+   "p": "CO_OCCURS_WITH"
+  },
+  {
+   "s": "VG:DEVATA:ASVINAU",
+   "t": "VG:DEVATA:BRHASPATIH",
+   "p": "CO_OCCURS_WITH"
+  },
+  {
+   "s": "VG:DEVATA:BRHASPATIH",
+   "t": "VG:DEVATA:VARUNAH",
+   "p": "CO_OCCURS_WITH"
+  },
+  {
+   "s": "VG:DEVATA:ASVINAU",
+   "t": "VG:DEVATA:USAH",
+   "p": "CO_OCCURS_WITH"
+  },
+  {
+   "s": "VG:DEVATA:USAH",
+   "t": "VG:DEVATA:VARUNAH",
+   "p": "CO_OCCURS_WITH"
+  },
+  {
+   "s": "VG:DEVATA:BRHASPATIH",
+   "t": "VG:DEVATA:USAH",
+   "p": "CO_OCCURS_WITH"
+  },
+  {
+   "s": "VG:DEVATA:ADITIH",
+   "t": "VG:DEVATA:PITARAH",
+   "p": "CO_OCCURS_WITH"
+  },
+  {
+   "s": "VG:DEVATA:ADITIH",
+   "t": "VG:DEVATA:VISNUH",
+   "p": "CO_OCCURS_WITH"
+  },
+  {
+   "s": "VG:DEVATA:ADITIH",
+   "t": "VG:DEVATA:MITRAVARUNAU",
+   "p": "CO_OCCURS_WITH"
+  },
+  {
+   "s": "VG:DEVATA:MITRAVARUNAU",
+   "t": "VG:DEVATA:VISNUH",
+   "p": "CO_OCCURS_WITH"
+  },
+  {
+   "s": "VG:DEVATA:TVASTA",
+   "t": "VG:DEVATA:VISNUH",
+   "p": "CO_OCCURS_WITH"
+  },
+  {
+   "s": "VG:DEVATA:INDRAGNI",
+   "t": "VG:DEVATA:MITRAVARUNAU",
+   "p": "CO_OCCURS_WITH"
+  },
+  {
+   "s": "VG:DEITYAXIS:WARRIOR",
+   "t": "VG:DEVATA:INDRAGNI",
+   "p": "HAS_AXIS"
+  },
+  {
+   "s": "VG:CONCEPT:PITARAH-ANCESTORS",
+   "t": "VG:DEVATA:PITARAH",
+   "p": "DEVATA_ASSOCIATED_WITH"
+  },
+  {
+   "s": "VG:CONCEPT:GRAHA-SOMA-DRAWING",
+   "t": "VG:CONCEPT:SOMA-PRESSING",
+   "p": "BROADER_THAN"
+  },
+  {
+   "s": "VG:CONCEPT:GRAHA-SOMA-DRAWING",
+   "t": "VG:CONCEPT:SOMA-DRINK",
+   "p": "USES_SUBSTANCE"
+  },
+  {
+   "s": "VG:CONCEPT:SOMA-DRINK",
+   "t": "VG:CONCEPT:SOMA-PRESSING",
+   "p": "USES_SUBSTANCE"
+  },
+  {
+   "s": "VG:CONCEPT:SAUTRAMANI",
+   "t": "VG:CONCEPT:SOMA-DRINK",
+   "p": "USES_SUBSTANCE"
+  },
+  {
+   "s": "VG:CONCEPT:GRAHA-SOMA-DRAWING",
+   "t": "VG:CONCEPT:POTR-PURIFIER",
+   "p": "PERFORMED_BY"
+  },
+  {
+   "s": "VG:CONCEPT:MADHYANDINA-SAVANA-MIDDAY-PRESSING",
+   "t": "VG:CONCEPT:SOMA-PRESSING",
+   "p": "BROADER_THAN"
+  },
+  {
+   "s": "VG:CONCEPT:AGNI-CITI-FIRE-PILING",
+   "t": "VG:CONCEPT:ISTAKA-BRICK",
+   "p": "USES_OBJECT"
+  }
+ ]
+}

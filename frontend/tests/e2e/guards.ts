@@ -1,74 +1,68 @@
-import { expect, type Page } from "@playwright/test";
+import { expect, type Locator, type Page } from "@playwright/test";
 
 /**
  * Guards for the most dangerous assertion in this suite: `toHaveCount(0)`.
  *
  * A bare count-zero passes for two completely different reasons. Either the thing really is
- * absent, which is what the test meant, or the selector no longer matches anything anywhere
- * because a class was renamed or the markup moved. In the second case the test has stopped
- * testing and reports success, so the coverage disappears with nothing turning red.
+ * absent, which is what the test meant, or the locator no longer matches anything anywhere
+ * because a class was renamed, an accessible name changed or the markup moved. In the second
+ * case the test has stopped testing and reports success, so the coverage disappears with
+ * nothing turning red.
  *
- * The audit found six of these, and one of them was already inert before anyone touched it:
- * `svg.notation, .musical-notation` had been guarding against classes that do not exist in
- * the stylesheet at all, so "no fake musical notation on a Samaveda page" had never once been
- * checked. A seventh assertion, `toContainText(/Certain and probable mentions are
- * included|/)`, carried a trailing empty alternative, which makes the regex match the empty
- * string and the assertion incapable of failing.
+ * The audit that prompted this found six of them, and one had been inert from the day it was
+ * written: `svg.notation, .musical-notation` guarded against classes that are not in the
+ * stylesheet at all, so "no fake musical notation on a Samaveda page" had never once been
+ * checked. A seventh assertion carried a trailing empty alternative in its regex, which makes
+ * it match the empty string and makes the assertion incapable of failing.
  *
- * This matters more than usual right now. The rebrand renames classes and restructures the
- * DOM across every surface, which is exactly the change these assertions cannot survive
- * honestly.
+ * ## Why the control is a function and not a URL
+ *
+ * A first version took a CSS selector and a control URL. Both were too narrow, and the guards
+ * proved it by refusing three real call sites on their first run:
+ *
+ * - The recitation play button carries its name in `aria-label` and has no text at all, so no
+ *   CSS selector can express it. The locator is now a function, so a role query works.
+ * - A search error only appears after the search has actually run, so navigating to a URL is
+ *   not enough to reach the control state. The control is now a function too.
+ *
+ * Both refusals were correct: in each case the assertion they were guarding would otherwise
+ * have been passing for the wrong reason.
  */
 
+type Control = {
+    /** Put the page into a state where the thing being guarded is definitely present. */
+    arrange: (page: Page) => Promise<void>;
+    /** Named in the failure message, so a stale guard says where it expected to find itself. */
+    hint: string;
+};
+
 /**
- * Assert `selector` matches nothing on the current page, having first proved on `controlUrl`
+ * Assert `locate` matches nothing on the current page, having first proved on a control state
  * that it still matches something.
  *
- * The control is the whole point. It is a page where the thing is known to be present, so if
- * the selector has gone stale the guard fails there and names the selector, instead of the
- * absence assertion passing for the wrong reason.
+ * The control is the whole point. If the locator has gone stale the guard fails there and
+ * names it, instead of the absence assertion passing for the wrong reason.
  */
 export async function absentHere(
     page: Page,
-    selector: string,
-    { controlUrl, controlHint }: { controlUrl: string; controlHint: string },
+    locate: (page: Page) => Locator,
+    control: Control,
 ) {
     const target = page.url();
 
-    await page.goto(controlUrl);
+    await control.arrange(page);
     await expect(
-        page.locator(selector),
-        `Control failed: "${selector}" matched nothing on ${controlHint}, where it is expected. ` +
-            `The selector is stale, so the absence check that follows would have passed ` +
-            `without testing anything. Update the selector rather than the control.`,
+        locate(page),
+        `Control failed: the locator matched nothing on ${control.hint}, where it is expected. ` +
+            `It is stale, so the absence check that follows would have passed without testing ` +
+            `anything. Update the locator rather than the control.`,
     ).not.toHaveCount(0);
 
     await page.goto(target);
-    await expect(page.locator(selector)).toHaveCount(0);
+    await expect(locate(page)).toHaveCount(0);
 }
 
-/**
- * The same idea for copy rather than markup: assert some text is absent here, having proved
- * the phrasing is still live somewhere it should appear.
- *
- * Without the control, rewording "Insufficient evidence" anywhere in the product silently
- * turns "an outage is not dressed up as a knowledge limit" into an assertion about a string
- * the product no longer uses.
- */
-export async function textAbsentHere(
-    page: Page,
-    pattern: RegExp,
-    { controlUrl, controlHint }: { controlUrl: string; controlHint: string },
-) {
-    const target = page.url();
-
-    await page.goto(controlUrl);
-    await expect(
-        page.getByText(pattern).first(),
-        `Control failed: ${pattern} appeared nowhere on ${controlHint}, where it is expected. ` +
-            `The wording has changed, so the absence check that follows proves nothing.`,
-    ).toBeVisible();
-
-    await page.goto(target);
-    await expect(page.getByText(pattern)).toHaveCount(0);
+/** The common case: the control is simply another page. */
+export function atUrl(url: string, hint: string): Control {
+    return { arrange: async (page) => void (await page.goto(url)), hint };
 }
