@@ -101,6 +101,31 @@ Cold first-render ranges 25–709 ms and is a one-time cost per route per server
 This is consistent with the previously recorded baseline (slowest non-Ask ≈234 ms) and
 shows no regression from the changes in this closure.
 
+#### One latency test fails in the full suite and only there
+
+`TestLivePerformance::test_median_latency[neighbourhood depth 2 (aggregate-class)]` holds
+`/api/v1/graph/neighborhood/{INDRA}?depth=2` to a 400 ms median. Observed:
+
+| Condition | Result |
+|---|---|
+| Full suite, product running | 850 ms — **fail** |
+| Full suite, product stopped | 817 ms — **fail** |
+| Full suite, earlier run today | pass |
+| Isolated, 8 consecutive runs | pass, 8/8 |
+| Isolated, with coverage enabled | pass |
+| Live API server, 4 samples | **186.6 ms cold, 183.3 ms warm** |
+
+The endpoint a reader actually reaches is comfortably inside the budget; only the
+in-process `TestClient` measurement taken partway through a full run is not, and a median
+of five requests at 817 ms means at least three of the five were slow, so it is not one
+cold cache miss. The same test failed in the session before this one, at 802 ms, and no
+file under `src/` was changed by this closure — `git diff --name-only 6c28190..HEAD -- src/`
+is empty — so this is pre-existing and cannot be a regression from the work here.
+
+It was **not** made to pass. Raising the budget or adding a warm-up would convert a
+measurement into a formality, and the honest state is that this gate is red. Recorded as
+**`TEST_BL_01`**.
+
 ### Ask — the wait is entirely the provider
 
 Measured on the reader's real path (browser → Next rewrite → API) and directly against the
@@ -204,8 +229,10 @@ unshifted — but confirmed on paper is not confirmed by ear.
 |---|---|
 | `PERF_BACKLOG_01` | **Ask latency is provider-bound: 29.7–248.7s end-to-end, of which ≤1.2s is VedaGraph.** Not a retrieval or graph problem. Addressed by choosing a faster provider (Groq is already supported and configured by env alone), by `ASK_BL_04` streaming so the reader sees progress, or by lowering `VEDAGRAPH_LLM_MAX_RETRIES`. If either LLM setting changes, `frontend/next.config.ts`'s `proxyTimeout` must still exceed `(retries + 1) × timeout + retries × 30s`; `tests/product/test_ask_proxy_ceiling.py` enforces this. |
 | `UI_BL_01` | **`--faint` and `--muted` have converged in the light theme.** Meeting AA left the two tokens near-identical. Either consolidate them or re-establish the step on a surface that can carry it. |
+| `TEST_BL_01` | **`TestLivePerformance` depth-2 median fails inside the full suite and nowhere else** — 817–850 ms in a full run, 8/8 pass isolated, 183–210 ms against the live API server. Pre-existing; it failed at 802 ms before this closure and no `src/` file changed here. Diagnose why the in-process `TestClient` path degrades partway through a run before touching the budget. Do not raise the number to clear it. |
 
-`ASK_BL_11` (ruff format drift) is **closed** by this closure. `ASK_BL_08`, `ASK_BL_13`,
+`ASK_BL_11` (ruff format drift) is **closed** by this closure. `TEST_BL_01` is why the
+backend suite gate is red and why this closure does not promote the release label. `ASK_BL_08`, `ASK_BL_13`,
 `ASK_BL_01`, `ASK_BL_03`, `ASK_BL_04`, `ASK_BL_05`, `ASK_BL_07`, `ASK_BL_09`, `ASK_BL_10`
 and `ASK_BL_12` remain post-V1 and were not touched.
 
