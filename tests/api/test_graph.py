@@ -26,7 +26,7 @@ from typing import Any
 import pytest
 from fastapi.testclient import TestClient
 
-from tests.api.conftest import FakeRepository
+from tests.api.conftest import FakeRepository, UntracedBlock
 from vedagraph.api.errors import BadRequestError
 from vedagraph.api.models.graph import RelationshipIdBasis
 from vedagraph.api.repositories.neo4j_repository import Neo4jRepository
@@ -1024,6 +1024,13 @@ class TestLivePerformance:
     The neighbourhood is aggregate-class at depth 2 and is held to a looser bound than the
     point reads, which is stated here rather than quietly absorbed: it fans out over up to
     57 predicates and then takes one bounded step beyond that frontier.
+
+    Every test here takes ``untraced_measurement``, and the budgets assume it. Depth 2 does
+    more Python per request than any other route in this file, so it paid the coverage
+    tracer more than any other route: 185 ms with the tracer paused against 360-459 ms with
+    it running, back to back in one process. Traced, this class passed at 282 ms in a small
+    run and failed at 769 ms in a large one against the same 400 ms budget -- the budget was
+    never what moved.
     """
 
     @pytest.mark.parametrize(
@@ -1053,31 +1060,44 @@ class TestLivePerformance:
     def test_median_latency(
         self,
         live_client: TestClient,
+        untraced_measurement: UntracedBlock,
         label: str,
         url: str,
         params: dict[str, Any],
         budget_ms: int,
     ) -> None:
         timings: list[float] = []
-        for _ in range(5):
-            started = time.perf_counter()
-            response = live_client.get(url, params=params)
-            timings.append((time.perf_counter() - started) * 1000)
-            assert response.status_code == 200
+        with untraced_measurement():
+            for _ in range(5):
+                started = time.perf_counter()
+                response = live_client.get(url, params=params)
+                timings.append((time.perf_counter() - started) * 1000)
+                assert response.status_code == 200
+        # Re-issued under the tracer, *after* the measurement and never before it: these
+        # routes have to stay in the coverage report, and the timed loop must stay exactly
+        # as written -- five samples, the first of them cold.
+        assert live_client.get(url, params=params).status_code == 200
         timings.sort()
         median = timings[len(timings) // 2]
         assert median < budget_ms, f"{label}: median {median:.0f} ms over {budget_ms} ms"
 
-    def test_relationship_explanation_is_a_point_read(self, live_client: TestClient) -> None:
+    def test_relationship_explanation_is_a_point_read(
+        self, live_client: TestClient, untraced_measurement: UntracedBlock
+    ) -> None:
         body = live_client.get(
             f"/api/v1/graph/neighborhood/{RV_FIRST}", params={"limit_per_type": 1}
         ).json()
         token = body["edges"][0]["id"]
         timings: list[float] = []
-        for _ in range(5):
-            started = time.perf_counter()
-            assert live_client.get(f"/api/v1/graph/relationships/{token}").status_code == 200
-            timings.append((time.perf_counter() - started) * 1000)
+        with untraced_measurement():
+            for _ in range(5):
+                started = time.perf_counter()
+                assert live_client.get(f"/api/v1/graph/relationships/{token}").status_code == 200
+                timings.append((time.perf_counter() - started) * 1000)
+        # Re-issued under the tracer, *after* the measurement and never before it: these
+        # routes have to stay in the coverage report, and the timed loop must stay exactly
+        # as written -- five samples, the first of them cold.
+        assert live_client.get(f"/api/v1/graph/relationships/{token}").status_code == 200
         timings.sort()
         assert timings[len(timings) // 2] < 150
 

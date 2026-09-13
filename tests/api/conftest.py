@@ -17,11 +17,20 @@ would be a third opportunity.
 
 Live fixtures skip rather than fail when the graph is down, so the suite stays green on a
 machine with no Neo4j, and the skip reason says which check failed.
+
+*Latency tests* are a third kind and they take :func:`untraced_measurement`. A millisecond
+budget is a claim about the product, and this project's ``addopts`` always pass
+``--cov=vedagraph`` with branch coverage, so without that fixture the number under the
+assertion is the product plus a line tracer the product never runs. See the fixture for the
+measurements.
 """
 
 from __future__ import annotations
 
-from collections.abc import Iterator
+import contextlib
+import sys
+from collections.abc import Callable, Iterator
+from contextlib import AbstractContextManager
 from typing import Any
 
 import pytest
@@ -142,6 +151,78 @@ def down_client() -> Iterator[TestClient]:
 # ---------------------------------------------------------------------------
 # Live graph
 # ---------------------------------------------------------------------------
+
+
+#: What :func:`untraced_measurement` hands a test: call it, and the block inside the
+#: ``with`` runs with no tracer installed.
+UntracedBlock = Callable[[], AbstractContextManager[None]]
+
+
+@pytest.fixture
+def untraced_measurement(
+    pytestconfig: pytest.Config,
+) -> Iterator[UntracedBlock]:
+    """Measure the product, not the instrument: no tracer runs inside the timed block.
+
+    ``addopts`` in ``pyproject.toml`` carries ``--cov=vedagraph`` and ``branch = true``, so
+    the default invocation of this suite runs every route under ``sys.settrace``. On an
+    aggregate-class route that is not a small tax, and it is not a constant one either. The
+    same depth-2 neighbourhood request, re-measured back to back inside one full-suite
+    process at an identical heap and on the same connection pool, ran **185 ms** with
+    coverage paused and **360-459 ms** with it running. Isolated it is 122-141 ms untraced.
+    The product itself, over a real socket to uvicorn on the same machine, is 149 ms median
+    (104-198 over nine samples), and was 183-210 ms at the previous closure -- either way the
+    untraced in-process number is the product's number and the traced one is not. Two full
+    runs of this suite put the *traced* median at 769 ms and 365 ms against a 400 ms budget,
+    so the assertion was not merely pessimistic -- it was non-deterministic, because it was
+    pricing the tracer.
+
+    Freezing or disabling the garbage collector at the same moment changed nothing
+    (185 ms either way, at 1.84 million live objects), which is why this pauses coverage and
+    does not touch the collector.
+
+    ``pytest.mark.no_cover`` from ``pytest-cov`` does the same pause, but it raises
+    ``AttributeError`` under ``--no-cov`` because its controller is ``None`` and the marker
+    hook does not check. Running this suite without coverage has to keep working, so the
+    pause is done here where the absent controller is a no-op.
+
+    This is a context manager rather than a blanket pause for the whole test so that the
+    warm-up call and the status assertions outside the timed block stay inside the coverage
+    report. That scoping is necessary and was *not* sufficient: pausing coverage at all is a
+    one-way door for threads that already exist, because ``Coverage.start()`` does not reach
+    back into a running thread, and every live request in this suite is served on one
+    session-scoped anyio portal thread. Either form of pause therefore took
+    ``graph_service`` from 90% to 68% and ``passage_service`` from 91% to 82% for the
+    remainder of the run. What closes that hole is
+    ``tests/conftest.py::pytest_collection_modifyitems``, which runs every test using this
+    fixture last; with it, coverage over ``tests/api`` is identical to the run before this
+    fixture existed -- 19,508 statements missed and 224 partial branches, exactly.
+
+    The tracer assertion is the guard on all of the above: if the pause ever stops working
+    -- a different coverage core, a debugger attached, this fixture dropped from a signature
+    -- the budget silently goes back to describing the instrument. Failing loudly is
+    deliberate; a latency test that quietly declines to measure reads as a pass.
+    """
+    controller = getattr(pytestconfig.pluginmanager.get_plugin("_cov"), "cov_controller", None)
+
+    @contextlib.contextmanager
+    def paused() -> Iterator[None]:
+        if controller is not None:
+            controller.pause()
+        try:
+            tracer = sys.gettrace()
+            profiler = sys.getprofile()
+            assert tracer is None and profiler is None, (
+                f"a latency budget cannot be read under {tracer or profiler!r}: it would "
+                "measure the tracer rather than the endpoint. Detach the debugger, or "
+                "restore the coverage pause above."
+            )
+            yield
+        finally:
+            if controller is not None:
+                controller.resume()
+
+    yield paused
 
 
 @pytest.fixture(scope="session")

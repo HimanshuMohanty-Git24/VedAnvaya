@@ -23,7 +23,7 @@ import time
 import pytest
 from fastapi.testclient import TestClient
 
-from tests.api.conftest import FakeRepository, build_client
+from tests.api.conftest import FakeRepository, UntracedBlock, build_client
 from tests.api.test_graph import assert_no_leaks
 from vedagraph.api.repositories.neo4j_repository import Neo4jRepository
 from vedagraph.api.routes import formulas
@@ -421,16 +421,26 @@ class TestLiveFormulaDetail:
 
 @pytest.mark.neo4j
 class TestLivePerformance:
-    def test_both_detail_endpoints_are_point_reads(self, live_formula_client: TestClient) -> None:
+    def test_both_detail_endpoints_are_point_reads(
+        self, live_formula_client: TestClient, untraced_measurement: UntracedBlock
+    ) -> None:
+        """150 ms is the product's number, so it is read without the coverage tracer.
+
+        The budget is read with the coverage tracer paused; see the
+        ``untraced_measurement`` fixture for why that is not cosmetic.
+        """
         for label, url in (
             ("formula", f"/api/v1/formulas/{PATA_SVASTIBHIH}"),
             ("family", f"/api/v1/formula-families/{VISVA_BHUVANA}"),
         ):
             timings: list[float] = []
-            for _ in range(5):
-                started = time.perf_counter()
-                assert live_formula_client.get(url).status_code == 200
-                timings.append((time.perf_counter() - started) * 1000)
+            with untraced_measurement():
+                for _ in range(5):
+                    started = time.perf_counter()
+                    assert live_formula_client.get(url).status_code == 200
+                    timings.append((time.perf_counter() - started) * 1000)
+            # Traced, and after the measurement: coverage, not a warm-up.
+            assert live_formula_client.get(url).status_code == 200
             timings.sort()
             median = timings[len(timings) // 2]
             assert median < 150, f"{label}: median {median:.0f} ms"

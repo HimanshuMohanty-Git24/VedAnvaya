@@ -27,7 +27,7 @@ from urllib.parse import quote
 import pytest
 from fastapi.testclient import TestClient
 
-from tests.api.conftest import FakeRepository
+from tests.api.conftest import FakeRepository, UntracedBlock
 from vedagraph.api.config import MAX_PAGE_SIZE
 from vedagraph.api.models.entity import (
     DEITY_STRUCTURES,
@@ -873,8 +873,14 @@ def test_no_deity_response_leaks_an_internal(live_client: TestClient) -> None:
 
 
 @pytest.mark.neo4j
-def test_deity_endpoints_answer_inside_the_latency_budget(live_client: TestClient) -> None:
-    """Median under 150ms, every endpoint under 300ms. Warmed, best of three."""
+def test_deity_endpoints_answer_inside_the_latency_budget(
+    live_client: TestClient, untraced_measurement: UntracedBlock
+) -> None:
+    """Median under 150ms, every endpoint under 300ms. Warmed, best of three.
+
+    The budget is read with the coverage tracer paused; see the
+    ``untraced_measurement`` fixture for why that is not cosmetic.
+    """
     cases: list[tuple[str, dict[str, Any]]] = [
         ("/api/v1/devatas", {}),
         (f"/api/v1/devatas/{INDRA}", {}),
@@ -884,8 +890,11 @@ def test_deity_endpoints_answer_inside_the_latency_budget(live_client: TestClien
     ]
     timings: dict[str, float] = {}
     for path, params in cases:
+        # Traced, and deliberately outside the block below: the warm call is what keeps
+        # these routes in the coverage report.
         live_client.get(path, params=params)
-        best = min(_elapsed_ms(live_client, path, params) for _ in range(3))
+        with untraced_measurement():
+            best = min(_elapsed_ms(live_client, path, params) for _ in range(3))
         timings[f"{path} {params}"] = best
     slow = {key: round(ms, 1) for key, ms in timings.items() if ms > 300}
     assert not slow, f"over the 300ms budget: {slow}"

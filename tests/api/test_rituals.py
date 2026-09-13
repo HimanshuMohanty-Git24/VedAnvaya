@@ -16,7 +16,7 @@ from typing import Any
 import pytest
 from fastapi.testclient import TestClient
 
-from tests.api.conftest import FakeRepository
+from tests.api.conftest import FakeRepository, UntracedBlock
 from tests.api.test_devatas import KNOWN_NON_DEITY_LABELS, assert_no_internals
 from vedagraph.api.config import MAX_PAGE_SIZE
 from vedagraph.api.repositories.neo4j_repository import Neo4jRepository
@@ -176,15 +176,25 @@ def test_no_ritual_response_leaks_an_internal(live_client: TestClient) -> None:
 
 
 @pytest.mark.neo4j
-def test_ritual_endpoints_answer_inside_the_latency_budget(live_client: TestClient) -> None:
+def test_ritual_endpoints_answer_inside_the_latency_budget(
+    live_client: TestClient, untraced_measurement: UntracedBlock
+) -> None:
+    """Every ritual endpoint under 300ms. Warmed, best of three.
+
+    The budget is read with the coverage tracer paused; see the
+    ``untraced_measurement`` fixture for why that is not cosmetic.
+    """
     cases: list[tuple[str, dict[str, Any]]] = [
         ("/api/v1/rituals", {}),
         (f"/api/v1/rituals/{SOMA_PRESSING}", {}),
     ]
     timings = {}
     for path, params in cases:
+        # Traced, and deliberately outside the block below: the warm call is what keeps
+        # these routes in the coverage report.
         live_client.get(path, params=params)
-        timings[path] = min(_elapsed_ms(live_client, path, params) for _ in range(3))
+        with untraced_measurement():
+            timings[path] = min(_elapsed_ms(live_client, path, params) for _ in range(3))
     slow = {key: round(ms, 1) for key, ms in timings.items() if ms > 300}
     assert not slow, f"over the 300ms budget: {slow}"
 
