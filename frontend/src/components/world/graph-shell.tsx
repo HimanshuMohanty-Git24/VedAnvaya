@@ -553,6 +553,7 @@ export function GraphShell() {
                         graph.reportRendererFailure("context-lost", detail)
                     }
                     onInspectEdge={inspectEdge}
+                    inspectedEdge={inspectedEdge}
                     /*
                      * A tap on a subject is a selection and goes into the record of state like
                      * every other. A tap on the background is not a request to leave the
@@ -580,6 +581,7 @@ export function GraphShell() {
                            on a phone is behind the sheet - at every one of its three heights. */
                         safeArea={safeArea}
                         onInspectEdge={inspectEdge}
+                        inspectedEdge={inspectedEdge}
                         onSelect={(node) => selectNode(node, "reader:select-subject")}
                         root={selectedIndex}
                         scope={state.view === "FOCUS" && selectedIndex !== null ? "focus" : "world"}
@@ -938,6 +940,60 @@ export function GraphShell() {
                         </Link>
                     </div>
 
+                    {/*
+                      * The summary before the list, and that order is a correction.
+                      *
+                      * The list was first and the summary under it, which was survivable while
+                      * the list was collapsed to nothing by a stray `min-height: 0` - see
+                      * world.css. With the section laid out at its real height it is 1,286 px of
+                      * rows on Indra, so "what kinds of connection are these" sat a full screen
+                      * and a half below the fold. Overview, then detail: the families answer the
+                      * question a reader arrives with, including for the families there are none
+                      * of, and the named rows answer the one they ask next.
+                      */}
+                    {/*
+                      * What kind of connections these are, including the kinds there are none of.
+                      *
+                      * The absent rows are the point. A reader shown only the seven families a
+                      * subject has will conclude those are the seven that exist, and on Indra
+                      * five of the twelve are absent - on a single mandala, eleven of twelve
+                      * are. A list that silently omits them lets someone infer that Indra has no
+                      * recorded metre, when the truth is that a deity node never carries one.
+                      *
+                      * The absent sentence states a fact about the record, never about
+                      * possibility, because the artifact carries no rule to check a claim about
+                      * possibility against.
+                      */}
+                    {focus && focus.rows.length > 0 && (
+                        <section className="va-world-families">
+                            <h3>Kinds of connection</h3>
+                            <dl>
+                                {focus.rows.map((row) => (
+                                    <div
+                                        data-present={row.present}
+                                        key={row.family}
+                                    >
+                                        <dt>{row.heading}</dt>
+                                        <dd>
+                                            {row.present ? (
+                                                <>
+                                                    {row.subjects.toLocaleString("en-GB")} subject
+                                                    {row.subjects === 1 ? "" : "s"}
+                                                    {row.shown > 0 && (
+                                                        <span>
+                                                            {row.shown} on screen
+                                                        </span>
+                                                    )}
+                                                </>
+                                            ) : (
+                                                FAMILY_COPY[row.family].absent
+                                            )}
+                                        </dd>
+                                    </div>
+                                ))}
+                            </dl>
+                        </section>
+                    )}
                     {neighbourRows.length > 0 && (
                         <section className="va-world-neighbours">
                             <h3>
@@ -1007,49 +1063,6 @@ export function GraphShell() {
                         </section>
                     )}
 
-                    {/*
-                      * What kind of connections these are, including the kinds there are none of.
-                      *
-                      * The absent rows are the point. A reader shown only the seven families a
-                      * subject has will conclude those are the seven that exist, and on Indra
-                      * five of the twelve are absent - on a single mandala, eleven of twelve
-                      * are. A list that silently omits them lets someone infer that Indra has no
-                      * recorded metre, when the truth is that a deity node never carries one.
-                      *
-                      * The absent sentence states a fact about the record, never about
-                      * possibility, because the artifact carries no rule to check a claim about
-                      * possibility against.
-                      */}
-                    {focus && focus.rows.length > 0 && (
-                        <section className="va-world-families">
-                            <h3>Kinds of connection</h3>
-                            <dl>
-                                {focus.rows.map((row) => (
-                                    <div
-                                        data-present={row.present}
-                                        key={row.family}
-                                    >
-                                        <dt>{row.heading}</dt>
-                                        <dd>
-                                            {row.present ? (
-                                                <>
-                                                    {row.subjects.toLocaleString("en-GB")} subject
-                                                    {row.subjects === 1 ? "" : "s"}
-                                                    {row.shown > 0 && (
-                                                        <span>
-                                                            {row.shown} on screen
-                                                        </span>
-                                                    )}
-                                                </>
-                                            ) : (
-                                                FAMILY_COPY[row.family].absent
-                                            )}
-                                        </dd>
-                                    </div>
-                                ))}
-                            </dl>
-                        </section>
-                    )}
                 </aside>
             )}
         </div>

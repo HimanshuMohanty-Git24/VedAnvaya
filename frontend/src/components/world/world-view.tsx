@@ -43,6 +43,7 @@ export function WorldView({
     pathHops,
     onRendererLost,
     onInspectEdge,
+    inspectedEdge = null,
     safeArea,
     paused = false,
 }: {
@@ -75,6 +76,16 @@ export function WorldView({
     safeArea?: { top?: number; right?: number; bottom?: number; left?: number };
     /** A relationship label was clicked. The index is into the world edge arrays. */
     onInspectEdge?: (edge: number) => void;
+    /**
+     * Which relationship the reader currently has an explanation open on, or null.
+     *
+     * The label layer pins that phrase at the top tier so the collision pass cannot drop the
+     * one thing the reader just asked about. It learns of a *click on a phrase* by itself, but
+     * not of the two other ways the state moves - the explanation being closed, and one being
+     * opened from the panel's relations list, which is the keyboard path. Without this the
+     * label of a closed explanation stayed pinned until the subject changed.
+     */
+    inspectedEdge?: number | null;
     /** True while another renderer is the visible one. The scene is kept, not drawn. */
     paused?: boolean;
 }) {
@@ -127,6 +138,18 @@ export function WorldView({
     const paletteRef = useRef(palette);
     const lostRef = useRef(onRendererLost);
     const tapRef = useRef(onTap);
+    /*
+     * The open explanation, told to the layer that has to keep its phrase on screen.
+     *
+     * Keyed on `engine` as well as the edge because the label layer is built inside the async
+     * initialisation, long after the first render: an effect that ran only on the edge would
+     * find the ref still null on a cold load and never fire again, which is the exact shape of
+     * the `setPaused` defect recorded a few lines below.
+     */
+    useEffect(() => {
+        labelViewRef.current?.setInspected(inspectedEdge);
+    }, [engine, inspectedEdge]);
+
     const inspectRef = useRef(onInspectEdge);
     const pausedRef = useRef(paused);
     useEffect(() => {
@@ -235,6 +258,11 @@ export function WorldView({
                     engine?.resize();
                     if (!engine) return;
                     const size = engine.viewport();
+                    /* The phrase cap is a function of the width and was being read once, at
+                       construction. A rotation from portrait to landscape more than doubles the
+                       room and a window narrowed past 768 halves it, and in both directions the
+                       layer went on budgeting for the width it was born at. */
+                    labelViewRef.current?.setRelationCap(edgeLabelBudget(size.width));
                     setBand((previous) =>
                         previous.width === size.width ? previous : { ...previous, width: size.width },
                     );

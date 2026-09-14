@@ -665,7 +665,16 @@ export class EdgeLabelView {
            on each side; rounding to nearest painted a 43.8 px target and made a claim of "44"
            false by 0.2 px, which measurement finds and a reader does not. */
         const padX = Math.ceil((label.hitWidth - label.width) / 2);
-        const padY = Math.ceil((label.hitHeight - label.height) / 2);
+        /*
+         * The exact half, not a ceiled one.
+         *
+         * `Math.ceil` was here to avoid landing under the floor and it guaranteed landing under
+         * it: ceiling the half and then doubling can only produce an even total, so a chip of
+         * 17.75 got 13 a side and a 43.75 px target - a quarter of a pixel short of a
+         * requirement, twice measured. The guard box is already at least `TOUCH_MIN`, so half of
+         * its excess is the right number and sub-pixel padding is something CSS handles.
+         */
+        const padY = (label.hitHeight - label.height) / 2;
         cell.span.style.setProperty("--va-label-pad-x", `${padX}px`);
         cell.span.style.setProperty("--va-label-pad-y", `${padY}px`);
         cell.key = label.key;

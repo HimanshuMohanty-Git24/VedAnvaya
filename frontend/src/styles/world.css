@@ -225,6 +225,20 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    /*
+     * `min-width: 0`, without which the ellipsis above does nothing.
+     *
+     * A flex item's default `min-width` is `auto`, which for `nowrap` text is the width of the
+     * whole unbroken string - so `overflow: hidden` clips the glyphs while the item still
+     * *claims* its full width. Measured on Indra: this list's longest row is a derived-metric
+     * node labelled `DEVATA_ATTRIBUTION_BY_VEDA (VG:DEVATA:INDRAH)`, 338 px of text in a 286 px
+     * box, and the claim propagated up through the button, the list and the section to give the
+     * panel's grid column a min-content width of 403 px inside a 349 px panel. Every
+     * right-aligned value in the panel was then laid out 78 px past the panel's own edge and 46
+     * px off the side of a 1440 px viewport: the connection counts the phase requires a reader
+     * to see - 7,347 recorded, 40 shown - were in the DOM and off the screen.
+     */
+    min-width: 0;
 }
 
 .va-world-hit-kind {
@@ -251,9 +265,24 @@
     color: var(--va-text-tertiary);
 }
 
+/*
+ * No `min-height: 0` here, and that is the whole of a defect.
+ *
+ * It was left behind by the inner scroller removed above, where it existed to let the list
+ * shrink. The panel is a grid with a definite height - `position: absolute` with both block
+ * insets set - and in that situation `min-height: 0` tells the row-sizing algorithm that this
+ * item may be shrunk below its content. It was: measured at 1440x900 on Indra, the section's
+ * row came out **12 px** against 491 px of content, the box reported a height of **0**, and the
+ * list painted straight through the section below it. Thirty-nine pairs of glyphs overlapped -
+ * every neighbour's name over a relationship family's heading - which is visible in a
+ * screenshot and invisible to every assertion in the suite, because nothing measured the ink.
+ *
+ * The default for a grid item is `min-height: auto`, which is exactly the protection wanted: the
+ * row is as tall as its content and the panel's own `overflow-y: auto` does the scrolling. See
+ * `tests/e2e/graph-labels.spec.ts` for the assertion that now holds this.
+ */
 .va-world-neighbours {
     margin-top: var(--va-space-md);
-    min-height: 0;
 }
 
 .va-world-neighbours h3 {
@@ -499,10 +528,29 @@
     --va-label-pad-y: 0px;
 }
 
+/*
+ * The touch target, floored in CSS rather than in arithmetic.
+ *
+ * The inline pads carry the geometry the collision pass reserved, and they are derived from a
+ * *measured* chip - the layout sizes text with a hidden ruler so it can place labels without
+ * reading the DOM every frame. The ruler and the painted chip do not agree to the pixel: the
+ * ruler reported 18.0 and the chip paints at 17.75, so a pad computed as `ceil((44 - 18) / 2)`
+ * is 13, and 17.75 + 26 is **43.75**. A quarter of a pixel under a requirement is still under
+ * it, and it is the second time this target has been measured short.
+ *
+ * So the floor no longer depends on the measurement at all. `100%` on an absolutely positioned
+ * pseudo-element resolves against the chip's own padding box, which is the thing the reader
+ * actually touches, and `max()` guarantees 44 from that rather than from what a ruler said
+ * about a string. The pads still decide where the box sits; they no longer decide whether it is
+ * big enough.
+ */
 .va-edge-label[data-pickable="true"][data-shown="true"]::after {
     content: "";
     position: absolute;
-    inset: calc(-1 * var(--va-label-pad-y)) calc(-1 * var(--va-label-pad-x));
+    inset-block-start: calc(-1 * var(--va-label-pad-y));
+    inset-inline-start: calc(-1 * var(--va-label-pad-x));
+    width: max(calc(100% + 2 * var(--va-label-pad-x)), 44px);
+    height: max(calc(100% + 2 * var(--va-label-pad-y)), 44px);
 }
 
 /*
@@ -544,6 +592,17 @@
     width: min(22rem, calc(100% - 4rem));
     align-content: start;
     display: grid;
+    /*
+     * `minmax(0, 1fr)` rather than the implicit `auto`, so no descendant can widen the panel.
+     *
+     * An `auto` grid column is floored at its items' min-content width, and that floor is not
+     * clamped by the container - so one unbreakable string anywhere inside made the column wider
+     * than the panel and pushed every right-aligned value off the screen. `minmax(0, 1fr)` makes
+     * the column exactly the container's width whatever its contents claim, which turns an
+     * over-long row into a clipped row instead of a displaced panel. The individual fix is on
+     * `.va-world-hit-name`; this is the one that means the next long string is not a defect.
+     */
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--va-space-md);
     padding: var(--va-space-xl);
     background: color-mix(in srgb, var(--va-surface-page) 92%, transparent);

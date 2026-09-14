@@ -142,6 +142,7 @@ export function PlanarView({
     scope,
     onSelect,
     onInspectEdge,
+    inspectedEdge = null,
     safeArea,
     ref,
 }: {
@@ -166,6 +167,8 @@ export function PlanarView({
      */
     onSelect: (node: number) => void;
     onInspectEdge: (edge: number | null) => void;
+    /** The relationship the reader has an explanation open on. See the note in `WorldView`. */
+    inspectedEdge?: number | null;
     /**
      * Canvas edges covered by chrome, so the diagram is centred in what a reader can see.
      *
@@ -774,6 +777,11 @@ export function PlanarView({
                     );
                     picksRef.current = picks;
                     pointsRef.current = new Float32Array(picks.length * LABEL_STRIDE);
+                    /* The candidate budget above is read from the live width every time; the
+                       layer's own cap was read once, when it was constructed. Both have to move
+                       when the canvas does, or a narrowed window keeps laying out for a wide
+                       one. Idempotent, so saying it on every re-pick costs nothing. */
+                    labelView.setRelationCap(edgeLabelBudget(width));
                     labelView.setLabels(picks);
                 }
             }
@@ -818,6 +826,21 @@ export function PlanarView({
             labelView.setLabels([]);
         }
     }, [labels, scope, world, markDirty]);
+
+    /*
+     * The open explanation, told to the layer that has to keep its phrase on screen.
+     *
+     * `markDirty` because this canvas only repaints when something asks it to, and a phrase
+     * changing tier is not motion the draw loop would otherwise notice - the same reason the
+     * label deadline needed one. Without it, closing an explanation left its phrase pinned
+     * until the next thing that happened to redraw.
+     */
+    useEffect(() => {
+        const labelView = labelViewRef.current;
+        if (!labelView) return;
+        labelView.setInspected(inspectedEdge);
+        markDirty();
+    }, [inspectedEdge, markDirty]);
 
     /* The overlay outlives individual neighbourhoods; only its contents change. */
     useEffect(() => {
