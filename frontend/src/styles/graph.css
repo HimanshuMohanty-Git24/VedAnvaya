@@ -476,7 +476,25 @@
  * would turn a set of typographic controls into a row of buttons and lose the whole look, so the
  * ink stays where it is and an invisible 44px target is centred on it.
  */
+/*
+ * One hint, two devices.
+ *
+ * The copy described a wheel to every reader, including the ones holding a phone - where there
+ * is no wheel, and where the canvas takes the page's scroll for itself.
+ */
+.va-graph-hint-coarse {
+    display: none;
+}
+
 @media (pointer: coarse) {
+    .va-graph-hint-fine {
+        display: none;
+    }
+
+    .va-graph-hint-coarse {
+        display: inline;
+    }
+
     .va-graph-modes,
     .va-graph-modes.is-renderer {
         /* Load-bearing: at the previous 12px gap the 3D and 2D overlays overlapped by 18px and

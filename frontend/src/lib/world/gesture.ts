@@ -41,12 +41,16 @@ export type PointerKind = "mouse" | "pen" | "touch";
 /**
  * How far a pointer may travel and still have been held still.
  *
- * Taken from the platforms rather than chosen. 4 px is the Win32 `SM_CXDRAG` default and a
- * little more forgiving than Blink's own 3 px, which matters because a hand on a trackpad moves
- * two or three pixels during a deliberate click. 10 px clears both the 8 dp Android
+ * Taken from the platforms rather than chosen. 4 px is both the Win32 `SM_CXDRAG` default and
+ * Blink's own `kDragThresholdX` on Windows and Linux; Blink uses 3 only on macOS. It matters
+ * that this is not lower, because a trackpad is the noisiest precise pointer there is and a
+ * hand on one moves two or three pixels during a deliberate click - MapLibre ships 3 and is
+ * widely reported as hostile to trackpad clicks. 10 px clears both Android's 8 dp
  * `ViewConfiguration` touch slop - the boundary Chrome for Android uses to tell a tap from a
  * scroll - and the ten-odd points at which `UIPanGestureRecognizer` begins. A stylus sits
- * between a finger and a mouse in steadiness, so it gets a value between theirs.
+ * between a finger and a mouse in steadiness, so it gets a value between theirs. If taps turn
+ * out to be eaten on touch, raise this toward 12-18 (Flutter ships 18 for a finger against 1
+ * for a precise pointer, an eighteenfold spread) rather than adding a time ceiling.
  *
  * Measured from the press, never between two moves, and as a distance rather than per axis:
  * three pixels on each axis is four and a quarter pixels of travel, and a test that reads that

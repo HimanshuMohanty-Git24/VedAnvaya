@@ -473,15 +473,61 @@
         --va-sheet-height: calc(100% - var(--va-space-6xl));
     }
 
-    /* The heading is the handle. No new furniture: the name you are reading is the control. */
+    /*
+     * The name, and a control beside it.
+     *
+     * The name used to *be* the control - "no new furniture: the name you are reading is the
+     * control" - and the restraint was right while the cost looked like nothing. It was not.
+     * A button has presentational children in ARIA, so wrapping the h2 in it removed the
+     * panel's only heading from the structure and collapsed its accessible name to "Deity
+     * Indra"; and the sole signal that the name was pressable was `cursor: pointer`, which
+     * does not exist on the one device where the panel is a sheet at all.
+     *
+     * So: one piece of furniture, labelled with the state it moves to.
+     */
+    .va-world-sheet-head {
+        display: grid;
+        grid-template-areas: "kind control" "name control";
+        grid-template-columns: 1fr auto;
+        align-items: start;
+        column-gap: var(--va-space-md);
+    }
+
+    .va-world-sheet-head .va-world-panel-kind {
+        grid-area: kind;
+    }
+
+    .va-world-sheet-head h2 {
+        grid-area: name;
+    }
+
     .va-world-sheet-handle {
-        display: block;
-        width: 100%;
-        padding: 0;
-        border: 0;
+        grid-area: control;
+        align-self: center;
+        min-height: 44px;
+        padding-inline: var(--va-space-sm);
+        border: var(--va-border-width) solid var(--va-line-strong);
+        border-radius: var(--va-radius-xs);
         background: none;
-        text-align: start;
+        color: var(--va-text-secondary);
+        font-family: var(--va-font-ui);
+        font-size: var(--va-text-2xs);
+        letter-spacing: var(--va-tracking-wide);
+        text-transform: uppercase;
+        white-space: nowrap;
         cursor: pointer;
+    }
+
+    /*
+     * A collapsed sheet does not scroll.
+     *
+     * Measured: 829 px of content behind a 117 px window, so a vertical swipe inside the
+     * collapsed sheet scrolled the panel instead of raising it - and a reader could read the
+     * whole thing without ever discovering it had three heights. What the collapse is hiding
+     * is reached by the control, which is the point of having one.
+     */
+    .va-world-panel[data-sheet="collapsed"] {
+        overflow: hidden;
     }
 
     .va-world-hover,

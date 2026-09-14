@@ -42,6 +42,7 @@ export function PlanarView({
     scope,
     onSelect,
     onInspectEdge,
+    safeArea,
 }: {
     world: World;
     labels: WorldLabels | null;
@@ -64,6 +65,15 @@ export function PlanarView({
      */
     onSelect: (node: number) => void;
     onInspectEdge: (edge: number | null) => void;
+    /**
+     * Canvas edges covered by chrome, so the diagram is centred in what a reader can see.
+     *
+     * Measured for both renderers since the phase that introduced it, and passed to one. On a
+     * phone the graph chrome takes 226 px of the top and the subject sheet takes 120 px of the
+     * bottom, so a diagram centred in the whole canvas puts the chosen subject behind the
+     * sheet - at every one of its three heights.
+     */
+    safeArea?: { top?: number; right?: number; bottom?: number; left?: number };
 }) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const stageRef = useRef<HTMLDivElement>(null);
@@ -127,15 +137,34 @@ export function PlanarView({
         const { minX, minY, maxX, maxY } = planarBounds(graph);
         const width = canvas.clientWidth;
         const height = canvas.clientHeight;
+        /*
+         * Fitted into the visible band, not the canvas.
+         *
+         * The band is what is left after the chrome above and the sheet below, and on a phone
+         * that is less than half the canvas. Centring in the canvas put the subject under the
+         * sheet; centring in the band puts it where the reader is looking. A floor of 120 px
+         * stops an expanded sheet from collapsing the band to nothing and taking the scale with
+         * it - past that point there is no good answer, and the least bad one is to keep the
+         * diagram at a legible size and let the reader lower the sheet.
+         */
+        const inset = {
+            top: safeArea?.top ?? 0,
+            right: safeArea?.right ?? 0,
+            bottom: safeArea?.bottom ?? 0,
+            left: safeArea?.left ?? 0,
+        };
+        const bandWidth = Math.max(160, width - inset.left - inset.right);
+        const bandHeight = Math.max(120, height - inset.top - inset.bottom);
         const spanX = Math.max(1, maxX - minX);
         const spanY = Math.max(1, maxY - minY);
-        const scale = Math.min((width * 0.82) / spanX, (height * 0.82) / spanY, 2.4);
+        const scale = Math.min((bandWidth * 0.82) / spanX, (bandHeight * 0.82) / spanY, 2.4);
         viewRef.current.scale = scale;
-        viewRef.current.x = width / 2 - ((minX + maxX) / 2) * scale;
-        viewRef.current.y = height / 2 - ((minY + maxY) / 2) * scale;
+        viewRef.current.x =
+            inset.left + bandWidth / 2 - ((minX + maxX) / 2) * scale;
+        viewRef.current.y = inset.top + bandHeight / 2 - ((minY + maxY) / 2) * scale;
         viewRef.current.vx = 0;
         viewRef.current.vy = 0;
-    }, []);
+    }, [safeArea]);
 
     useEffect(() => {
         if (scope === "world") {

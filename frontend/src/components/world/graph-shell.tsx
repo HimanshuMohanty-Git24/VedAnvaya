@@ -65,6 +65,21 @@ type Hit = { index: number; label: string; group: string };
  */
 const HUB_ALTERNATIVE_COUNT = 60;
 
+type SheetHeight = "collapsed" | "half" | "expanded";
+
+/** The cycle, written once so the control and its label cannot disagree about what is next. */
+const SHEET_NEXT: Record<SheetHeight, SheetHeight> = {
+    collapsed: "half",
+    half: "expanded",
+    expanded: "collapsed",
+};
+
+const SHEET_COPY: Record<SheetHeight, string> = {
+    collapsed: "Show less",
+    half: "Show more",
+    expanded: "Show all of it",
+};
+
 export function GraphShell() {
     const graph = useGraphState();
     const { state } = graph;
@@ -107,7 +122,7 @@ export function GraphShell() {
 
     const [sheetState, setSheetState] = useState<{
         at: string;
-        height: "collapsed" | "half" | "expanded";
+        height: SheetHeight;
     } | null>(null);
     const [hintDismissed, setHintDismissed] = useState(false);
     const deferred = useDeferredValue(query);
@@ -382,6 +397,10 @@ export function GraphShell() {
                         semantic levels here as in the spatial view. */}
                     <PlanarView
                         labels={labels}
+                        /* The safe area was measured for both renderers and passed to one. So in
+                           the planar view a chosen subject was centred in the whole canvas, which
+                           on a phone is behind the sheet - at every one of its three heights. */
+                        safeArea={safeArea}
                         onInspectEdge={inspectEdge}
                         onSelect={(node) => selectNode(node, "reader:select-subject")}
                         root={selectedIndex}
@@ -578,8 +597,18 @@ export function GraphShell() {
 
                 {!hintDismissed && world && spatial && !selection && (
                     <p className="va-graph-hint">
-                        Drag to orbit, scroll to move through depth, select to follow a
-                        connection.
+                        {/* Two sentences because there are two devices. The previous copy said
+                            "scroll to move through depth" to every reader, including the ones
+                            holding a phone, which has no wheel and whose canvas refuses the
+                            page its scroll. */}
+                        <span className="va-graph-hint-fine">
+                            Drag to orbit, scroll to move through depth, select to follow a
+                            connection.
+                        </span>
+                        <span className="va-graph-hint-coarse">
+                            Drag to turn it, pinch to move through depth, tap a subject to
+                            follow its connections.
+                        </span>
                         <button onClick={() => setHintDismissed(true)} type="button">
                             Got it
                         </button>
@@ -595,29 +624,41 @@ export function GraphShell() {
                     className="va-world-panel"
                     data-sheet={sheet}
                 >
-                    <button
-                        aria-expanded={sheet !== "collapsed"}
-                        className="va-world-sheet-handle"
-                        onClick={() =>
-                            setSheetState({
-                                at: state.node ?? "",
-                                height:
-                                    sheet === "collapsed"
-                                        ? "half"
-                                        : sheet === "half"
-                                          ? "expanded"
-                                          : "collapsed",
-                            })
-                        }
-                        type="button"
-                    >
+                    {/*
+                      * The heading is a heading, and the control is a control.
+                      *
+                      * The h2 used to be a child of the handle button, and the intent was good -
+                      * "the name you are reading is the control, no new furniture". But a button
+                      * has presentational children in ARIA, so the heading was not exposed as one
+                      * at all: the panel had no heading in the structure, the accessible name
+                      * collapsed to "Deity Indra", and `headingRef.current?.focus()` - the fix
+                      * that stops keyboard traversal dropping focus to the body on every hop -
+                      * was moving focus onto a non-interactive element nested inside a button.
+                      *
+                      * Also `aria-expanded` is boolean and this control has three states, so it
+                      * reported "expanded" at half height. The state is named in words instead,
+                      * which is both true and more use than a boolean would have been.
+                      */}
+                    <div className="va-world-sheet-head">
                         <p className="va-world-panel-kind">
                             {GROUP_LABEL[selection.group] ?? selection.group}
                         </p>
                         <h2 ref={headingRef} tabIndex={-1}>
                             {selection.label || selection.id}
                         </h2>
-                    </button>
+                        <button
+                            className="va-world-sheet-handle"
+                            onClick={() =>
+                                setSheetState({
+                                    at: state.node ?? "",
+                                    height: SHEET_NEXT[sheet],
+                                })
+                            }
+                            type="button"
+                        >
+                            {SHEET_COPY[SHEET_NEXT[sheet]]}
+                        </button>
+                    </div>
 
                     {constellation && (
                         <p className="va-world-region">
