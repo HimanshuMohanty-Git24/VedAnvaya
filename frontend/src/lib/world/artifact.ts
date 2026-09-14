@@ -238,10 +238,49 @@ export function composeWorld(input: {
     };
 }
 
-export async function loadWorld(signal?: AbortSignal): Promise<World> {
+/**
+ * The artifact, fetched and decoded exactly once per page.
+ *
+ * Memoised for a structural reason rather than to save a fetch. The planar canvas could not
+ * exist until the *spatial* engine had finished starting, because the page took its `world` and
+ * `labels` from the 3D view's ready callback - so a cold `?renderer=2d` link waited on a
+ * renderer it was never going to use, and on the 1.9 MB label file besides. That is the worst
+ * available first impression for the fallback renderer, which is the one a weak device is sent
+ * to. With the load memoised the page can ask for the artifact itself and hand it to whichever
+ * canvas is drawing, and the two callers share one fetch and one decode.
+ *
+ * The decode is the part worth not repeating: `buildAdjacency` walks 185,693 edges twice to
+ * build the CSR index, and doing that a second time on the same bytes would be pure waste.
+ *
+ * ## Why the signal is not passed to the shared fetch
+ *
+ * A cached promise has many consumers and one of them aborting must not fail the others. So the
+ * fetch runs unaborted and each caller checks its own signal *after* awaiting, which is what
+ * `world-view.tsx` already does. A rejected load clears the cache so that a later mount retries
+ * rather than inheriting the failure for the life of the page.
+ */
+let worldCache: Promise<World> | null = null;
+let labelCache: Promise<WorldLabels> | null = null;
+
+export function loadWorld(signal?: AbortSignal): Promise<World> {
+    if (!worldCache) {
+        worldCache = readWorld().catch((reason) => {
+            worldCache = null;
+            throw reason;
+        });
+    }
+    /* Awaited here rather than returned raw so a caller that has since been aborted gets the
+       rejection it expects instead of a world it will not use. */
+    return worldCache.then((world) => {
+        signal?.throwIfAborted();
+        return world;
+    });
+}
+
+async function readWorld(): Promise<World> {
     const [manifestResponse, binaryResponse] = await Promise.all([
-        fetch("/world/world.json", { signal }),
-        fetch("/world/world.bin", { signal }),
+        fetch("/world/world.json"),
+        fetch("/world/world.bin"),
     ]);
     if (!manifestResponse.ok || !binaryResponse.ok) {
         throw new Error("The world could not be read.");
@@ -275,8 +314,21 @@ export async function loadWorld(signal?: AbortSignal): Promise<World> {
 }
 
 /** Labels arrive after the geometry, so the world can paint before any text is parsed. */
-export async function loadWorldLabels(signal?: AbortSignal): Promise<WorldLabels> {
-    const response = await fetch("/world/world.labels.json", { signal });
+export function loadWorldLabels(signal?: AbortSignal): Promise<WorldLabels> {
+    if (!labelCache) {
+        labelCache = readWorldLabels().catch((reason) => {
+            labelCache = null;
+            throw reason;
+        });
+    }
+    return labelCache.then((labels) => {
+        signal?.throwIfAborted();
+        return labels;
+    });
+}
+
+async function readWorldLabels(): Promise<WorldLabels> {
+    const response = await fetch("/world/world.labels.json");
     if (!response.ok) throw new Error("The world labels could not be read.");
     return (await response.json()) as WorldLabels;
 }

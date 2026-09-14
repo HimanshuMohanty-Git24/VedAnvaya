@@ -273,8 +273,31 @@ describe("labels", () => {
 
 describe("a world that cannot be read", () => {
     it("fails with a sentence rather than a stack", async () => {
+        /*
+         * Imported fresh, because the loader memoises.
+         *
+         * The module holds the decoded artifact so that the two canvases share one fetch and
+         * one build of the 185,693-edge adjacency index - which means the top-level
+         * `loadWorld` in this file has already succeeded by the time this test runs, and
+         * asking it again would be answered from the cache rather than by the stubbed fetch.
+         * Resetting the module registry is what makes the failure path reachable at all; the
+         * alternative is a reset hook exported from production code for a test to call.
+         */
+        vi.resetModules();
         vi.stubGlobal("fetch", vi.fn(async () => ({ ok: false }) as unknown as Response));
-        await expect(loadWorld()).rejects.toThrow(/could not be read/i);
+        const fresh = await import("@/lib/world/artifact");
+        await expect(fresh.loadWorld()).rejects.toThrow(/could not be read/i);
+    });
+
+    it("does not remember a failure, so a later read can succeed", async () => {
+        /* A cache that held a rejection would make one bad response permanent for the life of
+           the page, and the reader's only recourse would be a reload. */
+        vi.resetModules();
+        vi.stubGlobal("fetch", vi.fn(async () => ({ ok: false }) as unknown as Response));
+        const fresh = await import("@/lib/world/artifact");
+        await expect(fresh.loadWorld()).rejects.toThrow(/could not be read/i);
+        await expect(fresh.loadWorld()).rejects.toThrow(/could not be read/i);
+        expect(vi.mocked(globalThis.fetch).mock.calls.length).toBeGreaterThan(2);
     });
 });
 

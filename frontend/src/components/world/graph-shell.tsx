@@ -4,7 +4,13 @@ import Link from "next/link";
 import { useCallback, useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
 import { encoded } from "@/lib/api";
 import { entityHref } from "@/lib/knowledge";
-import { describeSubject, type World, type WorldLabels } from "@/lib/world/artifact";
+import {
+    describeSubject,
+    loadWorld,
+    loadWorldLabels,
+    type World,
+    type WorldLabels,
+} from "@/lib/world/artifact";
 import type { WorldEngine } from "@/lib/world/engine";
 import { useGraphState } from "@/lib/world/graph-state";
 import {
@@ -206,10 +212,39 @@ export function GraphShell() {
         engine?.setMode(state.view);
     }, [engine, state.view]);
 
+    /*
+     * The page reads the artifact itself, rather than being handed it by one of the canvases.
+     *
+     * It used to take `world` and `labels` from the spatial view's ready callback, which made
+     * the planar canvas unmountable until the *3D* engine had finished starting - so a cold
+     * `?renderer=2d` link waited on a renderer it was never going to use, and on the 1.9 MB
+     * label file besides. The fallback renderer is the one a weak device is sent to; making it
+     * queue behind WebGL is the worst available first impression.
+     *
+     * The loaders are memoised, so asking here costs nothing: both callers share one fetch and
+     * one decode of the 185,693-edge adjacency index.
+     */
+    useEffect(() => {
+        const controller = new AbortController();
+        void (async () => {
+            try {
+                const loaded = await loadWorld(controller.signal);
+                if (controller.signal.aborted) return;
+                setWorld(loaded);
+                const loadedLabels = await loadWorldLabels(controller.signal);
+                if (controller.signal.aborted) return;
+                setLabels(loadedLabels);
+            } catch {
+                /* The canvases report their own failure with the detail a reader needs; a
+                   second notice from here would say the same thing twice. */
+            }
+        })();
+        return () => controller.abort();
+    }, []);
+
+    /** The spatial engine, once it exists. The geometry no longer arrives with it. */
     const onReady = useCallback(
-        (loaded: World, loadedLabels: WorldLabels, loadedEngine: WorldEngine) => {
-            setWorld(loaded);
-            setLabels(loadedLabels);
+        (_loaded: World, _loadedLabels: WorldLabels, loadedEngine: WorldEngine) => {
             setEngine(loadedEngine);
         },
         [],
