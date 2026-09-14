@@ -654,7 +654,12 @@ test.describe("homepage: the world teaser is handled, not followed", () => {
 
         await heroPage(page);
         await page.locator(".va-world-preview-link").click();
-        await expect(page).toHaveURL(/\/graph$/);
+        /* Both axes, not a bare path. The state model writes `view` and `renderer` explicitly
+           even at their defaults, because a URL that omits the default is a URL that means
+           something different from the state that produced it - which is the defect the
+           two-axis split was made to fix. An anchored `/graph$` forbids exactly the query
+           string the product is right to emit. */
+        await expect(page).toHaveURL(/\/graph(\?|$)/);
     });
 
     /**
@@ -774,6 +779,69 @@ test.describe("homepage: the world teaser is handled, not followed", () => {
         const before = await positions(page);
         await page.waitForTimeout(1600);
         expect(await positions(page)).toEqual(before);
+    });
+
+    /**
+     * And it stops drawing it, too.
+     *
+     * The test above asserts that nothing *moves*, and it passed while the renderer was redrawing
+     * an identical picture 30 times a second - 89 frames in three idle seconds, measured, about
+     * 340 ms of main-thread time per five. That is a cost with no visible effect, which is
+     * precisely the kind a check written to catch a visible effect cannot see. It is also the
+     * third appearance of one lesson in this phase: the hidden planar renderer, the offscreen
+     * teaser, and now a field that has been asked to hold still.
+     *
+     * The pointer has to be able to wake it, because a hover still lights a subject up and a tap
+     * still holds one, so both halves are asserted here. Waking on the way in and sleeping again
+     * on the way out is the whole of the mechanism, and a test that only checked the sleep would
+     * pass against a hero that had simply stopped working.
+     */
+    test("and stops redrawing it, until the pointer asks", async ({ page }) => {
+        await heroPage(page);
+        const canvas = page.locator(HERO_CANVAS);
+
+        /* Past the grace period the loop keeps for the entry fit. Polled rather than slept
+           through, so the claim is "it settled" rather than "600 ms is enough". */
+        await expect
+            .poll(() => paused(page), {
+                message:
+                    "the teaser never stopped drawing a still field, so a reader who declined " +
+                    "motion is paying for frames that cannot differ from each other",
+                timeout: 8_000,
+            })
+            .toBe(true);
+
+        /* Exact equality on wall clock, for the same reason as the offscreen test: a loop that
+           wakes sixty times a second to read a boolean and return is not a paused loop. */
+        const parked = await drawCount(page);
+        await page.waitForTimeout(2_000);
+        expect(
+            await drawCount(page),
+            "a paused teaser drew frames while nothing asked it to",
+        ).toBe(parked);
+
+        /* And the pointer brings it back, both before the hover it carries and for the tap a
+           hoverless device makes instead. */
+        const box = await canvas.boundingBox();
+        expect(box, "the hero canvas has no box").not.toBeNull();
+        await page.mouse.move(box!.x + box!.width / 2, box!.y + box!.height / 2);
+        await expect
+            .poll(() => drawCount(page), {
+                message: "the pointer entering the field did not wake it, so nothing it does " +
+                    "to the picture can be seen",
+                timeout: 4_000,
+            })
+            .toBeGreaterThan(parked);
+
+        /* Out again, and it goes back to sleep rather than staying awake for the rest of the
+           visit because it was touched once. */
+        await page.mouse.move(box!.x + box!.width / 2, box!.y - 80);
+        await expect
+            .poll(() => paused(page), {
+                message: "the teaser stayed awake after the pointer left",
+                timeout: 8_000,
+            })
+            .toBe(true);
     });
 });
 

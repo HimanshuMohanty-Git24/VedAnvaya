@@ -225,6 +225,15 @@ function toWorld(slice: HeroSlice) {
     });
 }
 
+/**
+ * How long the loop keeps running with nothing asking it to.
+ *
+ * Long enough for the entry fit and for the emphasis fade after the pointer leaves - the
+ * transition on those labels is 180 ms - and short enough that a reader who declined motion is
+ * not paying for a second of redundant frames every time they pass the cursor over the hero.
+ */
+const IDLE_GRACE_MS = 600;
+
 export function WorldPreview({ slice }: { slice: HeroSlice }) {
     const router = useRouter();
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -600,26 +609,63 @@ export function WorldPreview({ slice }: { slice: HeroSlice }) {
     }, [flat, ranked, slice]);
 
     /*
-     * Draw only while visible.
+     * Draw only while visible, and only while there is something to draw.
      *
-     * Two independent reasons to stop - scrolled out of view, and the tab in the background -
-     * combined into one wish, so neither can switch the loop back on while the other still wants
-     * it off.
+     * Three independent reasons to stop - scrolled out of view, the tab in the background, and
+     * a field that has been asked not to move and is not being touched - combined into one wish,
+     * so none of them can switch the loop back on while another still wants it off.
+     *
+     * ## The third reason
+     *
+     * `prefers-reduced-motion` turns the drift off and damping with it, so after the entry fit
+     * has settled the field is a still image. Measured, it was still being redrawn: 89 frames in
+     * three idle seconds, about 340 ms of main-thread time per five, for a picture identical
+     * frame to frame. The end-to-end test that guards this setting asserts that nothing *moves*,
+     * and nothing did - which is how a cost with no visible effect survived a check written to
+     * catch a visible effect. It is the same lesson as the hidden renderer and the offscreen
+     * teaser, arriving a third time: a renderer nobody is looking at should not be running.
+     *
+     * A hover still has to light up, and so does a tap on a device with no hover, so the pointer
+     * wakes it. `pointerenter` rather than `pointermove`, because the move that carries the hover
+     * arrives after it and would otherwise be the one frame nobody drew. On the way out it goes
+     * back to sleep after a short grace period, which is what lets the emphasis fade finish
+     * rather than freezing half way.
+     *
+     * Not applied when motion is welcome: there the drift is the point, and a loop that stopped
+     * whenever the pointer left would be a hero that only turns while you are pointing at it.
      */
     useEffect(() => {
         const canvas = canvasRef.current;
         if (!canvas) return;
 
+        const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         let onScreen = false;
+        let pointing = false;
+        /* Open at mount and after every wake, because the entry fit and the emphasis fade both
+           need frames that no pointer is asking for. */
+        let graceUntil = performance.now() + IDLE_GRACE_MS;
+        let timer = 0;
+
         const apply = () => {
-            const next = onScreen && document.visibilityState === "visible";
+            const settling = performance.now() < graceUntil;
+            const busy = !reduced || pointing || settling;
+            const next = onScreen && document.visibilityState === "visible" && busy;
             wanted.current = next;
             engineRef.current?.setPaused(!next);
+            /* One pending re-check, so the grace period ends by itself rather than waiting for
+               the next event that happens to arrive. */
+            if (next && settling && timer === 0) {
+                timer = window.setTimeout(() => {
+                    timer = 0;
+                    apply();
+                }, Math.max(16, graceUntil - performance.now()));
+            }
         };
 
         const observer = new IntersectionObserver(
             ([entry]) => {
                 onScreen = entry.isIntersecting;
+                if (onScreen) graceUntil = performance.now() + IDLE_GRACE_MS;
                 apply();
             },
             { threshold: 0.05 },
@@ -627,9 +673,32 @@ export function WorldPreview({ slice }: { slice: HeroSlice }) {
         observer.observe(canvas);
         document.addEventListener("visibilitychange", apply);
 
+        const onEnter = () => {
+            pointing = true;
+            apply();
+        };
+        const onLeave = () => {
+            pointing = false;
+            graceUntil = performance.now() + IDLE_GRACE_MS;
+            apply();
+        };
+        /* A tap is the only contact a hoverless device makes, and it changes what is emphasised,
+           so it reopens the grace period even though the pointer is already gone. */
+        const onDown = onEnter;
+        const onUp = onLeave;
+        canvas.addEventListener("pointerenter", onEnter);
+        canvas.addEventListener("pointerleave", onLeave);
+        canvas.addEventListener("pointerdown", onDown);
+        canvas.addEventListener("pointerup", onUp);
+
         return () => {
             observer.disconnect();
             document.removeEventListener("visibilitychange", apply);
+            canvas.removeEventListener("pointerenter", onEnter);
+            canvas.removeEventListener("pointerleave", onLeave);
+            canvas.removeEventListener("pointerdown", onDown);
+            canvas.removeEventListener("pointerup", onUp);
+            if (timer !== 0) window.clearTimeout(timer);
         };
     }, [flat]);
 
