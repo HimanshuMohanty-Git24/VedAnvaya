@@ -5,7 +5,7 @@
 | | |
 | --- | --- |
 | Starting commit | `2398b81` |
-| Ending commit | recorded in the commit that carries this report |
+| Ending commit | `a10acce` on `phase-8-visualization-lab-and-editorial-pages` |
 | Elapsed | ~2h from the first API probe (2026-09-14 23:13) to the closing gate (2026-09-15 01:10) |
 | Agents | One. No subagents were used. |
 
@@ -295,8 +295,9 @@ region's width directly instead.
 
 ## 43–44. Tree
 
-Working tree clean at the closing commit. Eight files modified, eighteen added; no file
-outside this phase's scope was reformatted.
+Working tree clean at `a10acce`. Eight files modified, twenty-eight added; no file outside
+this phase's scope was reformatted. The work is on a branch rather than on `main`, and is one
+`git merge --ff-only` away from it.
 
 ## 45. Decision
 
