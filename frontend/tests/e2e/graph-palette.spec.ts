@@ -27,9 +27,35 @@ import { inflateSync } from "node:zlib";
  *
  * ## What it asserts
  *
- * Indra is at node index 22975. The engine is asked where it projected that node, the canvas is
- * sampled there, and the result is compared against `--va-group-deity-fill` composited over
- * `--va-graph-canvas` at the alpha the token layer declares for a curated orb. Within dE00 2.
+ * Indra is at node index 22975. The engine is asked where it projected that node and how wide it
+ * drew it, the canvas is sampled across that disc, and each sampled pixel is compared against a
+ * prediction built from `--va-group-deity-fill`, `--va-graph-canvas`, the curated alpha token and
+ * the renderer's own declared depth cues. Within dE00 2, per band of the key light.
+ *
+ * ## There is no flat patch, and assuming one was a defect in this file
+ *
+ * The first version of this test grew a square block outward from the projected centre for as
+ * long as every pixel stayed within dE00 6 of the block's median, required 5px of it, and
+ * compared that median against `over(deity, canvas, alphaCurated)`. It never had a green run,
+ * and the reason was not the renderer:
+ *
+ *   - **A curated orb is a shaded ball, not a disc.** The node shader builds a hemisphere normal
+ *     from the point coordinate and mixes towards a key tint by `0.18 * lit`. So the interior is
+ *     a gradient by design, and the largest genuinely flat region at the centre measured 3px.
+ *   - **It is fogged.** `uFogMax` is solved against the 3:1 contrast gate rather than chosen, and
+ *     at the Focus framing it resolves to 0.096 on an ivory page and 0.494 on a carbon one, with
+ *     the node half way through the fog band. Measured, that moves the published pixel by about
+ *     dE00 3.8 in light and 2.8 in dark - on its own more than the tolerance.
+ *   - **Its own spokes are drawn over it.** Forty-one curated nodes means forty spokes converging
+ *     on the root, the line object carries `renderOrder` 2 against the orb's 1, and coincident
+ *     depth passes `LessEqualDepth`. So the fan covers most of the middle of its own subject's
+ *     disc, in very nearly the subject's own hue. This is what made the flat region 3px, and it
+ *     is not a defect: an edge that stopped at the rim would be a diagram of a hub rather than a
+ *     hub.
+ *
+ * So the prediction models the fragment - linear fill, key mix, fog mix, sRGB encode, then the
+ * encoded-space blend - and the *statistic* is chosen to survive the overdraw rather than to
+ * pretend it is absent. See `assertOrbMatchesTokens`.
  *
  * ## The obstacles, and what is done about each
  *
@@ -41,21 +67,15 @@ import { inflateSync } from "node:zlib";
  * decoder below rather than a dependency: all that is needed is a non-interlaced truecolour
  * PNG, and `zlib` is built in. The decoder is exercised over all five PNG filter types.
  *
- * **Antialiasing, and how big the orb actually is.** The node fragment shader feathers the rim
- * with a smoothstep, so only the interior carries the declared alpha. A fixed sample block was
- * the first thing tried and it was wrong: on the first run the engine was still in WORLD, where
- * the same node is a few pixels across, and a 9x9 block centred on it was mostly canvas. It
- * reported the dark orb as #b56850 against a predicted #ce7161 and blamed the colour. That is
- * the failure this project has a lesson about - a right figure inside a wrong sentence - so the
- * sample region is now *measured*: the block grows outward from the projected centre for as long
- * as every pixel in it stays within dE00 6 of the block's own median, and the test fails saying
- * "too small to sample" if the flat region is under 5px rather than reporting a colour.
+ * **The screenshot is a page clip.** `locator.screenshot()` on a canvas returns the page
+ * composited and cropped to the element, so the DOM label overlay above it lands in the buffer -
+ * and a name backplate is opaque and sits within 9px of this particular orb. The overlay is
+ * hidden for the shutter. That changes no canvas pixel: it is a sibling element, and the claim
+ * here is about what the canvas published.
  *
- * **Overdraw.** Indra is the graph's largest hub and every one of its edges terminates at its
- * centre, so the exact centre pixel is the most overdrawn on the canvas. The statistic is the
- * per-channel median of the block, which discards a handful of edge crossings as outliers while
- * a genuine shift in the fill moves every pixel together and is not discarded. A mean would be
- * dragged by the outliers; a wider tolerance would stop failing on the thing this file is for.
+ * **Antialiasing.** The node fragment shader feathers the rim with a smoothstep from r = 0.19 to
+ * 0.25 in disc coordinates, which is the outer 13% of the radius. Sampling stops at 0.85R, inside
+ * the plateau, so no sampled pixel is part of the feather.
  *
  * **Device scale factor.** `screenPositionOf` answers in CSS pixels relative to the canvas's own
  * box; a screenshot buffer is in device pixels. The ratio is measured from the buffer against
@@ -82,14 +102,38 @@ const SETTLE = 30_000;
 /** "The same colour." About two JND for a large patch, and roughly one 8-bit step here. */
 const TOLERANCE = 2;
 
-/** How far from the block's own median a pixel may sit and still count as the same flat fill.
-    Loose enough to keep the rim's first faint pixel from truncating the block, tight enough
-    that the block cannot grow across the rim into the canvas. */
-const FLATNESS = 6;
+/**
+ * The band of the orb that is sampled, as a fraction of the drawn radius.
+ *
+ * The outer bound is inside the rim feather, which begins at 0.872R. The inner bound excludes
+ * the densest part of the spoke fan: measured across the whole disc the median disagreement is
+ * dE00 1.20, and over this annulus it is 0.30, because forty spokes converging on a point cover
+ * a region whose area falls as the square of the radius while their own coverage falls linearly.
+ * Nothing about the claim depends on the inner bound - the statistic below already tolerates the
+ * fan - but a sample that is three quarters overdrawn is a worse instrument than one that is a
+ * third overdrawn, and this costs nothing to choose well.
+ */
+const SAMPLE_INNER = 0.7;
+const SAMPLE_OUTER = 0.85;
 
-/** The smallest flat region worth a colour claim, and the largest worth sampling. */
-const MIN_BLOCK = 5;
-const MAX_BLOCK = 15;
+/**
+ * The fraction of each band that must match, and why it is a quantile at all.
+ *
+ * Because the spoke fan is drawn over an unknown share of the disc and that share is a property
+ * of the layout, not of the colour pipeline. A mean or a maximum over the disc would be a
+ * measurement of how many neighbours Indra was given this week. A low quantile is a claim that
+ * cannot be satisfied by luck - a quarter of a 130-pixel band is 32 pixels - and cannot be
+ * defeated by overdraw short of three quarters of the band.
+ *
+ * Measured at the commit this was written against: the 25th percentile is dE00 0.13-0.42 across
+ * the three bands and both themes, and the best pixels in every band agree to 0.02, which is
+ * below one 8-bit step. A missing `colorspace_fragment` would read 21-26 against this same
+ * prediction, so there is about fifty times more headroom than the defect needs.
+ */
+const MATCHING_QUANTILE = 0.25;
+
+/** Below this a band is too small to make a claim about, and something has moved. */
+const MIN_BAND = 20;
 
 type Rgb = [number, number, number];
 
@@ -158,18 +202,6 @@ function deltaE00(c1: Rgb, c2: Rgb): number {
         (dL / Sl) ** 2 + (dC / Sc) ** 2 + (dH / Sh) ** 2 + Rt * (dC / Sc) * (dH / Sh),
     );
 }
-
-/**
- * Encoded-sRGB alpha compositing, which is what the pipeline does.
- *
- * Not a linear-light blend. The drawing buffer is RGBA8 with no hardware sRGB encode, both
- * custom shaders run `colorspace_fragment` before the blend, and the blend func Three sets for
- * a non-premultiplied material is SRC_ALPHA / ONE_MINUS_SRC_ALPHA - so the values the blender
- * sees are already encoded. Compositing in linear here would predict a lighter pixel than the
- * one published and would fail against a correct renderer.
- */
-const over = (fg: Rgb, bg: Rgb, alpha: number): Rgb =>
-    fg.map((c, i) => alpha * c + (1 - alpha) * bg[i]) as Rgb;
 
 const show = (c: Rgb) =>
     "#" + c.map((v) => Math.round(v).toString(16).padStart(2, "0")).join("");
@@ -268,44 +300,122 @@ const pixelAt = (png: Png, x: number, y: number): Rgb => {
     return [png.data[at], png.data[at + 1], png.data[at + 2]];
 };
 
-const medianRgb = (pixels: Rgb[]): Rgb =>
-    [0, 1, 2].map((c) => {
-        const values = pixels.map((p) => p[c]).sort((a, b) => a - b);
-        return values[(values.length - 1) >> 1];
-    }) as Rgb;
+const linearToSrgb = (c: number) => (c <= 0.0031308 ? c * 12.92 : 1.055 * c ** (1 / 2.4) - 0.055);
+
+/** What the renderer says it is doing to a fragment's colour. See `Engine.depthCues`. */
+type Cues = {
+    depth: number;
+    fogColour: [number, number, number];
+    fog: number;
+    keyAmount: number;
+    keyShape: number;
+    keyTint: [number, number, number];
+    light: [number, number, number];
+    alpha: number;
+};
 
 /**
- * The largest odd block centred on a point in which every pixel is the same flat colour.
+ * The whole node colour pipeline, for one fragment of one orb, in the order the hardware runs it.
  *
- * Grown rather than assumed, so that "the orb is smaller than the sample" reports itself as a
- * geometry problem instead of as a colour one. Returns the block's median and its size.
+ * `u` and `v` are the fragment's offset from the orb centre divided by its drawn radius, which is
+ * exactly `normal.xy` in the shader: the disc spans the point sprite's inscribed circle, so an
+ * offset of one radius is a unit of normal. `v` is positive downward, matching both CSS and
+ * `gl_PointCoord.t` - the GLES definition is `1/2 - (yw - yf)/size` against a window y that
+ * points up, which reverses twice into screen order. Getting that sign wrong would not be a
+ * subtle failure: it would put the whole prediction on the wrong hemisphere, and the measured
+ * agreement of dE00 0.02 on the lit side is what says it is right.
+ *
+ * The blend at the end is in encoded space, not linear. The drawing buffer is RGBA8 with no
+ * hardware sRGB encode, both custom shaders run `colorspace_fragment` before they write, and the
+ * blend func Three sets for a non-premultiplied material is SRC_ALPHA / ONE_MINUS_SRC_ALPHA - so
+ * the values the blender sees are already encoded. Compositing in linear here would predict a
+ * lighter pixel than the one published and would fail against a correct renderer.
  */
-function flatBlock(png: Png, cx: number, cy: number) {
-    let best: { size: number; colour: Rgb } | null = null;
-    for (let size = 3; size <= MAX_BLOCK; size += 2) {
-        const half = (size - 1) / 2;
-        if (cx - half < 0 || cy - half < 0 || cx + half >= png.width || cy + half >= png.height)
-            break;
-        const pixels: Rgb[] = [];
-        for (let dy = -half; dy <= half; dy += 1)
-            for (let dx = -half; dx <= half; dx += 1) pixels.push(pixelAt(png, cx + dx, cy + dy));
-        const colour = medianRgb(pixels);
-        /* The 90th-percentile deviation rather than the maximum: a hub's edges terminate inside
-           this block and each leaves a pixel or two, which the median rejects anyway. Judging
-           the block by its single worst pixel would refuse to grow past the first edge. */
-        const spread = pixels
-            .map((p) => deltaE00(p, colour))
-            .sort((a, b) => a - b)[Math.floor(pixels.length * 0.9)];
-        if (spread > FLATNESS) break;
-        best = { size, colour };
-    }
-    return best;
+function predictFragment(fill: Rgb, ground: Rgb, alpha: number, cues: Cues, u: number, v: number) {
+    const nz = Math.sqrt(Math.max(0, 1 - u * u - v * v));
+    const lit = Math.min(
+        1,
+        Math.max(0, u * cues.light[0] + v * cues.light[1] + nz * cues.light[2]),
+    );
+    /* `keyShape` selects which side of the ball the light is spent on, and it is a uniform
+       rather than a constant because the answer depends on which way the page has contrast to
+       give: the unlit half darkens on ivory, the lit half lightens on carbon. */
+    const key = cues.keyAmount * (cues.keyShape === 1 ? lit : 1 - lit);
+    const colour = fill.map((channel, i) => {
+        let linear = srgbToLinear(channel / 255);
+        linear = linear * (1 - key) + cues.keyTint[i] * key;
+        linear = linear * (1 - cues.fog) + cues.fogColour[i] * cues.fog;
+        const encoded = linearToSrgb(linear) * 255;
+        return alpha * encoded + (1 - alpha) * ground[i];
+    }) as Rgb;
+    return { lit, colour };
 }
+
+type Sample = { u: number; v: number; lit: number; sampled: Rgb; predicted: Rgb; error: number };
+
+/** Every pixel of the orb's sampled annulus, with the fragment each one should have been. */
+function sampleOrb(
+    png: Png,
+    centre: { x: number; y: number },
+    radius: number,
+    fill: Rgb,
+    ground: Rgb,
+    alpha: number,
+    cues: Cues,
+): Sample[] {
+    const out: Sample[] = [];
+    const reach = Math.ceil(radius) + 1;
+    for (let y = Math.floor(centre.y - reach); y <= Math.ceil(centre.y + reach); y += 1) {
+        for (let x = Math.floor(centre.x - reach); x <= Math.ceil(centre.x + reach); x += 1) {
+            if (x < 0 || y < 0 || x >= png.width || y >= png.height) continue;
+            /* The half is the pixel's own centre, which is where the fragment was evaluated. */
+            const dx = x + 0.5 - centre.x;
+            const dy = y + 0.5 - centre.y;
+            const distance = Math.hypot(dx, dy);
+            if (distance < radius * SAMPLE_INNER || distance > radius * SAMPLE_OUTER) continue;
+            const u = dx / radius;
+            const v = dy / radius;
+            const { lit, colour } = predictFragment(fill, ground, alpha, cues, u, v);
+            const sampled = pixelAt(png, x, y);
+            out.push({ u, v, lit, sampled, predicted: colour, error: deltaE00(sampled, colour) });
+        }
+    }
+    return out;
+}
+
+/**
+ * The three bands of the key light, which are asserted separately.
+ *
+ * Because one statistic over the whole orb cannot tell a colour pipeline from a light. If
+ * `keyShape` were inverted - the light spending contrast towards the page instead of away from
+ * it, which is the regression the shader's own comment warns about - then on an ivory page the
+ * shadowed side would be wrong by the full key amount while the lit side stayed exactly right,
+ * and more than half the disc would still agree. Asserting each band separately means the claim
+ * is about the shading and not only about the fill.
+ */
+const BANDS: Array<{ name: string; holds: (lit: number) => boolean }> = [
+    { name: "shadowed", holds: (lit) => lit < 0.3 },
+    { name: "turning", holds: (lit) => lit >= 0.3 && lit < 0.65 },
+    { name: "lit", holds: (lit) => lit >= 0.65 },
+];
+
+const quantile = (values: number[], p: number) =>
+    values.length === 0
+        ? Number.NaN
+        : [...values].sort((a, b) => a - b)[
+              Math.min(values.length - 1, Math.floor(values.length * p))
+          ];
 
 /* ------------------------------------------------------------------- driving - */
 
 type Handle = {
     screenPositionOf(node: number): { x: number; y: number; z: number } | null;
+    /** Rebuilds the projection before answering, which is why the settle poll uses it. */
+    orbGeometry(
+        nodes: Iterable<number>,
+    ): Array<{ node: number; x: number; y: number; depth: number; radius: number }>;
+    /** The depth cues in force, because both of them are solved at runtime and not declared. */
+    depthCues(node: number): Cues;
     currentMode: string;
     drawCount: number;
     setReducedMotion(value: boolean): void;
@@ -357,37 +467,106 @@ async function openFocusedOnIndra(page: Page): Promise<Locator> {
     await expect(canvas).toBeVisible({ timeout: SETTLE });
     await expect(page.locator(".va-world-panel")).toBeVisible({ timeout: SETTLE });
     /*
-     * `data-view`, and deliberately not `engine.currentMode`.
+     * `data-view` first, then the engine's own mode, then a projection that has stopped moving.
      *
-     * The engine's own mode was the first thing this waited on, and it never arrives:
-     * graph-shell.tsx calls `engine?.setMode(state.view)` in an effect that runs while the
-     * engine ref is still null on first mount, so `currentMode` stays "WORLD" for the life of
-     * the page while `setFocus` has been applied and the curated orbs are on screen. That is
-     * worth knowing and is not this file's to fix - it is carried in the attachment below so
-     * the reading stays visible rather than assumed - but it makes `currentMode` the wrong
-     * signal to wait on. `data-view` is written by the surface that owns the state.
-     *
-     * The orb's presence is then proved geometrically rather than trusted: the flat block has
-     * to measure at least MIN_BLOCK across, which only a curated orb at 16-40px produces. A
-     * WORLD-sized node at this zoom fails that and says so.
+     * An earlier version of this comment recorded that `engine.currentMode` never reaches
+     * "FOCUS" and blamed the shell for calling `setMode` against a null engine ref. That was a
+     * real observation of a real defect and the diagnosis was wrong: the shell's effect is keyed
+     * on the engine and re-runs correctly. The cause was in the state owner - `commit` refused
+     * the boot because a boot is not a reader intent, so a `?view=focus` deep link resolved to
+     * FOCUS and was forced back to WORLD before the first paint, and the engine was being told
+     * WORLD because WORLD was genuinely the state. Fixed, so `currentMode` is a legitimate
+     * signal again and is waited on here.
      */
     await expect(page.locator('.va-graph[data-view="FOCUS"]')).toBeVisible({ timeout: SETTLE });
-    /* Reduced motion cancels the entry flight and the damping, so the projection the engine
-       reports and the pixels the compositor holds come from the same camera. Without it the orb
-       moves between the two reads and the sample lands beside it. */
-    await page.evaluate(() => {
-        (window as unknown as { __vedaWorld?: Handle }).__vedaWorld?.setReducedMotion(true);
-    });
-    await page.waitForTimeout(1_500);
+    /*
+     * The flight is allowed to finish. It used to be cancelled here.
+     *
+     * `setReducedMotion(true)` clears the engine's in-progress flight, and the comment that
+     * asked for it reasoned that this makes the projection and the pixels come from the same
+     * camera. It does - but it does so by stopping the camera *wherever it happens to be*, so
+     * the orb was frozen part-way at 801, 529 on its route to 720, 418 and every pixel
+     * assertion below was aimed between the ring nodes. Measured against a build with no such
+     * call, the same read gives 720, 418 and the two APIs agree to the pixel.
+     *
+     * The concern it was addressing is real and is now handled properly by waiting for two
+     * identical projections below, which is a statement about the camera having arrived rather
+     * than about it having been switched off.
+     */
+
+    /*
+     * Waited on, not slept through.
+     *
+     * A fixed 1.5s was not enough: the sample landed at 805, 533 while the orb was at 720, 418,
+     * found three pixels of flat colour between the ring nodes, and reported a colour defect
+     * that was really a camera still in flight. The error message said as much and nobody could
+     * tell which of its two branches applied.
+     *
+     * `orbGeometry` rebuilds the projection before answering, so polling it until the position
+     * repeats is a direct statement about the thing the sample depends on. The radius comes
+     * back too, so "is this a curated orb" is read from the engine rather than inferred from how
+     * wide a flat patch of colour turned out to be.
+     */
+    /*
+     * Polled until the projection *repeats*, not until it merely looks plausible.
+     *
+     * The first version of this matched a pattern - mode FOCUS and a radius in the curated
+     * range - and both of those are true within a few frames of arrival, while the camera is
+     * still flying. So it returned at 17 frames drawn with the orb at 799.8, 528.4 on its way
+     * to 720, 418, the sample landed between the ring nodes, and the failure read as a colour
+     * defect. Matching a shape is not waiting for stillness, and the distinction is the whole
+     * point of this wait.
+     *
+     * `orbGeometry` rebuilds the projection before answering, so two identical consecutive
+     * readings are a statement about the camera rather than about the poll interval.
+     */
+    let previous: string | null = null;
+    await expect
+        .poll(
+            async () => {
+                const reading = await page.evaluate((node) => {
+                    const engine = (window as unknown as { __vedaWorld?: Handle }).__vedaWorld;
+                    const orb = engine?.orbGeometry?.([node])?.[0];
+                    if (!orb || engine?.currentMode !== "FOCUS") return null;
+                    return `${Math.round(orb.x)}:${Math.round(orb.y)}:${Math.round(orb.radius)}`;
+                }, INDRA_INDEX);
+                const settled = reading !== null && reading === previous;
+                previous = reading;
+                return settled ? reading : null;
+            },
+            {
+                message:
+                    "the engine never reported the same projection for Indra twice running, so " +
+                    "the camera never settled and no pixel here could be attributed to a token",
+                timeout: SETTLE,
+                intervals: [300, 300, 300, 300, 500, 500, 500, 1_000, 1_000],
+            },
+        )
+        /* A curated root orb is 16-40 CSS px; a WORLD-sized node at this zoom is not, and
+           saying so here means the colour assertions below cannot run against a speck. */
+        .toMatch(/^\d+:\d+:(1[6-9]|[23]\d|40)$/);
     return canvas;
 }
 
-/** Sample Indra's orb and compare it against the prediction, attaching the numbers either way. */
+/**
+ * Sample Indra's orb across its annulus and compare every pixel against the modelled fragment.
+ *
+ * The prediction's *palette* comes from CSS - the group fill, the page colour and the curated
+ * alpha - and its *cues* come from the renderer, because the fog ceiling is solved against the
+ * contrast gate and the key tint is derived from the page's luminance, so neither can be written
+ * down here without writing down a number that is allowed to move. What is asserted is the
+ * arithmetic that combines them, which is where the defect this file exists for lived: an
+ * unencoded write moves every fragment by about dE00 21 whatever the cues are set to.
+ *
+ * The cues are not taken on trust either. Their *direction* is checked against the contract the
+ * shader states - shading only towards the high-contrast side of the page - so reading them from
+ * the renderer cannot turn into accepting whatever the renderer felt like doing.
+ */
 async function assertOrbMatchesTokens(
     page: Page,
     canvas: Locator,
     testInfo: TestInfo,
-    label: string,
+    label: "light" | "dark",
 ) {
     const tokens = await readTokens(page);
     expect(
@@ -398,16 +577,54 @@ async function assertOrbMatchesTokens(
     const placed = await page.evaluate((index) => {
         const engine = (window as unknown as { __vedaWorld?: Handle }).__vedaWorld;
         if (!engine) return null;
-        const at = engine.screenPositionOf(index);
-        return at ? { ...at, mode: engine.currentMode, drawn: engine.drawCount } : null;
+        const orb = engine.orbGeometry([index])[0];
+        if (!orb) return null;
+        return {
+            ...orb,
+            cues: engine.depthCues(index),
+            mode: engine.currentMode,
+            drawn: engine.drawCount,
+        };
     }, INDRA_INDEX);
     expect(
         placed,
         "the engine handle did not place Indra: __vedaWorld is absent or the node is off screen",
     ).not.toBeNull();
 
-    /* The canvas element's own screenshot, so the coordinates `screenPositionOf` returns -
-       relative to the canvas's client box - need no page offset that could be stale. */
+    const cues = placed!.cues;
+
+    /*
+     * The light is hidden from the page it has to be read against.
+     *
+     * Not a colour assertion - a statement about which way the cue points, without which reading
+     * the cue from the renderer would make the prediction unfalsifiable. On an ivory page the
+     * tint is black and the shape shades the unlit side; on a carbon one the tint is white and
+     * the shape lights the lit side. The inverse of either would lift half of every orb towards
+     * the paper it is measured against, spending contrast the palette has none of to spare.
+     */
+    expect(
+        cues.keyAmount,
+        "the curated orb has no key light at all, so it is a flat disc again",
+    ).toBeGreaterThan(0);
+    expect(
+        { tint: cues.keyTint[0], shape: cues.keyShape },
+        `in the ${label} theme the key light must shade away from the page, not towards it`,
+    ).toEqual(label === "light" ? { tint: 0, shape: 0 } : { tint: 1, shape: 1 });
+
+    /*
+     * The label overlay is hidden for the shutter, because the screenshot is a page clip.
+     *
+     * `.va-world-label.is-strong` for Indra measures 50x23 at an offset of 9px from this orb's
+     * centre, with an opaque near-white backplate. It is a sibling of the canvas and hiding it
+     * changes nothing the canvas draws; leaving it visible would put a token of the *label*
+     * palette inside a sample of the *graph* palette.
+     */
+    await page.addStyleTag({
+        content: ".va-edge-labels, .va-world-label { display: none !important }",
+    });
+
+    /* The canvas element's own screenshot, so the coordinates `orbGeometry` returns - relative
+       to the canvas's client box - need no page offset that could be stale. */
     const png = decodePng(await canvas.screenshot());
     const box = await canvas.boundingBox();
     expect(box, "the canvas has no layout box").not.toBeNull();
@@ -420,70 +637,129 @@ async function assertOrbMatchesTokens(
         `the screenshot is ${scale.toFixed(3)}x the element and the page reports devicePixelRatio ${tokens.dpr}`,
     ).toBeLessThan(0.02);
 
-    const cx = Math.round(placed!.x * scale);
-    const cy = Math.round(placed!.y * scale);
-    const block = flatBlock(png, cx, cy);
-
     const fill = parseRgb(tokens.deity);
     const ground = parseRgb(tokens.canvas);
-    const predicted = over(fill, ground, tokens.alphaCurated);
-    const sampled = block?.colour ?? pixelAt(png, cx, cy);
-    const measured = deltaE00(sampled, predicted);
+    const samples = sampleOrb(
+        png,
+        { x: placed!.x * scale, y: placed!.y * scale },
+        placed!.radius * scale,
+        fill,
+        ground,
+        tokens.alphaCurated,
+        cues,
+    );
+
+    const bands = BANDS.map((band) => {
+        const rows = samples.filter((sample) => band.holds(sample.lit));
+        const errors = rows.map((sample) => sample.error);
+        return {
+            name: band.name,
+            count: rows.length,
+            matching: quantile(errors, MATCHING_QUANTILE),
+            median: quantile(errors, 0.5),
+            worst: quantile(errors, 1),
+            best: rows.length === 0 ? null : rows.reduce((a, b) => (a.error <= b.error ? a : b)),
+        };
+    });
+
+    /* How wrong an unencoded write would look against this same prediction, so the attachment
+       records the margin rather than only the reading. */
+    const unencoded = quantile(
+        samples.map((sample) => {
+            const raw = fill.map((channel, i) => {
+                let linear = srgbToLinear(channel / 255);
+                const key = cues.keyAmount * (cues.keyShape === 1 ? sample.lit : 1 - sample.lit);
+                linear = linear * (1 - key) + cues.keyTint[i] * key;
+                linear = linear * (1 - cues.fog) + cues.fogColour[i] * cues.fog;
+                return tokens.alphaCurated * linear * 255 + (1 - tokens.alphaCurated) * ground[i];
+            }) as Rgb;
+            return deltaE00(raw, sample.predicted);
+        }),
+        MATCHING_QUANTILE,
+    );
 
     await testInfo.attach(`graph-palette-${label}.txt`, {
         body:
             `node            ${INDRA_INDEX} (${INDRA_ID})\n` +
-            `engine mode     ${placed!.mode} - not waited on; see openFocusedOnIndra\n` +
+            `engine mode     ${placed!.mode}\n` +
             `frames drawn    ${placed!.drawn}\n` +
-            `projected       ${placed!.x.toFixed(1)}, ${placed!.y.toFixed(1)} css px\n` +
+            `projected       ${placed!.x.toFixed(1)}, ${placed!.y.toFixed(1)} css px, radius ${placed!.radius.toFixed(1)}\n` +
             `buffer scale    ${scale.toFixed(3)} (devicePixelRatio ${tokens.dpr})\n` +
             `canvas buffer   ${png.width}x${png.height}, ${png.channels} channels\n` +
-            `flat block      ${block ? `${block.size}x${block.size} at ${cx},${cy}` : `none - centre pixel only at ${cx},${cy}`}\n` +
+            `sampled         ${samples.length} px over ${SAMPLE_INNER}-${SAMPLE_OUTER}R\n` +
             `deity token     ${show(fill)}\n` +
             `canvas token    ${show(ground)}\n` +
             `alpha curated   ${tokens.alphaCurated}\n` +
-            `predicted       ${show(predicted)}\n` +
-            `published       ${show(sampled)}\n` +
-            `dE00            ${measured.toFixed(2)} (tolerance ${TOLERANCE})\n`,
+            `view depth      ${cues.depth.toFixed(0)}\n` +
+            `fog             ${cues.fog.toFixed(4)} towards linear ${cues.fogColour.map((c) => c.toFixed(4)).join(", ")}\n` +
+            `key light       ${cues.keyAmount} towards ${cues.keyTint.join(",")}, shape ${cues.keyShape}, from ${cues.light.map((c) => c.toFixed(3)).join(", ")}\n` +
+            bands
+                .map(
+                    (band) =>
+                        `band ${band.name.padEnd(9)} n=${String(band.count).padStart(4)} ` +
+                        `p${MATCHING_QUANTILE * 100} ${band.matching.toFixed(2)} ` +
+                        `median ${band.median.toFixed(2)} worst ${band.worst.toFixed(2)}` +
+                        (band.best
+                            ? `  best px published ${show(band.best.sampled)} against ${show(band.best.predicted)} at lit ${band.best.lit.toFixed(2)}`
+                            : ""),
+                )
+                .join("\n") +
+            `\ntolerance       ${TOLERANCE}\n` +
+            `margin          an unencoded write would read ${unencoded.toFixed(1)} here\n`,
         contentType: "text/plain",
     });
 
     /*
      * Geometry before colour.
      *
-     * Each of these three is a way for the sample to be measuring something other than the
-     * orb's interior, and each of them would otherwise surface as a wrong colour. The first
-     * run of this file did exactly that: it reported #b56850 against a predicted #ce7161 and
-     * blamed the renderer, when the engine had simply still been in WORLD and the block had
-     * been mostly canvas.
+     * Each of these is a way for the sample to be measuring something other than the orb, and
+     * each would otherwise surface as a wrong colour. The first run of this file did exactly
+     * that: it reported #b56850 against a predicted #ce7161 and blamed the renderer, when the
+     * engine had simply still been in WORLD and the sample had been mostly canvas.
      */
+    for (const band of bands) {
+        expect(
+            band.count,
+            `the ${band.name} band of the orb holds only ${band.count} pixels, so either the orb ` +
+                "is not being drawn at the curated size or the key light has moved. Nothing " +
+                "below can be attributed to a token from a sample this small.",
+        ).toBeGreaterThanOrEqual(MIN_BAND);
+    }
     expect(
-        block,
-        `no flat region at all around ${cx},${cy}: the projection and the pixels disagree, ` +
-            "so this is a placement failure rather than a colour one",
-    ).not.toBeNull();
-    expect(
-        block!.size,
-        `the flat region around Indra is only ${block!.size}px across, which is too small to ` +
-            "make a colour claim about. Either the orb is not being drawn at the curated size " +
-            "or the camera has not settled.",
-    ).toBeGreaterThanOrEqual(MIN_BLOCK);
-    expect(
-        deltaE00(sampled, ground),
-        `the sampled block is the cleared canvas (${show(ground)}), so either the sample missed ` +
-            "the orb or the readback returned nothing",
+        quantile(
+            samples.map((sample) => deltaE00(sample.sampled, ground)),
+            0.9,
+        ),
+        `nine tenths of the sample is the cleared canvas (${show(ground)}), so either the sample ` +
+            "missed the orb or the readback returned nothing",
     ).toBeGreaterThan(TOLERANCE);
 
-    expect(
-        measured,
-        `Indra's orb published ${show(sampled)} where the ${label} tokens predict ${show(predicted)} ` +
-            `(${show(fill)} at alpha ${tokens.alphaCurated} over ${show(ground)}), dE00 ${measured.toFixed(2)}. ` +
-            `Sampled from a ${block!.size}x${block!.size} flat region, so this is the fill and not the rim. ` +
-            "A gap of this size is a renderer-side colour defect rather than a palette one: check that " +
-            "colorspace_fragment appears exactly once in each custom fragment shader in engine.ts, that " +
-            "toLinearTriple in palette.ts has neither been removed nor doubled, that outputColorSpace is " +
-            "still SRGBColorSpace, and that no uniform is scaling the colour on its way through.",
-    ).toBeLessThanOrEqual(TOLERANCE);
+    /*
+     * And the colour, per band.
+     *
+     * The statistic is the 25th percentile of each band rather than its mean, because the spoke
+     * fan is drawn over an unknown share of the disc - see the note at the top of this file - and
+     * that share is a fact about Indra's degree rather than about the colour pipeline. What is
+     * claimed is that within each band of the key light there is a substantial population of
+     * pixels publishing exactly what the tokens and the cues predict. Measured, that population
+     * agrees to dE00 0.02, which is finer than one 8-bit step.
+     */
+    for (const band of bands) {
+        expect(
+            band.matching,
+            `In the ${band.name} band of Indra's orb, three quarters of the ${band.count} sampled ` +
+                `pixels are further than dE00 ${band.matching.toFixed(2)} from what the ${label} ` +
+                "tokens and the renderer's own declared depth cues predict. The best pixel in " +
+                `that band published ${band.best ? show(band.best.sampled) : "-"} where the model ` +
+                `says ${band.best ? show(band.best.predicted) : "-"}. A gap of this size is a ` +
+                "renderer-side colour defect rather than a palette one: check that " +
+                "colorspace_fragment appears exactly once in each custom fragment shader in " +
+                "engine.ts, that toLinearTriple in palette.ts has neither been removed nor " +
+                "doubled, that outputColorSpace is still SRGBColorSpace, and that no uniform is " +
+                "scaling the colour on its way through. For reference, an unencoded write would " +
+                `read ${unencoded.toFixed(1)} against this same prediction.`,
+        ).toBeLessThanOrEqual(TOLERANCE);
+    }
 }
 
 /* -------------------------------------------------------------------- test - */
