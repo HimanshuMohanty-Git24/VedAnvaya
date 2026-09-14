@@ -75,9 +75,11 @@ export function WorldView({
        rather than through the construction effect's dependency list. */
     const paletteRef = useRef(palette);
     const lostRef = useRef(onRendererLost);
+    const pausedRef = useRef(paused);
     useEffect(() => {
         paletteRef.current = palette;
         lostRef.current = onRendererLost;
+        pausedRef.current = paused;
     });
 
     const describe = useCallback((index: number): WorldSelection | null => {
@@ -134,6 +136,18 @@ export function WorldView({
                     },
                 });
                 engineRef.current = engine;
+                /*
+                 * The pause is applied at construction, not only by the effect that watches it.
+                 *
+                 * The engine is built after the artifact loads, which is long after the first
+                 * render. So an effect that calls `setPaused` on mount finds `engineRef.current`
+                 * still null, does nothing, and never fires again - because `paused` has not
+                 * changed. Opening straight into the planar renderer therefore left the spatial
+                 * engine running unseen: measured at 88 frames in three seconds, drawing 35,370
+                 * nodes nobody was looking at, on exactly the weak devices the planar renderer
+                 * exists to help.
+                 */
+                engine.setPaused(pausedRef.current);
                 engine.start();
                 const startedEngine = engine;
                 setEngine(engine);

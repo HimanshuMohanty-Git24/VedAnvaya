@@ -203,3 +203,50 @@ describe("where the opening renderer comes from", () => {
         expect(state.renderer).toBe("3d");
     });
 });
+
+describe("links written before the two-axis split still work", () => {
+    /*
+     * Found by the mobile audit, which reported that every pre-existing `?mode=` link had
+     * become a silent fall-through to the default view. Those links were the shape every
+     * shared and bookmarked graph URL took, so dropping them is a worse failure than the one
+     * the refactor was done to fix.
+     */
+    const legacy = (search: string) => parseGraphState(new URLSearchParams(search));
+
+    it("reads mode=world", () => {
+        expect(legacy("mode=world").view).toBe("WORLD");
+        expect(legacy("mode=world").renderer).toBe("3d");
+    });
+
+    it("reads mode=2d with a subject as a planar focus", () => {
+        const state = legacy("mode=2d&node=VG%3ADEVATA%3AAGNIH");
+        expect(state.renderer).toBe("2d");
+        expect(state.view).toBe("FOCUS");
+        expect(state.node).toBe("VG:DEVATA:AGNIH");
+    });
+
+    it("reads mode=3d with a subject as a spatial focus", () => {
+        const state = legacy("mode=3d&node=VG%3ADEVATA%3AAGNIH");
+        expect(state.renderer).toBe("3d");
+        expect(state.view).toBe("FOCUS");
+    });
+
+    it("reads mode=path with endpoints", () => {
+        const state = legacy("mode=path&from=VG%3AA&to=VG%3AB");
+        expect(state.view).toBe("PATH");
+        expect(state.from).toBe("VG:A");
+    });
+
+    it("never lets the old parameter contradict the new ones", () => {
+        /* A URL carrying both is either hand-edited or half-rewritten. The explicit axes win;
+           the legacy reader is a fallback, not a competing source. */
+        const state = legacy("mode=2d&view=world&renderer=3d");
+        expect(state.view).toBe("WORLD");
+        expect(state.renderer).toBe("3d");
+    });
+
+    it("ignores a mode value that never existed", () => {
+        expect(legacy("mode=hyperbolic").view).toBe("WORLD");
+        expect(legacy("mode=hyperbolic").renderer).toBe("3d");
+    });
+});

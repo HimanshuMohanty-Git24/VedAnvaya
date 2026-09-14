@@ -88,19 +88,50 @@ function readRenderer(value: string | null): GraphRenderer | null {
  * only ever fills in what is absent. It can no longer contradict what is present, which is
  * the whole of the fix.
  */
+/**
+ * The previous single-axis `?mode=` parameter, translated.
+ *
+ * That parameter is gone, and links carrying it are not: they were the shape every shared and
+ * bookmarked graph URL took before this phase. Dropping them would be a silent 404 into the
+ * default view, which is a worse failure than the one this refactor was done to fix. Read only
+ * when neither new axis is present, so it can never contradict an explicit request.
+ */
+function readLegacyMode(
+    params: URLSearchParams,
+    hasNode: boolean,
+): { view: GraphView; renderer: GraphRenderer } | null {
+    const legacy = params.get("mode");
+    if (!legacy || params.has("view") || params.has("renderer")) return null;
+    switch (legacy.toLowerCase()) {
+        case "world":
+            return { view: "WORLD", renderer: "3d" };
+        case "3d":
+            // `mode=3d` meant "look at this subject spatially", which is FOCUS with a node.
+            return { view: hasNode ? "FOCUS" : "WORLD", renderer: "3d" };
+        case "2d":
+            return { view: hasNode ? "FOCUS" : "WORLD", renderer: "2d" };
+        case "path":
+            return { view: "PATH", renderer: "3d" };
+        default:
+            return null;
+    }
+}
+
 export function parseGraphState(params: URLSearchParams): GraphState {
     const node = params.get("node");
     const from = params.get("from");
     const to = params.get("to");
     const region = params.has("region") ? Number(params.get("region")) : null;
+    const legacy = readLegacyMode(params, Boolean(node));
 
     const view =
         readView(params.get("view")) ??
-        (from && to ? "PATH" : node ? "FOCUS" : region !== null ? "WORLD" : "WORLD");
+        legacy?.view ??
+        (from && to ? "PATH" : node ? "FOCUS" : "WORLD");
 
     return {
         view,
-        renderer: readRenderer(params.get("renderer")) ?? DEFAULT_STATE.renderer,
+        renderer: readRenderer(params.get("renderer")) ?? legacy?.renderer ?? DEFAULT_STATE.renderer,
         node,
         region: region !== null && Number.isFinite(region) ? region : null,
         from,
