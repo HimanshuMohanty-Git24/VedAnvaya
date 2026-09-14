@@ -1,7 +1,7 @@
 "use client";
 
 import { Color } from "three";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
     loadWorld,
     loadWorldLabels,
@@ -30,20 +30,10 @@ import { WorldLabels } from "./world-labels";
  * is an imperative class behind a thin component rather than a scene expressed as JSX.
  */
 
-export type WorldSelection = {
-    index: number;
-    id: string;
-    label: string;
-    group: string;
-    type: string;
-    degree: number;
-    neighbours: number[];
-};
-
 export function WorldView({
-    onSelect,
+    onTap,
     onReady,
-    initialNodeId,
+    selectedIndex,
     pathNodes,
     pathHops,
     onRendererLost,
@@ -51,10 +41,25 @@ export function WorldView({
     safeArea,
     paused = false,
 }: {
-    onSelect?: (selection: WorldSelection | null) => void;
+    /**
+     * The reader tapped the canvas. An event, reported upward and acted on by the owner of the
+     * state - never by this component, which does not know what a selection means.
+     *
+     * Null means the background was tapped. The graph page deliberately does nothing with that:
+     * "nothing is under the pointer" is not a request to leave the subject you are reading.
+     */
+    onTap?: (node: number | null) => void;
     /** Called once the geometry, the labels and the engine are all available. */
     onReady?: (world: World, labels: WorldLabelData, engine: WorldEngine) => void;
-    initialNodeId?: string | null;
+    /**
+     * The selected subject, as state flowing down. Not an opening value.
+     *
+     * It was `initialNodeId` and it was applied once, at construction. So a subject chosen in
+     * the planar view and then looked at spatially was never selected in this scene, and
+     * neither was one arrived at through the browser's back button. The scene followed the
+     * reader for exactly one frame of the session and then stopped.
+     */
+    selectedIndex?: number | null;
     /** Node indices along a traced route, emphasised and framed together. */
     pathNodes?: number[];
     /** The phrase for each step of that route, from the service that traced it. */
@@ -100,29 +105,16 @@ export function WorldView({
        rather than through the construction effect's dependency list. */
     const paletteRef = useRef(palette);
     const lostRef = useRef(onRendererLost);
+    const tapRef = useRef(onTap);
     const inspectRef = useRef(onInspectEdge);
     const pausedRef = useRef(paused);
     useEffect(() => {
         paletteRef.current = palette;
         lostRef.current = onRendererLost;
+        tapRef.current = onTap;
         inspectRef.current = onInspectEdge;
         pausedRef.current = paused;
     });
-
-    const describe = useCallback((index: number): WorldSelection | null => {
-        const world = worldRef.current;
-        if (!world) return null;
-        const labels = labelsRef.current;
-        return {
-            index,
-            id: labels?.ids[index] ?? String(index),
-            label: labels?.labels[index] ?? "",
-            group: world.manifest.groups[world.nodeGroup[index]],
-            type: world.manifest.types[world.nodeType[index]],
-            degree: world.nodeDegree[index],
-            neighbours: Array.from(neighboursOf(world, index)),
-        };
-    }, []);
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -153,12 +145,10 @@ export function WorldView({
                     events: {
                         onLost: (detail) => lostRef.current?.(detail),
                         onHover: setHovered,
-                        onSelect: (index) => {
-                            setSelected(index);
-                            const described = index === null ? null : describe(index);
-                            setNeighbours(described?.neighbours ?? []);
-                            onSelect?.(described);
-                        },
+                        /* Forwarded, not interpreted. What a tap means is the state owner's
+                           decision, and this component holding an opinion about it is how the
+                           scene and the address bar came to disagree. */
+                        onTap: (index) => tapRef.current?.(index),
                         onStats: setStats,
                         /*
                          * Label positions are written here, after the render, because that is
@@ -239,13 +229,6 @@ export function WorldView({
                 // separate half-ready states.
                 onReady?.(world, labels, startedEngine);
 
-                if (initialNodeId) {
-                    const index = labels.ids.indexOf(initialNodeId);
-                    if (index >= 0) {
-                        engine.select(index);
-                        engine.focusNode(index);
-                    }
-                }
             } catch (reason) {
                 if (controller.signal.aborted) return;
                 setFailure(
@@ -279,6 +262,39 @@ export function WorldView({
     useEffect(() => {
         engineRef.current?.setSafeArea(safeArea ?? {});
     }, [safeArea]);
+
+    /*
+     * The scene follows the selected subject, for as long as there is a session.
+     *
+     * This is the correction to a one-shot. The subject used to be applied at construction and
+     * never again, guarded by a ref on the page as well, so the spatial scene tracked the
+     * reader for one frame and then went deaf: choose a subject in the planar view and switch
+     * to 3D, or press the browser's back button, and the scene still showed whatever had been
+     * in the URL when the page first loaded.
+     *
+     * `engine.select` returns early when the subject has not changed, so this is idempotent -
+     * which matters, because the camera flight below must not restart on an unrelated re-render.
+     */
+    const framed = useRef<number | null>(null);
+    const nextSelection = selectedIndex ?? null;
+    useEffect(() => {
+        const current = engineRef.current;
+        if (!current) return;
+        current.select(nextSelection);
+        setSelected(nextSelection);
+        const world = worldRef.current;
+        setNeighbours(
+            nextSelection !== null && world ? Array.from(neighboursOf(world, nextSelection)) : [],
+        );
+        /* Framed once per subject. A re-render is not a request to fly the camera again, and a
+           camera that re-flies under a reader who is orbiting is the thing this phase is
+           correcting rather than a thing to add. */
+        if (nextSelection !== null && framed.current !== nextSelection) {
+            framed.current = nextSelection;
+            current.focusNode(nextSelection);
+        }
+        if (nextSelection === null) framed.current = null;
+    }, [nextSelection, engine]);
 
     /* A theme change rewrites the buffers rather than rebuilding the scene. Recreating the
        renderer would drop the camera, the selection and a two-megabyte artifact along with it. */
@@ -382,63 +398,14 @@ export function WorldView({
     }, [selected, hovered, predicates, labelsReady, pathNodes, pathHops]);
 
     /*
-     * A drag is an orbit, not a hover and not a click.
+     * There is no pointer pipeline here any more.
      *
-     * Both mattered. While the button is down the pointer sweeps across the whole scene, so
-     * hovering during a drag re-aimed the relationship labels at every node the cursor happened
-     * to cross on the way. And the browser fires a click at the end of a drag regardless of how
-     * far it travelled, so letting go after turning the world selected whatever was underneath -
-     * measured: orbiting away from Indra ended up selected on an unrelated assertion record.
-     *
-     * Three pixels of travel is the threshold. Below that it is a click with a shaky hand.
+     * Forty-seven lines of drag tracking used to live at this spot, and a second copy lived on
+     * the homepage with no threshold at all and a third in the planar view with a broken one.
+     * They are one decision - was that a click or the end of an orbit - and it is now taken
+     * once, in `installGestures`, which the engine installs on its own canvas. See that file
+     * for why the copy that lived here also failed on touch.
      */
-    const dragRef = useRef<{ x: number; y: number; moved: boolean } | null>(null);
-
-    const onPointerDown = (event: React.PointerEvent<HTMLCanvasElement>) => {
-        dragRef.current = { x: event.clientX, y: event.clientY, moved: false };
-    };
-
-    const onPointerMove = (event: React.PointerEvent<HTMLCanvasElement>) => {
-        const engine = engineRef.current;
-        if (!engine) return;
-        const drag = dragRef.current;
-        if (drag) {
-            if (
-                Math.abs(event.clientX - drag.x) > 3 ||
-                Math.abs(event.clientY - drag.y) > 3
-            ) {
-                drag.moved = true;
-            }
-            return;
-        }
-        const rect = event.currentTarget.getBoundingClientRect();
-        const node = engine.hover(event.clientX - rect.left, event.clientY - rect.top);
-        // Hovering draws the subject's own edges. Without this the lines being named are
-        // frequently not on screen at all: the world tier draws 24,000 of 185,693 edges.
-        engine.setEmphasis(node);
-    };
-
-    const onPointerUp = () => {
-        // Cleared after the click handler has had its chance to read `moved`.
-        window.setTimeout(() => {
-            dragRef.current = null;
-        }, 0);
-    };
-
-    const onPointerLeave = () => {
-        dragRef.current = null;
-        engineRef.current?.setEmphasis(null);
-    };
-
-    const onClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
-        const engine = engineRef.current;
-        if (!engine) return;
-        if (dragRef.current?.moved) return;
-        const rect = event.currentTarget.getBoundingClientRect();
-        const node = engine.pick(event.clientX - rect.left, event.clientY - rect.top);
-        engine.select(node);
-        if (node !== null) engine.focusNode(node);
-    };
 
     const hoveredLabel = hovered !== null && labelData ? labelData.labels[hovered] : null;
 
@@ -447,12 +414,6 @@ export function WorldView({
             <canvas
                 aria-label="The knowledge graph as a spatial map. A searchable, keyboard-navigable list of the same nodes and their connections is beside it."
                 className="va-world-canvas"
-                onClick={onClick}
-                onPointerCancel={onPointerUp}
-                onPointerDown={onPointerDown}
-                onPointerLeave={onPointerLeave}
-                onPointerMove={onPointerMove}
-                onPointerUp={onPointerUp}
                 ref={canvasRef}
                 role="img"
             />

@@ -10,6 +10,7 @@ import {
     pickEdgeLabels,
     type EdgeLabelPick,
 } from "@/lib/world/edge-labels";
+import { GESTURE_SLOP, type PointerKind } from "@/lib/world/gesture";
 import { GROUP_NAMES, useGraphPalette, type GraphPalette } from "@/lib/world/palette";
 import { usePredicateSemantics } from "@/lib/world/predicates";
 import { buildWorldProjection } from "@/lib/world/planar";
@@ -54,7 +55,14 @@ export function PlanarView({
      * the same diagram deepening rather than two different tools.
      */
     scope: "world" | "focus";
-    onSelect: (node: number | null) => void;
+    /**
+     * A subject was chosen. Non-nullable on purpose.
+     *
+     * This used to accept null, and the canvas used to pass one on a tap into empty space. The
+     * type is the guard: there is no longer a value this component can send that means "the
+     * reader is finished with the subject", because it is not something a canvas knows.
+     */
+    onSelect: (node: number) => void;
     onInspectEdge: (edge: number | null) => void;
 }) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -97,6 +105,10 @@ export function PlanarView({
         node: number | null;
         lastX: number;
         lastY: number;
+        /** Where the press landed. The threshold is measured from here. */
+        originX: number;
+        originY: number;
+        kindOfPointer: PointerKind;
         moved: boolean;
     } | null>(null);
     const hoverRef = useRef<number | null>(null);
@@ -480,6 +492,12 @@ export function PlanarView({
             node: grabbable ? hit : null,
             lastX: screenX,
             lastY: screenY,
+            originX: screenX,
+            originY: screenY,
+            kindOfPointer:
+                event.pointerType === "touch" || event.pointerType === "pen"
+                    ? event.pointerType
+                    : "mouse",
             moved: false,
         };
     };
@@ -505,7 +523,22 @@ export function PlanarView({
         const dy = screenY - drag.lastY;
         drag.lastX = screenX;
         drag.lastY = screenY;
-        if (Math.abs(dx) > 1 || Math.abs(dy) > 1) drag.moved = true;
+        /*
+         * Travel from the press, not between two moves.
+         *
+         * This read `Math.abs(dx) > 1 || Math.abs(dy) > 1` on the per-event delta, and that was
+         * a release blocker rather than an imprecision. A slow pan - a careful trackbad drag, a
+         * finger, or any pan whose moves the browser coalesced - arrives one pixel at a time, so
+         * the flag never latched, the release was classified as a click, the click hit empty
+         * canvas, and a reader who was only panning was returned to the whole corpus. The
+         * thresholds are in `gesture.ts` with the platform sources for them.
+         */
+        if (
+            Math.hypot(screenX - drag.originX, screenY - drag.originY) >
+            GESTURE_SLOP[drag.kindOfPointer]
+        ) {
+            drag.moved = true;
+        }
 
         if (drag.kind === "node" && drag.node !== null) {
             const node = graph.nodes[drag.node];
@@ -521,27 +554,59 @@ export function PlanarView({
         }
     };
 
+    /*
+     * A cancelled gesture completes nothing.
+     *
+     * `onPointerCancel` was wired straight to the release handler, so whenever the browser took
+     * a gesture over - which it does every time a reader scrolls past with a finger that landed
+     * here - the handler ran with `moved` still false and cleared the reader's subject. It also
+     * released a capture the browser had already dropped, which throws.
+     */
+    const onPointerCancel = (event: React.PointerEvent<HTMLCanvasElement>) => {
+        const graph = graphRef.current;
+        const drag = dragRef.current;
+        dragRef.current = null;
+        if (graph && drag?.node !== null && drag?.node !== undefined) {
+            graph.nodes[drag.node].held = false;
+            sleepingRef.current = false;
+        }
+        if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+            event.currentTarget.releasePointerCapture(event.pointerId);
+        }
+    };
+
     const onPointerUp = (event: React.PointerEvent<HTMLCanvasElement>) => {
         const graph = graphRef.current;
         const drag = dragRef.current;
         dragRef.current = null;
         if (!graph || !drag) return;
-        event.currentTarget.releasePointerCapture(event.pointerId);
+        if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+            event.currentTarget.releasePointerCapture(event.pointerId);
+        }
         if (drag.node !== null) {
             graph.nodes[drag.node].held = false;
             sleepingRef.current = false;
             // A release with no movement is a click, not a throw.
             if (!drag.moved) onSelect(graph.nodes[drag.node].id);
         } else if (!drag.moved) {
-            /* A tap that moved nothing. In the world projection nodes are not draggable, so a
-               tap on one still has to select it; on empty canvas it clears. */
+            /*
+             * A tap that moved nothing. In the world projection nodes are not draggable, so a
+             * tap on one still has to select it.
+             *
+             * A tap on empty canvas used to call `onSelect(null)`, and that single line was the
+             * reported release blocker: it reached a state transition that demoted Focus to
+             * World, so a stray tap - or, through the threshold bug above, a slow pan -
+             * discarded the subject a reader was studying. A canvas has no business deciding
+             * that the reader has finished with a subject. Leaving one is a control in the
+             * chrome and the Escape key, both owned by the page.
+             *
+             * The inspected relationship is still dismissed, because that *is* about the
+             * canvas: it annotates a line, and tapping away from the line is done with it.
+             */
             const { x, y } = toGraph(event);
             const hit = pickPlanar(graph, x, y);
             if (hit !== null) onSelect(graph.nodes[hit].id);
-            else {
-                onSelect(null);
-                onInspectEdge(null);
-            }
+            else onInspectEdge(null);
         }
     };
 
@@ -564,7 +629,7 @@ export function PlanarView({
             <canvas
                 aria-label="The selected subject and its connections as a diagram. The same connections are listed beside it."
                 className="va-planar-canvas"
-                onPointerCancel={onPointerUp}
+                onPointerCancel={onPointerCancel}
                 onPointerDown={onPointerDown}
                 onPointerMove={onPointerMove}
                 onPointerUp={onPointerUp}

@@ -4,15 +4,21 @@ import Link from "next/link";
 import { useCallback, useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
 import { encoded } from "@/lib/api";
 import { entityHref } from "@/lib/knowledge";
-import type { World, WorldLabels } from "@/lib/world/artifact";
+import { describeSubject, type World, type WorldLabels } from "@/lib/world/artifact";
 import type { WorldEngine } from "@/lib/world/engine";
 import { useGraphState } from "@/lib/world/graph-state";
-import { RENDERERS, RENDERER_COPY, VIEWS, VIEW_COPY } from "@/lib/world/modes";
+import {
+    RENDERERS,
+    RENDERER_COPY,
+    VIEWS,
+    VIEW_COPY,
+    type ReaderIntent,
+} from "@/lib/world/modes";
 import { usePredicateSemantics } from "@/lib/world/predicates";
 import { RelationshipInspector } from "./relationship-inspector";
 import { PathTrace } from "./path-trace";
 import { PlanarView } from "./planar-view";
-import { WorldView, type WorldSelection } from "./world-view";
+import { WorldView } from "./world-view";
 
 /**
  * One graph, on two axes.
@@ -67,7 +73,6 @@ export function GraphShell() {
     const predicates = usePredicateSemantics();
     const [labels, setLabels] = useState<WorldLabels | null>(null);
     const [engine, setEngine] = useState<WorldEngine | null>(null);
-    const [selection, setSelection] = useState<WorldSelection | null>(null);
     const [query, setQuery] = useState(state.query ?? "");
     const [pathNodes, setPathNodes] = useState<number[]>([]);
     const [pathHops, setPathHops] = useState<string[]>([]);
@@ -106,7 +111,6 @@ export function GraphShell() {
     } | null>(null);
     const [hintDismissed, setHintDismissed] = useState(false);
     const deferred = useDeferredValue(query);
-    const appliedDeepLink = useRef(false);
 
     const indexOfId = useCallback(
         (id: string | null) => {
@@ -118,31 +122,65 @@ export function GraphShell() {
     );
 
     /*
-     * Selecting moves the camera and deepens the view.
+     * The selected subject, derived from the state rather than stored beside it.
      *
-     * It cannot touch the renderer, and that is structural rather than careful: there is no
-     * call to `setRenderer` reachable from here. The regression tests assert the same thing
-     * from the state model's side.
+     * There used to be a `useState` here, written by the spatial canvas through an event. So
+     * the panel was driven by what the canvas had said and the view control by what the URL
+     * said, and the two were free to disagree - which they did, in both directions. Nothing is
+     * kept in step now because there is nothing to keep in step: the id is in the state, and
+     * every surface reads the same description from it.
      */
-    const selectNode = useCallback(
-        (node: number | null) => {
-            const id = node !== null && labels ? labels.ids[node] : null;
-            graph.select(id);
-            if (node !== null && engine) {
-                engine.select(node);
-                engine.focusNode(node);
-            } else if (engine) {
-                engine.select(null);
-            }
-        },
-        [engine, labels, graph],
+    const selectedIndex = indexOfId(state.node);
+    const selection = useMemo(
+        () =>
+            world && selectedIndex !== null ? describeSubject(world, labels, selectedIndex) : null,
+        [world, labels, selectedIndex],
     );
 
-    /** Clearing the selection, without needing a node index to say "none". */
-    const selectNothing = useCallback(() => {
-        graph.select(null);
-        engine?.select(null);
-    }, [engine, graph]);
+    /*
+     * Selecting deepens the view. It cannot touch the renderer.
+     *
+     * Structural rather than careful: there is no call to `setRenderer` reachable from here,
+     * and the state model refuses one anyway. What it *must* do, and did not, is write to the
+     * state at all - the spatial canvas used to route a selection into a local variable and
+     * leave the record of state saying the reader was looking at the whole corpus.
+     *
+     * The reason is a parameter because the state model requires one. A selection from a canvas
+     * and a selection from a list are both the reader, and both say which they were.
+     */
+    const selectNode = useCallback(
+        (node: number | null, reason: ReaderIntent) => {
+            /* `?? null` rather than a truthy test: an index past the end of the label table
+               yields `undefined`, and `undefined` written as a subject is a Focus on nothing. */
+            const id = node !== null && labels ? (labels.ids[node] ?? null) : null;
+            if (id === null) return;
+            graph.select(id, reason);
+        },
+        [labels, graph],
+    );
+
+    /**
+     * Step back out to the whole corpus.
+     *
+     * The only thing that leaves Focus, and it has exactly two callers: the World control and
+     * the Escape key. Both are the reader saying so, which is the whole requirement.
+     */
+    const leaveFocus = useCallback(
+        () => graph.returnToWorld("reader:clear-selection"),
+        [graph],
+    );
+
+    /*
+     * The engine is told which semantic view it is in.
+     *
+     * `setMode` existed on the engine and was called from nowhere: the field it writes was
+     * initialised to WORLD and never moved, so World and Focus were rendered identically in
+     * the spatial view and "Focus" was a camera position with some dimming. That is the other
+     * half of the reported complaint - not only did Focus reset, it was never a mode.
+     */
+    useEffect(() => {
+        engine?.setMode(state.view);
+    }, [engine, state.view]);
 
     const onReady = useCallback(
         (loaded: World, loadedLabels: WorldLabels, loadedEngine: WorldEngine) => {
@@ -152,17 +190,6 @@ export function GraphShell() {
         },
         [],
     );
-
-    /* A deep link is applied once. Re-applying it would fight the reader on every selection. */
-    useEffect(() => {
-        if (appliedDeepLink.current || !engine || !labels || !state.node) return;
-        const index = labels.ids.indexOf(state.node);
-        if (index >= 0) {
-            engine.select(index);
-            engine.focusNode(index);
-        }
-        appliedDeepLink.current = true;
-    }, [engine, labels, state.node]);
 
     /* ------------------------------------------------------------ search - */
 
@@ -227,7 +254,6 @@ export function GraphShell() {
      * file exists because four of those once disagreed about which view the reader was in.
      */
     const [inspected, setInspected] = useState<{ edge: number; at: string } | null>(null);
-    const selectedIndex = indexOfId(state.node);
 
     /* A relationship belongs to the subject and the view it was opened from. Move either and it
        is no longer the thing on screen, so it simply stops being current. */
@@ -260,11 +286,11 @@ export function GraphShell() {
                 inspectEdge(null);
                 return;
             }
-            if (selection) selectNothing();
+            if (selection) leaveFocus();
         };
         window.addEventListener("keydown", onKeyDown);
         return () => window.removeEventListener("keydown", onKeyDown);
-    }, [inspectedEdge, inspectEdge, selection, selectNothing]);
+    }, [inspectedEdge, inspectEdge, selection, leaveFocus]);
 
     /*
      * Remeasured whenever the chrome can have changed size.
@@ -329,13 +355,19 @@ export function GraphShell() {
                 renderer switch would mean a blank flash and a reload of a 2 MB artifact. */}
             <div className="va-graph-stage" data-active={spatial}>
                 <WorldView
-                    initialNodeId={state.node}
                     onReady={onReady}
                     onRendererLost={(detail) =>
                         graph.reportRendererFailure("context-lost", detail)
                     }
                     onInspectEdge={inspectEdge}
-                    onSelect={setSelection}
+                    /*
+                     * A tap on a subject is a selection and goes into the record of state like
+                     * every other. A tap on the background is not a request to leave the
+                     * subject the reader is reading, so it does nothing at all: conflating
+                     * those two is what returned a reader exploring Indra to the whole corpus.
+                     */
+                    onTap={(node) => node !== null && selectNode(node, "reader:select-subject")}
+                    selectedIndex={selectedIndex}
                     pathHops={pathHops}
                     pathNodes={pathNodes}
                     safeArea={safeArea}
@@ -351,7 +383,7 @@ export function GraphShell() {
                     <PlanarView
                         labels={labels}
                         onInspectEdge={inspectEdge}
-                        onSelect={selectNode}
+                        onSelect={(node) => selectNode(node, "reader:select-subject")}
                         root={selectedIndex}
                         scope={state.view === "FOCUS" && selectedIndex !== null ? "focus" : "world"}
                         world={world}
@@ -365,7 +397,7 @@ export function GraphShell() {
                 onClose={() => inspectEdge(null)}
                 onSelect={(node) => {
                     inspectEdge(null);
-                    selectNode(node);
+                    selectNode(node, "reader:select-listed");
                 }}
                 predicates={predicates}
                 world={world}
@@ -396,7 +428,7 @@ export function GraphShell() {
                     <ul>
                         {world.manifest.hubs.slice(0, HUB_ALTERNATIVE_COUNT).map((hub) => (
                             <li key={hub}>
-                                <button onClick={() => selectNode(hub)} type="button">
+                                <button onClick={() => selectNode(hub, "reader:select-listed")} type="button">
                                     {labels.labels[hub] || labels.ids[hub]}
                                 </button>
                                 , {world.manifest.groups[world.nodeGroup[hub]]},{" "}
@@ -448,7 +480,14 @@ export function GraphShell() {
                             <button
                                 aria-current={state.view === view ? "true" : undefined}
                                 key={view}
-                                onClick={() => graph.setView(view)}
+                                /* Focus is about a subject, so the control is inert without
+                                   one rather than writing a view that means nothing. */
+                                disabled={view === "FOCUS" && !state.node}
+                                onClick={() =>
+                                    view === "WORLD"
+                                        ? graph.returnToWorld("reader:view-control")
+                                        : graph.setView(view, "reader:view-control")
+                                }
                                 title={VIEW_COPY[view].note}
                                 type="button"
                             >
@@ -461,7 +500,7 @@ export function GraphShell() {
                             <button
                                 aria-current={state.renderer === renderer ? "true" : undefined}
                                 key={renderer}
-                                onClick={() => graph.setRenderer(renderer)}
+                                onClick={() => graph.setRenderer(renderer, "reader:renderer-control")}
                                 title={RENDERER_COPY[renderer].note}
                                 type="button"
                             >
@@ -476,7 +515,7 @@ export function GraphShell() {
                         className="va-world-find"
                         onSubmit={(event) => {
                             event.preventDefault();
-                            if (hits[0]) selectNode(hits[0].index);
+                            if (hits[0]) selectNode(hits[0].index, "reader:search");
                         }}
                         role="search"
                     >
@@ -493,7 +532,7 @@ export function GraphShell() {
                             <ul className="va-world-hits">
                                 {hits.map((hit) => (
                                     <li key={hit.index}>
-                                        <button onClick={() => selectNode(hit.index)} type="button">
+                                        <button onClick={() => selectNode(hit.index, "reader:search")} type="button">
                                             <span className="va-world-hit-name">{hit.label}</span>
                                             <span className="va-world-hit-kind">
                                                 {GROUP_LABEL[hit.group] ?? hit.group}
@@ -516,7 +555,7 @@ export function GraphShell() {
                     <PathTrace
                         from={state.from}
                         labels={labels}
-                        onEndpoints={(from, to) => graph.setEndpoints(from, to)}
+                        onEndpoints={(from, to) => graph.setEndpoints(from, to, "reader:trace-path")}
                         onPathNodes={(nodes, hops) => {
                             setPathNodes(nodes);
                             setPathHops(hops);
@@ -531,7 +570,7 @@ export function GraphShell() {
                 {graph.fallback && (
                     <p className="va-graph-notice" role="status">
                         Drawing this flat: {graph.fallback.detail}.{" "}
-                        <button onClick={() => graph.setRenderer("3d")} type="button">
+                        <button onClick={() => graph.setRenderer("3d", "reader:renderer-control")} type="button">
                             Use the spatial view anyway
                         </button>
                     </p>
@@ -617,11 +656,11 @@ export function GraphShell() {
                         )}
                         {/* Changing how the graph is drawn is the reader asking for it, so it
                             is remembered like any other explicit choice. */}
-                        <button onClick={() => graph.setRenderer(spatial ? "2d" : "3d")} type="button">
+                        <button onClick={() => graph.setRenderer(spatial ? "2d" : "3d", "reader:renderer-control")} type="button">
                             {spatial ? "Pull its connections apart" : "See where it sits"}
                         </button>
                         <button
-                            onClick={() => graph.setEndpoints(selection.id, state.to)}
+                            onClick={() => graph.setEndpoints(selection.id, state.to, "reader:trace-path")}
                             type="button"
                         >
                             Trace a path from here
@@ -647,7 +686,7 @@ export function GraphShell() {
                                         <button
                                             onClick={() => {
                                                 moveFocus.current = true;
-                                                selectNode(row.index);
+                                                selectNode(row.index, "reader:select-listed");
                                             }}
                                             type="button"
                                         >

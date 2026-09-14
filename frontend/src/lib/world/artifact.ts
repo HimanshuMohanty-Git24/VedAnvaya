@@ -310,6 +310,44 @@ export function neighboursOf(world: World, node: number): Uint32Array {
     return Uint32Array.from(seen);
 }
 
+/**
+ * Everything a surface needs to name one subject.
+ *
+ * Here rather than in a component because two of them needed it and each had its own copy, and
+ * the copies did not agree about what a selection *was*. The spatial view built one when its
+ * canvas was clicked and handed it up as an event; the page stored that object and rendered the
+ * subject panel from it. So the panel was driven by a thing the canvas had said, while the URL
+ * was driven by something else, and a click on empty space cleared the first without touching
+ * the second: the panel vanished while the address bar still read `view=focus`. A reader could
+ * not tell that from Focus resetting itself, and neither could a test.
+ *
+ * A subject is a *derivation* from an id, so there is nothing to keep in step. The id is in the
+ * state, the state is in the URL, and every surface computes the same description from it.
+ */
+export type Subject = {
+    index: number;
+    id: string;
+    label: string;
+    group: string;
+    type: string;
+    /** The edge count. The honest figure for "recorded connections". */
+    degree: number;
+    /** Distinct connected subjects, which is a different number from `degree`. */
+    neighbours: number[];
+};
+
+export function describeSubject(world: World, labels: WorldLabels | null, index: number): Subject {
+    return {
+        index,
+        id: labels?.ids[index] ?? String(index),
+        label: labels?.labels[index] ?? "",
+        group: world.manifest.groups[world.nodeGroup[index]],
+        type: world.manifest.types[world.nodeType[index]],
+        degree: world.nodeDegree[index],
+        neighbours: Array.from(neighboursOf(world, index)),
+    };
+}
+
 /** The region a node sits in, or null where it has no public connections. */
 export function regionOf(world: World, node: number): number | null {
     const region = world.nodeRegion[node];

@@ -484,6 +484,26 @@
         gap: var(--va-space-2xl);
     }
 
+    /*
+     * The same collision, between the rows rather than along them.
+     *
+     * The horizontal case above was found and fixed. The vertical one was not looked at, and it
+     * was worse: the ink is about 26px tall, the target is 44, so each row overhangs its own box
+     * by nine pixels at top and bottom. Against a 4px grid gap the two rows overlapped by 15.8px
+     * - and the renderer row comes later in the document, so it won the hit test. Measured at
+     * 390px: a tap inside the word "World" changed the renderer instead, taking 27% of that
+     * control's target with it.
+     *
+     * Which is the exact failure the two-axis split was built to make impossible, returning
+     * through a stylesheet on touch only - where none of the state-model regression tests could
+     * see it. A gap that clears the overhang on both sides is the fix; the assertion that the
+     * pads stay pairwise disjoint is in the mobile suite, because this is now the second time
+     * this class of defect has shipped.
+     */
+    .va-graph-switch {
+        gap: var(--va-space-xl);
+    }
+
     .va-graph-modes button,
     .va-graph-notice button,
     .va-graph-hint button {

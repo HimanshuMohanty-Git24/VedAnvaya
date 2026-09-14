@@ -14,6 +14,7 @@ import {
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { edgesOf, otherEnd, type World } from "./artifact";
 import { LABEL_FRACTIONS, LABEL_STRIDE } from "./edge-labels";
+import { installGestures } from "./gesture";
 
 /**
  * The world engine.
@@ -60,7 +61,27 @@ const PATH_EDGE_BUDGET = 1_200;
 
 export type EngineEvents = {
     onHover?: (node: number | null) => void;
-    onSelect?: (node: number | null) => void;
+    /**
+     * The reader pressed and released without dragging, and this is what was under them.
+     *
+     * This replaced `onSelect`, and the rename is the fix rather than a tidy-up. `onSelect` was
+     * emitted from the `select()` *command*, so a consumer that both listened for a selection
+     * and commanded one had a loop, and the only way out of it was for the consumer that owned
+     * the state to stop listening - which is exactly what the graph page did. It wired the
+     * canvas to a local `useState` and never told the state model a subject had been chosen at
+     * all, so the reader was looking at Indra while the application believed it was showing the
+     * whole corpus. Everything downstream of that - a renderer switch that lost the subject, a
+     * view control that read World, a panel that vanished on a click into empty space - was one
+     * missing write.
+     *
+     * So the two directions are now separate and named for what they are. `select()` is a
+     * command travelling down and emits nothing. This is an event travelling up, raised only
+     * from a real tap, classified by `installGestures` rather than by `click`.
+     *
+     * Null means the reader tapped the background. That is a legitimate thing to do and each
+     * consumer decides what it means; the engine does not decide for them.
+     */
+    onTap?: (node: number | null) => void;
     /** Called after each rendered frame, once the camera matrices are current. */
     onFrame?: () => void;
     /**
@@ -155,6 +176,27 @@ const NODE_FRAGMENT = /* glsl */ `
         if (r > 0.25) discard;
         float edge = smoothstep(0.25, 0.19, r);
         gl_FragColor = vec4(vColour, vAlpha * edge);
+        /*
+         * Encoded on the way out, like every stock material in the library.
+         *
+         * This line was missing, and its absence was a real defect rather than a nicety. The
+         * palette hands these shaders linear-light triples - toLinearTriple in palette.ts for
+         * the group fills, and Color.r/g/b for the edge ink, which Three keeps linear by design
+         * - and a shader that writes a linear value into an 8-bit sRGB framebuffer without
+         * encoding it publishes a colour darker than the one it was given. Light-mode deity
+         * bd4f32 was reaching the screen as 821408.
+         *
+         * Which is what made the graph muddy, and why recolouring would not have fixed it. It
+         * also inverted by theme: darkening everything happens to raise contrast against ivory
+         * and destroys it against carbon, where the focus edges were landing darker than the
+         * page they were drawn on - the relations a reader selected a subject to see, rendered
+         * invisible.
+         *
+         * The tell was that the selection overlay looked right while everything around it did
+         * not: that object is a LineBasicMaterial, and Three own basic shader carries this
+         * include. One canvas was running two colour pipelines.
+         */
+        #include <colorspace_fragment>
     }
 `;
 
@@ -176,6 +218,7 @@ const EDGE_FRAGMENT = /* glsl */ `
     void main() {
         if (vAlpha <= 0.004) discard;
         gl_FragColor = vec4(vColour, vAlpha);
+        #include <colorspace_fragment>
     }
 `;
 
@@ -222,6 +265,14 @@ export type EngineOptions = {
      * halved and a difference nobody can see.
      */
     maxFps?: number;
+    /**
+     * What the browser keeps of a touch on this canvas.
+     *
+     * Unset leaves OrbitControls' own `none`, which is right where the canvas is the page. The
+     * homepage sets `pan-y pinch-zoom` so a finger can still scroll and still pinch: a preview
+     * is not entitled to take a third of the fold and refuse both.
+     */
+    touchAction?: string;
 };
 
 export class WorldEngine {
@@ -249,6 +300,17 @@ export class WorldEngine {
 
     private frame = 0;
     private disposed = false;
+    private readonly releaseGestures: () => void;
+    /**
+     * Frames actually rendered. Only ever increases.
+     *
+     * Exposed because "the renderer stopped when it left the screen" is not provable from the
+     * HUD - which keeps its last text after the loop stops and looks identical either way - and
+     * not reliably provable from `renderer.info`, which three resets each frame. A test reads
+     * this before and after and asserts they are *equal*, which is an exact claim rather than a
+     * small-enough one.
+     */
+    private drawn = 0;
     private selected: number | null = null;
     private path: number[] = [];
     private hovered: number | null = null;
@@ -355,6 +417,41 @@ export class WorldEngine {
         this.controls.addEventListener("change", () => {
             this.pickDirty = true;
         });
+
+        /*
+         * Gestures, here, once, for everything that draws with this engine.
+         *
+         * OrbitControls is constructed three lines above, and it is the whole reason a `click`
+         * on this canvas cannot be trusted: it captures the pointer to orbit and the release
+         * still dispatches a click. Each consumer used to answer that for itself, with a
+         * different threshold, and two of the three answers were wrong - the homepage navigated
+         * on every orbit, and the planar view could be panned into clearing the reader's
+         * selection. The discrimination belongs next to the thing that makes it necessary.
+         *
+         * Hover is routed through the same place for the same reason: during a drag there is no
+         * hover, and a view that has to remember to suppress it will one day forget.
+         */
+        this.releaseGestures = installGestures(options.canvas, {
+            onTap: (point) => this.events.onTap?.(this.pick(point.x, point.y)),
+            onHoverMove: (point) => this.hover(point.x, point.y),
+            onHoverLeave: () => {
+                this.hovered = null;
+                this.events.onHover?.(null);
+                this.setEmphasis(null);
+            },
+        });
+
+        /*
+         * What the browser may do with a touch here.
+         *
+         * `OrbitControls.connect` sets `touch-action: none` on its element unconditionally -
+         * it does not consult `enablePan` or `enableZoom` - and inline style beats any
+         * stylesheet. On a full-screen graph that is right: vertical orbit is the point and the
+         * canvas is the page. On the homepage it meant a finger landing in the hero could
+         * neither scroll the page nor pinch to zoom it, on a panel taking about a third of the
+         * fold. Applied after the controls, because `connect` would otherwise overwrite it.
+         */
+        if (options.touchAction) options.canvas.style.touchAction = options.touchAction;
 
         this.onContextLost = (event: Event) => {
             event.preventDefault();
@@ -687,8 +784,29 @@ export class WorldEngine {
      * The loop keeps its rAF so that resuming is immediate; it simply does no work.
      */
     setPaused(paused: boolean) {
+        if (paused === this.paused) return;
         this.paused = paused;
-        if (!paused) this.pickDirty = true;
+        if (paused) {
+            /*
+             * The frame is cancelled, not merely skipped.
+             *
+             * The loop used to reschedule itself before testing the flag, so a paused engine
+             * still woke about sixty times a second to read a boolean and return. That is the
+             * residual cost the homepage measured while its preview was scrolled off screen,
+             * and it is the same shape as the bug this pause was introduced to fix: honoured
+             * for drawing, not for scheduling.
+             */
+            cancelAnimationFrame(this.frame);
+            this.frame = 0;
+            return;
+        }
+        this.pickDirty = true;
+        /* A pause is not a frame. Left alone, the first sample after resuming reports the whole
+           idle period as one interval, and the HUD announces a forty-second frame. */
+        this.lastFrame = 0;
+        this.frameTimes = [];
+        this.jsTimes = [];
+        if (!this.disposed && this.frame === 0) this.frame = requestAnimationFrame(this.loop);
     }
 
     setMode(mode: WorldMode) {
@@ -710,10 +828,17 @@ export class WorldEngine {
         this.applySelection();
     }
 
+    /**
+     * Show this subject as the selected one. A command, and silent.
+     *
+     * It does not raise `onTap`. A command that announces itself cannot be called by whoever
+     * listens to the announcement, and the thing that owns the selection is exactly the thing
+     * that needs to do both.
+     */
     select(node: number | null) {
+        if (node === this.selected) return;
         this.selected = node;
         this.applySelection();
-        this.events.onSelect?.(node);
     }
 
     /**
@@ -1095,34 +1220,49 @@ export class WorldEngine {
         if (t >= 1) this.flight = null;
     }
 
+    /**
+     * The frame loop, as a bound field rather than a local.
+     *
+     * `setPaused` has to be able to schedule it again after cancelling it, so it cannot be a
+     * closure inside `start`.
+     */
+    private readonly loop = () => {
+        if (this.disposed) {
+            this.frame = 0;
+            return;
+        }
+        this.frame = requestAnimationFrame(this.loop);
+        /* Belt and braces for the one frame that may already be queued when the pause lands.
+           `setPaused` cancels the pending frame; this catches the race if it does not. */
+        if (this.paused) return;
+        const began = performance.now();
+        /* Dropped before any work is done, not after: the point is to skip the frame, and the
+           stats below deliberately do not count a frame that was never drawn. */
+        if (this.frameInterval > 0 && began - this.lastDrawn < this.frameInterval - 1) return;
+        this.lastDrawn = began;
+        this.tickFlight(began);
+        this.controls.update();
+        const material = this.nodes.material as ShaderMaterial;
+        // Point size is in pixels, so it has to track both the viewport height and the field
+        // of view or nodes change size when the window does.
+        material.uniforms.uScale.value =
+            this.renderer.domElement.clientHeight /
+            (2 * Math.tan((this.camera.fov * Math.PI) / 360));
+        this.renderer.render(this.scene, this.camera);
+        this.drawn += 1;
+        /* After the render, never before it. `renderer.render` is what refreshes the camera's
+           `matrixWorldInverse`, and a projection taken ahead of it is computed from the
+           previous frame's camera - so anything positioned from it trails the lines it is
+           meant to sit on by exactly one frame, which reads as lag during an orbit and is
+           invisible when still. */
+        this.events.onFrame?.();
+        this.sample(began);
+    };
+
+    /** Idempotent: a second call must not leave two loops running against one canvas. */
     start() {
-        const loop = () => {
-            if (this.disposed) return;
-            this.frame = requestAnimationFrame(loop);
-            if (this.paused) return;
-            const began = performance.now();
-            /* Dropped before any work is done, not after: the point is to skip the frame, and
-               the stats below deliberately do not count a frame that was never drawn. */
-            if (this.frameInterval > 0 && began - this.lastDrawn < this.frameInterval - 1) return;
-            this.lastDrawn = began;
-            this.tickFlight(began);
-            this.controls.update();
-            const material = this.nodes.material as ShaderMaterial;
-            // Point size is in pixels, so it has to track both the viewport height and the
-            // field of view or nodes change size when the window does.
-            material.uniforms.uScale.value =
-                this.renderer.domElement.clientHeight /
-                (2 * Math.tan((this.camera.fov * Math.PI) / 360));
-            this.renderer.render(this.scene, this.camera);
-            /* After the render, never before it. `renderer.render` is what refreshes the
-               camera's `matrixWorldInverse`, and a projection taken ahead of it is computed
-               from the previous frame's camera - so anything positioned from it trails the
-               lines it is meant to sit on by exactly one frame, which reads as lag during an
-               orbit and is invisible when still. */
-            this.events.onFrame?.();
-            this.sample(began);
-        };
-        this.frame = requestAnimationFrame(loop);
+        if (this.frame !== 0 || this.disposed) return;
+        this.frame = requestAnimationFrame(this.loop);
     }
 
     /**
@@ -1192,6 +1332,21 @@ export class WorldEngine {
         if (value) this.flight = null;
     }
 
+    /**
+     * How many frames this engine has actually drawn, and whether it is drawing now.
+     *
+     * For the tests, not for the product. The offscreen pause can only be asserted honestly as
+     * an equality - draw count before, scroll away, draw count after, expect the same number -
+     * and a "less than a few" assertion would pass with the defect still present.
+     */
+    get drawCount() {
+        return this.drawn;
+    }
+
+    get isPaused() {
+        return this.paused;
+    }
+
     /** Screen position of a node, for placing a label in the DOM above the canvas. */
     screenPositionOf(node: number): { x: number; y: number; z: number } | null {
         if (this.pickDirty) this.rebuildPickIndex();
@@ -1208,6 +1363,7 @@ export class WorldEngine {
         this.disposed = true;
         cancelAnimationFrame(this.frame);
         this.renderer.domElement.removeEventListener("webglcontextlost", this.onContextLost);
+        this.releaseGestures();
         this.controls.dispose();
         this.nodes.geometry.dispose();
         (this.nodes.material as ShaderMaterial).dispose();

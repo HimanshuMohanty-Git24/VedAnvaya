@@ -1,13 +1,15 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { probeCapability, recallRenderer, rememberRenderer } from "./capability";
 import {
     DEFAULT_STATE,
     graphStateToQuery,
+    isReaderIntent,
     parseGraphState,
     resolveInitialState,
+    returnToWorld as applyReturn,
     selectRegion as applyRegion,
     selectSubject as applySelection,
     setRenderer as applyRenderer,
@@ -15,21 +17,36 @@ import {
     type GraphRenderer,
     type GraphState,
     type GraphView,
+    type TransitionReason,
 } from "./modes";
 
 /**
  * The one owner of graph state.
  *
- * Before this there were four writers - the URL, a capability probe, a stored preference and
- * a selection effect - each holding part of the answer and each free to overwrite the others
- * on any render. That is how a reader ended up in a view they had not chosen: two of them
- * disagreed and the last one to run won. Everything that can change the graph's state now
- * goes through this hook, and precedence between the sources is resolved exactly once, on
- * mount, rather than continuously by whichever effect fired last.
+ * ## What was wrong, precisely
  *
- * The URL remains the record of state, because a view of the graph should be something you can
- * send to someone. But it is written from here, and read back only as the reader navigates -
- * never re-derived into a decision.
+ * The previous version already had one owner and still lost the reader's place, so "one owner"
+ * was not the whole of the problem. Two things were.
+ *
+ * The first is that the owner read its own state back out of the URL on every render and every
+ * mutator computed the next state from that. `router.replace` is a transition: `useSearchParams`
+ * does not report the new query until it commits. So two writes inside one commit window both
+ * read the state from *before* either of them, and the second silently discarded the first.
+ * Selecting a subject and then touching anything else lost the selection - not always, which
+ * is what made it look like the graph resetting itself at random.
+ *
+ * The authority is now a ref, updated synchronously inside the write. Two writes in one window
+ * compose instead of racing. The URL is still written from it, because a view of the graph
+ * should be something you can send to someone, and it is still read back - but only to notice
+ * that the reader moved through history, never to re-derive a decision.
+ *
+ * The second is that a write did not have to say why it was happening. `TransitionReason` is
+ * now a required parameter and a closed union, and only the reader's half of it may move the
+ * semantic axis. A boot, a history navigation and a lost WebGL context are the only causes
+ * that are not the reader, they are each allowed exactly what they need, and anything else
+ * reaching for `view` is refused and recorded. There is no reason in the union for a physics
+ * tick, a camera move, a hover, a settling simulation or a theme change, which is the same
+ * thing as saying none of them can do this.
  */
 
 export type FallbackReason = {
@@ -38,6 +55,28 @@ export type FallbackReason = {
     at: number;
 };
 
+/**
+ * One line of the semantic-state trace.
+ *
+ * Kept in production rather than behind a development flag. It is a bounded ring of plain
+ * objects and costs nothing, and the alternative is that the one bug this file exists to
+ * prevent becomes unobservable in exactly the build a reader is running. The soak test asserts
+ * against it, and so can a person with the console open.
+ */
+export type GraphTransition = {
+    at: number;
+    from: GraphView;
+    to: GraphView;
+    reason: TransitionReason;
+    node: string | null;
+    renderer: GraphRenderer;
+    url: string;
+    /** Set where a cause reached for something it was not entitled to change. A defect. */
+    refused?: string;
+};
+
+const TRACE_LIMIT = 64;
+
 export type GraphStateHandle = {
     state: GraphState;
     /** Where the opening renderer came from. Reported, and useful when this misbehaves. */
@@ -45,13 +84,17 @@ export type GraphStateHandle = {
     /** Set only where a real runtime failure forced the renderer to change. */
     fallback: FallbackReason | null;
     ready: boolean;
+    /** Most recent first. Read by the persistence soak test and by anyone debugging this. */
+    transitions: GraphTransition[];
 
-    setView: (view: GraphView) => void;
-    setRenderer: (renderer: GraphRenderer) => void;
-    select: (node: string | null) => void;
-    selectRegion: (region: number | null) => void;
-    setEndpoints: (from: string | null, to: string | null) => void;
-    setQuery: (query: string | null) => void;
+    setView: (view: GraphView, reason: TransitionReason) => void;
+    /** Step back out to the whole corpus. The only thing that may leave Focus. */
+    returnToWorld: (reason: TransitionReason) => void;
+    setRenderer: (renderer: GraphRenderer, reason: TransitionReason) => void;
+    select: (node: string | null, reason: TransitionReason) => void;
+    selectRegion: (region: number | null, reason: TransitionReason) => void;
+    setEndpoints: (from: string | null, to: string | null, reason: TransitionReason) => void;
+    setQuery: (query: string | null, reason: TransitionReason) => void;
     /** Called by the renderer when it genuinely cannot continue. Never speculatively. */
     reportRendererFailure: (reason: string, detail: string) => void;
     dismissFallback: () => void;
@@ -62,13 +105,96 @@ export function useGraphState(): GraphStateHandle {
     const pathname = usePathname();
     const searchParams = useSearchParams();
 
-    const [resolved, setResolved] = useState<{
-        state: GraphState;
-        rendererSource: "url" | "remembered" | "capability";
-    } | null>(null);
+    /**
+     * The state, twice: once for rendering and once for writing.
+     *
+     * The duplication is deliberate and it is the whole fix. A mutator has to see the result of
+     * the mutator that ran a microsecond ago - two changes inside one commit window must
+     * compose rather than the second discarding the first - and React state cannot offer that,
+     * because it does not update until the next render. A ref can.
+     *
+     * But a ref must not be *read during render*, and not merely because a lint rule says so:
+     * a render that reads a value React does not know changed can paint a state that was never
+     * committed. So the two have distinct jobs and the boundary is strict. `rendered` is what
+     * the component tree sees. `authority` is what a mutator computes from, and it is touched
+     * only inside callbacks and effects, which is where refs are legitimate.
+     */
+    const [rendered, setRendered] = useState<GraphState>(DEFAULT_STATE);
+    const authority = useRef<GraphState>(DEFAULT_STATE);
+    /** The query we last wrote, so the reader moving through history can be told apart. */
+    const written = useRef<string | null>(null);
+    const [transitions, setTransitions] = useState<GraphTransition[]>([]);
+    const trace = useRef<GraphTransition[]>([]);
+
+    const [rendererSource, setRendererSource] = useState<"url" | "remembered" | "capability">(
+        "capability",
+    );
     const [fallback, setFallback] = useState<FallbackReason | null>(null);
+    const [ready, setReady] = useState(false);
     /** Set once the opening state has actually been applied, not once it has been scheduled. */
     const applied = useRef(false);
+
+    const record = useCallback((entry: GraphTransition) => {
+        trace.current = [entry, ...trace.current].slice(0, TRACE_LIMIT);
+        setTransitions(trace.current);
+        if (typeof window !== "undefined") {
+            (window as unknown as Record<string, unknown>).__vedaGraphTrace = trace.current;
+        }
+    }, []);
+
+    /**
+     * Apply a state change, or refuse it.
+     *
+     * Everything that can move this state goes through here, so the invariant is stated once:
+     * a cause that is not the reader may not change what is being explored. Refusing rather
+     * than throwing in production is deliberate - a reader mid-session is better served by a
+     * graph that ignores an illegitimate transition than by one that stops - but the refusal is
+     * recorded, and in development it is loud, because a refusal means a caller exists that
+     * should not.
+     */
+    const commit = useCallback(
+        (next: GraphState, reason: TransitionReason) => {
+            const current = authority.current;
+            let applying = next;
+            let refused: string | undefined;
+
+            if (!isReaderIntent(reason) && next.view !== current.view) {
+                refused = `${reason} tried to change the view from ${current.view} to ${next.view}`;
+                applying = { ...next, view: current.view };
+            }
+
+            const query = graphStateToQuery(applying);
+            if (
+                applying.view === current.view &&
+                query === graphStateToQuery(current) &&
+                !refused
+            ) {
+                return;
+            }
+
+            authority.current = applying;
+            setRendered(applying);
+            written.current = query.slice(1);
+            record({
+                at: Date.now(),
+                from: current.view,
+                to: applying.view,
+                reason,
+                node: applying.node,
+                renderer: applying.renderer,
+                url: `${pathname}${query}`,
+                ...(refused ? { refused } : {}),
+            });
+            if (refused && process.env.NODE_ENV !== "production") {
+                // Not thrown: throwing here would take the graph down in a development session
+                // for a transition that has already been correctly refused. It is an error in
+                // the console because it means a call site needs deleting.
+                console.error(`[graph-state] refused a transition. ${refused}`);
+            }
+            router.replace(`${pathname}${query}`, { scroll: false });
+        },
+        [pathname, record, router],
+    );
 
     /*
      * Precedence is applied once.
@@ -99,7 +225,7 @@ export function useGraphState(): GraphStateHandle {
                 remembered: recallRenderer(),
                 capability: report.capability,
             });
-            setResolved(opening);
+            setRendererSource(opening.rendererSource);
             /* Where the device could not have drawn what was asked for, that is a fallback and
                it is announced. Where the device merely had no preference to override, it is
                not, and saying so would be noise. */
@@ -110,7 +236,8 @@ export function useGraphState(): GraphStateHandle {
             ) {
                 setFallback({ reason: "capability", detail: report.reason, at: Date.now() });
             }
-            router.replace(`${pathname}${graphStateToQuery(opening.state)}`, { scroll: false });
+            setReady(true);
+            commit(opening.state, "boot:resolve-precedence");
         }, 0);
         return () => window.clearTimeout(timer);
         // Mount only. This resolves precedence; it is not a subscription to anything.
@@ -118,56 +245,78 @@ export function useGraphState(): GraphStateHandle {
     }, []);
 
     /*
-     * After the opening resolution, the URL is the state.
+     * The reader moved through history, or arrived from a link.
      *
-     * Reading it back rather than keeping a second copy is what makes the browser's own back
-     * button work, and leaves no second source that can drift out of agreement with it.
+     * This is the only thing the URL is still read for. Anything the query says that we did not
+     * just write is somebody else navigating - the back button, a link from the sidebar, a
+     * pasted address - and it is adopted whole, because the alternative is fighting the browser
+     * over its own history. Anything the query says that we *did* write is our own echo and is
+     * ignored, which is what stops the loop the previous version had.
      */
-    const state = useMemo(() => {
-        if (!resolved) return DEFAULT_STATE;
-        const params = new URLSearchParams(searchParams.toString());
-        if (!params.has("view") && !params.has("renderer")) return resolved.state;
-        return parseGraphState(params);
-    }, [resolved, searchParams]);
+    useEffect(() => {
+        if (!applied.current) return;
+        const incoming = searchParams.toString();
+        if (incoming === written.current) return;
+        const parsed = parseGraphState(new URLSearchParams(incoming));
+        const current = authority.current;
+        authority.current = parsed;
+        setRendered(parsed);
+        written.current = incoming;
+        record({
+            at: Date.now(),
+            from: current.view,
+            to: parsed.view,
+            reason: "history:navigated",
+            node: parsed.node,
+            renderer: parsed.renderer,
+            url: `${pathname}?${incoming}`,
+        });
+    }, [searchParams, pathname, record]);
 
-    const write = useCallback(
-        (next: GraphState) => {
-            router.replace(`${pathname}${graphStateToQuery(next)}`, { scroll: false });
-        },
-        [router, pathname],
+    const setView = useCallback(
+        (view: GraphView, reason: TransitionReason) =>
+            commit(applyView(authority.current, view), reason),
+        [commit],
     );
 
-    const setView = useCallback((view: GraphView) => write(applyView(state, view)), [state, write]);
+    const returnToWorld = useCallback(
+        (reason: TransitionReason) => commit(applyReturn(authority.current), reason),
+        [commit],
+    );
 
     const setRenderer = useCallback(
-        (renderer: GraphRenderer) => {
+        (renderer: GraphRenderer, reason: TransitionReason) => {
             // An explicit choice: remembered, and it clears any standing notice about a choice
             // that was made on the reader's behalf.
             rememberRenderer(renderer);
             setFallback(null);
-            write(applyRenderer(state, renderer));
+            commit(applyRenderer(authority.current, renderer), reason);
         },
-        [state, write],
+        [commit],
     );
 
     const select = useCallback(
-        (node: string | null) => write(applySelection(state, node)),
-        [state, write],
+        (node: string | null, reason: TransitionReason) =>
+            commit(applySelection(authority.current, node), reason),
+        [commit],
     );
 
     const selectRegion = useCallback(
-        (region: number | null) => write(applyRegion(state, region)),
-        [state, write],
+        (region: number | null, reason: TransitionReason) =>
+            commit(applyRegion(authority.current, region), reason),
+        [commit],
     );
 
     const setEndpoints = useCallback(
-        (from: string | null, to: string | null) => write({ ...state, view: "PATH", from, to }),
-        [state, write],
+        (from: string | null, to: string | null, reason: TransitionReason) =>
+            commit({ ...authority.current, view: "PATH", from, to }, reason),
+        [commit],
     );
 
     const setQuery = useCallback(
-        (query: string | null) => write({ ...state, query }),
-        [state, write],
+        (query: string | null, reason: TransitionReason) =>
+            commit({ ...authority.current, query }, reason),
+        [commit],
     );
 
     /**
@@ -175,25 +324,28 @@ export function useGraphState(): GraphStateHandle {
      *
      * Called from a lost WebGL context or a failed renderer construction, and from nothing
      * else - not a frame-rate sample, not a selection, not a camera move, not a theme change.
-     * The view is untouched: a reader looking at the world keeps looking at the world, drawn
-     * the other way.
+     * The view is untouched, and now cannot be touched: `fallback:renderer-lost` is not a
+     * reader intent, so `commit` would refuse a view change even if one were computed here. A
+     * reader looking at one subject keeps looking at it, drawn the other way.
      */
     const reportRendererFailure = useCallback(
         (reason: string, detail: string) => {
             setFallback({ reason, detail, at: Date.now() });
-            write(applyRenderer(state, "2d"));
+            commit(applyRenderer(authority.current, "2d"), "fallback:renderer-lost");
         },
-        [state, write],
+        [commit],
     );
 
     const dismissFallback = useCallback(() => setFallback(null), []);
 
     return {
-        state,
-        rendererSource: resolved?.rendererSource ?? "capability",
+        state: rendered,
+        rendererSource,
         fallback,
-        ready: resolved !== null,
+        ready,
+        transitions,
         setView,
+        returnToWorld,
         setRenderer,
         select,
         selectRegion,

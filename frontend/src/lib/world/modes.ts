@@ -34,6 +34,65 @@ export type GraphView = (typeof VIEWS)[number];
 export const RENDERERS = ["3d", "2d"] as const;
 export type GraphRenderer = (typeof RENDERERS)[number];
 
+/**
+ * Why the state changed. Required on every write, and not decorative.
+ *
+ * ## The bug this exists to make impossible
+ *
+ * A reader who selected Indra and explored its neighbourhood was returned to the whole corpus
+ * without asking to be. Three separate mechanisms could do it, and none of them recorded that
+ * it had: a planar pan whose threshold never latched released into a cleared selection, the
+ * spatial canvas never wrote a selection to the state at all so the view stayed WORLD
+ * underneath a panel that said otherwise, and clearing a selection demoted FOCUS silently.
+ *
+ * The common property is that a state change had no stated cause. So a cause is now a
+ * parameter, it is a closed union rather than a string, and `isReaderIntent` divides the
+ * union in two. Only the reader's half may change `view`. Everything else - a boot, a
+ * renderer failure, a history navigation - may change what it is entitled to change and is
+ * refused if it reaches for the semantic axis.
+ *
+ * A physics tick, a settling simulation, a camera move, a hover, a theme change and a frame
+ * sample are all absent from this union by design. There is no reason for them to be here,
+ * which is the same thing as saying they may not change this state.
+ */
+export const READER_INTENTS = [
+    /** The World / Focus / Path control. */
+    "reader:view-control",
+    /** The 3D / 2D control, or the offer in a fallback notice. */
+    "reader:renderer-control",
+    /** A subject picked out of a canvas, by tap or by keyboard. */
+    "reader:select-subject",
+    /** A subject picked from the panel, the search results or the relationship inspector. */
+    "reader:select-listed",
+    /** Escape, or an explicit close on the subject panel. */
+    "reader:clear-selection",
+    /** The explicit way back out of a subject - "see where it sits". */
+    "reader:return-to-world",
+    "reader:select-region",
+    "reader:trace-path",
+    "reader:search",
+    /** The reader asked for more of a curated neighbourhood. */
+    "reader:expand-neighbourhood",
+] as const;
+
+export const SYSTEM_CAUSES = [
+    /** Once, on mount, when precedence between the URL, a preference and the device settles. */
+    "boot:resolve-precedence",
+    /** The browser moved through history, or another page linked in. Adopted, not fought. */
+    "history:navigated",
+    /** A lost WebGL context. May change the renderer and nothing else. */
+    "fallback:renderer-lost",
+] as const;
+
+export type ReaderIntent = (typeof READER_INTENTS)[number];
+export type SystemCause = (typeof SYSTEM_CAUSES)[number];
+export type TransitionReason = ReaderIntent | SystemCause;
+
+/** Whether this cause is the reader acting. The only kind that may move the semantic axis. */
+export function isReaderIntent(reason: TransitionReason): reason is ReaderIntent {
+    return (READER_INTENTS as readonly string[]).includes(reason);
+}
+
 export const VIEW_COPY: Record<GraphView, { label: string; note: string }> = {
     WORLD: { label: "World", note: "The whole corpus, arranged by what connects to what" },
     FOCUS: { label: "Focus", note: "One subject and what it is attached to" },
@@ -169,6 +228,17 @@ export function graphStateToQuery(state: GraphState): string {
  */
 export function setView(state: GraphState, view: GraphView): GraphState {
     if (view === state.view) return state;
+    /*
+     * Focus is about a subject, so focus without one is not a state.
+     *
+     * It was reachable, and it was half of the reported confusion: pressing Focus with nothing
+     * selected wrote `view=focus&node=` - a view whose own copy promises "one subject and what
+     * it is attached to" with no subject to show. The next write then computed from a state
+     * that meant nothing and the control snapped back, which looked exactly like Focus
+     * resetting itself. The control is disabled in the chrome for the same reason; this is the
+     * floor under it, so no other caller can reach the state either.
+     */
+    if (view === "FOCUS" && !state.node) return state;
     const next: GraphState = { ...state, view };
     if (view !== "PATH") {
         next.from = null;
@@ -194,14 +264,42 @@ export function setRenderer(state: GraphState, renderer: GraphRenderer): GraphSt
  * reader is inspecting a stop on the route, not abandoning it.
  */
 export function selectSubject(state: GraphState, node: string | null): GraphState {
-    if (node === null) {
-        return { ...state, node: null, view: state.view === "FOCUS" ? "WORLD" : state.view };
-    }
+    /*
+     * Clearing the subject clears the subject. It does not decide what the reader is exploring.
+     *
+     * This line used to read `view: state.view === "FOCUS" ? "WORLD" : state.view`, and that
+     * conditional was the release blocker. It coupled "no subject" to "leave Focus", which made
+     * every caller able to pass a null into an unauthorised writer of `view` - and one of them
+     * was a tap on empty canvas. A reader panning the planar diagram slowly enough that no
+     * single pointer event moved more than a pixel was classified as having clicked, the click
+     * hit nothing, the nothing was passed through here, and a Focus session on Indra became the
+     * whole projected corpus. Nobody had asked for the corpus.
+     *
+     * Leaving Focus is now a separate verb with a separate name, because it is a separate
+     * decision. `returnToWorld` is called from the view control and from Escape, and from
+     * nothing that can happen by accident.
+     *
+     * `node === null` rather than a falsy test on purpose: an out-of-range label lookup yields
+     * `undefined`, and a `=== null` guard let that through to be written as a subject.
+     */
+    if (node === null || node === undefined) return { ...state, node: null };
     return {
         ...state,
         node,
         view: state.view === "PATH" ? "PATH" : "FOCUS",
     };
+}
+
+/**
+ * Step back out to the whole corpus. The only thing that may leave Focus.
+ *
+ * Separate from clearing a selection so that the transition has exactly two callers - the view
+ * control and the Escape key - and so that a reader reading this file can see that there are
+ * only two. The subject is dropped with it: returning to the world while still holding one
+ * would leave the panel open over a view that is no longer about it.
+ */
+export function returnToWorld(state: GraphState): GraphState {
+    return { ...state, view: "WORLD", node: null, from: null, to: null };
 }
 
 /** Select a constellation. Same rule: the renderer is not involved. */
@@ -251,7 +349,3 @@ export function resolveInitialState({
     };
 }
 
-/** WORLD and PATH are both drawn spatially in 3D; FOCUS is the neighbourhood view. */
-export function usesWorldGeometry(view: GraphView) {
-    return view === "WORLD" || view === "PATH";
-}

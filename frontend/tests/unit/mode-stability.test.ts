@@ -6,10 +6,14 @@ import {
     graphStateToQuery,
     parseGraphState,
     resolveInitialState,
+    isReaderIntent,
+    returnToWorld,
     selectRegion,
     selectSubject,
     setRenderer,
     setView,
+    READER_INTENTS,
+    SYSTEM_CAUSES,
     type GraphState,
 } from "@/lib/world/modes";
 
@@ -145,8 +149,45 @@ describe("selecting changes depth, not renderer", () => {
         expect(selectSubject(at({ view: "WORLD" }), "VG:X").view).toBe("FOCUS");
     });
 
-    it("returns focus to the world when the selection is cleared", () => {
-        expect(selectSubject(at({ view: "FOCUS", node: "VG:X" }), null).view).toBe("WORLD");
+    it("does NOT return focus to the world when the subject is cleared", () => {
+        /*
+         * This assertion is the inverse of the one it replaces, and the inversion is the fix.
+         *
+         * `selectSubject(state, null)` used to demote FOCUS to WORLD, and the old test asserted
+         * that it did. But the transition made every caller who could pass a null into an
+         * unauthorised writer of `view`, and one of those callers was a tap on empty canvas.
+         * A reader panning the planar diagram slowly enough that no single pointer event moved
+         * more than a pixel was classified as having clicked, the click hit nothing, and a
+         * Focus session on Indra became the whole projected corpus. That was the release
+         * blocker the product owner reported twice.
+         *
+         * Clearing a subject now clears the subject. Leaving Focus is `returnToWorld`, which
+         * has two callers and both of them are the reader saying so.
+         */
+        const cleared = selectSubject(at({ view: "FOCUS", node: "VG:X" }), null);
+        expect(cleared.view).toBe("FOCUS");
+        expect(cleared.node).toBeNull();
+    });
+
+    it("leaves focus only when explicitly asked", () => {
+        const left = returnToWorld(at({ view: "FOCUS", node: "VG:X" }));
+        expect(left.view).toBe("WORLD");
+        expect(left.node).toBeNull();
+    });
+
+    it("refuses a focus with no subject", () => {
+        /* Focus is about a subject. `view=focus&node=` is a view whose own copy promises "one
+           subject and what it is attached to" with no subject to show, and the write that
+           followed it computed from a state that meant nothing. */
+        expect(setView(at({ view: "WORLD", node: null }), "FOCUS").view).toBe("WORLD");
+        expect(setView(at({ view: "WORLD", node: "VG:X" }), "FOCUS").view).toBe("FOCUS");
+    });
+
+    it("does not write an undefined subject", () => {
+        /* An index past the end of the label table yields `undefined`, and a `=== null` guard
+           let that through to be written as a subject. */
+        const state = selectSubject(at({ view: "FOCUS", node: "VG:X" }), undefined as never);
+        expect(state.node).toBeNull();
     });
 
     it("does not abandon a trace when a stop on it is inspected", () => {
@@ -155,6 +196,74 @@ describe("selecting changes depth, not renderer", () => {
         expect(after.view).toBe("PATH");
         expect(after.from).toBe("VG:A");
         expect(after.to).toBe("VG:B");
+    });
+});
+
+describe("nothing but an explicit request may change what is being explored", () => {
+    /*
+     * The mirror of the renderer table above, and the reason this phase exists.
+     *
+     * That table asserts "nothing the reader does to the graph may change the renderer" for
+     * every mutator, in fourteen cases. The identical table for the *other* axis was never
+     * written - and the axis nobody tested is the axis that broke. The previous phase was
+     * reported as "interacting with the 3D graph sometimes returned them to a different view",
+     * was diagnosed as a renderer problem, was fixed as a renderer problem, and was tested
+     * exhaustively as a renderer problem. The reader kept losing their view.
+     *
+     * So: for every view, every mutator that is not about the view must leave it alone.
+     */
+    const cases: Array<[string, (state: GraphState) => GraphState]> = [
+        ["selecting a subject", (s) => selectSubject(s, "VG:DEVATA:AGNIH")],
+        ["clearing a subject", (s) => selectSubject(s, null)],
+        ["selecting a constellation", (s) => selectRegion(s, 4)],
+        ["clearing a constellation", (s) => selectRegion(s, null)],
+        ["changing the renderer to 2d", (s) => setRenderer(s, "2d")],
+        ["changing the renderer to 3d", (s) => setRenderer(s, "3d")],
+    ];
+
+    for (const view of VIEWS) {
+        for (const [what, act] of cases) {
+            /* Selecting a subject from WORLD is the one legitimate deepening, and it is the
+               only exception in the table. Everything else must be inert. */
+            if (view === "WORLD" && what === "selecting a subject") continue;
+            it(`${what} keeps ${view}`, () => {
+                const before = at({ view, node: "VG:DEVATA:INDRAH" });
+                expect(act(before).view).toBe(view);
+            });
+        }
+    }
+
+    it("takes the world to focus when a subject is chosen, and only then", () => {
+        expect(selectSubject(at({ view: "WORLD" }), "VG:X").view).toBe("FOCUS");
+    });
+});
+
+describe("every cause of a state change is declared", () => {
+    /*
+     * The state model requires a reason on every write, and divides the reasons in two: the
+     * reader acting, and everything else. Only the reader's half may move the semantic axis.
+     *
+     * That division is what makes the release blocker unrepresentable rather than merely
+     * fixed. A physics tick, a settling simulation, a camera move, a hover, a frame sample and
+     * a theme change are all absent from the union, which is the same thing as saying none of
+     * them can do this - and a new one cannot be added without someone writing it down here.
+     */
+    it("counts the reader's causes and the system's separately", () => {
+        expect(READER_INTENTS.every((reason) => isReaderIntent(reason))).toBe(true);
+        expect(SYSTEM_CAUSES.some((reason) => isReaderIntent(reason))).toBe(false);
+    });
+
+    it("has no cause for a camera, a simulation, a hover or a theme", () => {
+        const all = [...READER_INTENTS, ...SYSTEM_CAUSES].join(" ");
+        for (const forbidden of ["camera", "physics", "settle", "hover", "theme", "frame"]) {
+            expect(all).not.toContain(forbidden);
+        }
+    });
+
+    it("allows a renderer failure to change the renderer and nothing else", () => {
+        /* The only system cause that touches state at all after boot. It is not a reader
+           intent, so the state owner refuses a view change from it even if one were computed. */
+        expect(isReaderIntent("fallback:renderer-lost")).toBe(false);
     });
 });
 
