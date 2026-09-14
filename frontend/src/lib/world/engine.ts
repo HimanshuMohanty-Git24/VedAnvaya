@@ -747,6 +747,8 @@ export class WorldEngine {
     /** A live 3D relaxation over the curated set, while a reader is pulling one of them about. */
     private field: Field | null = null;
     private heldSlot: number | null = null;
+    /** Picked on the press, promoted to a hold on the first travel. See `offerGrab`. */
+    private pendingGrab: number | null = null;
     /** True while the curated object is the thing being drawn. */
     private focusActive = false;
     /**
@@ -903,6 +905,9 @@ export class WorldEngine {
                 this.events.onHover?.(null);
                 this.setEmphasis(null);
             },
+            onGrabCheck: (point) => this.offerGrab(this.pick(point.x, point.y)),
+            onGrabMove: (point) => this.moveGrab(point.x, point.y),
+            onGrabEnd: () => this.releaseGrab(),
         });
 
         /*
@@ -1997,15 +2002,14 @@ export class WorldEngine {
      * value, which is stated here so that raising the slack is visibly a decision about the
      * guarantee rather than about how loose the drag feels.
      *
-     * ## What is missing, and where it lives
+     * ## What drives it
      *
-     * Nothing calls this yet. A drag on a *node* has to be told apart from a drag that is an
-     * orbit, and that discrimination belongs in `installGestures` - which is the file that owns
-     * the pointer precisely because three consumers previously answered it separately and two of
-     * the answers were wrong. It is not this file's to change, so the binding is complete and
-     * callable and the input that would drive it is one file away. `controls.enabled` is turned
-     * off here rather than by the caller, because a node drag that leaves the orbit live is not a
-     * node drag, it is both at once.
+     * `offerGrab` / `moveGrab` / `releaseGrab`, from the three grab handlers `installGestures`
+     * raises. The discrimination between a drag on a node and a drag that is an orbit lives in
+     * that file, which owns the pointer precisely because three consumers previously answered it
+     * separately and two of the answers were wrong. `controls.enabled` is turned off in
+     * `offerGrab` rather than here, because it has to be off before the camera has moved and this
+     * function does not run until the press has travelled - see the note there.
      */
     beginNodeDrag(node: number): boolean {
         if (!this.focusActive || !this.focusSlab) return false;
@@ -2100,6 +2104,60 @@ export class WorldEngine {
         if (this.heldSlot !== null && this.field) this.field.held[this.heldSlot] = 0;
         this.heldSlot = null;
         this.controls.enabled = true;
+    }
+
+    /**
+     * A press landed here. Is there an orb under it to take hold of?
+     *
+     * ## Why the camera is stopped on the press and not on the first move
+     *
+     * Because by the first move it is too late. `OrbitControls` is constructed before
+     * `installGestures`, so its own `pointerdown` listener runs first and has already recorded a
+     * rotation start and captured the pointer by the time this is asked. Waiting for the gesture
+     * to be *recognisable* as a drag - four pixels for a mouse, ten for a finger - means those
+     * first pixels orbit the camera and the orb then starts moving from a scene that has already
+     * turned under it. Disabling here costs nothing that is wanted: `OrbitControls` checks
+     * `enabled` again in its move handler, so the rotation it prepared never advances, while the
+     * capture it took stays in place and keeps delivering moves after the pointer leaves the
+     * canvas - which a drag towards the edge needs.
+     *
+     * The physics is not started here, though. A press that never travels is a selection, and
+     * building a field for it would seed a relaxation over the whole neighbourhood on every tap:
+     * the orbs are seeded from their drawn positions and anchored to their seats, and during a
+     * transition those two differ, so a tap mid-flight would visibly nudge the arrangement. So
+     * the node is remembered and `beginNodeDrag` waits for travel.
+     *
+     * Only a curated orb answers. In WORLD there are 35,370 of them at two pixels across, none
+     * of them has an anchor to be pulled away from, and a reader there is navigating rather than
+     * handling anything.
+     */
+    private offerGrab(node: number | null): boolean {
+        if (node === null || !this.focusActive || !this.focusSlab) return false;
+        if (!this.curatedSlot.has(node)) return false;
+        this.pendingGrab = node;
+        this.controls.enabled = false;
+        return true;
+    }
+
+    /** The press has travelled. Promote it to a hold on the first call, then track the pointer. */
+    private moveGrab(x: number, y: number) {
+        if (this.heldSlot === null) {
+            const node = this.pendingGrab;
+            /* A refusal is not an error - the scene can have been replaced between the press and
+               the move - but it must hand the camera back rather than leave the view inert. */
+            if (node === null || !this.beginNodeDrag(node)) {
+                this.releaseGrab();
+                return;
+            }
+        }
+        this.dragNodeTo(x, y);
+    }
+
+    /** Whatever the press turned out to be, the camera comes back and nothing stays held. */
+    private releaseGrab() {
+        this.pendingGrab = null;
+        if (this.heldSlot !== null) this.endNodeDrag();
+        else this.controls.enabled = true;
     }
 
     /** One physics step, and the write-back. Returns false once the field has gone to sleep. */
@@ -2714,6 +2772,58 @@ export class WorldEngine {
 
     get currentMode() {
         return this.mode;
+    }
+
+    /**
+     * What the two depth cues are currently set to, and where one node sits in the fog.
+     *
+     * ## Why this is reported rather than looked up
+     *
+     * Because neither cue is a constant. The fog ceiling is *solved* against the 3:1 contrast
+     * gate for the palette and the page colour of the moment - see `fogCeiling` - and the key
+     * light's tint and shape are derived from the page's luminance, so the light shades towards
+     * whichever side of the page has contrast to spare. Anything outside this file that needs to
+     * know what a fragment will be worth cannot hardcode them and would otherwise have to read
+     * the material's uniforms, which is a private arrangement that no test should be pinned to.
+     *
+     * The one consumer today is `graph-palette.spec.ts`, which predicts the pixels of a curated
+     * orb from the CSS tokens plus these numbers and compares them against a screenshot. That
+     * test exists because a missing `colorspace_fragment` published every fill about 21 dE00
+     * darker than the palette declared and nothing else noticed; predicting a shaded, fogged
+     * fragment is what it takes to make that claim about a real orb rather than about a flat
+     * patch, because there is no flat patch - the key light is a gradient and the spoke fan is
+     * drawn over the middle of its own subject.
+     *
+     * `fog` is the resolved product: how far towards the page colour this node's fragments are
+     * mixed, per-vertex and therefore constant across its disc.
+     */
+    depthCues(node: number) {
+        const uniforms = (
+            (this.curatedSlot.has(node) ? this.curated : this.nodes).material as ShaderMaterial
+        ).uniforms;
+        const target = new Vector3(
+            this.drawPositions[node * 3],
+            this.drawPositions[node * 3 + 1],
+            this.drawPositions[node * 3 + 2],
+        ).applyMatrix4(this.camera.matrixWorldInverse);
+        const depth = Math.max(-target.z, 1);
+        const near = uniforms.uFogNear.value as number;
+        const far = uniforms.uFogFar.value as number;
+        const reach = Math.min(1, Math.max(0, (depth - near) / Math.max(far - near, 1)));
+        const triple = (value: Vector3): [number, number, number] => [value.x, value.y, value.z];
+        return {
+            depth,
+            /** Linear-light, because that is the space the shader mixes in. */
+            fogColour: triple(uniforms.uFog.value as Vector3),
+            fog: reach * (uniforms.uFogMax.value as number),
+            keyAmount: uniforms.uKeyAmount.value as number,
+            /** 0 shades the unlit side, 1 lights the lit side. */
+            keyShape: uniforms.uKeyShape.value as number,
+            keyTint: triple(uniforms.uKeyTint.value as Vector3),
+            /** Unit length, in the disc's own coordinates: x right, y down, z towards the eye. */
+            light: triple(uniforms.uLight.value as Vector3),
+            alpha: uniforms.uAlpha.value as number,
+        };
     }
 
     /**

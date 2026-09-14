@@ -87,6 +87,28 @@ export type GestureHandlers = {
     onHoverLeave?: () => void;
     /** Reported so a view can suppress hover work, and so a test can assert the phase. */
     onPhase?: (phase: GesturePhase) => void;
+    /**
+     * Did this press land on something that can be taken hold of?
+     *
+     * Asked once, on the press, and never again during the gesture. The answer decides which
+     * of two things the travel that follows means - moving an object, or moving the camera -
+     * and it has to be decided at the press because by the time a drag is recognisable the
+     * camera has already moved. A consumer that answers true is expected to have suppressed
+     * its own camera control by the time it returns.
+     *
+     * Answering true does not consume the gesture. A press that never travels is still a tap,
+     * because the alternative is that pressing an object and releasing it does nothing.
+     */
+    onGrabCheck?: (point: GesturePoint) => boolean;
+    /** The gesture began on a handle and has travelled. Every move after the latch. */
+    onGrabMove?: (point: GesturePoint) => void;
+    /**
+     * Let go, however the gesture ended: released, cancelled, or joined by a second pointer.
+     *
+     * Raised even when `onGrabMove` never was, so that whatever `onGrabCheck` turned off is
+     * turned back on by exactly one path rather than by each of the three.
+     */
+    onGrabEnd?: () => void;
 };
 
 function kindOf(pointerType: string): PointerKind {
@@ -115,6 +137,8 @@ export function installGestures(element: HTMLElement, handlers: GestureHandlers)
      * first finger's travel has been forgotten - so a pinch would end in a tap.
      */
     let latched = false;
+    /** The press landed on a handle, so travel moves the object rather than the camera. */
+    let holding = false;
     let phase: GesturePhase = "idle";
 
     const setPhase = (next: GesturePhase) => {
@@ -133,6 +157,13 @@ export function installGestures(element: HTMLElement, handlers: GestureHandlers)
         };
     };
 
+    /** Exactly one path out of a hold, so the caller cannot be left with its camera off. */
+    const releaseHold = () => {
+        if (!holding) return;
+        holding = false;
+        handlers.onGrabEnd?.();
+    };
+
     const endGesture = () => {
         if (active.size > 0) return;
         primary = null;
@@ -143,8 +174,11 @@ export function installGestures(element: HTMLElement, handlers: GestureHandlers)
     const onPointerDown = (event: PointerEvent) => {
         active.add(event.pointerId);
         if (active.size > 1) {
-            // A second pointer means a pinch or a two-finger pan. Nothing after it is a tap.
+            // A second pointer means a pinch or a two-finger pan. Nothing after it is a tap,
+            // and nothing after it is a hold either: a second finger arriving means the reader
+            // has stopped addressing the object and started addressing the view.
             latched = true;
+            releaseHold();
             setPhase("multi");
             return;
         }
@@ -155,6 +189,7 @@ export function installGestures(element: HTMLElement, handlers: GestureHandlers)
         /* A secondary button is a dolly or a pan in every orbit control ever written, and in
            none of them is it a selection. */
         latched = event.button !== 0;
+        holding = !latched && (handlers.onGrabCheck?.(pointOf(event)) ?? false);
         setPhase("pressed");
     };
 
@@ -163,16 +198,26 @@ export function installGestures(element: HTMLElement, handlers: GestureHandlers)
             handlers.onHoverMove?.(pointOf(event));
             return;
         }
-        if (event.pointerId !== primary || latched) return;
+        if (event.pointerId !== primary) return;
+        if (latched) {
+            /* Delivered after the latch and only while holding, so a camera drag costs nothing
+               and the held object never jumps by the slop distance on its first frame. */
+            if (holding) handlers.onGrabMove?.(pointOf(event));
+            return;
+        }
         if (Math.hypot(event.clientX - startX, event.clientY - startY) > GESTURE_SLOP[kind]) {
             latched = true;
             setPhase("dragging");
+            if (holding) handlers.onGrabMove?.(pointOf(event));
         }
     };
 
     const onPointerUp = (event: PointerEvent) => {
         const wasPrimary = event.pointerId === primary;
         active.delete(event.pointerId);
+        /* Let go before reporting the tap, so the consumer is never asked to act on a
+           selection while it still believes a drag is in progress. */
+        if (wasPrimary) releaseHold();
         if (wasPrimary && !latched) handlers.onTap?.(pointOf(event));
         endGesture();
     };
@@ -193,6 +238,7 @@ export function installGestures(element: HTMLElement, handlers: GestureHandlers)
     const onPointerCancel = (event: PointerEvent) => {
         latched = true;
         active.delete(event.pointerId);
+        if (event.pointerId === primary) releaseHold();
         endGesture();
     };
 

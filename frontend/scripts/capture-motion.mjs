@@ -64,6 +64,9 @@ const BLANK_COLOURS_MIN = 12;
 // ---------------------------------------------------------------------------
 
 const INDRA = "VG%3ADEVATA%3AINDRAH";
+/* The packed index of the same subject. Checked against the label table by
+   tests/e2e/graph-palette.spec.ts, which fails by name if a rebuild renumbers it. */
+const INDRA_INDEX = 22975;
 const AGNI = "VG%3ADEVATA%3AAGNIH";
 /* 298 connections against Indra's 7,347, and a genuinely mixed neighbourhood - five node
    groups including a river. The comparison case for whether the curation is sane at both
@@ -175,13 +178,24 @@ const SCENES = [
         id: "home-explicit-open",
         url: "/",
         viewport: DESKTOP,
-        canvas: HERO_CANVAS,
+        /*
+         * The graph's canvas, not the hero's.
+         *
+         * This is the one scene that deliberately leaves the page it started on, and `canvas`
+         * names what the *final* frame is checked against - so declaring the hero's canvas made
+         * the scene fail for succeeding: by the time the shutter fell the hero had been unmounted
+         * by the navigation the clip exists to record. Naming the graph canvas keeps the blank
+         * check meaningful, and makes it a stronger claim than before: the explicit affordance
+         * both navigates and arrives somewhere that draws.
+         */
+        canvas: "canvas.va-world-canvas",
         actions: [
             { type: "waitFor", selector: HERO_CANVAS },
             { type: "wait", ms: 1200 },
             { type: "clickSelector", selector: ".va-world-preview-link" },
             { type: "waitFor", selector: ".va-graph", timeout: 30_000 },
             { type: "assertUrl", matches: "/graph" },
+            ...WORLD_READY,
             { type: "wait", ms: 3000 },
         ],
     },
@@ -369,7 +383,12 @@ const SCENES = [
             ...WORLD_READY,
             { type: "waitFor", selector: "aside.va-world-panel", timeout: 30_000 },
             { type: "wait", ms: 3000 },
+            /* The drag starts at the centre of the canvas, which is where the Focus framing
+               puts the subject's own orb - so this is the node drag, not an orbit, and the
+               assertion after it is what says so. */
+            { type: "markSubject", node: INDRA_INDEX },
             { type: "drag", from: [0.5, 0.5], to: [0.62, 0.42], steps: 36, holdMs: 22 },
+            { type: "assertMoved", node: INDRA_INDEX, atLeastPx: 60 },
             { type: "wait", ms: 2500 },
             { type: "drag", from: [0.62, 0.42], to: [0.44, 0.56], steps: 36, holdMs: 22 },
             { type: "wait", ms: 3000 },
@@ -744,7 +763,7 @@ async function pinch(page, box, action) {
     }
 }
 
-async function runAction(page, scene, action, notes) {
+async function runAction(page, scene, action, notes, state) {
     const box = async () => canvasBox(page, scene.canvas ?? "canvas.va-world-canvas", scene.id);
 
     switch (action.type) {
@@ -893,6 +912,50 @@ async function runAction(page, scene, action, notes) {
         }
 
         /*
+         * Remember where the subject is, so a later `assertMoved` has something to compare to.
+         *
+         * A drag clip is the one kind of scene whose whole content is a change, and the two
+         * changes it could be recording - the object moving, or the camera swinging around it -
+         * look similar in a thumbnail and completely different to a reader. The harness's blank
+         * canvas guard cannot tell them apart, so the scene says which one it means.
+         */
+        case "markSubject": {
+            state.subject = await page.evaluate((node) => {
+                const engine = window.__vedaWorld;
+                const orb = engine?.orbGeometry?.([node])?.[0];
+                return orb ? { x: orb.x, y: orb.y } : null;
+            }, action.node);
+            if (!state.subject) {
+                throw new Error(
+                    `[${scene.id}] the engine could not place node ${action.node}, so this ` +
+                        "scene cannot state what its drag moved",
+                );
+            }
+            return;
+        }
+
+        case "assertMoved": {
+            const now = await page.evaluate((node) => {
+                const engine = window.__vedaWorld;
+                const orb = engine?.orbGeometry?.([node])?.[0];
+                return orb ? { x: orb.x, y: orb.y } : null;
+            }, action.node);
+            if (!now || !state.subject) {
+                throw new Error(`[${scene.id}] nothing to compare: the subject was not placed`);
+            }
+            const moved = Math.hypot(now.x - state.subject.x, now.y - state.subject.y);
+            if (moved < (action.atLeastPx ?? 40)) {
+                throw new Error(
+                    `[${scene.id}] node ${action.node} moved ${moved.toFixed(1)} px, under the ` +
+                        `${action.atLeastPx ?? 40} px this scene claims to show. The drag orbited ` +
+                        "the camera instead of taking hold of the orb, so the clip is of the " +
+                        "wrong gesture.",
+                );
+            }
+            return;
+        }
+
+        /*
          * Hold a claim for a while, checking it throughout rather than at the end.
          *
          * The reported defect was a view that reverted at some unpredictable moment during an
@@ -1004,6 +1067,9 @@ async function captureScene(browser, analyzer, scene, opts, ffmpeg) {
     const shotPath = path.join(opts.out, `${scene.id}.png`);
     const canvasSel = scene.canvas ?? "canvas.va-world-canvas";
     const notes = [];
+    /* Carried across the actions of one scene, so a claim can be made about a change
+       rather than only about an end state. See `markSubject`. */
+    const state = {};
     const consoleErrors = [];
 
     const record = {
@@ -1091,7 +1157,7 @@ async function captureScene(browser, analyzer, scene, opts, ffmpeg) {
         const midpoint = Math.floor((firstMove + scene.actions.length) / 2);
         for (const [i, action] of scene.actions.entries()) {
             if (i === firstMove || i === midpoint) await sample();
-            await runAction(page, scene, action, notes);
+            await runAction(page, scene, action, notes, state);
         }
 
         if (scene.theme) {

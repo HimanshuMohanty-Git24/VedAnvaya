@@ -66,6 +66,26 @@ type Transition = {
     refused?: string;
 };
 
+/**
+ * The engine handle the spatial view publishes on `window`, as far as this file uses it.
+ *
+ * `camera` is a private field on the engine, declared here because the node-drag test below
+ * has to state that the camera did not move and there is nothing else on screen to state it
+ * through. See the note on that test.
+ */
+type Stage = {
+    orbGeometry(
+        nodes: Iterable<number>,
+    ): Array<{ node: number; x: number; y: number; depth: number; radius: number }>;
+    screenPositionOf(node: number): { x: number; y: number; z: number } | null;
+    currentMode: string;
+    /** Private on the engine. See the note on the node-drag test for why it is read here. */
+    camera?: {
+        position: { x: number; y: number; z: number };
+        quaternion: { x: number; y: number; z: number; w: number };
+    };
+};
+
 const CANVAS: Record<Renderer, string> = {
     "3d": ".va-world-canvas",
     "2d": ".va-planar-canvas",
@@ -227,26 +247,55 @@ async function slowPan(page: Page, canvas: Locator) {
  * a soak that skips the interaction entirely.
  */
 async function tapRelationship(page: Page) {
-    const labels = page.locator('.va-edge-label[data-pickable="true"]');
-    const count = await labels.count();
-    for (let index = 0; index < count; index += 1) {
-        const label = labels.nth(index);
-        const shown = await label.evaluate((node) => (node as HTMLElement).style.opacity);
-        if (shown !== "1") continue;
-        if (!(await label.isVisible())) continue;
-        if ((await label.boundingBox()) === null) continue;
-        try {
-            await label.click({ timeout: 1_000 });
-        } catch {
-            continue;
+    /*
+     * The candidate is chosen in one page evaluation, not by walking `nth()`.
+     *
+     * The three filters above were right about *what* makes a label clickable and wrong about
+     * *how* to ask. Reading a count and then walking `locator.nth(index)` is three round trips
+     * per candidate against a DOM that is moving: the pool retires and reuses spans as the
+     * camera turns, so an index that existed when the count was taken may not exist when it is
+     * resolved - and `nth()` waits for it. That is not a slow click, it is an unbounded one,
+     * and it timed out the whole sixty-second soak on a scene where Focus never wavered. The
+     * soak then reported a timeout, which says nothing about the thing it exists to prove.
+     *
+     * So the enumeration is atomic. One evaluation reads every span, applies the real
+     * hit test - `elementFromPoint` at the centre, which is what "clickable" actually means and
+     * is stricter than a visible box - and returns a coordinate. Nothing after that can wait on
+     * an element that has since gone, because nothing after that names one.
+     */
+    const target = await page.evaluate(() => {
+        const spans = [...document.querySelectorAll('.va-edge-label[data-pickable="true"]')];
+        for (const span of spans) {
+            const node = span as HTMLElement;
+            if (node.style.opacity !== "1") continue;
+            const box = node.getBoundingClientRect();
+            if (box.width === 0 || box.height === 0) continue;
+            const x = box.left + box.width / 2;
+            const y = box.top + box.height / 2;
+            /* Topmost at its own centre, or a click there would land on whatever is over it. */
+            const hit = document.elementFromPoint(x, y);
+            if (!hit || !(hit === node || node.contains(hit))) continue;
+            return { x, y, text: node.textContent ?? "" };
         }
-        const inspector = page.locator(".va-relationship");
-        await expect(inspector).toBeVisible();
-        await page.keyboard.press("Escape");
-        await expect(inspector).toHaveCount(0);
-        return true;
+        return null;
+    });
+    if (!target) return false;
+
+    try {
+        await page.mouse.click(target.x, target.y);
+    } catch {
+        return false;
     }
-    return false;
+    const inspector = page.locator(".va-relationship");
+    /* Bounded, so a click that landed on nothing costs a second rather than the test. */
+    try {
+        await expect(inspector).toBeVisible({ timeout: 2_000 });
+    } catch {
+        return false;
+    }
+    await page.keyboard.press("Escape");
+    await expect(inspector).toHaveCount(0);
+    return true;
 }
 
 /** Collapse the subject panel and open it again. */
@@ -412,5 +461,191 @@ test.describe("the graph holds the reader's place while it is used", () => {
             entries.filter((entry) => entry.node !== INDRA_ID).map((entry) => entry.reason),
             "the slow pan changed which subject was being explored",
         ).toEqual([]);
+    });
+
+    /**
+     * Taking hold of the subject, in three dimensions.
+     *
+     * ## What this is distinguishing between
+     *
+     * A press and a drag on this canvas can mean two entirely different things - move the
+     * object, or move the camera - and both of them look like "the picture changed". The
+     * discriminator used here is that the orb lands *under the pointer*: `dragNodeTo`
+     * intersects the pointer ray with the slab's own plane, so a held orb is placed exactly
+     * where the cursor is, while an orbit whose target is that same orb would leave it almost
+     * still and swing everything else around it. Those two are not near each other, so this is
+     * not a threshold that needs tuning.
+     *
+     * The camera is then read directly, because there is nothing else in the frame to read it
+     * through. The first attempt at this test looked for nodes *outside* the curated set and
+     * asserted their screen positions were unchanged, on the reasoning that only the camera can
+     * move those. It found none: at the Focus framing the camera sits 900 units from the subject
+     * and `screenPositionOf` returns null for anything whose normalised depth leaves [-1, 1], so
+     * of 255 sampled candidates **zero** projected. The neighbourhood is the whole of what is on
+     * screen, and every orb in it is expected to move - that is the physics - so no orb can
+     * witness the camera.
+     *
+     * ## Why it reads the camera off the engine
+     *
+     * `camera` is a private field, reached for here because it is precisely the subject of the
+     * claim: "a node drag that leaves the orbit live is not a node drag, it is both at once."
+     * Measuring it through anything else would be measuring a proxy for the thing this test
+     * exists to state. The read is loud if it breaks - an absent field fails by name rather than
+     * producing a plausible wrong number - and the assertion is exact rather than tolerant,
+     * because `OrbitControls` either advanced or it did not.
+     */
+    test("a drag that starts on the subject moves the subject, not the camera", async ({
+        page,
+    }) => {
+        await enter(page, "3d");
+        const canvas = page.locator(CANVAS["3d"]);
+
+        /* The index is resolved from the artifact the page itself loaded rather than written
+           down, because a rebuild renumbers it and a test that dragged the wrong node would
+           report a physics problem as a gesture one. */
+        const subject = await page.evaluate(async (id) => {
+            const response = await fetch("/world/world.labels.json");
+            const labels = (await response.json()) as { ids: string[] };
+            return labels.ids.indexOf(id);
+        }, INDRA_ID);
+        expect(subject, `${INDRA_ID} is not in the artifact's label table`).toBeGreaterThanOrEqual(
+            0,
+        );
+
+        /*
+         * Waited until the projection repeats, not slept through.
+         *
+         * The entry flight is still moving the camera for a second or so after the panel
+         * appears, and a displacement measured against a moving camera is a measurement of the
+         * flight. Two identical readings is a statement about the camera having arrived.
+         */
+        let previous: string | null = null;
+        await expect
+            .poll(
+                async () => {
+                    const reading = await page.evaluate((node) => {
+                        const engine = (window as unknown as { __vedaWorld?: Stage }).__vedaWorld;
+                        const orb = engine?.orbGeometry([node])[0];
+                        if (!orb || engine?.currentMode !== "FOCUS") return null;
+                        return `${Math.round(orb.x)}:${Math.round(orb.y)}`;
+                    }, subject);
+                    const settled = reading !== null && reading === previous;
+                    previous = reading;
+                    return settled;
+                },
+                {
+                    message: "the curated scene never stopped moving, so nothing could be grabbed",
+                    timeout: SETTLE,
+                    intervals: [300, 300, 300, 300, 500, 500, 500, 1_000, 1_000],
+                },
+            )
+            .toBe(true);
+
+        /** Where the camera is, to the digit. Rounded only so a float tail cannot read as motion. */
+        const cameraSignature = () =>
+            page.evaluate(() => {
+                const engine = (window as unknown as { __vedaWorld?: Stage }).__vedaWorld;
+                const camera = engine?.camera;
+                if (!camera) return null;
+                const { position: p, quaternion: q } = camera;
+                return [p.x, p.y, p.z, q.x, q.y, q.z, q.w]
+                    .map((value) => value.toFixed(6))
+                    .join(" ");
+            });
+
+        const cameraBefore = await cameraSignature();
+        expect(
+            cameraBefore,
+            "the engine no longer exposes its camera, so this test cannot say whether it moved",
+        ).not.toBeNull();
+
+        const box = await boxOf(canvas, "the spatial canvas");
+        const start = await page.evaluate((node) => {
+            const engine = (window as unknown as { __vedaWorld?: Stage }).__vedaWorld;
+            return engine!.orbGeometry([node])[0];
+        }, subject);
+        expect(
+            start.radius,
+            `the subject is drawn at ${start.radius.toFixed(1)} px, which is not a curated root, ` +
+                "so this is not the scene the drag is supposed to act on",
+        ).toBeGreaterThanOrEqual(16);
+
+        const from = { x: box.x + start.x, y: box.y + start.y };
+        const to = { x: from.x + 150, y: from.y - 90 };
+        await page.mouse.move(from.x, from.y);
+        await page.mouse.down();
+        /* Stepped, because the classifier reads travel from the press and a single jump is one
+           event. Thirty steps also carries the gesture well past the 4px mouse slop early, so
+           most of the drag is spent held rather than deciding. */
+        for (let step = 1; step <= 30; step += 1) {
+            const t = step / 30;
+            await page.mouse.move(from.x + (to.x - from.x) * t, from.y + (to.y - from.y) * t);
+        }
+
+        expect(
+            await canvas.getAttribute("data-gesture"),
+            "the canvas does not consider this a drag, so nothing below is about a drag",
+        ).toBe("dragging");
+
+        const held = await page.evaluate((node) => {
+            const engine = (window as unknown as { __vedaWorld?: Stage }).__vedaWorld;
+            return engine!.orbGeometry([node])[0];
+        }, subject);
+        const cameraHeld = await cameraSignature();
+        await page.mouse.up();
+
+        /* The orb is where the cursor is. Two pixels covers the physics writing back one frame
+           behind the pointer and the projection being rebuilt on read. */
+        expect(
+            Math.hypot(box.x + held.x - to.x, box.y + held.y - to.y),
+            `the held orb is at ${held.x.toFixed(1)}, ${held.y.toFixed(1)} while the pointer is ` +
+                `at ${(to.x - box.x).toFixed(1)}, ${(to.y - box.y).toFixed(1)}. A drag that starts ` +
+                "on an orb has to move the orb; if the orb barely moved, the gesture orbited the " +
+                "camera instead and offerGrab did not take.",
+        ).toBeLessThan(2);
+
+        /* And the camera did not come along. Exact, not tolerant: `OrbitControls` records a
+           rotation start on the press - its own listener runs before the gesture module's,
+           because it is constructed first - and the only question is whether it was allowed to
+           advance. Any advance at all is the defect. */
+        expect(
+            cameraHeld,
+            "the camera moved during a node drag, so the orbit was left live and the gesture " +
+                "was both things at once. `offerGrab` disables the controls on the press for " +
+                "exactly this reason; check that it still answers for this orb.",
+        ).toBe(cameraBefore);
+
+        /*
+         * Let go, and the arrangement takes its subject back.
+         *
+         * The seats are anchors and `slack` bounds how far a body may leave one, so a released
+         * orb returns towards where the layout put it. This is the observable difference between
+         * a simulation and a drag that simply leaves things where they were dropped, and it is
+         * also the reason the separation guarantee survives being pulled about.
+         */
+        await expect
+            .poll(
+                async () => {
+                    const at = await page.evaluate((node) => {
+                        const engine = (window as unknown as { __vedaWorld?: Stage }).__vedaWorld;
+                        return engine!.orbGeometry([node])[0];
+                    }, subject);
+                    return Math.hypot(at.x - start.x, at.y - start.y);
+                    /* Against `start`, the seat it was pulled away from - not against the drop
+                       point, which would also be satisfied by nothing happening at all. */
+                },
+                {
+                    message:
+                        "the released orb never came back towards its seat, so the arrangement " +
+                        "is holding whatever position the pointer left it in",
+                    timeout: 15_000,
+                    intervals: [400, 400, 600, 600, 1_000, 1_000, 2_000],
+                },
+            )
+            .toBeLessThan(20);
+
+        /* None of which is allowed to have moved the reader. */
+        await hold(page, "3d", "after dragging the subject about");
+        await assertTraceIsClean(page, "the node drag");
     });
 });
