@@ -1,43 +1,54 @@
 /**
- * One graph product, four ways of looking at it.
+ * What the reader is exploring, and how it is drawn. Two axes, never one.
  *
- * Before this there were two graph experiences: a 2D explorer at `/graph` that the rest of the
- * product linked to, and a 3D world at `/graph/world` that nothing linked to and nobody would
- * find. That is not two features, it is one feature and one orphan. The modes below are views
- * over a single piece of state - the same selection, the same search, the same path - so that
- * switching is a change of viewpoint rather than a change of application.
+ * ## The bug this file was rewritten to fix
  *
- * The state lives in the URL, which makes every view of the graph a thing you can send to
- * someone. Camera position deliberately does not: it changes on every frame of an orbit, and a
- * link that restores an exact camera angle restores the one thing the recipient was going to
- * change first anyway.
+ * The previous model had a single `mode` of WORLD | 3D | 2D | PATH, which mixes a semantic
+ * level with a renderer, and that conflation was a release blocker rather than an
+ * inelegance. WORLD was the default, so it was omitted from the URL; a URL carrying only
+ * `?node=X` was then read back as 3D, because a bare subject looks like a request to go and
+ * look at one. So selecting anything in the world wrote a URL that meant something different
+ * from the state that wrote it, and the reader was moved into a view they had not asked for.
+ * A round trip through the URL has to be lossless, and a state model where two different
+ * states serialise identically cannot be.
+ *
+ * Split in two, the question does not arise. `view` says WORLD, FOCUS or PATH. `renderer`
+ * says 3d or 2d. Selecting a subject changes `view`; nothing about selection can reach
+ * `renderer`, which is the hard invariant this phase exists to establish.
+ *
+ * ## Precedence
+ *
+ * One owner, one order, written down so that effects cannot quietly disagree:
+ *
+ *   1. an explicit user action           - always wins, always remembered
+ *   2. a valid deep link                 - what the URL says, if it says anything
+ *   3. a remembered preference           - the reader's last explicit choice
+ *   4. the capability default            - what this device can actually draw
+ *
+ * A runtime failure may override the renderer, and only the renderer, and only loudly.
  */
 
-export const GRAPH_MODES = ["WORLD", "3D", "2D", "PATH"] as const;
-export type GraphMode = (typeof GRAPH_MODES)[number];
+export const VIEWS = ["WORLD", "FOCUS", "PATH"] as const;
+export type GraphView = (typeof VIEWS)[number];
 
-export const MODE_COPY: Record<GraphMode, { label: string; note: string }> = {
-    WORLD: {
-        label: "World",
-        note: "The whole corpus, arranged by what connects to what",
-    },
-    "3D": {
-        label: "3D",
-        note: "Free spatial exploration of one region",
-    },
-    "2D": {
-        label: "2D",
-        note: "A planar diagram you can pull apart",
-    },
-    PATH: {
-        label: "Path",
-        note: "How one subject reaches another",
-    },
+export const RENDERERS = ["3d", "2d"] as const;
+export type GraphRenderer = (typeof RENDERERS)[number];
+
+export const VIEW_COPY: Record<GraphView, { label: string; note: string }> = {
+    WORLD: { label: "World", note: "The whole corpus, arranged by what connects to what" },
+    FOCUS: { label: "Focus", note: "One subject and what it is attached to" },
+    PATH: { label: "Path", note: "How one subject reaches another" },
+};
+
+export const RENDERER_COPY: Record<GraphRenderer, { label: string; note: string }> = {
+    "3d": { label: "3D", note: "Spatial, with depth" },
+    "2d": { label: "2D", note: "Planar, and physical to the touch" },
 };
 
 export type GraphState = {
-    mode: GraphMode;
-    /** Canonical id of the selected subject, not its index: indices change between builds. */
+    view: GraphView;
+    renderer: GraphRenderer;
+    /** Canonical id, not an index: indices change between builds, ids do not. */
     node: string | null;
     /** Constellation id, when a region rather than a subject is in focus. */
     region: number | null;
@@ -46,8 +57,9 @@ export type GraphState = {
     query: string | null;
 };
 
-export const EMPTY_STATE: GraphState = {
-    mode: "WORLD",
+export const DEFAULT_STATE: GraphState = {
+    view: "WORLD",
+    renderer: "3d",
     node: null,
     region: null,
     from: null,
@@ -55,39 +67,59 @@ export const EMPTY_STATE: GraphState = {
     query: null,
 };
 
-function readMode(value: string | null): GraphMode | null {
+function readView(value: string | null): GraphView | null {
     if (!value) return null;
     const upper = value.toUpperCase();
-    return (GRAPH_MODES as readonly string[]).includes(upper) ? (upper as GraphMode) : null;
+    return (VIEWS as readonly string[]).includes(upper) ? (upper as GraphView) : null;
+}
+
+function readRenderer(value: string | null): GraphRenderer | null {
+    if (!value) return null;
+    const lower = value.toLowerCase();
+    return (RENDERERS as readonly string[]).includes(lower) ? (lower as GraphRenderer) : null;
 }
 
 /**
- * Read graph state out of a URL.
+ * Read state out of a URL.
  *
- * `?node=` is honoured without a mode, because every deep link written before this phase used
- * exactly that and those links are in the product's own pages. A node without a mode means a
- * subject someone wants to look at, which is 3D.
+ * Both axes are written explicitly by `graphStateToQuery`, so a URL this application produced
+ * always states both and nothing is inferred. Inference exists only for a URL a person wrote
+ * or was sent - `?node=X`, which every link in the product used before this phase - and it
+ * only ever fills in what is absent. It can no longer contradict what is present, which is
+ * the whole of the fix.
  */
 export function parseGraphState(params: URLSearchParams): GraphState {
     const node = params.get("node");
     const from = params.get("from");
     const to = params.get("to");
-    const explicit = readMode(params.get("mode"));
-    const implied: GraphMode = from && to ? "PATH" : node ? "3D" : "WORLD";
+    const region = params.has("region") ? Number(params.get("region")) : null;
+
+    const view =
+        readView(params.get("view")) ??
+        (from && to ? "PATH" : node ? "FOCUS" : region !== null ? "WORLD" : "WORLD");
+
     return {
-        mode: explicit ?? implied,
+        view,
+        renderer: readRenderer(params.get("renderer")) ?? DEFAULT_STATE.renderer,
         node,
-        region: params.has("region") ? Number(params.get("region")) : null,
+        region: region !== null && Number.isFinite(region) ? region : null,
         from,
         to,
         query: params.get("q"),
     };
 }
 
-/** Only what differs from the default is written, so a shared link stays readable. */
+/**
+ * Write state into a URL.
+ *
+ * Both axes are always written, even when they equal the default. That is the correction: a
+ * shorter link is worth nothing next to a link that means what produced it, and omitting the
+ * default was precisely how one state came to serialise as another.
+ */
 export function graphStateToQuery(state: GraphState): string {
     const params = new URLSearchParams();
-    if (state.mode !== "WORLD") params.set("mode", state.mode.toLowerCase());
+    params.set("view", state.view.toLowerCase());
+    params.set("renderer", state.renderer);
     if (state.node) params.set("node", state.node);
     if (state.region !== null && Number.isFinite(state.region)) {
         params.set("region", String(state.region));
@@ -95,53 +127,100 @@ export function graphStateToQuery(state: GraphState): string {
     if (state.from) params.set("from", state.from);
     if (state.to) params.set("to", state.to);
     if (state.query) params.set("q", state.query);
-    const query = params.toString();
-    return query ? `?${query}` : "";
+    return `?${params.toString()}`;
 }
 
 /**
- * What survives a change of mode.
+ * Change what is being explored. The renderer is untouched, by construction.
  *
- * Everything that is about the graph rather than about the viewpoint. A reader who has found
- * Agni in the world and switches to 2D to pull its neighbourhood apart has not asked to go
- * back to the beginning, and the most common way a multi-view tool feels like several tools is
- * that each view starts over.
- *
- * The one thing that is dropped is a path's endpoints when leaving PATH, because a traced
- * route is a question that was asked and answered; carrying it into 2D would redraw an answer
- * nobody is looking at any more. The selected node is kept, so the reader arrives in the new
- * mode standing at one end of the path they were just reading.
+ * There is no code path from a view change to a renderer change, and that is deliberate
+ * rather than incidental: the reported bug was exactly such a path existing by accident.
  */
-export function switchMode(state: GraphState, mode: GraphMode): GraphState {
-    if (mode === state.mode) return state;
-    const carried: GraphState = { ...state, mode };
-    if (mode !== "PATH") {
-        carried.from = null;
-        carried.to = null;
+export function setView(state: GraphState, view: GraphView): GraphState {
+    if (view === state.view) return state;
+    const next: GraphState = { ...state, view };
+    if (view !== "PATH") {
+        next.from = null;
+        next.to = null;
+    } else {
+        // Entering a trace from a selection offers that subject as the starting point, which
+        // is almost always what "trace a path from here" means.
+        next.from = state.from ?? state.node;
     }
-    if (mode === "PATH") {
-        // Entering PATH from a selection offers that subject as the starting point, which is
-        // almost always what someone means by tracing a path from where they are.
-        carried.from = state.from ?? state.node;
-    }
-    return carried;
+    return next;
+}
+
+/** Change how it is drawn. Nothing about what is being explored moves. */
+export function setRenderer(state: GraphState, renderer: GraphRenderer): GraphState {
+    return renderer === state.renderer ? state : { ...state, renderer };
 }
 
 /**
- * Which mode a device should open in.
+ * Select a subject.
  *
- * Never used to override an explicit choice, and never silent: where this returns something
- * other than what was asked for, the interface says so and offers the other one. A reader on a
- * machine that cannot hold a frame rate is better served by a 2D diagram that works than by a
- * 3D one that stutters, but they are entitled to know that decision was made for them.
+ * Selecting deepens the view from WORLD to FOCUS, because that is what selecting means; it
+ * cannot touch the renderer. Selecting while tracing a path leaves the trace alone - the
+ * reader is inspecting a stop on the route, not abandoning it.
  */
+export function selectSubject(state: GraphState, node: string | null): GraphState {
+    if (node === null) {
+        return { ...state, node: null, view: state.view === "FOCUS" ? "WORLD" : state.view };
+    }
+    return {
+        ...state,
+        node,
+        view: state.view === "PATH" ? "PATH" : "FOCUS",
+    };
+}
+
+/** Select a constellation. Same rule: the renderer is not involved. */
+export function selectRegion(state: GraphState, region: number | null): GraphState {
+    return { ...state, region, node: region === null ? state.node : null };
+}
+
 export type Capability = "FULL_3D" | "REDUCED_3D" | "FLAT";
 
-export function defaultModeFor(capability: Capability, requested: GraphMode | null): GraphMode {
-    if (requested) return requested;
-    return capability === "FLAT" ? "2D" : "WORLD";
+/**
+ * The renderer to open with, when the reader has not said.
+ *
+ * Never consulted where the URL or a remembered preference has an answer; this is the last
+ * rung of the precedence ladder, not the first.
+ */
+export function defaultRendererFor(capability: Capability): GraphRenderer {
+    return capability === "FLAT" ? "2d" : "3d";
 }
 
-export function isSpatial(mode: GraphMode) {
-    return mode === "WORLD" || mode === "3D" || mode === "PATH";
+/**
+ * Resolve the opening state from every source, in one place.
+ *
+ * Written as a single function returning one answer, rather than as effects that each write
+ * part of the state, because effects that each write part of the state are how the previous
+ * version ended up with the URL, a classifier and a stored preference disagreeing about which
+ * view the reader was in.
+ */
+export function resolveInitialState({
+    url,
+    remembered,
+    capability,
+}: {
+    url: URLSearchParams;
+    remembered: GraphRenderer | null;
+    capability: Capability;
+}): { state: GraphState; rendererSource: "url" | "remembered" | "capability" } {
+    const parsed = parseGraphState(url);
+    if (url.has("renderer")) {
+        return { state: parsed, rendererSource: "url" };
+    }
+    if (remembered) {
+        return { state: { ...parsed, renderer: remembered }, rendererSource: "remembered" };
+    }
+    return {
+        state: { ...parsed, renderer: defaultRendererFor(capability) },
+        rendererSource: "capability",
+    };
+}
+
+/** WORLD and PATH are both drawn spatially in 3D; FOCUS is the neighbourhood view. */
+export function usesWorldGeometry(view: GraphView) {
+    return view === "WORLD" || view === "PATH";
 }

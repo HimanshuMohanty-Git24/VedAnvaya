@@ -90,11 +90,35 @@
  * four things are separate tools that happen to share a screen. A ruled row of names with the
  * current one marked says they are the contents of one thing, which is what they are.
  */
+/*
+ * Two rows, one rule.
+ *
+ * The upper row is what is being explored, the lower is how it is drawn. Only the upper one
+ * carries the rule, so the pair reads as one control with a heading rather than as two
+ * unrelated toolbars stacked.
+ */
+.va-graph-switch {
+    display: grid;
+    gap: var(--va-space-2xs);
+}
+
 .va-graph-modes {
     display: flex;
     gap: var(--va-space-lg);
     padding-top: var(--va-space-2xs);
     border-top: var(--va-border-width) solid var(--va-line-strong);
+}
+
+.va-graph-modes.is-renderer {
+    gap: var(--va-space-md);
+    padding-top: 0;
+    border-top: 0;
+}
+
+.va-graph-modes.is-renderer button {
+    font-family: var(--va-font-mono);
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
 }
 
 .va-graph-modes button {
@@ -436,4 +460,23 @@
     margin-inline-start: var(--va-space-sm);
     font-style: normal;
     color: var(--va-accent-text);
+}
+
+/* ------------------------------------------------- theme transition - */
+
+/*
+ * The canvas changes colour without the page flashing.
+ *
+ * Both renderers rewrite their own buffers on a theme change rather than being rebuilt, so
+ * there is nothing to fade; what this smooths is the surrounding paper, which would otherwise
+ * snap while the canvas takes a frame to repaint.
+ */
+.va-graph {
+    transition: background-color var(--va-duration-base) var(--va-ease-standard);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .va-graph {
+        transition: none;
+    }
 }

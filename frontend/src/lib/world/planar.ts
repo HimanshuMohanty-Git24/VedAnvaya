@@ -327,3 +327,63 @@ export function planarBounds(graph: PlanarGraph) {
     if (!Number.isFinite(minX)) return { minX: -100, minY: -100, maxX: 100, maxY: 100 };
     return { minX, minY, maxX, maxY };
 }
+
+
+/**
+ * The whole world, projected onto a plane.
+ *
+ * Not a second layout. The composed artifact already encodes what this view exists to show -
+ * which constellations there are, how large, how far apart, and which relationships bridge
+ * them - and it took minutes of offline simulation to settle. Re-deriving that in the browser
+ * would produce a worse arrangement of the same graph and spend the frame budget doing it. So
+ * x and y are taken as they are, and the reader is looking at the same world the spatial view
+ * draws, from directly above.
+ *
+ * What is drawn is a cut, not the whole: at world scale an individual verse is a speck among
+ * twenty thousand, so this keeps the most connected subjects and the edges between the ones
+ * that survive. The result is the backbone, which is what a map of a corpus is for.
+ */
+export function buildWorldProjection(
+    world: World,
+    { nodes: nodeBudget = 2600, edges: edgeBudget = 5200 }: { nodes?: number; edges?: number } = {},
+): PlanarGraph {
+    const count = world.manifest.counts.nodes;
+
+    const ranked = Array.from({ length: count }, (_, i) => i)
+        .filter((i) => world.nodeRegion[i] !== 65535)
+        .sort((a, b) => world.nodeDegree[b] - world.nodeDegree[a])
+        .slice(0, nodeBudget);
+    const index = new Map(ranked.map((id, i) => [id, i]));
+
+    const nodes: PlanarNode[] = ranked.map((id) => {
+        const degree = world.nodeDegree[id];
+        return {
+            id,
+            x: world.positions[id * 3],
+            y: world.positions[id * 3 + 1],
+            vx: 0,
+            vy: 0,
+            mass: 1,
+            radius: 1.6 + Math.cbrt(degree) * 0.85,
+            group: world.nodeGroup[id],
+            degree,
+            /* Ring is read by the painter as importance rather than as distance here: the
+               busiest subjects are drawn at full weight and named, the rest recede. */
+            ring: degree >= 60 ? 0 : degree >= 14 ? 1 : 2,
+            held: false,
+            anchorX: null,
+            anchorY: null,
+        };
+    });
+
+    const edges: PlanarEdge[] = [];
+    const total = world.manifest.counts.edges;
+    for (let i = 0; i < total && edges.length < edgeBudget; i += 1) {
+        const a = index.get(world.edgePairs[i * 2]);
+        const b = index.get(world.edgePairs[i * 2 + 1]);
+        if (a === undefined || b === undefined) continue;
+        edges.push({ a, b, edge: i, rest: 0, bridge: world.edgeBridge[i] === 1 });
+    }
+
+    return { nodes, edges, index, rootId: null };
+}

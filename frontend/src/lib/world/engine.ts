@@ -60,6 +60,14 @@ const PATH_EDGE_BUDGET = 1_200;
 export type EngineEvents = {
     onHover?: (node: number | null) => void;
     onSelect?: (node: number | null) => void;
+    /**
+     * The renderer has genuinely stopped working.
+     *
+     * Raised only from a lost WebGL context - never from a slow frame. A frame-rate sample is
+     * not a failure, and treating one as a failure is how a product starts changing modes
+     * underneath a reader who is only orbiting.
+     */
+    onLost?: (detail: string) => void;
     /** Emitted about once a second with measured frame cost, for the HUD and the benchmark. */
     onStats?: (stats: EngineStats) => void;
 };
@@ -195,15 +203,15 @@ export class WorldEngine {
     private edges!: LineSegments;
     private selectionEdges!: LineSegments;
     private selectionPositions!: Float32Array;
-    private readonly accent: Color;
+    private accent: Color;
     private nodeAlpha!: Float32Array;
     private nodeColour!: Float32Array;
     private nodeSize!: Float32Array;
     private edgeAlpha!: Float32Array;
     private edgeColour!: Float32Array;
 
-    private readonly groupColours: Float32Array;
-    private readonly edgeBase: Color;
+    private groupColours: Float32Array;
+    private edgeBase: Color;
     private reducedMotion: boolean;
 
     private frame = 0;
@@ -225,6 +233,8 @@ export class WorldEngine {
     private lastStats = 0;
     private drawnEdges = 0;
     private edgeBudgetOverride: number | null = null;
+    private paused = false;
+    private readonly onContextLost: (event: Event) => void;
 
     /** Set while a scripted camera move is running; any user input clears it. */
     private flight: {
@@ -295,6 +305,14 @@ export class WorldEngine {
         this.controls.addEventListener("change", () => {
             this.pickDirty = true;
         });
+
+        this.onContextLost = (event: Event) => {
+            event.preventDefault();
+            this.disposed = true;
+            cancelAnimationFrame(this.frame);
+            this.events.onLost?.("the graphics context was lost");
+        };
+        options.canvas.addEventListener("webglcontextlost", this.onContextLost);
 
         this.buildEdges();
         this.buildSelectionEdges();
@@ -558,6 +576,67 @@ export class WorldEngine {
         this.drawnEdges = drawn;
     }
 
+    /**
+     * Re-read the palette after a theme change.
+     *
+     * Colours are baked into vertex attributes and into the clear colour, which is the right
+     * thing for a scene drawn thirty-five thousand times a second and the wrong thing for a
+     * scene that has to change theme. Before this the engine read its tokens once at mount
+     * and never again, so switching to dark left a full-viewport ivory rectangle sitting
+     * inside a carbon page with the DOM labels above it correctly re-themed - the canvas and
+     * the page visibly disagreeing.
+     *
+     * Rewriting the buffers is cheap and happens on a human action, not on a frame: one pass
+     * over the node colours, one over the edge colours, and two flags.
+     */
+    setPalette(palette: {
+        groupColours: Float32Array;
+        background: Color;
+        edgeColour: Color;
+        accentColour: Color;
+    }) {
+        this.groupColours = palette.groupColours;
+        this.edgeBase = palette.edgeColour;
+        this.accent = palette.accentColour;
+
+        this.renderer.setClearColor(palette.background, 1);
+        this.scene.background = palette.background;
+
+        const { nodeGroup, manifest } = this.world;
+        for (let i = 0; i < manifest.counts.nodes; i += 1) {
+            const group = nodeGroup[i];
+            this.nodeColour[i * 3] = this.groupColours[group * 3];
+            this.nodeColour[i * 3 + 1] = this.groupColours[group * 3 + 1];
+            this.nodeColour[i * 3 + 2] = this.groupColours[group * 3 + 2];
+        }
+        for (let i = 0; i < manifest.counts.edges; i += 1) {
+            for (let v = 0; v < 2; v += 1) {
+                this.edgeColour[i * 6 + v * 3] = this.edgeBase.r;
+                this.edgeColour[i * 6 + v * 3 + 1] = this.edgeBase.g;
+                this.edgeColour[i * 6 + v * 3 + 2] = this.edgeBase.b;
+            }
+        }
+        (this.selectionEdges.material as LineBasicMaterial).color.copy(this.accent);
+        (this.nodes.geometry.getAttribute("aColour") as BufferAttribute).needsUpdate = true;
+        (this.edges.geometry.getAttribute("aColour") as BufferAttribute).needsUpdate = true;
+    }
+
+    /**
+     * Stop drawing while this renderer is not the visible one.
+     *
+     * The spatial stage stays mounted across a renderer switch, because tearing down a WebGL
+     * context would drop the camera, the buffers and a two-megabyte artifact with it. Staying
+     * mounted is not the same as staying busy, though: leaving the loop running cost the
+     * planar view a third of its frame rate on a laptop and rather more on a phone, since two
+     * renderers were competing for one budget to draw one canvas.
+     *
+     * The loop keeps its rAF so that resuming is immediate; it simply does no work.
+     */
+    setPaused(paused: boolean) {
+        this.paused = paused;
+        if (!paused) this.pickDirty = true;
+    }
+
     setMode(mode: WorldMode) {
         this.mode = mode;
         this.applySelection();
@@ -791,6 +870,7 @@ export class WorldEngine {
         const loop = () => {
             if (this.disposed) return;
             this.frame = requestAnimationFrame(loop);
+            if (this.paused) return;
             const began = performance.now();
             this.tickFlight(began);
             this.controls.update();
@@ -885,6 +965,7 @@ export class WorldEngine {
     dispose() {
         this.disposed = true;
         cancelAnimationFrame(this.frame);
+        this.renderer.domElement.removeEventListener("webglcontextlost", this.onContextLost);
         this.controls.dispose();
         this.nodes.geometry.dispose();
         (this.nodes.material as ShaderMaterial).dispose();

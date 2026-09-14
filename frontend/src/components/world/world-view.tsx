@@ -10,6 +10,7 @@ import {
     type WorldLabels as WorldLabelData,
 } from "@/lib/world/artifact";
 import { WorldEngine, type EngineStats } from "@/lib/world/engine";
+import { useGraphPalette } from "@/lib/world/palette";
 import { WorldLabels } from "./world-labels";
 
 /**
@@ -20,46 +21,6 @@ import { WorldLabels } from "./world-labels";
  * reconciliation, and a re-render never rebuilds a buffer. That separation is the reason this
  * is an imperative class behind a thin component rather than a scene expressed as JSX.
  */
-
-/**
- * Semantic colour, read once from the token layer.
- *
- * There were two semantic colour tables in this project. `GROUP_STYLE` in `graph-canvas.tsx`
- * carried a hard-coded light and dark hex for each of eleven groups, and `--va-group-*` in
- * `theme.css` declared a fill and a text colour for ten of the same names, theme-aware. They
- * had drifted. Reading the computed value of the token here leaves the token layer as the
- * only place a group's colour is decided, which also means the world follows a theme change
- * without a second table having to be remembered.
- */
-function readGroupColours(groups: string[]): Float32Array {
-    const out = new Float32Array(groups.length * 3);
-    const probe = document.createElement("span");
-    probe.style.display = "none";
-    document.body.appendChild(probe);
-    const colour = new Color();
-    for (let i = 0; i < groups.length; i += 1) {
-        probe.style.color = `var(--va-group-${groups[i]}-fill)`;
-        const resolved = getComputedStyle(probe).color;
-        // `other` has no token by design: it is the bucket for a type the map does not know,
-        // and giving it a colour of its own would dress an unknown as a category.
-        colour.set(resolved && resolved !== "rgb(0, 0, 0)" ? resolved : "#8c9490");
-        out[i * 3] = colour.r;
-        out[i * 3 + 1] = colour.g;
-        out[i * 3 + 2] = colour.b;
-    }
-    probe.remove();
-    return out;
-}
-
-function readToken(name: string, fallback: string) {
-    const probe = document.createElement("span");
-    probe.style.display = "none";
-    probe.style.color = `var(${name})`;
-    document.body.appendChild(probe);
-    const value = getComputedStyle(probe).color;
-    probe.remove();
-    return new Color(value || fallback);
-}
 
 export type WorldSelection = {
     index: number;
@@ -76,6 +37,8 @@ export function WorldView({
     onReady,
     initialNodeId,
     pathNodes,
+    onRendererLost,
+    paused = false,
 }: {
     onSelect?: (selection: WorldSelection | null) => void;
     /** Called once the geometry, the labels and the engine are all available. */
@@ -83,6 +46,10 @@ export function WorldView({
     initialNodeId?: string | null;
     /** Node indices along a traced route, emphasised and framed together. */
     pathNodes?: number[];
+    /** Raised only on a real renderer failure, never on a slow frame. */
+    onRendererLost?: (detail: string) => void;
+    /** True while another renderer is the visible one. The scene is kept, not drawn. */
+    paused?: boolean;
 }) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const engineRef = useRef<WorldEngine | null>(null);
@@ -103,6 +70,15 @@ export function WorldView({
     const [selected, setSelected] = useState<number | null>(null);
     const [neighbours, setNeighbours] = useState<number[]>([]);
     const [labelsReady, setLabelsReady] = useState(0);
+    const palette = useGraphPalette();
+    /* The engine is built once, so the newest palette and failure handler travel through refs
+       rather than through the construction effect's dependency list. */
+    const paletteRef = useRef(palette);
+    const lostRef = useRef(onRendererLost);
+    useEffect(() => {
+        paletteRef.current = palette;
+        lostRef.current = onRendererLost;
+    });
 
     const describe = useCallback((index: number): WorldSelection | null => {
         const world = worldRef.current;
@@ -131,6 +107,8 @@ export function WorldView({
         void (async () => {
             try {
                 const world = await loadWorld(controller.signal);
+                const initial = paletteRef.current;
+                if (!initial) return;
                 if (controller.signal.aborted) return;
                 worldRef.current = world;
                 setWorldData(world);
@@ -138,12 +116,13 @@ export function WorldView({
                 engine = new WorldEngine({
                     canvas,
                     world,
-                    groupColours: readGroupColours(world.manifest.groups),
-                    background: readToken("--va-surface-page", "#f4f0e7"),
-                    edgeColour: readToken("--va-line-strong", "#b9c2bd"),
-                    accentColour: readToken("--va-accent-base", "#bd4f32"),
+                    groupColours: initial.groups,
+                    background: new Color(initial.page),
+                    edgeColour: new Color(initial.line),
+                    accentColour: new Color(initial.accent),
                     reducedMotion: reduced.matches,
                     events: {
+                        onLost: (detail) => lostRef.current?.(detail),
                         onHover: setHovered,
                         onSelect: (index) => {
                             setSelected(index);
@@ -210,7 +189,23 @@ export function WorldView({
         // Mounted once. Data and handlers travel through refs, not through the dependency
         // list, because re-creating a WebGL context on a prop change is not a thing to do.
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [palette !== null]);
+
+    useEffect(() => {
+        engineRef.current?.setPaused(paused);
+    }, [paused]);
+
+    /* A theme change rewrites the buffers rather than rebuilding the scene. Recreating the
+       renderer would drop the camera, the selection and a two-megabyte artifact along with it. */
+    useEffect(() => {
+        if (!palette) return;
+        engineRef.current?.setPalette({
+            groupColours: palette.groups,
+            background: new Color(palette.page),
+            edgeColour: new Color(palette.line),
+            accentColour: new Color(palette.accent),
+        });
+    }, [palette]);
 
     /* A traced route takes over the view: the nodes along it are lifted, everything else
        recedes, and the camera frames the whole run rather than any one end of it. */

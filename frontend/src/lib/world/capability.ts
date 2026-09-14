@@ -157,20 +157,27 @@ export function watchFrameHealth(
     };
 }
 
-const STORAGE_KEY = "vedanvaya.graph.mode";
+const STORAGE_KEY = "vedanvaya.graph.renderer";
 
-/** The reader's last explicit choice, which always outranks anything measured. */
-export function rememberMode(mode: string) {
+/**
+ * The reader's last explicit renderer choice.
+ *
+ * Only the renderer is remembered, never the view. Which subject someone was looking at last
+ * time is not a preference, and restoring it would be the product deciding where a new visit
+ * begins; how they prefer the graph drawn is exactly a preference.
+ */
+export function rememberRenderer(renderer: "3d" | "2d") {
     try {
-        window.localStorage.setItem(STORAGE_KEY, mode);
+        window.localStorage.setItem(STORAGE_KEY, renderer);
     } catch {
         // Private browsing, or storage disabled. Not remembering is not an error.
     }
 }
 
-export function recallMode(): string | null {
+export function recallRenderer(): "3d" | "2d" | null {
     try {
-        return window.localStorage.getItem(STORAGE_KEY);
+        const value = window.localStorage.getItem(STORAGE_KEY);
+        return value === "3d" || value === "2d" ? value : null;
     } catch {
         return null;
     }

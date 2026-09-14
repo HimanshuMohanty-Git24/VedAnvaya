@@ -2,6 +2,8 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { World, WorldLabels } from "@/lib/world/artifact";
+import { GROUP_NAMES, useGraphPalette, type GraphPalette } from "@/lib/world/palette";
+import { buildWorldProjection } from "@/lib/world/planar";
 import {
     buildNeighbourhood,
     isAtRest,
@@ -21,67 +23,48 @@ import {
  * impressive to describe and worse to read.
  */
 
-const GROUP_TOKENS = [
-    "deity",
-    "unresolved-deity",
-    "passage",
-    "person",
-    "idea",
-    "rite",
-    "thing",
-    "wording",
-    "derived",
-    "record",
-    "other",
-];
-
-type Palette = {
-    groups: string[];
-    ink: string;
-    line: string;
-    faint: string;
-    accent: string;
-    paper: string;
-};
-
-function readPalette(): Palette {
-    const probe = document.createElement("span");
-    probe.style.display = "none";
-    document.body.appendChild(probe);
-    const read = (token: string, fallback: string) => {
-        probe.style.color = `var(${token})`;
-        return getComputedStyle(probe).color || fallback;
-    };
-    const palette: Palette = {
-        groups: GROUP_TOKENS.map((group) => read(`--va-group-${group}-fill`, "#8c9490")),
-        ink: read("--va-text-primary", "#171815"),
-        line: read("--va-line-strong", "#b9c2bd"),
-        faint: read("--va-text-tertiary", "#6b7169"),
-        accent: read("--va-accent-base", "#bd4f32"),
-        paper: read("--va-surface-page", "#f4f0e7"),
-    };
-    probe.remove();
-    return palette;
-}
-
 export type PlanarSelection = { index: number; node: number };
 
 export function PlanarView({
     world,
     labels,
     root,
+    scope,
     onSelect,
     onInspectEdge,
 }: {
     world: World;
     labels: WorldLabels | null;
     root: number | null;
+    /**
+     * What this canvas is drawing.
+     *
+     * "world" projects the whole composed corpus onto a plane; "focus" builds a live
+     * neighbourhood around one subject. They share this component because they share a visual
+     * language and an interaction model, and because a reader moving between them should feel
+     * the same diagram deepening rather than two different tools.
+     */
+    scope: "world" | "focus";
     onSelect: (node: number | null) => void;
     onInspectEdge: (edge: number | null) => void;
 }) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const graphRef = useRef<PlanarGraph | null>(null);
-    const paletteRef = useRef<Palette | null>(null);
+    /*
+     * The palette is a subscription, not a snapshot.
+     *
+     * Read once at mount, this canvas kept drawing carbon ink and a 3.5-pixel ivory halo
+     * around every label after a switch to dark - the halo being the paper colour, stroked
+     * behind text so it stays legible over a dense region. On a carbon page that is a glowing
+     * outline around every name, which is the precise look this product is built to avoid.
+     */
+    const palette = useGraphPalette();
+    /* The paint function reads this from inside the frame loop, which is outside React, so
+       the current value is mirrored into a ref - in an effect, not during render. */
+    const paletteRef = useRef<GraphPalette | null>(null);
+    useEffect(() => {
+        paletteRef.current = palette;
+    }, [palette]);
     const viewRef = useRef({ x: 0, y: 0, scale: 1, vx: 0, vy: 0 });
     const dragRef = useRef<{
         kind: "node" | "canvas";
@@ -117,6 +100,23 @@ export function PlanarView({
     }, []);
 
     useEffect(() => {
+        if (scope === "world") {
+            /*
+             * The world, projected rather than re-simulated.
+             *
+             * The composed layout already encodes everything this view is for - which
+             * constellations there are, how big, how far apart, which edges bridge them - and
+             * it took minutes to settle. Re-running a simulation in the browser would produce
+             * a worse arrangement of the same graph and take the frame budget to do it. So the
+             * plane is a projection of the existing x and y, and the reader is looking at the
+             * same world the spatial view shows, from directly above it.
+             */
+            graphRef.current = buildWorldProjection(world);
+            // Static: nothing to settle, so the simulation never starts.
+            sleepingRef.current = true;
+            fit();
+            return;
+        }
         if (root === null) {
             graphRef.current = null;
             return;
@@ -127,7 +127,7 @@ export function PlanarView({
         // the diagram arrives settling rather than arriving scrambled.
         for (let i = 0; i < 60; i += 1) stepPlanar(graphRef.current);
         fit();
-    }, [world, root, fit]);
+    }, [world, root, scope, fit]);
 
     /* ------------------------------------------------------------- paint - */
 
@@ -196,7 +196,7 @@ export function PlanarView({
             const x = toScreenX(node.x);
             const y = toScreenY(node.y);
             const r = node.radius * Math.min(1.6, Math.max(0.7, view.scale));
-            const colour = palette.groups[node.group] ?? palette.faint;
+            const colour = palette.groupCss[node.group] ?? palette.inkSoft;
 
             context.beginPath();
             /*
@@ -208,7 +208,7 @@ export function PlanarView({
              * passages are the thing you leave the graph to go and read, and there are twenty
              * thousand of them.
              */
-            if (GROUP_TOKENS[node.group] === "passage") {
+            if (GROUP_NAMES[node.group] === "passage") {
                 context.moveTo(x, y - r);
                 context.lineTo(x + r, y);
                 context.lineTo(x, y + r);
@@ -244,13 +244,13 @@ export function PlanarView({
                 context.font = strong
                     ? '500 14px "Charis SIL", Georgia, serif'
                     : '400 11.5px "Charis SIL", Georgia, serif';
-                context.fillStyle = strong ? palette.ink : palette.faint;
+                context.fillStyle = strong ? palette.ink : palette.inkSoft;
                 context.textBaseline = "middle";
                 const x = toScreenX(node.x) + node.radius + 7;
                 const y = toScreenY(node.y);
                 // Paper drawn under the letterforms keeps names legible over dense regions
                 // without a box or a shadow behind each one.
-                context.strokeStyle = palette.paper;
+                context.strokeStyle = palette.page;
                 context.lineWidth = 3.5;
                 context.lineJoin = "round";
                 context.strokeText(text, x, y);
@@ -262,7 +262,6 @@ export function PlanarView({
     /* -------------------------------------------------------------- loop - */
 
     useEffect(() => {
-        paletteRef.current = readPalette();
         reducedRef.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
         const loop = () => {
@@ -276,7 +275,7 @@ export function PlanarView({
                  * again until something disturbs it. A diagram nobody is touching costs
                  * nothing and, more importantly, holds perfectly still while it is being read.
                  */
-                if (!sleepingRef.current) {
+                if (scope === "focus" && !sleepingRef.current) {
                     const energy = stepPlanar(graph);
                     if (isAtRest(energy) && !dragRef.current) sleepingRef.current = true;
                 }
@@ -294,7 +293,13 @@ export function PlanarView({
         };
         frameRef.current = requestAnimationFrame(loop);
         return () => cancelAnimationFrame(frameRef.current);
-    }, [draw]);
+    }, [draw, scope]);
+
+    /* A sleeping graph still has to repaint when the theme changes: the loop is running but
+       the simulation is not, and nothing else would mark the canvas dirty. */
+    useEffect(() => {
+        if (palette) draw();
+    }, [palette, draw]);
 
     /* ---------------------------------------------------------- pointers - */
 
@@ -315,13 +320,17 @@ export function PlanarView({
         event.currentTarget.setPointerCapture(event.pointerId);
         const { x, y, screenX, screenY } = toGraph(event);
         const hit = pickPlanar(graph, x, y);
-        if (hit !== null) {
+        /* In the world projection the positions are the artifact's, so a node cannot be
+           dragged: moving one would claim the arrangement is live when it is precomputed, and
+           the next reload would silently put it back. Panning still works. */
+        const grabbable = scope === "focus" && hit !== null;
+        if (grabbable && hit !== null) {
             graph.nodes[hit].held = true;
             sleepingRef.current = false;
         }
         dragRef.current = {
-            kind: hit === null ? "canvas" : "node",
-            node: hit,
+            kind: grabbable ? "node" : "canvas",
+            node: grabbable ? hit : null,
             lastX: screenX,
             lastY: screenY,
             moved: false,
@@ -377,8 +386,15 @@ export function PlanarView({
             // A release with no movement is a click, not a throw.
             if (!drag.moved) onSelect(graph.nodes[drag.node].id);
         } else if (!drag.moved) {
-            onSelect(null);
-            onInspectEdge(null);
+            /* A tap that moved nothing. In the world projection nodes are not draggable, so a
+               tap on one still has to select it; on empty canvas it clears. */
+            const { x, y } = toGraph(event);
+            const hit = pickPlanar(graph, x, y);
+            if (hit !== null) onSelect(graph.nodes[hit].id);
+            else {
+                onSelect(null);
+                onInspectEdge(null);
+            }
         }
     };
 
@@ -414,7 +430,7 @@ export function PlanarView({
                     {hoverLabel}
                 </p>
             )}
-            {root === null && (
+            {scope === "focus" && root === null && (
                 <p className="va-planar-empty">
                     Choose a subject to pull its connections apart. Search above, or open the
                     world to find one spatially.

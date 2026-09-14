@@ -47,15 +47,20 @@ const IN = resolve(ROOT, args.get("in") ?? ".world/world.raw.json");
 const CONSTELLATIONS = resolve(ROOT, args.get("constellations") ?? ".world/constellations.json");
 /** A community has to reach this size before it is drawn as a region of its own. */
 const REGION_MIN = Number(args.get("region-min") ?? 24);
-/**
- * One axis is compressed.
+/*
+ * There is no axis compression, and there was.
  *
- * A force layout in three dimensions fills a sphere, and a sphere seen from outside is a disc
- * from every angle. Compressing one axis gives the world a plane it is arranged on and a
- * thickness it is arranged through, so orbiting changes the silhouette and therefore reveals
- * something. It is the same reason a galaxy is legible where a globular cluster is not.
+ * A previous build multiplied every z by 0.42, on the theory that a sphere seen from outside
+ * is a disc from every angle and that a plane with thickness would read better. Measured, the
+ * result was a pancake: attached extents of 1.000 : 0.879 : 0.345, and sixteen of thirty-three
+ * constellation centres sitting closer to z=0 than their own radius. It did not read as depth,
+ * it read as a squashed shell, and orbiting it revealed less rather than more.
+ *
+ * The multiplier also reached somewhere subtle. Region radii were measured in the compressed
+ * metric, so the spacing floor between regions was computed from a distance that was not the
+ * one they would be drawn at - removing the compression from positions alone would have left
+ * regions under-spaced and overlapping through z. It is gone from all five places at once.
  */
-const FLATTEN = 0.42;
 
 const GROUPS = [
     "deity",
@@ -234,7 +239,7 @@ for (let r = 0; r < regionIds.length; r += 1) {
        is: the 92nd percentile, so one escaped member does not reserve empty space for the
        whole arrangement. */
     const distances = localNodes
-        .map((n) => Math.hypot(n.x, n.y, n.z * FLATTEN))
+        .map((n) => Math.hypot(n.x, n.y, n.z))
         .sort((a, b) => a - b);
     const radius = distances[Math.min(distances.length - 1, Math.floor(distances.length * 0.92))];
     radii.push(Math.max(radius, 40));
@@ -300,7 +305,6 @@ const regionSim = forceSimulation(regionNodes, 3)
     .force("centre", forceCenter(0, 0, 0).strength(0.008))
     .stop();
 for (let i = 0; i < 900; i += 1) regionSim.tick();
-for (const region of regionNodes) region.z *= FLATTEN;
 
 /* Translate each interior into its region's place. */
 for (let r = 0; r < regionIds.length; r += 1) {
@@ -308,7 +312,7 @@ for (let r = 0; r < regionIds.length; r += 1) {
     for (const point of localPositions[r]) {
         positions3[point.node * 3] = centre.x + point.x;
         positions3[point.node * 3 + 1] = centre.y + point.y;
-        positions3[point.node * 3 + 2] = centre.z + point.z * FLATTEN;
+        positions3[point.node * 3 + 2] = centre.z + point.z;
     }
 }
 
@@ -338,7 +342,7 @@ for (let i = 0; i < marginalPlaced.length; i += 1) {
     const id = marginalPlaced[i];
     positions3[id * 3] = shell * Math.sin(phi) * Math.cos(theta);
     positions3[id * 3 + 1] = shell * Math.sin(phi) * Math.sin(theta);
-    positions3[id * 3 + 2] = shell * Math.cos(phi) * FLATTEN;
+    positions3[id * 3 + 2] = shell * Math.cos(phi);
 }
 
 /* ------------------------------------------------------------- normalise - */

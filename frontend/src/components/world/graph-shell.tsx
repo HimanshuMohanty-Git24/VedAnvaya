@@ -1,38 +1,28 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
 import { encoded } from "@/lib/api";
 import { entityHref } from "@/lib/knowledge";
 import type { World, WorldLabels } from "@/lib/world/artifact";
-import { probeCapability, recallMode, rememberMode } from "@/lib/world/capability";
 import type { WorldEngine } from "@/lib/world/engine";
-import {
-    GRAPH_MODES,
-    MODE_COPY,
-    graphStateToQuery,
-    parseGraphState,
-    switchMode,
-    type GraphMode,
-} from "@/lib/world/modes";
+import { useGraphState } from "@/lib/world/graph-state";
+import { RENDERERS, RENDERER_COPY, VIEWS, VIEW_COPY } from "@/lib/world/modes";
 import { PathTrace } from "./path-trace";
 import { PlanarView } from "./planar-view";
 import { WorldView, type WorldSelection } from "./world-view";
 
 /**
- * One graph, four ways of looking at it.
+ * One graph, on two axes.
  *
- * This replaces two disconnected things: a 2D explorer at `/graph` that the product linked to,
- * and a spatial world at `/graph/world` that nothing linked to. Whichever of those was better
- * did not matter, because a reader only ever saw one of them.
+ * What the reader is exploring - the world, one subject, a route between two - and how it is
+ * drawn. They were one control and one state field, and that conflation was a release
+ * blocker: a URL written while looking at the world read back as a request for a different
+ * renderer, so selecting anything moved the reader somewhere they had not asked to go.
  *
- * The modes here are views over one piece of state. Switching from the world to the planar
- * diagram keeps the subject you were looking at; entering path tracing offers it as a starting
- * point; every one of them writes to the same URL, so any view of the graph can be sent to
- * someone. The chrome is a thin index line rather than a tab bar, and the panel only exists
- * once something is selected: when a page is mostly a map, everything that is not the map has
- * to earn its space.
+ * All state now comes from `useGraphState`, which owns the precedence between the URL, a
+ * remembered preference and what the device can draw, and resolves it once. Nothing in this
+ * component writes to the URL directly, and there is no path from a selection to a renderer.
  */
 
 const GROUP_LABEL: Record<string, string> = {
@@ -59,14 +49,8 @@ function fold(value: string) {
 type Hit = { index: number; label: string; group: string };
 
 export function GraphShell() {
-    const router = useRouter();
-    const pathname = usePathname();
-    const searchParams = useSearchParams();
-
-    const state = useMemo(
-        () => parseGraphState(new URLSearchParams(searchParams.toString())),
-        [searchParams],
-    );
+    const graph = useGraphState();
+    const { state } = graph;
 
     const [world, setWorld] = useState<World | null>(null);
     const [labels, setLabels] = useState<WorldLabels | null>(null);
@@ -74,79 +58,9 @@ export function GraphShell() {
     const [selection, setSelection] = useState<WorldSelection | null>(null);
     const [query, setQuery] = useState(state.query ?? "");
     const [pathNodes, setPathNodes] = useState<number[]>([]);
-    const [notice, setNotice] = useState<string | null>(null);
     const [hintDismissed, setHintDismissed] = useState(false);
     const deferred = useDeferredValue(query);
     const appliedDeepLink = useRef(false);
-
-    /* -------------------------------------------------------- capability - */
-
-    useEffect(() => {
-        /*
-         * The probe runs in a microtask rather than in the effect body.
-         *
-         * It writes the degraded-mode notice, and a synchronous write inside an effect
-         * cascades a second render before the first has painted. Deferring it by a tick also
-         * means the canvas gets to start before the page is asked to re-render, which is the
-         * order that matters on the device this branch is for.
-         */
-        const timer = window.setTimeout(() => {
-        const report = probeCapability();
-        if (report.capability === "FLAT" && state.mode !== "2D") {
-            /*
-             * Degraded, and said out loud.
-             *
-             * Silently serving a different experience is how a product ends up with users who
-             * think it is worse than it is. The reader is told what happened, why, and is
-             * given the way back.
-             */
-            setNotice(
-                `Showing the planar view: ${report.reason}. You can still try the spatial view.`,
-            );
-            router.replace(
-                `${pathname}${graphStateToQuery(switchMode(state, "2D"))}`,
-                { scroll: false },
-            );
-            return;
-        }
-        // An explicit previous choice outranks anything measured, but only when the URL has
-        // not asked for something specific.
-        if (!searchParams.has("mode") && !searchParams.has("node")) {
-            const remembered = recallMode();
-            if (remembered && remembered !== state.mode) {
-                const mode = (GRAPH_MODES as readonly string[]).includes(remembered)
-                    ? (remembered as GraphMode)
-                    : null;
-                if (mode) {
-                    router.replace(`${pathname}${graphStateToQuery({ ...state, mode })}`, {
-                        scroll: false,
-                    });
-                }
-            }
-        }
-        }, 0);
-        return () => window.clearTimeout(timer);
-        // Runs once on mount: this is a measurement of the device, not of the state.
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    /* ------------------------------------------------------------- state - */
-
-    const push = useCallback(
-        (next: Parameters<typeof graphStateToQuery>[0]) => {
-            router.replace(`${pathname}${graphStateToQuery(next)}`, { scroll: false });
-        },
-        [router, pathname],
-    );
-
-    const setMode = useCallback(
-        (mode: GraphMode) => {
-            rememberMode(mode);
-            setNotice(null);
-            push(switchMode(state, mode));
-        },
-        [push, state],
-    );
 
     const indexOfId = useCallback(
         (id: string | null) => {
@@ -157,10 +71,17 @@ export function GraphShell() {
         [labels],
     );
 
+    /*
+     * Selecting moves the camera and deepens the view.
+     *
+     * It cannot touch the renderer, and that is structural rather than careful: there is no
+     * call to `setRenderer` reachable from here. The regression tests assert the same thing
+     * from the state model's side.
+     */
     const selectNode = useCallback(
         (node: number | null) => {
             const id = node !== null && labels ? labels.ids[node] : null;
-            push({ ...state, node: id });
+            graph.select(id);
             if (node !== null && engine) {
                 engine.select(node);
                 engine.focusNode(node);
@@ -168,7 +89,7 @@ export function GraphShell() {
                 engine.select(null);
             }
         },
-        [engine, labels, push, state],
+        [engine, labels, graph],
     );
 
     const onReady = useCallback(
@@ -180,8 +101,7 @@ export function GraphShell() {
         [],
     );
 
-    /* A deep link is applied once, after the world is available, and never again: re-applying
-       it would fight the reader every time they selected something else. */
+    /* A deep link is applied once. Re-applying it would fight the reader on every selection. */
     useEffect(() => {
         if (appliedDeepLink.current || !engine || !labels || !state.node) return;
         const index = labels.ids.indexOf(state.node);
@@ -235,30 +155,39 @@ export function GraphShell() {
         return world.manifest.constellations[region] ?? null;
     }, [selection, world]);
 
-    const spatial = state.mode === "WORLD" || state.mode === "3D" || state.mode === "PATH";
+    /* The renderer decides which stage is shown; the view decides what it is showing. */
+    const spatial = state.renderer === "3d";
     const selectedIndex = indexOfId(state.node);
 
     return (
-        <div className="va-graph" data-mode={state.mode}>
-            {/* The spatial engine is mounted once and kept mounted across mode changes. A
-                canvas that unmounts loses its WebGL context, its buffers and its camera, and
-                switching modes would mean a blank flash and a second of reloading. */}
+        <div className="va-graph" data-renderer={state.renderer} data-view={state.view}>
+            {/* The spatial engine is mounted once and kept mounted across every change. A
+                canvas that unmounts loses its context, its buffers and its camera, and a
+                renderer switch would mean a blank flash and a reload of a 2 MB artifact. */}
             <div className="va-graph-stage" data-active={spatial}>
                 <WorldView
                     initialNodeId={state.node}
                     onReady={onReady}
+                    onRendererLost={(detail) =>
+                        graph.reportRendererFailure("context-lost", detail)
+                    }
                     onSelect={setSelection}
                     pathNodes={pathNodes}
+                    paused={!spatial}
                 />
             </div>
 
-            {state.mode === "2D" && world && (
+            {state.renderer === "2d" && world && (
                 <div className="va-graph-stage is-planar" data-active>
+                    {/* The view decides what the planar canvas draws; the renderer only
+                        decided that it is the one drawing. World and Focus are the same two
+                        semantic levels here as in the spatial view. */}
                     <PlanarView
                         labels={labels}
                         onInspectEdge={() => {}}
                         onSelect={selectNode}
-                        root={selectedIndex ?? world.manifest.hubs[0] ?? null}
+                        root={selectedIndex}
+                        scope={state.view === "FOCUS" && selectedIndex !== null ? "focus" : "world"}
                         world={world}
                     />
                 </div>
@@ -277,27 +206,43 @@ export function GraphShell() {
                 </header>
 
                 {/*
-                 * The mode switch as an index line, not a tab bar.
+                 * Two rows, because there are two questions.
                  *
-                 * Four capitalised pills across the top of a map is the shape of a dashboard.
-                 * Set as a ruled row of names with the current one marked, it reads as the
-                 * contents of one thing rather than four tools sharing a screen.
+                 * The previous version put World, 3D, 2D and Path on one line, which said the
+                 * four were alternatives - and the state behind it believed that too, which is
+                 * what let a selection change the renderer. Separating them on screen is the
+                 * same correction as separating them in the model.
                  */}
-                <nav aria-label="How to look at the graph" className="va-graph-modes">
-                    {GRAPH_MODES.map((mode) => (
-                        <button
-                            aria-current={state.mode === mode ? "true" : undefined}
-                            key={mode}
-                            onClick={() => setMode(mode)}
-                            title={MODE_COPY[mode].note}
-                            type="button"
-                        >
-                            {MODE_COPY[mode].label}
-                        </button>
-                    ))}
-                </nav>
+                <div className="va-graph-switch">
+                    <nav aria-label="What to explore" className="va-graph-modes">
+                        {VIEWS.map((view) => (
+                            <button
+                                aria-current={state.view === view ? "true" : undefined}
+                                key={view}
+                                onClick={() => graph.setView(view)}
+                                title={VIEW_COPY[view].note}
+                                type="button"
+                            >
+                                {VIEW_COPY[view].label}
+                            </button>
+                        ))}
+                    </nav>
+                    <nav aria-label="How it is drawn" className="va-graph-modes is-renderer">
+                        {RENDERERS.map((renderer) => (
+                            <button
+                                aria-current={state.renderer === renderer ? "true" : undefined}
+                                key={renderer}
+                                onClick={() => graph.setRenderer(renderer)}
+                                title={RENDERER_COPY[renderer].note}
+                                type="button"
+                            >
+                                {RENDERER_COPY[renderer].label}
+                            </button>
+                        ))}
+                    </nav>
+                </div>
 
-                {state.mode !== "PATH" && (
+                {state.view !== "PATH" && (
                     <form
                         className="va-world-find"
                         onSubmit={(event) => {
@@ -338,27 +283,29 @@ export function GraphShell() {
                     </form>
                 )}
 
-                {state.mode === "PATH" && world && (
+                {state.view === "PATH" && world && (
                     <PathTrace
                         from={state.from}
                         labels={labels}
-                        onEndpoints={(from, to) => push({ ...state, from, to })}
+                        onEndpoints={(from, to) => graph.setEndpoints(from, to)}
                         onPathNodes={setPathNodes}
                         to={state.to}
                         world={world}
                     />
                 )}
 
-                {notice && (
+                {/* A renderer chosen for the reader always says so and always offers the other
+                    one. Nothing about how this graph is drawn changes quietly. */}
+                {graph.fallback && (
                     <p className="va-graph-notice" role="status">
-                        {notice}{" "}
-                        <button onClick={() => setMode("3D")} type="button">
-                            Try the spatial view
+                        Drawing this flat: {graph.fallback.detail}.{" "}
+                        <button onClick={() => graph.setRenderer("3d")} type="button">
+                            Use the spatial view anyway
                         </button>
                     </p>
                 )}
 
-                {!hintDismissed && world && state.mode !== "2D" && !selection && (
+                {!hintDismissed && world && spatial && !selection && (
                     <p className="va-graph-hint">
                         Drag to orbit, scroll to move through depth, select to follow a
                         connection.
@@ -413,17 +360,13 @@ export function GraphShell() {
                                 </Link>
                             )
                         )}
-                        <button
-                            onClick={() => {
-                                rememberMode("2D");
-                                push({ ...switchMode(state, "2D"), node: selection.id });
-                            }}
-                            type="button"
-                        >
-                            Pull its connections apart
+                        {/* Changing how the graph is drawn is the reader asking for it, so it
+                            is remembered like any other explicit choice. */}
+                        <button onClick={() => graph.setRenderer(spatial ? "2d" : "3d")} type="button">
+                            {spatial ? "Pull its connections apart" : "See where it sits"}
                         </button>
                         <button
-                            onClick={() => push({ ...switchMode(state, "PATH"), from: selection.id })}
+                            onClick={() => graph.setEndpoints(selection.id, state.to)}
                             type="button"
                         >
                             Trace a path from here
