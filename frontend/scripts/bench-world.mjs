@@ -19,6 +19,7 @@
  *   node scripts/bench-world.mjs                    # against the dev server
  *   node scripts/bench-world.mjs --gpu              # ask for real hardware
  *   node scripts/bench-world.mjs --json out.json
+ *   node scripts/bench-world.mjs --labels           # the label cost curve
  */
 
 import { chromium } from "@playwright/test";
@@ -205,6 +206,100 @@ if (args.get("sweep")) {
         report.sweep.push({ budget, ...s, fps: Math.round(1000 / s.median) });
     }
     await page.evaluate(() => window.__vedaWorld?.setEdgeBudgetOverride(null));
+}
+
+/* --------------------------------------------------------- label cost - */
+
+/*
+ * What a label costs, per label, per frame.
+ *
+ * Three things this does that the figures it replaces did not. The previous comment in
+ * `edge-label-view.ts` quoted "+0.109 ms for sixteen spans, +0.292 ms for sixteen fillText
+ * calls"; nothing in this repository produces either number, and no recorded run contains them.
+ *
+ *  - **Interleaved, not sequential.** 0 / N / 0 / N within one page, so a thermal ramp or a
+ *    background tab waking up lands on both arms instead of on the second one. Two separate runs
+ *    subtracted is how a machine's warm-up gets reported as a feature's cost.
+ *  - **It records how many labels were actually placed.** A cost "at cap 16" is meaningless if
+ *    eight were placed, and at a cap of 16 on a crowded hub eight is a realistic outcome: the
+ *    collision pass refuses positions, it does not invent them. `shownLabels().length` is read
+ *    at each cap and reported beside the timing.
+ *  - **It overrides the cap rather than the data.** Selecting a different subject to change the
+ *    label count would also change the edge count, the node count and the camera distance.
+ *
+ * The per-label figure is the paired delta divided by the *placed* count, not by the cap.
+ */
+if (args.get("labels")) {
+    console.log("\nlabel cost (Focus on the most connected subject)");
+    report.labels = { arms: [], perLabelMs: null, method: "interleaved paired delta, per placed label" };
+
+    const hasHook = await page.evaluate(() => Boolean(window.__vedaLabels));
+    if (!hasHook) {
+        console.log("  no __vedaLabels hook on the page - is this build current?");
+    } else {
+        // A hub, so there is something to label. Picked by degree from the artifact itself.
+        await page.evaluate(() => {
+            const engine = window.__vedaWorld;
+            engine?.select(null);
+        });
+        await page.waitForTimeout(600);
+        const hub = await page.evaluate(() => {
+            const engine = window.__vedaWorld;
+            return engine?.world?.manifest?.hubs?.[0] ?? null;
+        });
+        if (hub !== null) await page.evaluate((n) => window.__vedaWorld?.select(n), hub);
+        // Past the camera flight and past the label pass's own settle window.
+        await page.waitForTimeout(2500);
+
+        const arm = async (cap, round) => {
+            await page.evaluate((n) => window.__vedaLabels.setCapOverride(n), cap);
+            // The assignment runs on a debounced settle, so give it one.
+            await page.waitForTimeout(700);
+            const shown = await page.evaluate(() => window.__vedaLabels.shownLabels().length);
+            const overlaps = await page.evaluate(() => window.__vedaLabels.overlaps());
+            const frames = await measureFrames(`  cap ${String(cap).padStart(2)} (round ${round}, ${shown} placed)`, 2200);
+            return { cap, round, shown, overlaps, ...frames };
+        };
+
+        for (const round of [1, 2]) {
+            for (const cap of [0, 16]) report.labels.arms.push(await arm(cap, round));
+        }
+
+        const mean = (cap) => {
+            const rows = report.labels.arms.filter((row) => row.cap === cap);
+            return rows.reduce((total, row) => total + row.median, 0) / rows.length;
+        };
+        const placed = (cap) => {
+            const rows = report.labels.arms.filter((row) => row.cap === cap);
+            return rows.reduce((total, row) => total + row.shown, 0) / rows.length;
+        };
+        const delta = mean(16) - mean(0);
+        const count = placed(16) - placed(0);
+        report.labels.perLabelMs = count > 0 ? Number((delta / count).toFixed(4)) : null;
+        console.log(
+            `  paired delta ${delta.toFixed(3)} ms over ${count} placed labels` +
+                `  =>  ${report.labels.perLabelMs} ms per label per frame`,
+        );
+
+        console.log("\n  shown against attempted, by cap");
+        report.labels.curve = [];
+        for (const cap of [2, 4, 5, 6, 10, 16, 24]) {
+            await page.evaluate((n) => window.__vedaLabels.setCapOverride(n), cap);
+            await page.waitForTimeout(700);
+            const row = await page.evaluate(() => ({
+                shown: window.__vedaLabels.shownLabels().length,
+                overlaps: window.__vedaLabels.overlaps(),
+                phrases: window.__vedaLabels.shownLabels().filter((l) => l.kind === "relation").length,
+                names: window.__vedaLabels.shownLabels().filter((l) => l.kind === "name").length,
+            }));
+            report.labels.curve.push({ cap, ...row });
+            console.log(
+                `    cap ${String(cap).padStart(2)}  shown ${String(row.shown).padStart(2)}` +
+                    `  (${row.phrases} phrases, ${row.names} names)  overlapping pairs ${row.overlaps}`,
+            );
+        }
+        await page.evaluate(() => window.__vedaLabels.setCapOverride(null));
+    }
 }
 
 /* -------------------------------------------------------------- memory - */

@@ -133,6 +133,16 @@ export function useGraphState(): GraphStateHandle {
     const [ready, setReady] = useState(false);
     /** Set once the opening state has actually been applied, not once it has been scheduled. */
     const applied = useRef(false);
+    /**
+     * Set once the opening state has been *committed*, which is later than `applied`.
+     *
+     * A separate ref rather than reusing `applied`, and not for tidiness: `applied` is set
+     * before the commit so that React's development double-invoke cannot schedule the
+     * resolution twice, so by the time `commit` runs it is already true. Asking it whether the
+     * boot has happened would always be answered yes, and the boot would be refused - which is
+     * the defect this pair of flags exists to keep apart. Two questions, two answers.
+     */
+    const booted = useRef(false);
 
     const record = useCallback((entry: GraphTransition) => {
         trace.current = [entry, ...trace.current].slice(0, TRACE_LIMIT);
@@ -158,13 +168,41 @@ export function useGraphState(): GraphStateHandle {
             let applying = next;
             let refused: string | undefined;
 
-            if (!isReaderIntent(reason) && next.view !== current.view) {
+            /*
+             * Only the reader may *change* the view. The boot may *establish* it.
+             *
+             * The distinction is not a loophole, and leaving it out was a defect that a colour
+             * test found by accident. `boot:resolve-precedence` is the one cause with no prior
+             * state to preserve: it runs once, against `DEFAULT_STATE`, and its whole job is to
+             * say what the URL, a remembered preference and the device add up to. Refusing it
+             * meant that `?view=focus&node=INDRA` resolved to FOCUS and was then forced back to
+             * WORLD before the first paint - a deep link into a subject landing on the whole
+             * corpus, which is the exact failure this file exists to prevent, reintroduced by
+             * the guard against it.
+             *
+             * Every other system cause is still refused. A lost context may change the renderer
+             * and nothing else; a history navigation is adopted in its own effect, because
+             * arriving somewhere the browser already went is not this function's business.
+             */
+            const establishing = reason === "boot:resolve-precedence" && !booted.current;
+            if (!isReaderIntent(reason) && !establishing && next.view !== current.view) {
                 refused = `${reason} tried to change the view from ${current.view} to ${next.view}`;
                 applying = { ...next, view: current.view };
             }
 
             const query = graphStateToQuery(applying);
+            /*
+             * A write that changes nothing is dropped - except the boot, which is always
+             * recorded even when it agrees with the URL it read.
+             *
+             * "The opening state was resolved and matched" and "the resolution never ran" are
+             * different facts, and a trace that cannot tell them apart is the wrong tool for the
+             * bug it was added to catch. It also makes an invariant the soak test relies on
+             * actually true: the trace holds at least the opening transition, so an assertion
+             * over it cannot pass by reading an empty array.
+             */
             if (
+                !establishing &&
                 applying.view === current.view &&
                 query === graphStateToQuery(current) &&
                 !refused
@@ -175,6 +213,7 @@ export function useGraphState(): GraphStateHandle {
             authority.current = applying;
             setRendered(applying);
             written.current = query.slice(1);
+            if (reason === "boot:resolve-precedence") booted.current = true;
             record({
                 at: Date.now(),
                 from: current.view,
