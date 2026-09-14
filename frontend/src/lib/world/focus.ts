@@ -353,12 +353,16 @@ export function expandFocusBudget(budget: number): number {
  *
  * One line per shown neighbour is not discretionary. A neighbour with no line to the subject is
  * an unattached dot in a view whose entire claim is "this is what the subject is attached to",
- * which is a worse defect than a crowded scene. So where the budget alone exceeds the cap -
- * and FOCUS_BUDGET_MAX is 200, which does - every neighbour still gets its one line and this
- * cap governs only the parallels above them. The guarantee is
- * `spokes <= max(shown.length, SPOKE_CAP)`, and the two constants were derived independently:
- * 128 from the worst measured scene at the default budgets, 200 from where expansion stops
- * being useful.
+ * which is a worse defect than a crowded scene. So where the budget alone would exceed the cap,
+ * every neighbour still gets its one line and this cap governs only the parallels above them.
+ * The guarantee is `spokes <= max(shown.length, SPOKE_CAP)`, which holds whatever the budget is.
+ *
+ * At the shipped ceiling it does not bind: `FOCUS_BUDGET_MAX` is 64, well under 128. It was 200
+ * when this was written - an earlier comment here still quoted that figure - and the lower
+ * ceiling came from the layout rather than from the line count: past 64 the slab stops holding
+ * a projected separation worth the name. The cap is kept at its measured value rather than
+ * lowered to match, because it is a statement about the worst scene this code can be asked to
+ * draw and not about the budget that happens to be configured.
  */
 export const SPOKE_CAP = 128;
 
