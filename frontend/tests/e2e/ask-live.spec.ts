@@ -6,8 +6,8 @@
  * key, which is why no other spec touches /ask.
  *
  * The question is short and cheap on purpose. What is under test is the *journey* --
- * composer, pending state, answer, status badge, citation markers, evidence drawer,
- * follow-up chips -- not the scholarship, which the 60-question benchmark measures.
+ * composer, waiting state, answer, support grade, citation markers, evidence drawer,
+ * follow-ups -- not the scholarship, which the 60-question benchmark measures.
  */
 import { expect, test } from "@playwright/test";
 
@@ -30,38 +30,48 @@ test.describe("Ask, live", () => {
         await expect(page.getByRole("heading", { name: "What it refuses to do" })).toBeVisible();
 
         // -- the composer --------------------------------------------------
-        const composer = page.getByLabel("Your research question");
+        const composer = page.getByLabel("Your question");
         await expect(composer).toBeVisible();
         await composer.fill(QUESTION);
 
-        const submit = page.getByRole("button", { name: "Ask VedAnvaya" });
+        const submit = page.getByRole("button", { name: "Ask", exact: true });
         await expect(submit).toBeEnabled();
         await submit.click();
 
-        // -- the loading state ---------------------------------------------
+        // -- the waiting state ---------------------------------------------
         // Raced against the answer rather than awaited: a fast reply is not a failure,
-        // and asserting the spinner strictly would make this flaky on a warm provider.
-        const pending = page.locator(".ask-pending");
-        const answer = page.locator(".ask-answer");
-        await expect(pending.or(answer).first()).toBeVisible({ timeout: 30_000 });
+        // and asserting the waiting state strictly would make this flaky on a warm provider.
+        const waiting = page.locator(".va-ask-waiting");
+        const answer = page.locator(".va-answer");
+        await expect(waiting.or(answer).first()).toBeVisible({ timeout: 30_000 });
+
+        /* If the waiting state is the one that appeared, it must report elapsed time rather
+           than a fabricated stage. This is the defect the phase existed to fix: the previous
+           build advanced through three phases in 2.6s and then sat on the last one for the
+           remaining hundred seconds of a median request. */
+        if (await waiting.isVisible()) {
+            await expect(page.locator(".va-ask-elapsed")).toContainText(/\d+s elapsed/);
+            await expect(page.getByRole("button", { name: /Stop waiting/i })).toBeVisible();
+        }
 
         // -- the answer ----------------------------------------------------
         await expect(answer).toBeVisible({ timeout: 150_000 });
-        const prose = page.locator(".ask-prose");
+        const prose = page.locator(".va-answer-prose");
         await expect(prose).toBeVisible();
         expect((await prose.innerText()).trim().length).toBeGreaterThan(40);
 
-        // -- KnowledgeStatus -----------------------------------------------
-        const badges = page.locator(".ask-badges");
-        await expect(badges).toBeVisible();
-        const status = (await badges.innerText()).toUpperCase();
-        expect(status).toMatch(/SUPPORTED|PARTIAL|INSUFFICIENT|NOT BUILT|NOT_BUILT/);
+        // -- the grade on the evidence -------------------------------------
+        const support = page.locator(".va-answer-support");
+        await expect(support).toBeVisible();
+        // Graded in words, not only in colour.
+        expect((await support.innerText()).toUpperCase()).toMatch(
+            /STRONG|MODERATE|LIMITED|INSUFFICIENT|NOT GRADED/,
+        );
 
         // -- a citation marker opens its evidence --------------------------
-        const markers = page.locator("button.ask-cite");
+        const markers = page.locator("button.va-cite");
         await expect(markers.first()).toBeVisible();
-        const markerCount = await markers.count();
-        expect(markerCount).toBeGreaterThan(0);
+        expect(await markers.count()).toBeGreaterThan(0);
 
         await markers.first().click();
         const drawer = page.locator(".evidence-drawer");
@@ -71,14 +81,14 @@ test.describe("Ask, live", () => {
         await expect(drawer).toBeHidden();
 
         // -- the drawer also opens from the answer's own action ------------
-        await page.locator(".ask-answer-actions button").first().click();
+        await page.locator(".va-answer-inspect").click();
         await expect(drawer).toBeVisible();
         await page.keyboard.press("Escape");
         await expect(drawer).toBeHidden();
 
         // -- follow-ups are offered ----------------------------------------
-        const related = page.locator(".ask-related");
-        await expect(related).toBeVisible();
-        expect(await related.locator("button").count()).toBeGreaterThan(0);
+        const next = page.locator(".va-answer-next");
+        await expect(next).toBeVisible();
+        expect(await next.locator("button").count()).toBeGreaterThan(0);
     });
 });

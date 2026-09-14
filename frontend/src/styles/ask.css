@@ -1,0 +1,1392 @@
+/* ================================================================== ask ===
+ *
+ * Ask VedAnvaya.
+ *
+ * The brief for this surface is mostly a list of things it must not become, because the
+ * default shape for "type a question, read a response" is so well established that reaching
+ * for it is automatic: a rounded composer, a bubble, an avatar, a row of pastel suggestion
+ * cards, three animated dots. None of that carries meaning here. There is one participant and
+ * one answer on screen at a time, so a transcript has nothing to arrange; the answer is a
+ * research response, so the hierarchy belongs to the grade on the evidence and the passages
+ * the prose was built from, and a bubble has nowhere to put either.
+ *
+ * What it is instead is the page the rest of the product already uses: a measure of prose, a
+ * ruled apparatus beside it, figures in tabular numerals, and rubric red kept for the one
+ * mark that means arrival.
+ * ========================================================================= */
+
+.va-ask-page .va-page-head h1 {
+    margin-top: var(--va-space-2xs);
+}
+
+/*
+ * The Devanagari kicker.
+ *
+ * `प्रश्न` (praśna) is the word for a question in the sense this page means: the unit of
+ * inquiry a teaching text is organised into, as in the Praśna Upaniṣad, rather than a query
+ * typed at a machine. It is set in the display Devanagari face because it is read as a word
+ * here and not used as an ornament, which is the line this product draws about script.
+ */
+.va-ask-kicker {
+    margin: 0;
+    font-family: var(--va-font-deva);
+    font-size: var(--va-text-lg);
+    line-height: 1.4;
+    color: var(--va-accent-text);
+}
+
+/* ------------------------------------------------------------- contract - */
+
+.va-ask-contract {
+    display: grid;
+    gap: var(--va-space-2xl);
+    margin-bottom: var(--va-space-3xl);
+    padding-top: var(--va-space-xl);
+    border-top: var(--va-border-width) solid var(--va-line-strong);
+}
+
+@media (min-width: 48rem) {
+    .va-ask-contract {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--va-space-4xl);
+    }
+}
+
+.va-ask-contract h2 {
+    margin: 0 0 var(--va-space-sm);
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-ask-contract p {
+    margin: 0;
+    max-width: var(--va-measure);
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-secondary);
+}
+
+/* ------------------------------------------------------------- composer - */
+
+/*
+ * A ruled field, not a rounded box.
+ *
+ * The input is the most important object on an empty Ask screen, and the way to say so is to
+ * give it the width of the page and a rule under it rather than a border around it and a pill
+ * to the right. A capsule with a circular arrow button is the single most recognisable piece
+ * of chat furniture there is.
+ */
+.va-ask-composer {
+    display: grid;
+    gap: var(--va-space-md);
+    padding-bottom: var(--va-space-xl);
+    border-bottom: var(--va-border-width) solid var(--va-line-strong);
+}
+
+.va-ask-label {
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-ask-input {
+    display: block;
+    width: 100%;
+    padding: var(--va-space-xs) 0 var(--va-space-md);
+    border: 0;
+    border-bottom: var(--va-border-width-accent) solid var(--va-line-strong);
+    border-radius: 0;
+    background: none;
+    /* The question is read back as prose, so it is set in the reading face at a size that
+       invites a sentence rather than a keyword. */
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-xl);
+    line-height: var(--va-leading-prose);
+    color: var(--va-text-primary);
+    resize: vertical;
+    transition: border-color var(--va-duration-base) var(--va-ease-standard);
+}
+
+.va-ask-input::placeholder {
+    color: var(--va-text-tertiary);
+    opacity: 1;
+}
+
+.va-ask-input:focus {
+    outline: none;
+    border-bottom-color: var(--va-accent-base);
+}
+
+/* The field carries its own focus ring on the rule, so the browser default would double it.
+   Removing it is only safe because the replacement is visible in both themes. */
+.va-ask-input:focus-visible {
+    outline: none;
+}
+
+.va-ask-input.is-over {
+    border-bottom-color: var(--va-tone-insufficient);
+}
+
+.va-ask-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+    gap: var(--va-space-lg) var(--va-space-2xl);
+}
+
+.va-ask-scopes {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    gap: var(--va-space-sm) var(--va-space-xl);
+}
+
+.va-ask-scopes label {
+    display: grid;
+    gap: var(--va-space-3xs);
+}
+
+.va-ask-scopes span {
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-ask-scopes select {
+    padding: var(--va-space-3xs) 0;
+    border: 0;
+    border-bottom: var(--va-border-width) solid var(--va-line-strong);
+    border-radius: 0;
+    background: none;
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-sm);
+    color: var(--va-text-primary);
+    cursor: pointer;
+}
+
+.va-ask-mode-note {
+    flex-basis: 100%;
+    font-size: var(--va-text-xs);
+    color: var(--va-text-tertiary);
+}
+
+.va-ask-submit {
+    display: flex;
+    align-items: baseline;
+    gap: var(--va-space-lg);
+    margin-inline-start: auto;
+}
+
+.va-ask-counter {
+    font-size: var(--va-text-xs);
+    font-variant-numeric: tabular-nums;
+    color: var(--va-text-tertiary);
+}
+
+.va-ask-counter.is-near {
+    color: var(--va-tone-partial);
+}
+
+.va-ask-counter.is-over {
+    color: var(--va-tone-insufficient);
+}
+
+/*
+ * The submit control.
+ *
+ * Rubric red, filled, square. It is the only filled object on the page, which is how it gets
+ * its weight without a shadow, a gradient or a glow.
+ */
+.va-ask-go {
+    padding: var(--va-space-xs) var(--va-space-2xl);
+    border: 0;
+    border-radius: 0;
+    background: var(--va-accent-base);
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-sm);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: 0.02em;
+    color: var(--va-text-on-accent);
+    cursor: pointer;
+    transition: var(--va-transition-colors);
+}
+
+.va-ask-go:hover:not(:disabled) {
+    background: var(--va-accent-hover);
+}
+
+.va-ask-go:disabled {
+    background: var(--va-surface-sunk);
+    color: var(--va-text-tertiary);
+    cursor: not-allowed;
+}
+
+.va-ask-submit-hint {
+    margin: 0;
+    font-size: var(--va-text-xs);
+    color: var(--va-text-tertiary);
+}
+
+.va-ask-submit-hint kbd {
+    font-family: var(--va-font-mono);
+    font-size: 0.92em;
+    color: var(--va-text-secondary);
+}
+
+.va-ask-clear,
+.va-ask-context-drop {
+    padding: 0;
+    border: 0;
+    border-bottom: var(--va-border-width) solid var(--va-line-strong);
+    background: none;
+    font: inherit;
+    color: var(--va-text-secondary);
+    cursor: pointer;
+    transition: var(--va-transition-colors);
+}
+
+.va-ask-clear:hover,
+.va-ask-context-drop:hover {
+    color: var(--va-accent-text);
+    border-bottom-color: var(--va-accent-base);
+}
+
+/* -------------------------------------------------------------- context - */
+
+/*
+ * Contextual Ask, stated rather than hidden.
+ *
+ * When a reader arrives from a verse the binding is a real change to how retrieval runs, so
+ * it is shown as a line above the field with a way out of it. Carrying it as invisible state
+ * would mean the same question typed twice could answer differently for a reason nothing on
+ * screen explained.
+ */
+.va-ask-context {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--va-space-2xs) var(--va-space-md);
+    padding-inline-start: var(--va-space-md);
+    border-inline-start: var(--va-border-width-accent) solid var(--va-accent-base);
+}
+
+.va-ask-context-kind {
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-ask-context strong {
+    font-family: var(--va-font-iast);
+    font-size: var(--va-text-md);
+    font-weight: var(--va-weight-regular);
+    color: var(--va-text-primary);
+}
+
+.va-ask-context small {
+    flex-basis: 100%;
+    font-size: var(--va-text-xs);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-tertiary);
+}
+
+/* ---------------------------------------------------- thread of inquiry - */
+
+.va-inquiry {
+    display: block;
+    width: 100%;
+    max-width: 46rem;
+    height: auto;
+    color: var(--va-line-strong);
+}
+
+.va-inquiry-ticks,
+.va-inquiry-instruments,
+.va-inquiry-line {
+    stroke: currentColor;
+}
+
+.va-inquiry-ticks {
+    opacity: 0.5;
+}
+
+.va-inquiry-instruments {
+    opacity: 0.65;
+}
+
+.va-inquiry-line {
+    stroke: var(--va-text-tertiary);
+}
+
+.va-inquiry-nodes circle {
+    fill: var(--va-text-tertiary);
+}
+
+/* The arrival. Filled, and the only red in the figure. */
+.va-inquiry-diamond {
+    fill: var(--va-accent-base);
+    opacity: 0.4;
+    transition: opacity var(--va-duration-slow) var(--va-ease-standard);
+}
+
+.va-inquiry.has-arrived .va-inquiry-diamond {
+    opacity: 1;
+}
+
+/*
+ * The shuttle.
+ *
+ * A short dash that travels the length of the thread and repeats. It is explicitly not a fill
+ * from left to right: a bar that fills is a claim about how much is left, and this request
+ * reports nothing while it runs, so any proportion would be invented. A shuttle passing along
+ * a warp says work is happening and says nothing about when it stops.
+ */
+.va-inquiry-shuttle {
+    stroke: var(--va-accent-base);
+    stroke-dasharray: 90 1200;
+    stroke-linecap: round;
+    animation: va-inquiry-pass 2.6s var(--va-ease-standard) infinite;
+}
+
+@keyframes va-inquiry-pass {
+    from {
+        stroke-dashoffset: 90;
+    }
+    to {
+        stroke-dashoffset: -1200;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .va-inquiry-shuttle {
+        animation: none;
+        stroke-dasharray: none;
+        opacity: 0.45;
+    }
+}
+
+/* -------------------------------------------------------------- openings - */
+
+.va-ask-openings {
+    margin-top: var(--va-space-3xl);
+}
+
+.va-ask-openings h2,
+.va-answer-evidence h3,
+.va-answer-caveats h3,
+.va-answer-names h3,
+.va-answer-next h3 {
+    margin: 0 0 var(--va-space-md);
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-ask-openings h2 {
+    margin-top: var(--va-space-2xl);
+}
+
+/*
+ * Openings as an index, not as a row of cards.
+ *
+ * Five suggested questions set as tiles is the clearest single tell that a page was built
+ * from a chat template. As ruled lines they read as what they are: a short list of things
+ * this build is known to be able to answer.
+ */
+.va-ask-openings ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: var(--va-border-width) solid var(--va-line-strong);
+}
+
+.va-ask-openings li {
+    border-bottom: var(--va-rule-quiet);
+}
+
+.va-ask-openings button {
+    display: block;
+    width: 100%;
+    padding: var(--va-space-sm) 0;
+    border: 0;
+    background: none;
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-md);
+    color: var(--va-text-secondary);
+    text-align: start;
+    cursor: pointer;
+    transition: var(--va-transition-colors);
+}
+
+.va-ask-openings button:hover {
+    color: var(--va-accent-text);
+}
+
+.va-ask-openings-note {
+    margin: var(--va-space-md) 0 0;
+    max-width: var(--va-measure);
+    font-size: var(--va-text-xs);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-tertiary);
+}
+
+/* --------------------------------------------------------------- waiting - */
+
+.va-ask-waiting {
+    margin-top: var(--va-space-3xl);
+    padding-bottom: var(--va-space-2xl);
+}
+
+.va-ask-waiting-note {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--va-space-md);
+    margin: var(--va-space-2xl) 0 0;
+    padding-bottom: var(--va-space-xs);
+    border-bottom: var(--va-border-width) solid var(--va-line-strong);
+}
+
+.va-ask-waiting-lead {
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-lg);
+    color: var(--va-text-primary);
+}
+
+.va-ask-elapsed {
+    font-family: var(--va-font-mono);
+    font-size: var(--va-text-sm);
+    font-variant-numeric: tabular-nums;
+    color: var(--va-text-tertiary);
+}
+
+.va-ask-waiting-detail {
+    margin: var(--va-space-md) 0 0;
+    max-width: var(--va-measure);
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-secondary);
+}
+
+.va-ask-cancel,
+.va-ask-retry {
+    margin-top: var(--va-space-lg);
+    padding: 0 0 2px;
+    border: 0;
+    border-bottom: var(--va-border-width) solid var(--va-line-strong);
+    background: none;
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-sm);
+    color: var(--va-text-secondary);
+    cursor: pointer;
+    transition: var(--va-transition-colors);
+}
+
+.va-ask-cancel:hover,
+.va-ask-retry:hover {
+    color: var(--va-accent-text);
+    border-bottom-color: var(--va-accent-base);
+}
+
+/* --------------------------------------------------------------- notices - */
+
+/*
+ * Service states, as statements rather than as alert cards.
+ *
+ * A provider that is not configured and a request that timed out are both facts about a
+ * deployment. Drawn as a tinted panel with a warning glyph they read as findings about the
+ * corpus, which is precisely the inference this product spends the rest of its surface area
+ * preventing.
+ */
+.va-ask-notice {
+    margin-top: var(--va-space-2xl);
+    padding-inline-start: var(--va-space-lg);
+    border-inline-start: var(--va-border-width-accent) solid var(--va-line-strong);
+    max-width: var(--va-measure);
+}
+
+.va-ask-notice.is-error {
+    border-inline-start-color: var(--va-tone-insufficient);
+}
+
+.va-ask-notice.is-unavailable {
+    border-inline-start-color: var(--va-tone-unbuilt);
+}
+
+.va-ask-notice-head {
+    margin: 0 0 var(--va-space-2xs);
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-lg);
+    color: var(--va-text-primary);
+}
+
+.va-ask-notice p {
+    margin: 0 0 var(--va-space-xs);
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-secondary);
+}
+
+.va-ask-hint {
+    color: var(--va-text-tertiary) !important;
+    font-size: var(--va-text-xs) !important;
+}
+
+/* ---------------------------------------------------------------- answer - */
+
+/*
+ * The answer, as a reading column with an apparatus beside it.
+ *
+ * This is the Reader's layout, and it is the same layout for the same reason: the prose is
+ * held at a measure because it is read continuously, and everything that is a statement
+ * *about* the answer rather than part of it goes in the rail. Without the split, a 1440px
+ * page drew full-width rules under four sections whose text only ever filled the left third
+ * of them, so the rules pointed at emptiness and the page read as a narrow column that had
+ * been stretched.
+ */
+.va-answer {
+    margin-top: var(--va-space-4xl);
+}
+
+@media (min-width: 62rem) {
+    .va-answer {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 21rem);
+        column-gap: var(--va-space-5xl);
+        align-items: start;
+    }
+
+    .va-answer-head {
+        grid-column: 1 / -1;
+    }
+
+    .va-answer-rail {
+        /* The rail travels with the prose rather than stopping at the first section's end. */
+        position: sticky;
+        top: calc(var(--va-header-height) + var(--va-space-lg));
+    }
+}
+
+.va-answer-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--va-space-2xs) var(--va-space-2xl);
+    padding-bottom: var(--va-space-sm);
+    border-bottom: var(--va-border-width) solid var(--va-line-strong);
+}
+
+.va-answer-head h2 {
+    margin: 0;
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-2xl);
+    font-weight: var(--va-weight-regular);
+    color: var(--va-text-primary);
+}
+
+/*
+ * Support, as a line of type.
+ *
+ * The grade matters and a filled green badge is the wrong way to say so: it reads as a pass
+ * mark on the answer's truth rather than as a description of how much was retrieved. Set as a
+ * label with its own sentence, and coloured only on the label, it stays a measurement. The
+ * tone is carried by a word as well as a colour, so it survives being read without one.
+ */
+.va-answer-support {
+    display: grid;
+    gap: 2px;
+    margin: 0;
+    max-width: 24rem;
+}
+
+@media (min-width: 62rem) {
+    .va-answer-support {
+        text-align: end;
+        justify-items: end;
+    }
+}
+
+.va-answer-support strong {
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+}
+
+.va-answer-support span {
+    font-size: var(--va-text-xs);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-tertiary);
+}
+
+.va-answer-support.tone-supported strong {
+    color: var(--va-tone-evidenced);
+}
+.va-answer-support.tone-partial strong {
+    color: var(--va-tone-partial);
+}
+.va-answer-support.tone-insufficient strong {
+    color: var(--va-tone-insufficient);
+}
+.va-answer-support.tone-unknown strong {
+    color: var(--va-text-tertiary);
+}
+
+/* ------------------------------------------------------------ truncation - */
+
+/*
+ * A truncated answer cannot look like a finished one.
+ *
+ * It sits above the prose rather than below it, because a reader who meets it after reading
+ * has already taken the text for complete. The dashed rule is the token layer's mark for
+ * something that stops short of its own claim, and it is the same rule the reader uses for a
+ * typed absence.
+ */
+.va-answer-truncated {
+    margin: var(--va-space-xl) 0 0;
+    padding: var(--va-space-md) 0 var(--va-space-md) var(--va-space-lg);
+    border-inline-start: var(--va-border-width-accent) dashed var(--va-tone-partial);
+    max-width: var(--va-measure);
+}
+
+.va-answer-truncated-head {
+    margin: 0 0 var(--va-space-sm);
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-lg);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-primary);
+}
+
+.va-answer-truncated p {
+    margin: 0;
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-secondary);
+}
+
+.va-answer-truncated-ways {
+    margin-top: var(--va-space-md);
+}
+
+.va-answer-truncated-ways button {
+    padding: 0 0 2px;
+    border: 0;
+    border-bottom: var(--va-border-width) solid var(--va-line-strong);
+    background: none;
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-sm);
+    color: var(--va-text-secondary);
+    cursor: pointer;
+    transition: var(--va-transition-colors);
+}
+
+.va-answer-truncated-ways button:hover {
+    color: var(--va-accent-text);
+    border-bottom-color: var(--va-accent-base);
+}
+
+.va-answer-interpretive {
+    margin: var(--va-space-xl) 0 0;
+    padding-inline-start: var(--va-space-lg);
+    border-inline-start: var(--va-border-width-accent) solid var(--va-tone-partial);
+    max-width: var(--va-measure);
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-secondary);
+}
+
+/* ------------------------------------------------------------------ prose - */
+
+.va-answer-prose {
+    margin-top: var(--va-space-2xl);
+    max-width: var(--va-measure);
+}
+
+/* The answer is UI prose, so it takes the UI face rather than the display serif: it is read
+   continuously and at length, which is the one thing Fraunces is not for. */
+.va-answer-prose p {
+    margin: 0 0 var(--va-space-lg);
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-md);
+    line-height: var(--va-leading-prose);
+    color: var(--va-text-primary);
+}
+
+.va-answer-empty {
+    color: var(--va-text-tertiary) !important;
+}
+
+/*
+ * The citation marker.
+ *
+ * A superior numeral, the way a printed apparatus marks one. Not a pill, not a chip, and not
+ * coloured: the marker's job is to be available without interrupting the sentence it sits in.
+ */
+.va-cite-group {
+    white-space: nowrap;
+}
+
+.va-cite {
+    padding: 0 1px;
+    border: 0;
+    background: none;
+    font-family: var(--va-font-mono);
+    font-size: 0.68em;
+    font-variant-numeric: tabular-nums;
+    vertical-align: super;
+    line-height: 1;
+    color: var(--va-accent-text);
+    cursor: pointer;
+    transition: var(--va-transition-colors);
+}
+
+.va-cite:hover:not(:disabled) {
+    color: var(--va-text-primary);
+    text-decoration: underline;
+}
+
+.va-cite:disabled {
+    color: var(--va-text-tertiary);
+    cursor: default;
+}
+
+/* --------------------------------------------------------------- evidence - */
+
+.va-answer-evidence {
+    margin-top: var(--va-space-3xl);
+}
+
+.va-answer-evidence-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--va-space-sm) var(--va-space-xl);
+}
+
+.va-answer-evidence-top p {
+    margin: 0 0 var(--va-space-md);
+    font-size: var(--va-text-xs);
+    font-variant-numeric: tabular-nums;
+    color: var(--va-text-tertiary);
+}
+
+.va-evidence-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: var(--va-border-width) solid var(--va-line-strong);
+}
+
+.va-evidence-entry {
+    padding: var(--va-space-lg) 0;
+    border-bottom: var(--va-rule-quiet);
+}
+
+.va-evidence-cite {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--va-space-sm);
+}
+
+.va-evidence-id {
+    font-family: var(--va-font-mono);
+    font-size: var(--va-text-2xs);
+    color: var(--va-accent-text);
+}
+
+.va-evidence-cite strong {
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-md);
+    font-weight: var(--va-weight-regular);
+    color: var(--va-text-primary);
+}
+
+.va-evidence-cite small {
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+/* An uncited item is not a lesser one: it was retrieved and available, and saying so is part
+   of what makes the answer checkable. It is marked, not dimmed. */
+.va-evidence-entry[data-cited="false"] .va-evidence-id {
+    color: var(--va-text-tertiary);
+}
+
+.va-evidence-entry .sanskrit {
+    margin: var(--va-space-sm) 0 0;
+    font-size: var(--va-text-md);
+    line-height: var(--va-leading-verse);
+    color: var(--va-text-primary);
+}
+
+.va-evidence-entry blockquote {
+    margin: var(--va-space-sm) 0 0;
+    padding-inline-start: var(--va-space-md);
+    border-inline-start: var(--va-border-width) solid var(--va-line-hairline);
+    max-width: var(--va-measure);
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-secondary);
+}
+
+.va-evidence-ways {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--va-space-md) var(--va-space-xl);
+    margin-top: var(--va-space-md);
+}
+
+.va-evidence-ways a,
+.va-evidence-ways button,
+.va-answer-inspect,
+.va-answer-evidence.is-empty button {
+    padding: 0 0 2px;
+    border: 0;
+    border-bottom: var(--va-border-width) solid var(--va-line-strong);
+    background: none;
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-sm);
+    color: var(--va-text-secondary);
+    text-decoration: none;
+    cursor: pointer;
+    transition: var(--va-transition-colors);
+}
+
+.va-evidence-ways a:hover,
+.va-evidence-ways button:hover,
+.va-answer-inspect:hover,
+.va-answer-evidence.is-empty button:hover {
+    color: var(--va-accent-text);
+    border-bottom-color: var(--va-accent-base);
+}
+
+.va-answer-inspect {
+    margin-top: var(--va-space-lg);
+}
+
+.va-answer-evidence.is-empty p {
+    margin: 0;
+    max-width: var(--va-measure);
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-secondary);
+}
+
+/* --------------------------------------------------------------- caveats - */
+
+.va-answer-caveats {
+    margin-top: var(--va-space-3xl);
+}
+
+/* Inside the rail the sections sit closer together: they are a column of notes, not a run of
+   page sections, and the rail's own narrowness already separates them from the prose. */
+.va-answer-names,
+.va-answer-next {
+    margin-top: var(--va-space-2xl);
+}
+
+.va-answer-caveats ul,
+.va-answer-next ul,
+.va-name-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* The rule runs the width of the column, like the evidence rules above it. Capping the `li`
+   instead made the caveat rules visibly shorter than the evidence rules in the same column,
+   which read as two different grids rather than one. The measure is held on the text. */
+.va-answer-caveats li {
+    padding: var(--va-space-sm) 0;
+    border-top: var(--va-rule-quiet);
+}
+
+.va-answer-caveats li p {
+    margin: 0;
+    max-width: var(--va-measure);
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-secondary);
+}
+
+.va-answer-caveats cite {
+    display: block;
+    margin-top: 2px;
+    font-family: var(--va-font-mono);
+    font-size: var(--va-text-2xs);
+    font-style: normal;
+    color: var(--va-text-tertiary);
+}
+
+/* ----------------------------------------------------------------- names - */
+
+.va-name-list li {
+    border-top: var(--va-rule-quiet);
+}
+
+.va-name-list a,
+.va-name-list > li > span {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--va-space-sm) var(--va-space-md);
+    padding: var(--va-space-xs) 0;
+    color: inherit;
+    text-decoration: none;
+    transition: var(--va-transition-colors);
+}
+
+.va-name-list strong {
+    font-family: var(--va-font-iast);
+    font-size: var(--va-text-md);
+    font-weight: var(--va-weight-regular);
+    color: var(--va-text-primary);
+}
+
+.va-name-list a:hover strong {
+    color: var(--va-accent-text);
+}
+
+.va-name-list small {
+    font-size: var(--va-text-xs);
+    color: var(--va-text-tertiary);
+}
+
+.va-name-unresolved {
+    margin-top: var(--va-space-lg);
+    padding-inline-start: var(--va-space-lg);
+    border-inline-start: var(--va-border-width-accent) dashed var(--va-tone-unbuilt);
+    max-width: var(--va-measure);
+}
+
+.va-name-unresolved p {
+    margin: 0;
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-secondary);
+}
+
+.va-name-unresolved ul {
+    margin: var(--va-space-xs) 0 0;
+    padding-inline-start: var(--va-space-lg);
+    font-family: var(--va-font-iast);
+    font-size: var(--va-text-sm);
+    color: var(--va-text-primary);
+}
+
+.va-name-unresolved small {
+    margin-inline-start: var(--va-space-xs);
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-xs);
+    color: var(--va-text-tertiary);
+}
+
+/* ------------------------------------------------------------------- next - */
+
+/* Follow-ups as editorial links. A grid of suggestion tiles is the other half of the chat
+   template, and these are links into the same inquiry rather than four new products. */
+.va-answer-next li {
+    border-top: var(--va-rule-quiet);
+}
+
+.va-answer-next button {
+    display: block;
+    width: 100%;
+    padding: var(--va-space-xs) 0;
+    border: 0;
+    background: none;
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-md);
+    color: var(--va-text-secondary);
+    text-align: start;
+    cursor: pointer;
+    transition: var(--va-transition-colors);
+}
+
+.va-answer-next button::before {
+    content: "→ ";
+    color: var(--va-accent-base);
+}
+
+.va-answer-next button:hover {
+    color: var(--va-accent-text);
+}
+
+/* -------------------------------------------------------------- retrieval - */
+
+.va-answer-retrieval {
+    margin-top: var(--va-space-2xl);
+    border-top: var(--va-border-width) solid var(--va-line-strong);
+}
+
+.va-answer-retrieval summary {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--va-space-md);
+    padding: var(--va-space-sm) 0;
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+    cursor: pointer;
+}
+
+.va-answer-retrieval summary span {
+    font-family: var(--va-font-mono);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+/* One column. In the rail there is no room for two, and below 62rem this sits under the prose
+   where a second column would set the blocks at half a measure each. */
+.va-retrieval-body {
+    display: grid;
+    gap: var(--va-space-lg);
+    padding-bottom: var(--va-space-xl);
+}
+
+.va-retrieval-block h4 {
+    margin: 0 0 var(--va-space-2xs);
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-retrieval-terms {
+    margin: 0;
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-primary);
+}
+
+/* Searched-and-empty is evidence of a kind, so it is marked with the dashed rule rather than
+   greyed out as though nothing had happened. */
+.va-retrieval-terms.is-empty {
+    padding-inline-start: var(--va-space-sm);
+    border-inline-start: var(--va-border-width) dashed var(--va-tone-unbuilt);
+    color: var(--va-text-secondary);
+}
+
+.va-retrieval-none,
+.va-retrieval-note {
+    margin: var(--va-space-2xs) 0 0;
+    font-size: var(--va-text-xs);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-tertiary);
+}
+
+.va-retrieval-figures {
+    display: grid;
+    gap: var(--va-space-2xs);
+    margin: 0;
+}
+
+.va-retrieval-figures > div {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--va-space-md);
+    border-bottom: var(--va-rule-quiet);
+    padding-bottom: 2px;
+}
+
+.va-retrieval-figures dt {
+    font-size: var(--va-text-xs);
+    color: var(--va-text-tertiary);
+}
+
+.va-retrieval-figures dd {
+    margin: 0;
+    font-family: var(--va-font-mono);
+    font-size: var(--va-text-xs);
+    font-variant-numeric: tabular-nums;
+    color: var(--va-text-primary);
+}
+
+.va-answer-provenance {
+    margin: var(--va-space-xl) 0 0;
+    max-width: var(--va-measure);
+    font-size: var(--va-text-xs);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-tertiary);
+}
+
+/* -------------------------------------------------------- evidence drawer - */
+
+/*
+ * The full evidence panel.
+ *
+ * Scoped to the `ask-` classes rather than to `.evidence-drawer`, which the graph explorer's
+ * own drawer also uses and which still wants the older chrome.
+ *
+ * What is being undone here is mostly semantic rather than decorative. Each item arrived as a
+ * bordered card containing a tinted Sanskrit block, a pink panel for the qualifier and a green
+ * pill for the knowledge status, and the pink panel was the real problem: "does not establish"
+ * is the most careful sentence on the page, it is what separates this from a chat model, and
+ * in error colours it reads as a fault in the evidence rather than as its scope.
+ */
+.evidence-drawer .ask-evidence-group {
+    margin-bottom: var(--va-space-2xl);
+}
+
+.evidence-drawer .ask-evidence-group > h3 {
+    display: flex;
+    align-items: baseline;
+    gap: var(--va-space-sm);
+    margin: 0 0 var(--va-space-3xs);
+    padding-bottom: var(--va-space-3xs);
+    border-bottom: var(--va-border-width) solid var(--va-line-strong);
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.evidence-drawer .ask-evidence-group > h3 span {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    font-family: var(--va-font-mono);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0;
+    color: var(--va-text-tertiary);
+}
+
+.evidence-drawer .ask-evidence-group-note {
+    margin: 0 0 var(--va-space-md);
+    font-size: var(--va-text-xs);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-tertiary);
+}
+
+.evidence-drawer .ask-evidence-group ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.evidence-drawer .ask-evidence-item {
+    padding: var(--va-space-lg) 0;
+    border: 0;
+    border-bottom: var(--va-rule-quiet);
+    border-radius: 0;
+    background: none;
+}
+
+.evidence-drawer .ask-evidence-head {
+    display: flex;
+    align-items: baseline;
+    gap: var(--va-space-sm);
+}
+
+.evidence-drawer .ask-evidence-head strong {
+    display: block;
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-md);
+    font-weight: var(--va-weight-regular);
+    color: var(--va-text-primary);
+}
+
+.evidence-drawer .ask-evidence-head small {
+    display: block;
+    margin-top: 1px;
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.evidence-drawer .ask-evidence-id {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    font-family: var(--va-font-mono);
+    font-size: var(--va-text-2xs);
+    color: var(--va-accent-text);
+}
+
+.evidence-drawer .ask-evidence-item .sanskrit {
+    margin: var(--va-space-sm) 0 0;
+    padding: 0;
+    border-radius: 0;
+    background: none;
+    font-size: var(--va-text-md);
+    line-height: var(--va-leading-verse);
+    color: var(--va-text-primary);
+}
+
+.evidence-drawer .ask-evidence-item blockquote {
+    margin: var(--va-space-xs) 0 0;
+    padding-inline-start: var(--va-space-md);
+    border-inline-start: var(--va-border-width) solid var(--va-line-hairline);
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-secondary);
+}
+
+.evidence-drawer .ask-evidence-fact,
+.evidence-drawer .ask-evidence-relation,
+.evidence-drawer .ask-evidence-meta {
+    margin: var(--va-space-xs) 0 0;
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-secondary);
+}
+
+.evidence-drawer .ask-evidence-claim {
+    margin-top: var(--va-space-sm);
+    padding-inline-start: var(--va-space-md);
+    border-inline-start: var(--va-border-width-accent) solid var(--va-tone-partial);
+}
+
+.evidence-drawer .ask-evidence-claim > span {
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-tone-partial);
+}
+
+.evidence-drawer .ask-evidence-claim p {
+    margin: 2px 0 0;
+    font-size: var(--va-text-sm);
+    color: var(--va-text-secondary);
+}
+
+.evidence-drawer .ask-evidence-claim cite {
+    display: block;
+    margin-top: 2px;
+    font-size: var(--va-text-xs);
+    font-style: normal;
+    color: var(--va-text-tertiary);
+}
+
+/* The qualifier: a hanging label and a sentence, set as an apparatus note. */
+.evidence-drawer .ask-qualifier {
+    display: grid;
+    gap: 2px;
+    margin: var(--va-space-md) 0 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+}
+
+.evidence-drawer .ask-qualifier b {
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.evidence-drawer .ask-qualifier span {
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-secondary);
+}
+
+.evidence-drawer .ask-evidence-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--va-space-sm) var(--va-space-lg);
+    margin-top: var(--va-space-md);
+}
+
+/* The status becomes a typographic label. As a filled green pill with a tick it read as a
+   pass mark on the evidence, which is not what a knowledge status records. */
+.evidence-drawer .ask-evidence-item .knowledge-status[data-tone] {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+}
+
+.evidence-drawer .ask-evidence-item .knowledge-status[data-tone] svg {
+    display: none;
+}
+
+.evidence-drawer .ask-evidence-footer .text-link {
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-sm);
+    color: var(--va-text-secondary);
+    text-decoration: none;
+    border-bottom: var(--va-border-width) solid var(--va-line-strong);
+    padding-bottom: 2px;
+}
+
+.evidence-drawer .ask-evidence-footer .text-link:hover {
+    color: var(--va-accent-text);
+    border-bottom-color: var(--va-accent-base);
+}
+
+/* ------------------------------------------------------------- responsive - */
+
+@media (max-width: 47.99rem) {
+    .va-ask-input {
+        font-size: var(--va-text-lg);
+    }
+
+    .va-ask-controls {
+        align-items: stretch;
+    }
+
+    .va-ask-submit {
+        justify-content: space-between;
+        width: 100%;
+        margin-inline-start: 0;
+    }
+
+    .va-ask-go {
+        padding-inline: var(--va-space-xl);
+    }
+
+    /* The support line sits under the heading on a narrow screen rather than being pushed
+       to an edge it has to share with it. */
+    .va-answer-support {
+        margin-inline-start: 0;
+        text-align: start;
+        max-width: none;
+    }
+
+    .va-answer-head {
+        gap: var(--va-space-xs);
+    }
+}

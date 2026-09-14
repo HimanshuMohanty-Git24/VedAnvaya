@@ -1,27 +1,38 @@
 "use client";
 
-import { ArrowRight, Books, Lightbulb, MagnifyingGlass, Sparkle } from "@phosphor-icons/react";
 import clsx from "clsx";
 import Link from "next/link";
+import { encoded } from "@/lib/api";
 import {
     channelLabel,
     formatMs,
     matchRankCopy,
     supportLevelCopy,
+    truncationCaveat,
+    TRUNCATION_SOURCE,
+    type AskEvidenceItem,
     type AskResponse,
 } from "@/lib/ask";
 import { parseAnswer } from "@/lib/ask-citations";
 import { entityHref } from "@/lib/knowledge";
-import { KnowledgeStatus } from "../status";
 
-/** Support level, as a badge that says its grade in words as well as in colour. */
-function SupportBadge({ level }: { level: string }) {
-    const copy = supportLevelCopy(level);
-    return (
-        <span className={clsx("ask-support", `tone-${copy.tone}`)} title={copy.description}>
-            <b>{copy.label}</b>
-        </span>
-    );
+/**
+ * The answer, as a research response rather than as a message.
+ *
+ * There is no bubble, no avatar and no transcript, because none of those carry meaning here:
+ * the reader knows who wrote it and there is only ever one of them on screen. What the layout
+ * spends its hierarchy on instead is the part a bubble has nowhere to put - the grade on the
+ * evidence, the passages the prose was built from, and the sentence saying what the answer
+ * does not settle.
+ *
+ * Evidence is on the page, not only behind the drawer. Retrieved passages are what the answer
+ * is made of, so at least the first of them are set under the prose where they can be read
+ * without a click; the drawer holds the full set with every item's provenance.
+ */
+
+/** The first passages, which are the part of the evidence a reader can check by reading. */
+function inlinePassages(evidence: AskEvidenceItem[]) {
+    return evidence.filter((item) => item.type === "PASSAGE" && (item.sanskrit || item.translation));
 }
 
 export function AskAnswer({
@@ -40,33 +51,77 @@ export function AskAnswer({
     const evidenceIds = new Set(result.evidence.map((item) => item.id));
     const unresolved = result.entities.filter((entity) => !entity.resolved);
     const resolved = result.entities.filter((entity) => entity.resolved);
+    const support = supportLevelCopy(result.support_level);
+
+    /*
+     * Only citations that resolve to a retrieved item are counted.
+     *
+     * `citedIds` is parsed out of the prose, so it can name an item that is not in the
+     * evidence at all: a model asked to cite its sources can emit a marker for something it
+     * did not receive. Counting those made the summary line read "1 item retrieved, 2 cited",
+     * which is not merely odd arithmetic - it credits the answer with support that was never
+     * retrieved. The markers themselves already render disabled when they dangle.
+     */
+    const resolvedCitations = citedIds.filter((id) => evidenceIds.has(id));
+
+    const truncated = truncationCaveat(result);
+    /* The truncation caveat is lifted out of the list and given its own place above the prose.
+       Left in the list it read as one scope note among five, which is the one thing it must
+       not be: every other caveat qualifies a complete answer, and this one says the text is
+       not complete. The remaining caveats keep their section unchanged. */
+    const caveats = result.caveats.filter((caveat) => caveat.source !== TRUNCATION_SOURCE);
+    const passages = inlinePassages(result.evidence);
+    const cited = new Set(citedIds);
 
     return (
-        <article className="ask-answer" aria-labelledby="ask-answer-heading">
-            <header className="ask-answer-head">
+        <article aria-labelledby="ask-answer-heading" className="va-answer">
+            {/*
+             * The grade sits with the heading, not in the rail.
+             *
+             * It qualifies the prose, so it has to be met before the prose is read. In the
+             * rail it was correct on a wide screen and wrong on a narrow one, where the rail
+             * stacks under the reading column and "moderate support" arrived after the
+             * answer, the evidence and the caveats had all been read.
+             */}
+            <header className="va-answer-head">
                 <h2 id="ask-answer-heading">Answer</h2>
-                <div className="ask-badges">
-                    <KnowledgeStatus status={result.status} compact />
-                    <SupportBadge level={result.support_level} />
-                </div>
+                <p className={clsx("va-answer-support", `tone-${support.tone}`)}>
+                    <strong>{support.label}</strong>
+                    <span>{support.description}</span>
+                </p>
             </header>
 
-            <p className="ask-status-note">{supportLevelCopy(result.support_level).description}</p>
-
-            {result.interpretive_content_present && (
-                <div className="ask-interpretive" data-knowledge-kind="interpretation">
-                    <Lightbulb size={17} weight="duotone" aria-hidden="true" />
-                    <span>
-                        <b>This answer draws on an interpretive claim.</b> Part of what follows is a
-                        reading attributed to a source, not something the texts state. The
-                        interpretation is listed in the evidence under its own heading.
-                    </span>
+            <div className="va-answer-main">
+            {truncated && (
+                <div className="va-answer-truncated" role="status">
+                    <p className="va-answer-truncated-head">
+                        This response ended before synthesis completed
+                    </p>
+                    {/* The backend's own wording. It is the canonical statement of this
+                        condition and re-phrasing it here would fork the policy. */}
+                    <p>{truncated.text}</p>
+                    <div className="va-answer-truncated-ways">
+                        <button onClick={() => onOpenEvidence(null)} type="button">
+                            Read the evidence instead
+                        </button>
+                    </div>
                 </div>
             )}
 
-            <div className="ask-prose">
+            {result.interpretive_content_present && (
+                <p className="va-answer-interpretive" data-knowledge-kind="interpretation">
+                    <strong>This answer draws on an interpretive claim.</strong> Part of what
+                    follows is a reading attributed to a source, not something the texts state. It
+                    is listed in the evidence under its own heading.
+                </p>
+            )}
+
+            <div className="va-answer-prose">
                 {paragraphs.length === 0 && (
-                    <p className="muted">The synthesis returned no prose for this question.</p>
+                    <p className="va-answer-empty">
+                        The synthesis returned no prose for this question. The retrieved evidence
+                        is still listed below.
+                    </p>
                 )}
                 {paragraphs.map((paragraph, index) => (
                     // Paragraph order is the answer's own order; index is the stable key.
@@ -75,15 +130,15 @@ export function AskAnswer({
                             segment.kind === "text" ? (
                                 <span key={position}>{segment.text}</span>
                             ) : (
-                                <span className="ask-cite-group" key={position}>
+                                <span className="va-cite-group" key={position}>
                                     {segment.ids.map((id) => (
                                         <button
-                                            type="button"
-                                            className="ask-cite"
-                                            key={id}
-                                            aria-label={`Evidence ${id}`}
+                                            aria-label={`Open evidence ${id}`}
+                                            className="va-cite"
                                             disabled={!evidenceIds.has(id)}
+                                            key={id}
                                             onClick={() => onOpenEvidence(id)}
+                                            type="button"
                                         >
                                             {id}
                                         </button>
@@ -95,26 +150,91 @@ export function AskAnswer({
                 ))}
             </div>
 
-            <div className="ask-answer-actions">
-                <button
-                    type="button"
-                    className="button secondary"
-                    onClick={() => onOpenEvidence(null)}
-                >
-                    <Books size={18} aria-hidden="true" />
-                    Inspect all {summary.evidence_count} evidence items
-                </button>
-                <p className="ask-provenance">
-                    Retrieved from the VedAnvaya graph, synthesised by {result.llm.provider} /{" "}
-                    {result.llm.model}. The model saw only the retrieved evidence.
-                </p>
-            </div>
+            {passages.length > 0 && (
+                <section aria-labelledby="ask-evidence-heading" className="va-answer-evidence">
+                    <div className="va-answer-evidence-top">
+                        <h3 id="ask-evidence-heading">Evidence</h3>
+                        <p>
+                            {summary.evidence_count} item
+                            {summary.evidence_count === 1 ? "" : "s"} retrieved,{" "}
+                            {resolvedCitations.length} cited in the prose above.
+                        </p>
+                    </div>
 
-            {result.caveats.length > 0 && (
-                <section className="ask-caveats" aria-label="Scope notes for this answer">
+                    <ul className="va-evidence-list">
+                        {passages.slice(0, 3).map((item) => (
+                            <li
+                                className="va-evidence-entry"
+                                data-cited={cited.has(item.id)}
+                                key={item.id}
+                            >
+                                <div className="va-evidence-cite">
+                                    <span className="va-evidence-id">{item.id}</span>
+                                    <strong>{item.citation ?? item.passage_key}</strong>
+                                    <small>
+                                        {cited.has(item.id)
+                                            ? "cited above"
+                                            : "retrieved, not cited"}
+                                    </small>
+                                </div>
+                                {item.sanskrit && (
+                                    <p className="sanskrit" lang="sa">
+                                        {item.sanskrit}
+                                    </p>
+                                )}
+                                {item.translation && <blockquote>{item.translation}</blockquote>}
+                                <div className="va-evidence-ways">
+                                    {item.passage_key && (
+                                        <Link href={`/passage/${encoded(item.passage_key)}`}>
+                                            Open in the reader
+                                        </Link>
+                                    )}
+                                    <button
+                                        onClick={() => onOpenEvidence(item.id)}
+                                        type="button"
+                                    >
+                                        What it does not establish
+                                    </button>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+
+                    <button
+                        className="va-answer-inspect"
+                        onClick={() => onOpenEvidence(null)}
+                        type="button"
+                    >
+                        Inspect all {summary.evidence_count} retrieved items
+                    </button>
+                </section>
+            )}
+
+            {passages.length === 0 && (
+                <section className="va-answer-evidence is-empty">
+                    <h3>Evidence</h3>
+                    <p>
+                        {summary.evidence_count > 0 ? (
+                            <>
+                                {summary.evidence_count} item
+                                {summary.evidence_count === 1 ? " was" : "s were"} retrieved, none
+                                of them a passage with readable text.{" "}
+                                <button onClick={() => onOpenEvidence(null)} type="button">
+                                    Inspect what was retrieved
+                                </button>
+                            </>
+                        ) : (
+                            "Retrieval returned nothing for this question. That is a statement about what this build could reach, not about what the Vedas contain."
+                        )}
+                    </p>
+                </section>
+            )}
+
+            {caveats.length > 0 && (
+                <section aria-label="Scope notes for this answer" className="va-answer-caveats">
                     <h3>What this answer does not settle</h3>
                     <ul>
-                        {result.caveats.map((caveat) => (
+                        {caveats.map((caveat) => (
                             <li key={`${caveat.source}-${caveat.text}`}>
                                 <p>{caveat.text}</p>
                                 <cite>{caveat.source}</cite>
@@ -124,24 +244,37 @@ export function AskAnswer({
                 </section>
             )}
 
+            </div>
+
+            {/*
+             * The apparatus rail.
+             *
+             * The same division the Reader draws: what is being read on the left, what is
+             * recorded about it on the right. The grade, the names retrieval could and could
+             * not resolve, and the channel report are all statements about the answer rather
+             * than parts of it, and at this width they would otherwise sit under the prose as
+             * four more full-width blocks with a measure of text in the left third of each.
+             *
+             * It comes after the reading column in the DOM, so it is also what a screen reader
+             * and a narrow viewport get last, which is the right order for an apparatus.
+             */}
+            <aside aria-label="About this answer" className="va-answer-rail">
             {(resolved.length > 0 || unresolved.length > 0) && (
-                <section className="ask-entities" aria-label="Names in this question">
+                <section aria-label="Names in this question" className="va-answer-names">
                     <h3>Names in this question</h3>
                     {resolved.length > 0 && (
-                        <ul className="ask-entity-list">
+                        <ul className="va-name-list">
                             {resolved.map((entity) => (
                                 <li key={`${entity.label}-${entity.entity_key}`}>
                                     {entity.entity_key ? (
                                         <Link
-                                            className="ask-entity is-resolved"
                                             href={entityHref(entity.entity_type, entity.entity_key)}
                                         >
                                             <strong>{entity.label}</strong>
                                             <small>{matchRankCopy(entity.match_rank)}</small>
-                                            <ArrowRight size={14} aria-hidden="true" />
                                         </Link>
                                     ) : (
-                                        <span className="ask-entity is-resolved">
+                                        <span>
                                             <strong>{entity.label}</strong>
                                             <small>{matchRankCopy(entity.match_rank)}</small>
                                         </span>
@@ -151,11 +284,11 @@ export function AskAnswer({
                         </ul>
                     )}
                     {unresolved.length > 0 && (
-                        <div className="ask-unresolved">
+                        <div className="va-name-unresolved">
                             <p>
-                                <b>Not found in VedAnvaya.</b> These names were read out of the
-                                question and no entity in this build answers to them. That is a
-                                fact about this graph, not about the Vedas.
+                                <strong>Not found in VedAnvaya.</strong> These names were read out
+                                of the question and no entity in this build answers to them. That
+                                is a fact about this graph, not about the Vedas.
                             </p>
                             <ul>
                                 {unresolved.map((entity) => (
@@ -173,81 +306,75 @@ export function AskAnswer({
             )}
 
             {result.related_questions.length > 0 && (
-                <section className="ask-related" aria-label="Related questions">
-                    <h3>
-                        <Sparkle size={15} weight="duotone" aria-hidden="true" />
-                        Ask next
-                    </h3>
-                    <div className="ask-chip-row">
+                <section aria-label="Related questions" className="va-answer-next">
+                    <h3>Continue the inquiry</h3>
+                    <ul>
                         {result.related_questions.map((question) => (
-                            <button type="button" key={question} onClick={() => onAsk(question)}>
-                                {question}
-                            </button>
+                            <li key={question}>
+                                <button onClick={() => onAsk(question)} type="button">
+                                    {question}
+                                </button>
+                            </li>
                         ))}
-                    </div>
+                    </ul>
                 </section>
             )}
 
-            <details className="ask-retrieval">
+            <details className="va-answer-retrieval">
                 <summary>
-                    <MagnifyingGlass size={16} aria-hidden="true" />
                     How this answer was retrieved
                     <span>{formatMs(summary.total_ms)}</span>
                 </summary>
-                <div className="ask-retrieval-body">
-                    <div className="ask-retrieval-block">
+                <div className="va-retrieval-body">
+                    <div className="va-retrieval-block">
                         <h4>Question read as</h4>
                         {summary.intents.length ? (
-                            <div className="ask-tag-row">
-                                {summary.intents.map((intent) => (
-                                    <span key={intent}>{channelLabel(intent)}</span>
-                                ))}
-                            </div>
+                            <p className="va-retrieval-terms">
+                                {summary.intents.map(channelLabel).join(", ")}
+                            </p>
                         ) : (
-                            <p className="muted">No intent was recorded for this question.</p>
-                        )}
-                    </div>
-
-                    <div className="ask-retrieval-block">
-                        <h4>Channels that returned evidence</h4>
-                        {summary.channels_used.length ? (
-                            <div className="ask-tag-row">
-                                {summary.channels_used.map((channel) => (
-                                    <span key={channel}>{channelLabel(channel)}</span>
-                                ))}
-                            </div>
-                        ) : (
-                            <p className="muted">No channel returned evidence.</p>
-                        )}
-                    </div>
-
-                    <div className="ask-retrieval-block">
-                        <h4>Searched, found nothing</h4>
-                        {summary.channels_empty.length ? (
-                            <>
-                                <div className="ask-tag-row is-empty">
-                                    {summary.channels_empty.map((channel) => (
-                                        <span key={channel}>{channelLabel(channel)}</span>
-                                    ))}
-                                </div>
-                                <p className="ask-empty-note">
-                                    These channels ran and came back empty. That is different from a
-                                    channel that was never selected: searched-and-empty is evidence
-                                    of a kind, unexamined is not.
-                                </p>
-                            </>
-                        ) : (
-                            <p className="muted">
-                                Every channel that ran returned something. Channels not listed above
-                                were not selected for this question, so nothing is known about them
-                                either way.
+                            <p className="va-retrieval-none">
+                                No intent was recorded for this question.
                             </p>
                         )}
                     </div>
 
-                    <div className="ask-retrieval-block">
+                    <div className="va-retrieval-block">
+                        <h4>Channels that returned evidence</h4>
+                        {summary.channels_used.length ? (
+                            <p className="va-retrieval-terms">
+                                {summary.channels_used.map(channelLabel).join(", ")}
+                            </p>
+                        ) : (
+                            <p className="va-retrieval-none">No channel returned evidence.</p>
+                        )}
+                    </div>
+
+                    <div className="va-retrieval-block">
+                        <h4>Searched, found nothing</h4>
+                        {summary.channels_empty.length ? (
+                            <>
+                                <p className="va-retrieval-terms is-empty">
+                                    {summary.channels_empty.map(channelLabel).join(", ")}
+                                </p>
+                                <p className="va-retrieval-note">
+                                    These channels ran and came back empty. That is different from
+                                    a channel that was never selected: searched-and-empty is
+                                    evidence of a kind, unexamined is not.
+                                </p>
+                            </>
+                        ) : (
+                            <p className="va-retrieval-none">
+                                Every channel that ran returned something. Channels not listed
+                                above were not selected for this question, so nothing is known
+                                about them either way.
+                            </p>
+                        )}
+                    </div>
+
+                    <div className="va-retrieval-block">
                         <h4>Scope and yield</h4>
-                        <dl className="ask-figures">
+                        <dl className="va-retrieval-figures">
                             <div>
                                 <dt>Collection scope</dt>
                                 <dd>{summary.veda_scope}</dd>
@@ -258,7 +385,7 @@ export function AskAnswer({
                             </div>
                             <div>
                                 <dt>Evidence cited</dt>
-                                <dd>{citedIds.length}</dd>
+                                <dd>{resolvedCitations.length}</dd>
                             </div>
                             <div>
                                 <dt>Names resolved</dt>
@@ -271,9 +398,9 @@ export function AskAnswer({
                         </dl>
                     </div>
 
-                    <div className="ask-retrieval-block">
+                    <div className="va-retrieval-block">
                         <h4>Time spent</h4>
-                        <dl className="ask-figures">
+                        <dl className="va-retrieval-figures">
                             <div>
                                 <dt>Planning</dt>
                                 <dd>{formatMs(summary.planner_ms)}</dd>
@@ -294,6 +421,12 @@ export function AskAnswer({
                     </div>
                 </div>
             </details>
+
+            <p className="va-answer-provenance">
+                Retrieved from the VedAnvaya graph and synthesised by {result.llm.provider} /{" "}
+                {result.llm.model}. The model saw only the retrieved evidence.
+            </p>
+            </aside>
         </article>
     );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Prohibit, X } from "@phosphor-icons/react";
+import { X } from "@phosphor-icons/react";
 import * as Dialog from "@radix-ui/react-dialog";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
@@ -205,11 +205,17 @@ function EvidenceRow({ item, cited }: { item: AskEvidenceItem; cited: boolean })
                 </p>
             )}
 
-            {/* The qualifier is the point of the item, so it is never collapsed away. */}
+            {/*
+             * The qualifier is the point of the item, so it is never collapsed away.
+             *
+             * It carries no prohibition glyph and no warning tint. What it states is the scope
+             * of a piece of evidence, which is ordinary scholarly practice rather than a fault
+             * in the item: drawn as an error, it teaches a reader that the most careful thing
+             * on the page is the thing that went wrong.
+             */}
             <p className="ask-qualifier">
-                <Prohibit size={15} weight="duotone" aria-hidden="true" />
+                <b>Does not establish</b>
                 <span>
-                    <b>Does not establish: </b>
                     {item.qualifier ??
                         "No qualifier travelled with this item. Read its knowledge status before relying on it."}
                 </span>
@@ -220,7 +226,6 @@ function EvidenceRow({ item, cited }: { item: AskEvidenceItem; cited: boolean })
                 {item.passage_key && (
                     <Link className="text-link" href={`/passage/${encoded(item.passage_key)}`}>
                         Open passage
-                        <ArrowRight size={15} aria-hidden="true" />
                     </Link>
                 )}
             </div>

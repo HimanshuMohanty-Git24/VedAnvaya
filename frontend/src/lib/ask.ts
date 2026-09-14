@@ -178,6 +178,66 @@ export async function fetchAskHealth(signal?: AbortSignal): Promise<AskHealth | 
 
 export const ASK_QUESTION_LIMIT = 2000;
 
+/**
+ * The caveat source the synthesiser stamps when generation hit its output cap.
+ *
+ * Truncation does not travel as a field on the response. The service appends a caveat with
+ * this source, downgrades `status` to PARTIAL and holds `support_level` at LIMITED or below.
+ * Reading the caveat is therefore reading the contract, not sniffing a string: this is the
+ * only channel the backend has for saying the prose stops early while the evidence does not.
+ */
+export const TRUNCATION_SOURCE = "generation_truncated";
+
+/** A truncated answer must never be presented as a complete one. */
+export function truncationCaveat(result: AskResponse) {
+    return result.caveats.find((caveat) => caveat.source === TRUNCATION_SOURCE) ?? null;
+}
+
+/**
+ * What to say to someone who has been waiting.
+ *
+ * The response is not streamed and the backend reports no phase while it works, so there is
+ * nothing to show but the time that has actually passed. These thresholds are read against
+ * measured latency rather than chosen for feel: synthesis has been observed from 29.7s to
+ * 248.7s with a median near 106s, so a wait of half a minute is ordinary and one of two
+ * minutes is still inside the envelope. Each line says only what is known at that point and
+ * none of them promises a finish.
+ */
+export const WAIT_NOTES: Array<{ at: number; note: string }> = [
+    {
+        at: 0,
+        note: "Resolving the names in the question, running the retrieval channels, then writing from what they returned.",
+    },
+    {
+        at: 15_000,
+        note: "Retrieval is usually done by now and the answer is being written. Synthesis is the slow half.",
+    },
+    {
+        at: 45_000,
+        note: "Still synthesising. Questions that span collections or resolve several names take longer than a single-passage lookup.",
+    },
+    {
+        at: 90_000,
+        note: "A complex question can take several minutes. Nothing is wrong; the request is still open and the answer will appear here.",
+    },
+];
+
+export function waitNoteFor(elapsed: number) {
+    return WAIT_NOTES.reduce(
+        (current, entry) => (elapsed >= entry.at ? entry : current),
+        WAIT_NOTES[0],
+    ).note;
+}
+
+/** Elapsed time, spoken rather than counted, so a reader is not watching a stopwatch. */
+export function elapsedCopy(ms: number) {
+    const seconds = Math.floor(ms / 1000);
+    if (seconds < 60) return `${seconds}s elapsed`;
+    const minutes = Math.floor(seconds / 60);
+    const rest = seconds % 60;
+    return `${minutes}m ${String(rest).padStart(2, "0")}s elapsed`;
+}
+
 export const ASK_VEDA_SCOPES: Array<{ value: AskVedaScope; label: string }> = [
     { value: "ALL", label: "All four" },
     { value: "RV", label: "Rigveda" },

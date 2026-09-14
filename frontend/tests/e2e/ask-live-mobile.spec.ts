@@ -29,22 +29,33 @@ test.describe("Ask, live, 390px", () => {
         };
         await noSideScroll("the empty composer");
 
-        const composer = page.getByLabel("Your research question");
+        const composer = page.getByLabel("Your question");
         await expect(composer).toBeVisible();
         await composer.fill(QUESTION);
 
-        const submit = page.getByRole("button", { name: "Ask VedAnvaya" });
+        const submit = page.getByRole("button", { name: "Ask", exact: true });
         await expect(submit).toBeEnabled();
         await submit.click();
 
-        const answer = page.locator(".ask-answer");
+        const answer = page.locator(".va-answer");
         await expect(answer).toBeVisible({ timeout: 150_000 });
-        await expect(page.locator(".ask-prose")).toBeVisible();
-        await expect(page.locator(".ask-badges")).toBeVisible();
+        await expect(page.locator(".va-answer-prose")).toBeVisible();
+        await expect(page.locator(".va-answer-support")).toBeVisible();
         await noSideScroll("the rendered answer");
 
+        /*
+         * The grade qualifies the prose, so it has to be met before it.
+         *
+         * At this width the apparatus rail stacks under the reading column, and the grade was
+         * briefly in that rail: correct on a wide screen, and wrong here, where it arrived
+         * after the answer, the evidence and the caveats had all been read.
+         */
+        const gradeY = (await page.locator(".va-answer-support").boundingBox())!.y;
+        const proseY = (await page.locator(".va-answer-prose").boundingBox())!.y;
+        expect(gradeY, "the support grade sits below the prose it qualifies").toBeLessThan(proseY);
+
         // A citation marker must be tappable, not merely present.
-        const marker = page.locator("button.ask-cite").first();
+        const marker = page.locator("button.va-cite").first();
         await expect(marker).toBeVisible();
         const box = await marker.boundingBox();
         expect(box, "the citation marker has no layout box").not.toBeNull();
@@ -62,6 +73,6 @@ test.describe("Ask, live, 390px", () => {
         await page.getByRole("button", { name: "Close the evidence panel" }).tap();
         await expect(drawer).toBeHidden();
 
-        await expect(page.locator(".ask-related")).toBeVisible();
+        await expect(page.locator(".va-answer-next")).toBeVisible();
     });
 });

@@ -1,6 +1,5 @@
 "use client";
 
-import { ArrowUp, Prohibit, WarningCircle, X } from "@phosphor-icons/react";
 import clsx from "clsx";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
@@ -9,8 +8,10 @@ import {
     ASK_QUESTION_LIMIT,
     ASK_VEDA_SCOPES,
     AskError,
+    elapsedCopy,
     fetchAskHealth,
     postAsk,
+    waitNoteFor,
     type AskConversationTurn,
     type AskMode,
     type AskResponse,
@@ -19,29 +20,38 @@ import {
 import { extractCitedIds } from "@/lib/ask-citations";
 import { AskAnswer } from "./ask-answer";
 import { AskEvidenceDrawer } from "./ask-evidence-drawer";
+import { ThreadOfInquiry } from "./thread-of-inquiry";
 
 /**
- * The response is not streamed, so elapsed-time phases are estimates, not backend
- * telemetry. The pending copy states this explicitly.
+ * Ask, as one state machine rather than as six booleans.
+ *
+ * The states below are the ones the transport can actually produce. There is deliberately no
+ * COMPOSING state: typing is not a state of the request, and modelling it as one was how the
+ * previous version ended up asking `!result && !pending && !error` in three places to decide
+ * whether the examples should show.
+ *
+ * ## What changed about waiting, and why it mattered
+ *
+ * The previous version showed three phases that advanced on a timer at 0, 0.9 and 2.6
+ * seconds. Measured synthesis latency on this backend runs from 29.7s to 248.7s with a
+ * median near 106s. So every real request reached the last phase, "Synthesising the answer",
+ * about two and a half seconds in, and then sat on it, unchanged, for another hundred
+ * seconds. The phases were not a simplification of what the backend was doing; they were
+ * three sentences the frontend made up, and they were wrong on every request that had ever
+ * been made. What replaces them says the one thing that is actually known - how long it has
+ * been - and lets the copy under it get more informative as that number grows.
  */
-const PHASES = [
-    { at: 0, label: "Reading the question", note: "Classifying intent and resolving names" },
-    { at: 900, label: "Retrieving evidence", note: "Running the selected channels over the graph" },
-    {
-        at: 2600,
-        label: "Synthesising the answer",
-        note: "Writing prose from the retrieved evidence only",
-    },
-];
-
-function phaseFor(elapsed: number) {
-    return PHASES.reduce((current, phase) => (elapsed >= phase.at ? phase : current), PHASES[0]);
-}
+type AskState =
+    | { kind: "IDLE" }
+    | { kind: "WAITING" }
+    | { kind: "ANSWER"; result: AskResponse }
+    | { kind: "ERROR"; error: AskError }
+    | { kind: "CANCELLED" };
 
 export function AskExperience({
     initialQuestion = "",
-    passageContext = null,
-    entityContext = null,
+    passageContext: initialPassage = null,
+    entityContext: initialEntity = null,
 }: {
     initialQuestion?: string;
     passageContext?: string | null;
@@ -50,40 +60,52 @@ export function AskExperience({
     const [question, setQuestion] = useState(initialQuestion);
     const [veda, setVeda] = useState<AskVedaScope>("ALL");
     const [mode, setMode] = useState<AskMode>("AUTO");
-    const [pending, setPending] = useState(false);
+    const [state, setState] = useState<AskState>({ kind: "IDLE" });
     const [elapsed, setElapsed] = useState(0);
+    /** Non-zero only while a request is open; the tick effect subscribes to it. */
     const [startedAt, setStartedAt] = useState(0);
-    const [result, setResult] = useState<AskResponse | null>(null);
-    const [error, setError] = useState<AskError | null>(null);
-    const [unavailable, setUnavailable] = useState<{ detail: string; hint?: string | null } | null>(
-        null,
-    );
     const [turns, setTurns] = useState<AskConversationTurn[]>([]);
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [focusId, setFocusId] = useState<string | null>(null);
+    const [unavailable, setUnavailable] = useState<{ detail: string; hint?: string | null } | null>(
+        null,
+    );
+
+    /* Context arrives from the URL but is the reader's to drop: a question seeded from a
+       passage is often the start of a broader one, and silently binding retrieval to a verse
+       the reader has moved on from is worse than asking them to re-state it. */
+    const [passageContext, setPassageContext] = useState(initialPassage);
+    const [entityContext, setEntityContext] = useState(initialEntity);
 
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const answerRef = useRef<HTMLDivElement>(null);
     const requestRef = useRef<AbortController | null>(null);
 
-    // Readiness is checked once so an unconfigured deployment says so before a reader
-    // writes a question, rather than after waiting for a 503.
+    const pending = state.kind === "WAITING";
+
+    // Readiness is checked once so an unconfigured deployment says so before a reader writes
+    // a question, rather than after waiting out a full request for a 503.
     useEffect(() => {
         const controller = new AbortController();
         void fetchAskHealth(controller.signal).then((health) => {
-            if (health && !health.ask_available) {
-                setUnavailable({ detail: health.detail });
-            }
+            if (health && !health.ask_available) setUnavailable({ detail: health.detail });
         });
         return () => controller.abort();
     }, []);
 
-    // The clock is started by the submit handler, so this effect only subscribes to it.
+    /*
+     * One second, not 200ms. The readout is whole seconds, so a faster tick renders four
+     * frames that say the same thing, and this element is inside a live region.
+     *
+     * The clock is zeroed by the submit handler rather than here: resetting it in the effect
+     * body is a synchronous setState inside an effect, which cascades a second render on
+     * every request.
+     */
     useEffect(() => {
-        if (!pending || !startedAt) return;
-        const timer = window.setInterval(() => setElapsed(Date.now() - startedAt), 200);
+        if (!startedAt) return;
+        const timer = window.setInterval(() => setElapsed(Date.now() - startedAt), 1000);
         return () => window.clearInterval(timer);
-    }, [pending, startedAt]);
+    }, [startedAt]);
 
     useEffect(() => () => requestRef.current?.abort(), []);
 
@@ -95,12 +117,10 @@ export function AskExperience({
             requestRef.current?.abort();
             const controller = new AbortController();
             requestRef.current = controller;
-
-            setStartedAt(Date.now());
             setElapsed(0);
-            setPending(true);
-            setError(null);
-            setResult(null);
+            setStartedAt(Date.now());
+            setState({ kind: "WAITING" });
+
             try {
                 const response = await postAsk(
                     {
@@ -109,14 +129,15 @@ export function AskExperience({
                         mode,
                         passage_context: passageContext,
                         entity_context: entityContext,
-                        // The graph is the source of truth; history only disambiguates
-                        // a follow-up, so a short window is enough and stays in budget.
+                        // The graph is the source of truth; history only disambiguates a
+                        // follow-up, so a short window is enough and stays in budget.
                         conversation_context: history.length ? history.slice(-6) : null,
                     },
                     controller.signal,
                 );
                 if (controller.signal.aborted) return;
-                setResult(response);
+                setStartedAt(0);
+                setState({ kind: "ANSWER", result: response });
                 setTurns([
                     ...history,
                     { role: "user", content: trimmed },
@@ -128,6 +149,7 @@ export function AskExperience({
             } catch (reason) {
                 if (controller.signal.aborted) return;
                 if (reason instanceof DOMException && reason.name === "AbortError") return;
+                setStartedAt(0);
                 const failure =
                     reason instanceof AskError
                         ? reason
@@ -136,16 +158,23 @@ export function AskExperience({
                               "REQUEST_FAILED",
                               503,
                           );
-                setError(failure);
+                setState({ kind: "ERROR", error: failure });
                 if (failure.unavailable) {
                     setUnavailable({ detail: failure.message, hint: failure.hint });
                 }
-            } finally {
-                if (!controller.signal.aborted) setPending(false);
             }
         },
         [veda, mode, passageContext, entityContext],
     );
+
+    /* Abort is the reader's, so it sets its own state rather than letting the rejected
+       request fall through to ERROR. A cancelled request is not a failed one. */
+    const cancel = useCallback(() => {
+        requestRef.current?.abort();
+        requestRef.current = null;
+        setStartedAt(0);
+        setState({ kind: "CANCELLED" });
+    }, []);
 
     const askAgain = useCallback(
         (next: string) => {
@@ -166,80 +195,89 @@ export function AskExperience({
     const remaining = ASK_QUESTION_LIMIT - question.length;
     const overLimit = remaining < 0;
     const nearLimit = remaining <= 200;
-    const phase = phaseFor(elapsed);
+    const result = state.kind === "ANSWER" ? state.result : null;
     const citedIds = result ? extractCitedIds(result.answer) : [];
+    const context = passageContext ?? entityContext;
 
     const openEvidence = (id: string | null) => {
         setFocusId(id);
         setDrawerOpen(true);
     };
 
+    /* Not `va-ask`: that class belongs to the homepage's Ask section, which paints the Thread
+       of Inquiry as a background watermark. Reusing the name here pulled that watermark under
+       this whole page, where it collided with the drawn thread below. */
     return (
-        <div className="ask-experience">
+        <div className="va-ask-console">
             {unavailable && (
-                <div className="ask-unavailable" role="status">
-                    <Prohibit size={20} weight="duotone" aria-hidden="true" />
-                    <div>
-                        <strong>The synthesis backend is not configured.</strong>
-                        <p>{unavailable.detail}</p>
-                        {unavailable.hint && <p className="ask-hint">{unavailable.hint}</p>}
-                        <p className="ask-hint">
-                            Every other surface of this atlas still works. Ask is the only feature
-                            that needs a synthesis provider, and none of the graph data depends on
-                            it.
-                        </p>
-                    </div>
-                </div>
-            )}
-
-            {(passageContext || entityContext) && (
-                <div className="ask-context" role="status">
-                    <span>Asking about</span>
-                    <strong>{passageContext ?? entityContext}</strong>
-                    <small>
-                        {passageContext
-                            ? "sent as passage context, so retrieval binds this verse rather than re-reading its citation out of the question"
-                            : "sent as entity context, so retrieval binds this record rather than re-resolving the name"}
-                    </small>
+                <div className="va-ask-notice is-unavailable" role="status">
+                    <p className="va-ask-notice-head">The synthesis provider is not configured</p>
+                    <p>{unavailable.detail}</p>
+                    {unavailable.hint && <p className="va-ask-hint">{unavailable.hint}</p>}
+                    <p className="va-ask-hint">
+                        Ask is the only surface that needs a synthesis provider. Every other part
+                        of this atlas, and all of the graph behind it, is unaffected.
+                    </p>
                 </div>
             )}
 
             <form
-                className="ask-composer"
+                className="va-ask-composer"
                 onSubmit={(event) => {
                     event.preventDefault();
                     void submit(question, turns);
                 }}
             >
-                <label htmlFor="ask-question">
-                    Your research question
-                    <small>
-                        Questions can be long. Name the collection, the passage or the entity you
-                        mean, and Ask will say which of them it could resolve.
-                    </small>
+                <label className="va-ask-label" htmlFor="ask-question">
+                    Your question
                 </label>
-                <div className={clsx("ask-textarea-wrap", overLimit && "is-over")}>
-                    <textarea
-                        id="ask-question"
-                        ref={textareaRef}
-                        value={question}
-                        rows={4}
-                        onChange={(event) => setQuestion(event.target.value)}
-                        onKeyDown={onKeyDown}
-                        placeholder="e.g. How does Indra appear across the four Vedas, and is the Atharvavedic picture different?"
-                        aria-describedby="ask-counter ask-submit-hint"
-                        aria-invalid={overLimit || undefined}
-                        spellCheck
-                    />
-                </div>
 
-                <div className="ask-controls">
-                    <div className="ask-selects">
+                {context && (
+                    <div className="va-ask-context">
+                        <span className="va-ask-context-kind">
+                            {passageContext ? "Passage context" : "Entity context"}
+                        </span>
+                        <strong>{context}</strong>
+                        <button
+                            className="va-ask-context-drop"
+                            onClick={() => {
+                                setPassageContext(null);
+                                setEntityContext(null);
+                                textareaRef.current?.focus();
+                            }}
+                            type="button"
+                        >
+                            Ask without it
+                        </button>
+                        <small>
+                            {passageContext
+                                ? "Retrieval is bound to this verse rather than re-reading its citation out of the question."
+                                : "Retrieval is bound to this record rather than resolving the name again."}
+                        </small>
+                    </div>
+                )}
+
+                <textarea
+                    aria-describedby="ask-counter ask-submit-hint"
+                    aria-invalid={overLimit || undefined}
+                    className={clsx("va-ask-input", overLimit && "is-over")}
+                    id="ask-question"
+                    onChange={(event) => setQuestion(event.target.value)}
+                    onKeyDown={onKeyDown}
+                    placeholder="How does Indra appear across the four Vedas, and is the Atharvavedic picture different?"
+                    ref={textareaRef}
+                    rows={3}
+                    spellCheck
+                    value={question}
+                />
+
+                <div className="va-ask-controls">
+                    <div className="va-ask-scopes">
                         <label>
                             <span>Collection</span>
                             <select
-                                value={veda}
                                 onChange={(event) => setVeda(event.target.value as AskVedaScope)}
+                                value={veda}
                             >
                                 {ASK_VEDA_SCOPES.map((scope) => (
                                     <option key={scope.value} value={scope.value}>
@@ -249,11 +287,11 @@ export function AskExperience({
                             </select>
                         </label>
                         <label>
-                            <span>Retrieval mode</span>
+                            <span>Retrieval</span>
                             <select
-                                value={mode}
                                 aria-describedby="ask-mode-note"
                                 onChange={(event) => setMode(event.target.value as AskMode)}
+                                value={mode}
                             >
                                 {ASK_MODES.map((item) => (
                                     <option key={item.value} value={item.value}>
@@ -261,144 +299,158 @@ export function AskExperience({
                                     </option>
                                 ))}
                             </select>
-                            <small className="ask-mode-note" id="ask-mode-note">
-                                {ASK_MODES.find((item) => item.value === mode)?.note}
-                            </small>
                         </label>
+                        <small className="va-ask-mode-note" id="ask-mode-note">
+                            {ASK_MODES.find((item) => item.value === mode)?.note}
+                        </small>
                     </div>
 
-                    <div className="ask-submit-row">
+                    <div className="va-ask-submit">
                         <span
                             className={clsx(
-                                "ask-counter",
+                                "va-ask-counter",
                                 nearLimit && "is-near",
                                 overLimit && "is-over",
                             )}
                             id="ask-counter"
-                            aria-live="polite"
                         >
                             {overLimit
                                 ? `${-remaining} over the ${ASK_QUESTION_LIMIT}-character limit`
                                 : nearLimit
                                   ? `${remaining} characters left`
-                                  : `${question.length} / ${ASK_QUESTION_LIMIT}`}
+                                  : ""}
                         </span>
                         <button
-                            type="submit"
-                            className="button primary"
+                            className="va-ask-go"
                             disabled={!trimmed || overLimit || pending}
+                            type="submit"
                         >
-                            <ArrowUp size={17} aria-hidden="true" />
-                            {pending ? "Asking…" : "Ask VedAnvaya"}
+                            {pending ? "Asking" : "Ask"}
                         </button>
                     </div>
                 </div>
-                <p className="ask-submit-hint" id="ask-submit-hint">
-                    Press <kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>Enter</kbd> to ask.
+
+                <p className="va-ask-submit-hint" id="ask-submit-hint">
+                    <kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>Enter</kbd> to ask.
                     {turns.length > 0 && (
                         <>
                             {" "}
                             {turns.length / 2} earlier{" "}
-                            {turns.length === 2 ? "exchange" : "exchanges"} will be sent as context.
+                            {turns.length === 2 ? "exchange" : "exchanges"} will be sent as
+                            context.{" "}
                             <button
-                                type="button"
-                                className="ask-clear"
+                                className="va-ask-clear"
                                 onClick={() => setTurns([])}
+                                type="button"
                             >
-                                <X size={12} aria-hidden="true" />
-                                Clear context
+                                Clear
                             </button>
                         </>
                     )}
                 </p>
             </form>
 
-            {!result && !pending && (
-                <section className="ask-examples" aria-label="Example questions">
-                    <h2>Questions this build can answer</h2>
-                    <div className="ask-chip-row">
+            {state.kind === "IDLE" && (
+                <section aria-labelledby="ask-openings" className="va-ask-openings">
+                    <ThreadOfInquiry height={104} />
+                    <h2 id="ask-openings">Questions this build can answer</h2>
+                    <ul>
                         {ASK_EXAMPLES.map((example) => (
-                            <button
-                                type="button"
-                                key={example}
-                                onClick={() => {
-                                    setQuestion(example);
-                                    textareaRef.current?.focus();
-                                }}
-                            >
-                                {example}
-                            </button>
+                            <li key={example}>
+                                <button
+                                    onClick={() => {
+                                        setQuestion(example);
+                                        textareaRef.current?.focus();
+                                    }}
+                                    type="button"
+                                >
+                                    {example}
+                                </button>
+                            </li>
                         ))}
-                    </div>
-                    <p className="muted">
-                        The last one is deliberate: a term the Yajurveda may not yield is a test of
-                        whether the answer reports a limit or invents a denial.
+                    </ul>
+                    <p className="va-ask-openings-note">
+                        The last is deliberate. A term the Yajurveda may not yield tests whether
+                        the answer reports a limit or invents a denial.
                     </p>
                 </section>
             )}
 
             {pending && (
-                <div className="ask-pending" role="status" aria-live="polite">
-                    <ol className="ask-phases">
-                        {PHASES.map((item) => {
-                            const done = elapsed > item.at && item.label !== phase.label;
-                            const active = item.label === phase.label;
-                            return (
-                                <li
-                                    key={item.label}
-                                    data-state={done ? "done" : active ? "active" : "waiting"}
-                                >
-                                    <i aria-hidden="true" />
-                                    <span>
-                                        <strong>{item.label}</strong>
-                                        <small>{item.note}</small>
-                                    </span>
-                                </li>
-                            );
-                        })}
-                    </ol>
-                    <p className="ask-pending-note">
-                        Progress is estimated. The answer appears when retrieval and synthesis
-                        finish. Response time varies with the question and synthesis provider.
+                <section aria-label="Working" className="va-ask-waiting">
+                    <ThreadOfInquiry height={104} working />
+                    <p className="va-ask-waiting-note">
+                        <span className="va-ask-waiting-lead">
+                            Searching and synthesising from the corpus
+                        </span>
+                        {/*
+                         * The clock is deliberately outside the live region below.
+                         *
+                         * It changes every second, and a polite region containing it announces
+                         * every one of those: on a median request that is about a hundred
+                         * announcements of a number nobody asked to be read the time. It stays
+                         * in the accessibility tree, so it can still be read on demand; it just
+                         * does not interrupt.
+                         */}
+                        <span className="va-ask-elapsed">{elapsedCopy(elapsed)}</span>
                     </p>
-                    <div className="skeleton" style={{ height: 14, width: "88%" }} />
-                    <div className="skeleton" style={{ height: 14, width: "94%" }} />
-                    <div className="skeleton" style={{ height: 14, width: "64%" }} />
+                    {/* What is announced instead: a sentence that changes four times in four
+                        minutes, so a reader is told something only when something changed. */}
+                    <p aria-live="polite" className="va-ask-waiting-detail" role="status">
+                        {waitNoteFor(elapsed)}
+                    </p>
+                    <button className="va-ask-cancel" onClick={cancel} type="button">
+                        Stop waiting
+                    </button>
+                </section>
+            )}
+
+            {state.kind === "CANCELLED" && (
+                <div className="va-ask-notice" role="status">
+                    <p className="va-ask-notice-head">Stopped</p>
+                    <p>
+                        The request was cancelled before an answer arrived. Nothing was retrieved
+                        or discarded; ask again when you want it.
+                    </p>
                 </div>
             )}
 
-            {error && !error.unavailable && (
-                <div className="ask-error" role="alert">
-                    <WarningCircle size={20} aria-hidden="true" />
-                    <div>
-                        <strong>{error.message}</strong>
-                        {error.hint && <p className="ask-hint">{error.hint}</p>}
-                        <p className="ask-hint">
-                            This is a service problem, not a finding about the corpus. Nothing
-                            should be read into it about what the Vedas contain.
-                        </p>
-                    </div>
+            {state.kind === "ERROR" && !state.error.unavailable && (
+                <div className="va-ask-notice is-error" role="alert">
+                    <p className="va-ask-notice-head">{state.error.message}</p>
+                    {state.error.hint && <p className="va-ask-hint">{state.error.hint}</p>}
+                    <p className="va-ask-hint">
+                        This is a service problem, not a finding about the corpus. Nothing should
+                        be read into it about what the Vedas contain.
+                    </p>
+                    <button
+                        className="va-ask-retry"
+                        onClick={() => void submit(question, turns)}
+                        type="button"
+                    >
+                        Ask again
+                    </button>
                 </div>
             )}
 
             <div ref={answerRef}>
-                {result && !pending && (
+                {result && (
                     <AskAnswer
-                        result={result}
                         citedIds={citedIds}
-                        onOpenEvidence={openEvidence}
                         onAsk={askAgain}
+                        onOpenEvidence={openEvidence}
+                        result={result}
                     />
                 )}
             </div>
 
             {result && (
                 <AskEvidenceDrawer
-                    open={drawerOpen}
-                    items={result.evidence}
-                    focusId={focusId}
                     citedIds={citedIds}
+                    focusId={focusId}
+                    items={result.evidence}
                     onOpenChange={setDrawerOpen}
+                    open={drawerOpen}
                 />
             )}
         </div>
