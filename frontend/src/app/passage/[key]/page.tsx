@@ -1,16 +1,12 @@
-import {
-    ArrowLeft,
-    ArrowRight,
-    ArrowsLeftRight,
-    CirclesThreePlus,
-} from "@phosphor-icons/react/dist/ssr";
+import { ArrowLeft, ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { AskAboutButton } from "@/components/ask/ask-about-button";
 import { CopyButton } from "@/components/copy-button";
 import { LoadFailure } from "@/components/empty-state";
-import { PassageKnowledge } from "@/components/passage-knowledge";
+import { Action } from "@/components/home/sections";
+import { Apparatus } from "@/components/reader/apparatus";
 import { RecitationPlayer } from "@/components/recitation-player";
 import { Caveat, KnowledgeStatus } from "@/components/status";
 import {
@@ -24,6 +20,21 @@ import {
     vedaNames,
 } from "@/lib/api";
 
+/**
+ * One mantra, read.
+ *
+ * The composition rule for this page is that the verse is the protagonist and everything
+ * else is margin. The build this replaces put the verse in a bordered card between a bordered
+ * player and a bordered witness box, beside a tabbed rail of six more bordered panels, and
+ * the effect was that the text had the same visual weight as the controls around it.
+ *
+ * Nothing has been removed. Every distinction the old page drew is still drawn, because those
+ * distinctions are the product rather than decoration on it: an ascription from the
+ * traditional index is never shown as something the Sanskrit says, a named deity keeps its
+ * referent certainty, an absent translation is a statement about the layer rather than a
+ * blank, and a caveat is printed rather than summarised.
+ */
+
 type Params = { params: Promise<{ key: string }> };
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
@@ -31,9 +42,19 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     const key = routeId(rawKey);
     const result = await load<Reader>(`/passages/${encoded(key)}/reader`);
     if (!result.ok) return { title: "Passage" };
+
+    const citation = result.data.canonical_citation ?? result.data.display_label ?? "Passage";
+    const translation = result.data.translations.items?.[0];
     return {
-        title: result.data.canonical_citation ?? result.data.display_label ?? "Passage",
-        description: result.data.translations.items?.[0]?.text ?? undefined,
+        title: citation,
+        /*
+         * The description is the translation, and never the Sanskrit as a substitute for one.
+         * A verse whose translation layer is not built should say so rather than present its
+         * romanised text to a search engine as though it were a gloss.
+         */
+        description: translation
+            ? `${translation.text} Translated by ${translation.translator}${translation.year ? `, ${translation.year}` : ""}.`
+            : `${citation} is held in this corpus. No released translation covers it in the current build.`,
     };
 }
 
@@ -50,11 +71,16 @@ export default async function PassagePage({ params }: Params) {
         );
     }
     const reader = result.data;
-    const parallels = await load<ParallelsResponse>(`/passages/${encoded(key)}/parallels?limit=25`);
-    const audio = await load<PassageAudio>(`/passages/${encoded(key)}/audio`);
-    // No audio is a supported state, so an unmapped passage renders no player at all
-    // rather than a disabled one. A failed request is treated the same way: the reader
-    // loses a control it may never have had, and keeps the text.
+    const [parallels, audio] = await Promise.all([
+        load<ParallelsResponse>(`/passages/${encoded(key)}/parallels?limit=25`),
+        load<PassageAudio>(`/passages/${encoded(key)}/audio`),
+    ]);
+
+    /*
+     * No audio is a supported state, so an unmapped passage renders no player rather than a
+     * disabled one with a zero duration. A failed request is treated the same way: the reader
+     * loses a control they may never have had, and keeps the text.
+     */
     const recitation = audio.ok ? (audio.data.tracks ?? [])[0] : undefined;
 
     const primary = reader.primary_text;
@@ -64,52 +90,54 @@ export default async function PassagePage({ params }: Params) {
     const crossVeda = parallels.ok
         ? (parallels.data.items ?? []).filter((row) => !row.same_veda && row.is_textual_parallelism)
         : [];
+    const script = primary?.script === "DEVANAGARI" ? "DEVANAGARI" : "IAST";
 
     return (
-        <div className="reader-page">
-            <nav className="shell reader-breadcrumbs" aria-label="Passage location">
+        <div className="va-reader">
+            <nav aria-label="Passage location" className="va-reader-where">
                 <Link href={`/vedas/${workSlugs[reader.veda] ?? "rigveda"}`}>
                     {reader.work_display_label}
                 </Link>
                 {reader.breadcrumbs?.map((crumb) => (
-                    <Link
-                        key={crumb.canonical_key}
-                        href={`/passage/${encoded(crumb.canonical_key ?? "")}`}
-                    >
-                        <span className="crumb-level">{crumb.native_label}</span>
-                        {crumb.value}
-                    </Link>
+                    <span key={crumb.canonical_key} style={{ display: "contents" }}>
+                        <span aria-hidden="true">/</span>
+                        <Link href={`/passage/${encoded(crumb.canonical_key ?? "")}`}>
+                            <em>{crumb.native_label}</em>
+                            <strong>{crumb.value}</strong>
+                        </Link>
+                    </span>
                 ))}
             </nav>
 
-            <div className="shell reader-layout">
-                <article className="reading-column">
-                    <header className="citation-line">
+            <div className="va-reader-layout">
+                <article className="va-reading">
+                    <header className="va-reader-head">
                         <div>
-                            <span className="veda-chip">
+                            <p className="va-reader-veda">
                                 {vedaNames[reader.veda] ?? reader.veda}
-                            </span>
-                            <h1>{reader.canonical_citation ?? reader.display_label}</h1>
+                            </p>
+                            <h1 className="va-reader-title">
+                                {reader.canonical_citation ?? reader.display_label}
+                            </h1>
                         </div>
                         <KnowledgeStatus status={reader.data_status} compact />
                     </header>
 
                     {primary?.text ? (
-                        <section className="mantra-block" aria-label="Sanskrit text">
-                            <div className="text-meta">
+                        <section aria-label="Sanskrit text" className="va-verse">
+                            <div className="va-verse-meta">
                                 <span>
-                                    {primary.script === "DEVANAGARI" ? "Devanagari" : "IAST"}{" "}
-                                    Sanskrit
+                                    {script === "DEVANAGARI" ? "Devanagari" : "Romanised"}
                                     {primary.accented ? ", accented" : ""}
+                                    {primary.witness_id ? ` · ${primary.witness_id}` : ""}
                                 </span>
                                 <CopyButton text={primary.text} />
                             </div>
                             <p
                                 className={
-                                    primary.script === "DEVANAGARI"
-                                        ? "sanskrit devanagari"
-                                        : "sanskrit"
+                                    script === "DEVANAGARI" ? "sanskrit devanagari" : "sanskrit"
                                 }
+                                data-script={script}
                                 lang="sa"
                             >
                                 {primary.text}
@@ -119,28 +147,29 @@ export default async function PassagePage({ params }: Params) {
                         <KnowledgeStatus status={reader.text.data_status} />
                     )}
 
-                    {recitation && (
-                        <RecitationPlayer
-                            key={recitation.audio_id}
-                            track={recitation}
-                        />
-                    )}
+                    {recitation ? (
+                        <RecitationPlayer key={recitation.audio_id} track={recitation} />
+                    ) : null}
 
                     {alternates.length > 0 && (
-                        <details className="witness-block">
+                        <details className="va-witnesses witness-block">
                             <summary>
-                                Other witnesses of this text
-                                <span>{alternates.length}</span>
+                                {alternates.length === 1
+                                    ? "One other witness prints this text"
+                                    : `${alternates.length} other witnesses print this text`}
                             </summary>
                             {alternates.map((surface) => (
-                                <div key={`${surface.witness_id}-${surface.surface}`}>
-                                    <div className="text-meta">
+                                <div
+                                    className="va-witness"
+                                    key={`${surface.witness_id}-${surface.surface}`}
+                                >
+                                    <div className="va-verse-meta">
                                         <span>
-                                            {surface.witness_id ?? "Witness not identified"}{" "}
-                                            &middot;{" "}
+                                            {surface.witness_id ?? "Witness not identified"}
+                                            {" · "}
                                             {surface.script === "DEVANAGARI"
                                                 ? "Devanagari"
-                                                : "IAST"}
+                                                : "Romanised"}
                                         </span>
                                         {surface.text && <CopyButton text={surface.text} />}
                                     </div>
@@ -149,6 +178,9 @@ export default async function PassagePage({ params }: Params) {
                                             surface.script === "DEVANAGARI"
                                                 ? "sanskrit devanagari"
                                                 : "sanskrit"
+                                        }
+                                        data-script={
+                                            surface.script === "DEVANAGARI" ? "DEVANAGARI" : "IAST"
                                         }
                                         lang="sa"
                                     >
@@ -159,7 +191,10 @@ export default async function PassagePage({ params }: Params) {
                         </details>
                     )}
 
-                    <section className="translation-section" aria-label="Translation">
+                    <section
+                        aria-label="Translation"
+                        className="va-translation translation-section"
+                    >
                         <h2>Translation</h2>
                         {reader.translations.items?.length ? (
                             reader.translations.items.map((translation) => (
@@ -171,97 +206,89 @@ export default async function PassagePage({ params }: Params) {
                                             {translation.year ? `, ${translation.year}` : ""}
                                         </span>
                                         {translation.work_edition && (
-                                            <small>{translation.work_edition}</small>
+                                            <span>{translation.work_edition}</span>
                                         )}
                                     </figcaption>
                                 </figure>
                             ))
                         ) : (
                             <KnowledgeStatus
-                                status={reader.translations.data_status}
                                 note="No released translation covers this passage in the current build. The verse is held; its translation layer is not."
+                                status={reader.translations.data_status}
                             />
                         )}
                     </section>
 
                     {crossVeda.length > 0 && (
                         <Link
-                            className="reuse-callout"
+                            className="va-parallel"
                             href={`/reuse/${encoded(reader.canonical_key)}`}
                         >
-                            <ArrowsLeftRight size={20} aria-hidden="true" />
-                            <span>
-                                <strong>
-                                    This wording also stands in{" "}
-                                    {[
-                                        ...new Set(
-                                            crossVeda.map((row) => vedaNames[row.passage.veda]),
-                                        ),
-                                    ]
-                                        .filter(Boolean)
-                                        .join(" and ")}
-                                </strong>
-                                <small>
-                                    Compare the two texts side by side with their evidence
-                                </small>
-                            </span>
-                            <ArrowRight size={17} aria-hidden="true" />
+                            <strong>
+                                This wording also stands in{" "}
+                                {[...new Set(crossVeda.map((row) => vedaNames[row.passage.veda]))]
+                                    .filter(Boolean)
+                                    .join(" and ")}
+                            </strong>
+                            <small>
+                                Compare the two texts side by side, with what each witness reads and
+                                how the connection was established
+                            </small>
                         </Link>
                     )}
 
-                    <nav className="reader-nav" aria-label="Adjacent passages">
+                    <nav aria-label="Adjacent passages" className="va-reader-adjacent reader-nav">
                         {reader.previous ? (
                             <Link href={`/passage/${encoded(reader.previous.canonical_key)}`}>
-                                <ArrowLeft size={17} aria-hidden="true" />
-                                <span>
-                                    <small>Previous</small>
-                                    {reader.previous.display_label}
-                                </span>
+                                <small>
+                                    <ArrowLeft aria-hidden="true" size={11} /> Previous
+                                </small>
+                                <span>{reader.previous.display_label}</span>
                             </Link>
                         ) : (
-                            <p className="reader-edge">{reader.neighbour_note}</p>
+                            <p className="va-reader-edge reader-edge">{reader.neighbour_note}</p>
                         )}
                         {reader.next && (
                             <Link href={`/passage/${encoded(reader.next.canonical_key)}`}>
-                                <span>
-                                    <small>Next</small>
-                                    {reader.next.display_label}
-                                </span>
-                                <ArrowRight size={17} aria-hidden="true" />
+                                <small>
+                                    Next <ArrowRight aria-hidden="true" size={11} />
+                                </small>
+                                <span>{reader.next.display_label}</span>
                             </Link>
                         )}
                     </nav>
                 </article>
 
-                <aside className="reader-aside" aria-label="Passage knowledge">
-                    <PassageKnowledge
-                        reader={reader}
-                        parallels={parallels.ok ? (parallels.data.items ?? []) : []}
-                        parallelsFailed={!parallels.ok}
-                    />
-                    <Link
-                        className="graph-entry"
-                        href={`/graph?node=${encoded(reader.canonical_key)}`}
-                    >
-                        <CirclesThreePlus size={20} aria-hidden="true" />
-                        <span>
-                            <strong>Open in the graph</strong>
-                            <small>
-                                {reader.graph_neighbour_count ?? 0} curated connections from this
-                                verse
-                            </small>
-                        </span>
-                        <ArrowRight size={16} aria-hidden="true" />
-                    </Link>
-                    <AskAboutButton
-                        passageKey={reader.canonical_key}
-                        label="Ask about this mantra"
-                    />
+                <aside aria-label="Passage apparatus" className="sticky-aside">
+                    {/* The rail travels as one object. Apparatus and actions share a single
+                        sticky wrapper so the actions can never be left behind by it. */}
+                    <div className="va-rail">
+                        <Apparatus
+                            parallels={parallels.ok ? (parallels.data.items ?? []) : []}
+                            parallelsFailed={!parallels.ok}
+                            reader={reader}
+                        />
+                        <div className="va-apparatus-actions">
+                            <Action href={`/graph?node=${encoded(reader.canonical_key)}`}>
+                                {reader.graph_neighbour_count
+                                    ? `Show ${reader.graph_neighbour_count} connections in the graph`
+                                    : "Show this in the graph"}
+                            </Action>
+                            {/* Quiet, because the rail's language is links and rules. A filled
+                            pill here reads as the most important thing on the page, and it
+                            is not: the verse is. */}
+                            <AskAboutButton
+                                label="Ask about this mantra"
+                                passageKey={reader.canonical_key}
+                                variant="quiet"
+                            />
+                        </div>
+                    </div>
                 </aside>
             </div>
 
             {reader.caveats?.length ? (
-                <div className="shell reader-footnotes">
+                <div className="va-reader-footnotes">
                     {reader.caveats.map((caveat) => (
                         <Caveat key={caveat.text}>{caveat.text}</Caveat>
                     ))}

@@ -1,8 +1,9 @@
-import { ArrowRight, CirclesThreePlus } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { LoadFailure } from "@/components/empty-state";
+import { Action } from "@/components/home/sections";
+import { AskAboutButton } from "@/components/ask/ask-about-button";
 import { MeasureChart, type MeasureRow } from "@/components/measure";
 import { SeerPanel } from "@/components/seer-panel";
 import { Caveat, CaveatList, KnowledgeStatus } from "@/components/status";
@@ -61,22 +62,11 @@ export default async function EntityPage({ params }: Params) {
     const anyReach = reachRows.some((row) => row.value != null);
 
     return (
-        <div className="shell page profile-page">
+        <div className="va-page va-profile profile-page">
             <PageHeader entity={entity} type={type} />
 
             <div className="content-grid">
                 <div>
-                    <div className="entity-detail-meta">
-                        <KnowledgeStatus status={entity.data_status} compact />
-                        {entity.condition_kind && (
-                            <span
-                                className={`condition-kind kind-${entity.condition_kind.toLowerCase()}`}
-                            >
-                                {conditionLabel(entity.condition_kind)}
-                            </span>
-                        )}
-                    </div>
-
                     {entity.condition_kind && (
                         <Caveat title={conditionLabel(entity.condition_kind)}>
                             {conditionNote(entity.condition_kind)}
@@ -186,15 +176,6 @@ export default async function EntityPage({ params }: Params) {
                         </div>
                     )}
 
-                    <Link className="graph-entry" href={`/graph?node=${encoded(entity.id)}`}>
-                        <CirclesThreePlus size={20} aria-hidden="true" />
-                        <span>
-                            <strong>Open in the graph</strong>
-                            <small>See this record and what it connects to</small>
-                        </span>
-                        <ArrowRight size={16} aria-hidden="true" />
-                    </Link>
-
                     <CaveatList caveats={entity.caveats} title="How this record was built" />
                 </aside>
             </div>
@@ -202,21 +183,53 @@ export default async function EntityPage({ params }: Params) {
     );
 }
 
+/**
+ * The record head.
+ *
+ * The Sanskrit is the heading where the corpus holds one, with the English beneath it as the
+ * gloss. Many of these records are curated rather than attested, so the head carries the
+ * status next to the name instead of burying it in the body: whether a thing is established
+ * in the text is the first thing a reader needs, not the last.
+ */
 function PageHeader({ entity, type }: { entity: EntityProfile; type: string }) {
+    const sanskrit = entity.preferred_label_sa;
     return (
-        <header className="page-heading">
-            <Link className="back-link" href={`/entities/${type}`}>
+        <header className="va-archive-head">
+            <Link className="va-work-back" href={`/entities/${type}`}>
                 All {humanizePredicate(type)}
             </Link>
-            {entity.preferred_label_sa && (
-                <span className="profile-iast" lang="sa">
-                    {entity.preferred_label_sa}
-                </span>
+            <p className="va-archive-kind">{entityTypeLabel(type)}</p>
+            {sanskrit ? (
+                <>
+                    <h1 className="va-archive-name" lang="sa">
+                        {sanskrit}
+                    </h1>
+                    <p className="va-archive-english">{entity.display_label}</p>
+                </>
+            ) : (
+                <h1 className="va-archive-name">{entity.display_label}</h1>
             )}
-            <h1>{entity.display_label}</h1>
             {(entity.definition || entity.short_description) && (
-                <p>{entity.definition ?? entity.short_description}</p>
+                <p className="va-archive-gloss">{entity.definition ?? entity.short_description}</p>
             )}
+            <div className="va-archive-meta">
+                <span className="va-profile-status">
+                    <KnowledgeStatus status={entity.data_status} compact />
+                </span>
+                {entity.condition_kind && (
+                    <span className={`condition-kind kind-${entity.condition_kind.toLowerCase()}`}>
+                        {conditionLabel(entity.condition_kind)}
+                    </span>
+                )}
+            </div>
+            <div className="va-archive-actions">
+                <Action href={`/graph?node=${encoded(entity.id)}`}>Open in the graph</Action>
+                <AskAboutButton
+                    entityLabel={entity.display_label ?? sanskrit ?? entity.id}
+                    label={`Ask about ${entity.display_label ?? "this record"}`}
+                    variant="quiet"
+                />
+            </div>
         </header>
     );
 }

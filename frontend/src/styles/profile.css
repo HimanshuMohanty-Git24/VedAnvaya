@@ -1,0 +1,630 @@
+/* =============================================================== profile ===
+ *
+ * A deity or entity record.
+ *
+ * Everything here is scoped to `.va-profile`. The markup it restyles belongs to shared
+ * components - `MeasureChart`, `RankedFacts`, `DerivedMetricCard` - whose structure is careful
+ * and whose semantics are the product: a null is never drawn as a zero-length bar, an
+ * inherited ascription is never summed with a stated one. None of that is touched. What
+ * changes is that the page arrived as a hundred and seventeen fully bordered boxes and about
+ * seventy pills, and a record of a Vedic deity should not look like a settings screen.
+ *
+ * Scoping is also what keeps these overrides from reaching pages that still want the old
+ * chrome, which is the trap this rebuild has fallen into twice already.
+ */
+
+/* ------------------------------------------------------------ archive head - */
+
+/*
+ * The back link and the kind eyebrow are both small uppercase lines, so stacked at the same
+ * rhythm they read as one confused label. The link is pushed clear of the record itself.
+ */
+.va-archive-head > .va-work-back {
+    display: block;
+    margin-bottom: var(--va-space-2xl);
+}
+
+.va-archive-head > .va-archive-name {
+    margin-top: var(--va-space-xs);
+}
+
+.va-archive-english {
+    margin: var(--va-space-xs) 0 0;
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-xl);
+    font-weight: var(--va-weight-regular);
+    color: var(--va-text-secondary);
+}
+
+.va-archive-epithets {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--va-space-2xs) var(--va-space-sm);
+    margin: var(--va-space-lg) 0 0;
+    max-width: var(--va-measure);
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-tertiary);
+}
+
+.va-archive-epithets > span {
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+}
+
+/*
+ * Epithets are transliterated Sanskrit, so they take the reading face and not an italic of the
+ * display face: the display face has no GPOS `mark` table and would strand their diacritics.
+ * The emphasis is carried by colour instead.
+ */
+.va-archive-epithets > em {
+    font-family: var(--va-font-iast);
+    font-style: normal;
+    color: var(--va-text-secondary);
+}
+
+.va-archive-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--va-space-lg) var(--va-space-2xl);
+    margin-top: var(--va-space-2xl);
+}
+
+.va-archive-actions .ask-about-quiet {
+    padding-bottom: 3px;
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-base);
+    color: var(--va-text-secondary);
+    text-decoration: none;
+    border-bottom: var(--va-border-width) solid var(--va-line-strong);
+    transition: var(--va-transition-colors);
+}
+
+.va-archive-actions .ask-about-quiet:hover {
+    color: var(--va-text-primary);
+    border-bottom-color: var(--va-text-primary);
+}
+
+.va-profile-status .knowledge-status[data-tone] {
+    padding: 0 0 2px;
+    background: none;
+    border: 0;
+    border-bottom: var(--va-border-width) solid currentColor;
+    border-radius: 0;
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+}
+
+.va-profile-status .knowledge-status[data-tone] svg {
+    display: none;
+}
+
+/* ----------------------------------------------------------- ranked lists - */
+
+/*
+ * Six of these sit together on a deity page. As pills they were about seventy rounded
+ * rectangles in a row, which is unreadable as a ranking and unscannable as a list: a pill
+ * gives every item the same weight and hides the order entirely. As a ruled column the order
+ * is the layout.
+ */
+.va-profile .ranked-facts ul {
+    display: grid;
+    gap: 0;
+    margin: var(--va-space-sm) 0 0;
+    padding: 0;
+    list-style: none;
+    border-top: var(--va-border-width) solid var(--va-line-strong);
+}
+
+.va-profile .ranked-facts li {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--va-space-md);
+    padding: var(--va-space-xs) 0;
+    border: 0;
+    border-bottom: var(--va-rule-quiet);
+    border-radius: 0;
+    background: none;
+    font-size: var(--va-text-sm);
+    color: var(--va-text-primary);
+}
+
+.va-profile .ranked-facts li b {
+    font-variant-numeric: tabular-nums;
+    font-weight: var(--va-weight-regular);
+    color: var(--va-text-tertiary);
+}
+
+.va-profile .ranked-facts > h3 {
+    margin: 0;
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-profile .ranked-definition {
+    margin: var(--va-space-2xs) 0 0;
+    font-size: var(--va-text-xs);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-tertiary);
+}
+
+/* Six lists read as a table of contents when they are columns, and as a heap when they wrap. */
+.va-profile .profile-sections {
+    display: grid;
+    gap: var(--va-space-2xl) var(--va-space-4xl);
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    align-items: start;
+}
+
+/* ------------------------------------------ co-mentions and registered forms - */
+
+.va-profile .chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--va-space-2xs) var(--va-space-md);
+}
+
+.va-profile .chip-row > a,
+.va-profile .chip-row > span {
+    padding: 0 0 2px;
+    border: 0;
+    border-bottom: var(--va-border-width) solid transparent;
+    border-radius: 0;
+    background: none;
+    font-size: var(--va-text-sm);
+    color: var(--va-text-primary);
+    text-decoration: none;
+    transition: var(--va-transition-colors);
+}
+
+.va-profile .chip-row > a:hover {
+    color: var(--va-accent-text);
+    border-bottom-color: var(--va-accent-base);
+}
+
+/* `.chip-row.is-static > span` in the legacy sheet ties this rule on specificity and wins on
+   order, so the background has to be restated rather than inherited from the rule above. */
+.va-profile .chip-row.is-static > span {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    font-family: var(--va-font-iast);
+    color: var(--va-text-secondary);
+}
+
+/* -------------------------------------------------------- certainty split - */
+
+/*
+ * Three figures, one of which is excluded from the other two. The exclusion is the whole
+ * point, so the ambiguous column keeps a rule the others do not have rather than a tinted
+ * card that reads as a warning about the page.
+ */
+.va-profile .certainty-split {
+    display: grid;
+    gap: var(--va-space-xl) var(--va-space-3xl);
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    margin-top: var(--va-space-xl);
+}
+
+.va-profile .certainty-split > div {
+    display: grid;
+    gap: var(--va-space-3xs);
+    align-content: start;
+    padding: var(--va-space-sm) 0 0;
+    border: 0;
+    border-top: var(--va-border-width) solid var(--va-line-strong);
+    border-radius: 0;
+    background: none;
+}
+
+.va-profile .certainty-split > div.is-ambiguous {
+    border-top-style: dashed;
+    border-top-color: var(--va-accent-base);
+}
+
+.va-profile .certainty-split strong {
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-2xl);
+    font-weight: var(--va-weight-regular);
+    font-variant-numeric: tabular-nums;
+    line-height: var(--va-leading-flat);
+    color: var(--va-text-primary);
+}
+
+.va-profile .certainty-split span {
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-profile .certainty-split small {
+    margin-top: var(--va-space-2xs);
+    font-size: var(--va-text-xs);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-tertiary);
+}
+
+/* -------------------------------------------------------- formula families - */
+
+.va-profile .formula-chip-list {
+    display: grid;
+    gap: 0;
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    column-gap: var(--va-space-4xl);
+    margin-top: var(--va-space-md);
+}
+
+.va-profile .formula-chip {
+    display: grid;
+    gap: var(--va-space-3xs);
+    padding: var(--va-space-sm) 0;
+    border: 0;
+    border-bottom: var(--va-rule-quiet);
+    border-radius: 0;
+    background: none;
+}
+
+.va-profile .formula-chip strong {
+    font-family: var(--va-font-iast);
+    font-size: var(--va-text-base);
+    font-weight: var(--va-weight-regular);
+    color: var(--va-text-primary);
+}
+
+.va-profile .formula-chip small {
+    font-size: var(--va-text-xs);
+    color: var(--va-text-tertiary);
+}
+
+/* ------------------------------------------------------- citation columns - */
+
+.va-profile .passage-columns {
+    display: grid;
+    gap: var(--va-space-2xl) var(--va-space-4xl);
+    grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+    margin-top: var(--va-space-md);
+    align-items: start;
+}
+
+.va-profile .passage-columns h3 {
+    margin: 0 0 var(--va-space-sm);
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-profile .citation-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: var(--va-border-width) solid var(--va-line-strong);
+}
+
+.va-profile .citation-list li {
+    border-bottom: var(--va-rule-quiet);
+}
+
+.va-profile .citation-list a {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--va-space-md);
+    padding: var(--va-space-xs) 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    text-decoration: none;
+    transition: var(--va-transition-colors);
+}
+
+.va-profile .citation-list a strong {
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-base);
+    font-weight: var(--va-weight-regular);
+    color: var(--va-text-primary);
+}
+
+.va-profile .citation-list a small {
+    font-size: var(--va-text-xs);
+    color: var(--va-text-tertiary);
+    text-align: right;
+}
+
+.va-profile .citation-list a:hover strong {
+    color: var(--va-accent-text);
+}
+
+/* ---------------------------------------------------------------- the rail - */
+
+.va-profile .panel {
+    padding: var(--va-space-lg) 0 0;
+    border: 0;
+    border-top: var(--va-border-width) solid var(--va-line-strong);
+    border-radius: 0;
+    background: none;
+    gap: var(--va-space-sm);
+}
+
+.va-profile .panel h3 {
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-profile .provenance-list > div {
+    display: grid;
+    gap: var(--va-space-3xs);
+    padding: var(--va-space-xs) 0;
+    border-bottom: var(--va-rule-quiet);
+}
+
+.va-profile .provenance-list dt {
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-profile .provenance-list dd {
+    margin: 0;
+    font-size: var(--va-text-sm);
+    color: var(--va-text-primary);
+}
+
+/* ------------------------------------------------------ sections and rules - */
+
+.va-profile .section-heading.small > h2 {
+    margin: 0;
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-xl);
+    font-weight: var(--va-weight-regular);
+    color: var(--va-text-primary);
+}
+
+.va-profile .section-heading.small > p {
+    margin: var(--va-space-2xs) 0 0;
+    max-width: var(--va-measure);
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-prose);
+    color: var(--va-text-secondary);
+}
+
+.va-profile .profile-main > section {
+    padding-top: var(--va-space-2xl);
+    margin-top: var(--va-space-2xl);
+    border-top: var(--va-rule-feature);
+}
+
+.va-profile .profile-main > section:first-child {
+    padding-top: 0;
+    margin-top: 0;
+    border-top: 0;
+}
+
+/* --------------------------------------------------------- measure charts - */
+
+.va-profile .measure {
+    margin: var(--va-space-lg) 0 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+}
+
+.va-profile .measure figcaption h3 {
+    margin: 0;
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-profile .measure figcaption p {
+    margin: var(--va-space-2xs) 0 0;
+    max-width: var(--va-measure);
+    font-size: var(--va-text-xs);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-tertiary);
+}
+
+.va-profile .measure-table th {
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-sm);
+    font-weight: var(--va-weight-regular);
+    color: var(--va-text-primary);
+}
+
+.va-profile .measure-value {
+    font-variant-numeric: tabular-nums;
+    color: var(--va-text-secondary);
+}
+
+/* --------------------------------------------------------- derived metrics - */
+
+.va-profile .derived-grid {
+    display: grid;
+    gap: var(--va-space-2xl) var(--va-space-4xl);
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    margin-top: var(--va-space-md);
+    align-items: start;
+}
+
+.va-profile .derived-metric {
+    padding: var(--va-space-md) 0 0;
+    border: 0;
+    border-top: var(--va-border-width) solid var(--va-line-strong);
+    border-radius: 0;
+    background: none;
+}
+
+/* ------------------------------------------------------ entity relationships - */
+
+/*
+ * Related records, as an index rather than a grid of tiles.
+ *
+ * Each row says what kind of thing the neighbour is before it says its name, because on an
+ * entity page the kind is the discriminating fact: a reader following "fire" needs to know at
+ * a glance whether they are about to open a deity, a ritual or a natural phenomenon.
+ */
+.va-profile .related-section > h2 {
+    margin: 0;
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-xl);
+    font-weight: var(--va-weight-regular);
+    color: var(--va-text-primary);
+}
+
+.va-profile .related-section > .panel-note {
+    margin: var(--va-space-2xs) 0 0;
+    max-width: var(--va-measure);
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-prose);
+    color: var(--va-text-secondary);
+}
+
+.va-profile .related-grid {
+    display: grid;
+    gap: 0 var(--va-space-4xl);
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    margin-top: var(--va-space-lg);
+    border-top: var(--va-border-width) solid var(--va-line-strong);
+}
+
+.va-profile .related-grid > a {
+    display: grid;
+    gap: var(--va-space-3xs);
+    padding: var(--va-space-sm) 0;
+    border: 0;
+    border-bottom: var(--va-rule-quiet);
+    border-radius: 0;
+    background: none;
+    text-decoration: none;
+    transition: var(--va-transition-colors);
+}
+
+.va-profile .related-grid > a > span {
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+/* The neighbour's name is often transliterated Sanskrit, so it takes the reading face. */
+.va-profile .related-grid > a > strong {
+    font-family: var(--va-font-iast);
+    font-size: var(--va-text-base);
+    font-weight: var(--va-weight-regular);
+    color: var(--va-text-primary);
+    transition: var(--va-transition-colors);
+}
+
+.va-profile .related-grid > a > small {
+    font-size: var(--va-text-xs);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-tertiary);
+}
+
+.va-profile .related-grid > a:hover {
+    border-bottom-color: var(--va-accent-base);
+}
+
+.va-profile .related-grid > a:hover > strong {
+    color: var(--va-accent-text);
+}
+
+.va-profile .content-grid > div > section + section,
+.va-profile .content-grid > div > .related-section {
+    padding-top: var(--va-space-2xl);
+    margin-top: var(--va-space-2xl);
+    border-top: var(--va-rule-feature);
+}
+
+/* The condition label sits beside the status in the head, so it is set to match it. */
+.va-profile .va-archive-meta .condition-kind {
+    padding: 0 0 2px;
+    border: 0;
+    border-bottom: var(--va-border-width) dotted currentColor;
+    border-radius: 0;
+    background: none;
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+}
+
+/* --------------------------------------------------------- typed absence - */
+
+/*
+ * A statement that something is not established, set as a statement.
+ *
+ * The default treatment tints the block in the tone colour, and for `INSUFFICIENT_EVIDENCE`
+ * that tone is red. On a page whose other blocks are rules and type it was the only coloured
+ * object, and it read as an error the reader had caused. It is not an error. It is the product:
+ * the corpus does not establish this, and saying so plainly is the whole point of the surface.
+ *
+ * So the tone is kept and moved into the rule, which is where every other kind of uncertainty
+ * on this site is already carried - solid for what is held, dashed for what the evidence does
+ * not reach, dotted for a layer that was never built.
+ */
+.va-profile .knowledge-status[data-tone]:not(.is-compact) {
+    display: grid;
+    gap: var(--va-space-3xs);
+    max-width: var(--va-measure);
+    margin-top: var(--va-space-md);
+    padding: var(--va-space-sm) 0 0;
+    border: 0;
+    border-top: var(--va-border-width) solid currentColor;
+    border-radius: 0;
+    background: none;
+}
+
+.va-profile .knowledge-status[data-tone]:not(.is-compact) svg {
+    display: none;
+}
+
+.va-profile .knowledge-status[data-tone]:not(.is-compact) strong {
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+}
+
+.va-profile .knowledge-status[data-tone]:not(.is-compact) span {
+    margin-top: var(--va-space-3xs);
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-prose);
+    color: var(--va-text-secondary);
+}
+
+.va-profile .knowledge-status.tone-insufficient:not(.is-compact) {
+    border-top-style: dashed;
+}
+
+.va-profile .knowledge-status.tone-partial:not(.is-compact),
+.va-profile .knowledge-status.tone-not-built:not(.is-compact) {
+    border-top-style: dotted;
+}

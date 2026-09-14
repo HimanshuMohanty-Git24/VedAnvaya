@@ -1,10 +1,11 @@
-import { ArrowRight, ArrowsLeftRight, CirclesThreePlus } from "@phosphor-icons/react/dist/ssr";
+import { ArrowsLeftRight } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { AskAboutButton } from "@/components/ask/ask-about-button";
 import { DerivedMetricCard } from "@/components/derived-metric";
 import { LoadFailure, NothingHere } from "@/components/empty-state";
+import { Action } from "@/components/home/sections";
 import { MeasureChart, RankedFacts, type MeasureRow } from "@/components/measure";
 import { Caveat, CaveatList, InterpretationFrame, KnowledgeStatus } from "@/components/status";
 import {
@@ -106,47 +107,49 @@ export default async function DevataPage({ params }: Params) {
     );
 
     return (
-        <div className="shell page profile-page">
-            <div className="profile-hero">
-                <div>
-                    <Link className="back-link" href="/devatas">
-                        Deity atlas
-                    </Link>
-                    <span className="profile-iast" lang="sa">
-                        {deity.preferred_label ?? deity.label_iast}
+        <div className="va-page va-profile profile-page">
+            <header className="va-archive-head">
+                <Link className="va-work-back" href="/devatas">
+                    Deity atlas
+                </Link>
+                <p className="va-archive-kind">Deity</p>
+                {/*
+                 * The Sanskrit name is the heading and the English is its gloss, because the
+                 * English is a convention of translation and the Sanskrit is what the corpus
+                 * holds. It is set in the reading face, not the display face: it carries
+                 * combining marks, and the display face has no `mark` table to place them.
+                 */}
+                <h1 className="va-archive-name" lang="sa">
+                    {deity.preferred_label ?? deity.label_iast}
+                </h1>
+                <p className="va-archive-english">{deity.display_label}</p>
+                <p className="va-archive-gloss">{deity.short_description}</p>
+
+                <div className="va-archive-meta">
+                    <span className="va-profile-status">
+                        <KnowledgeStatus status={deity.data_status} compact />
                     </span>
-                    <h1>{deity.display_label}</h1>
-                    <p>{deity.short_description}</p>
-                    {deity.epithets?.length ? (
-                        <div className="alias-line">
-                            <span className="alias-label">Epithets</span>
-                            {deity.epithets.slice(0, 6).map((epithet) => (
-                                <span key={epithet} lang="sa">
-                                    {epithet}
-                                </span>
-                            ))}
-                        </div>
-                    ) : null}
                     {deity.axes?.length ? (
-                        <div className="axis-list">
-                            {deity.axes.map((axis) => (
-                                <span key={axis}>{humanizePredicate(axis)}</span>
-                            ))}
-                        </div>
+                        <span>{deity.axes.map((axis) => humanizePredicate(axis)).join(" · ")}</span>
                     ) : null}
                 </div>
-                <div className="profile-actions">
-                    <KnowledgeStatus status={deity.data_status} compact />
-                    <Link className="button primary" href={`/graph?node=${encoded(deity.id)}`}>
-                        <CirclesThreePlus size={18} aria-hidden="true" />
-                        Explore connections
-                    </Link>
+
+                {deity.epithets?.length ? (
+                    <p className="va-archive-epithets">
+                        <span>Epithets</span>
+                        <em lang="sa">{deity.epithets.slice(0, 6).join(", ")}</em>
+                    </p>
+                ) : null}
+
+                <div className="va-archive-actions">
+                    <Action href={`/graph?node=${encoded(deity.id)}`}>Explore connections</Action>
                     <AskAboutButton
                         entityLabel={deity.display_label ?? deity.preferred_label ?? decodedId}
                         label={`Ask about ${deity.display_label ?? "this deity"}`}
+                        variant="quiet"
                     />
                 </div>
-            </div>
+            </header>
 
             {identity && (
                 <Caveat title="Two records, one word" tone="boundary">
@@ -462,16 +465,12 @@ export default async function DevataPage({ params }: Params) {
                         </div>
                     ) : null}
 
-                    <Link
-                        className="graph-entry"
+                    <Action
                         href={`/search?q=${encodeURIComponent(deity.display_label ?? "")}`}
+                        note="Every entity and text match, including look-alikes"
                     >
-                        <ArrowRight size={20} aria-hidden="true" />
-                        <span>
-                            <strong>Search this name</strong>
-                            <small>See every entity and text match, including look-alikes</small>
-                        </span>
-                    </Link>
+                        Search this name
+                    </Action>
 
                     <CaveatList
                         caveats={deity.caveats}

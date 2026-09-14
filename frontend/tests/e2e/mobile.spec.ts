@@ -17,16 +17,41 @@ test.describe("mobile reader", () => {
         );
         expect(overflow).toBeLessThanOrEqual(1);
 
-        // The knowledge tabs stay reachable below the reading column.
-        await expect(page.getByRole("tab", { name: /Context/ })).toBeVisible();
+        // The apparatus follows the verse down the page rather than beside it.
+        await expect(
+            page.getByRole("heading", { name: /Ascribed in the apparatus/i }),
+        ).toBeVisible();
     });
 
-    test("the knowledge tabs switch on a touch viewport", async ({ page }) => {
+    test("the whole apparatus is readable without opening anything", async ({ page }) => {
+        /*
+         * This replaces a test that clicked between six tabbed panels. The tabs are gone, and
+         * their removal is the point rather than an incidental refactor: an apparatus is read
+         * alongside its text, and putting three quarters of it behind a control means a reader
+         * has to know it is there before they can find it. On a phone that cost was worst,
+         * because the control sat below the fold as well.
+         *
+         * So the assertion is the inverse of the old one. Every group is present on arrival,
+         * with nothing tapped.
+         */
         await page.goto(`/passage/${RV_1_1_1}`);
-        await page.getByRole("tab", { name: /Evidence/ }).click();
-        await expect(
-            page.getByRole("heading", { name: "Where this text comes from" }),
-        ).toBeVisible();
+        for (const heading of [
+            /Ascribed in the apparatus/i,
+            /Named inside this verse/i,
+            /Connected passages/i,
+        ]) {
+            await expect(page.getByRole("heading", { name: heading })).toBeVisible();
+        }
+        await expect(page.getByRole("tab")).toHaveCount(0);
+    });
+
+    test("the rail stacks under the verse rather than beside it", async ({ page }) => {
+        await page.goto(`/passage/${RV_1_1_1}`);
+        const verse = await page.locator(".va-verse").boundingBox();
+        const rail = await page.locator(".va-rail").boundingBox();
+        // Below, not alongside: a 390px column has no room for a margin apparatus.
+        expect(rail!.y).toBeGreaterThan(verse!.y + verse!.height - 1);
+        expect(rail!.x).toBeLessThan(40);
     });
 });
 

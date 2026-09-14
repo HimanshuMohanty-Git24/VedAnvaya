@@ -1,13 +1,4 @@
-import {
-    ArrowRight,
-    Bank,
-    FirstAidKit,
-    Hammer,
-    Repeat,
-    Sparkle,
-} from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
-import { PageHeading } from "@/components/page-heading";
 import { Caveat } from "@/components/status";
 
 export const metadata = {
@@ -23,7 +14,6 @@ export const metadata = {
 const LENSES = [
     {
         href: "/devatas",
-        icon: Sparkle,
         title: "Deities",
         blurb: "Who is invoked, what they do, and where each of them is named across the four collections.",
         reads: "Deity registry, mention layer, ascription apparatus",
@@ -31,7 +21,6 @@ const LENSES = [
     },
     {
         href: "/rituals",
-        icon: Bank,
         title: "Ritual",
         blurb: "The rites the corpus names, who performs them, what is offered, and what the text actually describes.",
         reads: "Ritual layer, curated apparatus edges",
@@ -39,7 +28,6 @@ const LENSES = [
     },
     {
         href: "/explore/atharvaveda",
-        icon: FirstAidKit,
         title: "Human concerns",
         blurb: "Healing, protection, household life and prosperity, with afflictions kept apart from threats.",
         reads: "Condition and concern registries, lexical mention layer",
@@ -47,7 +35,6 @@ const LENSES = [
     },
     {
         href: "/material-culture",
-        icon: Hammer,
         title: "Material culture",
         blurb: "Animals, crops, metals, rivers and peoples: what the texts name and where.",
         reads: "Entity registry, lexical mention layer",
@@ -55,7 +42,6 @@ const LENSES = [
     },
     {
         href: "/connections",
-        icon: Repeat,
         title: "Cross-Veda transmission",
         blurb: "Shared wording between collections, kept as separate kinds of connection rather than one similarity score.",
         reads: "Parallel layer, formula families, directed reuse edges",
@@ -65,37 +51,37 @@ const LENSES = [
 
 export default function ExplorePage() {
     return (
-        <div className="shell page">
-            <PageHeading
-                title="Lenses on the corpus"
-                description="Five curated ways in. Each one reads a named knowledge layer and says what that layer does not establish."
-            />
+        <div className="va-page">
+            <header className="va-page-head">
+                <h1>Five ways into the corpus.</h1>
+                <p>
+                    Each one reads a named knowledge layer and says what that layer does not
+                    establish. They are routes through the same material, not separate datasets.
+                </p>
+            </header>
 
-            <div className="lens-grid">
+            <ul className="va-index">
                 {LENSES.map((lens) => (
-                    <Link className="lens-card" href={lens.href} key={lens.href}>
-                        <span className="lens-icon">
-                            <lens.icon size={24} weight="duotone" aria-hidden="true" />
-                        </span>
-                        <h2>{lens.title}</h2>
-                        <p>{lens.blurb}</p>
-                        <dl>
-                            <div>
-                                <dt>Reads</dt>
-                                <dd>{lens.reads}</dd>
-                            </div>
-                            <div>
-                                <dt>Does not establish</dt>
-                                <dd>{lens.limit}</dd>
-                            </div>
-                        </dl>
-                        <span className="lens-cta">
-                            Open this lens
-                            <ArrowRight size={16} aria-hidden="true" />
-                        </span>
-                    </Link>
+                    <li key={lens.href}>
+                        <Link className="va-lens" href={lens.href}>
+                            <span className="va-index-name">
+                                <strong>{lens.title}</strong>
+                            </span>
+                            <span className="va-lens-body">
+                                <span className="va-index-note">{lens.blurb}</span>
+                                <span className="va-lens-layers">
+                                    <span>
+                                        <em>Reads</em> {lens.reads}
+                                    </span>
+                                    <span>
+                                        <em>Does not establish</em> {lens.limit}
+                                    </span>
+                                </span>
+                            </span>
+                        </Link>
+                    </li>
                 ))}
-            </div>
+            </ul>
 
             <Caveat title="No historical narrative is imposed">
                 A lens groups what was measured. Where a view mixes measured data with a derived

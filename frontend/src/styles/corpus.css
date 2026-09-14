@@ -1,0 +1,1006 @@
+/* ============================================================================
+   Corpus and discovery surfaces: the Vedas index, structural navigation,
+   Explore, Deities and Entities.
+
+   These share one idea and it is the reason they share a stylesheet: they are
+   all indexes. A catalogue of collections, a table of contents, a list of
+   figures, a list of named things. What they are not is a set of dashboards
+   with different data in them, which is what a grid of equal cards turns any
+   list into.
+
+   So the vocabulary here is the vocabulary of a printed index: a rule under a
+   heading, a number in the margin, a name, a gloss, and the counts set in
+   tabular figures so a reader can compare them down the column.
+   ============================================================================ */
+
+.va-page {
+    width: min(100% - (2 * var(--va-shell-gutter)), var(--va-shell-max));
+    margin-inline: auto;
+    padding-block: var(--va-space-3xl) var(--va-space-6xl);
+}
+
+/* ------------------------------------------------------------- page head - */
+
+.va-page-head {
+    max-width: var(--va-measure);
+    margin-bottom: var(--va-space-3xl);
+}
+
+.va-page-head h1 {
+    margin: 0;
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-3xl);
+    font-weight: var(--va-weight-regular);
+    line-height: var(--va-leading-flat);
+    letter-spacing: var(--va-tracking-display);
+    font-optical-sizing: auto;
+    text-wrap: balance;
+}
+
+.va-page-head p {
+    margin: var(--va-space-lg) 0 0;
+    font-size: var(--va-text-md);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-secondary);
+}
+
+/* ------------------------------------------------------- the Vedas index - */
+
+/*
+ * Four entries, each given room.
+ *
+ * Not a four-up grid. The four collections are not four instances of one thing: they differ
+ * in size by a factor of six, in what is held of them, and in whether they have a translation
+ * layer at all. Four equal cards assert an equivalence the data contradicts, and there is no
+ * room in a card for the sentence that says what is missing, which is the most important
+ * thing on the page.
+ */
+.va-collections {
+    border-top: var(--va-border-width) solid var(--va-line-strong);
+}
+
+.va-collection {
+    display: grid;
+    gap: var(--va-space-lg) var(--va-space-3xl);
+    padding-block: var(--va-space-2xl);
+    border-bottom: var(--va-rule-quiet);
+}
+
+@media (min-width: 62rem) {
+    .va-collection {
+        grid-template-columns: minmax(0, 15rem) minmax(0, 1fr) minmax(0, 15rem);
+        align-items: start;
+    }
+}
+
+.va-collection-name {
+    display: grid;
+    gap: var(--va-space-2xs);
+    align-content: start;
+    color: inherit;
+    text-decoration: none;
+}
+
+.va-collection-deva {
+    font-family: var(--va-font-deva);
+    font-size: clamp(1.6rem, 1.2rem + 1.4vw, 2.15rem);
+    line-height: 1.45;
+    letter-spacing: 0;
+    color: var(--va-text-primary);
+    transition: var(--va-transition-colors);
+}
+
+.va-collection-name:hover .va-collection-deva {
+    color: var(--va-accent-text);
+}
+
+.va-collection-latin {
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-xl);
+    color: var(--va-text-secondary);
+}
+
+.va-collection-recension {
+    font-size: var(--va-text-xs);
+    color: var(--va-text-tertiary);
+}
+
+.va-collection-body {
+    display: grid;
+    gap: var(--va-space-lg);
+}
+
+.va-collection-structure {
+    margin: 0;
+    font-family: var(--va-font-mono);
+    font-size: var(--va-text-xs);
+    letter-spacing: 0.02em;
+    color: var(--va-text-tertiary);
+}
+
+.va-collection-limit {
+    margin: 0;
+    max-width: var(--va-measure);
+    padding-inline-start: var(--va-space-lg);
+    border-inline-start: var(--va-border-width-accent) solid var(--va-tone-unbuilt);
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-secondary);
+}
+
+/* --------------------------------------------------------- counted facts - */
+
+/*
+ * The counts, as a small ledger rather than as pills.
+ *
+ * Tabular figures and right alignment so the four collections can be compared down the
+ * column, which is the only reason to print four numbers next to each other.
+ */
+.va-facts {
+    display: grid;
+    gap: var(--va-space-sm);
+    align-content: start;
+}
+
+.va-fact {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: baseline;
+    gap: var(--va-space-md);
+    padding-bottom: var(--va-space-2xs);
+    border-bottom: var(--va-rule-quiet);
+    font-size: var(--va-text-xs);
+    color: var(--va-text-tertiary);
+}
+
+.va-fact strong {
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-lg);
+    font-weight: var(--va-weight-regular);
+    font-variant-numeric: tabular-nums;
+    color: var(--va-text-primary);
+}
+
+/* A count that is really zero says so in a word, with the dashed rule the token layer
+   reserves for "not established". A 0 beside four-figure counts reads as a rounding error. */
+.va-fact.is-none strong {
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-sm);
+    color: var(--va-tone-unbuilt);
+    border-bottom: var(--va-border-dashed);
+}
+
+/* ------------------------------------------------------ structural index - */
+
+/*
+ * The table of contents for one collection.
+ *
+ * Every Veda keeps its own hierarchy and its own words for it. The browser adapts to whatever
+ * levels the API reports rather than assuming the Rigveda's mandala and sukta, because three
+ * of the four do not have them.
+ */
+.va-structure {
+    display: grid;
+    column-gap: var(--va-space-xl);
+    row-gap: 0;
+    /*
+     * Wide enough for the longest division name in the corpus. The Samaveda's top level is
+     * named rather than numbered - CHANDA, ARANYA, MAHANAMNYA, UTTARA - and a track sized to
+     * "191" let MAHANAMNYA run out of its cell and into UTTARA's.
+     */
+    grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+    margin-top: var(--va-space-lg);
+    padding: 0;
+    list-style: none;
+}
+
+/*
+ * A division of the collection, as an index entry.
+ *
+ * Descending is a button and arriving at a verse is a link, because one changes what is on
+ * screen and the other changes the page, and a reader is entitled to know which before they
+ * commit. They are set identically: the distinction belongs in the semantics and in the
+ * cursor, not in two visual treatments of the same row of an index.
+ */
+.va-structure > li {
+    min-width: 0;
+}
+
+.va-structure a,
+.va-structure button {
+    display: grid;
+    min-width: 0;
+    gap: 1px;
+    width: 100%;
+    padding: var(--va-space-sm) var(--va-space-sm) var(--va-space-md) 0;
+    /*
+     * A rule over each entry rather than a box around it. Ten boxes read as ten cards; a
+     * hundred and ninety-one read as a wall. A ruled cell is what an index is set as, and it
+     * is the one treatment that stays legible at both counts.
+     */
+    border: 0;
+    border-top: var(--va-border-width) solid var(--va-line-strong);
+    border-radius: 0;
+    background: none;
+    font: inherit;
+    color: inherit;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+    transition: var(--va-transition-colors);
+}
+
+.va-structure a:hover,
+.va-structure button:hover:not(:disabled) {
+    border-top-color: var(--va-accent-base);
+}
+
+.va-structure a:hover .va-structure-value,
+.va-structure button:hover:not(:disabled) .va-structure-value {
+    color: var(--va-accent-text);
+}
+
+.va-structure button:disabled {
+    cursor: default;
+    opacity: 0.55;
+}
+
+.va-structure-label {
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-structure-value {
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-lg);
+    font-variant-numeric: tabular-nums;
+    color: var(--va-text-primary);
+    /* A name longer than its track wraps rather than overprinting its neighbour. */
+    overflow-wrap: break-word;
+    transition: var(--va-transition-colors);
+}
+
+.va-structure-count {
+    font-size: var(--va-text-2xs);
+    color: var(--va-text-tertiary);
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: break-word;
+}
+
+/* ------------------------------------------------------------ index list - */
+
+/*
+ * The general index row, used by Explore, Deities and Entities.
+ *
+ * A ruled row with a name, a gloss and a figure. The rubric rule that extends from the margin
+ * on hover is the same gesture the homepage index uses, so a reader who has met one
+ * recognises the other.
+ */
+.va-index {
+    border-top: var(--va-border-width) solid var(--va-line-strong);
+}
+
+.va-index li {
+    position: relative;
+    border-bottom: var(--va-rule-quiet);
+}
+
+.va-index a {
+    display: grid;
+    grid-template-columns: minmax(0, 20rem) minmax(0, 1fr) auto;
+    align-items: baseline;
+    gap: var(--va-space-lg);
+    padding: var(--va-space-lg) 0 var(--va-space-lg) var(--va-space-lg);
+    color: inherit;
+    text-decoration: none;
+    transition: var(--va-transition-colors);
+}
+
+.va-index a::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: 0;
+    top: 50%;
+    width: 0;
+    height: var(--va-border-width-accent);
+    background: var(--va-accent-base);
+    transition: width var(--va-duration-base) var(--va-ease-standard);
+}
+
+.va-index a:hover::before,
+.va-index a:focus-visible::before {
+    width: var(--va-space-md);
+}
+
+.va-index-name {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--va-space-sm);
+}
+
+.va-index-name strong {
+    font-family: var(--va-font-iast);
+    font-size: var(--va-text-xl);
+    font-weight: var(--va-weight-regular);
+    color: var(--va-text-primary);
+    transition: var(--va-transition-colors);
+}
+
+.va-index a:hover .va-index-name strong,
+.va-index a:focus-visible .va-index-name strong {
+    color: var(--va-accent-text);
+}
+
+.va-index-kind {
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-index-note {
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-tertiary);
+}
+
+.va-index-figure {
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-lg);
+    font-variant-numeric: tabular-nums;
+    color: var(--va-text-secondary);
+    white-space: nowrap;
+}
+
+.va-index-figure small {
+    display: block;
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+    text-align: end;
+}
+
+/* ---------------------------------------------------------- filter bar - */
+
+/*
+ * The kind filter on the condition index. In the global sheet this is pill-shaped, which is
+ * the right treatment on pages that still use the old chrome. Inside `.va-page` the pills break
+ * the rules-and-type language, so they are replaced with an underline-current tab row.
+ */
+.va-page .kind-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--va-space-2xl);
+    margin-bottom: var(--va-space-2xl);
+    padding: 0;
+    border-bottom: var(--va-border-width) solid var(--va-line-strong);
+}
+
+.va-page .kind-tabs a {
+    padding: var(--va-space-xs) 0 calc(var(--va-space-xs) - var(--va-border-width));
+    border: 0;
+    border-bottom: 2px solid transparent;
+    border-radius: 0;
+    background: none;
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-sm);
+    color: var(--va-text-secondary);
+    text-decoration: none;
+    transition: var(--va-transition-colors);
+}
+
+.va-page .kind-tabs a[aria-current="page"] {
+    border-bottom-color: var(--va-accent-base);
+    color: var(--va-text-primary);
+}
+
+.va-page .kind-tabs a:hover:not([aria-current="page"]) {
+    color: var(--va-text-primary);
+}
+
+/* ------------------------------------------------------------- groupings - */
+
+.va-group {
+    margin-top: var(--va-space-4xl);
+}
+
+.va-group > h2 {
+    margin: 0 0 var(--va-space-md);
+    display: flex;
+    align-items: baseline;
+    gap: var(--va-space-md);
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-xl);
+    font-weight: var(--va-weight-regular);
+    color: var(--va-text-primary);
+}
+
+.va-group > h2 span {
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+    font-variant-numeric: tabular-nums;
+}
+
+.va-group > p {
+    margin: 0 0 var(--va-space-lg);
+    max-width: var(--va-measure);
+    font-size: var(--va-text-sm);
+    color: var(--va-text-secondary);
+}
+
+/* ----------------------------------------------------------- archive head - */
+
+/*
+ * The header for one deity or one entity.
+ *
+ * The Archive Plates artwork sits behind it at low opacity and only here, because this is the
+ * page where a reader arrives at a single named thing and the plate is the brand's figure for
+ * a catalogued object. It is dropped in dark mode: it is a photograph of paper.
+ */
+.va-archive-head {
+    position: relative;
+    isolation: isolate;
+    padding: var(--va-space-3xl) var(--va-space-2xl);
+    margin-bottom: var(--va-space-3xl);
+    border-block: var(--va-border-width) solid var(--va-line-strong);
+}
+
+.va-archive-head::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image: image-set(
+        url("/brand/textures/plates-light-1536.avif") type("image/avif"),
+        url("/brand/textures/plates-light-1536.webp") type("image/webp")
+    );
+    background-size: cover;
+    background-position: center;
+    opacity: 0.3;
+    -webkit-mask-image: linear-gradient(to right, #000, transparent 72%);
+    mask-image: linear-gradient(to right, #000, transparent 72%);
+}
+
+.dark .va-archive-head::before {
+    display: none;
+}
+
+.va-archive-kind {
+    margin: 0 0 var(--va-space-sm);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-accent-text);
+}
+
+.va-archive-name {
+    margin: 0;
+    font-family: var(--va-font-iast);
+    font-size: var(--va-text-3xl);
+    font-weight: var(--va-weight-regular);
+    line-height: var(--va-leading-flat);
+    color: var(--va-text-primary);
+}
+
+.va-archive-gloss {
+    margin: var(--va-space-lg) 0 0;
+    max-width: var(--va-measure);
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-lg);
+    line-height: var(--va-leading-prose);
+    color: var(--va-text-secondary);
+    font-optical-sizing: auto;
+}
+
+.va-archive-meta {
+    margin-top: var(--va-space-lg);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--va-space-sm) var(--va-space-lg);
+    font-size: var(--va-text-xs);
+    color: var(--va-text-tertiary);
+}
+
+/* ------------------------------------------------------------ responsive - */
+
+@media (max-width: 61.99rem) {
+    .va-collection {
+        gap: var(--va-space-lg);
+    }
+
+    .va-index a {
+        grid-template-columns: minmax(0, 1fr) auto;
+        row-gap: var(--va-space-2xs);
+    }
+
+    .va-index-note {
+        grid-column: 1 / -1;
+    }
+
+    .va-archive-head {
+        padding-inline: var(--va-space-lg);
+    }
+
+    .va-archive-head::before {
+        opacity: 0.2;
+    }
+}
+
+/* ------------------------------------------------------------- the lenses - */
+
+/*
+ * Explore's rows carry more than a name and a figure: each lens states the layer it reads and
+ * the thing that layer does not establish, and those two are the point of the page. So the
+ * row is two columns rather than three, with the layer statements set as an apparatus under
+ * the description.
+ *
+ * The icons that used to sit in rounded squares here are gone. A row of duotone glyphs in
+ * tinted boxes is the most recognisable furniture of a generated feature grid, and none of
+ * the five said anything the title did not.
+ */
+.va-lens {
+    grid-template-columns: minmax(0, 14rem) minmax(0, 1fr) !important;
+}
+
+.va-lens-body {
+    display: grid;
+    gap: var(--va-space-md);
+}
+
+.va-lens-layers {
+    display: grid;
+    gap: var(--va-space-2xs);
+    font-size: var(--va-text-xs);
+    color: var(--va-text-tertiary);
+}
+
+.va-lens-layers em {
+    font-style: normal;
+    display: inline-block;
+    min-width: 10.5rem;
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    font-size: 0.92em;
+}
+
+@media (max-width: 61.99rem) {
+    .va-lens {
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+
+    .va-lens-layers em {
+        display: block;
+        min-width: 0;
+    }
+}
+
+/* ----------------------------------------------------------- archive index - */
+
+/*
+ * The finding aid on a collection page.
+ *
+ * It is an index, so it is set as one: a trail saying where you are, a line saying how much is
+ * at this level and what the level is called here, then the divisions. There is no tree,
+ * because the four corpora do not share a shape and a tree would imply they do.
+ */
+.va-findaid {
+    display: grid;
+    gap: var(--va-space-sm);
+    margin-top: var(--va-space-3xl);
+    padding-top: var(--va-space-lg);
+    border-top: var(--va-rule-feature);
+}
+
+.va-findaid-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--va-space-md);
+}
+
+.va-findaid-top > h2 {
+    margin: 0;
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-findaid-trail {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--va-space-2xs);
+    font-size: var(--va-text-sm);
+}
+
+.va-findaid-trail > * + *::before {
+    content: "/";
+    margin-right: var(--va-space-2xs);
+    color: var(--va-line-strong);
+}
+
+.va-findaid-trail button {
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    color: var(--va-accent-text);
+    cursor: pointer;
+    transition: var(--va-transition-colors);
+}
+
+.va-findaid-trail button:hover {
+    color: var(--va-text-primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.va-findaid-trail [aria-current] {
+    color: var(--va-text-primary);
+    font-weight: var(--va-weight-medium);
+}
+
+.va-findaid-level {
+    margin: 0;
+    font-size: var(--va-text-sm);
+    color: var(--va-text-secondary);
+    font-variant-numeric: tabular-nums;
+}
+
+/* The heading takes focus when a level changes, and a focus ring on a paragraph that the
+   reader never tabbed to is noise. It is shown only for keyboard arrival. */
+.va-findaid-level:focus {
+    outline: none;
+}
+
+.va-findaid-level:focus-visible {
+    outline: 2px solid var(--va-line-focus);
+    outline-offset: 3px;
+}
+
+.va-findaid-empty,
+.va-findaid-loading,
+.va-findaid-error {
+    margin: var(--va-space-md) 0 0;
+    font-size: var(--va-text-sm);
+    color: var(--va-text-tertiary);
+}
+
+.va-findaid-error {
+    color: var(--va-text-secondary);
+    padding-left: var(--va-space-md);
+    border-left: var(--va-border-width) solid var(--va-accent-base);
+}
+
+.va-findaid-more {
+    justify-self: start;
+    margin-top: var(--va-space-md);
+    padding: 0 0 3px;
+    border: 0;
+    border-bottom: var(--va-border-width) solid var(--va-line-strong);
+    background: none;
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-sm);
+    color: var(--va-text-secondary);
+    cursor: pointer;
+    transition: var(--va-transition-colors);
+}
+
+.va-findaid-more:hover:not(:disabled) {
+    color: var(--va-text-primary);
+    border-bottom-color: var(--va-text-primary);
+}
+
+.va-findaid-more:disabled {
+    cursor: default;
+    opacity: 0.55;
+}
+
+/* ------------------------------------------------------------ one collection - */
+
+/*
+ * The head of a Samhita page.
+ *
+ * The Devanagari name is set large and first because it is the collection's own name and the
+ * one piece of the page that needs no translation. The romanised name follows it as a gloss,
+ * which is the opposite of the usual arrangement and the right way round here.
+ */
+.va-work-head {
+    display: grid;
+    gap: var(--va-space-2xs);
+    justify-items: start;
+    padding-bottom: var(--va-space-xl);
+    border-bottom: var(--va-rule-feature);
+}
+
+.va-work-back {
+    margin-bottom: var(--va-space-md);
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+    text-decoration: none;
+    transition: var(--va-transition-colors);
+}
+
+.va-work-back:hover {
+    color: var(--va-accent-text);
+}
+
+.va-work-deva {
+    margin: 0;
+    font-family: var(--va-font-deva);
+    font-size: var(--va-text-3xl);
+    line-height: var(--va-leading-verse);
+    color: var(--va-text-primary);
+}
+
+.va-work-head > h1 {
+    margin: 0;
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-2xl);
+    font-weight: var(--va-weight-regular);
+    line-height: var(--va-leading-tight);
+    color: var(--va-text-secondary);
+}
+
+.va-work-recension {
+    margin: 0;
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-sm);
+    color: var(--va-text-tertiary);
+}
+
+.va-work-band {
+    display: grid;
+    gap: var(--va-space-2xl);
+    margin-top: var(--va-space-2xl);
+}
+
+@media (min-width: 48rem) {
+    .va-work-band {
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: var(--va-space-5xl);
+        align-items: start;
+    }
+}
+
+.va-work-shape > h2,
+.va-work-limit > h2,
+.va-work-ways > h2 {
+    margin: 0 0 var(--va-space-sm);
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-work-gloss {
+    margin: var(--va-space-sm) 0 0;
+    max-width: var(--va-measure);
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-prose);
+    color: var(--va-text-secondary);
+}
+
+/*
+ * The limit statement, given an accent rule rather than a box.
+ *
+ * It is the same gesture the collection index uses for the same sentence, so the reader who
+ * has met it on the way in recognises it here as the same kind of claim.
+ */
+.va-work-limit {
+    margin-top: var(--va-space-3xl);
+    padding-left: var(--va-space-lg);
+    border-left: var(--va-border-width) solid var(--va-accent-base);
+}
+
+.va-work-limit > p {
+    margin: 0;
+    max-width: var(--va-measure);
+    font-size: var(--va-text-base);
+    line-height: var(--va-leading-prose);
+    color: var(--va-text-primary);
+}
+
+.va-work-status {
+    margin-top: var(--va-space-md);
+}
+
+.va-work-foot {
+    display: grid;
+    gap: var(--va-space-3xl);
+    margin-top: var(--va-space-4xl);
+    padding-top: var(--va-space-xl);
+    border-top: var(--va-rule-feature);
+}
+
+@media (min-width: 48rem) {
+    .va-work-foot {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: var(--va-space-5xl);
+        align-items: start;
+    }
+}
+
+.va-work-ways {
+    display: grid;
+    gap: var(--va-space-md);
+    justify-items: start;
+}
+
+/*
+ * The corpus status inside the limit statement.
+ *
+ * The default treatment is a tinted card with an icon, which is right in a list of many
+ * statuses and wrong as the single object on a page of rules and type: it reads as the most
+ * important thing here, and the sentence above it is. Reduced to a tone-coded label.
+ */
+.va-work-status .knowledge-status[data-tone] {
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--va-space-2xs);
+    padding: 0 0 2px;
+    background: none;
+    border: 0;
+    border-bottom: var(--va-border-width) solid currentColor;
+    border-radius: 0;
+}
+
+.va-work-status .knowledge-status[data-tone] svg {
+    display: none;
+}
+
+.va-work-status .knowledge-status[data-tone] strong {
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+}
+
+.va-work-status .knowledge-status[data-tone] span {
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-xs);
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--va-text-tertiary);
+}
+
+.va-work-status .knowledge-status[data-tone] > div {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--va-space-2xs);
+}
+
+/* Absence keeps its own rule style, as it does in the reader's apparatus. */
+.va-work-status .knowledge-status.tone-insufficient {
+    border-bottom-style: dashed;
+}
+
+.va-work-status .knowledge-status.tone-partial,
+.va-work-status .knowledge-status.tone-not-built {
+    border-bottom-style: dotted;
+}
+
+/* ------------------------------------------------------------ missing thread - */
+
+/*
+ * The 404 and the empty result share one page language, because they are one statement: a
+ * connection this product exists to draw could not be drawn here.
+ */
+.va-missing {
+    display: grid;
+    justify-items: start;
+    gap: var(--va-space-md);
+    max-width: var(--va-measure);
+    padding-block: var(--va-space-5xl);
+}
+
+.va-missing > .va-thread {
+    width: 100%;
+    max-width: 22rem;
+    margin-bottom: var(--va-space-xl);
+    color: var(--va-line-strong);
+}
+
+.va-missing-code {
+    margin: 0;
+    font-family: var(--va-font-mono);
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    color: var(--va-text-tertiary);
+}
+
+.va-missing > h1 {
+    margin: 0;
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-2xl);
+    font-weight: var(--va-weight-regular);
+    line-height: var(--va-leading-tight);
+    color: var(--va-text-primary);
+}
+
+.va-missing-body {
+    margin: 0;
+    font-size: var(--va-text-base);
+    line-height: var(--va-leading-prose);
+    color: var(--va-text-secondary);
+}
+
+.va-missing-ways {
+    display: grid;
+    justify-items: start;
+    gap: var(--va-space-md);
+    margin-top: var(--va-space-xl);
+    padding-top: var(--va-space-xl);
+    border-top: var(--va-rule-feature);
+    width: 100%;
+}
+
+.va-missing-foot {
+    margin: var(--va-space-2xl) 0 0;
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-prose);
+    color: var(--va-text-tertiary);
+}
+
+.va-missing-foot a {
+    color: var(--va-accent-text);
+}
+
+/* -------------------------------------------------------- reader skeleton - */
+
+.va-reader-skeleton .skeleton {
+    display: block;
+}
+
+.va-reader-skeleton .va-reader-where,
+.va-reader-skeleton .va-verse,
+.va-reader-skeleton-block,
+.va-reader-skeleton-rail {
+    display: grid;
+    gap: var(--va-space-sm);
+}
+
+.va-reader-skeleton .va-reader-where {
+    grid-auto-flow: column;
+    justify-content: start;
+    gap: var(--va-space-md);
+}
+
+.va-reader-skeleton-block {
+    margin-top: var(--va-space-2xl);
+}
+
+.va-reader-skeleton-rail {
+    gap: var(--va-space-3xl);
+}
+
+/*
+ * The shimmer is decoration on a wait, which is exactly the kind of motion that makes some
+ * people ill. Reduced motion gets a still placeholder instead of no placeholder.
+ */
+@media (prefers-reduced-motion: reduce) {
+    .skeleton {
+        animation: none;
+        background-position: 0 0;
+    }
+}

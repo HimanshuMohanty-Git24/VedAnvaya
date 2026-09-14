@@ -8,6 +8,7 @@ import {
     WarningCircle,
 } from "@phosphor-icons/react";
 import { useEffect, useId, useRef, useState } from "react";
+import { Cadence } from "./brand/cadence";
 import type { AudioTrack } from "@/lib/api";
 
 /**
@@ -149,24 +150,41 @@ export function RecitationPlayer({ track }: { track: AudioTrack }) {
                         )}
                     </button>
 
-                    <input
-                        id={seekId}
-                        className="recitation-seek"
-                        type="range"
-                        min={0}
-                        max={duration || 0}
-                        step={0.5}
-                        value={current}
-                        disabled={!duration}
-                        aria-label="Seek within this recitation"
-                        aria-valuetext={`${formatTime(current)} of ${formatTime(duration)}`}
-                        onChange={(event) => {
-                            const media = mediaRef.current;
-                            const next = Number(event.target.value);
-                            setCurrent(next);
-                            if (media) media.currentTime = next;
-                        }}
-                    />
+                    {/*
+                     * The Vedic Cadence sits behind the seek control, and the control itself
+                     * is made transparent over it. The range input stays exactly where it
+                     * was: it is what carries the keyboard interaction, the accessible name
+                     * and the value text, and replacing it with a div and pointer handlers
+                     * would mean rebuilding all three by hand and getting one of them wrong.
+                     *
+                     * The motif is the brand's drawing of pitch accent, which is the reason
+                     * this corpus is transmitted as sound at all, so it is the one ornament
+                     * on this page that is about what the control does.
+                     */}
+                    <span className="recitation-track">
+                        <Cadence
+                            className="recitation-cadence"
+                            progress={duration ? current / duration : 0}
+                        />
+                        <input
+                            id={seekId}
+                            className="recitation-seek"
+                            type="range"
+                            min={0}
+                            max={duration || 0}
+                            step={0.5}
+                            value={current}
+                            disabled={!duration}
+                            aria-label="Seek within this recitation"
+                            aria-valuetext={`${formatTime(current)} of ${formatTime(duration)}`}
+                            onChange={(event) => {
+                                const media = mediaRef.current;
+                                const next = Number(event.target.value);
+                                setCurrent(next);
+                                if (media) media.currentTime = next;
+                            }}
+                        />
+                    </span>
 
                     <span className="recitation-time" aria-hidden="true">
                         {formatTime(current)}

@@ -1,88 +1,145 @@
-import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 import { LoadFailure } from "@/components/empty-state";
-import { PageHeading } from "@/components/page-heading";
-import { Caveat, CaveatList, KnowledgeStatus } from "@/components/status";
+import { Action } from "@/components/home/sections";
+import { CaveatList } from "@/components/status";
 import { load, vedaOrder, workSlugs, type WorksResponse } from "@/lib/api";
 
 export const metadata = {
     title: "The four Vedas",
-    description: "Four Samhita corpora, presented with their native structures and stated limits.",
+    description:
+        "Four Samhita corpora, each with its own hierarchy, the recension held, its translation and recitation coverage, and a statement of what is not held.",
 };
 
-const NATIVE_STRUCTURE: Record<string, string> = {
+/**
+ * The collection index.
+ *
+ * Four entries rather than four cards, and the difference is not cosmetic. The collections
+ * differ by a factor of six in size, one of them has no translation layer at all and another
+ * has no recitation, and three are partial in ways their traditional names do not reveal.
+ * Four equal tiles assert an equivalence the data contradicts, and a tile has no room for the
+ * sentence that says what is missing, which is the most useful thing on the page.
+ */
+
+const DEVANAGARI: Record<string, string> = {
+    RV: "ऋग्वेद",
+    SV: "सामवेद",
+    YV: "यजुर्वेद",
+    AV: "अथर्ववेद",
+};
+
+const RECENSION: Record<string, string> = {
+    RV: "Śākala recension",
+    SV: "Kauthuma recension, ārcika only",
+    YV: "Śukla, Vājasaneyi Mādhyandina",
+    AV: "Śaunaka recension",
+};
+
+/** The levels each collection actually uses. None of them is forced into another's shape. */
+const STRUCTURE: Record<string, string> = {
     RV: "Mandala → Sukta → Mantra",
     SV: "Collection → Parvan → Dasati → Verse",
     YV: "Adhyaya → Mantra",
     AV: "Kanda → Sukta → Mantra",
 };
 
-const BOUNDARY: Record<string, string | undefined> = {
-    SV: "Kauthuma arcika only. The gana collections and complete musical information are not included, so nothing here shows or infers melody.",
-    YV: "Shukla Yajurveda in the Vajasaneyi Madhyandina recension only. The Krishna Yajurveda is not held at all.",
-    AV: "Saunaka recension only, held as a working private corpus. The Paippalada recension is not held.",
-    RV: "Sakala recension, Samhita only. No Brahmana, Aranyaka or Upanisad layer is held.",
+const NOT_HELD: Record<string, string> = {
+    RV: "Samhita only, in one recension. No Brahmana, Aranyaka or Upanisad layer is held, and the Ashvalayana recension is not present.",
+    SV: "The ārcika verses only. The gana collections are a parallel and larger body, and they are the reason the Samaveda is a distinct Veda rather than a Rigvedic excerpt. Nothing here shows or infers melody.",
+    YV: "The White Yajurveda only. The Krishna Yajurveda is not held at all, which is the omission most likely to mislead, because the name ordinarily covers both.",
+    AV: "The Śaunaka recension only. The Paippalāda is not a minor variant: it is a substantially different collection with its own hymn order.",
 };
 
+type AudioStats = { mapped_scope_keys_by_veda: Record<string, number> };
+
+const number = (value: number | null | undefined) =>
+    typeof value === "number" ? value.toLocaleString("en-GB") : null;
+
 export default async function VedasPage() {
-    const result = await load<WorksResponse>("/works");
+    const [result, audio] = await Promise.all([
+        load<WorksResponse>("/works"),
+        load<AudioStats>("/audio/stats"),
+    ]);
     if (!result.ok) {
         return (
-            <div className="shell page">
-                <LoadFailure status={result.status} message={result.message} />
+            <div className="va-page">
+                <LoadFailure message={result.message} status={result.status} />
             </div>
         );
     }
     const works = [...(result.data.items ?? [])].sort(
         (a, b) => (vedaOrder[a.veda ?? ""] ?? 9) - (vedaOrder[b.veda ?? ""] ?? 9),
     );
+    const recited = audio.ok ? audio.data.mapped_scope_keys_by_veda : {};
 
     return (
-        <div className="shell page">
-            <PageHeading
-                title="The four Vedas"
-                description="Four Samhita corpora, each shown with its own hierarchy, its translation coverage and the boundary of what is held."
-            />
+        <div className="va-page">
+            <header className="va-page-head">
+                <h1>Four Samhitas. Four textual worlds.</h1>
+                <p>
+                    Each collection keeps its own hierarchy and its own words for it. None is
+                    flattened into a common template, and each says which recension is held here
+                    before it says how much of it.
+                </p>
+            </header>
 
-            <div className="work-list">
+            <div className="va-collections">
                 {works.map((work) => {
                     const code = work.veda ?? "RV";
-                    const translated = work.translated_mantra_count ?? 0;
+                    const slug = workSlugs[code];
                     const total = work.mantra_count ?? 0;
+                    const translated = work.translated_mantra_count ?? 0;
+                    const audioCount = recited[code];
+
                     return (
-                        <article className="work-row" key={work.work_id}>
-                            <div className="work-code">{code}</div>
-                            <div>
-                                <h2>{work.traditional_name}</h2>
-                                <p>{work.display_label}</p>
-                                <div className="work-facts">
-                                    <span>
-                                        <strong>{total.toLocaleString()}</strong> mantras
-                                    </span>
-                                    <span>
-                                        <strong>{translated.toLocaleString()}</strong> translated
-                                        {total > 0 && (
-                                            <small>
-                                                {" "}
-                                                ({((translated / total) * 100).toFixed(1)}%)
-                                            </small>
-                                        )}
-                                    </span>
-                                    <span>
-                                        <strong>{NATIVE_STRUCTURE[code]}</strong>
-                                    </span>
-                                    <KnowledgeStatus status={work.data_status} compact />
-                                </div>
-                                {BOUNDARY[code] && (
-                                    <Caveat title="Coverage boundary" tone="boundary">
-                                        {BOUNDARY[code]}
-                                    </Caveat>
-                                )}
-                            </div>
-                            <Link className="button secondary" href={`/vedas/${workSlugs[code]}`}>
-                                Open collection
-                                <ArrowRight size={17} aria-hidden="true" />
+                        <article className="va-collection" key={work.work_id}>
+                            <Link className="va-collection-name" href={`/vedas/${slug}`}>
+                                <span className="va-collection-deva" lang="sa">
+                                    {DEVANAGARI[code]}
+                                </span>
+                                <span className="va-collection-latin">
+                                    {work.traditional_name}
+                                </span>
+                                <span className="va-collection-recension">{RECENSION[code]}</span>
                             </Link>
+
+                            <div className="va-collection-body">
+                                <p className="va-collection-structure">{STRUCTURE[code]}</p>
+                                <p className="va-collection-limit">{NOT_HELD[code]}</p>
+                                <Action href={`/vedas/${slug}`}>
+                                    Read the {work.traditional_name}
+                                </Action>
+                            </div>
+
+                            <dl className="va-facts">
+                                <div className="va-fact">
+                                    <dt>Verses</dt>
+                                    <dd>
+                                        <strong>{number(total)}</strong>
+                                    </dd>
+                                </div>
+                                <div
+                                    className={`va-fact${translated === 0 ? " is-none" : ""}`}
+                                >
+                                    <dt>Translated</dt>
+                                    <dd>
+                                        <strong>
+                                            {translated === 0 ? "none" : number(translated)}
+                                        </strong>
+                                    </dd>
+                                </div>
+                                <div
+                                    className={`va-fact${audioCount === 0 ? " is-none" : ""}`}
+                                >
+                                    <dt>Recited</dt>
+                                    <dd>
+                                        <strong>
+                                            {audioCount === 0
+                                                ? "none"
+                                                : (number(audioCount) ?? "not read")}
+                                        </strong>
+                                    </dd>
+                                </div>
+                            </dl>
                         </article>
                     );
                 })}

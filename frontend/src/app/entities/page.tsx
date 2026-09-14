@@ -1,7 +1,5 @@
-import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 import { LoadFailure } from "@/components/empty-state";
-import { PageHeading } from "@/components/page-heading";
 import { Caveat, CaveatList } from "@/components/status";
 import { load, type EntityInventory } from "@/lib/api";
 import { humanizePredicate, titleCase } from "@/lib/knowledge";
@@ -77,17 +75,21 @@ export default async function EntitiesPage() {
     );
 
     return (
-        <div className="shell page">
-            <PageHeading
-                title="People, ideas and things"
-                description="The curated knowledge types around the texts. Counts describe this graph, not an exhaustive Vedic taxonomy."
-            />
+        <div className="va-page">
+            <header className="va-page-head">
+                <h1>People, ideas and things.</h1>
+                <p>
+                    The curated knowledge types around the texts. Every count describes this
+                    graph rather than an exhaustive Vedic taxonomy: a type with eight members is
+                    a selection, and the type&rsquo;s own page says what it covers.
+                </p>
+            </header>
 
             <Caveat title="Deities are elsewhere">
-                Deities are not served by this generic surface, because resolving the traditional
+                Deities are not served by this generic surface, because resolving the tradition&rsquo;s
                 dedication slot into actual gods is a contract only the deity pages apply.{" "}
                 <Link className="text-link" href="/devatas">
-                    Open the deity atlas
+                    Open the deity index
                 </Link>
             </Caveat>
 
@@ -106,23 +108,32 @@ export default async function EntitiesPage() {
                       ]
                     : []),
             ].map((group) => (
-                <section className="entity-group" key={group.title}>
-                    <div className="section-heading small">
-                        <h2>{group.title}</h2>
-                        <p>{group.note}</p>
-                    </div>
-                    <div className="type-grid">
+                <section className="va-group entity-group" key={group.title}>
+                    <h2>
+                        {group.title}
+                        <span>{group.items.length} types</span>
+                    </h2>
+                    <p>{group.note}</p>
+                    <ul className="va-index">
                         {group.items.map((type) =>
                             type ? (
-                                <Link href={`/entities/${type.slug}`} key={type.slug}>
-                                    <span>{type.count?.toLocaleString() ?? "—"}</span>
-                                    <h3>{titleCase(humanizePredicate(type.type))}</h3>
-                                    {type.note && <p>{type.note}</p>}
-                                    <ArrowRight size={16} aria-hidden="true" />
-                                </Link>
+                                <li key={type.slug}>
+                                    <Link href={`/entities/${type.slug}`}>
+                                        <span className="va-index-name">
+                                            <strong>
+                                                {titleCase(humanizePredicate(type.type))}
+                                            </strong>
+                                        </span>
+                                        <span className="va-index-note">{type.note ?? ""}</span>
+                                        <span className="va-index-figure">
+                                            {type.count?.toLocaleString("en-GB") ?? "not read"}
+                                            <small>registered</small>
+                                        </span>
+                                    </Link>
+                                </li>
                             ) : null,
                         )}
-                    </div>
+                    </ul>
                 </section>
             ))}
 

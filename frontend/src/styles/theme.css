@@ -237,7 +237,11 @@
 
     --font-display: var(--va-font-display);
     --font-ui: var(--va-font-ui);
-    --font-sanskrit: var(--va-font-sanskrit);
+    /* Charis SIL. `--va-font-sanskrit` was never declared, so this shim resolved to nothing
+       and would have dropped any consumer to the inherited face - the Phase 2 failure again.
+       Nothing consumes it today; it is pointed at the reading face so that it is true if
+       anything ever does. */
+    --font-sanskrit: var(--va-font-iast);
     --font-mono: var(--va-font-mono);
 
     --radius-xs: var(--va-radius-xs);

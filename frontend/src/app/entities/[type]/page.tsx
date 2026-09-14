@@ -1,7 +1,5 @@
-import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 import { LoadFailure, NothingHere } from "@/components/empty-state";
-import { PageHeading } from "@/components/page-heading";
 import { Caveat, CaveatList } from "@/components/status";
 import { routeId, encoded, load, type EntityListResponse } from "@/lib/api";
 import { conditionLabel, conditionNote, humanizePredicate, titleCase } from "@/lib/knowledge";
@@ -55,16 +53,17 @@ export default async function EntityTypePage({ params, searchParams }: Params) {
     const title = titleCase(humanizePredicate(type));
 
     return (
-        <div className="shell page">
-            <PageHeading
-                title={title}
-                description={
-                    TYPE_INTRO[type] ??
-                    "A curated, evidence-aware list from the frozen product graph."
-                }
-                backHref="/entities"
-                backLabel="All entity types"
-            />
+        <div className="va-page">
+            <header className="va-page-head">
+                <Link className="va-work-back" href="/entities">
+                    All entity types
+                </Link>
+                <h1>{title}</h1>
+                <p>
+                    {TYPE_INTRO[type] ??
+                        "A curated, evidence-aware list from the frozen product graph."}
+                </p>
+            </header>
 
             {isCondition && (
                 <>
@@ -88,44 +87,49 @@ export default async function EntityTypePage({ params, searchParams }: Params) {
             )}
 
             {data.items?.length ? (
-                <div className="entity-index">
+                <ul className="va-index entity-index">
                     {data.items.map((item) => (
-                        <Link
-                            href={`/entities/${type}/${encoded(item.id)}`}
-                            className="entity-index-row"
-                            key={item.id}
-                        >
-                            <div>
-                                <span
-                                    className={
-                                        isCondition
-                                            ? `condition-kind kind-${(item.kind ?? "").toLowerCase()}`
-                                            : undefined
-                                    }
-                                >
-                                    {isCondition
-                                        ? conditionLabel(item.kind)
-                                        : item.is_seer === false
-                                          ? `not a seer: ${humanizePredicate(item.non_seer_kind)}`
-                                          : (item.subtitle ?? humanizePredicate(item.type))}
+                        <li className="entity-index-row" key={item.id}>
+                            <Link href={`/entities/${type}/${encoded(item.id)}`}>
+                                <span className="va-index-name">
+                                    <strong>{item.display_label}</strong>
+                                    {/*
+                                     * The kind keeps its own class on the condition list. A
+                                     * threat is a hostile agent the texts guard against and
+                                     * not a disease, and the row has to say which it is
+                                     * before a reader reads the description under it.
+                                     */}
+                                    <span
+                                        className={
+                                            isCondition
+                                                ? `condition-kind kind-${(item.kind ?? "").toLowerCase()}`
+                                                : "va-index-kind"
+                                        }
+                                    >
+                                        {isCondition
+                                            ? conditionLabel(item.kind)
+                                            : item.is_seer === false
+                                              ? `not a seer: ${humanizePredicate(item.non_seer_kind)}`
+                                              : (item.subtitle ?? humanizePredicate(item.type))}
+                                    </span>
                                 </span>
-                                <h2>{item.display_label}</h2>
-                                {item.short_description && <p>{item.short_description}</p>}
-                            </div>
-                            <div className="certainty-mini">
-                                {item.passage_count == null ? (
-                                    <span>passage count not established</span>
-                                ) : (
-                                    <>
-                                        <strong>{item.passage_count.toLocaleString()}</strong>
-                                        <span>linked passages</span>
-                                    </>
+                                {item.short_description && (
+                                    <span className="va-index-note">{item.short_description}</span>
                                 )}
-                            </div>
-                            <ArrowRight size={18} aria-hidden="true" />
-                        </Link>
+                                <span className="va-index-figure">
+                                    {item.passage_count == null ? (
+                                        <small>passage count not established</small>
+                                    ) : (
+                                        <>
+                                            {item.passage_count.toLocaleString("en-GB")}
+                                            <small>linked passages</small>
+                                        </>
+                                    )}
+                                </span>
+                            </Link>
+                        </li>
                     ))}
-                </div>
+                </ul>
             ) : (
                 <NothingHere
                     title="Nothing is registered under this type yet"

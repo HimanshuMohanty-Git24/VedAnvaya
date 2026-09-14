@@ -1,0 +1,948 @@
+/* ============================================================================
+   The reader.
+
+   One rule governs everything here: the verse is the protagonist and the
+   interface is the margin. The build this replaces put the verse in a bordered
+   card, the player in a bordered card, the witnesses in a bordered card and the
+   apparatus in six more, so the text became one object among ten of equal
+   weight. Containment is now reserved for the two places where something really
+   is a separate object: the recitation panel and the evidence drawer.
+
+   What carries structure instead is what carries it on a folio: rules, space,
+   and a change of size.
+   ============================================================================ */
+
+.va-reader {
+    --va-reader-measure: 34rem;
+    padding-bottom: var(--va-space-5xl);
+}
+
+/* ------------------------------------------------------------- breadcrumb - */
+
+.va-reader-where {
+    width: min(100% - (2 * var(--va-shell-gutter)), var(--va-shell-max));
+    margin-inline: auto;
+    padding-block: var(--va-space-xl) 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--va-space-sm);
+    font-size: var(--va-text-xs);
+    color: var(--va-text-tertiary);
+}
+
+.va-reader-where a {
+    color: inherit;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--va-space-2xs);
+    transition: var(--va-transition-colors);
+}
+
+.va-reader-where a:hover {
+    color: var(--va-accent-text);
+}
+
+/* The level name is the apparatus speaking, the number is the address. They are set
+   differently so a reader can skim the numbers without reading the words again. */
+.va-reader-where a em {
+    font-style: normal;
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    font-size: 0.85em;
+    color: var(--va-text-tertiary);
+}
+
+.va-reader-where a strong {
+    font-weight: var(--va-weight-medium);
+    font-variant-numeric: tabular-nums;
+    color: var(--va-text-secondary);
+}
+
+.va-reader-where span[aria-hidden] {
+    color: var(--va-line-strong);
+}
+
+/* ----------------------------------------------------------------- layout - */
+
+.va-reader-layout {
+    width: min(100% - (2 * var(--va-shell-gutter)), var(--va-shell-max));
+    margin-inline: auto;
+    padding-top: var(--va-space-xl);
+    display: grid;
+    gap: var(--va-space-4xl);
+}
+
+@media (min-width: 62rem) {
+    .va-reader-layout {
+        /*
+         * The reading column takes its width from the text, not from a fraction of the
+         * viewport, and the apparatus takes what is left up to a limit. That is the way a
+         * critical edition is set: the measure is fixed by legibility and the margin varies.
+         */
+        grid-template-columns: minmax(0, 1fr) minmax(17rem, 21rem);
+        gap: var(--va-space-5xl);
+        align-items: start;
+    }
+}
+
+/* --------------------------------------------------------------- citation - */
+
+.va-reader-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--va-space-lg);
+    padding-bottom: var(--va-space-lg);
+}
+
+.va-reader-veda {
+    margin: 0 0 var(--va-space-2xs);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-accent-text);
+}
+
+.va-reader-title {
+    margin: 0;
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-3xl);
+    font-weight: var(--va-weight-regular);
+    line-height: var(--va-leading-flat);
+    letter-spacing: var(--va-tracking-display);
+    font-variant-numeric: tabular-nums;
+    font-optical-sizing: auto;
+}
+
+/* ------------------------------------------------------------- the verse - */
+
+/*
+ * The verse block.
+ *
+ * No border, no background, no radius. What frames it is a corner mark at the head and a
+ * rule at the foot, which is how a folio frames its text: the ruling is on the page, not
+ * around the words.
+ */
+.va-verse {
+    position: relative;
+    margin: 0;
+    padding: var(--va-space-xl) 0 var(--va-space-2xl);
+    border-bottom: var(--va-rule-quiet);
+}
+
+/*
+ * The manuscript corner, drawn rather than placed.
+ *
+ * The supplied ornament is a 76 KB raster with the ink baked in, and what it is a picture of
+ * is a ruled corner with a marked intersection. Two borders and a diamond do the same job,
+ * take the ink colour in dark mode, and cost nothing. It appears once on the page, here,
+ * because an ornament used twice stops being an accent.
+ */
+.va-verse::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    inset-inline: 0;
+    height: var(--va-border-width);
+    background: var(--va-line-strong);
+}
+
+/* The rubric mark sits on the rule at its start, where a scribe would mark the head of a
+   line. Placed outside the column it read as a stray diamond floating beside the title. */
+.va-verse::after {
+    content: "";
+    position: absolute;
+    top: -3.5px;
+    inset-inline-start: 0;
+    width: 8px;
+    height: 8px;
+    background: var(--va-accent-base);
+    rotate: 45deg;
+}
+
+.va-verse-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--va-space-md);
+    margin-bottom: var(--va-space-lg);
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-verse .sanskrit {
+    margin: 0;
+    max-inline-size: var(--va-reader-measure);
+}
+
+/*
+ * Verse size is set here rather than taken from the token, because this is the one place in
+ * the product where the Sanskrit is the subject rather than a quotation. The ceiling is
+ * lower than it looks: accented IAST carries marks above and below the line, and past about
+ * 1.9rem a long pada starts breaking in places the metre does not.
+ */
+.va-verse .sanskrit {
+    font-size: clamp(1.22rem, 1rem + 0.95vw, 1.72rem);
+}
+
+/* --------------------------------------------------------------- witnesses - */
+
+/*
+ * Other witnesses.
+ *
+ * Previously a collapsed box with a count in a badge, which told a reader there was a number
+ * of something without saying what. A witness is an editorial fact: this text, as this source
+ * prints it. So each one is stated, and the disclosure names what it holds.
+ */
+.va-witnesses,
+.va-witnesses.witness-block {
+    margin-top: var(--va-space-2xl);
+    padding: 0;
+    background: none;
+    border: 0;
+    border-radius: 0;
+}
+
+.va-witnesses > summary {
+    display: flex;
+    align-items: baseline;
+    gap: var(--va-space-sm);
+    cursor: pointer;
+    list-style: none;
+    font-size: var(--va-text-sm);
+    color: var(--va-text-secondary);
+    transition: var(--va-transition-colors);
+}
+
+.va-witnesses > summary::-webkit-details-marker {
+    display: none;
+}
+
+.va-witnesses > summary::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-inline-end: var(--va-border-width) solid currentColor;
+    border-block-end: var(--va-border-width) solid currentColor;
+    rotate: -45deg;
+    translate: 0 -2px;
+    transition: var(--va-transition-transform);
+}
+
+.va-witnesses[open] > summary::before {
+    rotate: 45deg;
+}
+
+.va-witnesses > summary:hover {
+    color: var(--va-accent-text);
+}
+
+.va-witness {
+    margin-top: var(--va-space-xl);
+    padding-inline-start: var(--va-space-lg);
+    border-inline-start: var(--va-border-width) solid var(--va-line-hairline);
+}
+
+.va-witness .sanskrit {
+    margin: var(--va-space-sm) 0 0;
+    font-size: var(--va-text-sanskrit-inline);
+    color: var(--va-text-secondary);
+}
+
+/* ------------------------------------------------------------ translation - */
+
+.va-translation {
+    margin-top: var(--va-space-3xl);
+}
+
+.va-translation h2,
+.va-reading-heading {
+    margin: 0 0 var(--va-space-lg);
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-translation figure {
+    margin: 0 0 var(--va-space-xl);
+}
+
+.va-translation blockquote {
+    margin: 0;
+    max-inline-size: var(--va-reader-measure);
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-reading);
+    line-height: var(--va-leading-prose);
+    color: var(--va-text-primary);
+    font-optical-sizing: auto;
+}
+
+.va-translation figcaption {
+    margin-top: var(--va-space-md);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--va-space-2xs) var(--va-space-md);
+    font-size: var(--va-text-xs);
+    color: var(--va-text-tertiary);
+}
+
+/* --------------------------------------------------------- parallel entry - */
+
+/*
+ * The parallel is an editorial statement, not a call to action in a box: this wording stands
+ * somewhere else, and here is where. The rule above it is the separator; the arrow is the
+ * only ornament.
+ */
+.va-parallel {
+    display: grid;
+    gap: var(--va-space-2xs);
+    margin-top: var(--va-space-2xl);
+    padding-top: var(--va-space-lg);
+    border-top: var(--va-rule-feature);
+    color: inherit;
+    text-decoration: none;
+    max-inline-size: var(--va-reader-measure);
+}
+
+.va-parallel strong {
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-xl);
+    font-weight: var(--va-weight-regular);
+    color: var(--va-text-primary);
+    transition: var(--va-transition-colors);
+}
+
+.va-parallel:hover strong {
+    color: var(--va-accent-text);
+}
+
+.va-parallel small {
+    font-size: var(--va-text-sm);
+    color: var(--va-text-tertiary);
+}
+
+/* ------------------------------------------------------------ adjacent nav - */
+
+.va-reader-adjacent {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: start;
+    justify-content: space-between;
+    gap: var(--va-space-lg);
+    margin-top: var(--va-space-4xl);
+    padding-top: var(--va-space-lg);
+    border-top: var(--va-rule-quiet);
+}
+
+.va-reader-adjacent a {
+    display: grid;
+    gap: 2px;
+    color: inherit;
+    text-decoration: none;
+}
+
+.va-reader-adjacent a:last-child {
+    text-align: end;
+}
+
+.va-reader-adjacent small {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--va-space-2xs);
+    white-space: nowrap;
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-reader-adjacent a span {
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-lg);
+    font-variant-numeric: tabular-nums;
+    transition: var(--va-transition-colors);
+}
+
+.va-reader-adjacent a:hover span {
+    color: var(--va-accent-text);
+}
+
+.va-reader-edge {
+    margin: 0;
+    max-width: 34ch;
+    font-size: var(--va-text-xs);
+    color: var(--va-text-tertiary);
+}
+
+/* ------------------------------------------------------------- apparatus - */
+
+/*
+ * The apparatus rail.
+ *
+ * Previously a tab bar over six bordered cards, which is the shape of an admin panel. It is
+ * now what a margin apparatus is: headed groups of rows, separated by rules. Nothing here is
+ * a card, because none of it is a separate object; it is all commentary on the one text.
+ */
+.va-apparatus {
+    display: grid;
+    gap: var(--va-space-2xl);
+    align-content: start;
+}
+
+/*
+ * The rail travels as one object.
+ *
+ * This was briefly two sticky boxes, one inside the other, and the failure is worth recording
+ * because it is invisible until you scroll: a sticky element does not leave the flow, it is
+ * painted at an offset from where it sits. So the apparatus slid down over the actions below
+ * it while they stayed put, and the graph link ended up printed across the deity rows.
+ *
+ * The shape that works is the ordinary one: an outer column stretched to the full height of
+ * the row, giving sticky something to travel through, and a single sticky wrapper inside it
+ * holding everything that should travel.
+ *
+ * The wrapper is deliberately not capped at the window height. Capping it and scrolling its
+ * overflow is the usual advice, and it was tried here, but it hides the foot of the apparatus
+ * behind a second scrollbar at exactly the moment the page itself has stopped scrolling.
+ * Uncapped, sticky releases the rail when it reaches the end of the reading column, the rail
+ * travels up with it, and a long apparatus reads to its end on the page scroll alone. No
+ * inner scrollbar, and nothing out of reach.
+ *
+ * `.sticky-aside` and its `top: 92px` come from the pre-VedAnvaya stylesheet and are still
+ * load-bearing on the work and profile pages, so they are corrected here rather than there.
+ */
+@media (min-width: 62rem) {
+    .va-reader-layout .sticky-aside {
+        position: static;
+        align-self: stretch;
+    }
+
+    .va-rail {
+        position: sticky;
+        top: calc(var(--va-header-height) + var(--va-space-lg));
+    }
+}
+
+.va-rail {
+    display: grid;
+    gap: var(--va-space-2xl);
+    align-content: start;
+}
+
+.va-apparatus-group {
+    display: grid;
+    gap: var(--va-space-md);
+}
+
+.va-apparatus-group > h2 {
+    margin: 0;
+    padding-bottom: var(--va-space-sm);
+    border-bottom: var(--va-border-width) solid var(--va-line-strong);
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-apparatus-note {
+    margin: 0;
+    font-size: var(--va-text-xs);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-tertiary);
+}
+
+/*
+ * One row of apparatus: what kind of thing it is, what it is, and on whose authority.
+ *
+ * A three-part row rather than a card, because the three parts are a single sentence read
+ * top to bottom, and a border around them invites the eye to treat them as a unit to be
+ * compared with the next unit rather than as a line to be read.
+ */
+.va-row {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    padding: var(--va-space-sm) 0;
+    border-bottom: var(--va-rule-quiet);
+    color: inherit;
+    text-decoration: none;
+}
+
+.va-row:last-child {
+    border-bottom: 0;
+}
+
+.va-row-kind {
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+/*
+ * The verse face, not the display face.
+ *
+ * These values are entity labels, and entity labels in this corpus are Sanskrit: gayatri,
+ * hotr, yajna, vaisvamitro madhucchandah. Set in Fraunces the macron on gayatri detached and
+ * landed after the word, which is the Phase 2 finding exactly, and it reappeared here the
+ * moment a heading style was applied to a field that holds Sanskrit. Charis covers the marks
+ * and places them, and is a text serif, so the rail keeps its editorial voice.
+ */
+.va-row-value {
+    font-family: var(--va-font-iast);
+    font-size: var(--va-text-lg);
+    line-height: var(--va-leading-tight);
+    color: var(--va-text-primary);
+    transition: var(--va-transition-colors);
+}
+
+a.va-row:hover .va-row-value {
+    color: var(--va-accent-text);
+}
+
+.va-row-note {
+    font-size: var(--va-text-xs);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-tertiary);
+}
+
+/*
+ * Certainty, as a word rather than a coloured pill.
+ *
+ * The old treatment was a filled chip, which reads as a status badge on a dashboard and
+ * makes three rows of apparatus look like three alerts. The claim it carries is real, so it
+ * keeps a mark: a dotted underline, which the token layer reserves for "derived, not stated",
+ * and which does not rely on colour to be seen.
+ */
+.va-row-certainty {
+    order: 1;
+    margin-top: 2px;
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+    border-bottom: var(--va-border-dotted);
+    padding-bottom: 1px;
+    justify-self: start;
+}
+
+.va-row[data-certainty="ambiguous"] .va-row-certainty {
+    color: var(--va-tone-insufficient);
+    border-bottom-style: dashed;
+}
+
+/* ----------------------------------------------------------- rail actions - */
+
+.va-apparatus-actions {
+    display: grid;
+    gap: var(--va-space-md);
+    padding-top: var(--va-space-lg);
+    border-top: var(--va-rule-feature);
+}
+
+.va-apparatus-actions .va-action,
+.va-apparatus-actions .ask-about-quiet,
+.va-apparatus-actions button {
+    justify-self: start;
+}
+
+/* Both rail actions are the same object at different weights, so they are set alike. */
+.va-apparatus-actions .ask-about-quiet {
+    padding-bottom: 3px;
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-sm);
+    color: var(--va-text-secondary);
+    text-decoration: none;
+    border-bottom: var(--va-border-width) solid var(--va-line-strong);
+    transition: var(--va-transition-colors);
+}
+
+.va-apparatus-actions .ask-about-quiet:hover {
+    color: var(--va-text-primary);
+    border-bottom-color: var(--va-text-primary);
+}
+
+/* ------------------------------------------------------------- footnotes - */
+
+.va-reader-footnotes {
+    width: min(100% - (2 * var(--va-shell-gutter)), var(--va-shell-max));
+    margin: var(--va-space-4xl) auto 0;
+    display: grid;
+    gap: var(--va-space-md);
+    max-width: var(--va-measure-wide);
+}
+
+/* ------------------------------------------------------------ responsive - */
+
+@media (max-width: 61.99rem) {
+    .va-reader-layout {
+        gap: var(--va-space-3xl);
+    }
+
+    /*
+     * On a phone the apparatus follows the text rather than sitting beside it, and its
+     * groups collapse. Stacking the desktop rail as a column of open sections puts twenty
+     * rows between the translation and the next verse, which is the thing a reader is most
+     * likely to want next.
+     */
+    .va-apparatus-group > h2 {
+        padding-block: var(--va-space-sm);
+    }
+
+    .va-verse::before,
+    .va-verse::after {
+        inset-inline-start: 0;
+    }
+
+    .va-verse {
+        padding-top: var(--va-space-2xl);
+    }
+}
+
+/* ============================================================================
+   The recitation player.
+
+   One of the two places on this page where containment is right: a recording is
+   a separate object from the text, with its own source, its own licence and its
+   own failure mode. So it keeps a surface. What it does not keep is the
+   appearance of a media app.
+   ============================================================================ */
+
+section.recitation {
+    margin-top: var(--va-space-2xl);
+    padding: var(--va-space-lg) var(--va-space-xl);
+    max-inline-size: var(--va-reader-measure);
+    background: var(--va-surface-raised);
+    border: var(--va-border-hairline);
+    border-radius: var(--va-radius-sm);
+}
+
+.recitation-scope {
+    display: flex;
+    align-items: center;
+    gap: var(--va-space-sm);
+    margin: 0 0 var(--va-space-md);
+    font-size: var(--va-text-xs);
+    color: var(--va-text-tertiary);
+}
+
+.recitation-transport {
+    display: flex;
+    align-items: center;
+    gap: var(--va-space-md);
+}
+
+/*
+ * The play control: a rubric diamond, not a filled circle.
+ *
+ * The circle-with-a-triangle is the most generic object in interface design and it would be
+ * the only circle on this site. A diamond is the mark this identity already uses for "here",
+ * which is what a play control means.
+ */
+.recitation-play {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    color: var(--va-text-on-accent);
+    background: none;
+    border: 0;
+    cursor: pointer;
+    position: relative;
+    transition: var(--va-transition-transform);
+}
+
+.recitation-play::before {
+    content: "";
+    position: absolute;
+    inset: 0.3rem;
+    background: var(--va-accent-base);
+    rotate: 45deg;
+    border-radius: 2px;
+    transition: var(--va-transition-colors);
+}
+
+.recitation-play svg {
+    position: relative;
+}
+
+.recitation-play:hover::before {
+    background: var(--va-accent-hover);
+}
+
+.recitation-play:active {
+    transform: scale(0.96);
+}
+
+/* ------------------------------------------------------------ the cadence - */
+
+.recitation-track {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+    height: 2.2rem;
+    display: grid;
+    place-items: center;
+}
+
+.recitation-cadence {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    /* One step darker than the hairline. At --va-line-strong the contour was technically
+       present and practically invisible, which makes it decoration rather than a motif. */
+    color: color-mix(in srgb, var(--va-text-tertiary) 55%, transparent);
+    pointer-events: none;
+}
+
+/*
+ * The range input, made invisible but not removed.
+ *
+ * It still carries the keyboard interaction, the accessible name and the value text; only its
+ * painted parts are taken away so the cadence behind it is what a reader sees. The thumb is
+ * kept at full size and opacity, because a control you can operate but cannot locate is worse
+ * than a plain one.
+ */
+.recitation-seek {
+    position: relative;
+    width: 100%;
+    margin: 0;
+    background: none;
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+}
+
+.recitation-seek::-webkit-slider-runnable-track {
+    height: 2.2rem;
+    background: none;
+}
+
+.recitation-seek::-moz-range-track {
+    height: 2.2rem;
+    background: none;
+}
+
+.recitation-seek::-webkit-slider-thumb {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 9px;
+    height: 9px;
+    margin-top: calc(1.1rem - 4.5px);
+    rotate: 45deg;
+    background: var(--va-accent-base);
+    border: 0;
+}
+
+.recitation-seek::-moz-range-thumb {
+    width: 9px;
+    height: 9px;
+    rotate: 45deg;
+    background: var(--va-accent-base);
+    border: 0;
+}
+
+.recitation-seek:disabled {
+    cursor: default;
+}
+
+.recitation-time {
+    flex: none;
+    font-family: var(--va-font-mono);
+    font-size: var(--va-text-xs);
+    font-variant-numeric: tabular-nums;
+    color: var(--va-text-secondary);
+}
+
+/*
+ * Playback rate as a native select, deliberately.
+ *
+ * A custom listbox here would mean rebuilding keyboard support, typeahead and the mobile
+ * picker for four values. The select keeps all of that; only its frame is quietened.
+ */
+.recitation-speed select {
+    font-family: var(--va-font-mono);
+    font-size: var(--va-text-xs);
+    color: var(--va-text-secondary);
+    background: none;
+    border: var(--va-border-hairline);
+    border-radius: var(--va-radius-xs);
+    padding: 3px 4px;
+    cursor: pointer;
+}
+
+.recitation-loading {
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+/* --------------------------------------------------------- provenance ---- */
+
+.recitation-provenance {
+    margin-top: var(--va-space-lg);
+    padding-top: var(--va-space-md);
+    border-top: var(--va-rule-quiet);
+}
+
+.recitation-provenance > summary {
+    cursor: pointer;
+    list-style: none;
+    font-size: var(--va-text-xs);
+    color: var(--va-text-tertiary);
+}
+
+.recitation-provenance > summary::-webkit-details-marker {
+    display: none;
+}
+
+.recitation-provenance > summary:hover {
+    color: var(--va-accent-text);
+}
+
+.recitation-provenance dl {
+    margin: var(--va-space-md) 0 0;
+    display: grid;
+    grid-template-columns: minmax(0, 9.5rem) minmax(0, 1fr);
+    gap: var(--va-space-2xs) var(--va-space-md);
+    font-size: var(--va-text-xs);
+}
+
+.recitation-provenance dt {
+    color: var(--va-text-tertiary);
+}
+
+.recitation-provenance dd {
+    margin: 0;
+    color: var(--va-text-secondary);
+}
+
+.recitation-source-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--va-space-2xs);
+    margin-top: var(--va-space-md);
+    font-size: var(--va-text-xs);
+    color: var(--va-accent-text);
+    text-decoration: none;
+    border-bottom: var(--va-border-width) solid
+        color-mix(in srgb, var(--va-accent-text) 34%, transparent);
+}
+
+.recitation-failed {
+    display: flex;
+    align-items: start;
+    gap: var(--va-space-md);
+    color: var(--va-text-secondary);
+    font-size: var(--va-text-sm);
+}
+
+.recitation-failed strong {
+    display: block;
+    color: var(--va-text-primary);
+    font-weight: var(--va-weight-medium);
+}
+
+.recitation-failed small {
+    display: block;
+    margin-top: 2px;
+    color: var(--va-text-tertiary);
+}
+
+.recitation-media {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+}
+
+@media (max-width: 47.99rem) {
+    .recitation-provenance dl {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0;
+    }
+
+    .recitation-provenance dt {
+        margin-top: var(--va-space-sm);
+        font-size: var(--va-text-2xs);
+        letter-spacing: var(--va-tracking-eyebrow);
+        text-transform: uppercase;
+    }
+}
+
+/* ============================================================================
+   Two overrides on the stylesheet this page is migrating away from.
+
+   Both are cases where the old rule is not merely dated but says the wrong
+   thing about the content it is applied to.
+   ============================================================================ */
+
+/*
+ * The data status, beside the citation.
+ *
+ * It was a filled chip with a tinted background and a coloured border, which is the shape of
+ * a notification. What it actually reports is how well evidenced this record is, which is a
+ * standing property of the passage rather than an event, and it was the only filled object
+ * on a page of ruled type. Set as a label with a rule under it, coloured by tone, it says the
+ * same thing without claiming to be urgent.
+ *
+ * Tone is carried by colour AND by the rule's style, so the distinction survives for a reader
+ * who cannot separate the hues: solid for evidenced, dashed for insufficient, dotted for
+ * partial and unbuilt, which is the vocabulary the token layer already defines.
+ */
+.va-reader-head .knowledge-status.is-compact {
+    padding: 0 0 2px;
+    background: none;
+    border: 0;
+    border-bottom: var(--va-border-width) solid currentColor;
+    border-radius: 0;
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    gap: var(--va-space-2xs);
+}
+
+.va-reader-head .knowledge-status.is-compact svg {
+    width: 12px;
+    height: 12px;
+}
+
+.va-reader-head .knowledge-status.tone-insufficient {
+    border-bottom-style: dashed;
+}
+
+.va-reader-head .knowledge-status.tone-partial,
+.va-reader-head .knowledge-status.tone-not-built {
+    border-bottom-style: dotted;
+}
+
+/*
+ * The play control.
+ *
+ * The old rule gives it a circular filled background, and the new one draws a rubric diamond
+ * behind the glyph, so both applied at once and the result was a diamond inside a ring. The
+ * circle goes: it is the single most generic object in interface design and it would have
+ * been the only circle on this site.
+ */
+section.recitation .recitation-play {
+    background: none;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+}

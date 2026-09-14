@@ -190,6 +190,28 @@
     color: var(--va-text-tertiary);
 }
 
+/*
+ * With a note, the rule has to move.
+ *
+ * The underline belongs to the label: it is the affordance that says "this is the link". The
+ * note is a second grid row, so a border on the link box drew the rule beneath the note
+ * instead and made the gloss look like the thing you click.
+ */
+.va-action:has(.va-action-note) {
+    border-bottom-color: transparent;
+}
+
+.va-action:has(.va-action-note) .va-action-label {
+    padding-bottom: 3px;
+    border-bottom: var(--va-border-width) solid
+        color-mix(in srgb, var(--va-accent-text) 34%, transparent);
+    transition: var(--va-transition-colors);
+}
+
+.va-action:has(.va-action-note):hover .va-action-label {
+    border-bottom-color: var(--va-text-primary);
+}
+
 /* ------------------------------------------------------------ constellation - */
 
 .va-constellation-panel {

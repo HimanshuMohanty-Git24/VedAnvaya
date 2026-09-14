@@ -9,7 +9,10 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "audit:contrast": "node scripts/audit-contrast.mjs",
+    "audit:tokens": "node scripts/audit-tokens.mjs",
+    "audit": "node scripts/audit-tokens.mjs && node scripts/audit-contrast.mjs"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",

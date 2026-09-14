@@ -9,6 +9,9 @@
 @import "../styles/base.css";
 @import "../styles/shell.css";
 @import "../styles/home.css";
+@import "../styles/reader.css";
+@import "../styles/corpus.css";
+@import "../styles/profile.css";
 
 /* ============================================================
    VedaGraph design system
@@ -1776,91 +1779,6 @@ table {
     color: var(--va-accent-text);
 }
 
-/* ---------- Structure browser ---------- */
-
-.structure-browser {
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    background: var(--surface);
-    padding: 20px 22px 24px;
-}
-
-.structure-top {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 20px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid var(--line);
-    margin-bottom: 12px;
-}
-
-.structure-top h2 {
-    font-size: 1.15rem;
-}
-
-.structure-top p {
-    font-size: 0.84rem;
-    color: var(--muted);
-    margin-top: 4px;
-}
-
-.structure-top > span {
-    font-size: 0.76rem;
-    color: var(--faint);
-    white-space: nowrap;
-}
-
-.tree-row > div {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 5px 0 5px calc(var(--depth, 0) * 20px);
-    border-bottom: 1px solid color-mix(in srgb, var(--line) 55%, transparent);
-}
-
-.tree-row button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 44px;
-    min-height: 44px;
-    border: 0;
-    background: transparent;
-    color: var(--muted);
-    padding: 2px;
-}
-
-.tree-row .branch-label,
-.tree-row a {
-    display: inline-flex;
-    align-items: center;
-    justify-content: flex-start;
-    min-height: 44px;
-    flex: 1;
-    text-align: left;
-    color: var(--ink);
-    font-size: 0.9rem;
-}
-
-.tree-row a:hover,
-.tree-row .branch-label:hover {
-    color: var(--va-accent-text);
-}
-
-.tree-row > div > span:last-child {
-    font-size: 0.7rem;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
-    color: var(--faint);
-}
-
-.tree-loading {
-    padding: 6px 0 6px calc((var(--depth, 0) + 1) * 20px);
-    font-size: 0.8rem;
-    color: var(--faint);
-}
-
 /* ---------- Work and collection pages ---------- */
 
 .content-grid {
@@ -2271,70 +2189,6 @@ table {
     padding: 0 15px 12px;
     color: var(--muted);
     line-height: 1.6;
-}
-
-/* ---------- Index lists ---------- */
-
-.entity-index {
-    display: grid;
-    gap: 8px;
-}
-
-.entity-index-row {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto auto;
-    align-items: center;
-    gap: 24px;
-    padding: 18px 20px;
-    border: 1px solid var(--line);
-    border-radius: var(--radius-sm);
-    background: var(--surface);
-}
-
-.entity-index-row:hover {
-    border-color: var(--accent);
-}
-
-.entity-index-row > div:first-child > span {
-    font-size: 0.7rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--faint);
-}
-
-.entity-index-row h2 {
-    font-size: 1.16rem;
-    margin-top: 4px;
-}
-
-.entity-index-row p {
-    margin-top: 5px;
-    font-size: 0.86rem;
-    color: var(--muted);
-    max-width: 72ch;
-}
-
-.certainty-mini {
-    text-align: right;
-    min-width: 150px;
-}
-
-.certainty-mini strong {
-    display: block;
-    font-family: var(--font-reading), serif;
-    font-size: 1.3rem;
-}
-
-.certainty-mini span {
-    font-size: 0.74rem;
-    color: var(--muted);
-}
-
-.certainty-mini small {
-    display: block;
-    margin-top: 3px;
-    font-size: 0.72rem;
-    color: var(--tone-insufficient);
 }
 
 .entity-group {
@@ -4701,16 +4555,6 @@ table {
         gap: 14px;
     }
 
-    .entity-index-row {
-        grid-template-columns: 1fr auto;
-        gap: 14px;
-    }
-
-    .certainty-mini {
-        text-align: left;
-        min-width: 0;
-    }
-
     .result-row,
     .result-skeleton {
         grid-template-columns: 1fr auto;
@@ -4817,29 +4661,6 @@ table {
     }
 }
 
-.tree-level-label {
-    padding: 8px 0 4px calc((var(--depth, 0)) * 20px);
-    font-size: 0.7rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--faint);
-}
-
-.tree-more {
-    margin: 8px 0 4px calc((var(--depth, 0)) * 20px);
-    padding: 5px 12px;
-    border-radius: 999px;
-    border: 1px dashed var(--line-strong);
-    background: transparent;
-    font-size: 0.78rem;
-    color: var(--muted);
-}
-
-.tree-more:hover {
-    border-color: var(--accent);
-    color: var(--va-accent-text);
-}
-
 /* ---------- Overflow containment ----------
    Grid and flex children default to min-width:auto, which lets a wide table or a
    long unbroken token push a whole column past the viewport. */
@@ -4853,7 +4674,6 @@ table {
 .comparison-column,
 .limit-card,
 .insight-section,
-.entity-index-row > div,
 .discovery-link > span,
 .result-row > div {
     min-width: 0;
