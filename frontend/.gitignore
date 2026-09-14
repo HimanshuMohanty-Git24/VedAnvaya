@@ -46,3 +46,7 @@ next-env.d.ts
 /playwright-report/
 /.tmp/
 /qa-report.json
+
+# The intermediate world export. Reproduced by `python scripts/export_graph_world.py`
+# from the frozen store; large, and not the artifact the app loads.
+/.world/

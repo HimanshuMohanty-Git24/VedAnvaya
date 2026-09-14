@@ -1,0 +1,423 @@
+/* ================================================================ world ===
+ *
+ * The World View.
+ *
+ * The default aesthetic for a 3D graph is well established and entirely wrong for this
+ * product: a black void, neon nodes, additive bloom, a HUD of floating translucent panels.
+ * That is the visual language of a crypto network diagram, and it says the same thing every
+ * time, which is "look at how connected this is" rather than "here is what connects".
+ *
+ * So the world sits on the same paper the rest of the atlas is printed on, the nodes are
+ * matte discs in the semantic colours the token layer already declares, and the only chrome
+ * is a title, a way in by name, and a panel that does not exist until something is chosen.
+ * ========================================================================= */
+
+.va-world-stage {
+    position: relative;
+    /* The shell header is fixed; the stage takes the rest of the viewport exactly, so the
+       canvas never causes a page scroll. */
+    height: calc(100dvh - var(--va-header-height));
+    overflow: hidden;
+    background: var(--va-surface-page);
+}
+
+.va-world,
+.va-world-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.va-world-canvas {
+    cursor: crosshair;
+    touch-action: none;
+}
+
+/* ---------------------------------------------------------------- chrome - */
+
+/*
+ * Controls that recede.
+ *
+ * The chrome is a column in the top-left corner with no background of its own. It sits over
+ * paper, so it needs no scrim; giving it one would be the first floating panel, and the
+ * second is always easier than the first.
+ */
+.va-world-chrome {
+    position: absolute;
+    inset-block-start: var(--va-space-2xl);
+    inset-inline-start: var(--va-space-2xl);
+    display: grid;
+    gap: var(--va-space-lg);
+    max-width: 22rem;
+    pointer-events: none;
+}
+
+.va-world-chrome > * {
+    pointer-events: auto;
+}
+
+.va-world-kicker {
+    margin: 0 0 var(--va-space-2xs);
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-world-head h1 {
+    margin: 0;
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-2xl);
+    font-weight: var(--va-weight-regular);
+    line-height: var(--va-leading-flat);
+    color: var(--va-text-primary);
+}
+
+.va-world-find input {
+    width: 100%;
+    padding: var(--va-space-2xs) 0 var(--va-space-xs);
+    border: 0;
+    border-bottom: var(--va-border-width) solid var(--va-line-strong);
+    border-radius: 0;
+    background: none;
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-sm);
+    color: var(--va-text-primary);
+    transition: border-color var(--va-duration-base) var(--va-ease-standard);
+}
+
+.va-world-find input::placeholder {
+    color: var(--va-text-tertiary);
+    opacity: 1;
+}
+
+.va-world-find input:focus {
+    outline: none;
+    border-bottom-color: var(--va-accent-base);
+}
+
+.va-world-find > label {
+    display: block;
+    margin-bottom: var(--va-space-3xs);
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+/* ----------------------------------------------------------------- lists - */
+
+/*
+ * Results and connections share one row treatment.
+ *
+ * Both answer the same question in the same shape - a name, and what kind of thing it is -
+ * and both move the map when used. Giving them one appearance is what makes the list read as
+ * the map's index rather than as a separate search feature bolted beside it.
+ */
+.va-world-hits,
+.va-world-neighbours ul {
+    margin: var(--va-space-xs) 0 0;
+    padding: 0;
+    list-style: none;
+    max-height: 44dvh;
+    overflow-y: auto;
+    border-top: var(--va-rule-quiet);
+}
+
+.va-world-hits li,
+.va-world-neighbours li {
+    border-bottom: var(--va-rule-quiet);
+}
+
+.va-world-hits button,
+.va-world-neighbours button {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--va-space-md);
+    width: 100%;
+    padding: var(--va-space-2xs) 0;
+    border: 0;
+    background: none;
+    text-align: start;
+    cursor: pointer;
+    transition: var(--va-transition-colors);
+}
+
+.va-world-hit-name {
+    font-family: var(--va-font-iast);
+    font-size: var(--va-text-sm);
+    color: var(--va-text-primary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.va-world-hit-kind {
+    flex: none;
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-world-hits button:hover .va-world-hit-name,
+.va-world-neighbours button:hover .va-world-hit-name,
+.va-world-hits button:focus-visible .va-world-hit-name,
+.va-world-neighbours button:focus-visible .va-world-hit-name {
+    color: var(--va-accent-text);
+}
+
+.va-world-nohits,
+.va-world-neighbours-note {
+    margin: var(--va-space-xs) 0 0;
+    font-size: var(--va-text-xs);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-tertiary);
+}
+
+.va-world-neighbours {
+    margin-top: var(--va-space-md);
+    min-height: 0;
+}
+
+.va-world-neighbours h3 {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--va-space-md);
+    margin: 0;
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-world-neighbours h3 span {
+    font-family: var(--va-font-mono);
+    letter-spacing: 0;
+    text-transform: none;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ------------------------------------------------------------- feedback - */
+
+.va-world-status {
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline: 0;
+    margin: 0;
+    text-align: center;
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-sm);
+    color: var(--va-text-tertiary);
+}
+
+.va-world-status.is-failed {
+    inset-block-start: 42%;
+    max-width: var(--va-measure);
+    margin-inline: auto;
+    color: var(--va-text-secondary);
+}
+
+.va-world-status-note {
+    margin-top: var(--va-space-xs);
+    font-size: var(--va-text-xs);
+    color: var(--va-text-tertiary);
+}
+
+/* The hovered name, set as a caption at the foot rather than as a tooltip that chases the
+   cursor: a label that moves with the pointer is unreadable while the pointer is moving. */
+.va-world-hover {
+    position: absolute;
+    inset-block-end: var(--va-space-2xl);
+    inset-inline-start: var(--va-space-2xl);
+    margin: 0;
+    max-width: 28rem;
+    font-family: var(--va-font-iast);
+    font-size: var(--va-text-lg);
+    color: var(--va-text-primary);
+    pointer-events: none;
+}
+
+.va-world-stats {
+    position: absolute;
+    inset-block-end: var(--va-space-md);
+    inset-inline-end: var(--va-space-2xl);
+    margin: 0;
+    font-family: var(--va-font-mono);
+    font-size: var(--va-text-2xs);
+    font-variant-numeric: tabular-nums;
+    color: var(--va-text-tertiary);
+    pointer-events: none;
+}
+
+/* --------------------------------------------------------------- labels - */
+
+/*
+ * Names, set in the reading face.
+ *
+ * These are DOM spans rather than sprites or SDF text, and only ever a few dozen of them.
+ * At that count the browser is simply the better text renderer: it has Charis SIL, it places
+ * the combining marks correctly, it follows the theme, and none of that would survive being
+ * baked into a texture atlas.
+ */
+.va-world-labels {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    /* A containing block for the translated spans, which are positioned from the top-left. */
+    overflow: hidden;
+}
+
+.va-world-label {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    /* The translate puts the anchor at the node; this shifts the text clear of the disc. */
+    margin-inline-start: 9px;
+    margin-block-start: -0.62em;
+    max-width: 13rem;
+    font-family: var(--va-font-iast);
+    font-size: var(--va-text-xs);
+    line-height: 1.2;
+    color: var(--va-text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* Paper showing through the letterforms is what keeps these legible over a dense cloud
+       without a box or a drop shadow behind each one. */
+    text-shadow:
+        0 0 3px var(--va-surface-page),
+        0 0 6px var(--va-surface-page);
+}
+
+.va-world-label.is-strong {
+    font-size: var(--va-text-md);
+    color: var(--va-text-primary);
+}
+
+/* ---------------------------------------------------------------- panel - */
+
+/*
+ * The panel exists only when something is selected.
+ *
+ * A rail that is always there, empty, waiting to be filled, is how a map becomes a dashboard.
+ * This one arrives with a subject and leaves with it.
+ */
+.va-world-panel {
+    position: absolute;
+    inset-block: var(--va-space-2xl);
+    inset-inline-end: var(--va-space-2xl);
+    width: min(22rem, calc(100% - 4rem));
+    align-content: start;
+    display: grid;
+    gap: var(--va-space-md);
+    padding: var(--va-space-xl);
+    background: color-mix(in srgb, var(--va-surface-page) 92%, transparent);
+    border-inline-start: var(--va-border-width-accent) solid var(--va-accent-base);
+    overflow-y: auto;
+}
+
+.va-world-panel-kind {
+    margin: 0;
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-accent-text);
+}
+
+.va-world-panel h2 {
+    margin: 0;
+    font-family: var(--va-font-iast);
+    font-size: var(--va-text-xl);
+    font-weight: var(--va-weight-regular);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-primary);
+}
+
+.va-world-facts {
+    display: grid;
+    gap: var(--va-space-2xs);
+    margin: 0;
+}
+
+.va-world-facts > div {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--va-space-md);
+    padding-bottom: 2px;
+    border-bottom: var(--va-rule-quiet);
+}
+
+.va-world-facts dt {
+    font-size: var(--va-text-xs);
+    color: var(--va-text-tertiary);
+}
+
+.va-world-facts dd {
+    margin: 0;
+    font-family: var(--va-font-mono);
+    font-size: var(--va-text-xs);
+    font-variant-numeric: tabular-nums;
+    color: var(--va-text-primary);
+}
+
+.va-world-ways {
+    display: grid;
+    gap: var(--va-space-sm);
+    justify-items: start;
+    margin-top: var(--va-space-xs);
+}
+
+.va-world-ways a {
+    padding-bottom: 2px;
+    border-bottom: var(--va-border-width) solid var(--va-line-strong);
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-sm);
+    color: var(--va-text-secondary);
+    text-decoration: none;
+    transition: var(--va-transition-colors);
+}
+
+.va-world-ways a:hover {
+    color: var(--va-accent-text);
+    border-bottom-color: var(--va-accent-base);
+}
+
+/* ------------------------------------------------------------ responsive - */
+
+@media (max-width: 47.99rem) {
+    .va-world-chrome {
+        inset-block-start: var(--va-space-lg);
+        inset-inline-start: var(--va-space-lg);
+        max-width: calc(100% - 2 * var(--va-space-lg));
+    }
+
+    /* The panel becomes a sheet at the foot. A 22rem rail on a 390px screen is the screen. */
+    .va-world-panel {
+        inset-block: auto var(--va-space-lg);
+        inset-inline: var(--va-space-lg);
+        width: auto;
+        max-height: 52dvh;
+        border-inline-start: 0;
+        border-block-start: var(--va-border-width-accent) solid var(--va-accent-base);
+    }
+
+    .va-world-hover,
+    .va-world-stats {
+        display: none;
+    }
+}
