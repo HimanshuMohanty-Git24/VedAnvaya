@@ -109,7 +109,14 @@ let cached: Promise<PredicateTable> | null = null;
  *
  * Twenty-one kilobytes, most of it the long explanations that only the inspector reads. It is
  * held outside the JavaScript bundle so that changing a scholar's wording does not invalidate
- * a code chunk, and so the homepage - which draws no edges - never pays for it.
+ * a code chunk, and so a page that has no use for it does not pay for it.
+ *
+ * That last clause used to read "the homepage - which draws no edges - never pays for it", and
+ * it stopped being true when the hero became fifty real subjects with a hundred and ten real
+ * connections between them. The homepage does draw edges, and a connection the reader can see
+ * and not name is the defect the previous phase existed to fix. So the teaser does fetch this -
+ * but lazily, on the first hover over a subject, rather than at mount: a reader who scrolls
+ * past the hero without touching it still pays nothing, which is what the clause was protecting.
  */
 export function loadPredicateSemantics(signal?: AbortSignal): Promise<PredicateTable> {
     if (!cached) {

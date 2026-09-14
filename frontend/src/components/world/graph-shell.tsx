@@ -14,6 +14,13 @@ import {
     VIEW_COPY,
     type ReaderIntent,
 } from "@/lib/world/modes";
+import {
+    FAMILY_COPY,
+    FOCUS_EXPAND_STEP,
+    expandFocusBudget,
+    focusBudgetForBand,
+    useFocusNeighbourhood,
+} from "@/lib/world/focus";
 import { usePredicateSemantics } from "@/lib/world/predicates";
 import { RelationshipInspector } from "./relationship-inspector";
 import { PathTrace } from "./path-trace";
@@ -118,6 +125,8 @@ export function GraphShell() {
      * into the part of the canvas a reader can actually see.
      */
     const [safeArea, setSafeArea] = useState({ top: 0, right: 0, bottom: 0, left: 0 });
+    /** The stage, measured. Written by the same observer that measures the chrome. */
+    const [stageSize, setStageSize] = useState({ width: 0, height: 0 });
     const stageRef = useRef<HTMLDivElement>(null);
 
     const [sheetState, setSheetState] = useState<{
@@ -229,18 +238,74 @@ export function GraphShell() {
         return out;
     }, [deferred, world, labels]);
 
+    /*
+     * How many connections the reader has asked to see.
+     *
+     * Derived against the subject it was raised for, like the sheet height and the inspected
+     * relationship, so a new subject opens at the default without an effect racing the
+     * selection to reset it.
+     */
+    const [expansion, setExpansion] = useState<{ at: string; budget: number } | null>(null);
+
+    /*
+     * The budget, from the band the reader can actually see.
+     *
+     * Not from the viewport: the chrome takes the top of the canvas and the sheet takes the
+     * foot, and on a phone what is left is under half of it. `focusBudgetForBand` derives the
+     * seat count from a 44 px touch pitch around the shorter axis rather than thresholding on a
+     * width, so a short desktop band is treated as the short band it is.
+     */
+    const stageBand = useMemo(() => {
+        /* Before the first measurement the stage has no size, and a budget derived from zero
+           would be the floor rather than the default. A desktop-shaped guess is the honest
+           placeholder: the observer corrects it within a frame, and nothing is drawn yet. */
+        const width = stageSize.width || 1440;
+        const height = stageSize.height || 900;
+        return { width, height: Math.max(120, height - safeArea.top - safeArea.bottom) };
+    }, [stageSize, safeArea]);
+
+    const defaultBudget = focusBudgetForBand(stageBand.width, stageBand.height);
+    const budget =
+        expansion?.at === (state.node ?? "") ? expansion.budget : defaultBudget;
+
+    /**
+     * The curated neighbourhood. One computation, read by every surface.
+     *
+     * Both canvases, this panel, the counts and the non-visual list all read *this*, because
+     * five callers each deriving their own is how a canvas and a panel come to disagree about
+     * what a subject is attached to. It is memoised and must never be reached from a frame
+     * callback: the cost is proportional to the subject's degree, not to the budget, so the
+     * compact mobile budget looks like the cheap path and is not.
+     */
+    const focus = useFocusNeighbourhood({
+        world,
+        labels,
+        root: state.view === "FOCUS" ? selectedIndex : null,
+        budget,
+    });
+
+    /*
+     * The list beside the canvas is the canvas, in words.
+     *
+     * It used to rank the whole adjacency by degree and take the first forty, which meant the
+     * panel and the diagram were two different answers to the same question - and the panel was
+     * the clearer of the two, which a reviewer noticed and reported as the graph being worse
+     * than its own sidebar. They are one answer now. A neighbour that is on screen says so, and
+     * the ones past the budget are reached by asking for more rather than by scrolling a
+     * thousand rows in a narrow pane.
+     */
     const neighbourRows = useMemo(() => {
-        if (!selection || !world || !labels) return [];
-        return selection.neighbours
-            .map((index) => ({
-                index,
-                label: labels.labels[index] || labels.ids[index],
-                group: world.manifest.groups[world.nodeGroup[index]],
-                degree: world.nodeDegree[index],
-            }))
-            .sort((a, b) => b.degree - a.degree)
-            .slice(0, 40);
-    }, [selection, world, labels]);
+        if (!focus || !world || !labels) return [];
+        return focus.shown.map((neighbour) => ({
+            index: neighbour.node,
+            label: neighbour.label || neighbour.id,
+            group: neighbour.group,
+            degree: neighbour.degree,
+            /* Why the curation kept it. Shown to nobody; useful in a review, and the reason the
+               selection records one at all. */
+            reason: neighbour.reason,
+        }));
+    }, [focus, world, labels]);
 
     const constellation = useMemo(() => {
         if (!selection || !world?.manifest.constellations) return null;
@@ -322,6 +387,16 @@ export function GraphShell() {
         const measure = () => {
             const bounds = stage.getBoundingClientRect();
             if (bounds.width === 0 || bounds.height === 0) return;
+            /* Recorded here because the observer already has the box, and because the neighbour
+               budget is computed from it. Read from the ref during render instead, it would be a
+               size React does not know changed - so a rotation or a raised sheet would leave the
+               budget describing the previous layout. */
+            setStageSize((current) =>
+                current.width === Math.round(bounds.width) &&
+                current.height === Math.round(bounds.height)
+                    ? current
+                    : { width: Math.round(bounds.width), height: Math.round(bounds.height) },
+            );
             const narrow = bounds.width < 768;
             if (!narrow) {
                 setSafeArea((current) =>
@@ -468,8 +543,24 @@ export function GraphShell() {
              * live region must carry an event, not a state.
              */}
             <p aria-live="polite" className="sr-only" role="status">
+                {/*
+                  * What was selected, and how much of it is on screen.
+                  *
+                  * The second sentence is the addition, and it is not decoration. The drawn view
+                  * is curated, so a reader who cannot see the canvas is told what exists AND how
+                  * much of it was chosen for display - the same two figures the panel shows.
+                  * Announcing only the recorded count would describe a view nobody is looking
+                  * at; announcing only the drawn count would understate the corpus.
+                  */}
                 {selection
-                    ? `${selection.label || selection.id} selected. ${selection.degree.toLocaleString("en-GB")} recorded connections.`
+                    ? `${selection.label || selection.id} selected. ` +
+                      `${selection.degree.toLocaleString("en-GB")} recorded connections to ` +
+                      `${selection.neighbours.length.toLocaleString("en-GB")} subjects.` +
+                      (focus
+                          ? focus.truncated
+                              ? ` ${focus.shown.length} of them are drawn; the rest are in the list beside the map.`
+                              : ` All of them are drawn.`
+                          : "")
                     : ""}
             </p>
 
@@ -672,11 +763,38 @@ export function GraphShell() {
                         </p>
                     )}
 
+                    {/*
+                      * Three figures, because they are three different things.
+                      *
+                      * The panel used to show one, "Recorded connections", and the list below it
+                      * was headed "40 of 7,347" - which compares a count of subjects against a
+                      * count of edges. They are not the same quantity: 1,803 of Indra's pairs
+                      * are joined by two relationships, so the degree overstates the number of
+                      * things by a fifth, and the fraction was nonsense in the reader's
+                      * favour.
+                      *
+                      * And the drawn view is now curated, so the difference between what exists
+                      * and what is on screen has to be on the page. A reader who sees forty orbs
+                      * and no figure saying otherwise will conclude there are forty.
+                      */}
                     <dl className="va-world-facts">
                         <div>
                             <dt>Recorded connections</dt>
                             <dd>{selection.degree.toLocaleString("en-GB")}</dd>
                         </div>
+                        <div>
+                            <dt>Connected subjects</dt>
+                            <dd>{selection.neighbours.length.toLocaleString("en-GB")}</dd>
+                        </div>
+                        {focus && (
+                            <div>
+                                <dt>Shown in this view</dt>
+                                <dd>
+                                    {focus.shown.length.toLocaleString("en-GB")}
+                                    {focus.truncated ? "" : " (all of them)"}
+                                </dd>
+                            </div>
+                        )}
                         <div>
                             <dt>Type</dt>
                             <dd>{selection.type}</dd>
@@ -697,8 +815,17 @@ export function GraphShell() {
                         )}
                         {/* Changing how the graph is drawn is the reader asking for it, so it
                             is remembered like any other explicit choice. */}
+                        {/*
+                          * Named for what it does.
+                          *
+                          * This button read "Pull its connections apart", which describes a
+                          * spatial action on the neighbourhood. It switches the renderer. A
+                          * control whose label promises one thing and performs another is worse
+                          * than a plainly-named one, and re-spacing a neighbourhood is a real
+                          * action that deserves its own name rather than borrowing this one.
+                          */}
                         <button onClick={() => graph.setRenderer(spatial ? "2d" : "3d", "reader:renderer-control")} type="button">
-                            {spatial ? "Pull its connections apart" : "See where it sits"}
+                            {spatial ? "Lay it out flat" : "See it in space"}
                         </button>
                         <button
                             onClick={() => graph.setEndpoints(selection.id, state.to, "reader:trace-path")}
@@ -714,11 +841,14 @@ export function GraphShell() {
                     {neighbourRows.length > 0 && (
                         <section className="va-world-neighbours">
                             <h3>
-                                Connected subjects
+                                On screen
                                 <span>
-                                    {neighbourRows.length < selection.degree
-                                        ? `${neighbourRows.length} of ${selection.degree.toLocaleString("en-GB")}`
-                                        : String(selection.degree)}
+                                    {/* Subjects against subjects. The previous version read
+                                        "40 of 7,347", which set a count of things against a
+                                        count of relationships. */}
+                                    {focus?.truncated
+                                        ? `${neighbourRows.length} of ${focus.total.toLocaleString("en-GB")}`
+                                        : `all ${neighbourRows.length}`}
                                 </span>
                             </h3>
                             <ul>
@@ -745,6 +875,79 @@ export function GraphShell() {
                                     record page.
                                 </p>
                             )}
+                            {/*
+                              * More, in a step, from the same rounds.
+                              *
+                              * Deliberately not "show everything": a subject with seven thousand
+                              * connections has no readable everything, and the tiers are nested
+                              * because the previous set is pinned - so nothing a reader was
+                              * already looking at disappears when they ask for more. That
+                              * guarantee is what makes this safe to press twice.
+                              */}
+                            {focus?.truncated && (
+                                <button
+                                    className="va-world-more"
+                                    onClick={() =>
+                                        setExpansion({
+                                            at: state.node ?? "",
+                                            budget: expandFocusBudget(budget),
+                                        })
+                                    }
+                                    type="button"
+                                >
+                                    Show {FOCUS_EXPAND_STEP} more
+                                    <span>
+                                        {(focus.total - neighbourRows.length).toLocaleString(
+                                            "en-GB",
+                                        )}{" "}
+                                        not shown
+                                    </span>
+                                </button>
+                            )}
+                        </section>
+                    )}
+
+                    {/*
+                      * What kind of connections these are, including the kinds there are none of.
+                      *
+                      * The absent rows are the point. A reader shown only the seven families a
+                      * subject has will conclude those are the seven that exist, and on Indra
+                      * five of the twelve are absent - on a single mandala, eleven of twelve
+                      * are. A list that silently omits them lets someone infer that Indra has no
+                      * recorded metre, when the truth is that a deity node never carries one.
+                      *
+                      * The absent sentence states a fact about the record, never about
+                      * possibility, because the artifact carries no rule to check a claim about
+                      * possibility against.
+                      */}
+                    {focus && focus.rows.length > 0 && (
+                        <section className="va-world-families">
+                            <h3>Kinds of connection</h3>
+                            <dl>
+                                {focus.rows.map((row) => (
+                                    <div
+                                        data-present={row.present}
+                                        key={row.family}
+                                    >
+                                        <dt>{row.heading}</dt>
+                                        <dd>
+                                            {row.present ? (
+                                                <>
+                                                    {row.subjects.toLocaleString("en-GB")} subject
+                                                    {row.subjects === 1 ? "" : "s"}
+                                                    {row.shown > 0 && (
+                                                        <span>
+                                                            {row.shown} on screen
+                                                        </span>
+                                                    )}
+                                                </>
+                                            ) : (
+                                                FAMILY_COPY[row.family].absent
+                                            )}
+                                        </dd>
+                                    </div>
+                                ))}
+                            </dl>
                         </section>
                     )}
                 </aside>

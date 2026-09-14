@@ -65,6 +65,10 @@ const BLANK_COLOURS_MIN = 12;
 
 const INDRA = "VG%3ADEVATA%3AINDRAH";
 const AGNI = "VG%3ADEVATA%3AAGNIH";
+/* 298 connections against Indra's 7,347, and a genuinely mixed neighbourhood - five node
+   groups including a river. The comparison case for whether the curation is sane at both
+   ends, rather than only at the extreme it was tuned on. */
+const SARASVATI = "VG%3ADEVATA%3ASARASVATI";
 
 const DESKTOP = { width: 1440, height: 900 };
 const MOBILE = { width: 390, height: 844 };
@@ -110,6 +114,75 @@ const SCENES = [
         actions: [
             { type: "waitFor", selector: HERO_CANVAS },
             { type: "wait", ms: 4000 },
+        ],
+    },
+    /*
+     * The front door, as three separate claims.
+     *
+     * Dragging the hero used to navigate, and so did the click that ended an orbit, because the
+     * canvas acted on `click` and a mouse drag always ends in one. These three scenes are the
+     * proof, and they are deliberately split: one clip showing a drag that stays put, one
+     * showing a tap that selects without leaving, and one showing the only thing on the surface
+     * that is allowed to navigate. A single clip covering all three would let the interesting
+     * failure hide behind the successful part.
+     */
+    {
+        id: "home-drag-stays",
+        url: "/",
+        viewport: DESKTOP,
+        canvas: HERO_CANVAS,
+        actions: [
+            { type: "waitFor", selector: HERO_CANVAS },
+            { type: "wait", ms: 1200 },
+            { type: "drag", from: [0.3, 0.5], to: [0.72, 0.34], steps: 44, holdMs: 16 },
+            { type: "wait", ms: 600 },
+            // Released over empty space, which is where an orbit usually ends and which used
+            // to be read as a request for the whole graph.
+            { type: "drag", from: [0.5, 0.5], to: [0.12, 0.86], steps: 44, holdMs: 16 },
+            { type: "assertUrl", matches: "^[^?]*/$" },
+            { type: "assertAbsent", selector: "[data-testid='hero-selection']" },
+            { type: "wait", ms: 1500 },
+        ],
+    },
+    {
+        id: "home-tap-selects",
+        url: "/",
+        viewport: DESKTOP,
+        canvas: HERO_CANVAS,
+        actions: [
+            { type: "waitFor", selector: HERO_CANVAS },
+            { type: "wait", ms: 1500 },
+            {
+                type: "clickUntil",
+                selector: "[data-testid='hero-selection']",
+                timeout: 2000,
+                candidates: [
+                    [0.5, 0.5],
+                    [0.46, 0.48],
+                    [0.54, 0.52],
+                    [0.5, 0.44],
+                    [0.42, 0.55],
+                    [0.58, 0.45],
+                    [0.48, 0.58],
+                    [0.55, 0.4],
+                ],
+            },
+            { type: "assertUrl", matches: "^[^?]*/$" },
+            { type: "wait", ms: 2500 },
+        ],
+    },
+    {
+        id: "home-explicit-open",
+        url: "/",
+        viewport: DESKTOP,
+        canvas: HERO_CANVAS,
+        actions: [
+            { type: "waitFor", selector: HERO_CANVAS },
+            { type: "wait", ms: 1200 },
+            { type: "clickSelector", selector: ".va-world-preview-link" },
+            { type: "waitFor", selector: ".va-graph", timeout: 30_000 },
+            { type: "assertUrl", matches: "/graph" },
+            { type: "wait", ms: 3000 },
         ],
     },
     {
@@ -217,6 +290,214 @@ const SCENES = [
             ...WORLD_READY,
             { type: "waitFor", selector: ".va-graph[data-view='PATH']", timeout: 30_000 },
             { type: "wait", ms: 6000 },
+        ],
+    },
+    /*
+     * Thirty seconds in Focus, doing everything that used to break it.
+     *
+     * This is the release-blocking claim, and it is held rather than checked at the end: an
+     * assertion taken once at the finish cannot tell "it never moved" from "it moved and moved
+     * back". Orbiting, hovering, dwelling while the physics settles and raising the panel are
+     * each one of the things the product owner named, and the trace assertion at the end says
+     * not merely that the view is still Focus but that nothing ever asked it not to be.
+     */
+    {
+        id: "focus-soak-3d",
+        url: `/graph?view=focus&renderer=3d&node=${INDRA}`,
+        viewport: DESKTOP,
+        actions: [
+            ...WORLD_READY,
+            { type: "waitFor", selector: "aside.va-world-panel", timeout: 30_000 },
+            { type: "wait", ms: 2000 },
+            { type: "drag", from: [0.35, 0.5], to: [0.66, 0.4], steps: 40, holdMs: 16 },
+            { type: "hover", at: [0.5, 0.46], ms: 1200 },
+            { type: "drag", from: [0.66, 0.42], to: [0.38, 0.58], steps: 40, holdMs: 16 },
+            { type: "hover", at: [0.44, 0.54], ms: 1200 },
+            { type: "wheel", at: [0.5, 0.5], dy: -180, times: 5, gapMs: 110 },
+            { type: "wheel", at: [0.5, 0.5], dy: 180, times: 5, gapMs: 110 },
+            {
+                type: "hold",
+                ms: 30_000,
+                everyMs: 750,
+                url: `node=${INDRA}`,
+                claims: [
+                    { selector: ".va-graph", attribute: "data-view", equals: "FOCUS" },
+                    { selector: ".va-graph", attribute: "data-renderer", equals: "3d" },
+                ],
+            },
+            { type: "assertTrace" },
+        ],
+    },
+    {
+        id: "focus-soak-2d",
+        url: `/graph?view=focus&renderer=2d&node=${INDRA}`,
+        viewport: DESKTOP,
+        canvas: "canvas.va-planar-canvas",
+        actions: [
+            { type: "waitFor", selector: ".va-graph[data-renderer='2d']", timeout: 60_000 },
+            { type: "waitFor", selector: "canvas.va-planar-canvas", timeout: 60_000 },
+            { type: "wait", ms: 2500 },
+            /*
+             * The historical reproduction, deliberately slow.
+             *
+             * The planar threshold measured travel between two pointer moves rather than from
+             * the press, so a pan delivering a pixel at a time never latched: the release was
+             * read as a click, the click hit empty canvas, and the subject was discarded. Many
+             * small steps over a long hold is exactly that gesture.
+             */
+            { type: "drag", from: [0.2, 0.8], to: [0.28, 0.72], steps: 60, holdMs: 34 },
+            { type: "wait", ms: 800 },
+            {
+                type: "hold",
+                ms: 30_000,
+                everyMs: 750,
+                url: `node=${INDRA}`,
+                claims: [
+                    { selector: ".va-graph", attribute: "data-view", equals: "FOCUS" },
+                    { selector: ".va-graph", attribute: "data-renderer", equals: "2d" },
+                ],
+            },
+            { type: "assertTrace" },
+        ],
+    },
+    /* Dragging a subject moves what it is attached to, and nothing else in the world. */
+    {
+        id: "focus-drag-3d",
+        url: `/graph?view=focus&renderer=3d&node=${INDRA}`,
+        viewport: DESKTOP,
+        actions: [
+            ...WORLD_READY,
+            { type: "waitFor", selector: "aside.va-world-panel", timeout: 30_000 },
+            { type: "wait", ms: 3000 },
+            { type: "drag", from: [0.5, 0.5], to: [0.62, 0.42], steps: 36, holdMs: 22 },
+            { type: "wait", ms: 2500 },
+            { type: "drag", from: [0.62, 0.42], to: [0.44, 0.56], steps: 36, holdMs: 22 },
+            { type: "wait", ms: 3000 },
+            { type: "assertAttribute", selector: ".va-graph", attribute: "data-view", equals: "FOCUS" },
+        ],
+    },
+    {
+        id: "focus-drag-2d",
+        url: `/graph?view=focus&renderer=2d&node=${INDRA}`,
+        viewport: DESKTOP,
+        canvas: "canvas.va-planar-canvas",
+        actions: [
+            { type: "waitFor", selector: "canvas.va-planar-canvas", timeout: 60_000 },
+            { type: "wait", ms: 3000 },
+            { type: "drag", from: [0.5, 0.5], to: [0.64, 0.4], steps: 36, holdMs: 22 },
+            { type: "wait", ms: 2500 },
+            { type: "drag", from: [0.64, 0.4], to: [0.42, 0.58], steps: 36, holdMs: 22 },
+            { type: "wait", ms: 3000 },
+            { type: "assertAttribute", selector: ".va-graph", attribute: "data-view", equals: "FOCUS" },
+        ],
+    },
+    /* What the lines say, and what clicking one of them explains. */
+    {
+        id: "focus-relationships",
+        url: `/graph?view=focus&renderer=3d&node=${INDRA}`,
+        viewport: DESKTOP,
+        actions: [
+            ...WORLD_READY,
+            { type: "waitFor", selector: ".va-edge-label", timeout: 30_000 },
+            { type: "wait", ms: 3000 },
+            { type: "hover", at: [0.58, 0.44], ms: 1600 },
+            { type: "hover", at: [0.42, 0.56], ms: 1600 },
+            { type: "wait", ms: 2000 },
+        ],
+    },
+    {
+        id: "focus-edge-inspector",
+        url: `/graph?view=focus&renderer=3d&node=${INDRA}`,
+        viewport: DESKTOP,
+        actions: [
+            ...WORLD_READY,
+            { type: "waitFor", selector: ".va-edge-label", timeout: 30_000 },
+            { type: "wait", ms: 3000 },
+            { type: "clickSelector", selector: ".va-edge-label[data-pickable='true']" },
+            { type: "waitFor", selector: ".va-relationship", timeout: 15_000 },
+            { type: "wait", ms: 4000 },
+            { type: "key", key: "Escape", ms: 1200 },
+            { type: "assertAttribute", selector: ".va-graph", attribute: "data-view", equals: "FOCUS" },
+            { type: "wait", ms: 1200 },
+        ],
+    },
+    /*
+     * Leaving Focus, which only the reader may do.
+     *
+     * The clip is the counterpart of the soak: World returns, and it returns because the World
+     * control was pressed. Both claims matter - a product that never returned would be as
+     * broken as one that returned on its own.
+     */
+    {
+        id: "focus-to-world",
+        url: `/graph?view=focus&renderer=3d&node=${INDRA}`,
+        viewport: DESKTOP,
+        actions: [
+            ...WORLD_READY,
+            { type: "waitFor", selector: "aside.va-world-panel", timeout: 30_000 },
+            { type: "wait", ms: 2500 },
+            { type: "assertAttribute", selector: ".va-graph", attribute: "data-view", equals: "FOCUS" },
+            { type: "clickSelector", selector: "nav.va-graph-modes button:has-text('World')" },
+            { type: "waitFor", selector: ".va-graph[data-view='WORLD']", timeout: 15_000 },
+            { type: "assertAbsent", selector: "aside.va-world-panel" },
+            { type: "wait", ms: 3500 },
+        ],
+    },
+    /* The same subject in both themes, so the palette is judged on the same composition. */
+    {
+        id: "focus-light",
+        url: `/graph?view=focus&renderer=3d&node=${INDRA}`,
+        viewport: DESKTOP,
+        theme: "light",
+        actions: [
+            ...WORLD_READY,
+            { type: "waitFor", selector: "aside.va-world-panel", timeout: 30_000 },
+            { type: "wait", ms: 4000 },
+            { type: "drag", from: [0.4, 0.5], to: [0.6, 0.42], steps: 30, holdMs: 18 },
+            { type: "wait", ms: 2500 },
+        ],
+    },
+    {
+        id: "focus-dark",
+        url: `/graph?view=focus&renderer=3d&node=${INDRA}`,
+        viewport: DESKTOP,
+        theme: "dark",
+        actions: [
+            ...WORLD_READY,
+            { type: "waitFor", selector: "aside.va-world-panel", timeout: 30_000 },
+            { type: "wait", ms: 4000 },
+            { type: "drag", from: [0.4, 0.5], to: [0.6, 0.42], steps: 30, holdMs: 18 },
+            { type: "wait", ms: 2500 },
+        ],
+    },
+    /* A subject with an ordinary number of connections. The median node has six. */
+    {
+        id: "focus-low-degree",
+        url: `/graph?view=focus&renderer=3d&node=${SARASVATI}`,
+        viewport: DESKTOP,
+        actions: [
+            ...WORLD_READY,
+            { type: "waitFor", selector: "aside.va-world-panel", timeout: 30_000 },
+            { type: "wait", ms: 4000 },
+            { type: "drag", from: [0.4, 0.5], to: [0.6, 0.42], steps: 30, holdMs: 18 },
+            { type: "wait", ms: 2500 },
+        ],
+    },
+    {
+        id: "focus-mobile",
+        url: `/graph?view=focus&renderer=3d&node=${INDRA}`,
+        viewport: MOBILE,
+        mobile: true,
+        actions: [
+            ...WORLD_READY,
+            { type: "waitFor", selector: "aside.va-world-panel", timeout: 30_000 },
+            { type: "wait", ms: 2500 },
+            { type: "drag", from: [0.3, 0.5], to: [0.7, 0.4], steps: 34, holdMs: 18, touch: true },
+            { type: "wait", ms: 1500 },
+            { type: "clickSelector", selector: ".va-world-sheet-handle" },
+            { type: "wait", ms: 2500 },
+            { type: "assertAttribute", selector: ".va-graph", attribute: "data-view", equals: "FOCUS" },
+            { type: "wait", ms: 1500 },
         ],
     },
     {
@@ -565,6 +846,118 @@ async function runAction(page, scene, action, notes) {
             await page.keyboard.press(action.key);
             await page.waitForTimeout(action.ms ?? 400);
             return;
+
+        /*
+         * The assertions below are what make a clip evidence rather than footage.
+         *
+         * A recording of the Focus view not resetting looks exactly like a recording of the
+         * Focus view resetting if nobody watches the right second of it. So the claim is made
+         * inside the capture, the scene fails loudly when it is false, and the reviewer watches
+         * the clip to judge whether it is *beautiful* rather than to check whether it is broken.
+         */
+        case "assertAttribute": {
+            const actual = await page
+                .locator(action.selector)
+                .first()
+                .getAttribute(action.attribute);
+            if (actual !== action.equals) {
+                throw new Error(
+                    `[${scene.id}] expected ${action.selector}[${action.attribute}] to be ` +
+                        `"${action.equals}" but found "${actual}"`,
+                );
+            }
+            notes.push(`${action.attribute}="${actual}"`);
+            return;
+        }
+
+        case "assertUrl": {
+            const url = page.url();
+            if (!new RegExp(action.matches).test(url)) {
+                throw new Error(
+                    `[${scene.id}] expected the address to match /${action.matches}/ ` +
+                        `but it is ${url}`,
+                );
+            }
+            notes.push(`url ok: ${url.replace(/^https?:\/\/[^/]+/, "")}`);
+            return;
+        }
+
+        case "assertAbsent": {
+            const count = await page.locator(action.selector).count();
+            if (count !== 0) {
+                throw new Error(
+                    `[${scene.id}] expected no "${action.selector}" but found ${count}`,
+                );
+            }
+            return;
+        }
+
+        /*
+         * Hold a claim for a while, checking it throughout rather than at the end.
+         *
+         * The reported defect was a view that reverted at some unpredictable moment during an
+         * exploration. An assertion taken once at the finish cannot distinguish "it never moved"
+         * from "it moved and moved back", so this samples on an interval and names the elapsed
+         * time when it breaks. That is the difference between a soak test and a long wait.
+         */
+        case "hold": {
+            const every = action.everyMs ?? 500;
+            const began = Date.now();
+            while (Date.now() - began < action.ms) {
+                for (const claim of action.claims) {
+                    const actual = await page
+                        .locator(claim.selector)
+                        .first()
+                        .getAttribute(claim.attribute);
+                    if (actual !== claim.equals) {
+                        throw new Error(
+                            `[${scene.id}] after ${Date.now() - began}ms of holding, ` +
+                                `${claim.selector}[${claim.attribute}] became "${actual}" ` +
+                                `when it should have stayed "${claim.equals}"`,
+                        );
+                    }
+                }
+                if (action.url && !new RegExp(action.url).test(page.url())) {
+                    throw new Error(
+                        `[${scene.id}] after ${Date.now() - began}ms the address left ` +
+                            `/${action.url}/ and became ${page.url()}`,
+                    );
+                }
+                await page.waitForTimeout(every);
+            }
+            notes.push(`held every claim for ${action.ms}ms`);
+            return;
+        }
+
+        /*
+         * The semantic-state trace, read back out of the page.
+         *
+         * `useGraphState` keeps a bounded ring of every transition with the cause that asked for
+         * it, precisely so this claim can be exact. A transition into WORLD whose reason is not
+         * the reader is the defect, by definition, and so is any refusal - a refusal means a
+         * caller exists that should not.
+         */
+        case "assertTrace": {
+            const trace = await page.evaluate(() => window.__vedaGraphTrace ?? []);
+            const refused = trace.filter((entry) => entry.refused);
+            const unasked = trace.filter(
+                (entry) =>
+                    entry.to === "WORLD" &&
+                    entry.from !== "WORLD" &&
+                    !String(entry.reason).startsWith("reader:"),
+            );
+            if (refused.length > 0 || unasked.length > 0) {
+                throw new Error(
+                    `[${scene.id}] the state trace is not clean. ` +
+                        `${refused.length} refused transition(s): ` +
+                        `${JSON.stringify(refused)}. ` +
+                        `${unasked.length} unasked return(s) to World: ` +
+                        `${JSON.stringify(unasked)}`,
+                );
+            }
+            notes.push(`${trace.length} transitions, all accounted for`);
+            return;
+        }
 
         default:
             throw new Error(`[${scene.id}] unknown action type "${action.type}"`);

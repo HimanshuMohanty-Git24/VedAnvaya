@@ -307,7 +307,22 @@ export function selectRegion(state: GraphState, region: number | null): GraphSta
     return { ...state, region, node: region === null ? state.node : null };
 }
 
-export type Capability = "FULL_3D" | "REDUCED_3D" | "FLAT";
+/**
+ * What the device classifier concluded. Two classes, because two is all any consumer reads.
+ *
+ * There was a third, `REDUCED_3D`, for a device reporting two gigabytes or less. It never
+ * reached the one branch below - `FLAT` against everything else - so the low-memory Android it
+ * was written for opened in the same renderer as a workstation, and had done since the class was
+ * added. The signal behind it cannot carry a tier either: `navigator.deviceMemory` is Chromium
+ * and secure-context only, so it is absent on every browser on iOS and in Firefox, and where it
+ * is present it reports installed RAM quantised to a power of two rather than anything about the
+ * GPU. A class that fires on some cheap Androids and on no iPhone at all is not a
+ * reduced-capability path; it is a Chromium path with a misleading name.
+ *
+ * If a per-device budget is wanted, key it on viewport area, which every device reports
+ * honestly. See `capability.ts`.
+ */
+export type Capability = "FULL_3D" | "FLAT";
 
 /**
  * The renderer to open with, when the reader has not said.

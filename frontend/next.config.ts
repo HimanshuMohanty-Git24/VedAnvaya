@@ -28,6 +28,39 @@ const nextConfig: NextConfig = {
     // This is a dev-server allowlist and has no effect on a production build, which does not
     // serve /_next/hmr at all and does no origin checking of its own here.
     allowedDevOrigins: ["127.0.0.1", "localhost"],
+    /*
+     * The world artifact is cached properly. It is still not compressed.
+     *
+     * Two separate findings, and this fixes one of them. `world.bin` was served with
+     * `Cache-Control: max-age=0`, which is simply wrong about a build artifact: the filename is
+     * stable and the contents are frozen per build, so every graph visit re-fetched 2.4 MB it
+     * already had. A rebuilt artifact is a new deployment, not a stale cache, and the honest
+     * header is a long immutable one.
+     *
+     * The compression half is NOT fixed here and this header does not fix it. Measured, the
+     * file goes over the wire as 2,493,613 bytes with no `Content-Encoding`, while
+     * `world.labels.json` beside it compresses by 78% - because the built-in compression skips
+     * `application/octet-stream`. It is a packed array of little-endian numbers and compresses
+     * well: gzip -9 reaches 966 KB and brotli 808 KB, a 61% saving on the critical path of
+     * every graph visit. `Vary: Accept-Encoding` is set so that a reverse proxy or CDN which
+     * does compress it caches the two variants separately rather than serving one to both.
+     *
+     * Closing it properly means either pre-compressing at build time in `build-world.mjs` and
+     * serving the encoded variant, or doing it at the edge. Both are deployment decisions
+     * rather than a config line, so this is recorded as a known residual rather than quietly
+     * left looking solved.
+     */
+    async headers() {
+        return [
+            {
+                source: "/world/:file*",
+                headers: [
+                    { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
+                    { key: "Vary", value: "Accept-Encoding" },
+                ],
+            },
+        ];
+    },
     async rewrites() {
         const apiBase = process.env.VEDAGRAPH_API_URL ?? "http://127.0.0.1:8000";
         return [{ source: "/backend/:path*", destination: `${apiBase}/api/v1/:path*` }];

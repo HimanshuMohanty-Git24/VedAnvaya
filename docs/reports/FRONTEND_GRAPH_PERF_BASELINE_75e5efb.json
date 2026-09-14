@@ -1,0 +1,3411 @@
+{
+  "identity": {
+    "agent": "agent 9 — performance baseline",
+    "commit": "75e5efb",
+    "gitDescribe": "4c3d3e0 fix(graph): give the sheet a heading, a handle and a hint that fits the device",
+    "treeClean": false,
+    "when": "2026-09-14T12:18:45.936Z",
+    "purpose": "BEFORE baseline for the FOCUS redesign (whole adjacency -> curated ~30-50 node neighbourhood). Every row is a diff target for the AFTER run.",
+    "provenance": {
+      "servedBuild": "All reported figures come from `next start --port 3210` serving the .next produced by my own `pnpm build` at 16:41 IST from a tree git reported CLEAN at 75e5efb. `next start` serves a prebuilt output and does not recompile, so source edits made later could not reach the served bundle.",
+      "measurementsValidUntil": "17:07 IST 2026-09-14",
+      "treeCleanAtMeasurement": true,
+      "treeCleanNow": false,
+      "contamination": "This is a parallel agent wave sharing one working tree and one .next directory. From ~17:16 IST other agents began modifying frontend source (capability.ts, edge-labels.ts, edge-label-view.ts, modes.ts, predicates.ts, world-preview.tsx, graph-shell.tsx, public/data/home-world.json, globals.css, home.css, vedas pages, and two deleted loading.tsx files), and at ~17:36 IST a rebuild replaced .next underneath my running server. Every measurement attempted after ~17:16 either failed with 'the canvas never appeared' or returned a bundle missing the 584.8 KB three.js chunk. Those runs are DISCARDED, not reported.",
+      "isolationAttempted": "A pristine 75e5efb tree was extracted with `git archive` into a temp directory outside the repo and verified byte-identical for engine.ts, capability.ts, edge-labels.ts, world-preview.tsx and graph-shell.tsx. It could not be built: Turbopack rejects a junctioned node_modules ('Symlink [project]/node_modules is invalid, it points out of the filesystem root') both across volumes and on the same volume, and pnpm's symlink farm cannot be hardlink-copied. Abandoned rather than spend the remaining budget on a full install; the temp tree was removed.",
+      "harnessSelfCorrections": "Three harness bugs were found and fixed during the run, all mine, all worth recording because they are the shape of bug this surface produces: (1) waitForSelector defaults to state 'visible', and the thing under test in the hidden-renderer probe is deliberately `visibility: hidden`, so the probe waited forever for the evidence of its own subject; (2) `.va-graph` matches both the real shell and the route's empty Suspense fallback, so a selector can bind to the wrong element; (3) awaiting `response.body()` inside a Playwright `response` handler buffers every response and was observed to stall the page's own dynamic imports, which made a transfer probe report a bundle 847 KB smaller than it is."
+    }
+  },
+  "environment": {
+    "os": "Windows 11 Home Single Language 10.0.26200",
+    "cpu": "12th Gen Intel Core i5-1240P, 12 cores / 16 threads",
+    "gpu": "Intel Iris Xe Graphics, driver 32.0.101.5542, 2 GB reported",
+    "browser": "Playwright Chromium 1234, headless",
+    "browserArgs": [
+      "--use-gl=angle",
+      "--use-angle=default",
+      "--ignore-gpu-blocklist",
+      "--js-flags=--expose-gc"
+    ],
+    "glRenderer": "ANGLE (Intel, Intel(R) Iris(R) Xe Graphics (0x000046A6) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "softwareRasteriser": false,
+    "softwareNote": "Verified hardware, NOT SwiftShader. This matters twice: a software rasteriser would make every figure a floor, and capability.ts classifies a software renderer as FLAT and forces the 2D renderer, so a SwiftShader run cannot measure 3D at all. Note that scripts/bench-world.mjs defaults to SwiftShader unless --gpu is passed.",
+    "server": "next start --port 3210, production build, VEDAGRAPH_API_URL=http://127.0.0.1:8000 (backend up)",
+    "display": "60 Hz; rAF is capped there, which is why frame-interval medians pin at 16.7 ms"
+  },
+  "methods": {
+    "frameIntervalMs": "Interval between consecutive requestAnimationFrame callbacks, sampled in-page for 5000 ms after a 1500 ms warm-up that is discarded. rAF is capped at the display refresh, so a scene with headroom reads as ~16.7 ms whatever its cost; this row says whether 60 fps is held, not how much headroom is left.",
+    "drawCostMs": "renderer.render(scene, camera) followed by gl.getError() and gl.finish(), timed 40 times after 5 warm renders, at the camera the product itself flew to. gl.finish() blocks until the GPU has consumed the commands, so this includes the GPU. It is a draw cost, not a frame time, and it is the figure that has headroom in it.",
+    "pinnedDrawCostMs": "The same forced-render timing with the camera moved to a fixed distance from its existing target. Separates edge count from camera proximity, which the product's own FOCUS camera varies per subject. Caveat: the camera TARGET still differs between scenes, so two pinned figures from different subjects are not perfectly controlled.",
+    "decomposition": "The same forced-render timing with scene objects toggled via Object3D.visible, one at a time, camera unmoved. `none` is the empty-scene floor and should be subtracted. 30 timed renders after 5 warm. Nothing is edited; visible is restored afterwards.",
+    "visibleCounts": "WebGLRenderer.info.render for the last drawn frame: `points` is nodes submitted, `lines` is line segments submitted, `calls` is draw calls. Read from the renderer, not from the engine: EngineStats.drawnNodes is a hard-coded manifest constant and cannot be used (see defects).",
+    "visibleLabels": "DOM count of span.va-edge-label with inline opacity exactly '1', excluding the measuring ruler. The pool size is also reported; pool 32 means two EdgeLabelView instances are in the document (the spatial view's and the planar view's), each with a 16-span pool.",
+    "mainThreadMs": "Delta of CDP Performance.TaskDuration (and ScriptDuration / LayoutDuration / RecalcStyleDuration) across a fixed wall-clock window, converted to ms. TaskDuration is the browser's own total for main-thread tasks, so it includes the rAF callback, the render, style and layout.",
+    "selectionLatencyMs": "From WORLD 3D, settled. t0 is immediately before engine.select(22975). selectSyncMs is the synchronous return of that call. firstFrameMs is the next presented rAF. panelCommittedMs is when the side panel's text first matches /indra/i, i.e. React has committed. settledMs is when 10 consecutive frames have come in under 20 ms. Driven through the engine handle rather than a canvas click, because hitting one node of 35,370 by coordinate is not reproducible; the pick cost is measured separately as hoverPick.",
+    "hoverPickMs": "engine.hover(x, y) called 40 times at scattered canvas coordinates, timed individually. This is the screen-space bucket pick, not a raycast.",
+    "heapMB": "performance.memory.usedJSHeapSize after two explicit window.gc() calls 250 ms apart, with Chromium launched under --js-flags=--expose-gc. Without the forced collection this figure is wherever the allocator happened to be.",
+    "planarRepaints": "CanvasRenderingContext2D.prototype.clearRect wrapped with a counter before navigation. The planar renderer calls clearRect exactly once per draw(), so this count IS the repaint count. stroke/arc/fillText counts divided by it give the primitives painted per repaint.",
+    "planarCounts": "RECONSTRUCTION, not a live read: the planar component holds its graph in a React ref with no window handle, so buildNeighbourhood (ringOne 48, ringTwo 40) and buildWorldProjection (nodes 2600, edges 5200) were re-run in-page against the same artifact read through the 3D engine's world handle. Same algorithm, same inputs. The canvas pixel size IS read live.",
+    "labelCurve": "Two halves, separately stated. `project` is the engine's real projectSegmentPoints over N segments, batched 200 calls per sample to get under Chromium's 0.1 ms performance.now() coarsening, 40 samples. `dom` is a RECONSTRUCTION of EdgeLabelView.update's writes (textContent + transform + opacity over a 16-span pool), batched 50x; domNoFlush is the product's path, domWithFlush adds a forced synchronous style flush and is an upper bound. Neither half includes EdgeLabelLayout's collision placement, which the harness cannot reach.",
+    "labelBudgetAB": "End-to-end through the product's only label knob: edgeLabelBudget() returns 16 above 720 CSS px and 8 at or below, so the identical Indra FOCUS scenario was run at 1440x900 and 700x900. Canvas area changes with the width; that is a limitation of this knob, not a controlled variable.",
+    "hiddenRenderer": "WebGLRenderer.info.render.frame, three's own monotonic per-render counter, sampled 4000 ms apart. The same instrument ecc5943 reports using. info.render.calls is NOT reset when the loop stops, so a stale non-zero calls beside a zero frame delta is the expected signature of a stopped renderer. The planar side is counted by the clearRect wrapper.",
+    "capability": "probeCapability()'s own logic re-run in-page against the emulated device's real WebGL context (the module is bundled, not on window). The decisive branch is the software-rasteriser test: a SwiftShader renderer string returns FLAT, which forces 2D.",
+    "mobile": "390x844 CSS px, deviceScaleFactor 3, touch, mobile UA, CPU throttled 4x via CDP Emulation.setCPUThrottlingRate. 4x throttles the MAIN THREAD ONLY. Chromium exposes no GPU throttle, so these figures are a real Intel Iris Xe GPU behind a 4x-slower CPU, which is not any actual phone. CPU-bound costs (selection, labels, the planar renderer) transfer; the fill-rate half does not.",
+    "bundle": "Next 16.3.4 with Turbopack no longer prints a First Load JS table, so per-route figures were derived instead: every /_next/static/**.js referenced by each prerendered .next/server/app/<route>.html, summed from its ON-DISK (uncompressed) size. Over-the-wire transfer was measured separately in the browser from PerformanceResourceTiming.transferSize, which is the compressed figure."
+  },
+  "build": {
+    "command": "pnpm build (next build, Turbopack)",
+    "exit": "EXIT=0 WALL_MS=158172",
+    "wallMs": 158172,
+    "phases": {
+      "compileS": 7.6,
+      "typescriptMin": 2.2,
+      "staticPages": "24/24 in 4.0 s using 15 workers"
+    },
+    "firstLoadJsTablePrinted": false,
+    "firstLoadJsNote": "Next 16.3.4 with Turbopack no longer prints a First Load JS table, so per-route figures were derived instead: every /_next/static/**.js referenced by each prerendered .next/server/app/<route>.html, summed from its ON-DISK (uncompressed) size. Over-the-wire transfer was measured separately in the browser from PerformanceResourceTiming.transferSize, which is the compressed figure.",
+    "perRouteOnDiskJsKB": {
+      "/graph": 1244.5,
+      "/": 639.6,
+      "/vedas/[veda]": 623.6,
+      "shared baseline (most static routes)": 619.9
+    },
+    "threeJsChunk": {
+      "file": "/_next/static/chunks/098_q2v416_za.js",
+      "onDiskKB": 584.8,
+      "referencedBy": [
+        "/graph"
+      ],
+      "note": "The homepage does NOT load this in its initial bundle: WorldPreview is behind next/dynamic, so three arrives after hydration. /graph loads it up front."
+    },
+    "otherLargeChunks": [
+      {
+        "file": "1o_i_meluz1so.js",
+        "onDiskKB": 223.6,
+        "what": "next/react client runtime"
+      },
+      {
+        "file": "3agiasdri1lu_.js",
+        "onDiskKB": 156.2,
+        "what": "next app-router client"
+      },
+      {
+        "file": "0cz1d0mv5g_q7.js",
+        "onDiskKB": 110,
+        "what": "polyfills (nomodule; not loaded by a modern browser)"
+      }
+    ],
+    "staticArtifacts": [
+      {
+        "file": "world.bin",
+        "onDiskKB": 2435.2
+      },
+      {
+        "file": "world.json",
+        "onDiskKB": 17.4
+      },
+      {
+        "file": "world.labels.json",
+        "onDiskKB": 1887.2
+      },
+      {
+        "file": "world.predicates.json",
+        "onDiskKB": 20.4
+      }
+    ]
+  },
+  "rows": {
+    "world3d": {
+      "label": "WORLD, 3D spatial renderer, nothing selected",
+      "renderer": "3d",
+      "reps": 3,
+      "readyMs": {
+        "reps": [
+          675,
+          355,
+          372
+        ],
+        "median": 372,
+        "min": 355,
+        "max": 675,
+        "spreadPct": 90.1,
+        "n": 3
+      },
+      "visibleNodes": {
+        "reps": [
+          35370,
+          35370,
+          35370
+        ],
+        "median": 35370,
+        "min": 35370,
+        "max": 35370,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "visibleEdges": {
+        "reps": [
+          24000,
+          24000,
+          24000
+        ],
+        "median": 24000,
+        "min": 24000,
+        "max": 24000,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "drawCalls": {
+        "reps": [
+          3,
+          3,
+          3
+        ],
+        "median": 3,
+        "min": 3,
+        "max": 3,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "visibleEdgeLabels": {
+        "reps": [
+          0,
+          0,
+          0
+        ],
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "spreadPct": null,
+        "n": 3
+      },
+      "edgeLabelPool": {
+        "reps": [
+          16,
+          16,
+          16
+        ],
+        "median": 16,
+        "min": 16,
+        "max": 16,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "visibleNodeLabels": {
+        "reps": [
+          14,
+          14,
+          14
+        ],
+        "median": 14,
+        "min": 14,
+        "max": 14,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "frameMsMedian": {
+        "reps": [
+          16.7,
+          16.7,
+          16.7
+        ],
+        "median": 16.7,
+        "min": 16.7,
+        "max": 16.7,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "frameMsP95": {
+        "reps": [
+          16.9,
+          16.9,
+          16.9
+        ],
+        "median": 16.9,
+        "min": 16.9,
+        "max": 16.9,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "frameMsMax": {
+        "reps": [
+          17,
+          17.2,
+          17.3
+        ],
+        "median": 17.2,
+        "min": 17,
+        "max": 17.3,
+        "spreadPct": 1.8,
+        "n": 3
+      },
+      "framesSampled": {
+        "reps": [
+          300,
+          300,
+          300
+        ],
+        "median": 300,
+        "min": 300,
+        "max": 300,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "framesDrawnPer2s": {
+        "reps": [
+          121,
+          120,
+          121
+        ],
+        "median": 121,
+        "min": 120,
+        "max": 121,
+        "spreadPct": 0.8,
+        "n": 3
+      },
+      "drawCostMsMedian": {
+        "reps": [
+          3.1,
+          2.8,
+          3.9
+        ],
+        "median": 3.1,
+        "min": 2.8,
+        "max": 3.9,
+        "spreadPct": 39.3,
+        "n": 3
+      },
+      "drawCostMsP95": {
+        "reps": [
+          4.7,
+          17.1,
+          8.3
+        ],
+        "median": 8.3,
+        "min": 4.7,
+        "max": 17.1,
+        "spreadPct": 263.8,
+        "n": 3
+      },
+      "cameraDistance": {
+        "reps": [
+          2600,
+          2600,
+          2600
+        ],
+        "median": 2600,
+        "min": 2600,
+        "max": 2600,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "pinnedDrawMs900": {
+        "reps": [
+          23.3,
+          22.6,
+          22.9
+        ],
+        "median": 22.9,
+        "min": 22.6,
+        "max": 23.3,
+        "spreadPct": 3.1,
+        "n": 3
+      },
+      "pinnedDrawMs260": {
+        "reps": [
+          117.2,
+          120.4,
+          114.7
+        ],
+        "median": 117.2,
+        "min": 114.7,
+        "max": 120.4,
+        "spreadPct": 5,
+        "n": 3
+      },
+      "mainThreadMsPer2s": {
+        "reps": [
+          115.06,
+          107.3,
+          174.95
+        ],
+        "median": 115.06,
+        "min": 107.3,
+        "max": 174.95,
+        "spreadPct": 63,
+        "n": 3
+      },
+      "scriptMsPer2s": {
+        "reps": [
+          51.01,
+          47.08,
+          75.76
+        ],
+        "median": 51.01,
+        "min": 47.08,
+        "max": 75.76,
+        "spreadPct": 60.9,
+        "n": 3
+      },
+      "layoutCountPer2s": {
+        "reps": [
+          0,
+          1,
+          2
+        ],
+        "median": 1,
+        "min": 0,
+        "max": 2,
+        "spreadPct": null,
+        "n": 3
+      },
+      "styleCountPer2s": {
+        "reps": [
+          0,
+          0,
+          0
+        ],
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "spreadPct": null,
+        "n": 3
+      },
+      "heapMB": {
+        "reps": [
+          26.2,
+          26.2,
+          26.2
+        ],
+        "median": 26.2,
+        "min": 26.2,
+        "max": 26.2,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "drawDecompositionProductCamera": {
+        "all": {
+          "reps": [
+            3.1,
+            3.1,
+            3.2
+          ],
+          "median": 3.1,
+          "min": 3.1,
+          "max": 3.2,
+          "spreadPct": 3.2,
+          "n": 3
+        },
+        "emptySceneFloor": {
+          "reps": [
+            0.6,
+            0.2,
+            0.5
+          ],
+          "median": 0.5,
+          "min": 0.2,
+          "max": 0.6,
+          "spreadPct": 200,
+          "n": 3
+        },
+        "nodeCloudOnly": {
+          "reps": [
+            1.2,
+            1.1,
+            1.2
+          ],
+          "median": 1.2,
+          "min": 1.1,
+          "max": 1.2,
+          "spreadPct": 9.1,
+          "n": 3
+        },
+        "backboneEdgesOnly": {
+          "reps": [
+            2.4,
+            2.2,
+            2.4
+          ],
+          "median": 2.4,
+          "min": 2.2,
+          "max": 2.4,
+          "spreadPct": 9.1,
+          "n": 3
+        },
+        "selectionOverlayOnly": {
+          "reps": [
+            0.9,
+            0.3,
+            0.5
+          ],
+          "median": 0.5,
+          "min": 0.3,
+          "max": 0.9,
+          "spreadPct": 200,
+          "n": 3
+        },
+        "nodesPlusBackbone": {
+          "reps": [
+            3,
+            2.8,
+            3.1
+          ],
+          "median": 3,
+          "min": 2.8,
+          "max": 3.1,
+          "spreadPct": 10.7,
+          "n": 3
+        }
+      },
+      "drawDecompositionPinned700": {
+        "all": {
+          "reps": [
+            37.5,
+            38.4,
+            37.4
+          ],
+          "median": 37.5,
+          "min": 37.4,
+          "max": 38.4,
+          "spreadPct": 2.7,
+          "n": 3
+        },
+        "emptySceneFloor": {
+          "reps": [
+            0.2,
+            1,
+            0.4
+          ],
+          "median": 0.4,
+          "min": 0.2,
+          "max": 1,
+          "spreadPct": 400,
+          "n": 3
+        },
+        "nodeCloudOnly": {
+          "reps": [
+            9.8,
+            9.8,
+            9.8
+          ],
+          "median": 9.8,
+          "min": 9.8,
+          "max": 9.8,
+          "spreadPct": 0,
+          "n": 3
+        },
+        "backboneEdgesOnly": {
+          "reps": [
+            32,
+            31.8,
+            31.4
+          ],
+          "median": 31.8,
+          "min": 31.4,
+          "max": 32,
+          "spreadPct": 1.9,
+          "n": 3
+        },
+        "selectionOverlayOnly": {
+          "reps": [
+            0.2,
+            0.7,
+            1.1
+          ],
+          "median": 0.7,
+          "min": 0.2,
+          "max": 1.1,
+          "spreadPct": 450,
+          "n": 3
+        },
+        "nodesPlusBackbone": {
+          "reps": [
+            36.9,
+            38,
+            36.5
+          ],
+          "median": 36.9,
+          "min": 36.5,
+          "max": 38,
+          "spreadPct": 4.1,
+          "n": 3
+        }
+      }
+    },
+    "world2d": {
+      "label": "WORLD, 2D planar renderer, nothing selected",
+      "renderer": "2d",
+      "reps": 3,
+      "readyMs": {
+        "reps": [
+          271,
+          283,
+          298
+        ],
+        "median": 283,
+        "min": 271,
+        "max": 298,
+        "spreadPct": 10,
+        "n": 3
+      },
+      "visibleNodes": {
+        "reps": [
+          2600,
+          2600,
+          2600
+        ],
+        "median": 2600,
+        "min": 2600,
+        "max": 2600,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "visibleEdges": {
+        "reps": [
+          5200,
+          5200,
+          5200
+        ],
+        "median": 5200,
+        "min": 5200,
+        "max": 5200,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "visibleNodesMethod": "reconstruction — see methods.planarCounts",
+      "repaintsPerSec": {
+        "reps": [
+          22.7,
+          23.7,
+          22.3
+        ],
+        "median": 22.7,
+        "min": 22.3,
+        "max": 23.7,
+        "spreadPct": 6.3,
+        "n": 3
+      },
+      "strokesPerRepaint": {
+        "reps": [
+          5472,
+          5472,
+          5472
+        ],
+        "median": 5472,
+        "min": 5472,
+        "max": 5472,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "arcsPerRepaint": {
+        "reps": [
+          612,
+          612,
+          612
+        ],
+        "median": 612,
+        "min": 612,
+        "max": 612,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "textsPerRepaint": {
+        "reps": [
+          18,
+          18,
+          18
+        ],
+        "median": 18,
+        "min": 18,
+        "max": 18,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "visibleEdgeLabels": {
+        "reps": [
+          0,
+          0,
+          0
+        ],
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "spreadPct": null,
+        "n": 3
+      },
+      "edgeLabelPool": {
+        "reps": [
+          32,
+          32,
+          32
+        ],
+        "median": 32,
+        "min": 32,
+        "max": 32,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "frameMsMedian": {
+        "reps": [
+          49.9,
+          49.9,
+          49.8
+        ],
+        "median": 49.9,
+        "min": 49.8,
+        "max": 49.9,
+        "spreadPct": 0.2,
+        "n": 3
+      },
+      "frameMsP95": {
+        "reps": [
+          50.1,
+          50.2,
+          50.2
+        ],
+        "median": 50.2,
+        "min": 50.1,
+        "max": 50.2,
+        "spreadPct": 0.2,
+        "n": 3
+      },
+      "frameMsMax": {
+        "reps": [
+          67.2,
+          66.7,
+          66.7
+        ],
+        "median": 66.7,
+        "min": 66.7,
+        "max": 67.2,
+        "spreadPct": 0.7,
+        "n": 3
+      },
+      "mainThreadMsPer2s": {
+        "reps": [
+          141.87,
+          141.67,
+          145.9
+        ],
+        "median": 141.87,
+        "min": 141.67,
+        "max": 145.9,
+        "spreadPct": 3,
+        "n": 3
+      },
+      "scriptMsPer2s": {
+        "reps": [
+          101.01,
+          97.93,
+          102.33
+        ],
+        "median": 101.01,
+        "min": 97.93,
+        "max": 102.33,
+        "spreadPct": 4.5,
+        "n": 3
+      },
+      "styleCountPer2s": {
+        "reps": [
+          0,
+          0,
+          0
+        ],
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "spreadPct": null,
+        "n": 3
+      },
+      "heapMB": {
+        "reps": [
+          33,
+          48.1,
+          33
+        ],
+        "median": 33,
+        "min": 33,
+        "max": 48.1,
+        "spreadPct": 45.8,
+        "n": 3
+      },
+      "canvasPx": {
+        "bufW": 1440,
+        "bufH": 836,
+        "cssW": 1440,
+        "cssH": 836
+      }
+    },
+    "focus3dIndra": {
+      "label": "FOCUS on VG:DEVATA:INDRAH (index 22975, degree 7347), 3D",
+      "renderer": "3d",
+      "reps": 3,
+      "readyMs": {
+        "reps": [
+          273,
+          357,
+          262
+        ],
+        "median": 273,
+        "min": 262,
+        "max": 357,
+        "spreadPct": 36.3,
+        "n": 3
+      },
+      "visibleNodes": {
+        "reps": [
+          35370,
+          35370,
+          35370
+        ],
+        "median": 35370,
+        "min": 35370,
+        "max": 35370,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "visibleEdges": {
+        "reps": [
+          31347,
+          31347,
+          31347
+        ],
+        "median": 31347,
+        "min": 31347,
+        "max": 31347,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "drawCalls": {
+        "reps": [
+          3,
+          3,
+          3
+        ],
+        "median": 3,
+        "min": 3,
+        "max": 3,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "visibleEdgeLabels": {
+        "reps": [
+          6,
+          6,
+          6
+        ],
+        "median": 6,
+        "min": 6,
+        "max": 6,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "edgeLabelPool": {
+        "reps": [
+          16,
+          16,
+          16
+        ],
+        "median": 16,
+        "min": 16,
+        "max": 16,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "visibleNodeLabels": {
+        "reps": [
+          16,
+          16,
+          16
+        ],
+        "median": 16,
+        "min": 16,
+        "max": 16,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "frameMsMedian": {
+        "reps": [
+          16.7,
+          16.7,
+          16.7
+        ],
+        "median": 16.7,
+        "min": 16.7,
+        "max": 16.7,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "frameMsP95": {
+        "reps": [
+          16.9,
+          16.9,
+          16.9
+        ],
+        "median": 16.9,
+        "min": 16.9,
+        "max": 16.9,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "frameMsMax": {
+        "reps": [
+          17.1,
+          17.2,
+          17.1
+        ],
+        "median": 17.1,
+        "min": 17.1,
+        "max": 17.2,
+        "spreadPct": 0.6,
+        "n": 3
+      },
+      "framesSampled": {
+        "reps": [
+          300,
+          300,
+          300
+        ],
+        "median": 300,
+        "min": 300,
+        "max": 300,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "framesDrawnPer2s": {
+        "reps": [
+          121,
+          121,
+          121
+        ],
+        "median": 121,
+        "min": 121,
+        "max": 121,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "drawCostMsMedian": {
+        "reps": [
+          5.9,
+          5.8,
+          5.8
+        ],
+        "median": 5.8,
+        "min": 5.8,
+        "max": 5.9,
+        "spreadPct": 1.7,
+        "n": 3
+      },
+      "drawCostMsP95": {
+        "reps": [
+          17.4,
+          11.6,
+          18.3
+        ],
+        "median": 17.4,
+        "min": 11.6,
+        "max": 18.3,
+        "spreadPct": 57.8,
+        "n": 3
+      },
+      "cameraDistance": {
+        "reps": [
+          1699.7,
+          1699.7,
+          1699.7
+        ],
+        "median": 1699.7,
+        "min": 1699.7,
+        "max": 1699.7,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "pinnedDrawMs900": {
+        "reps": [
+          17.9,
+          16.9,
+          17.2
+        ],
+        "median": 17.2,
+        "min": 16.9,
+        "max": 17.9,
+        "spreadPct": 5.9,
+        "n": 3
+      },
+      "pinnedDrawMs260": {
+        "reps": [
+          81.8,
+          77.8,
+          77.5
+        ],
+        "median": 77.8,
+        "min": 77.5,
+        "max": 81.8,
+        "spreadPct": 5.5,
+        "n": 3
+      },
+      "mainThreadMsPer2s": {
+        "reps": [
+          163.14,
+          227.08,
+          256.77
+        ],
+        "median": 227.08,
+        "min": 163.14,
+        "max": 256.77,
+        "spreadPct": 57.4,
+        "n": 3
+      },
+      "scriptMsPer2s": {
+        "reps": [
+          82.33,
+          104.17,
+          145.72
+        ],
+        "median": 104.17,
+        "min": 82.33,
+        "max": 145.72,
+        "spreadPct": 77,
+        "n": 3
+      },
+      "layoutCountPer2s": {
+        "reps": [
+          2,
+          1,
+          1
+        ],
+        "median": 1,
+        "min": 1,
+        "max": 2,
+        "spreadPct": 100,
+        "n": 3
+      },
+      "styleCountPer2s": {
+        "reps": [
+          0,
+          0,
+          0
+        ],
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "spreadPct": null,
+        "n": 3
+      },
+      "heapMB": {
+        "reps": [
+          27.5,
+          42.5,
+          27.4
+        ],
+        "median": 27.5,
+        "min": 27.4,
+        "max": 42.5,
+        "spreadPct": 55.1,
+        "n": 3
+      },
+      "drawDecompositionProductCamera": {
+        "all": {
+          "reps": [
+            5.9,
+            5.7,
+            6.2
+          ],
+          "median": 5.9,
+          "min": 5.7,
+          "max": 6.2,
+          "spreadPct": 8.8,
+          "n": 3
+        },
+        "emptySceneFloor": {
+          "reps": [
+            0.6,
+            0.3,
+            0.7
+          ],
+          "median": 0.6,
+          "min": 0.3,
+          "max": 0.7,
+          "spreadPct": 133.3,
+          "n": 3
+        },
+        "nodeCloudOnly": {
+          "reps": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "median": 0.7,
+          "min": 0.7,
+          "max": 0.7,
+          "spreadPct": 0,
+          "n": 3
+        },
+        "backboneEdgesOnly": {
+          "reps": [
+            4.8,
+            4.5,
+            4.7
+          ],
+          "median": 4.7,
+          "min": 4.5,
+          "max": 4.8,
+          "spreadPct": 6.7,
+          "n": 3
+        },
+        "selectionOverlayOnly": {
+          "reps": [
+            2,
+            1.6,
+            1.8
+          ],
+          "median": 1.8,
+          "min": 1.6,
+          "max": 2,
+          "spreadPct": 25,
+          "n": 3
+        },
+        "nodesPlusBackbone": {
+          "reps": [
+            5.2,
+            4.9,
+            5.2
+          ],
+          "median": 5.2,
+          "min": 4.9,
+          "max": 5.2,
+          "spreadPct": 6.1,
+          "n": 3
+        }
+      },
+      "drawDecompositionPinned700": {
+        "all": {
+          "reps": [
+            26.4,
+            25.7,
+            25.7
+          ],
+          "median": 25.7,
+          "min": 25.7,
+          "max": 26.4,
+          "spreadPct": 2.7,
+          "n": 3
+        },
+        "emptySceneFloor": {
+          "reps": [
+            0.7,
+            0.6,
+            0.9
+          ],
+          "median": 0.7,
+          "min": 0.6,
+          "max": 0.9,
+          "spreadPct": 50,
+          "n": 3
+        },
+        "nodeCloudOnly": {
+          "reps": [
+            1.5,
+            1.5,
+            1.5
+          ],
+          "median": 1.5,
+          "min": 1.5,
+          "max": 1.5,
+          "spreadPct": 0,
+          "n": 3
+        },
+        "backboneEdgesOnly": {
+          "reps": [
+            24.4,
+            23.9,
+            23.9
+          ],
+          "median": 23.9,
+          "min": 23.9,
+          "max": 24.4,
+          "spreadPct": 2.1,
+          "n": 3
+        },
+        "selectionOverlayOnly": {
+          "reps": [
+            6.1,
+            6.2,
+            6
+          ],
+          "median": 6.1,
+          "min": 6,
+          "max": 6.2,
+          "spreadPct": 3.3,
+          "n": 3
+        },
+        "nodesPlusBackbone": {
+          "reps": [
+            24.5,
+            23.9,
+            24.4
+          ],
+          "median": 24.4,
+          "min": 23.9,
+          "max": 24.5,
+          "spreadPct": 2.5,
+          "n": 3
+        }
+      }
+    },
+    "focus2dIndra": {
+      "label": "FOCUS on VG:DEVATA:INDRAH (index 22975, degree 7347), 2D",
+      "renderer": "2d",
+      "reps": 3,
+      "readyMs": {
+        "reps": [
+          276,
+          283,
+          259
+        ],
+        "median": 276,
+        "min": 259,
+        "max": 283,
+        "spreadPct": 9.3,
+        "n": 3
+      },
+      "visibleNodes": {
+        "reps": [
+          84,
+          84,
+          84
+        ],
+        "median": 84,
+        "min": 84,
+        "max": 84,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "visibleEdges": {
+        "reps": [
+          487,
+          487,
+          487
+        ],
+        "median": 487,
+        "min": 487,
+        "max": 487,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "visibleNodesMethod": "reconstruction — see methods.planarCounts",
+      "repaintsPerSec": {
+        "reps": [
+          60.3,
+          60,
+          60
+        ],
+        "median": 60,
+        "min": 60,
+        "max": 60.3,
+        "spreadPct": 0.5,
+        "n": 3
+      },
+      "strokesPerRepaint": {
+        "reps": [
+          488,
+          488,
+          488
+        ],
+        "median": 488,
+        "min": 488,
+        "max": 488,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "arcsPerRepaint": {
+        "reps": [
+          75,
+          75,
+          75
+        ],
+        "median": 75,
+        "min": 75,
+        "max": 75,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "textsPerRepaint": {
+        "reps": [
+          18,
+          18,
+          18
+        ],
+        "median": 18,
+        "min": 18,
+        "max": 18,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "visibleEdgeLabels": {
+        "reps": [
+          9,
+          9,
+          9
+        ],
+        "median": 9,
+        "min": 9,
+        "max": 9,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "edgeLabelPool": {
+        "reps": [
+          32,
+          32,
+          32
+        ],
+        "median": 32,
+        "min": 32,
+        "max": 32,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "frameMsMedian": {
+        "reps": [
+          16.7,
+          16.7,
+          16.7
+        ],
+        "median": 16.7,
+        "min": 16.7,
+        "max": 16.7,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "frameMsP95": {
+        "reps": [
+          16.9,
+          16.9,
+          16.8
+        ],
+        "median": 16.9,
+        "min": 16.8,
+        "max": 16.9,
+        "spreadPct": 0.6,
+        "n": 3
+      },
+      "frameMsMax": {
+        "reps": [
+          17.1,
+          17.3,
+          17
+        ],
+        "median": 17.1,
+        "min": 17,
+        "max": 17.3,
+        "spreadPct": 1.8,
+        "n": 3
+      },
+      "mainThreadMsPer2s": {
+        "reps": [
+          264.53,
+          297.73,
+          250.21
+        ],
+        "median": 264.53,
+        "min": 250.21,
+        "max": 297.73,
+        "spreadPct": 19,
+        "n": 3
+      },
+      "scriptMsPer2s": {
+        "reps": [
+          121.45,
+          173.93,
+          137.1
+        ],
+        "median": 137.1,
+        "min": 121.45,
+        "max": 173.93,
+        "spreadPct": 43.2,
+        "n": 3
+      },
+      "styleCountPer2s": {
+        "reps": [
+          0,
+          0,
+          0
+        ],
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "spreadPct": null,
+        "n": 3
+      },
+      "heapMB": {
+        "reps": [
+          28.3,
+          28.3,
+          28.3
+        ],
+        "median": 28.3,
+        "min": 28.3,
+        "max": 28.3,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "canvasPx": {
+        "bufW": 1440,
+        "bufH": 836,
+        "cssW": 1440,
+        "cssH": 836
+      }
+    },
+    "focus3dLow": {
+      "label": "FOCUS on a comparison node, 3D",
+      "renderer": "3d",
+      "reps": 3,
+      "readyMs": {
+        "reps": [
+          298,
+          328,
+          250
+        ],
+        "median": 298,
+        "min": 250,
+        "max": 328,
+        "spreadPct": 31.2,
+        "n": 3
+      },
+      "visibleNodes": {
+        "reps": [
+          35370,
+          35370,
+          35370
+        ],
+        "median": 35370,
+        "min": 35370,
+        "max": 35370,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "visibleEdges": {
+        "reps": [
+          24298,
+          24298,
+          24298
+        ],
+        "median": 24298,
+        "min": 24298,
+        "max": 24298,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "drawCalls": {
+        "reps": [
+          3,
+          3,
+          3
+        ],
+        "median": 3,
+        "min": 3,
+        "max": 3,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "visibleEdgeLabels": {
+        "reps": [
+          6,
+          6,
+          6
+        ],
+        "median": 6,
+        "min": 6,
+        "max": 6,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "edgeLabelPool": {
+        "reps": [
+          16,
+          16,
+          16
+        ],
+        "median": 16,
+        "min": 16,
+        "max": 16,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "visibleNodeLabels": {
+        "reps": [
+          14,
+          14,
+          14
+        ],
+        "median": 14,
+        "min": 14,
+        "max": 14,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "frameMsMedian": {
+        "reps": [
+          16.7,
+          16.7,
+          16.7
+        ],
+        "median": 16.7,
+        "min": 16.7,
+        "max": 16.7,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "frameMsP95": {
+        "reps": [
+          16.9,
+          16.9,
+          16.9
+        ],
+        "median": 16.9,
+        "min": 16.9,
+        "max": 16.9,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "frameMsMax": {
+        "reps": [
+          17.4,
+          17.4,
+          17.6
+        ],
+        "median": 17.4,
+        "min": 17.4,
+        "max": 17.6,
+        "spreadPct": 1.1,
+        "n": 3
+      },
+      "framesSampled": {
+        "reps": [
+          300,
+          300,
+          300
+        ],
+        "median": 300,
+        "min": 300,
+        "max": 300,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "framesDrawnPer2s": {
+        "reps": [
+          121,
+          121,
+          120
+        ],
+        "median": 121,
+        "min": 120,
+        "max": 121,
+        "spreadPct": 0.8,
+        "n": 3
+      },
+      "drawCostMsMedian": {
+        "reps": [
+          7.7,
+          7.8,
+          8.6
+        ],
+        "median": 7.8,
+        "min": 7.7,
+        "max": 8.6,
+        "spreadPct": 11.7,
+        "n": 3
+      },
+      "drawCostMsP95": {
+        "reps": [
+          20.5,
+          19.5,
+          21.9
+        ],
+        "median": 20.5,
+        "min": 19.5,
+        "max": 21.9,
+        "spreadPct": 12.3,
+        "n": 3
+      },
+      "cameraDistance": {
+        "reps": [
+          1526,
+          1526,
+          1526
+        ],
+        "median": 1526,
+        "min": 1526,
+        "max": 1526,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "pinnedDrawMs900": {
+        "reps": [
+          23.8,
+          26.5,
+          28.5
+        ],
+        "median": 26.5,
+        "min": 23.8,
+        "max": 28.5,
+        "spreadPct": 19.7,
+        "n": 3
+      },
+      "pinnedDrawMs260": {
+        "reps": [
+          34.9,
+          37.8,
+          36.7
+        ],
+        "median": 36.7,
+        "min": 34.9,
+        "max": 37.8,
+        "spreadPct": 8.3,
+        "n": 3
+      },
+      "mainThreadMsPer2s": {
+        "reps": [
+          221.73,
+          286.86,
+          172.07
+        ],
+        "median": 221.73,
+        "min": 172.07,
+        "max": 286.86,
+        "spreadPct": 66.7,
+        "n": 3
+      },
+      "scriptMsPer2s": {
+        "reps": [
+          97.32,
+          122.37,
+          66.33
+        ],
+        "median": 97.32,
+        "min": 66.33,
+        "max": 122.37,
+        "spreadPct": 84.5,
+        "n": 3
+      },
+      "layoutCountPer2s": {
+        "reps": [
+          2,
+          2,
+          2
+        ],
+        "median": 2,
+        "min": 2,
+        "max": 2,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "styleCountPer2s": {
+        "reps": [
+          0,
+          0,
+          0
+        ],
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "spreadPct": null,
+        "n": 3
+      },
+      "heapMB": {
+        "reps": [
+          30.9,
+          30.9,
+          30.9
+        ],
+        "median": 30.9,
+        "min": 30.9,
+        "max": 30.9,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "drawDecompositionProductCamera": {
+        "all": {
+          "reps": [
+            7.9,
+            8.2,
+            8.2
+          ],
+          "median": 8.2,
+          "min": 7.9,
+          "max": 8.2,
+          "spreadPct": 3.8,
+          "n": 3
+        },
+        "emptySceneFloor": {
+          "reps": [
+            0.2,
+            0.3,
+            0.2
+          ],
+          "median": 0.2,
+          "min": 0.2,
+          "max": 0.3,
+          "spreadPct": 50,
+          "n": 3
+        },
+        "nodeCloudOnly": {
+          "reps": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "median": 0.7,
+          "min": 0.7,
+          "max": 0.7,
+          "spreadPct": 0,
+          "n": 3
+        },
+        "backboneEdgesOnly": {
+          "reps": [
+            6.9,
+            7.2,
+            7
+          ],
+          "median": 7,
+          "min": 6.9,
+          "max": 7.2,
+          "spreadPct": 4.3,
+          "n": 3
+        },
+        "selectionOverlayOnly": {
+          "reps": [
+            0.5,
+            0.2,
+            0.4
+          ],
+          "median": 0.4,
+          "min": 0.2,
+          "max": 0.5,
+          "spreadPct": 150,
+          "n": 3
+        },
+        "nodesPlusBackbone": {
+          "reps": [
+            7.5,
+            7.7,
+            8
+          ],
+          "median": 7.7,
+          "min": 7.5,
+          "max": 8,
+          "spreadPct": 6.7,
+          "n": 3
+        }
+      },
+      "drawDecompositionPinned700": {
+        "all": {
+          "reps": [
+            37.6,
+            35.8,
+            38.9
+          ],
+          "median": 37.6,
+          "min": 35.8,
+          "max": 38.9,
+          "spreadPct": 8.7,
+          "n": 3
+        },
+        "emptySceneFloor": {
+          "reps": [
+            0.9,
+            0.9,
+            0.2
+          ],
+          "median": 0.9,
+          "min": 0.2,
+          "max": 0.9,
+          "spreadPct": 350,
+          "n": 3
+        },
+        "nodeCloudOnly": {
+          "reps": [
+            1.2,
+            1.1,
+            1.2
+          ],
+          "median": 1.2,
+          "min": 1.1,
+          "max": 1.2,
+          "spreadPct": 9.1,
+          "n": 3
+        },
+        "backboneEdgesOnly": {
+          "reps": [
+            35.8,
+            34.3,
+            34.5
+          ],
+          "median": 34.5,
+          "min": 34.3,
+          "max": 35.8,
+          "spreadPct": 4.4,
+          "n": 3
+        },
+        "selectionOverlayOnly": {
+          "reps": [
+            1.2,
+            1.1,
+            0.4
+          ],
+          "median": 1.1,
+          "min": 0.4,
+          "max": 1.2,
+          "spreadPct": 200,
+          "n": 3
+        },
+        "nodesPlusBackbone": {
+          "reps": [
+            38,
+            35.3,
+            35
+          ],
+          "median": 35.3,
+          "min": 35,
+          "max": 38,
+          "spreadPct": 8.6,
+          "n": 3
+        }
+      }
+    },
+    "focus2dLow": {
+      "label": "FOCUS on a comparison node, 2D",
+      "renderer": "2d",
+      "reps": 3,
+      "readyMs": {
+        "reps": [
+          554,
+          539,
+          535
+        ],
+        "median": 539,
+        "min": 535,
+        "max": 554,
+        "spreadPct": 3.6,
+        "n": 3
+      },
+      "visibleNodes": {
+        "reps": [
+          87,
+          87,
+          87
+        ],
+        "median": 87,
+        "min": 87,
+        "max": 87,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "visibleEdges": {
+        "reps": [
+          560,
+          560,
+          560
+        ],
+        "median": 560,
+        "min": 560,
+        "max": 560,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "visibleNodesMethod": "reconstruction — see methods.planarCounts",
+      "repaintsPerSec": {
+        "reps": [
+          60,
+          60.3,
+          60
+        ],
+        "median": 60,
+        "min": 60,
+        "max": 60.3,
+        "spreadPct": 0.5,
+        "n": 3
+      },
+      "strokesPerRepaint": {
+        "reps": [
+          561,
+          561,
+          561
+        ],
+        "median": 561,
+        "min": 561,
+        "max": 561,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "arcsPerRepaint": {
+        "reps": [
+          63,
+          63,
+          63
+        ],
+        "median": 63,
+        "min": 63,
+        "max": 63,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "textsPerRepaint": {
+        "reps": [
+          18,
+          18,
+          18
+        ],
+        "median": 18,
+        "min": 18,
+        "max": 18,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "visibleEdgeLabels": {
+        "reps": [
+          12,
+          12,
+          12
+        ],
+        "median": 12,
+        "min": 12,
+        "max": 12,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "edgeLabelPool": {
+        "reps": [
+          32,
+          32,
+          32
+        ],
+        "median": 32,
+        "min": 32,
+        "max": 32,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "frameMsMedian": {
+        "reps": [
+          16.7,
+          16.7,
+          16.7
+        ],
+        "median": 16.7,
+        "min": 16.7,
+        "max": 16.7,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "frameMsP95": {
+        "reps": [
+          16.9,
+          16.9,
+          16.9
+        ],
+        "median": 16.9,
+        "min": 16.9,
+        "max": 16.9,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "frameMsMax": {
+        "reps": [
+          17.1,
+          17.1,
+          17.3
+        ],
+        "median": 17.1,
+        "min": 17.1,
+        "max": 17.3,
+        "spreadPct": 1.2,
+        "n": 3
+      },
+      "mainThreadMsPer2s": {
+        "reps": [
+          323.31,
+          449.4,
+          405.44
+        ],
+        "median": 405.44,
+        "min": 323.31,
+        "max": 449.4,
+        "spreadPct": 39,
+        "n": 3
+      },
+      "scriptMsPer2s": {
+        "reps": [
+          136.79,
+          198.81,
+          171.63
+        ],
+        "median": 171.63,
+        "min": 136.79,
+        "max": 198.81,
+        "spreadPct": 45.3,
+        "n": 3
+      },
+      "styleCountPer2s": {
+        "reps": [
+          108,
+          111,
+          111
+        ],
+        "median": 111,
+        "min": 108,
+        "max": 111,
+        "spreadPct": 2.8,
+        "n": 3
+      },
+      "heapMB": {
+        "reps": [
+          31.6,
+          31.6,
+          31.6
+        ],
+        "median": 31.6,
+        "min": 31.6,
+        "max": 31.6,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "canvasPx": {
+        "bufW": 1440,
+        "bufH": 836,
+        "cssW": 1440,
+        "cssH": 836
+      }
+    },
+    "comparisonNode": {
+      "id": "VG:DEVATA:SARASVATI",
+      "index": 23039,
+      "degree": 298,
+      "label": "Sarasvati"
+    },
+    "cameraResponsiveness": {
+      "method": "A real pointer drag: mouse down on the canvas centre, 90 mouse moves along a Lissajous path, mouse up. Drives OrbitControls damping and the pick-index invalidation, not a synthetic event. Frame interval sampled for 3000 ms starting with the drag.",
+      "world3dOrbitFrameMsMedian": {
+        "reps": [
+          16.7,
+          16.7,
+          16.7
+        ],
+        "median": 16.7,
+        "min": 16.7,
+        "max": 16.7,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "world3dOrbitFrameMsP95": {
+        "reps": [
+          16.9,
+          16.8,
+          16.9
+        ],
+        "median": 16.9,
+        "min": 16.8,
+        "max": 16.9,
+        "spreadPct": 0.6,
+        "n": 3
+      },
+      "world3dOrbitFrameMsMax": {
+        "reps": [
+          33.5,
+          33.6,
+          33.4
+        ],
+        "median": 33.5,
+        "min": 33.4,
+        "max": 33.6,
+        "spreadPct": 0.6,
+        "n": 3
+      },
+      "focus3dIndraOrbitFrameMsMedian": {
+        "reps": [
+          16.7,
+          16.7,
+          16.7
+        ],
+        "median": 16.7,
+        "min": 16.7,
+        "max": 16.7,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "focus3dIndraOrbitFrameMsP95": {
+        "reps": [
+          16.8,
+          16.9,
+          16.9
+        ],
+        "median": 16.9,
+        "min": 16.8,
+        "max": 16.9,
+        "spreadPct": 0.6,
+        "n": 3
+      },
+      "focus3dIndraOrbitFrameMsMax": {
+        "reps": [
+          17,
+          17.4,
+          17.1
+        ],
+        "median": 17.1,
+        "min": 17,
+        "max": 17.4,
+        "spreadPct": 2.4,
+        "n": 3
+      }
+    },
+    "selectionLatencyIndra3d": {
+      "method": "From WORLD 3D, settled. t0 is immediately before engine.select(22975). selectSyncMs is the synchronous return of that call. firstFrameMs is the next presented rAF. panelCommittedMs is when the side panel's text first matches /indra/i, i.e. React has committed. settledMs is when 10 consecutive frames have come in under 20 ms. Driven through the engine handle rather than a canvas click, because hitting one node of 35,370 by coordinate is not reproducible; the pick cost is measured separately as hoverPick.",
+      "selectSyncMs": {
+        "reps": [
+          12.1,
+          6.4,
+          14.8
+        ],
+        "median": 12.1,
+        "min": 6.4,
+        "max": 14.8,
+        "spreadPct": 131.3,
+        "n": 3
+      },
+      "firstFrameMs": {
+        "reps": [
+          14.1,
+          13.4,
+          15.6
+        ],
+        "median": 14.1,
+        "min": 13.4,
+        "max": 15.6,
+        "spreadPct": 16.4,
+        "n": 3
+      },
+      "panelCommittedMs": {
+        "reps": [
+          35.2,
+          13.5,
+          32.6
+        ],
+        "median": 32.6,
+        "min": 13.5,
+        "max": 35.2,
+        "spreadPct": 160.7,
+        "n": 3
+      },
+      "settledMs": {
+        "reps": [
+          192.2,
+          175.3,
+          195.3
+        ],
+        "median": 192.2,
+        "min": 175.3,
+        "max": 195.3,
+        "spreadPct": 11.4,
+        "n": 3
+      },
+      "hoverPickMedianMs": {
+        "reps": [
+          0,
+          0,
+          0
+        ],
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "spreadPct": null,
+        "n": 3
+      },
+      "hoverPickP95Ms": {
+        "reps": [
+          0.6,
+          1,
+          0.7
+        ],
+        "median": 0.7,
+        "min": 0.6,
+        "max": 1,
+        "spreadPct": 66.7,
+        "n": 3
+      }
+    },
+    "selectCostByDegree": {
+      "method": "engine.select(null) then engine.select(index), the second call timed synchronously, 5 times per node, median taken. Nodes chosen from the artifact by nearest degree to 1/5/20/80/300/1200 plus Indra at 7347. The SHAPE of this curve is the finding: flat means the cost is the O(nodes)+O(edges) alpha rewrite, rising means it is the neighbourhood work.",
+      "degrees": [
+        1,
+        5,
+        20,
+        80,
+        301,
+        1203,
+        7347
+      ],
+      "byDegree": [
+        {
+          "degree": 1,
+          "node": 11597,
+          "selectSyncMs": {
+            "reps": [
+              1.8,
+              1.7,
+              2
+            ],
+            "median": 1.8,
+            "min": 1.7,
+            "max": 2,
+            "spreadPct": 17.6,
+            "n": 3
+          }
+        },
+        {
+          "degree": 5,
+          "node": 22,
+          "selectSyncMs": {
+            "reps": [
+              2.2,
+              1.8,
+              1.7
+            ],
+            "median": 1.8,
+            "min": 1.7,
+            "max": 2.2,
+            "spreadPct": 29.4,
+            "n": 3
+          }
+        },
+        {
+          "degree": 20,
+          "node": 70,
+          "selectSyncMs": {
+            "reps": [
+              2.6,
+              1.9,
+              1.8
+            ],
+            "median": 1.9,
+            "min": 1.8,
+            "max": 2.6,
+            "spreadPct": 44.4,
+            "n": 3
+          }
+        },
+        {
+          "degree": 80,
+          "node": 16450,
+          "selectSyncMs": {
+            "reps": [
+              1.6,
+              1.9,
+              2.1
+            ],
+            "median": 1.9,
+            "min": 1.6,
+            "max": 2.1,
+            "spreadPct": 31.3,
+            "n": 3
+          }
+        },
+        {
+          "degree": 301,
+          "node": 23090,
+          "selectSyncMs": {
+            "reps": [
+              2.3,
+              1.9,
+              2.1
+            ],
+            "median": 2.1,
+            "min": 1.9,
+            "max": 2.3,
+            "spreadPct": 21.1,
+            "n": 3
+          }
+        },
+        {
+          "degree": 1203,
+          "node": 23015,
+          "selectSyncMs": {
+            "reps": [
+              2.8,
+              2,
+              2.2
+            ],
+            "median": 2.2,
+            "min": 2,
+            "max": 2.8,
+            "spreadPct": 40,
+            "n": 3
+          }
+        },
+        {
+          "degree": 7347,
+          "node": 22975,
+          "selectSyncMs": {
+            "reps": [
+              3,
+              3.3,
+              2.4
+            ],
+            "median": 3,
+            "min": 2.4,
+            "max": 3.3,
+            "spreadPct": 37.5,
+            "n": 3
+          }
+        }
+      ]
+    },
+    "selectionCostBreakdownIndra": {
+      "method": "Each step of applySelection reproduced in-page at the engine's own size against the engine's own arrays, timed 20 times, median taken. A reconstruction of the work, not a profile of the function. The GPU re-upload is a byte count that three's needsUpdate flags cause, not a timing.",
+      "degree": 7347,
+      "incidentEdges": 7347,
+      "totalNodes": 35370,
+      "totalEdges": 185693,
+      "gpuReuploadBytesPerSelection": {
+        "nodeAlpha": 141480,
+        "edgeAlpha": 1485544,
+        "selectionPositions": 176352
+      },
+      "steps": [
+        {
+          "step": "restEdges: write edgeAlpha for all 185693 edges (2 floats each)",
+          "medianMs": {
+            "reps": [
+              0.6,
+              0.7,
+              0.7
+            ],
+            "median": 0.7,
+            "min": 0.6,
+            "max": 0.7,
+            "spreadPct": 16.7,
+            "n": 3
+          }
+        },
+        {
+          "step": "neighbour Set over 7347 incident edges",
+          "medianMs": {
+            "reps": [
+              0.2,
+              0.2,
+              0.2
+            ],
+            "median": 0.2,
+            "min": 0.2,
+            "max": 0.2,
+            "spreadPct": 0,
+            "n": 3
+          }
+        },
+        {
+          "step": "nodeAlpha: Set lookup for all 35370 nodes",
+          "medianMs": {
+            "reps": [
+              0.5,
+              0.5,
+              0.4
+            ],
+            "median": 0.5,
+            "min": 0.4,
+            "max": 0.5,
+            "spreadPct": 25,
+            "n": 3
+          }
+        },
+        {
+          "step": "updateSelectionEdges: write 7347 segments (6 floats each)",
+          "medianMs": {
+            "reps": [
+              0.1,
+              0.1,
+              0.1
+            ],
+            "median": 0.1,
+            "min": 0.1,
+            "max": 0.1,
+            "spreadPct": 0,
+            "n": 3
+          }
+        }
+      ]
+    },
+    "homepage": {
+      "label": "Homepage, hero world teaser (WorldEngine at maxFps 30, edgeWeight 14)",
+      "method": "Delta of CDP Performance.TaskDuration (and ScriptDuration / LayoutDuration / RecalcStyleDuration) across a fixed wall-clock window, converted to ms. TaskDuration is the browser's own total for main-thread tasks, so it includes the rAF callback, the render, style and layout.",
+      "windowMs": 5000,
+      "readyMs": {
+        "reps": [
+          254,
+          242,
+          288
+        ],
+        "median": 254,
+        "min": 242,
+        "max": 288,
+        "spreadPct": 19,
+        "n": 3
+      },
+      "lcpMs": {
+        "reps": [
+          268,
+          220,
+          252
+        ],
+        "median": 252,
+        "min": 220,
+        "max": 268,
+        "spreadPct": 21.8,
+        "n": 3
+      },
+      "lcpElement": "SECTION.va-hero",
+      "fcpMs": {
+        "reps": [
+          232,
+          204,
+          236
+        ],
+        "median": 232,
+        "min": 204,
+        "max": 236,
+        "spreadPct": 15.7,
+        "n": 3
+      },
+      "loadMs": {
+        "reps": [
+          109.9,
+          100.3,
+          212.2
+        ],
+        "median": 109.9,
+        "min": 100.3,
+        "max": 212.2,
+        "spreadPct": 111.6,
+        "n": 3
+      },
+      "cls": {
+        "reps": [
+          0,
+          0,
+          0
+        ],
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "spreadPct": null,
+        "n": 3
+      },
+      "longTaskCount": {
+        "reps": [
+          1,
+          0,
+          1
+        ],
+        "median": 1,
+        "min": 0,
+        "max": 1,
+        "spreadPct": null,
+        "n": 3
+      },
+      "longTaskWorstMs": {
+        "reps": [
+          52,
+          0,
+          68
+        ],
+        "median": 52,
+        "min": 0,
+        "max": 68,
+        "spreadPct": null,
+        "n": 3
+      },
+      "teaserCanvas": {
+        "present": true,
+        "cssW": 535,
+        "cssH": 428,
+        "bufW": 535,
+        "bufH": 428,
+        "inViewport": true
+      },
+      "teaserGlRenderer": "ANGLE (Intel, Intel(R) Iris(R) Xe Graphics (0x000046A6) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "flatFallbackTaken": false,
+      "mainThreadPer5s": {
+        "visible": {
+          "reps": [
+            204.39,
+            135.7,
+            255.12
+          ],
+          "median": 204.39,
+          "min": 135.7,
+          "max": 255.12,
+          "spreadPct": 88,
+          "n": 3
+        },
+        "offscreen": {
+          "reps": [
+            123.22,
+            122.39,
+            114.56
+          ],
+          "median": 122.39,
+          "min": 114.56,
+          "max": 123.22,
+          "spreadPct": 7.6,
+          "n": 3
+        },
+        "backgroundTab": {
+          "reps": [
+            155.92,
+            229.96,
+            251.94
+          ],
+          "median": 229.96,
+          "min": 155.92,
+          "max": 251.94,
+          "spreadPct": 61.6,
+          "n": 3
+        },
+        "staticRouteFloor": {
+          "reps": [
+            104.73,
+            72.82,
+            133.99
+          ],
+          "median": 104.73,
+          "min": 72.82,
+          "max": 133.99,
+          "spreadPct": 84,
+          "n": 3
+        }
+      },
+      "scriptMsPer5s": {
+        "visible": {
+          "reps": [
+            61.62,
+            47.99,
+            76.61
+          ],
+          "median": 61.62,
+          "min": 47.99,
+          "max": 76.61,
+          "spreadPct": 59.6,
+          "n": 3
+        },
+        "offscreen": {
+          "reps": [
+            14.91,
+            16.28,
+            15.26
+          ],
+          "median": 15.26,
+          "min": 14.91,
+          "max": 16.28,
+          "spreadPct": 9.2,
+          "n": 3
+        },
+        "staticRouteFloor": {
+          "reps": [
+            13.26,
+            9.83,
+            17.63
+          ],
+          "median": 13.26,
+          "min": 9.83,
+          "max": 17.63,
+          "spreadPct": 79.3,
+          "n": 3
+        }
+      },
+      "rafCallbacksPer5s": {
+        "visible": {
+          "reps": [
+            301,
+            301,
+            301
+          ],
+          "median": 301,
+          "min": 301,
+          "max": 301,
+          "spreadPct": 0,
+          "n": 3
+        },
+        "offscreen": {
+          "reps": [
+            301,
+            301,
+            301
+          ],
+          "median": 301,
+          "min": 301,
+          "max": 301,
+          "spreadPct": 0,
+          "n": 3
+        },
+        "staticRouteFloor": {
+          "reps": [
+            301,
+            301,
+            301
+          ],
+          "median": 301,
+          "min": 301,
+          "max": 301,
+          "spreadPct": 0,
+          "n": 3
+        }
+      },
+      "frameMsMedianVisible": {
+        "reps": [
+          16.7,
+          16.7,
+          16.7
+        ],
+        "median": 16.7,
+        "min": 16.7,
+        "max": 16.7,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "heapMBVisible": {
+        "reps": [
+          8.1,
+          8.1,
+          8.1
+        ],
+        "median": 8.1,
+        "min": 8.1,
+        "max": 8.1,
+        "spreadPct": 0,
+        "n": 3
+      },
+      "transferKB": {
+        "scripts": {
+          "reps": [
+            326.6,
+            326.6,
+            326.6
+          ],
+          "median": 326.6,
+          "min": 326.6,
+          "max": 326.6,
+          "spreadPct": 0,
+          "n": 3
+        },
+        "all": {
+          "reps": [
+            1067.3,
+            1066.6,
+            1066.6
+          ],
+          "median": 1066.6,
+          "min": 1066.6,
+          "max": 1067.3,
+          "spreadPct": 0.1,
+          "n": 3
+        }
+      },
+      "biggestResources": [
+        {
+          "file": "/_next/static/chunks/098_q2v416_za.js",
+          "transferKB": 145.2,
+          "decodedKB": 584.8,
+          "ms": 42.3
+        },
+        {
+          "file": "/_next/static/media/b0db33b4a6649cdd-s.p.0y0w7afv-0ok6.woff2",
+          "transferKB": 124.6,
+          "decodedKB": 124.3,
+          "ms": 11.1
+        },
+        {
+          "file": "/_next/static/media/1bffadaabf893a1e-s.p.3-6t-g6q0vh0a.woff2",
+          "transferKB": 83.6,
+          "decodedKB": 83.3,
+          "ms": 4.2
+        },
+        {
+          "file": "/brand/textures/inquiry-light-1600.avif",
+          "transferKB": 82.7,
+          "decodedKB": 82.4,
+          "ms": 2.8
+        },
+        {
+          "file": "/_next/static/media/charis_regular-s.p.0xy0mdevp_g9v.woff2",
+          "transferKB": 77.9,
+          "decodedKB": 77.6,
+          "ms": 11
+        },
+        {
+          "file": "/_next/static/chunks/1o_i_meluz1so.js",
+          "transferKB": 70.2,
+          "decodedKB": 223.6,
+          "ms": 32.6
+        },
+        {
+          "file": "/brand/textures/hero-light-1920.avif",
+          "transferKB": 68.3,
+          "decodedKB": 68,
+          "ms": 3.3
+        },
+        {
+          "file": "/_next/static/media/791bf8c4bb753ed6-s.p.0ggqn9ig56u4s.woff2",
+          "transferKB": 66.1,
+          "decodedKB": 65.8,
+          "ms": 10.4
+        },
+        {
+          "file": "/_next/static/media/e455bcff747f0d5e-s.p.1wuo3gtslpr33.woff2",
+          "transferKB": 58.4,
+          "decodedKB": 58.1,
+          "ms": 13.7
+        },
+        {
+          "file": "/brand/textures/footer-light-1920.avif",
+          "transferKB": 53.4,
+          "decodedKB": 53.1,
+          "ms": 3.3
+        }
+      ],
+      "priorPhaseClaim": "The spec cites ~245 ms per 5 s visible and ~122 ms per 5 s offscreen, and requires offscreen to become approximately zero. `staticRouteFloor` is what a 5 s window costs on a route with no WebGL at all; 'approximately zero' has to be read against that floor, not against zero."
+    },
+    "hiddenRendererInvariant": {
+      "method": "WebGLRenderer.info.render.frame, three's own monotonic per-render counter, sampled 4000 ms apart. The same instrument ecc5943 reports using. info.render.calls is NOT reset when the loop stops, so a stale non-zero calls beside a zero frame delta is the expected signature of a stopped renderer. The planar side is counted by the clearRect wrapper.",
+      "observeMs": 4000,
+      "probe1_deepLinkInto2d": {
+        "spatialFramesDrawnPer4s": {
+          "reps": [
+            0
+          ],
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "spreadPct": null,
+          "n": 1
+        },
+        "spatialFramesPerSec": {
+          "reps": [
+            0
+          ],
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "spreadPct": null,
+          "n": 1
+        },
+        "planarRepaintsPerSec": {
+          "reps": [
+            60.25
+          ],
+          "median": 60.25,
+          "min": 60.25,
+          "max": 60.25,
+          "spreadPct": 0,
+          "n": 1
+        },
+        "spatialPausedFlag": [
+          true
+        ],
+        "spatialLastDrawCalls": [
+          0
+        ],
+        "spatialGeometriesUploaded": [
+          0
+        ],
+        "spatialSceneChildren": [
+          3
+        ],
+        "spatialContextLost": [
+          false
+        ],
+        "absoluteFrameCounter": [
+          [
+            0,
+            0
+          ]
+        ],
+        "hiddenViewEdgeLabelsStillAtOpacity1": [
+          9
+        ]
+      },
+      "probe2_switched3dTo2d": {
+        "spatialFramesDrawnPer4s": {
+          "reps": [
+            0
+          ],
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "spreadPct": null,
+          "n": 1
+        },
+        "spatialFramesPerSec": {
+          "reps": [
+            0
+          ],
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "spreadPct": null,
+          "n": 1
+        },
+        "planarRepaintsPerSec": {
+          "reps": [
+            60
+          ],
+          "median": 60,
+          "min": 60,
+          "max": 60,
+          "spreadPct": 0,
+          "n": 1
+        },
+        "spatialPausedFlag": [
+          true
+        ],
+        "spatialLastDrawCalls": [
+          3
+        ],
+        "spatialGeometriesUploaded": [
+          3
+        ],
+        "spatialSceneChildren": [
+          3
+        ],
+        "spatialContextLost": [
+          false
+        ],
+        "absoluteFrameCounter": [
+          [
+            403,
+            403
+          ]
+        ],
+        "hiddenViewEdgeLabelsStillAtOpacity1": [
+          15
+        ]
+      },
+      "probe3_control3dActive": {
+        "spatialFramesDrawnPer4s": {
+          "reps": [
+            240
+          ],
+          "median": 240,
+          "min": 240,
+          "max": 240,
+          "spreadPct": 0,
+          "n": 1
+        },
+        "spatialFramesPerSec": {
+          "reps": [
+            60
+          ],
+          "median": 60,
+          "min": 60,
+          "max": 60,
+          "spreadPct": 0,
+          "n": 1
+        },
+        "planarRepaintsPerSec": {
+          "reps": [
+            0
+          ],
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "spreadPct": null,
+          "n": 1
+        },
+        "spatialPausedFlag": [
+          false
+        ],
+        "spatialLastDrawCalls": [
+          3
+        ],
+        "spatialGeometriesUploaded": [
+          3
+        ],
+        "spatialSceneChildren": [
+          3
+        ],
+        "spatialContextLost": [
+          false
+        ],
+        "absoluteFrameCounter": [
+          [
+            162,
+            402
+          ]
+        ],
+        "hiddenViewEdgeLabelsStillAtOpacity1": [
+          6
+        ]
+      },
+      "probe3b_controlSwitchedBackTo3d": {
+        "spatialFramesDrawnPer4s": {
+          "reps": [
+            240
+          ],
+          "median": 240,
+          "min": 240,
+          "max": 240,
+          "spreadPct": 0,
+          "n": 1
+        },
+        "spatialFramesPerSec": {
+          "reps": [
+            60
+          ],
+          "median": 60,
+          "min": 60,
+          "max": 60,
+          "spreadPct": 0,
+          "n": 1
+        },
+        "planarRepaintsPerSec": {
+          "reps": [
+            0
+          ],
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "spreadPct": null,
+          "n": 1
+        },
+        "spatialPausedFlag": [
+          false
+        ],
+        "spatialLastDrawCalls": [
+          3
+        ],
+        "spatialGeometriesUploaded": [
+          3
+        ],
+        "spatialSceneChildren": [
+          3
+        ],
+        "spatialContextLost": [
+          false
+        ],
+        "absoluteFrameCounter": [
+          [
+            553,
+            793
+          ]
+        ],
+        "hiddenViewEdgeLabelsStillAtOpacity1": [
+          6
+        ]
+      },
+      "switchedVia": [
+        {
+          "via": "ui control",
+          "text": "2D"
+        }
+      ]
+    },
+    "mobile": {
+      "method": "390x844 CSS px, deviceScaleFactor 3, touch, mobile UA, CPU throttled 4x via CDP Emulation.setCPUThrottlingRate. 4x throttles the MAIN THREAD ONLY. Chromium exposes no GPU throttle, so these figures are a real Intel Iris Xe GPU behind a 4x-slower CPU, which is not any actual phone. CPU-bound costs (selection, labels, the planar renderer) transfer; the fill-rate half does not.",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "deviceScaleFactor": 3,
+      "cpuThrottle": 4,
+      "gpuThrottle": "none available; GPU is the desktop Intel Iris Xe",
+      "capability": {
+        "capability": "FULL_3D",
+        "webgl": true,
+        "renderer": "ANGLE (Intel, Intel(R) Iris(R) Xe Graphics (0x000046A6) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "software": false,
+        "deviceMemory": 16,
+        "reason": "measured on this device"
+      },
+      "capabilityMethod": "probeCapability()'s own logic re-run in-page against the emulated device's real WebGL context (the module is bundled, not on window). The decisive branch is the software-rasteriser test: a SwiftShader renderer string returns FLAT, which forces 2D.",
+      "defaultRendererWithNoQuery": [
+        {
+          "dataRenderer": "3d",
+          "planarPresent": false
+        },
+        {
+          "dataRenderer": "3d",
+          "planarPresent": false
+        }
+      ],
+      "focus3dIndra": {
+        "readyMs": {
+          "reps": [
+            2291,
+            2752
+          ],
+          "median": 2752,
+          "min": 2291,
+          "max": 2752,
+          "spreadPct": 20.1,
+          "n": 2
+        },
+        "frameMsMedian": {
+          "reps": [
+            33.2,
+            16.7
+          ],
+          "median": 33.2,
+          "min": 16.7,
+          "max": 33.2,
+          "spreadPct": 98.8,
+          "n": 2
+        },
+        "frameMsP95": {
+          "reps": [
+            83.2,
+            33.6
+          ],
+          "median": 83.2,
+          "min": 33.6,
+          "max": 83.2,
+          "spreadPct": 147.6,
+          "n": 2
+        },
+        "frameMsMax": {
+          "reps": [
+            133.5,
+            66.7
+          ],
+          "median": 133.5,
+          "min": 66.7,
+          "max": 133.5,
+          "spreadPct": 100.1,
+          "n": 2
+        },
+        "drawCostMsMedian": {
+          "reps": [
+            10.5,
+            18.1
+          ],
+          "median": 18.1,
+          "min": 10.5,
+          "max": 18.1,
+          "spreadPct": 72.4,
+          "n": 2
+        },
+        "visibleNodes": null,
+        "visibleEdges": {
+          "reps": [
+            31347,
+            31347
+          ],
+          "median": 31347,
+          "min": 31347,
+          "max": 31347,
+          "spreadPct": 0,
+          "n": 2
+        },
+        "visibleEdgeLabels": {
+          "reps": [
+            3,
+            3
+          ],
+          "median": 3,
+          "min": 3,
+          "max": 3,
+          "spreadPct": 0,
+          "n": 2
+        },
+        "edgeLabelPool": {
+          "reps": [
+            8,
+            8
+          ],
+          "median": 8,
+          "min": 8,
+          "max": 8,
+          "spreadPct": 0,
+          "n": 2
+        },
+        "mainThreadMsPer3s": {
+          "reps": [
+            751.39,
+            1165.86
+          ],
+          "median": 1165.86,
+          "min": 751.39,
+          "max": 1165.86,
+          "spreadPct": 55.2,
+          "n": 2
+        },
+        "heapMB": {
+          "reps": [
+            27.9,
+            27.9
+          ],
+          "median": 27.9,
+          "min": 27.9,
+          "max": 27.9,
+          "spreadPct": 0,
+          "n": 2
+        },
+        "decompositionProductCamera": {
+          "all": {
+            "reps": [
+              22.7,
+              23.9
+            ],
+            "median": 23.9,
+            "min": 22.7,
+            "max": 23.9,
+            "spreadPct": 5.3,
+            "n": 2
+          },
+          "emptySceneFloor": {
+            "reps": [
+              1.1,
+              1.1
+            ],
+            "median": 1.1,
+            "min": 1.1,
+            "max": 1.1,
+            "spreadPct": 0,
+            "n": 2
+          },
+          "nodeCloudOnly": {
+            "reps": [
+              1.6,
+              1.1
+            ],
+            "median": 1.6,
+            "min": 1.1,
+            "max": 1.6,
+            "spreadPct": 45.5,
+            "n": 2
+          },
+          "backboneEdgesOnly": {
+            "reps": [
+              13.7,
+              8.2
+            ],
+            "median": 13.7,
+            "min": 8.2,
+            "max": 13.7,
+            "spreadPct": 67.1,
+            "n": 2
+          },
+          "selectionOverlayOnly": {
+            "reps": [
+              2.8,
+              2.7
+            ],
+            "median": 2.8,
+            "min": 2.7,
+            "max": 2.8,
+            "spreadPct": 3.7,
+            "n": 2
+          }
+        }
+      },
+      "focus2dIndra": {
+        "readyMs": {
+          "reps": [
+            2738,
+            2799
+          ],
+          "median": 2799,
+          "min": 2738,
+          "max": 2799,
+          "spreadPct": 2.2,
+          "n": 2
+        },
+        "frameMsMedian": {
+          "reps": [
+            16.7,
+            16.7
+          ],
+          "median": 16.7,
+          "min": 16.7,
+          "max": 16.7,
+          "spreadPct": 0,
+          "n": 2
+        },
+        "frameMsP95": {
+          "reps": [
+            17,
+            16.8
+          ],
+          "median": 17,
+          "min": 16.8,
+          "max": 17,
+          "spreadPct": 1.2,
+          "n": 2
+        },
+        "frameMsMax": {
+          "reps": [
+            33.6,
+            33.4
+          ],
+          "median": 33.6,
+          "min": 33.4,
+          "max": 33.6,
+          "spreadPct": 0.6,
+          "n": 2
+        },
+        "repaintsPerSec": {
+          "reps": [
+            59.7,
+            60.3
+          ],
+          "median": 60.3,
+          "min": 59.7,
+          "max": 60.3,
+          "spreadPct": 1,
+          "n": 2
+        },
+        "strokesPerRepaint": null,
+        "visibleEdgeLabels": {
+          "reps": [
+            4,
+            4
+          ],
+          "median": 4,
+          "min": 4,
+          "max": 4,
+          "spreadPct": 0,
+          "n": 2
+        },
+        "mainThreadMsPer3s": {
+          "reps": [
+            2295.45,
+            2149.22
+          ],
+          "median": 2295.45,
+          "min": 2149.22,
+          "max": 2295.45,
+          "spreadPct": 6.8,
+          "n": 2
+        },
+        "heapMB": {
+          "reps": [
+            28.6,
+            28.6
+          ],
+          "median": 28.6,
+          "min": 28.6,
+          "max": 28.6,
+          "spreadPct": 0,
+          "n": 2
+        }
+      },
+      "selectionLatency": {
+        "selectSyncMs": {
+          "reps": [
+            50,
+            25.9
+          ],
+          "median": 50,
+          "min": 25.9,
+          "max": 50,
+          "spreadPct": 93.1,
+          "n": 2
+        },
+        "settledMs": {
+          "reps": [
+            405.3,
+            272.9
+          ],
+          "median": 405.3,
+          "min": 272.9,
+          "max": 405.3,
+          "spreadPct": 48.5,
+          "n": 2
+        }
+      }
+    }
+  },
+  "defects": [
+    {
+      "id": "A9-D1",
+      "severity": "blocks the after/before comparison",
+      "what": "EngineStats.drawnNodes is a hard-coded constant, so the product's own HUD cannot detect this redesign.",
+      "where": "frontend/src/lib/world/engine.ts, sample(): drawnNodes: this.world.manifest.counts.nodes",
+      "evidence": "The value is the manifest node total (35,370) and is emitted regardless of what was drawn. It is correct today only because nodes.frustumCulled = false and every node is submitted every frame. It is shown to the user in .va-world-stats (world-view.tsx line 453) as 'N nodes'.",
+      "consequence": "After a redesign that draws 40 nodes, the HUD will still read 35,370 nodes. Anyone validating the change from the on-screen figure will see no movement. Use WebGLRenderer.info.render.points, which is what this baseline used."
+    },
+    {
+      "id": "A9-D2",
+      "severity": "high, and nobody asked about it",
+      "what": "The 2D planar renderer repaints the whole canvas every frame even when its simulation is asleep and nothing has changed.",
+      "where": "frontend/src/components/world/planar-view.tsx, the rAF loop: draw() is called unconditionally AFTER the `if (scope === 'focus' && !sleepingRef.current)` guard, so the guard stops the SIMULATION and never the DRAW.",
+      "evidence": "MEASURED with a clearRect counter, which the planar draw calls exactly once per repaint. FOCUS 2D at rest: 60.0-60.3 repaints/s, 488 strokes per repaint for Indra and 561 for Sarasvati. WORLD 2D at rest: 5,472 strokes + 612 arcs + 18 fillText per repaint, which the machine sustains at only 20.0-23.7 repaints/s. Main thread: WORLD 2D 141.9 ms per 2 s; FOCUS 2D Sarasvati 405.4 ms per 2 s. Under 4x CPU at 390 px, FOCUS 2D cost 2,149-2,295 ms per 3 s, i.e. 72-77% of the throttled main thread, for a diagram nobody is touching.",
+      "consequence": "The file's own docstring says 'an untouched diagram is perfectly still and costs nothing'. It is still; it does not cost nothing. This is the most expensive row in the whole baseline, and it is in the renderer that exists to serve weak devices."
+    },
+    {
+      "id": "A9-D3",
+      "severity": "medium, per-frame allocation and a per-frame sort",
+      "what": "The 2D draw rebuilds, sorts and re-slices its subject-name list on every frame.",
+      "where": "frontend/src/components/world/planar-view.tsx, inside draw(): graph.nodes.map(...).filter(...).sort(...).slice(0, 18)",
+      "evidence": "Code-level. In WORLD 2D that is 2,600 fresh objects plus a full comparison sort per repaint, to arrive at the same 18 names every time, plus 18 context.measureText calls and a namedBoxes array. The inputs (graph, hover) change on human actions, not per frame.",
+      "consequence": "Pure garbage on the hot path of the slowest view."
+    },
+    {
+      "id": "A9-D4",
+      "severity": "medium, no culling and no path batching in 2D",
+      "what": "The 2D draw issues one beginPath/stroke pair per edge with no viewport culling.",
+      "where": "frontend/src/components/world/planar-view.tsx, the edge loop",
+      "evidence": "MEASURED: 5,472 stroke calls per repaint in WORLD 2D against 5,200 edges in the projection, and 612 arcs against 2,600 nodes (the other 1,988 are passages, drawn as diamonds). Nothing is skipped for being off screen.",
+      "consequence": "The loop already sorts edges into exactly three style buckets, so three accumulated paths and three strokes would draw the same picture. This is the direct cause of the 20 fps in A9-D2."
+    },
+    {
+      "id": "A9-D5",
+      "severity": "medium, transfer",
+      "what": "world.bin is served uncompressed and with Cache-Control: max-age=0.",
+      "where": "frontend/public/world/world.bin, served by next start",
+      "evidence": "MEASURED with curl offering 'Accept-Encoding: gzip, br': 2,493,613 bytes returned, no Content-Encoding and no Vary header, whereas world.labels.json in the same directory does compress (1,932,515 -> 422,959). Next's compression skips application/octet-stream. Locally gzip -9 gives 966 KB (61% saved) and brotli -q11 gives 808 KB (66% saved). Headers are 'Cache-Control: public, max-age=0' with a weak ETag, so a 2.4 MB immutable build artifact is revalidated on every visit.",
+      "consequence": "About 1.5 MB of avoidable transfer in front of the first frame, plus a round trip per visit."
+    },
+    {
+      "id": "A9-D6",
+      "severity": "low, but it re-renders forever",
+      "what": "The engine pushes stats into React state once a second for a permanently-visible HUD.",
+      "where": "frontend/src/lib/world/engine.ts sample() -> events.onStats, wired to setStats in world-view.tsx, rendered unconditionally at {stats && phase === 'ready' && ...}",
+      "evidence": "Code-level. sample() calls onStats whenever 1000 ms have passed, and `stats` is React state, so WorldView and its subtree reconcile once per second for the lifetime of the page.",
+      "consequence": "A re-render per second with nothing else happening. See also A9-D1: the figure it renders is partly a constant."
+    },
+    {
+      "id": "A9-D7",
+      "severity": "low, load-time main-thread block",
+      "what": "The CSR adjacency index is built synchronously on the main thread during load.",
+      "where": "frontend/src/lib/world/artifact.ts loadWorld() -> buildAdjacency(35370, edgePairs)",
+      "evidence": "Code-level plus the mobile timings: two passes over 371,386 edge endpoints, on the main thread, between the fetch and the first frame. Under 4x CPU the FOCUS 3D route took 2,291-2,752 ms to reach its ready phase.",
+      "consequence": "Nothing can paint while it runs. A transferable ArrayBuffer in a worker, or shipping the CSR inside the artifact, would take it off the critical path."
+    },
+    {
+      "id": "A9-D8",
+      "severity": "low, a benchmark measuring the wrong thing",
+      "what": "The project's own 3D benchmark defaults to a software rasteriser.",
+      "where": "frontend/scripts/bench-world.mjs: WANT_GPU = Boolean(args.get('gpu')), and SOFTWARE_ARGS is the default branch.",
+      "evidence": "Running `node scripts/bench-world.mjs` without --gpu launches Chromium with --use-angle=swiftshader. Verified: that configuration reports 'ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero)), SwiftShader driver)'. The script does label the result as a floor, so this is a footgun rather than a false claim.",
+      "consequence": "There is a sharper second edge: capability.ts classifies a software renderer as FLAT and the product then forces the 2D renderer, so a SwiftShader run cannot reach the 3D view at all. Any 'after' run must pass --gpu or it will not be measuring the thing that changed."
+    },
+    {
+      "id": "A9-D9",
+      "severity": "low, stale leftover",
+      "what": "The graph route's Suspense fallback still carries the pre-split data-mode attribute.",
+      "where": "frontend/src/app/graph/page.tsx: <div className=\"va-graph\" data-mode=\"WORLD\" />",
+      "evidence": "Observed directly in the DOM while waiting for the shell: <div class=\"va-graph\" data-mode=\"WORLD\">. The two-axis split replaced `mode` with `view` + `renderer`, and graph-shell.tsx writes data-renderer and data-view; only the fallback was left behind.",
+      "consequence": "Harmless to the product, but it means two elements match `.va-graph` with different attributes, which cost me two harness runs. Any selector-based test or measurement keyed on `.va-graph` can bind to the fallback."
+    },
+    {
+      "id": "A9-D10",
+      "severity": "low, coupling",
+      "what": "The 2D renderer's first paint is gated on the 3D view finishing its entire load, including the 1.9 MB label file.",
+      "where": "graph-shell.tsx mounts PlanarView only when state.renderer === '2d' && world, and `world` is set by WorldView's onReady, which fires only after BOTH loadWorld and loadWorldLabels resolve.",
+      "evidence": "Code-level. A ?renderer=2d deep link therefore waits on 2.4 MB + 1.9 MB and on the spatial engine's construction before the planar canvas exists at all.",
+      "consequence": "The planar renderer exists for weak devices and is the slowest thing to appear on them. run-2d-deeplink.mjs was written to time this over 6 attempts and could not be run before the tree was contaminated; it is left in the scratchpad."
+    },
+    {
+      "id": "A9-D11",
+      "severity": "informational, not a cost",
+      "what": "The inactive view's edge-label spans are left at opacity 1 with stale text.",
+      "where": "EdgeLabelView pools are per-view and are not cleared when a renderer is deactivated.",
+      "evidence": "MEASURED: after switching 3d -> 2d the document held 15 spans at inline opacity 1 out of a 32-span pool (two 16-span pools, one per view). On a cold 2d deep link the count was 9 of 32 — only the planar view's — because the spatial view had never rendered.",
+      "consequence": "Not a paint cost: the inactive stage is `visibility: hidden` in graph.css, so the spans are not painted. It is stale state, and it is why a naive count of visible labels double-counts across renderers."
+    },
+    {
+      "id": "A9-D12",
+      "severity": "informational, reproducible one-frame stall",
+      "what": "Orbiting in WORLD 3D drops exactly one frame, reproducibly; orbiting in Indra FOCUS 3D does not.",
+      "where": "Unattributed. The likeliest candidate is the pick-index rebuild gated on the camera settling.",
+      "evidence": "MEASURED over 3 reps, 3000 ms of real pointer drag each: WORLD 3D max frame interval 33.5 ms [33.4..33.6] with p95 at 16.9 ms; Indra FOCUS 3D max 17.1 ms [17.0..17.4]. The tightness of the 33.4-33.6 band across reps says one deterministic long frame, not jitter.",
+      "consequence": "One dropped frame at the end of every orbit in the default view."
+    }
+  ],
+  "hypothesesTestedAndRejected": [
+    {
+      "hypothesis": "The per-frame label pipeline thrashes layout: engine.viewport() reads clientWidth/clientHeight, the engine's loop reads renderer.domElement.clientHeight every frame to set uScale, and EdgeLabelView.update writes styles to its spans — a read/write/read cycle.",
+      "verdict": "REJECTED by measurement.",
+      "evidence": "CDP LayoutCount over a 2 s window: 2 layouts in WORLD 3D, 2 in Indra FOCUS 3D, 0 in FOCUS 2D Indra. RecalcStyleCount 0 in both 3D cases. The label writes are transform and opacity, which are composited and do not invalidate layout, so the clientHeight reads are served from cache. Recorded so the 'after' does not spend effort here."
+    },
+    {
+      "hypothesis": "Selection cost scales with the selected node's degree, so cutting Indra's 7,347-edge neighbourhood will cut selection latency proportionally.",
+      "verdict": "REJECTED by measurement. The curve is almost flat.",
+      "evidence": "engine.select() synchronous cost by degree, 3 reps, median of 5 calls each: degree 1 -> 1.8 ms, 5 -> 1.8, 20 -> 1.9, 80 -> 1.9, 301 -> 2.1, 1,203 -> 2.2, 7,347 -> 3.0. Selecting the most connected node in the graph costs 1.2 ms more than selecting a leaf. The floor is degree-independent work: a reproduction of applySelection's steps measured restEdges (rewriting edgeAlpha for all 185,693 edges) at 0.7 ms and the nodeAlpha pass over all 35,370 nodes at 0.5 ms, and three needsUpdate flags re-upload 1,485,544 + 141,480 + 176,352 bytes to the GPU on every selection regardless of what was selected."
+    },
+    {
+      "hypothesis": "Indra FOCUS is the worst 3D case because it draws the most lines (31,347 vs 24,000).",
+      "verdict": "REJECTED by measurement. It is not even the worst FOCUS case.",
+      "evidence": "At each view's own product camera, Indra FOCUS draws at 5.9 ms median while a degree-298 subject's FOCUS draws at 8.2 ms, despite 7,049 fewer lines. The scene is fill-rate bound: Indra's large neighbourhood pushes the framing camera further out (1,699.7 vs 1,526 units), so its lines cover less of the viewport. Screen coverage is the variable, not edge count."
+    }
+  ],
+  "whereTheCostActuallyIs": {
+    "summary": "In Indra FOCUS 3D the 24,000-edge context backbone costs 2.6x to 3.9x what Indra's entire 7,347-edge neighbourhood costs, and the 35,370-node cloud is effectively free. A redesign that only curates the neighbourhood recovers about a fifth of the draw.",
+    "method": "Object3D.visible toggled one object at a time, camera unmoved, 30 gl.finish()-fenced renders after 5 warm, 3 reps. The empty-scene row is the floor and should be subtracted.",
+    "indraFocus3dAtProductCamera": {
+      "cameraDistance": 1699.7,
+      "wholeSceneMs": 5.9,
+      "emptySceneFloorMs": 0.6,
+      "nodeCloud_35370_pointsMs": 0.7,
+      "backbone_24000_linesMs": 4.7,
+      "selectionOverlay_7347_linesMs": 1.8,
+      "netOfFloorMs": {
+        "nodeCloud": 0.1,
+        "backbone": 4.1,
+        "selectionOverlay": 1.2
+      },
+      "readAs": "Deleting the whole adjacency overlay saves about 1.2 ms of about 5.3 ms of real work (23%). The backbone keeps about 4.1 ms (77%)."
+    },
+    "indraFocus3dPinnedAt700Units": {
+      "wholeSceneMs": 25.7,
+      "emptySceneFloorMs": 0.7,
+      "nodeCloudMs": 1.5,
+      "backbone_24000_linesMs": 23.9,
+      "selectionOverlay_7347_linesMs": 6.1,
+      "readAs": "Closer in, where the view is actually unusable, the ratio is worse for the redesign, not better: the backbone is 3.9x the overlay."
+    },
+    "comparisonNodeFocus3dAtProductCamera": {
+      "node": "VG:DEVATA:SARASVATI, degree 298",
+      "cameraDistance": 1526,
+      "wholeSceneMs": 8.2,
+      "backbone_24000_linesMs": 7,
+      "selectionOverlay_298_linesMs": 0.4,
+      "readAs": "The backbone is 17x the overlay here. For every subject except the hubs, the neighbourhood is not the cost at all."
+    },
+    "prediction": "If the redesign cuts only the neighbourhood, expect Indra FOCUS draw cost to fall from about 5.9 ms to about 4.8 ms and the frame interval not to move at all, because it is already vsync-capped at 16.7 ms on this GPU. To move the real bottleneck, applyEdgeRange() must also cut the backbone in the FOCUS view: it currently holds WORLD_EDGE_BUDGET = 24,000 whether or not something is selected, and engine.ts documents that as a deliberate choice (widening it on selection was tried and rejected). The measurement says that choice is now the dominant cost of the very view this phase is redesigning.",
+    "secondPrediction": "Selection latency will barely improve. The 1.8 ms floor is the full-graph alpha rewrite plus a 1.5 MB per-selection GPU re-upload, neither of which depends on neighbourhood size. If the 'after' reports a large selection-latency win, check that restEdges and the two alpha needsUpdate flags were changed too — otherwise the win is measurement noise.",
+    "thirdPrediction": "Visible-label count will not change much either. At 1440 px the budget is 16 but only 6 were ever visible at Indra FOCUS across all 3 reps, because collision rejection binds long before the budget does. A redesign that spreads 40 nodes over more of the screen may well raise the visible label count rather than lower it."
+  },
+  "couldNotMeasure": [
+    {
+      "item": "Label budget A/B end-to-end at 700 px vs 1440 px (the product's only real label-count knob).",
+      "why": "run-labels.mjs was written and syntax-checked, but every attempt fell after ~17:16 IST inside the contamination window and failed to reach .va-world[data-phase=ready]. The 0/5/10/16 per-label curve that section 49 actually asks for WAS measured and is reported."
+    },
+    {
+      "item": "The clean, sampler-free marginal cost of the homepage teaser (visible / offscreen / hidden tab).",
+      "why": "run-teaser.mjs measured its two control floors before failing: a static route with no WebGL costs 0.26 ms per 5 s [0.18..17.13], and the homepage with WebGL refused (flat fallback confirmed present, WebGL canvas confirmed absent) costs 0.38 ms per 5 s [0.21..11.36]. The three teaser conditions then failed to find the preview canvas, inside the contamination window. The 3-rep teaser figures that ARE reported were taken with a rAF sampler running in every condition including the floor, which inflates all of them by roughly 300 rAF callbacks per 5 s."
+    },
+    {
+      "item": "Mobile rep 3, and mobile draw-call and visible-node counts.",
+      "why": "Reps 1-2 are valid and reported; rep 3 died on a harness selector bug before the JSON was written, so reps 1-2 are transcribed from console output. n=2, not 3."
+    },
+    {
+      "item": "A 3-rep hidden-renderer probe.",
+      "why": "The 1-rep probe is clean and decisive. Both 3-rep attempts fell inside the contamination window, and modes.ts — the file that owns the renderer axis under test — was itself modified at 17:23, so a re-run now would not be testing 75e5efb."
+    },
+    {
+      "item": "Whether a 2D deep link can hang (the A9-D10 timing).",
+      "why": "Observed once as .va-planar-canvas never appearing in 120 s, but that observation is inside the contamination window and is better explained by the clobbered bundle than by a product defect. The coupling it was written to measure is real and visible in the code; the timing is not measured."
+    },
+    {
+      "item": "Per-route First Load JS as Next prints it.",
+      "why": "Next 16.3.4 with Turbopack no longer prints that table; the build output carries only Revalidate and Expire columns. Per-route figures were derived from each prerendered route's script references instead, and over-the-wire transfer was measured in the browser. Both are reported; neither is the table the spec asked for, because it no longer exists."
+    },
+    {
+      "item": "A GPU-throttled mobile figure.",
+      "why": "Chromium exposes no GPU throttle. CPU was throttled 4x; the GPU stayed a desktop Intel Iris Xe. Since the 3D view is fill-rate bound, the mobile 3D draw figures are optimistic by an unknown factor and must not be quoted as phone numbers."
+    },
+    {
+      "item": "Anything at all after ~17:16 IST 2026-09-14.",
+      "why": "See provenance.contamination. Other agents in this wave hold the same working tree and the same .next directory."
+    }
+  ]
+}
