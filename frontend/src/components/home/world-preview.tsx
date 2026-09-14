@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Color } from "three";
@@ -117,6 +118,21 @@ export function WorldPreview({ slice }: { slice: HeroSlice }) {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const engineRef = useRef<WorldEngine | null>(null);
     const [named, setNamed] = useState<HeroSliceNode | null>(null);
+    /**
+     * The subject chosen inside the preview. Local, and it is the point.
+     *
+     * A tap used to navigate. That was wrong twice over: it navigated at the end of every orbit,
+     * because a mouse drag always ends in a click; and releasing over empty space - which is
+     * where an orbit usually ends - navigated to the whole graph, because a pick of nothing was
+     * read as a request for everything. A preview exists so that people can handle it, and a
+     * surface that leaves the page when handled cannot be handled.
+     *
+     * So a tap selects, here, and going to the graph is a thing the reader asks for in words.
+     */
+    const [chosen, setChosen] = useState<{ index: number; node: HeroSliceNode } | null>(null);
+    /* The engine is built once, so its callbacks reach the current handler through a ref rather
+       than through the construction effect's dependency list. */
+    const chooseRef = useRef<(index: number | null) => void>(() => {});
     /*
      * Whether this device can draw the spatial preview at all.
      *
@@ -137,6 +153,20 @@ export function WorldPreview({ slice }: { slice: HeroSlice }) {
     /* Paused unless the canvas is both on screen and in a visible tab. Held in a ref because the
        engine is built asynchronously and the observers may fire before it exists. */
     const wanted = useRef(false);
+
+    const choose = useCallback(
+        (index: number | null) => {
+            setChosen(index === null ? null : { index, node: slice.nodes[index] });
+        },
+        [slice],
+    );
+
+    /* Written in an effect, not during render: a ref assignment during render is a write React
+       does not know about, and under a re-entrant render it can publish a handler for a slice
+       that is no longer the one on screen. */
+    useEffect(() => {
+        chooseRef.current = choose;
+    });
 
     const open = useCallback(
         (node: HeroSliceNode | null) => {
@@ -168,12 +198,38 @@ export function WorldPreview({ slice }: { slice: HeroSlice }) {
                 /* Twice the rotation per frame at half the frame rate, because OrbitControls
                    advances `autoRotate` per update call rather than per second. Same drift. */
                 controls: { zoom: false, pan: false, autoRotate: 0.64 },
+                /*
+                 * A finger here must still be able to scroll the page.
+                 *
+                 * OrbitControls sets `touch-action: none` on whatever element it is given,
+                 * unconditionally, and inline style beats the stylesheet. On a phone this panel
+                 * is about a third of the fold, so a finger landing in it could neither scroll
+                 * past nor pinch to zoom - the page simply refused. `pan-y pinch-zoom` keeps
+                 * both and leaves the horizontal axis, which is the one a turntable needs.
+                 */
+                touchAction: "pan-y pinch-zoom",
                 maxFps: 30,
                 // Fifty lines, not 185,693, so they carry the weight of drawn strokes rather
                 // than of ink accumulating.
                 edgeWeight: 14,
                 events: {
-                    onHover: (index) => setNamed(index === null ? null : slice.nodes[index]),
+                    onHover: (index) => {
+                        setNamed(index === null ? null : slice.nodes[index]);
+                        /* The lines a name refers to have to be on screen for the name to mean
+                           anything. The graph page learned this in the previous phase; the
+                           preview was left hovering over nothing. */
+                        engineRef.current?.setEmphasis(index);
+                    },
+                    /*
+                     * A real tap, classified by `installGestures` inside the engine rather than
+                     * by a `click` this canvas cannot trust. It selects and it does not
+                     * navigate - not even on a tap into empty space, which merely clears.
+                     */
+                    onTap: (index) => {
+                        const current = engineRef.current;
+                        current?.select(index);
+                        chooseRef.current(index);
+                    },
                     // A lost context on the homepage is not worth a notice. The panel keeps its
                     // heading and its link, which is the whole of what it has to do.
                     onLost: () => setFlat(true),
@@ -256,38 +312,53 @@ export function WorldPreview({ slice }: { slice: HeroSlice }) {
                 /* The list beside this canvas is the real content for a screen reader; a canvas
                    has nothing to offer one. */
                 aria-hidden="true"
-                onPointerMove={(event) => {
-                    const rect = event.currentTarget.getBoundingClientRect();
-                    engineRef.current?.hover(
-                        event.clientX - rect.left,
-                        event.clientY - rect.top,
-                    );
-                }}
-                onPointerLeave={() => setNamed(null)}
-                onClick={(event) => {
-                    const rect = event.currentTarget.getBoundingClientRect();
-                    const index = engineRef.current?.pick(
-                        event.clientX - rect.left,
-                        event.clientY - rect.top,
-                    );
-                    open(index === null || index === undefined ? null : slice.nodes[index]);
-                }}
+
             />
+            {/*
+              * What is under the pointer, or what has been chosen.
+              *
+              * The copy used to say "click any subject to open it", which was an accurate
+              * description of a bug: a click left the page, and so did the click that ended an
+              * orbit. Choosing a subject now happens here, and leaving is a separate sentence
+              * the reader has to mean.
+              */}
             <p className="va-world-preview-readout" aria-hidden="true">
-                {named ? (
+                {(chosen?.node ?? named) ? (
                     <>
-                        <span className="va-world-preview-name">{named.label}</span>
+                        <span className="va-world-preview-name">
+                            {(chosen?.node ?? named)!.label}
+                        </span>
                         <span className="va-world-preview-kind">
-                            {named.group.replace(/-/g, " ")} · {named.degree.toLocaleString()}{" "}
-                            connections
+                            {(chosen?.node ?? named)!.group.replace(/-/g, " ")} ·{" "}
+                            {(chosen?.node ?? named)!.degree.toLocaleString()} connections
                         </span>
                     </>
                 ) : (
                     <span className="va-world-preview-kind">
-                        Drag to turn. Click any subject to open it.
+                        Drag to turn it. Tap a subject to hold it.
                     </span>
                 )}
             </p>
+
+            {/*
+              * The one thing here that navigates, and it says so in words.
+              *
+              * Outside the readout rather than inside it: that paragraph is aria-hidden and
+              * pointer-events: none, and a link inside an aria-hidden subtree is a link nobody
+              * using assistive technology can reach.
+              */}
+            {chosen && (
+                <p className="va-world-preview-chosen" data-testid="hero-selection" data-node-id={chosen.node.id}>
+                    <Link
+                        className="va-world-preview-explore"
+                        data-testid="hero-explore"
+                        href={`/graph?view=focus&renderer=3d&node=${encodeURIComponent(chosen.node.id)}`}
+                    >
+                        Explore {chosen.node.label} in the Knowledge World
+                        <span aria-hidden="true"> →</span>
+                    </Link>
+                </p>
+            )}
         </div>
     );
 }
