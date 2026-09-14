@@ -676,8 +676,7 @@ test.describe("homepage: the world teaser is handled, not followed", () => {
      * Marked as an expected failure rather than weakened, so that fixing it turns this red and
      * the test gets deleted instead of quietly enshrining the wrong behaviour.
      */
-    test("the explore link should arrive in Focus, and does not", async ({ page }) => {
-        test.fail();
+    test("the explore link arrives in Focus", async ({ page }) => {
         const canvas = await heroPage(page);
         const box = (await canvas.boundingBox())!;
         const subject = await busiestSubject(page);

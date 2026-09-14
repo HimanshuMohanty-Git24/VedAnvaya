@@ -392,6 +392,26 @@ export class EdgeLabelView {
      * container. Whoever projected them decides what usable means - behind the camera in the
      * spatial view, nothing in the planar one.
      */
+    /**
+     * Whether an assignment is still owed.
+     *
+     * A renderer that sleeps has to know. The assignment deliberately waits for the scene to
+     * have been still for `SETTLE_MS`, because placing a phrase against moving geometry attaches
+     * it to whichever line happens to pass underneath - so the last `update` of a settling
+     * scene arrives when it has been still for roughly nothing, and the one that would cross the
+     * deadline has to be asked for.
+     *
+     * The spatial view never needed this: its frame loop runs whether or not anything moved, so
+     * the next call always came. The planar view stopped repainting a settled diagram - correctly,
+     * it was burning sixty repaints a second on a still scene - and the two changes together
+     * meant the deadline was never reached and nothing was ever placed. Measured on a production
+     * build: eight phrases in the spatial view, nought in the planar one, with its label spans
+     * allocated, empty and at opacity zero.
+     */
+    get pending() {
+        return this.dirty;
+    }
+
     update(points: Float32Array, viewport: { width: number; height: number }) {
         const now = performance.now();
         this.lastPoints = points;

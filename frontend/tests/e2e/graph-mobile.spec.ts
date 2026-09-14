@@ -874,13 +874,15 @@ test.describe("the subject sheet", () => {
     test("the selected subject stays inside the visible band at every sheet height", async ({
         page,
     }) => {
-        /* Inside the body, not beside the declaration: at describe scope `test.fail` marks
-           every test in the group, and it reported the sheet-cycle test above - which passes -
-           as unexpectedly passing. */
-        test.fail(
-            true,
-            "the expanded sheet leaves a -72.2px band at 390x844; see the sheet heights in world.css",
-        );
+        /*
+         * This was an expected failure and is now a real assertion.
+         *
+         * The expanded sheet was `calc(100% - 6rem)`, which left 96px of a 780px stage - less
+         * than the chrome standing above it - so the band was measured at -72.2px and every
+         * drawn orb including the subject sat behind furniture. The sheet is now bounded by the
+         * chrome height the page publishes from its own measurement, plus the same 7.5rem floor
+         * the neighbour budget uses, so the two cannot disagree about how much canvas survives.
+         */
         await enterFocus(page);
         const handle = page.locator(".va-world-sheet-handle");
         const outside: string[] = [];

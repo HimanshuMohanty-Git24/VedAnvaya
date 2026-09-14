@@ -807,13 +807,17 @@ export function PlanarView({
                     points[base] = 1;
                 });
                 labelView.update(points, { width, height });
+                /* The assignment waits for stillness, so a settled diagram has to offer one
+                   more frame or the deadline never arrives. Bounded by the view itself: it
+                   stops asking the moment it has placed what it has. */
+                if (labelView.pending) markDirty();
             }
         } else if (labelView && labelSubjectRef.current !== null) {
             labelSubjectRef.current = null;
             picksRef.current = [];
             labelView.setLabels([]);
         }
-    }, [labels, scope, world]);
+    }, [labels, scope, world, markDirty]);
 
     /* The overlay outlives individual neighbourhoods; only its contents change. */
     useEffect(() => {
@@ -833,11 +837,26 @@ export function PlanarView({
         };
     }, []);
 
-    /* A new neighbourhood invalidates whatever was being named in the last one. */
+    /*
+     * A new neighbourhood invalidates whatever was being named in the last one - and so does
+     * the arrival of the words.
+     *
+     * `predicates` is fetched after the geometry, so on a cold load the first paint happens
+     * before the curated phrasing exists. The pick is memoised on the subject, and the paint
+     * only runs while the canvas is dirty, so without `predicates` in this list the sequence
+     * was: paint with no table, record the subject as done, settle, and never name anything.
+     * Measured on a production build - the spatial view showed eight phrases and the planar
+     * view showed nought, with its label spans allocated, empty and at opacity zero.
+     *
+     * The spatial view never had this, because there the pick is a React effect with
+     * `predicates` among its dependencies. Here the pick lives inside the frame loop, so the
+     * dependency has to be declared by hand. The palette already does exactly this a few lines
+     * below; the table was the one asynchronous input nobody had connected.
+     */
     useEffect(() => {
         labelSubjectRef.current = null;
         markDirty();
-    }, [root, scope, markDirty]);
+    }, [root, scope, predicates, markDirty]);
 
     /* -------------------------------------------------------------- loop - */
 
