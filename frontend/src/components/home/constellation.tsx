@@ -1,5 +1,7 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
 import { useEffect, useRef, useState } from "react";
 
 /**
@@ -58,6 +60,10 @@ function seeded(seed: number) {
 export function Constellation({ slice }: { slice: Slice }) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [hovered, setHovered] = useState<Node | null>(null);
+    const router = useRouter();
+    /* The hovered node is read by the click handler, which is outside the effect that
+       tracks it, so it travels through a ref as well as through state. */
+    const hoveredRef = useRef<Node | null>(null);
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -314,13 +320,16 @@ export function Constellation({ slice }: { slice: Slice }) {
             }
             if (nearest !== hoveredIndex) {
                 hoveredIndex = nearest;
-                setHovered(nearest >= 0 ? bodies[nearest].node : null);
+                const node = nearest >= 0 ? bodies[nearest].node : null;
+                hoveredRef.current = node;
+                setHovered(node);
             }
         };
 
         const onPointerLeave = () => {
             pointer.inside = false;
             hoveredIndex = -1;
+            hoveredRef.current = null;
             setHovered(null);
         };
 
@@ -349,15 +358,35 @@ export function Constellation({ slice }: { slice: Slice }) {
         };
     }, [slice]);
 
+    /*
+     * Clicking a subject opens the graph standing on it.
+     *
+     * This is the whole reason the preview is worth having. Before, it linked to `/graph` and
+     * the reader arrived somewhere with no relation to what they had just been pointing at -
+     * which made the figure decoration. Carrying the identifier across means the thing you
+     * were looking at is the thing that opens, and the preview becomes a way in rather than a
+     * picture of one.
+     */
+    const enter = () => {
+        const node = hoveredRef.current;
+        router.push(node ? `/graph?node=${encodeURIComponent(node.id)}` : "/graph");
+    };
+
     return (
         <div className="va-constellation">
-            <canvas aria-hidden="true" className="va-constellation-canvas" ref={canvasRef} />
+            <canvas
+                aria-hidden="true"
+                className="va-constellation-canvas"
+                onClick={enter}
+                ref={canvasRef}
+            />
             <p className="va-constellation-readout" aria-live="polite">
                 {hovered ? (
                     <>
                         <span className="va-constellation-name">{hovered.label}</span>
                         <span className="va-constellation-kind">
                             {hovered.deity ? "deity" : hovered.type.toLowerCase().replace(/_/g, " ")}
+                            <em>open the world here</em>
                         </span>
                     </>
                 ) : (

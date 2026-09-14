@@ -1,38 +1,24 @@
-import { LoadFailure } from "@/components/empty-state";
-import { GraphExplorer } from "@/components/graph-explorer";
-import { PageHeading } from "@/components/page-heading";
-import { encoded, load, type GraphData } from "@/lib/api";
+import type { Metadata } from "next";
+import { Suspense } from "react";
+import { GraphShell } from "@/components/world/graph-shell";
 
-export const metadata = {
-    title: "Knowledge graph",
+export const metadata: Metadata = {
+    title: "The knowledge world",
     description:
-        "A curated, bounded map of passages, deities, seers, ideas, rites and wording, where every relationship can be asked to explain itself.",
+        "The whole public corpus as one connected map: 35,370 subjects and 185,693 recorded relationships, in a spatial world, a planar diagram, or traced as a path between two things.",
 };
 
-export default async function GraphPage({
-    searchParams,
-}: {
-    searchParams: Promise<{ node?: string }>;
-}) {
-    const { node = "VG:DEVATA:INDRAH" } = await searchParams;
-    const result = await load<GraphData>(
-        `/graph/neighborhood/${encoded(node)}?depth=1&limit_per_type=8`,
-        { revalidate: 0 },
-    );
-    if (!result.ok) {
-        return (
-            <div className="shell page">
-                <LoadFailure status={result.status} message={result.message} />
-            </div>
-        );
-    }
+/**
+ * The graph.
+ *
+ * This route used to open a bounded 2D explorer while the spatial world sat unlinked at
+ * `/graph/world`, which meant the flagship view of the corpus was reachable only by typing its
+ * address. There is now one graph with four ways of looking at it, and this is where it opens.
+ */
+export default function GraphPage() {
     return (
-        <div className="shell page graph-page">
-            <PageHeading
-                title="Knowledge graph"
-                description="Curated for reading, not a database browser. Expand one node at a time and select any relationship line to see the exact evidence behind it."
-            />
-            <GraphExplorer initialData={result.data} initialNode={node} />
-        </div>
+        <Suspense fallback={<div className="va-graph" data-mode="WORLD" />}>
+            <GraphShell />
+        </Suspense>
     );
 }

@@ -1,24 +1,22 @@
-import type { Metadata } from "next";
-import { WorldStage } from "@/components/world/world-stage";
-
-export const metadata: Metadata = {
-    title: "The world",
-    description:
-        "The whole public knowledge graph as one spatial map: 35,370 subjects and 185,693 recorded relationships, with every connection openable.",
-};
+import { redirect } from "next/navigation";
 
 /**
- * The World View, behind its own route while it is being proven.
+ * The world moved to `/graph`.
  *
- * The 2D explorer at `/graph` stays exactly as it is. It is the working graph today, it is
- * what the rest of the product links to, and replacing it before this one has a search, an
- * accessible parallel and a mobile answer would be trading something that works for something
- * that is nearly finished.
+ * It lived here while it was being proven, and links to it exist. A redirect rather than a
+ * deletion keeps them working, and carries any deep link across: `/graph/world?node=X` becomes
+ * `/graph?node=X`, which selects the same subject in the same place.
  */
-export default function WorldPage({
+export default async function WorldRedirect({
     searchParams,
 }: {
-    searchParams: Promise<{ node?: string }>;
+    searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-    return <WorldStage searchParams={searchParams} />;
+    const params = await searchParams;
+    const query = new URLSearchParams();
+    for (const [key, value] of Object.entries(params)) {
+        if (typeof value === "string") query.set(key, value);
+    }
+    const suffix = query.toString();
+    redirect(suffix ? `/graph?${suffix}` : "/graph");
 }

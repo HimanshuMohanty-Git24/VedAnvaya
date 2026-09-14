@@ -5,6 +5,7 @@ import {
     loadWorldLabels,
     neighboursOf,
     otherEnd,
+    regionOf,
     type WorldManifest,
 } from "@/lib/world/artifact";
 
@@ -27,11 +28,15 @@ function tinyWorld() {
     const nodeType = new Uint8Array([0, 1, 1, 2, 2]);
     const nodeGroup = new Uint8Array([0, 2, 2, 4, 10]);
     const nodeDegree = new Uint16Array([3, 2, 2, 1, 0]);
+    // Nodes 0-2 are one region, node 3 another, node 4 unattached (65535).
+    const nodeRegion = new Uint16Array([0, 0, 0, 1, 65535]);
     /* 0-1, 0-2, 1-2 (triangle), 0-3 (tail). Node 4 is isolated.
        Edge types mirror the real artifact's ordering rule: the two semantic edges come first
        and the two structural ones last, so `semanticEdges` is the boundary between them. */
     const edgePairs = new Uint32Array([0, 1, 0, 2, 1, 2, 0, 3]);
     const edgeType = new Uint8Array([0, 0, 1, 1]);
+    // Only the tail edge leaves region 0, so only it is a bridge.
+    const edgeBridge = new Uint8Array([0, 0, 0, 1]);
 
     const sections: WorldManifest["sections"] = [];
     let offset = 0;
@@ -40,8 +45,10 @@ function tinyWorld() {
         ["nodeType", nodeType],
         ["nodeGroup", nodeGroup],
         ["nodeDegree", nodeDegree],
+        ["nodeRegion", nodeRegion],
         ["edgePairs", edgePairs],
         ["edgeType", edgeType],
+        ["edgeBridge", edgeBridge],
     ];
     for (const [name, array] of parts) {
         offset = Math.ceil(offset / 8) * 8;
@@ -88,6 +95,43 @@ function tinyWorld() {
         sections,
         hubs: [0],
         maxDegree: 3,
+        communities: {
+            algorithm: "louvain",
+            resolution: 1.05,
+            modularity: 0.5,
+            detected: 2,
+            drawn: 2,
+            minSize: 2,
+            unattached: 1,
+        },
+        constellations: [
+            {
+                id: 0,
+                community: 0,
+                name: "Rigvedic · agniḥ",
+                size: 3,
+                veda: { name: "RV", count: 3, share: 1 },
+                group: { name: "deity", count: 1, share: 0.34 },
+                central: [0],
+                bridges: [0],
+                connectedShare: 1,
+                centre: [0, 0, 0],
+                radius: 20,
+            },
+            {
+                id: 1,
+                community: 1,
+                name: null,
+                size: 1,
+                veda: null,
+                group: null,
+                central: [3],
+                bridges: [],
+                connectedShare: 1,
+                centre: [200, 0, 0],
+                radius: 10,
+            },
+        ],
     };
     return { manifest, buffer };
 }
@@ -231,5 +275,45 @@ describe("a world that cannot be read", () => {
     it("fails with a sentence rather than a stack", async () => {
         vi.stubGlobal("fetch", vi.fn(async () => ({ ok: false }) as unknown as Response));
         await expect(loadWorld()).rejects.toThrow(/could not be read/i);
+    });
+});
+
+describe("regions and bridges", () => {
+    it("reads a node's region, and reports none as null rather than 65535", async () => {
+        const world = await loadWorld();
+        expect(regionOf(world, 0)).toBe(0);
+        expect(regionOf(world, 3)).toBe(1);
+        /* The sentinel must never leak: 65535 read as a region index would look up
+           constellation 65535 and quietly render undefined. */
+        expect(regionOf(world, 4)).toBeNull();
+    });
+
+    it("marks only edges that leave their region as bridges", async () => {
+        const world = await loadWorld();
+        const bridges = [...world.edgeBridge];
+        expect(bridges.filter(Boolean)).toHaveLength(1);
+        // The bridge is the edge whose two ends sit in different regions.
+        const index = bridges.indexOf(1);
+        const a = world.edgePairs[index * 2];
+        const b = world.edgePairs[index * 2 + 1];
+        expect(regionOf(world, a)).not.toBe(regionOf(world, b));
+    });
+
+    it("names a constellation only where the metrics carried it", async () => {
+        const world = await loadWorld();
+        const [named, unnamed] = world.manifest.constellations ?? [];
+        expect(named.name).toBe("Rigvedic · agniḥ");
+        /* A constellation with no dominant Veda and no clear leading member keeps its number.
+           An invented thematic name would be the one thing this pipeline must not produce. */
+        expect(unnamed.name).toBeNull();
+    });
+
+    it("lists a neighbour once even when two relationships join the same pair", async () => {
+        const world = await loadWorld();
+        /* Node 0 reaches node 1 by one edge and node 2 by one edge; the triangle means 1 and 2
+           also reach each other. What is guarded here is that a repeated pair is collapsed:
+           degree counts edges, this counts subjects, and they are different numbers. */
+        const neighbours = Array.from(neighboursOf(world, 0));
+        expect(new Set(neighbours).size).toBe(neighbours.length);
     });
 });

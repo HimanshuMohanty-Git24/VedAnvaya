@@ -54,6 +54,9 @@ export type WorldMode = "WORLD" | "FOCUS" | "PATH";
  */
 const WORLD_EDGE_BUDGET = 24_000;
 
+/** What stays drawn behind a traced route: enough for context, not enough to obscure it. */
+const PATH_EDGE_BUDGET = 1_200;
+
 export type EngineEvents = {
     onHover?: (node: number | null) => void;
     onSelect?: (node: number | null) => void;
@@ -206,6 +209,7 @@ export class WorldEngine {
     private frame = 0;
     private disposed = false;
     private selected: number | null = null;
+    private path: number[] = [];
     private hovered: number | null = null;
     private mode: WorldMode = "WORLD";
 
@@ -472,11 +476,31 @@ export class WorldEngine {
 
     private updateSelectionEdges() {
         const geometry = this.selectionEdges.geometry;
+        const { positions } = this.world;
+
+        /* A traced route draws its own steps: the segment between each consecutive pair, in
+           order, rather than every edge touching either end of it. */
+        if (this.path.length > 1) {
+            const steps = Math.min(this.path.length - 1, this.selectionPositions.length / 6);
+            for (let i = 0; i < steps; i += 1) {
+                const a = this.path[i];
+                const b = this.path[i + 1];
+                this.selectionPositions[i * 6] = positions[a * 3];
+                this.selectionPositions[i * 6 + 1] = positions[a * 3 + 1];
+                this.selectionPositions[i * 6 + 2] = positions[a * 3 + 2];
+                this.selectionPositions[i * 6 + 3] = positions[b * 3];
+                this.selectionPositions[i * 6 + 4] = positions[b * 3 + 1];
+                this.selectionPositions[i * 6 + 5] = positions[b * 3 + 2];
+            }
+            (geometry.getAttribute("position") as BufferAttribute).needsUpdate = true;
+            geometry.setDrawRange(0, steps * 2);
+            return;
+        }
+
         if (this.selected === null) {
             geometry.setDrawRange(0, 0);
             return;
         }
-        const { positions } = this.world;
         const touching = edgesOf(this.world, this.selected);
         const capacity = this.selectionPositions.length / 6;
         const count = Math.min(touching.length, capacity);
@@ -517,7 +541,18 @@ export class WorldEngine {
          * eight times more of it at the exact moment the camera is closest - when every line
          * spans more of the viewport - was the worst possible time to do it.
          */
-        const budget = this.edgeBudgetOverride ?? WORLD_EDGE_BUDGET;
+        /*
+         * A traced route draws almost no context.
+         *
+         * The route is the answer, and with the camera brought in to frame two subjects the
+         * backbone is not structure any more - it is a wash of hairlines across the whole
+         * viewport, each one crossing hundreds of pixels. Measured, it held four frames a
+         * second. A thousand edges is enough to say the route runs through something rather
+         * than through nothing; the steps themselves are on the overlay and unaffected.
+         */
+        const budget =
+            this.edgeBudgetOverride ??
+            (this.path.length > 1 ? PATH_EDGE_BUDGET : WORLD_EDGE_BUDGET);
         const drawn = Math.min(semantic, budget);
         this.edges.geometry.setDrawRange(0, drawn * 2);
         this.drawnEdges = drawn;
@@ -525,6 +560,20 @@ export class WorldEngine {
 
     setMode(mode: WorldMode) {
         this.mode = mode;
+        this.applySelection();
+    }
+
+    /**
+     * Emphasise a traced route.
+     *
+     * A path is a different kind of focus from a selection: a selection has a centre and a
+     * ring around it, a path has a run of subjects and the specific steps between them. The
+     * steps are drawn on the selection overlay, which already exists and is already the right
+     * size, rather than by widening the world draw range to reach edges scattered through
+     * 185,693 of them.
+     */
+    setPath(nodes: number[]) {
+        this.path = nodes;
         this.applySelection();
     }
 
@@ -546,7 +595,11 @@ export class WorldEngine {
         const count = this.world.manifest.counts.nodes;
         const focus = this.selected;
 
-        if (focus === null) {
+        if (this.path.length > 1) {
+            const along = new Set(this.path);
+            for (let i = 0; i < count; i += 1) this.nodeAlpha[i] = along.has(i) ? 1 : 0.06;
+            this.restEdges();
+        } else if (focus === null) {
             for (let i = 0; i < count; i += 1) this.nodeAlpha[i] = 0.85;
             this.restEdges();
         } else {
@@ -696,7 +749,10 @@ export class WorldEngine {
         for (const id of nodeIds) radius = Math.max(radius, centre.distanceTo(this.positionOf(id)));
         const direction = this.camera.position.clone().sub(this.controls.target);
         if (direction.lengthSq() < 1) direction.set(0, 0, 1);
-        direction.normalize().multiplyScalar(Math.min(3000, Math.max(160, radius * 2.4)));
+        /* A floor of 700 units: framing two subjects that happen to be close together would
+           otherwise put the camera inside the cloud, where every edge crosses the viewport
+           and nothing is legible however well it is framed. */
+        direction.normalize().multiplyScalar(Math.min(3200, Math.max(700, radius * 2.6)));
         this.flyTo(centre.clone().add(direction), centre, ms);
     }
 

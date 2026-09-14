@@ -1,41 +1,38 @@
 #!/usr/bin/env node
 /**
- * Lay out the public graph once, offline, and pack it for the World View to load.
+ * Compose the world, and pack it for the browser.
  *
  * ## Why the layout is not computed in the browser
  *
- * A force simulation is O(n log n) per tick with Barnes-Hut and needs a few hundred ticks to
+ * A force simulation is O(n log n) per tick with Barnes-Hut and needs hundreds of ticks to
  * settle. At 35,370 nodes that is minutes of arithmetic, and the published practical ceiling
- * for an interactive in-browser force layout is around five to ten thousand nodes. Every tool
- * that draws graphs this size - Gephi, Graphistry, Cosmograph - computes the layout somewhere
- * other than the frame loop and ships coordinates. Doing it here also buys something a runtime
+ * for an interactive in-browser force layout is five to ten thousand nodes. Every tool that
+ * draws graphs this size - Gephi, Graphistry, Cosmograph - computes the layout somewhere other
+ * than the frame loop and ships coordinates. Doing it here also buys something a runtime
  * layout cannot: the world is in the same place on every visit, which matters when a reader is
  * meant to learn where things are.
  *
- * The frame loop still runs a live simulation, but only over the few hundred nodes of a
- * neighbourhood, which is well inside what a browser settles smoothly.
+ * The browser still runs a live simulation, but only over the few hundred nodes a reader is
+ * touching, which is well inside what settles smoothly.
  *
- * ## What comes out
+ * ## Why the layout is in two levels
  *
- *   world.bin     positions, degrees, types, and the edge list, as typed arrays
- *   world.json    the manifest: type tables, counts, extent, and the hub index
- *   world.labels.json  labels, separately, because geometry should paint before text arrives
+ * The first version of this ran one simulation over everything and produced a ball: uniformly
+ * dense, no interior structure, sixty frames a second of nothing. A force layout expresses
+ * whatever grouping it is given, and it was given none. So the constellation graph is laid out
+ * first - a few dozen bodies, not thirty-five thousand - and each constellation is then filled
+ * in locally, in its own frame, and translated into place.
  *
- * Usage:  node scripts/build-world.mjs [--ticks 320] [--in ../.world/world.raw.json]
+ * Usage:
+ *   python scripts/export_graph_world.py      # frozen store  -> .world/world.raw.json
+ *   node scripts/build-constellations.mjs     # communities   -> .world/constellations.json
+ *   node scripts/build-world.mjs              # composition   -> public/world/*
  */
 
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import {
-    forceCenter,
-    forceLink,
-    forceManyBody,
-    forceSimulation,
-    forceX,
-    forceY,
-    forceZ,
-} from "d3-force-3d";
+import { forceCenter, forceLink, forceManyBody, forceSimulation } from "d3-force-3d";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(HERE, "..");
@@ -47,16 +44,19 @@ for (let i = 2; i < process.argv.length; i += 2) {
 }
 const TICKS = Number(args.get("ticks") ?? 320);
 const IN = resolve(ROOT, args.get("in") ?? ".world/world.raw.json");
-
+const CONSTELLATIONS = resolve(ROOT, args.get("constellations") ?? ".world/constellations.json");
+/** A community has to reach this size before it is drawn as a region of its own. */
+const REGION_MIN = Number(args.get("region-min") ?? 24);
 /**
- * The semantic groups, and the ontology types that fall in each.
+ * One axis is compressed.
  *
- * This is the single mapping. It replaces the copy that lived in `graph-canvas.tsx` beside a
- * hard-coded light/dark hex pair per group, which had drifted from the `--va-group-*` tokens
- * the theme declares for exactly these ten names. Colour now comes from the token layer at
- * render time; this file decides only which group a type belongs to, and the group ids are
- * baked into the artifact so the client does not re-derive them for 35,370 nodes on load.
+ * A force layout in three dimensions fills a sphere, and a sphere seen from outside is a disc
+ * from every angle. Compressing one axis gives the world a plane it is arranged on and a
+ * thickness it is arranged through, so orbiting changes the silhouette and therefore reveals
+ * something. It is the same reason a galaxy is legible where a globular cluster is not.
  */
+const FLATTEN = 0.42;
+
 const GROUPS = [
     "deity",
     "unresolved-deity",
@@ -71,51 +71,14 @@ const GROUPS = [
     "other",
 ];
 
+/*
+ * One table, read from disk.
+ *
+ * This mapping was inline here, and the constellation step needs exactly the same answer. A
+ * second copy is how the two semantic colour tables this rebuild had to reconcile came about.
+ */
 const TYPE_TO_GROUP = new Map(
-    Object.entries({
-        Devata: "deity",
-        MANTRA: "passage",
-        HYMN: "passage",
-        SECTION: "passage",
-        STRUCTURAL_CONTAINER: "passage",
-        PASSAGE: "passage",
-        Rishi: "person",
-        RishiFamily: "person",
-        Tribe: "person",
-        Ritual: "rite",
-        RitualRole: "rite",
-        SocialRite: "rite",
-        Offering: "rite",
-        Formula: "wording",
-        FormulaFamily: "wording",
-        Chandas: "wording",
-        DerivedMetric: "derived",
-        InterpretiveClaim: "derived",
-        DevataAscription: "record",
-        SemanticAssertion: "record",
-        AgentiveAssertion: "record",
-        Object: "thing",
-        Weapon: "thing",
-        Substance: "thing",
-        Plant: "thing",
-        Animal: "thing",
-        Metal: "thing",
-        Crop: "thing",
-        River: "thing",
-        Place: "thing",
-        Concept: "idea",
-        PhilosophicalConcept: "idea",
-        ActionPredicate: "idea",
-        Action: "idea",
-        Condition: "idea",
-        HumanConcern: "idea",
-        Quality: "idea",
-        State: "idea",
-        DeityAxis: "idea",
-        Epithet: "idea",
-        NaturalPhenomenon: "idea",
-        CosmicEntity: "idea",
-    }),
+    Object.entries(JSON.parse(readFileSync(join(HERE, "world-groups.json"), "utf8"))),
 );
 
 function groupOf(node) {
@@ -125,151 +88,297 @@ function groupOf(node) {
 
 /* ------------------------------------------------------------------ read - */
 
-if (!existsSync(IN)) {
-    console.error(
-        `No world export at ${IN}.\nRun:  python scripts/export_graph_world.py\nfirst; it reads the frozen store and writes that file.`,
-    );
-    process.exit(1);
+for (const [path, how] of [
+    [IN, "python scripts/export_graph_world.py"],
+    [CONSTELLATIONS, "node scripts/build-constellations.mjs"],
+]) {
+    if (!existsSync(path)) {
+        console.error(`Missing ${path}.\nRun:  ${how}\nfirst.`);
+        process.exit(1);
+    }
 }
 
 console.log(`reading ${IN} ...`);
 const raw = JSON.parse(readFileSync(IN, "utf8"));
 const nodes = raw.nodes;
 const edges = raw.edges;
-console.log(`  ${nodes.length.toLocaleString()} nodes, ${edges.length.toLocaleString()} edges`);
+const detected = JSON.parse(readFileSync(CONSTELLATIONS, "utf8"));
+const community = Int32Array.from(detected.community);
+const degree = nodes.map((n) => n.deg ?? 0);
+console.log(
+    `  ${nodes.length.toLocaleString()} nodes, ${edges.length.toLocaleString()} edges, ` +
+        `${detected.counts.communities.toLocaleString()} communities (modularity ${detected.modularity.toFixed(3)})`,
+);
 
 const types = [...new Set(nodes.map((n) => n.type))].sort();
 const typeIndex = new Map(types.map((t, i) => [t, i]));
 const edgeTypes = [...new Set(edges.map((e) => e[2]))].sort();
 const edgeTypeIndex = new Map(edgeTypes.map((t, i) => [t, i]));
 
-/* ---------------------------------------------------------------- layout - */
+/* ------------------------------------------------------ regions from communities - */
+
+const sizes = new Map();
+for (let i = 0; i < nodes.length; i += 1) {
+    sizes.set(community[i], (sizes.get(community[i]) ?? 0) + 1);
+}
+const regionIds = [...sizes.entries()]
+    .filter(([, size]) => size >= REGION_MIN)
+    .sort((a, b) => b[1] - a[1])
+    .map(([id]) => id);
+const regionIndex = new Map(regionIds.map((id, i) => [id, i]));
+console.log(`  ${regionIds.length} regions of ${REGION_MIN}+ members`);
 
 /*
- * Link strength falls with the degree of the busier endpoint.
+ * Every remaining node joins the region it has most links into.
  *
- * Indra has 7,347 edges and the metre triṣṭup has 4,195. At uniform strength those two pull
- * a fifth of the corpus into a single knot and the rest of the structure disappears behind
- * it. Dividing by the heavier endpoint's degree is d3's own default heuristic and it is the
- * difference between a hairball and a figure with arms.
+ * A node in a five-member community is not homeless; its group is simply too small to be a
+ * place. Sending it to its best-connected region keeps it beside the things it is related to
+ * and keeps the number of drawn regions small enough to compose deliberately.
  */
-const degree = nodes.map((n) => n.deg ?? 0);
-const simNodes = nodes.map((n, i) => ({ index: i }));
-const simLinks = edges.map(([s, t]) => ({ source: s, target: t }));
+const linksToRegion = new Map();
+for (const [source, target] of edges) {
+    for (const [from, to] of [
+        [source, target],
+        [target, source],
+    ]) {
+        if (regionIndex.has(community[from])) continue;
+        const region = regionIndex.get(community[to]);
+        if (region === undefined) continue;
+        const key = `${from}:${region}`;
+        linksToRegion.set(key, (linksToRegion.get(key) ?? 0) + 1);
+    }
+}
+const bestRegion = new Map();
+for (const [key, count] of linksToRegion) {
+    const [node, region] = key.split(":").map(Number);
+    const current = bestRegion.get(node);
+    if (!current || count > current.count) bestRegion.set(node, { region, count });
+}
 
-console.log(`laying out, ${TICKS} ticks ...`);
-const started = Date.now();
-const sim = forceSimulation(simNodes, 3)
+const regionOf = new Int32Array(nodes.length).fill(-1);
+for (let i = 0; i < nodes.length; i += 1) {
+    const own = regionIndex.get(community[i]);
+    if (own !== undefined) regionOf[i] = own;
+    else if (bestRegion.has(i)) regionOf[i] = bestRegion.get(i).region;
+}
+const marginal = [];
+for (let i = 0; i < nodes.length; i += 1) if (regionOf[i] < 0) marginal.push(i);
+console.log(`  ${marginal.length.toLocaleString()} nodes attach to no region`);
+
+/* ------------------------------------- level one: inside each region - */
+
+/*
+ * Interiors are laid out first, and that ordering is the whole composition.
+ *
+ * The first version placed the regions against each other and then filled them in, which put
+ * region centres about 240 units apart while a region of 3,512 members spreads over a radius
+ * of several hundred. Every region overlapped every neighbour and the result was the ball
+ * again, just built out of pieces. Laying the interiors out first means each region's real
+ * radius is known, and the arrangement can then be told to keep them apart by it.
+ */
+
+const positions3 = new Float64Array(nodes.length * 3);
+const localPositions = regionIds.map(() => null);
+const membersOf = regionIds.map(() => []);
+for (let i = 0; i < nodes.length; i += 1) {
+    if (regionOf[i] >= 0) membersOf[regionOf[i]].push(i);
+}
+
+/* Edges bucketed by region in one pass: 185,693 edges times 33 regions would be six million
+   comparisons done thirty-three times. */
+const localEdges = regionIds.map(() => []);
+for (const [source, target] of edges) {
+    const r = regionOf[source];
+    if (r >= 0 && r === regionOf[target]) localEdges[r].push([source, target]);
+}
+
+console.log("laying out region interiors ...");
+const localStarted = Date.now();
+const radii = [];
+for (let r = 0; r < regionIds.length; r += 1) {
+    const members = membersOf[r];
+    if (!members.length) {
+        radii.push(0);
+        localPositions[r] = [];
+        continue;
+    }
+    const local = new Map(members.map((id, i) => [id, i]));
+    const localNodes = members.map((id, i) => ({ index: i, node: id }));
+    const links = localEdges[r].map(([source, target]) => ({
+        source: local.get(source),
+        target: local.get(target),
+    }));
+
+    const sim = forceSimulation(localNodes, 3)
+        .numDimensions(3)
+        .force(
+            "link",
+            forceLink(links)
+                .id((d) => d.index)
+                .distance(16)
+                .strength((link) => {
+                    const a = degree[link.source.node ?? 0] || 1;
+                    const b = degree[link.target.node ?? 0] || 1;
+                    // Capped at 60 so a hub inside a region still holds its own members
+                    // together instead of letting them float off.
+                    return 1 / Math.min(a, b, 60);
+                }),
+        )
+        .force("charge", forceManyBody().strength(-26).theta(0.9).distanceMax(420))
+        .force("centre", forceCenter(0, 0, 0).strength(0.08))
+        .stop();
+    const ticks = Math.min(TICKS, 90 + Math.round(Math.sqrt(members.length) * 5));
+    for (let i = 0; i < ticks; i += 1) sim.tick();
+
+    /* The radius that matters is not the outermost stray node but where the region actually
+       is: the 92nd percentile, so one escaped member does not reserve empty space for the
+       whole arrangement. */
+    const distances = localNodes
+        .map((n) => Math.hypot(n.x, n.y, n.z * FLATTEN))
+        .sort((a, b) => a - b);
+    const radius = distances[Math.min(distances.length - 1, Math.floor(distances.length * 0.92))];
+    radii.push(Math.max(radius, 40));
+    localPositions[r] = localNodes.map((n) => ({ node: n.node, x: n.x, y: n.y, z: n.z }));
+
+    if ((r + 1) % 10 === 0) {
+        process.stdout.write(
+            `  ${r + 1}/${regionIds.length}  (${((Date.now() - localStarted) / 1000).toFixed(0)}s)
+`,
+        );
+    }
+}
+console.log(`
+  interiors settled in ${((Date.now() - localStarted) / 1000).toFixed(1)}s`);
+
+/* ----------------------------------- level two: arranging the regions - */
+
+const regionWeight = new Map();
+for (const [a, b, weight] of detected.between) {
+    const ra = regionIndex.get(a);
+    const rb = regionIndex.get(b);
+    if (ra === undefined || rb === undefined || ra === rb) continue;
+    const key = ra < rb ? `${ra}:${rb}` : `${rb}:${ra}`;
+    regionWeight.set(key, (regionWeight.get(key) ?? 0) + weight);
+}
+
+const regionNodes = regionIds.map((_, i) => ({ index: i }));
+const regionLinks = [...regionWeight.entries()].map(([key, weight]) => {
+    const [source, target] = key.split(":").map(Number);
+    return { source, target, weight };
+});
+
+console.log(`arranging ${regionIds.length} regions ...`);
+const regionSim = forceSimulation(regionNodes, 3)
     .numDimensions(3)
     .force(
         "link",
-        forceLink(simLinks)
+        forceLink(regionLinks)
             .id((d) => d.index)
-            .distance(28)
-            .strength((link) => {
-                const a = degree[link.source.index ?? link.source] || 1;
-                const b = degree[link.target.index ?? link.target] || 1;
-                return 1 / Math.min(a, b);
-            }),
+            /*
+             * Two regions never sit closer than their radii plus a margin.
+             *
+             * This is the line that stops the map collapsing. Weight still matters - heavily
+             * linked regions sit at the near end of what the radii allow - but it can only
+             * ever pull them to touching, never through each other.
+             */
+            .distance((link) => {
+                const a = radii[link.source.index ?? link.source];
+                const b = radii[link.target.index ?? link.target];
+                const floor = (a + b) * 1.95 + 260;
+                return floor + 1400 / Math.sqrt(link.weight);
+            })
+            .strength((link) => Math.min(0.22, link.weight / 2600)),
     )
-    /*
-     * theta 0.9 rather than the 0.8 default: this runs offline over a graph with a very long
-     * degree tail, and the looser Barnes-Hut approximation costs accuracy no one can see at
-     * this scale while taking a noticeable fraction off a build that runs in minutes.
-     */
-    /*
-     * Repulsion is strong and long-range, and the pull to the centre is nearly absent.
-     *
-     * The first settings produced a sphere: a uniformly dense ball with no visible interior
-     * structure, which is what a force layout gives you when the centring force is strong
-     * enough to overwhelm the differences between regions. It rendered at sixty frames a
-     * second and told the reader nothing, which is the failure mode this phase is meant to
-     * avoid rather than the one it is meant to measure.
-     *
-     * Raising repulsion and letting `distanceMax` reach most of the cloud lets groups that
-     * are only weakly linked drift apart instead of being packed together, and cutting the
-     * axis springs to a tenth keeps them from being pulled back. The origin forces are not
-     * removed entirely because 997 nodes have no edges at all and nothing else would stop
-     * them leaving.
-     */
-    .force("charge", forceManyBody().strength(-120).theta(0.9).distanceMax(2600))
-    .force("centre", forceCenter(0, 0, 0).strength(0.04))
-    .force("x", forceX(0).strength(0.0012))
-    .force("y", forceY(0).strength(0.0012))
-    .force("z", forceZ(0).strength(0.0012))
+    /* Repulsion scales with the region's actual extent rather than with its member count, so
+       a sparse region of 500 claims the room it visually occupies. */
+    .force(
+        "charge",
+        forceManyBody()
+            .strength((d) => -900 - radii[d.index] * 52)
+            .theta(0.85),
+    )
+    .force("centre", forceCenter(0, 0, 0).strength(0.008))
     .stop();
+for (let i = 0; i < 900; i += 1) regionSim.tick();
+for (const region of regionNodes) region.z *= FLATTEN;
 
-for (let i = 0; i < TICKS; i += 1) {
-    sim.tick();
-    if ((i + 1) % 40 === 0) {
-        const pct = Math.round(((i + 1) / TICKS) * 100);
-        process.stdout.write(`  ${pct}%  (${((Date.now() - started) / 1000).toFixed(0)}s)\r`);
+/* Translate each interior into its region's place. */
+for (let r = 0; r < regionIds.length; r += 1) {
+    const centre = regionNodes[r];
+    for (const point of localPositions[r]) {
+        positions3[point.node * 3] = centre.x + point.x;
+        positions3[point.node * 3 + 1] = centre.y + point.y;
+        positions3[point.node * 3 + 2] = centre.z + point.z * FLATTEN;
     }
 }
-console.log(`\n  settled in ${((Date.now() - started) / 1000).toFixed(1)}s`);
+
+const marginalPlaced = marginal;
+
+/*
+ * The unattached, on a shell outside everything else.
+ *
+ * These nodes have no public relationship at all. They are real subjects and dropping them
+ * would misreport the corpus, but the structure implies no position for them, so they go on a
+ * wide sphere around the whole arrangement - visibly outside the structure, which is exactly
+ * what having no connections means. A Fibonacci spiral spreads them evenly rather than
+ * clumping them at the poles.
+ */
+let worldRadius = 0;
+for (let r = 0; r < regionNodes.length; r += 1) {
+    worldRadius = Math.max(
+        worldRadius,
+        Math.hypot(regionNodes[r].x, regionNodes[r].y, regionNodes[r].z) + radii[r],
+    );
+}
+const shell = worldRadius * 1.22 + 260;
+for (let i = 0; i < marginalPlaced.length; i += 1) {
+    const t = (i + 0.5) / marginalPlaced.length;
+    const phi = Math.acos(1 - 2 * t);
+    const theta = Math.PI * (1 + Math.sqrt(5)) * i;
+    const id = marginalPlaced[i];
+    positions3[id * 3] = shell * Math.sin(phi) * Math.cos(theta);
+    positions3[id * 3 + 1] = shell * Math.sin(phi) * Math.sin(theta);
+    positions3[id * 3 + 2] = shell * Math.cos(phi) * FLATTEN;
+}
 
 /* ------------------------------------------------------------- normalise - */
 
-// Scale the settled cloud into a fixed cube so the camera has one set of distances to work
-// with regardless of how the simulation happened to spread out on a given build.
 let extent = 0;
-for (const node of simNodes) {
-    extent = Math.max(extent, Math.abs(node.x), Math.abs(node.y), Math.abs(node.z));
-}
+for (let i = 0; i < nodes.length * 3; i += 1) extent = Math.max(extent, Math.abs(positions3[i]));
 const scale = extent > 0 ? 1000 / extent : 1;
 
 const positions = new Float32Array(nodes.length * 3);
-for (let i = 0; i < simNodes.length; i += 1) {
-    positions[i * 3] = simNodes[i].x * scale;
-    positions[i * 3 + 1] = simNodes[i].y * scale;
-    positions[i * 3 + 2] = simNodes[i].z * scale;
-}
+for (let i = 0; i < nodes.length * 3; i += 1) positions[i] = positions3[i] * scale;
 
 /* ------------------------------------------------------------------ pack - */
 
 const nodeType = new Uint8Array(nodes.length);
 const nodeGroup = new Uint8Array(nodes.length);
-// Degree is clamped to 65,535; the real maximum is 7,347, so nothing is lost today and a
-// future build with a busier hub degrades to "very busy" rather than wrapping to zero.
+// Degree clamps at 65,535; the real maximum is 7,347, so nothing is lost today and a busier
+// future hub degrades to "very busy" rather than wrapping to zero.
 const nodeDegree = new Uint16Array(nodes.length);
+// -1 becomes 65,535 here and is read back as "no region" by the client.
+const nodeRegion = new Uint16Array(nodes.length);
 for (let i = 0; i < nodes.length; i += 1) {
     nodeType[i] = typeIndex.get(nodes[i].type) ?? 0;
     nodeGroup[i] = GROUPS.indexOf(groupOf(nodes[i]));
     nodeDegree[i] = Math.min(65535, degree[i]);
+    nodeRegion[i] = regionOf[i] < 0 ? 65535 : regionOf[i];
 }
 
 /*
  * Edges are ordered so the ones worth drawing at world scale come first.
  *
- * This is the artifact's main concession to the frame budget, and it exists because of a
- * measurement. Drawing something at alpha 0.012 costs exactly what drawing it at alpha 1.0
- * costs: the fragment is still shaded and still blended. The first build drew all 185,693
- * edges every frame, most of them structural and invisible, and an Intel Iris Xe held 15 fps.
+ * Measured: a fragment shaded at alpha 0.01 costs exactly what one at alpha 1.0 costs, so
+ * drawing invisible structural edges was paying full price for nothing. Sorted to the back,
+ * they can be left out of the draw range at world scale and brought back on selection.
  *
- * `CONTAINS` and `HAS_CHANDAS` join a verse to the book that holds it and to its metre. There
- * are 38,794 of them, they are true, and they say nothing a reader came to a map to find:
- * every verse has a parent and a metre, so the relationship carries no information about any
- * particular verse. Sorted to the back, they can be excluded from the draw range entirely at
- * world scale and brought back the moment something is selected, which is when a verse's own
- * container genuinely matters.
+ * Within the semantic edges the rank is the degree of the *less* connected endpoint. Ranking
+ * by the busier end would put Indra's 7,347 spokes first and the first ten thousand edges
+ * drawn would be three hubs' worth of star. Ranking by the quieter end asks whether *both*
+ * ends are well connected, which draws the structure between major subjects first.
  */
 const STRUCTURAL = new Set(["CONTAINS", "HAS_CHANDAS", "HAS_TEXT_VERSION", "HAS_TRANSLATION"]);
-
-/*
- * Within the semantic edges, the backbone comes first.
- *
- * The ranking key is the degree of the *less* connected endpoint, descending, and the choice
- * between that and the more connected one is the whole difference between a skeleton and a
- * star. Ranking by the busier end puts Indra's 7,347 edges at the front, and the first ten
- * thousand edges drawn are then all the spokes of two or three hubs - which is exactly the
- * shape the neighbourhood API already produces and the reason this artifact exists.
- *
- * Ranking by the quieter end asks instead: are *both* of these things well connected? An edge
- * from Indra to a single verse scores that verse's degree, which is small. An edge from Indra
- * to Agni, or from a metre to a seer family, scores high. Taking edges in that order draws the
- * structure the corpus has between its major subjects first and fills in the long tail of
- * leaf attachments last, which is precisely what a level-of-detail cut wants.
- */
 const rank = (edge) => Math.min(degree[edge[0]] ?? 0, degree[edge[1]] ?? 0);
 const order = edges
     .map((_, index) => index)
@@ -283,11 +392,17 @@ const semanticEdgeCount = edges.filter((edge) => !STRUCTURAL.has(edge[2])).lengt
 
 const edgePairs = new Uint32Array(edges.length * 2);
 const edgeType = new Uint8Array(edges.length);
+// An edge joining two regions is a bridge, and bridges are the part of the picture that shows
+// how the corpus hangs together. Flagged here so the renderer can lift them without a lookup.
+const edgeBridge = new Uint8Array(edges.length);
 for (let i = 0; i < order.length; i += 1) {
     const edge = edges[order[i]];
     edgePairs[i * 2] = edge[0];
     edgePairs[i * 2 + 1] = edge[1];
     edgeType[i] = edgeTypeIndex.get(edge[2]) ?? 0;
+    const ra = regionOf[edge[0]];
+    const rb = regionOf[edge[1]];
+    edgeBridge[i] = ra >= 0 && rb >= 0 && ra !== rb ? 1 : 0;
 }
 
 const sections = [
@@ -295,65 +410,73 @@ const sections = [
     ["nodeType", nodeType],
     ["nodeGroup", nodeGroup],
     ["nodeDegree", nodeDegree],
+    ["nodeRegion", nodeRegion],
     ["edgePairs", edgePairs],
     ["edgeType", edgeType],
+    ["edgeBridge", edgeBridge],
 ];
 
 let offset = 0;
 const layout = [];
 for (const [name, array] of sections) {
-    // Each section starts on an 8-byte boundary so the client can build typed-array views
-    // directly over the ArrayBuffer instead of copying every section out of it.
+    // Each section starts on an 8-byte boundary so the client can build typed-array views over
+    // the buffer instead of copying every section out of it.
     offset = Math.ceil(offset / 8) * 8;
-    layout.push({
-        name,
-        offset,
-        length: array.length,
-        type: array.constructor.name,
-    });
+    layout.push({ name, offset, length: array.length, type: array.constructor.name });
     offset += array.byteLength;
 }
 const buffer = Buffer.alloc(offset);
 for (let i = 0; i < sections.length; i += 1) {
-    Buffer.from(
-        sections[i][1].buffer,
-        sections[i][1].byteOffset,
-        sections[i][1].byteLength,
-    ).copy(buffer, layout[i].offset);
+    Buffer.from(sections[i][1].buffer, sections[i][1].byteOffset, sections[i][1].byteLength).copy(
+        buffer,
+        layout[i].offset,
+    );
 }
 
-mkdirSync(OUT_DIR, { recursive: true });
-writeFileSync(join(OUT_DIR, "world.bin"), buffer);
-
 /*
- * The hub index: the nodes worth naming before a reader has selected anything.
+ * The hub index: names worth showing before anything is selected.
  *
  * Drawn from degree, but not from degree alone. The busiest nodes in this graph by raw count
- * are metres - triṣṭup is attached to 4,195 verses - and a world whose visible labels are
- * four metre names describes the prosody of the corpus rather than its subject matter. So
- * passages and the reified record types are held out of the index, and what is left is the
- * deities, seers, ideas and rites a reader would recognise as the things the corpus is about.
+ * are metres - triṣṭup is attached to 4,195 verses - and a world whose visible labels are four
+ * metre names has described the prosody of the corpus rather than its subject.
  */
 const NAMEABLE = new Set(["deity", "person", "idea", "rite", "thing", "wording"]);
 const hubs = nodes
-    .map((node, index) => ({ index, group: GROUPS[nodeGroup[index]], degree: degree[index] }))
+    .map((_, index) => ({ index, group: GROUPS[nodeGroup[index]], degree: degree[index] }))
     .filter((entry) => NAMEABLE.has(entry.group))
     .sort((a, b) => b.degree - a.degree)
     .slice(0, 600)
     .map((entry) => entry.index);
 
+/* The constellations, in the renderer's region order, with their centres in world units. */
+const byId = new Map(detected.constellations.map((c) => [c.id, c]));
+const constellations = regionIds.map((id, i) => {
+    const described = byId.get(id) ?? {};
+    const centre = regionNodes[i];
+    return {
+        id: i,
+        community: id,
+        name: described.name ?? null,
+        size: membersOf[i].length,
+        veda: described.veda ?? null,
+        group: described.group ?? null,
+        central: described.central ?? [],
+        bridges: described.bridges ?? [],
+        connectedShare: described.connectedShare ?? null,
+        centre: [centre.x * scale, centre.y * scale, centre.z * scale].map((v) =>
+            Number(v.toFixed(1)),
+        ),
+        radius: Number((radii[i] * scale).toFixed(1)),
+    };
+});
+
 const manifest = {
-    version: 1,
+    version: 2,
     generated: raw.generated,
     source: { nodes: raw.counts.nodes, edges: raw.counts.edges },
     counts: { nodes: nodes.length, edges: edges.length },
     extent: 1000,
     ticks: TICKS,
-    /**
-     * Edges before this index carry meaning a reader is looking for; the rest are structural
-     * containment and metre. The renderer draws the first run at world scale and the whole
-     * array once something is selected.
-     */
     semanticEdges: semanticEdgeCount,
     groups: GROUPS,
     types,
@@ -361,34 +484,39 @@ const manifest = {
     sections: layout,
     hubs,
     maxDegree: Math.max(...degree),
+    communities: {
+        algorithm: detected.algorithm,
+        resolution: detected.resolution,
+        modularity: detected.modularity,
+        detected: detected.counts.communities,
+        drawn: regionIds.length,
+        minSize: REGION_MIN,
+        unattached: marginal.length,
+    },
+    constellations,
 };
+
+mkdirSync(OUT_DIR, { recursive: true });
+writeFileSync(join(OUT_DIR, "world.bin"), buffer);
 writeFileSync(join(OUT_DIR, "world.json"), JSON.stringify(manifest));
-writeFileSync(
-    join(OUT_DIR, "world.labels.json"),
-    JSON.stringify({
-        ids: nodes.map((n) => n.id),
-        labels: nodes.map((n) => n.label ?? ""),
-    }),
-);
+const labels = {
+    ids: nodes.map((n) => n.id),
+    labels: nodes.map((n) => n.label ?? ""),
+};
+writeFileSync(join(OUT_DIR, "world.labels.json"), JSON.stringify(labels));
 
 /* ----------------------------------------------------------------- report - */
 
-const sizes = {
-    "world.bin": buffer.byteLength,
-    "world.json": Buffer.byteLength(JSON.stringify(manifest)),
-    "world.labels.json": Buffer.byteLength(
-        JSON.stringify({ ids: nodes.map((n) => n.id), labels: nodes.map((n) => n.label ?? "") }),
-    ),
-};
+const named = constellations.filter((c) => c.name).length;
 console.log("\nwrote public/world/");
-let total = 0;
-for (const [name, bytes] of Object.entries(sizes)) {
-    total += bytes;
+for (const [name, bytes] of [
+    ["world.bin", buffer.byteLength],
+    ["world.json", Buffer.byteLength(JSON.stringify(manifest))],
+    ["world.labels.json", Buffer.byteLength(JSON.stringify(labels))],
+]) {
     console.log(`  ${name.padEnd(20)} ${(bytes / 1e6).toFixed(2)} MB`);
 }
-console.log(`  ${"total".padEnd(20)} ${(total / 1e6).toFixed(2)} MB`);
-console.log(
-    `\n  bytes per node (geometry only): ${(buffer.byteLength / nodes.length).toFixed(1)}`,
-);
-console.log(`  groups: ${GROUPS.length}, node types: ${types.length}, edge types: ${edgeTypes.length}`);
-console.log(`  hub index: ${hubs.length} nameable nodes`);
+console.log(`\n  ${constellations.length} constellations drawn, ${named} named from metrics`);
+console.log(`  ${semanticEdgeCount.toLocaleString()} semantic edges before the structural tail`);
+console.log(`  ${edgeBridge.reduce((a, b) => a + b, 0).toLocaleString()} bridge edges between regions`);
+console.log(`  bytes per node (geometry only): ${(buffer.byteLength / nodes.length).toFixed(1)}`);

@@ -1,0 +1,439 @@
+/* ================================================================ graph ===
+ *
+ * One graph, four ways of looking at it.
+ *
+ * The world stylesheet beside this one dresses the spatial view. This file is about the thing
+ * that holds all four views together: the mode switch, the planar diagram, the path column,
+ * and the rule that the chrome recedes so the map can be the page.
+ * ========================================================================= */
+
+.va-graph {
+    position: relative;
+    height: calc(100dvh - var(--va-header-height));
+    overflow: hidden;
+    background: var(--va-surface-page);
+}
+
+/*
+ * Both stages stay mounted; only one is shown.
+ *
+ * A canvas that unmounts loses its WebGL context, its buffers and its camera, so switching
+ * modes would mean a blank flash and a second spent reloading a two-megabyte artifact.
+ * Hidden with visibility rather than display, because `display: none` gives an element no
+ * layout box and the renderer would resize itself to nothing on every switch.
+ */
+.va-graph-stage {
+    position: absolute;
+    inset: 0;
+    visibility: hidden;
+    opacity: 0;
+    transition:
+        opacity var(--va-duration-slow) var(--va-ease-standard),
+        visibility 0s linear var(--va-duration-slow);
+}
+
+.va-graph-stage[data-active="true"] {
+    visibility: visible;
+    opacity: 1;
+    transition:
+        opacity var(--va-duration-slow) var(--va-ease-standard),
+        visibility 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .va-graph-stage {
+        transition: none;
+    }
+}
+
+/* --------------------------------------------------------------- chrome - */
+
+.va-graph-chrome {
+    position: absolute;
+    inset-block-start: var(--va-space-2xl);
+    inset-inline-start: var(--va-space-2xl);
+    display: grid;
+    gap: var(--va-space-lg);
+    align-content: start;
+    max-width: 23rem;
+    max-height: calc(100% - 2 * var(--va-space-2xl));
+    pointer-events: none;
+}
+
+.va-graph-chrome > * {
+    pointer-events: auto;
+}
+
+.va-graph-kicker {
+    margin: 0 0 var(--va-space-2xs);
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-graph-head h1 {
+    margin: 0;
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-2xl);
+    font-weight: var(--va-weight-regular);
+    line-height: var(--va-leading-flat);
+    color: var(--va-text-primary);
+}
+
+/*
+ * The mode switch as an index line.
+ *
+ * Four capitalised pills across the top of a map is the shape of a dashboard, and it says the
+ * four things are separate tools that happen to share a screen. A ruled row of names with the
+ * current one marked says they are the contents of one thing, which is what they are.
+ */
+.va-graph-modes {
+    display: flex;
+    gap: var(--va-space-lg);
+    padding-top: var(--va-space-2xs);
+    border-top: var(--va-border-width) solid var(--va-line-strong);
+}
+
+.va-graph-modes button {
+    padding: 0 0 3px;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    background: none;
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-sm);
+    color: var(--va-text-tertiary);
+    cursor: pointer;
+    transition: var(--va-transition-colors);
+}
+
+.va-graph-modes button:hover {
+    color: var(--va-text-primary);
+}
+
+.va-graph-modes button[aria-current="true"] {
+    color: var(--va-text-primary);
+    border-bottom-color: var(--va-accent-base);
+}
+
+.va-graph-notice,
+.va-graph-hint {
+    margin: 0;
+    max-width: 22rem;
+    font-size: var(--va-text-xs);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-tertiary);
+}
+
+.va-graph-notice button,
+.va-graph-hint button {
+    margin-inline-start: var(--va-space-2xs);
+    padding: 0 0 1px;
+    border: 0;
+    border-bottom: var(--va-border-width) solid var(--va-line-strong);
+    background: none;
+    font: inherit;
+    color: var(--va-text-secondary);
+    cursor: pointer;
+}
+
+.va-graph-notice button:hover,
+.va-graph-hint button:hover {
+    color: var(--va-accent-text);
+    border-bottom-color: var(--va-accent-base);
+}
+
+/* --------------------------------------------------------------- planar - */
+
+.va-planar,
+.va-planar-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.va-planar-canvas {
+    cursor: grab;
+    touch-action: none;
+}
+
+.va-planar-canvas:active {
+    cursor: grabbing;
+}
+
+.va-planar-empty {
+    position: absolute;
+    inset-block-start: 46%;
+    inset-inline: 0;
+    margin-inline: auto;
+    max-width: 26rem;
+    text-align: center;
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-tertiary);
+}
+
+/* ----------------------------------------------------------------- path - */
+
+.va-path {
+    display: grid;
+    gap: var(--va-space-md);
+    align-content: start;
+    min-height: 0;
+    overflow-y: auto;
+}
+
+.va-path-fields {
+    display: grid;
+    gap: var(--va-space-sm);
+}
+
+.va-path-fields label {
+    display: grid;
+    gap: var(--va-space-3xs);
+}
+
+.va-path-fields span {
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-path-fields input {
+    padding: var(--va-space-3xs) 0 var(--va-space-2xs);
+    border: 0;
+    border-bottom: var(--va-border-width) solid var(--va-line-strong);
+    border-radius: 0;
+    background: none;
+    font-family: var(--va-font-iast);
+    font-size: var(--va-text-md);
+    color: var(--va-text-primary);
+}
+
+.va-path-fields input:focus {
+    outline: none;
+    border-bottom-color: var(--va-accent-base);
+}
+
+.va-path-go {
+    justify-self: start;
+    padding: var(--va-space-2xs) var(--va-space-xl);
+    border: 0;
+    border-radius: 0;
+    background: var(--va-accent-base);
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-sm);
+    font-weight: var(--va-weight-semibold);
+    color: var(--va-text-on-accent);
+    cursor: pointer;
+    transition: var(--va-transition-colors);
+}
+
+.va-path-go:hover {
+    background: var(--va-accent-hover);
+}
+
+.va-path-status {
+    margin: 0;
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-secondary);
+}
+
+.va-path-summary {
+    margin: 0;
+    font-size: var(--va-text-sm);
+    color: var(--va-text-secondary);
+}
+
+.va-path-summary strong {
+    font-family: var(--va-font-iast);
+    font-weight: var(--va-weight-regular);
+    color: var(--va-text-primary);
+}
+
+/*
+ * The hub warning.
+ *
+ * The most important sentence on this surface. A route through a waypoint attached to
+ * thousands of things exists between almost any two subjects, so reading one as a meaningful
+ * relationship is the easiest mistake to make with a shortest path. It takes the dashed rule
+ * the token layer reserves for a claim that stops short of itself.
+ */
+.va-path-caution {
+    margin: 0;
+    padding-inline-start: var(--va-space-md);
+    border-inline-start: var(--va-border-width-accent) dashed var(--va-tone-partial);
+    font-size: var(--va-text-xs);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-secondary);
+}
+
+.va-path-steps {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-inline-start: var(--va-border-width) solid var(--va-line-strong);
+}
+
+.va-path-step {
+    position: relative;
+    display: grid;
+    gap: 1px;
+    padding: var(--va-space-xs) 0 var(--va-space-xs) var(--va-space-lg);
+}
+
+/* A rubric diamond on the rule at each stop, so the column reads as a route rather than as a
+   list that happens to be indented. */
+.va-path-step::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: -4px;
+    inset-block-start: calc(var(--va-space-xs) + 0.55em);
+    width: 7px;
+    height: 7px;
+    background: var(--va-accent-base);
+    transform: rotate(45deg);
+}
+
+.va-path-step.is-end::before {
+    background: var(--va-text-primary);
+}
+
+.va-path-relation {
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-accent-text);
+}
+
+.va-path-node {
+    font-family: var(--va-font-iast);
+    font-size: var(--va-text-md);
+    color: var(--va-text-primary);
+}
+
+.va-path-kind {
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+/*
+ * The service's own explanation of a step.
+ *
+ * Set as an apparatus note under the hop rather than as a tooltip or a disclosure, because it
+ * routinely ends with what the relationship does *not* establish, and that clause is the part
+ * a reader most needs and is least likely to go looking for.
+ */
+.va-path-why {
+    margin: var(--va-space-3xs) 0 0;
+    max-width: 22rem;
+    font-size: var(--va-text-xs);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-tertiary);
+}
+
+.va-path-read {
+    justify-self: start;
+    margin-top: 2px;
+    padding-bottom: 1px;
+    border-bottom: var(--va-border-width) solid var(--va-line-strong);
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-xs);
+    color: var(--va-text-secondary);
+    text-decoration: none;
+}
+
+.va-path-read:hover {
+    color: var(--va-accent-text);
+    border-bottom-color: var(--va-accent-base);
+}
+
+.va-path-caveats {
+    margin: 0;
+    padding-inline-start: var(--va-space-lg);
+    font-size: var(--va-text-xs);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-tertiary);
+}
+
+/* ------------------------------------------------------- panel additions - */
+
+.va-world-region {
+    display: grid;
+    gap: 1px;
+    margin: 0;
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-xs);
+    color: var(--va-text-secondary);
+}
+
+.va-world-region span {
+    font-size: var(--va-text-2xs);
+    color: var(--va-text-tertiary);
+}
+
+.va-world-ways button {
+    padding: 0 0 2px;
+    border: 0;
+    border-bottom: var(--va-border-width) solid var(--va-line-strong);
+    background: none;
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-sm);
+    color: var(--va-text-secondary);
+    text-align: start;
+    cursor: pointer;
+    transition: var(--va-transition-colors);
+}
+
+.va-world-ways button:hover {
+    color: var(--va-accent-text);
+    border-bottom-color: var(--va-accent-base);
+}
+
+/* ------------------------------------------------------------ responsive - */
+
+@media (max-width: 47.99rem) {
+    .va-graph-chrome {
+        inset-block-start: var(--va-space-lg);
+        inset-inline-start: var(--va-space-lg);
+        inset-inline-end: var(--va-space-lg);
+        max-width: none;
+    }
+
+    .va-graph-head h1 {
+        font-size: var(--va-text-xl);
+    }
+
+    .va-graph-modes {
+        gap: var(--va-space-md);
+    }
+}
+
+/* ------------------------------------------------- homepage continuity - */
+
+/* The canvas is a way into the graph, so it says so with the cursor. */
+.va-constellation-canvas {
+    cursor: pointer;
+}
+
+/*
+ * "Open the world here", shown only while a subject is under the pointer.
+ *
+ * It sits inside the readout that already names the hovered thing rather than becoming a
+ * second label, so the panel gains an affordance without gaining another element.
+ */
+.va-constellation-kind em {
+    margin-inline-start: var(--va-space-sm);
+    font-style: normal;
+    color: var(--va-accent-text);
+}

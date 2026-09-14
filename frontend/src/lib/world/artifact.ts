@@ -56,6 +56,39 @@ export type WorldManifest = {
      */
     hubs: number[];
     maxDegree: number;
+    /** How the communities were found, and how many survived into regions. */
+    communities?: {
+        algorithm: string;
+        resolution: number;
+        modularity: number;
+        detected: number;
+        drawn: number;
+        minSize: number;
+        unattached: number;
+    };
+    /**
+     * The drawn regions, in `nodeRegion` order.
+     *
+     * A name is present only where the metrics carried it: a Veda holding at least sixty per
+     * cent of the members, or a leading member at least twice as connected as the next. Where
+     * neither holds the constellation keeps its number, which is the honest description of a
+     * group that is genuinely mixed rather than a failure to describe it.
+     */
+    constellations?: Constellation[];
+};
+
+export type Constellation = {
+    id: number;
+    community: number;
+    name: string | null;
+    size: number;
+    veda: { name: string; count: number; share: number } | null;
+    group: { name: string; count: number; share: number } | null;
+    central: number[];
+    bridges: number[];
+    connectedShare: number | null;
+    centre: [number, number, number];
+    radius: number;
 };
 
 export type World = {
@@ -65,9 +98,13 @@ export type World = {
     nodeType: Uint8Array;
     nodeGroup: Uint8Array;
     nodeDegree: Uint16Array;
+    /** Which drawn region a node belongs to; 65535 means none. */
+    nodeRegion: Uint16Array;
     /** Two node indices per edge. */
     edgePairs: Uint32Array;
     edgeType: Uint8Array;
+    /** 1 where an edge joins two different regions. Bridges are how the corpus hangs together. */
+    edgeBridge: Uint8Array;
     /**
      * Edge indices grouped by node, and where each node's run starts.
      *
@@ -161,8 +198,10 @@ export async function loadWorld(signal?: AbortSignal): Promise<World> {
         nodeType: need("nodeType") as Uint8Array,
         nodeGroup: need("nodeGroup") as Uint8Array,
         nodeDegree: need("nodeDegree") as Uint16Array,
+        nodeRegion: need("nodeRegion") as Uint16Array,
         edgePairs,
         edgeType: need("edgeType") as Uint8Array,
+        edgeBridge: need("edgeBridge") as Uint8Array,
         adjacencyStart,
         adjacency,
     };
@@ -186,10 +225,35 @@ export function otherEnd(world: World, edge: number, from: number) {
     return a === from ? world.edgePairs[edge * 2 + 1] : a;
 }
 
-/** First-degree neighbours of a node, as node indices. */
+/**
+ * First-degree neighbours of a node, each named once.
+ *
+ * Deduplicated, and that is not a tidying-up: two subjects can be joined by more than one
+ * relationship - Agni is both invoked in a hymn and ascribed to it - and the adjacency index
+ * is keyed by edge, so the naive version returns the same neighbour once per relationship.
+ * Rendered as a list that is a duplicate React key, and read as a count it overstates how many
+ * distinct things a subject is connected to. The degree is still the edge count, which is the
+ * honest figure for "recorded connections"; this is the honest figure for "connected subjects",
+ * and the two are different numbers on purpose.
+ */
 export function neighboursOf(world: World, node: number): Uint32Array {
     const edges = edgesOf(world, node);
-    const out = new Uint32Array(edges.length);
-    for (let i = 0; i < edges.length; i += 1) out[i] = otherEnd(world, edges[i], node);
+    const seen = new Set<number>();
+    for (let i = 0; i < edges.length; i += 1) seen.add(otherEnd(world, edges[i], node));
+    return Uint32Array.from(seen);
+}
+
+/** The region a node sits in, or null where it has no public connections. */
+export function regionOf(world: World, node: number): number | null {
+    const region = world.nodeRegion[node];
+    return region === 65535 ? null : region;
+}
+
+/** Every node in a constellation. Scanned once and cached by the caller if needed. */
+export function membersOfRegion(world: World, region: number): number[] {
+    const out: number[] = [];
+    for (let i = 0; i < world.nodeRegion.length; i += 1) {
+        if (world.nodeRegion[i] === region) out.push(i);
+    }
     return out;
 }

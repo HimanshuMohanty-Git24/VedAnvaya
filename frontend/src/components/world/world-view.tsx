@@ -75,11 +75,14 @@ export function WorldView({
     onSelect,
     onReady,
     initialNodeId,
+    pathNodes,
 }: {
     onSelect?: (selection: WorldSelection | null) => void;
     /** Called once the geometry, the labels and the engine are all available. */
     onReady?: (world: World, labels: WorldLabelData, engine: WorldEngine) => void;
     initialNodeId?: string | null;
+    /** Node indices along a traced route, emphasised and framed together. */
+    pathNodes?: number[];
 }) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const engineRef = useRef<WorldEngine | null>(null);
@@ -208,6 +211,15 @@ export function WorldView({
         // list, because re-creating a WebGL context on a prop change is not a thing to do.
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    /* A traced route takes over the view: the nodes along it are lifted, everything else
+       recedes, and the camera frames the whole run rather than any one end of it. */
+    useEffect(() => {
+        const current = engineRef.current;
+        if (!current) return;
+        current.setPath(pathNodes ?? []);
+        if (pathNodes && pathNodes.length > 1) current.fitNodes(pathNodes);
+    }, [pathNodes]);
 
     const onPointerMove = (event: React.PointerEvent<HTMLCanvasElement>) => {
         const engine = engineRef.current;
