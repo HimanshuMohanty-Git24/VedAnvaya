@@ -249,12 +249,19 @@ export const FOCUS_EXPAND_STEP = 20;
 /**
  * The ceiling on expansion.
  *
- * 200, not the subject's degree. Expansion is additive by construction (see ROUND 0), so a
- * reader can keep pressing; the cap is where the scene has stopped being able to answer any
- * question that a list could not answer better. Indra would need 139 presses to exhaust his
- * neighbours and the last hundred would each add twenty passages that name him.
+ * Not the subject's degree. Expansion is additive by construction (see ROUND 0), so a reader
+ * can keep pressing; the cap is where the scene has stopped being able to answer any question
+ * that a list could not answer better. Indra would need 139 presses to exhaust his neighbours
+ * and the last hundred would each add twenty passages that name him.
+ *
+ * 64, lowered from 200 on the layout's measurement rather than on taste. The slab keeps its
+ * separation guarantee above one orb diameter to 64 members and its comfortable 1.6-diameter
+ * floor to 43, which is p99 of the corpus. At 200 it is still legal and no longer legible: 200
+ * spokes, zero edges between neighbours because the line cap is spent, a 36.6 px pitch and
+ * 7.3 px of clearance between a node and the spoke passing it. A ceiling that permits a scene
+ * the layout cannot draw well is a ceiling in name only.
  */
-export const FOCUS_BUDGET_MAX = 200;
+export const FOCUS_BUDGET_MAX = 64;
 
 /**
  * The viewport width below which the compact budget applies.

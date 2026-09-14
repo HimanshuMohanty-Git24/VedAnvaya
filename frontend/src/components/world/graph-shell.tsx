@@ -482,7 +482,20 @@ export function GraphShell() {
             const next = {
                 top: Math.round(heightOf(".va-graph-chrome")),
                 right: 0,
-                bottom: Math.round(heightOf(".va-world-panel")),
+                /*
+                 * Whichever of the two actually owns the foot.
+                 *
+                 * At narrow widths the relationship inspector *replaces* the subject sheet
+                 * rather than stacking on it - they cannot both claim the bottom of a phone,
+                 * and measurement found them overlapping completely when they tried. So while
+                 * the inspector is open the sheet is hidden, and a hidden sheet measures zero:
+                 * reading only the panel would report no chrome at the foot at exactly the
+                 * moment there is 316 px of it, and the camera would centre the subject behind
+                 * the thing explaining it.
+                 */
+                bottom: Math.round(
+                    Math.max(heightOf(".va-world-panel"), heightOf(".va-relationship")),
+                ),
                 left: 0,
             };
             setSafeArea((current) =>
@@ -493,12 +506,15 @@ export function GraphShell() {
         measure();
         const observer = new ResizeObserver(measure);
         observer.observe(stage);
-        for (const selector of [".va-graph-chrome", ".va-world-panel"]) {
+        for (const selector of [".va-graph-chrome", ".va-world-panel", ".va-relationship"]) {
             const node = stage.querySelector(selector);
             if (node) observer.observe(node);
         }
         return () => observer.disconnect();
-    }, [selection, sheet, state.view]);
+        /* `inspectedEdge` is in the dependency list because opening the inspector swaps which
+           element owns the foot, and a ResizeObserver on an element that does not exist yet
+           observes nothing. */
+    }, [selection, sheet, state.view, inspectedEdge]);
 
     return (
         <div
