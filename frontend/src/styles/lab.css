@@ -1,0 +1,1352 @@
+/* ============================================================================
+   The Visualization Lab.
+
+   The reference is a plate in a scholarly atlas: a ruled figure, a caption set
+   smaller than the body, and a wall label beneath it. Not a dashboard. The
+   differences are specific and each one is a decision:
+
+   - No card has a fill. A plate is separated from its neighbour by a rule and
+     by space, the way a printed figure is, because a grid of filled cards makes
+     seven unrelated questions look like seven readings of one instrument.
+   - No categorical palette. There is one ink and one accent, and the accent
+     appears at most once per figure. Corpora are told apart by position and by
+     a row header, which also means every figure survives greyscale.
+   - No gradient, no glass, no shadow on a figure. The only elevation in the
+     Lab is the header's, which is not the Lab's.
+   - Numbers are set in tabular figures everywhere, so a column reads down.
+   ============================================================================ */
+
+/*
+ * The page wrapper is `.va-plate-page`, not `.va-plate`.
+ *
+ * `.va-plate` is taken: it is the homepage's featured-verse plate, and it is
+ * `display: grid; place-items: center; overflow: clip`. Reusing the name put every
+ * Lab plate inside a centring grid that sized its children to max-content and then
+ * clipped them, which at 390px laid the page head out 666px wide and hid the right
+ * 300px of it. Nothing reported a horizontal scrollbar, because the clip absorbed it.
+ */
+.va-lab,
+.va-plate-page {
+    width: min(100% - (2 * var(--va-shell-gutter)), var(--va-shell-max));
+    margin-inline: auto;
+    padding-block: var(--va-space-3xl) var(--va-space-6xl);
+}
+
+/* ------------------------------------------------------------ the index -- */
+
+.va-lab-head {
+    max-width: var(--va-measure);
+    margin-bottom: var(--va-space-4xl);
+}
+
+.va-lab-head h1 {
+    margin: 0;
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-3xl);
+    font-weight: var(--va-weight-regular);
+    line-height: var(--va-leading-flat);
+    letter-spacing: var(--va-tracking-display);
+    font-optical-sizing: auto;
+    text-wrap: balance;
+}
+
+.va-lab-head p {
+    margin: var(--va-space-lg) 0 0;
+    font-size: var(--va-text-md);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-secondary);
+}
+
+.va-lab-eyebrow {
+    margin: 0 0 var(--va-space-md);
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-wide);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+/*
+ * The plate list.
+ *
+ * A single column of wide entries rather than a grid of tiles. Each plate needs a question,
+ * a sentence, a caution and a figure in its entry, and none of those survives a 320px card:
+ * the caution is the first thing a card drops and it is the thing that must not be dropped.
+ */
+.va-lab-index {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: var(--va-border-width) solid var(--va-line-strong);
+}
+
+.va-lab-index > li {
+    border-bottom: var(--va-rule-quiet);
+}
+
+.va-lab-card {
+    position: relative;
+    display: grid;
+    gap: var(--va-space-lg) var(--va-space-3xl);
+    padding-block: var(--va-space-2xl);
+}
+
+/*
+ * A stretched link.
+ *
+ * The anchor holds the plate's title and nothing else, so its accessible name is the title;
+ * the pseudo-element gives the whole row the click target. Wrapping the card in the anchor
+ * instead would put the figure's table - caption, row headers, every number - inside the
+ * link's name.
+ */
+.va-lab-card-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.va-lab-card-link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+}
+
+.va-lab-card-link:focus-visible::after {
+    outline: 2px solid var(--va-line-focus);
+    outline-offset: -4px;
+    border-radius: var(--va-radius-sm);
+}
+
+/* The ring is drawn by the pseudo-element over the whole card, so the anchor's own default
+   ring would be a second, smaller box around the title. */
+.va-lab-card-link:focus-visible {
+    outline: none;
+}
+
+@media (min-width: 62rem) {
+    .va-lab-card {
+        grid-template-columns: minmax(0, 13rem) minmax(0, 1fr) minmax(0, 17rem);
+        align-items: start;
+    }
+}
+
+.va-lab-card-lens {
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-lab-card-lens h2 {
+    margin: var(--va-space-xs) 0 0;
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-lg);
+    font-weight: var(--va-weight-regular);
+    line-height: var(--va-leading-tight);
+    letter-spacing: var(--va-tracking-normal);
+    text-transform: none;
+    color: var(--va-text-primary);
+    transition: var(--va-transition-colors);
+}
+
+.va-lab-card:hover .va-lab-card-lens h2 {
+    color: var(--va-accent-base);
+}
+
+.va-lab-card-body {
+    display: grid;
+    gap: var(--va-space-md);
+}
+
+.va-lab-card-body p {
+    margin: 0;
+}
+
+.va-lab-card-question {
+    margin: 0;
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-xl);
+    line-height: var(--va-leading-tight);
+    text-wrap: balance;
+}
+
+.va-lab-card-summary {
+    margin: 0;
+    max-width: var(--va-measure);
+    font-size: var(--va-text-base);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-secondary);
+}
+
+.va-lab-card-caution {
+    margin: 0;
+    padding-left: var(--va-space-md);
+    border-left: var(--va-border-width-accent) solid var(--va-tone-partial);
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-secondary);
+}
+
+/*
+ * The card's figure.
+ *
+ * A real measurement from the plate, never a sample or a sketch. It is the one number the
+ * plate would give you if you only had a second, and it is set beside the corpus strip that
+ * number came from where the plate has one.
+ */
+.va-lab-card-figure {
+    display: grid;
+    gap: var(--va-space-sm);
+    padding: var(--va-space-lg);
+    background: var(--va-surface-sunk);
+    border-radius: var(--va-radius-sm);
+}
+
+.va-lab-card-figure b {
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-2xl);
+    font-weight: var(--va-weight-regular);
+    line-height: 1;
+    font-variant-numeric: tabular-nums lining-nums;
+}
+
+.va-lab-card-figure > span {
+    font-size: var(--va-text-xs);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-secondary);
+}
+
+.va-lab-card-figure .va-strip {
+    margin-top: var(--va-space-2xs);
+}
+
+/* ------------------------------------------------------ declared omissions */
+
+.va-lab-omissions {
+    margin-top: var(--va-space-5xl);
+    padding-top: var(--va-space-2xl);
+    border-top: var(--va-border-dashed);
+}
+
+.va-lab-omissions h2 {
+    margin: 0 0 var(--va-space-sm);
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-xl);
+    font-weight: var(--va-weight-regular);
+}
+
+.va-lab-omissions > p {
+    margin: 0 0 var(--va-space-2xl);
+    max-width: var(--va-measure);
+    font-size: var(--va-text-base);
+    color: var(--va-text-secondary);
+}
+
+.va-lab-omissions ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--va-space-2xl);
+}
+
+@media (min-width: 62rem) {
+    .va-lab-omissions ul {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--va-space-3xl);
+    }
+}
+
+.va-lab-omissions h3 {
+    margin: 0 0 var(--va-space-sm);
+    font-size: var(--va-text-md);
+    font-weight: var(--va-weight-medium);
+}
+
+.va-lab-omissions p {
+    margin: 0 0 var(--va-space-md);
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-secondary);
+}
+
+/* ------------------------------------------------------------- one plate -- */
+
+.va-plate-head {
+    max-width: var(--va-measure-wide);
+    margin-bottom: var(--va-space-4xl);
+}
+
+.va-plate-back {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--va-space-2xs);
+    margin-bottom: var(--va-space-xl);
+    font-size: var(--va-text-xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-secondary);
+    text-decoration: none;
+}
+
+.va-plate-back:hover,
+.va-plate-back:focus-visible {
+    color: var(--va-accent-base);
+}
+
+.va-plate-lens {
+    margin: 0 0 var(--va-space-sm);
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-wide);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-plate-head h1 {
+    margin: 0;
+    max-width: var(--va-measure);
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-3xl);
+    font-weight: var(--va-weight-regular);
+    line-height: var(--va-leading-flat);
+    letter-spacing: var(--va-tracking-display);
+    font-optical-sizing: auto;
+    text-wrap: balance;
+}
+
+.va-plate-question {
+    margin: var(--va-space-lg) 0 0;
+    max-width: var(--va-measure);
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-lg);
+    font-style: italic;
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-strong);
+}
+
+.va-plate-lede {
+    margin: var(--va-space-lg) 0 0;
+    max-width: var(--va-measure);
+    font-size: var(--va-text-md);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-secondary);
+}
+
+/* --------------------------------------------------------------- figures -- */
+
+.va-figure {
+    margin: 0 0 var(--va-space-5xl);
+    padding-top: var(--va-space-2xl);
+    border-top: var(--va-border-width) solid var(--va-line-strong);
+}
+
+.va-figure figcaption {
+    max-width: var(--va-measure);
+    margin-bottom: var(--va-space-2xl);
+}
+
+.va-figure figcaption h2 {
+    margin: 0;
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-xl);
+    font-weight: var(--va-weight-regular);
+    line-height: var(--va-leading-tight);
+}
+
+.va-figure figcaption p {
+    margin: var(--va-space-sm) 0 0;
+    font-size: var(--va-text-base);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-secondary);
+}
+
+.va-figure-note {
+    margin: var(--va-space-xl) 0 0;
+    max-width: var(--va-measure);
+    padding-top: var(--va-space-md);
+    border-top: var(--va-rule-quiet);
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-tertiary);
+}
+
+.va-figure-number {
+    display: grid;
+    gap: var(--va-space-2xs);
+    margin: 0;
+}
+
+.va-figure-number strong {
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-3xl);
+    font-weight: var(--va-weight-regular);
+    line-height: 1;
+    font-variant-numeric: tabular-nums lining-nums;
+}
+
+.va-figure-number span {
+    font-size: var(--va-text-sm);
+    color: var(--va-text-secondary);
+}
+
+.va-figure-number small {
+    font-size: var(--va-text-xs);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-tertiary);
+}
+
+/* ------------------------------------------------------------------ bars -- */
+
+.va-rank,
+.va-strip {
+    width: 100%;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums lining-nums;
+}
+
+.va-rank thead {
+    border-bottom: var(--va-rule-quiet);
+}
+
+.va-rank thead th {
+    padding: 0 0 var(--va-space-sm);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-medium);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    text-align: start;
+    color: var(--va-text-tertiary);
+}
+
+.va-rank thead th:last-child {
+    text-align: end;
+}
+
+/*
+ * The header's middle cell carries the track's width.
+ *
+ * `.va-rank-track` is a `td` rule, so without this the header row has no middle column and
+ * the first and third headings collapse against each other: "Deity" and "Verses" rendered as
+ * "DeityVerses".
+ */
+.va-rank thead th:nth-child(2) {
+    width: 55%;
+}
+
+.va-rank tbody tr {
+    border-bottom: var(--va-rule-quiet);
+}
+
+.va-rank tbody th {
+    padding: var(--va-space-md) var(--va-space-lg) var(--va-space-md) 0;
+    font-size: var(--va-text-base);
+    font-weight: var(--va-weight-regular);
+    text-align: start;
+    vertical-align: baseline;
+}
+
+.va-rank.is-dense tbody th,
+.va-rank.is-dense tbody td {
+    padding-block: var(--va-space-sm);
+    font-size: var(--va-text-sm);
+}
+
+.va-rank tbody th a {
+    color: inherit;
+    text-decoration-color: var(--va-line-strong);
+    text-underline-offset: 3px;
+}
+
+.va-rank tbody th a:hover,
+.va-rank tbody th a:focus-visible {
+    color: var(--va-accent-base);
+    text-decoration-color: currentColor;
+}
+
+.va-rank tbody th small {
+    display: block;
+    margin-top: var(--va-space-3xs);
+    font-size: var(--va-text-xs);
+    color: var(--va-text-tertiary);
+}
+
+.va-rank-track,
+.va-strip-track {
+    width: 55%;
+    padding: var(--va-space-md) var(--va-space-lg) var(--va-space-md) 0;
+    vertical-align: middle;
+}
+
+.va-rank-bar,
+.va-strip-bar {
+    display: block;
+    height: 0.5rem;
+    background: var(--va-text-primary);
+    opacity: 0.72;
+    border-radius: 1px;
+}
+
+.is-emphasis .va-rank-bar {
+    background: var(--va-accent-base);
+    opacity: 1;
+}
+
+.is-emphasis > th {
+    font-weight: var(--va-weight-medium);
+    color: var(--va-accent-base);
+}
+
+.va-rank-value,
+.va-strip-value {
+    padding: var(--va-space-md) 0;
+    text-align: end;
+    font-size: var(--va-text-base);
+    white-space: nowrap;
+    vertical-align: baseline;
+}
+
+.va-rank-value small,
+.va-strip-value small {
+    font-size: var(--va-text-xs);
+    color: var(--va-text-tertiary);
+}
+
+/*
+ * An absence.
+ *
+ * Drawn as a dotted rule the width of the track, not as a bar of length zero. A reader
+ * scanning the column sees that the row was reached and had nothing, versus was never
+ * reached at all, and the word in the value column says which.
+ */
+.va-rank-absent,
+.va-strip-absent {
+    display: block;
+    height: 0.5rem;
+    border-bottom: var(--va-border-width) dotted var(--va-line-strong);
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+    line-height: 0.5rem;
+}
+
+.va-rank-null,
+.va-strip-null {
+    font-size: var(--va-text-xs);
+    color: var(--va-text-tertiary);
+}
+
+/* ----------------------------------------------------------- corpus strip -- */
+
+.va-strip tbody th {
+    width: 2.5rem;
+    padding: var(--va-space-xs) var(--va-space-md) var(--va-space-xs) 0;
+    font-size: var(--va-text-xs);
+    font-weight: var(--va-weight-medium);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-align: start;
+    color: var(--va-text-secondary);
+}
+
+.va-strip tbody th abbr {
+    text-decoration: none;
+    border: 0;
+}
+
+.va-strip-track {
+    padding-block: var(--va-space-xs);
+}
+
+.va-strip-value {
+    padding-block: var(--va-space-xs);
+    font-size: var(--va-text-sm);
+}
+
+/* ------------------------------------------------------- small multiples -- */
+
+.va-multiples {
+    display: grid;
+    gap: var(--va-space-3xl) var(--va-space-4xl);
+}
+
+@media (min-width: 60rem) {
+    .va-multiples {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 90rem) {
+    .va-multiples {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+.va-multiple header {
+    margin-bottom: var(--va-space-lg);
+    padding-bottom: var(--va-space-sm);
+    border-bottom: var(--va-rule-quiet);
+}
+
+.va-multiple h3 {
+    margin: 0;
+    font-size: var(--va-text-md);
+    font-weight: var(--va-weight-medium);
+}
+
+.va-multiple header p {
+    margin: var(--va-space-2xs) 0 0;
+    font-size: var(--va-text-xs);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-tertiary);
+}
+
+.va-multiple-note {
+    margin: var(--va-space-md) 0 0;
+    font-size: var(--va-text-xs);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-tertiary);
+}
+
+/* ------------------------------------------------------------ share strip -- */
+
+.va-share-track {
+    display: flex;
+    height: 0.5rem;
+    overflow: hidden;
+    border-radius: 1px;
+    background: var(--va-surface-sunk);
+}
+
+/*
+ * Four segments, four textures, no hue.
+ *
+ * The share strip is the one mark here where segments touch, so position alone cannot
+ * separate them. They are separated by density instead: a solid, then three repeating-linear
+ * hatches at decreasing weight. That reads in greyscale, in dark mode and at 390px, and it
+ * costs no colour.
+ */
+.va-share-segment {
+    display: block;
+    background: var(--va-text-primary);
+    opacity: 0.8;
+}
+
+.va-share-segment[data-tone="1"] {
+    background: repeating-linear-gradient(
+        135deg,
+        var(--va-text-primary) 0 2px,
+        transparent 2px 4px
+    );
+}
+
+.va-share-segment[data-tone="2"] {
+    background: repeating-linear-gradient(
+        135deg,
+        var(--va-text-primary) 0 1px,
+        transparent 1px 4px
+    );
+}
+
+.va-share-segment[data-tone="3"] {
+    background: repeating-linear-gradient(90deg, var(--va-text-primary) 0 1px, transparent 1px 5px);
+}
+
+.va-share-legend {
+    margin: var(--va-space-sm) 0 0;
+    font-size: var(--va-text-xs);
+    color: var(--va-text-secondary);
+    font-variant-numeric: tabular-nums lining-nums;
+}
+
+.va-share-legend abbr {
+    text-decoration: none;
+    font-weight: var(--va-weight-medium);
+}
+
+.va-share-absent,
+.va-share-total {
+    color: var(--va-text-tertiary);
+}
+
+/* ------------------------------------------------------------ wall label -- */
+
+.va-plate-label {
+    margin: var(--va-space-4xl) 0;
+    padding: var(--va-space-2xl) 0;
+    border-block: var(--va-border-width) solid var(--va-line-strong);
+}
+
+.va-plate-label h2 {
+    margin: 0 0 var(--va-space-xl);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-medium);
+    letter-spacing: var(--va-tracking-wide);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-plate-label dl {
+    display: grid;
+    gap: var(--va-space-xl);
+    margin: 0;
+}
+
+@media (min-width: 62rem) {
+    .va-plate-label dl {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--va-space-2xl) var(--va-space-4xl);
+    }
+
+    /* The last answer is the one a reader is least likely to reach and most needs, so it
+       runs the full width rather than sitting in the shorter of two columns. */
+    .va-plate-label dl > div:last-child {
+        grid-column: 1 / -1;
+    }
+}
+
+.va-plate-label dt {
+    margin-bottom: var(--va-space-2xs);
+    font-size: var(--va-text-xs);
+    font-weight: var(--va-weight-medium);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-secondary);
+}
+
+.va-plate-label dd {
+    margin: 0;
+    max-width: var(--va-measure);
+    font-size: var(--va-text-base);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-primary);
+}
+
+.va-plate-label dl > div:last-child dd {
+    color: var(--va-accent-text);
+}
+
+.va-plate-reads {
+    margin: var(--va-space-2xl) 0 0;
+    font-size: var(--va-text-xs);
+    color: var(--va-text-tertiary);
+}
+
+.va-plate-reads span {
+    margin-right: var(--va-space-sm);
+    font-weight: var(--va-weight-medium);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+}
+
+/* -------------------------------------------------------------- takeaway -- */
+
+.va-plate-takeaway {
+    display: grid;
+    gap: var(--va-space-xl);
+    margin-bottom: var(--va-space-4xl);
+}
+
+@media (min-width: 62rem) {
+    .va-plate-takeaway {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--va-space-3xl);
+    }
+}
+
+.va-takeaway-block {
+    padding-left: var(--va-space-lg);
+    border-left: var(--va-border-width-accent) solid var(--va-line-strong);
+}
+
+.va-takeaway-block[data-knowledge-kind="interpretation"] {
+    border-left-color: var(--va-tone-partial);
+}
+
+.va-takeaway-tag {
+    margin: 0 0 var(--va-space-sm);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-medium);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-takeaway-body {
+    margin: 0;
+    max-width: var(--va-measure);
+    font-size: var(--va-text-md);
+    line-height: var(--va-leading-normal);
+}
+
+/* -------------------------------------------------------------- handoffs -- */
+
+.va-plate-handoff h2 {
+    margin: 0 0 var(--va-space-lg);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-medium);
+    letter-spacing: var(--va-tracking-wide);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-plate-handoff ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: var(--va-rule-quiet);
+}
+
+.va-plate-handoff li {
+    border-bottom: var(--va-rule-quiet);
+}
+
+.va-plate-handoff a {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--va-space-2xs) var(--va-space-lg);
+    align-items: center;
+    padding-block: var(--va-space-lg);
+    color: inherit;
+    text-decoration: none;
+}
+
+.va-plate-handoff a strong {
+    font-size: var(--va-text-md);
+    font-weight: var(--va-weight-medium);
+    transition: var(--va-transition-colors);
+}
+
+.va-plate-handoff a span {
+    grid-column: 1;
+    font-size: var(--va-text-sm);
+    color: var(--va-text-secondary);
+}
+
+.va-plate-handoff a svg {
+    grid-row: 1 / span 2;
+    grid-column: 2;
+    color: var(--va-text-tertiary);
+}
+
+.va-plate-handoff a:hover strong,
+.va-plate-handoff a:focus-visible strong {
+    color: var(--va-accent-base);
+}
+
+/* --------------------------------------------------------------- controls -- */
+
+/*
+ * A control here is a link, not a widget.
+ *
+ * Every filter and every metric switch is a server-rendered href, which is why the Lab ships
+ * no JavaScript of its own. It also means each state of a figure has an address, so a reader
+ * can send someone the view they were looking at.
+ */
+.va-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--va-space-sm) var(--va-space-lg);
+    margin-bottom: var(--va-space-2xl);
+    padding-bottom: var(--va-space-md);
+    border-bottom: var(--va-rule-quiet);
+}
+
+.va-controls-label {
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-control {
+    padding: var(--va-space-2xs) var(--va-space-sm);
+    border-radius: var(--va-radius-xs);
+    font-size: var(--va-text-sm);
+    color: var(--va-text-secondary);
+    text-decoration: none;
+    transition: var(--va-transition-colors);
+}
+
+.va-control:hover,
+.va-control:focus-visible {
+    color: var(--va-accent-base);
+    background: var(--va-surface-sunk);
+}
+
+.va-control[aria-current="true"] {
+    color: var(--va-text-primary);
+    background: var(--va-surface-sunk);
+    font-weight: var(--va-weight-medium);
+    box-shadow: inset 0 -2px 0 0 var(--va-accent-base);
+}
+
+/* ---------------------------------------------------------------- matrix -- */
+
+/*
+ * The cross-corpus matrix.
+ *
+ * Every cell is typed, including the empty ones, and the type is carried by a glyph and a
+ * `title`, never by a colour alone. A measured cell prints its number; the four kinds of
+ * non-measurement print a mark that says which kind it is, because a matrix that rendered
+ * NOT_BUILT and MEASURED_ZERO the same way would state that two collections share nothing
+ * when what is true is that nobody looked.
+ */
+.va-matrix-scroll {
+    overflow-x: auto;
+    /* A scrolled region needs to be focusable or a keyboard reader cannot reach the columns
+       that are off-screen. */
+    scrollbar-width: thin;
+}
+
+.va-matrix {
+    width: 100%;
+    min-width: 42rem;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums lining-nums;
+}
+
+.va-matrix th,
+.va-matrix td {
+    padding: var(--va-space-sm) var(--va-space-md);
+    border: var(--va-rule-quiet);
+    text-align: center;
+    font-size: var(--va-text-sm);
+    font-weight: var(--va-weight-regular);
+}
+
+.va-matrix thead th {
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-medium);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-secondary);
+    vertical-align: bottom;
+}
+
+.va-matrix tbody th {
+    text-align: start;
+    white-space: nowrap;
+    font-weight: var(--va-weight-medium);
+}
+
+.va-matrix td[data-cell="MEASURED"] {
+    background: var(--va-tone-evidenced-surface);
+    font-weight: var(--va-weight-medium);
+}
+
+.va-matrix td[data-cell="MEASURED_ZERO"] {
+    color: var(--va-text-secondary);
+}
+
+.va-matrix td[data-cell="NOT_BUILT"],
+.va-matrix td[data-cell="NOT_ESTABLISHED_FOR_PAIR"],
+.va-matrix td[data-cell="CLASS_NOT_CROSS_VEDA"] {
+    color: var(--va-text-tertiary);
+    background: var(--va-surface-sunk);
+}
+
+.va-matrix-key {
+    display: grid;
+    gap: var(--va-space-sm);
+    margin: var(--va-space-xl) 0 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--va-text-xs);
+    color: var(--va-text-secondary);
+}
+
+@media (min-width: 48rem) {
+    .va-matrix-key {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--va-space-sm) var(--va-space-2xl);
+    }
+}
+
+.va-matrix-key b {
+    font-weight: var(--va-weight-medium);
+    font-variant-numeric: tabular-nums;
+}
+
+/* ------------------------------------------------------------ the flow -- */
+
+/*
+ * Rigveda to Samaveda, verse by verse.
+ *
+ * Two columns and a rule between them, which is what the relationship actually is: a pairing,
+ * not a network. Drawing it as a node graph would invite the reader to look for structure in
+ * the vertical order, and there is none - the rows are the order the endpoint returned.
+ */
+.va-flow {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: var(--va-rule-quiet);
+}
+
+.va-flow li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    gap: var(--va-space-md);
+    padding-block: var(--va-space-md);
+    border-bottom: var(--va-rule-quiet);
+}
+
+.va-flow-source {
+    text-align: end;
+}
+
+.va-flow a,
+.va-flow span[data-unresolved] {
+    font-size: var(--va-text-base);
+    font-variant-numeric: tabular-nums lining-nums;
+    color: inherit;
+    text-decoration-color: var(--va-line-strong);
+    text-underline-offset: 3px;
+}
+
+.va-flow a:hover,
+.va-flow a:focus-visible {
+    color: var(--va-accent-base);
+    text-decoration-color: currentColor;
+}
+
+.va-flow span[data-unresolved] {
+    color: var(--va-text-tertiary);
+}
+
+.va-flow-link {
+    display: grid;
+    justify-items: center;
+    gap: var(--va-space-3xs);
+    min-width: 7rem;
+    color: var(--va-text-tertiary);
+}
+
+.va-flow-rule {
+    display: block;
+    width: 100%;
+    height: var(--va-border-width);
+    background: var(--va-line-strong);
+}
+
+.va-flow-kind {
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+}
+
+@media (max-width: 47.999rem) {
+    .va-flow li {
+        grid-template-columns: minmax(0, 1fr);
+        gap: var(--va-space-2xs);
+        text-align: start;
+    }
+
+    .va-flow-source {
+        text-align: start;
+    }
+
+    .va-flow-link {
+        justify-items: start;
+        min-width: 0;
+    }
+
+    .va-flow-rule {
+        width: 2.5rem;
+    }
+}
+
+/* ------------------------------------------------------------- sections -- */
+
+/* A run of rows inside a figure that needs its own heading - "afflictions" against
+   "threats", say - where a second `<figure>` would overstate the separation. */
+.va-panel {
+    margin-bottom: var(--va-space-3xl);
+}
+
+.va-panel > header {
+    margin-bottom: var(--va-space-lg);
+}
+
+.va-panel h3 {
+    margin: 0;
+    font-size: var(--va-text-lg);
+    font-family: var(--va-font-display);
+    font-weight: var(--va-weight-regular);
+}
+
+.va-panel > header p {
+    margin: var(--va-space-2xs) 0 0;
+    max-width: var(--va-measure);
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-secondary);
+}
+
+.va-panels {
+    display: grid;
+    gap: var(--va-space-3xl);
+}
+
+@media (min-width: 64rem) {
+    .va-panels {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--va-space-4xl);
+    }
+}
+
+/* A ruled aside inside a figure: the ritual layer's coverage statement, the metals
+   declared gap. Reads as a printer's note, not as an alert. */
+.va-plate-note {
+    margin: 0 0 var(--va-space-2xl);
+    padding: var(--va-space-lg) var(--va-space-xl);
+    background: var(--va-surface-sunk);
+    border-left: var(--va-border-width-accent) solid var(--va-tone-partial);
+    border-radius: 0 var(--va-radius-sm) var(--va-radius-sm) 0;
+}
+
+.va-plate-note strong {
+    display: block;
+    margin-bottom: var(--va-space-2xs);
+    font-size: var(--va-text-sm);
+    font-weight: var(--va-weight-medium);
+}
+
+.va-plate-note p {
+    margin: 0;
+    max-width: var(--va-measure);
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-secondary);
+}
+
+/* ------------------------------------------------------------- mobile -- */
+
+@media (max-width: 47.999rem) {
+    .va-lab,
+    .va-plate-page {
+        width: min(100% - (2 * var(--va-space-lg)), var(--va-shell-max));
+        padding-block: var(--va-space-2xl) var(--va-space-5xl);
+    }
+
+    /*
+     * The bar track collapses on a phone.
+     *
+     * At 390px a three-column row leaves the track about 90px, which is not enough for the
+     * bar to encode anything: two rows 15% apart become the same mark. The number is what
+     * survives, so the track is dropped and the label and figure become a two-column row.
+     * This is the one place the chart stops being a chart, and it does so rather than
+     * showing a bar that cannot be compared.
+     */
+    .va-rank-track {
+        display: none;
+    }
+
+    .va-rank tbody th {
+        padding-right: var(--va-space-md);
+    }
+
+    .va-strip-track {
+        width: 40%;
+    }
+}
+
+/* ------------------------------------------------------------- motion -- */
+
+@media (prefers-reduced-motion: reduce) {
+    .va-lab-card-lens h2,
+    .va-plate-handoff a strong,
+    .va-control {
+        transition: none;
+    }
+}
+
+/* --------------------------------------------------- a non-numeric row -- */
+
+/*
+ * Two rows of the corpus portrait are not counts: the divisions each collection uses, and
+ * what its name covers that this build does not. Drawing them as bars would be inventing a
+ * quantity, so they are set as a definition list in the same grid cell a strip would occupy,
+ * which is what keeps the six rows reading as one figure.
+ */
+.va-plate-terms {
+    display: grid;
+    gap: var(--va-space-md);
+    margin: 0;
+}
+
+.va-plate-terms > div {
+    display: grid;
+    grid-template-columns: 5.5rem minmax(0, 1fr);
+    gap: var(--va-space-md);
+    align-items: baseline;
+}
+
+.va-plate-terms dt {
+    font-size: var(--va-text-xs);
+    font-weight: var(--va-weight-medium);
+    color: var(--va-text-secondary);
+}
+
+.va-plate-terms dt span {
+    display: inline-block;
+    margin-left: var(--va-space-2xs);
+    padding: 0 var(--va-space-2xs);
+    border-radius: var(--va-radius-xs);
+    background: var(--va-surface-sunk);
+    font-variant-numeric: tabular-nums;
+    color: var(--va-text-tertiary);
+}
+
+.va-plate-terms dd {
+    margin: 0;
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-primary);
+    text-wrap: pretty;
+}
+
+@media (max-width: 30rem) {
+    .va-plate-terms > div {
+        grid-template-columns: minmax(0, 1fr);
+        gap: var(--va-space-3xs);
+    }
+}
+
+/* ------------------------------------------------ figure with a headline -- */
+
+/*
+ * One display figure beside the table it summarises. The figure is the sentence a reader
+ * leaves with; the table is where they check it. Stacked on narrow screens, with the figure
+ * first, because the figure survives being the only thing read.
+ */
+.va-figure-split {
+    display: grid;
+    gap: var(--va-space-2xl);
+}
+
+@media (min-width: 62rem) {
+    .va-figure-split {
+        grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+        gap: var(--va-space-4xl);
+        align-items: start;
+    }
+}
+
+/* ------------------------------------------------------ formula families -- */
+
+.va-families {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--va-space-2xl);
+}
+
+@media (min-width: 62rem) {
+    .va-families {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--va-space-2xl) var(--va-space-4xl);
+    }
+}
+
+.va-family-head {
+    margin-bottom: var(--va-space-md);
+}
+
+.va-family-head h3 {
+    margin: 0;
+    font-size: var(--va-text-md);
+    font-weight: var(--va-weight-regular);
+}
+
+.va-family-head a {
+    color: inherit;
+    text-decoration-color: var(--va-line-strong);
+    text-underline-offset: 4px;
+}
+
+.va-family-head a:hover,
+.va-family-head a:focus-visible {
+    color: var(--va-accent-base);
+    text-decoration-color: currentColor;
+}
+
+.va-family-head p {
+    margin: var(--va-space-2xs) 0 0;
+    font-size: var(--va-text-xs);
+    color: var(--va-text-tertiary);
+    font-variant-numeric: tabular-nums;
+}
+
+/* ----------------------------------------------------------- the flow -- */
+
+.va-flow-head {
+    margin-bottom: var(--va-space-2xl);
+}
+
+.va-flow-header {
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-flow-header .va-flow-link {
+    letter-spacing: var(--va-tracking-eyebrow);
+}
+
+/* -------------------------------------------------------- panel footnote -- */
+
+.va-panel-note {
+    margin: var(--va-space-lg) 0 0;
+    padding-top: var(--va-space-md);
+    border-top: var(--va-rule-quiet);
+    max-width: var(--va-measure);
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-secondary);
+}
+
+/* ------------------------------------------------------- declared gap -- */
+
+/*
+ * A cell that is wrong and known to be wrong.
+ *
+ * It gets the caution tone rather than the quiet one, because it is the opposite of an
+ * absence: the thing is there and the instrument cannot see it. The mark is an exclamation,
+ * so the distinction is carried by the glyph and not by the fill.
+ */
+.va-matrix td[data-cell="DECLARED_GAP"] {
+    background: var(--va-tone-partial-surface);
+    color: var(--va-tone-partial);
+    font-weight: var(--va-weight-medium);
+}
+
+.va-matrix abbr {
+    text-decoration: none;
+    border-bottom: var(--va-border-width) dotted currentColor;
+    cursor: help;
+}
+
+.va-matrix thead abbr {
+    border-bottom: 0;
+    cursor: default;
+}
+
+.va-matrix tbody th a {
+    color: inherit;
+    text-decoration-color: var(--va-line-strong);
+    text-underline-offset: 3px;
+}
+
+.va-matrix tbody th a:hover,
+.va-matrix tbody th a:focus-visible {
+    color: var(--va-accent-base);
+}
+
+/* --------------------------------------------------------- the ask exit -- */
+
+.va-plate-ask {
+    margin: var(--va-space-3xl) 0 0;
+}

@@ -3,6 +3,11 @@
  * inspection, and reports any element wider than its viewport.
  *
  *   node tests/visual-qa.mjs [--base http://127.0.0.1:3100] [--out .tmp/shots]
+ *                            [--only substring] [--theme dark|light]
+ *
+ * `--theme` drives `prefers-color-scheme` rather than the theme toggle. The provider is
+ * `defaultTheme: "system"` with `enableSystem`, so the emulated media query is what a first
+ * visitor actually gets, and it needs no click and no localStorage seeding.
  */
 import { chromium } from "@playwright/test";
 import { mkdir } from "node:fs/promises";
@@ -17,6 +22,7 @@ const arg = (name, fallback) => {
 const BASE = arg("base", "http://127.0.0.1:3100");
 const OUT = arg("out", ".tmp/shots");
 const ONLY = arg("only", null);
+const THEME = arg("theme", "light");
 
 const VIEWPORTS = [
     { name: "desktop", width: 1440, height: 960 },
@@ -50,14 +56,41 @@ const SURFACES = [
     { name: "material-culture", url: "/material-culture" },
     { name: "explore", url: "/explore" },
     { name: "entities", url: "/entities" },
+    { name: "lab", url: "/visualizations" },
+    { name: "lab-four-corpora", url: "/visualizations/four-corpora" },
+    { name: "lab-four-corpora-share", url: "/visualizations/four-corpora?scale=share" },
+    { name: "lab-deities", url: "/visualizations/deities" },
+    { name: "lab-transmission", url: "/visualizations/transmission" },
+    { name: "lab-formulas", url: "/visualizations/formulas" },
+    { name: "lab-human-concerns", url: "/visualizations/human-concerns" },
+    { name: "lab-ritual", url: "/visualizations/ritual" },
+    { name: "lab-material-culture", url: "/visualizations/material-culture" },
+    { name: "about", url: "/about" },
+    { name: "sources", url: "/sources" },
 ];
 
 const findOverflow = () => {
     const docWidth = document.documentElement.clientWidth;
     const offenders = [];
+    /*
+     * A node inside a deliberate horizontal scroller is not an overflow.
+     *
+     * The cross-corpus matrix is 6 by 8 and cannot be read at 390px; it lives in an
+     * `overflow-x: auto` region with a `min-width`, which is the correct answer for a wide
+     * table on a phone. Without this check every cell of it is reported as a finding and the
+     * one real page-level overflow is buried under forty-five false ones.
+     */
+    const inScroller = (node) => {
+        for (let parent = node.parentElement; parent; parent = parent.parentElement) {
+            const overflowX = getComputedStyle(parent).overflowX;
+            if (overflowX === "auto" || overflowX === "scroll") return true;
+        }
+        return false;
+    };
     for (const node of document.querySelectorAll("body *")) {
         const rect = node.getBoundingClientRect();
         if (rect.width === 0 && rect.height === 0) continue;
+        if (inScroller(node)) continue;
         const right = rect.right + window.scrollX;
         if (right > docWidth + 1) {
             offenders.push({
@@ -88,6 +121,7 @@ for (const viewport of VIEWPORTS) {
     const context = await browser.newContext({
         viewport: { width: viewport.width, height: viewport.height },
         deviceScaleFactor: 1,
+        colorScheme: THEME === "dark" ? "dark" : "light",
     });
     const page = await context.newPage();
     const dir = path.join(OUT, viewport.name);
@@ -122,7 +156,7 @@ for (const viewport of VIEWPORTS) {
 await browser.close();
 
 if (findings.length === 0) {
-    console.log("No overflow or load failures at 1440, 1024 or 390.");
+    console.log(`No overflow or load failures at 1440, 1024 or 390 (${THEME}).`);
 } else {
     console.log(JSON.stringify(findings, null, 1));
 }

@@ -118,6 +118,11 @@ const START_HERE = [
         title: "A formula through four collections",
         note: "Shared wording, traced to every collection it reaches",
     },
+    {
+        href: "/visualizations",
+        title: "The four collections, side by side",
+        note: "A plate for each question, and a plain statement of what it does not show",
+    },
 ];
 
 const number = (value: number | null | undefined) =>
@@ -675,7 +680,8 @@ function StartHere({ translations }: { translations: number | null }) {
                 ))}
             </ol>
             <p className="va-start-close">
-                Built by one person over the sources named on the sources page
+                Built by one person over{" "}
+                <Link href="/sources">the sources named on the sources page</Link>
                 {translations ? `, across ${number(translations)} translated verses` : ""}.{" "}
                 <Link href="/about">About this project</Link>
             </p>

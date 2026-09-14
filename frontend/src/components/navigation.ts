@@ -11,8 +11,9 @@ export type NavItem = {
  *
  * Six is the ceiling. The desktop bar has to stay on one line at 1024px beside the wordmark,
  * the search affordance and the theme control, and a seventh item is what pushes it to two.
- * The sixth slot is reserved for Visualize and is held empty until that surface exists,
- * because a navigation item is a promise that something is there.
+ * The sixth slot was held empty for Visualize until that surface existed, because a
+ * navigation item is a promise that something is there. It is now filled, and the bar is
+ * full: a seventh item costs a second line, so the next surface goes in the overflow.
  */
 export const PRIMARY_NAV: NavItem[] = [
     {
@@ -35,6 +36,11 @@ export const PRIMARY_NAV: NavItem[] = [
         href: "/graph",
         label: "Graph",
         description: "Follow a relationship and ask it to explain itself",
+    },
+    {
+        href: "/visualizations",
+        label: "Visualize",
+        description: "Seven plates, each answering one question about the corpus",
     },
 ];
 
@@ -62,8 +68,8 @@ export const SECONDARY_NAV: NavItem[] = [
     },
     {
         href: "/sources",
-        label: "Sources",
-        description: "Where the material comes from, and on what terms",
+        label: "Sources and method",
+        description: "Where the material comes from, and how it is turned into evidence",
     },
     { href: "/about", label: "About", description: "Why VedAnvaya exists" },
 ];

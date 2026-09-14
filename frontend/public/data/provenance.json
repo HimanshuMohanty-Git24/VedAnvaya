@@ -1,0 +1,1090 @@
+{
+  "generator": "scripts/build_frontend_provenance.py",
+  "inputs": [
+    "data/registry/sources.yaml",
+    "data/registry/source_artifacts.yaml",
+    "data/registry/works.yaml"
+  ],
+  "layers": [
+    {
+      "id": "primary-text",
+      "label": "The Sanskrit text",
+      "note": "The verses themselves. Each of the four collections is carried from one electronic edition, named here with its underlying print edition."
+    },
+    {
+      "id": "translation",
+      "label": "Translations",
+      "note": "Every translation held here is out of copyright, which means every one of them is also a century or more old. They are period readings, not current scholarship, and the reader sees the translator and the year on every verse."
+    },
+    {
+      "id": "traditional-apparatus",
+      "label": "The traditional apparatus",
+      "note": "The indices the tradition itself keeps: who is named as the seer of a hymn, which deity it is assigned to, which metre it is in. This is evidence about the tradition's own account of the text."
+    },
+    {
+      "id": "recitation",
+      "label": "Recitation",
+      "note": "Audio is linked and streamed, never republished. It is a layer over the text rather than part of it."
+    },
+    {
+      "id": "comparison",
+      "label": "Consulted for comparison",
+      "note": "Witnesses read against the text to check it. None of them supplies a verse displayed on this site."
+    }
+  ],
+  "works": [
+    {
+      "work_id": "VG:WORK:AV:SAU",
+      "veda": "AV",
+      "work_name": "Atharvaveda Samhita",
+      "abbreviation": "AVS",
+      "recension": "Shaunaka",
+      "hierarchy": [
+        "Kanda",
+        "Sukta",
+        "Mantra"
+      ],
+      "scope": "SAMHITA ONLY, Saunaka recension, held as a WORKING_PRIVATE digital corpus: 5,839 mantras. The PAIPPALADA recension is NOT HELD, and it is not a minor variant -- it is a substantially different collection with its own hymn order, so an Atharvavedic absence measured here is an absence from the Saunaka recension only. The Gopatha Brahmana is not held. Every one of this work's 5,084 seer attributions is a sukta label projected downward onto its mantras rather than a per-verse statement, so a per-verse Atharvavedic seer claim cannot be made from this corpus.",
+      "completeness": "5,839 mantras carry a canonical key and a canonical citation against an attested total of approximately 5,977 (97.7%). 4,878 of 5,839 carry a translation (83.5%). The divergence from the attested total is OPEN_RESEARCH, attributed to edition-relative verse totals, with one candidate mechanism raised and falsified.",
+      "excluded_corpora": [
+        "ATHARVAVEDA_PAIPPALADA_RECENSION",
+        "GOPATHA_BRAHMANA",
+        "UPANISAD"
+      ],
+      "canonical_build": "atharvaveda_saunaka_digital_working_v1"
+    },
+    {
+      "work_id": "VG:WORK:RV:SAK",
+      "veda": "RV",
+      "work_name": "Rigveda Samhita",
+      "abbreviation": "RV",
+      "recension": "Shakala",
+      "hierarchy": [
+        "Mandala",
+        "Sukta",
+        "Mantra"
+      ],
+      "scope": "SAMHITA ONLY, Sakala recension. This work_id addresses the 10,552 mantras of the Rigveda Samhita in the Sakala recension and nothing else. It does not address a second Rigvedic recension, nor any post-samhita layer: no Brahmana, no Aranyaka and no Upanisad are held. Padapatha and the accented samhitapatha are carried as text versions of these same mantras, not as separate works.",
+      "completeness": "10,552 of 10,552 attested mantras carry a canonical key and a canonical citation (100.0%). 10,502 of 10,552 carry a translation (99.5%). No shortfall in addressing.",
+      "excluded_corpora": [
+        "SECOND_RIGVEDIC_RECENSION",
+        "RIGVEDIC_BRAHMANA",
+        "RIGVEDIC_ARANYAKA",
+        "UPANISAD"
+      ],
+      "canonical_build": "rigveda_full_v1"
+    },
+    {
+      "work_id": "VG:WORK:SV:KAU",
+      "veda": "SV",
+      "work_name": "Samaveda Samhita",
+      "abbreviation": "SV",
+      "recension": "Kauthuma",
+      "hierarchy": [
+        "Collection",
+        "Prapathaka",
+        "Ardha",
+        "Dasati",
+        "Verse"
+      ],
+      "scope": "ARCIKA ONLY. THIS IS NOT THE COMPLETE SAMAVEDA. This work_id addresses the Kauthuma arcika verse corpus and cannot address the gana collections: the gramageya, aranyakageya, uhagana and uhyagana books are a PARALLEL AND LARGER body (roughly 2,639 ganas against 1,875 arcika verses) which requires its own work_id. The sung dimension is not a decoration on the verse skeleton; it is the reason the Samaveda is a distinct Veda rather than a Rigveda excerpt. Any claim that VedaGraph \"has the Samaveda\" while holding only the arcika is FALSE. No second recension and no post-samhita layer are held.",
+      "completeness": "1,844 of the traditional 1,875 verses carry a canonical key (98.3%). The 31 without one are enumerated with causes: 2 running numbers the selected witness does not print, 9 verses in one Uttararcika dasati whose printed run is non-contiguous, and 21 verses in four Uttararcika dasati groups where two witnesses disagree about the partition. ZERO translations are released (0.0%) -- an SV zero in any translation-derived layer is an absent layer, not an absent text.",
+      "excluded_corpora": [
+        "SAMAVEDA_GRAMAGEYA_GANA",
+        "SAMAVEDA_ARANYAKAGEYA_GANA",
+        "SAMAVEDA_UHAGANA",
+        "SAMAVEDA_UHYAGANA",
+        "SECOND_SAMAVEDIC_RECENSION",
+        "SAMAVEDIC_BRAHMANA",
+        "UPANISAD"
+      ],
+      "canonical_build": "samaveda_arcika_v1"
+    },
+    {
+      "work_id": "VG:WORK:YV:VSM",
+      "veda": "YV",
+      "work_name": "Vajasaneyi Samhita",
+      "abbreviation": "VSM",
+      "recension": "Madhyandina",
+      "hierarchy": [
+        "Adhyaya",
+        "Mantra"
+      ],
+      "scope": "SAMHITA ONLY, and only the SHUKLA (White) Yajurveda in the Vajasaneyi Madhyandina recension: 1,975 mantras. The KRISHNA (Black) Yajurveda is NOT HELD AT ALL -- no Taittiriya, no Kathaka, no Maitrayani, no Kapisthala samhita is present. This is the exclusion most likely to mislead, because \"the Yajurveda\" in ordinary use covers both and the Krishna recensions carry prose brahmana passages interleaved with the mantras that have no counterpart here. The Kanva recension of the Shukla Yajurveda is also absent, as is the Satapatha Brahmana.",
+      "completeness": "1,975 of 1,975 attested mantras carry a canonical key and a canonical citation (100.0%). 1,903 of 1,975 carry a translation (96.4%). No shortfall in addressing. Every one of this work's 2,240 seer attributions is source-stated rather than container-inherited, which is the opposite of the Atharvavedic pattern.",
+      "excluded_corpora": [
+        "KRISHNA_YAJURVEDA_TAITTIRIYA",
+        "KRISHNA_YAJURVEDA_KATHAKA",
+        "KRISHNA_YAJURVEDA_MAITRAYANI",
+        "KRISHNA_YAJURVEDA_KAPISTHALA",
+        "SHUKLA_YAJURVEDA_KANVA_RECENSION",
+        "SATAPATHA_BRAHMANA",
+        "UPANISAD"
+      ],
+      "canonical_build": "yajurveda_vsm_v1"
+    }
+  ],
+  "entries": [
+    {
+      "layer": "primary-text",
+      "source_id": "GRETIL",
+      "name": "Göttingen Register of Electronic Texts in Indian Languages",
+      "organization": "University of Göttingen",
+      "url": "https://gretil.sub.uni-goettingen.de/",
+      "authority_tier": "SCHOLARLY_EDITION",
+      "rights_status": [
+        "CC_BY_NC_SA"
+      ],
+      "site_rights_status": "UNKNOWN",
+      "rights_url": null,
+      "vedas": [
+        "RV"
+      ],
+      "contributes": "All 10,552 Rigvedic mantras, in romanised Sanskrit with the Vedic accents carried as combining marks.",
+      "evidence": "data/canonical/rigveda_full_v1/source_artifacts.jsonl",
+      "artifacts": [
+        {
+          "artifact_id": "GRETIL.RV.AUFRECHT.TEI.2019",
+          "title": "Ṛgveda-Saṃhitā",
+          "edition_title": "Die Hymnen des Rigveda. Mandala I–VI / VII–X",
+          "source_edition": "Theodor Aufrecht, Die Hymnen des Rigveda, Bonn, 1877, volumes 1–2",
+          "editors": [
+            "Theodor Aufrecht"
+          ],
+          "electronic_editors": [
+            "Barend A. Van Nooten",
+            "Gary B. Holland",
+            "Detlef Eichler",
+            "Reinhold Grünendahl",
+            "Maximilian Mehner"
+          ],
+          "contributors": [
+            "Detlef Eichler"
+          ],
+          "publication_date": "2019-10-03",
+          "retrieval_date": "2026-09-04",
+          "format": "TEI_XML",
+          "language": "sa-Latn",
+          "recension": "Shakala (structural identification; TEI header does not state the recension)",
+          "rights_status": "CC_BY_NC_SA",
+          "license_url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+          "url": "https://gretil.sub.uni-goettingen.de/gretil/corpustei/sa_Rgveda-edAufrecht.xml",
+          "work_id": "VG:WORK:RV:SAK"
+        }
+      ]
+    },
+    {
+      "layer": "primary-text",
+      "source_id": "GRETIL",
+      "name": "Göttingen Register of Electronic Texts in Indian Languages",
+      "organization": "University of Göttingen",
+      "url": "https://gretil.sub.uni-goettingen.de/",
+      "authority_tier": "SCHOLARLY_EDITION",
+      "rights_status": [
+        "REFERENCE_ONLY"
+      ],
+      "site_rights_status": "UNKNOWN",
+      "rights_url": null,
+      "vedas": [
+        "AV"
+      ],
+      "contributes": "The 5,839 mantras of the Saunaka Atharvaveda, as an accented text with an unaccented second witness read beside it.",
+      "evidence": "data/canonical/atharvaveda_saunaka_digital_working_v1/source_artifacts.jsonl",
+      "artifacts": [
+        {
+          "artifact_id": "GRETIL.AV.SAUNAKA.ACCENTED.HTML",
+          "title": "Atharvaveda-Samhita, Saunaka recension, ACCENTED TEXT",
+          "edition_title": null,
+          "source_edition": "Gli inni dell Atharvaveda (Saunaka), trasliterazione a cura di Chatia Orlandi, Pisa 1991, collated with R. Roth and W. D. Whitney, Atharva Veda Sanhita, Berlin 1856",
+          "editors": [
+            "Chatia Orlandi",
+            "Rudolf von Roth",
+            "William Dwight Whitney"
+          ],
+          "electronic_editors": [
+            "Vladimir Petr",
+            "Petr Vavrousek",
+            "Jost Gippert",
+            "Arlo Griffiths",
+            "Philipp Kubisch"
+          ],
+          "contributors": null,
+          "publication_date": null,
+          "retrieval_date": "2026-09-07",
+          "format": "HTML",
+          "language": "sa-Latn",
+          "recension": "Shaunaka, PROVED FROM THE ARTIFACT by two independent witnesses per Agent D: (1) the document title \"Atharvaveda-Samhita, Saunaka recension\"; (2) all 11395 body locators are prefixed AVS_ with the palatal sibilant, e.g. (AVS_1,1.1a) - so the recension marker is per-verse in the data, not only in a header that could belong to a swapped file",
+          "rights_status": "REFERENCE_ONLY",
+          "license_url": null,
+          "url": "https://gretil.sub.uni-goettingen.de/gretil/1_sanskr/1_veda/1_sam/avs_acu.htm",
+          "work_id": "VG:WORK:AV:SAU"
+        },
+        {
+          "artifact_id": "GRETIL.AV.SAUNAKA.UNACCENTED.HTML",
+          "title": "Atharvaveda-Samhita, Saunaka recension, UNACCENTED TEXT",
+          "edition_title": null,
+          "source_edition": "Gli inni dell Atharvaveda (Saunaka), trasliterazione a cura di Chatia Orlandi, Pisa 1991, collated with R. Roth and W. D. Whitney, Atharva Veda Sanhita, Berlin 1856",
+          "editors": [
+            "Chatia Orlandi",
+            "Rudolf von Roth",
+            "William Dwight Whitney"
+          ],
+          "electronic_editors": [
+            "Vladimir Petr",
+            "Petr Vavrousek",
+            "Jost Gippert",
+            "Arlo Griffiths",
+            "Philipp Kubisch"
+          ],
+          "contributors": null,
+          "publication_date": null,
+          "retrieval_date": "2026-09-07",
+          "format": "HTML",
+          "language": "sa-Latn",
+          "recension": "Shaunaka, PROVED FROM THE ARTIFACT by two independent witnesses per Agent D: (1) the document title \"Atharvaveda-Samhita, Saunaka recension\"; (2) all 11395 body locators are prefixed AVS_ with the palatal sibilant, e.g. (AVS_1,1.1a) - so the recension marker is per-verse in the data, not only in a header that could belong to a swapped file",
+          "rights_status": "REFERENCE_ONLY",
+          "license_url": null,
+          "url": "https://gretil.sub.uni-goettingen.de/gretil/1_sanskr/1_veda/1_sam/avs___u.htm",
+          "work_id": "VG:WORK:AV:SAU"
+        }
+      ]
+    },
+    {
+      "layer": "primary-text",
+      "source_id": "WIKISOURCE_SA",
+      "name": "Sanskrit Wikisource",
+      "organization": "Wikimedia Foundation",
+      "url": "https://sa.wikisource.org/",
+      "authority_tier": "COMMUNITY_TRANSCRIPTION",
+      "rights_status": [
+        "CC_BY_SA"
+      ],
+      "site_rights_status": "CC_BY_SA",
+      "rights_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "vedas": [
+        "SV",
+        "YV"
+      ],
+      "contributes": "The Samavedic arcika and the whole Vajasaneyi Samhita, in Devanagari. These are the two collections this site sets in Devanagari rather than in transliteration, because that is the script they were carried in.",
+      "evidence": "data/canonical/samaveda_arcika_v1/source_artifacts.jsonl",
+      "artifacts": [
+        {
+          "artifact_id": "WIKISOURCE_SA.SV.KAU.SAMHITA.DEVANAGARI",
+          "title": "Samavedah / Kauthumiya / Samhita",
+          "edition_title": null,
+          "source_edition": "UNIDENTIFIED",
+          "editors": null,
+          "electronic_editors": null,
+          "contributors": null,
+          "publication_date": null,
+          "retrieval_date": "2026-09-07",
+          "format": "MEDIAWIKI_TRANSCRIPTION",
+          "language": "sa-Deva",
+          "recension": "Kauthuma",
+          "rights_status": "CC_BY_SA",
+          "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "url": "https://sa.wikisource.org/wiki/%E0%A4%B8%E0%A4%BE%E0%A4%AE%E0%A4%B5%E0%A5%87%E0%A4%A6%E0%A4%83",
+          "work_id": "VG:WORK:SV:KAU"
+        },
+        {
+          "artifact_id": "WIKISOURCE_SA.YV.VSM.SAMHITA.DEVANAGARI",
+          "title": "Shuklayajurvedah (Shukla Yajurveda Samhita)",
+          "edition_title": "Nirnaya Sagara Press 2nd edition, Bombay, 1929",
+          "source_edition": "Vajasaneyi-Madhyandina Sukla Yajurveda Samhita, edited by Vasudeva Sarma Panasikara, 2nd edition, Nirnaya Sagara Press, Bombay, Saka 1850 = CE 1929, with Uvata's Mantrabhasya and Mahidhara's Vedadipa",
+          "editors": [
+            "Vasudeva Sarma Panasikara"
+          ],
+          "electronic_editors": null,
+          "contributors": null,
+          "publication_date": "1929",
+          "retrieval_date": "2026-09-07",
+          "format": "MEDIAWIKI_TRANSCRIPTION",
+          "language": "sa-Deva",
+          "recension": "Madhyandina, PROVED FROM THE ARTIFACT ITSELF, which titles itself \"srimad-vajasaneyi-madhyandina sukla-yajurveda-samhita\"",
+          "rights_status": "CC_BY_SA",
+          "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "url": "https://sa.wikisource.org/wiki/%E0%A4%B6%E0%A5%81%E0%A4%95%E0%A5%8D%E0%A4%B2%E0%A4%AF%E0%A4%9C%E0%A5%81%E0%A4%B0%E0%A5%8D%E0%A4%B5%E0%A5%87%E0%A4%A6%E0%A4%83",
+          "work_id": "VG:WORK:YV:VSM"
+        }
+      ]
+    },
+    {
+      "layer": "translation",
+      "source_id": "WIKISOURCE_GRIFFITH_RV",
+      "name": "The Hymns of the Rigveda, Griffith, second edition",
+      "organization": "Wikisource transcription of E. J. Lazarus & Co. edition",
+      "url": "https://en.wikisource.org/wiki/The_Hymns_of_the_Rigveda",
+      "authority_tier": "HISTORICAL_TRANSLATION",
+      "rights_status": [
+        "PUBLIC_DOMAIN"
+      ],
+      "site_rights_status": "PUBLIC_DOMAIN",
+      "rights_url": "https://en.wikisource.org/wiki/The_Hymns_of_the_Rigveda",
+      "vedas": [
+        "RV"
+      ],
+      "contributes": "The English of 10,502 of the 10,552 Rigvedic verses.",
+      "evidence": "data/canonical/rigveda_full_v1/source_artifacts.jsonl",
+      "artifacts": [
+        {
+          "artifact_id": "GRIFFITH.RV.1896.WIKISOURCE",
+          "title": "The Hymns of the Rigveda",
+          "edition_title": "Second Edition, complete in two volumes",
+          "source_edition": "E. J. Lazarus and Co., Benares, 1896",
+          "editors": [
+            "Ralph T. H. Griffith"
+          ],
+          "electronic_editors": null,
+          "contributors": null,
+          "publication_date": "1896",
+          "retrieval_date": null,
+          "format": "MEDIAWIKI_TRANSCRIPTION",
+          "language": "en",
+          "recension": null,
+          "rights_status": "PUBLIC_DOMAIN",
+          "license_url": null,
+          "url": "https://en.wikisource.org/wiki/The_Hymns_of_the_Rigveda",
+          "work_id": "VG:WORK:RV:SAK"
+        }
+      ]
+    },
+    {
+      "layer": "translation",
+      "source_id": "SACRED_TEXTS",
+      "name": "Internet Sacred Text Archive",
+      "organization": "Internet Sacred Text Archive",
+      "url": "https://sacred-texts.com/",
+      "authority_tier": "COMMUNITY_TRANSCRIPTION",
+      "rights_status": [
+        "PUBLIC_DOMAIN"
+      ],
+      "site_rights_status": "PUBLIC_DOMAIN",
+      "rights_url": "https://sacred-texts.com/",
+      "vedas": [
+        "YV"
+      ],
+      "contributes": "The English of 1,903 of the 1,975 verses of the White Yajurveda.",
+      "evidence": "data/staged/yajurveda_translation_stage.json",
+      "artifacts": [
+        {
+          "artifact_id": "GRIFFITH.YV.1899.SACREDTEXTS",
+          "title": "The Texts of the White Yajurveda, Griffith translation",
+          "edition_title": null,
+          "source_edition": "Ralph T. H. Griffith, The Texts of the White Yajurveda, E. J. Lazarus and Co., Benares, 1899",
+          "editors": [
+            "Ralph T. H. Griffith"
+          ],
+          "electronic_editors": null,
+          "contributors": null,
+          "publication_date": "1899",
+          "retrieval_date": "2026-09-07",
+          "format": "HTML",
+          "language": "en",
+          "recension": "Vajasaneyi Madhyandina",
+          "rights_status": "PUBLIC_DOMAIN",
+          "license_url": "https://sacred-texts.com/copyrights.htm",
+          "url": "https://sacred-texts.com/hin/wyv/index.htm",
+          "work_id": "VG:WORK:YV:VSM"
+        }
+      ]
+    },
+    {
+      "layer": "translation",
+      "source_id": "VEDAWEB",
+      "name": "VedaWeb Rigveda public data",
+      "organization": "Cologne Center for eHumanities, University of Cologne",
+      "url": "https://github.com/VedaWebProject/vedaweb-data",
+      "authority_tier": "SCHOLARLY_EDITION",
+      "rights_status": [
+        "PUBLIC_DOMAIN"
+      ],
+      "site_rights_status": "UNKNOWN",
+      "rights_url": null,
+      "vedas": [
+        "AV"
+      ],
+      "contributes": "The English of 4,878 of the 5,839 Atharvavedic verses, in Whitney's deliberately literal rendering.",
+      "evidence": "data/staged/atharvaveda_translation_stage_full_v1.json",
+      "artifacts": [
+        {
+          "artifact_id": "VEDAWEB.AVS.WHITNEY_LANMAN_1905.PLAINTEXT.L2",
+          "title": "Atharva-Veda Samhita, Whitney and Lanman translation, VedaWeb resource 696f42266f50da42570ad040",
+          "edition_title": "Harvard Oriental Series 7-8",
+          "source_edition": null,
+          "editors": [
+            "Charles Rockwell Lanman"
+          ],
+          "electronic_editors": null,
+          "contributors": [
+            "William Dwight Whitney"
+          ],
+          "publication_date": "1905",
+          "retrieval_date": "2026-09-07",
+          "format": "JSON_API_PLAINTEXT",
+          "language": "en",
+          "recension": "Shaunaka",
+          "rights_status": "PUBLIC_DOMAIN",
+          "license_url": null,
+          "url": "https://vedaweb.uni-koeln.de/api/contents?res=696f42266f50da42570ad040&limit=6000",
+          "work_id": "VG:WORK:AV:SAU"
+        }
+      ]
+    },
+    {
+      "layer": "traditional-apparatus",
+      "source_id": "WSC2023",
+      "name": "Digital Rig Vedic Index (Anukramani), WSC 2023",
+      "organization": "Dept. of Computer Science and Engineering, IIT Kanpur",
+      "url": "https://github.com/mahesh-ak/WSC2023",
+      "authority_tier": "SCHOLARLY_EDITION",
+      "rights_status": [
+        "APACHE_2_0"
+      ],
+      "site_rights_status": "APACHE_2_0",
+      "rights_url": "https://www.apache.org/licenses/LICENSE-2.0",
+      "vedas": [
+        "RV"
+      ],
+      "contributes": "The Anukramani for all ten mandalas: the seer, the deity and the metre traditionally given for each hymn. This is the only Veda here for which that index is held, and it is the reason deity ascription figures are Rigvedic.",
+      "evidence": "data/registry/rishis.yaml",
+      "artifacts": [
+        {
+          "artifact_id": "WSC2023.RV.ANUKRAMANI.M01",
+          "title": "Digital Rig Vedic Anukramani - Mandala 1",
+          "edition_title": "Digital Rig Vedic Index (Anukramani), WSC 2023",
+          "source_edition": "Katyayana's Sarvanukramani tradition, as digitized by the authors",
+          "editors": [
+            "A V S D S Mahesh (Mahesh Akavarapu)",
+            "Arnab Bhattacharya"
+          ],
+          "electronic_editors": [
+            "A V S D S Mahesh (Mahesh Akavarapu)",
+            "Arnab Bhattacharya"
+          ],
+          "contributors": null,
+          "publication_date": "2023",
+          "retrieval_date": "2026-09-04",
+          "format": "PLAIN_TEXT",
+          "language": "sa",
+          "recension": "Shakala",
+          "rights_status": "APACHE_2_0",
+          "license_url": "https://www.apache.org/licenses/LICENSE-2.0",
+          "url": "https://raw.githubusercontent.com/mahesh-ak/WSC2023/05b5987d6d8d6ec7228926eb68d6a21117c9b1f2/Anukramani/Mandala_1.txt",
+          "work_id": "VG:WORK:RV:SAK"
+        },
+        {
+          "artifact_id": "WSC2023.RV.ANUKRAMANI.M02",
+          "title": "Digital Rig Vedic Anukramani - Mandala 2",
+          "edition_title": "Digital Rig Vedic Index (Anukramani), WSC 2023",
+          "source_edition": "Katyayana's Sarvanukramani tradition, as digitized by the authors",
+          "editors": [
+            "A V S D S Mahesh (Mahesh Akavarapu)",
+            "Arnab Bhattacharya"
+          ],
+          "electronic_editors": [
+            "A V S D S Mahesh (Mahesh Akavarapu)",
+            "Arnab Bhattacharya"
+          ],
+          "contributors": null,
+          "publication_date": "2023",
+          "retrieval_date": "2026-09-04",
+          "format": "PLAIN_TEXT",
+          "language": "sa",
+          "recension": "Shakala",
+          "rights_status": "APACHE_2_0",
+          "license_url": "https://www.apache.org/licenses/LICENSE-2.0",
+          "url": "https://raw.githubusercontent.com/mahesh-ak/WSC2023/05b5987d6d8d6ec7228926eb68d6a21117c9b1f2/Anukramani/Mandala_2.txt",
+          "work_id": "VG:WORK:RV:SAK"
+        },
+        {
+          "artifact_id": "WSC2023.RV.ANUKRAMANI.M03",
+          "title": "Digital Rig Vedic Anukramani - Mandala 3",
+          "edition_title": "Digital Rig Vedic Index (Anukramani), WSC 2023",
+          "source_edition": "Katyayana's Sarvanukramani tradition, as digitized by the authors",
+          "editors": [
+            "A V S D S Mahesh (Mahesh Akavarapu)",
+            "Arnab Bhattacharya"
+          ],
+          "electronic_editors": [
+            "A V S D S Mahesh (Mahesh Akavarapu)",
+            "Arnab Bhattacharya"
+          ],
+          "contributors": null,
+          "publication_date": "2023",
+          "retrieval_date": "2026-09-04",
+          "format": "PLAIN_TEXT",
+          "language": "sa",
+          "recension": "Shakala",
+          "rights_status": "APACHE_2_0",
+          "license_url": "https://www.apache.org/licenses/LICENSE-2.0",
+          "url": "https://raw.githubusercontent.com/mahesh-ak/WSC2023/05b5987d6d8d6ec7228926eb68d6a21117c9b1f2/Anukramani/Mandala_3.txt",
+          "work_id": "VG:WORK:RV:SAK"
+        },
+        {
+          "artifact_id": "WSC2023.RV.ANUKRAMANI.M04",
+          "title": "Digital Rig Vedic Anukramani - Mandala 4",
+          "edition_title": "Digital Rig Vedic Index (Anukramani), WSC 2023",
+          "source_edition": "Katyayana's Sarvanukramani tradition, as digitized by the authors",
+          "editors": [
+            "A V S D S Mahesh (Mahesh Akavarapu)",
+            "Arnab Bhattacharya"
+          ],
+          "electronic_editors": [
+            "A V S D S Mahesh (Mahesh Akavarapu)",
+            "Arnab Bhattacharya"
+          ],
+          "contributors": null,
+          "publication_date": "2023",
+          "retrieval_date": "2026-09-04",
+          "format": "PLAIN_TEXT",
+          "language": "sa",
+          "recension": "Shakala",
+          "rights_status": "APACHE_2_0",
+          "license_url": "https://www.apache.org/licenses/LICENSE-2.0",
+          "url": "https://raw.githubusercontent.com/mahesh-ak/WSC2023/05b5987d6d8d6ec7228926eb68d6a21117c9b1f2/Anukramani/Mandala_4.txt",
+          "work_id": "VG:WORK:RV:SAK"
+        },
+        {
+          "artifact_id": "WSC2023.RV.ANUKRAMANI.M05",
+          "title": "Digital Rig Vedic Anukramani - Mandala 5",
+          "edition_title": "Digital Rig Vedic Index (Anukramani), WSC 2023",
+          "source_edition": "Katyayana's Sarvanukramani tradition, as digitized by the authors",
+          "editors": [
+            "A V S D S Mahesh (Mahesh Akavarapu)",
+            "Arnab Bhattacharya"
+          ],
+          "electronic_editors": [
+            "A V S D S Mahesh (Mahesh Akavarapu)",
+            "Arnab Bhattacharya"
+          ],
+          "contributors": null,
+          "publication_date": "2023",
+          "retrieval_date": "2026-09-04",
+          "format": "PLAIN_TEXT",
+          "language": "sa",
+          "recension": "Shakala",
+          "rights_status": "APACHE_2_0",
+          "license_url": "https://www.apache.org/licenses/LICENSE-2.0",
+          "url": "https://raw.githubusercontent.com/mahesh-ak/WSC2023/05b5987d6d8d6ec7228926eb68d6a21117c9b1f2/Anukramani/Mandala_5.txt",
+          "work_id": "VG:WORK:RV:SAK"
+        },
+        {
+          "artifact_id": "WSC2023.RV.ANUKRAMANI.M06",
+          "title": "Digital Rig Vedic Anukramani - Mandala 6",
+          "edition_title": "Digital Rig Vedic Index (Anukramani), WSC 2023",
+          "source_edition": "Katyayana's Sarvanukramani tradition, as digitized by the authors",
+          "editors": [
+            "A V S D S Mahesh (Mahesh Akavarapu)",
+            "Arnab Bhattacharya"
+          ],
+          "electronic_editors": [
+            "A V S D S Mahesh (Mahesh Akavarapu)",
+            "Arnab Bhattacharya"
+          ],
+          "contributors": null,
+          "publication_date": "2023",
+          "retrieval_date": "2026-09-04",
+          "format": "PLAIN_TEXT",
+          "language": "sa",
+          "recension": "Shakala",
+          "rights_status": "APACHE_2_0",
+          "license_url": "https://www.apache.org/licenses/LICENSE-2.0",
+          "url": "https://raw.githubusercontent.com/mahesh-ak/WSC2023/05b5987d6d8d6ec7228926eb68d6a21117c9b1f2/Anukramani/Mandala_6.txt",
+          "work_id": "VG:WORK:RV:SAK"
+        },
+        {
+          "artifact_id": "WSC2023.RV.ANUKRAMANI.M07",
+          "title": "Digital Rig Vedic Anukramani - Mandala 7",
+          "edition_title": "Digital Rig Vedic Index (Anukramani), WSC 2023",
+          "source_edition": "Katyayana's Sarvanukramani tradition, as digitized by the authors",
+          "editors": [
+            "A V S D S Mahesh (Mahesh Akavarapu)",
+            "Arnab Bhattacharya"
+          ],
+          "electronic_editors": [
+            "A V S D S Mahesh (Mahesh Akavarapu)",
+            "Arnab Bhattacharya"
+          ],
+          "contributors": null,
+          "publication_date": "2023",
+          "retrieval_date": "2026-09-04",
+          "format": "PLAIN_TEXT",
+          "language": "sa",
+          "recension": "Shakala",
+          "rights_status": "APACHE_2_0",
+          "license_url": "https://www.apache.org/licenses/LICENSE-2.0",
+          "url": "https://raw.githubusercontent.com/mahesh-ak/WSC2023/05b5987d6d8d6ec7228926eb68d6a21117c9b1f2/Anukramani/Mandala_7.txt",
+          "work_id": "VG:WORK:RV:SAK"
+        },
+        {
+          "artifact_id": "WSC2023.RV.ANUKRAMANI.M08",
+          "title": "Digital Rig Vedic Anukramani - Mandala 8",
+          "edition_title": "Digital Rig Vedic Index (Anukramani), WSC 2023",
+          "source_edition": "Katyayana's Sarvanukramani tradition, as digitized by the authors",
+          "editors": [
+            "A V S D S Mahesh (Mahesh Akavarapu)",
+            "Arnab Bhattacharya"
+          ],
+          "electronic_editors": [
+            "A V S D S Mahesh (Mahesh Akavarapu)",
+            "Arnab Bhattacharya"
+          ],
+          "contributors": null,
+          "publication_date": "2023",
+          "retrieval_date": "2026-09-04",
+          "format": "PLAIN_TEXT",
+          "language": "sa",
+          "recension": "Shakala",
+          "rights_status": "APACHE_2_0",
+          "license_url": "https://www.apache.org/licenses/LICENSE-2.0",
+          "url": "https://raw.githubusercontent.com/mahesh-ak/WSC2023/05b5987d6d8d6ec7228926eb68d6a21117c9b1f2/Anukramani/Mandala_8.txt",
+          "work_id": "VG:WORK:RV:SAK"
+        },
+        {
+          "artifact_id": "WSC2023.RV.ANUKRAMANI.M09",
+          "title": "Digital Rig Vedic Anukramani - Mandala 9",
+          "edition_title": "Digital Rig Vedic Index (Anukramani), WSC 2023",
+          "source_edition": "Katyayana's Sarvanukramani tradition, as digitized by the authors",
+          "editors": [
+            "A V S D S Mahesh (Mahesh Akavarapu)",
+            "Arnab Bhattacharya"
+          ],
+          "electronic_editors": [
+            "A V S D S Mahesh (Mahesh Akavarapu)",
+            "Arnab Bhattacharya"
+          ],
+          "contributors": null,
+          "publication_date": "2023",
+          "retrieval_date": "2026-09-04",
+          "format": "PLAIN_TEXT",
+          "language": "sa",
+          "recension": "Shakala",
+          "rights_status": "APACHE_2_0",
+          "license_url": "https://www.apache.org/licenses/LICENSE-2.0",
+          "url": "https://raw.githubusercontent.com/mahesh-ak/WSC2023/05b5987d6d8d6ec7228926eb68d6a21117c9b1f2/Anukramani/Mandala_9.txt",
+          "work_id": "VG:WORK:RV:SAK"
+        },
+        {
+          "artifact_id": "WSC2023.RV.ANUKRAMANI.M10",
+          "title": "Digital Rig Vedic Anukramani - Mandala 10",
+          "edition_title": "Digital Rig Vedic Index (Anukramani), WSC 2023",
+          "source_edition": "Katyayana's Sarvanukramani tradition, as digitized by the authors",
+          "editors": [
+            "A V S D S Mahesh (Mahesh Akavarapu)",
+            "Arnab Bhattacharya"
+          ],
+          "electronic_editors": [
+            "A V S D S Mahesh (Mahesh Akavarapu)",
+            "Arnab Bhattacharya"
+          ],
+          "contributors": null,
+          "publication_date": "2023",
+          "retrieval_date": "2026-09-04",
+          "format": "PLAIN_TEXT",
+          "language": "sa",
+          "recension": "Shakala",
+          "rights_status": "APACHE_2_0",
+          "license_url": "https://www.apache.org/licenses/LICENSE-2.0",
+          "url": "https://raw.githubusercontent.com/mahesh-ak/WSC2023/05b5987d6d8d6ec7228926eb68d6a21117c9b1f2/Anukramani/Mandala_10.txt",
+          "work_id": "VG:WORK:RV:SAK"
+        }
+      ]
+    },
+    {
+      "layer": "traditional-apparatus",
+      "source_id": "WIKISOURCE_WHITNEY_AV",
+      "name": "Atharva-Veda Samhita, Whitney and Lanman translation",
+      "organization": "Wikisource transcription of Harvard Oriental Series edition",
+      "url": "https://en.wikisource.org/wiki/Atharva-Veda_Samhita",
+      "authority_tier": "HISTORICAL_TRANSLATION",
+      "rights_status": [
+        "PUBLIC_DOMAIN"
+      ],
+      "site_rights_status": "PUBLIC_DOMAIN",
+      "rights_url": null,
+      "vedas": [
+        "AV"
+      ],
+      "contributes": "The Atharvavedic index, kept in its own namespace. Its seer names are not resolved against the Rigvedic register, because the two indices spell the same tradition differently and merging them would assert an identity nobody established.",
+      "evidence": "data/registry/rishis_av.yaml",
+      "artifacts": [
+        {
+          "artifact_id": "WIKISOURCE.AV.WHITNEY.ANUKRAMANI.HEADERS",
+          "title": "Brhatsarvanukramani excerpts in Whitney's per-hymn bracketed headers",
+          "edition_title": null,
+          "source_edition": null,
+          "editors": [
+            "Charles Rockwell Lanman"
+          ],
+          "electronic_editors": null,
+          "contributors": [
+            "William Dwight Whitney"
+          ],
+          "publication_date": "1905",
+          "retrieval_date": "2026-09-07",
+          "format": "MEDIAWIKI_TRANSCRIPTION",
+          "language": "en",
+          "recension": "Shaunaka",
+          "rights_status": "PUBLIC_DOMAIN",
+          "license_url": "https://en.wikisource.org/wiki/Atharva-Veda_Samhita",
+          "url": "https://en.wikisource.org/wiki/Atharva-Veda_Samhita",
+          "work_id": "VG:WORK:AV:SAU"
+        }
+      ]
+    },
+    {
+      "layer": "traditional-apparatus",
+      "source_id": "WIKISOURCE_SA",
+      "name": "Sanskrit Wikisource",
+      "organization": "Wikimedia Foundation",
+      "url": "https://sa.wikisource.org/",
+      "authority_tier": "COMMUNITY_TRANSCRIPTION",
+      "rights_status": [
+        "CC_BY_SA"
+      ],
+      "site_rights_status": "CC_BY_SA",
+      "rights_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "vedas": [
+        "YV"
+      ],
+      "contributes": "The Rsisuci, the Yajurvedic index of seers, likewise kept apart.",
+      "evidence": "data/registry/rishis_yv.yaml",
+      "artifacts": [
+        {
+          "artifact_id": "WIKISOURCE_SA.YV.VSM.RISHISUCI",
+          "title": "Shuklayajurvedah / Rishisuci",
+          "edition_title": null,
+          "source_edition": null,
+          "editors": null,
+          "electronic_editors": null,
+          "contributors": null,
+          "publication_date": null,
+          "retrieval_date": "2026-09-07",
+          "format": "MEDIAWIKI_TRANSCRIPTION",
+          "language": "sa-Deva",
+          "recension": "Madhyandina",
+          "rights_status": "CC_BY_SA",
+          "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "url": "https://sa.wikisource.org/wiki/%E0%A4%B6%E0%A5%81%E0%A4%95%E0%A5%8D%E0%A4%B2%E0%A4%AF%E0%A4%9C%E0%A5%81%E0%A4%B0%E0%A5%8D%E0%A4%B5%E0%A5%87%E0%A4%A6%E0%A4%83/%E0%A4%8B%E0%A4%B7%E0%A4%BF%E0%A4%B8%E0%A5%82%E0%A4%9A%E0%A5%80",
+          "work_id": "VG:WORK:YV:VSM"
+        }
+      ]
+    },
+    {
+      "layer": "recitation",
+      "source_id": "VEDSEARCH",
+      "name": "VedSearch",
+      "organization": "VedSearch",
+      "url": "https://vedsearch.org/",
+      "authority_tier": "AGGREGATOR",
+      "rights_status": [
+        "UNKNOWN"
+      ],
+      "site_rights_status": "UNKNOWN",
+      "rights_url": null,
+      "vedas": [
+        "RV",
+        "YV",
+        "AV"
+      ],
+      "contributes": "16,834 verse recitations, one file per verse, streamed from the source rather than copied. No Samavedic recitation is catalogued, which is the gap this layer most obviously has.",
+      "evidence": "data/product/audio_catalog.jsonl",
+      "artifacts": []
+    },
+    {
+      "layer": "comparison",
+      "source_id": "VEDAWEB",
+      "name": "VedaWeb Rigveda public data",
+      "organization": "Cologne Center for eHumanities, University of Cologne",
+      "url": "https://github.com/VedaWebProject/vedaweb-data",
+      "authority_tier": "SCHOLARLY_EDITION",
+      "rights_status": [
+        "PERMISSION_REQUIRED",
+        "UNKNOWN"
+      ],
+      "site_rights_status": "UNKNOWN",
+      "rights_url": null,
+      "vedas": [
+        "RV",
+        "AV"
+      ],
+      "contributes": "A second electronic witness to the Rigveda, read against the first verse by verse. Where the two disagreed the difference was recorded rather than silently resolved.",
+      "evidence": "data/canonical/rigveda_full_v1/source_artifacts.jsonl",
+      "artifacts": [
+        {
+          "artifact_id": "VEDAWEB.RV.CORPUS.TEI.D3EB8AF",
+          "title": "VedaWeb - Rigveda",
+          "edition_title": "Rigveda Edition VedaWeb 2020",
+          "source_edition": null,
+          "editors": [
+            "Daniel Kölligan",
+            "Uta Reinöhl"
+          ],
+          "electronic_editors": [
+            "Francisco Mondaca",
+            "Anna Fischer"
+          ],
+          "contributors": [
+            "Patrick Sahle",
+            "Peter Dängeli",
+            "Martina Gödel"
+          ],
+          "publication_date": "2020",
+          "retrieval_date": "2026-09-04",
+          "format": "TEI_XML",
+          "language": "mul",
+          "recension": null,
+          "rights_status": "UNKNOWN",
+          "license_url": null,
+          "url": "https://raw.githubusercontent.com/VedaWebProject/vedaweb-data/d3eb8af7324338161520d2d35eae8f7e985a19a5/rigveda/TEI/vedaweb_corpus.tei",
+          "work_id": "VG:WORK:RV:SAK"
+        },
+        {
+          "artifact_id": "VEDAWEB.RV.BOOK01.TEI.D3EB8AF",
+          "title": "Rigveda - VedaWeb Version - Book 01",
+          "edition_title": "Rigveda Edition VedaWeb 2020",
+          "source_edition": null,
+          "editors": null,
+          "electronic_editors": [
+            "Francisco Mondaca",
+            "Anna Fischer"
+          ],
+          "contributors": null,
+          "publication_date": "2020",
+          "retrieval_date": "2026-09-04",
+          "format": "TEI_XML",
+          "language": "mul",
+          "recension": "Shakala (structural identification; the TEI does not state the recension)",
+          "rights_status": "UNKNOWN",
+          "license_url": null,
+          "url": "https://raw.githubusercontent.com/VedaWebProject/vedaweb-data/d3eb8af7324338161520d2d35eae8f7e985a19a5/rigveda/TEI/rv_book_01.tei",
+          "work_id": "VG:WORK:RV:SAK"
+        },
+        {
+          "artifact_id": "VEDAWEB.RV.BOOK02.TEI.D3EB8AF",
+          "title": "Rigveda - VedaWeb Version - Book 02",
+          "edition_title": "Rigveda Edition VedaWeb 2020",
+          "source_edition": null,
+          "editors": null,
+          "electronic_editors": null,
+          "contributors": null,
+          "publication_date": null,
+          "retrieval_date": "2026-09-04",
+          "format": "TEI_XML",
+          "language": null,
+          "recension": null,
+          "rights_status": "UNKNOWN",
+          "license_url": null,
+          "url": "https://raw.githubusercontent.com/VedaWebProject/vedaweb-data/d3eb8af7324338161520d2d35eae8f7e985a19a5/rigveda/TEI/rv_book_02.tei",
+          "work_id": "VG:WORK:RV:SAK"
+        },
+        {
+          "artifact_id": "VEDAWEB.RV.BOOK03.TEI.D3EB8AF",
+          "title": "Rigveda - VedaWeb Version - Book 03",
+          "edition_title": "Rigveda Edition VedaWeb 2020",
+          "source_edition": null,
+          "editors": null,
+          "electronic_editors": null,
+          "contributors": null,
+          "publication_date": null,
+          "retrieval_date": "2026-09-04",
+          "format": "TEI_XML",
+          "language": null,
+          "recension": null,
+          "rights_status": "UNKNOWN",
+          "license_url": null,
+          "url": "https://raw.githubusercontent.com/VedaWebProject/vedaweb-data/d3eb8af7324338161520d2d35eae8f7e985a19a5/rigveda/TEI/rv_book_03.tei",
+          "work_id": "VG:WORK:RV:SAK"
+        },
+        {
+          "artifact_id": "VEDAWEB.RV.BOOK04.TEI.D3EB8AF",
+          "title": "Rigveda - VedaWeb Version - Book 04",
+          "edition_title": "Rigveda Edition VedaWeb 2020",
+          "source_edition": null,
+          "editors": null,
+          "electronic_editors": null,
+          "contributors": null,
+          "publication_date": null,
+          "retrieval_date": "2026-09-04",
+          "format": "TEI_XML",
+          "language": null,
+          "recension": null,
+          "rights_status": "UNKNOWN",
+          "license_url": null,
+          "url": "https://raw.githubusercontent.com/VedaWebProject/vedaweb-data/d3eb8af7324338161520d2d35eae8f7e985a19a5/rigveda/TEI/rv_book_04.tei",
+          "work_id": "VG:WORK:RV:SAK"
+        },
+        {
+          "artifact_id": "VEDAWEB.RV.BOOK05.TEI.D3EB8AF",
+          "title": "Rigveda - VedaWeb Version - Book 05",
+          "edition_title": "Rigveda Edition VedaWeb 2020",
+          "source_edition": null,
+          "editors": null,
+          "electronic_editors": null,
+          "contributors": null,
+          "publication_date": null,
+          "retrieval_date": "2026-09-04",
+          "format": "TEI_XML",
+          "language": null,
+          "recension": null,
+          "rights_status": "UNKNOWN",
+          "license_url": null,
+          "url": "https://raw.githubusercontent.com/VedaWebProject/vedaweb-data/d3eb8af7324338161520d2d35eae8f7e985a19a5/rigveda/TEI/rv_book_05.tei",
+          "work_id": "VG:WORK:RV:SAK"
+        },
+        {
+          "artifact_id": "VEDAWEB.RV.BOOK06.TEI.D3EB8AF",
+          "title": "Rigveda - VedaWeb Version - Book 06",
+          "edition_title": "Rigveda Edition VedaWeb 2020",
+          "source_edition": null,
+          "editors": null,
+          "electronic_editors": null,
+          "contributors": null,
+          "publication_date": null,
+          "retrieval_date": "2026-09-04",
+          "format": "TEI_XML",
+          "language": null,
+          "recension": null,
+          "rights_status": "UNKNOWN",
+          "license_url": null,
+          "url": "https://raw.githubusercontent.com/VedaWebProject/vedaweb-data/d3eb8af7324338161520d2d35eae8f7e985a19a5/rigveda/TEI/rv_book_06.tei",
+          "work_id": "VG:WORK:RV:SAK"
+        },
+        {
+          "artifact_id": "VEDAWEB.RV.BOOK07.TEI.D3EB8AF",
+          "title": "Rigveda - VedaWeb Version - Book 07",
+          "edition_title": "Rigveda Edition VedaWeb 2020",
+          "source_edition": null,
+          "editors": null,
+          "electronic_editors": null,
+          "contributors": null,
+          "publication_date": null,
+          "retrieval_date": "2026-09-04",
+          "format": "TEI_XML",
+          "language": null,
+          "recension": null,
+          "rights_status": "UNKNOWN",
+          "license_url": null,
+          "url": "https://raw.githubusercontent.com/VedaWebProject/vedaweb-data/d3eb8af7324338161520d2d35eae8f7e985a19a5/rigveda/TEI/rv_book_07.tei",
+          "work_id": "VG:WORK:RV:SAK"
+        },
+        {
+          "artifact_id": "VEDAWEB.RV.BOOK08.TEI.D3EB8AF",
+          "title": "Rigveda - VedaWeb Version - Book 08",
+          "edition_title": "Rigveda Edition VedaWeb 2020",
+          "source_edition": null,
+          "editors": null,
+          "electronic_editors": null,
+          "contributors": null,
+          "publication_date": null,
+          "retrieval_date": "2026-09-04",
+          "format": "TEI_XML",
+          "language": null,
+          "recension": null,
+          "rights_status": "UNKNOWN",
+          "license_url": null,
+          "url": "https://raw.githubusercontent.com/VedaWebProject/vedaweb-data/d3eb8af7324338161520d2d35eae8f7e985a19a5/rigveda/TEI/rv_book_08.tei",
+          "work_id": "VG:WORK:RV:SAK"
+        },
+        {
+          "artifact_id": "VEDAWEB.RV.BOOK09.TEI.D3EB8AF",
+          "title": "Rigveda - VedaWeb Version - Book 09",
+          "edition_title": "Rigveda Edition VedaWeb 2020",
+          "source_edition": null,
+          "editors": null,
+          "electronic_editors": null,
+          "contributors": null,
+          "publication_date": null,
+          "retrieval_date": "2026-09-04",
+          "format": "TEI_XML",
+          "language": null,
+          "recension": null,
+          "rights_status": "UNKNOWN",
+          "license_url": null,
+          "url": "https://raw.githubusercontent.com/VedaWebProject/vedaweb-data/d3eb8af7324338161520d2d35eae8f7e985a19a5/rigveda/TEI/rv_book_09.tei",
+          "work_id": "VG:WORK:RV:SAK"
+        },
+        {
+          "artifact_id": "VEDAWEB.RV.BOOK10.TEI.D3EB8AF",
+          "title": "Rigveda - VedaWeb Version - Book 10",
+          "edition_title": "Rigveda Edition VedaWeb 2020",
+          "source_edition": null,
+          "editors": null,
+          "electronic_editors": null,
+          "contributors": null,
+          "publication_date": null,
+          "retrieval_date": "2026-09-04",
+          "format": "TEI_XML",
+          "language": null,
+          "recension": null,
+          "rights_status": "UNKNOWN",
+          "license_url": null,
+          "url": "https://raw.githubusercontent.com/VedaWebProject/vedaweb-data/d3eb8af7324338161520d2d35eae8f7e985a19a5/rigveda/TEI/rv_book_10.tei",
+          "work_id": "VG:WORK:RV:SAK"
+        },
+        {
+          "artifact_id": "VEDAWEB.AVS.SANSKRIT.TITUS.PLAINTEXT",
+          "title": "Atharva-Veda Samhita Sanskrit, VedaWeb AVS resource",
+          "edition_title": null,
+          "source_edition": null,
+          "editors": null,
+          "electronic_editors": null,
+          "contributors": null,
+          "publication_date": null,
+          "retrieval_date": "2026-09-07",
+          "format": "JSON_API_PLAINTEXT",
+          "language": "sa-Latn",
+          "recension": "Shaunaka",
+          "rights_status": "PERMISSION_REQUIRED",
+          "license_url": null,
+          "url": "https://vedaweb.uni-koeln.de/api/contents?res=696f331f6f50da42570ad028",
+          "work_id": "VG:WORK:AV:SAU"
+        }
+      ]
+    },
+    {
+      "layer": "comparison",
+      "source_id": "VHP",
+      "name": "Vedic Heritage Portal",
+      "organization": "Indira Gandhi National Centre for the Arts, Ministry of Culture, Government of India",
+      "url": "https://vedicheritage.gov.in/",
+      "authority_tier": "PRIMARY_TRADITIONAL",
+      "rights_status": [
+        "PERMISSION_REQUIRED"
+      ],
+      "site_rights_status": "PERMISSION_REQUIRED",
+      "rights_url": "https://vedicheritage.gov.in/copyright-policy/",
+      "vedas": [
+        "RV"
+      ],
+      "contributes": "The Government of India's portal, consulted to check the recension and the hymn structure of the first mandala. Its material is not reproduced here.",
+      "evidence": "data/canonical/rigveda_full_v1/source_artifacts.jsonl",
+      "artifacts": [
+        {
+          "artifact_id": "VHP.RV.SHAKALA.MANDALA1.WEB",
+          "title": "Rigveda – Shakala Samhita – Mandala 01",
+          "edition_title": null,
+          "source_edition": null,
+          "editors": null,
+          "electronic_editors": null,
+          "contributors": null,
+          "publication_date": null,
+          "retrieval_date": null,
+          "format": "HTML_REFERENCE",
+          "language": "sa-Deva",
+          "recension": "Shakala",
+          "rights_status": "PERMISSION_REQUIRED",
+          "license_url": "https://vedicheritage.gov.in/copyright-policy/",
+          "url": "https://vedicheritage.gov.in/samhitas/rigveda/shakala-samhita/mandal-01/",
+          "work_id": "VG:WORK:RV:SAK"
+        }
+      ]
+    }
+  ],
+  "totals": {
+    "sources": 9,
+    "artifacts": 33,
+    "registered_sources": 18,
+    "registered_artifacts": 53
+  }
+}

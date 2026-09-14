@@ -1,0 +1,630 @@
+/* ============================================================================
+   The editorial pages: About, and Sources and method.
+
+   These are documents, not application surfaces, so the vocabulary is a
+   document's: one column at a reading measure, headings that step in size
+   rather than in weight, a rule where a printed page would have one, and a
+   marginal note where a printed page would have a marginal note.
+
+   The one structural idea worth naming is that a long document needs a spine.
+   Both pages carry a sticky contents rail on wide screens and an ordinary list
+   of links at the top on narrow ones; neither is a navigation component, and
+   neither moves under the reader.
+   ============================================================================ */
+
+.va-doc {
+    width: min(100% - (2 * var(--va-shell-gutter)), var(--va-shell-max));
+    margin-inline: auto;
+    padding-block: var(--va-space-3xl) var(--va-space-6xl);
+}
+
+/* ------------------------------------------------------------------ head -- */
+
+.va-doc-head {
+    max-width: var(--va-measure-wide);
+    margin-bottom: var(--va-space-4xl);
+    padding-bottom: var(--va-space-2xl);
+    border-bottom: var(--va-border-width) solid var(--va-line-strong);
+}
+
+.va-doc-eyebrow {
+    margin: 0 0 var(--va-space-md);
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-wide);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-doc-head h1 {
+    margin: 0;
+    max-width: var(--va-measure);
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-3xl);
+    font-weight: var(--va-weight-regular);
+    line-height: var(--va-leading-flat);
+    letter-spacing: var(--va-tracking-display);
+    font-optical-sizing: auto;
+    text-wrap: balance;
+}
+
+.va-doc-lede {
+    margin: var(--va-space-xl) 0 0;
+    max-width: var(--va-measure);
+    font-size: var(--va-text-lg);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-secondary);
+}
+
+/* ------------------------------------------------------------------ body -- */
+
+.va-doc-layout {
+    display: grid;
+    gap: var(--va-space-3xl);
+}
+
+@media (min-width: 70rem) {
+    .va-doc-layout {
+        grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+        gap: var(--va-space-6xl);
+        align-items: start;
+    }
+}
+
+/*
+ * The contents rail.
+ *
+ * Sticky on wide screens only. Below that it is a plain list above the prose, because a
+ * sticky element on a phone eats the viewport the document needs.
+ */
+.va-doc-contents {
+    margin-bottom: var(--va-space-2xl);
+}
+
+@media (min-width: 70rem) {
+    .va-doc-contents {
+        position: sticky;
+        top: calc(var(--va-header-height) + var(--va-space-xl));
+        margin-bottom: 0;
+    }
+}
+
+.va-doc-contents h2 {
+    margin: 0 0 var(--va-space-md);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-medium);
+    letter-spacing: var(--va-tracking-wide);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-doc-contents ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--va-space-2xs);
+    counter-reset: contents;
+}
+
+.va-doc-contents a {
+    display: grid;
+    grid-template-columns: 1.75rem minmax(0, 1fr);
+    gap: var(--va-space-xs);
+    padding-block: var(--va-space-2xs);
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-secondary);
+    text-decoration: none;
+    counter-increment: contents;
+}
+
+.va-doc-contents a::before {
+    content: counter(contents, decimal-leading-zero);
+    font-size: var(--va-text-2xs);
+    font-variant-numeric: tabular-nums;
+    color: var(--va-text-tertiary);
+    padding-top: 0.15em;
+}
+
+.va-doc-contents a:hover,
+.va-doc-contents a:focus-visible {
+    color: var(--va-accent-base);
+}
+
+/* ------------------------------------------------------------- prose -- */
+
+.va-doc-body > section {
+    margin-bottom: var(--va-space-5xl);
+    scroll-margin-top: calc(var(--va-header-height) + var(--va-space-xl));
+}
+
+.va-doc-body h2 {
+    margin: 0 0 var(--va-space-lg);
+    max-width: var(--va-measure);
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-2xl);
+    font-weight: var(--va-weight-regular);
+    line-height: var(--va-leading-tight);
+    letter-spacing: var(--va-tracking-tight);
+    text-wrap: balance;
+}
+
+.va-doc-body h3 {
+    margin: var(--va-space-2xl) 0 var(--va-space-sm);
+    max-width: var(--va-measure);
+    font-size: var(--va-text-lg);
+    font-weight: var(--va-weight-medium);
+    line-height: var(--va-leading-snug);
+}
+
+.va-doc-body p {
+    margin: 0 0 var(--va-space-lg);
+    max-width: var(--va-measure);
+    font-size: var(--va-text-reading);
+    line-height: var(--va-leading-prose);
+}
+
+.va-doc-body p:last-child {
+    margin-bottom: 0;
+}
+
+.va-doc-body a:not(.va-doc-action) {
+    color: inherit;
+    text-decoration-color: var(--va-accent-base);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+}
+
+.va-doc-body a:not(.va-doc-action):hover,
+.va-doc-body a:not(.va-doc-action):focus-visible {
+    color: var(--va-accent-base);
+}
+
+.va-doc-body ul:not([class]) {
+    margin: 0 0 var(--va-space-lg);
+    padding-left: var(--va-space-lg);
+    max-width: var(--va-measure);
+}
+
+.va-doc-body ul:not([class]) li {
+    margin-bottom: var(--va-space-sm);
+    font-size: var(--va-text-reading);
+    line-height: var(--va-leading-normal);
+}
+
+/* A lead paragraph that opens a section, one step up in size. */
+.va-doc-open {
+    font-size: var(--va-text-lg);
+    color: var(--va-text-strong);
+}
+
+/*
+ * The definition run: a short term and a sentence, repeated. Used for the evidence layers,
+ * the certainty grades and the relationship kinds, all of which are the same shape — a name
+ * a reader will meet elsewhere in the product, and what it means.
+ */
+.va-doc-terms {
+    display: grid;
+    gap: var(--va-space-xl);
+    margin: 0 0 var(--va-space-2xl);
+    padding: 0;
+    border-top: var(--va-rule-quiet);
+}
+
+.va-doc-terms > div {
+    display: grid;
+    gap: var(--va-space-2xs);
+    padding-top: var(--va-space-lg);
+}
+
+@media (min-width: 52rem) {
+    .va-doc-terms > div {
+        grid-template-columns: minmax(0, 13rem) minmax(0, 1fr);
+        gap: var(--va-space-xl);
+        align-items: baseline;
+    }
+}
+
+.va-doc-terms dt {
+    font-size: var(--va-text-base);
+    font-weight: var(--va-weight-medium);
+}
+
+.va-doc-terms dt small {
+    display: block;
+    margin-top: var(--va-space-3xs);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-regular);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-doc-terms dd {
+    margin: 0;
+    max-width: var(--va-measure);
+    font-size: var(--va-text-base);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-secondary);
+}
+
+.va-doc-terms dd code,
+.va-doc-body code {
+    font-family: var(--va-font-mono);
+    font-size: 0.9em;
+    padding: 0.1em 0.3em;
+    border-radius: var(--va-radius-xs);
+    background: var(--va-surface-sunk);
+}
+
+/* A worked example: the thing the section just explained, shown happening. */
+.va-doc-example {
+    margin: 0 0 var(--va-space-2xl);
+    padding: var(--va-space-xl);
+    background: var(--va-surface-sunk);
+    border-radius: var(--va-radius-sm);
+}
+
+.va-doc-example h3 {
+    margin: 0 0 var(--va-space-md);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-medium);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-doc-example p {
+    font-size: var(--va-text-base);
+    line-height: var(--va-leading-normal);
+}
+
+.va-doc-example dl {
+    display: grid;
+    gap: var(--va-space-md);
+    margin: 0;
+}
+
+@media (min-width: 40rem) {
+    .va-doc-example dl {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--va-space-lg) var(--va-space-2xl);
+    }
+}
+
+.va-doc-example dt {
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-doc-example dd {
+    margin: var(--va-space-3xs) 0 0;
+    font-size: var(--va-text-base);
+    line-height: var(--va-leading-snug);
+    font-variant-numeric: tabular-nums;
+}
+
+/* ---------------------------------------------------------- the sources -- */
+
+.va-source-layer {
+    margin-bottom: var(--va-space-4xl);
+}
+
+.va-source-layer > header {
+    margin-bottom: var(--va-space-xl);
+    padding-bottom: var(--va-space-md);
+    border-bottom: var(--va-border-width) solid var(--va-line-strong);
+}
+
+.va-source-layer h3 {
+    margin: 0;
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-xl);
+    font-weight: var(--va-weight-regular);
+}
+
+.va-source-layer > header p {
+    margin: var(--va-space-sm) 0 0;
+    max-width: var(--va-measure);
+    font-size: var(--va-text-base);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-secondary);
+}
+
+.va-source-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.va-source {
+    padding-block: var(--va-space-xl);
+    border-bottom: var(--va-rule-quiet);
+}
+
+@media (min-width: 62rem) {
+    .va-source {
+        display: grid;
+        grid-template-columns: minmax(0, 16rem) minmax(0, 1fr);
+        gap: var(--va-space-3xl);
+        align-items: start;
+    }
+}
+
+.va-source-name {
+    display: grid;
+    gap: var(--va-space-2xs);
+    align-content: start;
+}
+
+.va-source-name h4 {
+    margin: 0;
+    font-size: var(--va-text-md);
+    font-weight: var(--va-weight-medium);
+    line-height: var(--va-leading-snug);
+}
+
+.va-source-name a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--va-space-2xs);
+    font-size: var(--va-text-xs);
+    color: var(--va-text-secondary);
+}
+
+.va-source-id {
+    margin: 0;
+}
+
+.va-source-id code {
+    font-family: var(--va-font-mono);
+    font-size: var(--va-text-2xs);
+    letter-spacing: 0.02em;
+    color: var(--va-text-tertiary);
+}
+
+.va-source-org {
+    font-size: var(--va-text-xs);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-tertiary);
+}
+
+.va-source-vedas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--va-space-2xs);
+    margin-top: var(--va-space-2xs);
+}
+
+.va-source-vedas span {
+    padding: 0 var(--va-space-xs);
+    border: var(--va-border-hairline);
+    border-radius: var(--va-radius-pill);
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    color: var(--va-text-secondary);
+}
+
+.va-source-body > p {
+    margin: 0 0 var(--va-space-md);
+    max-width: var(--va-measure);
+    font-size: var(--va-text-base);
+    line-height: var(--va-leading-normal);
+}
+
+.va-source-terms {
+    margin: 0 0 var(--va-space-md);
+    font-size: var(--va-text-xs);
+    color: var(--va-text-secondary);
+}
+
+.va-source-terms b {
+    font-weight: var(--va-weight-medium);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+    margin-right: var(--va-space-2xs);
+}
+
+.va-source-artifacts {
+    margin: 0;
+}
+
+.va-source-artifacts summary {
+    font-size: var(--va-text-xs);
+    color: var(--va-text-secondary);
+    cursor: pointer;
+}
+
+.va-source-artifacts summary:hover {
+    color: var(--va-accent-base);
+}
+
+.va-source-artifacts ul {
+    list-style: none;
+    margin: var(--va-space-md) 0 0;
+    padding: 0;
+    display: grid;
+    gap: var(--va-space-md);
+    border-top: var(--va-rule-quiet);
+    padding-top: var(--va-space-md);
+}
+
+.va-source-artifacts li {
+    font-size: var(--va-text-xs);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-secondary);
+}
+
+.va-source-artifacts strong {
+    display: block;
+    font-size: var(--va-text-sm);
+    font-weight: var(--va-weight-regular);
+    color: var(--va-text-primary);
+}
+
+/*
+ * Artifact identifiers are long, dotted and unbreakable.
+ *
+ * `VEDAWEB.AVS.WHITNEY_LANMAN_1905.PLAINTEXT.L2` is 44 characters with no space in it, and a
+ * browser will not break on a full stop. At 390px it ran 19px past the column and was clipped,
+ * which loses the end of the id - the part that distinguishes one witness from another.
+ * `anywhere` rather than `break-word` because the latter only breaks a word that would
+ * otherwise overflow *on its own line*, and this one shares a line with the label.
+ */
+.va-source-artifacts code {
+    font-family: var(--va-font-mono);
+    font-size: 0.95em;
+    color: var(--va-text-tertiary);
+    overflow-wrap: anywhere;
+}
+
+.va-source-artifacts li,
+.va-source-artifacts strong {
+    overflow-wrap: anywhere;
+}
+
+/* ------------------------------------------------------------- the maker -- */
+
+/*
+ * The builder section.
+ *
+ * Set as a letter rather than as a profile: no portrait frame, no role badge, no metrics.
+ * A wider measure than the surrounding prose would make it a pull quote, and a narrower one
+ * would make it an aside; it gets the same measure as everything else and is marked only by
+ * a rule and by the first line being set in the display face.
+ */
+.va-maker {
+    padding-top: var(--va-space-2xl);
+    border-top: var(--va-border-width) solid var(--va-line-strong);
+}
+
+.va-maker-open {
+    max-width: var(--va-measure);
+    margin: 0 0 var(--va-space-lg);
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-xl);
+    font-weight: var(--va-weight-regular);
+    line-height: var(--va-leading-snug);
+    text-wrap: pretty;
+}
+
+.va-maker-sign {
+    margin-top: var(--va-space-xl);
+    font-size: var(--va-text-sm);
+    color: var(--va-text-secondary);
+}
+
+.va-maker-sign strong {
+    display: block;
+    font-family: var(--va-font-display);
+    font-size: var(--va-text-md);
+    font-weight: var(--va-weight-regular);
+    color: var(--va-text-primary);
+}
+
+/* --------------------------------------------------------- what it is not -- */
+
+.va-doc-negations {
+    list-style: none;
+    margin: 0 0 var(--va-space-lg);
+    padding: 0;
+    display: grid;
+    gap: var(--va-space-lg);
+    border-top: var(--va-rule-quiet);
+}
+
+.va-doc-negations li {
+    display: grid;
+    gap: var(--va-space-2xs);
+    padding-top: var(--va-space-lg);
+    max-width: var(--va-measure);
+}
+
+.va-doc-negations strong {
+    font-size: var(--va-text-md);
+    font-weight: var(--va-weight-medium);
+}
+
+.va-doc-negations span {
+    font-size: var(--va-text-base);
+    line-height: var(--va-leading-normal);
+    color: var(--va-text-secondary);
+}
+
+/* ----------------------------------------------------------- onward links -- */
+
+.va-doc-onward {
+    margin-top: var(--va-space-3xl);
+    padding-top: var(--va-space-xl);
+    border-top: var(--va-border-width) solid var(--va-line-strong);
+}
+
+.va-doc-onward h2 {
+    margin: 0 0 var(--va-space-lg);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-medium);
+    letter-spacing: var(--va-tracking-wide);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-doc-onward ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--va-space-lg);
+}
+
+@media (min-width: 52rem) {
+    .va-doc-onward ul {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--va-space-lg) var(--va-space-3xl);
+    }
+}
+
+.va-doc-onward a {
+    display: grid;
+    gap: var(--va-space-3xs);
+    color: inherit;
+    text-decoration: none;
+}
+
+.va-doc-onward strong {
+    font-size: var(--va-text-md);
+    font-weight: var(--va-weight-medium);
+    transition: var(--va-transition-colors);
+}
+
+.va-doc-onward span {
+    font-size: var(--va-text-sm);
+    color: var(--va-text-secondary);
+}
+
+.va-doc-onward a:hover strong,
+.va-doc-onward a:focus-visible strong {
+    color: var(--va-accent-base);
+}
+
+/* ------------------------------------------------------------- mobile -- */
+
+@media (max-width: 47.999rem) {
+    .va-doc {
+        width: min(100% - (2 * var(--va-space-lg)), var(--va-shell-max));
+        padding-block: var(--va-space-2xl) var(--va-space-5xl);
+    }
+
+    .va-doc-body p,
+    .va-doc-body ul:not([class]) li {
+        font-size: var(--va-text-md);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .va-doc-onward strong {
+        transition: none;
+    }
+}

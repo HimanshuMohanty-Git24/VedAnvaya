@@ -25,6 +25,7 @@ export type EntityProfile = S["EntityProfile"];
 export type RishiProfile = S["RishiProfile"];
 export type RitualsResponse = S["Paginated_RitualSummary_"];
 export type RitualProfile = S["RitualProfile"];
+export type RitualsInsight = S["RitualsInsightResponse"];
 export type FormulaFamily = S["FormulaFamilyDetail"];
 export type FormulaDiffusion = S["FormulaDiffusionResponse"];
 export type CrossVeda = S["CrossVedaMatrixResponse"];

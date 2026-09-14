@@ -65,6 +65,23 @@ const nextConfig: NextConfig = {
         const apiBase = process.env.VEDAGRAPH_API_URL ?? "http://127.0.0.1:8000";
         return [{ source: "/backend/:path*", destination: `${apiBase}/api/v1/:path*` }];
     },
+    /*
+     * Two names each for two surfaces, with one canonical address apiece.
+     *
+     * The Visualization Lab is at /visualizations because that is what the navigation slot
+     * reserved for it says, and /lab is the short name it gets called by. Sources and method
+     * are one page rather than two, because splitting them means a reader who wants to know
+     * where a verse came from lands on the page that explains evidence grades; /sources is
+     * canonical because five existing links already point there.
+     *
+     * Permanent rather than temporary: these are naming decisions, not a migration.
+     */
+    async redirects() {
+        return [
+            { source: "/lab", destination: "/visualizations", permanent: true },
+            { source: "/methodology", destination: "/sources", permanent: true },
+        ];
+    },
 };
 
 export default nextConfig;

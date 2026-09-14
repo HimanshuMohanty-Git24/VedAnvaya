@@ -32,6 +32,7 @@ const COLUMNS: { heading: string; links: { href: string; label: string }[] }[] =
         heading: "Follow",
         links: [
             { href: "/graph", label: "Knowledge graph" },
+            { href: "/visualizations", label: "Visualizations" },
             { href: "/devatas", label: "Deities" },
             { href: "/entities", label: "Entities" },
             { href: "/ask", label: "Ask VedAnvaya" },
@@ -41,8 +42,8 @@ const COLUMNS: { heading: string; links: { href: string; label: string }[] }[] =
         heading: "Check",
         links: [
             { href: "/limits", label: "What is not held" },
+            { href: "/sources", label: "Sources and method" },
             { href: "/insights", label: "Evidence and interpretation" },
-            { href: "/sources", label: "Sources and acknowledgements" },
             { href: "/about", label: "About the project" },
         ],
     },
