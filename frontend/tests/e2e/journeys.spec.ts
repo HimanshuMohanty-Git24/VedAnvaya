@@ -27,16 +27,26 @@ test.describe("journey 1 — home to a single mantra", () => {
         await page
             .getByRole("article")
             .filter({ hasText: "Rigveda Samhita" })
-            .getByRole("link", { name: /Open collection/ })
+            .getByRole("link", { name: /Read the Rigveda Samhita/ })
             .click();
         await expect(page).toHaveURL(/\/vedas\/rigveda$/);
 
-        // Native hierarchy, not a common template.
-        await expect(page.getByRole("heading", { name: /Browse by Mandala/ })).toBeVisible();
-
-        await page.getByRole("button", { name: /Expand RV 1$/ }).click();
-        await page.getByRole("button", { name: /Expand RV 1\.1$/ }).click();
-        await page.getByRole("link", { name: "RV 1.1.1", exact: true }).click();
+        /*
+         * Native hierarchy, not a common template - asserted where the product now says it.
+         *
+         * cabe44c rebuilt the finding aid as a level-by-level descent rather than an expanding
+         * tree. There is no "Browse by Mandala" heading any more (the heading is the generic
+         * "Index of the collection") and no "Expand RV 1" disclosure buttons; the corpus's own
+         * vocabulary is announced in `.va-findaid-level` at each level, which is a stronger
+         * place for it because it names the level the reader is actually standing on. The
+         * claim is unchanged: the Rigveda descends mandala, sukta, mantra under its own names.
+         */
+        await expect(page.locator(".va-findaid-level")).toContainText(/mandalas/i);
+        await page.locator(".va-structure button").first().click();
+        await expect(page.locator(".va-findaid-level")).toContainText(/suktas/i);
+        await page.locator(".va-structure button").first().click();
+        await expect(page.locator(".va-findaid-level")).toContainText(/mantras/i);
+        await page.locator('.va-structure a[href^="/passage/"]').first().click();
 
         await expect(page).toHaveURL(new RegExp(`/passage/${RV_1_1_1}`));
         await expect(page.getByRole("heading", { level: 1 })).toHaveText("RV 1.1.1");
@@ -54,7 +64,11 @@ test.describe("journey 2 — search Indra to a passage", () => {
         await deityRow.click();
 
         await expect(page).toHaveURL(/\/devatas\//);
-        await expect(page.getByRole("heading", { level: 1 })).toContainText("Indra");
+        /* cabe44c made the record's heading the transliterated Sanskrit name and gave the
+           English name its own line. `indraḥ` carries a dot-below, which is why
+           corpus-surfaces.spec.ts separately pins `.va-archive-name` to the reading face. */
+        await expect(page.locator(".va-archive-name")).toHaveText("indraḥ");
+        await expect(page.locator(".va-archive-english")).toContainText("Indra");
         await expect(page.getByRole("heading", { name: "Across the four Vedas" })).toBeVisible();
 
         await page.locator(".citation-list a").first().click();
@@ -192,7 +206,9 @@ test.describe("journey 4 — Soma as deity and as substance", () => {
 
     test("Agni the deity and fire the phenomenon stay apart", async ({ page }) => {
         await page.goto(`/devatas/${AGNI}`);
-        await expect(page.getByRole("heading", { level: 1 })).toHaveText("Agni");
+        // The heading is the Sanskrit name; the English one sits beside it. See journey 2.
+        await expect(page.locator(".va-archive-name")).toHaveText("agniḥ");
+        await expect(page.locator(".va-archive-english")).toHaveText("Agni");
         await expect(page.getByText("Two records, one word")).toBeVisible();
         await page.getByRole("link", { name: /fire \(agni\), the phenomenon/ }).click();
         await expect(page).toHaveURL(new RegExp(AGNI_FIRE));
@@ -216,7 +232,9 @@ test.describe("journey 5 — Atharvavedic healing", () => {
 
         await page.getByRole("link", { name: /fever/ }).first().click();
         await expect(page).toHaveURL(new RegExp(TAKMAN));
-        await expect(page.getByRole("heading", { level: 1 })).toContainText(/fever/i);
+        /* The heading is `takman`. That it is a fever is the gloss's job, and the gloss is
+           what a reader who does not know the word needs, so that is what is asserted. */
+        await expect(page.locator(".va-archive-english")).toContainText(/fever/i);
         await expect(page.locator(".condition-kind")).toContainText("Affliction");
     });
 
@@ -360,7 +378,10 @@ test.describe("journey 10 — the API is offline", () => {
             .getByRole("navigation", { name: "Primary" })
             .getByRole("link", { name: "Explore", exact: true })
             .click();
-        await expect(page.getByRole("heading", { level: 1 })).toContainText("Lenses");
+        // cabe44c reworded this heading from "Lenses" to name what the page offers.
+        await expect(page.getByRole("heading", { level: 1 })).toContainText(
+            /Five ways into the corpus/i,
+        );
     });
 
     test("an interactive request that fails says so without blaming the corpus", async ({
@@ -380,13 +401,24 @@ test.describe("knowledge-status regressions", () => {
         await page.goto("/vedas");
         const row = page.getByRole("article").filter({ hasText: "Samaveda" });
         await expect(row).toContainText(/gana collections/i);
+        /*
+         * Kept rather than relaxed, and the copy was corrected instead.
+         *
+         * cabe44c reworded this limit to "the gana collections are a parallel and larger
+         * body, and they are the reason the Samaveda is a distinct Veda", which describes the
+         * gana corpus without ever saying it is absent. On /vedas the sentence carries no
+         * heading to type the absence for it - it renders as a bare `.va-collection-limit`
+         * paragraph - and the same string is reused as the page's meta description, where it
+         * travels with no heading at all. A reader who is told only that the gana are large
+         * and constitutive infers that they are here.
+         */
         await expect(row).toContainText(/not included|not held/i);
 
         await page.goto("/vedas/samaveda");
         await expect(page.getByText("Gana collections are not included")).toBeVisible();
-        await expect(
-            page.getByText(/nothing in this product shows, notates or infers/i),
-        ).toBeVisible();
+        /* The melody disclaimer is pinned by its claim, not its sentence: cabe44c
+           deliberately reworded "nothing in this product" to "nothing here". */
+        await expect(page.getByText(/shows, notates or infers melody/i)).toBeVisible();
     });
 
     test("default deity analytics exclude ambiguous mentions", async ({ page }) => {

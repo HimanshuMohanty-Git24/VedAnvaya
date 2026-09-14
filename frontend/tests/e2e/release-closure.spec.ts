@@ -9,14 +9,37 @@ for (const width of [1440, 1024, 390]) {
 
         test("hierarchy controls remain large enough when branches expand", async ({ page }) => {
             await page.goto("/vedas/rigveda");
-            const expand = page.getByRole("button", { name: "Expand RV 1", exact: true });
-            const box = await expand.boundingBox();
+            /*
+             * The finding aid descends one level at a time.
+             *
+             * cabe44c replaced the "Expand RV 1" and "Expand RV 1.1" disclosure buttons this
+             * used to name with a level-by-level drill-down, so those accessible names no
+             * longer exist anywhere. The claim is unchanged, and it is the one that actually
+             * matters at 390px: every control in the descent is a real touch target at every
+             * level, and descending never pushes the page sideways.
+             */
+            const level = page.locator(".va-findaid-level");
+            await expect(level).toContainText(/mandalas/i);
+
+            const mandala = page.locator(".va-structure button").first();
+            const box = await mandala.boundingBox();
             expect(box!.width).toBeGreaterThanOrEqual(44);
             expect(box!.height).toBeGreaterThanOrEqual(44);
-            await expand.focus();
+
+            // Descended by keyboard, because a drill-down that only answers a mouse would be
+            // worse than the disclosure tree it replaced.
+            await mandala.focus();
             await page.keyboard.press("Enter");
-            await page.getByRole("button", { name: "Expand RV 1.1", exact: true }).click();
-            await expect(page.getByRole("link", { name: "RV 1.1.1", exact: true })).toBeVisible();
+            await expect(level).toContainText(/suktas/i);
+
+            const sukta = page.locator(".va-structure button").first();
+            const suktaBox = await sukta.boundingBox();
+            expect(suktaBox!.width).toBeGreaterThanOrEqual(44);
+            expect(suktaBox!.height).toBeGreaterThanOrEqual(44);
+            await sukta.click();
+
+            await expect(level).toContainText(/mantras/i);
+            await expect(page.locator('.va-structure a[href^="/passage/"]').first()).toBeVisible();
             expect(
                 await page.evaluate(() => document.documentElement.scrollWidth),
             ).toBeLessThanOrEqual(width);
@@ -24,7 +47,8 @@ for (const width of [1440, 1024, 390]) {
 
         test("Ask mode explanation stays readable outside the native select", async ({ page }) => {
             await page.goto("/ask");
-            const mode = page.getByRole("combobox", { name: /Retrieval mode/ });
+            // cabe44c shortened this control label from "Retrieval mode" to "Retrieval".
+            const mode = page.getByRole("combobox", { name: /Retrieval/ });
             await expect(mode).toHaveAccessibleDescription("Let the planner choose the channels");
             await expect(mode.locator("option:checked")).toHaveText("Automatic");
             await mode.selectOption("GRAPH");
@@ -37,16 +61,33 @@ for (const width of [1440, 1024, 390]) {
         });
 
         test("formula status keeps the shared badge typography", async ({ page }) => {
-            await page.goto(READER);
-            const normalSize = await page
-                .locator(".knowledge-status strong")
-                .first()
-                .evaluate((e) => getComputedStyle(e).fontSize);
+            /*
+             * Measured against another compact badge, not against the reader.
+             *
+             * This read the reader page's `.knowledge-status strong` as the reference for "the
+             * shared typography" and required the formula record to match it. The reader is
+             * the single surface that deliberately does not match: inside `.va-reader` the
+             * badge is restyled as an 11px uppercase eyebrow, while the shared component
+             * renders its compact variant at one size on /insights and on the formula record
+             * alike - both 12.48px when this was written. So the old assertion compared a
+             * deliberate exception against the rule, and then failed on the rule.
+             *
+             * Two compact badges outside the reader is the comparison that was intended: the
+             * same component looks the same everywhere it is not restyled on purpose. The
+             * size is still read rather than hard-coded, so this fails if either one drifts.
+             */
+            await page.goto("/insights");
+            const reference = page.locator(".knowledge-status.is-compact strong").first();
+            await expect(reference).toBeVisible();
+            const compactSize = await reference.evaluate((e) => getComputedStyle(e).fontSize);
+
             await page.goto("/formulas");
             await page.locator(".formula-list a").first().click();
-            const status = page.locator(".formula-stats .knowledge-status strong");
+            const status = page
+                .locator(".formula-stats .knowledge-status.is-compact strong")
+                .first();
             await expect(status).toBeVisible();
-            expect(await status.evaluate((e) => getComputedStyle(e).fontSize)).toBe(normalSize);
+            expect(await status.evaluate((e) => getComputedStyle(e).fontSize)).toBe(compactSize);
         });
 
         test("audio controls and supporting text stay accessible in both themes", async ({
@@ -191,9 +232,37 @@ test("every group colour meets AA on the surface it is drawn on, in both themes"
     }
 });
 
-test("incomplete Rigveda translation coverage is not rounded to 100 percent", async ({ page }) => {
+test("incomplete Rigveda translation coverage is never presented as complete", async ({ page }) => {
     await page.goto("/vedas");
     const rigveda = page.getByRole("article").filter({ hasText: "Rigveda Samhita" });
-    await expect(rigveda).toContainText("10,502 translated (99.5%)");
-    await expect(rigveda).not.toContainText("(100%)");
+    /*
+     * Restated for the figures the page now prints.
+     *
+     * This asserted the literal string "10,502 translated (99.5%)". cabe44c replaced the
+     * percentage with two absolute counts - Verses 10,552, Translated 10,502 - which removes
+     * the rounding hazard rather than concealing it, because two integers cannot round into
+     * one another. The claim is kept against the counts, and read off the page rather than
+     * hard-coded so it does not need editing every time the corpus grows: the translated
+     * figure is strictly short of the verse figure, and nothing on the row rounds that
+     * shortfall away into a claim of completeness.
+     */
+    const facts: Record<string, string> = await rigveda
+        .locator(".va-fact")
+        .evaluateAll((nodes) =>
+            Object.fromEntries(
+                nodes.map((node) => [
+                    node.querySelector("dt")?.textContent?.trim() ?? "",
+                    node.querySelector("dd")?.textContent?.trim() ?? "",
+                ]),
+            ),
+        );
+    const count = (value: string | undefined) => Number((value ?? "").replace(/[^0-9]/g, ""));
+
+    expect(count(facts.Verses), "the row prints no verse count").toBeGreaterThan(0);
+    expect(count(facts.Translated), "the row prints no translated count").toBeGreaterThan(0);
+    expect(
+        count(facts.Translated),
+        "the translated count has reached the verse count, which this corpus does not support",
+    ).toBeLessThan(count(facts.Verses));
+    await expect(rigveda).not.toContainText("100%");
 });

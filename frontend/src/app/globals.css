@@ -5606,7 +5606,8 @@ a.ask-entity:hover small {
 }
 
 .recitation-seek {
-    flex: 1 1 auto;
+    /* No `flex` here: the input is a grid item inside `.recitation-track`, so flex
+       properties on it are inert. The track carries the sizing. */
     min-width: 0;
     accent-color: var(--accent);
     height: 44px;
@@ -5734,7 +5735,17 @@ a.ask-entity:hover small {
         row-gap: 10px;
     }
 
-    .recitation-seek {
+    /*
+     * On the real flex item, not on the input.
+     *
+     * This rule used to name `.recitation-seek` and was dead from the moment the cadence
+     * motif was introduced: the input was wrapped in `.recitation-track`, so the slider is a
+     * grid item inside the transport's flex child rather than a flex child itself, and
+     * `order` and `flex-basis` do nothing to it. The visible consequence was the defect this
+     * rule exists to prevent - at 390px the seek control shared a row with the play button,
+     * the timecode and the speed select and measured 56px. See recitation-player.tsx.
+     */
+    .recitation-track {
         order: 4;
         flex-basis: 100%;
     }

@@ -298,9 +298,44 @@ test.describe("records", () => {
 
 /* -------------------------------------------------------------- not found - */
 
-test("a missing record gets the broken thread, not a blank page", async ({ page }) => {
-    const response = await page.goto("/passage/VG%3ANOT%3AHELD");
-    expect(response?.status()).toBe(404);
-    await expect(page.locator(".va-missing .va-thread.is-broken")).toBeVisible();
-    await expect(page.getByText(/not a statement about the Vedas/i)).toBeVisible();
-});
+/**
+ * Every route that can answer "not held", asserted on all of them rather than one.
+ *
+ * This started as a single assertion on `/passage`, and that is exactly what let the defect
+ * hide. The seven routes below all call `notFound()` after awaiting the record, and all seven
+ * were answering HTTP 200 with the broken-thread page drawn inside it - a soft 404, which
+ * tells a crawler, a link checker and an API client that a record exists when it does not.
+ * One route's worth of coverage reported one route's worth of the problem.
+ *
+ * The list is the complete set: `grep -rn "notFound()" src/app` returns these and nothing
+ * else. Keep them in step. The status is the load-bearing assertion here - the broken-thread
+ * UI was already correct on every one of them before the fix, so asserting only the markup
+ * would still pass today with the status wrong.
+ *
+ * The cause was a Suspense boundary above the existence check (a root `loading.tsx`, plus a
+ * segment-level one under `passage/[key]`), which commits the response before `notFound()`
+ * can be reached. The reasoning is written up in `src/app/not-found.tsx`.
+ */
+const MISSING_RECORDS = [
+    { what: "a passage", url: "/passage/VG%3ANOT%3AHELD" },
+    { what: "a deity", url: "/devatas/VG%3ADEVATA%3ANOT-HELD" },
+    { what: "an entity", url: "/entities/condition/VG%3ACONCEPT%3ANOT-HELD" },
+    { what: "a formula family", url: "/formula-families/VG%3AFF%3ANOT-HELD" },
+    { what: "a reuse record", url: "/reuse/VG%3ANOT%3AHELD" },
+    { what: "a rite", url: "/rituals/VG%3ARITUAL%3ANOT-HELD" },
+    { what: "a collection", url: "/vedas/not-a-veda" },
+];
+
+for (const { what, url } of MISSING_RECORDS) {
+    test(`${what} that is not held gets the broken thread and a 404`, async ({ page }) => {
+        const response = await page.goto(url);
+        expect(
+            response?.status(),
+            `${url} answered a soft 404: the broken thread over a success status. ` +
+                `A Suspense boundary above the existence check will do this - see ` +
+                `src/app/not-found.tsx.`,
+        ).toBe(404);
+        await expect(page.locator(".va-missing .va-thread.is-broken")).toBeVisible();
+        await expect(page.getByText(/not a statement about the Vedas/i)).toBeVisible();
+    });
+}
