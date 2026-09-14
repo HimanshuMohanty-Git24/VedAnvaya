@@ -8,6 +8,8 @@ import type { World, WorldLabels } from "@/lib/world/artifact";
 import type { WorldEngine } from "@/lib/world/engine";
 import { useGraphState } from "@/lib/world/graph-state";
 import { RENDERERS, RENDERER_COPY, VIEWS, VIEW_COPY } from "@/lib/world/modes";
+import { usePredicateSemantics } from "@/lib/world/predicates";
+import { RelationshipInspector } from "./relationship-inspector";
 import { PathTrace } from "./path-trace";
 import { PlanarView } from "./planar-view";
 import { WorldView, type WorldSelection } from "./world-view";
@@ -48,16 +50,60 @@ function fold(value: string) {
 
 type Hit = { index: number; label: string; group: string };
 
+/**
+ * How many subjects the non-visual alternative names before a reader has searched.
+ *
+ * The artifact's hub index holds six hundred, ordered by connectedness and with passages and
+ * reified records already held out of it. Sixty is enough to be a genuine way into the corpus and
+ * short enough to be read rather than skipped.
+ */
+const HUB_ALTERNATIVE_COUNT = 60;
+
 export function GraphShell() {
     const graph = useGraphState();
     const { state } = graph;
 
     const [world, setWorld] = useState<World | null>(null);
+    const predicates = usePredicateSemantics();
     const [labels, setLabels] = useState<WorldLabels | null>(null);
     const [engine, setEngine] = useState<WorldEngine | null>(null);
     const [selection, setSelection] = useState<WorldSelection | null>(null);
     const [query, setQuery] = useState(state.query ?? "");
     const [pathNodes, setPathNodes] = useState<number[]>([]);
+    const [pathHops, setPathHops] = useState<string[]>([]);
+    /*
+     * Where focus goes after a selection made from the keyboard.
+     *
+     * Measured before this: choosing a neighbour dropped focus to `<body>` on every hop, in both
+     * renderers, because the list is keyed by node index and React unmounts the focused button
+     * when the panel is rebuilt for the new subject. Neighbour traversal is the main keyboard
+     * route through the graph, so it lost the reader once per step. Focus is moved deliberately
+     * to the new subject's heading, which is also the right announcement.
+     */
+    const headingRef = useRef<HTMLHeadingElement>(null);
+    const moveFocus = useRef(false);
+    /*
+     * How much of the phone screen the subject panel is taking.
+     *
+     * Only meaningful at narrow widths, where the panel is a sheet at the foot. It opens
+     * collapsed so that choosing a subject does not bury it: the camera flies the selection to
+     * the middle of the canvas, and a half-height sheet sits exactly there.
+     */
+    /*
+     * How much of the canvas the chrome is sitting on.
+     *
+     * Measured from the live layout rather than assumed from the breakpoint, because the band's
+     * height depends on what is in it - in PATH it carries two fields and a paragraph of caveats,
+     * and a search with results is taller again. The camera uses this to frame a chosen subject
+     * into the part of the canvas a reader can actually see.
+     */
+    const [safeArea, setSafeArea] = useState({ top: 0, right: 0, bottom: 0, left: 0 });
+    const stageRef = useRef<HTMLDivElement>(null);
+
+    const [sheetState, setSheetState] = useState<{
+        at: string;
+        height: "collapsed" | "half" | "expanded";
+    } | null>(null);
     const [hintDismissed, setHintDismissed] = useState(false);
     const deferred = useDeferredValue(query);
     const appliedDeepLink = useRef(false);
@@ -91,6 +137,12 @@ export function GraphShell() {
         },
         [engine, labels, graph],
     );
+
+    /** Clearing the selection, without needing a node index to say "none". */
+    const selectNothing = useCallback(() => {
+        graph.select(null);
+        engine?.select(null);
+    }, [engine, graph]);
 
     const onReady = useCallback(
         (loaded: World, loadedLabels: WorldLabels, loadedEngine: WorldEngine) => {
@@ -155,12 +207,123 @@ export function GraphShell() {
         return world.manifest.constellations[region] ?? null;
     }, [selection, world]);
 
+    useEffect(() => {
+        if (!moveFocus.current) return;
+        moveFocus.current = false;
+        headingRef.current?.focus();
+    });
+
+
     /* The renderer decides which stage is shown; the view decides what it is showing. */
     const spatial = state.renderer === "3d";
+    /*
+     * Which relationship is being explained.
+     *
+     * Not in the URL: it is a reading aid attached to a subject the URL already names, not a
+     * place in the corpus you would send someone to.
+     *
+     * Stored with the state it was opened against and *derived* stale, rather than cleared by an
+     * effect watching the subject. An effect would be a second writer racing the first, and this
+     * file exists because four of those once disagreed about which view the reader was in.
+     */
+    const [inspected, setInspected] = useState<{ edge: number; at: string } | null>(null);
     const selectedIndex = indexOfId(state.node);
 
+    /* A relationship belongs to the subject and the view it was opened from. Move either and it
+       is no longer the thing on screen, so it simply stops being current. */
+    /* Derived against the subject it was raised for, so a new subject opens collapsed without an
+       effect racing the selection to reset it. */
+    const sheet = sheetState?.at === (state.node ?? "") ? sheetState.height : "collapsed";
+
+    const inspectedAt = `${state.node ?? ""}|${state.view}|${state.renderer}`;
+    const inspectedEdge = inspected?.at === inspectedAt ? inspected.edge : null;
+    const inspectEdge = useCallback(
+        (edge: number | null) => setInspected(edge === null ? null : { edge, at: inspectedAt }),
+        [inspectedAt],
+    );
+
+    /*
+     * Escape steps back out.
+     *
+     * The panel has up to forty-four focusable controls and had no dismissal at all, so a
+     * keyboard reader who opened a subject had to tab through the whole of it to reach anything
+     * else. The relationship explanation closes first, because it was opened last.
+     *
+     * Rebound whenever those change rather than reading them from refs: a listener that closes
+     * over a stale selection is the same class of bug as two effects disagreeing about state,
+     * and rebinding one key handler costs nothing.
+     */
+    useEffect(() => {
+        const onKeyDown = (event: KeyboardEvent) => {
+            if (event.key !== "Escape") return;
+            if (inspectedEdge !== null) {
+                inspectEdge(null);
+                return;
+            }
+            if (selection) selectNothing();
+        };
+        window.addEventListener("keydown", onKeyDown);
+        return () => window.removeEventListener("keydown", onKeyDown);
+    }, [inspectedEdge, inspectEdge, selection, selectNothing]);
+
+    /*
+     * Remeasured whenever the chrome can have changed size.
+     *
+     * A ResizeObserver on both pieces rather than a listener on the window: the band grows when
+     * a search returns results and the sheet grows when the reader raises it, and neither is a
+     * window resize. Only the top and bottom are reported - on a wide screen the panel is a rail
+     * on one side, and shifting the camera sideways for it would be worse than leaving it.
+     */
+    useEffect(() => {
+        const stage = stageRef.current;
+        if (!stage) return;
+
+        const measure = () => {
+            const bounds = stage.getBoundingClientRect();
+            if (bounds.width === 0 || bounds.height === 0) return;
+            const narrow = bounds.width < 768;
+            if (!narrow) {
+                setSafeArea((current) =>
+                    current.top === 0 && current.bottom === 0
+                        ? current
+                        : { top: 0, right: 0, bottom: 0, left: 0 },
+                );
+                return;
+            }
+            const heightOf = (selector: string) => {
+                const node = stage.querySelector(selector);
+                if (!node) return 0;
+                const box = node.getBoundingClientRect();
+                return box.height > 0 ? box.height : 0;
+            };
+            const next = {
+                top: Math.round(heightOf(".va-graph-chrome")),
+                right: 0,
+                bottom: Math.round(heightOf(".va-world-panel")),
+                left: 0,
+            };
+            setSafeArea((current) =>
+                current.top === next.top && current.bottom === next.bottom ? current : next,
+            );
+        };
+
+        measure();
+        const observer = new ResizeObserver(measure);
+        observer.observe(stage);
+        for (const selector of [".va-graph-chrome", ".va-world-panel"]) {
+            const node = stage.querySelector(selector);
+            if (node) observer.observe(node);
+        }
+        return () => observer.disconnect();
+    }, [selection, sheet, state.view]);
+
     return (
-        <div className="va-graph" data-renderer={state.renderer} data-view={state.view}>
+        <div
+            className="va-graph"
+            data-renderer={state.renderer}
+            data-view={state.view}
+            ref={stageRef}
+        >
             {/* The spatial engine is mounted once and kept mounted across every change. A
                 canvas that unmounts loses its context, its buffers and its camera, and a
                 renderer switch would mean a blank flash and a reload of a 2 MB artifact. */}
@@ -171,8 +334,11 @@ export function GraphShell() {
                     onRendererLost={(detail) =>
                         graph.reportRendererFailure("context-lost", detail)
                     }
+                    onInspectEdge={inspectEdge}
                     onSelect={setSelection}
+                    pathHops={pathHops}
                     pathNodes={pathNodes}
+                    safeArea={safeArea}
                     paused={!spatial}
                 />
             </div>
@@ -184,7 +350,7 @@ export function GraphShell() {
                         semantic levels here as in the spatial view. */}
                     <PlanarView
                         labels={labels}
-                        onInspectEdge={() => {}}
+                        onInspectEdge={inspectEdge}
                         onSelect={selectNode}
                         root={selectedIndex}
                         scope={state.view === "FOCUS" && selectedIndex !== null ? "focus" : "world"}
@@ -192,6 +358,69 @@ export function GraphShell() {
                     />
                 </div>
             )}
+
+            <RelationshipInspector
+                edge={inspectedEdge}
+                labels={labels}
+                onClose={() => inspectEdge(null)}
+                onSelect={(node) => {
+                    inspectEdge(null);
+                    selectNode(node);
+                }}
+                predicates={predicates}
+                world={world}
+            />
+
+            {/*
+             * What the canvas cannot say.
+             *
+             * The spatial canvas carried an `aria-label` promising "a searchable,
+             * keyboard-navigable list of the same nodes" and, with nothing selected, measurement
+             * found no list, no node buttons and no hidden text anywhere in the view - the list
+             * only existed once you had already found something. A screen reader met a search box
+             * and 35,370 unreachable subjects.
+             *
+             * The artifact ships an index of its most connected subjects for exactly this kind of
+             * question, so it is rendered as real links. Not the whole graph - thirty-five
+             * thousand list items would be its own kind of unusable - but a way in that exists
+             * before the reader has guessed a name.
+             */}
+            {!selection && world && labels && (
+                <div className="sr-only">
+                    <h2>The most connected subjects</h2>
+                    <p>
+                        {world.manifest.counts.nodes.toLocaleString("en-GB")} subjects are drawn on
+                        the map. These are the {HUB_ALTERNATIVE_COUNT} with the most connections;
+                        search above to reach any of the others.
+                    </p>
+                    <ul>
+                        {world.manifest.hubs.slice(0, HUB_ALTERNATIVE_COUNT).map((hub) => (
+                            <li key={hub}>
+                                <button onClick={() => selectNode(hub)} type="button">
+                                    {labels.labels[hub] || labels.ids[hub]}
+                                </button>
+                                , {world.manifest.groups[world.nodeGroup[hub]]},{" "}
+                                {world.nodeDegree[hub].toLocaleString("en-GB")} connections
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )}
+
+            {/*
+             * Selection, announced once.
+             *
+             * Choosing a subject replaces most of the page and, measured, said nothing at all -
+             * there was no live region anywhere in the view. This is deliberately one short
+             * sentence written only when the subject changes: an earlier region in this product
+             * announced a running clock every second, and the lesson taken from it was that a
+             * live region must carry an event, not a state.
+             */}
+            <p aria-live="polite" className="sr-only" role="status">
+                {selection
+                    ? `${selection.label || selection.id} selected. ${selection.degree.toLocaleString("en-GB")} recorded connections.`
+                    : ""}
+            </p>
 
             {/* ------------------------------------------------------ chrome - */}
 
@@ -288,7 +517,10 @@ export function GraphShell() {
                         from={state.from}
                         labels={labels}
                         onEndpoints={(from, to) => graph.setEndpoints(from, to)}
-                        onPathNodes={setPathNodes}
+                        onPathNodes={(nodes, hops) => {
+                            setPathNodes(nodes);
+                            setPathHops(hops);
+                        }}
                         to={state.to}
                         world={world}
                     />
@@ -319,11 +551,34 @@ export function GraphShell() {
             {/* ------------------------------------------------------- panel - */}
 
             {selection && (
-                <aside aria-label="The selected subject" className="va-world-panel">
-                    <p className="va-world-panel-kind">
-                        {GROUP_LABEL[selection.group] ?? selection.group}
-                    </p>
-                    <h2>{selection.label || selection.id}</h2>
+                <aside
+                    aria-label="The selected subject"
+                    className="va-world-panel"
+                    data-sheet={sheet}
+                >
+                    <button
+                        aria-expanded={sheet !== "collapsed"}
+                        className="va-world-sheet-handle"
+                        onClick={() =>
+                            setSheetState({
+                                at: state.node ?? "",
+                                height:
+                                    sheet === "collapsed"
+                                        ? "half"
+                                        : sheet === "half"
+                                          ? "expanded"
+                                          : "collapsed",
+                            })
+                        }
+                        type="button"
+                    >
+                        <p className="va-world-panel-kind">
+                            {GROUP_LABEL[selection.group] ?? selection.group}
+                        </p>
+                        <h2 ref={headingRef} tabIndex={-1}>
+                            {selection.label || selection.id}
+                        </h2>
+                    </button>
 
                     {constellation && (
                         <p className="va-world-region">
@@ -389,7 +644,13 @@ export function GraphShell() {
                             <ul>
                                 {neighbourRows.map((row) => (
                                     <li key={row.index}>
-                                        <button onClick={() => selectNode(row.index)} type="button">
+                                        <button
+                                            onClick={() => {
+                                                moveFocus.current = true;
+                                                selectNode(row.index);
+                                            }}
+                                            type="button"
+                                        >
                                             <span className="va-world-hit-name">{row.label}</span>
                                             <span className="va-world-hit-kind">
                                                 {GROUP_LABEL[row.group] ?? row.group}

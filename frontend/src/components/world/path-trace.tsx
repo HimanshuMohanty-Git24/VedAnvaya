@@ -95,7 +95,15 @@ export function PathTrace({
     to: string | null;
     onEndpoints: (from: string | null, to: string | null) => void;
     /** Node indices along the route, so the spatial view can frame and emphasise them. */
-    onPathNodes: (nodes: number[]) => void;
+    /**
+     * The route, as node indices, and the phrase for each step between them.
+     *
+     * The phrases are sent with the route rather than looked up again by the canvas, because the
+     * service already resolved them from the same curated table the artifact was exported from.
+     * Re-deriving them from the artifact would mean matching an API hop back to an edge index and
+     * could disagree with the list the reader is looking at.
+     */
+    onPathNodes: (nodes: number[], hops: string[]) => void;
 }) {
     const [outcome, setOutcome] = useState<Outcome | null>(null);
     /*
@@ -120,7 +128,7 @@ export function PathTrace({
 
     useEffect(() => {
         if (!from || !to) {
-            onPathNodes([]);
+            onPathNodes([], []);
             return;
         }
         const controller = new AbortController();
@@ -136,7 +144,7 @@ export function PathTrace({
                     // searches. It is not an error and must not be reported as one.
                     if (response.status === 404) {
                         setOutcome({ kind: "NONE" });
-                        onPathNodes([]);
+                        onPathNodes([], []);
                         return;
                     }
                     throw new Error("The route could not be traced.");
@@ -152,7 +160,10 @@ export function PathTrace({
                     const indices = ids
                         .map((id) => labels.ids.indexOf(id))
                         .filter((index) => index >= 0);
-                    onPathNodes(indices);
+                    onPathNodes(
+                        indices,
+                        path.hops.map((hop) => hop.relationship.label),
+                    );
                 }
             } catch (reason) {
                 if (controller.signal.aborted) return;
@@ -161,7 +172,7 @@ export function PathTrace({
                     message:
                         reason instanceof Error ? reason.message : "The route could not be traced.",
                 });
-                onPathNodes([]);
+                onPathNodes([], []);
             }
         })();
         return () => controller.abort();

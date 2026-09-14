@@ -427,11 +427,36 @@
 /* ------------------------------------------------------------ responsive - */
 
 @media (max-width: 47.99rem) {
+    /*
+     * The chrome becomes a band, and the band is what scrolls.
+     *
+     * Floating over the map it had a transparent background, so its prose was set directly on
+     * the edges underneath; and in PATH it overflowed its own height - measured at 878 against
+     * a 716 box - with `overflow-y: visible` inside a clipped stage, so the caveats and the
+     * dismiss control sat below the screen with no way to reach them. The nested `.va-path`
+     * scroller could not help: its content and its box were the same height, so it never had
+     * anything to scroll.
+     *
+     * Opaque, bounded, and scrollable at this level fixes all three at once.
+     */
     .va-graph-chrome {
-        inset-block-start: var(--va-space-lg);
-        inset-inline-start: var(--va-space-lg);
-        inset-inline-end: var(--va-space-lg);
+        inset-block-start: 0;
+        inset-inline: 0;
         max-width: none;
+        max-height: 45dvh;
+        padding: var(--va-space-lg);
+        gap: var(--va-space-md);
+        background: var(--va-surface-page);
+        border-block-end: var(--va-border-width) solid var(--va-line-strong);
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        /* Opaque now, so it must stop taps as well as light. */
+        pointer-events: auto;
+    }
+
+    /* The band is the scroller; this nested one never had anything to scroll. */
+    .va-path {
+        overflow: visible;
     }
 
     .va-graph-head h1 {
@@ -443,23 +468,71 @@
     }
 }
 
-/* ------------------------------------------------- homepage continuity - */
-
-/* The canvas is a way into the graph, so it says so with the cursor. */
-.va-constellation-canvas {
-    cursor: pointer;
-}
-
 /*
- * "Open the world here", shown only while a subject is under the pointer.
+ * Touch targets, without changing what anything looks like.
  *
- * It sits inside the readout that already names the hovered thing rather than becoming a
- * second label, so the panel gains an affordance without gaining another element.
+ * Measured at 390x844, nothing in the graph chrome or the panel reached 44x44: the renderer
+ * buttons were 14x23, the view buttons about 30x26, the panel's links 24 tall. Growing the ink
+ * would turn a set of typographic controls into a row of buttons and lose the whole look, so the
+ * ink stays where it is and an invisible 44px target is centred on it.
  */
-.va-constellation-kind em {
-    margin-inline-start: var(--va-space-sm);
-    font-style: normal;
-    color: var(--va-accent-text);
+@media (pointer: coarse) {
+    .va-graph-modes,
+    .va-graph-modes.is-renderer {
+        /* Load-bearing: at the previous 12px gap the 3D and 2D overlays overlapped by 18px and
+           the later one in the DOM stole part of the earlier one's target. */
+        gap: var(--va-space-2xl);
+    }
+
+    .va-graph-modes button,
+    .va-graph-notice button,
+    .va-graph-hint button {
+        position: relative;
+    }
+
+    .va-graph-modes button::after,
+    .va-graph-notice button::after,
+    .va-graph-hint button::after {
+        content: "";
+        position: absolute;
+        inset-block-start: 50%;
+        inset-inline-start: 50%;
+        width: max(100%, 44px);
+        height: 44px;
+        transform: translate(-50%, -50%);
+    }
+
+    [dir="rtl"] .va-graph-modes button::after,
+    [dir="rtl"] .va-graph-notice button::after,
+    [dir="rtl"] .va-graph-hint button::after {
+        transform: translate(50%, -50%);
+    }
+
+    .va-world-hits button,
+    .va-world-neighbours button,
+    .va-path-go {
+        padding-block: var(--va-space-md);
+    }
+
+    .va-world-find input,
+    .va-path-fields input {
+        padding-block: var(--va-space-md);
+    }
+
+    /* A ruled list of full-width rows rather than inline links: the same treatment the facts and
+       the neighbour rows already use, so it reads as consistent rather than as enlarged. */
+    .va-world-ways {
+        gap: 0;
+        margin-top: 0;
+        justify-items: stretch;
+    }
+
+    .va-world-ways a,
+    .va-world-ways button {
+        width: 100%;
+        padding-block: var(--va-space-md);
+        border-bottom: var(--va-rule-quiet);
+    }
 }
 
 /* ------------------------------------------------- theme transition - */

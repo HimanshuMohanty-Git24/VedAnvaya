@@ -171,6 +171,73 @@ function buildAdjacency(nodeCount: number, edgePairs: Uint32Array) {
     return { adjacencyStart: start, adjacency };
 }
 
+/**
+ * Assemble a world in memory, from arrays rather than from the packed file.
+ *
+ * The homepage preview is the reason. It shows fifty real nodes cut from this same artifact,
+ * and the way to guarantee it looks like the graph is to make it *be* the graph: build a small
+ * `World` and hand it to the same `WorldEngine`. One renderer, one set of shaders, one sizing
+ * rule, one palette. A second preview renderer would have started identical and diverged on the
+ * first change to either - which is precisely how the teaser this replaces ended up with its own
+ * shapes and its own colours.
+ *
+ * Everything that carries a claim is required rather than defaulted. `edgeType` in particular:
+ * filling it with zeros would have every edge assert it is `edgeTypes[0]`, and an edge that
+ * confidently names the wrong relationship is worse than one that names none. Where a caller
+ * genuinely has no node types it passes an empty `types` array, so `nodeType[i]` indexes nothing
+ * and reads as absent instead of as the first entry.
+ *
+ * A node with no region is 65535, the same sentinel the packed file uses, so downstream code
+ * cannot tell the two kinds of world apart.
+ */
+export function composeWorld(input: {
+    groups: string[];
+    types: string[];
+    edgeTypes: string[];
+    positions: Float32Array;
+    nodeGroup: Uint8Array;
+    nodeDegree: Uint16Array;
+    edgePairs: Uint32Array;
+    edgeType: Uint8Array;
+}): World {
+    const nodes = input.nodeGroup.length;
+    const edges = input.edgePairs.length / 2;
+    const { adjacencyStart, adjacency } = buildAdjacency(nodes, input.edgePairs);
+    let maxDegree = 0;
+    for (let i = 0; i < nodes; i += 1) maxDegree = Math.max(maxDegree, input.nodeDegree[i]);
+
+    return {
+        manifest: {
+            version: 2,
+            generated: "",
+            source: { nodes, edges },
+            counts: { nodes, edges },
+            extent: 1000,
+            ticks: 0,
+            // Every edge in a composed world is semantic: the structural backbone is not cut
+            // from the artifact, so there is no range above which meaning stops.
+            semanticEdges: edges,
+            groups: input.groups,
+            types: input.types,
+            edgeTypes: input.edgeTypes,
+            sections: [],
+            hubs: [],
+            maxDegree,
+        },
+        positions: input.positions,
+        nodeType: new Uint8Array(nodes),
+        nodeGroup: input.nodeGroup,
+        nodeDegree: input.nodeDegree,
+        nodeRegion: new Uint16Array(nodes).fill(65535),
+        edgePairs: input.edgePairs,
+        edgeType: input.edgeType,
+        // No regions, so no edge can bridge two of them.
+        edgeBridge: new Uint8Array(edges),
+        adjacencyStart,
+        adjacency,
+    };
+}
+
 export async function loadWorld(signal?: AbortSignal): Promise<World> {
     const [manifestResponse, binaryResponse] = await Promise.all([
         fetch("/world/world.json", { signal }),

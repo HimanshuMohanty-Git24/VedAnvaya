@@ -2,7 +2,8 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import Image from "next/image";
 import Link from "next/link";
-import { ConstellationPanel } from "@/components/home/constellation-panel";
+import { WorldPreviewPanel } from "@/components/home/world-preview-panel";
+import type { HeroSlice } from "@/components/home/world-preview";
 import { Action, Heading, Kicker, Section, SectionRule } from "@/components/home/sections";
 import { ServiceUnavailable } from "@/components/empty-state";
 import {
@@ -23,7 +24,7 @@ import {
  * failure mode of a long marketing page is that every section becomes a heading, a
  * paragraph and three cards, and the reader stops seeing sections at all. Here the ledger is
  * a table, the recitation figures are bars, the cross-Veda material is the live matrix, the
- * constellation is full-bleed, the featured verse is a plate, and the closing list is a
+ * world preview is full-bleed, the featured verse is a plate, and the closing list is a
  * contents page. No two neighbours are shaped alike.
  *
  * Every figure on the page is read from the API at request time. None is hard-coded, with
@@ -61,10 +62,8 @@ type Passage = {
 /** One row of `/works`, once the optional list has been narrowed. */
 type Collection = NonNullable<WorksResponse["items"]>[number];
 
-type ConstellationSlice = {
-    nodes: Array<{ id: string; type: string; label: string; deity: boolean; degree: number }>;
-    edges: Array<{ s: string; t: string; p: string }>;
-};
+/** The hero's slice of the world artifact. Built by `scripts/build-home-world.mjs`. */
+type WorldSlice = HeroSlice;
 
 /** A recension whose ordinary name promises more than this build holds. */
 const NOT_HELD: Record<string, string> = {
@@ -124,22 +123,22 @@ const START_HERE = [
 const number = (value: number | null | undefined) =>
     typeof value === "number" ? value.toLocaleString("en-GB") : null;
 
-async function readConstellation(): Promise<ConstellationSlice | null> {
+async function readWorldSlice(): Promise<WorldSlice | null> {
     /*
      * Read from disk rather than fetched over HTTP. It is a build artifact that ships in
      * `public/`, so on the server the file is already there; fetching it from our own origin
      * would add a network round trip to render a file we are sitting on.
      */
     try {
-        const file = path.join(process.cwd(), "public", "data", "home-constellation.json");
-        return JSON.parse(await readFile(file, "utf8")) as ConstellationSlice;
+        const file = path.join(process.cwd(), "public", "data", "home-world.json");
+        return JSON.parse(await readFile(file, "utf8")) as WorldSlice;
     } catch {
         return null;
     }
 }
 
 export default async function Home() {
-    const [works, stats, audio, capabilities, diffusion, featured, opening, constellation] =
+    const [works, stats, audio, capabilities, diffusion, featured, opening, worldSlice] =
         await Promise.all([
             load<WorksResponse>("/works"),
             load<Stats>("/stats"),
@@ -148,7 +147,7 @@ export default async function Home() {
             load<FormulaDiffusion>("/insights/formula-diffusion"),
             load<Passage>(`/passages/${encoded("VG:RV:SAK:M10:S129:V007")}`),
             load<Passage>(`/passages/${encoded("VG:RV:SAK:M01:S001:V001")}`),
-            readConstellation(),
+            readWorldSlice(),
         ]);
 
     if (!works.ok || !stats.ok) {
@@ -177,7 +176,7 @@ export default async function Home() {
                 collections={collections.length}
                 recitations={recitations}
                 verses={verses}
-                constellation={constellation}
+                world={worldSlice}
             />
 
             <Ledger collections={collections} recited={recited} />
@@ -209,12 +208,12 @@ function Hero({
     collections,
     recitations,
     verses,
-    constellation,
+    world,
 }: {
     collections: number;
     recitations: number | null;
     verses: number | null;
-    constellation: ConstellationSlice | null;
+    world: WorldSlice | null;
 }) {
     /*
      * The signal line is institutional proof, not a growth metric, so it is set at the size
@@ -258,7 +257,7 @@ function Hero({
                 </div>
 
                 <div className="va-hero-figure">
-                    <ConstellationPanel slice={constellation} />
+                    <WorldPreviewPanel slice={world} />
                 </div>
             </div>
         </section>

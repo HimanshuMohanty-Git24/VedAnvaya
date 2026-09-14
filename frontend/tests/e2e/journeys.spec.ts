@@ -63,86 +63,103 @@ test.describe("journey 2 — search Indra to a passage", () => {
     });
 });
 
+/** Relationship labels live in a reused pool; the inline opacity is what makes one current. */
+async function shownLabels(page: import("@playwright/test").Page) {
+    return page.evaluate(() =>
+        [...document.querySelectorAll(".va-edge-label")]
+            .filter((node) => (node as HTMLElement).style.opacity === "1")
+            .map((node) => node.textContent ?? ""),
+    );
+}
+
 test.describe("journey 3 — graph to evidence", () => {
-    test("select a relationship and read why it exists", async ({ page }) => {
-        await page.goto(`/graph?node=${INDRA}`);
-        await expect(page.locator(".graph-canvas canvas").first()).toBeVisible();
-        await expect(page.locator(".graph-legend .legend-chip").first()).toBeVisible();
+    /*
+     * Rewritten against the current graph.
+     *
+     * These assertions used to drive the Cytoscape explorer - `.graph-canvas`, `.legend-chip`,
+     * `.graph-node-list` - which has been deleted twice over. The claims they protected are not
+     * about that component and they outlive it: a reader must be able to see what a connection
+     * *is*, find out what it does and does not establish, and reach all of it without clicking a
+     * one-pixel line on a canvas.
+     */
+    const GRAPH = `/graph?view=focus&renderer=2d&node=${INDRA}`;
 
-        // Every edge is reachable from the node list without clicking the canvas.
-        await page.getByRole("group", { name: /Show or hide entity kinds/ }).waitFor();
+    test("every visible connection says what kind of relationship it is", async ({ page }) => {
+        await page.goto(GRAPH);
+        /* The pool is allocated at the cap and slots are reused, so an unused span is an empty
+           element with no box. Visibility is carried by the inline opacity, not by the DOM. */
+        await expect
+            .poll(async () => (await shownLabels(page)).length, { timeout: 30_000 })
+            .toBeGreaterThan(0);
+        const shown = await shownLabels(page);
 
-        // Drive the evidence panel through a real relationship id from the API.
-        const edgeId = await page.evaluate(async () => {
-            const response = await fetch(
-                `/backend/graph/neighborhood/${encodeURIComponent("VG:DEVATA:INDRAH")}?depth=1&limit_per_type=4`,
-            );
-            const data = await response.json();
-            return data.edges[0].id as string;
-        });
-        expect(edgeId).toBeTruthy();
-
-        const explanation = await page.evaluate(async (id: string) => {
-            const response = await fetch(`/backend/graph/relationships/${encodeURIComponent(id)}`);
-            return response.json();
-        }, edgeId);
-        expect(explanation.why).toBeTruthy();
-
-        // The canvas renders the same edges the API returned.
-        const nodeCount = await page.locator(".graph-node-list li").count();
-        expect(nodeCount).toBeGreaterThan(0);
+        // Words, not predicate tokens. The curated phrasing differs from a mechanical
+        // humanisation on 44 of 57 predicates, so an underscore here means the wrong source.
+        for (const phrase of shown) {
+            expect(phrase).not.toMatch(/_/);
+            expect(phrase).toMatch(/[a-z]/);
+        }
     });
 
-    test("the evidence panel is reachable without touching the canvas", async ({ page }) => {
-        await page.goto(`/graph?node=${INDRA}`);
-        const relationship = page.locator(".selected-relationships button").first();
-        await expect(relationship).toBeVisible();
-        await relationship.click();
+    test("a relationship explains what it does not establish", async ({ page }) => {
+        await page.goto(GRAPH);
+        await expect
+            .poll(async () => (await shownLabels(page)).length, { timeout: 30_000 })
+            .toBeGreaterThan(0);
+        const labels = page.locator('.va-edge-label[data-pickable="true"]');
+        const count = await labels.count();
+        for (let i = 0; i < count; i += 1) {
+            const label = labels.nth(i);
+            if ((await label.evaluate((node) => (node as HTMLElement).style.opacity)) !== "1") {
+                continue;
+            }
+            await label.click();
+            break;
+        }
 
-        const drawer = page.getByRole("dialog");
-        await expect(drawer).toBeVisible();
-        await expect(drawer.getByText("Why are these connected?")).toBeVisible();
-        await expect(drawer.getByRole("heading", { name: "Why" })).toBeVisible();
-        await expect(drawer.getByText("How it was established")).toBeVisible();
+        const inspector = page.locator(".va-relationship");
+        await expect(inspector).toBeVisible();
+        // The half a reader is most often missing, and the reason this panel exists at all.
+        await expect(inspector.getByText("What it does not establish")).toBeVisible();
+        await expect(inspector.locator(".va-relationship-phrase")).not.toBeEmpty();
 
-        // Internal grades stay behind progressive disclosure.
-        const technical = drawer.locator("details.evidence-technical");
-        await expect(technical).toBeVisible();
-        await expect(technical).not.toHaveAttribute("open", "");
-
-        await drawer.getByRole("button", { name: "Close the evidence panel" }).click();
-        await expect(page.getByRole("dialog")).toHaveCount(0);
+        await inspector.getByRole("button", { name: "Close the relationship" }).click();
+        await expect(page.locator(".va-relationship")).toHaveCount(0);
     });
 
-    test("an ascription descriptor is never presented as a deity", async ({ page }) => {
-        await page.goto(`/graph?node=${encodeURIComponent("VG:DEVATA:ASAMATIH")}`);
-        const nodeType = page.locator(".node-type");
-        await expect(nodeType).toBeVisible();
-        await expect(nodeType).not.toHaveText("deity");
-        await expect(
-            page.getByText(/was not resolved as a deity|excluded from deity analytics/i),
-        ).toBeVisible();
+    test("the connections are reachable without touching the canvas", async ({ page }) => {
+        await page.goto(GRAPH);
+        const connections = page.locator(".va-world-neighbours button");
+        await expect(connections.first()).toBeVisible({ timeout: 30_000 });
+        expect(await connections.count()).toBeGreaterThan(0);
     });
 
     test("the graph never renders internal bookkeeping nodes", async ({ page }) => {
-        await page.goto(`/graph?node=${INDRA}`);
-        await page.locator(".graph-node-list summary").click();
-        const labels = await page.locator(".graph-node-list li span").allTextContents();
-        for (const label of labels) {
+        await page.goto(GRAPH);
+        const rows = page.locator(".va-world-neighbours .va-world-hit-name");
+        await expect(rows.first()).toBeVisible({ timeout: 30_000 });
+        for (const label of await rows.allTextContents()) {
             expect(label.toLowerCase()).not.toMatch(
                 /qaissue|qa issue|source artifact|text version|internal/,
             );
         }
     });
 
-    test("expansion stays bounded and says what it held back", async ({ page }) => {
-        await page.goto(`/graph?node=${INDRA}`);
-        const bounds = page.locator(".graph-bounds");
-        await expect(bounds).toContainText(/shown of \d+ loaded/);
-        await expect(bounds).toContainText(/Only a bounded sample is drawn/);
-        await expect(
-            page.getByRole("heading", { name: /Held back to keep this readable/ }),
-        ).toBeVisible();
+    test("an ascription descriptor is never presented as a deity", async ({ page }) => {
+        await page.goto(
+            `/graph?view=focus&renderer=2d&node=${encodeURIComponent("VG:DEVATA:ASAMATIH")}`,
+        );
+        const kind = page.locator(".va-world-panel-kind");
+        await expect(kind).toBeVisible({ timeout: 30_000 });
+        await expect(kind).not.toHaveText(/^deity$/i);
+    });
+
+    test("the connection list says how much of the whole it is showing", async ({ page }) => {
+        await page.goto(GRAPH);
+        const heading = page.locator(".va-world-neighbours h3");
+        await expect(heading).toBeVisible({ timeout: 30_000 });
+        // Indra has 7,347 connections and the panel shows a few dozen; saying so is the point.
+        await expect(heading).toContainText(/\d+ of [\d,]+/);
     });
 });
 
@@ -480,10 +497,28 @@ test.describe("accessibility sanity", () => {
     });
 
     test("the graph exposes a textual equivalent of the canvas", async ({ page }) => {
-        await page.goto(`/graph?node=${INDRA}`);
-        const canvas = page.getByRole("img", { name: /Knowledge graph showing/ });
-        await expect(canvas).toBeVisible();
-        await expect(canvas).toHaveAttribute("aria-label", /textual list of the same nodes/);
+        /*
+         * The canvas claims a list exists beside it. Measured before this phase, with nothing
+         * selected there was no list, no node buttons and no hidden text anywhere in the view -
+         * the promise was only kept once the reader had already found something, which is the
+         * one case where they did not need it.
+         */
+        await page.goto("/graph?view=world&renderer=3d");
+        const canvas = page.locator("canvas.va-world-canvas");
+        await expect(canvas).toBeVisible({ timeout: 30_000 });
+
+        const alternative = page.getByRole("heading", { name: /most connected subjects/i });
+        await expect(alternative).toBeAttached({ timeout: 30_000 });
+        const subjects = page.locator(".va-graph .sr-only li button");
+        expect(await subjects.count()).toBeGreaterThan(20);
+
+        /* Selecting from it has to work, or it is a description rather than an equivalent -
+           and it is exercised by keyboard, because that is the only way anyone reaches it. The
+           list is visually hidden, so a pointer click is intercepted by the canvas over it,
+           which is correct rather than a defect. */
+        await subjects.first().focus();
+        await page.keyboard.press("Enter");
+        await expect(page.locator(".va-world-panel")).toBeVisible();
     });
 });
 

@@ -212,9 +212,9 @@
     border-bottom-color: var(--va-text-primary);
 }
 
-/* ------------------------------------------------------------ constellation - */
+/* ------------------------------------------------------------ world preview - */
 
-.va-constellation-panel {
+.va-world-preview-panel {
     position: relative;
     /*
      * The palm-leaf proportion, from the Archive Plates artwork and from the object itself.
@@ -226,14 +226,10 @@
     overflow: hidden;
     background: var(--va-night-800);
     border: var(--va-border-width) solid var(--va-night-line-strong);
-    --va-constellation-ink: #b8b1a0;
-    --va-constellation-line: #3a3b33;
-    --va-constellation-accent: #c9694f;
-    --va-constellation-gold: #b49a62;
 }
 
-.va-constellation,
-.va-constellation-canvas {
+.va-world-preview,
+.va-world-preview-canvas {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -241,12 +237,17 @@
     display: block;
 }
 
+/* A way into the graph, so it says so with the cursor. */
+.va-world-preview-canvas {
+    cursor: pointer;
+}
+
 /*
  * The readout sits over the field, so it carries its own scrim. Without one it collided with
- * the node labels on a narrow panel, where the text wraps to two lines and the field has
+ * the subject names on a narrow panel, where the text wraps to two lines and the field has
  * nowhere to move to.
  */
-.va-constellation-readout {
+.va-world-preview-readout {
     position: absolute;
     inset-inline: 0;
     bottom: 0;
@@ -260,20 +261,34 @@
     pointer-events: none;
 }
 
-.va-constellation-name {
+.va-world-preview-name {
     font-family: var(--va-font-display);
     font-size: var(--va-text-lg);
     color: #efe9dc;
 }
 
-.va-constellation-kind {
+.va-world-preview-kind {
     font-size: var(--va-text-2xs);
     letter-spacing: var(--va-tracking-eyebrow);
     text-transform: uppercase;
     color: #8f887a;
 }
 
-.va-constellation-link {
+/* The flat fallback offers its own way through, since it cannot be clicked into. */
+.va-world-preview-kind button {
+    pointer-events: auto;
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    color: var(--va-accent-text);
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.va-world-preview-link {
     position: absolute;
     top: var(--va-space-lg);
     inset-inline-end: var(--va-space-lg);
@@ -289,12 +304,12 @@
     transition: var(--va-transition-colors);
 }
 
-.va-constellation-link:hover {
+.va-world-preview-link:hover {
     color: #f4f0e7;
     border-color: #57584d;
 }
 
-.va-constellation-absent {
+.va-world-preview-absent {
     position: absolute;
     inset: 0;
     margin: 0;
@@ -1052,12 +1067,12 @@
         font-size: var(--va-text-md);
     }
 
-    .va-constellation-readout {
+    .va-world-preview-readout {
         padding-inline: var(--va-space-md);
         font-size: var(--va-text-2xs);
     }
 
-    .va-constellation-panel {
+    .va-world-preview-panel {
         aspect-ratio: 4 / 3;
     }
 

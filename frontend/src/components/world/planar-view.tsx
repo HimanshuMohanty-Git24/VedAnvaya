@@ -2,7 +2,16 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { World, WorldLabels } from "@/lib/world/artifact";
+import { EdgeLabelView } from "@/lib/world/edge-label-view";
+import {
+    LABEL_FRACTIONS,
+    LABEL_STRIDE,
+    edgeLabelBudget,
+    pickEdgeLabels,
+    type EdgeLabelPick,
+} from "@/lib/world/edge-labels";
 import { GROUP_NAMES, useGraphPalette, type GraphPalette } from "@/lib/world/palette";
+import { usePredicateSemantics } from "@/lib/world/predicates";
 import { buildWorldProjection } from "@/lib/world/planar";
 import {
     buildNeighbourhood,
@@ -49,7 +58,19 @@ export function PlanarView({
     onInspectEdge: (edge: number | null) => void;
 }) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const stageRef = useRef<HTMLDivElement>(null);
     const graphRef = useRef<PlanarGraph | null>(null);
+    /* Relationship labels, drawn by the same module the spatial view uses. Everything about
+       them - the cap, the collision rule, the hysteresis, the words - is shared, so the two
+       renderers cannot come to different conclusions about what a subject is attached to. */
+    const labelViewRef = useRef<EdgeLabelView | null>(null);
+    const labelSubjectRef = useRef<number | null>(null);
+    const picksRef = useRef<EdgeLabelPick[]>([]);
+    const planarEdgeRef = useRef<Map<number, number>>(new Map());
+    const pointsRef = useRef<Float32Array>(new Float32Array(0));
+    const namedBoxesRef = useRef<
+        Array<{ key: number; text: string; x: number; y: number; width: number; height: number }>
+    >([]);
     /*
      * The palette is a subscription, not a snapshot.
      *
@@ -59,12 +80,17 @@ export function PlanarView({
      * outline around every name, which is the precise look this product is built to avoid.
      */
     const palette = useGraphPalette();
+    const predicates = usePredicateSemantics();
+    const predicatesRef = useRef(predicates);
+    const inspectRef = useRef(onInspectEdge);
     /* The paint function reads this from inside the frame loop, which is outside React, so
        the current value is mirrored into a ref - in an effect, not during render. */
     const paletteRef = useRef<GraphPalette | null>(null);
     useEffect(() => {
         paletteRef.current = palette;
-    }, [palette]);
+        predicatesRef.current = predicates;
+        inspectRef.current = onInspectEdge;
+    }, [palette, predicates, onInspectEdge]);
     const viewRef = useRef({ x: 0, y: 0, scale: 1, vx: 0, vy: 0 });
     const dragRef = useRef<{
         kind: "node" | "canvas";
@@ -230,6 +256,16 @@ export function PlanarView({
             }
         }
 
+        /* Boxes the relationship labels must not land on, filled as the names are drawn. */
+        const namedBoxes: Array<{
+            key: number;
+            text: string;
+            x: number;
+            y: number;
+            width: number;
+            height: number;
+        }> = [];
+
         /* Labels: the subject, its hovered neighbour, and the busiest of the first ring. */
         if (labels) {
             const named = graph.nodes
@@ -255,9 +291,120 @@ export function PlanarView({
                 context.lineJoin = "round";
                 context.strokeText(text, x, y);
                 context.fillText(text, x, y);
+                const measured = context.measureText(text).width;
+                const lineHeight = strong ? 16 : 13;
+                namedBoxes.push({
+                    key: -1,
+                    text: "",
+                    x,
+                    y: y - lineHeight / 2,
+                    width: measured,
+                    height: lineHeight,
+                });
             }
         }
-    }, [labels]);
+
+        /*
+         * What each connection is.
+         *
+         * The subject is whatever the pointer is on, or the root when it is on nothing - the
+         * same precedence the spatial view uses, so moving between renderers does not change
+         * which connections are being explained.
+         *
+         * The choice of which to name is recomputed only when that subject changes. It depends
+         * on the graph, not on the camera; only the positions are per-frame, and those are an
+         * affine transform of coordinates this function already has.
+         */
+        const labelView = labelViewRef.current;
+        if (labelView) {
+            const subject = hovered ?? (graph.rootId === null ? null : graph.index.get(graph.rootId) ?? null);
+
+            if (subject !== labelSubjectRef.current) {
+                labelSubjectRef.current = subject;
+                if (subject === null) {
+                    picksRef.current = [];
+                    labelView.setLabels([]);
+                } else {
+                    /* Only the connections this diagram actually drew are eligible. The
+                       neighbourhood is capped at two rings, so a subject has edges in the
+                       artifact that are not lines on this canvas, and naming one of those would
+                       put a phrase beside a line it does not belong to. */
+                    const drawn = new Map<number, number>();
+                    graph.edges.forEach((planarEdge, i) => {
+                        if (planarEdge.a === subject || planarEdge.b === subject) {
+                            drawn.set(planarEdge.edge, i);
+                        }
+                    });
+                    planarEdgeRef.current = drawn;
+                    const picks = pickEdgeLabels(
+                        world,
+                        predicatesRef.current,
+                        graph.nodes[subject].id,
+                        edgeLabelBudget(width),
+                        [...drawn.keys()],
+                    );
+                    picksRef.current = picks;
+                    pointsRef.current = new Float32Array(picks.length * LABEL_STRIDE);
+                    labelView.setLabels(picks);
+                }
+            }
+
+            const picks = picksRef.current;
+            if (picks.length > 0) {
+                const points = pointsRef.current;
+                picks.forEach((pick, i) => {
+                    const base = i * LABEL_STRIDE;
+                    const planarIndex = planarEdgeRef.current.get(pick.edge);
+                    if (planarIndex === undefined) {
+                        points[base] = 0;
+                        return;
+                    }
+                    const edge = graph.edges[planarIndex];
+                    /* Oriented from the subject outward, so the fractions mean the same thing
+                       here as they do in the spatial view: a label slides away from the thing
+                       being described, not away from whichever end the artifact stored first. */
+                    const from = edge.a === subject ? graph.nodes[edge.a] : graph.nodes[edge.b];
+                    const to = edge.a === subject ? graph.nodes[edge.b] : graph.nodes[edge.a];
+                    const ax = toScreenX(from.x);
+                    const ay = toScreenY(from.y);
+                    const bx = toScreenX(to.x);
+                    const by = toScreenY(to.y);
+                    LABEL_FRACTIONS.forEach((t, f) => {
+                        points[base + 1 + f * 2] = ax + (bx - ax) * t;
+                        points[base + 2 + f * 2] = ay + (by - ay) * t;
+                    });
+                    // This projection is affine, so unlike the spatial one there is no point
+                    // that can land behind the viewer. Everything it produces is usable.
+                    points[base] = 1;
+                });
+                namedBoxesRef.current = namedBoxes;
+                labelView.update(points, { width, height });
+            }
+        }
+    }, [labels, world]);
+
+    /* The overlay outlives individual neighbourhoods; only its contents change. */
+    useEffect(() => {
+        const stage = stageRef.current;
+        if (!stage) return;
+        const view = new EdgeLabelView(
+            stage,
+            edgeLabelBudget(stage.clientWidth),
+            (edge) => inspectRef.current(edge),
+            // Filled during the draw pass, where the names' boxes are already known.
+            () => namedBoxesRef.current,
+        );
+        labelViewRef.current = view;
+        return () => {
+            labelViewRef.current = null;
+            view.destroy();
+        };
+    }, []);
+
+    /* A new neighbourhood invalidates whatever was being named in the last one. */
+    useEffect(() => {
+        labelSubjectRef.current = null;
+    }, [root, scope]);
 
     /* -------------------------------------------------------------- loop - */
 
@@ -413,7 +560,7 @@ export function PlanarView({
     };
 
     return (
-        <div className="va-planar">
+        <div className="va-planar" ref={stageRef}>
             <canvas
                 aria-label="The selected subject and its connections as a diagram. The same connections are listed beside it."
                 className="va-planar-canvas"

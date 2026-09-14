@@ -12,14 +12,6 @@
  * is a title, a way in by name, and a panel that does not exist until something is chosen.
  * ========================================================================= */
 
-.va-world-stage {
-    position: relative;
-    /* The shell header is fixed; the stage takes the rest of the viewport exactly, so the
-       canvas never causes a page scroll. */
-    height: calc(100dvh - var(--va-header-height));
-    overflow: hidden;
-    background: var(--va-surface-page);
-}
 
 .va-world,
 .va-world-canvas {
@@ -44,38 +36,9 @@
  * paper, so it needs no scrim; giving it one would be the first floating panel, and the
  * second is always easier than the first.
  */
-.va-world-chrome {
-    position: absolute;
-    inset-block-start: var(--va-space-2xl);
-    inset-inline-start: var(--va-space-2xl);
-    display: grid;
-    gap: var(--va-space-lg);
-    max-width: 22rem;
-    pointer-events: none;
-}
 
-.va-world-chrome > * {
-    pointer-events: auto;
-}
 
-.va-world-kicker {
-    margin: 0 0 var(--va-space-2xs);
-    font-family: var(--va-font-ui);
-    font-size: var(--va-text-2xs);
-    font-weight: var(--va-weight-semibold);
-    letter-spacing: var(--va-tracking-eyebrow);
-    text-transform: uppercase;
-    color: var(--va-text-tertiary);
-}
 
-.va-world-head h1 {
-    margin: 0;
-    font-family: var(--va-font-display);
-    font-size: var(--va-text-2xl);
-    font-weight: var(--va-weight-regular);
-    line-height: var(--va-leading-flat);
-    color: var(--va-text-primary);
-}
 
 .va-world-find input {
     width: 100%;
@@ -294,16 +257,86 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    /* Paper showing through the letterforms is what keeps these legible over a dense cloud
-       without a box or a drop shadow behind each one. */
-    text-shadow:
-        0 0 3px var(--va-surface-page),
-        0 0 6px var(--va-surface-page);
+    /*
+     * An opaque plate, not a glow.
+     *
+     * This was a `text-shadow` halo in the page colour, on the theory that paper showing through
+     * the letterforms keeps a name legible without a box behind it. Measured per pixel against
+     * the real backdrop, twelve of sixteen visible names came in under 4.5:1, several near
+     * 1.8:1, and for six of them the whole glyph box failed. The halo works over empty space and
+     * does nothing at all where a label sits on the node it names - which is exactly where
+     * labels sit. A blur cannot guarantee a contrast ratio; a fill can.
+     */
+    padding: 1px 5px;
+    border-radius: var(--va-radius-xs);
+    background: var(--va-surface-page);
+    color: var(--va-text-primary);
 }
 
 .va-world-label.is-strong {
     font-size: var(--va-text-md);
     color: var(--va-text-primary);
+    border: var(--va-border-width) solid var(--va-line-strong);
+}
+
+/* ----------------------------------------------------- relationship labels - */
+
+/*
+ * What each connection is, written on the connection.
+ *
+ * The graph could always show that two subjects were joined and never what joined them, which
+ * makes a line a decoration. These carry the predicate's curated phrase - "is ascribed to the
+ * seer", not "HAS_RISHI" - taken from the same table the API serves, and sit at the midpoint of
+ * the drawn line.
+ *
+ * Set apart from the subject names on purpose: smaller, in the interface face rather than the
+ * reading face, and in the accent. A relationship is an annotation on the diagram, and if it
+ * were set like a name the eye would read the fifty words on screen as fifty more subjects.
+ */
+.va-edge-labels {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    /* Above the subject names: a phrase half-covered by a name it belongs to is worse than a
+       name half-covered by the phrase explaining it. */
+    z-index: 2;
+}
+
+.va-edge-label {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    padding: 1px 5px;
+    max-width: 14rem;
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    line-height: 1.25;
+    letter-spacing: var(--va-tracking-tight);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--va-accent-text);
+    background: var(--va-surface-page);
+    border: var(--va-border-width) solid var(--va-line-hairline);
+    border-radius: var(--va-radius-xs);
+    /* Placement decides whether a label is shown; the fade only stops it appearing abruptly.
+       Transitioning opacity alone keeps this off the main thread. */
+    transition: opacity var(--va-duration-fast) var(--va-ease-standard);
+}
+
+/* The ruler is measured, never seen. Out of flow so measuring costs no visible layout. */
+.va-edge-label.is-measuring {
+    visibility: hidden;
+    inset-block-start: -9999px;
+    max-width: none;
+    transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .va-edge-label {
+        transition: none;
+    }
 }
 
 /* ---------------------------------------------------------------- panel - */
@@ -400,24 +433,224 @@
 /* ------------------------------------------------------------ responsive - */
 
 @media (max-width: 47.99rem) {
-    .va-world-chrome {
-        inset-block-start: var(--va-space-lg);
-        inset-inline-start: var(--va-space-lg);
-        max-width: calc(100% - 2 * var(--va-space-lg));
-    }
-
-    /* The panel becomes a sheet at the foot. A 22rem rail on a 390px screen is the screen. */
+    /*
+     * The panel becomes a sheet at the foot, in three heights.
+     *
+     * A 22rem rail on a 390px screen is the screen. But the floating version was worse than
+     * that suggests: measured, the selected subject is flown to the centre of the canvas at
+     * y 455, and the sheet occupied y 390 to 829, so the thing the reader had just chosen was
+     * underneath the panel describing it. Along the vertical centre line only 122 unbroken
+     * pixels were canvas at all.
+     *
+     * Three states rather than one height. It opens collapsed - a name and its kind, and the
+     * map - and is raised by the reader when they want the detail. The surface is
+     * `--va-surface-raised` rather than `--va-surface-page` because the page colour is exactly
+     * what the canvas clears to, so at any opacity it read as a hole rather than as a sheet.
+     */
     .va-world-panel {
-        inset-block: auto var(--va-space-lg);
-        inset-inline: var(--va-space-lg);
+        inset-block: auto 0;
+        inset-inline: 0;
         width: auto;
-        max-height: 52dvh;
+        max-height: none;
+        height: var(--va-sheet-height, 44dvh);
+        padding: var(--va-space-lg) var(--va-space-lg) var(--va-space-2xl);
+        background: var(--va-surface-raised);
+        overscroll-behavior: contain;
         border-inline-start: 0;
         border-block-start: var(--va-border-width-accent) solid var(--va-accent-base);
+    }
+
+    .va-world-panel[data-sheet="collapsed"] {
+        --va-sheet-height: 7.5rem;
+        padding-block-end: var(--va-space-lg);
+    }
+
+    .va-world-panel[data-sheet="half"] {
+        --va-sheet-height: 44dvh;
+    }
+
+    .va-world-panel[data-sheet="expanded"] {
+        --va-sheet-height: calc(100% - var(--va-space-6xl));
+    }
+
+    /* The heading is the handle. No new furniture: the name you are reading is the control. */
+    .va-world-sheet-handle {
+        display: block;
+        width: 100%;
+        padding: 0;
+        border: 0;
+        background: none;
+        text-align: start;
+        cursor: pointer;
     }
 
     .va-world-hover,
     .va-world-stats {
         display: none;
+    }
+}
+
+/*
+ * A relationship label is a target, not just a caption.
+ *
+ * The line it names is one pixel wide in a spatial scene; the word on it is a comfortable
+ * click. So the word is what opens the explanation, and it says so on hover.
+ */
+.va-edge-label[data-pickable="true"] {
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+.va-edge-label[data-pickable="true"]:hover {
+    color: var(--va-text-inverse);
+    background: var(--va-accent-base);
+    border-color: var(--va-accent-base);
+}
+
+/* ------------------------------------------------- relationship inspector - */
+
+/*
+ * What one line means, opened by clicking its name.
+ *
+ * Placed at the foot of the stage rather than beside the subject panel, because the two answer
+ * different questions and stacking them would make the second look like a section of the first.
+ * The panel says what this subject is; this says what one of its connections claims.
+ *
+ * Solid paper with a rule, not a floating translucent card: the same surface the rest of the
+ * atlas is printed on, brought forward by an accent rule rather than by a shadow.
+ */
+.va-relationship {
+    position: absolute;
+    inset-block-end: var(--va-space-2xl);
+    inset-inline-start: var(--va-space-2xl);
+    z-index: 3;
+    width: min(32rem, calc(100% - var(--va-space-4xl)));
+    padding: var(--va-space-lg);
+    background: var(--va-surface-raised);
+    border: var(--va-border-width) solid var(--va-line-strong);
+    border-block-start: var(--va-border-width-accent) solid var(--va-accent-base);
+    border-radius: var(--va-radius-xs);
+}
+
+.va-relationship-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--va-space-md);
+}
+
+.va-relationship-kind {
+    margin: 0;
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-relationship-close {
+    padding: var(--va-space-3xs) 0;
+    border: 0;
+    background: none;
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+    cursor: pointer;
+    transition: var(--va-transition-colors);
+}
+
+.va-relationship-close:hover {
+    color: var(--va-accent-text);
+}
+
+/* The claim, set as a sentence so it reads as one rather than as three fields. */
+.va-relationship-statement {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--va-space-2xs) var(--va-space-sm);
+    margin: var(--va-space-sm) 0 0;
+}
+
+.va-relationship-statement button {
+    padding: 0;
+    border: 0;
+    border-bottom: var(--va-border-width) solid var(--va-line-strong);
+    background: none;
+    font-family: var(--va-font-iast);
+    font-size: var(--va-text-lg);
+    color: var(--va-text-primary);
+    cursor: pointer;
+    transition: var(--va-transition-colors);
+}
+
+.va-relationship-statement button:hover {
+    color: var(--va-accent-text);
+    border-bottom-color: var(--va-accent-base);
+}
+
+.va-relationship-phrase {
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-accent-text);
+}
+
+.va-relationship-facts {
+    margin: var(--va-space-md) 0 0;
+    display: grid;
+    gap: var(--va-space-2xs);
+}
+
+.va-relationship-facts dt {
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-tertiary);
+}
+
+.va-relationship-facts dd {
+    margin: 0 0 var(--va-space-sm);
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-secondary);
+}
+
+.va-relationship-uncurated {
+    margin: var(--va-space-md) 0 0;
+    font-size: var(--va-text-sm);
+    line-height: var(--va-leading-snug);
+    color: var(--va-text-secondary);
+}
+
+.va-relationship-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--va-space-2xs) var(--va-space-md);
+    margin: var(--va-space-sm) 0 0;
+    padding-block-start: var(--va-space-sm);
+    border-block-start: var(--va-rule-quiet);
+    font-size: var(--va-text-2xs);
+    color: var(--va-text-tertiary);
+}
+
+.va-relationship-meta > span:first-child {
+    font-family: var(--va-font-mono);
+}
+
+@media (max-width: 47.99rem) {
+    .va-relationship {
+        inset-block-end: 0;
+        inset-inline: 0;
+        width: auto;
+        border-inline: 0;
+        border-block-end: 0;
+        border-radius: 0;
     }
 }

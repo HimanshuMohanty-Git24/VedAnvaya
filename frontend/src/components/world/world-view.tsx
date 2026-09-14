@@ -9,8 +9,16 @@ import {
     type World,
     type WorldLabels as WorldLabelData,
 } from "@/lib/world/artifact";
+import { EdgeLabelView } from "@/lib/world/edge-label-view";
+import {
+    LABEL_STRIDE,
+    edgeLabelBudget,
+    pickEdgeLabels,
+    type EdgeLabelPick,
+} from "@/lib/world/edge-labels";
 import { WorldEngine, type EngineStats } from "@/lib/world/engine";
 import { useGraphPalette } from "@/lib/world/palette";
+import { usePredicateSemantics } from "@/lib/world/predicates";
 import { WorldLabels } from "./world-labels";
 
 /**
@@ -37,7 +45,10 @@ export function WorldView({
     onReady,
     initialNodeId,
     pathNodes,
+    pathHops,
     onRendererLost,
+    onInspectEdge,
+    safeArea,
     paused = false,
 }: {
     onSelect?: (selection: WorldSelection | null) => void;
@@ -46,13 +57,26 @@ export function WorldView({
     initialNodeId?: string | null;
     /** Node indices along a traced route, emphasised and framed together. */
     pathNodes?: number[];
+    /** The phrase for each step of that route, from the service that traced it. */
+    pathHops?: string[];
     /** Raised only on a real renderer failure, never on a slow frame. */
     onRendererLost?: (detail: string) => void;
+    /** Canvas edges covered by chrome, so the camera frames into what is actually visible. */
+    safeArea?: { top?: number; right?: number; bottom?: number; left?: number };
+    /** A relationship label was clicked. The index is into the world edge arrays. */
+    onInspectEdge?: (edge: number) => void;
     /** True while another renderer is the visible one. The scene is kept, not drawn. */
     paused?: boolean;
 }) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const stageRef = useRef<HTMLDivElement>(null);
     const engineRef = useRef<WorldEngine | null>(null);
+    /* The edge-label overlay and the three buffers it needs. All refs: these are written and
+       read inside the frame loop, where a state update would be a re-render per frame. */
+    const labelViewRef = useRef<EdgeLabelView | null>(null);
+    const picksRef = useRef<EdgeLabelPick[]>([]);
+    const segmentsRef = useRef<Uint32Array>(new Uint32Array(0));
+    const pointsRef = useRef<Float32Array>(new Float32Array(0));
     const worldRef = useRef<World | null>(null);
     const labelsRef = useRef<WorldLabelData | null>(null);
     /* Also held in state: the label layer and the hover caption read these during
@@ -71,14 +95,17 @@ export function WorldView({
     const [neighbours, setNeighbours] = useState<number[]>([]);
     const [labelsReady, setLabelsReady] = useState(0);
     const palette = useGraphPalette();
+    const predicates = usePredicateSemantics();
     /* The engine is built once, so the newest palette and failure handler travel through refs
        rather than through the construction effect's dependency list. */
     const paletteRef = useRef(palette);
     const lostRef = useRef(onRendererLost);
+    const inspectRef = useRef(onInspectEdge);
     const pausedRef = useRef(paused);
     useEffect(() => {
         paletteRef.current = palette;
         lostRef.current = onRendererLost;
+        inspectRef.current = onInspectEdge;
         pausedRef.current = paused;
     });
 
@@ -133,6 +160,21 @@ export function WorldView({
                             onSelect?.(described);
                         },
                         onStats: setStats,
+                        /*
+                         * Label positions are written here, after the render, because that is
+                         * when the camera's matrices are current - and they are written to the
+                         * DOM directly rather than to state, so sixty frames a second of
+                         * movement costs no reconciliation.
+                         */
+                        onFrame: () => {
+                            const view = labelViewRef.current;
+                            const segments = segmentsRef.current;
+                            if (!view || segments.length === 0 || !engine) return;
+                            view.update(
+                                engine.projectSegmentPoints(segments, pointsRef.current),
+                                engine.viewport(),
+                            );
+                        },
                     },
                 });
                 engineRef.current = engine;
@@ -148,6 +190,29 @@ export function WorldView({
                  * exists to help.
                  */
                 engine.setPaused(pausedRef.current);
+                if (stageRef.current) {
+                    labelViewRef.current = new EdgeLabelView(
+                        stageRef.current,
+                        edgeLabelBudget(engine.viewport().width),
+                        (edge) => inspectRef.current?.(edge),
+                        () => {
+                            const stage = stageRef.current;
+                            if (!stage) return [];
+                            const origin = stage.getBoundingClientRect();
+                            return [...stage.querySelectorAll(".va-world-label")].map((node) => {
+                                const box = node.getBoundingClientRect();
+                                return {
+                                    key: -1,
+                                    text: "",
+                                    x: box.left - origin.left,
+                                    y: box.top - origin.top,
+                                    width: box.width,
+                                    height: box.height,
+                                };
+                            });
+                        },
+                    );
+                }
                 engine.start();
                 const startedEngine = engine;
                 setEngine(engine);
@@ -197,6 +262,8 @@ export function WorldView({
             controller.abort();
             reduced.removeEventListener("change", onMotionChange);
             observer?.disconnect();
+            labelViewRef.current?.destroy();
+            labelViewRef.current = null;
             engine?.dispose();
             engineRef.current = null;
         };
@@ -208,6 +275,10 @@ export function WorldView({
     useEffect(() => {
         engineRef.current?.setPaused(paused);
     }, [paused]);
+
+    useEffect(() => {
+        engineRef.current?.setSafeArea(safeArea ?? {});
+    }, [safeArea]);
 
     /* A theme change rewrites the buffers rather than rebuilding the scene. Recreating the
        renderer would drop the camera, the selection and a two-megabyte artifact along with it. */
@@ -230,16 +301,139 @@ export function WorldView({
         if (pathNodes && pathNodes.length > 1) current.fitNodes(pathNodes);
     }, [pathNodes]);
 
+    /*
+     * Naming the connections under the pointer.
+     *
+     * The subject whose edges are named is the selected one if there is one, and the hovered one
+     * otherwise - the same precedence the engine uses to decide whose edges to draw, because the
+     * words have to be about the lines that are on screen.
+     *
+     * Recomputed only when that subject changes. Which sixteen connections are worth naming does
+     * not depend on where the camera is; only where the words go does, and that is done per frame
+     * in `onFrame` without touching React.
+     */
+    useEffect(() => {
+        const view = labelViewRef.current;
+        const engine = engineRef.current;
+        const world = worldRef.current;
+        if (!view || !engine || !world) return;
+
+        /*
+         * A traced route names its own steps.
+         *
+         * In PATH the drawn lines are the hops, not a subject's neighbourhood, so the labels
+         * describe those and the words come from the service that found the route. The keys are
+         * negative, which is how the inspector knows these are hops rather than artifact edges:
+         * a hop is not one edge in the world file, and the explanation for each is already set
+         * out in the list beside the canvas.
+         */
+        if (pathNodes && pathNodes.length > 1) {
+            const steps = pathNodes.length - 1;
+            const picks: EdgeLabelPick[] = [];
+            const pairs: number[] = [];
+            for (let i = 0; i < steps; i += 1) {
+                const text = pathHops?.[i] ?? "";
+                /* A step with no phrase is skipped here rather than filtered afterwards: the
+                   points buffer is indexed in step with `picks`, so removing an entry from one
+                   and not the other would put every later label on the wrong line. */
+                if (!text) continue;
+                pairs.push(pathNodes[i], pathNodes[i + 1]);
+                picks.push({
+                    edge: -1 - i,
+                    other: pathNodes[i + 1],
+                    outgoing: true,
+                    predicate: "",
+                    text,
+                    // Earlier steps first, so a long route loses its tail rather than its head.
+                    priority: 1 - i / steps,
+                });
+            }
+            picksRef.current = picks;
+            segmentsRef.current = new Uint32Array(pairs);
+            pointsRef.current = new Float32Array(picks.length * LABEL_STRIDE);
+            view.setLabels(picks);
+            return;
+        }
+
+        const subject = selected ?? hovered;
+        if (subject === null) {
+            picksRef.current = [];
+            segmentsRef.current = new Uint32Array(0);
+            view.setLabels([]);
+            return;
+        }
+
+        const picks = pickEdgeLabels(
+            world,
+            predicates,
+            subject,
+            edgeLabelBudget(engine.viewport().width),
+            engine.drawnEdgesOf(subject),
+        );
+        picksRef.current = picks;
+        const segments = new Uint32Array(picks.length * 2);
+        picks.forEach((pick, i) => {
+            segments[i * 2] = subject;
+            segments[i * 2 + 1] = pick.other;
+        });
+        segmentsRef.current = segments;
+        pointsRef.current = new Float32Array(picks.length * LABEL_STRIDE);
+        view.setLabels(picks);
+    }, [selected, hovered, predicates, labelsReady, pathNodes, pathHops]);
+
+    /*
+     * A drag is an orbit, not a hover and not a click.
+     *
+     * Both mattered. While the button is down the pointer sweeps across the whole scene, so
+     * hovering during a drag re-aimed the relationship labels at every node the cursor happened
+     * to cross on the way. And the browser fires a click at the end of a drag regardless of how
+     * far it travelled, so letting go after turning the world selected whatever was underneath -
+     * measured: orbiting away from Indra ended up selected on an unrelated assertion record.
+     *
+     * Three pixels of travel is the threshold. Below that it is a click with a shaky hand.
+     */
+    const dragRef = useRef<{ x: number; y: number; moved: boolean } | null>(null);
+
+    const onPointerDown = (event: React.PointerEvent<HTMLCanvasElement>) => {
+        dragRef.current = { x: event.clientX, y: event.clientY, moved: false };
+    };
+
     const onPointerMove = (event: React.PointerEvent<HTMLCanvasElement>) => {
         const engine = engineRef.current;
         if (!engine) return;
+        const drag = dragRef.current;
+        if (drag) {
+            if (
+                Math.abs(event.clientX - drag.x) > 3 ||
+                Math.abs(event.clientY - drag.y) > 3
+            ) {
+                drag.moved = true;
+            }
+            return;
+        }
         const rect = event.currentTarget.getBoundingClientRect();
-        engine.hover(event.clientX - rect.left, event.clientY - rect.top);
+        const node = engine.hover(event.clientX - rect.left, event.clientY - rect.top);
+        // Hovering draws the subject's own edges. Without this the lines being named are
+        // frequently not on screen at all: the world tier draws 24,000 of 185,693 edges.
+        engine.setEmphasis(node);
+    };
+
+    const onPointerUp = () => {
+        // Cleared after the click handler has had its chance to read `moved`.
+        window.setTimeout(() => {
+            dragRef.current = null;
+        }, 0);
+    };
+
+    const onPointerLeave = () => {
+        dragRef.current = null;
+        engineRef.current?.setEmphasis(null);
     };
 
     const onClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
         const engine = engineRef.current;
         if (!engine) return;
+        if (dragRef.current?.moved) return;
         const rect = event.currentTarget.getBoundingClientRect();
         const node = engine.pick(event.clientX - rect.left, event.clientY - rect.top);
         engine.select(node);
@@ -249,12 +443,16 @@ export function WorldView({
     const hoveredLabel = hovered !== null && labelData ? labelData.labels[hovered] : null;
 
     return (
-        <div className="va-world" data-phase={phase}>
+        <div className="va-world" data-phase={phase} ref={stageRef}>
             <canvas
                 aria-label="The knowledge graph as a spatial map. A searchable, keyboard-navigable list of the same nodes and their connections is beside it."
                 className="va-world-canvas"
                 onClick={onClick}
+                onPointerCancel={onPointerUp}
+                onPointerDown={onPointerDown}
+                onPointerLeave={onPointerLeave}
                 onPointerMove={onPointerMove}
+                onPointerUp={onPointerUp}
                 ref={canvasRef}
                 role="img"
             />

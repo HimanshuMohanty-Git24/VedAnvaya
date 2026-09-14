@@ -649,3 +649,22 @@
 .dark .va-theme-icon-dark {
     display: block;
 }
+
+/*
+ * The map is the page, on a phone.
+ *
+ * Measured at 390x844: the graph route scrolled 1,739px against an 844px viewport, 798 of the
+ * overflow being the footer. Scrolling dragged the canvas off the top of the screen - at a
+ * scrollTop of 397 the canvas began at -332 - so the one thing the route exists to show could be
+ * lost by a flick. The footer's links are all present in the mobile header dialog, so removing
+ * it here costs no destination.
+ */
+@media (max-width: 47.99rem) {
+    body:has(.va-graph) {
+        overflow: hidden;
+    }
+
+    body:has(.va-graph) .va-footer {
+        display: none;
+    }
+}

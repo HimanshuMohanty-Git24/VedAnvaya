@@ -89,8 +89,10 @@ test.describe("mobile navigation", () => {
 
     test("the graph remains usable with simplified controls", async ({ page }) => {
         await page.goto(`/graph?node=${INDRA}`);
-        await expect(page.locator(".graph-canvas canvas").first()).toBeVisible();
-        await expect(page.getByRole("button", { name: "Fit the graph to the view" })).toBeVisible();
+        await expect(page.locator(".va-graph canvas").first()).toBeVisible();
+        // The renderer and view controls, which is what the graph's chrome is on a phone.
+        await expect(page.getByRole("button", { name: "World" })).toBeVisible();
+        await expect(page.getByRole("button", { name: "2D" })).toBeVisible();
 
         const overflow = await page.evaluate(
             () => document.documentElement.scrollWidth - document.documentElement.clientWidth,

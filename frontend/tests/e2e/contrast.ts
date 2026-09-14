@@ -52,7 +52,27 @@ export async function failingContrast(page: Page) {
              * 1.04:1 for content nobody can see. The test is 1px in either dimension, which is
              * what every sr-only recipe collapses to and is also true of any other technique
              * that hides text by shrinking its box.
+             *
+             * The test walks up the tree, not just at the element itself. `overflow: hidden` on a
+             * 1px box does not shrink the boxes of its children - they still report their full
+             * size to `getBoundingClientRect` - so a link inside a visually hidden list looks
+             * full-sized here while being invisible on screen. Checking only the element's own
+             * box reported the graph preview's whole text alternative as failing at 1.04:1,
+             * which is the colour of something nobody was ever going to see.
              */
+            let clipped = false;
+            for (
+                let node: Element | null = el;
+                node && node !== document.body;
+                node = node.parentElement
+            ) {
+                const rect = node.getBoundingClientRect();
+                if (rect.width <= 1 || rect.height <= 1) {
+                    clipped = true;
+                    break;
+                }
+            }
+            if (clipped) continue;
             if (box.width <= 1 || box.height <= 1) continue;
             const size = parseFloat(style.fontSize);
             const large = size >= 24 || (size >= 18.66 && Number(style.fontWeight) >= 700);

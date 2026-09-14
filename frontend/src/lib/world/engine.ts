@@ -13,6 +13,7 @@ import {
 } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { edgesOf, otherEnd, type World } from "./artifact";
+import { LABEL_FRACTIONS, LABEL_STRIDE } from "./edge-labels";
 
 /**
  * The world engine.
@@ -60,6 +61,8 @@ const PATH_EDGE_BUDGET = 1_200;
 export type EngineEvents = {
     onHover?: (node: number | null) => void;
     onSelect?: (node: number | null) => void;
+    /** Called after each rendered frame, once the camera matrices are current. */
+    onFrame?: () => void;
     /**
      * The renderer has genuinely stopped working.
      *
@@ -189,6 +192,36 @@ export type EngineOptions = {
     accentColour: Color;
     reducedMotion: boolean;
     events?: EngineEvents;
+    /**
+     * What the reader may do to the camera. Defaults to everything, which is right for the
+     * graph page, where the canvas is the page.
+     *
+     * The homepage is the reason this is an option. A preview of the world sits inside a
+     * document that scrolls, and OrbitControls consumes the wheel to zoom - so a reader
+     * scrolling past the hero would find the page stuck while the graph crept closer. Turning
+     * zoom off hands the wheel back to the document. `autoRotate` gives that same preview its
+     * slow drift without a second animation loop competing with this one.
+     */
+    controls?: { zoom?: boolean; pan?: boolean; autoRotate?: number };
+    /**
+     * Multiplies the resting weight of every edge. One is the world's own setting.
+     *
+     * The resting alpha is 0.05, which is correct for 185,693 lines whose crossings accumulate
+     * into visible structure and useless for a small graph, where a hundred lines at 0.05 are
+     * simply not there. The homepage preview draws fifty nodes and needs its connections to be
+     * connections; it is the same ink, applied at a weight that suits the number of strokes.
+     */
+    edgeWeight?: number;
+    /**
+     * An upper bound on frames per second. Unset means every frame the display offers.
+     *
+     * The graph page takes every frame, because a reader dragging the world is judging it on
+     * exactly that. The homepage preview does not: it drifts slowly under no one's hand, and
+     * measured, rendering it at the display rate cost 431 ms of main thread per five seconds
+     * against a 275 ms budget for the whole page. Half the frames of a slow rotation is a cost
+     * halved and a difference nobody can see.
+     */
+    maxFps?: number;
 };
 
 export class WorldEngine {
@@ -219,6 +252,14 @@ export class WorldEngine {
     private selected: number | null = null;
     private path: number[] = [];
     private hovered: number | null = null;
+    /** Hovered, and drawn as such. Never dims the world; see `setEmphasis`. */
+    private emphasis: number | null = null;
+    private readonly edgeWeight: number;
+    /** Minimum milliseconds between rendered frames, from `maxFps`. Zero means no limit. */
+    private readonly frameInterval: number;
+    private lastDrawn = 0;
+    /** Edges of the canvas covered by chrome, in CSS pixels. See `setSafeArea`. */
+    private safeArea = { top: 0, right: 0, bottom: 0, left: 0 };
     private mode: WorldMode = "WORLD";
 
     /** Screen-space buckets, rebuilt when the camera settles. Picking reads these. */
@@ -253,6 +294,8 @@ export class WorldEngine {
         this.edgeBase = options.edgeColour;
         this.accent = options.accentColour;
         this.reducedMotion = options.reducedMotion;
+        this.edgeWeight = options.edgeWeight ?? 1;
+        this.frameInterval = options.maxFps ? 1000 / options.maxFps : 0;
         this.projected = new Float32Array(options.world.manifest.counts.nodes * 3);
 
         /*
@@ -298,6 +341,13 @@ export class WorldEngine {
         this.controls.panSpeed = 0.7;
         this.controls.minDistance = 40;
         this.controls.maxDistance = 6000;
+        this.controls.enableZoom = options.controls?.zoom ?? true;
+        this.controls.enablePan = options.controls?.pan ?? true;
+        // A drift is motion, so it is refused outright where motion has been declined rather
+        // than merely slowed: `reducedMotion` means still, not gentler.
+        const drift = options.reducedMotion ? 0 : (options.controls?.autoRotate ?? 0);
+        this.controls.autoRotate = drift > 0;
+        this.controls.autoRotateSpeed = drift;
         // Any real input cancels a scripted move rather than fighting it.
         this.controls.addEventListener("start", () => {
             this.flight = null;
@@ -443,7 +493,7 @@ export class WorldEngine {
                 .filter((index) => index >= 0),
         );
         for (let i = 0; i < manifest.counts.edges; i += 1) {
-            const weight = structural.has(edgeType[i]) ? 0.012 : 0.05;
+            const weight = (structural.has(edgeType[i]) ? 0.012 : 0.05) * this.edgeWeight;
             this.edgeAlpha[i * 2] = weight;
             this.edgeAlpha[i * 2 + 1] = weight;
         }
@@ -515,11 +565,15 @@ export class WorldEngine {
             return;
         }
 
-        if (this.selected === null) {
+        /* A selection wins over a hover: the reader has committed to one subject, and having
+           the overlay jump to whatever the pointer grazes on the way to the panel would undo
+           the commitment. */
+        const focus = this.selected ?? this.emphasis;
+        if (focus === null) {
             geometry.setDrawRange(0, 0);
             return;
         }
-        const touching = edgesOf(this.world, this.selected);
+        const touching = edgesOf(this.world, focus);
         const capacity = this.selectionPositions.length / 6;
         const count = Math.min(touching.length, capacity);
         for (let i = 0; i < count; i += 1) {
@@ -663,6 +717,40 @@ export class WorldEngine {
     }
 
     /**
+     * Draw a hovered subject's own connections, without selecting it.
+     *
+     * Before this, hovering changed nothing in the scene: it reported a node and drew no edges.
+     * That was survivable while edges were anonymous and fatal once they carry names, because
+     * the world draw range is a budget - 24,000 of 185,693 edges, sorted by structural
+     * importance - so a given subject's connections are usually *not* among the lines on screen.
+     * Naming edges that are not being drawn would put words next to whichever line happened to
+     * pass underneath.
+     *
+     * So hovering now fills the same overlay a selection fills. The dimming is deliberately not
+     * applied: a selection re-weights the whole world and that is too violent to happen under a
+     * moving pointer. This adds lines and nothing else.
+     */
+    setEmphasis(node: number | null) {
+        if (node === this.emphasis) return;
+        this.emphasis = node;
+        if (this.selected === null && this.path.length <= 1) this.updateSelectionEdges();
+    }
+
+    /**
+     * The edges of a node that are actually on screen, in draw order.
+     *
+     * The selection overlay is a fixed buffer and truncates past its capacity, so a node with
+     * more connections than that has some which are emphasised and some which are not. Anything
+     * choosing edges to name has to choose from this, not from the full incident set, or it will
+     * eventually label a line nobody can see.
+     */
+    drawnEdgesOf(node: number): Uint32Array {
+        const capacity = this.selectionPositions.length / 6;
+        const touching = edgesOf(this.world, node);
+        return touching.length <= capacity ? touching : touching.subarray(0, capacity);
+    }
+
+    /**
      * Selection, as emphasis rather than as isolation.
      *
      * Nothing is removed from the scene. The world stays where it is and recedes, the chosen
@@ -781,6 +869,140 @@ export class WorldEngine {
         return node;
     }
 
+    /* ------------------------------------------------------------- labels - */
+
+    /** The canvas size in CSS pixels, which is the space label layout works in. */
+    viewport(): { width: number; height: number } {
+        return {
+            width: this.renderer.domElement.clientWidth,
+            height: this.renderer.domElement.clientHeight,
+        };
+    }
+
+    /**
+     * Where to write a word on each of these connections.
+     *
+     * `segments` is pairs of node indices, flat - the same shape the selection edges are built
+     * from, so a label always lands on a line that is actually drawn. For each pair this writes
+     * `usable`, then an x and a y for every fraction in `LABEL_FRACTIONS`, and returns `out`.
+     *
+     * Projected fresh rather than read from the pick index. That index holds every node and is
+     * rebuilt only when the camera settles, which is correct for hovering and useless here: a
+     * label has to stay on its line *during* an orbit, not snap to it afterwards. Sixteen
+     * labels is thirty-two `project` calls a frame against 35,370, so doing it properly costs
+     * nothing.
+     *
+     * The interpolation happens in screen space, after projecting both ends, rather than in
+     * world space before it. Those give different points under perspective, and the one that
+     * matters is a point on the line the reader can actually see.
+     *
+     * A pair with either end outside the depth range is marked unusable rather than clamped.
+     * Interpolating between a point in front of the camera and one behind it produces a
+     * confident position that is nowhere near the line, so the only safe answer is silence.
+     */
+    projectSegmentPoints(segments: ArrayLike<number>, out?: Float32Array): Float32Array {
+        const pairs = segments.length >> 1;
+        const needed = pairs * LABEL_STRIDE;
+        const result = out && out.length >= needed ? out : new Float32Array(needed);
+        const { positions } = this.world;
+        const { width, height } = this.viewport();
+        const a = new Vector3();
+        const b = new Vector3();
+
+        for (let i = 0; i < pairs; i += 1) {
+            const na = segments[i * 2];
+            const nb = segments[i * 2 + 1];
+            a.set(positions[na * 3], positions[na * 3 + 1], positions[na * 3 + 2]).project(
+                this.camera,
+            );
+            b.set(positions[nb * 3], positions[nb * 3 + 1], positions[nb * 3 + 2]).project(
+                this.camera,
+            );
+            const base = i * LABEL_STRIDE;
+            result[base] = a.z >= -1 && a.z <= 1 && b.z >= -1 && b.z <= 1 ? 1 : 0;
+
+            const ax = (a.x * 0.5 + 0.5) * width;
+            const ay = (-a.y * 0.5 + 0.5) * height;
+            const bx = (b.x * 0.5 + 0.5) * width;
+            const by = (-b.y * 0.5 + 0.5) * height;
+            for (let f = 0; f < LABEL_FRACTIONS.length; f += 1) {
+                const t = LABEL_FRACTIONS[f];
+                result[base + 1 + f * 2] = ax + (bx - ax) * t;
+                result[base + 2 + f * 2] = ay + (by - ay) * t;
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Which part of the canvas is actually visible.
+     *
+     * On a phone the canvas fills the screen and is then covered: a band of chrome at the top and
+     * a sheet at the bottom. Measured, the largest unbroken strip of visible canvas down the
+     * centre line was 122 pixels of 780 - and `focusNode` flies the chosen subject to the
+     * geometric centre, which sat underneath the sheet describing it.
+     *
+     * The fix is a lens shift, not a change to any of the framing code. `setViewOffset` with the
+     * full size equal to the real size scales the frustum by one and only translates it, so this
+     * moves what the centre of the screen means without zooming, cropping or moving the orbit
+     * pivot. Moving `controls.target` instead would have put the pivot off the subject, and
+     * orbiting would then swing it around a point beside itself.
+     *
+     * `focusNode`, `fitNodes` and `fitWorld` need no knowledge of this: they keep aiming at the
+     * true centre and inherit the shift. Picking is unaffected for the same reason - the pick
+     * index projects through this same matrix.
+     */
+    setSafeArea(area: { top?: number; right?: number; bottom?: number; left?: number }) {
+        const next = {
+            top: Math.max(0, area.top ?? 0),
+            right: Math.max(0, area.right ?? 0),
+            bottom: Math.max(0, area.bottom ?? 0),
+            left: Math.max(0, area.left ?? 0),
+        };
+        const same =
+            next.top === this.safeArea.top &&
+            next.right === this.safeArea.right &&
+            next.bottom === this.safeArea.bottom &&
+            next.left === this.safeArea.left;
+        if (same) return;
+        this.safeArea = next;
+        this.applySafeArea();
+    }
+
+    private applySafeArea() {
+        const { width, height } = this.viewport();
+        if (width <= 0 || height <= 0) return;
+        const { top, right, bottom, left } = this.safeArea;
+
+        /* A band narrower than this is not somewhere a subject can be read, so the shift stops
+           growing rather than flying the camera off to satisfy an impossible constraint. */
+        const MIN_BAND = 120;
+        const visibleWidth = width - left - right;
+        const visibleHeight = height - top - bottom;
+        if (visibleWidth < MIN_BAND || visibleHeight < MIN_BAND) {
+            this.camera.clearViewOffset();
+            this.pickDirty = true;
+            return;
+        }
+
+        const centreX = left + visibleWidth / 2;
+        const centreY = top + visibleHeight / 2;
+        if (Math.abs(centreX - width / 2) < 1 && Math.abs(centreY - height / 2) < 1) {
+            this.camera.clearViewOffset();
+        } else {
+            this.camera.setViewOffset(
+                width,
+                height,
+                width / 2 - centreX,
+                height / 2 - centreY,
+                width,
+                height,
+            );
+        }
+        this.pickDirty = true;
+    }
+
     /* ------------------------------------------------------------ camera - */
 
     private positionOf(node: number) {
@@ -818,8 +1040,15 @@ export class WorldEngine {
         this.flyTo(centre.clone().add(direction), centre, ms);
     }
 
-    /** Frame an arbitrary set of nodes, used for a path. */
-    fitNodes(nodeIds: number[], ms = 900) {
+    /**
+     * Frame an arbitrary set of nodes, used for a path and for the homepage preview.
+     *
+     * `spread` and `floor` are exposed because the defaults are the path's. A route across the
+     * corpus needs to be framed loosely and from far enough out that the camera is not inside
+     * the cloud; a fifty-node preview in a small panel needs neither, and inheriting both left
+     * it a scatter of dots in the middle of an empty frame.
+     */
+    fitNodes(nodeIds: number[], ms = 900, { spread = 2.6, floor = 700 } = {}) {
         if (!nodeIds.length) return;
         const centre = new Vector3();
         for (const id of nodeIds) centre.add(this.positionOf(id));
@@ -828,10 +1057,10 @@ export class WorldEngine {
         for (const id of nodeIds) radius = Math.max(radius, centre.distanceTo(this.positionOf(id)));
         const direction = this.camera.position.clone().sub(this.controls.target);
         if (direction.lengthSq() < 1) direction.set(0, 0, 1);
-        /* A floor of 700 units: framing two subjects that happen to be close together would
-           otherwise put the camera inside the cloud, where every edge crosses the viewport
-           and nothing is legible however well it is framed. */
-        direction.normalize().multiplyScalar(Math.min(3200, Math.max(700, radius * 2.6)));
+        /* The floor exists because framing two subjects that happen to be close together would
+           otherwise put the camera inside the cloud, where every edge crosses the viewport and
+           nothing is legible however well it is framed. */
+        direction.normalize().multiplyScalar(Math.min(3200, Math.max(floor, radius * spread)));
         this.flyTo(centre.clone().add(direction), centre, ms);
     }
 
@@ -872,6 +1101,10 @@ export class WorldEngine {
             this.frame = requestAnimationFrame(loop);
             if (this.paused) return;
             const began = performance.now();
+            /* Dropped before any work is done, not after: the point is to skip the frame, and
+               the stats below deliberately do not count a frame that was never drawn. */
+            if (this.frameInterval > 0 && began - this.lastDrawn < this.frameInterval - 1) return;
+            this.lastDrawn = began;
             this.tickFlight(began);
             this.controls.update();
             const material = this.nodes.material as ShaderMaterial;
@@ -881,6 +1114,12 @@ export class WorldEngine {
                 this.renderer.domElement.clientHeight /
                 (2 * Math.tan((this.camera.fov * Math.PI) / 360));
             this.renderer.render(this.scene, this.camera);
+            /* After the render, never before it. `renderer.render` is what refreshes the
+               camera's `matrixWorldInverse`, and a projection taken ahead of it is computed
+               from the previous frame's camera - so anything positioned from it trails the
+               lines it is meant to sit on by exactly one frame, which reads as lag during an
+               orbit and is invisible when still. */
+            this.events.onFrame?.();
             this.sample(began);
         };
         this.frame = requestAnimationFrame(loop);
@@ -940,6 +1179,9 @@ export class WorldEngine {
         if (!width || !height) return;
         this.renderer.setSize(width, height, false);
         this.camera.aspect = width / height;
+        /* Re-applied after a resize: the view offset is stored in terms of the full canvas size,
+           so `updateProjectionMatrix` would otherwise keep shifting by the old screen's geometry. */
+        this.applySafeArea();
         this.camera.updateProjectionMatrix();
         this.pickDirty = true;
     }

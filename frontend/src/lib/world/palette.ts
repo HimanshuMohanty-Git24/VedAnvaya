@@ -57,10 +57,10 @@ export type GraphPalette = {
  * `var(--va-rubric-500)` is the string "var(--va-rubric-500)" rather than a colour. Setting
  * it as a `color` and reading the computed value makes the browser do the resolution.
  */
-function makeReader() {
+function makeReader(scope: HTMLElement) {
     const probe = document.createElement("span");
     probe.style.cssText = "position:absolute;visibility:hidden;pointer-events:none";
-    document.body.appendChild(probe);
+    scope.appendChild(probe);
     const read = (token: string, fallback: string) => {
         probe.style.color = "";
         probe.style.color = `var(${token})`;
@@ -89,8 +89,21 @@ function toLinearTriple(css: string): [number, number, number] {
     return [toLinear(r), toLinear(g), toLinear(b)];
 }
 
-export function readGraphPalette(revision = 0): GraphPalette {
-    const { read, done } = makeReader();
+/**
+ * Read the palette as it resolves *inside* a given element.
+ *
+ * `scope` exists because one surface in the product does not take the page's theme: the
+ * homepage panel is carbon whether the site is light or dark, and it carries the `dark` class to
+ * say so. A probe appended to `document.body` resolves the page's tokens, so a preview inside
+ * that panel would clear to ivory inside a carbon frame - which is exactly the defect a previous
+ * phase had to fix on the graph page. Reading through an element in the panel lets the cascade
+ * answer the question instead of the caller guessing.
+ */
+export function readGraphPalette(
+    revision = 0,
+    scope: HTMLElement = document.body,
+): GraphPalette {
+    const { read, done } = makeReader(scope);
     const groupCss = GROUP_NAMES.map((group) => read(`--va-group-${group}-fill`, "#8c9490"));
     const groups = new Float32Array(GROUP_NAMES.length * 3);
     groupCss.forEach((css, i) => {
@@ -121,9 +134,27 @@ export function readGraphPalette(revision = 0): GraphPalette {
  * read, so a consumer never paints with guessed colours.
  */
 export function useGraphPalette(): GraphPalette | null {
+    return usePaletteIn(undefined);
+}
+
+/**
+ * The palette as it resolves inside one element, which may not exist yet.
+ *
+ * Distinct from `useGraphPalette` because the waiting is the point. A caller that names a scope
+ * is saying its colours are not the page's, so answering with the page's while the element is
+ * still null would be worse than answering nothing: the consumer would build with ivory, then
+ * rebuild with carbon a frame later. Null here means "not yet", not "no theme".
+ */
+export function useScopedGraphPalette(scope: HTMLElement | null): GraphPalette | null {
+    return usePaletteIn(scope);
+}
+
+function usePaletteIn(scope: HTMLElement | null | undefined): GraphPalette | null {
     const [palette, setPalette] = useState<GraphPalette | null>(null);
 
     useEffect(() => {
+        // Explicitly null: a scope was named and has not arrived. Waiting is correct.
+        if (scope === null) return;
         let revision = 0;
         let frame = 0;
 
@@ -133,7 +164,7 @@ export function useGraphPalette(): GraphPalette | null {
             cancelAnimationFrame(frame);
             frame = requestAnimationFrame(() => {
                 revision += 1;
-                setPalette(readGraphPalette(revision));
+                setPalette(readGraphPalette(revision, scope ?? document.body));
             });
         };
 
@@ -152,7 +183,8 @@ export function useGraphPalette(): GraphPalette | null {
             observer.disconnect();
             media.removeEventListener("change", refresh);
         };
-    }, []);
+        // Re-read when the scope element arrives, since the answer depends on where it is read.
+    }, [scope]);
 
     return palette;
 }

@@ -235,20 +235,22 @@ test.describe("homepage: responsive and reachable", () => {
         expect(box!.y + box!.height).toBeLessThanOrEqual(view844());
     });
 
-    test("the constellation offers the same content as text", async ({ page }) => {
+    test("the world preview offers the same content as text", async ({ page }) => {
         await home(page);
         // The canvas is hidden from assistive technology, so the list beside it is the whole
-        // of what a screen reader receives. It has to be the content, not a description of it.
-        await expect(page.locator(".va-constellation-canvas")).toHaveAttribute(
+        // of what a screen reader receives. It has to be the content, not a description of it,
+        // and each subject has to be reachable rather than merely named.
+        await expect(page.locator(".va-world-preview-canvas")).toHaveAttribute(
             "aria-hidden",
             "true",
         );
         await expect(
-            page.getByRole("heading", { name: /constellation, as a list/i }),
+            page.getByRole("heading", { name: /world preview, as a list/i }),
         ).toBeAttached();
-        const items = page.locator(".va-constellation-panel .sr-only li");
+        const items = page.locator(".va-world-preview-panel .sr-only li");
         expect(await items.count()).toBeGreaterThan(8);
         await expect(items.first()).toContainText(/\w/);
+        await expect(items.first().locator("a")).toHaveAttribute("href", /\/graph\?/);
     });
 
     for (const view of VIEWPORTS) {
