@@ -58,7 +58,15 @@ test.describe("mobile reader", () => {
 test.describe("mobile entity page", () => {
     test("a deity profile is readable and its charts do not clip", async ({ page }) => {
         await page.goto(`/devatas/${INDRA}`);
-        await expect(page.getByRole("heading", { level: 1 })).toContainText("Indra");
+        /*
+         * The heading is the Sanskrit name, and the English is its gloss beneath it - the
+         * English is a convention of translation and the Sanskrit is what the corpus holds. So
+         * `indraḥ` is the h1 and "Indra" is the line under it, and both are asserted: checking
+         * only the English would pass against a page that had lost the record's own name, and
+         * checking only the Sanskrit would pass against one a reader could not identify.
+         */
+        await expect(page.getByRole("heading", { level: 1 })).toHaveText(/indra/i);
+        await expect(page.locator(".va-archive-english")).toContainText("Indra");
         await expect(page.locator("figure.measure").first()).toBeVisible();
 
         const overflow = await page.evaluate(

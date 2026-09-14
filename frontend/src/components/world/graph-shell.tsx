@@ -104,6 +104,38 @@ export function GraphShell() {
     const [query, setQuery] = useState(state.query ?? "");
     const [pathNodes, setPathNodes] = useState<number[]>([]);
     const [pathHops, setPathHops] = useState<string[]>([]);
+
+    /*
+     * A traced route, reported back without starting a loop.
+     *
+     * This was an inline arrow, and the three facts together were a request storm: measured at
+     * **485 identical `/graph/path` requests in fifteen seconds** from a single trace, none of
+     * which ever settled, plus "Maximum update depth exceeded" on merely entering the view.
+     *
+     *   1. an inline arrow gets a new identity on every render;
+     *   2. `PathTrace` has it in its effect's dependency list, correctly, because it is one;
+     *   3. the effect reports its result as fresh `[]` literals, so `useState` sees a new
+     *      array, cannot take its bail-out, and re-renders - which remakes the arrow, which
+     *      re-runs the effect, which aborts its own in-flight fetch and issues another.
+     *
+     * Fixing the identity alone would be enough today and would break again the next time
+     * somebody passes an inline function, so the equality bail-out is here as well: an empty
+     * route reported twice is the same empty route, and the second report changes nothing.
+     * Between a stable identity and a value comparison, the comparison is the one that holds
+     * when the other is forgotten.
+     */
+    const setPath = useCallback((nodes: number[], hops: string[]) => {
+        setPathNodes((current) =>
+            current.length === nodes.length && current.every((n, i) => n === nodes[i])
+                ? current
+                : nodes,
+        );
+        setPathHops((current) =>
+            current.length === hops.length && current.every((h, i) => h === hops[i])
+                ? current
+                : hops,
+        );
+    }, []);
     /*
      * Where focus goes after a selection made from the keyboard.
      *
@@ -474,6 +506,26 @@ export function GraphShell() {
             data-renderer={state.renderer}
             data-view={state.view}
             ref={stageRef}
+            /*
+             * The measured chrome, published to the stylesheet.
+             *
+             * The expanded sheet was `calc(100% - 6rem)`, which on a 780 px phone stage is
+             * 684 px and leaves 96 px - less than the chrome standing above it. Measured, that
+             * put the sheet's top edge at 161 px and the renderer control's touch targets at
+             * 182-227 px, so 3D/2D could not be reached at all, and every drawn orb including
+             * the subject sat behind furniture.
+             *
+             * A guess in the stylesheet cannot fix that, because the chrome's height depends on
+             * what is in it - 168 px in Focus, 245 with a subject in World, 294 with the hint,
+             * 380 in Path. It is already measured here for the camera, so it is published here
+             * too and the sheet is bounded by the real number rather than a constant that was
+             * right for one state.
+             */
+            style={
+                {
+                    "--va-graph-chrome-height": `${safeArea.top}px`,
+                } as React.CSSProperties
+            }
         >
             {/* The spatial engine is mounted once and kept mounted across every change. A
                 canvas that unmounts loses its context, its buffers and its camera, and a
@@ -701,10 +753,7 @@ export function GraphShell() {
                         from={state.from}
                         labels={labels}
                         onEndpoints={(from, to) => graph.setEndpoints(from, to, "reader:trace-path")}
-                        onPathNodes={(nodes, hops) => {
-                            setPathNodes(nodes);
-                            setPathHops(hops);
-                        }}
+                        onPathNodes={setPath}
                         to={state.to}
                         world={world}
                     />

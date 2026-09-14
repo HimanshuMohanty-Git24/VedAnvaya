@@ -237,28 +237,227 @@
     display: block;
 }
 
-/* A way into the graph, so it says so with the cursor. */
+/*
+ * A field you turn, so the cursor says turn.
+ *
+ * It said `pointer` while a release anywhere on this canvas navigated - including the release
+ * that ends an orbit - so the cursor was an accurate description of the defect. Nothing here
+ * navigates now. `grabbing` is keyed off the gesture module's own phase attribute rather than
+ * off `:active`, so what the cursor shows is what the classifier decided rather than a second
+ * opinion about it.
+ */
 .va-world-preview-canvas {
-    cursor: pointer;
+    cursor: grab;
+}
+
+.va-world-preview-canvas[data-gesture="dragging"],
+.va-world-preview-canvas[data-gesture="multi"] {
+    cursor: grabbing;
 }
 
 /*
- * The readout sits over the field, so it carries its own scrim. Without one it collided with
- * the subject names on a narrow panel, where the text wraps to two lines and the field has
- * nowhere to move to.
+ * Four names on the field, two on a phone.
+ *
+ * Without them the front door is fifty coloured discs and a reader has no way to discover that
+ * the thing in front of them holds Indra. An opaque plate rather than a halo, for the reason
+ * the graph page measured: a blur cannot guarantee a contrast ratio over a backdrop that is
+ * itself a diagram, and twelve of sixteen haloed names there came in under 4.5:1.
  */
-.va-world-preview-readout {
+.va-world-preview-labels {
+    position: absolute;
+    inset: 0;
+    /* A name that swallowed a press would be a hole in the surface the reader turns. */
+    pointer-events: none;
+    /* A containing block for spans placed from the top-left corner by transform. */
+    overflow: hidden;
+}
+
+.va-world-preview-label {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    /* The transform puts the anchor on the disc; these clear the text of it. */
+    margin-inline-start: 10px;
+    margin-block-start: -0.62em;
+    max-width: 11rem;
+    padding: 1px 5px;
+    border-radius: var(--va-radius-xs);
+    background: var(--va-surface-page);
+    color: var(--va-text-primary);
+    font-family: var(--va-font-iast);
+    font-size: var(--va-text-xs);
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* The held subject, tied to the card describing it by taking the card's accent. */
+.va-world-preview-label.is-held {
+    color: var(--va-accent-text);
+    border: var(--va-border-width) solid var(--va-line-strong);
+}
+
+/*
+ * Flipped to the leading side of its disc, for a name that would otherwise be clipped.
+ *
+ * The inline-start margin is the gap between the disc and the text, so when the text runs the
+ * other way the gap has to run the other way too - left as it was, the plate sat on the disc.
+ */
+.va-world-preview-label.is-flipped {
+    margin-inline-start: -10px;
+    text-align: end;
+}
+
+/*
+ * Everything written over the foot of the field, in one column under one scrim.
+ *
+ * The card and the readout were two blocks both anchored to the bottom edge, which stacked one
+ * on top of the other as soon as a subject was held. The scrim is here rather than on the
+ * readout because without one the type collided with the subject names on a narrow panel,
+ * where it wraps to two lines and the field has nowhere to move to.
+ */
+.va-world-preview-foot {
     position: absolute;
     inset-inline: 0;
-    bottom: 0;
-    margin: 0;
+    inset-block-end: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--va-space-sm);
     padding: var(--va-space-2xl) var(--va-space-lg) var(--va-space-lg);
     background: linear-gradient(to top, var(--va-night-800) 38%, transparent);
+    /* The field keeps the pointer; the two children that need it take it back. */
+    pointer-events: none;
+}
+
+.va-world-preview-readout {
+    margin: 0;
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
     gap: var(--va-space-sm);
-    pointer-events: none;
+}
+
+/*
+ * The held subject, spelled out.
+ *
+ * A plate rather than bare type over the diagram, and opaque: the contrast walk resolves the
+ * nearest ancestor painted at 95 per cent or more, and a translucent card would hand it the
+ * panel's colour while the reader sees this text over whatever lines happen to be behind it.
+ */
+.va-world-preview-chosen {
+    pointer-events: auto;
+    max-width: min(22rem, 100%);
+    display: flex;
+    flex-direction: column;
+    gap: var(--va-space-2xs);
+    padding: var(--va-space-sm) var(--va-space-md);
+    border: var(--va-border-width) solid var(--va-night-line);
+    border-radius: var(--va-radius-xs);
+    background: var(--va-night-900);
+}
+
+.va-world-preview-chosen-head {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.va-world-preview-chosen-title {
+    margin: 0;
+    display: flex;
+    align-items: baseline;
+    gap: var(--va-space-sm);
+}
+
+.va-world-preview-chosen-head .va-world-preview-kind {
+    margin: 0;
+}
+
+/*
+ * The release, set at the weight of a caption and pushed to the trailing edge.
+ *
+ * It shares the head's row rather than taking one of its own, because the card already takes
+ * about two thirds of a 390 px panel and the whole reason this control exists is that there
+ * was not enough field left to tap.
+ */
+.va-world-preview-release {
+    margin-inline-start: auto;
+    font: inherit;
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-secondary);
+    background: none;
+    border: 0;
+    padding: var(--va-space-2xs) 0;
+    cursor: pointer;
+    transition: var(--va-transition-colors);
+}
+
+.va-world-preview-release:hover {
+    color: var(--va-text-primary);
+}
+
+/*
+ * The connections, as sentences rather than as a count.
+ *
+ * The phrase is the curated one from the API's own table - "is ascribed to the seer", never
+ * "HAS_RISHI" and never this codebase's general enum humaniser, which disagrees with the
+ * scholarship on 44 of 57 predicates. Set apart from the subject names the way the graph page
+ * sets them apart: smaller, in the interface face, in the accent, because a row read at the
+ * weight of a name would be read as another name.
+ */
+.va-world-preview-relations {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.va-world-preview-relations li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--va-space-2xs);
+    font-size: var(--va-text-xs);
+    line-height: 1.35;
+}
+
+.va-world-preview-predicate {
+    color: var(--va-accent-text);
+}
+
+.va-world-preview-other {
+    font-family: var(--va-font-iast);
+    color: var(--va-text-primary);
+}
+
+.va-world-preview-relations-absent {
+    margin: 0;
+    font-size: var(--va-text-xs);
+    color: var(--va-text-secondary);
+}
+
+.va-world-preview-explore {
+    margin-block-start: var(--va-space-2xs);
+    font-size: var(--va-text-2xs);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-accent-text);
+    text-decoration: none;
+    border-block-end: var(--va-border-width) solid
+        color-mix(in srgb, var(--va-accent-text) 40%, transparent);
+    align-self: flex-start;
+    transition: var(--va-transition-colors);
+}
+
+.va-world-preview-explore:hover {
+    color: var(--va-text-primary);
+    border-block-end-color: var(--va-text-primary);
 }
 
 .va-world-preview-name {
@@ -1067,8 +1266,26 @@
         font-size: var(--va-text-md);
     }
 
-    .va-world-preview-readout {
+    /*
+     * The foot is 350 px wide here against 537, so the inset comes in and the card takes the
+     * whole column. Measured at 390: a held subject's card, two connections and the way into
+     * the graph occupy about half the panel, which is the price of the card carrying words at
+     * all - and the reader asked for it by tapping a subject.
+     */
+    .va-world-preview-foot {
         padding-inline: var(--va-space-md);
+        padding-block-start: var(--va-space-xl);
+        font-size: var(--va-text-2xs);
+    }
+
+    .va-world-preview-chosen {
+        max-width: 100%;
+        padding: var(--va-space-xs) var(--va-space-sm);
+    }
+
+    /* A phone's panel gets two names on the field rather than four; see KEY_LABELS_COMPACT. */
+    .va-world-preview-label {
+        max-width: 8rem;
         font-size: var(--va-text-2xs);
     }
 

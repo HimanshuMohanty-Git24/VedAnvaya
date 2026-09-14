@@ -107,45 +107,247 @@
     --va-transition-transform: transform var(--va-duration-base) var(--va-ease-standard);
     --va-transition-opacity: opacity var(--va-duration-base) var(--va-ease-standard);
 
-    /* --- Graph colour.
+    /* ============================ Graph colour ============================
 
-       One table, in CSS, read from TypeScript. The old build declared eleven
-       graph colours twice, once as node fills in TypeScript and once as legend
-       text in CSS, with different values and nothing tying them together, so
-       the legend did not describe the picture it labelled. ------------------- */
-    /* Eleven semantic groups, each with the colour its node is filled with and the colour
-       its legend label is set in. They differ on purpose: a fill sits against a dark canvas
-       at 20 to 40 pixels across and a label is 12.6px text on paper, and one value cannot
-       serve both. Every -text value clears 4.5:1 on all four light surfaces, checked by
-       scripts/audit-contrast.mjs.
+       One table, in CSS, read from TypeScript. Nine values across eleven groups,
+       plus the chrome both renderers draw everything else in.
 
-       This replaces two tables that disagreed. The node fills lived in TypeScript and the
-       legend colours in CSS, with different values and nothing tying them together, so the
-       legend did not describe the picture it labelled. It also broke on contact with the new
-       palette: the legend hexes had been tuned against the old cool-grey surface, and a
-       warmer ivory dropped idea, rite and thing to 4.46, 4.47 and 4.45. */
-    --va-group-deity-fill: #bd4f32;
-    --va-group-deity-text: #9b4129;
-    --va-group-unresolved-deity-fill: #b59a8f;
-    --va-group-unresolved-deity-text: #695953;
-    --va-group-passage-fill: #9b8462;
-    --va-group-passage-text: #695a43;
-    --va-group-person-fill: #607d92;
-    --va-group-person-text: #495f6f;
-    --va-group-idea-fill: #6c8f83;
-    --va-group-idea-text: #496159;
-    --va-group-rite-fill: #8a6f9b;
-    --va-group-rite-text: #6a5577;
-    --va-group-thing-fill: #7d7969;
-    --va-group-thing-text: #605d51;
-    --va-group-wording-fill: #4f7f8f;
-    --va-group-wording-text: #3d626e;
-    --va-group-derived-fill: #8d8d8d;
-    --va-group-derived-text: #5d5d5d;
-    --va-group-record-fill: #8c9490;
-    --va-group-record-text: #585d5b;
-    --va-group-other-fill: #8c9490;
-    --va-group-other-text: #585d5b;
+       ## Nine values, not eleven
+
+       `derived`, `record` and `other` are the graph's own bookkeeping -- a
+       predicate with no semantic group, a provenance record, a kind the mapping
+       does not cover -- and they are not three distinguishable things to a reader.
+       They already were not: `record` and `other` shipped byte-identical at
+       #8c9490, dE00 0.00, which nothing in the build could see and nobody had
+       decided. They now share one declared value, so the collapse is a decision
+       with a name instead of a coincidence, and the ALIASED line below makes a
+       drifting alias a failure in scripts/audit-graph-contrast.mjs.
+
+       Eleven `--va-group-*-fill` names remain, because the renderers index them by
+       `GROUP_NAMES` order and tests/e2e/release-closure.spec.ts reads all eleven.
+       Nine values under eleven names is the shape. Ten under eleven was the
+       accident.
+
+       ## Why every value moved
+
+       A fill is never painted at full strength. The 3D engine draws nodes at alpha
+       0.85 in WORLD and 0.96 in FOCUS, the 2D canvas at 0.94 for the subject and
+       its first ring and 0.55 for the second, and both blend in encoded sRGB
+       against the page. Measured that way the old table failed: at 0.85 only five
+       of eleven cleared 3:1 in the light theme and unresolved-deity reached
+       2.01:1. Four were under 3:1 against the page even as tokens --
+       unresolved-deity 2.31, derived 2.92, record 2.73, other 2.73 -- and every
+       contrast check in the repository reported pass, because the audit was
+       spending its 88 graph pairs on the `-text` tokens nothing painted and none
+       on the fills that did.
+
+       Each value now sits inside a band with three measured constraints, which is
+       why these hexes look arbitrary and are not:
+
+         - composited at 0.85 over the page it clears 3:1 (worst 3.09 light,
+           4.01 dark);
+         - as a token it stays light enough that the focus ring clears 3:1 against
+           it, which caps it at 5.00:1 light and 5.65:1 dark -- see the ring below,
+           where that ceiling is derived;
+         - in the dark theme it still clears the 5:1 floor release-closure.spec.ts
+           measures at full alpha.
+
+       ## Lightness is held flat on purpose
+
+       Light values span L* 43.5 to 49.9 and dark values L* 56.0 to 59.0. A
+       categorical palette with a wide lightness spread reads as a ranking, and a
+       search allowed to vary lightness freely scored *better* on dE00 while
+       producing a table in which passage plainly mattered more than idea. Inside a
+       flat band the separation has to come from hue and chroma, which is what
+       these do: minimum pairwise dE00 is 12.12 light and 9.41 dark, against 5.29
+       and 6.09 for the table this replaces.
+
+       Recessiveness therefore comes from chroma rather than from lightness. The
+       quiet categories read as quiet because they are nearly achromatic -- C* 2.1
+       light, 3.0 dark, beside deity at C* 57 -- and not because they are pale.
+       Pale is exactly what put four of them under 3:1.
+
+       ## Colour vision deficiency
+
+       Simulated at severity 1.0 (Machado, Oliveira & Santos 2009) the worst pair
+       is dE00 6.01 light and 4.61 dark, against 1.76 and 0.89 before. Nine
+       categories cannot be made unambiguous under dichromacy, so separation is not
+       the only channel carrying the distinction: a passage is a diamond and
+       everything else a disc, and any drawn subject can carry its name.
+
+       Each fill states, in order, its ratio against the page as a token, its ratio
+       composited at 0.85, and the focus ring's ratio against it.
+
+       The middle figure is 0.85 deliberately: that is the alpha these nine values were
+       derived against, and it is the strictest of the four the renderers use. The engine
+       has since raised its WORLD alpha to 0.92, where the same nine measure 3.46 to 4.29,
+       so the derivation floor is the binding one and is the one worth recording. The gate
+       measures whatever --va-graph-alpha-* currently says, not this column.
+       ===================================================================== */
+    --va-group-deity-fill: #b35026; /* 4.51 | 3.54 | ring 3.47 */
+    --va-group-unresolved-deity-fill: #766262; /* 5.00 | 3.71 | ring 3.14 */
+    --va-group-passage-fill: #917146; /* 3.97 | 3.10 | ring 3.95 */
+    --va-group-person-fill: #4a7ba5; /* 3.96 | 3.11 | ring 3.96 */
+    --va-group-idea-fill: #568065; /* 3.95 | 3.09 | ring 3.97 */
+    --va-group-rite-fill: #7f698c; /* 4.29 | 3.29 | ring 3.65 */
+    --va-group-thing-fill: #6f6a4d; /* 4.80 | 3.59 | ring 3.26 */
+    --va-group-wording-fill: #277174; /* 4.99 | 3.77 | ring 3.14 */
+    /* The one value the three bookkeeping groups share. */
+    --va-group-quiet-fill: #747774; /* 3.98 | 3.10 | ring 3.93 */
+
+    /* ALIASED: derived record other -> --va-group-quiet-fill
+       Read by scripts/audit-graph-contrast.mjs, which fails if any name listed
+       here stops being a literal `var()` at that target or stops resolving to the
+       same bytes. The three are declared once, here, and deliberately *not*
+       redeclared in `.dark`: a `var()` resolves in the consumer's scope, so
+       overriding `--va-group-quiet-fill` alone carries all three, and the dark
+       theme is given no second place for them to drift apart in. */
+    --va-group-derived-fill: var(--va-group-quiet-fill);
+    --va-group-record-fill: var(--va-group-quiet-fill);
+    --va-group-other-fill: var(--va-group-quiet-fill);
+
+    /* ---------------------------- graph chrome ----------------------------
+
+       Everything the two renderers draw that is not a node fill.
+
+       These are `--va-graph-*` rather than reused `--va-line-*` and `--va-tone-*`
+       tokens because the grounds are different. A document token is painted on
+       paper; these are painted on a canvas the reader can move, over a field of up
+       to 185,693 edges and 35,000 discs. `--va-line-hairline` is the case in
+       point: at 1.20:1 light and 1.38:1 dark it is right as the rule between two
+       rows of a table and wrong as the border of `.va-edge-label`, which is the
+       only edge affordance on a phone. It keeps its value -- 49 sites read it or a
+       composite built from it, and raising it would turn every list in the product
+       into a spreadsheet -- and the edge label moves to `--va-graph-plate-edge`,
+       which is measured for that job.
+
+       Tokens whose value is identical in both themes are declared once here and
+       have no `.dark` entry. That is not tidiness. `--va-graph-label-halo` is the
+       paper stroked under a canvas label, and a literal ivory in this slot is a
+       recorded defect: the 2D view went on stroking a 3.5px ivory halo around
+       every name after a switch to dark, over correctly re-themed carbon ink. Held
+       as `var(--va-graph-canvas)` it cannot be got wrong, because there is no
+       second declaration to forget. --------------------------------------- */
+
+    /* What both renderers clear to, and therefore what every alpha composites
+       against. One name for "the ground", so the gate has something to measure
+       against rather than an assumption about the page. */
+    --va-graph-canvas: var(--va-surface-page);
+    /* The paper, stroked under canvas text. Never a literal. */
+    --va-graph-label-halo: var(--va-graph-canvas);
+    /* A line of paper between two orbs, rather than a stroke.
+       This is the one keyline that needs no tuning: drawn in the canvas colour its
+       ratio against any fill *is* that fill's ratio against the page, so the fill
+       gate above guarantees it clears 3:1 for all nine values in both themes --
+       3.95:1 at worst light, 5.10:1 dark. It is also the manuscript idiom, where
+       forms are separated by paper. */
+    --va-graph-orb-keyline: var(--va-graph-canvas);
+    --va-graph-label-ink: var(--va-text-primary); /* 15.68 light, 16.26 dark on the halo */
+    --va-graph-label-ink-quiet: var(--va-text-tertiary); /* 5.70 light, 6.61 dark */
+
+    /* A plate floating over the canvas. Ink is measured against the plate
+       composited at --va-graph-alpha-plate over the worst fill beneath it, which
+       costs 1.67 ratio points in the light theme: 16.94 on the plate alone, 15.27
+       over a plate laid on unresolved-deity. */
+    --va-graph-plate: var(--va-surface-raised); /* 1.08 light, 1.09 dark on the canvas */
+    --va-graph-plate-ink: var(--va-text-primary); /* bled 15.27 light, 13.40 dark, AA */
+    --va-graph-plate-ink-quiet: var(--va-text-secondary); /* bled 5.64 light, 6.90 dark, AA */
+
+    /* A highlight, drawn at --va-graph-alpha-orb-sheen and never near opaque. Gold
+       rather than paper so that even drawn wrongly it is not the dark theme's
+       focus ring; over the fills at 0.18 it reads 1.30 to 1.39:1. */
+    --va-graph-orb-sheen: var(--va-gold-100);
+
+    /* The relation under the pointer, in the pointer's own ink. One step off the
+       focus ring -- dE00 11.1 light, 8.7 dark -- so a hovered relation and a
+       selected subject are not the same mark. */
+    --va-graph-relation-hover: var(--va-text-strong); /* 9.93 light, 12.69 dark */
+
+    /* --- The one token whose job is to be seen on a coloured thing.
+
+       `--va-graph-focus-ring` marks what the reader selected, so it is measured
+       against the fills and never against the page. The 2D view drew it in
+       `--va-accent-base`, and the measured result was 1.18:1 light and 1.07:1 dark
+       over the node it was marking: the ring that says "this is the one" was
+       invisible on the one.
+
+       The arithmetic admits exactly one family of answers, and it is worth writing
+       down because it is also what sets the fill bands above. In the light theme
+       the fills are darker than the page, so a light ring would need luminance
+       0.852 to clear 3:1 against the palest composited fill and would then sit at
+       1.02:1 against the ivory it crosses; the ring has to be darker than every
+       fill, and the darkest thing in the system is the ink. In the dark theme the
+       fills are lighter than the page and the argument inverts exactly: no colour
+       is dark enough, because the requirement solves to a negative luminance, so
+       the ring has to be lighter than every fill, and the lightest thing in the
+       system is the paper.
+
+       So the rule is one sentence: the focus ring is the theme's extreme
+       primitive. That is what caps the fills -- carbon-900 holds 3:1 up to a fill
+       of 5.00:1 against the page, ivory-50 up to 5.65:1 -- and the search for the
+       nine values was run inside those caps rather than checked against them
+       afterwards.
+
+       Measured over all nine fills at every alpha a ringed node is actually drawn
+       at -- 1.00 for an opaque orb, 0.96 in FOCUS, 0.94 for the 2D subject, a
+       recessive 0.55 node and a dimmed 0.85 one never being the selected one --
+       the worst case is 3.14:1 light and 3.12:1 dark. Against the canvas it is
+       15.68 and 17.58, so it is not leaning on the fill to be seen either.
+
+       What it cannot carry is the difference between hovered and selected, because
+       in either theme both have to be the same extreme. That distinction lives in
+       stroke width and in `--va-graph-relation-primary` on the subject's own
+       edges, where there is a page to contrast against. ------------------- */
+    --va-graph-focus-ring: var(--va-carbon-900); /* worst fill 3.14:1, canvas 15.68:1 */
+
+    /* --- Edges and relations.
+
+       `edge-quiet` is the resting weight of the whole field, and is deliberately
+       sub-threshold as one stroke at 1.04:1. The value is set so the accumulation
+       reads instead: six crossings stack to an effective alpha of 0.265 and
+       1.23:1, which is where a constellation boundary appears. Judging this one
+       against 3:1 would be judging it against a job it does not have.
+
+       `edge-bridge` is the opposite -- a single line whose whole point is that one
+       of them is visible -- so it is measured as a single stroke. It clears 3:1
+       from alpha 0.80 upward, which is the bridge renderer's constraint rather
+       than this file's; the gate prints that minimum alpha so it cannot be
+       assumed.
+
+       `relation-primary` is rubric, and rubric-700 rather than the accent because
+       the accent and the deity fill measure dE00 4.1 apart. A relation drawn in
+       the accent would read as a deity, and that collision is already recorded in
+       palette.ts, where an earlier build used the deity fill *as* the accent. At
+       rubric-700 the separation is 10.8 light and 12.3 dark.
+
+       `relation-secondary` is a muted warm neutral and the only token here whose
+       gate is two-sided, 2.0 <= r < 3.0. It means "present but not asserted", so
+       it may neither vanish into the page nor start claiming to be information. A
+       one-sided floor would let someone raise it and quietly delete the
+       distinction. -------------------------------------------------------- */
+    --va-graph-edge-quiet: #aa9c7f; /* 2.38:1 canvas; 1.04 at rest, 1.23 at six crossings */
+    --va-graph-edge-bridge: #7a705d; /* 4.29:1 canvas, 3:1 from alpha 0.80 */
+    --va-graph-relation-primary: var(--va-rubric-700); /* 6.79:1 canvas, dE00 10.8 from deity */
+    --va-graph-relation-secondary: #9b9080; /* 2.76:1 canvas, inside the 2.0-3.0 band */
+
+    /* --- Paths.
+
+       `path-strong` is the route itself and can be drawn on the canvas beside
+       nodes, so it carries the dE00 >= 5 separation from every fill that a drawn
+       mark needs: 24.5 light, 12.6 dark. The three stops are a ramp along the
+       hops, so what has to hold of them is that each clears 3:1 against the canvas
+       and that adjacent stops are told apart -- dE00 6.2, 8.6 and 11.2 light.
+       Indigo because it is the palette's structural colour, and because at L* 22
+       against person's L* 50 it cannot be read as a subject. -------------- */
+    --va-graph-path-strong: var(--va-indigo-700); /* 10.80:1 canvas */
+    --va-graph-path-stop-1: #35495f; /* 8.14:1 */
+    --va-graph-path-stop-2: #4f6179; /* 5.56:1 */
+    --va-graph-path-stop-3: #6f7d8f; /* 3.69:1 */
+
+    /* The edge of a plate, and of `.va-edge-label`. Clears 3:1 against both the
+       plate it borders and the canvas it floats over, 3.84 and 3.55, which is the
+       pair of grounds `--va-line-hairline` was failing at 1.20:1. */
+    --va-graph-plate-edge: #847e70;
 }
 
 .dark {
@@ -191,28 +393,56 @@
         0 0 0 1px var(--va-night-line-strong), 0 24px 56px -28px rgb(0 0 0 / 0.8);
     --va-scrim: color-mix(in srgb, #000 62%, transparent);
 
-    --va-group-deity-fill: #e07858;
-    --va-group-deity-text: #e07858;
-    --va-group-unresolved-deity-fill: #9b807a;
-    --va-group-unresolved-deity-text: #a48881;
-    --va-group-passage-fill: #c7ab7e;
-    --va-group-passage-text: #c7ab7e;
-    --va-group-person-fill: #86a6bb;
-    --va-group-person-text: #86a6bb;
-    --va-group-idea-fill: #8fb3a6;
-    --va-group-idea-text: #8fb3a6;
-    --va-group-rite-fill: #ab8ec0;
-    --va-group-rite-text: #ab8ec0;
-    --va-group-thing-fill: #a5a08c;
-    --va-group-thing-text: #a5a08c;
-    --va-group-wording-fill: #77a9b8;
-    --va-group-wording-text: #77a9b8;
-    --va-group-derived-fill: #a8a8a8;
-    --va-group-derived-text: #a8a8a8;
-    --va-group-record-fill: #9faaa5;
-    --va-group-record-text: #9faaa5;
-    --va-group-other-fill: #9faaa5;
-    --va-group-other-text: #9faaa5;
+    /* The nine values, dark. Same three constraints as the light table above,
+       with the focus-ring ceiling at 5.65:1 rather than 5.00:1 because the ring is
+       ivory-50 here rather than the ink. The 5:1 floor is not this file's
+       invention: release-closure.spec.ts measures it at full alpha and every value
+       below clears it, the tightest being wording at 5.10.
+
+       Ratio against the page, then composited at 0.85 - the derivation alpha, as in the
+       light table - then the ring against it. At the engine's current 0.92 these nine
+       measure 4.50 to 4.96. */
+    --va-group-deity-fill: #d27363; /* 5.61 | 4.37 | ring 3.13 */
+    --va-group-unresolved-deity-fill: #a37f74; /* 5.15 | 4.05 | ring 3.41 */
+    --va-group-passage-fill: #98854c; /* 5.10 | 4.02 | ring 3.44 */
+    --va-group-person-fill: #6690b8; /* 5.50 | 4.30 | ring 3.20 */
+    --va-group-idea-fill: #759580; /* 5.61 | 4.38 | ring 3.13 */
+    --va-group-rite-fill: #a378a7; /* 5.11 | 4.02 | ring 3.44 */
+    --va-group-thing-fill: #8e9169; /* 5.64 | 4.41 | ring 3.12 */
+    --va-group-wording-fill: #4f9191; /* 5.10 | 4.01 | ring 3.45 */
+    /* Overriding this one value carries derived, record and other, which are
+       declared as `var()` in `:root` and never redeclared here. */
+    --va-group-quiet-fill: #838884; /* 5.13 | 4.04 | ring 3.43 */
+
+    /* --- graph chrome, dark.
+
+       Only the tokens whose value actually differs appear here. The canvas, the
+       label halo, the orb keyline, the plate, both inks, the quiet ink, the sheen
+       and the hover relation all resolve through themed aliases and are correct in
+       this theme without a line in this block -- which is the point, since the
+       halo's one recorded failure was a second declaration going stale. ----- */
+
+    /* The paper, because in this theme nothing is lighter, and 3:1 against a fill
+       cannot be reached from below: the requirement solves to a negative
+       luminance. Worst over the nine fills at the alphas a ringed node is drawn at
+       is 3.12:1; against the canvas, 17.58:1. */
+    --va-graph-focus-ring: var(--va-ivory-50);
+
+    --va-graph-plate-edge: #7a7c6f; /* 4.35:1 canvas, 3.99:1 plate */
+    --va-graph-edge-quiet: #5a5c50; /* 2.71:1 canvas; 1.03 at rest, 1.23 at six crossings */
+    --va-graph-edge-bridge: #8a8c7a; /* 5.38:1 canvas, 3:1 from alpha 0.66 */
+    --va-graph-relation-primary: var(--va-rubric-300); /* 8.41:1, dE00 12.3 from deity */
+    --va-graph-relation-secondary: #5f5b50; /* 2.73:1, inside the 2.0-3.0 band */
+
+    /* The ramp runs light-to-dark here, the reverse of the light theme, and
+       path-strong sits two steps clear of the person fill rather than beside it:
+       indigo-300 measured dE00 8.1 from #6690b8, which is a route that reads as a
+       subject. At #9db2c9 the separation is 12.6, and adjacent stops are 8.5, 9.4
+       and 8.1 apart. */
+    --va-graph-path-strong: #9db2c9; /* 8.50:1 canvas */
+    --va-graph-path-stop-1: #7e97b4; /* 6.14:1 */
+    --va-graph-path-stop-2: #667d95; /* 4.34:1 */
+    --va-graph-path-stop-3: #556880; /* 3.24:1 */
 }
 
 /* Hand the aliases to Tailwind so the utility escape hatch exists without

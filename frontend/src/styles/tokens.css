@@ -200,6 +200,70 @@
     --va-border-width: 1px;
     --va-border-width-accent: 3px;
 
+    /* ========================================================================
+       Graph compositing alphas.
+
+       Bare numbers, on purpose, so `getPropertyValue` returns something a script
+       can multiply.
+
+       These are primitives rather than theme aliases because they are facts about
+       the renderers and not about the paper: the 3D engine writes 0.85 into the
+       node alpha attribute in WORLD and 0.96 in FOCUS, and the 2D canvas sets
+       `globalAlpha` to 0.94 for the subject and its first ring and 0.55 for the
+       second. Both composite in encoded sRGB -- the WebGL drawing buffer is RGBA8
+       and both fragment shaders run `colorspace_fragment` before the blend -- so a
+       composited pixel is `alpha * fill + (1 - alpha) * canvas` per 8-bit channel,
+       which is what scripts/audit-graph-contrast.mjs computes.
+
+       Declaring them is the structural change that makes that gate possible at
+       all. Before this the alphas existed only as literals inside two renderers,
+       so no audit could know what a fill composites to: the token table said the
+       light deity fill cleared 3:1 against the page and the reader was looking at
+       a pixel that did not. Four of the eleven light fills were under 3:1 as
+       tokens and every check in the repository reported pass.
+
+       A renderer that changes one of these must change it here too. The gate
+       measures what is written here, so a drifted literal is not a mismatch, it is
+       a silently unmeasured surface.
+       ======================================================================== */
+    /* engine.ts NODE_ALPHA_REST. It was 0.85 when the nine values below were derived, and
+       the palette was built to clear 3:1 at 0.85; a later engine change raised it, which can
+       only add contrast. The token follows the renderer rather than the derivation, because a
+       token that states the alpha the palette was designed for and not the one the renderer
+       draws at would have the gate measuring a composite nobody sees. */
+    --va-graph-alpha-world: 0.92;
+    /* engine.ts, the focused neighbourhood. Everything outside it is discarded, not faded. */
+    --va-graph-alpha-focus: 0.96;
+    /* engine.ts NODE_ALPHA_CURATED: an orb the reader asked for. The binding case for the
+       focus ring, because it is the closest any node gets to opaque. */
+    --va-graph-alpha-curated: 0.98;
+    /*
+     * The 2D view draws orbs opaque, and this token exists to say so rather than to scale
+     * anything.
+     *
+     * It used to be 0.94, with a second recessive tier at 0.55. The 0.55 tier is gone, and the
+     * reason is arithmetic rather than taste: composited at 0.55 over the light page the nine
+     * fills reach 1.97:1, and a *pure black* fill reaches only 4.61:1, so 3:1 at that alpha is
+     * unreachable for any palette whatever. No colour work could have rescued it. Recession in
+     * that view now comes from size, from whether the mark is named, from the weight of the
+     * lines reaching it and from paint order - four channels that do not spend contrast.
+     */
+    --va-graph-alpha-planar: 1;
+    /* The resting weight of one of 185,693 edges. Deliberately sub-threshold as a
+       single stroke at 1.03:1; structure comes from crossings, and six of them
+       stack to an effective 0.265 and 1.23:1, which is where a constellation
+       boundary becomes visible without any one line asserting. */
+    --va-graph-alpha-edge-rest: 0.05;
+    /* The only alpha a sheen may be drawn at. Composited over every group fill it
+       lands between 1.20 and 1.39:1, which is precisely why it cannot be mistaken
+       for the focus ring at 3.12:1. Drawn opaque it would be a second keyline. */
+    --va-graph-alpha-orb-sheen: 0.18;
+    /* A plate laid over the canvas. Ink on a plate is measured against the plate
+       composited at this alpha over the worst fill it can sit on, never against
+       the plate alone: the bleed-through costs 1.7 ratio points in the light
+       theme, and a plate audited against itself would not see it. */
+    --va-graph-alpha-plate: 0.92;
+
     /* --- Motion. ------------------------------------------------------------ */
     --va-duration-instant: 100ms;
     --va-duration-fast: 160ms;

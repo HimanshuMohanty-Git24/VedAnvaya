@@ -380,16 +380,26 @@
      */
     padding: 1px 5px;
     border-radius: var(--va-radius-xs);
-    background: var(--va-surface-page);
-    color: var(--va-text-primary);
+    /*
+     * `--va-graph-label-halo` rather than a page colour, because this is paper stroked under
+     * canvas text and the token layer holds it as `var(--va-graph-canvas)` so it cannot be got
+     * wrong. A literal ivory in this slot is a recorded defect: the 2D view went on stroking an
+     * ivory halo around every name after a switch to dark, over correctly re-themed carbon ink.
+     */
+    background: var(--va-graph-label-halo);
+    /* 5.70:1 light, 6.61:1 dark on the halo. A neighbour's name is context, not the answer. */
+    color: var(--va-graph-label-ink-quiet);
     /* The same 300 ms crossfade the phrases use. See `--va-label-fade`. */
     transition: opacity var(--va-label-fade) var(--va-ease-standard);
 }
 
+/* The subject, or the one under the pointer: a plate rather than a halo, and the full ink.
+   15.68:1 light and 16.26:1 dark on the halo; the keyline is 3.84:1 / 3.99:1 on the plate. */
 .va-world-label.is-strong {
     font-size: var(--va-text-md);
-    color: var(--va-text-primary);
-    border: var(--va-border-width) solid var(--va-line-strong);
+    background: var(--va-graph-plate);
+    color: var(--va-graph-label-ink);
+    border: var(--va-border-width) solid var(--va-graph-plate-edge);
 }
 
 /* ----------------------------------------------------- relationship labels - */
@@ -437,21 +447,26 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    color: var(--va-accent-text);
-    background: var(--va-surface-page);
+    /*
+     * The chip is drawn in the same ink as the line it names: 7.34:1 light and 7.71:1 dark
+     * against the plate. Tying the two together is the point - a phrase that is not the colour of
+     * its own relation is a caption looking for a line.
+     */
+    color: var(--va-graph-relation-primary);
+    background: var(--va-graph-plate);
     /*
      * The border was `--va-line-hairline`, measured at 1.20:1 against the page in light and
-     * 1.38:1 in dark. So the only affordance for a relationship on a phone had an invisible
-     * outline, and an audit of token usage found this was the *only* place that token was read.
-     * `--va-line-strong` does not fix it either (1.51:1 light, 1.81:1 dark). `--va-accent-base` is
-     * the one existing token that clears 3:1 in this role in both themes - 4.61:1 light on
-     * `--va-surface-page`, 4.95:1 dark - and it is already the chip's hover fill, so the resting
-     * and hovered states are the same hue at two weights rather than two unrelated colours.
+     * 1.38:1 in dark, and a token audit found this was the *only* place in the product that read
+     * it. So the border of the only edge affordance on a phone was invisible. `--va-line-strong`
+     * does not fix it either, at 1.51:1 and 1.81:1.
      *
-     * This should be a `--va-graph-relation-primary` from the token layer. Agent 7 owns those
-     * values; until one lands that is measured at 3:1 in this role, this reads the accent.
+     * The hairline keeps its value - 49 sites read it or a composite built from it, and raising it
+     * would turn every list in the product into a spreadsheet - and this moves to
+     * `--va-graph-plate-edge`, which the token layer measures for exactly this job: 3.84:1 on the
+     * plate and 3.55:1 on the bare canvas in light, 3.99:1 and 4.35:1 in dark. Both grounds
+     * matter, because a chip near the edge of the plate is read against the canvas behind it.
      */
-    border: var(--va-border-width) solid var(--va-accent-base);
+    border: var(--va-border-width) solid var(--va-graph-plate-edge);
     border-radius: var(--va-radius-xs);
     /*
      * 300 ms, which is MapLibre's `fadeDuration` default and the figure Vaaraniemi, Treib &
@@ -484,7 +499,7 @@
     --va-label-pad-y: 0px;
 }
 
-.va-edge-label[data-pickable="true"]::after {
+.va-edge-label[data-pickable="true"][data-shown="true"]::after {
     content: "";
     position: absolute;
     inset: calc(-1 * var(--va-label-pad-y)) calc(-1 * var(--va-label-pad-x));
@@ -644,8 +659,29 @@
         --va-sheet-height: 44dvh;
     }
 
+    /*
+     * Expanded, but never over the chrome.
+     *
+     * This was `calc(100% - 6rem)` - 684 px of a 780 px stage, leaving 96 px. Measured, the
+     * chrome above it is 168 px in Focus, so the sheet's top edge landed at 161 px and the
+     * renderer control's 44 px targets at 182-227 px were entirely covered: 3D and 2D could
+     * not be reached, 13 px of the view row went with them, and all sixteen drawn orbs
+     * including the subject sat behind furniture with their separation collapsing from 59.5 px
+     * to 36.7 - under the 44 px pitch the neighbour budget exists to guarantee.
+     *
+     * The chrome's height is not a constant that a stylesheet can know: it is 168 px in Focus,
+     * 245 with a subject in World, 294 with the hint showing and 380 in Path. So the page
+     * publishes what it measured for the camera as `--va-graph-chrome-height`, and the sheet
+     * leaves that plus a 7.5rem band - the same floor the budget arithmetic uses, so the two
+     * cannot disagree about how much canvas has to survive.
+     *
+     * The fallback is the widest chrome rather than the narrowest: before the first measurement
+     * a sheet that is too short is recoverable and one that covers the controls is not.
+     */
     .va-world-panel[data-sheet="expanded"] {
-        --va-sheet-height: calc(100% - var(--va-space-6xl));
+        --va-sheet-height: calc(
+            100% - var(--va-graph-chrome-height, 24rem) - 7.5rem
+        );
     }
 
     /*
@@ -717,15 +753,26 @@
  * The line it names is one pixel wide in a spatial scene; the word on it is a comfortable
  * click. So the word is what opens the explanation, and it says so on hover.
  */
-.va-edge-label[data-pickable="true"] {
+/*
+ * `[data-shown="true"]` and not just `[data-pickable]`.
+ *
+ * Every span in the pool is pickable, including the ones showing nothing. With
+ * `pointer-events: auto` on all of them, a faded, empty, fully transparent chip went on
+ * intercepting clicks on the canvas underneath - so a reader clicking where a label used to be hit
+ * an invisible target and got nothing, which reads as the graph ignoring them. Caught by the
+ * end-to-end gate, which refused to click a real label because an empty one was over it.
+ */
+.va-edge-label[data-pickable="true"][data-shown="true"] {
     pointer-events: auto;
     cursor: pointer;
 }
 
-.va-edge-label[data-pickable="true"]:hover {
+/* Inverted, in the same hue: 7.34:1 light and 8.80:1 dark for the text on the fill. Resting and
+   hovered are one colour at two weights rather than two unrelated colours. */
+.va-edge-label[data-pickable="true"][data-shown="true"]:hover {
     color: var(--va-text-inverse);
-    background: var(--va-accent-base);
-    border-color: var(--va-accent-base);
+    background: var(--va-graph-relation-primary);
+    border-color: var(--va-graph-relation-primary);
 }
 
 /* ------------------------------------------------- relationship inspector - */

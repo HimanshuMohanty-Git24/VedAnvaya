@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useId, useRef } from "react";
 import type { World } from "@/lib/world/artifact";
 import { describePredicate, edgePredicate, type PredicateTable } from "@/lib/world/predicates";
 
@@ -25,6 +26,16 @@ import { describePredicate, edgePredicate, type PredicateTable } from "@/lib/wor
  * the API does not traverse them. For those the phrase is derived from the predicate's own name
  * and `basis` says so, and this declines to show an explanation rather than presenting a
  * generated sentence in the voice of the ones a scholar wrote.
+ *
+ * ## Why it is a dialog and where the focus goes
+ *
+ * It is opened by activating a control - a phrase on the canvas with a pointer, or a row in the
+ * relations list with a keyboard - and it is the answer to that activation, so it takes focus and
+ * gives it back. Not modal: the map behind it stays usable, and trapping a reader inside a
+ * three-sentence explanation would be worse than not offering one. So `role="dialog"` with a
+ * label and no `aria-modal`, focus moved to the heading on open, and focus returned to whatever
+ * opened it on close - which is the only thing that makes the keyboard path a loop rather than a
+ * one-way trip into a panel the reader then has to tab out of from the top of the document.
  */
 
 export function RelationshipInspector({
@@ -43,6 +54,32 @@ export function RelationshipInspector({
     onClose: () => void;
     onSelect: (node: number) => void;
 }) {
+    const headingId = useId();
+    const headingRef = useRef<HTMLParagraphElement>(null);
+    /**
+     * The control that opened it.
+     *
+     * Captured at the moment it opens rather than passed in, because the two things that open it
+     * are a DOM span outside React's tree and a button inside it, and neither can name the other.
+     * Restored only if it is still in the document: a reader who chooses one of the two subjects
+     * in the statement has navigated away, and the row they clicked may not exist any more.
+     */
+    const invoker = useRef<HTMLElement | null>(null);
+
+    useEffect(() => {
+        if (edge === null) {
+            const target = invoker.current;
+            invoker.current = null;
+            if (target && document.contains(target)) target.focus();
+            return;
+        }
+        invoker.current = document.activeElement as HTMLElement | null;
+        /* The heading rather than the close button. Announcing "close" as the first thing a
+           reader hears on opening an explanation tells them how to leave before it has told them
+           what they are in. */
+        headingRef.current?.focus();
+    }, [edge]);
+
     /* Negative keys are path hops, which are explained in the route list rather than here, and a
        non-integer is a click that read a stale attribute off a hidden label. Neither is an edge. */
     if (
@@ -65,9 +102,29 @@ export function RelationshipInspector({
     const curated = semantics.basis === "CURATED";
 
     return (
-        <aside aria-label="The selected relationship" className="va-relationship">
+        <aside
+            aria-labelledby={headingId}
+            className="va-relationship"
+            /* Escape closes it, handled here rather than on the document. The page has its own
+               Escape listener with a larger meaning, and a reader inside a dialog pressing Escape
+               means "close this", not "leave the subject I am reading". Focus is inside this
+               element, so this handler sees the key first and stops it going further. */
+            onKeyDown={(event) => {
+                if (event.key !== "Escape") return;
+                event.stopPropagation();
+                onClose();
+            }}
+            role="dialog"
+        >
             <div className="va-relationship-head">
-                <p className="va-relationship-kind">Relationship</p>
+                <p
+                    className="va-relationship-kind"
+                    id={headingId}
+                    ref={headingRef}
+                    tabIndex={-1}
+                >
+                    Relationship
+                </p>
                 <button
                     aria-label="Close the relationship"
                     className="va-relationship-close"
@@ -80,9 +137,14 @@ export function RelationshipInspector({
 
             {/*
              * Set as a sentence with the two subjects in it, in stored order. That order is the
-             * reading order and nothing more: only ten of fifty-seven predicates declare a
-             * direction at all, so an arrowhead here would assert something the ontology does
-             * not. Where symmetry *is* declared, the note below says so outright.
+             * reading order and nothing more: of the sixty predicates the exported vocabulary
+             * declares, eight declare a direction at all - five DIRECTED and three SYMMETRIC - so
+             * an arrowhead here would assert something the ontology declines to state for the
+             * other fifty-two. Where symmetry *is* declared, the note below says so outright.
+             *
+             * The figure to quote is 8 of 60, verified against `world.predicates.json` and the
+             * artifact's 48 edge types, all eight of which are drawable. This comment previously
+             * said "ten of fifty-seven", which was wrong in both numbers.
              */}
             <p className="va-relationship-statement">
                 <button onClick={() => onSelect(source)} type="button">

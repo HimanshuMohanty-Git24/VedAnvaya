@@ -110,21 +110,26 @@ const TONE_PAIRS = [
     ["--va-tone-unbuilt", "--va-tone-unbuilt-surface"],
     ["--va-tone-neutral", "--va-tone-neutral-surface"],
 ];
-/* All eleven semantic groups the graph can render, not only the ones a given root happens to
-   produce. The end-to-end suite injects the missing chips for the same reason. */
-const GROUPS = [
-    "deity",
-    "unresolved-deity",
-    "passage",
-    "person",
-    "idea",
-    "rite",
-    "thing",
-    "wording",
-    "derived",
-    "record",
-    "other",
-].map((g) => `--va-group-${g}-text`);
+/*
+ * The graph is not audited here, and that is a decision rather than a gap.
+ *
+ * It used to be, and it was the worst kind of coverage: 88 of this script's 198 pairs - eleven
+ * groups against four surfaces in two themes - were spent on `--va-group-*-text` tokens that
+ * no stylesheet and no renderer ever read. The 22 `-fill` tokens that were painted got none.
+ * So the report said "all pass" while four light fills sat under 3:1 against the page, and six
+ * of eleven failed once composited at the alpha the renderer actually draws them at. The dead
+ * tokens are gone; the 110 remaining pairs here are all on colours something paints.
+ *
+ * Nothing in the graph can be checked the way this script checks: a node fill is composited at
+ * 0.85, 0.96, 0.94 or 0.55 over the canvas before anyone sees it, and a focus ring has to be
+ * measured against a *fill* rather than against a surface. That work is
+ * scripts/audit-graph-contrast.mjs, and the check below is what keeps this delegation from
+ * quietly becoming an absence: if that script stops being wired into the `audit` chain, this
+ * one fails, because otherwise removing it would restore exactly the clean report that hid
+ * four failing fills.
+ */
+const PACKAGE = path.join(here, "..", "package.json");
+const GRAPH_GATE = "scripts/audit-graph-contrast.mjs";
 
 /** Body text and anything under 18.66px needs 4.5. Large text needs 3. Nothing here is large. */
 const AA = 4.5;
@@ -165,9 +170,8 @@ for (const [themeName, aliases] of [
         check(fg, "--va-surface-page");
         check(fg, "--va-surface-raised");
     }
-    /* Every surface, including strong: the graph legend sits on an active chip and that is
-       where the end-to-end contrast walk found rite at 4.46 and thing at 4.45. */
-    for (const fg of GROUPS) for (const bg of SURFACES) check(fg, bg);
+    /* The graph's own tokens are measured in scripts/audit-graph-contrast.mjs, against
+       composited grounds this script has no way to construct. */
     for (const fg of SHIM_TEXT)
         for (const bg of SHIM_SURFACES) {
             const merged = { ...shim, ...aliases };
@@ -195,5 +199,32 @@ for (const [themeName, aliases] of [
     }
 }
 
-console.log(`\n${checked} pairs checked, ${failures} below ${AA}:1`);
-process.exit(failures ? 1 : 0);
+/*
+ * Coverage, stated alongside precision.
+ *
+ * "N pairs checked, 0 failing" is the sentence this suite printed while the graph was broken,
+ * and it was true. What it did not say was how many of those pairs were on colours nobody
+ * paints. A count is not a measurement of coverage, so the delegation is asserted instead.
+ */
+const chain = JSON.parse(readFileSync(PACKAGE, "utf8")).scripts?.audit ?? "";
+let structural = 0;
+if (!chain.includes(GRAPH_GATE)) {
+    structural += 1;
+    console.error(
+        `\ngraph: the \`audit\` script in package.json does not run ${GRAPH_GATE}.\n` +
+            "The graph's tokens are deliberately not measured in this file, so without that\n" +
+            "script in the chain they are measured nowhere - and this file will keep reporting\n" +
+            "a clean run, which is what it did over four fills that were under 3:1.",
+    );
+} else {
+    console.log(`\ngraph: delegated to ${GRAPH_GATE}, which the \`audit\` chain runs.`);
+}
+
+/* Counted apart from the pair failures. Folding a broken delegation into "N below 4.5:1"
+   would report a structural hole as a contrast figure, and the figure would be right while
+   the sentence it sat in was wrong. */
+console.log(
+    `\n${checked} pairs checked, ${failures} below ${AA}:1` +
+        (structural ? `, and ${structural} structural failure(s) above` : ""),
+);
+process.exit(failures + structural ? 1 : 0);

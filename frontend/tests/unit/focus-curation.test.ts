@@ -373,6 +373,70 @@ describe("choosing what to draw", () => {
 /* --------------------------------------------------------------- lines in the scene - */
 
 describe("the lines drawn", () => {
+    it("gives a multiply-attested pair its rarest line, not its lowest-numbered one", async () => {
+        /*
+         * The guaranteed spoke used to be `neighbour.edges[0]`, the lowest edge index, so on a
+         * pair joined by two relationships the drawn line was whichever the build happened to
+         * write first. A rare relationship sitting at a higher index could be absent from the
+         * scene entirely - the same failure the artifact's notes record for the planar world
+         * projection, where 16,895 edges were dropped by index order rather than by importance.
+         *
+         * Indra is the case that matters: 1,803 of its pairs carry two edges, and its
+         * predicates run from 3,566 `MENTIONS_DEVATA` down to a single `EPITHET_VARIANT_OF`.
+         * Where a pair carries both, the epithet is the line worth drawing.
+         */
+        const { world, labels } = await realWorld();
+        const root = nodeById(labels, INDRA);
+        const scene = focusNeighbourhood(world, labels, root, FOCUS_BUDGET);
+
+        const frequency = new Map<number, number>();
+        const incident = edgesOf(world, root);
+        for (let i = 0; i < incident.length; i += 1) {
+            const type = world.edgeType[incident[i]];
+            frequency.set(type, (frequency.get(type) ?? 0) + 1);
+        }
+
+        /* One spoke per shown neighbour is guaranteed; those are the ones under test. */
+        const firstFor = new Map<number, number>();
+        for (const spoke of scene.spokes) {
+            if (!firstFor.has(spoke.node)) firstFor.set(spoke.node, spoke.edge);
+        }
+
+        let multiplyAttested = 0;
+        for (const neighbour of scene.shown) {
+            if (neighbour.edges.length < 2) continue;
+            multiplyAttested += 1;
+            const drawn = firstFor.get(neighbour.node);
+            expect(drawn, `${neighbour.label} has no guaranteed line`).toBeDefined();
+            const rarest = Math.min(
+                ...Array.from(neighbour.edges, (edge) => frequency.get(world.edgeType[edge]) ?? 0),
+            );
+            expect(
+                frequency.get(world.edgeType[drawn as number]) ?? 0,
+                `${neighbour.label}: drew a ${world.manifest.edgeTypes[world.edgeType[drawn as number]]} ` +
+                    `line where a rarer kind was available`,
+            ).toBe(rarest);
+        }
+
+        /* Without this the loop above can pass by never running, which is the failure mode
+           this suite's own cost test also guards against. */
+        expect(
+            multiplyAttested,
+            "no shown neighbour carries two relationships, so nothing was actually tested",
+        ).toBeGreaterThan(0);
+    });
+
+    it("draws every one of a pair's lines when there is room, and none of them twice", async () => {
+        /* The parallel pass skipped index zero on the assumption that the first pass had taken
+           it. Once the first pass chooses by rarity that assumption is false, and skipping by
+           index would draw the representative again and drop whatever sat at zero. */
+        const { world, labels } = await realWorld();
+        const root = nodeById(labels, INDRA);
+        const scene = focusNeighbourhood(world, labels, root, FOCUS_BUDGET);
+        const seen = new Set(scene.spokes.map((spoke) => spoke.edge));
+        expect(seen.size).toBe(scene.spokes.length);
+    });
+
     it("bounds the edges between neighbours, and never mistakes a spoke for one", async () => {
         /*
          * Unbounded there are 67 lines among Indra's forty, and a top-forty-by-degree set with

@@ -29,6 +29,29 @@
  * Per-group caps hold the shape open, and the edge budget is dealt out predicate by predicate
  * so the rarer kinds survive alongside the common one.
  *
+ * ## Why a subject can be refused for standing too close to one already taken
+ *
+ * The coordinates are the world's own, and the world was laid out for 35,370 subjects in a
+ * canvas the size of a page. At the size of a hero panel that layout does not separate:
+ * measured on the running panel, fifteen to eighteen of the fifty nearest-neighbour distances
+ * came in under six CSS pixels, and the closest pair was 2.3 px apart at 1440 and 1.4 px at
+ * 390. The camera cannot fix it - the sweep from 1.6 to 2.6 times the cloud radius moved the
+ * closest pair between 1.0 and 2.0 px and never changed the count under six - because framing
+ * scales every distance at once.
+ *
+ * Two subjects a pixel apart are one disc with two meanings, and the rear one cannot even be
+ * picked: the picker scores by depth as well as distance, so whichever is nearer the camera
+ * wins every time. The pairs turned out to be the deity-and-word doublets the layout had every
+ * reason to place together - "Agni" the deity on top of "fire (agni)" the thing, "Soma" on
+ * "soma juice (soma)", "the Waters" on "waters (āpaḥ)" - so the front door was showing the
+ * same subject twice as a smudge.
+ *
+ * So a candidate standing within `MIN_SEPARATION` of one already admitted is refused, and the
+ * growth takes the next neighbour instead. Nothing is moved: a coordinate here is still the
+ * one the offline simulation produced, which is the whole claim this file rests on. Measured,
+ * the rule costs no subjects at all - the neighbourhood is deep enough to supply fifty either
+ * way - and it replaces the doublets with Rudra, Visnu, Usas, the Sarasvati river and kingship.
+ *
  * Usage:
  *     node scripts/build-home-world.mjs
  */
@@ -67,6 +90,17 @@ const GROUP_CAPS = {
 const NODE_BUDGET = 60;
 /** Enough to read as a fabric, few enough to stay a diagram at panel size. */
 const EDGE_BUDGET = 110;
+
+/**
+ * How far apart two admitted subjects must stand, as a fraction of the unit cube's half-edge.
+ *
+ * 0.08 buys a closest pair of 16.9 CSS px at a 1440 viewport and 10.3 px at 390, measured off
+ * the running panel at the framing it ships with. Below 0.06 the smallest gap drops under ten
+ * pixels on a phone; above 0.10 the growth starts running out of eligible neighbours and the
+ * idea and thing groups come back short, which is the one-colour failure the caps exist to
+ * prevent - 47 nodes at 0.10 and 32 at 0.15.
+ */
+const MIN_SEPARATION = 0.08;
 
 /* ------------------------------------------------------------------ read - */
 
@@ -130,35 +164,88 @@ const seed = [...adjacency.keys()].sort(
     (a, b) => intraDegree(b) - intraDegree(a) || labels.ids[a].localeCompare(labels.ids[b]),
 )[0];
 
-const taken = new Map(Object.keys(GROUP_CAPS).map((group) => [group, 0]));
-const selected = [];
-const seen = new Set();
-
-function admit(node) {
-    const group = groupName(node);
-    if (taken.get(group) >= GROUP_CAPS[group]) return false;
-    taken.set(group, taken.get(group) + 1);
-    seen.add(node);
-    selected.push(node);
-    return true;
-}
-
-admit(seed);
-const queue = [seed];
-while (queue.length > 0 && selected.length < NODE_BUDGET) {
-    const current = queue.shift();
-    const neighbours = [...new Set(adjacency.get(current))]
-        .filter((node) => !seen.has(node))
-        .sort(
-            (a, b) => intraDegree(b) - intraDegree(a) || labels.ids[a].localeCompare(labels.ids[b]),
-        );
-    for (const node of neighbours) {
-        if (selected.length >= NODE_BUDGET) break;
-        // A node rejected for a full group is not marked seen: a later ring may still want it
-        // if the caps change, and leaving it unmarked keeps this loop's behaviour obvious.
-        if (admit(node)) queue.push(node);
+/**
+ * The centroid of a set and its widest per-axis distance from it.
+ *
+ * The reach is the divisor that lands the slice in a unit cube, so it is also the ruler the
+ * separation rule has to be measured against: `MIN_SEPARATION` is a fraction of the unit cube
+ * and the artifact's coordinates are not.
+ */
+function extent(nodes) {
+    const centre = [0, 0, 0];
+    for (const node of nodes) {
+        for (let k = 0; k < 3; k += 1) centre[k] += positions[node * 3 + k];
     }
+    for (let k = 0; k < 3; k += 1) centre[k] /= nodes.length;
+
+    let reach = 0;
+    for (const node of nodes) {
+        for (let k = 0; k < 3; k += 1) {
+            reach = Math.max(reach, Math.abs(positions[node * 3 + k] - centre[k]));
+        }
+    }
+    return { centre, reach };
 }
+
+function distance(a, b) {
+    let sum = 0;
+    for (let k = 0; k < 3; k += 1) {
+        const d = positions[a * 3 + k] - positions[b * 3 + k];
+        sum += d * d;
+    }
+    return Math.sqrt(sum);
+}
+
+/**
+ * Grow the selection outward from the seed, honouring the caps and the separation rule.
+ *
+ * `ruler` converts artifact units into unit-cube units. Null runs without the separation rule,
+ * which is how the ruler itself is established: the scale is a property of the set chosen, so
+ * the first pass chooses a set and the second uses its reach to keep subjects apart. The two
+ * passes disagree about the ruler by well under a per cent, which is why this is two lines
+ * rather than a fixed point iteration.
+ */
+function grow(ruler) {
+    const taken = new Map(Object.keys(GROUP_CAPS).map((group) => [group, 0]));
+    const selected = [];
+    const seen = new Set();
+
+    const admit = (node) => {
+        const group = groupName(node);
+        if (taken.get(group) >= GROUP_CAPS[group]) return false;
+        if (ruler !== null) {
+            for (const other of selected) {
+                if (distance(node, other) / ruler < MIN_SEPARATION) return false;
+            }
+        }
+        taken.set(group, taken.get(group) + 1);
+        seen.add(node);
+        selected.push(node);
+        return true;
+    };
+
+    admit(seed);
+    const queue = [seed];
+    while (queue.length > 0 && selected.length < NODE_BUDGET) {
+        const current = queue.shift();
+        const neighbours = [...new Set(adjacency.get(current))]
+            .filter((node) => !seen.has(node))
+            .sort(
+                (a, b) =>
+                    intraDegree(b) - intraDegree(a) || labels.ids[a].localeCompare(labels.ids[b]),
+            );
+        for (const node of neighbours) {
+            if (selected.length >= NODE_BUDGET) break;
+            /* A node rejected for a full group or for standing too close is not marked seen: a
+               later ring may still want it if the caps change, and leaving it unmarked keeps
+               this loop's behaviour obvious. */
+            if (admit(node)) queue.push(node);
+        }
+    }
+    return selected;
+}
+
+const selected = grow(extent(grow(null)).reach);
 
 const index = new Map(selected.map((node, i) => [node, i]));
 
@@ -221,18 +308,7 @@ for (let round = 0; edges.length < EDGE_BUDGET; round += 1) {
  * into a shape the corpus does not have. That is exactly the flattening a previous phase had to
  * be torn out for.
  */
-const centre = [0, 0, 0];
-for (const node of selected) {
-    for (let k = 0; k < 3; k += 1) centre[k] += positions[node * 3 + k];
-}
-for (let k = 0; k < 3; k += 1) centre[k] /= selected.length;
-
-let reach = 0;
-for (const node of selected) {
-    for (let k = 0; k < 3; k += 1) {
-        reach = Math.max(reach, Math.abs(positions[node * 3 + k] - centre[k]));
-    }
-}
+const { centre, reach } = extent(selected);
 const scale = reach > 0 ? 1 / reach : 1;
 const round3 = (value) => Math.round(value * 1000) / 1000;
 
@@ -242,7 +318,8 @@ const payload = {
     version: 1,
     generated: new Date().toISOString().replace(/\.\d+Z$/, "Z"),
     source: "public/world/world.bin",
-    note: "A real slice of the world artifact. Coordinates are the world's own, recentred and uniformly scaled into a unit cube.",
+    note: "A real slice of the world artifact. Coordinates are the world's own, recentred and uniformly scaled into a unit cube; nothing is moved. Subjects standing within 0.08 of one already selected are refused rather than repositioned, so the slice is sparser than the world at this scale but every position in it is the world's.",
+    minSeparation: MIN_SEPARATION,
     groups: manifest.groups,
     nodes: selected.map((node) => ({
         id: labels.ids[node],
@@ -299,4 +376,20 @@ console.log(
         .join(", ")}`,
 );
 console.log(`  isolated nodes: ${isolated}`);
+
+/* The number the separation rule exists to move. Reported because a threshold nobody measures
+   the effect of is a constant with an opinion attached. */
+const separations = payload.nodes
+    .map((a, i) =>
+        Math.min(
+            ...payload.nodes
+                .filter((_, j) => j !== i)
+                .map((b) => Math.hypot(a.x - b.x, a.y - b.y, a.z - b.z)),
+        ),
+    )
+    .sort((x, y) => x - y);
+console.log(
+    `  nearest neighbour, unit space: min ${separations[0].toFixed(3)}, ` +
+        `median ${separations[Math.floor(separations.length / 2)].toFixed(3)}`,
+);
 console.log(`  axis spans (x:y:z): ${spans.map((s) => (s / widest).toFixed(3)).join(" : ")}`);

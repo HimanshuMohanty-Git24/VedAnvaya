@@ -466,6 +466,51 @@
     .va-graph-modes {
         gap: var(--va-space-md);
     }
+
+    /*
+     * In Focus the page's own title is furniture.
+     *
+     * Measured live at 390x844: the chrome sat on 245.6 px of a 780 px canvas - 31.5% of it,
+     * opaque and taking taps - and in Focus every one of those pixels is the binding constraint
+     * on how much of a neighbourhood can be drawn, because the budget is derived from the band
+     * left underneath it and not from the phone. The audit figure was 225.6 px; the 20 px it has
+     * gained since is the switch gap, which had to grow to `--va-space-xl` to stop the two rows'
+     * 44 px touch pads overlapping. So the fix for one mobile defect was paid for out of another,
+     * and this is where it is paid back.
+     *
+     * The kicker and the h1 are what go, and only in Focus. There the reader has chosen a
+     * subject and the sheet at the foot names it, its kind, its constellation and its counts, so
+     * "The knowledge world / N subjects, connected" answers a question nobody is asking
+     * any more. In World it is the only thing on the page that says what the page is.
+     *
+     * Clipped rather than `display: none`, because that h1 is the route's only one: removing it
+     * from the accessibility tree would leave the document with no heading at all, which trades
+     * a layout defect for a worse structural one.
+     *
+     * The search label goes the same way for a weaker reason - the input keeps it as its
+     * accessible name and the placeholder repeats it in the open - so that is 19.6 px bought for
+     * one visible word.
+     *
+     * Measured after: 168.2 px, 21.6% of the canvas, and the half-raised sheet's drawing budget
+     * rises from 12 to 15 as a result. 96 px was the stated target and it is not reachable from
+     * here, which is worth writing down rather than leaving as an open action: two rows of 44 px
+     * pads that stay pairwise disjoint cannot occupy less than 26.7 + 17.3 + 26.7 = 70.7 px, and
+     * with the band's own 32 px of padding that is a 102.7 px floor before anything else is in
+     * it at all. Getting under it means one row instead of two - which is exactly the conflation
+     * of what is being explored with how it is drawn that this phase separated, and it is not
+     * worth 13 px.
+     */
+    .va-graph[data-view="FOCUS"] .va-graph-head,
+    .va-graph[data-view="FOCUS"] .va-world-find > label {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+    }
 }
 
 /*
@@ -521,6 +566,20 @@
     .va-graph-switch {
         gap: var(--va-space-xl);
     }
+
+    /*
+     * Re-measured at 390x844 after the fix, because a clearance is the number that matters and
+     * the gap is only how it is obtained. Declared pads, in page pixels:
+     *
+     *   World    12.08 - 56.08     Focus  80.63 - 124.63    Path  144.87 - 188.87   (y 134.68 - 178.68)
+     *   3D        1.04 - 45.04     2D     47.12 -  91.12                            (y 182.88 - 226.88)
+     *
+     * Pairwise disjoint, but the two tightest clearances in the control are 4.20 px between the
+     * rows and 2.08 px between 3D and 2D. That is a fix with almost no margin in it: a font
+     * metric, a token nudge or one more character in a label re-collides. Which is why the
+     * assertion lives in `graph-mobile.spec.ts` as pairwise disjointness over every pair rather
+     * than as this one gap value, and why it reports the minimum clearance when it fails.
+     */
 
     .va-graph-modes button,
     .va-graph-notice button,

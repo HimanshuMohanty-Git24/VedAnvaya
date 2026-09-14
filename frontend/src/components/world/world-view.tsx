@@ -17,9 +17,14 @@ import {
     type EdgeLabelPick,
 } from "@/lib/world/edge-labels";
 import { WorldEngine, type EngineStats } from "@/lib/world/engine";
+import {
+    FAMILY_INDEX,
+    FOCUS_BUDGET,
+    focusBudgetForBand,
+    useFocusNeighbourhood,
+} from "@/lib/world/focus";
 import { useGraphPalette } from "@/lib/world/palette";
 import { usePredicateSemantics } from "@/lib/world/predicates";
-import { WorldLabels } from "./world-labels";
 
 /**
  * The World View.
@@ -88,6 +93,12 @@ export function WorldView({
        render, and a ref read during render does not schedule one. */
     const [labelData, setLabelData] = useState<WorldLabelData | null>(null);
     const [engine, setEngine] = useState<WorldEngine | null>(null);
+    /* The artifact, as a render input.
+       Its one previous consumer was the `<WorldLabels>` element, which is gone - names are now
+       placed by the unified label pass and reach it through `EdgeLabelView.setScene`. It is read
+       again because curating the neighbourhood is a memoised derivation from the artifact and the
+       selection, and a `useMemo` cannot key on a ref. `worldRef` stays for the frame path, where
+       a render input would be the wrong thing entirely. */
     const [worldData, setWorldData] = useState<World | null>(null);
 
     const [phase, setPhase] = useState<"loading" | "ready" | "failed">("loading");
@@ -99,6 +110,16 @@ export function WorldView({
     const [selected, setSelected] = useState<number | null>(null);
     const [neighbours, setNeighbours] = useState<number[]>([]);
     const [labelsReady, setLabelsReady] = useState(0);
+    /*
+     * The band a subject can actually be drawn into, in CSS pixels.
+     *
+     * Not the viewport, and the two differ by more than a factor of two on a phone: measured on
+     * a 390x844 device the graph chrome takes 225.6 px before anything is drawn, leaving 434.4 px
+     * under a collapsed sheet and 183.1 px under a half-raised one. A budget chosen from the
+     * viewport height draws sixteen orbs into room for eleven, and a slab sized to the canvas
+     * puts half of itself behind the sheet.
+     */
+    const [band, setBand] = useState({ width: 0, height: 0 });
     const palette = useGraphPalette();
     const predicates = usePredicateSemantics();
     /* The engine is built once, so the newest palette and failure handler travel through refs
@@ -185,22 +206,19 @@ export function WorldView({
                         stageRef.current,
                         edgeLabelBudget(engine.viewport().width),
                         (edge) => inspectRef.current?.(edge),
-                        () => {
-                            const stage = stageRef.current;
-                            if (!stage) return [];
-                            const origin = stage.getBoundingClientRect();
-                            return [...stage.querySelectorAll(".va-world-label")].map((node) => {
-                                const box = node.getBoundingClientRect();
-                                return {
-                                    key: -1,
-                                    text: "",
-                                    x: box.left - origin.left,
-                                    y: box.top - origin.top,
-                                    width: box.width,
-                                    height: box.height,
-                                };
-                            });
-                        },
+                        /* Nothing on this canvas is inked before the label pass runs, so there
+                           are no immovable obstacles to declare. The names used to be - placed
+                           by `world-labels.tsx` on its own 160 ms timer, then read back out of
+                           the DOM here with up to 41 `getBoundingClientRect` calls every 150 ms,
+                           a forced layout flush nearly seven times a second. That is the
+                           two-pass design ARB-3 replaced: under it a phrase could only ever give
+                           way to a name and never the other way round. */
+                        undefined,
+                        /* The projection, and nothing else. Which subjects are named, in which
+                           quadrant, at which tier and under which cap is decided by
+                           `nodeNameAnchors` and the one collision pass; this supplies the single
+                           fact the engine holds and the layout does not. */
+                        (node) => engineRef.current?.screenPositionOf(node) ?? null,
                     );
                 }
                 engine.start();
@@ -213,7 +231,14 @@ export function WorldView({
                 (window as unknown as Record<string, unknown>).__vedaWorld = engine;
                 setPhase("ready");
 
-                observer = new ResizeObserver(() => engine?.resize());
+                observer = new ResizeObserver(() => {
+                    engine?.resize();
+                    if (!engine) return;
+                    const size = engine.viewport();
+                    setBand((previous) =>
+                        previous.width === size.width ? previous : { ...previous, width: size.width },
+                    );
+                });
                 observer.observe(canvas);
 
                 /* Labels are fetched after the geometry is already drawing. They are needed
@@ -262,6 +287,59 @@ export function WorldView({
     useEffect(() => {
         engineRef.current?.setSafeArea(safeArea ?? {});
     }, [safeArea]);
+
+    /* Re-measured on both of its causes: the canvas changing size, and the chrome over it
+       changing height. In PATH the band carries two fields and a paragraph of caveats, so the
+       second happens without the first. */
+    useEffect(() => {
+        const current = engineRef.current;
+        if (!current) return;
+        const { width, height } = current.viewport();
+        setBand({
+            width,
+            height: Math.max(0, height - (safeArea?.top ?? 0) - (safeArea?.bottom ?? 0)),
+        });
+    }, [safeArea, engine, phase]);
+
+    /*
+     * The curated neighbourhood, memoised, and never derived in a frame.
+     *
+     * `selectFocus` on Indra costs between 1.3 and 2.9 ms - a frame, or fifty-five of them at the
+     * rate this canvas draws - so the derivation happens here, once per subject, and the engine
+     * is handed the answer. The hook keys on primitives so that an inline options object cannot
+     * defeat the memo, which is the whole cost it exists to pay once.
+     *
+     * It is derived whatever the view is. Focus composes a slab from it; World uses the same set
+     * to decide what to brighten, which is how a reader who selects Indra in the world gets a
+     * neighbourhood rather than one sixth of the corpus lit at once.
+     */
+    const focusNeighbourhood = useFocusNeighbourhood({
+        world: worldData,
+        labels: labelData,
+        root: selectedIndex ?? null,
+        budget: band.width > 0 ? focusBudgetForBand(band.width, band.height) : FOCUS_BUDGET,
+    });
+
+    useEffect(() => {
+        const current = engineRef.current;
+        if (!current) return;
+        if (!focusNeighbourhood) {
+            current.setFocus(null);
+            return;
+        }
+        current.setFocus({
+            root: focusNeighbourhood.subject.index,
+            /* One family per orb, because a sector is an angular partition and a member cannot
+               be in two of them. The first is the artifact's own order, so the choice is the
+               record's rather than this component's. */
+            members: focusNeighbourhood.shown.map((neighbour) => ({
+                node: neighbour.node,
+                family: FAMILY_INDEX.get(neighbour.families[0] ?? "OTHER") ?? 0,
+            })),
+            spokes: focusNeighbourhood.spokes,
+            between: focusNeighbourhood.between,
+        });
+    }, [focusNeighbourhood, engine]);
 
     /*
      * The scene follows the selected subject, for as long as there is a session.
@@ -334,6 +412,16 @@ export function WorldView({
         const world = worldRef.current;
         if (!view || !engine || !world) return;
 
+        /* The scene the names are drawn from. Facts, not placements - see `LabelScene`. It is set
+           here rather than in the frame callback because none of it can change within a frame. */
+        view.setScene({
+            world,
+            labels: labelsRef.current,
+            selected,
+            hovered,
+            neighbours,
+        });
+
         /*
          * A traced route names its own steps.
          *
@@ -395,7 +483,7 @@ export function WorldView({
         segmentsRef.current = segments;
         pointsRef.current = new Float32Array(picks.length * LABEL_STRIDE);
         view.setLabels(picks);
-    }, [selected, hovered, predicates, labelsReady, pathNodes, pathHops]);
+    }, [selected, hovered, neighbours, predicates, labelsReady, pathNodes, pathHops]);
 
     /*
      * There is no pointer pipeline here any more.
@@ -433,15 +521,6 @@ export function WorldView({
                     </p>
                 </div>
             )}
-
-            <WorldLabels
-                engine={engine}
-                key={labelsReady}
-                labels={labelData?.labels ?? null}
-                neighbours={neighbours}
-                selected={selected}
-                world={worldData}
-            />
 
             {hoveredLabel && (
                 <p aria-hidden="true" className="va-world-hover">

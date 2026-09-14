@@ -20,6 +20,7 @@
  *   node scripts/bench-world.mjs --gpu              # ask for real hardware
  *   node scripts/bench-world.mjs --json out.json
  *   node scripts/bench-world.mjs --labels           # the label cost curve
+ *   node scripts/bench-world.mjs --url "/graph?renderer=3d"   # a specific page
  */
 
 import { chromium } from "@playwright/test";
@@ -36,6 +37,16 @@ for (let i = 2; i < process.argv.length; i += 1) {
     }
 }
 const BASE = args.get("base") ?? "http://localhost:3000";
+/*
+ * Which page to measure.
+ *
+ * It was `/graph/world` always, and on a machine whose capability check opens that route in the
+ * planar renderer the spatial stage is present but `display: none` - so the wait for
+ * `.va-world[data-phase="ready"]` to be *visible* times out after two minutes against a page that
+ * is working perfectly. Overridable, so an arm that needs the spatial renderer and a chosen
+ * subject can ask for them: `--url "/graph?view=focus&renderer=3d&node=VG%3ADEVATA%3AINDRAH"`.
+ */
+const PATH = args.get("url") ?? "/graph/world";
 const WANT_GPU = Boolean(args.get("gpu"));
 const EXECUTABLE =
     args.get("chrome") ??
@@ -65,9 +76,9 @@ page.on("pageerror", (e) => console.error("  PAGE ERROR:", e.message.slice(0, 20
 
 const report = { base: BASE, requestedGpu: WANT_GPU, when: new Date().toISOString() };
 
-console.log(`loading ${BASE}/graph/world ...`);
+console.log(`loading ${BASE}${PATH} ...`);
 const navStart = Date.now();
-await page.goto(`${BASE}/graph/world`, { waitUntil: "domcontentloaded" });
+await page.goto(`${BASE}${PATH}`, { waitUntil: "domcontentloaded" });
 await page.waitForSelector('.va-world[data-phase="ready"]', { timeout: 120_000 });
 report.readyMs = Date.now() - navStart;
 console.log(`  ready in ${report.readyMs} ms`);

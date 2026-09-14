@@ -38,9 +38,32 @@ test.describe("the final journey", () => {
         const hero = page.locator("canvas.va-world-preview-canvas");
         await expect(hero).toBeVisible({ timeout: SETTLE });
 
-        // The teaser this replaced is gone, not merely hidden behind it.
-        await expect(page.locator(".va-constellation-canvas")).toHaveCount(0);
-        await expect(page.locator(".va-constellation-panel")).toHaveCount(0);
+        /*
+         * The teaser this replaced is gone, not merely hidden behind it.
+         *
+         * Restated, because the two assertions here were inert. They read
+         * `.va-constellation-canvas` and `.va-constellation-panel` at count 0, and neither
+         * class occurs in any source file in this repository - so both passed by matching
+         * nothing, bypassed the `absentHere()` guard that exists in this suite precisely to
+         * catch that, and would have gone on passing had the teaser returned under any other
+         * name. A guard is no use here either: `absentHere` needs a control page where the
+         * locator still matches, and a deleted component has none.
+         *
+         * So the claim is made about what the front door draws rather than about two dead
+         * class names: every canvas on this page is the world preview's own. A second,
+         * decorative canvas - which is what the teaser was - fails this whatever it is
+         * called. The two mutually exclusive preview variants (spatial and flat) both use
+         * `va-world-preview-canvas`, so one class covers either.
+         */
+        const canvasClasses = await page
+            .locator("canvas")
+            .evaluateAll((nodes) => nodes.map((node) => node.className));
+        expect(canvasClasses.length, "the front door drew no canvas at all").toBeGreaterThan(0);
+        for (const name of canvasClasses) {
+            expect(name, `an extra canvas is on the front door: ${name}`).toContain(
+                "va-world-preview-canvas",
+            );
+        }
 
         // Its subjects are real and reachable without a canvas.
         const alternatives = page.locator(".va-world-preview-panel .sr-only li a");

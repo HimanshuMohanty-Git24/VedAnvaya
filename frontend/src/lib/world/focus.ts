@@ -1470,15 +1470,72 @@ export function focusNeighbourhood(
         const predicate = world.manifest.edgeTypes[world.edgeType[edge]] ?? "";
         spokes.push({ edge, node, predicate, family: familyOfPredicate(predicate) });
     };
+
+    /*
+     * How common each kind of relationship is on this subject.
+     *
+     * Needed because a pair joined by more than one relationship gets exactly one guaranteed
+     * line, and which one it is has to be a decision rather than an accident. Counted over the
+     * root's *whole* incident set, not over the curated subset: rarity is a fact about the
+     * subject, and measured against the subset the counts tie and the tie-break silently
+     * decides which rare relationship leads.
+     */
+    const incident = edgesOf(world, root);
+    const typeFrequency = new Map<number, number>();
+    for (let i = 0; i < incident.length; i += 1) {
+        const type = world.edgeType[incident[i]];
+        typeFrequency.set(type, (typeFrequency.get(type) ?? 0) + 1);
+    }
+
+    /**
+     * The one line a neighbour is guaranteed, chosen by what it says.
+     *
+     * This was `neighbour.edges[0]` - the lowest edge index - so on a multiply-attested pair
+     * the drawn line was whichever the build happened to write first, and a rare relationship
+     * sitting at a higher index could be absent from the scene entirely. That is the same
+     * failure the artifact's own notes record for the planar world projection: 16,895 edges
+     * dropped by index order rather than by importance.
+     *
+     * Rarest first, because a subject's common relationship is already represented many times
+     * over and its uncommon one is the reason to look. Indra has 3,566 `MENTIONS_DEVATA` edges
+     * and one `EPITHET_VARIANT_OF`; if a pair carries both, the epithet is the line worth
+     * drawing. Ties break on the predicate name and then the edge index, so the choice is
+     * stable across builds.
+     */
+    const representativeEdge = (edges: ArrayLike<number>): number => {
+        let best = edges[0];
+        let bestCount = Infinity;
+        let bestName = "";
+        for (let i = 0; i < edges.length; i += 1) {
+            const edge = edges[i];
+            const type = world.edgeType[edge];
+            const count = typeFrequency.get(type) ?? 0;
+            const name = world.manifest.edgeTypes[type] ?? String(type);
+            if (count < bestCount || (count === bestCount && name < bestName)) {
+                best = edge;
+                bestCount = count;
+                bestName = name;
+            }
+        }
+        return best;
+    };
+
     for (const neighbour of selection.shown) {
         spokeTotal += neighbour.edges.length;
-        if (neighbour.edges.length > 0) pushSpoke(neighbour.node, neighbour.edges[0]);
+        if (neighbour.edges.length > 0) {
+            pushSpoke(neighbour.node, representativeEdge(neighbour.edges));
+        }
     }
     if (spokeTotal > spokes.length) {
+        /* Skipping by edge identity rather than by index, now that the first pass no longer
+           takes index zero: `i = 1` would have drawn the representative a second time and
+           dropped whichever line sat at index zero. */
+        const drawn = new Set(spokes.map((spoke) => spoke.edge));
         for (const neighbour of selection.shown) {
             if (spokes.length >= SPOKE_CAP) break;
-            for (let i = 1; i < neighbour.edges.length; i += 1) {
+            for (let i = 0; i < neighbour.edges.length; i += 1) {
                 if (spokes.length >= SPOKE_CAP) break;
+                if (drawn.has(neighbour.edges[i])) continue;
                 pushSpoke(neighbour.node, neighbour.edges[i]);
             }
         }
