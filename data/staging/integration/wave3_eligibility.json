@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-09-15T13:17:36.356940+00:00",
+  "generated_at": "2026-09-15T13:57:14.866697+00:00",
   "snapshot_caveat": "A domain whose agent is actively restaging may read FAIL transiently -- most often a manifest checksum mismatch, because the manifest is rewritten after the files it hashes. Re-run once no agent is in flight before treating any gate A result here as final.",
   "gates": {
     "A": "STRUCTURAL -- schema, identity, subject grain, source refs, denominators",
@@ -192,12 +192,12 @@
         "detail": "validator PASS at full evaluation coverage with --graph"
       },
       "gate_b_semantic": {
-        "status": "UNKNOWN",
-        "detail": "agent has not reported"
+        "status": "PASS",
+        "detail": "0 rows typed HUMAN_GOLD; three layers adjudicated by a published treebank that didnot build them; metre checked by counting the text against the index's claim"
       },
       "gate_c_adversarial": {
-        "status": "NOT_RUN",
-        "detail": "adversarial test not yet performed"
+        "status": "SURVIVED",
+        "detail": "lead tested for evaluation leakage and found none. Its verdicts are the finding: of11,210, some 1,402 diverge from their own metre, 1,283 confirm only via an alias itjudges unsound, 143 refuted"
       },
       "restage_required": false,
       "restage_reason": null,
@@ -218,8 +218,8 @@
       },
       "own_digest": "0e7665d92d22861a40046cceb9cead5b6e1fc4ca077cb377ee1153387c941207",
       "stale_inputs": [],
-      "status": "NOT_ELIGIBLE",
-      "status_detail": "gate(s) B, C not passed"
+      "status": "ELIGIBLE",
+      "status_detail": "all three gates pass and no blocker is open"
     },
     "ritual": {
       "gate_a_structural": {
@@ -227,12 +227,12 @@
         "detail": "validator PASS at full evaluation coverage with --graph"
       },
       "gate_b_semantic": {
-        "status": "UNKNOWN",
-        "detail": "agent has not reported"
+        "status": "PASS_AFTER_LEAD_CORRECTION",
+        "detail": "27 rows retyped NAMES_RITE_CATEGORY_GENERICALLY and downgraded; core boundary cleanat 0 of 3,045 rows keyed outside the four recensions"
       },
       "gate_c_adversarial": {
-        "status": "NOT_RUN",
-        "detail": "adversarial test not yet performed"
+        "status": "DEFECT_FOUND_AND_FIXED",
+        "detail": "lead attack found 24 rows resting on the generic yajna and 3 on bare ISTI, afterenumerating all 45 rite keys rather than grepping the expected term"
       },
       "restage_required": false,
       "restage_reason": null,
@@ -241,8 +241,8 @@
       "input_digests": {},
       "own_digest": "433b0409aabb3396684b409f941bfedc5446a7428511a9b3855f8c0a46d1a48c",
       "stale_inputs": [],
-      "status": "NOT_ELIGIBLE",
-      "status_detail": "gate(s) B, C not passed"
+      "status": "ELIGIBLE",
+      "status_detail": "all three gates pass and no blocker is open"
     },
     "samaveda_music": {
       "gate_a_structural": {
@@ -275,12 +275,12 @@
         "detail": "validator PASS at full evaluation coverage with --graph"
       },
       "gate_b_semantic": {
-        "status": "UNKNOWN",
-        "detail": "agent has not reported"
+        "status": "PASS_AFTER_LEAD_CORRECTION",
+        "detail": "1 same-asserter disagreement withdrawn; the other 91 carry two named asserters, twoclaims, two page-precise locators and a stated incompatibility"
       },
       "gate_c_adversarial": {
-        "status": "NOT_RUN",
-        "detail": "adversarial test not yet performed"
+        "status": "DEFECT_FOUND_AND_FIXED",
+        "detail": "lead attack found the owner's same-author case; the reporting-source attack wasalready pre-empted by 73 rows typed ASCRIPTION_DISPUTED_BY_THE_REPORTING_SOURCE"
       },
       "restage_required": false,
       "restage_reason": null,
@@ -289,8 +289,43 @@
       "input_digests": {},
       "own_digest": "97456b52ac565fad5226d627241ae23575c4ffa6ae9217ee0160bb6d44a0e926",
       "stale_inputs": [],
-      "status": "NOT_ELIGIBLE",
-      "status_detail": "gate(s) B, C not passed"
+      "status": "ELIGIBLE",
+      "status_detail": "all three gates pass and no blocker is open"
+    },
+    "semantic_resemblance": {
+      "gate_a_structural": {
+        "status": "PASS",
+        "detail": "validator PASS at full evaluation coverage with --graph"
+      },
+      "gate_b_semantic": {
+        "status": "PASS_WITH_DECLARED_LIMITS",
+        "detail": "THEMATICALLY_RESEMBLES, 43,006 edges, 26,953 importable at TIER_A. The layer is defined on the translation-free channels, chosen on structural grounds fixed before the numbers were read and costing 0.049 AUC, because the graph holds zero Samavedic translations and Wave 3 may import 173 that are Griffith's Rigveda renderings used cross-corpus."
+      },
+      "gate_c_adversarial": {
+        "status": "SURVIVED",
+        "detail": "seven attacks run, six clean and the seventh -- lexical leakage -- survived on a residualisation test: the hybrid still separates at 0.737 after removing the lexical control, while the control falls to 0.403, below chance, after removing the hybrid. Three of its own seven blast-radius assertions failed and all three are reported; the tier whose fix broke one is refused."
+      },
+      "restage_required": false,
+      "restage_reason": null,
+      "blocked_by": [
+        "TIER_B_AWAITS_DEDICATION_VOCABULARY_RULING"
+      ],
+      "depends_on": [
+        "translation",
+        "semantic_roles",
+        "attribution",
+        "formula"
+      ],
+      "input_digests": {
+        "translation": "95318468a47c3c45909cada2188f7eff18f591ea63e04bc0a5b7763243a984cd",
+        "semantic_roles": "9ec93cae78c1d1d90bc6873fc1c28cfabb496601f5838e87dccb3e52c319ef35",
+        "attribution": "3577b87142f710d570de47fcd75e46199b2c4823eea73de56875d342b7b710df",
+        "formula": "caf078d773e7485f68e09fee118172ebab971c5d3032566e1811e3a271011978"
+      },
+      "own_digest": "37be8f726d4514029f383d5b5d1ed4d20fb07618a37d939922aaa091b58c5e19",
+      "stale_inputs": [],
+      "status": "BLOCKED",
+      "status_detail": "three gates pass, blocked by TIER_B_AWAITS_DEDICATION_VOCABULARY_RULING"
     },
     "semantic_roles": {
       "gate_a_structural": {
@@ -345,9 +380,12 @@
   "eligible_domains": [
     "communities",
     "formula",
+    "quality",
+    "ritual",
+    "scholarship",
     "semantic_roles"
   ],
-  "eligible_count": 3,
-  "domain_count": 13,
+  "eligible_count": 6,
+  "domain_count": 14,
   "wave_3_go": false
 }

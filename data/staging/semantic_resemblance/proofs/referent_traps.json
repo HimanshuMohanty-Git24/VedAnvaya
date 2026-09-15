@@ -1,0 +1,2083 @@
+{
+ "final_rule": {
+  "triples": 52,
+  "ground_truth": "source-explicit dedication (Anukramani HAS_DEVATA / HAS_DEVATA_ASCRIPTION) against the entity registry's own sense typing. No model opinion enters the label.",
+  "score_only_ordering_correct": 38,
+  "score_only_accuracy": 0.7308,
+  "per_trap_score_only": {
+   "SOMA_DEITY_VS_SUBSTANCE": {
+    "n": 20,
+    "ordering_correct": 14,
+    "other_sense_rejected_by_the_full_rule": 20
+   },
+   "AGNI_DEITY_VS_PHYSICAL_FIRE": {
+    "n": 20,
+    "ordering_correct": 15,
+    "other_sense_rejected_by_the_full_rule": 20
+   },
+   "VAC_DEITY_VS_SPEECH_FACULTY": {
+    "n": 12,
+    "ordering_correct": 9,
+    "other_sense_rejected_by_the_full_rule": 12
+   }
+  },
+  "other_sense_pairs_emitted_by_the_full_rule": 0,
+  "same_sense_pairs_emitted_by_the_full_rule": 33,
+  "other_sense_disposition": {
+   "REJECTED_BY_SCORE": 27,
+   "REJECTED_BY_TIER:REFUSED_REFERENT_GUARD_VIOLATED": 15,
+   "REJECTED_BY_TIER:TIER_B_REFERENT_EVIDENCE_NOT_COMPARABLE": 10
+  },
+  "circularity_declared": "the guard reads the same dedication layer the trap's ground truth is drawn from, so a guard-driven rejection is not evidence FOR the guard. The figure that carries evidence is the score-only ordering accuracy above.",
+  "detail": [
+   {
+    "trap": "SOMA_DEITY_VS_SUBSTANCE",
+    "anchor": "VG:RV:SAK:M09:S061:V010",
+    "same_sense": "VG:RV:SAK:M09:S021:V005",
+    "other_sense": "VG:RV:SAK:M03:S050:V003",
+    "z_same": 0.0653,
+    "z_other": -0.2215,
+    "score_ordering_correct": true,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_SCORE",
+    "same_sense_emitted": true,
+    "anchor_dedication": [
+     "Soma Pavamana"
+    ],
+    "other_sense_dedication": [
+     "Indra"
+    ]
+   },
+   {
+    "trap": "SOMA_DEITY_VS_SUBSTANCE",
+    "anchor": "VG:RV:SAK:M09:S065:V024",
+    "same_sense": "VG:RV:SAK:M09:S063:V013",
+    "other_sense": "VG:RV:SAK:M05:S064:V007",
+    "z_same": 0.5244,
+    "z_other": -0.2124,
+    "score_ordering_correct": true,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_SCORE",
+    "same_sense_emitted": true,
+    "anchor_dedication": [
+     "Soma Pavamana"
+    ],
+    "other_sense_dedication": [
+     "Mitra and Varuna"
+    ]
+   },
+   {
+    "trap": "SOMA_DEITY_VS_SUBSTANCE",
+    "anchor": "VG:RV:SAK:M09:S072:V004",
+    "same_sense": "VG:RV:SAK:M09:S056:V002",
+    "other_sense": "VG:RV:SAK:M08:S057:V002",
+    "z_same": -0.2622,
+    "z_other": -0.0659,
+    "score_ordering_correct": false,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_SCORE",
+    "same_sense_emitted": false,
+    "anchor_dedication": [
+     "Soma Pavamana"
+    ],
+    "other_sense_dedication": [
+     "the Asvins"
+    ]
+   },
+   {
+    "trap": "SOMA_DEITY_VS_SUBSTANCE",
+    "anchor": "VG:RV:SAK:M09:S004:V004",
+    "same_sense": "VG:RV:SAK:M09:S067:V011",
+    "other_sense": "VG:RV:SAK:M08:S021:V004",
+    "z_same": 1.0782,
+    "z_other": 0.5148,
+    "score_ordering_correct": true,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_TIER:REFUSED_REFERENT_GUARD_VIOLATED",
+    "same_sense_emitted": true,
+    "anchor_dedication": [
+     "Soma Pavamana"
+    ],
+    "other_sense_dedication": [
+     "Indra"
+    ]
+   },
+   {
+    "trap": "SOMA_DEITY_VS_SUBSTANCE",
+    "anchor": "VG:RV:SAK:M09:S098:V003",
+    "same_sense": "VG:RV:SAK:M09:S097:V010",
+    "other_sense": "VG:RV:SAK:M08:S085:V002",
+    "z_same": -0.002,
+    "z_other": -0.3753,
+    "score_ordering_correct": true,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_SCORE",
+    "same_sense_emitted": false,
+    "anchor_dedication": [
+     "Soma Pavamana"
+    ],
+    "other_sense_dedication": [
+     "the Asvins"
+    ]
+   },
+   {
+    "trap": "SOMA_DEITY_VS_SUBSTANCE",
+    "anchor": "VG:RV:SAK:M09:S086:V002",
+    "same_sense": "VG:RV:SAK:M09:S085:V002",
+    "other_sense": "VG:RV:SAK:M01:S135:V004",
+    "z_same": 1.1592,
+    "z_other": 0.4736,
+    "score_ordering_correct": true,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_TIER:REFUSED_REFERENT_GUARD_VIOLATED",
+    "same_sense_emitted": true,
+    "anchor_dedication": [
+     "Soma Pavamana"
+    ],
+    "other_sense_dedication": [
+     "Indra and Vayu"
+    ]
+   },
+   {
+    "trap": "SOMA_DEITY_VS_SUBSTANCE",
+    "anchor": "VG:RV:SAK:M09:S067:V008",
+    "same_sense": "VG:RV:SAK:M09:S085:V007",
+    "other_sense": "VG:RV:SAK:M08:S094:V009",
+    "z_same": -0.1703,
+    "z_other": 0.1475,
+    "score_ordering_correct": false,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_TIER:REFUSED_REFERENT_GUARD_VIOLATED",
+    "same_sense_emitted": false,
+    "anchor_dedication": [
+     "Soma Pavamana"
+    ],
+    "other_sense_dedication": [
+     "the Maruts"
+    ]
+   },
+   {
+    "trap": "SOMA_DEITY_VS_SUBSTANCE",
+    "anchor": "VG:RV:SAK:M09:S079:V002",
+    "same_sense": "VG:RV:SAK:M09:S069:V004",
+    "other_sense": "VG:RV:SAK:M08:S046:V014",
+    "z_same": 0.1358,
+    "z_other": -0.0918,
+    "score_ordering_correct": true,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_SCORE",
+    "same_sense_emitted": true,
+    "anchor_dedication": [
+     "Soma Pavamana"
+    ],
+    "other_sense_dedication": [
+     "Indra"
+    ]
+   },
+   {
+    "trap": "SOMA_DEITY_VS_SUBSTANCE",
+    "anchor": "VG:RV:SAK:M09:S085:V001",
+    "same_sense": "VG:RV:SAK:M08:S048:V003",
+    "other_sense": "VG:RV:SAK:M10:S125:V002",
+    "z_same": 0.0181,
+    "z_other": 0.051,
+    "score_ordering_correct": false,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_TIER:REFUSED_REFERENT_GUARD_VIOLATED",
+    "same_sense_emitted": false,
+    "anchor_dedication": [
+     "Soma Pavamana"
+    ],
+    "other_sense_dedication": [
+     "the self"
+    ]
+   },
+   {
+    "trap": "SOMA_DEITY_VS_SUBSTANCE",
+    "anchor": "VG:RV:SAK:M09:S037:V001",
+    "same_sense": "VG:RV:SAK:M09:S109:V012",
+    "other_sense": "VG:RV:SAK:M04:S024:V007",
+    "z_same": 0.8751,
+    "z_other": -0.0541,
+    "score_ordering_correct": true,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_SCORE",
+    "same_sense_emitted": true,
+    "anchor_dedication": [
+     "Soma Pavamana"
+    ],
+    "other_sense_dedication": [
+     "Indra"
+    ]
+   },
+   {
+    "trap": "SOMA_DEITY_VS_SUBSTANCE",
+    "anchor": "VG:RV:SAK:M09:S063:V025",
+    "same_sense": "VG:RV:SAK:M09:S101:V007",
+    "other_sense": "VG:RV:SAK:M08:S094:V003",
+    "z_same": 0.845,
+    "z_other": 0.5392,
+    "score_ordering_correct": true,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_TIER:REFUSED_REFERENT_GUARD_VIOLATED",
+    "same_sense_emitted": true,
+    "anchor_dedication": [
+     "Soma Pavamana"
+    ],
+    "other_sense_dedication": [
+     "the Maruts"
+    ]
+   },
+   {
+    "trap": "SOMA_DEITY_VS_SUBSTANCE",
+    "anchor": "VG:RV:SAK:M09:S062:V015",
+    "same_sense": "VG:RV:SAK:M09:S107:V018",
+    "other_sense": "VG:AV:SAU:K10:S001:V022",
+    "z_same": -0.5595,
+    "z_other": 0.0272,
+    "score_ordering_correct": false,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_TIER:TIER_B_REFERENT_EVIDENCE_NOT_COMPARABLE",
+    "same_sense_emitted": false,
+    "anchor_dedication": [
+     "Soma Pavamana"
+    ],
+    "other_sense_dedication": [
+     "kṛtyādūṣaṇadevatyam"
+    ]
+   },
+   {
+    "trap": "SOMA_DEITY_VS_SUBSTANCE",
+    "anchor": "VG:RV:SAK:M09:S096:V023",
+    "same_sense": "VG:RV:SAK:M09:S074:V005",
+    "other_sense": "VG:RV:SAK:M03:S051:V009",
+    "z_same": -0.2411,
+    "z_other": -0.0095,
+    "score_ordering_correct": false,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_SCORE",
+    "same_sense_emitted": false,
+    "anchor_dedication": [
+     "Soma Pavamana"
+    ],
+    "other_sense_dedication": [
+     "Indra"
+    ]
+   },
+   {
+    "trap": "SOMA_DEITY_VS_SUBSTANCE",
+    "anchor": "VG:RV:SAK:M09:S092:V006",
+    "same_sense": "VG:RV:SAK:M09:S091:V002",
+    "other_sense": "VG:AV:SAU:K14:S001:V004",
+    "z_same": 0.0855,
+    "z_other": -0.4726,
+    "score_ordering_correct": true,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_SCORE",
+    "same_sense_emitted": true,
+    "anchor_dedication": [
+     "Soma Pavamana"
+    ],
+    "other_sense_dedication": [
+     "ātmadāivatam"
+    ]
+   },
+   {
+    "trap": "SOMA_DEITY_VS_SUBSTANCE",
+    "anchor": "VG:RV:SAK:M09:S074:V007",
+    "same_sense": "VG:RV:SAK:M09:S109:V013",
+    "other_sense": "VG:RV:SAK:M07:S021:V001",
+    "z_same": -0.4016,
+    "z_other": -0.0924,
+    "score_ordering_correct": false,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_SCORE",
+    "same_sense_emitted": false,
+    "anchor_dedication": [
+     "Soma Pavamana"
+    ],
+    "other_sense_dedication": [
+     "Indra"
+    ]
+   },
+   {
+    "trap": "SOMA_DEITY_VS_SUBSTANCE",
+    "anchor": "VG:RV:SAK:M09:S086:V019",
+    "same_sense": "VG:RV:SAK:M09:S086:V026",
+    "other_sense": "VG:RV:SAK:M05:S029:V007",
+    "z_same": 0.3796,
+    "z_other": 0.0873,
+    "score_ordering_correct": true,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_TIER:REFUSED_REFERENT_GUARD_VIOLATED",
+    "same_sense_emitted": true,
+    "anchor_dedication": [
+     "Soma Pavamana"
+    ],
+    "other_sense_dedication": [
+     "Indra"
+    ]
+   },
+   {
+    "trap": "SOMA_DEITY_VS_SUBSTANCE",
+    "anchor": "VG:RV:SAK:M09:S066:V023",
+    "same_sense": "VG:RV:SAK:M09:S103:V001",
+    "other_sense": "VG:RV:SAK:M01:S023:V007",
+    "z_same": 0.9992,
+    "z_other": 0.5388,
+    "score_ordering_correct": true,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_TIER:REFUSED_REFERENT_GUARD_VIOLATED",
+    "same_sense_emitted": true,
+    "anchor_dedication": [
+     "Soma Pavamana"
+    ],
+    "other_sense_dedication": [
+     "Indra and the Maruts"
+    ]
+   },
+   {
+    "trap": "SOMA_DEITY_VS_SUBSTANCE",
+    "anchor": "VG:RV:SAK:M09:S002:V005",
+    "same_sense": "VG:RV:SAK:M09:S034:V003",
+    "other_sense": "VG:AV:SAU:K03:S005:V004",
+    "z_same": 0.1909,
+    "z_other": -0.5694,
+    "score_ordering_correct": true,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_SCORE",
+    "same_sense_emitted": true,
+    "anchor_dedication": [
+     "Soma Pavamana"
+    ],
+    "other_sense_dedication": [
+     "sāumyam"
+    ]
+   },
+   {
+    "trap": "SOMA_DEITY_VS_SUBSTANCE",
+    "anchor": "VG:RV:SAK:M06:S047:V004",
+    "same_sense": "VG:RV:SAK:M09:S086:V036",
+    "other_sense": "VG:RV:SAK:M08:S033:V007",
+    "z_same": -0.0595,
+    "z_other": -0.1704,
+    "score_ordering_correct": true,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_SCORE",
+    "same_sense_emitted": false,
+    "anchor_dedication": [
+     "Soma"
+    ],
+    "other_sense_dedication": [
+     "Indra"
+    ]
+   },
+   {
+    "trap": "SOMA_DEITY_VS_SUBSTANCE",
+    "anchor": "VG:RV:SAK:M09:S063:V009",
+    "same_sense": "VG:RV:SAK:M09:S027:V003",
+    "other_sense": "VG:AV:SAU:K06:S053:V001",
+    "z_same": 0.2693,
+    "z_other": -0.7102,
+    "score_ordering_correct": true,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_SCORE",
+    "same_sense_emitted": true,
+    "anchor_dedication": [
+     "Soma Pavamana"
+    ],
+    "other_sense_dedication": [
+     "nānādāivatam"
+    ]
+   },
+   {
+    "trap": "AGNI_DEITY_VS_PHYSICAL_FIRE",
+    "anchor": "VG:RV:SAK:M03:S027:V011",
+    "same_sense": "VG:RV:SAK:M07:S007:V005",
+    "other_sense": "VG:RV:SAK:M03:S030:V002",
+    "z_same": 0.2732,
+    "z_other": 0.1871,
+    "score_ordering_correct": true,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_TIER:REFUSED_REFERENT_GUARD_VIOLATED",
+    "same_sense_emitted": true,
+    "anchor_dedication": [
+     "Agni"
+    ],
+    "other_sense_dedication": [
+     "Indra"
+    ]
+   },
+   {
+    "trap": "AGNI_DEITY_VS_PHYSICAL_FIRE",
+    "anchor": "VG:RV:SAK:M05:S001:V012",
+    "same_sense": "VG:RV:SAK:M06:S010:V004",
+    "other_sense": "VG:AV:SAU:K07:S062:V001",
+    "z_same": 0.4196,
+    "z_other": 0.2497,
+    "score_ordering_correct": true,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_TIER:TIER_B_REFERENT_EVIDENCE_NOT_COMPARABLE",
+    "same_sense_emitted": true,
+    "anchor_dedication": [
+     "Agni"
+    ],
+    "other_sense_dedication": [
+     "āgneyam"
+    ]
+   },
+   {
+    "trap": "AGNI_DEITY_VS_PHYSICAL_FIRE",
+    "anchor": "VG:RV:SAK:M03:S023:V001",
+    "same_sense": "VG:RV:SAK:M10:S021:V005",
+    "other_sense": "VG:AV:SAU:K13:S003:V005",
+    "z_same": 0.531,
+    "z_other": 0.1714,
+    "score_ordering_correct": true,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_TIER:TIER_B_REFERENT_EVIDENCE_NOT_COMPARABLE",
+    "same_sense_emitted": true,
+    "anchor_dedication": [
+     "Agni"
+    ],
+    "other_sense_dedication": [
+     "rohitādityadevatyam",
+     "ādhyātmam"
+    ]
+   },
+   {
+    "trap": "AGNI_DEITY_VS_PHYSICAL_FIRE",
+    "anchor": "VG:RV:SAK:M08:S102:V016",
+    "same_sense": "VG:RV:SAK:M03:S029:V002",
+    "other_sense": "VG:RV:SAK:M10:S065:V001",
+    "z_same": 0.1755,
+    "z_other": -0.6238,
+    "score_ordering_correct": true,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_SCORE",
+    "same_sense_emitted": true,
+    "anchor_dedication": [
+     "Agni"
+    ],
+    "other_sense_dedication": [
+     "the All-Gods"
+    ]
+   },
+   {
+    "trap": "AGNI_DEITY_VS_PHYSICAL_FIRE",
+    "anchor": "VG:RV:SAK:M01:S069:V006",
+    "same_sense": "VG:RV:SAK:M10:S046:V008",
+    "other_sense": "VG:AV:SAU:K11:S008:V031",
+    "z_same": -0.0222,
+    "z_other": -0.1807,
+    "score_ordering_correct": true,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_SCORE",
+    "same_sense_emitted": false,
+    "anchor_dedication": [
+     "Agni"
+    ],
+    "other_sense_dedication": [
+     "adhyātmamanyudāivatam"
+    ]
+   },
+   {
+    "trap": "AGNI_DEITY_VS_PHYSICAL_FIRE",
+    "anchor": "VG:RV:SAK:M01:S070:V005",
+    "same_sense": "VG:RV:SAK:M06:S015:V004",
+    "other_sense": "VG:RV:SAK:M10:S061:V014",
+    "z_same": 0.723,
+    "z_other": 0.5006,
+    "score_ordering_correct": true,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_TIER:REFUSED_REFERENT_GUARD_VIOLATED",
+    "same_sense_emitted": true,
+    "anchor_dedication": [
+     "Agni"
+    ],
+    "other_sense_dedication": [
+     "the All-Gods"
+    ]
+   },
+   {
+    "trap": "AGNI_DEITY_VS_PHYSICAL_FIRE",
+    "anchor": "VG:RV:SAK:M10:S046:V007",
+    "same_sense": "VG:RV:SAK:M10:S087:V017",
+    "other_sense": "VG:AV:SAU:K05:S027:V005",
+    "z_same": 0.3664,
+    "z_other": 0.2715,
+    "score_ordering_correct": true,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_TIER:TIER_B_REFERENT_EVIDENCE_NOT_COMPARABLE",
+    "same_sense_emitted": true,
+    "anchor_dedication": [
+     "Agni"
+    ],
+    "other_sense_dedication": [
+     "āgneyam"
+    ]
+   },
+   {
+    "trap": "AGNI_DEITY_VS_PHYSICAL_FIRE",
+    "anchor": "VG:RV:SAK:M10:S011:V003",
+    "same_sense": "VG:RV:SAK:M03:S001:V018",
+    "other_sense": "VG:AV:SAU:K08:S008:V002",
+    "z_same": -0.0498,
+    "z_other": 0.062,
+    "score_ordering_correct": false,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_TIER:TIER_B_REFERENT_EVIDENCE_NOT_COMPARABLE",
+    "same_sense_emitted": false,
+    "anchor_dedication": [
+     "Agni"
+    ],
+    "other_sense_dedication": [
+     "parasenāhananam",
+     "āindram uta vānaspatyam"
+    ]
+   },
+   {
+    "trap": "AGNI_DEITY_VS_PHYSICAL_FIRE",
+    "anchor": "VG:RV:SAK:M10:S045:V012",
+    "same_sense": "VG:RV:SAK:M06:S001:V008",
+    "other_sense": "VG:RV:SAK:M10:S063:V009",
+    "z_same": 0.5536,
+    "z_other": 0.7504,
+    "score_ordering_correct": false,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_TIER:REFUSED_REFERENT_GUARD_VIOLATED",
+    "same_sense_emitted": true,
+    "anchor_dedication": [
+     "Agni"
+    ],
+    "other_sense_dedication": [
+     "the All-Gods"
+    ]
+   },
+   {
+    "trap": "AGNI_DEITY_VS_PHYSICAL_FIRE",
+    "anchor": "VG:RV:SAK:M04:S015:V001",
+    "same_sense": "VG:RV:SAK:M05:S004:V002",
+    "other_sense": "VG:RV:SAK:M10:S051:V004",
+    "z_same": 0.4237,
+    "z_other": 0.1242,
+    "score_ordering_correct": true,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_TIER:REFUSED_REFERENT_GUARD_VIOLATED",
+    "same_sense_emitted": true,
+    "anchor_dedication": [
+     "Agni"
+    ],
+    "other_sense_dedication": [
+     "the gods"
+    ]
+   },
+   {
+    "trap": "AGNI_DEITY_VS_PHYSICAL_FIRE",
+    "anchor": "VG:RV:SAK:M08:S023:V007",
+    "same_sense": "VG:RV:SAK:M04:S001:V019",
+    "other_sense": "VG:RV:SAK:M08:S031:V014",
+    "z_same": 0.602,
+    "z_other": 0.6366,
+    "score_ordering_correct": false,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_TIER:REFUSED_REFERENT_GUARD_VIOLATED",
+    "same_sense_emitted": true,
+    "anchor_dedication": [
+     "Agni"
+    ],
+    "other_sense_dedication": [
+     "the blessings of the married pair"
+    ]
+   },
+   {
+    "trap": "AGNI_DEITY_VS_PHYSICAL_FIRE",
+    "anchor": "VG:RV:SAK:M10:S087:V023",
+    "same_sense": "VG:RV:SAK:M01:S044:V012",
+    "other_sense": "VG:AV:SAU:K10:S004:V026",
+    "z_same": 0.5541,
+    "z_other": 0.3794,
+    "score_ordering_correct": true,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_TIER:TIER_B_REFERENT_EVIDENCE_NOT_COMPARABLE",
+    "same_sense_emitted": true,
+    "anchor_dedication": [
+     "Agni"
+    ],
+    "other_sense_dedication": [
+     "takṣakadāivatam"
+    ]
+   },
+   {
+    "trap": "AGNI_DEITY_VS_PHYSICAL_FIRE",
+    "anchor": "VG:RV:SAK:M01:S001:V003",
+    "same_sense": "VG:RV:SAK:M05:S025:V006",
+    "other_sense": "VG:RV:SAK:M06:S040:V003",
+    "z_same": 0.3381,
+    "z_other": -0.2506,
+    "score_ordering_correct": true,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_SCORE",
+    "same_sense_emitted": true,
+    "anchor_dedication": [
+     "Agni"
+    ],
+    "other_sense_dedication": [
+     "Indra"
+    ]
+   },
+   {
+    "trap": "AGNI_DEITY_VS_PHYSICAL_FIRE",
+    "anchor": "VG:RV:SAK:M03:S027:V002",
+    "same_sense": "VG:RV:SAK:M03:S026:V002",
+    "other_sense": "VG:RV:SAK:M10:S165:V004",
+    "z_same": 0.6614,
+    "z_other": -0.247,
+    "score_ordering_correct": true,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_SCORE",
+    "same_sense_emitted": true,
+    "anchor_dedication": [
+     "Agni"
+    ],
+    "other_sense_dedication": [
+     "the All-Gods"
+    ]
+   },
+   {
+    "trap": "AGNI_DEITY_VS_PHYSICAL_FIRE",
+    "anchor": "VG:RV:SAK:M08:S019:V007",
+    "same_sense": "VG:RV:SAK:M08:S019:V022",
+    "other_sense": "VG:AV:SAU:K01:S033:V001",
+    "z_same": 1.3459,
+    "z_other": 0.1412,
+    "score_ordering_correct": true,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_TIER:TIER_B_REFERENT_EVIDENCE_NOT_COMPARABLE",
+    "same_sense_emitted": true,
+    "anchor_dedication": [
+     "Agni"
+    ],
+    "other_sense_dedication": [
+     "cāndramasam āpyam uta"
+    ]
+   },
+   {
+    "trap": "AGNI_DEITY_VS_PHYSICAL_FIRE",
+    "anchor": "VG:RV:SAK:M05:S014:V006",
+    "same_sense": "VG:RV:SAK:M06:S015:V013",
+    "other_sense": "VG:RV:SAK:M01:S162:V019",
+    "z_same": 0.6969,
+    "z_other": -0.2295,
+    "score_ordering_correct": true,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_SCORE",
+    "same_sense_emitted": true,
+    "anchor_dedication": [
+     "Agni"
+    ],
+    "other_sense_dedication": [
+     "the horse"
+    ]
+   },
+   {
+    "trap": "AGNI_DEITY_VS_PHYSICAL_FIRE",
+    "anchor": "VG:RV:SAK:M05:S001:V006",
+    "same_sense": "VG:RV:SAK:M01:S012:V009",
+    "other_sense": "VG:AV:SAU:K05:S027:V003",
+    "z_same": 0.1067,
+    "z_other": 0.1944,
+    "score_ordering_correct": false,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_TIER:TIER_B_REFERENT_EVIDENCE_NOT_COMPARABLE",
+    "same_sense_emitted": true,
+    "anchor_dedication": [
+     "Agni"
+    ],
+    "other_sense_dedication": [
+     "āgneyam"
+    ]
+   },
+   {
+    "trap": "AGNI_DEITY_VS_PHYSICAL_FIRE",
+    "anchor": "VG:RV:SAK:M10:S016:V006",
+    "same_sense": "VG:RV:SAK:M03:S003:V009",
+    "other_sense": "VG:RV:SAK:M10:S101:V001",
+    "z_same": 0.0535,
+    "z_other": 0.0975,
+    "score_ordering_correct": false,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_TIER:REFUSED_REFERENT_GUARD_VIOLATED",
+    "same_sense_emitted": true,
+    "anchor_dedication": [
+     "Agni"
+    ],
+    "other_sense_dedication": [
+     "the All-Gods"
+    ]
+   },
+   {
+    "trap": "AGNI_DEITY_VS_PHYSICAL_FIRE",
+    "anchor": "VG:RV:SAK:M08:S011:V009",
+    "same_sense": "VG:RV:SAK:M01:S036:V002",
+    "other_sense": "VG:AV:SAU:K04:S014:V002",
+    "z_same": 1.535,
+    "z_other": 0.1097,
+    "score_ordering_correct": true,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_TIER:TIER_B_REFERENT_EVIDENCE_NOT_COMPARABLE",
+    "same_sense_emitted": true,
+    "anchor_dedication": [
+     "Agni"
+    ],
+    "other_sense_dedication": [
+     "āgneyam",
+     "ājyam"
+    ]
+   },
+   {
+    "trap": "AGNI_DEITY_VS_PHYSICAL_FIRE",
+    "anchor": "VG:RV:SAK:M08:S044:V004",
+    "same_sense": "VG:RV:SAK:M07:S003:V005",
+    "other_sense": "VG:RV:SAK:M04:S028:V003",
+    "z_same": 0.3827,
+    "z_other": 0.0167,
+    "score_ordering_correct": true,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_TIER:REFUSED_REFERENT_GUARD_VIOLATED",
+    "same_sense_emitted": true,
+    "anchor_dedication": [
+     "Agni"
+    ],
+    "other_sense_dedication": [
+     "Indra"
+    ]
+   },
+   {
+    "trap": "VAC_DEITY_VS_SPEECH_FACULTY",
+    "anchor": "VG:AV:SAU:K04:S030:V006",
+    "same_sense": "VG:AV:SAU:K01:S001:V002",
+    "other_sense": "VG:RV:SAK:M01:S006:V006",
+    "z_same": -0.3274,
+    "z_other": -0.4743,
+    "score_ordering_correct": true,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_SCORE",
+    "same_sense_emitted": false,
+    "anchor_dedication": [
+     "vāgdevatyam"
+    ],
+    "other_sense_dedication": [
+     "Indra"
+    ]
+   },
+   {
+    "trap": "VAC_DEITY_VS_SPEECH_FACULTY",
+    "anchor": "VG:AV:SAU:K04:S030:V008",
+    "same_sense": "VG:RV:SAK:M10:S125:V007",
+    "other_sense": "VG:RV:SAK:M10:S071:V009",
+    "z_same": 0.085,
+    "z_other": -1.2243,
+    "score_ordering_correct": true,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_SCORE",
+    "same_sense_emitted": false,
+    "anchor_dedication": [
+     "vāgdevatyam"
+    ],
+    "other_sense_dedication": [
+     "knowledge"
+    ]
+   },
+   {
+    "trap": "VAC_DEITY_VS_SPEECH_FACULTY",
+    "anchor": "VG:AV:SAU:K01:S001:V004",
+    "same_sense": "VG:RV:SAK:M08:S100:V011",
+    "other_sense": "VG:RV:SAK:M01:S051:V001",
+    "z_same": 0.5819,
+    "z_other": -0.1609,
+    "score_ordering_correct": true,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_SCORE",
+    "same_sense_emitted": false,
+    "anchor_dedication": [
+     "vācaspatyam"
+    ],
+    "other_sense_dedication": [
+     "Indra"
+    ]
+   },
+   {
+    "trap": "VAC_DEITY_VS_SPEECH_FACULTY",
+    "anchor": "VG:AV:SAU:K04:S030:V003",
+    "same_sense": "VG:AV:SAU:K04:S030:V005",
+    "other_sense": "VG:RV:SAK:M10:S023:V005",
+    "z_same": 0.4801,
+    "z_other": -0.6735,
+    "score_ordering_correct": true,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_SCORE",
+    "same_sense_emitted": true,
+    "anchor_dedication": [
+     "vāgdevatyam"
+    ],
+    "other_sense_dedication": [
+     "Indra"
+    ]
+   },
+   {
+    "trap": "VAC_DEITY_VS_SPEECH_FACULTY",
+    "anchor": "VG:RV:SAK:M08:S100:V010",
+    "same_sense": "VG:RV:SAK:M10:S125:V003",
+    "other_sense": "VG:RV:SAK:M08:S041:V002",
+    "z_same": -0.3406,
+    "z_other": -0.8347,
+    "score_ordering_correct": true,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_SCORE",
+    "same_sense_emitted": false,
+    "anchor_dedication": [
+     "Vac, Speech"
+    ],
+    "other_sense_dedication": [
+     "Varuna"
+    ]
+   },
+   {
+    "trap": "VAC_DEITY_VS_SPEECH_FACULTY",
+    "anchor": "VG:AV:SAU:K04:S030:V007",
+    "same_sense": "VG:RV:SAK:M10:S125:V004",
+    "other_sense": "VG:RV:SAK:M08:S101:V016",
+    "z_same": -0.6056,
+    "z_other": -0.9071,
+    "score_ordering_correct": true,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_SCORE",
+    "same_sense_emitted": false,
+    "anchor_dedication": [
+     "vāgdevatyam"
+    ],
+    "other_sense_dedication": [
+     "the cow"
+    ]
+   },
+   {
+    "trap": "VAC_DEITY_VS_SPEECH_FACULTY",
+    "anchor": "VG:AV:SAU:K01:S001:V003",
+    "same_sense": "VG:AV:SAU:K04:S030:V001",
+    "other_sense": "VG:RV:SAK:M08:S002:V027",
+    "z_same": -0.6608,
+    "z_other": 0.2646,
+    "score_ordering_correct": false,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_TIER:TIER_B_REFERENT_EVIDENCE_NOT_COMPARABLE",
+    "same_sense_emitted": false,
+    "anchor_dedication": [
+     "vācaspatyam"
+    ],
+    "other_sense_dedication": [
+     "Indra"
+    ]
+   },
+   {
+    "trap": "VAC_DEITY_VS_SPEECH_FACULTY",
+    "anchor": "VG:AV:SAU:K04:S030:V004",
+    "same_sense": "VG:AV:SAU:K04:S030:V002",
+    "other_sense": "VG:AV:SAU:K10:S002:V007",
+    "z_same": 0.1989,
+    "z_other": -0.518,
+    "score_ordering_correct": true,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_SCORE",
+    "same_sense_emitted": true,
+    "anchor_dedication": [
+     "vāgdevatyam"
+    ],
+    "other_sense_dedication": [
+     "brahmaprakāçisūktam",
+     "pārṣṇisūktam",
+     "pāuruṣam"
+    ]
+   },
+   {
+    "trap": "VAC_DEITY_VS_SPEECH_FACULTY",
+    "anchor": "VG:RV:SAK:M01:S164:V042",
+    "same_sense": "VG:RV:SAK:M10:S125:V006",
+    "other_sense": "VG:RV:SAK:M09:S067:V009",
+    "z_same": -0.7134,
+    "z_other": -0.7745,
+    "score_ordering_correct": true,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_SCORE",
+    "same_sense_emitted": false,
+    "anchor_dedication": [
+     "Vac and the Waters"
+    ],
+    "other_sense_dedication": [
+     "Soma Pavamana"
+    ]
+   },
+   {
+    "trap": "VAC_DEITY_VS_SPEECH_FACULTY",
+    "anchor": "VG:RV:SAK:M10:S125:V005",
+    "same_sense": "VG:RV:SAK:M10:S125:V001",
+    "other_sense": "VG:RV:SAK:M01:S079:V010",
+    "z_same": 0.1242,
+    "z_other": -1.3095,
+    "score_ordering_correct": true,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_SCORE",
+    "same_sense_emitted": true,
+    "anchor_dedication": [
+     "the self"
+    ],
+    "other_sense_dedication": [
+     "Agni"
+    ]
+   },
+   {
+    "trap": "VAC_DEITY_VS_SPEECH_FACULTY",
+    "anchor": "VG:AV:SAU:K01:S001:V001",
+    "same_sense": "VG:RV:SAK:M10:S125:V002",
+    "other_sense": "VG:RV:SAK:M08:S103:V001",
+    "z_same": -0.7714,
+    "z_other": -0.4869,
+    "score_ordering_correct": false,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_SCORE",
+    "same_sense_emitted": false,
+    "anchor_dedication": [
+     "vācaspatyam"
+    ],
+    "other_sense_dedication": [
+     "Agni"
+    ]
+   },
+   {
+    "trap": "VAC_DEITY_VS_SPEECH_FACULTY",
+    "anchor": "VG:RV:SAK:M01:S164:V045",
+    "same_sense": "VG:RV:SAK:M10:S125:V008",
+    "other_sense": "VG:RV:SAK:M01:S092:V009",
+    "z_same": -1.2735,
+    "z_other": 0.6658,
+    "score_ordering_correct": false,
+    "other_sense_emitted": false,
+    "other_sense_disposition": "REJECTED_BY_TIER:REFUSED_REFERENT_GUARD_VIOLATED",
+    "same_sense_emitted": false,
+    "anchor_dedication": [
+     "Vac, Speech"
+    ],
+    "other_sense_dedication": [
+     "Usas"
+    ]
+   }
+  ]
+ },
+ "score_only_first_measurement": {
+  "rule": "anchor-to-same-sense must score STRICTLY above anchor-to-other-sense; a tie is counted as a failure",
+  "ground_truth": "source-explicit dedication (Anukramani HAS_DEVATA / HAS_DEVATA_ASCRIPTION) against the entity registry's own sense typing -- no model opinion enters the label",
+  "per_trap": {
+   "SOMA_DEITY_VS_SUBSTANCE": {
+    "pass": 14,
+    "fail": 6,
+    "tie": 0,
+    "n": 20
+   },
+   "AGNI_DEITY_VS_PHYSICAL_FIRE": {
+    "pass": 15,
+    "fail": 5,
+    "tie": 0,
+    "n": 20
+   },
+   "VAC_DEITY_VS_SPEECH_FACULTY": {
+    "pass": 9,
+    "fail": 3,
+    "tie": 0,
+    "n": 12
+   }
+  },
+  "total_pass": 38,
+  "total": 52,
+  "also_rejected_at_the_threshold": {
+   "other_sense_pairs_at_or_above_threshold": 9,
+   "same_sense_pairs_at_or_above_threshold": 23,
+   "triples": 52
+  },
+  "detail": [
+   {
+    "trap": "SOMA_DEITY_VS_SUBSTANCE",
+    "anchor": "VG:RV:SAK:M09:S061:V010",
+    "same_sense": "VG:RV:SAK:M09:S021:V005",
+    "other_sense": "VG:RV:SAK:M03:S050:V003",
+    "z_same": 0.0653,
+    "z_other": -0.2215,
+    "verdict": "PASS",
+    "anchor_dedication": [
+     "Soma Pavamana"
+    ],
+    "other_sense_dedication": [
+     "Indra"
+    ],
+    "truth_basis": "HAS_DEVATA / HAS_DEVATA_ASCRIPTION dedication (Anukramani) vs the registry's Offering+Substance typing of soma juice"
+   },
+   {
+    "trap": "SOMA_DEITY_VS_SUBSTANCE",
+    "anchor": "VG:RV:SAK:M09:S065:V024",
+    "same_sense": "VG:RV:SAK:M09:S063:V013",
+    "other_sense": "VG:RV:SAK:M05:S064:V007",
+    "z_same": 0.5244,
+    "z_other": -0.2124,
+    "verdict": "PASS",
+    "anchor_dedication": [
+     "Soma Pavamana"
+    ],
+    "other_sense_dedication": [
+     "Mitra and Varuna"
+    ],
+    "truth_basis": "HAS_DEVATA / HAS_DEVATA_ASCRIPTION dedication (Anukramani) vs the registry's Offering+Substance typing of soma juice"
+   },
+   {
+    "trap": "SOMA_DEITY_VS_SUBSTANCE",
+    "anchor": "VG:RV:SAK:M09:S072:V004",
+    "same_sense": "VG:RV:SAK:M09:S056:V002",
+    "other_sense": "VG:RV:SAK:M08:S057:V002",
+    "z_same": -0.2622,
+    "z_other": -0.0659,
+    "verdict": "FAIL",
+    "anchor_dedication": [
+     "Soma Pavamana"
+    ],
+    "other_sense_dedication": [
+     "the Asvins"
+    ],
+    "truth_basis": "HAS_DEVATA / HAS_DEVATA_ASCRIPTION dedication (Anukramani) vs the registry's Offering+Substance typing of soma juice"
+   },
+   {
+    "trap": "SOMA_DEITY_VS_SUBSTANCE",
+    "anchor": "VG:RV:SAK:M09:S004:V004",
+    "same_sense": "VG:RV:SAK:M09:S067:V011",
+    "other_sense": "VG:RV:SAK:M08:S021:V004",
+    "z_same": 1.0782,
+    "z_other": 0.5148,
+    "verdict": "PASS",
+    "anchor_dedication": [
+     "Soma Pavamana"
+    ],
+    "other_sense_dedication": [
+     "Indra"
+    ],
+    "truth_basis": "HAS_DEVATA / HAS_DEVATA_ASCRIPTION dedication (Anukramani) vs the registry's Offering+Substance typing of soma juice"
+   },
+   {
+    "trap": "SOMA_DEITY_VS_SUBSTANCE",
+    "anchor": "VG:RV:SAK:M09:S098:V003",
+    "same_sense": "VG:RV:SAK:M09:S097:V010",
+    "other_sense": "VG:RV:SAK:M08:S085:V002",
+    "z_same": -0.002,
+    "z_other": -0.3753,
+    "verdict": "PASS",
+    "anchor_dedication": [
+     "Soma Pavamana"
+    ],
+    "other_sense_dedication": [
+     "the Asvins"
+    ],
+    "truth_basis": "HAS_DEVATA / HAS_DEVATA_ASCRIPTION dedication (Anukramani) vs the registry's Offering+Substance typing of soma juice"
+   },
+   {
+    "trap": "SOMA_DEITY_VS_SUBSTANCE",
+    "anchor": "VG:RV:SAK:M09:S086:V002",
+    "same_sense": "VG:RV:SAK:M09:S085:V002",
+    "other_sense": "VG:RV:SAK:M01:S135:V004",
+    "z_same": 1.1592,
+    "z_other": 0.4736,
+    "verdict": "PASS",
+    "anchor_dedication": [
+     "Soma Pavamana"
+    ],
+    "other_sense_dedication": [
+     "Indra and Vayu"
+    ],
+    "truth_basis": "HAS_DEVATA / HAS_DEVATA_ASCRIPTION dedication (Anukramani) vs the registry's Offering+Substance typing of soma juice"
+   },
+   {
+    "trap": "SOMA_DEITY_VS_SUBSTANCE",
+    "anchor": "VG:RV:SAK:M09:S067:V008",
+    "same_sense": "VG:RV:SAK:M09:S085:V007",
+    "other_sense": "VG:RV:SAK:M08:S094:V009",
+    "z_same": -0.1703,
+    "z_other": 0.1475,
+    "verdict": "FAIL",
+    "anchor_dedication": [
+     "Soma Pavamana"
+    ],
+    "other_sense_dedication": [
+     "the Maruts"
+    ],
+    "truth_basis": "HAS_DEVATA / HAS_DEVATA_ASCRIPTION dedication (Anukramani) vs the registry's Offering+Substance typing of soma juice"
+   },
+   {
+    "trap": "SOMA_DEITY_VS_SUBSTANCE",
+    "anchor": "VG:RV:SAK:M09:S079:V002",
+    "same_sense": "VG:RV:SAK:M09:S069:V004",
+    "other_sense": "VG:RV:SAK:M08:S046:V014",
+    "z_same": 0.1358,
+    "z_other": -0.0918,
+    "verdict": "PASS",
+    "anchor_dedication": [
+     "Soma Pavamana"
+    ],
+    "other_sense_dedication": [
+     "Indra"
+    ],
+    "truth_basis": "HAS_DEVATA / HAS_DEVATA_ASCRIPTION dedication (Anukramani) vs the registry's Offering+Substance typing of soma juice"
+   },
+   {
+    "trap": "SOMA_DEITY_VS_SUBSTANCE",
+    "anchor": "VG:RV:SAK:M09:S085:V001",
+    "same_sense": "VG:RV:SAK:M08:S048:V003",
+    "other_sense": "VG:RV:SAK:M10:S125:V002",
+    "z_same": 0.0181,
+    "z_other": 0.051,
+    "verdict": "FAIL",
+    "anchor_dedication": [
+     "Soma Pavamana"
+    ],
+    "other_sense_dedication": [
+     "the self"
+    ],
+    "truth_basis": "HAS_DEVATA / HAS_DEVATA_ASCRIPTION dedication (Anukramani) vs the registry's Offering+Substance typing of soma juice"
+   },
+   {
+    "trap": "SOMA_DEITY_VS_SUBSTANCE",
+    "anchor": "VG:RV:SAK:M09:S037:V001",
+    "same_sense": "VG:RV:SAK:M09:S109:V012",
+    "other_sense": "VG:RV:SAK:M04:S024:V007",
+    "z_same": 0.8751,
+    "z_other": -0.0541,
+    "verdict": "PASS",
+    "anchor_dedication": [
+     "Soma Pavamana"
+    ],
+    "other_sense_dedication": [
+     "Indra"
+    ],
+    "truth_basis": "HAS_DEVATA / HAS_DEVATA_ASCRIPTION dedication (Anukramani) vs the registry's Offering+Substance typing of soma juice"
+   },
+   {
+    "trap": "SOMA_DEITY_VS_SUBSTANCE",
+    "anchor": "VG:RV:SAK:M09:S063:V025",
+    "same_sense": "VG:RV:SAK:M09:S101:V007",
+    "other_sense": "VG:RV:SAK:M08:S094:V003",
+    "z_same": 0.845,
+    "z_other": 0.5392,
+    "verdict": "PASS",
+    "anchor_dedication": [
+     "Soma Pavamana"
+    ],
+    "other_sense_dedication": [
+     "the Maruts"
+    ],
+    "truth_basis": "HAS_DEVATA / HAS_DEVATA_ASCRIPTION dedication (Anukramani) vs the registry's Offering+Substance typing of soma juice"
+   },
+   {
+    "trap": "SOMA_DEITY_VS_SUBSTANCE",
+    "anchor": "VG:RV:SAK:M09:S062:V015",
+    "same_sense": "VG:RV:SAK:M09:S107:V018",
+    "other_sense": "VG:AV:SAU:K10:S001:V022",
+    "z_same": -0.5595,
+    "z_other": 0.0272,
+    "verdict": "FAIL",
+    "anchor_dedication": [
+     "Soma Pavamana"
+    ],
+    "other_sense_dedication": [
+     "kṛtyādūṣaṇadevatyam"
+    ],
+    "truth_basis": "HAS_DEVATA / HAS_DEVATA_ASCRIPTION dedication (Anukramani) vs the registry's Offering+Substance typing of soma juice"
+   },
+   {
+    "trap": "SOMA_DEITY_VS_SUBSTANCE",
+    "anchor": "VG:RV:SAK:M09:S096:V023",
+    "same_sense": "VG:RV:SAK:M09:S074:V005",
+    "other_sense": "VG:RV:SAK:M03:S051:V009",
+    "z_same": -0.2411,
+    "z_other": -0.0095,
+    "verdict": "FAIL",
+    "anchor_dedication": [
+     "Soma Pavamana"
+    ],
+    "other_sense_dedication": [
+     "Indra"
+    ],
+    "truth_basis": "HAS_DEVATA / HAS_DEVATA_ASCRIPTION dedication (Anukramani) vs the registry's Offering+Substance typing of soma juice"
+   },
+   {
+    "trap": "SOMA_DEITY_VS_SUBSTANCE",
+    "anchor": "VG:RV:SAK:M09:S092:V006",
+    "same_sense": "VG:RV:SAK:M09:S091:V002",
+    "other_sense": "VG:AV:SAU:K14:S001:V004",
+    "z_same": 0.0855,
+    "z_other": -0.4726,
+    "verdict": "PASS",
+    "anchor_dedication": [
+     "Soma Pavamana"
+    ],
+    "other_sense_dedication": [
+     "ātmadāivatam"
+    ],
+    "truth_basis": "HAS_DEVATA / HAS_DEVATA_ASCRIPTION dedication (Anukramani) vs the registry's Offering+Substance typing of soma juice"
+   },
+   {
+    "trap": "SOMA_DEITY_VS_SUBSTANCE",
+    "anchor": "VG:RV:SAK:M09:S074:V007",
+    "same_sense": "VG:RV:SAK:M09:S109:V013",
+    "other_sense": "VG:RV:SAK:M07:S021:V001",
+    "z_same": -0.4016,
+    "z_other": -0.0924,
+    "verdict": "FAIL",
+    "anchor_dedication": [
+     "Soma Pavamana"
+    ],
+    "other_sense_dedication": [
+     "Indra"
+    ],
+    "truth_basis": "HAS_DEVATA / HAS_DEVATA_ASCRIPTION dedication (Anukramani) vs the registry's Offering+Substance typing of soma juice"
+   },
+   {
+    "trap": "SOMA_DEITY_VS_SUBSTANCE",
+    "anchor": "VG:RV:SAK:M09:S086:V019",
+    "same_sense": "VG:RV:SAK:M09:S086:V026",
+    "other_sense": "VG:RV:SAK:M05:S029:V007",
+    "z_same": 0.3796,
+    "z_other": 0.0873,
+    "verdict": "PASS",
+    "anchor_dedication": [
+     "Soma Pavamana"
+    ],
+    "other_sense_dedication": [
+     "Indra"
+    ],
+    "truth_basis": "HAS_DEVATA / HAS_DEVATA_ASCRIPTION dedication (Anukramani) vs the registry's Offering+Substance typing of soma juice"
+   },
+   {
+    "trap": "SOMA_DEITY_VS_SUBSTANCE",
+    "anchor": "VG:RV:SAK:M09:S066:V023",
+    "same_sense": "VG:RV:SAK:M09:S103:V001",
+    "other_sense": "VG:RV:SAK:M01:S023:V007",
+    "z_same": 0.9992,
+    "z_other": 0.5388,
+    "verdict": "PASS",
+    "anchor_dedication": [
+     "Soma Pavamana"
+    ],
+    "other_sense_dedication": [
+     "Indra and the Maruts"
+    ],
+    "truth_basis": "HAS_DEVATA / HAS_DEVATA_ASCRIPTION dedication (Anukramani) vs the registry's Offering+Substance typing of soma juice"
+   },
+   {
+    "trap": "SOMA_DEITY_VS_SUBSTANCE",
+    "anchor": "VG:RV:SAK:M09:S002:V005",
+    "same_sense": "VG:RV:SAK:M09:S034:V003",
+    "other_sense": "VG:AV:SAU:K03:S005:V004",
+    "z_same": 0.1909,
+    "z_other": -0.5694,
+    "verdict": "PASS",
+    "anchor_dedication": [
+     "Soma Pavamana"
+    ],
+    "other_sense_dedication": [
+     "sāumyam"
+    ],
+    "truth_basis": "HAS_DEVATA / HAS_DEVATA_ASCRIPTION dedication (Anukramani) vs the registry's Offering+Substance typing of soma juice"
+   },
+   {
+    "trap": "SOMA_DEITY_VS_SUBSTANCE",
+    "anchor": "VG:RV:SAK:M06:S047:V004",
+    "same_sense": "VG:RV:SAK:M09:S086:V036",
+    "other_sense": "VG:RV:SAK:M08:S033:V007",
+    "z_same": -0.0595,
+    "z_other": -0.1704,
+    "verdict": "PASS",
+    "anchor_dedication": [
+     "Soma"
+    ],
+    "other_sense_dedication": [
+     "Indra"
+    ],
+    "truth_basis": "HAS_DEVATA / HAS_DEVATA_ASCRIPTION dedication (Anukramani) vs the registry's Offering+Substance typing of soma juice"
+   },
+   {
+    "trap": "SOMA_DEITY_VS_SUBSTANCE",
+    "anchor": "VG:RV:SAK:M09:S063:V009",
+    "same_sense": "VG:RV:SAK:M09:S027:V003",
+    "other_sense": "VG:AV:SAU:K06:S053:V001",
+    "z_same": 0.2693,
+    "z_other": -0.7102,
+    "verdict": "PASS",
+    "anchor_dedication": [
+     "Soma Pavamana"
+    ],
+    "other_sense_dedication": [
+     "nānādāivatam"
+    ],
+    "truth_basis": "HAS_DEVATA / HAS_DEVATA_ASCRIPTION dedication (Anukramani) vs the registry's Offering+Substance typing of soma juice"
+   },
+   {
+    "trap": "AGNI_DEITY_VS_PHYSICAL_FIRE",
+    "anchor": "VG:RV:SAK:M03:S027:V011",
+    "same_sense": "VG:RV:SAK:M07:S007:V005",
+    "other_sense": "VG:RV:SAK:M03:S030:V002",
+    "z_same": 0.2732,
+    "z_other": 0.1871,
+    "verdict": "PASS",
+    "anchor_dedication": [
+     "Agni"
+    ],
+    "other_sense_dedication": [
+     "Indra"
+    ],
+    "truth_basis": "dedication vs the registry's NaturalPhenomenon typing of fire"
+   },
+   {
+    "trap": "AGNI_DEITY_VS_PHYSICAL_FIRE",
+    "anchor": "VG:RV:SAK:M05:S001:V012",
+    "same_sense": "VG:RV:SAK:M06:S010:V004",
+    "other_sense": "VG:AV:SAU:K07:S062:V001",
+    "z_same": 0.4196,
+    "z_other": 0.2497,
+    "verdict": "PASS",
+    "anchor_dedication": [
+     "Agni"
+    ],
+    "other_sense_dedication": [
+     "āgneyam"
+    ],
+    "truth_basis": "dedication vs the registry's NaturalPhenomenon typing of fire"
+   },
+   {
+    "trap": "AGNI_DEITY_VS_PHYSICAL_FIRE",
+    "anchor": "VG:RV:SAK:M03:S023:V001",
+    "same_sense": "VG:RV:SAK:M10:S021:V005",
+    "other_sense": "VG:AV:SAU:K13:S003:V005",
+    "z_same": 0.531,
+    "z_other": 0.1714,
+    "verdict": "PASS",
+    "anchor_dedication": [
+     "Agni"
+    ],
+    "other_sense_dedication": [
+     "rohitādityadevatyam",
+     "ādhyātmam"
+    ],
+    "truth_basis": "dedication vs the registry's NaturalPhenomenon typing of fire"
+   },
+   {
+    "trap": "AGNI_DEITY_VS_PHYSICAL_FIRE",
+    "anchor": "VG:RV:SAK:M08:S102:V016",
+    "same_sense": "VG:RV:SAK:M03:S029:V002",
+    "other_sense": "VG:RV:SAK:M10:S065:V001",
+    "z_same": 0.1755,
+    "z_other": -0.6238,
+    "verdict": "PASS",
+    "anchor_dedication": [
+     "Agni"
+    ],
+    "other_sense_dedication": [
+     "the All-Gods"
+    ],
+    "truth_basis": "dedication vs the registry's NaturalPhenomenon typing of fire"
+   },
+   {
+    "trap": "AGNI_DEITY_VS_PHYSICAL_FIRE",
+    "anchor": "VG:RV:SAK:M01:S069:V006",
+    "same_sense": "VG:RV:SAK:M10:S046:V008",
+    "other_sense": "VG:AV:SAU:K11:S008:V031",
+    "z_same": -0.0222,
+    "z_other": -0.1807,
+    "verdict": "PASS",
+    "anchor_dedication": [
+     "Agni"
+    ],
+    "other_sense_dedication": [
+     "adhyātmamanyudāivatam"
+    ],
+    "truth_basis": "dedication vs the registry's NaturalPhenomenon typing of fire"
+   },
+   {
+    "trap": "AGNI_DEITY_VS_PHYSICAL_FIRE",
+    "anchor": "VG:RV:SAK:M01:S070:V005",
+    "same_sense": "VG:RV:SAK:M06:S015:V004",
+    "other_sense": "VG:RV:SAK:M10:S061:V014",
+    "z_same": 0.723,
+    "z_other": 0.5006,
+    "verdict": "PASS",
+    "anchor_dedication": [
+     "Agni"
+    ],
+    "other_sense_dedication": [
+     "the All-Gods"
+    ],
+    "truth_basis": "dedication vs the registry's NaturalPhenomenon typing of fire"
+   },
+   {
+    "trap": "AGNI_DEITY_VS_PHYSICAL_FIRE",
+    "anchor": "VG:RV:SAK:M10:S046:V007",
+    "same_sense": "VG:RV:SAK:M10:S087:V017",
+    "other_sense": "VG:AV:SAU:K05:S027:V005",
+    "z_same": 0.3664,
+    "z_other": 0.2715,
+    "verdict": "PASS",
+    "anchor_dedication": [
+     "Agni"
+    ],
+    "other_sense_dedication": [
+     "āgneyam"
+    ],
+    "truth_basis": "dedication vs the registry's NaturalPhenomenon typing of fire"
+   },
+   {
+    "trap": "AGNI_DEITY_VS_PHYSICAL_FIRE",
+    "anchor": "VG:RV:SAK:M10:S011:V003",
+    "same_sense": "VG:RV:SAK:M03:S001:V018",
+    "other_sense": "VG:AV:SAU:K08:S008:V002",
+    "z_same": -0.0498,
+    "z_other": 0.062,
+    "verdict": "FAIL",
+    "anchor_dedication": [
+     "Agni"
+    ],
+    "other_sense_dedication": [
+     "parasenāhananam",
+     "āindram uta vānaspatyam"
+    ],
+    "truth_basis": "dedication vs the registry's NaturalPhenomenon typing of fire"
+   },
+   {
+    "trap": "AGNI_DEITY_VS_PHYSICAL_FIRE",
+    "anchor": "VG:RV:SAK:M10:S045:V012",
+    "same_sense": "VG:RV:SAK:M06:S001:V008",
+    "other_sense": "VG:RV:SAK:M10:S063:V009",
+    "z_same": 0.5536,
+    "z_other": 0.7504,
+    "verdict": "FAIL",
+    "anchor_dedication": [
+     "Agni"
+    ],
+    "other_sense_dedication": [
+     "the All-Gods"
+    ],
+    "truth_basis": "dedication vs the registry's NaturalPhenomenon typing of fire"
+   },
+   {
+    "trap": "AGNI_DEITY_VS_PHYSICAL_FIRE",
+    "anchor": "VG:RV:SAK:M04:S015:V001",
+    "same_sense": "VG:RV:SAK:M05:S004:V002",
+    "other_sense": "VG:RV:SAK:M10:S051:V004",
+    "z_same": 0.4237,
+    "z_other": 0.1242,
+    "verdict": "PASS",
+    "anchor_dedication": [
+     "Agni"
+    ],
+    "other_sense_dedication": [
+     "the gods"
+    ],
+    "truth_basis": "dedication vs the registry's NaturalPhenomenon typing of fire"
+   },
+   {
+    "trap": "AGNI_DEITY_VS_PHYSICAL_FIRE",
+    "anchor": "VG:RV:SAK:M08:S023:V007",
+    "same_sense": "VG:RV:SAK:M04:S001:V019",
+    "other_sense": "VG:RV:SAK:M08:S031:V014",
+    "z_same": 0.602,
+    "z_other": 0.6366,
+    "verdict": "FAIL",
+    "anchor_dedication": [
+     "Agni"
+    ],
+    "other_sense_dedication": [
+     "the blessings of the married pair"
+    ],
+    "truth_basis": "dedication vs the registry's NaturalPhenomenon typing of fire"
+   },
+   {
+    "trap": "AGNI_DEITY_VS_PHYSICAL_FIRE",
+    "anchor": "VG:RV:SAK:M10:S087:V023",
+    "same_sense": "VG:RV:SAK:M01:S044:V012",
+    "other_sense": "VG:AV:SAU:K10:S004:V026",
+    "z_same": 0.5541,
+    "z_other": 0.3794,
+    "verdict": "PASS",
+    "anchor_dedication": [
+     "Agni"
+    ],
+    "other_sense_dedication": [
+     "takṣakadāivatam"
+    ],
+    "truth_basis": "dedication vs the registry's NaturalPhenomenon typing of fire"
+   },
+   {
+    "trap": "AGNI_DEITY_VS_PHYSICAL_FIRE",
+    "anchor": "VG:RV:SAK:M01:S001:V003",
+    "same_sense": "VG:RV:SAK:M05:S025:V006",
+    "other_sense": "VG:RV:SAK:M06:S040:V003",
+    "z_same": 0.3381,
+    "z_other": -0.2506,
+    "verdict": "PASS",
+    "anchor_dedication": [
+     "Agni"
+    ],
+    "other_sense_dedication": [
+     "Indra"
+    ],
+    "truth_basis": "dedication vs the registry's NaturalPhenomenon typing of fire"
+   },
+   {
+    "trap": "AGNI_DEITY_VS_PHYSICAL_FIRE",
+    "anchor": "VG:RV:SAK:M03:S027:V002",
+    "same_sense": "VG:RV:SAK:M03:S026:V002",
+    "other_sense": "VG:RV:SAK:M10:S165:V004",
+    "z_same": 0.6614,
+    "z_other": -0.247,
+    "verdict": "PASS",
+    "anchor_dedication": [
+     "Agni"
+    ],
+    "other_sense_dedication": [
+     "the All-Gods"
+    ],
+    "truth_basis": "dedication vs the registry's NaturalPhenomenon typing of fire"
+   },
+   {
+    "trap": "AGNI_DEITY_VS_PHYSICAL_FIRE",
+    "anchor": "VG:RV:SAK:M08:S019:V007",
+    "same_sense": "VG:RV:SAK:M08:S019:V022",
+    "other_sense": "VG:AV:SAU:K01:S033:V001",
+    "z_same": 1.3459,
+    "z_other": 0.1412,
+    "verdict": "PASS",
+    "anchor_dedication": [
+     "Agni"
+    ],
+    "other_sense_dedication": [
+     "cāndramasam āpyam uta"
+    ],
+    "truth_basis": "dedication vs the registry's NaturalPhenomenon typing of fire"
+   },
+   {
+    "trap": "AGNI_DEITY_VS_PHYSICAL_FIRE",
+    "anchor": "VG:RV:SAK:M05:S014:V006",
+    "same_sense": "VG:RV:SAK:M06:S015:V013",
+    "other_sense": "VG:RV:SAK:M01:S162:V019",
+    "z_same": 0.6969,
+    "z_other": -0.2295,
+    "verdict": "PASS",
+    "anchor_dedication": [
+     "Agni"
+    ],
+    "other_sense_dedication": [
+     "the horse"
+    ],
+    "truth_basis": "dedication vs the registry's NaturalPhenomenon typing of fire"
+   },
+   {
+    "trap": "AGNI_DEITY_VS_PHYSICAL_FIRE",
+    "anchor": "VG:RV:SAK:M05:S001:V006",
+    "same_sense": "VG:RV:SAK:M01:S012:V009",
+    "other_sense": "VG:AV:SAU:K05:S027:V003",
+    "z_same": 0.1067,
+    "z_other": 0.1944,
+    "verdict": "FAIL",
+    "anchor_dedication": [
+     "Agni"
+    ],
+    "other_sense_dedication": [
+     "āgneyam"
+    ],
+    "truth_basis": "dedication vs the registry's NaturalPhenomenon typing of fire"
+   },
+   {
+    "trap": "AGNI_DEITY_VS_PHYSICAL_FIRE",
+    "anchor": "VG:RV:SAK:M10:S016:V006",
+    "same_sense": "VG:RV:SAK:M03:S003:V009",
+    "other_sense": "VG:RV:SAK:M10:S101:V001",
+    "z_same": 0.0535,
+    "z_other": 0.0975,
+    "verdict": "FAIL",
+    "anchor_dedication": [
+     "Agni"
+    ],
+    "other_sense_dedication": [
+     "the All-Gods"
+    ],
+    "truth_basis": "dedication vs the registry's NaturalPhenomenon typing of fire"
+   },
+   {
+    "trap": "AGNI_DEITY_VS_PHYSICAL_FIRE",
+    "anchor": "VG:RV:SAK:M08:S011:V009",
+    "same_sense": "VG:RV:SAK:M01:S036:V002",
+    "other_sense": "VG:AV:SAU:K04:S014:V002",
+    "z_same": 1.535,
+    "z_other": 0.1097,
+    "verdict": "PASS",
+    "anchor_dedication": [
+     "Agni"
+    ],
+    "other_sense_dedication": [
+     "āgneyam",
+     "ājyam"
+    ],
+    "truth_basis": "dedication vs the registry's NaturalPhenomenon typing of fire"
+   },
+   {
+    "trap": "AGNI_DEITY_VS_PHYSICAL_FIRE",
+    "anchor": "VG:RV:SAK:M08:S044:V004",
+    "same_sense": "VG:RV:SAK:M07:S003:V005",
+    "other_sense": "VG:RV:SAK:M04:S028:V003",
+    "z_same": 0.3827,
+    "z_other": 0.0167,
+    "verdict": "PASS",
+    "anchor_dedication": [
+     "Agni"
+    ],
+    "other_sense_dedication": [
+     "Indra"
+    ],
+    "truth_basis": "dedication vs the registry's NaturalPhenomenon typing of fire"
+   },
+   {
+    "trap": "VAC_DEITY_VS_SPEECH_FACULTY",
+    "anchor": "VG:AV:SAU:K04:S030:V006",
+    "same_sense": "VG:AV:SAU:K01:S001:V002",
+    "other_sense": "VG:RV:SAK:M01:S006:V006",
+    "z_same": -0.3274,
+    "z_other": -0.4743,
+    "verdict": "PASS",
+    "anchor_dedication": [
+     "vāgdevatyam"
+    ],
+    "other_sense_dedication": [
+     "Indra"
+    ],
+    "truth_basis": "AV 4.30 vagdevatyam / AV vacaspatyam / RV Vac dedications / RV 10.125 vs the registry's PhilosophicalConcept typing of speech"
+   },
+   {
+    "trap": "VAC_DEITY_VS_SPEECH_FACULTY",
+    "anchor": "VG:AV:SAU:K04:S030:V008",
+    "same_sense": "VG:RV:SAK:M10:S125:V007",
+    "other_sense": "VG:RV:SAK:M10:S071:V009",
+    "z_same": 0.085,
+    "z_other": -1.2243,
+    "verdict": "PASS",
+    "anchor_dedication": [
+     "vāgdevatyam"
+    ],
+    "other_sense_dedication": [
+     "knowledge"
+    ],
+    "truth_basis": "AV 4.30 vagdevatyam / AV vacaspatyam / RV Vac dedications / RV 10.125 vs the registry's PhilosophicalConcept typing of speech"
+   },
+   {
+    "trap": "VAC_DEITY_VS_SPEECH_FACULTY",
+    "anchor": "VG:AV:SAU:K01:S001:V004",
+    "same_sense": "VG:RV:SAK:M08:S100:V011",
+    "other_sense": "VG:RV:SAK:M01:S051:V001",
+    "z_same": 0.5819,
+    "z_other": -0.1609,
+    "verdict": "PASS",
+    "anchor_dedication": [
+     "vācaspatyam"
+    ],
+    "other_sense_dedication": [
+     "Indra"
+    ],
+    "truth_basis": "AV 4.30 vagdevatyam / AV vacaspatyam / RV Vac dedications / RV 10.125 vs the registry's PhilosophicalConcept typing of speech"
+   },
+   {
+    "trap": "VAC_DEITY_VS_SPEECH_FACULTY",
+    "anchor": "VG:AV:SAU:K04:S030:V003",
+    "same_sense": "VG:AV:SAU:K04:S030:V005",
+    "other_sense": "VG:RV:SAK:M10:S023:V005",
+    "z_same": 0.4801,
+    "z_other": -0.6735,
+    "verdict": "PASS",
+    "anchor_dedication": [
+     "vāgdevatyam"
+    ],
+    "other_sense_dedication": [
+     "Indra"
+    ],
+    "truth_basis": "AV 4.30 vagdevatyam / AV vacaspatyam / RV Vac dedications / RV 10.125 vs the registry's PhilosophicalConcept typing of speech"
+   },
+   {
+    "trap": "VAC_DEITY_VS_SPEECH_FACULTY",
+    "anchor": "VG:RV:SAK:M08:S100:V010",
+    "same_sense": "VG:RV:SAK:M10:S125:V003",
+    "other_sense": "VG:RV:SAK:M08:S041:V002",
+    "z_same": -0.3406,
+    "z_other": -0.8347,
+    "verdict": "PASS",
+    "anchor_dedication": [
+     "Vac, Speech"
+    ],
+    "other_sense_dedication": [
+     "Varuna"
+    ],
+    "truth_basis": "AV 4.30 vagdevatyam / AV vacaspatyam / RV Vac dedications / RV 10.125 vs the registry's PhilosophicalConcept typing of speech"
+   },
+   {
+    "trap": "VAC_DEITY_VS_SPEECH_FACULTY",
+    "anchor": "VG:AV:SAU:K04:S030:V007",
+    "same_sense": "VG:RV:SAK:M10:S125:V004",
+    "other_sense": "VG:RV:SAK:M08:S101:V016",
+    "z_same": -0.6056,
+    "z_other": -0.9071,
+    "verdict": "PASS",
+    "anchor_dedication": [
+     "vāgdevatyam"
+    ],
+    "other_sense_dedication": [
+     "the cow"
+    ],
+    "truth_basis": "AV 4.30 vagdevatyam / AV vacaspatyam / RV Vac dedications / RV 10.125 vs the registry's PhilosophicalConcept typing of speech"
+   },
+   {
+    "trap": "VAC_DEITY_VS_SPEECH_FACULTY",
+    "anchor": "VG:AV:SAU:K01:S001:V003",
+    "same_sense": "VG:AV:SAU:K04:S030:V001",
+    "other_sense": "VG:RV:SAK:M08:S002:V027",
+    "z_same": -0.6608,
+    "z_other": 0.2646,
+    "verdict": "FAIL",
+    "anchor_dedication": [
+     "vācaspatyam"
+    ],
+    "other_sense_dedication": [
+     "Indra"
+    ],
+    "truth_basis": "AV 4.30 vagdevatyam / AV vacaspatyam / RV Vac dedications / RV 10.125 vs the registry's PhilosophicalConcept typing of speech"
+   },
+   {
+    "trap": "VAC_DEITY_VS_SPEECH_FACULTY",
+    "anchor": "VG:AV:SAU:K04:S030:V004",
+    "same_sense": "VG:AV:SAU:K04:S030:V002",
+    "other_sense": "VG:AV:SAU:K10:S002:V007",
+    "z_same": 0.1989,
+    "z_other": -0.518,
+    "verdict": "PASS",
+    "anchor_dedication": [
+     "vāgdevatyam"
+    ],
+    "other_sense_dedication": [
+     "brahmaprakāçisūktam",
+     "pārṣṇisūktam",
+     "pāuruṣam"
+    ],
+    "truth_basis": "AV 4.30 vagdevatyam / AV vacaspatyam / RV Vac dedications / RV 10.125 vs the registry's PhilosophicalConcept typing of speech"
+   },
+   {
+    "trap": "VAC_DEITY_VS_SPEECH_FACULTY",
+    "anchor": "VG:RV:SAK:M01:S164:V042",
+    "same_sense": "VG:RV:SAK:M10:S125:V006",
+    "other_sense": "VG:RV:SAK:M09:S067:V009",
+    "z_same": -0.7134,
+    "z_other": -0.7745,
+    "verdict": "PASS",
+    "anchor_dedication": [
+     "Vac and the Waters"
+    ],
+    "other_sense_dedication": [
+     "Soma Pavamana"
+    ],
+    "truth_basis": "AV 4.30 vagdevatyam / AV vacaspatyam / RV Vac dedications / RV 10.125 vs the registry's PhilosophicalConcept typing of speech"
+   },
+   {
+    "trap": "VAC_DEITY_VS_SPEECH_FACULTY",
+    "anchor": "VG:RV:SAK:M10:S125:V005",
+    "same_sense": "VG:RV:SAK:M10:S125:V001",
+    "other_sense": "VG:RV:SAK:M01:S079:V010",
+    "z_same": 0.1242,
+    "z_other": -1.3095,
+    "verdict": "PASS",
+    "anchor_dedication": [
+     "the self"
+    ],
+    "other_sense_dedication": [
+     "Agni"
+    ],
+    "truth_basis": "AV 4.30 vagdevatyam / AV vacaspatyam / RV Vac dedications / RV 10.125 vs the registry's PhilosophicalConcept typing of speech"
+   },
+   {
+    "trap": "VAC_DEITY_VS_SPEECH_FACULTY",
+    "anchor": "VG:AV:SAU:K01:S001:V001",
+    "same_sense": "VG:RV:SAK:M10:S125:V002",
+    "other_sense": "VG:RV:SAK:M08:S103:V001",
+    "z_same": -0.7714,
+    "z_other": -0.4869,
+    "verdict": "FAIL",
+    "anchor_dedication": [
+     "vācaspatyam"
+    ],
+    "other_sense_dedication": [
+     "Agni"
+    ],
+    "truth_basis": "AV 4.30 vagdevatyam / AV vacaspatyam / RV Vac dedications / RV 10.125 vs the registry's PhilosophicalConcept typing of speech"
+   },
+   {
+    "trap": "VAC_DEITY_VS_SPEECH_FACULTY",
+    "anchor": "VG:RV:SAK:M01:S164:V045",
+    "same_sense": "VG:RV:SAK:M10:S125:V008",
+    "other_sense": "VG:RV:SAK:M01:S092:V009",
+    "z_same": -1.2735,
+    "z_other": 0.6658,
+    "verdict": "FAIL",
+    "anchor_dedication": [
+     "Vac, Speech"
+    ],
+    "other_sense_dedication": [
+     "Usas"
+    ],
+    "truth_basis": "AV 4.30 vagdevatyam / AV vacaspatyam / RV Vac dedications / RV 10.125 vs the registry's PhilosophicalConcept typing of speech"
+   }
+  ]
+ },
+ "adversarial_classes_final": {
+  "formulaic_boilerplate": {
+   "cases": 40,
+   "expected": "REJECT -- formula reuse is USES_FORMULA, a different predicate",
+   "emitted": 0,
+   "disposition": {
+    "REJECTED_BY_TIER:REFUSED_REFERENT_GUARD_VIOLATED": 4,
+    "REJECTED_BY_SCORE": 10,
+    "REJECTED_BY_NOVELTY_FILTER:IN_AGENT_12_STAGED_RELATIONS": 2,
+    "REJECTED_BY_NOVELTY_FILTER:SHARED_FORMULA": 18,
+    "REJECTED_BY_NOVELTY_FILTER:EXISTING_TEXTUAL_PARALLEL": 4,
+    "REJECTED_BY_TIER:TIER_B_REFERENT_EVIDENCE_NOT_COMPARABLE": 2
+   },
+   "max_z": 2.2489,
+   "emitted_cases": []
+  },
+  "common_high_frequency_only": {
+   "cases": 40,
+   "expected": "REJECT -- the only shared vocabulary is the corpus's twelve commonest concepts",
+   "emitted": 9,
+   "disposition": {
+    "REJECTED_BY_SCORE": 25,
+    "EMITTED": 9,
+    "REJECTED_BY_TIER:TIER_B_REFERENT_EVIDENCE_NOT_COMPARABLE": 2,
+    "REJECTED_BY_TIER:REFUSED_REFERENT_GUARD_VIOLATED": 4
+   },
+   "max_z": 0.6305,
+   "emitted_cases": [
+    {
+     "kind": "COMMON_HIGH_FREQUENCY_ONLY",
+     "a": "VG:RV:SAK:M03:S035:V006",
+     "b": "VG:RV:SAK:M01:S132:V001",
+     "shared": [
+      "sacrifice (yajña)"
+     ],
+     "expected": "REJECT -- the only shared vocabulary is the corpus's twelve commonest concepts",
+     "z": 0.5038,
+     "tier": "TIER_A_DEDICATION_AGREES",
+     "key_a": "VG:RV:SAK:M01:S132:V001",
+     "key_b": "VG:RV:SAK:M03:S035:V006"
+    },
+    {
+     "kind": "COMMON_HIGH_FREQUENCY_ONLY",
+     "a": "VG:RV:SAK:M09:S113:V009",
+     "b": "VG:AV:SAU:K20:S028:V003",
+     "shared": [
+      "heaven (dyaus)"
+     ],
+     "expected": "REJECT -- the only shared vocabulary is the corpus's twelve commonest concepts",
+     "z": 0.0502,
+     "tier": "TIER_C_NO_REFERENT_EVIDENCE_EXISTS",
+     "key_a": "VG:AV:SAU:K20:S028:V003",
+     "key_b": "VG:RV:SAK:M09:S113:V009"
+    },
+    {
+     "kind": "COMMON_HIGH_FREQUENCY_ONLY",
+     "a": "VG:YV:VSM:A11:V021",
+     "b": "VG:RV:SAK:M08:S102:V010",
+     "shared": [
+      "fire (agni)"
+     ],
+     "expected": "REJECT -- the only shared vocabulary is the corpus's twelve commonest concepts",
+     "z": 0.1479,
+     "tier": "TIER_C_NO_REFERENT_EVIDENCE_EXISTS",
+     "key_a": "VG:RV:SAK:M08:S102:V010",
+     "key_b": "VG:YV:VSM:A11:V021"
+    },
+    {
+     "kind": "COMMON_HIGH_FREQUENCY_ONLY",
+     "a": "VG:YV:VSM:A13:V032",
+     "b": "VG:YV:VSM:A05:V027",
+     "shared": [
+      "earth (pṛthivī)"
+     ],
+     "expected": "REJECT -- the only shared vocabulary is the corpus's twelve commonest concepts",
+     "z": 0.1482,
+     "tier": "TIER_C_NO_REFERENT_EVIDENCE_EXISTS",
+     "key_a": "VG:YV:VSM:A05:V027",
+     "key_b": "VG:YV:VSM:A13:V032"
+    },
+    {
+     "kind": "COMMON_HIGH_FREQUENCY_ONLY",
+     "a": "VG:RV:SAK:M08:S035:V019",
+     "b": "VG:SV:KAU:UTTARA:P01:R02:D16:V03",
+     "shared": [
+      "sun (sūrya)"
+     ],
+     "expected": "REJECT -- the only shared vocabulary is the corpus's twelve commonest concepts",
+     "z": 0.5027,
+     "tier": "TIER_C_NO_REFERENT_EVIDENCE_EXISTS",
+     "key_a": "VG:RV:SAK:M08:S035:V019",
+     "key_b": "VG:SV:KAU:UTTARA:P01:R02:D16:V03"
+    },
+    {
+     "kind": "COMMON_HIGH_FREQUENCY_ONLY",
+     "a": "VG:YV:VSM:A09:V021",
+     "b": "VG:RV:SAK:M03:S006:V010",
+     "shared": [
+      "sacrifice (yajña)"
+     ],
+     "expected": "REJECT -- the only shared vocabulary is the corpus's twelve commonest concepts",
+     "z": 0.2947,
+     "tier": "TIER_C_NO_REFERENT_EVIDENCE_EXISTS",
+     "key_a": "VG:RV:SAK:M03:S006:V010",
+     "key_b": "VG:YV:VSM:A09:V021"
+    },
+    {
+     "kind": "COMMON_HIGH_FREQUENCY_ONLY",
+     "a": "VG:YV:VSM:A37:V011",
+     "b": "VG:RV:SAK:M09:S075:V001",
+     "shared": [
+      "sun (sūrya)"
+     ],
+     "expected": "REJECT -- the only shared vocabulary is the corpus's twelve commonest concepts",
+     "z": 0.5613,
+     "tier": "TIER_C_NO_REFERENT_EVIDENCE_EXISTS",
+     "key_a": "VG:RV:SAK:M09:S075:V001",
+     "key_b": "VG:YV:VSM:A37:V011"
+    },
+    {
+     "kind": "COMMON_HIGH_FREQUENCY_ONLY",
+     "a": "VG:AV:SAU:K20:S060:V003",
+     "b": "VG:RV:SAK:M06:S023:V005",
+     "shared": [
+      "soma pressing (savana)"
+     ],
+     "expected": "REJECT -- the only shared vocabulary is the corpus's twelve commonest concepts",
+     "z": 0.1862,
+     "tier": "TIER_C_NO_REFERENT_EVIDENCE_EXISTS",
+     "key_a": "VG:AV:SAU:K20:S060:V003",
+     "key_b": "VG:RV:SAK:M06:S023:V005"
+    },
+    {
+     "kind": "COMMON_HIGH_FREQUENCY_ONLY",
+     "a": "VG:AV:SAU:K18:S004:V005",
+     "b": "VG:AV:SAU:K18:S003:V052",
+     "shared": [
+      "earth (pṛthivī)"
+     ],
+     "expected": "REJECT -- the only shared vocabulary is the corpus's twelve commonest concepts",
+     "z": 0.6305,
+     "tier": "TIER_A_DEDICATION_AGREES",
+     "key_a": "VG:AV:SAU:K18:S003:V052",
+     "key_b": "VG:AV:SAU:K18:S004:V005"
+    }
+   ]
+  },
+  "accent_or_surface_identical": {
+   "cases": 40,
+   "expected": "REJECT -- identical surface is the textual-parallel axis, not a semantic claim",
+   "emitted": 0,
+   "disposition": {
+    "REJECTED_BY_NOVELTY_FILTER:IN_AGENT_12_STAGED_RELATIONS": 22,
+    "REJECTED_BY_NOVELTY_FILTER:EXISTING_TEXTUAL_PARALLEL": 15,
+    "REJECTED_BY_TIER:TIER_B_REFERENT_EVIDENCE_NOT_COMPARABLE": 2,
+    "REJECTED_BY_TIER:REFUSED_REFERENT_GUARD_VIOLATED": 1
+   },
+   "max_z": 2.9497,
+   "emitted_cases": []
+  }
+ },
+ "adversarial_classes_score_only": {
+  "formulaic_boilerplate": {
+   "cases": 40,
+   "expected": "REJECT -- formula reuse is USES_FORMULA, a different predicate",
+   "at_or_above_threshold_before_novelty_filter": 22,
+   "rejected_by_the_threshold": 18,
+   "of_the_above_threshold_how_many_the_novelty_filter_also_removes": 17,
+   "max_z": 2.2489,
+   "median_z": 0.3439
+  },
+  "common_high_frequency_only": {
+   "cases": 40,
+   "expected": "REJECT -- the only shared vocabulary is the corpus's twelve commonest concepts",
+   "at_or_above_threshold_before_novelty_filter": 4,
+   "rejected_by_the_threshold": 36,
+   "of_the_above_threshold_how_many_the_novelty_filter_also_removes": 0,
+   "max_z": 0.6305,
+   "median_z": -0.0907
+  },
+  "accent_or_surface_identical": {
+   "cases": 40,
+   "expected": "REJECT -- identical surface is the textual-parallel axis, not a semantic claim",
+   "at_or_above_threshold_before_novelty_filter": 40,
+   "rejected_by_the_threshold": 0,
+   "of_the_above_threshold_how_many_the_novelty_filter_also_removes": 40,
+   "max_z": 2.9497,
+   "median_z": 2.5335
+  }
+ },
+ "frame_ablation": {
+  "R4_FRAME_IDF (as built: dedication + mentions + predicates + classes)": {
+   "per_trap": {
+    "SOMA_DEITY_VS_SUBSTANCE": "19/20",
+    "AGNI_DEITY_VS_PHYSICAL_FIRE": "20/20",
+    "VAC_DEITY_VS_SPEECH_FACULTY": "6/12"
+   },
+   "total": "45/52",
+   "accuracy": 0.865,
+   "dim": 913,
+   "populated": 19284
+  },
+  "R4b_FRAME_NO_DEDICATION (mentions + predicates + classes)": {
+   "per_trap": {
+    "SOMA_DEITY_VS_SUBSTANCE": "13/20",
+    "AGNI_DEITY_VS_PHYSICAL_FIRE": "11/20",
+    "VAC_DEITY_VS_SPEECH_FACULTY": "3/12"
+   },
+   "total": "27/52",
+   "accuracy": 0.519,
+   "dim": 447,
+   "populated": 17540
+  },
+  "R4c_FRAME_NO_REFERENT_AT_ALL (predicates + classes only)": {
+   "per_trap": {
+    "SOMA_DEITY_VS_SUBSTANCE": "10/20",
+    "AGNI_DEITY_VS_PHYSICAL_FIRE": "7/20",
+    "VAC_DEITY_VS_SPEECH_FACULTY": "2/12"
+   },
+   "total": "19/52",
+   "accuracy": 0.365,
+   "dim": 406,
+   "populated": 15513
+  },
+  "R4d_DEDICATION_ONLY": {
+   "per_trap": {
+    "SOMA_DEITY_VS_SUBSTANCE": "18/20",
+    "AGNI_DEITY_VS_PHYSICAL_FIRE": "20/20",
+    "VAC_DEITY_VS_SPEECH_FACULTY": "3/12"
+   },
+   "total": "41/52",
+   "accuracy": 0.788,
+   "dim": 466,
+   "populated": 14646
+  }
+ },
+ "frame_ablation_note": "measured in the first run of this domain and re-used: the referent discrimination lives in the dedication, not in the mention layers. 45/52 with dedication, 27/52 without it, 19/52 with no referent feature at all."
+}

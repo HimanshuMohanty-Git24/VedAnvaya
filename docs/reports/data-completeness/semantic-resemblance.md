@@ -747,12 +747,40 @@ graph cannot otherwise distinguish "assessed and came back empty" from "never as
 |---|--:|--:|
 | `candidates_considered` | 20,210 | 1,133,311 |
 | `accepted` | 19,088 | 43,006 |
-| `rejected` | 1,122 | 1,090,305 |
-| `unresolved` | 0 | 0 |
+| `rejected` | 359 | 1,090,305 |
+| `unresolved` | **763** | 0 |
+| `verified_zero` | **0** | 0 |
 
-Both balance independently; the pair-grain block is `proofs/pair_counts.json` and the
-per-pair refusal reasons are in `proofs/pair_ledger.jsonl`, one line per non-accepted pool
-pair.
+Both balance independently. `rejected.jsonl` holds all 1,122 no-edge mantras; the 763
+flagged `unresolved: true` are counted under `unresolved` because they carry **neither a
+typed frame nor an entity-registry mention**, so two of the three defining channels are
+empty for them and the predicate has no non-lexical basis to assert either way. The
+remaining 359 were scored and came back empty. Neither is a verified zero, and
+`verified_zero` is 0 deliberately.
+
+The pair-grain accounting is `proofs/pair_counts.json`:
+
+| first reason that applies | pairs |
+|---|--:|
+| accepted | 43,006 |
+| referent guard violated (same mechanism, disjoint) | 384,536 |
+| per-mantra cap of 5 | 293,412 |
+| below threshold | 253,840 |
+| TIER_B, vocabularies not comparable | 138,054 |
+| novelty: shared formula via the `USES_FORMULA` hub | 12,198 |
+| novelty: existing textual parallel | 3,883 |
+| lexical ceiling of 0.20 | 2,639 |
+| novelty: identical folded Sanskrit surface | 915 |
+| novelty: in agent 12's staged relations | 828 |
+| **total** | **1,133,311** |
+
+Each pair is charged to the **first** reason that applies in that order, so these are not
+the same as §5's per-filter counts, which measure each filter over the whole pool
+independently of the others. Both are correct under their stated attribution and the
+manifest says which is which. `proofs/pair_ledger_sample.jsonl` holds a seeded reservoir
+sample of up to 2,500 pairs per reason (19,243 rows); the exhaustive one-line-per-pair
+version was 246 MB of two canonical keys and a reason code, which is disproportionate to a
+43,006-edge layer, so the counts above are exhaustive and the per-pair detail is sampled.
 
 **43,006 edges on 19,088 mantras**, by tier and Veda pair:
 
@@ -765,13 +793,70 @@ Score distribution of the emitted edges, in z units: min 0.0001, p10 0.368, p25 
 p50 1.048, p75 1.403, p95 1.797, max 2.451. Degree distribution: 15,017 mantras at the cap
 of 5, then 1,202 at 4, 1,132 at 3, 986 at 2, 751 at 1.
 
-Every edge carries `method`, `model` (with the ONNX sha256), `version`, `score`,
-`score_scale`, the three channel cosines and their z values, `evidence_basis`,
-`referent_guard`, `resemblance_tier`, `importable`, the unused translation-channel score,
-the lexical-control cosine, and a `not_reachable_by` list naming the six predicates that
-would have made it redundant. Every row and the manifest carry `source_snapshot`,
-`algorithm_version`, `config_hash`, `code_commit`, `population`, `processed_count`,
-`positive_count` and the evaluation block.
+Every edge carries `predicate`, `version`, `score`, the three channel cosines and their
+z values, `evidence_basis`, `referent_guard`, `shared_dedication`, `resemblance_tier`,
+`importable`, `not_importable_reason`, the unused translation-channel score and the
+lexical-control cosine. Every row carries `method`, `model` (with the ONNX sha256),
+`version`, `source_snapshot`, `algorithm_version`, `config_hash`, `code_commit`,
+`population`, `processed_count`, `positive_count`, the assessed-population record and the
+evaluation block. The method card, symmetry convention, normalisation role and
+`not_reachable_by` list are identical for all 43,006 edges and live once in
+`proofs/config.json#method_card` rather than 86,012 times — the first emission repeated
+them and cost 223 MB of the same prose.
+
+### 8.1 A residual: 255 edges that are not really non-lexical
+
+| `evidence_basis` — which channels actually fired | edges | share |
+|---|--:|--:|
+| typed frame + entity registry + Sanskrit encoder | 35,740 | 83.1% |
+| typed frame + Sanskrit encoder | 7,011 | 16.3% |
+| **Sanskrit encoder alone** | **255** | **0.59%** |
+
+Those 255 have no typed or registry evidence at all: they rest entirely on an anisotropic
+sentence encoder over the Sanskrit surface, which is not what a layer defined as
+non-lexical should assert. Applying the predicate's own definition consistently makes them
+not importable whatever their tier, and they carry that reason on the edge.
+
+All 255 fall in `TIER_C`, and **provably so rather than by luck**: `TIER_A` requires a
+shared dedication, a dedication is itself an `R4_FRAME_IDF` feature, so a `TIER_A` edge
+cannot have an empty frame channel. The importable set of 26,953 is unaffected.
+
+### 8.2 A tooling defect of my own, because it cost an hour and would recur
+
+`np.load` on an `.npz` returns a lazy archive handle: **every `Z[name]` access
+decompresses the whole 1.13-million-element array out of the zip again.** A per-edge access
+pattern did that 215,030 times and burned 913 seconds of CPU producing no output at all,
+while the same work over materialised arrays is instant. Two earlier symptoms pointed the
+wrong way — a stopped shell leaving an orphaned Python process, and `tail` holding the
+pipeline's output until exit so the progress prints were invisible. The fix is one line;
+finding it needed a timing probe rather than another guess.
+
+### 8.3 Validation
+
+```sh
+.venv/Scripts/python.exe scripts/validate_staging_artifact.py \
+    data/staging/semantic_resemblance --graph
+```
+
+**PASS.** Every check evaluated every eligible row and found no defect:
+**20 of 20 file checksums**, `19,088/19,088` on all eight row checks,
+`1,122/1,122` on `rejected.has_reason`, and `19,088/19,088` on both
+`graph.canonical_key_resolves` and `graph.veda_agrees`. The manifest was written last and
+nothing in the artifact was touched between it and this run.
+
+The graph was re-counted after validation: **108,779 nodes / 265,295 relationships**, 66
+relationship types, and `THEMATICALLY_RESEMBLES` is **not** among them. No canonical write
+occurred.
+
+Every load-bearing figure in this report is also checked mechanically against the artifact
+it came from — `proofs/report_figure_check.json`, which reports **0 disagreements** over every
+figure it covers. It found
+two before this version: a rounded κ that was the checker's own fault, and one that was
+real — `proofs/candidate_representations.json` still embedded the inherited
+`C_LEXICAL_CHAR4` dimension of 91,738 that §1.1 corrects to 94,040. A proof file carrying
+the number its own report calls wrong is exactly the drift the check exists to catch. The
+proof was re-derived from the live build, the superseded value is kept beside it, and the
+manifest was then regenerated and re-validated in that order.
 
 A note on one field name, because this project has been bitten by it: the per-edge
 `evidence_basis` here records **which non-lexical channels fired**. It is not the graph's

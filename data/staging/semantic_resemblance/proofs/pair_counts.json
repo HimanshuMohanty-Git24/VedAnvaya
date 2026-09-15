@@ -1,0 +1,36 @@
+{
+ "grain": "PAIR",
+ "candidates_considered": 1133311,
+ "accepted": 43006,
+ "rejected": 1090305,
+ "unresolved": 0,
+ "balances": true,
+ "by_reason": {
+  "ACCEPTED": 43006,
+  "REFUSED_REFERENT_GUARD_DEDICATIONS_DISJOINT_WITHIN_ONE_MECHANISM": 384536,
+  "REFUSED_BELOW_THRESHOLD": 253840,
+  "REFUSED_BY_THE_PER_MANTRA_CAP_OF_5": 293412,
+  "REFUSED_TIER_B_DEDICATION_VOCABULARIES_NOT_COMPARABLE": 138054,
+  "REFUSED_ABOVE_DECLARED_LEXICAL_CEILING_0.20": 2639,
+  "REFUSED_NOVELTY_IN_AGENT_12_STAGED_RELATIONS": 828,
+  "REFUSED_NOVELTY_SHARED_FORMULA_VIA_USES_FORMULA_HUB": 12198,
+  "REFUSED_NOVELTY_IDENTICAL_FOLDED_SANSKRIT_SURFACE": 915,
+  "REFUSED_NOVELTY_EXISTING_TEXTUAL_PARALLEL": 3883
+ },
+ "by_reason_sums_to_the_pool": 1133311,
+ "attribution_order": [
+  "referent guard VIOLATED",
+  "TIER_B not comparable",
+  "below threshold",
+  "novelty: identical folded Sanskrit",
+  "novelty: existing textual parallel",
+  "novelty: agent 12 relations",
+  "novelty: shared formula",
+  "lexical ceiling",
+  "per-mantra cap"
+ ],
+ "attribution_order_note": "each pair is charged to the FIRST reason that applies in this order, so these counts are not the same as the independent per-filter counts in the report's attack 6 table, which measure each filter over the whole pool regardless of the others. Both are correct under their stated attribution.",
+ "per_pair_detail": "proofs/pair_ledger_sample.jsonl holds a seeded reservoir sample of up to 2500 pairs per reason (19243 rows), not one line per rejected pair: the exhaustive version was 246 MB of two canonical keys and a reason code. The counts above are exhaustive.",
+ "not_exhaustive_over": "the 204,211,945-pair mantra product; the pool is the union of each candidate representation's top-10 neighbours",
+ "note": "the manifest counts are at the MANTRA grain, following agent 10's precedent, so the assessed-set record covers all 20,210 mantras. This block is the pair-grain arithmetic and it balances independently."
+}

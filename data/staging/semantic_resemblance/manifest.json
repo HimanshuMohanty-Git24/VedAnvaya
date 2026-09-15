@@ -1,0 +1,611 @@
+{
+ "domain": "semantic_resemblance",
+ "agent": 11,
+ "schema_version": "1.0",
+ "algorithm_version": "semantic-resemblance-hybrid-v2",
+ "created_at": "2026-09-15T13:42:57.279343+00:00",
+ "code_commit": "767f2d714c6035169528d6c8193b513e997fbf05",
+ "config_hash": "39cecb432412704c5762cf4000999d62afaada7aa64c2d2ed27c4b3335206670",
+ "source_snapshot_ids": [
+  "VEDAGRAPH_CANONICAL_GRAPH_2026_09_15",
+  "HF_ONNX_MULTILINGUAL_E5_SMALL",
+  "HF_ONNX_PARAPHRASE_MULTILINGUAL_MINILM_L12",
+  "HF_ONNX_ALL_MINILM_L6_V2",
+  "OPENROUTER_NEMOTRON_3_ULTRA_ADJUDICATION",
+  "VEDAGRAPH_RV_COORDINATE_REPAIR_TABLE",
+  "VEDAGRAPH_STAGING_FORMULA_AGENT_12",
+  "VEDAWEB_ZURICH_RIGVEDA_LEXICAL_V1"
+ ],
+ "files": [
+  {
+   "path": "rejected.jsonl",
+   "sha256": "d6c12ed82349ce37218ed6a476bb888c2f93134ea17bfdcdbeb046844f35533e",
+   "rows": 1122,
+   "bytes": 965883
+  },
+  {
+   "path": "rows.jsonl",
+   "sha256": "37be8f726d4514029f383d5b5d1ed4d20fb07618a37d939922aaa091b58c5e19",
+   "rows": 19088,
+   "bytes": 137902906
+  },
+  {
+   "path": "sources.jsonl",
+   "sha256": "7d20aa243d466cf4c8298f0ba21aad20bbd46f4b4e764157b16ac6db83227b02",
+   "rows": 8,
+   "bytes": 4260
+  },
+  {
+   "path": "proofs/adjudication.jsonl",
+   "sha256": "ceb1278969870a94263e1611eccbb2ac6954e4a4410213ce1d13d3bd80b5b74b",
+   "rows": 324,
+   "bytes": 119873
+  },
+  {
+   "path": "proofs/adversarial_notes.json",
+   "sha256": "8f40453f0522c9948083173cd48bf7fa19e29980432042e9521182f154622de4",
+   "rows": 1,
+   "bytes": 705
+  },
+  {
+   "path": "proofs/adversarial_set.jsonl",
+   "sha256": "e9bf52634905e344a8849b96be543d8650ebda7f877a764234cc4a8733eddf6b",
+   "rows": 172,
+   "bytes": 53775
+  },
+  {
+   "path": "proofs/attacks_1_to_5.json",
+   "sha256": "072f66d1a7c8f81d6be3ff2e16ac29c17551b25184896b2469856b107f5ce834",
+   "rows": 1,
+   "bytes": 8238
+  },
+  {
+   "path": "proofs/attacks_6_7_and_agent_12.json",
+   "sha256": "720c4424eb4cc27e1fedab5ee621c84d5c87dbefe159c0f14508521418f811be",
+   "rows": 1,
+   "bytes": 3438
+  },
+  {
+   "path": "proofs/blast_radius_assertions.json",
+   "sha256": "934bd3b92560a44ab133d8aefec92e3e91736abaea0c35ad4ea5c9e5a85a08ce",
+   "rows": 1,
+   "bytes": 27027
+  },
+  {
+   "path": "proofs/candidate_representations.json",
+   "sha256": "23d49a7702ad01aeddb46ef2082bfd974ad75735452c2da0c046691840239f4b",
+   "rows": 1,
+   "bytes": 11842
+  },
+  {
+   "path": "proofs/config.json",
+   "sha256": "6f14f197921fbdb95ceca3c3e4ba458a1b087b1dc5e2f8313912bd325285c77d",
+   "rows": 1,
+   "bytes": 6348
+  },
+  {
+   "path": "proofs/evaluation.json",
+   "sha256": "18eef852f608d2491fd93c14a32136e585a7ee8f86f0163cdae4d0b71c4106f8",
+   "rows": 1,
+   "bytes": 26127
+  },
+  {
+   "path": "proofs/gold_sample.jsonl",
+   "sha256": "1368d87a580512302d790d33f72cecb2fdf033fa73e7d610f165aed86ad767ac",
+   "rows": 486,
+   "bytes": 583419
+  },
+  {
+   "path": "proofs/inherited_artifact_verification.json",
+   "sha256": "b3dd5227d98efb12037535c5989665f2d87964d2baf0a9b5bc454e00a2e14ea4",
+   "rows": 1,
+   "bytes": 7463
+  },
+  {
+   "path": "proofs/inter_adjudicator_agreement.json",
+   "sha256": "341b9a98bc7e9ad5d5dd4c20f017ef9cd9dbb546e9ec77b63073e7a5a872164f",
+   "rows": 1,
+   "bytes": 9968
+  },
+  {
+   "path": "proofs/pair_counts.json",
+   "sha256": "dea6a5371a5775e6bf48e4464c44bd04efad91ed35ab28cdce1d1ac42b608db1",
+   "rows": 1,
+   "bytes": 2000
+  },
+  {
+   "path": "proofs/pair_ledger_sample.jsonl",
+   "sha256": "e0973a368b67051918c3a7b03f6c122f759e3698b3bc36bc5c61122e5756cabe",
+   "rows": 19243,
+   "bytes": 4414532
+  },
+  {
+   "path": "proofs/referent_traps.json",
+   "sha256": "f0877fb9bbf7f7fe4a078aa26a09aebb7abba16b7e1ae03c82b2874f4f8c39ee",
+   "rows": 1,
+   "bytes": 63712
+  },
+  {
+   "path": "proofs/relations.jsonl",
+   "sha256": "e9c9e6fb3cd2b16d435eebb428bf2ddfb81ada1577b7ebd6bcd1a9c3c2076a1f",
+   "rows": 43006,
+   "bytes": 27245419
+  },
+  {
+   "path": "proofs/report_figure_check.json",
+   "sha256": "0ab7652e8015ac0d8aa49c72b1311d63817ee7d15b7172968ad0082215087a82",
+   "rows": 1,
+   "bytes": 65
+  }
+ ],
+ "counts": {
+  "candidates_considered": 20210,
+  "accepted": 19088,
+  "rejected": 359,
+  "verified_zero": 0,
+  "not_applicable": 0,
+  "unresolved": 763
+ },
+ "counts_grain": "MANTRA, following agent 10's precedent, so the assessed-set record covers all 20,210 mantras. rejected.jsonl holds all 1122 no-edge mantras; the 763 flagged unresolved:true are counted under unresolved and the remaining 359 under rejected.",
+ "pair_grain_counts": {
+  "candidates_considered": 1133311,
+  "accepted": 43006,
+  "rejected": 1090305,
+  "unresolved": 0,
+  "by_reason": {
+   "ACCEPTED": 43006,
+   "REFUSED_REFERENT_GUARD_DEDICATIONS_DISJOINT_WITHIN_ONE_MECHANISM": 384536,
+   "REFUSED_BELOW_THRESHOLD": 253840,
+   "REFUSED_BY_THE_PER_MANTRA_CAP_OF_5": 293412,
+   "REFUSED_TIER_B_DEDICATION_VOCABULARIES_NOT_COMPARABLE": 138054,
+   "REFUSED_ABOVE_DECLARED_LEXICAL_CEILING_0.20": 2639,
+   "REFUSED_NOVELTY_IN_AGENT_12_STAGED_RELATIONS": 828,
+   "REFUSED_NOVELTY_SHARED_FORMULA_VIA_USES_FORMULA_HUB": 12198,
+   "REFUSED_NOVELTY_IDENTICAL_FOLDED_SANSKRIT_SURFACE": 915,
+   "REFUSED_NOVELTY_EXISTING_TEXTUAL_PARALLEL": 3883
+  }
+ },
+ "verified_zero_note": "zero deliberately. A mantra with no edge is recorded as assessed under three named channels over a pool that is NOT exhaustive over the 204,211,945-pair product. Promoting that to a verified zero would be turning NOT ASSESSED into VERIFIED ZERO, which the contract forbids.",
+ "closes_gaps": [],
+ "partially_addresses_gaps": [
+  "GAP-SEMANTICS-006"
+ ],
+ "gap_note": "GAP-SEMANTICS-006 is NOT closed. A non-lexical resemblance layer now exists and is measured, but 16,053 of its 43,006 edges are not importable, no human has reviewed any of it, and pool recall over the corpus product is under 1%. Closing the gap requires a human-adjudicated sample (section 22) and an ontology ruling on TIER_B.",
+ "proposes_relationship_type": {
+  "name": "THEMATICALLY_RESEMBLES",
+  "symmetric": true,
+  "stored_once_in_ascending_canonical_key_order": true,
+  "definition": "THEMATICALLY_RESEMBLES(a,b) asserts: these two passages make comparable statements about a shared referent, on evidence that is not their shared wording. Symmetric, emitted once in ascending canonical_key order. It is NOT NORMALIZED_EQUIVALENCE, NOT CANONICAL_IDENTITY, NOT a TEXTUAL_VARIANT and NOT a near duplicate: no normalisation of any kind establishes an edge here, and every pair reachable by an existing textual predicate, by USES_FORMULA co-membership, by identical folded Sanskrit surface, by agent 12's staged relations, or at a lexical char-4gram cosine of 0.20 or above is refused by construction.",
+  "not_in_controlled_predicates": true,
+  "note": "not in src/vedagraph/enrich/predicates.py CONTROLLED_PREDICATES and not one of the 14 frozen semantic predicates. Proposed for addition, not assumed. It does not collide with ADDRESSES_CONCERN or CONCERNS (passage-to-Concept) nor with the 5 predicates refused by name in vedagraph.semantic.ontology. It is not a generic RELATED_TO: it means one thing and is refused wherever it cannot be defended."
+ },
+ "emitted": {
+  "edges": 43006,
+  "by_tier": {
+   "TIER_A_DEDICATION_AGREES": 26953,
+   "TIER_C_NO_REFERENT_EVIDENCE_EXISTS": 16053
+  },
+  "by_veda_pair": {
+   "AV": 8419,
+   "AV-SV": 1670,
+   "AV-YV": 1907,
+   "AV-RV": 2035,
+   "RV": 20312,
+   "RV-SV": 2592,
+   "RV-YV": 2201,
+   "SV": 1262,
+   "SV-YV": 929,
+   "YV": 1679
+  },
+  "by_tier_and_veda_pair": {
+   "TIER_A_DEDICATION_AGREES|AV": 6641,
+   "TIER_A_DEDICATION_AGREES|RV": 20312,
+   "TIER_C_NO_REFERENT_EVIDENCE_EXISTS|AV": 1778,
+   "TIER_C_NO_REFERENT_EVIDENCE_EXISTS|AV-RV": 2035,
+   "TIER_C_NO_REFERENT_EVIDENCE_EXISTS|AV-SV": 1670,
+   "TIER_C_NO_REFERENT_EVIDENCE_EXISTS|AV-YV": 1907,
+   "TIER_C_NO_REFERENT_EVIDENCE_EXISTS|RV-SV": 2592,
+   "TIER_C_NO_REFERENT_EVIDENCE_EXISTS|RV-YV": 2201,
+   "TIER_C_NO_REFERENT_EVIDENCE_EXISTS|SV": 1262,
+   "TIER_C_NO_REFERENT_EVIDENCE_EXISTS|SV-YV": 929,
+   "TIER_C_NO_REFERENT_EVIDENCE_EXISTS|YV": 1679
+  },
+  "score_distribution_z": {
+   "min": 0.0001,
+   "p10": 0.3675,
+   "p25": 0.6701,
+   "p50": 1.0479,
+   "p75": 1.403,
+   "p95": 1.7965,
+   "max": 2.4511
+  },
+  "importable": 26953,
+  "staged_not_importable": 16053,
+  "refused_tier_b_pool_pairs": 138054,
+  "evidence_basis_distribution": {
+   "TYPED_FRAME+ENTITY_REGISTRY+SANSKRIT_SENTENCE_ENCODER": 35740,
+   "TYPED_FRAME+SANSKRIT_SENTENCE_ENCODER": 7011,
+   "SANSKRIT_SENTENCE_ENCODER": 255
+  },
+  "encoder_only_edges_are_never_importable": true,
+  "encoder_only_note": "all 255 encoder-only edges fall in TIER_C, and provably so: TIER_A requires a shared dedication, which is itself an R4_FRAME_IDF feature, so a TIER_A edge cannot have an empty frame channel."
+ },
+ "evaluation": {
+  "candidate_representations_compared": 14,
+  "control_included_by_design": "C_LEXICAL_CHAR4",
+  "control_auc_test": 0.7445,
+  "control_beat_every_semantic_candidate": true,
+  "best_single_semantic_candidate": "R4_FRAME_IDF",
+  "best_single_semantic_auc_test": 0.7357,
+  "greedy_hybrid_auc_test": 0.8228,
+  "defining_hybrid_auc_test": 0.7737,
+  "defining_channels": [
+   "R4_FRAME_IDF",
+   "R6_E5_SANSKRIT",
+   "R2_ENTITY_IDF"
+  ],
+  "channel_choice_was_against_the_numbers": true,
+  "gold_pairs_sampled": 486,
+  "gold_pairs_adjudicated": 324,
+  "gold_pairs_unadjudicated_quota_exhausted": 162,
+  "gold_label_counts": {
+   "UNRELATED": 128,
+   "SAME_TOPIC_DIFFERENT_CLAIM": 138,
+   "SAME_CONTENT": 50,
+   "SHARED_PHRASING_ONLY": 8,
+   "UNADJUDICATED_QUOTA_EXHAUSTED": 162
+  },
+  "random_stratum_positive_rate": "2 of the 20 adjudicated uniform-random pairs",
+  "adjudicator_of_record": "nvidia/nemotron-3-ultra-550b-a55b:free via OpenRouter",
+  "adjudicator_built_no_representation": true,
+  "second_opinion": "claude-opus-5 (this agent), labels written before the first adjudicator's were revealed",
+  "second_opinion_independent_of_the_representations": false,
+  "inter_adjudicator_four_way_kappa": 0.5667,
+  "inter_adjudicator_binary_kappa": 0.3659,
+  "inter_adjudicator_population_reweighted_agreement": 0.7701,
+  "precision_and_recall": {
+   "TIER_A_DEDICATION_AGREES|dev": {
+    "emitted_in_gold": 18,
+    "of_which_positive": 17,
+    "precision": 0.9444,
+    "precision_95ci_wilson": [
+     0.7424,
+     0.9901
+    ],
+    "labels": {
+     "SAME_TOPIC_DIFFERENT_CLAIM": 16,
+     "UNRELATED": 1,
+     "SAME_CONTENT": 1
+    }
+   },
+   "TIER_A_DEDICATION_AGREES|test": {
+    "emitted_in_gold": 22,
+    "of_which_positive": 21,
+    "precision": 0.9545,
+    "precision_95ci_wilson": [
+     0.782,
+     0.9919
+    ],
+    "labels": {
+     "SAME_TOPIC_DIFFERENT_CLAIM": 18,
+     "UNRELATED": 1,
+     "SAME_CONTENT": 3
+    }
+   },
+   "TIER_A_DEDICATION_AGREES|all": {
+    "emitted_in_gold": 40,
+    "of_which_positive": 38,
+    "precision": 0.95,
+    "precision_95ci_wilson": [
+     0.835,
+     0.9862
+    ],
+    "labels": {
+     "SAME_TOPIC_DIFFERENT_CLAIM": 34,
+     "UNRELATED": 2,
+     "SAME_CONTENT": 4
+    }
+   },
+   "TIER_C_NO_REFERENT_EVIDENCE_EXISTS|dev": {
+    "emitted_in_gold": 10,
+    "of_which_positive": 7,
+    "precision": 0.7,
+    "precision_95ci_wilson": [
+     0.3968,
+     0.8922
+    ],
+    "labels": {
+     "SAME_TOPIC_DIFFERENT_CLAIM": 6,
+     "UNRELATED": 3,
+     "SAME_CONTENT": 1
+    }
+   },
+   "TIER_C_NO_REFERENT_EVIDENCE_EXISTS|test": {
+    "emitted_in_gold": 13,
+    "of_which_positive": 8,
+    "precision": 0.6154,
+    "precision_95ci_wilson": [
+     0.3552,
+     0.8229
+    ],
+    "labels": {
+     "UNRELATED": 4,
+     "SHARED_PHRASING_ONLY": 1,
+     "SAME_TOPIC_DIFFERENT_CLAIM": 8
+    }
+   },
+   "TIER_C_NO_REFERENT_EVIDENCE_EXISTS|all": {
+    "emitted_in_gold": 23,
+    "of_which_positive": 15,
+    "precision": 0.6522,
+    "precision_95ci_wilson": [
+     0.4489,
+     0.8119
+    ],
+    "labels": {
+     "SAME_TOPIC_DIFFERENT_CLAIM": 14,
+     "UNRELATED": 7,
+     "SAME_CONTENT": 1,
+     "SHARED_PHRASING_ONLY": 1
+    }
+   },
+   "ALL_EMITTED|dev": {
+    "emitted_in_gold": 28,
+    "of_which_positive": 24,
+    "precision": 0.8571,
+    "precision_95ci_wilson": [
+     0.6851,
+     0.943
+    ],
+    "labels": {
+     "SAME_TOPIC_DIFFERENT_CLAIM": 22,
+     "UNRELATED": 4,
+     "SAME_CONTENT": 2
+    }
+   },
+   "ALL_EMITTED|test": {
+    "emitted_in_gold": 35,
+    "of_which_positive": 29,
+    "precision": 0.8286,
+    "precision_95ci_wilson": [
+     0.6732,
+     0.919
+    ],
+    "labels": {
+     "UNRELATED": 5,
+     "SHARED_PHRASING_ONLY": 1,
+     "SAME_TOPIC_DIFFERENT_CLAIM": 26,
+     "SAME_CONTENT": 3
+    }
+   },
+   "ALL_EMITTED|all": {
+    "emitted_in_gold": 63,
+    "of_which_positive": 53,
+    "precision": 0.8413,
+    "precision_95ci_wilson": [
+     0.7319,
+     0.9114
+    ],
+    "labels": {
+     "SAME_TOPIC_DIFFERENT_CLAIM": 48,
+     "UNRELATED": 9,
+     "SAME_CONTENT": 5,
+     "SHARED_PHRASING_ONLY": 1
+    }
+   },
+   "TIER_B_REFUSED|all": {
+    "emitted_in_gold": 16,
+    "of_which_positive": 8,
+    "precision": 0.5,
+    "precision_95ci_wilson": [
+     0.28,
+     0.72
+    ],
+    "labels": {
+     "UNRELATED": 8,
+     "SAME_CONTENT": 1,
+     "SAME_TOPIC_DIFFERENT_CLAIM": 7
+    }
+   },
+   "TIER_B_REFUSED|test": {
+    "emitted_in_gold": 9,
+    "of_which_positive": 4,
+    "precision": 0.4444,
+    "precision_95ci_wilson": [
+     0.1888,
+     0.7334
+    ],
+    "labels": {
+     "UNRELATED": 5,
+     "SAME_TOPIC_DIFFERENT_CLAIM": 4
+    }
+   },
+   "recall_dev": {
+    "asserted_population": 44,
+    "positives_in_it": 29,
+    "emitted_positives": 24,
+    "recall": 0.8276
+   },
+   "recall_test": {
+    "asserted_population": 54,
+    "positives_in_it": 36,
+    "emitted_positives": 29,
+    "recall": 0.8056
+   }
+  },
+  "threshold_z": 0.0,
+  "threshold_chosen_on": "dev only, under a precision floor of 0.85 declared before the sweep, inside the population the predicate is actually asserted over",
+  "pool_recall_upper_bound": 0.007902,
+  "operative_selector": "the per-mantra cap of 5, not the threshold: 336,418 pool pairs clear threshold, guard and novelty filter and the cap reduces them to 43,006, removing 87.2%. 15,017 of the 19,088 mantras touched sit exactly at the cap.",
+  "human_gold": false,
+  "human_reviewed": 0,
+  "section_22_satisfied": false
+ },
+ "llm_cost": {
+  "provider": "openrouter",
+  "model_id": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "total_calls_this_domain": 30,
+  "adjudication_batches": 29,
+  "batch_size": 12,
+  "availability_probes": 1,
+  "temperature": 0.0,
+  "stopped_because": "RATE_LIMIT_NOT_RETRIED, daily_exhausted=true",
+  "retried_in_a_loop": false,
+  "note": "one single probe this session confirmed the daily allowance is still exhausted; it was not retried. 162 sampled pairs remain unadjudicated and are typed as such in the gold sample rather than dropped."
+ },
+ "attacks": {
+  "1_translation_circularity": {
+   "verdict": "CLEAN",
+   "same_encoder_sanskrit_vs_english_spearman_on_the_pool": 0.057,
+   "auc_gained_by_removing_60_translator_habit_words": 0.0088,
+   "same_translator_positive_rate": 0.6054,
+   "different_translator_positive_rate": 0.3718,
+   "translation_free_hybrid_auc": 0.803,
+   "full_hybrid_auc": 0.8377,
+   "predicate_uses_no_translation_channel": true
+  },
+  "2_duplicate_translations": {
+   "verdict": "CLEAN",
+   "known_bad_rv_keys_excluded": 31,
+   "leaked": 0,
+   "hymn_level_only_rv_keys_excluded": 158,
+   "gold_pairs_with_fold_identical_english": 1,
+   "gold_pairs_with_fold_identical_sanskrit": 27,
+   "all_27_labelled_SAME_CONTENT_and_all_27_refused_by_the_novelty_filter": true,
+   "samavedic_translations_in_the_live_graph": 0
+  },
+  "3_lexical_leakage": {
+   "verdict": "SURVIVED, and it is the most serious of the seven",
+   "control_auc_test_beats_every_semantic_candidate": true,
+   "pearson_hybrid_vs_control_on_the_pool": 0.3874,
+   "auc_hybrid_residualised_on_control": 0.7371,
+   "auc_control_residualised_on_hybrid": 0.4025,
+   "auc_hybrid_where_lexical_cosine_below_0.10": 0.8161,
+   "auc_hybrid_where_lexical_cosine_at_or_above_0.20": 0.5738,
+   "lexical_ceiling_is_part_of_the_predicate": 0.2,
+   "yajurvedic_fold_contamination_verses": 873,
+   "finding_does_not_depend_on_it": true
+  },
+  "4_entity_layer_leakage": {
+   "verdict": "CLEAN, and the prediction was wrong in the right direction",
+   "auc_on_pairs_sharing_no_theonym": 0.8041,
+   "auc_on_pairs_sharing_one": 0.7147,
+   "auc_lost_by_removing_the_entity_channel": 0.0054,
+   "gold_pairs_already_carrying_an_entity_vocabulary_edge": 1
+  },
+  "5_anisotropy": {
+   "verdict": "CONFIRMED on the candidates that lost; the predicate is centred or IDF-weighted throughout",
+   "random_pairs_drawn": 200000,
+   "share_of_random_pairs_at_cosine_0.8_or_above_raw_e5_sanskrit": 0.9999,
+   "same_after_centring": 0.0,
+   "hybrid_z_on_random_pairs_p99": 0.2567,
+   "threshold_z": 0.0
+  },
+  "6_near_duplicate": {
+   "verdict": "CLEAN by construction",
+   "novelty_removals_over_the_pool": 29052,
+   "unattributed_removals": 0,
+   "novel_accepted_gold_pairs_are_mostly_SAME_TOPIC_DIFFERENT_CLAIM": 48,
+   "already_reachable_accepted_gold_pairs_are_mostly_SAME_CONTENT": 41
+  },
+  "7_cross_veda_source_reuse": {
+   "verdict": "CLEAN, excluded by name",
+   "rv_sv_gold_positive_rate": 0.75,
+   "rv_sv_gold_pairs_already_a_stored_textual_parallel": 5,
+   "rv_sv_gold_pairs_surviving_the_novelty_filter": 3,
+   "rv_sv_edges_emitted": 2592
+  },
+  "correlation_with_agent_12": {
+   "their_relations": 6139,
+   "share_present_in_my_candidate_pool": 1.0,
+   "pearson": 0.2588,
+   "spearman": 0.3432,
+   "reading": "a LOW correlation is the required result; a high one would mean this layer re-derives a textual comparator under a semantic name"
+  }
+ },
+ "referent_traps": {
+  "triples": 52,
+  "ground_truth": "source-explicit dedication, no model opinion",
+  "score_only_ordering_accuracy": 0.7308,
+  "per_trap_score_only": {
+   "SOMA_DEITY_VS_SUBSTANCE": {
+    "n": 20,
+    "ordering_correct": 14,
+    "other_sense_rejected_by_the_full_rule": 20
+   },
+   "AGNI_DEITY_VS_PHYSICAL_FIRE": {
+    "n": 20,
+    "ordering_correct": 15,
+    "other_sense_rejected_by_the_full_rule": 20
+   },
+   "VAC_DEITY_VS_SPEECH_FACULTY": {
+    "n": 12,
+    "ordering_correct": 9,
+    "other_sense_rejected_by_the_full_rule": 12
+   }
+  },
+  "other_sense_pairs_emitted_by_the_full_rule": 0,
+  "circularity_declared": "the guard reads the same dedication layer the trap's ground truth is drawn from, so a guard-driven rejection is not evidence FOR the guard. The figure that carries evidence is the score-only ordering accuracy above.",
+  "adversarial_classes": {
+   "formulaic_boilerplate": {
+    "cases": 40,
+    "emitted": 0
+   },
+   "common_high_frequency_only": {
+    "cases": 40,
+    "emitted": 9
+   },
+   "accent_or_surface_identical": {
+    "cases": 40,
+    "emitted": 0
+   }
+  },
+  "residual": "9 of the 40 common-high-frequency-vocabulary cases are emitted; 7 are TIER_C and not importable and 2 are TIER_A. Named, not rounded away."
+ },
+ "blast_radius_assertions": {
+  "declared_before_applying": 7,
+  "held": 4,
+  "failed": 3,
+  "failed_list": [
+   "G1: predicted the referent guard would apply to under half the pool; measured 67.6% because the pool is RV-heavy and the RV is 100% dedicated",
+   "B3: predicted the edge count could only rise with every new edge in TIER_B; the per-mantra cap is a global competition and 4,897 edges were displaced, 3,740 of them TIER_A",
+   "B4: predicted no referent-trap regression from the guard fix; measured 10 of 52 other-sense pairs becoming emittable, which is why TIER_B is refused"
+  ],
+  "detail": "proofs/blast_radius_assertions.json"
+ },
+ "defects_found": [
+  "MY OWN, and it decided the tier structure: the referent guard read corpus-level devata_attr, which merges HAS_DEVATA (RV, 210 English display labels) and HAS_DEVATA_ASCRIPTION (AV, 324 Sanskrit ascription forms). The two vocabularies intersect in 0 values, so a set intersection across them can never be non-empty and the guard was refusing every RV-AV pair for a vocabulary reason dressed as an evidential one. Found because TIER_A came back with zero cross-Veda edges, which is not a plausible fact about the Vedas.",
+  "INHERITED, and every per-pair number depended on it: pool_scores.npz was aligned to a pool 199 pairs shorter than the one on disk, because the previous run rebuilt its corpus and embeddings and never re-ran the pair scorer. Up to 1,037,092 of 1,133,112 positions were attached to the wrong pair. The aggregate threshold table barely moved, so plausibility could not have caught it; a length check did.",
+  "MY OWN TOOLING: np.load on an .npz is lazy, so Z[name] re-decompresses the whole 1.13-million-element array from the zip on every access. A per-edge access pattern did that 215,030 times and burned 913 seconds of CPU with no output. Materialising the arrays once made the same work instant.",
+  "MY OWN SURFACE, reproducing agent 10 independently: 873 of 1,975 Yajurvedic verses (44.2%) carry a Vedic sign that survives my accent fold with no counterpart on the transliterated RV/AV side -- 780 with U+1CEA + U+1CED and 141 with U+0901 candrabindu, and 3 SV verses, and 0 in RV and AV. This biases the lexical control on those verses. Excluding every Yajurvedic endpoint RAISES the leakage AUC to 0.8447, so no conclusion here depends on it.",
+  "THE PREVIOUS RUN OF THIS DOMAIN, retracted: it called the SHARES_FORMULA_WITH zero 'an empty declaration' and 'a correction nobody had recorded'. The count is right and the reading is wrong -- the rationale is recorded as data at src/vedagraph/enrich/predicates.py::UNPOPULATED_BY_DESIGN. Agent 10 is correct.",
+  "255 of 43,006 edges (0.59%) fire only the Sanskrit sentence encoder, so they have no non-lexical evidence at all despite sitting in a layer defined as non-lexical. All 255 are in TIER_C and provably cannot be in TIER_A, and they are typed not-importable with that reason on the edge."
+ ],
+ "qa": {
+  "sampled": 486,
+  "sample_method": "both",
+  "sample_composition": "stratified per representation across rank-1 / rank-2-3 / rank-4-10 bands, plus a 30-pair uniform-random stratum for the base rate, plus the whole 172-case adversarial set",
+  "adjudicated": 324,
+  "defects_found": 6,
+  "human_reviewed": 0,
+  "adversarial_cases": 172,
+  "adversarial_referent_triples": 52,
+  "adversarial_verdict": "the full rule emits 0 of 52 other-sense referent pairs, 0 of 40 formulaic-boilerplate pairs and 0 of 40 accent-identical pairs, and 9 of 40 common-high-frequency-only pairs. But the SCORE alone orders only 38 of 52 triples correctly and puts 40 of 40 accent-identical pairs above the threshold: the filters, not the score, are what reject them.",
+  "not_done": "no human reviewed any edge, any label or any adversarial case. Section 22 is not satisfied. 43,006 edges rest on 324 labels from one model and 26 from another, and the one label boundary those two disagree about (shared-phrasing negative against same-topic positive) is the boundary this layer sits on."
+ },
+ "for_the_lead": [
+  "Import TIER_A or not, but decide on the interval: 26,953 edges at test precision 0.9545 measured on 22 gold pairs, 95% CI [0.782, 0.992]. A human pass over 200 sampled TIER_A edges would tighten that to about +/-0.03.",
+  "TIER_B needs an ontology ruling, not more modelling: 138,054 RV-AV candidate pairs refused because the two dedication vocabularies share 0 labels.",
+  "THEMATICALLY_RESEMBLES must be added to CONTROLLED_PREDICATES before any import; src/vedagraph/enrich/predicates.py is not this agent's write surface.",
+  "Store it symmetrically and document it. A directed query returns a false zero for the second endpoint -- the exact shape of CORPUS_D07.",
+  "Withdraw the previous run's SHARES_FORMULA_WITH reading.",
+  "The Yajurvedic fold defect is still live in enrich/surfaces.build_surfaces.",
+  "If Wave 3 imports the 173 Samavedic translations, no edge here changes because the predicate uses no translation channel; the per-edge audit score would become partly circular for RV-SV and the evidence_basis makes those findable."
+ ],
+ "graph_unchanged": {
+  "nodes": 108779,
+  "relationships": 265295,
+  "recounted_at_start_and_end": true,
+  "canonical_writes": 0
+ }
+}

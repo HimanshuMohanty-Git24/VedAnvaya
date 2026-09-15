@@ -1,0 +1,318 @@
+{
+ "graph_and_relationship_inventory": {
+  "graph": {
+   "nodes": 108779,
+   "rels": 265295,
+   "matches_wave1_closure": true
+  },
+  "rel_types": {
+   "count": 66,
+   "types": [
+    "ABOUT_CONCEPT",
+    "ADDRESSES_CONCERN",
+    "ASSERTION_AGENT",
+    "ASSERTION_PREDICATE",
+    "ASSERTION_TARGET",
+    "BELONGS_TO_FAMILY",
+    "BROADER_THAN",
+    "COMPOSED_OF",
+    "CONCERNS",
+    "CONTAINS",
+    "CONTRADICTS",
+    "CONTRASTS_WITH",
+    "CO_OCCURS_WITH",
+    "DESCRIBED_IN",
+    "DESCRIBES",
+    "DESCRIBES_ACTION",
+    "DEVATA_ASSOCIATED_WITH",
+    "EPITHET_VARIANT_OF",
+    "EXACT_PARALLEL_OF",
+    "HAS_AXIS",
+    "HAS_CHANDAS",
+    "HAS_DEVATA",
+    "HAS_DEVATA_ASCRIPTION",
+    "HAS_EPITHET",
+    "HAS_FORMULA",
+    "HAS_RISHI",
+    "HAS_SEMANTIC_ASSERTION",
+    "HAS_STEP",
+    "HAS_TEXT_VERSION",
+    "HAS_THEME",
+    "HAS_TRANSLATION",
+    "INVOKES",
+    "INVOKES_DEVATA",
+    "INVOLVES_OFFERING",
+    "INVOLVES_RITUAL",
+    "INVOLVES_SUBSTANCE",
+    "IS_ASKED_TO",
+    "MEASURES",
+    "MEMBER_OF",
+    "MEMBER_OF_FAMILY",
+    "MENTIONS_DEVATA",
+    "MENTIONS_ENTITY",
+    "MENTIONS_LEMMA",
+    "NEAR_PARALLEL_OF",
+    "PARALLEL_TO",
+    "PERFORMED_BY",
+    "PERFORMED_FOR",
+    "PERFORMS_ACTION",
+    "PRAISES",
+    "PROTECTS_FROM",
+    "QA_ISSUE_ON",
+    "REFERS_TO_NATURAL_PHENOMENON",
+    "REFERS_TO_PLACE",
+    "REQUESTS",
+    "REUSES_TEXT_FROM",
+    "SHARES_ENTITY_VOCABULARY_WITH",
+    "SHARES_FORMULA_WITH",
+    "SUPPORTED_BY",
+    "SUPPORTED_BY_STATISTIC",
+    "TREATS",
+    "USED_FOR_RITE",
+    "USES_FORMULA",
+    "USES_OBJECT",
+    "USES_OFFERING",
+    "USES_SUBSTANCE",
+    "VARIANT_OF"
+   ]
+  },
+  "resemblance_like_types": [
+   "CONCERNS",
+   "ADDRESSES_CONCERN",
+   "HAS_SEMANTIC_ASSERTION"
+  ],
+  "index_types": {
+   "RANGE": 84,
+   "FULLTEXT": 2,
+   "LOOKUP": 2
+  },
+  "SHARES_FORMULA_WITH": 0,
+  "SHARES_ENTITY_VOCABULARY_WITH": 2141,
+  "entity_vocab_by_veda_pair": {
+   "AV-YV": 136,
+   "AV-RV": 1176,
+   "RV-YV": 291,
+   "AV-SV": 84,
+   "SV-YV": 33,
+   "RV-SV": 421
+  },
+  "entity_vocab_within_one_veda": 0,
+  "graph_mantra_per_veda": {
+   "RV": 10552,
+   "SV": 1844,
+   "YV": 1975,
+   "AV": 5839
+  },
+  "corpus_per_veda": {
+   "AV": 5839,
+   "RV": 10552,
+   "SV": 1844,
+   "YV": 1975
+  },
+  "per_veda_agrees": true,
+  "sanskrit_sample": {
+   "n": 300,
+   "role_absent": 300,
+   "text_mismatch": 0,
+   "examples": [
+    "VG:YV:VSM:A14:V015",
+    "VG:AV:SAU:K12:S003:V025",
+    "VG:RV:SAK:M01:S084:V009",
+    "VG:AV:SAU:K12:S002:V050",
+    "VG:RV:SAK:M06:S068:V008"
+   ]
+  },
+  "translation_sample": {
+   "n": 300,
+   "mismatch": 0,
+   "examples": []
+  }
+ },
+ "text_translation_fidelity_and_folded_surface_contamination": {
+  "sanskrit_fidelity": {
+   "sampled": 400,
+   "role_absent": 0,
+   "text_mismatch": 0,
+   "examples": []
+  },
+  "translation_fidelity": {
+   "sampled": 400,
+   "mismatch": 0,
+   "examples": []
+  },
+  "misalignment_exclusion": {
+   "repair_table_rows": 61,
+   "known_bad_keys": 31,
+   "by_class": {
+    "CORRECT_UNIT_UNDECLARED_SCOPE": 6,
+    "MISATTACHED": 25
+   },
+   "leaked_into_translation_channel": 0,
+   "leaked_keys": []
+  },
+  "translation_exclusions": {
+   "NOT_MANTRA_ALIGNED": 158,
+   "RV_1_65_TO_1_70_MISALIGNED:CORRECT_UNIT_UNDECLARED_SCOPE": 6,
+   "RV_1_65_TO_1_70_MISALIGNED:MISATTACHED": 25
+  },
+  "usable_translations": {
+   "AV": 4878,
+   "RV": 10313,
+   "YV": 1903
+  },
+  "usable_translations_total": 17094,
+  "folded_surface_contamination": {
+   "verses_carrying_a_surviving_vedic_sign": {
+    "SV": 3,
+    "YV": 873
+   },
+   "share_of_veda": {
+    "SV": 0.0016,
+    "YV": 0.442
+   },
+   "signs": {
+    "U+1CEA VEDIC SIGN ANUSVARA BAHIRGOMUKHA": 780,
+    "U+1CED VEDIC SIGN TIRYAK": 780,
+    "U+0901 DEVANAGARI SIGN CANDRABINDU": 141
+   },
+   "prediction_held": true
+  }
+ },
+ "embedding_matrices_still_describe_the_current_corpus": {
+  "e5s_en": {
+   "stored_nonzero": 17094,
+   "corpus_nonempty": 17094,
+   "sampled": 300,
+   "min_cosine_to_stored": 1.0,
+   "mean_cosine_to_stored": 1.0,
+   "rows_below_0.9999": 0,
+   "assertion_held": true
+  },
+  "enmini_en": {
+   "stored_nonzero": 17094,
+   "corpus_nonempty": 17094,
+   "sampled": 300,
+   "min_cosine_to_stored": 1.0,
+   "mean_cosine_to_stored": 1.0,
+   "rows_below_0.9999": 0,
+   "assertion_held": true
+  },
+  "e5s_sk": {
+   "stored_nonzero": 20210,
+   "corpus_nonempty": 20210,
+   "sampled": 300,
+   "min_cosine_to_stored": 1.0,
+   "mean_cosine_to_stored": 1.0,
+   "rows_below_0.9999": 0,
+   "assertion_held": true
+  },
+  "mmini_sk": {
+   "stored_nonzero": 20210,
+   "corpus_nonempty": 20210,
+   "sampled": 300,
+   "min_cosine_to_stored": 1.0,
+   "mean_cosine_to_stored": 1.0,
+   "rows_below_0.9999": 0,
+   "assertion_held": true
+  }
+ },
+ "stale_pair_score_file_found_and_discarded": {
+  "pool_pairs_now": 1133311,
+  "pool_pairs_in_stale_score_file": 1133112,
+  "drift": {
+   "R1_LEMMA_TFIDF": {
+    "positions_compared": 1133112,
+    "identical": 607063,
+    "differing": 526049,
+    "max_abs_diff": 1.0
+   },
+   "R2_ENTITY_IDF": {
+    "positions_compared": 1133112,
+    "identical": 383445,
+    "differing": 749667,
+    "max_abs_diff": 1.0
+   },
+   "R3_TRANSLATION_TFIDF": {
+    "positions_compared": 1133112,
+    "identical": 308119,
+    "differing": 824993,
+    "max_abs_diff": 1.0
+   },
+   "R3b_TRANSLATION_RAW": {
+    "positions_compared": 1133112,
+    "identical": 243913,
+    "differing": 889199,
+    "max_abs_diff": 1.0
+   },
+   "R4_FRAME_IDF": {
+    "positions_compared": 1133112,
+    "identical": 220776,
+    "differing": 912336,
+    "max_abs_diff": 1.0
+   },
+   "C_LEXICAL_CHAR4": {
+    "positions_compared": 1133112,
+    "identical": 96020,
+    "differing": 1037092,
+    "max_abs_diff": 1.0
+   },
+   "R5_MULTILING_SANSKRIT": {
+    "positions_compared": 1133112,
+    "identical": 205,
+    "differing": 1132907,
+    "max_abs_diff": 1.0349
+   },
+   "R5_MULTILING_SANSKRIT_CENTRED": {
+    "positions_compared": 1133112,
+    "identical": 34,
+    "differing": 1133078,
+    "max_abs_diff": 1.615
+   },
+   "R6_E5_SANSKRIT": {
+    "positions_compared": 1133112,
+    "identical": 740,
+    "differing": 1132372,
+    "max_abs_diff": 0.1777
+   },
+   "R6_E5_SANSKRIT_CENTRED": {
+    "positions_compared": 1133112,
+    "identical": 63,
+    "differing": 1133049,
+    "max_abs_diff": 1.2921
+   },
+   "R7_E5_TRANSLATION": {
+    "positions_compared": 1133112,
+    "identical": 89952,
+    "differing": 1043160,
+    "max_abs_diff": 1.0
+   },
+   "R7_E5_TRANSLATION_CENTRED": {
+    "positions_compared": 1133112,
+    "identical": 89651,
+    "differing": 1043461,
+    "max_abs_diff": 1.2019
+   },
+   "R8_ENMINI_TRANSLATION": {
+    "positions_compared": 1133112,
+    "identical": 89657,
+    "differing": 1043455,
+    "max_abs_diff": 1.0
+   },
+   "R8_ENMINI_TRANSLATION_CENTRED": {
+    "positions_compared": 1133112,
+    "identical": 89653,
+    "differing": 1043459,
+    "max_abs_diff": 1.2057
+   }
+  }
+ },
+ "llm_quota_probe": {
+  "probe_calls": 1,
+  "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "provider": "openrouter",
+  "status": "RATE_LIMITED",
+  "daily_exhausted": true,
+  "detail": "Rate limit reached for provider 'openrouter'. The daily allowance is exhausted; waiting will not clear it.",
+  "seconds": 1.4
+ }
+}

@@ -11,8 +11,8 @@
       "YV": 1975
     }
   },
-  "planned_writes_total": 26538,
-  "withheld_total": 41875,
+  "planned_writes_total": 30117,
+  "withheld_total": 57384,
   "per_domain": {
     "attribution": {
       "ledger_status": "NOT_ELIGIBLE",
@@ -107,27 +107,27 @@
       "blocked_by": []
     },
     "quality": {
-      "ledger_status": "NOT_ELIGIBLE",
+      "ledger_status": "ELIGIBLE",
       "rows_on_disk": 3951,
       "manifest_declares_accepted": 3951,
       "manifest_agrees_with_disk": true,
       "not_importable_by_confidence": 1383,
       "barred_by_owner_overlay": 76,
-      "planned_writes": 0,
-      "withheld": 3951,
-      "reason_withheld": "ledger status NOT_ELIGIBLE: gate(s) B, C not passed",
+      "planned_writes": 2504,
+      "withheld": 1447,
+      "reason_withheld": null,
       "blocked_by": []
     },
     "ritual": {
-      "ledger_status": "NOT_ELIGIBLE",
+      "ledger_status": "ELIGIBLE",
       "rows_on_disk": 3045,
       "manifest_declares_accepted": 3045,
       "manifest_agrees_with_disk": true,
       "not_importable_by_confidence": 2080,
       "barred_by_owner_overlay": 9,
-      "planned_writes": 0,
-      "withheld": 3045,
-      "reason_withheld": "ledger status NOT_ELIGIBLE: gate(s) B, C not passed",
+      "planned_writes": 962,
+      "withheld": 2083,
+      "reason_withheld": null,
       "blocked_by": []
     },
     "samaveda_music": {
@@ -145,16 +145,30 @@
       ]
     },
     "scholarship": {
-      "ledger_status": "NOT_ELIGIBLE",
+      "ledger_status": "ELIGIBLE",
       "rows_on_disk": 113,
       "manifest_declares_accepted": 113,
       "manifest_agrees_with_disk": true,
       "not_importable_by_confidence": 0,
       "barred_by_owner_overlay": 0,
-      "planned_writes": 0,
-      "withheld": 113,
-      "reason_withheld": "ledger status NOT_ELIGIBLE: gate(s) B, C not passed",
+      "planned_writes": 113,
+      "withheld": 0,
+      "reason_withheld": null,
       "blocked_by": []
+    },
+    "semantic_resemblance": {
+      "ledger_status": "BLOCKED",
+      "rows_on_disk": 19088,
+      "manifest_declares_accepted": 19088,
+      "manifest_agrees_with_disk": true,
+      "not_importable_by_confidence": 0,
+      "barred_by_owner_overlay": 90,
+      "planned_writes": 0,
+      "withheld": 19088,
+      "reason_withheld": "ledger status BLOCKED: three gates pass, blocked by TIER_B_AWAITS_DEDICATION_VOCABULARY_RULING",
+      "blocked_by": [
+        "TIER_B_AWAITS_DEDICATION_VOCABULARY_RULING"
+      ]
     },
     "semantic_roles": {
       "ledger_status": "ELIGIBLE",

@@ -186,24 +186,66 @@ ASSESSMENTS: dict[str, dict[str, Any]] = {
         "blocked_by": ["OWNER_DECISION_E_AUDIO_GATE"],
     },
     "ritual": {
-        "B": ("UNKNOWN", "agent has not reported"),
-        "C": ("NOT_RUN", "adversarial test not yet performed"),
+        "B": (
+            "PASS_AFTER_LEAD_CORRECTION",
+            "27 rows retyped NAMES_RITE_CATEGORY_GENERICALLY and downgraded; core boundary clean"
+            "at 0 of 3,045 rows keyed outside the four recensions",
+        ),
+        "C": (
+            "DEFECT_FOUND_AND_FIXED",
+            "lead attack found 24 rows resting on the generic yajna and 3 on bare ISTI, after"
+            "enumerating all 45 rite keys rather than grepping the expected term",
+        ),
         "restage_required": False,
+        "waits_on_owner": ["SOMA-PRESSING: ritual act or category"],
     },
     "scholarship": {
-        "B": ("UNKNOWN", "agent has not reported"),
-        "C": ("NOT_RUN", "adversarial test not yet performed"),
+        "B": (
+            "PASS_AFTER_LEAD_CORRECTION",
+            "1 same-asserter disagreement withdrawn; the other 91 carry two named asserters, two"
+            "claims, two page-precise locators and a stated incompatibility",
+        ),
+        "C": (
+            "DEFECT_FOUND_AND_FIXED",
+            "lead attack found the owner's same-author case; the reporting-source attack was"
+            "already pre-empted by 73 rows typed ASCRIPTION_DISPUTED_BY_THE_REPORTING_SOURCE",
+        ),
         "restage_required": False,
     },
     "quality": {
-        "B": ("UNKNOWN", "agent has not reported"),
-        "C": ("NOT_RUN", "adversarial test not yet performed"),
+        "B": (
+            "PASS",
+            "0 rows typed HUMAN_GOLD; three layers adjudicated by a published treebank that did"
+            "not build them; metre checked by counting the text against the index's claim",
+        ),
+        "C": (
+            "SURVIVED",
+            "lead tested for evaluation leakage and found none. Its verdicts are the finding: of"
+            "11,210, some 1,402 diverge from their own metre, 1,283 confirm only via an alias it"
+            "judges unsound, 143 refuted",
+        ),
         "restage_required": False,
     },
     "semantic_resemblance": {
-        "B": ("UNKNOWN", "agent has not reported"),
-        "C": ("NOT_RUN", "adversarial test not yet performed"),
+        "B": (
+            "PASS_WITH_DECLARED_LIMITS",
+            "THEMATICALLY_RESEMBLES, 43,006 edges, 26,953 importable at TIER_A. The layer "
+            "is defined on the translation-free channels, chosen on structural grounds "
+            "fixed before the numbers were read and costing 0.049 AUC, because the graph "
+            "holds zero Samavedic translations and Wave 3 may import 173 that are "
+            "Griffith's Rigveda renderings used cross-corpus.",
+        ),
+        "C": (
+            "SURVIVED",
+            "seven attacks run, six clean and the seventh -- lexical leakage -- survived on "
+            "a residualisation test: the hybrid still separates at 0.737 after removing the "
+            "lexical control, while the control falls to 0.403, below chance, after "
+            "removing the hybrid. Three of its own seven blast-radius assertions failed and "
+            "all three are reported; the tier whose fix broke one is refused.",
+        ),
         "restage_required": False,
+        "waits_on_migration": ["THEMATICALLY_RESEMBLES into CONTROLLED_PREDICATES"],
+        "blocked_by": ["TIER_B_AWAITS_DEDICATION_VOCABULARY_RULING"],
     },
 }
 
@@ -309,7 +351,8 @@ def main() -> int:
         elif (
             entry["gate_a_structural"]["status"] == "PASS"
             and entry["gate_b_semantic"]["status"].startswith("PASS")
-            and entry["gate_c_adversarial"]["status"] in ("PASS", "SURVIVED")
+            and entry["gate_c_adversarial"]["status"]
+            in ("PASS", "SURVIVED", "DEFECT_FOUND_AND_FIXED")
         ):
             entry["status"] = "ELIGIBLE"
             entry["status_detail"] = "all three gates pass and no blocker is open"
@@ -325,7 +368,7 @@ def main() -> int:
                 if not (
                     entry[key]["status"] == "PASS"
                     or entry[key]["status"].startswith("PASS")
-                    or entry[key]["status"] == "SURVIVED"
+                    or entry[key]["status"] in ("SURVIVED", "DEFECT_FOUND_AND_FIXED")
                 )
             ]
             entry["status_detail"] = f"gate(s) {', '.join(missing)} not passed"
@@ -364,13 +407,13 @@ def main() -> int:
     )
 
     print()
-    print(f"  {'domain':20}{'A':>10}{'B':>24}{'C':>16}   status")
-    print(f"  {'-' * 20}{'-' * 10}{'-' * 24}{'-' * 16}   {'-' * 18}")
+    print(f"  {'domain':20}{'A':>10}{'B':>30}{'C':>16}   status")
+    print(f"  {'-' * 20}{'-' * 10}{'-' * 30}{'-' * 16}   {'-' * 18}")
     for domain in sorted(entries):
         e = entries[domain]
         print(
             f"  {domain:20}{e['gate_a_structural']['status']:>10}"
-            f"{e['gate_b_semantic']['status']:>24}"
+            f"{e['gate_b_semantic']['status']:>30}"
             f"{e['gate_c_adversarial']['status']:>16}   {e['status']}"
         )
     print()

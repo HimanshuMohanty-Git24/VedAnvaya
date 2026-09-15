@@ -1,0 +1,90 @@
+{
+ "algorithm_version": "semantic-resemblance-hybrid-v2",
+ "predicate": "THEMATICALLY_RESEMBLES",
+ "defining_channels": [
+  "R4_FRAME_IDF",
+  "R6_E5_SANSKRIT",
+  "R2_ENTITY_IDF"
+ ],
+ "threshold_z": 0.0,
+ "per_mantra_cap": 5,
+ "lexical_ceiling": 0.2,
+ "emitted_tiers": [
+  "TIER_A_DEDICATION_AGREES",
+  "TIER_C_NO_REFERENT_EVIDENCE_EXISTS"
+ ],
+ "refused_tier": "TIER_B_REFERENT_EVIDENCE_NOT_COMPARABLE",
+ "pool": "union of top-10 neighbours per candidate representation",
+ "positive_class": [
+  "SAME_CONTENT",
+  "SAME_TOPIC_DIFFERENT_CLAIM"
+ ],
+ "referent_guard": "refuse when both dedications come from the SAME mechanism and are disjoint; refuse the whole tier when the two mechanisms are not comparable",
+ "config_hash": "39cecb432412704c5762cf4000999d62afaada7aa64c2d2ed27c4b3335206670",
+ "code_commit": "767f2d714c6035169528d6c8193b513e997fbf05",
+ "tiers": {
+  "TIER_A_DEDICATION_AGREES": {
+   "definition": "the source-explicit dedication is known for BOTH endpoints, from the SAME mechanism, and the two dedications intersect. HAS_DEVATA (Anukramani, RV 10,552/10,552) or HAS_DEVATA_ASCRIPTION (AV 4,160/5,839). This evidence is independent of every channel that produced the score.",
+   "test_precision": 0.9545,
+   "test_n": 22,
+   "test_precision_95ci_wilson": [
+    0.782,
+    0.9919
+   ],
+   "importable": true,
+   "evidence_layer": "SEMANTIC_MODEL_EXTRACTION"
+  },
+  "TIER_C_NO_REFERENT_EVIDENCE_EXISTS": {
+   "definition": "at least one endpoint carries no dedication in the graph at all, so the referent guard cannot be evaluated. Structurally: every pair touching SV (0/1,844 dedicated) or YV (0/1,975), plus the 1,679 AV verses with no ascription.",
+   "test_precision": 0.6154,
+   "test_n": 13,
+   "test_precision_95ci_wilson": [
+    0.3552,
+    0.8229
+   ],
+   "importable": false,
+   "not_importable_reason": "test precision 0.6154 on 13 gold pairs, 95% CI [0.3552, 0.8229]. No independent referent evidence exists for these pairs and none can be built from the graph as it stands, so the layer's own defence against the deity/thing conflation is inapplicable. The 52-triple adversarial set cannot be run on this tier either: its ground truth requires a dedication on both sides, which is exactly what this tier lacks. This is the verification queue.",
+   "evidence_layer": "INTERPRETIVE_CLAIM"
+  },
+  "TIER_B_REFERENT_EVIDENCE_NOT_COMPARABLE": {
+   "definition": "both endpoints carry a dedication but from different mechanisms whose label vocabularies share 0 of 210 and 324 values, so the guard cannot compare them. Structurally: RV-AV pairs where the AV endpoint has an ascription.",
+   "test_precision": 0.4444,
+   "test_n": 9,
+   "test_precision_95ci_wilson": [
+    0.1888,
+    0.7334
+   ],
+   "importable": false,
+   "emitted": false,
+   "refusal_reason": "REFUSED, not staged as an edge. Test precision 0.4444 on 9 gold pairs (5 of them UNRELATED), and blast-radius assertion B4 failed on it: 10 of the 52 referent-trap other-sense pairs become emittable once the guard stops speaking about RV-AV pairs. Unlocking it is an ontology decision this agent does not own -- a mapping between the 210 HAS_DEVATA display labels and the 324 HAS_DEVATA_ASCRIPTION forms.",
+   "pool_pairs_in_this_state": 138054,
+   "evidence_layer": null
+  }
+ },
+ "method_card": {
+  "method": "hybrid non-lexical cosine, mean of three z-scored channels, with a referent guard, a novelty filter and a per-mantra cap of 5",
+  "model": "R4_FRAME_IDF and R2_ENTITY_IDF are deterministic IDF-weighted bag-of-typed-features (no model); R6_E5_SANSKRIT is intfloat/multilingual-e5-small ONNX, sha256 ca456c06b3a9505ddfd9131408916dd79290368331e7d76bb621f1cba6bc8665",
+  "version": "semantic-resemblance-hybrid-v2",
+  "score_scale": "mean of three L2-normalised cosines, each z-scored on the 1,133,311-pair candidate pool. Not a probability, not a cosine.",
+  "threshold_z": 0.0,
+  "per_mantra_cap": 5,
+  "lexical_ceiling": 0.2,
+  "evidence_basis_axis": "the per-edge evidence_basis records WHICH non-lexical channels fired. It is NOT the graph's evidence_basis property (SANSKRIT / ENGLISH) and NOT a derivation enum.",
+  "stored_as_directed": false,
+  "direction_basis": "SYMMETRIC: emitted once, in ascending canonical_key order, to be read undirected. A directed query returns a false zero for the second endpoint (corpus-audit CORPUS_D07).",
+  "not_reachable_by": [
+   "EXACT_PARALLEL_OF",
+   "NEAR_PARALLEL_OF",
+   "VARIANT_OF",
+   "REUSES_TEXT_FROM",
+   "USES_FORMULA co-membership",
+   "identical folded Sanskrit surface",
+   "agent 12 staged relations",
+   "lexical char-4gram cosine at or above 0.20"
+  ],
+  "normalisation_role": "accent stripping, transliteration to Devanagari and whitespace folding build comparison surfaces that GENERATE CANDIDATES only. No folded equality asserts an edge here; a folded equality is a reason to REFUSE one."
+ },
+ "predicate_definition": "THEMATICALLY_RESEMBLES(a,b) asserts: these two passages make comparable statements about a shared referent, on evidence that is not their shared wording. Symmetric, emitted once in ascending canonical_key order. It is NOT NORMALIZED_EQUIVALENCE, NOT CANONICAL_IDENTITY, NOT a TEXTUAL_VARIANT and NOT a near duplicate: no normalisation of any kind establishes an edge here, and every pair reachable by an existing textual predicate, by USES_FORMULA co-membership, by identical folded Sanskrit surface, by agent 12's staged relations, or at a lexical char-4gram cosine of 0.20 or above is refused by construction.",
+ "normalisation_role": "Accent stripping, script transliteration to Devanagari and whitespace folding are used ONLY to build comparison surfaces that generate candidates. No folded equality asserts that two passages are the same passage, entity or recension; on the contrary, a folded equality is a REASON TO REFUSE an edge here, because it makes the pair agent 12's.",
+ "predicate_is_not_in_the_controlled_vocabulary": "THEMATICALLY_RESEMBLES is not in src/vedagraph/enrich/predicates.py CONTROLLED_PREDICATES and is not one of the 14 frozen semantic predicates. It is proposed for addition, not assumed. It does not collide with ADDRESSES_CONCERN or CONCERNS, which are passage-to-Concept, nor with the 5 predicates refused by name in vedagraph.semantic.ontology."
+}
