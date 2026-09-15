@@ -337,12 +337,16 @@ def main() -> int:
                 exempt=sorted(DELIBERATELY_UNATTACHED),
             )
             isolated = int(orphan.get("c") or 0)
+            # The same predicate as the count above. It used to be the unfiltered set, so a
+            # finding of 27 printed a breakdown summing to 40 and made the two exempt
+            # classes look like part of the defect.
             by_label = {
                 r["label"]: r["c"]
                 for r in session.run(
                     "MATCH (n) WHERE n.wave3_created_by IS NOT NULL AND NOT (n)--() "
+                    "AND NOT n:DeityCommunity AND NOT n.entity_key IN $exempt "
                     "UNWIND labels(n) AS label RETURN label, count(*) AS c ORDER BY c DESC",
-                    wave=WAVE,
+                    exempt=sorted(DELIBERATELY_UNATTACHED),
                 )
             }
             if isolated:
