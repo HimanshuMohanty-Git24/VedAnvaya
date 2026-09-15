@@ -13,7 +13,7 @@
     "10 DEFECT_FOUND_AND_FIXED counts as a completed adversarial gate"
   ],
   "provenance": {
-    "git_commit": "19500658c571eb59f29780f2a1e45d4804fd79c7",
+    "git_commit": "faeb613d724feb5cc41b58af8197f199c887c7c9",
     "git_branch": "phase-data-completeness-v2",
     "working_tree_clean": true,
     "gap_registry_sha256": "82ba2160569bb603cf65452b652fececb693771868fca9d64157a26412c5709b",
@@ -26,7 +26,7 @@
     "backup_sha256": "98f71b641f608c8fd1aa3082ef4b88f7d983687d2996aa5b1c7528effc83b981",
     "backup_bytes": 96844203,
     "pre_import_census": {
-      "nodes": 122988,
+      "nodes": 122986,
       "relationships": 288051,
       "core_corpus": {
         "AV": 5839,
@@ -682,11 +682,11 @@
     ]
   },
   "expected_census": {
-    "nodes_before": 122988,
+    "nodes_before": 122986,
     "nodes_create": 0,
     "nodes_update": 19852,
     "nodes_retire": 0,
-    "nodes_after": 122988,
+    "nodes_after": 122986,
     "relationships_before": 288051,
     "relationships_create": 0,
     "relationships_update": 66890,
