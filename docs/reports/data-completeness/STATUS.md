@@ -9,16 +9,50 @@
 
 ## Current wave
 
-**WAVE 0** — gap census, corpus audit, source reconnaissance. No canonical graph mutation.
+**WAVE 0 — CLOSED.** Gap census, corpus audit and source reconnaissance all returned; the
+lead re-measured their consequential claims and one was disproven. See
+`WAVE_0_CLOSURE.md`. Graph re-counted after all three: unchanged.
+
+**WAVE 1 — opening.** Agents 3-8: translation, the four audio domains, attribution and
+entity coverage. Staging only; no canonical mutation.
 
 | Agent | Role | State |
 |---|---|---|
-| 1 | Gap census / product miner | RUNNING |
-| 2 | Corpus / structural metadata audit | RUNNING |
-| — | Source reconnaissance | RUNNING |
+| 1 | Gap census / product miner | DONE — 74 gaps registered |
+| 2 | Corpus / structural metadata audit | DONE — 20,210 rows, 11 defects |
+| - | Source reconnaissance | DONE — 67 sources, 3 prior negatives corrected |
+| 3 | Translation completion | Wave 1 |
+| 4 | Rigveda audio | Wave 1 |
+| 5 | Samaveda audio + musical layer | Wave 1 |
+| 6 | Yajurveda audio | Wave 1 |
+| 7 | Atharvaveda audio | Wave 1 |
+| 8 | Attribution / entity coverage | Wave 1 |
 
-Waves 1-4 not started. The staging contract and its validator are in place, so
-Wave 1 can open as soon as the registry is frozen.
+Waves 2-4 not started.
+
+## Registry
+
+`data/gap_registry.json` — 74 gaps: 62 IMPLEMENTATION_GAP, 7 STALE, 5 TRUE_SCOPE_FACT.
+All `OPEN`. Owners 3-16 assigned. 17 populations `null` with a stated reason; the nine
+zeros are measured zeros on STALE findings, not unknowns.
+
+## What Wave 0 changed about the plan
+
+- AV translation gap is **one acquisition**: 958 of 961 are kanda 20, plus exactly three
+  strays (3.9.4, 5.12.11, 10.8.30). Verified.
+- YV's 72 may not be a gap at all -- concentrated in adhyaya 12 (25) and 23 (13), plausibly
+  Griffith's own cross-references. **Check two local snapshots before sourcing anything.**
+- ~43% of the AV audio gap is probably ours: 495 of 1,159 are recorded `text_mismatch`,
+  the signature of a numbering offset. Same pattern on 33 YV rows.
+- Samaveda audio is **not source-blocked** -- 475 licence-clean Ogg files on Commons, none
+  fetched -- but every one is `PAGE_LEVEL` and they are gana performances, not arcika
+  recitation. Needs boundary verification plus a separate gana Work identity.
+- SV morphology is genuinely unavailable: three independent negatives (DCS, UD, VedaWeb).
+- No layer may be called human gold: 120/120 semantic gold rows are `UNANNOTATED`, and the
+  only populated set was adjudicated by the model family that would be scored.
+
+## Done
+
 
 ## Done
 
@@ -106,13 +140,37 @@ Graph queries: `docker exec vedagraph-neo4j cypher-shell -u neo4j -p vedagraph_d
 
 ## Blocking issues
 
-None yet.
+1. **`sacred-texts.com` returns 403 from this host.** Re-probed by the lead: 403 direct and
+   403 after following its own www redirect. It supplied the 1,903 YV translations from
+   snapshots taken 2026-09-07, and the AV kanda-20 acquisition depends on it. **Wave 1
+   step 1 is a reachability re-probe;** if it stays down, kanda 20 needs an independent
+   host.
+2. **IGNCA's 40 `SYMS_CHAP_*.mp3` are still 404**, re-verified 17 months on. YV Madhyandina
+   audio would have to be commissioned -- a genuine external unavailability, and a
+   candidate for BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE once three avenues are documented.
+3. **Section 32 is unreportable as the graph stands.** Run provenance is written onto
+   produced artifacts, never onto the mantra examined, so "assessed and empty" cannot be
+   told from "never assessed" for any dimension but audio. Every Wave 1 artifact must
+   therefore emit its assessed set, not just its positives.
+
 
 ## Next exact command
 
-Wait for the three Wave 0 agents. On completion: reconcile their three reports into
-`data/gap_registry.json` as the single source of truth, assign owners, then open Wave 1
-(agents 3–8) against the frozen registry.
+Wave 1 is running as agents 3-8 against the frozen registry. Each writes to
+`data/staging/<domain>/` and nothing else, and must satisfy the ingestion contract.
+
+Before importing any Wave 1 artifact:
+
+```
+.venv/Scripts/python.exe scripts/validate_staging_artifact.py data/staging/<domain> --graph
+```
+
+`--graph` is not optional for an import: it resolves every canonical key against the live
+store and checks the row's claimed veda against the node's.
+
+Wave 1's own first step, before acquisition: re-probe `sacred-texts.com`, and read the two
+local snapshots that settle whether the YV 72 are real gaps or Griffith cross-references.
+
 
 ## Rules a resuming session must not break
 
