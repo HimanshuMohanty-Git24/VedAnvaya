@@ -1109,10 +1109,10 @@
       "require": [],
       "notes": "27 officiant roles, 11 marked EXISTING and 16 PROPOSED_NEW. The artifact's own note is preserved: the sixteen classical officiants are a Srautasutra schema and not a Samhita one, so in_classical_sixteen is recorded and not used as a denominator.",
       "artifact_elements": 27,
-      "filtered_out_by_require": 1,
-      "candidates": 26,
-      "candidates_before_collision_withholding": 26,
-      "distinct_identities": 26,
+      "filtered_out_by_require": 5,
+      "candidates": 22,
+      "candidates_before_collision_withholding": 22,
+      "distinct_identities": 22,
       "identity_collisions": 0,
       "identity_collisions_withheld": 0,
       "rows_withheld_on_identity_collision": 0,
@@ -1122,7 +1122,7 @@
       "evidence_fields_declared": [],
       "elements_redirected_not_created": 0,
       "redirect_detail": [],
-      "node_status_disagreements": 15,
+      "node_status_disagreements": 13,
       "node_status_disagreement_detail": [
         {
           "key": "VG:CONCEPT:MAITRAVARUNA-PRIEST",
@@ -1170,11 +1170,6 @@
           "graph_says": "PRESENT"
         },
         {
-          "key": "VG:CONCEPT:SADASYA-PRIEST",
-          "artifact_says": "PROPOSED_NEW",
-          "graph_says": "PRESENT"
-        },
-        {
           "key": "VG:CONCEPT:GRHAPATI-HOUSEHOLDER",
           "artifact_says": "PROPOSED_NEW",
           "graph_says": "PRESENT"
@@ -1183,14 +1178,19 @@
           "key": "VG:CONCEPT:DIKSITA-CONSECRATED",
           "artifact_says": "PROPOSED_NEW",
           "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:ACARYA-TEACHER",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
         }
       ],
       "match_property": "entity_key",
       "key_minted_from_identity": false,
-      "distinct_subjects": 26,
-      "already_present": 26,
+      "distinct_subjects": 22,
+      "already_present": 22,
       "nodes_create": 0,
-      "nodes_update": 26,
+      "nodes_update": 22,
       "subjects_absent_from_graph": [],
       "property_writes": 0,
       "dangling_references": 0
@@ -2573,9 +2573,9 @@
     "identity_collisions": 18,
     "identity_collisions_withheld": 18,
     "multi_source_evidence_merges": 147,
-    "node_status_disagreements": 191,
+    "node_status_disagreements": 189,
     "nodes_create": 0,
-    "nodes_update": 19856,
+    "nodes_update": 19852,
     "property_writes": 51215,
     "relationships_create": 0,
     "relationships_update": 66869,

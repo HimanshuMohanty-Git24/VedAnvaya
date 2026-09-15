@@ -13,11 +13,11 @@
     "10 DEFECT_FOUND_AND_FIXED counts as a completed adversarial gate"
   ],
   "provenance": {
-    "git_commit": "aa3baae9e29b74851c590f84b4fcea4b2bf0222b",
+    "git_commit": "8638f454397ce78fb89254ccad8e2abbe7e776b8",
     "git_branch": "phase-data-completeness-v2",
-    "working_tree_clean": true,
+    "working_tree_clean": false,
     "gap_registry_sha256": "82ba2160569bb603cf65452b652fececb693771868fca9d64157a26412c5709b",
-    "element_plan_sha256": "40f3b63916cd335a3ad5c2991833eb692a81c9ad2a7dc06004a1fb018d710da4",
+    "element_plan_sha256": "8a293038c1926c059f1c63b23e4d9b0c06282a5f477964f9c3e953ffab6ce967",
     "eligibility_ledger_sha256": "84ae87e0d62f43f7f2cf9d3fb1306a48d117d1030e931611fb5184953612dc0c",
     "scope_grain_sha256": "42d659913274888a449fbc290e22ae5912b5498e90707a8fa7693c4b74ec48df",
     "soma_correction_sha256": "5e11524298667f98e2c5303c1cc4cc10d097f83784d5968dc2f0de23d5d4705b",
@@ -277,9 +277,9 @@
       "identity_collisions": 18,
       "identity_collisions_withheld": 18,
       "multi_source_evidence_merges": 147,
-      "node_status_disagreements": 191,
+      "node_status_disagreements": 189,
       "nodes_create": 0,
-      "nodes_update": 19856,
+      "nodes_update": 19852,
       "property_writes": 51215,
       "relationships_create": 0,
       "relationships_update": 66869,
@@ -620,7 +620,7 @@
   },
   "dangling_references": 0,
   "semantic_conflicts": {
-    "node_status_contradicted_by_the_graph": 191,
+    "node_status_contradicted_by_the_graph": 189,
     "detail": "16 ritual registry rows claim PROPOSED_NEW for a key the graph already holds: 11 materials and 5 offerings. The plan resolves each against the graph rather than the marking, so no duplicate is created, but an importer trusting node_status would have written new ritual properties onto existing canonical Concepts.",
     "elements_redirected_not_created": 3,
     "redirect_detail": "3 rites are ALREADY_MODELLED_AS_SOCIALRITE. Two of their own keys are absent from the graph, so treating the status as ordinary would have created duplicate rite nodes for PITRMEDHA and GRHAPRAVESA, which the graph already holds as PITRYANA-FUNERARY-RITE and SALA-HOUSE-BUILDING.",
@@ -684,7 +684,7 @@
   "expected_census": {
     "nodes_before": 122988,
     "nodes_create": 0,
-    "nodes_update": 19856,
+    "nodes_update": 19852,
     "nodes_retire": 0,
     "nodes_after": 122988,
     "relationships_before": 288051,
@@ -756,12 +756,14 @@
     "audio_pending_review_rows_remain_withheld": true,
     "destructive_changes_are_explicit_corrections_with_proof": true,
     "graph_backup_exists": true,
-    "working_tree_clean": true,
+    "working_tree_clean": false,
     "element_plan_usable": true,
     "artifact_coverage_complete": true,
     "no_open_blockers": true
   },
-  "acceptance_gate_failures": [],
-  "go_no_go": "GO",
-  "authorization": "Owner section 6 authorizes canonical integration without another owner round when every condition above holds."
+  "acceptance_gate_failures": [
+    "working_tree_clean"
+  ],
+  "go_no_go": "NO-GO",
+  "authorization": "STOP. Owner section 6: if any condition fails, STOP."
 }
