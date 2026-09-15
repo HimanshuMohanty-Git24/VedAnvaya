@@ -9,26 +9,64 @@
 
 ## Current wave
 
-**WAVE 0 — CLOSED.** Gap census, corpus audit and source reconnaissance all returned; the
-lead re-measured their consequential claims and one was disproven. See
-`WAVE_0_CLOSURE.md`. Graph re-counted after all three: unchanged.
+**WAVE 0 - CLOSED.** See `WAVE_0_CLOSURE.md`.
 
-**WAVE 1 — opening.** Agents 3-8: translation, the four audio domains, attribution and
-entity coverage. Staging only; no canonical mutation.
+**WAVE 1 - in progress.** Four of six agents returned; all four artifacts pass the staging
+validator at full coverage with `--graph`.
 
 | Agent | Role | State |
 |---|---|---|
-| 1 | Gap census / product miner | DONE — 74 gaps registered |
-| 2 | Corpus / structural metadata audit | DONE — 20,210 rows, 11 defects |
-| - | Source reconnaissance | DONE — 67 sources, 3 prior negatives corrected |
-| 3 | Translation completion | Wave 1 |
-| 4 | Rigveda audio | Wave 1 |
-| 5 | Samaveda audio + musical layer | Wave 1 |
-| 6 | Yajurveda audio | Wave 1 |
-| 7 | Atharvaveda audio | Wave 1 |
-| 8 | Attribution / entity coverage | Wave 1 |
+| 1 | Gap census | DONE - 74 gaps registered |
+| 2 | Corpus audit | DONE - 20,210 rows, 11 defects |
+| - | Source reconnaissance | DONE - 67 sources |
+| 3 | Translation completion | RUNNING |
+| 4 | Rigveda audio | RUNNING |
+| 5 | Samaveda audio + music | DONE - validator PASS |
+| 6 | Yajurveda audio | DONE - validator PASS, 25 closed |
+| 7 | Atharvaveda audio | RUNNING |
+| 8 | Attribution / entity coverage | DONE - validator PASS |
 
 Waves 2-4 not started.
+
+## Wave 1 results so far
+
+| Domain | Outcome |
+|---|---|
+| YV audio | 1,752 -> 1,777 of 1,975, closed by fixing our own comparator rather than acquiring anything. 190 blocked on rights and granularity, 8 need a listener. |
+| Samaveda music | A melodic layer now exists: 1,136 of 1,844 verses notated. 475 of 475 gana recordings fetched and checksummed (808,529,118 bytes). 4 gana Works proposed. |
+| Samaveda audio | Arcika verse audio is 0 of 1,844 - a VERIFIED ZERO over an assessed 1,844, not an unknown. Section 22 listening review explicitly NOT satisfied and not claimed. |
+| Attribution | AV gained 83 verse-level source-explicit deity rows and 383 metre rows. Unmodelled dedication 5,498 -> 5,465; metre gap 5,610 -> 5,493. SV staged zero rows on evidence. YV judged NOT_EXTRACTABLE_AT_SOURCE_EXPLICIT. |
+
+### One product defect fixed in code
+
+`30ba692` - the verse comparator discarded nearly the whole alphabet on any long verse
+(difflib autojunk) and dropped colon-spelled visarga. A pair differing in one letter scored
+0.1391. The published calibration had been measured with that broken comparator and is
+replaced with figures from 12,000 mispaired pairs. Four regression tests, each confirmed to
+fail against the old behaviour. Full suite green: 3,095 passed, 74 skipped.
+
+## Lead process note
+
+Do NOT commit a specialist's staging directory until it has reported. The lead committed
+the Samaveda directory after a first notification while the agent was still working, and
+three finished files had to be picked up in a second commit. A task notification can fire
+more than once for the same agent.
+
+## Registry
+
+`data/gap_registry.json` - **79 gaps**: 66 IMPLEMENTATION_GAP, 8 STALE, 5 TRUE_SCOPE_FACT.
+All `OPEN`. 19 populations `null` with a stated reason; the 10 zeros are measured zeros on
+STALE findings, not unknowns.
+
+Wave 0 registered 74. The lead folded in 5 more that Wave 1 discovered, because specialists
+are scoped away from the registry to keep six agents out of one file - which makes folding
+their findings in the lead's job, not an optional tidy-up. An unregistered finding escapes
+the section 43 gate silently.
+
+The five: `GAP-QUALITY-006` (occurrence_count), `GAP-ATTRIBUTION-009` (attribution_scope),
+`GAP-SAMAVEDA_MUSIC-003` (the missing arcika-gana join key), `GAP-OTHER-006` (the
+comparator defects), `GAP-ENTITY_COVERAGE-008` (registry contamination).
+
 
 ## Registry
 
