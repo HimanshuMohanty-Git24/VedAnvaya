@@ -67,12 +67,15 @@ PROMISED: dict[str, int] = {
     "ASSERTION_TARGET": 799,
     "EPITHET_VARIANT_OF": 10,
     "SPECIALIZED_FORM_OF": 1,
+    # HAS_STEP must NOT grow. Its 3 edges point at an :Action, and the 9,255 new steps use
+    # HAS_RITUAL_STEP precisely so that an existing predicate's range is left alone.
+    "HAS_STEP": 3,
 }
 
 #: One query per domain, each asking the thing that would have to be true for that domain's
 #: claim to hold. Deliberately not a count of what was written: a count confirms the writer
 #: and a closure test confirms the claim.
-CLOSURE: dict[str, tuple[str, str, str]] = {
+CLOSURE: dict[str, tuple[str, str, tuple[str, ...]]] = {
     "semantic_roles": (
         "every asserted role filler resolves to exactly one passage, and none is a "
         "duplicate of a canonical entity",
@@ -81,7 +84,7 @@ CLOSURE: dict[str, tuple[str, str, str]] = {
         "WITH f, count(DISTINCT p) AS passages "
         "RETURN count(f) AS fillers, sum(CASE WHEN passages = 1 THEN 1 ELSE 0 END) AS anchored, "
         "sum(CASE WHEN passages <> 1 THEN 1 ELSE 0 END) AS unanchored",
-        "unanchored",
+        ("unanchored",),
     ),
     "formula": (
         "the shared-formula relation joins only mantras, and every edge names the formulae "
@@ -89,23 +92,24 @@ CLOSURE: dict[str, tuple[str, str, str]] = {
         "MATCH (a)-[r:SHARES_FORMULA_WITH]->(b) "
         "RETURN count(r) AS edges, "
         "sum(CASE WHEN a:Mantra AND b:Mantra THEN 0 ELSE 1 END) AS off_grain, "
-        "sum(CASE WHEN r.formula_shared_formula_ids IS NULL THEN 1 ELSE 0 END) AS no_evidence",
-        "off_grain",
+        "sum(CASE WHEN r.shared_formula_ids IS NULL THEN 1 ELSE 0 END) AS no_evidence",
+        ("off_grain", "no_evidence"),
     ),
     "ritual": (
         "every ritual step is anchored on a rite and carries its source citation",
         "MATCH (s:RitualStep) "
         "RETURN count(s) AS steps, "
         "sum(CASE WHEN s.ritual_key IS NULL THEN 1 ELSE 0 END) AS unanchored, "
-        "sum(CASE WHEN s.citation IS NULL THEN 1 ELSE 0 END) AS uncited",
-        "unanchored",
+        "sum(CASE WHEN s.citation IS NULL THEN 1 ELSE 0 END) AS uncited, "
+        "sum(CASE WHEN NOT (s)<-[:HAS_RITUAL_STEP]-() THEN 1 ELSE 0 END) AS unreachable",
+        ("unanchored", "uncited", "unreachable"),
     ),
     "scholarship": (
         "every scholar carries a named attribution status, so a disputed ascription is "
         "never presented as settled",
         "MATCH (s:Scholar) RETURN count(s) AS scholars, "
         "sum(CASE WHEN s.attribution_status IS NULL THEN 1 ELSE 0 END) AS unstated",
-        "unstated",
+        ("unstated",),
     ),
     "communities": (
         "the partition is present as an artifact with its refusal attached and NO membership "
@@ -115,15 +119,16 @@ CLOSURE: dict[str, tuple[str, str, str]] = {
         "RETURN count(DISTINCT c) AS communities, "
         "sum(CASE WHEN c.caveat IS NULL THEN 1 ELSE 0 END) AS without_caveat, "
         "count(m) AS membership_edges",
-        "membership_edges",
+        ("without_caveat", "membership_edges"),
     ),
     "quality": (
         "no verdict is typed human gold, and every one names the reference set it came from",
         "MATCH (v:QualityVerdict) RETURN count(v) AS verdicts, "
-        "sum(CASE WHEN v.quality_reference_set_type IS NULL THEN 1 ELSE 0 END) AS unsourced, "
-        "sum(CASE WHEN v.quality_reference_set_type = 'HUMAN_GOLD' THEN 1 ELSE 0 END) AS "
-        "claims_human_gold",
-        "claims_human_gold",
+        "sum(CASE WHEN v.reference_set_type IS NULL THEN 1 ELSE 0 END) AS unsourced, "
+        "sum(CASE WHEN v.reference_set_type = 'HUMAN_GOLD' THEN 1 ELSE 0 END) AS "
+        "claims_human_gold, "
+        "sum(CASE WHEN NOT (v)-[:QUALITY_VERDICT_ABOUT]->() THEN 1 ELSE 0 END) AS unattached",
+        ("unsourced", "claims_human_gold", "unattached"),
     ),
     "cross_veda": (
         "the corrected transformation typing landed on existing parallel edges and created "
@@ -131,7 +136,7 @@ CLOSURE: dict[str, tuple[str, str, str]] = {
         "MATCH ()-[r:EXACT_PARALLEL_OF|VARIANT_OF|NEAR_PARALLEL_OF|REUSES_TEXT_FROM]->() "
         "RETURN count(r) AS parallel_edges, "
         "sum(CASE WHEN r.cross_veda_transformation IS NOT NULL THEN 1 ELSE 0 END) AS typed",
-        None,
+        (),
     ),
 }
 
@@ -283,28 +288,68 @@ def main() -> int:
                 )
 
             # ---- no edge written this wave may dangle -----------------------------------
+            # A node nothing points at is not imported data. The twelve :DeityCommunity
+            # artifacts are the one exception and they are exempted by name: the integration
+            # plan's phase 5 imports the partition with its refusal and NO membership claim,
+            # because six of the twelve draw every internal edge from a single hymn. Every
+            # other island is a defect, and the second import left 12,033 of them.
             orphan = one(
                 session,
-                "MATCH (n) WHERE n.wave = $wave AND NOT (n)--() RETURN count(n) AS c",
+                "MATCH (n) WHERE n.wave = $wave AND NOT (n)--() "
+                "AND NOT n:DeityCommunity RETURN count(n) AS c",
                 wave=WAVE,
             )
             isolated = int(orphan.get("c") or 0)
+            by_label = {
+                r["label"]: r["c"]
+                for r in session.run(
+                    "MATCH (n) WHERE n.wave = $wave AND NOT (n)--() "
+                    "UNWIND labels(n) AS label RETURN label, count(*) AS c ORDER BY c DESC",
+                    wave=WAVE,
+                )
+            }
+            if isolated:
+                findings.append(
+                    f"{isolated} node(s) written this wave have no relationship at all and "
+                    f"are unreachable: {by_label}"
+                )
+            deliberate = one(
+                session,
+                "MATCH (n:DeityCommunity) WHERE NOT (n)--() RETURN count(n) AS c",
+            )
 
             # ---- domain closure tests ---------------------------------------------------
             closure: dict[str, Any] = {}
             for domain, (claim, query, must_be_zero) in sorted(CLOSURE.items()):
                 measured = one(session, query)
-                passed = must_be_zero is None or int(measured.get(must_be_zero) or 0) == 0
+                # Every field the claim covers, not one of them. Requiring a single field
+                # let two tests measure their own failure and pass anyway: quality read
+                # unsourced 2,568 of 2,568 and asserted claims_human_gold instead.
+                failed = {
+                    field: measured.get(field)
+                    for field in must_be_zero
+                    if int(measured.get(field) or 0) != 0
+                }
+                # A field named in must_be_zero that the query does not return would make
+                # the assertion vacuous, so an absent field is a failure of the test itself.
+                absent = [field for field in must_be_zero if field not in measured]
                 closure[domain] = {
                     "claim": claim,
-                    "measured": {k: v for k, v in measured.items()},
-                    "must_be_zero": must_be_zero,
-                    "passed": passed,
+                    "measured": dict(measured),
+                    "must_be_zero": list(must_be_zero),
+                    "fields_not_returned_by_the_query": absent,
+                    "failed_fields": failed,
+                    "passed": not failed and not absent,
                 }
-                if not passed:
+                if failed:
                     findings.append(
-                        f"{domain} closure test failed: {must_be_zero} = "
-                        f"{measured.get(must_be_zero)}"
+                        f"{domain} closure test failed: "
+                        + ", ".join(f"{k} = {v}" for k, v in sorted(failed.items()))
+                    )
+                if absent:
+                    findings.append(
+                        f"{domain} closure test is vacuous: it requires {absent} to be zero "
+                        "and its query does not return them"
                     )
 
             # ---- the corrections, read back ---------------------------------------------
@@ -375,6 +420,8 @@ def main() -> int:
         "per_group": groups,
         "withheld_identities_found_in_graph": withheld_found,
         "nodes_written_this_wave_with_no_relationship": isolated,
+        "unattached_by_label": by_label,
+        "deliberately_unattached_deity_communities": int(deliberate.get("c") or 0),
         "domain_closure_tests": closure,
         "corrections_read_back": corrections,
         "schema_additions_in_graph": {
@@ -423,7 +470,10 @@ def main() -> int:
     print("  new relationship types:", new_types or "(none)")
     print()
     print(f"  withheld identities found in the graph: {len(withheld_found)}")
-    print(f"  nodes written this wave with no relationship: {isolated}")
+    print(
+        f"  nodes written this wave with no relationship: {isolated}"
+        f"  (plus {int(deliberate.get('c') or 0)} :DeityCommunity, unattached on purpose)"
+    )
     print()
     if findings:
         print(f"  {len(findings)} FINDING(S):")

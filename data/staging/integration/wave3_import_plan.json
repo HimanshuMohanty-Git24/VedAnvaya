@@ -153,6 +153,7 @@
       "end_endpoints_absent": 0,
       "endpoints_provided_by_this_plan": 2052,
       "triples_awaiting_an_earlier_step": 2052,
+      "endpoints_redirected": 0,
       "ambiguous_endpoint_keys": 0,
       "ambiguous_endpoint_detail": [],
       "relationships_create": 2052,
@@ -201,6 +202,7 @@
       "end_endpoints_absent": 0,
       "endpoints_provided_by_this_plan": 402,
       "triples_awaiting_an_earlier_step": 387,
+      "endpoints_redirected": 0,
       "ambiguous_endpoint_keys": 0,
       "ambiguous_endpoint_detail": [],
       "relationships_create": 387,
@@ -244,6 +246,7 @@
       "end_endpoints_absent": 0,
       "endpoints_provided_by_this_plan": 0,
       "triples_awaiting_an_earlier_step": 0,
+      "endpoints_redirected": 0,
       "ambiguous_endpoint_keys": 0,
       "ambiguous_endpoint_detail": [],
       "relationships_create": 6148,
@@ -287,6 +290,7 @@
       "end_endpoints_absent": 0,
       "endpoints_provided_by_this_plan": 0,
       "triples_awaiting_an_earlier_step": 0,
+      "endpoints_redirected": 0,
       "ambiguous_endpoint_keys": 0,
       "ambiguous_endpoint_detail": [],
       "relationships_create": 0,
@@ -412,6 +416,7 @@
       "end_endpoints_absent": 0,
       "endpoints_provided_by_this_plan": 0,
       "triples_awaiting_an_earlier_step": 0,
+      "endpoints_redirected": 0,
       "ambiguous_endpoint_keys": 0,
       "ambiguous_endpoint_detail": [],
       "relationships_create": 0,
@@ -511,6 +516,7 @@
       "end_endpoints_absent": 0,
       "endpoints_provided_by_this_plan": 0,
       "triples_awaiting_an_earlier_step": 0,
+      "endpoints_redirected": 0,
       "ambiguous_endpoint_keys": 0,
       "ambiguous_endpoint_detail": [],
       "relationships_create": 0,
@@ -851,8 +857,9 @@
       "dangling_detail": [],
       "start_endpoints_absent": 0,
       "end_endpoints_absent": 0,
-      "endpoints_provided_by_this_plan": 170,
-      "triples_awaiting_an_earlier_step": 418,
+      "endpoints_provided_by_this_plan": 167,
+      "triples_awaiting_an_earlier_step": 414,
+      "endpoints_redirected": 9,
       "ambiguous_endpoint_keys": 0,
       "ambiguous_endpoint_detail": [],
       "relationships_create": 473,
@@ -963,8 +970,9 @@
       "dangling_detail": [],
       "start_endpoints_absent": 0,
       "end_endpoints_absent": 0,
-      "endpoints_provided_by_this_plan": 71,
+      "endpoints_provided_by_this_plan": 70,
       "triples_awaiting_an_earlier_step": 118,
+      "endpoints_redirected": 0,
       "ambiguous_endpoint_keys": 0,
       "ambiguous_endpoint_detail": [],
       "relationships_create": 131,
@@ -1019,6 +1027,7 @@
       "end_endpoints_absent": 0,
       "endpoints_provided_by_this_plan": 27,
       "triples_awaiting_an_earlier_step": 22,
+      "endpoints_redirected": 0,
       "ambiguous_endpoint_keys": 0,
       "ambiguous_endpoint_detail": [],
       "relationships_create": 23,
@@ -1332,6 +1341,177 @@
       "dangling_references": 0
     },
     {
+      "group_id": "RITUAL_STEP_EDGES",
+      "domain": "ritual",
+      "kind": "RELATIONSHIP",
+      "element": "HAS_RITUAL_STEP",
+      "source": "steps.jsonl",
+      "identity_fields": [
+        "ritual_key",
+        "step_key"
+      ],
+      "require": [],
+      "notes": "9,255 steps arrived as nodes carrying a ritual_key PROPERTY and no edge, so nothing in the graph could reach them from their rite -- the readback counted them among 12,033 nodes with no relationship at all. A new predicate rather than the existing HAS_STEP, whose 3 edges point at an :Action: widening its range would change what an existing predicate means, which the acceptance gate forbids without a card.",
+      "artifact_elements": 9273,
+      "filtered_out_by_require": 0,
+      "candidates": 9255,
+      "candidates_before_collision_withholding": 9273,
+      "distinct_identities": 9264,
+      "identity_collisions": 9,
+      "identity_collisions_withheld": 9,
+      "rows_withheld_on_identity_collision": 18,
+      "identity_collision_detail": [
+        {
+          "identity": "VG:CONCEPT:BAHISPAVAMANA|VG:RITESTEP:BAHISPAVAMANA:KatySS:20:5:20",
+          "count": 2,
+          "differing_fields": [
+            "printed_ordinal_in_work",
+            "step_position",
+            "text_iast"
+          ],
+          "conflicting_fields": [
+            "printed_ordinal_in_work",
+            "step_position",
+            "text_iast"
+          ]
+        },
+        {
+          "identity": "VG:CONCEPT:SAUTRAMANI|VG:RITESTEP:SAUTRAMANI:KatySS:8:8:13",
+          "count": 2,
+          "differing_fields": [
+            "printed_ordinal_in_work",
+            "step_position",
+            "text_iast"
+          ],
+          "conflicting_fields": [
+            "printed_ordinal_in_work",
+            "step_position",
+            "text_iast"
+          ]
+        },
+        {
+          "identity": "VG:CONCEPT:TRIRATRA|VG:RITESTEP:TRIRATRA:SankhSS:4:15:8",
+          "count": 2,
+          "differing_fields": [
+            "printed_ordinal_in_work",
+            "step_position",
+            "text_iast"
+          ],
+          "conflicting_fields": [
+            "printed_ordinal_in_work",
+            "step_position",
+            "text_iast"
+          ]
+        },
+        {
+          "identity": "VG:CONCEPT:VAISVADEVA-PARVAN|VG:RITESTEP:VAISVADEVA-PARVAN:KatySS:8:6:16",
+          "count": 2,
+          "differing_fields": [
+            "order_basis",
+            "printed_ordinal_in_work",
+            "sequence_marker",
+            "step_position",
+            "text_iast"
+          ],
+          "conflicting_fields": [
+            "order_basis",
+            "printed_ordinal_in_work",
+            "sequence_marker",
+            "step_position",
+            "text_iast"
+          ]
+        },
+        {
+          "identity": "VG:CONCEPT:VAISVANARA-ISTI|VG:RITESTEP:VAISVANARA-ISTI:SankhSS:12:17:2",
+          "count": 2,
+          "differing_fields": [
+            "printed_ordinal_in_work",
+            "step_position",
+            "text_iast"
+          ],
+          "conflicting_fields": [
+            "printed_ordinal_in_work",
+            "step_position",
+            "text_iast"
+          ]
+        },
+        {
+          "identity": "VG:CONCEPT:VAISVANARA-ISTI|VG:RITESTEP:VAISVANARA-ISTI:SankhSS:12:17:3",
+          "count": 2,
+          "differing_fields": [
+            "printed_ordinal_in_work",
+            "step_position",
+            "text_iast"
+          ],
+          "conflicting_fields": [
+            "printed_ordinal_in_work",
+            "step_position",
+            "text_iast"
+          ]
+        },
+        {
+          "identity": "VG:CONCEPT:VISVAJIT|VG:RITESTEP:VISVAJIT:SankhSS:16:15:13",
+          "count": 2,
+          "differing_fields": [
+            "printed_ordinal_in_work",
+            "step_position",
+            "text_iast"
+          ],
+          "conflicting_fields": [
+            "printed_ordinal_in_work",
+            "step_position",
+            "text_iast"
+          ]
+        },
+        {
+          "identity": "VG:CONCEPT:YAJNA-SACRIFICE|VG:RITESTEP:YAJNA-SACRIFICE:SankhSS:4:7:13",
+          "count": 2,
+          "differing_fields": [
+            "printed_ordinal_in_work",
+            "step_position"
+          ],
+          "conflicting_fields": [
+            "printed_ordinal_in_work",
+            "step_position"
+          ]
+        },
+        {
+          "identity": "VG:CONCEPT:YAJNA-SACRIFICE|VG:RITESTEP:YAJNA-SACRIFICE:SankhSS:4:7:14",
+          "count": 2,
+          "differing_fields": [
+            "printed_ordinal_in_work",
+            "step_position"
+          ],
+          "conflicting_fields": [
+            "printed_ordinal_in_work",
+            "step_position"
+          ]
+        }
+      ],
+      "multi_source_evidence_merges": 0,
+      "multi_source_detail": [],
+      "evidence_fields_declared": [],
+      "unique_triples": 9255,
+      "rows_missing_an_endpoint_field": 0,
+      "relationship_types_asserted": [
+        "HAS_RITUAL_STEP"
+      ],
+      "dangling_references": 0,
+      "dangling_detail": [],
+      "start_endpoints_absent": 0,
+      "end_endpoints_absent": 0,
+      "endpoints_provided_by_this_plan": 9355,
+      "triples_awaiting_an_earlier_step": 9255,
+      "endpoints_redirected": 357,
+      "ambiguous_endpoint_keys": 0,
+      "ambiguous_endpoint_detail": [],
+      "relationships_create": 9255,
+      "relationships_update": 0,
+      "property_writes": 0,
+      "expected_to_exist_but_absent": 0,
+      "expected_to_exist_but_absent_detail": []
+    },
+    {
       "group_id": "SCHOLARSHIP_SCHOLAR_NODES",
       "domain": "scholarship",
       "kind": "NODE",
@@ -1441,6 +1621,101 @@
       "dangling_references": 0
     },
     {
+      "group_id": "SCHOLARSHIP_CLAIM_EDGES",
+      "domain": "scholarship",
+      "kind": "RELATIONSHIP",
+      "element": "INTERPRETIVE_CLAIM_ABOUT",
+      "source": "rows.jsonl",
+      "identity_fields": [
+        "canonical_key",
+        "payload.axis",
+        "payload.row_kind"
+      ],
+      "require": [],
+      "notes": "113 claims arrived unattached. A new predicate: the existing :InterpretiveClaim edges are SUPPORTED_BY to a Passage, meaning the passage supports the claim, and CONCERNS to a Work or Concept. Neither says 'this claim is about this passage', and reusing either would change its meaning.",
+      "artifact_elements": 113,
+      "filtered_out_by_require": 0,
+      "candidates": 113,
+      "candidates_before_collision_withholding": 113,
+      "distinct_identities": 113,
+      "identity_collisions": 0,
+      "identity_collisions_withheld": 0,
+      "rows_withheld_on_identity_collision": 0,
+      "identity_collision_detail": [],
+      "multi_source_evidence_merges": 0,
+      "multi_source_detail": [],
+      "evidence_fields_declared": [],
+      "unique_triples": 113,
+      "rows_missing_an_endpoint_field": 0,
+      "relationship_types_asserted": [
+        "INTERPRETIVE_CLAIM_ABOUT"
+      ],
+      "dangling_references": 0,
+      "dangling_detail": [],
+      "start_endpoints_absent": 0,
+      "end_endpoints_absent": 0,
+      "endpoints_provided_by_this_plan": 113,
+      "triples_awaiting_an_earlier_step": 113,
+      "endpoints_redirected": 0,
+      "ambiguous_endpoint_keys": 0,
+      "ambiguous_endpoint_detail": [],
+      "relationships_create": 113,
+      "relationships_update": 0,
+      "property_writes": 0,
+      "expected_to_exist_but_absent": 0,
+      "expected_to_exist_but_absent_detail": []
+    },
+    {
+      "group_id": "QUALITY_VERDICT_EDGES",
+      "domain": "quality",
+      "kind": "RELATIONSHIP",
+      "element": "QUALITY_VERDICT_ABOUT",
+      "source": "rows.jsonl",
+      "identity_fields": [
+        "canonical_key",
+        "algorithm_version",
+        "payload.reference_set_type"
+      ],
+      "require": [
+        [
+          "mapping_confidence",
+          "EXACT"
+        ]
+      ],
+      "notes": "2,568 verdicts arrived unattached. Modelled on the QA_ISSUE_ON precedent -- (:QAIssue)-[:QA_ISSUE_ON]->(:Work), 915 edges -- with the verdict pointing at what it judges. The verdict is strictly about EDGES on the passage rather than the passage itself; the passage is the addressable approximation and the verdict's layers_present property says which layers it judged.",
+      "artifact_elements": 3951,
+      "filtered_out_by_require": 1383,
+      "candidates": 2568,
+      "candidates_before_collision_withholding": 2568,
+      "distinct_identities": 2568,
+      "identity_collisions": 0,
+      "identity_collisions_withheld": 0,
+      "rows_withheld_on_identity_collision": 0,
+      "identity_collision_detail": [],
+      "multi_source_evidence_merges": 0,
+      "multi_source_detail": [],
+      "evidence_fields_declared": [],
+      "unique_triples": 2568,
+      "rows_missing_an_endpoint_field": 0,
+      "relationship_types_asserted": [
+        "QUALITY_VERDICT_ABOUT"
+      ],
+      "dangling_references": 0,
+      "dangling_detail": [],
+      "start_endpoints_absent": 0,
+      "end_endpoints_absent": 0,
+      "endpoints_provided_by_this_plan": 2568,
+      "triples_awaiting_an_earlier_step": 2568,
+      "endpoints_redirected": 0,
+      "ambiguous_endpoint_keys": 0,
+      "ambiguous_endpoint_detail": [],
+      "relationships_create": 2568,
+      "relationships_update": 0,
+      "property_writes": 0,
+      "expected_to_exist_but_absent": 0,
+      "expected_to_exist_but_absent_detail": []
+    },
+    {
       "group_id": "COMMUNITIES_ARTIFACT_NODES",
       "domain": "communities",
       "kind": "NODE",
@@ -1522,18 +1797,19 @@
     "ambiguous_endpoint_keys": 0,
     "dangling_references": 0,
     "elements_redirected_not_created": 3,
+    "endpoints_redirected": 366,
     "expected_to_exist_but_absent": 1765,
-    "identity_collisions": 9,
-    "identity_collisions_withheld": 9,
+    "identity_collisions": 18,
+    "identity_collisions_withheld": 18,
     "multi_source_evidence_merges": 147,
     "node_status_disagreements": 16,
     "nodes_create": 14221,
     "nodes_update": 5647,
     "property_writes": 51215,
-    "relationships_create": 9214,
+    "relationships_create": 21150,
     "relationships_update": 43888,
-    "rows_withheld_on_identity_collision": 18,
-    "triples_awaiting_an_earlier_step": 2997
+    "rows_withheld_on_identity_collision": 36,
+    "triples_awaiting_an_earlier_step": 14929
   },
   "by_domain": {
     "communities": {
@@ -1554,17 +1830,17 @@
     "quality": {
       "nodes_create": 2568,
       "property_writes": 0,
-      "relationships_create": 0
+      "relationships_create": 2568
     },
     "ritual": {
       "nodes_create": 9442,
       "property_writes": 27,
-      "relationships_create": 627
+      "relationships_create": 9882
     },
     "scholarship": {
       "nodes_create": 147,
       "property_writes": 0,
-      "relationships_create": 0
+      "relationships_create": 113
     },
     "semantic_roles": {
       "nodes_create": 2052,
@@ -1591,8 +1867,11 @@
     "relationship_types_touched": [
       "ASSERTION_ROLE",
       "FORM_OF_RITE",
+      "HAS_RITUAL_STEP",
+      "INTERPRETIVE_CLAIM_ABOUT",
       "PART_OF_RITE",
       "PERFORMED_BY",
+      "QUALITY_VERDICT_ABOUT",
       "REFERS_TO",
       "RITE_INVOLVES_ACTION",
       "SHARES_FORMULA_WITH",
@@ -1606,8 +1885,8 @@
     "nodes_after": 123000,
     "nodes_delta": 14221,
     "relationships_before": 265295,
-    "relationships_after": 274509,
-    "relationships_delta": 9214,
+    "relationships_after": 286445,
+    "relationships_delta": 21150,
     "note": "No group plans a retirement, so no element is removed by an ADDITION. The retirements Wave 3 makes are corrections, planned separately and named in the dry-run: the SOMA-PRESSING weak-alias retirement."
   },
   "identity_collisions_are_all_withheld": true,

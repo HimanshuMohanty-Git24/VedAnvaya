@@ -140,6 +140,11 @@ class ElementGroup:
     #: graph already holds under another name.
     skip_statuses: tuple[str, ...] = ()
     redirect_field: str = ""
+    #: Name the node group whose minted key this relationship's start is. The start key is
+    #: then computed exactly as that group mints it, rather than read from a row field: a
+    #: claim or verdict has no key in its artifact, so the only way to address it is to mint
+    #: the same string the node group did.
+    start_minted_by: str = ""
     #: True when the element has no key of its own in the artifact and the importer mints
     #: one from the identity. Such an element cannot already exist under that key, so every
     #: distinct identity is a create -- and idempotency then rests on the minting being
@@ -555,6 +560,28 @@ GROUPS: tuple[ElementGroup, ...] = (
             "target is not."
         ),
     ),
+    ElementGroup(
+        group_id="RITUAL_STEP_EDGES",
+        domain="ritual",
+        kind="RELATIONSHIP",
+        source="steps.jsonl",
+        element="HAS_RITUAL_STEP",
+        identity_fields=("ritual_key", "step_key"),
+        start_field="ritual_key",
+        end_field="step_key",
+        start_label=None,
+        end_label="RitualStep",
+        start_key_property="entity_key",
+        end_key_property="step_key",
+        notes=(
+            "9,255 steps arrived as nodes carrying a ritual_key PROPERTY and no edge, so "
+            "nothing in the graph could reach them from their rite -- the readback counted "
+            "them among 12,033 nodes with no relationship at all. A new predicate rather "
+            "than the existing HAS_STEP, whose 3 edges point at an :Action: widening its "
+            "range would change what an existing predicate means, which the acceptance "
+            "gate forbids without a card."
+        ),
+    ),
     # ---- scholarship ------------------------------------------------------------------
     ElementGroup(
         group_id="SCHOLARSHIP_SCHOLAR_NODES",
@@ -589,6 +616,50 @@ GROUPS: tuple[ElementGroup, ...] = (
             "113 rows, each a disagreement or a position over a passage. 6 "
             ":InterpretiveClaim nodes and 2 CONTRADICTS edges already exist, so this group "
             "is a mix and the planner must say which."
+        ),
+    ),
+    ElementGroup(
+        group_id="SCHOLARSHIP_CLAIM_EDGES",
+        domain="scholarship",
+        kind="RELATIONSHIP",
+        source="rows.jsonl",
+        element="INTERPRETIVE_CLAIM_ABOUT",
+        identity_fields=("canonical_key", "payload.axis", "payload.row_kind"),
+        start_field="canonical_key",
+        end_field="canonical_key",
+        start_label="InterpretiveClaim",
+        end_label="Passage",
+        start_key_property="entity_key",
+        end_key_property="canonical_key",
+        start_minted_by="SCHOLARSHIP_CLAIM_ROWS",
+        notes=(
+            "113 claims arrived unattached. A new predicate: the existing :InterpretiveClaim "
+            "edges are SUPPORTED_BY to a Passage, meaning the passage supports the claim, "
+            "and CONCERNS to a Work or Concept. Neither says 'this claim is about this "
+            "passage', and reusing either would change its meaning."
+        ),
+    ),
+    ElementGroup(
+        group_id="QUALITY_VERDICT_EDGES",
+        domain="quality",
+        kind="RELATIONSHIP",
+        source="rows.jsonl",
+        element="QUALITY_VERDICT_ABOUT",
+        identity_fields=("canonical_key", "algorithm_version", "payload.reference_set_type"),
+        start_field="canonical_key",
+        end_field="canonical_key",
+        start_label="QualityVerdict",
+        end_label="Passage",
+        start_key_property="entity_key",
+        end_key_property="canonical_key",
+        start_minted_by="QUALITY_VERDICT_NODES",
+        require=(("mapping_confidence", "EXACT"),),
+        notes=(
+            "2,568 verdicts arrived unattached. Modelled on the QA_ISSUE_ON precedent -- "
+            "(:QAIssue)-[:QA_ISSUE_ON]->(:Work), 915 edges -- with the verdict pointing at "
+            "what it judges. The verdict is strictly about EDGES on the passage rather than "
+            "the passage itself; the passage is the addressable approximation and the "
+            "verdict's layers_present property says which layers it judged."
         ),
     ),
     # ---- communities: the artifact and its refusal, never a membership claim ---------
@@ -644,6 +715,33 @@ GROUPS: tuple[ElementGroup, ...] = (
 )
 
 
+#: Keys an artifact says are already modelled under a different key, mapped to that key.
+#: Applied to relationship endpoints in BOTH the planner and the importer, because a
+#: redirect that stops at the node group leaves the edges pointing at a key nobody created:
+#: 6 rite edges named VG:CONCEPT:GRHAPRAVESA and VG:CONCEPT:PITRMEDHA, whose own keys are
+#: absent because the graph holds those rites as SALA-HOUSE-BUILDING and
+#: PITRYANA-FUNERARY-RITE, and their MATCH found nothing and landed nothing.
+_REDIRECT_CACHE: dict[str, dict[str, str]] = {}
+
+
+def redirects(domain: str) -> dict[str, str]:
+    """Old key to already-modelled-as key, read from the domain's own artifacts."""
+    if domain in _REDIRECT_CACHE:
+        return _REDIRECT_CACHE[domain]
+    mapping: dict[str, str] = {}
+    for group in GROUPS:
+        if group.domain != domain or not group.skip_statuses or not group.redirect_field:
+            continue
+        for row in read_jsonl(STAGING / domain / group.source.split(":", 1)[0]):
+            status = str(row.get(group.node_status_field) or "")
+            target = str(row.get(group.redirect_field) or "")
+            key = str(row.get(group.identity_fields[0]) or "")
+            if status in group.skip_statuses and key and target and key != target:
+                mapping[key] = target
+    _REDIRECT_CACHE[domain] = mapping
+    return mapping
+
+
 def read_jsonl(path: pathlib.Path) -> list[dict[str, Any]]:
     if not path.exists():
         return []
@@ -684,6 +782,16 @@ def elements_of(group: ElementGroup) -> list[dict[str, Any]]:
 
 def passes(row: dict[str, Any], group: ElementGroup) -> bool:
     return all(get_path(row, field) == value for field, value in group.require)
+
+
+def minted_key(row: dict[str, Any], group: ElementGroup) -> str:
+    """The key a minted-identity node group gives this row, recomputed identically.
+
+    Both the node group and any edge group pointing at it call this, so the two cannot
+    drift: if the minting changes, both ends change together.
+    """
+    owner = next(g for g in GROUPS if g.group_id == group.start_minted_by)
+    return f"{owner.element}:{identity_of(row, owner)}"
 
 
 def identity_of(row: dict[str, Any], group: ElementGroup) -> str:
@@ -977,8 +1085,14 @@ def plan_group(
     triples: list[tuple[str, str, str]] = []
     missing_endpoint_rows = 0
     by_predicate = dict(group.object_field_by_predicate)
+    redirect = redirects(group.domain)
+    redirected_endpoints = 0
     for row in candidates:
-        start = get_path(row, group.start_field)
+        start = (
+            minted_key(row, group)
+            if group.start_minted_by
+            else get_path(row, group.start_field)
+        )
         predicate = row_rel_type(row, group)
         # One file may cover several predicates that each name their object differently:
         # rite_edges writes action_key, object_key, offering_key and material_key under
@@ -989,7 +1103,11 @@ def plan_group(
         if not start or not end:
             missing_endpoint_rows += 1
             continue
-        triples.append((str(start), predicate, str(end)))
+        if str(start) in redirect or str(end) in redirect:
+            redirected_endpoints += 1
+        triples.append(
+            (redirect.get(str(start), str(start)), predicate, redirect.get(str(end), str(end)))
+        )
     unique_triples = sorted(set(triples))
 
     # Endpoint existence, which is what makes a reference dangling rather than new.
@@ -1076,6 +1194,7 @@ def plan_group(
             "end_endpoints_absent": len(set(ends) - end_present),
             "endpoints_provided_by_this_plan": len(start_from_plan | end_from_plan),
             "triples_awaiting_an_earlier_step": len(awaiting_plan),
+            "endpoints_redirected": redirected_endpoints,
             "ambiguous_endpoint_keys": len(ambiguous),
             "ambiguous_endpoint_detail": ambiguous[:10],
             "relationships_create": 0 if group.kind == "RELATIONSHIP_PROPERTY" else len(creates),
@@ -1147,11 +1266,25 @@ def main() -> int:
             for group in node_groups:
                 plan = plan_group(session, group)
                 plans.append(plan)
+                # Rows the importer will skip are NOT provided by this plan. Including
+                # them made the plan promise two rite nodes it then declined to create, and
+                # the edges pointing at them read as resolvable when they were not.
                 keys = {
                     str(get_path(row, group.identity_fields[0]))
                     for row in elements_of(group)
                     if passes(row, group)
+                    and not (
+                        group.skip_statuses
+                        and str(get_path(row, group.node_status_field) or "")
+                        in group.skip_statuses
+                    )
                 }
+                if group.key_minted_from_identity:
+                    keys = {
+                        f"{group.element}:{identity_of(row, group)}"
+                        for row in elements_of(group)
+                        if passes(row, group)
+                    }
                 provided[group.match_property] |= {k for k in keys if k and k != "None"}
 
             for group in other_groups:
@@ -1174,6 +1307,7 @@ def main() -> int:
             "property_writes",
             "dangling_references",
             "identity_collisions",
+            "endpoints_redirected",
             "ambiguous_endpoint_keys",
             "identity_collisions_withheld",
             "rows_withheld_on_identity_collision",

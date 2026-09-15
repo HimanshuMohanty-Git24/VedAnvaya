@@ -61,18 +61,27 @@ def test_no_group_carries_a_foreign_identity_property_onto_its_element() -> None
         "family_id",
     }
 
-    for group_id, carried in imp.CARRIED.items():
-        group = groups[group_id]
-        renamed = imp.RENAMED.get(group_id, {})
-        for field in carried:
+    # Every NODE group, not only the ones in CARRIED. The two groups that carried a
+    # Passage key were absent from CARRIED and so invisible to the first version of this
+    # loop -- the widest exposure was the part the test could not see.
+    for group in plan.GROUPS:
+        if group.kind != "NODE":
+            continue
+        assert group.group_id in imp.CARRIED, (
+            f"{group.group_id} declares no CARRIED fields, so it would carry whatever its "
+            "row happens to hold. List them."
+        )
+        renamed = imp.RENAMED.get(group.group_id, {})
+        for field in imp.CARRIED[group.group_id]:
             if field not in at_risk or field == group.match_property:
                 continue
             assert field in renamed, (
-                f"{group_id} carries {field!r}, which identifies a different element, and "
-                f"its own match_property is {group.match_property!r}. Rename it in RENAMED "
-                f"or drop it: an element answering to another element's key makes every "
-                f"label-less match against that key ambiguous."
+                f"{group.group_id} carries {field!r}, which identifies a different "
+                f"element, and its own match_property is {group.match_property!r}. Rename "
+                f"it in RENAMED or drop it: an element answering to another element's key "
+                f"makes every label-less match against that key ambiguous."
             )
+    del groups
 
 
 def test_the_role_filler_keeps_its_referent_under_a_name_that_is_not_an_identity() -> None:
@@ -175,3 +184,37 @@ def test_the_plan_refuses_itself_when_an_endpoint_key_is_ambiguous() -> None:
     assert 'totals["ambiguous_endpoint_keys"] == 0' in usable, (
         "an ambiguous endpoint must make the plan unusable, not merely be reported"
     )
+
+
+def test_node_props_refuses_a_group_that_declares_nothing() -> None:
+    """The fallback is gone, and its absence is the assertion.
+
+    ``node_props`` used to default to every field in the row. That is how a Passage's
+    ``canonical_key`` reached 2,568 quality verdicts: nobody chose to put it there, an
+    implicit rule did.
+    """
+    import dataclasses
+
+    invented = dataclasses.replace(
+        next(g for g in plan.GROUPS if g.kind == "NODE"),
+        group_id="A_GROUP_THAT_DECLARES_NOTHING",
+    )
+    try:
+        imp.node_props({"canonical_key": "VG:RV:SAK:M01:S001:V001"}, invented)
+    except imp.UndeclaredProperties:
+        return
+    raise AssertionError("node_props accepted a group with no declared properties")
+
+
+def test_the_quality_verdict_carries_its_reference_set_as_a_property() -> None:
+    """The one distinction the quality domain exists to preserve must be queryable.
+
+    161 passages carry two verdicts on different evidence: an
+    INDEPENDENT_SOURCE_ADJUDICATED_REFERENCE_SET over the mention and concept layers,
+    adjudicated by a published human treebank, and a DETERMINISTIC_TEXT_DERIVED_REFERENCE
+    over HAS_CHANDAS, adjudicated by counting syllables. Left inside a JSON payload, that
+    difference is invisible to every query, including the closure test.
+    """
+    lifted = imp.LIFTED["QUALITY_VERDICT_NODES"]
+    assert lifted["payload.reference_set_type"] == "reference_set_type"
+    assert lifted["payload.adjudicated_by"] == "adjudicated_by"

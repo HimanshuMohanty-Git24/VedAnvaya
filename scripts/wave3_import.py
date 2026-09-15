@@ -56,7 +56,9 @@ from wave3_import_plan import (
     elements_of,
     get_path,
     identity_of,
+    minted_key,
     passes,
+    redirects,
     row_rel_type,
 )
 
@@ -214,6 +216,36 @@ CARRIED: dict[str, tuple[str, ...]] = {
         "attribution_status",
     ),
     "SCHOLARSHIP_WORK_NODES": ("work_id", "title", "source_id", "scope_note"),
+    # The claim is ABOUT a passage, so the passage's key is renamed rather than carried:
+    # a claim that answers to a canonical_key is addressable as the passage it discusses.
+    "SCHOLARSHIP_CLAIM_ROWS": (
+        "canonical_key",
+        "veda",
+        "algorithm_version",
+        "evidence_layer",
+        "mapping_confidence",
+        "quality_class",
+        "source_id",
+        "source_locator",
+        "source_url",
+        "recension_verified",
+    ),
+    # Likewise a verdict is a claim ABOUT an edge on a passage. reference_set_type is
+    # lifted out of the payload because the closure test and every honest reader need to
+    # see which reference set a verdict came from without parsing a JSON blob.
+    "QUALITY_VERDICT_NODES": (
+        "canonical_key",
+        "veda",
+        "algorithm_version",
+        "evidence_layer",
+        "mapping_confidence",
+        "quality_class",
+        "source_id",
+        "source_locator",
+        "source_snapshot",
+        "code_commit",
+        "config_hash",
+    ),
     "COMMUNITIES_ARTIFACT_NODES": (
         "community_id",
         "algorithm",
@@ -251,9 +283,30 @@ def scalar(value: Any) -> Any:
     return json.dumps(value, ensure_ascii=False, sort_keys=True)
 
 
+class UndeclaredProperties(RuntimeError):
+    """A NODE group did not say which of its row's fields become element properties."""
+
+
 def node_props(row: dict[str, Any], group: ElementGroup) -> dict[str, Any]:
-    fields = CARRIED.get(group.group_id, tuple(row))
-    return {field: scalar(row.get(field)) for field in fields if field in row}
+    """The properties one row contributes, declared rather than inferred.
+
+    There is deliberately no fallback to "every field in the row". The fallback existed and
+    it carried ``canonical_key`` -- a Passage's identity -- onto 2,568 quality verdicts and
+    113 scholarship claims, and the contract test could not see it because the test walked
+    CARRIED and those groups were not in it. The groups with the widest exposure were
+    exactly the ones an implicit rule covered.
+    """
+    if group.group_id not in CARRIED:
+        raise UndeclaredProperties(
+            f"{group.group_id} declares no CARRIED fields. List them: carrying a whole row "
+            "puts every foreign key the artifact happens to hold onto the element."
+        )
+    props = {
+        field: scalar(row.get(field)) for field in CARRIED[group.group_id] if field in row
+    }
+    for source, name in LIFTED.get(group.group_id, {}).items():
+        props[name] = scalar(get_path(row, source))
+    return props
 
 
 # ---------------------------------------------------------------------------------------
@@ -396,6 +449,31 @@ def correction_m5(session: Session, run_id: str, *, execute: bool) -> dict[str, 
 # ---------------------------------------------------------------------------------------
 
 
+#: Payload fields lifted onto the element, with the name they take. A verdict that keeps
+#: its reference set only inside a JSON payload cannot be queried for the one distinction
+#: the quality domain exists to preserve: an independent human-treebank adjudication and a
+#: syllable count are not the same evidence, and 161 passages carry one of each.
+LIFTED: dict[str, dict[str, str]] = {
+    "QUALITY_VERDICT_NODES": {
+        "payload.reference_set_type": "reference_set_type",
+        "payload.adjudicated_by": "adjudicated_by",
+        "payload.reference_set": "reference_set",
+        "payload.not_human_gold_because": "not_human_gold_because",
+        "payload.layers_present": "layers_present",
+        "payload.verdict_counts": "verdict_counts",
+    },
+    "SCHOLARSHIP_CLAIM_ROWS": {
+        "payload.axis": "axis",
+        "payload.row_kind": "row_kind",
+        "payload.relation": "relation",
+        "payload.relation_basis": "relation_basis",
+        "payload.relation_strength": "relation_strength",
+        "payload.witness": "witness",
+        "payload.passage_citation": "passage_citation",
+        "payload.passage_scope": "passage_scope",
+    },
+}
+
 #: Fields renamed on the way onto an element, because the artifact's name collides with an
 #: identity the graph already uses. See the note on CARRIED.
 RENAMED: dict[str, dict[str, str]] = {
@@ -406,7 +484,19 @@ RENAMED: dict[str, dict[str, str]] = {
         "entity_key": "refers_to_entity_key",
         "canonical_key": "passage_canonical_key",
     },
+    "SCHOLARSHIP_CLAIM_ROWS": {"canonical_key": "about_passage_canonical_key"},
+    "QUALITY_VERDICT_NODES": {"canonical_key": "about_passage_canonical_key"},
 }
+
+#: Labels a created element takes in addition to its own, because a key in the
+#: ``VG:CONCEPT:`` namespace belongs to the concept ontology and every one of the 229
+#: entities already there carries ``:Concept:DomainEntity``. Without this the second
+#: import created 136 ritual entities labelled only with their type, so
+#: ``MATCH (n:DomainEntity)`` could not see them and they sat outside the ontology their
+#: own keys claim membership of. Derived from the key namespace rather than listed per
+#: group, so a new registry group cannot forget it.
+CONCEPT_NAMESPACE_LABELS: tuple[str, ...] = ("Concept", "DomainEntity")
+CONCEPT_KEY_PREFIX = "VG:CONCEPT:"
 
 
 class AmbiguousEndpoint(RuntimeError):
@@ -500,13 +590,26 @@ def write_nodes(
         absent = [row for row in payload if row[key] not in present]
         created = 0
         if absent:
-            created = int(
-                tx.run(
-                    f"UNWIND $rows AS row CREATE (n:{group.element}) SET n += row "
-                    "RETURN count(n) AS n",
-                    rows=absent,
-                ).single()["n"]
-            )
+            # A key in the concept namespace joins the concept ontology. Split so a group
+            # whose keys are mixed still gets each element the labels its own key claims.
+            in_namespace = [
+                row for row in absent if str(row[key]).startswith(CONCEPT_KEY_PREFIX)
+            ]
+            outside = [row for row in absent if row not in in_namespace]
+            for rows_for_labels, extra in (
+                (in_namespace, CONCEPT_NAMESPACE_LABELS),
+                (outside, ()),
+            ):
+                if not rows_for_labels:
+                    continue
+                labels = ":".join((group.element, *extra))
+                created += int(
+                    tx.run(
+                        f"UNWIND $rows AS row CREATE (n:{labels}) SET n += row "
+                        "RETURN count(n) AS n",
+                        rows=rows_for_labels,
+                    ).single()["n"]
+                )
         tx.commit()
     return created, labelled
 
@@ -546,11 +649,16 @@ def write_relationships(
     session: Session, group: ElementGroup, rows: list[dict[str, Any]], run_id: str
 ) -> int:
     by_predicate = dict(group.object_field_by_predicate)
+    redirect = redirects(group.domain)
     buckets: dict[str, list[dict[str, Any]]] = {}
     for row in rows:
         predicate = row_rel_type(row, group)
         end_field = by_predicate.get(predicate, group.end_field)
-        start = get_path(row, str(group.start_field))
+        start = (
+            minted_key(row, group)
+            if group.start_minted_by
+            else get_path(row, str(group.start_field))
+        )
         end = get_path(row, str(end_field))
         if not start or not end:
             continue
@@ -560,8 +668,16 @@ def write_relationships(
             if field not in {group.start_field, end_field}
         }
         props.update(provenance(run_id, group.domain, group.group_id))
+        # The same redirect the plan applies. Without it 6 rite edges pointed at
+        # GRHAPRAVESA and PITRMEDHA, whose own keys the import correctly declines to create
+        # because the graph holds those rites under other names, and the edges landed
+        # nothing while every group reported ok.
         buckets.setdefault(predicate, []).append(
-            {"start": str(start), "end": str(end), "props": props}
+            {
+                "start": redirect.get(str(start), str(start)),
+                "end": redirect.get(str(end), str(end)),
+                "props": props,
+            }
         )
 
     start_label = f":{group.start_label}" if group.start_label else ""
@@ -600,6 +716,7 @@ def write_relationship_properties(
     there, so a MERGE would create the very element whose absence is the finding.
     """
     by_predicate = dict(group.object_field_by_predicate)
+    redirect = redirects(group.domain)
     buckets: dict[str, list[dict[str, Any]]] = {}
     prefix = f"{group.domain}_"
     for row in rows:
@@ -616,7 +733,11 @@ def write_relationship_properties(
         }
         props.update(provenance(run_id, group.domain, group.group_id))
         buckets.setdefault(predicate, []).append(
-            {"start": str(start), "end": str(end), "props": props}
+            {
+                "start": redirect.get(str(start), str(start)),
+                "end": redirect.get(str(end), str(end)),
+                "props": props,
+            }
         )
 
     start_label = f":{group.start_label}" if group.start_label else ""
@@ -635,6 +756,25 @@ def write_relationship_properties(
             landed += int(tx.run(query, rows=payload).single()["n"])
             tx.commit()
     return landed
+
+
+def _pairs(group: ElementGroup, rows: list[dict[str, Any]]) -> list[dict[str, str]]:
+    """Undirected pair identities for a symmetric group, for the expectation arithmetic."""
+    by_predicate = dict(group.object_field_by_predicate)
+    redirect = redirects(group.domain)
+    out: list[dict[str, str]] = []
+    for row in rows:
+        predicate = row_rel_type(row, group)
+        end_field = by_predicate.get(predicate, group.end_field)
+        start = get_path(row, str(group.start_field))
+        end = get_path(row, str(end_field))
+        if not start or not end:
+            continue
+        a = redirect.get(str(start), str(start))
+        b = redirect.get(str(end), str(end))
+        lo, hi = sorted((a, b))
+        out.append({"start": lo, "end": hi})
+    return out
 
 
 WRITERS = {
@@ -838,10 +978,29 @@ def main() -> int:
                 # Against the plan's own promise for this group, so a disagreement shows up
                 # here rather than only in the final census -- which is how the first run of
                 # this import got 5,930 relationships past the per-group check.
+                #
+                # The comparison has to be like with like, and the first version was not: a
+                # writer touches the elements it creates AND the ones it updates, while the
+                # plan reports those separately, so six property groups read as
+                # "plan promised 0" when the plan had promised exactly what landed under
+                # another field name.
                 entry = promised.get(group.group_id, {})
-                field = "nodes_create" if group.kind == "NODE" else "relationships_create"
-                expected = int(entry.get(field) or 0)
-                measured = created if group.kind == "NODE" else touched
+                if group.kind == "NODE":
+                    expected = int(entry.get("nodes_create") or 0)
+                    measured = created
+                elif group.kind == "NODE_PROPERTY":
+                    expected = int(entry.get("nodes_update") or 0)
+                    measured = touched
+                else:
+                    expected = int(entry.get("relationships_create") or 0) + int(
+                        entry.get("relationships_update") or 0
+                    )
+                    measured = touched
+                    if group.symmetric:
+                        # A symmetric group's candidates name each pair from both sides, and
+                        # both name one undirected edge. cross_veda sent 16,824 rows and
+                        # matched 8,412 edges; the plan counted the rows.
+                        expected = len({(row["start"], row["end"]) for row in _pairs(group, rows)})
                 ok = measured == expected
                 steps.append(
                     {

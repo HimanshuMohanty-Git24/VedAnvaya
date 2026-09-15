@@ -198,7 +198,16 @@ def main() -> int:
                 mentions.get("update_drop_retired_alias_keep_edge") or 0
             )
             + int(about.get("update_method_narrowed_to_english_only") or 0),
-            "relationships_create": int(about.get("create_newly_attested") or 0),
+            # Deliberately 0, not the 5 the correction artifact reports as newly attested.
+            # Those 5 exist only because assign_concepts reshuffled its per-passage cap when
+            # SOMA-PRESSING's corpus-wide attestation dropped, and that reshuffle is held
+            # back for its own decision -- it changes concepts the owner's ruling did not
+            # name. Promising them and then not writing them is what left the second import
+            # 5 relationships short of its own dry-run.
+            "relationships_create": 0,
+            "newly_attested_withheld_with_the_cap_collateral": int(
+                about.get("create_newly_attested") or 0
+            ),
             "detail": {
                 "MENTIONS_ENTITY_retire": mentions.get("retire_sole_evidence_is_retired"),
                 "MENTIONS_ENTITY_update": mentions.get(
