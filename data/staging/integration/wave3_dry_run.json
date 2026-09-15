@@ -1,0 +1,213 @@
+{
+  "schema_version": "1.0",
+  "mode": "DRY_RUN_NO_WRITE",
+  "graph_before": {
+    "nodes": 108779,
+    "relationships": 265295,
+    "core_corpus": {
+      "AV": 5839,
+      "RV": 10552,
+      "SV": 1844,
+      "YV": 1975
+    }
+  },
+  "planned_writes_total": 26538,
+  "withheld_total": 41875,
+  "per_domain": {
+    "attribution": {
+      "ledger_status": "NOT_ELIGIBLE",
+      "rows_on_disk": 23003,
+      "manifest_declares_accepted": 23003,
+      "manifest_agrees_with_disk": true,
+      "not_importable_by_confidence": 0,
+      "barred_by_owner_overlay": 92,
+      "planned_writes": 0,
+      "withheld": 23003,
+      "reason_withheld": "ledger status NOT_ELIGIBLE: gate(s) B, C not passed",
+      "blocked_by": []
+    },
+    "audio_av": {
+      "ledger_status": "BLOCKED",
+      "rows_on_disk": 771,
+      "manifest_declares_accepted": 771,
+      "manifest_agrees_with_disk": true,
+      "not_importable_by_confidence": 7,
+      "barred_by_owner_overlay": 0,
+      "planned_writes": 0,
+      "withheld": 771,
+      "reason_withheld": "ledger status BLOCKED: three gates pass, blocked by OWNER_DECISION_E_AUDIO_GATE",
+      "blocked_by": [
+        "OWNER_DECISION_E_AUDIO_GATE"
+      ]
+    },
+    "audio_rv": {
+      "ledger_status": "BLOCKED",
+      "rows_on_disk": 150,
+      "manifest_declares_accepted": 150,
+      "manifest_agrees_with_disk": true,
+      "not_importable_by_confidence": 0,
+      "barred_by_owner_overlay": 0,
+      "planned_writes": 0,
+      "withheld": 150,
+      "reason_withheld": "ledger status BLOCKED: three gates pass, blocked by OWNER_DECISION_E_AUDIO_GATE",
+      "blocked_by": [
+        "OWNER_DECISION_E_AUDIO_GATE"
+      ]
+    },
+    "audio_yv": {
+      "ledger_status": "BLOCKED",
+      "rows_on_disk": 33,
+      "manifest_declares_accepted": 33,
+      "manifest_agrees_with_disk": true,
+      "not_importable_by_confidence": 8,
+      "barred_by_owner_overlay": 2,
+      "planned_writes": 0,
+      "withheld": 33,
+      "reason_withheld": "ledger status BLOCKED: three gates pass, blocked by OWNER_DECISION_E_AUDIO_GATE",
+      "blocked_by": [
+        "OWNER_DECISION_E_AUDIO_GATE"
+      ]
+    },
+    "communities": {
+      "ledger_status": "ELIGIBLE",
+      "rows_on_disk": 1185,
+      "manifest_declares_accepted": 1185,
+      "manifest_agrees_with_disk": true,
+      "not_importable_by_confidence": 0,
+      "barred_by_owner_overlay": 0,
+      "planned_writes": 1185,
+      "withheld": 0,
+      "reason_withheld": null,
+      "blocked_by": []
+    },
+    "cross_veda": {
+      "ledger_status": "BLOCKED",
+      "rows_on_disk": 7021,
+      "manifest_declares_accepted": 7021,
+      "manifest_agrees_with_disk": true,
+      "not_importable_by_confidence": 0,
+      "barred_by_owner_overlay": 9,
+      "planned_writes": 0,
+      "withheld": 7021,
+      "reason_withheld": "ledger status BLOCKED: three gates pass, blocked by FOLD_FIX_BREAKS_REFERENT_IDENTITY",
+      "blocked_by": [
+        "FOLD_FIX_BREAKS_REFERENT_IDENTITY"
+      ]
+    },
+    "formula": {
+      "ledger_status": "ELIGIBLE",
+      "rows_on_disk": 11181,
+      "manifest_declares_accepted": 11181,
+      "manifest_agrees_with_disk": true,
+      "not_importable_by_confidence": 0,
+      "barred_by_owner_overlay": 12,
+      "planned_writes": 11169,
+      "withheld": 12,
+      "reason_withheld": null,
+      "blocked_by": []
+    },
+    "quality": {
+      "ledger_status": "NOT_ELIGIBLE",
+      "rows_on_disk": 3951,
+      "manifest_declares_accepted": 3951,
+      "manifest_agrees_with_disk": true,
+      "not_importable_by_confidence": 1383,
+      "barred_by_owner_overlay": 76,
+      "planned_writes": 0,
+      "withheld": 3951,
+      "reason_withheld": "ledger status NOT_ELIGIBLE: gate(s) B, C not passed",
+      "blocked_by": []
+    },
+    "ritual": {
+      "ledger_status": "NOT_ELIGIBLE",
+      "rows_on_disk": 3045,
+      "manifest_declares_accepted": 3045,
+      "manifest_agrees_with_disk": true,
+      "not_importable_by_confidence": 2080,
+      "barred_by_owner_overlay": 9,
+      "planned_writes": 0,
+      "withheld": 3045,
+      "reason_withheld": "ledger status NOT_ELIGIBLE: gate(s) B, C not passed",
+      "blocked_by": []
+    },
+    "samaveda_music": {
+      "ledger_status": "BLOCKED",
+      "rows_on_disk": 1471,
+      "manifest_declares_accepted": 1471,
+      "manifest_agrees_with_disk": true,
+      "not_importable_by_confidence": 0,
+      "barred_by_owner_overlay": 0,
+      "planned_writes": 0,
+      "withheld": 1471,
+      "reason_withheld": "ledger status BLOCKED: three gates pass, blocked by OWNER_DECISION_E_AUDIO_GATE",
+      "blocked_by": [
+        "OWNER_DECISION_E_AUDIO_GATE"
+      ]
+    },
+    "scholarship": {
+      "ledger_status": "NOT_ELIGIBLE",
+      "rows_on_disk": 113,
+      "manifest_declares_accepted": 113,
+      "manifest_agrees_with_disk": true,
+      "not_importable_by_confidence": 0,
+      "barred_by_owner_overlay": 0,
+      "planned_writes": 0,
+      "withheld": 113,
+      "reason_withheld": "ledger status NOT_ELIGIBLE: gate(s) B, C not passed",
+      "blocked_by": []
+    },
+    "semantic_roles": {
+      "ledger_status": "ELIGIBLE",
+      "rows_on_disk": 14235,
+      "manifest_declares_accepted": 14235,
+      "manifest_agrees_with_disk": true,
+      "not_importable_by_confidence": 0,
+      "barred_by_owner_overlay": 51,
+      "planned_writes": 14184,
+      "withheld": 51,
+      "reason_withheld": null,
+      "blocked_by": []
+    },
+    "translation": {
+      "ledger_status": "BLOCKED",
+      "rows_on_disk": 2254,
+      "manifest_declares_accepted": 2254,
+      "manifest_agrees_with_disk": true,
+      "not_importable_by_confidence": 740,
+      "barred_by_owner_overlay": 31,
+      "planned_writes": 0,
+      "withheld": 2254,
+      "reason_withheld": "ledger status BLOCKED: three gates pass, blocked by OWNER_DECISION_A_RV_SPAN, OWNER_DECISION_C_FORCED_ADDRESSES",
+      "blocked_by": [
+        "OWNER_DECISION_A_RV_SPAN",
+        "OWNER_DECISION_C_FORCED_ADDRESSES"
+      ]
+    }
+  },
+  "schema_additions_pending": [
+    "M1 :RoleFiller + ASSERTION_ROLE + ROLE_FILLER_ENTITY",
+    "M2 running_samhita_number on Samavedic :Mantra",
+    "M3 four gana :Work identities",
+    "M4 MUSICALIZED_AS range widening",
+    "M5 SPECIALIZED_FORM_OF"
+  ],
+  "schema_additions_returned_to_owner": [
+    "M6 scope_type namespacing -- OLD_PREDICATE_MEANING_CHANGED is true"
+  ],
+  "open_blockers": [
+    "NAME_COLLISION_SCOPE_TYPE",
+    "FOLD_FIX_BREAKS_REFERENT_IDENTITY"
+  ],
+  "manifest_vs_disk_disagreements": [],
+  "expected_final_census": {
+    "note": "Node and relationship deltas are not derivable from row counts alone -- a row may create several relationships and no node, or update a property with no new element. The importer must emit its own per-element plan before this figure can be stated, and stating it from row counts would be the kind of arithmetic-shaped guess this campaign has been correcting.",
+    "nodes_before": 108779,
+    "relationships_before": 265295,
+    "derivable_yet": false
+  },
+  "go_no_go": "NO-GO",
+  "go_no_go_reasons": [
+    "open blocker: NAME_COLLISION_SCOPE_TYPE",
+    "open blocker: FOLD_FIX_BREAKS_REFERENT_IDENTITY"
+  ]
+}

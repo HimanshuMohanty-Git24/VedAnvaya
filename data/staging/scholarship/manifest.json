@@ -196,10 +196,10 @@
   },
   "config_hash": "1133a5ae5482c6ca2c5f677cee1ae505b5f0f7d2427e8d8591e19b16e4de97a6",
   "counts": {
-    "accepted": 114,
+    "accepted": 113,
     "candidates_considered": 2461,
     "not_applicable": 0,
-    "rejected": 2347,
+    "rejected": 2348,
     "unresolved": 0,
     "verified_zero": 2
   },
@@ -210,10 +210,10 @@
   "domain": "scholarship",
   "files": [
     {
-      "bytes": 676416,
+      "bytes": 671039,
       "path": "rows.jsonl",
-      "rows": 114,
-      "sha256": "b6462e2581ad9080b22a23465fdd5d24937a026bc893576f1935041aba84ed66"
+      "rows": 113,
+      "sha256": "97456b52ac565fad5226d627241ae23575c4ffa6ae9217ee0160bb6d44a0e926"
     },
     {
       "bytes": 7508,
@@ -222,10 +222,10 @@
       "sha256": "21048fab76c7d3cd2471938b4183ada8757cca7035d5a82cf2db1b8dab098889"
     },
     {
-      "bytes": 1672419,
+      "bytes": 1678208,
       "path": "rejected.jsonl",
-      "rows": 2347,
-      "sha256": "06564eef2368e8756e68cfd0469643e4ee8325af16c6a67a10a77d64757e5fed"
+      "rows": 2348,
+      "sha256": "cc69427f840d1b80e256e6018c7a208210af8f6820219983230ab7fd2137c483"
     },
     {
       "bytes": 3436,
@@ -310,7 +310,7 @@
     "yv_positive_count": 0
   },
   "qa": {
-    "defects_found": 0,
+    "defects_found": 1,
     "defects_found_and_fixed_during_the_build": 21,
     "human_reviewed": 114,
     "llm_adjudicated": 12,
@@ -341,5 +341,15 @@
     "WEBER_INDISCHE_STUDIEN",
     "WIKISOURCE_WHITNEY_AV",
     "WILSON_RIGVEDA_SANHITA"
+  ],
+  "lead_corrections": [
+    {
+      "correction_id": "LEAD-SCHOLARSHIP-01",
+      "found_by": "lead adversarial test, owner attack list section 14",
+      "defect": "1 of 92 SCHOLARLY_DISAGREEMENT rows carried the same asserter_id on both sides -- the owner's 'same author's two works' attack.",
+      "fix": "Withdrawn to rejected.jsonl with the whole row preserved under withdrawn_row.",
+      "unchanged_and_verified_clean": "The other 91 satisfy the contract in full: two named asserters, two claims, two page-precise work_locator values and a stated incompatible_about. The attribution_status vocabulary also pre-empts the reporting-source attack, with 73 rows typed ASCRIPTION_DISPUTED_BY_THE_REPORTING_SOURCE.",
+      "lead_probe_error_recorded": "The lead's first attack reported all 92 rows as missing an attributed position. That was the lead's error: it guessed the field name 'attributed_to' where the schema uses 'asserter_name'. The rows were right and the probe was wrong."
+    }
   ]
 }

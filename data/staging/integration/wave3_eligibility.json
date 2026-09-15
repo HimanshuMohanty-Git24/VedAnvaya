@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-09-15T11:42:19.026428+00:00",
+  "generated_at": "2026-09-15T13:17:36.356940+00:00",
   "snapshot_caveat": "A domain whose agent is actively restaging may read FAIL transiently -- most often a manifest checksum mismatch, because the manifest is rewritten after the files it hashes. Re-run once no agent is in flight before treating any gate A result here as final.",
   "gates": {
     "A": "STRUCTURAL -- schema, identity, subject grain, source refs, denominators",
@@ -122,9 +122,7 @@
       },
       "restage_required": false,
       "restage_reason": "Rationale corrected, not data. The refusal stands on six measurements, and the artifact already carries both grains.",
-      "blocked_by": [
-        "CURATION_CONTRADICTION_SOMA_PAVAMANA"
-      ],
+      "blocked_by": [],
       "depends_on": [
         "attribution"
       ],
@@ -133,8 +131,8 @@
       },
       "own_digest": "157794f1ebe74a46fd8c4a084ab25798f3dcba669691d3ad0190746e6c0c1806",
       "stale_inputs": [],
-      "status": "BLOCKED",
-      "status_detail": "three gates pass, blocked by CURATION_CONTRADICTION_SOMA_PAVAMANA"
+      "status": "ELIGIBLE",
+      "status_detail": "all three gates pass and no blocker is open"
     },
     "cross_veda": {
       "gate_a_structural": {
@@ -241,7 +239,7 @@
       "blocked_by": [],
       "depends_on": [],
       "input_digests": {},
-      "own_digest": "e6fc030d6a7d62f94c09780128057965345a098d9dcd07222cb61b60922613fb",
+      "own_digest": "433b0409aabb3396684b409f941bfedc5446a7428511a9b3855f8c0a46d1a48c",
       "stale_inputs": [],
       "status": "NOT_ELIGIBLE",
       "status_detail": "gate(s) B, C not passed"
@@ -289,7 +287,7 @@
       "blocked_by": [],
       "depends_on": [],
       "input_digests": {},
-      "own_digest": "b6462e2581ad9080b22a23465fdd5d24937a026bc893576f1935041aba84ed66",
+      "own_digest": "97456b52ac565fad5226d627241ae23575c4ffa6ae9217ee0160bb6d44a0e926",
       "stale_inputs": [],
       "status": "NOT_ELIGIBLE",
       "status_detail": "gate(s) B, C not passed"
@@ -345,10 +343,11 @@
     }
   },
   "eligible_domains": [
+    "communities",
     "formula",
     "semantic_roles"
   ],
-  "eligible_count": 2,
+  "eligible_count": 3,
   "domain_count": 13,
   "wave_3_go": false
 }

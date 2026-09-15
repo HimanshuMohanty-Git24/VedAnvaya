@@ -143,7 +143,12 @@ ASSESSMENTS: dict[str, dict[str, Any]] = {
             "Rationale corrected, not data. The refusal stands on six measurements, and "
             "the artifact already carries both grains."
         ),
-        "blocked_by": ["CURATION_CONTRADICTION_SOMA_PAVAMANA"],
+        # The Soma/Pavamana contradiction was resolved by owner decision 1: both nodes
+        # stay separate, linked by an additive SPECIALIZED_FORM_OF. The migration is staged
+        # as card M5 rather than applied, so this domain now waits on the migration rather
+        # than on a question.
+        "blocked_by": [],
+        "waits_on_migration": ["M5 SPECIALIZED_FORM_OF"],
     },
     "attribution": {
         "B": ("UNKNOWN", "no semantic review recorded"),

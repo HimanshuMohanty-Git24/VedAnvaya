@@ -15,11 +15,11 @@
     "bridge_exact_requires_clean_word_end": true,
     "min_prefix_alias_len": 5,
     "allowed_short_prefixes": [
-      "y\u016bpa"
+      "yūpa"
     ],
     "negative_prefixes": {
-      "gr\u0101va": [
-        "gr\u0101vastut"
+      "grāva": [
+        "grāvastut"
       ],
       "madhu": [
         "madhupark",
@@ -27,17 +27,17 @@
         "madhumant",
         "madhumatt"
       ],
-      "\u015by\u0101ma": [
-        "\u015by\u0101m\u0101k"
+      "śyāma": [
+        "śyāmāk"
       ],
-      "dak\u1e63i\u1e47\u0101": [
-        "dak\u1e63i\u1e47\u0101gn",
-        "dak\u1e63i\u1e47\u0101v\u1e5bt",
-        "dak\u1e63i\u1e47\u0101rdh",
-        "dak\u1e63i\u1e47\u0101gr",
-        "dak\u1e63i\u1e47\u0101t",
-        "dak\u1e63i\u1e47\u0101hi",
-        "dak\u1e63i\u1e47\u0101mukh"
+      "dakṣiṇā": [
+        "dakṣiṇāgn",
+        "dakṣiṇāvṛt",
+        "dakṣiṇārdh",
+        "dakṣiṇāgr",
+        "dakṣiṇāt",
+        "dakṣiṇāhi",
+        "dakṣiṇāmukh"
       ]
     },
     "supplementary_works": [
@@ -220,9 +220,9 @@
     },
     {
       "path": "rows.jsonl",
-      "sha256": "e6fc030d6a7d62f94c09780128057965345a098d9dcd07222cb61b60922613fb",
+      "sha256": "433b0409aabb3396684b409f941bfedc5446a7428511a9b3855f8c0a46d1a48c",
       "rows": 3045,
-      "bytes": 11822136
+      "bytes": 11829102
     },
     {
       "path": "sources.jsonl",
@@ -377,7 +377,7 @@
   "qa": {
     "sampled": 80,
     "sample_method": "both",
-    "defects_found": 0,
+    "defects_found": 1,
     "human_reviewed": 0,
     "detail": {
       "row_level_checks_are_exhaustive_not_sampled": true,
@@ -389,5 +389,16 @@
       "listening_or_reading_review_population": 0,
       "reading_review_note": "NO HUMAN READ ANY LOCUS. Every claim here rests on a mechanical match plus this agent's own reading of samples. The PROBABLE tiers exist precisely because they need a human read, and none has had one."
     }
-  }
+  },
+  "lead_corrections": [
+    {
+      "correction_id": "LEAD-RITUAL-01",
+      "found_by": "lead adversarial test, owner attack list section 13",
+      "defect": "27 rows asserted rite membership where the only rite named is a category term: 24 on YAJNA-SACRIFICE and 3 on bare ISTI. A mantra that names 'sacrifice' is not thereby a member of a specific rite.",
+      "fix": "Retyped to NAMES_RITE_CATEGORY_GENERICALLY and downgraded to PROBABLE, so the validator treats them as staged and not importable. Prior row_kind preserved on each row.",
+      "value_space_enumerated": "All 45 rite keys were listed before choosing these two, rather than grepping for the term the lead expected. The other 43 are genuine named rites -- agnihotra, agnistoma, asvamedha, darsapurnamasa, rajasuya, vajapeya, upanayana and so on.",
+      "deliberately_not_retyped": "SOMA-PRESSING, 22 rows. It is a ritual act rather than a named rite, which is a different objection from being a category: soma pressing occurs inside many rites, so a mantra naming it has named something specific. Referred to the owner rather than swept in.",
+      "unchanged_and_verified_clean": "The core boundary: 0 of 3,045 rows keyed outside the four recensions, and evidence_source_type still distinguishes SRAUTASUTRA 1,303 / BRAHMANA 992 / GRHYASUTRA 527 / SAMHITA 223."
+    }
+  ]
 }
