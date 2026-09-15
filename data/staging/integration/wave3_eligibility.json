@@ -1,0 +1,353 @@
+{
+  "schema_version": "1.0",
+  "gates": {
+    "A": "STRUCTURAL -- schema, identity, subject grain, source refs, denominators",
+    "B": "SEMANTIC -- classification, population, source meaning, relation meaning",
+    "C": "ADVERSARIAL -- headline survived an independent falsification attempt"
+  },
+  "rule": "Wave 3 eligibility requires A=PASS and B=PASS and C=PASS. No combined percentage: a strong A must not be allowed to carry a failed C. Four of four domains adversarially tested so far have failed C, and two of those four had every aggregate count survive.",
+  "domains": {
+    "attribution": {
+      "gate_a_structural": {
+        "status": "PASS",
+        "detail": "validator PASS at full evaluation coverage with --graph"
+      },
+      "gate_b_semantic": {
+        "status": "UNKNOWN",
+        "detail": "no semantic review recorded"
+      },
+      "gate_c_adversarial": {
+        "status": "NOT_RUN",
+        "detail": "adversarial test not yet performed"
+      },
+      "restage_required": false,
+      "restage_reason": null,
+      "blocked_by": [],
+      "depends_on": [],
+      "input_digests": {},
+      "own_digest": "3577b87142f710d570de47fcd75e46199b2c4823eea73de56875d342b7b710df",
+      "stale_inputs": [],
+      "status": "NOT_ELIGIBLE",
+      "status_detail": "gate(s) B, C not passed"
+    },
+    "audio_av": {
+      "gate_a_structural": {
+        "status": "PASS",
+        "detail": "validator PASS at full evaluation coverage with --graph"
+      },
+      "gate_b_semantic": {
+        "status": "UNKNOWN",
+        "detail": "no semantic review recorded"
+      },
+      "gate_c_adversarial": {
+        "status": "NOT_RUN",
+        "detail": "adversarial test not yet performed"
+      },
+      "restage_required": false,
+      "restage_reason": null,
+      "blocked_by": [
+        "OWNER_DECISION_E_AUDIO_GATE"
+      ],
+      "depends_on": [],
+      "input_digests": {},
+      "own_digest": "2c811addd725488278df9399b072751eebb65daa7b1ad81d1f8a3a7f22e9c969",
+      "stale_inputs": [],
+      "status": "NOT_ELIGIBLE",
+      "status_detail": "gate(s) B, C not passed"
+    },
+    "audio_rv": {
+      "gate_a_structural": {
+        "status": "PASS",
+        "detail": "validator PASS at full evaluation coverage with --graph"
+      },
+      "gate_b_semantic": {
+        "status": "UNKNOWN",
+        "detail": "no semantic review recorded"
+      },
+      "gate_c_adversarial": {
+        "status": "NOT_RUN",
+        "detail": "adversarial test not yet performed"
+      },
+      "restage_required": false,
+      "restage_reason": null,
+      "blocked_by": [
+        "OWNER_DECISION_E_AUDIO_GATE"
+      ],
+      "depends_on": [],
+      "input_digests": {},
+      "own_digest": "c85bec80f74edfcb515c04534e657adaf1f1e2d0c240295594fe61419b489f67",
+      "stale_inputs": [],
+      "status": "NOT_ELIGIBLE",
+      "status_detail": "gate(s) B, C not passed"
+    },
+    "audio_yv": {
+      "gate_a_structural": {
+        "status": "PASS",
+        "detail": "validator PASS at full evaluation coverage with --graph"
+      },
+      "gate_b_semantic": {
+        "status": "UNKNOWN",
+        "detail": "no semantic review recorded"
+      },
+      "gate_c_adversarial": {
+        "status": "NOT_RUN",
+        "detail": "adversarial test not yet performed"
+      },
+      "restage_required": false,
+      "restage_reason": null,
+      "blocked_by": [
+        "OWNER_DECISION_E_AUDIO_GATE"
+      ],
+      "depends_on": [],
+      "input_digests": {},
+      "own_digest": "206f054ef86166a72d1b23e8e23d8427869fc8b3e1420c3043f7b7b09ee7154c",
+      "stale_inputs": [],
+      "status": "NOT_ELIGIBLE",
+      "status_detail": "gate(s) B, C not passed"
+    },
+    "communities": {
+      "gate_a_structural": {
+        "status": "FAIL",
+        "detail": "validator reported data defects"
+      },
+      "gate_b_semantic": {
+        "status": "PASS_AFTER_CORRECTION",
+        "detail": "withdrawn claim replaced by a measured internal limitation"
+      },
+      "gate_c_adversarial": {
+        "status": "DEFECT_FOUND",
+        "detail": "the decisive check rested on a scholarly prior the graph contradicts"
+      },
+      "restage_required": false,
+      "restage_reason": "Rationale corrected, not data. The refusal stands on six measurements, and the artifact already carries both grains.",
+      "blocked_by": [
+        "CURATION_CONTRADICTION_SOMA_PAVAMANA"
+      ],
+      "depends_on": [
+        "attribution"
+      ],
+      "input_digests": {
+        "attribution": "3577b87142f710d570de47fcd75e46199b2c4823eea73de56875d342b7b710df"
+      },
+      "own_digest": "ef88ac149a2884137d82922b2d716c19b3e99e1fddb05637347e2b8b86eb4e97",
+      "stale_inputs": [],
+      "status": "NOT_ELIGIBLE",
+      "status_detail": "gate(s) A, C not passed"
+    },
+    "cross_veda": {
+      "gate_a_structural": {
+        "status": "PASS",
+        "detail": "validator PASS at full evaluation coverage with --graph"
+      },
+      "gate_b_semantic": {
+        "status": "FAIL",
+        "detail": "328 of 6,271 transformation types wrong, 32.2% of RV-YV"
+      },
+      "gate_c_adversarial": {
+        "status": "DEFECT_FOUND",
+        "detail": "anusvara fold correction changed the description, not the counts"
+      },
+      "restage_required": true,
+      "restage_reason": "Owner sections 7 and 15: surviving counts do not make it acceptable. Relationship semantics are part of the data.",
+      "blocked_by": [],
+      "depends_on": [
+        "formula"
+      ],
+      "input_digests": {
+        "formula": "b4af2e7aafc38f894a0ce429a94ba1aeacc9abb9a817bf8090a08c5f2a8628ae"
+      },
+      "own_digest": "4b40f9371be63865fc5a20a6d3c9ddc06d1bbe20489ce9ad6746ff6fff77b3bb",
+      "stale_inputs": [
+        "formula"
+      ],
+      "status": "STALE_INPUT",
+      "status_detail": "depends on formula, which must be restaged; its own gates cannot certify it until those inputs settle"
+    },
+    "formula": {
+      "gate_a_structural": {
+        "status": "PASS",
+        "detail": "validator PASS at full evaluation coverage with --graph"
+      },
+      "gate_b_semantic": {
+        "status": "FAIL",
+        "detail": "134 pairs typed as edition variants where the difference is an inline address"
+      },
+      "gate_c_adversarial": {
+        "status": "DEFECT_FOUND",
+        "detail": "ceiling function was blind to a third axis it never modelled"
+      },
+      "restage_required": true,
+      "restage_reason": "Owner section 8: fix structural-reference handling as a class and re-run the whole candidate population, not the 134 retyped rows.",
+      "blocked_by": [],
+      "depends_on": [],
+      "input_digests": {},
+      "own_digest": "b4af2e7aafc38f894a0ce429a94ba1aeacc9abb9a817bf8090a08c5f2a8628ae",
+      "stale_inputs": [],
+      "status": "RESTAGE_REQUIRED",
+      "status_detail": "Owner section 8: fix structural-reference handling as a class and re-run the whole candidate population, not the 134 retyped rows."
+    },
+    "quality": {
+      "gate_a_structural": {
+        "status": "PASS",
+        "detail": "validator PASS at full evaluation coverage with --graph"
+      },
+      "gate_b_semantic": {
+        "status": "UNKNOWN",
+        "detail": "agent has not reported"
+      },
+      "gate_c_adversarial": {
+        "status": "NOT_RUN",
+        "detail": "adversarial test not yet performed"
+      },
+      "restage_required": false,
+      "restage_reason": null,
+      "blocked_by": [],
+      "depends_on": [
+        "semantic_roles",
+        "attribution",
+        "formula",
+        "cross_veda",
+        "translation"
+      ],
+      "input_digests": {
+        "semantic_roles": "52bbd4fdc4a852327f8955ba69355bcd58eaa92abf944361c284e55ad798a323",
+        "attribution": "3577b87142f710d570de47fcd75e46199b2c4823eea73de56875d342b7b710df",
+        "formula": "b4af2e7aafc38f894a0ce429a94ba1aeacc9abb9a817bf8090a08c5f2a8628ae",
+        "cross_veda": "4b40f9371be63865fc5a20a6d3c9ddc06d1bbe20489ce9ad6746ff6fff77b3bb",
+        "translation": "95318468a47c3c45909cada2188f7eff18f591ea63e04bc0a5b7763243a984cd"
+      },
+      "own_digest": "0e7665d92d22861a40046cceb9cead5b6e1fc4ca077cb377ee1153387c941207",
+      "stale_inputs": [
+        "cross_veda",
+        "formula",
+        "semantic_roles"
+      ],
+      "status": "STALE_INPUT",
+      "status_detail": "depends on cross_veda, formula, semantic_roles, which must be restaged; its own gates cannot certify it until those inputs settle"
+    },
+    "ritual": {
+      "gate_a_structural": {
+        "status": "PASS",
+        "detail": "validator PASS at full evaluation coverage with --graph"
+      },
+      "gate_b_semantic": {
+        "status": "UNKNOWN",
+        "detail": "agent has not reported"
+      },
+      "gate_c_adversarial": {
+        "status": "NOT_RUN",
+        "detail": "adversarial test not yet performed"
+      },
+      "restage_required": false,
+      "restage_reason": null,
+      "blocked_by": [],
+      "depends_on": [],
+      "input_digests": {},
+      "own_digest": "e6fc030d6a7d62f94c09780128057965345a098d9dcd07222cb61b60922613fb",
+      "stale_inputs": [],
+      "status": "NOT_ELIGIBLE",
+      "status_detail": "gate(s) B, C not passed"
+    },
+    "samaveda_music": {
+      "gate_a_structural": {
+        "status": "PASS",
+        "detail": "validator PASS at full evaluation coverage with --graph"
+      },
+      "gate_b_semantic": {
+        "status": "UNKNOWN",
+        "detail": "no semantic review recorded"
+      },
+      "gate_c_adversarial": {
+        "status": "NOT_RUN",
+        "detail": "adversarial test not yet performed"
+      },
+      "restage_required": false,
+      "restage_reason": null,
+      "blocked_by": [
+        "OWNER_DECISION_E_AUDIO_GATE"
+      ],
+      "depends_on": [],
+      "input_digests": {},
+      "own_digest": "c56169455380d625f8be58b83bf325def7086542efc6a18946f16b52c69f858d",
+      "stale_inputs": [],
+      "status": "NOT_ELIGIBLE",
+      "status_detail": "gate(s) B, C not passed"
+    },
+    "scholarship": {
+      "gate_a_structural": {
+        "status": "PASS",
+        "detail": "validator PASS at full evaluation coverage with --graph"
+      },
+      "gate_b_semantic": {
+        "status": "UNKNOWN",
+        "detail": "agent has not reported"
+      },
+      "gate_c_adversarial": {
+        "status": "NOT_RUN",
+        "detail": "adversarial test not yet performed"
+      },
+      "restage_required": false,
+      "restage_reason": null,
+      "blocked_by": [],
+      "depends_on": [],
+      "input_digests": {},
+      "own_digest": "b6462e2581ad9080b22a23465fdd5d24937a026bc893576f1935041aba84ed66",
+      "stale_inputs": [],
+      "status": "NOT_ELIGIBLE",
+      "status_detail": "gate(s) B, C not passed"
+    },
+    "semantic_roles": {
+      "gate_a_structural": {
+        "status": "PASS",
+        "detail": "validator PASS at full evaluation coverage with --graph"
+      },
+      "gate_b_semantic": {
+        "status": "FAIL",
+        "detail": "24.8% of emitted role fillers are wrong from cross-clause leakage"
+      },
+      "gate_c_adversarial": {
+        "status": "DEFECT_FOUND",
+        "detail": "preflight measured precision 0.4855 against an expected 0.85-0.95"
+      },
+      "restage_required": true,
+      "restage_reason": "Owner section 6: fix the extraction rule and re-run the whole population. Recording a measured error rate is not a substitute for not emitting it.",
+      "blocked_by": [],
+      "depends_on": [],
+      "input_digests": {},
+      "own_digest": "52bbd4fdc4a852327f8955ba69355bcd58eaa92abf944361c284e55ad798a323",
+      "stale_inputs": [],
+      "status": "RESTAGE_REQUIRED",
+      "status_detail": "Owner section 6: fix the extraction rule and re-run the whole population. Recording a measured error rate is not a substitute for not emitting it."
+    },
+    "translation": {
+      "gate_a_structural": {
+        "status": "PASS",
+        "detail": "validator PASS at full evaluation coverage with --graph"
+      },
+      "gate_b_semantic": {
+        "status": "UNKNOWN",
+        "detail": "no semantic review recorded"
+      },
+      "gate_c_adversarial": {
+        "status": "NOT_RUN",
+        "detail": "adversarial test not yet performed"
+      },
+      "restage_required": false,
+      "restage_reason": null,
+      "blocked_by": [
+        "OWNER_DECISION_A_RV_SPAN",
+        "OWNER_DECISION_C_FORCED_ADDRESSES"
+      ],
+      "depends_on": [],
+      "input_digests": {},
+      "own_digest": "95318468a47c3c45909cada2188f7eff18f591ea63e04bc0a5b7763243a984cd",
+      "stale_inputs": [],
+      "status": "NOT_ELIGIBLE",
+      "status_detail": "gate(s) B, C not passed"
+    }
+  },
+  "eligible_domains": [],
+  "eligible_count": 0,
+  "domain_count": 13,
+  "wave_3_go": false
+}

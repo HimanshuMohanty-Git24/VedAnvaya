@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0",
+  "purpose": "Integration blockers requiring an owner decision before Wave 3. A blocker is not a gap: a gap is something missing from the data, and a blocker is a question the data cannot answer about itself.",
+  "blockers": [
+    {
+      "blocker_id": "CURATION_CONTRADICTION_SOMA_PAVAMANA",
+      "status": "AWAITING_OWNER_DECISION",
+      "raised_by": "agent 15, adversarial preflight",
+      "raised_at": "2026-09-15",
+      "root_cause_type": "CURATION_CONTRADICTION",
+      "summary": "The graph asserts that Soma Pavamana is a variant name for Soma, and the deity taxonomy holds the two apart on separate axes. Both are curated, deliberate, and incompatible.",
+      "evidence": {
+        "identity_relation": "EPITHET_VARIANT_OF links Soma Pavamana to Soma, asserting they are one deity under two names.",
+        "taxonomy": "DEVATA_TAXONOMY_V1 assigns them different axes and deliberately partitions their aliases, asserting they are two.",
+        "partition_behaviour": "Every one of the six community methods separates them, which is consistent with the taxonomy and inconsistent with the identity relation.",
+        "precedent": "The taxonomy already flags a conflict of the same shape for Mitravarunau, so this is a second instance of one pattern rather than an isolated case."
+      },
+      "why_it_is_not_agent_15s_to_resolve": "It is an ontology question about what EPITHET_VARIANT_OF means, not a question about community detection. Resolving it inside the domain that noticed it would set ontology policy from one consumer's point of view.",
+      "options": [
+        {
+          "option": "A",
+          "statement": "The identity relation is correct and the taxonomy needs explicit subtype semantics.",
+          "consequence": "Soma Pavamana becomes a subtype or aspect of Soma. The taxonomy gains a subtype axis, and every deity currently distinguished only by axis must be re-examined for the same treatment."
+        },
+        {
+          "option": "B",
+          "statement": "The taxonomy distinction is correct and EPITHET_VARIANT_OF is too strong.",
+          "consequence": "The relation is weakened or retyped for this pair, and the other 10 EPITHET_VARIANT_OF pairs must be re-checked against the same standard, since the relation's meaning changes for all of them."
+        },
+        {
+          "option": "C",
+          "statement": "Both are valid at different abstraction levels, and the ontology must encode that distinction explicitly.",
+          "consequence": "A new, additive distinction between name-identity and cult-identity. The most faithful option and the most work: it requires the ontology to say which kind of sameness each relation asserts."
+        }
+      ],
+      "constraint_until_resolved": "No community membership involving this identity question may be treated as a truth test. That includes agent 15's own Soma-related diagnostics, and any semantic representation that treats deity identity as settled.",
+      "blocks_domains": ["communities"],
+      "also_relevant_to": ["semantic_resemblance", "attribution", "quality"]
+    },
+    {
+      "blocker_id": "NAME_COLLISION_SCOPE_TYPE",
+      "status": "AWAITING_LEAD_ACTION",
+      "raised_by": "collision audit, owner section 12",
+      "raised_at": "2026-09-15",
+      "root_cause_type": "SCOPE_MISMATCH",
+      "summary": "The property scope_type is written by the attribution domain meaning the scope of an attribution assertion, and by the audio domains meaning the scope of an audio record. Same name, different concept, on 18 shared canonical keys.",
+      "evidence": {
+        "attribution": "scope_type = SINGLE_MANTRA on 466 rows",
+        "audio_av": "scope_type = MANTRA on 771 rows",
+        "overlap": "18 canonical keys carry both"
+      },
+      "why_precedence_is_the_wrong_remedy": "The audit's own second pass classified this as DOMAIN_PRECEDENCE with the audio family authoritative. That would have overwritten one concept with another and lost the attribution meaning silently. Owner section 12 names this case explicitly as a property name with incompatible meaning.",
+      "resolution": "Namespace the property per domain at import. No owner decision needed; recorded so the import cannot quietly resolve it by precedence.",
+      "blocks_domains": ["attribution", "audio_av"]
+    }
+  ]
+}

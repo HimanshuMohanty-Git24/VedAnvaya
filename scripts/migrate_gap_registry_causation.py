@@ -56,6 +56,16 @@ ROOT_CAUSE_TYPES = (
     "PIPELINE_NOT_RUN",
     "DERIVED_LAYER_NOT_BUILT",
     "PRODUCT_PROJECTION_MISSING",
+    # Added after the adversarial preflight found a material defect in four of four
+    # domains tested. Each of these is a distinct failure mode with a distinct remedy, and
+    # collapsing them into OTHER_MEASURED would lose exactly the information that made the
+    # preflight worth running.
+    "PROJECTION_STRUCTURAL_BLINDNESS",
+    "CLASSIFIER_SEMANTIC_DEFECT",
+    "CROSS_CLAUSE_LEAKAGE",
+    "INLINE_SELF_REFERENCE_MISCLASSIFICATION",
+    "CURATION_CONTRADICTION",
+    "HEADLINE_UNSUPPORTED_BY_INTERNAL_MODEL",
     "OTHER_MEASURED",
 )
 
