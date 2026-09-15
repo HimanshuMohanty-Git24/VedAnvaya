@@ -1608,7 +1608,17 @@ def main() -> int:
             "b": "VG:DEVATA:BRAHMANASPATIH",
             "relation": (
                 "the tradition largely identifies them; the registry pins them as two "
-                "entities on purpose and says so in the curation_note"
+                "entities on purpose and says so in a HIGH-confidence curation_note"
+            ),
+            "ORIGINAL CLAIM": "withdrawn",
+            "REASON": "contradicted by the graph's own HIGH-confidence curation note",
+            "withdrawal_note": (
+                "An earlier version of this artifact recorded the separation of this pair as "
+                "the decisive defect and the decisive ground for refusing to publish. The "
+                "claim is WITHDRAWN. It is kept on the record here, rather than erased, "
+                "because the lead had already relayed it to the owner as decisive and a "
+                "deleted mistake cannot be audited. It is replaced by "
+                "PROJECTION_IDENTITY_BLINDNESS."
             ),
         },
         {
@@ -1628,6 +1638,7 @@ def main() -> int:
                 "Soma and Soma Pavamana, which DEVATA_TAXONOMY_V1 holds apart deliberately "
                 "AND which the graph links with EPITHET_VARIANT_OF"
             ),
+            "blocked_by": "CURATION_CONTRADICTION_SOMA_PAVAMANA",
         },
         {
             "a": "VG:DEVATA:SURYAH",
@@ -1671,7 +1682,18 @@ def main() -> int:
         }
         separated = all(v == "SEPARATED" for v in pair["per_method"].values())
         together = all(v == "SAME" for v in pair["per_method"].values())
-        if declared_same and separated:
+        if pair.get("blocked_by"):
+            # The owner has referred this identity question, and until it is decided no
+            # community membership involving it may be treated as a truth test. So this row
+            # carries no verdict at all rather than a verdict with a caveat attached.
+            pair["verdict"] = (
+                f"BLOCKED by {pair['blocked_by']} -- NOT A TRUTH TEST. The graph and the "
+                "curation overlay disagree about whether these are one deity, the question "
+                "is referred to the owner, and until it is resolved this pair's "
+                "co-assignment is evidence of nothing. It is not among the grounds for the "
+                "refusal."
+            )
+        elif declared_same and separated:
             pair["verdict"] = (
                 "DEFECT: the graph declares these one deity and the partition splits them"
             )
@@ -1700,6 +1722,17 @@ def main() -> int:
                 "The cheapest available sanity test of whether the partition can be read as a "
                 "statement about Vedic religion."
             ),
+            "ORIGINAL CLAIM": "withdrawn",
+            "REASON": "contradicted by the graph's own HIGH-confidence curation note",
+            "what_was_withdrawn": (
+                "That Brhaspati and Brahmanaspati must cluster together, and that a partition "
+                "separating them is defective. Not an active claim anywhere in this artifact, "
+                "and not among the grounds for the refusal. Retained as a historical record "
+                "only. Replaced by PROJECTION_IDENTITY_BLINDNESS, which is entailed by the "
+                "graph's own identity vocabulary and this projection's definition rather than "
+                "by any external theological prior -- and that distinction is the whole reason "
+                "it replaces it."
+            ),
             "the_rule": (
                 "A separation counts as a DEFECT only where the graph itself declares the two "
                 "nodes the same deity, via EPITHET_VARIANT_OF. That is deliberately the "
@@ -1713,15 +1746,14 @@ def main() -> int:
                 (r["a"], r["b"]) for r in epithet_variants
             ),
             "headline": (
-                "No pair the graph declares to be one deity is split by any method: zero "
-                "defects on this test. The Brhaspati / Brahmanaspati separation, which an "
-                "earlier draft called the decisive defect, is the partition correctly "
-                "following a curated distinction. Two things the same sweep DOES establish, "
-                "both model-internal: 10 of the 11 EPITHET_VARIANT_OF pairs share no hymn at "
-                "all, so this projection is blind to the deity identity the graph declares; "
-                "and 15 of Brahmanaspati's 18 co-dedication partners come from the single "
-                "hymn RV 6.75, so a deity with 48 dedications across 8 hymns has his "
-                "community decided by one of them."
+                "PROJECTION_IDENTITY_BLINDNESS: population 11, no_shared_dedication 10, "
+                "shared_dedication 1. Of the 11 pairs the graph itself declares to be one "
+                "deity, 10 share no dedicated hymn, so the projection cannot represent that "
+                "identity at all -- only 'the self of Agni' ~ Agni shares one. 4 of the 6 "
+                "testable pairs are split by every method. One further pair is BLOCKED as a "
+                "referred ontology question. And 15 of Brahmanaspati's 18 co-dedication "
+                "partners come from the single hymn RV 6.75, so a deity with 48 dedications "
+                "across 8 hymns has his community decided by one of them."
             ),
             "pairs": diagnostic_pairs,
         },
@@ -1890,6 +1922,9 @@ def main() -> int:
                     "brahmanaspati_hymns": population[brahmanaspati]["hymns"],
                     "brahmanaspati_dedications": population[brahmanaspati]["dedications"],
                 },
+                "ORIGINAL CLAIM": "withdrawn",
+                "REASON": "contradicted by the graph's own HIGH-confidence curation note",
+                "curation_confidence_on_both_nodes": "HIGH",
                 "verdict": (
                     "THE ASSUMPTION WAS WRONG AND THE CLAIM IS WITHDRAWN. A direct edge does "
                     "exist (RV 2.23 and 2.24), so it is not that no method could join them. "
@@ -1931,6 +1966,10 @@ def main() -> int:
                 "pairs_sharing_zero_hymns": sum(
                     1 for r in identity_sweep if r["shared_hymns"] == 0
                 ),
+                "finding_name": "PROJECTION_IDENTITY_BLINDNESS",
+                "population": 11,
+                "no_shared_dedication": 10,
+                "shared_dedication": 1,
                 "the_structural_finding": (
                     "10 of the 11 declared-identity pairs share NO hymn at all, so no edge "
                     "exists between a deity and its own declared epithet-variant. That is not "
@@ -1997,6 +2036,20 @@ def main() -> int:
                     "That hymn-scope co-dedication recovers the source's granularity evenly, "
                     "so the projection describes the Rigveda rather than part of it."
                 ),
+                "finding_name": "PROJECTION_CORPUS_SECTION_IMBALANCE",
+                "recorded_figures_the_lead_s_measurement_over_all_214_devata": {
+                    "maximum": 0.272,
+                    "maximum_section": "mandala 8",
+                    "minimum": 0.026,
+                    "minimum_section": "mandala 9",
+                    "spread": "approximately tenfold",
+                    "mandala_9": {"hymns": 114, "multi_dedicatee_hymns": 3},
+                },
+                "mandala_9_is_not_absent": (
+                    "All 114 of its hymns are present, dedicated and assessed. What is low is "
+                    "the projection's usable signal there. Calling the mandala absent would be "
+                    "the false zero this campaign exists to prevent."
+                ),
                 "probe": "Multi-dedicatee hymn share per mandala.",
                 "outcome": {
                     "per_mandala": dict(sorted(per_mandala.items())),
@@ -2005,13 +2058,18 @@ def main() -> int:
                     "spread_ratio": round(max(shares) / min(shares), 1) if min(shares) else None,
                 },
                 "verdict": (
-                    "CONFIRMED AS A REAL LIMIT. The share ranges from 0.026 in mandala 9 to "
-                    "0.207 in mandala 4 -- an eightfold spread. Mandala 9, the entire Pavamana "
-                    "Soma collection and 114 of the 1,028 dedication-bearing hymns, "
-                    "contributes 3 multi-dedicatee hymns. So the partition is disproportionately "
-                    "a picture of mandalas 1, 2, 4, 7, 8 and 10 and is very nearly blind to the "
-                    "Soma corpus. This was not in the artifact before and it strengthens the "
-                    "refusal."
+                    "CONFIRMED AS A REAL LIMIT, recorded as "
+                    "PROJECTION_CORPUS_SECTION_IMBALANCE. The recorded figures are the lead's "
+                    "independent measurement over all 214 :Devata: maximum 0.272 at mandala 8, "
+                    "minimum 0.026 at mandala 9, an approximately tenfold spread, with mandala "
+                    "9 carrying 114 hymns and 3 multi-dedicatee hymns. Over the 157 eligible "
+                    "deities the maximum moves to mandala 4 at 0.207 and mandala 8 falls to "
+                    "0.175, a 7.9-fold spread against the same minimum -- both correct over "
+                    "their own population. The difference is itself a finding: cleaning removes "
+                    "10 multi-dedicatee hymns from mandala 8, where the danastuti labels "
+                    "concentrate, and none at all from mandala 9. The projection has very low "
+                    "usable signal in mandala 9 -- NOT an absent mandala; all 114 hymns are "
+                    "present, dedicated and assessed."
                 ),
             },
             "TEST_D_the_null_marker": {
@@ -2047,10 +2105,13 @@ def main() -> int:
                 "weighting sensitivity 0.584 to 0.879; 6 of 12 communities being one hymn's "
                 "cast list and 5 of 12 being whole connected components; a well-attested "
                 "deity's community decided by 1 of his 8 hymns (15 of Brahmanaspati's 18 "
-                "partners come from RV 6.75); an eightfold per-mandala imbalance that leaves "
-                "mandala 9 almost unseen; and the projection being structurally blind to the "
-                "deity identity the graph itself declares, 10 of 11 EPITHET_VARIANT_OF pairs "
-                "sharing no hymn. Not one of those is a scholarly prior."
+                "partners come from RV 6.75); PROJECTION_CORPUS_SECTION_IMBALANCE, an "
+                "approximately tenfold spread in usable signal across the mandalas, 0.272 at "
+                "mandala 8 against 0.026 at mandala 9; and PROJECTION_IDENTITY_BLINDNESS, "
+                "population 11 / no_shared_dedication 10 / shared_dedication 1. Not one of "
+                "those is a scholarly prior: the last is entailed by the graph's own identity "
+                "vocabulary and this projection's definition, which is precisely why it "
+                "replaces the withdrawn claim rather than restating it."
             ),
         },
     )
@@ -2445,6 +2506,132 @@ def main() -> int:
             "their internal and external support and example hymns, which is a third object "
             "again."
         ),
+        "withdrawn_claims": [
+            {
+                "claim_id": "BRHASPATI_BRAHMANASPATI_MUST_CLUSTER",
+                "ORIGINAL CLAIM": "withdrawn",
+                "REASON": (
+                    "contradicted by the graph's own HIGH-confidence curation note"
+                ),
+                "what_was_claimed": (
+                    "That Brhaspati and Brahmanaspati are one deity, so a partition "
+                    "separating them is defective -- offered as the decisive ground for "
+                    "refusing to publish."
+                ),
+                "why_it_was_wrong": (
+                    "The two :Devata nodes each carry curation_confidence HIGH, and "
+                    "Brahmanaspati's own curation_note states verbatim: 'The tradition "
+                    "largely identifies him with Brhaspati; the registry pins them as two "
+                    "entities and this overlay keeps them apart rather than asserting the "
+                    "identification.' The graph also carries a declared identity vocabulary, "
+                    "EPITHET_VARIANT_OF, from which the pair is deliberately absent. The "
+                    "claim imported an external theological prior and graded the partition "
+                    "defective for respecting the project's own curation."
+                ),
+                "status": (
+                    "WITHDRAWN. Removed from every active ground for the verdict. Retained "
+                    "here and in proofs/adversarial_preflight.json as a historical record, "
+                    "because the lead had already relayed it to the owner as decisive and an "
+                    "erased mistake cannot be audited."
+                ),
+                "replaced_by": "PROJECTION_IDENTITY_BLINDNESS",
+            }
+        ],
+        "named_findings": {
+            "PROJECTION_IDENTITY_BLINDNESS": {
+                "population": 11,
+                "no_shared_dedication": 10,
+                "shared_dedication": 1,
+                "the_one_that_shares": (
+                    "VG:DEVATA:AGNERATMA ('the self of Agni') ~ VG:DEVATA:AGNIH, one shared "
+                    "dedicated hymn"
+                ),
+                "measured_over": (
+                    "every EPITHET_VARIANT_OF edge in the graph, against the RV hymn-scope "
+                    "co-dedication projection defined in this manifest"
+                ),
+                "statement": (
+                    "The graph declares deity identity with EPITHET_VARIANT_OF. 10 of its 11 "
+                    "pairs share NO dedicated hymn, so no edge exists between a deity and its "
+                    "own declared variant name, and the projection cannot represent that "
+                    "identity at all. A variant can only ever be joined to its canonical form "
+                    "by coincidence of neighbourhood; 4 of the 6 testable pairs are split by "
+                    "every method."
+                ),
+                "why_this_is_not_a_theological_prior": (
+                    "THE WHOLE POINT OF THIS FINDING. It is entailed by two things this "
+                    "project already owns: the graph's own identity vocabulary, and the "
+                    "projection definition recorded in this manifest. It asserts nothing "
+                    "about Vedic religion and needs no external authority. That is why it "
+                    "replaces the withdrawn Brhaspati claim rather than restating it."
+                ),
+                "independently_reproduced_by": "the lead",
+            },
+            "PROJECTION_CORPUS_SECTION_IMBALANCE": {
+                "maximum": 0.272,
+                "maximum_section": "mandala 8",
+                "minimum": 0.026,
+                "minimum_section": "mandala 9",
+                "spread": "approximately tenfold",
+                "mandala_9": {"hymns": 114, "multi_dedicatee_hymns": 3},
+                "statement": (
+                    "The share of hymns carrying two or more dedicatees -- the only hymns "
+                    "that contribute an edge -- varies about tenfold across the ten mandalas. "
+                    "Mandala 9, the Pavamana Soma collection, has 114 hymns and 3 "
+                    "multi-dedicatee hymns."
+                ),
+                "mandala_9_is_NOT_absent": (
+                    "Mandala 9 is fully present in the corpus, fully dedicated, and fully "
+                    "assessed: all 114 of its hymns have rows. What is low is the projection's "
+                    "USABLE SIGNAL there, because almost every one of those hymns is dedicated "
+                    "to a single deity. Describing the mandala as absent would be exactly the "
+                    "false-zero this campaign exists to prevent."
+                ),
+                "figures_are_the_lead_s_independent_measurement_over_the_uncleaned_population": (
+                    "0.272 at mandala 8 is measured over all 214 :Devata nodes. Over the 157 "
+                    "eligible after cleaning, mandala 8 falls to 0.175 and the maximum moves "
+                    "to mandala 4 at 0.207, a 7.9-fold spread against the same 0.026 minimum. "
+                    "Both figures are correct over their own population and neither "
+                    "contradicts the other. The recorded headline is the lead's."
+                ),
+                "and_the_cleaning_is_itself_unevenly_distributed": (
+                    "The gap between the two measurements is not noise, it is a finding. "
+                    "Cleaning removes 10 multi-dedicatee hymns from mandala 8 and none at all "
+                    "from mandala 9, because mandala 8 is where the danastuti patron-praise "
+                    "labels concentrate. So the imbalance has two layers: the source's own, "
+                    "and the one our exclusions add on top of it."
+                ),
+                "per_mandala_over_the_eligible_population": dict(sorted(per_mandala.items())),
+            },
+        },
+        "integration_blockers": {
+            "CURATION_CONTRADICTION_SOMA_PAVAMANA": {
+                "status": "REFERRED_AND_BLOCKED_AWAITING_OWNER_DECISION",
+                "found_by": "the all-pairs EPITHET_VARIANT_OF sweep in the adversarial preflight",
+                "the_contradiction": (
+                    "EPITHET_VARIANT_OF asserts VG:DEVATA:PAVAMANAH-SOMAH is a variant of "
+                    "VG:DEVATA:SOMAH -- the graph's own statement that they are one deity. "
+                    "DEVATA_TAXONOMY_V1 states the two 'differ substantively, not just by "
+                    "key', gives them different axes (Pavamana RITUAL_SUBSTANCE alone, Soma "
+                    "adding COSMIC_SOVEREIGN), and partitions their aliases 'deliberately so "
+                    "the two do not silently collect each other's mantras'. Both cannot be "
+                    "followed."
+                ),
+                "options_awaiting_the_owner": [
+                    "the identity relation is right and the taxonomy needs subtype semantics",
+                    "the taxonomy is right and EPITHET_VARIANT_OF is too strong",
+                    "both hold at different abstraction levels and the ontology must encode that",
+                ],
+                "not_this_agent_s_to_resolve": True,
+                "CONSTRAINT": (
+                    "NO COMMUNITY MEMBERSHIP INVOLVING THIS IDENTITY QUESTION MAY BE TREATED "
+                    "AS A TRUTH TEST UNTIL IT IS RESOLVED. That includes this artifact's own "
+                    "Soma-related diagnostics: the Soma / Soma Pavamana row in "
+                    "proofs/diagnostic_pairs.json is typed BLOCKED rather than carrying a "
+                    "verdict, and it is not among the grounds for the refusal."
+                ),
+            }
+        },
         "partition_summary": {
             "reference_partition": (
                 f"{CONFIG['primary_algorithm']} | {CONFIG['primary_weighting']} | "
@@ -2463,7 +2650,37 @@ def main() -> int:
                 1 for v in hymn_profile.values() if v["is_a_whole_connected_component"]
             ),
             "connected_components_of_the_projection": len(component_sizes),
+            "status": "ANALYSIS_EXECUTED",
+            "membership": "MEMBERSHIP_REFUSED",
             "publication_verdict": "NOT_STABLE_ENOUGH_TO_PUBLISH_AS_A_PRODUCT_SURFACE",
+            "grounds": [
+                "PROJECTION_IDENTITY_BLINDNESS -- 10 of 11 EPITHET_VARIANT_OF pairs share no "
+                "dedicated hymn, so the projection cannot represent the deity identity the "
+                "graph itself declares",
+                "PROJECTION_CORPUS_SECTION_IMBALANCE -- an approximately tenfold spread in "
+                "usable signal across the mandalas, 0.272 at mandala 8 against 0.026 at "
+                "mandala 9",
+                "ELIGIBLE_POPULATION_LIMITS -- 214 :Devata reduce to 157 eligible and 123 "
+                "placeable; 34 are unplaceable, of which 3 only because our own cleaning "
+                "removed their sole partner",
+                "PROJECTION_SENSITIVITY -- ARI 0.013 between the co-dedication and co-mention "
+                "projections over the 35 deities both reach, i.e. chance",
+                "WEIGHTING_SENSITIVITY -- pairwise ARI 0.584, 0.659 and 0.879 between the "
+                "three weightings",
+                "RESOLUTION_SENSITIVITY -- a stable plateau only over gamma 0.8 to 1.5, "
+                "falling to ARI 0.278 against gamma 1 by gamma 8",
+                "STRUCTURE_IS_LARGELY_NOT_DEITY_STRUCTURE -- 6 of 12 communities are one "
+                "hymn's cast list, 5 of 12 are whole connected components, and a deity with "
+                "48 dedications across 8 hymns has his community decided by one of them",
+                "SEED_STABILITY_IS_NOT_A_GROUND -- it is perfect (ARI 1.0000 over 200 seeds) "
+                "and recorded here so nobody reads its absence from this list as a gap",
+            ],
+            "grounds_explicitly_excluded": [
+                "BRHASPATI_BRAHMANASPATI_MUST_CLUSTER -- WITHDRAWN, see withdrawn_claims. It "
+                "must not reappear among the grounds.",
+                "CURATION_CONTRADICTION_SOMA_PAVAMANA -- referred and blocked; it is an "
+                "ontology question awaiting an owner decision, not evidence about a partition.",
+            ],
             "publication_verdict_reason": (
                 "Seed stability is not the problem -- the reference partition is identical "
                 "on all 200 seeds (pairwise ARI 1.0000). The specification is. Changing the "
@@ -2475,19 +2692,24 @@ def main() -> int:
                 "whole connected components. The same is true of an individual, "
                 "well-attested deity: 15 of Brahmanaspati's 18 co-dedication partners come "
                 "from the single hymn RV 6.75, so a deity with 48 dedications across 8 hymns "
-                "has his community decided by one of them. The projection is eightfold "
-                "uneven across mandalas -- 0.207 of mandala 4's hymns carry two or more "
-                "dedicatees against 0.026 of mandala 9's, leaving the entire Pavamana Soma "
-                "collection almost unseen. And it is structurally blind to the deity identity "
-                "the graph itself declares: 10 of the 11 EPITHET_VARIANT_OF pairs share no "
-                "hymn, so a deity and its own declared variant name can only be joined by "
-                "coincidence, and 4 of the 6 testable pairs are split by every method. "
+                "has his community decided by one of them. "
+                "PROJECTION_CORPUS_SECTION_IMBALANCE: the share of hymns carrying two or more "
+                "dedicatees varies about tenfold across the mandalas, 0.272 at mandala 8 "
+                "against 0.026 at mandala 9, which has 114 hymns and 3 multi-dedicatee hymns "
+                "-- very low usable signal there, not an absent mandala. "
+                "PROJECTION_IDENTITY_BLINDNESS: 10 of the 11 EPITHET_VARIANT_OF pairs share "
+                "no dedicated hymn, so a deity and its own declared variant name can only be "
+                "joined by coincidence, and 4 of the 6 testable pairs are split by every "
+                "method. "
                 "A published deity-community surface would be "
                 "presenting an artefact of four discretionary choices as a property of the "
-                "corpus. NOTE: an earlier version of this reason cited the separation of "
-                "Brhaspati and Brahmanaspati as a defect. The adversarial preflight withdrew "
-                "that claim -- the registry pins the two apart on purpose -- and the verdict "
-                "is unchanged without it. See proofs/adversarial_preflight.json."
+                "corpus. NOTE, on the record at two levels because the lead had already "
+                "relayed the claim to the owner as decisive -- ORIGINAL CLAIM: withdrawn. "
+                "REASON: contradicted by the graph's own HIGH-confidence curation note. An "
+                "earlier version of this reason cited the separation of Brhaspati and "
+                "Brahmanaspati as a defect; that claim is withdrawn, is not among the grounds "
+                "listed above, and must not reappear there. See withdrawn_claims and "
+                "proofs/adversarial_preflight.json."
             ),
         },
         "closes_gaps": [],

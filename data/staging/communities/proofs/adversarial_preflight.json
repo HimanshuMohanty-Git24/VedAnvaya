@@ -2,6 +2,8 @@
   "TEST_A2_the_generalisation_that_should_have_been_written_first": {
     "assumption": "Implicit in TEST A: that five hand-picked pairs are a fair test of whether the partition respects deity identity. Five pairs answer a question about five pairs.",
     "effect_on_the_refusal": "STRENGTHENS IT, though not via the contradiction. The registry conflict is neutral. The identity-blindness above is not: a deity-community surface would scatter a deity's own declared variant names across different communities, and it would do so structurally rather than occasionally.",
+    "finding_name": "PROJECTION_IDENTITY_BLINDNESS",
+    "no_shared_dedication": 10,
     "outcome": {
       "declared_identity_pairs": 11,
       "pairs": [
@@ -207,12 +209,17 @@
       "split_by_every_method": 4
     },
     "pairs_sharing_zero_hymns": 10,
+    "population": 11,
     "probe": "Sweep EVERY pair the graph declares to be one deity via EPITHET_VARIANT_OF -- all 11 of them -- against all six method consensuses.",
+    "shared_dedication": 1,
     "the_structural_finding": "10 of the 11 declared-identity pairs share NO hymn at all, so no edge exists between a deity and its own declared epithet-variant. That is not an accident of sparsity, it is what the dedication layer is: a name and its variant are alternative labels for the same slot, so the Anukramani never dedicates a hymn to both. THE CO-DEDICATION PROJECTION IS THEREFORE BLIND TO DEITY IDENTITY BY CONSTRUCTION -- a variant can only ever be joined to its canonical form by coincidence of neighbourhood, and 4 of the 6 testable pairs are not. This is a stronger and entirely model-internal version of the argument the withdrawn Brhaspati claim was reaching for, and it rests on the graph's own EPITHET_VARIANT_OF rather than on any scholarly prior.",
     "verdict": "A NEW FINDING THE HAND-PICKED TEST MISSED, AND IT CUTS BOTH WAYS. Soma Pavamana is linked to Soma by EPITHET_VARIANT_OF -- the graph's own assertion that they are one deity -- and every method separates them. So by the graph's identity model there IS a real split-identity case, and it is not the one the report claimed. But the registry contradicts itself here: DEVATA_TAXONOMY_V1 states that Soma and Soma Pavamana 'differ substantively, not just by key', that Pavamana carries RITUAL_SUBSTANCE alone while Soma adds COSMIC_SOVEREIGN, and that their aliases are 'partitioned deliberately so the two do not silently collect each other's mantras'. The curation overlay holds them apart; the graph edge declares them the same. Both cannot be followed, and which one is right decides whether this is a partition defect or correct behaviour. Handed to the lead as a registry contradiction of exactly the shape DEVATA_TAXONOMY_V1 already flagged for Mitravarunau."
   },
   "TEST_A_the_load_bearing_one": {
+    "ORIGINAL CLAIM": "withdrawn",
+    "REASON": "contradicted by the graph's own HIGH-confidence curation note",
     "assumption": "That Brhaspati and Brahmanaspati are one deity, so a partition separating them is defective. This single check was what moved the verdict from 'unstable' to 'do not publish'.",
+    "curation_confidence_on_both_nodes": "HIGH",
     "effect_on_the_refusal": "SURVIVES, on better evidence and one fewer claim.",
     "expectation": "If they share no hymn and have disjoint neighbourhoods, no co-dedication method could join them and the diagnostic is measuring the projection's blindness rather than the method's failure.",
     "outcome": {
@@ -292,6 +299,8 @@
   },
   "TEST_C_projection_uniformity": {
     "assumption": "That hymn-scope co-dedication recovers the source's granularity evenly, so the projection describes the Rigveda rather than part of it.",
+    "finding_name": "PROJECTION_CORPUS_SECTION_IMBALANCE",
+    "mandala_9_is_not_absent": "All 114 of its hymns are present, dedicated and assessed. What is low is the projection's usable signal there. Calling the mandala absent would be the false zero this campaign exists to prevent.",
     "outcome": {
       "max_share": 0.2069,
       "min_share": 0.0263,
@@ -350,7 +359,18 @@
       "spread_ratio": 7.9
     },
     "probe": "Multi-dedicatee hymn share per mandala.",
-    "verdict": "CONFIRMED AS A REAL LIMIT. The share ranges from 0.026 in mandala 9 to 0.207 in mandala 4 -- an eightfold spread. Mandala 9, the entire Pavamana Soma collection and 114 of the 1,028 dedication-bearing hymns, contributes 3 multi-dedicatee hymns. So the partition is disproportionately a picture of mandalas 1, 2, 4, 7, 8 and 10 and is very nearly blind to the Soma corpus. This was not in the artifact before and it strengthens the refusal."
+    "recorded_figures_the_lead_s_measurement_over_all_214_devata": {
+      "mandala_9": {
+        "hymns": 114,
+        "multi_dedicatee_hymns": 3
+      },
+      "maximum": 0.272,
+      "maximum_section": "mandala 8",
+      "minimum": 0.026,
+      "minimum_section": "mandala 9",
+      "spread": "approximately tenfold"
+    },
+    "verdict": "CONFIRMED AS A REAL LIMIT, recorded as PROJECTION_CORPUS_SECTION_IMBALANCE. The recorded figures are the lead's independent measurement over all 214 :Devata: maximum 0.272 at mandala 8, minimum 0.026 at mandala 9, an approximately tenfold spread, with mandala 9 carrying 114 hymns and 3 multi-dedicatee hymns. Over the 157 eligible deities the maximum moves to mandala 4 at 0.207 and mandala 8 falls to 0.175, a 7.9-fold spread against the same minimum -- both correct over their own population. The difference is itself a finding: cleaning removes 10 multi-dedicatee hymns from mandala 8, where the danastuti labels concentrate, and none at all from mandala 9. The projection has very low usable signal in mandala 9 -- NOT an absent mandala; all 114 hymns are present, dedicated and assessed."
   },
   "TEST_D_the_null_marker": {
     "assumption": "That excluding VG:DEVATA:LINGOKTAH -- the Anukramani's own lingokta deferral marker, materialised as a deity node -- was a precaution rather than a necessity.",
@@ -373,6 +393,6 @@
     "probe": "Place it in the V-ALL projection, where it is not excluded, and see whether it joins a community and how many communities its partners span.",
     "verdict": "CONFIRMED AND WORSE THAN STATED. It is not a stray singleton: it carries 5 edges and its partners span 3 different communities, so a null value sits in the projection as an inter-community BRIDGE -- the position where a spurious node does the most damage to a partition. It is excluded from the reference partition, so no published figure here is affected, but retiring the node is now a stronger recommendation than it was."
   },
-  "net_effect": "One claim withdrawn, three new limits found, and the refusal ends up on firmer ground than it started. The publication verdict is unchanged and now rests on: ARI 0.013 between the dedication and mention projections; weighting sensitivity 0.584 to 0.879; 6 of 12 communities being one hymn's cast list and 5 of 12 being whole connected components; a well-attested deity's community decided by 1 of his 8 hymns (15 of Brahmanaspati's 18 partners come from RV 6.75); an eightfold per-mandala imbalance that leaves mandala 9 almost unseen; and the projection being structurally blind to the deity identity the graph itself declares, 10 of 11 EPITHET_VARIANT_OF pairs sharing no hymn. Not one of those is a scholarly prior.",
+  "net_effect": "One claim withdrawn, three new limits found, and the refusal ends up on firmer ground than it started. The publication verdict is unchanged and now rests on: ARI 0.013 between the dedication and mention projections; weighting sensitivity 0.584 to 0.879; 6 of 12 communities being one hymn's cast list and 5 of 12 being whole connected components; a well-attested deity's community decided by 1 of his 8 hymns (15 of Brahmanaspati's 18 partners come from RV 6.75); PROJECTION_CORPUS_SECTION_IMBALANCE, an approximately tenfold spread in usable signal across the mandalas, 0.272 at mandala 8 against 0.026 at mandala 9; and PROJECTION_IDENTITY_BLINDNESS, population 11 / no_shared_dedication 10 / shared_dedication 1. Not one of those is a scholarly prior: the last is entailed by the graph's own identity vocabulary and this projection's definition, which is precisely why it replaces the withdrawn claim rather than restating it.",
   "why": "Mandatory preflight before Wave 3. The campaign has found five cases where an apparent source absence was our own addressing or modelling error, and the instruction was to assume a sixth. There was one, and it was in this agent's own headline."
 }

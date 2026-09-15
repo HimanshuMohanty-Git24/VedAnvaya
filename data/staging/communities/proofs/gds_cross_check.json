@@ -16,18 +16,18 @@
     "gds_version": "2.13.12",
     "in_memory_graph_dropped": true,
     "leiden": {
-      "ari_gds_vs_mine": 0.879479,
+      "ari_gds_vs_mine": 0.761683,
       "community_count_on_5_identical_repeat_calls": [
-        10,
+        9,
         10,
         9,
         10,
         10
       ],
-      "gds_communities": 10,
+      "gds_communities": 9,
       "gds_is_reproducible_across_identical_calls": false,
       "mine_communities": 10,
-      "nmi_gds_vs_mine": 0.924357,
+      "nmi_gds_vs_mine": 0.902146,
       "nodes_compared": 123
     },
     "louvain": {
