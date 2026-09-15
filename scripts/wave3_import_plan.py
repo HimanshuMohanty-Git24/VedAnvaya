@@ -1022,6 +1022,27 @@ def plan_group(
     ]
     probeable = [t for t in resolvable if t not in set(awaiting_plan)]
 
+    # An endpoint key that names more than one node is a defect in the plan, not only in
+    # the import. A label-less MATCH binds every node carrying the key and two of them form
+    # a cartesian product, so the plan counts one triple where the import writes n x m. The
+    # first run of this import turned 387 intended REFERS_TO edges into 4,564 that way, and
+    # the plan had promised 387 because it counted by key.
+    ambiguous: list[dict[str, Any]] = []
+    for side, values_for_side, prop, label in (
+        ("start", starts, group.start_key_property, group.start_label),
+        ("end", ends, group.end_key_property, group.end_label),
+    ):
+        if label or not values_for_side:
+            continue
+        rows_found = session.run(
+            f"UNWIND $keys AS v MATCH (n) WHERE n.{prop} = v "
+            "WITH v, count(n) AS c WHERE c > 1 RETURN v AS v, c AS c ORDER BY c DESC",
+            keys=values_for_side,
+        ).data()
+        ambiguous.extend(
+            {"side": side, "key": str(r["v"]), "nodes": int(r["c"])} for r in rows_found
+        )
+
     types = sorted({t[1] for t in resolvable})
     probe_types = types or list(
         PARALLEL_TYPES if group.element == "PARALLEL_FAMILY" else (group.element,)
@@ -1055,6 +1076,8 @@ def plan_group(
             "end_endpoints_absent": len(set(ends) - end_present),
             "endpoints_provided_by_this_plan": len(start_from_plan | end_from_plan),
             "triples_awaiting_an_earlier_step": len(awaiting_plan),
+            "ambiguous_endpoint_keys": len(ambiguous),
+            "ambiguous_endpoint_detail": ambiguous[:10],
             "relationships_create": 0 if group.kind == "RELATIONSHIP_PROPERTY" else len(creates),
             "relationships_update": len(updates),
             "property_writes": len(candidates) if group.kind == "RELATIONSHIP_PROPERTY" else 0,
@@ -1151,6 +1174,7 @@ def main() -> int:
             "property_writes",
             "dangling_references",
             "identity_collisions",
+            "ambiguous_endpoint_keys",
             "identity_collisions_withheld",
             "rows_withheld_on_identity_collision",
             "multi_source_evidence_merges",
@@ -1211,6 +1235,7 @@ def main() -> int:
             not cover["unmapped_artifacts"]
             and not cover["stale_not_imported_entries"]
             and totals["dangling_references"] == 0
+            and totals["ambiguous_endpoint_keys"] == 0
             and totals["identity_collisions"] == totals["identity_collisions_withheld"]
         ),
         "usable_note": (
@@ -1253,6 +1278,7 @@ def main() -> int:
         f"  property writes {totals['property_writes']:,}"
         f"  dangling {totals['dangling_references']:,}"
         f"  collisions {totals['identity_collisions']:,}"
+        f"  ambiguous endpoints {totals['ambiguous_endpoint_keys']:,}"
     )
     print()
     print("  coverage of the eligible domains' artifacts:")

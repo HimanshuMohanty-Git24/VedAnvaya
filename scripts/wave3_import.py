@@ -91,6 +91,16 @@ def provenance(run_id: str, domain: str, group_id: str) -> dict[str, str]:
 #: Which properties of a source row become element properties. Everything else in the row
 #: is evidence about how the row was produced and stays in the staging artifact -- copying a
 #: whole row onto a node makes the graph a second, diverging copy of the artifact.
+#:
+#: WHAT MUST NOT BE CARRIED, learned by doing it and rolling it back. The role-filler rows
+#: name the canonical entity a filler refers to in a field called ``entity_key``. Carrying
+#: that straight through puts the REFERENT's identity onto the filler, so 2,052
+#: :RoleFiller nodes answered to the keys of entities they merely referred to -- which is
+#: exactly the duplication the M1 card forbids, stated there as "not a duplicate of a
+#: canonical entity". ``entity_key`` was unique across all 108,779 pre-import nodes;
+#: afterwards 85 keys were shared by 481 nodes, and the label-less endpoint match then
+#: fanned 387 intended REFERS_TO edges into 4,564. Renamed via RENAMED below to
+#: ``refers_to_entity_key``, which says what it is and cannot be mistaken for an identity.
 CARRIED: dict[str, tuple[str, ...]] = {
     "SR_ROLE_FILLER_NODES": (
         "role_filler_key",
@@ -106,8 +116,6 @@ CARRIED: dict[str, tuple[str, ...]] = {
         "predicate",
         "frame",
         "assertion_ordinal",
-        "entity_key",
-        "entity_label",
     ),
     "RITUAL_RITE_NODES": (
         "ritual_key",
@@ -388,13 +396,81 @@ def correction_m5(session: Session, run_id: str, *, execute: bool) -> dict[str, 
 # ---------------------------------------------------------------------------------------
 
 
+#: Fields renamed on the way onto an element, because the artifact's name collides with an
+#: identity the graph already uses. See the note on CARRIED.
+RENAMED: dict[str, dict[str, str]] = {
+    # Both of these name something the filler is ABOUT rather than something it is. The
+    # first was found by rolling back a bad import; the second by the contract test written
+    # afterwards, before it could cost anything.
+    "SR_ROLE_FILLER_NODES": {
+        "entity_key": "refers_to_entity_key",
+        "canonical_key": "passage_canonical_key",
+    },
+}
+
+
+class AmbiguousEndpoint(RuntimeError):
+    """An endpoint key names more than one node, so an edge write would multiply it."""
+
+
+def assert_unambiguous(
+    session: Session, group: ElementGroup, payload: list[dict[str, Any]]
+) -> None:
+    """Refuse to write an edge whose endpoint key names more than one node.
+
+    A label-less ``MATCH (a) WHERE a.entity_key = X`` binds every node carrying that key,
+    and two such matches form a cartesian product, so one intended edge becomes n x m. This
+    project has met that before -- an unlabelled MATCH once made 39,461 bogus edges -- and
+    met it again here, turning 387 intended REFERS_TO edges into 4,564.
+
+    Raising is the right response rather than picking one node. Which of several nodes an
+    edge should attach to is a modelling question, and answering it inside an importer would
+    settle it by whichever node the planner happened to bind first.
+    """
+    for side, prop, label in (
+        ("start", group.start_key_property, group.start_label),
+        ("end", group.end_key_property, group.end_label),
+    ):
+        if label:
+            continue  # a labelled match is constrained by that label's own unique index
+        keys = sorted({str(row[side]) for row in payload})
+        ambiguous = session.run(
+            f"UNWIND $keys AS v MATCH (n) WHERE n.{prop} = v "
+            "WITH v, count(n) AS c WHERE c > 1 "
+            "RETURN v AS v, c AS c ORDER BY c DESC LIMIT 5",
+            keys=keys,
+        ).data()
+        if ambiguous:
+            raise AmbiguousEndpoint(
+                f"{group.group_id}: the {side} key names more than one node, so writing "
+                f"would multiply the edge. Worst: {ambiguous}. Constrain the group's "
+                f"{side}_label, or resolve the duplicate keys first."
+            )
+
+
 def write_nodes(
     session: Session, group: ElementGroup, rows: list[dict[str, Any]], run_id: str
-) -> int:
+) -> tuple[int, int]:
+    """Create the absent elements and LABEL the present ones. Returns (created, labelled).
+
+    Two queries rather than one MERGE, and the reason is measured. ``MERGE (n:Ritual
+    {entity_key: X})`` does not find an existing ``:Concept {entity_key: X}`` -- MERGE
+    matches on label AND properties together -- so it created a second node under the same
+    key for each of the 66 registry rows whose element the graph already held. The plan
+    already distinguishes present from absent; the importer has to act on that distinction
+    rather than hope MERGE will.
+
+    An existing element therefore gains the new label and the new properties on the node
+    that is already there, which is what the registries mean when they say EXISTING.
+    """
     key = group.match_property
+    renames = RENAMED.get(group.group_id, {})
     payload = []
     for row in rows:
-        props = node_props(row, group)
+        props = {
+            renames.get(field, field): value
+            for field, value in node_props(row, group).items()
+        }
         props.update(provenance(run_id, group.domain, group.group_id))
         if group.key_minted_from_identity:
             props[key] = f"{group.element}:{identity_of(row, group)}"
@@ -402,14 +478,37 @@ def write_nodes(
             props[key] = str(get_path(row, group.identity_fields[0]))
         payload.append(props)
 
-    query = (
-        f"UNWIND $rows AS row MERGE (n:{group.element} {{{key}: row.{key}}}) "
-        "SET n += row RETURN count(n) AS n"
-    )
+    keys = [row[key] for row in payload]
     with session.begin_transaction() as tx:
-        landed = tx.run(query, rows=payload).single()["n"]
+        present = {
+            str(record["v"])
+            for record in tx.run(
+                f"UNWIND $keys AS v MATCH (n) WHERE n.{key} = v RETURN DISTINCT v AS v",
+                keys=keys,
+            )
+        }
+        labelled = 0
+        existing = [row for row in payload if row[key] in present]
+        if existing:
+            labelled = int(
+                tx.run(
+                    f"UNWIND $rows AS row MATCH (n) WHERE n.{key} = row.{key} "
+                    f"SET n:{group.element}, n += row RETURN count(DISTINCT n) AS n",
+                    rows=existing,
+                ).single()["n"]
+            )
+        absent = [row for row in payload if row[key] not in present]
+        created = 0
+        if absent:
+            created = int(
+                tx.run(
+                    f"UNWIND $rows AS row CREATE (n:{group.element}) SET n += row "
+                    "RETURN count(n) AS n",
+                    rows=absent,
+                ).single()["n"]
+            )
         tx.commit()
-    return int(landed)
+    return created, labelled
 
 
 def write_node_properties(
@@ -469,11 +568,16 @@ def write_relationships(
     end_label = f":{group.end_label}" if group.end_label else ""
     landed = 0
     for predicate, payload in sorted(buckets.items()):
+        assert_unambiguous(session, group, payload)
+        # count(DISTINCT r), not count(r): UNWIND runs the MERGE once per row, so counting
+        # rows reports how many MERGE operations ran and calls a repeated pair a new edge.
+        # That is what made three groups report landing more than they were sent.
         query = (
             f"UNWIND $rows AS row "
             f"MATCH (a{start_label}) WHERE a.{group.start_key_property} = row.start "
             f"MATCH (b{end_label}) WHERE b.{group.end_key_property} = row.end "
-            f"MERGE (a)-[r:{predicate}]->(b) SET r += row.props RETURN count(r) AS n"
+            f"MERGE (a)-[r:{predicate}]->(b) SET r += row.props "
+            "RETURN count(DISTINCT r) AS n"
         )
         with session.begin_transaction() as tx:
             landed += int(tx.run(query, rows=payload).single()["n"])
@@ -524,8 +628,9 @@ def write_relationship_properties(
             f"MATCH (a{start_label}) WHERE a.{group.start_key_property} = row.start "
             f"MATCH (b{end_label}) WHERE b.{group.end_key_property} = row.end "
             f"MATCH (a)-[r:{predicate}]{'-' if group.symmetric else '->'}(b) "
-            "SET r += row.props RETURN count(r) AS n"
+            "SET r += row.props RETURN count(DISTINCT r) AS n"
         )
+        assert_unambiguous(session, group, payload)
         with session.begin_transaction() as tx:
             landed += int(tx.run(query, rows=payload).single()["n"])
             tx.commit()
@@ -686,7 +791,11 @@ def main() -> int:
                         newline="\n",
                     )
 
-            header = f"  {'group':38}{'kind':24}{'sent':>8}{'landed':>8}  status"
+            promised = {entry["group_id"]: entry for entry in (plan.get("groups") or [])}
+            disagreements: list[str] = []
+            header = (
+                f"  {'group':38}{'kind':24}{'sent':>8}{'landed':>11}{'planned':>9}  status"
+            )
             print()
             print(header)
             print("  " + "-" * (len(header) - 2))
@@ -706,33 +815,56 @@ def main() -> int:
                     ]
                 sent = len(rows)
                 if group.group_id in done:
-                    print(f"  {group.group_id[:37]:38}{group.kind:24}{sent:>8}{'-':>8}  done")
+                    print(
+                        f"  {group.group_id[:37]:38}{group.kind:24}{sent:>8}"
+                        f"{'-':>11}{'-':>9}  done"
+                    )
                     continue
                 if not args.execute:
                     print(
-                        f"  {group.group_id[:37]:38}{group.kind:24}{sent:>8}{'-':>8}  rehearsed"
+                        f"  {group.group_id[:37]:38}{group.kind:24}{sent:>8}"
+                        f"{'-':>11}{'-':>9}  rehearsed"
                     )
                     steps.append(
                         {"group_id": group.group_id, "rows_sent": sent, "executed": False}
                     )
                     continue
 
-                landed = WRITERS[group.kind](session, group, rows, run_id)
-                ok = landed >= sent if group.kind == "NODE" else landed > 0 or sent == 0
+                outcome = WRITERS[group.kind](session, group, rows, run_id)
+                if isinstance(outcome, tuple):
+                    created, touched = outcome
+                else:
+                    created, touched = 0, int(outcome)
+                # Against the plan's own promise for this group, so a disagreement shows up
+                # here rather than only in the final census -- which is how the first run of
+                # this import got 5,930 relationships past the per-group check.
+                entry = promised.get(group.group_id, {})
+                field = "nodes_create" if group.kind == "NODE" else "relationships_create"
+                expected = int(entry.get(field) or 0)
+                measured = created if group.kind == "NODE" else touched
+                ok = measured == expected
                 steps.append(
                     {
                         "group_id": group.group_id,
                         "domain": group.domain,
                         "kind": group.kind,
                         "rows_sent": sent,
-                        "rows_landed": landed,
+                        "elements_created": created,
+                        "elements_labelled_or_updated": touched,
+                        "plan_promised_create": expected,
+                        "matches_the_plan": ok,
                         "executed": True,
                     }
                 )
+                shown = f"{created}+{touched}" if group.kind == "NODE" else str(touched)
                 print(
-                    f"  {group.group_id[:37]:38}{group.kind:24}{sent:>8}{landed:>8}  "
-                    + ("ok" if ok else "DIFF")
+                    f"  {group.group_id[:37]:38}{group.kind:24}{sent:>8}{shown:>11}"
+                    f"{expected:>9}  " + ("ok" if ok else "DIFFERS FROM PLAN")
                 )
+                if not ok:
+                    disagreements.append(
+                        f"{group.group_id}: plan promised {expected}, {measured} landed"
+                    )
                 done.add(group.group_id)
                 CHECKPOINT.write_text(
                     json.dumps({"run_id": run_id, "completed": sorted(done)}, indent=2) + "\n",
@@ -774,6 +906,13 @@ def main() -> int:
         "node_delta": after["nodes"] - before["nodes"],
         "relationship_delta": after["relationships"] - before["relationships"],
         "core_corpus_unchanged": before["core_corpus"] == after["core_corpus"],
+        "promised_node_delta": (dry.get("expected_census") or {}).get("nodes_create"),
+        "promised_relationship_delta": (
+            int((dry.get("expected_census") or {}).get("relationships_create") or 0)
+            - int((dry.get("expected_census") or {}).get("relationships_retire") or 0)
+        ),
+        "per_group_disagreements": disagreements,
+        "every_group_matched_the_plan": not disagreements,
         "steps": steps,
     }
     pathlib.Path(args.json).write_text(
@@ -785,13 +924,22 @@ def main() -> int:
         f"  after: {after['nodes']:,} nodes / {after['relationships']:,} relationships"
         f"  (nodes {receipt['node_delta']:+}, relationships {receipt['relationship_delta']:+})"
     )
+    print(
+        f"  promised: nodes {receipt['promised_node_delta']:+}, "
+        f"relationships {receipt['promised_relationship_delta']:+}"
+    )
     print(f"  core corpus unchanged: {receipt['core_corpus_unchanged']}")
+    if disagreements:
+        print()
+        print(f"  {len(disagreements)} GROUP(S) DID NOT MATCH THE PLAN:")
+        for line in disagreements:
+            print(f"    - {line}")
     print(f"  receipt: {args.json}")
     print()
     if not args.execute:
         print("  REHEARSAL ONLY. Nothing was written. Re-run with --execute.")
         print()
-    return 0
+    return 0 if not disagreements else 1
 
 
 if __name__ == "__main__":
