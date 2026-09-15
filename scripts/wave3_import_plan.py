@@ -1086,11 +1086,22 @@ def passes(row: dict[str, Any], group: ElementGroup) -> bool:
     if group.require_reachable_evidence:
         key = str(get_path(row, group.identity_fields[0]) or "")
         # Reachable means one of two things, both measurable here: a rite edge names it, or
-        # the Samhita attests it. An entity attested only in a Brahmana or a Srautasutra is
-        # neither -- ritual/supplementary_passages.jsonl is declared not-imported, so
-        # importing the entity while excluding its evidence asserts what this graph cannot
-        # support. 12 registry entities fail this; every one of them arrived with no edge.
-        attested = bool(row.get("samhita_attested"))
+        # it carries a Samhita attestation EXAMPLE -- a locator, not a claim to have one.
+        #
+        # The first version accepted the samhita_attested flag on its own, and two officiant
+        # roles came through on it with no example recorded: roles.jsonl has no
+        # samhita_attestation_examples field at all, which is why RITUAL_ROLE_ATTESTATION
+        # finds 0 candidates. They became the scorecard's last two orphan_entities, and
+        # exempting them by name was arguing with a gate rather than answering it. An entity
+        # claiming attestation it cannot locate is weaker than an absent one.
+        examples = row.get("samhita_attestation_examples")
+        if isinstance(examples, dict):
+            located = any(
+                values if isinstance(values, list) else [values] for values in examples.values()
+            )
+        else:
+            located = bool(examples)
+        attested = located
         redirect = redirects(group.domain)
         if not attested and key not in referenced_by_a_rite_edge():
             if redirect.get(key, key) not in referenced_by_a_rite_edge():

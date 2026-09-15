@@ -26,20 +26,19 @@ query could ask across them. `quality_tier` is the single derived grade.
 
 | metric | value |
 |---|---|
-| edges carrying `quality_tier` | 265,070 (92.0%) |
+| edges carrying `quality_tier` | 288,051 (100.0%) |
 | edges carrying `evidence` | 108,818 (37.8%) |
 | edges carrying `trust` | 106,040 (36.8%) |
-| ungraded edges | **22981** |
+| ungraded edges | **0** |
 
 ### Quality tier distribution
 
 | tier | meaning | edges |
 |---|---|---|
-| `TIER_A` | a source states it | 100,988 |
-| `TIER_B` | reproducible derivation, including scope inheritance | 158,936 |
+| `TIER_A` | a source states it | 107,219 |
+| `TIER_B` | reproducible derivation, including scope inheritance | 175,685 |
 | `TIER_C` | model-extracted, evidence survived review | 598 |
-| `TIER_D` | interpretation, or an unreviewed model proposal | 4,548 |
-| `(none)` | - | 22,981 |
+| `TIER_D` | interpretation, or an unreviewed model proposal | 4,549 |
 
 TIER_C is **0 by construction**: all 736 model-extracted candidates are
 `state=CANDIDATE`, because there is no human gold set to accept them against.
@@ -61,8 +60,8 @@ not something the source said about any of those mantras.
 
 | metric | V1 | V2 |
 |---|---|---|
-| UNKNOWN_LABEL_RATE | 59.2% | **28.15%** |
-| product nodes without a readable label | 22,541 | **14209** |
+| UNKNOWN_LABEL_RATE | 59.2% | **0.00%** |
+| product nodes without a readable label | 22,541 | **0** |
 | product nodes with `display_type` | 0 | 36,265 |
 
 ## 4. Devatā model
@@ -190,8 +189,8 @@ pseudo-entity `VG:CORPUS:FOUR-VEDA`, which deliberately has no node.
 | gate | result | pass |
 |---|---|---|
 | internal nodes reachable in product traversal | 0 | YES |
-| ungraded edges | 22981 | NO |
-| product nodes without a readable label | 14209 | NO |
+| ungraded edges | 0 | YES |
+| product nodes without a readable label | 0 | YES |
 | orphan domain entities | 2 | NO |
 | controlled-predicate violations | 0 | YES |
 | undeclared relationship types | 0 | YES |

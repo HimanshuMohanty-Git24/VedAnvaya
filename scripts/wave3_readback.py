@@ -58,16 +58,13 @@ WAVE = "WAVE_3"
 #: Nodes this wave writes that are unattached on purpose, each with the decision behind it.
 #: A list of decisions rather than a rule, so the next island is a finding rather than a
 #: silent member of a class.
+#:
+#: It used to hold two officiant roles as well, on the argument that dropping a measured
+#: attestation over a missing locator was worse than keeping an orphan. That was the wrong
+#: way round -- an entity claiming attestation it cannot locate is weaker than an absent one
+#: -- and the plan now withholds them instead. An exemption list earns its place by being
+#: short; two of its three entries turned out to be a gate I was arguing with.
 DELIBERATELY_UNATTACHED: dict[str, str] = {
-    "VG:CONCEPT:SADASYA-PRIEST": (
-        "An officiant role marked samhita_attested with evidence SAMHITA and no attestation "
-        "example recorded -- roles.jsonl carries no samhita_attestation_examples field at "
-        "all. Attested in a corpus this graph holds, so kept rather than dropped over a "
-        "missing locator. The artifact's silence is a finding against the artifact."
-    ),
-    "VG:CONCEPT:SAMITR-BUTCHER": (
-        "The same case as SADASYA-PRIEST: Samhita-attested, no locator recorded."
-    ),
     "VG:SWORK:SAYANA-TAITTIRIYA-BRAHMANA-BHASYA": (
         "A registered scholarly work that no claim cites. 16 of the 17 works appear in the "
         "rows; this one is a bibliography entry, not an error."
