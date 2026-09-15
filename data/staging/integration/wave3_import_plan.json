@@ -11,7 +11,7 @@
     "semantic_roles"
   ],
   "graph_before": {
-    "nodes": 123000,
+    "nodes": 122988,
     "relationships": 288051
   },
   "coverage": {
@@ -2003,7 +2003,7 @@
       "group_id": "SCHOLARSHIP_ASSERTED_BY_A",
       "domain": "scholarship",
       "kind": "RELATIONSHIP",
-      "element": "ASSERTED_BY",
+      "element": "POSITION_ASSERTED_BY",
       "source": "rows.jsonl",
       "identity_fields": [
         "canonical_key",
@@ -2011,7 +2011,7 @@
         "payload.position_a.asserter_id"
       ],
       "require": [],
-      "notes": "The first of two named asserters per claim. Without these the 17 :Scholar nodes are unreachable and the graph cannot answer who disagreed with whom, which is the whole substance of the domain: 91 disagreements, each with two named asserters, two page-precise locators and a stated incompatibility.",
+      "notes": "The first of two named asserters per claim. Without these the 17 :Scholar nodes are unreachable and the graph cannot answer who disagreed with whom, which is the whole substance of the domain: 91 disagreements, each with two named asserters, two page-precise locators and a stated incompatibility.\n\nPOSITION_ASSERTED_BY and not the existing ASSERTED_BY, whose declared signature is InterpretiveClaim -> Source. Reusing it put 226 edges outside that signature, which the quality scorecard caught -- the same error avoided deliberately for HAS_STEP and CONCERNS and then made anyway here.",
       "artifact_elements": 113,
       "filtered_out_by_require": 0,
       "candidates": 113,
@@ -2027,7 +2027,7 @@
       "unique_triples": 113,
       "rows_missing_an_endpoint_field": 0,
       "relationship_types_asserted": [
-        "ASSERTED_BY"
+        "POSITION_ASSERTED_BY"
       ],
       "dangling_references": 0,
       "dangling_detail": [],
@@ -2038,8 +2038,8 @@
       "endpoints_redirected": 0,
       "ambiguous_endpoint_keys": 0,
       "ambiguous_endpoint_detail": [],
-      "relationships_create": 0,
-      "relationships_update": 113,
+      "relationships_create": 113,
+      "relationships_update": 0,
       "property_writes": 0,
       "expected_to_exist_but_absent": 0,
       "expected_to_exist_but_absent_detail": []
@@ -2048,7 +2048,7 @@
       "group_id": "SCHOLARSHIP_ASSERTED_BY_B",
       "domain": "scholarship",
       "kind": "RELATIONSHIP",
-      "element": "ASSERTED_BY",
+      "element": "POSITION_ASSERTED_BY",
       "source": "rows.jsonl",
       "identity_fields": [
         "canonical_key",
@@ -2072,7 +2072,7 @@
       "unique_triples": 113,
       "rows_missing_an_endpoint_field": 0,
       "relationship_types_asserted": [
-        "ASSERTED_BY"
+        "POSITION_ASSERTED_BY"
       ],
       "dangling_references": 0,
       "dangling_detail": [],
@@ -2083,8 +2083,8 @@
       "endpoints_redirected": 0,
       "ambiguous_endpoint_keys": 0,
       "ambiguous_endpoint_detail": [],
-      "relationships_create": 0,
-      "relationships_update": 113,
+      "relationships_create": 113,
+      "relationships_update": 0,
       "property_writes": 0,
       "expected_to_exist_but_absent": 0,
       "expected_to_exist_but_absent_detail": []
@@ -2577,8 +2577,8 @@
     "nodes_create": 0,
     "nodes_update": 19856,
     "property_writes": 51215,
-    "relationships_create": 0,
-    "relationships_update": 66869,
+    "relationships_create": 226,
+    "relationships_update": 66643,
     "rows_withheld_on_identity_collision": 36,
     "triples_awaiting_an_earlier_step": 0
   },
@@ -2611,7 +2611,7 @@
     "scholarship": {
       "nodes_create": 0,
       "property_writes": 0,
-      "relationships_create": 0
+      "relationships_create": 226
     },
     "semantic_roles": {
       "nodes_create": 0,
@@ -2622,13 +2622,13 @@
   "schema_additions": {
     "node_labels_created": [],
     "relationship_types_touched": [
-      "ASSERTED_BY",
       "ASSERTION_ROLE",
       "ATTESTED_IN",
       "FORM_OF_RITE",
       "HAS_RITUAL_STEP",
       "PART_OF_RITE",
       "PERFORMED_BY",
+      "POSITION_ASSERTED_BY",
       "POSITION_STATED_IN",
       "QUALITY_VERDICT_ABOUT",
       "REFERS_TO",
@@ -2642,12 +2642,12 @@
     ]
   },
   "expected_census": {
-    "nodes_before": 123000,
-    "nodes_after": 123000,
+    "nodes_before": 122988,
+    "nodes_after": 122988,
     "nodes_delta": 0,
     "relationships_before": 288051,
-    "relationships_after": 288051,
-    "relationships_delta": 0,
+    "relationships_after": 288277,
+    "relationships_delta": 226,
     "note": "No group plans a retirement, so no element is removed by an ADDITION. The retirements Wave 3 makes are corrections, planned separately and named in the dry-run: the SOMA-PRESSING weak-alias retirement."
   },
   "identity_collisions_are_all_withheld": true,
