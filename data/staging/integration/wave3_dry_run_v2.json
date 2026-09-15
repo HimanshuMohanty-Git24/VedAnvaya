@@ -13,9 +13,9 @@
     "10 DEFECT_FOUND_AND_FIXED counts as a completed adversarial gate"
   ],
   "provenance": {
-    "git_commit": "44d112ea070c973613824a4666d6e38800c9d39c",
+    "git_commit": "fb900dd744000c7f918afde0b41087765f4e7027",
     "git_branch": "phase-data-completeness-v2",
-    "working_tree_clean": false,
+    "working_tree_clean": true,
     "gap_registry_sha256": "82ba2160569bb603cf65452b652fececb693771868fca9d64157a26412c5709b",
     "element_plan_sha256": "5a894bb5df8e66bf23941eb2d8ae5158031451593fb4e1c276e378cbad75271e",
     "eligibility_ledger_sha256": "84ae87e0d62f43f7f2cf9d3fb1306a48d117d1030e931611fb5184953612dc0c",
@@ -748,7 +748,7 @@
     "all_subject_grain_validation_pass": true,
     "m6_scopes_homogeneous_and_truthful": true,
     "folded_equality_creates_no_identity_by_itself": true,
-    "soma_pressing_weak_alias_corrections_included": false,
+    "soma_pressing_weak_alias_corrections_included": true,
     "cross_domain_collision_conflict_zero": true,
     "dangling_references_zero": true,
     "unexplained_identity_collisions_zero": true,
@@ -756,15 +756,12 @@
     "audio_pending_review_rows_remain_withheld": true,
     "destructive_changes_are_explicit_corrections_with_proof": true,
     "graph_backup_exists": true,
-    "working_tree_clean": false,
+    "working_tree_clean": true,
     "element_plan_usable": true,
     "artifact_coverage_complete": true,
     "no_open_blockers": true
   },
-  "acceptance_gate_failures": [
-    "soma_pressing_weak_alias_corrections_included",
-    "working_tree_clean"
-  ],
-  "go_no_go": "NO-GO",
-  "authorization": "STOP. Owner section 6: if any condition fails, STOP."
+  "acceptance_gate_failures": [],
+  "go_no_go": "GO",
+  "authorization": "Owner section 6 authorizes canonical integration without another owner round when every condition above holds."
 }
