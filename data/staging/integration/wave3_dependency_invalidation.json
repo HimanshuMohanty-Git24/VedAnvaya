@@ -1,0 +1,352 @@
+{
+  "schema_version": "1.0",
+  "artifact": "WAVE_3_DEPENDENCY_INVALIDATION",
+  "owner_section": "13",
+  "import_run_id": "5fa3e60c92fb19da",
+  "method": "Every element Wave 3 wrote carries a wave stamp, so staleness is a query about labels and predicates rather than a judgement about what probably moved. A property backfill counts as an input changing: an artifact computed over USES_FORMULA before the match levels landed read edges that now say more than they did, and nothing in the artifact records which version it saw.",
+  "labels_written_by_this_wave": {
+    "Action": 32,
+    "Animal": 4,
+    "Concept": 250,
+    "Crop": 4,
+    "DeityCommunity": 12,
+    "Devata": 27,
+    "DomainEntity": 250,
+    "Formula": 4825,
+    "FormulaFamily": 720,
+    "Metal": 7,
+    "Object": 44,
+    "Offering": 21,
+    "Plant": 4,
+    "QualityVerdict": 2568,
+    "Ritual": 100,
+    "RitualRole": 26,
+    "RitualStep": 9255,
+    "RoleFiller": 2052,
+    "Scholar": 17,
+    "ScholarlyDisagreement": 113,
+    "ScholarlyWork": 17,
+    "Substance": 34,
+    "Weapon": 5
+  },
+  "relationship_types_written_by_this_wave": {
+    "ASSERTED_BY": 226,
+    "ASSERTION_ROLE": 2052,
+    "ATTESTED_IN": 1266,
+    "EXACT_PARALLEL_OF": 1002,
+    "FORM_OF_RITE": 5,
+    "HAS_RITUAL_STEP": 9255,
+    "NEAR_PARALLEL_OF": 3049,
+    "PART_OF_RITE": 18,
+    "PERFORMED_BY": 135,
+    "POSITION_STATED_IN": 226,
+    "QUALITY_VERDICT_ABOUT": 2568,
+    "REFERS_TO": 387,
+    "REPORTED_IN": 113,
+    "REUSES_TEXT_FROM": 1684,
+    "RITE_INVOLVES_ACTION": 174,
+    "SCHOLARLY_CLAIM_ABOUT": 113,
+    "SHARES_ENTITY_VOCABULARY_WITH": 2141,
+    "SHARES_FORMULA_WITH": 6148,
+    "SPECIALIZED_FORM_OF": 1,
+    "USES_FORMULA": 22686,
+    "USES_OBJECT": 111,
+    "USES_OFFERING": 162,
+    "USES_SUBSTANCE": 32,
+    "VARIANT_OF": 788
+  },
+  "consumers": [
+    {
+      "consumer": "semantic resemblance",
+      "status": "STALE_INPUT",
+      "inputs_that_moved": {
+        "labels": {
+          "RoleFiller": 2052
+        },
+        "relationship_types": {
+          "ASSERTION_ROLE": 2052,
+          "REFERS_TO": 387,
+          "USES_FORMULA": 22686
+        }
+      },
+      "elements_touched": 27177,
+      "reads_labels": [
+        "Passage",
+        "Mantra",
+        "Translation",
+        "SemanticAssertion",
+        "RoleFiller"
+      ],
+      "reads_types": [
+        "HAS_TRANSLATION",
+        "ASSERTION_ROLE",
+        "REFERS_TO",
+        "USES_FORMULA"
+      ],
+      "rebuilt_by": "the domain's own pipeline, from the post-import snapshot",
+      "owner_ruling": "Section 8: re-derive from the post-import snapshot. Not a refresh -- the predicate stays defined on the translation-free channels and its declared limits carry over. Tier B stays refused until the Devata bridge exists.",
+      "cost": "the full candidate pool; the layer's own gates and adjudication set apply"
+    },
+    {
+      "consumer": "cross-Veda matrices",
+      "status": "STALE_INPUT",
+      "inputs_that_moved": {
+        "labels": {},
+        "relationship_types": {
+          "EXACT_PARALLEL_OF": 1002,
+          "VARIANT_OF": 788,
+          "NEAR_PARALLEL_OF": 3049,
+          "REUSES_TEXT_FROM": 1684
+        }
+      },
+      "elements_touched": 6523,
+      "reads_labels": [
+        "Passage",
+        "Mantra"
+      ],
+      "reads_types": [
+        "EXACT_PARALLEL_OF",
+        "VARIANT_OF",
+        "NEAR_PARALLEL_OF",
+        "REUSES_TEXT_FROM"
+      ],
+      "rebuilt_by": "vedagraph.enrich.crossveda over the canonical corpora",
+      "owner_ruling": null,
+      "cost": "about four minutes over all 20,210 mantras"
+    },
+    {
+      "consumer": "formula / parallel / variant relations",
+      "status": "STALE_INPUT",
+      "inputs_that_moved": {
+        "labels": {
+          "Formula": 4825,
+          "FormulaFamily": 720
+        },
+        "relationship_types": {
+          "USES_FORMULA": 22686,
+          "SHARES_FORMULA_WITH": 6148
+        }
+      },
+      "elements_touched": 34379,
+      "reads_labels": [
+        "Formula",
+        "FormulaFamily",
+        "Passage"
+      ],
+      "reads_types": [
+        "USES_FORMULA",
+        "HAS_FORMULA",
+        "SHARES_FORMULA_WITH",
+        "MEMBER_OF_FAMILY"
+      ],
+      "rebuilt_by": "scripts/build_formula_families.py",
+      "owner_ruling": null,
+      "cost": "minutes; its byte-identical rebuild test pins the output"
+    },
+    {
+      "consumer": "entity coverage",
+      "status": "STALE_INPUT",
+      "inputs_that_moved": {
+        "labels": {
+          "Devata": 27,
+          "Concept": 250,
+          "DomainEntity": 250
+        },
+        "relationship_types": {}
+      },
+      "elements_touched": 527,
+      "reads_labels": [
+        "Devata",
+        "Concept",
+        "DomainEntity",
+        "Rishi",
+        "Chandas"
+      ],
+      "reads_types": [
+        "MENTIONS_ENTITY",
+        "ABOUT_CONCEPT",
+        "HAS_DEVATA",
+        "MENTIONS_DEVATA"
+      ],
+      "rebuilt_by": "scripts/build_veda_coverage_and_metrics.py",
+      "owner_ruling": "Coverage figures must come from canonical readback, not staging manifests (section 12).",
+      "cost": "minutes, reads the graph directly"
+    },
+    {
+      "consumer": "ritual aggregates",
+      "status": "STALE_INPUT",
+      "inputs_that_moved": {
+        "labels": {
+          "Ritual": 100,
+          "RitualStep": 9255,
+          "RitualRole": 26,
+          "Offering": 21,
+          "Action": 32
+        },
+        "relationship_types": {
+          "HAS_RITUAL_STEP": 9255,
+          "PERFORMED_BY": 135,
+          "USES_OBJECT": 111,
+          "USES_OFFERING": 162,
+          "USES_SUBSTANCE": 32,
+          "RITE_INVOLVES_ACTION": 174,
+          "ATTESTED_IN": 1266
+        }
+      },
+      "elements_touched": 20569,
+      "reads_labels": [
+        "Ritual",
+        "RitualStep",
+        "RitualRole",
+        "Offering",
+        "Action"
+      ],
+      "reads_types": [
+        "HAS_RITUAL_STEP",
+        "PERFORMED_BY",
+        "USES_OBJECT",
+        "USES_OFFERING",
+        "USES_SUBSTANCE",
+        "RITE_INVOLVES_ACTION",
+        "ATTESTED_IN"
+      ],
+      "rebuilt_by": "no aggregate exists yet -- this layer is new in Wave 3",
+      "owner_ruling": null,
+      "cost": "n/a: nothing to invalidate, and nothing consumes it yet"
+    },
+    {
+      "consumer": "quality evaluation",
+      "status": "STALE_INPUT",
+      "inputs_that_moved": {
+        "labels": {
+          "QualityVerdict": 2568
+        },
+        "relationship_types": {
+          "QUALITY_VERDICT_ABOUT": 2568
+        }
+      },
+      "elements_touched": 5136,
+      "reads_labels": [
+        "QualityVerdict",
+        "QAIssue",
+        "Passage"
+      ],
+      "reads_types": [
+        "QUALITY_VERDICT_ABOUT",
+        "QA_ISSUE_ON"
+      ],
+      "rebuilt_by": "scripts/graph_quality_scorecard.py",
+      "owner_ruling": null,
+      "cost": "cheap, and the scorecard's own docstring says re-running is the only way it stays honest"
+    },
+    {
+      "consumer": "Ask retrieval",
+      "status": "STALE_INPUT",
+      "inputs_that_moved": {
+        "labels": {
+          "Devata": 27,
+          "Concept": 250
+        },
+        "relationship_types": {}
+      },
+      "elements_touched": 277,
+      "reads_labels": [
+        "Passage",
+        "Mantra",
+        "Translation",
+        "Devata",
+        "Concept"
+      ],
+      "reads_types": [
+        "MENTIONS_ENTITY",
+        "ABOUT_CONCEPT",
+        "HAS_TRANSLATION",
+        "HAS_DEVATA"
+      ],
+      "rebuilt_by": "the search index build, then scripts/run_ask_benchmark.py to re-grade",
+      "owner_ruling": null,
+      "cost": "the index is cheap; re-grading the benchmark spends LLM quota, and a daily quota is burned by retrying it"
+    },
+    {
+      "consumer": "Visualization Lab aggregates",
+      "status": "STALE_INPUT",
+      "inputs_that_moved": {
+        "labels": {
+          "Devata": 27,
+          "Concept": 250
+        },
+        "relationship_types": {}
+      },
+      "elements_touched": 277,
+      "reads_labels": [
+        "Devata",
+        "Concept",
+        "Passage",
+        "DerivedMetric"
+      ],
+      "reads_types": [
+        "MENTIONS_ENTITY",
+        "ABOUT_CONCEPT",
+        "CO_OCCURS_WITH",
+        "HAS_DEVATA"
+      ],
+      "rebuilt_by": "scripts/export_graph_world.py and the metrics build",
+      "owner_ruling": "Do not regenerate the frontend design (section 13).",
+      "cost": "minutes; publishes to a reader-facing surface, so it follows the gate"
+    },
+    {
+      "consumer": "Knowledge World public projection",
+      "status": "STALE_INPUT",
+      "inputs_that_moved": {
+        "labels": {
+          "Devata": 27,
+          "Concept": 250,
+          "DomainEntity": 250
+        },
+        "relationship_types": {
+          "SPECIALIZED_FORM_OF": 1
+        }
+      },
+      "elements_touched": 528,
+      "reads_labels": [
+        "Devata",
+        "Concept",
+        "DomainEntity",
+        "Passage"
+      ],
+      "reads_types": [
+        "MENTIONS_ENTITY",
+        "ABOUT_CONCEPT",
+        "SPECIALIZED_FORM_OF"
+      ],
+      "rebuilt_by": "scripts/export_graph_world.py",
+      "owner_ruling": "A staged figure may not reach a public surface before canonical readback (section F, carried into Wave 3).",
+      "cost": "minutes; public, so it follows the gate"
+    }
+  ],
+  "stale": [
+    "semantic resemblance",
+    "cross-Veda matrices",
+    "formula / parallel / variant relations",
+    "entity coverage",
+    "ritual aggregates",
+    "quality evaluation",
+    "Ask retrieval",
+    "Visualization Lab aggregates",
+    "Knowledge World public projection"
+  ],
+  "current": [],
+  "nothing_has_been_rebuilt": true,
+  "rebuild_order": [
+    "1. cross-Veda matrices and formula relations -- no consumer of theirs yet",
+    "2. entity coverage and quality evaluation -- read the graph directly",
+    "3. semantic resemblance -- the owner's re-derivation, with its own gates",
+    "4. Ask retrieval index, then re-grade only if the index moved",
+    "5. Visualization Lab and Knowledge World -- public, so last and gated"
+  ],
+  "do_not": [
+    "regenerate the frontend design",
+    "publish a projection figure that has not been read back",
+    "re-grade the Ask benchmark speculatively -- a daily quota is burned by a retry"
+  ]
+}

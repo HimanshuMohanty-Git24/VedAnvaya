@@ -158,6 +158,17 @@ CLOSURE: dict[str, tuple[str, str, tuple[str, ...]]] = {
         "sum(CASE WHEN n.falsifier IS NULL THEN 1 ELSE 0 END) AS without_falsifier",
         ("without_about", "without_falsifier"),
     ),
+    "graph_quality_contracts": (
+        "every element this wave wrote carries the quality_tier and display_label the "
+        "graph keeps on all the others -- NOT YET TRUE, and the figures are the residual",
+        "MATCH ()-[r]->() WHERE r.wave3_touched_by IS NOT NULL AND r.quality_tier IS NULL "
+        "WITH count(r) AS ungraded "
+        "MATCH (n) WHERE n.wave3_created_by IS NOT NULL AND NOT n:Internal "
+        "AND n.display_label IS NULL "
+        "RETURN ungraded AS edges_without_a_quality_tier, "
+        "count(n) AS nodes_without_a_display_label",
+        (),
+    ),
     "cross_veda": (
         "the corrected transformation typing landed on existing parallel edges and created "
         "none",

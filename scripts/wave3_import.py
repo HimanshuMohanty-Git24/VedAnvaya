@@ -893,6 +893,88 @@ def correction_withheld_registry_entities(
     return result
 
 
+def correction_retype_asserted_by(
+    session: Session, run_id: str, *, execute: bool
+) -> dict[str, Any]:
+    """Move this wave's ASSERTED_BY edges to POSITION_ASSERTED_BY.
+
+    Scoped to edges this wave wrote, so a curated InterpretiveClaim -> Source edge cannot
+    be caught. Idempotent: on a graph where the retype has run this matches nothing.
+    """
+    result: dict[str, Any] = {"correction": "RETYPE_ASSERTED_BY"}
+    probe = session.run(
+        "MATCH ()-[r:ASSERTED_BY]->() WHERE r.wave3_touched_by IS NOT NULL "
+        "RETURN count(r) AS c"
+    ).single()
+    outstanding = int((probe or {"c": 0})["c"])
+    result["mistyped_edges"] = outstanding
+    result["already_applied"] = outstanding == 0
+    if not execute or not outstanding:
+        result["executed"] = False
+        return result
+    with session.begin_transaction() as tx:
+        moved = int(
+            tx.run(
+                "MATCH (a)-[r:ASSERTED_BY]->(b) WHERE r.wave3_touched_by IS NOT NULL "
+                "CREATE (a)-[n:POSITION_ASSERTED_BY]->(b) "
+                "SET n = properties(r), n.retyped_from = 'ASSERTED_BY', "
+                "    n.retype_reason = 'ASSERTED_BY is declared InterpretiveClaim -> "
+                "Source; this relation is ScholarlyDisagreement -> Scholar', "
+                "    n.wave3_retyped_by = $run_id "
+                "DELETE r RETURN count(*) AS n",
+                run_id=run_id,
+            ).single()["n"]
+        )
+        tx.commit()
+    result.update({"executed": True, "edges_retyped": moved})
+    return result
+
+
+def correction_label_redirect_targets_as_rituals(
+    session: Session, run_id: str, *, execute: bool
+) -> dict[str, Any]:
+    """Give the three redirect targets the :Ritual label their edges' signatures require.
+
+    The rite registries mark three rites ALREADY_MODELLED_AS_SOCIALRITE, and the redirect
+    sends their edges to those nodes -- which carry :SocialRite and not :Ritual, so 5 edges
+    fell outside the PERFORMED_BY, USES_OBJECT, USES_OFFERING and USES_SUBSTANCE signatures.
+
+    The label is truthful rather than a workaround. A marriage a Srautasutra describes with
+    objects and offerings is a rite; the artifact says so by naming it already_modelled_as;
+    and a node may carry two labels that are both true. MATCH (n:Ritual) goes 100 to 103.
+    """
+    targets = sorted(set(redirects("ritual").values()))
+    result: dict[str, Any] = {
+        "correction": "LABEL_REDIRECT_TARGETS_AS_RITUALS",
+        "targets": targets,
+    }
+    if not targets:
+        result.update({"already_applied": True, "executed": False})
+        return result
+    probe = session.run(
+        "UNWIND $keys AS k MATCH (n {entity_key: k}) WHERE NOT n:Ritual RETURN count(n) AS c",
+        keys=targets,
+    ).single()
+    outstanding = int((probe or {"c": 0})["c"])
+    result["unlabelled"] = outstanding
+    result["already_applied"] = outstanding == 0
+    if not execute or not outstanding:
+        result["executed"] = False
+        return result
+    with session.begin_transaction() as tx:
+        labelled = int(
+            tx.run(
+                "UNWIND $keys AS k MATCH (n {entity_key: k}) WHERE NOT n:Ritual "
+                "SET n:Ritual, n.ritual_label_added_by = $run_id RETURN count(n) AS n",
+                keys=targets,
+                run_id=run_id,
+            ).single()["n"]
+        )
+        tx.commit()
+    result.update({"executed": True, "nodes_labelled": labelled})
+    return result
+
+
 WRITERS = {
     "NODE": write_nodes,
     "NODE_PROPERTY": write_node_properties,
@@ -1030,6 +1112,11 @@ def main() -> int:
                 ("SOMA_PRESSING_WEAK_ALIAS_RETIREMENT", correction_soma),
                 ("M5_SPECIALIZED_FORM_OF", correction_m5),
                 ("WITHHELD_REGISTRY_ENTITIES", correction_withheld_registry_entities),
+                ("RETYPE_ASSERTED_BY", correction_retype_asserted_by),
+                (
+                    "LABEL_REDIRECT_TARGETS_AS_RITUALS",
+                    correction_label_redirect_targets_as_rituals,
+                ),
             ):
                 if name in done:
                     print(f"  {name:46} already applied, skipping")

@@ -682,7 +682,7 @@ GROUPS: tuple[ElementGroup, ...] = (
         domain="scholarship",
         kind="RELATIONSHIP",
         source="rows.jsonl",
-        element="ASSERTED_BY",
+        element="POSITION_ASSERTED_BY",
         identity_fields=("canonical_key", "payload.axis", "payload.position_a.asserter_id"),
         start_field="canonical_key",
         end_field="payload.position_a.asserter_id",
@@ -695,7 +695,11 @@ GROUPS: tuple[ElementGroup, ...] = (
             "The first of two named asserters per claim. Without these the 17 :Scholar "
             "nodes are unreachable and the graph cannot answer who disagreed with whom, "
             "which is the whole substance of the domain: 91 disagreements, each with two "
-            "named asserters, two page-precise locators and a stated incompatibility."
+            "named asserters, two page-precise locators and a stated incompatibility.\n\n"
+            "POSITION_ASSERTED_BY and not the existing ASSERTED_BY, whose declared "
+            "signature is InterpretiveClaim -> Source. Reusing it put 226 edges outside "
+            "that signature, which the quality scorecard caught -- the same error avoided "
+            "deliberately for HAS_STEP and CONCERNS and then made anyway here."
         ),
     ),
     ElementGroup(
@@ -703,7 +707,7 @@ GROUPS: tuple[ElementGroup, ...] = (
         domain="scholarship",
         kind="RELATIONSHIP",
         source="rows.jsonl",
-        element="ASSERTED_BY",
+        element="POSITION_ASSERTED_BY",
         identity_fields=("canonical_key", "payload.axis", "payload.position_b.asserter_id"),
         start_field="canonical_key",
         end_field="payload.position_b.asserter_id",
