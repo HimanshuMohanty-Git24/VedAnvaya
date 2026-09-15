@@ -20,7 +20,29 @@
       "owner_agent": 8,
       "closure_test": "HAS_DEVATA (or an equivalently typed dedication predicate) reaches SV, YV and AV, and /api/v1/insights/devatas/{id} returns an ascribed_scope of more than one Veda with the per-Veda method stated.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "Deity dedication resolved to a Devata node is Rigveda-only, and 5,498 mantras carry no dedication record at all.",
+      "initial_hypothesis": "The Anukramani apparatus was ingested for the Rigveda and, in descriptor form, for the Atharvaveda. For the Samaveda the join key is melodic: veda_coverage_v3.json records \"The Kauthuma school's Devatadhyaya Brahmana is keyed to samans in the gana collections, which this corpus does not contain: the join key exists for 7.7% of verses.\" For the Yajurveda, data/knowledge/yajurveda_deterministic_v1/manifest.json records that the Madhyandina Sarvanukramana-sutra \"is pratika-keyed sutra prose and is refused for machine resolution\", and its descriptor_predicates field is an empty list.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-ATTRIBUTION-002",
@@ -38,7 +60,29 @@
       "owner_agent": 8,
       "closure_test": "MATCH (a:DevataAscription) WHERE size([(a)-[]->(:Devata)|1])>0 RETURN count(a) is greater than 0 for every resolvable descriptor, /api/v1/insights/devatas/{id} returns AV in ascribed_scope with its method stated, and the unresolvable descriptors carry an explicit reason.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "The Atharvaveda's Anukramani deity ascription IS held, as 4,816 edges over 4,160 mantras, but none of its 324 descriptors resolves to a Devata node, so the product reports it as absent.",
+      "initial_hypothesis": "The descriptor layer was ingested as opaque strings and the resolution step was never built. The descriptors are adjectival forms (agneyam = to Agni, aindram = to Indra, saumyam = to Soma), so resolution is a tractable morphological mapping, not new research. Because nothing resolves, every deity profile reports AV dedication as a missing apparatus and the reader is told less than the graph holds.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-ATTRIBUTION-003",
@@ -56,7 +100,29 @@
       "owner_agent": 8,
       "closure_test": "No API caveat, derived-metric scope_note or frontend string asserts that the Atharvaveda carries no Anukramani deity ascription; each states the descriptor layer and its unresolved status instead.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "A live API caveat asserts that AV carries no Anukramani deity ascription, which the graph disproves: AV carries 4,816 such edges.",
+      "initial_hypothesis": "The caveat was written about the HAS_DEVATA predicate and then generalised into a claim about the corpora. The AV descriptor layer was added later and the caveat was never revised. The effect is the inverse of the failure this product normally guards against: instead of showing a zero that reads as textual absence, it describes held data as absent.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-ATTRIBUTION-004",
@@ -74,7 +140,29 @@
       "owner_agent": 8,
       "closure_test": "MATCH (p:Mantra) WHERE p.veda='SV' AND NOT (p)-[:HAS_RISHI]->() RETURN count(p) falls below 1,844, with each attribution's join path recorded.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "The Samaveda has no seer attribution: 0 of 1,844 mantras carry HAS_RISHI.",
+      "initial_hypothesis": "Source-blocked on the same melodic join key as SV dedication. veda_coverage_v3.json records the reason: \"The Arseya Brahmana is keyed to samans in the gana collections, absent from this corpus.\" There is no *_sv.yaml registry file of any kind, where rishis_av.yaml and rishis_yv.yaml both exist.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-ATTRIBUTION-005",
@@ -92,7 +180,29 @@
       "owner_agent": 8,
       "closure_test": "The 1,297 unattributed AV mantras are partitioned into a typed unattributable set with its source quoted and a residual gap set, and the residual set shrinks.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "Every Atharvaveda seer attribution is a sukta label projected onto its verses, and 1,297 AV mantras have none at all.",
+      "initial_hypothesis": "The AV Anukramani attributes at sukta scope, and the projection is correctly typed as CONTAINER_INHERITED rather than disguised as a per-verse claim. The 1,297 with nothing are a separate matter: kanda 15 is attributed as a unit with no seer named for any part, which Lanman states explicitly, so part of this population is genuinely unattributable rather than merely unattributed.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-ATTRIBUTION-006",
@@ -110,7 +220,29 @@
       "owner_agent": 8,
       "closure_test": "HAS_CHANDAS reaches SV and YV, or each carries an explicit recorded decision with its reasoning, and the AV residual falls below 1,757.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "Metre is absent for the Samaveda and Yajurveda entirely and partial for the Atharvaveda: 5,610 mantras carry no chandas.",
+      "initial_hypothesis": "For the Yajurveda the metre source is the Sarvanukramana-sutra, refused for machine resolution as pratika-keyed prose. For the Samaveda, veda_coverage_v3.json gives a scope-level reason: \"The Samaveda's identity is melody rather than metre.\" That is a genuine argument about the SV, but it is recorded as a source-absence rather than a decision not to model metre, and arcika verses do carry metre in the tradition. The AV residual of 1,757 is ordinary incompleteness in chandas_av.yaml.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-ATTRIBUTION-007",
@@ -128,7 +260,29 @@
       "owner_agent": 8,
       "closure_test": "MATCH (r:Rishi) WHERE NOT (r)-[:BELONGS_TO_FAMILY]->() RETURN count(r) falls well below 427, and tests/domain/test_rishi_families.py runs rather than skipping.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "427 of 729 seers are not resolved to a family.",
+      "initial_hypothesis": "The family decomposition was built for the major Rigvedic lineages and not extended. The AV and YV seer registries (rishis_av.yaml 134, rishis_yv.yaml 228) were added without family resolution, and tests/domain/test_rishi_families.py:46 skips because data/domain/vedagraph_domain_v2/rishi_families_v1.json is not built in this checkout.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-ATTRIBUTION-008",
@@ -146,7 +300,29 @@
       "owner_agent": 8,
       "closure_test": "Already disproven. No campaign artifact repeats the 0-nodes or 729-unresolved figures.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "A report claims RishiFamily is empty and all 729 seers unresolved; the live graph holds 87 families, 305 edges and 302 resolved seers.",
+      "initial_hypothesis": "The claim described the state at the V3 baseline audit and the layer was built afterwards. It is a historical report, but it is the document a later session is most likely to consult for the rishi layer, and its figure would make the campaign build something that already exists.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-ATTRIBUTION-009",
@@ -164,7 +340,29 @@
       "owner_agent": 8,
       "closure_test": "No :Devata node asserts a scope contradicted by the edges present, and the Atharvaveda appears in the scope of every deity that has an Atharvavedic ascription.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "All 214 Devata nodes assert that deity attribution is Rigveda-only. It is true of the node and false of the corpus: 4,160 Atharvavedic mantras carry dedication.",
+      "initial_hypothesis": "The property was written when the anukramani layer really was Rigveda-only and was never revisited when the Atharvavedic ascriptions landed. It is the same false claim already recorded as GAP-ATTRIBUTION-003, but served from a node property rather than from prose -- which is why a documentation-scoped sweep missed it. Two earlier audits in this project certified the absence of stale claims by searching the wrong surface and then the wrong vocabulary; this is a third instance of the same shape.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-AUDIO-001",
@@ -187,7 +385,33 @@
       "measured_cause": "Not an absence of Samavedic recording, but an absence of arcika *verse* recording. 475 licence-clean Ogg files exist on Wikimedia Commons -- 459 CC BY-SA 4.0, 16 CC0 -- and all 475 are now fetched and checksummed at 808,529,118 bytes over 19.1 hours. But every one is PAGE_LEVEL, only 6 of 475 touch arcika pages at all, and they are gana performances rather than arcika recitation. The source-provided cue index is real and legible but handwritten with no text layer, and it anchors rather than segments: one page carries six cues for seven ganas, another five ganas and one cue.",
       "closure_method": "Not closable as arcika verse audio from present material. What the 475 files support is a gana performance layer at container scope, staged as 3 rows with start_seconds null -- never at a verse. The open route is the LOAR deposit: 224 cassettes, four Vedas, six oral traditions, named reciters including two Samavedic. Owner decision D makes it a priority investigation and forbids claiming any coverage from it until each item is classified.",
       "disproven_prescription": "Wave 0 partly rested this gap on every candidate having an unnamed reciter. The LOAR deposit names its reciters, so that reasoning is withdrawn -- without any claim that the material is arcika, which is not established.",
-      "causation_status": "MEASURED"
+      "causation_status": "MEASURED",
+      "initial_hypothesis": "NOT source-blocked, which is the surprise. data/source_registry/four_veda_source_matrix.yaml:1233-1279 declares a SELECTED audio row for Samavedic saman/gana recitation: \"474 Ogg files, licence-checked PER FILE via the Commons imageinfo API: 458 CC BY-SA 4.0, 16 CC0, 0 missing\", mirror_local true, and \"THIS IS THE ONLY MIRRORABLE AUDIO ACROSS ALL FOUR VEDAS\". The inventory data/source_registry/samaveda_gana_audio_inventory.jsonl holds 475 rows with found_on_commons true on every row and sha256_of_bytes NULL on every row: not one byte was ever fetched. The row's source_id is literally null, and the registered artifact COMMONS.SV.KAU.SAMAN.AUDIO appears in only two files repo-wide, both registries.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "RUN",
+        "M_scope": "RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": {
+        "types": [
+          "GRANULARITY_MISMATCH",
+          "RECENSION_MISMATCH"
+        ],
+        "explanation": "475 licence-clean recordings exist and are now fetched, but every one is page-level and they are gana performances rather than arcika recitation. The LOAR deposit adds a Jaiminiya arcika, which is the wrong recension. So the material is reachable and the gap is not closable from it."
+      },
+      "source_availability": "PUBLICLY_REACHABLE",
+      "initial_hypothesis_status": "DISPROVEN"
     },
     {
       "gap_id": "GAP-AUDIO-002",
@@ -210,7 +434,32 @@
       "measured_cause": "A coordinate-system mismatch, not a text problem. VedSearch divides the Atharvaveda into 754 suktas where our Berlin (Roth and Whitney 1856) division has 731 -- the 23 extra sitting in kandas 7, 9, 11, 12 and 13, verified against our side at 118, 10, 10, 5 and 4. Keys were mapped straight through, so past the first split within a kanda the coordinate addressed the wrong verse, and in the paryaya books a verse offset of up to +61 rides along with it. The text refusals were correct; the address was wrong. 494 of the 495 are this one cause, and no_source_verse was the same defect rather than a different one.",
       "closure_method": "Per-verse re-establishment against the source's own division: 607 rows by unique letter identity across all 5,916 source rows, 9 by position disambiguation, 109 as orthographic variants adjacent to a letter-identical anchor. 740 of 915 refusals closed, taking the Atharvaveda from 80.1% to 93.2%. A further 197 are reachable but blocked on a record-model decision: each has a contiguous run of 2-3 Vedavani files whose concatenation is letter-identical to the mantra, and the model permits one media_url per record.",
       "disproven_prescription": "The original entry prescribed re-running with accent- and sandhi-insensitive matching. skeleton() already was both, and re-running changed 1 of 495. The entry also claimed the 420 no_source_verse needed another source; 385 were in VedSearch all along. Both are withdrawn.",
-      "causation_status": "MEASURED"
+      "causation_status": "MEASURED",
+      "initial_hypothesis": "Three itemised causes: the source marks no Sanskrit audio (244), the recited text did not match and mapping was correctly refused (495), or the verse is absent from the source (420). Only the third is a hard source limit; the 495 refusals are a matcher problem.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "RUN",
+        "B_source_coordinate_system": "RUN",
+        "C_edition_numbering": "RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": {
+        "types": [
+          "WRONG_SOURCE_COORDINATE"
+        ],
+        "explanation": "VedSearch divides the Atharvaveda into 754 suktas where our Berlin division has 731. Keys were mapped straight through, so past the first split in a kanda the coordinate addressed the wrong verse. The refusals were right and the address was wrong."
+      },
+      "source_availability": "PUBLICLY_REACHABLE",
+      "initial_hypothesis_status": "DISPROVEN"
     },
     {
       "gap_id": "GAP-AUDIO-003",
@@ -232,7 +481,33 @@
       "suspected_cause": "190 verses are marked as having no Sanskrit audio at the source and 33 were refused by the matcher. No YV verse is absent from the source entirely.",
       "measured_cause": "For the 33, our own comparator. difflib's autojunk heuristic discarded nearly the whole alphabet on any skeleton over 200 characters -- 17 of 18 distinct letters on a measured 285-character case -- and a visarga typed as an ASCII colon was dropped as a non-letter while the Devanagari sign survived as 'h'. For 30 of the 33 the coordinate-aligned row was already the global best match. For the 190, the source publishes no verse-level audio.",
       "closure_method": "Comparator fixed at commit 30ba692 with four regression tests, closing 25 of the 33 with no acquisition. The remaining 8 are source-side text defects and need a listener. The 190 are BLOCKED_RIGHTS_AND_GRANULARITY rather than source-unavailable: IGNCA publishes Madhyandina per adhyaya at Shukla_Yajurveda_Madhyandin_MP3/SYMS_CHAP_NN.mp4, verified answering 206 for adhyayas 1-40 and 404 at 41. The remedy is a permission request plus verified segmentation, not commissioning a reciter.",
-      "causation_status": "MEASURED"
+      "causation_status": "MEASURED",
+      "initial_hypothesis": "190 verses are marked as having no Sanskrit audio at the source and 33 were refused by the matcher. No YV verse is absent from the source entirely.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "RUN",
+        "G_accent_normalization": "RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": {
+        "types": [
+          "COMPARATOR_DEFECT",
+          "GRANULARITY_MISMATCH"
+        ],
+        "explanation": "For 33 verses, difflib autojunk discarded nearly the whole alphabet and a colon-spelled visarga was dropped as a non-letter. For the remaining 190, Madhyandina recitation is published per adhyaya -- IGNCA under permission, and LOAR under CC0 at multi-chapter granularity -- so the blocker is granularity and rights, not availability."
+      },
+      "source_availability": "REACHABLE_WITH_PERMISSION",
+      "initial_hypothesis_status": "SUPERSEDED_BY_MEASUREMENT"
     },
     {
       "gap_id": "GAP-AUDIO-004",
@@ -255,7 +530,33 @@
       "measured_cause": "A source dependency. The incumbent source publishes the 1,017-hymn presentation -- 10,472 verses, Mandala 8 stopping at hymn 92 -- so the transform's target 8.93 has never existed there. Re-probed live: sukta 93 returns total_shloks 0 while sukta 92 returns rows. The 70 are a shared lacuna rather than a harvest failure: an independent Archive parayana set by a different uploader marks its own tracks incomplete at the same places, covering 66 of the 70.",
       "closure_method": "All 150 from VedaWeb's per-stanza Kirchheiner recitation, measured at 10,552 of 10,552 over one contiguous range, so no segmentation was needed and no timestamp is asserted. The Valakhilya mapping was tested acoustically as well as textually: duration against syllable count correlates at 0.871 as mapped and 0.088 under the Griffith eleven-hymn shift.",
       "disproven_prescription": "The original entry stated the Griffith permutation 'was never applied' and set source_dependency to NONE. Both halves are wrong. The permutation IS applied -- vedsearch_coordinates routes through griffith_page, it is stated on all 16,834 catalogue rows, and the audit shows our 8.60 mapping to source 8.49 text-confirmed. And it was a source dependency throughout. Withdrawn.",
-      "causation_status": "MEASURED"
+      "causation_status": "MEASURED",
+      "initial_hypothesis": "The audio source numbers Mandala 8 by a different edition convention, and the Griffith permutation needed to map the Valakhilya insertion was never applied. Mapping naively would give 55 hymns of Mandala 8 the wrong recitation.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "RUN",
+        "N_stale_transform": "RUN"
+      },
+      "measured_root_cause": {
+        "types": [
+          "SCOPE_MISMATCH",
+          "SOURCE_NOT_YET_DISCOVERED"
+        ],
+        "explanation": "The incumbent source publishes the 1,017-hymn presentation, so the transform's target 8.93 never existed there. The registry had recorded this as an unapplied transform; the transform is applied and correct. A different source covers all 10,552 per stanza."
+      },
+      "source_availability": "PUBLICLY_REACHABLE",
+      "initial_hypothesis_status": "DISPROVEN"
     },
     {
       "gap_id": "GAP-AUDIO-005",
@@ -273,7 +574,29 @@
       "owner_agent": 4,
       "closure_test": "checksum, duration_seconds, performer and licence are non-null for every one of the 16,834 catalog rows, and a scheduled probe reports upstream availability.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "The entire recitation layer is proxied from one external host with nothing cached and no per-record checksum, duration, performer or licence.",
+      "initial_hypothesis": "Rights: PRODUCT_V1_SCOPE.md:212-221 lists 'no audio redistribution' as a deliberate V1 non-goal, so streaming rather than mirroring was a decision. The consequence was not separately recorded: with checksum null on every row there is no way to detect that an upstream file changed, and with performer and licence null the catalog cannot state whose recitation it is playing.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-AUDIO-006",
@@ -291,7 +614,29 @@
       "owner_agent": 4,
       "closure_test": "Not a gap to close in this campaign. It remains TRUE_SCOPE_FACT while by_scope_type stays MANTRA-only and the scope statement continues to say so; it becomes an IMPLEMENTATION_GAP only if the product starts claiming sub-verse navigation.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "Audio is mapped at verse granularity only; no word- or pada-level timing exists, and the AudioSegment entity is declared but empty.",
+      "initial_hypothesis": "A recorded V1 decision, and the right one: sub-verse timing cannot be derived from proxied streams without forced alignment, and inventing timings was explicitly refused. The expected population is not knowable because it depends on an alignment that has never been run; writing 0 here would assert that no sub-verse boundary exists in the recordings.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-COMMUNITIES-001",
@@ -314,7 +659,32 @@
       "suspected_cause": "Never computed. The typed refusal is exemplary and was earned the hard way: this question was graded MISLEADING when the deity-pair co-occurrence table was substituted for it, and that table's top-ranked members turned out to be human patrons carried in the deity registry. The capability answer now states PAIRWISE_CO_OCCURRENCE_IS_NOT_A_COMMUNITY_PARTITION explicitly.",
       "measured_cause": "The eligible population is 157 after excluding 29 non-deities and ruling on 42 ABSTRACT labels, of which only 123 are placeable -- 34 eligible deities have no co-dedication partner anywhere and are typed degree-zero rather than given singleton communities. Correct 192 to 157 eligible / 123 placeable.",
       "closure_method": "Computed and then REFUSED for publication, on evidence. Leiden beats Louvain on every weighting and every measure (ARI 1.0000 against 0.9079 at 200 seeds), and there is a real resolution plateau at gamma 0.8 to 1.5. Seed stability is not the problem; the specification is. Six of twelve communities have every internal edge from a single hymn, five of twelve are whole connected components free to any method, so only 7 are detected structure. Switching the projection from dedication to mention destroys the correspondence entirely at ARI 0.013, which is chance. And the decisive check needs no statistics: all six methods separate Brhaspati from Brahmanaspati, two names for one deity, and park Brahmanaspati with the quiver and the bowstring. The existing typed refusal is better than this partition presented as a fact. The one real positive is that the algorithm recovers the apri sequence of the animal offering -- a liturgical running order, not a pantheon.",
-      "disproven_prescription": "The brief's projection premise was wrong twice, and the lead repeated one of the errors when briefing the agent. Co-dedication within a mantra does not exist as a graph: 10,546 of 10,552 Rigvedic mantras carry exactly one deity and 6 carry two, so that projection has 6 edges. And the projection is Rigveda-only, not RV+AV as the lead stated: HAS_DEVATA_ASCRIPTION targets 324 :DevataAscription nodes and none of them is a :Devata, which GAP-ATTRIBUTION-002 already recorded correctly. The workable projection is co-dedication at hymn scope, Rigveda, which also recovers the source's own granularity since 79% of verse dedication is a sukta-wide value read down."
+      "disproven_prescription": "The brief's projection premise was wrong twice, and the lead repeated one of the errors when briefing the agent. Co-dedication within a mantra does not exist as a graph: 10,546 of 10,552 Rigvedic mantras carry exactly one deity and 6 carry two, so that projection has 6 edges. And the projection is Rigveda-only, not RV+AV as the lead stated: HAS_DEVATA_ASCRIPTION targets 324 :DevataAscription nodes and none of them is a :Devata, which GAP-ATTRIBUTION-002 already recorded correctly. The workable projection is co-dedication at hymn scope, Rigveda, which also recovers the source's own granularity since 79% of verse dedication is a sukta-wide value read down.",
+      "initial_hypothesis": "Never computed. The typed refusal is exemplary and was earned the hard way: this question was graded MISLEADING when the deity-pair co-occurrence table was substituted for it, and that table's top-ranked members turned out to be human patrons carried in the deity registry. The capability answer now states PAIRWISE_CO_OCCURRENCE_IS_NOT_A_COMMUNITY_PARTITION explicitly.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "RUN",
+        "M_scope": "RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": {
+        "types": [
+          "DERIVED_LAYER_NOT_BUILT"
+        ],
+        "explanation": "Built, then refused for publication on evidence. The projection premise in the brief was wrong twice: within-mantra co-dedication is 6 edges, and the projection is Rigveda-only because HAS_DEVATA_ASCRIPTION targets 324 :DevataAscription nodes of which none is a :Devata."
+      },
+      "source_availability": "NOT_REQUIRED",
+      "initial_hypothesis_status": "DISPROVEN"
     },
     {
       "gap_id": "GAP-COMMUNITIES-002",
@@ -337,7 +707,32 @@
       "suspected_cause": "Decomposition was implemented for pairs and never for groups. A dual deity like Mitra-Varuna can be resolved into two members; a group like the Maruts or the Adityas cannot be, without deciding how many members it has and whether they are individually named - which is a curation question the ADR anticipated and deferred. The scorecard's 30 of 33 is slightly optimistic against the live 33 of 33.",
       "measured_cause": "Real, and it does not gate what the entry says it gates. 59 of the 71 composite labels were placed in a community WITHOUT decomposition, because a dual label co-occurs with other deities in its own right.",
       "closure_method": "Decompose the 24 remaining pairs and type each group as decomposable or not with its reason -- worth doing for interpretation, not as a prerequisite.",
-      "disproven_prescription": "The entry states this 'directly gates GAP-COMMUNITIES-001, since an undecomposed dual label cannot be placed in a community'. Measured false: 59 of 71 were placed undecomposed. It constrains interpretation -- one community holds both Mitra-and-Varuna and Mitra -- and does not gate computation. Withdrawn as a blocker."
+      "disproven_prescription": "The entry states this 'directly gates GAP-COMMUNITIES-001, since an undecomposed dual label cannot be placed in a community'. Measured false: 59 of 71 were placed undecomposed. It constrains interpretation -- one community holds both Mitra-and-Varuna and Mitra -- and does not gate computation. Withdrawn as a blocker.",
+      "initial_hypothesis": "Decomposition was implemented for pairs and never for groups. A dual deity like Mitra-Varuna can be resolved into two members; a group like the Maruts or the Adityas cannot be, without deciding how many members it has and whether they are individually named - which is a curation question the ADR anticipated and deferred. The scorecard's 30 of 33 is slightly optimistic against the live 33 of 33.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": {
+        "types": [
+          "OTHER_MEASURED"
+        ],
+        "explanation": "Real as a gap and false as a blocker: 59 of 71 composite labels were placed without decomposition, so it constrains interpretation rather than gating computation."
+      },
+      "source_availability": "NOT_REQUIRED",
+      "initial_hypothesis_status": "DISPROVEN"
     },
     {
       "gap_id": "GAP-COMMUNITIES-003",
@@ -355,7 +750,29 @@
       "owner_agent": 15,
       "closure_test": "Already disproven. No campaign artifact cites CO_OCCURS_WITH as 0.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "A scorecard claims CO_OCCURS_WITH is empty; it carries 306 deity-pair edges.",
+      "initial_hypothesis": "The co-occurrence layer was built after the scorecard was written. The conclusion the scorecard drew - that community structure is absent - happens to remain true for the right reason (a pairwise layer is not a partition), so the claim is stale in its evidence while accidentally correct in its verdict. That combination is the dangerous kind: a session confirming the verdict would leave the false evidence in place.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-CROSS_VEDA-001",
@@ -373,7 +790,29 @@
       "owner_agent": 10,
       "closure_test": "/api/v1/insights/cross-veda reports measured REUSES_TEXT_FROM counts for more than one pair, and each directed edge carries per-edge directional evidence rather than a pipeline constant.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "Directed textual reuse was established for the RV-SV pair only; the other five corpus pairs have no direction at all despite carrying thousands of undirected parallel edges.",
+      "initial_hypothesis": "The directed-reuse detector was built for the Samavedic case, where the RV-to-SV direction is well established and the SV is largely drawn from the RV. It was never generalised. The undirected parallel layer covers all six pairs, so the asymmetry is purely in the direction-assigning step.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-CROSS_VEDA-002",
@@ -391,7 +830,29 @@
       "owner_agent": 12,
       "closure_test": "MATCH ()-[r:NEAR_PARALLEL_OF|VARIANT_OF]->() WHERE r.transformation_type IS NULL RETURN count(r) falls well below 3,837, and each typed edge carries the span that evidences it.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "None of the 6,527 parallel and reuse edges records how the text was transformed, so the product can say two verses are related but never how they differ.",
+      "initial_hypothesis": "The typology was designed - the question 'how are those verses transformed' is a benchmark question and the schema anticipated it - but the property was never written. The edge classes themselves encode a crude version (exact, near, variant), which may be why populating the finer typology never felt urgent.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-CROSS_VEDA-003",
@@ -413,7 +874,32 @@
       "observed_gap": "256 EXACT_PARALLEL_OF edges carry no parallel_id and no match_level.",
       "suspected_cause": "These are the 256 within-one-Veda exact parallels, which the cross-Veda matrix also reports separately as excluded from every pair cell. They were built by an earlier pass that did not assign group identifiers, and the later cross-corpus pass did. Without a parallel_id an edge cannot be grouped with the other members of its parallel set.",
       "measured_cause": "A name collision rather than an absence. The 256 edges with no parallel_id are the same 256 with a null match_level, and they already carry strongest_method. The information exists under a different property name.",
-      "closure_method": "Backfill by MAPPING ParallelMethod onto MatchLevel, not by re-deriving the relations. Re-deriving would risk changing edges whose evidence is already present and correct."
+      "closure_method": "Backfill by MAPPING ParallelMethod onto MatchLevel, not by re-deriving the relations. Re-deriving would risk changing edges whose evidence is already present and correct.",
+      "initial_hypothesis": "These are the 256 within-one-Veda exact parallels, which the cross-Veda matrix also reports separately as excluded from every pair cell. They were built by an earlier pass that did not assign group identifiers, and the later cross-corpus pass did. Without a parallel_id an edge cannot be grouped with the other members of its parallel set.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "RUN"
+      },
+      "measured_root_cause": {
+        "types": [
+          "UNAPPLIED_EXISTING_TRANSFORM"
+        ],
+        "explanation": "A name collision, not an absence. The 256 edges lacking parallel_id are the same 256 with a null match_level and they already carry strongest_method. Backfill by mapping the existing property, not by re-deriving."
+      },
+      "source_availability": "NOT_REQUIRED",
+      "initial_hypothesis_status": "SUPERSEDED_BY_MEASUREMENT"
     },
     {
       "gap_id": "GAP-CROSS_VEDA-004",
@@ -431,7 +917,29 @@
       "owner_agent": 12,
       "closure_test": "Pada-level parallel edges exist with their granularity typed distinctly from verse-level parallels, and their RV-only reach is stated on the surface that reports them.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "Parallels are detected at whole-verse granularity only; pada-level parallels are unimplemented although the schema and token pada tags already support them.",
+      "initial_hypothesis": "Verse-level detection was sufficient for the first pass and the finer granularity was deferred. The consequence is that a verse sharing one quarter with another verse is either reported as a near parallel with no indication of which quarter, or missed entirely. The expected population is not knowable before the detector runs, since it depends on the similarity threshold at pada scale.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-ENTITY_COVERAGE-001",
@@ -449,7 +957,29 @@
       "owner_agent": 8,
       "closure_test": "Epithets carry passage edges, the inventory reaches well beyond 4 deities, and per-epithet recall is measured rather than assumed.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "The epithet layer reaches 4 of 214 deities and no epithet is linked to a single passage, so no question about where an epithet occurs can be answered.",
+      "initial_hypothesis": "The layer was built as a deity-attribute list and the occurrence projection was never run. Without passage edges an epithet is a label on a deity rather than something observable in the text, so the product cannot show a reader where the epithet is used.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-ENTITY_COVERAGE-002",
@@ -467,7 +997,29 @@
       "owner_agent": 8,
       "closure_test": "MATCH (m:DerivedMetric) WHERE m.subject_key STARTS WITH 'VG:DEVATA:' RETURN count(DISTINCT m.subject_key) reaches the resolved-deity population, and /api/v1/devatas/VG:DEVATA:SARASVATI returns per-corpus figures rather than nulls.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "Deity profile statistics were materialised for only 25 of 214 deities, so 189 deity pages report null for every corpus.",
+      "initial_hypothesis": "The materialisation pass covered the major deities and stopped. The product handles it correctly - a null is reported as INSUFFICIENT_EVIDENCE rather than drawn as a zero bar - but the practical effect is that Sarasvati, a deity with 65 passages, has a profile page showing nothing. The recorded figure of 184 is five out of date.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-ENTITY_COVERAGE-003",
@@ -485,7 +1037,29 @@
       "owner_agent": 8,
       "closure_test": "A remedy entity class exists with registered aliases, a stated-remedy relation carries verse evidence, and the concerns endpoint no longer needs to caveat the absence of a healing entity.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "No healing or remedy entity exists: bhesaja was never curated, so the Atharvaveda's central concern can only be approached through afflictions and plants.",
+      "initial_hypothesis": "A curation omission with outsized consequence, because healing is the Atharvaveda's characteristic subject and the product has a dedicated surface for it. The endpoint declares the gap in its own caveat, which is honest, but a reader asking what the corpus prescribes gets afflictions rather than remedies.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-ENTITY_COVERAGE-004",
@@ -503,7 +1077,29 @@
       "owner_agent": 8,
       "closure_test": "Entity nodes carry an expected_source, and a coverage report names entities the expectation lists but the registry lacks - the query that would have found trapu without a human reading the text.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "No expected-entity manifest exists, so an entity the corpus attests but the registry omits cannot be detected by any query.",
+      "initial_hypothesis": "This is the meta-gap of the entity domain and it is why the other entity gaps were found by external inspection rather than by the graph auditing itself. Without a declared expectation, coverage can only be measured against what was curated, which always looks complete. The trapu case is the documented instance: tin is named at AVS 11.3.8 in the graph's own stored Sanskrit and was absent from the registry, and the only way that surfaced was a human reading the text. The expected population is not knowable until an expectation is declared, which is the point.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-ENTITY_COVERAGE-005",
@@ -521,7 +1117,29 @@
       "owner_agent": 8,
       "closure_test": "Already disproven. No campaign artifact lists trapu as an unregistered metal.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "The benchmark records tin as attested but unregistered; a Metal node for trapu exists with 2 mentions.",
+      "initial_hypothesis": "The node was added when the Q10 defect was fixed, which the V3.3 re-grade reflects by moving Q10 to FULLY_ANSWERABLE. The V3.2 markdown still carries the original finding. It matters because trapu is cited in several later documents as the canonical example of registry invisibility - the example is now historical, though the class of defect it illustrates is real and is tracked as GAP-ENTITY_COVERAGE-004.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-ENTITY_COVERAGE-006",
@@ -539,7 +1157,29 @@
       "owner_agent": 8,
       "closure_test": "Every entity carries a measured recall figure with its sample size, the ayas YV cell matches VSM 18.13, and no cell is known-false without being typed.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "Lexical alias recall is unmeasured across the entity layer, and at least one cell is known to be false: ayas in the Yajurveda is attested at VSM 18.13 and matched by nothing.",
+      "initial_hypothesis": "The alias registry admits attested whole-word inflections only, so compounds and unregistered inflections miss. The product handles the known case impeccably - the cell carries NO_LEXICAL_MATCH and names its own counter-witness rather than printing a zero - but that one cell was found by hand. No recall figure exists for ABOUT_CONCEPT or MENTIONS_ENTITY anywhere in the graph, so the general size of the shortfall is unknown, which is why all three counts are null rather than 0.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-ENTITY_COVERAGE-007",
@@ -557,7 +1197,29 @@
       "owner_agent": 8,
       "closure_test": "Phrase matching reaches multi-word entities, and every entity that could be personified carries a resolution status distinguishing refusal from absence.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "Phrase matching was never built, and personification resolution is materialised for 9 NaturalPhenomenon nodes only, leaving the other 200-odd entities with no way to distinguish a refusal from a gap.",
+      "initial_hypothesis": "Single-word matching was sufficient for the first pass, so multi-word realia are unreachable. Personification resolution - deciding whether a mention of dawn means the phenomenon or the goddess Usas - was solved for one class and not generalised, and for the 4 unresolved NaturalPhenomenon nodes the product cannot say whether resolution was refused or never attempted. That specific ambiguity is the one this project most consistently forbids elsewhere.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-ENTITY_COVERAGE-008",
@@ -575,7 +1237,29 @@
       "owner_agent": 15,
       "closure_test": "The eligible deity population is derivable by one documented predicate; counts over it exclude the 29 non-deities; and the ABSTRACT decision is recorded with its reasoning rather than applied implicitly.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "The deity, seer and metre registries carry typed non-members that inflate every count taken over them, including the deity population any community detection would partition.",
+      "initial_hypothesis": "The registries were populated from source apparatus that lists patrons and gift-praise beside deities, and no eligibility predicate was ever applied.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-FORMULA-001",
@@ -593,7 +1277,29 @@
       "owner_agent": 12,
       "closure_test": "Either SHARES_FORMULA_WITH carries edges under a declared selectivity policy with a stated ranking key, or the type is removed from the schema so no declaration outruns the data.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "SHARES_FORMULA_WITH is the only relationship type in the graph that is declared and carries zero edges: the passage-to-passage formula-sharing edge was designed and never built.",
+      "initial_hypothesis": "Formula sharing is currently only reachable by traversing two hops through a Formula node, so the direct edge was never needed by any query that was written. It survives in the type store as a declaration with no data, which is the exact pattern that makes a schema look more complete than the graph. The expected population is not knowable without a policy decision: materialising every passage pair that shares any formula would be an enormous and mostly uninformative join, since USES_FORMULA carries 22,686 edges over 4,825 formulas.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-FORMULA-002",
@@ -616,7 +1322,33 @@
       "suspected_cause": "Two separate causes. The matching quality problem is downstream of GAP-MORPHOLOGY-005: with the RV in Latin and the SV in Devanagari, cross-script comparison can only run at the weakest sandhi-insensitive level, so SV family membership is systematically less reliable than within-script membership. The missing family id is a plain API omission. The 105 single-Veda families are not themselves a defect - single-Veda diction is a real finding - but they are the baseline against which the 107 four-Veda families must be read.",
       "measured_cause": "Two different things under one id. The USES_FORMULA half was recoverable all along: all 22,686 occurrences trace to their own evidence surface, 20,577 SCRIPT_FOLDED and 2,109 SANDHI_INSENSITIVE. The parallel half is real, and 4,368 typology backfills now close it.",
       "closure_method": "Backfill typology from a six-level identity ladder computed against each pair's own comparison ceiling. 736 EXACT_PARALLEL, 1,475 VARIANT with difference spans and differing codepoints named, 3,924 NEAR_PARALLEL.",
-      "disproven_prescription": "The closure test as written -- 'no edge has a blank match_level' -- cannot be met and should not be. It is false by design for the 3,049 NEAR_PARALLEL_OF edges, which are identical at no level and so have no match level to carry. The clause needs amending, not satisfying."
+      "disproven_prescription": "The closure test as written -- 'no edge has a blank match_level' -- cannot be met and should not be. It is false by design for the 3,049 NEAR_PARALLEL_OF edges, which are identical at no level and so have no match level to carry. The clause needs amending, not satisfying.",
+      "initial_hypothesis": "Two separate causes. The matching quality problem is downstream of GAP-MORPHOLOGY-005: with the RV in Latin and the SV in Devanagari, cross-script comparison can only run at the weakest sandhi-insensitive level, so SV family membership is systematically less reliable than within-script membership. The missing family id is a plain API omission. The 105 single-Veda families are not themselves a defect - single-Veda diction is a real finding - but they are the baseline against which the 107 four-Veda families must be read.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "RUN"
+      },
+      "measured_root_cause": {
+        "types": [
+          "DERIVED_LAYER_NOT_BUILT",
+          "UNAPPLIED_EXISTING_TRANSFORM"
+        ],
+        "explanation": "Two things under one id. The USES_FORMULA half was recoverable from its own evidence surface all along; the parallel typology half was genuinely unbuilt and 4,368 backfills close it. The entry's closure test is false by design for edges identical at no level."
+      },
+      "source_availability": "NOT_REQUIRED",
+      "initial_hypothesis_status": "DISPROVEN"
     },
     {
       "gap_id": "GAP-FORMULA-003",
@@ -634,7 +1366,29 @@
       "owner_agent": 12,
       "closure_test": "Every formula either has no strict-substring relation to another or carries an explicit nesting type, and formula frequency rankings state which policy they apply.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "1,103 of 4,825 formulas are strict substrings of another formula, so formula counts double-count nested wordings.",
+      "initial_hypothesis": "The deduplication pass removed exact duplicates but not nested ones. A formula that is a substring of another will be counted as its own formula and will also inflate the containing formula's occurrence count, so any ranking by formula frequency is affected.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-MORPHOLOGY-001",
@@ -652,7 +1406,29 @@
       "owner_agent": 9,
       "closure_test": "MATCH (l:Lemma) WHERE size([(l)<--()|1])=0 RETURN count(l) falls far below 9,992, and any product surface reporting lemma coverage states distinct lemmas reached alongside mantras reached.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "The lemma layer is an inert registry: 10,031 Lemma nodes exist, only 39 of them are reached by any edge, and all 39 are deity names.",
+      "initial_hypothesis": "MENTIONS_LEMMA was built solely as the instrument behind the Rigvedic deity mention layer, not as a general lexical index. The full Zurich/VedaWeb lemma inventory was loaded as nodes and then only the theonym subset was wired, leaving 9,992 lemmas with zero edges in either direction. The campaign baseline reports this dimension as \"Lemma: RV 6,560\", which is a true count of mantras carrying at least one MENTIONS_LEMMA edge and conceals that those edges reach 39 words. Anyone reading the baseline row would conclude the Rigveda has a 62% lexical index; it has a 0.4% one.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-MORPHOLOGY-002",
@@ -670,7 +1446,29 @@
       "owner_agent": 9,
       "closure_test": "MENTIONS_LEMMA reaches a non-RV corpus with its derivation typed distinctly from the RV's manual annotation, and no query sums the two.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "Morphological annotation exists for the Rigveda only; 9,658 mantras in the other three corpora have no lemma layer.",
+      "initial_hypothesis": "The RV layer derives from the Zurich manual annotation published through VedaWeb. No equivalent manual annotation is published for the other three Samhitas, so this is genuinely source-blocked rather than unfinished - unlike GAP-MORPHOLOGY-001, which is unfinished work over annotation already held.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-MORPHOLOGY-003",
@@ -688,7 +1486,29 @@
       "owner_agent": 9,
       "closure_test": "Either MATCH (t:TextVersion) WHERE t.text_form='PADAPATHA' RETURN count(t) is greater than 0, or no scope statement, registry file or product surface mentions a Padapatha.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "The Rigveda scope statement, served live by the API, claims a Padapatha text version is carried; no padapatha exists anywhere in the graph.",
+      "initial_hypothesis": "The claim conflates the accented samhitapatha (which IS carried, twice over, from GRETIL and VedaWeb) with the padapatha (which is not). VedaWeb does publish a padapatha, so the source was in hand and the sentence was probably written from the source's contents rather than from what was ingested. It is the most consequential stale claim found because it is served on every insights endpoint reporting the Rigveda, and a reader would reasonably expect to be able to query word-segmented text.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-MORPHOLOGY-004",
@@ -706,7 +1526,29 @@
       "owner_agent": 9,
       "closure_test": "The 711 tokens are resolved or each carries a typed reason for non-resolution, and RIGVEDA_LEXICAL_MENTION_POLICY.md no longer lists this as deferred.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "711 Rigvedic lexical tokens are left unresolved because no feature-conditioned alias mechanism exists, a deferral the architecture document itself calls the highest-value one.",
+      "initial_hypothesis": "Resolving these tokens requires conditioning an alias on morphological features rather than surface form, which the v1 alias mechanism cannot express. The deferral is recorded in a live architecture document and a live ADR, so it is a known and deliberate postponement rather than an oversight - but it is postponement, not scope.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-MORPHOLOGY-005",
@@ -724,7 +1566,29 @@
       "owner_agent": 9,
       "closure_test": "GET /api/v1/passages/{key} returns both text.devanagari and text.transliteration for a verse in each corpus, with accent placement verified line by line rather than in aggregate.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "No mantra is available in both scripts: 16,391 RV and AV verses are romanised only and 3,819 SV and YV verses are Devanagari only.",
+      "initial_hypothesis": "The two halves of the corpus were ingested from sources in different scripts and no transliteration was generated. The refusal to ship a transliteration is deliberate and well-reasoned - accent placement in generated Devanagari was judged unreliable, and the memory of this project records that AV accents measured 0 of 21 acceptable at band scale - so the NOT_BUILT report is honest. But the reader who wants the Rigveda in Devanagari, or the Samaveda in IAST, cannot have it.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-MORPHOLOGY-006",
@@ -742,7 +1606,29 @@
       "owner_agent": 9,
       "closure_test": "Every work carries a search-normalised text version, the 139 YV mantras gain an unaccented form, and a single accent-bearing query is shown to reach all four corpora equally.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "Text-version provision is uneven: the Samaveda has no accented and no search-normalised text, 139 Yajurveda mantras have no unaccented form, and only the Atharvaveda has a search-normalised version.",
+      "initial_hypothesis": "Each corpus was ingested with whatever the source provided and only the AV received a derived search-normalised version. The consequence is that search behaves differently per corpus: an accent-bearing query can match AV and RV and miss SV. The missing population is not a single countable figure because the dimension is per-version rather than per-mantra, so it is null rather than 0; the countable components are SV 1,844 with no accented text and 139 YV with no unaccented text.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-OTHER-001",
@@ -760,7 +1646,29 @@
       "owner_agent": 8,
       "closure_test": "Not a gap to close. The closure test is that the exclusion list, the scope_honest_label and the frontend not-held copy continue to match what is held, and that no YV figure silently starts including another recension.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "Only the Shukla Yajurveda in the Madhyandina recension is held; the entire Krishna Yajurveda and the Kanva recension are not.",
+      "initial_hypothesis": "A declared, tested and correctly surfaced boundary, and the one the product itself flags as most likely to mislead - rightly, since 'the Yajurveda' ordinarily covers both and the Krishna recensions interleave prose brahmana passages with the mantras that have no counterpart here. Campaign rule 3 forbids mapping Taittiriya material onto Madhyandina.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-OTHER-002",
@@ -778,7 +1686,29 @@
       "owner_agent": 7,
       "closure_test": "Not a gap to close. The closure test is that the exclusion list and the Saunaka-only qualification continue to match what is held.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "Only the Saunaka Atharvaveda is held, as a working private corpus; the Paippalada recension is not held and is not a minor variant.",
+      "initial_hypothesis": "A declared and tested boundary, correctly qualified: the scope statement says an Atharvavedic absence measured here is an absence from Saunaka only, which is the honest reading. The working-private rights status is a separate real constraint on publication, not on completeness. Note that the AV also carries a genuine open question about its own total - 5,839 held against approximately 5,977 attested, recorded as OPEN_RESEARCH with one candidate mechanism raised and falsified - which is tracked separately as it is not a scope fact.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-OTHER-003",
@@ -796,7 +1726,29 @@
       "owner_agent": 7,
       "closure_test": "The 5,839-versus-5,977 divergence carries a determined cause or an explicit statement that it is edition-relative and closed, and the atharvaveda_saunaka_1856_v1 manifest is marked abandoned rather than FAILED.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "The Atharvaveda holds 5,839 mantras against roughly 5,977 attested and the divergence is unresolved, while a declared 1856 canonical corpus for the same work has passage_count 0 and qa_status FAILED over 478 inventoried leaves.",
+      "initial_hypothesis": "Two connected states. The count divergence is genuinely open research, honestly typed as OPEN_RESEARCH with a falsified candidate mechanism recorded - this is the right handling and the campaign should not force a resolution. The empty 1856 corpus is different: it declares a public-domain scan route with parser versions and a rights summary, inventories 478 leaves, and emits no text. The project's memory records that the AV image transcription was cancelled and the AV is now a labelled digital working corpus, so this manifest is the residue of the abandoned route and must not be restarted.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-OTHER-004",
@@ -814,7 +1766,29 @@
       "owner_agent": 3,
       "closure_test": "The SV printed witness carries a determined recension with its evidence, and the 31 unkeyed verses either gain keys or carry a permanent typed reason.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "31 of the traditional 1,875 Samavedic verses carry no canonical key, and the printed edition's recension is not established - Griffith's preface assigns it to Ranayaniya rather than Kauthuma.",
+      "initial_hypothesis": "The 31 missing keys are enumerated with per-verse causes, which is the right treatment: 21 of them turn on two witnesses disagreeing about a dasati partition, and inventing a partition would fabricate verse identity. The recension question is more serious than the count: if the printed witness is Ranayaniya, then a corpus labelled Kauthuma arcika is built on a witness from another school, which would undermine every SV figure and is exactly what campaign rule 3 guards against.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-OTHER-005",
@@ -832,7 +1806,29 @@
       "owner_agent": 16,
       "closure_test": "Already disproven. No campaign artifact treats Work.scope as unpopulated.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "A report lists all four Work.scope properties as null; all four are populated and served live by the API.",
+      "initial_hypothesis": "The scope statements were authored after the V3 final report and are now among the strongest parts of the product - they are the text that tells a reader the Krishna Yajurveda is not held at all. The stale claim matters because a session reading that report would conclude the scope apparatus does not exist and rebuild it, overwriting the statements that the frontend not-held copy and three HTTP-boundary tests depend on.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-OTHER-006",
@@ -850,7 +1846,35 @@
       "owner_agent": 7,
       "closure_test": "Atharvavedic audio discovery re-run with the corrected comparator, its text_mismatch population re-reported, and no currently-accepted mapping lost.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "MEASURED",
+      "observed_gap": "The comparator that verifies a recording is the verse we hold discarded nearly the whole alphabet on any long verse, and its published calibration was measured with that broken comparator.",
+      "initial_hypothesis": "verse_matches short-circuits on exact skeleton equality, so only genuinely variant pairs ever reached the fuzzy comparison -- exactly the population autojunk destroys. The defect was therefore invisible to every test that used a matching or a plainly different pair, and the calibration that would have exposed it was computed with the same broken instrument.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "RUN",
+        "G_accent_normalization": "RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": {
+        "types": [
+          "COMPARATOR_DEFECT",
+          "UNICODE_NORMALIZATION_DEFECT"
+        ],
+        "explanation": "autojunk discarded 17 of 18 distinct letters on a 285-character skeleton, and the published calibration had been measured with that comparator. Fixed at 30ba692 and recalibrated over 12,000 mispaired pairs."
+      },
+      "source_availability": "NOT_REQUIRED",
+      "initial_hypothesis_status": "SUPERSEDED_BY_MEASUREMENT",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-PRODUCT_SURFACE-001",
@@ -868,7 +1892,29 @@
       "owner_agent": 8,
       "closure_test": "No endpoint returns a Veda in both vedas_in_scope and vedas_not_covered, and any multi-dimension response reports coverage per dimension.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "The deity insight endpoint reports AV, YV and SV as both in scope and not covered while returning measured counts for all three.",
+      "initial_hypothesis": "vedas_not_covered is being populated from the ascription dimension while vedas_in_scope and measured describe the naming dimension, and the two are merged into one coverage block. The endpoint's prose caveats state the distinction correctly - named spans four corpora, ascribed reaches one - so the defect is in the structured block a machine consumer would read, not in the text a human reads. A client filtering on vedas_not_covered would discard the very figures the endpoint measured.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-PRODUCT_SURFACE-002",
@@ -886,7 +1932,29 @@
       "owner_agent": 16,
       "closure_test": "The limits catalogue covers every dimension the benchmark grades NOT_ANSWERABLE, each with a reproducible probe, and total_available matches that population.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "The limits catalogue publishes 7 of at least 21 structurally unanswerable dimensions, and says so rather than implying completeness.",
+      "initial_hypothesis": "The catalogue was populated from the limits the benchmark probed with a frozen capability query, which is a higher evidentiary bar than the benchmark verdict alone, so the 7 are the ones with a reproducible probe behind them. The self-declared non-exhaustiveness is the right disclosure and is repeated on the frontend. But 14 further NOT_ANSWERABLE dimensions - among them the transformation typology, the dating layer, the ritual-context assignment and the narrative layer - have no card, so a reader consulting /limits to find out whether a question is answerable gets an incomplete answer that correctly warns them it is incomplete.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-PRODUCT_SURFACE-003",
@@ -904,7 +1972,29 @@
       "owner_agent": 16,
       "closure_test": "Per-book and deity-by-metre aggregates are served, dispersion is fetchable for a deity with more than 200 passages, and the three VIZ_BLOCKER entries are closed in the design spec.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "Three visualizations are blocked by missing API aggregates: no per-book deity breakdown, no deity-by-metre aggregate, and dispersion capped at 200 passages per request.",
+      "initial_hypothesis": "Two of the three are API omissions over data that exists: the graph knows which mandala a passage is in and the metre layer covers RV and AV, but neither is exposed as an aggregate, and the page-size cap makes dispersion unfetchable rather than slow. The third is downstream of GAP-ATTRIBUTION-006: a deity-by-metre matrix would be two-thirds empty because metre does not reach SV or YV, so building it before the metre layer extends would ship a mostly-hatched grid.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-PRODUCT_SURFACE-004",
@@ -922,7 +2012,29 @@
       "owner_agent": 16,
       "closure_test": "Ask returns a Samavedic passage for a direct SV citation, routes a metals question to the metals insight, and a re-run of the 60-question benchmark holds MISLEADING at 0 with Q34 answered.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "Ask cannot retrieve Samavedic passages at all and cannot reach several insight endpoints, so it refuses or misleads on questions the API answers directly.",
+      "initial_hypothesis": "A retrieval-planning gap rather than a data gap: the Samavedic mantras are present and addressable, and the metals insight is served, but no Ask channel reaches either. The Q34 failure is the more serious because it produced a MISLEADING grade about a corpus whose absence Ask then attributed to scope - conflating a planner blind spot with a declared exclusion, which is precisely the confusion the scope statements exist to prevent.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-PRODUCT_SURFACE-005",
@@ -940,7 +2052,29 @@
       "owner_agent": 16,
       "closure_test": "Every canonical release artifact is either tracked or covered by a verified external snapshot with a recorded checksum, and the 4 apparatus-contaminated SV verses are corrected.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "The whole canonical corpus is gitignored, so no released corpus text is protected by version history, and 4 released Samavedic verses carry printed apparatus welded into the text.",
+      "initial_hypothesis": "The ignore rules were written to keep large derived artifacts out of the repository and swept the canonical release in with them. The hazard is recorded in the project's own backlog and is real: this project has previously had a sealed schema destroyed by an export command, with recovery depending on a dangling git blob that happened to survive. A corpus with no history has no such fallback. The campaign is about to write new data, which makes this the moment it matters.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-QUALITY-001",
@@ -958,7 +2092,29 @@
       "owner_agent": 16,
       "closure_test": "data/gold/rigveda_semantic_gold_v1.jsonl has zero rows with annotator UNANNOTATED, the adjudication and manifest files exist, and /api/v1/insights/capabilities reports human_annotated_assertions above 0.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "The Rigveda semantic gold set is a 120-row empty scaffold: every row is UNANNOTATED with epoch-zero timestamp, no entities and no relations, and its declared adjudication and manifest files do not exist.",
+      "initial_hypothesis": "The gold harness was built - schema, loader, validator, CLI defaults - and the annotation was never performed. This is the campaign's most consequential finding about self-knowledge: a file named as a gold set, sized like a gold set and wired into the CLI contains no annotation at all, so any process that checks for the gold file's existence rather than its contents would report a gold set present. Five semantic_gold_* schemas have zero instances between them, and of the six GoldReviewStatus enum values only UNANNOTATED ever occurs.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-QUALITY-002",
@@ -976,7 +2132,29 @@
       "owner_agent": 16,
       "closure_test": "A human-annotated subsample of theonym_mention_gold_v1.jsonl exists with its agreement against the model labels measured and reported per ambiguity class.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "The only populated gold set is model-adjudicated: all 575 theonym rows were labelled by claude-opus-5, so no human-labelled evaluation data exists anywhere.",
+      "initial_hypothesis": "The theonym gold set was produced by a model because human annotation was unavailable, and it is honestly labelled MODEL_ADJUDICATED rather than passed off as human. But measuring the graph against it measures agreement between two model passes, which ADR-014 identifies as the failure mode. Combined with GAP-QUALITY-001, the product has no human-verified ground truth of any kind - which is exactly what the capability limit calibrated_confidence reports.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-QUALITY-003",
@@ -994,7 +2172,29 @@
       "owner_agent": 16,
       "closure_test": "Each predicate carrying a confidence has a calibration curve measured against a human-labelled sample, and no predicate carries a single constant confidence on every edge.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "No confidence value in the graph is calibrated; several predicates carry a single constant on every edge, so filtering by confidence selects nothing.",
+      "initial_hypothesis": "Confidence was written as a pipeline prior to carry provenance strength, not as a probability, and nothing was ever measured against ground truth - which GAP-QUALITY-001 and GAP-QUALITY-002 show does not exist. A constant-valued confidence is worse than none, because it presents as a filterable quality signal and is not one. The expected population is null until predicates are chosen for calibration.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-QUALITY-004",
@@ -1012,7 +2212,29 @@
       "owner_agent": 16,
       "closure_test": "A re-run of the 100-question benchmark against the post-campaign graph shows FULLY_ANSWERABLE well above 11 with MISLEADING still 0, and the re-grade is a re-run rather than a re-scoring of the frozen answers.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "89 of the 100 benchmark questions remain non-pass, and only 11 are fully answerable.",
+      "initial_hypothesis": "The benchmark reached MISLEADING = 0, which was the gate, and that is a real achievement - the product no longer answers confidently when it should not. But the gate measured the absence of harm rather than the presence of capability, so 89 questions are still answered partially or refused. The dominant recurring cause across the partial set is RV-only layer scope, which appears in at least 14 of the 68.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-QUALITY-005",
@@ -1030,7 +2252,29 @@
       "owner_agent": 16,
       "closure_test": "The BASELINE.md dimension matrix reports distinct targets reached for every mention-type row, and no campaign artifact cites the Lemma row without it.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "The campaign's own baseline matrix reports a dimension in a unit that conceals its sparsity: the Lemma row's 6,560 counts mantras touched by 39 words.",
+      "initial_hypothesis": "Every other row in the matrix is counted the same way - mantras with at least one outgoing edge - and for translation or rishi that unit is meaningful because the layer is one edge per mantra. For a mention layer it is not: one edge per mantra says nothing about how many distinct terms the layer indexes. The figure is arithmetically correct and the inference it invites is false, which is the failure mode this campaign exists to prevent, appearing in the campaign's own frozen baseline.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-QUALITY-006",
@@ -1048,7 +2292,29 @@
       "owner_agent": 16,
       "closure_test": "Every :Rishi, :Devata and :Chandas node carries occurrence_count; the value for each equals its edge count under one declared scope; a Rigvedic seer's figure matches its HAS_RISHI degree; and the scope is recorded on the node so a reader can tell mantra-scope from container-scope.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "occurrence_count is null on every Devata and every Chandas node, and on Rishi it is written to two mutually incompatible conventions, so all 367 Rigveda-only seers report zero occurrences over the most complete seer layer in the corpus.",
+      "initial_hypothesis": "Three writers, three conventions, and no contract. The Yajurvedic loader counts mantra-scope occurrences (2,240), the Atharvavedic one counts container-scope (542), and the Rigvedic path writes 0. The Devata and Chandas loaders never write the property at all. The Rigvedic zero is arithmetically correct under the Atharvavedic convention, which is precisely why no check caught it: the row is internally consistent and every figure in it is right. This is the same type-level failure as the dedication axis, where three mechanisms disagreed because no one contract was applied last.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-RITUAL-001",
@@ -1066,7 +2332,29 @@
       "owner_agent": 13,
       "closure_test": "The Ritual class holds the rites the four Samhitas name, each with mention evidence, and the inventory_coverage column reports the new denominator rather than a stale 8.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "Eight rites are modelled against a corpus that names considerably more; vajapeya, rajasuya, darsapurnamasa and caturmasya have no node.",
+      "initial_hypothesis": "The class is a curated selection, honestly declared as such in every row through an inventory_coverage column. The expected population is not knowable without deciding what counts as a rite named by the Samhitas, and that is a curation question rather than a count - which is why this is null rather than a number. A hard ceiling sits above it regardless: the Brahmana and Srautasutra prose that actually describes the srauta rites is not in the corpus at all.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-RITUAL-002",
@@ -1084,7 +2372,29 @@
       "owner_agent": 13,
       "closure_test": "Either a describing corpus is ingested and HAS_STEP grows with per-step citations, or the absence is restated as a scope consequence rather than a thin layer - the current PARTIAL status correctly describes it, so the honest closure may be a scope statement rather than data.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "Ritual procedure is effectively unmodelled: 3 HAS_STEP edges exist in the entire graph and 7 of 8 rites have no ordering at all.",
+      "initial_hypothesis": "Genuinely source-limited rather than merely unfinished. Vedic ritual procedure is described in the Brahmana and Srautasutra prose, which the corpus excludes by declared scope. The three steps that do exist were curated from Samhita evidence for soma pressing. The expected population is null because a rite's step count is a property of the describing text, and that text is not held.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-RITUAL-003",
@@ -1102,7 +2412,29 @@
       "owner_agent": 13,
       "closure_test": "USES_OBJECT reaches mani, dundubhi and the udumbara amulet, and yupa's vedas_with_matches reads 3 with VSM 19.17 and 25.29 both matched.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "Only 14 of 23 registry objects are linked to a rite, so mani at 86 mentions, dundubhi at 17 and the udumbara amulet are absent from the ritual-object ranking despite being genuine ritual objects.",
+      "initial_hypothesis": "Ritual implement is defined as an object a curated rite is wired to use, which is the right definition - it stopped the earlier version ranking a war-chariot and Indra's thunderbolt as the corpus's foremost ritual objects, which was graded MISLEADING. But the definition inherits the curation ceiling: an object with no USES_OBJECT edge is invisible however often the corpus names it. A second, independent shortfall sits underneath: alias recall, where the sacrificial post reaches 6 of 11 attested mantras and misses both Yajurvedic witnesses because they are compounds not registered.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-RITUAL-004",
@@ -1120,7 +2452,29 @@
       "owner_agent": 13,
       "closure_test": "RitualRole holds the classical sixteen with their source stated, the hotr carries PERFORMED_BY edges, and any completeness figure names the schema its denominator comes from.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "11 ritual roles are modelled against the classical set of sixteen, and the hotr - the principal Rigvedic officiant - is wired to no rite at all.",
+      "initial_hypothesis": "The role set was curated partially and the PERFORMED_BY wiring is thinner still at 16 edges. That the hotr has zero rite links is the clearest symptom: it is the officiant the Rigveda names most and the one a reader would check first, so a rite-by-officiant query returns a confident answer that omits the principal priest.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-RITUAL-005",
@@ -1138,7 +2492,29 @@
       "owner_agent": 13,
       "closure_test": "A typed deity-to-offering predicate exists with per-edge verse evidence, every modelled rite carries its offerings, and no surface presents co-occurrence as an asserted offering.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "There is no typed deity-to-offering predicate; the relation is representable only as 10 generic association edges, and none of the 8 modelled rites is linked to an offering at all.",
+      "initial_hypothesis": "Benchmark Q61 records this as \"zero deity->offering edges of any type exist\", which is not quite right - 10 DEVATA_ASSOCIATED_WITH edges do reach Offering nodes - but the substance holds: a generic association cannot express that a deity receives an offering, so the question of which deity receives what can only be answered by verse co-occurrence. The expected population is null because it depends on a curation decision about which associations the Samhitas actually support.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-RITUAL-006",
@@ -1156,7 +2532,29 @@
       "owner_agent": 13,
       "closure_test": "Passages carry a ritual_context assignment with its method declared and its precision measured against a reviewed sample, and material-culture counts are reported split by context.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "No passage carries a ritual-context assignment, so a mention of a crop, metal or animal cannot be distinguished as ritual or everyday.",
+      "initial_hypothesis": "The dimension was never designed. It matters because the material-culture surface is one of the product's strongest, and every count it reports mixes ritual and domestic mention: a metal named in a sacrificial formula and one named in a simile about wealth are the same row.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-RITUAL-007",
@@ -1174,7 +2572,29 @@
       "owner_agent": 13,
       "closure_test": "Already disproven. No campaign artifact lists asvamedha among the absent rites.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "A diagnosis report says asvamedha does not appear at all; it is one of the eight modelled rites.",
+      "initial_hypothesis": "The horse sacrifice was added after the V3.1 diagnosis was written. The rest of the sentence is still accurate, which is what makes the claim hazardous: a session reading it would trust the whole list and add a duplicate asvamedha node while correctly adding the other four.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-SAMAVEDA_MUSIC-001",
@@ -1192,7 +2612,29 @@
       "owner_agent": 5,
       "closure_test": "Not a gap to close under this work_id. It closes only by a new work identifier whose scope statement is its own, leaving VG:WORK:SV:KAU's arcika figures unchanged and its exclusion list intact.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "The gana collections (roughly 2,639 ganas against 1,875 arcika verses) are a declared exclusion from this work identifier, and the product says so in its own scope statement.",
+      "initial_hypothesis": "An on-record scope decision, correctly declared at four surfaces and carrying its own coverage_status field. It is a real boundary, not an oversight: works.yaml:290-297 states \"The ganas need their own work_id; Sanskrit Wikisource carries all four gana books, so this is real future work and not a hypothetical.\" It is recorded here as a TRUE_SCOPE_FACT because the V1 boundary is genuine and declared, while noting that the corpus itself is identified and available.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-SAMAVEDA_MUSIC-002",
@@ -1210,7 +2652,29 @@
       "owner_agent": 5,
       "closure_test": "A melodic node label exists, MUSICALIZED_AS appears in db.relationshipTypes() with a non-zero count, and /api/v1/insights/capabilities no longer returns samavedic_melodic_layer as NOT_BUILT.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "No melodic layer of any kind exists: no saman, gana or stobha node label, no melody property, and the MUSICALIZED_AS predicate named in the ontology reference is not even present in the graph's type store.",
+      "initial_hypothesis": "The melodic dimension was never modelled, only excluded. This is distinct from GAP-SAMAVEDA_MUSIC-001: even for the arcika verses that ARE held, there is no place to record which saman realises a verse. The expected population is not knowable until a gana corpus is ingested and the saman-to-verse mapping is counted, so it is null rather than 0.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-SAMAVEDA_MUSIC-003",
@@ -1228,7 +2692,29 @@
       "owner_agent": 5,
       "closure_test": "Every Samavedic mantra exposes its running Samhita number, and re-deriving the MUSICALIZED_AS edges from the graph alone reproduces all 495.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "The running Samhita number is the only key joining an arcika verse to a gana rendering, and it exists nowhere in the graph, so the 495 MUSICALIZED_AS edges cannot be re-derived or audited after import.",
+      "initial_hypothesis": "The arcika ingest kept structural coordinates and discarded the edition's own running number, which was not needed until a second work had to be joined to it.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-SCHOLARSHIP-001",
@@ -1246,7 +2732,29 @@
       "owner_agent": 14,
       "closure_test": "Named asserter entities exist, InterpretiveClaim nodes carry a non-empty asserted_by, at least two claims about the same passage contradict each other with both attributed, and /api/v1/insights/capabilities no longer returns rival_scholarly_readings as NOT_ANSWERABLE.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "The graph records no scholarly position: 6 interpretive claims exist, none has a named asserter, no scholar or commentator entity exists, and no two claims about the text contradict each other.",
+      "initial_hypothesis": "The claim layer was built to record this project's own readings with their falsifiers, not to model scholarship, and it does that honestly - all six carry a falsifier. But four of the six are about the dataset rather than about the Vedas, so the layer cannot support a question about scholarly disagreement. The expected population is null because it depends on which commentarial corpus is chosen: Sayana alone would yield a very different count from a modern survey.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-SCHOLARSHIP-002",
@@ -1264,7 +2772,29 @@
       "owner_agent": 14,
       "closure_test": "Not a gap to close in this campaign. It closes only by a deliberate scope expansion with its own work identifiers; until then the closure test is that the exclusion lists still match what is held.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "No post-Samhita layer is held for any Veda: no Brahmana, Aranyaka or Upanisad, and no commentary.",
+      "initial_hypothesis": "A declared and consistently applied scope decision, stated at four work identifiers and in the product scope document, and correctly surfaced per Veda on the frontend. It is recorded here as a TRUE_SCOPE_FACT because it is a genuine boundary - but it is the boundary that causes GAP-RITUAL-002 and constrains GAP-SCHOLARSHIP-001, so the campaign should know that two of its ritual and scholarship gaps are downstream of this one decision rather than independently fixable.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-SEMANTICS-001",
@@ -1282,7 +2812,29 @@
       "owner_agent": 9,
       "closure_test": "HAS_SEMANTIC_ASSERTION reaches a non-Rigvedic corpus, RV coverage rises above 2,542, and no surface reports a blended assertion total.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "The semantic assertion layer is Rigveda-only and covers 2,542 of 10,552 RV mantras, so 17,668 mantras carry no assertion.",
+      "initial_hypothesis": "The layer has two instruments of unequal strength and neither was extended. The rule layer depends on the RV-only morphological annotation (GAP-MORPHOLOGY-002). The model layer reads a 19th-century English translation, so it cannot reach the Samaveda at all, which has no translation. Half the layer's volume concentrates on 3.8% of the Rigveda.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-SEMANTICS-002",
@@ -1300,7 +2852,29 @@
       "owner_agent": 16,
       "closure_test": "MATCH (a:SemanticAssertion) WHERE a.review_state='UNREVIEWED' RETURN count(a) falls below 4,865, with the reviewed sample stratified by derivation and its reviewer recorded.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "Every one of the 4,865 semantic assertions is UNREVIEWED; no assertion in the graph has ever been checked by a human.",
+      "initial_hypothesis": "No human review pass was ever run. 2,459 of the assertions are TIER_D unreviewed model output over a 19th-century English translation, which is the weakest provenance in the graph, and they are the half most in need of review.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-SEMANTICS-003",
@@ -1318,7 +2892,29 @@
       "owner_agent": 9,
       "closure_test": "MATCH (a:SemanticAssertion) with all three slots present returns a non-zero count, and at least one assertion has a non-Devata target.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "Not one of the 4,865 assertions carries a complete agent-predicate-target triple, 1,522 carry no role slot at all, and the role slots can only point at deities.",
+      "initial_hypothesis": "The two derivations fill different slots: the rule layer writes agent and predicate but never a target, and the model layer writes targets. They were never reconciled into one triple. The range restriction to :Devata is the deeper limit: an assertion about a deity acting on a mortal, a place or an object cannot be expressed at all, so the layer can only ever describe deity-to-deity events. The benchmark's figure of 17 assertions with three slots does not reproduce; the measured value is 0.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-SEMANTICS-004",
@@ -1336,7 +2932,29 @@
       "owner_agent": 14,
       "closure_test": "Either a stratum layer exists with every assignment attributed to a named position, or the absence is recorded as a deliberate decision with its reasoning, rather than appearing as an unanswered benchmark question.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "There is no chronological or stratigraphic dimension anywhere in the graph, and Veda membership is not a period.",
+      "initial_hypothesis": "Deliberately not modelled, and for a defensible reason: Vedic stratigraphy is contested and a stratum assignment would be an interpretive claim rather than a measurement. But it is recorded nowhere as a decision, and docs/reports/VEDAGRAPH_50_KILLER_QUESTIONS.md:507 and _V2.md:621 note the corpus layer \"is still not modelled\" as an open item rather than a closed one. The expected population is not knowable without choosing a stratum scheme, so it is null.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-SEMANTICS-005",
@@ -1354,7 +2972,29 @@
       "owner_agent": 9,
       "closure_test": "MATCH (e:DomainEntity) WHERE e.domain IS NULL RETURN count(e) returns 0, with multi-domain entities carrying every applicable domain rather than one.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "All 229 DomainEntity nodes lack a domain assignment, so the entity population cannot be partitioned into ritual, cosmological or material spheres.",
+      "initial_hypothesis": "The property was designed into the label name and never written. Without it, questions that ask how two spheres of the ontology connect have no partition to connect, and the entity surface can only be sliced by node type.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-SEMANTICS-006",
@@ -1372,7 +3012,29 @@
       "owner_agent": 11,
       "closure_test": "A resemblance predicate exists with a declared measure and threshold, /api/v1/insights/cross-veda returns measured counts in the SEMANTIC_RESEMBLANCE row, and the capability limit conceptual_similarity_without_shared_text is no longer NOT_ANSWERABLE.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "No non-lexical resemblance measure exists: no embedding, no vector index and no asserted semantic resemblance, so conceptual similarity without shared wording is unanswerable for every corpus pair.",
+      "initial_hypothesis": "Never built, and the V1 product explicitly chose not to: PRODUCT_V1_SCOPE.md:212-221 lists \"No vector database and no embedding retrieval\" as a deliberate non-goal. The typed NOT_BUILT handling is exemplary - the graph refuses to print a zero that a reader would take as a finding about the Vedas - but the dimension itself is the single largest unanswerable class in the benchmark, accounting for Q22, Q49 and Q81 directly and constraining Q53. The expected population is not knowable before a measure is chosen, since the edge count depends entirely on the threshold.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-TRANSLATION-001",
@@ -1390,7 +3052,29 @@
       "owner_agent": 3,
       "closure_test": "MATCH (p:Mantra) WHERE p.veda='SV' AND NOT (p)-[:HAS_TRANSLATION]->() RETURN count(p) returns 0, every SV Translation node carries a Kauthuma-aligned source_id, and /api/v1/works reports VG:WORK:SV:KAU as SUPPORTED.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "The Samaveda has no translation at all: 0 of 1,844 mantras carry HAS_TRANSLATION.",
+      "initial_hypothesis": "Source-blocked, and the block is on record rather than assumed. data/domain/vedagraph_domain_v2/veda_coverage_v3.json:285 gives the reason verbatim: \"No complete translation of the Kauthuma arcika is ingested; the only one located is Ranayaniya and does not align.\" A Source node WIKISOURCE_GRIFFITH_SV exists in the graph and feeds ZERO Translation nodes (Cypher: MATCH (n) WHERE n.source_id='WIKISOURCE_GRIFFITH_SV' RETURN labels(n) -> a single :Source, no Translation). So the registry declares an SV translation source that was never used, because using it would map Ranayaniya material onto the Kauthuma arcika we hold.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-TRANSLATION-002",
@@ -1412,7 +3096,32 @@
       "suspected_cause": "The ingested AV translation is Whitney/Lanman via VEDAWEB (4,878 Translation nodes), and Whitney excluded kanda 20 because it is largely Rigvedic redaction. The gap is therefore one contiguous book plus three isolated verses, not scattered attrition.",
       "measured_cause": "Both incumbent Atharvavedic sources omit kanda 20 for the same Whitney-related reason, so it was a single source dependency rather than 961 separate absences.",
       "closure_method": "944 of 961 from Griffith's Hymns of the Atharvaveda via the Internet Archive Wayback Machine, sacred-texts.com being 403 behind a Cloudflare bot challenge rather than merely unreachable. 923 direct including all three strays, and 21 by the permitted cross-corpus route at surface identity of exactly 1.0 citing both keys.",
-      "causation_status": "MEASURED"
+      "causation_status": "MEASURED",
+      "initial_hypothesis": "The ingested AV translation is Whitney/Lanman via VEDAWEB (4,878 Translation nodes), and Whitney excluded kanda 20 because it is largely Rigvedic redaction. The gap is therefore one contiguous book plus three isolated verses, not scattered attrition.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": {
+        "types": [
+          "SOURCE_NOT_YET_DISCOVERED"
+        ],
+        "explanation": "Both incumbent sources omit kanda 20 for the same Whitney-related reason, so it was one source dependency rather than 961 absences. Closed via the Wayback Machine, sacred-texts.com being behind a Cloudflare challenge."
+      },
+      "source_availability": "PUBLICLY_REACHABLE",
+      "initial_hypothesis_status": "SUPERSEDED_BY_MEASUREMENT"
     },
     {
       "gap_id": "GAP-TRANSLATION-003",
@@ -1434,7 +3143,32 @@
       "suspected_cause": "Residual alignment misses against a source that covers the whole Vajasaneyi Samhita. Not source-blocked.",
       "measured_cause": "39 of the 72 were never missing. The stage file's own gap labels decompose as 39 LABEL_NOT_PRINTED, 21 spine divergence and 12 printed omission, and re-parsing the pinned snapshots shows the 39 are digit-confusion OCR of the printed verse label -- '22 23 24 23 26' for 25, '84 S5 85 87' for 84/85/86 -- with the translated text present throughout. Adhyaya 23.20-31 is by contrast a true omission: Griffith printed a row of ellipsis dots.",
       "closure_method": "Recovery by forced interpolation between bindings the shipped pipeline already made, controlled against all 1,889 existing EXACT bindings with zero regressions. A first attempt recovered 60 while silently re-binding 53 verses of adhyaya 12 by one place; the regression guard caught it, which is the only reason the figure is trustworthy. Owner decision C then ruled the 31 rows lacking independent content control ineligible, so accepted recovery is 19.",
-      "causation_status": "MEASURED"
+      "causation_status": "MEASURED",
+      "initial_hypothesis": "Residual alignment misses against a source that covers the whole Vajasaneyi Samhita. Not source-blocked.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": {
+        "types": [
+          "OCR_LABEL_DEFECT"
+        ],
+        "explanation": "39 of the 72 gap labels were digit-confusion OCR of printed verse numbers, with the translated text present throughout. Never a source gap."
+      },
+      "source_availability": "HELD_LOCALLY",
+      "initial_hypothesis_status": "SUPERSEDED_BY_MEASUREMENT"
     },
     {
       "gap_id": "GAP-TRANSLATION-004",
@@ -1456,7 +3190,33 @@
       "suspected_cause": "Residual alignment misses against WIKISOURCE_GRIFFITH_RV, which covers the Sakala Samhita in full. Note that PRODUCT_V1_SCOPE.md:58-59 states 52; the live measurement is 50, so the scope document is two out of date.",
       "measured_cause": "30 of the 50 are not a source gap. They are the unbound halves of RV 1.65-1.70, where Griffith renders each pair of our verses as one merged unit -- so no printed unit addresses them individually, and the 25 units that ARE bound in that span sit on the wrong verses. The gap was the visible symptom of a misalignment, which is why reading it as a gap hid the defect. See GAP-TRANSLATION-006.",
       "closure_method": "13 closed conventionally. The 30 are barred from import until the coordinate repair is verified, per owner decision A: filling the span first would leave every verse carrying text and 25 carrying the wrong text.",
-      "causation_status": "MEASURED"
+      "causation_status": "MEASURED",
+      "initial_hypothesis": "Residual alignment misses against WIKISOURCE_GRIFFITH_RV, which covers the Sakala Samhita in full. Note that PRODUCT_V1_SCOPE.md:58-59 states 52; the live measurement is 50, so the scope document is two out of date.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": {
+        "types": [
+          "CANONICAL_COORDINATE_DEFECT",
+          "GRANULARITY_MISMATCH"
+        ],
+        "explanation": "Griffith renders each pair of our Sakala verses as one merged unit, so unit k covers verses 2k-1 and 2k. The import bound unit k to verse k. 30 of the 50 were never a source gap; they are the unbound halves of a pair-scope rendering."
+      },
+      "source_availability": "HELD_LOCALLY",
+      "initial_hypothesis_status": "SUPERSEDED_BY_MEASUREMENT"
     },
     {
       "gap_id": "GAP-TRANSLATION-005",
@@ -1474,7 +3234,29 @@
       "owner_agent": 3,
       "closure_test": "MATCH (t:Translation) WHERE t.alignment_confidence IS NULL RETURN count(t) returns 0, and the 158-uncertain claim is either reproducible from the data or removed.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
+      "observed_gap": "All 17,283 translations are single-witness and machine-aligned with no per-translation alignment confidence recorded.",
+      "initial_hypothesis": "The aligner never wrote a confidence field, and one translator was ingested per corpus. PRODUCT_V1_SCOPE.md:58 claims 158 translations are 'recorded as uncertain', but no property on any Translation node carries that record, so the claim is unverifiable from the data.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "NOT_RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "NOT_RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "NOT_RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": null,
+      "source_availability": "UNDIAGNOSED",
+      "initial_hypothesis_status": "UNTESTED",
+      "closure_method": null
     },
     {
       "gap_id": "GAP-TRANSLATION-006",
@@ -1492,7 +3274,83 @@
       "owner_agent": 3,
       "closure_test": "Each of the 31 rows reads correctly against its own verse's Sanskrit -- not that the hymn is full. Plus an invariant in the test suite that rejects a near-half translated-to-verse ratio at hymn scope.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "MEASURED",
+      "observed_gap": "Griffith renders each pair of our Sakala verses as one unit, so his unit N belongs to our verse 2N-1. The import bound his units one-for-one, leaving 25 of 31 translations attached to the wrong verse.",
+      "initial_hypothesis": "A positional bind where the two editions do not share a verse spine. Nothing caught it because all three available safeguards were satisfied: the totals balance at 31 units in and 31 rows out, every canonical key resolves and is Rigvedic so the staging graph checks pass, and the 30 unbound verses present as a coverage gap rather than as a defect. This campaign's own baseline recorded them that way. The missing verses were the visible symptom of the misalignment, and reading them as a gap hid the defect behind them.",
+      "diagnostics_run": {
+        "A_canonical_key_correctness": "RUN",
+        "B_source_coordinate_system": "NOT_RUN",
+        "C_edition_numbering": "RUN",
+        "D_recension_identity": "NOT_RUN",
+        "E_transliteration_script": "NOT_RUN",
+        "F_unicode_normalization": "NOT_RUN",
+        "G_accent_normalization": "NOT_RUN",
+        "H_ocr_digit_confusion": "NOT_RUN",
+        "I_sort_order": "NOT_RUN",
+        "J_comparator_behaviour": "NOT_RUN",
+        "K_sandhi_word_boundary": "NOT_RUN",
+        "L_granularity": "RUN",
+        "M_scope": "NOT_RUN",
+        "N_stale_transform": "NOT_RUN"
+      },
+      "measured_root_cause": {
+        "types": [
+          "CANONICAL_COORDINATE_DEFECT",
+          "GRANULARITY_MISMATCH"
+        ],
+        "explanation": "25 of 31 shipped translations in RV 1.65-1.70 sit on the wrong verse, and the scope of the remaining 6 is undeclared. Nothing needs acquiring: all 61 verses are covered by some unit."
+      },
+      "source_availability": "NOT_REQUIRED",
+      "initial_hypothesis_status": "SUPERSEDED_BY_MEASUREMENT",
+      "closure_method": null
     }
-  ]
+  ],
+  "root_cause_taxonomy": [
+    "SOURCE_TRULY_ABSENT",
+    "SOURCE_NOT_YET_DISCOVERED",
+    "WRONG_SOURCE_COORDINATE",
+    "CANONICAL_COORDINATE_DEFECT",
+    "TRANSLITERATION_MISMATCH",
+    "UNICODE_NORMALIZATION_DEFECT",
+    "OCR_LABEL_DEFECT",
+    "COMPARATOR_DEFECT",
+    "SORT_ORDER_DEFECT",
+    "GRANULARITY_MISMATCH",
+    "RECENSION_MISMATCH",
+    "SCOPE_MISMATCH",
+    "UNAPPLIED_EXISTING_TRANSFORM",
+    "SCHEMA_CANNOT_REPRESENT_DOMAIN",
+    "VALIDATOR_FALSE_COMPLETENESS",
+    "PIPELINE_NOT_RUN",
+    "DERIVED_LAYER_NOT_BUILT",
+    "PRODUCT_PROJECTION_MISSING",
+    "OTHER_MEASURED"
+  ],
+  "source_availability_vocabulary": [
+    "UNDIAGNOSED",
+    "NOT_REQUIRED",
+    "HELD_LOCALLY",
+    "PUBLICLY_REACHABLE",
+    "REACHABLE_WITH_PERMISSION",
+    "UNREACHABLE_FROM_HERE",
+    "NOT_LOCATED",
+    "CONFIRMED_ABSENT"
+  ],
+  "addressing_checks": {
+    "A_canonical_key_correctness": "our own key is the key we think it is",
+    "B_source_coordinate_system": "the source addresses its text the way we assume",
+    "C_edition_numbering": "the edition does not divide or merge units differently",
+    "D_recension_identity": "the material is the school we hold, not a sibling",
+    "E_transliteration_script": "both sides are in the script we are comparing in",
+    "F_unicode_normalization": "composed and decomposed forms are folded alike",
+    "G_accent_normalization": "tone marks are not mistaken for letters, or vice versa",
+    "H_ocr_digit_confusion": "printed labels were read correctly",
+    "I_sort_order": "ordering is numeric where we assume numeric, and symmetric where declared",
+    "J_comparator_behaviour": "the comparator measures what it claims to",
+    "K_sandhi_word_boundary": "segmentation convention is not read as a textual difference",
+    "L_granularity": "the source's unit is the unit we are attaching to",
+    "M_scope": "the work or section boundary is the one we assume",
+    "N_stale_transform": "an existing mapping table is applied, and applied correctly"
+  },
+  "addressing_first_rule": "A gap may not be classified SOURCE_TRULY_ABSENT, NOT_LOCATED or CONFIRMED_ABSENT until every applicable addressing check in `addressing_checks` has been run and recorded in the entry's `diagnostics_run`. Five campaign findings were an apparent source absence that turned out to be our own addressing defect; three registry prescriptions sent the campaign to acquire material it already held."
 }
