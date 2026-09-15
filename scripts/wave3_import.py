@@ -56,6 +56,7 @@ from wave3_import_plan import (
     elements_of,
     get_path,
     identity_of,
+    mint,
     minted_key,
     passes,
     redirects,
@@ -80,14 +81,24 @@ DB = os.environ.get("NEO4J_DATABASE", "neo4j")
 #: readback can tell a Wave 3 element from one that was already there.
 WAVE = "WAVE_3"
 
-#: Properties carried onto every written element. ``run_id`` is the import's own identity.
-def provenance(run_id: str, domain: str, group_id: str) -> dict[str, str]:
-    return {
+def provenance(run_id: str, domain: str, group_id: str, *, created: bool) -> dict[str, str]:
+    """What this wave records about an element it wrote.
+
+    ``wave3_created_by`` is set only when the element is CREATED, and
+    ``wave3_touched_by`` on every write. The first version stamped one ``wave`` property
+    either way, so labelling the 8 pre-existing rites made them claim this wave wrote them
+    and no query could tell them from the 92 it did. Creation and contact are different
+    facts.
+    """
+    stamp = {
         "wave": WAVE,
-        "wave3_run_id": run_id,
+        "wave3_touched_by": run_id,
         "wave3_domain": domain,
         "wave3_group": group_id,
     }
+    if created:
+        stamp["wave3_created_by"] = run_id
+    return stamp
 
 
 #: Which properties of a source row become element properties. Everything else in the row
@@ -561,30 +572,58 @@ def write_nodes(
             renames.get(field, field): value
             for field, value in node_props(row, group).items()
         }
-        props.update(provenance(run_id, group.domain, group.group_id))
+        # The stamp is applied per branch below, since it differs for create and label.
         if group.key_minted_from_identity:
-            props[key] = f"{group.element}:{identity_of(row, group)}"
+            props[key] = mint(group, row)
         else:
             props[key] = str(get_path(row, group.identity_fields[0]))
         payload.append(props)
 
     keys = [row[key] for row in payload]
+    created_stamp = provenance(run_id, group.domain, group.group_id, created=True)
+    touched_stamp = provenance(run_id, group.domain, group.group_id, created=False)
+
+    # An index on the group's own key, created before the probe. Without it the probe is
+    # label-less and cannot use one: 9,255 step keys over 123,000 nodes took 3m40s, and the
+    # equivalent labelling pass on 2,568 quality verdicts took 4m42s. IF NOT EXISTS makes it
+    # idempotent, and the index is a permanent improvement rather than a run-scoped one.
+    session.run(
+        f"CREATE INDEX wave3_{group.element.lower()}_{key} IF NOT EXISTS "
+        f"FOR (n:{group.element}) ON (n.{key})"
+    ).consume()
+
     with session.begin_transaction() as tx:
+        # Two probes. The label-scoped one uses the index and finds everything on a re-run;
+        # the label-less one runs only for the keys it missed, which on a first pass is the
+        # small set of elements the graph already holds under a DIFFERENT label -- 66 ritual
+        # registry entities -- and on a re-run is empty.
         present = {
             str(record["v"])
             for record in tx.run(
-                f"UNWIND $keys AS v MATCH (n) WHERE n.{key} = v RETURN DISTINCT v AS v",
+                f"UNWIND $keys AS v MATCH (n:{group.element}) WHERE n.{key} = v "
+                "RETURN DISTINCT v AS v",
                 keys=keys,
             )
         }
+        unseen = [k for k in keys if k not in present]
+        if unseen:
+            present |= {
+                str(record["v"])
+                for record in tx.run(
+                    f"UNWIND $keys AS v MATCH (n) WHERE n.{key} = v RETURN DISTINCT v AS v",
+                    keys=unseen,
+                )
+            }
         labelled = 0
         existing = [row for row in payload if row[key] in present]
         if existing:
             labelled = int(
                 tx.run(
                     f"UNWIND $rows AS row MATCH (n) WHERE n.{key} = row.{key} "
-                    f"SET n:{group.element}, n += row RETURN count(DISTINCT n) AS n",
+                    f"SET n:{group.element}, n += row, n += $stamp "
+                    "RETURN count(DISTINCT n) AS n",
                     rows=existing,
+                    stamp=touched_stamp,
                 ).single()["n"]
             )
         absent = [row for row in payload if row[key] not in present]
@@ -605,9 +644,10 @@ def write_nodes(
                 labels = ":".join((group.element, *extra))
                 created += int(
                     tx.run(
-                        f"UNWIND $rows AS row CREATE (n:{labels}) SET n += row "
+                        f"UNWIND $rows AS row CREATE (n:{labels}) SET n += row, n += $stamp "
                         "RETURN count(n) AS n",
                         rows=rows_for_labels,
+                        stamp=created_stamp,
                     ).single()["n"]
                 )
         tx.commit()
@@ -632,7 +672,7 @@ def write_node_properties(
             for field, value in row.items()
             if field not in group.identity_fields and not field.startswith("evidence")
         }
-        props.update(provenance(run_id, group.domain, group.group_id))
+        props.update(provenance(run_id, group.domain, group.group_id, created=False))
         payload.append({"key": str(get_path(row, group.identity_fields[0])), "props": props})
 
     query = (
@@ -667,7 +707,7 @@ def write_relationships(
             for field, value in row.items()
             if field not in {group.start_field, end_field}
         }
-        props.update(provenance(run_id, group.domain, group.group_id))
+        props.update(provenance(run_id, group.domain, group.group_id, created=True))
         # The same redirect the plan applies. Without it 6 rite edges pointed at
         # GRHAPRAVESA and PITRMEDHA, whose own keys the import correctly declines to create
         # because the graph holds those rites under other names, and the edges landed
@@ -731,7 +771,7 @@ def write_relationship_properties(
             for field, value in row.items()
             if field not in {group.start_field, end_field}
         }
-        props.update(provenance(run_id, group.domain, group.group_id))
+        props.update(provenance(run_id, group.domain, group.group_id, created=True))
         buckets.setdefault(predicate, []).append(
             {
                 "start": redirect.get(str(start), str(start)),

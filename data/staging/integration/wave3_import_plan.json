@@ -1873,7 +1873,7 @@
       "group_id": "SCHOLARSHIP_CLAIM_ROWS",
       "domain": "scholarship",
       "kind": "NODE",
-      "element": "InterpretiveClaim",
+      "element": "ScholarlyDisagreement",
       "source": "rows.jsonl",
       "identity_fields": [
         "canonical_key",
@@ -1881,7 +1881,7 @@
         "payload.row_kind"
       ],
       "require": [],
-      "notes": "113 rows, each a disagreement or a position over a passage. 6 :InterpretiveClaim nodes and 2 CONTRADICTS edges already exist, so this group is a mix and the planner must say which.",
+      "notes": "113 rows, each a recorded disagreement, agreement or qualification between named asserters over a passage.\n\nNOT :InterpretiveClaim, which it was until the API suite failed. That label is a curated product object -- 6 nodes, each with an `about` enum of VEDIC_TEXT / DATASET / TRADITIONAL_APPARATUS, a `falsifier`, a `claim_text` and a `claim_id`, all of which /insights promises. These rows carry `axis` and `row_kind` instead, so putting them under that label made the endpoint return `about: None` against its own schema. Adding rows to an existing label without meeting its contract is the same error as widening a predicate's range without a card.",
       "artifact_elements": 113,
       "filtered_out_by_require": 0,
       "candidates": 113,
@@ -1897,9 +1897,9 @@
       "match_property": "entity_key",
       "key_minted_from_identity": true,
       "distinct_subjects": 113,
-      "already_present": 113,
-      "nodes_create": 0,
-      "nodes_update": 113,
+      "already_present": 0,
+      "nodes_create": 113,
+      "nodes_update": 0,
       "subjects_absent_from_graph": [],
       "property_writes": 0,
       "dangling_references": 0
@@ -1939,12 +1939,12 @@
       "start_endpoints_absent": 0,
       "end_endpoints_absent": 0,
       "endpoints_provided_by_this_plan": 113,
-      "triples_awaiting_an_earlier_step": 0,
+      "triples_awaiting_an_earlier_step": 113,
       "endpoints_redirected": 0,
       "ambiguous_endpoint_keys": 0,
       "ambiguous_endpoint_detail": [],
-      "relationships_create": 0,
-      "relationships_update": 113,
+      "relationships_create": 113,
+      "relationships_update": 0,
       "property_writes": 0,
       "expected_to_exist_but_absent": 0,
       "expected_to_exist_but_absent_detail": []
@@ -2034,7 +2034,7 @@
       "start_endpoints_absent": 0,
       "end_endpoints_absent": 0,
       "endpoints_provided_by_this_plan": 123,
-      "triples_awaiting_an_earlier_step": 0,
+      "triples_awaiting_an_earlier_step": 113,
       "endpoints_redirected": 0,
       "ambiguous_endpoint_keys": 0,
       "ambiguous_endpoint_detail": [],
@@ -2079,7 +2079,7 @@
       "start_endpoints_absent": 0,
       "end_endpoints_absent": 0,
       "endpoints_provided_by_this_plan": 123,
-      "triples_awaiting_an_earlier_step": 0,
+      "triples_awaiting_an_earlier_step": 113,
       "endpoints_redirected": 0,
       "ambiguous_endpoint_keys": 0,
       "ambiguous_endpoint_detail": [],
@@ -2124,7 +2124,7 @@
       "start_endpoints_absent": 0,
       "end_endpoints_absent": 0,
       "endpoints_provided_by_this_plan": 123,
-      "triples_awaiting_an_earlier_step": 0,
+      "triples_awaiting_an_earlier_step": 113,
       "endpoints_redirected": 0,
       "ambiguous_endpoint_keys": 0,
       "ambiguous_endpoint_detail": [],
@@ -2169,7 +2169,7 @@
       "start_endpoints_absent": 0,
       "end_endpoints_absent": 0,
       "endpoints_provided_by_this_plan": 122,
-      "triples_awaiting_an_earlier_step": 0,
+      "triples_awaiting_an_earlier_step": 113,
       "endpoints_redirected": 0,
       "ambiguous_endpoint_keys": 0,
       "ambiguous_endpoint_detail": [],
@@ -2214,7 +2214,7 @@
       "start_endpoints_absent": 0,
       "end_endpoints_absent": 0,
       "endpoints_provided_by_this_plan": 116,
-      "triples_awaiting_an_earlier_step": 0,
+      "triples_awaiting_an_earlier_step": 113,
       "endpoints_redirected": 0,
       "ambiguous_endpoint_keys": 0,
       "ambiguous_endpoint_detail": [],
@@ -2574,13 +2574,13 @@
     "identity_collisions_withheld": 18,
     "multi_source_evidence_merges": 147,
     "node_status_disagreements": 203,
-    "nodes_create": 0,
-    "nodes_update": 19868,
+    "nodes_create": 113,
+    "nodes_update": 19755,
     "property_writes": 51215,
-    "relationships_create": 1831,
-    "relationships_update": 65038,
+    "relationships_create": 1944,
+    "relationships_update": 64925,
     "rows_withheld_on_identity_collision": 36,
-    "triples_awaiting_an_earlier_step": 0
+    "triples_awaiting_an_earlier_step": 678
   },
   "by_domain": {
     "communities": {
@@ -2609,9 +2609,9 @@
       "relationships_create": 1266
     },
     "scholarship": {
-      "nodes_create": 0,
+      "nodes_create": 113,
       "property_writes": 0,
-      "relationships_create": 565
+      "relationships_create": 678
     },
     "semantic_roles": {
       "nodes_create": 0,
@@ -2620,7 +2620,9 @@
     }
   },
   "schema_additions": {
-    "node_labels_created": [],
+    "node_labels_created": [
+      "ScholarlyDisagreement"
+    ],
     "relationship_types_touched": [
       "ASSERTED_BY",
       "ASSERTION_ROLE",
@@ -2643,11 +2645,11 @@
   },
   "expected_census": {
     "nodes_before": 123000,
-    "nodes_after": 123000,
-    "nodes_delta": 0,
+    "nodes_after": 123113,
+    "nodes_delta": 113,
     "relationships_before": 286220,
-    "relationships_after": 288051,
-    "relationships_delta": 1831,
+    "relationships_after": 288164,
+    "relationships_delta": 1944,
     "note": "No group plans a retirement, so no element is removed by an ADDITION. The retirements Wave 3 makes are corrections, planned separately and named in the dry-run: the SOMA-PRESSING weak-alias retirement."
   },
   "identity_collisions_are_all_withheld": true,

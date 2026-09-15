@@ -130,6 +130,15 @@ CLOSURE: dict[str, tuple[str, str, tuple[str, ...]]] = {
         "sum(CASE WHEN NOT (v)-[:QUALITY_VERDICT_ABOUT]->() THEN 1 ELSE 0 END) AS unattached",
         ("unsourced", "claims_human_gold", "unattached"),
     ),
+    "scholarship_label_contract": (
+        "no row this wave imported wears :InterpretiveClaim, whose contract promises an "
+        "about enum and a falsifier that a scholarly disagreement does not have",
+        "MATCH (n:InterpretiveClaim) "
+        "RETURN count(n) AS claims, "
+        "sum(CASE WHEN n.about IS NULL THEN 1 ELSE 0 END) AS without_about, "
+        "sum(CASE WHEN n.falsifier IS NULL THEN 1 ELSE 0 END) AS without_falsifier",
+        ("without_about", "without_falsifier"),
+    ),
     "cross_veda": (
         "the corrected transformation typing landed on existing parallel edges and created "
         "none",
@@ -295,7 +304,7 @@ def main() -> int:
             # other island is a defect, and the second import left 12,033 of them.
             orphan = one(
                 session,
-                "MATCH (n) WHERE n.wave = $wave AND NOT (n)--() "
+                "MATCH (n) WHERE n.wave3_created_by IS NOT NULL AND NOT (n)--() "
                 "AND NOT n:DeityCommunity RETURN count(n) AS c",
                 wave=WAVE,
             )
@@ -303,7 +312,7 @@ def main() -> int:
             by_label = {
                 r["label"]: r["c"]
                 for r in session.run(
-                    "MATCH (n) WHERE n.wave = $wave AND NOT (n)--() "
+                    "MATCH (n) WHERE n.wave3_created_by IS NOT NULL AND NOT (n)--() "
                     "UNWIND labels(n) AS label RETURN label, count(*) AS c ORDER BY c DESC",
                     wave=WAVE,
                 )

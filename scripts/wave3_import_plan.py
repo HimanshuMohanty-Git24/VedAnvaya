@@ -608,14 +608,21 @@ GROUPS: tuple[ElementGroup, ...] = (
         domain="scholarship",
         kind="NODE",
         source="rows.jsonl",
-        element="InterpretiveClaim",
+        element="ScholarlyDisagreement",
         identity_fields=("canonical_key", "payload.axis", "payload.row_kind"),
         match_property="entity_key",
         key_minted_from_identity=True,
         notes=(
-            "113 rows, each a disagreement or a position over a passage. 6 "
-            ":InterpretiveClaim nodes and 2 CONTRADICTS edges already exist, so this group "
-            "is a mix and the planner must say which."
+            "113 rows, each a recorded disagreement, agreement or qualification between "
+            "named asserters over a passage.\n\n"
+            "NOT :InterpretiveClaim, which it was until the API suite failed. That label is "
+            "a curated product object -- 6 nodes, each with an `about` enum of VEDIC_TEXT / "
+            "DATASET / TRADITIONAL_APPARATUS, a `falsifier`, a `claim_text` and a "
+            "`claim_id`, all of which /insights promises. These rows carry `axis` and "
+            "`row_kind` instead, so putting them under that label made the endpoint return "
+            "`about: None` against its own schema. Adding rows to an existing label without "
+            "meeting its contract is the same error as widening a predicate's range without "
+            "a card."
         ),
     ),
     ElementGroup(
@@ -623,20 +630,21 @@ GROUPS: tuple[ElementGroup, ...] = (
         domain="scholarship",
         kind="RELATIONSHIP",
         source="rows.jsonl",
-        element="INTERPRETIVE_CLAIM_ABOUT",
+        element="SCHOLARLY_CLAIM_ABOUT",
         identity_fields=("canonical_key", "payload.axis", "payload.row_kind"),
         start_field="canonical_key",
         end_field="canonical_key",
-        start_label="InterpretiveClaim",
+        start_label="ScholarlyDisagreement",
         end_label="Passage",
         start_key_property="entity_key",
         end_key_property="canonical_key",
         start_minted_by="SCHOLARSHIP_CLAIM_ROWS",
         notes=(
-            "113 claims arrived unattached. A new predicate: the existing :InterpretiveClaim "
-            "edges are SUPPORTED_BY to a Passage, meaning the passage supports the claim, "
-            "and CONCERNS to a Work or Concept. Neither says 'this claim is about this "
-            "passage', and reusing either would change its meaning."
+            "113 claims arrived unattached. A new predicate, named for the relation rather "
+            "than for a label that turned out to be the wrong one: the existing "
+            ":InterpretiveClaim edges are SUPPORTED_BY to a Passage, meaning the passage "
+            "supports the claim, and CONCERNS to a Work or Concept. Neither says 'this "
+            "claim is about this passage', and reusing either would change its meaning."
         ),
     ),
     ElementGroup(
@@ -671,7 +679,7 @@ GROUPS: tuple[ElementGroup, ...] = (
         identity_fields=("canonical_key", "payload.axis", "payload.position_a.asserter_id"),
         start_field="canonical_key",
         end_field="payload.position_a.asserter_id",
-        start_label="InterpretiveClaim",
+        start_label="ScholarlyDisagreement",
         end_label="Scholar",
         start_key_property="entity_key",
         end_key_property="entity_key",
@@ -692,7 +700,7 @@ GROUPS: tuple[ElementGroup, ...] = (
         identity_fields=("canonical_key", "payload.axis", "payload.position_b.asserter_id"),
         start_field="canonical_key",
         end_field="payload.position_b.asserter_id",
-        start_label="InterpretiveClaim",
+        start_label="ScholarlyDisagreement",
         end_label="Scholar",
         start_key_property="entity_key",
         end_key_property="entity_key",
@@ -709,7 +717,7 @@ GROUPS: tuple[ElementGroup, ...] = (
         identity_fields=("canonical_key", "payload.axis", "payload.position_a.work_id"),
         start_field="canonical_key",
         end_field="payload.position_a.work_id",
-        start_label="InterpretiveClaim",
+        start_label="ScholarlyDisagreement",
         end_label="ScholarlyWork",
         start_key_property="entity_key",
         end_key_property="entity_key",
@@ -726,7 +734,7 @@ GROUPS: tuple[ElementGroup, ...] = (
         identity_fields=("canonical_key", "payload.axis", "payload.position_b.work_id"),
         start_field="canonical_key",
         end_field="payload.position_b.work_id",
-        start_label="InterpretiveClaim",
+        start_label="ScholarlyDisagreement",
         end_label="ScholarlyWork",
         start_key_property="entity_key",
         end_key_property="entity_key",
@@ -742,7 +750,7 @@ GROUPS: tuple[ElementGroup, ...] = (
         identity_fields=("canonical_key", "payload.axis", "payload.witness.work_id"),
         start_field="canonical_key",
         end_field="payload.witness.work_id",
-        start_label="InterpretiveClaim",
+        start_label="ScholarlyDisagreement",
         end_label="ScholarlyWork",
         start_key_property="entity_key",
         end_key_property="entity_key",
@@ -999,14 +1007,25 @@ def passes(row: dict[str, Any], group: ElementGroup) -> bool:
     return all(get_path(row, field) == value for field, value in group.require)
 
 
-def minted_key(row: dict[str, Any], group: ElementGroup) -> str:
-    """The key a minted-identity node group gives this row, recomputed identically.
+def mint(group: ElementGroup, row: dict[str, Any]) -> str:
+    """The key a minted-identity group gives one row.
 
-    Both the node group and any edge group pointing at it call this, so the two cannot
-    drift: if the minting changes, both ends change together.
+    Keyed on the GROUP ID, not the element label. The first version used the label, so
+    correcting :InterpretiveClaim to :ScholarlyDisagreement re-minted every key and the plan
+    offered to create 113 nodes it already had. A label is the shape the graph gives an
+    element and a correction may change it; the identity must not move underneath.
+    """
+    return f"{group.group_id}:{identity_of(row, group)}"
+
+
+def minted_key(row: dict[str, Any], group: ElementGroup) -> str:
+    """The minted key of the node group this relationship's start belongs to.
+
+    Both ends call one function, so a change to the minting cannot reach one and not the
+    other.
     """
     owner = next(g for g in GROUPS if g.group_id == group.start_minted_by)
-    return f"{owner.element}:{identity_of(row, owner)}"
+    return mint(owner, row)
 
 
 def identity_of(row: dict[str, Any], group: ElementGroup) -> str:
@@ -1211,9 +1230,7 @@ def plan_group(
             # and false of a re-run: planning against an already-imported graph reported
             # 2,681 creates for 2,681 nodes that were already there, so the plan was not
             # idempotent even though the import was.
-            minted = sorted(
-                {f"{group.element}:{identity_of(row, group)}" for row in candidates}
-            )
+            minted = sorted({mint(group, row) for row in candidates})
             present = existing_keys(session, None, group.match_property, minted)
             result.update(
                 {
@@ -1503,7 +1520,7 @@ def main() -> int:
                 }
                 if group.key_minted_from_identity:
                     keys = {
-                        f"{group.element}:{identity_of(row, group)}"
+                        mint(group, row)
                         for row in elements_of(group)
                         if passes(row, group)
                     }
