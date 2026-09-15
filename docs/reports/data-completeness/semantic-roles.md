@@ -34,7 +34,8 @@ Wave 0 named and no artifact before this one could satisfy it.
 | **passages with ≥1 assertion** | 10,150 | 216 | 574 | 3,295 |
 | **assertions** | 22,192 | 372 | 1,543 | 6,167 |
 | **distinct predicates** | 40 of 41 | 37 | 36 | 36 |
-| role fillers | 40,518 | 604 | 1,577 | 8,532 |
+| **asserted role fillers** (parse-backed only) | 0 | 0 | 387 | 1,665 |
+| non-importable role candidates (queue) | 28,341 | 0 | 599 | 3,085 |
 | agent + predicate + patient together | 4,109 | 50 | 152 | 908 |
 | **abstentions** | 402 | 1,628 | 1,401 | 2,544 |
 | **uncertain** (staged at `VERIFIED_SEGMENT`) | 0 | 0 | 81 | 391 |
@@ -50,18 +51,18 @@ It was a consequence of the schema limit described below: the old rule only emit
 assertion when the agent resolved to a `:Devata`.
 
 Assertions carrying agent, predicate and patient together go from a measured **0** to
-**5,219**. GAP-SEMANTICS-003's benchmark claim of 17 does not reproduce and never did; the
-live count is 0, re-verified here with edge direction checked first. The 5,219 was tested
-against a dependency parse in the preflight below and survives at **92.2%**, erring toward
-under-reporting completeness.
+**341** — all of them parse-backed. GAP-SEMANTICS-003's benchmark claim of 17 does not
+reproduce and never did; the live count is 0, re-verified here with edge direction checked
+first. An earlier version of this report claimed 5,219; that figure rested on the
+case-scoped role rule which the Wave-3 correction below withdrew.
 
 ## Three derivations, never summed
 
-| derivation | assertions | what it rests on |
-|---|--:|---|
-| `MORPHOLOGY_RULE_CASE` | 28,370 | morphological case beside a finite verb, within one metrical pada (RV) or one sentence (unparsed DCS). No dependency parse exists. |
-| `TREEBANK_DEPREL` | 1,532 | the verb's own dependency children in DCS, using the treebank's `obl:goal` / `obl:source` / `obl:instr` / `obl:loc` subtype labels. |
-| `CROSS_VEDA_TEXT_IDENTITY` | 372 | a Samavedic verse whose letter skeleton equals a Rigvedic verse's, given that verse's analysis. |
+| derivation | assertions | asserted role fillers | what it rests on |
+|---|--:|--:|---|
+| `MORPHOLOGY_RULE_PREDICATE_ONLY` | 28,370 | **0** | predicate, frame, verb surface and verb features, read off the finite verb token. Roles withheld: no parse covers these passages. |
+| `TREEBANK_DEPREL` | 1,532 | **2,052** | the verb's own dependency children in DCS, using the treebank's `obl:goal` / `obl:source` / `obl:instr` / `obl:loc` subtype labels. |
+| `CROSS_VEDA_TEXT_IDENTITY` | 372 | **0** | a Samavedic verse whose letter skeleton equals a Rigvedic verse's, given that verse's predicate and frame. |
 
 These must never be added together on a product surface, and neither may be added to the
 2,406 existing `MORPHOLOGY_RULE` or 2,459 `MODEL_EXTRACTION` assertions. The proposed
@@ -83,29 +84,36 @@ instruments, 356 beneficiaries and 225 locations as **opaque string properties**
 edges for any of them. 2,311 role fillers are present in the data and reachable by no
 traversal. The schema told a pipeline to write prose.
 
-**From this artifact.** 51,231 role fillers:
+**From this artifact.** Restated on the corrected layer. The argument is now *stronger*,
+because it rests only on labels taken from a dependency parse rather than on the withdrawn
+case rule — 2,052 asserted, parse-backed fillers:
 
 | | fillers | share |
 |---|--:|--:|
-| a `:Devata` — the only thing today's schema can hold | 4,138 | 8.1% |
-| **not representable at all** | **47,093** | **91.9%** |
-| …of which resolve to an existing `:Concept`/`:DomainEntity` node | 5,681 | |
-| …of which are the first- or second-person ritual participant | 3,416 | |
-| …of which are an unregistered nominal or unresolved pronoun | 37,996 | |
+| a `:Devata` — the only thing today's schema can hold | 142 | 6.9% |
+| **not representable at all** | **1,910** | **93.1%** |
+| …of which resolve to an existing `:Concept`/`:DomainEntity` node | 245 | |
+| …of which are the first- or second-person ritual participant | 298 | |
+| …of which are an unregistered nominal or unresolved pronoun | 1,367 | |
+
+Over the asserted layer *plus* the verification queue — 34,077 fillers, which is the size
+of the role layer this corpus would support if the roles could be defended — the shape is
+the same: 2,946 deities (8.7%) against **31,131 (91.4%) unrepresentable**.
 
 The cost is two-layered and the layers need separating:
 
-1. **No relationship type exists for the role at all.** 16,347 fillers (31.9%) fill
-   BENEFICIARY, INSTRUMENT, LOCATION, SOURCE or GOAL. Three of those five are *declared
-   roles in the project's own `action_predicates.yaml`*, named in the `argument_frame` of
-   GRANTS, SLAYS, POURS, ESTABLISHES, CREATES, CARRIES, OFFERS, SPEAKS, MOVES_TO, FLOWS,
-   SHINES and DWELLS. The schema has no edge type for any of them, whatever the endpoint.
-2. **The two types that do exist are `:Devata`-only.** Of 34,884 AGENT and PATIENT
-   fillers, 3,442 are deities. **31,442 — 90.1% — cannot be attached** even though the
-   edge type exists.
+1. **No relationship type exists for the role at all.** 643 of the 2,052 asserted
+   fillers (31.3%) fill BENEFICIARY, INSTRUMENT, LOCATION, SOURCE or GOAL — 11,344 over the
+   asserted layer plus the queue. Three of those five are *declared roles in the project's
+   own `action_predicates.yaml`*, named in the `argument_frame` of GRANTS, SLAYS, POURS,
+   ESTABLISHES, CREATES, CARRIES, OFFERS, SPEAKS, MOVES_TO, FLOWS, SHINES and DWELLS. The
+   schema has no edge type for any of them, whatever the endpoint.
+2. **The two types that do exist are `:Devata`-only.** Of 1,409 asserted AGENT and PATIENT
+   fillers, 116 are deities. **1,293 — 91.8% — cannot be attached** even though the edge
+   type exists.
 
-The sharpest single consequence: 1,319 BENEFICIARY fillers are the first-person ritual
-participant. *"Grant to us"* has a recipient and it is not a god. A role layer whose
+The sharpest single consequence, on the parse-backed layer alone: 111 of the 167 asserted
+BENEFICIARY fillers are the first- or second-person ritual participant. *"Grant to us"* has a recipient and it is not a god. A role layer whose
 endpoints are deities can state that a god acts, and never that a god acts **for
 someone** — which is most of what the Saṃhitās say. That is why "a role layer that can
 only say 'a god did it' is not a role layer" is the right reading, and it is now a number.
@@ -121,9 +129,10 @@ wants only deity-to-deity events is unaffected.
 - **`ASSERTION_ROLE`**, `:SemanticAssertion → :RoleFiller`, 0..n. The role is a *property*,
   so adding a role later needs no schema change and no migration.
 - **`ROLE_FILLER_ENTITY`**, `:RoleFiller → :Devata|:Concept|:DomainEntity`, 0..1. Present
-  only where the filler resolved. All 118 entity keys this artifact references were
-  resolved against the live graph — 37 `:Devata`, 81 `:Concept` — so the endpoints already
-  exist and none is invented.
+  only where the filler resolved. Every entity key this artifact references was resolved
+  against the live graph — 37 `:Devata` and 81 `:Concept` across the asserted layer and the
+  queue — so the endpoints already exist and none is invented. The projection is shipped:
+  `role_fillers.jsonl`, 2,052 rows, parse-backed and importable.
 - **`polarity`** on `:SemanticAssertion` (`POSITIVE|NEGATED|UNKNOWN`). See QA-3.
 - **`role_derivation`** on `:SemanticAssertion`, so the five instruments cannot be summed.
 
@@ -317,7 +326,7 @@ is claimed for any corpus**. 4 in 44 is a floor on the defect rate, not an estim
 | **QA-2** | RV 8.48.10 `ayaṁ yaḥ somo ny adhāyy asme`: a passive verb's nominative labelled AGENT, making the deposited Soma the depositor | **closed in code** |
 | **QA-3** | VSM 6.22 `mā apaḥ mā oṣadhīḥ hiṃsīḥ`: a prohibition came out as a *requested* SLAYS with the plants as PATIENT — the opposite of the verse | **mitigated, not closed** |
 | **QA-4** | AVŚ 6.114.2: "we could not accomplish the sacrifice" came out as BLESSES | **open, inherited** |
-| **QA-5** | the case-scoped rule attaches 24.8% of its role fillers across a clause boundary or to the wrong role, measured against the parse on 1,114 sentences | **measured, not fixable without a parse** — see the preflight section |
+| **QA-5** | the case-scoped rule attaches 24.8% of its role fillers across a clause boundary or to the wrong role, measured against the parse on 1,114 sentences | **closed by withdrawing the rule** — see the Wave-3 correction |
 
 **QA-1's cause is a new hazard of the same shape as the one the root map names.** DCS never
 writes a long vocalic liquid — measured: **0 of 1,651 distinct verb lemmas**. So its `stṛ`
@@ -357,109 +366,143 @@ would be worse than the defect.
   the last carries the case. Where a parse exists the members are now prepended, so the
   filler's surface is the whole compound; where no parse exists they cannot be.
 
-## ADVERSARIAL PREFLIGHT BEFORE WAVE 3 — the case-scoped role rule, tested
+## WAVE-3 CORRECTION — the case-scoped role rule was withdrawn, not annotated
 
-Requested by the coordinator: name the most load-bearing assumption and test it once.
+The owner ruled the previous artifact superseded and not importable. This section is the
+record; every table above reflects the corrected run.
 
-**The assumption.** *A role read from morphological case standing beside a finite verb,
-scoped to one metrical pada (Rigveda) or one sentence (unparsed DCS), is the role a
-dependency parse would assign to that token.*
+### headline_before
 
-**Why this one and not the others.** 28,370 of 30,274 assertions — 93.7% — get their roles
-this way, including every Rigvedic assertion and every Samavedic projection. It is also the
-assumption behind both figures this report leads with: the 0 → 5,219 three-slot count and
-the 91.9% unrepresentable-filler cost. The Samavedic identity projection (372 assertions)
-and the ≥95% dominant-sense rule (1,139) are each smaller by an order of magnitude, and
-both are already labelled and filterable on the row.
+| | before |
+|---|--:|
+| assertions | 30,274 |
+| **asserted role fillers** | **51,231** |
+| agent+predicate+patient triples | 5,219 |
+| Rigvedic passages with an assertion | 10,150 of 10,552 |
+| known error in asserted role fillers | **24.8%**, recorded in an `evaluation` block |
 
-**Why a test was possible at all, having said no agreement figure could be computed.** That
-claim was about the *source*, and it is true — there is no second witness and no human
-gold. It is false about the *rule*. 2,823 DCS sentences carry a human-validated dependency
-parse, so the case rule can be run on exactly those sentences and scored against the parse
-token by token. **The instrument has a ground truth even where the corpus does not, and not
-noticing that was a gap in my own evaluation design.**
+### The attack
 
-**The test.** For every parsed DCS sentence, with the deployed single-finite-verb gate
-applied and the predicate resolved by the same root map, extract roles twice — once from
-the verb's dependency children, once from case over the whole sentence — and compare per
-token id. Then classify every disagreement by walking the token's head chain, so three
-unlike kinds of disagreement are never averaged. 1,114 sentences scored, 2,715 fillers.
+Most load-bearing assumption: *a role read from morphological case beside a finite verb,
+scoped to one pada or one sentence, is the role a dependency parse would assign.* 28,370 of
+30,274 assertions rested on it.
 
-**Expected:** precision 0.85–0.95. The gate already suppresses non-agent roles wherever two
-finite verbs share a scope, so the error was expected to be small.
+A test was possible because the earlier claim that "no agreement figure can be computed"
+was true of the **source** and false of the **rule**: 2,823 DCS sentences carry a
+human-validated parse, so the rule can be run on exactly those and scored. Not seeing that
+was a gap in my own evaluation design.
 
-**Returned:** raw precision **0.4855**. Decomposed:
+Result: raw precision **0.4855**. Decomposed, **24.8% of emitted fillers were wrong** — 623
+attached across a clause boundary, 50 given the wrong role — while a further 21.4% were a
+second token inside one argument. The deployed gate could not see it, because it counts
+*finite* verbs and the leakage comes from clauses headed by participles, infinitives and
+relative pronouns.
 
-| | fillers | share | is it wrong? |
+**One correction to my own earlier phrasing:** the 623 leaked fillers were *counterfactual*
+— those sentences used the parse in production. The 24.8% is the **rule's** error rate,
+which transfers to the 28,370 case-scoped assertions where the rule actually ran. There was
+never a list of 623 bad rows to patch, which is precisely why the whole population had to
+be re-run.
+
+### The measurement that decided it
+
+I tried to repair rather than withdraw. The gate was widened from "more than one finite
+verb" to "more than one verbal anchor of any kind, and no relative pronoun" — exactly where
+the leakage pointed (`acl` 75, `xcomp:result` 56, `xcomp` 34, `advcl` 42, nominal-internal
+`nsubj` 106) — plus an agreement-based merge collapsing a modifier onto its argument. All
+four gate combinations scored on the same sentences:
+
+| anchor gate | relative gate | precision | recall |
+|---|---|--:|--:|
+| off | off | 0.5518 | 0.8693 |
+| off | on | 0.5668 | 0.8181 |
+| on | off | 0.5823 | 0.7251 |
+| **on** | **on** | **0.5985** | **0.6860** |
+
+Decomposed, the wrong share moved **24.8% → 24.3%**. That is **0.5 points of precision for
+18 points of recall.** Per role, with both gates on:
+
+| role | emitted | wrong |
+|---|--:|--:|
+| GOAL | 88 | 11.4% |
+| SOURCE | 61 | 18.0% |
+| INSTRUMENT | 125 | 18.4% |
+| PATIENT | 586 | 18.8% |
+| BENEFICIARY | 162 | 30.2% |
+| AGENT | 541 | 30.9% |
+| LOCATION | 138 | 31.2% |
+
+AGENT splits sharply by case: a vocative under a second-person verb is 23% wrong, an
+agreeing nominative under a third-person verb is **39.8% wrong** — and the nominative class
+is the larger one. **No role reaches an importable standard and there is no threshold at
+which this rule is safe to assert.**
+
+### What I did — the third route
+
+Not "prevent what is preventable" (the sweep shows prevention fails) and not "downgrade the
+row" (a row carries many assertions; downgrading the row would also downgrade the
+defensible predicate layer). Instead, split by **what each claim rests on**:
+
+1. **Role fillers are asserted only where the DCS parse supplies them** — the treebank's own
+   `nsubj`/`obj`/`iobj`/`obl:goal`/`obl:source`/`obl:instr`/`obl:loc` labels. No heuristic.
+2. **Everywhere else the assertion is predicate-only**: predicate, frame, verb surface and
+   verb features, every one read off the verb token itself and none dependent on role scope.
+   Each carries `roles_withheld: true` and its reason.
+3. **The withdrawn candidates become an explicitly non-importable queue**,
+   `role_candidates.jsonl`, `importable: false` on every row, with the measured per-role
+   error rates in the manifest. That is what the contract means by a verification queue.
+4. **The `:RoleFiller` projection** is `role_fillers.jsonl` — parse-backed only, importable.
+
+### headline_after
+
+| | before | after | change |
 |---|--:|--:|---|
-| exact agreement with the parse | 1,318 | 48.6% | no |
-| same-argument expansion — a determiner, adjective, apposition or conjunct inside one argument | 580 | 21.4% | **no** — 406 of the 423 checkable ones carry the same role as the argument head they sit in. Inflates the count, not the role. |
-| **cross-clause leakage** | **623** | **23.0%** | **yes** |
-| role disagreement | 50 | 1.8% | **yes** |
-| the parse assigns it to no verb either | 144 | 5.3% | neither side is right |
+| assertions | 30,274 | 30,274 | unchanged — **see the caveat below** |
+| **asserted role fillers** | 51,231 | **2,052** | **−96.0%**, all parse-backed |
+| agent+predicate+patient triples | 5,219 | **341** | **−93.5%**, all parse-backed |
+| assertions carrying `roles_withheld` | 0 | **28,742** | these assert strictly less than before |
+| non-importable role candidates | 0 | 32,025 over 15,704 assertions | the verification queue |
+| known error in asserted role fillers | 24.8% | **none measured** | the instrument that had one no longer asserts |
 
-**24.8% of the fillers the case rule emits are wrong.** The assumption does not hold at
-filler level.
+**The caveat on the unchanged assertion count, stated plainly because the instruction was
+not to preserve it by loosening anything.** Nothing was loosened. The count is identical
+because a predicate and a frame are read off the finite verb's own lemma and morphology and
+never depended on role scope — the same 23,622 Rigvedic finite verb tokens resolve to the
+same 22,192 predicates. What changed is what each assertion *claims*: 28,742 of the 30,274
+now assert a predicate and a frame and explicitly withhold roles. If the campaign prefers to
+publish "assertions that carry at least one asserted role", that figure is **1,532**, down
+from 30,274.
 
-**And the gate I relied on cannot catch it.** The gate counts *finite* verbs. The leakage
-comes from non-finite clauses — `acl` 75, `xcomp:result` 56, `xcomp` 34, `advcl` 42 — and
-from subjects internal to a nominal, `nsubj` 106. Two measured examples:
+### Per Veda, processed and positive — the figures the campaign publishes
 
-- AVŚ `aśmānam tanvam kṛdhi`, "make the body a stone" — `aśmānam` is a predicative
-  complement (`xcomp`), and the case rule files it as a second PATIENT.
-- AVŚ `amūḥ yāḥ upa sūrye … tāḥ naḥ hinvantu` — `amūḥ` is the subject of a relative clause
-  headed by `sūrye`, and the case rule makes it the AGENT of `hinvantu`.
+| | RV | SV | YV | AV |
+|---|--:|--:|--:|--:|
+| **processed** | 10,552 | 1,844 | 1,975 | 5,839 |
+| **positive** (≥1 assertion) | 10,150 | 216 | 574 | 3,295 |
+| assertions | 22,192 | 372 | 1,543 | 6,167 |
+| **asserted role fillers** | **0** | **0** | 387 | 1,665 |
+| assertions with roles withheld | 22,192 | 372 | 1,198 | 4,980 |
+| triples | 0 | 0 | 56 | 285 |
+| non-importable candidates | 28,341 | 0 | 599 | 3,085 |
 
-### What survives, measured rather than assumed
+**Processed and positive counts are unchanged from what the coordinator has already
+reported to the owner** — 10,150 of 10,552 Rigvedic passages still carry an assertion, and
+that figure needs no correction. **The figure that does move is the second one: three-slot
+assertions went 0 → 5,219 and are now 0 → 341.** The owner should be told that directly.
+The Rigveda now has a predicate layer and **no** role layer, because it has no parse.
 
-**Every count in this artifact is unchanged.** Predicates, frames, passages processed,
-assertions and every abstention figure derive from the verb's own morphology; no scope
-decision touches them. Nothing was restaged and nothing renumbered. The validator still
-passes at 100% coverage on all 15 checks.
+No Samavedic candidate is projected: a candidate that is both case-derived and
+cross-Veda-projected would be two unverified steps deep.
 
-**The three-slot figure survives at 92.2%**, and the residual error runs the safe way. Of
-218 assertions the case rule calls complete, the parse also calls **201** complete. It
-*misses* 42 complete triples the parse finds, against 17 it manufactures — so the rule
-**under-reports** completeness. Completeness needs an AGENT and a PATIENT anywhere in the
-role set, and leakage adds fillers to a set that usually already held both, which is why
-this figure is far more robust than the filler count.
+### What this costs and what it buys
 
-**The 91.9% cost figure survives, and is if anything understated.** Deity share is **7.74%**
-among parse-confirmed fillers and **3.72%** among parse-rejected ones — leakage is *less*
-deity-heavy than genuine attachment. Discarding every rejected filler would move the
-overall deity share from 8.08% to about 8.6%. The conclusion that the `:Devata`-only
-endpoint leaves ~92% of a role layer unrepresentable does not depend on the defect.
+Costs: the Rigveda loses its role layer entirely, and 96% of role fillers move from asserted
+to queued. Buys: every asserted role filler in the artifact is now a label from a
+human-validated dependency parse, so there is **no known error rate left to discount**. A
+smaller defensible layer, as instructed.
 
-### What changed, and what deliberately did not
-
-Changed: a case-scoped role **filler** count now carries a measured 24.8% wrong-attachment
-rate and a 21.4% duplication rate. Both are written into every row's `evaluation` block —
-so the rate travels with a row separated from its manifest — and into
-`manifest.evaluation.adversarial_preflight_before_wave_3`. `manifest.qa.defects_found` goes
-4 → 5 (QA-5) and `sampled` 44 → 1,158.
-
-Not changed: the rule. Cross-clause leakage cannot be detected without a parse, and all of
-the Rigveda plus three quarters of the non-Rigvedic material has none. Tightening the rule
-by guesswork — refusing any filler that looks like a modifier — would trade a measured
-error for an unmeasured one. Every filler already carries its own case, surface and
-evidence string, so a consumer can re-judge it.
-
-**For the lead:** treat a case-scoped filler as a *candidate* and a `TREEBANK_DEPREL` filler
-as a *reading*. A surface that counts role fillers should either report the two derivations
-separately or apply the 0.2479 discount and say so. Counting agent-predicate-patient
-triples is safe at 92.2%.
-
-### Is this the sixth case?
-
-Yes, and it fits the pattern rather than extending it. Like the Yajurvedic comparator and
-the Atharvavedic coordinates, this is a defect on our side of the line, not a source
-absence — DCS supplied the parse all along and the rule ignored it wherever the sentence
-fell outside the parsed quarter. The refusal logic was correct in form and the
-**attachment** was wrong. The one new thing: here the wrong attachment is *inside* a verse
-rather than between verses, so **no coverage count could ever have surfaced it** — which is
-why it needed an instrument-level test rather than a recount.
-
-Full record: `proofs/adversarial_preflight_case_scoped_roles.json`.
+Records: `proofs/adversarial_preflight_case_scoped_roles.json` (the attack),
+`proofs/wave3_gate_sweep_and_withdrawal.json` (the repair attempt and the per-role rates).
 
 ## Known limitations, stated plainly
 
@@ -485,10 +528,12 @@ Full record: `proofs/adversarial_preflight_case_scoped_roles.json`.
 5. **Roles are pada- or sentence-scoped, not clause-scoped, and this is now measured.**
    1,115 Rigvedic padas and 2,423 Atharvavedic unparsed sentences hold more than one finite
    verb; those assertions keep their predicate and frame and carry **no** non-agent roles.
-   But that gate counts only *finite* verbs, and the preflight above shows it is not
-   enough: **24.8% of case-scoped role fillers are attached across a clause boundary or
-   given the wrong role**, the leakage coming from participles, infinitives and
-   nominal-internal subjects the gate cannot see. The rate is on every row.
+   That gate counted only *finite* verbs, and the Wave-3 preflight showed it was not
+   enough: 24.8% of case-scoped fillers were attached across a clause boundary or given the
+   wrong role, the leakage coming from participles, infinitives and nominal-internal
+   subjects the gate could not see. Widening the gate moved it only to 24.3%, so **the
+   case-scoped role reading was withdrawn**. Roles are now asserted only from a dependency
+   parse, and the Rigveda — which has none — has no role layer.
 6. **A predicate edge is not a parse.** The root map says so in its own recommendations,
    point 8, and it is repeated on every `MORPHOLOGY_RULE_CASE` row's `mapping_method`.
 7. **`IS_OR_BECOMES` is 2,035 Rigvedic assertions** and is not an action. It is excluded
@@ -514,7 +559,7 @@ rows / 372 assertions.
 | gap | effect |
 |---|---|
 | `GAP-SEMANTICS-001` | `HAS_SEMANTIC_ASSERTION` would reach all four corpora; RV rises 2,542 → 10,150 of 10,552. **Closable.** |
-| `GAP-SEMANTICS-003` | three-slot assertions 0 → 5,219. The `:Devata`-only range is **not** closed and cannot be by a staging artifact; the additive proposal is above. **Partial.** |
+| `GAP-SEMANTICS-003` | three-slot assertions 0 → **341**, all parse-backed. The `:Devata`-only range is **not** closed and cannot be by a staging artifact; the additive proposal is above. **Partial.** |
 | `GAP-MORPHOLOGY-002` | a morphological layer reaches AV and YV for the first time, typed distinctly from the Rigveda's manual annotation. Does not reach the Samaveda, and that negative is now evidenced. **Partial.** |
 | `GAP-MORPHOLOGY-003` | the Padapāṭha source is located on VedaWeb. The false scope statement still needs correcting in `works.yaml`, which is not my write surface. **Source located.** |
 | `GAP-MORPHOLOGY-001` | untouched. The 9,992 isolated `:Lemma` nodes are a separate projection-policy question; this artifact adds no `MENTIONS_LEMMA` edge. |
@@ -535,8 +580,11 @@ rows / 372 assertions.
 
 ## Reproducibility
 
-`data/staging/semantic_roles/` holds `lib_roles.py`, `extract_rv.py`, `extract_dcs.py`,
-`extract_sv.py` and `build.py`; every one is SHA-256'd into the manifest's `config`, and
+`data/staging/semantic_roles/` holds `lib_roles.py`, `clause_scope.py`, `extract_rv.py`,
+`extract_dcs.py`, `extract_sv.py` and `build.py`, and emits `rows.jsonl`,
+`rejected.jsonl`, `sources.jsonl`, `role_fillers.jsonl` (the `:RoleFiller` projection,
+importable) and `role_candidates.jsonl` (the verification queue, `importable: false`). Each
+module is SHA-256'd into the manifest's `config`, and
 `config_hash` is the digest of that config. The DCS snapshot id is the digest of the sorted
 list of the 534 individual blob digests. Every row carries `source_snapshot`,
 `algorithm_version`, `config_hash`, `code_commit`, `population`, `processed_count`,
@@ -544,7 +592,8 @@ list of the 534 individual blob digests. Every row carries `source_snapshot`,
 
 Validator: `scripts/validate_staging_artifact.py data/staging/semantic_roles --graph` —
 **PASS**, 15 checks, every one at 100% evaluation coverage, including
-`graph.canonical_key_resolves` and `graph.veda_agrees` over all 14,235 rows.
+`graph.canonical_key_resolves` and `graph.veda_agrees` over all 14,235 rows and checksums
+over all five emitted files. Re-run after the Wave-3 correction.
 
 Neo4j was read-only throughout. `MATCH`/`RETURN` only; no `CREATE`, `MERGE`, `SET` or
 `DELETE` was issued.

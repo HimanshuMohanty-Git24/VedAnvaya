@@ -68,6 +68,13 @@ WORK_RECENSION = {
 }
 
 DERIVATION_NOTE = {
+    "MORPHOLOGY_RULE_PREDICATE_ONLY": (
+        "Predicate, frame, verb surface and verb features, all read off the finite verb "
+        "token itself. No role filler is asserted, because no dependency parse covers this "
+        "passage and a case-scoped reading was measured against the DCS parse at 24.3% "
+        "wrong even under a tightened clause gate. Gated candidates are in "
+        "role_candidates.jsonl, which is not importable."
+    ),
     "MORPHOLOGY_RULE_CASE": (
         "Roles read from morphological case within one metrical pada (Rigveda) or one "
         "sentence (DCS chapters with no dependency parse). The underlying annotation "
@@ -133,7 +140,12 @@ def main(scratch: str, out_dir: str) -> None:
     now = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
 
     rv = json.load(io.open(os.path.join(scratch, "rv_assertions.json"), encoding="utf-8"))
-    rv_stats = json.load(io.open(os.path.join(scratch, "rv_out.json"), encoding="utf-8"))
+    rv_stats = json.load(
+        io.open(os.path.join(scratch, "rv_assertions_summary.json"), encoding="utf-8")
+    )
+    rv_candidates = json.load(
+        io.open(os.path.join(scratch, "rv_assertions_candidates.json"), encoding="utf-8")
+    )
     av = json.load(io.open(os.path.join(scratch, "dcs_av.json"), encoding="utf-8"))
     yv = json.load(io.open(os.path.join(scratch, "dcs_yv.json"), encoding="utf-8"))
     sv = json.load(io.open(os.path.join(scratch, "sv_proj.json"), encoding="utf-8"))
@@ -303,7 +315,7 @@ def main(scratch: str, out_dir: str) -> None:
             continue
         row = base_row(
             key,
-            "MORPHOLOGY_RULE_CASE",
+            "MORPHOLOGY_RULE_PREDICATE_ONLY",
             "VEDAWEB",
             zurich_snapshot,
             f"rigveda_lexical_v1/tokens.jsonl, passage_key={key}",
@@ -312,10 +324,20 @@ def main(scratch: str, out_dir: str) -> None:
             "alignment step was required",
         )
         row["payload"] = {
-            "derivation": "MORPHOLOGY_RULE_CASE",
+            "derivation": "MORPHOLOGY_RULE_PREDICATE_ONLY",
             "assertion_count": len(assertions),
             "assertions": assertions,
-            "role_scope": "METRICAL_PADA",
+            "asserted_role_fillers": 0,
+            "role_fillers_withheld": True,
+            "role_fillers_withheld_reason": (
+                "No dependency parse exists for the Rigveda. A case-scoped role reading was "
+                "measured against the DCS parse at 24.3% wrong under the tightened clause "
+                "gate, with the nominative-derived AGENT 39.8% wrong, so no role is "
+                "asserted for this corpus."
+            ),
+            "role_candidates_in_the_queue": sum(
+                len(c["role_candidates"]) for c in rv_candidates.get(key, [])
+            ),
             "annotation_method": "MANUAL_SCHOLARLY_ANNOTATION",
             "annotation_provenance": (
                 "University of Zurich morphosyntactic annotation of Lubotsky's Rigveda "
@@ -359,10 +381,19 @@ def main(scratch: str, out_dir: str) -> None:
             )
             derivations = sorted({i["assertion"]["derivation"] for i in items})
             row["mapping_method"] = " || ".join(DERIVATION_NOTE[d] for d in derivations)
+            asserted_fillers = sum(len(i["assertion"]["roles"]) for i in items)
             row["payload"] = {
                 "derivation": derivations,
                 "assertion_count": len(items),
                 "assertions": [i["assertion"] for i in items],
+                "asserted_role_fillers": asserted_fillers,
+                "asserted_role_fillers_are_parse_backed": True,
+                "role_fillers_withheld": any(
+                    i["assertion"].get("roles_withheld") for i in items
+                ),
+                "role_candidates_in_the_queue": sum(
+                    len(c["role_candidates"]) for c in bundle["candidates"].get(key, [])
+                ),
                 "aligned_sentences": [
                     {
                         "sent_id": i["sent_id"],
@@ -433,11 +464,21 @@ def main(scratch: str, out_dir: str) -> None:
             retyped["cautions"] = list(assertion.get("cautions") or []) + [
                 "ANALYSIS_IS_OF_A_LETTER_IDENTICAL_RIGVEDIC_VERSE_NOT_OF_A_SAMAVEDIC_ANNOTATION"
             ]
+            retyped["roles"] = []
+            retyped["roles_withheld"] = True
+            retyped["roles_withheld_reason"] = (
+                "The Rigvedic source verse asserts no role filler either, and no role "
+                "candidate is projected across corpora: a candidate that is both "
+                "case-derived and cross-Veda-projected would be two unverified steps deep."
+            )
             projected.append(retyped)
         row["payload"] = {
             "derivation": "CROSS_VEDA_TEXT_IDENTITY",
             "assertion_count": len(projected),
             "assertions": projected,
+            "asserted_role_fillers": 0,
+            "role_fillers_withheld": True,
+            "role_candidates_in_the_queue": 0,
             "projected_from": entry["rv_key"],
             "projection_relationship_in_graph": entry["relationship"],
             "projection_graph_score": entry["graph_score"],
@@ -451,10 +492,73 @@ def main(scratch: str, out_dir: str) -> None:
         }
         rows.append(row)
 
+    # --- the :RoleFiller projection, parse-backed only, importable -----------------
+    role_fillers = []
+    for row in rows:
+        for position, assertion in enumerate(row["payload"]["assertions"]):
+            for ordinal, filler in enumerate(assertion["roles"]):
+                role_fillers.append(
+                    {
+                        "role_filler_key": (
+                            f"{row['canonical_key']}:A{position + 1:03d}:R{ordinal + 1:02d}"
+                        ),
+                        "canonical_key": row["canonical_key"],
+                        "veda": row["veda"],
+                        "assertion_ordinal": position + 1,
+                        "predicate": assertion["predicate"],
+                        "frame": assertion["frame"],
+                        "derivation": assertion["derivation"],
+                        "importable": True,
+                        **filler,
+                        "source_id": row["source_id"],
+                        "source_snapshot": row["source_snapshot"],
+                        "algorithm_version": ALGORITHM_VERSION,
+                        "config_hash": config_hash,
+                        "code_commit": head,
+                    }
+                )
+
+    # --- the verification queue, NOT importable ------------------------------------
+    queue = []
+    for veda, source, snapshot, bundle in (
+        ("RV", "VEDAWEB", zurich_snapshot, rv_candidates),
+        ("AV", "DCS", dcs_snapshot, av["candidates"]),
+        ("YV", "DCS", dcs_snapshot, yv["candidates"]),
+    ):
+        for key, entries in bundle.items():
+            for position, entry in enumerate(entries):
+                queue.append(
+                    {
+                        "canonical_key": key,
+                        "veda": veda,
+                        "importable": False,
+                        "not_importable_reason": (
+                            "case-scoped role candidate. Measured against the DCS "
+                            "dependency parse at 24.3% wrong under the tightened clause "
+                            "gate; per-role rates in manifest.evaluation. This is a "
+                            "verification queue for a philologist, not a role layer."
+                        ),
+                        "predicate": entry["predicate"],
+                        "frame": entry["frame"],
+                        "verb_surface": entry["verb_surface"],
+                        "scope": entry["scope"],
+                        "sent_id": entry.get("sent_id"),
+                        "locator": entry.get("locator"),
+                        "role_candidates": entry["role_candidates"],
+                        "source_id": source,
+                        "source_snapshot": snapshot,
+                        "algorithm_version": ALGORITHM_VERSION,
+                        "config_hash": config_hash,
+                        "code_commit": head,
+                    }
+                )
+
     os.makedirs(out_dir, exist_ok=True)
     _write_jsonl(os.path.join(out_dir, "rows.jsonl"), rows)
     _write_jsonl(os.path.join(out_dir, "rejected.jsonl"), rejected)
     _write_jsonl(os.path.join(out_dir, "sources.jsonl"), sources_records(dcs_snapshot, zurich_snapshot, fetch))
+    _write_jsonl(os.path.join(out_dir, "role_fillers.jsonl"), role_fillers)
+    _write_jsonl(os.path.join(out_dir, "role_candidates.jsonl"), queue)
 
     counted = collections.Counter(r["state"] for r in rejected)
     manifest = {
@@ -488,8 +592,39 @@ def main(scratch: str, out_dir: str) -> None:
         "population": population,
         "processed_count": sum(population.values()),
         "positive_count": len(rows),
+        "quality_counts": {
+            "rows_importable": sum(
+                1 for r in rows if r["mapping_confidence"] not in ("PROBABLE", "UNVERIFIED")
+            ),
+            "rows_staged_not_importable": sum(
+                1 for r in rows if r["mapping_confidence"] in ("PROBABLE", "UNVERIFIED")
+            ),
+            "rows_by_mapping_confidence": dict(
+                collections.Counter(r["mapping_confidence"] for r in rows)
+            ),
+            "assertions_total": sum(r["payload"]["assertion_count"] for r in rows),
+            "assertions_by_derivation": dict(
+                collections.Counter(
+                    a["derivation"] for r in rows for a in r["payload"]["assertions"]
+                )
+            ),
+            "asserted_role_fillers_all_parse_backed": len(role_fillers),
+            "asserted_role_fillers_by_role": dict(
+                collections.Counter(f["role"] for f in role_fillers)
+            ),
+            "assertions_with_roles_withheld": sum(
+                1
+                for r in rows
+                for a in r["payload"]["assertions"]
+                if a.get("roles_withheld")
+            ),
+            "role_candidates_not_importable": sum(
+                len(q["role_candidates"]) for q in queue
+            ),
+            "role_candidate_assertions_not_importable": len(queue),
+        },
         "census": census,
-        "per_veda": per_veda_block(population, reachable, positives, tokens_processed, rv_stats, av, yv, sv, rows, rejected),
+        "per_veda": per_veda_block(population, reachable, positives, tokens_processed, rv_stats, av, yv, sv, rows, rejected, role_fillers, queue),
         "closes_gaps": [
             "GAP-SEMANTICS-001",
             "GAP-SEMANTICS-003",
@@ -597,14 +732,15 @@ def main(scratch: str, out_dir: str) -> None:
                         "non-finite clauses (acl, xcomp, advcl) and from subjects internal "
                         "to a nominal, none of which the gate can see"
                     ),
-                    "status": "MEASURED, NOT FIXABLE WITHOUT A PARSE",
+                    "status": "CLOSED BY WITHDRAWING THE RULE",
                     "fix": (
-                        "none. It is a property of reading roles from case with no "
-                        "dependency annotation, which is the situation for all of the "
-                        "Rigveda and three quarters of the rest. The measured rate is "
-                        "carried on every row instead. No count was restaged: predicates, "
-                        "frames, assertions and abstentions do not depend on role scope, "
-                        "and the agent-predicate-patient triple figure survives at 92.2%."
+                        "The clause gate was widened to catch non-finite clause heads and "
+                        "relative pronouns, which moved the error only from 24.8% to 24.3% "
+                        "at a cost of 18 recall points, and no role reached an importable "
+                        "standard. So the rule was withdrawn across all four corpora rather "
+                        "than tuned: asserted role fillers now come only from the DCS "
+                        "parse, 51,231 -> 2,052. The gated candidates are retained as a "
+                        "non-importable verification queue."
                     ),
                 },
             ],
@@ -628,6 +764,8 @@ def main(scratch: str, out_dir: str) -> None:
             ("rows.jsonl", len(rows)),
             ("rejected.jsonl", len(rejected)),
             ("sources.jsonl", len(sources_records(dcs_snapshot, zurich_snapshot, fetch))),
+            ("role_fillers.jsonl", len(role_fillers)),
+            ("role_candidates.jsonl", len(queue)),
         )
     ]
     with io.open(os.path.join(out_dir, "manifest.json"), "w", encoding="utf-8", newline="\n") as handle:
@@ -648,22 +786,17 @@ ROW_EVALUATION = {
     "repository; see manifest.evaluation for what was measured instead",
     # The Wave-3 adversarial preflight, carried on the row because a row separated from its
     # manifest must still know the measured error rate of the instrument that made it.
-    "case_scoped_rule_measured_against_the_treebank": {
-        "measured_on": "1,114 DCS sentences that carry a dependency parse, with the "
-        "deployed single-finite-verb gate applied",
-        "role_fillers_scored": 2715,
-        "wrong_share": 0.2479,
-        "wrong_share_note": "623 fillers attached across a clause boundary plus 50 given "
-        "the wrong role. A property of reading roles from case with no parse.",
-        "same_argument_duplicate_share": 0.2136,
-        "same_argument_duplicate_note": "a modifier, determiner or conjunct inside an "
-        "argument the verb does have, carrying the same role in 406 of 423 checkable "
-        "cases. Inflates the filler count; does not change the role.",
-        "agent_predicate_patient_triple_survival": 0.922,
-        "triple_survival_note": "and the error is conservative: the parse finds 42 "
-        "complete triples the case rule missed, against 17 it manufactured",
-        "applies_to_derivations": ["MORPHOLOGY_RULE_CASE", "CROSS_VEDA_TEXT_IDENTITY"],
-        "does_not_apply_to": "TREEBANK_DEPREL, which is the parse itself",
+    "case_scoped_role_reading_withdrawn": {
+        "what_happened": "The case-scoped role rule was scored against the DCS dependency "
+        "parse and withdrawn. It is no longer a source of any asserted role.",
+        "measured_on": "1,114 DCS sentences carrying a parse, gate applied as deployed",
+        "wrong_share_before_the_clause_gate": 0.2479,
+        "wrong_share_after_the_clause_gate": 0.2432,
+        "recall_cost_of_the_gate": "0.869 to 0.686",
+        "conclusion": "the gate bought 0.5 points of precision for 18 of recall and no "
+        "role reached an importable standard, so the rule was withdrawn rather than tuned",
+        "where_roles_still_come_from": "TREEBANK_DEPREL only -- the DCS parse's own labels",
+        "where_the_withdrawn_candidates_went": "role_candidates.jsonl, importable=false",
     },
 }
 
@@ -685,88 +818,84 @@ EVALUATION = {
         "disagreement on a nominative, a homonym fold, a particle-sensitive root, a "
         "conjugation-sensitive root, a sentence spanning a verse boundary.",
     ],
-    "adversarial_preflight_before_wave_3": {
+    "adversarial_preflight_before_wave_3_and_the_correction_it_forced": {
         "assumption_tested": (
             "A role read from morphological case standing beside a finite verb, scoped to "
             "one pada (Rigveda) or one sentence (unparsed DCS), is the role a dependency "
-            "parse would assign. 28,370 of 30,274 assertions rest on it, which is why it "
-            "was chosen over the Samavedic projection (372 assertions) or the "
-            "dominant-sense rule (1,139)."
+            "parse would assign. 28,370 of 30,274 assertions rested on it."
         ),
         "why_a_test_was_possible_at_all": (
-            "This report said no agreement figure could be computed because no independent "
-            "source exists. That is true of the SOURCE and false of the RULE: 2,823 DCS "
-            "sentences carry a human-validated dependency parse, so the case rule can be "
-            "run on exactly those and scored against it. The instrument has a ground truth "
-            "even where the corpus does not, and not noticing that was the gap in the "
-            "original evaluation design."
+            "An earlier version of this report said no agreement figure could be computed "
+            "because no independent source exists. That is true of the SOURCE and false of "
+            "the RULE: 2,823 DCS sentences carry a human-validated dependency parse, so the "
+            "case rule can be run on exactly those and scored against it. Not seeing that "
+            "was a gap in the original evaluation design."
         ),
-        "verdict": "FAILS AT FILLER LEVEL, HOLDS AT ASSERTION LEVEL",
-        "filler_level": {
+        "result_before_correction": {
             "fillers_emitted": 2715,
-            "exact_agreement_with_the_parse": 1318,
+            "agreement_with_the_parse": 1318,
             "raw_precision": 0.4855,
             "cross_clause_leakage": 623,
             "role_disagreements": 50,
-            "wrong_share": 0.2479,
             "same_argument_expansion": 580,
-            "treebank_unassigned": 127,
-            "other": 17,
-            "reading": (
-                "The raw 0.4855 is an average of unlike quantities and must not be quoted. "
-                "Decomposed: 21.4% of emitted fillers are a second token inside one "
-                "argument and carry the right role, 24.8% are wrong, and the remainder the "
-                "parse assigns to no verb either."
+            "wrong_share": 0.2479,
+        },
+        "attempt_to_repair_the_rule_and_why_it_failed": {
+            "the_repair": (
+                "The gate was widened from 'more than one FINITE verb' to 'more than one "
+                "verbal anchor of any kind, and no relative pronoun', which is where the "
+                "leakage analysis pointed: acl 75, xcomp:result 56, xcomp 34, advcl 42 and "
+                "nsubj-inside-a-nominal 106 are all clauses headed by something other than "
+                "a finite verb. An agreement-based merge was added to collapse a modifier "
+                "onto the argument it agrees with."
+            ),
+            "gate_sweep": [
+                {"anchor_gate": False, "relative_gate": False, "precision": 0.5518, "recall": 0.8693},
+                {"anchor_gate": False, "relative_gate": True, "precision": 0.5668, "recall": 0.8181},
+                {"anchor_gate": True, "relative_gate": False, "precision": 0.5823, "recall": 0.7251},
+                {"anchor_gate": True, "relative_gate": True, "precision": 0.5985, "recall": 0.6860},
+            ],
+            "decomposed_wrong_share_with_both_gates": 0.2432,
+            "per_role_wrong_share_with_both_gates": {
+                "GOAL": 0.1136, "SOURCE": 0.1803, "INSTRUMENT": 0.1840,
+                "PATIENT": 0.1880, "BENEFICIARY": 0.3025, "AGENT": 0.3090,
+                "LOCATION": 0.3116,
+            },
+            "agent_split_by_case": {
+                "vocative_under_a_second_person_verb": {"agree": 77, "wrong": 23},
+                "agreeing_nominative_under_a_third_person_verb": {"agree": 218, "wrong": 144},
+            },
+            "verdict": (
+                "The repair failed. 24.8% wrong became 24.3% wrong while recall fell from "
+                "0.869 to 0.686 -- 0.5 points of precision for 18 of recall. Not one role "
+                "reached an importable standard: the best, GOAL, is still 11.4% wrong, and "
+                "the nominative-derived AGENT, which is the single largest class, is 39.8% "
+                "wrong. There is no threshold at which this rule is safe to assert."
             ),
         },
-        "the_defect_the_single_finite_verb_gate_does_not_catch": (
-            "Leakage comes from NON-finite clauses -- acl 75, xcomp:result 56, xcomp 34, "
-            "advcl 42 -- and from subjects internal to a nominal, nsubj 106. The deployed "
-            "gate counts finite verbs, so it sees none of them. Two measured examples: "
-            "asmanam tanvam kridhi gives the predicative complement as a second PATIENT, "
-            "and amuh yah upa surye ... tah nah hinvantu gives the subject of a relative "
-            "clause as the AGENT of the main verb."
+        "the_correction_applied": (
+            "The case-scoped role reading is withdrawn as a source of asserted roles across "
+            "all four corpora, not only on the sentences the probe covered. Role fillers are "
+            "now asserted ONLY where the DCS parse supplies them. Everywhere else the "
+            "assertion carries predicate, frame, verb surface and verb features -- all read "
+            "off the verb token and none of them dependent on role scope -- and is marked "
+            "roles_withheld with its reason. The gated candidates are kept as an explicitly "
+            "non-importable verification queue in role_candidates.jsonl."
         ),
-        "assertion_level": {
-            "unchanged_by_scope": (
-                "passages processed, assertions, predicates, frames and every abstention "
-                "count. All derive from the verb's own morphology, not from role scope."
-            ),
-            "triples_case_rule_calls_complete": 218,
-            "triples_the_parse_also_calls_complete": 201,
-            "survival_rate": 0.922,
-            "triples_the_case_rule_missed": 42,
-            "triples_the_case_rule_manufactured": 17,
-            "reading": (
-                "Completeness needs an AGENT and a PATIENT anywhere in the role set, and "
-                "leakage adds fillers to a set that usually already held both. So the "
-                "0 to 5,219 three-slot figure survives at 92.2%, and the rule "
-                "under-reports completeness rather than over-reporting it."
-            ),
+        "what_this_cost": {
+            "asserted_role_fillers": "51,231 -> 2,052, a 96.0% reduction",
+            "agent_predicate_patient_triples": "5,219 -> 341, all parse-backed",
+            "assertions": "30,274 -> 30,274, unchanged, because predicate and frame never "
+            "depended on role scope. This is not a preserved count: 28,742 of those "
+            "assertions now carry roles_withheld and assert strictly less than before.",
+            "rigvedic_role_layer": "gone. The Rigveda has no dependency parse at all, so it "
+            "now has a predicate layer and no role layer.",
         },
-        "headline_cost_figure_survives": {
-            "deity_share_among_parse_confirmed_fillers": 0.0774,
-            "deity_share_among_parse_rejected_fillers": 0.0372,
-            "reading": (
-                "Leakage is LESS deity-heavy than confirmed attachment, so discarding it "
-                "would raise the deity share from 8.08% to at most about 8.6%. The "
-                "Devata-only-leaves-91.9%-unrepresentable conclusion stands, and if "
-                "anything it understates the case."
-            ),
-        },
-        "what_was_not_changed_and_why": (
-            "No row was restaged and no count renumbered. The leakage cannot be fixed "
-            "without a parse, which is the finding rather than a bug to patch: all of the "
-            "Rigveda and three quarters of the non-Rigvedic material have none. The "
-            "measured rate is attached to every row's evaluation block instead so it "
-            "travels with the data, and each filler already carries its own case, surface "
-            "and evidence string for a consumer that wants to re-judge it."
-        ),
-        "what_the_lead_should_do_with_it": (
-            "Treat a case-scoped role filler as a candidate and a TREEBANK_DEPREL filler as "
-            "a reading. A product surface that counts role fillers should report the two "
-            "derivations separately, or apply the 0.2479 discount and say so. Counting "
-            "agent-predicate-patient triples is safe at 92.2%."
+        "what_it_bought": (
+            "Every asserted role filler in the artifact is now a label taken from a "
+            "human-validated dependency parse rather than inferred from case. There is no "
+            "known error rate left to discount, because the instrument with the measured "
+            "error rate no longer produces asserted output."
         ),
     },
     "why_no_cross_source_agreement_figure": (
@@ -810,7 +939,8 @@ def _negative_reason(veda, key, reachability, bundle):
     )
 
 
-def per_veda_block(population, reachable, positives, tokens, rv_stats, av, yv, sv, rows, rejected):
+def per_veda_block(population, reachable, positives, tokens, rv_stats, av, yv, sv, rows,
+                   rejected, role_fillers, queue):
     by_veda_rows = collections.Counter(r["veda"] for r in rows)
     predicates = collections.Counter()
     role_counts = collections.Counter()
@@ -837,6 +967,17 @@ def per_veda_block(population, reachable, positives, tokens, rv_stats, av, yv, s
                 if filler["filler_type"] != "DEITY":
                     nondeity[veda] += 1
     rej = collections.Counter((r["veda"], r["reason"]) for r in rejected)
+    asserted = collections.Counter(f["veda"] for f in role_fillers)
+    asserted_role = collections.Counter((f["veda"], f["role"]) for f in role_fillers)
+    queued = collections.Counter(
+        (q["veda"],) for q in queue for _ in q["role_candidates"]
+    )
+    withheld = collections.Counter(
+        r["veda"]
+        for r in rows
+        for a in r["payload"]["assertions"]
+        if a.get("roles_withheld")
+    )
     out = {}
     for veda in ("RV", "SV", "YV", "AV"):
         out[veda] = {
@@ -848,6 +989,12 @@ def per_veda_block(population, reachable, positives, tokens, rv_stats, av, yv, s
             "assertions": assertion_counts[veda],
             "distinct_predicates": sum(1 for (v, _) in predicates if v == veda),
             "assertions_with_agent_predicate_and_patient": triples[veda],
+            "asserted_role_fillers_parse_backed": asserted[veda],
+            "asserted_role_fillers_by_role": {
+                r: c for (v, r), c in asserted_role.items() if v == veda
+            },
+            "assertions_with_roles_withheld": withheld[veda],
+            "role_candidates_not_importable": queued[(veda,)],
             "role_fillers": {r: c for (v, r), c in role_counts.items() if v == veda},
             "proposed_role_fillers": {r: c for (v, r), c in proposed.items() if v == veda},
             "role_fillers_that_are_not_a_deity": nondeity[veda],

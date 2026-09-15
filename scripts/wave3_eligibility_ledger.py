@@ -68,12 +68,22 @@ DEPENDENCIES: dict[str, list[str]] = {
 #: rather than inferred. An absent entry is UNKNOWN, which blocks -- silence is not a pass.
 ASSESSMENTS: dict[str, dict[str, Any]] = {
     "semantic_roles": {
-        "B": ("FAIL", "24.8% of emitted role fillers are wrong from cross-clause leakage"),
-        "C": ("DEFECT_FOUND", "preflight measured precision 0.4855 against an expected 0.85-0.95"),
-        "restage_required": True,
+        "B": (
+            "PASS_AFTER_RESTAGE",
+            "roles asserted only from treebank labels: 2,052 fillers, all TREEBANK_DEPREL, "
+            "0 outside it; 28,742 assertions carry roles_withheld and 15,704 candidate rows "
+            "are importable:false. Enforced mechanically and verified by the lead.",
+        ),
+        "C": (
+            "SURVIVED",
+            "repair was attempted and measured to fail before withdrawal: widening the gate "
+            "moved the wrong share 24.8% to 24.3% at a cost of 18 points of recall, and the "
+            "largest AGENT class is 39.8% wrong, so no threshold makes the rule safe.",
+        ),
+        "restage_required": False,
         "restage_reason": (
-            "Owner section 6: fix the extraction rule and re-run the whole population. "
-            "Recording a measured error rate is not a substitute for not emitting it."
+            "Restage complete. Asserted fillers 51,231 to 2,052 and triples 5,219 to 341, "
+            "with the known 24.8% error eliminated rather than documented."
         ),
     },
     "cross_veda": {

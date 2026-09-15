@@ -28,6 +28,7 @@ from difflib import SequenceMatcher
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import lib_roles as L  # noqa: E402
+import clause_scope as C  # noqa: E402
 
 REGISTRY = r"D:\VedaGraph\data\registry"
 
@@ -148,29 +149,32 @@ def align_hymn(sentences, verses):
 
 
 def roles_for_sentence(tokens, rootmap, entities, locator):
-    """One assertion per finite verb.
+    """One assertion per finite verb. Roles ONLY where the treebank supplies them.
 
-    DCS carries a dependency parse on only part of these corpora — measured here at 24.1%
-    of Atharvavedic and 24.9% of Yajurvedic sentences, which is the slice also released as
-    UD_Sanskrit-Vedic. Where the parse exists, roles come off the verb's own dependency
-    children and the subtype labels ``obl:goal``, ``obl:source``, ``obl:instr`` and
-    ``obl:loc`` are taken from the treebank rather than inferred: a case rule would have
-    filed every goal of motion under PATIENT.
+    Corrected after the Wave-3 preflight and the owner's ruling. The previous version fell
+    back to a case-scoped reading wherever DCS had no parse, and that fallback was measured
+    against the parse at 24.8% wrong -- 24.3% even after the clause gate was widened from
+    "one finite verb" to "one verbal anchor of any kind, and no relative pronoun". No role
+    reached an importable standard, so none is asserted without a parse.
 
-    Where it does not exist, the sentence still has full morphology, so the same
-    case-scoped reading used for the Rigveda applies — and is typed as that weaker
-    derivation, never as treebank evidence. The two are never summed.
+    Where the parse exists the roles are the treebank's own labels, including its
+    ``obl:goal`` / ``obl:source`` / ``obl:instr`` / ``obl:loc`` subtypes. Where it does not,
+    the assertion carries predicate, frame, verb surface and verb features -- all read off
+    the verb token, none of them dependent on role scope -- and its gated case-scoped
+    fillers go to the non-importable verification queue instead.
     """
     by_head = collections.defaultdict(list)
     for token in tokens:
         by_head[token["head"]].append(token)
     parsed = any(token["deprel"] != "_" for token in tokens)
-    derivation = "TREEBANK_DEPREL" if parsed else "MORPHOLOGY_RULE_CASE"
-    scope = "SENTENCE_DEPENDENCY_SUBTREE" if parsed else "SENTENCE_CASE_SCOPED"
+    derivation = "TREEBANK_DEPREL" if parsed else "MORPHOLOGY_RULE_PREDICATE_ONLY"
+    scope = "SENTENCE_DEPENDENCY_SUBTREE" if parsed else "SENTENCE_PREDICATE_ONLY"
 
     assertions = []
+    candidates = []
     diagnostics = collections.Counter()
     diagnostics["sentences_with_parse" if parsed else "sentences_morphology_only"] += 1
+    view = C.view_dcs(tokens)
     finite = [
         token
         for token in tokens
@@ -181,9 +185,10 @@ def roles_for_sentence(tokens, rootmap, entities, locator):
     diagnostics["nonfinite_or_participial_verb"] += sum(
         1 for t in tokens if t["upos"] == "VERB" and t not in finite
     )
-    multiple = len(finite) > 1
-    if multiple and not parsed:
-        diagnostics["sentences_case_scoped_with_multiple_finite_verbs"] += 1
+    gate_ok, gate_reason = C.clause_gate(view)
+    if not parsed and not gate_ok:
+        diagnostics["sentences_refused_by_clause_gate"] += 1
+        diagnostics["gate_reason:" + gate_reason.split(":")[0]] += 1
 
     for token in finite:
         feats = token["feats"]
@@ -198,6 +203,15 @@ def roles_for_sentence(tokens, rootmap, entities, locator):
         mood = feats.get("Mood")
         frame = "REQUESTED" if mood in L.REQUEST_MOODS and person == "2" else "ASSERTED"
         cautions = []
+        if status == "MAPPED_BY_PREVERB_STRIP":
+            cautions.append("PREDICATE_VIA_PREVERB_STRIP:" + str(qualifier))
+        if status == "MAPPED_BY_SECONDARY_STEM":
+            cautions.append("PREDICATE_VIA_SECONDARY_STEM:" + str(qualifier))
+        minority = rootmap.fold_unmapped_minority.get(L.fold_root(token["lemma"]))
+        if minority:
+            cautions.append("FOLD_CARRIES_AN_UNMAPPED_MINORITY_SENSE:" + minority)
+        if person == "1":
+            cautions.append("FIRST_PERSON_AGENT_IS_THE_UNNAMED_SPEAKER")
         negators = sorted(
             {
                 t["lemma"]
@@ -211,15 +225,6 @@ def roles_for_sentence(tokens, rootmap, entities, locator):
                 "POLARITY_NOT_MODELLED_NEGATION_PARTICLE_IN_SCOPE:" + ",".join(negators)
             )
             diagnostics["assertions_in_scope_of_a_negation_particle"] += 1
-        if status == "MAPPED_BY_PREVERB_STRIP":
-            cautions.append(f"PREDICATE_VIA_PREVERB_STRIP:{qualifier}")
-        if status == "MAPPED_BY_SECONDARY_STEM":
-            cautions.append(f"PREDICATE_VIA_SECONDARY_STEM:{qualifier}")
-        minority = rootmap.fold_unmapped_minority.get(L.fold_root(token["lemma"]))
-        if minority:
-            cautions.append(f"FOLD_CARRIES_AN_UNMAPPED_MINORITY_SENSE:{minority}")
-        if person == "1":
-            cautions.append("FIRST_PERSON_AGENT_IS_THE_UNNAMED_SPEAKER")
 
         fillers = []
         if parsed:
@@ -257,65 +262,80 @@ def roles_for_sentence(tokens, rootmap, entities, locator):
                         role,
                         case,
                         entities,
-                        f"{locator}: deprel {deprel} of the finite verb",
+                        locator + ": deprel " + deprel + " of the finite verb",
                         prefix,
                     )
                 )
-        elif not multiple:
-            for child in tokens:
-                if child is token or child["upos"] not in ("NOUN", "PROPN", "PRON", "ADJ", "NUM"):
-                    continue
-                case = L.UD_CASE.get(child["feats"].get("Case") or "")
-                if case is None:
-                    continue
-                role = None
-                if case == "NOM" and person == "3":
-                    if child["feats"].get("Number") != feats.get("Number"):
-                        diagnostics["nominatives_refused_number_disagreement"] += 1
-                    elif feats.get("Voice") == "Pass":
-                        role = "PATIENT"
-                        diagnostics["nominatives_retyped_patient_under_passive"] += 1
-                    else:
-                        role = "AGENT"
-                elif case == "VOC" and person == "2":
-                    role = "AGENT"
-                elif case in L.CASE_ROLE:
-                    role = L.CASE_ROLE[case]
-                    if role == "PATIENT" and predicate in L.MOTION_PREDICATES:
-                        role = "GOAL"
-                if role is None:
-                    continue
-                fillers.append(
-                    _filler(child, role, case, entities, f"{locator}: {case} in the same sentence, no parse available")
-                )
-        else:
-            cautions.append("ROLE_SCOPE_AMBIGUOUS_MULTIPLE_FINITE_VERBS_NO_PARSE")
+                diagnostics["parse_backed_role_fillers"] += 1
 
-        assertions.append(
-            L.Assertion(
-                predicate=predicate,
-                frame=frame,
-                root_label=token["lemma"],
-                root_lemma=token["lemma"],
-                verb_surface=token["misc"].get("Unsandhied") or token["form"],
-                verb_features=feats,
-                scope=scope,
-                fillers=fillers,
-                predicate_status=status,
-                cautions=cautions,
-                derivation=derivation,
-            )
+        assertion = L.Assertion(
+            predicate=predicate,
+            frame=frame,
+            root_label=token["lemma"],
+            root_lemma=token["lemma"],
+            verb_surface=token["misc"].get("Unsandhied") or token["form"],
+            verb_features=feats,
+            scope=scope,
+            fillers=fillers,
+            predicate_status=status,
+            cautions=cautions,
+            derivation=derivation,
         )
-    return assertions, diagnostics
+        record = assertion.as_dict()
+        if not parsed:
+            record["roles_withheld"] = True
+            record["roles_withheld_reason"] = (
+                "DCS supplies no dependency parse for this chapter. Roles read from case "
+                "were measured against the parse at 24.3% wrong even under the tightened "
+                "clause gate, so none is asserted. Gated candidates are in "
+                "role_candidates.jsonl."
+            )
+        assertions.append(record)
+
+        if not parsed and gate_ok and len(finite) == 1:
+            verb_view = next(t for t in view if t.raw is token)
+            merged, refusals = C.case_scoped_roles(
+                view, verb_view, predicate, person, feats.get("Voice")
+            )
+            for reason in refusals:
+                diagnostics[reason.lower()] += 1
+            if merged:
+                cand = []
+                for head, role, prefix in merged:
+                    cand.append(
+                        _filler(
+                            head.raw,
+                            role,
+                            head.case,
+                            entities,
+                            locator + ": " + str(head.case)
+                            + " beside the finite verb, clause gate cleared",
+                            prefix,
+                        ).as_dict()
+                    )
+                    diagnostics["candidate_role:" + role] += 1
+                candidates.append(
+                    {
+                        "predicate": predicate,
+                        "frame": frame,
+                        "verb_surface": token["misc"].get("Unsandhied") or token["form"],
+                        "scope": scope,
+                        "role_candidates": cand,
+                    }
+                )
+                diagnostics["candidate_assertions"] += 1
+        elif not parsed and len(finite) > 1:
+            diagnostics["candidate_scopes_refused_multiple_finite_verbs"] += 1
+
+    return assertions, candidates, diagnostics
 
 
 def _filler(child, role, case, entities, evidence, compound_prefix=""):
     """Build one role filler.
 
     ``compound_prefix`` exists because DCS splits a nominal compound into one token per
-    member, and only the last member carries the case. Recording that last member alone as
-    the filler's surface reports "kṣitim" where the verse has "asurakṣitim" -- a fragment
-    presented as a word. The members are prepended so the surface is the whole compound.
+    member and only the last member carries the case. Recording that last member alone
+    reports "kṣitim" where the verse has "asurakṣitim" -- a fragment presented as a word.
     """
     ftype, ekey, elabel = entities.classify(child["lemma"], child["upos"])
     return L.Filler(
@@ -344,6 +364,7 @@ def run(dcs_dir, prefix, hymn_of_file, verses_by_hymn, locator_of):
     filler_types = collections.Counter()
     unresolved_reasons = collections.Counter()
     out = collections.defaultdict(list)
+    candidates = collections.defaultdict(list)
     hymn_report = []
 
     for filename in sorted(os.listdir(dcs_dir)):
@@ -393,14 +414,18 @@ def run(dcs_dir, prefix, hymn_of_file, verses_by_hymn, locator_of):
                 continue
             stats["sentences_aligned"] += 1
             locator = locator_of(filename, sent_id)
-            found, diagnostics = roles_for_sentence(tokens, rootmap, entities, locator)
+            found, found_candidates, diagnostics = roles_for_sentence(
+                tokens, rootmap, entities, locator
+            )
+            for cand in found_candidates:
+                candidates[key].append({**cand, "sent_id": sent_id, "locator": locator})
             for name, count in diagnostics.items():
                 stats[name] += count
             for assertion in found:
-                predicates[assertion.predicate] += 1
-                for filler in assertion.fillers:
-                    roles[filler.role] += 1
-                    filler_types[filler.filler_type] += 1
+                predicates[assertion["predicate"]] += 1
+                for filler in assertion["roles"]:
+                    roles[filler["role"]] += 1
+                    filler_types[filler["filler_type"]] += 1
                 out[key].append(
                     {
                         "assertion": assertion,
@@ -416,6 +441,7 @@ def run(dcs_dir, prefix, hymn_of_file, verses_by_hymn, locator_of):
 
     return {
         "assertions": out,
+        "candidates": candidates,
         "stats": dict(stats),
         "predicates": dict(predicates),
         "roles": dict(roles),

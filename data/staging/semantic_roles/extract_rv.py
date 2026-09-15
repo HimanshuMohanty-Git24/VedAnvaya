@@ -1,19 +1,26 @@
-"""Rigvedic semantic roles from the Zurich manual morphological annotation.
+"""Rigvedic semantic assertions from the Zurich manual morphological annotation.
 
-The annotation is morphology only. There is no dependency parse, no clause boundary and
-no subject link, so a role here is read from a case inside one metrical pada. That is a
-heuristic and it is typed as one: ``MORPHOLOGY_RULE_CASE``.
+Corrected after the Wave-3 preflight and the owner's ruling.
 
-Three refusals are built in, each because the registry that owns the vocabulary said so:
+What changed and why
+--------------------
+The previous version read role fillers from morphological case inside one metrical pada.
+Scored against the DCS dependency parse, that rule attached 24.8% of its fillers across a
+clause boundary or to the wrong role. Widening the gate from "one finite verb" to "one
+verbal anchor of any kind, and no relative pronoun" — which is what the leakage analysis
+pointed at — moved the error only from 24.8% to 24.3%, and cost 18 points of recall. Not
+one role reached an importable standard: the best, GOAL, was still 11.4% wrong and the
+nominative-derived AGENT was 39.8% wrong.
 
-* A pada holding more than one finite verb yields predicates and frames but no
-  non-agent roles, because nothing in the annotation says which accusative belongs to
-  which verb.
-* A nominative is only an AGENT when its number agrees with the verb's.
-* A non-active voice on one of the roots the root map flags as frame-inverting is
-  recorded as a caution on the assertion, not silently resolved. An extractor that
-  assigns AGENT from any nominative "will make the fire kindle the priest" — the root
-  map's own words.
+So the Rigveda gets **no asserted role fillers**. There is no dependency parse for the
+Rigveda at all, and this pipeline will not assert a role it cannot defend.
+
+What it does emit is everything that never depended on role scope: the predicate, the
+frame, the verb's surface and the verb's morphological features, all read off the verb
+token itself. A predicate-only assertion claims less than before, and what it claims is
+sound. The gated case-scoped fillers are still produced, but as a separate, explicitly
+non-importable verification queue with their measured error rate attached — they are the
+philologist's work list, not a layer.
 """
 from __future__ import annotations
 
@@ -25,17 +32,21 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import lib_roles as L  # noqa: E402
+import clause_scope as C  # noqa: E402
 
 TOKENS = r"D:\VedaGraph\data\knowledge\rigveda_lexical_v1\tokens.jsonl"
 REGISTRY = r"D:\VedaGraph\data\registry"
 
-#: Roots whose secondary conjugation or non-active voice inverts the argument frame
-#: without changing the predicate, per action_root_map.yaml recommendations.
 FRAME_INVERTING = {"vr̥dh", "dhr̥", "sad", "vr̥t", "naś", "dhā", "randh"}
+
+ROLES_WITHHELD = (
+    "No dependency parse exists for the Rigveda. Roles read from case inside a pada were "
+    "measured against the DCS parse at 24.3% wrong even under the tightened clause gate, "
+    "so none is asserted. The gated candidates are in role_candidates.jsonl."
+)
 
 
 def load_passages():
-    """Stream the 200 MB token file once, grouped by passage and pada."""
     current_key = None
     bucket: dict[str, list[dict]] = collections.OrderedDict()
     for line in io.open(TOKENS, encoding="utf-8"):
@@ -50,15 +61,6 @@ def load_passages():
         yield current_key, bucket
 
 
-def is_finite(token) -> bool:
-    features = token.get("morphological_features") or {}
-    return (
-        token.get("part_of_speech") == "root"
-        and "person" in features
-        and "non-finite" not in features
-    )
-
-
 def run() -> dict:
     rootmap = L.RootMap(os.path.join(REGISTRY, "action_root_map.yaml"))
     entities = L.EntityIndex(
@@ -67,33 +69,32 @@ def run() -> dict:
     )
     stats = collections.Counter()
     predicate_counts = collections.Counter()
-    role_counts = collections.Counter()
-    filler_types = collections.Counter()
     predicate_status = collections.Counter()
-    out = {}
+    candidate_roles = collections.Counter()
+    assertions_out: dict[str, list] = {}
+    candidates_out: dict[str, list] = {}
 
     for passage_key, padas in load_passages():
         stats["passages_processed"] += 1
         assertions = []
+        candidates = []
         for pada, tokens in padas.items():
             stats["tokens_processed"] += len(tokens)
-            verbs = [t for t in tokens if is_finite(t)]
-            nonfinite = [
-                t
-                for t in tokens
-                if t.get("part_of_speech") == "root" and not is_finite(t)
-            ]
-            stats["nonfinite_root_tokens"] += len(nonfinite)
-            if not verbs:
+            view = C.view_zurich(tokens)
+            finite = [t for t in view if t.is_finite_verb]
+            stats["nonfinite_root_tokens"] += sum(1 for t in view if t.is_nonfinite_verbal)
+            if not finite:
                 continue
-            multiple = len(verbs) > 1
-            if multiple:
-                stats["padas_with_multiple_finite_verbs"] += 1
-            for verb in verbs:
+            gate_ok, gate_reason = C.clause_gate(view)
+            if not gate_ok:
+                stats["padas_refused_by_clause_gate"] += 1
+                stats["gate_reason:" + gate_reason.split(":")[0]] += 1
+            for verb in finite:
                 stats["finite_verb_tokens"] += 1
-                features = verb.get("morphological_features") or {}
+                raw = verb.raw
+                features = raw.get("morphological_features") or {}
                 predicate, status = rootmap.for_zurich(
-                    verb.get("lemma_ids") or [], verb.get("normalized_lemma") or ""
+                    raw.get("lemma_ids") or [], raw.get("normalized_lemma") or ""
                 )
                 predicate_status[status] += 1
                 if predicate is None:
@@ -103,24 +104,20 @@ def run() -> dict:
                 mood = features.get("mood")
                 person = str(features.get("person") or "")
                 frame = (
-                    "REQUESTED"
-                    if mood in L.REQUEST_MOODS and person == "2"
-                    else "ASSERTED"
+                    "REQUESTED" if mood in L.REQUEST_MOODS and person == "2" else "ASSERTED"
                 )
                 cautions = []
-                if multiple:
-                    cautions.append("ROLE_SCOPE_AMBIGUOUS_MULTIPLE_FINITE_VERBS_IN_PADA")
-                base = L.fold_root(verb.get("normalized_lemma") or "")
+                base = L.fold_root(raw.get("normalized_lemma") or "")
                 if base in FRAME_INVERTING and features.get("voice") != "ACT":
                     cautions.append("FRAME_MAY_INVERT_NONACTIVE_VOICE_ON_FLAGGED_ROOT")
                 if person == "1":
                     cautions.append("FIRST_PERSON_AGENT_IS_THE_UNNAMED_SPEAKER")
                 negators = sorted(
                     {
-                        t.get("normalized_lemma") or ""
-                        for t in tokens
-                        if t.get("part_of_speech") == "invariable"
-                        and L.fold_root(t.get("normalized_lemma") or "")
+                        t.lemma
+                        for t in view
+                        if t.upos == "invariable"
+                        and L.fold_root(t.lemma)
                         in {L.fold_root(n) for n in L.NEGATION_PARTICLES}
                     }
                 )
@@ -131,97 +128,89 @@ def run() -> dict:
                     )
                     stats["assertions_in_scope_of_a_negation_particle"] += 1
 
-                fillers = []
-                if not multiple:
-                    for token in tokens:
-                        if token is verb:
-                            continue
-                        pos = token.get("part_of_speech")
-                        if pos not in ("nominal stem", "pronoun"):
-                            continue
-                        tf = token.get("morphological_features") or {}
-                        case = tf.get("case")
-                        if case is None:
-                            continue
-                        role = None
-                        if case == "NOM" and person == "3":
-                            if tf.get("number") != features.get("number"):
-                                stats["nominatives_refused_number_disagreement"] += 1
-                            elif features.get("voice") == "PASS":
-                                # A passive verb's nominative is the undergoer. Calling it
-                                # the AGENT is precisely the inversion action_root_map.yaml
-                                # warns about -- it "will make the fire kindle the priest"
-                                # -- and a caution on the assertion does not undo a wrong
-                                # role on the filler. Found by reading a sampled row:
-                                # RV 8.48.10 'ayaṁ yaḥ somo ny adhāyy asme', this Soma
-                                # which has been deposited in us, had Soma as AGENT.
-                                role = "PATIENT"
-                                stats["nominatives_retyped_patient_under_passive"] += 1
-                            else:
-                                role = "AGENT"
-                        elif case == "VOC" and person == "2":
-                            role = "AGENT"
-                        elif case in L.CASE_ROLE:
-                            role = L.CASE_ROLE[case]
-                            if role == "PATIENT" and predicate in L.MOTION_PREDICATES:
-                                role = "GOAL"
-                        if role is None:
-                            continue
-                        lemma = token.get("normalized_lemma") or ""
-                        ftype, ekey, elabel = entities.classify(lemma, None)
-                        if pos == "pronoun":
-                            ftype = (
-                                "RITUAL_PARTICIPANT_PRONOUN"
-                                if L.fold_root(lemma) in entities.PARTICIPANT_PRONOUNS
-                                else "PRONOUN_UNRESOLVED"
-                            )
-                            ekey = elabel = None
-                        proposed = role in L.PROPOSED_ROLES
-                        fillers.append(
-                            L.Filler(
-                                role=role,
-                                surface=token.get("normalized_surface") or "",
-                                lemma=lemma,
-                                case=case,
-                                upos=pos,
-                                filler_type=ftype,
-                                entity_key=ekey,
-                                entity_label=elabel,
-                                proposed_role=proposed,
-                                evidence=f"pada {pada}, {case} in the same pada as the finite verb",
-                            )
-                        )
-                        role_counts[role] += 1
-                        filler_types[ftype] += 1
-
-                assertions.append(
-                    L.Assertion(
-                        predicate=predicate,
-                        frame=frame,
-                        root_label=(verb.get("lemma") or "").strip(),
-                        root_lemma=verb.get("normalized_lemma") or "",
-                        verb_surface=verb.get("normalized_surface") or "",
-                        verb_features=features,
-                        scope=f"PADA:{pada}",
-                        fillers=fillers,
-                        predicate_status=status,
-                        cautions=cautions,
-                    )
+                assertion = L.Assertion(
+                    predicate=predicate,
+                    frame=frame,
+                    root_label=(raw.get("lemma") or "").strip(),
+                    root_lemma=raw.get("normalized_lemma") or "",
+                    verb_surface=raw.get("normalized_surface") or "",
+                    verb_features=features,
+                    scope=f"PADA:{pada}",
+                    fillers=[],
+                    predicate_status=status,
+                    cautions=cautions,
+                    derivation="MORPHOLOGY_RULE_PREDICATE_ONLY",
                 )
+                record = assertion.as_dict()
+                record["roles_withheld"] = True
+                record["roles_withheld_reason"] = ROLES_WITHHELD
+                assertions.append(record)
+                stats["assertions"] += 1
+
+                # --- the non-importable verification queue -------------------------
+                if not gate_ok or len(finite) > 1:
+                    if len(finite) > 1:
+                        stats["candidate_scopes_refused_multiple_finite_verbs"] += 1
+                    continue
+                merged, refusals = C.case_scoped_roles(
+                    view, verb, predicate, person, features.get("voice")
+                )
+                for reason in refusals:
+                    stats[reason.lower()] += 1
+                if not merged:
+                    continue
+                fillers = []
+                for head, role, prefix in merged:
+                    ftype, ekey, elabel = entities.classify(head.lemma, None)
+                    if head.upos == "pronoun":
+                        ftype = (
+                            "RITUAL_PARTICIPANT_PRONOUN"
+                            if L.fold_root(head.lemma) in entities.PARTICIPANT_PRONOUNS
+                            else "PRONOUN_UNRESOLVED"
+                        )
+                        ekey = elabel = None
+                    fillers.append(
+                        L.Filler(
+                            role=role,
+                            surface=prefix + head.surface,
+                            lemma=head.lemma,
+                            case=head.case,
+                            upos=head.upos,
+                            filler_type=ftype,
+                            entity_key=ekey,
+                            entity_label=elabel,
+                            proposed_role=role in L.PROPOSED_ROLES,
+                            evidence=f"pada {pada}, {head.case} beside the finite verb, "
+                            "clause gate cleared",
+                        ).as_dict()
+                    )
+                    candidate_roles[role] += 1
+                candidates.append(
+                    {
+                        "predicate": predicate,
+                        "frame": frame,
+                        "verb_surface": raw.get("normalized_surface") or "",
+                        "scope": f"PADA:{pada}",
+                        "role_candidates": fillers,
+                    }
+                )
+                stats["candidate_assertions"] += 1
+
         if assertions:
-            out[passage_key] = assertions
+            assertions_out[passage_key] = assertions
             stats["passages_with_assertion"] += 1
-            stats["assertions"] += len(assertions)
         else:
             stats["passages_without_assertion"] += 1
+        if candidates:
+            candidates_out[passage_key] = candidates
 
     return {
-        "assertions": out,
+        "assertions": assertions_out,
+        "candidates": candidates_out,
         "stats": dict(stats),
         "predicates": dict(predicate_counts),
-        "roles": dict(role_counts),
-        "filler_types": dict(filler_types),
         "predicate_status": dict(predicate_status),
+        "candidate_roles": dict(candidate_roles),
         "rootmap_version": rootmap.version,
     }
 
@@ -229,13 +218,13 @@ def run() -> dict:
 if __name__ == "__main__":
     sys.stdout.reconfigure(encoding="utf-8")
     result = run()
-    print(json.dumps({k: v for k, v in result.items() if k != "assertions"},
-                     ensure_ascii=False, indent=1))
-    scratch = sys.argv[1] if len(sys.argv) > 1 else "rv_assertions.json"
-    with io.open(scratch, "w", encoding="utf-8") as handle:
-        json.dump(
-            {k: [a.as_dict() for a in v] for k, v in result["assertions"].items()},
-            handle,
-            ensure_ascii=False,
-        )
-    print("wrote", scratch)
+    summary = {k: v for k, v in result.items() if k not in ("assertions", "candidates")}
+    print(json.dumps(summary, ensure_ascii=False, indent=1))
+    out = sys.argv[1]
+    with io.open(out, "w", encoding="utf-8") as handle:
+        json.dump(result["assertions"], handle, ensure_ascii=False)
+    with io.open(out.replace(".json", "_candidates.json"), "w", encoding="utf-8") as handle:
+        json.dump(result["candidates"], handle, ensure_ascii=False)
+    with io.open(out.replace(".json", "_summary.json"), "w", encoding="utf-8") as handle:
+        json.dump(summary, handle, ensure_ascii=False)
+    print("wrote", out)
