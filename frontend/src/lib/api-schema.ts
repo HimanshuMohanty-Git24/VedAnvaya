@@ -1602,7 +1602,7 @@ export interface components {
             supports_seek: boolean;
             /**
              * Media Kind
-             * @description 'audio' or 'video'. Two of the three portal series are served as MP4, so a client that assumed audio would fail silently on them.
+             * @description 'audio' or 'video'. Carried because a source may serve either -- the first one tried served MP4 for two of its three Vedas -- and a client that assumed audio would fail silently on those.
              */
             media_kind?: string | null;
         };
@@ -1647,7 +1647,7 @@ export interface components {
             levels_above: number;
             /**
              * Scope Note
-             * @description Reader-facing prose for this scope, safe to render verbatim. For a hymn recording asked about from a verse this reads 'Recitation of this hymn (RV 1.1), which contains this verse' -- never 'play this mantra'.
+             * @description Reader-facing prose for this scope, safe to render verbatim. For a verse's own recording this reads 'Recitation of this verse (RV 1.1.1).'; for a hymn recording reached from a verse it reads 'Recitation of this hymn (RV 1.1), which contains this passage' -- never 'play this mantra'.
              */
             scope_note: string;
         };
@@ -1744,7 +1744,7 @@ export interface components {
             scope: components["schemas"]["AudioScopeView"];
             /**
              * Performer
-             * @description Null where the source names none. The Vedic Heritage Portal names no reciter on any page reached, so these are null and the UI says 'not stated' rather than inventing a tradition.
+             * @description Null where the source names none. The current source names no reciter anywhere reached, so these are null and the UI says 'not stated by the source' rather than inventing a tradition.
              */
             performer?: string | null;
             /** Tradition */
@@ -1792,9 +1792,9 @@ export interface components {
          * @description Whether the media answered when last checked.
          *
          *     ``BROKEN`` is deliberately hard to reach: a single timeout is
-         *     ``TEMPORARILY_UNAVAILABLE``, because the Vedic Heritage Portal times out under
-         *     ordinary polite load and treating that as proof the recording never existed would
-         *     delete real coverage from the catalog.
+         *     ``TEMPORARILY_UNAVAILABLE``, because third-party media hosts time out under ordinary
+         *     polite load and treating that as proof the recording never existed would delete real
+         *     coverage from the catalog.
          * @enum {string}
          */
         Availability: "AVAILABLE" | "TEMPORARILY_UNAVAILABLE" | "BROKEN" | "EXTERNAL_ONLY";

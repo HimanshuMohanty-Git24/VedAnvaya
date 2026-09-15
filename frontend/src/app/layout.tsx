@@ -5,6 +5,7 @@ import "./globals.css";
 import { SiteFooter } from "@/components/shell/site-footer";
 import { SiteHeader } from "@/components/shell/site-header";
 import { ThemeProvider } from "@/components/theme-provider";
+import { siteUrl, socialImage } from "@/lib/site";
 
 /**
  * Fraunces sets English display type. Its optical-size axis is requested so the browser can
@@ -73,24 +74,27 @@ const charis = localFont({
  * it Next warns and emits a relative path, which every social scraper ignores.
  */
 export const metadata: Metadata = {
-    metadataBase: new URL(process.env.VEDANVAYA_SITE_URL ?? "http://localhost:3000"),
+    metadataBase: siteUrl,
     title: {
-        default: "VedAnvaya: the Vedas, connected",
-        template: "%s | VedAnvaya",
+        default: "VedAnvaya — The Vedas, connected",
+        template: "%s — VedAnvaya",
     },
     description:
         "Read the four Vedic Samhitas as one connected corpus. Mantras, deities, seers, rites and shared wording, with the evidence behind every connection and a plain statement of what is not held.",
     applicationName: "VedAnvaya",
     manifest: "/manifest.webmanifest",
+    robots: {
+        index: process.env.NODE_ENV === "production",
+        follow: process.env.NODE_ENV === "production",
+    },
     openGraph: {
         type: "website",
         siteName: "VedAnvaya",
-        title: "VedAnvaya: the Vedas, connected",
-        description:
-            "Four Samhitas, one corpus, and the evidence behind every connection.",
-        images: [{ url: "/brand/og.png", width: 1200, height: 630, alt: "VedAnvaya" }],
+        title: "VedAnvaya — The Vedas, connected",
+        description: "Four Samhitas, one corpus, and the evidence behind every connection.",
+        images: [socialImage],
     },
-    twitter: { card: "summary_large_image" },
+    twitter: { card: "summary_large_image", images: [socialImage.url] },
 };
 
 export const viewport: Viewport = {
@@ -106,6 +110,15 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
+    const websiteJsonLd = {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        name: "VedAnvaya",
+        url: siteUrl.toString(),
+        description:
+            "A reading and research interface for the four Vedic Samhitas, with the evidence behind every connection.",
+    };
+
     return (
         <html
             lang="en"
@@ -114,6 +127,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         >
             <body>
                 <ThemeProvider>
+                    <script
+                        type="application/ld+json"
+                        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+                    />
                     <a className="va-skip-link" href="#main">
                         Skip to content
                     </a>

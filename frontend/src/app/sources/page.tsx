@@ -14,6 +14,7 @@ import {
 } from "@/lib/api";
 import { count } from "@/lib/lab";
 import { readProvenance, type ProvenanceEntry } from "@/lib/provenance";
+import { pageMetadata } from "@/lib/site";
 
 /**
  * Sources and method.
@@ -36,16 +37,12 @@ import { readProvenance, type ProvenanceEntry } from "@/lib/provenance";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-    title: "Sources and method",
+export const metadata: Metadata = pageMetadata({
+    title: "Sources & Methodology",
     description:
-        "Which editions this corpus is built from, on what terms, and how text becomes evidence: the four knowledge layers, the difference between a deity being named and a hymn being dedicated to it, the certainty grades, the kinds of textual connection, and what is not held.",
-    openGraph: {
-        title: "Sources and method | VedAnvaya",
-        description:
-            "Every edition behind every verse, and the evidence model that turns them into answers.",
-    },
-};
+        "The editions behind this corpus, their terms, and the evidence model that turns text into accountable connections.",
+    pathname: "/sources",
+});
 
 const CONTENTS = [
     { id: "scope", label: "What is in this corpus" },

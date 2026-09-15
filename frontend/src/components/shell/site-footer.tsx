@@ -63,10 +63,18 @@ export function SiteFooter() {
                 </div>
 
                 {COLUMNS.map((column) => (
-                    <nav aria-label={column.heading} className="va-footer-column" key={column.heading}>
+                    <nav
+                        aria-label={column.heading}
+                        className="va-footer-column"
+                        key={column.heading}
+                    >
                         <h2 className="va-footer-heading">{column.heading}</h2>
                         {column.links.map((link) => (
-                            <Link href={link.href} key={link.href}>
+                            <Link
+                                href={link.href}
+                                key={link.href}
+                                prefetch={link.href === "/graph" ? false : undefined}
+                            >
                                 {link.label}
                             </Link>
                         ))}

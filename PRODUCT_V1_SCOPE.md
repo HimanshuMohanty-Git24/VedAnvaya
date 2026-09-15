@@ -1,8 +1,8 @@
-# VedaGraph Product V1 — Scope
+# VedAnvaya Product V1 — Scope
 
 **Version:** 1.0.0 · **Status:** local release · **Graph:** 108,779 nodes / 265,295 relationships (frozen)
 
-This document exists to stop scope drift. Every claim VedaGraph makes is bounded by what is
+This document exists to stop scope drift. Every claim VedAnvaya makes is bounded by what is
 written here, and the boundaries are not guessable from the product's own vocabulary: three
 of the four Samhitas are partial in ways their traditional names do not reveal.
 
@@ -185,9 +185,9 @@ review.
   includes the five Mandala 8 keys where a permutation error would hide. Last run: **31 of
   31 confirmed, 0 wrong**, median similarity 1.000.
 
-## 5. Ask VedaGraph: what a citation means
+## 5. Ask VedAnvaya: what a citation means
 
-Ask VedaGraph is **evidence-grounded and textual**. Retrieval runs first and the model sees
+Ask VedAnvaya is **evidence-grounded and textual**. Retrieval runs first and the model sees
 only what retrieval found, so:
 
 - every factual claim carries a citation into the graph;
@@ -224,7 +224,7 @@ Final benchmark over 60 questions: 36 supported-correct, 8 partial, 16 correctly
 
 ## 7. Absence semantics, in one paragraph
 
-If VedaGraph shows you nothing, ask **whose** nothing it is. `NOT_BUILT` means the layer
+If VedAnvaya shows you nothing, ask **whose** nothing it is. `NOT_BUILT` means the layer
 does not exist here and the silence is ours. `INSUFFICIENT_EVIDENCE` means evidence exists
 and cannot support the claim — it is **not** a zero and must never be rendered as one.
 `PARTIAL` means a real answer over part of the corpus, one Veda, or one evidence mode. An

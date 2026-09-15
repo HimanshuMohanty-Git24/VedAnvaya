@@ -56,6 +56,7 @@ export function WorldPreviewPanel({ slice }: { slice: HeroSlice | null }) {
                                 <li key={node.id}>
                                     <Link
                                         href={`/graph?view=focus&renderer=3d&node=${encodeURIComponent(node.id)}`}
+                                        prefetch={false}
                                     >
                                         {node.label}
                                     </Link>
@@ -72,7 +73,7 @@ export function WorldPreviewPanel({ slice }: { slice: HeroSlice | null }) {
                     unaffected.
                 </p>
             )}
-            <Link className="va-world-preview-link" href="/graph">
+            <Link className="va-world-preview-link" href="/graph" prefetch={false}>
                 Open the graph
             </Link>
         </div>

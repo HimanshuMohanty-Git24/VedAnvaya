@@ -1,10 +1,13 @@
 import { AskExperience } from "@/components/ask/ask-experience";
+import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/site";
 
-export const metadata = {
+export const metadata: Metadata = pageMetadata({
     title: "Ask VedAnvaya",
     description:
         "Ask a research question across the four Samhitas and inspect the evidence behind the answer. Every claim carries a citation you can open.",
-};
+    pathname: "/ask",
+});
 
 /**
  * Ask.
@@ -36,9 +39,7 @@ export default async function AskPage({
                     प्रश्न
                 </p>
                 <h1>Ask VedAnvaya</h1>
-                <p>
-                    Ask a question across the corpus and inspect the evidence behind the answer.
-                </p>
+                <p>Ask a question across the corpus and inspect the evidence behind the answer.</p>
             </header>
 
             <div className="va-ask-contract">

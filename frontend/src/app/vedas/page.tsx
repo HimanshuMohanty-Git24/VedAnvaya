@@ -3,12 +3,15 @@ import { LoadFailure } from "@/components/empty-state";
 import { Action } from "@/components/home/sections";
 import { CaveatList } from "@/components/status";
 import { load, vedaOrder, workSlugs, type WorksResponse } from "@/lib/api";
+import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/site";
 
-export const metadata = {
-    title: "The four Vedas",
+export const metadata: Metadata = pageMetadata({
+    title: "The Four Vedas",
     description:
-        "Four Samhita corpora, each with its own hierarchy, the recension held, its translation and recitation coverage, and a statement of what is not held.",
-};
+        "Four Samhita corpora, each with its own hierarchy, recension, translation and recitation coverage, and a statement of what is not held.",
+    pathname: "/vedas",
+});
 
 /**
  * The collection index.
@@ -96,9 +99,7 @@ export default async function VedasPage() {
                                 <span className="va-collection-deva" lang="sa">
                                     {DEVANAGARI[code]}
                                 </span>
-                                <span className="va-collection-latin">
-                                    {work.traditional_name}
-                                </span>
+                                <span className="va-collection-latin">{work.traditional_name}</span>
                                 <span className="va-collection-recension">{RECENSION[code]}</span>
                             </Link>
 
@@ -117,9 +118,7 @@ export default async function VedasPage() {
                                         <strong>{number(total)}</strong>
                                     </dd>
                                 </div>
-                                <div
-                                    className={`va-fact${translated === 0 ? " is-none" : ""}`}
-                                >
+                                <div className={`va-fact${translated === 0 ? " is-none" : ""}`}>
                                     <dt>Translated</dt>
                                     <dd>
                                         <strong>
@@ -127,9 +126,7 @@ export default async function VedasPage() {
                                         </strong>
                                     </dd>
                                 </div>
-                                <div
-                                    className={`va-fact${audioCount === 0 ? " is-none" : ""}`}
-                                >
+                                <div className={`va-fact${audioCount === 0 ? " is-none" : ""}`}>
                                     <dt>Recited</dt>
                                     <dd>
                                         <strong>

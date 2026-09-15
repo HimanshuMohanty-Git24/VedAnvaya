@@ -96,13 +96,15 @@ export function Action({
     href,
     children,
     note,
+    prefetch,
 }: {
     href: string;
     children: ReactNode;
     note?: string;
+    prefetch?: boolean;
 }) {
     return (
-        <Link className="va-action" href={href}>
+        <Link className="va-action" href={href} prefetch={prefetch}>
             <span className="va-action-label">{children}</span>
             <ArrowRight aria-hidden="true" size={15} weight="bold" />
             {note ? <span className="va-action-note">{note}</span> : null}

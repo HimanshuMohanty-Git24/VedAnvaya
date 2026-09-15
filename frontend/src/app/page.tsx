@@ -6,6 +6,7 @@ import { WorldPreviewPanel } from "@/components/home/world-preview-panel";
 import type { HeroSlice } from "@/components/home/world-preview";
 import { Action, Heading, Kicker, Section, SectionRule } from "@/components/home/sections";
 import { ServiceUnavailable } from "@/components/empty-state";
+import { pageMetadata } from "@/lib/site";
 import {
     encoded,
     load,
@@ -16,6 +17,13 @@ import {
     type Stats,
     type WorksResponse,
 } from "@/lib/api";
+
+export const metadata = pageMetadata({
+    title: "VedAnvaya — The Vedas, connected",
+    description:
+        "Read the four Vedic Samhitas as one connected corpus, with passages, recitation, entities and the evidence behind every connection.",
+    pathname: "/",
+});
 
 /**
  * The VedAnvaya homepage.
@@ -242,8 +250,7 @@ function Hero({
                         {/* The explicit space survives the line break being hidden on a
                             phone, where the headline sets as one paragraph. Without it the
                             two clauses ran together as "one corpus,and the". */}
-                        Four Samhitas, one corpus,{" "}
-                        <br className="va-hero-break" />
+                        Four Samhitas, one corpus, <br className="va-hero-break" />
                         and the evidence behind every connection.
                     </h1>
                     <p className="va-hero-lede">
@@ -254,7 +261,9 @@ function Hero({
                         <Link className="va-button" href="/vedas">
                             Read the Vedas
                         </Link>
-                        <Action href="/graph">Open the graph</Action>
+                        <Action href="/graph" prefetch={false}>
+                            Open the graph
+                        </Action>
                     </div>
                     {signals.length ? (
                         <p className="va-hero-signal">{signals.join(" · ")}</p>
@@ -281,16 +290,14 @@ function Ledger({
     return (
         <Section tone="sunk" className="va-ledger-section is-open">
             <Kicker sanskrit="श्रुति">The Vedas</Kicker>
-            <Heading
-                lede="Three of the four are partial in ways their traditional names do not reveal. Each row says which part, before it says how much."
-            >
+            <Heading lede="Three of the four are partial in ways their traditional names do not reveal. Each row says which part, before it says how much.">
                 Four Samhitas, one recension each.
             </Heading>
 
             <table className="va-ledger">
                 <caption className="sr-only">
-                    The four collections held, with the recension of each, its verse count, how
-                    many verses carry a translation and a recitation, and what is not held.
+                    The four collections held, with the recension of each, its verse count, how many
+                    verses carry a translation and a recitation, and what is not held.
                 </caption>
                 <thead>
                     <tr>
@@ -410,14 +417,13 @@ function Reading({ passage }: { passage: Loaded<Passage> }) {
             <div className="va-split-copy">
                 <Heading>A verse, and everything standing behind it.</Heading>
                 <p>
-                    The Sanskrit, the recitation, the translation where one exists, the seer and
-                    the deity the traditional index assigns, the words the verse actually
-                    contains, and the wording it shares with another collection.
+                    The Sanskrit, the recitation, the translation where one exists, the seer and the
+                    deity the traditional index assigns, the words the verse actually contains, and
+                    the wording it shares with another collection.
                 </p>
                 <p>
-                    Each of those comes from a named layer, and each says how it was established.
-                    An assignment made by the index is never shown as a statement the Sanskrit
-                    makes.
+                    Each of those comes from a named layer, and each says how it was established. An
+                    assignment made by the index is never shown as a statement the Sanskrit makes.
                 </p>
                 <Action
                     href={`/passage/${encoded(passage.ok ? passage.data.canonical_key : "VG:RV:SAK:M01:S001:V001")}`}
@@ -444,9 +450,7 @@ function Recitation({
 
     return (
         <Section tone="sunk">
-            <Heading
-                lede="One recording per verse, from VedSearch. A recording is attached only when our canonical key lands in the source's numbering and the text that source says it recites matches this corpus's text for that key. Where they disagree the mapping is refused and recorded as a gap."
-            >
+            <Heading lede="One recording per verse, from VedSearch. A recording is attached only when our canonical key lands in the source's numbering and the text that source says it recites matches this corpus's text for that key. Where they disagree the mapping is refused and recorded as a gap.">
                 {total ? `${number(total)} verses, each with its own recitation.` : "Recitation."}
             </Heading>
 
@@ -467,10 +471,10 @@ function Recitation({
                                 <span className="va-bar-label">{vedaNames[code]}</span>
                                 <p className="va-bar-absence">
                                     <strong>No recording exists.</strong> The source publishes
-                                    Samavedic verse text and no Samavedic audio, and no other
-                                    source located offers ārcika recitation mapped to individual
-                                    verses. This is the Veda defined by its sung realisation. The
-                                    gap is in what has been published anywhere.
+                                    Samavedic verse text and no Samavedic audio, and no other source
+                                    located offers ārcika recitation mapped to individual verses.
+                                    This is the Veda defined by its sung realisation. The gap is in
+                                    what has been published anywhere.
                                 </p>
                             </li>
                         );
@@ -508,15 +512,14 @@ function Connections({ reachingAll }: { reachingAll: number | null }) {
                 <Kicker sanskrit="अन्वय">Connections</Kicker>
                 <Heading>The same wording stands in more than one collection.</Heading>
                 <p>
-                    Cross-corpus connections are built in five kinds, never as one similarity
-                    score: exact parallel, near parallel, variant, shared formula, shared entity
+                    Cross-corpus connections are built in five kinds, never as one similarity score:
+                    exact parallel, near parallel, variant, shared formula, shared entity
                     vocabulary. Which kind a connection is decides what it can be used to argue.
                 </p>
                 <p>
-                    Some pairs are empty on purpose. Directed reuse was established for the
-                    Rigveda and Samaveda only, which is a fact about what was built. Non-lexical
-                    resemblance was never built at all, so that row reads as unbuilt rather than
-                    as zero.
+                    Some pairs are empty on purpose. Directed reuse was established for the Rigveda
+                    and Samaveda only, which is a fact about what was built. Non-lexical resemblance
+                    was never built at all, so that row reads as unbuilt rather than as zero.
                 </p>
                 <Action href="/connections">
                     {reachingAll
@@ -529,7 +532,9 @@ function Connections({ reachingAll }: { reachingAll: number | null }) {
                     <li>
                         <span className="va-chain-mark" aria-hidden="true" />
                         <span className="va-chain-label">A Rigvedic verse</span>
-                        <span className="va-chain-note">RV 1.1.1, the text as GRETIL prints it</span>
+                        <span className="va-chain-note">
+                            RV 1.1.1, the text as GRETIL prints it
+                        </span>
                     </li>
                     <li>
                         <span className="va-chain-mark" aria-hidden="true" />
@@ -563,18 +568,17 @@ function Ask() {
                 <div>
                     <h3>What it does</h3>
                     <p>
-                        Every factual sentence carries a citation you can open: the retrieved
-                        item, its Sanskrit, its translation and its canonical citation. The
-                        evidence is the answer&rsquo;s working, not a reading list attached
-                        afterwards.
+                        Every factual sentence carries a citation you can open: the retrieved item,
+                        its Sanskrit, its translation and its canonical citation. The evidence is
+                        the answer&rsquo;s working, not a reading list attached afterwards.
                     </p>
                 </div>
                 <div>
                     <h3>What it refuses to do</h3>
                     <p>
-                        A question this build cannot answer returns insufficient evidence and
-                        names the dimension it could not reach. It does not guess, and it does
-                        not turn a gap in the graph into a confident denial about the Vedas.
+                        A question this build cannot answer returns insufficient evidence and names
+                        the dimension it could not reach. It does not guess, and it does not turn a
+                        gap in the graph into a confident denial about the Vedas.
                     </p>
                 </div>
             </div>

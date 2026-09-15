@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { load, type Stats, type WorksResponse } from "@/lib/api";
 import { count } from "@/lib/lab";
+import { pageMetadata } from "@/lib/site";
 
 /**
  * About VedAnvaya.
@@ -16,16 +17,12 @@ import { count } from "@/lib/lab";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-    title: "About",
+export const metadata: Metadata = pageMetadata({
+    title: "About VedAnvaya",
     description:
-        "VedAnvaya is a reading and research interface for the four Vedic Samhitas, built by one person to make the connections between them followable. What it is, why it exists, how it was made, and what it is not.",
-    openGraph: {
-        title: "About VedAnvaya",
-        description:
-            "A reading and research interface for the four Vedic Samhitas, and an account of how it was built and what it does not do.",
-    },
-};
+        "VedAnvaya is a reading and research interface for the four Vedic Samhitas, built by one person to make their internal connections easier to explore.",
+    pathname: "/about",
+});
 
 const CONTENTS = [
     { id: "what", label: "What this is" },
@@ -187,9 +184,11 @@ export default async function AboutPage() {
                                 does not show.
                             </li>
                             <li>
-                                <Link href="/graph">Open the knowledge graph</Link> and move through
-                                the relationships themselves, asking any one of them to explain what
-                                it is and where it came from.
+                                <Link href="/graph" prefetch={false}>
+                                    Open the knowledge graph
+                                </Link>{" "}
+                                and move through the relationships themselves, asking any one of
+                                them to explain what it is and where it came from.
                             </li>
                             <li>
                                 <Link href="/ask">Ask a question in ordinary language</Link> and get
@@ -275,9 +274,8 @@ export default async function AboutPage() {
                     <section className="va-maker" id="builder">
                         <h2>Who built it</h2>
                         <p className="va-maker-open">
-                            I am Himanshu Mohanty. I am a software engineer, and this is a personal
-                            project — not a product, not a startup, and not affiliated with any
-                            institution.
+                            I am Himanshu Mohanty. I am a software engineer, and VedAnvaya is an
+                            independent personal research and engineering project.
                         </p>
                         <p>
                             My working life is in software engineering, machine learning and the
@@ -289,11 +287,15 @@ export default async function AboutPage() {
                             reach.
                         </p>
                         <p>
-                            I am not a Sanskritist and I have not represented myself as one anywhere
-                            on this site. What I have done is read carefully, record provenance
-                            obsessively, and refuse to ship a figure I could not account for. Where
-                            the corpus needed a judgement I was not qualified to make, the project
-                            records the question rather than answering it — which is why{" "}
+                            I&apos;m not a Sanskrit scholar by training. I&apos;m a software
+                            engineer approaching these texts through computation, data, and a
+                            genuine interest in how their internal connections can be made easier to
+                            explore. VedAnvaya is not an institutional edition of the Vedas, and it
+                            does not claim to replace traditional study, philology, or scholarship.
+                            What I have done is read carefully, record provenance obsessively, and
+                            refuse to ship a figure I could not account for. Where the corpus needed
+                            a judgement I was not qualified to make, the project records the
+                            question rather than answering it — which is why{" "}
                             <Link href="/limits">the limits page</Link> is one of the larger things
                             here.
                         </p>

@@ -33,6 +33,7 @@ export function PrimaryNav() {
                         href={item.href}
                         key={item.href}
                         aria-current={active ? "page" : undefined}
+                        prefetch={item.href === "/graph" ? false : undefined}
                     >
                         {item.label}
                     </Link>

@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { GraphShell } from "@/components/world/graph-shell";
+import { pageMetadata } from "@/lib/site";
 
-export const metadata: Metadata = {
-    title: "The knowledge world",
+export const metadata: Metadata = pageMetadata({
+    title: "Knowledge World",
     description:
-        "The whole public corpus as one connected map: 35,370 subjects and 185,693 recorded relationships, in a spatial world, a planar diagram, or traced as a path between two things.",
-};
+        "Explore the public corpus as one connected map: a spatial world, a planar diagram, or a traced path between two subjects.",
+    pathname: "/graph",
+});
 
 /**
  * The graph.

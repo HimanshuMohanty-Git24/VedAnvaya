@@ -13,6 +13,7 @@ import {
     type WorksResponse,
 } from "@/lib/api";
 import { count, NOT_DRAWN, PLATES, plateHref, type CorpusCode, type PlateSlug } from "@/lib/lab";
+import { pageMetadata } from "@/lib/site";
 
 /**
  * The Lab index.
@@ -31,14 +32,11 @@ import { count, NOT_DRAWN, PLATES, plateHref, type CorpusCode, type PlateSlug } 
 
 export const revalidate = 300;
 
-export const metadata: Metadata = {
-    title: "Visualizations",
-    description: `${PLATES.length} plates over the four Vedic Samhitas: how the corpora differ, which deities are named and which are dedicated to, where Rigvedic wording reappears in the Samaveda, how formulas travel, what the Atharvaveda addresses, how much ritual is modelled, and what the corpus handles.`,
-    openGraph: {
-        title: "Visualizations | VedAnvaya",
-        description: `${PLATES.length} plates over the four Vedic Samhitas, each answering one question and stating what it does not show.`,
-    },
-};
+export const metadata: Metadata = pageMetadata({
+    title: "Visualization Lab",
+    description: `${PLATES.length} evidence-led plates over the four Vedic Samhitas, each answering one question and stating what it does not show.`,
+    pathname: "/visualizations",
+});
 
 /** Small counts read better spelled out in a headline, and only small counts appear there. */
 const NUMBER_WORDS = [

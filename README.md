@@ -1,9 +1,9 @@
-# VedaGraph
+# VedAnvaya
 
-**A knowledge graph of the four Vedas, with the evidence and the limits attached to every
-answer.** Read the Saṃhitās verse by verse with recitation audio, explore deities and seers
-as a graph, trace wording reused across Vedas, and ask questions in English that are
-answered only from what the graph can actually support.
+**The Vedas, connected.** VedAnvaya is a reading and research interface for the four Vedic
+Samhitas, with the evidence and the limits attached to every answer. Read verse by verse with
+recitation audio, explore deities and seers as a graph, trace wording reused across Vedas,
+and ask questions in English that are answered only from what the graph can actually support.
 
 > Text is immutable. Metadata is provenanced. Deterministic facts are separated from
 > interpretation. LLM output never becomes canonical source data.
@@ -40,7 +40,7 @@ credential matters it reports only that it is set and how long it is.
 ### Starting without everything
 
 The product degrades rather than failing. **No LLM key** — browsing, search, the graph,
-cross-Veda comparison and audio all work, and Ask VedaGraph reports `NOT_CONFIGURED`
+cross-Veda comparison and audio all work, and Ask VedAnvaya reports `NOT_CONFIGURED`
 instead of taking the product down. **No audio catalog** — the reader omits the player and
 nothing else changes. **Neo4j down** — the API still starts and answers `/health`, and
 knowledge routes return 503 with a body that names no hostname.
@@ -61,7 +61,7 @@ graph is treated as frozen.
 | **Interactive graph** | Cytoscape neighbourhoods with a *Why* panel that explains any edge from its stored evidence |
 | **Cross-Veda** | Wording that recurs across Vedas, and formula families with their occurrences |
 | **Search** | One ladder across Sanskrit text, translations, dictionary headwords and entity names |
-| **Ask VedaGraph** | Evidence-grounded question answering: retrieval first, every claim cited, `INSUFFICIENT_EVIDENCE` instead of a confident guess |
+| **Ask VedAnvaya** | Evidence-grounded question answering: retrieval first, every claim cited, `INSUFFICIENT_EVIDENCE` instead of a confident guess |
 
 ### The corpus
 
@@ -119,7 +119,7 @@ stored unless the cache tool is run.
 
 ---
 
-## Configuring Ask VedaGraph
+## Configuring Ask VedAnvaya
 
 The LLM provider is an **environment choice, with no code change**. Set two variables in
 `.env`:

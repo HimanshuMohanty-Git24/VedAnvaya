@@ -25,7 +25,11 @@ export function MobileNav() {
     return (
         <Dialog.Root>
             <Dialog.Trigger asChild>
-                <button className="va-icon-button va-mobile-trigger" type="button" aria-label="Open navigation">
+                <button
+                    className="va-icon-button va-mobile-trigger"
+                    type="button"
+                    aria-label="Open navigation"
+                >
                     <List aria-hidden="true" size={21} />
                 </button>
             </Dialog.Trigger>
@@ -55,6 +59,7 @@ export function MobileNav() {
                                     aria-current={isActive(item.href) ? "page" : undefined}
                                     className="va-sheet-link"
                                     href={item.href}
+                                    prefetch={item.href === "/graph" ? false : undefined}
                                 >
                                     <span className="va-sheet-link-label">{item.label}</span>
                                     <span className="va-sheet-link-note">{item.description}</span>

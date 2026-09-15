@@ -16,6 +16,7 @@ import {
     type WorkRoot,
     type WorksResponse,
 } from "@/lib/api";
+import { pageMetadata } from "@/lib/site";
 
 /**
  * One Samhita, as a collection rather than as a folder.
@@ -77,12 +78,10 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     const code = veda.slice(0, 2).toUpperCase();
     const name = vedaNames[code] ?? veda;
     const title = name.charAt(0).toUpperCase() + name.slice(1);
-    return {
-        title,
-        description: NOT_HELD[code]
-            ? `${RECENSION[code]}. ${NOT_HELD[code]}`
-            : `The ${title} as held in this corpus.`,
-    };
+    const description = NOT_HELD[code]
+        ? `${RECENSION[code]}. ${NOT_HELD[code]}`
+        : `The ${title} as held in this corpus.`;
+    return pageMetadata({ title, description, pathname: `/vedas/${veda}` });
 }
 
 export async function generateStaticParams() {
