@@ -13,7 +13,7 @@
     "10 DEFECT_FOUND_AND_FIXED counts as a completed adversarial gate"
   ],
   "provenance": {
-    "git_commit": "98ee24e0920e99431a248203257fa5dbd825b879",
+    "git_commit": "c8051180e4ca56c380d45c8bdb43d6892e79dbf3",
     "git_branch": "phase-data-completeness-v2",
     "working_tree_clean": true,
     "gap_registry_sha256": "82ba2160569bb603cf65452b652fececb693771868fca9d64157a26412c5709b",
