@@ -190,21 +190,26 @@ text, on the strongest surface the two scripts can reach. Cross-Veda only:
 
 | Transformation | Total | AV-RV | AV-SV | AV-YV | RV-SV | RV-YV | SV-YV |
 |---|--:|--:|--:|--:|--:|--:|--:|
-| `SINGLE_CONTIGUOUS_SUBSTITUTION` | 1,390 | 297 | 109 | 31 | 792 | 131 | 30 |
-| `SCATTERED_SUBSTITUTIONS` | 1,295 | 215 | 103 | 67 | 745 | 107 | 58 |
-| `WORD_DIVISION_ONLY` | 1,203 | 22 | 132 | 41 | 830 | 165 | 13 |
-| `TWO_CONTIGUOUS_SUBSTITUTIONS` | 1,143 | 176 | 75 | 39 | 695 | 122 | 36 |
-| `SCRIPT_CONVENTION_ONLY` | 471 | 470 | 0 | 0 | 0 | 0 | 1 |
-| `INTERIOR_INSERTION` | 245 | 29 | 22 | 17 | 59 | 93 | 25 |
-| `NO_CHANGE_OBSERVABLE_AT_REACHABLE_LEVEL` | 218 | 0 | 9 | 7 | 178 | 24 | 0 |
+| `SINGLE_CONTIGUOUS_SUBSTITUTION` | 1,493 | 297 | 109 | 44 | 792 | 189 | 62 |
+| `WORD_DIVISION_ONLY` | 1,321 | 22 | 132 | 58 | 830 | 259 | 20 |
+| `SCATTERED_SUBSTITUTIONS` | 1,196 | 215 | 103 | 56 | 745 | 49 | 28 |
+| `TWO_CONTIGUOUS_SUBSTITUTIONS` | 1,096 | 176 | 75 | 30 | 695 | 92 | 28 |
+| `SCRIPT_CONVENTION_ONLY` | 487 | 470 | 0 | 0 | 0 | 0 | 17 |
+| `NO_CHANGE_OBSERVABLE_AT_REACHABLE_LEVEL` | 233 | 0 | 9 | 9 | 178 | 37 | 0 |
 | `ACCENT_NOTATION_ONLY` | 150 | 81 | 0 | 0 | 0 | 0 | 69 |
-| `INTERIOR_DELETION` | 114 | 23 | 13 | 4 | 59 | 13 | 2 |
-| `TAIL_EXTENSION` | 22 | 3 | 3 | 2 | 4 | 7 | 3 |
+| `INTERIOR_DELETION` | 124 | 23 | 13 | 7 | 59 | 19 | 3 |
+| `INTERIOR_INSERTION` | 123 | 29 | 22 | 2 | 59 | 6 | 5 |
+| `TAIL_EXTENSION` | 26 | 3 | 3 | 2 | 4 | 10 | 4 |
 | `SHARED_SEGMENT_ONLY` | 9 | 5 | 0 | 2 | 2 | 0 | 0 |
 | `TAIL_TRUNCATION` | 8 | 2 | 1 | 0 | 4 | 0 | 1 |
 | `PADA_REORDER` | 2 | 2 | 0 | 0 | 0 | 0 | 0 |
+| `HEAD_TRUNCATION` | 2 | 0 | 0 | 0 | 0 | 1 | 1 |
 | `HEAD_EXTENSION` | 1 | 0 | 0 | 0 | 0 | 0 | 1 |
 | **Total** | **6,271** | 1,325 | 467 | 210 | 3,368 | 662 | 239 |
+
+These are the figures **after** the anusvāra correction of §14. Before it, 328 of the
+Yajurvedic cells above were wrong — `INTERIOR_INSERTION` for RV-YV read 93 where it is 6.
+Every row carries both values.
 
 Two deliberate restraints:
 
@@ -225,7 +230,8 @@ Two deliberate restraints:
 A verification fell out of this: re-deriving the identity level from the text agrees with
 the stored `match_level` on **every one of the 750 cross-Veda `EXACT_PARALLEL_OF` edges,
 1,203 `SANDHI_INSENSITIVE` and 689 `SCRIPT_FOLDED`**. The cross-Veda pipeline reproduces
-exactly.
+exactly. 2,191 of the 6,271 cross-Veda edges are an identity at some level and 4,080 are a
+substantive difference.
 
 ---
 
@@ -628,7 +634,108 @@ in `proofs/figure_check.json`. It caught three things, all of them mine:
   of the six. What is missing is a witness, and this agent did not go looking for one
   outside the repository.
 
-## 14. For the lead, in the order they matter
+---
+
+## 14. Adversarial preflight — the assumption I tested, and what it returned
+
+Mandatory before Wave 3. The campaign has five cases where an apparent source absence was
+our own addressing or modelling error, and one of them was mine.
+
+### The assumption
+
+**That the five Yajurvedic cells of the matrix are complete measurements.** Chosen over the
+other candidates because it carries the most weight in both directions at once: it sits
+underneath five of the 48 cells and underneath this report's headline claim that the layer
+"was already nearly complete" — and because §11 of this very report records a character
+misalignment across **780 of 1,975 Yajurvedic verses** that I wrote up as a defect and then
+did not propagate into a single figure. Finding the modelling error and then reporting as
+though it did not matter is exactly the pattern the campaign keeps catching. If there is a
+sixth case, the most likely place for it is a defect I found myself and under-used.
+
+The other candidates, and why not:
+
+| Candidate | Why it is not the one |
+|---|---|
+| `EXACT_PARALLEL_OF` conflation wider than 4 edges | already tested exhaustively: all 750 cross-Veda exact edges reproduce as identical at their stored `match_level`, and all 4 lemma-only edges are intra-RV. Nothing left to probe. |
+| The revealed 0.90 boundary is circular | a sharp critique and partly true — it is the incumbent generator's reach as much as a quality bar. But it only demotes 301 already-marginal candidates, and being conservative there is the safe direction. |
+| Concept overlap is registry-bound | agreed, and already stated as the finding in §8 rather than presented as a result. |
+
+### The test
+
+Correct the fold — collapse a run of the same private-use sentinel to one, since the
+anusvāra is one phoneme however many signs an edition writes it with — then re-measure in
+three parts. The middle part is what makes the test honest:
+
+- **A.** Re-score every existing cross-Veda edge.
+- **B.** **Re-calibrate the mispaired ceiling under the corrected fold.** If the correction
+  raises every score including unrelated pairs, the ceiling rises with it and nothing has
+  been gained. Scoring corrected pairs against the uncorrected ceiling is the trap here, and
+  it would have manufactured a discovery.
+- **C.** Re-run the exhaustive `FORMULA_HUB` + `VOCAB_EDGE` recall probe against the
+  re-calibrated ceiling.
+
+The correction is applied to all four corpora, not only the Yajurveda, so it cannot favour
+the pairs under test. It changes the comparison surface of **780 YV verses and 0 verses in
+the RV, SV and AV**, which independently confirms §11's scoping.
+
+### What I expected
+
+That the misalignment had been suppressing cross-script similarity, that the three YV pairs
+would gain parallels, and that their cells were understated.
+
+### What came back
+
+**The cell counts survive. The transformation table does not.**
+
+| Part | Result |
+|---|---|
+| A — existing edges | mean score change on YV pairs +0.0021 to +0.0032, max +0.019. **149 pairs become identity matches** that were not: AV-YV 19, RV-YV 107, SV-YV 23. |
+| B — re-calibrated ceiling | moves by **at most +0.0034** (RV-YV 0.4714 → 0.4748); four of six pairs do not move at all, and **0** of 120,000 mispaired draws reach the floor under either fold. |
+| C — recall re-run | **2 distinct new pairs** cross the floor, at 0.7204 (AV-YV) and 0.7211 (SV-YV). **0 are importable** by the revealed standard. |
+
+So the YV cells stay 7 / 162 / 41, 24 / 473 / 165 and 70 / 156 / 13. The assumption held —
+and part B is why that is a real negative rather than a threshold that failed to move with
+the scores: the correction sharpens precision instead of inflating everything, so the
+near-absence of new pairs is a measurement.
+
+### The figure that did move
+
+**328 of 6,271 cross-Veda transformation types were wrong** — every one on a Yajurvedic
+pair.
+
+| Pair | Types changed | of that pair's edges |
+|---|--:|--:|
+| RV-YV | 213 | **32.2%** |
+| SV-YV | 73 | 30.5% |
+| AV-YV | 42 | 20.0% |
+
+The largest single reclassification is `INTERIOR_INSERTION` → `WORD_DIVISION_ONLY`, 97
+edges: the "inserted" characters were the duplicated anusvāra sentinel, so 97 pairs I
+described as having extra material in one verse differ only in how the two editions divide
+words. RV-YV's `INTERIOR_INSERTION` cell read 93 and is **6**. Identity-at-some-level goes
+from 2,042 to 2,191.
+
+This is the same class of defect as the one I set out to test, one layer in: not a wrong
+count, a wrong *description*. A reader asking how a Yajurvedic verse differs from its
+Rigvedic parallel was being told something untrue about a third of them.
+
+### What changed in the artifact
+
+The 328 are corrected, and **both values are kept on every row** — `transformation`
+(corrected) beside `transformation_uncorrected` and a `changed_by_anusvara_correction`
+flag — because `surfaces.py` is not this agent's write surface and a lead reconciling this
+artifact against the graph needs to see the value the graph implies today. The 2 new pairs
+are staged with `found_only_under_anusvara_correction: true`. §4's table is the corrected
+one. Nothing else was restaged: the matrix, the direction verdicts, the calibration and the
+adversarial suite were unaffected and were left alone.
+
+This promotes one item below from a tidy-up to a prerequisite: **fix the fold in
+`surfaces.py` before the near-parallel stage is ever re-run**, or the corrected types and
+the pipeline will disagree about a third of the Yajurveda.
+
+---
+
+## 15. For the lead, in the order they matter
 
 1. **Fix the query, not the data, for CORPUS_D07.** Any surface reporting parallel coverage
    must use `-[r]-`. A directed query reports a false zero for all 1,975 Yajurvedic mantras

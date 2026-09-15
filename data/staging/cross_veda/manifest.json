@@ -3,8 +3,8 @@
  "agent": 10,
  "schema_version": "1.0",
  "algorithm_version": "crossveda-connection-completion-v1",
- "created_at": "2026-09-15T09:24:38.559467+00:00",
- "code_commit": "7c9d32e3ae13c1049061212da7c10e32df4e028b",
+ "created_at": "2026-09-15T10:27:26.123946+00:00",
+ "code_commit": "04b940354b2238e19662d2b5341851a7b2238f0e",
  "config_hash": "18e6fcb3a5e11c8771332915b0425530f061206840f845969aacc96ecfde756f",
  "source_snapshot_ids": [
   "VEDAGRAPH_CANONICAL_GRAPH_2026_09_15",
@@ -15,9 +15,9 @@
  "files": [
   {
    "path": "rows.jsonl",
-   "sha256": "83bb646ba7d43dfce32a7220dfadb919dc9596aa6736dced6c4fc61887aebb90",
+   "sha256": "4b40f9371be63865fc5a20a6d3c9ddc06d1bbe20489ce9ad6746ff6fff77b3bb",
    "rows": 7021,
-   "bytes": 32082378
+   "bytes": 33663773
   },
   {
    "path": "sources.jsonl",
@@ -27,9 +27,9 @@
   },
   {
    "path": "rejected.jsonl",
-   "sha256": "b869123fc824467e68ff88a5d789b1c240934bd64cf8e2039ccc967427ba8f2b",
+   "sha256": "042dc3ba380d201b1971c3ead1d00a839d4f6cd5804417fdf431dc5f754d5dc7",
    "rows": 13189,
-   "bytes": 17023467
+   "bytes": 17024153
   },
   {
    "path": "proofs/adversarial.json",
@@ -63,15 +63,15 @@
   },
   {
    "path": "proofs/discovered_parallels.jsonl",
-   "sha256": "6491051ff9af06ec0bace2d8abad923fa4ef99f16d5691d9015357272d7ad278",
-   "rows": 305,
-   "bytes": 134940
+   "sha256": "0b463b1361fc26a07b1a026339f0d300e4a23fa56bbb10125b2558b1d0d8f5c5",
+   "rows": 307,
+   "bytes": 135882
   },
   {
    "path": "proofs/figure_check.json",
-   "sha256": "7cdc24c41e6372886dbfb332716ec3ac65990f17dd84bf2042357cda66cf5bbd",
-   "rows": 672,
-   "bytes": 12687
+   "sha256": "344cd77e597952a4aeb57f5988721ff0eac1b0b93f1b4aab8b635417b0a179a0",
+   "rows": 768,
+   "bytes": 14330
   },
   {
    "path": "proofs/generator_claim.json",
@@ -84,6 +84,24 @@
    "sha256": "52fbecf9f79843cc8dabab1cabdcd9640b1471e999b996d46be3457d389871e8",
    "rows": 530,
    "bytes": 34438
+  },
+  {
+   "path": "proofs/preflight.json",
+   "sha256": "bb376780420fc1c37c750aa69168cc6176cfc3cc598bf624c7c9f4d258bae150",
+   "rows": 132,
+   "bytes": 2615
+  },
+  {
+   "path": "proofs/preflight_net_new.jsonl",
+   "sha256": "89dfc7e7998ca44d2d44dd717405d7eeea51d60c7c9aad8b6f38d4a30c499597",
+   "rows": 3,
+   "bytes": 1347
+  },
+  {
+   "path": "proofs/preflight_retype_summary.json",
+   "sha256": "54ca6048b6933a4f9abbaabbf1b83db54775329cc40ae68f2399413ca6cdb601",
+   "rows": 28,
+   "bytes": 1119
   },
   {
    "path": "proofs/recall_diagnosis.json",
@@ -99,9 +117,9 @@
   },
   {
    "path": "proofs/transformations.jsonl",
-   "sha256": "e0e1a5ce090b5f063588ffc1fb3cd81ea174d987590a7a542a9d74bc4f16fc76",
+   "sha256": "f7bee4a05266c0aa8187c15bdc88f1fe09325cc6b393ed50ca58e2a1f46d0f41",
    "rows": 6596,
-   "bytes": 4795277
+   "bytes": 9572735
   }
  ],
  "counts": {
@@ -131,6 +149,7 @@
   "The near-parallel layer's revealed operating point is not its stated floor. The stated floor is 0.72; re-deriving a comparator on the 3,049 near parallels it accepted gives median 0.9767 and 5th percentile 0.9026. Grading new candidates against 0.72 would admit material four times weaker than anything it kept.",
   "Containment is corpus-size arithmetic. The Samaveda's 90.1% parallel coverage, the figure that makes the RV/SV direction look self-evident, is 5.72x explained by 1,844 verses against 10,552; the excess over size is 1.17x. Across all six pairs the excess runs 0.99x to 1.17x, so containment establishes no direction anywhere.",
   "Concept overlap as currently modelled cannot discriminate. ABOUT_CONCEPT reaches only 91 of 229 Concept nodes and every Veda touches nearly all 91, so the pairwise Jaccard runs 0.9451 to 1.0. The dimension is measured and positive for all six pairs and tells a reader nothing about which pairs are more connected.",
+  "328 of 6,271 cross-Veda transformation types were wrong, every one on a Yajurvedic pair -- RV-YV 213 (32.2% of that pair), SV-YV 73, AV-YV 42. Found by the adversarial preflight, which propagated the anusvara misalignment this agent had already reported and then left out of every figure. 97 edges described as an interior insertion differ only in word division; RV-YV's INTERIOR_INSERTION cell read 93 and is 6. Corrected here, with both values kept on every row.",
   "A probe of this agent's own, retracted: fold_check.py reported that the comparison fold deletes vocalic r, on the same signature as the known AV SEARCH_DERIVATIVE corruption. It does not. Devanagari vowel sign, Latin precomposed and Latin decomposed all fold to U+E000 and agree across scripts. The deletion was the console dropping an unprintable private-use character. 88% of every Veda's folded surface contains such a character, so any probe that prints one will show the same false defect."
  ],
  "assessed_population": {
@@ -170,10 +189,24 @@
   }
  },
  "verified_zero_note": "zero at the mantra unit, deliberately. The matrix contains no VERIFIED_ZERO cell either: all 31 measured cells are positive. A mantra with no connection is recorded as assessed-under-three-named-channels, because promoting that to a verified zero would be turning NOT ASSESSED into VERIFIED ZERO, which the contract forbids.",
+ "adversarial_preflight": {
+  "assumption_tested": "that the five Yajurvedic matrix cells are complete measurements, despite a character misalignment this agent itself found across 780 of 1,975 Yajurvedic verses. Chosen because it carries the most downstream weight: it sits underneath five of the 48 cells and underneath the report's headline claim that the layer was already nearly complete, and because finding a modelling error and then not propagating it is the exact pattern this campaign has now caught five times.",
+  "test": "collapse a run of the same private-use sentinel to one, applied symmetrically to all four corpora; then (A) re-score every existing cross-Veda edge, (B) RE-CALIBRATE the mispaired ceiling under the corrected fold so that a global inflation could not pass as a gain, and (C) re-run the exhaustive FORMULA_HUB + VOCAB_EDGE recall probe against the re-calibrated ceiling.",
+  "expected": "if the misalignment suppressed cross-script similarity, the three YV pairs should gain parallels and their cells should be revealed as understated.",
+  "returned": {
+   "surfaces_changed": "780 of 1,975 YV verses; 0 in RV, SV and AV",
+   "matrix_cells": "UNCHANGED. 2 distinct new pairs cross the floor, at 0.7204 and 0.7211, and neither is importable by the revealed standard.",
+   "ceiling_moved_by_at_most": 0.0034,
+   "transformation_types_changed": 328,
+   "identity_edges": "2042 -> 2191"
+  },
+  "verdict": "The cell counts SURVIVE and the transformation table DOES NOT. 328 of 6,271 cross-Veda transformation types were wrong, every one on a Yajurvedic pair -- AV-YV 42, RV-YV 213 (32% of that pair), SV-YV 73. 97 edges described as an interior insertion differ only in word division; RV-YV's INTERIOR_INSERTION cell was 93 and is 6. Those 328 are corrected here and both values are kept on every row. The completeness claim for the YV cells holds; the description of how those YV verses differ did not.",
+  "note": "the ceiling test is what makes this trustworthy in either direction: the correction moves the mispaired ceiling by at most +0.0034, so it sharpens precision rather than raising every score, and the near-total absence of new pairs is a real negative rather than a threshold that failed to move with it."
+ },
  "qa": {
   "sampled": 11,
   "sample_method": "adversarial",
-  "defects_found": 8,
+  "defects_found": 9,
   "human_reviewed": 0,
   "adversarial_verdicts": {
    "REJECTED": 3,
@@ -181,6 +214,7 @@
    "CONTAINED": 6
   },
   "adversarial_note": "11 cases: 7 generic and the 4 named referent traps. Two generic cases came back EXPOSED rather than REJECTED and both found the same thing -- unlinked pairs above the floor, i.e. a recall extension rather than a false positive. 305 such pairs exist; only 4 clear the layer's revealed boundary and are importable, and the other 301 are staged as candidates.",
+  "preflight": "one load-bearing assumption named and tested; the matrix counts survived it and 328 transformation types did not. See adversarial_preflight above and proofs/preflight.json.",
   "not_done": "no human reviewed any pair. Section 22 is not satisfied: 0 of 6,596 transformation types and 0 of 305 discovered pairs were checked by a person."
  }
 }

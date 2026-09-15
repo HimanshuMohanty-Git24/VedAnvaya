@@ -11,7 +11,7 @@ both numbers appear and the measurement that produced this one is named.
   graph**, which stands unchanged at 108,779 nodes and 265,295 relationships.
 - Write surface: `data/staging/formula/` and this file. No existing repo file was modified.
 - Validator: `scripts/validate_staging_artifact.py data/staging/formula --graph` → **PASS**,
-  every check at 100% evaluation coverage, 22 files checksummed.
+  every check at 100% evaluation coverage, 24 files checksummed.
 
 ---
 
@@ -112,7 +112,13 @@ So the ceiling is computed first, from script **and from the measured accent-not
 |---|---|
 | different script | `SCRIPT_FOLDED` |
 | same script, different accent-notation class | `ACCENT_INSENSITIVE` |
-| same script, same accent-notation class | `SOURCE_EXACT` |
+| same script and notation, **both layers print their own address inline and the pair's whole `UNICODE_NORMALIZED` difference is digits** | `PUNCTUATION_NORMALIZED` |
+| otherwise | `SOURCE_EXACT` |
+
+The third condition was **not** in the first version of this layer. It was added by the
+adversarial preflight in §13.5, which found 134 within-recension pairs typed `VARIANT` whose
+entire difference is their own printed verse number. Read §13.5 before trusting any
+`EXACT`-versus-`VARIANT` figure here.
 
 The notation classes are derived from the marks actually placed, not declared:
 
@@ -125,7 +131,8 @@ The notation classes are derived from the marks actually placed, not declared:
 
 | ceiling | pairs |
 |---|--:|
-| `SOURCE_EXACT` (within recension) | 1,542 |
+| `SOURCE_EXACT` (within recension) | 1,409 |
+| `PUNCTUATION_NORMALIZED` (within recension, address printed inline) | 139 |
 | `SCRIPT_FOLDED` (cross-script) | 3,023 |
 | `ACCENT_INSENSITIVE` (same script, two notations) | 1,564 |
 
@@ -140,7 +147,7 @@ exactly** — and **667 are within-recension**.
 | level reached | cross-recension | within-recension |
 |---|--:|--:|
 | `SOURCE_EXACT` | 0 | 451 |
-| `PUNCTUATION_NORMALIZED` | 0 | 158 |
+| `PUNCTUATION_NORMALIZED` | 0 | 158 — of which 134 are an address difference, §13.5 |
 | `ACCENT_INSENSITIVE` | 150 | 23 |
 | `SCRIPT_FOLDED` | 600 | 4 |
 | `SANDHI_INSENSITIVE` | 788 | 31 |
@@ -358,7 +365,10 @@ run retracts none of them.
 
 ---
 
-## 7. Transformation typology — 6,129 rows, 0 untyped
+## 7. Transformation typology — 6,135 rows, 0 untyped
+
+> Revised by §13.5. The counts below are post-fix: 134 rows moved from `EDITORIAL_APPARATUS`
+> to `NONE_AT_COMPARISON_CEILING` once the third ceiling axis was added.
 
 `GAP-CROSS_VEDA-002` recorded 0 of 6,527 parallel edges carrying a transformation type. The
 vocabulary was declared before any row was produced, 11 closed members, and every row carries
@@ -369,9 +379,9 @@ its `comparison_ceiling` beside its type.
 | IDENTITY | cross | `WORD_DIVISION` | 788 |
 | IDENTITY | cross | `ORTHOGRAPHIC_VARIATION` | 471 |
 | IDENTITY | cross | `NONE_AT_COMPARISON_CEILING` | 279 |
-| IDENTITY | within | `NONE_AT_COMPARISON_CEILING` | 451 |
-| IDENTITY | within | `EDITORIAL_APPARATUS` | 158 |
+| IDENTITY | within | `NONE_AT_COMPARISON_CEILING` | 591 |
 | IDENTITY | within | `WORD_DIVISION` | 31 |
+| IDENTITY | within | `EDITORIAL_APPARATUS` | 24 |
 | IDENTITY | within | `ACCENT_PLACEMENT` | 23 |
 | IDENTITY | within | `ORTHOGRAPHIC_VARIATION` | 4 |
 | NEAR | cross | `SUBSTITUTION` | 1,778 |
@@ -677,30 +687,181 @@ which.
 
 ---
 
-## 14. Five defects in my own work, and what each would have shipped
+## 13.5 Adversarial preflight — the ceiling was missing an axis, and 134 rows were mistyped
+
+`proofs/adversarial_preflight_comparison_ceiling.json`. Requested by the coordinator before
+Wave 3, and it found a sixth self-inflicted case.
+
+**The assumption under test: the comparison ceiling.** Everything in §2, §3, §5 and §7 is
+defined relative to it, so if it is computed wrong for one layer combination, edges move
+between `EXACT_PARALLEL` and `VARIANT` wholesale. The 150-pair accent finding in §4 was a
+result *about pairs*, not a test *of the function*. The function makes two claims that had
+never been tested.
+
+**Test A — is the ceiling ever too low?** Recompute it for all 2,211 identity rows and assert
+`level ≥ ceiling` and that the stored label agrees. Expected 0. **Returned 0. Holds.**
+
+**Test B — is the predicted ceiling actually reachable?** Per veda-pair, over every identity
+row. Expected: reached at least once everywhere. It is — but the *rates* are the finding:
+
+| veda pair | ceiling | reached |
+|---|---|--:|
+| RV-RV | `SOURCE_EXACT` | **252 / 252** |
+| SV-SV | `SOURCE_EXACT` | 176 / 204 |
+| AV-AV | `SOURCE_EXACT` | **26 / 137** |
+| YV-YV | `SOURCE_EXACT` | **3 / 80** |
+
+3-in-80 is not a fact about the Yajurveda. It is a fact about its text field.
+
+**The defect.** The Atharvavedic and Yajurvedic layers **print each verse's own number inside
+the stored text**, so two verses at different addresses can never be byte-identical however
+identical their text. `AVS 2.32.3 ~ AVS 5.23.10` differ in exactly `'3'` → `'10'`. I had
+typed 134 such pairs `VARIANT` / `EDITORIAL_APPARATUS` — a claim that two editions transmit
+the verse differently, where the entire difference is the citation the row already carries in
+two other fields.
+
+This is the campaign's own pattern: an apparent difference that is our modelling.
+`corpus-audit.md` §10 already records that `text_original` keeps `||18||` and `{11}` inline
+*by design*. I read that and still let the numeral drive a claim.
+
+**The third axis, derived rather than asserted.** Measured over the whole corpus by asking
+whether the trailing numeral in each stored text equals that mantra's own verse number:
+
+| Veda | self-addressing | prints its address inline |
+|---|--:|:--:|
+| YV | 1,964 / 1,975 (**99.44%**) | yes |
+| AV | 5,513 / 5,839 (**94.42%**) | yes |
+| RV | 58 / 10,552 (0.55%) | no |
+| SV | 17 / 1,844 (0.92%) | no |
+
+The Rigvedic 643 texts containing any digit are GRETIL's in-word pluti marks (`nya3trinam`),
+not addresses — which is why RV-RV reaches `SOURCE_EXACT` 252/252 and is the control.
+
+> **ceiling** = `SCRIPT_FOLDED` if the scripts differ; else `ACCENT_INSENSITIVE` if the
+> accent-notation classes differ; else `PUNCTUATION_NORMALIZED` if both layers print their
+> address inline **and** the pair's entire `UNICODE_NORMALIZED` difference is digits; else
+> `SOURCE_EXACT`.
+
+**And the probe itself had three bugs, each caught by an assertion rather than by reading:**
+
+1. The first digit-only test **ignored whitespace**, which admitted 12 `WORD_DIVISION` pairs
+   whose real difference is a space. Whitespace *is* word division. Strict: 139, not 151.
+2. My first difference class **lumped digits with dandas**, which would have moved 18
+   Samavedic rows containing no digit at all — they differ in ASCII `|` against Devanagari
+   `।` (9) or an inserted space (9). Genuine apparatus; they stay `VARIANT`. (That the
+   Samavedic source encodes the verse break two ways is itself a small new finding.)
+3. The 6 sub-threshold *svāhā* rows carried an **asserted** `match_level` of `SOURCE_EXACT`
+   that I hard-coded in the builder instead of measuring. **5 of 6 were wrong** and are
+   `PUNCTUATION_NORMALIZED`.
+
+**What moved.** 134 rows `VARIANT` → `EXACT_PARALLEL`; 24 correctly left as
+`EDITORIAL_APPARATUS` (6 are address *plus* a real mark, 18 are Samavedic apparatus with no
+numeral); 5 sub-threshold match levels corrected.
+
+| claim | before | after |
+|---|--:|--:|
+| EXACT_PARALLEL | 736 | **870** (279 cross, 591 within) |
+| VARIANT | 1,475 | **1,341** (1,259 cross, 82 within) |
+| NEAR_PARALLEL | 3,924 | 3,924 |
+
+**What did not move**, and the confinement is the reason the fix is safe: every
+cross-recension figure (a cross ceiling is `ACCENT_INSENSITIVE` or `SCRIPT_FOLDED`, both
+below `PUNCTUATION_NORMALIZED`, so an inline address cannot bind it), all 875 within-recension
+near parallels, the 967 within-recension identical mantras, the 415 new identity pairs, the 23
+accent variants, the 475 orthographic and 819 word-division variants, the 4,825 nesting types,
+the 6,148 sharing edges, the 22,686 `match_level` backfills, and every per-Veda coverage
+figure in §13. The blast radius was asserted before anything was touched, and the assertion
+is what caught bugs 1 and 3.
+
+**Invariants after the fix**, all re-run: 0 rows identical above their ceiling; 0
+`EXACT_PARALLEL` rows not exactly *at* their ceiling; 0 of 23 `ACCENT_PLACEMENT` rows whose
+difference is anything but a tone mark.
+
+**Verdict: the assumption partly failed and is now fixed.** The function was right on the two
+axes it modelled and blind to a third. Test A held outright; Test B held on reachability and
+its *rates* are what exposed the missing axis — which is the argument for testing a function
+rather than re-reading its outputs.
+
+*On the coordinator's correction:* the 0.8413 all-Veda mispaired maximum is cited nowhere in
+this domain and `vedsearch.similarity()` was not used. The blend here is `crossveda`'s own
+`0.5·char4gram_jaccard + 0.5·lcs_ratio`, and its 0.72 floor was re-measured on this domain's
+own within-recension population (§6.1).
+
+---
+
+### 13.6 The gate resolves `rows.jsonl`; these files resolve the rest
+
+`proofs/sidecar_keys_resolve_against_the_live_store.json`. Commit `c39a34f` widened the
+staging gate to an `ENTITY` grain because two agents had moved their real output into a
+sidecar and filled `rows.jsonl` with passage-grained proxies, and the gate then reported full
+coverage over rows that were not the domain's subject. That grain matches on `entity_key`.
+Measured: `:Formula` has **0 of 4,825** nodes with an `entity_key` and `:FormulaFamily` **0 of
+720** — their identities are `formula_id` and `family_id` — so neither the `PASSAGE` grain nor
+the new `ENTITY` grain can resolve this domain's sidecar subjects.
+
+`rows.jsonl` here is genuinely passage-grained and is not a proxy: it reports per-mantra
+formula and parallel state, which is a real subject. A *pair* cannot be a `rows.jsonl` row at
+all, because `row.no_duplicate_key_source` forbids two rows sharing a `canonical_key`. So
+rather than let the sidecars pass unchecked behind a clean per-mantra result, every sidecar key
+is resolved against the live store here:
+
+| file | key | resolves |
+|---|---|--:|
+| `formula_nesting.jsonl` | `formula_id` → `:Formula` | 4,825 / 4,825 |
+| `formula_nesting.jsonl` | `family_id` → `:FormulaFamily` | 720 / 720 |
+| `formula_families.jsonl` | `family_id` → `:FormulaFamily` | 720 / 720 |
+| `relations.jsonl` | subject + object → `:Passage` | 7,213 / 7,213 |
+| `uses_formula_match_level.jsonl` | `passage_key` → `:Passage` | 10,574 / 10,574 |
+| `uses_formula_match_level.jsonl` | `formula_id` → `:Formula` | 4,825 / 4,825 |
+| `shares_formula_with.jsonl` | `a` + `b` → `:Passage` | 4,491 / 4,491 |
+| `shares_formula_with.jsonl` | `shared_formula_ids` → `:Formula` | 3,663 / 3,663 |
+| `uses_formula_match_level.jsonl` | every row targets a **live** `USES_FORMULA` edge | 22,686 / 22,686 |
+
+Zero unresolved. The last row is the one that matters most: a `match_level` backfill that named
+a `(passage, formula)` pair with no edge behind it would be a write with nowhere to land, and
+that is the failure `load_enrichment_neo4j.py` exists to catch after the fact.
+
+---
+
+## 14. Nine defects in my own work, and what each would have shipped
 
 Recorded because each was found by a check rather than by inspection, and three of them would
 have shipped a confident wrong number.
 
-1. **1,475 `VARIANT` rows quoted the surface on which the two texts *agree* and nothing on
+1. **The comparison ceiling was missing a third axis** — 134 within-recension pairs whose
+   entire difference is their own printed verse number were typed `VARIANT`. §13.5.
+2. **The first digit-only probe ignored whitespace**, which would have moved 12
+   `WORD_DIVISION` pairs whose real difference is a space.
+3. **The first difference class lumped digits with dandas**, which would have moved 18
+   Samavedic rows containing no digit at all.
+4. **1,475 `VARIANT` rows quoted the surface on which the two texts *agree* and nothing on
    which they differ** — a variant claim proving its own negation. Every one now carries
    `difference_spans` with the differing codepoints named, computed on the surface the pair
    *fails* at, plus both quotes at that surface. 0 `VARIANT` rows lack one.
-2. **`claim_confidence` read `NOT_APPLICABLE` on 4,103 rows** whose only delta is a
+5. **`claim_confidence` read `NOT_APPLICABLE` on 4,103 rows** whose only delta is a
    `SHARES_FORMULA_WITH` edge — "this row makes no claim", about a row that makes one.
    Corrected; 0 staged rows now say `NOT_APPLICABLE`.
-3. **The first transformation typology special-cased accent notation instead of deriving a
+6. **The first transformation typology special-cased accent notation instead of deriving a
    ceiling**, which labelled 129 cross-*script* identities `ACCENT_NOTATION_INCOMPARABLE` —
    a statement about accent for pairs whose difference is script. Rebuilt around the ceiling.
-4. **The first false-duplicate test compared `structural_path`, which is null for the
+7. **The first false-duplicate test compared `structural_path`, which is null for the
    Rigveda**, so all 252 RV pairs returned `SAME_ADDRESS_INGESTION_DUPLICATE` while the
    printed examples showed different maṇḍalas. A null-equals-null comparison is not a match.
-5. **The first floor calibration read the random-pair maximum as a null maximum** and
+8. **The first floor calibration read the random-pair maximum as a null maximum** and
    concluded the imported 0.72 floor was unsafe. Reading the tail showed the sample was
    contaminated by real signal. Had the number been accepted, a threshold would have been
    invented to fit it.
 
-`proofs/report_figure_check.json` re-checks all 44 load-bearing figures in this document
+9. **The 6 sub-threshold *svāhā* rows carried a hard-coded `match_level`** of `SOURCE_EXACT`
+   that I asserted in the builder instead of measuring. **5 of the 6 were wrong** and are
+   `PUNCTUATION_NORMALIZED`. Caught by the same blast-radius assertion as 2 and 3.
+
+Three of these nine were found only because the coordinator mandated an adversarial preflight,
+and three more only because that fix was written with an assertion in front of it rather than
+applied directly. The pattern is that reading rows found the cosmetic ones and asserting an
+invariant found the substantive ones.
+
+`proofs/report_figure_check.json` re-checks all 52 load-bearing figures in this document
 against the artifacts they describe, because every table here reads from a file and a number
 typed into a sentence is the only one nothing else can catch. 44 checks, 0 failures.
 

@@ -1,55 +1,49 @@
 {
  "report": "docs/reports/data-completeness/cross-veda.md",
- "figures_checked": 104,
+ "figures_checked": 116,
  "failed": [],
  "note": "Every table cell in the report is read out of an artifact; the figures that needed checking are the ones a writer added up. The first run of this check found exactly that: all 14 transformation rows and all 6 pair columns of every row were correct, and the two hand-added grand-total cells were wrong -- 15 transposed between the RV-SV and SV-YV columns -- along with an invented cross-Veda pair product. The totals row is now parsed out of the report rather than restated here, because restating it is how a wrong table passes its own check.",
  "checks": [
   {
    "figure": "transformation types listed",
-   "claimed": 14,
-   "recomputed": 14,
+   "claimed": 15,
+   "recomputed": 15,
    "ok": true
   },
   {
    "figure": "SINGLE_CONTIGUOUS_SUBSTITUTION total",
-   "claimed": 1390,
-   "recomputed": 1390,
-   "ok": true
-  },
-  {
-   "figure": "SCATTERED_SUBSTITUTIONS total",
-   "claimed": 1295,
-   "recomputed": 1295,
+   "claimed": 1493,
+   "recomputed": 1493,
    "ok": true
   },
   {
    "figure": "WORD_DIVISION_ONLY total",
-   "claimed": 1203,
-   "recomputed": 1203,
+   "claimed": 1321,
+   "recomputed": 1321,
+   "ok": true
+  },
+  {
+   "figure": "SCATTERED_SUBSTITUTIONS total",
+   "claimed": 1196,
+   "recomputed": 1196,
    "ok": true
   },
   {
    "figure": "TWO_CONTIGUOUS_SUBSTITUTIONS total",
-   "claimed": 1143,
-   "recomputed": 1143,
+   "claimed": 1096,
+   "recomputed": 1096,
    "ok": true
   },
   {
    "figure": "SCRIPT_CONVENTION_ONLY total",
-   "claimed": 471,
-   "recomputed": 471,
-   "ok": true
-  },
-  {
-   "figure": "INTERIOR_INSERTION total",
-   "claimed": 245,
-   "recomputed": 245,
+   "claimed": 487,
+   "recomputed": 487,
    "ok": true
   },
   {
    "figure": "NO_CHANGE_OBSERVABLE_AT_REACHABLE_ total",
-   "claimed": 218,
-   "recomputed": 218,
+   "claimed": 233,
+   "recomputed": 233,
    "ok": true
   },
   {
@@ -60,14 +54,20 @@
   },
   {
    "figure": "INTERIOR_DELETION total",
-   "claimed": 114,
-   "recomputed": 114,
+   "claimed": 124,
+   "recomputed": 124,
+   "ok": true
+  },
+  {
+   "figure": "INTERIOR_INSERTION total",
+   "claimed": 123,
+   "recomputed": 123,
    "ok": true
   },
   {
    "figure": "TAIL_EXTENSION total",
-   "claimed": 22,
-   "recomputed": 22,
+   "claimed": 26,
+   "recomputed": 26,
    "ok": true
   },
   {
@@ -84,6 +84,12 @@
   },
   {
    "figure": "PADA_REORDER total",
+   "claimed": 2,
+   "recomputed": 2,
+   "ok": true
+  },
+  {
+   "figure": "HEAD_TRUNCATION total",
    "claimed": 2,
    "recomputed": 2,
    "ok": true
@@ -174,14 +180,14 @@
   },
   {
    "figure": "identity at some level",
-   "claimed": 2042,
-   "recomputed": 2042,
+   "claimed": 2191,
+   "recomputed": 2191,
    "ok": true
   },
   {
    "figure": "substantive difference",
-   "claimed": 4229,
-   "recomputed": 4229,
+   "claimed": 4080,
+   "recomputed": 4080,
    "ok": true
   },
   {
@@ -200,6 +206,78 @@
    "figure": "1538 already typed via match_level",
    "claimed": 1538,
    "recomputed": 1538,
+   "ok": true
+  },
+  {
+   "figure": "transformation types changed",
+   "claimed": 328,
+   "recomputed": 328,
+   "ok": true
+  },
+  {
+   "figure": "changed per pair",
+   "claimed": {
+    "AV-YV": 42,
+    "RV-YV": 213,
+    "SV-YV": 73
+   },
+   "recomputed": {
+    "SV-YV": 73,
+    "RV-YV": 213,
+    "AV-YV": 42
+   },
+   "ok": true
+  },
+  {
+   "figure": "INTERIOR_INSERTION -> WORD_DIVISION_ONLY",
+   "claimed": 97,
+   "recomputed": 97,
+   "ok": true
+  },
+  {
+   "figure": "identity old -> new",
+   "claimed": [
+    2042,
+    2191
+   ],
+   "recomputed": [
+    2042,
+    2191
+   ],
+   "ok": true
+  },
+  {
+   "figure": "surfaces changed by correction",
+   "claimed": {
+    "RV": 0,
+    "SV": 0,
+    "YV": 780,
+    "AV": 0
+   },
+   "recomputed": {
+    "RV": 0,
+    "SV": 0,
+    "YV": 780,
+    "AV": 0
+   },
+   "ok": true
+  },
+  {
+   "figure": "max ceiling movement",
+   "claimed": 0.0034,
+   "recomputed": 0.0034,
+   "ok": true
+  },
+  {
+   "figure": "net new pairs, all six",
+   "claimed": 3,
+   "recomputed": 3,
+   "ok": true
+  },
+  {
+   "figure": "net new importable",
+   "claimed": 0,
+   "recomputed": 0,
    "ok": true
   },
   {
@@ -600,6 +678,24 @@
     "EXPOSED": 2,
     "CONTAINED": 6
    },
+   "ok": true
+  },
+  {
+   "figure": "qa.defects_found matches the list",
+   "claimed": 9,
+   "recomputed": 9,
+   "ok": true
+  },
+  {
+   "figure": "qa.sampled matches the adversarial artifact",
+   "claimed": 11,
+   "recomputed": 11,
+   "ok": true
+  },
+  {
+   "figure": "files[] covers every file on disk",
+   "claimed": true,
+   "recomputed": true,
    "ok": true
   },
   {

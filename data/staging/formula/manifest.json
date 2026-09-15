@@ -12,15 +12,15 @@
   "files": [
     {
       "path": "rows.jsonl",
-      "sha256": "95e1464d6a2f7ef8a9a0997465552117d5b7008eb6bc4cd84fb9998b93603b08",
+      "sha256": "b4af2e7aafc38f894a0ce429a94ba1aeacc9abb9a817bf8090a08c5f2a8628ae",
       "rows": 5636,
-      "bytes": 11457276
+      "bytes": 11459926
     },
     {
       "path": "relations.jsonl",
-      "sha256": "9a402ce46bd9ceab0bd2ba810c590a35999570e00369803e795450b41f8009e1",
+      "sha256": "4386a9f5fc3c3486669ec1ab2861bb7ceb6aefa52e5cd17cc211e37478fab2e0",
       "rows": 6135,
-      "bytes": 8595143
+      "bytes": 8676073
     },
     {
       "path": "formula_nesting.jsonl",
@@ -77,6 +77,12 @@
       "bytes": 7418
     },
     {
+      "path": "proofs/adversarial_preflight_comparison_ceiling.json",
+      "sha256": "0d95911e6807cdf919823fd68e40c6f8b3f1f11418e4124c745193feb501e61a",
+      "rows": 1,
+      "bytes": 18035
+    },
+    {
       "path": "proofs/boilerplate_and_short_phrase_test.json",
       "sha256": "e79bb82483d46f5ca922edc694e943abd98b2ab96b32473073b0e9352b66e229",
       "rows": 1,
@@ -108,9 +114,9 @@
     },
     {
       "path": "proofs/report_figure_check.json",
-      "sha256": "657bac6a8a316ccb00ccff7fa523bc6bea3f4fe2f2e5015fc684445a83b381bb",
+      "sha256": "3c7fbb8e8b073dc5523044ab45843bb6a2665308ffe4655d85ea5b7ff7b46a6b",
       "rows": 1,
-      "bytes": 6212
+      "bytes": 7523
     },
     {
       "path": "proofs/search_derivative_hazard.json",
@@ -123,6 +129,12 @@
       "sha256": "713b857499b257c00ce3cd2f305491c588bb4a165ab6d60f2fe101fc255731f6",
       "rows": 1,
       "bytes": 3602
+    },
+    {
+      "path": "proofs/sidecar_keys_resolve_against_the_live_store.json",
+      "sha256": "a851f95ecd1429e47ca998d423655d122a28b99693b1f299b6f59d90e8292588",
+      "rows": 1,
+      "bytes": 2437
     },
     {
       "path": "proofs/threshold_recall_cost.json",
@@ -184,9 +196,9 @@
         "CROSS_RECENSION|EXACT_PARALLEL": 279,
         "CROSS_RECENSION|NEAR_PARALLEL": 3049,
         "CROSS_RECENSION|VARIANT": 1259,
-        "WITHIN_RECENSION|EXACT_PARALLEL": 457,
+        "WITHIN_RECENSION|EXACT_PARALLEL": 591,
         "WITHIN_RECENSION|NEAR_PARALLEL": 875,
-        "WITHIN_RECENSION|VARIANT": 216
+        "WITHIN_RECENSION|VARIANT": 82
       },
       "four_claims_kept_four_claims": "EXACT_PARALLEL means identical at the pair's comparison ceiling. VARIANT means the same verse reached only below that ceiling, and the transformation_type says which step was needed. NEAR_PARALLEL means identical at no level with a similarity at or above 0.72. A FORMULA_FAMILY is a set of formulas related by containment and is not a passage relation at all -- it lives in formula_families.jsonl. No row carries two of these."
     },
@@ -293,8 +305,12 @@
     "sampled": 0,
     "sample_method": "adversarial",
     "sample_note": "nothing was sampled because nothing needed to be: the identity layer is exact string equality over an enumerated population and every candidate-level rejection is written out. What WAS read by hand, and is the QA of record: the 21 same-notation accent variants (all 21 printed beside their marks in proofs/accent_only_false_family_test.json), the 6 weakest accepted near parallels at 0.720-0.721, the 16 top-of-sample 'random' pairs that disproved the naive null calibration, the 6 sub-threshold svaha identities, and the codepoint-level diff of the 475 orthographic variants.",
-    "defects_found": 5,
+    "defects_found": 9,
     "defects": [
+      "THE COMPARISON CEILING WAS MISSING A THIRD AXIS. The Atharvavedic and Yajurvedic layers print each verse's own number inside the stored text (measured: 5,513 of 5,839 AV and 1,964 of 1,975 YV mantras), so two verses at different addresses can never be byte-identical however identical their text. 134 within-recension pairs whose ENTIRE difference is their own citation were typed VARIANT / EDITORIAL_APPARATUS -- a claim that two editions transmit the verse differently, where there is no difference of text at all. Found by the coordinator's mandated adversarial preflight, not by reading the rows. Ceiling now has a third condition and 134 rows are EXACT_PARALLEL. See proofs/adversarial_preflight_comparison_ceiling.json.",
+      "the first digit-only probe for that fix IGNORED WHITESPACE, which would have moved 12 WORD_DIVISION pairs whose real difference is a space. Whitespace is word division. Caught by a blast-radius assertion written before anything was changed.",
+      "the first difference class for that fix lumped digits with dandas, which would have moved 18 Samavedic rows containing no digit at all -- they differ in ASCII '|' against Devanagari danda (9) or an inserted space (9). Genuine apparatus; left as VARIANT.",
+      "the 6 sub-threshold svaha rows carried an ASSERTED match_level of SOURCE_EXACT that was hard-coded in the builder instead of measured. 5 of 6 were wrong and are PUNCTUATION_NORMALIZED. Also caught by that assertion.",
       "my first transformation typology special-cased accent notation instead of deriving a comparison ceiling, which labelled 129 cross-script SCRIPT_FOLDED identities ACCENT_NOTATION_INCOMPARABLE -- a statement about accent for a pair whose difference is script. Rebuilt around the ceiling; 0 rows now carry a type their ceiling contradicts.",
       "my first false-duplicate test compared structural_path, which is null for the Rigveda, so all 252 RV pairs came back SAME_ADDRESS_INGESTION_DUPLICATE while the printed examples plainly showed different mandalas. A null-equals-null comparison is not a match. Rebuilt on canonical_citation plus parent and sequence; the answer is 0 duplicates.",
       "1,475 VARIANT rows initially shipped with evidence quoting the surface on which the two texts AGREE and nothing quoting where they differ -- a variant claim proving its own negation. Every one now carries difference_spans with the differing codepoints named, computed on the surface the pair FAILS at, and 0 VARIANT rows lack one.",
@@ -320,6 +336,30 @@
       "collapsing word-division variants. 819 pairs agree only once word boundaries are dropped; the Samaveda writes continuous sandhi and that is data.",
       "merging any textual variant into its neighbour. Every VARIANT row keeps both texts, the level reached, the ceiling, and the differing codepoints or spans."
     ]
+  },
+  "adversarial_preflight": {
+    "assumption_tested": "the comparison ceiling, because the whole EXACT/VARIANT distinction is defined relative to it",
+    "test_A_ceiling_never_too_low": {
+      "expected": 0,
+      "returned": 0,
+      "verdict": "HOLDS"
+    },
+    "test_B_ceiling_reachability": {
+      "expected": "the predicted ceiling is reached at least once for all ten veda-pairs",
+      "returned": "reached everywhere, but RV-RV 252/252 against AV-AV 26/137 and YV-YV 3/80",
+      "verdict": "the RATES exposed a missing third axis"
+    },
+    "verdict": "PARTLY FAILED, fixed, and confined to 139 within-recension rows",
+    "rows_retyped": 134,
+    "rows_correctly_untouched": 24,
+    "match_levels_corrected": 5,
+    "invariants_reasserted": {
+      "rows_above_their_ceiling": 0,
+      "exact_rows_not_at_their_ceiling": 0,
+      "accent_placement_rows_not_purely_a_tone_mark": 0
+    },
+    "figures_that_did_not_move": "every cross-recension figure, all 875 within-recension near parallels, the 967 within-recension identical mantras, the 415 new identity pairs, the 23 accent variants, the 475 orthographic and 819 word-division variants, the 4,825 nesting types, the 6,148 sharing edges, the 22,686 match_level backfills, and all per-Veda coverage.",
+    "proof": "proofs/adversarial_preflight_comparison_ceiling.json"
   },
   "hard_rules_observed": {
     "neo4j": "read-only. Only MATCH/RETURN and db.relationshipTypes() were issued.",

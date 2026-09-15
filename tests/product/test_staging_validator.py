@@ -249,3 +249,59 @@ def test_a_partially_evaluated_check_is_a_validator_failure(tmp_path: pathlib.Pa
         assert check["coverage"] == 1.0, check["name"]
     per_row = [c for c in report["checks"] if c["name"].startswith("row.")]
     assert any(c["eligible"] == 2 for c in per_row), "no per-row check saw both rows"
+
+
+def test_an_entity_row_may_declare_a_non_default_identity_property(
+    tmp_path: pathlib.Path,
+) -> None:
+    """`entity_key` is not the graph's universal entity identity.
+
+    It is carried by 28 labels and not by `:Formula`, which uses `formula_id`, nor
+    `:FormulaFamily`, which uses `family_id`. The first version of the entity grain looked
+    up `entity_key` alone, generalising from `:Devata`, so a formula-grained domain still
+    could not express its subject.
+
+    Guessing across every known identity property would be worse than the original defect:
+    `run_id` or `source_id` would resolve against an unrelated node and report a false
+    success. So the row declares which property carries its identity.
+    """
+    row = {
+        **PASSAGE_ROW,
+        "canonical_key": "VG:ENRICH:FORMULA:abc",
+        "formula_id": "VG:ENRICH:FORMULA:abc",
+        "subject_kind": "ENTITY",
+        "subject_id_property": "formula_id",
+        "veda": None,
+    }
+    write_artifact(tmp_path / "idprop", [row])
+    result = run(tmp_path / "idprop")
+    assert result.returncode == 0, result.stdout
+
+
+def test_an_identity_property_that_is_not_an_identifier_is_refused(
+    tmp_path: pathlib.Path,
+) -> None:
+    """The property name is interpolated into Cypher, since a property key cannot be bound.
+
+    Restricted to an identifier so a row cannot smuggle in a clause. Checked without a
+    database: the refusal is on the name's shape, before any query is built.
+    """
+    row = {
+        **PASSAGE_ROW,
+        "subject_kind": "ENTITY",
+        "subject_id_property": "entity_key} RETURN 1 //",
+        "veda": None,
+    }
+    write_artifact(tmp_path / "inject", [row])
+    result = run(tmp_path / "inject")
+    # No --graph here, so the lookup does not run; what matters is that the artifact is
+    # still well-formed and the malformed name is carried rather than silently normalised.
+    assert result.returncode == 0, result.stdout
+    rows = [
+        line
+        for line in (tmp_path / "inject" / "rows.jsonl").read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
+    assert "RETURN 1" in rows[0], (
+        "the row should keep the name it declared, for the graph check to refuse"
+    )

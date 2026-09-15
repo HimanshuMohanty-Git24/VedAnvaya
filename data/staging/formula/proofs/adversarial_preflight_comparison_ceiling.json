@@ -1,0 +1,653 @@
+{
+ "section": "adversarial preflight, requested by the coordinator before Wave 3",
+ "assumption_under_test": "THE COMPARISON CEILING. The whole EXACT_PARALLEL / VARIANT distinction is defined relative to a per-pair ceiling. If the ceiling is computed wrong for one layer combination, edges move between EXACT and VARIANT wholesale -- so it carries more downstream weight than any single figure.",
+ "why_this_one": "the 150-pair accent-notation finding was a result ABOUT pairs, not a test OF the ceiling function. Two claims the function makes were never tested: that the ceiling is never too LOW (no pair identical above it), and that the predicted ceiling is actually REACHABLE for each layer combination. The second is where a self-inflicted error hides, because an unreachable ceiling silently demotes every pair a rung and types real exact parallels as variants.",
+ "test_A_ceiling_never_too_low": {
+  "probe": "for all 2,211 identity rows, recompute the ceiling and assert IDX(match_level) >= IDX(ceiling) and that the stored label agrees",
+  "expected": "0 failures",
+  "returned": 0,
+  "verdict": "HOLDS"
+ },
+ "test_B_ceiling_reachability": {
+  "probe": "per veda-pair, over every identity row, is the predicted ceiling ever reached?",
+  "expected": "reached at least once for all ten veda-pairs",
+  "returned": {
+   "AV-AV": {
+    "SOURCE_EXACT|SOURCE_EXACT": 26,
+    "SOURCE_EXACT|PUNCTUATION_NORMALIZED": 95,
+    "SOURCE_EXACT|ACCENT_INSENSITIVE": 16
+   },
+   "AV-RV": {
+    "ACCENT_INSENSITIVE|ACCENT_INSENSITIVE": 81,
+    "ACCENT_INSENSITIVE|SCRIPT_FOLDED": 470,
+    "ACCENT_INSENSITIVE|SANDHI_INSENSITIVE": 22
+   },
+   "AV-SV": {
+    "SCRIPT_FOLDED|SCRIPT_FOLDED": 9,
+    "SCRIPT_FOLDED|SANDHI_INSENSITIVE": 132
+   },
+   "AV-YV": {
+    "SCRIPT_FOLDED|SCRIPT_FOLDED": 7,
+    "SCRIPT_FOLDED|SANDHI_INSENSITIVE": 41
+   },
+   "RV-RV": {
+    "SOURCE_EXACT|SOURCE_EXACT": 252
+   },
+   "RV-SV": {
+    "SCRIPT_FOLDED|SCRIPT_FOLDED": 89,
+    "SCRIPT_FOLDED|SANDHI_INSENSITIVE": 415
+   },
+   "RV-YV": {
+    "SCRIPT_FOLDED|SCRIPT_FOLDED": 24,
+    "SCRIPT_FOLDED|SANDHI_INSENSITIVE": 165
+   },
+   "SV-SV": {
+    "SOURCE_EXACT|SOURCE_EXACT": 176,
+    "SOURCE_EXACT|SANDHI_INSENSITIVE": 9,
+    "SOURCE_EXACT|PUNCTUATION_NORMALIZED": 18,
+    "SOURCE_EXACT|SCRIPT_FOLDED": 1
+   },
+   "SV-YV": {
+    "ACCENT_INSENSITIVE|ACCENT_INSENSITIVE": 69,
+    "ACCENT_INSENSITIVE|SANDHI_INSENSITIVE": 13,
+    "ACCENT_INSENSITIVE|SCRIPT_FOLDED": 1
+   },
+   "YV-YV": {
+    "SOURCE_EXACT|SOURCE_EXACT": 3,
+    "SOURCE_EXACT|SANDHI_INSENSITIVE": 22,
+    "SOURCE_EXACT|SCRIPT_FOLDED": 3,
+    "SOURCE_EXACT|PUNCTUATION_NORMALIZED": 45,
+    "SOURCE_EXACT|ACCENT_INSENSITIVE": 7
+   }
+  },
+  "never_reached": [],
+  "verdict": "reachable everywhere, BUT the rates exposed the defect: RV-RV reaches SOURCE_EXACT 252/252 while AV-AV reaches it 26/137 and YV-YV 3/80. A 3-in-80 rate is not a fact about the Yajurveda, it is a fact about its text field."
+ },
+ "the_defect_found": {
+  "what": "the Atharvavedic and Yajurvedic layers print each verse's own number INSIDE the stored text. Two verses at different addresses therefore can never be byte-identical however identical their text, and my ceiling said SOURCE_EXACT for them. 134 pairs whose entire difference was their own citation were typed VARIANT / EDITORIAL_APPARATUS -- a transmission claim about two editions where there is no difference of text at all.",
+  "worked_example": "AVS 2.32.3 ~ AVS 5.23.10 differ in exactly '3' -> '10'",
+  "this_is_the_campaign_pattern": "an apparent difference that is our own modelling. corpus-audit.md already records that text_original keeps '||18||' and '{11}' inline by design; I read that and still let the numeral drive a claim.",
+  "third_ceiling_axis_derived_not_asserted": {
+   "RV": {
+    "mantras": 10552,
+    "text_contains_a_digit": 643,
+    "no_digit_in_text": 9909,
+    "trailing_number_equals_its_own_verse_number": 58,
+    "trailing_number_differs": 585,
+    "share_self_addressing": 0.0055,
+    "prints_its_own_address_inline": false,
+    "examples_matching": [
+     "RV 1.38.3 -> printed 3, own 3/3",
+     "RV 1.71.3 -> printed 3, own 3/3",
+     "RV 1.103.1 -> printed 1, own 1/1"
+    ],
+    "examples_not_matching": [
+     "RV 1.2.6 -> printed 1, own 6/6",
+     "RV 1.4.10 -> printed 3, own 10/10",
+     "RV 1.23.19 -> printed 1, own 19/19"
+    ]
+   },
+   "SV": {
+    "mantras": 1844,
+    "text_contains_a_digit": 71,
+    "no_digit_in_text": 1773,
+    "trailing_number_equals_its_own_verse_number": 17,
+    "trailing_number_differs": 54,
+    "share_self_addressing": 0.0092,
+    "prints_its_own_address_inline": false,
+    "examples_matching": [
+     "SV ARANYA 3.3 -> printed 3, own 3/3",
+     "SV CHANDA 1.7.3 -> printed 3, own 3/3",
+     "SV CHANDA 3.7.3 -> printed 3, own 3/3"
+    ],
+    "examples_not_matching": [
+     "SV ARANYA 3.10 -> printed 3, own 10/10",
+     "SV CHANDA 1.3.2 -> printed 3, own 2/2",
+     "SV CHANDA 1.4.2 -> printed 3, own 2/2"
+    ]
+   },
+   "YV": {
+    "mantras": 1975,
+    "text_contains_a_digit": 1974,
+    "no_digit_in_text": 1,
+    "trailing_number_equals_its_own_verse_number": 1964,
+    "trailing_number_differs": 10,
+    "share_self_addressing": 0.9944,
+    "prints_its_own_address_inline": true,
+    "examples_matching": [
+     "VSM 1.1 -> printed 1, own 1/1",
+     "VSM 1.2 -> printed 2, own 2/2",
+     "VSM 1.3 -> printed 3, own 3/3"
+    ],
+    "examples_not_matching": [
+     "VSM 9.31 -> printed 1, own 31/31",
+     "VSM 14.10 -> printed 0, own 10/10",
+     "VSM 15.10 -> printed 0, own 10/10"
+    ]
+   },
+   "AV": {
+    "mantras": 5839,
+    "text_contains_a_digit": 5808,
+    "no_digit_in_text": 31,
+    "trailing_number_equals_its_own_verse_number": 5513,
+    "trailing_number_differs": 295,
+    "share_self_addressing": 0.9442,
+    "prints_its_own_address_inline": true,
+    "examples_matching": [
+     "AVS 1.1.1 -> printed 1, own 1/1",
+     "AVS 1.1.2 -> printed 2, own 2/2",
+     "AVS 1.1.3 -> printed 3, own 3/3"
+    ],
+    "examples_not_matching": [
+     "AVS 3.3.3 -> printed 4, own 3/3",
+     "AVS 3.3.4 -> printed 5, own 4/4",
+     "AVS 3.3.5 -> printed 6, own 5/5"
+    ]
+   }
+  },
+  "rule": "ceiling = SCRIPT_FOLDED if the scripts differ; else ACCENT_INSENSITIVE if the accent-notation classes differ; else PUNCTUATION_NORMALIZED if both layers print their own address inline AND the pair's entire UNICODE_NORMALIZED difference is digits; else SOURCE_EXACT"
+ },
+ "and_the_probe_itself_had_two_bugs_caught_by_assertion": [
+  "the first digit-only test ignored whitespace, which admitted 12 WORD_DIVISION pairs whose real difference is a space. Whitespace IS word division. Strict test: 139, not 151.",
+  "my first difference class lumped digits with dandas, which would have moved 18 Samavedic rows that contain no digit at all -- they differ in ASCII '|' against Devanagari danda (9) or an inserted space (9). Those are genuine apparatus and stay VARIANT.",
+  "the 6 sub-threshold svaha rows carried an ASSERTED match_level of SOURCE_EXACT that I hard-coded in the builder instead of measuring. 5 of 6 were wrong and are PUNCTUATION_NORMALIZED."
+ ],
+ "what_moved": {
+  "rows_retyped_VARIANT_to_EXACT_PARALLEL": 134,
+  "rows_correctly_left_as_EDITORIAL_APPARATUS": 24,
+  "kept_breakdown": {
+   "verse numeral PLUS a real editorial mark": 6,
+   "danda encoding or whitespace only, no numeral involved": 18
+  },
+  "sub_threshold_match_levels_corrected": 5,
+  "claims_before": {
+   "EXACT_PARALLEL": 736,
+   "VARIANT": 1475,
+   "NEAR_PARALLEL": 3924
+  },
+  "claims_after": {
+   "EXACT_PARALLEL": 870,
+   "VARIANT": 1341,
+   "NEAR_PARALLEL": 3924
+  },
+  "claims_after_detail": {
+   "CROSS_RECENSION|EXACT_PARALLEL": 279,
+   "CROSS_RECENSION|NEAR_PARALLEL": 3049,
+   "CROSS_RECENSION|VARIANT": 1259,
+   "WITHIN_RECENSION|EXACT_PARALLEL": 591,
+   "WITHIN_RECENSION|NEAR_PARALLEL": 875,
+   "WITHIN_RECENSION|VARIANT": 82
+  },
+  "ceilings_after": {
+   "cross|ACCENT_INSENSITIVE": 1564,
+   "cross|SCRIPT_FOLDED": 3023,
+   "within|PUNCTUATION_NORMALIZED": 139,
+   "within|SOURCE_EXACT": 1409
+  },
+  "unchanged": "every cross-recension figure, all 875 within-recension near parallels, the 967 within-recension identical mantras, the 415 new identity pairs, the 23 accent variants, the 475 orthographic variants, the 819 word-division variants, the 4,825 nesting types, the 6,148 sharing edges, the 22,686 match_level backfills and all per-Veda coverage. The defect was confined to the label on 139 within-recension rows."
+ },
+ "invariants_after_the_fix": {
+  "rows_identical_above_their_ceiling": 0,
+  "EXACT_PARALLEL_rows_not_exactly_at_their_ceiling": 0,
+  "ACCENT_PLACEMENT_rows_whose_difference_is_not_purely_a_tone_mark": 0,
+  "of": 23
+ },
+ "assumption_verdict": "PARTLY FAILED and now fixed. The ceiling function was correct on the two axes it modelled and missing a third. Test A held; Test B held on reachability and its RATES are what exposed the missing axis. No figure outside the 139 rows moved.",
+ "note_on_the_coordinators_correction": "the lead's 0.8413 all-Veda mispaired maximum is not cited anywhere in this domain and vedsearch.similarity() was not used. The near-parallel blend here is crossveda's own 0.5*char4gram_jaccard + 0.5*lcs_ratio, and its 0.72 floor was re-measured on this domain's own within-recension population -- see near_parallel_floor_calibration.json.",
+ "raw_probe_output": {
+  "test_A_and_B": {
+   "test_A_pairs_above_their_ceiling_or_mislabelled": 0,
+   "test_A_detail": [],
+   "test_B_ceiling_reachability": {
+    "AV-AV": {
+     "SOURCE_EXACT|SOURCE_EXACT": 26,
+     "SOURCE_EXACT|PUNCTUATION_NORMALIZED": 95,
+     "SOURCE_EXACT|ACCENT_INSENSITIVE": 16
+    },
+    "AV-RV": {
+     "ACCENT_INSENSITIVE|ACCENT_INSENSITIVE": 81,
+     "ACCENT_INSENSITIVE|SCRIPT_FOLDED": 470,
+     "ACCENT_INSENSITIVE|SANDHI_INSENSITIVE": 22
+    },
+    "AV-SV": {
+     "SCRIPT_FOLDED|SCRIPT_FOLDED": 9,
+     "SCRIPT_FOLDED|SANDHI_INSENSITIVE": 132
+    },
+    "AV-YV": {
+     "SCRIPT_FOLDED|SCRIPT_FOLDED": 7,
+     "SCRIPT_FOLDED|SANDHI_INSENSITIVE": 41
+    },
+    "RV-RV": {
+     "SOURCE_EXACT|SOURCE_EXACT": 252
+    },
+    "RV-SV": {
+     "SCRIPT_FOLDED|SCRIPT_FOLDED": 89,
+     "SCRIPT_FOLDED|SANDHI_INSENSITIVE": 415
+    },
+    "RV-YV": {
+     "SCRIPT_FOLDED|SCRIPT_FOLDED": 24,
+     "SCRIPT_FOLDED|SANDHI_INSENSITIVE": 165
+    },
+    "SV-SV": {
+     "SOURCE_EXACT|SOURCE_EXACT": 176,
+     "SOURCE_EXACT|SANDHI_INSENSITIVE": 9,
+     "SOURCE_EXACT|PUNCTUATION_NORMALIZED": 18,
+     "SOURCE_EXACT|SCRIPT_FOLDED": 1
+    },
+    "SV-YV": {
+     "ACCENT_INSENSITIVE|ACCENT_INSENSITIVE": 69,
+     "ACCENT_INSENSITIVE|SANDHI_INSENSITIVE": 13,
+     "ACCENT_INSENSITIVE|SCRIPT_FOLDED": 1
+    },
+    "YV-YV": {
+     "SOURCE_EXACT|SOURCE_EXACT": 3,
+     "SOURCE_EXACT|SANDHI_INSENSITIVE": 22,
+     "SOURCE_EXACT|SCRIPT_FOLDED": 3,
+     "SOURCE_EXACT|PUNCTUATION_NORMALIZED": 45,
+     "SOURCE_EXACT|ACCENT_INSENSITIVE": 7
+    }
+   },
+   "test_B_never_reached": [],
+   "editorial_apparatus_probe": {
+    "AV-AV|NUMERAL_ONLY": 95,
+    "SV-SV|NUMERAL_ONLY": 18,
+    "YV-YV|NUMERAL_ONLY": 45
+   },
+   "editorial_apparatus_examples": {
+    "NUMERAL_ONLY": [
+     [
+      "AVS 2.32.3",
+      "AVS 5.23.10",
+      [
+       [
+        "replace",
+        "'3'",
+        "'10'"
+       ]
+      ]
+     ],
+     [
+      "AVS 2.32.4",
+      "AVS 5.23.11",
+      [
+       [
+        "replace",
+        "'4'",
+        "'11'"
+       ]
+      ]
+     ],
+     [
+      "AVS 2.32.5",
+      "AVS 5.23.12",
+      [
+       [
+        "replace",
+        "'5'",
+        "'12'"
+       ]
+      ]
+     ],
+     [
+      "AVS 2.33.2",
+      "AVS 20.96.18",
+      [
+       [
+        "replace",
+        "'2'",
+        "'18'"
+       ]
+      ]
+     ],
+     [
+      "AVS 2.33.3",
+      "AVS 20.96.19",
+      [
+       [
+        "replace",
+        "'3'",
+        "'19'"
+       ]
+      ]
+     ]
+    ]
+   },
+   "accent_placement_control": {
+    "rows": 23,
+    "not_purely_a_tone_mark": 0,
+    "detail": []
+   }
+  },
+  "digit_vs_danda_split": {
+   "self_addressing_layers": [
+    "AV",
+    "YV"
+   ],
+   "classes": {
+    "AV-AV|DIGIT_AND_MARK|self=True": 3,
+    "AV-AV|DIGIT_ONLY|self=True": 92,
+    "SV-SV|DIGIT_AND_MARK|self=False": 9,
+    "SV-SV|WHITESPACE_ONLY|self=False": 9,
+    "YV-YV|DIGIT_AND_MARK|self=True": 3,
+    "YV-YV|DIGIT_ONLY|self=True": 42
+   },
+   "examples": {
+    "AV-AV|DIGIT_AND_MARK": [
+     [
+      "AVS 6.46.2",
+      "AVS 16.5.6",
+      [
+       [
+        "insert",
+        "''",
+        "'|\\n'"
+       ],
+       [
+        "replace",
+        "'2'",
+        "'6'"
+       ]
+      ]
+     ],
+     [
+      "AVS 13.2.20",
+      "AVS 20.47.17",
+      [
+       [
+        "replace",
+        "'20'",
+        "'17'"
+       ],
+       [
+        "delete",
+        "' {8}'",
+        "''"
+       ]
+      ]
+     ],
+     [
+      "AVS 13.4.49",
+      "AVS 13.4.56",
+      [
+       [
+        "replace",
+        "'49'",
+        "'56'"
+       ],
+       [
+        "insert",
+        "''",
+        "' {20}'"
+       ]
+      ]
+     ]
+    ],
+    "AV-AV|DIGIT_ONLY": [
+     [
+      "AVS 2.32.3",
+      "AVS 5.23.10",
+      [
+       [
+        "replace",
+        "'3'",
+        "'10'"
+       ]
+      ]
+     ],
+     [
+      "AVS 2.32.4",
+      "AVS 5.23.11",
+      [
+       [
+        "replace",
+        "'4'",
+        "'11'"
+       ]
+      ]
+     ],
+     [
+      "AVS 2.32.5",
+      "AVS 5.23.12",
+      [
+       [
+        "replace",
+        "'5'",
+        "'12'"
+       ]
+      ]
+     ]
+    ],
+    "SV-SV|DIGIT_AND_MARK": [
+     [
+      "SV CHANDA 1.4.1",
+      "SV UTTARA 1.1.20.1",
+      [
+       [
+        "replace",
+        "'|'",
+        "'।'"
+       ]
+      ]
+     ],
+     [
+      "SV CHANDA 1.4.2",
+      "SV UTTARA 7.2.4.1",
+      [
+       [
+        "replace",
+        "'|'",
+        "'।'"
+       ]
+      ]
+     ],
+     [
+      "SV CHANDA 1.4.6",
+      "SV UTTARA 9.1.6.1",
+      [
+       [
+        "replace",
+        "'|'",
+        "'।'"
+       ]
+      ]
+     ]
+    ],
+    "SV-SV|WHITESPACE_ONLY": [
+     [
+      "SV CHANDA 1.1.8",
+      "SV UTTARA 4.2.12.1",
+      [
+       [
+        "insert",
+        "''",
+        "' '"
+       ]
+      ]
+     ],
+     [
+      "SV CHANDA 3.5.2",
+      "SV UTTARA 2.1.12.1",
+      [
+       [
+        "insert",
+        "''",
+        "' '"
+       ]
+      ]
+     ],
+     [
+      "SV CHANDA 4.6.1",
+      "SV UTTARA 5.2.23.1",
+      [
+       [
+        "insert",
+        "''",
+        "' '"
+       ]
+      ]
+     ]
+    ],
+    "YV-YV|DIGIT_AND_MARK": [
+     [
+      "VSM 12.10",
+      "VSM 12.41",
+      [
+       [
+        "replace",
+        "'॥'",
+        "'।।'"
+       ],
+       [
+        "insert",
+        "''",
+        "'४'"
+       ],
+       [
+        "delete",
+        "'०'",
+        "''"
+       ]
+      ]
+     ],
+     [
+      "VSM 12.56",
+      "VSM 15.61",
+      [
+       [
+        "delete",
+        "'५'",
+        "''"
+       ],
+       [
+        "replace",
+        "' ॥'",
+        "'१'"
+       ],
+       [
+        "insert",
+        "''",
+        "'।'"
+       ]
+      ]
+     ],
+     [
+      "VSM 12.56",
+      "VSM 17.61",
+      [
+       [
+        "delete",
+        "'५'",
+        "''"
+       ],
+       [
+        "replace",
+        "' ॥'",
+        "'१'"
+       ],
+       [
+        "insert",
+        "''",
+        "'।'"
+       ]
+      ]
+     ]
+    ],
+    "YV-YV|DIGIT_ONLY": [
+     [
+      "VSM 3.15",
+      "VSM 15.26",
+      [
+       [
+        "replace",
+        "'१५'",
+        "'२६'"
+       ]
+      ]
+     ],
+     [
+      "VSM 3.35",
+      "VSM 22.9",
+      [
+       [
+        "replace",
+        "'३५'",
+        "'९'"
+       ]
+      ]
+     ],
+     [
+      "VSM 4.8",
+      "VSM 11.67",
+      [
+       [
+        "replace",
+        "'८'",
+        "'६७'"
+       ]
+      ]
+     ]
+    ]
+   }
+  },
+  "fix": {
+   "self_addressing_layers": [
+    "AV",
+    "YV"
+   ],
+   "address_inline_measurement": {
+    "RV": {
+     "mantras": 10552,
+     "trailing_number_equals_its_own_verse_number": 58,
+     "share_self_addressing": 0.0055,
+     "prints_its_own_address_inline": false
+    },
+    "SV": {
+     "mantras": 1844,
+     "trailing_number_equals_its_own_verse_number": 17,
+     "share_self_addressing": 0.0092,
+     "prints_its_own_address_inline": false
+    },
+    "YV": {
+     "mantras": 1975,
+     "trailing_number_equals_its_own_verse_number": 1964,
+     "share_self_addressing": 0.9944,
+     "prints_its_own_address_inline": true
+    },
+    "AV": {
+     "mantras": 5839,
+     "trailing_number_equals_its_own_verse_number": 5513,
+     "share_self_addressing": 0.9442,
+     "prints_its_own_address_inline": true
+    }
+   },
+   "rows_moved_to_exact": 134,
+   "rows_kept_as_apparatus": 24,
+   "kept_breakdown": {
+    "verse numeral PLUS a real editorial mark": 6,
+    "danda encoding or whitespace only, no numeral involved": 18
+   },
+   "test_A_rerun_failures": 0,
+   "exact_rows_not_at_their_ceiling": 5,
+   "post_fix_claims": {
+    "CROSS_RECENSION|EXACT_PARALLEL": 279,
+    "CROSS_RECENSION|NEAR_PARALLEL": 3049,
+    "CROSS_RECENSION|VARIANT": 1259,
+    "WITHIN_RECENSION|EXACT_PARALLEL": 591,
+    "WITHIN_RECENSION|NEAR_PARALLEL": 875,
+    "WITHIN_RECENSION|VARIANT": 82
+   },
+   "post_fix_transformation_types": {
+    "ACCENT_PLACEMENT": 23,
+    "DELETION": 123,
+    "EDITORIAL_APPARATUS": 24,
+    "INSERTION": 315,
+    "MIXED": 1323,
+    "NONE_AT_COMPARISON_CEILING": 870,
+    "ORTHOGRAPHIC_VARIATION": 475,
+    "REORDERING": 18,
+    "SUBSTITUTION": 2145,
+    "WORD_DIVISION": 819
+   }
+  }
+ }
+}

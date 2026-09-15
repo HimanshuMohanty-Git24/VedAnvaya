@@ -35,6 +35,7 @@ import argparse
 import json
 import os
 import pathlib
+import re
 import sys
 from collections import Counter
 from dataclasses import dataclass, field
@@ -355,17 +356,30 @@ def validate_against_graph(rows: list[dict[str, Any]], result: Result) -> None:
     A passage-grained row names a `:Passage` by `canonical_key`. That is most domains, and
     it is the default.
 
-    An entity-grained row names a registry entity -- a `:Devata`, `:Rishi`, `:Chandas`,
-    `:Concept` -- by `entity_key`. Those nodes carry no `canonical_key` and no `:Passage`
-    label, so requiring one made the primary object of an entity-grained domain
-    unexpressible. Two agents hit that wall and worked around it by moving their real
-    output into a sidecar file and filling `rows.jsonl` with passage-grained proxies. The
-    artifacts passed, which is the problem: the check reported full coverage over rows that
-    were not the domain's subject.
+    An entity-grained row names a registry entity rather than a passage. Those nodes carry
+    no `canonical_key` and no `:Passage` label, so requiring one made the primary object of
+    an entity-grained domain unexpressible. Two agents hit that wall and worked around it by
+    moving their real output into a sidecar file and filling `rows.jsonl` with
+    passage-grained proxies. The artifacts passed, which is the problem: the check reported
+    full coverage over rows that were not the domain's subject.
 
-    So a row may declare `subject_kind: ENTITY` and carry `entity_key`. The two grains are
-    counted as separate checks rather than pooled, because a single blended coverage figure
-    would hide a domain resolving none of its entities behind a wall of passage proxies.
+    So a row may declare `subject_kind: ENTITY`. The two grains are counted as separate
+    checks rather than pooled, because a single blended coverage figure would hide a domain
+    resolving none of its entities behind a wall of passage proxies.
+
+    **The identity property must be declared, not guessed.** The first version of this
+    extension looked up `entity_key` alone, generalising from `:Devata`. That was half a
+    fix: `entity_key` is carried by 28 labels but not by `:Formula` (0 of 4,825, which uses
+    `formula_id`) or `:FormulaFamily` (0 of 720, `family_id`), and the graph also uses
+    `concept_id`, `axis_key`, `group_key`, `family_key`, `epithet_key`, `claim_id`,
+    `assertion_id` and more. An agent discovered this by measuring rather than by trusting
+    the extension.
+
+    Trying every known identity property in turn would be worse than the original defect,
+    because `run_id` or `source_id` would resolve against an unrelated node and report a
+    false success. So a row sets `subject_id_property` (default `entity_key`), and may set
+    `subject_label` to assert what it expects to find. The resolved labels are reported, so
+    a row that resolves against something unexpected is visible rather than merely green.
     """
     sys.path.insert(0, str(pathlib.Path(__file__).parent.parent / "src"))
     try:
@@ -388,11 +402,13 @@ def validate_against_graph(rows: list[dict[str, Any]], result: Result) -> None:
         for row in passage_rows
         if row.get("canonical_key")
     }
-    entity_keys = [
-        row.get("entity_key") or row.get("canonical_key")
-        for row in entity_rows
-        if row.get("entity_key") or row.get("canonical_key")
-    ]
+    # (identity property, value, expected label or None) per entity row.
+    entity_subjects: list[tuple[str, str, str | None]] = []
+    for row in entity_rows:
+        prop = str(row.get("subject_id_property") or "entity_key")
+        value = row.get(prop) or row.get("entity_key") or row.get("canonical_key")
+        if value:
+            entity_subjects.append((prop, str(value), row.get("subject_label")))
 
     resolves = result.check("graph.canonical_key_resolves")
     resolves.eligible = len(keys)
@@ -430,24 +446,50 @@ def validate_against_graph(rows: list[dict[str, Any]], result: Result) -> None:
                         f"{key}: row claims veda {claimed[key]!r}, graph says {found[key]!r}"
                     )
 
-            if entity_keys:
-                entity_check = result.check("graph.entity_key_resolves")
-                entity_check.eligible = len(entity_keys)
-                seen_entities: set[str] = set()
-                for start in range(0, len(entity_keys), batch_size):
-                    batch = entity_keys[start : start + batch_size]
-                    records = session.run(
-                        "UNWIND $keys AS k MATCH (n {entity_key: k}) "
-                        "RETURN DISTINCT n.entity_key AS key",
-                        keys=batch,
-                    )
-                    seen_entities.update(record["key"] for record in records)
-                    entity_check.evaluated += len(batch)
-                for key in entity_keys:
-                    if key not in seen_entities:
+            if entity_subjects:
+                entity_check = result.check("graph.entity_subject_resolves")
+                entity_check.eligible = len(entity_subjects)
+                label_check = result.check("graph.entity_label_agrees")
+
+                by_property: dict[str, list[tuple[str, str | None]]] = {}
+                for prop, value, expected in entity_subjects:
+                    by_property.setdefault(prop, []).append((value, expected))
+
+                for prop, pairs in by_property.items():
+                    # The property name is interpolated because Cypher cannot parameterise a
+                    # property key. Restricted to an identifier so it cannot carry a clause.
+                    if not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", prop):
+                        entity_check.evaluated += len(pairs)
                         entity_check.failures.append(
-                            f"{key} does not resolve to any node by entity_key"
+                            f"{prop!r} is not a usable property name for an identity lookup"
                         )
+                        continue
+                    resolved: dict[str, list[str]] = {}
+                    values = [value for value, _ in pairs]
+                    for start in range(0, len(values), batch_size):
+                        batch = values[start : start + batch_size]
+                        records = session.run(
+                            f"UNWIND $keys AS k MATCH (n) WHERE n.`{prop}` = k "
+                            f"RETURN k AS key, labels(n) AS labels",
+                            keys=batch,
+                        )
+                        for record in records:
+                            resolved.setdefault(record["key"], []).extend(record["labels"])
+                        entity_check.evaluated += len(batch)
+                    for value, expected in pairs:
+                        if value not in resolved:
+                            entity_check.failures.append(
+                                f"{value} does not resolve to any node by {prop}"
+                            )
+                            continue
+                        if expected:
+                            label_check.eligible += 1
+                            label_check.evaluated += 1
+                            if expected not in resolved[value]:
+                                label_check.failures.append(
+                                    f"{value}: row expects :{expected}, graph has "
+                                    f"{sorted(set(resolved[value]))}"
+                                )
     finally:
         driver.close()
 

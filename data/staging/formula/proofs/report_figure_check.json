@@ -1,7 +1,7 @@
 {
  "question": "does every load-bearing figure in formula.md match the artifact it describes?",
  "why": "every table in this report reads from an artifact, so a number typed into prose is the only one nothing else can catch. MEMORY records that lesson; this is the check.",
- "checks": 44,
+ "checks": 52,
  "failures": 0,
  "result": "PASS",
  "detail": [
@@ -103,14 +103,14 @@
   },
   {
    "check": "within EXACT",
-   "measured": 457,
-   "expected_by_the_report": 457,
+   "measured": 591,
+   "expected_by_the_report": 591,
    "pass": true
   },
   {
    "check": "within VARIANT",
-   "measured": 216,
-   "expected_by_the_report": 216,
+   "measured": 82,
+   "expected_by_the_report": 82,
    "pass": true
   },
   {
@@ -150,9 +150,57 @@
    "pass": true
   },
   {
-   "check": "EDITORIAL_APPARATUS total",
-   "measured": 158,
-   "expected_by_the_report": 158,
+   "check": "EDITORIAL_APPARATUS total, post-preflight",
+   "measured": 24,
+   "expected_by_the_report": 24,
+   "pass": true
+  },
+  {
+   "check": "NONE_AT_COMPARISON_CEILING total",
+   "measured": 870,
+   "expected_by_the_report": 870,
+   "pass": true
+  },
+  {
+   "check": "EXACT_PARALLEL total",
+   "measured": 870,
+   "expected_by_the_report": 870,
+   "pass": true
+  },
+  {
+   "check": "VARIANT total",
+   "measured": 1341,
+   "expected_by_the_report": 1341,
+   "pass": true
+  },
+  {
+   "check": "ceiling PUNCTUATION_NORMALIZED (within, address inline)",
+   "measured": 139,
+   "expected_by_the_report": 139,
+   "pass": true
+  },
+  {
+   "check": "ceiling SOURCE_EXACT (within)",
+   "measured": 1409,
+   "expected_by_the_report": 1409,
+   "pass": true
+  },
+  {
+   "check": "rows carrying ceiling_lowered_because",
+   "measured": 139,
+   "expected_by_the_report": 139,
+   "pass": true
+  },
+  {
+   "check": "INVARIANT rows identical above their ceiling",
+   "measured": 0,
+   "expected_by_the_report": 0,
+   "pass": true
+  },
+  {
+   "check": "INVARIANT EXACT rows not exactly at their ceiling",
+   "measured": 0,
+   "expected_by_the_report": 0,
    "pass": true
   },
   {
@@ -270,5 +318,6 @@
    "pass": true
   }
  ],
+ "includes_the_two_post_preflight_invariants": "rows identical above their ceiling = 0, and EXACT_PARALLEL rows not exactly at their ceiling = 0. Both are re-asserted here rather than trusted from the fix script.",
  "what_is_not_covered": "figures quoted from committed reports for comparison (CORPUS_D11's 587, the registry's 87,296, GRAPH_ENRICHMENT_V1's 1,103) are checked in proofs/false_duplicate_test.json, proofs/shares_formula_with_policy.json and proofs/formula_nesting_contract.json against a re-measurement, not here."
 }
