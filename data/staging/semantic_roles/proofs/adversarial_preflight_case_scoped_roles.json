@@ -1,0 +1,490 @@
+{
+  "proof_id": "ADVERSARIAL_PREFLIGHT_CASE_SCOPED_ROLE_RULE",
+  "measured_at": "2026-09-15",
+  "requested_by": "campaign coordinator, mandatory preflight before Wave 3",
+  "assumption_chosen": "A role read from morphological case standing beside a finite verb, scoped to one metrical pada (Rigveda) or one sentence (DCS chapters with no parse), is the role a dependency parse would assign to that token.",
+  "why_this_one_carries_the_most_weight": "28,370 of 30,274 assertions -- 93.7% -- get their roles this way, including every Rigvedic assertion and every Samavedic projection. It is also the assumption behind the two figures the report leads with: the 0 to 5,219 three-slot count and the 91.9% unrepresentable-filler cost. The Samavedic identity projection (372 assertions) and the dominant-sense rule (1,139) are both smaller by an order of magnitude, and both are already labelled and filterable on the row.",
+  "why_a_test_was_possible_when_the_report_said_no_agreement_figure_could_be_computed": "The report's claim was that no independent witness exists, and that is true of the SOURCE. It is false of the RULE. 2,823 DCS sentences carry a human-validated dependency parse, so the case rule can be run on exactly those sentences and scored against the parse, token by token. The instrument has a ground truth even where the corpus does not. Not seeing that was a gap in the original evaluation design, and it is recorded here as such.",
+  "method": "For every DCS sentence carrying a parse, with the deployed single-finite-verb gate applied and the predicate resolved by the same root map: extract roles twice -- once from the verb's dependency children (the deployed TREEBANK_DEPREL path) and once from morphological case over the whole sentence (the deployed MORPHOLOGY_RULE_CASE path) -- and compare per token id. Every disagreement is then classified by walking the token's head chain, so the three unlike kinds of disagreement are never averaged into one number.",
+  "expected_before_running": "The single-finite-verb gate was expected to hold the error down, since it already suppresses non-agent roles wherever two finite verbs share a scope. Precision was expected in the 0.85 to 0.95 band.",
+  "probe_1_raw": {
+    "test_id": "PREFLIGHT_CASE_RULE_AGAINST_TREEBANK",
+    "assumption_under_test": "A role read from morphological case standing beside a finite verb, scoped to one pada (Rigveda) or one sentence (unparsed DCS), is the role a dependency parse would assign. 28,370 of 30,274 assertions rest on it.",
+    "method": "Run the deployed case rule on the DCS sentences that DO carry a parse, with the deployed single-finite-verb gate applied, and score every filler it emits against the treebank role for the same token.",
+    "counts": {
+      "parsed_sentences": 2823,
+      "skipped_not_exactly_one_finite_verb": 864,
+      "skipped_no_predicate": 845,
+      "scored_sentences": 1114,
+      "scored_sentences_AV": 800,
+      "agree": 1318,
+      "case_rule_false_positive": 1347,
+      "role_disagreement": 50,
+      "case_rule_miss": 116,
+      "scored_sentences_YV": 314
+    },
+    "fillers_emitted_by_the_case_rule": 2715,
+    "exact_agreement": 1318,
+    "precision": 0.4855,
+    "role_disagreements": 50,
+    "false_positives": 1347,
+    "misses": 116,
+    "recall": 0.8881,
+    "role_confusion_case_rule_vs_treebank": {
+      "LOCATION->GOAL": 30,
+      "PATIENT->BENEFICIARY": 13,
+      "PATIENT->GOAL": 4,
+      "GOAL->LOCATION": 2,
+      "BENEFICIARY->GOAL": 1
+    },
+    "per_role": {
+      "AGENT": {
+        "agree": 388,
+        "false_positive": 498,
+        "miss": 88
+      },
+      "LOCATION": {
+        "false_positive": 104,
+        "disagree": 30,
+        "agree": 90
+      },
+      "PATIENT": {
+        "false_positive": 369,
+        "agree": 510,
+        "disagree": 17,
+        "miss": 17
+      },
+      "INSTRUMENT": {
+        "false_positive": 149,
+        "agree": 94
+      },
+      "BENEFICIARY": {
+        "false_positive": 127,
+        "agree": 113,
+        "disagree": 1,
+        "miss": 4
+      },
+      "SOURCE": {
+        "false_positive": 56,
+        "miss": 5,
+        "agree": 40
+      },
+      "GOAL": {
+        "miss": 2,
+        "agree": 83,
+        "false_positive": 44,
+        "disagree": 2
+      }
+    },
+    "false_positive_by_treebank_deprel": {
+      "conj": 304,
+      "amod": 132,
+      "det": 109,
+      "nsubj": 106,
+      "acl": 75,
+      "root": 70,
+      "nmod:appos": 64,
+      "orphan": 57,
+      "xcomp:result": 56,
+      "obl": 47,
+      "obj": 37,
+      "xcomp": 34,
+      "iobj": 28,
+      "vocative": 26,
+      "appos": 19,
+      "obl:soc": 18,
+      "advcl": 17,
+      "advcl:fin": 16,
+      "advmod": 14,
+      "flat": 14
+    },
+    "false_positive_by_distance_from_the_finite_verb": {
+      "attached_at_depth_99": 336,
+      "attached_at_depth_2": 600,
+      "attached_at_depth_1": 224,
+      "attached_at_depth_3": 146,
+      "attached_at_depth_4": 35,
+      "attached_at_depth_5": 6
+    },
+    "examples": [
+      {
+        "sent_id": "643701_2",
+        "veda": "AV",
+        "verb": "astu",
+        "predicate": "IS_OR_BECOMES",
+        "token": "mayi",
+        "case_rule_said": "LOCATION",
+        "treebank_deprel": "root",
+        "treebank_head": null,
+        "text": "mayi eva astu mayi śrutam"
+      },
+      {
+        "sent_id": "643701_2",
+        "veda": "AV",
+        "verb": "astu",
+        "predicate": "IS_OR_BECOMES",
+        "token": "mayi",
+        "case_rule_said": "LOCATION",
+        "treebank_deprel": "dislocated",
+        "treebank_head": "mayi",
+        "text": "mayi eva astu mayi śrutam"
+      },
+      {
+        "sent_id": "643702_1",
+        "veda": "AV",
+        "verb": "tanu",
+        "predicate": "ESTABLISHES",
+        "token": "ubhe",
+        "case_rule_said": "PATIENT",
+        "treebank_deprel": "det",
+        "treebank_head": "ārtnī",
+        "text": "iha eva abhi vi tanu ubhe ārtnī iva jyayā"
+      },
+      {
+        "sent_id": "643702_1",
+        "veda": "AV",
+        "verb": "tanu",
+        "predicate": "ESTABLISHES",
+        "token": "ārtnī",
+        "case_rule_said": "PATIENT",
+        "treebank_deprel": "advcl:manner",
+        "treebank_head": "tanu",
+        "text": "iha eva abhi vi tanu ubhe ārtnī iva jyayā"
+      },
+      {
+        "sent_id": "643702_1",
+        "veda": "AV",
+        "verb": "tanu",
+        "predicate": "ESTABLISHES",
+        "token": "jyayā",
+        "case_rule_said": "INSTRUMENT",
+        "treebank_deprel": "orphan",
+        "treebank_head": "ārtnī",
+        "text": "iha eva abhi vi tanu ubhe ārtnī iva jyayā"
+      },
+      {
+        "sent_id": "643703_2",
+        "veda": "AV",
+        "verb": "astu",
+        "predicate": "IS_OR_BECOMES",
+        "token": "mayi",
+        "case_rule_said": "LOCATION",
+        "treebank_deprel": "root",
+        "treebank_head": null,
+        "text": "mayi eva astu mayi śrutam"
+      },
+      {
+        "sent_id": "643703_2",
+        "veda": "AV",
+        "verb": "astu",
+        "predicate": "IS_OR_BECOMES",
+        "token": "mayi",
+        "case_rule_said": "LOCATION",
+        "treebank_deprel": "dislocated",
+        "treebank_head": "mayi",
+        "text": "mayi eva astu mayi śrutam"
+      },
+      {
+        "sent_id": "643708_2",
+        "veda": "AV",
+        "verb": "kṛdhi",
+        "predicate": "CREATES",
+        "token": "aśmānam",
+        "case_rule_said": "PATIENT",
+        "treebank_deprel": "xcomp",
+        "treebank_head": "kṛdhi",
+        "text": "aśmānam tanvam kṛdhi"
+      },
+      {
+        "sent_id": "643709_1",
+        "veda": "AV",
+        "verb": "kṛdhi",
+        "predicate": "CREATES",
+        "token": "varīyaḥ",
+        "case_rule_said": "PATIENT",
+        "treebank_deprel": "xcomp:result",
+        "treebank_head": "kṛdhi",
+        "text": "vīḍuḥ varīyaḥ arātīḥ apa dveṣāṃsi ā kṛdhi"
+      },
+      {
+        "sent_id": "643709_1",
+        "veda": "AV",
+        "verb": "kṛdhi",
+        "predicate": "CREATES",
+        "token": "dveṣāṃsi",
+        "case_rule_said": "PATIENT",
+        "treebank_deprel": "conj",
+        "treebank_head": "arātīḥ",
+        "text": "vīḍuḥ varīyaḥ arātīḥ apa dveṣāṃsi ā kṛdhi"
+      },
+      {
+        "sent_id": "643735_1",
+        "veda": "AV",
+        "verb": "hinvantu",
+        "predicate": "LEADS",
+        "token": "amūḥ",
+        "case_rule_said": "AGENT",
+        "treebank_deprel": "nsubj",
+        "treebank_head": "sūrye",
+        "text": "amūḥ yāḥ upa sūrye yābhiḥ vā sūryaḥ saha tāḥ naḥ hinvantu adhvaram"
+      },
+      {
+        "sent_id": "643735_1",
+        "veda": "AV",
+        "verb": "hinvantu",
+        "predicate": "LEADS",
+        "token": "yāḥ",
+        "case_rule_said": "AGENT",
+        "treebank_deprel": "det",
+        "treebank_head": "amūḥ",
+        "text": "amūḥ yāḥ upa sūrye yābhiḥ vā sūryaḥ saha tāḥ naḥ hinvantu adhvaram"
+      }
+    ]
+  },
+  "probe_2_decomposed": {
+    "test_id": "PREFLIGHT_CASE_RULE_AGAINST_TREEBANK_DECOMPOSED",
+    "scored_sentences": 1114,
+    "fillers_emitted": 2715,
+    "exact_agreement_with_the_parse": 1318,
+    "raw_precision_before_decomposition": 0.4855,
+    "decomposition_of_the_non_matching": {
+      "TREEBANK_UNASSIGNED": 127,
+      "OTHER": 17,
+      "CROSS_CLAUSE_LEAKAGE": 623,
+      "SAME_ARGUMENT_EXPANSION": 423,
+      "SAME_ARGUMENT_EXPANSION_NO_GOLD_ANCESTOR": 157
+    },
+    "by_kind_and_role": {
+      "CROSS_CLAUSE_LEAKAGE|AGENT": 254,
+      "CROSS_CLAUSE_LEAKAGE|PATIENT": 154,
+      "SAME_ARGUMENT_EXPANSION|PATIENT": 142,
+      "SAME_ARGUMENT_EXPANSION|AGENT": 121,
+      "CROSS_CLAUSE_LEAKAGE|INSTRUMENT": 76,
+      "SAME_ARGUMENT_EXPANSION_NO_GOLD_ANCESTOR|AGENT": 75,
+      "CROSS_CLAUSE_LEAKAGE|BENEFICIARY": 73,
+      "TREEBANK_UNASSIGNED|AGENT": 46,
+      "SAME_ARGUMENT_EXPANSION|LOCATION": 43,
+      "SAME_ARGUMENT_EXPANSION|INSTRUMENT": 43,
+      "SAME_ARGUMENT_EXPANSION_NO_GOLD_ANCESTOR|PATIENT": 41,
+      "CROSS_CLAUSE_LEAKAGE|LOCATION": 36,
+      "SAME_ARGUMENT_EXPANSION|SOURCE": 33,
+      "TREEBANK_UNASSIGNED|PATIENT": 22,
+      "SAME_ARGUMENT_EXPANSION|BENEFICIARY": 21,
+      "SAME_ARGUMENT_EXPANSION|GOAL": 20,
+      "TREEBANK_UNASSIGNED|LOCATION": 18,
+      "SAME_ARGUMENT_EXPANSION_NO_GOLD_ANCESTOR|BENEFICIARY": 17,
+      "TREEBANK_UNASSIGNED|BENEFICIARY": 16,
+      "TREEBANK_UNASSIGNED|INSTRUMENT": 15,
+      "CROSS_CLAUSE_LEAKAGE|SOURCE": 15,
+      "CROSS_CLAUSE_LEAKAGE|GOAL": 15,
+      "SAME_ARGUMENT_EXPANSION_NO_GOLD_ANCESTOR|INSTRUMENT": 15,
+      "OTHER|PATIENT": 10,
+      "TREEBANK_UNASSIGNED|SOURCE": 6,
+      "SAME_ARGUMENT_EXPANSION_NO_GOLD_ANCESTOR|LOCATION": 5,
+      "TREEBANK_UNASSIGNED|GOAL": 4,
+      "OTHER|GOAL": 3,
+      "OTHER|LOCATION": 2,
+      "OTHER|AGENT": 2,
+      "SAME_ARGUMENT_EXPANSION_NO_GOLD_ANCESTOR|SOURCE": 2,
+      "SAME_ARGUMENT_EXPANSION_NO_GOLD_ANCESTOR|GOAL": 2
+    },
+    "expansion_role_agreement_with_its_own_head": {
+      "same_role": 406,
+      "different_role": 17
+    },
+    "cross_clause_leakage": 623,
+    "cross_clause_leakage_share_of_emitted": 0.2295,
+    "role_disagreements": 50,
+    "wrong_fillers_total": 673,
+    "wrong_share_of_emitted": 0.2479,
+    "adjusted_precision_counting_same_argument_expansion_as_correct": 0.6991,
+    "leakage_by_deprel": {
+      "nsubj": 106,
+      "acl": 75,
+      "xcomp:result": 56,
+      "conj": 54,
+      "obl": 47,
+      "obj": 37,
+      "xcomp": 34,
+      "iobj": 28,
+      "vocative": 26,
+      "obl:soc": 18,
+      "amod": 17,
+      "advcl": 17,
+      "advcl:fin": 16,
+      "other:advmod": 13,
+      "obl:temp": 12,
+      "det": 11,
+      "obl:loc": 10,
+      "advcl:manner": 9,
+      "obl:instr": 9,
+      "obl:agent": 8
+    },
+    "leakage_examples": [
+      {
+        "sent_id": "643702_1",
+        "veda": "AV",
+        "finite_verb": "tanu",
+        "predicate": "ESTABLISHES",
+        "token": "ubhe",
+        "case_rule_said": "PATIENT",
+        "treebank_deprel": "det",
+        "treebank_head": "ārtnī",
+        "head_upos": "NOUN",
+        "text": "iha eva abhi vi tanu ubhe ārtnī iva jyayā"
+      },
+      {
+        "sent_id": "643702_1",
+        "veda": "AV",
+        "finite_verb": "tanu",
+        "predicate": "ESTABLISHES",
+        "token": "ārtnī",
+        "case_rule_said": "PATIENT",
+        "treebank_deprel": "advcl:manner",
+        "treebank_head": "tanu",
+        "head_upos": "VERB",
+        "text": "iha eva abhi vi tanu ubhe ārtnī iva jyayā"
+      },
+      {
+        "sent_id": "643708_2",
+        "veda": "AV",
+        "finite_verb": "kṛdhi",
+        "predicate": "CREATES",
+        "token": "aśmānam",
+        "case_rule_said": "PATIENT",
+        "treebank_deprel": "xcomp",
+        "treebank_head": "kṛdhi",
+        "head_upos": "VERB",
+        "text": "aśmānam tanvam kṛdhi"
+      },
+      {
+        "sent_id": "643709_1",
+        "veda": "AV",
+        "finite_verb": "kṛdhi",
+        "predicate": "CREATES",
+        "token": "varīyaḥ",
+        "case_rule_said": "PATIENT",
+        "treebank_deprel": "xcomp:result",
+        "treebank_head": "kṛdhi",
+        "head_upos": "VERB",
+        "text": "vīḍuḥ varīyaḥ arātīḥ apa dveṣāṃsi ā kṛdhi"
+      },
+      {
+        "sent_id": "643735_1",
+        "veda": "AV",
+        "finite_verb": "hinvantu",
+        "predicate": "LEADS",
+        "token": "amūḥ",
+        "case_rule_said": "AGENT",
+        "treebank_deprel": "nsubj",
+        "treebank_head": "sūrye",
+        "head_upos": "NOUN",
+        "text": "amūḥ yāḥ upa sūrye yābhiḥ vā sūryaḥ saha tāḥ naḥ hinvantu adhvaram"
+      },
+      {
+        "sent_id": "643735_1",
+        "veda": "AV",
+        "finite_verb": "hinvantu",
+        "predicate": "LEADS",
+        "token": "yāḥ",
+        "case_rule_said": "AGENT",
+        "treebank_deprel": "det",
+        "treebank_head": "amūḥ",
+        "head_upos": "PRON",
+        "text": "amūḥ yāḥ upa sūrye yābhiḥ vā sūryaḥ saha tāḥ naḥ hinvantu adhvaram"
+      },
+      {
+        "sent_id": "643735_1",
+        "veda": "AV",
+        "finite_verb": "hinvantu",
+        "predicate": "LEADS",
+        "token": "yābhiḥ",
+        "case_rule_said": "INSTRUMENT",
+        "treebank_deprel": "conj",
+        "treebank_head": "sūrye",
+        "head_upos": "NOUN",
+        "text": "amūḥ yāḥ upa sūrye yābhiḥ vā sūryaḥ saha tāḥ naḥ hinvantu adhvaram"
+      },
+      {
+        "sent_id": "643740_2",
+        "veda": "AV",
+        "finite_verb": "dadhātana",
+        "predicate": "ESTABLISHES",
+        "token": "ūrje",
+        "case_rule_said": "BENEFICIARY",
+        "treebank_deprel": "advcl:fin",
+        "treebank_head": "dadhātana",
+        "head_upos": "VERB",
+        "text": "tāḥ naḥ ūrje dadhātana mahe raṇāya cakṣase"
+      },
+      {
+        "sent_id": "643740_2",
+        "veda": "AV",
+        "finite_verb": "dadhātana",
+        "predicate": "ESTABLISHES",
+        "token": "mahe",
+        "case_rule_said": "BENEFICIARY",
+        "treebank_deprel": "amod",
+        "treebank_head": "raṇāya",
+        "head_upos": "NOUN",
+        "text": "tāḥ naḥ ūrje dadhātana mahe raṇāya cakṣase"
+      },
+      {
+        "sent_id": "643740_2",
+        "veda": "AV",
+        "finite_verb": "dadhātana",
+        "predicate": "ESTABLISHES",
+        "token": "raṇāya",
+        "case_rule_said": "BENEFICIARY",
+        "treebank_deprel": "obj",
+        "treebank_head": "cakṣase",
+        "head_upos": "VERB",
+        "text": "tāḥ naḥ ūrje dadhātana mahe raṇāya cakṣase"
+      }
+    ]
+  },
+  "probe_3_does_it_undermine_the_cost_figure": {
+    "confirmed_by_parse": {
+      "deity": 102,
+      "not_deity": 1216,
+      "total": 1318,
+      "deity_share": 0.0774
+    },
+    "rejected_by_parse": {
+      "deity": 52,
+      "not_deity": 1345,
+      "total": 1397,
+      "deity_share": 0.0372
+    }
+  },
+  "probe_4_does_it_undermine_the_triple_figure": {
+    "test_id": "PREFLIGHT_TRIPLE_SURVIVAL",
+    "scored_assertions": 1114,
+    "case_rule_calls_complete": 218,
+    "parse_also_calls_complete": 201,
+    "parse_disagrees": 17,
+    "triple_survival_rate": 0.922,
+    "parse_complete_but_case_rule_missed": 42,
+    "counts": {
+      "assertions": 1114,
+      "case_rule_calls_complete": 218,
+      "and_parse_agrees": 201,
+      "parse_complete_case_rule_missed_it": 42,
+      "but_parse_does_not": 17
+    }
+  },
+  "verdict": {
+    "headline": "FAILS AT FILLER LEVEL, HOLDS AT ASSERTION LEVEL",
+    "filler_level": "Raw precision 0.4855, far below the 0.85-0.95 expected. Decomposed: 623 of 2,715 emitted fillers (23.0%) are attached across a clause boundary and 50 carry the wrong role, so 24.8% are wrong. A further 580 (21.4%) are a second token inside a single argument -- a determiner, adjective, apposition or conjunct -- which inflates the count without changing the role, and 406 of the 423 checkable ones carry the same role as the argument head they sit in.",
+    "the_gate_does_not_catch_it": "The gate counts FINITE verbs. The leakage comes from non-finite clauses -- acl 75, xcomp:result 56, xcomp 34, advcl 42 -- and from subjects internal to a nominal, nsubj 106. The gate is blind to all of them, so the mitigation the report relied on does not cover the failure mode.",
+    "assertion_level_holds": "Predicates, frames, passage counts and every abstention count derive from the verb's own morphology and are untouched by scope. The one headline figure that does depend on fillers, the agent-predicate-patient triple, survives at 0.922 -- and the residual error is conservative: the parse finds 42 complete triples the case rule missed against 17 it manufactured, so the rule UNDER-reports completeness.",
+    "cost_figure_holds": "Deity share is 7.74% among parse-confirmed fillers and 3.72% among parse-rejected ones, so leakage is less deity-heavy than genuine attachment. Discarding every rejected filler would move the overall deity share from 8.08% to about 8.6%. The 91.9% figure stands and the conclusion is, if anything, understated."
+  },
+  "figures_that_move": [
+    "None of the counts in the artifact. Nothing was restaged or renumbered.",
+    "What moves is the confidence attached to one class of figure: a case-scoped role FILLER count now carries a measured 24.8% wrong-attachment rate and a 21.4% duplication rate, both recorded on every row's evaluation block and in manifest.evaluation.",
+    "manifest.qa.defects_found 4 -> 5 and manifest.qa.sampled 44 -> 1,158, because the preflight is a fifth finding over 1,114 mechanically scored assertions."
+  ],
+  "what_was_deliberately_not_done": "No attempt to patch the rule. Cross-clause leakage cannot be detected without a parse, and all of the Rigveda plus three quarters of the non-Rigvedic material has none. Tightening the case rule by guesswork -- refusing a filler that looks like a modifier, say -- would trade a measured error for an unmeasured one. The honest move is to publish the rate and let a consumer discount or filter.",
+  "the_sixth_case_the_owner_asked_us_to_look_for": "This is a modelling error on our side of the line, not a source absence: DCS supplied a dependency parse for these sentences all along and the rule that reads them ignored it wherever the sentence fell outside the parsed quarter. The pattern matches the five prior cases -- the refusal was correct in form and the ATTACHMENT was wrong -- with the difference that here the wrong attachment is inside a verse rather than between verses, so no coverage count could ever have shown it."
+}

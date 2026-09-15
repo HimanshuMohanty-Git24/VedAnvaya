@@ -514,9 +514,13 @@ def main(scratch: str, out_dir: str) -> None:
             ),
         },
         "qa": {
-            "sampled": 44,
+            "sampled": 1158,
             "sample_method": "both",
-            "defects_found": 4,
+            "defects_found": 5,
+            "sampled_note": (
+                "44 assertions adjudicated by reading, plus 1,114 scored mechanically "
+                "against the dependency parse in the Wave-3 adversarial preflight."
+            ),
             "human_reviewed": 0,
             "adjudicator": "MODEL_ADJUDICATED",
             "adjudicator_model": "claude-opus-5",
@@ -579,6 +583,30 @@ def main(scratch: str, out_dir: str) -> None:
                     "status": "OPEN, INHERITED FROM THE ROOT MAP",
                     "fix": "none applied. Overriding a hand-adjudicated root map from a string operation would be worse than the defect.",
                 },
+                {
+                    "id": "QA-5",
+                    "example": "AVS 1.1.4 asmanam tanvam kridhi; AVS 1.4.4 amuh yah upa surye ... tah nah hinvantu",
+                    "found": (
+                        "the case-scoped rule attaches roles across a clause boundary. "
+                        "Scored against the dependency parse on 1,114 sentences: 623 of "
+                        "2,715 emitted fillers (23.0%) belong to another clause and 50 more "
+                        "carry the wrong role, 24.8% wrong in total."
+                    ),
+                    "cause": (
+                        "the deployed gate counts FINITE verbs, and the leakage comes from "
+                        "non-finite clauses (acl, xcomp, advcl) and from subjects internal "
+                        "to a nominal, none of which the gate can see"
+                    ),
+                    "status": "MEASURED, NOT FIXABLE WITHOUT A PARSE",
+                    "fix": (
+                        "none. It is a property of reading roles from case with no "
+                        "dependency annotation, which is the situation for all of the "
+                        "Rigveda and three quarters of the rest. The measured rate is "
+                        "carried on every row instead. No count was restaged: predicates, "
+                        "frames, assertions and abstentions do not depend on role scope, "
+                        "and the agent-predicate-patient triple figure survives at 92.2%."
+                    ),
+                },
             ],
             "limitations_the_sample_exposed_that_are_not_defects": [
                 "A dative of purpose is read as BENEFICIARY, because the registry defines BENEFICIARY as a dative. 'for lasting might' becomes a beneficiary.",
@@ -618,6 +646,25 @@ ROW_EVALUATION = {
     "precision_claimed": None,
     "precision_claimed_note": "no human gold set for Vedic semantic roles exists in this "
     "repository; see manifest.evaluation for what was measured instead",
+    # The Wave-3 adversarial preflight, carried on the row because a row separated from its
+    # manifest must still know the measured error rate of the instrument that made it.
+    "case_scoped_rule_measured_against_the_treebank": {
+        "measured_on": "1,114 DCS sentences that carry a dependency parse, with the "
+        "deployed single-finite-verb gate applied",
+        "role_fillers_scored": 2715,
+        "wrong_share": 0.2479,
+        "wrong_share_note": "623 fillers attached across a clause boundary plus 50 given "
+        "the wrong role. A property of reading roles from case with no parse.",
+        "same_argument_duplicate_share": 0.2136,
+        "same_argument_duplicate_note": "a modifier, determiner or conjunct inside an "
+        "argument the verb does have, carrying the same role in 406 of 423 checkable "
+        "cases. Inflates the filler count; does not change the role.",
+        "agent_predicate_patient_triple_survival": 0.922,
+        "triple_survival_note": "and the error is conservative: the parse finds 42 "
+        "complete triples the case rule missed, against 17 it manufactured",
+        "applies_to_derivations": ["MORPHOLOGY_RULE_CASE", "CROSS_VEDA_TEXT_IDENTITY"],
+        "does_not_apply_to": "TREEBANK_DEPREL, which is the parse itself",
+    },
 }
 
 EVALUATION = {
@@ -638,6 +685,90 @@ EVALUATION = {
         "disagreement on a nominative, a homonym fold, a particle-sensitive root, a "
         "conjugation-sensitive root, a sentence spanning a verse boundary.",
     ],
+    "adversarial_preflight_before_wave_3": {
+        "assumption_tested": (
+            "A role read from morphological case standing beside a finite verb, scoped to "
+            "one pada (Rigveda) or one sentence (unparsed DCS), is the role a dependency "
+            "parse would assign. 28,370 of 30,274 assertions rest on it, which is why it "
+            "was chosen over the Samavedic projection (372 assertions) or the "
+            "dominant-sense rule (1,139)."
+        ),
+        "why_a_test_was_possible_at_all": (
+            "This report said no agreement figure could be computed because no independent "
+            "source exists. That is true of the SOURCE and false of the RULE: 2,823 DCS "
+            "sentences carry a human-validated dependency parse, so the case rule can be "
+            "run on exactly those and scored against it. The instrument has a ground truth "
+            "even where the corpus does not, and not noticing that was the gap in the "
+            "original evaluation design."
+        ),
+        "verdict": "FAILS AT FILLER LEVEL, HOLDS AT ASSERTION LEVEL",
+        "filler_level": {
+            "fillers_emitted": 2715,
+            "exact_agreement_with_the_parse": 1318,
+            "raw_precision": 0.4855,
+            "cross_clause_leakage": 623,
+            "role_disagreements": 50,
+            "wrong_share": 0.2479,
+            "same_argument_expansion": 580,
+            "treebank_unassigned": 127,
+            "other": 17,
+            "reading": (
+                "The raw 0.4855 is an average of unlike quantities and must not be quoted. "
+                "Decomposed: 21.4% of emitted fillers are a second token inside one "
+                "argument and carry the right role, 24.8% are wrong, and the remainder the "
+                "parse assigns to no verb either."
+            ),
+        },
+        "the_defect_the_single_finite_verb_gate_does_not_catch": (
+            "Leakage comes from NON-finite clauses -- acl 75, xcomp:result 56, xcomp 34, "
+            "advcl 42 -- and from subjects internal to a nominal, nsubj 106. The deployed "
+            "gate counts finite verbs, so it sees none of them. Two measured examples: "
+            "asmanam tanvam kridhi gives the predicative complement as a second PATIENT, "
+            "and amuh yah upa surye ... tah nah hinvantu gives the subject of a relative "
+            "clause as the AGENT of the main verb."
+        ),
+        "assertion_level": {
+            "unchanged_by_scope": (
+                "passages processed, assertions, predicates, frames and every abstention "
+                "count. All derive from the verb's own morphology, not from role scope."
+            ),
+            "triples_case_rule_calls_complete": 218,
+            "triples_the_parse_also_calls_complete": 201,
+            "survival_rate": 0.922,
+            "triples_the_case_rule_missed": 42,
+            "triples_the_case_rule_manufactured": 17,
+            "reading": (
+                "Completeness needs an AGENT and a PATIENT anywhere in the role set, and "
+                "leakage adds fillers to a set that usually already held both. So the "
+                "0 to 5,219 three-slot figure survives at 92.2%, and the rule "
+                "under-reports completeness rather than over-reporting it."
+            ),
+        },
+        "headline_cost_figure_survives": {
+            "deity_share_among_parse_confirmed_fillers": 0.0774,
+            "deity_share_among_parse_rejected_fillers": 0.0372,
+            "reading": (
+                "Leakage is LESS deity-heavy than confirmed attachment, so discarding it "
+                "would raise the deity share from 8.08% to at most about 8.6%. The "
+                "Devata-only-leaves-91.9%-unrepresentable conclusion stands, and if "
+                "anything it understates the case."
+            ),
+        },
+        "what_was_not_changed_and_why": (
+            "No row was restaged and no count renumbered. The leakage cannot be fixed "
+            "without a parse, which is the finding rather than a bug to patch: all of the "
+            "Rigveda and three quarters of the non-Rigvedic material have none. The "
+            "measured rate is attached to every row's evaluation block instead so it "
+            "travels with the data, and each filler already carries its own case, surface "
+            "and evidence string for a consumer that wants to re-judge it."
+        ),
+        "what_the_lead_should_do_with_it": (
+            "Treat a case-scoped role filler as a candidate and a TREEBANK_DEPREL filler as "
+            "a reading. A product surface that counts role fillers should report the two "
+            "derivations separately, or apply the 0.2479 discount and say so. Counting "
+            "agent-predicate-patient triples is safe at 92.2%."
+        ),
+    },
     "why_no_cross_source_agreement_figure": (
         "UD_Sanskrit-Vedic looked like an independent second witness and is not. Measured "
         "here: 2,160 of 9,105 DCS Atharvavedic sentences and 619 of 2,516 Vājasaneyi "

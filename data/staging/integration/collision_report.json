@@ -1,0 +1,496 @@
+{
+  "schema_version": "1.0",
+  "generated_for_wave": 3,
+  "domains_audited": [
+    "attribution",
+    "audio_av",
+    "audio_rv",
+    "audio_yv",
+    "communities",
+    "cross_veda",
+    "formula",
+    "quality",
+    "ritual",
+    "samaveda_music",
+    "scholarship",
+    "semantic_roles",
+    "translation"
+  ],
+  "domain_row_counts": {
+    "attribution": 23003,
+    "audio_av": 771,
+    "audio_rv": 150,
+    "audio_yv": 33,
+    "communities": 1028,
+    "cross_veda": 7021,
+    "formula": 5636,
+    "quality": 3951,
+    "ritual": 3045,
+    "samaveda_music": 1471,
+    "scholarship": 114,
+    "semantic_roles": 14235,
+    "translation": 2254
+  },
+  "subjects_touched_by_more_than_one_domain": 20079,
+  "subjects_touched_total": 22537,
+  "properties_shared_by_more_than_one_domain": {
+    "citation": [
+      "attribution",
+      "formula"
+    ],
+    "veda": [
+      "attribution",
+      "audio_rv",
+      "communities",
+      "formula",
+      "translation"
+    ],
+    "predicate": [
+      "attribution",
+      "samaveda_music"
+    ],
+    "scope_type": [
+      "attribution",
+      "audio_av",
+      "audio_rv",
+      "audio_yv",
+      "samaveda_music"
+    ],
+    "attribution": [
+      "audio_av",
+      "audio_rv",
+      "audio_yv"
+    ],
+    "audio_id": [
+      "audio_av",
+      "audio_rv",
+      "audio_yv"
+    ],
+    "audio_type": [
+      "audio_av",
+      "audio_rv",
+      "audio_yv"
+    ],
+    "availability": [
+      "audio_av",
+      "audio_rv",
+      "audio_yv"
+    ],
+    "duration_seconds": [
+      "audio_av",
+      "audio_rv",
+      "audio_yv"
+    ],
+    "end_seconds": [
+      "audio_av",
+      "audio_rv",
+      "audio_yv"
+    ],
+    "last_verified": [
+      "audio_av",
+      "audio_rv",
+      "audio_yv"
+    ],
+    "licence": [
+      "audio_av",
+      "audio_rv",
+      "audio_yv"
+    ],
+    "local_copy_permitted": [
+      "audio_av",
+      "audio_rv",
+      "audio_yv"
+    ],
+    "location": [
+      "audio_av",
+      "audio_rv",
+      "audio_yv"
+    ],
+    "media_url": [
+      "audio_av",
+      "audio_rv",
+      "audio_yv"
+    ],
+    "notes": [
+      "audio_av",
+      "audio_rv",
+      "audio_yv",
+      "scholarship"
+    ],
+    "patha_type": [
+      "audio_av",
+      "audio_yv"
+    ],
+    "performer": [
+      "audio_av",
+      "audio_rv",
+      "audio_yv"
+    ],
+    "playback_mode": [
+      "audio_av",
+      "audio_rv",
+      "audio_yv"
+    ],
+    "recension": [
+      "audio_av",
+      "audio_rv",
+      "audio_yv"
+    ],
+    "source_page": [
+      "audio_av",
+      "audio_rv",
+      "audio_yv"
+    ],
+    "source_reference": [
+      "audio_av",
+      "audio_rv",
+      "audio_yv"
+    ],
+    "start_seconds": [
+      "audio_av",
+      "audio_rv",
+      "audio_yv"
+    ],
+    "text_verified": [
+      "audio_av",
+      "audio_rv",
+      "audio_yv"
+    ],
+    "title": [
+      "audio_av",
+      "audio_rv"
+    ],
+    "tradition": [
+      "audio_av",
+      "audio_rv",
+      "audio_yv"
+    ],
+    "evaluation": [
+      "communities",
+      "formula",
+      "quality",
+      "scholarship"
+    ],
+    "population": [
+      "formula",
+      "quality",
+      "scholarship"
+    ],
+    "positive_count": [
+      "formula",
+      "quality",
+      "scholarship"
+    ],
+    "processed_count": [
+      "formula",
+      "quality",
+      "scholarship"
+    ],
+    "row_kind": [
+      "ritual",
+      "scholarship"
+    ],
+    "note": [
+      "ritual",
+      "samaveda_music"
+    ]
+  },
+  "collision_counts": {
+    "NAME_COLLISION_DIFFERENT_MEANING": 18
+  },
+  "conflict_count": 18,
+  "wave_3_barred": true,
+  "note": "Two domains writing the same canonical key is not a collision and is not counted as one: fourteen domains describe a shared corpus of 20,210 mantras. Only a shared property with divergent values, or a duplicated minted identity, is a collision.",
+  "collisions": [
+    {
+      "kind": "SHARED_PROPERTY_ON_ONE_SUBJECT",
+      "property": "scope_type",
+      "subject": "VG:AV:SAU:K06:S056:V002",
+      "domains": [
+        "attribution",
+        "audio_av"
+      ],
+      "distinct_values": 2,
+      "classification": "NAME_COLLISION_DIFFERENT_MEANING",
+      "resolution": "'scope_type' is used by unrelated domain families (attribution, audio) and almost certainly means different things in each. Namespace it per domain at import; do NOT resolve by precedence, which would overwrite one concept with another",
+      "values": {
+        "attribution": "\"SINGLE_MANTRA\"",
+        "audio_av": "\"MANTRA\""
+      }
+    },
+    {
+      "kind": "SHARED_PROPERTY_ON_ONE_SUBJECT",
+      "property": "scope_type",
+      "subject": "VG:AV:SAU:K06:S063:V004",
+      "domains": [
+        "attribution",
+        "audio_av"
+      ],
+      "distinct_values": 2,
+      "classification": "NAME_COLLISION_DIFFERENT_MEANING",
+      "resolution": "'scope_type' is used by unrelated domain families (attribution, audio) and almost certainly means different things in each. Namespace it per domain at import; do NOT resolve by precedence, which would overwrite one concept with another",
+      "values": {
+        "attribution": "\"SINGLE_MANTRA\"",
+        "audio_av": "\"MANTRA\""
+      }
+    },
+    {
+      "kind": "SHARED_PROPERTY_ON_ONE_SUBJECT",
+      "property": "scope_type",
+      "subject": "VG:AV:SAU:K07:S012:V003",
+      "domains": [
+        "attribution",
+        "audio_av"
+      ],
+      "distinct_values": 2,
+      "classification": "NAME_COLLISION_DIFFERENT_MEANING",
+      "resolution": "'scope_type' is used by unrelated domain families (attribution, audio) and almost certainly means different things in each. Namespace it per domain at import; do NOT resolve by precedence, which would overwrite one concept with another",
+      "values": {
+        "attribution": "\"SINGLE_MANTRA\"",
+        "audio_av": "\"MANTRA\""
+      }
+    },
+    {
+      "kind": "SHARED_PROPERTY_ON_ONE_SUBJECT",
+      "property": "scope_type",
+      "subject": "VG:AV:SAU:K07:S012:V004",
+      "domains": [
+        "attribution",
+        "audio_av"
+      ],
+      "distinct_values": 2,
+      "classification": "NAME_COLLISION_DIFFERENT_MEANING",
+      "resolution": "'scope_type' is used by unrelated domain families (attribution, audio) and almost certainly means different things in each. Namespace it per domain at import; do NOT resolve by precedence, which would overwrite one concept with another",
+      "values": {
+        "attribution": "\"SINGLE_MANTRA\"",
+        "audio_av": "\"MANTRA\""
+      }
+    },
+    {
+      "kind": "SHARED_PROPERTY_ON_ONE_SUBJECT",
+      "property": "scope_type",
+      "subject": "VG:AV:SAU:K07:S056:V002",
+      "domains": [
+        "attribution",
+        "audio_av"
+      ],
+      "distinct_values": 2,
+      "classification": "NAME_COLLISION_DIFFERENT_MEANING",
+      "resolution": "'scope_type' is used by unrelated domain families (attribution, audio) and almost certainly means different things in each. Namespace it per domain at import; do NOT resolve by precedence, which would overwrite one concept with another",
+      "values": {
+        "attribution": "\"SINGLE_MANTRA\"",
+        "audio_av": "\"MANTRA\""
+      }
+    },
+    {
+      "kind": "SHARED_PROPERTY_ON_ONE_SUBJECT",
+      "property": "scope_type",
+      "subject": "VG:AV:SAU:K07:S080:V003",
+      "domains": [
+        "attribution",
+        "audio_av"
+      ],
+      "distinct_values": 2,
+      "classification": "NAME_COLLISION_DIFFERENT_MEANING",
+      "resolution": "'scope_type' is used by unrelated domain families (attribution, audio) and almost certainly means different things in each. Namespace it per domain at import; do NOT resolve by precedence, which would overwrite one concept with another",
+      "values": {
+        "attribution": "\"SINGLE_MANTRA\"",
+        "audio_av": "\"MANTRA\""
+      }
+    },
+    {
+      "kind": "SHARED_PROPERTY_ON_ONE_SUBJECT",
+      "property": "scope_type",
+      "subject": "VG:AV:SAU:K07:S084:V001",
+      "domains": [
+        "attribution",
+        "audio_av"
+      ],
+      "distinct_values": 2,
+      "classification": "NAME_COLLISION_DIFFERENT_MEANING",
+      "resolution": "'scope_type' is used by unrelated domain families (attribution, audio) and almost certainly means different things in each. Namespace it per domain at import; do NOT resolve by precedence, which would overwrite one concept with another",
+      "values": {
+        "attribution": "\"SINGLE_MANTRA\"",
+        "audio_av": "\"MANTRA\""
+      }
+    },
+    {
+      "kind": "SHARED_PROPERTY_ON_ONE_SUBJECT",
+      "property": "scope_type",
+      "subject": "VG:AV:SAU:K06:S049:V002",
+      "domains": [
+        "attribution",
+        "audio_av"
+      ],
+      "distinct_values": 2,
+      "classification": "NAME_COLLISION_DIFFERENT_MEANING",
+      "resolution": "'scope_type' is used by unrelated domain families (attribution, audio) and almost certainly means different things in each. Namespace it per domain at import; do NOT resolve by precedence, which would overwrite one concept with another",
+      "values": {
+        "attribution": "\"SINGLE_MANTRA\"",
+        "audio_av": "\"MANTRA\""
+      }
+    },
+    {
+      "kind": "SHARED_PROPERTY_ON_ONE_SUBJECT",
+      "property": "scope_type",
+      "subject": "VG:AV:SAU:K07:S053:V005",
+      "domains": [
+        "attribution",
+        "audio_av"
+      ],
+      "distinct_values": 2,
+      "classification": "NAME_COLLISION_DIFFERENT_MEANING",
+      "resolution": "'scope_type' is used by unrelated domain families (attribution, audio) and almost certainly means different things in each. Namespace it per domain at import; do NOT resolve by precedence, which would overwrite one concept with another",
+      "values": {
+        "attribution": "\"SINGLE_MANTRA\"",
+        "audio_av": "\"MANTRA\""
+      }
+    },
+    {
+      "kind": "SHARED_PROPERTY_ON_ONE_SUBJECT",
+      "property": "scope_type",
+      "subject": "VG:AV:SAU:K07:S053:V006",
+      "domains": [
+        "attribution",
+        "audio_av"
+      ],
+      "distinct_values": 2,
+      "classification": "NAME_COLLISION_DIFFERENT_MEANING",
+      "resolution": "'scope_type' is used by unrelated domain families (attribution, audio) and almost certainly means different things in each. Namespace it per domain at import; do NOT resolve by precedence, which would overwrite one concept with another",
+      "values": {
+        "attribution": "\"SINGLE_MANTRA\"",
+        "audio_av": "\"MANTRA\""
+      }
+    },
+    {
+      "kind": "SHARED_PROPERTY_ON_ONE_SUBJECT",
+      "property": "scope_type",
+      "subject": "VG:AV:SAU:K07:S053:V007",
+      "domains": [
+        "attribution",
+        "audio_av"
+      ],
+      "distinct_values": 2,
+      "classification": "NAME_COLLISION_DIFFERENT_MEANING",
+      "resolution": "'scope_type' is used by unrelated domain families (attribution, audio) and almost certainly means different things in each. Namespace it per domain at import; do NOT resolve by precedence, which would overwrite one concept with another",
+      "values": {
+        "attribution": "\"SINGLE_MANTRA\"",
+        "audio_av": "\"MANTRA\""
+      }
+    },
+    {
+      "kind": "SHARED_PROPERTY_ON_ONE_SUBJECT",
+      "property": "scope_type",
+      "subject": "VG:AV:SAU:K07:S070:V003",
+      "domains": [
+        "attribution",
+        "audio_av"
+      ],
+      "distinct_values": 2,
+      "classification": "NAME_COLLISION_DIFFERENT_MEANING",
+      "resolution": "'scope_type' is used by unrelated domain families (attribution, audio) and almost certainly means different things in each. Namespace it per domain at import; do NOT resolve by precedence, which would overwrite one concept with another",
+      "values": {
+        "attribution": "\"SINGLE_MANTRA\"",
+        "audio_av": "\"MANTRA\""
+      }
+    },
+    {
+      "kind": "SHARED_PROPERTY_ON_ONE_SUBJECT",
+      "property": "scope_type",
+      "subject": "VG:AV:SAU:K07:S070:V004",
+      "domains": [
+        "attribution",
+        "audio_av"
+      ],
+      "distinct_values": 2,
+      "classification": "NAME_COLLISION_DIFFERENT_MEANING",
+      "resolution": "'scope_type' is used by unrelated domain families (attribution, audio) and almost certainly means different things in each. Namespace it per domain at import; do NOT resolve by precedence, which would overwrite one concept with another",
+      "values": {
+        "attribution": "\"SINGLE_MANTRA\"",
+        "audio_av": "\"MANTRA\""
+      }
+    },
+    {
+      "kind": "SHARED_PROPERTY_ON_ONE_SUBJECT",
+      "property": "scope_type",
+      "subject": "VG:AV:SAU:K07:S070:V005",
+      "domains": [
+        "attribution",
+        "audio_av"
+      ],
+      "distinct_values": 2,
+      "classification": "NAME_COLLISION_DIFFERENT_MEANING",
+      "resolution": "'scope_type' is used by unrelated domain families (attribution, audio) and almost certainly means different things in each. Namespace it per domain at import; do NOT resolve by precedence, which would overwrite one concept with another",
+      "values": {
+        "attribution": "\"SINGLE_MANTRA\"",
+        "audio_av": "\"MANTRA\""
+      }
+    },
+    {
+      "kind": "SHARED_PROPERTY_ON_ONE_SUBJECT",
+      "property": "scope_type",
+      "subject": "VG:AV:SAU:K07:S026:V004",
+      "domains": [
+        "attribution",
+        "audio_av"
+      ],
+      "distinct_values": 2,
+      "classification": "NAME_COLLISION_DIFFERENT_MEANING",
+      "resolution": "'scope_type' is used by unrelated domain families (attribution, audio) and almost certainly means different things in each. Namespace it per domain at import; do NOT resolve by precedence, which would overwrite one concept with another",
+      "values": {
+        "attribution": "\"SINGLE_MANTRA\"",
+        "audio_av": "\"MANTRA\""
+      }
+    },
+    {
+      "kind": "SHARED_PROPERTY_ON_ONE_SUBJECT",
+      "property": "scope_type",
+      "subject": "VG:AV:SAU:K07:S026:V005",
+      "domains": [
+        "attribution",
+        "audio_av"
+      ],
+      "distinct_values": 2,
+      "classification": "NAME_COLLISION_DIFFERENT_MEANING",
+      "resolution": "'scope_type' is used by unrelated domain families (attribution, audio) and almost certainly means different things in each. Namespace it per domain at import; do NOT resolve by precedence, which would overwrite one concept with another",
+      "values": {
+        "attribution": "\"SINGLE_MANTRA\"",
+        "audio_av": "\"MANTRA\""
+      }
+    },
+    {
+      "kind": "SHARED_PROPERTY_ON_ONE_SUBJECT",
+      "property": "scope_type",
+      "subject": "VG:AV:SAU:K07:S026:V006",
+      "domains": [
+        "attribution",
+        "audio_av"
+      ],
+      "distinct_values": 2,
+      "classification": "NAME_COLLISION_DIFFERENT_MEANING",
+      "resolution": "'scope_type' is used by unrelated domain families (attribution, audio) and almost certainly means different things in each. Namespace it per domain at import; do NOT resolve by precedence, which would overwrite one concept with another",
+      "values": {
+        "attribution": "\"SINGLE_MANTRA\"",
+        "audio_av": "\"MANTRA\""
+      }
+    },
+    {
+      "kind": "SHARED_PROPERTY_ON_ONE_SUBJECT",
+      "property": "scope_type",
+      "subject": "VG:AV:SAU:K07:S026:V007",
+      "domains": [
+        "attribution",
+        "audio_av"
+      ],
+      "distinct_values": 2,
+      "classification": "NAME_COLLISION_DIFFERENT_MEANING",
+      "resolution": "'scope_type' is used by unrelated domain families (attribution, audio) and almost certainly means different things in each. Namespace it per domain at import; do NOT resolve by precedence, which would overwrite one concept with another",
+      "values": {
+        "attribution": "\"SINGLE_MANTRA\"",
+        "audio_av": "\"MANTRA\""
+      }
+    }
+  ],
+  "collisions_truncated": false,
+  "collisions_total": 18
+}

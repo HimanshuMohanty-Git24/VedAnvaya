@@ -51,7 +51,9 @@ assertion when the agent resolved to a `:Devata`.
 
 Assertions carrying agent, predicate and patient together go from a measured **0** to
 **5,219**. GAP-SEMANTICS-003's benchmark claim of 17 does not reproduce and never did; the
-live count is 0, re-verified here with edge direction checked first.
+live count is 0, re-verified here with edge direction checked first. The 5,219 was tested
+against a dependency parse in the preflight below and survives at **92.2%**, erring toward
+under-reporting completeness.
 
 ## Three derivations, never summed
 
@@ -206,6 +208,10 @@ distinct hymns. UD is the treebanked slice of DCS re-released. Ingesting it woul
 coverage, and an agreement figure between the two would measure a file format. **So no
 cross-source agreement figure is claimed anywhere in this artifact.**
 
+That holds for the *source*. It does **not** hold for the *rule*, and the adversarial
+preflight below exploits the difference: the parsed quarter is a ground truth for the
+case-scoped role rule even though it is not a second opinion about the text.
+
 **VedaWeb 2.0, probed directly.** Two negatives and one positive, measured rather than
 inherited:
 
@@ -311,6 +317,7 @@ is claimed for any corpus**. 4 in 44 is a floor on the defect rate, not an estim
 | **QA-2** | RV 8.48.10 `ayaṁ yaḥ somo ny adhāyy asme`: a passive verb's nominative labelled AGENT, making the deposited Soma the depositor | **closed in code** |
 | **QA-3** | VSM 6.22 `mā apaḥ mā oṣadhīḥ hiṃsīḥ`: a prohibition came out as a *requested* SLAYS with the plants as PATIENT — the opposite of the verse | **mitigated, not closed** |
 | **QA-4** | AVŚ 6.114.2: "we could not accomplish the sacrifice" came out as BLESSES | **open, inherited** |
+| **QA-5** | the case-scoped rule attaches 24.8% of its role fillers across a clause boundary or to the wrong role, measured against the parse on 1,114 sentences | **measured, not fixable without a parse** — see the preflight section |
 
 **QA-1's cause is a new hazard of the same shape as the one the root map names.** DCS never
 writes a long vocalic liquid — measured: **0 of 1,651 distinct verb lemmas**. So its `stṛ`
@@ -350,6 +357,110 @@ would be worse than the defect.
   the last carries the case. Where a parse exists the members are now prepended, so the
   filler's surface is the whole compound; where no parse exists they cannot be.
 
+## ADVERSARIAL PREFLIGHT BEFORE WAVE 3 — the case-scoped role rule, tested
+
+Requested by the coordinator: name the most load-bearing assumption and test it once.
+
+**The assumption.** *A role read from morphological case standing beside a finite verb,
+scoped to one metrical pada (Rigveda) or one sentence (unparsed DCS), is the role a
+dependency parse would assign to that token.*
+
+**Why this one and not the others.** 28,370 of 30,274 assertions — 93.7% — get their roles
+this way, including every Rigvedic assertion and every Samavedic projection. It is also the
+assumption behind both figures this report leads with: the 0 → 5,219 three-slot count and
+the 91.9% unrepresentable-filler cost. The Samavedic identity projection (372 assertions)
+and the ≥95% dominant-sense rule (1,139) are each smaller by an order of magnitude, and
+both are already labelled and filterable on the row.
+
+**Why a test was possible at all, having said no agreement figure could be computed.** That
+claim was about the *source*, and it is true — there is no second witness and no human
+gold. It is false about the *rule*. 2,823 DCS sentences carry a human-validated dependency
+parse, so the case rule can be run on exactly those sentences and scored against the parse
+token by token. **The instrument has a ground truth even where the corpus does not, and not
+noticing that was a gap in my own evaluation design.**
+
+**The test.** For every parsed DCS sentence, with the deployed single-finite-verb gate
+applied and the predicate resolved by the same root map, extract roles twice — once from
+the verb's dependency children, once from case over the whole sentence — and compare per
+token id. Then classify every disagreement by walking the token's head chain, so three
+unlike kinds of disagreement are never averaged. 1,114 sentences scored, 2,715 fillers.
+
+**Expected:** precision 0.85–0.95. The gate already suppresses non-agent roles wherever two
+finite verbs share a scope, so the error was expected to be small.
+
+**Returned:** raw precision **0.4855**. Decomposed:
+
+| | fillers | share | is it wrong? |
+|---|--:|--:|---|
+| exact agreement with the parse | 1,318 | 48.6% | no |
+| same-argument expansion — a determiner, adjective, apposition or conjunct inside one argument | 580 | 21.4% | **no** — 406 of the 423 checkable ones carry the same role as the argument head they sit in. Inflates the count, not the role. |
+| **cross-clause leakage** | **623** | **23.0%** | **yes** |
+| role disagreement | 50 | 1.8% | **yes** |
+| the parse assigns it to no verb either | 144 | 5.3% | neither side is right |
+
+**24.8% of the fillers the case rule emits are wrong.** The assumption does not hold at
+filler level.
+
+**And the gate I relied on cannot catch it.** The gate counts *finite* verbs. The leakage
+comes from non-finite clauses — `acl` 75, `xcomp:result` 56, `xcomp` 34, `advcl` 42 — and
+from subjects internal to a nominal, `nsubj` 106. Two measured examples:
+
+- AVŚ `aśmānam tanvam kṛdhi`, "make the body a stone" — `aśmānam` is a predicative
+  complement (`xcomp`), and the case rule files it as a second PATIENT.
+- AVŚ `amūḥ yāḥ upa sūrye … tāḥ naḥ hinvantu` — `amūḥ` is the subject of a relative clause
+  headed by `sūrye`, and the case rule makes it the AGENT of `hinvantu`.
+
+### What survives, measured rather than assumed
+
+**Every count in this artifact is unchanged.** Predicates, frames, passages processed,
+assertions and every abstention figure derive from the verb's own morphology; no scope
+decision touches them. Nothing was restaged and nothing renumbered. The validator still
+passes at 100% coverage on all 15 checks.
+
+**The three-slot figure survives at 92.2%**, and the residual error runs the safe way. Of
+218 assertions the case rule calls complete, the parse also calls **201** complete. It
+*misses* 42 complete triples the parse finds, against 17 it manufactures — so the rule
+**under-reports** completeness. Completeness needs an AGENT and a PATIENT anywhere in the
+role set, and leakage adds fillers to a set that usually already held both, which is why
+this figure is far more robust than the filler count.
+
+**The 91.9% cost figure survives, and is if anything understated.** Deity share is **7.74%**
+among parse-confirmed fillers and **3.72%** among parse-rejected ones — leakage is *less*
+deity-heavy than genuine attachment. Discarding every rejected filler would move the
+overall deity share from 8.08% to about 8.6%. The conclusion that the `:Devata`-only
+endpoint leaves ~92% of a role layer unrepresentable does not depend on the defect.
+
+### What changed, and what deliberately did not
+
+Changed: a case-scoped role **filler** count now carries a measured 24.8% wrong-attachment
+rate and a 21.4% duplication rate. Both are written into every row's `evaluation` block —
+so the rate travels with a row separated from its manifest — and into
+`manifest.evaluation.adversarial_preflight_before_wave_3`. `manifest.qa.defects_found` goes
+4 → 5 (QA-5) and `sampled` 44 → 1,158.
+
+Not changed: the rule. Cross-clause leakage cannot be detected without a parse, and all of
+the Rigveda plus three quarters of the non-Rigvedic material has none. Tightening the rule
+by guesswork — refusing any filler that looks like a modifier — would trade a measured
+error for an unmeasured one. Every filler already carries its own case, surface and
+evidence string, so a consumer can re-judge it.
+
+**For the lead:** treat a case-scoped filler as a *candidate* and a `TREEBANK_DEPREL` filler
+as a *reading*. A surface that counts role fillers should either report the two derivations
+separately or apply the 0.2479 discount and say so. Counting agent-predicate-patient
+triples is safe at 92.2%.
+
+### Is this the sixth case?
+
+Yes, and it fits the pattern rather than extending it. Like the Yajurvedic comparator and
+the Atharvavedic coordinates, this is a defect on our side of the line, not a source
+absence — DCS supplied the parse all along and the rule ignored it wherever the sentence
+fell outside the parsed quarter. The refusal logic was correct in form and the
+**attachment** was wrong. The one new thing: here the wrong attachment is *inside* a verse
+rather than between verses, so **no coverage count could ever have surfaced it** — which is
+why it needed an instrument-level test rather than a recount.
+
+Full record: `proofs/adversarial_preflight_case_scoped_roles.json`.
+
 ## Known limitations, stated plainly
 
 1. **1,390 Atharvavedic and 1,191 Yajurvedic mantras have no morphological source.** AVŚ
@@ -371,10 +482,13 @@ would be worse than the defect.
    highest-value follow-on in the domain: `vid`, `i`, `pā` and `dviṣ` alone account for 769
    Atharvavedic and 115 Yajurvedic finite verbs. That is a bounded philological task over a
    named list of about twenty DCS lemma strings, not an acquisition.
-5. **Roles are pada- or sentence-scoped, not clause-scoped.** 1,115 Rigvedic padas and
-   2,423 Atharvavedic unparsed sentences hold more than one finite verb; those assertions
-   keep their predicate and frame and carry **no** non-agent roles, because nothing in the
-   annotation says which accusative belongs to which verb.
+5. **Roles are pada- or sentence-scoped, not clause-scoped, and this is now measured.**
+   1,115 Rigvedic padas and 2,423 Atharvavedic unparsed sentences hold more than one finite
+   verb; those assertions keep their predicate and frame and carry **no** non-agent roles.
+   But that gate counts only *finite* verbs, and the preflight above shows it is not
+   enough: **24.8% of case-scoped role fillers are attached across a clause boundary or
+   given the wrong role**, the leakage coming from participles, infinitives and
+   nominal-internal subjects the gate cannot see. The rate is on every row.
 6. **A predicate edge is not a parse.** The root map says so in its own recommendations,
    point 8, and it is repeated on every `MORPHOLOGY_RULE_CASE` row's `mapping_method`.
 7. **`IS_OR_BECOMES` is 2,035 Rigvedic assertions** and is not an action. It is excluded
