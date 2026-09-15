@@ -348,7 +348,25 @@ def validate_rows(
 
 
 def validate_against_graph(rows: list[dict[str, Any]], result: Result) -> None:
-    """Resolve every canonical_key against the live graph and check the claimed veda."""
+    """Resolve every row's subject against the live graph and check the claimed veda.
+
+    Rows come at two grains, and the first version of this validator only understood one.
+
+    A passage-grained row names a `:Passage` by `canonical_key`. That is most domains, and
+    it is the default.
+
+    An entity-grained row names a registry entity -- a `:Devata`, `:Rishi`, `:Chandas`,
+    `:Concept` -- by `entity_key`. Those nodes carry no `canonical_key` and no `:Passage`
+    label, so requiring one made the primary object of an entity-grained domain
+    unexpressible. Two agents hit that wall and worked around it by moving their real
+    output into a sidecar file and filling `rows.jsonl` with passage-grained proxies. The
+    artifacts passed, which is the problem: the check reported full coverage over rows that
+    were not the domain's subject.
+
+    So a row may declare `subject_kind: ENTITY` and carry `entity_key`. The two grains are
+    counted as separate checks rather than pooled, because a single blended coverage figure
+    would hide a domain resolving none of its entities behind a wall of passage proxies.
+    """
     sys.path.insert(0, str(pathlib.Path(__file__).parent.parent / "src"))
     try:
         from neo4j import GraphDatabase
@@ -361,12 +379,20 @@ def validate_against_graph(rows: list[dict[str, Any]], result: Result) -> None:
     password = os.environ.get("NEO4J_PASSWORD", "vedagraph_dev")
     database = os.environ.get("NEO4J_DATABASE", "neo4j")
 
-    keys = [row["canonical_key"] for row in rows if row.get("canonical_key")]
+    passage_rows = [r for r in rows if str(r.get("subject_kind", "PASSAGE")).upper() != "ENTITY"]
+    entity_rows = [r for r in rows if str(r.get("subject_kind", "PASSAGE")).upper() == "ENTITY"]
+
+    keys = [row["canonical_key"] for row in passage_rows if row.get("canonical_key")]
     claimed = {
         row["canonical_key"]: row.get("veda") or (row.get("payload") or {}).get("veda")
-        for row in rows
+        for row in passage_rows
         if row.get("canonical_key")
     }
+    entity_keys = [
+        row.get("entity_key") or row.get("canonical_key")
+        for row in entity_rows
+        if row.get("entity_key") or row.get("canonical_key")
+    ]
 
     resolves = result.check("graph.canonical_key_resolves")
     resolves.eligible = len(keys)
@@ -403,6 +429,25 @@ def validate_against_graph(rows: list[dict[str, Any]], result: Result) -> None:
                     veda_match.failures.append(
                         f"{key}: row claims veda {claimed[key]!r}, graph says {found[key]!r}"
                     )
+
+            if entity_keys:
+                entity_check = result.check("graph.entity_key_resolves")
+                entity_check.eligible = len(entity_keys)
+                seen_entities: set[str] = set()
+                for start in range(0, len(entity_keys), batch_size):
+                    batch = entity_keys[start : start + batch_size]
+                    records = session.run(
+                        "UNWIND $keys AS k MATCH (n {entity_key: k}) "
+                        "RETURN DISTINCT n.entity_key AS key",
+                        keys=batch,
+                    )
+                    seen_entities.update(record["key"] for record in records)
+                    entity_check.evaluated += len(batch)
+                for key in entity_keys:
+                    if key not in seen_entities:
+                        entity_check.failures.append(
+                            f"{key} does not resolve to any node by entity_key"
+                        )
     finally:
         driver.close()
 
@@ -486,6 +531,12 @@ def main() -> int:
         "mapping_confidence": dict(confidence_counts),
         "not_importable": sum(confidence_counts[c] for c in NOT_IMPORTABLE),
         "graph_checked": bool(args.graph),
+        "passage_grained_rows": sum(
+            1 for r in rows if str(r.get("subject_kind", "PASSAGE")).upper() != "ENTITY"
+        ),
+        "entity_grained_rows": sum(
+            1 for r in rows if str(r.get("subject_kind", "PASSAGE")).upper() == "ENTITY"
+        ),
     }
 
     _report(result, args)

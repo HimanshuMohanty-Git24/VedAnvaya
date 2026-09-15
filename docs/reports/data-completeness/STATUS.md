@@ -9,53 +9,746 @@
 
 ## Current wave
 
-**WAVE 0 - CLOSED.** `WAVE_0_CLOSURE.md`.
-**WAVE 1 - CLOSED.** `WAVE_1_CLOSURE.md`. All six specialists returned; every artifact
-passes the validator at 100% coverage with `--graph`.
+**WAVE 0 CLOSED** (`WAVE_0_CLOSURE.md`). **WAVE 1 CLOSED** (`WAVE_1_CLOSURE.md`).
+**WAVE 2 in progress** -- 4 of 8 agents returned.
 
-**WAVE 2 - not started.** Agents 9-16: semantic roles, cross-Veda connections, semantic
-resemblance, formulae, ritual, scholarship, deity communities, quality reference set.
-
-**Nothing has been imported.** Graph unchanged at 108,779 / 265,295. Every Wave 1 figure is
-stageable, not live, and must not be quoted as product coverage until Wave 3 imports it and
-reads the counts back out of the database.
+**Nothing is imported.** Graph unchanged at 108,779 / 265,295, re-counted after every
+agent. Every coverage figure in this campaign is STAGED_PROJECTED_COVERAGE until Wave 3
+ingests and reads the counts back out of the database (owner section F).
 
 | Agent | Role | State |
 |---|---|---|
-| 1 | Gap census | DONE - 74 gaps |
-| 2 | Corpus audit | DONE - 20,210 rows, 11 defects |
-| - | Source reconnaissance | DONE - 67 sources |
-| 3 | Translation | DONE - 1,514 stageable, PASS |
-| 4 | Rigveda audio | DONE - 150 of 150, PASS |
-| 5 | Samaveda audio + music | DONE - melodic layer created, PASS |
-| 6 | Yajurveda audio | DONE - 25 recovered, PASS |
-| 7 | Atharvaveda audio | DONE - 764 recovered, PASS |
-| 8 | Attribution / entity | DONE - PASS |
+| 1 | Gap census | DONE |
+| 2 | Corpus audit | DONE |
+| - | Source reconnaissance | DONE |
+| 3-8 | Wave 1, all six | DONE, all validator PASS |
+| 9 | Morphology + semantic roles | DONE -- four Vedas reached, PASS |
+| 10 | Cross-Veda matrix | DONE -- 48 cells, none unresolved, PASS |
+| 11 | Semantic resemblance | RUNNING |
+| 12 | Formula / parallel / variant | DONE -- nothing stale, PASS |
+| 13 | Ritual expansion | RUNNING |
+| 14 | Scholarly disagreement | RUNNING |
+| 15 | Deity communities | DONE -- computed and REFUSED, PASS |
+| 16 | Quality reference set | RUNNING |
 
-## Wave 1 totals, if imported
+Ten staging domains, 55,602 rows, 54,847 strong. See `WAVE_3_INTEGRATION_PLAN.md`.
 
-| Dimension | Before | After | Note |
-|---|--:|--:|---|
-| Translation | 17,283 | 18,797 | 85.5% -> 93.0% of 20,210 |
-| Audio | 16,834 | 17,773 | 83.3% -> 87.9% |
-| Dedication unmodelled | 5,498 | 5,465 | |
-| Metre gap | 5,610 | 5,493 | |
-| Samavedic notation | 0 | 1,136 | a layer that did not exist |
+## Owner decisions in force
 
-No `VERIFIED_SEGMENT` mapping was needed and **no timestamp is asserted anywhere** in
-Wave 1. Nobody listened to any file: 0 of 150, 0 of 771, 0 of 475, 0 of 25.
+Recorded as an overlay in `data/staging/lead_overlays/wave1_decisions.json`, applied after
+artifacts are read rather than by editing them. **The import must read overlays or it will
+import rows the owner barred.**
 
-## Before Wave 3 imports anything
+- **A** -- RV 1.65-1.70 barred until the coordinate repair is applied. Repair artifact in
+  `data/staging/rv_coordinate_repair/`, step 7 verified 10/10. NB the affected layer is
+  translations; that span's audio is 61 of 61, all EXACT and text_verified.
+- **C** -- 31 forced Yajurvedic addresses barred. Accepted recovery is 19, not 50.
+- **E** -- audio import gate CLOSED. `data/staging/audio_review_queue.jsonl`, 1,021 rows,
+  all `NEEDS_AUDIBLE_REVIEW`, **0 reviewed**. 793 carry a blind unlabelled neighbour pair.
+  Zero segmented rows, so no boundary review is owed.
+- **D** -- LOAR inventoried, 22 items, no coverage claimed. **No item is a Kauthuma arcika
+  recitation**, so the Samavedic gap is not closed by it. Two findings outside the Samaveda:
+  a CC0 Madhyandina Samhita recitation (rights blocker gone, granularity remains) and a
+  Saunaka Atharvaveda at roughly one kanda per file.
 
-1. **Realign RV 1.65-1.70 first.** 25 shipped translations are on the wrong verse
-   (`RV_1_65_TO_1_70_MISALIGNMENT.md`). Importing the 30 absent verses first would fill the
-   hymns and hide it.
-2. Decide the playback mode for the Rigvedic 150 - `REMOTE_DIRECT`, caching blocked by a
-   rights requirement, Range supported.
-3. Rule on 31 forced Yajurvedic addresses flagged
-   `address_forced_without_content_control`.
-4. Give Samavedic verses a home for the running Samhita number, or `MUSICALIZED_AS` cannot
-   be re-derived post-import.
+#
+#
+ 
+R
+e
+g
+i
+s
+t
+r
+y
+
+
+
+
+`
+d
+a
+t
+a
+/
+g
+a
+p
+_
+r
+e
+g
+i
+s
+t
+r
+y
+.
+j
+s
+o
+n
+`
+ 
+-
+-
+ 
+*
+*
+8
+0
+ 
+g
+a
+p
+s
+*
+*
+:
+ 
+6
+7
+ 
+I
+M
+P
+L
+E
+M
+E
+N
+T
+A
+T
+I
+O
+N
+_
+G
+A
+P
+,
+ 
+8
+ 
+S
+T
+A
+L
+E
+,
+ 
+5
+ 
+T
+R
+U
+E
+_
+S
+C
+O
+P
+E
+_
+F
+A
+C
+T
+.
+
+
+A
+l
+l
+ 
+`
+O
+P
+E
+N
+`
+;
+ 
+n
+o
+t
+h
+i
+n
+g
+ 
+c
+l
+o
+s
+e
+s
+ 
+u
+n
+t
+i
+l
+ 
+W
+a
+v
+e
+ 
+3
+ 
+i
+m
+p
+o
+r
+t
+s
+ 
+a
+n
+d
+ 
+r
+e
+-
+r
+e
+a
+d
+s
+.
+
+
+
+
+*
+*
+1
+1
+ 
+e
+n
+t
+r
+i
+e
+s
+ 
+n
+o
+w
+ 
+c
+a
+r
+r
+y
+ 
+`
+c
+a
+u
+s
+a
+t
+i
+o
+n
+_
+s
+t
+a
+t
+u
+s
+:
+ 
+M
+E
+A
+S
+U
+R
+E
+D
+`
+*
+*
+ 
+w
+i
+t
+h
+ 
+o
+b
+s
+e
+r
+v
+e
+d
+_
+g
+a
+p
+,
+ 
+s
+u
+s
+p
+e
+c
+t
+e
+d
+_
+c
+a
+u
+s
+e
+,
+
+
+m
+e
+a
+s
+u
+r
+e
+d
+_
+c
+a
+u
+s
+e
+ 
+a
+n
+d
+ 
+c
+l
+o
+s
+u
+r
+e
+_
+m
+e
+t
+h
+o
+d
+ 
+s
+e
+p
+a
+r
+a
+t
+e
+d
+,
+ 
+a
+n
+d
+ 
+*
+*
+6
+ 
+d
+i
+s
+p
+r
+o
+v
+e
+n
+ 
+p
+r
+e
+s
+c
+r
+i
+p
+t
+i
+o
+n
+s
+ 
+a
+r
+e
+ 
+w
+i
+t
+h
+d
+r
+a
+w
+n
+*
+*
+
+
+(
+o
+w
+n
+e
+r
+ 
+s
+e
+c
+t
+i
+o
+n
+ 
+G
+)
+.
+ 
+E
+a
+c
+h
+ 
+o
+r
+i
+g
+i
+n
+a
+l
+ 
+h
+y
+p
+o
+t
+h
+e
+s
+i
+s
+ 
+i
+s
+ 
+p
+r
+e
+s
+e
+r
+v
+e
+d
+ 
+r
+a
+t
+h
+e
+r
+ 
+t
+h
+a
+n
+ 
+o
+v
+e
+r
+w
+r
+i
+t
+t
+e
+n
+.
+
+
+
+
+T
+h
+e
+ 
+c
+a
+m
+p
+a
+i
+g
+n
+ 
+g
+o
+t
+ 
+t
+h
+e
+ 
+s
+a
+m
+e
+ 
+k
+i
+n
+d
+ 
+o
+f
+ 
+g
+u
+e
+s
+s
+ 
+w
+r
+o
+n
+g
+ 
+r
+e
+p
+e
+a
+t
+e
+d
+l
+y
+:
+ 
+i
+t
+ 
+a
+s
+s
+u
+m
+e
+d
+ 
+a
+b
+s
+e
+n
+c
+e
+ 
+a
+t
+ 
+t
+h
+e
+ 
+s
+o
+u
+r
+c
+e
+
+
+w
+h
+e
+r
+e
+ 
+t
+h
+e
+ 
+d
+e
+f
+e
+c
+t
+ 
+w
+a
+s
+ 
+i
+n
+ 
+o
+u
+r
+ 
+o
+w
+n
+ 
+a
+d
+d
+r
+e
+s
+s
+i
+n
+g
+.
+ 
+F
+o
+u
+r
+ 
+a
+u
+d
+i
+o
+ 
+a
+n
+d
+ 
+t
+r
+a
+n
+s
+l
+a
+t
+i
+o
+n
+ 
+g
+a
+p
+s
+,
+ 
+t
+h
+e
+ 
+Y
+a
+j
+u
+r
+v
+e
+d
+i
+c
+
+
+p
+a
+r
+a
+l
+l
+e
+l
+ 
+a
+s
+y
+m
+m
+e
+t
+r
+y
+,
+ 
+a
+n
+d
+ 
+a
+ 
+l
+e
+m
+m
+a
+ 
+l
+a
+y
+e
+r
+ 
+t
+h
+a
+t
+ 
+w
+a
+s
+ 
+n
+e
+v
+e
+r
+ 
+a
+ 
+l
+e
+m
+m
+a
+ 
+l
+a
+y
+e
+r
+.
+
+
+
 
 ## Registry
 
