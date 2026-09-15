@@ -1,0 +1,67 @@
+{
+  "domain": "audio_yv",
+  "agent": 6,
+  "schema_version": "1.0",
+  "algorithm_version": "yv-audio-realign-v1.0",
+  "created_at": "2026-09-15T07:12:22Z",
+  "code_commit": "564d43fd5f62f892fb565693dcd3c02c5d36893c",
+  "config_hash": "745d05ee5c688981bbc1b8740b34e82312df8a71bbd9854743774812ad4c298b",
+  "source_snapshot_ids": [
+    "VEDSEARCH_YV_HARVEST_2026-09-12"
+  ],
+  "files": [
+    {
+      "path": "rows.jsonl",
+      "sha256": "206f054ef86166a72d1b23e8e23d8427869fc8b3e1420c3043f7b7b09ee7154c",
+      "rows": 33,
+      "bytes": 131465
+    },
+    {
+      "path": "sources.jsonl",
+      "sha256": "63f40751887ea68b480d4a46f2d294675a30be3bd23cde30310d99cc23b36eab",
+      "rows": 12,
+      "bytes": 3957
+    },
+    {
+      "path": "rejected.jsonl",
+      "sha256": "b370df06ef57315452e23db0528da4eddf346e32621e0f748493834428eab507",
+      "rows": 201,
+      "bytes": 104617
+    }
+  ],
+  "counts": {
+    "candidates_considered": 234,
+    "accepted": 33,
+    "rejected": 201,
+    "verified_zero": 0,
+    "not_applicable": 0,
+    "unresolved": 0
+  },
+  "counts_detail": {
+    "assessed_population": "all 1,975 YV mantras were re-assessed, not only the 223 gap. The 1,752 already-mapped verses were re-scored under the corrected instrument and all 1,752 still map -- zero regressions. candidates_considered counts the 223 open gap keys plus the 11 whole-source candidates evaluated for them.",
+    "gap_keys_considered": 223,
+    "external_source_candidates_considered": 11,
+    "accepted_EXACT_importable": 25,
+    "accepted_UNVERIFIED_staged_not_importable": 8,
+    "rejected_gap_keys_no_audio_at_source": 190,
+    "rejected_external_source_candidates": 11,
+    "arithmetic": "223 gap keys = 25 accepted EXACT + 8 accepted UNVERIFIED + 190 rejected. Adding the 11 rejected source candidates gives candidates_considered 234 = accepted 33 + rejected 201 + unresolved 0. The 8 UNVERIFIED rows count as accepted because they are staged as rows; the validator reports them separately as not importable.",
+    "yv_audio_after_import": "1,777 of 1,975 = 90.0%, up from 1,752 = 88.7%",
+    "residual_198": "190 NO_AUDIO_AT_SOURCE + 8 UNVERIFIED. Every one carries a typed reason, which is GAP-AUDIO-003's second closure clause."
+  },
+  "closes_gaps": [],
+  "advances_gaps": [
+    "GAP-AUDIO-003"
+  ],
+  "gap_status_proposed": {
+    "GAP-AUDIO-003": "PARTIALLY_CLOSED_REMAINDER_BLOCKED_RIGHTS_AND_GRANULARITY -- NOT BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE. Madhyandina audio covering the remaining 198 exists and is live today at IGNCA; it is permission-blocked and published per adhyaya, not absent. See proofs/ignca-madhyandina-live.md."
+  },
+  "qa": {
+    "sampled": 93,
+    "sample_method": "both",
+    "defects_found": 2,
+    "human_reviewed": 0,
+    "sampling_detail": "25 of 25 accepted rows (100%): real audio fetched from the live API, every one decoded as MP3, 88-288 KB. 60 control rows already accepted by the shipped pipeline: audio fetched to establish a bytes-per-text-letter band of 414.8-978.6 (median 527.4); all 25 accepted rows fall inside it, at 418.9-853.1, so none is a long recording attached to one mantra -- a whole adhyaya at that rate would be ~2,852 KB against a largest accepted file of 281 KB. 25 distinct recordings; no recording is shared between two keys. 8 of 8 residue coordinates fetched: all carry real MP3, so their blocker is text verification, not absence. 40 of the 190 NO_AUDIO_AT_SOURCE rows re-probed live 2026-09-15: 0 flipped. Adversarially, each of the 33 was also scored against all 1,975 source rows to test the numbering-offset hypothesis, which it disproved. The 2 defects_found are the two instrument defects reported in the companion document; zero defects were found in the 33 rows themselves.",
+    "not_verified": "No row carries duration_seconds, because no duration was decoded -- it is unknown, not zero. No human has heard any of these 33 recordings; human_reviewed is 0 and no row claims otherwise. The 25 EXACT rows rest on the source's own statement of what each file recites, matched against our text: the same two-safeguard basis as the 1,752 rows already in the catalogue, and no stronger."
+  }
+}
