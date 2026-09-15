@@ -41,8 +41,31 @@ nowhere:
 
 Internal consistency check that the transcription passes: the offsets are strictly
 increasing, and all of them fall inside `SV001.mp3`, whose archive.org-reported length is
-2648.04 s = 44:08. Note also that **GG 17 carries no cue at all**, so coverage inside the
-cue index is itself partial -- it is not one row per gana.
+2648.04 s = 44:08.
+
+## It is an ANCHOR index, not a segment map -- measured on a second page
+
+This is the part that changes what the index is worth, so it was checked on a second page
+deeper into the same volume rather than assumed from the first.
+
+Volume 01 is **40 pages** covering GG 1-180, about 4.5 ganas per page. Page 11
+(`AAGNEYAM GG / A1.4`, i.e. adhyaya 1 fourth khanda) holds five ganas -- `(35.1)` through
+`(36.1)`, right-margin running numbers 56-60 -- and carries **exactly one** left-margin
+cue: `1/33.05`. The other four ganas on that page have no cue at all; `(36.1)` has a bare
+tick mark instead.
+
+So the density is not one cue per gana and it is not even stable: 6 cues for 7 ganas on
+page 3, **1 cue for 5 ganas on page 11**. The timestamps mark selected anchor points in
+the recording, and a complete human transcription of every margin column would therefore
+still NOT yield a timestamp for every gana. Any downstream segment map built from this
+would have to interpolate between anchors -- which is inventing a boundary, and is
+refused.
+
+Corroboration that the two pages belong to one continuous reading: 12.42 on page 3 and
+33.05 on page 11 are both clip 1 and in order, so clip 1 alone spans roughly GG 12-60.
+That is consistent with the volume filenames, which sum to 10h24 for the five Grameyagaana
+volumes plus 5h29 for the five Aranyakagaana volumes -- 15h53 against about 24 clips of
+~44 min each.
 
 ## Why it produced zero rows
 
@@ -78,8 +101,16 @@ Four reasons, each independently sufficient.
 
 A human transcription pass over the margin columns of volumes 01-10, followed by the
 recension check reconnaissance already specified (the Gayatram on RV 3.62.10 against the
-Kauthuma notation at the printed offset). The cost is real but now known: it is handwriting
-transcription of two margin columns across the ten volumes, not a parser.
+Kauthuma notation at the printed offset). The cost is real but now bounded: volume 01 is 40
+pages for 180 ganas, so the ten volumes are on the order of 330 pages of two handwritten
+margin columns -- a transcription task, not a parser. (The 1,419-page figure in
+reconnaissance belongs to the separate typeset PPN PDFs, not to this scanned set.)
+
+But note what it would and would not buy, given the anchor density measured above: a
+complete transcription yields **anchor** offsets for a minority of ganas inside clips 1-24,
+covering Gramageya and Aranyakageya only, pointing into a recording with no rights
+statement. It is worth doing to make the corpus navigable. It is NOT a per-gana segment
+map and must not be presented as one.
 
 `FOUR_VEDA_SNAPSHOT_PROVENANCE.md` F5 -- "No timing or cue artifacts exist for any audio"
 -- **is stale and should be amended**, not rediscovered: a cue artifact exists, is located

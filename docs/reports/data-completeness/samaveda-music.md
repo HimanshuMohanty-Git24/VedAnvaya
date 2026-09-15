@@ -131,9 +131,17 @@ It yielded **0 `VERIFIED_SEGMENT` rows**, for four independently sufficient reas
 4. `sAmagAnam` is **CC BY-NC-ND 4.0**, one-way incompatible with the CC BY-SA corpus beside it.
 
 A seven-row pilot transcription of that one page is recorded in the proof, typed as a pilot and
-promoted nowhere. It passes its own consistency check (offsets strictly increasing, all inside
-`SV001.mp3`'s 2,648.04 s) and it exposes a detail the description omits: **GG 17 carries no cue at
-all**, so coverage *inside* the cue index is itself partial.
+promoted nowhere. It passes its own consistency check: offsets strictly increasing, all inside
+`SV001.mp3`'s 2,648.04 s.
+
+**And it is an anchor index, not a segment map** — checked on a second page rather than assumed
+from the first. Volume 01 is 40 pages for GG 1–180. Page 11 holds five gānas (`(35.1)`–`(36.1)`,
+running numbers 56–60) and carries **exactly one** cue, `1/33.05`; the other four have none.
+Against 6 cues for 7 gānas on page 3, the density is neither one-per-gāna nor stable. So even a
+complete transcription would leave most gānas without a timestamp, and filling the gaps means
+interpolating between anchors — which is inventing a boundary, and is refused. The two pages do
+corroborate each other: 12.42 and 33.05 are both clip 1 and in order, so clip 1 alone spans
+roughly GG 12–60, consistent with the volume filenames summing to 15h53 over ~24 clips.
 
 `FOUR_VEDA_SNAPSHOT_PROVENANCE.md` **F5 — "No timing or cue artifacts exist for any audio" — is
 stale and should be amended, not rediscovered.** The accurate narrower statement is that no cue

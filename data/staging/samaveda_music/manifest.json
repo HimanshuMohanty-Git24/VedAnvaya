@@ -57,9 +57,9 @@
     },
     {
       "path": "proofs/cue-index.md",
-      "sha256": "7a8a2a97c7c0309d5e3950cb06b5cd44f78a9320936746c79287459a69b9b324",
+      "sha256": "4544ad016a541b2cf48831e9bdb872a79df82dde80a08815dc9a90e82e8eec47",
       "rows": null,
-      "bytes": 4693
+      "bytes": 6537
     },
     {
       "path": "proofs/listening-review.json",
