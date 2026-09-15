@@ -563,6 +563,15 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--execute", action="store_true", help="actually write")
     parser.add_argument("--json", default=str(RECEIPT))
+    parser.add_argument(
+        "--backup",
+        default="",
+        help=(
+            "Directory holding the neo4j.dump taken immediately before this run. Recorded "
+            "in the receipt with its checksum, because the rollback point has to be "
+            "identifiable from the receipt alone -- owner section 11."
+        ),
+    )
     args = parser.parse_args()
 
     dry = load(DRY_RUN)
@@ -742,6 +751,24 @@ def main() -> int:
         "started_from_dry_run": str(DRY_RUN),
         "dry_run_sha256": digest(DRY_RUN),
         "at": datetime.datetime.now(datetime.UTC).isoformat(),
+        "rollback_point": {
+            "backup_directory": args.backup or None,
+            "backup_sha256": digest(pathlib.Path(args.backup) / "neo4j.dump")
+            if args.backup
+            else None,
+            "backup_bytes": (pathlib.Path(args.backup) / "neo4j.dump").stat().st_size
+            if args.backup and (pathlib.Path(args.backup) / "neo4j.dump").exists()
+            else None,
+            "git_commit": (dry.get("provenance") or {}).get("git_commit"),
+            "restore": (
+                "docker stop vedagraph-neo4j; docker run --rm -v infra_neo4j_data:/data "
+                "-v <backup_directory>:/backups neo4j:5.26-community neo4j-admin database "
+                "load neo4j --from-path=/backups --overwrite-destination=true; "
+                "docker start vedagraph-neo4j. The dump must be named neo4j.dump inside a "
+                "timestamped directory: load matches by database name, which is how the "
+                "first restore attempt in this project failed."
+            ),
+        },
         "census_before": before,
         "census_after": after,
         "node_delta": after["nodes"] - before["nodes"],
