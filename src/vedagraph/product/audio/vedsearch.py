@@ -177,6 +177,26 @@ def vedsearch_coordinates(veda: str, canonical_key: str) -> VerseCoordinates | N
 #: verse from another.
 _STRIP_AFTER_FOLD: Final = re.compile(r"[^a-z]")
 
+#: A visarga typed as an ASCII colon, which this corpus does and the source does not.
+#:
+#: Left alone, the two spellings of one sound reduce differently: a Devanagari visarga
+#: survives transliteration as ``h``, while a colon is simply dropped as a non-letter. The
+#: skeletons then differ by one letter per visarga in a verse that is word-for-word
+#: identical, and 893 of the 1,975 Yajurvedic verses carry at least one.
+#:
+#: Matched only after a Devanagari character, which is what the corpus actually contains:
+#: of 1,452 colons across all four Vedas -- 1,451 Yajurvedic, 1 Samavedic, none in the
+#: Rigveda or Atharvaveda -- every one is preceded by a Devanagari character. The
+#: look-behind therefore costs nothing today and keeps a genuine ASCII colon in Latin
+#: text, which would be punctuation rather than a visarga, from being folded later.
+_COLON_VISARGA: Final = re.compile(r"(?<=[ऀ-ॿ]):")
+
+#: U+0903 DEVANAGARI SIGN VISARGA, written as an escape rather than the glyph.
+#: The glyph is visually near-identical to an ASCII colon -- which is the entire
+#: confusion this fold exists to resolve -- so spelling it out keeps the two apart for
+#: a reader as well as for the matcher.
+_VISARGA: Final = chr(0x0903)
+
 
 def skeleton(text: str) -> str:
     """The orthography-insensitive identity of a verse: its letters, and nothing else.
@@ -194,6 +214,9 @@ def skeleton(text: str) -> str:
     # before transliteration, because afterwards it is the two ordinary letters "om" and
     # indistinguishable from a verse that really begins with that word.
     text = text.replace("ॐ", "")
+    # Normalise a colon-spelled visarga to the real sign before transliteration, so the
+    # transliterator resolves both spellings by the same path.
+    text = _COLON_VISARGA.sub(_VISARGA, text)
     if any(0x0900 <= ord(char) < 0x0980 for char in text):
         text = _TRANSLITERATOR.transliterate(text)
     decomposed = unicodedata.normalize("NFD", text.lower())
@@ -203,13 +226,34 @@ def skeleton(text: str) -> str:
 
 #: How similar two verse skeletons must be to count as the same verse.
 #:
-#: Calibrated, not guessed. Over all 1,975 Yajurvedic verses, coordinate-aligned pairs
-#: score a median of 0.995 and a 5th percentile of 0.973, while 400 deliberately mispaired
-#: verses score a median of 0.247 and a **maximum of 0.462**. The two populations do not
-#: overlap anywhere near here, so 0.90 sits at roughly twice the worst wrong pair and still
-#: accepts 98.1% of real matches. It exists because the two editions differ on visarga,
-#: final anusvara and gemination for text that is word-for-word identical -- differences
-#: that survive :func:`skeleton` because they are base letters, not combining marks.
+#: Calibrated, not guessed -- and recalibrated after the comparator was fixed.
+#:
+#: The figures previously recorded here (mispaired median 0.247, maximum 0.462) were
+#: measured with :func:`similarity` still subject to SequenceMatcher's autojunk heuristic,
+#: which discarded nearly the whole alphabet. They described a broken instrument and are
+#: kept only as a warning: a calibration is only as sound as the comparator that produced
+#: it, and this one passed review for a long time.
+#:
+#: Remeasured with ``autojunk=False`` and the colon-visarga fold in place:
+#:
+#: * Coordinate-aligned pairs, all 1,975 Yajurvedic verses against the source edition:
+#:   median 1.0000, 5th percentile 0.9862.
+#: * Mispaired pairs, 12,000 random same-Veda pairs across all four recensions:
+#:   median 0.2683, p95 0.3820, p99 0.4276, **maximum 0.8413**.
+#: * Mispaired pairs reaching this threshold: **0 of 12,000**.
+#:
+#: So 0.90 still separates the populations cleanly, but the headroom is far smaller than
+#: the old figures suggested -- 0.0587 above the worst wrong pair, not the better than
+#: double they implied. Fixing the comparator raised wrong pairs as well as right ones.
+#:
+#: The worst wrong pair is worth knowing: VSM 28.43 against VSM 28.37, two adjacent verses
+#: of one adhyaya whose formulaic text genuinely nearly coincides. The near-misses are
+#: neighbours, which is exactly the confusion an audio mapping must not make, so do not
+#: lower this threshold without remeasuring the neighbour population specifically.
+#:
+#: The threshold exists at all because the two editions differ on visarga, final anusvara
+#: and gemination for text that is word-for-word identical -- differences that survive
+#: :func:`skeleton` because they are base letters, not combining marks.
 MATCH_THRESHOLD: Final = 0.90
 
 #: A fuzzy match must beat the runner-up by this much to be accepted when searching.
@@ -221,8 +265,21 @@ MATCH_MARGIN: Final = 0.05
 
 
 def similarity(left: str, right: str) -> float:
-    """Ratio of two already-reduced skeletons."""
-    return difflib.SequenceMatcher(None, left, right).ratio()
+    """Ratio of two already-reduced skeletons.
+
+    ``autojunk=False`` is load-bearing, not a preference. SequenceMatcher's heuristic
+    treats any element occurring in more than 1% of a sequence longer than 200 elements as
+    junk and excludes it from matching. A verse skeleton is 200 to 1,100 characters drawn
+    from an alphabet of about thirty letters, so the heuristic discards very nearly the
+    whole alphabet: measured on a 285-character skeleton, 17 of its 18 distinct letters
+    were dropped. The resulting ratio is not a similarity between the verses at all.
+
+    The effect was invisible because :func:`verse_matches` short-circuits on exact skeleton
+    equality, so only genuinely-variant pairs ever reached this function -- which is
+    precisely the population the heuristic destroys. One Yajurvedic pair differing in five
+    letters out of 269 scored 0.2342 with the heuristic active and 0.9777 without it.
+    """
+    return difflib.SequenceMatcher(None, left, right, autojunk=False).ratio()
 
 
 def verse_matches(source_text: str, our_text: str) -> tuple[bool, float]:
