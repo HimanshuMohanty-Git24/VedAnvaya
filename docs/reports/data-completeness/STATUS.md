@@ -29,8 +29,8 @@ not reach the frontend, API or any public report.
 
 | | Before Wave 3 | After Wave 3 |
 |---|---:|---:|
-| Nodes | 108,779 | **122,986** |
-| Relationships | 265,295 | **288,051** |
+| Nodes | 108,779 | **116,852** |
+| Relationships | 265,295 | **281,290** |
 
 Core corpus unchanged and asserted every run: RV 10,552 · SV 1,844 · YV 1,975 · AV 5,839.
 
@@ -60,9 +60,9 @@ Element-level, planned by `scripts/wave3_import_plan.py` and read back by
 
 | | Planned | Landed |
 |---|---:|---:|
-| Nodes created | 14,221 | 14,207 |
+| Nodes created | 8,073 | 8,073 |
 | Nodes labelled or updated | 5,647 | — |
-| Relationships created | 22,982 | 22,982 |
+| Relationships created | 16,220 | 16,220 |
 | Relationships retired | 226 | 226 |
 | Property writes | 51,215 | 51,215 |
 
@@ -154,18 +154,48 @@ found things no amount of reading the plan would have.
 | API suite | `ASSERTED_BY` reused, whose signature is `InterpretiveClaim → Source` |
 | API suite | `SET n += row` overwrote 102 curated `display_label`s; `AYAS-METAL` lost "(ayas)" |
 | scorecard | 22,981 edges with no `quality_tier` and 14,209 nodes with no `display_label` |
+| API suite | **13,187 elements imported that the domain staged `PROBABLE` and said never to import** |
 
 Each is now guarded by a test on the spec, so it fails offline rather than in the database.
-**The lesson, in one line: an importer's own per-group report is not evidence.** All five
-passes printed a clean table.
+**The lesson, in one line: an importer's own per-group report is not evidence.** Every pass
+printed a clean table.
 
-## Rollback, tested three times
+### The worst of them, recorded in full
+
+`NOT_IMPORTABLE = {"PROBABLE", "UNVERIFIED"}` had been a constant in the dry-run from the
+start. It was applied to each domain's `rows.jsonl` and to **none of the side files**, which
+is where most elements come from. So the ritual domain's side files imported entire:
+6,150 step nodes, 6,150 step edges, all 685 rite edges, all 179 role assignments and all 23
+rite relations — 13,187 elements.
+
+The artifact does not merely grade them. Every `rite_edges` row carries the instruction:
+
+> *"Staged PROBABLE, never imported as an assertion, because a sūtra may mention an
+> implement in order to forbid it. The campaign's own record of this error is
+> GAP-RITUAL-005."*
+
+Its report adds that PROBABLE exists *"precisely because they need a human read, and none
+has had one"*, and that *"some unknown share of the 2,053 PROBABLE rows are correct."*
+
+The cost reached the reader inside one import. `q25` asserts that chariot and thunderbolt
+must not rank as foremost ritual implements: a version that ranked them was graded
+MISLEADING, and the fix defined an implement as an object a modelled rite *uses*, which
+excluded them by construction over 8 rites. Seven `USES_OBJECT` edges put them back — and
+read one by one they are a mix, which is the point. The Vājapeya genuinely yokes a chariot
+at the altar's southern hip; `ṣoḍaśī vajraḥ` is a metaphor; and several are a word inside a
+mantra the rite *recites* rather than an implement it handles.
+
+The filter now lives in `passes()`, which every group goes through. With it the ritual
+domain contributes 3,121 anchored steps and their edges, and **no** rite edges, role
+assignments or rite relations at all.
+
+## Rollback, tested five times
 
 ```
 D:\vedanvaya-backups\wave3-pre-import-20260915T155144\neo4j.dump
 96,841,712 bytes · sha256 a0ab27b6…d6957
 ```
-Restored four times during this session, and verified exact every time: 108,779 / 265,295, four
+Restored five times during this session, and verified exact every time: 108,779 / 265,295, four
 corpora exact, 0 Wave 3 residue, 0 shared `entity_key`. The dump must be named `neo4j.dump`
 inside a timestamped directory — `neo4j-admin database load` matches by database name.
 
