@@ -943,7 +943,23 @@ def correction_label_redirect_targets_as_rituals(
     objects and offerings is a rite; the artifact says so by naming it already_modelled_as;
     and a node may carry two labels that are both true. MATCH (n:Ritual) goes 100 to 103.
     """
-    targets = sorted(set(redirects("ritual").values()))
+    # Every rite the artifact marks ALREADY_MODELLED_AS_SOCIALRITE, and its target. Not
+    # the redirect map: that skips a row whose already_modelled_as points at ITSELF, which
+    # is how VIVAHA-MARRIAGE was left as the one remaining signature violation after the
+    # other two were labelled. A rite is a rite whether it redirects elsewhere or not.
+    from wave3_import_plan import STAGING, read_jsonl
+
+    targets: set[str] = set()
+    for group in GROUPS:
+        if not group.skip_statuses or not group.redirect_field:
+            continue
+        for row in read_jsonl(STAGING / group.domain / group.source.split(":", 1)[0]):
+            if str(row.get(group.node_status_field) or "") not in group.skip_statuses:
+                continue
+            for value in (row.get(group.identity_fields[0]), row.get(group.redirect_field)):
+                if value:
+                    targets.add(str(value))
+    targets = sorted(targets)
     result: dict[str, Any] = {
         "correction": "LABEL_REDIRECT_TARGETS_AS_RITUALS",
         "targets": targets,
