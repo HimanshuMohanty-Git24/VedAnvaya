@@ -1,0 +1,72 @@
+{
+ "defect": "I ran scripts/validate_staging_artifact.py five times while concurrently rewriting the files it reads. A validator racing its writer can report a PASS on a byte state that never existed as a whole.",
+ "why_it_matters": "this is MEMORY.md's 'parallel agents must not share one .next' lesson, committed against my own gate -- which is worse than committing it against a build, because the gate is the instrument that is supposed to catch me. A PASS obtained this way is not evidence about the artifact; it is evidence about whatever mixture of old and new bytes the run happened to read.",
+ "how_it_was_caught": "comparing each run's manifest.file_checksums count against the file count actually on disk. Five runs reported 28/28 while the shipped manifest lists 29.",
+ "timeline": [
+  {
+   "staging_write": "relations.jsonl",
+   "at": "16:39:06"
+  },
+  {
+   "staging_write": "rejected_pairs.jsonl",
+   "at": "16:44:48"
+  },
+  {
+   "staging_write": "manifest.json (29 files)",
+   "at": "16:49:34"
+  },
+  {
+   "validation_run": "bqlp79ela",
+   "finished": "16:36:48",
+   "checksums": "28/28",
+   "verdict": "PASS",
+   "covers_shipped_bytes": false
+  },
+  {
+   "validation_run": "bx12ppits",
+   "finished": "16:46:03",
+   "checksums": "28/28",
+   "verdict": "PASS",
+   "covers_shipped_bytes": false
+  },
+  {
+   "validation_run": "bhnfg1ql2",
+   "finished": "16:48:39",
+   "checksums": "28/28",
+   "verdict": "PASS",
+   "covers_shipped_bytes": false
+  },
+  {
+   "validation_run": "b119ka8ad",
+   "finished": "16:50:11",
+   "checksums": "28/28",
+   "verdict": "PASS",
+   "covers_shipped_bytes": false
+  },
+  {
+   "validation_run": "bjzv471if",
+   "finished": "16:52:07",
+   "checksums": "28/28",
+   "verdict": "PASS",
+   "covers_shipped_bytes": false
+  },
+  {
+   "validation_run": "bqvgkdaqs",
+   "started": "16:49:42",
+   "checksums": "29/29",
+   "verdict": "PASS",
+   "covers_shipped_bytes": true,
+   "note": "started 8 seconds after the last staging write, on a directory frozen for its whole run"
+  }
+ ],
+ "resolution": "all five racing PASSes are WITHDRAWN as evidence about this artifact. The verdict of record is bqvgkdaqs: 29/29 checksums, 17 checks, 11,181 rows, 100% evaluation coverage on every check, PASS.",
+ "the_rule_this_should_have_followed": "the manifest is generated LAST, and nothing writes to the staging directory between manifest generation and the validation that covers it. The checksum count in a run's output is the cheap way to tell which byte state a verdict describes, and it should be read every time rather than the word PASS.",
+ "verdict_of_record": {
+  "run": "bqvgkdaqs",
+  "file_checksums": "29/29",
+  "rows": 11181,
+  "checks": 17,
+  "coverage": "100% on every check",
+  "result": "PASS"
+ }
+}

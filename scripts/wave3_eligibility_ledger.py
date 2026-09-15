@@ -87,24 +87,44 @@ ASSESSMENTS: dict[str, dict[str, Any]] = {
         ),
     },
     "cross_veda": {
-        "B": ("FAIL", "328 of 6,271 transformation types wrong, 32.2% of RV-YV"),
-        "C": ("DEFECT_FOUND", "anusvara fold correction changed the description, not the counts"),
-        "restage_required": True,
-        "restage_reason": (
-            "Owner sections 7 and 15: surviving counts do not make it acceptable. "
-            "Relationship semantics are part of the data."
+        "B": (
+            "PASS_PENDING_FOLD_FIX",
+            "396 of 6,271 transformation types corrected and 197 stored relationship types "
+            "identified as contradicted by their own text. The corrected typing is right "
+            "and the codebase cannot yet reproduce it, because the fold fix it depends on "
+            "is blocked on FOLD_FIX_BREAKS_REFERENT_IDENTITY.",
         ),
+        "C": (
+            "SURVIVED",
+            "root cause traced to dead code -- surfaces transliterates before it folds, so "
+            "every Devanagari anusvara rule was unreachable on the only cross-script "
+            "comparison surface. Re-measured over all six pairs rather than assuming "
+            "Yajurveda-only, which moved RV-SV from a reported 0 to 6.",
+        ),
+        "restage_required": False,
+        "restage_reason": (
+            "Restage complete. Blocked on the fold fix rather than on further work."
+        ),
+        "blocked_by": ["FOLD_FIX_BREAKS_REFERENT_IDENTITY"],
     },
     "formula": {
         "B": (
-            "FAIL",
-            "134 pairs typed as edition variants where the difference is an inline address",
+            "PASS_AFTER_RESTAGE",
+            "a general structural-reference class replaced the digit exception; all five "
+            "classes tested and reported including class 4's measured zero. The clearest "
+            "evidence: EDITORIAL_APPARATUS no longer exists as a transformation type, "
+            "having held 158 rows.",
         ),
-        "C": ("DEFECT_FOUND", "ceiling function was blind to a third axis it never modelled"),
-        "restage_required": True,
+        "C": (
+            "SURVIVED",
+            "whole 34,502-pair population re-run on stripped surfaces, with the floor "
+            "re-measured on the changed surface rather than inherited. 13 defects recorded, "
+            "including a validation race the agent caught in its own gate.",
+        ),
+        "restage_required": False,
         "restage_reason": (
-            "Owner section 8: fix structural-reference handling as a class and re-run the "
-            "whole candidate population, not the 134 retyped rows."
+            "Restage complete and independently re-validated by the lead at 30/30 "
+            "checksums on frozen bytes."
         ),
     },
     "communities": {
@@ -113,8 +133,10 @@ ASSESSMENTS: dict[str, dict[str, Any]] = {
             "withdrawn claim replaced by a measured internal limitation",
         ),
         "C": (
-            "DEFECT_FOUND",
-            "the decisive check rested on a scholarly prior the graph contradicts",
+            "SURVIVED",
+            "the decisive check rested on a scholarly prior the graph contradicts; the "
+            "claim was withdrawn with the mistake preserved, and the refusal now stands on "
+            "eight measured grounds with no prior among them",
         ),
         "restage_required": False,
         "restage_reason": (
@@ -270,13 +292,22 @@ def main() -> int:
         elif entry["restage_required"]:
             entry["status"] = "RESTAGE_REQUIRED"
             entry["status_detail"] = entry["restage_reason"] or ""
+        elif entry["blocked_by"]:
+            # An open blocker outranks three passing gates. The first version of this
+            # ledger reported cross_veda ELIGIBLE while it carried an unresolved blocker,
+            # which is the same shape of error as a validator pass standing in for
+            # correctness: every check it ran was green and the thing still could not ship.
+            entry["status"] = "BLOCKED"
+            entry["status_detail"] = (
+                f"three gates pass, blocked by {', '.join(entry['blocked_by'])}"
+            )
         elif (
             entry["gate_a_structural"]["status"] == "PASS"
             and entry["gate_b_semantic"]["status"].startswith("PASS")
             and entry["gate_c_adversarial"]["status"] in ("PASS", "SURVIVED")
         ):
             entry["status"] = "ELIGIBLE"
-            entry["status_detail"] = "all three gates pass"
+            entry["status_detail"] = "all three gates pass and no blocker is open"
         else:
             entry["status"] = "NOT_ELIGIBLE"
             missing = [

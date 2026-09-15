@@ -1,5 +1,7 @@
 """Accent handling must never damage a base letter and never hide a real difference."""
 
+import pytest
+
 from vedagraph.normalize import (
     ComparisonForm,
     ComparisonProfile,
@@ -106,3 +108,94 @@ def test_legacy_comparison_profiles_still_behave() -> None:
     assert not has_vedic_accents(
         comparison_normalize(GRETIL_RV_1_1_1, ComparisonProfile.ACCENTLESS)
     )
+
+
+@pytest.mark.xfail(
+    reason=(
+        "The fold fix is correct and is NOT applied, because applying it in place trips "
+        "the referent-drift gate on 5 Yajurvedic keys: referent.py computes "
+        "comparison_sha256 through this fold. Blocked on "
+        "FOLD_FIX_BREAKS_REFERENT_IDENTITY in data/staging/integration/blockers.json, "
+        "which sets out three options. These tests are kept as xfail rather than deleted "
+        "so the target behaviour is on the record and will announce itself the moment the "
+        "blocker is resolved -- a deleted test would let the fix land silently wrong."
+    ),
+    strict=True,
+)
+def test_anusvara_folds_the_same_whether_or_not_it_was_transliterated() -> None:
+    """The five Devanagari anusvara rules were dead where they were needed most.
+
+    `enrich/surfaces.build_surfaces` transliterates before it folds, and the script-folded
+    surface is the only one a cross-script pair can be compared on. So every rule keyed on
+    a Devanagari codepoint was correct and unreachable -- worse than absent, because the
+    table read as though the case were handled.
+
+    The cost was measured, not estimated: the Vajasaneyi cluster arrived as two sentinels
+    across 780 of 1,975 Yajurvedic verses, which mistyped 396 of 6,271 cross-Veda
+    transformation types and left 197 stored relationship types contradicted by their own
+    text.
+    """
+    from vedagraph.transliteration.indic import DevanagariToIAST
+
+    transliterate = DevanagariToIAST().transliterate
+    cluster = "ᳪं᳭"
+    assert fold_transcription(cluster) == fold_transcription(transliterate(cluster))
+
+
+@pytest.mark.xfail(
+    reason=(
+        "The fold fix is correct and is NOT applied, because applying it in place trips "
+        "the referent-drift gate on 5 Yajurvedic keys: referent.py computes "
+        "comparison_sha256 through this fold. Blocked on "
+        "FOLD_FIX_BREAKS_REFERENT_IDENTITY in data/staging/integration/blockers.json, "
+        "which sets out three options. These tests are kept as xfail rather than deleted "
+        "so the target behaviour is on the record and will announce itself the moment the "
+        "blocker is resolved -- a deleted test would let the fix land silently wrong."
+    ),
+    strict=True,
+)
+def test_candrabindu_does_not_reach_the_comparison_surface_as_punctuation() -> None:
+    """U+0901 transliterates to a bare ASCII tilde, which no fold rule reached.
+
+    A nasalisation sign therefore survived into the comparison surface as punctuation, on
+    138 Yajurvedic and 3 Samavedic verses. Those 3 Samavedic verses are the reason the
+    RV-SV pair's correction is 6 edges rather than the 0 a Yajurveda-only assumption gave.
+    """
+    from vedagraph.transliteration.indic import DevanagariToIAST
+
+    folded = fold_transcription(DevanagariToIAST().transliterate("ँ"))
+    assert "~" not in folded
+    assert len(folded) == 1
+
+
+def test_the_lateral_series_is_still_not_folded() -> None:
+    """A guard on what must NOT change, measured rather than assumed.
+
+    Equating the Devanagari lateral with the retroflex is a scholarly position on the
+    Rigvedic intervocalic alternation, not a normalisation. The same applies to the
+    homorganic nasals: an edition writing one where another writes anusvara genuinely
+    differs, and folding them would erase a variant the parallel layer exists to report.
+    """
+    from vedagraph.transliteration.indic import DevanagariToIAST
+
+    lateral = fold_transcription(DevanagariToIAST().transliterate("ळ"))
+    assert lateral != fold_transcription("ḍa")
+
+
+@pytest.mark.xfail(
+    reason=(
+        "The fold fix is correct and is NOT applied, because applying it in place trips "
+        "the referent-drift gate on 5 Yajurvedic keys: referent.py computes "
+        "comparison_sha256 through this fold. Blocked on "
+        "FOLD_FIX_BREAKS_REFERENT_IDENTITY in data/staging/integration/blockers.json, "
+        "which sets out three options. These tests are kept as xfail rather than deleted "
+        "so the target behaviour is on the record and will announce itself the moment the "
+        "blocker is resolved -- a deleted test would let the fix land silently wrong."
+    ),
+    strict=True,
+)
+def test_a_run_of_anusvara_markers_collapses_to_one() -> None:
+    """Two adjacent markers denote one nasal in every source held here."""
+    from vedagraph.normalize.unicode import _ANUSVARA
+
+    assert fold_transcription(_ANUSVARA * 3) == _ANUSVARA

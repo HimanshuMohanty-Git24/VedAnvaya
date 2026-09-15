@@ -1,8 +1,8 @@
 {
  "algorithm_version": "crossveda-connection-completion-v1",
  "near_parallel_floor": 0.72,
- "revealed_boundary_p05": 0.9026,
- "revealed_boundary_p25": 0.954,
+ "revealed_boundary_p05": 0.9032,
+ "revealed_boundary_p25": 0.9544,
  "revealed_boundary_note": "the layer's stated floor is 0.72 but its revealed operating point is about 0.90: re-deriving this agent's comparator on the 3,049 near parallels it accepted gives median 0.9767, p05 0.9026, p25 0.9540. A discovered pair is graded against what the layer actually kept, not against what it says it keeps.",
  "floor_justification": "retained from the existing layer only because it clears this agent's own measured ceiling: the worst of 120,000 mispaired cross-Veda draws is 0.5225, so 0.72 sits 0.1975 above the highest score any unrelated pair reached",
  "comparator": "difflib.SequenceMatcher character LCS ratio over the sandhi-insensitive surface, autojunk=False",
@@ -18,6 +18,8 @@
   "AV",
   "YV"
  ],
+ "fold_correction": "anusvara-arrival-forms-and-run-collapse-v1. enrich/surfaces.build_surfaces transliterates to Latin BEFORE it folds, so every Devanagari rule in normalize/unicode.TRANSCRIPTION_EQUIVALENCES is dead on the script_folded surface -- the only surface a cross-script pair can be compared on. Proof: fold_transcription of the Vajasaneyi cluster is one sentinel, and fold_transcription(to_iast(same)) is two. Two symptoms: U+1CEA + U+0902 folded to two sentinels (780 YV verses), and U+0901 candrabindu transliterated to an unfoldable ASCII tilde (138 YV, 3 SV). Corrected here by adding the post-transliteration arrival forms and collapsing a run of the anusvara sentinel to one. The exact patch to normalize/unicode.py is staged at proofs/surfaces_fold_patch.txt: that module is NOT this agent's write surface.",
+ "fold_correction_not_applied_to": "the lateral series and the homorganic nasals, both measured and both genuine differences between the editions rather than fold gaps; and numerals, which never survive past punctuation_normalized.",
  "permutation_null_draws": 400,
  "permutation_seed": 20260915,
  "calibration_sample_per_pair": 20000

@@ -6,13 +6,7 @@
   "p99": 0.3596,
   "p99_9": 0.4112,
   "max": 0.481,
-  "at_or_above_0_72": 0,
-  "at_or_above_0_80": 0,
-  "worst_pair": [
-   "VG:AV:SAU:K06:S105:V003",
-   "VG:RV:SAK:M01:S048:V013",
-   0.481
-  ]
+  "at_or_above_0_72": 0
  },
  "AV-SV": {
   "pair": "AV-SV",
@@ -21,28 +15,16 @@
   "p99": 0.368,
   "p99_9": 0.4144,
   "max": 0.4952,
-  "at_or_above_0_72": 0,
-  "at_or_above_0_80": 0,
-  "worst_pair": [
-   "VG:AV:SAU:K20:S019:V005",
-   "VG:SV:KAU:UTTARA:P02:R01:D09:V02",
-   0.4952
-  ]
+  "at_or_above_0_72": 0
  },
  "AV-YV": {
   "pair": "AV-YV",
   "sampled": 20000,
-  "mean": 0.216,
-  "p99": 0.3582,
-  "p99_9": 0.41,
+  "mean": 0.2168,
+  "p99": 0.3587,
+  "p99_9": 0.4096,
   "max": 0.5185,
-  "at_or_above_0_72": 0,
-  "at_or_above_0_80": 0,
-  "worst_pair": [
-   "VG:AV:SAU:K05:S012:V007",
-   "VG:YV:VSM:A20:V042",
-   0.5185
-  ]
+  "at_or_above_0_72": 0
  },
  "RV-SV": {
   "pair": "RV-SV",
@@ -51,42 +33,24 @@
   "p99": 0.3738,
   "p99_9": 0.422,
   "max": 0.4954,
-  "at_or_above_0_72": 0,
-  "at_or_above_0_80": 0,
-  "worst_pair": [
-   "VG:RV:SAK:M01:S015:V001",
-   "VG:SV:KAU:UTTARA:P06:R03:D03:V05",
-   0.4954
-  ]
+  "at_or_above_0_72": 0
  },
  "RV-YV": {
   "pair": "RV-YV",
   "sampled": 20000,
-  "mean": 0.2199,
-  "p99": 0.3594,
-  "p99_9": 0.404,
-  "max": 0.4714,
-  "at_or_above_0_72": 0,
-  "at_or_above_0_80": 0,
-  "worst_pair": [
-   "VG:RV:SAK:M08:S007:V021",
-   "VG:YV:VSM:A33:V058",
-   0.4714
-  ]
+  "mean": 0.2209,
+  "p99": 0.3607,
+  "p99_9": 0.4068,
+  "max": 0.4748,
+  "at_or_above_0_72": 0
  },
  "SV-YV": {
   "pair": "SV-YV",
   "sampled": 20000,
-  "mean": 0.2217,
-  "p99": 0.3636,
-  "p99_9": 0.4068,
+  "mean": 0.2226,
+  "p99": 0.3647,
+  "p99_9": 0.4079,
   "max": 0.5225,
-  "at_or_above_0_72": 0,
-  "at_or_above_0_80": 0,
-  "worst_pair": [
-   "VG:SV:KAU:UTTARA:P04:R01:D13:V02",
-   "VG:YV:VSM:A33:V010",
-   0.5225
-  ]
+  "at_or_above_0_72": 0
  }
 }

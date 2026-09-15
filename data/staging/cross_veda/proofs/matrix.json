@@ -8,7 +8,9 @@
   "population": "5839 AV x 10552 RV = 61,613,128 candidate pairs",
   "quality_tier": "TIER_B",
   "evidence_drilldown": "MATCH (a:Mantra {veda:'AV'})-[r:EXACT_PARALLEL_OF]-(b:Mantra {veda:'RV'}) RETURN a,r,b",
-  "note": "re-derived identity level agrees with the stored match_level on every edge; mispaired ceiling for this pair is 0.481 against a 0.72 floor"
+  "note": "re-derived identity level agrees with the stored match_level on every edge; mispaired ceiling for this pair is 0.481 against a 0.72 floor",
+  "count_corrected_typing": 551,
+  "count_as_stored": 551
  },
  {
   "pair": "AV-RV",
@@ -19,7 +21,9 @@
   "population": "5839 AV x 10552 RV = 61,613,128 candidate pairs",
   "quality_tier": "TIER_B",
   "evidence_drilldown": "MATCH (a:Mantra {veda:'AV'})-[r:NEAR_PARALLEL_OF]-(b:Mantra {veda:'RV'}) RETURN a,r,b",
-  "note": "re-derived identity level agrees with the stored match_level on every edge; mispaired ceiling for this pair is 0.481 against a 0.72 floor"
+  "note": "re-derived identity level agrees with the stored match_level on every edge; mispaired ceiling for this pair is 0.481 against a 0.72 floor",
+  "count_corrected_typing": 752,
+  "count_as_stored": 752
  },
  {
   "pair": "AV-RV",
@@ -30,7 +34,9 @@
   "population": "5839 AV x 10552 RV = 61,613,128 candidate pairs",
   "quality_tier": "TIER_B",
   "evidence_drilldown": "MATCH (a:Mantra {veda:'AV'})-[r:VARIANT_OF]-(b:Mantra {veda:'RV'}) RETURN a,r,b",
-  "note": "re-derived identity level agrees with the stored match_level on every edge; mispaired ceiling for this pair is 0.481 against a 0.72 floor"
+  "note": "re-derived identity level agrees with the stored match_level on every edge; mispaired ceiling for this pair is 0.481 against a 0.72 floor",
+  "count_corrected_typing": 22,
+  "count_as_stored": 22
  },
  {
   "pair": "AV-RV",
@@ -96,7 +102,9 @@
   "population": "5839 AV x 1844 SV = 10,767,116 candidate pairs",
   "quality_tier": "TIER_B",
   "evidence_drilldown": "MATCH (a:Mantra {veda:'AV'})-[r:EXACT_PARALLEL_OF]-(b:Mantra {veda:'SV'}) RETURN a,r,b",
-  "note": "re-derived identity level agrees with the stored match_level on every edge; mispaired ceiling for this pair is 0.4952 against a 0.72 floor"
+  "note": "re-derived identity level agrees with the stored match_level on every edge; mispaired ceiling for this pair is 0.4952 against a 0.72 floor",
+  "count_corrected_typing": 9,
+  "count_as_stored": 9
  },
  {
   "pair": "AV-SV",
@@ -107,7 +115,9 @@
   "population": "5839 AV x 1844 SV = 10,767,116 candidate pairs",
   "quality_tier": "TIER_B",
   "evidence_drilldown": "MATCH (a:Mantra {veda:'AV'})-[r:NEAR_PARALLEL_OF]-(b:Mantra {veda:'SV'}) RETURN a,r,b",
-  "note": "re-derived identity level agrees with the stored match_level on every edge; mispaired ceiling for this pair is 0.4952 against a 0.72 floor"
+  "note": "re-derived identity level agrees with the stored match_level on every edge; mispaired ceiling for this pair is 0.4952 against a 0.72 floor",
+  "count_corrected_typing": 326,
+  "count_as_stored": 326
  },
  {
   "pair": "AV-SV",
@@ -118,7 +128,9 @@
   "population": "5839 AV x 1844 SV = 10,767,116 candidate pairs",
   "quality_tier": "TIER_B",
   "evidence_drilldown": "MATCH (a:Mantra {veda:'AV'})-[r:VARIANT_OF]-(b:Mantra {veda:'SV'}) RETURN a,r,b",
-  "note": "re-derived identity level agrees with the stored match_level on every edge; mispaired ceiling for this pair is 0.4952 against a 0.72 floor"
+  "note": "re-derived identity level agrees with the stored match_level on every edge; mispaired ceiling for this pair is 0.4952 against a 0.72 floor",
+  "count_corrected_typing": 132,
+  "count_as_stored": 132
  },
  {
   "pair": "AV-SV",
@@ -184,7 +196,10 @@
   "population": "5839 AV x 1975 YV = 11,532,025 candidate pairs",
   "quality_tier": "TIER_B",
   "evidence_drilldown": "MATCH (a:Mantra {veda:'AV'})-[r:EXACT_PARALLEL_OF]-(b:Mantra {veda:'YV'}) RETURN a,r,b",
-  "note": "re-derived identity level agrees with the stored match_level on every edge; mispaired ceiling for this pair is 0.5185 against a 0.72 floor"
+  "note": "re-derived identity level agrees with the stored match_level on every edge; mispaired ceiling for this pair is 0.5185 against a 0.72 floor",
+  "count_corrected_typing": 11,
+  "count_as_stored": 7,
+  "typing_note": "the graph stores 7 edges of this type for this pair and the corrected fold says 11. The count above is what the graph HOLDS; the difference is the anusvara fold defect, not a measurement error."
  },
  {
   "pair": "AV-YV",
@@ -195,7 +210,10 @@
   "population": "5839 AV x 1975 YV = 11,532,025 candidate pairs",
   "quality_tier": "TIER_B",
   "evidence_drilldown": "MATCH (a:Mantra {veda:'AV'})-[r:NEAR_PARALLEL_OF]-(b:Mantra {veda:'YV'}) RETURN a,r,b",
-  "note": "re-derived identity level agrees with the stored match_level on every edge; mispaired ceiling for this pair is 0.5185 against a 0.72 floor"
+  "note": "re-derived identity level agrees with the stored match_level on every edge; mispaired ceiling for this pair is 0.5185 against a 0.72 floor",
+  "count_corrected_typing": 135,
+  "count_as_stored": 162,
+  "typing_note": "the graph stores 162 edges of this type for this pair and the corrected fold says 135. The count above is what the graph HOLDS; the difference is the anusvara fold defect, not a measurement error."
  },
  {
   "pair": "AV-YV",
@@ -206,7 +224,10 @@
   "population": "5839 AV x 1975 YV = 11,532,025 candidate pairs",
   "quality_tier": "TIER_B",
   "evidence_drilldown": "MATCH (a:Mantra {veda:'AV'})-[r:VARIANT_OF]-(b:Mantra {veda:'YV'}) RETURN a,r,b",
-  "note": "re-derived identity level agrees with the stored match_level on every edge; mispaired ceiling for this pair is 0.5185 against a 0.72 floor"
+  "note": "re-derived identity level agrees with the stored match_level on every edge; mispaired ceiling for this pair is 0.5185 against a 0.72 floor",
+  "count_corrected_typing": 64,
+  "count_as_stored": 41,
+  "typing_note": "the graph stores 41 edges of this type for this pair and the corrected fold says 64. The count above is what the graph HOLDS; the difference is the anusvara fold defect, not a measurement error."
  },
  {
   "pair": "AV-YV",
@@ -272,7 +293,10 @@
   "population": "10552 RV x 1844 SV = 19,457,888 candidate pairs",
   "quality_tier": "TIER_B",
   "evidence_drilldown": "MATCH (a:Mantra {veda:'RV'})-[r:EXACT_PARALLEL_OF]-(b:Mantra {veda:'SV'}) RETURN a,r,b",
-  "note": "re-derived identity level agrees with the stored match_level on every edge; mispaired ceiling for this pair is 0.4954 against a 0.72 floor"
+  "note": "re-derived identity level agrees with the stored match_level on every edge; mispaired ceiling for this pair is 0.4954 against a 0.72 floor",
+  "count_corrected_typing": 90,
+  "count_as_stored": 89,
+  "typing_note": "the graph stores 89 edges of this type for this pair and the corrected fold says 90. The count above is what the graph HOLDS; the difference is the anusvara fold defect, not a measurement error."
  },
  {
   "pair": "RV-SV",
@@ -283,7 +307,10 @@
   "population": "10552 RV x 1844 SV = 19,457,888 candidate pairs",
   "quality_tier": "TIER_B",
   "evidence_drilldown": "MATCH (a:Mantra {veda:'RV'})-[r:NEAR_PARALLEL_OF]-(b:Mantra {veda:'SV'}) RETURN a,r,b",
-  "note": "re-derived identity level agrees with the stored match_level on every edge; mispaired ceiling for this pair is 0.4954 against a 0.72 floor"
+  "note": "re-derived identity level agrees with the stored match_level on every edge; mispaired ceiling for this pair is 0.4954 against a 0.72 floor",
+  "count_corrected_typing": 1179,
+  "count_as_stored": 1180,
+  "typing_note": "the graph stores 1180 edges of this type for this pair and the corrected fold says 1179. The count above is what the graph HOLDS; the difference is the anusvara fold defect, not a measurement error."
  },
  {
   "pair": "RV-SV",
@@ -294,7 +321,9 @@
   "population": "10552 RV x 1844 SV = 19,457,888 candidate pairs",
   "quality_tier": "TIER_B",
   "evidence_drilldown": "MATCH (a:Mantra {veda:'RV'})-[r:VARIANT_OF]-(b:Mantra {veda:'SV'}) RETURN a,r,b",
-  "note": "re-derived identity level agrees with the stored match_level on every edge; mispaired ceiling for this pair is 0.4954 against a 0.72 floor"
+  "note": "re-derived identity level agrees with the stored match_level on every edge; mispaired ceiling for this pair is 0.4954 against a 0.72 floor",
+  "count_corrected_typing": 415,
+  "count_as_stored": 415
  },
  {
   "pair": "RV-SV",
@@ -360,7 +389,10 @@
   "population": "10552 RV x 1975 YV = 20,840,200 candidate pairs",
   "quality_tier": "TIER_B",
   "evidence_drilldown": "MATCH (a:Mantra {veda:'RV'})-[r:EXACT_PARALLEL_OF]-(b:Mantra {veda:'YV'}) RETURN a,r,b",
-  "note": "re-derived identity level agrees with the stored match_level on every edge; mispaired ceiling for this pair is 0.4714 against a 0.72 floor"
+  "note": "re-derived identity level agrees with the stored match_level on every edge; mispaired ceiling for this pair is 0.4748 against a 0.72 floor",
+  "count_corrected_typing": 41,
+  "count_as_stored": 24,
+  "typing_note": "the graph stores 24 edges of this type for this pair and the corrected fold says 41. The count above is what the graph HOLDS; the difference is the anusvara fold defect, not a measurement error."
  },
  {
   "pair": "RV-YV",
@@ -371,7 +403,10 @@
   "population": "10552 RV x 1975 YV = 20,840,200 candidate pairs",
   "quality_tier": "TIER_B",
   "evidence_drilldown": "MATCH (a:Mantra {veda:'RV'})-[r:NEAR_PARALLEL_OF]-(b:Mantra {veda:'YV'}) RETURN a,r,b",
-  "note": "re-derived identity level agrees with the stored match_level on every edge; mispaired ceiling for this pair is 0.4714 against a 0.72 floor"
+  "note": "re-derived identity level agrees with the stored match_level on every edge; mispaired ceiling for this pair is 0.4748 against a 0.72 floor",
+  "count_corrected_typing": 334,
+  "count_as_stored": 473,
+  "typing_note": "the graph stores 473 edges of this type for this pair and the corrected fold says 334. The count above is what the graph HOLDS; the difference is the anusvara fold defect, not a measurement error."
  },
  {
   "pair": "RV-YV",
@@ -382,7 +417,10 @@
   "population": "10552 RV x 1975 YV = 20,840,200 candidate pairs",
   "quality_tier": "TIER_B",
   "evidence_drilldown": "MATCH (a:Mantra {veda:'RV'})-[r:VARIANT_OF]-(b:Mantra {veda:'YV'}) RETURN a,r,b",
-  "note": "re-derived identity level agrees with the stored match_level on every edge; mispaired ceiling for this pair is 0.4714 against a 0.72 floor"
+  "note": "re-derived identity level agrees with the stored match_level on every edge; mispaired ceiling for this pair is 0.4748 against a 0.72 floor",
+  "count_corrected_typing": 287,
+  "count_as_stored": 165,
+  "typing_note": "the graph stores 165 edges of this type for this pair and the corrected fold says 287. The count above is what the graph HOLDS; the difference is the anusvara fold defect, not a measurement error."
  },
  {
   "pair": "RV-YV",
@@ -448,7 +486,10 @@
   "population": "1844 SV x 1975 YV = 3,641,900 candidate pairs",
   "quality_tier": "TIER_B",
   "evidence_drilldown": "MATCH (a:Mantra {veda:'SV'})-[r:EXACT_PARALLEL_OF]-(b:Mantra {veda:'YV'}) RETURN a,r,b",
-  "note": "re-derived identity level agrees with the stored match_level on every edge; mispaired ceiling for this pair is 0.5225 against a 0.72 floor"
+  "note": "re-derived identity level agrees with the stored match_level on every edge; mispaired ceiling for this pair is 0.5225 against a 0.72 floor",
+  "count_corrected_typing": 93,
+  "count_as_stored": 70,
+  "typing_note": "the graph stores 70 edges of this type for this pair and the corrected fold says 93. The count above is what the graph HOLDS; the difference is the anusvara fold defect, not a measurement error."
  },
  {
   "pair": "SV-YV",
@@ -459,7 +500,10 @@
   "population": "1844 SV x 1975 YV = 3,641,900 candidate pairs",
   "quality_tier": "TIER_B",
   "evidence_drilldown": "MATCH (a:Mantra {veda:'SV'})-[r:NEAR_PARALLEL_OF]-(b:Mantra {veda:'YV'}) RETURN a,r,b",
-  "note": "re-derived identity level agrees with the stored match_level on every edge; mispaired ceiling for this pair is 0.5225 against a 0.72 floor"
+  "note": "re-derived identity level agrees with the stored match_level on every edge; mispaired ceiling for this pair is 0.5225 against a 0.72 floor",
+  "count_corrected_typing": 126,
+  "count_as_stored": 156,
+  "typing_note": "the graph stores 156 edges of this type for this pair and the corrected fold says 126. The count above is what the graph HOLDS; the difference is the anusvara fold defect, not a measurement error."
  },
  {
   "pair": "SV-YV",
@@ -470,7 +514,10 @@
   "population": "1844 SV x 1975 YV = 3,641,900 candidate pairs",
   "quality_tier": "TIER_B",
   "evidence_drilldown": "MATCH (a:Mantra {veda:'SV'})-[r:VARIANT_OF]-(b:Mantra {veda:'YV'}) RETURN a,r,b",
-  "note": "re-derived identity level agrees with the stored match_level on every edge; mispaired ceiling for this pair is 0.5225 against a 0.72 floor"
+  "note": "re-derived identity level agrees with the stored match_level on every edge; mispaired ceiling for this pair is 0.5225 against a 0.72 floor",
+  "count_corrected_typing": 20,
+  "count_as_stored": 13,
+  "typing_note": "the graph stores 13 edges of this type for this pair and the corrected fold says 20. The count above is what the graph HOLDS; the difference is the anusvara fold defect, not a measurement error."
  },
  {
   "pair": "SV-YV",

@@ -34,8 +34,14 @@
         }
       ],
       "constraint_until_resolved": "No community membership involving this identity question may be treated as a truth test. That includes agent 15's own Soma-related diagnostics, and any semantic representation that treats deity identity as settled.",
-      "blocks_domains": ["communities"],
-      "also_relevant_to": ["semantic_resemblance", "attribution", "quality"]
+      "blocks_domains": [
+        "communities"
+      ],
+      "also_relevant_to": [
+        "semantic_resemblance",
+        "attribution",
+        "quality"
+      ]
     },
     {
       "blocker_id": "NAME_COLLISION_SCOPE_TYPE",
@@ -51,7 +57,46 @@
       },
       "why_precedence_is_the_wrong_remedy": "The audit's own second pass classified this as DOMAIN_PRECEDENCE with the audio family authoritative. That would have overwritten one concept with another and lost the attribution meaning silently. Owner section 12 names this case explicitly as a property name with incompatible meaning.",
       "resolution": "Namespace the property per domain at import. No owner decision needed; recorded so the import cannot quietly resolve it by precedence.",
-      "blocks_domains": ["attribution", "audio_av"]
+      "blocks_domains": [
+        "attribution",
+        "audio_av"
+      ]
+    },
+    {
+      "blocker_id": "FOLD_FIX_BREAKS_REFERENT_IDENTITY",
+      "status": "AWAITING_OWNER_DECISION",
+      "raised_by": "lead, applying agent 10's staged fold patch and running the full suite",
+      "raised_at": "2026-09-15",
+      "root_cause_type": "SCHEMA_CANNOT_REPRESENT_DOMAIN",
+      "summary": "The cross-Veda layer needs the transcription fold corrected, and the fold is inside the referent identity contract. Correcting it in place moves the comparison digest of 5 Yajurvedic canonical keys and trips the referent-drift gate.",
+      "the_defect_being_fixed": "enrich/surfaces.build_surfaces transliterates before it folds, so all five Devanagari anusvara rules in TRANSCRIPTION_EQUIVALENCES are unreachable on the script_folded surface -- the only surface a cross-script pair can be compared on. Verified by the lead: the Devanagari cluster folds to one sentinel and its transliteration to three codepoints, with U+1CED surviving unfolded. U+0901 candrabindu transliterates to a bare ASCII tilde no rule reaches. Cost: 396 of 6,271 cross-Veda transformation types mistyped and 197 stored relationship types contradicted by their own text.",
+      "why_it_cannot_be_applied_in_place": "referent.py computes comparison_sha256 through comparison_form, which runs the fold. Applying the patch tripped ReferentDriftError on VG:YV:VSM:A06:V015, A09:V021, A09:V031, A09:V032 and A09:V034. The module exists precisely because a segmentation change once moved five Samaveda referents under unchanged UUIDs while every gate reported success, so the gate is working as designed.",
+      "why_a_migration_would_be_the_wrong_remedy": "The referent did not change. The gate's own message shows the locator and the marker byte-identical on all five keys, with only the digest differing. Recording a referent migration would assert that the source occurrence moved, which is false. What changed is the normalisation that computes the digest.",
+      "also_downstream": "The fold feeds the generated lexical layer, whose byte-identical rebuild test fails under the change, and the cross-Veda identical-pair count moves from 2,042 to 2,240 so its measured-range test fails. Both are legitimate consequences rather than defects, and both need their baselines re-recorded deliberately.",
+      "options": [
+        {
+          "option": "A",
+          "statement": "Version the comparison digest by the normalisation that produced it.",
+          "consequence": "The gate compares like with like, and a fold change stops being indistinguishable from a referent change. Most correct, and it touches the identity contract, so it needs its own migration note and a re-recorded baseline for all 20,210 keys."
+        },
+        {
+          "option": "B",
+          "statement": "Give the comparison surfaces their own fold, leaving the identity fold untouched.",
+          "consequence": "Additive and safe: cross-Veda, parallel and formula layers get a corrected comparison fold while referent identity keeps the historical one. The cost is two folds to keep honest, and a reader must know which one a figure used."
+        },
+        {
+          "option": "C",
+          "statement": "Apply the fix in place and adjudicate the 5 keys as recorded migrations.",
+          "consequence": "Cheapest and the lead recommends against it: it records a referent change that did not happen, which is exactly the kind of false statement the referent gate was built to prevent."
+        }
+      ],
+      "lead_recommendation": "B, then A when the identity contract is next revised deliberately.",
+      "blocks_domains": [
+        "cross_veda",
+        "formula"
+      ],
+      "patch_staged_at": "data/staging/cross_veda/proofs/surfaces_fold_patch.txt",
+      "note_on_the_staged_patch": "The patch is well-reasoned and its regression assertions are the right ones -- running them is what exposed both its own incompleteness and this blocker. Two corrections: its rules cover CEA + m-dot-below, and the arriving form is CEA + m-dot-below + U+1CED, so a longest-first rule for U+1CED is also needed; and it could not have anticipated the referent consequence, because normalize/unicode.py was outside the agent's write surface and it therefore never ran the full suite."
     }
   ]
 }

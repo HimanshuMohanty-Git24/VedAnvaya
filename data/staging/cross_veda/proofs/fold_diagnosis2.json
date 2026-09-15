@@ -1,0 +1,16 @@
+{
+ "tilde_verses_folded": {
+  "SV": 3,
+  "YV": 138
+ },
+ "tilde_verses_raw": {},
+ "tilde_sources": [
+  {
+   "codepoint": "U+0901",
+   "iast": "~"
+  }
+ ],
+ "lateral_verdict": "genuine difference, fold correctly keeps them apart",
+ "nasal_verdict": "genuine editorial choice, fold correctly keeps them apart",
+ "anusvara_duplication_edges": 328
+}
