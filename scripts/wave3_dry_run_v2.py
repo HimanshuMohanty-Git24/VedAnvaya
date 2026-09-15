@@ -232,14 +232,6 @@ def main() -> int:
             "EPITHET_VARIANT_OF goes 11 to 10 and SPECIALIZED_FORM_OF becomes 1",
         },
     }
-    retire_rels = sum(int(c.get("relationships_retire") or 0) for c in corrections.values())
-    correction_creates = sum(
-        int(c.get("relationships_create") or 0) for c in corrections.values()
-    )
-    correction_updates = sum(
-        int(c.get("relationships_update") or 0) for c in corrections.values()
-    )
-
     # ---- the collateral the owner's decision did not name -----------------------------
     collateral = (soma.get("collateral_from_the_per_passage_cap") or {}) if soma else {}
 
@@ -247,6 +239,48 @@ def main() -> int:
     driver = GraphDatabase.driver(URI, auth=AUTH)
     try:
         with driver.session(database=DB) as session:
+            # How much of each correction is still OUTSTANDING, measured rather than
+            # restated. The artifact's counts are what the correction had to do on a virgin
+            # graph; re-promising them after they have been applied made the expected census
+            # 225 too low, which is the same non-idempotent accounting the element plan had.
+            retired = dict(corrections["SOMA_PRESSING_WEAK_ALIAS_RETIREMENT"]["detail"])
+            outstanding_mentions = int(
+                session.run(
+                    "MATCH ()-[r:MENTIONS_ENTITY]->(c {entity_key: 'VG:CONCEPT:SOMA-PRESSING'}) "
+                    "WHERE ALL(a IN r.matched_aliases WHERE a IN $retired) "
+                    "RETURN count(r) AS c",
+                    retired=list(soma.get("retired_aliases") or []),
+                ).single()["c"]
+            )
+            outstanding_about = int(
+                session.run(
+                    "UNWIND $keys AS k "
+                    "MATCH (p:Passage {canonical_key: k})-[r:ABOUT_CONCEPT]->"
+                    "(c {entity_key: 'VG:CONCEPT:SOMA-PRESSING'}) RETURN count(r) AS c",
+                    keys=list(about.get("retire_keys") or []),
+                ).single()["c"]
+            )
+            outstanding_m5 = int(
+                session.run(
+                    "MATCH (:Devata {entity_key: 'VG:DEVATA:PAVAMANAH-SOMAH'})"
+                    "-[r:EPITHET_VARIANT_OF]->(:Devata {entity_key: 'VG:DEVATA:SOMAH'}) "
+                    "RETURN count(r) AS c"
+                ).single()["c"]
+            )
+            corrections["SOMA_PRESSING_WEAK_ALIAS_RETIREMENT"].update(
+                {
+                    "already_applied": outstanding_mentions == 0 and outstanding_about == 0,
+                    "relationships_retire": outstanding_mentions + outstanding_about,
+                    "retire_when_first_applied": retired,
+                }
+            )
+            corrections["M5_SPECIALIZED_FORM_OF"].update(
+                {
+                    "already_applied": outstanding_m5 == 0,
+                    "relationships_retire": outstanding_m5,
+                    "relationships_create": outstanding_m5,
+                }
+            )
             nodes = int(session.run("MATCH (n) RETURN count(n) AS c").single()["c"])
             rels = int(session.run("MATCH ()-[r]->() RETURN count(r) AS c").single()["c"])
             core = {
@@ -264,6 +298,15 @@ def main() -> int:
             }
     finally:
         driver.close()
+
+    # Measured above against the live graph, so a correction already applied contributes 0.
+    retire_rels = sum(int(c.get("relationships_retire") or 0) for c in corrections.values())
+    correction_creates = sum(
+        int(c.get("relationships_create") or 0) for c in corrections.values()
+    )
+    correction_updates = sum(
+        int(c.get("relationships_update") or 0) for c in corrections.values()
+    )
 
     totals = plan.get("totals") or {}
     nodes_create = int(totals.get("nodes_create") or 0)
@@ -351,8 +394,13 @@ def main() -> int:
         "folded_equality_creates_no_identity_by_itself": (
             "FOLD_FIX_BREAKS_REFERENT_IDENTITY" not in open_blockers
         ),
+        # Included, or already applied. Requiring retirements > 0 made the condition fail
+        # on a second pass for the reason it was meant to guarantee: the edges were gone.
         "soma_pressing_weak_alias_corrections_included": soma_ok
-        and retire_rels > 0,
+        and (
+            retire_rels > 0
+            or corrections["SOMA_PRESSING_WEAK_ALIAS_RETIREMENT"].get("already_applied") is True
+        ),
         "cross_domain_collision_conflict_zero": int(totals.get("identity_collisions") or 0)
         == int(totals.get("identity_collisions_withheld") or 0),
         "dangling_references_zero": int(totals.get("dangling_references") or 0) == 0,
