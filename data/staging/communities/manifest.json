@@ -7,9 +7,9 @@
   },
   "agent": 15,
   "algorithm_version": "vg-deity-communities-v1",
-  "candidate_ledger_is_mixed_grain": "Stated rather than hidden, because the arithmetic would otherwise be comparing unlike things. `accepted` counts RV sukta assessments (the grain at which a canonical_key resolves to a :Passage, which the validator requires). `rejected` counts :Devata nodes removed from the eligible population. `unresolved` counts the 324 :DevataAscription descriptors that cannot enter a :Devata partition at all. Each rejected and unresolved row carries a `candidate_unit` field naming its grain.",
+  "candidate_ledger_is_mixed_grain": "Stated rather than hidden, because the arithmetic would otherwise be comparing unlike things. `accepted` counts BOTH row grains in rows.jsonl: 1028 RV sukta assessments, which are the projection's evidence, and 157 eligible :Devata nodes carrying subject_kind ENTITY, which are the domain's subject. `rejected` counts the :Devata nodes removed from the eligible population, so the 214 deities are split 157 accepted + 57 rejected. `unresolved` counts the 324 :DevataAscription descriptors that cannot enter a :Devata partition at all. Each rejected and unresolved row carries a `candidate_unit` field naming its grain.",
   "closes_gaps": [],
-  "code_commit": "7c9d32e3ae13c1049061212da7c10e32df4e028b",
+  "code_commit": "37cf7c55a22cd5fa547c81f4b0ac68d260b1a52c",
   "config": {
     "abstract_rulings_file": "abstract_label_rulings.json",
     "algorithm_version": "vg-deity-communities-v1",
@@ -255,22 +255,25 @@
     ]
   },
   "config_hash": "96ef0c7d4283613e591852994c0f3646baa93b0c83659635566de4364843c617",
+  "contract_limit_flagged_then_fixed_then_used": "An earlier version of this artifact could not put its primary object in rows.jsonl: graph.canonical_key_resolves required every canonical_key to resolve to a :Passage, and a :Devata carries entity_key with no :Passage label. The deity-grained membership went into a sidecar and rows.jsonl held hymn-grained proxies. The limit was flagged rather than worked around silently, the lead has since extended the validator with subject_kind ENTITY plus subject_id_property and subject_label -- naming that exact workaround as the defect it fixes, because the check had been reporting full coverage over rows that were not the domain's subject -- and this artifact now uses it. The 157 deity rows are first-class rows. The hymn rows stay because they are the projection's evidence, not a proxy for its subject. communities.jsonl also stays: it is the community-grained view, 12 records with their internal and external support and example hymns, which is a third object again.",
   "counts": {
-    "accepted": 1028,
-    "candidates_considered": 1409,
+    "accepted": 1185,
+    "candidates_considered": 1566,
+    "entity_rows_typed_absent": 34,
+    "entity_rows_with_a_community": 123,
     "not_applicable": 21,
     "rejected": 57,
     "unresolved": 324,
     "verified_zero": 880
   },
-  "created_at": "2026-09-15T09:14:27.150799Z",
+  "created_at": "2026-09-15T10:33:08.944650Z",
   "domain": "communities",
   "files": [
     {
-      "bytes": 4628069,
+      "bytes": 5395455,
       "path": "rows.jsonl",
-      "rows": 1028,
-      "sha256": "30fc5d132cbc123c4621a47486264b708334dd33ed5452fa2d6dab3c00839715"
+      "rows": 1185,
+      "sha256": "ef88ac149a2884137d82922b2d716c19b3e99e1fddb05637347e2b8b86eb4e97"
     },
     {
       "bytes": 46625,
@@ -282,13 +285,13 @@
       "bytes": 1825,
       "path": "sources.jsonl",
       "rows": 3,
-      "sha256": "c4603b2ab2d6b6ea6e6f2f81fec9d51cc8403e07b46a9b045c351fc58575404e"
+      "sha256": "e1297c212ad0c408b80c1e57ec40e90c7f48265aaee1af2efccf4073d40f6d4c"
     },
     {
       "bytes": 94282,
       "path": "communities.jsonl",
       "rows": 12,
-      "sha256": "b904c90e1b0afab42445724e049ca833ede211d4d57426551f6b6d9aa98e2f80"
+      "sha256": "ee36b545f51e6dd435327670ccf95a56bfd4921b4677217da60810509fd23296"
     },
     {
       "bytes": 12790,
@@ -303,10 +306,10 @@
       "sha256": "0674d6c7d7071a1e1fb346dce1c9f0f3327b41d4fe20ab818e194146c00612cd"
     },
     {
-      "bytes": 93439,
+      "bytes": 130604,
       "path": "build_communities_staging.py",
       "rows": 0,
-      "sha256": "dcbae1c82cf7459d9f8b70d86c97fb7c603fec9a19d9a3bfc8bab3e9d18769b6"
+      "sha256": "87837edac766107cbdf7d65957ef751cd4d424f141233376465d23784f63f889"
     }
   ],
   "graph_snapshot": {
@@ -341,21 +344,34 @@
     "deities_placed": 123,
     "deities_unplaceable_degree_zero": 34,
     "publication_verdict": "NOT_STABLE_ENOUGH_TO_PUBLISH_AS_A_PRODUCT_SURFACE",
-    "publication_verdict_reason": "Seed stability is not the problem -- the reference partition is identical on all 200 seeds (pairwise ARI 1.0000). The specification is. Changing the weighting moves the partition (pairwise ARI 0.584, 0.659 and 0.879 between the three), and changing the co-occurrence relation from dedication to mention destroys the correspondence entirely (ARI 0.013 on the 35 shared deities). Half the communities are one hymn's list of dedicatees and five of the twelve are whole connected components. And the decisive check needs no statistics at all: all six methods separate Brhaspati from Brahmanaspati, two names for the same deity, and separate Brahmanaspati from his own dual Indra-and-Brahmanaspati -- see proofs/diagnostic_pairs.json. A published deity-community surface would be presenting an artefact of four discretionary choices as a property of the corpus.",
+    "publication_verdict_reason": "Seed stability is not the problem -- the reference partition is identical on all 200 seeds (pairwise ARI 1.0000). The specification is. Changing the weighting moves the partition (pairwise ARI 0.584, 0.659 and 0.879 between the three), and changing the co-occurrence relation from dedication to mention destroys the correspondence entirely (ARI 0.013 on the 35 shared deities). Half the communities are one hymn's list of dedicatees and five of the twelve are whole connected components. The same is true of an individual, well-attested deity: 15 of Brahmanaspati's 18 co-dedication partners come from the single hymn RV 6.75, so a deity with 48 dedications across 8 hymns has his community decided by one of them. The projection is eightfold uneven across mandalas -- 0.207 of mandala 4's hymns carry two or more dedicatees against 0.026 of mandala 9's, leaving the entire Pavamana Soma collection almost unseen. And it is structurally blind to the deity identity the graph itself declares: 10 of the 11 EPITHET_VARIANT_OF pairs share no hymn, so a deity and its own declared variant name can only be joined by coincidence, and 4 of the 6 testable pairs are split by every method. A published deity-community surface would be presenting an artefact of four discretionary choices as a property of the corpus. NOTE: an earlier version of this reason cited the separation of Brhaspati and Brahmanaspati as a defect. The adversarial preflight withdrew that claim -- the registry pins the two apart on purpose -- and the verdict is unchanged without it. See proofs/adversarial_preflight.json.",
     "reference_partition": "leiden | COSINE | gamma=1.0 | V-RULED | consensus over 200 seeds",
     "single_hymn_cast_list_communities": 6
   },
-  "primary_deliverable_is_not_rows_jsonl": "The deity-grained community membership is communities.jsonl. It is checksummed in `files` but cannot live in rows.jsonl, because the validator's graph.canonical_key_resolves check requires every canonical_key to resolve to a :Passage and a :Devata node carries entity_key, not canonical_key, and no :Passage label. Agent 8 hit the same wall and put entity-grained material in proofs/. Flagged to the lead as a contract limit, not worked around silently.",
   "qa": {
     "defects": [
+      "INTERPRETIVE DEFECT, IN THIS AGENT'S OWN HEADLINE, found by the mandatory adversarial preflight. The report's decisive argument against publishing was that all six methods separate Brhaspati from Brahmanaspati, 'two names for the same deity'. That identity is the standard scholarly view and it is NOT this graph's model: the registry pins the two as separate entities deliberately, Brahmanaspati's own curation_note says so verbatim, and the graph carries a declared EPITHET_VARIANT_OF vocabulary for deity identity (11 edges) from which these two are deliberately absent. The dedication evidence separates them independently as well -- neighbourhood Jaccard 0.0645, 2 shared partners of 31. The claim is WITHDRAWN and the verdict column in proofs/diagnostic_pairs.json is now computed from EPITHET_VARIANT_OF rather than from a prior. Zero defects remain on that test. The refusal survives on the plank the same probe uncovered: 11 of Brahmanaspati's 18 partners come from one hymn.",
+      "The 34 degree-zero eligible deities were reported as isolated in the source. 3 of them are collateral of this artifact's own filters -- Urvasi's only co-dedicatee in the Rigveda is Pururavas, a HUMAN exclusion; Agni-Surya's was the danastuti label; and Aksah, the dice, lost both partners to this agent's abstract rulings. Now typed as COLLATERAL_OF_OUR_OWN_EXCLUSIONS rather than counted with the other 31.",
       "The graph aggregation step in community_algorithms.py double-counted between-community edge weight, because each edge is walked from both endpoints and only the internal half was being halved. The karate-club self-test caught it: the level-2 aggregate reported total weight m = 111.0 against the graph's 78.0, and every modularity above the first level was wrong. Before the fix the best partition found on karate was Q = 0.3718 at k = 2; after it, Q = 0.4198 at k = 4, which is the published optimum for that graph. Had this shipped, the Vedic numbers would have looked entirely plausible and been wrong."
     ],
-    "defects_found": 1,
+    "defects_found": 3,
     "human_reviewed": 0,
     "reviewed_by": "claude-opus-5 acting as Agent 15. Model adjudication, not gold; campaign section 26 forbids calling it gold. The 42 ABSTRACT rulings are the part most in need of a human and are written one per line with a reason so they can be re-read in an hour.",
     "sample_method": "both",
     "sample_note": "No sampling of accepted rows: every row is a deterministic restatement of HAS_DEVATA edges that already exist, so a sample would only re-measure the graph. What was validated instead is the MACHINERY, which is where a defect in this domain would live. community_algorithms.py is checked against Zachary's karate club, whose modularity optimum is a published number, and the 42 ABSTRACT rulings and 29 exclusions were each read individually.",
     "sampled": 0
+  },
+  "row_grains": {
+    "ENTITY": {
+      "count": 157,
+      "role": "the domain's subject: per-deity community membership, or a typed absence",
+      "subject": ":Devata, resolved by entity_key"
+    },
+    "PASSAGE": {
+      "count": 1028,
+      "role": "the projection's evidence: which deities the Anukramani places in this hymn, which pairs it contributes, and where each of its deities landed",
+      "subject": "an RV sukta carrying HAS_DEVATA"
+    }
   },
   "schema_version": "1.0",
   "source_snapshot_ids": [

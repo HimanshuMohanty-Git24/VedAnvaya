@@ -19,10 +19,10 @@
       "ari_gds_vs_mine": 0.879479,
       "community_count_on_5_identical_repeat_calls": [
         10,
-        9,
         10,
         9,
-        9
+        10,
+        10
       ],
       "gds_communities": 10,
       "gds_is_reproducible_across_identical_calls": false,

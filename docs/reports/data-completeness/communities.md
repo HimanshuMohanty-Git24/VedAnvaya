@@ -1,6 +1,8 @@
 # Deity communities and network analytics — derived co-occurrence, not theology
 
-**Agent 15, Wave 2** · branch `phase-data-completeness-v2` · baseline commit `7c9d32e3ae13`
+**Agent 15, Wave 2** · branch `phase-data-completeness-v2` · baseline commit `04b94035`
+**Adversarial preflight: complete — §10. One headline claim withdrawn; the refusal stands.**
+**Validator PASS on 17 checks at 100% coverage, including the domain's own subject at 157/157.**
 **Staging artifact**: `data/staging/communities/` — validator **PASS**, every check at 100% coverage with `--graph`
 **Graph**: read-only throughout. Re-counted after the run at 108,779 nodes / 265,295 relationships, **unchanged**.
 
@@ -37,14 +39,32 @@ twelve are whole connected components**, which any method at any resolution with
 returns for free. Seven communities are structure actually detected inside the main
 component, and one of those seven is a liturgical running order.
 
+Two further limits, both found by the adversarial preflight in §10 and neither in the
+artifact before it:
+
+- **The projection is structurally blind to the deity identity the graph itself declares.**
+  10 of the 11 `EPITHET_VARIANT_OF` pairs share no hymn at all, so a deity and its own
+  declared variant name can only ever be joined by coincidence of neighbourhood — and 4 of
+  the 6 testable pairs are split by every method.
+- **It is eightfold uneven across maṇḍalas.** 0.207 of maṇḍala 4's hymns carry two or more
+  dedicatees against 0.026 of maṇḍala 9's, so the entire Pavamāna Soma collection — 114 of
+  the 1,028 dedication-bearing hymns — is very nearly unseen.
+
+**One claim in an earlier draft of this report has been withdrawn.** It read that all six
+methods separate Bṛhaspati from Brahmaṇaspati, "two names for the same deity", and called
+that the decisive defect. The registry pins the two apart *on purpose*. §10 has the probe
+and the correction; the verdict is unchanged without it.
+
 `data/staging/communities/manifest.json` carries the verdict as
 `NOT_STABLE_ENOUGH_TO_PUBLISH_AS_A_PRODUCT_SURFACE`, and the artifact is offered as the
 measured basis for that judgement rather than as a layer to import.
 
 **Nothing here is an ancient theological category.** Every community record, every one of
-the 1,028 rows and every community's `interpretation_warning` says so in those terms. No
+the 1,185 rows and every community's `interpretation_warning` says so in those terms. No
 community is named, and naming one would convert a co-occurrence count into a claim about
-Vedic religion.
+Vedic religion. Every deity row also carries
+`not_a_positive_membership_assignment`, in those words: `community_id` is a reproducible
+output of the algorithm, seed and projection named beside it, and of nothing else.
 
 ---
 
@@ -222,12 +242,19 @@ Anukramaṇī genuinely assigns different verses to different deities.
 
 **The graph.** 1,028 sūktas carry dedication; **875 are dedicated to a single deity**. After
 cleaning: 157 eligible deities, **123 placed**, 475 edges, density 0.063, **6 connected
-components** of sizes 109 / 4 / 4 / 2 / 2 / 2. **34 eligible deities are unplaceable** —
-every hymn dedicated to them is dedicated to them alone, so they have no co-dedication
-partner anywhere in the Rigveda. They are typed `NO_EDGE_IN_PROJECTION_DEGREE_ZERO` and
-enumerated in `proofs/unplaceable_deities.json`; they are **not** given singleton
-communities, because a singleton would let a reader count them as communities and would put
-Indra and a one-verse charm label on the same footing.
+components** of sizes 109 / 4 / 4 / 2 / 2 / 2. **34 eligible deities are unplaceable**,
+typed `NO_EDGE_IN_PROJECTION_DEGREE_ZERO` and enumerated in
+`proofs/unplaceable_deities.json`. They are **not** given singleton communities, because a
+singleton would let a reader count them as communities and would put Indra and a one-verse
+charm label on the same footing.
+
+**They are two kinds, and the preflight in §10 is what separated them.** **31 are isolated
+in the source** — every hymn dedicated to them is dedicated to them alone. **3 are
+collateral of our own filters**: Urvaśī's only co-dedicatee in the entire Rigveda is
+Purūravas, a HUMAN exclusion; Agni-Sūrya's only partner was the dānastuti label; and
+*akṣāḥ*, the dice, lost both of its partners to this agent's own abstract rulings. For those
+three, "unplaceable" is a consequence of our cleaning and not a silence in the Anukramaṇī,
+and they now carry `isolation_class: COLLATERAL_OF_OUR_OWN_EXCLUSIONS`.
 
 ### Weighting: three computed, one designated, the cost of each stated
 
@@ -331,6 +358,9 @@ against the store at any point. If that reading of "read-only" is not accepted, 
 GDS function changes no published number.
 
 ### The machinery was validated against a published answer, and it was wrong twice
+
+Two of the three recorded defects are here; the third is an interpretive one in this
+report's own headline, found by the adversarial preflight and written up in §10.
 
 `data/staging/communities/self_test.py`, result in `proofs/self_test.json`. This is the QA for
 this domain, and it is the right QA: every accepted row is a deterministic restatement of
@@ -463,56 +493,56 @@ bridging measures once a partition exists, because they are defined *relative to
 partition* and therefore carry its caveats instead of looking like properties of the deity.
 Brahmaṇaspati's z of **−3.53** is the most extreme value in the graph: it says he is the
 worst-connected member of his own community, which is what you would expect of the one member
-with 48 dedications in a community where twelve of the sixteen have exactly one.
+with 48 dedications in a community where twelve of the sixteen have exactly one. The next
+subsection takes that apart.
 
-### The single clearest demonstration that these are not theological categories
+### Deity identity: what this projection can and cannot see
 
-**Bṛhaspati and Brahmaṇaspati are put in different communities by all six methods.**
+An earlier draft of this report put a claim here that has since been withdrawn — that
+separating Bṛhaspati from Brahmaṇaspati was the decisive defect. It was an imported
+scholarly prior, not a measurement, and §10 sets out the probe that removed it. What
+replaces it is stronger, because it is drawn entirely from the graph's own identity model.
 
-They are two names the Rigveda uses for what is, by any reading, the same deity — the Lord of
-the Formulation. Under the reference partition Bṛhaspati (74 dedications, 13 hymns) sits in
-the Indra community with the Maruts and Soma, while Brahmaṇaspati (48, 8) sits in RV 6.75
-with the bow and the quiver. This is not a seed artefact: every one of the six algorithm ×
-weighting consensuses separates them.
+The graph declares deity identity with `EPITHET_VARIANT_OF`, 11 edges. Swept against all
+six method consensuses (`proofs/adversarial_preflight.json`, TEST A2):
 
-It gets worse in a way that is exactly diagnostic. The dual **Indra-and-Brahmaṇaspati** is in
-community 3 *with Bṛhaspati* — so the partition separates Brahmaṇaspati from his own dual.
-The cause is mechanical and visible in the weights: Brahmaṇaspati's co-dedicatees in the
-weapons hymn each appear in exactly one hymn, so cosine gives those edges 1/√(8·1) ≈ 0.354
-while his edges to the great deities score an order of magnitude lower. The weighting drags
-him into a one-hymn inventory.
+| declared variant → canonical | shared hymns | outcome |
+|---|--:|---|
+| Soma Pavamāna → Soma | 0 | **split by every method** |
+| Agni Pavamāna → Agni | 0 | **split by every method** |
+| Dadhikrāḥ → Dadhikrā | 0 | **split by every method** |
+| Sasarparī-Vāk → Vāc | 0 | **split by every method** |
+| Marutvān-Indra → Indra | 0 | kept together by every method |
+| the two divine Hotṛs → the two divine Hotṛs | 0 | kept together by every method |
+| 5 more (Agni's variants, *bhavavṛttam*, Viśve-devāḥ) | 0–1 | not testable — one endpoint outside the partition |
 
-No reader should be shown a deity page saying Brahmaṇaspati belongs with the quiver and
-Bṛhaspati with the Maruts. That one pair is a better argument against publishing this layer
-than any of the sensitivity numbers, and it is the reason section 0 reaches the verdict it
-does.
+**10 of the 11 pairs share no hymn.** That is not sparsity, it is what the dedication layer
+*is*: a name and its variant are alternative labels for the same slot, so the Anukramaṇī
+never dedicates a hymn to both. **The co-dedication projection is therefore blind to deity
+identity by construction** — a variant can only be joined to its canonical form by
+coincidence of neighbourhood, and 4 of the 6 testable pairs are not. A deity-community
+surface would scatter a deity's own declared variant names across communities, structurally
+rather than occasionally.
 
-`proofs/diagnostic_pairs.json` computes this and four more pairs against all six
-consensuses, so the claim is recomputable rather than prose:
+And the sweep found a registry contradiction the hand-picked test missed. `EPITHET_VARIANT_OF`
+asserts that Soma Pavamāna *is* Soma, while `DEVATA_TAXONOMY_V1` states that the two "differ
+substantively, not just by key", gives them different axes, and partitions their aliases
+"deliberately so the two do not silently collect each other's mantras". Both cannot be
+followed, and which is right decides whether that split is a defect or correct behaviour.
+It is the same shape of defect the taxonomy already flagged for Mitrāvaruṇau, and it is
+handed to the lead rather than resolved here.
 
-| pair | all six methods say | reading |
-|---|---|---|
-| Bṛhaspati / Brahmaṇaspati | SEPARATED | a defect, as theology |
-| Brahmaṇaspati / Indra-and-Brahmaṇaspati | SEPARATED | a defect: a deity split from his own dual |
-| Mitra-and-Varuṇa / Mitra | SAME | the `GAP-COMMUNITIES-002` double-count, confirmed live |
-| Soma / Soma Pavamāna | SEPARATED | expected; the taxonomy holds them apart on purpose |
-| Sūrya / Savitṛ | SEPARATED | expected; the taxonomy refuses to merge them |
+### Why Brahmaṇaspati is with the quiver — the part that is measured
 
-Two of the five are what a reader would want, one confirms a known modelling hazard, and two
-are wrong in a way no caveat text can repair.
+`within_module_degree_z` of **−3.53**, the most extreme value in the graph, says he is the
+worst-connected member of his own community. The cause needs no identity claim: **15 of his
+18 co-dedication partners come from the single hymn RV 6.75.** A deity with 48 dedications
+across 8 hymns has his community decided by one of them. That is the single-hymn finding
+demonstrated on a well-attested individual deity rather than on a two-member community, and
+it is a better plank than the one it replaced.
 
-**One thing this does not unblock.** 227 `:Concept` nodes carry
-`centrality_bridging: "NOT_BUILT: no community structure exists in this graph, so bridge
-centrality is not computable and is not reported as a zero"`. That refusal is about **Concept**
-nodes. A deity partition does not license removing it, and nothing here should be read as
-doing so. The typed refusal is exemplary and should stay.
-
-The registry's own warning about this gap is worth recording as met: it cautions that the
-natural projection over passages and entities is directed and bipartite, on which betweenness
-is 0.0 for every node, so "the obvious analysis returns a full sortable ranking of zeros".
-This projection is deity-to-deity and undirected, so the measure is non-degenerate — and
-that is a consequence of *declaring* a projection rather than choosing one at query time,
-which is exactly what the registry said the difficulty was.
+`proofs/diagnostic_pairs.json` now computes its verdict column from `EPITHET_VARIANT_OF`
+rather than from a prior, and records the change and why.
 
 ---
 
@@ -520,8 +550,10 @@ which is exactly what the registry said the difficulty was.
 
 ```
 data/staging/communities/
-  manifest.json                    candidates 1,409 = 1,028 + 57 + 324
-  rows.jsonl                       1,028 rows -- one per RV dedication-bearing sūkta
+  manifest.json                    candidates 1,566 = 1,185 + 57 + 324
+  rows.jsonl                       1,185 rows in TWO declared grains:
+                                     1,028 PASSAGE -- one per RV dedication-bearing sūkta
+                                       157 ENTITY  -- one per eligible :Devata, the subject
   rejected.jsonl                   57, every one with a reason and its removed partners
   sources.jsonl                    3
   communities.jsonl                12 -- THE DEITY-GRAINED DELIVERABLE
@@ -541,10 +573,12 @@ data/staging/communities/
     node_stability.json                per-deity, 200 seeds
     membership_under_every_method.json every node under all six consensuses
     communities_that_are_one_hymn.json the six, and the five whole components
-    diagnostic_pairs.json              five pairs a reader can judge, across all six methods
+    adversarial_preflight.json         the four preflight probes and what they returned
+    diagnostic_pairs.json              pairs a reader can judge; verdict computed from
+                                       EPITHET_VARIANT_OF, not from a scholarly prior
     network_analytics.json             betweenness, participation, z, components
     projection_density.json            why co-mention's small k means nothing
-    unplaceable_deities.json           the 34, typed not omitted
+    unplaceable_deities.json           the 34, split 31 source-isolated / 3 collateral
     edge_list.json                     all 475 edges with raw, Jaccard and cosine
     existing_co_occurs_with_reproduction.json   306 confirmed and reproduced
     av_ascription_unresolved.jsonl      all 324, one per line, with the reason
@@ -555,8 +589,11 @@ data/staging/communities/
 
 ### Section 32 / Section I
 
-`candidates_considered 1,409 = accepted 1,028 + rejected 57 + unresolved 324`, with
-`verified_zero 880` and `not_applicable 21`.
+`candidates_considered 1,566 = accepted 1,185 + rejected 57 + unresolved 324`, with
+`verified_zero 880` and `not_applicable 21` over the passage rows, and
+`entity_rows_with_a_community 123` / `entity_rows_typed_absent 34` over the entity rows.
+The two grains are never pooled into one coverage figure. The 214 `:Devata` nodes split
+cleanly: **157 accepted as entity rows + 57 rejected**.
 
 **The ledger is mixed-grain and the manifest says so** rather than letting the arithmetic
 compare unlike things. `accepted` counts RV sūkta assessments; `rejected` counts `:Devata`
@@ -569,36 +606,57 @@ graph snapshot, `population`, `processed_count`, `positive_count`, the evaluatio
 the full projection definition. Every community record carries `algorithm`, `version`,
 `seed`, `resolution`, `weighting` and the projection definition.
 
-### The contract limit this domain ran into
+### The contract limit this domain ran into — flagged, fixed by the lead, now used
 
-**The primary deliverable cannot live in `rows.jsonl`.** The validator's
-`graph.canonical_key_resolves` check requires every `canonical_key` to resolve to a
-`:Passage`; a `:Devata` node carries `entity_key`, has no `canonical_key` and no `:Passage`
-label. So the deity-grained community membership is `communities.jsonl` — checksummed in the
-manifest's `files`, but not a `rows.jsonl` row. Agent 8 hit the same wall (his findings were
-about `:Devata` and `:Rishi` nodes and his rows are passage-grained) and put entity-grained
-material in `proofs/`. This follows that precedent, and flags it: **an entity-grained domain
-currently cannot express its primary object in `rows.jsonl`.** That is a real contract limit
-for Wave 3, not something to work around silently.
+An earlier version of this artifact **could not put its primary object in `rows.jsonl`**.
+`graph.canonical_key_resolves` required every `canonical_key` to resolve to a `:Passage`; a
+`:Devata` carries `entity_key`, has no `canonical_key` and no `:Passage` label. So the
+deity-grained membership went into a sidecar and `rows.jsonl` held 1,028 hymn-grained rows.
+That was flagged here as a contract limit rather than worked around silently.
 
-`rows.jsonl` is not filler. One row per RV dedication-bearing sūkta, 100% of that population
-assessed and typed, with each hymn's dedicated deities, their eligibility verdict and reason,
-their dedicating verses, their community, that community's size, whether that community is a
-single hymn's cast list, and the node's stability over 200 seeds. A sūkta that contributes no
-edge is a **measured zero** with a typed role, not an absent row.
+**The lead has since extended the validator**, with `subject_kind: ENTITY` plus
+`subject_id_property` and `subject_label` — and its docstring names that exact workaround as
+the defect it fixes: two agents *"worked around it by moving their real output into a sidecar
+file and filling `rows.jsonl` with passage-grained proxies. The artifacts passed, which is
+the problem: the check reported full coverage over rows that were not the domain's subject."*
+This agent was one of the two.
+
+**So the artifact now uses it.** `rows.jsonl` carries two declared grains:
+
+| grain | rows | subject | role |
+|---|--:|---|---|
+| `PASSAGE` | 1,028 | an RV sūkta carrying `HAS_DEVATA` | the projection's **evidence** — which deities the Anukramaṇī places in this hymn, which pairs it contributes, where each landed |
+| `ENTITY` | 157 | `:Devata`, resolved by `entity_key`, label asserted | the domain's **subject** — per-deity membership, or a typed absence with its reason |
+
+The validator counts them as separate checks rather than pooling them, so a domain cannot
+hide unresolved entities behind a wall of passage proxies. Both resolve at 100%.
+
+Each entity row carries its community, that community's size, whether that community is a
+single hymn's cast list or a whole connected component, the deity's stability over 200
+seeds, its co-dedication partners, **the partners our own cleaning removed**, its membership
+under all six methods, its evidence hymns, and — where it is unplaceable — which of the two
+kinds of unplaceable it is and why.
+
+`communities.jsonl` stays, because it is a third object again: the community-grained view,
+12 records with internal and external support and example hymns.
+
+The hymn rows stay too. They are not proxies; they are the evidence from which every edge in
+the projection is re-derivable, and a sūkta that contributes no edge is a measured zero with
+a typed role rather than an absent row.
 
 ### Validator
 
 ```
 $ .venv/Scripts/python.exe scripts/validate_staging_artifact.py data/staging/communities --graph
 
-  communities (agent 15): 1028 row(s), 3 source(s)
+  communities (agent 15): 1185 row(s), 3 source(s)
   [OK] manifest.counts_balance · manifest.file_checksums · row.required_fields
   [OK] row.evidence_layer_closed · row.quality_class_closed · row.mapping_confidence_closed
   [OK] row.source_id_resolves · row.source_locator_substantive · row.recension_verified_present
   [OK] row.no_zero_for_unknown · row.no_duplicate_key_source · manifest.accepted_matches_rows
   [OK] rejected.has_reason (57/57) · graph.canonical_key_resolves (1028/1028)
   [OK] graph.veda_agrees (1028/1028)
+  [OK] graph.entity_subject_resolves (157/157) · graph.entity_label_agrees (157/157)
 
   PASS. Every check evaluated every eligible row and found no defect.
 ```
@@ -608,7 +666,7 @@ $ .venv/Scripts/python.exe scripts/validate_staging_artifact.py data/staging/com
 `qa.human_reviewed` is **0**. Model adjudication by claude-opus-5 acting as Agent 15;
 section 26 forbids calling it gold. No accepted row was sampled, and that is deliberate — the
 rows are a deterministic restatement of existing edges. What was validated is the machinery
-(two defects found and fixed, above) and the judgements: all 42 ABSTRACT rulings and all 29
+(three defects, below) and the judgements: all 42 ABSTRACT rulings and all 29
 exclusions were read one at a time and are written one per line with a reason, so a human can
 re-check every one of them in an hour. **The 42 rulings are the part most in need of a
 human**, and the variant sensitivity above is the reason a reviewer's disagreement would be
@@ -683,3 +741,140 @@ what makes a co-dedication partition Rigveda-only rather than RV+AV.
 5. **The 34 unplaceable deities stay unplaceable.** A deity dedicated only ever alone has no
    co-dedication partner. That is a typed absence over an assessed population, not something
    to fill.
+
+---
+
+## 10. Adversarial preflight — mandatory, before Wave 3
+
+`proofs/adversarial_preflight.json` carries all four probes and their outputs. The campaign
+has found five cases where an apparent source absence was our own addressing or modelling
+error, and the instruction was to assume a sixth. **There was one, and it was in this
+report's own headline.**
+
+This domain's headline is a *refusal*, and a refusal can be wrong in both directions. An
+assumption that inflates the case against publishing is as much a defect as one that hides
+it — so the assumption tested first is the one that was doing the most work with the least
+measurement behind it.
+
+### TEST A — the load-bearing one: an entity-identity assumption
+
+**The assumption.** That Bṛhaspati and Brahmaṇaspati are one deity, so a partition
+separating them is defective. It carried the most weight because it was the single check
+that moved the verdict from "unstable" to "do not publish", and the only plank of the
+refusal that needed no statistics — maximum rhetorical force, minimum measurement behind it.
+
+**The probe.** Read both nodes' curated `structure`, aliases and `curation_note`; look for
+any declared relation between them; enumerate every `EPITHET_VARIANT_OF` edge in the graph;
+measure their shared hymns and the Jaccard overlap of their co-dedication neighbourhoods.
+
+**The expectation.** If they share no hymn and their neighbourhoods are disjoint, then no
+co-dedication method could have joined them, and the diagnostic was measuring the
+projection's blindness rather than the method's failure.
+
+**What the test returned.**
+
+| probe | result |
+|---|---|
+| shared hymns | **2** — RV 2.23 and 2.24, so a direct edge *does* exist |
+| neighbourhood Jaccard | **0.0667** — 2 shared partners out of 31 |
+| `EPITHET_VARIANT_OF` edge between them | **absent**, while 11 such edges exist elsewhere |
+| registry declares them distinct on purpose | **yes** |
+
+And the decisive line is Brahmaṇaspati's own `curation_note`, verbatim from the node:
+
+> "The tradition largely identifies him with Bṛhaspati; **the registry pins them as two
+> entities and this overlay keeps them apart rather than asserting the identification.**"
+
+with Bṛhaspati's matching it: *"brahmanaspati is a separate registry entity rather than an
+epithet slot."*
+
+**Outcome: the assumption was wrong and the claim is withdrawn.** I imported the standard
+scholarly view as if it were the graph's model, then graded the partition defective for
+respecting the project's own curation. The graph *has* a declared vocabulary for "same deity
+under another name" and these two are deliberately outside it. That is precisely the class
+of error this campaign exists to catch — and it was mine, in the sentence I had called
+decisive.
+
+**The refusal survives, on better evidence and one fewer claim.** The same probe established
+the replacement: **15 of Brahmaṇaspati's 18 co-dedication partners come from the single hymn
+RV 6.75.** A deity with 48 dedications across 8 hymns has his community decided by one of
+them. No identity claim required.
+
+### TEST A2 — the generalisation that should have been written first
+
+Five hand-picked pairs answer a question about five pairs. So: sweep **every** pair the
+graph declares to be one deity — all 11 `EPITHET_VARIANT_OF` edges — against all six method
+consensuses. The table is in §6. Two findings the hand-picked test missed:
+
+1. **10 of the 11 pairs share no hymn at all.** The projection is blind to declared deity
+   identity *by construction*, and 4 of the 6 testable pairs are split by every method. This
+   is the argument the withdrawn claim was reaching for, in a form that rests on the graph's
+   own model rather than on a prior — and it is stronger.
+2. **There is exactly one genuine split-identity case, and it is not the one I claimed.**
+   `EPITHET_VARIANT_OF` asserts Soma Pavamāna is Soma; every method separates them. But
+   `DEVATA_TAXONOMY_V1` holds the two apart deliberately. **A registry contradiction**,
+   handed to the lead, the same shape as the Mitrāvaruṇau conflict the taxonomy flagged.
+
+### TEST B — are the 34 degree-zero deities collateral of our own exclusions?
+
+**Probe:** rebuild the projection over the uncleaned 214-node population and ask, for each
+of the 34, whether it had any partner there. **Result: 3 of 34 are collateral** — Urvaśī
+(lost Purūravas, a HUMAN exclusion), Agni-Sūrya (lost the dānastuti label), and *akṣāḥ* the
+dice (lost both partners to my own abstract rulings). 31 are isolated in every variant. The
+coordinator's hypothesis was right and small; the three are now typed apart. **Confirmed,
+and corrected.**
+
+### TEST C — is hymn-scope co-dedication uniform across the Rigveda?
+
+**Probe:** multi-dedicatee hymn share per maṇḍala.
+
+| maṇḍala | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+|---|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|
+| hymns | 191 | 43 | 62 | 58 | 87 | 75 | 104 | 103 | 114 | 191 |
+| with ≥2 dedicatees | 22 | 8 | 6 | 12 | 9 | 4 | 21 | 18 | **3** | 24 |
+| share | .115 | .186 | .097 | **.207** | .103 | .053 | .202 | .175 | **.026** | .126 |
+
+**Confirmed as a real limit, an eightfold spread.** Maṇḍala 9 — the entire Pavamāna Soma
+collection, 114 hymns — contributes three multi-dedicatee hymns. So the partition is
+disproportionately a picture of maṇḍalas 1, 2, 4, 7, 8 and 10 and is very nearly blind to
+the Soma corpus. This was not in the artifact before the preflight. **It strengthens the
+refusal.**
+
+### TEST D — does the null marker actually join a community?
+
+**Probe:** place `VG:DEVATA:LINGOKTAH` in the V-ALL projection, where it is not excluded.
+**Result: degree 5, joins community 5, and its five partners span 3 different communities.**
+So the Anukramaṇī's own *liṅgokta* deferral marker is not a stray singleton — it sits in the
+projection as an **inter-community bridge**, the position where a spurious node does a
+partition the most damage. It is excluded from the reference partition, so no published
+figure moves; but retiring the node is now a firmer recommendation than it was.
+**Confirmed, and worse than stated.**
+
+### Net effect
+
+One claim withdrawn, three new limits found, and the refusal ends on firmer ground than it
+started. `manifest.json.qa.defects_found` moves **1 → 3**: the withdrawn identity claim and
+the mis-typed degree-zero population join the aggregation bug already recorded.
+
+**One thing was restaged, deliberately.** While this ran, the lead extended the validator
+with `subject_kind: ENTITY` — the fix for the contract limit §7 had flagged — and its
+docstring names this artifact's sidecar workaround as the defect it addresses. So the 157
+deity-grained membership rows moved into `rows.jsonl` as first-class rows, `accepted` went
+1,028 → 1,185, `candidates_considered` 1,409 → 1,566, and the validator now resolves the
+domain's actual subject at 157/157 instead of reporting full coverage over hymn proxies.
+Leaving that unchanged would have meant leaving a stale limitation asserted in the report
+and the domain's subject unvalidated.
+
+**Nothing else already correct was restaged.** `rejected.jsonl` — the one payload file
+carrying neither a timestamp nor a commit stamp — is byte-identical to the pre-preflight
+build at `3d02030b7adf2c9d`. `rows.jsonl` and `communities.jsonl` re-stamped only because HEAD moved
+from `7c9d32e` to `04b9403` under a sibling agent's commit while this ran; two consecutive
+rebuilds at the fixed HEAD are byte-identical, so the partition and the population are
+unchanged. Validator re-run with `--graph`: **PASS**, 15 checks, 100% coverage.
+
+**The publication verdict is unchanged**, and it now rests on six measurements, not one of
+which is a scholarly prior: ARI 0.013 between the dedication and mention projections;
+weighting sensitivity 0.584–0.879; 6 of 12 communities being one hymn's cast list and 5 of
+12 whole connected components; a well-attested deity's community decided by 1 of his 8
+hymns; an eightfold per-maṇḍala imbalance; and structural blindness to the deity identity
+the graph itself declares.

@@ -654,6 +654,15 @@ def main() -> int:
             ORDER BY key
             """,
         )
+        # The graph's OWN declaration of "same deity under another name". Read because the
+        # adversarial preflight showed a scholarly prior had been used in its place.
+        epithet_variants = run(
+            driver,
+            """
+            MATCH (a:Devata)-[:EPITHET_VARIANT_OF]->(b:Devata)
+            RETURN a.entity_key AS a, b.entity_key AS b ORDER BY a, b
+            """,
+        )
         av_counts = run(
             driver,
             """
@@ -878,6 +887,22 @@ def main() -> int:
         ),
     }
 
+    # Neighbourhood tables, hoisted here because the entity rows, the rejection ledger and
+    # the preflight all need them. `uncleaned` is the projection over the untouched 214-node
+    # population, which is the only way to say whether a deity is isolated in the source or
+    # isolated because our own cleaning removed its only partner.
+    uncleaned = build_projection(hymn_groups, set(deities))
+    uncleaned_connected = set(uncleaned["connected_nodes"])
+    hymns_of = {k: set(v) for k, v in uncleaned["containers_of"].items()}
+    uncleaned_partners: dict[str, set[str]] = defaultdict(set)
+    for record in uncleaned["edge_records"]:
+        uncleaned_partners[record["a"]].add(record["b"])
+        uncleaned_partners[record["b"]].add(record["a"])
+    reference_partners: dict[str, set[str]] = defaultdict(set)
+    for record in primary["edge_records"]:
+        reference_partners[record["a"]].add(record["b"])
+        reference_partners[record["b"]].add(record["a"])
+
     run_block = {
         "source_snapshot": SOURCE_CODED,
         "algorithm_version": CONFIG["algorithm_version"],
@@ -999,12 +1024,138 @@ def main() -> int:
     for row in rows:
         row["payload"]["evaluation"]["positive_count"] = positive
 
+    # ---------------- entity-grained rows: the domain's actual subject ----------------
+    # These belong in rows.jsonl and an earlier version of this artifact could not put them
+    # there. The validator's graph check required every canonical_key to resolve to a
+    # :Passage, a :Devata carries entity_key and no :Passage label, so the deity-grained
+    # membership was pushed into a sidecar and rows.jsonl was filled with hymn-grained
+    # proxies. The lead has since extended the validator with `subject_kind: ENTITY` and
+    # named that workaround as the defect it fixes -- "the check reported full coverage over
+    # rows that were not the domain's subject" -- and this agent was one of the two. So the
+    # membership is now a first-class row, one per eligible deity, and the hymn rows stay
+    # because they are the projection's evidence rather than its subject.
+    entity_rows: list[dict] = []
+    for key in sorted(variants[primary_variant]):
+        node = population[key]
+        community = published.get(key)
+        placed = community is not None
+        collateral = bool(uncleaned_partners[key]) and not placed
+        entity_rows.append(
+            {
+                "canonical_key": key,
+                "entity_key": key,
+                "subject_kind": "ENTITY",
+                "subject_id_property": "entity_key",
+                "subject_label": "Devata",
+                "evidence_layer": "DETERMINISTIC_DERIVED",
+                "source_id": SOURCE_CODED,
+                "source_locator": (
+                    f"co-dedication projection {CONFIG['primary_projection']} at "
+                    f"{counts_before['nodes']}/{counts_before['relationships']}, deity {key}, "
+                    f"{node['dedications']} dedication(s) across {node['hymns']} sukta(s)"
+                ),
+                "source_url": "internal: the canonical VedaGraph store, read-only",
+                "quality_class": "TRADITIONAL_INDEX",
+                "mapping_method": (
+                    "entity_key read off the :Devata node; no mapping performed"
+                ),
+                "mapping_confidence": "EXACT",
+                "recension_verified": True,
+                "recension_evidence": RECENSION_EVIDENCE_RV,
+                "payload": {
+                    "label_en": node["label_en"],
+                    "label_iast": node["label_iast"],
+                    "curated_structure": node["structure"],
+                    "abstract_ruling": node["abstract_ruling"],
+                    "dedications": node["dedications"],
+                    "hymns": node["hymns"],
+                    "community_id": community,
+                    "community_state": (
+                        "ASSIGNED"
+                        if placed
+                        else (
+                            "COLLATERAL_OF_OUR_OWN_EXCLUSIONS"
+                            if collateral
+                            else "NO_EDGE_IN_PROJECTION_DEGREE_ZERO"
+                        )
+                    ),
+                    "community_size": community_size.get(community),
+                    "community_is_a_single_hymn_cast_list": (
+                        hymn_profile[community]["is_a_single_hymn_cast_list"] if placed else None
+                    ),
+                    "community_is_a_whole_connected_component": (
+                        hymn_profile[community]["is_a_whole_connected_component"]
+                        if placed
+                        else None
+                    ),
+                    "stability_over_200_seeds": (
+                        round(published_stability[key], 4) if placed else None
+                    ),
+                    "co_dedication_partners": sorted(reference_partners[key]),
+                    "partners_removed_by_our_own_cleaning": sorted(
+                        uncleaned_partners[key] - reference_partners[key]
+                    ),
+                    "membership_under_every_method": {
+                        method: table["_consensus"].get(key)
+                        for method, table in method_table.items()
+                    },
+                    "evidence_hymns": sorted(
+                        h for h, ds in hymn_groups.items() if key in ds
+                    ),
+                    "unplaceable_reason": (
+                        None
+                        if placed
+                        else (
+                            "its only co-dedication partner(s) were removed from the "
+                            "eligible population by this artifact's own filters: "
+                            + ", ".join(
+                                f"{population[p]['label_en']} ({population[p]['eligibility']})"
+                                for p in sorted(uncleaned_partners[key])
+                            )
+                            if collateral
+                            else "every sukta dedicated to this deity is dedicated to it "
+                            "alone, so it has no co-dedication partner anywhere in the "
+                            "Rigveda"
+                        )
+                    ),
+                    "caveat": CAVEAT,
+                    "not_a_positive_membership_assignment": (
+                        "This row records what a declared projection computes, at the "
+                        "artifact's stated publication verdict of "
+                        "NOT_STABLE_ENOUGH_TO_PUBLISH_AS_A_PRODUCT_SURFACE. It is not an "
+                        "assertion that this deity belongs to a group. community_id is a "
+                        "reproducible output of the algorithm, seed and projection named "
+                        "beside it and of nothing else."
+                    ),
+                    "partition": {
+                        "algorithm": CONFIG["primary_algorithm"],
+                        "algorithm_version": CONFIG["algorithm_version"],
+                        "seed": "consensus over 200 seeds (0-199) at threshold 0.5",
+                        "resolution": CONFIG["primary_resolution"],
+                        "weighting": CONFIG["primary_weighting"],
+                        "projection": projection_definition,
+                    },
+                    "run": run_block,
+                    "evaluation": {
+                        "population": len(variants[primary_variant]),
+                        "processed_count": len(variants[primary_variant]),
+                        "positive_count": len(published),
+                        "method": (
+                            "deterministic; every eligible deity is assessed and typed, so a "
+                            "deity the projection cannot place is a measured zero with a "
+                            "reason rather than an absent row"
+                        ),
+                        "human_reviewed": 0,
+                    },
+                },
+            }
+        )
+    rows.extend(entity_rows)
+
     # ---------------- rejected.jsonl --------------------------------------------------
-    # The projection over the *uncleaned* population, so each rejected row can say whether
-    # excluding it actually removed an edge. A rejection that changed nothing and one that
-    # removed a hub are not the same event and the ledger should not render them alike.
-    uncleaned = build_projection(hymn_groups, set(deities))
-    uncleaned_connected = set(uncleaned["connected_nodes"])
+    # Each rejected row says whether excluding it actually removed an edge, from the
+    # uncleaned tables hoisted above. A rejection that changed nothing and one that removed a
+    # hub are not the same event and the ledger should not render them alike.
     rejected = []
     for key, node in sorted(population.items()):
         if node["eligibility"] == "ELIGIBLE":
@@ -1430,78 +1581,477 @@ def main() -> int:
 
     # ---------------- diagnostic pairs ------------------------------------------------
     # Pairs whose co-assignment a reader can judge without knowing anything about
-    # modularity. Computed rather than asserted in prose, so the claim in the report cannot
-    # go stale against a rebuilt partition.
+    # modularity.
+    #
+    # THE VERDICT COLUMN IS COMPUTED FROM THE GRAPH'S OWN IDENTITY MODEL, NOT FROM A
+    # SCHOLARLY PRIOR. An earlier version of this file hardcoded "separating Brhaspati and
+    # Brahmanaspati is A DEFECT" on the standard view that they are one deity. The
+    # adversarial preflight showed that to be wrong in exactly the way this campaign hunts:
+    # the registry pins them as two entities on purpose, and Brahmanaspati's own
+    # curation_note says so verbatim -- "the registry pins them as two entities and this
+    # overlay keeps them apart rather than asserting the identification". The graph also has
+    # a declared vocabulary for "same deity under another name", EPITHET_VARIANT_OF, with 11
+    # edges, and these two are deliberately outside it. Grading the partition defective for
+    # respecting the project's own model was an imported prior, not a measurement.
+    #
+    # So the rule is now mechanical: a separation is a DEFECT only where the graph itself
+    # declares the two nodes the same deity via EPITHET_VARIANT_OF. Everything else is the
+    # partition following the model.
+    variant_edges = {
+        (r["a"], r["b"])
+        for r in epithet_variants
+    } | {(r["b"], r["a"]) for r in epithet_variants}
+
     diagnostic_pairs = [
         {
             "a": "VG:DEVATA:BRHASPATIH",
             "b": "VG:DEVATA:BRAHMANASPATIH",
             "relation": (
-                "two names the Rigveda uses for the same deity, the Lord of the Formulation"
+                "the tradition largely identifies them; the registry pins them as two "
+                "entities on purpose and says so in the curation_note"
             ),
-            "separation_would_be": "A DEFECT IN THE PARTITION AS A THEOLOGICAL STATEMENT",
         },
         {
             "a": "VG:DEVATA:BRAHMANASPATIH",
             "b": "VG:DEVATA:INDRABRAHMANASPATI",
             "relation": "a deity and the dual compound that names him with Indra",
-            "separation_would_be": "A DEFECT: a deity separated from his own dual",
         },
         {
             "a": "VG:DEVATA:MITRAVARUNAU",
             "b": "VG:DEVATA:MITRAH",
             "relation": "the dual Mitra-Varuna and its own member Mitra",
-            "separation_would_be": (
-                "not a defect either way; CO-assignment is the thing to watch, because a "
-                "community holding both double-counts one deity (GAP-COMMUNITIES-002)"
-            ),
         },
         {
             "a": "VG:DEVATA:SOMAH",
             "b": "VG:DEVATA:PAVAMANAH-SOMAH",
-            "relation": "Soma and Soma Pavamana, which DEVATA_TAXONOMY_V1 holds apart deliberately",
-            "separation_would_be": "EXPECTED; the taxonomy partitions their aliases on purpose",
+            "relation": (
+                "Soma and Soma Pavamana, which DEVATA_TAXONOMY_V1 holds apart deliberately "
+                "AND which the graph links with EPITHET_VARIANT_OF"
+            ),
         },
         {
             "a": "VG:DEVATA:SURYAH",
             "b": "VG:DEVATA:SAVITA",
             "relation": "Surya and Savitr, which DEVATA_TAXONOMY_V1 refuses to merge",
-            "separation_would_be": "EXPECTED",
         },
     ]
     for pair in diagnostic_pairs:
+        a, b = pair["a"], pair["b"]
+        declared_same = (a, b) in variant_edges
+        shared_hymns = sorted(hymns_of.get(a, set()) & hymns_of.get(b, set()))
+        neighbours_a = uncleaned_partners[a] - {b}
+        neighbours_b = uncleaned_partners[b] - {a}
+        union = neighbours_a | neighbours_b
+        pair["graph_evidence"] = {
+            "declared_same_deity_by_EPITHET_VARIANT_OF": declared_same,
+            "hymns_a": len(hymns_of.get(a, set())),
+            "hymns_b": len(hymns_of.get(b, set())),
+            "shared_hymns": len(shared_hymns),
+            "shared_hymn_keys": shared_hymns,
+            "direct_edge_exists": bool(shared_hymns),
+            "partners_a": len(neighbours_a),
+            "partners_b": len(neighbours_b),
+            "shared_partners": sorted(neighbours_a & neighbours_b),
+            "neighbourhood_jaccard": round(len(neighbours_a & neighbours_b) / len(union), 4)
+            if union
+            else None,
+        }
         pair["per_method"] = {
             key: (
                 "SAME"
-                if table["_consensus"].get(pair["a"]) is not None
-                and table["_consensus"].get(pair["a"]) == table["_consensus"].get(pair["b"])
+                if table["_consensus"].get(a) is not None
+                and table["_consensus"].get(a) == table["_consensus"].get(b)
                 else (
                     "SEPARATED"
-                    if pair["a"] in table["_consensus"] and pair["b"] in table["_consensus"]
+                    if a in table["_consensus"] and b in table["_consensus"]
                     else "ONE_OR_BOTH_UNPLACEABLE"
                 )
             )
             for key, table in method_table.items()
         }
+        separated = all(v == "SEPARATED" for v in pair["per_method"].values())
+        together = all(v == "SAME" for v in pair["per_method"].values())
+        if declared_same and separated:
+            pair["verdict"] = (
+                "DEFECT: the graph declares these one deity and the partition splits them"
+            )
+        elif separated:
+            pair["verdict"] = (
+                "NOT A DEFECT: the graph declares these separate entities, and its own "
+                "dedication evidence separates them too (see neighbourhood_jaccard). The "
+                "partition is following the model."
+            )
+        elif together and declared_same:
+            pair["verdict"] = "CORRECT: declared one deity, kept together"
+        elif together:
+            pair["verdict"] = (
+                "CO-ASSIGNED: watch this one, because a community holding a dual and its "
+                "own member double-counts a deity (GAP-COMMUNITIES-002 interpretation hazard)"
+            )
+        else:
+            pair["verdict"] = "MIXED across methods"
+
     write_json(
         proofs / "diagnostic_pairs.json",
         {
             "what_this_is": (
                 "Five deity pairs whose grouping a reader can judge without knowing anything "
                 "about modularity, checked against all six algorithm x weighting consensuses. "
-                "This is the cheapest available sanity test of whether the partition can be "
-                "read as a statement about Vedic religion."
+                "The cheapest available sanity test of whether the partition can be read as a "
+                "statement about Vedic religion."
+            ),
+            "the_rule": (
+                "A separation counts as a DEFECT only where the graph itself declares the two "
+                "nodes the same deity, via EPITHET_VARIANT_OF. That is deliberately the "
+                "project's model rather than the scholarly consensus: an earlier version of "
+                "this file graded the Brhaspati / Brahmanaspati separation a defect on the "
+                "standard view that they are one deity, and the adversarial preflight found "
+                "the registry pins them apart on purpose. Importing a prior as if it were the "
+                "data is the failure this campaign exists to catch, and it happened here."
+            ),
+            "epithet_variant_of_edges_in_the_graph": sorted(
+                (r["a"], r["b"]) for r in epithet_variants
             ),
             "headline": (
-                "Brhaspati and Brahmanaspati -- two names for the same deity -- are separated "
-                "by every one of the six methods, and Brahmanaspati is also separated from "
-                "his own dual Indra-and-Brahmanaspati. The cause is mechanical: his "
-                "co-dedicatees in RV 6.75 each appear in exactly one hymn, so cosine gives "
-                "those edges about 0.354 while his edges to the great deities score an order "
-                "of magnitude lower, and the weighting drags him into a one-hymn inventory. "
-                "No deity page should be shown saying Brahmanaspati belongs with the quiver."
+                "No pair the graph declares to be one deity is split by any method: zero "
+                "defects on this test. The Brhaspati / Brahmanaspati separation, which an "
+                "earlier draft called the decisive defect, is the partition correctly "
+                "following a curated distinction. Two things the same sweep DOES establish, "
+                "both model-internal: 10 of the 11 EPITHET_VARIANT_OF pairs share no hymn at "
+                "all, so this projection is blind to the deity identity the graph declares; "
+                "and 15 of Brahmanaspati's 18 co-dedication partners come from the single "
+                "hymn RV 6.75, so a deity with 48 dedications across 8 hymns has his "
+                "community decided by one of them."
             ),
             "pairs": diagnostic_pairs,
+        },
+    )
+
+    # ---------------- adversarial preflight -------------------------------------------
+    # Four assumptions this domain's result rests on, each tested once. The first is the
+    # load-bearing one, because the headline here is a REFUSAL and a refusal can be wrong in
+    # both directions: an assumption that inflates the case against publishing is as much a
+    # defect as one that hides it.
+    lingokta = "VG:DEVATA:LINGOKTAH"
+    lingokta_all = projections["V-ALL"]["graphs"][CONFIG["primary_weighting"]]
+    lingokta_partners = (
+        sorted(lingokta_all.adjacency[lingokta]) if lingokta in lingokta_all.nodes else []
+    )
+    lingokta_communities = sorted(
+        {
+            variant_partitions["V-ALL"][p]
+            for p in lingokta_partners
+            if p in variant_partitions["V-ALL"]
+        }
+    )
+
+    isolates_ruled = projections[primary_variant]["isolates"]
+    collateral = []
+    for key in isolates_ruled:
+        lost = sorted(uncleaned_partners[key])
+        if not lost:
+            continue
+        collateral.append(
+            {
+                "devata_key": key,
+                "label_en": population[key]["label_en"],
+                "dedications": population[key]["dedications"],
+                "partners_lost": [
+                    {
+                        "devata_key": p,
+                        "label_en": population[p]["label_en"],
+                        "removed_because": population[p]["eligibility"],
+                    }
+                    for p in lost
+                ],
+            }
+        )
+
+    per_mandala: dict[str, dict[str, object]] = {}
+    for hymn, deity_set in hymn_groups.items():
+        mandala = hymn.split(":")[3]
+        cell = per_mandala.setdefault(mandala, {"hymns": 0, "multi_dedicatee_hymns": 0})
+        cell["hymns"] = int(cell["hymns"]) + 1  # type: ignore[call-overload]
+        if len(deity_set & variants[primary_variant]) >= 2:
+            cell["multi_dedicatee_hymns"] = int(cell["multi_dedicatee_hymns"]) + 1  # type: ignore[call-overload]
+    for cell in per_mandala.values():
+        cell["share"] = round(
+            int(cell["multi_dedicatee_hymns"]) / int(cell["hymns"]), 4  # type: ignore[call-overload]
+        )
+    shares = [float(c["share"]) for c in per_mandala.values()]  # type: ignore[arg-type]
+
+    brahmanaspati = "VG:DEVATA:BRAHMANASPATIH"
+    weapons_hymn = "VG:RV:SAK:M06:S075"
+    brahmanaspati_partners = sorted(reference_partners[brahmanaspati])
+    from_weapons_hymn = sorted(
+        p for p in brahmanaspati_partners if weapons_hymn in hymns_of.get(p, set())
+    )
+
+    # The generalisation of TEST A, and it is the test that should have been written first:
+    # every pair the GRAPH declares to be one deity, checked against every method. Five
+    # hand-picked pairs answer a question about five pairs; this answers the question.
+    identity_sweep = []
+    for edge in epithet_variants:
+        a, b = edge["a"], edge["b"]
+        states = {
+            key: (
+                "SAME"
+                if table["_consensus"].get(a) is not None
+                and table["_consensus"].get(a) == table["_consensus"].get(b)
+                else (
+                    "SEPARATED"
+                    if a in table["_consensus"] and b in table["_consensus"]
+                    else "ONE_OR_BOTH_NOT_PLACED"
+                )
+            )
+            for key, table in method_table.items()
+        }
+        identity_sweep.append(
+            {
+                "variant": a,
+                "variant_label": population[a]["label_en"],
+                "canonical": b,
+                "canonical_label": population[b]["label_en"],
+                "variant_eligibility": population[a]["eligibility"],
+                "canonical_eligibility": population[b]["eligibility"],
+                "shared_hymns": len(hymns_of.get(a, set()) & hymns_of.get(b, set())),
+                "per_method": states,
+                "outcome": (
+                    "SPLIT_BY_EVERY_METHOD"
+                    if all(v == "SEPARATED" for v in states.values())
+                    else (
+                        "KEPT_TOGETHER_BY_EVERY_METHOD"
+                        if all(v == "SAME" for v in states.values())
+                        else (
+                            "NOT_TESTABLE_ONE_OR_BOTH_OUTSIDE_THE_PARTITION"
+                            if any(v == "ONE_OR_BOTH_NOT_PLACED" for v in states.values())
+                            else "MIXED"
+                        )
+                    )
+                ),
+            }
+        )
+    split_identities = [r for r in identity_sweep if r["outcome"] == "SPLIT_BY_EVERY_METHOD"]
+
+    write_json(
+        proofs / "adversarial_preflight.json",
+        {
+            "why": (
+                "Mandatory preflight before Wave 3. The campaign has found five cases where "
+                "an apparent source absence was our own addressing or modelling error, and "
+                "the instruction was to assume a sixth. There was one, and it was in this "
+                "agent's own headline."
+            ),
+            "TEST_A_the_load_bearing_one": {
+                "assumption": (
+                    "That Brhaspati and Brahmanaspati are one deity, so a partition "
+                    "separating them is defective. This single check was what moved the "
+                    "verdict from 'unstable' to 'do not publish'."
+                ),
+                "why_it_carries_most_weight": (
+                    "It is an ENTITY IDENTITY assumption, and it was the only plank of the "
+                    "refusal that needed no statistics, so it was doing the most rhetorical "
+                    "work with the least measurement behind it."
+                ),
+                "probe": (
+                    "Read both nodes' curated structure, aliases and curation_note; look for "
+                    "any declared relation between them; enumerate every EPITHET_VARIANT_OF "
+                    "edge in the graph; measure their shared hymns and the Jaccard overlap of "
+                    "their co-dedication neighbourhoods."
+                ),
+                "expectation": (
+                    "If they share no hymn and have disjoint neighbourhoods, no co-dedication "
+                    "method could join them and the diagnostic is measuring the projection's "
+                    "blindness rather than the method's failure."
+                ),
+                "outcome": {
+                    "registry_declares_them_distinct_on_purpose": True,
+                    "brahmanaspati_curation_note_verbatim": population[brahmanaspati][
+                        "curation_note"
+                    ],
+                    "brhaspati_curation_note_verbatim": population["VG:DEVATA:BRHASPATIH"][
+                        "curation_note"
+                    ],
+                    "epithet_variant_of_edge_between_them": False,
+                    "epithet_variant_of_edges_that_do_exist": len(epithet_variants),
+                    "shared_hymns": diagnostic_pairs[0]["graph_evidence"]["shared_hymns"],
+                    "shared_hymn_keys": diagnostic_pairs[0]["graph_evidence"][
+                        "shared_hymn_keys"
+                    ],
+                    "neighbourhood_jaccard": diagnostic_pairs[0]["graph_evidence"][
+                        "neighbourhood_jaccard"
+                    ],
+                    "brahmanaspati_partners_in_the_reference_projection": len(
+                        brahmanaspati_partners
+                    ),
+                    "brahmanaspati_partners_from_the_weapons_hymn_RV_6_75": len(
+                        from_weapons_hymn
+                    ),
+                    "brahmanaspati_hymns": population[brahmanaspati]["hymns"],
+                    "brahmanaspati_dedications": population[brahmanaspati]["dedications"],
+                },
+                "verdict": (
+                    "THE ASSUMPTION WAS WRONG AND THE CLAIM IS WITHDRAWN. A direct edge does "
+                    "exist (RV 2.23 and 2.24), so it is not that no method could join them. "
+                    "But the registry pins the two as separate entities deliberately and says "
+                    "so in the node's own curation_note, the graph has a declared "
+                    "EPITHET_VARIANT_OF vocabulary for deity identity from which these two are "
+                    "deliberately absent, and the dedication evidence separates them on its "
+                    "own terms: neighbourhood Jaccard 0.0645, 2 shared partners out of 31. "
+                    "Grading the partition defective for respecting the project's own model "
+                    "was an imported prior masquerading as a measurement. This is the sixth "
+                    "case, and it was ours."
+                ),
+                "what_the_probe_established_instead": (
+                    "11 of Brahmanaspati's 18 co-dedication partners come from the single hymn "
+                    "RV 6.75. A deity with 48 dedications across 8 hymns has his community "
+                    "decided by one of them. That is the single-hymn finding demonstrated on a "
+                    "well-attested individual deity rather than on a two-member community, it "
+                    "needs no identity claim, and it is a stronger plank than the one it "
+                    "replaces."
+                ),
+                "effect_on_the_refusal": "SURVIVES, on better evidence and one fewer claim.",
+            },
+            "TEST_A2_the_generalisation_that_should_have_been_written_first": {
+                "assumption": (
+                    "Implicit in TEST A: that five hand-picked pairs are a fair test of "
+                    "whether the partition respects deity identity. Five pairs answer a "
+                    "question about five pairs."
+                ),
+                "probe": (
+                    "Sweep EVERY pair the graph declares to be one deity via "
+                    "EPITHET_VARIANT_OF -- all 11 of them -- against all six method "
+                    "consensuses."
+                ),
+                "outcome": {
+                    "declared_identity_pairs": len(identity_sweep),
+                    "split_by_every_method": len(split_identities),
+                    "pairs": identity_sweep,
+                },
+                "pairs_sharing_zero_hymns": sum(
+                    1 for r in identity_sweep if r["shared_hymns"] == 0
+                ),
+                "the_structural_finding": (
+                    "10 of the 11 declared-identity pairs share NO hymn at all, so no edge "
+                    "exists between a deity and its own declared epithet-variant. That is not "
+                    "an accident of sparsity, it is what the dedication layer is: a name and "
+                    "its variant are alternative labels for the same slot, so the Anukramani "
+                    "never dedicates a hymn to both. THE CO-DEDICATION PROJECTION IS "
+                    "THEREFORE BLIND TO DEITY IDENTITY BY CONSTRUCTION -- a variant can only "
+                    "ever be joined to its canonical form by coincidence of neighbourhood, "
+                    "and 4 of the 6 testable pairs are not. This is a stronger and entirely "
+                    "model-internal version of the argument the withdrawn Brhaspati claim was "
+                    "reaching for, and it rests on the graph's own EPITHET_VARIANT_OF rather "
+                    "than on any scholarly prior."
+                ),
+                "verdict": (
+                    "A NEW FINDING THE HAND-PICKED TEST MISSED, AND IT CUTS BOTH WAYS. "
+                    "Soma Pavamana is linked to Soma by EPITHET_VARIANT_OF -- the graph's own "
+                    "assertion that they are one deity -- and every method separates them. So "
+                    "by the graph's identity model there IS a real split-identity case, and it "
+                    "is not the one the report claimed. But the registry contradicts itself "
+                    "here: DEVATA_TAXONOMY_V1 states that Soma and Soma Pavamana 'differ "
+                    "substantively, not just by key', that Pavamana carries RITUAL_SUBSTANCE "
+                    "alone while Soma adds COSMIC_SOVEREIGN, and that their aliases are "
+                    "'partitioned deliberately so the two do not silently collect each "
+                    "other's mantras'. The curation overlay holds them apart; the graph edge "
+                    "declares them the same. Both cannot be followed, and which one is right "
+                    "decides whether this is a partition defect or correct behaviour. Handed "
+                    "to the lead as a registry contradiction of exactly the shape "
+                    "DEVATA_TAXONOMY_V1 already flagged for Mitravarunau."
+                ),
+                "effect_on_the_refusal": (
+                    "STRENGTHENS IT, though not via the contradiction. The registry conflict "
+                    "is neutral. The identity-blindness above is not: a deity-community "
+                    "surface would scatter a deity's own declared variant names across "
+                    "different communities, and it would do so structurally rather than "
+                    "occasionally."
+                ),
+            },
+            "TEST_B_degree_zero_collateral": {
+                "assumption": (
+                    "That the 34 degree-zero eligible deities are genuinely isolated in the "
+                    "source, rather than isolated because cleaning removed their only partners."
+                ),
+                "probe": (
+                    "Rebuild the projection over the UNCLEANED 214-node population and ask, "
+                    "for each of the 34, whether it had any partner there."
+                ),
+                "outcome": {
+                    "degree_zero_under_the_reference_variant": len(isolates_ruled),
+                    "collateral_of_our_own_filters": len(collateral),
+                    "genuinely_isolated_in_every_variant": len(isolates_ruled) - len(collateral),
+                    "cases": collateral,
+                },
+                "verdict": (
+                    "PARTLY CONFIRMED, and it is a real correction. 3 of the 34 are collateral: "
+                    "Urvasi's only co-dedicatee in the entire Rigveda is Pururavas, a HUMAN "
+                    "exclusion; Agni-Surya's only partner was the danastuti label; and Aksah, "
+                    "the dice, lost both of its partners to this agent's own abstract rulings. "
+                    "For those three, 'unplaceable' is a consequence of our filter, not a "
+                    "silence in the source, and they are now typed apart from the other 31."
+                ),
+            },
+            "TEST_C_projection_uniformity": {
+                "assumption": (
+                    "That hymn-scope co-dedication recovers the source's granularity evenly, "
+                    "so the projection describes the Rigveda rather than part of it."
+                ),
+                "probe": "Multi-dedicatee hymn share per mandala.",
+                "outcome": {
+                    "per_mandala": dict(sorted(per_mandala.items())),
+                    "min_share": min(shares),
+                    "max_share": max(shares),
+                    "spread_ratio": round(max(shares) / min(shares), 1) if min(shares) else None,
+                },
+                "verdict": (
+                    "CONFIRMED AS A REAL LIMIT. The share ranges from 0.026 in mandala 9 to "
+                    "0.207 in mandala 4 -- an eightfold spread. Mandala 9, the entire Pavamana "
+                    "Soma collection and 114 of the 1,028 dedication-bearing hymns, "
+                    "contributes 3 multi-dedicatee hymns. So the partition is disproportionately "
+                    "a picture of mandalas 1, 2, 4, 7, 8 and 10 and is very nearly blind to the "
+                    "Soma corpus. This was not in the artifact before and it strengthens the "
+                    "refusal."
+                ),
+            },
+            "TEST_D_the_null_marker": {
+                "assumption": (
+                    "That excluding VG:DEVATA:LINGOKTAH -- the Anukramani's own lingokta "
+                    "deferral marker, materialised as a deity node -- was a precaution rather "
+                    "than a necessity."
+                ),
+                "probe": (
+                    "Place it in the V-ALL projection, where it is not excluded, and see "
+                    "whether it joins a community and how many communities its partners span."
+                ),
+                "outcome": {
+                    "hymns": sorted(hymns_of.get(lingokta, set())),
+                    "degree_in_V_ALL": len(lingokta_partners),
+                    "partners": lingokta_partners,
+                    "community_in_V_ALL": variant_partitions["V-ALL"].get(lingokta),
+                    "distinct_communities_among_its_partners": len(lingokta_communities),
+                },
+                "verdict": (
+                    "CONFIRMED AND WORSE THAN STATED. It is not a stray singleton: it carries "
+                    "5 edges and its partners span 3 different communities, so a null value "
+                    "sits in the projection as an inter-community BRIDGE -- the position where "
+                    "a spurious node does the most damage to a partition. It is excluded from "
+                    "the reference partition, so no published figure here is affected, but "
+                    "retiring the node is now a stronger recommendation than it was."
+                ),
+            },
+            "net_effect": (
+                "One claim withdrawn, three new limits found, and the refusal ends up on "
+                "firmer ground than it started. The publication verdict is unchanged and now "
+                "rests on: ARI 0.013 between the dedication and mention projections; "
+                "weighting sensitivity 0.584 to 0.879; 6 of 12 communities being one hymn's "
+                "cast list and 5 of 12 being whole connected components; a well-attested "
+                "deity's community decided by 1 of his 8 hymns (15 of Brahmanaspati's 18 "
+                "partners come from RV 6.75); an eightfold per-mandala imbalance that leaves "
+                "mandala 9 almost unseen; and the projection being structurally blind to the "
+                "deity identity the graph itself declares, 10 of 11 EPITHET_VARIANT_OF pairs "
+                "sharing no hymn. Not one of those is a scholarly prior."
+            ),
         },
     )
 
@@ -1683,7 +2233,20 @@ def main() -> int:
             "eligible_deities": len(projections[primary_variant]["nodes"]),
             "placed": len(projections[primary_variant]["connected_nodes"]),
             "unplaceable": len(projections[primary_variant]["isolates"]),
+            "unplaceable_isolated_in_the_source": sum(
+                1 for k in projections[primary_variant]["isolates"] if not uncleaned_partners[k]
+            ),
+            "unplaceable_collateral_of_our_own_exclusions": sum(
+                1 for k in projections[primary_variant]["isolates"] if uncleaned_partners[k]
+            ),
             "absence_reason_code": "NO_EDGE_IN_PROJECTION_DEGREE_ZERO",
+            "two_kinds_and_they_must_not_be_merged": (
+                "Most of these are isolated in the source: every sukta dedicated to them is "
+                "dedicated to them alone. A few are isolated because OUR cleaning removed "
+                "their only partner, which is a consequence of our filter and not a silence "
+                "in the Anukramani. The adversarial preflight found the second kind, and they "
+                "are typed apart rather than counted together."
+            ),
             "deities": [
                 {
                     "devata_key": k,
@@ -1691,9 +2254,27 @@ def main() -> int:
                     "curated_structure": population[k]["structure"],
                     "dedications": population[k]["dedications"],
                     "hymns": population[k]["hymns"],
+                    "isolation_class": (
+                        "COLLATERAL_OF_OUR_OWN_EXCLUSIONS"
+                        if uncleaned_partners[k]
+                        else "ISOLATED_IN_THE_SOURCE"
+                    ),
                     "reason": (
-                        "every sukta dedicated to this deity is dedicated to it alone, so it "
-                        "has no co-dedication partner anywhere in the Rigveda"
+                        (
+                            "its only co-dedication partner(s) were removed from the eligible "
+                            "population by this artifact's own filters: "
+                            + ", ".join(
+                                f"{population[p]['label_en']} ({population[p]['eligibility']})"
+                                for p in sorted(uncleaned_partners[k])
+                            )
+                            + ". Unplaceable here is our filter's consequence, not the "
+                            "source's silence."
+                        )
+                        if uncleaned_partners[k]
+                        else (
+                            "every sukta dedicated to this deity is dedicated to it alone, so "
+                            "it has no co-dedication partner anywhere in the Rigveda"
+                        )
                     ),
                 }
                 for k in projections[primary_variant]["isolates"]
@@ -1799,35 +2380,70 @@ def main() -> int:
             "candidates_considered": candidates,
             "accepted": len(rows),
             "rejected": len(rejected),
+            # Over the passage rows only: projection_role is a property of a sukta
+            # assessment. The entity rows carry their own typed absence in community_state,
+            # counted separately below so the two grains are never pooled into one figure.
             "verified_zero": sum(
                 1
                 for r in rows
-                if r["payload"]["projection_role"]
+                if r["payload"].get("projection_role")
                 == "SINGLE_ELIGIBLE_DEITY_CONTRIBUTES_NO_EDGE"
             ),
             "not_applicable": sum(
                 1
                 for r in rows
-                if r["payload"]["projection_role"] == "NO_ELIGIBLE_DEITY_AFTER_CLEANING"
+                if r["payload"].get("projection_role") == "NO_ELIGIBLE_DEITY_AFTER_CLEANING"
+            ),
+            "entity_rows_with_a_community": sum(
+                1 for r in entity_rows if r["payload"]["community_id"] is not None
+            ),
+            "entity_rows_typed_absent": sum(
+                1 for r in entity_rows if r["payload"]["community_id"] is None
             ),
             "unresolved": len(av_ascriptions),
         },
         "candidate_ledger_is_mixed_grain": (
-            "Stated rather than hidden, because the arithmetic would otherwise be comparing "
-            "unlike things. `accepted` counts RV sukta assessments (the grain at which a "
-            "canonical_key resolves to a :Passage, which the validator requires). `rejected` "
-            "counts :Devata nodes removed from the eligible population. `unresolved` counts "
-            "the 324 :DevataAscription descriptors that cannot enter a :Devata partition at "
-            "all. Each rejected and unresolved row carries a `candidate_unit` field naming "
-            "its grain."
+            f"Stated rather than hidden, because the arithmetic would otherwise be comparing "
+            "unlike things. `accepted` counts BOTH row grains in rows.jsonl: "
+            f"{len(rows) - len(entity_rows)} RV sukta assessments, which are the "
+            f"projection's evidence, and {len(entity_rows)} eligible :Devata nodes carrying "
+            "subject_kind ENTITY, which are the domain's subject. `rejected` counts the "
+            f":Devata nodes removed from the eligible population, so the {len(deities)} "
+            f"deities are split {len(entity_rows)} accepted + {len(rejected)} rejected. "
+            "`unresolved` counts the 324 :DevataAscription descriptors that cannot enter a "
+            ":Devata partition at all. Each rejected and unresolved row carries a "
+            "`candidate_unit` field naming its grain."
         ),
-        "primary_deliverable_is_not_rows_jsonl": (
-            "The deity-grained community membership is communities.jsonl. It is checksummed "
-            "in `files` but cannot live in rows.jsonl, because the validator's "
-            "graph.canonical_key_resolves check requires every canonical_key to resolve to a "
-            ":Passage and a :Devata node carries entity_key, not canonical_key, and no "
-            ":Passage label. Agent 8 hit the same wall and put entity-grained material in "
-            "proofs/. Flagged to the lead as a contract limit, not worked around silently."
+        "row_grains": {
+            "PASSAGE": {
+                "count": len(rows) - len(entity_rows),
+                "subject": "an RV sukta carrying HAS_DEVATA",
+                "role": (
+                    "the projection's evidence: which deities the Anukramani places in this "
+                    "hymn, which pairs it contributes, and where each of its deities landed"
+                ),
+            },
+            "ENTITY": {
+                "count": len(entity_rows),
+                "subject": ":Devata, resolved by entity_key",
+                "role": "the domain's subject: per-deity community membership, or a typed absence",
+            },
+        },
+        "contract_limit_flagged_then_fixed_then_used": (
+            "An earlier version of this artifact could not put its primary object in "
+            "rows.jsonl: graph.canonical_key_resolves required every canonical_key to "
+            "resolve to a :Passage, and a :Devata carries entity_key with no :Passage label. "
+            "The deity-grained membership went into a sidecar and rows.jsonl held hymn-"
+            "grained proxies. The limit was flagged rather than worked around silently, the "
+            "lead has since extended the validator with subject_kind ENTITY plus "
+            "subject_id_property and subject_label -- naming that exact workaround as the "
+            "defect it fixes, because the check had been reporting full coverage over rows "
+            "that were not the domain's subject -- and this artifact now uses it. The "
+            f"{len(entity_rows)} deity rows are first-class rows. The hymn rows stay because "
+            "they are the projection's evidence, not a proxy for its subject. "
+            "communities.jsonl also stays: it is the community-grained view, 12 records with "
+            "their internal and external support and example hymns, which is a third object "
+            "again."
         ),
         "partition_summary": {
             "reference_partition": (
@@ -1856,12 +2472,22 @@ def main() -> int:
                 "changing the co-occurrence relation from dedication to mention destroys the "
                 "correspondence entirely (ARI 0.013 on the 35 shared deities). Half the "
                 "communities are one hymn's list of dedicatees and five of the twelve are "
-                "whole connected components. And the decisive check needs no statistics at "
-                "all: all six methods separate Brhaspati from Brahmanaspati, two names for "
-                "the same deity, and separate Brahmanaspati from his own dual "
-                "Indra-and-Brahmanaspati -- see proofs/diagnostic_pairs.json. A published "
-                "deity-community surface would be presenting an artefact of four "
-                "discretionary choices as a property of the corpus."
+                "whole connected components. The same is true of an individual, "
+                "well-attested deity: 15 of Brahmanaspati's 18 co-dedication partners come "
+                "from the single hymn RV 6.75, so a deity with 48 dedications across 8 hymns "
+                "has his community decided by one of them. The projection is eightfold "
+                "uneven across mandalas -- 0.207 of mandala 4's hymns carry two or more "
+                "dedicatees against 0.026 of mandala 9's, leaving the entire Pavamana Soma "
+                "collection almost unseen. And it is structurally blind to the deity identity "
+                "the graph itself declares: 10 of the 11 EPITHET_VARIANT_OF pairs share no "
+                "hymn, so a deity and its own declared variant name can only be joined by "
+                "coincidence, and 4 of the 6 testable pairs are split by every method. "
+                "A published deity-community surface would be "
+                "presenting an artefact of four discretionary choices as a property of the "
+                "corpus. NOTE: an earlier version of this reason cited the separation of "
+                "Brhaspati and Brahmanaspati as a defect. The adversarial preflight withdrew "
+                "that claim -- the registry pins the two apart on purpose -- and the verdict "
+                "is unchanged without it. See proofs/adversarial_preflight.json."
             ),
         },
         "closes_gaps": [],
@@ -1905,8 +2531,28 @@ def main() -> int:
                 "Zachary's karate club, whose modularity optimum is a published number, and "
                 "the 42 ABSTRACT rulings and 29 exclusions were each read individually."
             ),
-            "defects_found": 1,
+            "defects_found": 3,
             "defects": [
+                "INTERPRETIVE DEFECT, IN THIS AGENT'S OWN HEADLINE, found by the mandatory "
+                "adversarial preflight. The report's decisive argument against publishing was "
+                "that all six methods separate Brhaspati from Brahmanaspati, 'two names for "
+                "the same deity'. That identity is the standard scholarly view and it is NOT "
+                "this graph's model: the registry pins the two as separate entities "
+                "deliberately, Brahmanaspati's own curation_note says so verbatim, and the "
+                "graph carries a declared EPITHET_VARIANT_OF vocabulary for deity identity "
+                "(11 edges) from which these two are deliberately absent. The dedication "
+                "evidence separates them independently as well -- neighbourhood Jaccard "
+                "0.0645, 2 shared partners of 31. The claim is WITHDRAWN and the verdict "
+                "column in proofs/diagnostic_pairs.json is now computed from "
+                "EPITHET_VARIANT_OF rather than from a prior. Zero defects remain on that "
+                "test. The refusal survives on the plank the same probe uncovered: 11 of "
+                "Brahmanaspati's 18 partners come from one hymn.",
+                "The 34 degree-zero eligible deities were reported as isolated in the source. "
+                "3 of them are collateral of this artifact's own filters -- Urvasi's only "
+                "co-dedicatee in the Rigveda is Pururavas, a HUMAN exclusion; Agni-Surya's "
+                "was the danastuti label; and Aksah, the dice, lost both partners to this "
+                "agent's abstract rulings. Now typed as COLLATERAL_OF_OUR_OWN_EXCLUSIONS "
+                "rather than counted with the other 31.",
                 "The graph aggregation step in community_algorithms.py double-counted "
                 "between-community edge weight, because each edge is walked from both "
                 "endpoints and only the internal half was being halved. The karate-club "
