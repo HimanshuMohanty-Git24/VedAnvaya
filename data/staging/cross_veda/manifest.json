@@ -1,0 +1,186 @@
+{
+ "domain": "cross_veda",
+ "agent": 10,
+ "schema_version": "1.0",
+ "algorithm_version": "crossveda-connection-completion-v1",
+ "created_at": "2026-09-15T09:24:38.559467+00:00",
+ "code_commit": "7c9d32e3ae13c1049061212da7c10e32df4e028b",
+ "config_hash": "18e6fcb3a5e11c8771332915b0425530f061206840f845969aacc96ecfde756f",
+ "source_snapshot_ids": [
+  "VEDAGRAPH_CANONICAL_GRAPH_2026_09_15",
+  "CROSSVEDA_PARALLELS_RUN_5BF3C9CE73209098",
+  "VEDAGRAPH_INTRA_RV_LEXICAL_PARALLEL_LAYER_UNVERSIONED",
+  "VEDAGRAPH_ENRICH_PREDICATES_ESTABLISHED_REUSE"
+ ],
+ "files": [
+  {
+   "path": "rows.jsonl",
+   "sha256": "83bb646ba7d43dfce32a7220dfadb919dc9596aa6736dced6c4fc61887aebb90",
+   "rows": 7021,
+   "bytes": 32082378
+  },
+  {
+   "path": "sources.jsonl",
+   "sha256": "73da9e7dc7f28c8e84438ee3df032965f53983e487cccffced7620b206bc103a",
+   "rows": 4,
+   "bytes": 2086
+  },
+  {
+   "path": "rejected.jsonl",
+   "sha256": "b869123fc824467e68ff88a5d789b1c240934bd64cf8e2039ccc967427ba8f2b",
+   "rows": 13189,
+   "bytes": 17023467
+  },
+  {
+   "path": "proofs/adversarial.json",
+   "sha256": "6846362faf82c7fb40c5790d771f2e18a1d1709f4d28df421c0d09debff29bef",
+   "rows": 117,
+   "bytes": 8232
+  },
+  {
+   "path": "proofs/boundary.json",
+   "sha256": "ef0c7d75b107719d752a77573517e0b34181c8ea6d6f6dc151d4d7d524b0ac96",
+   "rows": 27,
+   "bytes": 443
+  },
+  {
+   "path": "proofs/calibration.json",
+   "sha256": "41ee4e1c7578c53c617f40a979975bf2609abd67c02ba3dabf3bdd2cdb32506f",
+   "rows": 92,
+   "bytes": 1704
+  },
+  {
+   "path": "proofs/config.json",
+   "sha256": "fb2d85ea99639b717b8d378c34b56f89fb20209f8326323a85eb4f750ff23a50",
+   "rows": 24,
+   "bytes": 1381
+  },
+  {
+   "path": "proofs/direction_null.json",
+   "sha256": "3397e23e47f7a9216acf9ed8fff0daeb765b4e8666f53361455ca88104f47380",
+   "rows": 140,
+   "bytes": 2751
+  },
+  {
+   "path": "proofs/discovered_parallels.jsonl",
+   "sha256": "6491051ff9af06ec0bace2d8abad923fa4ef99f16d5691d9015357272d7ad278",
+   "rows": 305,
+   "bytes": 134940
+  },
+  {
+   "path": "proofs/figure_check.json",
+   "sha256": "7cdc24c41e6372886dbfb332716ec3ac65990f17dd84bf2042357cda66cf5bbd",
+   "rows": 672,
+   "bytes": 12687
+  },
+  {
+   "path": "proofs/generator_claim.json",
+   "sha256": "3977aa5a5a4cc8e0a11f7b0c8a8d336753ad3dff8f5998d1f6628f9bca6b6522",
+   "rows": 18,
+   "bytes": 239
+  },
+  {
+   "path": "proofs/matrix.json",
+   "sha256": "52fbecf9f79843cc8dabab1cabdcd9640b1471e999b996d46be3457d389871e8",
+   "rows": 530,
+   "bytes": 34438
+  },
+  {
+   "path": "proofs/recall_diagnosis.json",
+   "sha256": "a787dd84f4c48269854c503d73512f3f3a8685415e1431b905eb67e0a96d03e1",
+   "rows": 23,
+   "bytes": 542
+  },
+  {
+   "path": "proofs/recall_probe_stats.json",
+   "sha256": "9a8a8ec90f2d048bfa7fff9359ad447eb1ff509167f871f28af94392c86e3c16",
+   "rows": 12,
+   "bytes": 354
+  },
+  {
+   "path": "proofs/transformations.jsonl",
+   "sha256": "e0e1a5ce090b5f063588ffc1fb3cd81ea174d987590a7a542a9d74bc4f16fc76",
+   "rows": 6596,
+   "bytes": 4795277
+  }
+ ],
+ "counts": {
+  "candidates_considered": 20210,
+  "accepted": 7021,
+  "rejected": 13074,
+  "verified_zero": 0,
+  "not_applicable": 12,
+  "unresolved": 115
+ },
+ "closes_gaps": [
+  "GAP-CROSS_VEDA-001",
+  "GAP-CROSS_VEDA-002",
+  "CORPUS_D07"
+ ],
+ "reframes_gaps": {
+  "GAP-CROSS_VEDA-002": "its population of 6,527 conflates two layers, and 1,538 of those edges already record their transformation through match_level. The edges genuinely without one are the 3,049 near parallels plus their 1,180 reuse co-emissions. All 6,596 now carry a derived transformation type.",
+  "GAP-CROSS_VEDA-003": "NOT A CROSS-VEDA GAP. All 256 EXACT_PARALLEL_OF edges lacking a parallel_id are RV-to-RV, from an unversioned intra-Rigvedic lexical layer that carries no parallel_id on any edge and never did. Asking them for a cross-Veda parallel group is a category error. The live defect in those 256 is different and narrower: 4 of them mean EXACT in the sense of lemma-sequence identity, with a stored text similarity of 0.617 to 0.878.",
+  "GAP-FORMULA-001": "NOT A GAP. The zero is a recorded design decision at src/vedagraph/enrich/predicates.py::UNPOPULATED_BY_DESIGN: the Formula hub carries the relation losslessly in two hops, and materialising it would add 87,296 edges in place of 27,511. The dimension is measured here through the hub for all six pairs. The registry's prescription to populate it should be withdrawn.",
+  "GAP-CROSS_VEDA-004": "still open and still not countable. A pada-level detector was not run; no pada segmentation exists anywhere in the graph to run it on (CORPUS_D05), so the dependency is structural rather than a matter of threshold."
+ },
+ "defects_found": [
+  "CORPUS_D07 confirmed AND explained: all 4,587 cross-Veda edges of the three symmetric types run from the alphabetically earlier Veda code to the later one and none runs the other way. The Yajurvedic zero is a storage convention on a relation declared symmetric, not a finding about the Yajurveda.",
+  "EXACT_PARALLEL_OF carries three different meanings in one relationship type: identical text on the strongest reachable surface (750 cross-Veda), identical stored text (252 intra-RV), and identical lemma sequence (4 intra-RV, text similarity 0.617-0.878). A product query for exact parallels returns 4 rows whose texts differ by up to 38% and nothing in the type says so.",
+  "REUSES_TEXT_FROM records one evidence axis where it has two. All 1,684 edges carry trust=DETERMINISTIC_DERIVED and evidence_basis=SANSKRIT with two Sanskrit quotes as evidence, but the direction comes from the tradition's self-description and not from the Sanskrit. The pairing is derived; the direction is not.",
+  "The Vajasaneyi anusvara cluster U+1CEA + U+0902 + U+1CED folds to two private-use sentinels where every Latin and plain-Devanagari spelling of the same sign folds to one. 780 of 1,975 Yajurvedic verses carry it, so 39.5% of the Yajurveda is one character out of alignment per anusvara in every cross-script comparison.",
+  "The near-parallel layer's revealed operating point is not its stated floor. The stated floor is 0.72; re-deriving a comparator on the 3,049 near parallels it accepted gives median 0.9767 and 5th percentile 0.9026. Grading new candidates against 0.72 would admit material four times weaker than anything it kept.",
+  "Containment is corpus-size arithmetic. The Samaveda's 90.1% parallel coverage, the figure that makes the RV/SV direction look self-evident, is 5.72x explained by 1,844 verses against 10,552; the excess over size is 1.17x. Across all six pairs the excess runs 0.99x to 1.17x, so containment establishes no direction anywhere.",
+  "Concept overlap as currently modelled cannot discriminate. ABOUT_CONCEPT reaches only 91 of 229 Concept nodes and every Veda touches nearly all 91, so the pairwise Jaccard runs 0.9451 to 1.0. The dimension is measured and positive for all six pairs and tells a reader nothing about which pairs are more connected.",
+  "A probe of this agent's own, retracted: fold_check.py reported that the comparison fold deletes vocalic r, on the same signature as the known AV SEARCH_DERIVATIVE corruption. It does not. Devanagari vowel sign, Latin precomposed and Latin decomposed all fold to U+E000 and agree across scripts. The deletion was the console dropping an unprintable private-use character. 88% of every Veda's folded surface contains such a character, so any probe that prints one will show the same false defect."
+ ],
+ "assessed_population": {
+  "note": "the set this agent examined, per mantra per dimension, so the graph can tell 'assessed and found nothing' from 'never assessed' (campaign section 32). corpus-audit.md section 4 records that this distinction is unrecoverable from the graph as it stands; these rows are the record it lacks.",
+  "canonical_keys_assessed": 20210,
+  "per_veda": {
+   "RV": 10552,
+   "SV": 1844,
+   "YV": 1975,
+   "AV": 5839
+  },
+  "accepted_per_veda": {
+   "AV": 1530,
+   "RV": 3054,
+   "SV": 1687,
+   "YV": 750
+  },
+  "rejected_per_veda": {
+   "AV": 4195,
+   "RV": 7498,
+   "SV": 156,
+   "YV": 1225
+  },
+  "channels": [
+   "crossveda-parallels MinHash char-4gram banding (not exhaustive, capped at 5 counterparts per mantra per pair; the cap binds on 3 of 5,574 slots)",
+   "FORMULA_HUB, exhaustive over 21,302 cross-Veda formula co-member pairs",
+   "VOCAB_EDGE, exhaustive over 2,141 entity-vocabulary edges"
+  ],
+  "not_exhaustive_over": "the 127,852,257-pair cross-Veda product"
+ },
+ "matrix_summary": {
+  "cells": 48,
+  "by_status": {
+   "MEASURED_COUNT": 31,
+   "DIRECTION_NOT_SUPPORTED": 5,
+   "NOT_APPLICABLE": 12
+  }
+ },
+ "verified_zero_note": "zero at the mantra unit, deliberately. The matrix contains no VERIFIED_ZERO cell either: all 31 measured cells are positive. A mantra with no connection is recorded as assessed-under-three-named-channels, because promoting that to a verified zero would be turning NOT ASSESSED into VERIFIED ZERO, which the contract forbids.",
+ "qa": {
+  "sampled": 11,
+  "sample_method": "adversarial",
+  "defects_found": 8,
+  "human_reviewed": 0,
+  "adversarial_verdicts": {
+   "REJECTED": 3,
+   "EXPOSED": 2,
+   "CONTAINED": 6
+  },
+  "adversarial_note": "11 cases: 7 generic and the 4 named referent traps. Two generic cases came back EXPOSED rather than REJECTED and both found the same thing -- unlinked pairs above the floor, i.e. a recall extension rather than a false positive. 305 such pairs exist; only 4 clear the layer's revealed boundary and are importable, and the other 301 are staged as candidates.",
+  "not_done": "no human reviewed any pair. Section 22 is not satisfied: 0 of 6,596 transformation types and 0 of 305 discovered pairs were checked by a person."
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "diagnosis": {
+  "PER_MANTRA_CAP": 4,
+  "CANDIDATE_NEVER_PROPOSED_one_side_linked": 185,
+  "CANDIDATE_NEVER_PROPOSED_both_isolated": 115,
+  "BELOW_CANDIDATE_GENERATOR_SENSITIVITY": 1
+ },
+ "jaccard_min": 0.2740740740740741,
+ "jaccard_median": 0.5,
+ "jaccard_max": 0.93,
+ "at_or_above_0_44": 237,
+ "below_0_30": 1,
+ "l_line_below_occurrences": {
+  "RV": 671,
+  "AV": 2
+ },
+ "l_line_below_verses": {
+  "RV": 638,
+  "AV": 2
+ },
+ "discovered_pairs_touching_l_line_below": 9,
+ "yv_verses_with_vedic_anusvara_cluster": 780
+}

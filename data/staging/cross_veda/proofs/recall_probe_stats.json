@@ -1,0 +1,12 @@
+{
+ "FORMULA_HUB::population": 21302,
+ "FORMULA_HUB::assessed": 17807,
+ "FORMULA_HUB::below_floor": 17506,
+ "FORMULA_HUB::already_linked": 3495,
+ "FORMULA_HUB::above_floor": 301,
+ "VOCAB_EDGE::population": 2141,
+ "VOCAB_EDGE::assessed": 2122,
+ "VOCAB_EDGE::below_floor": 2096,
+ "VOCAB_EDGE::above_floor": 26,
+ "VOCAB_EDGE::already_linked": 19
+}

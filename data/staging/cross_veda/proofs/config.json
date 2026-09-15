@@ -1,0 +1,24 @@
+{
+ "algorithm_version": "crossveda-connection-completion-v1",
+ "near_parallel_floor": 0.72,
+ "revealed_boundary_p05": 0.9026,
+ "revealed_boundary_p25": 0.954,
+ "revealed_boundary_note": "the layer's stated floor is 0.72 but its revealed operating point is about 0.90: re-deriving this agent's comparator on the 3,049 near parallels it accepted gives median 0.9767, p05 0.9026, p25 0.9540. A discovered pair is graded against what the layer actually kept, not against what it says it keeps.",
+ "floor_justification": "retained from the existing layer only because it clears this agent's own measured ceiling: the worst of 120,000 mispaired cross-Veda draws is 0.5225, so 0.72 sits 0.1975 above the highest score any unrelated pair reached",
+ "comparator": "difflib.SequenceMatcher character LCS ratio over the sandhi-insensitive surface, autojunk=False",
+ "text_layers": {
+  "RV": "PRIMARY_TEXT GRETIL.RV.AUFRECHT",
+  "SV": "PRIMARY_TEXT WIKISOURCE_SA.SV.KAU.ARCIKA_MULA",
+  "YV": "EXTRACTED_FROM_CONTAINER WIKISOURCE_SA.YV.VSM.ACCENTED",
+  "AV": "PRIMARY_TEXT GRETIL.AVS.SAUNAKA.ACCENTED"
+ },
+ "search_derivative_refused": "the AV SEARCH_DERIVATIVE layer deletes base letters and is never read here",
+ "word_division_trusted": [
+  "RV",
+  "AV",
+  "YV"
+ ],
+ "permutation_null_draws": 400,
+ "permutation_seed": 20260915,
+ "calibration_sample_per_pair": 20000
+}

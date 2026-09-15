@@ -1,0 +1,117 @@
+[
+ {
+  "case_id": "ADV-A1",
+  "name": "an accent-only difference presented as a change in the text",
+  "verdict": "REJECTED",
+  "detail": "150 edges are stored at match_level ACCENT_INSENSITIVE. Worked example VG:AV:SAU:K20:S084:V001 / VG:RV:SAK:M01:S003:V004 (AV-RV, EXACT_PARALLEL_OF): identical once tone marks are dropped, different above that level. The derivation types all 150 as ACCENT_NOTATION_ONLY, which says the two editions notate differently and says nothing about the verse. 69 of them are SV-YV, where the Samaveda carries no accents at all, so the difference is entirely the Yajurvedic edition's marks.",
+  "keys": [
+   "VG:AV:SAU:K20:S084:V001",
+   "VG:RV:SAK:M01:S003:V004"
+  ],
+  "score": null,
+  "threshold": null
+ },
+ {
+  "case_id": "ADV-A2",
+  "name": "formulaic boilerplate shared across Vedas",
+  "verdict": "EXPOSED",
+  "detail": "the 12 widest cross-Veda formulas yield 6428 cross-Veda member pairs that carry no parallel edge (a further 114 member pairs do carry one and are excluded as genuine). The highest-scoring boilerplate-only pair of the 6428 is VG:AV:SAU:K06:S045:V003 / VG:RV:SAK:M10:S164:V004 (AV-RV) inside VG:ENRICH:FORMULA:fe3701b783e5aa28fc78f96a62636c8a, which spans 38 mantras across ['AV', 'SV', 'RV', 'YV']. It does not reach the floor, so the Formula hub carries the repetition and no parallel edge is written. This is why the widest formula's 93 passages do not become 4,278 edges.",
+  "keys": [
+   "VG:AV:SAU:K06:S045:V003",
+   "VG:RV:SAK:M10:S164:V004"
+  ],
+  "score": 0.8611111111111112,
+  "threshold": "floor 0.72, mispaired ceiling 0.481"
+ },
+ {
+  "case_id": "ADV-A3",
+  "name": "common high-frequency Sanskrit as the only shared material",
+  "verdict": "REJECTED",
+  "detail": "the highest-scoring pair out of 120,000 random unlinked cross-Veda draws is VG:SV:KAU:UTTARA:P04:R01:D13:V02 / VG:YV:VSM:A33:V010 in SV-YV at 0.5225. Two Vedic verses in the same register already share about 22% of their characters by subsequence before any reuse is involved (mispaired mean 0.2217, p99.9 0.4068). Not one of the 120,000 reaches 0.72, and none reaches even 0.53.",
+  "keys": [
+   "VG:SV:KAU:UTTARA:P04:R01:D13:V02",
+   "VG:YV:VSM:A33:V010"
+  ],
+  "score": 0.5225,
+  "threshold": "floor 0.72"
+ },
+ {
+  "case_id": "ADV-A4",
+  "name": "byte-identical translations on two verses in different Vedas",
+  "verdict": "REJECTED",
+  "detail": "46 translation strings over 60 characters are shared by more than one mantra, and 0 of those cross a Veda boundary, so the trap has no instance to fire on. It could not fire in any case: every textual dimension records evidence_basis=SANSKRIT and the stored evidence on each edge is the two Sanskrit quotes. The translation layer is never an input.",
+  "keys": [],
+  "score": null,
+  "threshold": null
+ },
+ {
+  "case_id": "ADV-A5",
+  "name": "the same concept expressed in different vocabulary",
+  "verdict": "EXPOSED",
+  "detail": "2987 of 3000 sampled cross-Veda concept-sharing pairs have no textual parallel at all, and 2 of them reach the floor. The strongest is VG:AV:SAU:K18:S004:V060 / VG:SV:KAU:CHANDA:P06:D07:V04 sharing VG:CONCEPT:ADHVAN-PATH at 0.8688. Concept overlap is reported as its own dimension and is never promoted to a textual parallel.",
+  "keys": [
+   "VG:AV:SAU:K18:S004:V060",
+   "VG:SV:KAU:CHANDA:P06:D07:V04"
+  ],
+  "score": 0.8687782805429864,
+  "threshold": "floor 0.72"
+ },
+ {
+  "case_id": "ADV-A6",
+  "name": "Samavedic repetition: a best match is not an established counterpart",
+  "verdict": "CONTAINED",
+  "detail": "357 of 472 multi-candidate slots have their top two candidates within 0.01 similarity, and 250 of those touch the Samaveda. Worked example: VG:RV:SAK:M09:S061:V011 in RV-SV scores 0.9098 against VG:SV:KAU:UTTARA:P01:R01:D08:V03 and 0.9098 against VG:SV:KAU:ARANYA:D01:V08 -- a gap of 0.0000. The layer stores every candidate above the floor rather than electing a winner, so no single counterpart is asserted anywhere. These 357 slots are published as AMBIGUOUS_COUNTERPART. A best-match design would have silently picked one of the two.",
+  "keys": [
+   "VG:RV:SAK:M09:S061:V011",
+   "VG:SV:KAU:UTTARA:P01:R01:D08:V03",
+   "VG:SV:KAU:ARANYA:D01:V08"
+  ],
+  "score": null,
+  "threshold": null
+ },
+ {
+  "case_id": "ADV-A7",
+  "name": "the same words carrying a different meaning",
+  "verdict": "CONTAINED",
+  "detail": "for a textual dimension this is not a false positive: two verses with the same words in the same order ARE the same verse, whatever either one means in its context, and EXACT_PARALLEL_OF / NEAR_PARALLEL_OF / VARIANT_OF claim nothing about meaning. The trap bites only a dimension that asserts shared sense, and this agent asserts none: SEMANTIC_RESEMBLANCE is marked PENDING_AGENT_11 in all six cells rather than approximated from word overlap. Recorded as a scope boundary, not as a passed test.",
+  "keys": [],
+  "score": null,
+  "threshold": null
+ },
+ {
+  "case_id": "ADV-B1",
+  "name": "Soma the deity vs soma the substance",
+  "verdict": "CONTAINED",
+  "detail": "VG:DEVATA:SOMAH and VG:CONCEPT:SOMA-DRINK are distinct nodes -- concept labels ['Concept', 'DomainEntity', 'Offering', 'Substance'] -- joined by DEVATA_ASSOCIATED_WITH=True, which records the connection without asserting the identity. 80 mantras are dedicated to the deity and 1169 mention the concept; 19 do both, and those 19 are the trap's live surface. 315 vocabulary edges cite this concept and 0 rest on it alone. No dimension in this matrix reads a shared concept as a same-referent claim: the vocabulary dimension is typed as vocabulary and every edge carries its own statement that the overlap is not a claim that the two passages express the same idea.",
+  "keys": [],
+  "score": null,
+  "threshold": null
+ },
+ {
+  "case_id": "ADV-B2",
+  "name": "Agni the deity vs physical fire",
+  "verdict": "CONTAINED",
+  "detail": "VG:DEVATA:AGNIH and VG:CONCEPT:AGNI-FIRE are distinct nodes -- concept labels ['Concept', 'DomainEntity', 'NaturalPhenomenon'] -- joined by DEVATA_ASSOCIATED_WITH=True, which records the connection without asserting the identity. 1988 mantras are dedicated to the deity and 1028 mention the concept; 448 do both, and those 448 are the trap's live surface. 406 vocabulary edges cite this concept and 0 rest on it alone. No dimension in this matrix reads a shared concept as a same-referent claim: the vocabulary dimension is typed as vocabulary and every edge carries its own statement that the overlap is not a claim that the two passages express the same idea.",
+  "keys": [],
+  "score": null,
+  "threshold": null
+ },
+ {
+  "case_id": "ADV-B3",
+  "name": "Vac the deity vs speech",
+  "verdict": "CONTAINED",
+  "detail": "VG:DEVATA:VAK and VG:CONCEPT:VAC-SPEECH are distinct nodes -- concept labels ['Concept', 'DomainEntity', 'PhilosophicalConcept'] -- joined by DEVATA_ASSOCIATED_WITH=True, which records the connection without asserting the identity. 3 mantras are dedicated to the deity and 651 mention the concept; 2 do both, and those 2 are the trap's live surface. 70 vocabulary edges cite this concept and 0 rest on it alone. No dimension in this matrix reads a shared concept as a same-referent claim: the vocabulary dimension is typed as vocabulary and every edge carries its own statement that the overlap is not a claim that the two passages express the same idea.",
+  "keys": [],
+  "score": null,
+  "threshold": null
+ },
+ {
+  "case_id": "ADV-B4",
+  "name": "Indra in a simile vs Indra as dedicatee",
+  "verdict": "CONTAINED",
+  "detail": "1821 mantras mention Indra without being dedicated to him, against 2869 that are dedicated. The two facts sit on different predicates, MENTIONS_DEVATA and HAS_DEVATA, so a mention cannot be read as a dedication by any query that names its predicate. 0 SHARES_ENTITY_VOCABULARY_WITH edges cite a Devata key at all: the vocabulary dimension is built from Concept keys only, so neither role enters it and it cannot collapse the distinction. The residual exposure is a consumer that queries the union of the two predicates without saying which one answered.",
+  "keys": [],
+  "score": null,
+  "threshold": null
+ }
+]

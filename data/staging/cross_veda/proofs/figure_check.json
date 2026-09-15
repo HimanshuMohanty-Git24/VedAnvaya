@@ -1,0 +1,672 @@
+{
+ "report": "docs/reports/data-completeness/cross-veda.md",
+ "figures_checked": 104,
+ "failed": [],
+ "note": "Every table cell in the report is read out of an artifact; the figures that needed checking are the ones a writer added up. The first run of this check found exactly that: all 14 transformation rows and all 6 pair columns of every row were correct, and the two hand-added grand-total cells were wrong -- 15 transposed between the RV-SV and SV-YV columns -- along with an invented cross-Veda pair product. The totals row is now parsed out of the report rather than restated here, because restating it is how a wrong table passes its own check.",
+ "checks": [
+  {
+   "figure": "transformation types listed",
+   "claimed": 14,
+   "recomputed": 14,
+   "ok": true
+  },
+  {
+   "figure": "SINGLE_CONTIGUOUS_SUBSTITUTION total",
+   "claimed": 1390,
+   "recomputed": 1390,
+   "ok": true
+  },
+  {
+   "figure": "SCATTERED_SUBSTITUTIONS total",
+   "claimed": 1295,
+   "recomputed": 1295,
+   "ok": true
+  },
+  {
+   "figure": "WORD_DIVISION_ONLY total",
+   "claimed": 1203,
+   "recomputed": 1203,
+   "ok": true
+  },
+  {
+   "figure": "TWO_CONTIGUOUS_SUBSTITUTIONS total",
+   "claimed": 1143,
+   "recomputed": 1143,
+   "ok": true
+  },
+  {
+   "figure": "SCRIPT_CONVENTION_ONLY total",
+   "claimed": 471,
+   "recomputed": 471,
+   "ok": true
+  },
+  {
+   "figure": "INTERIOR_INSERTION total",
+   "claimed": 245,
+   "recomputed": 245,
+   "ok": true
+  },
+  {
+   "figure": "NO_CHANGE_OBSERVABLE_AT_REACHABLE_ total",
+   "claimed": 218,
+   "recomputed": 218,
+   "ok": true
+  },
+  {
+   "figure": "ACCENT_NOTATION_ONLY total",
+   "claimed": 150,
+   "recomputed": 150,
+   "ok": true
+  },
+  {
+   "figure": "INTERIOR_DELETION total",
+   "claimed": 114,
+   "recomputed": 114,
+   "ok": true
+  },
+  {
+   "figure": "TAIL_EXTENSION total",
+   "claimed": 22,
+   "recomputed": 22,
+   "ok": true
+  },
+  {
+   "figure": "SHARED_SEGMENT_ONLY total",
+   "claimed": 9,
+   "recomputed": 9,
+   "ok": true
+  },
+  {
+   "figure": "TAIL_TRUNCATION total",
+   "claimed": 8,
+   "recomputed": 8,
+   "ok": true
+  },
+  {
+   "figure": "PADA_REORDER total",
+   "claimed": 2,
+   "recomputed": 2,
+   "ok": true
+  },
+  {
+   "figure": "HEAD_EXTENSION total",
+   "claimed": 1,
+   "recomputed": 1,
+   "ok": true
+  },
+  {
+   "figure": "transformation grand total (parsed from report)",
+   "claimed": 6271,
+   "recomputed": 6271,
+   "ok": true
+  },
+  {
+   "figure": "transformation column total AV-RV",
+   "claimed": 1325,
+   "recomputed": 1325,
+   "ok": true
+  },
+  {
+   "figure": "transformation column total AV-SV",
+   "claimed": 467,
+   "recomputed": 467,
+   "ok": true
+  },
+  {
+   "figure": "transformation column total AV-YV",
+   "claimed": 210,
+   "recomputed": 210,
+   "ok": true
+  },
+  {
+   "figure": "transformation column total RV-SV",
+   "claimed": 3368,
+   "recomputed": 3368,
+   "ok": true
+  },
+  {
+   "figure": "transformation column total RV-YV",
+   "claimed": 662,
+   "recomputed": 662,
+   "ok": true
+  },
+  {
+   "figure": "transformation column total SV-YV",
+   "claimed": 239,
+   "recomputed": 239,
+   "ok": true
+  },
+  {
+   "figure": "manifest cross-Veda product",
+   "claimed": 127852257,
+   "recomputed": 127852257,
+   "ok": true
+  },
+  {
+   "figure": "report carries the exact product",
+   "claimed": true,
+   "recomputed": true,
+   "ok": true
+  },
+  {
+   "figure": "unlabelled superseded product figures",
+   "claimed": [],
+   "recomputed": [],
+   "ok": true
+  },
+  {
+   "figure": "cross-Veda edges classified",
+   "claimed": 6271,
+   "recomputed": 6271,
+   "ok": true
+  },
+  {
+   "figure": "all edges classified",
+   "claimed": 6596,
+   "recomputed": 6596,
+   "ok": true
+  },
+  {
+   "figure": "had a non-empty match_level before",
+   "claimed": 2042,
+   "recomputed": 2042,
+   "ok": true
+  },
+  {
+   "figure": "identity at some level",
+   "claimed": 2042,
+   "recomputed": 2042,
+   "ok": true
+  },
+  {
+   "figure": "substantive difference",
+   "claimed": 4229,
+   "recomputed": 4229,
+   "ok": true
+  },
+  {
+   "figure": "CHARACTER_LEVEL only",
+   "claimed": 4074,
+   "recomputed": 4074,
+   "ok": true
+  },
+  {
+   "figure": "CHARACTER_AND_TOKEN_LEVEL",
+   "claimed": 2197,
+   "recomputed": 2197,
+   "ok": true
+  },
+  {
+   "figure": "1538 already typed via match_level",
+   "claimed": 1538,
+   "recomputed": 1538,
+   "ok": true
+  },
+  {
+   "figure": "cells",
+   "claimed": 48,
+   "recomputed": 48,
+   "ok": true
+  },
+  {
+   "figure": "MEASURED_COUNT",
+   "claimed": 31,
+   "recomputed": 31,
+   "ok": true
+  },
+  {
+   "figure": "DIRECTION_NOT_SUPPORTED",
+   "claimed": 5,
+   "recomputed": 5,
+   "ok": true
+  },
+  {
+   "figure": "NOT_APPLICABLE",
+   "claimed": 12,
+   "recomputed": 12,
+   "ok": true
+  },
+  {
+   "figure": "VERIFIED_ZERO",
+   "claimed": 0,
+   "recomputed": 0,
+   "ok": true
+  },
+  {
+   "figure": "EXACT_PARALLEL_OF AV-RV",
+   "claimed": 551,
+   "recomputed": 551,
+   "ok": true
+  },
+  {
+   "figure": "EXACT_PARALLEL_OF AV-SV",
+   "claimed": 9,
+   "recomputed": 9,
+   "ok": true
+  },
+  {
+   "figure": "EXACT_PARALLEL_OF AV-YV",
+   "claimed": 7,
+   "recomputed": 7,
+   "ok": true
+  },
+  {
+   "figure": "EXACT_PARALLEL_OF RV-SV",
+   "claimed": 89,
+   "recomputed": 89,
+   "ok": true
+  },
+  {
+   "figure": "EXACT_PARALLEL_OF RV-YV",
+   "claimed": 24,
+   "recomputed": 24,
+   "ok": true
+  },
+  {
+   "figure": "EXACT_PARALLEL_OF SV-YV",
+   "claimed": 70,
+   "recomputed": 70,
+   "ok": true
+  },
+  {
+   "figure": "NEAR_PARALLEL_OF AV-RV",
+   "claimed": 752,
+   "recomputed": 752,
+   "ok": true
+  },
+  {
+   "figure": "NEAR_PARALLEL_OF AV-SV",
+   "claimed": 326,
+   "recomputed": 326,
+   "ok": true
+  },
+  {
+   "figure": "NEAR_PARALLEL_OF AV-YV",
+   "claimed": 162,
+   "recomputed": 162,
+   "ok": true
+  },
+  {
+   "figure": "NEAR_PARALLEL_OF RV-SV",
+   "claimed": 1180,
+   "recomputed": 1180,
+   "ok": true
+  },
+  {
+   "figure": "NEAR_PARALLEL_OF RV-YV",
+   "claimed": 473,
+   "recomputed": 473,
+   "ok": true
+  },
+  {
+   "figure": "NEAR_PARALLEL_OF SV-YV",
+   "claimed": 156,
+   "recomputed": 156,
+   "ok": true
+  },
+  {
+   "figure": "VARIANT_OF AV-RV",
+   "claimed": 22,
+   "recomputed": 22,
+   "ok": true
+  },
+  {
+   "figure": "VARIANT_OF AV-SV",
+   "claimed": 132,
+   "recomputed": 132,
+   "ok": true
+  },
+  {
+   "figure": "VARIANT_OF AV-YV",
+   "claimed": 41,
+   "recomputed": 41,
+   "ok": true
+  },
+  {
+   "figure": "VARIANT_OF RV-SV",
+   "claimed": 415,
+   "recomputed": 415,
+   "ok": true
+  },
+  {
+   "figure": "VARIANT_OF RV-YV",
+   "claimed": 165,
+   "recomputed": 165,
+   "ok": true
+  },
+  {
+   "figure": "VARIANT_OF SV-YV",
+   "claimed": 13,
+   "recomputed": 13,
+   "ok": true
+  },
+  {
+   "figure": "SHARES_ENTITY_VOCABULA AV-RV",
+   "claimed": 1176,
+   "recomputed": 1176,
+   "ok": true
+  },
+  {
+   "figure": "SHARES_ENTITY_VOCABULA AV-SV",
+   "claimed": 84,
+   "recomputed": 84,
+   "ok": true
+  },
+  {
+   "figure": "SHARES_ENTITY_VOCABULA AV-YV",
+   "claimed": 136,
+   "recomputed": 136,
+   "ok": true
+  },
+  {
+   "figure": "SHARES_ENTITY_VOCABULA RV-SV",
+   "claimed": 421,
+   "recomputed": 421,
+   "ok": true
+  },
+  {
+   "figure": "SHARES_ENTITY_VOCABULA RV-YV",
+   "claimed": 291,
+   "recomputed": 291,
+   "ok": true
+  },
+  {
+   "figure": "SHARES_ENTITY_VOCABULA SV-YV",
+   "claimed": 33,
+   "recomputed": 33,
+   "ok": true
+  },
+  {
+   "figure": "CONCEPT_OVERLAP AV-RV",
+   "claimed": 91,
+   "recomputed": 91,
+   "ok": true
+  },
+  {
+   "figure": "CONCEPT_OVERLAP AV-SV",
+   "claimed": 86,
+   "recomputed": 86,
+   "ok": true
+  },
+  {
+   "figure": "CONCEPT_OVERLAP AV-YV",
+   "claimed": 89,
+   "recomputed": 89,
+   "ok": true
+  },
+  {
+   "figure": "CONCEPT_OVERLAP RV-SV",
+   "claimed": 86,
+   "recomputed": 86,
+   "ok": true
+  },
+  {
+   "figure": "CONCEPT_OVERLAP RV-YV",
+   "claimed": 89,
+   "recomputed": 89,
+   "ok": true
+  },
+  {
+   "figure": "CONCEPT_OVERLAP SV-YV",
+   "claimed": 86,
+   "recomputed": 86,
+   "ok": true
+  },
+  {
+   "figure": "REUSES_TEXT_FROM RV-SV",
+   "claimed": 1684,
+   "recomputed": 1684,
+   "ok": true
+  },
+  {
+   "figure": "coverage RV",
+   "claimed": 2850,
+   "recomputed": 2850,
+   "ok": true
+  },
+  {
+   "figure": "coverage SV",
+   "claimed": 1677,
+   "recomputed": 1677,
+   "ok": true
+  },
+  {
+   "figure": "coverage YV",
+   "claimed": 687,
+   "recomputed": 687,
+   "ok": true
+  },
+  {
+   "figure": "coverage AV",
+   "claimed": 1332,
+   "recomputed": 1332,
+   "ok": true
+  },
+  {
+   "figure": "cross-Veda exact",
+   "claimed": 750,
+   "recomputed": 750,
+   "ok": true
+  },
+  {
+   "figure": "intra-RV exact, identical stored text",
+   "claimed": 252,
+   "recomputed": 252,
+   "ok": true
+  },
+  {
+   "figure": "intra-RV exact, lemma-only",
+   "claimed": 4,
+   "recomputed": 4,
+   "ok": true
+  },
+  {
+   "figure": "PARALLEL_TO",
+   "claimed": 69,
+   "recomputed": 69,
+   "ok": true
+  },
+  {
+   "figure": "cases in the report table",
+   "claimed": 11,
+   "recomputed": 11,
+   "ok": true
+  },
+  {
+   "figure": "case ids agree",
+   "claimed": [
+    "ADV-A1",
+    "ADV-A2",
+    "ADV-A3",
+    "ADV-A4",
+    "ADV-A5",
+    "ADV-A6",
+    "ADV-A7",
+    "ADV-B1",
+    "ADV-B2",
+    "ADV-B3",
+    "ADV-B4"
+   ],
+   "recomputed": [
+    "ADV-A1",
+    "ADV-A2",
+    "ADV-A3",
+    "ADV-A4",
+    "ADV-A5",
+    "ADV-A6",
+    "ADV-A7",
+    "ADV-B1",
+    "ADV-B2",
+    "ADV-B3",
+    "ADV-B4"
+   ],
+   "ok": true
+  },
+  {
+   "figure": "ADV-A1 verdict",
+   "claimed": "REJECTED",
+   "recomputed": "REJECTED",
+   "ok": true
+  },
+  {
+   "figure": "ADV-A2 verdict",
+   "claimed": "EXPOSED",
+   "recomputed": "EXPOSED",
+   "ok": true
+  },
+  {
+   "figure": "ADV-A3 verdict",
+   "claimed": "REJECTED",
+   "recomputed": "REJECTED",
+   "ok": true
+  },
+  {
+   "figure": "ADV-A4 verdict",
+   "claimed": "REJECTED",
+   "recomputed": "REJECTED",
+   "ok": true
+  },
+  {
+   "figure": "ADV-A5 verdict",
+   "claimed": "EXPOSED",
+   "recomputed": "EXPOSED",
+   "ok": true
+  },
+  {
+   "figure": "ADV-A6 verdict",
+   "claimed": "CONTAINED",
+   "recomputed": "CONTAINED",
+   "ok": true
+  },
+  {
+   "figure": "ADV-A7 verdict",
+   "claimed": "CONTAINED",
+   "recomputed": "CONTAINED",
+   "ok": true
+  },
+  {
+   "figure": "ADV-B1 verdict",
+   "claimed": "CONTAINED",
+   "recomputed": "CONTAINED",
+   "ok": true
+  },
+  {
+   "figure": "ADV-B2 verdict",
+   "claimed": "CONTAINED",
+   "recomputed": "CONTAINED",
+   "ok": true
+  },
+  {
+   "figure": "ADV-B3 verdict",
+   "claimed": "CONTAINED",
+   "recomputed": "CONTAINED",
+   "ok": true
+  },
+  {
+   "figure": "ADV-B4 verdict",
+   "claimed": "CONTAINED",
+   "recomputed": "CONTAINED",
+   "ok": true
+  },
+  {
+   "figure": "report verdict tally",
+   "claimed": {
+    "REJECTED": 3,
+    "EXPOSED": 2,
+    "CONTAINED": 6
+   },
+   "recomputed": {
+    "REJECTED": 3,
+    "EXPOSED": 2,
+    "CONTAINED": 6
+   },
+   "ok": true
+  },
+  {
+   "figure": "manifest qa.sampled",
+   "claimed": 11,
+   "recomputed": 11,
+   "ok": true
+  },
+  {
+   "figure": "manifest qa verdicts",
+   "claimed": {
+    "REJECTED": 3,
+    "EXPOSED": 2,
+    "CONTAINED": 6
+   },
+   "recomputed": {
+    "REJECTED": 3,
+    "EXPOSED": 2,
+    "CONTAINED": 6
+   },
+   "ok": true
+  },
+  {
+   "figure": "candidates_considered",
+   "claimed": 20210,
+   "recomputed": 20210,
+   "ok": true
+  },
+  {
+   "figure": "accepted",
+   "claimed": 7021,
+   "recomputed": 7021,
+   "ok": true
+  },
+  {
+   "figure": "rejected",
+   "claimed": 13074,
+   "recomputed": 13074,
+   "ok": true
+  },
+  {
+   "figure": "unresolved",
+   "claimed": 115,
+   "recomputed": 115,
+   "ok": true
+  },
+  {
+   "figure": "verified_zero",
+   "claimed": 0,
+   "recomputed": 0,
+   "ok": true
+  },
+  {
+   "figure": "balance",
+   "claimed": 20210,
+   "recomputed": 20210,
+   "ok": true
+  },
+  {
+   "figure": "accepted RV",
+   "claimed": 3054,
+   "recomputed": 3054,
+   "ok": true
+  },
+  {
+   "figure": "accepted SV",
+   "claimed": 1687,
+   "recomputed": 1687,
+   "ok": true
+  },
+  {
+   "figure": "accepted AV",
+   "claimed": 1530,
+   "recomputed": 1530,
+   "ok": true
+  },
+  {
+   "figure": "accepted YV",
+   "claimed": 750,
+   "recomputed": 750,
+   "ok": true
+  },
+  {
+   "figure": "23443 two-channel population",
+   "claimed": 23443,
+   "recomputed": 23443,
+   "ok": true
+  }
+ ]
+}
