@@ -1346,6 +1346,23 @@
       "owner_agent": 3,
       "closure_test": "MATCH (t:Translation) WHERE t.alignment_confidence IS NULL RETURN count(t) returns 0, and the 158-uncertain claim is either reproducible from the data or removed.",
       "status": "OPEN"
+    },
+    {
+      "gap_id": "GAP-TRANSLATION-006",
+      "domain": "translation",
+      "surface": "GET /api/v1/passages/{key} and /api/v1/passages/{key}/reader for the 31 translated verses of RV 1.65 to 1.70; the frontend reader renders the misattached English beside the correct Sanskrit.",
+      "evidence": "Lead-confirmed by reading Sanskrit against English on the live graph. RV 1.65.2 holds 'sajosa dhirah padair anu gmann' and carries 'The Gods approached the ways of holy Law', which is verse 3's 'rtasya deva anu vrata gur'. RV 1.65.3 carries verse 5's rendering, 1.65.4 carries verse 7's, 1.65.5 carries verse 9's. RV 1.66 shows the identical shift. Per-hymn counts: suktas 65-69 are 10 verses with 5 translated, sukta 70 is 11 with 6, totalling 31 translated rows of which 6 are correct.",
+      "classification": "IMPLEMENTATION_GAP",
+      "description": "Griffith renders each pair of our Sakala verses as one unit, so his unit N belongs to our verse 2N-1. The import bound his units one-for-one, leaving 25 of 31 translations attached to the wrong verse.",
+      "current_count": 31,
+      "expected_population": 61,
+      "missing_count": 30,
+      "root_cause": "A positional bind where the two editions do not share a verse spine. Nothing caught it because all three available safeguards were satisfied: the totals balance at 31 units in and 31 rows out, every canonical key resolves and is Rigvedic so the staging graph checks pass, and the 30 unbound verses present as a coverage gap rather than as a defect. This campaign's own baseline recorded them that way. The missing verses were the visible symptom of the misalignment, and reading them as a gap hid the defect behind them.",
+      "source_dependency": "NONE for the realignment. The 30 absent verses need a translation whose spine matches ours verse-for-verse, or per-verse verification against Griffith's merged units.",
+      "implementation_dependency": "Realign the 25 rows to 2N-1 with per-verse Sanskrit verification rather than by applying the formula blindly, since RV 1.70's 11 verses against 6 units show the mapping is not uniformly a doubling. Only then import the absent verses: filling the hymn first would make every verse carry text while 25 still carried the wrong text, which is strictly worse than the gap. Add an import invariant that fails when a hymn's translated count is a near-half of its verse count.",
+      "owner_agent": 3,
+      "closure_test": "Each of the 31 rows reads correctly against its own verse's Sanskrit -- not that the hymn is full. Plus an invariant in the test suite that rejects a near-half translated-to-verse ratio at hymn scope.",
+      "status": "OPEN"
     }
   ]
 }

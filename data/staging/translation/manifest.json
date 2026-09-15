@@ -1,0 +1,156 @@
+{
+ "domain": "translation",
+ "agent": 3,
+ "schema_version": "1.0",
+ "algorithm_version": "translation-completion-v1",
+ "created_at": "2026-09-15T07:49:54.422257+00:00",
+ "code_commit": "381ba0e8b358b2716e0d5d4242e992b2814bd271",
+ "config_hash": "06d63dc642864f5001383a57094885ad24014ef2304f1aa61b019a5bd8c3b7fe",
+ "source_snapshot_ids": [
+  "SACRED_TEXTS_WYV_SNAPSHOT_2026_09_07",
+  "IA_WAYBACK_GRIFFITH_AV_1895",
+  "IA_WAYBACK_GRIFFITH_SV_1893",
+  "IA_WAYBACK_GRIFFITH_RV_1896",
+  "VEDAGRAPH_CANONICAL_RV_GRIFFITH"
+ ],
+ "files": [
+  {
+   "path": "rows.jsonl",
+   "sha256": "95318468a47c3c45909cada2188f7eff18f591ea63e04bc0a5b7763243a984cd",
+   "rows": 2254,
+   "bytes": 4587860
+  },
+  {
+   "path": "sources.jsonl",
+   "sha256": "61852477ccfacf29d7de2ac9223422599fdf40c26f0d67bf83e1fd86c71c685a",
+   "rows": 5,
+   "bytes": 2407
+  },
+  {
+   "path": "rejected.jsonl",
+   "sha256": "f27b9981aa20c167f23c05f277cf66dc438d997ca16f820e2219352e9f9f0efd",
+   "rows": 673,
+   "bytes": 606129
+  }
+ ],
+ "counts": {
+  "candidates_considered": 2927,
+  "accepted": 2254,
+  "rejected": 673,
+  "verified_zero": 0,
+  "not_applicable": 0,
+  "unresolved": 0
+ },
+ "closes_gaps": [
+  "GAP-TRANSLATION-AV-KANDA20",
+  "GAP-TRANSLATION-AV-STRAYS",
+  "GAP-TRANSLATION-YV-72",
+  "GAP-TRANSLATION-RV-50",
+  "GAP-TRANSLATION-SV-KAUTHUMA-1844"
+ ],
+ "assessed_population": {
+  "note": "the set this agent examined, so the graph can tell 'assessed and found nothing' from 'never assessed' (campaign section 32)",
+  "canonical_keys_assessed": 2927,
+  "per_veda": {
+   "RV": 50,
+   "YV": 72,
+   "SV": 1844,
+   "AV": 961
+  },
+  "accepted_per_veda": {
+   "AV": 944,
+   "RV": 17,
+   "SV": 1242,
+   "YV": 51
+  },
+  "rejected_per_veda": {
+   "AV": 17,
+   "RV": 33,
+   "SV": 602,
+   "YV": 21
+  },
+  "mapping_confidence": {
+   "EXACT": 1252,
+   "VERIFIED_SEGMENT": 262,
+   "PROBABLE": 740
+  },
+  "resolution_tier": {
+   "1": 991,
+   "2": 528,
+   "3": 735
+  },
+  "rejection_reason_codes": {
+   "SOURCE_VERSE_NOT_PRINTED": 24,
+   "SOURCE_EDITION_VERSE_DIVISION_DIFFERS": 25,
+   "SOURCE_HYMN_NUMBERING_UNRESOLVED": 1,
+   "NO_PER_VERSE_EVIDENCE_FOR_ANY_TIER": 602,
+   "SOURCE_SPINE_DIVERGENCE_UNRESOLVED": 9,
+   "SOURCE_PRINTED_OMISSION": 12
+  },
+  "samaveda_tiers": {
+   "tier2_rigveda_cross_corpus": 173,
+   "unresolved": 602,
+   "tier3_griffith_samaveda_cross_recension": 735,
+   "tier2_griffith_samaveda": 334
+  },
+  "not_importable_probable": 740
+ },
+ "qa": {
+  "sampled": 160,
+  "sample_method": "both",
+  "defects_found": 6,
+  "human_reviewed": 0,
+  "checks": {
+   "off_by_one_numbering": {
+    "eligible": 1088,
+    "defects": 0
+   },
+   "structural_shift_monotonic": {
+    "eligible": 1069,
+    "defects": 0
+   },
+   "merged_verses_undeclared": {
+    "eligible": 2254,
+    "defects": 3
+   },
+   "expected_corpus_repetition_same_sanskrit": {
+    "eligible": 2254,
+    "defects": 0
+   },
+   "split_verse_containment": {
+    "eligible": 2254,
+    "defects": 1
+   },
+   "recension_and_attribution_typing": {
+    "eligible": 2254,
+    "defects": 0
+   },
+   "footnote_or_chrome_leakage": {
+    "eligible": 2254,
+    "defects": 0
+   },
+   "ocr_contamination": {
+    "eligible": 2254,
+    "defects": 2
+   },
+   "source_compositor_artifact": {
+    "eligible": 2254,
+    "defects": 0
+   },
+   "text_too_short": {
+    "eligible": 2254,
+    "defects": 0
+   },
+   "rejected_reason_substantive": {
+    "eligible": 673,
+    "defects": 0
+   }
+  },
+  "defect_classes_found": [
+   "merged_verses_undeclared",
+   "ocr_contamination",
+   "split_verse_containment"
+  ],
+  "detail": "proofs/qa.json"
+ }
+}
