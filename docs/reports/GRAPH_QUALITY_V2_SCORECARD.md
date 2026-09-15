@@ -12,11 +12,11 @@ weighted towards what a reader can rely on.
 
 | metric | V1 baseline | V2 | delta |
 |---|---|---|---|
-| nodes | 100,584 | 122,988 | +22,404 |
+| nodes | 100,584 | 122,986 | +22,402 |
 | relationships | 212,336 | 288,051 | +75,715 |
-| product nodes | — | 50,474 | — |
+| product nodes | — | 50,472 | — |
 | internal nodes | 0 (unmarked) | 72,514 | +72,514 |
-| domain entities | 89 | 404 | +315 |
+| domain entities | 89 | 402 | +313 |
 | typed domain labels | 0 | 24 | +24 |
 
 ## 2. Provenance coverage
@@ -114,7 +114,7 @@ axis and **20** carry a corpus profile.
 
 | entity type | entities |
 |---|---|
-| `None` | 175 |
+| `None` | 173 |
 | `Condition` | 36 |
 | `Concept` | 23 |
 | `Object` | 18 |
@@ -191,7 +191,7 @@ pseudo-entity `VG:CORPUS:FOUR-VEDA`, which deliberately has no node.
 | internal nodes reachable in product traversal | 0 | YES |
 | ungraded edges | 0 | YES |
 | product nodes without a readable label | 0 | YES |
-| orphan domain entities | 2 | NO |
+| orphan domain entities | 0 | YES |
 | controlled-predicate violations | 0 | YES |
 | undeclared relationship types | 0 | YES |
 | claims wrongly pointing at passages | 0 | YES |

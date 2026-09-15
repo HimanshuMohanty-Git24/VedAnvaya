@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0",
-  "run_id": "d3defecb6cc9cbcd",
+  "run_id": "afd85762709592fe",
   "executed": true,
   "started_from_dry_run": "data\\staging\\integration\\wave3_dry_run_v2.json",
-  "dry_run_sha256": "8b6e3be34df26c2fe74d37753263be6b1014e2c249eecf6a11a2e2df207386e5",
-  "at": "2026-09-15T18:30:59.916271+00:00",
+  "dry_run_sha256": "1a78e62cb1cc0e4ab4767370a35c234d3a8120cfb304230d890ab388a4b3413d",
+  "at": "2026-09-15T18:40:32.061774+00:00",
   "rollback_point": {
     "backup_directory": "D:/vedanvaya-backups/wave3-pre-import-20260915T155144",
     "backup_sha256": "a0ab27b627f0fc60fc002fd7b248d519a0c15bf1c31250c9f6056081eaad6957",
     "backup_bytes": 96841712,
-    "git_commit": "aa3baae9e29b74851c590f84b4fcea4b2bf0222b",
+    "git_commit": "19500658c571eb59f29780f2a1e45d4804fd79c7",
     "restore": "docker stop vedagraph-neo4j; docker run --rm -v infra_neo4j_data:/data -v <backup_directory>:/backups neo4j:5.26-community neo4j-admin database load neo4j --from-path=/backups --overwrite-destination=true; docker start vedagraph-neo4j. The dump must be named neo4j.dump inside a timestamped directory: load matches by database name, which is how the first restore attempt in this project failed."
   },
   "census_before": {
@@ -23,7 +23,7 @@
     }
   },
   "census_after": {
-    "nodes": 122988,
+    "nodes": 122986,
     "relationships": 288051,
     "core_corpus": {
       "AV": 5839,
@@ -32,16 +32,13 @@
       "YV": 1975
     }
   },
-  "node_delta": 0,
+  "node_delta": -2,
   "relationship_delta": 0,
   "core_corpus_unchanged": true,
   "promised_node_delta": 0,
   "promised_relationship_delta": 0,
-  "per_group_disagreements": [
-    "CROSS_VEDA_CONNECTION_TYPOLOGY: plan promised 6709, 8412 landed",
-    "FORMULA_RELATION_TYPOLOGY: plan promised 6133, 4368 landed"
-  ],
-  "every_group_matched_the_plan": false,
+  "per_group_disagreements": [],
+  "every_group_matched_the_plan": true,
   "steps": [
     {
       "correction": "SOMA_PRESSING_WEAK_ALIAS_RETIREMENT",
@@ -69,10 +66,11 @@
     },
     {
       "correction": "WITHHELD_REGISTRY_ENTITIES",
-      "keys_the_plan_now_withholds": 12,
-      "present_and_unreachable": 0,
-      "already_applied": true,
-      "executed": false
+      "keys_the_plan_now_withholds": 16,
+      "present_and_unreachable": 2,
+      "already_applied": false,
+      "executed": true,
+      "nodes_deleted": 2
     },
     {
       "correction": "RETYPE_ASSERTED_BY",
@@ -92,435 +90,6 @@
       "unlabelled": 0,
       "already_applied": true,
       "executed": false
-    },
-    {
-      "group_id": "COMMUNITIES_ARTIFACT_NODES",
-      "domain": "communities",
-      "kind": "NODE",
-      "rows_sent": 12,
-      "elements_created": 0,
-      "elements_labelled_or_updated": 12,
-      "plan_promised_create": 0,
-      "matches_the_plan": true,
-      "executed": true
-    },
-    {
-      "group_id": "QUALITY_VERDICT_NODES",
-      "domain": "quality",
-      "kind": "NODE",
-      "rows_sent": 2568,
-      "elements_created": 0,
-      "elements_labelled_or_updated": 2568,
-      "plan_promised_create": 0,
-      "matches_the_plan": true,
-      "executed": true
-    },
-    {
-      "group_id": "RITUAL_ACTION_NODES",
-      "domain": "ritual",
-      "kind": "NODE",
-      "rows_sent": 32,
-      "elements_created": 0,
-      "elements_labelled_or_updated": 32,
-      "plan_promised_create": 0,
-      "matches_the_plan": true,
-      "executed": true
-    },
-    {
-      "group_id": "RITUAL_IMPLEMENT_NODES",
-      "domain": "ritual",
-      "kind": "NODE",
-      "rows_sent": 44,
-      "elements_created": 0,
-      "elements_labelled_or_updated": 44,
-      "plan_promised_create": 0,
-      "matches_the_plan": true,
-      "executed": true
-    },
-    {
-      "group_id": "RITUAL_MATERIAL_NODES",
-      "domain": "ritual",
-      "kind": "NODE",
-      "rows_sent": 27,
-      "elements_created": 0,
-      "elements_labelled_or_updated": 27,
-      "plan_promised_create": 0,
-      "matches_the_plan": true,
-      "executed": true
-    },
-    {
-      "group_id": "RITUAL_OFFERING_NODES",
-      "domain": "ritual",
-      "kind": "NODE",
-      "rows_sent": 21,
-      "elements_created": 0,
-      "elements_labelled_or_updated": 21,
-      "plan_promised_create": 0,
-      "matches_the_plan": true,
-      "executed": true
-    },
-    {
-      "group_id": "RITUAL_RITE_NODES",
-      "domain": "ritual",
-      "kind": "NODE",
-      "rows_sent": 100,
-      "elements_created": 0,
-      "elements_labelled_or_updated": 100,
-      "plan_promised_create": 0,
-      "matches_the_plan": true,
-      "executed": true
-    },
-    {
-      "group_id": "RITUAL_ROLE_NODES",
-      "domain": "ritual",
-      "kind": "NODE",
-      "rows_sent": 26,
-      "elements_created": 0,
-      "elements_labelled_or_updated": 26,
-      "plan_promised_create": 0,
-      "matches_the_plan": true,
-      "executed": true
-    },
-    {
-      "group_id": "RITUAL_STEP_NODES",
-      "domain": "ritual",
-      "kind": "NODE",
-      "rows_sent": 9255,
-      "elements_created": 0,
-      "elements_labelled_or_updated": 9255,
-      "plan_promised_create": 0,
-      "matches_the_plan": true,
-      "executed": true
-    },
-    {
-      "group_id": "SCHOLARSHIP_CLAIM_ROWS",
-      "domain": "scholarship",
-      "kind": "NODE",
-      "rows_sent": 113,
-      "elements_created": 0,
-      "elements_labelled_or_updated": 113,
-      "plan_promised_create": 0,
-      "matches_the_plan": true,
-      "executed": true
-    },
-    {
-      "group_id": "SCHOLARSHIP_SCHOLAR_NODES",
-      "domain": "scholarship",
-      "kind": "NODE",
-      "rows_sent": 17,
-      "elements_created": 0,
-      "elements_labelled_or_updated": 17,
-      "plan_promised_create": 0,
-      "matches_the_plan": true,
-      "executed": true
-    },
-    {
-      "group_id": "SCHOLARSHIP_WORK_NODES",
-      "domain": "scholarship",
-      "kind": "NODE",
-      "rows_sent": 17,
-      "elements_created": 0,
-      "elements_labelled_or_updated": 17,
-      "plan_promised_create": 0,
-      "matches_the_plan": true,
-      "executed": true
-    },
-    {
-      "group_id": "SR_ROLE_FILLER_NODES",
-      "domain": "semantic_roles",
-      "kind": "NODE",
-      "rows_sent": 2052,
-      "elements_created": 0,
-      "elements_labelled_or_updated": 2052,
-      "plan_promised_create": 0,
-      "matches_the_plan": true,
-      "executed": true
-    },
-    {
-      "group_id": "FORMULA_SHARES_FORMULA_WITH",
-      "domain": "formula",
-      "kind": "RELATIONSHIP",
-      "rows_sent": 6148,
-      "elements_created": 0,
-      "elements_labelled_or_updated": 6148,
-      "plan_promised_create": 6148,
-      "matches_the_plan": true,
-      "executed": true
-    },
-    {
-      "group_id": "QUALITY_VERDICT_EDGES",
-      "domain": "quality",
-      "kind": "RELATIONSHIP",
-      "rows_sent": 2568,
-      "elements_created": 0,
-      "elements_labelled_or_updated": 2568,
-      "plan_promised_create": 2568,
-      "matches_the_plan": true,
-      "executed": true
-    },
-    {
-      "group_id": "RITUAL_ACTION_ATTESTATION",
-      "domain": "ritual",
-      "kind": "RELATIONSHIP",
-      "rows_sent": 142,
-      "elements_created": 0,
-      "elements_labelled_or_updated": 142,
-      "plan_promised_create": 142,
-      "matches_the_plan": true,
-      "executed": true
-    },
-    {
-      "group_id": "RITUAL_ATTESTATION_EDGES",
-      "domain": "ritual",
-      "kind": "RELATIONSHIP",
-      "rows_sent": 234,
-      "elements_created": 0,
-      "elements_labelled_or_updated": 234,
-      "plan_promised_create": 234,
-      "matches_the_plan": true,
-      "executed": true
-    },
-    {
-      "group_id": "RITUAL_IMPLEMENT_ATTESTATION",
-      "domain": "ritual",
-      "kind": "RELATIONSHIP",
-      "rows_sent": 436,
-      "elements_created": 0,
-      "elements_labelled_or_updated": 436,
-      "plan_promised_create": 436,
-      "matches_the_plan": true,
-      "executed": true
-    },
-    {
-      "group_id": "RITUAL_MATERIAL_ATTESTATION",
-      "domain": "ritual",
-      "kind": "RELATIONSHIP",
-      "rows_sent": 139,
-      "elements_created": 0,
-      "elements_labelled_or_updated": 139,
-      "plan_promised_create": 139,
-      "matches_the_plan": true,
-      "executed": true
-    },
-    {
-      "group_id": "RITUAL_OFFERING_ATTESTATION",
-      "domain": "ritual",
-      "kind": "RELATIONSHIP",
-      "rows_sent": 315,
-      "elements_created": 0,
-      "elements_labelled_or_updated": 315,
-      "plan_promised_create": 315,
-      "matches_the_plan": true,
-      "executed": true
-    },
-    {
-      "group_id": "RITUAL_RITE_EDGES",
-      "domain": "ritual",
-      "kind": "RELATIONSHIP",
-      "rows_sent": 685,
-      "elements_created": 0,
-      "elements_labelled_or_updated": 479,
-      "plan_promised_create": 479,
-      "matches_the_plan": true,
-      "executed": true
-    },
-    {
-      "group_id": "RITUAL_RITE_RELATIONS",
-      "domain": "ritual",
-      "kind": "RELATIONSHIP",
-      "rows_sent": 23,
-      "elements_created": 0,
-      "elements_labelled_or_updated": 23,
-      "plan_promised_create": 23,
-      "matches_the_plan": true,
-      "executed": true
-    },
-    {
-      "group_id": "RITUAL_ROLE_ASSIGNMENTS",
-      "domain": "ritual",
-      "kind": "RELATIONSHIP",
-      "rows_sent": 179,
-      "elements_created": 0,
-      "elements_labelled_or_updated": 135,
-      "plan_promised_create": 135,
-      "matches_the_plan": true,
-      "executed": true
-    },
-    {
-      "group_id": "RITUAL_ROLE_ATTESTATION",
-      "domain": "ritual",
-      "kind": "RELATIONSHIP",
-      "rows_sent": 0,
-      "elements_created": 0,
-      "elements_labelled_or_updated": 0,
-      "plan_promised_create": 0,
-      "matches_the_plan": true,
-      "executed": true
-    },
-    {
-      "group_id": "RITUAL_STEP_EDGES",
-      "domain": "ritual",
-      "kind": "RELATIONSHIP",
-      "rows_sent": 9255,
-      "elements_created": 0,
-      "elements_labelled_or_updated": 9255,
-      "plan_promised_create": 9255,
-      "matches_the_plan": true,
-      "executed": true
-    },
-    {
-      "group_id": "SCHOLARSHIP_ASSERTED_BY_A",
-      "domain": "scholarship",
-      "kind": "RELATIONSHIP",
-      "rows_sent": 113,
-      "elements_created": 0,
-      "elements_labelled_or_updated": 113,
-      "plan_promised_create": 113,
-      "matches_the_plan": true,
-      "executed": true
-    },
-    {
-      "group_id": "SCHOLARSHIP_ASSERTED_BY_B",
-      "domain": "scholarship",
-      "kind": "RELATIONSHIP",
-      "rows_sent": 113,
-      "elements_created": 0,
-      "elements_labelled_or_updated": 113,
-      "plan_promised_create": 113,
-      "matches_the_plan": true,
-      "executed": true
-    },
-    {
-      "group_id": "SCHOLARSHIP_CLAIM_EDGES",
-      "domain": "scholarship",
-      "kind": "RELATIONSHIP",
-      "rows_sent": 113,
-      "elements_created": 0,
-      "elements_labelled_or_updated": 113,
-      "plan_promised_create": 113,
-      "matches_the_plan": true,
-      "executed": true
-    },
-    {
-      "group_id": "SCHOLARSHIP_POSITION_WORK_A",
-      "domain": "scholarship",
-      "kind": "RELATIONSHIP",
-      "rows_sent": 113,
-      "elements_created": 0,
-      "elements_labelled_or_updated": 113,
-      "plan_promised_create": 113,
-      "matches_the_plan": true,
-      "executed": true
-    },
-    {
-      "group_id": "SCHOLARSHIP_POSITION_WORK_B",
-      "domain": "scholarship",
-      "kind": "RELATIONSHIP",
-      "rows_sent": 113,
-      "elements_created": 0,
-      "elements_labelled_or_updated": 113,
-      "plan_promised_create": 113,
-      "matches_the_plan": true,
-      "executed": true
-    },
-    {
-      "group_id": "SCHOLARSHIP_REPORTED_IN",
-      "domain": "scholarship",
-      "kind": "RELATIONSHIP",
-      "rows_sent": 113,
-      "elements_created": 0,
-      "elements_labelled_or_updated": 113,
-      "plan_promised_create": 113,
-      "matches_the_plan": true,
-      "executed": true
-    },
-    {
-      "group_id": "SR_ASSERTION_ROLE_EDGES",
-      "domain": "semantic_roles",
-      "kind": "RELATIONSHIP",
-      "rows_sent": 2052,
-      "elements_created": 0,
-      "elements_labelled_or_updated": 2052,
-      "plan_promised_create": 2052,
-      "matches_the_plan": true,
-      "executed": true
-    },
-    {
-      "group_id": "SR_ROLE_FILLER_ENTITY_EDGES",
-      "domain": "semantic_roles",
-      "kind": "RELATIONSHIP",
-      "rows_sent": 2052,
-      "elements_created": 0,
-      "elements_labelled_or_updated": 387,
-      "plan_promised_create": 387,
-      "matches_the_plan": true,
-      "executed": true
-    },
-    {
-      "group_id": "FORMULA_FAMILY_PROPERTIES",
-      "domain": "formula",
-      "kind": "NODE_PROPERTY",
-      "rows_sent": 720,
-      "elements_created": 0,
-      "elements_labelled_or_updated": 720,
-      "plan_promised_create": 720,
-      "matches_the_plan": true,
-      "executed": true
-    },
-    {
-      "group_id": "FORMULA_NESTING_PROPERTIES",
-      "domain": "formula",
-      "kind": "NODE_PROPERTY",
-      "rows_sent": 4825,
-      "elements_created": 0,
-      "elements_labelled_or_updated": 4825,
-      "plan_promised_create": 4825,
-      "matches_the_plan": true,
-      "executed": true
-    },
-    {
-      "group_id": "RITUAL_DEITY_OFFERING_ATTESTATION",
-      "domain": "ritual",
-      "kind": "NODE_PROPERTY",
-      "rows_sent": 27,
-      "elements_created": 0,
-      "elements_labelled_or_updated": 27,
-      "plan_promised_create": 27,
-      "matches_the_plan": true,
-      "executed": true
-    },
-    {
-      "group_id": "CROSS_VEDA_CONNECTION_TYPOLOGY",
-      "domain": "cross_veda",
-      "kind": "RELATIONSHIP_PROPERTY",
-      "rows_sent": 16824,
-      "elements_created": 0,
-      "elements_labelled_or_updated": 8412,
-      "plan_promised_create": 6709,
-      "matches_the_plan": false,
-      "executed": true
-    },
-    {
-      "group_id": "FORMULA_RELATION_TYPOLOGY",
-      "domain": "formula",
-      "kind": "RELATIONSHIP_PROPERTY",
-      "rows_sent": 6133,
-      "elements_created": 0,
-      "elements_labelled_or_updated": 4368,
-      "plan_promised_create": 6133,
-      "matches_the_plan": false,
-      "executed": true
-    },
-    {
-      "group_id": "FORMULA_USES_FORMULA_MATCH_LEVEL",
-      "domain": "formula",
-      "kind": "RELATIONSHIP_PROPERTY",
-      "rows_sent": 22686,
-      "elements_created": 0,
-      "elements_labelled_or_updated": 22686,
-      "plan_promised_create": 22686,
-      "matches_the_plan": true,
-      "executed": true
     }
   ]
 }
