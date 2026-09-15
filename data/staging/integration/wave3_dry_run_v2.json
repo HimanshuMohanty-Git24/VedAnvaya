@@ -13,11 +13,11 @@
     "10 DEFECT_FOUND_AND_FIXED counts as a completed adversarial gate"
   ],
   "provenance": {
-    "git_commit": "c8051180e4ca56c380d45c8bdb43d6892e79dbf3",
+    "git_commit": "aa3baae9e29b74851c590f84b4fcea4b2bf0222b",
     "git_branch": "phase-data-completeness-v2",
     "working_tree_clean": true,
     "gap_registry_sha256": "82ba2160569bb603cf65452b652fececb693771868fca9d64157a26412c5709b",
-    "element_plan_sha256": "6704e91e33a3bde2ea8b86af6a4ecfb75557708a71fb4be524b474bdedb91669",
+    "element_plan_sha256": "40f3b63916cd335a3ad5c2991833eb692a81c9ad2a7dc06004a1fb018d710da4",
     "eligibility_ledger_sha256": "84ae87e0d62f43f7f2cf9d3fb1306a48d117d1030e931611fb5184953612dc0c",
     "scope_grain_sha256": "42d659913274888a449fbc290e22ae5912b5498e90707a8fa7693c4b74ec48df",
     "soma_correction_sha256": "5e11524298667f98e2c5303c1cc4cc10d097f83784d5968dc2f0de23d5d4705b",
@@ -281,8 +281,8 @@
       "nodes_create": 0,
       "nodes_update": 19856,
       "property_writes": 51215,
-      "relationships_create": 226,
-      "relationships_update": 66643,
+      "relationships_create": 0,
+      "relationships_update": 66869,
       "rows_withheld_on_identity_collision": 36,
       "triples_awaiting_an_earlier_step": 0
     },
@@ -315,7 +315,7 @@
       "scholarship": {
         "nodes_create": 0,
         "property_writes": 0,
-        "relationships_create": 226
+        "relationships_create": 0
       },
       "semantic_roles": {
         "nodes_create": 0,
@@ -688,10 +688,10 @@
     "nodes_retire": 0,
     "nodes_after": 122988,
     "relationships_before": 288051,
-    "relationships_create": 226,
-    "relationships_update": 66664,
+    "relationships_create": 0,
+    "relationships_update": 66890,
     "relationships_retire": 0,
-    "relationships_after": 288277,
+    "relationships_after": 288051,
     "properties_change": 51215,
     "core_corpus_before": {
       "AV": 5839,
@@ -718,7 +718,7 @@
       "planned_rows_total": 37129,
       "withheld_rows_total": 50372,
       "nodes_create": 0,
-      "relationships_create": 226,
+      "relationships_create": 0,
       "relationships_retire": 0,
       "properties_change": 51215
     },
