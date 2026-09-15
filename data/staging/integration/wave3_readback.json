@@ -1,13 +1,13 @@
 {
   "schema_version": "1.0",
   "artifact": "WAVE_3_READBACK",
-  "at": "2026-09-15T19:15:51.407217+00:00",
+  "at": "2026-09-15T19:22:18.568376+00:00",
   "read_against": "the dry-run's promise, not the importer's report",
   "import_run_id": "c8dc92a33d56a0a0",
   "census": {
-    "nodes_promised": 116852,
+    "nodes_promised": 116825,
     "nodes_actual": 116825,
-    "nodes_match": false,
+    "nodes_match": true,
     "relationships_promised": 281290,
     "relationships_actual": 281290,
     "relationships_match": true,
@@ -478,9 +478,7 @@
       "SHARES_FORMULA_WITH": 6148
     }
   },
-  "findings": [
-    "node census: promised 116852, read 116825"
-  ],
-  "verdict": "READBACK_DEFECT",
+  "findings": [],
+  "verdict": "READBACK_CLEAN",
   "closure_rule": "A registry gap closes only after canonical import, this readback, its own closure test, and product or API propagation where applicable. Staged work is not closed work, and neither is imported work until it is read back."
 }

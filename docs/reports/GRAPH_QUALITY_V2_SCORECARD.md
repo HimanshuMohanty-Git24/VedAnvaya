@@ -12,11 +12,11 @@ weighted towards what a reader can rely on.
 
 | metric | V1 baseline | V2 | delta |
 |---|---|---|---|
-| nodes | 100,584 | 122,986 | +22,402 |
-| relationships | 212,336 | 288,051 | +75,715 |
-| product nodes | — | 50,472 | — |
+| nodes | 100,584 | 116,825 | +16,241 |
+| relationships | 212,336 | 281,290 | +68,954 |
+| product nodes | — | 44,311 | — |
 | internal nodes | 0 (unmarked) | 72,514 | +72,514 |
-| domain entities | 89 | 402 | +313 |
+| domain entities | 89 | 375 | +286 |
 | typed domain labels | 0 | 24 | +24 |
 
 ## 2. Provenance coverage
@@ -26,9 +26,9 @@ query could ask across them. `quality_tier` is the single derived grade.
 
 | metric | value |
 |---|---|
-| edges carrying `quality_tier` | 288,051 (100.0%) |
-| edges carrying `evidence` | 108,818 (37.8%) |
-| edges carrying `trust` | 106,040 (36.8%) |
+| edges carrying `quality_tier` | 281,290 (100.0%) |
+| edges carrying `evidence` | 108,795 (38.7%) |
+| edges carrying `trust` | 106,040 (37.7%) |
 | ungraded edges | **0** |
 
 ### Quality tier distribution
@@ -36,9 +36,9 @@ query could ask across them. `quality_tier` is the single derived grade.
 | tier | meaning | edges |
 |---|---|---|
 | `TIER_A` | a source states it | 107,219 |
-| `TIER_B` | reproducible derivation, including scope inheritance | 175,685 |
+| `TIER_B` | reproducible derivation, including scope inheritance | 168,925 |
 | `TIER_C` | model-extracted, evidence survived review | 598 |
-| `TIER_D` | interpretation, or an unreviewed model proposal | 4,549 |
+| `TIER_D` | interpretation, or an unreviewed model proposal | 4,548 |
 
 TIER_C is **0 by construction**: all 736 model-extracted candidates are
 `state=CANDIDATE`, because there is no human gold set to accept them against.
@@ -114,7 +114,7 @@ axis and **20** carry a corpus profile.
 
 | entity type | entities |
 |---|---|
-| `None` | 173 |
+| `None` | 146 |
 | `Condition` | 36 |
 | `Concept` | 23 |
 | `Object` | 18 |
@@ -221,11 +221,11 @@ judgement is recorded.
 | `MENTIONS_DEVATA` | 17,165 |
 | `HAS_CHANDAS` | 16,331 |
 | `HAS_DEVATA` | 10,558 |
-| `HAS_RITUAL_STEP` | 9,255 |
 | `MENTIONS_LEMMA` | 9,000 |
 | `SHARES_FORMULA_WITH` | 6,148 |
 | `HAS_DEVATA_ASCRIPTION` | 5,385 |
 | `HAS_SEMANTIC_ASSERTION` | 4,865 |
+| `HAS_RITUAL_STEP` | 3,121 |
 | `NEAR_PARALLEL_OF` | 3,049 |
 
 During this pass an unlabelled `MATCH (t) WHERE t.work_id = $k` produced **39,461**

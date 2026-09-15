@@ -2,57 +2,50 @@
   "schema_version": "1.0",
   "artifact": "WAVE_3_DEPENDENCY_INVALIDATION",
   "owner_section": "13",
-  "import_run_id": "5fa3e60c92fb19da",
+  "import_run_id": "c8dc92a33d56a0a0",
   "method": "Every element Wave 3 wrote carries a wave stamp, so staleness is a query about labels and predicates rather than a judgement about what probably moved. A property backfill counts as an input changing: an artifact computed over USES_FORMULA before the match levels landed read edges that now say more than they did, and nothing in the artifact records which version it saw.",
   "labels_written_by_this_wave": {
-    "Action": 32,
+    "Action": 23,
     "Animal": 4,
-    "Concept": 250,
+    "Concept": 219,
     "Crop": 4,
     "DeityCommunity": 12,
     "Devata": 27,
-    "DomainEntity": 250,
+    "DomainEntity": 219,
     "Formula": 4825,
     "FormulaFamily": 720,
     "Metal": 7,
-    "Object": 44,
+    "Object": 41,
     "Offering": 21,
     "Plant": 4,
     "QualityVerdict": 2568,
     "Ritual": 100,
-    "RitualRole": 26,
-    "RitualStep": 9255,
+    "RitualRole": 9,
+    "RitualStep": 3121,
     "RoleFiller": 2052,
     "Scholar": 17,
     "ScholarlyDisagreement": 113,
     "ScholarlyWork": 17,
-    "Substance": 34,
+    "Substance": 32,
     "Weapon": 5
   },
   "relationship_types_written_by_this_wave": {
-    "ASSERTED_BY": 226,
     "ASSERTION_ROLE": 2052,
     "ATTESTED_IN": 1266,
     "EXACT_PARALLEL_OF": 1002,
-    "FORM_OF_RITE": 5,
-    "HAS_RITUAL_STEP": 9255,
+    "HAS_RITUAL_STEP": 3121,
     "NEAR_PARALLEL_OF": 3049,
-    "PART_OF_RITE": 18,
-    "PERFORMED_BY": 135,
+    "POSITION_ASSERTED_BY": 226,
     "POSITION_STATED_IN": 226,
     "QUALITY_VERDICT_ABOUT": 2568,
     "REFERS_TO": 387,
     "REPORTED_IN": 113,
     "REUSES_TEXT_FROM": 1684,
-    "RITE_INVOLVES_ACTION": 174,
     "SCHOLARLY_CLAIM_ABOUT": 113,
     "SHARES_ENTITY_VOCABULARY_WITH": 2141,
     "SHARES_FORMULA_WITH": 6148,
     "SPECIALIZED_FORM_OF": 1,
     "USES_FORMULA": 22686,
-    "USES_OBJECT": 111,
-    "USES_OFFERING": 162,
-    "USES_SUBSTANCE": 32,
     "VARIANT_OF": 788
   },
   "consumers": [
@@ -149,12 +142,12 @@
       "inputs_that_moved": {
         "labels": {
           "Devata": 27,
-          "Concept": 250,
-          "DomainEntity": 250
+          "Concept": 219,
+          "DomainEntity": 219
         },
         "relationship_types": {}
       },
-      "elements_touched": 527,
+      "elements_touched": 465,
       "reads_labels": [
         "Devata",
         "Concept",
@@ -178,22 +171,17 @@
       "inputs_that_moved": {
         "labels": {
           "Ritual": 100,
-          "RitualStep": 9255,
-          "RitualRole": 26,
+          "RitualStep": 3121,
+          "RitualRole": 9,
           "Offering": 21,
-          "Action": 32
+          "Action": 23
         },
         "relationship_types": {
-          "HAS_RITUAL_STEP": 9255,
-          "PERFORMED_BY": 135,
-          "USES_OBJECT": 111,
-          "USES_OFFERING": 162,
-          "USES_SUBSTANCE": 32,
-          "RITE_INVOLVES_ACTION": 174,
+          "HAS_RITUAL_STEP": 3121,
           "ATTESTED_IN": 1266
         }
       },
-      "elements_touched": 20569,
+      "elements_touched": 7661,
       "reads_labels": [
         "Ritual",
         "RitualStep",
@@ -245,11 +233,11 @@
       "inputs_that_moved": {
         "labels": {
           "Devata": 27,
-          "Concept": 250
+          "Concept": 219
         },
         "relationship_types": {}
       },
-      "elements_touched": 277,
+      "elements_touched": 246,
       "reads_labels": [
         "Passage",
         "Mantra",
@@ -273,11 +261,11 @@
       "inputs_that_moved": {
         "labels": {
           "Devata": 27,
-          "Concept": 250
+          "Concept": 219
         },
         "relationship_types": {}
       },
-      "elements_touched": 277,
+      "elements_touched": 246,
       "reads_labels": [
         "Devata",
         "Concept",
@@ -300,14 +288,14 @@
       "inputs_that_moved": {
         "labels": {
           "Devata": 27,
-          "Concept": 250,
-          "DomainEntity": 250
+          "Concept": 219,
+          "DomainEntity": 219
         },
         "relationship_types": {
           "SPECIALIZED_FORM_OF": 1
         }
       },
-      "elements_touched": 528,
+      "elements_touched": 466,
       "reads_labels": [
         "Devata",
         "Concept",
