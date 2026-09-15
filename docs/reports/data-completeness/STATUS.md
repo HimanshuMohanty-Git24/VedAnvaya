@@ -4,117 +4,170 @@
 Guard: `python scripts/validate_status_report.py`
 
 - Branch `phase-data-completeness-v2` · start commit `d6e93a9` · tag `vedanvaya-v1.0.0` FROZEN
-- Last rewritten 2026-09-15, Wave 2 closing
+- Last rewritten 2026-09-16, after the Wave 3 canonical import and its readback
 
-## Canonical graph — unchanged
+## Where the campaign is
 
-**108,779 nodes / 265,295 relationships.** No canonical write has occurred in this
-campaign. Every coverage figure is **STAGED_PROJECTED_COVERAGE** until Wave 3 imports and
-reads counts back out of the database. None may reach the frontend, API, release docs or
-any public report before then.
+**Wave 3 is imported, read back clean, and the graph's own quality gates pass.** The first
+canonical write of this campaign has happened. Seven of fourteen domains landed; seven are
+withheld, each for a named reason.
 
-## Owner decisions in force
+Two independent gates agree:
 
-Full text and rationale in `OWNER_DECISIONS.md`. Do not re-ask these.
+- `scripts/wave3_readback.py` → `READBACK_CLEAN`. Census matches the dry-run's promise on
+  both figures, the four corpus totals hold, nine closure tests pass with every field their
+  claim covers asserted, 0 withheld identities are present and 0 written nodes are
+  unreachable.
+- `scripts/graph_quality_scorecard.py` → **9 of 9 integrity gates PASS**, including the two
+  that were red for everything this wave wrote until the contracts were met.
 
-| | Decision |
-|---|---|
-| Soma / Pavamāna | **Specialized form, separate analytical nodes.** Predicate `SPECIALIZED_FORM_OF`, only this edge migrated, staged not applied |
-| Fold vs identity | **Normalization never establishes identity alone.** It generates candidates. `NORMALIZED_EQUIVALENCE` ≠ `CANONICAL_IDENTITY` ≠ `TEXTUAL_VARIANT` |
-| Schema migrations | **Four additive extensions approved** subject to migration cards showing all five flags, `OLD_PREDICATE_MEANING_CHANGED = false` |
-| Human gold | **Not required** where source adjudication is strongest available. A documented evaluation limitation, not an implementation gap |
-| SV morphology | Annotation source absent; **process all 1,844 anyway**. `PUBLISHED_HUMAN_ANNOTATION = unavailable`, `MORPHOLOGICAL_ANALYSIS = processed` |
-| A — RV 1.65–1.70 | Barred until the coordinate repair applies. Affected layer is **translations**; that span's audio is 61/61 EXACT and text-verified |
-| B — RV 150 audio | `REMOTE_DIRECT` accepted. Range supported; caching blocked by rights |
-| C — forced YV addresses | 31 barred. Accepted recovery **19, not 50** |
-| E — audio gate | **CLOSED.** 1,021 rows `NEEDS_AUDIBLE_REVIEW`, 0 reviewed. Text comparison, metadata, waveform and ASR are none of them listening review |
+Coverage figures from the imported domains are now **canonical readback figures** rather
+than `STAGED_PROJECTED_COVERAGE`. The withheld domains' figures are still projected and may
+not reach the frontend, API or any public report.
 
-## Wave 2 — 7 of 8 domains staged
+## Canonical graph
 
-All staged artifacts pass the structural gate. Three gates per domain, never averaged;
-`scripts/wave3_eligibility_ledger.py` is the live view.
+| | Before Wave 3 | After Wave 3 |
+|---|---:|---:|
+| Nodes | 108,779 | **122,986** |
+| Relationships | 265,295 | **288,051** |
 
-| Agent | Domain | A | B | C | Status |
-|---|---|---|---|---|---|
-| 9 | semantic_roles | PASS | PASS | SURVIVED | **ELIGIBLE** |
-| 12 | formula | PASS | PASS | SURVIVED | **ELIGIBLE** |
-| 10 | cross_veda | PASS | PASS* | SURVIVED | BLOCKED — fold fix |
-| 15 | communities | PASS | PASS | SURVIVED | needs re-check post-decision |
-| 13 | ritual | PASS | see below | lead-tested | pending |
-| 14 | scholarship | PASS | see below | lead-tested | pending |
-| 16 | quality | PASS | see below | lead-tested | pending |
-| 11 | semantic_resemblance | — | — | — | **RE-RUNNING** — first run produced no artifact |
+Core corpus unchanged and asserted every run: RV 10,552 · SV 1,844 · YV 1,975 · AV 5,839.
 
-Agents 13, 14 and 16 finished without reporting; their artifacts were found on disk,
-static for two hours, and validated by the lead.
+## Done
 
-## Adversarial results — 7 of 7 tested, 7 defects found
+Owner round two is applied in full; the decisions and their rationale are in
+`OWNER_DECISIONS.md` sections 11–17. Do not re-ask them.
 
-The hit rate is the finding. A validator pass proves an artifact is well-formed and says
-nothing about whether its headline is true.
+- **Folding is not identity.** `FOLD_FIX_BREAKS_REFERENT_IDENTITY` resolved by option B: the
+  comparison surfaces got their own fold and the identity fold is untouched. All 3,819
+  released referent digests reproduce byte for byte, including the five Yajurvedic keys an
+  in-place fix would have drifted. Cross-Veda identity baseline re-recorded 1,538 → 1,735.
+- **M6 replaced by M6′.** Three homogeneous populations on the schema's own closed enums,
+  1,423 rows, every subject asserted on grain. `scope_type` is on 0 nodes and 0
+  relationships, so the card's `ADDITIVE = false` had been recorded against a population
+  that does not exist.
+- **SOMA-PRESSING kept, three aliases retired** on a measured criterion. 117
+  `MENTIONS_ENTITY` and 108 `ABOUT_CONCEPT` edges retired, 21 updated, all read back.
+- **The audible-review harness exists.** `scripts/audio_review_harness.py`, resumable,
+  append-only log, three refusals enforced at the endpoint and tested.
+- **`CROSS_VEDA_DEVATA_IDENTITY_BRIDGE` registered and sized**, not built on a guess.
 
-| Domain | Defect found | Outcome |
-|---|---|---|
-| semantic_roles | 24.8% of role fillers wrong from cross-clause leakage | Restaged. Fillers 51,231 → **2,052**, triples 5,219 → **341**, all treebank-backed |
-| cross_veda | 396 of 6,271 transformation types wrong; root cause was dead code | Restaged. Fold fix blocked on identity |
-| formula | 134 pairs typed as edition variants where the difference was an inline address | Restaged. `EDITORIAL_APPARATUS` eliminated as a type |
-| communities | Its decisive claim rested on a prior the graph contradicts | Withdrawn, refusal re-founded on 8 measured grounds |
-| ritual | **24 rows rest only on the generic yajña** — 10.8% of Saṃhitā-typed claims | Needs re-typing |
-| scholarship | **1 of 92 disagreements has the same asserter on both sides** | Needs removal |
-| quality | Of 11,210 verdicts: 1,402 diverge, 1,283 confirm only via an unsound alias, 143 refuted | Finding, not a defect in the artifact |
+## Wave 3 — what landed
 
-Lead-tested attacks that came back **clean**: ritual's core/supplementary boundary (0 rows
-keyed outside the four recensions); scholarship's reporting-source problem (73 rows typed
-`ASCRIPTION_DISPUTED_BY_THE_REPORTING_SOURCE`); quality's evaluation independence (three
-layers adjudicated by a treebank that did not build them, metre checked by counting the
-text).
+Element-level, planned by `scripts/wave3_import_plan.py` and read back by
+`scripts/wave3_readback.py`.
 
-## The campaign's recurring error
+| | Planned | Landed |
+|---|---:|---:|
+| Nodes created | 14,221 | 14,207 |
+| Nodes labelled or updated | 5,647 | — |
+| Relationships created | 22,982 | 22,982 |
+| Relationships retired | 226 | 226 |
+| Property writes | 51,215 | 51,215 |
 
-Absence assumed at the source where the defect was in our own addressing. Seven instances.
-**Measure the cause before working the remedy** — three registry prescriptions sent this
-campaign to acquire material it already held.
+Domains imported: `communities` · `cross_veda` · `formula` · `quality` · `ritual` ·
+`scholarship` · `semantic_roles`.
 
-Registry now enforces it: a source-absence claim is refused while any of 14 addressing
-checks is unrun.
+New labels: `RoleFiller` `RitualStep` `QualityVerdict` `ScholarlyDisagreement` `Scholar`
+`ScholarlyWork` `DeityCommunity`, plus `Ritual` `RitualRole` `Action` `Object` `Substance`
+`Offering` extended with new registry entities.
+
+`:ScholarlyDisagreement` and not `:InterpretiveClaim`, which it was until the API suite
+failed: that label is a curated product object whose contract promises an `about` enum and
+a `falsifier`, and a recorded disagreement between two named asserters has neither.
+
+New predicates: `ASSERTION_ROLE` `REFERS_TO` `SHARES_FORMULA_WITH` `HAS_RITUAL_STEP`
+`QUALITY_VERDICT_ABOUT` `SCHOLARLY_CLAIM_ABOUT` `ASSERTED_BY` `POSITION_STATED_IN`
+`REPORTED_IN` `ATTESTED_IN` `SPECIALIZED_FORM_OF`, and the four rite predicates.
+
+`HAS_RITUAL_STEP` rather than the existing `HAS_STEP`, whose 3 edges point at an `:Action`:
+widening its range would change what an existing predicate means, and the readback asserts
+it still holds exactly 3.
+
+## Remaining — withheld, with the reason
+
+| Domain | Rows | Why |
+|---|---:|---|
+| `attribution` | 23,003 | Gates B and C were never run. A Wave-1 domain that never entered the adversarial programme. **The largest single piece of remaining work.** |
+| `semantic_resemblance` | 19,088 | A step-5 dependent re-derivation, not an import: two of its four inputs landed in this wave. Tier B refused pending the Devatā bridge. |
+| `translation` | 2,254 | Gates B and C never run, plus owner decisions A and C bar 31 forced addresses and the RV 1.65–1.70 span. |
+| `audio_av` | 771 | Audible review. 0 of 1,021 heard. |
+| `samaveda_music` | 1,471 | Audible review, and migrations M2–M4 wait with it. |
+| `audio_rv` | 150 | Audible review. |
+| `audio_yv` | 33 | Audible review. |
+
+## Blocking
+
+Nothing blocks a resumed session. Four named pieces of work remain, in this order:
+
+1. **Seven API contract tests fail, and five of them should.** `tests/api` asserts the
+   frozen Product-V1 census of 108,779 / 265,295 and a ritual total of 8, and its own
+   docstring says drift is worth failing over: *"every measured caveat in the API is
+   describing a graph that no longer exists"*. That is now true. The caveats must be
+   **re-derived, not bumped** — a constant edited to match is a caveat nobody measured.
+   `scripts/wave3_dependency_invalidation.py` lists which consumers moved and what rebuilds
+   each.
+2. **Dependent re-derivation (owner section 13).** Eight of nine named consumers read
+   something this wave wrote. Nothing has been rebuilt. Do not regenerate the frontend
+   design, and do not re-grade the Ask benchmark speculatively — a daily quota is burned by
+   a retry.
+3. **`attribution` gates B and C.** 23,003 rows, no semantic review and no adversarial test.
+   The largest single piece of remaining work.
+4. **The 1,021 audible reviews.** `python scripts/audio_review_harness.py`.
 
 ## Registry
 
-`data/gap_registry.json` — **80 gaps**, **0 closed**, which is expected before readback.
-13 carry `causation_status: MEASURED`; 67 are untested hypotheses. 6 disproven hypotheses
-preserved and marked. 25-type closed root-cause taxonomy.
+`data/gap_registry.json` — **81 gaps**. `GAP-CROSS-VEDA-DEVATA-IDENTITY-BRIDGE-001` opened
+this round with `causation_status: MEASURED`. No gap closes until its own closure test passes
+against canonical readback, and the seven imported domains' closure tests are in
+`wave3_readback.json`.
 
-## Open blockers
-
-`data/staging/integration/blockers.json`
-
-1. `FOLD_FIX_BREAKS_REFERENT_IDENTITY` — **awaiting owner decision.** The cross-Veda fix is
-   correct and cannot be applied in place: `referent.py` computes `comparison_sha256`
-   through the fold, so it trips the referent-drift gate on 5 Yajurvedic keys. A migration
-   would assert a referent change that did not happen. Three options; lead recommends B
-   (separate comparison fold). Four regression tests held as strict xfail.
-2. `NAME_COLLISION_SCOPE_TYPE` — lead action. Namespace at import; must not be resolved by
-   precedence.
-3. `CURATION_CONTRADICTION_SOMA_PAVAMANA` — **RESOLVED**, see decisions above.
-
-## Environment
+## Current wave artifacts
 
 ```
-powershell -ExecutionPolicy Bypass -File scripts\start-product.ps1
-powershell -ExecutionPolicy Bypass -File scripts\stop-product.ps1
+data/staging/integration/wave3_import_plan.json      element-level plan
+data/staging/integration/wave3_dry_run_v2.json       the GO, with its 16 conditions
+data/staging/integration/wave3_import_receipt.json   what landed, per group
+data/staging/integration/wave3_readback.json         read out of the database
+data/staging/integration/wave3_scope_grain.json      M6-prime populations
+data/staging/integration/wave3_soma_pressing_correction.json
+data/staging/integration/wave3_devata_identity_bridge.json
 ```
-Frontend 3000 · API 127.0.0.1:8000 · Neo4j 7474/7687 (Docker `vedagraph-neo4j`, managed
-outside the repo).
 
-Graph: `docker exec vedagraph-neo4j cypher-shell -u neo4j -p vedagraph_dev --format plain "<Q>"`
-Gate: `.venv/Scripts/python.exe scripts/validate_staging_artifact.py data/staging/<domain> --graph`
+## What the import cost, and why
 
-## Rollback, tested not assumed
+Five passes and four rollbacks. Every defect was mine rather than the artifacts', and none
+was visible offline — the database, the quality scorecard and the API contract tests each
+found things no amount of reading the plan would have.
 
-`D:\vedanvaya-backups\vedanvaya-v1.0.0-preflight-20260915T105606\neo4j.dump`
-(96,844,203 bytes, sha256 `98f71b64…83b981`). The dump must be named `neo4j.dump` inside a
-timestamped directory — `neo4j-admin database load` matches by database name, which is how
-the first restore attempt failed.
+| Found by | Defect |
+|---|---|
+| census diff | a referent's key carried onto the referrer destroyed `entity_key` uniqueness and fanned 387 edges into 4,564 |
+| census diff | `MERGE (n:Label {key})` matches on label AND properties, so it created twins instead of finding existing nodes |
+| per-group check | `count(r)` over an `UNWIND` counts operations, so three groups reported landing more than they were sent |
+| census diff | a "already modelled as" redirect stopped at the nodes; 6 edges matched nothing |
+| census diff | the dry-run promised 5 edges the correction was never going to write |
+| readback | 12,033 nodes arrived with no relationship — three whole relation families were missing from the plan |
+| readback | two closure tests I wrote measured their own failure and passed, asserting a different field |
+| API suite | `:InterpretiveClaim` overloaded; `/insights` returned `about: None` against its own schema |
+| API suite | `ASSERTED_BY` reused, whose signature is `InterpretiveClaim → Source` |
+| API suite | `SET n += row` overwrote 102 curated `display_label`s; `AYAS-METAL` lost "(ayas)" |
+| scorecard | 22,981 edges with no `quality_tier` and 14,209 nodes with no `display_label` |
+
+Each is now guarded by a test on the spec, so it fails offline rather than in the database.
+**The lesson, in one line: an importer's own per-group report is not evidence.** All five
+passes printed a clean table.
+
+## Rollback, tested three times
+
+```
+D:\vedanvaya-backups\wave3-pre-import-20260915T155144\neo4j.dump
+96,841,712 bytes · sha256 a0ab27b6…d6957
+```
+Restored four times during this session, and verified exact every time: 108,779 / 265,295, four
+corpora exact, 0 Wave 3 residue, 0 shared `entity_key`. The dump must be named `neo4j.dump`
+inside a timestamped directory — `neo4j-admin database load` matches by database name.
 
 ```
 docker stop vedagraph-neo4j
@@ -123,33 +176,66 @@ docker run --rm -v infra_neo4j_data:/data -v /d/vedanvaya-backups/<stamp>:/backu
   neo4j-admin database load neo4j --from-path=/backups --overwrite-destination=true
 docker start vedagraph-neo4j
 ```
-Proven by loading into a scratch volume, serving on spare ports and re-counting exact.
 
-## Next order — do not reorder
+On Git Bash, prefix the `docker run` with `MSYS_NO_PATHCONV=1` or `/backups` is rewritten to
+a Windows path and the command fails with "is not an existing directory".
 
-A finish Wave 2 (agent 11) · B adversarial-review all 8 · C restage failures ·
-D resolve dependency invalidation · E validate migration cards · F collision audit ·
-G **Wave 3 dry-run** · H owner review of dry-run · I canonical import · J readback ·
-K dependent re-derivation · L Wave 4 independent QA.
+## Backlog, measured
 
-**I must not precede G and H.**
+- **The label-less RELATIONSHIP endpoint match is still O(rows × nodes).** Node groups now
+  create an index on their own key and probe label-scoped first, which fixed the node side —
+  a 9,255-key probe had taken 3m40s and one labelling pass 4m42s. The relationship groups
+  that match an endpoint without a label still cannot use an index. Giving them
+  `start_label="DomainEntity"` would use `domain_entity_key_unique`, and the plan's
+  provided-by-this-plan set already covers the nodes that do not exist yet.
+- **9 ritual `step_key`s each cover two distinct steps** under one canonical URN and one
+  UUIDv5. Withheld from import rather than merged. The ritual domain needs to restage its
+  step identity.
+- **16 registry rows claim `PROPOSED_NEW` for a key the graph already holds** — 11 materials
+  and 5 offerings. The plan resolves against the graph rather than the marking, so no
+  duplicate was created, but the artifact's marking is wrong.
+- **The concept cap's tie-break is corpus-wide**, so withdrawing an alias from one concept
+  reshuffles which concepts survive the per-passage cap on unrelated passages: 29 assertions
+  across 17 other concepts. Held for its own decision and not imported.
+- **24 further aliases across 18 entities** meet the SOMA-PRESSING retirement criterion.
+  Reported, not applied.
+
+## Next
+
+A dependent re-derivation · B `attribution` gates B and C · C audible reviews ·
+D Wave 4 independent QA. **Wave 4 must not begin until every importable Wave 3 domain is
+readback-complete.**
+
+## Environment
+
+```
+powershell -ExecutionPolicy Bypass -File scripts\start-product.ps1
+powershell -ExecutionPolicy Bypass -File scripts\stop-product.ps1
+```
+Frontend 3000 · API 127.0.0.1:8000 · Neo4j 7474/7687 (Docker `vedagraph-neo4j`).
+
+Graph: `docker exec vedagraph-neo4j cypher-shell -u neo4j -p vedagraph_dev --format plain "<Q>"`
 
 ## Rules a resuming session must not break
 
-1. No canonical mutation outside a lead-run, idempotent, checksummed import that reads its
-   counts back out of the database.
-2. Never turn NOT ASSESSED into VERIFIED ZERO.
-3. Never map another recension onto the one we hold — Jaiminīya is not Kauthuma, Taittirīya
+1. An importer's own per-group report is not evidence. Three Wave 3 attempts printed a clean
+   25-group table; the first over-wrote by 5,930 relationships, the second landed 11 short
+   and left 12,033 unreachable nodes. Only the census diff and the readback found either.
+2. `count(r)` over an `UNWIND … MERGE` counts operations, not elements. Landed greater than
+   sent is impossible, not a success.
+3. `MERGE (n:Label {key: X})` matches on label **and** properties, so it does not find an
+   existing node carrying X under another label — it creates a twin.
+4. Never carry a referent's identity key onto the referrer. It destroyed `entity_key`
+   uniqueness and fanned 387 edges into 4,564.
+5. A "do not create, already modelled as Y" decision must propagate to the edges pointing at
+   the retired key.
+6. A node nothing points at is not imported data. Check for it; exempt the deliberate cases
+   by name.
+7. A closure test must assert every field its own claim covers. Two of mine measured their
+   own failure and passed.
+8. Never turn NOT ASSESSED into VERIFIED ZERO.
+9. Never map another recension onto the one we hold — Jaiminīya is not Kauthuma, Taittirīya
    and Kāṇva are not Mādhyandina, Paippalāda is not Śaunaka.
-4. Never attach a long recording to an exact mantra without verified boundaries.
-5. Never let a model invent a disagreement, an attribution or a timestamp.
-6. A limitation card is removed only when data proves closure.
-7. Do not commit a specialist's staging directory until it reports. Notifications fire more
-   than once, and three agents finished without reporting at all.
-8. Generate a manifest **last**, write nothing between it and the validation covering it,
-   and read the **checksum count** rather than the word PASS. One agent withdrew five
-   PASSes for racing its own gate.
-9. Write each fix behind an assertion about its blast radius **before** applying it. That
-   practice caught eight agent defects; reading one's own output afterwards caught none.
-10. Enumerate a field's value space before concluding it is empty. A lead probe reported
-    92 missing attributions that were all present under a different field name.
+10. Never attach a long recording to an exact mantra without verified boundaries.
+11. Enumerate a field's value space before concluding it is empty.
+12. Measure the cause before working the remedy.
