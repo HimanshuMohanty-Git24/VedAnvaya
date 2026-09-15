@@ -88,11 +88,13 @@ ASSESSMENTS: dict[str, dict[str, Any]] = {
     },
     "cross_veda": {
         "B": (
-            "PASS_PENDING_FOLD_FIX",
+            "PASS_AFTER_FOLD_FIX",
             "396 of 6,271 transformation types corrected and 197 stored relationship types "
-            "identified as contradicted by their own text. The corrected typing is right "
-            "and the codebase cannot yet reproduce it, because the fold fix it depends on "
-            "is blocked on FOLD_FIX_BREAKS_REFERENT_IDENTITY.",
+            "identified as contradicted by their own text. The codebase now reproduces the "
+            "corrected typing: the fold fix landed as a separate cross-script fold under "
+            "owner decision 1, leaving the identity fold and all 3,819 released referent "
+            "digests untouched. The cross-Veda identity baseline was re-recorded "
+            "deliberately, 1,538 to 1,735.",
         ),
         "C": (
             "SURVIVED",
@@ -103,9 +105,9 @@ ASSESSMENTS: dict[str, dict[str, Any]] = {
         ),
         "restage_required": False,
         "restage_reason": (
-            "Restage complete. Blocked on the fold fix rather than on further work."
+            "Restage complete and the fold fix it waited on is applied."
         ),
-        "blocked_by": ["FOLD_FIX_BREAKS_REFERENT_IDENTITY"],
+        "blocked_by": [],
     },
     "formula": {
         "B": (
@@ -245,7 +247,26 @@ ASSESSMENTS: dict[str, dict[str, Any]] = {
         ),
         "restage_required": False,
         "waits_on_migration": ["THEMATICALLY_RESEMBLES into CONTROLLED_PREDICATES"],
-        "blocked_by": ["TIER_B_AWAITS_DEDICATION_VOCABULARY_RULING"],
+        # Owner sections 8 and 9 settle both open questions and neither unblocks an import.
+        #
+        # Section 9 rules the dedication-vocabulary question: the zero intersection is a
+        # separate implementation gap, CROSS_VEDA_DEVATA_IDENTITY_BRIDGE, and the layers
+        # must not be joined on display labels. A deterministic parse resolves 8 of 324
+        # ascriptions, so TIER_B stays REFUSED rather than blocked -- that is now a
+        # measured limitation of the layer and not a pending question.
+        #
+        # Section 8 decides the rest: keep the chosen predicate rather than the
+        # higher-scoring lexical control, preserve the declared limits, and re-derive the
+        # relations from the POST-IMPORT snapshot. Since semantic_roles and formula both
+        # import in Wave 3, this domain's inputs move, so importing its current artifact
+        # would land a layer computed over superseded inputs. It is a step-5 dependent
+        # re-derivation, not a step-4 addition.
+        "blocked_by": ["RE_DERIVE_AFTER_IMPORT_NOT_IMPORTABLE_AS_STAGED"],
+        "tier_b_ruling": (
+            "REFUSED on measured grounds: the RV-AV guard it needs rests on a deity "
+            "vocabulary bridge that does not exist. Gap "
+            "CROSS_VEDA_DEVATA_IDENTITY_BRIDGE-001, resolving 8 of 324 ascriptions."
+        ),
     },
 }
 

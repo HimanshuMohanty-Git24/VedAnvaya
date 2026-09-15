@@ -1,0 +1,941 @@
+{
+  "schema_version": "1.0",
+  "owner_decision": "section 3 -- SOMA-PRESSING stays as a canonical ritual object; its weak lexical aliases lose assertion authority",
+  "mode": "PLAN_NO_WRITE",
+  "concept": "VG:CONCEPT:SOMA-PRESSING",
+  "concept_retained": true,
+  "retired_aliases": [
+    "sute",
+    "suteṣu",
+    "sutāsaḥ"
+  ],
+  "retirement_status": "NON_TRIGGERING_ALIAS",
+  "retirement_criterion": "h2_verdict = AMBIGUOUS_SURFACE in data/staging/quality/proofs/alias_soundness.json: the alias's dominant human lemma holds under 80% of its occurrences in a published human treebank",
+  "retained_for": [
+    "search",
+    "candidate generation",
+    "audit",
+    "manual review"
+  ],
+  "may_no_longer_create": [
+    "MENTIONS_ENTITY",
+    "ABOUT_CONCEPT",
+    "ritual identity"
+  ],
+  "measurement_per_alias": {
+    "savanam": {
+      "treebank_occurrences": 9,
+      "dominant_human_lemma": "savana",
+      "dominant_share": 1.0,
+      "human_lemmas_observed": {
+        "savana": 9
+      },
+      "h2_verdict": "UNAMBIGUOUS_SURFACE"
+    },
+    "savanasya": {
+      "treebank_occurrences": 1,
+      "dominant_human_lemma": "savana",
+      "dominant_share": 1.0,
+      "human_lemmas_observed": {
+        "savana": 1
+      },
+      "h2_verdict": "UNAMBIGUOUS_SURFACE"
+    },
+    "savane": {
+      "treebank_occurrences": 3,
+      "dominant_human_lemma": "savana",
+      "dominant_share": 1.0,
+      "human_lemmas_observed": {
+        "savana": 3
+      },
+      "h2_verdict": "UNAMBIGUOUS_SURFACE"
+    },
+    "savaneṣu": {
+      "treebank_occurrences": 4,
+      "dominant_human_lemma": "savana",
+      "dominant_share": 1.0,
+      "human_lemmas_observed": {
+        "savana": 4
+      },
+      "h2_verdict": "UNAMBIGUOUS_SURFACE"
+    },
+    "savanā": {
+      "treebank_occurrences": 3,
+      "dominant_human_lemma": "savana",
+      "dominant_share": 1.0,
+      "human_lemmas_observed": {
+        "savana": 3
+      },
+      "h2_verdict": "UNAMBIGUOUS_SURFACE"
+    },
+    "sunvanti": {
+      "treebank_occurrences": 1,
+      "dominant_human_lemma": "su",
+      "dominant_share": 1.0,
+      "human_lemmas_observed": {
+        "su": 1
+      },
+      "h2_verdict": "UNAMBIGUOUS_SURFACE"
+    },
+    "sunvataḥ": {
+      "treebank_occurrences": 4,
+      "dominant_human_lemma": "su",
+      "dominant_share": 1.0,
+      "human_lemmas_observed": {
+        "su": 4
+      },
+      "h2_verdict": "UNAMBIGUOUS_SURFACE"
+    },
+    "sunvate": {
+      "treebank_occurrences": 7,
+      "dominant_human_lemma": "su",
+      "dominant_share": 1.0,
+      "human_lemmas_observed": {
+        "su": 7
+      },
+      "h2_verdict": "UNAMBIGUOUS_SURFACE"
+    },
+    "sutam": {
+      "treebank_occurrences": 23,
+      "dominant_human_lemma": "su",
+      "dominant_share": 0.913,
+      "human_lemmas_observed": {
+        "su": 21,
+        "suta": 2
+      },
+      "h2_verdict": "UNAMBIGUOUS_SURFACE"
+    },
+    "sutasya": {
+      "treebank_occurrences": 12,
+      "dominant_human_lemma": "su",
+      "dominant_share": 0.8333,
+      "human_lemmas_observed": {
+        "su": 10,
+        "suta": 2
+      },
+      "h2_verdict": "UNAMBIGUOUS_SURFACE"
+    },
+    "sutaḥ": {
+      "treebank_occurrences": 19,
+      "dominant_human_lemma": "su",
+      "dominant_share": 0.8947,
+      "human_lemmas_observed": {
+        "su": 17,
+        "suta": 2
+      },
+      "h2_verdict": "UNAMBIGUOUS_SURFACE"
+    },
+    "sutaṃ": {
+      "treebank_occurrences": 0,
+      "dominant_human_lemma": null,
+      "dominant_share": null,
+      "human_lemmas_observed": {},
+      "h2_verdict": "UNATTESTED_AS_A_TOKEN"
+    },
+    "sute": {
+      "treebank_occurrences": 12,
+      "dominant_human_lemma": "su",
+      "dominant_share": 0.5,
+      "human_lemmas_observed": {
+        "su": 6,
+        "suta": 6
+      },
+      "h2_verdict": "AMBIGUOUS_SURFACE"
+    },
+    "suteṣu": {
+      "treebank_occurrences": 4,
+      "dominant_human_lemma": "su",
+      "dominant_share": 0.5,
+      "human_lemmas_observed": {
+        "su": 2,
+        "suta": 2
+      },
+      "h2_verdict": "AMBIGUOUS_SURFACE"
+    },
+    "suto": {
+      "treebank_occurrences": 0,
+      "dominant_human_lemma": null,
+      "dominant_share": null,
+      "human_lemmas_observed": {},
+      "h2_verdict": "UNATTESTED_AS_A_TOKEN"
+    },
+    "sutā": {
+      "treebank_occurrences": 0,
+      "dominant_human_lemma": null,
+      "dominant_share": null,
+      "human_lemmas_observed": {},
+      "h2_verdict": "UNATTESTED_AS_A_TOKEN"
+    },
+    "sutāsaḥ": {
+      "treebank_occurrences": 13,
+      "dominant_human_lemma": "su",
+      "dominant_share": 0.6923,
+      "human_lemmas_observed": {
+        "su": 9,
+        "suta": 4
+      },
+      "h2_verdict": "AMBIGUOUS_SURFACE"
+    }
+  },
+  "surviving_trigger_aliases": 14,
+  "mentions_entity": {
+    "edges_on_the_concept": 656,
+    "retire_sole_evidence_is_retired": 117,
+    "update_drop_retired_alias_keep_edge": 12,
+    "untouched": 527,
+    "retire_keys": [
+      "VG:AV:SAU:K20:S001:V001",
+      "VG:AV:SAU:K20:S006:V001",
+      "VG:AV:SAU:K20:S053:V001",
+      "VG:AV:SAU:K20:S053:V002",
+      "VG:AV:SAU:K20:S056:V005",
+      "VG:AV:SAU:K20:S057:V011",
+      "VG:AV:SAU:K20:S057:V012",
+      "VG:AV:SAU:K20:S068:V012",
+      "VG:AV:SAU:K20:S071:V008",
+      "VG:AV:SAU:K20:S073:V005",
+      "VG:AV:SAU:K20:S076:V006",
+      "VG:AV:SAU:K20:S078:V001",
+      "VG:AV:SAU:K20:S084:V003",
+      "VG:AV:SAU:K20:S085:V001",
+      "VG:AV:SAU:K20:S096:V001",
+      "VG:AV:SAU:K20:S110:V002",
+      "VG:AV:SAU:K20:S111:V002",
+      "VG:RV:SAK:M01:S003:V006",
+      "VG:RV:SAK:M01:S005:V002",
+      "VG:RV:SAK:M01:S009:V002",
+      "VG:RV:SAK:M01:S009:V010",
+      "VG:RV:SAK:M01:S010:V005",
+      "VG:RV:SAK:M01:S081:V008",
+      "VG:RV:SAK:M01:S105:V007",
+      "VG:RV:SAK:M01:S130:V001",
+      "VG:RV:SAK:M01:S161:V005",
+      "VG:RV:SAK:M01:S165:V004",
+      "VG:RV:SAK:M03:S036:V001",
+      "VG:RV:SAK:M03:S040:V001",
+      "VG:RV:SAK:M03:S046:V004",
+      "VG:RV:SAK:M03:S051:V011",
+      "VG:RV:SAK:M03:S053:V010",
+      "VG:RV:SAK:M03:S060:V004",
+      "VG:RV:SAK:M04:S049:V005",
+      "VG:RV:SAK:M05:S030:V003",
+      "VG:RV:SAK:M05:S051:V008",
+      "VG:RV:SAK:M05:S051:V009",
+      "VG:RV:SAK:M05:S051:V010",
+      "VG:RV:SAK:M06:S023:V005",
+      "VG:RV:SAK:M06:S023:V006",
+      "VG:RV:SAK:M06:S023:V009",
+      "VG:RV:SAK:M06:S023:V010",
+      "VG:RV:SAK:M06:S041:V001",
+      "VG:RV:SAK:M06:S041:V005",
+      "VG:RV:SAK:M06:S045:V022",
+      "VG:RV:SAK:M06:S045:V028",
+      "VG:RV:SAK:M06:S059:V001",
+      "VG:RV:SAK:M06:S059:V003",
+      "VG:RV:SAK:M06:S059:V004",
+      "VG:RV:SAK:M07:S026:V001",
+      "VG:RV:SAK:M07:S026:V002",
+      "VG:RV:SAK:M07:S026:V003",
+      "VG:RV:SAK:M07:S026:V005",
+      "VG:RV:SAK:M07:S032:V002",
+      "VG:RV:SAK:M07:S042:V002",
+      "VG:RV:SAK:M07:S059:V003",
+      "VG:RV:SAK:M07:S067:V004",
+      "VG:RV:SAK:M07:S090:V001",
+      "VG:RV:SAK:M07:S094:V010",
+      "VG:RV:SAK:M08:S001:V001",
+      "VG:RV:SAK:M08:S002:V007",
+      "VG:RV:SAK:M08:S002:V010",
+      "VG:RV:SAK:M08:S012:V017",
+      "VG:RV:SAK:M08:S013:V001",
+      "VG:RV:SAK:M08:S013:V009",
+      "VG:RV:SAK:M08:S021:V015",
+      "VG:RV:SAK:M08:S033:V004",
+      "VG:RV:SAK:M08:S033:V007",
+      "VG:RV:SAK:M08:S033:V008",
+      "VG:RV:SAK:M08:S045:V029",
+      "VG:RV:SAK:M08:S045:V038",
+      "VG:RV:SAK:M08:S054:V002",
+      "VG:RV:SAK:M08:S061:V011",
+      "VG:RV:SAK:M08:S064:V006",
+      "VG:RV:SAK:M08:S072:V013",
+      "VG:RV:SAK:M08:S092:V020",
+      "VG:RV:SAK:M08:S092:V026",
+      "VG:RV:SAK:M08:S093:V020",
+      "VG:RV:SAK:M08:S095:V001",
+      "VG:RV:SAK:M08:S097:V006",
+      "VG:RV:SAK:M08:S097:V008",
+      "VG:RV:SAK:M09:S107:V002",
+      "VG:RV:SAK:M10:S023:V004",
+      "VG:RV:SAK:M10:S029:V006",
+      "VG:RV:SAK:M10:S094:V014",
+      "VG:RV:SAK:M10:S160:V001",
+      "VG:RV:SAK:M10:S167:V004",
+      "VG:SV:KAU:CHANDA:P01:D08:V05",
+      "VG:SV:KAU:CHANDA:P02:D03:V01",
+      "VG:SV:KAU:CHANDA:P03:D02:V10",
+      "VG:SV:KAU:CHANDA:P03:D05:V09",
+      "VG:SV:KAU:CHANDA:P03:D05:V10",
+      "VG:SV:KAU:CHANDA:P04:D01:V05",
+      "VG:SV:KAU:CHANDA:P04:D06:V08",
+      "VG:SV:KAU:CHANDA:P04:D08:V04",
+      "VG:SV:KAU:CHANDA:P04:D10:V01",
+      "VG:SV:KAU:UTTARA:P01:R02:D04:V02",
+      "VG:SV:KAU:UTTARA:P01:R02:D10:V02",
+      "VG:SV:KAU:UTTARA:P01:R02:D12:V01",
+      "VG:SV:KAU:UTTARA:P04:R02:D05:V03",
+      "VG:SV:KAU:UTTARA:P05:R02:D12:V02",
+      "VG:SV:KAU:UTTARA:P06:R01:D05:V01",
+      "VG:SV:KAU:UTTARA:P06:R03:D16:V01",
+      "VG:SV:KAU:UTTARA:P08:R02:D04:V01",
+      "VG:SV:KAU:UTTARA:P08:R02:D06:V02",
+      "VG:SV:KAU:UTTARA:P08:R02:D15:V01",
+      "VG:SV:KAU:UTTARA:P08:R02:D15:V02",
+      "VG:YV:VSM:A19:V027",
+      "VG:YV:VSM:A19:V031",
+      "VG:YV:VSM:A20:V056",
+      "VG:YV:VSM:A20:V057",
+      "VG:YV:VSM:A20:V062",
+      "VG:YV:VSM:A20:V064",
+      "VG:YV:VSM:A20:V089",
+      "VG:YV:VSM:A33:V021",
+      "VG:YV:VSM:A33:V070",
+      "VG:YV:VSM:A33:V078"
+    ],
+    "update_rows": [
+      {
+        "canonical_key": "VG:AV:SAU:K20:S022:V001",
+        "matched_aliases_before": [
+          "sutaṃ",
+          "sute"
+        ],
+        "matched_aliases_after": [
+          "sutaṃ"
+        ]
+      },
+      {
+        "canonical_key": "VG:AV:SAU:K20:S052:V002",
+        "matched_aliases_before": [
+          "sutaṃ",
+          "sute"
+        ],
+        "matched_aliases_after": [
+          "sutaṃ"
+        ]
+      },
+      {
+        "canonical_key": "VG:AV:SAU:K20:S057:V015",
+        "matched_aliases_before": [
+          "sutaṃ",
+          "sute"
+        ],
+        "matched_aliases_after": [
+          "sutaṃ"
+        ]
+      },
+      {
+        "canonical_key": "VG:RV:SAK:M01:S016:V004",
+        "matched_aliases_before": [
+          "sutam",
+          "sute"
+        ],
+        "matched_aliases_after": [
+          "sutam"
+        ]
+      },
+      {
+        "canonical_key": "VG:RV:SAK:M02:S011:V011",
+        "matched_aliases_before": [
+          "sutaḥ",
+          "sutāsaḥ"
+        ],
+        "matched_aliases_after": [
+          "sutaḥ"
+        ]
+      },
+      {
+        "canonical_key": "VG:RV:SAK:M08:S033:V002",
+        "matched_aliases_before": [
+          "sutaṃ",
+          "sute"
+        ],
+        "matched_aliases_after": [
+          "sutaṃ"
+        ]
+      },
+      {
+        "canonical_key": "VG:RV:SAK:M08:S045:V022",
+        "matched_aliases_before": [
+          "sutaṃ",
+          "sute"
+        ],
+        "matched_aliases_after": [
+          "sutaṃ"
+        ]
+      },
+      {
+        "canonical_key": "VG:RV:SAK:M08:S059:V001",
+        "matched_aliases_before": [
+          "savanā",
+          "sunvate",
+          "suteṣu"
+        ],
+        "matched_aliases_after": [
+          "savanā",
+          "sunvate"
+        ]
+      },
+      {
+        "canonical_key": "VG:RV:SAK:M10:S050:V007",
+        "matched_aliases_before": [
+          "sutasya",
+          "sute"
+        ],
+        "matched_aliases_after": [
+          "sutasya"
+        ]
+      },
+      {
+        "canonical_key": "VG:SV:KAU:CHANDA:P02:D07:V07",
+        "matched_aliases_before": [
+          "sutaṃ",
+          "sute"
+        ],
+        "matched_aliases_after": [
+          "sutaṃ"
+        ]
+      },
+      {
+        "canonical_key": "VG:SV:KAU:UTTARA:P01:R02:D07:V01",
+        "matched_aliases_before": [
+          "sutaṃ",
+          "sute"
+        ],
+        "matched_aliases_after": [
+          "sutaṃ"
+        ]
+      },
+      {
+        "canonical_key": "VG:SV:KAU:UTTARA:P02:R02:D12:V02",
+        "matched_aliases_before": [
+          "sutaṃ",
+          "sute"
+        ],
+        "matched_aliases_after": [
+          "sutaṃ"
+        ]
+      }
+    ]
+  },
+  "about_concept": {
+    "method": "re-derived over all 20,210 mantras with and without the three aliases",
+    "assertions_before": 730,
+    "assertions_after": 627,
+    "retire": 108,
+    "update_method_narrowed_to_english_only": 9,
+    "create_newly_attested": 5,
+    "retire_keys": [
+      "VG:AV:SAU:K20:S001:V001",
+      "VG:AV:SAU:K20:S006:V001",
+      "VG:AV:SAU:K20:S053:V001",
+      "VG:AV:SAU:K20:S053:V002",
+      "VG:AV:SAU:K20:S056:V005",
+      "VG:AV:SAU:K20:S057:V011",
+      "VG:AV:SAU:K20:S057:V012",
+      "VG:AV:SAU:K20:S068:V012",
+      "VG:AV:SAU:K20:S071:V008",
+      "VG:AV:SAU:K20:S073:V005",
+      "VG:AV:SAU:K20:S076:V006",
+      "VG:AV:SAU:K20:S078:V001",
+      "VG:AV:SAU:K20:S084:V003",
+      "VG:AV:SAU:K20:S085:V001",
+      "VG:AV:SAU:K20:S096:V001",
+      "VG:AV:SAU:K20:S110:V002",
+      "VG:AV:SAU:K20:S111:V002",
+      "VG:RV:SAK:M01:S003:V006",
+      "VG:RV:SAK:M01:S005:V002",
+      "VG:RV:SAK:M01:S009:V002",
+      "VG:RV:SAK:M01:S009:V010",
+      "VG:RV:SAK:M01:S010:V005",
+      "VG:RV:SAK:M01:S081:V008",
+      "VG:RV:SAK:M01:S105:V007",
+      "VG:RV:SAK:M01:S130:V001",
+      "VG:RV:SAK:M01:S161:V005",
+      "VG:RV:SAK:M01:S165:V004",
+      "VG:RV:SAK:M03:S036:V001",
+      "VG:RV:SAK:M03:S040:V001",
+      "VG:RV:SAK:M03:S046:V004",
+      "VG:RV:SAK:M03:S051:V011",
+      "VG:RV:SAK:M03:S053:V010",
+      "VG:RV:SAK:M03:S060:V004",
+      "VG:RV:SAK:M04:S049:V005",
+      "VG:RV:SAK:M05:S030:V003",
+      "VG:RV:SAK:M05:S051:V008",
+      "VG:RV:SAK:M05:S051:V009",
+      "VG:RV:SAK:M05:S051:V010",
+      "VG:RV:SAK:M06:S023:V005",
+      "VG:RV:SAK:M06:S023:V009",
+      "VG:RV:SAK:M06:S023:V010",
+      "VG:RV:SAK:M06:S041:V001",
+      "VG:RV:SAK:M06:S041:V005",
+      "VG:RV:SAK:M06:S045:V028",
+      "VG:RV:SAK:M06:S059:V001",
+      "VG:RV:SAK:M06:S059:V003",
+      "VG:RV:SAK:M06:S059:V004",
+      "VG:RV:SAK:M07:S026:V003",
+      "VG:RV:SAK:M07:S026:V005",
+      "VG:RV:SAK:M07:S032:V002",
+      "VG:RV:SAK:M07:S042:V002",
+      "VG:RV:SAK:M07:S059:V003",
+      "VG:RV:SAK:M07:S067:V004",
+      "VG:RV:SAK:M07:S094:V010",
+      "VG:RV:SAK:M08:S001:V001",
+      "VG:RV:SAK:M08:S012:V017",
+      "VG:RV:SAK:M08:S013:V001",
+      "VG:RV:SAK:M08:S013:V009",
+      "VG:RV:SAK:M08:S021:V015",
+      "VG:RV:SAK:M08:S033:V004",
+      "VG:RV:SAK:M08:S033:V007",
+      "VG:RV:SAK:M08:S033:V008",
+      "VG:RV:SAK:M08:S045:V029",
+      "VG:RV:SAK:M08:S045:V038",
+      "VG:RV:SAK:M08:S054:V002",
+      "VG:RV:SAK:M08:S061:V011",
+      "VG:RV:SAK:M08:S064:V006",
+      "VG:RV:SAK:M08:S072:V013",
+      "VG:RV:SAK:M08:S092:V020",
+      "VG:RV:SAK:M08:S092:V026",
+      "VG:RV:SAK:M08:S093:V020",
+      "VG:RV:SAK:M08:S095:V001",
+      "VG:RV:SAK:M08:S097:V006",
+      "VG:RV:SAK:M08:S097:V008",
+      "VG:RV:SAK:M09:S107:V002",
+      "VG:RV:SAK:M10:S023:V004",
+      "VG:RV:SAK:M10:S029:V006",
+      "VG:RV:SAK:M10:S094:V014",
+      "VG:RV:SAK:M10:S160:V001",
+      "VG:RV:SAK:M10:S167:V004",
+      "VG:SV:KAU:CHANDA:P01:D08:V05",
+      "VG:SV:KAU:CHANDA:P02:D03:V01",
+      "VG:SV:KAU:CHANDA:P03:D02:V10",
+      "VG:SV:KAU:CHANDA:P03:D05:V09",
+      "VG:SV:KAU:CHANDA:P03:D05:V10",
+      "VG:SV:KAU:CHANDA:P04:D01:V05",
+      "VG:SV:KAU:CHANDA:P04:D06:V08",
+      "VG:SV:KAU:CHANDA:P04:D08:V04",
+      "VG:SV:KAU:CHANDA:P04:D10:V01",
+      "VG:SV:KAU:UTTARA:P01:R02:D04:V02",
+      "VG:SV:KAU:UTTARA:P01:R02:D10:V02",
+      "VG:SV:KAU:UTTARA:P01:R02:D12:V01",
+      "VG:SV:KAU:UTTARA:P04:R02:D05:V03",
+      "VG:SV:KAU:UTTARA:P05:R02:D12:V02",
+      "VG:SV:KAU:UTTARA:P06:R01:D05:V01",
+      "VG:SV:KAU:UTTARA:P06:R03:D16:V01",
+      "VG:SV:KAU:UTTARA:P08:R02:D04:V01",
+      "VG:SV:KAU:UTTARA:P08:R02:D06:V02",
+      "VG:SV:KAU:UTTARA:P08:R02:D15:V01",
+      "VG:SV:KAU:UTTARA:P08:R02:D15:V02",
+      "VG:YV:VSM:A19:V027",
+      "VG:YV:VSM:A19:V031",
+      "VG:YV:VSM:A20:V056",
+      "VG:YV:VSM:A20:V057",
+      "VG:YV:VSM:A20:V064",
+      "VG:YV:VSM:A20:V089",
+      "VG:YV:VSM:A33:V021",
+      "VG:YV:VSM:A33:V078"
+    ],
+    "method_narrowed_keys": [
+      "VG:RV:SAK:M06:S023:V006",
+      "VG:RV:SAK:M06:S045:V022",
+      "VG:RV:SAK:M07:S026:V001",
+      "VG:RV:SAK:M07:S026:V002",
+      "VG:RV:SAK:M07:S090:V001",
+      "VG:RV:SAK:M08:S002:V007",
+      "VG:RV:SAK:M08:S002:V010",
+      "VG:YV:VSM:A20:V062",
+      "VG:YV:VSM:A33:V070"
+    ],
+    "newly_attested_keys": [
+      "VG:RV:SAK:M01:S108:V013",
+      "VG:RV:SAK:M01:S137:V002",
+      "VG:RV:SAK:M08:S048:V007",
+      "VG:RV:SAK:M09:S009:V001",
+      "VG:RV:SAK:M09:S106:V009"
+    ],
+    "passages_keeping_the_concept_on_other_evidence": 9
+  },
+  "collateral_from_the_per_passage_cap": {
+    "finding": "assign_concepts caps a passage at MAX_CONCEPTS_PER_PASSAGE=4 and breaks ties on each concept's corpus-wide attestation count. Withdrawing three aliases lowers SOMA-PRESSING's count, which reshuffles the cap on passages containing no soma alias at all. Deterministic and reproducible, and outside the decision the owner took.",
+    "other_concepts_affected": [
+      "VG:CONCEPT:AHAN-DAY",
+      "VG:CONCEPT:ANNA-FOOD",
+      "VG:CONCEPT:AP-WATERS",
+      "VG:CONCEPT:ASMAN-PRESSING-STONE",
+      "VG:CONCEPT:ASVA-HORSE",
+      "VG:CONCEPT:AYUDHA-WEAPON",
+      "VG:CONCEPT:AYUS-LIFE",
+      "VG:CONCEPT:HRD-HEART",
+      "VG:CONCEPT:MADHU-HONEY",
+      "VG:CONCEPT:SAKHYA-FRIENDSHIP",
+      "VG:CONCEPT:SARMAN-PROTECTION",
+      "VG:CONCEPT:SINDHU-RIVER",
+      "VG:CONCEPT:SOMA-DRINK",
+      "VG:CONCEPT:STOMA-PRAISE",
+      "VG:CONCEPT:SURYA-SUN",
+      "VG:CONCEPT:VASU-WEALTH",
+      "VG:CONCEPT:VIDYUT-LIGHTNING"
+    ],
+    "assertions_lost_elsewhere": 5,
+    "assertions_gained_elsewhere": 24,
+    "lost_elsewhere": [
+      [
+        "VG:RV:SAK:M01:S108:V013",
+        "VG:CONCEPT:SINDHU-RIVER",
+        "concept-alias-v1:sanskrit-token"
+      ],
+      [
+        "VG:RV:SAK:M01:S137:V002",
+        "VG:CONCEPT:SURYA-SUN",
+        "concept-alias-v1:sanskrit-token"
+      ],
+      [
+        "VG:RV:SAK:M08:S048:V007",
+        "VG:CONCEPT:SURYA-SUN",
+        "concept-alias-v1:sanskrit-token"
+      ],
+      [
+        "VG:RV:SAK:M09:S009:V001",
+        "VG:CONCEPT:AYUS-LIFE",
+        "concept-alias-v1:english"
+      ],
+      [
+        "VG:RV:SAK:M09:S106:V009",
+        "VG:CONCEPT:SINDHU-RIVER",
+        "concept-alias-v1:english"
+      ]
+    ],
+    "gained_elsewhere": [
+      [
+        "VG:RV:SAK:M01:S081:V008",
+        "VG:CONCEPT:HRD-HEART",
+        "concept-alias-v1:english"
+      ],
+      [
+        "VG:RV:SAK:M01:S130:V001",
+        "VG:CONCEPT:ANNA-FOOD",
+        "concept-alias-v1:english"
+      ],
+      [
+        "VG:RV:SAK:M01:S165:V004",
+        "VG:CONCEPT:VIDYUT-LIGHTNING",
+        "concept-alias-v1:english"
+      ],
+      [
+        "VG:RV:SAK:M03:S046:V004",
+        "VG:CONCEPT:SINDHU-RIVER",
+        "concept-alias-v1:english"
+      ],
+      [
+        "VG:RV:SAK:M03:S053:V010",
+        "VG:CONCEPT:MADHU-HONEY",
+        "concept-alias-v1:english"
+      ],
+      [
+        "VG:RV:SAK:M06:S023:V005",
+        "VG:CONCEPT:AHAN-DAY",
+        "concept-alias-v1:english"
+      ],
+      [
+        "VG:RV:SAK:M06:S023:V009",
+        "VG:CONCEPT:SOMA-DRINK",
+        "concept-alias-v1:english"
+      ],
+      [
+        "VG:RV:SAK:M06:S041:V001",
+        "VG:CONCEPT:SOMA-DRINK",
+        "concept-alias-v1:sanskrit-token"
+      ],
+      [
+        "VG:RV:SAK:M06:S041:V005",
+        "VG:CONCEPT:SARMAN-PROTECTION",
+        "concept-alias-v1:english"
+      ],
+      [
+        "VG:RV:SAK:M06:S059:V003",
+        "VG:CONCEPT:ANNA-FOOD",
+        "concept-alias-v1:english"
+      ],
+      [
+        "VG:RV:SAK:M06:S059:V004",
+        "VG:CONCEPT:SAKHYA-FRIENDSHIP",
+        "concept-alias-v1:english"
+      ],
+      [
+        "VG:RV:SAK:M07:S026:V005",
+        "VG:CONCEPT:VASU-WEALTH",
+        "concept-alias-v1:english"
+      ],
+      [
+        "VG:RV:SAK:M07:S032:V002",
+        "VG:CONCEPT:SOMA-DRINK",
+        "concept-alias-v1:english"
+      ],
+      [
+        "VG:RV:SAK:M07:S067:V004",
+        "VG:CONCEPT:VASU-WEALTH",
+        "concept-alias-v1:english"
+      ],
+      [
+        "VG:RV:SAK:M08:S013:V001",
+        "VG:CONCEPT:STOMA-PRAISE",
+        "concept-alias-v1:english"
+      ],
+      [
+        "VG:RV:SAK:M08:S033:V004",
+        "VG:CONCEPT:ASVA-HORSE",
+        "concept-alias-v1:english"
+      ],
+      [
+        "VG:RV:SAK:M08:S064:V006",
+        "VG:CONCEPT:HRD-HEART",
+        "concept-alias-v1:english"
+      ],
+      [
+        "VG:RV:SAK:M09:S107:V002",
+        "VG:CONCEPT:AP-WATERS",
+        "concept-alias-v1:english"
+      ],
+      [
+        "VG:RV:SAK:M10:S023:V004",
+        "VG:CONCEPT:SOMA-DRINK",
+        "concept-alias-v1:english"
+      ],
+      [
+        "VG:RV:SAK:M10:S029:V006",
+        "VG:CONCEPT:MADHU-HONEY",
+        "concept-alias-v1:english"
+      ],
+      [
+        "VG:RV:SAK:M10:S094:V014",
+        "VG:CONCEPT:ASMAN-PRESSING-STONE",
+        "concept-alias-v1:english"
+      ],
+      [
+        "VG:SV:KAU:CHANDA:P01:D08:V05",
+        "VG:CONCEPT:VASU-WEALTH",
+        "concept-alias-v1:sanskrit-token"
+      ],
+      [
+        "VG:YV:VSM:A20:V064",
+        "VG:CONCEPT:SOMA-DRINK",
+        "concept-alias-v1:english"
+      ],
+      [
+        "VG:YV:VSM:A33:V078",
+        "VG:CONCEPT:AYUDHA-WEAPON",
+        "concept-alias-v1:english"
+      ]
+    ],
+    "whole_layer_before": 46523,
+    "whole_layer_after": 46439,
+    "whole_layer_net": -84,
+    "requires_its_own_decision": true
+  },
+  "same_criterion_elsewhere_reported_not_applied": {
+    "entities": 18,
+    "aliases": 24,
+    "detail": {
+      "VG:CONCEPT:ADHVAN-PATH": [
+        {
+          "alias": "pathyā",
+          "dominant_share": 0.6667
+        }
+      ],
+      "VG:CONCEPT:AHAN-DAY": [
+        {
+          "alias": "ahan",
+          "dominant_share": 0.7222
+        },
+        {
+          "alias": "ahāni",
+          "dominant_share": 0.7692
+        },
+        {
+          "alias": "divā",
+          "dominant_share": 0.72
+        }
+      ],
+      "VG:CONCEPT:ASAT-NONEXISTENCE": [
+        {
+          "alias": "asati",
+          "dominant_share": 0.7143
+        }
+      ],
+      "VG:CONCEPT:ASVA-HORSE": [
+        {
+          "alias": "aśvā",
+          "dominant_share": 0.625
+        }
+      ],
+      "VG:CONCEPT:AVI-SHEEP": [
+        {
+          "alias": "avye",
+          "dominant_share": 0.5
+        },
+        {
+          "alias": "avyā",
+          "dominant_share": 0.5
+        }
+      ],
+      "VG:CONCEPT:DAKSINA-PRIESTLY-GIFT": [
+        {
+          "alias": "dakṣiṇām",
+          "dominant_share": 0.5882
+        }
+      ],
+      "VG:CONCEPT:DYAUS-HEAVEN": [
+        {
+          "alias": "dive",
+          "dominant_share": 0.6176
+        }
+      ],
+      "VG:CONCEPT:JYOTIS-LIGHT": [
+        {
+          "alias": "rocanā",
+          "dominant_share": 0.75
+        }
+      ],
+      "VG:CONCEPT:OSADHI-PLANTS": [
+        {
+          "alias": "oṣadhīḥ",
+          "dominant_share": 0.7021
+        }
+      ],
+      "VG:CONCEPT:PAYAS-MILK": [
+        {
+          "alias": "dugdham",
+          "dominant_share": 0.5455
+        }
+      ],
+      "VG:CONCEPT:PUROHITA-CHAPLAIN": [
+        {
+          "alias": "purohitaḥ",
+          "dominant_share": 0.6667
+        }
+      ],
+      "VG:CONCEPT:SAKHYA-FRIENDSHIP": [
+        {
+          "alias": "sakhye",
+          "dominant_share": 0.5882
+        }
+      ],
+      "VG:CONCEPT:SRAVAS-FAME": [
+        {
+          "alias": "śravasyā",
+          "dominant_share": 0.6
+        }
+      ],
+      "VG:CONCEPT:SVAN-DOG": [
+        {
+          "alias": "śvānaḥ",
+          "dominant_share": 0.6
+        }
+      ],
+      "VG:CONCEPT:TANU-BODY": [
+        {
+          "alias": "tanvaḥ",
+          "dominant_share": 0.7586
+        },
+        {
+          "alias": "tanvā",
+          "dominant_share": 0.6111
+        }
+      ],
+      "VG:DEVATA:OSADHAYAH": [
+        {
+          "alias": "oṣadhīḥ",
+          "dominant_share": 0.7021
+        }
+      ],
+      "VG:DEVATA:PAVAMANAH": [
+        {
+          "alias": "pavamāna",
+          "dominant_share": 0.5
+        },
+        {
+          "alias": "pavamānaḥ",
+          "dominant_share": 0.5
+        }
+      ],
+      "VG:DEVATA:PAVAMANAH-SOMAH": [
+        {
+          "alias": "pavamāna",
+          "dominant_share": 0.5
+        },
+        {
+          "alias": "pavamānaḥ",
+          "dominant_share": 0.5
+        }
+      ]
+    }
+  },
+  "conflation_guard": {
+    "senses_held_apart": [
+      {
+        "entity_key": "VG:CONCEPT:SOMA-DRINK",
+        "sense": "the substance and the drink pressed from it",
+        "present_in_graph": true,
+        "graph_labels": [
+          "Concept",
+          "DomainEntity",
+          "Offering",
+          "Substance"
+        ],
+        "registry_alias_count": 21
+      },
+      {
+        "entity_key": "VG:CONCEPT:SOMA-PRESSING",
+        "sense": "the pressing rite and occasion",
+        "present_in_graph": true,
+        "graph_labels": [
+          "Concept",
+          "DomainEntity",
+          "Ritual"
+        ],
+        "registry_alias_count": 14
+      },
+      {
+        "entity_key": "VG:CONCEPT:GRAHA-SOMA-DRAWING",
+        "sense": "the drawing of a soma portion",
+        "present_in_graph": true,
+        "graph_labels": [
+          "Concept",
+          "DomainEntity",
+          "Ritual"
+        ],
+        "registry_alias_count": null
+      },
+      {
+        "entity_key": "VG:DEVATA:SOMAH",
+        "sense": "the deity",
+        "present_in_graph": true,
+        "graph_labels": [
+          "Devata"
+        ],
+        "registry_alias_count": null
+      },
+      {
+        "entity_key": "VG:DEVATA:PAVAMANAH-SOMAH",
+        "sense": "the deity in his self-purifying cult form",
+        "present_in_graph": true,
+        "graph_labels": [
+          "Devata"
+        ],
+        "registry_alias_count": null
+      }
+    ],
+    "shared_sanskrit_aliases_between_senses": []
+  },
+  "findings": [],
+  "verdict": "PLAN_READY"
+}

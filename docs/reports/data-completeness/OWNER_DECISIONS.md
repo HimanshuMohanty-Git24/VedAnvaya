@@ -184,3 +184,195 @@ The distinction:
   cannot be accessed, after exhaustive documented search.
 
 The campaign is not impossible because external resources are absent.
+
+---
+
+# Second owner round, 2026-09-15
+
+The owner's blockers are resolved. These supersede nothing above; they settle the
+questions the first round left open, and they bind Wave 3.
+
+## 11. Folding is not identity — and the fold blocker is decided by that
+
+**Decision.** Normalization, accent, punctuation, whitespace and case folding, script
+transliteration, sandhi-normalized comparison, OCR normalization and generic folded-label
+equality may establish `NORMALIZED_SURFACE_MATCH` or produce an `IDENTITY_CANDIDATE`.
+None of them establishes `SAME_CANONICAL_ENTITY`, `SAME_CANONICAL_PASSAGE`, `VARIANT_OF`,
+`TEXT_REUSE` or a canonical merge. **Do not equate them.**
+
+**What that decided.** `FOLD_FIX_BREAKS_REFERENT_IDENTITY` is the same invariant seen from
+the other side: the fold sat *inside* the identity contract, so correcting a comparison was
+indistinguishable from a referent moving. Resolved by option B — the comparison surfaces
+get their own fold and the identity fold is untouched.
+
+**Applied.** `fold_transcription_cross_script` and `ComparisonForm.CROSS_SCRIPT_COMPARISON`,
+consumed only by `enrich.surfaces.build_surfaces`. Verified: all 3,819 released referent
+digests reproduce byte for byte, including the five Yajurvedic keys the in-place fix would
+have drifted; the generated lexical layer still rebuilds byte-identical; 0 records change
+on `SEARCH_NORMALIZED`.
+
+**What enumerating the residue found that the staged patch had not.** Three further arrival
+forms — U+1CEC, U+A8F7, and the ASCII tilde the transliterator makes of U+0901 — plus four
+editorial marks surviving onto the comparison surface, and one form that is deliberately
+**not** folded: U+F15C, a private-use code point in the stored text of 20 unaccented
+Vājasaneyi records, sitting where that layer elsewhere writes an anusvāra. Reading it as one
+is a transcription judgement rather than a normalization, so it is registered as a source
+defect and left alone.
+
+The patch's own two proposed rules turned out redundant: each component already folds to the
+sentinel, and the run collapse merges them.
+
+**Re-recorded deliberately.** The cross-Veda identity baseline moves 1,538 → 1,735:
+`EXACT_PARALLEL_OF` +45 and `VARIANT_OF` +152, across all six pairs.
+
+**Deferred as a choice, not an omission.** Option A — versioning the comparison digest by the
+normalization that produced it — remains the more correct end state and waits for the next
+deliberate revision of the identity contract.
+
+## 12. `scope_type` comes from the evidence grain; M6 is split
+
+**Decision.** There is no global default `scope_type`. It is an evidence property, derived
+from the actual subject grain, using the narrowest truthful closed-enum scope each population
+supports. A heterogeneous M6 must be split into homogeneous import populations.
+
+**What the card got wrong.** It asked which readers could be allowed to break. `scope_type`
+is on **0 nodes and 0 relationships** of the live graph, so there is no reader to break, and
+`ADDITIVE = false` / `BACKWARD_COMPATIBLE = false` were recorded against a population that
+does not exist. The schema already held both vocabularies as separate closed enums —
+`AudioScope` with its `SCOPE_TO_ENTITY_TYPES` grain contract, and `ScopeType` for assertion
+scope — so no vocabulary had to be invented and no winner had to be picked.
+
+| Population | Property | `scope_type` | Enum | Rows | Grain asserted |
+|---|---|---|---|--:|---|
+| `AUDIO_RECORD_AT_MANTRA_SCOPE` | `audio_scope_type` | `MANTRA` | `AudioScope` | 954 | every subject is `entity_type=MANTRA` |
+| `GANA_PERFORMANCE_AT_COLLECTION_SCOPE` | `audio_scope_type` | `COLLECTION` | `AudioScope` | 3 | every subject is `entity_type=STRUCTURAL_CONTAINER` |
+| `ATTRIBUTION_ASSERTION_AT_SINGLE_MANTRA_SCOPE` | `assertion_scope_type` | `SINGLE_MANTRA` | `ScopeType` | 466 | every subject is `entity_type=MANTRA`, and all 466 independently carry `asserted_granularity=VERSE` |
+
+**Defect found and fixed.** The three gāna rows were staged `STRUCTURAL_CONTAINER`, which is
+a graph `entity_type` and **not a member of `AudioScope` at all** — one axis's value cast into
+the other's enum. `AudioScope.COLLECTION` is the enum's own value for a named Samavedic
+collection, and all three keys are CHANDA or UTTARA containers.
+
+The split is a total partition of the 1,423 scope-bearing rows, and M6 now passes all five
+flags: nothing writes a property called `scope_type`, so no predicate changes meaning.
+
+Validator: `scripts/wave3_scope_grain_repair.py` → `HOMOGENEOUS_AND_ON_GRAIN`.
+
+## 13. SOMA-PRESSING stays; its weak aliases lose assertion authority
+
+**Decision.** Keep `VG:CONCEPT:SOMA-PRESSING` as a canonical ritual object. Its weak lexical
+aliases may not establish identity alone. Retain them for search, candidate generation, audit
+and manual review; they must not create `MENTIONS_ENTITY`, `ABOUT_CONCEPT` or ritual identity
+by themselves. Re-evaluate every existing edge whose sole evidence is a retired alias.
+
+**The criterion is measured, not editorial.** `h2_verdict = AMBIGUOUS_SURFACE` in the quality
+artifact's per-alias soundness proof: the alias's dominant human lemma holds under 80% of its
+occurrences in a published human treebank.
+
+| Alias | Treebank | Dominant share | Status |
+|---|---|--:|---|
+| `sute` | su 6 / suta 6 | 0.500 | retired — named by the owner |
+| `suteṣu` | su 2 / suta 2 | 0.500 | retired — same split, same formation |
+| `sutāsaḥ` | su 9 / suta 4 | 0.692 | retired — named by the owner |
+
+`suteṣu` is not one of the owner's two examples and is retired anyway, because the same
+measurement selects it at the same value as `sute`; retiring one and keeping the other would
+be arbitrary. 14 trigger aliases survive.
+
+**New registry mechanism.** `non_triggering_aliases` in `data/registry/concepts.yaml`, scoped
+per concept — unlike `ambiguous_aliases`, which is contested between concepts and withdrawn
+from all of them. A form may be unsound for one concept and perfectly sound elsewhere, so
+withdrawing it globally would destroy evidence that is not in question.
+
+**Edges re-evaluated across both layers.** `MENTIONS_ENTITY` reads its dependence off
+`matched_aliases`; `ABOUT_CONCEPT` carries none, and its stored evidence quote is a window
+round the match rather than the whole verse, so that layer was re-derived over all 20,210
+mantras with and without the three forms.
+
+- `MENTIONS_ENTITY`: 117 retire, 12 keep with the alias dropped, 527 untouched.
+- `ABOUT_CONCEPT`: 108 retire, 9 narrow from `english+sanskrit` to `english`, 5 newly attested.
+- Every retired edge rests solely on a retired alias: 0 passages keep the concept on other
+  evidence.
+
+**One consequence held back for its own decision.** `assign_concepts` caps a passage at four
+concepts and breaks ties on each concept's **corpus-wide** attestation count, so withdrawing
+three aliases reshuffles the cap on passages containing no soma alias at all: 5 assertions
+lost and 24 gained across 17 other concepts, net −84 over the layer. Deterministic and
+reproducible, and outside the decision the owner took, so it is reported rather than folded
+into it.
+
+**The five senses are held apart**, verified: `SOMA-DRINK`, `SOMA-PRESSING`,
+`GRAHA-SOMA-DRAWING`, `DEVATA:SOMAH` and `DEVATA:PAVAMANAH-SOMAH`, with no shared Sanskrit
+alias between any two.
+
+**Reported, not applied.** The same criterion selects 24 further aliases across 18 other
+entities. The owner's decision names this concept, and withdrawing an alias has a measured
+blast radius beyond its own concept.
+
+## 14. The audible queue stays mandatory and blocks only audio
+
+**Decision.** The 1,021 rows stay `WITHHELD_PENDING_AUDIBLE_REVIEW`. No automated text or
+metadata check may relabel them. Audio does **not** block the non-audio Wave 3 domains.
+Allowed final states: `AUDIBLY_VERIFIED`, `AUDIBLY_REJECTED`, `AUDIBLE_REVIEW_UNCERTAIN`.
+
+**Built.** `scripts/audio_review_harness.py`, a local resumable harness. Per item it shows
+audio playback, canonical citation, canonical Sanskrit, source citation and coordinate,
+mapping method, the prior automated checks and what to listen for; it records the decision,
+the reviewer, `reviewed_at`, notes and the seconds actually heard.
+
+Three refusals are enforced at the endpoint rather than asked of the reviewer, and each is
+tested: `AUDIBLY_VERIFIED` and `AUDIBLY_REJECTED` are refused when nothing played, a verdict
+needs a named reviewer, and a verdict outside the three is a 400. `AUDIBLE_REVIEW_UNCERTAIN`
+is allowed with no audio, because that is the honest answer when a recording will not play —
+a queue that makes uncertainty inconvenient collects false certainty.
+
+The decision log is append-only and fsynced before the response returns; the queue is a
+projection of it, so a changed mind leaves both judgements on the record.
+
+**Still 0 of 1,021 reviewed.** A hand-probe of the gates left one self-test decision in the
+log; it was removed and the probes became tests against a temporary queue, because a gate
+probe that moves the figure it is probing is the small dishonesty this campaign keeps finding.
+
+## 15. Semantic resemblance: keep the chosen layer, re-derive after import
+
+**Decision.** Do not replace the chosen predicate because the lexical control scored higher.
+The predicate stays defined independently of the control. Preserve the reported limitations —
+the pool-recall bound, the within-pool metric distinction, the raw-encoder threshold collapse,
+the adjudicator disagreement around `SHARED_PHRASING_ONLY`, and the refused tiers. Do not
+market the layer beyond its measured evaluation. Re-derive from the post-import snapshot.
+
+**Consequence for Wave 3.** `semantic_resemblance` depends on `translation`, `semantic_roles`,
+`attribution` and `formula`; two of those import in this wave, so its inputs move. Importing
+its current artifact would land a layer computed over superseded inputs. It is a **step-5
+dependent re-derivation, not a step-4 addition** — 19,088 rows withheld for that settled
+reason rather than for a pending question.
+
+**Tier B is REFUSED, not blocked.** Its RV–AV guard needs a deity vocabulary bridge that does
+not exist, which is now a measured limitation of the layer rather than an open question.
+
+## 16. `CROSS_VEDA_DEVATA_IDENTITY_BRIDGE` is its own implementation gap
+
+**Decision.** Treat the zero intersection as a separate implementation gap. Bridge through
+canonical Devatā identity, never through display labels. Where an AV ascription cannot
+deterministically resolve, retain the unresolved form. Do not guess.
+
+**Verified and sized.** `HAS_DEVATA` carries 210 distinct display labels over 10,558 edges;
+`HAS_DEVATA_ASCRIPTION` carries 324 over 5,385. They share **0**. The zero is a category
+difference, not a coverage accident: one side is a deity's name in English, the other a
+Sanskrit adjective meaning *having X as its deity*.
+
+A deterministic parse resolves **8 of 324** ascriptions (2.5%), and 9 of 569 occurrences
+(1.6%). The residue: 167 carry no recognised deity-adjective suffix, 85 strip to a stem
+matching no canonical Devatā, 61 are compounds naming two ascriptions, 2 are subject
+descriptors — Whitney's apparatus puts a hymn's subject in the deity slot — and 1 names a
+plurality.
+
+Registered as `GAP-CROSS-VEDA-DEVATA-IDENTITY-BRIDGE-001`, `causation_status: MEASURED`,
+`source_availability: HELD_LOCALLY`. Buildable work, blocked on neither a source nor an owner.
+
+## 17. `DEFECT_FOUND_AND_FIXED` counts as a completed adversarial gate
+
+**Verified, and already fixed.** `scripts/wave3_eligibility_ledger.py` accepts it in both the
+eligibility test and the missing-gate computation. `ritual` and `scholarship` are ELIGIBLE on
+it, and each preserves its original defect, the fix, the restage and the post-fix validator
+result. No corrected domain is sent through its investigation again.

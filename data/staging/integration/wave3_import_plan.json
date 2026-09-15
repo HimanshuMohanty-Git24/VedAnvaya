@@ -1,0 +1,1597 @@
+{
+  "schema_version": "1.0",
+  "mode": "PLAN_NO_WRITE",
+  "eligible_domains": [
+    "communities",
+    "cross_veda",
+    "formula",
+    "quality",
+    "ritual",
+    "scholarship",
+    "semantic_roles"
+  ],
+  "graph_before": {
+    "nodes": 108779,
+    "relationships": 265295
+  },
+  "coverage": {
+    "artifacts_on_disk": 46,
+    "claimed_by_a_group": [
+      "communities/communities.jsonl",
+      "cross_veda/rows.jsonl",
+      "formula/formula_families.jsonl",
+      "formula/formula_nesting.jsonl",
+      "formula/relations.jsonl",
+      "formula/shares_formula_with.jsonl",
+      "formula/uses_formula_match_level.jsonl",
+      "quality/rows.jsonl",
+      "ritual/actions.jsonl",
+      "ritual/deity_offerings.jsonl",
+      "ritual/implements.jsonl",
+      "ritual/materials.jsonl",
+      "ritual/offerings.jsonl",
+      "ritual/rite_edges.jsonl",
+      "ritual/rite_relations.jsonl",
+      "ritual/rites.jsonl",
+      "ritual/role_assignments.jsonl",
+      "ritual/roles.jsonl",
+      "ritual/steps.jsonl",
+      "scholarship/rows.jsonl",
+      "scholarship/scholars.jsonl",
+      "scholarship/works.jsonl",
+      "semantic_roles/role_fillers.jsonl"
+    ],
+    "declared_not_imported": [
+      "communities/rejected.jsonl",
+      "communities/rows.jsonl",
+      "communities/sources.jsonl",
+      "cross_veda/rejected.jsonl",
+      "cross_veda/sources.jsonl",
+      "formula/rejected.jsonl",
+      "formula/rejected_pairs.jsonl",
+      "formula/rows.jsonl",
+      "formula/sources.jsonl",
+      "quality/rejected.jsonl",
+      "quality/sources.jsonl",
+      "ritual/rejected.jsonl",
+      "ritual/rows.jsonl",
+      "ritual/sources.jsonl",
+      "ritual/supplementary_passages.jsonl",
+      "ritual/unresolved.jsonl",
+      "ritual/works.jsonl",
+      "scholarship/rejected.jsonl",
+      "scholarship/sources.jsonl",
+      "semantic_roles/rejected.jsonl",
+      "semantic_roles/role_candidates.jsonl",
+      "semantic_roles/rows.jsonl",
+      "semantic_roles/sources.jsonl"
+    ],
+    "unmapped_artifacts": [],
+    "stale_not_imported_entries": [],
+    "manifests_ignored": "manifest.json and proofs/ are metadata, not elements"
+  },
+  "groups": [
+    {
+      "group_id": "SR_ROLE_FILLER_NODES",
+      "domain": "semantic_roles",
+      "kind": "NODE",
+      "element": "RoleFiller",
+      "source": "role_fillers.jsonl",
+      "identity_fields": [
+        "role_filler_key"
+      ],
+      "require": [
+        [
+          "importable",
+          true
+        ]
+      ],
+      "notes": "Migration M1. A role occurrence in an assertion, not a copy of a canonical entity. No :RoleFiller label exists in the graph, so every one is a create.",
+      "artifact_elements": 2052,
+      "filtered_out_by_require": 0,
+      "candidates": 2052,
+      "candidates_before_collision_withholding": 2052,
+      "distinct_identities": 2052,
+      "identity_collisions": 0,
+      "identity_collisions_withheld": 0,
+      "rows_withheld_on_identity_collision": 0,
+      "identity_collision_detail": [],
+      "multi_source_evidence_merges": 0,
+      "multi_source_detail": [],
+      "evidence_fields_declared": [],
+      "elements_redirected_not_created": 0,
+      "redirect_detail": [],
+      "node_status_disagreements": 0,
+      "node_status_disagreement_detail": [],
+      "match_property": "role_filler_key",
+      "key_minted_from_identity": false,
+      "distinct_subjects": 2052,
+      "already_present": 0,
+      "nodes_create": 2052,
+      "nodes_update": 0,
+      "subjects_absent_from_graph": [],
+      "property_writes": 0,
+      "dangling_references": 0
+    },
+    {
+      "group_id": "SR_ASSERTION_ROLE_EDGES",
+      "domain": "semantic_roles",
+      "kind": "RELATIONSHIP",
+      "element": "ASSERTION_ROLE",
+      "source": "role_fillers.jsonl",
+      "identity_fields": [
+        "canonical_key",
+        "role_filler_key"
+      ],
+      "require": [
+        [
+          "importable",
+          true
+        ]
+      ],
+      "notes": "Anchored on the passage rather than the :SemanticAssertion node, because the filler rows carry canonical_key and an assertion ordinal, not an assertion id. The importer resolves the ordinal to the assertion; the dangling check here is therefore on the passage, which is the endpoint the artifact actually names.",
+      "artifact_elements": 2052,
+      "filtered_out_by_require": 0,
+      "candidates": 2052,
+      "candidates_before_collision_withholding": 2052,
+      "distinct_identities": 2052,
+      "identity_collisions": 0,
+      "identity_collisions_withheld": 0,
+      "rows_withheld_on_identity_collision": 0,
+      "identity_collision_detail": [],
+      "multi_source_evidence_merges": 0,
+      "multi_source_detail": [],
+      "evidence_fields_declared": [],
+      "unique_triples": 2052,
+      "rows_missing_an_endpoint_field": 0,
+      "relationship_types_asserted": [
+        "ASSERTION_ROLE"
+      ],
+      "dangling_references": 0,
+      "dangling_detail": [],
+      "start_endpoints_absent": 0,
+      "end_endpoints_absent": 0,
+      "endpoints_provided_by_this_plan": 2052,
+      "triples_awaiting_an_earlier_step": 2052,
+      "relationships_create": 2052,
+      "relationships_update": 0,
+      "property_writes": 0,
+      "expected_to_exist_but_absent": 0,
+      "expected_to_exist_but_absent_detail": []
+    },
+    {
+      "group_id": "SR_ROLE_FILLER_ENTITY_EDGES",
+      "domain": "semantic_roles",
+      "kind": "RELATIONSHIP",
+      "element": "REFERS_TO",
+      "source": "role_fillers.jsonl",
+      "identity_fields": [
+        "role_filler_key",
+        "entity_key"
+      ],
+      "require": [
+        [
+          "importable",
+          true
+        ]
+      ],
+      "notes": "Only for fillers that resolve to a canonical entity. The endpoint is matched on entity_key with no label constraint, because a filler may refer to a Devata, Object, Substance, Plant, Place or Concept.",
+      "artifact_elements": 2052,
+      "filtered_out_by_require": 0,
+      "candidates": 2052,
+      "candidates_before_collision_withholding": 2052,
+      "distinct_identities": 2052,
+      "identity_collisions": 0,
+      "identity_collisions_withheld": 0,
+      "rows_withheld_on_identity_collision": 0,
+      "identity_collision_detail": [],
+      "multi_source_evidence_merges": 0,
+      "multi_source_detail": [],
+      "evidence_fields_declared": [],
+      "unique_triples": 387,
+      "rows_missing_an_endpoint_field": 1665,
+      "relationship_types_asserted": [
+        "REFERS_TO"
+      ],
+      "dangling_references": 0,
+      "dangling_detail": [],
+      "start_endpoints_absent": 0,
+      "end_endpoints_absent": 0,
+      "endpoints_provided_by_this_plan": 402,
+      "triples_awaiting_an_earlier_step": 387,
+      "relationships_create": 387,
+      "relationships_update": 0,
+      "property_writes": 0,
+      "expected_to_exist_but_absent": 0,
+      "expected_to_exist_but_absent_detail": []
+    },
+    {
+      "group_id": "FORMULA_SHARES_FORMULA_WITH",
+      "domain": "formula",
+      "kind": "RELATIONSHIP",
+      "element": "SHARES_FORMULA_WITH",
+      "source": "shares_formula_with.jsonl",
+      "identity_fields": [
+        "a",
+        "b"
+      ],
+      "require": [],
+      "notes": "A new relationship type. Distinct from the existing SHARES_ENTITY_VOCABULARY_WITH, which counts shared entities rather than shared formulae.",
+      "artifact_elements": 6148,
+      "filtered_out_by_require": 0,
+      "candidates": 6148,
+      "candidates_before_collision_withholding": 6148,
+      "distinct_identities": 6148,
+      "identity_collisions": 0,
+      "identity_collisions_withheld": 0,
+      "rows_withheld_on_identity_collision": 0,
+      "identity_collision_detail": [],
+      "multi_source_evidence_merges": 0,
+      "multi_source_detail": [],
+      "evidence_fields_declared": [],
+      "unique_triples": 6148,
+      "rows_missing_an_endpoint_field": 0,
+      "relationship_types_asserted": [
+        "SHARES_FORMULA_WITH"
+      ],
+      "dangling_references": 0,
+      "dangling_detail": [],
+      "start_endpoints_absent": 0,
+      "end_endpoints_absent": 0,
+      "endpoints_provided_by_this_plan": 0,
+      "triples_awaiting_an_earlier_step": 0,
+      "relationships_create": 6148,
+      "relationships_update": 0,
+      "property_writes": 0,
+      "expected_to_exist_but_absent": 0,
+      "expected_to_exist_but_absent_detail": []
+    },
+    {
+      "group_id": "FORMULA_USES_FORMULA_MATCH_LEVEL",
+      "domain": "formula",
+      "kind": "RELATIONSHIP_PROPERTY",
+      "element": "USES_FORMULA",
+      "source": "uses_formula_match_level.jsonl",
+      "identity_fields": [
+        "passage_key",
+        "formula_id"
+      ],
+      "require": [],
+      "notes": "Backfills match_level onto edges that already carry their evidence under another property name. 22,686 candidates against 22,686 existing edges, so this group must resolve to updates and no creates.",
+      "artifact_elements": 22686,
+      "filtered_out_by_require": 0,
+      "candidates": 22686,
+      "candidates_before_collision_withholding": 22686,
+      "distinct_identities": 22686,
+      "identity_collisions": 0,
+      "identity_collisions_withheld": 0,
+      "rows_withheld_on_identity_collision": 0,
+      "identity_collision_detail": [],
+      "multi_source_evidence_merges": 0,
+      "multi_source_detail": [],
+      "evidence_fields_declared": [],
+      "unique_triples": 22686,
+      "rows_missing_an_endpoint_field": 0,
+      "relationship_types_asserted": [
+        "USES_FORMULA"
+      ],
+      "dangling_references": 0,
+      "dangling_detail": [],
+      "start_endpoints_absent": 0,
+      "end_endpoints_absent": 0,
+      "endpoints_provided_by_this_plan": 0,
+      "triples_awaiting_an_earlier_step": 0,
+      "relationships_create": 0,
+      "relationships_update": 22686,
+      "property_writes": 22686,
+      "expected_to_exist_but_absent": 0,
+      "expected_to_exist_but_absent_detail": []
+    },
+    {
+      "group_id": "FORMULA_NESTING_PROPERTIES",
+      "domain": "formula",
+      "kind": "NODE_PROPERTY",
+      "element": "Formula",
+      "source": "formula_nesting.jsonl",
+      "identity_fields": [
+        "formula_id"
+      ],
+      "require": [],
+      "notes": "Nesting typology onto the 4,825 existing :Formula nodes.",
+      "artifact_elements": 4825,
+      "filtered_out_by_require": 0,
+      "candidates": 4825,
+      "candidates_before_collision_withholding": 4825,
+      "distinct_identities": 4825,
+      "identity_collisions": 0,
+      "identity_collisions_withheld": 0,
+      "rows_withheld_on_identity_collision": 0,
+      "identity_collision_detail": [],
+      "multi_source_evidence_merges": 0,
+      "multi_source_detail": [],
+      "evidence_fields_declared": [],
+      "elements_redirected_not_created": 0,
+      "redirect_detail": [],
+      "node_status_disagreements": 0,
+      "node_status_disagreement_detail": [],
+      "match_property": "formula_id",
+      "key_minted_from_identity": false,
+      "distinct_subjects": 4825,
+      "already_present": 4825,
+      "nodes_create": 0,
+      "nodes_update": 4825,
+      "subjects_absent_from_graph": [],
+      "property_writes": 4825,
+      "dangling_references": 0
+    },
+    {
+      "group_id": "FORMULA_FAMILY_PROPERTIES",
+      "domain": "formula",
+      "kind": "NODE_PROPERTY",
+      "element": "FormulaFamily",
+      "source": "formula_families.jsonl",
+      "identity_fields": [
+        "family_id"
+      ],
+      "require": [],
+      "notes": "720 candidates against 720 existing :FormulaFamily nodes.",
+      "artifact_elements": 720,
+      "filtered_out_by_require": 0,
+      "candidates": 720,
+      "candidates_before_collision_withholding": 720,
+      "distinct_identities": 720,
+      "identity_collisions": 0,
+      "identity_collisions_withheld": 0,
+      "rows_withheld_on_identity_collision": 0,
+      "identity_collision_detail": [],
+      "multi_source_evidence_merges": 0,
+      "multi_source_detail": [],
+      "evidence_fields_declared": [],
+      "elements_redirected_not_created": 0,
+      "redirect_detail": [],
+      "node_status_disagreements": 0,
+      "node_status_disagreement_detail": [],
+      "match_property": "family_id",
+      "key_minted_from_identity": false,
+      "distinct_subjects": 720,
+      "already_present": 720,
+      "nodes_create": 0,
+      "nodes_update": 720,
+      "subjects_absent_from_graph": [],
+      "property_writes": 720,
+      "dangling_references": 0
+    },
+    {
+      "group_id": "FORMULA_RELATION_TYPOLOGY",
+      "domain": "formula",
+      "kind": "RELATIONSHIP_PROPERTY",
+      "element": "PARALLEL_FAMILY",
+      "source": "relations.jsonl",
+      "identity_fields": [
+        "subject_key",
+        "predicate",
+        "object_key"
+      ],
+      "require": [
+        [
+          "importable",
+          true
+        ]
+      ],
+      "notes": "Transformation typology onto the existing parallel edges. The element is written PARALLEL_FAMILY because the row's own predicate field names which of EXACT_PARALLEL_OF, VARIANT_OF, NEAR_PARALLEL_OF or REUSES_TEXT_FROM it touches; the planner resolves the actual type per row.",
+      "artifact_elements": 6139,
+      "filtered_out_by_require": 6,
+      "candidates": 6133,
+      "candidates_before_collision_withholding": 6133,
+      "distinct_identities": 6133,
+      "identity_collisions": 0,
+      "identity_collisions_withheld": 0,
+      "rows_withheld_on_identity_collision": 0,
+      "identity_collision_detail": [],
+      "multi_source_evidence_merges": 0,
+      "multi_source_detail": [],
+      "evidence_fields_declared": [],
+      "unique_triples": 6133,
+      "rows_missing_an_endpoint_field": 0,
+      "relationship_types_asserted": [
+        "EXACT_PARALLEL_OF",
+        "NEAR_PARALLEL_OF",
+        "VARIANT_OF"
+      ],
+      "dangling_references": 0,
+      "dangling_detail": [],
+      "start_endpoints_absent": 0,
+      "end_endpoints_absent": 0,
+      "endpoints_provided_by_this_plan": 0,
+      "triples_awaiting_an_earlier_step": 0,
+      "relationships_create": 0,
+      "relationships_update": 4368,
+      "property_writes": 6133,
+      "expected_to_exist_but_absent": 1765,
+      "expected_to_exist_but_absent_detail": [
+        [
+          "VG:AV:SAU:K01:S003:V001",
+          "NEAR_PARALLEL_OF",
+          "VG:AV:SAU:K01:S003:V002"
+        ],
+        [
+          "VG:AV:SAU:K01:S003:V001",
+          "NEAR_PARALLEL_OF",
+          "VG:AV:SAU:K01:S003:V003"
+        ],
+        [
+          "VG:AV:SAU:K01:S003:V001",
+          "NEAR_PARALLEL_OF",
+          "VG:AV:SAU:K01:S003:V004"
+        ],
+        [
+          "VG:AV:SAU:K01:S003:V001",
+          "NEAR_PARALLEL_OF",
+          "VG:AV:SAU:K01:S003:V005"
+        ],
+        [
+          "VG:AV:SAU:K01:S003:V002",
+          "NEAR_PARALLEL_OF",
+          "VG:AV:SAU:K01:S003:V003"
+        ],
+        [
+          "VG:AV:SAU:K01:S003:V002",
+          "NEAR_PARALLEL_OF",
+          "VG:AV:SAU:K01:S003:V004"
+        ],
+        [
+          "VG:AV:SAU:K01:S003:V002",
+          "NEAR_PARALLEL_OF",
+          "VG:AV:SAU:K01:S003:V005"
+        ],
+        [
+          "VG:AV:SAU:K01:S003:V003",
+          "NEAR_PARALLEL_OF",
+          "VG:AV:SAU:K01:S003:V004"
+        ],
+        [
+          "VG:AV:SAU:K01:S003:V003",
+          "NEAR_PARALLEL_OF",
+          "VG:AV:SAU:K01:S003:V005"
+        ],
+        [
+          "VG:AV:SAU:K01:S003:V004",
+          "NEAR_PARALLEL_OF",
+          "VG:AV:SAU:K01:S003:V005"
+        ]
+      ]
+    },
+    {
+      "group_id": "CROSS_VEDA_CONNECTION_TYPOLOGY",
+      "domain": "cross_veda",
+      "kind": "RELATIONSHIP_PROPERTY",
+      "element": "PARALLEL_FAMILY",
+      "source": "rows.jsonl:payload.established_connections",
+      "identity_fields": [
+        "canonical_key",
+        "dimension",
+        "counterpart"
+      ],
+      "require": [],
+      "notes": "The corrected transformation typing, 396 of 6,271 types changed and 197 stored relationship types contradicted by their own text. These are property writes onto edges that already exist: each connection carries the parallel_id and the stored_match_level it was read from.",
+      "artifact_elements": 16824,
+      "filtered_out_by_require": 0,
+      "candidates": 16824,
+      "candidates_before_collision_withholding": 16824,
+      "distinct_identities": 16824,
+      "identity_collisions": 0,
+      "identity_collisions_withheld": 0,
+      "rows_withheld_on_identity_collision": 0,
+      "identity_collision_detail": [],
+      "multi_source_evidence_merges": 0,
+      "multi_source_detail": [],
+      "evidence_fields_declared": [],
+      "unique_triples": 16824,
+      "rows_missing_an_endpoint_field": 0,
+      "relationship_types_asserted": [
+        "EXACT_PARALLEL_OF",
+        "NEAR_PARALLEL_OF",
+        "REUSES_TEXT_FROM",
+        "SHARES_ENTITY_VOCABULARY_WITH",
+        "VARIANT_OF"
+      ],
+      "dangling_references": 0,
+      "dangling_detail": [],
+      "start_endpoints_absent": 0,
+      "end_endpoints_absent": 0,
+      "endpoints_provided_by_this_plan": 0,
+      "triples_awaiting_an_earlier_step": 0,
+      "relationships_create": 0,
+      "relationships_update": 16824,
+      "property_writes": 16824,
+      "expected_to_exist_but_absent": 0,
+      "expected_to_exist_but_absent_detail": []
+    },
+    {
+      "group_id": "RITUAL_RITE_NODES",
+      "domain": "ritual",
+      "kind": "NODE",
+      "element": "Ritual",
+      "source": "rites.jsonl",
+      "identity_fields": [
+        "ritual_key"
+      ],
+      "require": [],
+      "notes": "103 rites, of which the artifact marks some node_status EXISTING. The planner resolves each against the graph rather than trusting the marking.",
+      "artifact_elements": 103,
+      "filtered_out_by_require": 0,
+      "candidates": 103,
+      "candidates_before_collision_withholding": 103,
+      "distinct_identities": 103,
+      "identity_collisions": 0,
+      "identity_collisions_withheld": 0,
+      "rows_withheld_on_identity_collision": 0,
+      "identity_collision_detail": [],
+      "multi_source_evidence_merges": 0,
+      "multi_source_detail": [],
+      "evidence_fields_declared": [],
+      "elements_redirected_not_created": 3,
+      "redirect_detail": [
+        {
+          "key": "VG:CONCEPT:VIVAHA-MARRIAGE",
+          "status": "ALREADY_MODELLED_AS_SOCIALRITE",
+          "already_modelled_as": "VG:CONCEPT:VIVAHA-MARRIAGE",
+          "redirect_target_present": true
+        },
+        {
+          "key": "VG:CONCEPT:PITRMEDHA",
+          "status": "ALREADY_MODELLED_AS_SOCIALRITE",
+          "already_modelled_as": "VG:CONCEPT:PITRYANA-FUNERARY-RITE",
+          "redirect_target_present": true
+        },
+        {
+          "key": "VG:CONCEPT:GRHAPRAVESA",
+          "status": "ALREADY_MODELLED_AS_SOCIALRITE",
+          "already_modelled_as": "VG:CONCEPT:SALA-HOUSE-BUILDING",
+          "redirect_target_present": true
+        }
+      ],
+      "node_status_disagreements": 0,
+      "node_status_disagreement_detail": [],
+      "match_property": "entity_key",
+      "key_minted_from_identity": false,
+      "distinct_subjects": 100,
+      "already_present": 8,
+      "nodes_create": 92,
+      "nodes_update": 8,
+      "subjects_absent_from_graph": [],
+      "property_writes": 0,
+      "dangling_references": 0
+    },
+    {
+      "group_id": "RITUAL_STEP_NODES",
+      "domain": "ritual",
+      "kind": "NODE",
+      "element": "RitualStep",
+      "source": "steps.jsonl",
+      "identity_fields": [
+        "step_key"
+      ],
+      "require": [],
+      "notes": "9,273 ordered steps, each anchored on a supplementary citation. A new label.",
+      "artifact_elements": 9273,
+      "filtered_out_by_require": 0,
+      "candidates": 9255,
+      "candidates_before_collision_withholding": 9273,
+      "distinct_identities": 9264,
+      "identity_collisions": 9,
+      "identity_collisions_withheld": 9,
+      "rows_withheld_on_identity_collision": 18,
+      "identity_collision_detail": [
+        {
+          "identity": "VG:RITESTEP:BAHISPAVAMANA:KatySS:20:5:20",
+          "count": 2,
+          "differing_fields": [
+            "printed_ordinal_in_work",
+            "step_position",
+            "text_iast"
+          ],
+          "conflicting_fields": [
+            "printed_ordinal_in_work",
+            "step_position",
+            "text_iast"
+          ]
+        },
+        {
+          "identity": "VG:RITESTEP:SAUTRAMANI:KatySS:8:8:13",
+          "count": 2,
+          "differing_fields": [
+            "printed_ordinal_in_work",
+            "step_position",
+            "text_iast"
+          ],
+          "conflicting_fields": [
+            "printed_ordinal_in_work",
+            "step_position",
+            "text_iast"
+          ]
+        },
+        {
+          "identity": "VG:RITESTEP:TRIRATRA:SankhSS:4:15:8",
+          "count": 2,
+          "differing_fields": [
+            "printed_ordinal_in_work",
+            "step_position",
+            "text_iast"
+          ],
+          "conflicting_fields": [
+            "printed_ordinal_in_work",
+            "step_position",
+            "text_iast"
+          ]
+        },
+        {
+          "identity": "VG:RITESTEP:VAISVADEVA-PARVAN:KatySS:8:6:16",
+          "count": 2,
+          "differing_fields": [
+            "order_basis",
+            "printed_ordinal_in_work",
+            "sequence_marker",
+            "step_position",
+            "text_iast"
+          ],
+          "conflicting_fields": [
+            "order_basis",
+            "printed_ordinal_in_work",
+            "sequence_marker",
+            "step_position",
+            "text_iast"
+          ]
+        },
+        {
+          "identity": "VG:RITESTEP:VAISVANARA-ISTI:SankhSS:12:17:2",
+          "count": 2,
+          "differing_fields": [
+            "printed_ordinal_in_work",
+            "step_position",
+            "text_iast"
+          ],
+          "conflicting_fields": [
+            "printed_ordinal_in_work",
+            "step_position",
+            "text_iast"
+          ]
+        },
+        {
+          "identity": "VG:RITESTEP:VAISVANARA-ISTI:SankhSS:12:17:3",
+          "count": 2,
+          "differing_fields": [
+            "printed_ordinal_in_work",
+            "step_position",
+            "text_iast"
+          ],
+          "conflicting_fields": [
+            "printed_ordinal_in_work",
+            "step_position",
+            "text_iast"
+          ]
+        },
+        {
+          "identity": "VG:RITESTEP:VISVAJIT:SankhSS:16:15:13",
+          "count": 2,
+          "differing_fields": [
+            "printed_ordinal_in_work",
+            "step_position",
+            "text_iast"
+          ],
+          "conflicting_fields": [
+            "printed_ordinal_in_work",
+            "step_position",
+            "text_iast"
+          ]
+        },
+        {
+          "identity": "VG:RITESTEP:YAJNA-SACRIFICE:SankhSS:4:7:13",
+          "count": 2,
+          "differing_fields": [
+            "printed_ordinal_in_work",
+            "step_position"
+          ],
+          "conflicting_fields": [
+            "printed_ordinal_in_work",
+            "step_position"
+          ]
+        },
+        {
+          "identity": "VG:RITESTEP:YAJNA-SACRIFICE:SankhSS:4:7:14",
+          "count": 2,
+          "differing_fields": [
+            "printed_ordinal_in_work",
+            "step_position"
+          ],
+          "conflicting_fields": [
+            "printed_ordinal_in_work",
+            "step_position"
+          ]
+        }
+      ],
+      "multi_source_evidence_merges": 0,
+      "multi_source_detail": [],
+      "evidence_fields_declared": [],
+      "elements_redirected_not_created": 0,
+      "redirect_detail": [],
+      "node_status_disagreements": 0,
+      "node_status_disagreement_detail": [],
+      "match_property": "step_key",
+      "key_minted_from_identity": false,
+      "distinct_subjects": 9255,
+      "already_present": 0,
+      "nodes_create": 9255,
+      "nodes_update": 0,
+      "subjects_absent_from_graph": [],
+      "property_writes": 0,
+      "dangling_references": 0
+    },
+    {
+      "group_id": "RITUAL_RITE_EDGES",
+      "domain": "ritual",
+      "kind": "RELATIONSHIP",
+      "element": "RITE_PREDICATE",
+      "source": "rite_edges.jsonl",
+      "identity_fields": [
+        "ritual_key",
+        "predicate",
+        "object_key"
+      ],
+      "require": [],
+      "notes": "685 rows over four predicates, each naming its object in its own field. Endpoints are matched on entity_key with no label constraint, because a rite's object may be a Concept, Object, Substance, Offering or Action.",
+      "artifact_elements": 685,
+      "filtered_out_by_require": 0,
+      "candidates": 685,
+      "candidates_before_collision_withholding": 685,
+      "distinct_identities": 479,
+      "identity_collisions": 0,
+      "identity_collisions_withheld": 0,
+      "rows_withheld_on_identity_collision": 0,
+      "identity_collision_detail": [],
+      "multi_source_evidence_merges": 122,
+      "multi_source_detail": [
+        {
+          "identity": "VG:CONCEPT:AGNI-CITI-FIRE-PILING|USES_OFFERING|VG:CONCEPT:DAKSINA-PRIESTLY-GIFT",
+          "count": 3,
+          "differing_fields": [
+            "citations",
+            "evidence_source_type",
+            "primary_supplementary_key",
+            "quote",
+            "veda_school"
+          ],
+          "conflicting_fields": []
+        },
+        {
+          "identity": "VG:CONCEPT:AGNIHOTRA|RITE_INVOLVES_ACTION|VG:CONCEPT:HOMA-POURING-INTO-FIRE",
+          "count": 4,
+          "differing_fields": [
+            "citations",
+            "co_naming_loci",
+            "evidence_source_type",
+            "primary_supplementary_key",
+            "quote",
+            "translation",
+            "veda_school"
+          ],
+          "conflicting_fields": []
+        },
+        {
+          "identity": "VG:CONCEPT:AGNIHOTRA|USES_OBJECT|VG:CONCEPT:AGNIHOTRAHAVANI-LADLE",
+          "count": 3,
+          "differing_fields": [
+            "citations",
+            "evidence_source_type",
+            "primary_supplementary_key",
+            "quote",
+            "translation",
+            "veda_school"
+          ],
+          "conflicting_fields": []
+        },
+        {
+          "identity": "VG:CONCEPT:AGNIHOTRA|USES_OFFERING|VG:CONCEPT:PAYAS-MILK",
+          "count": 2,
+          "differing_fields": [
+            "citations",
+            "evidence_source_type",
+            "primary_supplementary_key",
+            "quote",
+            "veda_school"
+          ],
+          "conflicting_fields": []
+        },
+        {
+          "identity": "VG:CONCEPT:AGNIHOTRA|USES_OFFERING|VG:CONCEPT:SOMA-DRINK",
+          "count": 3,
+          "differing_fields": [
+            "citations",
+            "evidence_source_type",
+            "primary_supplementary_key",
+            "quote",
+            "veda_school"
+          ],
+          "conflicting_fields": []
+        }
+      ],
+      "evidence_fields_declared": [
+        "citations",
+        "co_naming_loci",
+        "primary_supplementary_key",
+        "quote",
+        "translation",
+        "veda_school",
+        "evidence_source_type",
+        "derivation_note",
+        "mapping_confidence",
+        "evidence_layer"
+      ],
+      "unique_triples": 479,
+      "rows_missing_an_endpoint_field": 0,
+      "relationship_types_asserted": [
+        "RITE_INVOLVES_ACTION",
+        "USES_OBJECT",
+        "USES_OFFERING",
+        "USES_SUBSTANCE"
+      ],
+      "dangling_references": 0,
+      "dangling_detail": [],
+      "start_endpoints_absent": 0,
+      "end_endpoints_absent": 0,
+      "endpoints_provided_by_this_plan": 170,
+      "triples_awaiting_an_earlier_step": 418,
+      "relationships_create": 473,
+      "relationships_update": 6,
+      "property_writes": 0,
+      "expected_to_exist_but_absent": 0,
+      "expected_to_exist_but_absent_detail": []
+    },
+    {
+      "group_id": "RITUAL_ROLE_ASSIGNMENTS",
+      "domain": "ritual",
+      "kind": "RELATIONSHIP",
+      "element": "PERFORMED_BY",
+      "source": "role_assignments.jsonl",
+      "identity_fields": [
+        "ritual_key",
+        "role_key"
+      ],
+      "require": [],
+      "notes": "179 rows binding a rite to the role that performs it. Where one rite and one role are attested in two Vedic schools the rows differ only in their evidence, and the importer merges their citations onto one edge.",
+      "artifact_elements": 179,
+      "filtered_out_by_require": 0,
+      "candidates": 179,
+      "candidates_before_collision_withholding": 179,
+      "distinct_identities": 135,
+      "identity_collisions": 0,
+      "identity_collisions_withheld": 0,
+      "rows_withheld_on_identity_collision": 0,
+      "identity_collision_detail": [],
+      "multi_source_evidence_merges": 25,
+      "multi_source_detail": [
+        {
+          "identity": "VG:CONCEPT:AINDRAGNA|VG:CONCEPT:ACCHAVAKA-PRIEST",
+          "count": 2,
+          "differing_fields": [
+            "citations",
+            "primary_supplementary_key",
+            "quote",
+            "translation",
+            "veda_school"
+          ],
+          "conflicting_fields": []
+        },
+        {
+          "identity": "VG:CONCEPT:AINDRAGNA|VG:CONCEPT:MAITRAVARUNA-PRIEST",
+          "count": 2,
+          "differing_fields": [
+            "citations",
+            "primary_supplementary_key",
+            "quote"
+          ],
+          "conflicting_fields": []
+        },
+        {
+          "identity": "VG:CONCEPT:BALIHARANA|VG:CONCEPT:PATNI-SACRIFICERS-WIFE",
+          "count": 2,
+          "differing_fields": [
+            "citations",
+            "primary_supplementary_key",
+            "quote",
+            "translation"
+          ],
+          "conflicting_fields": []
+        },
+        {
+          "identity": "VG:CONCEPT:DARSAPURNAMASA|VG:CONCEPT:DIKSITA-CONSECRATED",
+          "count": 2,
+          "differing_fields": [
+            "citations",
+            "primary_supplementary_key",
+            "quote",
+            "translation",
+            "veda_school"
+          ],
+          "conflicting_fields": []
+        },
+        {
+          "identity": "VG:CONCEPT:DIKSA-CONSECRATION|VG:CONCEPT:ADHVARYU-PRIEST",
+          "count": 3,
+          "differing_fields": [
+            "citations",
+            "co_naming_loci",
+            "primary_supplementary_key",
+            "quote",
+            "veda_school"
+          ],
+          "conflicting_fields": []
+        }
+      ],
+      "evidence_fields_declared": [
+        "citations",
+        "co_naming_loci",
+        "primary_supplementary_key",
+        "quote",
+        "translation",
+        "veda_school",
+        "evidence_source_type",
+        "derivation_note",
+        "mapping_confidence",
+        "evidence_layer"
+      ],
+      "unique_triples": 135,
+      "rows_missing_an_endpoint_field": 0,
+      "relationship_types_asserted": [
+        "PERFORMED_BY"
+      ],
+      "dangling_references": 0,
+      "dangling_detail": [],
+      "start_endpoints_absent": 0,
+      "end_endpoints_absent": 0,
+      "endpoints_provided_by_this_plan": 71,
+      "triples_awaiting_an_earlier_step": 118,
+      "relationships_create": 131,
+      "relationships_update": 4,
+      "property_writes": 0,
+      "expected_to_exist_but_absent": 0,
+      "expected_to_exist_but_absent_detail": []
+    },
+    {
+      "group_id": "RITUAL_RITE_RELATIONS",
+      "domain": "ritual",
+      "kind": "RELATIONSHIP",
+      "element": "RITE_RITE_RELATION",
+      "source": "rite_relations.jsonl",
+      "identity_fields": [
+        "child_ritual_key",
+        "predicate",
+        "parent_ritual_key"
+      ],
+      "require": [],
+      "notes": "23 rite-to-rite relations, 18 PART_OF_RITE and 5 FORM_OF_RITE. The file names its endpoints child_ritual_key and parent_ritual_key; reading ritual_key and object_key gave every row a null identity and reported 2 collisions covering all 23 rows.",
+      "artifact_elements": 23,
+      "filtered_out_by_require": 0,
+      "candidates": 23,
+      "candidates_before_collision_withholding": 23,
+      "distinct_identities": 23,
+      "identity_collisions": 0,
+      "identity_collisions_withheld": 0,
+      "rows_withheld_on_identity_collision": 0,
+      "identity_collision_detail": [],
+      "multi_source_evidence_merges": 0,
+      "multi_source_detail": [],
+      "evidence_fields_declared": [
+        "citations",
+        "co_naming_loci",
+        "curator_claim",
+        "evidence",
+        "evidence_layer",
+        "evidence_source_type",
+        "honesty_note",
+        "mapping_confidence"
+      ],
+      "unique_triples": 23,
+      "rows_missing_an_endpoint_field": 0,
+      "relationship_types_asserted": [
+        "FORM_OF_RITE",
+        "PART_OF_RITE"
+      ],
+      "dangling_references": 0,
+      "dangling_detail": [],
+      "start_endpoints_absent": 0,
+      "end_endpoints_absent": 0,
+      "endpoints_provided_by_this_plan": 27,
+      "triples_awaiting_an_earlier_step": 22,
+      "relationships_create": 23,
+      "relationships_update": 0,
+      "property_writes": 0,
+      "expected_to_exist_but_absent": 0,
+      "expected_to_exist_but_absent_detail": []
+    },
+    {
+      "group_id": "RITUAL_ROLE_NODES",
+      "domain": "ritual",
+      "kind": "NODE",
+      "element": "RitualRole",
+      "source": "roles.jsonl",
+      "identity_fields": [
+        "role_key"
+      ],
+      "require": [],
+      "notes": "27 officiant roles, 11 marked EXISTING and 16 PROPOSED_NEW. The artifact's own note is preserved: the sixteen classical officiants are a Srautasutra schema and not a Samhita one, so in_classical_sixteen is recorded and not used as a denominator.",
+      "artifact_elements": 27,
+      "filtered_out_by_require": 0,
+      "candidates": 27,
+      "candidates_before_collision_withholding": 27,
+      "distinct_identities": 27,
+      "identity_collisions": 0,
+      "identity_collisions_withheld": 0,
+      "rows_withheld_on_identity_collision": 0,
+      "identity_collision_detail": [],
+      "multi_source_evidence_merges": 0,
+      "multi_source_detail": [],
+      "evidence_fields_declared": [],
+      "elements_redirected_not_created": 0,
+      "redirect_detail": [],
+      "node_status_disagreements": 0,
+      "node_status_disagreement_detail": [],
+      "match_property": "entity_key",
+      "key_minted_from_identity": false,
+      "distinct_subjects": 27,
+      "already_present": 11,
+      "nodes_create": 16,
+      "nodes_update": 11,
+      "subjects_absent_from_graph": [],
+      "property_writes": 0,
+      "dangling_references": 0
+    },
+    {
+      "group_id": "RITUAL_ACTION_NODES",
+      "domain": "ritual",
+      "kind": "NODE",
+      "element": "Action",
+      "source": "actions.jsonl",
+      "identity_fields": [
+        "concept_key"
+      ],
+      "require": [],
+      "notes": "35 ritual actions, 9 EXISTING and 26 PROPOSED_NEW.",
+      "artifact_elements": 35,
+      "filtered_out_by_require": 0,
+      "candidates": 35,
+      "candidates_before_collision_withholding": 35,
+      "distinct_identities": 35,
+      "identity_collisions": 0,
+      "identity_collisions_withheld": 0,
+      "rows_withheld_on_identity_collision": 0,
+      "identity_collision_detail": [],
+      "multi_source_evidence_merges": 0,
+      "multi_source_detail": [],
+      "evidence_fields_declared": [],
+      "elements_redirected_not_created": 0,
+      "redirect_detail": [],
+      "node_status_disagreements": 0,
+      "node_status_disagreement_detail": [],
+      "match_property": "entity_key",
+      "key_minted_from_identity": false,
+      "distinct_subjects": 35,
+      "already_present": 9,
+      "nodes_create": 26,
+      "nodes_update": 9,
+      "subjects_absent_from_graph": [],
+      "property_writes": 0,
+      "dangling_references": 0
+    },
+    {
+      "group_id": "RITUAL_IMPLEMENT_NODES",
+      "domain": "ritual",
+      "kind": "NODE",
+      "element": "Object",
+      "source": "implements.jsonl",
+      "identity_fields": [
+        "concept_key"
+      ],
+      "require": [],
+      "notes": "47 implements, 23 EXISTING and 24 PROPOSED_NEW.",
+      "artifact_elements": 47,
+      "filtered_out_by_require": 0,
+      "candidates": 47,
+      "candidates_before_collision_withholding": 47,
+      "distinct_identities": 47,
+      "identity_collisions": 0,
+      "identity_collisions_withheld": 0,
+      "rows_withheld_on_identity_collision": 0,
+      "identity_collision_detail": [],
+      "multi_source_evidence_merges": 0,
+      "multi_source_detail": [],
+      "evidence_fields_declared": [],
+      "elements_redirected_not_created": 0,
+      "redirect_detail": [],
+      "node_status_disagreements": 0,
+      "node_status_disagreement_detail": [],
+      "match_property": "entity_key",
+      "key_minted_from_identity": false,
+      "distinct_subjects": 47,
+      "already_present": 23,
+      "nodes_create": 24,
+      "nodes_update": 23,
+      "subjects_absent_from_graph": [],
+      "property_writes": 0,
+      "dangling_references": 0
+    },
+    {
+      "group_id": "RITUAL_MATERIAL_NODES",
+      "domain": "ritual",
+      "kind": "NODE",
+      "element": "Substance",
+      "source": "materials.jsonl",
+      "identity_fields": [
+        "concept_key"
+      ],
+      "require": [],
+      "notes": "32 materials, every one PROPOSED_NEW.",
+      "artifact_elements": 32,
+      "filtered_out_by_require": 0,
+      "candidates": 32,
+      "candidates_before_collision_withholding": 32,
+      "distinct_identities": 32,
+      "identity_collisions": 0,
+      "identity_collisions_withheld": 0,
+      "rows_withheld_on_identity_collision": 0,
+      "identity_collision_detail": [],
+      "multi_source_evidence_merges": 0,
+      "multi_source_detail": [],
+      "evidence_fields_declared": [],
+      "elements_redirected_not_created": 0,
+      "redirect_detail": [],
+      "node_status_disagreements": 11,
+      "node_status_disagreement_detail": [
+        {
+          "key": "VG:CONCEPT:VRIHI-RICE",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:YAVA-BARLEY",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:TILA-SESAME",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:MASA-BEAN",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:HIRANYA-GOLD",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:RAJATA-SILVER",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:LOHA-COPPER",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:TRAPU-TIN",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:SISA-LEAD",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:AYAS-METAL",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:SYAMA-DARK-METAL",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        }
+      ],
+      "match_property": "entity_key",
+      "key_minted_from_identity": false,
+      "distinct_subjects": 32,
+      "already_present": 11,
+      "nodes_create": 21,
+      "nodes_update": 11,
+      "subjects_absent_from_graph": [],
+      "property_writes": 0,
+      "dangling_references": 0
+    },
+    {
+      "group_id": "RITUAL_OFFERING_NODES",
+      "domain": "ritual",
+      "kind": "NODE",
+      "element": "Offering",
+      "source": "offerings.jsonl",
+      "identity_fields": [
+        "concept_key"
+      ],
+      "require": [],
+      "notes": "21 offerings, 8 EXISTING and 13 PROPOSED_NEW.",
+      "artifact_elements": 21,
+      "filtered_out_by_require": 0,
+      "candidates": 21,
+      "candidates_before_collision_withholding": 21,
+      "distinct_identities": 21,
+      "identity_collisions": 0,
+      "identity_collisions_withheld": 0,
+      "rows_withheld_on_identity_collision": 0,
+      "identity_collision_detail": [],
+      "multi_source_evidence_merges": 0,
+      "multi_source_detail": [],
+      "evidence_fields_declared": [],
+      "elements_redirected_not_created": 0,
+      "redirect_detail": [],
+      "node_status_disagreements": 5,
+      "node_status_disagreement_detail": [
+        {
+          "key": "VG:CONCEPT:PAYAS-MILK",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:AJA-GOAT",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:SURA-SPIRITUOUS-LIQUOR",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:PARISRUT-FERMENTED-DRAUGHT",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:MADHU-HONEY",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        }
+      ],
+      "match_property": "entity_key",
+      "key_minted_from_identity": false,
+      "distinct_subjects": 21,
+      "already_present": 13,
+      "nodes_create": 8,
+      "nodes_update": 13,
+      "subjects_absent_from_graph": [],
+      "property_writes": 0,
+      "dangling_references": 0
+    },
+    {
+      "group_id": "RITUAL_DEITY_OFFERING_ATTESTATION",
+      "domain": "ritual",
+      "kind": "NODE_PROPERTY",
+      "element": "Devata",
+      "source": "deity_offerings.jsonl",
+      "identity_fields": [
+        "devata_key"
+      ],
+      "require": [],
+      "notes": "27 deities attested in a dative offering formula, with their loci counts. A property on the deity rather than a RECEIVES_OFFERING edge, because the rows name the deity and the dative form and NOT which offering it received -- the offering sits in surrounding sutra prose that was never parsed. An edge would have to invent the object of the verb, so the attestation is recorded and the target is not.",
+      "artifact_elements": 27,
+      "filtered_out_by_require": 0,
+      "candidates": 27,
+      "candidates_before_collision_withholding": 27,
+      "distinct_identities": 27,
+      "identity_collisions": 0,
+      "identity_collisions_withheld": 0,
+      "rows_withheld_on_identity_collision": 0,
+      "identity_collision_detail": [],
+      "multi_source_evidence_merges": 0,
+      "multi_source_detail": [],
+      "evidence_fields_declared": [],
+      "elements_redirected_not_created": 0,
+      "redirect_detail": [],
+      "node_status_disagreements": 0,
+      "node_status_disagreement_detail": [],
+      "match_property": "entity_key",
+      "key_minted_from_identity": false,
+      "distinct_subjects": 27,
+      "already_present": 27,
+      "nodes_create": 0,
+      "nodes_update": 27,
+      "subjects_absent_from_graph": [],
+      "property_writes": 27,
+      "dangling_references": 0
+    },
+    {
+      "group_id": "SCHOLARSHIP_SCHOLAR_NODES",
+      "domain": "scholarship",
+      "kind": "NODE",
+      "element": "Scholar",
+      "source": "scholars.jsonl",
+      "identity_fields": [
+        "scholar_id"
+      ],
+      "require": [],
+      "notes": "17 named scholars. A new label.",
+      "artifact_elements": 17,
+      "filtered_out_by_require": 0,
+      "candidates": 17,
+      "candidates_before_collision_withholding": 17,
+      "distinct_identities": 17,
+      "identity_collisions": 0,
+      "identity_collisions_withheld": 0,
+      "rows_withheld_on_identity_collision": 0,
+      "identity_collision_detail": [],
+      "multi_source_evidence_merges": 0,
+      "multi_source_detail": [],
+      "evidence_fields_declared": [],
+      "elements_redirected_not_created": 0,
+      "redirect_detail": [],
+      "node_status_disagreements": 0,
+      "node_status_disagreement_detail": [],
+      "match_property": "entity_key",
+      "key_minted_from_identity": false,
+      "distinct_subjects": 17,
+      "already_present": 0,
+      "nodes_create": 17,
+      "nodes_update": 0,
+      "subjects_absent_from_graph": [],
+      "property_writes": 0,
+      "dangling_references": 0
+    },
+    {
+      "group_id": "SCHOLARSHIP_WORK_NODES",
+      "domain": "scholarship",
+      "kind": "NODE",
+      "element": "ScholarlyWork",
+      "source": "works.jsonl",
+      "identity_fields": [
+        "work_id"
+      ],
+      "require": [],
+      "notes": "17 scholarly works. A new label.",
+      "artifact_elements": 17,
+      "filtered_out_by_require": 0,
+      "candidates": 17,
+      "candidates_before_collision_withholding": 17,
+      "distinct_identities": 17,
+      "identity_collisions": 0,
+      "identity_collisions_withheld": 0,
+      "rows_withheld_on_identity_collision": 0,
+      "identity_collision_detail": [],
+      "multi_source_evidence_merges": 0,
+      "multi_source_detail": [],
+      "evidence_fields_declared": [],
+      "elements_redirected_not_created": 0,
+      "redirect_detail": [],
+      "node_status_disagreements": 0,
+      "node_status_disagreement_detail": [],
+      "match_property": "entity_key",
+      "key_minted_from_identity": false,
+      "distinct_subjects": 17,
+      "already_present": 0,
+      "nodes_create": 17,
+      "nodes_update": 0,
+      "subjects_absent_from_graph": [],
+      "property_writes": 0,
+      "dangling_references": 0
+    },
+    {
+      "group_id": "SCHOLARSHIP_CLAIM_ROWS",
+      "domain": "scholarship",
+      "kind": "NODE",
+      "element": "InterpretiveClaim",
+      "source": "rows.jsonl",
+      "identity_fields": [
+        "canonical_key",
+        "payload.axis",
+        "payload.row_kind"
+      ],
+      "require": [],
+      "notes": "113 rows, each a disagreement or a position over a passage. 6 :InterpretiveClaim nodes and 2 CONTRADICTS edges already exist, so this group is a mix and the planner must say which.",
+      "artifact_elements": 113,
+      "filtered_out_by_require": 0,
+      "candidates": 113,
+      "candidates_before_collision_withholding": 113,
+      "distinct_identities": 113,
+      "identity_collisions": 0,
+      "identity_collisions_withheld": 0,
+      "rows_withheld_on_identity_collision": 0,
+      "identity_collision_detail": [],
+      "multi_source_evidence_merges": 0,
+      "multi_source_detail": [],
+      "evidence_fields_declared": [],
+      "match_property": "entity_key",
+      "key_minted_from_identity": true,
+      "distinct_subjects": 113,
+      "already_present": 0,
+      "nodes_create": 113,
+      "nodes_update": 0,
+      "subjects_absent_from_graph": [],
+      "property_writes": 0,
+      "dangling_references": 0
+    },
+    {
+      "group_id": "COMMUNITIES_ARTIFACT_NODES",
+      "domain": "communities",
+      "kind": "NODE",
+      "element": "DeityCommunity",
+      "source": "communities.jsonl",
+      "identity_fields": [
+        "community_id"
+      ],
+      "require": [],
+      "notes": "12 derived communities imported AS AN ARTIFACT with their method metadata and their refusal attached, per the integration plan's phase 5. No membership relationship is planned at all: six of the twelve draw every internal edge from a single hymn and five are whole connected components, so a membership edge would present a modularity artefact as a traditional category. The 1,185 rows.jsonl rows are the per-sukta evidence behind these twelve and are not themselves elements.",
+      "artifact_elements": 12,
+      "filtered_out_by_require": 0,
+      "candidates": 12,
+      "candidates_before_collision_withholding": 12,
+      "distinct_identities": 12,
+      "identity_collisions": 0,
+      "identity_collisions_withheld": 0,
+      "rows_withheld_on_identity_collision": 0,
+      "identity_collision_detail": [],
+      "multi_source_evidence_merges": 0,
+      "multi_source_detail": [],
+      "evidence_fields_declared": [],
+      "elements_redirected_not_created": 0,
+      "redirect_detail": [],
+      "node_status_disagreements": 0,
+      "node_status_disagreement_detail": [],
+      "match_property": "community_id",
+      "key_minted_from_identity": false,
+      "distinct_subjects": 12,
+      "already_present": 0,
+      "nodes_create": 12,
+      "nodes_update": 0,
+      "subjects_absent_from_graph": [],
+      "property_writes": 0,
+      "dangling_references": 0
+    },
+    {
+      "group_id": "QUALITY_VERDICT_NODES",
+      "domain": "quality",
+      "kind": "NODE",
+      "element": "QualityVerdict",
+      "source": "rows.jsonl",
+      "identity_fields": [
+        "canonical_key",
+        "algorithm_version",
+        "payload.reference_set_type"
+      ],
+      "require": [
+        [
+          "mapping_confidence",
+          "EXACT"
+        ]
+      ],
+      "notes": "The adjudicated reference set. A new label, and deliberately a node rather than a property on the edge it judges: of 11,210 verdicts 1,402 diverge from their own metre, 1,283 confirm only via an alias the layer judges unsound and 143 are refuted, so the verdict is a claim ABOUT an edge and must stay separately addressable from it. The identity carries reference_set_type because a passage legitimately holds TWO verdicts on different evidence: an INDEPENDENT_SOURCE_ADJUDICATED_REFERENCE_SET over the mention and concept layers, adjudicated by a published human treebank, and a DETERMINISTIC_TEXT_DERIVED_REFERENCE over HAS_CHANDAS, adjudicated by counting syllables. Keying on the passage alone merged 161 of these pairs, which would have let a syllable count overwrite a human-treebank verdict -- collapsing the one distinction this domain exists to keep.",
+      "artifact_elements": 3951,
+      "filtered_out_by_require": 1383,
+      "candidates": 2568,
+      "candidates_before_collision_withholding": 2568,
+      "distinct_identities": 2568,
+      "identity_collisions": 0,
+      "identity_collisions_withheld": 0,
+      "rows_withheld_on_identity_collision": 0,
+      "identity_collision_detail": [],
+      "multi_source_evidence_merges": 0,
+      "multi_source_detail": [],
+      "evidence_fields_declared": [],
+      "match_property": "entity_key",
+      "key_minted_from_identity": true,
+      "distinct_subjects": 2568,
+      "already_present": 0,
+      "nodes_create": 2568,
+      "nodes_update": 0,
+      "subjects_absent_from_graph": [],
+      "property_writes": 0,
+      "dangling_references": 0
+    }
+  ],
+  "totals": {
+    "dangling_references": 0,
+    "elements_redirected_not_created": 3,
+    "expected_to_exist_but_absent": 1765,
+    "identity_collisions": 9,
+    "identity_collisions_withheld": 9,
+    "multi_source_evidence_merges": 147,
+    "node_status_disagreements": 16,
+    "nodes_create": 14221,
+    "nodes_update": 5647,
+    "property_writes": 51215,
+    "relationships_create": 9214,
+    "relationships_update": 43888,
+    "rows_withheld_on_identity_collision": 18,
+    "triples_awaiting_an_earlier_step": 2997
+  },
+  "by_domain": {
+    "communities": {
+      "nodes_create": 12,
+      "property_writes": 0,
+      "relationships_create": 0
+    },
+    "cross_veda": {
+      "nodes_create": 0,
+      "property_writes": 16824,
+      "relationships_create": 0
+    },
+    "formula": {
+      "nodes_create": 0,
+      "property_writes": 34364,
+      "relationships_create": 6148
+    },
+    "quality": {
+      "nodes_create": 2568,
+      "property_writes": 0,
+      "relationships_create": 0
+    },
+    "ritual": {
+      "nodes_create": 9442,
+      "property_writes": 27,
+      "relationships_create": 627
+    },
+    "scholarship": {
+      "nodes_create": 147,
+      "property_writes": 0,
+      "relationships_create": 0
+    },
+    "semantic_roles": {
+      "nodes_create": 2052,
+      "property_writes": 0,
+      "relationships_create": 2439
+    }
+  },
+  "schema_additions": {
+    "node_labels_created": [
+      "Action",
+      "DeityCommunity",
+      "InterpretiveClaim",
+      "Object",
+      "Offering",
+      "QualityVerdict",
+      "Ritual",
+      "RitualRole",
+      "RitualStep",
+      "RoleFiller",
+      "Scholar",
+      "ScholarlyWork",
+      "Substance"
+    ],
+    "relationship_types_touched": [
+      "ASSERTION_ROLE",
+      "FORM_OF_RITE",
+      "PART_OF_RITE",
+      "PERFORMED_BY",
+      "REFERS_TO",
+      "RITE_INVOLVES_ACTION",
+      "SHARES_FORMULA_WITH",
+      "USES_OBJECT",
+      "USES_OFFERING",
+      "USES_SUBSTANCE"
+    ]
+  },
+  "expected_census": {
+    "nodes_before": 108779,
+    "nodes_after": 123000,
+    "nodes_delta": 14221,
+    "relationships_before": 265295,
+    "relationships_after": 274509,
+    "relationships_delta": 9214,
+    "note": "No group plans a retirement, so no element is removed by an ADDITION. The retirements Wave 3 makes are corrections, planned separately and named in the dry-run: the SOMA-PRESSING weak-alias retirement."
+  },
+  "identity_collisions_are_all_withheld": true,
+  "usable": true,
+  "usable_note": "An identity collision does not make the plan unusable; writing one would. Every colliding identity is withheld from the plan and reported by name, so no element with a contested identity reaches the graph and the count the import lands is exact. The owner's gate is on UNEXPLAINED collisions, and these are explained and excluded."
+}

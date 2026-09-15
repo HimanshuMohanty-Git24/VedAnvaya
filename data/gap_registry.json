@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "campaign": "post-v1-data-completeness",
-  "generated_at": "2026-09-15T00:00:00Z",
+  "generated_at": "2026-09-15",
   "baseline_commit": "d6e93a92c4e3ff1a5682a17b20bf32c6ce8fa19c",
   "gaps": [
     {
@@ -3303,6 +3303,44 @@
       "source_availability": "NOT_REQUIRED",
       "initial_hypothesis_status": "SUPERSEDED_BY_MEASUREMENT",
       "closure_method": null
+    },
+    {
+      "gap_id": "GAP-CROSS-VEDA-DEVATA-IDENTITY-BRIDGE-001",
+      "domain": "cross_veda",
+      "surface": "Any cross-Veda deity analytic that joins the two dedication layers: GET /api/v1/insights/devatas/{id}, the Visualization Lab's deity matrices, and semantic_resemblance TIER_B, whose RV-AV guard was refusing every pair for this reason.",
+      "evidence": "HAS_DEVATA carries 210 distinct display labels over 10,558 edges; HAS_DEVATA_ASCRIPTION carries 324 over 5,385. They share 0 values. A deterministic parse of the ascription adjectives resolves 8 of 324 (2.5%), and 9 of 569 occurrences (1.6%). Probe: scripts/wave3_devata_identity_bridge_probe.py.",
+      "classification": "IMPLEMENTATION_GAP",
+      "description": "The Rigvedic and Atharvavedic dedication layers cannot be joined. HAS_DEVATA points at a :Devata whose display label is an English deity name; HAS_DEVATA_ASCRIPTION points at a :DevataAscription whose display label is a Sanskrit adjective meaning 'having X as its deity'. The intersection is zero by category rather than by coverage, so a join on display labels returns nothing and reports it as absence of shared deities.",
+      "current_count": 8,
+      "expected_population": 324,
+      "missing_count": 316,
+      "root_cause": "The AV apparatus was ingested as descriptors rather than resolved entities, correctly -- Whitney's printed ascriptions are adjectives and some name a hymn's subject rather than a deity. What was never built is the bridge from a descriptor to canonical Devata identity. Measured residue: 167 labels carry no recognised deity-adjective suffix, 85 strip to a stem matching no canonical Devata, 61 are compounds naming two ascriptions, 2 are subject descriptors and 1 names a plurality.",
+      "source_dependency": "None. Both sides are held locally. This is buildable work, not a missing source.",
+      "implementation_dependency": "A descriptor-to-Devata resolver with an explicit unresolved state, plus a decision on how a compound ascription naming two deities is modelled. Blocked on neither a source nor an owner question.",
+      "owner_agent": null,
+      "closure_test": "A cross-Veda deity query returns RV and AV dedications for one canonical Devata without joining on any display label, every unresolved ascription is still addressable in its ascription form, and the resolved share is read back out of the database rather than out of the resolver.",
+      "status": "OPEN",
+      "causation_status": "MEASURED",
+      "observed_gap": "HAS_DEVATA and HAS_DEVATA_ASCRIPTION value spaces intersect at zero, so cross-Veda deity reasoning fails silently for RV against AV.",
+      "initial_hypothesis": "Agent 11 met it as an evidential guard refusing RV-AV pairs. The lead verified the cause is a vocabulary difference dressed as an evidential one.",
+      "diagnostics_run": {},
+      "measured_root_cause": "Two different kinds of object under one conceptual relation: a deity node on one side and a derived adjective on the other. Confirmed by probe.",
+      "source_availability": "HELD_LOCALLY",
+      "initial_hypothesis_status": "CONFIRMED_BY_MEASUREMENT",
+      "closure_method": null,
+      "opened_by": "owner section 9, sized by the lead",
+      "opened_at": "2026-09-15",
+      "blocks": [
+        "semantic_resemblance TIER_B",
+        "cross-Veda deity analytics"
+      ],
+      "must_not_do": [
+        "joining the two dedication layers on display_label",
+        "resolving an ambiguous stem by picking the more frequent Devata",
+        "resolving a plurality ascription such as bahudevatyam to a single deity",
+        "resolving a subject descriptor such as bhaisajyam to a deity at all"
+      ],
+      "proof_artifact": "data/staging/integration/wave3_devata_identity_bridge.json"
     }
   ],
   "root_cause_taxonomy": [

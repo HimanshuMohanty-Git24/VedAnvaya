@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-09-15T13:57:14.866697+00:00",
+  "generated_at": "2026-09-15T15:08:31.220679+00:00",
   "snapshot_caveat": "A domain whose agent is actively restaging may read FAIL transiently -- most often a manifest checksum mismatch, because the manifest is rewritten after the files it hashes. Re-run once no agent is in flight before treating any gate A result here as final.",
   "gates": {
     "A": "STRUCTURAL -- schema, identity, subject grain, source refs, denominators",
@@ -140,18 +140,16 @@
         "detail": "validator PASS at full evaluation coverage with --graph"
       },
       "gate_b_semantic": {
-        "status": "PASS_PENDING_FOLD_FIX",
-        "detail": "396 of 6,271 transformation types corrected and 197 stored relationship types identified as contradicted by their own text. The corrected typing is right and the codebase cannot yet reproduce it, because the fold fix it depends on is blocked on FOLD_FIX_BREAKS_REFERENT_IDENTITY."
+        "status": "PASS_AFTER_FOLD_FIX",
+        "detail": "396 of 6,271 transformation types corrected and 197 stored relationship types identified as contradicted by their own text. The codebase now reproduces the corrected typing: the fold fix landed as a separate cross-script fold under owner decision 1, leaving the identity fold and all 3,819 released referent digests untouched. The cross-Veda identity baseline was re-recorded deliberately, 1,538 to 1,735."
       },
       "gate_c_adversarial": {
         "status": "SURVIVED",
         "detail": "root cause traced to dead code -- surfaces transliterates before it folds, so every Devanagari anusvara rule was unreachable on the only cross-script comparison surface. Re-measured over all six pairs rather than assuming Yajurveda-only, which moved RV-SV from a reported 0 to 6."
       },
       "restage_required": false,
-      "restage_reason": "Restage complete. Blocked on the fold fix rather than on further work.",
-      "blocked_by": [
-        "FOLD_FIX_BREAKS_REFERENT_IDENTITY"
-      ],
+      "restage_reason": "Restage complete and the fold fix it waited on is applied.",
+      "blocked_by": [],
       "depends_on": [
         "formula"
       ],
@@ -160,8 +158,8 @@
       },
       "own_digest": "269c17d3b4c57baf78fb38290137ab8c76f200019e50de0c877bd69478b20cfb",
       "stale_inputs": [],
-      "status": "BLOCKED",
-      "status_detail": "three gates pass, blocked by FOLD_FIX_BREAKS_REFERENT_IDENTITY"
+      "status": "ELIGIBLE",
+      "status_detail": "all three gates pass and no blocker is open"
     },
     "formula": {
       "gate_a_structural": {
@@ -308,7 +306,7 @@
       "restage_required": false,
       "restage_reason": null,
       "blocked_by": [
-        "TIER_B_AWAITS_DEDICATION_VOCABULARY_RULING"
+        "RE_DERIVE_AFTER_IMPORT_NOT_IMPORTABLE_AS_STAGED"
       ],
       "depends_on": [
         "translation",
@@ -325,7 +323,7 @@
       "own_digest": "37be8f726d4514029f383d5b5d1ed4d20fb07618a37d939922aaa091b58c5e19",
       "stale_inputs": [],
       "status": "BLOCKED",
-      "status_detail": "three gates pass, blocked by TIER_B_AWAITS_DEDICATION_VOCABULARY_RULING"
+      "status_detail": "three gates pass, blocked by RE_DERIVE_AFTER_IMPORT_NOT_IMPORTABLE_AS_STAGED"
     },
     "semantic_roles": {
       "gate_a_structural": {
@@ -379,13 +377,14 @@
   },
   "eligible_domains": [
     "communities",
+    "cross_veda",
     "formula",
     "quality",
     "ritual",
     "scholarship",
     "semantic_roles"
   ],
-  "eligible_count": 6,
+  "eligible_count": 7,
   "domain_count": 14,
   "wave_3_go": false
 }

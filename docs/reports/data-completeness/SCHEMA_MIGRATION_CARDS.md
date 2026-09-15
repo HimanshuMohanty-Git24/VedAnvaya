@@ -14,10 +14,11 @@ reviewed.
 | M3 four gāna `Work` identities | samaveda_music | yes |
 | M4 `MUSICALIZED_AS` range widening | samaveda_music | yes |
 | M5 `SPECIALIZED_FORM_OF` | communities / ontology | yes |
-| M6 `scope_type` namespacing | attribution + audio | **returns to owner** |
+| M6 `scope_type` namespacing | attribution + audio | **SUPERSEDED** — see M6′ below |
 
-M5 and M6 were not in the original four. M5 implements owner decision 1. M6 is the
-collision the audit found, and it is the one card that fails the flags.
+M5 and M6 were not in the original four. M5 implements owner decision 1. M6 was the
+collision the audit found and the one card that failed the flags; the owner's second round
+replaced the question it asked, and M6′ below passes all five.
 
 ---
 
@@ -202,14 +203,14 @@ ROLLBACK_DEFINED = true · OLD_PREDICATE_MEANING_CHANGED = false
 
 ---
 
-## M6 — `scope_type` namespacing — **RETURNS TO OWNER**
+## M6 — `scope_type` namespacing — **SUPERSEDED, kept as the record**
 
 **The collision.** `attribution` writes `scope_type = SINGLE_MANTRA` meaning the scope of an
 attribution assertion. The audio domains write `scope_type = MANTRA` meaning the scope of an
 audio record. 18 canonical keys carry both.
 
-**Why this card fails the flags.** Any fix changes what an existing property name means for
-at least one existing reader:
+**Why this card failed the flags, as recorded at the time.** Any fix changes what an existing
+property name means for at least one existing reader:
 
 - Namespace both to `attribution_scope_type` and `audio_scope_type`: existing readers of
   `scope_type` break.
@@ -222,7 +223,71 @@ ADDITIVE = false · BACKWARD_COMPATIBLE = false
 OLD_PREDICATE_MEANING_CHANGED = true   ← not pre-approved
 ```
 
-**The owner's choice.** Which readers may break, and when. The lead's recommendation is to
-namespace both and update every reader in the same commit, because a property carrying two
-meanings will be read wrongly eventually and the 18 overlapping keys are only the ones we
-can currently see.
+**The owner asked a different question back.** Not *which readers may break*, but *what is
+the truthful scope of each population*. See M6′.
+
+---
+
+## M6′ — `scope_type` derived from the evidence grain, split by population
+
+**Implements owner decision 12.** Replaces M6.
+
+**Two measurements dissolved the original framing.**
+
+`scope_type` is on **0 nodes and 0 relationships** of the live graph. The collision the audit
+found is between two *staging* artifacts, so there is no reader in the database whose meaning
+could change, and M6's `ADDITIVE = false` / `BACKWARD_COMPATIBLE = false` were recorded
+against a population that does not exist.
+
+And the schema already held both vocabularies, already separate:
+`product.audio.models.AudioScope` is the tradition's span vocabulary for a recording, with
+`SCOPE_TO_ENTITY_TYPES` as its grain contract, and `models.enums.ScopeType` is the scope of a
+metadata assertion. Two axes, two closed enums, two Pydantic models — and one property name,
+which was the whole defect. So the repair writes each axis under its own name; no vocabulary
+had to be invented and no winner had to be picked.
+
+**Three homogeneous populations.** A total partition of the 1,423 scope-bearing rows.
+
+| Population | Property | `scope_type` | Enum | Rows | Grain asserted against the live graph |
+|---|---|---|---|--:|---|
+| `AUDIO_RECORD_AT_MANTRA_SCOPE` | `audio_scope_type` | `MANTRA` | `AudioScope` | 954 | every subject is `entity_type=MANTRA`, the only type `AudioScope.MANTRA` admits |
+| `GANA_PERFORMANCE_AT_COLLECTION_SCOPE` | `audio_scope_type` | `COLLECTION` | `AudioScope` | 3 | every subject is `entity_type=STRUCTURAL_CONTAINER` |
+| `ATTRIBUTION_ASSERTION_AT_SINGLE_MANTRA_SCOPE` | `assertion_scope_type` | `SINGLE_MANTRA` | `ScopeType` | 466 | every subject is `entity_type=MANTRA`, and all 466 independently carry `asserted_granularity=VERSE` |
+
+**Why the gāna rows are a population apart** rather than folded into the audio one, though
+both are audio: the grain genuinely differs. They are gāna performances of 82s, 223s and 399s
+over containers holding many verses, with no source stating a boundary inside any of them.
+Labelling them `MANTRA` so one importer could take a single population is what the owner
+barred.
+
+**Defect found and fixed.** Those three rows were staged `STRUCTURAL_CONTAINER` — a graph
+`entity_type`, and **not a member of `AudioScope` at all**. One axis's value cast into the
+other's enum, which is the same shape of error as the name collision it sits inside.
+`AudioScope.COLLECTION` is the enum's own value for a named Samavedic collection — "ARANYA,
+CHANDA, MAHANAMNYA, UTTARA" — and all three keys are CHANDA or UTTARA containers. The truthful
+closed-enum value was already in the schema.
+
+**No population is `UNKNOWN`.** Every source grain here is known, and the owner bars
+`UNKNOWN` where it is.
+
+**Identity rule.** Not an identity element. Both are properties on existing nodes; canonical
+keys do not change.
+
+**Backward compatibility.** Nothing writes a property called `scope_type`, and none exists in
+the graph. Two new property names appear. No predicate, label or key changes.
+
+**Rollback.** Remove `audio_scope_type` and `assertion_scope_type`.
+
+**Migration test.** `scripts/wave3_scope_grain_repair.py` asserts, per population, that the
+staged value is a member of its declared enum, that the population is homogeneous, and that
+every subject resolves at the grain the enum's own contract requires. It also asserts the
+partition is total, so a scope-bearing domain claimed by no population — or by two — is a
+failure rather than a silence. Verdict: `HOMOGENEOUS_AND_ON_GRAIN`.
+
+```
+ADDITIVE = true · DETERMINISTIC_IDENTITY = true · BACKWARD_COMPATIBLE = true
+ROLLBACK_DEFINED = true · OLD_PREDICATE_MEANING_CHANGED = false
+```
+
+**Pre-approved under owner decision 3**, because the flag that sent M6 back is now false and
+measured rather than argued.

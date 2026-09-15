@@ -309,6 +309,43 @@ def load_ambiguous_aliases(
     return out
 
 
+def load_non_triggering_aliases(
+    project_root: Path, *, registry_path: Path | None = None
+) -> dict[tuple[str, str, str], str]:
+    """Aliases a concept owns that may not assert it alone, mapped to the recorded reason.
+
+    Keyed by ``(concept_id, kind, alias)``. The scoping is the whole difference from
+    :func:`load_ambiguous_aliases`: an ambiguous alias is contested between concepts and
+    withdrawn from all of them, while one of these is uncontested and simply too weak a
+    surface to carry the concept it belongs to. The same string may be perfectly sound
+    elsewhere, so withdrawing it globally would destroy evidence that is not in question.
+
+    Owner decision, section 3. The alias keeps its place in the concept's ``aliases_sa``
+    in the registry file and reaches the row as ``non_triggering_aliases_sa``, so search,
+    candidate generation, audit and manual review still see it. Only its authority to
+    create a ``MENTIONS_ENTITY`` or ``ABOUT_CONCEPT`` edge is removed.
+    """
+    document = _read_yaml(project_root / (registry_path or CONCEPT_REGISTRY_PATH))
+    declared = document.get("non_triggering_aliases") or []
+    if not isinstance(declared, list):
+        raise ConceptRegistryError("non_triggering_aliases must be a list")
+    out: dict[tuple[str, str, str], str] = {}
+    for entry in declared:
+        concept_id = str(entry.get("concept_id", "")).strip()
+        kind = str(entry.get("kind", ""))
+        alias = str(entry.get("alias", ""))
+        reason = str(entry.get("reason", "")).strip()
+        if kind not in {"sa", "en"}:
+            raise ConceptRegistryError(f"non-triggering alias {alias!r}: kind must be 'sa' or 'en'")
+        if not concept_id or not alias or not reason:
+            raise ConceptRegistryError(
+                "every non-triggering alias needs a concept_id, an alias and a reason: a "
+                "withdrawal with no stated measurement is indistinguishable from an oversight"
+            )
+        out[concept_id, kind, alias] = reason
+    return out
+
+
 def _require_text(concept_id: str, field: str, value: object) -> str:
     if not isinstance(value, str) or not value.strip():
         raise ConceptRegistryError(f"{concept_id}: {field} must be a non-empty string")
@@ -404,6 +441,7 @@ def load_concepts(
         )
 
     ambiguous = load_ambiguous_aliases(project_root, registry_path=path)
+    non_triggering = load_non_triggering_aliases(project_root, registry_path=path)
     devata_keys = _devata_keys(project_root)
     node_types = (
         set(allowed_node_types)
@@ -440,6 +478,13 @@ def load_concepts(
         aliases_en = _alias_list(concept_id, "aliases_en", entry.get("aliases_en"))
         aliases_sa = tuple(a for a in aliases_sa if ("sa", a) not in ambiguous)
         aliases_en = tuple(a for a in aliases_en if ("en", a) not in ambiguous)
+        # Withdrawn from assertion, kept for search. Split before the one-concept-per-alias
+        # check below so that a withdrawn form cannot claim ownership of a surface it is no
+        # longer allowed to assert.
+        withdrawn_sa = tuple(a for a in aliases_sa if (concept_id, "sa", a) in non_triggering)
+        withdrawn_en = tuple(a for a in aliases_en if (concept_id, "en", a) in non_triggering)
+        aliases_sa = tuple(a for a in aliases_sa if a not in withdrawn_sa)
+        aliases_en = tuple(a for a in aliases_en if a not in withdrawn_en)
         if not aliases_sa and not aliases_en:
             raise ConceptRegistryError(
                 f"{concept_id}: no usable alias, so no passage can ever reach this concept"
@@ -511,6 +556,8 @@ def load_concepts(
                 # lives at the point where the retype is known, and this layer keeps
                 # depending only on the semantic ontology.
                 condition_kind=str(entry.get("condition_kind", "") or "").strip(),
+                non_triggering_aliases_sa=tuple(sorted(withdrawn_sa)),
+                non_triggering_aliases_en=tuple(sorted(withdrawn_en)),
             )
         )
 

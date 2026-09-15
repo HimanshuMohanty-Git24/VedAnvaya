@@ -65,6 +65,15 @@ line-length = 100
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP", "RUF"]
 
+[tool.ruff.lint.per-file-ignores]
+# The audible-review harness embeds its whole page -- HTML, CSS and the review keyboard
+# handler -- as one module constant, so it has no build step and no second file to keep in
+# sync with the endpoint that enforces the gate. CSS selectors and JS template literals do
+# not wrap at 100 columns without becoming less readable than they are long.
+# RUF001: the page prints a real en dash between the segment's start and end seconds,
+# which is what a reader expects to see between two times.
+"scripts/audio_review_harness.py" = ["E501", "RUF001"]
+
 [tool.mypy]
 python_version = "3.12"
 strict = true

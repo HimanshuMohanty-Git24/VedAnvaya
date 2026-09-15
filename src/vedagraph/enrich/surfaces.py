@@ -249,7 +249,7 @@ def build_surfaces(passage_key: str, veda: str, script: str, source_text: str) -
     accentless = comparison_form(source_text, ComparisonForm.ACCENT_STRIPPED_COMPARISON)
     folded = comparison_form(
         to_iast(fold_devanagari_source_conventions(normalize_nfc(source_text)), script),
-        ComparisonForm.SEARCH_NORMALIZED,
+        ComparisonForm.CROSS_SCRIPT_COMPARISON,
     )
     return TextSurfaces(
         passage_key=passage_key,

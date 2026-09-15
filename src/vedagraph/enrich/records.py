@@ -136,6 +136,13 @@ class ConceptRow:
     #: validated for conditions in :func:`vedagraph.enrich.concepts.load_concepts`, because
     #: a condition with no kind is what made "which diseases?" answer with demons.
     condition_kind: str = ""
+    #: Forms this concept owns that may not assert it on their own. Kept on the row rather
+    #: than dropped at load, because the owner's decision is that they stay usable for
+    #: search, candidate generation, audit and manual review -- only their authority to
+    #: create an edge is withdrawn. They are deliberately NOT in ``aliases_sa`` /
+    #: ``aliases_en``, which is what the mention matcher reads.
+    non_triggering_aliases_sa: tuple[str, ...] = ()
+    non_triggering_aliases_en: tuple[str, ...] = ()
 
     def as_row(self) -> dict[str, Any]:
         return {
@@ -149,6 +156,8 @@ class ConceptRow:
             "definition": self.definition,
             "related_devatas": list(self.related_devatas),
             "condition_kind": self.condition_kind,
+            "non_triggering_aliases_sa": list(self.non_triggering_aliases_sa),
+            "non_triggering_aliases_en": list(self.non_triggering_aliases_en),
         }
 
 
