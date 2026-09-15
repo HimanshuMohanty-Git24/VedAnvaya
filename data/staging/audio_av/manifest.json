@@ -1,0 +1,597 @@
+{
+  "domain": "audio_av",
+  "agent": 7,
+  "schema_version": "1.0",
+  "algorithm_version": "av-audio-offset-remap-1.1-corrected-comparator",
+  "created_at": "2026-09-15T08:03:04.056779+00:00",
+  "code_commit": "e854eff0d7ef9258bbae509f164c7c7e44be1028",
+  "config_hash": "52b076bb06eb3496cac6d6bd37230d1b0e02756c4025c1beb49a2730906236be",
+  "source_snapshot_ids": [
+    "VEDSEARCH.AV.SAU.RECITATION.2026-09-12",
+    "HF.VEDAVANI.AVS.SEGMENTED.2026-09-15"
+  ],
+  "files": [
+    {
+      "path": "rows.jsonl",
+      "sha256": "2c811addd725488278df9399b072751eebb65daa7b1ad81d1f8a3a7f22e9c969",
+      "rows": 771,
+      "bytes": 2290840
+    },
+    {
+      "path": "sources.jsonl",
+      "sha256": "bbda138d6446b934d081e8639f0ad5cda7ee7ecc44e27c29a9a9e62268f25bcc",
+      "rows": 12,
+      "bytes": 6608
+    },
+    {
+      "path": "rejected.jsonl",
+      "sha256": "5846e9b3443075bf9e17743f2f3c35b4705c7b569d564cb970336a070791cff1",
+      "rows": 191,
+      "bytes": 200985
+    },
+    {
+      "path": "unresolved.jsonl",
+      "sha256": "f9767d680c2bc6b11c0f395e4fc3e48a472ebd2e2227061ea25fd97035738e88",
+      "rows": 197,
+      "bytes": 308396
+    },
+    {
+      "path": "proofs/no_public_recording.jsonl",
+      "sha256": "8193caeb77d957829e3710a65457c6ce6a6e3d89de97e161c030340349b25c88",
+      "rows": 191,
+      "bytes": 466638
+    }
+  ],
+  "counts": {
+    "candidates_considered": 1159,
+    "accepted": 771,
+    "rejected": 191,
+    "verified_zero": 0,
+    "not_applicable": 0,
+    "unresolved": 197
+  },
+  "closes_gaps": [
+    "GAP-AUDIO-002"
+  ],
+  "qa": {
+    "sampled": 81,
+    "sample_method": "both -- every PROBABLE row plus a per-kanda quota over the corrected kandas (adversarial), and a uniform random draw inside each stratum",
+    "defects_found": 0,
+    "human_reviewed": 0,
+    "detail": {
+      "sampled_accepted_rows": 67,
+      "sampled_rejected_rows": 14,
+      "sample_method": "both -- every PROBABLE row plus a per-kanda quota over the corrected kandas (adversarial), and a uniform random draw inside each stratum",
+      "defects_found": 0,
+      "defects": [],
+      "human_listening_reviewed": 0,
+      "vedsearch_checks": {
+        "decoded_as_mp3": 47,
+        "audio_text_above_threshold_below_floor": 8,
+        "audio_text_letter_identical": 36,
+        "audio_text_orthographic_variant": 3
+      },
+      "vedsearch_audio_text_scores": {
+        "n": 47,
+        "min": 0.9091,
+        "median": 1.0
+      },
+      "vedsearch_sampled_by_kanda": {
+        "7": 8,
+        "8": 4,
+        "9": 8,
+        "11": 6,
+        "12": 7,
+        "13": 6,
+        "15": 3,
+        "16": 2,
+        "19": 3
+      },
+      "vedavani_checks": {
+        "wav_duration_agrees_with_metadata": 20
+      },
+      "rejected_reprobe": {
+        "confirmed_no_audio_payload_at_every_named_occurrence": 14
+      }
+    }
+  },
+  "assessed_population": {
+    "dimension": "audio",
+    "veda": "AV",
+    "recension": "SAU",
+    "mantras_in_corpus": 5839,
+    "already_catalogued_before_this_artifact": 4680,
+    "assessed_by_this_artifact": 1159,
+    "assessed_coverage_of_the_gap": 1.0,
+    "av_audio_after_importing_exact_rows_only": 5444,
+    "av_audio_coverage_after_importing_exact_rows_only": 0.9324,
+    "av_audio_if_probable_rows_were_also_imported": 5451,
+    "av_audio_if_the_197_unresolved_were_also_closed": 5641
+  },
+  "mapping_confidence_breakdown": {
+    "EXACT": 764,
+    "PROBABLE": 7
+  },
+  "accepted_by_source": {
+    "HF.VEDAVANI.AVS.SEGMENTED.2026-09-15": 46,
+    "VEDSEARCH.AV.SAU.RECITATION.2026-09-12": 725
+  },
+  "hymn_division_correspondence": {
+    "7": {
+      "6": [
+        6,
+        7
+      ],
+      "7": [
+        8
+      ],
+      "8": [
+        9
+      ],
+      "9": [
+        10
+      ],
+      "10": [
+        11
+      ],
+      "11": [
+        12
+      ],
+      "12": [
+        13
+      ],
+      "13": [
+        14
+      ],
+      "14": [
+        15
+      ],
+      "15": [
+        16
+      ],
+      "16": [
+        17
+      ],
+      "17": [
+        18
+      ],
+      "18": [
+        19
+      ],
+      "19": [
+        20
+      ],
+      "20": [
+        21
+      ],
+      "21": [
+        22
+      ],
+      "22": [
+        23
+      ],
+      "23": [
+        24
+      ],
+      "24": [
+        25
+      ],
+      "25": [
+        26
+      ],
+      "26": [
+        27
+      ],
+      "27": [
+        28
+      ],
+      "28": [
+        29
+      ],
+      "29": [
+        30
+      ],
+      "30": [
+        31
+      ],
+      "31": [
+        32
+      ],
+      "32": [
+        33
+      ],
+      "33": [
+        34
+      ],
+      "34": [
+        35
+      ],
+      "35": [
+        36
+      ],
+      "36": [
+        37
+      ],
+      "37": [
+        38
+      ],
+      "38": [
+        39
+      ],
+      "39": [
+        40
+      ],
+      "40": [
+        41
+      ],
+      "41": [
+        42
+      ],
+      "42": [
+        43
+      ],
+      "43": [
+        44
+      ],
+      "44": [
+        45
+      ],
+      "45": [
+        46,
+        47
+      ],
+      "46": [
+        48
+      ],
+      "47": [
+        49
+      ],
+      "48": [
+        50
+      ],
+      "49": [
+        51
+      ],
+      "50": [
+        52
+      ],
+      "51": [
+        53
+      ],
+      "52": [
+        54
+      ],
+      "53": [
+        55
+      ],
+      "54": [
+        56,
+        57
+      ],
+      "55": [
+        57
+      ],
+      "56": [
+        58
+      ],
+      "57": [
+        59
+      ],
+      "58": [
+        60
+      ],
+      "60": [
+        62
+      ],
+      "61": [
+        61,
+        63
+      ],
+      "62": [
+        64
+      ],
+      "63": [
+        65
+      ],
+      "64": [
+        66
+      ],
+      "65": [
+        67
+      ],
+      "66": [
+        68
+      ],
+      "67": [
+        69
+      ],
+      "68": [
+        70,
+        71
+      ],
+      "69": [
+        72
+      ],
+      "70": [
+        73
+      ],
+      "71": [
+        74
+      ],
+      "72": [
+        75,
+        76
+      ],
+      "73": [
+        77
+      ],
+      "74": [
+        78
+      ],
+      "75": [
+        79
+      ],
+      "76": [
+        80,
+        81
+      ],
+      "77": [
+        82
+      ],
+      "78": [
+        83
+      ],
+      "79": [
+        84
+      ],
+      "80": [
+        85
+      ],
+      "81": [
+        86
+      ],
+      "82": [
+        87
+      ],
+      "83": [
+        88
+      ],
+      "84": [
+        89
+      ],
+      "85": [
+        90
+      ],
+      "86": [
+        91
+      ],
+      "87": [
+        92
+      ],
+      "88": [
+        93
+      ],
+      "89": [
+        94
+      ],
+      "90": [
+        95
+      ],
+      "91": [
+        96
+      ],
+      "92": [
+        97
+      ],
+      "93": [
+        98
+      ],
+      "94": [
+        99
+      ],
+      "95": [
+        100
+      ],
+      "96": [
+        101
+      ],
+      "97": [
+        102
+      ],
+      "98": [
+        103
+      ],
+      "99": [
+        104
+      ],
+      "100": [
+        105
+      ],
+      "101": [
+        106
+      ],
+      "102": [
+        107
+      ],
+      "103": [
+        108
+      ],
+      "104": [
+        109
+      ],
+      "105": [
+        110
+      ],
+      "106": [
+        111
+      ],
+      "107": [
+        112
+      ],
+      "108": [
+        113
+      ],
+      "109": [
+        114
+      ],
+      "110": [
+        115
+      ],
+      "111": [
+        116
+      ],
+      "112": [
+        117
+      ],
+      "113": [
+        118
+      ],
+      "114": [
+        119
+      ],
+      "115": [
+        120
+      ],
+      "116": [
+        121
+      ],
+      "117": [
+        122
+      ],
+      "118": [
+        123
+      ]
+    },
+    "9": {
+      "6": [
+        6,
+        7,
+        8,
+        11
+      ],
+      "7": [
+        12
+      ],
+      "8": [
+        13
+      ],
+      "9": [
+        14
+      ],
+      "10": [
+        15
+      ]
+    },
+    "11": {
+      "3": [
+        3,
+        4,
+        5
+      ],
+      "4": [
+        6
+      ],
+      "5": [
+        7
+      ],
+      "6": [
+        8
+      ],
+      "7": [
+        9
+      ],
+      "8": [
+        10
+      ],
+      "9": [
+        11
+      ],
+      "10": [
+        12
+      ]
+    },
+    "12": {
+      "5": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ]
+    },
+    "13": {
+      "4": [
+        4,
+        6,
+        7,
+        8,
+        9
+      ]
+    }
+  },
+  "config": {
+    "identity_floor": 0.973,
+    "match_threshold": 0.9,
+    "match_margin": 0.05,
+    "text_role": "PRIMARY_TEXT",
+    "sources": [
+      "VEDSEARCH.AV.SAU.RECITATION.2026-09-12",
+      "HF.VEDAVANI.AVS.SEGMENTED.2026-09-15"
+    ],
+    "vedavani_guards": [
+      "transcript_letter_identity",
+      "filename_kanda_agreement",
+      "monotone_running_index_window",
+      "unique_in_window",
+      "duration_per_syllable_p1_p99",
+      "file_present_in_repository",
+      "injective_across_mantras"
+    ]
+  },
+  "comparator_correction": {
+    "defects_tested": [
+      "difflib.SequenceMatcher called without autojunk=False in src/vedagraph/product/audio/vedsearch.py similarity()",
+      "skeleton() deletes an ASCII colon that stands for a visarga instead of folding it to h"
+    ],
+    "instrument": "the repository's own src/vedagraph/product/audio/vedsearch.py, which the lead fixed at 2026-09-15T12:57 while this artifact was being generated. This artifact was first generated against a local correction; that local correction was then verified to produce byte-identical skeletons to the repaired module over all 21,752 relevant texts (5,839 canonical, 5,916 source, 9,997 Vedavani) and identical similarity over 400 random pairs, and the generator now calls the module directly. The before-figures below were measured against the module in its broken state.",
+    "av_mantra_skeleton_median_length": 80,
+    "av_mantras_above_difflib_autojunk_trigger": 30,
+    "av_stored_primary_text_rows_containing_a_colon": 0,
+    "av_source_text_rows_containing_a_colon": 11,
+    "coordinate_aligned_pairs_passing_at_0.90_before": 4680,
+    "coordinate_aligned_pairs_passing_at_0.90_after": 4681,
+    "regressions": 0,
+    "verses_the_two_defects_actually_cost_the_av": 1,
+    "the_one_verse": "VG:AV:SAU:K19:S009:V014, 0.8798 -> 0.9142",
+    "aligned_distribution_after": {
+      "n": 5175,
+      "p5": 0.2995,
+      "median": 1.0
+    },
+    "aligned_variant_path_after": {
+      "n": 1294,
+      "p5": 0.1872,
+      "median": 0.9861,
+      "max": 1.0
+    },
+    "mispaired_distribution_after": {
+      "n": 1000,
+      "median": 0.2637,
+      "max": 0.4859,
+      "at_or_above_0.90": 0
+    },
+    "autojunk_effect_below_the_trigger": {
+      "n": 1286,
+      "median_delta": 0.0,
+      "max_delta": 0.0093
+    },
+    "autojunk_effect_above_the_trigger": {
+      "n": 8,
+      "median_delta": 0.1423,
+      "max_delta": 0.2182,
+      "note": "real and large, but all eight still land between 0.10 and 0.38, far below 0.90"
+    }
+  }
+}
