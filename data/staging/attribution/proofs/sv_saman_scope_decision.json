@@ -1,0 +1,42 @@
+{
+  "decision": "SV attribution is asserted at SAMAN (gana-rendering) scope and NO verse-level Samavedic attribution row is staged by this agent.",
+  "what_licenses_a_verse_level_claim": "nothing currently does. Three independent blockers, all measured, and each one alone is sufficient:",
+  "blocker_1_scope_and_it_is_worse_than_a_widening": {
+    "finding": "the same arcika number receives MUTUALLY INCONSISTENT triads from its several gana renderings, so a projection onto the verse is not merely over-wide -- it is multi-valued and self-contradictory.",
+    "verbatim_evidence": "Page सामवेदः/कौथुमीया/संहिता/ग्रामगेयः/प्रपाठकः १७/सफम्(पवस्व) prints five gana renderings of arcika 578 on one page. Four print a triad and they disagree: (578.1) 'वासिष्ठम् । वसिष्ठः ककुप् सोमः' -- rsi vasistha, metre kakup, deity soma; (578.2) 'सफे द्वे । द्वयोर्देवाः ककुप् इन्द्रसोमौ' -- deity indra-soma; (578.3) prints NO triad at all; (578.4) 'वासिष्ठम् । वसिष्ठः ककुप् सोमेन्द्रौ' -- deity soma-indra; (578.5) 'सफम् । देवाः ककुप् सोमः' -- rsi devah, deity soma. One arcika verse, four deity values, three seer values.",
+    "read_by": "hand, on the fetched wikitext, revision-pinned in sv_gana_page_sample.jsonl"
+  },
+  "blocker_2_identity": "VG:WORK:SV:KAU's scope property states verbatim that the gana collections 'are a PARALLEL AND LARGER body (roughly 2,639 ganas against 1,875 arcika verses) which requires its own work_id'. No such Work exists, no :Saman label exists, and the contract requires every row's canonical_key to resolve to an existing node. A gana-scoped claim has nowhere to land.",
+  "blocker_3_join": "no SV mantra carries a running arcika number. Measured: `MATCH (m:Mantra {veda:'SV'}) RETURN keys(m)` returns no running-number property, and the spine is ARANYA/CHANDA/UTTARA/MAHANAMNYA with dasati and verse. The gana page's join key is exactly that running number (e.g. ४६१, ५७८), so even at saman scope the number cannot be resolved to a canonical key until a running-number index is built over the 1,844 mantras AND reconciled against the 1,844-vs-1,875 delta.",
+  "capacity_correction_to_reconnaissance": {
+    "claim_checked": "reconnaissance describes 726 gana pages carrying the triads and leaves the per-saman fill rate unverified.",
+    "finding": "the triads are not spread across all 726. In a 33-page stratified sample, every triad found was on a GRAMAGEYA or ARANYAKAGEYA page; the 16 UHAGANA and UHYAGANA pages sampled carried none. That is structurally expected -- uha means 'modification', and the uha/uhya ganas are derived renderings of the gramageya and aranyakageya samans, so they inherit the ascription rather than restate it. The attributable page population is therefore about 276 (190 GRAMAGEYA + 86 ARANYAKAGEYA), not 726.",
+    "not_claimed": "a per-saman fill rate. Automated triad detection over this wikitext produces false positives, because the gana notation itself is delimited with the same danda pair as the triad. Two of the seven arcika numbers my detector reached were notation, not triads. A fill rate is therefore NOT reported, and the 33 pinned pages are handed on so the next pass can measure it without refetching."
+  },
+  "inventory": {
+    "gana_pages_inventoried": 733,
+    "by_gana_book": {
+      "None": 7,
+      "ARANYAKAGEYA": 86,
+      "UHAGANA": 362,
+      "UHYAGANA": 87,
+      "GRAMAGEYA": 190,
+      "RAHASYAGANA": 1
+    },
+    "content_snapshotted": {
+      "False": 733
+    },
+    "note": "content_snapshotted is False on all 733 rows: the inventory records titles and revids, and not one page's bytes had been fetched before this agent fetched 33 of them."
+  },
+  "sample": {
+    "pages_fetched": 33,
+    "stratified_by": "gana_book, seed 20260915, non-redirect pages of >= 2,000 bytes",
+    "eligible_population": 517,
+    "pinned": "every page carries its revid and the sha256 of its wikitext"
+  },
+  "what_would_unblock_it": [
+    "a gana Work identity plus a :Saman node type, which is a schema decision and belongs to the lead, not to a specialist agent;",
+    "a running-arcika-number index over the 1,844 SV mantras, reconciled against the 1,875 the tradition counts;",
+    "the Arseya Brahmana as the attributing authority rather than the gana page: the gana pages cite it directly (e.g. 'आर्षेयब्रा. ४.१२.६' on the Yajnaturam page), which is the right citation target for a seer claim."
+  ]
+}

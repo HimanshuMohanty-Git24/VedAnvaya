@@ -1,0 +1,29 @@
+{
+  "per_verse_devata": {
+    "hymns_examined": 566,
+    "tail_segments_seen": 1309,
+    "segments_are_a_metre": 1243,
+    "rejected:value_is_a_pada_or_avasana_address": 8,
+    "hymns_gate_refused": 17,
+    "verse_slots_accepted": 83,
+    "segments_fused_devata_into_metre_by_colon": 14,
+    "segments_fused_devata_into_metre_by_period": 11,
+    "rejected:fused_segment_has_more_than_one_leading_non_metre_part_slot_ambiguous": 1,
+    "rejected:value_is_an_editorial_query": 3,
+    "rejected:value_truncated_by_editorial_bracket_mask_head_noun_would_be_lost": 1,
+    "rejected:value_is_a_known_metre_name_in_the_enumerated_chandas_value_space": 1,
+    "rejected:value_is_metrical_apparatus": 3,
+    "rejected:hand_refused_slot_is_an_authorship_ascription_not_a_devata -- the bracket reads 'agneyam uta mantroktadevatyam; 21-33. martvyah', which is positionally readable as a per-verse devata. But Lanman's own note at x. 5 says the Anukramani's corrupt 'martvi' / 'martvi' 'seems to contain an ASCRIPTION OF AUTHORSHIP' and that Ryder suggests Marica is intended. Emitting it as a deity across thirteen verses would put a patronymic into the deity namespace on a positional guess. It is recorded instead as a named lead for a per-verse RSI claim. Note at Page:Atharva-Veda samhita volume 2.djvu/123; bracket at AVS 12.2.": 1
+  },
+  "stranded_range_chandas": {
+    "range_assertions_in_artifact": 85,
+    "verse_slots_accepted": 394
+  },
+  "chandas_value_space_size": 635,
+  "counts": {
+    "census_rows": 22537,
+    "new_devata_verse_rows": 83,
+    "new_chandas_verse_rows": 383,
+    "rejected": 18
+  }
+}

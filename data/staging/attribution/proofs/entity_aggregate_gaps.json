@@ -1,0 +1,76 @@
+{
+  "note": "Campaign brief: no entity page should say 'not yet modelled' merely because an aggregate was never computed. These are the aggregates that do not exist, separated from the ones that exist and are wrong. An absent property and a measured zero are different facts and a UI renders both as 0.",
+  "types": {
+    "Devata": {
+      "nodes": 214,
+      "nodes_carrying_occurrence_count": 0,
+      "nodes_with_no_aggregate_at_all": 214,
+      "incoming_edges_of_the_primary_predicate_all_scopes": 10558,
+      "nodes_whose_stored_aggregate_disagrees_with_the_ALL_SCOPES_edge_count": 0,
+      "stored_aggregate_matches_the_MANTRA_scope_edge_count": 0,
+      "stored_aggregate_matches_the_CONTAINER_scope_edge_count": 0
+    },
+    "Chandas": {
+      "nodes": 575,
+      "nodes_carrying_occurrence_count": 0,
+      "nodes_with_no_aggregate_at_all": 575,
+      "incoming_edges_of_the_primary_predicate_all_scopes": 16331,
+      "nodes_whose_stored_aggregate_disagrees_with_the_ALL_SCOPES_edge_count": 0,
+      "stored_aggregate_matches_the_MANTRA_scope_edge_count": 0,
+      "stored_aggregate_matches_the_CONTAINER_scope_edge_count": 0
+    },
+    "Rishi": {
+      "nodes": 729,
+      "nodes_carrying_occurrence_count": 729,
+      "nodes_with_no_aggregate_at_all": 0,
+      "incoming_edges_of_the_primary_predicate_all_scopes": 17889,
+      "nodes_whose_stored_aggregate_disagrees_with_the_ALL_SCOPES_edge_count": 501,
+      "stored_aggregate_matches_the_MANTRA_scope_edge_count": 234,
+      "stored_aggregate_matches_the_CONTAINER_scope_edge_count": 501
+    },
+    "DevataAscription": {
+      "nodes": 324,
+      "nodes_carrying_occurrence_count": 324,
+      "nodes_with_no_aggregate_at_all": 0,
+      "incoming_edges_of_the_primary_predicate_all_scopes": 5385,
+      "nodes_whose_stored_aggregate_disagrees_with_the_ALL_SCOPES_edge_count": 324,
+      "stored_aggregate_matches_the_MANTRA_scope_edge_count": 21,
+      "stored_aggregate_matches_the_CONTAINER_scope_edge_count": 324
+    }
+  },
+  "rishi_occurrence_count_by_namespace": [
+    {
+      "namespace": "AV_WHITNEY_ANUKRAMANI",
+      "nodes": 134,
+      "mantra_edges": 4542,
+      "container_edges": 542,
+      "stored_total": 542,
+      "matches_mantra": 6,
+      "matches_container": 134
+    },
+    {
+      "namespace": "RV_WSC2023_ANUKRAMANI",
+      "nodes": 367,
+      "mantra_edges": 10565,
+      "container_edges": 0,
+      "stored_total": 0,
+      "matches_mantra": 0,
+      "matches_container": 367
+    },
+    {
+      "namespace": "YV_VSM_RSISUCI",
+      "nodes": 228,
+      "mantra_edges": 2240,
+      "container_edges": 0,
+      "stored_total": 2240,
+      "matches_mantra": 228,
+      "matches_container": 0
+    }
+  ],
+  "findings": [
+    "NO :Devata node (0 of 214) and NO :Chandas node (0 of 575) carries an occurrence_count property at all, against 10,558 HAS_DEVATA and 16,331 HAS_CHANDAS edges. An entity page reading that property gets null for every deity and every metre. That is UNKNOWN, not VERIFIED ZERO, and it is the exact failure the brief names: a page reading as 'not yet modelled' because an aggregate was never computed. Two aggregates are wanted and neither exists -- dedications (HAS_DEVATA / HAS_DEVATA_ASCRIPTION) and mentions (MENTIONS_DEVATA) -- and they must not be one number, because a verse naming Indra is not thereby dedicated to Indra.",
+    "all 729 :Rishi nodes DO carry occurrence_count, and the property is written to TWO DISAGREEING CONVENTIONS across three namespaces. Measured: the 134 Atharvavedic nodes store a CONTAINER-scope count (542 stored, 542 hymn-level edges, 4,542 mantra-level edges); the 228 Yajurvedic nodes store a MANTRA-scope count (2,240 stored, 2,240 mantra-level edges, 0 container edges); the 367 Rigvedic nodes store 0 in total against 10,565 mantra-level edges. The Rigvedic zero is 'correct' under the Atharvavedic convention, because the Rigvedic layer has no container-level HAS_RISHI edge at all -- and that is precisely what makes it dangerous. Every Rigvedic seer page reads '0 occurrences' over a complete 10,565-edge layer, and no figure in the row is wrong.",
+    "all 324 :DevataAscription nodes store a CONTAINER-scope count. It matches the hymn-level edge count on all 324 and the mantra-level count on only 21. Internally consistent rather than wrong, but the property name does not say which scope it counts, so 'abdevatyam: 2 occurrences' means 2 hymns and 4 mantras and nothing on the node distinguishes them.",
+    "the fix is not 'recompute occurrence_count'. One property cannot carry a container-scope count for one Veda and a mantra-scope count for another and be read safely by a single UI. Either the scope travels with the number or there are two properties. That is a schema decision and it belongs to the lead."
+  ]
+}

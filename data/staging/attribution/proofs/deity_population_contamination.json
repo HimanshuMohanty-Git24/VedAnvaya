@@ -1,0 +1,1402 @@
+{
+  "note": "The eligible deity population is :Devata (214 nodes). Exclusions are taken from the node's own curated `structure` property, not from a name heuristic, so the list is reproducible and each row carries the curator's reason. Agent 15 needs this.",
+  "devata_total": 214,
+  "devata_by_structure": {
+    "ABSTRACT": 41,
+    "GROUP": 33,
+    "HUMAN": 22,
+    "INDIVIDUAL": 72,
+    "PAIR": 38,
+    "PATRON_PRAISE": 7,
+    "UNSPECIFIED": 1
+  },
+  "excluded_from_the_eligible_deity_population": {
+    "count": 29,
+    "human_patrons": 22,
+    "danastuti_gift_praise": 7,
+    "dedicated_mantras_affected": 171,
+    "entities": [
+      {
+        "entity_key": "VG:DEVATA:ASAMATIH",
+        "label_iast": "asamāti",
+        "label_en": "Asamati, a patron",
+        "structure": "HUMAN",
+        "dedicated_mantras": 5,
+        "curation_note": "A named human standing in the devata slot; no divine axis applies.",
+        "exclusion_class": "HUMAN_PATRON"
+      },
+      {
+        "entity_key": "VG:DEVATA:ASANGAH",
+        "label_iast": "asaṅga",
+        "label_en": "Asanga, a patron",
+        "structure": "HUMAN",
+        "dedicated_mantras": 5,
+        "curation_note": "A named human standing in the devata slot; no divine axis applies.",
+        "exclusion_class": "HUMAN_PATRON"
+      },
+      {
+        "entity_key": "VG:DEVATA:ATRIH",
+        "label_iast": "atri",
+        "label_en": "Atri",
+        "structure": "HUMAN",
+        "dedicated_mantras": 4,
+        "curation_note": "A named human rishi in the devata slot; no divine axis applies.",
+        "exclusion_class": "HUMAN_PATRON"
+      },
+      {
+        "entity_key": "VG:DEVATA:BRBUSTAKSA",
+        "label_iast": "bṛbus takṣan",
+        "label_en": "Brbu the carpenter",
+        "structure": "HUMAN",
+        "dedicated_mantras": 3,
+        "curation_note": "ARTISAN was considered and rejected: in this vocabulary it denotes the divine craftsmen Tvastr and the Rbhus, not a human carpenter. A named human in the devata slot takes no divine axis.",
+        "exclusion_class": "HUMAN_PATRON"
+      },
+      {
+        "entity_key": "VG:DEVATA:DARBHYAH-RATHAVITIH",
+        "label_iast": "rathavīti dārbhya",
+        "label_en": "Rathaviti Darbhya",
+        "structure": "HUMAN",
+        "dedicated_mantras": 3,
+        "curation_note": "A named human in the devata slot; no divine axis applies.",
+        "exclusion_class": "HUMAN_PATRON"
+      },
+      {
+        "entity_key": "VG:DEVATA:KESINAH",
+        "label_iast": "keśin",
+        "label_en": "the long-haired ones",
+        "structure": "HUMAN",
+        "dedicated_mantras": 8,
+        "curation_note": "HUMAN rather than GROUP by the precedence rule stated in the header: a human collective is still human. They are ecstatics, not deities, and the vocabulary has no axis for them.",
+        "exclusion_class": "HUMAN_PATRON"
+      },
+      {
+        "entity_key": "VG:DEVATA:MAITRATITHIRUPAMASRAVAH",
+        "label_iast": "maitrātithir upamaśravas",
+        "label_en": "Upamasravas son of Mitratithi",
+        "structure": "HUMAN",
+        "dedicated_mantras": 4,
+        "curation_note": "A named human in the devata slot; no divine axis applies.",
+        "exclusion_class": "HUMAN_PATRON"
+      },
+      {
+        "entity_key": "VG:DEVATA:PURURAVAH",
+        "label_iast": "purūravas",
+        "label_en": "Pururavas",
+        "structure": "HUMAN",
+        "dedicated_mantras": 9,
+        "curation_note": "A named mortal in the devata slot; no divine axis applies.",
+        "exclusion_class": "HUMAN_PATRON"
+      },
+      {
+        "entity_key": "VG:DEVATA:ROMASA",
+        "label_iast": "romaśā",
+        "label_en": "Romasa",
+        "structure": "HUMAN",
+        "dedicated_mantras": 1,
+        "curation_note": "A named human speaker in the devata slot; no divine axis applies.",
+        "exclusion_class": "HUMAN_PATRON"
+      },
+      {
+        "entity_key": "VG:DEVATA:SAHADEVYAH-SOMAKAH",
+        "label_iast": "sāhadevyaḥ somaka",
+        "label_en": "Somaka son of Sahadeva",
+        "structure": "HUMAN",
+        "dedicated_mantras": 2,
+        "curation_note": "A named human in the devata slot; no divine axis applies.",
+        "exclusion_class": "HUMAN_PATRON"
+      },
+      {
+        "entity_key": "VG:DEVATA:SVANAYO-BHAVAYAVYAH",
+        "label_iast": "svanayo bhāvayavya",
+        "label_en": "Svanaya Bhavayavya",
+        "structure": "HUMAN",
+        "dedicated_mantras": 6,
+        "curation_note": "HUMAN rather than PATRON_PRAISE, because this label names the man himself and not his gift, unlike the danastuti label for the same patron. No divine axis applies.",
+        "exclusion_class": "HUMAN_PATRON"
+      },
+      {
+        "entity_key": "VG:DEVATA:TARANTAMAHISI-SASIYASI",
+        "label_iast": "tarantamahiṣī śaśīyasī",
+        "label_en": "Sasiyasi, queen of Taranta",
+        "structure": "HUMAN",
+        "dedicated_mantras": 4,
+        "curation_note": "A named human in the devata slot; no divine axis applies.",
+        "exclusion_class": "HUMAN_PATRON"
+      },
+      {
+        "entity_key": "VG:DEVATA:VAIDADASCIH-PURUMILHAH",
+        "label_iast": "vaidadaściḥ purumīḻha",
+        "label_en": "Purumilha Vaidadasvi",
+        "structure": "HUMAN",
+        "dedicated_mantras": 1,
+        "curation_note": "A named human in the devata slot; no divine axis applies.",
+        "exclusion_class": "HUMAN_PATRON"
+      },
+      {
+        "entity_key": "VG:DEVATA:VAIDADASCIH-TARANTAH",
+        "label_iast": "vaidadaściḥ taranta",
+        "label_en": "Taranta Vaidadasvi",
+        "structure": "HUMAN",
+        "dedicated_mantras": 1,
+        "curation_note": "A named human in the devata slot; no divine axis applies.",
+        "exclusion_class": "HUMAN_PATRON"
+      },
+      {
+        "entity_key": "VG:DEVATA:VAMADEVAH",
+        "label_iast": "vāmadeva",
+        "label_en": "Vamadeva",
+        "structure": "HUMAN",
+        "dedicated_mantras": 4,
+        "curation_note": "A named human rishi in the devata slot; no divine axis applies. The probe returns a single token hit for the name, so no alias is listed.",
+        "exclusion_class": "HUMAN_PATRON"
+      },
+      {
+        "entity_key": "VG:DEVATA:VASISTHAH",
+        "label_iast": "vasiṣṭha",
+        "label_en": "Vasistha",
+        "structure": "HUMAN",
+        "dedicated_mantras": 5,
+        "curation_note": "A named human rishi in the devata slot; no divine axis applies. The registry spells the label vasisthah, with th where the usual orthography has stha; that is the source form and is preserved untouched, while label_iast gives the standard spelling.",
+        "exclusion_class": "HUMAN_PATRON"
+      },
+      {
+        "entity_key": "VG:DEVATA:VASISTHAPUTRAH",
+        "label_iast": "vasiṣṭhaputra",
+        "label_en": "the sons of Vasistha",
+        "structure": "HUMAN",
+        "dedicated_mantras": 9,
+        "curation_note": "HUMAN rather than GROUP by the precedence rule stated in the header: the plural is real, but a human collective is still human, and that is the more informative fact for a reader. No divine axis applies.",
+        "exclusion_class": "HUMAN_PATRON"
+      },
+      {
+        "entity_key": "VG:DEVATA:VASUKRAH",
+        "label_iast": "vasukra",
+        "label_en": "Vasukra",
+        "structure": "HUMAN",
+        "dedicated_mantras": 5,
+        "curation_note": "A named human rishi in the devata slot; no divine axis applies.",
+        "exclusion_class": "HUMAN_PATRON"
+      },
+      {
+        "entity_key": "VG:DEVATA:VISVAMITRAH",
+        "label_iast": "viśvāmitra",
+        "label_en": "Visvamitra",
+        "structure": "HUMAN",
+        "dedicated_mantras": 3,
+        "curation_note": "A named human rishi in the devata slot; no divine axis applies. Worth noting for anyone extending the aliases: visvamitrasya turns up as a containment hit under Mitra's alias mitrasya, so the two entities can contaminate each other and the mitra forms must never be attached here.",
+        "exclusion_class": "HUMAN_PATRON"
+      },
+      {
+        "entity_key": "VG:DEVATA:VISVAMITROPADHYAYAH",
+        "label_iast": "viśvāmitropādhyāya",
+        "label_en": "Visvamitra as teacher",
+        "structure": "HUMAN",
+        "dedicated_mantras": 1,
+        "curation_note": "A named human in the devata slot, kept separate from VG:DEVATA:VISVAMITRAH as the registry pins it. No divine axis applies.",
+        "exclusion_class": "HUMAN_PATRON"
+      },
+      {
+        "entity_key": "VG:DEVATA:YAJAMANAH",
+        "label_iast": "yajamāna",
+        "label_en": "the sacrificer",
+        "structure": "HUMAN",
+        "dedicated_mantras": 1,
+        "curation_note": "A human role rather than a name, but human all the same. PRIESTLY is refused: the yajamana is the patron of the rite, not one of its officiants.",
+        "exclusion_class": "HUMAN_PATRON"
+      },
+      {
+        "entity_key": "VG:DEVATA:YAJAMANAPATNI",
+        "label_iast": "yajamānapatnī",
+        "label_en": "the sacrificer's wife",
+        "structure": "HUMAN",
+        "dedicated_mantras": 1,
+        "curation_note": "A human role rather than a name, but human all the same, so HUMAN is used. No divine axis applies.",
+        "exclusion_class": "HUMAN_PATRON"
+      },
+      {
+        "entity_key": "VG:DEVATA:CAYAMANASYABHYAVARTINO-DANAM",
+        "label_iast": "cāyamānasyābhyāvartino dānam",
+        "label_en": "the gift of Abhyavartin son of Cayamana",
+        "structure": "PATRON_PRAISE",
+        "dedicated_mantras": 1,
+        "curation_note": "Praise directed at a human patron and his gift, not at a deity; no interpretive axis applies.",
+        "exclusion_class": "DANASTUTI_GIFT_PRAISE"
+      },
+      {
+        "entity_key": "VG:DEVATA:DANASTUTIH",
+        "label_iast": "dānastuti",
+        "label_en": "praise of a patron's gift",
+        "structure": "PATRON_PRAISE",
+        "dedicated_mantras": 50,
+        "curation_note": "The registry already classifies this as an abstract class rather than a deity, and its own note says the patron is unnamed. Praise of a human gift takes no interpretive axis.",
+        "exclusion_class": "DANASTUTI_GIFT_PRAISE"
+      },
+      {
+        "entity_key": "VG:DEVATA:DHANANNADANAM",
+        "label_iast": "dhanānnadāna",
+        "label_en": "the giving of wealth and food",
+        "structure": "PATRON_PRAISE",
+        "dedicated_mantras": 9,
+        "curation_note": "A gift label rather than a deity; no interpretive axis applies. PATRON_PRAISE is used even though no patron is named, because the label names the gift.",
+        "exclusion_class": "DANASTUTI_GIFT_PRAISE"
+      },
+      {
+        "entity_key": "VG:DEVATA:PAIJAVANASYA-SUDASO-DANASTUTIH",
+        "label_iast": "paijavanasya sudāso dānastuti",
+        "label_en": "praise of the gift of Sudas son of Pijavana",
+        "structure": "PATRON_PRAISE",
+        "dedicated_mantras": 4,
+        "curation_note": "A danastuti with the patron named; no interpretive axis applies.",
+        "exclusion_class": "DANASTUTI_GIFT_PRAISE"
+      },
+      {
+        "entity_key": "VG:DEVATA:RAJASTUTIH",
+        "label_iast": "rājastuti",
+        "label_en": "praise of a king",
+        "structure": "PATRON_PRAISE",
+        "dedicated_mantras": 11,
+        "curation_note": "A king is a patron, so PATRON_PRAISE is used even though the word danastuti does not appear in the label. No interpretive axis applies.",
+        "exclusion_class": "DANASTUTI_GIFT_PRAISE"
+      },
+      {
+        "entity_key": "VG:DEVATA:SARNJAYASYA-PRASTOKASYA-DANASTUTIH",
+        "label_iast": "sārñjayasya prastokasya dānastuti",
+        "label_en": "praise of the gift of Prastoka Sarnjaya",
+        "structure": "PATRON_PRAISE",
+        "dedicated_mantras": 4,
+        "curation_note": "A danastuti with the patron named; no interpretive axis applies.",
+        "exclusion_class": "DANASTUTI_GIFT_PRAISE"
+      },
+      {
+        "entity_key": "VG:DEVATA:SVANAYAMYA-DANASTUTIH",
+        "label_iast": "svanayamya dānastuti",
+        "label_en": "praise of the gift of Svanaya",
+        "structure": "PATRON_PRAISE",
+        "dedicated_mantras": 7,
+        "curation_note": "A danastuti with the patron named; no interpretive axis applies.",
+        "exclusion_class": "DANASTUTI_GIFT_PRAISE"
+      }
+    ]
+  },
+  "abstract_labels_flagged_not_excluded": {
+    "count": 42,
+    "why_not_excluded": "an abstract noun in the devata slot is NOT automatically contamination. Sraddha, Manyu and Vac are abstractions and are genuine Vedic deities; abhisapa ('the curse') and adhyetrstuti ('praise of the reciter') are not. The distinction is a curation judgement and this agent does not make it silently. The list is handed to Agent 15 with each node's own curation_note.",
+    "entities": [
+      {
+        "entity_key": "VG:DEVATA:ABHISAPAH",
+        "label_iast": "abhiśāpa",
+        "label_en": "the curse",
+        "dedicated_mantras": 4,
+        "curation_note": "An abstract noun in the devata slot with nothing personified. The label names a condition, not an agent with a domain."
+      },
+      {
+        "entity_key": "VG:DEVATA:ADHYETRSTUTIH",
+        "label_iast": "adhyetṛstuti",
+        "label_en": "praise of the reciter",
+        "dedicated_mantras": 2,
+        "curation_note": "PATRON_PRAISE is withheld because no patron and no gift are named; this is praise of a reciter. No axis applies."
+      },
+      {
+        "entity_key": "VG:DEVATA:AGNERATMA",
+        "label_iast": "agnerātmā",
+        "label_en": "the self of Agni",
+        "dedicated_mantras": 3,
+        "curation_note": "The label is explicitly an aspect of Agni, which carries FIRE_MEDIUM across. The vocabulary has no term for aspect-of-a-deity, which is what this label actually is, so confidence is MEDIUM."
+      },
+      {
+        "entity_key": "VG:DEVATA:AKSAKITAVANINDA",
+        "label_iast": "akṣakitavanindā",
+        "label_en": "censure of the dice and the gambler",
+        "dedicated_mantras": 9,
+        "curation_note": "A theme rather than an addressee. No axis applies."
+      },
+      {
+        "entity_key": "VG:DEVATA:ALAKSMIGHNAH",
+        "label_iast": "alakṣmīghna",
+        "label_en": "the dispelling of ill fortune",
+        "dedicated_mantras": 2,
+        "curation_note": "One of the charm-purpose labels. The Anukramani names the purpose of the charm, not an agent with a domain, so no axis is asserted."
+      },
+      {
+        "entity_key": "VG:DEVATA:ANNAM",
+        "label_iast": "anna",
+        "label_en": "food",
+        "dedicated_mantras": 11,
+        "curation_note": "Food in the Vedic cult is the oblation, which is what RITUAL_SUBSTANCE records. The label is nonetheless a common noun rather than a named deity, so confidence is MEDIUM."
+      },
+      {
+        "entity_key": "VG:DEVATA:ASUNITIH",
+        "label_iast": "asunīti",
+        "label_en": "the conducting of the life-breath",
+        "dedicated_mantras": 2,
+        "curation_note": "The label literally names the conducting of the departed life, which is exactly what PSYCHOPOMP denotes. It is an act rather than an agent, so confidence is MEDIUM."
+      },
+      {
+        "entity_key": "VG:DEVATA:ATMA",
+        "label_iast": "ātman",
+        "label_en": "the self",
+        "dedicated_mantras": 30,
+        "curation_note": "An abstract noun and a philosophical term, not personified in the verse. No axis applies."
+      },
+      {
+        "entity_key": "VG:DEVATA:AVARTAMANAM-MANAH",
+        "label_iast": "āvartamānam manaḥ",
+        "label_en": "the returning mind",
+        "dedicated_mantras": 12,
+        "curation_note": "A charm-purpose label; the slot names the act, not an agent, so no axis is asserted."
+      },
+      {
+        "entity_key": "VG:DEVATA:BANDHVADINAM-HASTAH",
+        "label_iast": "bandhvādīnāṃ hastāḥ",
+        "label_en": "the hands of Bandhu and the others",
+        "dedicated_mantras": 1,
+        "curation_note": "A possessed body part in a genitive phrase, not a being, which is why ABSTRACT is used rather than GROUP despite the plural. No axis applies."
+      },
+      {
+        "entity_key": "VG:DEVATA:BHAVAVRTTAM",
+        "label_iast": "bhāvavṛtta",
+        "label_en": "the course of becoming",
+        "dedicated_mantras": 15,
+        "curation_note": "A theme of the verse rather than an addressee. No axis applies."
+      },
+      {
+        "entity_key": "VG:DEVATA:BHAVAVRTTHAM",
+        "label_iast": "bhāvavṛttha",
+        "label_en": "the course of becoming",
+        "dedicated_mantras": 7,
+        "curation_note": "A spelling variant of VG:DEVATA:BHAVAVRTTAM, kept as a separate entry because entity_key is pinned identity and this overlay may not merge registry entities. No axis applies."
+      },
+      {
+        "entity_key": "VG:DEVATA:BRAHMA",
+        "label_iast": "brahman",
+        "label_en": "the sacred formulation",
+        "dedicated_mantras": 1,
+        "curation_note": "Neuter brahman is the potent formulation, which is why SPEECH is used. This is the boundary case of that axis: elsewhere in this file SPEECH is reserved for deities whose domain is speech, and bare ritual utterances such as svahakrtayah get no axis at all. Deliberately not the later masculine Brahma the creator, who is post-Vedic."
+      },
+      {
+        "entity_key": "VG:DEVATA:DAKSINA",
+        "label_iast": "dakṣiṇā",
+        "label_en": "Daksina, the priestly fee",
+        "dedicated_mantras": 11,
+        "curation_note": "Structure is ABSTRACT because the label is the ordinary noun for the fee, but the hymn to her does treat her as an acting agent, which is what ABSTRACT_PERSONIFICATION records. The two fields disagreeing here is the taxonomy working as intended, not a defect."
+      },
+      {
+        "entity_key": "VG:DEVATA:DAMPATYASIPAH",
+        "label_iast": "dampatyāśipaḥ",
+        "label_en": "the blessings of the married pair",
+        "dedicated_mantras": 9,
+        "curation_note": "A ritual utterance, not an agent. SPEECH is reserved for deities whose domain is speech, so no axis is asserted."
+      },
+      {
+        "entity_key": "VG:DEVATA:DUHSVAPNANASANAH",
+        "label_iast": "duḥsvapnanāśana",
+        "label_en": "the dispelling of bad dreams",
+        "dedicated_mantras": 5,
+        "curation_note": "A charm-purpose label. The slot names the act, not an agent with a domain, so no axis is asserted."
+      },
+      {
+        "entity_key": "VG:DEVATA:GARBHASMADHANARUPO-ARTHAH",
+        "label_iast": "garbhasmādhānarūpo arthaḥ",
+        "label_en": "the matter in the form of implanting an embryo",
+        "dedicated_mantras": 6,
+        "curation_note": "A charm-purpose label; the slot names the act, not an agent, so no axis is asserted."
+      },
+      {
+        "entity_key": "VG:DEVATA:HOTRASISAH",
+        "label_iast": "hotrāśis",
+        "label_en": "the benedictions of the Hotr",
+        "dedicated_mantras": 1,
+        "curation_note": "A ritual utterance, not a deity of speech. SPEECH is reserved in this file for deities whose domain is speech, such as Vac, so no axis is asserted here. PRIESTLY was also considered and rejected: the utterance is not itself a priest."
+      },
+      {
+        "entity_key": "VG:DEVATA:JNANAM",
+        "label_iast": "jñāna",
+        "label_en": "knowledge",
+        "dedicated_mantras": 11,
+        "curation_note": "An abstract noun with no personification in the text. ABSTRACT_PERSONIFICATION is reserved for abstractions the hymns actually address as agents, such as Sraddha and Daksina, and this is not one of them."
+      },
+      {
+        "entity_key": "VG:DEVATA:KAH",
+        "label_iast": "ka",
+        "label_en": "Ka, the Who",
+        "dedicated_mantras": 11,
+        "curation_note": "A deliberate refusal. The Brahmanas answer the question by identifying Ka with Prajapati, and it would be easy to import that answer here, but it is post-Rigvedic exegesis and asserting it would dress a later reading as a textual fact. The label is left as what it is, an interrogative in the deity slot, with no axis."
+      },
+      {
+        "entity_key": "VG:DEVATA:KRSIH",
+        "label_iast": "kṛṣi",
+        "label_en": "ploughing",
+        "dedicated_mantras": 1,
+        "curation_note": "An activity rather than an agent, hence ABSTRACT. TERRESTRIAL is asserted because the whole content of the label is the working of the land, but it describes a domain rather than a deity, so confidence is MEDIUM."
+      },
+      {
+        "entity_key": "VG:DEVATA:LINGOKTAH",
+        "label_iast": "liṅgokta",
+        "label_en": "the deities indicated by the wording",
+        "dedicated_mantras": 3,
+        "curation_note": "This is metadata, not a deity: the index is deferring to the wording of the verse rather than assigning an addressee. It occupies a Devata node because the source put it in that column, and no axis can apply to it."
+      },
+      {
+        "entity_key": "VG:DEVATA:MANYUH",
+        "label_iast": "manyu",
+        "label_en": "Manyu, battle-fury",
+        "dedicated_mantras": 14,
+        "curation_note": "Structure is ABSTRACT because the label is the common noun for wrath, but the Atharvavedic hymns address him as an armed ally who goes before the fighter, which is the basis for WARRIOR alongside ABSTRACT_PERSONIFICATION. Confidence is MEDIUM because the martial reading rests on the Atharvaveda rather than on the Rigveda."
+      },
+      {
+        "entity_key": "VG:DEVATA:MAYABHEDAH",
+        "label_iast": "māyābheda",
+        "label_en": "the piercing of illusion",
+        "dedicated_mantras": 3,
+        "curation_note": "A theme rather than an addressee. No axis applies."
+      },
+      {
+        "entity_key": "VG:DEVATA:MRTYUH",
+        "label_iast": "mṛtyu",
+        "label_en": "Death",
+        "dedicated_mantras": 4,
+        "curation_note": "CHTHONIC and PSYCHOPOMP were both considered and refused. Mrtyu is addressed as a power to be turned aside, not as a ruler of an underworld and not as a guide of the dead, and giving him either axis would import a later infernal picture that these verses do not have."
+      },
+      {
+        "entity_key": "VG:DEVATA:NIRRTIH",
+        "label_iast": "nirṛti",
+        "label_en": "Nirrti, dissolution",
+        "dedicated_mantras": 4,
+        "curation_note": "Her name is the abstraction of undoing, which ABSTRACT_PERSONIFICATION records. CHTHONIC records her association with the nether region, which is stated in the later Vedic prose more firmly than in the Rigveda, so confidence is MEDIUM."
+      },
+      {
+        "entity_key": "VG:DEVATA:PATHYASVASTIH",
+        "label_iast": "pathyā svasti",
+        "label_en": "Pathya Svasti, well-being on the road",
+        "dedicated_mantras": 2,
+        "curation_note": "A personified abstraction, so ABSTRACT_PERSONIFICATION applies. There is no axis for travel or for the road; PSYCHOPOMP means the conducting of the dead and would be badly wrong here, so it is refused."
+      },
+      {
+        "entity_key": "VG:DEVATA:PITRMEDHAH",
+        "label_iast": "pitṛmedha",
+        "label_en": "the rite for the Fathers",
+        "dedicated_mantras": 8,
+        "curation_note": "Structure is ABSTRACT because the label names a rite, not a being. ANCESTRAL is asserted because the rite has no other content, but it describes the addressees of the rite rather than the label itself, so confidence is MEDIUM."
+      },
+      {
+        "entity_key": "VG:DEVATA:RATIH",
+        "label_iast": "rati",
+        "label_en": "the granting, or delight",
+        "dedicated_mantras": 6,
+        "curation_note": "The word carries both senses and the label does not choose between them, so no axis is asserted."
+      },
+      {
+        "entity_key": "VG:DEVATA:SACI",
+        "label_iast": "śacī",
+        "label_en": "Saci, might",
+        "dedicated_mantras": 6,
+        "curation_note": "Ambiguous between the abstract noun for power, which is the sense behind Indra's epithet sacipati, and the later personified consort of that name. Because the referent is unsettled, no axis is asserted and the structure follows the plainer reading of the word."
+      },
+      {
+        "entity_key": "VG:DEVATA:SAMVATSARAKALACAKRAM",
+        "label_iast": "saṃvatsarakālacakra",
+        "label_en": "the wheel of the year",
+        "dedicated_mantras": 1,
+        "curation_note": "A cosmological figure, not an agent. There is no axis for time or the calendar; DAWN_TIME is the division of the day and would be wrong for the year, so no axis is asserted."
+      },
+      {
+        "entity_key": "VG:DEVATA:SANJNANAM",
+        "label_iast": "sañjñāna",
+        "label_en": "concord",
+        "dedicated_mantras": 3,
+        "curation_note": "A theme rather than an addressee, and not personified anywhere in the verses, so ABSTRACT_PERSONIFICATION is refused as well."
+      },
+      {
+        "entity_key": "VG:DEVATA:SAPATNAGHNARUPO-ARTHAH",
+        "label_iast": "sapatnaghnarūpo arthaḥ",
+        "label_en": "the matter in the form of slaying a rival",
+        "dedicated_mantras": 5,
+        "curation_note": "A charm-purpose label; the slot names the intended effect, not an agent, so no axis is asserted."
+      },
+      {
+        "entity_key": "VG:DEVATA:SAPATNIBADHANARUPO-ARTHAH",
+        "label_iast": "sapatnībādhanarūpo arthaḥ",
+        "label_en": "the matter in the form of subduing a co-wife",
+        "dedicated_mantras": 6,
+        "curation_note": "A charm-purpose label; the slot names the intended effect, not an agent, so no axis is asserted."
+      },
+      {
+        "entity_key": "VG:DEVATA:SRADDHA",
+        "label_iast": "śraddhā",
+        "label_en": "Sraddha, Faith",
+        "dedicated_mantras": 5,
+        "curation_note": "One of the clearest personified abstractions in the corpus: the label is a common noun, which is why structure is ABSTRACT, but the hymn addresses her directly and asks her to enter the worshipper, which is what the axis records."
+      },
+      {
+        "entity_key": "VG:DEVATA:SUBANDHOJIVAH",
+        "label_iast": "subandhojīva",
+        "label_en": "the reviving of Subandhu",
+        "dedicated_mantras": 5,
+        "curation_note": "A purpose label built on a personal name, so ABSTRACT rather than HUMAN: the addressee is the act of revival, not the man. HEALER was considered and refused for the same reason it is refused on the disease-charm labels."
+      },
+      {
+        "entity_key": "VG:DEVATA:SURYAVIVAHAH",
+        "label_iast": "sūryāvivāha",
+        "label_en": "the wedding of Surya",
+        "dedicated_mantras": 11,
+        "curation_note": "An event, not a deity, which is what ABSTRACT is for. SOLAR is refused: the label names the wedding, and the bride already has her own entity in VG:DEVATA:SAVITRI-SURYA."
+      },
+      {
+        "entity_key": "VG:DEVATA:SVAHAKRTAYAH",
+        "label_iast": "svāhākṛti",
+        "label_en": "the svaha calls",
+        "dedicated_mantras": 9,
+        "curation_note": "A ritual utterance, and the file's boundary line is applied consistently: SPEECH belongs to deities whose domain is speech, not to the utterances themselves, so no axis is asserted here even though the apri sequence treats these calls as an addressee."
+      },
+      {
+        "entity_key": "VG:DEVATA:SVASTAYAH",
+        "label_iast": "svasti",
+        "label_en": "the blessings of well-being",
+        "dedicated_mantras": 1,
+        "curation_note": "A plural of abstract nouns, which by the header rule is ABSTRACT and not GROUP, since GROUP is for collectives of beings or objects. No axis applies."
+      },
+      {
+        "entity_key": "VG:DEVATA:VIVAVAHAMANTRAH",
+        "label_iast": "vivāhamantra",
+        "label_en": "the wedding verses",
+        "dedicated_mantras": 12,
+        "curation_note": "The verses themselves, not a deity of speech. SPEECH is reserved for deities whose domain is speech, so no axis is asserted, consistently with the svaha calls and the Hotr's benedictions."
+      },
+      {
+        "entity_key": "VG:DEVATA:YAKSMANASANAH",
+        "label_iast": "yakṣmanāśana",
+        "label_en": "the destruction of consumption",
+        "dedicated_mantras": 6,
+        "curation_note": "HEALER was seriously considered here, since the whole content of the label is the removal of disease. It is refused for consistency with the other charm-purpose labels: the slot names the intended act, not an agent who possesses a healing power, and the healers proper in this file are Rudra, the Asvins, the plants and the Waters. A reviewer who disagrees should change all the charm labels together, not this one alone."
+      },
+      {
+        "entity_key": "VG:DEVATA:SUNAH",
+        "label_iast": "śvan",
+        "label_en": "the dog",
+        "dedicated_mantras": 1,
+        "curation_note": "One of only two entries in this file with an UNSPECIFIED structure, and the reason is grammatical rather than religious: sunah is ambiguous between the genitive singular and the nominative plural of svan, so the label does not settle number and neither INDIVIDUAL nor GROUP can be read off it. A deified animal in either case, so no axis is asserted."
+      }
+    ]
+  },
+  "contamination_in_the_seer_namespace": {
+    "count": 113,
+    "by_kind": {
+      "ABSTRACTION": 21,
+      "COLLECTIVE": 3,
+      "DEITY": 58,
+      "DEITY_GROUP": 11,
+      "MYTHIC_BEING": 13,
+      "OBJECT": 2,
+      "PLANT_OR_ANIMAL": 5
+    },
+    "reading": "113 of the 729 :Rishi nodes are marked is_seer=false by the layer itself -- 58 deities, 21 abstractions, 13 mythic beings, 11 deity groups, 5 plants or animals, 3 collectives, 2 objects. They are correctly typed and they are NOT an unresolved-seer gap. Counting them as one inflates that gap by 113.",
+    "entities": [
+      {
+        "entity_key": "VG:RISHI:AV:BRAHMAN-9433",
+        "label_iast": "Brahman",
+        "non_seer_kind": "ABSTRACTION",
+        "registry_namespace": "AV_WHITNEY_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:AV:BRAHMAN-CANTIKAMAH-46F5",
+        "label_iast": "Brahman (çāntikāmaḥ)",
+        "non_seer_kind": "ABSTRACTION",
+        "registry_namespace": "AV_WHITNEY_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:AV:BRAHMAN-ETC-AS-61-FD43",
+        "label_iast": "Brahman (etc., as 61)",
+        "non_seer_kind": "ABSTRACTION",
+        "registry_namespace": "AV_WHITNEY_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:AV:BRAHMAN-FE95",
+        "label_iast": "Brahman (?)",
+        "non_seer_kind": "ABSTRACTION",
+        "registry_namespace": "AV_WHITNEY_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:AV:BRAHMAN-PACUPOSANAYA-62D7",
+        "label_iast": "Brahman (paçupoṣaṇāya)",
+        "non_seer_kind": "ABSTRACTION",
+        "registry_namespace": "AV_WHITNEY_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:AV:BRAHMAN-RAMYAN-GRHAN-VASTOSPATIN-APRARTHAYAT-FBE6",
+        "label_iast": "Brahman (ramyān gṛhān vāstospatīn aprārthayat)",
+        "non_seer_kind": "ABSTRACTION",
+        "registry_namespace": "AV_WHITNEY_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:AV:BRAHMAN-SAPATNAKSAYAKAMAH-F099",
+        "label_iast": "Brahman (sapatnakṣayakāmaḥ)",
+        "non_seer_kind": "ABSTRACTION",
+        "registry_namespace": "AV_WHITNEY_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:AV:CATANA-6A1E",
+        "label_iast": "Cātana",
+        "non_seer_kind": "ABSTRACTION",
+        "registry_namespace": "AV_WHITNEY_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:AV:CATANA-SAPATNAKSAYAKAMAH-78FE",
+        "label_iast": "Cātana (sapatnakṣayakāmaḥ)",
+        "non_seer_kind": "ABSTRACTION",
+        "registry_namespace": "AV_WHITNEY_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:AV:JAGADBIJAMPURUSA-63A1",
+        "label_iast": "Jagadbījampuruṣa",
+        "non_seer_kind": "ABSTRACTION",
+        "registry_namespace": "AV_WHITNEY_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:BRAHMA",
+        "label_iast": "brahma",
+        "non_seer_kind": "ABSTRACTION",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:PRAJAPATYO-HIRANYAGARBHAH",
+        "label_iast": "prājapatyo hiraṇyagarbhaḥ",
+        "non_seer_kind": "ABSTRACTION",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:PRAJAPATYO-YAJNA",
+        "label_iast": "prājapatyo yajña",
+        "non_seer_kind": "ABSTRACTION",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:YV:BRAHMA-SVAYAMBHU-C2B9",
+        "label_iast": "brahma(svayambhu-)",
+        "non_seer_kind": "ABSTRACTION",
+        "registry_namespace": "YV_VSM_RSISUCI"
+      },
+      {
+        "entity_key": "VG:RISHI:YV:HIRANYAGARBHA-FEE1",
+        "label_iast": "hiraṇyagarbha",
+        "non_seer_kind": "ABSTRACTION",
+        "registry_namespace": "YV_VSM_RSISUCI"
+      },
+      {
+        "entity_key": "VG:RISHI:YV:PRAJAPATYO-YAJNA-9319",
+        "label_iast": "prājāpatyo yajña",
+        "non_seer_kind": "ABSTRACTION",
+        "registry_namespace": "YV_VSM_RSISUCI"
+      },
+      {
+        "entity_key": "VG:RISHI:YV:SANKALPAH-SIVA-79C1",
+        "label_iast": "saṅkalpaḥ(śiva-)",
+        "non_seer_kind": "ABSTRACTION",
+        "registry_namespace": "YV_VSM_RSISUCI"
+      },
+      {
+        "entity_key": "VG:RISHI:YV:SIVASANKALPA-63FA",
+        "label_iast": "śivasaṅkalpa",
+        "non_seer_kind": "ABSTRACTION",
+        "registry_namespace": "YV_VSM_RSISUCI"
+      },
+      {
+        "entity_key": "VG:RISHI:YV:SVAYAMBHU-BRAHMA-1CF6",
+        "label_iast": "svayambhu brahma",
+        "non_seer_kind": "ABSTRACTION",
+        "registry_namespace": "YV_VSM_RSISUCI"
+      },
+      {
+        "entity_key": "VG:RISHI:YV:YAJNAH-PRAJAPATYO-2298",
+        "label_iast": "yajñaḥ(prājāpatyo-)",
+        "non_seer_kind": "ABSTRACTION",
+        "registry_namespace": "YV_VSM_RSISUCI"
+      },
+      {
+        "entity_key": "VG:RISHI:YV:YAJNAPURUSA-22F9",
+        "label_iast": "yajñapuruṣa",
+        "non_seer_kind": "ABSTRACTION",
+        "registry_namespace": "YV_VSM_RSISUCI"
+      },
+      {
+        "entity_key": "VG:RISHI:SAPTARSAYAH",
+        "label_iast": "saptarṣayaḥ",
+        "non_seer_kind": "COLLECTIVE",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:VATASANAH",
+        "label_iast": "vātaśanāḥ",
+        "non_seer_kind": "COLLECTIVE",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:YV:SAPTA-RSAYA-6408",
+        "label_iast": "sapta ṛṣaya",
+        "non_seer_kind": "COLLECTIVE",
+        "registry_namespace": "YV_VSM_RSISUCI"
+      },
+      {
+        "entity_key": "VG:RISHI:ADITIH",
+        "label_iast": "aditiḥ",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:ADITYO-VIVASVAN",
+        "label_iast": "ādityo vivasvān",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:AGNIH",
+        "label_iast": "agniḥ",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:AV:BHAGA-JAYAKAMAH-FE78",
+        "label_iast": "Bhaga (jāyākāmaḥ)",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "AV_WHITNEY_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:AV:BRHASPATI-0734",
+        "label_iast": "Bṛhaspati",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "AV_WHITNEY_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:AV:DRAVINODAS-3AAD",
+        "label_iast": "Draviṇodas",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "AV_WHITNEY_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:AV:NARAYANA-46BE",
+        "label_iast": "Nārāyaṇa",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "AV_WHITNEY_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:AV:PRAJAPATI-64EF",
+        "label_iast": "Prajāpati",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "AV_WHITNEY_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:AV:PRAJAPATI-BC67",
+        "label_iast": "Prajāpati (?)",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "AV_WHITNEY_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:AV:PRAJAPATI-KAMINIMANO-BHIMUKHIKARANAKAMAH-364E",
+        "label_iast": "Prajāpati (kāminīmano’ bhimukhīkaraṇakāmaḥ)",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "AV_WHITNEY_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:AV:RBHU-446C",
+        "label_iast": "Ṛbhu",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "AV_WHITNEY_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:AV:SAVITAR-DDB4",
+        "label_iast": "Savitar",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "AV_WHITNEY_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:AV:SAVITR-PUSTIKAMAH-45E8",
+        "label_iast": "Savitṛ (puṣṭīkāmaḥ)",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "AV_WHITNEY_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:AV:SAVITRI-SURYA-1AAA",
+        "label_iast": "Sāvitrī Sūryā",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "AV_WHITNEY_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:AV:TVASTAR-CB6D",
+        "label_iast": "Tvaṣṭar",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "AV_WHITNEY_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:AV:VARUNA-EB48",
+        "label_iast": "Varuṇa",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "AV_WHITNEY_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:AV:YAMA-A88F",
+        "label_iast": "Yama",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "AV_WHITNEY_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:CAKSUSO-AGNIH",
+        "label_iast": "cākṣuṣo agniḥ",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:GARBHAKARTA-TVASTA",
+        "label_iast": "garbhakartā tvaṣṭā",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:INDRAH",
+        "label_iast": "indraḥ",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:INDRANI",
+        "label_iast": "indrāṇī",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:INDRO-LABAH",
+        "label_iast": "indro labaḥ",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:MUSKAVAN-INDRAH",
+        "label_iast": "muṣkavān indraḥ",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:NARAYANAH",
+        "label_iast": "nārāyaṇaḥ",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:PARAMESTHI-PRAJAPATIH",
+        "label_iast": "parameṣṭhī prajāpatiḥ",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:PAVAKO-AGNIH",
+        "label_iast": "pāvako agniḥ",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:SAUCIKO-AGNIH",
+        "label_iast": "saucīko agniḥ",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:SAUCIKO-VAISVANARAH",
+        "label_iast": "saucīko vaiśvānaraḥ",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:SAUVIKO-AGNIH",
+        "label_iast": "sauvīko agniḥ",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:SAVITRI-SURYA",
+        "label_iast": "sāvitrī sūryā",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:VACYAH-PRAJAPATIH",
+        "label_iast": "vācyaḥ prajāpatiḥ",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:VAIKUNTHA-INDRAH",
+        "label_iast": "vaikuṇṭha indraḥ",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:VAIVASVATI-YAMI",
+        "label_iast": "vaivasvatī yamī",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:VAIVASVATO-YAMAH",
+        "label_iast": "vaivasvato yamaḥ",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:YV:AGNI-8FB4",
+        "label_iast": "agni",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "YV_VSM_RSISUCI"
+      },
+      {
+        "entity_key": "VG:RISHI:YV:ASVI-2BE8",
+        "label_iast": "aśvi",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "YV_VSM_RSISUCI"
+      },
+      {
+        "entity_key": "VG:RISHI:YV:ASVINAU-3DFF",
+        "label_iast": "aśvinau",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "YV_VSM_RSISUCI"
+      },
+      {
+        "entity_key": "VG:RISHI:YV:BRHASPATI-0AF3",
+        "label_iast": "bṛhaspati",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "YV_VSM_RSISUCI"
+      },
+      {
+        "entity_key": "VG:RISHI:YV:BRHASPATI-784A",
+        "label_iast": "bṛhaspatī",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "YV_VSM_RSISUCI"
+      },
+      {
+        "entity_key": "VG:RISHI:YV:DADHIKRAVA-2B5E",
+        "label_iast": "dadhikrāvā",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "YV_VSM_RSISUCI"
+      },
+      {
+        "entity_key": "VG:RISHI:YV:DAKSA-4773",
+        "label_iast": "dakṣa",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "YV_VSM_RSISUCI"
+      },
+      {
+        "entity_key": "VG:RISHI:YV:INDRA-FF5A",
+        "label_iast": "indra",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "YV_VSM_RSISUCI"
+      },
+      {
+        "entity_key": "VG:RISHI:YV:INDRABRHASPATI-189C",
+        "label_iast": "indrābṛhaspatī",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "YV_VSM_RSISUCI"
+      },
+      {
+        "entity_key": "VG:RISHI:YV:INDRAGNI-65CF",
+        "label_iast": "indrāgnī",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "YV_VSM_RSISUCI"
+      },
+      {
+        "entity_key": "VG:RISHI:YV:NARAYANA-5C0D",
+        "label_iast": "nārāyaṇa",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "YV_VSM_RSISUCI"
+      },
+      {
+        "entity_key": "VG:RISHI:YV:NARAYANAH-UTTARA-CC85",
+        "label_iast": "nārāyaṇaḥ(uttara)",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "YV_VSM_RSISUCI"
+      },
+      {
+        "entity_key": "VG:RISHI:YV:PARAMESTHI-PRAJAPATI-8D7D",
+        "label_iast": "parameṣṭhī prajāpati",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "YV_VSM_RSISUCI"
+      },
+      {
+        "entity_key": "VG:RISHI:YV:PARAMESTHI-PRAJAPATIRVA-DEVA-07BB",
+        "label_iast": "parameṣṭhī prajāpatirvā devā",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "YV_VSM_RSISUCI"
+      },
+      {
+        "entity_key": "VG:RISHI:YV:PRAJAPATI-2F3C",
+        "label_iast": "prajāpati",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "YV_VSM_RSISUCI"
+      },
+      {
+        "entity_key": "VG:RISHI:YV:PRAJAPATIH-PARAMESTHI-7C0A",
+        "label_iast": "prajāpatiḥ(parameṣṭhī-)",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "YV_VSM_RSISUCI"
+      },
+      {
+        "entity_key": "VG:RISHI:YV:PRAJAPATIRVA-DEVAH-PARAMESTHI-5D1D",
+        "label_iast": "prajāpatirvā devāḥ(parameṣṭhī-)",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "YV_VSM_RSISUCI"
+      },
+      {
+        "entity_key": "VG:RISHI:YV:SARASVATI-DAD6",
+        "label_iast": "sarasvatī",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "YV_VSM_RSISUCI"
+      },
+      {
+        "entity_key": "VG:RISHI:YV:SAVITA-BC55",
+        "label_iast": "savitā",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "YV_VSM_RSISUCI"
+      },
+      {
+        "entity_key": "VG:RISHI:YV:UTTARANARAYANA-11A3",
+        "label_iast": "uttaranārāyaṇa",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "YV_VSM_RSISUCI"
+      },
+      {
+        "entity_key": "VG:RISHI:YV:VARUNA-75BD",
+        "label_iast": "varuṇa",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "YV_VSM_RSISUCI"
+      },
+      {
+        "entity_key": "VG:RISHI:YV:VISVAKARMA-BHUVANAPUTRO-1707",
+        "label_iast": "viśvakarmā(bhuvanaputro-)",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "YV_VSM_RSISUCI"
+      },
+      {
+        "entity_key": "VG:RISHI:YV:VISVAKARMA-F944",
+        "label_iast": "viśvakarmā",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "YV_VSM_RSISUCI"
+      },
+      {
+        "entity_key": "VG:RISHI:YV:VIVASVAN-DAAE",
+        "label_iast": "vivasvān",
+        "non_seer_kind": "DEITY",
+        "registry_namespace": "YV_VSM_RSISUCI"
+      },
+      {
+        "entity_key": "VG:RISHI:AGNIVARUNASOMAH",
+        "label_iast": "agnivaruṇasomāḥ",
+        "non_seer_kind": "DEITY_GROUP",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:DEVAH",
+        "label_iast": "devāḥ",
+        "non_seer_kind": "DEITY_GROUP",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:DEVAJAMAYAH-INDRAMATARAH",
+        "label_iast": "devajāmayaḥ indramātaraḥ",
+        "non_seer_kind": "DEITY_GROUP",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:MARUTAH",
+        "label_iast": "marutaḥ",
+        "non_seer_kind": "DEITY_GROUP",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:NADYAH",
+        "label_iast": "nadyaḥ",
+        "non_seer_kind": "DEITY_GROUP",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:YV:ADITYA-DEVA-F0F8",
+        "label_iast": "ādityā devā",
+        "non_seer_kind": "DEITY_GROUP",
+        "registry_namespace": "YV_VSM_RSISUCI"
+      },
+      {
+        "entity_key": "VG:RISHI:YV:ADITYA-DEVA-VA-41FC",
+        "label_iast": "ādityā devā vā",
+        "non_seer_kind": "DEITY_GROUP",
+        "registry_namespace": "YV_VSM_RSISUCI"
+      },
+      {
+        "entity_key": "VG:RISHI:YV:DEVA-C916",
+        "label_iast": "devā",
+        "non_seer_kind": "DEITY_GROUP",
+        "registry_namespace": "YV_VSM_RSISUCI"
+      },
+      {
+        "entity_key": "VG:RISHI:YV:DEVA-VA-31DE",
+        "label_iast": "devā vā",
+        "non_seer_kind": "DEITY_GROUP",
+        "registry_namespace": "YV_VSM_RSISUCI"
+      },
+      {
+        "entity_key": "VG:RISHI:YV:VISVADEVA-03F4",
+        "label_iast": "viśvadeva",
+        "non_seer_kind": "DEITY_GROUP",
+        "registry_namespace": "YV_VSM_RSISUCI"
+      },
+      {
+        "entity_key": "VG:RISHI:YV:VISVEDEVA-6992",
+        "label_iast": "viśvedevā",
+        "non_seer_kind": "DEITY_GROUP",
+        "registry_namespace": "YV_VSM_RSISUCI"
+      },
+      {
+        "entity_key": "VG:RISHI:ARBUDAH-SARPAH",
+        "label_iast": "arbudaḥ sārpaḥ",
+        "non_seer_kind": "MYTHIC_BEING",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:AV:GARUTMAN-8012",
+        "label_iast": "Garutman",
+        "non_seer_kind": "MYTHIC_BEING",
+        "registry_namespace": "AV_WHITNEY_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:GANDHARVO-VISVAVASUH",
+        "label_iast": "gandharvo viśvāvasuḥ",
+        "non_seer_kind": "MYTHIC_BEING",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:KADRAVEYAH-SARPAH-ARBUDAH",
+        "label_iast": "kādraveyaḥ sarpaḥ arbudaḥ",
+        "non_seer_kind": "MYTHIC_BEING",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:PANAYAH-ASURAH",
+        "label_iast": "paṇayaḥ asurāḥ",
+        "non_seer_kind": "MYTHIC_BEING",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:SARAMA",
+        "label_iast": "saramā",
+        "non_seer_kind": "MYTHIC_BEING",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:SARPA-AIRAVATO-JARATKARNAH",
+        "label_iast": "sārpa airāvato jaratkarṇaḥ",
+        "non_seer_kind": "MYTHIC_BEING",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:SARPARAJNI",
+        "label_iast": "sārparājñī",
+        "non_seer_kind": "MYTHIC_BEING",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:URVASI",
+        "label_iast": "urvaśī",
+        "non_seer_kind": "MYTHIC_BEING",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:VRSAKAPIH",
+        "label_iast": "vṛṣākapiḥ",
+        "non_seer_kind": "MYTHIC_BEING",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:YV:KADRUH-SARPARAJNI-32D7",
+        "label_iast": "kadrūḥ(sarparājñī-)",
+        "non_seer_kind": "MYTHIC_BEING",
+        "registry_namespace": "YV_VSM_RSISUCI"
+      },
+      {
+        "entity_key": "VG:RISHI:YV:SARPARAJNI-KADRU-7786",
+        "label_iast": "sarparājñī kadrū",
+        "non_seer_kind": "MYTHIC_BEING",
+        "registry_namespace": "YV_VSM_RSISUCI"
+      },
+      {
+        "entity_key": "VG:RISHI:YV:VISVAVASU-2F62",
+        "label_iast": "viśvāvasu",
+        "non_seer_kind": "MYTHIC_BEING",
+        "registry_namespace": "YV_VSM_RSISUCI"
+      },
+      {
+        "entity_key": "VG:RISHI:JUHUH",
+        "label_iast": "juhūḥ",
+        "non_seer_kind": "OBJECT",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:SIKATA-NIVAVARI",
+        "label_iast": "sikatā nivāvarī",
+        "non_seer_kind": "OBJECT",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:AKRSTA-MASAH",
+        "label_iast": "akṛṣṭā māṣāḥ",
+        "non_seer_kind": "PLANT_OR_ANIMAL",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:AV:KAPINJALA-648D",
+        "label_iast": "Kapiñjala",
+        "non_seer_kind": "PLANT_OR_ANIMAL",
+        "registry_namespace": "AV_WHITNEY_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:GODHA",
+        "label_iast": "godhā",
+        "non_seer_kind": "PLANT_OR_ANIMAL",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:PRSNAYO-AJAH",
+        "label_iast": "pṛśnayo ajāḥ",
+        "non_seer_kind": "PLANT_OR_ANIMAL",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      },
+      {
+        "entity_key": "VG:RISHI:SARNGAH",
+        "label_iast": "śārṅgāḥ",
+        "non_seer_kind": "PLANT_OR_ANIMAL",
+        "registry_namespace": "RV_WSC2023_ANUKRAMANI"
+      }
+    ]
+  },
+  "contamination_in_the_metre_namespace": {
+    "count_chandas_entities": 17,
+    "count_edges": 20,
+    "finding": "17 :Chandas entities carrying 20 HAS_CHANDAS edges are not metre names. They are un-split bracket fragments in which a PER-VERSE DEVATA exception ran into the metre list, e.g. 'mantroktadevatya. anustubham: 1. bhurik tristubh' and 'raudryau: 2. anustubh'. The builder names this residual in its own docstring and leaves it deliberately. This agent has now staged the devata halves as verse-scope ascriptions; the metre halves are still fused and the 17 entities still stand in the Chandas namespace.",
+    "edges": [
+      {
+        "passage": "VG:AV:SAU:K03:S029:V008",
+        "entity_type": "MANTRA",
+        "chandas_key": "VG:CHANDAS:AV:BHAUMI-ANUSTUBHAM-1-3-PATHYAPANKTI-3126",
+        "value": "bhāumī. ānuṣṭubham: 1, 3. pathyāpan̄kti"
+      },
+      {
+        "passage": "VG:AV:SAU:K05:S003:V008",
+        "entity_type": "MANTRA",
+        "chandas_key": "VG:CHANDAS:AV:AINDRI-TRAISTUBHAM-2-BHURIJ-E5EA",
+        "value": "āindrī. trāiṣṭubham: 2. bhurij"
+      },
+      {
+        "passage": "VG:AV:SAU:K05:S003:V011",
+        "entity_type": "MANTRA",
+        "chandas_key": "VG:CHANDAS:AV:AINDRI-TRAISTUBHAM-2-BHURIJ-E5EA",
+        "value": "āindrī. trāiṣṭubham: 2. bhurij"
+      },
+      {
+        "passage": "VG:AV:SAU:K05:S006",
+        "entity_type": "HYMN",
+        "chandas_key": "VG:CHANDAS:AV:SARVATMAKAM-RUDRAM-TRAISTUBHAM-2-ANUSTUBH-B201",
+        "value": "sarvātmakaṁ rudram. trāiṣṭubham: 2. anuṣṭubh"
+      },
+      {
+        "passage": "VG:AV:SAU:K05:S008",
+        "entity_type": "HYMN",
+        "chandas_key": "VG:CHANDAS:AV:AINDRYAS-ANUSTUBHAM-2-3-AV-6-P-JAGATI-1341",
+        "value": "āindryas. ānuṣṭubham: 2. 3-av. 6-p. jagatī"
+      },
+      {
+        "passage": "VG:AV:SAU:K05:S026:V009",
+        "entity_type": "MANTRA",
+        "chandas_key": "VG:CHANDAS:AV:3-P-PIPILIKAMADHYA-PURAUSNIH-1-11-EKAVASANA-2657",
+        "value": "3-p. pipīlikamadhyā purauṣṇih: 1-11. ekāvasāna"
+      },
+      {
+        "passage": "VG:AV:SAU:K06:S051:V003",
+        "entity_type": "MANTRA",
+        "chandas_key": "VG:CHANDAS:AV:VARUNASTUTI-TRAISTUBHAM-1-GAYATRI-4B5D",
+        "value": "varuṇastuti. trāiṣṭubham: 1. gāyatrī"
+      },
+      {
+        "passage": "VG:AV:SAU:K06:S055:V002",
+        "entity_type": "MANTRA",
+        "chandas_key": "VG:CHANDAS:AV:RAUDRYAU-2-TRISTUBH-AC19",
+        "value": "rāudryāu: 2. triṣṭubh"
+      },
+      {
+        "passage": "VG:AV:SAU:K06:S055:V003",
+        "entity_type": "MANTRA",
+        "chandas_key": "VG:CHANDAS:AV:RAUDRYAU-2-TRISTUBH-AC19",
+        "value": "rāudryāu: 2. triṣṭubh"
+      },
+      {
+        "passage": "VG:AV:SAU:K06:S056:V002",
+        "entity_type": "MANTRA",
+        "chandas_key": "VG:CHANDAS:AV:RAUDRYAU-2-ANUSTUBH-7C91",
+        "value": "rāudryāu: 2. anuṣṭubh"
+      },
+      {
+        "passage": "VG:AV:SAU:K06:S056:V003",
+        "entity_type": "MANTRA",
+        "chandas_key": "VG:CHANDAS:AV:RAUDRYAU-2-ANUSTUBH-7C91",
+        "value": "rāudryāu: 2. anuṣṭubh"
+      },
+      {
+        "passage": "VG:AV:SAU:K06:S063:V004",
+        "entity_type": "MANTRA",
+        "chandas_key": "VG:CHANDAS:AV:AGNEYI-JAGATAM-1-ATIJAGATIGARBHA-900C",
+        "value": "āgneyī. jāgatam: 1. atijagatīgarbhā"
+      },
+      {
+        "passage": "VG:AV:SAU:K06:S071:V003",
+        "entity_type": "MANTRA",
+        "chandas_key": "VG:CHANDAS:AV:VAICVADEVI-JAGATYAM-3-TRISTUBH-5A74",
+        "value": "vāiçvadevī. jāgatyam: 3. triṣṭubh"
+      },
+      {
+        "passage": "VG:AV:SAU:K06:S096:V003",
+        "entity_type": "MANTRA",
+        "chandas_key": "VG:CHANDAS:AV:SAUMYA-ANUSTUBHAM-3-3-P-VIRAN-NAMA-GAYATRI-1454",
+        "value": "sāumyā. ānuṣṭubham: 3. 3-p. virāṇ nāma gāyatrī"
+      },
+      {
+        "passage": "VG:AV:SAU:K06:S099:V003",
+        "entity_type": "MANTRA",
+        "chandas_key": "VG:CHANDAS:AV:SAUMYA-SAVITRI-CA-ANUSTUBHAM-3-BHURIG-BRHATI-7B05",
+        "value": "sāumyā sāvitrī ca. ānuṣṭubham: 3. bhurig bṛhatī"
+      },
+      {
+        "passage": "VG:AV:SAU:K07:S012:V004",
+        "entity_type": "MANTRA",
+        "chandas_key": "VG:CHANDAS:AV:MANTROKTADEVATYA-ANUSTUBHAM-1-BHURIK-TRISTUBH-D1B1",
+        "value": "mantroktadevatyā. anuṣṭubham: 1. bhurik triṣṭubh"
+      },
+      {
+        "passage": "VG:AV:SAU:K07:S056:V004",
+        "entity_type": "MANTRA",
+        "chandas_key": "VG:CHANDAS:AV:BRAHMANASPATYA-ANUSTUBHAM-4-VIRATPRASTARAPANKTI-5B81",
+        "value": "brāhmaṇaspatyā. ānuṣṭubham: 4. virāṭprastārapan̄kti"
+      },
+      {
+        "passage": "VG:AV:SAU:K07:S080:V003",
+        "entity_type": "MANTRA",
+        "chandas_key": "VG:CHANDAS:AV:PRAJAPATYA-TRAISTUBHAM-2-ANUSTUBH-6B49",
+        "value": "prājāpatyā. trāiṣṭubham: 2. anuṣṭubh"
+      },
+      {
+        "passage": "VG:AV:SAU:K07:S084:V001",
+        "entity_type": "MANTRA",
+        "chandas_key": "VG:CHANDAS:AV:AGNEYI-TRAISTUBHAM-1-JAGATI-F59B",
+        "value": "āgneyī. trāiṣṭubham: 1. jagatī"
+      },
+      {
+        "passage": "VG:AV:SAU:K12:S001:V022",
+        "entity_type": "MANTRA",
+        "chandas_key": "VG:CHANDAS:AV:3-AV-6-P-VIRAD-ATIJAGATI-24-5-P-VIRAD-ATIJAGATI-D77A",
+        "value": "3-av. 6-p. virāḍ atijagatī: 24. 5-p. virāḍ atijagatī"
+      }
+    ]
+  }
+}

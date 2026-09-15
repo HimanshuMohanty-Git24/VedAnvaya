@@ -1,0 +1,48 @@
+{
+  "question": "How many of the 1,844 Kauthuma arcika verses have defensible audio?",
+  "answer": 0,
+  "answer_is_a_verified_zero_not_an_unassessed_zero": true,
+  "assessed_population": 1844,
+  "assessed_set_definition": "Every canonical_key carrying a WIKISOURCE_SA_RUNNING_SAMHITA_NUMBER citation, i.e. all 1,844 released arcika verses. Each was tested against every one of the 475 checksummed Commons recordings and against the four candidate sources named by reconnaissance.",
+  "per_collection": {
+    "ARANYA": 55,
+    "CHANDA": 585,
+    "MAHANAMNYA": 10,
+    "UTTARA": 1194
+  },
+  "why_zero": [
+    {
+      "candidate": "Wikimedia Commons, 475 Ogg files",
+      "fetched_and_checksummed": 475,
+      "disposition": "REFUSED for verse audio",
+      "reason": "All 475 are gana performances. Exactly 6 are transcluded from an arcika page, and all 6 sit on a CONTAINER page (an ardha or a dasati), never on a verse. Their durations are 81-399s over containers holding many verses and no source states a boundary inside any of them. Campaign rule 4 forbids attaching a long recording to an exact mantra without verified boundaries, so they are staged at container scope and at container scope only."
+    },
+    {
+      "candidate": "IISH IISHSamaVeda, 64 clips, 43.75h",
+      "fetched_and_checksummed": 0,
+      "disposition": "REFUSED",
+      "reason": "archive.org item metadata carries NO licenseurl and NO rights field - re-verified in this pass. Recension unstated; Kerala Samavedic tradition is substantially Jaiminiya. Also gana, not arcika."
+    },
+    {
+      "candidate": "Vedic Heritage / IGNCA, 158 files",
+      "disposition": "OUT OF SCOPE",
+      "reason": "PERMISSION_REQUIRED and already removed from this product by prior decision."
+    },
+    {
+      "candidate": "vedamu.org",
+      "disposition": "REFUSED",
+      "reason": "The operator's own terms are 'open to listen, and not to download'."
+    },
+    {
+      "candidate": "shaivam.org/audio-gallery/sama-veda/",
+      "disposition": "UNRESOLVED",
+      "reason": "Returns HTTP 403 to automated requests; no bypass attempted. Still the best value-per-minute human check in this domain."
+    }
+  ],
+  "what_the_arcika_verses_DID_get": {
+    "verses_with_a_notation_layer": 1136,
+    "verses_with_a_gana_rendering_link": 332,
+    "verses_with_neither": 628,
+    "verses_with_verse_scoped_audio": 0
+  }
+}

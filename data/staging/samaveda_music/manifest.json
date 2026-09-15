@@ -1,0 +1,188 @@
+{
+  "domain": "samaveda_music",
+  "agent": 5,
+  "schema_version": "1.0",
+  "algorithm_version": "samaveda-music-1.0.0",
+  "created_at": "2026-09-15T07:30:14Z",
+  "code_commit": "564d43fd5f62f892fb565693dcd3c02c5d36893c",
+  "config_hash": "52a2a69ed5bc47a5cdc24d37622fb2dc6436ca01fafa86753301b8e48b82e0be",
+  "source_snapshot_ids": [
+    "WIKISOURCE_SA.SV.KAU.SASVARA_PURNA",
+    "WIKISOURCE_SA.SV.KAU.GANA",
+    "COMMONS.SV.KAU.SAMAN.AUDIO",
+    "IISH.SV.GANA.RECORDING"
+  ],
+  "files": [
+    {
+      "path": "rows.jsonl",
+      "sha256": "c56169455380d625f8be58b83bf325def7086542efc6a18946f16b52c69f858d",
+      "rows": 1471,
+      "bytes": 4845611
+    },
+    {
+      "path": "sources.jsonl",
+      "sha256": "e4d496b171e4d0f97ef6d28d8a65726eaa103b5d79dc0259408487bb42e297fa",
+      "rows": 4,
+      "bytes": 3311
+    },
+    {
+      "path": "rejected.jsonl",
+      "sha256": "2d02c156d4181326eee3f001d5c393005e30620e902b115b9601ca6d6588fec2",
+      "rows": 724,
+      "bytes": 366799
+    },
+    {
+      "path": "gana_works.jsonl",
+      "sha256": "f33d3cbcb2005e4a486697643e244aa67e93573df8fc8938a53d38dafa7cfb70",
+      "rows": 4,
+      "bytes": 5029
+    },
+    {
+      "path": "gana_units.jsonl",
+      "sha256": "af81c0574cc833a1f19e4d1cd0aa4e6adb5007b90edb509c8c17c0e185fec9c9",
+      "rows": 657,
+      "bytes": 1524383
+    },
+    {
+      "path": "performances.jsonl",
+      "sha256": "eff5334f10c8edd5e2521fec9c0ad01d2c46deb8a544507c6d75ba96dd04d368",
+      "rows": 475,
+      "bytes": 1174311
+    },
+    {
+      "path": "proofs/arcika-verse-audio-absence.json",
+      "sha256": "ab1ffa2af869ef900da84fa1613d168b212a7509a151e8aeb95e213fcb498028",
+      "rows": null,
+      "bytes": 2380
+    },
+    {
+      "path": "proofs/cue-index.md",
+      "sha256": "7a8a2a97c7c0309d5e3950cb06b5cd44f78a9320936746c79287459a69b9b324",
+      "rows": null,
+      "bytes": 4693
+    },
+    {
+      "path": "proofs/listening-review.json",
+      "sha256": "cb20a930ca9efa75a5a2e179ff3f51a7857021940390ea4d95ba24fa214cc92a",
+      "rows": null,
+      "bytes": 2793
+    },
+    {
+      "path": "proofs/notation-codepoint-census.json",
+      "sha256": "62b69ff9fe09b5c83bd45fddc9e7cc171be2800bf1062fa98bd54f9b35b9c2a6",
+      "rows": null,
+      "bytes": 5679
+    },
+    {
+      "path": "proofs/qa-report.json",
+      "sha256": "a10b2a8fed25498eaf00d98e9e3320c29b377a206360ee9e62605f03e9c88c2d",
+      "rows": null,
+      "bytes": 3231
+    },
+    {
+      "path": "proofs/recension.md",
+      "sha256": "ba8a85cf0e97bd318739746fc7a833cef399793b875dd8b309e59c6ff1d7fcd6",
+      "rows": null,
+      "bytes": 3122
+    }
+  ],
+  "counts": {
+    "candidates_considered": 2195,
+    "accepted": 1471,
+    "rejected": 16,
+    "verified_zero": 1844,
+    "not_applicable": 0,
+    "unresolved": 708
+  },
+  "closes_gaps": [
+    "GAP-SAMAVEDA_MUSIC-002"
+  ],
+  "advances_gaps": [
+    "GAP-AUDIO-001",
+    "GAP-SAMAVEDA_MUSIC-001",
+    "GAP-MORPHOLOGY-006"
+  ],
+  "qa": {
+    "sampled": 11193,
+    "sample_method": "both",
+    "defects_found": 0,
+    "human_reviewed": 0,
+    "detail": {
+      "checks_run": 12,
+      "row_level_checks_are_exhaustive_not_sampled": true,
+      "records_evaluated_across_all_checks": 11193,
+      "seeded_random_sample": {
+        "size": 60,
+        "seed": 20260915,
+        "defects": 0
+      },
+      "adversarial_sample": {
+        "target": "the 40 shortest arcika verses carrying a gana rendering, where text containment is likeliest to match by accident",
+        "size": 40,
+        "defects": 0
+      },
+      "stratified_by": [
+        "arcika collection",
+        "gana book",
+        "licence"
+      ],
+      "listening_review_population": 0,
+      "listening_review_note": "See proofs/listening-review.json. Zero minutes were heard; no row claims aural verification.",
+      "independence": "The gana-rendering join was re-derived from the LIVE GRAPH's own stored arcika text (495/495), and the graph's text was checked against the canonical file it came from (1,844/1,844) so the re-derivation is not circular."
+    }
+  },
+  "row_kinds": {
+    "ARCIKA_NOTATION": 1136,
+    "GANA_RENDERING": 332,
+    "_musicalized_as_edges": 495,
+    "GANA_PERFORMANCE_AT_ARCIKA_CONTAINER_SCOPE": 3,
+    "_container_scope_files": 6
+  },
+  "config": {
+    "tone_ranges": [
+      [
+        43232,
+        43249
+      ],
+      [
+        7376,
+        7393
+      ],
+      [
+        7401,
+        7409
+      ],
+      [
+        7412,
+        7417
+      ]
+    ],
+    "not_tone": [
+      769,
+      7402,
+      7404,
+      7410,
+      43250,
+      43251
+    ],
+    "normalisation": [
+      "strip_tone",
+      "A8F2/A8F3->0902",
+      "drop danda/space/digits/punct",
+      "final m-virama and n-virama -> anusvara"
+    ],
+    "arcika_join": "LCS_ORDER_PLUS_TEXT_EQUALITY",
+    "gana_join": "PRINTED_RUNNING_NUMBER_AND_VERSE_TEXT_CONTAINMENT",
+    "containment_min_normalised_chars": 25,
+    "arcika_verse_audio_policy": "REFUSED_NO_VERIFIED_BOUNDARIES"
+  },
+  "known_limitations": [
+    "0 of 1,844 arcika verses carry verse-scoped audio. This is a VERIFIED zero over an assessed population of 1,844, not an unassessed one. See proofs/arcika-verse-audio-absence.json.",
+    "708 of 1,844 arcika verses have no notation row: the accented witness's text differs from ours at those verses. They are staged as UNRESOLVED, not rejected, and each row says whether a near line exists (a witness disagreement) or not (a probable absence).",
+    "421 of 657 gana units carry no machine-readable notation; 555 of 657 carry only a page scan image. Only 86 carry inline Unicode svara marks.",
+    "The notation is recorded as DATA, not interpreted into pitch. The Kauthuma-school decipherment authority (van der Hoogt 1929) is not held; Wayne Howard 1988 is Jaiminiya and was deliberately not applied.",
+    "The running Samhita number -- the only join key between the arcika and the gana corpus -- exists in data/canonical/samaveda_arcika_v1/citations.jsonl for all 1,844 verses but is ABSENT from Neo4j (no Citation label, no source_locator on SV TextVersions). After import the MUSICALIZED_AS edges cannot be re-derived from the graph alone.",
+    "The four gana Work identities are PROPOSED_FOR_LEAD_ADJUDICATION. The Rahasyagana page is deliberately neither folded into Uhyagana nor minted as a fifth Work.",
+    "Zero files were listened to. Campaign section 22's 100% listening review is NOT satisfied and is not claimed."
+  ]
+}
