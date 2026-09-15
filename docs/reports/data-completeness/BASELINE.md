@@ -45,6 +45,8 @@ Counted as "mantras with at least one outgoing edge of the relevant type".
 | Translation | 10,502 | 0 | 1,903 | 4,878 |
 | Rishi | 10,534 | 0 | 1,960 | 4,542 |
 | Devata (`HAS_DEVATA`) | 10,552 | 0 | 0 | 0 |
+| Devata (`HAS_DEVATA_ASCRIPTION`) | 0 | 0 | 0 | 4,160 |
+| **Dedication, either mechanism** | **10,552** | **0** | **0** | **4,160** |
 | Chandas | 10,518 | 0 | 0 | 4,082 |
 | Semantic assertion | 2,542 | 0 | 0 | 0 |
 | Entity mention | 8,143 | 1,306 | 1,358 | 4,292 |
@@ -70,16 +72,70 @@ The brief stated 16,834 mapped and ~3,376 uncovered. Both VERIFIED.
 
 ## Notable structural findings already visible at baseline
 
-1. `HAS_DEVATA` exists for the Rigveda only. Dedication is unmodelled for SV, YV and AV —
-   three quarters of the recensions, 9,658 mantras.
+Findings 1 and 5 were corrected after Agent 2's independent audit. Both original
+statements are kept visible rather than quietly rewritten, because the way they were
+wrong is instructive.
+
+1. **CORRECTED.** This baseline first said dedication was unmodelled for SV, YV and AV --
+   9,658 mantras. That was wrong, and wrong in a way this project has been caught by
+   before: the attribution axis has more than one mechanism, and counting only the obvious
+   one under-reports the data that exists. `HAS_DEVATA` is indeed Rigveda-only, but the
+   Atharvaveda carries dedication through `HAS_DEVATA_ASCRIPTION` on 4,160 of its 5,839
+   mantras.
+
+   | Veda | Dedicated, either mechanism | Total | Unmodelled |
+   |---|---|---|---|
+   | RV | 10,552 (`HAS_DEVATA`) | 10,552 | 0 |
+   | SV | 0 | 1,844 | 1,844 |
+   | YV | 0 | 1,975 | 1,975 |
+   | AV | 4,160 (`HAS_DEVATA_ASCRIPTION`) | 5,839 | 1,679 |
+
+   True unmodelled dedication population: **5,498**, not 9,658. Any query on this
+   dimension must read both predicates.
+
 2. `HAS_SEMANTIC_ASSERTION` is Rigveda-only and covers 2,542 of 10,552 RV mantras
    (24.1%), so it is partial even there.
-3. `MENTIONS_LEMMA` is Rigveda-only.
-4. Chandas is absent for SV and YV entirely.
-5. Samaveda has zero translations, zero audio, zero attribution of any kind. It is
-   present as Sanskrit text, formula membership and entity mentions only.
+
+3. `MENTIONS_LEMMA` is Rigveda-only, and carries no run provenance at all -- neither the
+   6,560 Rigvedic positives nor the zeros elsewhere can be explained from the graph.
+
+4. Chandas is absent for SV and YV entirely; AV has 4,082 of 5,839.
+
+5. **CORRECTED.** Samaveda has zero translations, zero audio, zero Rishi, zero Devata and
+   zero Chandas. But it is not bare, as this baseline first implied: it also carries 1,035
+   mantras with `MENTIONS_DEVATA` and 1,677 with a parallel or reuse relation -- 90.9%,
+   the *highest* parallel coverage of the four recensions. The Samaveda's gap is in its
+   attribution, translation and audio layers specifically, not across the board.
 
 None of these five is a scope decision on record. Each is unfinished work.
+
+## The finding that constrains the whole campaign
+
+Section 32 of the campaign brief requires that optional dimensions reach 100% *assessed*,
+even where no positive result is expected. The graph cannot currently report that number.
+
+Run provenance (`run_id`, `pipeline_version`, `method`) is written only onto the artifact
+a run produced -- the edge, or the `SemanticAssertion` or `Formula` node. It is never
+written onto the `:Mantra` that was examined. A `:Mantra` carries 15 properties and none
+records an enrichment run, there is no assessed-set node, and the 1,072 `DerivedMetric`
+nodes hold aggregate distributions rather than examined populations.
+
+So for almost every dimension, "no edge" is indistinguishable between *assessed and
+found nothing* and *never assessed*. Recoverable state, per dimension:
+
+| Dimension | What can be recovered |
+|---|---|
+| Audio | Fully resolved -- the catalogue is an enumerated file, not an edge |
+| Entity mentions, `MENTIONS_DEVATA`, formula | Which *Vedas* a run touched; not which mantras |
+| Parallels | One run, subjects in RV/SV/AV; whether YV was assessed and rejected is not recorded |
+| Semantic assertion | Two runs, both RV |
+| Chandas, Rishi, Devata | Positives describe how they were derived, not who was examined |
+| Lemma | Nothing. No run_id, no pipeline_version, no method |
+
+This cannot be reconstructed from the current graph. It has to be written down at
+assessment time, which makes an assessed-set artifact a Wave 1 prerequisite rather than a
+reporting detail -- otherwise the campaign cannot honestly close section 32.
+
 
 ## Environment at baseline
 

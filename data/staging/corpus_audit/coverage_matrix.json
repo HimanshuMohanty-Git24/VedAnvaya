@@ -1,0 +1,1032 @@
+{
+  "artifact": "AGENT 2 corpus / structural metadata coverage matrix",
+  "measured": "2026-09-15",
+  "branch": "phase-data-completeness-v2",
+  "access": "READ ONLY (MATCH/RETURN only) against Neo4j bolt://localhost:7687 db=neo4j",
+  "graph_census": {
+    "nodes": 108779,
+    "relationships": 265295,
+    "mantras": 20210,
+    "passages": 22537,
+    "works": 4
+  },
+  "denominators": {
+    "RV": 10552,
+    "SV": 1844,
+    "YV": 1975,
+    "AV": 5839
+  },
+  "classification_legend": {
+    "LOGICALLY_EXPECTED": "Every canonical mantra should have this. Target 100%; any shortfall is a gap.",
+    "TRADITION_EXPECTED": "The tradition transmits this for the recension, so a shortfall is unfinished ingestion rather than a property of the text -- but it is not a logical necessity the way text or hierarchy is.",
+    "RECENSION_CONDITIONAL": "Only applicable where the recension's witness carries the layer at all. State N/A per Veda, never zero.",
+    "OPTIONAL_ASSESSED": "Not required per passage, but the assessed population is knowable because it is held outside the graph as an explicit catalog.",
+    "INHERENTLY_OPTIONAL": "No mantra is required to have a positive value. What must reach 100% is HAVING BEEN ASSESSED, which is the number the graph cannot supply."
+  },
+  "status_legend": {
+    "OBSERVED_VALUE": "A positive count measured from the live graph.",
+    "VERIFIED_ZERO": "Zero, and the graph or a measured registry record establishes the layer was examined and is genuinely absent.",
+    "NOT_APPLICABLE": "The recension's witness does not carry this layer.",
+    "NOT_ASSESSED": "Zero, and nothing records that the detection population ever included this Veda. NOT the same as VERIFIED_ZERO."
+  },
+  "dimensions": [
+    {
+      "dimension": "sanskrit_text",
+      "column": "sanskrit_nonempty",
+      "classification": "LOGICALLY_EXPECTED",
+      "measurement": "(:Mantra)-[:HAS_TEXT_VERSION]->(:TextVersion) with a non-empty trim(text_nfc). Text is NOT a Mantra property; it lives only on TextVersion.",
+      "per_veda": {
+        "RV": {
+          "numerator": 10552,
+          "denominator": 10552,
+          "percentage": 100.0,
+          "status": "OBSERVED_VALUE"
+        },
+        "SV": {
+          "numerator": 1844,
+          "denominator": 1844,
+          "percentage": 100.0,
+          "status": "OBSERVED_VALUE"
+        },
+        "YV": {
+          "numerator": 1975,
+          "denominator": 1975,
+          "percentage": 100.0,
+          "status": "OBSERVED_VALUE"
+        },
+        "AV": {
+          "numerator": 5839,
+          "denominator": 5839,
+          "percentage": 100.0,
+          "status": "OBSERVED_VALUE"
+        }
+      }
+    },
+    {
+      "dimension": "sanskrit_primary_role",
+      "column": "sanskrit_primary_role",
+      "classification": "LOGICALLY_EXPECTED",
+      "measurement": "As above but requiring text_role='PRIMARY_TEXT'. The Yajurveda's only Sanskrit layer carries role EXTRACTED_FROM_CONTAINER, which the TextRole enum says must never be selected as primary.",
+      "per_veda": {
+        "RV": {
+          "numerator": 10552,
+          "denominator": 10552,
+          "percentage": 100.0,
+          "status": "OBSERVED_VALUE"
+        },
+        "SV": {
+          "numerator": 1844,
+          "denominator": 1844,
+          "percentage": 100.0,
+          "status": "OBSERVED_VALUE"
+        },
+        "YV": {
+          "numerator": 0,
+          "denominator": 1975,
+          "percentage": 0.0,
+          "status": "VERIFIED_ZERO",
+          "note": "All 1,975 Yajurvedic Sanskrit layers carry text_role EXTRACTED_FROM_CONTAINER. The TextRole enum's own docstring forbids selecting that role as primary_sanskrit because doing so makes an interpretive segmentation canonical."
+        },
+        "AV": {
+          "numerator": 5839,
+          "denominator": 5839,
+          "percentage": 100.0,
+          "status": "OBSERVED_VALUE"
+        }
+      }
+    },
+    {
+      "dimension": "accent",
+      "column": "accent_measured_in_string",
+      "classification": "RECENSION_CONDITIONAL",
+      "measurement": "Measured from the characters of text_nfc, not from TextVersion.accented. Accent class = U+0951..U+0954, Vedic-Extensions/Devanagari-Extended codepoints whose Unicode NAME contains TONE/SVARITA/UDATTA/ANUDATTA, U+030D, U+0331, and U+0301/U+0300 only when the base character is a vowel (U+0301 on s/n/c is the palatal sibilant, not an accent).",
+      "per_veda": {
+        "RV": {
+          "numerator": 10552,
+          "denominator": 10552,
+          "percentage": 100.0,
+          "status": "OBSERVED_VALUE"
+        },
+        "SV": {
+          "numerator": 0,
+          "denominator": 1844,
+          "percentage": 0.0,
+          "status": "VERIFIED_ZERO",
+          "note": "Zero accent marks measured in all 1,844 strings, TextVersion.accented=false, and data/registry/text_versions.yaml records the same as a MEASURED finding that corrected an earlier registry claim."
+        },
+        "YV": {
+          "numerator": 1974,
+          "denominator": 1975,
+          "percentage": 99.95,
+          "status": "OBSERVED_VALUE"
+        },
+        "AV": {
+          "numerator": 5839,
+          "denominator": 5839,
+          "percentage": 100.0,
+          "status": "OBSERVED_VALUE"
+        }
+      }
+    },
+    {
+      "dimension": "pada_segmentation",
+      "column": "pada_segmentation",
+      "classification": "RECENSION_CONDITIONAL",
+      "measurement": "TextVersion with text_form='PADAPATHA' or text_role='PADAPATHA'. Zero such nodes exist in the graph for any Veda.",
+      "per_veda": {
+        "RV": {
+          "numerator": 0,
+          "denominator": 10552,
+          "percentage": 0.0,
+          "status": "NOT_ASSESSED",
+          "note": "data/registry/text_versions.yaml declares a VedaWeb PADAPATHA layer (text_form PADAPATHA, text_role PADAPATHA) and the RV Work node's scope property asserts padapatha IS carried as a text version. Neither is true of the graph: zero PADAPATHA TextVersion nodes exist. The layer was declared and never ingested."
+        },
+        "SV": {
+          "numerator": 0,
+          "denominator": 1844,
+          "percentage": 0.0,
+          "status": "NOT_APPLICABLE",
+          "note": "The Kauthuma arcika witness held here carries no padapatha."
+        },
+        "YV": {
+          "numerator": 0,
+          "denominator": 1975,
+          "percentage": 0.0,
+          "status": "NOT_APPLICABLE",
+          "note": "The Wikisource Vajasaneyi witness held here carries no padapatha."
+        },
+        "AV": {
+          "numerator": 0,
+          "denominator": 5839,
+          "percentage": 0.0,
+          "status": "NOT_APPLICABLE",
+          "note": "The GRETIL Saunaka artifacts held here carry no padapatha."
+        }
+      }
+    },
+    {
+      "dimension": "translation",
+      "column": "translation_any",
+      "classification": "LOGICALLY_EXPECTED",
+      "measurement": "(:Mantra)-[:HAS_TRANSLATION]->(:Translation), any alignment_level.",
+      "per_veda": {
+        "RV": {
+          "numerator": 10502,
+          "denominator": 10552,
+          "percentage": 99.53,
+          "status": "OBSERVED_VALUE"
+        },
+        "SV": {
+          "numerator": 0,
+          "denominator": 1844,
+          "percentage": 0.0,
+          "status": "NOT_ASSESSED",
+          "note": "Zero. Two Samavedic translation Source nodes exist (WIKISOURCE_GRIFFITH_SV, bulk_ingestion_status REVIEW_BEFORE_INGESTION) and neither has been ingested. The SV Work node states this explicitly: an SV zero in a translation-derived layer is an absent layer, not an absent text."
+        },
+        "YV": {
+          "numerator": 1903,
+          "denominator": 1975,
+          "percentage": 96.35,
+          "status": "OBSERVED_VALUE"
+        },
+        "AV": {
+          "numerator": 4878,
+          "denominator": 5839,
+          "percentage": 83.54,
+          "status": "OBSERVED_VALUE"
+        }
+      }
+    },
+    {
+      "dimension": "translation_mantra_aligned",
+      "column": "translation_mantra_aligned",
+      "classification": "LOGICALLY_EXPECTED",
+      "measurement": "As above but requiring Translation.alignment_level='MANTRA'. 158 Rigvedic mantras carry only a HYMN-level translation.",
+      "per_veda": {
+        "RV": {
+          "numerator": 10344,
+          "denominator": 10552,
+          "percentage": 98.03,
+          "status": "OBSERVED_VALUE"
+        },
+        "SV": {
+          "numerator": 0,
+          "denominator": 1844,
+          "percentage": 0.0,
+          "status": "NOT_ASSESSED",
+          "note": "Zero with no record that this Veda was ever in the detection population."
+        },
+        "YV": {
+          "numerator": 1903,
+          "denominator": 1975,
+          "percentage": 96.35,
+          "status": "OBSERVED_VALUE"
+        },
+        "AV": {
+          "numerator": 4878,
+          "denominator": 5839,
+          "percentage": 83.54,
+          "status": "OBSERVED_VALUE"
+        }
+      }
+    },
+    {
+      "dimension": "rishi",
+      "column": "rishi",
+      "classification": "TRADITION_EXPECTED",
+      "measurement": "(:Mantra)-[:HAS_RISHI]->(:Rishi).",
+      "per_veda": {
+        "RV": {
+          "numerator": 10534,
+          "denominator": 10552,
+          "percentage": 99.83,
+          "status": "OBSERVED_VALUE"
+        },
+        "SV": {
+          "numerator": 0,
+          "denominator": 1844,
+          "percentage": 0.0,
+          "status": "NOT_ASSESSED",
+          "note": "Zero HAS_RISHI, no container-level attribution either."
+        },
+        "YV": {
+          "numerator": 1960,
+          "denominator": 1975,
+          "percentage": 99.24,
+          "status": "OBSERVED_VALUE"
+        },
+        "AV": {
+          "numerator": 4542,
+          "denominator": 5839,
+          "percentage": 77.79,
+          "status": "OBSERVED_VALUE"
+        }
+      }
+    },
+    {
+      "dimension": "devata_has_devata",
+      "column": "devata_has",
+      "classification": "TRADITION_EXPECTED",
+      "measurement": "(:Mantra)-[:HAS_DEVATA]->(:Devata) strictly, excluding MENTIONS_DEVATA.",
+      "per_veda": {
+        "RV": {
+          "numerator": 10552,
+          "denominator": 10552,
+          "percentage": 100.0,
+          "status": "OBSERVED_VALUE"
+        },
+        "SV": {
+          "numerator": 0,
+          "denominator": 1844,
+          "percentage": 0.0,
+          "status": "NOT_ASSESSED",
+          "note": "No HAS_DEVATA edge and no HAS_DEVATA_ASCRIPTION edge for any non-Rigvedic mantra outside the Atharvaveda."
+        },
+        "YV": {
+          "numerator": 0,
+          "denominator": 1975,
+          "percentage": 0.0,
+          "status": "NOT_ASSESSED",
+          "note": "As SV."
+        },
+        "AV": {
+          "numerator": 0,
+          "denominator": 5839,
+          "percentage": 0.0,
+          "status": "NOT_ASSESSED",
+          "note": "Zero HAS_DEVATA, but dedication IS modelled for 4,160 Atharvavedic mantras through HAS_DEVATA_ASCRIPTION. Reading HAS_DEVATA alone reports a false zero."
+        }
+      }
+    },
+    {
+      "dimension": "devata_ascription",
+      "column": "devata_ascription",
+      "classification": "TRADITION_EXPECTED",
+      "measurement": "(:Mantra)-[:HAS_DEVATA_ASCRIPTION]->(:DevataAscription). A second, independent dedication mechanism used only by the Atharvaveda.",
+      "per_veda": {
+        "RV": {
+          "numerator": 0,
+          "denominator": 10552,
+          "percentage": 0.0,
+          "status": "NOT_APPLICABLE",
+          "note": "The Rigveda uses HAS_DEVATA instead; the two mechanisms are disjoint by Veda."
+        },
+        "SV": {
+          "numerator": 0,
+          "denominator": 1844,
+          "percentage": 0.0,
+          "status": "NOT_ASSESSED"
+        },
+        "YV": {
+          "numerator": 0,
+          "denominator": 1975,
+          "percentage": 0.0,
+          "status": "NOT_ASSESSED"
+        },
+        "AV": {
+          "numerator": 4160,
+          "denominator": 5839,
+          "percentage": 71.25,
+          "status": "OBSERVED_VALUE"
+        }
+      }
+    },
+    {
+      "dimension": "devata_any_dedication",
+      "column": "devata_any_dedication",
+      "classification": "TRADITION_EXPECTED",
+      "measurement": "HAS_DEVATA or HAS_DEVATA_ASCRIPTION. This is the union a reader means by 'is this verse's deity recorded'.",
+      "per_veda": {
+        "RV": {
+          "numerator": 10552,
+          "denominator": 10552,
+          "percentage": 100.0,
+          "status": "OBSERVED_VALUE"
+        },
+        "SV": {
+          "numerator": 0,
+          "denominator": 1844,
+          "percentage": 0.0,
+          "status": "NOT_ASSESSED",
+          "note": "Zero with no record that this Veda was ever in the detection population."
+        },
+        "YV": {
+          "numerator": 0,
+          "denominator": 1975,
+          "percentage": 0.0,
+          "status": "NOT_ASSESSED",
+          "note": "Zero with no record that this Veda was ever in the detection population."
+        },
+        "AV": {
+          "numerator": 4160,
+          "denominator": 5839,
+          "percentage": 71.25,
+          "status": "OBSERVED_VALUE"
+        }
+      }
+    },
+    {
+      "dimension": "chandas",
+      "column": "chandas",
+      "classification": "TRADITION_EXPECTED",
+      "measurement": "(:Mantra)-[:HAS_CHANDAS]->(:Chandas).",
+      "per_veda": {
+        "RV": {
+          "numerator": 10518,
+          "denominator": 10552,
+          "percentage": 99.68,
+          "status": "OBSERVED_VALUE"
+        },
+        "SV": {
+          "numerator": 0,
+          "denominator": 1844,
+          "percentage": 0.0,
+          "status": "NOT_ASSESSED",
+          "note": "Zero, with no run or source record of metre having been looked for."
+        },
+        "YV": {
+          "numerator": 0,
+          "denominator": 1975,
+          "percentage": 0.0,
+          "status": "NOT_ASSESSED",
+          "note": "Zero, with no run or source record of metre having been looked for."
+        },
+        "AV": {
+          "numerator": 4082,
+          "denominator": 5839,
+          "percentage": 69.91,
+          "status": "OBSERVED_VALUE"
+        }
+      }
+    },
+    {
+      "dimension": "structural_hierarchy",
+      "column": "structural_root_reachable",
+      "classification": "LOGICALLY_EXPECTED",
+      "measurement": "(w:Work)-[:CONTAINS*1..8]->(m:Mantra). Every mantra must resolve to its Work root.",
+      "per_veda": {
+        "RV": {
+          "numerator": 10552,
+          "denominator": 10552,
+          "percentage": 100.0,
+          "status": "OBSERVED_VALUE"
+        },
+        "SV": {
+          "numerator": 1844,
+          "denominator": 1844,
+          "percentage": 100.0,
+          "status": "OBSERVED_VALUE"
+        },
+        "YV": {
+          "numerator": 1975,
+          "denominator": 1975,
+          "percentage": 100.0,
+          "status": "OBSERVED_VALUE"
+        },
+        "AV": {
+          "numerator": 5839,
+          "denominator": 5839,
+          "percentage": 100.0,
+          "status": "OBSERVED_VALUE"
+        }
+      }
+    },
+    {
+      "dimension": "provenance_source_id",
+      "column": "provenance_source_id",
+      "classification": "LOGICALLY_EXPECTED",
+      "measurement": "A non-empty source_id string on the mantra's TextVersion nodes.",
+      "per_veda": {
+        "RV": {
+          "numerator": 10552,
+          "denominator": 10552,
+          "percentage": 100.0,
+          "status": "OBSERVED_VALUE"
+        },
+        "SV": {
+          "numerator": 1844,
+          "denominator": 1844,
+          "percentage": 100.0,
+          "status": "OBSERVED_VALUE"
+        },
+        "YV": {
+          "numerator": 1975,
+          "denominator": 1975,
+          "percentage": 100.0,
+          "status": "OBSERVED_VALUE"
+        },
+        "AV": {
+          "numerator": 5839,
+          "denominator": 5839,
+          "percentage": 100.0,
+          "status": "OBSERVED_VALUE"
+        }
+      }
+    },
+    {
+      "dimension": "provenance_source_resolvable",
+      "column": "provenance_source_resolvable",
+      "classification": "LOGICALLY_EXPECTED",
+      "measurement": "Every source_id on the mantra's TextVersion AND Translation nodes matches an existing (:Source {source_id}). Source carries ZERO relationships, so this join is string-only and unenforced.",
+      "per_veda": {
+        "RV": {
+          "numerator": 10552,
+          "denominator": 10552,
+          "percentage": 100.0,
+          "status": "OBSERVED_VALUE"
+        },
+        "SV": {
+          "numerator": 1844,
+          "denominator": 1844,
+          "percentage": 100.0,
+          "status": "OBSERVED_VALUE"
+        },
+        "YV": {
+          "numerator": 72,
+          "denominator": 1975,
+          "percentage": 3.65,
+          "status": "OBSERVED_VALUE"
+        },
+        "AV": {
+          "numerator": 5839,
+          "denominator": 5839,
+          "percentage": 100.0,
+          "status": "OBSERVED_VALUE"
+        }
+      }
+    },
+    {
+      "dimension": "audio",
+      "column": "audio_recording",
+      "classification": "OPTIONAL_ASSESSED",
+      "measurement": "Cross-referenced against data/product/audio_catalog.jsonl (16,834 records) and /api/v1/audio/stats. Audio is NOT in the graph at all: no audio label, node or relationship exists.",
+      "per_veda": {
+        "RV": {
+          "numerator": 10402,
+          "denominator": 10552,
+          "percentage": 98.58,
+          "status": "OBSERVED_VALUE"
+        },
+        "SV": {
+          "numerator": 0,
+          "denominator": 1844,
+          "percentage": 0.0,
+          "status": "VERIFIED_ZERO",
+          "note": "Zero, and the absence is an explicit measured caveat carried by /api/v1/audio/stats: no Samavedic recording is catalogued by the selected source. The assessed population is fully knowable because the catalog is an explicit sidecar file."
+        },
+        "YV": {
+          "numerator": 1752,
+          "denominator": 1975,
+          "percentage": 88.71,
+          "status": "OBSERVED_VALUE"
+        },
+        "AV": {
+          "numerator": 4680,
+          "denominator": 5839,
+          "percentage": 80.15,
+          "status": "OBSERVED_VALUE"
+        }
+      }
+    },
+    {
+      "dimension": "lemma_morphology",
+      "column": "mentions_lemma",
+      "classification": "INHERENTLY_OPTIONAL",
+      "measurement": "(:Mantra)-[:MENTIONS_LEMMA]->(:Lemma). Morphology is carried as Lemma.parts_of_speech; there is no per-mantra morphological analysis node.",
+      "per_veda": {
+        "RV": {
+          "numerator": 6560,
+          "denominator": 10552,
+          "percentage": 62.17,
+          "status": "OBSERVED_VALUE"
+        },
+        "SV": {
+          "numerator": 0,
+          "denominator": 1844,
+          "percentage": 0.0,
+          "status": "NOT_ASSESSED",
+          "note": "MENTIONS_LEMMA carries no run provenance at all, so nothing distinguishes 'lemmatised, no lemma matched' from 'never lemmatised'."
+        },
+        "YV": {
+          "numerator": 0,
+          "denominator": 1975,
+          "percentage": 0.0,
+          "status": "NOT_ASSESSED",
+          "note": "As SV."
+        },
+        "AV": {
+          "numerator": 0,
+          "denominator": 5839,
+          "percentage": 0.0,
+          "status": "NOT_ASSESSED",
+          "note": "As SV."
+        }
+      },
+      "assessed_vs_positive": {
+        "resolution": "NOT_RECORDED_AT_ALL",
+        "detail": "MENTIONS_LEMMA carries NO run_id, no pipeline_version and no method -- only provenance_class='DETERMINISTIC_DERIVED'. Nothing in the graph records which mantras the lemmatiser examined, in any Veda.",
+        "positive_is_measurable": true,
+        "assessed_is_measurable_per_mantra": false
+      }
+    },
+    {
+      "dimension": "entity_mentions",
+      "column": "mentions_entity",
+      "classification": "INHERENTLY_OPTIONAL",
+      "measurement": "(:Mantra)-[:MENTIONS_ENTITY]->(:Concept:DomainEntity).",
+      "per_veda": {
+        "RV": {
+          "numerator": 8143,
+          "denominator": 10552,
+          "percentage": 77.17,
+          "status": "OBSERVED_VALUE"
+        },
+        "SV": {
+          "numerator": 1306,
+          "denominator": 1844,
+          "percentage": 70.82,
+          "status": "OBSERVED_VALUE"
+        },
+        "YV": {
+          "numerator": 1358,
+          "denominator": 1975,
+          "percentage": 68.76,
+          "status": "OBSERVED_VALUE"
+        },
+        "AV": {
+          "numerator": 4292,
+          "denominator": 5839,
+          "percentage": 73.51,
+          "status": "OBSERVED_VALUE"
+        }
+      },
+      "assessed_vs_positive": {
+        "resolution": "POPULATION_LEVEL_ONLY",
+        "detail": "MENTIONS_ENTITY carries run_id; one run (vedagraph-graph-enrichment-v1:domain-mentions:59550575a4870e52) demonstrably touched all four Vedas. The run is not recorded against the mantras it examined and missed, so per-mantra assessed status is UNKNOWN.",
+        "positive_is_measurable": true,
+        "assessed_is_measurable_per_mantra": false
+      }
+    },
+    {
+      "dimension": "mentions_devata",
+      "column": "mentions_devata",
+      "classification": "INHERENTLY_OPTIONAL",
+      "measurement": "(:Mantra)-[:MENTIONS_DEVATA]->(:Devata). Kept strictly distinct from HAS_DEVATA.",
+      "per_veda": {
+        "RV": {
+          "numerator": 7099,
+          "denominator": 10552,
+          "percentage": 67.28,
+          "status": "OBSERVED_VALUE"
+        },
+        "SV": {
+          "numerator": 1035,
+          "denominator": 1844,
+          "percentage": 56.13,
+          "status": "OBSERVED_VALUE"
+        },
+        "YV": {
+          "numerator": 1167,
+          "denominator": 1975,
+          "percentage": 59.09,
+          "status": "OBSERVED_VALUE"
+        },
+        "AV": {
+          "numerator": 2616,
+          "denominator": 5839,
+          "percentage": 44.8,
+          "status": "OBSERVED_VALUE"
+        }
+      },
+      "assessed_vs_positive": {
+        "resolution": "POPULATION_LEVEL_ONLY",
+        "detail": "One run (theonym-mentions:b3f932967d1e334f) hit all four Vedas. Per-mantra assessed status UNKNOWN.",
+        "positive_is_measurable": true,
+        "assessed_is_measurable_per_mantra": false
+      }
+    },
+    {
+      "dimension": "formula_membership",
+      "column": "formula_uses",
+      "classification": "INHERENTLY_OPTIONAL",
+      "measurement": "(:Mantra)-[:USES_FORMULA]->(:Formula). HAS_FORMULA is NOT a passage-level relation: it runs FormulaFamily->Formula only (2,037 edges, zero from any Mantra).",
+      "per_veda": {
+        "RV": {
+          "numerator": 5103,
+          "denominator": 10552,
+          "percentage": 48.36,
+          "status": "OBSERVED_VALUE"
+        },
+        "SV": {
+          "numerator": 1311,
+          "denominator": 1844,
+          "percentage": 71.1,
+          "status": "OBSERVED_VALUE"
+        },
+        "YV": {
+          "numerator": 1214,
+          "denominator": 1975,
+          "percentage": 61.47,
+          "status": "OBSERVED_VALUE"
+        },
+        "AV": {
+          "numerator": 2946,
+          "denominator": 5839,
+          "percentage": 50.45,
+          "status": "OBSERVED_VALUE"
+        }
+      },
+      "assessed_vs_positive": {
+        "resolution": "POPULATION_LEVEL_ONLY",
+        "detail": "One run (formulas:5f3a96b6a04a2557) hit all four Vedas. Per-mantra assessed status UNKNOWN.",
+        "positive_is_measurable": true,
+        "assessed_is_measurable_per_mantra": false
+      }
+    },
+    {
+      "dimension": "parallel_reuse",
+      "column": "parallel_any",
+      "classification": "INHERENTLY_OPTIONAL",
+      "measurement": "Any of EXACT_PARALLEL_OF / NEAR_PARALLEL_OF / VARIANT_OF / REUSES_TEXT_FROM / PARALLEL_TO, traversed UNDIRECTED. These edges are directed and asymmetric: no Yajurvedic mantra is ever the subject, so a directed-outgoing query reports a false zero for all 1,975.",
+      "per_veda": {
+        "RV": {
+          "numerator": 2850,
+          "denominator": 10552,
+          "percentage": 27.01,
+          "status": "OBSERVED_VALUE"
+        },
+        "SV": {
+          "numerator": 1677,
+          "denominator": 1844,
+          "percentage": 90.94,
+          "status": "OBSERVED_VALUE"
+        },
+        "YV": {
+          "numerator": 687,
+          "denominator": 1975,
+          "percentage": 34.78,
+          "status": "OBSERVED_VALUE"
+        },
+        "AV": {
+          "numerator": 1332,
+          "denominator": 5839,
+          "percentage": 22.81,
+          "status": "OBSERVED_VALUE"
+        }
+      },
+      "assessed_vs_positive": {
+        "resolution": "POPULATION_LEVEL_ONLY",
+        "detail": "One run (crossveda-parallels:5bf3c9ce73209098) emitted edges whose subjects are RV, SV and AV only; YV appears solely as an object. Whether YV was assessed as a subject and rejected, or never assessed as one, is NOT RECORDED.",
+        "positive_is_measurable": true,
+        "assessed_is_measurable_per_mantra": false
+      }
+    },
+    {
+      "dimension": "semantic_assertion",
+      "column": "semantic_assertion",
+      "classification": "INHERENTLY_OPTIONAL",
+      "measurement": "(:Mantra)-[:HAS_SEMANTIC_ASSERTION]->(:SemanticAssertion).",
+      "per_veda": {
+        "RV": {
+          "numerator": 2542,
+          "denominator": 10552,
+          "percentage": 24.09,
+          "status": "OBSERVED_VALUE"
+        },
+        "SV": {
+          "numerator": 0,
+          "denominator": 1844,
+          "percentage": 0.0,
+          "status": "NOT_ASSESSED",
+          "note": "No semantic run of any kind names this Veda."
+        },
+        "YV": {
+          "numerator": 0,
+          "denominator": 1975,
+          "percentage": 0.0,
+          "status": "NOT_ASSESSED",
+          "note": "No semantic run of any kind names this Veda."
+        },
+        "AV": {
+          "numerator": 0,
+          "denominator": 5839,
+          "percentage": 0.0,
+          "status": "NOT_ASSESSED",
+          "note": "No semantic run of any kind names this Veda."
+        }
+      },
+      "assessed_vs_positive": {
+        "resolution": "POPULATION_LEVEL_ONLY",
+        "detail": "Two Rigveda-only runs (agentive-assertions:6cbe63b24f5023cf, and rigveda-semantic-execution-v3.2 over 398 mantras). SV/YV/AV carry no run of any kind: NOT ASSESSED, not verified zero.",
+        "positive_is_measurable": true,
+        "assessed_is_measurable_per_mantra": false
+      }
+    }
+  ],
+  "structural_defects": [
+    {
+      "id": "CORPUS_D01",
+      "severity": "HIGH",
+      "finding": "The Atharvavedic SEARCH_DERIVATIVE layer deletes base letters instead of only accent marks. 5,134 of 5,839 AV mantras (87.94%) have a derivative missing at least one base letter present in the PRIMARY_TEXT: 11,582 lost 'm' (anusvara, written m + U+0323) and 5,139 lost 'r' (vocalic r, written r + U+0325). The normaliser decomposed each grapheme and dropped the base together with the combining-below mark, so 'kr̥dhi' is stored as 'kdhi' and 'parjanyaṃ' as 'parjanya'.",
+      "live_impact": "search_service.py reads text_role='SEARCH_DERIVATIVE' at lines 269, 494 and 747, so the corruption is served. Probed live: /api/v1/search?q=kr̥dhi&veda=AV returns 0 passages although AVS 1.2.2 contains the word; q=namāśmānaṃ likewise returns 0.",
+      "measurement": "Per-mantra NFD base-letter multiset diff of PRIMARY_TEXT against SEARCH_DERIVATIVE. Column search_derivative_intact in the CSV; -1 means the recension has no derivative layer.",
+      "affects": {
+        "RV": "no derivative layer",
+        "SV": "no derivative layer",
+        "YV": "no derivative layer",
+        "AV": 5134
+      }
+    },
+    {
+      "id": "CORPUS_D02",
+      "severity": "HIGH",
+      "finding": "All 1,903 Yajurvedic translations carry source_id='SACRED_TEXTS', for which NO (:Source) node exists. Meanwhile (:Source {source_id:'GRIFFITH_WHITE_YAJURVEDA', name:'The Texts of the White Yajurveda, Griffith translation'}) exists and is referenced by nothing. The translation's own translator and work_edition fields name exactly that Griffith text, so the correct Source node is present and orphaned while the pointer dangles.",
+      "measurement": "Set difference between source_id values on Translation/TextVersion and s.source_id on (:Source).",
+      "affects": {
+        "YV": 1903
+      }
+    },
+    {
+      "id": "CORPUS_D03",
+      "severity": "MEDIUM",
+      "finding": "(:Source) carries ZERO relationships of any type. Provenance is a bare string join from TextVersion.source_id / Translation.source_id to Source.source_id, with no edge and no constraint on the referencing side. Nothing prevents CORPUS_D02 from recurring, and provenance cannot be traversed in a graph query.",
+      "measurement": "MATCH (:Source)-[r]-() RETURN count(r) => 0.",
+      "affects": {
+        "RV": "all",
+        "SV": "all",
+        "YV": "all",
+        "AV": "all"
+      }
+    },
+    {
+      "id": "CORPUS_D04",
+      "severity": "MEDIUM",
+      "finding": "The 4,878 Atharvavedic translations are Whitney and Lanman (Harvard Oriental Series 7-8, 1905) by their own translator and work_edition fields, but carry source_id='VEDAWEB' -- a Source whose name in the graph is 'VedaWeb Rigveda public data'. (:Source {source_id:'WIKISOURCE_WHITNEY_AV', name:'Atharva-Veda Samhita, Whitney and Lanman translation'}) exists and is referenced by nothing. The source_id and the bibliographic fields disagree about who published the text.",
+      "measurement": "Grouped Translation.source_id against Translation.translator and Translation.work_edition per Veda.",
+      "affects": {
+        "AV": 4878
+      }
+    },
+    {
+      "id": "CORPUS_D05",
+      "severity": "MEDIUM",
+      "finding": "Zero PADAPATHA TextVersion nodes exist, yet the RV (:Work) node's scope property -- which the API serves -- asserts 'Padapatha and the accented samhitapatha are carried as text versions of these same mantras', and data/registry/text_versions.yaml declares a VedaWeb layer with text_form PADAPATHA and text_role PADAPATHA. A committed claim in the graph contradicts the graph.",
+      "measurement": "MATCH (t:TextVersion) WHERE t.text_form='PADAPATHA' OR t.text_role='PADAPATHA' RETURN count(t) => 0. Full text_form/text_role value space enumerated rather than grepped for the expected value.",
+      "affects": {
+        "RV": 10552
+      }
+    },
+    {
+      "id": "CORPUS_D06",
+      "severity": "MEDIUM",
+      "finding": "No Yajurvedic mantra has a PRIMARY_TEXT Sanskrit layer. All 1,975 carry exactly one canonical layer at text_role EXTRACTED_FROM_CONTAINER, whose own enum docstring states it 'must never be selected as primary_sanskrit: doing so would make an interpretive segmentation canonical'. Either the Yajurveda is being displayed from a role the model forbids as primary, or it has no primary text.",
+      "measurement": "TextVersion.text_role grouped per Veda.",
+      "affects": {
+        "YV": 1975
+      }
+    },
+    {
+      "id": "CORPUS_D07",
+      "severity": "LOW",
+      "finding": "Parallel and reuse relationships are directed and asymmetric by Veda. No Yajurvedic mantra is ever the SUBJECT of a parallel edge: has_outgoing is 0 for all 1,975, while 687 have an incoming edge. REUSES_TEXT_FROM is emitted only from SV (1,662 subjects); the Rigveda's 1,421 are all incoming. AV has 1,332 outgoing and 0 incoming. A directed-outgoing coverage query therefore reports a false zero for the Yajurveda and a false zero for Rigvedic reuse.",
+      "measurement": "Outgoing vs incoming counts per Veda over the five parallel types. The CSV columns are UNDIRECTED.",
+      "affects": {
+        "YV": 1975,
+        "RV": 10552
+      }
+    },
+    {
+      "id": "CORPUS_D08",
+      "severity": "LOW",
+      "finding": "The (:SourceArtifact) label is declared in db.labels() but holds ZERO nodes. Dimension 9's intended three-part provenance chain (Source / SourceArtifact / TextVersion) is missing its middle term entirely.",
+      "measurement": "MATCH (n:SourceArtifact) RETURN count(n) => 0.",
+      "affects": {}
+    },
+    {
+      "id": "CORPUS_D09",
+      "severity": "LOW",
+      "finding": "VG:YV:VSM:A20:V015 carries TextVersion.accented=true but its string holds no accent mark. Its only combining signs are U+1CEA and U+1CED, which are an anusvara sign and the Vedic tiryak sign, not tone marks. 1 of 1,975 Yajurvedic mantras.",
+      "measurement": "Per-string accent-mark scan compared against the accented flag.",
+      "affects": {
+        "YV": 1
+      }
+    },
+    {
+      "id": "CORPUS_D10",
+      "severity": "INFORMATIONAL",
+      "finding": "158 Rigvedic mantras carry ONLY a HYMN-level translation (Translation.alignment_level='HYMN'), not a per-mantra one. The committed figure 'RV translation 10,502' and the Work node's '10,502 of 10,552 carry a translation (99.5%)' are both literally true, but per-mantra Rigvedic translation coverage is 10,344/10,552 = 98.03%.",
+      "measurement": "Translation.alignment_level grouped per Veda; the CSV separates translation_any from translation_mantra_aligned.",
+      "affects": {
+        "RV": 158
+      }
+    },
+    {
+      "id": "CORPUS_D11",
+      "severity": "INFORMATIONAL",
+      "finding": "Identical Sanskrit recurs within a single recension: by content_sha256 within one text_role, 190 RV mantras (PRIMARY_TEXT), 349 SV (PRIMARY_TEXT), 6 YV (EXTRACTED_FROM_CONTAINER) and 42 AV (PRIMARY_TEXT) share their text with at least one other mantra of the same recension. The Samavedic cases are concentrated on ARANYA-versus-UTTARARCIKA pairs, which is a real feature of the collection rather than an ingestion fault. In the AV the SEARCH_DERIVATIVE layer collapses far more (256) than the PRIMARY_TEXT does (42), a direct consequence of CORPUS_D01.",
+      "measurement": "content_sha256 grouped within (veda, text_role) over more than one canonical_key.",
+      "affects": {
+        "RV": 190,
+        "SV": 349,
+        "YV": 6,
+        "AV": 42
+      }
+    }
+  ],
+  "clean_checks": [
+    {
+      "check": "Duplicate canonical keys among :Mantra",
+      "result": 0
+    },
+    {
+      "check": "Duplicate canonical_urn among :Mantra",
+      "result": 0
+    },
+    {
+      "check": "Duplicate entity_id among :Mantra",
+      "result": 0
+    },
+    {
+      "check": "Duplicate canonical_key among :Passage",
+      "result": 0
+    },
+    {
+      "check": "Mantras not reachable from their Work root (CONTAINS*1..8)",
+      "result": 0
+    },
+    {
+      "check": "Mantras with more than one CONTAINS parent",
+      "result": 0
+    },
+    {
+      "check": "Mantras where veda and work_id disagree",
+      "result": 0,
+      "detail": "RV->VG:WORK:RV:SAK 10552, SV->VG:WORK:SV:KAU 1844, YV->VG:WORK:YV:VSM 1975, AV->VG:WORK:AV:SAU 5839. One work_id per veda, exactly."
+    },
+    {
+      "check": "Mantra.status value space",
+      "result": "CANONICAL for all 20,210; no other value exists"
+    },
+    {
+      "check": "TextVersion with empty or whitespace text_nfc",
+      "result": 0,
+      "detail": "Shortest string is 9 characters (AVS 20.129.9 search derivative); the short ones are genuine short verses -- AV 5.9 and 19.22-23 svaha formulae, the Kuntapa hymns -- not placeholders."
+    },
+    {
+      "check": "Orphan TextVersion (no HAS_TEXT_VERSION from a Mantra)",
+      "result": 0
+    },
+    {
+      "check": "Orphan Translation (no HAS_TRANSLATION from a Mantra)",
+      "result": 0
+    },
+    {
+      "check": "Non-mantra Passage containers holding a translation",
+      "result": 0
+    },
+    {
+      "check": "Audio catalog scope_keys that do not resolve to a canonical mantra key",
+      "result": 0,
+      "detail": "All 16,834 scope_keys are distinct and all match a :Mantra canonical_key."
+    },
+    {
+      "check": "Mantra-level dimension edges in a non-ACCEPTED state",
+      "result": 0,
+      "detail": "Every HAS_*/MENTIONS_*/parallel edge carrying a state property is state='ACCEPTED', so 'has edge' equals 'positive' for all fifteen dimensions. CANDIDATE edges exist only on the ritual/semantic layers (INVOKES, REQUESTS, PRAISES, DESCRIBES and similar), which are outside these dimensions."
+    }
+  ],
+  "disagreements_with_committed_reports": [
+    {
+      "source": "docs/reports/data-completeness/BASELINE.md, finding 1",
+      "committed": "HAS_DEVATA exists for the Rigveda only. Dedication is unmodelled for SV, YV and AV -- three quarters of the recensions, 9,658 mantras.",
+      "measured": "HAS_DEVATA is indeed Rigveda-only, but dedication is NOT unmodelled for the Atharvaveda: 4,160 of 5,839 AV mantras (71.25%) carry HAS_DEVATA_ASCRIPTION, via 4,816 edges, plus 505 container-level ascriptions. The unmodelled population is SV 1,844 + YV 1,975 + AV 1,679 = 5,498, not 9,658.",
+      "query": "MATCH (m:Mantra)-[:HAS_DEVATA_ASCRIPTION]->() RETURN m.veda, count(DISTINCT m)",
+      "verdict": "The baseline's HAS_DEVATA figure is right; its conclusion about dedication overstates the gap by 4,160 mantras because it read one relationship type where the graph uses two."
+    },
+    {
+      "source": "docs/reports/data-completeness/BASELINE.md, finding 5",
+      "committed": "Samaveda ... is present as Sanskrit text, formula membership and entity mentions only.",
+      "measured": "The Samaveda also carries 1,035 MENTIONS_DEVATA mantras (56.13%) and 1,677 mantras with a parallel or reuse relation (90.94%) -- the highest parallel coverage of any Veda, driven by 1,662 REUSES_TEXT_FROM subjects. Five layers, not three.",
+      "query": "MATCH (m:Mantra {veda:'SV'})-[r]-(:Mantra) WHERE type(r) IN ['EXACT_PARALLEL_OF','NEAR_PARALLEL_OF','VARIANT_OF','REUSES_TEXT_FROM','PARALLEL_TO'] RETURN count(DISTINCT m)",
+      "verdict": "Understates what the Samaveda has."
+    },
+    {
+      "source": "VG:WORK:RV:SAK (:Work) node, scope property, served by the API",
+      "committed": "Padapatha and the accented samhitapatha are carried as text versions of these same mantras, not as separate works.",
+      "measured": "The accented samhitapatha is carried (10,552 accented PRIMARY_TEXT versions, accent confirmed in the characters). The padapatha is NOT: zero TextVersion nodes carry text_form or text_role PADAPATHA, in any Veda.",
+      "query": "MATCH (t:TextVersion) RETURN DISTINCT t.text_form, t.text_role, count(*) -- four combinations, none PADAPATHA",
+      "verdict": "Half of a committed claim is false. See CORPUS_D05."
+    },
+    {
+      "source": "VG:WORK:AV:SAU (:Work) node, completeness property",
+      "committed": "Every one of this work's 5,084 seer attributions is a sukta label projected downward onto its mantras.",
+      "measured": "Reconciles exactly: 4,542 mantra-level HAS_RISHI edges plus 542 container-level edges = 5,084, and every mantra-level edge is knowledge_layer L2_DETERMINISTIC_DERIVED with scope_origin SUKTA_WIDE. The figure counts both levels, which is worth stating because 4,542 is what a mantra-level query returns.",
+      "verdict": "AGREES. Recorded so a later agent does not read it as a discrepancy."
+    },
+    {
+      "source": "VG:WORK:YV:VSM (:Work) node, completeness property",
+      "committed": "Every one of this work's 2,240 seer attributions is source-stated rather than container-inherited.",
+      "measured": "Confirmed: 2,240 HAS_RISHI edges over 1,960 mantras, all knowledge_layer L1_SOURCE_EXPLICIT with scope_origin SINGLE_MANTRA. The Yajurveda is the only Veda with no derived seer attribution at all.",
+      "verdict": "AGREES."
+    },
+    {
+      "source": "docs/reports/data-completeness/BASELINE.md, dimension coverage table",
+      "committed": "Translation / Rishi / Devata / Chandas / Semantic assertion / Entity mention / Lemma / Formula, per Veda.",
+      "measured": "Every one of the 32 cells reproduces exactly against the live graph (RV 10,502/10,534/10,552/10,518/2,542/8,143/6,560/5,103; SV 0/0/0/0/0/1,306/0/1,311; YV 1,903/1,960/0/0/0/1,358/0/1,214; AV 4,878/4,542/0/4,082/0/4,292/0/2,946).",
+      "verdict": "AGREES, independently re-derived. The baseline's arithmetic is sound; its interpretation is where the two findings above diverge."
+    },
+    {
+      "source": "data/registry/text_versions.yaml, Vajasaneyi samhita_block record",
+      "committed": "UNACCENTED.",
+      "measured": "Correct for the PARALLEL_TEXT layer (1,836 versions, zero tone marks). A naive codepoint-range scan over the Vedic Extensions block reported 780 of them as accented; the marks present are U+A8F3 candrabindu-virama and U+1CEC anusvara, which are nasalisation, not tone. The registry is right and the broad character class was wrong.",
+      "verdict": "AGREES. Recorded because the wrong measurement is an easy one to make."
+    }
+  ],
+  "where_audio_lives": {
+    "in_the_graph": "Nowhere. No audio label, node, relationship or property exists. db.labels() and db.relationshipTypes() were enumerated in full.",
+    "authoritative_store": "data/product/audio_catalog.jsonl -- a committed 16,834-line JSONL sidecar, 23,563,875 bytes, one record per verse, keyed by scope_key which is the mantra's canonical_key.",
+    "binary_media": "None held. data/audio/cache contains only .gitkeep; every record is playback_mode PROXIED_STREAM with local_cache_path null and locally_cached=0.",
+    "served_by": "/api/v1/audio/stats, /api/v1/audio/{audio_id}, /api/v1/audio/{audio_id}/stream, /api/v1/passages/{key}/audio, /api/v1/works/{work_id}/audio.",
+    "resolution_semantics": "AudioCatalog.resolve walks UP the colon-delimited key and returns levels_above, so a container's recording is reported as a container's recording rather than copied onto each mantra. All 16,834 present records are scope_type MANTRA at levels_above 0.",
+    "coverage": {
+      "RV": 10402,
+      "SV": 0,
+      "YV": 1752,
+      "AV": 4680,
+      "total": 16834,
+      "uncovered": 3376
+    },
+    "assessed_vs_positive": "This is the one optional dimension where 'assessed' IS knowable, because the catalog is an explicit enumerated file rather than an edge that either exists or does not. The SV zero is a VERIFIED ZERO carried as a measured caveat on /api/v1/audio/stats, not a NOT ASSESSED."
+  },
+  "assessed_vs_never_assessed": {
+    "headline": "For every inherently optional dimension held INSIDE the graph, the graph cannot distinguish 'assessed and came back empty' from 'never assessed'. This is a property of where provenance is written, not a gap in this audit.",
+    "why": "Run provenance -- run_id, pipeline_version, method, execution_version, prompt_version, model, score, trust, state -- is written onto the PRODUCED artifact: the dimension relationship itself, or the SemanticAssertion / Formula / FormulaFamily node. It is never written onto the :Mantra that was examined. A :Mantra carries exactly fifteen properties and not one records an enrichment run. There is no assessed-set node, and the 1,072 DerivedMetric nodes hold aggregate distributions by Work, devata and action -- none records an examined population for a dimension.",
+    "consequence": "A mantra with no MENTIONS_ENTITY edge is indistinguishable from a mantra the entity detector never read. The absence cannot be typed in the row, only inferred from the pattern of absence across a Veda.",
+    "what_can_still_be_inferred": "Because the surviving edges carry run_id, the set of Vedas a run touched is recoverable even though the set of mantras it examined is not. That gives a population-level, not per-passage, answer.",
+    "per_dimension": {
+      "mentions_entity": "POPULATION-LEVEL ONLY. One run (domain-mentions:59550575a4870e52) touched all four Vedas.",
+      "mentions_devata": "POPULATION-LEVEL ONLY. One run (theonym-mentions:b3f932967d1e334f) touched all four Vedas.",
+      "formula_uses": "POPULATION-LEVEL ONLY. One run (formulas:5f3a96b6a04a2557) touched all four Vedas.",
+      "parallel_reuse": "POPULATION-LEVEL ONLY, and incomplete: run crossveda-parallels:5bf3c9ce73209098 emitted subjects in RV, SV and AV only. Whether the Yajurveda was assessed as a subject and rejected, or never assessed as one, is NOT RECORDED.",
+      "semantic_assertion": "POPULATION-LEVEL ONLY, and Rigveda-only. Two runs, both RV: agentive-assertions:6cbe63b24f5023cf (2,228 mantras, agentive-morphology-v1) and vedagraph-rigveda-semantic-claude-opus5-v3.2-448-new-v1 (398 mantras, execution_version rigveda-semantic-execution-v3.2). SV, YV and AV are named by no run, so their zero is NOT ASSESSED.",
+      "mentions_lemma": "NOT RECORDED AT ALL -- the worst case. MENTIONS_LEMMA carries no run_id, no pipeline_version and no method, only provenance_class='DETERMINISTIC_DERIVED'. Nothing records which mantras the lemmatiser examined, so even the population-level inference available for the other four is unavailable. The RV 6,560 and the SV/YV/AV zeros are equally unexplained.",
+      "chandas": "NOT RECORDED as a population. HAS_CHANDAS carries build_pass, source_id, scope_origin and confidence but no run identity, and nothing records metre having been sought for SV or YV.",
+      "rishi_and_devata": "NOT RECORDED as a population. The edges carry build_pass, scope_origin and knowledge_layer, which describe how a positive was derived, not who was examined.",
+      "audio": "FULLY RESOLVED, and the only dimension that is. See where_audio_lives."
+    },
+    "recommendation_for_later_agents": "Treat every zero in an INHERENTLY_OPTIONAL row of per_passage_coverage.csv as UNKNOWN, never as a negative finding, unless this table says otherwise. If assessed-vs-positive must become answerable per passage, the assessed population has to be written down at assessment time -- a marker per (mantra, dimension, run) -- because it cannot be recovered after the fact from the current graph."
+  },
+  "accent_storage": {
+    "question": "Is accent a property, a separate TextVersion, or inline in the Sanskrit string?",
+    "answer": "All three claims are partly true and only the third is load-bearing. Accent is stored INLINE in TextVersion.text_nfc. TextVersion.accented is a declared boolean that describes the layer, and accent is ALSO the axis on which a recension's several TextVersion layers differ -- so the accented and unaccented readings of the Atharvaveda are two separate TextVersion nodes on the same mantra.",
+    "notation_is_not_uniform": {
+      "RV PRIMARY_TEXT (GRETIL)": "U+0331 anudatta (101,175 marks) and U+030D svarita (74,801), udatta unmarked.",
+      "RV PARALLEL_TEXT (VEDAWEB)": "U+0301 udatta on a vowel (128,482) and U+0300 (2,080). A different convention for the same verses.",
+      "AV PRIMARY_TEXT (GRETIL)": "U+0301 on a vowel (68,834) and U+0300 (1,279).",
+      "YV EXTRACTED_FROM_CONTAINER (WIKISOURCE_SA)": "Devanagari U+0952 anudatta (24,329) and U+0951 udatta (17,204), plus a single U+1CD4.",
+      "SV PRIMARY_TEXT (WIKISOURCE_SA)": "No mark of any kind."
+    },
+    "flag_vs_string": "The accented flag and the measured string agree on 44,275 of 44,276 TextVersion nodes. The single exception is CORPUS_D09.",
+    "trap": "U+0301 is both the udatta and the palatal sibilant of IAST: s + U+0301 is the letter s-acute, not an accented s. Counting U+0301 by codepoint reports all 5,839 of the AV's deliberately unaccented PARALLEL_TEXT versions as accented (6,789 stray marks). The accent test must require a vowel base. Symmetrically, a codepoint-range test over the Vedic Extensions block counts U+1CEA and U+1CEC -- anusvara signs -- as tone and invents 780 accented Yajurvedic verses in the layer the registry correctly calls unaccented."
+  }
+}
