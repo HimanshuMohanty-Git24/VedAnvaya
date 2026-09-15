@@ -19,7 +19,8 @@
       "implementation_dependency": "A pratika-keyed resolver for the YV sutra prose. Note that the campaign's STATUS.md states this gap as 9,658 mantras; that figure counts every non-RV mantra and so double-counts the 4,160 AV mantras that do carry an unresolved descriptor. The two populations need separate work.",
       "owner_agent": 8,
       "closure_test": "HAS_DEVATA (or an equivalently typed dedication predicate) reaches SV, YV and AV, and /api/v1/insights/devatas/{id} returns an ascribed_scope of more than one Veda with the per-Veda method stated.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-ATTRIBUTION-002",
@@ -36,7 +37,8 @@
       "implementation_dependency": "A descriptor-to-Devata resolver with a typed refusal for the descriptors that genuinely denote no single deity (mantroktadevatyam = 'the deity named in the mantra', bahudevatyam = 'of many deities'). These must resolve to a typed non-resolution, not to a guess, and the resolved edge must stay distinguishable from the RV's direct HAS_DEVATA.",
       "owner_agent": 8,
       "closure_test": "MATCH (a:DevataAscription) WHERE size([(a)-[]->(:Devata)|1])>0 RETURN count(a) is greater than 0 for every resolvable descriptor, /api/v1/insights/devatas/{id} returns AV in ascribed_scope with its method stated, and the unresolvable descriptors carry an explicit reason.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-ATTRIBUTION-003",
@@ -53,7 +55,8 @@
       "implementation_dependency": "Rewrite the caveat to say that resolved dedication is RV-only while AV carries an unresolved Anukramani descriptor layer of 4,816 edges. The same sentence appears in the derived metric DEVATA_ATTRIBUTION_BY_VEDA scope_note and in frontend copy at frontend/src/app/sources/page.tsx:317, so all three surfaces must change together.",
       "owner_agent": 8,
       "closure_test": "No API caveat, derived-metric scope_note or frontend string asserts that the Atharvaveda carries no Anukramani deity ascription; each states the descriptor layer and its unresolved status instead.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-ATTRIBUTION-004",
@@ -70,7 +73,8 @@
       "implementation_dependency": "A saman-to-arcika join, which does not exist because the gana side does not exist.",
       "owner_agent": 8,
       "closure_test": "MATCH (p:Mantra) WHERE p.veda='SV' AND NOT (p)-[:HAS_RISHI]->() RETURN count(p) falls below 1,844, with each attribution's join path recorded.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-ATTRIBUTION-005",
@@ -87,7 +91,8 @@
       "implementation_dependency": "Split the 1,297 into the genuinely unattributable (kanda 15, attributed as a unit) and the merely unattributed, so the first is a typed scope fact and only the second is counted as a gap.",
       "owner_agent": 8,
       "closure_test": "The 1,297 unattributed AV mantras are partitioned into a typed unattributable set with its source quoted and a residual gap set, and the residual set shrinks.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-ATTRIBUTION-006",
@@ -104,7 +109,8 @@
       "implementation_dependency": "The product surface also lacks a metre visualisation: PHASE_8_CLOSURE.md:307-309 records \"Metres are not drawn. The metre-to-passage layer does not reach outside the Rigveda in a form these surfaces can read.\"",
       "owner_agent": 8,
       "closure_test": "HAS_CHANDAS reaches SV and YV, or each carries an explicit recorded decision with its reasoning, and the AV residual falls below 1,757.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-ATTRIBUTION-007",
@@ -121,7 +127,8 @@
       "implementation_dependency": "Rebuild the rishi_families artifact so its test does not skip, then extend resolution to the AV and YV registries.",
       "owner_agent": 8,
       "closure_test": "MATCH (r:Rishi) WHERE NOT (r)-[:BELONGS_TO_FAMILY]->() RETURN count(r) falls well below 427, and tests/domain/test_rishi_families.py runs rather than skipping.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-ATTRIBUTION-008",
@@ -138,7 +145,8 @@
       "implementation_dependency": "NONE. Record the correction; the real remaining work is GAP-ATTRIBUTION-007's 427 unresolved seers, not 729.",
       "owner_agent": 8,
       "closure_test": "Already disproven. No campaign artifact repeats the 0-nodes or 729-unresolved figures.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-ATTRIBUTION-009",
@@ -155,7 +163,8 @@
       "implementation_dependency": "Derive attribution_scope from the graph at projection time instead of storing a literal, so it cannot outlive the fact it describes.",
       "owner_agent": 8,
       "closure_test": "No :Devata node asserts a scope contradicted by the edges present, and the Atharvaveda appears in the scope of every deity that has an Atharvavedic ascription.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-AUDIO-001",
@@ -172,7 +181,13 @@
       "implementation_dependency": "Gana-to-arcika boundary verification. The available audio is gana (sung realisation), and a gana does not align one-to-one with an arcika verse, so this cannot be attached as per-verse EXACT audio without verified boundaries. Campaign rule 4 forbids attaching a long recording to an exact mantra without them. The honest first step is a gana-scoped audio layer under its own identifier, labelled as gana and never substituted for arcika recitation.",
       "owner_agent": 5,
       "closure_test": "Either /api/v1/audio/stats reports SV records with verified per-verse boundaries, or a gana-scoped audio layer exists that is explicitly labelled gana and the SV arcika row still reports a typed absence with the 474-file inventory cited as its disposition.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "observed_gap": "0 of 1,844 Kauthuma arcika verses have catalogued audio. Re-confirmed as a VERIFIED ZERO over an assessed population of 1,844, not an unknown.",
+      "suspected_cause": "NOT source-blocked, which is the surprise. data/source_registry/four_veda_source_matrix.yaml:1233-1279 declares a SELECTED audio row for Samavedic saman/gana recitation: \"474 Ogg files, licence-checked PER FILE via the Commons imageinfo API: 458 CC BY-SA 4.0, 16 CC0, 0 missing\", mirror_local true, and \"THIS IS THE ONLY MIRRORABLE AUDIO ACROSS ALL FOUR VEDAS\". The inventory data/source_registry/samaveda_gana_audio_inventory.jsonl holds 475 rows with found_on_commons true on every row and sha256_of_bytes NULL on every row: not one byte was ever fetched. The row's source_id is literally null, and the registered artifact COMMONS.SV.KAU.SAMAN.AUDIO appears in only two files repo-wide, both registries.",
+      "measured_cause": "Not an absence of Samavedic recording, but an absence of arcika *verse* recording. 475 licence-clean Ogg files exist on Wikimedia Commons -- 459 CC BY-SA 4.0, 16 CC0 -- and all 475 are now fetched and checksummed at 808,529,118 bytes over 19.1 hours. But every one is PAGE_LEVEL, only 6 of 475 touch arcika pages at all, and they are gana performances rather than arcika recitation. The source-provided cue index is real and legible but handwritten with no text layer, and it anchors rather than segments: one page carries six cues for seven ganas, another five ganas and one cue.",
+      "closure_method": "Not closable as arcika verse audio from present material. What the 475 files support is a gana performance layer at container scope, staged as 3 rows with start_seconds null -- never at a verse. The open route is the LOAR deposit: 224 cassettes, four Vedas, six oral traditions, named reciters including two Samavedic. Owner decision D makes it a priority investigation and forbids claiming any coverage from it until each item is classified.",
+      "disproven_prescription": "Wave 0 partly rested this gap on every candidate having an unnamed reciter. The LOAR deposit names its reciters, so that reasoning is withdrawn -- without any claim that the material is arcika, which is not established.",
+      "causation_status": "MEASURED"
     },
     {
       "gap_id": "GAP-AUDIO-002",
@@ -189,7 +204,13 @@
       "implementation_dependency": "Re-run the 495-verse refusal set with accent- and sandhi-insensitive matching, keeping the refuse-rather-than-approximate rule.",
       "owner_agent": 7,
       "closure_test": "/api/v1/audio/stats AV rises toward 5,839 with every added record at EXACT mapping confidence, and each residual verse carries one of the three typed reasons rather than being merely absent.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "observed_gap": "1,159 of 5,839 Atharvavedic verses had no catalogued recitation. Of those, 495 were recorded text_mismatch, 420 no_source_verse and 244 source_has_no_audio.",
+      "suspected_cause": "Three itemised causes: the source marks no Sanskrit audio (244), the recited text did not match and mapping was correctly refused (495), or the verse is absent from the source (420). Only the third is a hard source limit; the 495 refusals are a matcher problem.",
+      "measured_cause": "A coordinate-system mismatch, not a text problem. VedSearch divides the Atharvaveda into 754 suktas where our Berlin (Roth and Whitney 1856) division has 731 -- the 23 extra sitting in kandas 7, 9, 11, 12 and 13, verified against our side at 118, 10, 10, 5 and 4. Keys were mapped straight through, so past the first split within a kanda the coordinate addressed the wrong verse, and in the paryaya books a verse offset of up to +61 rides along with it. The text refusals were correct; the address was wrong. 494 of the 495 are this one cause, and no_source_verse was the same defect rather than a different one.",
+      "closure_method": "Per-verse re-establishment against the source's own division: 607 rows by unique letter identity across all 5,916 source rows, 9 by position disambiguation, 109 as orthographic variants adjacent to a letter-identical anchor. 740 of 915 refusals closed, taking the Atharvaveda from 80.1% to 93.2%. A further 197 are reachable but blocked on a record-model decision: each has a contiguous run of 2-3 Vedavani files whose concatenation is letter-identical to the mantra, and the model permits one media_url per record.",
+      "disproven_prescription": "The original entry prescribed re-running with accent- and sandhi-insensitive matching. skeleton() already was both, and re-running changed 1 of 495. The entry also claimed the 420 no_source_verse needed another source; 385 were in VedSearch all along. Both are withdrawn.",
+      "causation_status": "MEASURED"
     },
     {
       "gap_id": "GAP-AUDIO-003",
@@ -206,7 +227,12 @@
       "implementation_dependency": "Re-run the 33 refusals with a better matcher.",
       "owner_agent": 6,
       "closure_test": "/api/v1/audio/stats YV reaches 1,975 at EXACT confidence, or each residual verse carries a typed reason.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "observed_gap": "223 of 1,975 Madhyandina verses had no catalogued recitation: 190 found-with-no-audio, 33 found-and-rejected-on-text, 0 never searched, 0 absent at source.",
+      "suspected_cause": "190 verses are marked as having no Sanskrit audio at the source and 33 were refused by the matcher. No YV verse is absent from the source entirely.",
+      "measured_cause": "For the 33, our own comparator. difflib's autojunk heuristic discarded nearly the whole alphabet on any skeleton over 200 characters -- 17 of 18 distinct letters on a measured 285-character case -- and a visarga typed as an ASCII colon was dropped as a non-letter while the Devanagari sign survived as 'h'. For 30 of the 33 the coordinate-aligned row was already the global best match. For the 190, the source publishes no verse-level audio.",
+      "closure_method": "Comparator fixed at commit 30ba692 with four regression tests, closing 25 of the 33 with no acquisition. The remaining 8 are source-side text defects and need a listener. The 190 are BLOCKED_RIGHTS_AND_GRANULARITY rather than source-unavailable: IGNCA publishes Madhyandina per adhyaya at Shukla_Yajurveda_Madhyandin_MP3/SYMS_CHAP_NN.mp4, verified answering 206 for adhyayas 1-40 and 404 at 41. The remedy is a permission request plus verified segmentation, not commissioning a reciter.",
+      "causation_status": "MEASURED"
     },
     {
       "gap_id": "GAP-AUDIO-004",
@@ -223,7 +249,13 @@
       "implementation_dependency": "Apply the Valakhilya/Griffith permutation and verify by ear. A listening sheet must be authored against the corrected mapping: a sheet whose expected rows were generated from the broken transform will confirm the wrong answer.",
       "owner_agent": 4,
       "closure_test": "/api/v1/audio/stats RV reaches 10,552, and a human listening check confirms RV 8.49.1 plays the Valakhilya hymn rather than the hymn at that position in the continuous numbering.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "observed_gap": "150 of 10,552 Rigvedic verses had no catalogued recitation: 70 where the source's own row carries audio.sanskrit false, and 80 being RV 8.49.1-8.59.7, the Valakhilya. Zero text_mismatch.",
+      "suspected_cause": "The audio source numbers Mandala 8 by a different edition convention, and the Griffith permutation needed to map the Valakhilya insertion was never applied. Mapping naively would give 55 hymns of Mandala 8 the wrong recitation.",
+      "measured_cause": "A source dependency. The incumbent source publishes the 1,017-hymn presentation -- 10,472 verses, Mandala 8 stopping at hymn 92 -- so the transform's target 8.93 has never existed there. Re-probed live: sukta 93 returns total_shloks 0 while sukta 92 returns rows. The 70 are a shared lacuna rather than a harvest failure: an independent Archive parayana set by a different uploader marks its own tracks incomplete at the same places, covering 66 of the 70.",
+      "closure_method": "All 150 from VedaWeb's per-stanza Kirchheiner recitation, measured at 10,552 of 10,552 over one contiguous range, so no segmentation was needed and no timestamp is asserted. The Valakhilya mapping was tested acoustically as well as textually: duration against syllable count correlates at 0.871 as mapped and 0.088 under the Griffith eleven-hymn shift.",
+      "disproven_prescription": "The original entry stated the Griffith permutation 'was never applied' and set source_dependency to NONE. Both halves are wrong. The permutation IS applied -- vedsearch_coordinates routes through griffith_page, it is stated on all 16,834 catalogue rows, and the audit shows our 8.60 mapping to source 8.49 text-confirmed. And it was a source dependency throughout. Withdrawn.",
+      "causation_status": "MEASURED"
     },
     {
       "gap_id": "GAP-AUDIO-005",
@@ -240,7 +272,8 @@
       "implementation_dependency": "Per-record upstream fingerprint and an availability probe, so upstream drift is detected rather than discovered by a listener. Populate performer and licence from the source.",
       "owner_agent": 4,
       "closure_test": "checksum, duration_seconds, performer and licence are non-null for every one of the 16,834 catalog rows, and a scheduled probe reports upstream availability.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-AUDIO-006",
@@ -257,7 +290,8 @@
       "implementation_dependency": "NONE for V1. Closing it requires local audio plus a Sanskrit forced aligner, in that order.",
       "owner_agent": 4,
       "closure_test": "Not a gap to close in this campaign. It remains TRUE_SCOPE_FACT while by_scope_type stays MANTRA-only and the scope statement continues to say so; it becomes an IMPLEMENTATION_GAP only if the product starts claiming sub-verse navigation.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-COMMUNITIES-001",
@@ -274,7 +308,8 @@
       "implementation_dependency": "A stored community assignment over an explicitly declared projection - and the projection is the whole difficulty. The capability answer records the trap: \"A projection chosen at query time will not do: the natural one over passages and entities is directed and bipartite, on which betweenness is 0.0 for every node, so the obvious analysis returns a full sortable ranking of zeros.\" The denominator needs cleaning first: eligible_deities is 192 only after removing 22 HUMAN-typed entries, and it still carries 7 danastuti labels and one non-divine subject.",
       "owner_agent": 15,
       "closure_test": "Deity nodes carry a stored community assignment whose projection is declared, modularity is recorded, and /api/v1/insights/capabilities no longer returns deity_communities as NOT_BUILT.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-COMMUNITIES-002",
@@ -291,7 +326,8 @@
       "implementation_dependency": "Decompose the 24 remaining pairs, then type each group as decomposable or not with its reason. This directly gates GAP-COMMUNITIES-001, since an undecomposed dual label cannot be placed in a community.",
       "owner_agent": 15,
       "closure_test": "Every PAIR deity carries components, and every GROUP deity either carries components or a typed reason why its membership is not enumerable.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-COMMUNITIES-003",
@@ -308,7 +344,8 @@
       "implementation_dependency": "NONE. The live gap is GAP-COMMUNITIES-001, and its evidence is the absent partition, not an absent co-occurrence layer.",
       "owner_agent": 15,
       "closure_test": "Already disproven. No campaign artifact cites CO_OCCURS_WITH as 0.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-CROSS_VEDA-001",
@@ -325,7 +362,8 @@
       "implementation_dependency": "A direction criterion defensible per pair. RV-to-SV direction rests on a scholarly consensus that does not transfer: AV-RV direction is contested case by case, and asserting a direction from, say, corpus size would manufacture a finding. Benchmark Q59 records that the existing direction's \"reason is a pipeline constant\", so even the built pair lacks per-edge directional evidence.",
       "owner_agent": 10,
       "closure_test": "/api/v1/insights/cross-veda reports measured REUSES_TEXT_FROM counts for more than one pair, and each directed edge carries per-edge directional evidence rather than a pipeline constant.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-CROSS_VEDA-002",
@@ -342,7 +380,8 @@
       "implementation_dependency": "A transformation vocabulary (substitution, insertion, reordering, sandhi variation, metrical adjustment) declared before extraction, and per-edge evidence spans so a claimed transformation can be checked against the two texts.",
       "owner_agent": 12,
       "closure_test": "MATCH ()-[r:NEAR_PARALLEL_OF|VARIANT_OF]->() WHERE r.transformation_type IS NULL RETURN count(r) falls well below 3,837, and each typed edge carries the span that evidences it.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-CROSS_VEDA-003",
@@ -359,7 +398,8 @@
       "implementation_dependency": "Backfill parallel_id for the 256 within-corpus edges, grouping transitively so a parallel set is not split across two identifiers.",
       "owner_agent": 12,
       "closure_test": "MATCH ()-[r:EXACT_PARALLEL_OF]->() WHERE r.parallel_id IS NULL RETURN count(r) returns 0, and the sentinel skip in tests/api/test_graph.py:805-814 fires.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-CROSS_VEDA-004",
@@ -376,7 +416,8 @@
       "implementation_dependency": "A pada-level detector. Note it can only reach the Rigveda, since pada tags come from the RV-only annotation, so the result would be a fifth cross-corpus class that covers one corpus - which must be typed as such rather than presented as a corpus-wide layer.",
       "owner_agent": 12,
       "closure_test": "Pada-level parallel edges exist with their granularity typed distinctly from verse-level parallels, and their RV-only reach is stated on the surface that reports them.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-ENTITY_COVERAGE-001",
@@ -393,7 +434,8 @@
       "implementation_dependency": "An epithet-to-passage mention projection, and an expansion of the epithet inventory well beyond 13. The alias-recall discipline from the ritual objects case applies: epithets are heavily inflected, so unregistered forms will silently depress counts.",
       "owner_agent": 8,
       "closure_test": "Epithets carry passage edges, the inventory reaches well beyond 4 deities, and per-epithet recall is measured rather than assumed.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-ENTITY_COVERAGE-002",
@@ -410,7 +452,8 @@
       "implementation_dependency": "Re-run the metric materialisation over all 214 deities. Note that the denominator itself needs care: the 214 include 22 HUMAN-typed entries and 7 danastuti labels, so materialising metrics for all of them would put human patrons on deity profile pages.",
       "owner_agent": 8,
       "closure_test": "MATCH (m:DerivedMetric) WHERE m.subject_key STARTS WITH 'VG:DEVATA:' RETURN count(DISTINCT m.subject_key) reaches the resolved-deity population, and /api/v1/devatas/VG:DEVATA:SARASVATI returns per-corpus figures rather than nulls.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-ENTITY_COVERAGE-003",
@@ -427,7 +470,8 @@
       "implementation_dependency": "Curate a remedy entity class and a stated-remedy relation. The existing TREATS predicate is TIER_D and reaches only 142 mantras, so it is not a substitute.",
       "owner_agent": 8,
       "closure_test": "A remedy entity class exists with registered aliases, a stated-remedy relation carries verse evidence, and the concerns endpoint no longer needs to caveat the absence of a healing entity.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-ENTITY_COVERAGE-004",
@@ -444,7 +488,8 @@
       "implementation_dependency": "An expected_source field and a coverage report that measures registry membership against it, rather than measuring mention recall against the registry.",
       "owner_agent": 8,
       "closure_test": "Entity nodes carry an expected_source, and a coverage report names entities the expectation lists but the registry lacks - the query that would have found trapu without a human reading the text.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-ENTITY_COVERAGE-005",
@@ -461,7 +506,8 @@
       "implementation_dependency": "NONE. Keep trapu as the illustrative case for the missing expected-entity manifest, but not as an open registry gap.",
       "owner_agent": 8,
       "closure_test": "Already disproven. No campaign artifact lists trapu as an unregistered metal.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-ENTITY_COVERAGE-006",
@@ -478,7 +524,8 @@
       "implementation_dependency": "Per-entity recall measurement against a read sample, and compound-aware matching. Note the project's own lesson that a validator which silently skips is worse than none: coverage of the recall measurement must itself be reported, not just its precision.",
       "owner_agent": 8,
       "closure_test": "Every entity carries a measured recall figure with its sample size, the ayas YV cell matches VSM 18.13, and no cell is known-false without being typed.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-ENTITY_COVERAGE-007",
@@ -495,7 +542,8 @@
       "implementation_dependency": "Phrase-level matching, and a personification status field so an unresolved entity is typed as refused or as unattempted rather than simply empty.",
       "owner_agent": 8,
       "closure_test": "Phrase matching reaches multi-word entities, and every entity that could be personified carries a resolution status distinguishing refusal from absence.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-ENTITY_COVERAGE-008",
@@ -512,7 +560,8 @@
       "implementation_dependency": "An eligibility predicate, applied at query time rather than by deletion, so a human patron stays discoverable as a patron. The 42 ABSTRACT labels need a curation decision and not a silent rule: Shraddha is both an abstraction and a deity, abhisapa is not. Agent 15 must consume the eligible population rather than the raw label, and must not treat Yajurvedic ritual implements as contamination -- pratimabhuta implements are legitimate devatas.",
       "owner_agent": 15,
       "closure_test": "The eligible deity population is derivable by one documented predicate; counts over it exclude the 29 non-deities; and the ABSTRACT decision is recorded with its reasoning rather than applied implicitly.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-FORMULA-001",
@@ -529,7 +578,8 @@
       "implementation_dependency": "A declared selectivity policy before materialisation. The entity-vocabulary overlap layer is the precedent to follow: it is materialised, it ships with distinctiveness as its ranking key, and computing it online exceeded the 1.4 GiB transaction memory limit. A naive formula-sharing materialisation would hit the same wall.",
       "owner_agent": 12,
       "closure_test": "Either SHARES_FORMULA_WITH carries edges under a declared selectivity policy with a stated ranking key, or the type is removed from the schema so no declaration outruns the data.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-FORMULA-002",
@@ -546,7 +596,8 @@
       "implementation_dependency": "Add family_id to the diffusion endpoint response, backfill match_level on the edges that lack it, and re-run cross-script matching once a common script exists.",
       "owner_agent": 12,
       "closure_test": "The diffusion endpoint returns a family_id that resolves to /formula-families/{id}, no edge has a blank match_level, and SV family membership is re-measured after a common-script text exists.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-FORMULA-003",
@@ -563,7 +614,8 @@
       "implementation_dependency": "A nesting policy: decide whether a substring formula is a distinct formula, a member of its container, or a variant, and apply one contract rather than leaving all three readings available. Applying different rules in different queries is how this project previously produced three disagreeing answers for one attribution axis.",
       "owner_agent": 12,
       "closure_test": "Every formula either has no strict-substring relation to another or carries an explicit nesting type, and formula frequency rankings state which policy they apply.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-MORPHOLOGY-001",
@@ -580,7 +632,8 @@
       "implementation_dependency": "A general lemma-to-passage projection over the existing token annotation, plus a decision about scale: projecting all 10,031 lemmas would add on the order of a million edges, so this needs a declared policy rather than a bulk load.",
       "owner_agent": 9,
       "closure_test": "MATCH (l:Lemma) WHERE size([(l)<--()|1])=0 RETURN count(l) falls far below 9,992, and any product surface reporting lemma coverage states distinct lemmas reached alongside mantras reached.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-MORPHOLOGY-002",
@@ -597,7 +650,8 @@
       "implementation_dependency": "If an automated analyser is used, the derivation must be typed so the RV's manual annotation and the others' machine analysis are never summed - the same discipline already applied to MENTIONS_DEVATA's two instruments.",
       "owner_agent": 9,
       "closure_test": "MENTIONS_LEMMA reaches a non-RV corpus with its derivation typed distinctly from the RV's manual annotation, and no query sums the two.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-MORPHOLOGY-003",
@@ -614,7 +668,8 @@
       "implementation_dependency": "Either correct works.yaml:16 to say the accented samhitapatha only, or ingest the padapatha as a distinct text_form so the claim becomes true. Correcting the text is the immediate obligation; ingesting is optional.",
       "owner_agent": 9,
       "closure_test": "Either MATCH (t:TextVersion) WHERE t.text_form='PADAPATHA' RETURN count(t) is greater than 0, or no scope statement, registry file or product surface mentions a Padapatha.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-MORPHOLOGY-004",
@@ -631,7 +686,8 @@
       "implementation_dependency": "A feature-conditioned alias mechanism. Until it exists, no edge can be created without asserting a resolution the grammar does not support.",
       "owner_agent": 9,
       "closure_test": "The 711 tokens are resolved or each carries a typed reason for non-resolution, and RIGVEDA_LEXICAL_MENTION_POLICY.md no longer lists this as deferred.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-MORPHOLOGY-005",
@@ -648,7 +704,8 @@
       "implementation_dependency": "An accent-preserving transliterator, validated per line rather than in bulk: the project's own history shows band-scale validation reported 0 of 21 acceptable where per-line comparison reached 1.000 agreement, so the validation granularity is the load-bearing choice.",
       "owner_agent": 9,
       "closure_test": "GET /api/v1/passages/{key} returns both text.devanagari and text.transliteration for a verse in each corpus, with accent placement verified line by line rather than in aggregate.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-MORPHOLOGY-006",
@@ -665,7 +722,8 @@
       "implementation_dependency": "A search-normalised version for every corpus, so lexical search has one instrument rather than three.",
       "owner_agent": 9,
       "closure_test": "Every work carries a search-normalised text version, the 139 YV mantras gain an unaccented form, and a single accent-bearing query is shown to reach all four corpora equally.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-OTHER-001",
@@ -682,7 +740,8 @@
       "implementation_dependency": "NONE for V1.",
       "owner_agent": 8,
       "closure_test": "Not a gap to close. The closure test is that the exclusion list, the scope_honest_label and the frontend not-held copy continue to match what is held, and that no YV figure silently starts including another recension.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-OTHER-002",
@@ -699,7 +758,8 @@
       "implementation_dependency": "NONE for V1.",
       "owner_agent": 7,
       "closure_test": "Not a gap to close. The closure test is that the exclusion list and the Saunaka-only qualification continue to match what is held.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-OTHER-003",
@@ -716,7 +776,8 @@
       "implementation_dependency": "The empty 1856 manifest should be retired or marked abandoned rather than left declaring a FAILED corpus, so a later session does not read it as unfinished work and restart a cancelled scan.",
       "owner_agent": 7,
       "closure_test": "The 5,839-versus-5,977 divergence carries a determined cause or an explicit statement that it is edition-relative and closed, and the atharvaveda_saunaka_1856_v1 manifest is marked abandoned rather than FAILED.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-OTHER-004",
@@ -733,7 +794,8 @@
       "implementation_dependency": "Resolve the recension identity before writing new SV data. The count reconciliation must keep refusing to invent a partition for the 21 contested verses.",
       "owner_agent": 3,
       "closure_test": "The SV printed witness carries a determined recension with its evidence, and the 31 unkeyed verses either gain keys or carry a permanent typed reason.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-OTHER-005",
@@ -750,7 +812,8 @@
       "implementation_dependency": "NONE. Note in passing that the RV scope statement, while populated, contains the false Padapatha claim tracked as GAP-MORPHOLOGY-003, so it needs correcting rather than creating.",
       "owner_agent": 16,
       "closure_test": "Already disproven. No campaign artifact treats Work.scope as unpopulated.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-OTHER-006",
@@ -767,7 +830,8 @@
       "implementation_dependency": "Fixed at 30ba692: autojunk disabled, the colon-visarga fold added under a look-behind so Latin punctuation is untouched, the threshold recalibrated over 12,000 mispaired pairs (median 0.2683, p99 0.4276, max 0.8413, none reaching 0.90), and four regression tests each confirmed to fail against the old behaviour. Remaining work is to re-run Atharvavedic discovery through the corrected comparator.",
       "owner_agent": 7,
       "closure_test": "Atharvavedic audio discovery re-run with the corrected comparator, its text_mismatch population re-reported, and no currently-accepted mapping lost.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-PRODUCT_SURFACE-001",
@@ -784,7 +848,8 @@
       "implementation_dependency": "Make the coverage block dimension-aware, so not-covered is reported per dimension rather than once for a response that carries two dimensions.",
       "owner_agent": 8,
       "closure_test": "No endpoint returns a Veda in both vedas_in_scope and vedas_not_covered, and any multi-dimension response reports coverage per dimension.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-PRODUCT_SURFACE-002",
@@ -801,7 +866,8 @@
       "implementation_dependency": "A capability probe per remaining NOT_ANSWERABLE dimension, each with a measurement, a safe alternative and a statement of what would change it - the structure the existing 7 already use.",
       "owner_agent": 16,
       "closure_test": "The limits catalogue covers every dimension the benchmark grades NOT_ANSWERABLE, each with a reproducible probe, and total_available matches that population.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-PRODUCT_SURFACE-003",
@@ -818,7 +884,8 @@
       "implementation_dependency": "Per-book and per-metre aggregate endpoints, and a dispersion endpoint that is not bounded by the passage list's page size. The metre matrix should wait on GAP-ATTRIBUTION-006 rather than shipping two-thirds hatched.",
       "owner_agent": 16,
       "closure_test": "Per-book and deity-by-metre aggregates are served, dispersion is fetchable for a deity with more than 200 passages, and the three VIZ_BLOCKER entries are closed in the design spec.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-PRODUCT_SURFACE-004",
@@ -835,7 +902,8 @@
       "implementation_dependency": "A passage-lookup channel that covers all four corpora, and insight-endpoint routing for the entity and material-culture questions. Note this is retrieval work, not data work, so it sits outside the ingestion waves.",
       "owner_agent": 16,
       "closure_test": "Ask returns a Samavedic passage for a direct SV citation, routes a metals question to the metals insight, and a re-run of the 60-question benchmark holds MISLEADING at 0 with Q34 answered.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-PRODUCT_SURFACE-005",
@@ -852,7 +920,8 @@
       "implementation_dependency": "Either track the canonical release or protect it by a checksummed, versioned snapshot outside git. The pre-campaign Neo4j dump covers the graph but not the canonical JSONL artifacts the graph is built from.",
       "owner_agent": 16,
       "closure_test": "Every canonical release artifact is either tracked or covered by a verified external snapshot with a recorded checksum, and the 4 apparatus-contaminated SV verses are corrected.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-QUALITY-001",
@@ -869,7 +938,8 @@
       "implementation_dependency": "NONE - the harness, schema and validator all exist and the validator already flags the emptiness.",
       "owner_agent": 16,
       "closure_test": "data/gold/rigveda_semantic_gold_v1.jsonl has zero rows with annotator UNANNOTATED, the adjudication and manifest files exist, and /api/v1/insights/capabilities reports human_annotated_assertions above 0.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-QUALITY-002",
@@ -886,7 +956,8 @@
       "implementation_dependency": "A human review pass over a stratified subsample of the 575, so the model labels can be scored rather than trusted. The borderline flag already present on rows is the natural stratification key.",
       "owner_agent": 16,
       "closure_test": "A human-annotated subsample of theonym_mention_gold_v1.jsonl exists with its agreement against the model labels measured and reported per ambiguity class.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-QUALITY-003",
@@ -903,7 +974,8 @@
       "implementation_dependency": "Per-predicate calibration against a labelled sample, and removal or renaming of constant-valued confidence fields so they cannot be mistaken for probabilities.",
       "owner_agent": 16,
       "closure_test": "Each predicate carrying a confidence has a calibration curve measured against a human-labelled sample, and no predicate carries a single constant confidence on every edge.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-QUALITY-004",
@@ -920,7 +992,8 @@
       "implementation_dependency": "Closing the layer gaps. This gap is a roll-up rather than independent work, and should be re-measured after each wave rather than worked on directly.",
       "owner_agent": 16,
       "closure_test": "A re-run of the 100-question benchmark against the post-campaign graph shows FULLY_ANSWERABLE well above 11 with MISLEADING still 0, and the re-grade is a re-run rather than a re-scoring of the frozen answers.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-QUALITY-005",
@@ -937,7 +1010,8 @@
       "implementation_dependency": "Add a second unit to the baseline matrix for mention-type dimensions: distinct targets reached alongside mantras reached. The same correction applies to the Entity mention and Formula rows, where 8,143 RV mantras are reached by an unmeasured number of distinct entities.",
       "owner_agent": 16,
       "closure_test": "The BASELINE.md dimension matrix reports distinct targets reached for every mention-type row, and no campaign artifact cites the Lemma row without it.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-QUALITY-006",
@@ -954,7 +1028,8 @@
       "implementation_dependency": "One occurrence-count contract applied after all loaders, declaring its scope explicitly (mantra or container) and raising on a label it does not recognise rather than leaving the property absent. Until then Ask must not state the figure, because 0 is not distinguishable from unwritten.",
       "owner_agent": 16,
       "closure_test": "Every :Rishi, :Devata and :Chandas node carries occurrence_count; the value for each equals its edge count under one declared scope; a Rigvedic seer's figure matches its HAS_RISHI degree; and the scope is recorded on the node so a reader can tell mantra-scope from container-scope.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-RITUAL-001",
@@ -971,7 +1046,8 @@
       "implementation_dependency": "A curation pass adding the named-but-absent rites, each with its mention evidence, and keeping the inventory_coverage declaration honest as the count grows.",
       "owner_agent": 13,
       "closure_test": "The Ritual class holds the rites the four Samhitas name, each with mention evidence, and the inventory_coverage column reports the new denominator rather than a stale 8.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-RITUAL-002",
@@ -988,7 +1064,8 @@
       "implementation_dependency": "Procedure cannot be inferred from Samhita mantras. Any step added without a describing source would be invention, which campaign rule 5 forbids.",
       "owner_agent": 13,
       "closure_test": "Either a describing corpus is ingested and HAS_STEP grows with per-step citations, or the absence is restated as a scope consequence rather than a thin layer - the current PARTIAL status correctly describes it, so the honest closure may be a scope statement rather than data.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-RITUAL-003",
@@ -1005,7 +1082,8 @@
       "implementation_dependency": "Wire the missing objects to rites, and register the compound and inflected forms the yupa case exposes. Both must be done: wiring alone would still under-count, and alias work alone would still exclude unwired objects.",
       "owner_agent": 13,
       "closure_test": "USES_OBJECT reaches mani, dundubhi and the udumbara amulet, and yupa's vedas_with_matches reads 3 with VSM 19.17 and 25.29 both matched.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-RITUAL-004",
@@ -1022,7 +1100,8 @@
       "implementation_dependency": "Add the five missing roles and wire PERFORMED_BY from mention evidence. Note that the classical sixteen is a Srautasutra schema, so presenting it as the denominator imports a post-Samhita framework; the denominator should be stated as such.",
       "owner_agent": 13,
       "closure_test": "RitualRole holds the classical sixteen with their source stated, the hotr carries PERFORMED_BY edges, and any completeness figure names the schema its denominator comes from.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-RITUAL-005",
@@ -1039,7 +1118,8 @@
       "implementation_dependency": "A typed RECEIVES_OFFERING predicate, and offering links on the rites. Co-occurrence must not be promoted into an asserted offering relation: benchmark Q4 and Q31 already flag that the current answer is \"verse co-occurrence, not an asserted deity-to-offering relation\".",
       "owner_agent": 13,
       "closure_test": "A typed deity-to-offering predicate exists with per-edge verse evidence, every modelled rite carries its offerings, and no surface presents co-occurrence as an asserted offering.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-RITUAL-006",
@@ -1056,7 +1136,8 @@
       "implementation_dependency": "A ritual-context criterion. This is the riskiest item in the ritual domain: assigning context by proximity to ritual vocabulary would produce a circular result, since the ritual vocabulary is what the context is meant to explain.",
       "owner_agent": 13,
       "closure_test": "Passages carry a ritual_context assignment with its method declared and its precision measured against a reviewed sample, and material-culture counts are reported split by context.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-RITUAL-007",
@@ -1073,7 +1154,8 @@
       "implementation_dependency": "NONE. The live gap is the four remaining rites, tracked as GAP-RITUAL-001.",
       "owner_agent": 13,
       "closure_test": "Already disproven. No campaign artifact lists asvamedha among the absent rites.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-SAMAVEDA_MUSIC-001",
@@ -1090,7 +1172,8 @@
       "implementation_dependency": "A separate gana work_id. The ganas must not be ingested under VG:WORK:SV:KAU: that would silently change what every existing SV count denominates.",
       "owner_agent": 5,
       "closure_test": "Not a gap to close under this work_id. It closes only by a new work identifier whose scope statement is its own, leaving VG:WORK:SV:KAU's arcika figures unchanged and its exclusion list intact.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-SAMAVEDA_MUSIC-002",
@@ -1107,7 +1190,8 @@
       "implementation_dependency": "A melodic entity and a verse-to-saman predicate, neither of which exists. The ontology reference documents MUSICALIZED_AS but the graph has no such type, so the documentation is ahead of the schema.",
       "owner_agent": 5,
       "closure_test": "A melodic node label exists, MUSICALIZED_AS appears in db.relationshipTypes() with a non-zero count, and /api/v1/insights/capabilities no longer returns samavedic_melodic_layer as NOT_BUILT.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-SAMAVEDA_MUSIC-003",
@@ -1124,7 +1208,8 @@
       "implementation_dependency": "An additive property or node carrying the running number per Samavedic verse, imported before the MUSICALIZED_AS edges so the join is reproducible from the graph alone. MUSICALIZED_AS is also glossed RV->SV in the ontology reference and needs widening before it can carry an SV->gana edge honestly.",
       "owner_agent": 5,
       "closure_test": "Every Samavedic mantra exposes its running Samhita number, and re-deriving the MUSICALIZED_AS edges from the graph alone reproduces all 495.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-SCHOLARSHIP-001",
@@ -1141,7 +1226,8 @@
       "implementation_dependency": "An asserter entity and an attributed-claim model. The distinction the product already enforces between a textual statement and a reading must extend to a third case: a named scholar's reading, which is neither the text's statement nor this project's inference.",
       "owner_agent": 14,
       "closure_test": "Named asserter entities exist, InterpretiveClaim nodes carry a non-empty asserted_by, at least two claims about the same passage contradict each other with both attributed, and /api/v1/insights/capabilities no longer returns rival_scholarly_readings as NOT_ANSWERABLE.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-SCHOLARSHIP-002",
@@ -1158,7 +1244,8 @@
       "implementation_dependency": "A new work identifier per corpus. These must not be ingested under an existing Samhita work_id: doing so would change what every existing per-Veda denominator means.",
       "owner_agent": 14,
       "closure_test": "Not a gap to close in this campaign. It closes only by a deliberate scope expansion with its own work identifiers; until then the closure test is that the exclusion lists still match what is held.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-SEMANTICS-001",
@@ -1175,7 +1262,8 @@
       "implementation_dependency": "Any extension must keep the two derivations separately typed and must not present a blended count.",
       "owner_agent": 9,
       "closure_test": "HAS_SEMANTIC_ASSERTION reaches a non-Rigvedic corpus, RV coverage rises above 2,542, and no surface reports a blended assertion total.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-SEMANTICS-002",
@@ -1192,7 +1280,8 @@
       "implementation_dependency": "A review workflow that writes review_state, and a sampling plan that stratifies by derivation so the TIER_D half is not reviewed at the same rate as the rule-derived half.",
       "owner_agent": 16,
       "closure_test": "MATCH (a:SemanticAssertion) WHERE a.review_state='UNREVIEWED' RETURN count(a) falls below 4,865, with the reviewed sample stratified by derivation and its reviewer recorded.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-SEMANTICS-003",
@@ -1209,7 +1298,8 @@
       "implementation_dependency": "Widen the ASSERTION_AGENT and ASSERTION_TARGET range beyond :Devata, and reconcile the two derivations so a single assertion can carry all three slots without blending their tiers.",
       "owner_agent": 9,
       "closure_test": "MATCH (a:SemanticAssertion) with all three slots present returns a non-zero count, and at least one assertion has a non-Devata target.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-SEMANTICS-004",
@@ -1226,7 +1316,8 @@
       "implementation_dependency": "The InterpretiveClaim layer would need a named asserter first (GAP-SCHOLARSHIP-001), because a stratum assignment with no attribution is exactly the kind of claim this product refuses to make.",
       "owner_agent": 14,
       "closure_test": "Either a stratum layer exists with every assignment attributed to a named position, or the absence is recorded as a deliberate decision with its reasoning, rather than appearing as an unanswered benchmark question.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-SEMANTICS-005",
@@ -1243,7 +1334,8 @@
       "implementation_dependency": "A domain vocabulary, declared before assignment, and a rule for entities that sit in more than one domain: soma is ritual, botanical and divine at once, so a single-valued domain would force a false choice.",
       "owner_agent": 9,
       "closure_test": "MATCH (e:DomainEntity) WHERE e.domain IS NULL RETURN count(e) returns 0, with multi-domain entities carrying every applicable domain rather than one.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-SEMANTICS-006",
@@ -1260,7 +1352,8 @@
       "implementation_dependency": "A resemblance measure plus, critically, a declared threshold and a projection. The existing entity-vocabulary overlap layer is the cautionary precedent: under its old name it returned 25 confident-looking pairs ranked on a raw shared-entity count and was graded MISLEADING twice, because ranking on shared-entity count treats heaven, sacrifice and soma as strong evidence. Any resemblance layer must ship with its ranking key specified, as that one now does with distinctiveness.",
       "owner_agent": 11,
       "closure_test": "A resemblance predicate exists with a declared measure and threshold, /api/v1/insights/cross-veda returns measured counts in the SEMANTIC_RESEMBLANCE row, and the capability limit conceptual_similarity_without_shared_text is no longer NOT_ANSWERABLE.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-TRANSLATION-001",
@@ -1277,7 +1370,8 @@
       "implementation_dependency": "A verse-level aligner that refuses rather than approximates, plus a per-verse recension provenance field so a Ranayaniya-derived rendering is never silently presented as a Kauthuma translation.",
       "owner_agent": 3,
       "closure_test": "MATCH (p:Mantra) WHERE p.veda='SV' AND NOT (p)-[:HAS_TRANSLATION]->() RETURN count(p) returns 0, every SV Translation node carries a Kauthuma-aligned source_id, and /api/v1/works reports VG:WORK:SV:KAU as SUPPORTED.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-TRANSLATION-002",
@@ -1294,7 +1388,12 @@
       "implementation_dependency": "Kanda 20 is mostly RV redaction, so the importer must not substitute the RV translation of the parallel verse: that would assert a translation this work does not make. The 958 verses need their own source, marked as such.",
       "owner_agent": 3,
       "closure_test": "MATCH (p:Mantra) WHERE p.veda='AV' AND NOT (p)-[:HAS_TRANSLATION]->() RETURN count(p) returns 0, and no AVS 20 mantra is untranslated.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "observed_gap": "961 of 5,839 Saunaka mantras had no translation, 958 of them the whole of kanda 20 plus exactly three strays at AVS 3.9.4, 5.12.11 and 10.8.30.",
+      "suspected_cause": "The ingested AV translation is Whitney/Lanman via VEDAWEB (4,878 Translation nodes), and Whitney excluded kanda 20 because it is largely Rigvedic redaction. The gap is therefore one contiguous book plus three isolated verses, not scattered attrition.",
+      "measured_cause": "Both incumbent Atharvavedic sources omit kanda 20 for the same Whitney-related reason, so it was a single source dependency rather than 961 separate absences.",
+      "closure_method": "944 of 961 from Griffith's Hymns of the Atharvaveda via the Internet Archive Wayback Machine, sacred-texts.com being 403 behind a Cloudflare bot challenge rather than merely unreachable. 923 direct including all three strays, and 21 by the permitted cross-corpus route at surface identity of exactly 1.0 citing both keys.",
+      "causation_status": "MEASURED"
     },
     {
       "gap_id": "GAP-TRANSLATION-003",
@@ -1311,7 +1410,12 @@
       "implementation_dependency": "Per-verse alignment repair against the existing source artifact.",
       "owner_agent": 3,
       "closure_test": "MATCH (p:Mantra) WHERE p.veda='YV' AND NOT (p)-[:HAS_TRANSLATION]->() RETURN count(p) returns 0.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "observed_gap": "72 of 1,975 Madhyandina mantras had no translation.",
+      "suspected_cause": "Residual alignment misses against a source that covers the whole Vajasaneyi Samhita. Not source-blocked.",
+      "measured_cause": "39 of the 72 were never missing. The stage file's own gap labels decompose as 39 LABEL_NOT_PRINTED, 21 spine divergence and 12 printed omission, and re-parsing the pinned snapshots shows the 39 are digit-confusion OCR of the printed verse label -- '22 23 24 23 26' for 25, '84 S5 85 87' for 84/85/86 -- with the translated text present throughout. Adhyaya 23.20-31 is by contrast a true omission: Griffith printed a row of ellipsis dots.",
+      "closure_method": "Recovery by forced interpolation between bindings the shipped pipeline already made, controlled against all 1,889 existing EXACT bindings with zero regressions. A first attempt recovered 60 while silently re-binding 53 verses of adhyaya 12 by one place; the regression guard caught it, which is the only reason the figure is trustworthy. Owner decision C then ruled the 31 rows lacking independent content control ineligible, so accepted recovery is 19.",
+      "causation_status": "MEASURED"
     },
     {
       "gap_id": "GAP-TRANSLATION-004",
@@ -1328,7 +1432,12 @@
       "implementation_dependency": "Per-verse alignment repair against the existing source artifact.",
       "owner_agent": 3,
       "closure_test": "MATCH (p:Mantra) WHERE p.veda='RV' AND NOT (p)-[:HAS_TRANSLATION]->() RETURN count(p) returns 0.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "observed_gap": "50 of 10,552 Sakala mantras had no translation.",
+      "suspected_cause": "Residual alignment misses against WIKISOURCE_GRIFFITH_RV, which covers the Sakala Samhita in full. Note that PRODUCT_V1_SCOPE.md:58-59 states 52; the live measurement is 50, so the scope document is two out of date.",
+      "measured_cause": "30 of the 50 are not a source gap. They are the unbound halves of RV 1.65-1.70, where Griffith renders each pair of our verses as one merged unit -- so no printed unit addresses them individually, and the 25 units that ARE bound in that span sit on the wrong verses. The gap was the visible symptom of a misalignment, which is why reading it as a gap hid the defect. See GAP-TRANSLATION-006.",
+      "closure_method": "13 closed conventionally. The 30 are barred from import until the coordinate repair is verified, per owner decision A: filling the span first would leave every verse carrying text and 25 carrying the wrong text.",
+      "causation_status": "MEASURED"
     },
     {
       "gap_id": "GAP-TRANSLATION-005",
@@ -1345,7 +1454,8 @@
       "implementation_dependency": "Write alignment_confidence during alignment and surface it in the reader apparatus; reconcile or withdraw the '158 uncertain' figure in PRODUCT_V1_SCOPE.md.",
       "owner_agent": 3,
       "closure_test": "MATCH (t:Translation) WHERE t.alignment_confidence IS NULL RETURN count(t) returns 0, and the 158-uncertain claim is either reproducible from the data or removed.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     },
     {
       "gap_id": "GAP-TRANSLATION-006",
@@ -1362,7 +1472,8 @@
       "implementation_dependency": "Realign the 25 rows to 2N-1 with per-verse Sanskrit verification rather than by applying the formula blindly, since RV 1.70's 11 verses against 6 units show the mapping is not uniformly a doubling. Only then import the absent verses: filling the hymn first would make every verse carry text while 25 still carried the wrong text, which is strictly worse than the gap. Add an import invariant that fails when a hymn's translated count is a near-half of its verse count.",
       "owner_agent": 3,
       "closure_test": "Each of the 31 rows reads correctly against its own verse's Sanskrit -- not that the hymn is full. Plus an invariant in the test suite that rejects a near-half translated-to-verse ratio at hymn scope.",
-      "status": "OPEN"
+      "status": "OPEN",
+      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
     }
   ]
 }

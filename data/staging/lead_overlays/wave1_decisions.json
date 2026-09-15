@@ -1,0 +1,83 @@
+{
+  "schema_version": "1.0",
+  "applies_to_wave": 1,
+  "created_at": "2026-09-15",
+  "code_commit": "03310e432914ce99562071ac3d5a31635e371908",
+  "rationale": "Owner decisions are applied as an overlay rather than by editing a specialist's artifact. The contract makes staging artifacts immutable and checksummed, so a lead edit in place would break the manifest and erase the agent's own judgement from the record. An overlay keeps both: what the agent concluded, and what the owner decided about it. Wave 3's import reads artifacts first, then applies these.",
+  "decisions": [
+    {
+      "decision_id": "WAVE1-C-FORCED-YV-ADDRESSES",
+      "owner_decision": "C",
+      "instruction": "The 31 Yajurvedic translation rows flagged address_forced_without_content_control are NOT eligible for canonical import. Accepted Yajurvedic translation recovery is therefore 19, not 50. Coordinate plausibility alone is insufficient; eligibility requires independent content verification.",
+      "effect": "override mapping_confidence to PROBABLE, which the validator already treats as staged-but-not-importable",
+      "affects_domain": "translation",
+      "affected_count": 31,
+      "affected_keys": [
+        "VG:YV:VSM:A06:V023",
+        "VG:YV:VSM:A06:V025",
+        "VG:YV:VSM:A08:V017",
+        "VG:YV:VSM:A08:V027",
+        "VG:YV:VSM:A12:V044",
+        "VG:YV:VSM:A12:V071",
+        "VG:YV:VSM:A12:V074",
+        "VG:YV:VSM:A16:V031",
+        "VG:YV:VSM:A16:V034",
+        "VG:YV:VSM:A19:V023",
+        "VG:YV:VSM:A19:V028",
+        "VG:YV:VSM:A19:V033",
+        "VG:YV:VSM:A20:V084",
+        "VG:YV:VSM:A20:V085",
+        "VG:YV:VSM:A20:V086",
+        "VG:YV:VSM:A21:V043",
+        "VG:YV:VSM:A21:V045",
+        "VG:YV:VSM:A22:V023",
+        "VG:YV:VSM:A22:V028",
+        "VG:YV:VSM:A23:V058",
+        "VG:YV:VSM:A26:V023",
+        "VG:YV:VSM:A27:V012",
+        "VG:YV:VSM:A27:V013",
+        "VG:YV:VSM:A27:V026",
+        "VG:YV:VSM:A28:V021",
+        "VG:YV:VSM:A28:V024",
+        "VG:YV:VSM:A29:V059",
+        "VG:YV:VSM:A34:V013",
+        "VG:YV:VSM:A34:V015",
+        "VG:YV:VSM:A36:V021",
+        "VG:YV:VSM:A36:V024"
+      ],
+      "override": {
+        "mapping_confidence": "PROBABLE",
+        "not_importable_reason": "OWNER_DECISION_C: address established by forced interpolation between existing bindings plus a 1,889-row regression control, with no independent content control. Becomes eligible only on exact Sanskrit match, reliable source-level mapping, independently verified audio/text alignment, or direct listening with textual control."
+      },
+      "agent_position_preserved": "Agent 3 typed these EXACT and flagged them itself, explicitly inviting reversal. The flag is why this decision could be made at all, and the agent's reasoning stands in data/staging/translation/ unaltered."
+    },
+    {
+      "decision_id": "WAVE1-A-RV-SPAN-IMPORT-BAR",
+      "owner_decision": "A",
+      "instruction": "No import may touch RV 1.65-1.70 until the coordinate repair is verified. Repair before recovery.",
+      "effect": "bar import for the listed canonical keys across ALL domains",
+      "affects_domain": "*",
+      "affected_count": 61,
+      "affected_keys": null,
+      "affected_key_pattern": "VG:RV:SAK:M01:S0(65|66|67|68|69|70):V.*",
+      "override": {
+        "import_barred": true,
+        "not_importable_reason": "OWNER_DECISION_A: 25 of 31 existing translations in this span are attached to the wrong verse because Griffith renders each verse pair as one merged unit. Filling the span before re-binding would leave every verse carrying text and 25 carrying the wrong text. See docs/reports/data-completeness/RV_1_65_TO_1_70_MISALIGNMENT.md and data/staging/rv_coordinate_repair/."
+      },
+      "note": "Measured: the audio layer in this span is clean -- 61 of 61 records, all EXACT and text_verified -- so the bar is about the translation layer. The bar is applied to all domains anyway, because a coordinate repair in progress is not the moment to write anything else into the same span."
+    },
+    {
+      "decision_id": "WAVE1-E-AUDIO-IMPORT-GATE",
+      "owner_decision": "E",
+      "instruction": "No newly recovered audio enters the canonical catalogue until listening QA is satisfied. The audio import gate is CLOSED.",
+      "effect": "bar canonical import of all Wave 1 audio rows pending audible review",
+      "affects_domain": "audio_rv,audio_yv,audio_av,samaveda_music",
+      "affected_count": 1021,
+      "affected_keys": null,
+      "override": {
+        "import_barred": true,
+        "not_importable_reason": "OWNER_DECISION_E: listening review population is 0 in every audio domain. Automated text comparison is not listening review and metadata inspection is not listening review. Queue: data/staging/audio_review_queue.jsonl, 1,021 rows, all NEEDS_AUDIBLE_REVIEW."
+      }
+    }
+  ]
+}
