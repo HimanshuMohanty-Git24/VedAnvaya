@@ -606,7 +606,20 @@ def write_nodes(
             )
         }
         unseen = [k for k in keys if k not in present]
-        if unseen:
+        # The fallback answers one question: does the graph already hold this element under
+        # a DIFFERENT label? That can only happen if some other node uses this property
+        # name at all. For a property this wave introduces -- step_key, role_filler_key,
+        # community_id -- the answer is no by construction, and the scan is pure waste: the
+        # 9,255-key step probe spent 7m32s proving that nothing carries step_key.
+        elsewhere = (
+            tx.run(
+                f"MATCH (n) WHERE n.{key} IS NOT NULL AND NOT n:{group.element} "
+                "RETURN count(n) AS c LIMIT 1"
+            ).single()
+            if unseen
+            else None
+        )
+        if unseen and int((elsewhere or {"c": 0})["c"]) > 0:
             present |= {
                 str(record["v"])
                 for record in tx.run(
@@ -817,6 +830,69 @@ def _pairs(group: ElementGroup, rows: list[dict[str, Any]]) -> list[dict[str, st
     return out
 
 
+def correction_withheld_registry_entities(
+    session: Session, run_id: str, *, execute: bool
+) -> dict[str, Any]:
+    """Delete the registry entities a later plan rule withholds, and only those.
+
+    Scoped three ways so it cannot reach anything else: the node must have been CREATED by
+    this wave, must carry the entity_key of a row the current plan now filters out, and must
+    have no relationship at all. A node some edge reaches is not one of these by
+    construction, and a pre-existing node cannot be caught because it has no
+    wave3_created_by.
+
+    The 12 are attested only in a Brahmana or a Srautasutra, and
+    ritual/supplementary_passages.jsonl -- where that evidence lives -- is declared
+    not-imported. Importing the entity while excluding its evidence asserts what the graph
+    cannot support.
+    """
+    from wave3_import_plan import STAGING, elements_of, get_path, passes, read_jsonl
+
+    withheld: set[str] = set()
+    for group in GROUPS:
+        if not group.require_reachable_evidence:
+            continue
+        filename = group.source.split(":", 1)[0]
+        for row in read_jsonl(STAGING / group.domain / filename):
+            key = str(get_path(row, group.identity_fields[0]) or "")
+            if key and not passes(row, group):
+                withheld.add(key)
+    del elements_of
+
+    result: dict[str, Any] = {
+        "correction": "WITHHELD_REGISTRY_ENTITIES",
+        "keys_the_plan_now_withholds": len(withheld),
+    }
+    if not withheld:
+        result.update({"already_applied": True, "executed": False})
+        return result
+
+    probe = session.run(
+        "UNWIND $keys AS k MATCH (n {entity_key: k}) "
+        "WHERE n.wave3_created_by IS NOT NULL AND NOT (n)--() RETURN count(n) AS c",
+        keys=sorted(withheld),
+    ).single()
+    outstanding = int((probe or {"c": 0})["c"])
+    result["present_and_unreachable"] = outstanding
+    result["already_applied"] = outstanding == 0
+    if not execute or not outstanding:
+        result["executed"] = False
+        return result
+
+    with session.begin_transaction() as tx:
+        deleted = int(
+            tx.run(
+                "UNWIND $keys AS k MATCH (n {entity_key: k}) "
+                "WHERE n.wave3_created_by IS NOT NULL AND NOT (n)--() "
+                "DELETE n RETURN count(*) AS n",
+                keys=sorted(withheld),
+            ).single()["n"]
+        )
+        tx.commit()
+    result.update({"executed": True, "nodes_deleted": deleted})
+    return result
+
+
 WRITERS = {
     "NODE": write_nodes,
     "NODE_PROPERTY": write_node_properties,
@@ -847,6 +923,15 @@ def census(session: Session) -> dict[str, Any]:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--execute", action="store_true", help="actually write")
+    parser.add_argument(
+        "--corrections-only",
+        action="store_true",
+        help=(
+            "run the corrections and skip the element groups. For a correction that lands "
+            "after a full pass, where re-running 25 idempotent groups would cost forty "
+            "minutes to write nothing."
+        ),
+    )
     parser.add_argument("--json", default=str(RECEIPT))
     parser.add_argument(
         "--backup",
@@ -944,6 +1029,7 @@ def main() -> int:
             for name, correction in (
                 ("SOMA_PRESSING_WEAK_ALIAS_RETIREMENT", correction_soma),
                 ("M5_SPECIALIZED_FORM_OF", correction_m5),
+                ("WITHHELD_REGISTRY_ENTITIES", correction_withheld_registry_entities),
             ):
                 if name in done:
                     print(f"  {name:46} already applied, skipping")
@@ -979,6 +1065,9 @@ def main() -> int:
             print()
             print(header)
             print("  " + "-" * (len(header) - 2))
+            if args.corrections_only:
+                groups = []
+
             for group in groups:
                 skip = withheld.get(group.group_id, set())
                 rows = [

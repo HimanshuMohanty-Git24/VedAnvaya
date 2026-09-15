@@ -132,6 +132,8 @@ class ElementGroup:
     #: update, and the importer's MERGE then creates a second edge the dry-run did not
     #: promise. Plan and import have to agree about direction or the delta is fiction.
     symmetric: bool = False
+    #: Withhold an element whose evidence this wave does not import. See :func:`passes`.
+    require_reachable_evidence: bool = False
     #: Statuses that mean "do not create this element", with the field naming what it is
     #: already modelled as. Three rites are ALREADY_MODELLED_AS_SOCIALRITE: VIVAHA-MARRIAGE
     #: under its own key, PITRMEDHA as PITRYANA-FUNERARY-RITE and GRHAPRAVESA as
@@ -485,6 +487,7 @@ GROUPS: tuple[ElementGroup, ...] = (
     ),
     ElementGroup(
         group_id="RITUAL_ROLE_NODES",
+        require_reachable_evidence=True,
         node_status_field="node_status",
         domain="ritual",
         kind="NODE",
@@ -501,6 +504,7 @@ GROUPS: tuple[ElementGroup, ...] = (
     ),
     ElementGroup(
         group_id="RITUAL_ACTION_NODES",
+        require_reachable_evidence=True,
         node_status_field="node_status",
         domain="ritual",
         kind="NODE",
@@ -512,6 +516,7 @@ GROUPS: tuple[ElementGroup, ...] = (
     ),
     ElementGroup(
         group_id="RITUAL_IMPLEMENT_NODES",
+        require_reachable_evidence=True,
         node_status_field="node_status",
         domain="ritual",
         kind="NODE",
@@ -523,6 +528,7 @@ GROUPS: tuple[ElementGroup, ...] = (
     ),
     ElementGroup(
         group_id="RITUAL_MATERIAL_NODES",
+        require_reachable_evidence=True,
         node_status_field="node_status",
         domain="ritual",
         kind="NODE",
@@ -534,6 +540,7 @@ GROUPS: tuple[ElementGroup, ...] = (
     ),
     ElementGroup(
         group_id="RITUAL_OFFERING_NODES",
+        require_reachable_evidence=True,
         node_status_field="node_status",
         domain="ritual",
         kind="NODE",
@@ -1003,8 +1010,52 @@ def elements_of(group: ElementGroup) -> list[dict[str, Any]]:
     return [row for row in rows if isinstance(row, dict)]
 
 
+#: Keys any rite edge, role assignment or rite relation names. A registry entity a rite
+#: edge references is reachable whatever its own attestation, because the edge is the
+#: evidence. Computed from the artifacts so the planner and the importer agree.
+_REFERENCED_CACHE: set[str] | None = None
+
+
+def referenced_by_a_rite_edge() -> set[str]:
+    global _REFERENCED_CACHE
+    if _REFERENCED_CACHE is not None:
+        return _REFERENCED_CACHE
+    keys: set[str] = set()
+    root = STAGING / "ritual"
+    for filename, fields in (
+        (
+            "rite_edges.jsonl",
+            ("ritual_key", "action_key", "object_key", "offering_key", "material_key"),
+        ),
+        ("role_assignments.jsonl", ("ritual_key", "role_key")),
+        ("rite_relations.jsonl", ("child_ritual_key", "parent_ritual_key")),
+        ("steps.jsonl", ("ritual_key",)),
+    ):
+        for row in read_jsonl(root / filename):
+            for field in fields:
+                value = row.get(field)
+                if value:
+                    keys.add(str(value))
+    _REFERENCED_CACHE = keys
+    return keys
+
+
 def passes(row: dict[str, Any], group: ElementGroup) -> bool:
-    return all(get_path(row, field) == value for field, value in group.require)
+    if not all(get_path(row, field) == value for field, value in group.require):
+        return False
+    if group.require_reachable_evidence:
+        key = str(get_path(row, group.identity_fields[0]) or "")
+        # Reachable means one of two things, both measurable here: a rite edge names it, or
+        # the Samhita attests it. An entity attested only in a Brahmana or a Srautasutra is
+        # neither -- ritual/supplementary_passages.jsonl is declared not-imported, so
+        # importing the entity while excluding its evidence asserts what this graph cannot
+        # support. 12 registry entities fail this; every one of them arrived with no edge.
+        attested = bool(row.get("samhita_attested"))
+        redirect = redirects(group.domain)
+        if not attested and key not in referenced_by_a_rite_edge():
+            if redirect.get(key, key) not in referenced_by_a_rite_edge():
+                return False
+    return True
 
 
 def mint(group: ElementGroup, row: dict[str, Any]) -> str:

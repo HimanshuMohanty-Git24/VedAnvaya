@@ -55,6 +55,25 @@ DB = os.environ.get("NEO4J_DATABASE", "neo4j")
 
 WAVE = "WAVE_3"
 
+#: Nodes this wave writes that are unattached on purpose, each with the decision behind it.
+#: A list of decisions rather than a rule, so the next island is a finding rather than a
+#: silent member of a class.
+DELIBERATELY_UNATTACHED: dict[str, str] = {
+    "VG:CONCEPT:SADASYA-PRIEST": (
+        "An officiant role marked samhita_attested with evidence SAMHITA and no attestation "
+        "example recorded -- roles.jsonl carries no samhita_attestation_examples field at "
+        "all. Attested in a corpus this graph holds, so kept rather than dropped over a "
+        "missing locator. The artifact's silence is a finding against the artifact."
+    ),
+    "VG:CONCEPT:SAMITR-BUTCHER": (
+        "The same case as SADASYA-PRIEST: Samhita-attested, no locator recorded."
+    ),
+    "VG:SWORK:SAYANA-TAITTIRIYA-BRAHMANA-BHASYA": (
+        "A registered scholarly work that no claim cites. 16 of the 17 works appear in the "
+        "rows; this one is a bibliography entry, not an error."
+    ),
+}
+
 #: The four corpus totals. The campaign's hardest boundary: whatever else an import does,
 #: these do not move, and a readback that does not check them has not checked anything.
 CORE = {"RV": 10552, "SV": 1844, "YV": 1975, "AV": 5839}
@@ -305,8 +324,9 @@ def main() -> int:
             orphan = one(
                 session,
                 "MATCH (n) WHERE n.wave3_created_by IS NOT NULL AND NOT (n)--() "
-                "AND NOT n:DeityCommunity RETURN count(n) AS c",
-                wave=WAVE,
+                "AND NOT n:DeityCommunity AND NOT n.entity_key IN $exempt "
+                "RETURN count(n) AS c",
+                exempt=sorted(DELIBERATELY_UNATTACHED),
             )
             isolated = int(orphan.get("c") or 0)
             by_label = {
@@ -324,7 +344,9 @@ def main() -> int:
                 )
             deliberate = one(
                 session,
-                "MATCH (n:DeityCommunity) WHERE NOT (n)--() RETURN count(n) AS c",
+                "MATCH (n) WHERE NOT (n)--() AND (n:DeityCommunity "
+                "OR n.entity_key IN $exempt) RETURN count(n) AS c",
+                exempt=sorted(DELIBERATELY_UNATTACHED),
             )
 
             # ---- domain closure tests ---------------------------------------------------
@@ -430,7 +452,8 @@ def main() -> int:
         "withheld_identities_found_in_graph": withheld_found,
         "nodes_written_this_wave_with_no_relationship": isolated,
         "unattached_by_label": by_label,
-        "deliberately_unattached_deity_communities": int(deliberate.get("c") or 0),
+        "deliberately_unattached": int(deliberate.get("c") or 0),
+        "deliberately_unattached_reasons": DELIBERATELY_UNATTACHED,
         "domain_closure_tests": closure,
         "corrections_read_back": corrections,
         "schema_additions_in_graph": {
@@ -481,7 +504,8 @@ def main() -> int:
     print(f"  withheld identities found in the graph: {len(withheld_found)}")
     print(
         f"  nodes written this wave with no relationship: {isolated}"
-        f"  (plus {int(deliberate.get('c') or 0)} :DeityCommunity, unattached on purpose)"
+        f"  (plus {int(deliberate.get('c') or 0)} unattached on purpose, "
+        "12 communities and 3 named entities)"
     )
     print()
     if findings:
