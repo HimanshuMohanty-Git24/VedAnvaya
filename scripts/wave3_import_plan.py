@@ -1080,7 +1080,26 @@ def referenced_by_a_rite_edge() -> set[str]:
     return keys
 
 
+#: Confidences the campaign has always treated as staged-and-not-importable. The constant
+#: lived in the dry-run and was applied to every domain's rows.jsonl -- and to NONE of the
+#: side files, which is where most elements actually come from. That gap imported 13,187
+#: elements the ritual domain had staged PROBABLE with an explicit instruction attached:
+#: "never imported as an assertion, because a sutra may mention an implement in order to
+#: forbid it." Its report is blunter still -- "PROBABLE tiers exist precisely because they
+#: need a human read, and none has had one" -- and it names the precedent, GAP-RITUAL-005,
+#: where verse co-occurrence was once presented as an asserted relation.
+#:
+#: The cost was immediate and on the reader's surface: a chariot a sutra may be forbidding
+#: appeared as a foremost ritual implement, reintroducing the exact ranking that had been
+#: graded MISLEADING and fixed by defining an implement as an object a modelled rite uses.
+NOT_IMPORTABLE: frozenset[str] = frozenset({"PROBABLE", "UNVERIFIED"})
+
+
 def passes(row: dict[str, Any], group: ElementGroup) -> bool:
+    # Applied to EVERY group, before anything else. A row the domain staged as
+    # not-importable is not importable from a side file either.
+    if str(row.get("mapping_confidence") or "") in NOT_IMPORTABLE:
+        return False
     if not all(get_path(row, field) == value for field, value in group.require):
         return False
     if group.require_reachable_evidence:

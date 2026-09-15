@@ -288,3 +288,28 @@ def test_the_display_label_write_is_coalesced_and_never_direct() -> None:
         assert "n.display_label = coalesce( n.display_label" in code or (
             "n.display_label = coalesce(n.display_label" in code
         ), "an existing display_label must survive the write"
+
+
+def test_no_group_can_import_a_row_the_domain_staged_as_not_importable() -> None:
+    """PROBABLE and UNVERIFIED are refused for every group, not only for rows.jsonl.
+
+    The constant lived in the dry-run and was applied to each domain's rows.jsonl and to
+    none of the side files, which is where most elements come from. 13,187 elements landed
+    that the ritual domain had staged PROBABLE with an instruction attached: "never imported
+    as an assertion, because a sutra may mention an implement in order to forbid it." Its
+    report adds that PROBABLE exists "precisely because they need a human read, and none has
+    had one", and names the precedent -- GAP-RITUAL-005, where verse co-occurrence was once
+    presented as an asserted relation.
+
+    The cost was on the reader's surface within one import: a chariot a sūtra may be
+    forbidding appeared as a foremost ritual implement, reintroducing the ranking that had
+    been graded MISLEADING and fixed by defining an implement as an object a modelled rite
+    uses.
+    """
+    assert plan.NOT_IMPORTABLE == {"PROBABLE", "UNVERIFIED"}
+    for confidence in sorted(plan.NOT_IMPORTABLE):
+        for group in plan.GROUPS:
+            assert not plan.passes({"mapping_confidence": confidence}, group), (
+                f"{group.group_id} would import a {confidence} row. The filter belongs in "
+                "passes(), which every group goes through, not in one caller."
+            )

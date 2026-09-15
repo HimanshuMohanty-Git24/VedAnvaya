@@ -654,102 +654,14 @@
       "require": [],
       "notes": "9,273 ordered steps, each anchored on a supplementary citation. A new label.",
       "artifact_elements": 9273,
-      "filtered_out_by_require": 0,
-      "candidates": 9255,
-      "candidates_before_collision_withholding": 9273,
-      "distinct_identities": 9264,
-      "identity_collisions": 9,
-      "identity_collisions_withheld": 9,
-      "rows_withheld_on_identity_collision": 18,
+      "filtered_out_by_require": 6150,
+      "candidates": 3121,
+      "candidates_before_collision_withholding": 3123,
+      "distinct_identities": 3122,
+      "identity_collisions": 1,
+      "identity_collisions_withheld": 1,
+      "rows_withheld_on_identity_collision": 2,
       "identity_collision_detail": [
-        {
-          "identity": "VG:RITESTEP:BAHISPAVAMANA:KatySS:20:5:20",
-          "count": 2,
-          "differing_fields": [
-            "printed_ordinal_in_work",
-            "step_position",
-            "text_iast"
-          ],
-          "conflicting_fields": [
-            "printed_ordinal_in_work",
-            "step_position",
-            "text_iast"
-          ]
-        },
-        {
-          "identity": "VG:RITESTEP:SAUTRAMANI:KatySS:8:8:13",
-          "count": 2,
-          "differing_fields": [
-            "printed_ordinal_in_work",
-            "step_position",
-            "text_iast"
-          ],
-          "conflicting_fields": [
-            "printed_ordinal_in_work",
-            "step_position",
-            "text_iast"
-          ]
-        },
-        {
-          "identity": "VG:RITESTEP:TRIRATRA:SankhSS:4:15:8",
-          "count": 2,
-          "differing_fields": [
-            "printed_ordinal_in_work",
-            "step_position",
-            "text_iast"
-          ],
-          "conflicting_fields": [
-            "printed_ordinal_in_work",
-            "step_position",
-            "text_iast"
-          ]
-        },
-        {
-          "identity": "VG:RITESTEP:VAISVADEVA-PARVAN:KatySS:8:6:16",
-          "count": 2,
-          "differing_fields": [
-            "order_basis",
-            "printed_ordinal_in_work",
-            "sequence_marker",
-            "step_position",
-            "text_iast"
-          ],
-          "conflicting_fields": [
-            "order_basis",
-            "printed_ordinal_in_work",
-            "sequence_marker",
-            "step_position",
-            "text_iast"
-          ]
-        },
-        {
-          "identity": "VG:RITESTEP:VAISVANARA-ISTI:SankhSS:12:17:2",
-          "count": 2,
-          "differing_fields": [
-            "printed_ordinal_in_work",
-            "step_position",
-            "text_iast"
-          ],
-          "conflicting_fields": [
-            "printed_ordinal_in_work",
-            "step_position",
-            "text_iast"
-          ]
-        },
-        {
-          "identity": "VG:RITESTEP:VAISVANARA-ISTI:SankhSS:12:17:3",
-          "count": 2,
-          "differing_fields": [
-            "printed_ordinal_in_work",
-            "step_position",
-            "text_iast"
-          ],
-          "conflicting_fields": [
-            "printed_ordinal_in_work",
-            "step_position",
-            "text_iast"
-          ]
-        },
         {
           "identity": "VG:RITESTEP:VISVAJIT:SankhSS:16:15:13",
           "count": 2,
@@ -763,30 +675,6 @@
             "step_position",
             "text_iast"
           ]
-        },
-        {
-          "identity": "VG:RITESTEP:YAJNA-SACRIFICE:SankhSS:4:7:13",
-          "count": 2,
-          "differing_fields": [
-            "printed_ordinal_in_work",
-            "step_position"
-          ],
-          "conflicting_fields": [
-            "printed_ordinal_in_work",
-            "step_position"
-          ]
-        },
-        {
-          "identity": "VG:RITESTEP:YAJNA-SACRIFICE:SankhSS:4:7:14",
-          "count": 2,
-          "differing_fields": [
-            "printed_ordinal_in_work",
-            "step_position"
-          ],
-          "conflicting_fields": [
-            "printed_ordinal_in_work",
-            "step_position"
-          ]
         }
       ],
       "multi_source_evidence_merges": 0,
@@ -798,10 +686,10 @@
       "node_status_disagreement_detail": [],
       "match_property": "step_key",
       "key_minted_from_identity": false,
-      "distinct_subjects": 9255,
-      "already_present": 9255,
+      "distinct_subjects": 3121,
+      "already_present": 3121,
       "nodes_create": 0,
-      "nodes_update": 9255,
+      "nodes_update": 3121,
       "subjects_absent_from_graph": [],
       "property_writes": 0,
       "dangling_references": 0
@@ -820,80 +708,16 @@
       "require": [],
       "notes": "685 rows over four predicates, each naming its object in its own field. Endpoints are matched on entity_key with no label constraint, because a rite's object may be a Concept, Object, Substance, Offering or Action.",
       "artifact_elements": 685,
-      "filtered_out_by_require": 0,
-      "candidates": 685,
-      "candidates_before_collision_withholding": 685,
-      "distinct_identities": 479,
+      "filtered_out_by_require": 685,
+      "candidates": 0,
+      "candidates_before_collision_withholding": 0,
+      "distinct_identities": 0,
       "identity_collisions": 0,
       "identity_collisions_withheld": 0,
       "rows_withheld_on_identity_collision": 0,
       "identity_collision_detail": [],
-      "multi_source_evidence_merges": 122,
-      "multi_source_detail": [
-        {
-          "identity": "VG:CONCEPT:AGNI-CITI-FIRE-PILING|USES_OFFERING|VG:CONCEPT:DAKSINA-PRIESTLY-GIFT",
-          "count": 3,
-          "differing_fields": [
-            "citations",
-            "evidence_source_type",
-            "primary_supplementary_key",
-            "quote",
-            "veda_school"
-          ],
-          "conflicting_fields": []
-        },
-        {
-          "identity": "VG:CONCEPT:AGNIHOTRA|RITE_INVOLVES_ACTION|VG:CONCEPT:HOMA-POURING-INTO-FIRE",
-          "count": 4,
-          "differing_fields": [
-            "citations",
-            "co_naming_loci",
-            "evidence_source_type",
-            "primary_supplementary_key",
-            "quote",
-            "translation",
-            "veda_school"
-          ],
-          "conflicting_fields": []
-        },
-        {
-          "identity": "VG:CONCEPT:AGNIHOTRA|USES_OBJECT|VG:CONCEPT:AGNIHOTRAHAVANI-LADLE",
-          "count": 3,
-          "differing_fields": [
-            "citations",
-            "evidence_source_type",
-            "primary_supplementary_key",
-            "quote",
-            "translation",
-            "veda_school"
-          ],
-          "conflicting_fields": []
-        },
-        {
-          "identity": "VG:CONCEPT:AGNIHOTRA|USES_OFFERING|VG:CONCEPT:PAYAS-MILK",
-          "count": 2,
-          "differing_fields": [
-            "citations",
-            "evidence_source_type",
-            "primary_supplementary_key",
-            "quote",
-            "veda_school"
-          ],
-          "conflicting_fields": []
-        },
-        {
-          "identity": "VG:CONCEPT:AGNIHOTRA|USES_OFFERING|VG:CONCEPT:SOMA-DRINK",
-          "count": 3,
-          "differing_fields": [
-            "citations",
-            "evidence_source_type",
-            "primary_supplementary_key",
-            "quote",
-            "veda_school"
-          ],
-          "conflicting_fields": []
-        }
-      ],
+      "multi_source_evidence_merges": 0,
+      "multi_source_detail": [],
       "evidence_fields_declared": [
         "citations",
         "co_naming_loci",
@@ -906,25 +730,20 @@
         "mapping_confidence",
         "evidence_layer"
       ],
-      "unique_triples": 479,
+      "unique_triples": 0,
       "rows_missing_an_endpoint_field": 0,
-      "relationship_types_asserted": [
-        "RITE_INVOLVES_ACTION",
-        "USES_OBJECT",
-        "USES_OFFERING",
-        "USES_SUBSTANCE"
-      ],
+      "relationship_types_asserted": [],
       "dangling_references": 0,
       "dangling_detail": [],
       "start_endpoints_absent": 0,
       "end_endpoints_absent": 0,
-      "endpoints_provided_by_this_plan": 167,
+      "endpoints_provided_by_this_plan": 0,
       "triples_awaiting_an_earlier_step": 0,
-      "endpoints_redirected": 9,
+      "endpoints_redirected": 0,
       "ambiguous_endpoint_keys": 0,
       "ambiguous_endpoint_detail": [],
       "relationships_create": 0,
-      "relationships_update": 479,
+      "relationships_update": 0,
       "property_writes": 0,
       "expected_to_exist_but_absent": 0,
       "expected_to_exist_but_absent_detail": []
@@ -942,74 +761,16 @@
       "require": [],
       "notes": "179 rows binding a rite to the role that performs it. Where one rite and one role are attested in two Vedic schools the rows differ only in their evidence, and the importer merges their citations onto one edge.",
       "artifact_elements": 179,
-      "filtered_out_by_require": 0,
-      "candidates": 179,
-      "candidates_before_collision_withholding": 179,
-      "distinct_identities": 135,
+      "filtered_out_by_require": 179,
+      "candidates": 0,
+      "candidates_before_collision_withholding": 0,
+      "distinct_identities": 0,
       "identity_collisions": 0,
       "identity_collisions_withheld": 0,
       "rows_withheld_on_identity_collision": 0,
       "identity_collision_detail": [],
-      "multi_source_evidence_merges": 25,
-      "multi_source_detail": [
-        {
-          "identity": "VG:CONCEPT:AINDRAGNA|VG:CONCEPT:ACCHAVAKA-PRIEST",
-          "count": 2,
-          "differing_fields": [
-            "citations",
-            "primary_supplementary_key",
-            "quote",
-            "translation",
-            "veda_school"
-          ],
-          "conflicting_fields": []
-        },
-        {
-          "identity": "VG:CONCEPT:AINDRAGNA|VG:CONCEPT:MAITRAVARUNA-PRIEST",
-          "count": 2,
-          "differing_fields": [
-            "citations",
-            "primary_supplementary_key",
-            "quote"
-          ],
-          "conflicting_fields": []
-        },
-        {
-          "identity": "VG:CONCEPT:BALIHARANA|VG:CONCEPT:PATNI-SACRIFICERS-WIFE",
-          "count": 2,
-          "differing_fields": [
-            "citations",
-            "primary_supplementary_key",
-            "quote",
-            "translation"
-          ],
-          "conflicting_fields": []
-        },
-        {
-          "identity": "VG:CONCEPT:DARSAPURNAMASA|VG:CONCEPT:DIKSITA-CONSECRATED",
-          "count": 2,
-          "differing_fields": [
-            "citations",
-            "primary_supplementary_key",
-            "quote",
-            "translation",
-            "veda_school"
-          ],
-          "conflicting_fields": []
-        },
-        {
-          "identity": "VG:CONCEPT:DIKSA-CONSECRATION|VG:CONCEPT:ADHVARYU-PRIEST",
-          "count": 3,
-          "differing_fields": [
-            "citations",
-            "co_naming_loci",
-            "primary_supplementary_key",
-            "quote",
-            "veda_school"
-          ],
-          "conflicting_fields": []
-        }
-      ],
+      "multi_source_evidence_merges": 0,
+      "multi_source_detail": [],
       "evidence_fields_declared": [
         "citations",
         "co_naming_loci",
@@ -1022,22 +783,20 @@
         "mapping_confidence",
         "evidence_layer"
       ],
-      "unique_triples": 135,
+      "unique_triples": 0,
       "rows_missing_an_endpoint_field": 0,
-      "relationship_types_asserted": [
-        "PERFORMED_BY"
-      ],
+      "relationship_types_asserted": [],
       "dangling_references": 0,
       "dangling_detail": [],
       "start_endpoints_absent": 0,
       "end_endpoints_absent": 0,
-      "endpoints_provided_by_this_plan": 70,
+      "endpoints_provided_by_this_plan": 0,
       "triples_awaiting_an_earlier_step": 0,
       "endpoints_redirected": 0,
       "ambiguous_endpoint_keys": 0,
       "ambiguous_endpoint_detail": [],
       "relationships_create": 0,
-      "relationships_update": 135,
+      "relationships_update": 0,
       "property_writes": 0,
       "expected_to_exist_but_absent": 0,
       "expected_to_exist_but_absent_detail": []
@@ -1056,10 +815,10 @@
       "require": [],
       "notes": "23 rite-to-rite relations, 18 PART_OF_RITE and 5 FORM_OF_RITE. The file names its endpoints child_ritual_key and parent_ritual_key; reading ritual_key and object_key gave every row a null identity and reported 2 collisions covering all 23 rows.",
       "artifact_elements": 23,
-      "filtered_out_by_require": 0,
-      "candidates": 23,
-      "candidates_before_collision_withholding": 23,
-      "distinct_identities": 23,
+      "filtered_out_by_require": 23,
+      "candidates": 0,
+      "candidates_before_collision_withholding": 0,
+      "distinct_identities": 0,
       "identity_collisions": 0,
       "identity_collisions_withheld": 0,
       "rows_withheld_on_identity_collision": 0,
@@ -1076,23 +835,20 @@
         "honesty_note",
         "mapping_confidence"
       ],
-      "unique_triples": 23,
+      "unique_triples": 0,
       "rows_missing_an_endpoint_field": 0,
-      "relationship_types_asserted": [
-        "FORM_OF_RITE",
-        "PART_OF_RITE"
-      ],
+      "relationship_types_asserted": [],
       "dangling_references": 0,
       "dangling_detail": [],
       "start_endpoints_absent": 0,
       "end_endpoints_absent": 0,
-      "endpoints_provided_by_this_plan": 27,
+      "endpoints_provided_by_this_plan": 0,
       "triples_awaiting_an_earlier_step": 0,
       "endpoints_redirected": 0,
       "ambiguous_endpoint_keys": 0,
       "ambiguous_endpoint_detail": [],
       "relationships_create": 0,
-      "relationships_update": 23,
+      "relationships_update": 0,
       "property_writes": 0,
       "expected_to_exist_but_absent": 0,
       "expected_to_exist_but_absent_detail": []
@@ -1637,102 +1393,14 @@
       "require": [],
       "notes": "9,255 steps arrived as nodes carrying a ritual_key PROPERTY and no edge, so nothing in the graph could reach them from their rite -- the readback counted them among 12,033 nodes with no relationship at all. A new predicate rather than the existing HAS_STEP, whose 3 edges point at an :Action: widening its range would change what an existing predicate means, which the acceptance gate forbids without a card.",
       "artifact_elements": 9273,
-      "filtered_out_by_require": 0,
-      "candidates": 9255,
-      "candidates_before_collision_withholding": 9273,
-      "distinct_identities": 9264,
-      "identity_collisions": 9,
-      "identity_collisions_withheld": 9,
-      "rows_withheld_on_identity_collision": 18,
+      "filtered_out_by_require": 6150,
+      "candidates": 3121,
+      "candidates_before_collision_withholding": 3123,
+      "distinct_identities": 3122,
+      "identity_collisions": 1,
+      "identity_collisions_withheld": 1,
+      "rows_withheld_on_identity_collision": 2,
       "identity_collision_detail": [
-        {
-          "identity": "VG:CONCEPT:BAHISPAVAMANA|VG:RITESTEP:BAHISPAVAMANA:KatySS:20:5:20",
-          "count": 2,
-          "differing_fields": [
-            "printed_ordinal_in_work",
-            "step_position",
-            "text_iast"
-          ],
-          "conflicting_fields": [
-            "printed_ordinal_in_work",
-            "step_position",
-            "text_iast"
-          ]
-        },
-        {
-          "identity": "VG:CONCEPT:SAUTRAMANI|VG:RITESTEP:SAUTRAMANI:KatySS:8:8:13",
-          "count": 2,
-          "differing_fields": [
-            "printed_ordinal_in_work",
-            "step_position",
-            "text_iast"
-          ],
-          "conflicting_fields": [
-            "printed_ordinal_in_work",
-            "step_position",
-            "text_iast"
-          ]
-        },
-        {
-          "identity": "VG:CONCEPT:TRIRATRA|VG:RITESTEP:TRIRATRA:SankhSS:4:15:8",
-          "count": 2,
-          "differing_fields": [
-            "printed_ordinal_in_work",
-            "step_position",
-            "text_iast"
-          ],
-          "conflicting_fields": [
-            "printed_ordinal_in_work",
-            "step_position",
-            "text_iast"
-          ]
-        },
-        {
-          "identity": "VG:CONCEPT:VAISVADEVA-PARVAN|VG:RITESTEP:VAISVADEVA-PARVAN:KatySS:8:6:16",
-          "count": 2,
-          "differing_fields": [
-            "order_basis",
-            "printed_ordinal_in_work",
-            "sequence_marker",
-            "step_position",
-            "text_iast"
-          ],
-          "conflicting_fields": [
-            "order_basis",
-            "printed_ordinal_in_work",
-            "sequence_marker",
-            "step_position",
-            "text_iast"
-          ]
-        },
-        {
-          "identity": "VG:CONCEPT:VAISVANARA-ISTI|VG:RITESTEP:VAISVANARA-ISTI:SankhSS:12:17:2",
-          "count": 2,
-          "differing_fields": [
-            "printed_ordinal_in_work",
-            "step_position",
-            "text_iast"
-          ],
-          "conflicting_fields": [
-            "printed_ordinal_in_work",
-            "step_position",
-            "text_iast"
-          ]
-        },
-        {
-          "identity": "VG:CONCEPT:VAISVANARA-ISTI|VG:RITESTEP:VAISVANARA-ISTI:SankhSS:12:17:3",
-          "count": 2,
-          "differing_fields": [
-            "printed_ordinal_in_work",
-            "step_position",
-            "text_iast"
-          ],
-          "conflicting_fields": [
-            "printed_ordinal_in_work",
-            "step_position",
-            "text_iast"
-          ]
-        },
         {
           "identity": "VG:CONCEPT:VISVAJIT|VG:RITESTEP:VISVAJIT:SankhSS:16:15:13",
           "count": 2,
@@ -1746,36 +1414,12 @@
             "step_position",
             "text_iast"
           ]
-        },
-        {
-          "identity": "VG:CONCEPT:YAJNA-SACRIFICE|VG:RITESTEP:YAJNA-SACRIFICE:SankhSS:4:7:13",
-          "count": 2,
-          "differing_fields": [
-            "printed_ordinal_in_work",
-            "step_position"
-          ],
-          "conflicting_fields": [
-            "printed_ordinal_in_work",
-            "step_position"
-          ]
-        },
-        {
-          "identity": "VG:CONCEPT:YAJNA-SACRIFICE|VG:RITESTEP:YAJNA-SACRIFICE:SankhSS:4:7:14",
-          "count": 2,
-          "differing_fields": [
-            "printed_ordinal_in_work",
-            "step_position"
-          ],
-          "conflicting_fields": [
-            "printed_ordinal_in_work",
-            "step_position"
-          ]
         }
       ],
       "multi_source_evidence_merges": 0,
       "multi_source_detail": [],
       "evidence_fields_declared": [],
-      "unique_triples": 9255,
+      "unique_triples": 3121,
       "rows_missing_an_endpoint_field": 0,
       "relationship_types_asserted": [
         "HAS_RITUAL_STEP"
@@ -1784,13 +1428,13 @@
       "dangling_detail": [],
       "start_endpoints_absent": 0,
       "end_endpoints_absent": 0,
-      "endpoints_provided_by_this_plan": 9355,
+      "endpoints_provided_by_this_plan": 3221,
       "triples_awaiting_an_earlier_step": 0,
-      "endpoints_redirected": 357,
+      "endpoints_redirected": 49,
       "ambiguous_endpoint_keys": 0,
       "ambiguous_endpoint_detail": [],
       "relationships_create": 0,
-      "relationships_update": 9255,
+      "relationships_update": 3121,
       "property_writes": 0,
       "expected_to_exist_but_absent": 0,
       "expected_to_exist_but_absent_detail": []
@@ -2568,18 +2212,18 @@
     "ambiguous_endpoint_keys": 0,
     "dangling_references": 0,
     "elements_redirected_not_created": 3,
-    "endpoints_redirected": 369,
+    "endpoints_redirected": 52,
     "expected_to_exist_but_absent": 1765,
-    "identity_collisions": 18,
-    "identity_collisions_withheld": 18,
-    "multi_source_evidence_merges": 147,
+    "identity_collisions": 2,
+    "identity_collisions_withheld": 2,
+    "multi_source_evidence_merges": 0,
     "node_status_disagreements": 189,
     "nodes_create": 0,
-    "nodes_update": 19852,
+    "nodes_update": 13718,
     "property_writes": 51215,
     "relationships_create": 0,
-    "relationships_update": 58457,
-    "rows_withheld_on_identity_collision": 36,
+    "relationships_update": 51686,
+    "rows_withheld_on_identity_collision": 4,
     "triples_awaiting_an_earlier_step": 0
   },
   "by_domain": {
@@ -2624,21 +2268,14 @@
     "relationship_types_touched": [
       "ASSERTION_ROLE",
       "ATTESTED_IN",
-      "FORM_OF_RITE",
       "HAS_RITUAL_STEP",
-      "PART_OF_RITE",
-      "PERFORMED_BY",
       "POSITION_ASSERTED_BY",
       "POSITION_STATED_IN",
       "QUALITY_VERDICT_ABOUT",
       "REFERS_TO",
       "REPORTED_IN",
-      "RITE_INVOLVES_ACTION",
       "SCHOLARLY_CLAIM_ABOUT",
-      "SHARES_FORMULA_WITH",
-      "USES_OBJECT",
-      "USES_OFFERING",
-      "USES_SUBSTANCE"
+      "SHARES_FORMULA_WITH"
     ]
   },
   "expected_census": {
