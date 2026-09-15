@@ -13,11 +13,11 @@
     "10 DEFECT_FOUND_AND_FIXED counts as a completed adversarial gate"
   ],
   "provenance": {
-    "git_commit": "a29e80ae53f3e1d06ccc74e6c4d7d7acf4613256",
+    "git_commit": "9439100de362c4cdbef2c6a7bc1782127c2e731b",
     "git_branch": "phase-data-completeness-v2",
     "working_tree_clean": true,
     "gap_registry_sha256": "82ba2160569bb603cf65452b652fececb693771868fca9d64157a26412c5709b",
-    "element_plan_sha256": "2fd3f695841ecd9dd9a9a6932278f29e8d8e695de5671528155a2bb6c00c1898",
+    "element_plan_sha256": "6bc34fc19751a90a2ea3e88202196d2d7db2af92a841ca3deff3ed8c64f70cda",
     "eligibility_ledger_sha256": "84ae87e0d62f43f7f2cf9d3fb1306a48d117d1030e931611fb5184953612dc0c",
     "scope_grain_sha256": "42d659913274888a449fbc290e22ae5912b5498e90707a8fa7693c4b74ec48df",
     "soma_correction_sha256": "5e11524298667f98e2c5303c1cc4cc10d097f83784d5968dc2f0de23d5d4705b",
@@ -267,23 +267,24 @@
   "planned_rows_total": 37129,
   "withheld_rows_total": 50372,
   "element_plan": {
-    "groups": 25,
+    "groups": 28,
     "totals": {
       "ambiguous_endpoint_keys": 0,
       "dangling_references": 0,
       "elements_redirected_not_created": 3,
+      "endpoints_redirected": 366,
       "expected_to_exist_but_absent": 1765,
-      "identity_collisions": 9,
-      "identity_collisions_withheld": 9,
+      "identity_collisions": 18,
+      "identity_collisions_withheld": 18,
       "multi_source_evidence_merges": 147,
       "node_status_disagreements": 16,
       "nodes_create": 14221,
       "nodes_update": 5647,
       "property_writes": 51215,
-      "relationships_create": 9214,
+      "relationships_create": 21150,
       "relationships_update": 43888,
-      "rows_withheld_on_identity_collision": 18,
-      "triples_awaiting_an_earlier_step": 2997
+      "rows_withheld_on_identity_collision": 36,
+      "triples_awaiting_an_earlier_step": 14929
     },
     "by_domain": {
       "communities": {
@@ -304,17 +305,17 @@
       "quality": {
         "nodes_create": 2568,
         "property_writes": 0,
-        "relationships_create": 0
+        "relationships_create": 2568
       },
       "ritual": {
         "nodes_create": 9442,
         "property_writes": 27,
-        "relationships_create": 627
+        "relationships_create": 9882
       },
       "scholarship": {
         "nodes_create": 147,
         "property_writes": 0,
-        "relationships_create": 0
+        "relationships_create": 113
       },
       "semantic_roles": {
         "nodes_create": 2052,
@@ -341,8 +342,11 @@
       "relationship_types_touched": [
         "ASSERTION_ROLE",
         "FORM_OF_RITE",
+        "HAS_RITUAL_STEP",
+        "INTERPRETIVE_CLAIM_ABOUT",
         "PART_OF_RITE",
         "PERFORMED_BY",
+        "QUALITY_VERDICT_ABOUT",
         "REFERS_TO",
         "RITE_INVOLVES_ACTION",
         "SHARES_FORMULA_WITH",
@@ -413,7 +417,8 @@
       "owner_decision": "section 3",
       "relationships_retire": 225,
       "relationships_update": 21,
-      "relationships_create": 5,
+      "relationships_create": 0,
+      "newly_attested_withheld_with_the_cap_collateral": 5,
       "detail": {
         "MENTIONS_ENTITY_retire": 117,
         "MENTIONS_ENTITY_update": 12,
@@ -609,9 +614,9 @@
     "requires_its_own_decision": true
   },
   "identity_collisions": {
-    "found": 9,
-    "withheld": 9,
-    "rows_withheld": 18,
+    "found": 18,
+    "withheld": 18,
+    "rows_withheld": 36,
     "explained": "9 ritual step_keys each cover two distinct steps under one canonical URN and therefore one UUIDv5. Withheld rather than merged, because a MERGE keeps whichever row ran last and would lose 9 steps silently. Registered for the ritual domain to restage its step identity."
   },
   "dangling_references": 0,
@@ -674,8 +679,11 @@
     "relationship_types_touched": [
       "ASSERTION_ROLE",
       "FORM_OF_RITE",
+      "HAS_RITUAL_STEP",
+      "INTERPRETIVE_CLAIM_ABOUT",
       "PART_OF_RITE",
       "PERFORMED_BY",
+      "QUALITY_VERDICT_ABOUT",
       "REFERS_TO",
       "RITE_INVOLVES_ACTION",
       "SHARES_FORMULA_WITH",
@@ -691,10 +699,10 @@
     "nodes_retire": 0,
     "nodes_after": 123000,
     "relationships_before": 265295,
-    "relationships_create": 9220,
+    "relationships_create": 21151,
     "relationships_update": 43909,
     "relationships_retire": 226,
-    "relationships_after": 274289,
+    "relationships_after": 286220,
     "properties_change": 51215,
     "core_corpus_before": {
       "AV": 5839,
@@ -721,7 +729,7 @@
       "planned_rows_total": 37129,
       "withheld_rows_total": 50372,
       "nodes_create": 14221,
-      "relationships_create": 9220,
+      "relationships_create": 21151,
       "relationships_retire": 226,
       "properties_change": 51215
     },
