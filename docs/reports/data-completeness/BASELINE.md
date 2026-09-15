@@ -50,8 +50,35 @@ Counted as "mantras with at least one outgoing edge of the relevant type".
 | Chandas | 10,518 | 0 | 0 | 4,082 |
 | Semantic assertion | 2,542 | 0 | 0 | 0 |
 | Entity mention | 8,143 | 1,306 | 1,358 | 4,292 |
-| Lemma | 6,560 | 0 | 0 | 0 |
+| Lemma (see the warning below) | 6,560 | 0 | 0 | 0 |
 | Formula | 5,103 | 1,311 | 1,214 | 2,946 |
+
+### The Lemma row is true and misleading. Read this before using it.
+
+`6,560` is the number of Rigvedic mantras carrying at least one `MENTIONS_LEMMA` edge. It
+is arithmetically correct. It also invites the inference that the Rigveda has 62%
+lemma coverage, and that is false.
+
+| Measure | Count |
+|---|---|
+| `:Lemma` nodes | 10,031 |
+| `:Lemma` nodes with no edge in either direction | 9,992 (99.6%) |
+| `MENTIONS_LEMMA` edges | 9,000 |
+| **Distinct lemmas those edges reach** | **39** |
+
+Every one of the 39 is a theonym: `índra-` (2,305 edges), `agní-` (1,604), `sóma-` (950),
+`aśvín-`, `marút-`, `váruṇa-`, `sū́rya-`, `uṣás-`, `pr̥thivī́-`, `mitrá-`, `savitár-`,
+`áditi-` and so on. So `MENTIONS_LEMMA` is not a lemma layer. It is a theonym mention
+index wearing a lemma layer's name, and 9,992 of the 10,031 lemma nodes are inert.
+
+This matters twice over. It is the largest single overstatement in this baseline, and it is
+the exact failure this campaign was convened to prevent -- a row whose every figure is
+right and whose meaning is wrong -- sitting in the campaign's own frozen baseline. It was
+found by an independent census agent, not by the lead who wrote the row.
+
+The correct reading: morphological coverage is not 62% of the Rigveda. It is 39 lemmas
+across the whole corpus, and there is no morphology layer for any of the four recensions.
+
 
 ### Translation gap
 50 + 1,844 + 72 + 961 = **2,927**. The campaign brief stated 2,927. VERIFIED.
