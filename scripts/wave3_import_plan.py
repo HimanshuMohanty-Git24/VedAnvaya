@@ -132,6 +132,14 @@ class ElementGroup:
     #: update, and the importer's MERGE then creates a second edge the dry-run did not
     #: promise. Plan and import have to agree about direction or the delta is fiction.
     symmetric: bool = False
+    #: The knowledge layer this group's elements sit in, for the groups whose side file
+    #: states none. ``QualityTier`` is "a function of layer, not of confidence", so the tier
+    #: follows from this through the ontology's own TIER_BY_LAYER. Left empty where the row
+    #: carries its own ``evidence_layer``, which is the majority.
+    knowledge_layer: str = ""
+    #: The field a reader should see as this element's name. The graph gives every
+    #: non-Internal node a display_label and the scorecard gates on it.
+    display_label_field: str = ""
     #: Withhold an element whose evidence this wave does not import. See :func:`passes`.
     require_reachable_evidence: bool = False
     #: Statuses that mean "do not create this element", with the field naming what it is
@@ -213,6 +221,7 @@ GROUPS: tuple[ElementGroup, ...] = (
     # ---- semantic_roles: migration M1's new elements ---------------------------------
     ElementGroup(
         group_id="SR_ROLE_FILLER_NODES",
+        display_label_field="surface",
         domain="semantic_roles",
         kind="NODE",
         source="role_fillers.jsonl",
@@ -227,6 +236,9 @@ GROUPS: tuple[ElementGroup, ...] = (
     ),
     ElementGroup(
         group_id="SR_ASSERTION_ROLE_EDGES",
+        # the role occurrence is read off a published treebank's dependency labels, which is a
+        # derivation from an annotation rather than a statement about this passage
+        knowledge_layer="DETERMINISTIC_DERIVED",
         domain="semantic_roles",
         kind="RELATIONSHIP",
         source="role_fillers.jsonl",
@@ -247,6 +259,8 @@ GROUPS: tuple[ElementGroup, ...] = (
     ),
     ElementGroup(
         group_id="SR_ROLE_FILLER_ENTITY_EDGES",
+        # the referent is resolved from the filler's lemma against the entity registries
+        knowledge_layer="DETERMINISTIC_DERIVED",
         domain="semantic_roles",
         kind="RELATIONSHIP",
         source="role_fillers.jsonl",
@@ -268,6 +282,9 @@ GROUPS: tuple[ElementGroup, ...] = (
     # ---- formula ----------------------------------------------------------------------
     ElementGroup(
         group_id="FORMULA_SHARES_FORMULA_WITH",
+        # two mantras share a formula because the formula layer says both contain it; nothing
+        # in a source states the pair
+        knowledge_layer="DETERMINISTIC_DERIVED",
         symmetric=True,
         domain="formula",
         kind="RELATIONSHIP",
@@ -365,6 +382,7 @@ GROUPS: tuple[ElementGroup, ...] = (
     # ---- ritual -----------------------------------------------------------------------
     ElementGroup(
         group_id="RITUAL_RITE_NODES",
+        display_label_field="label_en",
         node_status_field="node_status",
         skip_statuses=("ALREADY_MODELLED_AS_SOCIALRITE",),
         redirect_field="already_modelled_as",
@@ -381,6 +399,7 @@ GROUPS: tuple[ElementGroup, ...] = (
     ),
     ElementGroup(
         group_id="RITUAL_STEP_NODES",
+        display_label_field="citation",
         domain="ritual",
         kind="NODE",
         source="steps.jsonl",
@@ -487,6 +506,7 @@ GROUPS: tuple[ElementGroup, ...] = (
     ),
     ElementGroup(
         group_id="RITUAL_ROLE_NODES",
+        display_label_field="label_en",
         require_reachable_evidence=True,
         node_status_field="node_status",
         domain="ritual",
@@ -504,6 +524,7 @@ GROUPS: tuple[ElementGroup, ...] = (
     ),
     ElementGroup(
         group_id="RITUAL_ACTION_NODES",
+        display_label_field="label_en",
         require_reachable_evidence=True,
         node_status_field="node_status",
         domain="ritual",
@@ -516,6 +537,7 @@ GROUPS: tuple[ElementGroup, ...] = (
     ),
     ElementGroup(
         group_id="RITUAL_IMPLEMENT_NODES",
+        display_label_field="label_en",
         require_reachable_evidence=True,
         node_status_field="node_status",
         domain="ritual",
@@ -528,6 +550,7 @@ GROUPS: tuple[ElementGroup, ...] = (
     ),
     ElementGroup(
         group_id="RITUAL_MATERIAL_NODES",
+        display_label_field="label_en",
         require_reachable_evidence=True,
         node_status_field="node_status",
         domain="ritual",
@@ -540,6 +563,7 @@ GROUPS: tuple[ElementGroup, ...] = (
     ),
     ElementGroup(
         group_id="RITUAL_OFFERING_NODES",
+        display_label_field="label_en",
         require_reachable_evidence=True,
         node_status_field="node_status",
         domain="ritual",
@@ -592,6 +616,7 @@ GROUPS: tuple[ElementGroup, ...] = (
     # ---- scholarship ------------------------------------------------------------------
     ElementGroup(
         group_id="SCHOLARSHIP_SCHOLAR_NODES",
+        display_label_field="name",
         domain="scholarship",
         kind="NODE",
         source="scholars.jsonl",
@@ -602,6 +627,7 @@ GROUPS: tuple[ElementGroup, ...] = (
     ),
     ElementGroup(
         group_id="SCHOLARSHIP_WORK_NODES",
+        display_label_field="title",
         domain="scholarship",
         kind="NODE",
         source="works.jsonl",
@@ -612,6 +638,7 @@ GROUPS: tuple[ElementGroup, ...] = (
     ),
     ElementGroup(
         group_id="SCHOLARSHIP_CLAIM_ROWS",
+        display_label_field="payload.passage_citation",
         domain="scholarship",
         kind="NODE",
         source="rows.jsonl",
@@ -776,6 +803,8 @@ GROUPS: tuple[ElementGroup, ...] = (
     ),
     ElementGroup(
         group_id="RITUAL_ATTESTATION_EDGES",
+        # the attestation example is a locator the registry read out of the Samhita
+        knowledge_layer="SOURCE_EXPLICIT",
         domain="ritual",
         kind="RELATIONSHIP",
         source="rites.jsonl!flatten:ritual_key:samhita_attestation_examples",
@@ -796,6 +825,7 @@ GROUPS: tuple[ElementGroup, ...] = (
     ),
     ElementGroup(
         group_id="RITUAL_ROLE_ATTESTATION",
+        knowledge_layer="SOURCE_EXPLICIT",  # as RITUAL_ATTESTATION_EDGES
         domain="ritual",
         kind="RELATIONSHIP",
         source="roles.jsonl!flatten:role_key:samhita_attestation_examples",
@@ -811,6 +841,7 @@ GROUPS: tuple[ElementGroup, ...] = (
     ),
     ElementGroup(
         group_id="RITUAL_ACTION_ATTESTATION",
+        knowledge_layer="SOURCE_EXPLICIT",  # as RITUAL_ATTESTATION_EDGES
         domain="ritual",
         kind="RELATIONSHIP",
         source="actions.jsonl!flatten:concept_key:samhita_attestation_examples",
@@ -826,6 +857,7 @@ GROUPS: tuple[ElementGroup, ...] = (
     ),
     ElementGroup(
         group_id="RITUAL_IMPLEMENT_ATTESTATION",
+        knowledge_layer="SOURCE_EXPLICIT",  # as RITUAL_ATTESTATION_EDGES
         domain="ritual",
         kind="RELATIONSHIP",
         source="implements.jsonl!flatten:concept_key:samhita_attestation_examples",
@@ -841,6 +873,7 @@ GROUPS: tuple[ElementGroup, ...] = (
     ),
     ElementGroup(
         group_id="RITUAL_MATERIAL_ATTESTATION",
+        knowledge_layer="SOURCE_EXPLICIT",  # as RITUAL_ATTESTATION_EDGES
         domain="ritual",
         kind="RELATIONSHIP",
         source="materials.jsonl!flatten:concept_key:samhita_attestation_examples",
@@ -856,6 +889,7 @@ GROUPS: tuple[ElementGroup, ...] = (
     ),
     ElementGroup(
         group_id="RITUAL_OFFERING_ATTESTATION",
+        knowledge_layer="SOURCE_EXPLICIT",  # as RITUAL_ATTESTATION_EDGES
         domain="ritual",
         kind="RELATIONSHIP",
         source="offerings.jsonl!flatten:concept_key:samhita_attestation_examples",
@@ -872,6 +906,7 @@ GROUPS: tuple[ElementGroup, ...] = (
     # ---- communities: the artifact and its refusal, never a membership claim ---------
     ElementGroup(
         group_id="COMMUNITIES_ARTIFACT_NODES",
+        display_label_field="community_id",
         domain="communities",
         kind="NODE",
         source="communities.jsonl",
@@ -891,6 +926,7 @@ GROUPS: tuple[ElementGroup, ...] = (
     # ---- quality: the evaluation, which is a finding about the graph -----------------
     ElementGroup(
         group_id="QUALITY_VERDICT_NODES",
+        display_label_field="canonical_key",
         domain="quality",
         kind="NODE",
         source="rows.jsonl",

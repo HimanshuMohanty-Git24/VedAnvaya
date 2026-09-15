@@ -63,6 +63,8 @@ from wave3_import_plan import (
     row_rel_type,
 )
 
+from vedagraph.domain.ontology import TIER_BY_LAYER, KnowledgeLayer
+
 INTEGRATION = pathlib.Path("data/staging/integration")
 DRY_RUN = INTEGRATION / "wave3_dry_run_v2.json"
 PLAN = INTEGRATION / "wave3_import_plan.json"
@@ -80,6 +82,42 @@ DB = os.environ.get("NEO4J_DATABASE", "neo4j")
 #: Stamped on every element this wave writes, so a rollback can be scoped to it and a
 #: readback can tell a Wave 3 element from one that was already there.
 WAVE = "WAVE_3"
+
+#: The graph's own rule, imported rather than restated. QualityTier documents itself as "a
+#: function of layer, not of confidence", so the tier is derived from a stated layer and
+#: never from an artifact's quality_class -- casting that vocabulary into this enum would
+#: invent a grade.
+_LAYER_TO_TIER: dict[str, str] = {
+    "SOURCE_EXPLICIT": str(TIER_BY_LAYER[KnowledgeLayer.L1_SOURCE_EXPLICIT]),
+    "SOURCE_DERIVED_SCOPE": str(TIER_BY_LAYER[KnowledgeLayer.L2_DETERMINISTIC_DERIVED]),
+    "DETERMINISTIC_DERIVED": str(TIER_BY_LAYER[KnowledgeLayer.L2_DETERMINISTIC_DERIVED]),
+    "LLM_EXTRACTED": str(TIER_BY_LAYER[KnowledgeLayer.L3_LLM_EXTRACTED]),
+    "INTERPRETIVE_CLAIM": str(TIER_BY_LAYER[KnowledgeLayer.L4_INTERPRETIVE_CLAIM]),
+}
+
+
+class UnknownKnowledgeLayer(RuntimeError):
+    """A layer with no tier. Raised rather than defaulted: a silent default is a grade."""
+
+
+def tier_for(layer: str) -> str:
+    if layer not in _LAYER_TO_TIER:
+        raise UnknownKnowledgeLayer(
+            f"{layer!r} maps to no QualityTier. Add it to _LAYER_TO_TIER deliberately: "
+            "defaulting would put an ungraded edge on the reader's surface wearing a grade."
+        )
+    return _LAYER_TO_TIER[layer]
+
+
+def grade(row: dict[str, Any], group: ElementGroup) -> dict[str, str]:
+    """The layer and tier for one element, from the row if it states one, else the group."""
+    layer = str(row.get("evidence_layer") or group.knowledge_layer or "")
+    if not layer:
+        raise UnknownKnowledgeLayer(
+            f"{group.group_id}: neither the row nor the group states a knowledge layer, so "
+            "no tier can be derived. Declare knowledge_layer on the group."
+        )
+    return {"knowledge_layer": layer, "quality_tier": tier_for(layer)}
 
 def provenance(run_id: str, domain: str, group_id: str, *, created: bool) -> dict[str, str]:
     """What this wave records about an element it wrote.
@@ -572,6 +610,10 @@ def write_nodes(
             renames.get(field, field): value
             for field, value in node_props(row, group).items()
         }
+        if group.display_label_field:
+            label = get_path(row, group.display_label_field)
+            if label is not None:
+                props.setdefault("display_label", scalar(label))
         # The stamp is applied per branch below, since it differs for create and label.
         if group.key_minted_from_identity:
             props[key] = mint(group, row)
@@ -721,6 +763,7 @@ def write_relationships(
             if field not in {group.start_field, end_field}
         }
         props.update(provenance(run_id, group.domain, group.group_id, created=True))
+        props.update(grade(row, group))
         # The same redirect the plan applies. Without it 6 rite edges pointed at
         # GRHAPRAVESA and PITRMEDHA, whose own keys the import correctly declines to create
         # because the graph holds those rites under other names, and the edges landed

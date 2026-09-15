@@ -193,14 +193,10 @@ pseudo-entity `VG:CORPUS:FOUR-VEDA`, which deliberately has no node.
 | ungraded edges | 22981 | NO |
 | product nodes without a readable label | 14209 | NO |
 | orphan domain entities | 2 | NO |
-| controlled-predicate violations | 1 | NO |
+| controlled-predicate violations | 0 | YES |
 | undeclared relationship types | 0 | YES |
 | claims wrongly pointing at passages | 0 | YES |
 | metrics wrongly pointing at passages | 0 | YES |
-
-Signature violations:
-
-- `PERFORMED_BY`: 1 edges
 
 ## 9. Query surface
 

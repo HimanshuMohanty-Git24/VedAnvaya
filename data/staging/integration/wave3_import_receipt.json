@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0",
-  "run_id": "444ee14560a4a24c",
+  "run_id": "87abf4f3402fb134",
   "executed": true,
   "started_from_dry_run": "data\\staging\\integration\\wave3_dry_run_v2.json",
-  "dry_run_sha256": "fd0a80d8e60768c651315a93c9018b0cae8147a230255550c9b15bee19eb5c39",
-  "at": "2026-09-15T17:56:52.376309+00:00",
+  "dry_run_sha256": "de24ed5d5b9452d2e1bb60190b0c431fe71c1c52376463e7ebfea85dc8c3515a",
+  "at": "2026-09-15T17:58:19.524879+00:00",
   "rollback_point": {
     "backup_directory": "D:/vedanvaya-backups/wave3-pre-import-20260915T155144",
     "backup_sha256": "a0ab27b627f0fc60fc002fd7b248d519a0c15bf1c31250c9f6056081eaad6957",
     "backup_bytes": 96841712,
-    "git_commit": "98ee24e0920e99431a248203257fa5dbd825b879",
+    "git_commit": "c8051180e4ca56c380d45c8bdb43d6892e79dbf3",
     "restore": "docker stop vedagraph-neo4j; docker run --rm -v infra_neo4j_data:/data -v <backup_directory>:/backups neo4j:5.26-community neo4j-admin database load neo4j --from-path=/backups --overwrite-destination=true; docker start vedagraph-neo4j. The dump must be named neo4j.dump inside a timestamped directory: load matches by database name, which is how the first restore attempt in this project failed."
   },
   "census_before": {
@@ -73,21 +73,23 @@
     },
     {
       "correction": "RETYPE_ASSERTED_BY",
-      "mistyped_edges": 226,
-      "already_applied": false,
-      "executed": true,
-      "edges_retyped": 226
+      "mistyped_edges": 0,
+      "already_applied": true,
+      "executed": false
     },
     {
       "correction": "LABEL_REDIRECT_TARGETS_AS_RITUALS",
       "targets": [
+        "VG:CONCEPT:GRHAPRAVESA",
+        "VG:CONCEPT:PITRMEDHA",
         "VG:CONCEPT:PITRYANA-FUNERARY-RITE",
-        "VG:CONCEPT:SALA-HOUSE-BUILDING"
+        "VG:CONCEPT:SALA-HOUSE-BUILDING",
+        "VG:CONCEPT:VIVAHA-MARRIAGE"
       ],
-      "unlabelled": 2,
+      "unlabelled": 1,
       "already_applied": false,
       "executed": true,
-      "nodes_labelled": 2
+      "nodes_labelled": 1
     }
   ]
 }
