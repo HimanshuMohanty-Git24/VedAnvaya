@@ -210,8 +210,10 @@ export default async function SourcesPage() {
                     <section id="scope">
                         <h2>What is in this corpus</h2>
                         <p className="va-doc-open">
-                            Four Samhitas, one recension each. No Brahmana, no Aranyaka, no
-                            Upanisad, for any of them. Three of the four are missing a body of
+                            Four Samhitas, one recension each. No separate Brahmana, Aranyaka, or
+                            Upanisad corpus is included. The Samaveda&apos;s ARANYA section is a
+                            structural division of the modeled Kauthuma Arcika, not an independent
+                            Aranyaka corpus. Three of the four are missing a body of
                             material that their ordinary name covers, and in one case that missing
                             body is larger than what is held.
                         </p>

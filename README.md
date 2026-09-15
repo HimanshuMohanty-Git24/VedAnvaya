@@ -67,7 +67,9 @@ graph is treated as frozen.
 
 Four Saṃhitās, one recension each: **Rigveda Śākala** (10,552 mantras), **Samaveda Kauthuma
 ārcika** (1,844 — the gāna corpus is *not* held), **Śukla Yajurveda Vājasaneyi-Mādhyandina**
-(1,975), **Atharvaveda Śaunaka** (5,839). No Brāhmaṇa, Āraṇyaka or Upaniṣad. The graph is
+(1,975), **Atharvaveda Śaunaka** (5,839). No separate Brāhmaṇa, Āraṇyaka or Upaniṣad corpus is
+included. The Samaveda's `ARANYA` section is a structural division of the modeled Kauthuma Ārcika,
+not an independent Āraṇyaka corpus. The graph is
 **108,779 nodes / 265,295 relationships**, and it is frozen.
 
 ### Absence means something specific

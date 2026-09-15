@@ -22,7 +22,9 @@ presenting the graph as a substitute for traditional study, philology or scholar
 
 VedAnvaya holds one recension per Veda. The Samaveda is Kauthuma Ārcika only: the gāna corpus
 is not included. The Yajurveda is Vājasaneyi Mādhyandina only: the Kṛṣṇa Yajurveda is not
-included. The Atharvaveda is Śaunaka only. No Brāhmaṇa, Āraṇyaka or Upaniṣad is included.
+included. The Atharvaveda is Śaunaka only. No separate Brāhmaṇa, Āraṇyaka or Upaniṣad corpus is
+included. The Samaveda's `ARANYA` section is a structural division of the modeled Kauthuma Ārcika,
+not an independent Āraṇyaka corpus.
 
 Audio coverage is uneven; the Samaveda has no mapped audio. Translation coverage is uneven;
 the Samaveda has no released translation in this product. Ask output remains a synthesis layer:
