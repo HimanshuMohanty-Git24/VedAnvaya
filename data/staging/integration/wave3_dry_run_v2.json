@@ -13,11 +13,11 @@
     "10 DEFECT_FOUND_AND_FIXED counts as a completed adversarial gate"
   ],
   "provenance": {
-    "git_commit": "3f2b0d86cc361b2a77b8e47128f14cc68997bef8",
+    "git_commit": "a29e80ae53f3e1d06ccc74e6c4d7d7acf4613256",
     "git_branch": "phase-data-completeness-v2",
     "working_tree_clean": true,
     "gap_registry_sha256": "82ba2160569bb603cf65452b652fececb693771868fca9d64157a26412c5709b",
-    "element_plan_sha256": "9e9729b9598f4738c4dccbd0eaf5ab4cbeb4d0501697a44975f7ec1f55ceac5c",
+    "element_plan_sha256": "2fd3f695841ecd9dd9a9a6932278f29e8d8e695de5671528155a2bb6c00c1898",
     "eligibility_ledger_sha256": "84ae87e0d62f43f7f2cf9d3fb1306a48d117d1030e931611fb5184953612dc0c",
     "scope_grain_sha256": "42d659913274888a449fbc290e22ae5912b5498e90707a8fa7693c4b74ec48df",
     "soma_correction_sha256": "5e11524298667f98e2c5303c1cc4cc10d097f83784d5968dc2f0de23d5d4705b",
@@ -269,6 +269,7 @@
   "element_plan": {
     "groups": 25,
     "totals": {
+      "ambiguous_endpoint_keys": 0,
       "dangling_references": 0,
       "elements_redirected_not_created": 3,
       "expected_to_exist_but_absent": 1765,
