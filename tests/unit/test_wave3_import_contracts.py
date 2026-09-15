@@ -218,3 +218,73 @@ def test_the_quality_verdict_carries_its_reference_set_as_a_property() -> None:
     lifted = imp.LIFTED["QUALITY_VERDICT_NODES"]
     assert lifted["payload.reference_set_type"] == "reference_set_type"
     assert lifted["payload.adjudicated_by"] == "adjudicated_by"
+
+
+def test_no_written_property_collides_with_the_curated_domain_entity_contract() -> None:
+    """A property name the curated loader writes must not be written by an import.
+
+    ``SET n += row`` overwrites a MENTIONED key, and ``domain/loader.py`` writes
+    display_label as ``f"{en} ({sa})" if en and sa else (en or sa)``. Writing display_label
+    from a registry's label_en replaced that on 102 pre-existing nodes, and
+    VG:CONCEPT:AYAS-METAL went from "metal (ayas)" to "metal" -- which broke the Q10
+    assertion that ayas must never render as a bare zero, because the product's second
+    rendering path looks the label up by prefix.
+
+    The loader carries a comment about the other half of this rule, that an UNmentioned key
+    is left in place. This is the half it does not mention.
+    """
+    curated = {
+        "entity_key",
+        "concept_id",
+        "node_type",
+        "preferred_label_sa",
+        "preferred_label_en",
+        "definition",
+        "short_description",
+        "aliases_sa",
+        "aliases_en",
+        "display_label",
+        "display_type",
+        "condition_kind",
+        "domain_model_version",
+    }
+    for group in plan.GROUPS:
+        if group.kind != "NODE":
+            continue
+        written = set(imp.CARRIED[group.group_id]) | set(
+            imp.RENAMED.get(group.group_id, {}).values()
+        )
+        collisions = sorted(written & curated - {group.match_property})
+        assert not collisions, (
+            f"{group.group_id} writes {collisions}, which the curated DomainEntity loader "
+            f"also writes. SET n += row overwrites a mentioned key, so this silently "
+            f"replaces curated product data on every pre-existing node the group touches."
+        )
+
+
+def test_the_display_label_write_is_coalesced_and_never_direct() -> None:
+    """The label goes on under a staging name and is coalesced in Cypher.
+
+    Written directly it overwrote 102 curated labels. ``setdefault`` on the props dict was
+    no protection: that dict is what the import is about to write, not what the node holds.
+    """
+    import ast
+    import inspect
+    import textwrap
+
+    for fn in (imp.write_nodes,):
+        tree = ast.parse(textwrap.dedent(inspect.getsource(fn)))
+        function = tree.body[0]
+        assert isinstance(function, ast.FunctionDef)
+        if (
+            function.body
+            and isinstance(function.body[0], ast.Expr)
+            and isinstance(function.body[0].value, ast.Constant)
+        ):
+            function.body = function.body[1:]
+        # Whitespace-insensitive: the Cypher wraps across source lines, so the first
+        # version of this assertion looked for an exact substring the query never contains.
+        code = " ".join(ast.unparse(function).split())
+        assert "n.display_label = coalesce( n.display_label" in code or (
+            "n.display_label = coalesce(n.display_label" in code
+        ), "an existing display_label must survive the write"

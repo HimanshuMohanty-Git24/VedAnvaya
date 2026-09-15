@@ -613,7 +613,15 @@ def write_nodes(
         if group.display_label_field:
             label = get_path(row, group.display_label_field)
             if label is not None:
-                props.setdefault("display_label", scalar(label))
+                # Carried under a staging name and coalesced onto display_label in Cypher
+                # below, NEVER written to display_label directly. `SET n += row` overwrites
+                # a MENTIONED key, so writing display_label here replaced the curated label
+                # on every pre-existing node the registries touch: 102 of them, and
+                # VG:CONCEPT:AYAS-METAL went from "metal (ayas)" to "metal", losing the
+                # disambiguating gloss. The loader that wrote those labels carries a comment
+                # about the other half of this rule -- an UNmentioned key is left in place --
+                # and I fell foul of the half it does not mention.
+                props["wave3_proposed_display_label"] = scalar(label)
         # The stamp is applied per branch below, since it differs for create and label.
         if group.key_minted_from_identity:
             props[key] = mint(group, row)
@@ -675,7 +683,9 @@ def write_nodes(
             labelled = int(
                 tx.run(
                     f"UNWIND $rows AS row MATCH (n) WHERE n.{key} = row.{key} "
-                    f"SET n:{group.element}, n += row, n += $stamp "
+                    f"SET n:{group.element}, n += row, n += $stamp, "
+                    "    n.display_label = coalesce("
+                    "        n.display_label, row.wave3_proposed_display_label) "
                     "RETURN count(DISTINCT n) AS n",
                     rows=existing,
                     stamp=touched_stamp,
@@ -699,7 +709,9 @@ def write_nodes(
                 labels = ":".join((group.element, *extra))
                 created += int(
                     tx.run(
-                        f"UNWIND $rows AS row CREATE (n:{labels}) SET n += row, n += $stamp "
+                        f"UNWIND $rows AS row CREATE (n:{labels}) "
+                        "SET n += row, n += $stamp, "
+                        "    n.display_label = row.wave3_proposed_display_label "
                         "RETURN count(n) AS n",
                         rows=rows_for_labels,
                         stamp=created_stamp,
@@ -914,6 +926,63 @@ def correction_withheld_registry_entities(
         )
         tx.commit()
     result.update({"executed": True, "nodes_deleted": deleted})
+    return result
+
+
+def correction_restore_curated_display_labels(
+    session: Session, run_id: str, *, execute: bool
+) -> dict[str, Any]:
+    """Put back the curated display_label this wave overwrote on pre-existing nodes.
+
+    `SET n += row` overwrites a MENTIONED key, so writing display_label from a registry's
+    label_en replaced the curated label on 102 pre-existing nodes.
+    VG:CONCEPT:AYAS-METAL went from "metal (ayas)" to "metal", which dropped the
+    disambiguating gloss and broke the Q10 material-culture assertion that ayas must never
+    render as a bare zero.
+
+    No backup is needed to repair it. ``domain/loader.py`` builds the label as
+    ``f"{en} ({sa})" if en and sa else (en or sa)`` from preferred_label_en and
+    preferred_label_sa, and this wave never wrote either of those names -- so the curated
+    value is reconstructible from properties still on the node, by the rule that produced
+    it rather than by a guess at what it said.
+
+    Scoped to nodes this wave TOUCHED and did not create, and only where the node carries a
+    preferred label. A node whose only label is the registry's keeps it.
+    """
+    result: dict[str, Any] = {"correction": "RESTORE_CURATED_DISPLAY_LABELS"}
+    probe = session.run(
+        "MATCH (n) WHERE n.wave3_touched_by IS NOT NULL AND n.wave3_created_by IS NULL "
+        "AND coalesce(n.preferred_label_en, n.preferred_label_sa) IS NOT NULL "
+        "WITH n, CASE "
+        "  WHEN n.preferred_label_en IS NOT NULL AND n.preferred_label_sa IS NOT NULL "
+        "    THEN n.preferred_label_en + ' (' + n.preferred_label_sa + ')' "
+        "  ELSE coalesce(n.preferred_label_en, n.preferred_label_sa) END AS curated "
+        "WHERE n.display_label IS NULL OR n.display_label <> curated "
+        "RETURN count(n) AS c"
+    ).single()
+    outstanding = int((probe or {"c": 0})["c"])
+    result["nodes_with_a_non_curated_label"] = outstanding
+    result["already_applied"] = outstanding == 0
+    if not execute or not outstanding:
+        result["executed"] = False
+        return result
+    with session.begin_transaction() as tx:
+        restored = int(
+            tx.run(
+                "MATCH (n) WHERE n.wave3_touched_by IS NOT NULL AND n.wave3_created_by IS NULL "
+                "AND coalesce(n.preferred_label_en, n.preferred_label_sa) IS NOT NULL "
+                "WITH n, CASE "
+                "  WHEN n.preferred_label_en IS NOT NULL AND n.preferred_label_sa IS NOT NULL "
+                "    THEN n.preferred_label_en + ' (' + n.preferred_label_sa + ')' "
+                "  ELSE coalesce(n.preferred_label_en, n.preferred_label_sa) END AS curated "
+                "WHERE n.display_label IS NULL OR n.display_label <> curated "
+                "SET n.display_label = curated, n.wave3_label_restored_by = $run_id "
+                "RETURN count(n) AS n",
+                run_id=run_id,
+            ).single()["n"]
+        )
+        tx.commit()
+    result.update({"executed": True, "labels_restored": restored})
     return result
 
 
@@ -1153,6 +1222,10 @@ def main() -> int:
                 ("M5_SPECIALIZED_FORM_OF", correction_m5),
                 ("WITHHELD_REGISTRY_ENTITIES", correction_withheld_registry_entities),
                 ("RETYPE_ASSERTED_BY", correction_retype_asserted_by),
+                (
+                    "RESTORE_CURATED_DISPLAY_LABELS",
+                    correction_restore_curated_display_labels,
+                ),
                 (
                     "LABEL_REDIRECT_TARGETS_AS_RITUALS",
                     correction_label_redirect_targets_as_rituals,
