@@ -1072,6 +1072,14 @@ def referenced_by_a_rite_edge() -> set[str]:
         ("steps.jsonl", ("ritual_key",)),
     ):
         for row in read_jsonl(root / filename):
+            # Only rows that will actually become edges. Counting the artifact's full set
+            # made 27 registry entities look reachable via rite edges the import then
+            # refused as PROBABLE, and they landed as islands: 13 officiant roles, 9
+            # actions, 3 objects and 2 substances whose only path into the graph was an
+            # edge nobody was going to write. Reachability has to be computed over the
+            # edges that will exist.
+            if str(row.get("mapping_confidence") or "") in NOT_IMPORTABLE:
+                continue
             for field in fields:
                 value = row.get(field)
                 if value:
