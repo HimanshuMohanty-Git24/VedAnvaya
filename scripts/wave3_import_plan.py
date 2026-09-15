@@ -1446,9 +1446,16 @@ def plan_group(
             continue
         if str(start) in redirect or str(end) in redirect:
             redirected_endpoints += 1
-        triples.append(
-            (redirect.get(str(start), str(start)), predicate, redirect.get(str(end), str(end)))
-        )
+        left = redirect.get(str(start), str(start))
+        right = redirect.get(str(end), str(end))
+        if group.symmetric:
+            # A symmetric relation is stored once and read both ways, and the artifacts name
+            # each pair from BOTH sides -- so (A, type, B) and (B, type, A) are two rows and
+            # one edge. Normalising here is what makes the plan's update count the number of
+            # edges rather than the number of rows: cross_veda promised 16,824 and the graph
+            # held 8,412, which is the same layer counted twice.
+            left, right = sorted((left, right))
+        triples.append((left, predicate, right))
     unique_triples = sorted(set(triples))
 
     # Endpoint existence, which is what makes a reference dangling rather than new.

@@ -512,8 +512,9 @@ def main() -> int:
     print(f"  withheld identities found in the graph: {len(withheld_found)}")
     print(
         f"  nodes written this wave with no relationship: {isolated}"
-        f"  (plus {int(deliberate.get('c') or 0)} unattached on purpose, "
-        "12 communities and 3 named entities)"
+        f"  (plus {int(deliberate.get('c') or 0)} unattached on purpose: "
+        f"{int(deliberate.get('c') or 0) - len(DELIBERATELY_UNATTACHED)} communities and "
+        f"{len(DELIBERATELY_UNATTACHED)} named)"
     )
     print()
     if findings:

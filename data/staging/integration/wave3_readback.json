@@ -1,12 +1,12 @@
 {
   "schema_version": "1.0",
   "artifact": "WAVE_3_READBACK",
-  "at": "2026-09-15T17:52:16.849406+00:00",
+  "at": "2026-09-15T18:41:22.882808+00:00",
   "read_against": "the dry-run's promise, not the importer's report",
-  "import_run_id": "5fa3e60c92fb19da",
+  "import_run_id": "afd85762709592fe",
   "census": {
-    "nodes_promised": 122988,
-    "nodes_actual": 122988,
+    "nodes_promised": 122986,
+    "nodes_actual": 122986,
     "nodes_match": true,
     "relationships_promised": 288051,
     "relationships_actual": 288051,
@@ -144,7 +144,7 @@
       "kind": "NODE",
       "element": "RitualRole",
       "promised_create": 0,
-      "in_graph_from_this_wave": 26,
+      "in_graph_from_this_wave": 24,
       "unattributed": 0
     },
     {
@@ -235,7 +235,7 @@
     {
       "group_id": "SCHOLARSHIP_ASSERTED_BY_A",
       "kind": "RELATIONSHIP",
-      "element": "ASSERTED_BY",
+      "element": "POSITION_ASSERTED_BY",
       "promised_create": 0,
       "in_graph_from_this_wave": 113,
       "unattributed": 0
@@ -243,7 +243,7 @@
     {
       "group_id": "SCHOLARSHIP_ASSERTED_BY_B",
       "kind": "RELATIONSHIP",
-      "element": "ASSERTED_BY",
+      "element": "POSITION_ASSERTED_BY",
       "promised_create": 0,
       "in_graph_from_this_wave": 113,
       "unattributed": 0
@@ -338,15 +338,10 @@
   "nodes_written_this_wave_with_no_relationship": 0,
   "unattached_by_label": {
     "DeityCommunity": 12,
-    "Concept": 2,
-    "DomainEntity": 2,
-    "RitualRole": 2,
     "ScholarlyWork": 1
   },
-  "deliberately_unattached": 15,
+  "deliberately_unattached": 13,
   "deliberately_unattached_reasons": {
-    "VG:CONCEPT:SADASYA-PRIEST": "An officiant role marked samhita_attested with evidence SAMHITA and no attestation example recorded -- roles.jsonl carries no samhita_attestation_examples field at all. Attested in a corpus this graph holds, so kept rather than dropped over a missing locator. The artifact's silence is a finding against the artifact.",
-    "VG:CONCEPT:SAMITR-BUTCHER": "The same case as SADASYA-PRIEST: Samhita-attested, no locator recorded.",
     "VG:SWORK:SAYANA-TAITTIRIYA-BRAHMANA-BHASYA": "A registered scholarly work that no claim cites. 16 of the 17 works appear in the rows; this one is a bibliography entry, not an error."
   },
   "domain_closure_tests": {
@@ -387,6 +382,14 @@
         "off_grain",
         "no_evidence"
       ],
+      "fields_not_returned_by_the_query": [],
+      "failed_fields": {},
+      "passed": true
+    },
+    "graph_quality_contracts": {
+      "claim": "every element this wave wrote carries the quality_tier and display_label the graph keeps on all the others -- NOT YET TRUE, and the figures are the residual",
+      "measured": {},
+      "must_be_zero": [],
       "fields_not_returned_by_the_query": [],
       "failed_fields": {},
       "passed": true
@@ -475,13 +478,13 @@
   "schema_additions_in_graph": {
     "node_labels": {},
     "relationship_types": {
-      "ASSERTED_BY": 226,
       "ASSERTION_ROLE": 2052,
       "ATTESTED_IN": 1266,
       "FORM_OF_RITE": 5,
       "HAS_RITUAL_STEP": 9255,
       "PART_OF_RITE": 18,
       "PERFORMED_BY": 147,
+      "POSITION_ASSERTED_BY": 226,
       "POSITION_STATED_IN": 226,
       "QUALITY_VERDICT_ABOUT": 2568,
       "REFERS_TO": 387,

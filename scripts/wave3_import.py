@@ -854,25 +854,6 @@ def write_relationship_properties(
     return landed
 
 
-def _pairs(group: ElementGroup, rows: list[dict[str, Any]]) -> list[dict[str, str]]:
-    """Undirected pair identities for a symmetric group, for the expectation arithmetic."""
-    by_predicate = dict(group.object_field_by_predicate)
-    redirect = redirects(group.domain)
-    out: list[dict[str, str]] = []
-    for row in rows:
-        predicate = row_rel_type(row, group)
-        end_field = by_predicate.get(predicate, group.end_field)
-        start = get_path(row, str(group.start_field))
-        end = get_path(row, str(end_field))
-        if not start or not end:
-            continue
-        a = redirect.get(str(start), str(start))
-        b = redirect.get(str(end), str(end))
-        lo, hi = sorted((a, b))
-        out.append({"start": lo, "end": hi})
-    return out
-
-
 def correction_withheld_registry_entities(
     session: Session, run_id: str, *, execute: bool
 ) -> dict[str, Any]:
@@ -1271,11 +1252,10 @@ def main() -> int:
                         entry.get("relationships_update") or 0
                     )
                     measured = touched
-                    if group.symmetric:
-                        # A symmetric group's candidates name each pair from both sides, and
-                        # both name one undirected edge. cross_veda sent 16,824 rows and
-                        # matched 8,412 edges; the plan counted the rows.
-                        expected = len({(row["start"], row["end"]) for row in _pairs(group, rows)})
+                    # No symmetric override here any more. The planner normalises a
+                    # symmetric pair's endpoints, so its create and update counts are
+                    # already edge counts rather than row counts, and re-deriving them from
+                    # the rows on this side was a second arithmetic that could disagree.
                 ok = measured == expected
                 steps.append(
                     {

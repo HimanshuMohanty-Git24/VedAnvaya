@@ -11,7 +11,7 @@
     "semantic_roles"
   ],
   "graph_before": {
-    "nodes": 122988,
+    "nodes": 122986,
     "relationships": 288051
   },
   "coverage": {
@@ -501,7 +501,7 @@
       "multi_source_evidence_merges": 0,
       "multi_source_detail": [],
       "evidence_fields_declared": [],
-      "unique_triples": 16824,
+      "unique_triples": 8412,
       "rows_missing_an_endpoint_field": 0,
       "relationship_types_asserted": [
         "EXACT_PARALLEL_OF",
@@ -520,7 +520,7 @@
       "ambiguous_endpoint_keys": 0,
       "ambiguous_endpoint_detail": [],
       "relationships_create": 0,
-      "relationships_update": 16824,
+      "relationships_update": 8412,
       "property_writes": 16824,
       "expected_to_exist_but_absent": 0,
       "expected_to_exist_but_absent_detail": []
@@ -2578,7 +2578,7 @@
     "nodes_update": 19852,
     "property_writes": 51215,
     "relationships_create": 0,
-    "relationships_update": 66869,
+    "relationships_update": 58457,
     "rows_withheld_on_identity_collision": 36,
     "triples_awaiting_an_earlier_step": 0
   },
@@ -2642,8 +2642,8 @@
     ]
   },
   "expected_census": {
-    "nodes_before": 122988,
-    "nodes_after": 122988,
+    "nodes_before": 122986,
+    "nodes_after": 122986,
     "nodes_delta": 0,
     "relationships_before": 288051,
     "relationships_after": 288051,
