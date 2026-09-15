@@ -13,11 +13,11 @@
     "10 DEFECT_FOUND_AND_FIXED counts as a completed adversarial gate"
   ],
   "provenance": {
-    "git_commit": "faeb613d724feb5cc41b58af8197f199c887c7c9",
+    "git_commit": "0c665b7d79cb8c82e72857a27c4257d445469fe2",
     "git_branch": "phase-data-completeness-v2",
     "working_tree_clean": true,
     "gap_registry_sha256": "82ba2160569bb603cf65452b652fececb693771868fca9d64157a26412c5709b",
-    "element_plan_sha256": "8a293038c1926c059f1c63b23e4d9b0c06282a5f477964f9c3e953ffab6ce967",
+    "element_plan_sha256": "1b8b3592c14e4c67f42cc483388d7c901f372b352c2f2ac92fb8a61ce123342e",
     "eligibility_ledger_sha256": "84ae87e0d62f43f7f2cf9d3fb1306a48d117d1030e931611fb5184953612dc0c",
     "scope_grain_sha256": "42d659913274888a449fbc290e22ae5912b5498e90707a8fa7693c4b74ec48df",
     "soma_correction_sha256": "5e11524298667f98e2c5303c1cc4cc10d097f83784d5968dc2f0de23d5d4705b",
@@ -282,7 +282,7 @@
       "nodes_update": 19852,
       "property_writes": 51215,
       "relationships_create": 0,
-      "relationships_update": 66869,
+      "relationships_update": 58457,
       "rows_withheld_on_identity_collision": 36,
       "triples_awaiting_an_earlier_step": 0
     },
@@ -689,7 +689,7 @@
     "nodes_after": 122986,
     "relationships_before": 288051,
     "relationships_create": 0,
-    "relationships_update": 66890,
+    "relationships_update": 58478,
     "relationships_retire": 0,
     "relationships_after": 288051,
     "properties_change": 51215,
