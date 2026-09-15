@@ -45,11 +45,13 @@ import os
 import pathlib
 import subprocess
 import sys
-from typing import Any
+from typing import Any, TypedDict
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "src"))
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 
 from neo4j import GraphDatabase
+from wave3_import import CORRECTIONS
 
 STAGING = pathlib.Path("data/staging")
 INTEGRATION = STAGING / "integration"
@@ -83,6 +85,69 @@ MIGRATIONS = {
     "M5": "SPECIALIZED_FORM_OF, Soma Pavamana to Soma",
     "M6": "SUPERSEDED by owner section 2: split into three grain-derived populations",
 }
+
+
+#: How each correction's rehearsal contributes to the expected census. Declared per
+#: correction, because a correction knows what it measures and a generic rule would have to
+#: guess: WITHHELD_REGISTRY_ENTITIES retires nodes, RETYPE_ASSERTED_BY is a retire plus a
+#: create of the same count, LABEL_REDIRECT adds a label to a node that already exists.
+#:
+#: An undeclared name raises. The importer's CORRECTIONS grew from two to six and this
+#: promise did not follow, so the four it could not see -- one of them node-destructive --
+#: never appeared in the owner's section 5 delta at all.
+class CorrectionEffect(TypedDict):
+    """What one correction contributes to the census.
+
+    ``measure`` is the key its rehearsal reports an outstanding count under, or None when the
+    count is already accounted for from a proof artifact. ``adds`` are the census fields that
+    count lands in -- more than one where a single change is two movements, as a retype is.
+    """
+
+    measure: str | None
+    adds: tuple[str, ...]
+    why: str
+
+
+CORRECTION_CENSUS_EFFECT: dict[str, CorrectionEffect] = {
+    "SOMA_PRESSING_WEAK_ALIAS_RETIREMENT": {
+        "measure": None,
+        "adds": (),
+        "why": "accounted above from its proof artifact and measured live",
+    },
+    "M5_SPECIALIZED_FORM_OF": {
+        "measure": None,
+        "adds": (),
+        "why": "accounted above from the migration card and measured live",
+    },
+    "WITHHELD_REGISTRY_ENTITIES": {
+        "measure": "present_and_unreachable",
+        "adds": ("nodes_retire",),
+        "why": "deletes registry entities whose only path in was an edge the plan refuses",
+    },
+    "RETYPE_ASSERTED_BY": {
+        "measure": "mistyped_edges",
+        "adds": ("relationships_retire", "relationships_create"),
+        "why": "a retype is one retire and one create of the same edge count",
+    },
+    "RESTORE_CURATED_DISPLAY_LABELS": {
+        "measure": "nodes_with_a_non_curated_label",
+        "adds": ("properties_change",),
+        "why": "rewrites display_label on nodes that already exist; no node or edge moves",
+    },
+    "LABEL_REDIRECT_TARGETS_AS_RITUALS": {
+        "measure": "unlabelled",
+        "adds": ("nodes_update",),
+        "why": "adds :Ritual to existing nodes, which is an update and not a create",
+    },
+}
+
+
+class UndeclaredCorrection(RuntimeError):
+    """A correction with no census effect declared, or one that cannot report its own.
+
+    Raised rather than skipped. A correction the promise cannot see is a mutation the
+    readback will find and be unable to explain.
+    """
 
 
 def load(path: pathlib.Path) -> dict[str, Any]:
@@ -236,6 +301,14 @@ def main() -> int:
     collateral = (soma.get("collateral_from_the_per_passage_cap") or {}) if soma else {}
 
     # ---- live census, read now rather than inherited ---------------------------------
+    rehearsals: dict[str, dict[str, Any]] = {}
+    correction_census: dict[str, int] = {
+        "nodes_retire": 0,
+        "nodes_update": 0,
+        "relationships_retire": 0,
+        "relationships_create": 0,
+        "properties_change": 0,
+    }
     driver = GraphDatabase.driver(URI, auth=AUTH)
     try:
         with driver.session(database=DB) as session:
@@ -281,6 +354,31 @@ def main() -> int:
                     "relationships_create": outstanding_m5,
                 }
             )
+            # Every correction the importer will run, rehearsed rather than restated. The
+            # rehearsal measures its own outstanding work against this graph, so one already
+            # applied contributes 0 and the promise stays idempotent.
+            for name, correction in CORRECTIONS:
+                spec = CORRECTION_CENSUS_EFFECT.get(name)
+                if spec is None:
+                    raise UndeclaredCorrection(
+                        f"{name} is in wave3_import.CORRECTIONS with no census effect "
+                        "declared here. Declare what it changes: a correction the dry-run "
+                        "cannot see is a mutation the readback will find unexplained."
+                    )
+                outcome = correction(session, "DRY_RUN", execute=False)
+                rehearsals[name] = outcome
+                key = spec["measure"]
+                if key is None:
+                    continue
+                if key not in outcome:
+                    raise UndeclaredCorrection(
+                        f"{name} rehearsal reported no {key!r}, so its effect on the census "
+                        f"cannot be measured. It returned {sorted(outcome)}."
+                    )
+                measured = int(outcome[key] or 0)
+                for field in spec["adds"]:
+                    correction_census[field] += measured
+
             nodes = int(session.run("MATCH (n) RETURN count(n) AS c").single()["c"])
             rels = int(session.run("MATCH ()-[r]->() RETURN count(r) AS c").single()["c"])
             core = {
@@ -300,9 +398,12 @@ def main() -> int:
         driver.close()
 
     # Measured above against the live graph, so a correction already applied contributes 0.
-    retire_rels = sum(int(c.get("relationships_retire") or 0) for c in corrections.values())
-    correction_creates = sum(
-        int(c.get("relationships_create") or 0) for c in corrections.values()
+    retire_rels = sum(
+        int(c.get("relationships_retire") or 0) for c in corrections.values()
+    ) + correction_census["relationships_retire"]
+    correction_creates = (
+        sum(int(c.get("relationships_create") or 0) for c in corrections.values())
+        + correction_census["relationships_create"]
     )
     correction_updates = sum(
         int(c.get("relationships_update") or 0) for c in corrections.values()
@@ -312,14 +413,18 @@ def main() -> int:
     nodes_create = int(totals.get("nodes_create") or 0)
     rels_create = int(totals.get("relationships_create") or 0) + correction_creates
     rels_update = int(totals.get("relationships_update") or 0) + correction_updates
-    property_writes = int(totals.get("property_writes") or 0)
+    property_writes = (
+        int(totals.get("property_writes") or 0) + correction_census["properties_change"]
+    )
 
+    nodes_retire = correction_census["nodes_retire"]
     census = {
         "nodes_before": nodes,
         "nodes_create": nodes_create,
-        "nodes_update": int(totals.get("nodes_update") or 0),
-        "nodes_retire": 0,
-        "nodes_after": nodes + nodes_create,
+        "nodes_update": int(totals.get("nodes_update") or 0)
+        + correction_census["nodes_update"],
+        "nodes_retire": nodes_retire,
+        "nodes_after": nodes + nodes_create - nodes_retire,
         "relationships_before": rels,
         "relationships_create": rels_create,
         "relationships_update": rels_update,
@@ -331,8 +436,11 @@ def main() -> int:
         "derivable_yet": True,
         "note": (
             "Element-level and measured against the live graph, not arithmetic over row "
-            "counts. Node retirements are zero: every destructive change in this wave is a "
-            "relationship correction, and each is named above with its proof artifact."
+            "counts. Every correction in wave3_import.CORRECTIONS is rehearsed here and its "
+            "measured outstanding work is in these figures; see corrections_rehearsed. Node "
+            "retirements used to be hardcoded 0 under a claim that no destructive change in "
+            "this wave touches a node, which was true when written and false by the time it "
+            "mattered."
         ),
     }
 
@@ -541,6 +649,7 @@ def main() -> int:
             ),
         },
         "expected_census": census,
+        "corrections_rehearsed": rehearsals,
         "delta_against_the_prior_dry_run": delta,
         "audio": {
             "queue_rows": len(audio_rows),

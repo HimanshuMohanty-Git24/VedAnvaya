@@ -15,6 +15,7 @@ import importlib
 
 plan = importlib.import_module("scripts.wave3_import_plan")
 imp = importlib.import_module("scripts.wave3_import")
+dry_run = importlib.import_module("scripts.wave3_dry_run_v2")
 
 
 def label_less_match_properties() -> set[str]:
@@ -312,4 +313,47 @@ def test_no_group_can_import_a_row_the_domain_staged_as_not_importable() -> None
             assert not plan.passes({"mapping_confidence": confidence}, group), (
                 f"{group.group_id} would import a {confidence} row. The filter belongs in "
                 "passes(), which every group goes through, not in one caller."
+            )
+
+
+def test_every_correction_the_importer_runs_is_in_the_promise() -> None:
+    """A correction the dry-run cannot see is a mutation the readback finds unexplained.
+
+    The importer's correction list grew from two to six. The dry-run kept its own hand-built
+    table of two, so WITHHELD_REGISTRY_ENTITIES -- the only correction that deletes nodes --
+    was never in the owner's section 5 delta. It removed 27 registry entities and the
+    readback reported the one thing it could: "node census: promised 116852, read 116825",
+    a discrepancy with no cause attached because the promise had no room for one.
+
+    CORRECTIONS is now the single registry and the dry-run raises on a name it has not been
+    told how to count, so the next correction cannot reach the graph unpromised.
+    """
+    declared = set(dry_run.CORRECTION_CENSUS_EFFECT)
+    performed = {name for name, _ in imp.CORRECTIONS}
+    assert performed == declared, (
+        "wave3_import.CORRECTIONS and wave3_dry_run_v2.CORRECTION_CENSUS_EFFECT disagree: "
+        f"undeclared {sorted(performed - declared)}, declared but never run "
+        f"{sorted(declared - performed)}."
+    )
+
+    census_fields = {
+        "nodes_retire",
+        "nodes_update",
+        "relationships_retire",
+        "relationships_create",
+        "properties_change",
+    }
+    for name, spec in sorted(dry_run.CORRECTION_CENSUS_EFFECT.items()):
+        assert spec["why"], f"{name}: declare why it counts the way it does"
+        unknown = set(spec["adds"]) - census_fields
+        assert not unknown, f"{name} adds to unknown census fields {sorted(unknown)}"
+        if spec["measure"] is None:
+            assert not spec["adds"], (
+                f"{name} measures nothing here yet claims a census effect. A correction is "
+                "either accounted from its artifact or measured live, not both."
+            )
+        else:
+            assert spec["adds"], (
+                f"{name} measures {spec['measure']!r} and then discards it. A measured "
+                "outstanding count that reaches no census field is a promise of zero."
             )

@@ -44,7 +44,7 @@ import json
 import os
 import pathlib
 import sys
-from typing import Any
+from typing import Any, Protocol
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "src"))
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
@@ -361,6 +361,17 @@ def node_props(row: dict[str, Any], group: ElementGroup) -> dict[str, Any]:
 # ---------------------------------------------------------------------------------------
 # Corrections. These run first, and each is a named, proof-backed change to existing data.
 # ---------------------------------------------------------------------------------------
+
+
+class CorrectionFn(Protocol):
+    """A correction: measures its own outstanding work against the live graph, and writes
+    only when asked. ``execute=False`` is a rehearsal, and it is what the dry-run calls to
+    build its promise -- so the keyword is part of the contract and a bare Callable, which
+    cannot express it, would type a correction that writes unconditionally."""
+
+    def __call__(
+        self, session: Session, run_id: str, *, execute: bool
+    ) -> dict[str, Any]: ...
 
 
 def correction_soma(session: Session, run_id: str, *, execute: bool) -> dict[str, Any]:
@@ -1096,6 +1107,19 @@ WRITERS = {
 KIND_ORDER = {"NODE": 0, "RELATIONSHIP": 1, "NODE_PROPERTY": 2, "RELATIONSHIP_PROPERTY": 3}
 
 
+#: The corrections, in the order they run. Exported rather than inlined in main() so the
+#: dry-run promises the same set the importer performs: it used to know about two of six,
+#: and the four it could not see included the only one that deletes nodes.
+CORRECTIONS: tuple[tuple[str, CorrectionFn], ...] = (
+    ("SOMA_PRESSING_WEAK_ALIAS_RETIREMENT", correction_soma),
+    ("M5_SPECIALIZED_FORM_OF", correction_m5),
+    ("WITHHELD_REGISTRY_ENTITIES", correction_withheld_registry_entities),
+    ("RETYPE_ASSERTED_BY", correction_retype_asserted_by),
+    ("RESTORE_CURATED_DISPLAY_LABELS", correction_restore_curated_display_labels),
+    ("LABEL_REDIRECT_TARGETS_AS_RITUALS", correction_label_redirect_targets_as_rituals),
+)
+
+
 def census(session: Session) -> dict[str, Any]:
     return {
         "nodes": int(session.run("MATCH (n) RETURN count(n) AS c").single()["c"]),
@@ -1217,37 +1241,29 @@ def main() -> int:
             )
             print()
 
-            for name, correction in (
-                ("SOMA_PRESSING_WEAK_ALIAS_RETIREMENT", correction_soma),
-                ("M5_SPECIALIZED_FORM_OF", correction_m5),
-                ("WITHHELD_REGISTRY_ENTITIES", correction_withheld_registry_entities),
-                ("RETYPE_ASSERTED_BY", correction_retype_asserted_by),
-                (
-                    "RESTORE_CURATED_DISPLAY_LABELS",
-                    correction_restore_curated_display_labels,
-                ),
-                (
-                    "LABEL_REDIRECT_TARGETS_AS_RITUALS",
-                    correction_label_redirect_targets_as_rituals,
-                ),
-            ):
+            for name, correction in CORRECTIONS:
                 if name in done:
                     print(f"  {name:46} already applied, skipping")
                     continue
                 outcome = correction(session, run_id, execute=args.execute)
                 steps.append(outcome)
-                print(
-                    f"  {name:46} "
-                    + (
-                        "rehearsed"
-                        if not args.execute
-                        else " ".join(
-                            f"{k.replace('_landed', '')}={v}"
-                            for k, v in outcome.items()
-                            if k.endswith("_landed")
-                        )
-                    )
+                # Every line says something. Reporting only *_landed keys made the one
+                # destructive correction -- nodes_deleted=27 -- print its name and a blank,
+                # indistinguishable on screen from the three that were already satisfied.
+                effects = " ".join(
+                    f"{k.replace('_landed', '')}={v}"
+                    for k, v in outcome.items()
+                    if k.endswith(("_landed", "_deleted"))
                 )
+                if not args.execute:
+                    effects = "rehearsed"
+                elif not effects:
+                    effects = (
+                        "already satisfied, nothing to change"
+                        if outcome.get("already_applied")
+                        else "RAN BUT REPORTED NO EFFECT -- see the receipt"
+                    )
+                print(f"  {name:46} {effects}")
                 if args.execute:
                     done.add(name)
                     CHECKPOINT.write_text(
