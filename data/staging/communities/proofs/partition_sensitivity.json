@@ -1,0 +1,60 @@
+{
+  "louvain_vs_leiden_consensus_ari": 1.0,
+  "population_variant_sensitivity": [
+    {
+      "ari_on_shared_nodes": 0.965867,
+      "communities_a": 15,
+      "communities_b": 12,
+      "nodes_in_a": 141,
+      "nodes_in_b": 123,
+      "nodes_shared": 123,
+      "pair": "V-ALL vs V-RULED"
+    },
+    {
+      "ari_on_shared_nodes": 0.971385,
+      "communities_a": 15,
+      "communities_b": 12,
+      "nodes_in_a": 141,
+      "nodes_in_b": 115,
+      "nodes_shared": 115,
+      "pair": "V-ALL vs V-NONE"
+    },
+    {
+      "ari_on_shared_nodes": 0.957649,
+      "communities_a": 12,
+      "communities_b": 12,
+      "nodes_in_a": 123,
+      "nodes_in_b": 115,
+      "nodes_shared": 115,
+      "pair": "V-RULED vs V-NONE"
+    }
+  ],
+  "projection_sensitivity_codedication_vs_comention": {
+    "ari_on_shared_nodes": 0.013084,
+    "codedication_communities": 12,
+    "codedication_nodes": 123,
+    "comention_communities": 4,
+    "comention_nodes": 40,
+    "shared_nodes": 35
+  },
+  "weighting_sensitivity": [
+    {
+      "ari": 0.583856,
+      "communities_a": 10,
+      "communities_b": 13,
+      "pair": "RAW vs JACCARD"
+    },
+    {
+      "ari": 0.878661,
+      "communities_a": 10,
+      "communities_b": 12,
+      "pair": "RAW vs COSINE"
+    },
+    {
+      "ari": 0.659164,
+      "communities_a": 13,
+      "communities_b": 12,
+      "pair": "JACCARD vs COSINE"
+    }
+  ]
+}

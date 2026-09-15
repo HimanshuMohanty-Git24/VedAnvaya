@@ -309,7 +309,12 @@
       "owner_agent": 15,
       "closure_test": "Deity nodes carry a stored community assignment whose projection is declared, modularity is recorded, and /api/v1/insights/capabilities no longer returns deity_communities as NOT_BUILT.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "MEASURED",
+      "observed_gap": "No deity community partition exists. The registry's stated eligible population of 192 deities is wrong.",
+      "suspected_cause": "Never computed. The typed refusal is exemplary and was earned the hard way: this question was graded MISLEADING when the deity-pair co-occurrence table was substituted for it, and that table's top-ranked members turned out to be human patrons carried in the deity registry. The capability answer now states PAIRWISE_CO_OCCURRENCE_IS_NOT_A_COMMUNITY_PARTITION explicitly.",
+      "measured_cause": "The eligible population is 157 after excluding 29 non-deities and ruling on 42 ABSTRACT labels, of which only 123 are placeable -- 34 eligible deities have no co-dedication partner anywhere and are typed degree-zero rather than given singleton communities. Correct 192 to 157 eligible / 123 placeable.",
+      "closure_method": "Computed and then REFUSED for publication, on evidence. Leiden beats Louvain on every weighting and every measure (ARI 1.0000 against 0.9079 at 200 seeds), and there is a real resolution plateau at gamma 0.8 to 1.5. Seed stability is not the problem; the specification is. Six of twelve communities have every internal edge from a single hymn, five of twelve are whole connected components free to any method, so only 7 are detected structure. Switching the projection from dedication to mention destroys the correspondence entirely at ARI 0.013, which is chance. And the decisive check needs no statistics: all six methods separate Brhaspati from Brahmanaspati, two names for one deity, and park Brahmanaspati with the quiver and the bowstring. The existing typed refusal is better than this partition presented as a fact. The one real positive is that the algorithm recovers the apri sequence of the animal offering -- a liturgical running order, not a pantheon.",
+      "disproven_prescription": "The brief's projection premise was wrong twice, and the lead repeated one of the errors when briefing the agent. Co-dedication within a mantra does not exist as a graph: 10,546 of 10,552 Rigvedic mantras carry exactly one deity and 6 carry two, so that projection has 6 edges. And the projection is Rigveda-only, not RV+AV as the lead stated: HAS_DEVATA_ASCRIPTION targets 324 :DevataAscription nodes and none of them is a :Devata, which GAP-ATTRIBUTION-002 already recorded correctly. The workable projection is co-dedication at hymn scope, Rigveda, which also recovers the source's own granularity since 79% of verse dedication is a sukta-wide value read down."
     },
     {
       "gap_id": "GAP-COMMUNITIES-002",
@@ -327,7 +332,12 @@
       "owner_agent": 15,
       "closure_test": "Every PAIR deity carries components, and every GROUP deity either carries components or a typed reason why its membership is not enumerable.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "MEASURED",
+      "observed_gap": "57 of 71 composite deity labels carry no components: all 33 GROUP deities are undecomposed, and 24 of 38 PAIR deities are.",
+      "suspected_cause": "Decomposition was implemented for pairs and never for groups. A dual deity like Mitra-Varuna can be resolved into two members; a group like the Maruts or the Adityas cannot be, without deciding how many members it has and whether they are individually named - which is a curation question the ADR anticipated and deferred. The scorecard's 30 of 33 is slightly optimistic against the live 33 of 33.",
+      "measured_cause": "Real, and it does not gate what the entry says it gates. 59 of the 71 composite labels were placed in a community WITHOUT decomposition, because a dual label co-occurs with other deities in its own right.",
+      "closure_method": "Decompose the 24 remaining pairs and type each group as decomposable or not with its reason -- worth doing for interpretation, not as a prerequisite.",
+      "disproven_prescription": "The entry states this 'directly gates GAP-COMMUNITIES-001, since an undecomposed dual label cannot be placed in a community'. Measured false: 59 of 71 were placed undecomposed. It constrains interpretation -- one community holds both Mitra-and-Varuna and Mitra -- and does not gate computation. Withdrawn as a blocker."
     },
     {
       "gap_id": "GAP-COMMUNITIES-003",
@@ -399,7 +409,11 @@
       "owner_agent": 12,
       "closure_test": "MATCH ()-[r:EXACT_PARALLEL_OF]->() WHERE r.parallel_id IS NULL RETURN count(r) returns 0, and the sentinel skip in tests/api/test_graph.py:805-814 fires.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "MEASURED",
+      "observed_gap": "256 EXACT_PARALLEL_OF edges carry no parallel_id and no match_level.",
+      "suspected_cause": "These are the 256 within-one-Veda exact parallels, which the cross-Veda matrix also reports separately as excluded from every pair cell. They were built by an earlier pass that did not assign group identifiers, and the later cross-corpus pass did. Without a parallel_id an edge cannot be grouped with the other members of its parallel set.",
+      "measured_cause": "A name collision rather than an absence. The 256 edges with no parallel_id are the same 256 with a null match_level, and they already carry strongest_method. The information exists under a different property name.",
+      "closure_method": "Backfill by MAPPING ParallelMethod onto MatchLevel, not by re-deriving the relations. Re-deriving would risk changing edges whose evidence is already present and correct."
     },
     {
       "gap_id": "GAP-CROSS_VEDA-004",
@@ -597,7 +611,12 @@
       "owner_agent": 12,
       "closure_test": "The diffusion endpoint returns a family_id that resolves to /formula-families/{id}, no edge has a blank match_level, and SV family membership is re-measured after a common-script text exists.",
       "status": "OPEN",
-      "causation_status": "SUSPECTED_NOT_YET_MEASURED"
+      "causation_status": "MEASURED",
+      "observed_gap": "Parallel and formula edges carry no recoverable match typology: match_level is blank on many and USES_FORMULA edges could not be traced to their evidence.",
+      "suspected_cause": "Two separate causes. The matching quality problem is downstream of GAP-MORPHOLOGY-005: with the RV in Latin and the SV in Devanagari, cross-script comparison can only run at the weakest sandhi-insensitive level, so SV family membership is systematically less reliable than within-script membership. The missing family id is a plain API omission. The 105 single-Veda families are not themselves a defect - single-Veda diction is a real finding - but they are the baseline against which the 107 four-Veda families must be read.",
+      "measured_cause": "Two different things under one id. The USES_FORMULA half was recoverable all along: all 22,686 occurrences trace to their own evidence surface, 20,577 SCRIPT_FOLDED and 2,109 SANDHI_INSENSITIVE. The parallel half is real, and 4,368 typology backfills now close it.",
+      "closure_method": "Backfill typology from a six-level identity ladder computed against each pair's own comparison ceiling. 736 EXACT_PARALLEL, 1,475 VARIANT with difference spans and differing codepoints named, 3,924 NEAR_PARALLEL.",
+      "disproven_prescription": "The closure test as written -- 'no edge has a blank match_level' -- cannot be met and should not be. It is false by design for the 3,049 NEAR_PARALLEL_OF edges, which are identical at no level and so have no match level to carry. The clause needs amending, not satisfying."
     },
     {
       "gap_id": "GAP-FORMULA-003",

@@ -1,0 +1,288 @@
+{
+ "question": "does the imported 0.72 floor hold on the within-recension population?",
+ "imported_from": "vedagraph.enrich.guards.NEAR_PARALLEL_FLOOR, measured cross-Veda. A threshold measured on a different population is not a threshold, so it was re-measured.",
+ "random_same_recension_pairs": {
+  "RV": {
+   "sampled": 40000,
+   "mean": 0.163,
+   "p50": 0.1647,
+   "p99": 0.22,
+   "p99.9": 0.247,
+   "p99.99": 0.345,
+   "max": 0.3779
+  },
+  "SV": {
+   "sampled": 39993,
+   "mean": 0.1634,
+   "p50": 0.1636,
+   "p99": 0.2272,
+   "p99.9": 0.2675,
+   "p99.99": 0.3532,
+   "max": 0.6363
+  },
+  "YV": {
+   "sampled": 39998,
+   "mean": 0.1525,
+   "p50": 0.1549,
+   "p99": 0.2172,
+   "p99.9": 0.3183,
+   "p99.99": 0.6112,
+   "max": 0.74
+  },
+  "AV": {
+   "sampled": 40000,
+   "mean": 0.1563,
+   "p50": 0.1603,
+   "p99": 0.2168,
+   "p99.9": 0.2484,
+   "p99.99": 0.6637,
+   "max": 0.9182
+  }
+ },
+ "the_naive_reading_and_why_it_is_wrong": "read as a null distribution these say the floor fails: a random YV pair reached 0.7400 and a random AV pair 0.9182, both at or above 0.72. Reading the tail shows why that reading is wrong -- every top-of-sample pair is a genuine near parallel. AVS 16.8.20 and 16.8.11 are the same litany; VSM 28.42 and 28.43 differ in two words. In a corpus this repetitive a random sample is not a null sample, and the sample's maximum is signal.",
+ "tail_read_by_hand": {
+  "RV": [
+   {
+    "similarity": 0.3779,
+    "a": "RV 8.47.10",
+    "b": "RV 8.47.3",
+    "text_a": "yaddevāḥśarmaśaraṇaṃyadbhadraṃyadanāturamtridhātuyadvarūthyaṃtadasmāsu",
+    "text_b": "vyasmeadhiśarmatatpakṣāvayonayantanaviśvāniviśvavedasovarūthyāmanāmahe"
+   },
+   {
+    "similarity": 0.3619,
+    "a": "RV 7.22.9",
+    "b": "RV 7.91.7",
+    "text_a": "yecapūrvaṛṣayoyecanūtnāindrabrahmāṇijanayantaviprāḥasmetesantusakhyāśi",
+    "text_b": "arvantonaśravasobhikṣamāṇāindravāyūsuṣṭutibhirvasiṣṭhāḥvājayantaḥsvava"
+   },
+   {
+    "similarity": 0.3454,
+    "a": "RV 7.27.5",
+    "b": "RV 7.88.7",
+    "text_a": "nūindrarāyevarivaskṛdhīnaātemanovavṛtyāmamaghāyagomadaśvāvadrathavadvy",
+    "text_b": "dhruvāsutvāsukṣitiṣukṣiyantovyasmatpāśaṃvaruṇomumocatavovanvānāaditeru"
+   },
+   {
+    "similarity": 0.345,
+    "a": "RV 7.13.3",
+    "b": "RV 10.66.15",
+    "text_a": "jātoyadagnebhuvanāvyakhyaḥpaśūnnagopāiryaḥparijmāvaiśvānarabrahmaṇevin",
+    "text_b": "devānvasiṣṭhoamṛtānvavandeyeviśvābhuvanābhipratasthuḥtenorāsantāmurugā"
+   }
+  ],
+  "SV": [
+   {
+    "similarity": 0.6363,
+    "a": "SV UTTARA 5.2.4.6",
+    "b": "SV UTTARA 4.1.3.7",
+    "text_a": "etaṃtyaṃharitodaśamarmṛjyanteapasyuvaḥyābhirmadāyaśumbhate",
+    "text_b": "girastaindaojasāmarmṛjyanteapasyuvaḥyābhirmadāyaśumbhase"
+   },
+   {
+    "similarity": 0.6202,
+    "a": "SV UTTARA 3.2.11.3",
+    "b": "SV UTTARA 3.1.12.3",
+    "text_a": "iṣaṃtokāyanodadhadasmabhyaṃsomaviśvataḥāpavasvasahasriṇaṃ",
+    "text_b": "nūnorayiṃmahāmindosmabhyaṃsomaviśvataḥāpavasvasahasriṇaṃ"
+   },
+   {
+    "similarity": 0.4194,
+    "a": "SV UTTARA 6.3.14.2",
+    "b": "SV UTTARA 7.1.13.1",
+    "text_a": "sanomandrābhiradhvarejihvābhiryajāmahaḥādevānvakṣiyakṣica",
+    "text_b": "agnepāvakarociṣāmandrayādevajihvayāādevānvakṣiyakṣica"
+   },
+   {
+    "similarity": 0.3532,
+    "a": "SV UTTARA 5.1.15.1",
+    "b": "SV UTTARA 4.2.2.7",
+    "text_a": "pavasvadevaāyuṣagindraṃgachatutemadaḥvāyumārohadharmaṇā",
+    "text_b": "savāyumindramaśvināsākaṃmadenagachatiraṇāyoasyadharmaṇā"
+   }
+  ],
+  "YV": [
+   {
+    "similarity": 0.74,
+    "a": "VSM 28.42",
+    "b": "VSM 28.43",
+    "text_a": "devonarāśaṃṃsodevamindraṃvayodhasaṃdevodevamavardhayatvirājāchandasend",
+    "text_b": "devovanaspatirdevamindraṃvayodhasaṃdevodevamavardhayatdvipadāchandasen"
+   },
+   {
+    "similarity": 0.6481,
+    "a": "VSM 25.47",
+    "b": "VSM 3.25",
+    "text_a": "agnetvaṃnoantamautatrātāśivobhavāvarūthyaḥvasuragnirvasuśravāachānakṣi",
+    "text_b": "agnetvaṃnoantamautatrātāśivobhavāvarūthyaḥvasuragnirvasuśravāachānakṣi"
+   },
+   {
+    "similarity": 0.6166,
+    "a": "VSM 18.42",
+    "b": "VSM 18.39",
+    "text_a": "bhujyuḥsuparṇoyajñogandharvastasyadakṣiṇāapsarasastāvānāmasanaidaṃbrah",
+    "text_b": "saṃṃhitoviśvasāmāsūryogandharvastasyamarīcayopsarasaāyuvonāmasanaidaṃb"
+   },
+   {
+    "similarity": 0.6112,
+    "a": "VSM 28.40",
+    "b": "VSM 28.42",
+    "text_a": "devādaivyāhotārādevamindraṃvayodhasaṃdevaudevamavardhatāmtriṣṭubhāchan",
+    "text_b": "devonarāśaṃṃsodevamindraṃvayodhasaṃdevodevamavardhayatvirājāchandasend"
+   }
+  ],
+  "AV": [
+   {
+    "similarity": 0.9182,
+    "a": "AVS 16.8.20",
+    "b": "AVS 16.8.11",
+    "text_a": "jitamasmākamudbhinnamasmākamṛtamasmākaṃtejosmākaṃbrahmāsmākaṃsvarasmāk",
+    "text_b": "jitamasmākamudbhinnamasmākamṛtamasmākaṃtejosmākaṃbrahmāsmākaṃsvarasmāk"
+   },
+   {
+    "similarity": 0.7484,
+    "a": "AVS 2.21.4",
+    "b": "AVS 2.23.4",
+    "text_a": "sūryayatteśocistenataṃpratiśocayosmāndveṣṭiyaṃvayaṃdviṣmaḥ",
+    "text_b": "āpoyadvasśocistenataṃpratiśocatayosmāndveṣṭiyaṃvayaṃdviṣmaḥ"
+   },
+   {
+    "similarity": 0.6707,
+    "a": "AVS 2.21.1",
+    "b": "AVS 2.22.4",
+    "text_a": "sūryayattetapastenataṃpratitapayosmāndveṣṭiyaṃvayaṃdviṣmaḥ",
+    "text_b": "candrayatteśocistenataṃpratiśocayosmāndveṣṭiyaṃvayaṃdviṣmaḥ"
+   },
+   {
+    "similarity": 0.6637,
+    "a": "AVS 2.22.1",
+    "b": "AVS 2.21.3",
+    "text_a": "candrayattetapastenataṃpratitapayosmāndveṣṭiyaṃvayaṃdviṣmaḥ",
+    "text_b": "sūryayattercistenataṃpratyarcayosmāndveṣṭiyaṃvayaṃdviṣmaḥ"
+   }
+  ]
+ },
+ "the_usable_statistic": {
+  "p99.9_per_veda": {
+   "RV": 0.247,
+   "SV": 0.2675,
+   "YV": 0.3183,
+   "AV": 0.2484
+  },
+  "floor": 0.72,
+  "margin": "the floor sits 2.3x to 2.9x above every Veda's p99.9",
+  "decision": "keep 0.72. Not imported on trust -- re-measured, and the measurement was read."
+ },
+ "floor_sensitivity_on_this_population": {
+  "0.60": {
+   "pairs": 2382,
+   "by_veda": {
+    "AV": 2005,
+    "YV": 140,
+    "SV": 73,
+    "RV": 164
+   }
+  },
+  "0.65": {
+   "pairs": 2072,
+   "by_veda": {
+    "AV": 1772,
+    "YV": 96,
+    "SV": 68,
+    "RV": 136
+   }
+  },
+  "0.70": {
+   "pairs": 1671,
+   "by_veda": {
+    "AV": 1421,
+    "YV": 72,
+    "SV": 68,
+    "RV": 110
+   }
+  },
+  "0.72": {
+   "pairs": 1437,
+   "by_veda": {
+    "AV": 1236,
+    "YV": 63,
+    "SV": 68,
+    "RV": 70
+   }
+  },
+  "0.75": {
+   "pairs": 1195,
+   "by_veda": {
+    "AV": 1025,
+    "YV": 56,
+    "SV": 68,
+    "RV": 46
+   }
+  },
+  "0.80": {
+   "pairs": 929,
+   "by_veda": {
+    "AV": 802,
+    "YV": 44,
+    "SV": 68,
+    "RV": 15
+   }
+  },
+  "0.85": {
+   "pairs": 717,
+   "by_veda": {
+    "AV": 613,
+    "YV": 34,
+    "SV": 66,
+    "RV": 4
+   }
+  },
+  "0.90": {
+   "pairs": 377,
+   "by_veda": {
+    "AV": 302,
+    "YV": 16,
+    "SV": 56,
+    "RV": 3
+   }
+  }
+ },
+ "the_weakest_accepted_pairs_read_by_hand": [
+  {
+   "similarity": 0.7202,
+   "a": "RV 10.58.4",
+   "b": "RV 10.58.7"
+  },
+  {
+   "similarity": 0.7205,
+   "a": "RV 10.58.5",
+   "b": "RV 10.58.10"
+  },
+  {
+   "similarity": 0.7209,
+   "a": "AVS 3.26.3",
+   "b": "AVS 3.26.4"
+  },
+  {
+   "similarity": 0.7214,
+   "a": "VSM 28.37",
+   "b": "VSM 28.40"
+  },
+  {
+   "similarity": 0.7214,
+   "a": "VSM 10.27",
+   "b": "VSM 20.2"
+  },
+  {
+   "similarity": 0.7214,
+   "a": "AVS 15.11.6",
+   "b": "AVS 15.11.10"
+  }
+ ],
+ "adversarial_verdict": "the six weakest accepted pairs at 0.720-0.721 are all genuine: RV 10.58 verses 4 and 7 are the same refrain with one pada substituted, AVS 3.26.3 and 3.26.4 are the direction-formula series, VSM 28.37 and 28.40 the metre series. 0 of 6 are false positives.",
+ "shorter_side_length_of_accepted_pairs": {
+  "min": 20,
+  "p10": 54,
+  "median": 91
+ }
+}

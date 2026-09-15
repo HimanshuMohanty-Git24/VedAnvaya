@@ -1,0 +1,258 @@
+{
+  "leiden|COSINE": [
+    {
+      "ari_vs_gamma_1": 0.40811,
+      "communities": 9,
+      "largest_community": 75,
+      "modularity_at_gamma_1": 0.605602,
+      "modularity_at_this_gamma": 0.890237,
+      "resolution": 0.25,
+      "singletons": 0
+    },
+    {
+      "ari_vs_gamma_1": 0.40811,
+      "communities": 9,
+      "largest_community": 75,
+      "modularity_at_gamma_1": 0.605602,
+      "modularity_at_this_gamma": 0.83331,
+      "resolution": 0.4,
+      "singletons": 0
+    },
+    {
+      "ari_vs_gamma_1": 0.598257,
+      "communities": 10,
+      "largest_community": 59,
+      "modularity_at_gamma_1": 0.618296,
+      "modularity_at_this_gamma": 0.797054,
+      "resolution": 0.5,
+      "singletons": 0
+    },
+    {
+      "ari_vs_gamma_1": 0.631018,
+      "communities": 11,
+      "largest_community": 57,
+      "modularity_at_gamma_1": 0.619292,
+      "modularity_at_this_gamma": 0.743691,
+      "resolution": 0.65,
+      "singletons": 0
+    },
+    {
+      "ari_vs_gamma_1": 0.968809,
+      "communities": 11,
+      "largest_community": 33,
+      "modularity_at_gamma_1": 0.624967,
+      "modularity_at_this_gamma": 0.692403,
+      "resolution": 0.8,
+      "singletons": 0
+    },
+    {
+      "ari_vs_gamma_1": 1.0,
+      "communities": 12,
+      "largest_community": 31,
+      "modularity_at_gamma_1": 0.625079,
+      "modularity_at_this_gamma": 0.625079,
+      "resolution": 1.0,
+      "singletons": 0
+    },
+    {
+      "ari_vs_gamma_1": 1.0,
+      "communities": 12,
+      "largest_community": 31,
+      "modularity_at_gamma_1": 0.625079,
+      "modularity_at_this_gamma": 0.541085,
+      "resolution": 1.25,
+      "singletons": 0
+    },
+    {
+      "ari_vs_gamma_1": 1.0,
+      "communities": 12,
+      "largest_community": 31,
+      "modularity_at_gamma_1": 0.625079,
+      "modularity_at_this_gamma": 0.457092,
+      "resolution": 1.5,
+      "singletons": 0
+    },
+    {
+      "ari_vs_gamma_1": 0.85755,
+      "communities": 28,
+      "largest_community": 31,
+      "modularity_at_gamma_1": 0.362747,
+      "modularity_at_this_gamma": 0.305295,
+      "resolution": 2.0,
+      "singletons": 14
+    },
+    {
+      "ari_vs_gamma_1": 0.645928,
+      "communities": 29,
+      "largest_community": 22,
+      "modularity_at_gamma_1": 0.355491,
+      "modularity_at_this_gamma": 0.277375,
+      "resolution": 2.5,
+      "singletons": 14
+    },
+    {
+      "ari_vs_gamma_1": 0.550077,
+      "communities": 30,
+      "largest_community": 17,
+      "modularity_at_gamma_1": 0.349889,
+      "modularity_at_this_gamma": 0.251452,
+      "resolution": 3.0,
+      "singletons": 14
+    },
+    {
+      "ari_vs_gamma_1": 0.552714,
+      "communities": 31,
+      "largest_community": 17,
+      "modularity_at_gamma_1": 0.347498,
+      "modularity_at_this_gamma": 0.20239,
+      "resolution": 4.0,
+      "singletons": 14
+    },
+    {
+      "ari_vs_gamma_1": 0.405886,
+      "communities": 34,
+      "largest_community": 12,
+      "modularity_at_gamma_1": 0.32862,
+      "modularity_at_this_gamma": 0.114176,
+      "resolution": 6.0,
+      "singletons": 14
+    },
+    {
+      "ari_vs_gamma_1": 0.278089,
+      "communities": 38,
+      "largest_community": 8,
+      "modularity_at_gamma_1": 0.291787,
+      "modularity_at_this_gamma": 0.030057,
+      "resolution": 8.0,
+      "singletons": 15
+    }
+  ],
+  "louvain|COSINE": [
+    {
+      "ari_vs_gamma_1": 0.362089,
+      "communities": 8,
+      "largest_community": 78,
+      "modularity_at_gamma_1": 0.598708,
+      "modularity_at_this_gamma": 0.889205,
+      "resolution": 0.25,
+      "singletons": 0
+    },
+    {
+      "ari_vs_gamma_1": 0.400535,
+      "communities": 9,
+      "largest_community": 75,
+      "modularity_at_gamma_1": 0.605602,
+      "modularity_at_this_gamma": 0.83331,
+      "resolution": 0.4,
+      "singletons": 0
+    },
+    {
+      "ari_vs_gamma_1": 0.400535,
+      "communities": 9,
+      "largest_community": 75,
+      "modularity_at_gamma_1": 0.605602,
+      "modularity_at_this_gamma": 0.795359,
+      "resolution": 0.5,
+      "singletons": 0
+    },
+    {
+      "ari_vs_gamma_1": 0.698691,
+      "communities": 10,
+      "largest_community": 51,
+      "modularity_at_gamma_1": 0.617587,
+      "modularity_at_this_gamma": 0.741193,
+      "resolution": 0.65,
+      "singletons": 0
+    },
+    {
+      "ari_vs_gamma_1": 0.970327,
+      "communities": 11,
+      "largest_community": 31,
+      "modularity_at_gamma_1": 0.622985,
+      "modularity_at_this_gamma": 0.690321,
+      "resolution": 0.8,
+      "singletons": 0
+    },
+    {
+      "ari_vs_gamma_1": 1.0,
+      "communities": 12,
+      "largest_community": 29,
+      "modularity_at_gamma_1": 0.623037,
+      "modularity_at_this_gamma": 0.623037,
+      "resolution": 1.0,
+      "singletons": 0
+    },
+    {
+      "ari_vs_gamma_1": 1.0,
+      "communities": 12,
+      "largest_community": 29,
+      "modularity_at_gamma_1": 0.623037,
+      "modularity_at_this_gamma": 0.539155,
+      "resolution": 1.25,
+      "singletons": 0
+    },
+    {
+      "ari_vs_gamma_1": 1.0,
+      "communities": 12,
+      "largest_community": 29,
+      "modularity_at_gamma_1": 0.623037,
+      "modularity_at_this_gamma": 0.455272,
+      "resolution": 1.5,
+      "singletons": 0
+    },
+    {
+      "ari_vs_gamma_1": 0.854929,
+      "communities": 28,
+      "largest_community": 29,
+      "modularity_at_gamma_1": 0.360706,
+      "modularity_at_this_gamma": 0.303696,
+      "resolution": 2.0,
+      "singletons": 14
+    },
+    {
+      "ari_vs_gamma_1": 0.713845,
+      "communities": 29,
+      "largest_community": 25,
+      "modularity_at_gamma_1": 0.357095,
+      "modularity_at_this_gamma": 0.275929,
+      "resolution": 2.5,
+      "singletons": 14
+    },
+    {
+      "ari_vs_gamma_1": 0.595399,
+      "communities": 30,
+      "largest_community": 20,
+      "modularity_at_gamma_1": 0.349007,
+      "modularity_at_this_gamma": 0.249794,
+      "resolution": 3.0,
+      "singletons": 14
+    },
+    {
+      "ari_vs_gamma_1": 0.567319,
+      "communities": 32,
+      "largest_community": 18,
+      "modularity_at_gamma_1": 0.344324,
+      "modularity_at_this_gamma": 0.200367,
+      "resolution": 4.0,
+      "singletons": 14
+    },
+    {
+      "ari_vs_gamma_1": 0.392902,
+      "communities": 34,
+      "largest_community": 12,
+      "modularity_at_gamma_1": 0.32862,
+      "modularity_at_this_gamma": 0.114176,
+      "resolution": 6.0,
+      "singletons": 14
+    },
+    {
+      "ari_vs_gamma_1": 0.271278,
+      "communities": 38,
+      "largest_community": 8,
+      "modularity_at_gamma_1": 0.291787,
+      "modularity_at_this_gamma": 0.030057,
+      "resolution": 8.0,
+      "singletons": 15
+    }
+  ]
+}

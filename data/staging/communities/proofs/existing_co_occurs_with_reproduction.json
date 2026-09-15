@@ -1,0 +1,20 @@
+{
+  "claim_being_checked": "a committed scorecard says CO_OCCURS_WITH is 0 edges; agent 1 says 306",
+  "distinct_devata_endpoints": 36,
+  "independent_recomputation": {
+    "existing_pairs_i_reproduce_exactly": 306,
+    "from": "MENTIONS_DEVATA co-occurrence within a mantra, all four Vedas",
+    "pairs_i_find_at_support_ge_1": 538,
+    "passage_count_agrees_on": 306,
+    "support_threshold_that_reproduces_the_edge_set_exactly": [
+      5
+    ]
+  },
+  "measured_edges": 306,
+  "method_property": [
+    "devata-cooccurrence-lift-v1"
+  ],
+  "reciprocated_edges": 0,
+  "unordered_pairs": 306,
+  "verdict": "306 confirmed. The layer is the four-Veda theonym co-MENTION graph thresholded at 5 shared mantras, and every one of its 306 passage_count values is reproduced from the mention edges. It is not a partition and it is not dedication."
+}

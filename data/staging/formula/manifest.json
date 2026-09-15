@@ -1,0 +1,336 @@
+{
+  "domain": "formula",
+  "agent": 12,
+  "schema_version": "1.0",
+  "algorithm_version": "vg-formula-parallel-variant-completion-v1",
+  "created_at": "2026-09-15T08:50:05.058378Z",
+  "code_commit": "7c9d32e3ae13c1049061212da7c10e32df4e028b",
+  "config_hash": "7ce5d04c9833e80a420fef39872471b372a53884c033aae688da995ca0361f52",
+  "source_snapshot_ids": [
+    "VG_FORMULA_PARALLEL_SNAPSHOT_2026_09_15"
+  ],
+  "files": [
+    {
+      "path": "rows.jsonl",
+      "sha256": "95e1464d6a2f7ef8a9a0997465552117d5b7008eb6bc4cd84fb9998b93603b08",
+      "rows": 5636,
+      "bytes": 11457276
+    },
+    {
+      "path": "relations.jsonl",
+      "sha256": "9a402ce46bd9ceab0bd2ba810c590a35999570e00369803e795450b41f8009e1",
+      "rows": 6135,
+      "bytes": 8595143
+    },
+    {
+      "path": "formula_nesting.jsonl",
+      "sha256": "c8fd1450a506a03dadbcd5b1535aea09e98bde12a225ae44e9677d23a696e03d",
+      "rows": 4825,
+      "bytes": 2814641
+    },
+    {
+      "path": "uses_formula_match_level.jsonl",
+      "sha256": "f6ac44ac7d040321dd3cd607c4b5b24318ee361298669f15dd8a5c44c7aa237f",
+      "rows": 22686,
+      "bytes": 7197173
+    },
+    {
+      "path": "shares_formula_with.jsonl",
+      "sha256": "6136d2ad6872b69a3c3eed0f90c11072e5312ea2c89ada8e85af727ff137f4f0",
+      "rows": 6148,
+      "bytes": 3165793
+    },
+    {
+      "path": "formula_families.jsonl",
+      "sha256": "4cec6461e053ab3135b21c798daccc2803077873085256305ac13c33f94065fc",
+      "rows": 720,
+      "bytes": 436222
+    },
+    {
+      "path": "sources.jsonl",
+      "sha256": "326867f5408a7676b052e6c41aa285e223f3b72e5fd8ba73f7d73110a3965d7f",
+      "rows": 1,
+      "bytes": 1360
+    },
+    {
+      "path": "rejected.jsonl",
+      "sha256": "aface86caa8fa98ef5f3bf4c1e1f6ed62e00da7bc54fb2c27fe4108e0f6b9a11",
+      "rows": 14574,
+      "bytes": 7691952
+    },
+    {
+      "path": "rejected_pairs.jsonl",
+      "sha256": "a94c0cc4812db7a6f50a442ece8cca7ff425f1b86e2c81066b2da15ce7f4593e",
+      "rows": 1663,
+      "bytes": 739807
+    },
+    {
+      "path": "proofs/accent_measured_by_name_not_range.json",
+      "sha256": "55d049c3faa93749f1f56eca1fd8222367227dc5014708b7eb1971334806848a",
+      "rows": 1,
+      "bytes": 2527
+    },
+    {
+      "path": "proofs/accent_only_false_family_test.json",
+      "sha256": "a773e7247ea361a567d19083daff3c05446fbae8d943a0811ae62bed1dc85fca",
+      "rows": 1,
+      "bytes": 7418
+    },
+    {
+      "path": "proofs/boilerplate_and_short_phrase_test.json",
+      "sha256": "e79bb82483d46f5ca922edc694e943abd98b2ab96b32473073b0e9352b66e229",
+      "rows": 1,
+      "bytes": 1724
+    },
+    {
+      "path": "proofs/false_duplicate_test.json",
+      "sha256": "5d34c893ff500f2143a55922e92583575500d89bfd4635344c5ca01911ab87f3",
+      "rows": 1,
+      "bytes": 3735
+    },
+    {
+      "path": "proofs/formula_nesting_contract.json",
+      "sha256": "ac6a9dadd9a6dafc37c1e167299b84e3acfdad34aaf40611528d92342faf37de",
+      "rows": 1,
+      "bytes": 1521
+    },
+    {
+      "path": "proofs/graph_reconciliation.json",
+      "sha256": "c6d54759c2d01c586d28a989487e4438864749a7810ed8579b4f91c2732d5ee5",
+      "rows": 1,
+      "bytes": 3758
+    },
+    {
+      "path": "proofs/near_parallel_floor_calibration.json",
+      "sha256": "98022f04bbfa82dd94ba3bdc577c1588a6a6539bde6d1a024858637811b4a78d",
+      "rows": 1,
+      "bytes": 8310
+    },
+    {
+      "path": "proofs/report_figure_check.json",
+      "sha256": "657bac6a8a316ccb00ccff7fa523bc6bea3f4fe2f2e5015fc684445a83b381bb",
+      "rows": 1,
+      "bytes": 6212
+    },
+    {
+      "path": "proofs/search_derivative_hazard.json",
+      "sha256": "ba1fe7e610353a3d3e616f5bff5b51fc17ec447210c454b31eca36d567fc95cc",
+      "rows": 1,
+      "bytes": 2445
+    },
+    {
+      "path": "proofs/shares_formula_with_policy.json",
+      "sha256": "713b857499b257c00ce3cd2f305491c588bb4a165ab6d60f2fe101fc255731f6",
+      "rows": 1,
+      "bytes": 3602
+    },
+    {
+      "path": "proofs/threshold_recall_cost.json",
+      "sha256": "8c65f79a71b7d36df00ebf340c6ae45d8dee76a1582f9bfe3b3a0e59c7be0de9",
+      "rows": 1,
+      "bytes": 5724
+    },
+    {
+      "path": "proofs/transformation_typology.json",
+      "sha256": "aba79fbbdf2e5cf682307655e68c3ffa5ae6db4b97c9a5ec8b79e7e566612f16",
+      "rows": 1,
+      "bytes": 4625
+    },
+    {
+      "path": "proofs/uses_formula_match_level_backfill.json",
+      "sha256": "5de4adfe95372cda3d9277457ebd0b10361e41d9cf519013b4c37326d241e398",
+      "rows": 1,
+      "bytes": 1459
+    }
+  ],
+  "counts": {
+    "candidates_considered": 20210,
+    "accepted": 5636,
+    "rejected": 14574,
+    "verified_zero": 14473,
+    "not_applicable": 101,
+    "unresolved": 0
+  },
+  "counts_unit": "the unit of rows.jsonl is one MANTRA, so candidates_considered is the whole corpus: every one of the 20,210 mantras was read on the full identity ladder and offered to the near-parallel candidate generator. accepted = a mantra with at least one staged delta; rejected = a mantra with none, each carrying its own reason. 5,636 + 14,574 = 20,210. Candidate-level accounting is separate and is in rejected_pairs.jsonl plus proofs/threshold_recall_cost.json, because a pair candidate is not a mantra and adding the two would make the arithmetic unauditable.",
+  "candidate_pair_accounting": {
+    "within_recension_candidate_pairs_generated": 16550,
+    "already_identical": 667,
+    "lossless_prune_by_ngram_bound": 13342,
+    "lossless_prune_by_length_bound": 3,
+    "below_near_parallel_floor": 1101,
+    "cleared_the_floor": 1437,
+    "dropped_by_the_degree_cap": 562,
+    "kept": 875,
+    "balance": "667 + 13342 + 3 + 1101 + 1437 = 16550, and 1437 = 562 + 875"
+  },
+  "closes_gaps": [
+    "GAP-FORMULA-001",
+    "GAP-FORMULA-003"
+  ],
+  "advances_gaps": {
+    "GAP-FORMULA-002": "backfills match_level on all 22,686 USES_FORMULA edges from each occurrence row's own evidence surface (20,577 SCRIPT_FOLDED, 2,109 SANDHI_INSENSITIVE) and supplies family_id on all 720 families for the diffusion endpoint. Does NOT close it: the closure test's 'no edge has a blank match_level' clause cannot be met for the 3,049 NEAR_PARALLEL_OF edges without asserting an identity that does not hold, and the 'SV membership re-measured after a common script exists' clause is blocked upstream. See proofs/uses_formula_match_level_backfill.json.",
+    "GAP-CROSS_VEDA-002": "types every one of the 6,129 identity and near-parallel pairs this run can reach with a transformation_type from an 11-member vocabulary declared before extraction, 0 untyped, each near-parallel row carrying up to four difference spans as evidence. 4,368 of the rows are a typology backfill onto an edge that already exists. The 1,684 REUSES_TEXT_FROM edges are mirrors of rows typed here and inherit the type; they are not separately emitted.",
+    "GAP-CROSS_VEDA-003": "RECLASSIFIES it. The 256 EXACT_PARALLEL_OF edges with no parallel_id are the same 256 with a null match_level, and they are not missing the fact -- they carry strongest_method = SOURCE_EXACT (252) or LEMMA_SEQUENCE_EXACT (4) under the RV lexical layer's property name. One axis, two names. relations.jsonl supplies the MatchLevel value for 252 of the 256; the other 4 rest on a lemma criterion no surface ladder can reach and must be mapped, not re-derived. See proofs/graph_reconciliation.json.",
+    "GAP-CROSS_VEDA-004": "not attempted. Pada-level parallels need the RV-only pada tags and would produce a corpus-wide-looking layer covering one corpus. Untouched and still open."
+  },
+  "produces": {
+    "relations.jsonl": {
+      "rows": 6135,
+      "new_relations": 1252,
+      "typology_backfill_only": 4368,
+      "retype_recommendations": 515,
+      "not_importable": 6,
+      "by_scope_and_claim": {
+        "CROSS_RECENSION|EXACT_PARALLEL": 279,
+        "CROSS_RECENSION|NEAR_PARALLEL": 3049,
+        "CROSS_RECENSION|VARIANT": 1259,
+        "WITHIN_RECENSION|EXACT_PARALLEL": 457,
+        "WITHIN_RECENSION|NEAR_PARALLEL": 875,
+        "WITHIN_RECENSION|VARIANT": 216
+      },
+      "four_claims_kept_four_claims": "EXACT_PARALLEL means identical at the pair's comparison ceiling. VARIANT means the same verse reached only below that ceiling, and the transformation_type says which step was needed. NEAR_PARALLEL means identical at no level with a similarity at or above 0.72. A FORMULA_FAMILY is a set of formulas related by containment and is not a passage relation at all -- it lives in formula_families.jsonl. No row carries two of these."
+    },
+    "formula_nesting.jsonl": {
+      "rows": 4825,
+      "one_row_per": "Formula node",
+      "nesting_types": {
+        "INDEPENDENT": 2788,
+        "NESTED_IN_ANOTHER": 918,
+        "CONTAINS_ANOTHER": 934,
+        "NESTED_AND_CONTAINING": 185
+      }
+    },
+    "uses_formula_match_level.jsonl": {
+      "rows": 22686
+    },
+    "shares_formula_with.jsonl": {
+      "rows": 6148,
+      "policy": {
+        "name": "formula-sharing-idf-topk-v1",
+        "min_shared_formulas": 2,
+        "top_k_per_passage_per_veda": 3,
+        "cut": "both-sided intersection",
+        "ranking_key": "sum over shared formulas of ln(20210 / mantra_df(formula))"
+      }
+    },
+    "formula_families.jsonl": {
+      "rows": 720,
+      "why": "family_id surface for the diffusion endpoint"
+    },
+    "rejected_pairs.jsonl": {
+      "rows": 1663
+    }
+  },
+  "coverage": {
+    "formula_membership_unchanged": {
+      "before": {
+        "RV": 5103,
+        "SV": 1311,
+        "YV": 1214,
+        "AV": 2946
+      },
+      "after": {
+        "RV": 5103,
+        "SV": 1311,
+        "YV": 1214,
+        "AV": 2946
+      },
+      "why": "re-running formula discovery on the current corpus reproduces the committed artifact byte for byte. Formula coverage is not a staleness gap and no new formula exists to be found at the declared thresholds. What this artifact adds to the formula layer is a nesting type, a match_level and a selective sharing edge, not new members."
+    },
+    "parallel_or_reuse_mantras": {
+      "before": {
+        "RV": 2850,
+        "SV": 1677,
+        "YV": 687,
+        "AV": 1332
+      },
+      "after_if_imported": {
+        "RV": 2866,
+        "SV": 1692,
+        "YV": 774,
+        "AV": 1871
+      },
+      "delta": {
+        "RV": 16,
+        "SV": 15,
+        "YV": 87,
+        "AV": 539
+      },
+      "pct_before": {
+        "RV": 27.0,
+        "SV": 90.9,
+        "YV": 34.8,
+        "AV": 22.8
+      },
+      "pct_after": {
+        "RV": 27.2,
+        "SV": 91.8,
+        "YV": 39.2,
+        "AV": 32.0
+      },
+      "basis": "distinct mantras carrying at least one EXACT_PARALLEL_OF, NEAR_PARALLEL_OF, VARIANT_OF, REUSES_TEXT_FROM or PARALLEL_TO edge in either direction, read out of the live graph for the before column and unioned with this artifact's importable NEW_RELATION rows for the after column. Retype recommendations move no mantra.",
+      "mantras_reaching_a_formula_family": {
+        "RV": 2206,
+        "SV": 637,
+        "YV": 672,
+        "AV": 1428
+      },
+      "mantras_reaching_a_formula_family_pct": {
+        "RV": 20.9,
+        "SV": 34.5,
+        "YV": 34.0,
+        "AV": 24.5
+      },
+      "mantras_gaining_a_shares_formula_with_edge": {
+        "RV": 1762,
+        "SV": 808,
+        "YV": 646,
+        "AV": 1275
+      }
+    }
+  },
+  "qa": {
+    "sampled": 0,
+    "sample_method": "adversarial",
+    "sample_note": "nothing was sampled because nothing needed to be: the identity layer is exact string equality over an enumerated population and every candidate-level rejection is written out. What WAS read by hand, and is the QA of record: the 21 same-notation accent variants (all 21 printed beside their marks in proofs/accent_only_false_family_test.json), the 6 weakest accepted near parallels at 0.720-0.721, the 16 top-of-sample 'random' pairs that disproved the naive null calibration, the 6 sub-threshold svaha identities, and the codepoint-level diff of the 475 orthographic variants.",
+    "defects_found": 5,
+    "defects": [
+      "my first transformation typology special-cased accent notation instead of deriving a comparison ceiling, which labelled 129 cross-script SCRIPT_FOLDED identities ACCENT_NOTATION_INCOMPARABLE -- a statement about accent for a pair whose difference is script. Rebuilt around the ceiling; 0 rows now carry a type their ceiling contradicts.",
+      "my first false-duplicate test compared structural_path, which is null for the Rigveda, so all 252 RV pairs came back SAME_ADDRESS_INGESTION_DUPLICATE while the printed examples plainly showed different mandalas. A null-equals-null comparison is not a match. Rebuilt on canonical_citation plus parent and sequence; the answer is 0 duplicates.",
+      "1,475 VARIANT rows initially shipped with evidence quoting the surface on which the two texts AGREE and nothing quoting where they differ -- a variant claim proving its own negation. Every one now carries difference_spans with the differing codepoints named, computed on the surface the pair FAILS at, and 0 VARIANT rows lack one.",
+      "claim_confidence read NOT_APPLICABLE on 4,103 rows whose only delta is a SHARES_FORMULA_WITH edge, which reads as 'this row makes no claim' about a row that makes one. Corrected; 0 staged rows now say NOT_APPLICABLE.",
+      "my first floor calibration read the random-pair maximum as a null maximum and concluded the imported 0.72 floor was unsafe on the Yajurveda and Atharvaveda. Reading the tail showed every high-scoring 'random' pair is a genuine near parallel. The sample was contaminated by real signal, which is what a repetitive corpus does to random sampling."
+    ],
+    "human_reviewed": 0,
+    "reviewed_by": "claude-opus-5 acting as Agent 12. Model adjudication, not human gold, and campaign section 26 forbids calling it gold. Every adjudicated set above is small enough to be re-read by hand and is printed verbatim in proofs/."
+  },
+  "normalisation": {
+    "applied": [
+      "NFC, per FOUR_VEDA_NORMALIZATION_POLICY section 3. Measured here: 0 pairs in the corpus differ only in NFC, so UNICODE_NORMALIZATION is an unused member of the typology.",
+      "editorial-mark stripping (dandas, brackets, verse numerals) -- and where that alone makes two verses equal, the pair is typed EDITORIAL_APPARATUS rather than called identical.",
+      "Vedic tone-mark stripping, on marks identified by Unicode NAME and by vowel base, never by codepoint block.",
+      "Devanagari-to-IAST transliteration plus the IAST/ISO 15919 transcription fold, after the ASCII-colon visarga convention is folded to U+0903.",
+      "word-boundary dropping, as the weakest level only, and always reported as such."
+    ],
+    "refused": [
+      "the AV SEARCH_DERIVATIVE layer. 5,134 of 5,839 AV mantras lose at least one base letter in it, 11,582 deletions of m and 5,139 of r. Using it would have destroyed every vocalic r and every anusvara in matching.",
+      "collapsing accent-only differences into exact identity. 21 same-notation pairs are real accent variants and are typed as such.",
+      "asserting an accent difference between two notation classes. 150 pairs reach ACCENT_INSENSITIVE because their editions mark tone differently, and no accent claim is made for them.",
+      "collapsing orthographic variants into exact parallels. 475 pairs agree only after the transcription fold -- the GRETIL Atharvaveda writes ISO 15919 ring-below vocalic r and dot-below anusvara where the GRETIL Rigveda writes IAST dot-below and dot-above -- and that is a transmission fact about two editions, not noise.",
+      "collapsing word-division variants. 819 pairs agree only once word boundaries are dropped; the Samaveda writes continuous sandhi and that is data.",
+      "merging any textual variant into its neighbour. Every VARIANT row keeps both texts, the level reached, the ceiling, and the differing codepoints or spans."
+    ]
+  },
+  "hard_rules_observed": {
+    "neo4j": "read-only. Only MATCH/RETURN and db.relationshipTypes() were issued.",
+    "write_surface": "data/staging/formula/ and docs/reports/data-completeness/formula.md only. No existing repo file and no other agent's staging directory was written.",
+    "nothing_imported": "the canonical graph is unchanged at 108,779 nodes and 265,295 relationships."
+  },
+  "known_residuals": {
+    "word_order_variants": "containment cannot merge daivya hotara with hotara daivya, and reordering plus inflection keeps visva bhuvana and bhuvanani visva in two families. 2 groups / 4 families measured exactly by FORMULA_FAMILY_RECONSTRUCTION_V3 section 5.2; not fixed here.",
+    "lemma_criterion": "4 within-Rigveda EXACT_PARALLEL_OF edges rest on LEMMA_SEQUENCE_EXACT. No level of the surface ladder can corroborate them and this run does not retract them.",
+    "min_formula_occurrences": "still 3. Measured cost: 109,118 mined spans have a word-aligned document frequency of exactly 2, 94,452 clear the character floor and 66,086 span two or more Vedas -- but those are raw non-maximal spans and the longest are whole verses the parallel layer already holds. A decision needs a maximality pass this run did not make, so the figure is an upper bound and is labelled one.",
+    "pada_level": "GAP-CROSS_VEDA-004 untouched.",
+    "sv_cross_script": "Samavedic membership still bottoms out at SANDHI_INSENSITIVE against the Latin corpora because the two share no code points. That is GAP-MORPHOLOGY-005's dependency, not something this layer can close."
+  }
+}

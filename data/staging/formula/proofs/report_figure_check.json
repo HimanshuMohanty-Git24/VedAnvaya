@@ -1,0 +1,274 @@
+{
+ "question": "does every load-bearing figure in formula.md match the artifact it describes?",
+ "why": "every table in this report reads from an artifact, so a number typed into prose is the only one nothing else can catch. MEMORY records that lesson; this is the check.",
+ "checks": 44,
+ "failures": 0,
+ "result": "PASS",
+ "detail": [
+  {
+   "check": "rows.jsonl rows",
+   "measured": 5636,
+   "expected_by_the_report": 5636,
+   "pass": true
+  },
+  {
+   "check": "relations.jsonl rows",
+   "measured": 6135,
+   "expected_by_the_report": 6135,
+   "pass": true
+  },
+  {
+   "check": "formula_nesting.jsonl rows",
+   "measured": 4825,
+   "expected_by_the_report": 4825,
+   "pass": true
+  },
+  {
+   "check": "uses_formula_match_level rows",
+   "measured": 22686,
+   "expected_by_the_report": 22686,
+   "pass": true
+  },
+  {
+   "check": "shares_formula_with rows",
+   "measured": 6148,
+   "expected_by_the_report": 6148,
+   "pass": true
+  },
+  {
+   "check": "formula_families rows",
+   "measured": 720,
+   "expected_by_the_report": 720,
+   "pass": true
+  },
+  {
+   "check": "rejected.jsonl rows",
+   "measured": 14574,
+   "expected_by_the_report": 14574,
+   "pass": true
+  },
+  {
+   "check": "rejected_pairs.jsonl rows",
+   "measured": 1663,
+   "expected_by_the_report": 1663,
+   "pass": true
+  },
+  {
+   "check": "manifest accepted == rows",
+   "measured": 5636,
+   "expected_by_the_report": 5636,
+   "pass": true
+  },
+  {
+   "check": "manifest rejected == rejected.jsonl",
+   "measured": 14574,
+   "expected_by_the_report": 14574,
+   "pass": true
+  },
+  {
+   "check": "accepted + rejected == 20210",
+   "measured": 20210,
+   "expected_by_the_report": 20210,
+   "pass": true
+  },
+  {
+   "check": "new relations",
+   "measured": 1252,
+   "expected_by_the_report": 1252,
+   "pass": true
+  },
+  {
+   "check": "typology backfill",
+   "measured": 4368,
+   "expected_by_the_report": 4368,
+   "pass": true
+  },
+  {
+   "check": "retype proposals",
+   "measured": 515,
+   "expected_by_the_report": 515,
+   "pass": true
+  },
+  {
+   "check": "new+backfill+retype == relations",
+   "measured": 6135,
+   "expected_by_the_report": 6135,
+   "pass": true
+  },
+  {
+   "check": "not importable",
+   "measured": 6,
+   "expected_by_the_report": 6,
+   "pass": true
+  },
+  {
+   "check": "within EXACT",
+   "measured": 457,
+   "expected_by_the_report": 457,
+   "pass": true
+  },
+  {
+   "check": "within VARIANT",
+   "measured": 216,
+   "expected_by_the_report": 216,
+   "pass": true
+  },
+  {
+   "check": "within NEAR",
+   "measured": 875,
+   "expected_by_the_report": 875,
+   "pass": true
+  },
+  {
+   "check": "cross EXACT",
+   "measured": 279,
+   "expected_by_the_report": 279,
+   "pass": true
+  },
+  {
+   "check": "cross VARIANT",
+   "measured": 1259,
+   "expected_by_the_report": 1259,
+   "pass": true
+  },
+  {
+   "check": "cross NEAR",
+   "measured": 3049,
+   "expected_by_the_report": 3049,
+   "pass": true
+  },
+  {
+   "check": "ORTHOGRAPHIC_VARIATION total",
+   "measured": 475,
+   "expected_by_the_report": 475,
+   "pass": true
+  },
+  {
+   "check": "ACCENT_PLACEMENT total",
+   "measured": 23,
+   "expected_by_the_report": 23,
+   "pass": true
+  },
+  {
+   "check": "EDITORIAL_APPARATUS total",
+   "measured": 158,
+   "expected_by_the_report": 158,
+   "pass": true
+  },
+  {
+   "check": "WORD_DIVISION total (819 = 788 + 31)",
+   "measured": 819,
+   "expected_by_the_report": 819,
+   "pass": true
+  },
+  {
+   "check": "UNICODE_NORMALIZATION is a verified zero",
+   "measured": 0,
+   "expected_by_the_report": 0,
+   "pass": true
+  },
+  {
+   "check": "nesting INDEPENDENT",
+   "measured": 2788,
+   "expected_by_the_report": 2788,
+   "pass": true
+  },
+  {
+   "check": "nesting CONTAINS_ANOTHER",
+   "measured": 934,
+   "expected_by_the_report": 934,
+   "pass": true
+  },
+  {
+   "check": "nesting NESTED_IN_ANOTHER",
+   "measured": 918,
+   "expected_by_the_report": 918,
+   "pass": true
+  },
+  {
+   "check": "nesting NESTED_AND_CONTAINING",
+   "measured": 185,
+   "expected_by_the_report": 185,
+   "pass": true
+  },
+  {
+   "check": "nesting sums to 4825",
+   "measured": 4825,
+   "expected_by_the_report": 4825,
+   "pass": true
+  },
+  {
+   "check": "match_level SCRIPT_FOLDED",
+   "measured": 20577,
+   "expected_by_the_report": 20577,
+   "pass": true
+  },
+  {
+   "check": "match_level SANDHI_INSENSITIVE",
+   "measured": 2109,
+   "expected_by_the_report": 2109,
+   "pass": true
+  },
+  {
+   "check": "match_level sums to 22686",
+   "measured": 22686,
+   "expected_by_the_report": 22686,
+   "pass": true
+  },
+  {
+   "check": "shares: not already parallel == 3545",
+   "measured": 3545,
+   "expected_by_the_report": 3545,
+   "pass": true
+  },
+  {
+   "check": "shares passages reached",
+   "measured": 4491,
+   "expected_by_the_report": 4491,
+   "pass": true
+  },
+  {
+   "check": "boilerplate recommendations in nesting",
+   "measured": 59,
+   "expected_by_the_report": 59,
+   "pass": true
+  },
+  {
+   "check": "verified_zero rejections",
+   "measured": 14473,
+   "expected_by_the_report": 14473,
+   "pass": true
+  },
+  {
+   "check": "not_applicable rejections",
+   "measured": 101,
+   "expected_by_the_report": 101,
+   "pass": true
+  },
+  {
+   "check": "within identity pairs new by veda SV",
+   "measured": 204,
+   "expected_by_the_report": 204,
+   "pass": true
+  },
+  {
+   "check": "within identity pairs new by veda AV",
+   "measured": 131,
+   "expected_by_the_report": 131,
+   "pass": true
+  },
+  {
+   "check": "within identity pairs new by veda YV",
+   "measured": 80,
+   "expected_by_the_report": 80,
+   "pass": true
+  },
+  {
+   "check": "retype AV-RV orthographic",
+   "measured": 470,
+   "expected_by_the_report": 470,
+   "pass": true
+  }
+ ],
+ "what_is_not_covered": "figures quoted from committed reports for comparison (CORPUS_D11's 587, the registry's 87,296, GRAPH_ENRICHMENT_V1's 1,103) are checked in proofs/false_duplicate_test.json, proofs/shares_formula_with_policy.json and proofs/formula_nesting_contract.json against a re-measurement, not here."
+}

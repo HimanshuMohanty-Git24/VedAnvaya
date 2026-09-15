@@ -1,0 +1,76 @@
+{
+  "headline": "Brhaspati and Brahmanaspati -- two names for the same deity -- are separated by every one of the six methods, and Brahmanaspati is also separated from his own dual Indra-and-Brahmanaspati. The cause is mechanical: his co-dedicatees in RV 6.75 each appear in exactly one hymn, so cosine gives those edges about 0.354 while his edges to the great deities score an order of magnitude lower, and the weighting drags him into a one-hymn inventory. No deity page should be shown saying Brahmanaspati belongs with the quiver.",
+  "pairs": [
+    {
+      "a": "VG:DEVATA:BRHASPATIH",
+      "b": "VG:DEVATA:BRAHMANASPATIH",
+      "per_method": {
+        "leiden|COSINE": "SEPARATED",
+        "leiden|JACCARD": "SEPARATED",
+        "leiden|RAW": "SEPARATED",
+        "louvain|COSINE": "SEPARATED",
+        "louvain|JACCARD": "SEPARATED",
+        "louvain|RAW": "SEPARATED"
+      },
+      "relation": "two names the Rigveda uses for the same deity, the Lord of the Formulation",
+      "separation_would_be": "A DEFECT IN THE PARTITION AS A THEOLOGICAL STATEMENT"
+    },
+    {
+      "a": "VG:DEVATA:BRAHMANASPATIH",
+      "b": "VG:DEVATA:INDRABRAHMANASPATI",
+      "per_method": {
+        "leiden|COSINE": "SEPARATED",
+        "leiden|JACCARD": "SEPARATED",
+        "leiden|RAW": "SEPARATED",
+        "louvain|COSINE": "SEPARATED",
+        "louvain|JACCARD": "SEPARATED",
+        "louvain|RAW": "SEPARATED"
+      },
+      "relation": "a deity and the dual compound that names him with Indra",
+      "separation_would_be": "A DEFECT: a deity separated from his own dual"
+    },
+    {
+      "a": "VG:DEVATA:MITRAVARUNAU",
+      "b": "VG:DEVATA:MITRAH",
+      "per_method": {
+        "leiden|COSINE": "SAME",
+        "leiden|JACCARD": "SAME",
+        "leiden|RAW": "SAME",
+        "louvain|COSINE": "SAME",
+        "louvain|JACCARD": "SAME",
+        "louvain|RAW": "SAME"
+      },
+      "relation": "the dual Mitra-Varuna and its own member Mitra",
+      "separation_would_be": "not a defect either way; CO-assignment is the thing to watch, because a community holding both double-counts one deity (GAP-COMMUNITIES-002)"
+    },
+    {
+      "a": "VG:DEVATA:SOMAH",
+      "b": "VG:DEVATA:PAVAMANAH-SOMAH",
+      "per_method": {
+        "leiden|COSINE": "SEPARATED",
+        "leiden|JACCARD": "SEPARATED",
+        "leiden|RAW": "SEPARATED",
+        "louvain|COSINE": "SEPARATED",
+        "louvain|JACCARD": "SEPARATED",
+        "louvain|RAW": "SEPARATED"
+      },
+      "relation": "Soma and Soma Pavamana, which DEVATA_TAXONOMY_V1 holds apart deliberately",
+      "separation_would_be": "EXPECTED; the taxonomy partitions their aliases on purpose"
+    },
+    {
+      "a": "VG:DEVATA:SURYAH",
+      "b": "VG:DEVATA:SAVITA",
+      "per_method": {
+        "leiden|COSINE": "SEPARATED",
+        "leiden|JACCARD": "SEPARATED",
+        "leiden|RAW": "SEPARATED",
+        "louvain|COSINE": "SEPARATED",
+        "louvain|JACCARD": "SEPARATED",
+        "louvain|RAW": "SEPARATED"
+      },
+      "relation": "Surya and Savitr, which DEVATA_TAXONOMY_V1 refuses to merge",
+      "separation_would_be": "EXPECTED"
+    }
+  ],
+  "what_this_is": "Five deity pairs whose grouping a reader can judge without knowing anything about modularity, checked against all six algorithm x weighting consensuses. This is the cheapest available sanity test of whether the partition can be read as a statement about Vedic religion."
+}

@@ -1,0 +1,2946 @@
+{
+  "proof_id": "QA_SAMPLE_ADJUDICATED",
+  "adjudicator": "MODEL_ADJUDICATED",
+  "adjudicator_model": "claude-opus-5",
+  "this_is_not_human_annotation": true,
+  "drawn_from": "the pre-fix build; the two defects it found that were fixable were then closed in code and the fixes verified on the rebuilt artifact",
+  "strata": [
+    "preverb_strip",
+    "secondary_stem",
+    "fold_minority",
+    "frame_invert",
+    "goal_role",
+    "deity_patient",
+    "treebank",
+    "sv_projection",
+    "weak_align",
+    "random"
+  ],
+  "drawn": 55,
+  "adjudicated": 44,
+  "defects_found": 4,
+  "verification_of_the_two_code_fixes": [
+    {
+      "key": "VG:RV:SAK:M08:S048:V010",
+      "before": "somaḥ was AGENT under a PASS verb",
+      "after": "somaḥ is PATIENT",
+      "confirmed_on_rebuild": true
+    },
+    {
+      "key": "VG:AV:SAU:K14:S002:V022",
+      "before": "upastṛ resolved to DESTROYS",
+      "after": "abstains; the verse now appears in rejected.jsonl",
+      "confirmed_on_rebuild": true
+    },
+    {
+      "key": "VG:YV:VSM:A06:V022",
+      "before": "prohibition silently read as a command",
+      "after": "carries POLARITY_NOT_MODELLED_NEGATION_PARTICLE_IN_SCOPE:mā",
+      "confirmed_on_rebuild": true
+    }
+  ],
+  "sample": [
+    {
+      "stratum": "preverb_strip",
+      "key": "VG:AV:SAU:K12:S003:V050",
+      "confidence": "EXACT",
+      "verse": "sám agnáyaḥ vidur anyó anyáṃ yá óṣadhīḥ sácate yáś ca síndhūn | / yā́vanto devā́ divy ā̀tápanti híraṇyaṃ jyótiḥ pácato babhūva ||50|| {17}",
+      "sentence": "yāvanto devā divy ātapanti hiraṇyaṃ jyotiḥ pacato babhūva",
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "MORPHOLOGY_RULE_CASE",
+        "predicate": "BURNS",
+        "predicate_status": "MAPPED_BY_PREVERB_STRIP",
+        "frame": "ASSERTED",
+        "root_label": "ātap",
+        "root_lemma": "ātap",
+        "verb_surface": "ātapanti",
+        "verb_features": {
+          "Tense": "Pres",
+          "Mood": "Ind",
+          "Person": "3",
+          "Number": "Plur"
+        },
+        "role_scope": "SENTENCE_CASE_SCOPED",
+        "roles": [],
+        "registry_role_count": 0,
+        "proposed_role_count": 0,
+        "cautions": [
+          "PREDICATE_VIA_PREVERB_STRIP:ā",
+          "ROLE_SCOPE_AMBIGUOUS_MULTIPLE_FINITE_VERBS_NO_PARSE"
+        ]
+      }
+    },
+    {
+      "stratum": "preverb_strip",
+      "key": "VG:AV:SAU:K14:S002:V022",
+      "confidence": "EXACT",
+      "verse": "yáṃ bálbajaṃ nyásyatha cárma copastr̥ṇīthána | / tád ā́ rohatu suprajā́ yā́ kanyā̀ vindáte pátim ||22||",
+      "sentence": "yaṃ balbajaṃ nyasyatha carma copastṛṇīthana",
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "MORPHOLOGY_RULE_CASE",
+        "predicate": "DESTROYS",
+        "predicate_status": "MAPPED_BY_PREVERB_STRIP",
+        "frame": "ASSERTED",
+        "root_label": "upastṛ",
+        "root_lemma": "upastṛ",
+        "verb_surface": "upastṛṇīthana",
+        "verb_features": {
+          "Tense": "Pres",
+          "Mood": "Ind",
+          "Person": "2",
+          "Number": "Plur"
+        },
+        "role_scope": "SENTENCE_CASE_SCOPED",
+        "roles": [],
+        "registry_role_count": 0,
+        "proposed_role_count": 0,
+        "cautions": [
+          "PREDICATE_VIA_PREVERB_STRIP:upa",
+          "ROLE_SCOPE_AMBIGUOUS_MULTIPLE_FINITE_VERBS_NO_PARSE"
+        ]
+      }
+    },
+    {
+      "stratum": "preverb_strip",
+      "key": "VG:AV:SAU:K12:S001:V005",
+      "confidence": "EXACT",
+      "verse": "yásyāṃ pū́rve pūrvajanā́ vicakriré yásyāṃ devā́ ásurān abhyávartayan | / gávām áśvānāṃ váyasaś ca viṣṭhā́ bhágaṃ várcaḥ pr̥thivī́ no dadhātu ||5||",
+      "sentence": "yasyām pūrve pūrva janāḥ vicakrire yasyām devāḥ asurān abhyavartayan gavām aśvānām vayasaḥ ca viṣṭhā",
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "TREEBANK_DEPREL",
+        "predicate": "CREATES",
+        "predicate_status": "MAPPED_BY_PREVERB_STRIP",
+        "frame": "ASSERTED",
+        "root_label": "vikṛ",
+        "root_lemma": "vikṛ",
+        "verb_surface": "vicakrire",
+        "verb_features": {
+          "Mood": "Ind",
+          "Number": "Plur",
+          "Person": "3",
+          "Tense": "Past"
+        },
+        "role_scope": "SENTENCE_DEPENDENCY_SUBTREE",
+        "roles": [
+          {
+            "role": "LOCATION",
+            "surface": "yasyām",
+            "lemma": "yad",
+            "case": "LOC",
+            "upos": "PRON",
+            "filler_type": "PRONOUN_UNRESOLVED",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "DCS Atharvaveda (Śaunaka)-0473-AVŚ, 12, 1-11938.conllu sent_id=650239_1: deprel obl:loc of the finite verb"
+          },
+          {
+            "role": "AGENT",
+            "surface": "janāḥ",
+            "lemma": "jana",
+            "case": "NOM",
+            "upos": "NOUN",
+            "filler_type": "CONCEPT:CONCEPT",
+            "entity_key": "VG:CONCEPT:JANA-PEOPLE",
+            "entity_label": "jana",
+            "proposed_role": false,
+            "evidence": "DCS Atharvaveda (Śaunaka)-0473-AVŚ, 12, 1-11938.conllu sent_id=650239_1: deprel nsubj of the finite verb"
+          }
+        ],
+        "registry_role_count": 2,
+        "proposed_role_count": 0,
+        "cautions": [
+          "PREDICATE_VIA_PREVERB_STRIP:vi"
+        ]
+      }
+    },
+    {
+      "stratum": "preverb_strip",
+      "key": "VG:AV:SAU:K09:S008:V003",
+      "confidence": "EXACT",
+      "verse": "yasya hetoḥ pracyavate yakṣmaḥ karṇato āsyataḥ | / sarvaṃ śīrṣanyaṃ te rogaṃ bahir nir mantrayāmahe ||3||",
+      "sentence": "yasya hetoḥ pracyavate yakṣmaḥ karṇato āsyataḥ",
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "MORPHOLOGY_RULE_CASE",
+        "predicate": "MOVES_TO",
+        "predicate_status": "MAPPED_BY_PREVERB_STRIP",
+        "frame": "ASSERTED",
+        "root_label": "pracyu",
+        "root_lemma": "pracyu",
+        "verb_surface": "pracyavate",
+        "verb_features": {
+          "Tense": "Pres",
+          "Mood": "Ind",
+          "Person": "3",
+          "Number": "Sing"
+        },
+        "role_scope": "SENTENCE_CASE_SCOPED",
+        "roles": [
+          {
+            "role": "SOURCE",
+            "surface": "hetoḥ",
+            "lemma": "hetu",
+            "case": "ABL",
+            "upos": "NOUN",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": true,
+            "evidence": "DCS Atharvaveda (Śaunaka)-0450-AVŚ, 9, 8-11419.conllu sent_id=648656: ABL in the same sentence, no parse available"
+          },
+          {
+            "role": "AGENT",
+            "surface": "yakṣmaḥ",
+            "lemma": "yakṣma",
+            "case": "NOM",
+            "upos": "NOUN",
+            "filler_type": "CONCEPT:STATE",
+            "entity_key": "VG:CONCEPT:YAKSMA-DISEASE",
+            "entity_label": "yakṣma",
+            "proposed_role": false,
+            "evidence": "DCS Atharvaveda (Śaunaka)-0450-AVŚ, 9, 8-11419.conllu sent_id=648656: NOM in the same sentence, no parse available"
+          },
+          {
+            "role": "SOURCE",
+            "surface": "karṇataḥ",
+            "lemma": "karṇa",
+            "case": "ABL",
+            "upos": "NOUN",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": true,
+            "evidence": "DCS Atharvaveda (Śaunaka)-0450-AVŚ, 9, 8-11419.conllu sent_id=648656: ABL in the same sentence, no parse available"
+          },
+          {
+            "role": "SOURCE",
+            "surface": "āsyataḥ",
+            "lemma": "āsya",
+            "case": "ABL",
+            "upos": "NOUN",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": true,
+            "evidence": "DCS Atharvaveda (Śaunaka)-0450-AVŚ, 9, 8-11419.conllu sent_id=648656: ABL in the same sentence, no parse available"
+          }
+        ],
+        "registry_role_count": 1,
+        "proposed_role_count": 3,
+        "cautions": [
+          "PREDICATE_VIA_PREVERB_STRIP:pra"
+        ]
+      }
+    },
+    {
+      "stratum": "preverb_strip",
+      "key": "VG:AV:SAU:K06:S114:V002",
+      "confidence": "EXACT",
+      "verse": "ṛtasya ṛtenādityā yajatrā muñcateha naḥ | / yajñaṃ yad yajñavāhasaḥ śikṣanto nopaśekima ||2||",
+      "sentence": "yajñaṃ yad yajñavāhasaḥ śikṣanto nopaśekima",
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "MORPHOLOGY_RULE_CASE",
+        "predicate": "BLESSES",
+        "predicate_status": "MAPPED_BY_PREVERB_STRIP",
+        "frame": "ASSERTED",
+        "root_label": "upaśak",
+        "root_lemma": "upaśak",
+        "verb_surface": "upaśekima",
+        "verb_features": {
+          "Tense": "Past",
+          "Mood": "Ind",
+          "Person": "1",
+          "Number": "Plur"
+        },
+        "role_scope": "SENTENCE_CASE_SCOPED",
+        "roles": [
+          {
+            "role": "PATIENT",
+            "surface": "yajñam",
+            "lemma": "yajña",
+            "case": "ACC",
+            "upos": "NOUN",
+            "filler_type": "CONCEPT:RITUAL",
+            "entity_key": "VG:CONCEPT:YAJNA-SACRIFICE",
+            "entity_label": "yajña",
+            "proposed_role": false,
+            "evidence": "DCS Atharvaveda (Śaunaka)-0286-AVŚ, 6, 114-11476.conllu sent_id=646962: ACC in the same sentence, no parse available"
+          }
+        ],
+        "registry_role_count": 1,
+        "proposed_role_count": 0,
+        "cautions": [
+          "PREDICATE_VIA_PREVERB_STRIP:upa",
+          "FIRST_PERSON_AGENT_IS_THE_UNNAMED_SPEAKER"
+        ]
+      }
+    },
+    {
+      "stratum": "secondary_stem",
+      "key": "VG:AV:SAU:K04:S003:V003",
+      "confidence": "EXACT",
+      "verse": "akṣyau ca te mukhaṃ ca te vyāghra jambhayāmasi | / āt sarvān viṃśatiṃ nakhān ||3||",
+      "sentence": "akṣyau ca te mukham ca te vyāghra jambhayāmasi āt sarvān viṃśatim nakhān",
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "TREEBANK_DEPREL",
+        "predicate": "DESTROYS",
+        "predicate_status": "MAPPED_BY_SECONDARY_STEM",
+        "frame": "ASSERTED",
+        "root_label": "jambhay",
+        "root_lemma": "jambhay",
+        "verb_surface": "jambhayāmasi",
+        "verb_features": {
+          "Mood": "Ind",
+          "Number": "Plur",
+          "Person": "1",
+          "Tense": "Pres"
+        },
+        "role_scope": "SENTENCE_DEPENDENCY_SUBTREE",
+        "roles": [
+          {
+            "role": "PATIENT",
+            "surface": "akṣyau",
+            "lemma": "akṣi",
+            "case": "ACC",
+            "upos": "NOUN",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "DCS Atharvaveda (Śaunaka)-0104-AVŚ, 4, 3-10515.conllu sent_id=644889_1: deprel obj of the finite verb"
+          }
+        ],
+        "registry_role_count": 1,
+        "proposed_role_count": 0,
+        "cautions": [
+          "PREDICATE_VIA_SECONDARY_STEM:ay",
+          "FIRST_PERSON_AGENT_IS_THE_UNNAMED_SPEAKER"
+        ]
+      }
+    },
+    {
+      "stratum": "secondary_stem",
+      "key": "VG:AV:SAU:K18:S001:V023",
+      "confidence": "EXACT",
+      "verse": "ud īraya pitarā jāra ā bhagam iyakṣati haryato htta iṣyati vivakti vahniḥ svapasyate makhas taviṣyate asuro vepate matī",
+      "sentence": "ud īraya pitarā jāra ā bhagam iyakṣati haryato hṛtta iṣyati",
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "MORPHOLOGY_RULE_CASE",
+        "predicate": "MOVES_TO",
+        "predicate_status": "MAPPED_BY_SECONDARY_STEM",
+        "frame": "REQUESTED",
+        "root_label": "īray",
+        "root_lemma": "īray",
+        "verb_surface": "īraya",
+        "verb_features": {
+          "Tense": "Pres",
+          "Mood": "Imp",
+          "Person": "2",
+          "Number": "Sing"
+        },
+        "role_scope": "SENTENCE_CASE_SCOPED",
+        "roles": [],
+        "registry_role_count": 0,
+        "proposed_role_count": 0,
+        "cautions": [
+          "PREDICATE_VIA_SECONDARY_STEM:ay",
+          "ROLE_SCOPE_AMBIGUOUS_MULTIPLE_FINITE_VERBS_NO_PARSE"
+        ]
+      }
+    },
+    {
+      "stratum": "secondary_stem",
+      "key": "VG:AV:SAU:K01:S001:V002",
+      "confidence": "VERIFIED_SEGMENT",
+      "verse": "púnar éhi vacas pate devéna mánasā sahá | / vásoṣ pate ní ramaya máyy evā́stu máyi śrutám ||2||",
+      "sentence": "vasoḥ pate ni ramaya",
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "TREEBANK_DEPREL",
+        "predicate": "DWELLS",
+        "predicate_status": "MAPPED_BY_SECONDARY_STEM",
+        "frame": "REQUESTED",
+        "root_label": "ramay",
+        "root_lemma": "ramay",
+        "verb_surface": "ramaya",
+        "verb_features": {
+          "Mood": "Imp",
+          "Number": "Sing",
+          "Person": "2",
+          "Tense": "Pres"
+        },
+        "role_scope": "SENTENCE_DEPENDENCY_SUBTREE",
+        "roles": [
+          {
+            "role": "AGENT",
+            "surface": "pate",
+            "lemma": "pati",
+            "case": "VOC",
+            "upos": "NOUN",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "DCS Atharvaveda (Śaunaka)-0000-AVŚ, 1, 1-10439.conllu sent_id=643701_1: deprel vocative of the finite verb"
+          }
+        ],
+        "registry_role_count": 1,
+        "proposed_role_count": 0,
+        "cautions": [
+          "PREDICATE_VIA_SECONDARY_STEM:ay"
+        ]
+      }
+    },
+    {
+      "stratum": "fold_minority",
+      "key": "VG:AV:SAU:K11:S001:V007",
+      "confidence": "EXACT",
+      "verse": "sākáṃ sajātáiḥ páyasā saháidhy úd ubjaināṃ mahaté vīryā̀ya | / ūrdhvó nā́kasyā́dhi roha viṣṭápaṃ svargó loká íti yáṃ vádanti ||7||",
+      "sentence": "sākaṃ sajātaiḥ payasā sahaidhy ud ubjaināṃ mahate vīryāya",
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "MORPHOLOGY_RULE_CASE",
+        "predicate": "IS_OR_BECOMES",
+        "predicate_status": "MAPPED_BY_FOLD",
+        "frame": "REQUESTED",
+        "root_label": "as",
+        "root_lemma": "as",
+        "verb_surface": "edhi",
+        "verb_features": {
+          "Tense": "Pres",
+          "Mood": "Imp",
+          "Person": "2",
+          "Number": "Sing"
+        },
+        "role_scope": "SENTENCE_CASE_SCOPED",
+        "roles": [],
+        "registry_role_count": 0,
+        "proposed_role_count": 0,
+        "cautions": [
+          "FOLD_CARRIES_AN_UNMAPPED_MINORITY_SENSE:√as- 2(32 RV tokens)",
+          "ROLE_SCOPE_AMBIGUOUS_MULTIPLE_FINITE_VERBS_NO_PARSE"
+        ]
+      }
+    },
+    {
+      "stratum": "fold_minority",
+      "key": "VG:YV:VSM:A02:V034",
+      "confidence": "EXACT",
+      "verse": "ऊर्जं वहन्तीर् अमृतं घृतं पयः कीलालं परिस्रुतम् । स्वधा स्थ तर्पयत मे पितॄन् ॥",
+      "sentence": "svadhā stha tarpayata me pitṝn",
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "MORPHOLOGY_RULE_CASE",
+        "predicate": "IS_OR_BECOMES",
+        "predicate_status": "MAPPED_BY_FOLD",
+        "frame": "ASSERTED",
+        "root_label": "as",
+        "root_lemma": "as",
+        "verb_surface": "stha",
+        "verb_features": {
+          "Tense": "Pres",
+          "Mood": "Ind",
+          "Person": "2",
+          "Number": "Plur"
+        },
+        "role_scope": "SENTENCE_CASE_SCOPED",
+        "roles": [],
+        "registry_role_count": 0,
+        "proposed_role_count": 0,
+        "cautions": [
+          "FOLD_CARRIES_AN_UNMAPPED_MINORITY_SENSE:√as- 2(32 RV tokens)",
+          "ROLE_SCOPE_AMBIGUOUS_MULTIPLE_FINITE_VERBS_NO_PARSE"
+        ]
+      }
+    },
+    {
+      "stratum": "fold_minority",
+      "key": "VG:YV:VSM:A01:V002",
+      "confidence": "EXACT",
+      "verse": "वसोः पवित्रम् असि । द्यौर् असि पृथिव्यसि । मातरिश्वनो ऽघर्मो सि विश्वधा ऽअसि परमेण धाम्ना दृꣳहस्व मा ह्वार् मा ते यज्ञपतिर् ह्वार्षीत् ॥",
+      "sentence": "vasoḥ pavitram asi",
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "MORPHOLOGY_RULE_CASE",
+        "predicate": "IS_OR_BECOMES",
+        "predicate_status": "MAPPED_BY_FOLD",
+        "frame": "ASSERTED",
+        "root_label": "as",
+        "root_lemma": "as",
+        "verb_surface": "asi",
+        "verb_features": {
+          "Tense": "Pres",
+          "Mood": "Ind",
+          "Person": "2",
+          "Number": "Sing"
+        },
+        "role_scope": "SENTENCE_CASE_SCOPED",
+        "roles": [],
+        "registry_role_count": 0,
+        "proposed_role_count": 0,
+        "cautions": [
+          "FOLD_CARRIES_AN_UNMAPPED_MINORITY_SENSE:√as- 2(32 RV tokens)"
+        ]
+      }
+    },
+    {
+      "stratum": "fold_minority",
+      "key": "VG:YV:VSM:A08:V006",
+      "confidence": "EXACT",
+      "verse": "वा॒मम॒द्य स॑वितर्वा॒ममु॒ श्वो दि॒वे दि॑वे वा॒मम॒स्मभ्य॑ᳪं᳭ सावीः । वा॒मस्य॒ हि क्षय॑स्य देव॒ भूरे॑र॒या धि॒या वा॑म॒भाज॑: स्याम ।। ६ ।।",
+      "sentence": "vāmasya hi kṣayasya deva bhūrer ayā dhiyā vāmabhājaḥ syāma",
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "MORPHOLOGY_RULE_CASE",
+        "predicate": "IS_OR_BECOMES",
+        "predicate_status": "MAPPED_BY_FOLD",
+        "frame": "ASSERTED",
+        "root_label": "as",
+        "root_lemma": "as",
+        "verb_surface": "syāma",
+        "verb_features": {
+          "Tense": "Pres",
+          "Mood": "Opt",
+          "Person": "1",
+          "Number": "Plur"
+        },
+        "role_scope": "SENTENCE_CASE_SCOPED",
+        "roles": [
+          {
+            "role": "INSTRUMENT",
+            "surface": "ayā",
+            "lemma": "idam",
+            "case": "INS",
+            "upos": "PRON",
+            "filler_type": "PRONOUN_UNRESOLVED",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "DCS Vājasaneyisaṃhitā (Mādhyandina)-0007-VSM, 8-12927.conllu sent_id=730051: INS in the same sentence, no parse available"
+          },
+          {
+            "role": "INSTRUMENT",
+            "surface": "dhiyā",
+            "lemma": "dhī",
+            "case": "INS",
+            "upos": "NOUN",
+            "filler_type": "CONCEPT:PHILOSOPHICAL_CONCEPT",
+            "entity_key": "VG:CONCEPT:DHI-INSIGHT",
+            "entity_label": "dhī",
+            "proposed_role": false,
+            "evidence": "DCS Vājasaneyisaṃhitā (Mādhyandina)-0007-VSM, 8-12927.conllu sent_id=730051: INS in the same sentence, no parse available"
+          }
+        ],
+        "registry_role_count": 2,
+        "proposed_role_count": 0,
+        "cautions": [
+          "FOLD_CARRIES_AN_UNMAPPED_MINORITY_SENSE:√as- 2(32 RV tokens)",
+          "FIRST_PERSON_AGENT_IS_THE_UNNAMED_SPEAKER"
+        ]
+      }
+    },
+    {
+      "stratum": "frame_invert",
+      "key": "VG:RV:SAK:M01:S085:V002",
+      "confidence": "EXACT",
+      "verse": "tá ukṣitā́so mahimā́nam āśata diví rudrā́so ádhi cakrire sádaḥ árcanto arkáṁ janáyanta indriyám ádhi śríyo dadhire pŕ̥śnimātaraḥ",
+      "sentence": null,
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "MORPHOLOGY_RULE_CASE",
+        "predicate": "ESTABLISHES",
+        "predicate_status": "MAPPED_BY_LEMMA_ID",
+        "frame": "ASSERTED",
+        "root_label": "√dhā- 1",
+        "root_lemma": "dhā- 1",
+        "verb_surface": "dadhire",
+        "verb_features": {
+          "mood": "IND",
+          "number": "PL",
+          "person": "3",
+          "tense": "PRF",
+          "voice": "MED"
+        },
+        "role_scope": "PADA:d",
+        "roles": [
+          {
+            "role": "PATIENT",
+            "surface": "śriyaḥ",
+            "lemma": "śrī",
+            "case": "ACC",
+            "upos": "nominal stem",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "pada d, ACC in the same pada as the finite verb"
+          },
+          {
+            "role": "AGENT",
+            "surface": "pr̥śnimātaraḥ",
+            "lemma": "pr̥śnimātar",
+            "case": "NOM",
+            "upos": "nominal stem",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "pada d, NOM in the same pada as the finite verb"
+          }
+        ],
+        "registry_role_count": 2,
+        "proposed_role_count": 0,
+        "cautions": [
+          "FRAME_MAY_INVERT_NONACTIVE_VOICE_ON_FLAGGED_ROOT"
+        ]
+      }
+    },
+    {
+      "stratum": "frame_invert",
+      "key": "VG:RV:SAK:M05:S023:V004",
+      "confidence": "EXACT",
+      "verse": "sa hi ṣmā̍ vi̱śvaca̍rṣaṇir a̱bhimā̍ti̱ saho̍ da̱dhe | agna̍ e̱ṣu kṣaye̱ṣv ā re̱van na̍ḥ śukra dīdihi dyu̱mat pā̍vaka dīdihi ||",
+      "sentence": null,
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "MORPHOLOGY_RULE_CASE",
+        "predicate": "ESTABLISHES",
+        "predicate_status": "MAPPED_BY_LEMMA_ID",
+        "frame": "ASSERTED",
+        "root_label": "√dhā- 1",
+        "root_lemma": "dhā- 1",
+        "verb_surface": "dadhe",
+        "verb_features": {
+          "mood": "IND",
+          "number": "SG",
+          "person": "3",
+          "voice": "MED"
+        },
+        "role_scope": "PADA:b",
+        "roles": [
+          {
+            "role": "PATIENT",
+            "surface": "abhimāti",
+            "lemma": "abhimāti",
+            "case": "ACC",
+            "upos": "nominal stem",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "pada b, ACC in the same pada as the finite verb"
+          },
+          {
+            "role": "PATIENT",
+            "surface": "sahaḥ",
+            "lemma": "sahas",
+            "case": "ACC",
+            "upos": "nominal stem",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "pada b, ACC in the same pada as the finite verb"
+          }
+        ],
+        "registry_role_count": 2,
+        "proposed_role_count": 0,
+        "cautions": [
+          "FRAME_MAY_INVERT_NONACTIVE_VOICE_ON_FLAGGED_ROOT"
+        ]
+      }
+    },
+    {
+      "stratum": "frame_invert",
+      "key": "VG:RV:SAK:M08:S048:V010",
+      "confidence": "EXACT",
+      "verse": "r̥dūdáreṇa sákhyā saceya yó mā ná ríṣyed dharyaśva pītáḥ ayáṁ yáḥ sómo ny ádhāyy asmé tásmā índram pratíram emy ā́yuḥ",
+      "sentence": null,
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "MORPHOLOGY_RULE_CASE",
+        "predicate": "ESTABLISHES",
+        "predicate_status": "MAPPED_BY_LEMMA_ID",
+        "frame": "ASSERTED",
+        "root_label": "√dhā- 1",
+        "root_lemma": "dhā- 1",
+        "verb_surface": "adhāyi",
+        "verb_features": {
+          "mood": "IND",
+          "number": "SG",
+          "person": "3",
+          "tense": "AOR",
+          "voice": "PASS"
+        },
+        "role_scope": "PADA:c",
+        "roles": [
+          {
+            "role": "AGENT",
+            "surface": "ayam",
+            "lemma": "ayam",
+            "case": "NOM",
+            "upos": "pronoun",
+            "filler_type": "PRONOUN_UNRESOLVED",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "pada c, NOM in the same pada as the finite verb"
+          },
+          {
+            "role": "AGENT",
+            "surface": "yaḥ",
+            "lemma": "ya",
+            "case": "NOM",
+            "upos": "pronoun",
+            "filler_type": "PRONOUN_UNRESOLVED",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "pada c, NOM in the same pada as the finite verb"
+          },
+          {
+            "role": "AGENT",
+            "surface": "somaḥ",
+            "lemma": "soma",
+            "case": "NOM",
+            "upos": "nominal stem",
+            "filler_type": "DEITY",
+            "entity_key": "VG:DEVATA:SOMAH",
+            "entity_label": "sóma-",
+            "proposed_role": false,
+            "evidence": "pada c, NOM in the same pada as the finite verb"
+          },
+          {
+            "role": "LOCATION",
+            "surface": "asme",
+            "lemma": "aham",
+            "case": "LOC",
+            "upos": "pronoun",
+            "filler_type": "RITUAL_PARTICIPANT_PRONOUN",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "pada c, LOC in the same pada as the finite verb"
+          }
+        ],
+        "registry_role_count": 4,
+        "proposed_role_count": 0,
+        "cautions": [
+          "FRAME_MAY_INVERT_NONACTIVE_VOICE_ON_FLAGGED_ROOT"
+        ]
+      }
+    },
+    {
+      "stratum": "goal_role",
+      "key": "VG:RV:SAK:M01:S104:V002",
+      "confidence": "EXACT",
+      "verse": "ó tyé nára índram ūtáye gur nū́ cit tā́n sadyó ádhvano jagamyāt devā́so manyúṁ dā́sasya ścamnan té na ā́ vakṣan suvitā́ya várṇam",
+      "sentence": null,
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "MORPHOLOGY_RULE_CASE",
+        "predicate": "MOVES_TO",
+        "predicate_status": "MAPPED_BY_LEMMA_ID",
+        "frame": "ASSERTED",
+        "root_label": "√gā-",
+        "root_lemma": "gā",
+        "verb_surface": "guḥ",
+        "verb_features": {
+          "mood": "INJ",
+          "number": "PL",
+          "person": "3",
+          "tense": "AOR",
+          "voice": "ACT"
+        },
+        "role_scope": "PADA:a",
+        "roles": [
+          {
+            "role": "AGENT",
+            "surface": "tye",
+            "lemma": "sya- ~ tya",
+            "case": "NOM",
+            "upos": "pronoun",
+            "filler_type": "PRONOUN_UNRESOLVED",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "pada a, NOM in the same pada as the finite verb"
+          },
+          {
+            "role": "AGENT",
+            "surface": "naraḥ",
+            "lemma": "nar",
+            "case": "NOM",
+            "upos": "nominal stem",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "pada a, NOM in the same pada as the finite verb"
+          },
+          {
+            "role": "GOAL",
+            "surface": "indram",
+            "lemma": "indra",
+            "case": "ACC",
+            "upos": "nominal stem",
+            "filler_type": "DEITY",
+            "entity_key": "VG:DEVATA:INDRAH",
+            "entity_label": "índra-",
+            "proposed_role": true,
+            "evidence": "pada a, ACC in the same pada as the finite verb"
+          },
+          {
+            "role": "BENEFICIARY",
+            "surface": "ūtaye",
+            "lemma": "ūti",
+            "case": "DAT",
+            "upos": "nominal stem",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "pada a, DAT in the same pada as the finite verb"
+          }
+        ],
+        "registry_role_count": 3,
+        "proposed_role_count": 1,
+        "cautions": []
+      }
+    },
+    {
+      "stratum": "goal_role",
+      "key": "VG:RV:SAK:M09:S101:V014",
+      "confidence": "EXACT",
+      "verse": "ā́ jāmír átke avyata bhujé ná putrá oṇyòḥ sáraj jāró ná yóṣaṇāṁ varó ná yónim āsádam",
+      "sentence": null,
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "MORPHOLOGY_RULE_CASE",
+        "predicate": "MOVES_TO",
+        "predicate_status": "MAPPED_BY_LEMMA_ID",
+        "frame": "ASSERTED",
+        "root_label": "√sr̥-",
+        "root_lemma": "sr̥",
+        "verb_surface": "sarat",
+        "verb_features": {
+          "mood": "INJ",
+          "number": "SG",
+          "person": "3",
+          "tense": "AOR",
+          "voice": "ACT"
+        },
+        "role_scope": "PADA:c",
+        "roles": [
+          {
+            "role": "AGENT",
+            "surface": "jāraḥ",
+            "lemma": "jāra",
+            "case": "NOM",
+            "upos": "nominal stem",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "pada c, NOM in the same pada as the finite verb"
+          },
+          {
+            "role": "GOAL",
+            "surface": "yoṣaṇām",
+            "lemma": "yoṣaṇā",
+            "case": "ACC",
+            "upos": "nominal stem",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": true,
+            "evidence": "pada c, ACC in the same pada as the finite verb"
+          }
+        ],
+        "registry_role_count": 1,
+        "proposed_role_count": 1,
+        "cautions": []
+      }
+    },
+    {
+      "stratum": "goal_role",
+      "key": "VG:RV:SAK:M04:S055:V010",
+      "confidence": "EXACT",
+      "verse": "tát sú naḥ savitā́ bhágo váruṇo mitró aryamā́ índro no rā́dhasā́ gamat",
+      "sentence": null,
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "MORPHOLOGY_RULE_CASE",
+        "predicate": "MOVES_TO",
+        "predicate_status": "MAPPED_BY_LEMMA_ID",
+        "frame": "ASSERTED",
+        "root_label": "√gam-",
+        "root_lemma": "gam",
+        "verb_surface": "gamat",
+        "verb_features": {
+          "mood": "SBJV",
+          "number": "SG",
+          "person": "3",
+          "tense": "AOR",
+          "voice": "ACT"
+        },
+        "role_scope": "PADA:c",
+        "roles": [
+          {
+            "role": "AGENT",
+            "surface": "indraḥ",
+            "lemma": "indra",
+            "case": "NOM",
+            "upos": "nominal stem",
+            "filler_type": "DEITY",
+            "entity_key": "VG:DEVATA:INDRAH",
+            "entity_label": "índra-",
+            "proposed_role": false,
+            "evidence": "pada c, NOM in the same pada as the finite verb"
+          },
+          {
+            "role": "GOAL",
+            "surface": "naḥ",
+            "lemma": "aham",
+            "case": "ACC",
+            "upos": "pronoun",
+            "filler_type": "RITUAL_PARTICIPANT_PRONOUN",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": true,
+            "evidence": "pada c, ACC in the same pada as the finite verb"
+          },
+          {
+            "role": "INSTRUMENT",
+            "surface": "rādhasā",
+            "lemma": "rādhas",
+            "case": "INS",
+            "upos": "nominal stem",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "pada c, INS in the same pada as the finite verb"
+          }
+        ],
+        "registry_role_count": 2,
+        "proposed_role_count": 1,
+        "cautions": []
+      }
+    },
+    {
+      "stratum": "goal_role",
+      "key": "VG:RV:SAK:M10:S124:V008",
+      "confidence": "EXACT",
+      "verse": "tā a̍sya̱ jyeṣṭha̍m indri̱yaṁ sa̍cante̱ tā ī̱m ā kṣe̍ti sva̱dhayā̱ mada̍ntīḥ | tā ī̱ṁ viśo̱ na rājā̍naṁ vṛṇā̱nā bī̍bha̱tsuvo̱ apa̍ vṛ̱trād a̍tiṣṭhan ||",
+      "sentence": null,
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "MORPHOLOGY_RULE_CASE",
+        "predicate": "MOVES_TO",
+        "predicate_status": "MAPPED_BY_LEMMA_ID",
+        "frame": "ASSERTED",
+        "root_label": "√sac-",
+        "root_lemma": "sac",
+        "verb_surface": "sacante",
+        "verb_features": {
+          "mood": "IND",
+          "number": "DU",
+          "person": "3",
+          "tense": "PRS",
+          "voice": "MED"
+        },
+        "role_scope": "PADA:a",
+        "roles": [
+          {
+            "role": "GOAL",
+            "surface": "jyeṣṭham",
+            "lemma": "jyeṣṭha",
+            "case": "ACC",
+            "upos": "nominal stem",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": true,
+            "evidence": "pada a, ACC in the same pada as the finite verb"
+          },
+          {
+            "role": "GOAL",
+            "surface": "indriyam",
+            "lemma": "indriya",
+            "case": "ACC",
+            "upos": "nominal stem",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": true,
+            "evidence": "pada a, ACC in the same pada as the finite verb"
+          }
+        ],
+        "registry_role_count": 0,
+        "proposed_role_count": 2,
+        "cautions": []
+      }
+    },
+    {
+      "stratum": "deity_patient",
+      "key": "VG:AV:SAU:K18:S002:V018",
+      "confidence": "EXACT",
+      "verse": "sahásraṇīthāḥ kaváyo yé gopāyánti sū́ryam | / ŕ̥ṣīn tápasvato yama tapojā́m̐ ápi gachatāt ||18||",
+      "sentence": "sahasraṇīthāḥ kavayo ye gopāyanti sūryam",
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "MORPHOLOGY_RULE_CASE",
+        "predicate": "PROTECTS",
+        "predicate_status": "MAPPED_BY_FOLD",
+        "frame": "ASSERTED",
+        "root_label": "gopāy",
+        "root_lemma": "gopāy",
+        "verb_surface": "gopāyanti",
+        "verb_features": {
+          "Tense": "Pres",
+          "Mood": "Ind",
+          "Person": "3",
+          "Number": "Plur"
+        },
+        "role_scope": "SENTENCE_CASE_SCOPED",
+        "roles": [
+          {
+            "role": "AGENT",
+            "surface": "sahasraṇīthāḥ",
+            "lemma": "sahasraṇītha",
+            "case": "NOM",
+            "upos": "ADJ",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "DCS Atharvaveda (Śaunaka)-0513-AVŚ, 18, 2-12402.conllu sent_id=652003: NOM in the same sentence, no parse available"
+          },
+          {
+            "role": "AGENT",
+            "surface": "kavayaḥ",
+            "lemma": "kavi",
+            "case": "NOM",
+            "upos": "NOUN",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "DCS Atharvaveda (Śaunaka)-0513-AVŚ, 18, 2-12402.conllu sent_id=652003: NOM in the same sentence, no parse available"
+          },
+          {
+            "role": "AGENT",
+            "surface": "ye",
+            "lemma": "yad",
+            "case": "NOM",
+            "upos": "PRON",
+            "filler_type": "PRONOUN_UNRESOLVED",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "DCS Atharvaveda (Śaunaka)-0513-AVŚ, 18, 2-12402.conllu sent_id=652003: NOM in the same sentence, no parse available"
+          },
+          {
+            "role": "PATIENT",
+            "surface": "sūryam",
+            "lemma": "sūrya",
+            "case": "ACC",
+            "upos": "NOUN",
+            "filler_type": "DEITY",
+            "entity_key": "VG:DEVATA:SURYAH",
+            "entity_label": "sū́rya-",
+            "proposed_role": false,
+            "evidence": "DCS Atharvaveda (Śaunaka)-0513-AVŚ, 18, 2-12402.conllu sent_id=652003: ACC in the same sentence, no parse available"
+          }
+        ],
+        "registry_role_count": 4,
+        "proposed_role_count": 0,
+        "cautions": []
+      }
+    },
+    {
+      "stratum": "deity_patient",
+      "key": "VG:RV:SAK:M08:S026:V010",
+      "confidence": "EXACT",
+      "verse": "aśvínā sv r̥̀ṣe stuhi kuvít te śrávato hávam nédīyasaḥ kūḷayātaḥ paṇī́m̐r utá",
+      "sentence": null,
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "MORPHOLOGY_RULE_CASE",
+        "predicate": "PRAISES",
+        "predicate_status": "MAPPED_BY_LEMMA_ID",
+        "frame": "REQUESTED",
+        "root_label": "√stu-",
+        "root_lemma": "stu",
+        "verb_surface": "stuhi",
+        "verb_features": {
+          "mood": "IMP",
+          "number": "SG",
+          "person": "2",
+          "tense": "PRS",
+          "voice": "ACT"
+        },
+        "role_scope": "PADA:a",
+        "roles": [
+          {
+            "role": "PATIENT",
+            "surface": "aśvinā",
+            "lemma": "aśvin",
+            "case": "ACC",
+            "upos": "nominal stem",
+            "filler_type": "DEITY",
+            "entity_key": "VG:DEVATA:ASVINAU",
+            "entity_label": "aśvín-",
+            "proposed_role": false,
+            "evidence": "pada a, ACC in the same pada as the finite verb"
+          },
+          {
+            "role": "AGENT",
+            "surface": "r̥ṣe",
+            "lemma": "r̥ṣi",
+            "case": "VOC",
+            "upos": "nominal stem",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "pada a, VOC in the same pada as the finite verb"
+          }
+        ],
+        "registry_role_count": 2,
+        "proposed_role_count": 0,
+        "cautions": []
+      }
+    },
+    {
+      "stratum": "deity_patient",
+      "key": "VG:RV:SAK:M03:S032:V005",
+      "confidence": "EXACT",
+      "verse": "manuṣvád indra sávanaṁ juṣāṇáḥ píbā sómaṁ śáśvate vīryāā̀ya sá ā́ vavr̥tsva haryaśva yajñaíḥ saraṇyúbhir apó árṇā sisarṣi",
+      "sentence": null,
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "MORPHOLOGY_RULE_CASE",
+        "predicate": "DRINKS",
+        "predicate_status": "MAPPED_BY_LEMMA_ID",
+        "frame": "REQUESTED",
+        "root_label": "√pā- 2",
+        "root_lemma": "pā- 2",
+        "verb_surface": "piba +",
+        "verb_features": {
+          "mood": "IMP",
+          "number": "SG",
+          "person": "2",
+          "tense": "PRS",
+          "voice": "ACT"
+        },
+        "role_scope": "PADA:b",
+        "roles": [
+          {
+            "role": "PATIENT",
+            "surface": "somam",
+            "lemma": "soma",
+            "case": "ACC",
+            "upos": "nominal stem",
+            "filler_type": "DEITY",
+            "entity_key": "VG:DEVATA:SOMAH",
+            "entity_label": "sóma-",
+            "proposed_role": false,
+            "evidence": "pada b, ACC in the same pada as the finite verb"
+          },
+          {
+            "role": "BENEFICIARY",
+            "surface": "śaśvate",
+            "lemma": "śaśvant",
+            "case": "DAT",
+            "upos": "nominal stem",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "pada b, DAT in the same pada as the finite verb"
+          },
+          {
+            "role": "BENEFICIARY",
+            "surface": "vīryāya",
+            "lemma": "vīrya",
+            "case": "DAT",
+            "upos": "nominal stem",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "pada b, DAT in the same pada as the finite verb"
+          }
+        ],
+        "registry_role_count": 3,
+        "proposed_role_count": 0,
+        "cautions": []
+      }
+    },
+    {
+      "stratum": "deity_patient",
+      "key": "VG:RV:SAK:M03:S035:V009",
+      "confidence": "EXACT",
+      "verse": "yā́m̐ ā́bhajo marúta indra sóme yé tvā́m ávardhann ábhavan gaṇás te tébhir etáṁ sajóṣā vāvaśānò 'gnéḥ piba jihváyā sómam indra",
+      "sentence": null,
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "MORPHOLOGY_RULE_CASE",
+        "predicate": "GRANTS",
+        "predicate_status": "MAPPED_BY_LEMMA_ID",
+        "frame": "ASSERTED",
+        "root_label": "√bhaj-",
+        "root_lemma": "bhaj",
+        "verb_surface": "abhajaḥ",
+        "verb_features": {
+          "mood": "IND",
+          "number": "SG",
+          "person": "2",
+          "tense": "IPRF",
+          "voice": "ACT"
+        },
+        "role_scope": "PADA:a",
+        "roles": [
+          {
+            "role": "PATIENT",
+            "surface": "yān",
+            "lemma": "ya",
+            "case": "ACC",
+            "upos": "pronoun",
+            "filler_type": "PRONOUN_UNRESOLVED",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "pada a, ACC in the same pada as the finite verb"
+          },
+          {
+            "role": "PATIENT",
+            "surface": "marutaḥ",
+            "lemma": "marut",
+            "case": "ACC",
+            "upos": "nominal stem",
+            "filler_type": "DEITY",
+            "entity_key": "VG:DEVATA:MARUTAH",
+            "entity_label": "marút-",
+            "proposed_role": false,
+            "evidence": "pada a, ACC in the same pada as the finite verb"
+          },
+          {
+            "role": "AGENT",
+            "surface": "indra",
+            "lemma": "indra",
+            "case": "VOC",
+            "upos": "nominal stem",
+            "filler_type": "DEITY",
+            "entity_key": "VG:DEVATA:INDRAH",
+            "entity_label": "índra-",
+            "proposed_role": false,
+            "evidence": "pada a, VOC in the same pada as the finite verb"
+          },
+          {
+            "role": "LOCATION",
+            "surface": "some",
+            "lemma": "soma",
+            "case": "LOC",
+            "upos": "nominal stem",
+            "filler_type": "DEITY",
+            "entity_key": "VG:DEVATA:SOMAH",
+            "entity_label": "sóma-",
+            "proposed_role": false,
+            "evidence": "pada a, LOC in the same pada as the finite verb"
+          }
+        ],
+        "registry_role_count": 4,
+        "proposed_role_count": 0,
+        "cautions": []
+      }
+    },
+    {
+      "stratum": "treebank",
+      "key": "VG:AV:SAU:K05:S018:V005",
+      "confidence": "VERIFIED_SEGMENT",
+      "verse": "ya enaṃ hanti mṛduṃ manyamāno devapīyur dhanakāmo na cittāt | / saṃ tasyendro hṛdaye 'gnim indhe ubhe enaṃ dviṣṭo nabhasī carantam ||5||",
+      "sentence": "yaḥ enam hanti mṛdum manyamānaḥ deva pīyuḥ dhana kāmaḥ na cittāt sam tasya indraḥ hṛdaye agnim indhe",
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "TREEBANK_DEPREL",
+        "predicate": "SLAYS",
+        "predicate_status": "MAPPED_BY_FOLD",
+        "frame": "ASSERTED",
+        "root_label": "han",
+        "root_lemma": "han",
+        "verb_surface": "hanti",
+        "verb_features": {
+          "Mood": "Ind",
+          "Number": "Sing",
+          "Person": "3",
+          "Tense": "Pres"
+        },
+        "role_scope": "SENTENCE_DEPENDENCY_SUBTREE",
+        "roles": [
+          {
+            "role": "AGENT",
+            "surface": "yaḥ",
+            "lemma": "yad",
+            "case": "NOM",
+            "upos": "PRON",
+            "filler_type": "PRONOUN_UNRESOLVED",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "DCS Atharvaveda (Śaunaka)-0159-AVŚ, 5, 18-10743.conllu sent_id=645876_1: deprel nsubj of the finite verb"
+          },
+          {
+            "role": "PATIENT",
+            "surface": "enam",
+            "lemma": "enad",
+            "case": "ACC",
+            "upos": "PRON",
+            "filler_type": "PRONOUN_UNRESOLVED",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "DCS Atharvaveda (Śaunaka)-0159-AVŚ, 5, 18-10743.conllu sent_id=645876_1: deprel obj of the finite verb"
+          }
+        ],
+        "registry_role_count": 2,
+        "proposed_role_count": 0,
+        "cautions": []
+      }
+    },
+    {
+      "stratum": "treebank",
+      "key": "VG:AV:SAU:K01:S034:V001",
+      "confidence": "VERIFIED_SEGMENT",
+      "verse": "iyaṃ vīrun madhujātā madhunā tvā khanāmasi | / madhor adhi prajātāsi sā no madhumatas kṛdhi ||1||",
+      "sentence": "sā naḥ madhumataḥ kṛdhi",
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "TREEBANK_DEPREL",
+        "predicate": "CREATES",
+        "predicate_status": "MAPPED_BY_FOLD",
+        "frame": "REQUESTED",
+        "root_label": "kṛ",
+        "root_lemma": "kṛ",
+        "verb_surface": "kṛdhi",
+        "verb_features": {
+          "Mood": "Imp",
+          "Number": "Sing",
+          "Person": "2",
+          "Tense": "Past"
+        },
+        "role_scope": "SENTENCE_DEPENDENCY_SUBTREE",
+        "roles": [
+          {
+            "role": "AGENT",
+            "surface": "sā",
+            "lemma": "tad",
+            "case": "NOM",
+            "upos": "PRON",
+            "filler_type": "PRONOUN_UNRESOLVED",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "DCS Atharvaveda (Śaunaka)-0033-AVŚ, 1, 34-10640.conllu sent_id=643988_2: deprel nsubj of the finite verb"
+          },
+          {
+            "role": "PATIENT",
+            "surface": "naḥ",
+            "lemma": "mad",
+            "case": "ACC",
+            "upos": "PRON",
+            "filler_type": "RITUAL_PARTICIPANT_PRONOUN",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "DCS Atharvaveda (Śaunaka)-0033-AVŚ, 1, 34-10640.conllu sent_id=643988_2: deprel obj of the finite verb"
+          }
+        ],
+        "registry_role_count": 2,
+        "proposed_role_count": 0,
+        "cautions": []
+      }
+    },
+    {
+      "stratum": "treebank",
+      "key": "VG:AV:SAU:K03:S019:V007",
+      "confidence": "VERIFIED_SEGMENT",
+      "verse": "prétā jáyatā nara ugrā́ vaḥ santu bāhávaḥ | / tīkṣṇéṣavo 'baládhanvano hatogrā́yudhā abalā́n ugrábāhavaḥ ||7||",
+      "sentence": "tīkṣṇa iṣavaḥ abala dhanvanaḥ hata ugra āyudhāḥ abalān ugra bāhavaḥ",
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "TREEBANK_DEPREL",
+        "predicate": "SLAYS",
+        "predicate_status": "MAPPED_BY_FOLD",
+        "frame": "REQUESTED",
+        "root_label": "han",
+        "root_lemma": "han",
+        "verb_surface": "hata",
+        "verb_features": {
+          "Mood": "Imp",
+          "Number": "Plur",
+          "Person": "2",
+          "Tense": "Pres"
+        },
+        "role_scope": "SENTENCE_DEPENDENCY_SUBTREE",
+        "roles": [
+          {
+            "role": "PATIENT",
+            "surface": "dhanvanaḥ",
+            "lemma": "dhanvan",
+            "case": "ACC",
+            "upos": "NOUN",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "DCS Atharvaveda (Śaunaka)-0089-AVŚ, 3, 19-10495.conllu sent_id=644666_1: deprel obj of the finite verb"
+          }
+        ],
+        "registry_role_count": 1,
+        "proposed_role_count": 0,
+        "cautions": []
+      }
+    },
+    {
+      "stratum": "treebank",
+      "key": "VG:AV:SAU:K04:S006:V005",
+      "confidence": "EXACT",
+      "verse": "śalyād viṣa nir avocam prāñjanād uta parṇadheḥ apāṣṭhāc chṅgāt kulmalān nir avocam aham viṣam",
+      "sentence": "apāṣṭhāt śṛṅgāt kulmalāt niḥ avocam aham viṣam",
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "TREEBANK_DEPREL",
+        "predicate": "SPEAKS",
+        "predicate_status": "MAPPED_BY_FOLD",
+        "frame": "ASSERTED",
+        "root_label": "vac",
+        "root_lemma": "vac",
+        "verb_surface": "avocam",
+        "verb_features": {
+          "Mood": "Ind",
+          "Number": "Sing",
+          "Person": "1",
+          "Tense": "Past"
+        },
+        "role_scope": "SENTENCE_DEPENDENCY_SUBTREE",
+        "roles": [
+          {
+            "role": "SOURCE",
+            "surface": "apāṣṭhāt",
+            "lemma": "apāṣṭha",
+            "case": "ABL",
+            "upos": "NOUN",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": true,
+            "evidence": "DCS Atharvaveda (Śaunaka)-0107-AVŚ, 4, 6-10520.conllu sent_id=644938_1: deprel obl:source of the finite verb"
+          },
+          {
+            "role": "AGENT",
+            "surface": "aham",
+            "lemma": "mad",
+            "case": "NOM",
+            "upos": "PRON",
+            "filler_type": "RITUAL_PARTICIPANT_PRONOUN",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "DCS Atharvaveda (Śaunaka)-0107-AVŚ, 4, 6-10520.conllu sent_id=644938_1: deprel nsubj of the finite verb"
+          },
+          {
+            "role": "PATIENT",
+            "surface": "viṣam",
+            "lemma": "viṣa",
+            "case": "ACC",
+            "upos": "NOUN",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "DCS Atharvaveda (Śaunaka)-0107-AVŚ, 4, 6-10520.conllu sent_id=644938_1: deprel obj of the finite verb"
+          }
+        ],
+        "registry_role_count": 2,
+        "proposed_role_count": 1,
+        "cautions": [
+          "FIRST_PERSON_AGENT_IS_THE_UNNAMED_SPEAKER"
+        ]
+      }
+    },
+    {
+      "stratum": "sv_projection",
+      "key": "VG:SV:KAU:UTTARA:P07:R01:D01:V03",
+      "confidence": "EXACT",
+      "verse": "इन्द्राय गाव आशिरं दुदुह्रे वज्रिणे मधु । यत्सीमुपह्वरे विदत्",
+      "sentence": null,
+      "projected_from": "VG:RV:SAK:M08:S069:V006",
+      "projected_source_text": "índrāya gā́va āśíraṁ duduhré vajríṇe mádhu yát sīm upahvaré vidát",
+      "assertion": {
+        "derivation": "CROSS_VEDA_TEXT_IDENTITY",
+        "predicate": "SEEKS",
+        "predicate_status": "MAPPED_BY_LEMMA_ID",
+        "frame": "ASSERTED",
+        "root_label": "√vid- 1",
+        "root_lemma": "vid- 1",
+        "verb_surface": "vidat",
+        "verb_features": {
+          "mood": "INJ",
+          "number": "SG",
+          "person": "3",
+          "tense": "AOR",
+          "voice": "ACT"
+        },
+        "role_scope": "PADA:c",
+        "roles": [
+          {
+            "role": "PATIENT",
+            "surface": "yat",
+            "lemma": "ya",
+            "case": "ACC",
+            "upos": "pronoun",
+            "filler_type": "PRONOUN_UNRESOLVED",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "pada c, ACC in the same pada as the finite verb"
+          },
+          {
+            "role": "LOCATION",
+            "surface": "upahvare",
+            "lemma": "upahvara",
+            "case": "LOC",
+            "upos": "nominal stem",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "pada c, LOC in the same pada as the finite verb"
+          }
+        ],
+        "registry_role_count": 2,
+        "proposed_role_count": 0,
+        "cautions": [
+          "ANALYSIS_IS_OF_A_LETTER_IDENTICAL_RIGVEDIC_VERSE_NOT_OF_A_SAMAVEDIC_ANNOTATION"
+        ],
+        "underlying_derivation": "MORPHOLOGY_RULE_CASE",
+        "analysed_passage": "VG:RV:SAK:M08:S069:V006"
+      }
+    },
+    {
+      "stratum": "sv_projection",
+      "key": "VG:SV:KAU:UTTARA:P08:R02:D04:V03",
+      "confidence": "EXACT",
+      "verse": "कुवित्सस्य प्र हि व्रजं गोमन्तं दस्युहा गमत् । शचीभिरप नो वरत्",
+      "sentence": null,
+      "projected_from": "VG:RV:SAK:M06:S045:V024",
+      "projected_source_text": "kuvítsasya prá hí vrajáṁ gómantaṁ dasyuhā́ gámat śácībhir ápa no varat",
+      "assertion": {
+        "derivation": "CROSS_VEDA_TEXT_IDENTITY",
+        "predicate": "MOVES_TO",
+        "predicate_status": "MAPPED_BY_LEMMA_ID",
+        "frame": "ASSERTED",
+        "root_label": "√gam-",
+        "root_lemma": "gam",
+        "verb_surface": "gamat",
+        "verb_features": {
+          "mood": "SBJV",
+          "number": "SG",
+          "person": "3",
+          "tense": "AOR",
+          "voice": "ACT"
+        },
+        "role_scope": "PADA:b",
+        "roles": [
+          {
+            "role": "GOAL",
+            "surface": "gomantam",
+            "lemma": "gomant",
+            "case": "ACC",
+            "upos": "nominal stem",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": true,
+            "evidence": "pada b, ACC in the same pada as the finite verb"
+          },
+          {
+            "role": "AGENT",
+            "surface": "dasyuhā",
+            "lemma": "dasyuhan",
+            "case": "NOM",
+            "upos": "nominal stem",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "pada b, NOM in the same pada as the finite verb"
+          }
+        ],
+        "registry_role_count": 1,
+        "proposed_role_count": 1,
+        "cautions": [
+          "ANALYSIS_IS_OF_A_LETTER_IDENTICAL_RIGVEDIC_VERSE_NOT_OF_A_SAMAVEDIC_ANNOTATION"
+        ],
+        "underlying_derivation": "MORPHOLOGY_RULE_CASE",
+        "analysed_passage": "VG:RV:SAK:M06:S045:V024"
+      }
+    },
+    {
+      "stratum": "sv_projection",
+      "key": "VG:SV:KAU:CHANDA:P03:D05:V01",
+      "confidence": "EXACT",
+      "verse": "अभि त्वा शूर नोनुमोऽदुग्धा इव धेनवः । ईशानमस्य जगतः स्वर्दृशमीशानमिन्द्र तस्थुषः",
+      "sentence": null,
+      "projected_from": "VG:RV:SAK:M07:S032:V022",
+      "projected_source_text": "abhí tvā śūra nonumó 'dugdhā iva dhenávaḥ ī́śānam asyá jágataḥ svardŕ̥śam ī́śānam indra tasthúṣaḥ",
+      "assertion": {
+        "derivation": "CROSS_VEDA_TEXT_IDENTITY",
+        "predicate": "PRAISES",
+        "predicate_status": "MAPPED_BY_LEMMA_ID",
+        "frame": "ASSERTED",
+        "root_label": "√nu- ~ nū-",
+        "root_lemma": "nu- ~ nū",
+        "verb_surface": "nonumaḥ",
+        "verb_features": {
+          "mood": "IND",
+          "number": "PL",
+          "person": "1",
+          "secondary conjugation": "INT",
+          "tense": "PRS",
+          "voice": "ACT"
+        },
+        "role_scope": "PADA:a",
+        "roles": [
+          {
+            "role": "PATIENT",
+            "surface": "tvā",
+            "lemma": "tvam",
+            "case": "ACC",
+            "upos": "pronoun",
+            "filler_type": "RITUAL_PARTICIPANT_PRONOUN",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "pada a, ACC in the same pada as the finite verb"
+          }
+        ],
+        "registry_role_count": 1,
+        "proposed_role_count": 0,
+        "cautions": [
+          "FIRST_PERSON_AGENT_IS_THE_UNNAMED_SPEAKER",
+          "ANALYSIS_IS_OF_A_LETTER_IDENTICAL_RIGVEDIC_VERSE_NOT_OF_A_SAMAVEDIC_ANNOTATION"
+        ],
+        "underlying_derivation": "MORPHOLOGY_RULE_CASE",
+        "analysed_passage": "VG:RV:SAK:M07:S032:V022"
+      }
+    },
+    {
+      "stratum": "sv_projection",
+      "key": "VG:SV:KAU:UTTARA:P09:R02:D01:V01",
+      "confidence": "EXACT",
+      "verse": "अग्ने तव श्रवो वयो महि भ्राजन्ते अर्चयो विभावसो । बृहद्भानो शवसा वाजमुक्थ्य३ं दधासि दाशुषे कवे",
+      "sentence": null,
+      "projected_from": "VG:RV:SAK:M10:S140:V001",
+      "projected_source_text": "ágne táva śrávo váyo máhi bhrājante arcáyo vibhāvaso bŕ̥hadbhāno śávasā vā́jam ukthyàṁ dádhāsi dāśúṣe kave",
+      "assertion": {
+        "derivation": "CROSS_VEDA_TEXT_IDENTITY",
+        "predicate": "ESTABLISHES",
+        "predicate_status": "MAPPED_BY_LEMMA_ID",
+        "frame": "ASSERTED",
+        "root_label": "√dhā- 1",
+        "root_lemma": "dhā- 1",
+        "verb_surface": "dadhāsi",
+        "verb_features": {
+          "mood": "IND",
+          "number": "SG",
+          "person": "2",
+          "tense": "PRS",
+          "voice": "ACT"
+        },
+        "role_scope": "PADA:d",
+        "roles": [
+          {
+            "role": "BENEFICIARY",
+            "surface": "dāśuṣe",
+            "lemma": "dāśvaṃs",
+            "case": "DAT",
+            "upos": "nominal stem",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "pada d, DAT in the same pada as the finite verb"
+          },
+          {
+            "role": "AGENT",
+            "surface": "kave",
+            "lemma": "kavi",
+            "case": "VOC",
+            "upos": "nominal stem",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "pada d, VOC in the same pada as the finite verb"
+          }
+        ],
+        "registry_role_count": 2,
+        "proposed_role_count": 0,
+        "cautions": [
+          "ANALYSIS_IS_OF_A_LETTER_IDENTICAL_RIGVEDIC_VERSE_NOT_OF_A_SAMAVEDIC_ANNOTATION"
+        ],
+        "underlying_derivation": "MORPHOLOGY_RULE_CASE",
+        "analysed_passage": "VG:RV:SAK:M10:S140:V001"
+      }
+    },
+    {
+      "stratum": "weak_align",
+      "key": "VG:AV:SAU:K04:S036:V003",
+      "confidence": "VERIFIED_SEGMENT",
+      "verse": "ya āgare mṛgayante pratikrośe 'māvāsye | / kravyādo anyān dipsataḥ sarvāṃs tānt sahasā sahe ||3||",
+      "sentence": "ye āgare mṛgayante pratikrośe amāvāsye kravyādaḥ anyān dipsataḥ sarvān tān sahasā sahe",
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "TREEBANK_DEPREL",
+        "predicate": "DEFEATS",
+        "predicate_status": "MAPPED_BY_FOLD",
+        "frame": "ASSERTED",
+        "root_label": "sah",
+        "root_lemma": "sah",
+        "verb_surface": "sahe",
+        "verb_features": {
+          "Mood": "Ind",
+          "Number": "Sing",
+          "Person": "1",
+          "Tense": "Pres"
+        },
+        "role_scope": "SENTENCE_DEPENDENCY_SUBTREE",
+        "roles": [
+          {
+            "role": "PATIENT",
+            "surface": "tān",
+            "lemma": "tad",
+            "case": "ACC",
+            "upos": "PRON",
+            "filler_type": "PRONOUN_UNRESOLVED",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "DCS Atharvaveda (Śaunaka)-0137-AVŚ, 4, 36-10570.conllu sent_id=645416_1: deprel obj of the finite verb"
+          },
+          {
+            "role": "INSTRUMENT",
+            "surface": "sahasā",
+            "lemma": "sahas",
+            "case": "INS",
+            "upos": "NOUN",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "DCS Atharvaveda (Śaunaka)-0137-AVŚ, 4, 36-10570.conllu sent_id=645416_1: deprel obl of the finite verb"
+          }
+        ],
+        "registry_role_count": 2,
+        "proposed_role_count": 0,
+        "cautions": [
+          "FIRST_PERSON_AGENT_IS_THE_UNNAMED_SPEAKER"
+        ]
+      }
+    },
+    {
+      "stratum": "weak_align",
+      "key": "VG:AV:SAU:K15:S007:V005",
+      "confidence": "VERIFIED_SEGMENT",
+      "verse": "aina śraddhā gachaty aina yajño gachaty aina loko gachaty ainam anna gachaty ainam annādya gachati ya eva veda",
+      "sentence": "ā enam śraddhā gacchati ā enam yajñaḥ gacchati ā enam lokaḥ gacchati ā enam annam gacchati ā enam annādyam gacchati yaḥ evam veda",
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "TREEBANK_DEPREL",
+        "predicate": "MOVES_TO",
+        "predicate_status": "MAPPED_BY_FOLD",
+        "frame": "ASSERTED",
+        "root_label": "gam",
+        "root_lemma": "gam",
+        "verb_surface": "gacchati",
+        "verb_features": {
+          "Mood": "Ind",
+          "Number": "Sing",
+          "Person": "3",
+          "Tense": "Pres"
+        },
+        "role_scope": "SENTENCE_DEPENDENCY_SUBTREE",
+        "roles": [
+          {
+            "role": "GOAL",
+            "surface": "enam",
+            "lemma": "enad",
+            "case": "ACC",
+            "upos": "PRON",
+            "filler_type": "PRONOUN_UNRESOLVED",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": true,
+            "evidence": "DCS Atharvaveda (Śaunaka)-0490-AVŚ, 15, 7-12292.conllu sent_id=651510_1: deprel obl:goal of the finite verb"
+          },
+          {
+            "role": "AGENT",
+            "surface": "śraddhā",
+            "lemma": "śraddhā",
+            "case": "NOM",
+            "upos": "NOUN",
+            "filler_type": "DEITY",
+            "entity_key": "VG:DEVATA:SRADDHA",
+            "entity_label": "śraddhā́-",
+            "proposed_role": false,
+            "evidence": "DCS Atharvaveda (Śaunaka)-0490-AVŚ, 15, 7-12292.conllu sent_id=651510_1: deprel nsubj of the finite verb"
+          }
+        ],
+        "registry_role_count": 1,
+        "proposed_role_count": 1,
+        "cautions": []
+      }
+    },
+    {
+      "stratum": "weak_align",
+      "key": "VG:YV:VSM:A06:V022",
+      "confidence": "VERIFIED_SEGMENT",
+      "verse": "माऽपो मौ॑षधीर्हिᳪं᳭सी॒र्धाम्नो॑ धाम्नो राजँ॒स्ततो॑ वरुण नो मुञ्च । यदा॒हुर॒घ्न्या इति॒ वरु॒णेति॒ शपा॑महे॒ ततो॑ वरुण नो मुञ्च । सुमि॒त्रि॒या न॒ आप॒ ओष॑धयः सन्तु दुर्मित्रि॒यास्तस्मै॑ सन्तु॒ योस्मान्द्वेष्टि॒ यं च॑ व॒यं द्वि॒ष्म: ।। २२ ।।",
+      "sentence": "mā apaḥ mā oṣadhīḥ hiṃsīḥ",
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "TREEBANK_DEPREL",
+        "predicate": "SLAYS",
+        "predicate_status": "MAPPED_BY_FOLD",
+        "frame": "REQUESTED",
+        "root_label": "hiṃs",
+        "root_lemma": "hiṃs",
+        "verb_surface": "hiṃsīḥ",
+        "verb_features": {
+          "Mood": "Jus",
+          "Number": "Sing",
+          "Person": "2",
+          "Tense": "Past"
+        },
+        "role_scope": "SENTENCE_DEPENDENCY_SUBTREE",
+        "roles": [
+          {
+            "role": "PATIENT",
+            "surface": "oṣadhīḥ",
+            "lemma": "oṣadhi",
+            "case": "ACC",
+            "upos": "NOUN",
+            "filler_type": "CONCEPT:PLANT",
+            "entity_key": "VG:CONCEPT:OSADHI-PLANTS",
+            "entity_label": "oṣadhi",
+            "proposed_role": false,
+            "evidence": "DCS Vājasaneyisaṃhitā (Mādhyandina)-0005-VSM, 6-12619.conllu sent_id=729813_1: deprel obj of the finite verb"
+          }
+        ],
+        "registry_role_count": 1,
+        "proposed_role_count": 0,
+        "cautions": []
+      }
+    },
+    {
+      "stratum": "weak_align",
+      "key": "VG:AV:SAU:K17:S001:V021",
+      "confidence": "VERIFIED_SEGMENT",
+      "verse": "rúcir asi rocó 'si | / sá yáthā tváṃ rúcyā rocó 'sy evā́háṃ paśúbhiś ca brāhmaṇavarcaséna ca ruciṣīya ||21||",
+      "sentence": "ruciḥ asi",
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "TREEBANK_DEPREL",
+        "predicate": "IS_OR_BECOMES",
+        "predicate_status": "MAPPED_BY_FOLD",
+        "frame": "ASSERTED",
+        "root_label": "as",
+        "root_lemma": "as",
+        "verb_surface": "asi",
+        "verb_features": {
+          "Mood": "Ind",
+          "Number": "Sing",
+          "Person": "2",
+          "Tense": "Pres"
+        },
+        "role_scope": "SENTENCE_DEPENDENCY_SUBTREE",
+        "roles": [],
+        "registry_role_count": 0,
+        "proposed_role_count": 0,
+        "cautions": [
+          "FOLD_CARRIES_AN_UNMAPPED_MINORITY_SENSE:√as- 2(32 RV tokens)"
+        ]
+      }
+    },
+    {
+      "stratum": "random",
+      "key": "VG:RV:SAK:M08:S022:V012",
+      "confidence": "EXACT",
+      "verse": "tābhi̱r ā yā̍taṁ vṛṣa̱ṇopa̍ me̱ hava̍ṁ vi̱śvapsu̍ṁ vi̱śvavā̍ryam | i̱ṣā maṁhi̍ṣṭhā puru̱bhūta̍mā narā̱ yābhi̱ḥ krivi̍ṁ vāvṛ̱dhus tābhi̱r ā ga̍tam ||",
+      "sentence": null,
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "MORPHOLOGY_RULE_CASE",
+        "predicate": "MOVES_TO",
+        "predicate_status": "MAPPED_BY_LEMMA_ID",
+        "frame": "REQUESTED",
+        "root_label": "√yā- 1",
+        "root_lemma": "yā- 1",
+        "verb_surface": "yātam",
+        "verb_features": {
+          "mood": "IMP",
+          "number": "DU",
+          "person": "2",
+          "tense": "PRS",
+          "voice": "ACT"
+        },
+        "role_scope": "PADA:a",
+        "roles": [
+          {
+            "role": "INSTRUMENT",
+            "surface": "tābhiḥ",
+            "lemma": "sa- ~ ta",
+            "case": "INS",
+            "upos": "pronoun",
+            "filler_type": "PRONOUN_UNRESOLVED",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "pada a, INS in the same pada as the finite verb"
+          },
+          {
+            "role": "AGENT",
+            "surface": "vr̥ṣaṇā",
+            "lemma": "vr̥ṣan",
+            "case": "VOC",
+            "upos": "nominal stem",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "pada a, VOC in the same pada as the finite verb"
+          },
+          {
+            "role": "GOAL",
+            "surface": "havam",
+            "lemma": "hava",
+            "case": "ACC",
+            "upos": "nominal stem",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": true,
+            "evidence": "pada a, ACC in the same pada as the finite verb"
+          }
+        ],
+        "registry_role_count": 2,
+        "proposed_role_count": 1,
+        "cautions": []
+      }
+    },
+    {
+      "stratum": "random",
+      "key": "VG:AV:SAU:K14:S002:V073",
+      "confidence": "EXACT",
+      "verse": "ye pitaro vadhūdarśā imaṃ vahatum āgaman | / te asyai vadhvai saṃpatnyai prajāvac charma yachantu ||73||",
+      "sentence": "te asyai vadhvai saṃpatnyai prajāvaccharma yacchantu",
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "MORPHOLOGY_RULE_CASE",
+        "predicate": "GRANTS",
+        "predicate_status": "MAPPED_BY_FOLD",
+        "frame": "ASSERTED",
+        "root_label": "yam",
+        "root_lemma": "yam",
+        "verb_surface": "yacchantu",
+        "verb_features": {
+          "Tense": "Pres",
+          "Mood": "Imp",
+          "Person": "3",
+          "Number": "Plur"
+        },
+        "role_scope": "SENTENCE_CASE_SCOPED",
+        "roles": [
+          {
+            "role": "AGENT",
+            "surface": "te",
+            "lemma": "tad",
+            "case": "NOM",
+            "upos": "PRON",
+            "filler_type": "PRONOUN_UNRESOLVED",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "DCS Atharvaveda (Śaunaka)-0483-AVŚ, 14, 2-12266.conllu sent_id=651396: NOM in the same sentence, no parse available"
+          },
+          {
+            "role": "BENEFICIARY",
+            "surface": "asyai",
+            "lemma": "idam",
+            "case": "DAT",
+            "upos": "PRON",
+            "filler_type": "PRONOUN_UNRESOLVED",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "DCS Atharvaveda (Śaunaka)-0483-AVŚ, 14, 2-12266.conllu sent_id=651396: DAT in the same sentence, no parse available"
+          },
+          {
+            "role": "BENEFICIARY",
+            "surface": "vadhvai",
+            "lemma": "vadhū",
+            "case": "DAT",
+            "upos": "NOUN",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "DCS Atharvaveda (Śaunaka)-0483-AVŚ, 14, 2-12266.conllu sent_id=651396: DAT in the same sentence, no parse available"
+          },
+          {
+            "role": "BENEFICIARY",
+            "surface": "patnyai",
+            "lemma": "patnī",
+            "case": "DAT",
+            "upos": "NOUN",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "DCS Atharvaveda (Śaunaka)-0483-AVŚ, 14, 2-12266.conllu sent_id=651396: DAT in the same sentence, no parse available"
+          },
+          {
+            "role": "PATIENT",
+            "surface": "prajāvat",
+            "lemma": "prajāvat",
+            "case": "ACC",
+            "upos": "ADJ",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "DCS Atharvaveda (Śaunaka)-0483-AVŚ, 14, 2-12266.conllu sent_id=651396: ACC in the same sentence, no parse available"
+          },
+          {
+            "role": "PATIENT",
+            "surface": "śarma",
+            "lemma": "śarman",
+            "case": "ACC",
+            "upos": "NOUN",
+            "filler_type": "CONCEPT:CONCEPT",
+            "entity_key": "VG:CONCEPT:SARMAN-PROTECTION",
+            "entity_label": "śarman",
+            "proposed_role": false,
+            "evidence": "DCS Atharvaveda (Śaunaka)-0483-AVŚ, 14, 2-12266.conllu sent_id=651396: ACC in the same sentence, no parse available"
+          }
+        ],
+        "registry_role_count": 6,
+        "proposed_role_count": 0,
+        "cautions": []
+      }
+    },
+    {
+      "stratum": "random",
+      "key": "VG:AV:SAU:K10:S006:V025",
+      "confidence": "EXACT",
+      "verse": "yam abadhnād bhaspatir devebhyo asurakṣitim sa māya maṇir āgaman madhor ghtasya dhārayā kīlālena maṇiḥ saha",
+      "sentence": "yam abadhnād bṛhaspatir devebhyo asurakṣitim",
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "MORPHOLOGY_RULE_CASE",
+        "predicate": "BINDS",
+        "predicate_status": "MAPPED_BY_FOLD",
+        "frame": "ASSERTED",
+        "root_label": "bandh",
+        "root_lemma": "bandh",
+        "verb_surface": "abadhnāt",
+        "verb_features": {
+          "Tense": "Impf",
+          "Mood": "Ind",
+          "Person": "3",
+          "Number": "Sing"
+        },
+        "role_scope": "SENTENCE_CASE_SCOPED",
+        "roles": [
+          {
+            "role": "PATIENT",
+            "surface": "yam",
+            "lemma": "yad",
+            "case": "ACC",
+            "upos": "PRON",
+            "filler_type": "PRONOUN_UNRESOLVED",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "DCS Atharvaveda (Śaunaka)-0458-AVŚ, 10, 6-11572.conllu sent_id=649221: ACC in the same sentence, no parse available"
+          },
+          {
+            "role": "AGENT",
+            "surface": "bṛhaspatiḥ",
+            "lemma": "bṛhaspati",
+            "case": "NOM",
+            "upos": "NOUN",
+            "filler_type": "DEITY",
+            "entity_key": "VG:DEVATA:BRHASPATIH",
+            "entity_label": "bŕ̥haspáti-",
+            "proposed_role": false,
+            "evidence": "DCS Atharvaveda (Śaunaka)-0458-AVŚ, 10, 6-11572.conllu sent_id=649221: NOM in the same sentence, no parse available"
+          },
+          {
+            "role": "BENEFICIARY",
+            "surface": "devebhyaḥ",
+            "lemma": "deva",
+            "case": "DAT",
+            "upos": "NOUN",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "DCS Atharvaveda (Śaunaka)-0458-AVŚ, 10, 6-11572.conllu sent_id=649221: DAT in the same sentence, no parse available"
+          },
+          {
+            "role": "PATIENT",
+            "surface": "kṣitim",
+            "lemma": "kṣiti",
+            "case": "ACC",
+            "upos": "NOUN",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "DCS Atharvaveda (Śaunaka)-0458-AVŚ, 10, 6-11572.conllu sent_id=649221: ACC in the same sentence, no parse available"
+          }
+        ],
+        "registry_role_count": 4,
+        "proposed_role_count": 0,
+        "cautions": []
+      }
+    },
+    {
+      "stratum": "random",
+      "key": "VG:RV:SAK:M01:S164:V007",
+      "confidence": "EXACT",
+      "verse": "ihá bravītu yá īm aṅgá védāsyá vāmásya níhitam padáṁ véḥ śīrṣṇáḥ kṣīráṁ duhrate gā́vo asya vavríṁ vásānā udakám padā́puḥ",
+      "sentence": null,
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "MORPHOLOGY_RULE_CASE",
+        "predicate": "SPEAKS",
+        "predicate_status": "MAPPED_BY_LEMMA_ID",
+        "frame": "ASSERTED",
+        "root_label": "√brū-",
+        "root_lemma": "brū",
+        "verb_surface": "bravītu",
+        "verb_features": {
+          "mood": "IMP",
+          "number": "SG",
+          "person": "3",
+          "tense": "PRS",
+          "voice": "ACT"
+        },
+        "role_scope": "PADA:a",
+        "roles": [],
+        "registry_role_count": 0,
+        "proposed_role_count": 0,
+        "cautions": [
+          "ROLE_SCOPE_AMBIGUOUS_MULTIPLE_FINITE_VERBS_IN_PADA"
+        ]
+      }
+    },
+    {
+      "stratum": "random",
+      "key": "VG:RV:SAK:M06:S053:V003",
+      "confidence": "EXACT",
+      "verse": "adi̍tsantaṁ cid āghṛṇe̱ pūṣa̱n dānā̍ya codaya | pa̱ṇeś ci̱d vi mra̍dā̱ mana̍ḥ ||",
+      "sentence": null,
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "MORPHOLOGY_RULE_CASE",
+        "predicate": "LEADS",
+        "predicate_status": "MAPPED_BY_LEMMA_ID",
+        "frame": "REQUESTED",
+        "root_label": "√cud-",
+        "root_lemma": "cud",
+        "verb_surface": "codaya",
+        "verb_features": {
+          "mood": "IMP",
+          "number": "SG",
+          "person": "2",
+          "tense": "PRS",
+          "voice": "ACT"
+        },
+        "role_scope": "PADA:b",
+        "roles": [
+          {
+            "role": "AGENT",
+            "surface": "pūṣan",
+            "lemma": "pūṣan",
+            "case": "VOC",
+            "upos": "nominal stem",
+            "filler_type": "DEITY",
+            "entity_key": "VG:DEVATA:PUSA",
+            "entity_label": "pūṣán-",
+            "proposed_role": false,
+            "evidence": "pada b, VOC in the same pada as the finite verb"
+          },
+          {
+            "role": "BENEFICIARY",
+            "surface": "dānāya",
+            "lemma": "dāna- 1",
+            "case": "DAT",
+            "upos": "nominal stem",
+            "filler_type": "CONCEPT:ACTION",
+            "entity_key": "VG:CONCEPT:DANA-LIBERALITY",
+            "entity_label": "dāna",
+            "proposed_role": false,
+            "evidence": "pada b, DAT in the same pada as the finite verb"
+          }
+        ],
+        "registry_role_count": 2,
+        "proposed_role_count": 0,
+        "cautions": []
+      }
+    },
+    {
+      "stratum": "random",
+      "key": "VG:RV:SAK:M04:S038:V002",
+      "confidence": "EXACT",
+      "verse": "u̱ta vā̱jina̍m puruni̱ṣṣidhvā̍naṁ dadhi̱krām u̍ dadathur vi̱śvakṛ̍ṣṭim | ṛ̱ji̱pyaṁ śye̱nam pru̍ṣi̱tapsu̍m ā̱śuṁ ca̱rkṛtya̍m a̱ryo nṛ̱pati̱ṁ na śūra̍m ||",
+      "sentence": null,
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "MORPHOLOGY_RULE_CASE",
+        "predicate": "GRANTS",
+        "predicate_status": "MAPPED_BY_LEMMA_ID",
+        "frame": "ASSERTED",
+        "root_label": "√dā- 1",
+        "root_lemma": "dā- 1",
+        "verb_surface": "dadathuḥ",
+        "verb_features": {
+          "mood": "IND",
+          "number": "DU",
+          "person": "2",
+          "tense": "PRF",
+          "voice": "ACT"
+        },
+        "role_scope": "PADA:b",
+        "roles": [
+          {
+            "role": "PATIENT",
+            "surface": "dadhikrām",
+            "lemma": "dadhikrā",
+            "case": "ACC",
+            "upos": "nominal stem",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "pada b, ACC in the same pada as the finite verb"
+          },
+          {
+            "role": "PATIENT",
+            "surface": "viśvakr̥ṣṭim",
+            "lemma": "viśvakr̥ṣṭi",
+            "case": "ACC",
+            "upos": "nominal stem",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "pada b, ACC in the same pada as the finite verb"
+          }
+        ],
+        "registry_role_count": 2,
+        "proposed_role_count": 0,
+        "cautions": []
+      }
+    },
+    {
+      "stratum": "random",
+      "key": "VG:AV:SAU:K05:S020:V003",
+      "confidence": "EXACT",
+      "verse": "vṣeva yūthe sahasā vidāno gavyann abhi ruva sadhanājit śucā vidhya hdaya pareṣā hitvā grāmān pracyutā yantu śatravaḥ",
+      "sentence": "śucā vidhya hṛdayaṃ pareṣāṃ hitvā grāmān pracyutā yantu śatravaḥ",
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "MORPHOLOGY_RULE_CASE",
+        "predicate": "SLAYS",
+        "predicate_status": "MAPPED_BY_FOLD",
+        "frame": "REQUESTED",
+        "root_label": "vyadh",
+        "root_lemma": "vyadh",
+        "verb_surface": "vidhya",
+        "verb_features": {
+          "Tense": "Pres",
+          "Mood": "Imp",
+          "Person": "2",
+          "Number": "Sing"
+        },
+        "role_scope": "SENTENCE_CASE_SCOPED",
+        "roles": [],
+        "registry_role_count": 0,
+        "proposed_role_count": 0,
+        "cautions": [
+          "ROLE_SCOPE_AMBIGUOUS_MULTIPLE_FINITE_VERBS_NO_PARSE"
+        ]
+      }
+    },
+    {
+      "stratum": "random",
+      "key": "VG:RV:SAK:M05:S023:V003",
+      "confidence": "EXACT",
+      "verse": "víśve hí tvā sajóṣaso jánāso vr̥ktábarhiṣaḥ hótāraṁ sádmasu priyáṁ vyánti vā́ryā purú",
+      "sentence": null,
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "MORPHOLOGY_RULE_CASE",
+        "predicate": "DESIRES",
+        "predicate_status": "MAPPED_BY_LEMMA_ID",
+        "frame": "ASSERTED",
+        "root_label": "√vī-",
+        "root_lemma": "vī",
+        "verb_surface": "vyanti",
+        "verb_features": {
+          "mood": "IND",
+          "number": "PL",
+          "person": "3",
+          "tense": "PRS",
+          "voice": "ACT"
+        },
+        "role_scope": "PADA:d",
+        "roles": [
+          {
+            "role": "PATIENT",
+            "surface": "vāryā",
+            "lemma": "vārya",
+            "case": "ACC",
+            "upos": "nominal stem",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "pada d, ACC in the same pada as the finite verb"
+          },
+          {
+            "role": "PATIENT",
+            "surface": "puru",
+            "lemma": "puru",
+            "case": "ACC",
+            "upos": "nominal stem",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "pada d, ACC in the same pada as the finite verb"
+          }
+        ],
+        "registry_role_count": 2,
+        "proposed_role_count": 0,
+        "cautions": []
+      }
+    },
+    {
+      "stratum": "random",
+      "key": "VG:AV:SAU:K08:S010:V026",
+      "confidence": "VERIFIED_SEGMENT",
+      "verse": "sod akrāmat sā devān āgachat tāṃ devā upāhvayantorja ehīti | / tasyā indro vatsa āsīc camasaḥ pātram | / tāṃ devaḥ savitādhok tām ūrjām evādhok | / tāṃ ūrjāṃ devā upa jīvanty upajīvanīyo bhavati ya evaṃ veda ||26||",
+      "sentence": "tasyāḥ indraḥ vatsaḥ āsīt camasaḥ pātram",
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "TREEBANK_DEPREL",
+        "predicate": "IS_OR_BECOMES",
+        "predicate_status": "MAPPED_BY_FOLD",
+        "frame": "ASSERTED",
+        "root_label": "as",
+        "root_lemma": "as",
+        "verb_surface": "āsīt",
+        "verb_features": {
+          "Mood": "Ind",
+          "Number": "Sing",
+          "Person": "3",
+          "Tense": "Past"
+        },
+        "role_scope": "SENTENCE_DEPENDENCY_SUBTREE",
+        "roles": [],
+        "registry_role_count": 0,
+        "proposed_role_count": 0,
+        "cautions": [
+          "FOLD_CARRIES_AN_UNMAPPED_MINORITY_SENSE:√as- 2(32 RV tokens)"
+        ]
+      }
+    },
+    {
+      "stratum": "random",
+      "key": "VG:AV:SAU:K15:S011:V011",
+      "confidence": "VERIFIED_SEGMENT",
+      "verse": "aina nikāmo gachati nikāme nikāmasya bhavati ya eva veda",
+      "sentence": "ā enam nikāmaḥ gacchati nikāme nikāmasya bhavati yaḥ evam veda",
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "TREEBANK_DEPREL",
+        "predicate": "MOVES_TO",
+        "predicate_status": "MAPPED_BY_FOLD",
+        "frame": "ASSERTED",
+        "root_label": "gam",
+        "root_lemma": "gam",
+        "verb_surface": "gacchati",
+        "verb_features": {
+          "Mood": "Ind",
+          "Number": "Sing",
+          "Person": "3",
+          "Tense": "Pres"
+        },
+        "role_scope": "SENTENCE_DEPENDENCY_SUBTREE",
+        "roles": [
+          {
+            "role": "GOAL",
+            "surface": "enam",
+            "lemma": "enad",
+            "case": "ACC",
+            "upos": "PRON",
+            "filler_type": "PRONOUN_UNRESOLVED",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": true,
+            "evidence": "DCS Atharvaveda (Śaunaka)-0494-AVŚ, 15, 11-12298.conllu sent_id=651538_1: deprel obl:goal of the finite verb"
+          },
+          {
+            "role": "AGENT",
+            "surface": "nikāmaḥ",
+            "lemma": "nikāma",
+            "case": "NOM",
+            "upos": "NOUN",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "DCS Atharvaveda (Śaunaka)-0494-AVŚ, 15, 11-12298.conllu sent_id=651538_1: deprel nsubj of the finite verb"
+          }
+        ],
+        "registry_role_count": 1,
+        "proposed_role_count": 1,
+        "cautions": []
+      }
+    },
+    {
+      "stratum": "random",
+      "key": "VG:RV:SAK:M08:S065:V003",
+      "confidence": "EXACT",
+      "verse": "ā́ tvā gīrbhír mahā́m urúṁ huvé gā́m iva bhójase índra sómasya pītáye",
+      "sentence": null,
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "MORPHOLOGY_RULE_CASE",
+        "predicate": "INVOKES",
+        "predicate_status": "MAPPED_BY_LEMMA_ID",
+        "frame": "ASSERTED",
+        "root_label": "√hū-",
+        "root_lemma": "hū",
+        "verb_surface": "huve",
+        "verb_features": {
+          "mood": "IND",
+          "number": "SG",
+          "person": "1",
+          "tense": "PRS",
+          "voice": "MED"
+        },
+        "role_scope": "PADA:b",
+        "roles": [
+          {
+            "role": "PATIENT",
+            "surface": "gām",
+            "lemma": "gav- ~ go",
+            "case": "ACC",
+            "upos": "nominal stem",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "pada b, ACC in the same pada as the finite verb"
+          }
+        ],
+        "registry_role_count": 1,
+        "proposed_role_count": 0,
+        "cautions": [
+          "FIRST_PERSON_AGENT_IS_THE_UNNAMED_SPEAKER"
+        ]
+      }
+    },
+    {
+      "stratum": "random",
+      "key": "VG:RV:SAK:M01:S134:V005",
+      "confidence": "EXACT",
+      "verse": "túbhyaṁ śukrā́saḥ śúcayas turaṇyávo mádeṣūgrā́ iṣaṇanta bhurváṇy apā́m iṣanta bhurváṇi tvā́ṁ tsārī́ dásamāno bhágam īṭṭe takvavī́ye tváṁ víśvasmād bhúvanāt pāsi dhármaṇāsuryāā̀t pāsi dhármaṇā",
+      "sentence": null,
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "MORPHOLOGY_RULE_CASE",
+        "predicate": "LEADS",
+        "predicate_status": "MAPPED_BY_LEMMA_ID",
+        "frame": "ASSERTED",
+        "root_label": "√iṣaṇy-",
+        "root_lemma": "iṣaṇy",
+        "verb_surface": "iṣaṇanta",
+        "verb_features": {
+          "mood": "SBJV",
+          "number": "PL",
+          "person": "3",
+          "secondary conjugation": "DEN",
+          "tense": "PRS",
+          "voice": "MED"
+        },
+        "role_scope": "PADA:b",
+        "roles": [
+          {
+            "role": "LOCATION",
+            "surface": "madeṣu",
+            "lemma": "mada",
+            "case": "LOC",
+            "upos": "nominal stem",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "pada b, LOC in the same pada as the finite verb"
+          },
+          {
+            "role": "AGENT",
+            "surface": "ugrāḥ",
+            "lemma": "ugra",
+            "case": "NOM",
+            "upos": "nominal stem",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "pada b, NOM in the same pada as the finite verb"
+          },
+          {
+            "role": "PATIENT",
+            "surface": "bhurvaṇi",
+            "lemma": "bhurvaṇi",
+            "case": "ACC",
+            "upos": "nominal stem",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "pada b, ACC in the same pada as the finite verb"
+          }
+        ],
+        "registry_role_count": 3,
+        "proposed_role_count": 0,
+        "cautions": []
+      }
+    },
+    {
+      "stratum": "random",
+      "key": "VG:AV:SAU:K12:S003:V041",
+      "confidence": "EXACT",
+      "verse": "vasor yā dhārā madhunā prapīnā ghṛtena miśrā amṛtasya nābhayaḥ | / sarvās tā ava rundhe svargaḥ ṣaṣṭyāṃ śaratsu nidhipā abhīchāt ||41||",
+      "sentence": "sarvās tā avarundhe svargaḥ ṣaṣṭyāṃ śaratsu nidhipā abhīcchāt",
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "MORPHOLOGY_RULE_CASE",
+        "predicate": "BINDS",
+        "predicate_status": "MAPPED_BY_PREVERB_STRIP",
+        "frame": "ASSERTED",
+        "root_label": "avarudh",
+        "root_lemma": "avarudh",
+        "verb_surface": "avarundhe",
+        "verb_features": {
+          "Tense": "Pres",
+          "Mood": "Ind",
+          "Person": "3",
+          "Number": "Sing"
+        },
+        "role_scope": "SENTENCE_CASE_SCOPED",
+        "roles": [],
+        "registry_role_count": 0,
+        "proposed_role_count": 0,
+        "cautions": [
+          "PREDICATE_VIA_PREVERB_STRIP:ava",
+          "ROLE_SCOPE_AMBIGUOUS_MULTIPLE_FINITE_VERBS_NO_PARSE"
+        ]
+      }
+    },
+    {
+      "stratum": "random",
+      "key": "VG:RV:SAK:M06:S016:V031",
+      "confidence": "EXACT",
+      "verse": "yó no agne duréva ā́ márto vadhā́ya dā́śati tásmān naḥ pāhy áṁhasaḥ",
+      "sentence": null,
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "MORPHOLOGY_RULE_CASE",
+        "predicate": "OFFERS",
+        "predicate_status": "MAPPED_BY_LEMMA_ID",
+        "frame": "ASSERTED",
+        "root_label": "√dāś-",
+        "root_lemma": "dāś",
+        "verb_surface": "dāśati",
+        "verb_features": {
+          "mood": "IND",
+          "number": "SG",
+          "person": "3",
+          "tense": "PRS",
+          "voice": "ACT"
+        },
+        "role_scope": "PADA:b",
+        "roles": [
+          {
+            "role": "AGENT",
+            "surface": "martaḥ",
+            "lemma": "marta",
+            "case": "NOM",
+            "upos": "nominal stem",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "pada b, NOM in the same pada as the finite verb"
+          },
+          {
+            "role": "BENEFICIARY",
+            "surface": "vadhāya",
+            "lemma": "vadha",
+            "case": "DAT",
+            "upos": "nominal stem",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "pada b, DAT in the same pada as the finite verb"
+          }
+        ],
+        "registry_role_count": 2,
+        "proposed_role_count": 0,
+        "cautions": []
+      }
+    },
+    {
+      "stratum": "random",
+      "key": "VG:RV:SAK:M04:S049:V006",
+      "confidence": "EXACT",
+      "verse": "sómam indrābr̥haspatī píbataṁ dāśúṣo gr̥hé mādáyethāṁ tádokasā",
+      "sentence": null,
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "MORPHOLOGY_RULE_CASE",
+        "predicate": "DRINKS",
+        "predicate_status": "MAPPED_BY_LEMMA_ID",
+        "frame": "REQUESTED",
+        "root_label": "√pā- 2",
+        "root_lemma": "pā- 2",
+        "verb_surface": "pibatam",
+        "verb_features": {
+          "mood": "IMP",
+          "number": "DU",
+          "person": "2",
+          "tense": "PRS",
+          "voice": "ACT"
+        },
+        "role_scope": "PADA:b",
+        "roles": [
+          {
+            "role": "LOCATION",
+            "surface": "gr̥he",
+            "lemma": "gr̥ha",
+            "case": "LOC",
+            "upos": "nominal stem",
+            "filler_type": "CONCEPT:PLACE",
+            "entity_key": "VG:CONCEPT:GRHA-HOUSE",
+            "entity_label": "gṛha",
+            "proposed_role": false,
+            "evidence": "pada b, LOC in the same pada as the finite verb"
+          }
+        ],
+        "registry_role_count": 1,
+        "proposed_role_count": 0,
+        "cautions": []
+      }
+    },
+    {
+      "stratum": "random",
+      "key": "VG:RV:SAK:M08:S033:V019",
+      "confidence": "EXACT",
+      "verse": "adháḥ paśyasva mópári saṁtarā́m pādakaú hara mā́ te kaśaplakaú dr̥śan strī́ hí brahmā́ babhū́vitha",
+      "sentence": null,
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "MORPHOLOGY_RULE_CASE",
+        "predicate": "SEES",
+        "predicate_status": "MAPPED_BY_LEMMA_ID",
+        "frame": "REQUESTED",
+        "root_label": "√spaś-",
+        "root_lemma": "spaś",
+        "verb_surface": "paśyasva",
+        "verb_features": {
+          "mood": "IMP",
+          "number": "SG",
+          "person": "2",
+          "tense": "PRS",
+          "voice": "MED"
+        },
+        "role_scope": "PADA:a",
+        "roles": [],
+        "registry_role_count": 0,
+        "proposed_role_count": 0,
+        "cautions": []
+      }
+    },
+    {
+      "stratum": "random",
+      "key": "VG:RV:SAK:M06:S044:V021",
+      "confidence": "EXACT",
+      "verse": "vŕ̥ṣāsi divó vr̥ṣabháḥ pr̥thivyā́ vŕ̥ṣā síndhūnāṁ vr̥ṣabhá stíyānām vŕ̥ṣṇe ta índur vr̥ṣabha pīpāya svādū́ ráso madhupéyo várāya",
+      "sentence": null,
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "MORPHOLOGY_RULE_CASE",
+        "predicate": "IS_OR_BECOMES",
+        "predicate_status": "MAPPED_BY_LEMMA_ID",
+        "frame": "ASSERTED",
+        "root_label": "√as- 1",
+        "root_lemma": "as- 1",
+        "verb_surface": "asi",
+        "verb_features": {
+          "mood": "IND",
+          "number": "SG",
+          "person": "2",
+          "tense": "PRS",
+          "voice": "ACT"
+        },
+        "role_scope": "PADA:a",
+        "roles": [],
+        "registry_role_count": 0,
+        "proposed_role_count": 0,
+        "cautions": []
+      }
+    },
+    {
+      "stratum": "random",
+      "key": "VG:RV:SAK:M07:S081:V003",
+      "confidence": "EXACT",
+      "verse": "prati̍ tvā duhitar diva̱ uṣo̍ jī̱rā a̍bhutsmahi | yā vaha̍si pu̱ru spā̱rhaṁ va̍nanvati̱ ratna̱ṁ na dā̱śuṣe̱ maya̍ḥ ||",
+      "sentence": null,
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "MORPHOLOGY_RULE_CASE",
+        "predicate": "PERCEIVES",
+        "predicate_status": "MAPPED_BY_LEMMA_ID",
+        "frame": "ASSERTED",
+        "root_label": "√budh-",
+        "root_lemma": "budh",
+        "verb_surface": "abhutsmahi",
+        "verb_features": {
+          "mood": "IND",
+          "number": "PL",
+          "person": "1",
+          "tense": "AOR",
+          "voice": "MED"
+        },
+        "role_scope": "PADA:b",
+        "roles": [],
+        "registry_role_count": 0,
+        "proposed_role_count": 0,
+        "cautions": [
+          "FIRST_PERSON_AGENT_IS_THE_UNNAMED_SPEAKER"
+        ]
+      }
+    },
+    {
+      "stratum": "random",
+      "key": "VG:AV:SAU:K18:S004:V020",
+      "confidence": "EXACT",
+      "verse": "apūpavān māṃsavāṃś carur eha sīdatu | / lokakṛtaḥ pathikṛto yajāmahe ye devānāṃ hutabhāgā iha stha ||20|| {21}",
+      "sentence": "apūpavān māṃsavāṃś carur eha sīdatu",
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "MORPHOLOGY_RULE_CASE",
+        "predicate": "DWELLS",
+        "predicate_status": "MAPPED_BY_FOLD",
+        "frame": "ASSERTED",
+        "root_label": "sad",
+        "root_lemma": "sad",
+        "verb_surface": "sīdatu",
+        "verb_features": {
+          "Tense": "Pres",
+          "Mood": "Imp",
+          "Person": "3",
+          "Number": "Sing"
+        },
+        "role_scope": "SENTENCE_CASE_SCOPED",
+        "roles": [
+          {
+            "role": "AGENT",
+            "surface": "apūpavān",
+            "lemma": "apūpavat",
+            "case": "NOM",
+            "upos": "ADJ",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "DCS Atharvaveda (Śaunaka)-0515-AVŚ, 18, 4-12422.conllu sent_id=652272: NOM in the same sentence, no parse available"
+          },
+          {
+            "role": "AGENT",
+            "surface": "māṃsavān",
+            "lemma": "māṃsavat",
+            "case": "NOM",
+            "upos": "ADJ",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "DCS Atharvaveda (Śaunaka)-0515-AVŚ, 18, 4-12422.conllu sent_id=652272: NOM in the same sentence, no parse available"
+          },
+          {
+            "role": "AGENT",
+            "surface": "caruḥ",
+            "lemma": "caru",
+            "case": "NOM",
+            "upos": "NOUN",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "DCS Atharvaveda (Śaunaka)-0515-AVŚ, 18, 4-12422.conllu sent_id=652272: NOM in the same sentence, no parse available"
+          }
+        ],
+        "registry_role_count": 3,
+        "proposed_role_count": 0,
+        "cautions": []
+      }
+    },
+    {
+      "stratum": "random",
+      "key": "VG:RV:SAK:M01:S064:V002",
+      "confidence": "EXACT",
+      "verse": "té jajñire divá r̥ṣvā́sa ukṣáṇo rudrásya máryā ásurā arepásaḥ pāvakā́saḥ śúcayaḥ sū́ryā iva sátvāno ná drapsíno ghorávarpasaḥ",
+      "sentence": null,
+      "projected_from": null,
+      "projected_source_text": null,
+      "assertion": {
+        "derivation": "MORPHOLOGY_RULE_CASE",
+        "predicate": "CREATES",
+        "predicate_status": "MAPPED_BY_LEMMA_ID",
+        "frame": "ASSERTED",
+        "root_label": "√janⁱ-",
+        "root_lemma": "janⁱ",
+        "verb_surface": "jajñire",
+        "verb_features": {
+          "mood": "IND",
+          "number": "PL",
+          "person": "3",
+          "tense": "PRF",
+          "voice": "MED"
+        },
+        "role_scope": "PADA:a",
+        "roles": [
+          {
+            "role": "AGENT",
+            "surface": "te",
+            "lemma": "sa- ~ ta",
+            "case": "NOM",
+            "upos": "pronoun",
+            "filler_type": "PRONOUN_UNRESOLVED",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "pada a, NOM in the same pada as the finite verb"
+          },
+          {
+            "role": "AGENT",
+            "surface": "r̥ṣvāsaḥ",
+            "lemma": "r̥ṣva",
+            "case": "NOM",
+            "upos": "nominal stem",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "pada a, NOM in the same pada as the finite verb"
+          },
+          {
+            "role": "AGENT",
+            "surface": "ukṣaṇaḥ",
+            "lemma": "ukṣan",
+            "case": "NOM",
+            "upos": "nominal stem",
+            "filler_type": "UNREGISTERED_NOMINAL",
+            "entity_key": null,
+            "entity_label": null,
+            "proposed_role": false,
+            "evidence": "pada a, NOM in the same pada as the finite verb"
+          }
+        ],
+        "registry_role_count": 3,
+        "proposed_role_count": 0,
+        "cautions": []
+      }
+    }
+  ]
+}

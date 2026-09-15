@@ -1,0 +1,293 @@
+{
+  "proof_id": "DCS_TREEBANK_COVERAGE_AND_WHAT_THE_ROOT_MAP_CANNOT_REACH",
+  "measured_at": "2026-09-15",
+  "finding_one_the_parse_covers_a_quarter": {
+    "claim": "DCS carries a dependency parse on about a quarter of these two corpora, not on all of them. Reconnaissance hedged this correctly ('HEAD/DEPREL where the chapter is in the Vedic Treebank'); an early read of one parsed file here suggested otherwise and was wrong.",
+    "atharvaveda_saunaka": {
+      "sentences": 9105,
+      "with_a_parse": 2160,
+      "share": 0.2372,
+      "hymn_files_with_any_parse": 188,
+      "hymn_files_total": 519
+    },
+    "vajasaneyi_madhyandina": {
+      "sentences": 2516,
+      "with_a_parse": 619,
+      "share": 0.246,
+      "adhyaya_files_with_any_parse": 5,
+      "adhyaya_files_total": 15
+    },
+    "consequence": "Roles from the parsed quarter are TREEBANK_DEPREL. Roles from the other three quarters use the same case-scoped reading as the Rigveda and are typed MORPHOLOGY_RULE_CASE. The two are never summed."
+  },
+  "finding_two_UD_is_that_same_quarter": {
+    "claim": "UD_Sanskrit-Vedic is not an independent second witness. It is the treebanked slice of DCS, re-released.",
+    "evidence": {
+      "dcs_parsed_avs_sentences": 2160,
+      "ud_avs_sentences": 2175,
+      "dcs_parsed_vsm_sentences": 619,
+      "ud_vsm_sentences": 622,
+      "ud_distinct_avs_hymns": 185,
+      "dcs_avs_hymn_files_with_a_parse": 188
+    },
+    "consequence": "Ingesting UD would add no coverage for our four Samhitas, and an agreement figure between UD and DCS would measure a file format, not an annotation. So no cross-source agreement figure is claimed anywhere in this artifact."
+  },
+  "finding_three_the_root_map_is_Rigvedic": {
+    "claim": "The predicate vocabulary's root map was built from 702 Rigvedic lemma labels. Applied to DCS it resolves well under half of Atharvavedic and Yajurvedic finite verbs, and the residue is itemised rather than aggregated.",
+    "atharvaveda": {
+      "finite_verb_tokens": 10881,
+      "verbs_without_a_predicate": 4714,
+      "status_breakdown": {
+        "ROOT_NOT_IN_RIGVEDIC_MAP": 2684,
+        "MAPPED_BY_DOMINANT_SENSE": 930,
+        "MAPPED_BY_SECONDARY_STEM": 45,
+        "MAPPED_BY_FOLD": 4821,
+        "UNRESOLVED_HOMONYM_FOLD": 1147,
+        "UNMAPPED_ROOT_ADJUDICATED": 454,
+        "REFUSED_PARTICLE_SENSITIVE_ROOT": 312,
+        "UNRESOLVED_HOMONYM_FOLD_AFTER_PREVERB_STRIP": 100,
+        "REFUSED_CONJUGATION_SENSITIVE_ROOT": 17,
+        "MAPPED_BY_PREVERB_STRIP_AND_DOMINANT_SENSE": 33,
+        "MAPPED_BY_PREVERB_STRIP": 338
+      }
+    },
+    "yajurveda": {
+      "finite_verb_tokens": 2594,
+      "verbs_without_a_predicate": 1051,
+      "status_breakdown": {
+        "MAPPED_BY_FOLD": 1270,
+        "ROOT_NOT_IN_RIGVEDIC_MAP": 638,
+        "MAPPED_BY_PREVERB_STRIP": 94,
+        "UNRESOLVED_HOMONYM_FOLD": 165,
+        "UNMAPPED_ROOT_ADJUDICATED": 82,
+        "REFUSED_PARTICLE_SENSITIVE_ROOT": 131,
+        "MAPPED_BY_DOMINANT_SENSE": 166,
+        "MAPPED_BY_PREVERB_STRIP_AND_DOMINANT_SENSE": 10,
+        "MAPPED_BY_SECONDARY_STEM": 3,
+        "UNRESOLVED_HOMONYM_FOLD_AFTER_PREVERB_STRIP": 35
+      }
+    },
+    "top_unresolved_dcs_lemma_folds_atharvaveda": [
+      {
+        "fold": "vid",
+        "finite_verb_tokens_lost": 314
+      },
+      {
+        "fold": "i",
+        "finite_verb_tokens_lost": 228
+      },
+      {
+        "fold": "dviṣ",
+        "finite_verb_tokens_lost": 130
+      },
+      {
+        "fold": "jan",
+        "finite_verb_tokens_lost": 128
+      },
+      {
+        "fold": "pā",
+        "finite_verb_tokens_lost": 97
+      },
+      {
+        "fold": "hvā",
+        "finite_verb_tokens_lost": 89
+      },
+      {
+        "fold": "e",
+        "finite_verb_tokens_lost": 81
+      },
+      {
+        "fold": "car",
+        "finite_verb_tokens_lost": 78
+      },
+      {
+        "fold": "ad",
+        "finite_verb_tokens_lost": 69
+      },
+      {
+        "fold": "paś",
+        "finite_verb_tokens_lost": 66
+      },
+      {
+        "fold": "rakṣ",
+        "finite_verb_tokens_lost": 66
+      },
+      {
+        "fold": "vad",
+        "finite_verb_tokens_lost": 65
+      },
+      {
+        "fold": "yā",
+        "finite_verb_tokens_lost": 64
+      },
+      {
+        "fold": "prāś",
+        "finite_verb_tokens_lost": 62
+      },
+      {
+        "fold": "ji",
+        "finite_verb_tokens_lost": 61
+      },
+      {
+        "fold": "grah",
+        "finite_verb_tokens_lost": 57
+      },
+      {
+        "fold": "av",
+        "finite_verb_tokens_lost": 55
+      },
+      {
+        "fold": "hṛ",
+        "finite_verb_tokens_lost": 52
+      },
+      {
+        "fold": "anuvical",
+        "finite_verb_tokens_lost": 52
+      },
+      {
+        "fold": "āgam",
+        "finite_verb_tokens_lost": 51
+      },
+      {
+        "fold": "pṛ",
+        "finite_verb_tokens_lost": 44
+      },
+      {
+        "fold": "kram",
+        "finite_verb_tokens_lost": 43
+      },
+      {
+        "fold": "mā",
+        "finite_verb_tokens_lost": 38
+      },
+      {
+        "fold": "vas",
+        "finite_verb_tokens_lost": 38
+      },
+      {
+        "fold": "pat",
+        "finite_verb_tokens_lost": 36
+      }
+    ],
+    "top_unresolved_dcs_lemma_folds_yajurveda": [
+      {
+        "fold": "pā",
+        "finite_verb_tokens_lost": 68
+      },
+      {
+        "fold": "sāday",
+        "finite_verb_tokens_lost": 41
+      },
+      {
+        "fold": "ujji",
+        "finite_verb_tokens_lost": 34
+      },
+      {
+        "fold": "grah",
+        "finite_verb_tokens_lost": 32
+      },
+      {
+        "fold": "jinv",
+        "finite_verb_tokens_lost": 25
+      },
+      {
+        "fold": "dviṣ",
+        "finite_verb_tokens_lost": 24
+      },
+      {
+        "fold": "vid",
+        "finite_verb_tokens_lost": 23
+      },
+      {
+        "fold": "kﾱp",
+        "finite_verb_tokens_lost": 23
+      },
+      {
+        "fold": "av",
+        "finite_verb_tokens_lost": 21
+      },
+      {
+        "fold": "āsad",
+        "finite_verb_tokens_lost": 16
+      },
+      {
+        "fold": "e",
+        "finite_verb_tokens_lost": 15
+      },
+      {
+        "fold": "i",
+        "finite_verb_tokens_lost": 15
+      },
+      {
+        "fold": "āruh",
+        "finite_verb_tokens_lost": 14
+      },
+      {
+        "fold": "pṛṇ",
+        "finite_verb_tokens_lost": 13
+      },
+      {
+        "fold": "tarpay",
+        "finite_verb_tokens_lost": 11
+      },
+      {
+        "fold": "ṛch",
+        "finite_verb_tokens_lost": 11
+      },
+      {
+        "fold": "hvā",
+        "finite_verb_tokens_lost": 10
+      },
+      {
+        "fold": "vikram",
+        "finite_verb_tokens_lost": 10
+      },
+      {
+        "fold": "āgam",
+        "finite_verb_tokens_lost": 10
+      },
+      {
+        "fold": "rakṣ",
+        "finite_verb_tokens_lost": 9
+      },
+      {
+        "fold": "car",
+        "finite_verb_tokens_lost": 9
+      },
+      {
+        "fold": "ji",
+        "finite_verb_tokens_lost": 9
+      },
+      {
+        "fold": "pṛc",
+        "finite_verb_tokens_lost": 9
+      },
+      {
+        "fold": "āviś",
+        "finite_verb_tokens_lost": 9
+      },
+      {
+        "fold": "vṛ",
+        "finite_verb_tokens_lost": 8
+      }
+    ],
+    "the_actionable_recommendation": "The single highest-value follow-on is not more source acquisition. It is adjudicating the twenty or so DCS lemma strings listed above against the Rigvedic root map, the way ACTION_PREDICATE_ROOT_MAPPING_V3.md adjudicated the Rigvedic ones. vid, i, pa and dvis alone account for 769 Atharvavedic and 115 Yajurvedic finite verbs that currently abstain. That is a bounded, one-time philological task over a named list, not an open-ended one."
+  },
+  "finding_four_dcs_never_writes_a_long_vocalic_liquid": {
+    "claim": "Across the 534 DCS files fetched here, 1,651 distinct verb lemmas, not one contains a long vocalic r or l.",
+    "measured": {
+      "lemmas_with_long_vocalic_r_or_l": 0,
+      "distinct_verb_lemmas": 1651,
+      "examples": {
+        "stṛ": 17,
+        "stṝ": 0,
+        "kṛ": 706,
+        "kṝ": 0,
+        "tṛ": 45,
+        "tṝ": 0,
+        "gṛ": 21,
+        "gṝ": 0
+      }
+    },
+    "consequence": "DCS's spelling cannot distinguish two roots the Rigvedic map gives OPPOSITE predicates: str̥- lays low (DESTROYS) and str̥̄- strews the sacred grass (ESTABLISHES). This has the same shape as the root_folded hazard the root map itself names -- a key that looks unambiguous and is not -- and it produced a real defect before it was found. DCS resolution now runs over a length-neutral bucket."
+  }
+}

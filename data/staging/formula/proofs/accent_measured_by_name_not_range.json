@@ -1,0 +1,67 @@
+{
+ "question": "is accent detected by testing meaning, or by scanning a codepoint block?",
+ "method": "a combining mark counts as a tone mark when its Unicode NAME contains TONE, SVARITA, UDATTA or ANUDATTA, or when it is one of the five Latin GRETIL/VedaWeb tone marks AND its base character is a vowel. U+0301 on a consonant is the letter s-acute and is excluded.",
+ "per_veda": {
+  "RV": {
+   "mantras": 10552,
+   "accented_by_name_and_base": 10552,
+   "accented_by_naive_range_scan": 7194,
+   "marks": {
+    "U+0331 COMBINING MACRON BELOW": 96080,
+    "U+030D COMBINING VERTICAL LINE ABOVE": 72576
+   }
+  },
+  "SV": {
+   "mantras": 1844,
+   "accented_by_name_and_base": 0,
+   "accented_by_naive_range_scan": 0,
+   "marks": {}
+  },
+  "YV": {
+   "mantras": 1975,
+   "accented_by_name_and_base": 1974,
+   "accented_by_naive_range_scan": 780,
+   "marks": {
+    "U+0952 DEVANAGARI STRESS SIGN ANUDATTA": 24329,
+    "U+0951 DEVANAGARI STRESS SIGN UDATTA": 17204,
+    "U+1CD4 VEDIC SIGN YAJURVEDIC MIDLINE SVARITA": 1
+   }
+  },
+  "AV": {
+   "mantras": 5839,
+   "accented_by_name_and_base": 5837,
+   "accented_by_naive_range_scan": 5839,
+   "marks": {
+    "U+0301 COMBINING ACUTE ACCENT": 67662,
+    "U+0300 COMBINING GRAVE ACCENT": 1271
+   }
+  }
+ },
+ "what_the_naive_range_scan_gets_wrong": {
+  "RV": "10,552 accented by name and base; the naive scan says 7,194, because RV tone marks are U+0331 and U+030D -- neither in the Vedic Extensions block nor in the acute/grave pair -- so the 7,194 it reports are the s-acute characters and the agreement is accidental.",
+  "YV": "1,974 accented by name and base; the naive scan says 780, which is the count of mantras carrying U+1CEA or U+1CEC. Those are ANUSVARA signs, not tone marks. This reproduces the 780 that data/registry/text_versions.yaml was wrongly said to contradict.",
+  "AV": "5,837 accented by name and base against 5,839 by the naive scan: two AV mantras carry no tone mark on any vowel base. The naive scan counts all 5,839 because every AV mantra contains an s-acute.",
+  "SV": "0 by both. The Samavedic verified zero reproduces."
+ },
+ "notation_classes_derived_from_the_placed_marks": {
+  "RV": "GRETIL_RV_ANUDATTA_SVARITA",
+  "SV": "UNACCENTED",
+  "YV": "DEVANAGARI_SVARA",
+  "AV": "GRETIL_AV_ACUTE_GRAVE"
+ },
+ "notation_inventories": {
+  "RV": [
+   "MACRON_BELOW",
+   "VERTICAL_LINE_ABOVE"
+  ],
+  "SV": [],
+  "YV": [
+   "DEV_ANUDATTA",
+   "DEV_UDATTA"
+  ],
+  "AV": [
+   "ACUTE",
+   "GRAVE"
+  ]
+ }
+}

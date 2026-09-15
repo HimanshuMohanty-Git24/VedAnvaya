@@ -1,0 +1,92 @@
+{
+  "benchmark": "Zachary karate club (1977), 34 nodes / 78 edges",
+  "betweenness_spot_checks": {
+    "n01": {
+      "computed": 0.43764,
+      "published": 0.43763
+    },
+    "n03": {
+      "computed": 0.14366,
+      "published": 0.14365
+    },
+    "n33": {
+      "computed": 0.14525,
+      "published": 0.14524
+    },
+    "n34": {
+      "computed": 0.30407,
+      "published": 0.30407
+    }
+  },
+  "connected_components": [
+    34
+  ],
+  "failures": [],
+  "graph_nodes": 34,
+  "graph_total_weight": 78.0,
+  "leiden": {
+    "ari_vs_zacharys_real_split": 0.5414,
+    "communities_at_best": 4,
+    "consensus_communities": 4,
+    "consensus_modularity": 0.4198,
+    "deterministic_under_a_fixed_seed": true,
+    "max_modularity": 0.4198,
+    "mean_modularity": 0.4198,
+    "mean_pairwise_seed_ari": 1.0,
+    "min_pairwise_seed_ari": 1.0,
+    "nmi_vs_zacharys_real_split": 0.7236,
+    "runs": 50,
+    "runs_with_a_disconnected_community": 0
+  },
+  "louvain": {
+    "ari_vs_zacharys_real_split": 0.5414,
+    "communities_at_best": 4,
+    "consensus_communities": 4,
+    "consensus_modularity": 0.4188,
+    "deterministic_under_a_fixed_seed": true,
+    "max_modularity": 0.4198,
+    "mean_modularity": 0.416,
+    "mean_pairwise_seed_ari": 0.8611,
+    "min_pairwise_seed_ari": 0.6352,
+    "nmi_vs_zacharys_real_split": 0.7236,
+    "runs": 50,
+    "runs_with_a_disconnected_community": 0
+  },
+  "participation_coefficient_range": [
+    0.0,
+    0.6667
+  ],
+  "published_maximum_modularity": 0.4198,
+  "resolution_ladder_communities": [
+    [
+      0.25,
+      1
+    ],
+    [
+      0.5,
+      2
+    ],
+    [
+      1.0,
+      4
+    ],
+    [
+      2.0,
+      8
+    ],
+    [
+      4.0,
+      13
+    ],
+    [
+      8.0,
+      24
+    ]
+  ],
+  "total_weight_per_aggregation_level": [
+    78.0,
+    78.0,
+    78.0
+  ],
+  "verdict": "PASS"
+}

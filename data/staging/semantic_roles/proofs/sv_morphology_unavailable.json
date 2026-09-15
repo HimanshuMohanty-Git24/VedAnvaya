@@ -1,0 +1,105 @@
+{
+  "proof_id": "SV_MORPHOLOGY_UNAVAILABLE",
+  "claim": "No morphological or syntactic annotation of the Samaveda Samhita (Kauthuma Arcika or any sakha) is published in any public resource reachable from here.",
+  "verdict": "CONFIRMED",
+  "verified_by": "agent 9, Wave 2, by independent enumeration rather than by inheriting Wave 0's conclusion",
+  "verified_at": "2026-09-15",
+  "why_this_is_a_proof_and_not_a_deferral": "Each of the three resources was enumerated in full and the enumeration is reproducible from the recorded method. The negative is therefore a measured absence over a stated search space, not an unfinished pipeline. It is the BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE case.",
+  "independent_negatives": [
+    {
+      "resource": "Digital Corpus of Sanskrit, CoNLL-U release",
+      "url": "https://github.com/OliverHellwig/sanskrit/tree/master/dcs/data/conllu/files",
+      "enumeration_method": "GitHub git trees API on the dcs subtree sha 21766ccd413c79dac0d4b42a115786e0a4b23a9a with recursive=1; truncated=false; 23,576 entries. The contents API was NOT used because it caps at 1,000 entries and the Atharvavedic directory alone holds 1,038 blobs.",
+      "corpora_enumerated": 271,
+      "samaveda_samhita_present": false,
+      "nearest_samavedic_corpora_present": {
+        "Samavidhanabrahmana": 46,
+        "Pancavimsabrahmana": 338,
+        "Jaiminiyabrahmana": 519,
+        "Drahyayanasrautasutra": 96,
+        "Sadvimsabrahmana": 48
+      },
+      "note": "Samavedic ritual literature is well served; the Samhita itself is absent."
+    },
+    {
+      "resource": "UD_Sanskrit-Vedic treebank, train+dev+test",
+      "url": "https://github.com/UniversalDependencies/UD_Sanskrit-Vedic",
+      "enumeration_method": "every '# citation_text=' value in the three CoNLL-U files, counted",
+      "sentences": 27182,
+      "tokens": 206440,
+      "distinct_texts": 57,
+      "samaveda_samhita_present": false,
+      "only_samavedic_text": {
+        "citation_text": "SVidhB",
+        "work": "Samavidhanabrahmana",
+        "sentences": 202
+      },
+      "file_sha256": {
+        "ud_train.conllu": "05829c606047956b25aa6ebbd1fd2b11255ed04840fb90c3661f102b556c791d",
+        "ud_dev.conllu": "f103e93cea236173afe93652c1ed251bc1dd2716c230ab95eab31a8090527871",
+        "ud_test.conllu": "242546c3d6709c7c30d9c443039eb1483bc6d8f45b4873f821b60c19756cce43"
+      }
+    },
+    {
+      "resource": "VedaWeb 2.0",
+      "url": "https://vedaweb.uni-koeln.de/api/texts",
+      "enumeration_method": "the public /api/texts and /api/resources indexes, read in full on 2026-09-15",
+      "texts": [
+        "rv",
+        "ab",
+        "jb",
+        "ms",
+        "sb",
+        "avs",
+        "avp"
+      ],
+      "text_titles": {
+        "rv": "Rigveda",
+        "ab": "Aitareya Brāhmaṇa",
+        "jb": "Jaiminīya Brāhmaṇa",
+        "ms": "Maitrāyaṇī Saṁhitā",
+        "sb": "Śatapatha Brāhmaṇa",
+        "avs": "Atharvaveda Śaunaka",
+        "avp": "Atharvaveda Paippalāda"
+      },
+      "samaveda_present": false,
+      "resource_types_per_text": {
+        "rv": [
+          "apiCall",
+          "audio",
+          "externalReferences",
+          "locationMetadata",
+          "plainText",
+          "textAnnotation"
+        ],
+        "sb": [
+          "externalReferences",
+          "plainText",
+          "textAnnotation"
+        ],
+        "ms": [
+          "externalReferences",
+          "locationMetadata",
+          "plainText"
+        ],
+        "avs": [
+          "locationMetadata",
+          "plainText"
+        ],
+        "avp": [
+          "externalReferences",
+          "plainText",
+          "textAnnotation"
+        ],
+        "ab": [
+          "plainText"
+        ],
+        "jb": [
+          "plainText"
+        ]
+      }
+    }
+  ],
+  "what_would_change_this": "A published morphological or syntactic annotation of the Samaveda Samhita. None was found. The standing rule against model-guessed Vedic analysis applies with particular force here, because Arcika verses are largely Rigvedic borrowings, which makes a wrong answer both especially plausible and especially hard to detect.",
+  "what_was_done_instead": "216 of 1,844 Arcika verses whose letter skeleton is IDENTICAL to a Rigvedic verse carrying an analysis were given that analysis, typed CROSS_VEDA_TEXT_IDENTITY. 1,628 abstained, each with a reason on its row. This is not a Samavedic annotation and is not presented as one."
+}

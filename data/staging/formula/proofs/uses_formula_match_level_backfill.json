@@ -1,0 +1,19 @@
+{
+ "gap": "GAP-FORMULA-002, the 'no edge has a blank match_level' clause",
+ "before": {
+  "USES_FORMULA edges": 22686,
+  "with a blank or null match_level": 22686,
+  "share": 1.0
+ },
+ "after_if_imported": {
+  "SCRIPT_FOLDED": 20577,
+  "SANDHI_INSENSITIVE": 2109
+ },
+ "basis": "read off each occurrence row's own evidence surface. Every one of the 22,686 rows in formula_occurrences.jsonl already records SCRIPT_FOLDED (word-aligned detection) or SANDHI_INSENSITIVE (sandhi-substring detection). Nothing is re-derived and nothing is guessed: this is a projection defect, not a derivation one.",
+ "method_split": {
+  "formula-occurrence-word-aligned-v1": 20577,
+  "formula-occurrence-sandhi-substring-v1": 2109
+ },
+ "what_the_weaker_level_means": "a SANDHI_INSENSITIVE occurrence proves the letters are in that order, not that the edition divides its words there. 2,109 of 22,686 rest on that weaker evidence and the level now says so.",
+ "still_blank_after_this": "NEAR_PARALLEL_OF at 3,049 stays blank BY DESIGN -- a near parallel is identical at no level, and naming the surface it was scored on would read as an identity claim. The 1,180 blank REUSES_TEXT_FROM and 256 blank EXACT_PARALLEL_OF are addressed in graph_reconciliation.json. GAP-FORMULA-002's closure test as written ('no edge has a blank match_level') cannot be satisfied for NEAR_PARALLEL_OF without making a false claim, and that clause should be amended rather than met."
+}

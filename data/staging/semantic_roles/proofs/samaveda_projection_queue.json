@@ -1,0 +1,22 @@
+{
+  "proof_id": "SAMAVEDA_PROJECTION_AND_ITS_VERIFICATION_QUEUE",
+  "measured_at": "2026-09-15",
+  "population": 1844,
+  "projected_on_letter_identity": 216,
+  "assertions_projected": 372,
+  "refused": {
+    "no_rigvedic_parallel_edge_in_the_graph": 182,
+    "skeleton_not_identical": 1436,
+    "identical_but_the_rigvedic_source_is_itself_empty": 10
+  },
+  "containment_of_the_refused_against_their_closest_rigvedic_parallel": {
+    "no_parallel_edge": 192,
+    "0.90-0.95": 273,
+    "0.99-1.00": 311,
+    "0.95-0.99": 798,
+    "0.80-0.90": 51,
+    "0.60-0.80": 3
+  },
+  "reading": "The refusals are not uniform, and the distribution is the useful part. The graph's own parallel layer asserts 89 EXACT_PARALLEL_OF and 415 VARIANT_OF edges between Samavedic and Rigvedic verses -- 504 edges -- while letter identity reaches 216 verses. The two disagree because the parallel layer folds sandhi and this does not: sandhi changes word boundaries, and a morphological analysis is per word, so a sandhi-insensitive match is not a licence to transfer one. The near-miss bands are the queue for a philologist: a verse at 0.99 containment differs from its Rigvedic source by one or two letters and a human can say in seconds whether the differing word changes its analysis.",
+  "what_this_is_not": "Not a Samavedic morphological annotation. Not a claim about a Samavedic recension's reading beyond the identity of the string. Not about the gana: the sung saman, its stobhas and its melodic text are a different object and every projected row says so."
+}

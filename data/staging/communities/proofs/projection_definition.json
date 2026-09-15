@@ -1,0 +1,43 @@
+{
+  "comparison": {
+    "edge_rule": "(:Mantra)-[:MENTIONS_DEVATA]->(:Devata); two deities joined when the same mantra mentions both",
+    "projection_id": "ALLVEDA_COMENTION_MANTRA_V1",
+    "unit_of_co_occurrence": "a single mantra, any Veda",
+    "vedas_reached": [
+      "RV",
+      "SV",
+      "YV",
+      "AV"
+    ],
+    "why_it_is_not_the_primary": "a mention is not a dedication, the brief forbids inferring one from the other, and this layer reaches only 42 of 214 :Devata nodes"
+  },
+  "primary": {
+    "cypher": "MATCH (m:Mantra {veda:'RV'})-[:HAS_DEVATA]->(d:Devata) RETURN m.canonical_key, m.parent_key, d.entity_key",
+    "edge_rule": "an undirected edge {a,b} exists when at least one RV sukta has a mantra dedicated to a and a mantra dedicated to b, via (:Mantra {veda:'RV'})-[:HAS_DEVATA]->(:Devata)",
+    "min_pair_weight": 1,
+    "node_population": "(:Devata) nodes, cleaned -- see population_filter",
+    "occurrence_count_not_used": "occurrence_count is null on all 214 :Devata nodes (GAP-QUALITY-006). Every weight here is derived from edges, never from a stored aggregate.",
+    "population_filter": "exclude curated structure in ('HUMAN','PATRON_PRAISE') [29 nodes, agent 8]; exclude the 28 ABSTRACT/UNSPECIFIED labels ruled NOT_DEITY in abstract_label_rulings.json; keep the 5 ruled UNDECIDED; keep every ritual implement",
+    "population_variant": "V-RULED",
+    "projection_id": "RV_CODEDICATION_HYMN_V1",
+    "unit_of_co_occurrence": "RV sukta (entity_type=HYMN), reached as the mantra's parent_key",
+    "vedas_not_reached": {
+      "AV": "HAS_DEVATA_ASCRIPTION targets 324 :DevataAscription nodes, 0 of which are :Devata (GAP-ATTRIBUTION-002). Not joinable to this projection.",
+      "SV": "no dedication predicate of any kind exists for the Samaveda.",
+      "YV": "no dedication predicate of any kind exists for the Yajurveda."
+    },
+    "vedas_reached": [
+      "RV"
+    ],
+    "weight_formula": "|hymns(a) intersect hymns(b)| / |hymns(a) union hymns(b)|",
+    "weighting": "COSINE"
+  },
+  "why_mantra_scope_co_dedication_was_rejected": {
+    "resulting_edges": 6,
+    "rv_devatas_per_mantra_histogram": {
+      "1": 10546,
+      "2": 6
+    },
+    "verdict": "not a graph; measured, not assumed"
+  }
+}

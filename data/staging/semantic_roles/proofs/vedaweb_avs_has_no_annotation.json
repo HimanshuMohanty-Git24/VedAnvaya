@@ -1,0 +1,16 @@
+{
+  "proof_id": "VEDAWEB_ANNOTATED_ATHARVAVEDA_IS_PAIPPALADA",
+  "claim": "VedaWeb's only annotated Atharvaveda is the Paippalada recension; the Saunaka text carries no annotation resource at all.",
+  "verdict": "CONFIRMED by direct measurement of the public resource index on 2026-09-15",
+  "avs_resource_types": [
+    "locationMetadata",
+    "plainText"
+  ],
+  "avp_resource_types": [
+    "externalReferences",
+    "plainText",
+    "textAnnotation"
+  ],
+  "consequence": "The most permissively licensed annotated Atharvaveda available is the wrong sakha. AVP numbering is not AVS numbering and the two recensions share much material in a different order with different readings, so a join would have produced plausible-looking, systematically wrong morphology. This agent used DCS's separately-labelled 'Atharvaveda (Saunaka)' corpus and fetched nothing from avp.",
+  "incidental_finding_bearing_on_GAP-MORPHOLOGY-003": "The rv text carries a plainText resource titled 'Lubotsky Padapatha (1997)'. GAP-MORPHOLOGY-003 records that the served Rigveda scope statement claims a Padapatha text version while all 44,276 TextVersion nodes are text_form=SAMHITA. The source exists and is reachable; the false claim still has to be corrected regardless, and works.yaml is not this agent's write surface."
+}

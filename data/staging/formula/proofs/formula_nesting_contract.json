@@ -1,0 +1,23 @@
+{
+ "gap": "GAP-FORMULA-003",
+ "closure_test": "every formula either has no strict-substring relation to another or carries an explicit nesting type, and formula frequency rankings state which policy they apply",
+ "identity_surface": "the sandhi-collapsed folded form. formulas.py derives formula_id from it and its own maximality rule tests containment on it, so it is the formula's identity. GRAPH_ENRICHMENT_V1's 1,103 reproduces on this surface and only on this surface.",
+ "measured": {
+  "formulas": 4825,
+  "distinct_collapsed_identities": 4825,
+  "strict_containment_pairs": 1593,
+  "contained_in_another": 1103,
+  "contains_another": 1119,
+  "in_a_containment_relation": 2037,
+  "in_no_containment_relation": 2788
+ },
+ "the_one_contract": {
+  "INDEPENDENT": 2788,
+  "NESTED_IN_ANOTHER": 918,
+  "CONTAINS_ANOTHER": 934,
+  "NESTED_AND_CONTAINING": 185
+ },
+ "accounting": "2,788 + 918 + 934 + 185 = 4,825. Every formula carries exactly one nesting_type and none is left untyped, which is the closure test's first clause.",
+ "reproduces": "GRAPH_ENRICHMENT_V1 section M2 (1,103) and FORMULA_FAMILY_RECONSTRUCTION_V3 section 1 (1,593 / 1,103 / 1,119 / 2,037 / 2,788) exactly.",
+ "what_is_not_fixed": "the nesting type records the relation; it does not decide whether a nested formula should exist. That is a deletion decision and this artifact makes none. Word-order variants are also still unmerged: containment cannot relate daivya hotara to hotara daivya because neither contains the other."
+}
