@@ -662,6 +662,194 @@ GROUPS: tuple[ElementGroup, ...] = (
             "verdict's layers_present property says which layers it judged."
         ),
     ),
+    ElementGroup(
+        group_id="SCHOLARSHIP_ASSERTED_BY_A",
+        domain="scholarship",
+        kind="RELATIONSHIP",
+        source="rows.jsonl",
+        element="ASSERTED_BY",
+        identity_fields=("canonical_key", "payload.axis", "payload.position_a.asserter_id"),
+        start_field="canonical_key",
+        end_field="payload.position_a.asserter_id",
+        start_label="InterpretiveClaim",
+        end_label="Scholar",
+        start_key_property="entity_key",
+        end_key_property="entity_key",
+        start_minted_by="SCHOLARSHIP_CLAIM_ROWS",
+        notes=(
+            "The first of two named asserters per claim. Without these the 17 :Scholar "
+            "nodes are unreachable and the graph cannot answer who disagreed with whom, "
+            "which is the whole substance of the domain: 91 disagreements, each with two "
+            "named asserters, two page-precise locators and a stated incompatibility."
+        ),
+    ),
+    ElementGroup(
+        group_id="SCHOLARSHIP_ASSERTED_BY_B",
+        domain="scholarship",
+        kind="RELATIONSHIP",
+        source="rows.jsonl",
+        element="ASSERTED_BY",
+        identity_fields=("canonical_key", "payload.axis", "payload.position_b.asserter_id"),
+        start_field="canonical_key",
+        end_field="payload.position_b.asserter_id",
+        start_label="InterpretiveClaim",
+        end_label="Scholar",
+        start_key_property="entity_key",
+        end_key_property="entity_key",
+        start_minted_by="SCHOLARSHIP_CLAIM_ROWS",
+        notes="The second asserter. A claim whose two asserters are the same person was "
+        "already withdrawn by the domain, so a MERGE collapsing the pair cannot hide one.",
+    ),
+    ElementGroup(
+        group_id="SCHOLARSHIP_POSITION_WORK_A",
+        domain="scholarship",
+        kind="RELATIONSHIP",
+        source="rows.jsonl",
+        element="POSITION_STATED_IN",
+        identity_fields=("canonical_key", "payload.axis", "payload.position_a.work_id"),
+        start_field="canonical_key",
+        end_field="payload.position_a.work_id",
+        start_label="InterpretiveClaim",
+        end_label="ScholarlyWork",
+        start_key_property="entity_key",
+        end_key_property="entity_key",
+        start_minted_by="SCHOLARSHIP_CLAIM_ROWS",
+        notes="Where the first position is stated. Distinct from REPORTED_IN below: the "
+        "work that states a position is not the work that reports the disagreement.",
+    ),
+    ElementGroup(
+        group_id="SCHOLARSHIP_POSITION_WORK_B",
+        domain="scholarship",
+        kind="RELATIONSHIP",
+        source="rows.jsonl",
+        element="POSITION_STATED_IN",
+        identity_fields=("canonical_key", "payload.axis", "payload.position_b.work_id"),
+        start_field="canonical_key",
+        end_field="payload.position_b.work_id",
+        start_label="InterpretiveClaim",
+        end_label="ScholarlyWork",
+        start_key_property="entity_key",
+        end_key_property="entity_key",
+        start_minted_by="SCHOLARSHIP_CLAIM_ROWS",
+        notes="Where the second position is stated.",
+    ),
+    ElementGroup(
+        group_id="SCHOLARSHIP_REPORTED_IN",
+        domain="scholarship",
+        kind="RELATIONSHIP",
+        source="rows.jsonl",
+        element="REPORTED_IN",
+        identity_fields=("canonical_key", "payload.axis", "payload.witness.work_id"),
+        start_field="canonical_key",
+        end_field="payload.witness.work_id",
+        start_label="InterpretiveClaim",
+        end_label="ScholarlyWork",
+        start_key_property="entity_key",
+        end_key_property="entity_key",
+        start_minted_by="SCHOLARSHIP_CLAIM_ROWS",
+        notes=(
+            "The work that REPORTS the disagreement, which is a different claim from "
+            "stating a position in it. 73 rows are typed "
+            "ASCRIPTION_DISPUTED_BY_THE_REPORTING_SOURCE precisely because the reporter and "
+            "the asserter are not the same voice, and collapsing the two edges would erase "
+            "that distinction."
+        ),
+    ),
+    ElementGroup(
+        group_id="RITUAL_ATTESTATION_EDGES",
+        domain="ritual",
+        kind="RELATIONSHIP",
+        source="rites.jsonl!flatten:ritual_key:samhita_attestation_examples",
+        element="ATTESTED_IN",
+        identity_fields=("ritual_key", "value"),
+        start_field="ritual_key",
+        end_field="value",
+        start_label=None,
+        end_label="Passage",
+        start_key_property="entity_key",
+        end_key_property="canonical_key",
+        notes=(
+            "The Saṃhitā attestation the registries already measured, as an edge instead of "
+            "a JSON property. 1,266 (entity, passage) pairs across 153 entities, and it is "
+            "what makes 17 of the 31 unreachable registry entities reachable. Rites only: "
+            "the other five registries are flattened by the sibling groups below."
+        ),
+    ),
+    ElementGroup(
+        group_id="RITUAL_ROLE_ATTESTATION",
+        domain="ritual",
+        kind="RELATIONSHIP",
+        source="roles.jsonl!flatten:role_key:samhita_attestation_examples",
+        element="ATTESTED_IN",
+        identity_fields=("role_key", "value"),
+        start_field="role_key",
+        end_field="value",
+        start_label=None,
+        end_label="Passage",
+        start_key_property="entity_key",
+        end_key_property="canonical_key",
+        notes="Saṃhitā attestation for roles.jsonl, same contract as the rites group.",
+    ),
+    ElementGroup(
+        group_id="RITUAL_ACTION_ATTESTATION",
+        domain="ritual",
+        kind="RELATIONSHIP",
+        source="actions.jsonl!flatten:concept_key:samhita_attestation_examples",
+        element="ATTESTED_IN",
+        identity_fields=("concept_key", "value"),
+        start_field="concept_key",
+        end_field="value",
+        start_label=None,
+        end_label="Passage",
+        start_key_property="entity_key",
+        end_key_property="canonical_key",
+        notes="Saṃhitā attestation for actions.jsonl, same contract as the rites group.",
+    ),
+    ElementGroup(
+        group_id="RITUAL_IMPLEMENT_ATTESTATION",
+        domain="ritual",
+        kind="RELATIONSHIP",
+        source="implements.jsonl!flatten:concept_key:samhita_attestation_examples",
+        element="ATTESTED_IN",
+        identity_fields=("concept_key", "value"),
+        start_field="concept_key",
+        end_field="value",
+        start_label=None,
+        end_label="Passage",
+        start_key_property="entity_key",
+        end_key_property="canonical_key",
+        notes="Saṃhitā attestation for implements.jsonl, same contract as the rites group.",
+    ),
+    ElementGroup(
+        group_id="RITUAL_MATERIAL_ATTESTATION",
+        domain="ritual",
+        kind="RELATIONSHIP",
+        source="materials.jsonl!flatten:concept_key:samhita_attestation_examples",
+        element="ATTESTED_IN",
+        identity_fields=("concept_key", "value"),
+        start_field="concept_key",
+        end_field="value",
+        start_label=None,
+        end_label="Passage",
+        start_key_property="entity_key",
+        end_key_property="canonical_key",
+        notes="Saṃhitā attestation for materials.jsonl, same contract as the rites group.",
+    ),
+    ElementGroup(
+        group_id="RITUAL_OFFERING_ATTESTATION",
+        domain="ritual",
+        kind="RELATIONSHIP",
+        source="offerings.jsonl!flatten:concept_key:samhita_attestation_examples",
+        element="ATTESTED_IN",
+        identity_fields=("concept_key", "value"),
+        start_field="concept_key",
+        end_field="value",
+        start_label=None,
+        end_label="Passage",
+        start_key_property="entity_key",
+        end_key_property="canonical_key",
+        notes="Saṃhitā attestation for offerings.jsonl, same contract as the rites group.",
+    ),
     # ---- communities: the artifact and its refusal, never a membership claim ---------
     ElementGroup(
         group_id="COMMUNITIES_ARTIFACT_NODES",
@@ -759,7 +947,34 @@ def get_path(row: dict[str, Any], dotted: str) -> Any:
 
 
 def elements_of(group: ElementGroup) -> list[dict[str, Any]]:
-    """Every candidate element the group's artifact yields, before graph resolution."""
+    """Every candidate element the group's artifact yields, before graph resolution.
+
+    Three source forms. ``file`` reads the file's lines as elements. ``file:dotted.path``
+    reads an array out of each row. ``file!flatten:keyfield:dictfield`` flattens a dict of
+    lists into one element per value -- which is the shape the ritual registries store their
+    Saṃhitā attestation in, veda to passage keys, and the shape no earlier form could read.
+    """
+    if "!flatten:" in group.source:
+        filename, spec = group.source.split("!flatten:", 1)
+        keyfield, dictfield = spec.split(":", 1)
+        out: list[dict[str, Any]] = []
+        for row in read_jsonl(STAGING / group.domain / filename):
+            nested = row.get(dictfield)
+            if not isinstance(nested, dict):
+                continue
+            for bucket, values in sorted(nested.items()):
+                for value in values if isinstance(values, list) else [values]:
+                    out.append(
+                        {
+                            keyfield: row.get(keyfield),
+                            "bucket": bucket,
+                            "value": str(value),
+                            "attestation_basis": dictfield,
+                            "samhita_attested": row.get("samhita_attested"),
+                            "existence_evidence_type": row.get("existence_evidence_type"),
+                        }
+                    )
+        return out
     if ":" in group.source:
         filename, dotted = group.source.split(":", 1)
         rows = read_jsonl(STAGING / group.domain / filename)
@@ -984,23 +1199,30 @@ def plan_group(
     }
 
     if group.kind in ("NODE", "NODE_PROPERTY"):
-        # The element count is the number of distinct FULL identities, not the number of
-        # distinct first fields. Counting on the first field alone under-reported two
-        # groups whose identity is composite: 113 scholarship claims read as 112 because
-        # two claims concern one passage, and 2,568 quality verdicts read as 2,541 because
-        # a passage carries one verdict per reference set.
-        elements = len(by_identity)
-
+        # A minted-key group counts distinct FULL identities, not distinct first fields.
+        # Counting on the first field alone under-reported two groups whose identity is
+        # composite: 113 scholarship claims read as 112 because two claims concern one
+        # passage, and 2,568 quality verdicts read as 2,541 because a passage carries one
+        # verdict per reference set. The minted key encodes the whole identity, so probing
+        # it below counts them correctly without a separate tally.
         if group.key_minted_from_identity:
-            # No key of its own, so nothing can pre-exist under it.
+            # The minted keys are probed like any others. The first version asserted that
+            # nothing could pre-exist under a minted key, which is true of a virgin graph
+            # and false of a re-run: planning against an already-imported graph reported
+            # 2,681 creates for 2,681 nodes that were already there, so the plan was not
+            # idempotent even though the import was.
+            minted = sorted(
+                {f"{group.element}:{identity_of(row, group)}" for row in candidates}
+            )
+            present = existing_keys(session, None, group.match_property, minted)
             result.update(
                 {
                     "match_property": group.match_property,
                     "key_minted_from_identity": True,
-                    "distinct_subjects": elements,
-                    "already_present": 0,
-                    "nodes_create": elements,
-                    "nodes_update": 0,
+                    "distinct_subjects": len(minted),
+                    "already_present": len(present),
+                    "nodes_create": len(minted) - len(present),
+                    "nodes_update": len(present),
                     "subjects_absent_from_graph": [],
                     "property_writes": 0,
                     "dangling_references": 0,

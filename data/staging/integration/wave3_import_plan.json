@@ -11,8 +11,8 @@
     "semantic_roles"
   ],
   "graph_before": {
-    "nodes": 108779,
-    "relationships": 265295
+    "nodes": 123000,
+    "relationships": 286220
   },
   "coverage": {
     "artifacts_on_disk": 46,
@@ -106,9 +106,9 @@
       "match_property": "role_filler_key",
       "key_minted_from_identity": false,
       "distinct_subjects": 2052,
-      "already_present": 0,
-      "nodes_create": 2052,
-      "nodes_update": 0,
+      "already_present": 2052,
+      "nodes_create": 0,
+      "nodes_update": 2052,
       "subjects_absent_from_graph": [],
       "property_writes": 0,
       "dangling_references": 0
@@ -152,12 +152,12 @@
       "start_endpoints_absent": 0,
       "end_endpoints_absent": 0,
       "endpoints_provided_by_this_plan": 2052,
-      "triples_awaiting_an_earlier_step": 2052,
+      "triples_awaiting_an_earlier_step": 0,
       "endpoints_redirected": 0,
       "ambiguous_endpoint_keys": 0,
       "ambiguous_endpoint_detail": [],
-      "relationships_create": 2052,
-      "relationships_update": 0,
+      "relationships_create": 0,
+      "relationships_update": 2052,
       "property_writes": 0,
       "expected_to_exist_but_absent": 0,
       "expected_to_exist_but_absent_detail": []
@@ -201,12 +201,12 @@
       "start_endpoints_absent": 0,
       "end_endpoints_absent": 0,
       "endpoints_provided_by_this_plan": 402,
-      "triples_awaiting_an_earlier_step": 387,
+      "triples_awaiting_an_earlier_step": 0,
       "endpoints_redirected": 0,
       "ambiguous_endpoint_keys": 0,
       "ambiguous_endpoint_detail": [],
-      "relationships_create": 387,
-      "relationships_update": 0,
+      "relationships_create": 0,
+      "relationships_update": 387,
       "property_writes": 0,
       "expected_to_exist_but_absent": 0,
       "expected_to_exist_but_absent_detail": []
@@ -249,8 +249,8 @@
       "endpoints_redirected": 0,
       "ambiguous_endpoint_keys": 0,
       "ambiguous_endpoint_detail": [],
-      "relationships_create": 6148,
-      "relationships_update": 0,
+      "relationships_create": 0,
+      "relationships_update": 6148,
       "property_writes": 0,
       "expected_to_exist_but_absent": 0,
       "expected_to_exist_but_absent_detail": []
@@ -569,14 +569,75 @@
           "redirect_target_present": true
         }
       ],
-      "node_status_disagreements": 0,
-      "node_status_disagreement_detail": [],
+      "node_status_disagreements": 92,
+      "node_status_disagreement_detail": [
+        {
+          "key": "VG:CONCEPT:VAJAPEYA",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:RAJASUYA",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:DARSAPURNAMASA",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:CATURMASYA",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:AGNISTOMA",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:ATYAGNISTOMA",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:UKTHYA",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:SODASIN",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:ATIRATRA",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:APTORYAMA",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:JYOTISTOMA",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:AGNISTUT",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        }
+      ],
       "match_property": "entity_key",
       "key_minted_from_identity": false,
       "distinct_subjects": 100,
-      "already_present": 8,
-      "nodes_create": 92,
-      "nodes_update": 8,
+      "already_present": 100,
+      "nodes_create": 0,
+      "nodes_update": 100,
       "subjects_absent_from_graph": [],
       "property_writes": 0,
       "dangling_references": 0
@@ -738,9 +799,9 @@
       "match_property": "step_key",
       "key_minted_from_identity": false,
       "distinct_subjects": 9255,
-      "already_present": 0,
-      "nodes_create": 9255,
-      "nodes_update": 0,
+      "already_present": 9255,
+      "nodes_create": 0,
+      "nodes_update": 9255,
       "subjects_absent_from_graph": [],
       "property_writes": 0,
       "dangling_references": 0
@@ -858,12 +919,12 @@
       "start_endpoints_absent": 0,
       "end_endpoints_absent": 0,
       "endpoints_provided_by_this_plan": 167,
-      "triples_awaiting_an_earlier_step": 414,
+      "triples_awaiting_an_earlier_step": 0,
       "endpoints_redirected": 9,
       "ambiguous_endpoint_keys": 0,
       "ambiguous_endpoint_detail": [],
-      "relationships_create": 473,
-      "relationships_update": 6,
+      "relationships_create": 0,
+      "relationships_update": 479,
       "property_writes": 0,
       "expected_to_exist_but_absent": 0,
       "expected_to_exist_but_absent_detail": []
@@ -971,12 +1032,12 @@
       "start_endpoints_absent": 0,
       "end_endpoints_absent": 0,
       "endpoints_provided_by_this_plan": 70,
-      "triples_awaiting_an_earlier_step": 118,
+      "triples_awaiting_an_earlier_step": 0,
       "endpoints_redirected": 0,
       "ambiguous_endpoint_keys": 0,
       "ambiguous_endpoint_detail": [],
-      "relationships_create": 131,
-      "relationships_update": 4,
+      "relationships_create": 0,
+      "relationships_update": 135,
       "property_writes": 0,
       "expected_to_exist_but_absent": 0,
       "expected_to_exist_but_absent_detail": []
@@ -1026,12 +1087,12 @@
       "start_endpoints_absent": 0,
       "end_endpoints_absent": 0,
       "endpoints_provided_by_this_plan": 27,
-      "triples_awaiting_an_earlier_step": 22,
+      "triples_awaiting_an_earlier_step": 0,
       "endpoints_redirected": 0,
       "ambiguous_endpoint_keys": 0,
       "ambiguous_endpoint_detail": [],
-      "relationships_create": 23,
-      "relationships_update": 0,
+      "relationships_create": 0,
+      "relationships_update": 23,
       "property_writes": 0,
       "expected_to_exist_but_absent": 0,
       "expected_to_exist_but_absent_detail": []
@@ -1061,14 +1122,75 @@
       "evidence_fields_declared": [],
       "elements_redirected_not_created": 0,
       "redirect_detail": [],
-      "node_status_disagreements": 0,
-      "node_status_disagreement_detail": [],
+      "node_status_disagreements": 16,
+      "node_status_disagreement_detail": [
+        {
+          "key": "VG:CONCEPT:MAITRAVARUNA-PRIEST",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:ACCHAVAKA-PRIEST",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:GRAVASTUT-PRIEST",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:PRATIPRASTHATR-PRIEST",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:UNNETR-PRIEST",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:PRASTOTR-PRIEST",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:PRATIHARTR-PRIEST",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:SUBRAHMANYA-PRIEST",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:BRAHMANACCHAMSIN-PRIEST",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:RTVIJ-OFFICIANT",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:SADASYA-PRIEST",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:GRHAPATI-HOUSEHOLDER",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        }
+      ],
       "match_property": "entity_key",
       "key_minted_from_identity": false,
       "distinct_subjects": 27,
-      "already_present": 11,
-      "nodes_create": 16,
-      "nodes_update": 11,
+      "already_present": 27,
+      "nodes_create": 0,
+      "nodes_update": 27,
       "subjects_absent_from_graph": [],
       "property_writes": 0,
       "dangling_references": 0
@@ -1098,14 +1220,75 @@
       "evidence_fields_declared": [],
       "elements_redirected_not_created": 0,
       "redirect_detail": [],
-      "node_status_disagreements": 0,
-      "node_status_disagreement_detail": [],
+      "node_status_disagreements": 26,
+      "node_status_disagreement_detail": [
+        {
+          "key": "VG:CONCEPT:NIRVAPA-TAKING-OUT",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:PROKSANA-SPRINKLING",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:AVADANA-CUTTING-PORTIONS",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:ABHIGHARANA-BASTING",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:UPASTARANA-UNDERLAYING",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:PRANAYANA-CARRYING-FORWARD",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:ADHISRAYANA-PUTTING-ON-FIRE",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:UTPAVANA-STRAINING",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:SAMNAYANA-MIXING",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:VYUHANA-SPREADING-OUT",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:PARISAMUHANA-SWEEPING",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:ULLEKHANA-DRAWING-LINES",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        }
+      ],
       "match_property": "entity_key",
       "key_minted_from_identity": false,
       "distinct_subjects": 35,
-      "already_present": 9,
-      "nodes_create": 26,
-      "nodes_update": 9,
+      "already_present": 35,
+      "nodes_create": 0,
+      "nodes_update": 35,
       "subjects_absent_from_graph": [],
       "property_writes": 0,
       "dangling_references": 0
@@ -1135,14 +1318,75 @@
       "evidence_fields_declared": [],
       "elements_redirected_not_created": 0,
       "redirect_detail": [],
-      "node_status_disagreements": 0,
-      "node_status_disagreement_detail": [],
+      "node_status_disagreements": 24,
+      "node_status_disagreement_detail": [
+        {
+          "key": "VG:CONCEPT:SRUVA-DIPPING-SPOON",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:JUHU-SPOON",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:UPABHRT-SPOON",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:DHRUVA-SPOON",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:SPHYA-WOODEN-SWORD",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:KAPALA-POTSHERD",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:MUSALA-PESTLE",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:DRSAD-GRINDING-STONE",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:UPALA-UPPER-STONE",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:SURPA-WINNOWING-BASKET",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:KRSNAJINA-BLACK-ANTELOPE-SKIN",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:SAMYA-YOKE-PIN",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        }
+      ],
       "match_property": "entity_key",
       "key_minted_from_identity": false,
       "distinct_subjects": 47,
-      "already_present": 23,
-      "nodes_create": 24,
-      "nodes_update": 23,
+      "already_present": 47,
+      "nodes_create": 0,
+      "nodes_update": 47,
       "subjects_absent_from_graph": [],
       "property_writes": 0,
       "dangling_references": 0
@@ -1172,7 +1416,7 @@
       "evidence_fields_declared": [],
       "elements_redirected_not_created": 0,
       "redirect_detail": [],
-      "node_status_disagreements": 11,
+      "node_status_disagreements": 32,
       "node_status_disagreement_detail": [
         {
           "key": "VG:CONCEPT:VRIHI-RICE",
@@ -1195,37 +1439,42 @@
           "graph_says": "PRESENT"
         },
         {
-          "key": "VG:CONCEPT:HIRANYA-GOLD",
+          "key": "VG:CONCEPT:PRIYANGU-MILLET",
           "artifact_says": "PROPOSED_NEW",
           "graph_says": "PRESENT"
         },
         {
-          "key": "VG:CONCEPT:RAJATA-SILVER",
+          "key": "VG:CONCEPT:NIVARA-WILD-RICE",
           "artifact_says": "PROPOSED_NEW",
           "graph_says": "PRESENT"
         },
         {
-          "key": "VG:CONCEPT:LOHA-COPPER",
+          "key": "VG:CONCEPT:SYAMAKA-MILLET",
           "artifact_says": "PROPOSED_NEW",
           "graph_says": "PRESENT"
         },
         {
-          "key": "VG:CONCEPT:TRAPU-TIN",
+          "key": "VG:CONCEPT:TANDULA-HUSKED-GRAIN",
           "artifact_says": "PROPOSED_NEW",
           "graph_says": "PRESENT"
         },
         {
-          "key": "VG:CONCEPT:SISA-LEAD",
+          "key": "VG:CONCEPT:DARBHA-GRASS",
           "artifact_says": "PROPOSED_NEW",
           "graph_says": "PRESENT"
         },
         {
-          "key": "VG:CONCEPT:AYAS-METAL",
+          "key": "VG:CONCEPT:KUSA-GRASS",
           "artifact_says": "PROPOSED_NEW",
           "graph_says": "PRESENT"
         },
         {
-          "key": "VG:CONCEPT:SYAMA-DARK-METAL",
+          "key": "VG:CONCEPT:PALASA-WOOD",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:KHADIRA-WOOD",
           "artifact_says": "PROPOSED_NEW",
           "graph_says": "PRESENT"
         }
@@ -1233,9 +1482,9 @@
       "match_property": "entity_key",
       "key_minted_from_identity": false,
       "distinct_subjects": 32,
-      "already_present": 11,
-      "nodes_create": 21,
-      "nodes_update": 11,
+      "already_present": 32,
+      "nodes_create": 0,
+      "nodes_update": 32,
       "subjects_absent_from_graph": [],
       "property_writes": 0,
       "dangling_references": 0
@@ -1265,8 +1514,33 @@
       "evidence_fields_declared": [],
       "elements_redirected_not_created": 0,
       "redirect_detail": [],
-      "node_status_disagreements": 5,
+      "node_status_disagreements": 13,
       "node_status_disagreement_detail": [
+        {
+          "key": "VG:CONCEPT:PURODASA-CAKE",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:CARU-GRUEL",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:AJYA-MELTED-BUTTER",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:AMIKSA-CURDLED-MILK",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:DADHI-SOUR-MILK",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
         {
           "key": "VG:CONCEPT:PAYAS-MILK",
           "artifact_says": "PROPOSED_NEW",
@@ -1274,6 +1548,16 @@
         },
         {
           "key": "VG:CONCEPT:AJA-GOAT",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:VAPA-OMENTUM",
+          "artifact_says": "PROPOSED_NEW",
+          "graph_says": "PRESENT"
+        },
+        {
+          "key": "VG:CONCEPT:PRAJAPATI-PURODASA",
           "artifact_says": "PROPOSED_NEW",
           "graph_says": "PRESENT"
         },
@@ -1296,9 +1580,9 @@
       "match_property": "entity_key",
       "key_minted_from_identity": false,
       "distinct_subjects": 21,
-      "already_present": 13,
-      "nodes_create": 8,
-      "nodes_update": 13,
+      "already_present": 21,
+      "nodes_create": 0,
+      "nodes_update": 21,
       "subjects_absent_from_graph": [],
       "property_writes": 0,
       "dangling_references": 0
@@ -1501,12 +1785,12 @@
       "start_endpoints_absent": 0,
       "end_endpoints_absent": 0,
       "endpoints_provided_by_this_plan": 9355,
-      "triples_awaiting_an_earlier_step": 9255,
+      "triples_awaiting_an_earlier_step": 0,
       "endpoints_redirected": 357,
       "ambiguous_endpoint_keys": 0,
       "ambiguous_endpoint_detail": [],
-      "relationships_create": 9255,
-      "relationships_update": 0,
+      "relationships_create": 0,
+      "relationships_update": 9255,
       "property_writes": 0,
       "expected_to_exist_but_absent": 0,
       "expected_to_exist_but_absent_detail": []
@@ -1541,9 +1825,9 @@
       "match_property": "entity_key",
       "key_minted_from_identity": false,
       "distinct_subjects": 17,
-      "already_present": 0,
-      "nodes_create": 17,
-      "nodes_update": 0,
+      "already_present": 17,
+      "nodes_create": 0,
+      "nodes_update": 17,
       "subjects_absent_from_graph": [],
       "property_writes": 0,
       "dangling_references": 0
@@ -1578,9 +1862,9 @@
       "match_property": "entity_key",
       "key_minted_from_identity": false,
       "distinct_subjects": 17,
-      "already_present": 0,
-      "nodes_create": 17,
-      "nodes_update": 0,
+      "already_present": 17,
+      "nodes_create": 0,
+      "nodes_update": 17,
       "subjects_absent_from_graph": [],
       "property_writes": 0,
       "dangling_references": 0
@@ -1613,9 +1897,9 @@
       "match_property": "entity_key",
       "key_minted_from_identity": true,
       "distinct_subjects": 113,
-      "already_present": 0,
-      "nodes_create": 113,
-      "nodes_update": 0,
+      "already_present": 113,
+      "nodes_create": 0,
+      "nodes_update": 113,
       "subjects_absent_from_graph": [],
       "property_writes": 0,
       "dangling_references": 0
@@ -1655,12 +1939,12 @@
       "start_endpoints_absent": 0,
       "end_endpoints_absent": 0,
       "endpoints_provided_by_this_plan": 113,
-      "triples_awaiting_an_earlier_step": 113,
+      "triples_awaiting_an_earlier_step": 0,
       "endpoints_redirected": 0,
       "ambiguous_endpoint_keys": 0,
       "ambiguous_endpoint_detail": [],
-      "relationships_create": 113,
-      "relationships_update": 0,
+      "relationships_create": 0,
+      "relationships_update": 113,
       "property_writes": 0,
       "expected_to_exist_but_absent": 0,
       "expected_to_exist_but_absent_detail": []
@@ -1705,11 +1989,498 @@
       "start_endpoints_absent": 0,
       "end_endpoints_absent": 0,
       "endpoints_provided_by_this_plan": 2568,
-      "triples_awaiting_an_earlier_step": 2568,
+      "triples_awaiting_an_earlier_step": 0,
       "endpoints_redirected": 0,
       "ambiguous_endpoint_keys": 0,
       "ambiguous_endpoint_detail": [],
-      "relationships_create": 2568,
+      "relationships_create": 0,
+      "relationships_update": 2568,
+      "property_writes": 0,
+      "expected_to_exist_but_absent": 0,
+      "expected_to_exist_but_absent_detail": []
+    },
+    {
+      "group_id": "SCHOLARSHIP_ASSERTED_BY_A",
+      "domain": "scholarship",
+      "kind": "RELATIONSHIP",
+      "element": "ASSERTED_BY",
+      "source": "rows.jsonl",
+      "identity_fields": [
+        "canonical_key",
+        "payload.axis",
+        "payload.position_a.asserter_id"
+      ],
+      "require": [],
+      "notes": "The first of two named asserters per claim. Without these the 17 :Scholar nodes are unreachable and the graph cannot answer who disagreed with whom, which is the whole substance of the domain: 91 disagreements, each with two named asserters, two page-precise locators and a stated incompatibility.",
+      "artifact_elements": 113,
+      "filtered_out_by_require": 0,
+      "candidates": 113,
+      "candidates_before_collision_withholding": 113,
+      "distinct_identities": 113,
+      "identity_collisions": 0,
+      "identity_collisions_withheld": 0,
+      "rows_withheld_on_identity_collision": 0,
+      "identity_collision_detail": [],
+      "multi_source_evidence_merges": 0,
+      "multi_source_detail": [],
+      "evidence_fields_declared": [],
+      "unique_triples": 113,
+      "rows_missing_an_endpoint_field": 0,
+      "relationship_types_asserted": [
+        "ASSERTED_BY"
+      ],
+      "dangling_references": 0,
+      "dangling_detail": [],
+      "start_endpoints_absent": 0,
+      "end_endpoints_absent": 0,
+      "endpoints_provided_by_this_plan": 123,
+      "triples_awaiting_an_earlier_step": 0,
+      "endpoints_redirected": 0,
+      "ambiguous_endpoint_keys": 0,
+      "ambiguous_endpoint_detail": [],
+      "relationships_create": 113,
+      "relationships_update": 0,
+      "property_writes": 0,
+      "expected_to_exist_but_absent": 0,
+      "expected_to_exist_but_absent_detail": []
+    },
+    {
+      "group_id": "SCHOLARSHIP_ASSERTED_BY_B",
+      "domain": "scholarship",
+      "kind": "RELATIONSHIP",
+      "element": "ASSERTED_BY",
+      "source": "rows.jsonl",
+      "identity_fields": [
+        "canonical_key",
+        "payload.axis",
+        "payload.position_b.asserter_id"
+      ],
+      "require": [],
+      "notes": "The second asserter. A claim whose two asserters are the same person was already withdrawn by the domain, so a MERGE collapsing the pair cannot hide one.",
+      "artifact_elements": 113,
+      "filtered_out_by_require": 0,
+      "candidates": 113,
+      "candidates_before_collision_withholding": 113,
+      "distinct_identities": 113,
+      "identity_collisions": 0,
+      "identity_collisions_withheld": 0,
+      "rows_withheld_on_identity_collision": 0,
+      "identity_collision_detail": [],
+      "multi_source_evidence_merges": 0,
+      "multi_source_detail": [],
+      "evidence_fields_declared": [],
+      "unique_triples": 113,
+      "rows_missing_an_endpoint_field": 0,
+      "relationship_types_asserted": [
+        "ASSERTED_BY"
+      ],
+      "dangling_references": 0,
+      "dangling_detail": [],
+      "start_endpoints_absent": 0,
+      "end_endpoints_absent": 0,
+      "endpoints_provided_by_this_plan": 123,
+      "triples_awaiting_an_earlier_step": 0,
+      "endpoints_redirected": 0,
+      "ambiguous_endpoint_keys": 0,
+      "ambiguous_endpoint_detail": [],
+      "relationships_create": 113,
+      "relationships_update": 0,
+      "property_writes": 0,
+      "expected_to_exist_but_absent": 0,
+      "expected_to_exist_but_absent_detail": []
+    },
+    {
+      "group_id": "SCHOLARSHIP_POSITION_WORK_A",
+      "domain": "scholarship",
+      "kind": "RELATIONSHIP",
+      "element": "POSITION_STATED_IN",
+      "source": "rows.jsonl",
+      "identity_fields": [
+        "canonical_key",
+        "payload.axis",
+        "payload.position_a.work_id"
+      ],
+      "require": [],
+      "notes": "Where the first position is stated. Distinct from REPORTED_IN below: the work that states a position is not the work that reports the disagreement.",
+      "artifact_elements": 113,
+      "filtered_out_by_require": 0,
+      "candidates": 113,
+      "candidates_before_collision_withholding": 113,
+      "distinct_identities": 113,
+      "identity_collisions": 0,
+      "identity_collisions_withheld": 0,
+      "rows_withheld_on_identity_collision": 0,
+      "identity_collision_detail": [],
+      "multi_source_evidence_merges": 0,
+      "multi_source_detail": [],
+      "evidence_fields_declared": [],
+      "unique_triples": 113,
+      "rows_missing_an_endpoint_field": 0,
+      "relationship_types_asserted": [
+        "POSITION_STATED_IN"
+      ],
+      "dangling_references": 0,
+      "dangling_detail": [],
+      "start_endpoints_absent": 0,
+      "end_endpoints_absent": 0,
+      "endpoints_provided_by_this_plan": 123,
+      "triples_awaiting_an_earlier_step": 0,
+      "endpoints_redirected": 0,
+      "ambiguous_endpoint_keys": 0,
+      "ambiguous_endpoint_detail": [],
+      "relationships_create": 113,
+      "relationships_update": 0,
+      "property_writes": 0,
+      "expected_to_exist_but_absent": 0,
+      "expected_to_exist_but_absent_detail": []
+    },
+    {
+      "group_id": "SCHOLARSHIP_POSITION_WORK_B",
+      "domain": "scholarship",
+      "kind": "RELATIONSHIP",
+      "element": "POSITION_STATED_IN",
+      "source": "rows.jsonl",
+      "identity_fields": [
+        "canonical_key",
+        "payload.axis",
+        "payload.position_b.work_id"
+      ],
+      "require": [],
+      "notes": "Where the second position is stated.",
+      "artifact_elements": 113,
+      "filtered_out_by_require": 0,
+      "candidates": 113,
+      "candidates_before_collision_withholding": 113,
+      "distinct_identities": 113,
+      "identity_collisions": 0,
+      "identity_collisions_withheld": 0,
+      "rows_withheld_on_identity_collision": 0,
+      "identity_collision_detail": [],
+      "multi_source_evidence_merges": 0,
+      "multi_source_detail": [],
+      "evidence_fields_declared": [],
+      "unique_triples": 113,
+      "rows_missing_an_endpoint_field": 0,
+      "relationship_types_asserted": [
+        "POSITION_STATED_IN"
+      ],
+      "dangling_references": 0,
+      "dangling_detail": [],
+      "start_endpoints_absent": 0,
+      "end_endpoints_absent": 0,
+      "endpoints_provided_by_this_plan": 122,
+      "triples_awaiting_an_earlier_step": 0,
+      "endpoints_redirected": 0,
+      "ambiguous_endpoint_keys": 0,
+      "ambiguous_endpoint_detail": [],
+      "relationships_create": 113,
+      "relationships_update": 0,
+      "property_writes": 0,
+      "expected_to_exist_but_absent": 0,
+      "expected_to_exist_but_absent_detail": []
+    },
+    {
+      "group_id": "SCHOLARSHIP_REPORTED_IN",
+      "domain": "scholarship",
+      "kind": "RELATIONSHIP",
+      "element": "REPORTED_IN",
+      "source": "rows.jsonl",
+      "identity_fields": [
+        "canonical_key",
+        "payload.axis",
+        "payload.witness.work_id"
+      ],
+      "require": [],
+      "notes": "The work that REPORTS the disagreement, which is a different claim from stating a position in it. 73 rows are typed ASCRIPTION_DISPUTED_BY_THE_REPORTING_SOURCE precisely because the reporter and the asserter are not the same voice, and collapsing the two edges would erase that distinction.",
+      "artifact_elements": 113,
+      "filtered_out_by_require": 0,
+      "candidates": 113,
+      "candidates_before_collision_withholding": 113,
+      "distinct_identities": 113,
+      "identity_collisions": 0,
+      "identity_collisions_withheld": 0,
+      "rows_withheld_on_identity_collision": 0,
+      "identity_collision_detail": [],
+      "multi_source_evidence_merges": 0,
+      "multi_source_detail": [],
+      "evidence_fields_declared": [],
+      "unique_triples": 113,
+      "rows_missing_an_endpoint_field": 0,
+      "relationship_types_asserted": [
+        "REPORTED_IN"
+      ],
+      "dangling_references": 0,
+      "dangling_detail": [],
+      "start_endpoints_absent": 0,
+      "end_endpoints_absent": 0,
+      "endpoints_provided_by_this_plan": 116,
+      "triples_awaiting_an_earlier_step": 0,
+      "endpoints_redirected": 0,
+      "ambiguous_endpoint_keys": 0,
+      "ambiguous_endpoint_detail": [],
+      "relationships_create": 113,
+      "relationships_update": 0,
+      "property_writes": 0,
+      "expected_to_exist_but_absent": 0,
+      "expected_to_exist_but_absent_detail": []
+    },
+    {
+      "group_id": "RITUAL_ATTESTATION_EDGES",
+      "domain": "ritual",
+      "kind": "RELATIONSHIP",
+      "element": "ATTESTED_IN",
+      "source": "rites.jsonl!flatten:ritual_key:samhita_attestation_examples",
+      "identity_fields": [
+        "ritual_key",
+        "value"
+      ],
+      "require": [],
+      "notes": "The Saṃhitā attestation the registries already measured, as an edge instead of a JSON property. 1,266 (entity, passage) pairs across 153 entities, and it is what makes 17 of the 31 unreachable registry entities reachable. Rites only: the other five registries are flattened by the sibling groups below.",
+      "artifact_elements": 234,
+      "filtered_out_by_require": 0,
+      "candidates": 234,
+      "candidates_before_collision_withholding": 234,
+      "distinct_identities": 234,
+      "identity_collisions": 0,
+      "identity_collisions_withheld": 0,
+      "rows_withheld_on_identity_collision": 0,
+      "identity_collision_detail": [],
+      "multi_source_evidence_merges": 0,
+      "multi_source_detail": [],
+      "evidence_fields_declared": [],
+      "unique_triples": 234,
+      "rows_missing_an_endpoint_field": 0,
+      "relationship_types_asserted": [
+        "ATTESTED_IN"
+      ],
+      "dangling_references": 0,
+      "dangling_detail": [],
+      "start_endpoints_absent": 0,
+      "end_endpoints_absent": 0,
+      "endpoints_provided_by_this_plan": 43,
+      "triples_awaiting_an_earlier_step": 0,
+      "endpoints_redirected": 3,
+      "ambiguous_endpoint_keys": 0,
+      "ambiguous_endpoint_detail": [],
+      "relationships_create": 234,
+      "relationships_update": 0,
+      "property_writes": 0,
+      "expected_to_exist_but_absent": 0,
+      "expected_to_exist_but_absent_detail": []
+    },
+    {
+      "group_id": "RITUAL_ROLE_ATTESTATION",
+      "domain": "ritual",
+      "kind": "RELATIONSHIP",
+      "element": "ATTESTED_IN",
+      "source": "roles.jsonl!flatten:role_key:samhita_attestation_examples",
+      "identity_fields": [
+        "role_key",
+        "value"
+      ],
+      "require": [],
+      "notes": "Saṃhitā attestation for roles.jsonl, same contract as the rites group.",
+      "artifact_elements": 0,
+      "filtered_out_by_require": 0,
+      "candidates": 0,
+      "candidates_before_collision_withholding": 0,
+      "distinct_identities": 0,
+      "identity_collisions": 0,
+      "identity_collisions_withheld": 0,
+      "rows_withheld_on_identity_collision": 0,
+      "identity_collision_detail": [],
+      "multi_source_evidence_merges": 0,
+      "multi_source_detail": [],
+      "evidence_fields_declared": [],
+      "unique_triples": 0,
+      "rows_missing_an_endpoint_field": 0,
+      "relationship_types_asserted": [],
+      "dangling_references": 0,
+      "dangling_detail": [],
+      "start_endpoints_absent": 0,
+      "end_endpoints_absent": 0,
+      "endpoints_provided_by_this_plan": 0,
+      "triples_awaiting_an_earlier_step": 0,
+      "endpoints_redirected": 0,
+      "ambiguous_endpoint_keys": 0,
+      "ambiguous_endpoint_detail": [],
+      "relationships_create": 0,
+      "relationships_update": 0,
+      "property_writes": 0,
+      "expected_to_exist_but_absent": 0,
+      "expected_to_exist_but_absent_detail": []
+    },
+    {
+      "group_id": "RITUAL_ACTION_ATTESTATION",
+      "domain": "ritual",
+      "kind": "RELATIONSHIP",
+      "element": "ATTESTED_IN",
+      "source": "actions.jsonl!flatten:concept_key:samhita_attestation_examples",
+      "identity_fields": [
+        "concept_key",
+        "value"
+      ],
+      "require": [],
+      "notes": "Saṃhitā attestation for actions.jsonl, same contract as the rites group.",
+      "artifact_elements": 142,
+      "filtered_out_by_require": 0,
+      "candidates": 142,
+      "candidates_before_collision_withholding": 142,
+      "distinct_identities": 142,
+      "identity_collisions": 0,
+      "identity_collisions_withheld": 0,
+      "rows_withheld_on_identity_collision": 0,
+      "identity_collision_detail": [],
+      "multi_source_evidence_merges": 0,
+      "multi_source_detail": [],
+      "evidence_fields_declared": [],
+      "unique_triples": 142,
+      "rows_missing_an_endpoint_field": 0,
+      "relationship_types_asserted": [
+        "ATTESTED_IN"
+      ],
+      "dangling_references": 0,
+      "dangling_detail": [],
+      "start_endpoints_absent": 0,
+      "end_endpoints_absent": 0,
+      "endpoints_provided_by_this_plan": 21,
+      "triples_awaiting_an_earlier_step": 0,
+      "endpoints_redirected": 0,
+      "ambiguous_endpoint_keys": 0,
+      "ambiguous_endpoint_detail": [],
+      "relationships_create": 142,
+      "relationships_update": 0,
+      "property_writes": 0,
+      "expected_to_exist_but_absent": 0,
+      "expected_to_exist_but_absent_detail": []
+    },
+    {
+      "group_id": "RITUAL_IMPLEMENT_ATTESTATION",
+      "domain": "ritual",
+      "kind": "RELATIONSHIP",
+      "element": "ATTESTED_IN",
+      "source": "implements.jsonl!flatten:concept_key:samhita_attestation_examples",
+      "identity_fields": [
+        "concept_key",
+        "value"
+      ],
+      "require": [],
+      "notes": "Saṃhitā attestation for implements.jsonl, same contract as the rites group.",
+      "artifact_elements": 436,
+      "filtered_out_by_require": 0,
+      "candidates": 436,
+      "candidates_before_collision_withholding": 436,
+      "distinct_identities": 436,
+      "identity_collisions": 0,
+      "identity_collisions_withheld": 0,
+      "rows_withheld_on_identity_collision": 0,
+      "identity_collision_detail": [],
+      "multi_source_evidence_merges": 0,
+      "multi_source_detail": [],
+      "evidence_fields_declared": [],
+      "unique_triples": 436,
+      "rows_missing_an_endpoint_field": 0,
+      "relationship_types_asserted": [
+        "ATTESTED_IN"
+      ],
+      "dangling_references": 0,
+      "dangling_detail": [],
+      "start_endpoints_absent": 0,
+      "end_endpoints_absent": 0,
+      "endpoints_provided_by_this_plan": 41,
+      "triples_awaiting_an_earlier_step": 0,
+      "endpoints_redirected": 0,
+      "ambiguous_endpoint_keys": 0,
+      "ambiguous_endpoint_detail": [],
+      "relationships_create": 436,
+      "relationships_update": 0,
+      "property_writes": 0,
+      "expected_to_exist_but_absent": 0,
+      "expected_to_exist_but_absent_detail": []
+    },
+    {
+      "group_id": "RITUAL_MATERIAL_ATTESTATION",
+      "domain": "ritual",
+      "kind": "RELATIONSHIP",
+      "element": "ATTESTED_IN",
+      "source": "materials.jsonl!flatten:concept_key:samhita_attestation_examples",
+      "identity_fields": [
+        "concept_key",
+        "value"
+      ],
+      "require": [],
+      "notes": "Saṃhitā attestation for materials.jsonl, same contract as the rites group.",
+      "artifact_elements": 139,
+      "filtered_out_by_require": 0,
+      "candidates": 139,
+      "candidates_before_collision_withholding": 139,
+      "distinct_identities": 139,
+      "identity_collisions": 0,
+      "identity_collisions_withheld": 0,
+      "rows_withheld_on_identity_collision": 0,
+      "identity_collision_detail": [],
+      "multi_source_evidence_merges": 0,
+      "multi_source_detail": [],
+      "evidence_fields_declared": [],
+      "unique_triples": 139,
+      "rows_missing_an_endpoint_field": 0,
+      "relationship_types_asserted": [
+        "ATTESTED_IN"
+      ],
+      "dangling_references": 0,
+      "dangling_detail": [],
+      "start_endpoints_absent": 0,
+      "end_endpoints_absent": 0,
+      "endpoints_provided_by_this_plan": 25,
+      "triples_awaiting_an_earlier_step": 0,
+      "endpoints_redirected": 0,
+      "ambiguous_endpoint_keys": 0,
+      "ambiguous_endpoint_detail": [],
+      "relationships_create": 139,
+      "relationships_update": 0,
+      "property_writes": 0,
+      "expected_to_exist_but_absent": 0,
+      "expected_to_exist_but_absent_detail": []
+    },
+    {
+      "group_id": "RITUAL_OFFERING_ATTESTATION",
+      "domain": "ritual",
+      "kind": "RELATIONSHIP",
+      "element": "ATTESTED_IN",
+      "source": "offerings.jsonl!flatten:concept_key:samhita_attestation_examples",
+      "identity_fields": [
+        "concept_key",
+        "value"
+      ],
+      "require": [],
+      "notes": "Saṃhitā attestation for offerings.jsonl, same contract as the rites group.",
+      "artifact_elements": 315,
+      "filtered_out_by_require": 0,
+      "candidates": 315,
+      "candidates_before_collision_withholding": 315,
+      "distinct_identities": 315,
+      "identity_collisions": 0,
+      "identity_collisions_withheld": 0,
+      "rows_withheld_on_identity_collision": 0,
+      "identity_collision_detail": [],
+      "multi_source_evidence_merges": 0,
+      "multi_source_detail": [],
+      "evidence_fields_declared": [],
+      "unique_triples": 315,
+      "rows_missing_an_endpoint_field": 0,
+      "relationship_types_asserted": [
+        "ATTESTED_IN"
+      ],
+      "dangling_references": 0,
+      "dangling_detail": [],
+      "start_endpoints_absent": 0,
+      "end_endpoints_absent": 0,
+      "endpoints_provided_by_this_plan": 21,
+      "triples_awaiting_an_earlier_step": 0,
+      "endpoints_redirected": 0,
+      "ambiguous_endpoint_keys": 0,
+      "ambiguous_endpoint_detail": [],
+      "relationships_create": 315,
       "relationships_update": 0,
       "property_writes": 0,
       "expected_to_exist_but_absent": 0,
@@ -1745,9 +2516,9 @@
       "match_property": "community_id",
       "key_minted_from_identity": false,
       "distinct_subjects": 12,
-      "already_present": 0,
-      "nodes_create": 12,
-      "nodes_update": 0,
+      "already_present": 12,
+      "nodes_create": 0,
+      "nodes_update": 12,
       "subjects_absent_from_graph": [],
       "property_writes": 0,
       "dangling_references": 0
@@ -1785,9 +2556,9 @@
       "match_property": "entity_key",
       "key_minted_from_identity": true,
       "distinct_subjects": 2568,
-      "already_present": 0,
-      "nodes_create": 2568,
-      "nodes_update": 0,
+      "already_present": 2568,
+      "nodes_create": 0,
+      "nodes_update": 2568,
       "subjects_absent_from_graph": [],
       "property_writes": 0,
       "dangling_references": 0
@@ -1797,23 +2568,23 @@
     "ambiguous_endpoint_keys": 0,
     "dangling_references": 0,
     "elements_redirected_not_created": 3,
-    "endpoints_redirected": 366,
+    "endpoints_redirected": 369,
     "expected_to_exist_but_absent": 1765,
     "identity_collisions": 18,
     "identity_collisions_withheld": 18,
     "multi_source_evidence_merges": 147,
-    "node_status_disagreements": 16,
-    "nodes_create": 14221,
-    "nodes_update": 5647,
+    "node_status_disagreements": 203,
+    "nodes_create": 0,
+    "nodes_update": 19868,
     "property_writes": 51215,
-    "relationships_create": 21150,
-    "relationships_update": 43888,
+    "relationships_create": 1831,
+    "relationships_update": 65038,
     "rows_withheld_on_identity_collision": 36,
-    "triples_awaiting_an_earlier_step": 14929
+    "triples_awaiting_an_earlier_step": 0
   },
   "by_domain": {
     "communities": {
-      "nodes_create": 12,
+      "nodes_create": 0,
       "property_writes": 0,
       "relationships_create": 0
     },
@@ -1825,54 +2596,44 @@
     "formula": {
       "nodes_create": 0,
       "property_writes": 34364,
-      "relationships_create": 6148
+      "relationships_create": 0
     },
     "quality": {
-      "nodes_create": 2568,
+      "nodes_create": 0,
       "property_writes": 0,
-      "relationships_create": 2568
+      "relationships_create": 0
     },
     "ritual": {
-      "nodes_create": 9442,
+      "nodes_create": 0,
       "property_writes": 27,
-      "relationships_create": 9882
+      "relationships_create": 1266
     },
     "scholarship": {
-      "nodes_create": 147,
+      "nodes_create": 0,
       "property_writes": 0,
-      "relationships_create": 113
+      "relationships_create": 565
     },
     "semantic_roles": {
-      "nodes_create": 2052,
+      "nodes_create": 0,
       "property_writes": 0,
-      "relationships_create": 2439
+      "relationships_create": 0
     }
   },
   "schema_additions": {
-    "node_labels_created": [
-      "Action",
-      "DeityCommunity",
-      "InterpretiveClaim",
-      "Object",
-      "Offering",
-      "QualityVerdict",
-      "Ritual",
-      "RitualRole",
-      "RitualStep",
-      "RoleFiller",
-      "Scholar",
-      "ScholarlyWork",
-      "Substance"
-    ],
+    "node_labels_created": [],
     "relationship_types_touched": [
+      "ASSERTED_BY",
       "ASSERTION_ROLE",
+      "ATTESTED_IN",
       "FORM_OF_RITE",
       "HAS_RITUAL_STEP",
       "INTERPRETIVE_CLAIM_ABOUT",
       "PART_OF_RITE",
       "PERFORMED_BY",
+      "POSITION_STATED_IN",
       "QUALITY_VERDICT_ABOUT",
       "REFERS_TO",
+      "REPORTED_IN",
       "RITE_INVOLVES_ACTION",
       "SHARES_FORMULA_WITH",
       "USES_OBJECT",
@@ -1881,12 +2642,12 @@
     ]
   },
   "expected_census": {
-    "nodes_before": 108779,
+    "nodes_before": 123000,
     "nodes_after": 123000,
-    "nodes_delta": 14221,
-    "relationships_before": 265295,
-    "relationships_after": 286445,
-    "relationships_delta": 21150,
+    "nodes_delta": 0,
+    "relationships_before": 286220,
+    "relationships_after": 288051,
+    "relationships_delta": 1831,
     "note": "No group plans a retirement, so no element is removed by an ADDITION. The retirements Wave 3 makes are corrections, planned separately and named in the dry-run: the SOMA-PRESSING weak-alias retirement."
   },
   "identity_collisions_are_all_withheld": true,
