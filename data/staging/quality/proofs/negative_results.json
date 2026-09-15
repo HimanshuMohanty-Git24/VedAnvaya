@@ -1,0 +1,290 @@
+{
+ "what_could_not_be_scored_and_why": [
+  {
+   "layer": "Samavedic anything",
+   "status": "NO_REFERENCE_EXISTS",
+   "detail": "The treebank's 57 texts include no Samavedic text. With DCS (271 corpora) and VedaWeb (7 texts) already recorded as negative in Wave 0, that is three independent negatives. 1,844 Samavedic mantras carry 2,027 ABOUT_CONCEPT edges, 1,335 MENTIONS_DEVATA edges and 1,311 USES_FORMULA edges, and not one of them can be adjudicated against any published annotation."
+  },
+  {
+   "layer": "morphology",
+   "status": "THERE_IS_NO_LAYER_TO_SCORE",
+   "detail": "The graph holds 10,031 :Lemma nodes carrying the Zurich lemma inventory, whose own mantra_count properties imply 154,261 mantra-lemma pairs. 9,000 edges exist, over 39 lemmas, all theonyms. Scoring that as morphology would be a category error; it is a theonym mention index. Its recall against the inventory the graph itself holds is 5.8%, and within the 39 lemmas it attempted it is 99.9%."
+  },
+  {
+   "layer": "formula membership and parallel detection",
+   "status": "SCORED_STRUCTURALLY_ONLY_AND_PREDATES_WAVE_2",
+   "detail": "Agents 10 and 12 are rebuilding these in this wave, so every figure here predates their work and must not be quoted against it. As it stands: 22,686 USES_FORMULA edges, all TIER_B, 2,109 of them from a sandhi-substring method of the same class as the concept layer's 0.55 tier; SHARES_FORMULA_WITH still has zero edges; and 5,808 parallel edges across four predicates carry no transformation type at all, confirming CROSS_VEDA-002. The parallel layer does carry the graph's only genuinely continuous quality measures -- similarity, edit_ratio, lcs_ratio, token_jaccard, ngram_jaccard -- which is what confidence should have looked like."
+  },
+  {
+   "layer": "aboutness, as distinct from lexical occurrence",
+   "status": "PARTLY_UNSCORABLE_BY_THIS_REFERENCE",
+   "detail": "A human lemma annotation can settle whether a word is in a verse and which word it is. It cannot settle whether a verse is *about* a concept. So ABOUT_CONCEPT is reported on its lexical claim, which its own method field says is all it makes, and the aboutness question is left open rather than answered by this agent's opinion."
+  },
+  {
+   "layer": "the three-role semantic assertion",
+   "status": "TWO_EARLIER_FIGURES_RECONCILED_NEITHER_WAS_WRONG",
+   "detail": "Benchmark Q67 said 17 assertions carry three role slots; agent-1-verification.md measured 0. Both are right. 17 assertions carry three role EDGES; 0 carry one edge of each of the three TYPES. The disagreement was in the predicate, not the count. 1,522 carry none, which both agree on."
+  }
+ ],
+ "role_slot_histogram": [
+  {
+   "derivation": "MODEL_EXTRACTION",
+   "slots": 0,
+   "n": 1522
+  },
+  {
+   "derivation": "MODEL_EXTRACTION",
+   "slots": 1,
+   "n": 730
+  },
+  {
+   "derivation": "MODEL_EXTRACTION",
+   "slots": 2,
+   "n": 190
+  },
+  {
+   "derivation": "MODEL_EXTRACTION",
+   "slots": 3,
+   "n": 17
+  },
+  {
+   "derivation": "MORPHOLOGY_RULE",
+   "slots": 2,
+   "n": 2406
+  }
+ ],
+ "lemma_layer": {
+  "nodes": 10031,
+  "implied_pairs": 154261,
+  "implied_tokens": 164758,
+  "edges": 9000,
+  "lemmas": 39,
+  "implied_pairs_for_the_wired_lemmas": 9005,
+  "recall_against_the_graphs_own_inventory": 0.05834,
+  "recall_within_the_lemmas_it_attempted": 0.99944,
+  "parts_of_speech": [
+   {
+    "pos": "[\"nominal stem\"]",
+    "n": 8897
+   },
+   {
+    "pos": "[\"root\"]",
+    "n": 702
+   },
+   {
+    "pos": "[\"invariable\"]",
+    "n": 406
+   },
+   {
+    "pos": "[\"pronoun\"]",
+    "n": 26
+   }
+  ],
+  "wired_lemmas": [
+   {
+    "lemma": "índra-",
+    "edges": 2305
+   },
+   {
+    "lemma": "agní-",
+    "edges": 1604
+   },
+   {
+    "lemma": "sóma-",
+    "edges": 950
+   },
+   {
+    "lemma": "aśvín-",
+    "edges": 439
+   },
+   {
+    "lemma": "marút-",
+    "edges": 401
+   },
+   {
+    "lemma": "váruṇa-",
+    "edges": 392
+   },
+   {
+    "lemma": "sū́rya-",
+    "edges": 378
+   },
+   {
+    "lemma": "uṣás-",
+    "edges": 353
+   },
+   {
+    "lemma": "pr̥thivī́-",
+    "edges": 319
+   },
+   {
+    "lemma": "mitrá-",
+    "edges": 317
+   },
+   {
+    "lemma": "savitár-",
+    "edges": 175
+   },
+   {
+    "lemma": "áditi-",
+    "edges": 163
+   },
+   {
+    "lemma": "vāyú-",
+    "edges": 132
+   },
+   {
+    "lemma": "rudrá-",
+    "edges": 128
+   },
+   {
+    "lemma": "bŕ̥haspáti-",
+    "edges": 121
+   },
+   {
+    "lemma": "pūṣán-",
+    "edges": 119
+   },
+   {
+    "lemma": "víṣṇu-",
+    "edges": 98
+   },
+   {
+    "lemma": "indrāgní-",
+    "edges": 93
+   },
+   {
+    "lemma": "mitrā́váruṇa-",
+    "edges": 92
+   },
+   {
+    "lemma": "dyā́vāpr̥thivī́-",
+    "edges": 83
+   },
+   {
+    "lemma": "sárasvant-",
+    "edges": 72
+   },
+   {
+    "lemma": "tváṣṭar-",
+    "edges": 65
+   },
+   {
+    "lemma": "śácī-",
+    "edges": 53
+   },
+   {
+    "lemma": "parjánya-",
+    "edges": 27
+   },
+   {
+    "lemma": "nírr̥ti-",
+    "edges": 24
+   },
+   {
+    "lemma": "draviṇodā́-",
+    "edges": 20
+   },
+   {
+    "lemma": "sarámā-",
+    "edges": 11
+   },
+   {
+    "lemma": "śraddhā́-",
+    "edges": 11
+   },
+   {
+    "lemma": "uṣā́sānáktā-",
+    "edges": 10
+   },
+   {
+    "lemma": "araṇyāní- ~ araṇyānī́-",
+    "edges": 6
+   },
+   {
+    "lemma": "yamī́-",
+    "edges": 6
+   },
+   {
+    "lemma": "índrābŕ̥haspáti-",
+    "edges": 6
+   },
+   {
+    "lemma": "dyā́vābhū́mī-",
+    "edges": 5
+   },
+   {
+    "lemma": "urváśī-",
+    "edges": 5
+   },
+   {
+    "lemma": "ásunīti-",
+    "edges": 5
+   },
+   {
+    "lemma": "rākā́-",
+    "edges": 4
+   },
+   {
+    "lemma": "sinīvālī́-",
+    "edges": 4
+   },
+   {
+    "lemma": "tā́rkṣya-",
+    "edges": 2
+   },
+   {
+    "lemma": "ásamāti-",
+    "edges": 2
+   }
+  ]
+ },
+ "formula_layer": {
+  "uses_formula": {
+   "edges": 22686,
+   "mantras": 10574,
+   "formulae": 4825
+  },
+  "shares_formula_with": {
+   "edges": 0
+  },
+  "by_tier": [
+   {
+    "tier": "TIER_B",
+    "method": "formula-occurrence-word-aligned-v1",
+    "evidence_basis": "SANSKRIT",
+    "n": 20577
+   },
+   {
+    "tier": "TIER_B",
+    "method": "formula-occurrence-sandhi-substring-v1",
+    "evidence_basis": "SANSKRIT",
+    "n": 2109
+   }
+  ],
+  "formula_length": [
+   {
+    "tokens": null,
+    "n": 4825
+   }
+  ]
+ },
+ "parallel_layer": {
+  "PARALLEL_TO": {
+   "edges": 69,
+   "transformation_types": 0
+  },
+  "EXACT_PARALLEL_OF": {
+   "edges": 1006,
+   "transformation_types": 0
+  },
+  "NEAR_PARALLEL_OF": {
+   "edges": 3049,
+   "transformation_types": 0
+  },
+  "REUSES_TEXT_FROM": {
+   "edges": 1684,
+   "transformation_types": 0
+  }
+ }
+}

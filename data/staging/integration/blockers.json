@@ -4,7 +4,7 @@
   "blockers": [
     {
       "blocker_id": "CURATION_CONTRADICTION_SOMA_PAVAMANA",
-      "status": "AWAITING_OWNER_DECISION",
+      "status": "RESOLVED_BY_OWNER_DECISION",
       "raised_by": "agent 15, adversarial preflight",
       "raised_at": "2026-09-15",
       "root_cause_type": "CURATION_CONTRADICTION",
@@ -41,7 +41,24 @@
         "semantic_resemblance",
         "attribution",
         "quality"
-      ]
+      ],
+      "owner_decision": {
+        "decided_at": "2026-09-15",
+        "chosen": "a fourth option, between B and C",
+        "statement": "Both distinctions carry useful semantics and EPITHET_VARIANT_OF is too strong for this case. Keep both nodes as separate analytical entities and link them with an additive specialized-form relation. Do not merge, do not delete the analytical distinction, do not weaken EPITHET_VARIANT_OF generally.",
+        "predicate_chosen": "SPECIALIZED_FORM_OF",
+        "predicate_rationale": "Chosen over RITUAL_ASPECT_OF on two grounds. The ontology already names relations in the X_OF idiom -- EPITHET_VARIANT_OF, VARIANT_OF, MEMBER_OF, MEMBER_OF_FAMILY -- so this reads as one of the family. And it generalises: a later specialization that is functional rather than liturgical would leave a ritual-named predicate either misapplied or duplicated.",
+        "semantics": "A SPECIALIZED_FORM_OF B means A is a contextually specialized manifestation or form of B and remains separately addressable for corpus analysis. It must NOT imply an orthographic alias, an epithet spelling, a node collapse, or interchangeability in every query.",
+        "scope": "Only the Soma Pavamana -> Soma edge, unless independent review finds another relation with the same semantic problem. The other 10 EPITHET_VARIANT_OF pairs were sampled and are epithets proper -- 'Agni Jatavedas', 'Agni the slayer of demons', 'the self of Agni' -- rather than distinct cult forms.",
+        "application_status": "NOT APPLIED. Wave 3 is not authorized, so this is staged as a migration card. The former edge's provenance is preserved for the migration record.",
+        "tests_to_re_run_on_application": [
+          "deity identity invariants",
+          "community input population",
+          "deity profile queries",
+          "Ask identity and disambiguation tests",
+          "Knowledge World projection tests"
+        ]
+      }
     },
     {
       "blocker_id": "NAME_COLLISION_SCOPE_TYPE",

@@ -1,0 +1,225 @@
+{
+ "finding": "1,176 mantras carry a source-explicit metre AND a container-inherited metre that name different Chandas nodes, and every one of those edges says confidence 1.0.",
+ "counts": {
+  "HAS_CHANDAS": {
+   "mantras_with_multiple_values": 1200,
+   "across_tiers": 1176,
+   "at_one_confidence": 1200,
+   "mantras_with_the_predicate": 14600
+  },
+  "HAS_DEVATA": {
+   "mantras_with_multiple_values": 6,
+   "across_tiers": 0,
+   "at_one_confidence": 6,
+   "mantras_with_the_predicate": 10552
+  },
+  "HAS_RISHI": {
+   "mantras_with_multiple_values": 307,
+   "across_tiers": 0,
+   "at_one_confidence": 307,
+   "mantras_with_the_predicate": 17036
+  }
+ },
+ "chandas_conflicts": {
+  "mantras": 1176
+ },
+ "examples": [
+  {
+   "key": "VG:AV:SAU:K06:S073:V001",
+   "source_explicit": "bhurij",
+   "inherited": "trāiṣṭubham",
+   "confidence_a": 1.0,
+   "confidence_b": 1.0
+  },
+  {
+   "key": "VG:AV:SAU:K06:S073:V003",
+   "source_explicit": "bhurij",
+   "inherited": "trāiṣṭubham",
+   "confidence_a": 1.0,
+   "confidence_b": 1.0
+  },
+  {
+   "key": "VG:AV:SAU:K04:S001:V002",
+   "source_explicit": "bhurij",
+   "inherited": "trāiṣṭubham",
+   "confidence_a": 1.0,
+   "confidence_b": 1.0
+  },
+  {
+   "key": "VG:AV:SAU:K04:S001:V005",
+   "source_explicit": "bhurij",
+   "inherited": "trāiṣṭubham",
+   "confidence_a": 1.0,
+   "confidence_b": 1.0
+  },
+  {
+   "key": "VG:AV:SAU:K02:S001:V003",
+   "source_explicit": "jagatī",
+   "inherited": "trāiṣṭubham",
+   "confidence_a": 1.0,
+   "confidence_b": 1.0
+  },
+  {
+   "key": "VG:AV:SAU:K03:S005:V001",
+   "source_explicit": "puro’nuṣṭup triṣṭubh",
+   "inherited": "ānuṣṭubham",
+   "confidence_a": 1.0,
+   "confidence_b": 1.0
+  },
+  {
+   "key": "VG:AV:SAU:K03:S005:V008",
+   "source_explicit": "virāḍurobṛhatī",
+   "inherited": "ānuṣṭubham",
+   "confidence_a": 1.0,
+   "confidence_b": 1.0
+  },
+  {
+   "key": "VG:AV:SAU:K04:S016:V001",
+   "source_explicit": "anuṣṭubh",
+   "inherited": "trāiṣṭubham",
+   "confidence_a": 1.0,
+   "confidence_b": 1.0
+  },
+  {
+   "key": "VG:AV:SAU:K04:S016:V005",
+   "source_explicit": "bhurij",
+   "inherited": "trāiṣṭubham",
+   "confidence_a": 1.0,
+   "confidence_b": 1.0
+  },
+  {
+   "key": "VG:AV:SAU:K04:S016:V007",
+   "source_explicit": "jagatī",
+   "inherited": "trāiṣṭubham",
+   "confidence_a": 1.0,
+   "confidence_b": 1.0
+  },
+  {
+   "key": "VG:AV:SAU:K04:S016:V008",
+   "source_explicit": "3-p. mahābṛhatī",
+   "inherited": "trāiṣṭubham",
+   "confidence_a": 1.0,
+   "confidence_b": 1.0
+  },
+  {
+   "key": "VG:AV:SAU:K04:S016:V009",
+   "source_explicit": "virāṇnāmatripādgāyatr",
+   "inherited": "trāiṣṭubham",
+   "confidence_a": 1.0,
+   "confidence_b": 1.0
+  }
+ ],
+ "why_this_is_not_merely_untidy": "An Anukramani names a per-verse metre precisely when it differs from the hymn's. So the disagreement is the index working, and the defect is that the inherited edge was not withdrawn when the explicit one arrived. A consumer reading HAS_CHANDAS on AVS 6.73.1 is handed both bhurij and traistubham at identical confidence, with quality_tier as the only thing that could break the tie -- and nothing in the API contract says a reader must.",
+ "not_the_same_for_dedication": "HAS_DEVATA has only 6 multi-valued mantras and none spanning tiers, and HAS_RISHI has 307 multi-valued and none spanning tiers. So this is specific to metre, and the fix is scoped.",
+ "attribution_split": [
+  {
+   "predicate": "HAS_CHANDAS",
+   "veda": "AV",
+   "tier": "TIER_A",
+   "precision": "PER_PASSAGE",
+   "edges": 1608,
+   "mantras": 1588
+  },
+  {
+   "predicate": "HAS_CHANDAS",
+   "veda": "AV",
+   "tier": "TIER_B",
+   "precision": "CONTAINER_INHERITED",
+   "edges": 3675,
+   "mantras": 3670
+  },
+  {
+   "predicate": "HAS_CHANDAS",
+   "veda": "RV",
+   "tier": "TIER_A",
+   "precision": "PER_PASSAGE",
+   "edges": 4247,
+   "mantras": 4242
+  },
+  {
+   "predicate": "HAS_CHANDAS",
+   "veda": "RV",
+   "tier": "TIER_B",
+   "precision": "CONTAINER_INHERITED",
+   "edges": 6276,
+   "mantras": 6276
+  },
+  {
+   "predicate": "HAS_DEVATA",
+   "veda": "RV",
+   "tier": "TIER_A",
+   "precision": "PER_PASSAGE",
+   "edges": 2229,
+   "mantras": 2223
+  },
+  {
+   "predicate": "HAS_DEVATA",
+   "veda": "RV",
+   "tier": "TIER_B",
+   "precision": "CONTAINER_INHERITED",
+   "edges": 8329,
+   "mantras": 8329
+  },
+  {
+   "predicate": "HAS_DEVATA_ASCRIPTION",
+   "veda": "AV",
+   "tier": "TIER_B",
+   "precision": "CONTAINER_INHERITED",
+   "edges": 4816,
+   "mantras": 4160
+  },
+  {
+   "predicate": "HAS_RISHI",
+   "veda": "AV",
+   "tier": "TIER_B",
+   "precision": "CONTAINER_INHERITED",
+   "edges": 4542,
+   "mantras": 4542
+  },
+  {
+   "predicate": "HAS_RISHI",
+   "veda": "RV",
+   "tier": "TIER_A",
+   "precision": "PER_PASSAGE",
+   "edges": 472,
+   "mantras": 467
+  },
+  {
+   "predicate": "HAS_RISHI",
+   "veda": "RV",
+   "tier": "TIER_B",
+   "precision": "CONTAINER_INHERITED",
+   "edges": 10093,
+   "mantras": 10067
+  },
+  {
+   "predicate": "HAS_RISHI",
+   "veda": "YV",
+   "tier": "TIER_A",
+   "precision": "PER_PASSAGE",
+   "edges": 2240,
+   "mantras": 1960
+  }
+ ],
+ "dedication_named_in_verse_by_tier": {
+  "TIER_A|PER_PASSAGE|SINGLE_MANTRA": {
+   "n": 12,
+   "dedicatee_named": 9,
+   "only_another_deity_named": 2,
+   "named_share": 0.75
+  },
+  "TIER_B|CONTAINER_INHERITED|SUKTA_WIDE": {
+   "n": 268,
+   "dedicatee_named": 146,
+   "only_another_deity_named": 85,
+   "named_share": 0.5448
+  },
+  "TIER_A|PER_PASSAGE|MANTRA_RANGE": {
+   "n": 82,
+   "dedicatee_named": 47,
+   "only_another_deity_named": 16,
+   "named_share": 0.5732
+  }
+ },
+ "how_to_read_the_dedication_table": "Dedication is not mention: a hymn dedicated to Indra need not name him. So a low named_share is not an error rate. It is reported because the gap between the tiers is the informative part -- 54.5% of verses carrying a sukta-wide inherited dedication name that deity, against 75% of the small per-verse single-mantra set."
+}

@@ -1,0 +1,396 @@
+{
+  "why_this_file_exists": "The naive accent rule is wrong on this data in two ways, and both were measured rather than assumed. U+0301 is the udatta over a vowel and the palatal sibilant over `s`, so it can only be stripped conditionally on the base character. And U+0304 is the long-vowel macron, not an accent: the first version of strip_accents removed it, turning `tva` and `tvaa` into one string.",
+  "validation": "Two independent witnesses of RV 1.1.1 -- VedaWeb's Aufrecht and GRETIL's Aufrecht, which differ in accent scheme, in anusvara and in the retroflex lateral -- normalise to a byte-identical string under letters_only().",
+  "supplementary_ritual_prose": [
+    {
+      "codepoint": "U+0304",
+      "name": "COMBINING MACRON",
+      "count": 248963,
+      "treatment": "KEPT_LETTER_FORMING"
+    },
+    {
+      "codepoint": "U+0323",
+      "name": "COMBINING DOT BELOW",
+      "count": 187120,
+      "treatment": "KEPT_LETTER_FORMING"
+    },
+    {
+      "codepoint": "U+0301",
+      "name": "COMBINING ACUTE ACCENT",
+      "count": 33530,
+      "treatment": "STRIPPED_OVER_A_VOWEL_ONLY"
+    },
+    {
+      "codepoint": "U+0303",
+      "name": "COMBINING TILDE",
+      "count": 7112,
+      "treatment": "KEPT_LETTER_FORMING"
+    },
+    {
+      "codepoint": "U+0307",
+      "name": "COMBINING DOT ABOVE",
+      "count": 2909,
+      "treatment": "KEPT_LETTER_FORMING"
+    },
+    {
+      "codepoint": "U+0325",
+      "name": "COMBINING RING BELOW",
+      "count": 9,
+      "treatment": "KEPT_LETTER_FORMING"
+    },
+    {
+      "codepoint": "U+0300",
+      "name": "COMBINING GRAVE ACCENT",
+      "count": 1,
+      "treatment": "STRIPPED_OVER_A_VOWEL_ONLY"
+    },
+    {
+      "codepoint": "U+0302",
+      "name": "COMBINING CIRCUMFLEX ACCENT",
+      "count": 1,
+      "treatment": "STRIPPED_OVER_A_VOWEL_ONLY"
+    }
+  ],
+  "samhita_text_versions": {
+    "GRETIL.AVS.SAUNAKA.ACCENTED": [
+      {
+        "codepoint": "U+0304",
+        "name": "COMBINING MACRON",
+        "count": 43636,
+        "treatment": "KEPT_LETTER_FORMING"
+      },
+      {
+        "codepoint": "U+0323",
+        "name": "COMBINING DOT BELOW",
+        "count": 32118,
+        "treatment": "KEPT_LETTER_FORMING"
+      },
+      {
+        "codepoint": "U+0301",
+        "name": "COMBINING ACUTE ACCENT",
+        "count": 7961,
+        "treatment": "STRIPPED_OVER_A_VOWEL_ONLY"
+      },
+      {
+        "codepoint": "U+0325",
+        "name": "COMBINING RING BELOW",
+        "count": 5148,
+        "treatment": "KEPT_LETTER_FORMING"
+      },
+      {
+        "codepoint": "U+0303",
+        "name": "COMBINING TILDE",
+        "count": 958,
+        "treatment": "KEPT_LETTER_FORMING"
+      },
+      {
+        "codepoint": "U+0307",
+        "name": "COMBINING DOT ABOVE",
+        "count": 481,
+        "treatment": "KEPT_LETTER_FORMING"
+      },
+      {
+        "codepoint": "U+0310",
+        "name": "COMBINING CANDRABINDU",
+        "count": 178,
+        "treatment": "KEPT_LETTER_FORMING"
+      },
+      {
+        "codepoint": "U+0300",
+        "name": "COMBINING GRAVE ACCENT",
+        "count": 8,
+        "treatment": "STRIPPED_OVER_A_VOWEL_ONLY"
+      }
+    ],
+    "GRETIL.AVS.SAUNAKA.UNACCENTED": [
+      {
+        "codepoint": "U+0304",
+        "name": "COMBINING MACRON",
+        "count": 43636,
+        "treatment": "KEPT_LETTER_FORMING"
+      },
+      {
+        "codepoint": "U+0323",
+        "name": "COMBINING DOT BELOW",
+        "count": 37444,
+        "treatment": "KEPT_LETTER_FORMING"
+      },
+      {
+        "codepoint": "U+0301",
+        "name": "COMBINING ACUTE ACCENT",
+        "count": 6789,
+        "treatment": "STRIPPED_OVER_A_VOWEL_ONLY"
+      },
+      {
+        "codepoint": "U+0303",
+        "name": "COMBINING TILDE",
+        "count": 958,
+        "treatment": "KEPT_LETTER_FORMING"
+      },
+      {
+        "codepoint": "U+0307",
+        "name": "COMBINING DOT ABOVE",
+        "count": 481,
+        "treatment": "KEPT_LETTER_FORMING"
+      }
+    ],
+    "GRETIL.RV.AUFRECHT": [
+      {
+        "codepoint": "U+0304",
+        "name": "COMBINING MACRON",
+        "count": 76812,
+        "treatment": "KEPT_LETTER_FORMING"
+      },
+      {
+        "codepoint": "U+0323",
+        "name": "COMBINING DOT BELOW",
+        "count": 49289,
+        "treatment": "KEPT_LETTER_FORMING"
+      },
+      {
+        "codepoint": "U+0307",
+        "name": "COMBINING DOT ABOVE",
+        "count": 15110,
+        "treatment": "KEPT_LETTER_FORMING"
+      },
+      {
+        "codepoint": "U+0301",
+        "name": "COMBINING ACUTE ACCENT",
+        "count": 12728,
+        "treatment": "STRIPPED_OVER_A_VOWEL_ONLY"
+      },
+      {
+        "codepoint": "U+0331",
+        "name": "COMBINING MACRON BELOW",
+        "count": 5095,
+        "treatment": "STRIPPED_OVER_A_VOWEL_ONLY"
+      },
+      {
+        "codepoint": "U+0303",
+        "name": "COMBINING TILDE",
+        "count": 1344,
+        "treatment": "KEPT_LETTER_FORMING"
+      },
+      {
+        "codepoint": "U+0310",
+        "name": "COMBINING CANDRABINDU",
+        "count": 883,
+        "treatment": "KEPT_LETTER_FORMING"
+      },
+      {
+        "codepoint": "U+0308",
+        "name": "COMBINING DIAERESIS",
+        "count": 13,
+        "treatment": "KEPT_LETTER_FORMING"
+      }
+    ],
+    "VEDAGRAPH.AVS.SEARCH_NORMALIZED": [
+      {
+        "codepoint": "U+0304",
+        "name": "COMBINING MACRON",
+        "count": 43591,
+        "treatment": "KEPT_LETTER_FORMING"
+      },
+      {
+        "codepoint": "U+0323",
+        "name": "COMBINING DOT BELOW",
+        "count": 20712,
+        "treatment": "KEPT_LETTER_FORMING"
+      },
+      {
+        "codepoint": "U+0301",
+        "name": "COMBINING ACUTE ACCENT",
+        "count": 6789,
+        "treatment": "STRIPPED_OVER_A_VOWEL_ONLY"
+      },
+      {
+        "codepoint": "U+0303",
+        "name": "COMBINING TILDE",
+        "count": 958,
+        "treatment": "KEPT_LETTER_FORMING"
+      },
+      {
+        "codepoint": "U+0307",
+        "name": "COMBINING DOT ABOVE",
+        "count": 481,
+        "treatment": "KEPT_LETTER_FORMING"
+      }
+    ],
+    "VEDAWEB.AUFRECHT": [
+      {
+        "codepoint": "U+0304",
+        "name": "COMBINING MACRON",
+        "count": 77088,
+        "treatment": "KEPT_LETTER_FORMING"
+      },
+      {
+        "codepoint": "U+0323",
+        "name": "COMBINING DOT BELOW",
+        "count": 39305,
+        "treatment": "KEPT_LETTER_FORMING"
+      },
+      {
+        "codepoint": "U+0307",
+        "name": "COMBINING DOT ABOVE",
+        "count": 15146,
+        "treatment": "KEPT_LETTER_FORMING"
+      },
+      {
+        "codepoint": "U+0301",
+        "name": "COMBINING ACUTE ACCENT",
+        "count": 15088,
+        "treatment": "STRIPPED_OVER_A_VOWEL_ONLY"
+      },
+      {
+        "codepoint": "U+0325",
+        "name": "COMBINING RING BELOW",
+        "count": 10505,
+        "treatment": "KEPT_LETTER_FORMING"
+      },
+      {
+        "codepoint": "U+0303",
+        "name": "COMBINING TILDE",
+        "count": 1344,
+        "treatment": "KEPT_LETTER_FORMING"
+      },
+      {
+        "codepoint": "U+0310",
+        "name": "COMBINING CANDRABINDU",
+        "count": 844,
+        "treatment": "KEPT_LETTER_FORMING"
+      },
+      {
+        "codepoint": "U+0300",
+        "name": "COMBINING GRAVE ACCENT",
+        "count": 48,
+        "treatment": "STRIPPED_OVER_A_VOWEL_ONLY"
+      }
+    ],
+    "WIKISOURCE_SA.SV.KAU.ARCIKA_MULA": [
+      {
+        "codepoint": "U+0304",
+        "name": "COMBINING MACRON",
+        "count": 10370,
+        "treatment": "KEPT_LETTER_FORMING"
+      },
+      {
+        "codepoint": "U+0323",
+        "name": "COMBINING DOT BELOW",
+        "count": 10365,
+        "treatment": "KEPT_LETTER_FORMING"
+      },
+      {
+        "codepoint": "U+0301",
+        "name": "COMBINING ACUTE ACCENT",
+        "count": 1726,
+        "treatment": "STRIPPED_OVER_A_VOWEL_ONLY"
+      },
+      {
+        "codepoint": "U+0303",
+        "name": "COMBINING TILDE",
+        "count": 163,
+        "treatment": "KEPT_LETTER_FORMING"
+      },
+      {
+        "codepoint": "U+0307",
+        "name": "COMBINING DOT ABOVE",
+        "count": 85,
+        "treatment": "KEPT_LETTER_FORMING"
+      },
+      {
+        "codepoint": "U+0331",
+        "name": "COMBINING MACRON BELOW",
+        "count": 3,
+        "treatment": "STRIPPED_OVER_A_VOWEL_ONLY"
+      }
+    ],
+    "WIKISOURCE_SA.YV.VSM.ACCENTED": [
+      {
+        "codepoint": "U+0304",
+        "name": "COMBINING MACRON",
+        "count": 20236,
+        "treatment": "KEPT_LETTER_FORMING"
+      },
+      {
+        "codepoint": "U+0323",
+        "name": "COMBINING DOT BELOW",
+        "count": 14852,
+        "treatment": "KEPT_LETTER_FORMING"
+      },
+      {
+        "codepoint": "U+0301",
+        "name": "COMBINING ACUTE ACCENT",
+        "count": 3209,
+        "treatment": "STRIPPED_OVER_A_VOWEL_ONLY"
+      },
+      {
+        "codepoint": "U+0331",
+        "name": "COMBINING MACRON BELOW",
+        "count": 678,
+        "treatment": "STRIPPED_OVER_A_VOWEL_ONLY"
+      },
+      {
+        "codepoint": "U+0303",
+        "name": "COMBINING TILDE",
+        "count": 517,
+        "treatment": "KEPT_LETTER_FORMING"
+      },
+      {
+        "codepoint": "U+0307",
+        "name": "COMBINING DOT ABOVE",
+        "count": 244,
+        "treatment": "KEPT_LETTER_FORMING"
+      },
+      {
+        "codepoint": "U+0310",
+        "name": "COMBINING CANDRABINDU",
+        "count": 1,
+        "treatment": "KEPT_LETTER_FORMING"
+      }
+    ],
+    "WIKISOURCE_SA.YV.VSM.UNACCENTED": [
+      {
+        "codepoint": "U+0304",
+        "name": "COMBINING MACRON",
+        "count": 19007,
+        "treatment": "KEPT_LETTER_FORMING"
+      },
+      {
+        "codepoint": "U+0323",
+        "name": "COMBINING DOT BELOW",
+        "count": 14350,
+        "treatment": "KEPT_LETTER_FORMING"
+      },
+      {
+        "codepoint": "U+0301",
+        "name": "COMBINING ACUTE ACCENT",
+        "count": 3030,
+        "treatment": "STRIPPED_OVER_A_VOWEL_ONLY"
+      },
+      {
+        "codepoint": "U+0310",
+        "name": "COMBINING CANDRABINDU",
+        "count": 1235,
+        "treatment": "KEPT_LETTER_FORMING"
+      },
+      {
+        "codepoint": "U+0303",
+        "name": "COMBINING TILDE",
+        "count": 460,
+        "treatment": "KEPT_LETTER_FORMING"
+      },
+      {
+        "codepoint": "U+0307",
+        "name": "COMBINING DOT ABOVE",
+        "count": 211,
+        "treatment": "KEPT_LETTER_FORMING"
+      }
+    ]
+  },
+  "folds_applied": {
+    "r_ring_below -> r_dot_below": "vocalic r; 10,505 against 9 occurrences",
+    "l_ring_below -> l_dot_below": "vocalic l",
+    "l_macron_below -> l_dot_below": "GRETIL's retroflex lateral",
+    "m_dot_above -> m_dot_below": "anusvara"
+  }
+}

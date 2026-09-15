@@ -1,0 +1,6 @@
+{
+  "consequence": "Every disagreement in these volumes turns on a Sanskrit form. A claim whose Sanskrit cannot be quoted correctly cannot be re-found by hand, so the OCR route was abandoned in favour of the sacred-texts transcription through the Wayback Machine, which preserves the diacritics and the printed page numbers.",
+  "finding": "The English prose OCRs adequately. The transliterated Sanskrit does not: krnavama appears as \"Kyvzzdvama\", pravrddha as \"pravrzddha\", achantsanta as \"A#&santa\", chadayatha as \"#Aadayatha\".",
+  "reusable_lesson": "For this domain, a proofread transcription beats a scan of the same book, even when the scan is the primary artifact. The scan is better evidence and worse data.",
+  "tested": "archive.org full-text layers for SBE 32 and SBE 46 (vedichymns01mulluoft, vedichymns02mulluoft), 1.29 MB and 0.81 MB."
+}

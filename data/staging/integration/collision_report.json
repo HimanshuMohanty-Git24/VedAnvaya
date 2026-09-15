@@ -21,9 +21,9 @@
     "audio_av": 771,
     "audio_rv": 150,
     "audio_yv": 33,
-    "communities": 1028,
+    "communities": 1185,
     "cross_veda": 7021,
-    "formula": 5636,
+    "formula": 11181,
     "quality": 3951,
     "ritual": 3045,
     "samaveda_music": 1471,
@@ -32,7 +32,7 @@
     "translation": 2254
   },
   "subjects_touched_by_more_than_one_domain": 20079,
-  "subjects_touched_total": 22537,
+  "subjects_touched_total": 28239,
   "properties_shared_by_more_than_one_domain": {
     "citation": [
       "attribution",

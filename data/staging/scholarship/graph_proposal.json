@@ -1,0 +1,44 @@
+{
+  "axes_used": [
+    "ATTRIBUTION_OF_AUTHORSHIP",
+    "GRAMMATICAL_OR_LEXICAL_ANALYSIS",
+    "INTERNAL_DIVERGENCE_BETWEEN_TWO_WORKS_OF_ONE_COMMENTATOR",
+    "LEXICAL_OR_SEMANTIC_ANALYSIS",
+    "METRICAL_IDENTIFICATION",
+    "MORPHOLOGICAL_OR_LEXICAL_ANALYSIS",
+    "REFERENT_IDENTIFICATION",
+    "REPORT_OF_A_THIRD_PARTYS_READING",
+    "TEXTUAL_READING"
+  ],
+  "identifier_policy": "VG:SCHOLAR: and VG:SWORK: are new deterministic prefixes of the same shape as the existing VG:WORK: and VG:CLAIM: identifiers. No existing identifier is proposed for change, no random id is used, and no ScholarlyWork is given a VG:WORK: identifier -- doing so would change what every per-Veda denominator means, which is the hazard GAP-SCHOLARSHIP-002 names.",
+  "new_labels": {
+    "Commentator": "A second label on a Scholar who is a traditional commentator, so a query can separate the commentarial layer from the philological one without a string test on a name.",
+    "Interpretation": "One attributed position about one passage: asserter, work, locator, claim, verbatim source quote. This is the node the relations connect.",
+    "Scholar": "A named person or a named corporate asserter of a scholarly or commentarial position. Carries scholar_type and attribution_status, because \"Sayana of the Atharvaveda\" is an ascription the reporting source itself disputes and the graph must be able to say so.",
+    "ScholarlyWork": "A work in which a position is stated. Distinct from :Work, which addresses the four Samhitas: a ScholarlyWork is never part of the corpus denominator and must not be given a VG:WORK: identifier."
+  },
+  "new_relationship_types": {
+    "ABOUT_PASSAGE": "(:Interpretation)-[:ABOUT_PASSAGE]->(:Passage)",
+    "AGREES_WITH": "(:Interpretation)-[:AGREES_WITH]-(:Interpretation)",
+    "ASSERTED_BY": "(:Interpretation)-[:ASSERTED_BY]->(:Scholar)",
+    "QUALIFIES": "(:Interpretation)-[:QUALIFIES]->(:Interpretation)",
+    "REPORTED_BY": "(:Interpretation)-[:REPORTED_BY]->(:ScholarlyWork) -- the work in which we read the position, where that is not the work that holds it. 9 of the 11 works here were not read directly, and the graph must not lose that.",
+    "STATED_IN": "(:Interpretation)-[:STATED_IN]->(:ScholarlyWork)"
+  },
+  "reused_relationship_types": {
+    "CONTRADICTS": {
+      "decision": "Reuse CONTRADICTS rather than mint a synonym, because two relationship types meaning \"these disagree\" is how an attribution axis ends up with three disagreeing writers. But every edge MUST carry disagreement_scope, and the two existing edges must be backfilled to disagreement_scope=CROSS_CATEGORY_METHODOLOGICAL before any of these rows are imported.",
+      "existing_semantics": "The existing pair is NOT two rival readings of the Vedic text. VG:CLAIM:SV-IDENTITY-IS-MELODIC says so in its own about_basis: \"the pair is a CROSS-CATEGORY methodological disagreement about what textual overlap implies, not two rival readings of the Vedic text\".",
+      "measured_before_reuse": "CALL db.relationshipTypes() lists CONTRADICTS, and it carries exactly 2 edges, which are one bidirectional pair between VG:CLAIM:SV-IDENTITY-IS-MELODIC and VG:CLAIM:SV-PREDOMINANTLY-RV-REUSE, both :InterpretiveClaim. Their properties are knowledge_layer=L4_INTERPRETIVE_CLAIM, evidence_basis=STRUCTURAL, attribution_precision=NOT_AN_ATTRIBUTION, quality_tier=TIER_D.",
+      "required_properties_on_every_new_edge": {
+        "attribution_precision": "NOT_AN_ATTRIBUTION",
+        "disagreement_axis": "one of the axis values enumerated in axes_used below",
+        "disagreement_scope": "ATTRIBUTED_SCHOLARLY | CROSS_CATEGORY_METHODOLOGICAL",
+        "evidence_basis": "SOURCE_EXPLICIT",
+        "knowledge_layer": "L4_INTERPRETIVE_CLAIM",
+        "relation_strength": "EXPLICIT | HEDGED"
+      },
+      "why_the_backfill_is_not_optional": "Without it, the product question \"what do scholars disagree about here?\" would return the Samaveda melodic-identity pair as though it were an attributed scholarly disagreement. It is this project's own reading against this project's own measurement, and neither side has a named asserter: asserted_by is the empty string on all 6 existing :InterpretiveClaim nodes. That is the exact failure GAP-SCHOLARSHIP-001 describes, and importing on top of it would hide rather than close it."
+    }
+  }
+}

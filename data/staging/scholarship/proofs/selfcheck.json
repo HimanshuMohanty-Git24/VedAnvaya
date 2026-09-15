@@ -1,0 +1,20 @@
+{
+  "checks_run": [
+    "every witness quote is a verbatim substring of the pinned snapshot text",
+    "every claim declaring itself verbatim is a verbatim substring",
+    "axis and relation are drawn from the closed sets the report documents",
+    "the two positions on a row are not the same asserter in the same work",
+    "both positions carry a substantive locator and a substantive claim",
+    "incompatible_about is long enough to state the incompatibility"
+  ],
+  "claim_verbatim_checks": {
+    "declared_not_verbatim": 30,
+    "verbatim_confirmed": 198
+  },
+  "failures": [],
+  "quote_checks": {
+    "quote_found": 107,
+    "quote_found_on_an_adjacent_page": 7
+  },
+  "rows": 114
+}

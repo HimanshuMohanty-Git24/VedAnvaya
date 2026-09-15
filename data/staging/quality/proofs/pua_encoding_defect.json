@@ -1,0 +1,774 @@
+{
+ "finding": "Private Use Area codepoints stand where Unicode letters belong, in the canonical text of two Vedas and in the morphology layer's roots.",
+ "corrects_a_committed_audit": {
+  "the_committed_reading": "corpus-audit.md CORPUS_D01 and agent-2-verification.md read this as a normaliser stripping the base letter along with its combining mark, storing kr-with-ring as kdhi. Confirmed by the lead.",
+  "what_is_actually_stored": "VG:AV:SAU:K01:S002:V002 SEARCH_DERIVATIVE holds U+006B U+E000 U+0064 U+0068 U+0069. Nothing was stripped. The two codepoints r + U+0325 were replaced by the single Private Use Area codepoint U+E000, which has no glyph, so every terminal and every report renders it as nothing -- which is why two independent readers saw kdhi and inferred deletion.",
+  "why_it_matters": "The committed reading implies the information is gone and the layer must be rebuilt from source. It is not gone. One letter became one codepoint and the substitution table below restores it exactly, derived from 5,123 verse pairs rather than guessed.",
+  "and_it_explains_the_disproven_symptom": "Agent 2 reported a search outage that the lead disproved. A symmetric substitution is exactly why: query and index pass through the same mapping, so they still match."
+ },
+ "surfaces_affected": {
+  "SemanticAssertion.root": {
+   "records_with_pua": 46,
+   "examples": [
+    {
+     "root": "'k\\ue000'",
+     "n": 112
+    },
+    {
+     "root": "'v\\ue000dh'",
+     "n": 24
+    },
+    {
+     "root": "'m\\ue000\\u1e0d'",
+     "n": 25
+    },
+    {
+     "root": "'p\\ue001'",
+     "n": 6
+    }
+   ]
+  },
+  "SemanticAssertion.all_string_properties": {
+   "records_with_pua": 393,
+   "examples": [
+    {
+     "id": "'VG:ENRICH:AGENTIVE:f526d7b1fe23176285fbd60375858b3e'",
+     "root": "'k\\ue000'",
+     "root_label": "'\\u221akr\\u0325-'",
+     "verb_surface": "'kari\\u1e63y\\xe1si'",
+     "agent_surface": "'\\xe1gne'",
+     "patient": "'bhadr\\xe1m'",
+     "instrument": "''",
+     "beneficiary": "''",
+     "roles_json": "'[{\"role\": \"PATIENT\", \"surface\": \"bhadr\\xe1m\", \"lemma\": \"bhadra\", \"case\": \"ACC\"}]'",
+     "display_label": "'AGNIH CREATES (asserted)'",
+     "preverbs": [],
+     "pada": "'b'"
+    },
+    {
+     "id": "'VG:ENRICH:AGENTIVE:09604d77c3898ac11c7ba928f17ea9ef'",
+     "root": "'v\\ue000dh'",
+     "root_label": "'\\u221avr\\u0325dh-'",
+     "verb_surface": "'vardhaya'",
+     "agent_surface": "'\\xedndra'",
+     "patient": "'yaj\\xf1\\xe1m'",
+     "instrument": "''",
+     "beneficiary": "''",
+     "roles_json": "'[{\"role\": \"PATIENT\", \"surface\": \"yaj\\xf1\\xe1m\", \"lemma\": \"yaj\\xf1a\", \"case\": \"ACC\"}]'",
+     "display_label": "'INDRAH STRENGTHENS (requested)'",
+     "preverbs": [],
+     "pada": "'d'"
+    },
+    {
+     "id": "'VG:ENRICH:AGENTIVE:fba4272b6f5769f72c637248fd96e9d3'",
+     "root": "'k\\ue000'",
+     "root_label": "'\\u221akr\\u0325-'",
+     "verb_surface": "'kr\\u0325dhi'",
+     "agent_surface": "'\\xe1gne'",
+     "patient": "'p\\xe1tn\\u012bvata\\u1e25'",
+     "instrument": "''",
+     "beneficiary": "''",
+     "roles_json": "'[{\"role\": \"PATIENT\", \"surface\": \"p\\xe1tn\\u012bvata\\u1e25\", \"lemma\": \"patn\\u012bvant\", \"case\": \"ACC\"}]'",
+     "display_label": "'AGNIH CREATES (requested)'",
+     "preverbs": [],
+     "pada": "'b'"
+    },
+    {
+     "id": "'VG:ENRICH:AGENTIVE:59aa4d102a39dd2ce60b7ef068ec7f6d'",
+     "root": "'k\\ue000'",
+     "root_label": "'\\u221akr\\u0325-'",
+     "verb_surface": "'akrata'",
+     "agent_surface": "'r\\u0325bh\\xe1va\\u1e25'",
+     "patient": "''",
+     "instrument": "'vi\\u1e63\\u1e6d\\u012b\\u0301'",
+     "beneficiary": "''",
+     "roles_json": "'[{\"role\": \"INSTRUMENT\", \"surface\": \"vi\\u1e63\\u1e6d\\u012b\\u0301\", \"lemma\": \"vi\\u1e63\\u1e6di\", \"case\": \"INS\"}]'",
+     "display_label": "'RBHAVAH CREATES (asserted)'",
+     "preverbs": [],
+     "pada": "'c'"
+    }
+   ]
+  },
+  "TextVersion.text_nfc": {
+   "records_with_pua": 5143,
+   "examples": [
+    {
+     "text": "'\\u0905\\u092a\\u093e\\u0930\\u0930\\u0941\\u0902 \\u092a\\u0943\\u0925\\u093f\\u0935\\u094d\\u092f\\u0948 \\u0926\\u0947\\u0935\\u092f\\u091c\\u0928\\u093e\\u0926\\u094d \\u0935\\u0927\\u094d\\u092f\\u093e\\u0938\\u092e\\u094d \\u0964 \\u0935\\u094d\\u0930\\u091c\\u0902 \\u0917\\u091a\\u094d\\u091b \\u0917\\u094b\\u0937\\u094d\\u0920\\u093e\\u0928\\u092e\\u094d \\u0964 \\u0935\\u0930\\u094d\\u0937\\u0924\\u0941 \\u0924\\u0947 \\u0926\\u094d\\u092f\\u094c\\u0903 \\u0964 \\u092c\\u0927\\u093e\\u0928 \\u0926\\u0947\\u0935 \\u0938\\u0935\\u093f\\u0924\\u0903 \\u092a\\u0930\\u092e\\u0938\\u094d\\u092f\\u093e\\u0902 \\u092a\\u0943\\u0925\\u093f\\u0935\\u094d\\u092f\\u093e\\uf15c \\u0936\\u0924\\u0947\\u0928 \\u092a\\u093e\\u0936\\u0948\\u0930\\u094d \\u092f\\u094b\\u093d\\u0938\\u094d\\u092e\\u093e\\u0928\\u094d \\u0926\\u094d\\u0935\\u0947\\u0937\\u094d\\u091f\\u093f \\u092f\\u0902 \\u091a \\u0935\\u092f\\u0902 \\u0926\\u094d\\u0935\\u093f\\u0937\\u094d\\u092e\\u0938\\u094d \\u0924\\u092e\\u094d \\u0905\\u0924\\u094b \\u092e\\u093e \\u092e\\u094c\\u0915\\u094d \\u0964 \\u0905\\u0930\\u0930\\u094b \\u0926\\u093f\\u0935\\u0902 \\u092e\\u093e \\u092a\\u092a\\u094d\\u0924\\u0903 \\u0964 \\u0926\\u094d\\u0930\\u092a\\u094d\\u0938\\u0938\\u094d \\u0924\\u0947 \\u0926\\u094d\\u092f\\u093e\\u0902 \\u092e\\u093e \\u0938\\u094d\\u0915\\u0928\\u094d \\u0964 \\u0935\\u094d\\u0930\\u091c\\u0902 \\u0917\\u091a\\u094d\\u091b \\u0917\\u094b\\u0937\\u094d\\u0920\\u093e\\u0928\\u092e\\u094d \\u0964 \\u0935\\u0930\\u094d\\u0937\\u0924\\u0941 \\u0924\\u0947 \\u0926\\u094d\\u092f\\u094c\\u0903 \\u0964 \\u092c\\u0927\\u093e\\u0928 \\u0926\\u0947\\u0935 \\u0938\\u0935\\u093f\\u0924\\u0903 \\u092a\\u0930\\u092e\\u0938\\u094d\\u092f\\u093e\\u0902 \\u092a\\u0943\\u0925\\u093f\\u0935\\u094d\\u092f\\u093e\\ua8f3 \\u0936\\u0924\\u0947\\u0928 \\u092a\\u093e\\u0936\\u0948\\u0930\\u094d \\u092f\\u094b\\u093d\\u0938\\u094d\\u092e\\u093e\\u0928\\u094d \\u0926\\u094d\\u0935\\u0947\\u0937\\u094d\\u091f\\u093f \\u092f\\u0902 \\u091a \\u0935\\u092f\\u0902 \\u0926\\u094d\\u0935\\u093f\\u0937\\u094d\\u092e\\u0938\\u094d \\u0924\\u092e\\u094d \\u0905\\u0924\\u094b \\u092e\\u093e \\u092e\\u094c\\u0915\\u094d \\u0965'"
+    },
+    {
+     "text": "'\\u0907\\u0926\\u0902 \\u0935\\u093f\\u0937\\u094d\\u0923\\u0941\\u0930\\u094d \\u0935\\u093f\\u091a\\u0915\\u094d\\u0930\\u092e\\u0947 \\u0924\\u094d\\u0930\\u0947\\u0927\\u093e \\u0928\\u093f \\u0926\\u0927\\u0947 \\u092a\\u0926\\u092e\\u094d \\u0964 \\u0938\\u092e\\u0942\\u0922\\u092e\\u094d \\u0905\\u0938\\u094d\\u092f \\u092a\\u093e\\uf15c\\u0938\\u0941\\u0930\\u0947 \\u0938\\u094d\\u0935\\u093e\\u0939\\u093e \\u0965'"
+    },
+    {
+     "text": "'\\u091c\\u094d\\u092f\\u094b\\u0924\\u093f\\u0930\\u094d \\u0905\\u0938\\u093f \\u0935\\u093f\\u0936\\u094d\\u0935\\u0930\\u0942\\u092a\\u0902 \\u0935\\u093f\\u0936\\u094d\\u0935\\u0947\\u0937\\u093e\\u0902 \\u0926\\u0947\\u0935\\u093e\\u0928\\u093e\\uf15c \\u0938\\u092e\\u093f\\u0924\\u094d \\u0964 \\u0924\\u094d\\u0935\\ua8f3 \\u0938\\u094b\\u092e \\u0924\\u0928\\u0942\\u0915\\u0943\\u0926\\u094d\\u092d\\u094d\\u092f\\u094b \\u0926\\u094d\\u0935\\u0947\\u0937\\u094b\\u092d\\u094d\\u092f\\u094b \\u093d\\u0928\\u094d\\u092f\\u0915\\u0943\\u0924\\u0947\\u092d\\u094d\\u092f \\u093d\\u0909\\u0930\\u0941 \\u092f\\u0928\\u094d\\u0924\\u093e\\u0938\\u093f \\u0935\\u0930\\u0942\\u0925\\ua8f3 \\u0938\\u094d\\u0935\\u093e\\u0939\\u093e \\u0964 \\u091c\\u0941\\u0937\\u093e\\u0923\\u094b \\u093d\\u0905\\u092a\\u094d\\u0924\\u0941\\u0930\\u094d \\u0906\\u091c\\u094d\\u092f\\u0938\\u094d\\u092f \\u0935\\u0947\\u0924\\u0941 \\u0938\\u094d\\u0935\\u093e\\u0939\\u093e \\u0965'"
+    },
+    {
+     "text": "'\\u0938\\u094d\\u0935\\u093e\\u0902\\u0915\\u0943\\u0924\\u094b \\u093d\\u0938\\u093f \\u0935\\u093f\\u0936\\u094d\\u0935\\u0947\\u092d\\u094d\\u092f \\u0907\\u0928\\u094d\\u0926\\u094d\\u0930\\u093f\\u092f\\u0947\\u092d\\u094d\\u092f\\u094b \\u0926\\u093f\\u0935\\u094d\\u092f\\u0947\\u092d\\u094d\\u092f\\u0903 \\u092a\\u093e\\u0930\\u094d\\u0925\\u093f\\u0935\\u0947\\u092d\\u094d\\u092f\\u094b \\u092e\\u0928\\u0938\\u094d \\u0924\\u094d\\u0935\\u093e\\u0937\\u094d\\u091f\\u0941 \\u0938\\u094d\\u0935\\u093e\\u0939\\u093e \\u0924\\u094d\\u0935\\u093e \\u0938\\u0941\\u092d\\u0935 \\u0938\\u0942\\u0930\\u094d\\u092f\\u093e\\u092f \\u0964 \\u0926\\u0947\\u0935\\u0947\\u092d\\u094d\\u092f\\u0938\\u094d \\u0924\\u094d\\u0935\\u093e \\u092e\\u0930\\u0940\\u091a\\u093f\\u092a\\u0947\\u092d\\u094d\\u092f\\u0903 \\u0964 \\u0926\\u0947\\u0935\\u093e\\uf15c\\u0936\\u094b \\u092f\\u0938\\u094d\\u092e\\u0948 \\u0924\\u094d\\u0935\\u0947\\u0921\\u0947 \\u0924\\u0924\\u094d \\u0938\\u0924\\u094d\\u092f\\u092e\\u094d \\u0909\\u092a\\u0930\\u093f\\u092a\\u094d\\u0930\\u0941\\u0924\\u093e \\u092d\\u0919\\u094d\\u0917\\u0947\\u0928 \\u0939\\u0924\\u094b \\u093d\\u0938\\u094c \\u092b\\u091f\\u094d \\u0964 \\u092a\\u094d\\u0930\\u093e\\u0923\\u093e\\u092f \\u0924\\u094d\\u0935\\u093e \\u0964 \\u0935\\u094d\\u092f\\u093e\\u0928\\u093e\\u092f \\u0924\\u094d\\u0935\\u093e \\u0965'"
+    }
+   ]
+  },
+  "Translation.text": {
+   "records_with_pua": 0,
+   "examples": []
+  },
+  "Devata.aliases_iast": {
+   "records_with_pua": 0,
+   "examples": []
+  },
+  "Concept.aliases_sa": {
+   "records_with_pua": 0,
+   "examples": []
+  },
+  "Lemma.lemma": {
+   "records_with_pua": 0,
+   "examples": []
+  },
+  "Formula.surface": {
+   "records_with_pua": 0,
+   "examples": []
+  },
+  "MENTIONS_DEVATA.matched_forms": {
+   "records_with_pua": 0,
+   "examples": []
+  },
+  "ABOUT_CONCEPT.evidence": {
+   "records_with_pua": 0,
+   "examples": []
+  }
+ },
+ "mapping_derived_from_the_data": {},
+ "root_inventory": [
+  {
+   "root_repr": "'k\\ue000'",
+   "codepoints": [
+    "U+006B",
+    "U+E000"
+   ],
+   "assertions": 112,
+   "verb_examples": [
+    "kariṣyási",
+    "kr̥dhi",
+    "akrata"
+   ]
+  },
+  {
+   "root_repr": "'bh\\ue000'",
+   "codepoints": [
+    "U+0062",
+    "U+0068",
+    "U+E000"
+   ],
+   "assertions": 35,
+   "verb_examples": [
+    "jabhāra",
+    "bhara +",
+    "bhara"
+   ]
+  },
+  {
+   "root_repr": "'m\\ue000\\u1e0d'",
+   "codepoints": [
+    "U+006D",
+    "U+E000",
+    "U+1E0D"
+   ],
+   "assertions": 25,
+   "verb_examples": [
+    "mr̥ḷayantu",
+    "mr̥ḷayantu",
+    "mr̥ḷayantu"
+   ]
+  },
+  {
+   "root_repr": "'v\\ue000dh'",
+   "codepoints": [
+    "U+0076",
+    "U+E000",
+    "U+0064",
+    "U+0068"
+   ],
+   "assertions": 24,
+   "verb_examples": [
+    "vardhaya",
+    "vāvr̥dhasva",
+    "vāvr̥dhe"
+   ]
+  },
+  {
+   "root_repr": "'s\\ue000j'",
+   "codepoints": [
+    "U+0073",
+    "U+E000",
+    "U+006A"
+   ],
+   "assertions": 21,
+   "verb_examples": [
+    "sr̥ja",
+    "sasr̥jyāt",
+    "asr̥jat"
+   ]
+  },
+  {
+   "root_repr": "'v\\ue000'",
+   "codepoints": [
+    "U+0076",
+    "U+E000"
+   ],
+   "assertions": 16,
+   "verb_examples": [
+    "āvar",
+    "avr̥ṇot",
+    "aporṇuté"
+   ]
+  },
+  {
+   "root_repr": "'t\\ue001'",
+   "codepoints": [
+    "U+0074",
+    "U+E001"
+   ],
+   "assertions": 12,
+   "verb_examples": [
+    "tira",
+    "avā́tirat",
+    "avā́tiraḥ"
+   ]
+  },
+  {
+   "root_repr": "'v\\ue000t'",
+   "codepoints": [
+    "U+0076",
+    "U+E000",
+    "U+0074"
+   ],
+   "assertions": 11,
+   "verb_examples": [
+    "vartta",
+    "ávartayat",
+    "vartaya +"
+   ]
+  },
+  {
+   "root_repr": "'dh\\ue000'",
+   "codepoints": [
+    "U+0064",
+    "U+0068",
+    "U+E000"
+   ],
+   "assertions": 11,
+   "verb_examples": [
+    "dādhāra",
+    "dhārayathaḥ",
+    "dhāraya"
+   ]
+  },
+  {
+   "root_repr": "'g\\ue001'",
+   "codepoints": [
+    "U+0067",
+    "U+E001"
+   ],
+   "assertions": 10,
+   "verb_examples": [
+    "jalgulaḥ",
+    "jalgulaḥ",
+    "jalgulaḥ"
+   ]
+  },
+  {
+   "root_repr": "'s\\ue000'",
+   "codepoints": [
+    "U+0073",
+    "U+E000"
+   ],
+   "assertions": 10,
+   "verb_examples": [
+    "sáran",
+    "sarat",
+    "sasre"
+   ]
+  },
+  {
+   "root_repr": "'\\u015ba\\ue003s'",
+   "codepoints": [
+    "U+015B",
+    "U+0061",
+    "U+E003",
+    "U+0073"
+   ],
+   "assertions": 8,
+   "verb_examples": [
+    "śaṃsaya",
+    "śaṃsaya",
+    "śaṃsaya"
+   ]
+  },
+  {
+   "root_repr": "'g\\ue000'",
+   "codepoints": [
+    "U+0067",
+    "U+E000"
+   ],
+   "assertions": 8,
+   "verb_examples": [
+    "ajīgar",
+    "ajīgar",
+    "ajīgar"
+   ]
+  },
+  {
+   "root_repr": "'p\\ue000'",
+   "codepoints": [
+    "U+0070",
+    "U+E000"
+   ],
+   "assertions": 7,
+   "verb_examples": [
+    "pāraya +",
+    "pípartu",
+    "apārayat"
+   ]
+  },
+  {
+   "root_repr": "'p\\ue001'",
+   "codepoints": [
+    "U+0070",
+    "U+E001"
+   ],
+   "assertions": 6,
+   "verb_examples": [
+    "pr̥ṇītá",
+    "pr̥ṇáti",
+    "pūrdhi"
+   ]
+  },
+  {
+   "root_repr": "'\\ue000'",
+   "codepoints": [
+    "U+E000"
+   ],
+   "assertions": 6,
+   "verb_examples": [
+    "ārata",
+    "r̥ṇvati",
+    "r̥ṇvati"
+   ]
+  },
+  {
+   "root_repr": "'\\ue000c'",
+   "codepoints": [
+    "U+E000",
+    "U+0063"
+   ],
+   "assertions": 6,
+   "verb_examples": [
+    "ā́rcan",
+    "arcan",
+    "árcanti"
+   ]
+  },
+  {
+   "root_repr": "'d\\ue000\\u015b'",
+   "codepoints": [
+    "U+0064",
+    "U+E000",
+    "U+015B"
+   ],
+   "assertions": 5,
+   "verb_examples": [
+    "dadr̥kṣé",
+    "adarśi",
+    "dádr̥śe"
+   ]
+  },
+  {
+   "root_repr": "'m\\ue001'",
+   "codepoints": [
+    "U+006D",
+    "U+E001"
+   ],
+   "assertions": 4,
+   "verb_examples": [
+    "mr̥ṇa",
+    "mr̥ṇa",
+    "mr̥ṇa"
+   ]
+  },
+  {
+   "root_repr": "'v\\ue000j'",
+   "codepoints": [
+    "U+0076",
+    "U+E000",
+    "U+006A"
+   ],
+   "assertions": 4,
+   "verb_examples": [
+    "ā́vr̥ṇak",
+    "vr̥ṇák",
+    "vr̥ṇak"
+   ]
+  },
+  {
+   "root_repr": "'m\\ue000j'",
+   "codepoints": [
+    "U+006D",
+    "U+E000",
+    "U+006A"
+   ],
+   "assertions": 4,
+   "verb_examples": [
+    "marjayanta",
+    "māmr̥je",
+    "mr̥jyáse"
+   ]
+  },
+  {
+   "root_repr": "'v\\ue000\\u015bc'",
+   "codepoints": [
+    "U+0076",
+    "U+E000",
+    "U+015B",
+    "U+0063"
+   ],
+   "assertions": 3,
+   "verb_examples": [
+    "vr̥ścat",
+    "vr̥ścat",
+    "avr̥ścat"
+   ]
+  },
+  {
+   "root_repr": "'t\\ue000p'",
+   "codepoints": [
+    "U+0074",
+    "U+E000",
+    "U+0070"
+   ],
+   "assertions": 3,
+   "verb_examples": [
+    "tr̥pṇuta",
+    "tr̥pṇuhi",
+    "tr̥mpatam"
+   ]
+  },
+  {
+   "root_repr": "'d\\ue000 ~ d\\ue001'",
+   "codepoints": [
+    "U+0064",
+    "U+E000",
+    "U+0020",
+    "U+007E",
+    "U+0020",
+    "U+0064",
+    "U+E001"
+   ],
+   "assertions": 3,
+   "verb_examples": [
+    "darṣi",
+    "dardar",
+    "dárṣi"
+   ]
+  },
+  {
+   "root_repr": "'h\\ue000'",
+   "codepoints": [
+    "U+0068",
+    "U+E000"
+   ],
+   "assertions": 3,
+   "verb_examples": [
+    "háryāḥ",
+    "haryata +",
+    "harya"
+   ]
+  },
+  {
+   "root_repr": "'k\\ue001'",
+   "codepoints": [
+    "U+006B",
+    "U+E001"
+   ],
+   "assertions": 3,
+   "verb_examples": [
+    "kira",
+    "kira +",
+    "cárkr̥ṣe"
+   ]
+  },
+  {
+   "root_repr": "'k\\ue002p'",
+   "codepoints": [
+    "U+006B",
+    "U+E002",
+    "U+0070"
+   ],
+   "assertions": 3,
+   "verb_examples": [
+    "kalpayāti",
+    "cīkl̥pāti",
+    "kalpayatu"
+   ]
+  },
+  {
+   "root_repr": "'m\\ue000\\u1e63'",
+   "codepoints": [
+    "U+006D",
+    "U+E000",
+    "U+1E63"
+   ],
+   "assertions": 2,
+   "verb_examples": [
+    "mīmr̥ṣaḥ",
+    "mr̥ṣyate"
+   ]
+  },
+  {
+   "root_repr": "'v\\ue000\\u1e63\\u0101y'",
+   "codepoints": [
+    "U+0076",
+    "U+E000",
+    "U+1E63",
+    "U+0101",
+    "U+0079"
+   ],
+   "assertions": 2,
+   "verb_examples": [
+    "vr̥ṣāyate",
+    "vr̥ṣāyáse"
+   ]
+  },
+  {
+   "root_repr": "'hv\\ue000 ~ hru'",
+   "codepoints": [
+    "U+0068",
+    "U+0076",
+    "U+E000",
+    "U+0020",
+    "U+007E",
+    "U+0020",
+    "U+0068",
+    "U+0072",
+    "U+0075"
+   ],
+   "assertions": 2,
+   "verb_examples": [
+    "hruṇāti",
+    "jihvaraḥ"
+   ]
+  },
+  {
+   "root_repr": "'b\\ue000h'",
+   "codepoints": [
+    "U+0062",
+    "U+E000",
+    "U+0068"
+   ],
+   "assertions": 2,
+   "verb_examples": [
+    "barhaya",
+    "barhaya"
+   ]
+  },
+  {
+   "root_repr": "'v\\ue000h'",
+   "codepoints": [
+    "U+0076",
+    "U+E000",
+    "U+0068"
+   ],
+   "assertions": 2,
+   "verb_examples": [
+    "vavarha +",
+    "vr̥ha"
+   ]
+  },
+  {
+   "root_repr": "'g\\ue000bh\\u2071'",
+   "codepoints": [
+    "U+0067",
+    "U+E000",
+    "U+0062",
+    "U+0068",
+    "U+2071"
+   ],
+   "assertions": 2,
+   "verb_examples": [
+    "gr̥hṇātu",
+    "jagr̥bhyāt"
+   ]
+  },
+  {
+   "root_repr": "'m\\ue000dh'",
+   "codepoints": [
+    "U+006D",
+    "U+E000",
+    "U+0064",
+    "U+0068"
+   ],
+   "assertions": 2,
+   "verb_examples": [
+    "mr̥dhāti",
+    "mardhataḥ"
+   ]
+  },
+  {
+   "root_repr": "'sp\\ue000dh'",
+   "codepoints": [
+    "U+0073",
+    "U+0070",
+    "U+E000",
+    "U+0064",
+    "U+0068"
+   ],
+   "assertions": 2,
+   "verb_examples": [
+    "aspr̥dhran",
+    "ápaspr̥dhethām"
+   ]
+  },
+  {
+   "root_repr": "'s\\ue000p'",
+   "codepoints": [
+    "U+0073",
+    "U+E000",
+    "U+0070"
+   ],
+   "assertions": 2,
+   "verb_examples": [
+    "sarpatu",
+    "sarpati"
+   ]
+  },
+  {
+   "root_repr": "'\\u015b\\ue001'",
+   "codepoints": [
+    "U+015B",
+    "U+E001"
+   ],
+   "assertions": 2,
+   "verb_examples": [
+    "śr̥ṇīhi",
+    "śr̥ṇīhi"
+   ]
+  },
+  {
+   "root_repr": "'d\\ue000h'",
+   "codepoints": [
+    "U+0064",
+    "U+E000",
+    "U+0068"
+   ],
+   "assertions": 2,
+   "verb_examples": [
+    "dŕ̥hya",
+    "adr̥ṃhat"
+   ]
+  },
+  {
+   "root_repr": "'g\\ue000bh\\u0101y'",
+   "codepoints": [
+    "U+0067",
+    "U+E000",
+    "U+0062",
+    "U+0068",
+    "U+0101",
+    "U+0079"
+   ],
+   "assertions": 1,
+   "verb_examples": [
+    "gr̥bhāya"
+   ]
+  },
+  {
+   "root_repr": "'\\ue000d'",
+   "codepoints": [
+    "U+E000",
+    "U+0064"
+   ],
+   "assertions": 1,
+   "verb_examples": [
+    "ardaya"
+   ]
+  },
+  {
+   "root_repr": "'p\\ue000c'",
+   "codepoints": [
+    "U+0070",
+    "U+E000",
+    "U+0063"
+   ],
+   "assertions": 1,
+   "verb_examples": [
+    "papr̥cyāt"
+   ]
+  },
+  {
+   "root_repr": "'t\\ue000d'",
+   "codepoints": [
+    "U+0074",
+    "U+E000",
+    "U+0064"
+   ],
+   "assertions": 1,
+   "verb_examples": [
+    "tr̥ndhi"
+   ]
+  },
+  {
+   "root_repr": "'h\\ue001'",
+   "codepoints": [
+    "U+0068",
+    "U+E001"
+   ],
+   "assertions": 1,
+   "verb_examples": [
+    "hr̥ṇīte"
+   ]
+  },
+  {
+   "root_repr": "'h\\ue000\\u1e63'",
+   "codepoints": [
+    "U+0068",
+    "U+E000",
+    "U+1E63"
+   ],
+   "assertions": 1,
+   "verb_examples": [
+    "hárṣasva"
+   ]
+  },
+  {
+   "root_repr": "'gh\\ue000'",
+   "codepoints": [
+    "U+0067",
+    "U+0068",
+    "U+E000"
+   ],
+   "assertions": 1,
+   "verb_examples": [
+    "jigharti"
+   ]
+  },
+  {
+   "root_repr": "'j\\ue001 ~ j\\u016br'",
+   "codepoints": [
+    "U+006A",
+    "U+E001",
+    "U+0020",
+    "U+007E",
+    "U+0020",
+    "U+006A",
+    "U+016B",
+    "U+0072"
+   ],
+   "assertions": 1,
+   "verb_examples": [
+    "jaranta"
+   ]
+  }
+ ],
+ "root_totals": {
+  "distinct_roots_with_pua": 46,
+  "assertions_affected": 393,
+  "assertions_with_a_root": 2406
+ }
+}
