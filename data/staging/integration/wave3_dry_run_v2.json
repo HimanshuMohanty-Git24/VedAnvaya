@@ -13,11 +13,11 @@
     "10 DEFECT_FOUND_AND_FIXED counts as a completed adversarial gate"
   ],
   "provenance": {
-    "git_commit": "663bbc8cebb5aeb14864865164f317734b266203",
+    "git_commit": "6188099981ce48312950087e4e44e508e4a8cb6d",
     "git_branch": "phase-data-completeness-v2",
     "working_tree_clean": true,
     "gap_registry_sha256": "82ba2160569bb603cf65452b652fececb693771868fca9d64157a26412c5709b",
-    "element_plan_sha256": "ba733085690ec1118b9d45803af0fee2ac140bc263cc3376226517ab284623b4",
+    "element_plan_sha256": "6c4fc60e7017d5f81e0dbdb79605ebb6a43ad0d674ab32f365b18dec928e5370",
     "eligibility_ledger_sha256": "84ae87e0d62f43f7f2cf9d3fb1306a48d117d1030e931611fb5184953612dc0c",
     "scope_grain_sha256": "42d659913274888a449fbc290e22ae5912b5498e90707a8fa7693c4b74ec48df",
     "soma_correction_sha256": "5e11524298667f98e2c5303c1cc4cc10d097f83784d5968dc2f0de23d5d4705b",
@@ -26,8 +26,8 @@
     "backup_sha256": "98f71b641f608c8fd1aa3082ef4b88f7d983687d2996aa5b1c7528effc83b981",
     "backup_bytes": 96844203,
     "pre_import_census": {
-      "nodes": 108779,
-      "relationships": 265295,
+      "nodes": 123000,
+      "relationships": 288051,
       "core_corpus": {
         "AV": 5839,
         "RV": 10552,
@@ -38,7 +38,7 @@
     "invariant_edge_counts_before": {
       "ASSERTION_AGENT": 2502,
       "ASSERTION_TARGET": 799,
-      "EPITHET_VARIANT_OF": 11
+      "EPITHET_VARIANT_OF": 10
     }
   },
   "eligible_domains": [
@@ -277,18 +277,18 @@
       "identity_collisions": 18,
       "identity_collisions_withheld": 18,
       "multi_source_evidence_merges": 147,
-      "node_status_disagreements": 16,
-      "nodes_create": 14221,
-      "nodes_update": 5647,
+      "node_status_disagreements": 191,
+      "nodes_create": 0,
+      "nodes_update": 19856,
       "property_writes": 51215,
-      "relationships_create": 22981,
-      "relationships_update": 43888,
+      "relationships_create": 0,
+      "relationships_update": 66869,
       "rows_withheld_on_identity_collision": 36,
-      "triples_awaiting_an_earlier_step": 15940
+      "triples_awaiting_an_earlier_step": 0
     },
     "by_domain": {
       "communities": {
-        "nodes_create": 12,
+        "nodes_create": 0,
         "property_writes": 0,
         "relationships_create": 0
       },
@@ -300,45 +300,31 @@
       "formula": {
         "nodes_create": 0,
         "property_writes": 34364,
-        "relationships_create": 6148
+        "relationships_create": 0
       },
       "quality": {
-        "nodes_create": 2568,
+        "nodes_create": 0,
         "property_writes": 0,
-        "relationships_create": 2568
+        "relationships_create": 0
       },
       "ritual": {
-        "nodes_create": 9442,
+        "nodes_create": 0,
         "property_writes": 27,
-        "relationships_create": 11148
+        "relationships_create": 0
       },
       "scholarship": {
-        "nodes_create": 147,
+        "nodes_create": 0,
         "property_writes": 0,
-        "relationships_create": 678
+        "relationships_create": 0
       },
       "semantic_roles": {
-        "nodes_create": 2052,
+        "nodes_create": 0,
         "property_writes": 0,
-        "relationships_create": 2439
+        "relationships_create": 0
       }
     },
     "schema_additions": {
-      "node_labels_created": [
-        "Action",
-        "DeityCommunity",
-        "Object",
-        "Offering",
-        "QualityVerdict",
-        "Ritual",
-        "RitualRole",
-        "RitualStep",
-        "RoleFiller",
-        "Scholar",
-        "ScholarlyDisagreement",
-        "ScholarlyWork",
-        "Substance"
-      ],
+      "node_labels_created": [],
       "relationship_types_touched": [
         "ASSERTED_BY",
         "ASSERTION_ROLE",
@@ -419,7 +405,7 @@
   "corrections": {
     "SOMA_PRESSING_WEAK_ALIAS_RETIREMENT": {
       "owner_decision": "section 3",
-      "relationships_retire": 225,
+      "relationships_retire": 0,
       "relationships_update": 21,
       "relationships_create": 0,
       "newly_attested_withheld_with_the_cap_collateral": 5,
@@ -432,7 +418,7 @@
       },
       "proof_artifact": "data\\staging\\integration\\wave3_soma_pressing_correction.json",
       "every_retired_edge_rests_solely_on_a_retired_alias": false,
-      "already_applied": false,
+      "already_applied": true,
       "retire_when_first_applied": {
         "MENTIONS_ENTITY_retire": 117,
         "MENTIONS_ENTITY_update": 12,
@@ -443,10 +429,10 @@
     },
     "M5_SPECIALIZED_FORM_OF": {
       "owner_decision": "section 1 of the prior round, unchanged",
-      "relationships_retire": 1,
-      "relationships_create": 1,
+      "relationships_retire": 0,
+      "relationships_create": 0,
       "detail": "the Soma Pavamana -> Soma edge moves from EPITHET_VARIANT_OF; EPITHET_VARIANT_OF goes 11 to 10 and SPECIALIZED_FORM_OF becomes 1",
-      "already_applied": false
+      "already_applied": true
     }
   },
   "collateral_requiring_its_own_decision": {
@@ -634,7 +620,7 @@
   },
   "dangling_references": 0,
   "semantic_conflicts": {
-    "node_status_contradicted_by_the_graph": 16,
+    "node_status_contradicted_by_the_graph": 191,
     "detail": "16 ritual registry rows claim PROPOSED_NEW for a key the graph already holds: 11 materials and 5 offerings. The plan resolves each against the graph rather than the marking, so no duplicate is created, but an importer trusting node_status would have written new ritual properties onto existing canonical Concepts.",
     "elements_redirected_not_created": 3,
     "redirect_detail": "3 rites are ALREADY_MODELLED_AS_SOCIALRITE. Two of their own keys are absent from the graph, so treating the status as ordinary would have created duplicate rite nodes for PITRMEDHA and GRHAPRAVESA, which the graph already holds as PITRYANA-FUNERARY-RITE and SALA-HOUSE-BUILDING.",
@@ -674,21 +660,7 @@
         "rows": 466
       }
     ],
-    "node_labels_created": [
-      "Action",
-      "DeityCommunity",
-      "Object",
-      "Offering",
-      "QualityVerdict",
-      "Ritual",
-      "RitualRole",
-      "RitualStep",
-      "RoleFiller",
-      "Scholar",
-      "ScholarlyDisagreement",
-      "ScholarlyWork",
-      "Substance"
-    ],
+    "node_labels_created": [],
     "relationship_types_touched": [
       "ASSERTED_BY",
       "ASSERTION_ROLE",
@@ -710,15 +682,15 @@
     ]
   },
   "expected_census": {
-    "nodes_before": 108779,
-    "nodes_create": 14221,
-    "nodes_update": 5647,
+    "nodes_before": 123000,
+    "nodes_create": 0,
+    "nodes_update": 19856,
     "nodes_retire": 0,
     "nodes_after": 123000,
-    "relationships_before": 265295,
-    "relationships_create": 22982,
-    "relationships_update": 43909,
-    "relationships_retire": 226,
+    "relationships_before": 288051,
+    "relationships_create": 0,
+    "relationships_update": 66890,
+    "relationships_retire": 0,
     "relationships_after": 288051,
     "properties_change": 51215,
     "core_corpus_before": {
@@ -745,9 +717,9 @@
     "this_dry_run": {
       "planned_rows_total": 37129,
       "withheld_rows_total": 50372,
-      "nodes_create": 14221,
-      "relationships_create": 22982,
-      "relationships_retire": 226,
+      "nodes_create": 0,
+      "relationships_create": 0,
+      "relationships_retire": 0,
       "properties_change": 51215
     },
     "planned_rows_delta": 7012,
