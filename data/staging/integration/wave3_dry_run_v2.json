@@ -13,7 +13,7 @@
     "10 DEFECT_FOUND_AND_FIXED counts as a completed adversarial gate"
   ],
   "provenance": {
-    "git_commit": "cc92e61b05a2b6f999acf9e79372fd2041b8ada8",
+    "git_commit": "ce052d0e9b2401454cafe12b2d72ce6cffcecc65",
     "git_branch": "phase-data-completeness-v2",
     "working_tree_clean": true,
     "gap_registry_sha256": "82ba2160569bb603cf65452b652fececb693771868fca9d64157a26412c5709b",
@@ -26,7 +26,7 @@
     "backup_sha256": "98f71b641f608c8fd1aa3082ef4b88f7d983687d2996aa5b1c7528effc83b981",
     "backup_bytes": 96844203,
     "pre_import_census": {
-      "nodes": 116852,
+      "nodes": 116825,
       "relationships": 281290,
       "core_corpus": {
         "AV": 5839,
@@ -668,11 +668,11 @@
     ]
   },
   "expected_census": {
-    "nodes_before": 116852,
+    "nodes_before": 116825,
     "nodes_create": 0,
     "nodes_update": 13680,
     "nodes_retire": 0,
-    "nodes_after": 116852,
+    "nodes_after": 116825,
     "relationships_before": 281290,
     "relationships_create": 0,
     "relationships_update": 51707,
@@ -687,7 +687,58 @@
     },
     "core_corpus_must_not_move": true,
     "derivable_yet": true,
-    "note": "Element-level and measured against the live graph, not arithmetic over row counts. Node retirements are zero: every destructive change in this wave is a relationship correction, and each is named above with its proof artifact."
+    "note": "Element-level and measured against the live graph, not arithmetic over row counts. Every correction in wave3_import.CORRECTIONS is rehearsed here and its measured outstanding work is in these figures; see corrections_rehearsed. Node retirements used to be hardcoded 0 under a claim that no destructive change in this wave touches a node, which was true when written and false by the time it mattered."
+  },
+  "corrections_rehearsed": {
+    "SOMA_PRESSING_WEAK_ALIAS_RETIREMENT": {
+      "correction": "SOMA_PRESSING_WEAK_ALIAS_RETIREMENT",
+      "retired_aliases": [
+        "sute",
+        "suteṣu",
+        "sutāsaḥ"
+      ],
+      "mentions_entity_sent": 117,
+      "about_concept_sent": 108,
+      "matched_alias_updates_sent": 12,
+      "executed": false
+    },
+    "M5_SPECIALIZED_FORM_OF": {
+      "correction": "M5_SPECIALIZED_FORM_OF",
+      "edges_sent": 1,
+      "executed": false
+    },
+    "WITHHELD_REGISTRY_ENTITIES": {
+      "correction": "WITHHELD_REGISTRY_ENTITIES",
+      "keys_the_plan_now_withholds": 54,
+      "present_and_unreachable": 0,
+      "already_applied": true,
+      "executed": false
+    },
+    "RETYPE_ASSERTED_BY": {
+      "correction": "RETYPE_ASSERTED_BY",
+      "mistyped_edges": 0,
+      "already_applied": true,
+      "executed": false
+    },
+    "RESTORE_CURATED_DISPLAY_LABELS": {
+      "correction": "RESTORE_CURATED_DISPLAY_LABELS",
+      "nodes_with_a_non_curated_label": 0,
+      "already_applied": true,
+      "executed": false
+    },
+    "LABEL_REDIRECT_TARGETS_AS_RITUALS": {
+      "correction": "LABEL_REDIRECT_TARGETS_AS_RITUALS",
+      "targets": [
+        "VG:CONCEPT:GRHAPRAVESA",
+        "VG:CONCEPT:PITRMEDHA",
+        "VG:CONCEPT:PITRYANA-FUNERARY-RITE",
+        "VG:CONCEPT:SALA-HOUSE-BUILDING",
+        "VG:CONCEPT:VIVAHA-MARRIAGE"
+      ],
+      "unlabelled": 0,
+      "already_applied": true,
+      "executed": false
+    }
   },
   "delta_against_the_prior_dry_run": {
     "prior_dry_run": {
