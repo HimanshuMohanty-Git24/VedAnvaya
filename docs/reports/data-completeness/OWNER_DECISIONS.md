@@ -633,3 +633,109 @@ recognise round parentheses, so Q20's `(E11)`-cited answer was scored uncited an
 `INSUFFICIENT_EVIDENCE`. Fixed, with a test that ordinary prose parentheses still yield no
 citation. The other two uncited answers are a truncated generation and a reasoning-preamble
 leak — model-side, already flagged, not hidden.
+
+# Wave 4 — independent adversarial QA, and what it found about the registry
+
+Full report: [`WAVE4_ADVERSARIAL_QA.md`](WAVE4_ADVERSARIAL_QA.md). Verdict
+`VEDANVAYA_DATA_COMPLETENESS_NOT_COMPLETE`, `RELEASE_CANDIDATE = NO`.
+
+## 29. The registry had no closed state, and four decisions are what stand in the way
+
+§9 of this ledger says *"Registry items do not close yet."* Wave 4 discovered that this was
+not a policy being followed but a structural fact: `data/gap_registry.json` had **no closure
+vocabulary and no field to hold one**. 84 of 85 entries read `OPEN`, 67 carried
+`causation_status: HYPOTHESIS_NOT_YET_MEASURED` with all 14 addressing diagnostics `NOT_RUN`,
+and `resolution` and `addressing_status` were `None` on all 85. Nothing in that file could ever
+have been complete, so the campaign could not have reported completion from it.
+
+Every entry now terminates in exactly one status: **37** data-completeness closures, **8**
+separately tracked execution blockers, **40** `STILL_IMPLEMENTATION_FIXABLE`.
+
+**The five blockers that are not source limits.** `GAP-TRANSLATION-002` records *"Closed via
+the Wayback Machine, 944 of 961."* The graph holds 4,878 of 5,839 Atharvavedic translations —
+exactly the pre-closure figure. All 2,254 accepted rows in `data/staging/translation/rows.jsonl`
+target mantras that exist and **none carries a translation**; 1,242 are Samavedic, against an
+entry recording the Samaveda as source-blocked, and they are keyed to this corpus's own
+canonical keys. Acquired, staged, never imported, recorded as closed.
+
+The gate is `OWNER_DECISION_A_RV_SPAN` + `OWNER_DECISION_C_FORCED_ADDRESSES` for translation
+and `OWNER_DECISION_E_AUDIO_GATE` for audio and Samaveda music. `wave3_eligibility.json` has
+Gate B `UNKNOWN` and Gate C `NOT_RUN` for all four of those domains, against a stated
+eligibility rule of A and B and C all PASS — so the decision needs those gates run first, and
+running them is the next substantive piece of work on this project.
+
+Recorded `BLOCKED_OWNER_DECISION_REQUIRED`, counted apart from the closures and never as one.
+Two guards stop the cheap alternative: `CLOSED_SCOPE_DECISION` requires a citation naming where
+the decision is written down, and `BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE` requires all five
+fields §L of the brief specified. Either missing and the entry is downgraded.
+
+## 30. Eleven generators were wrong, and the gates that should have caught them
+
+The brief said fix generators, not canonical symptoms. Eleven were fixed at source; the full
+table is in §C of the report. Three are worth naming here because of what they say about the
+gates:
+
+**`GAP-AV-CHANDOMETRE-SEGMENTATION-001` is closed.** The criterion stays bounded by Whitney's
+own notation — a colon separates a statement from its per-verse exceptions, a bare `N. ` is a
+verse address — and 39 tests pin 19 malformed strings as refused **and 16 real metre names
+carrying `3-av.`/`6-p.` qualifiers as surviving**, which is what keeps the fix from becoming
+the 17/28/39 heuristics that were barred. No entity was re-keyed, merged or renamed; the 28
+malformed identities were marked `:Internal` and keep their literals. The builder's
+import-time `sys.stdout` swap made it unimportable by pytest, which is **why** its own
+documented residual shipped, and that is fixed too.
+
+**M10's fix did not reach the reader, and nothing noticed.** The graph was corrected, the
+export dropped the 28, and `frontend/public/world/world.labels.json` still carried all 28.
+Both world consumers had declared the same *intermediate* as their output, so the Lab stage
+was judged on a file its own build never touches; `build-world.mjs` joined the constellation
+partition **by position** with no length check, reading 35,370 assignments onto 35,648 nodes;
+and `world.predicates.json` was in no consumer's hash.
+
+**A declaration of emptiness is a claim about the graph, and nothing checked it.**
+`SHARES_FORMULA_WITH` was declared deliberately unpopulated — *"materialising it would add
+87,296 edges"* — and Wave 3 materialised 6,148 on a criterion the reasoning had not
+considered. The ontology reference published the false claim, and the same document reported 39
+live predicates as undeclared because it read one declaration slice. Both fixed; a new
+`falsely_declared_unpopulated` gate reads both maps.
+
+## 31. Four of my own errors, and the checks that caught them
+
+Recorded because the pattern is one rule. A transformation count declared 531 against a
+measured 4,368; an unreviewed-assertion count declared 4,865 against a measured 0 because the
+property is `review_state` not `review_status`; a reproducibility harness classifying its own
+registry audit `DEFECTIVE_REGENERATION` because that script's exit code is a *verdict*; and a
+boundary sample reporting 20 valid `TEXTUAL_MENTION` edges as vocabulary violations because I
+typed the vocabulary out by hand instead of reading `AttributionPrecision`.
+
+The first two were caught **because the ruling was declared before the measurement**. The
+fourth is the same shape as casting a property into the wrong enum and reporting 44,778 edges
+as `UNKNOWN`. **Read the declaration; never restate it.**
+
+## 32. Audio: still 0 of 1,021 heard, and the harness now proves its own refusals
+
+Nothing in this wave played audio and nothing simulated it. §14 stands.
+
+The harness's refusals were tested against the **live server** on a loopback port rather than
+read from its docstring: unknown verdict, anonymous verdict, `AUDIBLY_VERIFIED` with nothing
+played, and an unknown `review_id` all return 400 — and the control matters as much, because
+`AUDIBLE_REVIEW_UNCERTAIN` with nothing played returns 200. If every verdict were refused the
+four refusals would prove nothing. Run against a synthetic `review_id` in a sandbox; the real
+queue still holds 0 verdicts and the real decision log still does not exist.
+
+A generator fix: **804 of 1,021 rows named no source**, because the builder read
+`payload.source_name` and the staged payloads do not carry that field. A reviewer was handed a
+media URL and left to infer whose recording it is, on the one surface whose entire purpose is a
+human judgement. Now 0 unnamed, each row also carrying licence and attribution.
+
+A **100-row seeded owner sample** is at `data/staging/wave4/audio_owner_sample_manifest.json`,
+stratified proportionally with a floor of one so the 6-row Samavedic container stratum
+survives. Every row is `NEEDS_AUDIBLE_REVIEW` and the manifest has no verdict field at all.
+
+## 33. What Wave 4 did not do
+
+It did not build the forty implementation-fixable layers, and it did not relabel them. It did
+not import the staged translation or audio material, because that is decision A, C and E and
+not mine. It did not re-key, merge or mass-migrate any entity. It did not run Gate B or Gate C
+for the four blocked domains — those are a fresh adversarial pass per domain, not a
+by-product of this one. And it did not claim `misleading = 0`: see §L1 of the report for the
+formal Ask grade and its status.
