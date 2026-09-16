@@ -137,3 +137,53 @@ def test_the_scholarship_classes_stay_public() -> None:
     for label in ("Scholar", "ScholarlyWork", "ScholarlyDisagreement"):
         assert label in PRODUCT_LABELS
         assert label not in INTERNAL_LABELS
+
+
+@pytest.mark.neo4j
+def test_the_generic_entity_listing_applies_the_product_filter(
+    live_repository: Neo4jRepository,
+) -> None:
+    """Two public endpoints agreed by luck until M10 marked something internal.
+
+    ``/api/v1/entities`` carries ``WHERE NOT n:Internal``; the listing and count queries
+    behind ``/api/v1/entities/{type}`` did not. So the listing served 575 chandas against the
+    inventory's 547 -- the difference being 28 retired metre identities, six of them on page
+    one, labelled things like ``'3-av. 6-p. virāḍ atijagatī: 24. 5-p. virāḍ atijagatī'``.
+
+    Asserted per registered type rather than for chandas alone. M8's demoted classes escaped
+    this endpoint only because no ``EntityTypeSpec`` gives them a slug, which is the third
+    time in this campaign a boundary has held by accident; if one is ever registered, this
+    test is what catches it rather than a reader.
+    """
+    from vedagraph.api.models.entity import ENTITY_TYPES
+    from vedagraph.api.services.entity_service import (
+        _entity_count_query,
+        _entity_list_query,
+    )
+
+    for spec in ENTITY_TYPES.values():
+        for build in (_entity_list_query, _entity_count_query):
+            cypher = build(spec)
+            assert f"NOT n:{LABEL_INTERNAL}" in cypher, (
+                f"{build.__name__} for {spec.slug} does not apply the product filter, so it "
+                f"would serve internal nodes to a reader"
+            )
+
+    internal_by_label = {
+        str(row["label"]): int(row["n"])
+        for row in live_repository.run(
+            f"MATCH (n:{LABEL_INTERNAL}) UNWIND labels(n) AS label "
+            "RETURN label, count(*) AS n"
+        )
+    }
+    served = {spec.label for spec in ENTITY_TYPES.values()}
+    overlap = {
+        label: n for label, n in internal_by_label.items() if label in served and n
+    }
+    # Overlap is allowed -- :Chandas legitimately holds 28 internal nodes -- but only
+    # because the filter above excludes them. This records which types the filter is
+    # actually load-bearing for, so the pairing is visible rather than assumed.
+    assert "Chandas" in overlap or not overlap, (
+        f"internal nodes exist under served labels {sorted(overlap)}; the filter assertions "
+        "above are what keeps them out of the listing"
+    )

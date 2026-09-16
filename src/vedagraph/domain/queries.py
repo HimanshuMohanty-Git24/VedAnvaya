@@ -118,10 +118,24 @@ _NOT_INTERNAL = f"NOT n:{LABEL_INTERNAL}"
 #: Rigveda-only rather than the whole attribution layer, because HAS_RISHI and
 #: HAS_CHANDAS are no longer RV-only and a blanket warning would now send a researcher
 #: away from questions the graph can answer.
+#: Two deity-attribution predicates, and the reason a zero in one is not an absence.
+#:
+#: The previous wording said "a zero for SV/YV/AV means those corpora carry no Anukramani
+#: deity ascription", which was written about HAS_DEVATA and generalised into a claim about
+#: the corpus. It was false for the Atharvaveda, which carries 5,385 HAS_DEVATA_ASCRIPTION
+#: edges over 4,665 of its 5,839 mantras -- so a reader asking which Vedas record dedications
+#: was told a whole corpus had none while the graph held the answer.
 _SCOPE_CAVEAT = (
-    "HAS_DEVATA is Rigveda-only: 10,558 edges, every one on the RV. A zero for SV/YV/AV "
-    "means those corpora carry no Anukramani deity ascription, not that the deity is "
-    "absent from them. MENTIONS_DEVATA answers 'is this deity named here?' across all "
+    "TWO DEITY-ATTRIBUTION PREDICATES, NEITHER COMPLETE. HAS_DEVATA resolves a dedication to "
+    "a :Devata node and is Rigveda-only: 10,558 edges, every one on the RV. The Atharvaveda "
+    "has its own layer under a different predicate -- HAS_DEVATA_ASCRIPTION, 5,385 edges over "
+    "4,665 of its 5,839 mantras -- which points at a :DevataAscription carrying Whitney's "
+    "verbatim descriptor rather than a resolved deity. The two cannot be joined: their label "
+    "sets share no value, by category rather than by coverage, which is registered as "
+    "GAP-CROSS-VEDA-DEVATA-IDENTITY-BRIDGE-001. So a zero here means this predicate does not "
+    "reach that corpus, NOT that the corpus records no dedication and NOT that the deity is "
+    "absent from it. The Samaveda and Yajurveda carry neither layer. MENTIONS_DEVATA answers "
+    "'is this deity named here?' across all "
     f"four ({figures.PREDICATE_TOTALS['MENTIONS_DEVATA']:,} edges: "
     f"{figures.veda_breakdown(figures.MENTIONS_DEVATA_BY_VEDA)})."
 )

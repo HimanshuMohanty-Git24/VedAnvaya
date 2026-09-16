@@ -104,6 +104,7 @@ from vedagraph.api.services.deity_population import (
 )
 from vedagraph.api.services.search_service import VEDA_ORDER, result_type_for_labels
 from vedagraph.domain.layer_figures import CORPUS_MANTRAS
+from vedagraph.domain.ontology import product_filter
 from vedagraph.domain.theonyms import AMBIGUOUS, CERTAIN, PROBABLE, referent_tiers_for_mode
 
 
@@ -595,6 +596,12 @@ LIMIT $top
 def _entity_list_query(spec: EntityTypeSpec) -> str:
     """The list query for one type. Label and id property are both allow-listed first.
 
+    Carries ``product_filter`` because it did not, and the inventory endpoint beside it did:
+    /api/v1/entities/chandas returned 575 rows while /api/v1/entities reported 547 for the
+    same type, the difference being 28 nodes marked :Internal. The ontology calls
+    ``product_filter`` "the one place the product/internal boundary is written as Cypher.
+    Every product query interpolates this" -- and this was the query that showed rows.
+
     ``passage_count`` COUNTS THE EDGES, using the same ``_PASSAGE_TO_ENTITY`` predicate set
     and the same ``count(DISTINCT p)`` as the detail view, so a row and its own profile
     cannot disagree. They did: reading
@@ -613,7 +620,8 @@ def _entity_list_query(spec: EntityTypeSpec) -> str:
     id_property = _validated_id_property(spec.id_property)
     return f"""
 MATCH (n:{label})
-WHERE ($condition_kind IS NULL OR n.condition_kind = $condition_kind)
+WHERE {product_filter("n")}
+  AND ($condition_kind IS NULL OR n.condition_kind = $condition_kind)
   AND ($name IS NULL OR toLower(coalesce(n.display_label, '')) CONTAINS $name)
 CALL (n) {{
     OPTIONAL MATCH (p:Passage)-[{_PASSAGE_TO_ENTITY}]->(n)
@@ -633,9 +641,14 @@ SKIP $offset LIMIT $limit
 
 def _entity_count_query(spec: EntityTypeSpec) -> str:
     label = validated_label(spec.label)
+    # The same product filter as the list query above and the inventory beside it. Without
+    # it this total counted internal nodes: /api/v1/entities/chandas reported 575 against
+    # the inventory's 547, the difference being 28 retired metre identities marked
+    # :Internal by M10 -- and six of them were on page 1.
     return f"""
 MATCH (n:{label})
-WHERE ($condition_kind IS NULL OR n.condition_kind = $condition_kind)
+WHERE {product_filter("n")}
+  AND ($condition_kind IS NULL OR n.condition_kind = $condition_kind)
   AND ($name IS NULL OR toLower(coalesce(n.display_label, '')) CONTAINS $name)
 RETURN count(n) AS total
 """
