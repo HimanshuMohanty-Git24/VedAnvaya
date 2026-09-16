@@ -1,17 +1,14 @@
 {
   "artifact": "WAVE4_REBUILD_REPRODUCIBILITY",
-  "at": "2026-09-16T10:09:04.992055+00:00",
+  "at": "2026-09-16T10:13:50.516012+00:00",
   "method": "Two consecutive runs per builder, outputs compared byte for byte, then compared again with each builder's own declared volatile patterns masked. Volatile fields are declared before the comparison so that 'semantically equivalent' is a prediction that can fail.",
   "counts": {
     "BLOCKED_EXTERNAL_SOURCE": 1,
-    "DEFECTIVE_REGENERATION": 1,
-    "NONDETERMINISTIC_BUT_SEMANTICALLY_EQUIVALENT": 4,
+    "NONDETERMINISTIC_BUT_SEMANTICALLY_EQUIVALENT": 5,
     "NOT_APPLICABLE": 2,
     "REPRODUCIBLE": 4
   },
-  "defective": [
-    "wave4_registry_closure_audit"
-  ],
+  "defective": [],
   "builders": [
     {
       "builder": "graph_quality_scorecard",
@@ -69,7 +66,7 @@
       "first_run_tail": "Wrote D:\\VedaGraph\\frontend\\public\\world\\world.predicates.json\n  68 predicates: 62 curated, 6 derived from the name\n  direction: 17 directed, 4 symmetric, 47 undeclared\n  no curated explanation for: ASSERTION_AGENT, ASSERTION_TARGET, CONTAINS, POSITION_ASSERTED_BY, POSITION_STATED_IN, REPORTED_IN\n",
       "outputs": {
         "frontend/public/world/world.predicates.json": {
-          "digest": "f58e874f96f4ee50c14c003919ca8666fa01bf6351f17802c723c04d57c09f3f",
+          "digest": "d150e717cab9e06c607214764c328e07cd5a42c4b2ce7242ee819202241e33e0",
           "bytes": 24592
         }
       }
@@ -90,7 +87,7 @@
       "first_run_tail": "rnal\\nWITH a, e, b,\\n     coalesce(a.entity_key, a.canonical_key, a.formula_id, a.assertion_id,\\n              a.concept_id, a.ascription_id, a.metric_id) AS sid,\\n     coalesce(b.entity_key, b.canonical_key, b.formula_id, b.assertion_id,\\n              b.concept_id, b.ascription_id, b.metric_id) AS tid\\nWHERE sid IS NOT NULL AND tid IS NOT NULL AND sid <> tid\\nRETURN sid, tid, type(e) AS type\\n'\n",
       "outputs": {
         "frontend/.world/world.raw.json": {
-          "digest": "98df937cf16a8780a9858475aab7ff1b9967dbc21516b8dfaa057e379ba707d8",
+          "digest": "977b02f79ce390a55170083967ec5b368ca5aec89c24f7be0a697b0d27422699",
           "bytes": 10838476
         }
       }
@@ -138,7 +135,7 @@
       "first_run_tail": "V 68%      passage    Rigvedic Â· wealth (rayi)\n   15    706   100% RV 54%      passage    passage cluster\n   52    657   100% RV 59%      passage    passage cluster\n    3    592   100% AV 56%      passage    lifespan (Ä�yus)\n    8    592   100% RV 38%      passage    passage cluster\n   16    589   100% RV 47%      passage    passage cluster\n\nwrote D:\\VedaGraph\\frontend\\.world\\constellations.json\n",
       "outputs": {
         "frontend/.world/constellations.json": {
-          "digest": "99e65a8e23f6785d519b44cc7f27557d2cfd486166c4693071a4362176a85a03",
+          "digest": "998fb5b3087ea64274917f684d2552eef21d49165292bdb61653890743bb2106",
           "bytes": 875865
         }
       }
@@ -159,10 +156,10 @@
         "\"\\d{4}-\\d{2}-\\d{2}T[0-9:.]+(?:\\+00:00|Z)?\"",
         "\\d+\\.\\d+s"
       ],
-      "first_run_tail": " ...\n  10/36  (77s)\n  20/36  (93s)\n  30/36  (101s)\n\n  interiors settled in 101.2s\narranging 36 regions ...\n\nwrote public/world/\n  world.bin            2.58 MB\n  world.json           0.02 MB\n  world.labels.json    1.95 MB\n\n  36 constellations drawn, 35 named from metrics\n  154,766 semantic edges before the structural tail\n  83,860 bridge edges between regions\n  bytes per node (geometry only): 72.3\n",
+      "first_run_tail": "rs ...\n  10/36  (63s)\n  20/36  (75s)\n  30/36  (80s)\n\n  interiors settled in 80.3s\narranging 36 regions ...\n\nwrote public/world/\n  world.bin            2.58 MB\n  world.json           0.02 MB\n  world.labels.json    1.95 MB\n\n  36 constellations drawn, 35 named from metrics\n  154,766 semantic edges before the structural tail\n  83,860 bridge edges between regions\n  bytes per node (geometry only): 72.3\n",
       "outputs": {
         "frontend/public/world/world.json": {
-          "digest": "de5c3e59c7f2bb755539e6921292138a74f6c1f5e06fd0724dc9c0990d51a17a",
+          "digest": "7a2d51158743afe48a534ddbb03302e6a02e52c7d9c512ca3648e60f60b16216",
           "bytes": 19014
         },
         "frontend/public/world/world.labels.json": {
@@ -177,10 +174,25 @@
     },
     {
       "builder": "wave4_registry_closure_audit",
-      "status": "DEFECTIVE_REGENERATION",
-      "reason": "exit 1 then 1",
-      "log": "TURN count(r)'\nReceived notification from DBMS server: <GqlStatusObject gql_status='01N52', status_description='warn: property key does not exist. The property `domain` does not exist. Verify that the spelling is correct.', position=<SummaryInputPosition line=1, column=32, offset=31>, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', '_position': {'offset': 31, 'line': 1, 'column': 32}, 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: 'MATCH (e:DomainEntity) WHERE e.domain IS NULL RETURN count(e)'\nReceived notification from DBMS server: <GqlStatusObject gql_status='01N52', status_description='warn: property key does not exist. The property `alignment_confidence` does not exist. Verify that the spelling is correct.', position=<SummaryInputPosition line=1, column=31, offset=30>, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', '_position': {'offset': 30, 'line': 1, 'column': 31}, 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: 'MATCH (t:Translation) WHERE t.alignment_confidence IS NOT NULL RETURN count(t)'\n",
-      "runs": 2
+      "status": "NONDETERMINISTIC_BUT_SEMANTICALLY_EQUIVALENT",
+      "runs": 2,
+      "byte_identical_outputs": [],
+      "differ_only_in_declared_volatile_fields": [
+        "data/staging/wave4/registry_closure_audit.json"
+      ],
+      "unexplained_differences": [],
+      "declared_volatile_patterns": [
+        "\"(?:built_at|at|created_at|measured_at|closure_measured_at)\"\\s*:\\s*\"[^\"]*\"",
+        "\"\\d{4}-\\d{2}-\\d{2}T[0-9:.]+(?:\\+00:00|Z)?\"",
+        "\"sha256\"\\s*:\\s*\"[0-9a-f]{64}\""
+      ],
+      "first_run_tail": "tion.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', '_position': {'offset': 30, 'line': 1, 'column': 31}, 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: 'MATCH (t:Translation) WHERE t.alignment_confidence IS NOT NULL RETURN count(t)'\n",
+      "outputs": {
+        "data/staging/wave4/registry_closure_audit.json": {
+          "digest": "e399dfc74936bf4f3d63f190e259f5f10d63b45f70cea37270ba19351ab3af8b",
+          "bytes": 82097
+        }
+      }
     },
     {
       "builder": "dependency_state",
@@ -198,7 +210,7 @@
       "first_run_tail": " a.assertion_id, a.step_key, a.lemma, a.predicate) AS ka, coalesce(b.canonical_key, b.entity_key, b.formula_id, b.family_id, b.metric_id, b.claim_id, b.work_id, b.assertion_id, b.step_key, b.lemma, b.predicate) AS kb RETURN count(*) AS total, sum(CASE WHEN ka IS NULL OR kb IS NULL THEN 1 ELSE 0 END) AS unnamed, collect(CASE WHEN ka IS NULL OR kb IS NULL THEN NULL ELSE ka + '>' + kb END) AS pairs\"\n",
       "outputs": {
         "data/staging/integration/dependency_status.json": {
-          "digest": "6462a12fd47cb4b149508edf36157ef733eb80df3991dcda087d2c2397fc9dd8",
+          "digest": "473f1671f0c24b9a5e19429e2a4701404982e61a41460216deeaed78350285d7",
           "bytes": 8119
         }
       }
@@ -222,5 +234,5 @@
       "runs": 0
     }
   ],
-  "sha256": "e72f05449e30fa4dbd79168115ab72f0f1c063124b16594ca8d5696e76f19b96"
+  "sha256": "4c18655b0221b0b5d0893ad48a423e9788e2128fcce995011a2fdd6dbc098b54"
 }

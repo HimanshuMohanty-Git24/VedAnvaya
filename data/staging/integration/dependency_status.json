@@ -1,6 +1,6 @@
 {
   "artifact": "DEPENDENCY_STATUS",
-  "at": "2026-09-16T10:09:04.913425+00:00",
+  "at": "2026-09-16T10:13:50.448774+00:00",
   "graph_census": {
     "nodes": 116838,
     "relationships": 281257
@@ -126,7 +126,7 @@
       ],
       "built_at": "2026-09-16T09:23:26.808485+00:00",
       "rebuilt_by": "scripts/export_graph_world.py and the metrics build",
-      "current_input_digest": "6114e18ff2e37f70809b22b13f01351acf4d530b7addc3237b1777916dc16f7d",
+      "current_input_digest": "99a9cc6f5ce0d4568d3237faef6aa2e02d1f0cacc064c9654ed0245547b84ead",
       "recorded_input_digest": "cdcad21eb3ab761a71838645541e3a376015ebdbdce9e2df3ad1e35d436b867d"
     },
     {
