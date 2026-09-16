@@ -4,7 +4,7 @@
 Guard: `python scripts/validate_status_report.py`
 
 - Branch `phase-data-completeness-v2` · start commit `d6e93a9` · tag `vedanvaya-v1.0.0` FROZEN
-- Last rewritten 2026-09-16, after owner round four: integrity gates, labels, Whitney, semantics
+- Last rewritten 2026-09-16, after owner round four and its authorised M9 correction
 
 ## Where the campaign is
 
@@ -96,9 +96,39 @@ bound the share and they disagree: **17, 28, 39**. That disagreement is the find
 separating a deity adjective from a metre name is philological adjudication, which may not act
 as identity evidence, so a partial import cannot be made safe.
 
-Found in data that was already canonical: **33 `HAS_CHANDAS` edges point at such fragments
-today**. `GAP-AV-CHANDOMETRE-SEGMENTATION-001`, not repaired — re-segmenting a canonical
-vocabulary re-identifies its entities.
+Found in data that was already canonical: **33 `HAS_CHANDAS` edges pointed at such
+fragments**. `GAP-AV-CHANDOMETRE-SEGMENTATION-001` — corrected under owner authorisation as
+M9, below.
+
+### M9 · the 33 malformed metre assertions, withdrawn
+
+Authorised as a targeted correction of the demonstrable 33 only. The criterion is Whitney's
+own notation, not a reading of Sanskrit: `:` separates his hymn statement from its per-verse
+exceptions and a bare `N.` is a verse number, and neither can occur inside a metre *name*.
+That is why the correction stops at 33 — three heuristics for the wider population gave 17,
+28 and 39, and an unbounded criterion cannot authorise a deletion.
+
+33 assertions across 28 entities and 33 passages. **17 keep a well-formed metre edge; 16 are
+left with none.** Replacements created: **0**, measured — every metre assertion for these
+passages traces to the same source whose segmentation is the defect, and reading the metre
+out of the mixed string is barred. No `:Chandas` entity re-keyed, merged, renamed or
+migrated; all 541 AV_WHITNEY and 34 RV entities are intact, which is what preserves the
+printed literal.
+
+The literal and its provenance travel onto the passage before the edge is deleted, in that
+order inside one transaction. Deleting without recording would turn a malformed assertion
+into silence, and silence reads as *the source says nothing here* — false for all 33, and for
+the 16 that record is the only thing between a reader and a false zero.
+
+**My own readback could not fail, and that is recorded.** Its first version rebuilt its
+expectation by querying the graph for the malformed edges, found none after the withdrawal,
+and printed `READBACK_CLEAN` having compared 0 against 0. The expectation now comes from the
+executed receipt, and it refuses to report a verdict without one. Re-run: 28 of 28 entities
+intact, 33 of 33 records matching the receipt field by field.
+
+Five regression tests in `tests/api/test_chandas_integrity.py`, whose negative cases include
+real metre names carrying structural qualifiers like `3-av.` so the criterion cannot degrade
+into a digit-and-dot rule.
 
 ### Semantic resemblance — outcome C, measured
 
@@ -125,9 +155,11 @@ blocker recorded in the ledger.
 
 ## Blocking
 
-1. **`GAP-AV-CHANDOMETRE-SEGMENTATION-001`** — 33 canonical `HAS_CHANDAS` edges point at
-   bracket fragments rather than metre names. Needs an owner decision: re-segment the registry
-   (which re-identifies entities) or model the compound strings as evidence.
+1. **`GAP-AV-CHANDOMETRE-SEGMENTATION-001` is corrected but not closed.** The 33 assertions
+   are withdrawn; the registry **builder** is unchanged, so re-running
+   `build_anukramani_knowledge_layer.py` would recreate the same fragments, and the wider
+   malformed population still cannot be bounded mechanically (17 / 28 / 39). Closing it means
+   re-segmenting the bracket in the builder, which re-identifies entities.
 2. **466 Whitney rows** stay `RETAINED_NON_IMPORTABLE_UNRESOLVED_OBJECT`, blocked behind (1).
 3. **Semantic resemblance needs an embedding runtime** in the checkout plus adjudication
    capacity for the 162 unadjudicated gold pairs. The control's AUC 0.754 is the baseline any

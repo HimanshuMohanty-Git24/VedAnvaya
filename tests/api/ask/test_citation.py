@@ -102,10 +102,15 @@ def test_bracketed_text_that_is_not_a_citation_is_ignored() -> None:
         ("Fullwidth grouped 【E2, E3】.", ["E2", "E3"]),
         ("Fullwidth square ［E4］.", ["E4"]),  # noqa: RUF001
         ("Mixed [E1] and 【E5】.", ["E1", "E5"]),
+        # nemotron-3-ultra on OpenRouter, the third vendor spelling. Q20 of the round-four
+        # benchmark carried (E11), (E5) and (E6, E12) and was scored uncited.
+        ("Round (E11) parentheses.", ["E11"]),
+        ("Round grouped (E6, E12).", ["E6", "E12"]),
+        ("Mixed [E1] and (E11).", ["E1", "E11"]),
     ],
 )
 def test_non_ascii_bracket_spellings_are_still_citations(answer: str, expected: list[str]) -> None:
-    """``gpt-oss-120b`` on Groq emits CJK fullwidth brackets: ``【E1】``.
+    """Three vendors, three spellings, all correct citations by intent.
 
     An ASCII-only pattern scored those as *uncited*, which is worse than losing a
     footnote: support grading is citation-derived, so a properly grounded answer was
@@ -408,3 +413,23 @@ def test_a_capitalised_quote_verifies_against_its_cited_item() -> None:
     """End to end: the fix must make a real quotation pass, not merely tokenize better."""
     cited = [item("E1", sanskrit="āraṇyaka kāṇḍa")]
     assert verify_quotes("The Āraṇyaka kāṇḍa is cited here [E1].", cited) == []
+
+
+@pytest.mark.parametrize(
+    "answer",
+    [
+        "Soma is a substance (the pressed plant) and a deity.",
+        "Griffith's rendering (1896) is reused in the Samaveda staging.",
+        "The metre is anustubh (eight syllables per pada).",
+        "Whitney (ed.) prints the bracket differently.",
+        "A range (1-11) is addressed here.",
+    ],
+)
+def test_ordinary_parentheses_are_not_citations(answer: str) -> None:
+    """Admitting round brackets is only safe because the content test is strict.
+
+    Prose is full of parentheses, and none of these holds a bare ``E<digits>`` token, so none
+    contributes an id. This is the assertion that stops the permissive delimiter turning into
+    a permissive citation.
+    """
+    assert extract_cited_ids(answer) == []

@@ -27,9 +27,10 @@ from vedagraph.normalize.unicode import strip_vedic_accents
 #: Bracket pairs a model may use to delimit a citation, as ``(open, close)``.
 #:
 #: More than ASCII because the prompt asks for ``[E1]`` and models comply approximately.
-#: Two vendors were observed producing two different spellings during this build: Gemini
-#: groups ids inside one pair (``[E6, E7, E8, E9]``), and ``gpt-oss-120b`` on Groq emits
-#: CJK fullwidth brackets (``【E1】``). Both are correct citations by intent, and a pattern
+#: Three vendors were observed producing three different spellings: Gemini groups ids inside
+#: one pair (``[E6, E7, E8, E9]``), ``gpt-oss-120b`` on Groq emits CJK fullwidth brackets
+#: (``【E1】``), and ``nemotron-3-ultra`` on OpenRouter uses round parentheses (``(E11)``).
+#: All are correct citations by intent, and a pattern
 #: that knows only ``[`` scored both as *uncited* -- which does not merely lose a link:
 #: support grading is citation-derived, so a properly grounded answer was reported
 #: ``INSUFFICIENT_EVIDENCE`` with an empty citation list. That is a worse failure than a
@@ -42,6 +43,15 @@ _BRACKET_PAIRS: Final[tuple[tuple[str, str], ...]] = (
     ("【", "】"),  # 【 】 fullwidth, emitted by gpt-oss
     ("〚", "〛"),  # 〚 〛
     ("［", "］"),  # noqa: RUF001 - U+FF3B/U+FF3D, fullwidth square brackets
+    # Third vendor, same cause. nemotron-3-ultra writes (E11). Q20 of the round-four
+    # benchmark answered "Which Veda does not mention Agni?" with per-corpus counts and the
+    # markers (E11), (E5), (E6, E12), and was scored uncited with status
+    # INSUFFICIENT_EVIDENCE -- the failure the docstring above predicts.
+    #
+    # Round brackets are riskier than square ones, because prose is full of them. The strict
+    # content test is what makes it safe: a group contributes nothing without a bare
+    # E<digits> token, so "(the pressed plant)" and "(1990)" match nothing.
+    ("(", ")"),
 )
 
 _CITATION_GROUP: Final = re.compile(
