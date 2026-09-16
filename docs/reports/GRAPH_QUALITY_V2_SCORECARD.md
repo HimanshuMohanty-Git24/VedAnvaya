@@ -188,7 +188,7 @@ pseudo-entity `VG:CORPUS:FOUR-VEDA`, which deliberately has no node.
 
 | gate | result | pass |
 |---|---|---|
-| internal nodes reachable in product traversal | 0 | YES |
+| internal nodes reachable in product traversal | 4632 | NO |
 | ungraded edges | 0 | YES |
 | product nodes without a readable label | 0 | YES |
 | orphan domain entities | 0 | YES |

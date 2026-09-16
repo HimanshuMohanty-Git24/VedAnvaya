@@ -23,6 +23,7 @@ import json
 import pathlib
 import sys
 import warnings
+from collections.abc import Mapping
 from typing import Any
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
@@ -31,17 +32,14 @@ warnings.filterwarnings("ignore")
 PROJECT_ROOT = pathlib.Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT / "src"))
 
-from vedagraph.api.services.graph_service import (  # noqa: E402
-    LEMMA_RELATIONSHIP,
-    NON_TRAVERSABLE_REASONS,
-    TRAVERSABLE_RELATIONSHIPS,
-)
 from vedagraph.domain.claims import claim_summary, load_claims  # noqa: E402
-from vedagraph.domain.ontology import (  # noqa: E402
+from vedagraph.domain.ontology import (  # noqa: E402  # noqa: E402
+    CORPUS_AND_CAMPAIGN_SIGNATURES,
     DOMAIN_MODEL_VERSION,
     INTERNAL_LABELS,
     RELATIONSHIP_SIGNATURES,
     UNPOPULATED_BY_DESIGN,
+    all_declared_relationship_types,
 )
 from vedagraph.domain.queries import QUERIES, questions_served  # noqa: E402
 from vedagraph.domain.registry import (  # noqa: E402
@@ -298,7 +296,11 @@ def measure(session: Any) -> dict[str, Any]:
     )
 
     violations: list[dict[str, Any]] = []
-    for predicate, (subjects, objects) in sorted(RELATIONSHIP_SIGNATURES.items()):
+    # Both signature dicts. Iterating only RELATIONSHIP_SIGNATURES left the eight corpus
+    # and ten campaign predicates -- 141,264 edges -- with their endpoints checked by
+    # nothing, which is how HAS_RITUAL_STEP could have pointed anywhere at all.
+    every_signature = {**RELATIONSHIP_SIGNATURES, **CORPUS_AND_CAMPAIGN_SIGNATURES}
+    for predicate, (subjects, objects) in sorted(every_signature.items()):
         if predicate in UNPOPULATED_BY_DESIGN:
             continue
         subject_ok = " OR ".join(f"a:{label}" for label in sorted(subjects))
@@ -312,25 +314,44 @@ def measure(session: Any) -> dict[str, Any]:
             violations.append({"predicate": predicate, "violations": bad})
     out["signature_violations"] = violations
 
-    # The authority is the product contract, not DOMAIN_RELATIONSHIP_TYPES -- which is the
-    # domain layer only, with the corpus, enrichment and semantic layers declaring their own,
-    # and 40 populated types legitimately outside it.
+    # The authority is the ontology, composed across layers by
+    # all_declared_relationship_types(). The graph is not an input to it, which is the whole
+    # point: the first version of this gate computed
     #
-    # The previous line unioned the ontology's set with every type found in the graph and
-    # then asked which graph types were missing from it. Nothing can be. The gate reported 0
-    # for a whole wave while eleven new predicates went unclassified.
-    declared = (
-        TRAVERSABLE_RELATIONSHIPS | set(NON_TRAVERSABLE_REASONS) | {LEMMA_RELATIONSHIP}
-    )
-    out["undeclared_rel_types"] = sorted(
-        row["type"]
-        for row in out["relationship_types"]
-        if row["type"] not in declared and row["edges"] > 0
+    #     declared = ontology | every type found in the graph
+    #
+    # and then asked which graph types were missing from `declared`. Nothing can be, so it
+    # reported 0 undeclared for a whole wave while eleven predicates went unclassified.
+    #
+    # The second version asked the API's traversable/refused lists. Better, and still wrong:
+    # those are a product decision about what a reader may cross, not a schema declaration
+    # of what may exist, so a predicate could be refused for a good reason and pass here
+    # while no ontology layer had ever declared it.
+    out["undeclared_rel_types"] = undeclared_relationship_types(
+        {row["type"]: int(row["edges"]) for row in out["relationship_types"]},
+        all_declared_relationship_types(),
     )
     out["empty_rel_types"] = sorted(
         row["type"] for row in out["relationship_types"] if row["edges"] == 0
     )
     return out
+
+
+def undeclared_relationship_types(
+    observed: Mapping[str, int], declared: frozenset[str]
+) -> list[str]:
+    """Populated relationship types no layer declares.
+
+    Two arguments and no I/O, so a test can prove this fails: hand it a fake predicate and
+    it must be reported; remove one entry from ``declared`` and the predicate using it must
+    appear. Neither earlier version of this gate was testable, which is why neither was
+    tested, and both shipped unable to fail.
+
+    Empty types are excluded deliberately. A declared-but-unpopulated predicate is
+    architecture (see UNPOPULATED_BY_DESIGN); an UNdeclared empty one cannot mislead a
+    reader because no edge carries it. Both are reported separately in ``empty_rel_types``.
+    """
+    return sorted(name for name, edges in observed.items() if edges > 0 and name not in declared)
 
 
 def _pct(numerator: float, denominator: float) -> str:

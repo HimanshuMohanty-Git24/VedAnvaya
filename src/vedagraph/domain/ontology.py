@@ -93,6 +93,30 @@ LABEL_RITUAL: Final = "Ritual"
 #: canonical URN and uuid5 they already carried. Distinct from LABEL_ACTION, which is what
 #: the Samhita-numbered HAS_STEP points at.
 LABEL_RITUAL_STEP: Final = "RitualStep"
+
+#: A named scholar of the secondary literature. Product-visible: a recorded disagreement is
+#: only interpretable if the reader can see who holds the position.
+LABEL_SCHOLAR: Final = "Scholar"
+#: A work of secondary literature. Distinct from LABEL_WORK, which is a corpus.
+LABEL_SCHOLARLY_WORK: Final = "ScholarlyWork"
+#: A recorded disagreement between named scholars about a passage. Product-visible, and
+#: deliberately NOT :InterpretiveClaim -- that label's contract promises an ``about`` enum
+#: and a ``falsifier``, and a disagreement between two asserters has neither.
+LABEL_SCHOLARLY_DISAGREEMENT: Final = "ScholarlyDisagreement"
+
+#: This repository's own quality assessment of one of its passages. INTERNAL, on the same
+#: footing as QAIssue: it is a fact about the record and never product content. 2,568 of
+#: these were reaching the public world export, where they were the fourth-largest node
+#: type, because "public" is measured as ``NOT n:Internal`` and nothing had marked them.
+LABEL_QUALITY_VERDICT: Final = "QualityVerdict"
+#: The reified filler of one semantic role slot. INTERNAL: it carries no entity_key and is
+#: not a thing a reader asked to see -- it is the wiring by which a passage's role
+#: assignment reaches its referent.
+LABEL_ROLE_FILLER: Final = "RoleFiller"
+#: One cluster of a deity co-occurrence partition, imported with its refusal attached and
+#: no membership claim. INTERNAL: an analytic artifact about this graph, not a Vedic
+#: subject, and six of the twelve draw every internal edge from a single hymn.
+LABEL_DEITY_COMMUNITY: Final = "DeityCommunity"
 LABEL_OFFERING: Final = "Offering"
 LABEL_SUBSTANCE: Final = "Substance"
 LABEL_PLANT: Final = "Plant"
@@ -318,6 +342,9 @@ PRODUCT_LABELS: Final[frozenset[str]] = frozenset(
         LABEL_DEVATA_ASCRIPTION,
         LABEL_FORMULA_FAMILY,
         LABEL_RITUAL_STEP,
+        LABEL_SCHOLAR,
+        LABEL_SCHOLARLY_WORK,
+        LABEL_SCHOLARLY_DISAGREEMENT,
     }
 )
 
@@ -331,6 +358,9 @@ INTERNAL_LABELS: Final[frozenset[str]] = frozenset(
         "Translation",
         "Source",
         "SourceArtifact",
+        LABEL_QUALITY_VERDICT,
+        LABEL_ROLE_FILLER,
+        LABEL_DEITY_COMMUNITY,
     }
 )
 
@@ -821,6 +851,39 @@ REL_HAS_DEVATA_ASCRIPTION: Final = "HAS_DEVATA_ASCRIPTION"
 #: ``āgneyam`` is the vrddhi derivative of ``agni``. Absent where it would be a reading.
 REL_ASCRIBES_TO_DEVATA: Final = "ASCRIBES_TO_DEVATA"
 
+# Corpus structure and text surfaces (pre-existing, previously undeclared).
+REL_HAS_TEXT_VERSION: Final = "HAS_TEXT_VERSION"
+REL_HAS_TRANSLATION: Final = "HAS_TRANSLATION"
+#: A textual parallel asserted before the typed cross-Veda predicates existed. 69 edges,
+#: retained rather than retyped: retyping them would change what an existing predicate
+#: means, which needs an owner decision and not a migration.
+REL_PARALLEL_TO: Final = "PARALLEL_TO"
+
+# The data-completeness campaign's predicates.
+#: Passage to the reified filler of one semantic role slot.
+REL_ASSERTION_ROLE: Final = "ASSERTION_ROLE"
+#: A role filler to the entity it resolves to.
+REL_REFERS_TO: Final = "REFERS_TO"
+#: A rite to a step a Srautasutra or Grhyasutra prints. Distinct from REL_HAS_STEP, which
+#: is the Samhita's own numbering, and never summed with it.
+REL_HAS_RITUAL_STEP: Final = "HAS_RITUAL_STEP"
+#: A registry entity to a passage the registry records as attesting it.
+REL_ATTESTED_IN: Final = "ATTESTED_IN"
+#: This repository's quality verdict to the passage it assesses. Internal.
+REL_QUALITY_VERDICT_ABOUT: Final = "QUALITY_VERDICT_ABOUT"
+#: A recorded scholarly disagreement to the passage it concerns.
+REL_SCHOLARLY_CLAIM_ABOUT: Final = "SCHOLARLY_CLAIM_ABOUT"
+#: A recorded position to the scholar who holds it. Distinct from REL_ASSERTED_BY, whose
+#: signature is InterpretiveClaim -> Source; reusing that one was a measured defect.
+REL_POSITION_ASSERTED_BY: Final = "POSITION_ASSERTED_BY"
+#: A recorded position to the work stating it.
+REL_POSITION_STATED_IN: Final = "POSITION_STATED_IN"
+#: A recorded disagreement to the work reporting it.
+REL_REPORTED_IN: Final = "REPORTED_IN"
+#: A narrower deity name to the broader one. Narrower than, NOT an alias for: unlike
+#: REL_EPITHET_VARIANT_OF it does not assert one referent under two names.
+REL_SPECIALIZED_FORM_OF: Final = "SPECIALIZED_FORM_OF"
+
 
 #: Relationship types V2 introduces or re-scopes. Anything not here and not already
 #: emitted by an earlier layer is a controlled-predicate violation, which
@@ -877,6 +940,42 @@ DOMAIN_RELATIONSHIP_TYPES: Final[frozenset[str]] = frozenset(
         REL_ASCRIBES_TO_DEVATA,
     }
 )
+
+#: Pre-existing corpus-structure and traditional-metadata predicates. Their constants were
+#: defined above with the note "listed so the closed vocabulary is complete", and then none
+#: of them reached a declared SET -- because RELATIONSHIP_SIGNATURES is asserted equal to
+#: DOMAIN_RELATIONSHIP_TYPES and these have no V2 signature. So the closed vocabulary was
+#: never actually closed, and eight predicates carrying 138,143 edges were undeclared.
+CORPUS_RELATIONSHIP_TYPES: Final[frozenset[str]] = frozenset(
+    {
+        REL_CONTAINS,
+        REL_HAS_TEXT_VERSION,
+        REL_HAS_TRANSLATION,
+        REL_HAS_RISHI,
+        REL_HAS_DEVATA,
+        REL_HAS_CHANDAS,
+        REL_MENTIONS_LEMMA,
+        REL_PARALLEL_TO,
+    }
+)
+
+#: Predicates the data-completeness campaign introduced. Each endpoint signature below was
+#: measured against the live graph rather than intended.
+CAMPAIGN_RELATIONSHIP_TYPES: Final[frozenset[str]] = frozenset(
+    {
+        REL_ASSERTION_ROLE,
+        REL_REFERS_TO,
+        REL_HAS_RITUAL_STEP,
+        REL_ATTESTED_IN,
+        REL_QUALITY_VERDICT_ABOUT,
+        REL_SCHOLARLY_CLAIM_ABOUT,
+        REL_POSITION_ASSERTED_BY,
+        REL_POSITION_STATED_IN,
+        REL_REPORTED_IN,
+        REL_SPECIALIZED_FORM_OF,
+    }
+)
+
 
 #: Declared so the architecture is inspectable, deliberately not populated in this
 #: release. The Sāmaveda's melodies (gāna) are not in the corpus, and an empty typed edge
@@ -1044,6 +1143,115 @@ RELATIONSHIP_SIGNATURES: Final[dict[str, tuple[frozenset[str], frozenset[str]]]]
 assert set(RELATIONSHIP_SIGNATURES) == DOMAIN_RELATIONSHIP_TYPES, (
     "every declared relationship type needs an endpoint signature"
 )
+
+
+#: Endpoint signatures for the corpus and campaign predicates. Every pair below was measured
+#: against the live graph rather than intended, so a signature violation here means the graph
+#: changed and not that somebody guessed wrong.
+#:
+#: Kept out of RELATIONSHIP_SIGNATURES because that dict is asserted to equal
+#: DOMAIN_RELATIONSHIP_TYPES exactly, and widening it would silence a check that exists to
+#: stop a V2 predicate shipping without a signature.
+CORPUS_AND_CAMPAIGN_SIGNATURES: Final[dict[str, tuple[frozenset[str], frozenset[str]]]] = {
+    # -- corpus structure -----------------------------------------------------------
+    #: A container to what it contains: Work -> Passage, Passage -> Passage, Passage ->
+    #: Mantra. One predicate for the whole containment tree.
+    REL_CONTAINS: (
+        frozenset({LABEL_WORK, LABEL_PASSAGE}),
+        frozenset({LABEL_PASSAGE, LABEL_MANTRA}),
+    ),
+    REL_HAS_TEXT_VERSION: (frozenset({LABEL_PASSAGE, LABEL_MANTRA}), frozenset({"TextVersion"})),
+    REL_HAS_TRANSLATION: (frozenset({LABEL_PASSAGE, LABEL_MANTRA}), frozenset({"Translation"})),
+    REL_MENTIONS_LEMMA: (frozenset({LABEL_PASSAGE, LABEL_MANTRA}), frozenset({LABEL_LEMMA})),
+    #: Anukramani attribution. Subject is a Mantra or the hymn-level Passage that inherits
+    #: it; the 525 and 542 container-level edges are the source asserting at hymn scope.
+    REL_HAS_RISHI: (frozenset({LABEL_PASSAGE, LABEL_MANTRA}), frozenset({LABEL_RISHI})),
+    REL_HAS_DEVATA: (frozenset({LABEL_PASSAGE, LABEL_MANTRA}), frozenset({LABEL_DEVATA})),
+    REL_HAS_CHANDAS: (frozenset({LABEL_PASSAGE, LABEL_MANTRA}), frozenset({LABEL_CHANDAS})),
+    REL_PARALLEL_TO: (
+        frozenset({LABEL_PASSAGE, LABEL_MANTRA}),
+        frozenset({LABEL_PASSAGE, LABEL_MANTRA}),
+    ),
+    # -- the campaign ---------------------------------------------------------------
+    REL_ASSERTION_ROLE: (
+        frozenset({LABEL_PASSAGE, LABEL_MANTRA}),
+        frozenset({LABEL_ROLE_FILLER}),
+    ),
+    #: A filler resolves to any registered entity: measured as Devata, DomainEntity and its
+    #: subtypes. The range is the domain-entity family, not one label.
+    REL_REFERS_TO: (
+        frozenset({LABEL_ROLE_FILLER}),
+        frozenset({LABEL_DEVATA, LABEL_DOMAIN_ENTITY}),
+    ),
+    #: Subject is a Ritual, and 59 of the 3,121 come from a node carrying :SocialRite too --
+    #: the three redirect targets M5 labelled, which are rites under both readings.
+    REL_HAS_RITUAL_STEP: (
+        frozenset({LABEL_RITUAL, LABEL_SOCIAL_RITE}),
+        frozenset({LABEL_RITUAL_STEP}),
+    ),
+    REL_ATTESTED_IN: (
+        frozenset({LABEL_DOMAIN_ENTITY}),
+        frozenset({LABEL_PASSAGE, LABEL_MANTRA}),
+    ),
+    REL_QUALITY_VERDICT_ABOUT: (
+        frozenset({LABEL_QUALITY_VERDICT}),
+        frozenset({LABEL_PASSAGE, LABEL_MANTRA}),
+    ),
+    REL_SCHOLARLY_CLAIM_ABOUT: (
+        frozenset({LABEL_SCHOLARLY_DISAGREEMENT}),
+        frozenset({LABEL_PASSAGE, LABEL_MANTRA}),
+    ),
+    REL_POSITION_ASSERTED_BY: (
+        frozenset({LABEL_SCHOLARLY_DISAGREEMENT}),
+        frozenset({LABEL_SCHOLAR}),
+    ),
+    REL_POSITION_STATED_IN: (
+        frozenset({LABEL_SCHOLARLY_DISAGREEMENT}),
+        frozenset({LABEL_SCHOLARLY_WORK}),
+    ),
+    REL_REPORTED_IN: (
+        frozenset({LABEL_SCHOLARLY_DISAGREEMENT}),
+        frozenset({LABEL_SCHOLARLY_WORK}),
+    ),
+    REL_SPECIALIZED_FORM_OF: (frozenset({LABEL_DEVATA}), frozenset({LABEL_DEVATA})),
+}
+
+assert set(CORPUS_AND_CAMPAIGN_SIGNATURES) == (
+    CORPUS_RELATIONSHIP_TYPES | CAMPAIGN_RELATIONSHIP_TYPES
+), "every corpus and campaign predicate needs an endpoint signature"
+
+
+#: Neo4j has no reserved relationship types of its own, so this set is empty and stays
+#: empty. It exists so that "are there system exceptions?" has a declared answer rather than
+#: an implicit one, and so that adding an exception is a visible act.
+SYSTEM_RELATIONSHIP_TYPES: Final[frozenset[str]] = frozenset()
+
+
+def all_declared_relationship_types() -> frozenset[str]:
+    """Every relationship type any layer of this project declares.
+
+    **Composed, never restated.** Each layer keeps its own authority and this function
+    unions them, so a predicate added to a layer appears here automatically and one removed
+    disappears -- which is what lets a test prove the gate fails when a declaration is taken
+    away.
+
+    Critically, the graph is not an input. The previous scorecard gate computed
+    ``declared = ontology | everything in the graph`` and then asked which graph types were
+    missing from ``declared``; nothing can be, so it reported 0 undeclared for a whole wave
+    while eleven predicates went unclassified. **The data may not declare itself valid.**
+
+    The enrichment layer is imported inside the function to keep the domain package free of
+    an import-time dependency on it.
+    """
+    from vedagraph.enrich.predicates import CONTROLLED_PREDICATES
+
+    return frozenset(
+        DOMAIN_RELATIONSHIP_TYPES
+        | CORPUS_RELATIONSHIP_TYPES
+        | CAMPAIGN_RELATIONSHIP_TYPES
+        | CONTROLLED_PREDICATES
+        | SYSTEM_RELATIONSHIP_TYPES
+    )
 
 
 # ---------------------------------------------------------------------------
