@@ -362,3 +362,58 @@ stable product id.
 ADDITIVE = true · DETERMINISTIC_IDENTITY = true · BACKWARD_COMPATIBLE = true
 ROLLBACK_DEFINED = true · OLD_PREDICATE_MEANING_CHANGED = false
 ```
+
+## M8 — the internal label boundary
+
+**Owner Phase C.** Six node labels this campaign created were declared by no authoritative
+source. Three are product content, three are facts about the record, and none was marked.
+
+**The leak, measured.** The product/internal boundary in this graph is one Cypher clause,
+`NOT n:Internal`. `frontend/.world/world.raw.json` held **2,568 `:QualityVerdict` nodes** —
+this repository's own quality assessments of its own passages — as the fourth-largest type in
+the public world, ahead of `:Rishi`. They carry an `entity_key`, so the export's
+`WHERE id IS NOT NULL` admitted them. `:RoleFiller` and `:DeityCommunity` escaped only
+because they have no id key and the export drops what it cannot name, which is luck rather
+than a boundary.
+
+**Classification of all six:**
+
+| label | n | disposition | reason |
+|---|---:|---|---|
+| `RitualStep` | 3,121 | product (M7) | a sutra's own step, with a deterministic identity |
+| `Scholar` | 17 | **product** | a recorded disagreement is uninterpretable without who holds it |
+| `ScholarlyWork` | 17 | **product** | the work stating a position; distinct from `:Work`, which is a corpus |
+| `ScholarlyDisagreement` | 113 | **product** | reached by the traversable `SCHOLARLY_CLAIM_ABOUT` |
+| `QualityVerdict` | 2,568 | **internal** | this repository's assessment of itself, same footing as `:QAIssue` |
+| `RoleFiller` | 2,052 | **internal** | the wiring by which a role assignment reaches a referent; carries no `entity_key` at all |
+| `DeityCommunity` | 12 | **internal** | an analytic partition imported with its own refusal and no membership claim |
+
+Demoting the scholarship classes would have made the unclassified set empty faster and would
+have hidden real knowledge content. The owner's instruction was explicit that the difference
+set must not be emptied by exposure *or* by concealment.
+
+**What this writes.** The `:Internal` label on 4,632 nodes across three classes. Nothing
+else. Public nodes 44,324 → 39,692; total nodes and relationships unchanged; four corpus
+totals unchanged.
+
+**Identity rule.** Not an identity element. No key, URN or UUID changes.
+
+**Backward compatibility.** Additive, and it only ever *removes* content from a public
+surface — the safe direction. The three demoted classes were never part of a published
+contract: no API route returns them, and the world export admitted the verdicts by accident
+rather than by design.
+
+**Rollback.** `MATCH (n:QualityVerdict|RoleFiller|DeityCommunity) REMOVE n:Internal,
+n.m8_applied`. The verified dump `round4-pre-m8-20260916T112837` covers it regardless.
+
+**Migration test.** The script refuses to run if any class it is asked to demote is also
+declared in `PRODUCT_LABELS`, so a later promotion cannot silently re-leak. Afterwards
+`tests/api/test_label_boundary.py` asserts: every graph label is product, internal or a
+listed exception; every internally classified label is actually marked in the graph; no
+internal class survives the product filter; the exported world file carries none; and — the
+proof the check can fail — an invented label added to the observed set is reported.
+
+```
+ADDITIVE = true · DETERMINISTIC_IDENTITY = true · BACKWARD_COMPATIBLE = true
+ROLLBACK_DEFINED = true · OLD_PREDICATE_MEANING_CHANGED = false
+```

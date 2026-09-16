@@ -14,8 +14,8 @@ weighted towards what a reader can rely on.
 |---|---|---|---|
 | nodes | 100,584 | 116,838 | +16,254 |
 | relationships | 212,336 | 281,290 | +68,954 |
-| product nodes | — | 44,324 | — |
-| internal nodes | 0 (unmarked) | 72,514 | +72,514 |
+| product nodes | — | 39,692 | — |
+| internal nodes | 0 (unmarked) | 77,146 | +77,146 |
 | domain entities | 89 | 375 | +286 |
 | typed domain labels | 0 | 24 | +24 |
 
@@ -188,7 +188,7 @@ pseudo-entity `VG:CORPUS:FOUR-VEDA`, which deliberately has no node.
 
 | gate | result | pass |
 |---|---|---|
-| internal nodes reachable in product traversal | 4632 | NO |
+| internal nodes reachable in product traversal | 0 | YES |
 | ungraded edges | 0 | YES |
 | product nodes without a readable label | 0 | YES |
 | orphan domain entities | 0 | YES |
