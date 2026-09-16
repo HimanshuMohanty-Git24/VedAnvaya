@@ -1,0 +1,89 @@
+{
+  "artifact": "M13_READBACK",
+  "gap": "GAP-TRANSLATION-006",
+  "at": "2026-09-16T11:14:49.235700+00:00",
+  "expectation_source": "data/staging/integration/m13_receipt.json -- the executed receipt. The graph was asked only what the receipt already claims, never for the expectation itself.",
+  "receipt_sha256": "62557895e41423593f9766e17a27efd147a7785dff3c180a45710a1fdfc0fe76",
+  "rows_in_receipt": 31,
+  "rows_moved": 25,
+  "rows_unchanged_anchor": 6,
+  "corrected_attachments_present": 31,
+  "corrected_attachments_missing": 0,
+  "old_attachments_still_serving_that_text": [],
+  "text_bytes_changed": [],
+  "provenance_mismatches": [],
+  "claim_mismatches": [],
+  "translated_verses_in_span": [
+    "VG:RV:SAK:M01:S065:V001",
+    "VG:RV:SAK:M01:S065:V003",
+    "VG:RV:SAK:M01:S065:V005",
+    "VG:RV:SAK:M01:S065:V007",
+    "VG:RV:SAK:M01:S065:V009",
+    "VG:RV:SAK:M01:S066:V001",
+    "VG:RV:SAK:M01:S066:V003",
+    "VG:RV:SAK:M01:S066:V005",
+    "VG:RV:SAK:M01:S066:V007",
+    "VG:RV:SAK:M01:S066:V009",
+    "VG:RV:SAK:M01:S067:V001",
+    "VG:RV:SAK:M01:S067:V003",
+    "VG:RV:SAK:M01:S067:V005",
+    "VG:RV:SAK:M01:S067:V007",
+    "VG:RV:SAK:M01:S067:V009",
+    "VG:RV:SAK:M01:S068:V001",
+    "VG:RV:SAK:M01:S068:V003",
+    "VG:RV:SAK:M01:S068:V005",
+    "VG:RV:SAK:M01:S068:V007",
+    "VG:RV:SAK:M01:S068:V009",
+    "VG:RV:SAK:M01:S069:V001",
+    "VG:RV:SAK:M01:S069:V003",
+    "VG:RV:SAK:M01:S069:V005",
+    "VG:RV:SAK:M01:S069:V007",
+    "VG:RV:SAK:M01:S069:V009",
+    "VG:RV:SAK:M01:S070:V001",
+    "VG:RV:SAK:M01:S070:V003",
+    "VG:RV:SAK:M01:S070:V005",
+    "VG:RV:SAK:M01:S070:V007",
+    "VG:RV:SAK:M01:S070:V009",
+    "VG:RV:SAK:M01:S070:V011"
+  ],
+  "neighbouring_hymns": {
+    "RV 1.63": [
+      9,
+      9
+    ],
+    "RV 1.64": [
+      15,
+      15
+    ],
+    "RV 1.71": [
+      10,
+      10
+    ],
+    "RV 1.72": [
+      10,
+      10
+    ],
+    "RV 1.73": [
+      10,
+      9
+    ]
+  },
+  "corpus_totals": {
+    "translation_nodes": 17283,
+    "translation_edges": 17283,
+    "by_veda": {
+      "AV": 4878,
+      "RV": 10502,
+      "YV": 1903
+    },
+    "core": {
+      "AV": 5839,
+      "RV": 10552,
+      "SV": 1844,
+      "YV": 1975
+    }
+  },
+  "findings": [],
+  "clean": true,
+  "sha256": "f16400fc30c5bbc8e2304dfddc551f69480deaae7f18683a996e541674a6ba0c"
+}

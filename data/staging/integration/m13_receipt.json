@@ -1,0 +1,582 @@
+{
+  "migration": "M13_RV_DVIPADA_SPINE_REALIGNMENT",
+  "gap": "GAP-TRANSLATION-006",
+  "at": "2026-09-16T11:12:19.664421+00:00",
+  "executed": true,
+  "backup": "D:/vedanvaya-backups/remediation1-pre-t006-20260916T161305",
+  "correction_source": "data/registry/upstream_corrections.yaml via vedagraph.graph.projection -- the same source a rebuild reads",
+  "plan_artifact": "data/staging/translation/m13_plan.json",
+  "audit_artifact": "data/staging/translation/rv_1_65_1_70_pre_fix_audit.json",
+  "rows_planned": 31,
+  "rows_moved": 25,
+  "rows_already_anchored": 6,
+  "rows_updated": 31,
+  "edges_recreated": 25,
+  "promised_delta": {
+    "nodes": 0,
+    "relationships": 0,
+    "translation_nodes": 0,
+    "translation_edges": 0
+  },
+  "actual_delta": {
+    "nodes": 0,
+    "relationships": 0,
+    "translation_nodes": 0,
+    "translation_edges": 0
+  },
+  "delta_matched_promise": true,
+  "census_before": {
+    "nodes": 116838,
+    "relationships": 281257,
+    "translation_nodes": 17283,
+    "translation_edges": 17283,
+    "rv_translated_mantras": 10502,
+    "core": {
+      "AV": 5839,
+      "RV": 10552,
+      "SV": 1844,
+      "YV": 1975
+    }
+  },
+  "census_after": {
+    "nodes": 116838,
+    "relationships": 281257,
+    "translation_nodes": 17283,
+    "translation_edges": 17283,
+    "rv_translated_mantras": 10502,
+    "core": {
+      "AV": 5839,
+      "RV": 10552,
+      "SV": 1844,
+      "YV": 1975
+    }
+  },
+  "core_corpus_unchanged": true,
+  "digests_before": {
+    "translation_attachments_outside_the_span": "dd62da498df3adaa35166bd2aaae3710fe0007d85f0ed228c72fbd11f7aeaf31",
+    "sanskrit_inside_the_span": "6e8e39db6aa93efc769fbee24887d8da11ac38a33d431a12ab49437e5b14f448",
+    "non_translation_edges_inside_the_span": "4a5ec91862875169668e2fca9eb233faf67c86e27242092f2c78814a3e4dbefd"
+  },
+  "digests_after": {
+    "translation_attachments_outside_the_span": "dd62da498df3adaa35166bd2aaae3710fe0007d85f0ed228c72fbd11f7aeaf31",
+    "sanskrit_inside_the_span": "6e8e39db6aa93efc769fbee24887d8da11ac38a33d431a12ab49437e5b14f448",
+    "non_translation_edges_inside_the_span": "4a5ec91862875169668e2fca9eb233faf67c86e27242092f2c78814a3e4dbefd"
+  },
+  "nothing_outside_the_span_changed": true,
+  "corrected_rows_not_where_planned": [],
+  "old_attachments_still_present": [
+    "eb053d64-c515-5f20-80e7-4d03531a7475",
+    "dc4233cb-0efc-53e0-9048-57654acd61fe",
+    "8fbfa11e-cbfb-5fa8-8cc5-4ef846e0f528",
+    "65df036b-78df-5219-93cb-b249409721fe",
+    "cb8d44b6-254d-5b78-886c-cf6060c7c97e",
+    "286f302c-0d5d-5b83-a0fa-0c48d2b60603",
+    "6f99d21e-2395-57f0-8582-3c9db2fa3b07",
+    "33a76ebf-1369-55a6-8614-62ad3c579e37",
+    "44d949bd-6bc4-506e-8db0-51bb2137105d",
+    "ea588a01-6335-5333-b502-e91dd9d299ef",
+    "77d6a75c-e4d4-5389-b6b0-6f9edbed6874",
+    "fd090d8f-063e-5873-8b6e-2b9da23c77c4"
+  ],
+  "translated_verses_after": [
+    "S065:V001",
+    "S065:V003",
+    "S065:V005",
+    "S065:V007",
+    "S065:V009",
+    "S066:V001",
+    "S066:V003",
+    "S066:V005",
+    "S066:V007",
+    "S066:V009",
+    "S067:V001",
+    "S067:V003",
+    "S067:V005",
+    "S067:V007",
+    "S067:V009",
+    "S068:V001",
+    "S068:V003",
+    "S068:V005",
+    "S068:V007",
+    "S068:V009",
+    "S069:V001",
+    "S069:V003",
+    "S069:V005",
+    "S069:V007",
+    "S069:V009",
+    "S070:V001",
+    "S070:V003",
+    "S070:V005",
+    "S070:V007",
+    "S070:V009",
+    "S070:V011"
+  ],
+  "moves": [
+    {
+      "correction_id": "WIKISOURCE_GRIFFITH_RV_1_65_DVIPADA_SPINE",
+      "source_unit": 5,
+      "from_canonical_key": "VG:RV:SAK:M01:S065:V005",
+      "to_canonical_key": "VG:RV:SAK:M01:S065:V009",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S065:V009",
+        "VG:RV:SAK:M01:S065:V010"
+      ],
+      "old_translation_id": "eb053d64-c515-5f20-80e7-4d03531a7475",
+      "new_translation_id": "17e3fa55-a3ef-5ec1-9127-66d848cfb9b5",
+      "alignment_level": "MANTRA_RANGE",
+      "text_sha256": "bd04b4d601ee316559b45aa08390a7ee5ed89d4c0faa059c6e79c90e5e3928ab",
+      "moved": true
+    },
+    {
+      "correction_id": "WIKISOURCE_GRIFFITH_RV_1_65_DVIPADA_SPINE",
+      "source_unit": 4,
+      "from_canonical_key": "VG:RV:SAK:M01:S065:V004",
+      "to_canonical_key": "VG:RV:SAK:M01:S065:V007",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S065:V007",
+        "VG:RV:SAK:M01:S065:V008"
+      ],
+      "old_translation_id": "6f0e3598-f055-5081-a495-82433dc1961d",
+      "new_translation_id": "21f33d9d-9cb0-5e7c-b71c-370f7944e53c",
+      "alignment_level": "MANTRA_RANGE",
+      "text_sha256": "d1c16aa78179f13bd20a8d71736f9b911753d77b8e2544087811ed3fc030b1ab",
+      "moved": true
+    },
+    {
+      "correction_id": "WIKISOURCE_GRIFFITH_RV_1_65_DVIPADA_SPINE",
+      "source_unit": 3,
+      "from_canonical_key": "VG:RV:SAK:M01:S065:V003",
+      "to_canonical_key": "VG:RV:SAK:M01:S065:V005",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S065:V005",
+        "VG:RV:SAK:M01:S065:V006"
+      ],
+      "old_translation_id": "dc4233cb-0efc-53e0-9048-57654acd61fe",
+      "new_translation_id": "eb053d64-c515-5f20-80e7-4d03531a7475",
+      "alignment_level": "MANTRA_RANGE",
+      "text_sha256": "a12b14193893fd05d78d78b92f4a14481e00c15ac50cbe4622fd4a763c58956f",
+      "moved": true
+    },
+    {
+      "correction_id": "WIKISOURCE_GRIFFITH_RV_1_65_DVIPADA_SPINE",
+      "source_unit": 2,
+      "from_canonical_key": "VG:RV:SAK:M01:S065:V002",
+      "to_canonical_key": "VG:RV:SAK:M01:S065:V003",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S065:V003",
+        "VG:RV:SAK:M01:S065:V004"
+      ],
+      "old_translation_id": "e3eee2ce-f071-52e0-89f3-39803d8f7e6f",
+      "new_translation_id": "dc4233cb-0efc-53e0-9048-57654acd61fe",
+      "alignment_level": "MANTRA_RANGE",
+      "text_sha256": "05a9ed35f7d14d7354b29eaed05e53ee3c9bcd2ac809108093c92b5c59800395",
+      "moved": true
+    },
+    {
+      "correction_id": "WIKISOURCE_GRIFFITH_RV_1_65_DVIPADA_SPINE",
+      "source_unit": 1,
+      "from_canonical_key": "VG:RV:SAK:M01:S065:V001",
+      "to_canonical_key": "VG:RV:SAK:M01:S065:V001",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S065:V001",
+        "VG:RV:SAK:M01:S065:V002"
+      ],
+      "old_translation_id": "58115083-de41-5762-a02e-3511a18d3434",
+      "new_translation_id": "58115083-de41-5762-a02e-3511a18d3434",
+      "alignment_level": "MANTRA_RANGE",
+      "text_sha256": "386e3618f89e744e2199f1451bcfcc10823ddba8421beff47df6f90e60520cf4",
+      "moved": false
+    },
+    {
+      "correction_id": "WIKISOURCE_GRIFFITH_RV_1_66_DVIPADA_SPINE",
+      "source_unit": 5,
+      "from_canonical_key": "VG:RV:SAK:M01:S066:V005",
+      "to_canonical_key": "VG:RV:SAK:M01:S066:V009",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S066:V009",
+        "VG:RV:SAK:M01:S066:V010"
+      ],
+      "old_translation_id": "8fbfa11e-cbfb-5fa8-8cc5-4ef846e0f528",
+      "new_translation_id": "63991970-3f7a-5678-8d9a-11d055e0df51",
+      "alignment_level": "MANTRA_RANGE",
+      "text_sha256": "ad5edd2aa1db1161b78cf033ce2212980a5201595d0dfacf6ade16653c916fa3",
+      "moved": true
+    },
+    {
+      "correction_id": "WIKISOURCE_GRIFFITH_RV_1_66_DVIPADA_SPINE",
+      "source_unit": 4,
+      "from_canonical_key": "VG:RV:SAK:M01:S066:V004",
+      "to_canonical_key": "VG:RV:SAK:M01:S066:V007",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S066:V007",
+        "VG:RV:SAK:M01:S066:V008"
+      ],
+      "old_translation_id": "63c6ffdc-5427-504a-8ec1-ed5cac7755d9",
+      "new_translation_id": "6a8a63a5-ccc3-50bf-90e8-d0b4f7707e29",
+      "alignment_level": "MANTRA_RANGE",
+      "text_sha256": "39962b02c4895f42f70dc0c61d9797257b9979dc282911f3db87597f0ebfed4a",
+      "moved": true
+    },
+    {
+      "correction_id": "WIKISOURCE_GRIFFITH_RV_1_66_DVIPADA_SPINE",
+      "source_unit": 3,
+      "from_canonical_key": "VG:RV:SAK:M01:S066:V003",
+      "to_canonical_key": "VG:RV:SAK:M01:S066:V005",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S066:V005",
+        "VG:RV:SAK:M01:S066:V006"
+      ],
+      "old_translation_id": "65df036b-78df-5219-93cb-b249409721fe",
+      "new_translation_id": "8fbfa11e-cbfb-5fa8-8cc5-4ef846e0f528",
+      "alignment_level": "MANTRA_RANGE",
+      "text_sha256": "e408e6963dbb067500cbd8c7c9f4224e346fa74ab13af357eb5ae2b95f9ec3d8",
+      "moved": true
+    },
+    {
+      "correction_id": "WIKISOURCE_GRIFFITH_RV_1_66_DVIPADA_SPINE",
+      "source_unit": 2,
+      "from_canonical_key": "VG:RV:SAK:M01:S066:V002",
+      "to_canonical_key": "VG:RV:SAK:M01:S066:V003",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S066:V003",
+        "VG:RV:SAK:M01:S066:V004"
+      ],
+      "old_translation_id": "bffae295-e3fc-533f-9b6f-bd45440777f0",
+      "new_translation_id": "65df036b-78df-5219-93cb-b249409721fe",
+      "alignment_level": "MANTRA_RANGE",
+      "text_sha256": "23edf76520696a6835d58d9430bf4d58dd1d1f64f7b2463e50bb08f94f280e94",
+      "moved": true
+    },
+    {
+      "correction_id": "WIKISOURCE_GRIFFITH_RV_1_66_DVIPADA_SPINE",
+      "source_unit": 1,
+      "from_canonical_key": "VG:RV:SAK:M01:S066:V001",
+      "to_canonical_key": "VG:RV:SAK:M01:S066:V001",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S066:V001",
+        "VG:RV:SAK:M01:S066:V002"
+      ],
+      "old_translation_id": "ce43fc9d-5f64-508c-8439-55137eca4eee",
+      "new_translation_id": "ce43fc9d-5f64-508c-8439-55137eca4eee",
+      "alignment_level": "MANTRA_RANGE",
+      "text_sha256": "0152155a12da449149ca94b2ef4e44832141b33b2691d11ee5b4fad5bceeaada",
+      "moved": false
+    },
+    {
+      "correction_id": "WIKISOURCE_GRIFFITH_RV_1_67_DVIPADA_SPINE",
+      "source_unit": 5,
+      "from_canonical_key": "VG:RV:SAK:M01:S067:V005",
+      "to_canonical_key": "VG:RV:SAK:M01:S067:V009",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S067:V009",
+        "VG:RV:SAK:M01:S067:V010"
+      ],
+      "old_translation_id": "cb8d44b6-254d-5b78-886c-cf6060c7c97e",
+      "new_translation_id": "83d20a07-4d79-54ed-bdd0-12330250828b",
+      "alignment_level": "MANTRA_RANGE",
+      "text_sha256": "89d4175b5422a4e05c68e305307930ea8a577851661a1b1303d05353d33cc8fb",
+      "moved": true
+    },
+    {
+      "correction_id": "WIKISOURCE_GRIFFITH_RV_1_67_DVIPADA_SPINE",
+      "source_unit": 4,
+      "from_canonical_key": "VG:RV:SAK:M01:S067:V004",
+      "to_canonical_key": "VG:RV:SAK:M01:S067:V007",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S067:V007",
+        "VG:RV:SAK:M01:S067:V008"
+      ],
+      "old_translation_id": "3472de91-62b1-5905-a504-ac3390ddae0e",
+      "new_translation_id": "3e661656-ef4f-580c-8c82-b3f3f2581764",
+      "alignment_level": "MANTRA_RANGE",
+      "text_sha256": "5faca335e7fe5bee2ba2f3e362553ef0e8b7e10ccc3f8adf4e208253a3ea8d1f",
+      "moved": true
+    },
+    {
+      "correction_id": "WIKISOURCE_GRIFFITH_RV_1_67_DVIPADA_SPINE",
+      "source_unit": 3,
+      "from_canonical_key": "VG:RV:SAK:M01:S067:V003",
+      "to_canonical_key": "VG:RV:SAK:M01:S067:V005",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S067:V005",
+        "VG:RV:SAK:M01:S067:V006"
+      ],
+      "old_translation_id": "286f302c-0d5d-5b83-a0fa-0c48d2b60603",
+      "new_translation_id": "cb8d44b6-254d-5b78-886c-cf6060c7c97e",
+      "alignment_level": "MANTRA_RANGE",
+      "text_sha256": "2488f6415109e278abf36bea0dfaaa86f0dc8b0dd7454705cdc7ace2910c2c86",
+      "moved": true
+    },
+    {
+      "correction_id": "WIKISOURCE_GRIFFITH_RV_1_67_DVIPADA_SPINE",
+      "source_unit": 2,
+      "from_canonical_key": "VG:RV:SAK:M01:S067:V002",
+      "to_canonical_key": "VG:RV:SAK:M01:S067:V003",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S067:V003",
+        "VG:RV:SAK:M01:S067:V004"
+      ],
+      "old_translation_id": "c3a469fe-8a6a-525c-87c5-03331cfa7101",
+      "new_translation_id": "286f302c-0d5d-5b83-a0fa-0c48d2b60603",
+      "alignment_level": "MANTRA_RANGE",
+      "text_sha256": "765c87fae7f8d4376adeeb5835dc83bf9b3d0c53c084ee559d70e52e2a4f5a6d",
+      "moved": true
+    },
+    {
+      "correction_id": "WIKISOURCE_GRIFFITH_RV_1_67_DVIPADA_SPINE",
+      "source_unit": 1,
+      "from_canonical_key": "VG:RV:SAK:M01:S067:V001",
+      "to_canonical_key": "VG:RV:SAK:M01:S067:V001",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S067:V001",
+        "VG:RV:SAK:M01:S067:V002"
+      ],
+      "old_translation_id": "4fea192e-a8a8-535c-a073-b530c15c0870",
+      "new_translation_id": "4fea192e-a8a8-535c-a073-b530c15c0870",
+      "alignment_level": "MANTRA_RANGE",
+      "text_sha256": "06c373517548b364a3b727bc2f39e9924c4e0747503aa8c3d5b76b4ff5db01fb",
+      "moved": false
+    },
+    {
+      "correction_id": "WIKISOURCE_GRIFFITH_RV_1_68_DVIPADA_SPINE",
+      "source_unit": 5,
+      "from_canonical_key": "VG:RV:SAK:M01:S068:V005",
+      "to_canonical_key": "VG:RV:SAK:M01:S068:V009",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S068:V009",
+        "VG:RV:SAK:M01:S068:V010"
+      ],
+      "old_translation_id": "6f99d21e-2395-57f0-8582-3c9db2fa3b07",
+      "new_translation_id": "470f089f-f102-5a26-b73e-b25f62b93752",
+      "alignment_level": "MANTRA_RANGE",
+      "text_sha256": "2af645f4375b66b617ecab5411b77332fa1266bb6e300c29f413a6a2808fcad8",
+      "moved": true
+    },
+    {
+      "correction_id": "WIKISOURCE_GRIFFITH_RV_1_68_DVIPADA_SPINE",
+      "source_unit": 4,
+      "from_canonical_key": "VG:RV:SAK:M01:S068:V004",
+      "to_canonical_key": "VG:RV:SAK:M01:S068:V007",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S068:V007",
+        "VG:RV:SAK:M01:S068:V008"
+      ],
+      "old_translation_id": "fb3e0e14-5105-5742-8d30-b8fe2237f95e",
+      "new_translation_id": "af9bdb2e-4631-51c2-a34b-b8c064e71254",
+      "alignment_level": "MANTRA_RANGE",
+      "text_sha256": "64fd254ada97acbfbc07300a7ab2bba2aac5b34c144a5e68194ab3ca4e4bd5fa",
+      "moved": true
+    },
+    {
+      "correction_id": "WIKISOURCE_GRIFFITH_RV_1_68_DVIPADA_SPINE",
+      "source_unit": 3,
+      "from_canonical_key": "VG:RV:SAK:M01:S068:V003",
+      "to_canonical_key": "VG:RV:SAK:M01:S068:V005",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S068:V005",
+        "VG:RV:SAK:M01:S068:V006"
+      ],
+      "old_translation_id": "33a76ebf-1369-55a6-8614-62ad3c579e37",
+      "new_translation_id": "6f99d21e-2395-57f0-8582-3c9db2fa3b07",
+      "alignment_level": "MANTRA_RANGE",
+      "text_sha256": "2d12f29858c2d8fb18121615532de8dfee194965e844b5042338580f4062fb5c",
+      "moved": true
+    },
+    {
+      "correction_id": "WIKISOURCE_GRIFFITH_RV_1_68_DVIPADA_SPINE",
+      "source_unit": 2,
+      "from_canonical_key": "VG:RV:SAK:M01:S068:V002",
+      "to_canonical_key": "VG:RV:SAK:M01:S068:V003",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S068:V003",
+        "VG:RV:SAK:M01:S068:V004"
+      ],
+      "old_translation_id": "3984da2c-be63-56ab-9b50-d3bc23780191",
+      "new_translation_id": "33a76ebf-1369-55a6-8614-62ad3c579e37",
+      "alignment_level": "MANTRA_RANGE",
+      "text_sha256": "0ada56a5d4be01a997828c15005f10e25f2ed9f20dea4ba5858d35e6814345ad",
+      "moved": true
+    },
+    {
+      "correction_id": "WIKISOURCE_GRIFFITH_RV_1_68_DVIPADA_SPINE",
+      "source_unit": 1,
+      "from_canonical_key": "VG:RV:SAK:M01:S068:V001",
+      "to_canonical_key": "VG:RV:SAK:M01:S068:V001",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S068:V001",
+        "VG:RV:SAK:M01:S068:V002"
+      ],
+      "old_translation_id": "1c2b4818-d07f-5c18-9cd1-9c00e67a8916",
+      "new_translation_id": "1c2b4818-d07f-5c18-9cd1-9c00e67a8916",
+      "alignment_level": "MANTRA_RANGE",
+      "text_sha256": "5e82a8a24446150bd4e7eb5a368f58ca353914c0ca1bc81a55b9188f45babd64",
+      "moved": false
+    },
+    {
+      "correction_id": "WIKISOURCE_GRIFFITH_RV_1_69_DVIPADA_SPINE",
+      "source_unit": 5,
+      "from_canonical_key": "VG:RV:SAK:M01:S069:V005",
+      "to_canonical_key": "VG:RV:SAK:M01:S069:V009",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S069:V009",
+        "VG:RV:SAK:M01:S069:V010"
+      ],
+      "old_translation_id": "44d949bd-6bc4-506e-8db0-51bb2137105d",
+      "new_translation_id": "49edf9ad-b7f8-5728-8eab-305c35cc12b4",
+      "alignment_level": "MANTRA_RANGE",
+      "text_sha256": "3a9ef3abbd3411239d33119834511a5b6b1e0a859709af1d7dff6173ff3cd856",
+      "moved": true
+    },
+    {
+      "correction_id": "WIKISOURCE_GRIFFITH_RV_1_69_DVIPADA_SPINE",
+      "source_unit": 4,
+      "from_canonical_key": "VG:RV:SAK:M01:S069:V004",
+      "to_canonical_key": "VG:RV:SAK:M01:S069:V007",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S069:V007",
+        "VG:RV:SAK:M01:S069:V008"
+      ],
+      "old_translation_id": "8ca98e10-7c5c-5b09-9349-5c5da1aeb7d5",
+      "new_translation_id": "645df11c-b66c-5553-b1ba-a9ecc26d03df",
+      "alignment_level": "MANTRA_RANGE",
+      "text_sha256": "b05f55219e300c16f7e9fd43b60881d0799f3b2e2b22d3b1d794d007f7208762",
+      "moved": true
+    },
+    {
+      "correction_id": "WIKISOURCE_GRIFFITH_RV_1_69_DVIPADA_SPINE",
+      "source_unit": 3,
+      "from_canonical_key": "VG:RV:SAK:M01:S069:V003",
+      "to_canonical_key": "VG:RV:SAK:M01:S069:V005",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S069:V005",
+        "VG:RV:SAK:M01:S069:V006"
+      ],
+      "old_translation_id": "ea588a01-6335-5333-b502-e91dd9d299ef",
+      "new_translation_id": "44d949bd-6bc4-506e-8db0-51bb2137105d",
+      "alignment_level": "MANTRA_RANGE",
+      "text_sha256": "b8f060e9f6eb95dea3f5c80739d486e2b4771c808c31fd9611f2434d571e14da",
+      "moved": true
+    },
+    {
+      "correction_id": "WIKISOURCE_GRIFFITH_RV_1_69_DVIPADA_SPINE",
+      "source_unit": 2,
+      "from_canonical_key": "VG:RV:SAK:M01:S069:V002",
+      "to_canonical_key": "VG:RV:SAK:M01:S069:V003",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S069:V003",
+        "VG:RV:SAK:M01:S069:V004"
+      ],
+      "old_translation_id": "9bc87dd4-9c74-5362-ad9a-dcfbbaa21f2d",
+      "new_translation_id": "ea588a01-6335-5333-b502-e91dd9d299ef",
+      "alignment_level": "MANTRA_RANGE",
+      "text_sha256": "ae85b524067d35cdd662a89b83627362f6eb1d7a99e0233cdddda442acc21afa",
+      "moved": true
+    },
+    {
+      "correction_id": "WIKISOURCE_GRIFFITH_RV_1_69_DVIPADA_SPINE",
+      "source_unit": 1,
+      "from_canonical_key": "VG:RV:SAK:M01:S069:V001",
+      "to_canonical_key": "VG:RV:SAK:M01:S069:V001",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S069:V001",
+        "VG:RV:SAK:M01:S069:V002"
+      ],
+      "old_translation_id": "0561b2c5-4a03-58aa-91bb-29e603e4a71d",
+      "new_translation_id": "0561b2c5-4a03-58aa-91bb-29e603e4a71d",
+      "alignment_level": "MANTRA_RANGE",
+      "text_sha256": "8dde2992caf064f1f4f86b7fa302fc8287e9331515c77c942cff3cb5bfb7a68b",
+      "moved": false
+    },
+    {
+      "correction_id": "WIKISOURCE_GRIFFITH_RV_1_70_DVIPADA_SPINE",
+      "source_unit": 6,
+      "from_canonical_key": "VG:RV:SAK:M01:S070:V006",
+      "to_canonical_key": "VG:RV:SAK:M01:S070:V011",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S070:V011"
+      ],
+      "old_translation_id": "913ed8a0-0944-504a-b7d6-2271fd3070b6",
+      "new_translation_id": "d8c44443-e6be-50b6-b33a-fa64b415b799",
+      "alignment_level": "MANTRA",
+      "text_sha256": "fbb9c05944d42096e0f561ede300fd44acede67c44a9a5b1e0eb856e87f0ab90",
+      "moved": true
+    },
+    {
+      "correction_id": "WIKISOURCE_GRIFFITH_RV_1_70_DVIPADA_SPINE",
+      "source_unit": 5,
+      "from_canonical_key": "VG:RV:SAK:M01:S070:V005",
+      "to_canonical_key": "VG:RV:SAK:M01:S070:V009",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S070:V009",
+        "VG:RV:SAK:M01:S070:V010"
+      ],
+      "old_translation_id": "77d6a75c-e4d4-5389-b6b0-6f9edbed6874",
+      "new_translation_id": "6f55c96e-44b5-5047-919a-d95cd5981eea",
+      "alignment_level": "MANTRA_RANGE",
+      "text_sha256": "55ae1d8a6dc62e0918d9b17dcf764a1ad3f24ca78a78b679b22c78f51ab3ed4c",
+      "moved": true
+    },
+    {
+      "correction_id": "WIKISOURCE_GRIFFITH_RV_1_70_DVIPADA_SPINE",
+      "source_unit": 4,
+      "from_canonical_key": "VG:RV:SAK:M01:S070:V004",
+      "to_canonical_key": "VG:RV:SAK:M01:S070:V007",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S070:V007",
+        "VG:RV:SAK:M01:S070:V008"
+      ],
+      "old_translation_id": "ea1ff7b7-7a5a-593c-978d-e10320cf0ecb",
+      "new_translation_id": "409b1107-a5d6-5e94-b775-b9ae43814d4b",
+      "alignment_level": "MANTRA_RANGE",
+      "text_sha256": "d4d8e517c2d93376532746c6cd85d393b976ca091562d81b544365accb51d63a",
+      "moved": true
+    },
+    {
+      "correction_id": "WIKISOURCE_GRIFFITH_RV_1_70_DVIPADA_SPINE",
+      "source_unit": 3,
+      "from_canonical_key": "VG:RV:SAK:M01:S070:V003",
+      "to_canonical_key": "VG:RV:SAK:M01:S070:V005",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S070:V005",
+        "VG:RV:SAK:M01:S070:V006"
+      ],
+      "old_translation_id": "fd090d8f-063e-5873-8b6e-2b9da23c77c4",
+      "new_translation_id": "77d6a75c-e4d4-5389-b6b0-6f9edbed6874",
+      "alignment_level": "MANTRA_RANGE",
+      "text_sha256": "bb035a7d4970237fb441bec0581167a4b5633461fc9e6a78e9ebde11ef54d14d",
+      "moved": true
+    },
+    {
+      "correction_id": "WIKISOURCE_GRIFFITH_RV_1_70_DVIPADA_SPINE",
+      "source_unit": 2,
+      "from_canonical_key": "VG:RV:SAK:M01:S070:V002",
+      "to_canonical_key": "VG:RV:SAK:M01:S070:V003",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S070:V003",
+        "VG:RV:SAK:M01:S070:V004"
+      ],
+      "old_translation_id": "d43fdf69-2855-585d-8e50-1b1f19d7ed5b",
+      "new_translation_id": "fd090d8f-063e-5873-8b6e-2b9da23c77c4",
+      "alignment_level": "MANTRA_RANGE",
+      "text_sha256": "8fa964afc5eb1713596b64975f1a2533423e8df0b121e86358f6a9e51a90e087",
+      "moved": true
+    },
+    {
+      "correction_id": "WIKISOURCE_GRIFFITH_RV_1_70_DVIPADA_SPINE",
+      "source_unit": 1,
+      "from_canonical_key": "VG:RV:SAK:M01:S070:V001",
+      "to_canonical_key": "VG:RV:SAK:M01:S070:V001",
+      "covers_canonical_keys": [
+        "VG:RV:SAK:M01:S070:V001",
+        "VG:RV:SAK:M01:S070:V002"
+      ],
+      "old_translation_id": "93093aeb-50c5-5aa4-a2e6-67f9276633cc",
+      "new_translation_id": "93093aeb-50c5-5aa4-a2e6-67f9276633cc",
+      "alignment_level": "MANTRA_RANGE",
+      "text_sha256": "4d3b52baef4b7d13383a7c2de12bc4e5e23ccd7c4cfc53d458f509069fc95a8f",
+      "moved": false
+    }
+  ],
+  "complete": false,
+  "sha256": "62557895e41423593f9766e17a27efd147a7785dff3c180a45710a1fdfc0fe76"
+}
