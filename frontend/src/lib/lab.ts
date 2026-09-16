@@ -171,7 +171,7 @@ export const PLATES: Plate[] = [
         title: "The rite, as far as it is modelled",
         question: "What does the corpus say about ritual, and how much of it has been modelled?",
         summary:
-            "Eight rites carry a modelled structure and three step edges exist across all of them. The coverage statement comes before the content here, because it is the more important fact.",
+            "Two step layers exist and neither gives a rite a recoverable sequence: what a Samhita text numbers in its own words is almost nothing, and what the sutras print is numbered independently per source work so its groups do not compose. The coverage statement comes before the content here, because it is the more important fact.",
         caution:
             "This is modelled coverage, not a taxonomy of Vedic ritual. The corpus names far more rites than the layer holds, and no rite here has a recoverable order of steps.",
         reads: "Ritual layer, curated implement and offering edges, lexical mention layer",

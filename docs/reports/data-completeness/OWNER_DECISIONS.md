@@ -477,3 +477,111 @@ that consumer declares it reads.
   tests pass; only the graded run is stale, and re-grading burns a daily quota.
 - **No audible reviews.** Still 0 of 1,021, and still a parallel track.
 - **Wave 4 not begun.**
+
+---
+
+# Owner round four — integrity gates, labels, Whitney, semantics
+
+## 23. Both vacuous gates replaced, and both can now fail
+
+**The relationship declaration gate, third version.** The reason each earlier one was wrong
+is now in the code beside it:
+
+| version | reference set | why it could not fail |
+|---|---|---|
+| v1 | `ontology ∪ every type in the graph` | membership is tautological |
+| v2 | the API's traversable/refused lists | a product decision, not a schema declaration |
+| v3 | `ontology.all_declared_relationship_types()` | composes layer authorities; the graph is not an input |
+
+Measured before the repair: **18 populated relationship types declared by nothing.** Ten
+were this campaign's. Eight were pre-existing corpus and traditional-metadata predicates
+carrying 138,143 edges, whose constants sat in the ontology under the comment *"listed so the
+closed vocabulary is complete"* and then reached no declared set — because
+`RELATIONSHIP_SIGNATURES` is asserted equal to `DOMAIN_RELATIONSHIP_TYPES` and these have no
+V2 signature. The closed vocabulary was never closed.
+
+Declared additively as `CORPUS_RELATIONSHIP_TYPES` (8) and `CAMPAIGN_RELATIONSHIP_TYPES`
+(10), each with an endpoint signature **measured against the live graph** rather than
+intended. Declared 90 · graph populated 76 · undeclared **0** · declared-but-unused 14 (all
+architecture) · system exceptions **0**, declared explicitly so adding one is a visible act.
+
+The signature gate is widened with them: it iterated `RELATIONSHIP_SIGNATURES` only, so those
+18 predicates — **141,264 edges** — had their endpoints checked by nothing at all.
+
+**The dependency staleness gate.** Round three's per-consumer hashes were the right shape and
+too weak in three ways, all fixed: counts are unchanged by a swap of equal size, so labels
+now digest sorted identity keys and predicates sorted endpoint pairs; declared **file** inputs
+were invisible; the **builder's** own source is now an input. `built_at` is metadata and
+`classify()` is grepped by a test for `built_at`, `wave3_` and `datetime.now`.
+
+40 adversarial and transition tests. Including one that reconstructs the original tautology
+and demonstrates it reports nothing for the very input the repaired gate catches.
+
+## 24. The six labels, and a leak that was live
+
+All six were declared by no authoritative source, and the consequence was measured:
+**`frontend/.world/world.raw.json` held 2,568 `:QualityVerdict` nodes** — this repository's
+assessment of its own passages — as the **fourth-largest type in the public world**, ahead of
+`:Rishi`. "Public" is one clause, `NOT n:Internal`, and nothing had marked them.
+`:RoleFiller` and `:DeityCommunity` escaped only because they carry no id key and the export
+drops what it cannot name, which is luck rather than a boundary.
+
+| label | n | disposition |
+|---|---:|---|
+| `Scholar` · `ScholarlyWork` · `ScholarlyDisagreement` | 17 · 17 · 113 | **canonical product-visible** |
+| `QualityVerdict` | 2,568 | **internal** — a fact about the record |
+| `RoleFiller` | 2,052 | **internal** — wiring, no `entity_key` |
+| `DeityCommunity` | 12 | **internal** — an analytic partition with its refusal attached |
+
+M8 marked 4,632 nodes. Public nodes 44,324 → 39,692; total nodes, relationships and the four
+corpus totals unchanged. Re-exported and verified: **0 of each** in the world file.
+
+Demoting the scholarship classes would have emptied the difference set faster and hidden real
+knowledge content. Final undeclared public labels: **0**, with an empty exception list.
+
+## 25. Whitney 466 — withheld, and not for want of evidence
+
+Four channels attempted; three refused with stated reasons (surface/normalized equality;
+verse-local context, because the rows are *exceptions* to their hymn and would resolve to the
+value the source contradicts; `rv_registry_name_match`, which the registry's own header
+declares non-evidential). The permitted channel — the AV registries' `source_variants`,
+generated from the same Whitney index — **works**: 405 of 477 proposals resolve, 0 ambiguous,
+0 findings against any individual resolution.
+
+**And nothing is imported, because the adversarial pass was checking the wrong object.** Of
+541 AV_WHITNEY `:Chandas` entities, a number are unsegmented fragments of Whitney's bracket
+carrying a deity, a metre and a per-verse exception in one string —
+`'āindryas. ānuṣṭubham: 2. 3-av. 6-p. jagatī'`. Three tests were written to bound the share
+and they disagree: **17, 28, 39**. That disagreement is the finding: separating a deity
+adjective from a metre name inside these strings is philological adjudication, which may not
+act as identity evidence, so a partial import cannot be made safe.
+
+A verse whose recorded metre is a string containing a deity name is worse than a verse with no
+verse-level metre. All 466 stay `RETAINED_NON_IMPORTABLE_UNRESOLVED_OBJECT`; the graph is not
+mutated.
+
+**A defect found in data that was already canonical:** 33 `HAS_CHANDAS` edges point at such
+fragments today. `GAP-AV-CHANDOMETRE-SEGMENTATION-001`. Not repaired — re-segmenting a
+canonical vocabulary re-identifies its entities, which is an owner decision.
+
+## 26. Semantic resemblance — outcome C, measured
+
+**0 assertions imported.** Three reasons, none of them a shrug:
+
+1. The prior artifact declares a 108,779-node graph snapshot; this one holds 116,838. Not
+   hash-identical, which was the stated condition for trusting an old pool or score.
+2. No semantic representation is computable here — no `onnxruntime`, `transformers`,
+   `sentence_transformers` or `.onnx` file. A representation that cannot be computed cannot be
+   shown to add value over a control.
+3. The control was re-implemented and measured on current canonical inputs: **AUC 0.754**
+   over 279 adjudicated pairs (dev 0.774, test 0.736), character 4-grams over accent-stripped
+   Sanskrit, no model and no translation channel.
+
+The control does **not** reproduce the prior `C_LEXICAL_CHAR4` — 6 of 370 exact, 292 within
+0.05, and the unaccented text gives 7 and 281, so the text role is not the difference. I
+expected reproduction and did not get it; the carry-over argument is withdrawn and the fresh
+AUC is the baseline instead.
+
+`SHARED_PHRASING_ONLY` stays withheld on **7** adjudicated labels of 486. Seven cannot
+establish a boundary. The gold labels are LLM-adjudicated with 162 of 486 left
+`UNADJUDICATED_QUOTA_EXHAUSTED`, and are not reported as a human gold standard.

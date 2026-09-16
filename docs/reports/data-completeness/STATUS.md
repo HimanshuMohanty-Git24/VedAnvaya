@@ -4,20 +4,21 @@
 Guard: `python scripts/validate_status_report.py`
 
 - Branch `phase-data-completeness-v2` · start commit `d6e93a9` · tag `vedanvaya-v1.0.0` FROZEN
-- Last rewritten 2026-09-16, after owner round three: M7, attribution, dependent rebuilds
+- Last rewritten 2026-09-16, after owner round four: integrity gates, labels, Whitney, semantics
 
 ## Where the campaign is
 
-**Wave 3 is closed. The attribution census is imported. Six of nine dependents are CURRENT.**
+**Both release-integrity gates are real and adversarially tested. The public label leak is
+closed. Whitney and semantic resemblance are both defensibly refused, with no graph
+mutation.** Wave 4 has not started.
 
-Three independent gates, two of them not mine:
-
-- `scripts/attribution_import.py --readback` → `READBACK_CLEAN`, 0 findings
-- `scripts/graph_quality_scorecard.py` → **9 of 9**, now including a gate that could
-  previously not fail at all
-- `pytest tests/api` → **1,366 passed, 0 failed**; `pnpm test` → **434 passed**
-
-Do not reopen Wave 3. This graph is the baseline; a verified dump of it exists.
+| gate | result |
+|---|---|
+| `attribution_import.py --readback` | `READBACK_CLEAN`, 0 findings |
+| `graph_quality_scorecard.py` | **9 of 9**, two of them previously unable to fail |
+| `pytest tests/api` | **1,372 passed** |
+| `pytest tests/unit` | **1,145 passed**, 41 skipped |
+| `pnpm test` | **434 passed** |
 
 ## Canonical graph
 
@@ -25,164 +26,137 @@ Do not reopen Wave 3. This graph is the baseline; a verified dump of it exists.
 |---|---:|---:|---:|
 | Nodes | 108,779 | 116,825 | **116,838** |
 | Relationships | 265,295 | 281,290 | **281,290** |
+| Public nodes (`NOT n:Internal`) | — | 44,324 | **39,692** |
 
-The last +13 is `:DerivedMetric`, from the coverage rebuild. Core corpus unchanged and
-asserted on every run: RV 10,552 · SV 1,844 · YV 1,975 · AV 5,839 = 20,210.
+Core corpus invariant and asserted every run: RV 10,552 · SV 1,844 · YV 1,975 · AV 5,839 =
+20,210. Round four's only mutation was M8, which adds one label and creates nothing.
 
-Backup: `D:\vedanvaya-backups\wave3-final-baseline-20260916T101224\neo4j.dump`
-117,924,267 bytes · sha256 `6da4d69f…a980ce`. Taken before any round-three mutation.
+Backup: `D:\vedanvaya-backups\round4-pre-m8-20260916T112837\neo4j.dump`
+sha256 `13eaef62…6698`.
 
-## Round three — what changed
+## Round four — what changed
 
-### M7 · `:RitualStep` product identity
+### Two gates that could not fail, replaced
 
-The grain was **measured, not chosen**, over 3,123 importable rows:
+**Relationship declarations.** Third version; the first two are recorded in the code so the
+mistake is not repeatable.
 
-| grain | distinct | values covering rows that **disagree** |
-|---|---:|---:|
-| `SOURCE_OCCURRENCE` | 2,767 | 308 |
-| `RITE_SPECIFIC_OCCURRENCE` | 3,122 | 1 |
-| `POSITION_BASED` | 1,137 | 680 |
-
-Source-occurrence would merge 308 identities standing for different claims — one sutra is
-cited for several rites. Position-based fails outright: `step_position` restarts inside every
-work. So the grain is **rite-specific occurrence**, and the `step_key` Wave 3 already staged
-is exactly that: rite + work + printed source coordinate, with a canonical URN and
-`uuid5(7c8cde94-…, urn)` reproduced byte-identically for all 3,123 rows.
-
-No identity was invented. M7 writes one property, `display_type = "RITUAL_STEP"`, on 3,121
-nodes — 0 node and 0 relationship delta. `HAS_RITUAL_STEP` is now traversable and a step
-resolves by its own id; it is **not** a path predicate, because a path hopping rite → step →
-rite would assert a relation between two rites that share only a sutra collection.
-
-One collision stays withheld and is now a registered gap: SankhSS 16.15.13 prints two sutras
-under one citation, so the locator cannot separate them. The graph holds 0 collisions of any
-kind.
-
-### Attribution · census imported, Whitney withheld
-
-23,003 rows, two populations that share a file and nothing else. Gates B and C were both run
-from scratch; nothing was inherited from the domain's own report.
-
-| population | rows | outcome |
-|---|---:|---|
-| Census (`DETERMINISTIC_DERIVED`) | 22,537 | **imported** as 3 properties per passage |
-| Whitney index (`SOURCE_EXPLICIT`) | 466 | **withheld**, `RETAINED_NON_IMPORTABLE_UNRESOLVED_OBJECT` |
-
-- **Gate B**, 18 checks, one finding: all 466 Whitney rows carry
-  `entity_resolution_method = VERBATIM_SOURCE_STRING_NOT_RESOLVED`. The object of each is a
-  printed Sanskrit string resolving to no node, and an edge needs a node at the far end.
-- **Gate C**, adversarial: the census claims to describe this graph, so the graph was used
-  against it. All **67,611** state assertions checked against the edges that actually exist,
-  stratified 38 ways by Veda × dimension × state — **0 contradictions**. The Whitney rows
-  were checked against their own printed source: every stated verse address appears verbatim
-  in the bracket, every address covers the verse it claims, no address overruns its hymn.
-
-The import wrote 97,114 properties across 22,537 passages and created nothing. What it buys
-is a distinction the graph could not previously make:
-
-| dimension | `NEVER_ASSESSED` | `ASSESSED_SOURCE_ABSENT` | `NOT_APPLICABLE` |
-|---|---:|---:|---:|
-| rishi | 2,945 | 1,446 | 568 |
-| devata | 4,920 | 1,832 | 568 |
-| chandas | 4,920 | 1,984 | 568 |
-
-Before this, all three read as one silence, and a consumer counting attributed mantras could
-not tell a source that says nothing from a source nobody has opened.
-
-### The ritual procedure reaches the product
-
-The rituals page rendered only the Samhita layer, so **102 of 103 rites displayed "not built"
-for order** while the graph held 3,121 sutra-attested steps for them. That is a stale
-limitation caused by unfinished implementation, not by evidence, and it is now removed.
-
-The new section groups by source work and is styled deliberately unlike the numbered run
-above it. That block renders a sequence; this layer is not one, and borrowing its visual
-grammar would assert through layout what the prose beside it denies.
-
-## Dependents — 6 CURRENT, 1 not applicable, 2 blocked
-
-`scripts/rebuild_ledger.py --status`. `CURRENT` means a recorded rebuild whose input hash
-still equals the current one, scoped to the labels and predicates that consumer declares it
-reads — a measurement, not a flag.
-
-| consumer | status | note |
+| version | reference set | why it could not fail |
 |---|---|---|
-| cross-Veda matrices | CURRENT | enrichment rebuilt, 26 offline checks, 6,285 parallels |
-| formula / parallel / variant | CURRENT | byte-identical output; not stale in effect |
-| entity coverage | CURRENT | `DerivedMetric` 1,072 → 1,085 |
-| quality evaluation | CURRENT | scorecard 9/9 |
-| Visualization Lab | CURRENT | 38,244 public nodes, 196,128 public edges |
-| Knowledge World | CURRENT | same projection |
-| ritual aggregates | NOT_APPLICABLE | no aggregate exists to rebuild |
-| semantic resemblance | BLOCKED | see below |
-| Ask retrieval | BLOCKED | see below |
+| v1 | `ontology ∪ every type in the graph` | membership is tautological |
+| v2 | the API's traversable/refused lists | a product decision, not a schema declaration |
+| v3 | `ontology.all_declared_relationship_types()` | composes layer authorities; the graph is not an input |
+
+Measured before the repair: **18 populated relationship types declared by nothing.** Ten were
+this campaign's; eight were pre-existing corpus and metadata predicates carrying 138,143
+edges, whose constants sat in the ontology under the comment *"listed so the closed vocabulary
+is complete"* and reached no declared set. Now: declared 90 · populated 76 · **undeclared 0**
+· declared-but-unused 14 · system exceptions 0.
+
+The signature gate was widened with them. It iterated `RELATIONSHIP_SIGNATURES` only, so
+those 18 predicates — **141,264 edges** — had their endpoints checked by nothing.
+
+**Dependency staleness.** Counts are unchanged by a swap of equal size, so labels now digest
+sorted identity keys and predicates sorted endpoint pairs; declared **file** inputs and the
+**builder's** own source are inputs too. `built_at` is metadata, and a test greps
+`classify()` for `built_at`, `wave3_` and `datetime.now`.
+
+**40 tests**, including one that reconstructs the original tautology and shows it reports
+nothing for the very input the repaired gate catches.
+
+### The label leak was live
+
+All six Wave 3 labels were declared by no authoritative source, and
+`frontend/.world/world.raw.json` held **2,568 `:QualityVerdict` nodes** — this repository's
+assessment of its own passages — as the **fourth-largest type in the public world**, ahead of
+`:Rishi`. "Public" is one clause, `NOT n:Internal`, and nothing had marked them.
+
+| label | n | disposition |
+|---|---:|---|
+| `Scholar` · `ScholarlyWork` · `ScholarlyDisagreement` | 17 · 17 · 113 | canonical product-visible |
+| `QualityVerdict` | 2,568 | internal — a fact about the record |
+| `RoleFiller` | 2,052 | internal — wiring, no `entity_key` |
+| `DeityCommunity` | 12 | internal — an analytic partition with its refusal attached |
+
+M8 marked 4,632 nodes; re-exported and verified **0 of each** in the world file. Final
+undeclared public labels: **0**, exception list empty.
+
+### Whitney 466 — withheld, and not for want of evidence
+
+Four channels attempted, three refused with stated reasons. The permitted channel — the AV
+registries' `source_variants`, generated from the same Whitney index — **works**: 405 of 477
+proposals resolve, 0 ambiguous, 0 findings against any individual resolution.
+
+**Nothing imported, because the adversarial pass was checking the wrong object.** Of 541
+AV_WHITNEY `:Chandas` entities, a number are unsegmented fragments of Whitney's bracket
+carrying a deity, a metre and a verse exception in one string. Three tests were written to
+bound the share and they disagree: **17, 28, 39**. That disagreement is the finding —
+separating a deity adjective from a metre name is philological adjudication, which may not act
+as identity evidence, so a partial import cannot be made safe.
+
+Found in data that was already canonical: **33 `HAS_CHANDAS` edges point at such fragments
+today**. `GAP-AV-CHANDOMETRE-SEGMENTATION-001`, not repaired — re-segmenting a canonical
+vocabulary re-identifies its entities.
+
+### Semantic resemblance — outcome C, measured
+
+**0 assertions imported.** The prior artifact declares a 108,779-node snapshot against this
+graph's 116,838, so it is not importable. No semantic representation is computable here — no
+`onnxruntime`, `transformers`, `sentence_transformers` or `.onnx` file — so none can be shown
+to beat a control. The control was re-implemented and measured on current inputs: **AUC
+0.754** over 279 adjudicated pairs (dev 0.774, test 0.736), character 4-grams over
+accent-stripped Sanskrit, no model and no translation channel.
+
+It does **not** reproduce the prior `C_LEXICAL_CHAR4` — 6 of 370 exact, 292 within 0.05 — so
+no prior number is carried forward. `SHARED_PHRASING_ONLY` stays withheld on 7 adjudicated
+labels of 486.
+
+## Dependents
+
+`scripts/dependency_state.py --status` — **6 CURRENT · 1 STALE_INPUT · 1 BLOCKED · 1
+NOT_APPLICABLE · 0 unexplained**.
+
+CURRENT: cross-Veda matrices · formula relations · entity coverage · quality evaluation ·
+Visualization Lab · Knowledge World. `ritual aggregates` is NOT_APPLICABLE (no artifact
+exists). `semantic resemblance` is BLOCKED (re-derivation, not rebuild). `Ask retrieval` is
+STALE until its graded run completes.
 
 ## Blocking
 
-1. **Semantic resemblance is not re-derived.** The staged artifact is pre-Wave-3
-   `semantic-resemblance-hybrid-v2`, and owner section 8 bars importing an old score artifact
-   because it exists. Re-derivation needs the embedding pipeline against the final snapshot
-   plus its full validity report — pool size, corpus-product recall, dev/test metrics,
-   lexical-control comparison, translation-confound exclusions, threshold, refusal
-   conditions. **0 rows imported.** Verified refusal is an acceptable outcome; an unverified
-   import is not.
-2. **The Ask benchmark is not re-graded.** Retrieval reads the graph live — there is no index
-   artifact — and its 280 contract tests pass against the final graph. Only the graded run is
-   stale, and re-grading burns a daily quota, so it needs a deliberate run.
-3. **466 Whitney attributions need entity resolution.**
-   `GAP-ATTRIBUTION-WHITNEY-UNRESOLVED-OBJECT-001`. The rows are correct; what is missing is a
-   way to resolve a verbatim printed string to an identity on evidence other than surface
-   equality.
-4. **The 1,021 audible reviews.** 0 heard. Parallel track; it blocks nothing here.
-5. **Six Wave 3 labels are still undeclared as product labels** — `RoleFiller`,
-   `QualityVerdict`, `ScholarlyDisagreement`, `Scholar`, `ScholarlyWork`, `DeityCommunity`.
-   Only `RitualStep` was declared, because only it needed to be. They are invisible to
-   `/api/v1/entities` until declared.
-
-## Two gates that could not fail
-
-Both were passing while measuring nothing. Recorded because the pattern recurs.
-
-- **Undeclared relationship types.** `declared = ONTOLOGY | everything in the graph`, then
-  "which graph types are missing from `declared`?" — structurally empty. It reported 0 for a
-  whole wave while eleven Wave 3 predicates went unclassified. Now measured against the API's
-  product contract, which a live test holds complete.
-- **Dependency staleness.** Computed from wave stamps that never come off, so every consumer
-  read `STALE_INPUT` for ever and a rebuild could not be expressed at all.
+1. **`GAP-AV-CHANDOMETRE-SEGMENTATION-001`** — 33 canonical `HAS_CHANDAS` edges point at
+   bracket fragments rather than metre names. Needs an owner decision: re-segment the registry
+   (which re-identifies entities) or model the compound strings as evidence.
+2. **466 Whitney rows** stay `RETAINED_NON_IMPORTABLE_UNRESOLVED_OBJECT`, blocked behind (1).
+3. **Semantic resemblance needs an embedding runtime** in the checkout plus adjudication
+   capacity for the 162 unadjudicated gold pairs. The control's AUC 0.754 is the baseline any
+   candidate must beat.
+4. **The 1,021 audible reviews.** 0 heard. Parallel track; blocks nothing here.
 
 ## Registry
 
-`data/gap_registry.json` — **83 gaps**. Two opened this round, both `MEASURED` and both
-produced by a gate that tried to falsify the data:
-`GAP-ATTRIBUTION-WHITNEY-UNRESOLVED-OBJECT-001`, `GAP-RITUAL-STEP-LOCATOR-COLLISION-001`.
+`data/gap_registry.json` — **84 gaps**. One opened this round,
+`GAP-AV-CHANDOMETRE-SEGMENTATION-001`, `MEASURED`, produced by a resolution attempt that
+tried to falsify its own result.
 
 ## Artifacts
 
-In `data/staging/integration/`: `ritual_step_identity_probe.json`,
-`m7_ritual_step_identity_receipt.json`, `corpus_deletion_audit.json`,
-`attribution_gate_b.json`, `attribution_gate_c.json`, `attribution_plan.json`,
-`attribution_import_receipt.json`, `attribution_readback.json`, `rebuild_ledger.json`,
-`dependency_status.json`, plus the Wave 3 set.
+In `data/staging/integration/`: `whitney_resolution.json`, `semantic_rederivation.json`,
+`m8_internal_boundary_receipt.json`, `dependency_ledger.json`, `dependency_status.json`,
+`corpus_deletion_audit.json`, `ritual_step_identity_probe.json`,
+`m7_ritual_step_identity_receipt.json`, `attribution_gate_b.json`,
+`attribution_gate_c.json`, `attribution_readback.json`, plus the Wave 3 set.
 
-## Corpus deletions, ratified and enumerated
+## Corpus deletions
 
-41 nodes, all created by this campaign, all unsupported after the importability filter, all
-edgeless, all recoverable. **None this round.** Reconstructed rather than remembered by
-`scripts/corpus_deletion_audit.py`, which replays both versions of the reachability rule and
-exits non-zero if the ratified split stops reproducing.
-
-| batch | n | reason |
-|---|---:|---|
-| evidence not imported | 12 | attested only in a Brāhmaṇa or Śrautasūtra |
-| attestation without locator | 2 | `samhita_attested` with no example; the file has no such field |
-| reachable only via a refused edge | 27 | named only by a rite edge staged `PROBABLE` |
+41 nodes, all ratified, all enumerated in `corpus_deletion_audit.json`, **none this round or
+in round three**. The audit replays both versions of the reachability rule and exits non-zero
+if the ratified 12 / 2 / 27 split stops reproducing.
 
 ## Next
 
-A semantic resemblance re-derivation · B Whitney entity resolution · C Ask re-grade ·
-D audible reviews. **Wave 4 must not begin** until A–C resolve and every importable domain is
-readback-complete.
+A owner decision on the AV metre segmentation · B Whitney, behind A · C an embedding runtime
+for semantics · D audible reviews. **Wave 4 is a separate adversarial round and must not
+begin inside this work.**
 
 ## Environment
 
@@ -196,30 +170,31 @@ On Git Bash prefix `docker run` with `MSYS_NO_PATHCONV=1` or `/backups` is rewri
 Restore: `docker stop vedagraph-neo4j`, then `docker run --rm -v infra_neo4j_data:/data -v
 /d/vedanvaya-backups/<stamp>:/backups neo4j:5.26-community neo4j-admin database load neo4j
 --from-path=/backups --overwrite-destination=true`, then `docker start`. The dump must be
-named `neo4j.dump` inside a timestamped directory.
+named `neo4j.dump` inside a timestamped directory. Neo4j reinstalls its GDS plugin on start,
+so allow a minute before the first query.
 
 ## Rules a resuming session must not break
 
-1. An importer's own per-group report is not evidence. Only the census diff and the readback
-   caught the two worst Wave 3 defects.
-2. A gate that cannot fail is worse than no gate. Two were found this round; before writing a
-   membership test, check that the reference set is not derived from the thing under test.
-3. Every mutation the writer performs must be in the promise. One registry that raises on an
+1. **No gate may derive its allowed universe from the data it validates.** Three gates broke
+   this rule; each was green while measuring nothing.
+2. A gate that cannot fail is worse than no gate. Make it a pure function of (observed,
+   declared) so a test can withdraw a declaration and watch it go red.
+3. An importer's own report is not evidence. Only the census diff and the readback caught the
+   two worst Wave 3 defects.
+4. Every mutation the writer performs must be in the promise. One registry that raises on an
    undeclared entry, never two lists.
-4. `count(r)` over an `UNWIND … MERGE` counts operations. Landed > sent is impossible.
-5. `MERGE (n:Label {key})` matches on label **and** properties — it creates a twin.
-6. Never carry a referent's identity key onto the referrer.
-7. A node nothing points at is not imported data; compute reachability over the edges that
-   will exist, not the rows.
-8. A finding must report a breakdown of its own set. One counted 27 and printed a breakdown
-   summing to 40.
-9. `x or -1` turns a correct 0 into a failure. The passing value is often the falsy one.
-10. Normalization is a comparison instrument, never identity evidence. No join on display
-    labels, across scripts or otherwise.
-11. Never turn NOT ASSESSED into VERIFIED ZERO. The graph can now tell them apart — keep it
-    that way.
-12. Never map another recension onto the one we hold — Jaiminīya is not Kauthuma, Taittirīya
+5. Counts are not a fingerprint. A swap of equal size leaves them unchanged.
+6. A timestamp is never staleness truth. Content hashes are.
+7. `count(r)` over an `UNWIND … MERGE` counts operations. Landed > sent is impossible.
+8. `MERGE (n:Label {key})` matches on label **and** properties — it creates a twin.
+9. A finding must report a breakdown of its own set, and a heuristic that cannot bound a
+   population must say so rather than pick its most convenient estimate.
+10. `x or -1` turns a correct 0 into a failure. The passing value is often the falsy one.
+11. Normalization is a comparison instrument, never identity evidence — and a registry lookup
+    is only independent evidence if the vocabulary it resolves into is sound.
+12. Never turn NOT ASSESSED into VERIFIED ZERO. The graph can now tell them apart.
+13. An unclassified label defaults to PUBLIC, so forgetting to classify exposes rather than
+    hides. 2,568 internal verdicts shipped that way.
+14. Never map another recension onto the one we hold — Jaiminīya is not Kauthuma, Taittirīya
     and Kāṇva are not Mādhyandina, Paippalāda is not Śaunaka.
-13. Never attach a long recording to an exact mantra without verified boundaries, and
-    automated matching is not audible verification.
-14. Enumerate a field's value space before concluding it is empty.
+15. Automated matching is not audible verification, and unlistened rows are never promoted.

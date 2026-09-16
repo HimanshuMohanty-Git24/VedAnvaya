@@ -385,7 +385,10 @@ CONFIDENCE_FILTER_CAVEAT: Final = (
 #: endpoints. Calibrated against the live degree distribution rather than chosen: the
 #: maximum degree of a mantra is 88, of a formula 95, of a hymn 95, of a formula family 28,
 #: of a seer family 51 -- so 200 sits clear of every node class a reader would call a
-#: *subject*. Above it are 137 of 108,779 nodes (0.13%): the frequent metres, the twenty
+#: *subject*. Above it are 137 of 108,779 nodes (0.13%) -- measured on the Product-V1
+#: graph, and left dated rather than restated, because re-running it is a separate
+#: decision and a figure re-attributed to a graph it was not taken on is worse than an
+#: old one: the frequent metres, the twenty
 #: highest-degree deities, and the concept hubs (*soma*, *heaven*, *sacrifice*, *cattle*).
 #:
 #: Total degree is used and not degree over the traversable set, for a measured reason: the
@@ -1266,7 +1269,8 @@ def _resolution_clause(variable: str, parameter: str) -> str:
 
     Written as a union of narrow lookups rather than the obvious
     ``MATCH (n) WHERE n.canonical_key = $id OR n.entity_key = $id ...``, which was measured:
-    that form is an all-node scan over 108,779 nodes with a disjunction the planner cannot
+    that form is an all-node scan -- over 108,779 nodes when this was measured, on the
+    Product-V1 graph -- with a disjunction the planner cannot
     index, and it did not finish inside a two-minute probe. This form is 9-17 ms.
     """
     branches = [
@@ -1949,7 +1953,8 @@ class GraphService:
     Every method here bounds its own result before the repository sees it: a page limit, a
     per-type fan-out limit, a node budget, a path candidate cap and a depth ceiling. That
     is not defensive style, it is the requirement -- a request must not be able to make this
-    server enumerate a 265,295-edge graph, and the enumeration is genuinely reachable. A
+    server enumerate the whole edge set -- 265,295 edges when this was measured, on the
+    Product-V1 graph -- and the enumeration is genuinely reachable. A
     two-hop expansion from Indra with no frontier cap touches 6,539 edges at the first step
     alone.
     """
