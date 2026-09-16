@@ -1,0 +1,41 @@
+{
+  "artifact": "ATTRIBUTION_READBACK",
+  "at": "2026-09-16T05:03:56.222111+00:00",
+  "passages_stamped": 22537,
+  "passages_promised": 22537,
+  "state_distribution_read_from_the_graph": {
+    "rishi": {
+      "DERIVED_PRESENT": 15151,
+      "NEVER_ASSESSED": 2945,
+      "SOURCE_EXPLICIT_PRESENT": 2427,
+      "ASSESSED_SOURCE_ABSENT": 1446,
+      "NOT_APPLICABLE_AT_THIS_GRANULARITY": 568
+    },
+    "devata": {
+      "DERIVED_PRESENT": 12994,
+      "NEVER_ASSESSED": 4920,
+      "SOURCE_EXPLICIT_PRESENT": 2223,
+      "ASSESSED_SOURCE_ABSENT": 1832,
+      "NOT_APPLICABLE_AT_THIS_GRANULARITY": 568
+    },
+    "chandas": {
+      "DERIVED_PRESENT": 9173,
+      "SOURCE_EXPLICIT_PRESENT": 5892,
+      "NEVER_ASSESSED": 4920,
+      "ASSESSED_SOURCE_ABSENT": 1984,
+      "NOT_APPLICABLE_AT_THIS_GRANULARITY": 568
+    }
+  },
+  "census": {
+    "nodes": 116825,
+    "relationships": 281290,
+    "core": {
+      "AV": 5839,
+      "RV": 10552,
+      "SV": 1844,
+      "YV": 1975
+    }
+  },
+  "findings": [],
+  "verdict": "READBACK_CLEAN"
+}
