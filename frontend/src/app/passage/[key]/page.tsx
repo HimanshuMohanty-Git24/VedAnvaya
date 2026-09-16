@@ -37,6 +37,59 @@ import {
 
 type Params = { params: Promise<{ key: string }> };
 
+type TranslationItem = NonNullable<Reader["translations"]["items"]>[number];
+
+/**
+ * The words printed above a rendering that is not this verse's own English.
+ *
+ * Returns null for the ordinary case, so a dedicated English translation gets no label at
+ * all and the three exceptional shapes are the only ones that carry one. The alternative --
+ * labelling every row — trains a reader to skip the label.
+ */
+function translationLabel(translation: TranslationItem): string | null {
+    if (translation.coverage_kind === "REUSED_RENDERING") {
+        const veda = translation.reused_from_veda
+            ? (vedaNames[translation.reused_from_veda] ?? translation.reused_from_veda)
+            : "another corpus";
+        return `Reused from the ${veda}`;
+    }
+    if (translation.language !== "en") {
+        return `${translation.language_name ?? translation.language}, not English`;
+    }
+    if (translation.coverage_kind === "RANGE_TRANSLATION") {
+        return translation.is_this_passages_own
+            ? "One rendering across this verse and the next"
+            : "Covered by a rendering anchored on a neighbouring verse";
+    }
+    if (translation.coverage_kind === "CONTAINER_TRANSLATION") {
+        return "Aligned to the hymn, not to this verse";
+    }
+    return null;
+}
+
+function disclosureTitle(translation: TranslationItem): string {
+    if (translation.coverage_kind === "REUSED_RENDERING") return "What this English is";
+    if (translation.language !== "en") return "Why this is not English";
+    return "What this rendering covers";
+}
+
+/** The attribution sentence for a search snippet, where no caveat can follow the text. */
+function describeProvenance(translation: TranslationItem): string {
+    const who = `${translation.translator}${translation.year ? `, ${translation.year}` : ""}`;
+    if (translation.coverage_kind === "REUSED_RENDERING") {
+        const where = translation.reused_from_citation ?? "a verified-identical parallel";
+        return `English reused from ${where} (${who}), not an independent translation of this verse.`;
+    }
+    if (translation.language !== "en") {
+        return `Rendered into ${translation.language_name ?? translation.language} by ${who}, not into English.`;
+    }
+    if (translation.coverage_kind === "RANGE_TRANSLATION") {
+        const span = translation.covers_canonical_keys?.length ?? 0;
+        return `One rendering covering ${span} verses, by ${who}.`;
+    }
+    return `Translated by ${who}.`;
+}
+
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
     const { key: rawKey } = await params;
     const key = routeId(rawKey);
@@ -51,10 +104,15 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
          * The description is the translation, and never the Sanskrit as a substitute for one.
          * A verse whose translation layer is not built should say so rather than present its
          * romanised text to a search engine as though it were a gloss.
+         *
+         * The verb matters here as much as anywhere else on the page, and a search result is
+         * the one place the caveat beneath the text cannot travel with it. "Translated by" is
+         * reserved for a dedicated English rendering; a reused one is rendered from its
+         * parallel, a range one covers a span, and a Latin one was not English at all.
          */
         description: translation
-            ? `${translation.text} Translated by ${translation.translator}${translation.year ? `, ${translation.year}` : ""}.`
-            : `${citation} is held in this corpus. No released translation covers it in the current build.`,
+            ? `${translation.text} ${describeProvenance(translation)}`
+            : `${citation} is held in this corpus. No translation of any kind reaches it in the current build.`,
     };
 }
 
@@ -197,23 +255,79 @@ export default async function PassagePage({ params }: Params) {
                     >
                         <h2>Translation</h2>
                         {reader.translations.items?.length ? (
-                            reader.translations.items.map((translation) => (
-                                <figure key={`${translation.translator}-${translation.text}`}>
-                                    <blockquote>{translation.text}</blockquote>
-                                    <figcaption>
-                                        <span>
-                                            {translation.translator}
-                                            {translation.year ? `, ${translation.year}` : ""}
-                                        </span>
-                                        {translation.work_edition && (
-                                            <span>{translation.work_edition}</span>
+                            <>
+                                {reader.translations.items.map((translation) => (
+                                    <figure
+                                        data-coverage={translation.coverage_kind}
+                                        data-language={translation.language}
+                                        key={`${translation.translator}-${translation.text}`}
+                                    >
+                                        {/*
+                                         * The heading above says "Translation", and for three of
+                                         * the four coverage kinds that word alone is a claim the
+                                         * row does not support. The label is printed before the
+                                         * text rather than after it, because a reader who has
+                                         * already read the English as this verse's own gloss does
+                                         * not un-read it on reaching a footnote.
+                                         */}
+                                        {translationLabel(translation) && (
+                                            <p className="va-translation-kind translation-kind">
+                                                {translationLabel(translation)}
+                                            </p>
                                         )}
-                                    </figcaption>
-                                </figure>
-                            ))
+                                        <blockquote
+                                            lang={translation.language}
+                                        >
+                                            {translation.text}
+                                        </blockquote>
+                                        <figcaption>
+                                            <span>
+                                                {translation.translator}
+                                                {translation.year ? `, ${translation.year}` : ""}
+                                            </span>
+                                            {translation.work_edition && (
+                                                <span>{translation.work_edition}</span>
+                                            )}
+                                            {translation.language !== "en" && (
+                                                <span>
+                                                    {translation.language_name ??
+                                                        translation.language}
+                                                </span>
+                                            )}
+                                        </figcaption>
+                                        {translation.disclosure && (
+                                            <Caveat title={disclosureTitle(translation)}>
+                                                {translation.disclosure}
+                                            </Caveat>
+                                        )}
+                                        {translation.reused_from_citation && (
+                                            <p className="va-translation-source translation-source">
+                                                Shown from{" "}
+                                                <Link
+                                                    href={`/passage/${encoded(translation.reused_from_passage_key ?? "")}`}
+                                                >
+                                                    {translation.reused_from_citation}
+                                                </Link>
+                                            </p>
+                                        )}
+                                        {translation.coverage_kind === "RANGE_TRANSLATION" &&
+                                            (translation.covers_canonical_keys?.length ?? 0) >
+                                                1 && (
+                                                <p className="va-translation-span translation-span">
+                                                    Covers{" "}
+                                                    {translation.covers_canonical_keys?.length}{" "}
+                                                    verses of this hymn
+                                                </p>
+                                            )}
+                                    </figure>
+                                ))}
+                                {reader.translations.caveats?.map((caveat) => (
+                                    <Caveat key={caveat.text}>{caveat.text}</Caveat>
+                                ))}
+                            </>
                         ) : (
                             <KnowledgeStatus
-                                note="No released translation covers this passage in the current build. The verse is held; its translation layer is not."
+                                note="No translation of any kind reaches this passage in the current build — it has none of its own and no multi-verse print unit covers it. The verse is held; its translation layer is not."
                                 status={reader.translations.data_status}
                             />
                         )}

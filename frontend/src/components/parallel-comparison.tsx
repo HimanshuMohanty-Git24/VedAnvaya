@@ -12,6 +12,15 @@ import { KnowledgeStatus } from "./status";
 
 type Summary = ParallelView["passage"];
 
+type TranslationItem = NonNullable<Reader["translations"]["items"]>[number];
+
+/*
+ * This is the one view where a reused rendering and the passage it was taken from are on
+ * screen together, so it is the view where presenting it as the target corpus's own
+ * translation is worst: the reader is looking at the Rigvedic verse on the left and the
+ * same English on the right, and would conclude the Samaveda has its own translation of
+ * it. The column therefore takes the whole translation item and not just its text.
+ */
 function TextColumn({
     citation,
     veda,
@@ -19,15 +28,13 @@ function TextColumn({
     text,
     script,
     translation,
-    translator,
 }: {
     citation: string;
     veda: string;
     href: string;
     text?: string | null;
     script?: string | null;
-    translation?: string | null;
-    translator?: string | null;
+    translation?: TranslationItem | null;
 }) {
     return (
         <div className="comparison-column">
@@ -54,14 +61,24 @@ function TextColumn({
                     note="No displayable Sanskrit surface was returned for this passage."
                 />
             )}
-            <div className="comparison-translation">
+            <div
+                className="comparison-translation"
+                data-coverage={translation?.coverage_kind}
+                data-language={translation?.language}
+            >
                 {translation ? (
                     <>
-                        <blockquote>{translation}</blockquote>
-                        <cite>{translator}</cite>
+                        <blockquote lang={translation.language}>{translation.text}</blockquote>
+                        <cite>{translation.translator}</cite>
+                        {translation.disclosure && (
+                            <p className="comparison-translation-note">{translation.disclosure}</p>
+                        )}
                     </>
                 ) : (
-                    <p className="muted">No released translation covers this passage.</p>
+                    <p className="muted">
+                        No translation of any kind reaches this passage: it has none of its own,
+                        and no multi-verse print unit covers it.
+                    </p>
                 )}
             </div>
         </div>
@@ -108,8 +125,7 @@ export function ParallelComparison({
                     href={`/passage/${encoded(source.canonical_key)}`}
                     text={source.primary_text?.text}
                     script={source.primary_text?.script}
-                    translation={source.translations.items?.[0]?.text}
-                    translator={source.translations.items?.[0]?.translator}
+                    translation={source.translations.items?.[0]}
                 />
                 <TextColumn
                     citation={targetSummary.canonical_citation ?? targetSummary.display_label ?? ""}
@@ -117,8 +133,7 @@ export function ParallelComparison({
                     href={`/passage/${encoded(targetSummary.canonical_key)}`}
                     text={target?.primary_text?.text}
                     script={target?.primary_text?.script}
-                    translation={target?.translations.items?.[0]?.text}
-                    translator={target?.translations.items?.[0]?.translator}
+                    translation={target?.translations.items?.[0]}
                 />
             </div>
 

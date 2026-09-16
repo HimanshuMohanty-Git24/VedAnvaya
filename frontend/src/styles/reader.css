@@ -296,6 +296,38 @@
     color: var(--va-text-tertiary);
 }
 
+/*
+ * The kind label sits above the text, in the eyebrow voice the section heading uses, and
+ * only appears for the three shapes that are not this verse's own English. Its job is to
+ * be read before the blockquote rather than after it: a reader who has taken the English
+ * as a gloss on this verse does not un-take it on reaching a note below.
+ */
+.va-translation-kind {
+    margin: 0 0 var(--va-space-xs);
+    font-family: var(--va-font-ui);
+    font-size: var(--va-text-2xs);
+    font-weight: var(--va-weight-semibold);
+    letter-spacing: var(--va-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--va-text-secondary);
+}
+
+/* A Latin rendering is Griffith's real text and is set in the reading face, but it is not
+ * the English layer; a reused one is another corpus's English. Both take the partial tone
+ * the rest of the product uses for a boundary, on the label rather than on the quotation:
+ * the text itself is not doubtful, only the claim that it is this verse's own translation. */
+.va-translation figure[data-language]:not([data-language="en"]) .va-translation-kind,
+.va-translation figure[data-coverage="REUSED_RENDERING"] .va-translation-kind {
+    color: var(--tone-partial);
+}
+
+.va-translation-source,
+.va-translation-span {
+    margin: var(--va-space-xs) 0 0;
+    font-size: var(--va-text-xs);
+    color: var(--va-text-tertiary);
+}
+
 /* --------------------------------------------------------- parallel entry - */
 
 /*

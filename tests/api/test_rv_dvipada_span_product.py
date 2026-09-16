@@ -57,14 +57,20 @@ CORRECTED: tuple[tuple[str, str, str, str], ...] = (
     ),
 )
 
-#: Verses that must now carry NO translation. Each one served a wrong rendering before, so an
-#: empty verse here is the correction and not a regression -- the honest state recorded as
-#: GAP-TRANSLATION-004, since Griffith renders the pair as one unit anchored on the odd verse.
-NOW_UNTRANSLATED: tuple[str, ...] = (
-    "VG:RV:SAK:M01:S065:V002",
-    "VG:RV:SAK:M01:S065:V004",
-    "VG:RV:SAK:M01:S066:V002",
-    "VG:RV:SAK:M01:S070:V006",
+#: Verses that must not carry a rendering of their own. Each one served a wrong rendering
+#: before, so the correction was to stop presenting one -- but the verse is not untranslated:
+#: Griffith renders the pair as one unit anchored on the odd verse, and that unit covers it.
+#:
+#: This tuple was originally asserted as "serves no translation at all", which was the
+#: product's behaviour and was itself a false statement to a reader: the reader's empty state
+#: told these 30 verses that no released translation covered them while one did. So the
+#: assertion below now pins the honest shape instead -- the covering unit is served, marked as
+#: anchored elsewhere and not as this verse's own.
+COVERED_BY_A_NEIGHBOURS_UNIT: tuple[tuple[str, str], ...] = (
+    ("VG:RV:SAK:M01:S065:V002", "VG:RV:SAK:M01:S065:V001"),
+    ("VG:RV:SAK:M01:S065:V004", "VG:RV:SAK:M01:S065:V003"),
+    ("VG:RV:SAK:M01:S066:V002", "VG:RV:SAK:M01:S066:V001"),
+    ("VG:RV:SAK:M01:S070:V006", "VG:RV:SAK:M01:S070:V005"),
 )
 
 
@@ -120,12 +126,35 @@ def test_the_api_serves_each_unit_against_its_own_sanskrit(
     )
 
 
-@pytest.mark.parametrize("key", NOW_UNTRANSLATED)
-def test_a_verse_covered_by_its_neighbours_unit_serves_no_translation(
-    live_client: TestClient, key: str
+@pytest.mark.parametrize(("key", "anchor"), COVERED_BY_A_NEIGHBOURS_UNIT)
+def test_a_verse_covered_by_its_neighbours_unit_says_so_rather_than_claiming_the_text(
+    live_client: TestClient, key: str, anchor: str
 ) -> None:
-    """No translation is better than another verse's, and this is where that is enforced."""
-    assert _translations(_passage(live_client, key)) == []
+    """Serving another verse's rendering is wrong; so is denying that it covers this one.
+
+    The defect this replaces was symmetrical to the one the file was opened for. Attaching
+    unit N's English to verse 2N was the first error; answering "no released translation
+    covers this passage" once that stopped was the second, and a reader cannot tell a
+    withheld translation from an absent one. Both are avoided only if the row is served
+    *and* says it is not this verse's own.
+    """
+    rows = _translations(_passage(live_client, key))
+    assert len(rows) == 1, f"{key} should be covered by exactly one unit, got {len(rows)}"
+    row = rows[0]
+    assert row["coverage_kind"] == "RANGE_TRANSLATION", (
+        f"{key} is covered by a multi-verse print unit and must say so, not present the "
+        f"rendering as a dedicated translation (got {row['coverage_kind']!r})"
+    )
+    assert row["is_this_passages_own"] is False, (
+        f"{key} has no rendering aligned to it alone, so the row must not claim to be its own"
+    )
+    assert row["anchor_canonical_key"] == anchor, (
+        f"{key} must name the verse its covering unit is anchored on"
+    )
+    assert key in row["covers_canonical_keys"], (
+        f"{key} must appear in the span it is served from, or the claim is unfalsifiable"
+    )
+    assert row["disclosure"], f"{key}'s covering unit must carry its disclosure sentence"
 
 
 @pytest.mark.parametrize(
@@ -219,9 +248,7 @@ def test_every_translated_verse_in_the_span_is_an_anchor(
         """,
         prefixes=[f"VG:RV:SAK:M01:S{n:03d}:" for n in range(65, 71)],
     )
-    even = [
-        str(r["key"]) for r in rows if int(str(r["key"]).rsplit(":V", 1)[1]) % 2 == 0
-    ]
+    even = [str(r["key"]) for r in rows if int(str(r["key"]).rsplit(":V", 1)[1]) % 2 == 0]
     assert not even, f"even-numbered verses carrying a translation: {even}"
 
 

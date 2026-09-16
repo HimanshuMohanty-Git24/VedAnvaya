@@ -114,17 +114,57 @@ class AttributionSplit(ApiModel):
 
 
 class TranslationCoverage(ApiModel):
-    """How much of a work is translated, and by whom.
+    """How much of a work is translated, in what sense, and by whom.
 
     ``translated`` is nullable but never rounded up, and the Samaveda is why this is a
-    first-class block rather than a percentage on the summary: it has 0 translations from
-    1,844 verses, so every translation-derived layer is empty for that corpus and every one
-    of those empty lists would otherwise read as a fact about the Samaveda.
+    first-class block rather than a percentage on the summary: it has 0 translations of its
+    own from 1,844 verses, so every translation-derived layer is empty for that corpus and
+    every one of those empty lists would otherwise read as a fact about the Samaveda.
+
+    The four populations below are separate fields because they are four different claims
+    and one percentage cannot carry them. ``dedicated`` is a verse with its own 1:1 English
+    rendering. ``range_covered`` is a verse the translator rendered inside a multi-verse
+    print unit -- real coverage, and not a rendering of that verse alone. ``reused_rendering``
+    is another corpus's published English on text verified identical, which is the only
+    English that will ever reach a Samavedic verse and is not the Samaveda's own. And
+    ``other_language`` is Griffith's Latin substitutions, which are his real text and are
+    not the English layer. ``translated`` counts ``dedicated`` alone, so the field that
+    existed before these distinctions did still means what it meant.
     """
 
     mantras: int | None = None
-    translated: int | None = None
-    percent: float | None = None
+    translated: int | None = Field(
+        default=None,
+        description="Verses with their own dedicated English translation. Deliberately "
+        "not the sum of the four populations below: adding them would assert that every "
+        "covered verse has a 1:1 rendering of its own.",
+    )
+    percent: float | None = Field(
+        default=None, description="`dedicated` over `mantras`. The English layer's own share."
+    )
+    dedicated: int | None = None
+    range_covered: int | None = Field(
+        default=None,
+        description="Verses covered only by a multi-verse print unit anchored elsewhere.",
+    )
+    reused_rendering: int | None = Field(
+        default=None,
+        description="Verses showing another corpus's rendering of verified-identical text. "
+        "Never added to `translated`.",
+    )
+    other_language: int | None = Field(
+        default=None, description="Verses whose only rendering is not in English."
+    )
+    uncovered: int | None = Field(
+        default=None,
+        description="Verses no rendering of any kind reaches. Reported so the four "
+        "populations above can be checked against the corpus rather than trusted.",
+    )
+    any_coverage: int | None = Field(
+        default=None,
+        description="Verses reached by a rendering of any kind. The honest answer to "
+        "'can I read something here', which is a different question to 'is it translated'.",
+    )
     translators: list[str] = Field(default_factory=list)
     status: KnowledgeStatus = KnowledgeStatus.SUPPORTED
     caveats: list[CaveatView] = Field(default_factory=list)

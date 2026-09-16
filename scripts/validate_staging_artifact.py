@@ -155,6 +155,74 @@ class Result:
         return not self.fatal and self.data_failures == 0 and not self.incomplete_checks
 
 
+# --------------------------------------------------------------------------------------
+# Language of a literal
+# --------------------------------------------------------------------------------------
+
+#: English function words that are *only* English. The restriction is load-bearing: "in",
+#: "a", "an", "at", "his", "me" and "is" are all Latin forms too, and including them let a
+#: Latin verse whose text reads "Quum jam in medio connessu ... in terrae superficiem"
+#: clear the threshold on three occurrences of "in".
+_ENGLISH_FUNCTION_WORDS = frozenset(
+    """
+    the and or but of to on by for with from as that this these those
+    are was were be been being has have had do does did will would shall should
+    may might can could must not no nor
+    he she it they we you him her them us hers their our your my its
+    thou thee thy thine ye hath doth art shalt
+    who whom which what when where while there here then than
+    up down out off over under again also very ever never now
+    """.split()
+)
+
+#: Forms that cannot be an English sentence's vocabulary at all. Corroboration only: the
+#: decision is the English absence above, so English prose quoting a Latin binomial or a
+#: legal tag is never flagged by this list alone.
+_LATIN_MARKERS = frozenset(
+    """
+    quum cujus ejus hujus illius illinc hinc aliqua veluti tanquam admodum magnopere
+    utrum quae quem quod qui quis sic tua tuum suam suum sua suis eius eum
+    est sunt fuerat fuerant fuerunt erat esse
+    non nos vero etiam tum nunc jam cum ut te si
+    mentula mentulae pudenda pudendum penis pene femora femoribus feminae femina
+    vaginam semen virile membrum arboris arbor silvae ignis ilia vaccae vacca
+    dii deus labor cupido amorem amatorem puella puellam pater viri vir
+    percutit percute dixit alloquitur increscunt dependet extendit retraxit
+    intumescenti faverunt ostentat delectata adveniens edidit superans pinsunt
+    inflammatur ardent infixus circumcurrit nescimus gerat currit custodi
+    futue fututio opprimit obtineat producit procurrit extrahat capiat
+    incidit videntur agitantur impleverat congressus adiverat discedens processit
+    jactavit cepit despicit nata detrahit favent vincamus superemus convenientes
+    interiores extentae solutus arenoso oryzam coctam bona magni magna
+    """.split()
+)
+
+_WORD_RE = re.compile(r"[A-Za-zÀ-ɏ]+")
+
+#: Below eight words a literal has too few function-word slots for their absence to mean
+#: anything. Three rows of the translation artifact are that short -- "'And two hides of an
+#: elephant.'" is one -- and guessing on them is how a false positive gets in.
+_MIN_WORDS_TO_JUDGE = 8
+_ENGLISH_DENSITY_CEILING = 0.10
+_MIN_LATIN_MARKERS = 2
+
+
+def _latin_marker_count(text: str) -> int:
+    tokens = {w.lower() for w in _WORD_RE.findall(text)}
+    return len(tokens & _LATIN_MARKERS)
+
+
+def language_of(text: str) -> str:
+    """``"LATIN"``, ``"ENGLISH"`` or ``"TOO_SHORT_TO_JUDGE"`` for one literal."""
+    tokens = [w.lower() for w in _WORD_RE.findall(text)]
+    if len(tokens) < _MIN_WORDS_TO_JUDGE:
+        return "TOO_SHORT_TO_JUDGE"
+    density = sum(1 for w in tokens if w in _ENGLISH_FUNCTION_WORDS) / len(tokens)
+    if density <= _ENGLISH_DENSITY_CEILING and _latin_marker_count(text) >= _MIN_LATIN_MARKERS:
+        return "LATIN"
+    return "ENGLISH"
+
+
 def file_sha256(path: pathlib.Path) -> str:
     digest = sha256()
     with path.open("rb") as handle:
@@ -263,6 +331,7 @@ def validate_rows(
     recension = result.check("row.recension_verified_present")
     recension.eligible = total
     zero_guard = result.check("row.no_zero_for_unknown")
+    declared_language = result.check("row.declared_language_matches_the_literal")
     zero_guard.eligible = total
 
     layer_counts: Counter[str] = Counter()
@@ -330,6 +399,30 @@ def validate_rows(
                     zero_guard.failures.append(
                         f"{label}: payload.{key} is 0; use null for an unknown population"
                     )
+
+        # A row may not declare a language its literal is not in. Griffith rendered the
+        # passages he judged too explicit into Latin rather than English, and 24 rows of
+        # this campaign's translation artifact declared `language: "en"` over Latin text.
+        # Left alone they would have been counted as English coverage, which overstates the
+        # English layer by exactly the passages Victorian propriety took out of it.
+        #
+        # The test is the absence of English function words, never the presence of Latin
+        # ones. A Griffith footnote naming *Aegle Marmelos* or *Ziziphi Jujubae* is English
+        # prose, and a rule that fired on Latin vocabulary would reject it. English of any
+        # length cannot drop "the", "of", "and", "to", "with" and "that" all at once; a
+        # Latin binomial inside an English sentence leaves every one of them in place.
+        if isinstance(payload, dict) and payload.get("text"):
+            declared_language.eligible += 1
+            declared_language.evaluated += 1
+            verdict = language_of(str(payload["text"]))
+            declared = str(payload.get("language") or "")
+            if verdict == "LATIN" and declared == "en":
+                declared_language.failures.append(
+                    f"{label}: declares language='en' over a literal with no English "
+                    f"function words and {_latin_marker_count(str(payload['text']))} "
+                    "distinct Latin markers; Griffith's Latin substitutions are his real "
+                    "text and are not the English layer"
+                )
 
         if "canonical_key" in row:
             seen[(row["canonical_key"], row.get("source_id"))] += 1

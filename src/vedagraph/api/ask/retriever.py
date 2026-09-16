@@ -67,14 +67,30 @@ MATCH (p:Passage)
 WHERE p.canonical_key = $key OR p.canonical_citation = $key
 OPTIONAL MATCH (p)-[:HAS_TEXT_VERSION]->(tv:TextVersion)
     WHERE tv.text_role = 'PRIMARY_TEXT'
-OPTIONAL MATCH (p)-[:HAS_TRANSLATION]->(tr:Translation)
+// A verse inside a multi-verse print unit carries no HAS_TRANSLATION edge of its own, so
+// the union of the two patterns is what stops Ask reporting the 30 even verses of
+// RV 1.65-1.70 as untranslated while a rendering on the paired verse covers them.
+OPTIONAL MATCH (p)-[:HAS_TRANSLATION]->(own:Translation)
+OPTIONAL MATCH (anchor:Passage)-[:HAS_TRANSLATION]->(span:Translation)
+    WHERE span.alignment_level = 'MANTRA_RANGE'
+      AND p.canonical_key IN span.covers_canonical_keys
+      AND anchor.canonical_key <> p.canonical_key
+WITH p, tv, coalesce(own, span) AS tr, anchor
 RETURN p.canonical_key AS canonical_key,
        p.canonical_citation AS canonical_citation,
        p.veda AS veda,
        p.display_type AS display_type,
        head(collect(DISTINCT tv.text_nfc)) AS sanskrit,
        head(collect(DISTINCT tr.text)) AS translation,
-       head(collect(DISTINCT tr.translator)) AS translator
+       head(collect(DISTINCT tr.translator)) AS translator,
+       head(collect(DISTINCT tr.language)) AS translation_language,
+       head(collect(DISTINCT tr.alignment_level)) AS translation_alignment_level,
+       head(collect(DISTINCT tr.covers_canonical_keys)) AS translation_covers_canonical_keys,
+       head(collect(DISTINCT tr.reuse_kind)) AS translation_reuse_kind,
+       head(collect(DISTINCT tr.reused_from_veda)) AS translation_reused_from_veda,
+       head(collect(DISTINCT tr.reused_from_passage_key)) AS translation_reused_from_passage_key,
+       head(collect(DISTINCT tr.reused_from_citation)) AS translation_reused_from_citation,
+       head(collect(DISTINCT anchor.canonical_key)) AS translation_anchor_key
 LIMIT 1
 """
 
@@ -92,11 +108,21 @@ OPTIONAL MATCH (p)-[:HAS_TEXT_VERSION]->(tv:TextVersion)
 OPTIONAL MATCH (p)-[:HAS_TRANSLATION]->(tr:Translation)
 WITH p, r,
      head(collect(DISTINCT tv.text_nfc)) AS sanskrit,
-     head(collect(DISTINCT tr.text)) AS translation
+     head(collect(DISTINCT tr.text)) AS translation,
+     head(collect(DISTINCT tr.language)) AS translation_language,
+     head(collect(DISTINCT tr.reuse_kind)) AS translation_reuse_kind,
+     head(collect(DISTINCT tr.reused_from_veda)) AS translation_reused_from_veda,
+     head(collect(DISTINCT tr.reused_from_passage_key)) AS translation_reused_from_passage_key,
+     head(collect(DISTINCT tr.reused_from_citation)) AS translation_reused_from_citation,
+     head(collect(DISTINCT tr.alignment_level)) AS translation_alignment_level,
+     head(collect(DISTINCT tr.covers_canonical_keys)) AS translation_covers_canonical_keys
 RETURN p.canonical_key AS canonical_key,
        p.canonical_citation AS canonical_citation,
        p.veda AS veda,
        sanskrit, translation,
+       translation_language, translation_reuse_kind, translation_reused_from_veda,
+       translation_reused_from_passage_key, translation_reused_from_citation,
+       translation_alignment_level, translation_covers_canonical_keys,
        type(r) AS relation_type,
        r.referent_certainty AS certainty,
        r.attribution_precision AS attribution_precision
@@ -112,6 +138,13 @@ RETURN p.canonical_key AS canonical_key,
        p.canonical_citation AS canonical_citation,
        p.veda AS veda,
        tr.text AS translation,
+       tr.language AS translation_language,
+       tr.reuse_kind AS translation_reuse_kind,
+       tr.reused_from_veda AS translation_reused_from_veda,
+       tr.reused_from_passage_key AS translation_reused_from_passage_key,
+       tr.reused_from_citation AS translation_reused_from_citation,
+       tr.alignment_level AS translation_alignment_level,
+       tr.covers_canonical_keys AS translation_covers_canonical_keys,
        'TRANSLATION_MATCH' AS relation_type
 ORDER BY p.veda, p.canonical_key
 LIMIT $limit
@@ -271,11 +304,22 @@ _PARALLELS: Final = """
 MATCH (p:Passage {canonical_key: $canonical_key})-[r]-(other:Passage)
 WHERE type(r) IN $parallel_relations
 OPTIONAL MATCH (other)-[:HAS_TRANSLATION]->(tr:Translation)
-WITH other, r, head(collect(DISTINCT tr.text)) AS translation
+WITH other, r,
+     head(collect(DISTINCT tr.text)) AS translation,
+     head(collect(DISTINCT tr.language)) AS translation_language,
+     head(collect(DISTINCT tr.reuse_kind)) AS translation_reuse_kind,
+     head(collect(DISTINCT tr.reused_from_veda)) AS translation_reused_from_veda,
+     head(collect(DISTINCT tr.reused_from_passage_key)) AS translation_reused_from_passage_key,
+     head(collect(DISTINCT tr.reused_from_citation)) AS translation_reused_from_citation,
+     head(collect(DISTINCT tr.alignment_level)) AS translation_alignment_level,
+     head(collect(DISTINCT tr.covers_canonical_keys)) AS translation_covers_canonical_keys
 RETURN other.canonical_key AS canonical_key,
        other.canonical_citation AS canonical_citation,
        other.veda AS veda,
        translation,
+       translation_language, translation_reuse_kind, translation_reused_from_veda,
+       translation_reused_from_passage_key, translation_reused_from_citation,
+       translation_alignment_level, translation_covers_canonical_keys,
        type(r) AS relation_type
 ORDER BY other.veda, other.canonical_key
 LIMIT 8

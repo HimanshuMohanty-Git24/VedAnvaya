@@ -44,6 +44,53 @@ CORPUS_MANTRAS: Final[dict[str, int]] = {
     "SV": 1_844,
 }
 
+#: Verses carrying their own dedicated English translation, by corpus. Four separate
+#: figures rather than one because they are four separate claims, and a caveat that quotes
+#: "coverage is X of Y" needs the one it names to be measurable.
+#:
+#: "Dedicated" is the narrow sense on purpose. It excludes a verse reached only by a
+#: multi-verse print unit (:data:`RANGE_COVERED_MANTRAS`), a verse showing another corpus's
+#: rendering of verified-identical text (:data:`REUSED_RENDERING_MANTRAS`), and a verse
+#: whose only rendering is Griffith's Latin (:data:`NON_ENGLISH_MANTRAS`). Summing those
+#: into one percentage is what let the reader present all four as the same thing.
+DEDICATED_ENGLISH_MANTRAS: Final[dict[str, int]] = {
+    "RV": 10_472,
+    "AV": 4_878,
+    "YV": 1_903,
+    "SV": 0,
+}
+
+#: Verses covered only because a translator's print unit spans them. Counts the whole span
+#: including its anchor, because the anchor's rendering is not a rendering of the anchor
+#: alone either.
+RANGE_COVERED_MANTRAS: Final[dict[str, int]] = {
+    "RV": 60,
+    "AV": 0,
+    "YV": 0,
+    "SV": 0,
+}
+
+#: Verses whose English is another corpus's published rendering of text verified
+#: character-identical. Never added to :data:`DEDICATED_ENGLISH_MANTRAS`: the Samavedic 173
+#: is the whole reason the distinction is drawn, because it is the only English that
+#: reaches that corpus and it is Rigvedic.
+REUSED_RENDERING_MANTRAS: Final[dict[str, int]] = {
+    "RV": 0,
+    "AV": 0,
+    "YV": 0,
+    "SV": 0,
+}
+
+#: Verses whose only rendering is not in English. Griffith rendered passages he judged too
+#: explicit for an English readership into Latin; the literal is his real published text
+#: and it is not the English layer.
+NON_ENGLISH_MANTRAS: Final[dict[str, int]] = {
+    "RV": 0,
+    "AV": 0,
+    "YV": 0,
+    "SV": 0,
+}
+
 #: Total edges per predicate, for the predicates a caveat names.
 PREDICATE_TOTALS: Final[dict[str, int]] = {
     "MENTIONS_DEVATA": 17_165,
@@ -116,6 +163,44 @@ _CERTAINTY_QUERY = (
 
 _MANTRAS_QUERY = "MATCH (m:Mantra) RETURN m.veda AS veda, count(*) AS c"
 
+# The four coverage populations, each measured on its own definition rather than derived
+# from the others. Derivation is what made them one number in the first place: a verse
+# reached only by a neighbour's print unit satisfies "has some English nearby" and does not
+# satisfy "has its own translation", and a subtraction cannot tell you which was meant.
+_DEDICATED_ENGLISH_QUERY = """
+MATCH (m:Mantra)-[:HAS_TRANSLATION]->(t:Translation)
+WHERE t.language = 'en'
+  AND t.reuse_kind IS NULL
+  AND t.alignment_level <> 'MANTRA_RANGE'
+RETURN m.veda AS veda, count(DISTINCT m) AS c
+"""
+
+# Counts the whole declared span and not the anchors, so the second verse of every pair is
+# in the figure. Counting anchors is the bug: it returns 30 for a population of 60.
+_RANGE_COVERED_QUERY = """
+MATCH (:Mantra)-[:HAS_TRANSLATION]->(t:Translation)
+WHERE t.alignment_level = 'MANTRA_RANGE'
+UNWIND t.covers_canonical_keys AS key
+MATCH (m:Mantra {canonical_key: key})
+RETURN m.veda AS veda, count(DISTINCT m) AS c
+"""
+
+_REUSED_RENDERING_QUERY = """
+MATCH (m:Mantra)-[:HAS_TRANSLATION]->(t:Translation)
+WHERE t.reuse_kind = 'REUSED_RENDERING'
+RETURN m.veda AS veda, count(DISTINCT m) AS c
+"""
+
+# A verse counts here only when it has no English at all. A verse with both an English
+# rendering and a Latin one is an English verse that also holds a Latin witness, and
+# putting it in this bucket would understate the English layer.
+_NON_ENGLISH_QUERY = """
+MATCH (m:Mantra)-[:HAS_TRANSLATION]->(t:Translation)
+WHERE t.language <> 'en'
+  AND NOT EXISTS { (m)-[:HAS_TRANSLATION]->(:Translation {language: 'en'}) }
+RETURN m.veda AS veda, count(DISTINCT m) AS c
+"""
+
 _ASSERTION_QUERY = "MATCH (a:SemanticAssertion) RETURN a.derivation AS value, count(*) AS c"
 
 _MULTI_DEVATA_QUERY = (
@@ -128,6 +213,19 @@ _AGNI_INDRA_QUERY = (
     "MATCH (p)-[:MENTIONS_DEVATA]->(:Devata {entity_key: 'VG:DEVATA:INDRAH'}) "
     "RETURN p.veda AS veda, count(DISTINCT p) AS c"
 )
+
+
+def _per_veda(session: Session, query: str) -> dict[str, int]:
+    """A per-corpus count seeded with an explicit zero for all four Vedas.
+
+    A corpus with none of whatever is being counted returns no row, and a dict that simply
+    lacks the key lets a reader infer whatever they expected. The Samaveda is at 0
+    dedicated English translations of 1,844 verses, and that zero has to be stated rather
+    than left as an absent key beside three populated ones.
+    """
+    counts = dict.fromkeys(CORPUS_MANTRAS, 0)
+    counts.update(_grouped(session, query, "veda"))
+    return counts
 
 
 def _grouped(session: Session, query: str, key: str) -> dict[str, int]:
@@ -148,6 +246,10 @@ def measure(session: Session) -> dict[str, Any]:
     record = session.run(_MULTI_DEVATA_QUERY).single()
     return {
         "CORPUS_MANTRAS": _grouped(session, _MANTRAS_QUERY, "veda"),
+        "DEDICATED_ENGLISH_MANTRAS": _per_veda(session, _DEDICATED_ENGLISH_QUERY),
+        "RANGE_COVERED_MANTRAS": _per_veda(session, _RANGE_COVERED_QUERY),
+        "REUSED_RENDERING_MANTRAS": _per_veda(session, _REUSED_RENDERING_QUERY),
+        "NON_ENGLISH_MANTRAS": _per_veda(session, _NON_ENGLISH_QUERY),
         "PREDICATE_TOTALS": {name: totals.get(name, 0) for name in PREDICATE_TOTALS},
         "MENTIONS_DEVATA_BY_VEDA": _grouped(session, _BY_VEDA_QUERY, "veda"),
         "REFERENT_CERTAINTY": _grouped(session, _CERTAINTY_QUERY, "value"),
@@ -161,6 +263,10 @@ def declared() -> dict[str, Any]:
     """The constants as this module declares them, in :func:`measure`'s shape."""
     return {
         "CORPUS_MANTRAS": dict(CORPUS_MANTRAS),
+        "DEDICATED_ENGLISH_MANTRAS": dict(DEDICATED_ENGLISH_MANTRAS),
+        "RANGE_COVERED_MANTRAS": dict(RANGE_COVERED_MANTRAS),
+        "REUSED_RENDERING_MANTRAS": dict(REUSED_RENDERING_MANTRAS),
+        "NON_ENGLISH_MANTRAS": dict(NON_ENGLISH_MANTRAS),
         "PREDICATE_TOTALS": dict(PREDICATE_TOTALS),
         "MENTIONS_DEVATA_BY_VEDA": dict(MENTIONS_DEVATA_BY_VEDA),
         "REFERENT_CERTAINTY": dict(REFERENT_CERTAINTY),

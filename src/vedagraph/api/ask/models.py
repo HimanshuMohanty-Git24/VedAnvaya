@@ -93,6 +93,15 @@ class EvidenceItem(ApiModel):
     veda: str | None = None
     sanskrit: str | None = None
     translation: str | None = None
+    translation_disclosure: str | None = Field(
+        default=None,
+        description="What the quoted English actually is, where that is not a dedicated "
+        "translation of this verse: a rendering reused from another corpus's parallel, one "
+        "print unit covering a span of verses, or Griffith's Latin substitution. Travels "
+        "on the item rather than in a preamble, and is repeated into `qualifier`, because "
+        "an answer that cites a reused Rigvedic rendering as a Samavedic verse's own "
+        "translation is wrong about which corpus it is describing.",
+    )
     entity_label: str | None = None
     entity_type: str | None = None
     entity_key: str | None = None

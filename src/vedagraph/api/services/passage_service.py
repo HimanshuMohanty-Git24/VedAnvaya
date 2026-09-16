@@ -115,7 +115,7 @@ from vedagraph.api.models.work import (
     WorkSummary,
 )
 from vedagraph.api.repositories.neo4j_repository import named_query_caveat
-from vedagraph.domain import layer_figures, theonyms
+from vedagraph.domain import layer_figures, theonyms, translation_semantics
 
 
 class Repository(Protocol):
@@ -555,15 +555,44 @@ CALL (w) {
 CALL (w) {
     MATCH (p:Passage {work_id: w.work_id, display_type: 'MANTRA'})
           -[:HAS_TRANSLATION]->(t:Translation)
-    RETURN count(DISTINCT p) AS translated_count,
-           collect(DISTINCT t.translator) AS translators
+    RETURN collect(DISTINCT t.translator) AS translators
+}
+// The four coverage populations, each on its own definition. A single
+// `count(DISTINCT p)` over HAS_TRANSLATION was the whole measurement until
+// GAP-TRANSLATION-006, and it answers "is some rendering attached here?" -- which stopped
+// being the same question as "does this verse have its own translation?" the moment one
+// print unit could span two verses and one corpus's English could be another's.
+CALL (w) {
+    MATCH (:Passage {work_id: w.work_id})-[:HAS_TRANSLATION]->(r:Translation)
+    WHERE r.alignment_level = 'MANTRA_RANGE'
+    UNWIND r.covers_canonical_keys AS key
+    RETURN collect(DISTINCT key) AS range_keys
+}
+CALL (w, range_keys) {
+    MATCH (p:Passage {work_id: w.work_id, display_type: 'MANTRA'})
+    OPTIONAL MATCH (p)-[:HAS_TRANSLATION]->(t:Translation)
+    WITH p, range_keys, collect(t) AS ts
+    RETURN
+      count(CASE WHEN any(x IN ts WHERE x.language = 'en' AND x.reuse_kind IS NULL
+                            AND x.alignment_level <> 'MANTRA_RANGE')
+                 THEN 1 END) AS dedicated_count,
+      count(CASE WHEN p.canonical_key IN range_keys THEN 1 END) AS range_covered_count,
+      count(CASE WHEN any(x IN ts WHERE x.reuse_kind = 'REUSED_RENDERING')
+                 THEN 1 END) AS reused_count,
+      count(CASE WHEN any(x IN ts WHERE x.language <> 'en')
+                  AND none(x IN ts WHERE x.language = 'en')
+                 THEN 1 END) AS other_language_count,
+      count(CASE WHEN size(ts) > 0 OR p.canonical_key IN range_keys
+                 THEN 1 END) AS any_coverage_count
 }
 RETURN w.work_id AS work_id, w.veda AS veda, w.abbreviation AS abbreviation,
        w.display_label AS display_label, w.work_name AS work_name, w.scope AS scope,
        w.scope_source AS scope_source, w.scope_evidence AS scope_evidence,
        w.completeness AS completeness, w.excluded_corpora AS excluded_corpora,
        w.rights AS rights,
-       passage_count, mantra_count, translated_count, translators
+       passage_count, mantra_count, translators,
+       dedicated_count, range_covered_count, reused_count, other_language_count,
+       any_coverage_count
 ORDER BY w.work_id
 """
 
@@ -729,8 +758,35 @@ CALL (p) {
         work_edition: t.work_edition, quality_status: t.quality_status,
         alignment_level: t.alignment_level, rights_status: t.rights_status,
         source_id: t.source_id, upstream_correction_id: t.upstream_correction_id,
-        upstream_correction_reason: t.upstream_correction_reason
+        upstream_correction_reason: t.upstream_correction_reason,
+        covers_canonical_keys: t.covers_canonical_keys, source_unit: t.source_unit,
+        reuse_kind: t.reuse_kind, reused_from_veda: t.reused_from_veda,
+        reused_from_passage_key: t.reused_from_passage_key,
+        reused_from_citation: t.reused_from_citation,
+        reused_from_translation_id: t.reused_from_translation_id,
+        reuse_basis: t.reuse_basis,
+        anchor_canonical_key: p.canonical_key
     }) AS translations
+}
+CALL (p) {
+    MATCH (anchor:Passage)-[:HAS_TRANSLATION]->(t:Translation)
+    WHERE t.alignment_level = 'MANTRA_RANGE'
+      AND p.canonical_key IN t.covers_canonical_keys
+      AND anchor.canonical_key <> p.canonical_key
+    RETURN collect({
+        text: t.text, translator: t.translator, language: t.language, year: t.year,
+        work_edition: t.work_edition, quality_status: t.quality_status,
+        alignment_level: t.alignment_level, rights_status: t.rights_status,
+        source_id: t.source_id, upstream_correction_id: t.upstream_correction_id,
+        upstream_correction_reason: t.upstream_correction_reason,
+        covers_canonical_keys: t.covers_canonical_keys, source_unit: t.source_unit,
+        reuse_kind: t.reuse_kind, reused_from_veda: t.reused_from_veda,
+        reused_from_passage_key: t.reused_from_passage_key,
+        reused_from_citation: t.reused_from_citation,
+        reused_from_translation_id: t.reused_from_translation_id,
+        reuse_basis: t.reuse_basis,
+        anchor_canonical_key: anchor.canonical_key
+    }) AS range_translations
 }
 """
 
@@ -871,7 +927,8 @@ RETURN {_P} AS passage,
        w.display_label AS work_display_label, w.work_name AS work_traditional_name,
        w.rights AS work_rights,
        CASE WHEN parent IS NULL THEN NULL ELSE {_summary_projection("parent")} END AS parent,
-       text_versions, translations, rishis, devatas, chandas, mentioned_devatas,
+       text_versions, translations, range_translations,
+       rishis, devatas, chandas, mentioned_devatas,
        concepts, concept_total, mentioned_entities, mention_total,
        formulas, formula_total, semantic_relations, relation_total,
        agentive_assertions, assertion_total, child_count
@@ -908,7 +965,8 @@ CALL (p) {
     + f"""
 RETURN {_P} AS passage, w.display_label AS work_display_label,
        w.work_name AS work_traditional_name,
-       text_versions, translations, rishis, devatas, chandas, mentioned_devatas,
+       text_versions, translations, range_translations,
+       rishis, devatas, chandas, mentioned_devatas,
        concepts, concept_total, parallel_counts, graph_neighbour_count
 """
 )
@@ -1227,20 +1285,61 @@ def _text_availability(rows: object, *, is_container: bool) -> TextAvailability:
     )
 
 
-def _translations(rows: object) -> list[TranslationView]:
+def _coverage_phrase() -> str:
+    """ "10,480 of 10,552 for the Rigveda, ..." read from the figures module.
+
+    Built rather than typed. The three figures this sentence quotes were typed into it
+    once, and the import that moved them would have left a caveat asserting a coverage the
+    same database contradicted -- which is the one failure mode a caveat cannot have.
+    """
+    parts = []
+    for veda, name in (("RV", "Rigveda"), ("YV", "Yajurveda"), ("AV", "Atharvaveda")):
+        dedicated = layer_figures.DEDICATED_ENGLISH_MANTRAS[veda]
+        corpus = layer_figures.CORPUS_MANTRAS[veda]
+        parts.append(f"{dedicated:,} of {corpus:,} for the {name}")
+    return ", ".join(parts[:-1]) + " and " + parts[-1]
+
+
+def _translations(rows: object, *, asked_about: str | None = None) -> list[TranslationView]:
+    """Project translation rows, classifying what kind of coverage each one gives.
+
+    ``asked_about`` is the canonical key the caller is rendering. It is what makes the
+    difference between "this verse's translation" and "a translation whose span reaches
+    this verse" visible, and the classification comes from
+    :mod:`vedagraph.domain.translation_semantics` rather than from a test repeated here,
+    because the reader, the coverage figures and Ask all have to agree about it.
+    """
     out: list[TranslationView] = []
     for row in rows if isinstance(rows, list) else []:
         if not isinstance(row, dict) or not row.get("text"):
             continue
+        anchor = _nonempty(row.get("anchor_canonical_key"))
+        covers = translation_semantics.covered_keys(row, anchor)
+        kind = translation_semantics.classify(row, asked_about=asked_about)
+        own = asked_about is None or anchor is None or anchor == asked_about
         out.append(
             TranslationView(
                 text=str(row["text"]),
                 translator=_nonempty(row.get("translator")),
                 language=str(row.get("language") or "en"),
+                language_name=translation_semantics.language_name(str(row.get("language") or "en")),
                 year=_as_int(row.get("year")),
                 work_edition=_nonempty(row.get("work_edition")),
                 quality_status=_nonempty(row.get("quality_status")),
                 alignment_level=_nonempty(row.get("alignment_level")),
+                coverage_kind=kind,
+                covers_canonical_keys=covers,
+                anchor_canonical_key=anchor,
+                is_this_passages_own=own,
+                source_unit=_nonempty(row.get("source_unit")),
+                independent_translation=translation_semantics.is_independent(row),
+                reuse_kind=_nonempty(row.get("reuse_kind")),
+                reused_from_veda=_nonempty(row.get("reused_from_veda")),
+                reused_from_passage_key=_nonempty(row.get("reused_from_passage_key")),
+                reused_from_citation=_nonempty(row.get("reused_from_citation")),
+                reused_from_translation_id=_nonempty(row.get("reused_from_translation_id")),
+                reuse_basis=_nonempty(row.get("reuse_basis")),
+                disclosure=translation_semantics.disclosure(row),
                 rights_status=_nonempty(row.get("rights_status")),
                 source_id=_nonempty(row.get("source_id")),
                 upstream_correction_id=_nonempty(row.get("upstream_correction_id")),
@@ -1618,7 +1717,13 @@ class PassageService:
         """Build the summary, keeping the honest label and the traditional name apart."""
         work_id = str(row.get("work_id") or "")
         mantra_count = _as_int(row.get("mantra_count"))
-        translated = _as_int(row.get("translated_count"))
+        # `translated_mantra_count` is the dedicated population and says so in its own
+        # field description. It deliberately narrowed when the other three populations
+        # became measurable: a verse the translator rendered inside a two-verse print unit
+        # is covered and does not have a translation of its own, and the field was being
+        # read as the second thing while counting the first.
+        translated = _as_int(row.get("dedicated_count"))
+        reused = _as_int(row.get("reused_count"))
         caveats: list[CaveatView] = []
         status = KnowledgeStatus.SUPPORTED
         if mantra_count and translated == 0:
@@ -1626,9 +1731,16 @@ class PassageService:
             caveats.append(
                 CaveatView(
                     text=(
-                        f"This work has {mantra_count:,} mantras and zero released "
-                        "translations, so every translation-derived layer is empty for it. "
-                        "None of those empty results is a statement about the text."
+                        f"This work has {mantra_count:,} mantras and no translation of its "
+                        "own, so every translation-derived layer is empty for it. "
+                        + (
+                            f"{reused:,} of its verses show another corpus's published "
+                            "rendering of text verified identical; that is disclosed as "
+                            "reuse and is not this work's English. "
+                            if reused
+                            else ""
+                        )
+                        + "None of those empty results is a statement about the text."
                     ),
                     source="measured",
                 )
@@ -1748,17 +1860,30 @@ class PassageService:
 
     @staticmethod
     def _translation_coverage(row: dict[str, Any], summary: WorkSummary) -> TranslationCoverage:
-        """Translation coverage, with the percentage computed here and not transcribed.
+        """Translation coverage, split into the four populations it is made of.
 
-        The percentage is divided from the two counts in the same response. Copying the
-        figure out of the work's ``completeness`` prose is what let three caveats in this
+        The percentage is divided from two counts in the same response. Copying the figure
+        out of the work's ``completeness`` prose is what let three caveats in this
         repository drift from the data they described.
+
+        The split is the substantive part. One percentage used to carry four claims: a
+        verse with its own rendering, a verse inside a multi-verse print unit, a verse
+        showing another corpus's rendering of identical text, and a verse whose only
+        rendering is Griffith's Latin. Those move a single number in the same direction
+        while meaning four different things, and the Samaveda is the case that makes it
+        matter -- every English string that will ever reach it is Rigvedic, so a
+        conflating percentage would report a translated Samaveda.
         """
         mantras = summary.mantra_count
-        translated = summary.translated_mantra_count
-        percent = (
-            round(100 * translated / mantras, 2) if mantras and translated is not None else None
+        dedicated = _as_int(row.get("dedicated_count"))
+        range_covered = _as_int(row.get("range_covered_count"))
+        reused = _as_int(row.get("reused_count"))
+        other_language = _as_int(row.get("other_language_count"))
+        any_coverage = _as_int(row.get("any_coverage_count"))
+        uncovered = (
+            mantras - any_coverage if mantras is not None and any_coverage is not None else None
         )
+        percent = round(100 * dedicated / mantras, 2) if mantras and dedicated is not None else None
         caveats = [
             CaveatView(
                 text=(
@@ -1770,24 +1895,67 @@ class PassageService:
             )
         ]
         status = KnowledgeStatus.SUPPORTED
-        if translated == 0:
+        if dedicated == 0:
             status = KnowledgeStatus.NOT_BUILT
             caveats.append(
                 CaveatView(
                     text=(
-                        f"Zero of this work's {mantras:,} mantras carry a translation. "
-                        "Every layer derived from the English translation is therefore "
-                        "empty for this corpus, and none of those absences is textual."
+                        f"Zero of this work's {mantras:,} mantras carry a translation of "
+                        "their own. Every layer derived from this corpus's English "
+                        "translation is therefore empty, and none of those absences is "
+                        "textual."
                     ),
                     source="measured",
                 )
             )
         elif percent is not None and percent < 100:
             status = KnowledgeStatus.PARTIAL
+        if range_covered:
+            caveats.append(
+                CaveatView(
+                    text=(
+                        f"{range_covered:,} verses are covered by a multi-verse print unit "
+                        "rather than by a rendering of their own, and are counted in "
+                        "`range_covered` rather than in `translated`. Adding the two would "
+                        "assert that each of them has a 1:1 translation."
+                    ),
+                    source="measured",
+                )
+            )
+        if reused:
+            caveats.append(
+                CaveatView(
+                    text=(
+                        f"{reused:,} verses show another corpus's published rendering of "
+                        "text verified character-identical. It is disclosed as reuse, is "
+                        "excluded from `translated`, and is not independent evidence about "
+                        "this corpus."
+                    ),
+                    source="measured",
+                )
+            )
+        if other_language:
+            caveats.append(
+                CaveatView(
+                    text=(
+                        f"{other_language:,} verses have no English rendering at all: "
+                        "Griffith put the passages he judged too explicit into Latin. Those "
+                        "are his real published text and they are not the English layer, so "
+                        "they are counted in `other_language`."
+                    ),
+                    source="measured",
+                )
+            )
         return TranslationCoverage(
             mantras=mantras,
-            translated=translated,
+            translated=dedicated,
             percent=percent,
+            dedicated=dedicated,
+            range_covered=range_covered,
+            reused_rendering=reused,
+            other_language=other_language,
+            uncovered=uncovered,
+            any_coverage=any_coverage,
             translators=sorted(str(item) for item in row.get("translators") or []),
             status=status,
             caveats=caveats,
@@ -1871,7 +2039,9 @@ class PassageService:
             child_count=_as_int(row.get("child_count")),
             sequence_in_parent=passage.sequence_in_parent,
             text=text,
-            translations=self._translation_set(row.get("translations"), passage),
+            translations=self._translation_set(
+                row.get("translations"), row.get("range_translations"), passage
+            ),
             rishis=self._attribution_set("HAS_RISHI", row.get("rishis"), passage),
             devatas=self._attribution_set("HAS_DEVATA", row.get("devatas"), passage),
             chandas=self._attribution_set("HAS_CHANDAS", row.get("chandas"), passage),
@@ -1905,7 +2075,9 @@ class PassageService:
                 translation_sources=sorted(
                     {
                         item.source_id
-                        for item in _translations(row.get("translations"))
+                        for item in _translations(
+                            row.get("translations"), asked_about=passage.canonical_key
+                        )
                         if item.source_id
                     }
                 ),
@@ -2161,7 +2333,9 @@ class PassageService:
                 (surface for surface in text.surfaces if surface.is_displayable), None
             ),
             text=text,
-            translations=self._translation_set(row.get("translations"), passage),
+            translations=self._translation_set(
+                row.get("translations"), row.get("range_translations"), passage
+            ),
             rishis=self._attribution_set("HAS_RISHI", row.get("rishis"), passage),
             devatas=self._attribution_set("HAS_DEVATA", row.get("devatas"), passage),
             chandas=self._attribution_set("HAS_CHANDAS", row.get("chandas"), passage),
@@ -2411,18 +2585,77 @@ class PassageService:
     # -- set builders ------------------------------------------------------
 
     def _translation_set(
-        self, rows: object, passage: PassageSummary
+        self, rows: object, range_rows: object, passage: PassageSummary
     ) -> AttestedSet[TranslationView]:
         """Translations, with the Samavedic zero named as a corpus fact.
 
-        The whole reason this is not a bare list: the Samaveda has 0 translations from
-        1,844 verses, so ``[]`` there means no translation was ever released for the
-        corpus. For the other three it means this particular verse is unaligned, which is
-        ``INSUFFICIENT_EVIDENCE`` rather than ``NOT_BUILT``.
+        The whole reason this is not a bare list: the Samaveda has no translation of its
+        own from 1,844 verses, so ``[]`` there means no translation was ever released for
+        the corpus. For the other three it means this particular verse is unaligned, which
+        is ``INSUFFICIENT_EVIDENCE`` rather than ``NOT_BUILT``.
+
+        ``range_rows`` carries the translations that reach this verse through another
+        verse's print unit. They are appended rather than merged, and the ``items`` list is
+        never empty while one exists: that emptiness is what told 30 real verses of RV
+        1.65-1.70 that no released translation covered them, when a ``MANTRA_RANGE`` on the
+        paired verse did.
         """
-        items = _translations(rows)
-        if items:
-            return AttestedSet[TranslationView](items=items, total=len(items))
+        items = _translations(rows, asked_about=passage.canonical_key)
+        covered_by_range = _translations(range_rows, asked_about=passage.canonical_key)
+        if items or covered_by_range:
+            every = items + covered_by_range
+            caveats = []
+            if covered_by_range and not items:
+                caveats.append(
+                    CaveatView(
+                        text=(
+                            "This verse has no rendering aligned to it alone. The "
+                            f"{len(covered_by_range)} shown "
+                            + (
+                                "translation covers"
+                                if len(covered_by_range) == 1
+                                else "translations cover"
+                            )
+                            + " it as part of a multi-verse print unit anchored on "
+                            + ", ".join(
+                                sorted(
+                                    {
+                                        item.anchor_canonical_key
+                                        for item in covered_by_range
+                                        if item.anchor_canonical_key
+                                    }
+                                )
+                            )
+                            + "."
+                        ),
+                        source="measured",
+                    )
+                )
+            if any(not item.independent_translation for item in every):
+                caveats.append(
+                    CaveatView(
+                        text=(
+                            "At least one rendering here is reused from another corpus's "
+                            "published translation of verified-identical text. It is not "
+                            f"an independent translation of the {passage.veda}, and it is "
+                            "excluded from this corpus's translated count and from "
+                            "independent semantic evidence."
+                        ),
+                        source="measured",
+                    )
+                )
+            if any(item.language != "en" for item in every):
+                caveats.append(
+                    CaveatView(
+                        text=(
+                            "At least one rendering here is not in English. Griffith put "
+                            "passages he judged too explicit into Latin, and those are "
+                            "his real published text but are not the English layer."
+                        ),
+                        source="measured",
+                    )
+                )
+            return AttestedSet[TranslationView](items=every, total=len(every), caveats=caveats)
         if passage.passage_type != "MANTRA":
             return AttestedSet[TranslationView](
                 items=[],
@@ -2449,9 +2682,19 @@ class PassageService:
                 caveats=[
                     CaveatView(
                         text=(
-                            "Zero translations are released for the Samaveda: none of its "
-                            "1,844 verses carries one. This empty list is an unbuilt layer "
-                            "for the whole corpus and says nothing about this verse."
+                            "No independent Samavedic translation is released: none of the "
+                            f"corpus's {layer_figures.CORPUS_MANTRAS['SV']:,} verses carries "
+                            "one of its own. "
+                            + (
+                                f"{layer_figures.REUSED_RENDERING_MANTRAS['SV']:,} of them "
+                                "show Griffith's Rigvedic rendering of text verified "
+                                "identical, which is disclosed as reuse and is not this "
+                                "corpus's own English; this verse is not one of them. "
+                                if layer_figures.REUSED_RENDERING_MANTRAS["SV"]
+                                else ""
+                            )
+                            + "This empty list is an unbuilt layer for the whole corpus and "
+                            "says nothing about this verse."
                         ),
                         source="measured",
                     )
@@ -2464,10 +2707,11 @@ class PassageService:
             caveats=[
                 CaveatView(
                     text=(
-                        "No translation is aligned to this verse, although its corpus is "
-                        "translated: coverage is 10,502 of 10,552 for the Rigveda, 1,903 "
-                        "of 1,975 for the Yajurveda and 4,878 of 5,839 for the "
-                        "Atharvaveda. This is an alignment gap, not an untranslated verse."
+                        "No translation of any kind reaches this verse, although its corpus "
+                        "is translated: verses with their own English rendering number "
+                        + _coverage_phrase()
+                        + ". No multi-verse print unit covers it either. This is an "
+                        "alignment gap, not an untranslated verse."
                     ),
                     source="measured",
                 )

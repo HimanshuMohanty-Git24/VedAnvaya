@@ -3213,6 +3213,11 @@ export interface components {
             sanskrit?: string | null;
             /** Translation */
             translation?: string | null;
+            /**
+             * Translation Disclosure
+             * @description What the quoted English actually is, where that is not a dedicated translation of this verse: a rendering reused from another corpus's parallel, one print unit covering a span of verses, or Griffith's Latin substitution. Travels on the item rather than in a preamble, and is repeated into `qualifier`, because an answer that cites a reused Rigvedic rendering as a Samavedic verse's own translation is wrong about which corpus it is describing.
+             */
+            translation_disclosure?: string | null;
             /** Entity Label */
             entity_label?: string | null;
             /** Entity Type */
@@ -5892,20 +5897,63 @@ export interface components {
         };
         /**
          * TranslationCoverage
-         * @description How much of a work is translated, and by whom.
+         * @description How much of a work is translated, in what sense, and by whom.
          *
          *     ``translated`` is nullable but never rounded up, and the Samaveda is why this is a
-         *     first-class block rather than a percentage on the summary: it has 0 translations from
-         *     1,844 verses, so every translation-derived layer is empty for that corpus and every one
-         *     of those empty lists would otherwise read as a fact about the Samaveda.
+         *     first-class block rather than a percentage on the summary: it has 0 translations of its
+         *     own from 1,844 verses, so every translation-derived layer is empty for that corpus and
+         *     every one of those empty lists would otherwise read as a fact about the Samaveda.
+         *
+         *     The four populations below are separate fields because they are four different claims
+         *     and one percentage cannot carry them. ``dedicated`` is a verse with its own 1:1 English
+         *     rendering. ``range_covered`` is a verse the translator rendered inside a multi-verse
+         *     print unit -- real coverage, and not a rendering of that verse alone. ``reused_rendering``
+         *     is another corpus's published English on text verified identical, which is the only
+         *     English that will ever reach a Samavedic verse and is not the Samaveda's own. And
+         *     ``other_language`` is Griffith's Latin substitutions, which are his real text and are
+         *     not the English layer. ``translated`` counts ``dedicated`` alone, so the field that
+         *     existed before these distinctions did still means what it meant.
          */
         TranslationCoverage: {
             /** Mantras */
             mantras?: number | null;
-            /** Translated */
+            /**
+             * Translated
+             * @description Verses with their own dedicated English translation. Deliberately not the sum of the four populations below: adding them would assert that every covered verse has a 1:1 rendering of its own.
+             */
             translated?: number | null;
-            /** Percent */
+            /**
+             * Percent
+             * @description `dedicated` over `mantras`. The English layer's own share.
+             */
             percent?: number | null;
+            /** Dedicated */
+            dedicated?: number | null;
+            /**
+             * Range Covered
+             * @description Verses covered only by a multi-verse print unit anchored elsewhere.
+             */
+            range_covered?: number | null;
+            /**
+             * Reused Rendering
+             * @description Verses showing another corpus's rendering of verified-identical text. Never added to `translated`.
+             */
+            reused_rendering?: number | null;
+            /**
+             * Other Language
+             * @description Verses whose only rendering is not in English.
+             */
+            other_language?: number | null;
+            /**
+             * Uncovered
+             * @description Verses no rendering of any kind reaches. Reported so the four populations above can be checked against the corpus rather than trusted.
+             */
+            uncovered?: number | null;
+            /**
+             * Any Coverage
+             * @description Verses reached by a rendering of any kind. The honest answer to 'can I read something here', which is a different question to 'is it translated'.
+             */
+            any_coverage?: number | null;
             /** Translators */
             translators?: string[];
             /** @default SUPPORTED */
@@ -5914,13 +5962,31 @@ export interface components {
             caveats?: components["schemas"]["CaveatView"][];
         };
         /**
-         * TranslationView
-         * @description One aligned English translation.
+         * TranslationCoverageKind
+         * @description How a translation covers the verse it was asked about.
          *
-         *     ``quality_status`` is ``MACHINE_ALIGNED`` on all 17,283 of them: the alignment of a
+         *     The order is the reporting order and the values are deliberately not rankable: a
+         *     ``RANGE_TRANSLATION`` is not a worse ``DEDICATED_TRANSLATION``, it is a different claim
+         *     about what the translator aligned to.
+         * @enum {string}
+         */
+        TranslationCoverageKind: "DEDICATED_TRANSLATION" | "RANGE_TRANSLATION" | "CONTAINER_TRANSLATION" | "REUSED_RENDERING";
+        /**
+         * TranslationView
+         * @description One aligned translation, and what kind of coverage it actually gives this verse.
+         *
+         *     ``quality_status`` is ``MACHINE_ALIGNED`` on all of them: the alignment of a
          *     public-domain translation to a canonical key was done by machine and never checked
          *     against the Sanskrit. A client must be able to see that rather than infer editorial
          *     care from the presence of a translator's name.
+         *
+         *     ``coverage_kind`` is the field that stops this model asserting something false, and it
+         *     is required rather than optional. Three shapes now reach a reader and only one of them
+         *     is a 1:1 rendering of the verse asked for: a ``RANGE_TRANSLATION`` is one print unit
+         *     over a span of verses, a ``REUSED_RENDERING`` is another corpus's published English on
+         *     text verified identical, and a non-English ``language`` is Griffith's Latin
+         *     substitution. Each was previously indistinguishable from a dedicated translation, and
+         *     the validators below refuse a payload that presents one as the other.
          */
         TranslationView: {
             /** Text */
@@ -5932,6 +5998,11 @@ export interface components {
              * @default en
              */
             language: string;
+            /**
+             * Language Name
+             * @description The language in words, e.g. 'Latin'. Present so a client need not carry an ISO table to avoid labelling a Latin rendering 'Translation'.
+             */
+            language_name?: string | null;
             /** Year */
             year?: number | null;
             /** Work Edition */
@@ -5943,6 +6014,61 @@ export interface components {
              * @description The unit the alignment claims, e.g. MANTRA.
              */
             alignment_level?: string | null;
+            /** @description How this translation covers the passage it was returned for: DEDICATED_TRANSLATION, RANGE_TRANSLATION, CONTAINER_TRANSLATION or REUSED_RENDERING. Never infer 1:1 alignment from the presence of a translation. */
+            coverage_kind: components["schemas"]["TranslationCoverageKind"];
+            /**
+             * Covers Canonical Keys
+             * @description Every canonical key this one rendering covers. A single-key list on a dedicated translation and the complete span on a range translation; never a partial span, which is refused.
+             */
+            covers_canonical_keys?: string[];
+            /**
+             * Anchor Canonical Key
+             * @description The passage the translation node is attached to. Differs from the passage requested when a range translation reaches it through its span.
+             */
+            anchor_canonical_key?: string | null;
+            /**
+             * Is This Passages Own
+             * @description False when the passage requested is inside a range anchored on another verse, so a client can render 'covered by' rather than 'translated as'.
+             * @default true
+             */
+            is_this_passages_own: boolean;
+            /**
+             * Source Unit
+             * @description The print unit the translator numbered, where it differs from this corpus's verse numbering.
+             */
+            source_unit?: string | null;
+            /**
+             * Independent Translation
+             * @description False for a reused rendering. A false here means the text must not be totalled into this corpus's own translated count, nor used as independent semantic evidence about this passage.
+             * @default true
+             */
+            independent_translation: boolean;
+            /**
+             * Reuse Kind
+             * @description REUSED_RENDERING, or null when the rendering is this translator's own work on this passage.
+             */
+            reuse_kind?: string | null;
+            /** Reused From Veda */
+            reused_from_veda?: string | null;
+            /** Reused From Passage Key */
+            reused_from_passage_key?: string | null;
+            /** Reused From Citation */
+            reused_from_citation?: string | null;
+            /**
+             * Reused From Translation Id
+             * @description The identity of the translation actually being shown, in the corpus it was published for.
+             */
+            reused_from_translation_id?: string | null;
+            /**
+             * Reuse Basis
+             * @description How the text equivalence was established.
+             */
+            reuse_basis?: string | null;
+            /**
+             * Disclosure
+             * @description The sentence a reader must be shown beside this translation. Non-null whenever the rendering is not a dedicated English translation of this verse, and a payload that omits it in that case is refused.
+             */
+            disclosure?: string | null;
             /** Rights Status */
             rights_status?: string | null;
             /** Source Id */

@@ -1,0 +1,196 @@
+{
+ "phase": "E",
+ "rows_scanned": 2254,
+ "this_detector": {
+  "LATIN": 24,
+  "rule": "a literal of at least 8 words whose English function-word density is at most 0.1 and which carries at least 2 distinct Latin markers. The density is the decision; the markers only corroborate, so English prose quoting a Latin binomial is never flagged."
+ },
+ "gate_c_detector": {
+  "LATIN": 22
+ },
+ "owner_decision_population": 22,
+ "agreement": {
+  "both": 22,
+  "found_only_now": 2,
+  "found_only_by_gate_c": 0
+ },
+ "rows_gate_c_missed": [
+  {
+   "english_function_word_density": 0.0,
+   "distinct_latin_markers": 6,
+   "latin_markers_found": [
+    "agitantur",
+    "ejus",
+    "feminae",
+    "pudenda",
+    "quis",
+    "vaccae"
+   ],
+   "row_id": "TR00881",
+   "canonical_key": "VG:AV:SAU:K20:S136:V001",
+   "source_locator": "kanda 20, hymn 136, printed label '1'",
+   "final_class": "IMPORT_SOURCE_EXPLICIT",
+   "text_head": "Si quis in hujus tenui rima praeditae feminae augustias fascinum intromittit, vaccae ungularum et Sakula. rum "
+  },
+  {
+   "english_function_word_density": 0.0,
+   "distinct_latin_markers": 4,
+   "latin_markers_found": [
+    "amorem",
+    "impleverat",
+    "jam",
+    "quum"
+   ],
+   "row_id": "TR00956",
+   "canonical_key": "VG:RV:SAK:M10:S061:V006",
+   "source_locator": "RV 10.61.6, printed label '6'",
+   "final_class": "IMPORT_SOURCE_EXPLICIT",
+   "text_head": "Quum jam in medio connessu, semiperfecto opere, amorem in puellam pater impleverat, ambo discedentes seminis p"
+  }
+ ],
+ "rows_only_gate_c_flagged": [],
+ "separation": {
+  "rows_judged": 2251,
+  "rows_too_short_to_judge": 3,
+  "too_short_row_ids": [
+   "TR00844",
+   "TR00868",
+   "TR00869"
+  ],
+  "english_function_word_density": {
+   "on_LATIN_rows": {
+    "n": 24,
+    "min": 0.0,
+    "p50": 0.0,
+    "max": 0.0667
+   },
+   "on_ENGLISH_rows": {
+    "n": 2227,
+    "min": 0.05,
+    "p50": 0.3704,
+    "max": 0.7333
+   },
+   "ceiling_applied": 0.1
+  },
+  "distinct_latin_markers": {
+   "on_LATIN_rows": {
+    "n": 24,
+    "min": 3,
+    "p50": 7,
+    "max": 12
+   },
+   "on_ENGLISH_rows": {
+    "n": 2227,
+    "min": 0,
+    "p50": 0,
+    "max": 0
+   },
+   "floor_applied": 2
+  },
+  "density_axis_alone_separates": false,
+  "marker_axis_alone_separates": true,
+  "no_english_row_carries_any_latin_marker": true
+ },
+ "contiguity": {
+  "blocks": {
+   "VG:AV:SAU:K20:S126": {
+    "verses": [
+     16,
+     17
+    ],
+    "run": "16-17",
+    "contiguous": true,
+    "gaps": []
+   },
+   "VG:AV:SAU:K20:S136": {
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16
+    ],
+    "run": "1-16",
+    "contiguous": true,
+    "gaps": []
+   },
+   "VG:RV:SAK:M01:S179": {
+    "verses": [
+     3,
+     4
+    ],
+    "run": "3-4",
+    "contiguous": true,
+    "gaps": []
+   },
+   "VG:RV:SAK:M10:S061": {
+    "verses": [
+     5,
+     6,
+     7,
+     8
+    ],
+    "run": "5-8",
+    "contiguous": true,
+    "gaps": []
+   }
+  },
+  "every_block_contiguous": true
+ },
+ "latin_rows_by_veda": {
+  "AV": 18,
+  "RV": 6
+ },
+ "latin_rows_by_prior_final_class": {
+  "IMPORT_NON_ENGLISH_TRANSLATION": 22,
+  "IMPORT_SOURCE_EXPLICIT": 2
+ },
+ "latin_row_ids": [
+  "TR00749",
+  "TR00750",
+  "TR00881",
+  "TR00882",
+  "TR00883",
+  "TR00884",
+  "TR00885",
+  "TR00886",
+  "TR00887",
+  "TR00888",
+  "TR00889",
+  "TR00890",
+  "TR00891",
+  "TR00892",
+  "TR00893",
+  "TR00894",
+  "TR00895",
+  "TR00896",
+  "TR00948",
+  "TR00949",
+  "TR00955",
+  "TR00956",
+  "TR00957",
+  "TR00958"
+ ],
+ "corrected_language": "la",
+ "language_evidence": {
+  "method": "the pinned sacred-texts pages were re-read and the printed text compared against the staged literal, so the language is read off the source rather than inferred from character classes",
+  "pages_verified": {
+   "av20136.htm": "headed 'Atharva Veda: Book 20: Hymn 136: Erotica'; every verse on the page is printed in Latin",
+   "av20126.htm": "printed in English except the two verses labelled 16 and 17, which are Latin and are the two AV 20.126 rows",
+   "rv01179.htm": "verses 3 and 4 printed in Latin, 1, 2, 5 and 6 in English",
+   "rv10061.htm": "verses 5, 6, 7 and 8 printed in Latin. Four, not three: verse 6 is the row Gate C missed"
+  }
+ },
+ "verdict": "LANGUAGE_POPULATION_IS_LARGER_THAN_THE_OWNER_FIGURE"
+}

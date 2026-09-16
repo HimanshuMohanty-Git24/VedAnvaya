@@ -48,6 +48,7 @@ from vedagraph.api.models.common import (
     ReferentCertaintyCounts,
 )
 from vedagraph.api.models.entity import AttributedRef, EntityRef, MentionCertainty
+from vedagraph.domain.translation_semantics import TranslationCoverageKind
 
 # ---------------------------------------------------------------------------
 # A bounded collection that explains its own size
@@ -225,27 +226,136 @@ class TextAvailability(ApiModel):
 
 
 class TranslationView(ApiModel):
-    """One aligned English translation.
+    """One aligned translation, and what kind of coverage it actually gives this verse.
 
-    ``quality_status`` is ``MACHINE_ALIGNED`` on all 17,283 of them: the alignment of a
+    ``quality_status`` is ``MACHINE_ALIGNED`` on all of them: the alignment of a
     public-domain translation to a canonical key was done by machine and never checked
     against the Sanskrit. A client must be able to see that rather than infer editorial
     care from the presence of a translator's name.
+
+    ``coverage_kind`` is the field that stops this model asserting something false, and it
+    is required rather than optional. Three shapes now reach a reader and only one of them
+    is a 1:1 rendering of the verse asked for: a ``RANGE_TRANSLATION`` is one print unit
+    over a span of verses, a ``REUSED_RENDERING`` is another corpus's published English on
+    text verified identical, and a non-English ``language`` is Griffith's Latin
+    substitution. Each was previously indistinguishable from a dedicated translation, and
+    the validators below refuse a payload that presents one as the other.
     """
 
     text: str
     translator: str | None = None
     language: str = "en"
+    language_name: str | None = Field(
+        default=None,
+        description="The language in words, e.g. 'Latin'. Present so a client need not "
+        "carry an ISO table to avoid labelling a Latin rendering 'Translation'.",
+    )
     year: int | None = None
     work_edition: str | None = None
     quality_status: str | None = None
     alignment_level: str | None = Field(
         default=None, description="The unit the alignment claims, e.g. MANTRA."
     )
+    coverage_kind: TranslationCoverageKind = Field(
+        description="How this translation covers the passage it was returned for: "
+        "DEDICATED_TRANSLATION, RANGE_TRANSLATION, CONTAINER_TRANSLATION or "
+        "REUSED_RENDERING. Never infer 1:1 alignment from the presence of a translation."
+    )
+    covers_canonical_keys: list[str] = Field(
+        default_factory=list,
+        description="Every canonical key this one rendering covers. A single-key list on a "
+        "dedicated translation and the complete span on a range translation; never a "
+        "partial span, which is refused.",
+    )
+    anchor_canonical_key: str | None = Field(
+        default=None,
+        description="The passage the translation node is attached to. Differs from the "
+        "passage requested when a range translation reaches it through its span.",
+    )
+    is_this_passages_own: bool = Field(
+        default=True,
+        description="False when the passage requested is inside a range anchored on "
+        "another verse, so a client can render 'covered by' rather than 'translated as'.",
+    )
+    source_unit: str | None = Field(
+        default=None,
+        description="The print unit the translator numbered, where it differs from this "
+        "corpus's verse numbering.",
+    )
+    independent_translation: bool = Field(
+        default=True,
+        description="False for a reused rendering. A false here means the text must not "
+        "be totalled into this corpus's own translated count, nor used as independent "
+        "semantic evidence about this passage.",
+    )
+    reuse_kind: str | None = Field(
+        default=None,
+        description="REUSED_RENDERING, or null when the rendering is this "
+        "translator's own work on this passage.",
+    )
+    reused_from_veda: str | None = None
+    reused_from_passage_key: str | None = None
+    reused_from_citation: str | None = None
+    reused_from_translation_id: str | None = Field(
+        default=None,
+        description="The identity of the translation actually being shown, in the corpus "
+        "it was published for.",
+    )
+    reuse_basis: str | None = Field(
+        default=None, description="How the text equivalence was established."
+    )
+    disclosure: str | None = Field(
+        default=None,
+        description="The sentence a reader must be shown beside this translation. Non-null "
+        "whenever the rendering is not a dedicated English translation of this verse, and "
+        "a payload that omits it in that case is refused.",
+    )
     rights_status: str | None = None
     source_id: str | None = None
     upstream_correction_id: str | None = None
     upstream_correction_reason: str | None = None
+
+    @model_validator(mode="after")
+    def _a_rendering_that_is_not_this_verses_own_must_say_so(self) -> Self:
+        """Refuse the three payloads that would read as a dedicated English translation.
+
+        A route can forget to set a disclosure on one branch; this model cannot. The
+        Samaveda is the reason it is enforced here: every English string that will ever
+        reach a Samavedic verse is a Rigvedic rendering, so an undisclosed one tells a
+        visitor the corpus has 173 translations of its own.
+        """
+        if self.coverage_kind is TranslationCoverageKind.REUSED_RENDERING:
+            if self.independent_translation:
+                raise ValueError(
+                    "a REUSED_RENDERING cannot claim independent_translation: it is "
+                    "another corpus's published English on verified-identical text."
+                )
+            if not self.reused_from_passage_key:
+                raise ValueError(
+                    "a REUSED_RENDERING must name the passage whose rendering it is; "
+                    "'The Hymns of the Rigveda' in an edition line is not a disclosure."
+                )
+            if not self.disclosure:
+                raise ValueError("a REUSED_RENDERING must carry its disclosure sentence")
+        if self.coverage_kind is TranslationCoverageKind.RANGE_TRANSLATION:
+            if len(self.covers_canonical_keys) < 2:
+                raise ValueError(
+                    "a RANGE_TRANSLATION must enumerate its complete span: a range that "
+                    "names one verse is indistinguishable from a dedicated translation."
+                )
+            if not self.disclosure:
+                raise ValueError("a RANGE_TRANSLATION must disclose that it covers a span")
+        if self.language != "en" and not self.disclosure:
+            raise ValueError(
+                f"a translation in {self.language!r} must disclose that it is not English: "
+                "the 22 Latin substitutions are Griffith's real text and are not the "
+                "English layer."
+            )
+        if not self.is_this_passages_own and not self.anchor_canonical_key:
+            raise ValueError(
+                "a translation reached through another passage's span must name the anchor"
+            )
+        return self
 
 
 # ---------------------------------------------------------------------------

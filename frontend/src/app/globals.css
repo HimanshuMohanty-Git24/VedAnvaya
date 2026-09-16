@@ -3037,6 +3037,18 @@ table {
     color: var(--faint);
 }
 
+/*
+ * The disclosure on a comparison column. Printed, never collapsed: the whole point of this
+ * view is that the two columns are read against each other, and a reader comparing them
+ * has to be told when the right-hand English is the left-hand column's rendering.
+ */
+.comparison-translation-note {
+    margin: 8px 0 0;
+    font-size: 0.76rem;
+    line-height: 1.5;
+    color: var(--tone-partial);
+}
+
 .matched-surface,
 .comparison-evidence {
     padding: 20px 24px;

@@ -49,7 +49,16 @@ SAMAVEDA_ROW: dict[str, Any] = {
     "rights": "Per manifest.",
     "passage_count": 2342,
     "mantra_count": 1844,
-    "translated_count": 0,
+    # The four coverage populations the works query returns, each measured on its own
+    # definition. The Samaveda is zero on all four and 1,844 uncovered, which is what makes
+    # it the right fixture for this endpoint: every translation-derived layer is empty for
+    # it, and a single `translated_count` could not say whether that was because nothing
+    # was aligned or because what reached it was another corpus's English.
+    "dedicated_count": 0,
+    "range_covered_count": 0,
+    "reused_count": 0,
+    "other_language_count": 0,
+    "any_coverage_count": 0,
     "translators": [],
 }
 
@@ -128,6 +137,13 @@ def test_zero_translations_is_reported_with_a_status_and_a_caveat(works_app: Tes
     detail = works_app.get("/api/v1/works/VG:WORK:SV:KAU").json()
     coverage = detail["translation_coverage"]
     assert coverage["translated"] == 0
+    # All four populations, because "the Samaveda has no translation" is now four separate
+    # measured zeros and a reader is entitled to see that each was measured.
+    assert coverage["dedicated"] == 0
+    assert coverage["range_covered"] == 0
+    assert coverage["reused_rendering"] == 0
+    assert coverage["other_language"] == 0
+    assert coverage["uncovered"] == coverage["mantras"]
     assert coverage["status"] == KnowledgeStatus.NOT_BUILT
     assert any("Zero" in caveat["text"] for caveat in coverage["caveats"])
     assert detail["data_status"] != KnowledgeStatus.SUPPORTED
@@ -330,18 +346,28 @@ def test_samaveda_translation_count_is_measured_as_zero(live_client: TestClient)
     assert coverage["translators"] == []
 
 
+#: Per corpus: mantras, verses with a rendering of their own, and verses reached only by a
+#: multi-verse print unit.
+#:
+#: The Rigvedic figure is 10,472 and not the 10,502 this case asserted before. The 30 that
+#: moved are the anchors of the RV 1.65-1.70 spans: Griffith renders each pair of dvipada
+#: verses as one unit, so those renderings cover 60 verses and none of the 60 has a
+#: translation aligned to it alone. They are counted in `range_covered` instead, and the
+#: third column is here so the restatement is asserted rather than absorbed -- a coverage
+#: figure that fell by 30 with nothing to account for it would be indistinguishable from a
+#: regression.
 @pytest.mark.neo4j
 @pytest.mark.parametrize(
-    ("work_id", "mantras", "translated"),
+    ("work_id", "mantras", "translated", "range_covered"),
     [
-        ("VG:WORK:RV:SAK", 10_552, 10_502),
-        ("VG:WORK:YV:VSM", 1_975, 1_903),
-        ("VG:WORK:AV:SAU", 5_839, 4_878),
-        ("VG:WORK:SV:KAU", 1_844, 0),
+        ("VG:WORK:RV:SAK", 10_552, 10_472, 60),
+        ("VG:WORK:YV:VSM", 1_975, 1_903, 0),
+        ("VG:WORK:AV:SAU", 5_839, 4_878, 0),
+        ("VG:WORK:SV:KAU", 1_844, 0, 0),
     ],
 )
 def test_translation_coverage_is_divided_from_the_counts_in_the_response(
-    live_client: TestClient, work_id: str, mantras: int, translated: int
+    live_client: TestClient, work_id: str, mantras: int, translated: int, range_covered: int
 ) -> None:
     """The percentage is computed from the two numbers beside it, never transcribed.
 
@@ -352,6 +378,12 @@ def test_translation_coverage_is_divided_from_the_counts_in_the_response(
     assert coverage["mantras"] == mantras
     assert coverage["translated"] == translated
     assert coverage["percent"] == round(100 * translated / mantras, 2)
+    assert coverage["range_covered"] == range_covered, (
+        "the verses a multi-verse print unit covers are a population of their own; folding "
+        "them into `translated` asserts each has a 1:1 rendering, and dropping them "
+        "asserts no translation reaches them"
+    )
+    assert coverage["translated"] == coverage["dedicated"]
 
 
 @pytest.mark.neo4j

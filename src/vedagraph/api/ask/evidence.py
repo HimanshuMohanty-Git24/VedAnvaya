@@ -25,12 +25,13 @@ The budget is ranked, not truncated arbitrarily: see :data:`_TYPE_PRIORITY`.
 from __future__ import annotations
 
 import json
-from collections.abc import Iterator
+from collections.abc import Iterator, Mapping
 from dataclasses import dataclass, field
 from typing import Any, Final
 
 from vedagraph.api.ask.models import EvidenceItem, EvidenceItemType
 from vedagraph.api.ask.retriever import SURFACE_LIMITS, RetrievalResult
+from vedagraph.domain import translation_semantics
 
 #: How many items reach the prompt. Bounded because a packet that dumps 200 passages
 #: costs latency and tokens while burying the three rows that answer the question.
@@ -109,6 +110,8 @@ def _render(item: EvidenceItem) -> str:
         lines.append(f"  sanskrit: {item.sanskrit[:_MAX_SANSKRIT]}")
     if item.translation:
         lines.append(f"  translation: {item.translation[:_MAX_TRANSLATION]}")
+    if item.translation_disclosure:
+        lines.append(f"  translation_is: {item.translation_disclosure}")
     if item.fact:
         lines.append(f"  fact: {item.fact}")
     if item.claim_text:
@@ -134,6 +137,28 @@ def _ids() -> Iterator[str]:
 # ---------------------------------------------------------------------------
 # Per-channel qualifiers. Measured statements about what a row can support.
 # ---------------------------------------------------------------------------
+
+
+def _translation_disclosure(row: Mapping[str, Any]) -> str | None:
+    """The disclosure owed by whatever English this row quotes, or None.
+
+    Reads the retriever's ``translation_*`` columns back into the shape
+    :mod:`vedagraph.domain.translation_semantics` classifies, so Ask, the passage API and
+    the coverage figures all disclose the same three things in the same words.
+    """
+    props = {
+        "language": row.get("translation_language") or "en",
+        "reuse_kind": row.get("translation_reuse_kind"),
+        "reused_from_veda": row.get("translation_reused_from_veda"),
+        "reused_from_passage_key": row.get("translation_reused_from_passage_key"),
+        "reused_from_citation": row.get("translation_reused_from_citation"),
+        "alignment_level": row.get("translation_alignment_level"),
+        "covers_canonical_keys": row.get("translation_covers_canonical_keys"),
+    }
+    if not row.get("translation"):
+        return None
+    return translation_semantics.disclosure(props)
+
 
 _TRANSLATION_QUALIFIER: Final = (
     "This English wording is a 19th-century translation (Griffith/Whitney), not the "
@@ -251,6 +276,9 @@ def build_evidence_packet(
                 "Found by matching the English translation, so the match is in the "
                 "translator's wording and not necessarily in the Sanskrit."
             )
+        disclosure = _translation_disclosure(row)
+        if disclosure:
+            qualifier_parts.append(disclosure)
         staged.append(
             EvidenceItem(
                 id=next(ids),
@@ -260,6 +288,7 @@ def build_evidence_packet(
                 veda=row.get("veda"),
                 sanskrit=row.get("sanskrit"),
                 translation=row.get("translation"),
+                translation_disclosure=disclosure,
                 relationship_type=row.get("relation_type"),
                 qualifier=" ".join(qualifier_parts) or None,
                 knowledge_status="SUPPORTED",
@@ -284,7 +313,16 @@ def build_evidence_packet(
                     "Anukramani apparatus (HAS_DEVATA), which is dedication and not "
                     "mention."
                 ),
-                qualifier=_ASCRIPTION_QUALIFIER.get(precision),
+                translation_disclosure=_translation_disclosure(row),
+                qualifier=" ".join(
+                    part
+                    for part in (
+                        _ASCRIPTION_QUALIFIER.get(precision),
+                        _translation_disclosure(row),
+                    )
+                    if part
+                )
+                or None,
                 knowledge_status="SUPPORTED",
             )
         )
@@ -395,7 +433,16 @@ def build_evidence_packet(
                 veda=row.get("veda"),
                 translation=row.get("translation"),
                 relationship_type=relation,
-                qualifier=_REUSE_QUALIFIER.get(relation),
+                translation_disclosure=_translation_disclosure(row),
+                qualifier=" ".join(
+                    part
+                    for part in (
+                        _REUSE_QUALIFIER.get(relation),
+                        _translation_disclosure(row),
+                    )
+                    if part
+                )
+                or None,
                 knowledge_status="SUPPORTED",
             )
         )

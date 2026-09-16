@@ -94,6 +94,18 @@ INDEXES: Final[list[str]] = [
     # Translation lookup
     "CREATE INDEX translation_language IF NOT EXISTS FOR (n:Translation) ON (n.language)",
     "CREATE INDEX translation_translator IF NOT EXISTS FOR (n:Translation) ON (n.translator)",
+    # A verse inside a multi-verse print unit carries no HAS_TRANSLATION edge of its own:
+    # the node anchors on the first verse of the span and names the rest in
+    # ``covers_canonical_keys``. So the reader has to ask "is this key inside anybody's
+    # span?", which without this index is a scan of every Translation node and measured
+    # 12-20ms on a path that has a budget. The index makes the range population reachable
+    # directly, and it is tiny -- 64 nodes of 18,415.
+    "CREATE INDEX translation_alignment_level IF NOT EXISTS "
+    "FOR (n:Translation) ON (n.alignment_level)",
+    # The reuse population is the one every consumer has to be able to exclude: coverage
+    # must not total it as a corpus's own English, and semantic evaluation must not treat
+    # it as independent evidence. Both are filters, so both want the index.
+    "CREATE INDEX translation_reuse_kind IF NOT EXISTS FOR (n:Translation) ON (n.reuse_kind)",
     # Entity classification
     "CREATE INDEX devata_subtype IF NOT EXISTS FOR (n:Devata) ON (n.devata_subtype)",
     # Passage hierarchy navigation
