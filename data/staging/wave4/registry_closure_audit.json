@@ -1,6 +1,6 @@
 {
   "artifact": "WAVE4_REGISTRY_CLOSURE_AUDIT",
-  "at": "2026-09-16T10:13:32.637257+00:00",
+  "at": "2026-09-16T10:34:10.988419+00:00",
   "entries": 85,
   "entries_without_a_ruling": [],
   "rulings_for_no_entry": [],
@@ -1445,5 +1445,5 @@
       "is_data_completeness_closure": true
     }
   ],
-  "sha256": "c1b74ab5bad5e703ee57f8cdffca1725ae6780090feea0e4e383b8a5d2dedea3"
+  "sha256": "fe2d2ccb18b7698045f9660de6b53874c31b4b69691ac8d08c8ce4b8ae90fbd3"
 }
