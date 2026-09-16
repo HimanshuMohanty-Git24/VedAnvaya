@@ -33,13 +33,12 @@ PROJECT_ROOT = pathlib.Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT / "src"))
 
 from vedagraph.domain.claims import claim_summary, load_claims  # noqa: E402
-from vedagraph.domain.ontology import (  # noqa: E402  # noqa: E402
-    CORPUS_AND_CAMPAIGN_SIGNATURES,
+from vedagraph.domain.ontology import (  # noqa: E402
     DOMAIN_MODEL_VERSION,
     INTERNAL_LABELS,
-    RELATIONSHIP_SIGNATURES,
     UNPOPULATED_BY_DESIGN,
     all_declared_relationship_types,
+    all_endpoint_signatures,
 )
 from vedagraph.domain.queries import QUERIES, questions_served  # noqa: E402
 from vedagraph.domain.registry import (  # noqa: E402
@@ -299,7 +298,7 @@ def measure(session: Any) -> dict[str, Any]:
     # Both signature dicts. Iterating only RELATIONSHIP_SIGNATURES left the eight corpus
     # and ten campaign predicates -- 141,264 edges -- with their endpoints checked by
     # nothing, which is how HAS_RITUAL_STEP could have pointed anywhere at all.
-    every_signature = {**RELATIONSHIP_SIGNATURES, **CORPUS_AND_CAMPAIGN_SIGNATURES}
+    every_signature = all_endpoint_signatures()
     for predicate, (subjects, objects) in sorted(every_signature.items()):
         if predicate in UNPOPULATED_BY_DESIGN:
             continue
@@ -313,6 +312,15 @@ def measure(session: Any) -> dict[str, Any]:
         if bad:
             violations.append({"predicate": predicate, "violations": bad})
     out["signature_violations"] = violations
+    # Populated predicates whose endpoints nothing constrains. Reported as a figure so the
+    # uncovered set cannot grow unnoticed: it was 22 before the enrichment layer's own
+    # signatures were read, and the remainder are the model-extracted semantic predicates,
+    # whose endpoints are declared nowhere. See GAP-SEMANTIC-SIGNATURE-COVERAGE-001.
+    out["populated_predicates_without_a_signature"] = sorted(
+        row["type"]
+        for row in out["relationship_types"]
+        if row["edges"] > 0 and row["type"] not in every_signature
+    )
 
     # The authority is the ontology, composed across layers by
     # all_declared_relationship_types(). The graph is not an input to it, which is the whole

@@ -1,0 +1,1286 @@
+{
+  "artifact": "DECLARATION_PROVENANCE",
+  "owner_phase": "A",
+  "authority": "vedagraph.domain.ontology.all_declared_relationship_types(), which composes each layer's own declaration. The graph is not an input to it.",
+  "declared_total": 90,
+  "graph_types_total": 76,
+  "graph_types_populated": 76,
+  "undeclared_populated": [],
+  "declared_but_unused": [
+    {
+      "predicate": "ASCRIBES_TO_DEVATA",
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "declared_unpopulated_on_purpose": false,
+      "reason": null
+    },
+    {
+      "predicate": "ASSERTED_BY",
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "declared_unpopulated_on_purpose": false,
+      "reason": null
+    },
+    {
+      "predicate": "ASSOCIATED_WITH",
+      "declared_in": "enrich.predicates.CONTROLLED_PREDICATES",
+      "declared_unpopulated_on_purpose": false,
+      "reason": null
+    },
+    {
+      "predicate": "ASSOCIATED_WITH_CONCEPT",
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "declared_unpopulated_on_purpose": false,
+      "reason": null
+    },
+    {
+      "predicate": "ASSOCIATED_WITH_PHENOMENON",
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "declared_unpopulated_on_purpose": false,
+      "reason": null
+    },
+    {
+      "predicate": "ASSOCIATED_WITH_SUBSTANCE",
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "declared_unpopulated_on_purpose": false,
+      "reason": null
+    },
+    {
+      "predicate": "ASSOCIATED_WITH_TRIBE",
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "declared_unpopulated_on_purpose": false,
+      "reason": null
+    },
+    {
+      "predicate": "EXPRESSES",
+      "declared_in": "enrich.predicates.CONTROLLED_PREDICATES",
+      "declared_unpopulated_on_purpose": false,
+      "reason": null
+    },
+    {
+      "predicate": "HAS_ALIAS",
+      "declared_in": "enrich.predicates.CONTROLLED_PREDICATES",
+      "declared_unpopulated_on_purpose": false,
+      "reason": null
+    },
+    {
+      "predicate": "MUSICALIZED_AS",
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "declared_unpopulated_on_purpose": true,
+      "reason": "No gāna/Saman melodic corpus is ingested. The edge type exists so that adding one later does not require reinterpreting existing textual-reuse edges."
+    },
+    {
+      "predicate": "PERSONIFIES",
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "declared_unpopulated_on_purpose": false,
+      "reason": null
+    },
+    {
+      "predicate": "RECEIVES_OFFERING",
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "declared_unpopulated_on_purpose": false,
+      "reason": null
+    },
+    {
+      "predicate": "TEXTUALLY_REUSED_AS",
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "declared_unpopulated_on_purpose": false,
+      "reason": null
+    },
+    {
+      "predicate": "WIELDS",
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "declared_unpopulated_on_purpose": false,
+      "reason": null
+    }
+  ],
+  "system_exceptions": [],
+  "signature_coverage": {
+    "predicates_with_a_signature": 75,
+    "populated_predicates_without_one": [
+      "CONTRASTS_WITH",
+      "DESCRIBES",
+      "DESCRIBES_ACTION",
+      "HAS_THEME",
+      "INVOKES",
+      "INVOLVES_OFFERING",
+      "INVOLVES_RITUAL",
+      "INVOLVES_SUBSTANCE",
+      "PRAISES",
+      "QA_ISSUE_ON",
+      "REFERS_TO_NATURAL_PHENOMENON",
+      "REFERS_TO_PLACE",
+      "REQUESTS"
+    ]
+  },
+  "predicates": [
+    {
+      "predicate": "ABOUT_CONCEPT",
+      "edges": 24861,
+      "declared_in": "enrich.predicates.CONTROLLED_PREDICATES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Passage"
+      ],
+      "object_labels": [
+        "Concept"
+      ]
+    },
+    {
+      "predicate": "ADDRESSES_CONCERN",
+      "edges": 326,
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Passage"
+      ],
+      "object_labels": [
+        "HumanConcern"
+      ]
+    },
+    {
+      "predicate": "ASSERTION_AGENT",
+      "edges": 2502,
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "SemanticAssertion"
+      ],
+      "object_labels": [
+        "Devata",
+        "DomainEntity"
+      ]
+    },
+    {
+      "predicate": "ASSERTION_PREDICATE",
+      "edges": 2672,
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "SemanticAssertion"
+      ],
+      "object_labels": [
+        "ActionPredicate"
+      ]
+    },
+    {
+      "predicate": "ASSERTION_ROLE",
+      "edges": 2052,
+      "declared_in": "ontology.CAMPAIGN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Mantra",
+        "Passage"
+      ],
+      "object_labels": [
+        "RoleFiller"
+      ]
+    },
+    {
+      "predicate": "ASSERTION_TARGET",
+      "edges": 799,
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "SemanticAssertion"
+      ],
+      "object_labels": [
+        "Devata",
+        "DomainEntity"
+      ]
+    },
+    {
+      "predicate": "ATTESTED_IN",
+      "edges": 1266,
+      "declared_in": "ontology.CAMPAIGN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "DomainEntity"
+      ],
+      "object_labels": [
+        "Mantra",
+        "Passage"
+      ]
+    },
+    {
+      "predicate": "BELONGS_TO_FAMILY",
+      "edges": 305,
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Rishi"
+      ],
+      "object_labels": [
+        "RishiFamily"
+      ]
+    },
+    {
+      "predicate": "BROADER_THAN",
+      "edges": 97,
+      "declared_in": "enrich.predicates.CONTROLLED_PREDICATES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Concept"
+      ],
+      "object_labels": [
+        "Concept"
+      ]
+    },
+    {
+      "predicate": "COMPOSED_OF",
+      "edges": 28,
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Devata"
+      ],
+      "object_labels": [
+        "Devata"
+      ]
+    },
+    {
+      "predicate": "CONCERNS",
+      "edges": 7,
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "InterpretiveClaim"
+      ],
+      "object_labels": [
+        "Concept",
+        "Devata",
+        "DomainEntity",
+        "Work"
+      ]
+    },
+    {
+      "predicate": "CONTAINS",
+      "edges": 22537,
+      "declared_in": "ontology.CORPUS_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Passage",
+        "Work"
+      ],
+      "object_labels": [
+        "Mantra",
+        "Passage"
+      ]
+    },
+    {
+      "predicate": "CONTRADICTS",
+      "edges": 2,
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "InterpretiveClaim"
+      ],
+      "object_labels": [
+        "InterpretiveClaim"
+      ]
+    },
+    {
+      "predicate": "CONTRASTS_WITH",
+      "edges": 8,
+      "declared_in": "enrich.predicates.CONTROLLED_PREDICATES",
+      "signature_enforced": false,
+      "subject_labels": [],
+      "object_labels": []
+    },
+    {
+      "predicate": "CO_OCCURS_WITH",
+      "edges": 306,
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Devata"
+      ],
+      "object_labels": [
+        "Devata"
+      ]
+    },
+    {
+      "predicate": "DESCRIBED_IN",
+      "edges": 71,
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Ritual",
+        "SocialRite"
+      ],
+      "object_labels": [
+        "Passage"
+      ]
+    },
+    {
+      "predicate": "DESCRIBES",
+      "edges": 199,
+      "declared_in": "enrich.predicates.CONTROLLED_PREDICATES",
+      "signature_enforced": false,
+      "subject_labels": [],
+      "object_labels": []
+    },
+    {
+      "predicate": "DESCRIBES_ACTION",
+      "edges": 35,
+      "declared_in": "enrich.predicates.CONTROLLED_PREDICATES",
+      "signature_enforced": false,
+      "subject_labels": [],
+      "object_labels": []
+    },
+    {
+      "predicate": "DEVATA_ASSOCIATED_WITH",
+      "edges": 160,
+      "declared_in": "enrich.predicates.CONTROLLED_PREDICATES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Devata"
+      ],
+      "object_labels": [
+        "Concept"
+      ]
+    },
+    {
+      "predicate": "EPITHET_VARIANT_OF",
+      "edges": 10,
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Devata"
+      ],
+      "object_labels": [
+        "Devata"
+      ]
+    },
+    {
+      "predicate": "EXACT_PARALLEL_OF",
+      "edges": 1006,
+      "declared_in": "enrich.predicates.CONTROLLED_PREDICATES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Passage"
+      ],
+      "object_labels": [
+        "Passage"
+      ]
+    },
+    {
+      "predicate": "HAS_AXIS",
+      "edges": 289,
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Devata"
+      ],
+      "object_labels": [
+        "DeityAxis"
+      ]
+    },
+    {
+      "predicate": "HAS_CHANDAS",
+      "edges": 16331,
+      "declared_in": "ontology.CORPUS_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Mantra",
+        "Passage"
+      ],
+      "object_labels": [
+        "Chandas"
+      ]
+    },
+    {
+      "predicate": "HAS_DEVATA",
+      "edges": 10558,
+      "declared_in": "ontology.CORPUS_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Mantra",
+        "Passage"
+      ],
+      "object_labels": [
+        "Devata"
+      ]
+    },
+    {
+      "predicate": "HAS_DEVATA_ASCRIPTION",
+      "edges": 5385,
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Passage"
+      ],
+      "object_labels": [
+        "DevataAscription"
+      ]
+    },
+    {
+      "predicate": "HAS_EPITHET",
+      "edges": 13,
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Devata"
+      ],
+      "object_labels": [
+        "Epithet"
+      ]
+    },
+    {
+      "predicate": "HAS_FORMULA",
+      "edges": 2037,
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "FormulaFamily"
+      ],
+      "object_labels": [
+        "Formula"
+      ]
+    },
+    {
+      "predicate": "HAS_RISHI",
+      "edges": 17889,
+      "declared_in": "ontology.CORPUS_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Mantra",
+        "Passage"
+      ],
+      "object_labels": [
+        "Rishi"
+      ]
+    },
+    {
+      "predicate": "HAS_RITUAL_STEP",
+      "edges": 3121,
+      "declared_in": "ontology.CAMPAIGN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Ritual",
+        "SocialRite"
+      ],
+      "object_labels": [
+        "RitualStep"
+      ]
+    },
+    {
+      "predicate": "HAS_SEMANTIC_ASSERTION",
+      "edges": 4865,
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Passage"
+      ],
+      "object_labels": [
+        "SemanticAssertion"
+      ]
+    },
+    {
+      "predicate": "HAS_STEP",
+      "edges": 3,
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Ritual"
+      ],
+      "object_labels": [
+        "Action"
+      ]
+    },
+    {
+      "predicate": "HAS_TEXT_VERSION",
+      "edges": 44276,
+      "declared_in": "ontology.CORPUS_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Mantra",
+        "Passage"
+      ],
+      "object_labels": [
+        "TextVersion"
+      ]
+    },
+    {
+      "predicate": "HAS_THEME",
+      "edges": 8,
+      "declared_in": "enrich.predicates.CONTROLLED_PREDICATES",
+      "signature_enforced": false,
+      "subject_labels": [],
+      "object_labels": []
+    },
+    {
+      "predicate": "HAS_TRANSLATION",
+      "edges": 17283,
+      "declared_in": "ontology.CORPUS_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Mantra",
+        "Passage"
+      ],
+      "object_labels": [
+        "Translation"
+      ]
+    },
+    {
+      "predicate": "INVOKES",
+      "edges": 207,
+      "declared_in": "enrich.predicates.CONTROLLED_PREDICATES",
+      "signature_enforced": false,
+      "subject_labels": [],
+      "object_labels": []
+    },
+    {
+      "predicate": "INVOKES_DEVATA",
+      "edges": 16,
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Ritual"
+      ],
+      "object_labels": [
+        "Devata"
+      ]
+    },
+    {
+      "predicate": "INVOLVES_OFFERING",
+      "edges": 11,
+      "declared_in": "enrich.predicates.CONTROLLED_PREDICATES",
+      "signature_enforced": false,
+      "subject_labels": [],
+      "object_labels": []
+    },
+    {
+      "predicate": "INVOLVES_RITUAL",
+      "edges": 9,
+      "declared_in": "enrich.predicates.CONTROLLED_PREDICATES",
+      "signature_enforced": false,
+      "subject_labels": [],
+      "object_labels": []
+    },
+    {
+      "predicate": "INVOLVES_SUBSTANCE",
+      "edges": 3,
+      "declared_in": "enrich.predicates.CONTROLLED_PREDICATES",
+      "signature_enforced": false,
+      "subject_labels": [],
+      "object_labels": []
+    },
+    {
+      "predicate": "IS_ASKED_TO",
+      "edges": 224,
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Devata"
+      ],
+      "object_labels": [
+        "ActionPredicate"
+      ]
+    },
+    {
+      "predicate": "MEASURES",
+      "edges": 76,
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "DerivedMetric"
+      ],
+      "object_labels": [
+        "Concept",
+        "Devata",
+        "DomainEntity",
+        "Work"
+      ]
+    },
+    {
+      "predicate": "MEMBER_OF",
+      "edges": 13,
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Devata"
+      ],
+      "object_labels": [
+        "DeityGroup"
+      ]
+    },
+    {
+      "predicate": "MEMBER_OF_FAMILY",
+      "edges": 2037,
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Formula"
+      ],
+      "object_labels": [
+        "FormulaFamily"
+      ]
+    },
+    {
+      "predicate": "MENTIONS_DEVATA",
+      "edges": 17165,
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Passage"
+      ],
+      "object_labels": [
+        "Devata"
+      ]
+    },
+    {
+      "predicate": "MENTIONS_ENTITY",
+      "edges": 28110,
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Passage"
+      ],
+      "object_labels": [
+        "Devata",
+        "DomainEntity"
+      ]
+    },
+    {
+      "predicate": "MENTIONS_LEMMA",
+      "edges": 9000,
+      "declared_in": "ontology.CORPUS_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Mantra",
+        "Passage"
+      ],
+      "object_labels": [
+        "Lemma"
+      ]
+    },
+    {
+      "predicate": "NEAR_PARALLEL_OF",
+      "edges": 3049,
+      "declared_in": "enrich.predicates.CONTROLLED_PREDICATES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Passage"
+      ],
+      "object_labels": [
+        "Passage"
+      ]
+    },
+    {
+      "predicate": "PARALLEL_TO",
+      "edges": 69,
+      "declared_in": "ontology.CORPUS_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Mantra",
+        "Passage"
+      ],
+      "object_labels": [
+        "Mantra",
+        "Passage"
+      ]
+    },
+    {
+      "predicate": "PERFORMED_BY",
+      "edges": 16,
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Ritual"
+      ],
+      "object_labels": [
+        "RitualRole"
+      ]
+    },
+    {
+      "predicate": "PERFORMED_FOR",
+      "edges": 9,
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Ritual",
+        "SocialRite"
+      ],
+      "object_labels": [
+        "Concept",
+        "HumanConcern",
+        "State"
+      ]
+    },
+    {
+      "predicate": "PERFORMS_ACTION",
+      "edges": 441,
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Devata"
+      ],
+      "object_labels": [
+        "Action",
+        "ActionPredicate"
+      ]
+    },
+    {
+      "predicate": "POSITION_ASSERTED_BY",
+      "edges": 226,
+      "declared_in": "ontology.CAMPAIGN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "ScholarlyDisagreement"
+      ],
+      "object_labels": [
+        "Scholar"
+      ]
+    },
+    {
+      "predicate": "POSITION_STATED_IN",
+      "edges": 226,
+      "declared_in": "ontology.CAMPAIGN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "ScholarlyDisagreement"
+      ],
+      "object_labels": [
+        "ScholarlyWork"
+      ]
+    },
+    {
+      "predicate": "PRAISES",
+      "edges": 38,
+      "declared_in": "enrich.predicates.CONTROLLED_PREDICATES",
+      "signature_enforced": false,
+      "subject_labels": [],
+      "object_labels": []
+    },
+    {
+      "predicate": "PROTECTS_FROM",
+      "edges": 659,
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Passage"
+      ],
+      "object_labels": [
+        "Condition",
+        "HumanConcern"
+      ]
+    },
+    {
+      "predicate": "QA_ISSUE_ON",
+      "edges": 915,
+      "declared_in": "enrich.predicates.CONTROLLED_PREDICATES",
+      "signature_enforced": false,
+      "subject_labels": [],
+      "object_labels": []
+    },
+    {
+      "predicate": "QUALITY_VERDICT_ABOUT",
+      "edges": 2568,
+      "declared_in": "ontology.CAMPAIGN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "QualityVerdict"
+      ],
+      "object_labels": [
+        "Mantra",
+        "Passage"
+      ]
+    },
+    {
+      "predicate": "REFERS_TO",
+      "edges": 387,
+      "declared_in": "ontology.CAMPAIGN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "RoleFiller"
+      ],
+      "object_labels": [
+        "Devata",
+        "DomainEntity"
+      ]
+    },
+    {
+      "predicate": "REFERS_TO_NATURAL_PHENOMENON",
+      "edges": 5,
+      "declared_in": "enrich.predicates.CONTROLLED_PREDICATES",
+      "signature_enforced": false,
+      "subject_labels": [],
+      "object_labels": []
+    },
+    {
+      "predicate": "REFERS_TO_PLACE",
+      "edges": 1,
+      "declared_in": "enrich.predicates.CONTROLLED_PREDICATES",
+      "signature_enforced": false,
+      "subject_labels": [],
+      "object_labels": []
+    },
+    {
+      "predicate": "REPORTED_IN",
+      "edges": 113,
+      "declared_in": "ontology.CAMPAIGN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "ScholarlyDisagreement"
+      ],
+      "object_labels": [
+        "ScholarlyWork"
+      ]
+    },
+    {
+      "predicate": "REQUESTS",
+      "edges": 89,
+      "declared_in": "enrich.predicates.CONTROLLED_PREDICATES",
+      "signature_enforced": false,
+      "subject_labels": [],
+      "object_labels": []
+    },
+    {
+      "predicate": "REUSES_TEXT_FROM",
+      "edges": 1684,
+      "declared_in": "enrich.predicates.CONTROLLED_PREDICATES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Passage"
+      ],
+      "object_labels": [
+        "Passage"
+      ]
+    },
+    {
+      "predicate": "SCHOLARLY_CLAIM_ABOUT",
+      "edges": 113,
+      "declared_in": "ontology.CAMPAIGN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "ScholarlyDisagreement"
+      ],
+      "object_labels": [
+        "Mantra",
+        "Passage"
+      ]
+    },
+    {
+      "predicate": "SHARES_ENTITY_VOCABULARY_WITH",
+      "edges": 2141,
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Passage"
+      ],
+      "object_labels": [
+        "Passage"
+      ]
+    },
+    {
+      "predicate": "SHARES_FORMULA_WITH",
+      "edges": 6148,
+      "declared_in": "enrich.predicates.CONTROLLED_PREDICATES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Passage"
+      ],
+      "object_labels": [
+        "Passage"
+      ]
+    },
+    {
+      "predicate": "SPECIALIZED_FORM_OF",
+      "edges": 1,
+      "declared_in": "ontology.CAMPAIGN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Devata"
+      ],
+      "object_labels": [
+        "Devata"
+      ]
+    },
+    {
+      "predicate": "SUPPORTED_BY",
+      "edges": 7,
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "InterpretiveClaim"
+      ],
+      "object_labels": [
+        "Passage"
+      ]
+    },
+    {
+      "predicate": "SUPPORTED_BY_STATISTIC",
+      "edges": 6,
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "InterpretiveClaim"
+      ],
+      "object_labels": [
+        "DerivedMetric"
+      ]
+    },
+    {
+      "predicate": "TREATS",
+      "edges": 160,
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Passage"
+      ],
+      "object_labels": [
+        "Condition"
+      ]
+    },
+    {
+      "predicate": "USED_FOR_RITE",
+      "edges": 529,
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Passage"
+      ],
+      "object_labels": [
+        "SocialRite"
+      ]
+    },
+    {
+      "predicate": "USES_FORMULA",
+      "edges": 22686,
+      "declared_in": "enrich.predicates.CONTROLLED_PREDICATES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Passage"
+      ],
+      "object_labels": [
+        "Formula"
+      ]
+    },
+    {
+      "predicate": "USES_OBJECT",
+      "edges": 23,
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Ritual"
+      ],
+      "object_labels": [
+        "Object"
+      ]
+    },
+    {
+      "predicate": "USES_OFFERING",
+      "edges": 4,
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Ritual"
+      ],
+      "object_labels": [
+        "Offering"
+      ]
+    },
+    {
+      "predicate": "USES_SUBSTANCE",
+      "edges": 11,
+      "declared_in": "ontology.DOMAIN_RELATIONSHIP_TYPES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Ritual"
+      ],
+      "object_labels": [
+        "Plant",
+        "Substance"
+      ]
+    },
+    {
+      "predicate": "VARIANT_OF",
+      "edges": 788,
+      "declared_in": "enrich.predicates.CONTROLLED_PREDICATES",
+      "signature_enforced": true,
+      "subject_labels": [
+        "Passage"
+      ],
+      "object_labels": [
+        "Passage"
+      ]
+    }
+  ],
+  "labels": [
+    {
+      "label": "Action",
+      "nodes": 26,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "ActionPredicate",
+      "nodes": 41,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "Animal",
+      "nodes": 15,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "Chandas",
+      "nodes": 575,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "Concept",
+      "nodes": 375,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "Condition",
+      "nodes": 36,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "CosmicEntity",
+      "nodes": 4,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "Crop",
+      "nodes": 5,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "DeityAxis",
+      "nodes": 22,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "DeityCommunity",
+      "nodes": 12,
+      "classification": "INTERNAL"
+    },
+    {
+      "label": "DeityGroup",
+      "nodes": 2,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "DerivedMetric",
+      "nodes": 1085,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "Devata",
+      "nodes": 214,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "DevataAscription",
+      "nodes": 324,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "DomainEntity",
+      "nodes": 375,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "Epithet",
+      "nodes": 13,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "Formula",
+      "nodes": 4825,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "FormulaFamily",
+      "nodes": 720,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "HumanConcern",
+      "nodes": 7,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "Internal",
+      "nodes": 77146,
+      "classification": "INTERNAL"
+    },
+    {
+      "label": "InterpretiveClaim",
+      "nodes": 6,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "Lemma",
+      "nodes": 10031,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "Mantra",
+      "nodes": 20210,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "Metal",
+      "nodes": 7,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "NaturalPhenomenon",
+      "nodes": 13,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "Object",
+      "nodes": 41,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "Offering",
+      "nodes": 21,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "Passage",
+      "nodes": 22537,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "PhilosophicalConcept",
+      "nodes": 13,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "Place",
+      "nodes": 11,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "Plant",
+      "nodes": 22,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "QAIssue",
+      "nodes": 915,
+      "classification": "INTERNAL"
+    },
+    {
+      "label": "Quality",
+      "nodes": 3,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "QualityVerdict",
+      "nodes": 2568,
+      "classification": "INTERNAL"
+    },
+    {
+      "label": "Rishi",
+      "nodes": 729,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "RishiFamily",
+      "nodes": 87,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "Ritual",
+      "nodes": 103,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "RitualRole",
+      "nodes": 11,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "RitualStep",
+      "nodes": 3121,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "River",
+      "nodes": 8,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "RoleFiller",
+      "nodes": 2052,
+      "classification": "INTERNAL"
+    },
+    {
+      "label": "Scholar",
+      "nodes": 17,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "ScholarlyDisagreement",
+      "nodes": 113,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "ScholarlyWork",
+      "nodes": 17,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "SemanticAssertion",
+      "nodes": 4865,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "SocialRite",
+      "nodes": 5,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "Source",
+      "nodes": 9,
+      "classification": "INTERNAL"
+    },
+    {
+      "label": "SourceArtifact",
+      "nodes": 0,
+      "classification": "INTERNAL"
+    },
+    {
+      "label": "State",
+      "nodes": 3,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "Substance",
+      "nodes": 33,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "TextVersion",
+      "nodes": 44276,
+      "classification": "INTERNAL"
+    },
+    {
+      "label": "Translation",
+      "nodes": 17283,
+      "classification": "INTERNAL"
+    },
+    {
+      "label": "Tribe",
+      "nodes": 5,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "Weapon",
+      "nodes": 5,
+      "classification": "PRODUCT"
+    },
+    {
+      "label": "Work",
+      "nodes": 4,
+      "classification": "PRODUCT"
+    }
+  ],
+  "unclassified_labels": []
+}

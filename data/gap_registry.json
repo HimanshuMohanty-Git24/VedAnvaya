@@ -3424,6 +3424,34 @@
       "observed_gap": "33 metre assertions whose object is not a metre",
       "initial_hypothesis": "the Whitney 466 were unimportable only because nothing had resolved their objects to entities",
       "initial_hypothesis_status": "PARTLY DISPROVED. A permitted resolution channel exists and works -- the registry's own source_variants resolve 405 of 477 proposals with zero ambiguity -- but the vocabulary it resolves into is contaminated, so the rows stay withheld for a different and stronger reason than 'no evidence'."
+    },
+    {
+      "gap_id": "GAP-SEMANTIC-SIGNATURE-COVERAGE-001",
+      "domain": "semantic",
+      "surface": "Any consumer of the model-extracted semantic layer: /api/v1/graph traversal across INVOKES, PRAISES, REQUESTS and DESCRIBES, and the semantic assertion panels of the passage profile.",
+      "evidence": "scripts/declaration_provenance.py: of 76 populated relationship types, 63 have an endpoint signature after all three declaring layers are composed. The remaining 13 are the model-extracted semantic predicates -- CONTRASTS_WITH, DESCRIBES, DESCRIBES_ACTION, HAS_THEME, INVOKES, INVOLVES_OFFERING, INVOLVES_RITUAL, INVOLVES_SUBSTANCE, PRAISES, REFERS_TO_NATURAL_PHENOMENON, REFERS_TO_PLACE, REQUESTS -- plus QA_ISSUE_ON.",
+      "classification": "IMPLEMENTATION_GAP",
+      "description": "The semantic layer's predicates are declared in enrich.predicates.CONTROLLED_PREDICATES, so the repaired declaration gate accepts them, but no layer declares what they may CONNECT. Nothing would catch a PRAISES edge from a Chandas to a Lemma. The layer is TIER_C/TIER_D model-extracted throughout, which is why the omission has not produced a visible defect -- and is not a reason for the constraint to be absent.",
+      "current_count": 63,
+      "expected_population": 76,
+      "missing_count": 13,
+      "status": "OPEN",
+      "causation_status": "MEASURED",
+      "root_cause": "NO_ENDPOINT_SIGNATURE_DECLARED_FOR_THE_SEMANTIC_PREDICATES",
+      "measured_root_cause": "enrich.predicates.SIGNATURES covers the 10 textual and structural predicates and stops there; the 15 semantic ones in SEMANTIC_PREDICATES have no Signature entry. The scorecard could not have noticed, because until this round it read only one of the three signature sources.",
+      "closure_method": "Declare a Signature for each semantic predicate in enrich.predicates, measured against the live graph as the corpus and campaign signatures were, then let all_endpoint_signatures() compose them.",
+      "closure_test": "scorecard populated_predicates_without_a_signature is empty, and signature_violations stays 0.",
+      "owner_agent": "semantic",
+      "source_availability": "SOURCE_HELD",
+      "source_dependency": "none",
+      "implementation_dependency": "endpoint signatures for the semantic predicates",
+      "diagnostics_run": [
+        "scripts/declaration_provenance.py",
+        "scripts/graph_quality_scorecard.py"
+      ],
+      "observed_gap": "13 populated predicates whose endpoints nothing constrains",
+      "initial_hypothesis": "wiring the corpus and campaign signatures completed coverage",
+      "initial_hypothesis_status": "DISPROVED. It took coverage from 54 to 63 of 76. The provenance report is what showed the remainder, and two scripts disagreed by 12 predicates until all_endpoint_signatures() composed all three sources."
     }
   ],
   "root_cause_taxonomy": [

@@ -1227,6 +1227,38 @@ assert set(CORPUS_AND_CAMPAIGN_SIGNATURES) == (
 SYSTEM_RELATIONSHIP_TYPES: Final[frozenset[str]] = frozenset()
 
 
+def all_endpoint_signatures() -> dict[str, tuple[frozenset[str], frozenset[str]]]:
+    """Every endpoint signature any layer declares, composed.
+
+    Three sources, and they were read by nobody together: the scorecard iterated
+    RELATIONSHIP_SIGNATURES alone, which left 18 predicates and 141,264 edges unconstrained,
+    and once the corpus and campaign dicts were added the enrichment layer's own SIGNATURES
+    were still unread -- so two scripts disagreed about coverage by 12 predicates.
+
+    The enrichment layer's NodeKind is deliberately coarser than the Neo4j labels (a Mantra
+    is a Passage for a domain constraint) and needs no translation, because every :Mantra
+    also carries :Passage.
+
+    Composed rather than restated, and imported inside the function to keep the domain
+    package free of an import-time dependency on the enrichment layer.
+    """
+    from vedagraph.enrich.predicates import SIGNATURES as ENRICH_SIGNATURES
+
+    composed: dict[str, tuple[frozenset[str], frozenset[str]]] = {
+        **RELATIONSHIP_SIGNATURES,
+        **CORPUS_AND_CAMPAIGN_SIGNATURES,
+    }
+    for name, signature in ENRICH_SIGNATURES.items():
+        composed.setdefault(
+            name,
+            (
+                frozenset(str(kind) for kind in signature.subject),
+                frozenset(str(kind) for kind in signature.object),
+            ),
+        )
+    return composed
+
+
 def all_declared_relationship_types() -> frozenset[str]:
     """Every relationship type any layer of this project declares.
 

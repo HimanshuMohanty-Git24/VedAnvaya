@@ -32,6 +32,7 @@ from vedagraph.domain.ontology import (
     DOMAIN_RELATIONSHIP_TYPES,
     INTERNAL_LABELS,
     PRODUCT_LABELS,
+    RELATIONSHIP_SIGNATURES,
     SYSTEM_RELATIONSHIP_TYPES,
     all_declared_relationship_types,
 )
@@ -213,3 +214,77 @@ def test_the_internal_campaign_labels_are_declared_internal(label: str) -> None:
     """
     assert label in INTERNAL_LABELS
     assert label not in PRODUCT_LABELS
+
+
+# ---------------------------------------------------------------------------
+# 6. Signature coverage, pinned so the uncovered set cannot grow
+# ---------------------------------------------------------------------------
+
+
+def test_all_three_signature_layers_are_composed() -> None:
+    """One function, three sources. Two scripts disagreed by 12 predicates until it existed.
+
+    The scorecard iterated ``RELATIONSHIP_SIGNATURES`` alone, which left 18 predicates and
+    141,264 edges unconstrained. Adding the corpus and campaign dicts fixed that and left
+    the enrichment layer's own ``SIGNATURES`` still unread -- so the scorecard and the
+    provenance report gave different coverage figures for the same graph.
+    """
+    from vedagraph.domain.ontology import all_endpoint_signatures
+    from vedagraph.enrich.predicates import SIGNATURES as ENRICH_SIGNATURES
+
+    composed = all_endpoint_signatures()
+    for source in (RELATIONSHIP_SIGNATURES, CORPUS_AND_CAMPAIGN_SIGNATURES):
+        assert set(source) <= set(composed)
+    assert set(ENRICH_SIGNATURES) <= set(composed)
+    for predicate, (subjects, objects) in composed.items():
+        assert subjects, f"{predicate} declares no subject labels"
+        assert objects, f"{predicate} declares no object labels"
+
+
+#: Populated predicates whose endpoints nothing constrains. The model-extracted semantic
+#: layer plus QA_ISSUE_ON, registered as GAP-SEMANTIC-SIGNATURE-COVERAGE-001.
+#:
+#: Pinned as an exact set rather than a count so that closing one entry is visible and
+#: ADDING one fails. A "<= 15" assertion would let a new unconstrained predicate in as long
+#: as an old one was fixed in the same change.
+#:
+#: Built from the DECLARED set, not the populated one. My first version listed only the 13
+#: that carry edges and this test caught the other two: ASSOCIATED_WITH and EXPRESSES are
+#: declared and unpopulated, and an unsigned predicate is a hole whether or not an edge
+#: exists through it yet.
+UNCONSTRAINED_BY_DESIGN_FOR_NOW: frozenset[str] = frozenset(
+    {
+        "ASSOCIATED_WITH",
+        "CONTRASTS_WITH",
+        "DESCRIBES",
+        "DESCRIBES_ACTION",
+        "EXPRESSES",
+        "HAS_THEME",
+        "INVOKES",
+        "INVOLVES_OFFERING",
+        "INVOLVES_RITUAL",
+        "INVOLVES_SUBSTANCE",
+        "PRAISES",
+        "QA_ISSUE_ON",
+        "REFERS_TO_NATURAL_PHENOMENON",
+        "REFERS_TO_PLACE",
+        "REQUESTS",
+    }
+)
+
+
+def test_no_new_predicate_escapes_endpoint_enforcement() -> None:
+    """Every declared predicate is either signed or on the named exception list.
+
+    Declared rather than populated, so this runs without a database: a predicate declared
+    and unsigned is a hole whether or not an edge exists yet.
+    """
+    from vedagraph.domain.ontology import all_endpoint_signatures
+
+    unsigned = all_declared_relationship_types() - set(all_endpoint_signatures())
+    unexpected = sorted(unsigned - UNCONSTRAINED_BY_DESIGN_FOR_NOW)
+    assert not unexpected, (
+        f"{len(unexpected)} declared predicate(s) have no endpoint signature and are not on "
+        f"the exception list: {unexpected}. Declare a signature, or add it to the list with "
+        f"a registry gap explaining why."
+    )
