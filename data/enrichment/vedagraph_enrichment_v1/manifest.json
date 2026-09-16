@@ -77,11 +77,11 @@
         "run_id": "vedagraph-graph-enrichment-v1:crossveda-parallels:5bf3c9ce73209098",
         "surface_contract": "893 of 1,975 Yajurveda mantras write visarga as an ASCII colon. vedagraph.enrich.surfaces folds it to U+0903 before transliterating; without that fold the identical cross-Veda total is 1,404 rather than 1,538.",
         "timings": {
-          "candidate_seconds": 8.541,
-          "guard_seconds": 0.015,
-          "identity_seconds": 0.108,
-          "scoring_seconds": 0.663,
-          "total_seconds": 9.759
+          "candidate_seconds": 8.502,
+          "guard_seconds": 0.025,
+          "identity_seconds": 0.086,
+          "scoring_seconds": 0.771,
+          "total_seconds": 9.994
         }
       },
       "produced": 6285,
@@ -213,9 +213,9 @@
   ],
   "timings_seconds": {
     "analytics": 0.09,
-    "concepts": 1.82,
-    "cross_veda_parallels": 9.83,
-    "formulas": 5.39,
-    "load_corpus": 5.4
+    "concepts": 2.13,
+    "cross_veda_parallels": 10.09,
+    "formulas": 5.71,
+    "load_corpus": 6.52
   }
 }

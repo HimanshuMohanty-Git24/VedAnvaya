@@ -1,0 +1,169 @@
+{
+  "cross-Veda matrices": {
+    "consumer": "cross-Veda matrices",
+    "input_hashes": {
+      "label:Mantra": "n=20210;keyless=0;keys=a83c3a79343bf58135f64d89d8c1befe87455f09765662257388aac6507523a6",
+      "label:Passage": "n=22537;keyless=0;keys=39a13384921e22b23f9cd72bd9b4b26b462b22a089de2a09f6b2f6ecfb2eaaf7",
+      "type:EXACT_PARALLEL_OF": "n=1006;unnamed=0;pairs=5ac03309835151d861d938548a85a2703ebef99e440c14041fff33632f2caede",
+      "type:NEAR_PARALLEL_OF": "n=3049;unnamed=0;pairs=571f6ac173ea86fde9ed7296d8e14be1aa2b1326649de1f3b3009a984898b800",
+      "type:REUSES_TEXT_FROM": "n=1684;unnamed=0;pairs=72d93e57f189a2b13bd545e40604d48e47f2573dd1644e97ebf6780f97ea67af",
+      "type:VARIANT_OF": "n=788;unnamed=0;pairs=76e3fd14b7e11b6bc5525f30f0fe368d1a9511efff2635d42dc6b0ea2fbfddc5",
+      "builder:scripts/build_enrichment.py": "011eee43b34b8798754e293bc0b0ba544e13a42385d3bfd24b6338fb272debf4"
+    },
+    "built_at": "2026-09-16T06:06:20.647649+00:00",
+    "graph_census": {
+      "nodes": 116838,
+      "relationships": 281290
+    },
+    "output_file": "data/enrichment/vedagraph_enrichment_v1/manifest.json",
+    "output_hash": "c1a2a0de831a7a8fd89fc65d5057a402ec23356ea67db2f60e7936e7d216e51a"
+  },
+  "formula / parallel / variant relations": {
+    "consumer": "formula / parallel / variant relations",
+    "input_hashes": {
+      "label:Formula": "n=4825;keyless=0;keys=a2821991639882b6cf84b845ede27de8d7838c84f3c647c238a65f5640949705",
+      "label:FormulaFamily": "n=720;keyless=0;keys=9855069860f5ce30abef0302cf2be6da893b29f01efae542c664da502b4af04c",
+      "label:Passage": "n=22537;keyless=0;keys=39a13384921e22b23f9cd72bd9b4b26b462b22a089de2a09f6b2f6ecfb2eaaf7",
+      "type:HAS_FORMULA": "n=2037;unnamed=0;pairs=7655b3659f1da06ebb709963c804638580a1f5732d559590477f5d86d89c0468",
+      "type:MEMBER_OF_FAMILY": "n=2037;unnamed=0;pairs=dcc907998607eb2fe09c1398b2d633cb855d78b6bb9771fc9b5f4e384033ce49",
+      "type:SHARES_FORMULA_WITH": "n=6148;unnamed=0;pairs=ff2ed3a01406f466f726dc35de97929201961388869fe32e93e1e96835fdf406",
+      "type:USES_FORMULA": "n=22686;unnamed=0;pairs=f5aece67e80837ed2dce219d18a17b78cb60c1609018f4f92be0bff9dde68a38",
+      "file:data/enrichment/vedagraph_enrichment_v1/manifest.json": "c1a2a0de831a7a8fd89fc65d5057a402ec23356ea67db2f60e7936e7d216e51a",
+      "builder:scripts/build_formula_families.py": "95281a9571b3addb8c2736c6e51bac4398e73a8b7ed016caf712cd1d1b426375"
+    },
+    "built_at": "2026-09-16T06:06:21.903084+00:00",
+    "graph_census": {
+      "nodes": 116838,
+      "relationships": 281290
+    },
+    "output_file": "data/enrichment/vedagraph_enrichment_v1/formula_families.jsonl",
+    "output_hash": "cc1ff965df087692a091604cf7c80cb39ed32bdf308afa35ac916b4cd499b945"
+  },
+  "entity coverage": {
+    "consumer": "entity coverage",
+    "input_hashes": {
+      "label:Chandas": "n=575;keyless=0;keys=27b65de5e279caac0f1e48de30ff2fd2a1c2e59a23fd63d66c692d9aab7a1742",
+      "label:Concept": "n=375;keyless=0;keys=dceeb64027c86c4fe9f1f5db531cfa94361458b2b8b78b21b7a3933d111fc83c",
+      "label:Devata": "n=214;keyless=0;keys=2c4a14b6bf91f0806acbb0870661713c886928d869db02685e6f05dd38a2f8f4",
+      "label:DomainEntity": "n=375;keyless=0;keys=dceeb64027c86c4fe9f1f5db531cfa94361458b2b8b78b21b7a3933d111fc83c",
+      "label:Rishi": "n=729;keyless=0;keys=ef3dc133d32b2d4096d7a4ffdac456fc38d84200fad0f6732eefa785b158cf3b",
+      "type:ABOUT_CONCEPT": "n=24861;unnamed=0;pairs=499c5d65713399051f8903e60791ef04e3c2bd911d799cd6eff0892d7bd89999",
+      "type:HAS_DEVATA": "n=10558;unnamed=0;pairs=8e4eea692c244357e1b3bdd2106719549f5a37430fa668977c59636ac0fedde8",
+      "type:MENTIONS_DEVATA": "n=17165;unnamed=0;pairs=bd51583b55154c393e05621ca50cb935896b3420a14061f530b27794519c22da",
+      "type:MENTIONS_ENTITY": "n=28110;unnamed=0;pairs=2c66d80eada586d6f80aa587673228c4b7c02cc05dbba7200fceb174fa6afa62",
+      "file:data/domain/vedagraph_domain_v2/veda_coverage_v3.json": "ade0e58aefd4a59e2828263ac37d2d64d44baa9047f8d2a9df4fd5a08037eedb",
+      "builder:scripts/build_veda_coverage_and_metrics.py": "00644458ec6689d01e2d0e00d122541f43c4aa077165d22c84ad70739ec71851"
+    },
+    "built_at": "2026-09-16T06:06:23.585242+00:00",
+    "graph_census": {
+      "nodes": 116838,
+      "relationships": 281290
+    },
+    "output_file": "data/domain/vedagraph_domain_v2/veda_coverage_v3.json",
+    "output_hash": "ade0e58aefd4a59e2828263ac37d2d64d44baa9047f8d2a9df4fd5a08037eedb"
+  },
+  "quality evaluation": {
+    "consumer": "quality evaluation",
+    "input_hashes": {
+      "label:Passage": "n=22537;keyless=0;keys=39a13384921e22b23f9cd72bd9b4b26b462b22a089de2a09f6b2f6ecfb2eaaf7",
+      "label:QAIssue": "n=915;keyless=915;keys=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "label:QualityVerdict": "n=2568;keyless=0;keys=a5c86f381d9a071f796af09129c4d1f378658c95df8c702345036780301a3b30",
+      "type:QA_ISSUE_ON": "n=915;unnamed=915;pairs=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "type:QUALITY_VERDICT_ABOUT": "n=2568;unnamed=0;pairs=81b929c8b243d02d718fa8b26866b0a9a63b7aff37bd4bd8f47df6cb0b3b281c",
+      "builder:scripts/graph_quality_scorecard.py": "0e43073e187f1cbd3e0570bf6f89718f738aedefad748cfd320048fafa11059e"
+    },
+    "built_at": "2026-09-16T06:06:24.338565+00:00",
+    "graph_census": {
+      "nodes": 116838,
+      "relationships": 281290
+    },
+    "output_file": "docs/reports/GRAPH_QUALITY_V2_SCORECARD.md",
+    "output_hash": "cf389cf9ccb2f6f425ca76fa23ff55b29d09bd4472f42547c7147b85b191ceb0"
+  },
+  "Visualization Lab aggregates": {
+    "consumer": "Visualization Lab aggregates",
+    "input_hashes": {
+      "label:Concept": "n=375;keyless=0;keys=dceeb64027c86c4fe9f1f5db531cfa94361458b2b8b78b21b7a3933d111fc83c",
+      "label:DerivedMetric": "n=1085;keyless=0;keys=17cba129f4dfcbb1327138e5bfc39daa49968ba2c49645ae5ead205c7bee9b58",
+      "label:Devata": "n=214;keyless=0;keys=2c4a14b6bf91f0806acbb0870661713c886928d869db02685e6f05dd38a2f8f4",
+      "label:Passage": "n=22537;keyless=0;keys=39a13384921e22b23f9cd72bd9b4b26b462b22a089de2a09f6b2f6ecfb2eaaf7",
+      "type:ABOUT_CONCEPT": "n=24861;unnamed=0;pairs=499c5d65713399051f8903e60791ef04e3c2bd911d799cd6eff0892d7bd89999",
+      "type:CO_OCCURS_WITH": "n=306;unnamed=0;pairs=6f0e1863edc369837b53bb837d28c4b264c0c6142c7151f4b451e799c372c169",
+      "type:HAS_DEVATA": "n=10558;unnamed=0;pairs=8e4eea692c244357e1b3bdd2106719549f5a37430fa668977c59636ac0fedde8",
+      "type:MENTIONS_ENTITY": "n=28110;unnamed=0;pairs=2c66d80eada586d6f80aa587673228c4b7c02cc05dbba7200fceb174fa6afa62",
+      "builder:scripts/export_graph_world.py": "721086cd74807f9167254dc91d921165d0a86d36dcf75d1d9a0c74af07659fda"
+    },
+    "built_at": "2026-09-16T06:06:25.879183+00:00",
+    "graph_census": {
+      "nodes": 116838,
+      "relationships": 281290
+    },
+    "output_file": "frontend/.world/world.raw.json",
+    "output_hash": "9e2dec2c80f9983ac89cf9b574aca878d78d6a38bce483e0f1e2d158ce0776a6"
+  },
+  "Knowledge World public projection": {
+    "consumer": "Knowledge World public projection",
+    "input_hashes": {
+      "label:Concept": "n=375;keyless=0;keys=dceeb64027c86c4fe9f1f5db531cfa94361458b2b8b78b21b7a3933d111fc83c",
+      "label:Devata": "n=214;keyless=0;keys=2c4a14b6bf91f0806acbb0870661713c886928d869db02685e6f05dd38a2f8f4",
+      "label:DomainEntity": "n=375;keyless=0;keys=dceeb64027c86c4fe9f1f5db531cfa94361458b2b8b78b21b7a3933d111fc83c",
+      "label:Passage": "n=22537;keyless=0;keys=39a13384921e22b23f9cd72bd9b4b26b462b22a089de2a09f6b2f6ecfb2eaaf7",
+      "type:ABOUT_CONCEPT": "n=24861;unnamed=0;pairs=499c5d65713399051f8903e60791ef04e3c2bd911d799cd6eff0892d7bd89999",
+      "type:MENTIONS_ENTITY": "n=28110;unnamed=0;pairs=2c66d80eada586d6f80aa587673228c4b7c02cc05dbba7200fceb174fa6afa62",
+      "type:SPECIALIZED_FORM_OF": "n=1;unnamed=0;pairs=312df33d6faee2051c8ae81913aa8f94d6e5cc63fb73b4cd7e8302b932dffea4",
+      "builder:scripts/export_graph_world.py": "721086cd74807f9167254dc91d921165d0a86d36dcf75d1d9a0c74af07659fda"
+    },
+    "built_at": "2026-09-16T06:06:27.376483+00:00",
+    "graph_census": {
+      "nodes": 116838,
+      "relationships": 281290
+    },
+    "output_file": "frontend/.world/world.raw.json",
+    "output_hash": "9e2dec2c80f9983ac89cf9b574aca878d78d6a38bce483e0f1e2d158ce0776a6"
+  },
+  "ritual aggregates": {
+    "consumer": "ritual aggregates",
+    "input_hashes": {
+      "label:Action": "n=26;keyless=0;keys=6b0bfbe0e4ac5206ce958d718330c5f277e28b8eb3861a796b1af01ad04e5940",
+      "label:Offering": "n=21;keyless=0;keys=1c6d6cb88d0957c4bdd24843bf3fde5336063350b8367da3124ca5570e1dfa08",
+      "label:Ritual": "n=103;keyless=0;keys=582a14c338a69400cda3c84b24efa5e18a2a4062525e273764f553580b001bf3",
+      "label:RitualRole": "n=11;keyless=0;keys=c03089533363f7c9363fa881a979f54c3f63b0dcd9494af8b589a27acc6b6a48",
+      "label:RitualStep": "n=3121;keyless=0;keys=ba17f9267e1f15fdbb212c6047473a7d09bbcf2fa79e997902ea3cac0b17e98e",
+      "type:ATTESTED_IN": "n=1266;unnamed=0;pairs=80fe874370d4ed55660732b94f2cf9678cdd0589a318da3a5314142d3a12208c",
+      "type:HAS_RITUAL_STEP": "n=3121;unnamed=0;pairs=660c312b29319a94df9ce05c12cbd1b62f5d69c8c9ab1128cb8db9d9904fbf23",
+      "type:PERFORMED_BY": "n=16;unnamed=0;pairs=84dfeaffb56eef9466afba10551870487b37d6a2248ffa69622b907ea26fc677",
+      "type:RITE_INVOLVES_ACTION": "n=0;unnamed=0;pairs=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "type:USES_OBJECT": "n=23;unnamed=0;pairs=88f3954dca4b2dfd42c30682b5b1b88695b8a92bd760e083cb6bad692d466e7a",
+      "type:USES_OFFERING": "n=4;unnamed=0;pairs=f562eae018934e20e1450692350c722ec909633984e09c828e0027a397816c62",
+      "type:USES_SUBSTANCE": "n=11;unnamed=0;pairs=f09e230eeb3a4b81e62523bfd65c4ac68beb34c83d0726ddf32ab401c0043298"
+    },
+    "built_at": "2026-09-16T06:06:38.183588+00:00",
+    "graph_census": {
+      "nodes": 116838,
+      "relationships": 281290
+    },
+    "not_applicable_reason": "No ritual aggregate artifact exists. The layer arrived in Wave 3, nothing downstream consumes it, and there is therefore nothing to rebuild -- as distinct from a rebuild that has not happened."
+  },
+  "semantic resemblance": {
+    "consumer": "semantic resemblance",
+    "input_hashes": {
+      "label:Mantra": "n=20210;keyless=0;keys=a83c3a79343bf58135f64d89d8c1befe87455f09765662257388aac6507523a6",
+      "label:Passage": "n=22537;keyless=0;keys=39a13384921e22b23f9cd72bd9b4b26b462b22a089de2a09f6b2f6ecfb2eaaf7",
+      "label:RoleFiller": "n=2052;keyless=0;keys=32404ceaeee1a6337807c30d6c856f545bc9756b9e30282a420e717cff3a51be",
+      "label:SemanticAssertion": "n=4865;keyless=0;keys=5af7a679acf3425d2aec72de3775d7efffe4c457f99680e4e4245cf387cb6f5a",
+      "label:Translation": "n=17283;keyless=17283;keys=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "type:ASSERTION_ROLE": "n=2052;unnamed=0;pairs=d5a4a076b17e3e8ea6ccf7cad2e72519fa591e868a08d28f2208343c7a7a7080",
+      "type:HAS_TRANSLATION": "n=17283;unnamed=17283;pairs=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "type:REFERS_TO": "n=387;unnamed=0;pairs=147b1341bd046bacd4d688894809e413008c3906cf9bafa43fb16bd2aa92f1cc",
+      "type:USES_FORMULA": "n=22686;unnamed=0;pairs=f5aece67e80837ed2dce219d18a17b78cb60c1609018f4f92be0bff9dde68a38",
+      "file:data/staging/semantic_resemblance/manifest.json": "dd3e6a5ab9fc9127d208f0f7ea3b91d05f09c7063b50809b1b4e8d983fb360cc",
+      "file:data/staging/semantic_resemblance/rows.jsonl": "37be8f726d4514029f383d5b5d1ed4d20fb07618a37d939922aaa091b58c5e19"
+    },
+    "built_at": "2026-09-16T06:06:39.974394+00:00",
+    "graph_census": {
+      "nodes": 116838,
+      "relationships": 281290
+    },
+    "blocked_reason": "Requires re-derivation from the final canonical snapshot, not a rebuild: the staged artifact is pre-Wave-3 semantic-resemblance-hybrid-v2 and owner section 5 bars importing an old score artifact. See PHASE E in the round-four report for the refusal and its evidence."
+  }
+}
