@@ -162,7 +162,10 @@ def _merge_translations(
                 t.source_id = row.source_id,
                 t.work_edition = row.work_edition,
                 t.upstream_correction_id = row.upstream_correction_id,
-                t.upstream_correction_reason = row.upstream_correction_reason
+                t.upstream_correction_reason = row.upstream_correction_reason,
+                t.source_unit = row.source_unit,
+                t.source_verse_spine = row.source_verse_spine,
+                t.covers_canonical_keys = row.covers_canonical_keys
             """,
             rows=batch,
         )

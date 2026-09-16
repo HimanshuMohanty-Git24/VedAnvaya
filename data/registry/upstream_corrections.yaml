@@ -90,3 +90,214 @@ translation_verse_number:
     effect: >-
       RV 5.44.14 gains the Griffith translation it never had, and RV 5.44.11 keeps only
       its own.
+
+# ---------------------------------------------------------------------------------------
+# VERSE SPINE: the source edition counts verses differently from ours
+# ---------------------------------------------------------------------------------------
+#
+# GAP-TRANSLATION-006. Not a source defect. Griffith's pages for RV 1.65-1.70 are correct and
+# so is our corpus -- the two editions simply do not share a verse spine. Those six hymns are
+# in dvipada viraj, a two-pada metre: our canonical verses are single hemistichs, and
+# Griffith's edition numbers the four-pada group as one verse.
+#
+# The ingest bound his unit index straight onto our verse number, so unit 2 -- which renders
+# our verses 3 and 4 -- shipped as the translation of our verse 2. 25 of the span's 31 rows
+# read against the wrong Sanskrit on a public page.
+#
+# EVIDENCE STANDARD, which differs from the section above
+#
+# A mis-printed number is proved by the page. A spine is proved by OUR side as well, and a
+# count on its own proves nothing: RV 9.7 has 8 units against 9 verses and every one of its
+# attachments is correct, because there the merge falls on the last unit. So a spine
+# declaration must carry, and every entry below does:
+#
+#   * our verses are single hemistichs where the neighbouring hymns' are two -- mechanical,
+#     from the corpus bytes, touching no translation
+#   * our Anukramani metre is virat (dvipada) where the neighbours are tristup or jagati --
+#     independent of the translation entirely
+#   * the source prints exactly ceil(V/2) units, numbered consecutively from 1
+#
+# Content agreement between a unit and its pair's Sanskrit was checked for all 31 rows and is
+# recorded in the audit artifact. It is deliberately NOT the basis: a translation is not
+# identified by resembling a string.
+#
+# WHAT A SPINE CORRECTION DOES NOT DO
+#
+# It does not split a unit across the verses it covers. Griffith's unit 1 for RV 1.65
+# interleaves verses 1 and 2 -- "ONE-MINDED, wise, they tracked thee" renders verse 2's
+# sajosa dhirah padair anu gmann, while "like a thief lurking in dark cave" renders verse 1's
+# pasva na tayum guha catantam -- because the two verses are one syntactic period. Splitting
+# at his line break would attach half of verse 2's sense to verse 1. The unit is anchored on
+# the first verse of its span and declares the span; the second verse keeps no translation,
+# which is honest and is counted in GAP-TRANSLATION-004.
+
+translation_verse_spine:
+  - correction_id: WIKISOURCE_GRIFFITH_RV_1_65_DVIPADA_SPINE
+    source_id: WIKISOURCE_GRIFFITH_RV
+    source_artifact_id: GRIFFITH.RV.1896.WIKISOURCE
+    source_page_title: The Hymns of the Rigveda/Book 1/Hymn 65
+    source_revision_id: 14396884
+    hymn_key: VG:RV:SAK:M01:S065
+    spine: PAIRED_DVIPADA
+    source_unit_count: 5
+    canonical_verse_count: 10
+    reason: >-
+      Griffith's edition numbers each four-pada group as one verse; ours numbers each
+      hemistich. His page prints 5 units against our 10 verses, so unit N renders our
+      verses 2N-1 and 2N and is anchored on 2N-1.
+    evidence:
+      canonical_hemistichs_per_verse: 1
+      neighbouring_hymns_hemistichs_per_verse: 2
+      canonical_metre_from_anukramani: virat (dvipada viraj), on all 10 verses
+      neighbouring_hymns_metre: tristup / jagati
+      source_units_printed: 5
+      source_units_numbered_consecutively_from_one: true
+      canonical_verse_count_measured: 10
+      verified_against: data/raw/wikisource_griffith_rv/2026-09-04 (revision 14396884)
+      audit_artifact: data/staging/translation/rv_1_65_1_70_pre_fix_audit.json
+    effect: >-
+      4 of this hymn's 5 rows move to the anchor of the span they render; unit 1 was
+      already on verse 1 and stays. A row covering two verses becomes MANTRA_RANGE, because
+      MANTRA claimed a precision the unit does not have.
+
+  - correction_id: WIKISOURCE_GRIFFITH_RV_1_66_DVIPADA_SPINE
+    source_id: WIKISOURCE_GRIFFITH_RV
+    source_artifact_id: GRIFFITH.RV.1896.WIKISOURCE
+    source_page_title: The Hymns of the Rigveda/Book 1/Hymn 66
+    source_revision_id: 14396885
+    hymn_key: VG:RV:SAK:M01:S066
+    spine: PAIRED_DVIPADA
+    source_unit_count: 5
+    canonical_verse_count: 10
+    reason: >-
+      Griffith's edition numbers each four-pada group as one verse; ours numbers each
+      hemistich. His page prints 5 units against our 10 verses, so unit N renders our
+      verses 2N-1 and 2N and is anchored on 2N-1.
+    evidence:
+      canonical_hemistichs_per_verse: 1
+      neighbouring_hymns_hemistichs_per_verse: 2
+      canonical_metre_from_anukramani: virat (dvipada viraj), on all 10 verses
+      neighbouring_hymns_metre: tristup / jagati
+      source_units_printed: 5
+      source_units_numbered_consecutively_from_one: true
+      canonical_verse_count_measured: 10
+      verified_against: data/raw/wikisource_griffith_rv/2026-09-04 (revision 14396885)
+      audit_artifact: data/staging/translation/rv_1_65_1_70_pre_fix_audit.json
+    effect: >-
+      4 of this hymn's 5 rows move to the anchor of the span they render; unit 1 was
+      already on verse 1 and stays. A row covering two verses becomes MANTRA_RANGE, because
+      MANTRA claimed a precision the unit does not have.
+
+  - correction_id: WIKISOURCE_GRIFFITH_RV_1_67_DVIPADA_SPINE
+    source_id: WIKISOURCE_GRIFFITH_RV
+    source_artifact_id: GRIFFITH.RV.1896.WIKISOURCE
+    source_page_title: The Hymns of the Rigveda/Book 1/Hymn 67
+    source_revision_id: 14396886
+    hymn_key: VG:RV:SAK:M01:S067
+    spine: PAIRED_DVIPADA
+    source_unit_count: 5
+    canonical_verse_count: 10
+    reason: >-
+      Griffith's edition numbers each four-pada group as one verse; ours numbers each
+      hemistich. His page prints 5 units against our 10 verses, so unit N renders our
+      verses 2N-1 and 2N and is anchored on 2N-1.
+    evidence:
+      canonical_hemistichs_per_verse: 1
+      neighbouring_hymns_hemistichs_per_verse: 2
+      canonical_metre_from_anukramani: virat (dvipada viraj), on all 10 verses
+      neighbouring_hymns_metre: tristup / jagati
+      source_units_printed: 5
+      source_units_numbered_consecutively_from_one: true
+      canonical_verse_count_measured: 10
+      verified_against: data/raw/wikisource_griffith_rv/2026-09-04 (revision 14396886)
+      audit_artifact: data/staging/translation/rv_1_65_1_70_pre_fix_audit.json
+    effect: >-
+      4 of this hymn's 5 rows move to the anchor of the span they render; unit 1 was
+      already on verse 1 and stays. A row covering two verses becomes MANTRA_RANGE, because
+      MANTRA claimed a precision the unit does not have.
+
+  - correction_id: WIKISOURCE_GRIFFITH_RV_1_68_DVIPADA_SPINE
+    source_id: WIKISOURCE_GRIFFITH_RV
+    source_artifact_id: GRIFFITH.RV.1896.WIKISOURCE
+    source_page_title: The Hymns of the Rigveda/Book 1/Hymn 68
+    source_revision_id: 14396887
+    hymn_key: VG:RV:SAK:M01:S068
+    spine: PAIRED_DVIPADA
+    source_unit_count: 5
+    canonical_verse_count: 10
+    reason: >-
+      Griffith's edition numbers each four-pada group as one verse; ours numbers each
+      hemistich. His page prints 5 units against our 10 verses, so unit N renders our
+      verses 2N-1 and 2N and is anchored on 2N-1.
+    evidence:
+      canonical_hemistichs_per_verse: 1
+      neighbouring_hymns_hemistichs_per_verse: 2
+      canonical_metre_from_anukramani: virat (dvipada viraj), on all 10 verses
+      neighbouring_hymns_metre: tristup / jagati
+      source_units_printed: 5
+      source_units_numbered_consecutively_from_one: true
+      canonical_verse_count_measured: 10
+      verified_against: data/raw/wikisource_griffith_rv/2026-09-04 (revision 14396887)
+      audit_artifact: data/staging/translation/rv_1_65_1_70_pre_fix_audit.json
+    effect: >-
+      4 of this hymn's 5 rows move to the anchor of the span they render; unit 1 was
+      already on verse 1 and stays. A row covering two verses becomes MANTRA_RANGE, because
+      MANTRA claimed a precision the unit does not have.
+
+  - correction_id: WIKISOURCE_GRIFFITH_RV_1_69_DVIPADA_SPINE
+    source_id: WIKISOURCE_GRIFFITH_RV
+    source_artifact_id: GRIFFITH.RV.1896.WIKISOURCE
+    source_page_title: The Hymns of the Rigveda/Book 1/Hymn 69
+    source_revision_id: 14396888
+    hymn_key: VG:RV:SAK:M01:S069
+    spine: PAIRED_DVIPADA
+    source_unit_count: 5
+    canonical_verse_count: 10
+    reason: >-
+      Griffith's edition numbers each four-pada group as one verse; ours numbers each
+      hemistich. His page prints 5 units against our 10 verses, so unit N renders our
+      verses 2N-1 and 2N and is anchored on 2N-1.
+    evidence:
+      canonical_hemistichs_per_verse: 1
+      neighbouring_hymns_hemistichs_per_verse: 2
+      canonical_metre_from_anukramani: virat (dvipada viraj), on all 10 verses
+      neighbouring_hymns_metre: tristup / jagati
+      source_units_printed: 5
+      source_units_numbered_consecutively_from_one: true
+      canonical_verse_count_measured: 10
+      verified_against: data/raw/wikisource_griffith_rv/2026-09-04 (revision 14396888)
+      audit_artifact: data/staging/translation/rv_1_65_1_70_pre_fix_audit.json
+    effect: >-
+      4 of this hymn's 5 rows move to the anchor of the span they render; unit 1 was
+      already on verse 1 and stays. A row covering two verses becomes MANTRA_RANGE, because
+      MANTRA claimed a precision the unit does not have.
+
+  - correction_id: WIKISOURCE_GRIFFITH_RV_1_70_DVIPADA_SPINE
+    source_id: WIKISOURCE_GRIFFITH_RV
+    source_artifact_id: GRIFFITH.RV.1896.WIKISOURCE
+    source_page_title: The Hymns of the Rigveda/Book 1/Hymn 70
+    source_revision_id: 14396890
+    hymn_key: VG:RV:SAK:M01:S070
+    spine: PAIRED_DVIPADA
+    source_unit_count: 6
+    canonical_verse_count: 11
+    reason: >-
+      Griffith's edition numbers each four-pada group as one verse; ours numbers each
+      hemistich. His page prints 6 units against our 11 verses, so unit N renders our
+      verses 2N-1 and 2N and is anchored on 2N-1.
+      Verse 11 is the odd one: unit 6 carries one line where the others carry
+      two, and covers verse 11 alone.
+    evidence:
+      canonical_hemistichs_per_verse: 1
+      neighbouring_hymns_hemistichs_per_verse: 2
+      canonical_metre_from_anukramani: virat (dvipada viraj), on all 11 verses
+      neighbouring_hymns_metre: tristup / jagati
+      source_units_printed: 6
+      source_units_numbered_consecutively_from_one: true
+      canonical_verse_count_measured: 11
+      verified_against: data/raw/wikisource_griffith_rv/2026-09-04 (revision 14396890)
+      audit_artifact: data/staging/translation/rv_1_65_1_70_pre_fix_audit.json
+    effect: >-
+      5 of this hymn's 6 rows move to the anchor of the span they render; unit 1 was
+      already on verse 1 and stays. A row covering two verses becomes MANTRA_RANGE, because
+      MANTRA claimed a precision the unit does not have.
