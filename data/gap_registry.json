@@ -3341,6 +3341,61 @@
         "resolving a subject descriptor such as bhaisajyam to a deity at all"
       ],
       "proof_artifact": "data/staging/integration/wave3_devata_identity_bridge.json"
+    },
+    {
+      "gap_id": "GAP-ATTRIBUTION-WHITNEY-UNRESOLVED-OBJECT-001",
+      "domain": "attribution",
+      "surface": "Any verse-level Atharvavedic deity or metre attribution from Whitney's index: GET /api/v1/passages/{key}, the devata and chandas dimensions of the coverage surfaces, and the 83 verses whose printed bracket states an exception to their hymn's ascription.",
+      "evidence": "All 466 SOURCE_EXPLICIT rows in data/staging/attribution/rows.jsonl carry entity_resolution_method = VERBATIM_SOURCE_STRING_NOT_RESOLVED. Gate B check 'every object resolves to an entity the graph holds' fails 466 of 466. Gate C confirms the rows themselves are sound: every stated verse address appears verbatim in the printed bracket, every address covers the verse it claims, and no verse address overruns its hymn.",
+      "classification": "IMPLEMENTATION_GAP",
+      "description": "466 verse-level attributions from Whitney's Atharvaveda index cannot be imported because their objects are verbatim printed Sanskrit strings that resolve to no node -- 'kamadevatya', 'pathyapankti' and the like. An edge needs a node at the far end. The only mechanism available is a normalized-string join against :Chandas and :DevataAscription, and normalization is a comparison instrument rather than identity evidence, so that join is barred. The rows are correct and are retained; what is missing is an entity resolution step.",
+      "current_count": 0,
+      "expected_population": 466,
+      "missing_count": 466,
+      "status": "OPEN",
+      "causation_status": "MEASURED",
+      "root_cause": "NO_ENTITY_RESOLUTION_FOR_VERBATIM_SOURCE_STRINGS",
+      "measured_root_cause": "The staging builder recorded the printed value verbatim and deliberately did not resolve it, which is the right call -- resolving by string equality is what this campaign forbids. Nothing downstream supplies the missing step.",
+      "closure_method": "A resolution pass that maps each verbatim value to a :Chandas or :DevataAscription identity on evidence other than surface equality, with its own adversarial gate, or a decision to model the verbatim string as its own node class.",
+      "closure_test": "Every one of the 466 rows either resolves to an identity and lands as an edge, or is rejected with a stated reason. Read back from canonical Neo4j.",
+      "owner_agent": "attribution",
+      "source_availability": "SOURCE_HELD",
+      "source_dependency": "none -- the printed bracket is already transcribed in the row",
+      "implementation_dependency": "entity resolution for verbatim source strings",
+      "diagnostics_run": [
+        "scripts/attribution_gate_b.py",
+        "scripts/attribution_gate_c.py"
+      ],
+      "observed_gap": "466 source-explicit attributions held and unimportable",
+      "initial_hypothesis": "the rows were unvalidated and might be wrong",
+      "initial_hypothesis_status": "DISPROVED. Gate C checked them against their own printed source and found no defect. The blocker is resolution, not correctness."
+    },
+    {
+      "gap_id": "GAP-RITUAL-STEP-LOCATOR-COLLISION-001",
+      "domain": "ritual",
+      "surface": "The Visvajit rite's procedural sequence in GET /api/v1/rituals/VG:CONCEPT:VISVAJIT, and any future step whose edition prints two sutras under one citation.",
+      "evidence": "scripts/ritual_step_identity_probe.py: over 3,123 importable rows the RITE_SPECIFIC_OCCURRENCE grain yields 3,122 distinct identities. The single collision is VG:RITESTEP:VISVAJIT:SankhSS:16:15:13, covering printed ordinals 4535 and 4536, whose texts differ.",
+      "classification": "SOURCE_LIMITATION",
+      "description": "Two distinct sutras are printed under the single citation SankhSS 16.15.13 in the edition the staging read, so the source locator cannot separate them and the identity key collides. Both are withheld; the graph holds 0 key, URN and UUID collisions. Adding printed_ordinal_in_work to the key would disambiguate them and would also change all 3,121 existing identities to accommodate one row, which is why it was not done.",
+      "current_count": 0,
+      "expected_population": 2,
+      "missing_count": 2,
+      "status": "OPEN",
+      "causation_status": "MEASURED",
+      "root_cause": "SOURCE_LOCATOR_NOT_UNIQUE_AT_THE_PRINTED_GRANULARITY",
+      "measured_root_cause": "The edition's citation granularity is coarser than its sutra granularity at this point. Not a staging defect: the locator extraction recorded what the edition prints.",
+      "closure_method": "Either a sub-index in the locator from an edition that prints one, or a deliberate identity revision that admits printed_ordinal_in_work for every step, costed as a re-identification of all 3,121.",
+      "closure_test": "Both sutras present as distinct :RitualStep nodes with distinct keys, URNs and UUIDs, and the total collision count still 0.",
+      "owner_agent": "ritual",
+      "source_availability": "SOURCE_HELD",
+      "source_dependency": "an edition with a finer printed locator",
+      "implementation_dependency": "none",
+      "diagnostics_run": [
+        "scripts/ritual_step_identity_probe.py"
+      ],
+      "observed_gap": "2 sutras unrepresentable under the current identity",
+      "initial_hypothesis": "the staging duplicated a row",
+      "initial_hypothesis_status": "DISPROVED. The two rows carry different text and different printed ordinals; they are two sutras, not one recorded twice."
     }
   ],
   "root_cause_taxonomy": [

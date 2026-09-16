@@ -376,3 +376,104 @@ Registered as `GAP-CROSS-VEDA-DEVATA-IDENTITY-BRIDGE-001`, `causation_status: ME
 eligibility test and the missing-gate computation. `ritual` and `scholarship` are ELIGIBLE on
 it, and each preserves its original defect, the fix, the restage and the post-fix validator
 result. No corrected domain is sent through its investigation again.
+
+---
+
+# Owner round three — Wave 3 closed, RitualStep identity, attribution
+
+## 18. Corpus deletions ratified, and now enumerated
+
+**Applied.** The owner ratified the three batches and required the exact IDs and reason for
+each to reach the audit trail. They were counted in prose and never listed.
+
+`scripts/corpus_deletion_audit.py` reconstructs them rather than remembering them: a key is
+listed because the current plan refuses it **and** the graph does not hold it, both halves
+recomputed. Attribution to a batch replays both versions of the reachability rule instead of
+inferring from a flag, and the replay reproduces the ratified split exactly — the script
+exits non-zero if it ever stops doing so.
+
+| batch | n | reason |
+|---|---:|---|
+| `BATCH_1_EVIDENCE_NOT_IMPORTED` | 12 | attested only in a Brāhmaṇa or Śrautasūtra, and that evidence is declared not-imported |
+| `BATCH_2_ATTESTATION_WITHOUT_LOCATOR` | 2 | `samhita_attested` with no example recorded; `roles.jsonl` has no such field at all |
+| `BATCH_3_REACHABLE_ONLY_VIA_A_REFUSED_EDGE` | 27 | named only by a rite edge staged `PROBABLE` |
+
+Full key lists: `data/staging/integration/corpus_deletion_audit.json`. Recoverable from
+`wave3-pre-import-20260915T155144`. **No further deletions were made this round.**
+
+An earlier version of this audit split the 41 as 32/2/7 by using `samhita_attested` as a
+proxy for which rule applied. That was recorded, found wrong, and replaced with the replay.
+
+## 19. `:RitualStep` identity — the grain was measured, not chosen
+
+**Applied as M7.** The owner barred exposing `step_key` merely to make traversal work and
+required the grain to be determined from the artifact. Measured over 3,123 importable rows:
+
+| grain | distinct | values covering rows that **disagree** |
+|---|---:|---:|
+| `SOURCE_OCCURRENCE` | 2,767 | 308 |
+| `RITE_SPECIFIC_OCCURRENCE` | 3,122 | 1 |
+| `POSITION_BASED` | 1,137 | 680 |
+
+Source-occurrence would merge 308 identities standing for different claims, because one sutra
+is cited for several rites. Position-based fails outright — `step_position` restarts inside
+every work. **The grain is rite-specific occurrence**, and the `step_key` Wave 3 already
+staged is exactly that: rite + work + printed source coordinate, with a canonical URN and
+`uuid5(7c8cde94-…, urn)` verified byte-identical for all 3,123 rows.
+
+So no identity was invented. M7 writes one property, `display_type = "RITUAL_STEP"`, and the
+traversal refusal — whose stated reason was that the nodes had no product type — is retired.
+`HAS_STEP` is untouched and still means the Samhita's own numbering.
+
+`HAS_RITUAL_STEP` is traversable but **not** a path predicate: a path hopping rite → step →
+rite would assert a relation between two rites whose only connection is that one sutra
+collection mentions both.
+
+## 20. Attribution — the census imported, Whitney withheld
+
+**Gates B and C both run, nothing inherited from the domain's own report.**
+
+The 23,003 rows are two populations sharing one file, and averaging them would have hidden
+both findings:
+
+- **Census, 22,537 rows.** Per-passage records of the *state* of rishi/devata/chandas
+  attribution. Not assertions about the text — an edge saying "this mantra has no recorded
+  seer" is a fact about the record. Gate C checked all 67,611 state assertions against the
+  edges that actually exist, stratified 38 ways: **0 contradictions.** Imported as three
+  properties per passage, 0 nodes and 0 edges.
+- **Whitney index, 466 rows.** Genuine verse-level source assertions, and every one carries
+  `entity_resolution_method = VERBATIM_SOURCE_STRING_NOT_RESOLVED`. The object is a printed
+  Sanskrit string that resolves to no node. **Withheld**, classified
+  `RETAINED_NON_IMPORTABLE_UNRESOLVED_OBJECT`, registered as
+  `GAP-ATTRIBUTION-WHITNEY-UNRESOLVED-OBJECT-001`. Resolving them by normalized string
+  equality is exactly what the owner's rules forbid.
+
+What the import bought: this graph can now distinguish a source that was consulted and says
+nothing (`ASSESSED_SOURCE_ABSENT`) from one nobody has opened (`NEVER_ASSESSED`) from a
+container asked a question only a verse can answer (`NOT_APPLICABLE_AT_THIS_GRANULARITY`).
+Before, all three read as one silence and every absence could be taken for a verified zero.
+
+## 21. Two gates that could not fail
+
+Recorded because both were passing while measuring nothing.
+
+**The scorecard's undeclared-type gate.** `declared = ONTOLOGY | everything in the graph`,
+then "which graph types are not in `declared`?" — structurally empty. It reported 0 for a
+whole wave while eleven Wave 3 predicates went unclassified. It now measures against the API's
+product contract, which a live test holds complete.
+
+**The dependency invalidation's one-way status.** Staleness was computed from the wave stamps,
+which never come off, so every consumer read `STALE_INPUT` for ever and a rebuild could not be
+expressed. `scripts/rebuild_ledger.py` adds the missing half: `CURRENT` means a recorded
+rebuild whose input hash still equals the current one, scoped to the labels and predicates
+that consumer declares it reads.
+
+## 22. What this round did not do
+
+- **Semantic resemblance is not re-derived.** The staged artifact is pre-Wave-3
+  `hybrid-v2`, and section 8 bars importing an old score artifact. Zero rows imported;
+  status `BLOCKED`.
+- **The Ask benchmark is not re-graded.** Retrieval reads the graph live and its 280 contract
+  tests pass; only the graded run is stale, and re-grading burns a daily quota.
+- **No audible reviews.** Still 0 of 1,021, and still a parallel track.
+- **Wave 4 not begun.**
