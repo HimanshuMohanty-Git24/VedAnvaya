@@ -1,0 +1,163 @@
+{
+  "artifact": "WAVE4_DEPENDENCY_PERTURBATION",
+  "at": "2026-09-16T09:25:07.760838+00:00",
+  "target": "frontend/.world/world.raw.json",
+  "perturbation": "one newline appended, then the original bytes written back",
+  "sha256_before": "560a271c23faeadb7f40affd778066c06cea8270aa768aa3abb9ef7f101ffdc2",
+  "sha256_after_restore": "560a271c23faeadb7f40affd778066c06cea8270aa768aa3abb9ef7f101ffdc2",
+  "byte_exact_restore": true,
+  "expected_stale": {
+    "Knowledge World public projection": "declared output",
+    "Visualization Lab aggregates": "file:frontend/.world/world.raw.json"
+  },
+  "baseline": {
+    "semantic resemblance": {
+      "status": "BLOCKED",
+      "moved": [],
+      "reason": "Requires re-derivation from the final canonical snapshot, not a rebuild: the staged artifact is pre-Wave-3 semantic-resemblance-hybrid-v2 and owner section 5 bars importing an old score artifact. See PHASE E in the round-four report for the refusal and its evidence."
+    },
+    "cross-Veda matrices": {
+      "status": "CURRENT",
+      "moved": [],
+      "reason": null
+    },
+    "formula / parallel / variant relations": {
+      "status": "CURRENT",
+      "moved": [],
+      "reason": null
+    },
+    "entity coverage": {
+      "status": "CURRENT",
+      "moved": [],
+      "reason": null
+    },
+    "ritual aggregates": {
+      "status": "NOT_APPLICABLE",
+      "moved": [],
+      "reason": "No ritual aggregate artifact exists. The layer arrived in Wave 3, nothing downstream consumes it, and there is therefore nothing to rebuild -- as distinct from a rebuild that has not happened."
+    },
+    "quality evaluation": {
+      "status": "CURRENT",
+      "moved": [],
+      "reason": null
+    },
+    "Ask retrieval": {
+      "status": "BLOCKED",
+      "moved": [],
+      "reason": "ASK_FORMAL_REGRADE_BLOCKED_EXTERNAL_QUOTA. The fresh commit-keyed run at b98d988 reached 19 of 60 and stopped at Q20 with vedagraph.llm.errors.LLMRateLimitError: 'Rate limit reached for provider openrouter. The daily allowance is exhausted; waiting will not clear it.' Only OpenRouter is credentialed -- Gemini and Anthropic providers exist in code with no keys -- and switching model would produce a different grade rather than a resumption. The earlier 31/60 run is diagnostic only and is NOT combined with this one, per owner instruction. Resume with a fresh run when the daily allowance resets. On the 19: 94 citations, 0 invented citations surviving, 0 invalid, 1 uncited answer (Q03, a reasoning-preamble leak). misleading/hallucinated NOT certified."
+    },
+    "Visualization Lab aggregates": {
+      "status": "CURRENT",
+      "moved": [],
+      "reason": null
+    },
+    "Knowledge World public projection": {
+      "status": "CURRENT",
+      "moved": [],
+      "reason": null
+    }
+  },
+  "perturbed": {
+    "semantic resemblance": {
+      "status": "BLOCKED",
+      "moved": [],
+      "reason": "Requires re-derivation from the final canonical snapshot, not a rebuild: the staged artifact is pre-Wave-3 semantic-resemblance-hybrid-v2 and owner section 5 bars importing an old score artifact. See PHASE E in the round-four report for the refusal and its evidence."
+    },
+    "cross-Veda matrices": {
+      "status": "CURRENT",
+      "moved": [],
+      "reason": null
+    },
+    "formula / parallel / variant relations": {
+      "status": "CURRENT",
+      "moved": [],
+      "reason": null
+    },
+    "entity coverage": {
+      "status": "CURRENT",
+      "moved": [],
+      "reason": null
+    },
+    "ritual aggregates": {
+      "status": "NOT_APPLICABLE",
+      "moved": [],
+      "reason": "No ritual aggregate artifact exists. The layer arrived in Wave 3, nothing downstream consumes it, and there is therefore nothing to rebuild -- as distinct from a rebuild that has not happened."
+    },
+    "quality evaluation": {
+      "status": "CURRENT",
+      "moved": [],
+      "reason": null
+    },
+    "Ask retrieval": {
+      "status": "BLOCKED",
+      "moved": [],
+      "reason": "ASK_FORMAL_REGRADE_BLOCKED_EXTERNAL_QUOTA. The fresh commit-keyed run at b98d988 reached 19 of 60 and stopped at Q20 with vedagraph.llm.errors.LLMRateLimitError: 'Rate limit reached for provider openrouter. The daily allowance is exhausted; waiting will not clear it.' Only OpenRouter is credentialed -- Gemini and Anthropic providers exist in code with no keys -- and switching model would produce a different grade rather than a resumption. The earlier 31/60 run is diagnostic only and is NOT combined with this one, per owner instruction. Resume with a fresh run when the daily allowance resets. On the 19: 94 citations, 0 invented citations surviving, 0 invalid, 1 uncited answer (Q03, a reasoning-preamble leak). misleading/hallucinated NOT certified."
+    },
+    "Visualization Lab aggregates": {
+      "status": "STALE_INPUT",
+      "moved": [
+        "file:frontend/.world/world.raw.json"
+      ],
+      "reason": null
+    },
+    "Knowledge World public projection": {
+      "status": "STALE_INPUT",
+      "moved": [],
+      "reason": "declared output frontend/.world/world.raw.json no longer matches its recorded digest"
+    }
+  },
+  "restored": {
+    "semantic resemblance": {
+      "status": "BLOCKED",
+      "moved": [],
+      "reason": "Requires re-derivation from the final canonical snapshot, not a rebuild: the staged artifact is pre-Wave-3 semantic-resemblance-hybrid-v2 and owner section 5 bars importing an old score artifact. See PHASE E in the round-four report for the refusal and its evidence."
+    },
+    "cross-Veda matrices": {
+      "status": "CURRENT",
+      "moved": [],
+      "reason": null
+    },
+    "formula / parallel / variant relations": {
+      "status": "CURRENT",
+      "moved": [],
+      "reason": null
+    },
+    "entity coverage": {
+      "status": "CURRENT",
+      "moved": [],
+      "reason": null
+    },
+    "ritual aggregates": {
+      "status": "NOT_APPLICABLE",
+      "moved": [],
+      "reason": "No ritual aggregate artifact exists. The layer arrived in Wave 3, nothing downstream consumes it, and there is therefore nothing to rebuild -- as distinct from a rebuild that has not happened."
+    },
+    "quality evaluation": {
+      "status": "CURRENT",
+      "moved": [],
+      "reason": null
+    },
+    "Ask retrieval": {
+      "status": "BLOCKED",
+      "moved": [],
+      "reason": "ASK_FORMAL_REGRADE_BLOCKED_EXTERNAL_QUOTA. The fresh commit-keyed run at b98d988 reached 19 of 60 and stopped at Q20 with vedagraph.llm.errors.LLMRateLimitError: 'Rate limit reached for provider openrouter. The daily allowance is exhausted; waiting will not clear it.' Only OpenRouter is credentialed -- Gemini and Anthropic providers exist in code with no keys -- and switching model would produce a different grade rather than a resumption. The earlier 31/60 run is diagnostic only and is NOT combined with this one, per owner instruction. Resume with a fresh run when the daily allowance resets. On the 19: 94 citations, 0 invented citations surviving, 0 invalid, 1 uncited answer (Q03, a reasoning-preamble leak). misleading/hallucinated NOT certified."
+    },
+    "Visualization Lab aggregates": {
+      "status": "CURRENT",
+      "moved": [],
+      "reason": null
+    },
+    "Knowledge World public projection": {
+      "status": "CURRENT",
+      "moved": [],
+      "reason": null
+    }
+  },
+  "went_stale": [
+    "Knowledge World public projection",
+    "Visualization Lab aggregates"
+  ],
+  "findings": [],
+  "passed": true,
+  "sha256": "e04fb94063699b866656f9f96733e77cf822951b2d558fa81b4790e15592be1e"
+}

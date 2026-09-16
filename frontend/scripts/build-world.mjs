@@ -108,6 +108,32 @@ const raw = JSON.parse(readFileSync(IN, "utf8"));
 const nodes = raw.nodes;
 const edges = raw.edges;
 const detected = JSON.parse(readFileSync(CONSTELLATIONS, "utf8"));
+
+/*
+ * The partition is joined BY POSITION, so it has to have been computed over this world.
+ *
+ * `community[i]` is the constellation of `nodes[i]` and nothing in the file says which world
+ * it was measured on. Wave 4 found the consequence: `world.raw.json` was re-exported after 28
+ * malformed metre identities were marked internal, the partition was not recomputed, and the
+ * build joined 35,370 assignments onto 35,648 nodes without complaint -- every node past the
+ * first divergence taking another node's constellation, and the last 278 reading `undefined`
+ * out of the end of a typed array.
+ *
+ * A length equality is the whole check. It is not sufficient in theory (two worlds of equal
+ * size would pass) but it catches the failure that actually happens, which is a rebuild of one
+ * stage and not the other, and it converts a silent mis-join into a refusal that names the fix.
+ */
+if (detected.community.length !== nodes.length) {
+    console.error(
+        `\nConstellation partition does not fit this world.\n` +
+            `  ${CONSTELLATIONS} holds ${detected.community.length.toLocaleString()} assignments\n` +
+            `  ${IN} holds ${nodes.length.toLocaleString()} nodes\n\n` +
+            `The partition is joined by position, so a length mismatch silently gives nodes\n` +
+            `another node's constellation. Recompute it:\n\n` +
+            `  node scripts/build-constellations.mjs\n`,
+    );
+    process.exit(1);
+}
 const community = Int32Array.from(detected.community);
 const degree = nodes.map((n) => n.deg ?? 0);
 console.log(

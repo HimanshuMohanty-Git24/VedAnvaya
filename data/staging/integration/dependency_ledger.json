@@ -70,15 +70,16 @@
       "label:QualityVerdict": "n=2568;keyless=0;keys=a5c86f381d9a071f796af09129c4d1f378658c95df8c702345036780301a3b30",
       "type:QA_ISSUE_ON": "n=915;unnamed=915;pairs=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "type:QUALITY_VERDICT_ABOUT": "n=2568;unnamed=0;pairs=81b929c8b243d02d718fa8b26866b0a9a63b7aff37bd4bd8f47df6cb0b3b281c",
-      "builder:scripts/graph_quality_scorecard.py": "76fd47c8b4a10e509326cd85cfc79119ec471995292b6e77c995b7544cd8b913"
+      "builder:scripts/graph_quality_scorecard.py": "fe3ef7887fb876a6ab019da2ef786f7009f578ba3157fceac09639264a7faa66"
     },
-    "built_at": "2026-09-16T07:25:01.065381+00:00",
+    "built_at": "2026-09-16T09:23:23.507772+00:00",
     "graph_census": {
       "nodes": 116838,
       "relationships": 281257
     },
-    "output_file": "docs/reports/GRAPH_QUALITY_V2_SCORECARD.md",
-    "output_hash": "9438cca1cfe69729b9c96f2a2977fa4a7e95e4316efbd34581368d81113f90c5"
+    "output_hashes": {
+      "docs/reports/GRAPH_QUALITY_V2_SCORECARD.md": "fe5803ad823606cd4554c928fa2e74bcdca08463498322ffddd3c16d45950fbe"
+    }
   },
   "Visualization Lab aggregates": {
     "consumer": "Visualization Lab aggregates",
@@ -91,15 +92,21 @@
       "type:CO_OCCURS_WITH": "n=306;unnamed=0;pairs=6f0e1863edc369837b53bb837d28c4b264c0c6142c7151f4b451e799c372c169",
       "type:HAS_DEVATA": "n=10558;unnamed=0;pairs=8e4eea692c244357e1b3bdd2106719549f5a37430fa668977c59636ac0fedde8",
       "type:MENTIONS_ENTITY": "n=28110;unnamed=0;pairs=2c66d80eada586d6f80aa587673228c4b7c02cc05dbba7200fceb174fa6afa62",
-      "builder:scripts/export_graph_world.py": "721086cd74807f9167254dc91d921165d0a86d36dcf75d1d9a0c74af07659fda"
+      "file:frontend/.world/world.raw.json": "560a271c23faeadb7f40affd778066c06cea8270aa768aa3abb9ef7f101ffdc2",
+      "builder:frontend/scripts/build-constellations.mjs": "66ee36ff935f56b638f8dbf53aadae07992096b8f749fc296369fb97014ae285",
+      "builder:frontend/scripts/build-world.mjs": "98cc4d9199930a55bf717e774c3240af8f47b84be895a696db1eb29f246fc77c"
     },
-    "built_at": "2026-09-16T07:25:02.700085+00:00",
+    "built_at": "2026-09-16T09:23:26.808485+00:00",
     "graph_census": {
       "nodes": 116838,
       "relationships": 281257
     },
-    "output_file": "frontend/.world/world.raw.json",
-    "output_hash": "2e59ff42c3844e4191a26052f6944368e7514c7289705dcf8ebaf797f85fd05c"
+    "output_hashes": {
+      "frontend/.world/constellations.json": "4aab411f55a9cc7bcb382069c0fbed582e56ab41d2d19b932878831534d8f1d0",
+      "frontend/public/world/world.bin": "12a11a69d34fc3e00fd7fef1361f17f3a3556861c3f4e39f652cbde34c18ad9c",
+      "frontend/public/world/world.json": "371087d5f65f6033ffe865107e0982eaeb46b80c629d04b19164b2efd3657e89",
+      "frontend/public/world/world.labels.json": "95510540c7971604e2934cacf5c49eba188db1991293a184429cd2a79c57dfe5"
+    }
   },
   "Knowledge World public projection": {
     "consumer": "Knowledge World public projection",
@@ -111,15 +118,18 @@
       "type:ABOUT_CONCEPT": "n=24861;unnamed=0;pairs=499c5d65713399051f8903e60791ef04e3c2bd911d799cd6eff0892d7bd89999",
       "type:MENTIONS_ENTITY": "n=28110;unnamed=0;pairs=2c66d80eada586d6f80aa587673228c4b7c02cc05dbba7200fceb174fa6afa62",
       "type:SPECIALIZED_FORM_OF": "n=1;unnamed=0;pairs=312df33d6faee2051c8ae81913aa8f94d6e5cc63fb73b4cd7e8302b932dffea4",
-      "builder:scripts/export_graph_world.py": "721086cd74807f9167254dc91d921165d0a86d36dcf75d1d9a0c74af07659fda"
+      "builder:scripts/export_graph_world.py": "721086cd74807f9167254dc91d921165d0a86d36dcf75d1d9a0c74af07659fda",
+      "builder:scripts/export_predicate_semantics.py": "fcbc6dc1ecb5cfec5bfb7e315dd6b42a9b98f49028d04120625d808640079d70"
     },
-    "built_at": "2026-09-16T07:25:04.236918+00:00",
+    "built_at": "2026-09-16T09:23:25.010385+00:00",
     "graph_census": {
       "nodes": 116838,
       "relationships": 281257
     },
-    "output_file": "frontend/.world/world.raw.json",
-    "output_hash": "2e59ff42c3844e4191a26052f6944368e7514c7289705dcf8ebaf797f85fd05c"
+    "output_hashes": {
+      "frontend/.world/world.raw.json": "560a271c23faeadb7f40affd778066c06cea8270aa768aa3abb9ef7f101ffdc2",
+      "frontend/public/world/world.predicates.json": "3c57221b7300759390dad3b7165296cbc33b51726146a3517103ad7ff500ec12"
+    }
   },
   "ritual aggregates": {
     "consumer": "ritual aggregates",

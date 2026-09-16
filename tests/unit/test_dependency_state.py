@@ -218,10 +218,71 @@ def test_every_declared_file_and_builder_input_exists() -> None:
     missing: list[str] = []
     for relatives in state.CONSUMER_FILES.values():
         missing += [r for r in relatives if not pathlib.Path(r).exists()]
-    missing += [
-        b for b in state.CONSUMER_BUILDERS.values() if not pathlib.Path(b).exists()
-    ]
+    for builders in state.CONSUMER_BUILDERS.values():
+        missing += [b for b in builders if not pathlib.Path(b).exists()]
+    # Declared OUTPUTS get the same treatment, for the same reason and one stronger: Wave 4
+    # found two consumers recording the wrong file as their output, and a path typo here would
+    # reproduce exactly that -- a consumer judged on a file nobody builds, which never moves
+    # and so is never stale.
+    for outputs in state.CONSUMER_OUTPUTS.values():
+        missing += [o for o in outputs if not pathlib.Path(o).exists()]
     assert not missing, f"declared inputs that do not exist: {sorted(set(missing))}"
+
+
+def test_no_two_consumers_declare_the_same_output() -> None:
+    """The Wave 4 defect, pinned as a rule.
+
+    "Visualization Lab aggregates" and "Knowledge World public projection" both recorded
+    ``frontend/.world/world.raw.json``. One of them does build it; the other is a later stage
+    that READS it, so it was being judged on a file its own build never touches -- permanently
+    CURRENT while shipping a partition and a bundle measured on the previous world.
+    """
+    owner: dict[str, str] = {}
+    collisions: list[str] = []
+    for consumer, outputs in state.CONSUMER_OUTPUTS.items():
+        for relative in outputs:
+            if relative in owner:
+                collisions.append(f"{relative} claimed by {owner[relative]} and {consumer}")
+            owner[relative] = consumer
+    assert not collisions, (
+        "two consumers claim one output, so at least one is judged on a file it does not "
+        f"build: {collisions}"
+    )
+
+
+def test_a_declared_output_that_moved_is_stale_and_says_which_file() -> None:
+    """The check that would have caught the shipped bundle, exercised BAD -> FAIL.
+
+    Written against ``classify`` directly rather than the graph, so it pins the decision and
+    not the current state of the filesystem.
+    """
+    inputs = {"label:Mantra": "same"}
+    recorded = {
+        "input_hashes": dict(inputs),
+        "output_hashes": {
+            "pyproject.toml": "a-digest-that-is-not-the-file-s",
+        },
+    }
+    status, moved, reason = state.classify(dict(inputs), recorded)
+    assert status == "STALE_INPUT"
+    assert moved == []
+    assert reason is not None and "pyproject.toml" in reason
+
+    # GOOD -> PASS, with the real digest.
+    recorded["output_hashes"] = {
+        "pyproject.toml": state.file_digest(pathlib.Path("pyproject.toml"))
+    }
+    assert state.classify(dict(inputs), recorded)[0] == "CURRENT"
+
+
+def test_a_declared_output_that_vanished_is_stale_rather_than_ignored() -> None:
+    recorded = {
+        "input_hashes": {},
+        "output_hashes": {"no/such/file.json": "whatever"},
+    }
+    status, _, reason = state.classify({}, recorded)
+    assert status == "STALE_INPUT"
+    assert reason is not None and "is gone" in reason
 
 
 def test_every_consumer_with_files_or_a_builder_is_a_real_consumer() -> None:

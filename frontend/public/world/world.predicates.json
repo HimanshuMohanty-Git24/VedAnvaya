@@ -1,14 +1,14 @@
 {
   "version": 1,
-  "generated": "2026-09-14T08:50:08Z",
+  "generated": "2026-09-16T09:21:04Z",
   "source": "vedagraph.api.services.graph_service.PREDICATE_SEMANTICS",
   "counts": {
-    "predicates": 60,
-    "curated": 57,
-    "derived": 3,
-    "symmetric": 3,
+    "predicates": 68,
+    "curated": 62,
+    "derived": 6,
+    "symmetric": 4,
     "directed": 5,
-    "undeclared": 52
+    "undeclared": 59
   },
   "predicates": {
     "ABOUT_CONCEPT": {
@@ -38,6 +38,13 @@
       "limit": "This API carries no curated explanation for this predicate, so what the edge does and does not establish is not stated here. Treat it as unexplained rather than as unqualified.",
       "direction": "UNDECLARED",
       "basis": "DERIVED_FROM_NAME"
+    },
+    "ATTESTED_IN": {
+      "phrase": "is attested in",
+      "asserts": "The registry records this passage as an attestation of the entity.",
+      "limit": "An attestation locator taken from the entity registry, not a re-reading of the passage. Absence means the registry recorded no example, not that the passage does not name the entity.",
+      "direction": "UNDECLARED",
+      "basis": "CURATED"
     },
     "BELONGS_TO_FAMILY": {
       "phrase": "belongs to the seer family",
@@ -147,7 +154,7 @@
     "HAS_CHANDAS": {
       "phrase": "is in the metre",
       "asserts": "The Anukramani names this metre for this passage.",
-      "limit": "10,388 of 16,331 arrive by projecting a hymn's label downward. The Samaveda carries no metre layer at all, so its absence there is a missing layer.",
+      "limit": "10,399 of 16,298 arrive by projecting a hymn's label downward. The Samaveda carries no metre layer at all, so its absence there is a missing layer.",
       "direction": "UNDECLARED",
       "basis": "CURATED"
     },
@@ -186,6 +193,13 @@
       "direction": "UNDECLARED",
       "basis": "CURATED"
     },
+    "HAS_RITUAL_STEP": {
+      "phrase": "has the procedural step",
+      "asserts": "A Srautasutra or Grhyasutra prints this step as part of the rite.",
+      "limit": "Not the Samhita's own numbering -- that is HAS_STEP, and the two are never summed. Each source work numbers its own sequence from 1, so these edges do not compose into one procedure, and most state a position without printing the run it falls in. Read /api/v1/rituals/{id}, which returns them grouped by source work.",
+      "direction": "UNDECLARED",
+      "basis": "CURATED"
+    },
     "HAS_SEMANTIC_ASSERTION": {
       "phrase": "carries the semantic assertion",
       "asserts": "This passage carries a reified assertion about who does what.",
@@ -195,8 +209,8 @@
     },
     "HAS_STEP": {
       "phrase": "has the step",
-      "asserts": "This action is a step of the rite.",
-      "limit": "Three steps exist across the whole layer, so a rite without them is unmodelled rather than stepless.",
+      "asserts": "This action is a step of the rite, in the Samhita text's own numbering.",
+      "limit": "Three steps exist across the whole layer, all on the soma pressing, so a rite without them is unmodelled rather than stepless. The sutra-attested procedure is a separate predicate, HAS_RITUAL_STEP, and the two must not be added together.",
       "direction": "UNDECLARED",
       "basis": "CURATED"
     },
@@ -319,6 +333,20 @@
       "direction": "UNDECLARED",
       "basis": "CURATED"
     },
+    "POSITION_ASSERTED_BY": {
+      "phrase": "position asserted by",
+      "asserts": "The graph records a position asserted by relationship between these two.",
+      "limit": "This API carries no curated explanation for this predicate, so what the edge does and does not establish is not stated here. Treat it as unexplained rather than as unqualified.",
+      "direction": "UNDECLARED",
+      "basis": "DERIVED_FROM_NAME"
+    },
+    "POSITION_STATED_IN": {
+      "phrase": "position stated in",
+      "asserts": "The graph records a position stated in relationship between these two.",
+      "limit": "This API carries no curated explanation for this predicate, so what the edge does and does not establish is not stated here. Treat it as unexplained rather than as unqualified.",
+      "direction": "UNDECLARED",
+      "basis": "DERIVED_FROM_NAME"
+    },
     "PRAISES": {
       "phrase": "praises",
       "asserts": "A model reading found the passage praising this target.",
@@ -347,6 +375,13 @@
       "direction": "UNDECLARED",
       "basis": "CURATED"
     },
+    "REPORTED_IN": {
+      "phrase": "reported in",
+      "asserts": "The graph records a reported in relationship between these two.",
+      "limit": "This API carries no curated explanation for this predicate, so what the edge does and does not establish is not stated here. Treat it as unexplained rather than as unqualified.",
+      "direction": "UNDECLARED",
+      "basis": "DERIVED_FROM_NAME"
+    },
     "REQUESTS": {
       "phrase": "requests",
       "asserts": "A model reading found the passage requesting this.",
@@ -361,10 +396,31 @@
       "direction": "DIRECTED",
       "basis": "CURATED"
     },
+    "SCHOLARLY_CLAIM_ABOUT": {
+      "phrase": "is a scholarly claim about",
+      "asserts": "A named scholar's recorded position concerns this passage.",
+      "limit": "A position held, not a finding accepted. The graph records that someone argued it and where; it takes no view on whether they were right, and a passage with several of these has a disagreement rather than an answer.",
+      "direction": "UNDECLARED",
+      "basis": "CURATED"
+    },
     "SHARES_ENTITY_VOCABULARY_WITH": {
       "phrase": "shares entity vocabulary with",
       "asserts": "Both passages name the same registry entities.",
       "limit": "THIS IS NOT A CONCEPTUAL-SIMILARITY CLAIM. It measures shared vocabulary, and no non-lexical resemblance measure exists anywhere in this graph. Read `distinctiveness`, not the count: three shared entities are weak evidence when they are heaven, sacrifice and soma, and strong when one is the altar.",
+      "direction": "UNDECLARED",
+      "basis": "CURATED"
+    },
+    "SHARES_FORMULA_WITH": {
+      "phrase": "shares a formula with",
+      "asserts": "Both mantras contain the same registered formula.",
+      "limit": "Derived from the formula layer rather than stated by any source: nothing in a text says these two are related. A shared formula is a shared phrase, which is weaker than a parallel and much weaker than textual reuse.",
+      "direction": "SYMMETRIC",
+      "basis": "CURATED"
+    },
+    "SPECIALIZED_FORM_OF": {
+      "phrase": "is a specialized form of",
+      "asserts": "This deity name is a narrower form of the broader one.",
+      "limit": "Narrower than the broader name, not an alias for it: unlike EPITHET_VARIANT_OF it does not assert the two are the same referent under two names.",
       "direction": "UNDECLARED",
       "basis": "CURATED"
     },

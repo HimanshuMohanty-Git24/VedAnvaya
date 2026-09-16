@@ -94,17 +94,61 @@ CONSUMER_FILES: dict[str, tuple[str, ...]] = {
     ),
     "entity coverage": ("data/domain/vedagraph_domain_v2/veda_coverage_v3.json",),
     "Ask retrieval": ("data/gold/ask_benchmark_v1.jsonl",),
+    # The Lab stage does not read the graph at all: it reads the Python export's output. Until
+    # Wave 4 that dependency was expressed nowhere, so re-exporting the world left the Lab
+    # CURRENT against a partition measured on the previous one.
+    "Visualization Lab aggregates": ("frontend/.world/world.raw.json",),
 }
 
 #: The script whose source is part of each consumer's input. A build script that changes
 #: leaves output that no longer reproduces, so it belongs in the hash.
-CONSUMER_BUILDERS: dict[str, str] = {
-    "cross-Veda matrices": "scripts/build_enrichment.py",
-    "formula / parallel / variant relations": "scripts/build_formula_families.py",
-    "entity coverage": "scripts/build_veda_coverage_and_metrics.py",
-    "quality evaluation": "scripts/graph_quality_scorecard.py",
-    "Visualization Lab aggregates": "scripts/export_graph_world.py",
-    "Knowledge World public projection": "scripts/export_graph_world.py",
+CONSUMER_BUILDERS: dict[str, tuple[str, ...]] = {
+    "cross-Veda matrices": ("scripts/build_enrichment.py",),
+    "formula / parallel / variant relations": ("scripts/build_formula_families.py",),
+    "entity coverage": ("scripts/build_veda_coverage_and_metrics.py",),
+    "quality evaluation": ("scripts/graph_quality_scorecard.py",),
+    # Three stages, so three builders. Round three recorded only the Python export for both
+    # world consumers, which is the stage that applies NOT n:Internal -- and the two JS stages
+    # that turn its output into the files a browser downloads were in nothing's hash.
+    "Visualization Lab aggregates": (
+        "frontend/scripts/build-constellations.mjs",
+        "frontend/scripts/build-world.mjs",
+    ),
+    "Knowledge World public projection": (
+        "scripts/export_graph_world.py",
+        "scripts/export_predicate_semantics.py",
+    ),
+}
+
+#: Every file a consumer's build produces that something downstream or a reader consumes.
+#:
+#: Wave 4 finding, and the reason this exists as a declaration rather than a ``--output-file``
+#: argument. Both world consumers had recorded ``frontend/.world/world.raw.json`` -- an
+#: intermediate, and the SAME intermediate -- as their output. So the Lab stage could never be
+#: seen stale, because the file it was judged on is rebuilt by the other consumer, and the four
+#: files that actually ship were declared by nothing at all.
+#:
+#: Measured consequence: M10 marked 28 malformed metre identities internal, the Python export
+#: was re-run and dropped them, and ``frontend/public/world/world.labels.json`` still carried
+#: all 28 to every reader of the Knowledge World. The dependency report said STALE_INPUT for a
+#: digest on the intermediate and nothing about the bundle.
+CONSUMER_OUTPUTS: dict[str, tuple[str, ...]] = {
+    "cross-Veda matrices": ("data/enrichment/vedagraph_enrichment_v1/manifest.json",),
+    "formula / parallel / variant relations": (
+        "data/enrichment/vedagraph_enrichment_v1/formula_families.jsonl",
+    ),
+    "entity coverage": ("data/domain/vedagraph_domain_v2/veda_coverage_v3.json",),
+    "quality evaluation": ("docs/reports/GRAPH_QUALITY_V2_SCORECARD.md",),
+    "Knowledge World public projection": (
+        "frontend/.world/world.raw.json",
+        "frontend/public/world/world.predicates.json",
+    ),
+    "Visualization Lab aggregates": (
+        "frontend/.world/constellations.json",
+        "frontend/public/world/world.bin",
+        "frontend/public/world/world.json",
+        "frontend/public/world/world.labels.json",
+    ),
 }
 
 
@@ -175,10 +219,21 @@ def upstream_hashes(session: Session, consumer: dict[str, Any]) -> dict[str, str
         inputs[f"type:{predicate}"] = predicate_fingerprint(session, predicate)
     for relative in CONSUMER_FILES.get(name, ()):
         inputs[f"file:{relative}"] = file_digest(pathlib.Path(relative)) or "absent"
-    builder = CONSUMER_BUILDERS.get(name)
-    if builder:
+    for builder in CONSUMER_BUILDERS.get(name, ()):
         inputs[f"builder:{builder}"] = file_digest(pathlib.Path(builder)) or "absent"
     return inputs
+
+
+def declared_output_hashes(name: str) -> dict[str, str]:
+    """Every declared output of a consumer, hashed, missing ones recorded as ``absent``.
+
+    ``absent`` rather than omitted: a recorded output that has since been deleted must read
+    as a difference, and a key that disappears from the dict would compare equal to nothing.
+    """
+    return {
+        relative: file_digest(pathlib.Path(relative)) or "absent"
+        for relative in CONSUMER_OUTPUTS.get(name, ())
+    }
 
 
 def consumer_by_name(name: str) -> dict[str, Any]:
@@ -217,6 +272,23 @@ def classify(
     if moved:
         return "STALE_INPUT", moved, None
 
+    # Declared outputs first, because that is the check that catches a stage rebuilt out of
+    # step with the stage it feeds. Every declared output is compared, and the reason names
+    # which file rather than saying an output moved.
+    for relative, recorded_hash in (recorded.get("output_hashes") or {}).items():
+        path = pathlib.Path(relative)
+        if not path.exists():
+            return "STALE_INPUT", [], f"declared output {relative} is gone"
+        actual = file_digest(path)
+        if actual != recorded_hash:
+            if recorded_hash == "absent":
+                return "STALE_INPUT", [], f"declared output {relative} appeared after recording"
+            return (
+                "STALE_INPUT",
+                [],
+                f"declared output {relative} no longer matches its recorded digest",
+            )
+
     output = recorded.get("output_file")
     if output:
         path = pathlib.Path(str(output))
@@ -252,10 +324,18 @@ def main() -> int:
                     "built_at": datetime.datetime.now(datetime.UTC).isoformat(),
                     "graph_census": {"nodes": nodes, "relationships": rels},
                 }
+                declared = declared_output_hashes(args.record)
                 if args.not_applicable:
                     entry["not_applicable_reason"] = args.not_applicable
                 elif args.blocked:
                     entry["blocked_reason"] = args.blocked
+                elif declared:
+                    missing = sorted(k for k, v in declared.items() if v == "absent")
+                    if missing:
+                        print(f"  declared output(s) do not exist: {missing}")
+                        print("  build them before recording; a recorded absence is not a build.")
+                        return 1
+                    entry["output_hashes"] = declared
                 elif args.output_file:
                     path = pathlib.Path(args.output_file)
                     if not path.exists():
@@ -288,6 +368,7 @@ def main() -> int:
                         "reason": reason,
                         "output_file": recorded.get("output_file"),
                         "output_hash": recorded.get("output_hash"),
+                        "declared_outputs": sorted(recorded.get("output_hashes") or {}),
                         "built_at": recorded.get("built_at"),
                         "rebuilt_by": consumer.get("rebuilt_by"),
                         "current_input_digest": digest(
