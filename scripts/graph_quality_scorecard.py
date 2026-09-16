@@ -24,7 +24,7 @@ import pathlib
 import sys
 import warnings
 from collections.abc import Mapping
-from typing import Any
+from typing import Any, Final
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 warnings.filterwarnings("ignore")
@@ -36,6 +36,8 @@ from vedagraph.domain.claims import claim_summary, load_claims  # noqa: E402
 from vedagraph.domain.ontology import (  # noqa: E402
     DOMAIN_MODEL_VERSION,
     INTERNAL_LABELS,
+    LABEL_INTERNAL,
+    PRODUCT_LABELS,
     UNPOPULATED_BY_DESIGN,
     all_declared_relationship_types,
     all_endpoint_signatures,
@@ -46,6 +48,35 @@ from vedagraph.domain.registry import (  # noqa: E402
     load_domain_entities,
 )
 from vedagraph.domain.taxonomy import load_taxonomy  # noqa: E402
+
+#: Individual nodes exempted by name, with the evidence. Named rather than label-exempted
+#: because :ActionPredicate has 41 nodes and 40 carry edges -- exempting the label would hide
+#: the next one to lose its own.
+ORPHANS_EXEMPT_BY_NAME: Final[dict[tuple[str, str, str], str]] = {
+    ("ActionPredicate", "predicate", "CURSES"): (
+        "441 PERFORMS_ACTION edges cover 40 of 41 ActionPredicates; CURSES has none, and the "
+        "zero is measured rather than dropped. Its Rigvedic occurrences sit in "
+        "staging/semantic_roles/role_candidates.jsonl as importable: false -- 'case-scoped "
+        "role candidate. Measured against the DCS dependency parse at 24.3% wrong'. Its "
+        "Atharvavedic occurrences DID land: 3 :RoleFiller nodes carry predicate CURSES, and "
+        "that layer represents the predicate as a property rather than as an edge to this "
+        "vocabulary node."
+    ),
+}
+
+#: Product labels whose nodes are edgeless BY DESIGN, each with the reason. A reason per
+#: label, not a tolerated count: a numeric threshold would absorb the next real orphan.
+ORPHANED_BY_DESIGN: Final[dict[str, str]] = {
+    "DerivedMetric": (
+        "A metric measures a population, not a node. 1,006 of 1,085 carry no edge and the "
+        "scorecard has a separate gate asserting they do NOT point at passages, so "
+        "edgelessness is the intended shape rather than a missing link."
+    ),
+    "ScholarlyWork": (
+        "One bibliography entry that no claim cites. 16 of the 17 works appear in the rows; "
+        "this one is a reference, and the Wave 3 readback already exempted it by name."
+    ),
+}
 
 BOLT_URI = "bolt://localhost:7687"
 BOLT_AUTH = ("neo4j", "vedagraph_dev")
@@ -217,6 +248,41 @@ def measure(session: Any) -> dict[str, Any]:
     out["orphan_entities"] = _one(
         session, "MATCH (n:DomainEntity) WHERE NOT (n)--() RETURN count(n)"
     )
+    # Every product label, not just :DomainEntity. The narrow version reported 0 while 28
+    # retired :Chandas identities sat edgeless AND public, visible in the world export as
+    # Vedic metres -- :Chandas is a product label and not a :DomainEntity, so the gate could
+    # not see them. An unreachable public node is unreachable whatever its label.
+    orphans: dict[str, int] = {}
+    for label in sorted(PRODUCT_LABELS):
+        if label in ORPHANED_BY_DESIGN:
+            continue
+        exempt = [
+            (prop, value)
+            for (exempt_label, prop, value) in ORPHANS_EXEMPT_BY_NAME
+            if exempt_label == label
+        ]
+        clause = "".join(f" AND NOT n.{prop} = '{value}'" for prop, value in exempt)
+        count = _one(
+            session,
+            f"MATCH (n:`{label}`) WHERE NOT n:{LABEL_INTERNAL} AND NOT (n)--(){clause} "
+            "RETURN count(n)",
+        )
+        if count:
+            orphans[label] = count
+    out["orphan_public_nodes_by_label"] = orphans
+    out["orphan_public_nodes"] = sum(orphans.values())
+    out["orphans_exempted_by_name"] = {
+        f"{label}.{prop}={value}": reason
+        for (label, prop, value), reason in ORPHANS_EXEMPT_BY_NAME.items()
+    }
+    out["orphans_exempted_by_design"] = {
+        label: _one(
+            session,
+            f"MATCH (n:`{label}`) WHERE NOT n:{LABEL_INTERNAL} AND NOT (n)--() "
+            "RETURN count(n)",
+        )
+        for label in sorted(ORPHANED_BY_DESIGN)
+    }
     out["mention_edges"] = _one(
         session, "MATCH (:Passage)-[m:MENTIONS_ENTITY]->(:DomainEntity) RETURN count(m)"
     )
@@ -566,6 +632,8 @@ def render(m: dict[str, Any]) -> str:
         f"{'YES' if m['nodes_without_label'] == 0 else 'NO'} |",
         f"| orphan domain entities | {m['orphan_entities']} | "
         f"{'YES' if m['orphan_entities'] == 0 else 'NO'} |",
+        f"| orphan public nodes, all product labels | {m['orphan_public_nodes']} | "
+        f"{'YES' if m['orphan_public_nodes'] == 0 else 'NO'} |",
         f"| controlled-predicate violations | {len(m['signature_violations'])} | "
         f"{'YES' if not m['signature_violations'] else 'NO'} |",
         f"| undeclared relationship types | {len(m['undeclared_rel_types'])} | "
@@ -651,6 +719,11 @@ def main() -> int:
         "claims_non_candidate": measured["claims_non_candidate"],
         "claims_to_passages": measured["claims_to_passages_via_concerns"],
         "metrics_to_passages": measured["metrics_to_passages"],
+        # Added in Wave 4. The orphan_entities gate above is scoped to :DomainEntity and
+        # reported 0 while 28 retired :Chandas identities sat edgeless and PUBLIC, visible
+        # in the world export as Vedic metres. This one sweeps every product label, with
+        # ORPHANED_BY_DESIGN carrying a stated reason per exempt label.
+        "orphan_public_nodes": measured["orphan_public_nodes"],
     }
     print(f"wrote {REPORT_PATH}\n")
     print("integrity gates (all must be 0):")

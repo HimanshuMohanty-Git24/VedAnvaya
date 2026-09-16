@@ -14,8 +14,8 @@ weighted towards what a reader can rely on.
 |---|---|---|---|
 | nodes | 100,584 | 116,838 | +16,254 |
 | relationships | 212,336 | 281,257 | +68,921 |
-| product nodes | — | 39,692 | — |
-| internal nodes | 0 (unmarked) | 77,146 | +77,146 |
+| product nodes | — | 39,664 | — |
+| internal nodes | 0 (unmarked) | 77,174 | +77,174 |
 | domain entities | 89 | 375 | +286 |
 | typed domain labels | 0 | 24 | +24 |
 
@@ -62,7 +62,7 @@ not something the source said about any of those mantras.
 |---|---|---|
 | UNKNOWN_LABEL_RATE | 59.2% | **0.00%** |
 | product nodes without a readable label | 22,541 | **0** |
-| product nodes with `display_type` | 0 | 39,399 |
+| product nodes with `display_type` | 0 | 39,371 |
 
 ## 4. Devatā model
 
@@ -192,6 +192,7 @@ pseudo-entity `VG:CORPUS:FOUR-VEDA`, which deliberately has no node.
 | ungraded edges | 0 | YES |
 | product nodes without a readable label | 0 | YES |
 | orphan domain entities | 0 | YES |
+| orphan public nodes, all product labels | 0 | YES |
 | controlled-predicate violations | 0 | YES |
 | undeclared relationship types | 0 | YES |
 | claims wrongly pointing at passages | 0 | YES |
