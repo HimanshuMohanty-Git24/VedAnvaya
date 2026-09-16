@@ -3346,7 +3346,7 @@
       "gap_id": "GAP-ATTRIBUTION-WHITNEY-UNRESOLVED-OBJECT-001",
       "domain": "attribution",
       "surface": "Any verse-level Atharvavedic deity or metre attribution from Whitney's index: GET /api/v1/passages/{key}, the devata and chandas dimensions of the coverage surfaces, and the 83 verses whose printed bracket states an exception to their hymn's ascription.",
-      "evidence": "All 466 SOURCE_EXPLICIT rows in data/staging/attribution/rows.jsonl carry entity_resolution_method = VERBATIM_SOURCE_STRING_NOT_RESOLVED. Gate B check 'every object resolves to an entity the graph holds' fails 466 of 466. Gate C confirms the rows themselves are sound: every stated verse address appears verbatim in the printed bracket, every address covers the verse it claims, and no verse address overruns its hymn.",
+      "evidence": "All 466 SOURCE_EXPLICIT rows carry entity_resolution_method = VERBATIM_SOURCE_STRING_NOT_RESOLVED. Round four found a permitted resolution channel and it works: the AV registries' own source_variants, generated from the same Whitney index, resolve 405 of 477 proposals with 0 ambiguity and 0 findings against any individual resolution. All 383 chandas literals resolve; all 72 unresolved proposals are devata, and many of those are plainly not entity references -- 'agnim astaut' (a verbal clause), 'devan' (a generic plural), 'mantroktadevatye' (the index saying the deity is named in the mantra itself). Probe: scripts/whitney_resolution.py.",
       "classification": "IMPLEMENTATION_GAP",
       "description": "466 verse-level attributions from Whitney's Atharvaveda index cannot be imported because their objects are verbatim printed Sanskrit strings that resolve to no node -- 'kamadevatya', 'pathyapankti' and the like. An edge needs a node at the far end. The only mechanism available is a normalized-string join against :Chandas and :DevataAscription, and normalization is a comparison instrument rather than identity evidence, so that join is barred. The rows are correct and are retained; what is missing is an entity resolution step.",
       "current_count": 0,
@@ -3355,20 +3355,21 @@
       "status": "OPEN",
       "causation_status": "MEASURED",
       "root_cause": "NO_ENTITY_RESOLUTION_FOR_VERBATIM_SOURCE_STRINGS",
-      "measured_root_cause": "The staging builder recorded the printed value verbatim and deliberately did not resolve it, which is the right call -- resolving by string equality is what this campaign forbids. Nothing downstream supplies the missing step.",
-      "closure_method": "A resolution pass that maps each verbatim value to a :Chandas or :DevataAscription identity on evidence other than surface equality, with its own adversarial gate, or a decision to model the verbatim string as its own node class.",
+      "measured_root_cause": "No longer 'no resolution channel exists'. The channel exists and succeeds; the target vocabulary is unsound. Of 541 AV_WHITNEY :Chandas entities, a number are unsegmented bracket fragments carrying a deity, a metre and sometimes a verse exception in one string. Three tests written to bound that share disagree (17, 28, 39), and the disagreement is itself the finding: separating a deity adjective from a metre name is philological adjudication, which may not act as identity evidence, so a partial import cannot be made safe.",
+      "closure_method": "Blocked behind GAP-AV-CHANDOMETRE-SEGMENTATION-001. Once the metre vocabulary is sound, the 383 chandas rows resolve through the registry channel already proven here. The 72 devata literals need a separate decision on whether a printed clause or generic plural is an entity reference at all -- if it is not, RETAINED_LITERAL_NON_ENTITY is the correct model and preserving the string as evidence is the correct outcome.",
       "closure_test": "Every one of the 466 rows either resolves to an identity and lands as an edge, or is rejected with a stated reason. Read back from canonical Neo4j.",
       "owner_agent": "attribution",
       "source_availability": "SOURCE_HELD",
       "source_dependency": "none -- the printed bracket is already transcribed in the row",
-      "implementation_dependency": "entity resolution for verbatim source strings",
+      "implementation_dependency": "GAP-AV-CHANDOMETRE-SEGMENTATION-001 for the chandas half; an owner ruling on entity-hood for the devata half",
       "diagnostics_run": [
         "scripts/attribution_gate_b.py",
-        "scripts/attribution_gate_c.py"
+        "scripts/attribution_gate_c.py",
+        "scripts/whitney_resolution.py"
       ],
       "observed_gap": "466 source-explicit attributions held and unimportable",
       "initial_hypothesis": "the rows were unvalidated and might be wrong",
-      "initial_hypothesis_status": "DISPROVED. Gate C checked them against their own printed source and found no defect. The blocker is resolution, not correctness."
+      "initial_hypothesis_status": "DISPROVED TWICE. Round three: the rows are not wrong -- Gate C checked them against their own printed source and found no defect. Round four: nor are they unresolvable -- a permitted channel resolves 405 of 477. They are withheld because the vocabulary they would resolve into is contaminated, which is a stronger and more specific reason than either earlier one."
     },
     {
       "gap_id": "GAP-RITUAL-STEP-LOCATOR-COLLISION-001",
