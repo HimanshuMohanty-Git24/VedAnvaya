@@ -81,16 +81,23 @@ apparatus class -- see its docstring -- and every refusal is written per hymn to
 ``rejected_from_devata_slot`` in the provenance sidecar and republished in the generated
 registry's ``rejections`` block.
 
-**Known residual, measured and not fixed here.**  17 ``HAS_CHANDAS`` values are whole
-un-parsed bracket fragments rather than metre names: they still contain a colon, and some
-carry a devatā with them (``mantroktadevatyā. anuṣṭubham: 1. bhurik triṣṭubh``,
-``rāudryāu: 2. anuṣṭubh``, ``sāumyā. ānuṣṭubham: 3. 3-p. virāṇ nāma gāyatrī``).  They arise
-where a **per-verse devatā exception** is printed inside the metre list, so the tail
-splitter reads one specification where the page states two.  That is a tail-grammar
-problem, not a corruption-pair problem, and fixing it means deciding how a per-verse devatā
-should be scoped -- which the ``HAS_DEVATA`` layer does not currently model at mantra
-scope.  Left as a named gap so it is not mistaken for cleanliness: ``grep ':'`` over
-``data/registry/chandas_av.yaml`` enumerates them.
+**The compound-statement residual, fixed in Wave 4.**  33 ``HAS_CHANDAS`` values were whole
+un-parsed bracket fragments rather than metre names -- 20 carrying a colon, 32 carrying an
+embedded verse address, 33 in union.  They arose where a **per-verse devatā exception** is
+printed inside the metre list, so the tail splitter read one specification where the page
+states two: AVS 5.3's ``8, 11. āindrī. trāiṣṭubham: 2. bhurij`` is a per-verse devatā, then
+the hymn's metre, then that metre's own exception, with no semicolon between them.
+
+``compound_metre_statement`` now refuses such a value at both emission sites, by the same
+two structural tokens this parser already relies on: a colon separates a statement from its
+per-verse exceptions, and a bare ``N.`` is a verse address.
+
+It refuses rather than repairs, and that is deliberate.  The notation makes the compound
+*detectable* but not *assignable*: ``trāiṣṭubham`` in that example is the hymn's default
+printed inside a per-verse list, so assigning it to verses 8 and 11 would be a fabrication,
+and re-addressing ``'7. 5-p. pathyāpan̄kti'`` onto verse 7 would be inference from the mixed
+string.  Every refusal is recorded per hymn in the provenance sidecar, so the printed words
+survive even though no assertion is made from them.
 
 Usage
 -----
@@ -114,9 +121,20 @@ import orjson
 
 from vedagraph.identity import uuid_for_urn
 
-# Rejection reasons carry the verbatim rejected token, which is IAST, and the Windows
-# console is cp1252. Reporting a rejection must not be the thing that kills the build.
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+
+def use_utf8_console() -> None:
+    """Re-encode stdout for IAST output. Called by __main__, never at import.
+
+    Rejection reasons carry the verbatim rejected token, which is IAST, and the Windows
+    console is cp1252 -- reporting a rejection must not be the thing that kills the build.
+
+    This used to run at module scope, and that is why the parser had no tests: replacing
+    sys.stdout on import detaches pytest's capture buffer, so importing this module killed
+    the whole session with "I/O operation on closed file". The builder's docstring named
+    33 malformed values as a known residual and shipped them; a parser no test can import
+    is a parser whose residual cannot become a failing test. Same fact, two symptoms.
+    """
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 
 CORPUS = Path("data/canonical/atharvaveda_saunaka_digital_working_v1")
 MANIFEST = Path("data/raw/wikisource_whitney_avs/anukramani_page_manifest.jsonl")
@@ -218,6 +236,35 @@ CORRUPT_METRE = re.compile(r"[sṣ][tṭ]uhh")
 PARENTHESISED_ASCRIPTION = re.compile(r"^\s*\((.*?—.*?)\)\s*", re.DOTALL)
 #: Devatā markers: the tradition's own suffixes for "having X as deity".
 DEVATA_MARKER = re.compile(r"devat|d[āa]ivat|devy|d[āa]ivy")
+
+#: A bare verse address inside a value. Whitney writes structural qualifiers as ``3-av.``
+#: and ``6-p.`` -- digit, hyphen, letters -- so the negative lookbehind keeps those out of
+#: this pattern while a true verse reference (``24. ``, ``7. ``) matches.
+EMBEDDED_VERSE_ADDRESS = re.compile(r"(?<![0-9a-zA-Z-])\d{1,2}\.\s")
+
+
+def compound_metre_statement(value: str) -> str:
+    """Why this value cannot be one metre name, in Whitney's own notation, or "".
+
+    Two structural tokens, both already justified elsewhere in this parser. A colon
+    separates a statement from its per-verse exceptions -- that is what
+    :func:`split_head_and_tail` splits on -- and a bare ``N.`` is a verse address, which is
+    what :data:`PER_VERSE_OPENER` recognises. Neither can occur inside the NAME of a metre,
+    so a value carrying either is a run of two or more printed statements.
+
+    Deliberately only those two tokens. Generic digit detection would refuse
+    ``3-av. 6-p. dvyuṣṇiggarbhā jagatī``, which is one metre name with two structural
+    qualifiers; punctuation heuristics would refuse ``trāiṣṭubham, jātavedasam``, which the
+    tail loop already splits correctly; and deciding which half of a compound is the metre
+    is Sanskrit adjudication, which is exactly what this function exists to avoid doing.
+
+    Returns a refusal reason rather than a bool so the caller records WHICH token fired.
+    """
+    if ":" in value:
+        return "colon_separates_statement_from_per_verse_exceptions"
+    if EMBEDDED_VERSE_ADDRESS.search(value):
+        return "embedded_verse_address"
+    return ""
 #: Sanskrit numeral words used for the stated verse count, mapped by explicit table rather
 #: than by a compound parser: the vocabulary is 79 strings on the real data and a parser
 #: would silently invent values for the irregular ones.
@@ -776,6 +823,15 @@ def parse_bracket(item: Bracket) -> Bracket:
                 if not part:
                     continue
                 if METRE_STEM.search(part):
+                    # Same criterion as the per-verse path. This site emits 0 malformed
+                    # values today; a guard placed only where a defect was observed is a
+                    # guard waiting for the next page layout.
+                    compound = compound_metre_statement(part)
+                    if compound:
+                        item.refusals.append(
+                            f"default_metre_is_a_compound_statement:{compound}"
+                        )
+                        continue
                     item.chandas.append(printed_value(part))
                 elif classify_head_part(item, part):
                     item.devata.append(printed_value(part))
@@ -790,6 +846,20 @@ def parse_bracket(item: Bracket) -> Bracket:
             continue
         if not value or not METRE_STEM.search(value):
             continue  # a per-verse devatā exception, not a metre
+        # The 33 malformed values entered here. The tail is split on ";" alone, so where a
+        # page prints a per-verse devatā, then the hymn's metre, then that metre's own
+        # exception without a semicolon between them -- AVS 5.3's
+        # "8, 11. āindrī. trāiṣṭubham: 2. bhurij" -- ``[^;]+`` takes all three and
+        # METRE_STEM matches the middle one.
+        #
+        # Refused, not repaired. The notation makes the compound detectable but not
+        # assignable: ``trāiṣṭubham`` there is the HYMN's default printed inside a per-verse
+        # list, so giving it to verses 8 and 11 would be a fabrication, and re-addressing
+        # ``'7. 5-p. pathyāpan̄kti'`` onto verse 7 is inference from the mixed string.
+        compound = compound_metre_statement(value)
+        if compound:
+            item.refusals.append(f"per_verse_metre_is_a_compound_statement:{compound}")
+            continue
         for part in addresses.split(","):
             part = part.strip()
             if not part:
@@ -1200,4 +1270,5 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    use_utf8_console()
     main()

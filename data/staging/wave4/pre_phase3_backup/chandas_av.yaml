@@ -446,6 +446,18 @@ entities:
   ocr_variants_merged: []
   is_ascription_descriptor: false
   rv_registry_name_match: ''
+- entity_key: VG:CHANDAS:AV:2-BHURIJ-BCC4
+  entity_type: CHANDAS
+  registry_namespace: AV_WHITNEY_ANUKRAMANI
+  preferred_label: 2. bhurij
+  label_iast: 2. bhurij
+  normalized_name: 2. bhurij
+  occurrence_count: 1
+  source_variants:
+  - 2. bhurij
+  ocr_variants_merged: []
+  is_ascription_descriptor: false
+  rv_registry_name_match: ''
 - entity_key: VG:CHANDAS:AV:3-AV-5-P-ANUSTUBGARBHA-PURAUPARISTAJJYOTISMATI-JAGATI-6645
   entity_type: CHANDAS
   registry_namespace: AV_WHITNEY_ANUKRAMANI
@@ -721,6 +733,18 @@ entities:
   occurrence_count: 1
   source_variants:
   - 3-av. 6-p. upariṣṭāddāivībṛhatī kaiummatīgarbhā virāḍjagatī
+  ocr_variants_merged: []
+  is_ascription_descriptor: false
+  rv_registry_name_match: ''
+- entity_key: VG:CHANDAS:AV:3-AV-6-P-VIRAD-ATIJAGATI-24-5-P-VIRAD-ATIJAGATI-D77A
+  entity_type: CHANDAS
+  registry_namespace: AV_WHITNEY_ANUKRAMANI
+  preferred_label: '3-av. 6-p. virāḍ atijagatī: 24. 5-p. virāḍ atijagatī'
+  label_iast: '3-av. 6-p. virāḍ atijagatī: 24. 5-p. virāḍ atijagatī'
+  normalized_name: '3-av. 6-p. virāḍ atijagatī: 24. 5-p. virāḍ atijagatī'
+  occurrence_count: 1
+  source_variants:
+  - '3-av. 6-p. virāḍ atijagatī: 24. 5-p. virāḍ atijagatī'
   ocr_variants_merged: []
   is_ascription_descriptor: false
   rv_registry_name_match: ''
@@ -1141,6 +1165,18 @@ entities:
   occurrence_count: 1
   source_variants:
   - 3-p. pathyāpan̄kti
+  ocr_variants_merged: []
+  is_ascription_descriptor: false
+  rv_registry_name_match: ''
+- entity_key: VG:CHANDAS:AV:3-P-PIPILIKAMADHYA-PURAUSNIH-1-11-EKAVASANA-2657
+  entity_type: CHANDAS
+  registry_namespace: AV_WHITNEY_ANUKRAMANI
+  preferred_label: '3-p. pipīlikamadhyā purauṣṇih: 1-11. ekāvasāna'
+  label_iast: '3-p. pipīlikamadhyā purauṣṇih: 1-11. ekāvasāna'
+  normalized_name: '3-p. pipīlikamadhyā purauṣṇih: 1-11. ekāvasāna'
+  occurrence_count: 1
+  source_variants:
+  - '3-p. pipīlikamadhyā purauṣṇih: 1-11. ekāvasāna'
   ocr_variants_merged: []
   is_ascription_descriptor: false
   rv_registry_name_match: ''
@@ -2258,6 +2294,30 @@ entities:
   ocr_variants_merged: []
   is_ascription_descriptor: false
   rv_registry_name_match: ''
+- entity_key: VG:CHANDAS:AV:5-2-P-ASURI-GAYATRI-65E4
+  entity_type: CHANDAS
+  registry_namespace: AV_WHITNEY_ANUKRAMANI
+  preferred_label: 5. 2-p. āsurī gāyatrī
+  label_iast: 5. 2-p. āsurī gāyatrī
+  normalized_name: 5. 2-p. āsurī gāyatrī
+  occurrence_count: 1
+  source_variants:
+  - 5. 2-p. āsurī gāyatrī
+  ocr_variants_merged: []
+  is_ascription_descriptor: false
+  rv_registry_name_match: ''
+- entity_key: VG:CHANDAS:AV:5-JAGATI-1789
+  entity_type: CHANDAS
+  registry_namespace: AV_WHITNEY_ANUKRAMANI
+  preferred_label: 5. jagatī
+  label_iast: 5. jagatī
+  normalized_name: 5. jagatī
+  occurrence_count: 1
+  source_variants:
+  - 5. jagatī
+  ocr_variants_merged: []
+  is_ascription_descriptor: false
+  rv_registry_name_match: ''
 - entity_key: VG:CHANDAS:AV:6-P-3-AV-JAGATI-3F2F
   entity_type: CHANDAS
   registry_namespace: AV_WHITNEY_ANUKRAMANI
@@ -2354,6 +2414,18 @@ entities:
   ocr_variants_merged: []
   is_ascription_descriptor: false
   rv_registry_name_match: ''
+- entity_key: VG:CHANDAS:AV:6-ANUSTUBH-E1BD
+  entity_type: CHANDAS
+  registry_namespace: AV_WHITNEY_ANUKRAMANI
+  preferred_label: 6. anuṣṭubh
+  label_iast: 6. anuṣṭubh
+  normalized_name: 6. anuṣṭubh
+  occurrence_count: 1
+  source_variants:
+  - 6. anuṣṭubh
+  ocr_variants_merged: []
+  is_ascription_descriptor: false
+  rv_registry_name_match: ''
 - entity_key: VG:CHANDAS:AV:7-P-ASTI-9512
   entity_type: CHANDAS
   registry_namespace: AV_WHITNEY_ANUKRAMANI
@@ -2411,6 +2483,18 @@ entities:
   occurrence_count: 1
   source_variants:
   - 7-p. çakvarī
+  ocr_variants_merged: []
+  is_ascription_descriptor: false
+  rv_registry_name_match: ''
+- entity_key: VG:CHANDAS:AV:7-5-P-PATHYAPANKTI-5CD7
+  entity_type: CHANDAS
+  registry_namespace: AV_WHITNEY_ANUKRAMANI
+  preferred_label: 7. 5-p. pathyāpan̄kti
+  label_iast: 7. 5-p. pathyāpan̄kti
+  normalized_name: 7. 5-p. pathyāpan̄kti
+  occurrence_count: 1
+  source_variants:
+  - 7. 5-p. pathyāpan̄kti
   ocr_variants_merged: []
   is_ascription_descriptor: false
   rv_registry_name_match: ''
@@ -2974,6 +3058,30 @@ entities:
   ocr_variants_merged: []
   is_ascription_descriptor: false
   rv_registry_name_match: ''
+- entity_key: VG:CHANDAS:AV:BHAUMI-ANUSTUBHAM-1-3-PATHYAPANKTI-3126
+  entity_type: CHANDAS
+  registry_namespace: AV_WHITNEY_ANUKRAMANI
+  preferred_label: 'bhāumī. ānuṣṭubham: 1, 3. pathyāpan̄kti'
+  label_iast: 'bhāumī. ānuṣṭubham: 1, 3. pathyāpan̄kti'
+  normalized_name: 'bhāumī. ānuṣṭubham: 1, 3. pathyāpan̄kti'
+  occurrence_count: 1
+  source_variants:
+  - 'bhāumī. ānuṣṭubham: 1, 3. pathyāpan̄kti'
+  ocr_variants_merged: []
+  is_ascription_descriptor: false
+  rv_registry_name_match: ''
+- entity_key: VG:CHANDAS:AV:BRAHMANASPATYA-ANUSTUBHAM-4-VIRATPRASTARAPANKTI-5B81
+  entity_type: CHANDAS
+  registry_namespace: AV_WHITNEY_ANUKRAMANI
+  preferred_label: 'brāhmaṇaspatyā. ānuṣṭubham: 4. virāṭprastārapan̄kti'
+  label_iast: 'brāhmaṇaspatyā. ānuṣṭubham: 4. virāṭprastārapan̄kti'
+  normalized_name: 'brāhmaṇaspatyā. ānuṣṭubham: 4. virāṭprastārapan̄kti'
+  occurrence_count: 1
+  source_variants:
+  - 'brāhmaṇaspatyā. ānuṣṭubham: 4. virāṭprastārapan̄kti'
+  ocr_variants_merged: []
+  is_ascription_descriptor: false
+  rv_registry_name_match: ''
 - entity_key: VG:CHANDAS:AV:BARHATAGARBHA-TRISTUBH-0DC9
   entity_type: CHANDAS
   registry_namespace: AV_WHITNEY_ANUKRAMANI
@@ -3529,6 +3637,54 @@ entities:
   occurrence_count: 6
   source_variants:
   - mahābṛhatī
+  ocr_variants_merged: []
+  is_ascription_descriptor: false
+  rv_registry_name_match: ''
+- entity_key: VG:CHANDAS:AV:MANTROKTABAHUDEVATYAM-1-PATHYABRHATI-F814
+  entity_type: CHANDAS
+  registry_namespace: AV_WHITNEY_ANUKRAMANI
+  preferred_label: mantroktabahudevatyam. 1. pathyābṛhatī
+  label_iast: mantroktabahudevatyam. 1. pathyābṛhatī
+  normalized_name: mantroktabahudevatyam. 1. pathyābṛhatī
+  occurrence_count: 2
+  source_variants:
+  - mantroktabahudevatyam. 1. pathyābṛhatī
+  ocr_variants_merged: []
+  is_ascription_descriptor: false
+  rv_registry_name_match: ''
+- entity_key: VG:CHANDAS:AV:MANTROKTADEVATYAM-1-2-ANUSTUBH-49AE
+  entity_type: CHANDAS
+  registry_namespace: AV_WHITNEY_ANUKRAMANI
+  preferred_label: mantroktadevatyam. 1, 2. anuṣṭubh
+  label_iast: mantroktadevatyam. 1, 2. anuṣṭubh
+  normalized_name: mantroktadevatyam. 1, 2. anuṣṭubh
+  occurrence_count: 1
+  source_variants:
+  - mantroktadevatyam. 1, 2. anuṣṭubh
+  ocr_variants_merged: []
+  is_ascription_descriptor: false
+  rv_registry_name_match: ''
+- entity_key: VG:CHANDAS:AV:MANTROKTADEVATYE-JAGATYAU-3-AINDRI-ANUSTUBH-9752
+  entity_type: CHANDAS
+  registry_namespace: AV_WHITNEY_ANUKRAMANI
+  preferred_label: mantroktadevatye. jagatyāu. 3. āindrī. anuṣṭubh
+  label_iast: mantroktadevatye. jagatyāu. 3. āindrī. anuṣṭubh
+  normalized_name: mantroktadevatye. jagatyāu. 3. āindrī. anuṣṭubh
+  occurrence_count: 1
+  source_variants:
+  - mantroktadevatye. jagatyāu. 3. āindrī. anuṣṭubh
+  ocr_variants_merged: []
+  is_ascription_descriptor: false
+  rv_registry_name_match: ''
+- entity_key: VG:CHANDAS:AV:MANTROKTADEVATYA-ANUSTUBHAM-1-BHURIK-TRISTUBH-D1B1
+  entity_type: CHANDAS
+  registry_namespace: AV_WHITNEY_ANUKRAMANI
+  preferred_label: 'mantroktadevatyā. anuṣṭubham: 1. bhurik triṣṭubh'
+  label_iast: 'mantroktadevatyā. anuṣṭubham: 1. bhurik triṣṭubh'
+  normalized_name: 'mantroktadevatyā. anuṣṭubham: 1. bhurik triṣṭubh'
+  occurrence_count: 1
+  source_variants:
+  - 'mantroktadevatyā. anuṣṭubham: 1. bhurik triṣṭubh'
   ocr_variants_merged: []
   is_ascription_descriptor: false
   rv_registry_name_match: ''
@@ -4116,6 +4272,18 @@ entities:
   ocr_variants_merged: []
   is_ascription_descriptor: false
   rv_registry_name_match: ''
+- entity_key: VG:CHANDAS:AV:PRAJAPATYA-TRAISTUBHAM-2-ANUSTUBH-6B49
+  entity_type: CHANDAS
+  registry_namespace: AV_WHITNEY_ANUKRAMANI
+  preferred_label: 'prājāpatyā. trāiṣṭubham: 2. anuṣṭubh'
+  label_iast: 'prājāpatyā. trāiṣṭubham: 2. anuṣṭubh'
+  normalized_name: 'prājāpatyā. trāiṣṭubham: 2. anuṣṭubh'
+  occurrence_count: 1
+  source_variants:
+  - 'prājāpatyā. trāiṣṭubham: 2. anuṣṭubh'
+  ocr_variants_merged: []
+  is_ascription_descriptor: false
+  rv_registry_name_match: ''
 - entity_key: VG:CHANDAS:AV:PRAKRTA-72EF
   entity_type: CHANDAS
   registry_namespace: AV_WHITNEY_ANUKRAMANI
@@ -4574,6 +4742,42 @@ entities:
   ocr_variants_merged: []
   is_ascription_descriptor: false
   rv_registry_name_match: ''
+- entity_key: VG:CHANDAS:AV:RAUDRYAU-2-ANUSTUBH-7C91
+  entity_type: CHANDAS
+  registry_namespace: AV_WHITNEY_ANUKRAMANI
+  preferred_label: 'rāudryāu: 2. anuṣṭubh'
+  label_iast: 'rāudryāu: 2. anuṣṭubh'
+  normalized_name: 'rāudryāu: 2. anuṣṭubh'
+  occurrence_count: 2
+  source_variants:
+  - 'rāudryāu: 2. anuṣṭubh'
+  ocr_variants_merged: []
+  is_ascription_descriptor: false
+  rv_registry_name_match: ''
+- entity_key: VG:CHANDAS:AV:RAUDRYAU-2-TRISTUBH-AC19
+  entity_type: CHANDAS
+  registry_namespace: AV_WHITNEY_ANUKRAMANI
+  preferred_label: 'rāudryāu: 2. triṣṭubh'
+  label_iast: 'rāudryāu: 2. triṣṭubh'
+  normalized_name: 'rāudryāu: 2. triṣṭubh'
+  occurrence_count: 2
+  source_variants:
+  - 'rāudryāu: 2. triṣṭubh'
+  ocr_variants_merged: []
+  is_ascription_descriptor: false
+  rv_registry_name_match: ''
+- entity_key: VG:CHANDAS:AV:SARVATMAKAM-RUDRAM-TRAISTUBHAM-2-ANUSTUBH-B201
+  entity_type: CHANDAS
+  registry_namespace: AV_WHITNEY_ANUKRAMANI
+  preferred_label: 'sarvātmakaṁ rudram. trāiṣṭubham: 2. anuṣṭubh'
+  label_iast: 'sarvātmakaṁ rudram. trāiṣṭubham: 2. anuṣṭubh'
+  normalized_name: 'sarvātmakaṁ rudram. trāiṣṭubham: 2. anuṣṭubh'
+  occurrence_count: 1
+  source_variants:
+  - 'sarvātmakaṁ rudram. trāiṣṭubham: 2. anuṣṭubh'
+  ocr_variants_merged: []
+  is_ascription_descriptor: false
+  rv_registry_name_match: ''
 - entity_key: VG:CHANDAS:AV:SATAHPANKTI-3543
   entity_type: CHANDAS
   registry_namespace: AV_WHITNEY_ANUKRAMANI
@@ -4764,6 +4968,54 @@ entities:
   occurrence_count: 1
   source_variants:
   - sāudhanvanā. trāiṣṭubham
+  ocr_variants_merged: []
+  is_ascription_descriptor: false
+  rv_registry_name_match: ''
+- entity_key: VG:CHANDAS:AV:SAUMYA-SAVITRI-CA-ANUSTUBHAM-3-BHURIG-BRHATI-7B05
+  entity_type: CHANDAS
+  registry_namespace: AV_WHITNEY_ANUKRAMANI
+  preferred_label: 'sāumyā sāvitrī ca. ānuṣṭubham: 3. bhurig bṛhatī'
+  label_iast: 'sāumyā sāvitrī ca. ānuṣṭubham: 3. bhurig bṛhatī'
+  normalized_name: 'sāumyā sāvitrī ca. ānuṣṭubham: 3. bhurig bṛhatī'
+  occurrence_count: 1
+  source_variants:
+  - 'sāumyā sāvitrī ca. ānuṣṭubham: 3. bhurig bṛhatī'
+  ocr_variants_merged: []
+  is_ascription_descriptor: false
+  rv_registry_name_match: ''
+- entity_key: VG:CHANDAS:AV:SAUMYA-ANUSTUBHAM-3-3-P-VIRAN-NAMA-GAYATRI-1454
+  entity_type: CHANDAS
+  registry_namespace: AV_WHITNEY_ANUKRAMANI
+  preferred_label: 'sāumyā. ānuṣṭubham: 3. 3-p. virāṇ nāma gāyatrī'
+  label_iast: 'sāumyā. ānuṣṭubham: 3. 3-p. virāṇ nāma gāyatrī'
+  normalized_name: 'sāumyā. ānuṣṭubham: 3. 3-p. virāṇ nāma gāyatrī'
+  occurrence_count: 1
+  source_variants:
+  - 'sāumyā. ānuṣṭubham: 3. 3-p. virāṇ nāma gāyatrī'
+  ocr_variants_merged: []
+  is_ascription_descriptor: false
+  rv_registry_name_match: ''
+- entity_key: VG:CHANDAS:AV:SAURYE-1-ARCY-ANUSTUBH-C81A
+  entity_type: CHANDAS
+  registry_namespace: AV_WHITNEY_ANUKRAMANI
+  preferred_label: sāurye. 1. ārcy anuṣṭubh
+  label_iast: sāurye. 1. ārcy anuṣṭubh
+  normalized_name: sāurye. 1. ārcy anuṣṭubh
+  occurrence_count: 2
+  source_variants:
+  - sāurye. 1. ārcy anuṣṭubh
+  ocr_variants_merged: []
+  is_ascription_descriptor: false
+  rv_registry_name_match: ''
+- entity_key: VG:CHANDAS:AV:SAVITRI-1-1-P-BRAHMY-ANUSTUBH-EBBD
+  entity_type: CHANDAS
+  registry_namespace: AV_WHITNEY_ANUKRAMANI
+  preferred_label: sāvitrī. 1. 1-p. brāhmy anuṣṭubh
+  label_iast: sāvitrī. 1. 1-p. brāhmy anuṣṭubh
+  normalized_name: sāvitrī. 1. 1-p. brāhmy anuṣṭubh
+  occurrence_count: 1
+  source_variants:
+  - sāvitrī. 1. 1-p. brāhmy anuṣṭubh
   ocr_variants_merged: []
   is_ascription_descriptor: false
   rv_registry_name_match: ''
@@ -5134,6 +5386,18 @@ entities:
   occurrence_count: 1
   source_variants:
   - uṣṇih
+  ocr_variants_merged: []
+  is_ascription_descriptor: false
+  rv_registry_name_match: ''
+- entity_key: VG:CHANDAS:AV:VARUNASTUTI-TRAISTUBHAM-1-GAYATRI-4B5D
+  entity_type: CHANDAS
+  registry_namespace: AV_WHITNEY_ANUKRAMANI
+  preferred_label: 'varuṇastuti. trāiṣṭubham: 1. gāyatrī'
+  label_iast: 'varuṇastuti. trāiṣṭubham: 1. gāyatrī'
+  normalized_name: 'varuṇastuti. trāiṣṭubham: 1. gāyatrī'
+  occurrence_count: 1
+  source_variants:
+  - 'varuṇastuti. trāiṣṭubham: 1. gāyatrī'
   ocr_variants_merged: []
   is_ascription_descriptor: false
   rv_registry_name_match: ''
@@ -5653,6 +5917,18 @@ entities:
   ocr_variants_merged: []
   is_ascription_descriptor: false
   rv_registry_name_match: ''
+- entity_key: VG:CHANDAS:AV:VAICVADEVI-JAGATYAM-3-TRISTUBH-5A74
+  entity_type: CHANDAS
+  registry_namespace: AV_WHITNEY_ANUKRAMANI
+  preferred_label: 'vāiçvadevī. jāgatyam: 3. triṣṭubh'
+  label_iast: 'vāiçvadevī. jāgatyam: 3. triṣṭubh'
+  normalized_name: 'vāiçvadevī. jāgatyam: 3. triṣṭubh'
+  occurrence_count: 1
+  source_variants:
+  - 'vāiçvadevī. jāgatyam: 3. triṣṭubh'
+  ocr_variants_merged: []
+  is_ascription_descriptor: false
+  rv_registry_name_match: ''
 - entity_key: VG:CHANDAS:AV:YAVAMADHYA-3-P-GAYATRI-1177
   entity_type: CHANDAS
   registry_namespace: AV_WHITNEY_ANUKRAMANI
@@ -5893,6 +6169,46 @@ entities:
   ocr_variants_merged: []
   is_ascription_descriptor: false
   rv_registry_name_match: ''
+- entity_key: VG:CHANDAS:AV:AGNEYI-2-VAYAVYA-3-SAURYA-1-SAMNI-TRISTUBH-2-PRAJAPATYA-BRHATI-3-SAMNI-BRHATI-48A1
+  entity_type: CHANDAS
+  registry_namespace: AV_WHITNEY_ANUKRAMANI
+  preferred_label: āgneyī, 2. vāyavyā, 3. sāuryā. 1. sāmnī triṣṭubh, 2. prājāpatyā
+    bṛhatī, 3. sāmnī bṛhatī
+  label_iast: āgneyī, 2. vāyavyā, 3. sāuryā. 1. sāmnī triṣṭubh, 2. prājāpatyā bṛhatī,
+    3. sāmnī bṛhatī
+  normalized_name: āgneyī, 2. vāyavyā, 3. sāuryā. 1. sāmnī triṣṭubh, 2. prājāpatyā
+    bṛhatī, 3. sāmnī bṛhatī
+  occurrence_count: 1
+  source_variants:
+  - āgneyī, 2. vāyavyā, 3. sāuryā. 1. sāmnī triṣṭubh, 2. prājāpatyā bṛhatī, 3. sāmnī
+    bṛhatī
+  ocr_variants_merged: []
+  is_ascription_descriptor: false
+  rv_registry_name_match: ''
+- entity_key: VG:CHANDAS:AV:AGNEYI-JAGATAM-1-ATIJAGATIGARBHA-900C
+  entity_type: CHANDAS
+  registry_namespace: AV_WHITNEY_ANUKRAMANI
+  preferred_label: 'āgneyī. jāgatam: 1. atijagatīgarbhā'
+  label_iast: 'āgneyī. jāgatam: 1. atijagatīgarbhā'
+  normalized_name: 'āgneyī. jāgatam: 1. atijagatīgarbhā'
+  occurrence_count: 1
+  source_variants:
+  - 'āgneyī. jāgatam: 1. atijagatīgarbhā'
+  ocr_variants_merged: []
+  is_ascription_descriptor: false
+  rv_registry_name_match: ''
+- entity_key: VG:CHANDAS:AV:AGNEYI-TRAISTUBHAM-1-JAGATI-F59B
+  entity_type: CHANDAS
+  registry_namespace: AV_WHITNEY_ANUKRAMANI
+  preferred_label: 'āgneyī. trāiṣṭubham: 1. jagatī'
+  label_iast: 'āgneyī. trāiṣṭubham: 1. jagatī'
+  normalized_name: 'āgneyī. trāiṣṭubham: 1. jagatī'
+  occurrence_count: 1
+  source_variants:
+  - 'āgneyī. trāiṣṭubham: 1. jagatī'
+  ocr_variants_merged: []
+  is_ascription_descriptor: false
+  rv_registry_name_match: ''
 - entity_key: VG:CHANDAS:AV:AGNEYI-ANUSTUBHAM-BA0B
   entity_type: CHANDAS
   registry_namespace: AV_WHITNEY_ANUKRAMANI
@@ -5902,6 +6218,30 @@ entities:
   occurrence_count: 1
   source_variants:
   - āgneyī. ānuṣṭubham
+  ocr_variants_merged: []
+  is_ascription_descriptor: false
+  rv_registry_name_match: ''
+- entity_key: VG:CHANDAS:AV:AINDRYAS-ANUSTUBHAM-2-3-AV-6-P-JAGATI-1341
+  entity_type: CHANDAS
+  registry_namespace: AV_WHITNEY_ANUKRAMANI
+  preferred_label: 'āindryas. ānuṣṭubham: 2. 3-av. 6-p. jagatī'
+  label_iast: 'āindryas. ānuṣṭubham: 2. 3-av. 6-p. jagatī'
+  normalized_name: 'āindryas. ānuṣṭubham: 2. 3-av. 6-p. jagatī'
+  occurrence_count: 1
+  source_variants:
+  - 'āindryas. ānuṣṭubham: 2. 3-av. 6-p. jagatī'
+  ocr_variants_merged: []
+  is_ascription_descriptor: false
+  rv_registry_name_match: ''
+- entity_key: VG:CHANDAS:AV:AINDRI-TRAISTUBHAM-2-BHURIJ-E5EA
+  entity_type: CHANDAS
+  registry_namespace: AV_WHITNEY_ANUKRAMANI
+  preferred_label: 'āindrī. trāiṣṭubham: 2. bhurij'
+  label_iast: 'āindrī. trāiṣṭubham: 2. bhurij'
+  normalized_name: 'āindrī. trāiṣṭubham: 2. bhurij'
+  occurrence_count: 2
+  source_variants:
+  - 'āindrī. trāiṣṭubham: 2. bhurij'
   ocr_variants_merged: []
   is_ascription_descriptor: false
   rv_registry_name_match: ''
