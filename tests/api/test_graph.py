@@ -43,6 +43,7 @@ from vedagraph.api.services.graph_service import (
     PIPELINE_CONSTANT_PREDICATES,
     PREDICATE_SEMANTICS,
     PRODUCT_TYPE_BY_DISPLAY_TYPE,
+    STABLE_ID_PROPERTIES,
     TRAVERSABLE_RELATIONSHIPS,
     decode_relationship_id,
     encode_relationship_id,
@@ -505,15 +506,16 @@ class TestLiveInvariants:
     def test_every_traversable_endpoint_has_a_stable_product_id(
         self, live_repository: Neo4jRepository
     ) -> None:
+        # Derived from STABLE_ID_PROPERTIES rather than restated. The hand-written copy
+        # drifted the moment step_key was added to the real list: the traversal could name a
+        # :RitualStep and this test said 3,121 endpoints were unidentifiable, which is the
+        # test describing its own staleness rather than the graph.
         pattern = "|".join(sorted(TRAVERSABLE_RELATIONSHIPS))
+        ka = ", ".join(f"a.{name}" for name in STABLE_ID_PROPERTIES)
+        kb = ", ".join(f"b.{name}" for name in STABLE_ID_PROPERTIES)
         row = live_repository.run_one(
             f"MATCH (a)-[r:{pattern}]->(b) "
-            "WITH coalesce(a.canonical_key, a.entity_key, a.formula_id, a.family_id, "
-            "  a.epithet_key, a.axis_key, a.family_key, a.group_key, a.metric_id, "
-            "  a.claim_id, a.work_id, a.assertion_id, a.lemma, a.predicate) AS ka, "
-            "  coalesce(b.canonical_key, b.entity_key, b.formula_id, b.family_id, "
-            "  b.epithet_key, b.axis_key, b.family_key, b.group_key, b.metric_id, "
-            "  b.claim_id, b.work_id, b.assertion_id, b.lemma, b.predicate) AS kb "
+            f"WITH coalesce({ka}) AS ka, coalesce({kb}) AS kb "
             "WHERE ka IS NULL OR kb IS NULL RETURN count(*) AS unidentifiable"
         )
         assert row is not None

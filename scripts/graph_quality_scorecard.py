@@ -31,10 +31,14 @@ warnings.filterwarnings("ignore")
 PROJECT_ROOT = pathlib.Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT / "src"))
 
+from vedagraph.api.services.graph_service import (  # noqa: E402
+    LEMMA_RELATIONSHIP,
+    NON_TRAVERSABLE_REASONS,
+    TRAVERSABLE_RELATIONSHIPS,
+)
 from vedagraph.domain.claims import claim_summary, load_claims  # noqa: E402
 from vedagraph.domain.ontology import (  # noqa: E402
     DOMAIN_MODEL_VERSION,
-    DOMAIN_RELATIONSHIP_TYPES,
     INTERNAL_LABELS,
     RELATIONSHIP_SIGNATURES,
     UNPOPULATED_BY_DESIGN,
@@ -308,7 +312,16 @@ def measure(session: Any) -> dict[str, Any]:
             violations.append({"predicate": predicate, "violations": bad})
     out["signature_violations"] = violations
 
-    declared = DOMAIN_RELATIONSHIP_TYPES | {row["type"] for row in out["relationship_types"]}
+    # The authority is the product contract, not DOMAIN_RELATIONSHIP_TYPES -- which is the
+    # domain layer only, with the corpus, enrichment and semantic layers declaring their own,
+    # and 40 populated types legitimately outside it.
+    #
+    # The previous line unioned the ontology's set with every type found in the graph and
+    # then asked which graph types were missing from it. Nothing can be. The gate reported 0
+    # for a whole wave while eleven new predicates went unclassified.
+    declared = (
+        TRAVERSABLE_RELATIONSHIPS | set(NON_TRAVERSABLE_REASONS) | {LEMMA_RELATIONSHIP}
+    )
     out["undeclared_rel_types"] = sorted(
         row["type"]
         for row in out["relationship_types"]

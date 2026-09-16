@@ -88,6 +88,11 @@ LABEL_CONCEPT: Final = "Concept"
 LABEL_PHILOSOPHICAL_CONCEPT: Final = "PhilosophicalConcept"
 LABEL_THEME: Final = "Theme"
 LABEL_RITUAL: Final = "Ritual"
+#: One step of a rite as a Srautasutra or Grhyasutra prints it. A product label since M7,
+#: which gave the 3,121 nodes a display_type to go with the deterministic step_key,
+#: canonical URN and uuid5 they already carried. Distinct from LABEL_ACTION, which is what
+#: the Samhita-numbered HAS_STEP points at.
+LABEL_RITUAL_STEP: Final = "RitualStep"
 LABEL_OFFERING: Final = "Offering"
 LABEL_SUBSTANCE: Final = "Substance"
 LABEL_PLANT: Final = "Plant"
@@ -312,6 +317,7 @@ PRODUCT_LABELS: Final[frozenset[str]] = frozenset(
         LABEL_ACTION_PREDICATE,
         LABEL_DEVATA_ASCRIPTION,
         LABEL_FORMULA_FAMILY,
+        LABEL_RITUAL_STEP,
     }
 )
 

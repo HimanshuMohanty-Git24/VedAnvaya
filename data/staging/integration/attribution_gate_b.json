@@ -1,0 +1,173 @@
+{
+  "artifact": "ATTRIBUTION_GATE_B",
+  "rows_assessed": 23003,
+  "populations": {
+    "CENSUS": 22537,
+    "WHITNEY_INDEX": 466
+  },
+  "manifest_row_count": 23003,
+  "shared_checks": [
+    {
+      "check": "every subject resolves to a canonical :Passage",
+      "failures": 0,
+      "passed": true,
+      "examples": [],
+      "detail": "22537 of 22537 distinct canonical keys matched a node"
+    },
+    {
+      "check": "the declared Veda matches the canonical key's own prefix",
+      "failures": 0,
+      "passed": true,
+      "examples": [],
+      "detail": ""
+    },
+    {
+      "check": "every row carries a verified recension",
+      "failures": 0,
+      "passed": true,
+      "examples": [],
+      "detail": "Jaiminiya is not Kauthuma; Taittiriya and Kanva are not Madhyandina."
+    },
+    {
+      "check": "no row carries a confidence the campaign refuses",
+      "failures": 0,
+      "passed": true,
+      "examples": [],
+      "detail": "The Wave 3 defect: the filter was applied to rows.jsonl and to no side file."
+    },
+    {
+      "check": "the domain's side files are enumerated, not assumed absent",
+      "failures": 0,
+      "passed": true,
+      "examples": [],
+      "detail": "side files present: ['rejected.jsonl', 'sources.jsonl']"
+    }
+  ],
+  "census_checks": [
+    {
+      "check": "every census state is a declared member of the closed set",
+      "failures": 0,
+      "passed": true,
+      "examples": [],
+      "detail": ""
+    },
+    {
+      "check": "no census state is an assertion about the text",
+      "failures": 0,
+      "passed": true,
+      "examples": [],
+      "detail": "Every state records what our coverage is, including a typed absence. A 'NEVER_ASSESSED' edge would be a claim about the record wearing the shape of a claim about the mantra."
+    },
+    {
+      "check": "every census row reports all three dimensions",
+      "failures": 0,
+      "passed": true,
+      "examples": [],
+      "detail": ""
+    },
+    {
+      "check": "every recorded absence carries a reason code",
+      "failures": 0,
+      "passed": true,
+      "examples": [],
+      "detail": "An untyped absence is the thing this campaign refuses to ship."
+    },
+    {
+      "check": "the declared is_mantra agrees with the node's own labels",
+      "failures": 0,
+      "passed": true,
+      "examples": [],
+      "detail": "A passage proxy standing in for an entity, or a container typed as a verse."
+    }
+  ],
+  "whitney_checks": [
+    {
+      "check": "every predicate named is declared by the ontology",
+      "failures": 0,
+      "passed": true,
+      "examples": [],
+      "detail": "declared: ['HAS_CHANDAS', 'HAS_DEVATA_ASCRIPTION']"
+    },
+    {
+      "check": "every object resolves to an entity the graph holds",
+      "failures": 466,
+      "passed": false,
+      "examples": [
+        "VG:AV:SAU:K03:S029:V007:devata",
+        "VG:AV:SAU:K03:S029:V008:devata",
+        "VG:AV:SAU:K05:S003:V001:devata",
+        "VG:AV:SAU:K05:S003:V002:devata",
+        "VG:AV:SAU:K05:S003:V003:devata"
+      ],
+      "detail": "An edge needs a node at the far end. A verbatim printed string is evidence that the source said something, not a resolved referent."
+    },
+    {
+      "check": "the containing hymn resolves",
+      "failures": 0,
+      "passed": true,
+      "examples": [],
+      "detail": ""
+    },
+    {
+      "check": "every row carries a source locator",
+      "failures": 0,
+      "passed": true,
+      "examples": [],
+      "detail": ""
+    },
+    {
+      "check": "the scope grain is homogeneous",
+      "failures": 0,
+      "passed": true,
+      "examples": [],
+      "detail": "scope types present: ['SINGLE_MANTRA']"
+    },
+    {
+      "check": "the asserted granularity is homogeneous",
+      "failures": 0,
+      "passed": true,
+      "examples": [],
+      "detail": "granularities present: ['VERSE']"
+    },
+    {
+      "check": "no deterministic derivation is labelled source-explicit",
+      "failures": 0,
+      "passed": true,
+      "examples": [],
+      "detail": "The method must describe reading a source, not computing a value."
+    },
+    {
+      "check": "no subject carries two rows for one dimension",
+      "failures": 0,
+      "passed": true,
+      "examples": [],
+      "detail": "Duplicated attribution under two normalized forms of one printed value."
+    }
+  ],
+  "census_state_distribution": {
+    "rishi": {
+      "NOT_APPLICABLE_AT_THIS_GRANULARITY": 568,
+      "DERIVED_PRESENT": 15151,
+      "ASSESSED_SOURCE_ABSENT": 1446,
+      "NEVER_ASSESSED": 2945,
+      "SOURCE_EXPLICIT_PRESENT": 2427
+    },
+    "devata": {
+      "NOT_APPLICABLE_AT_THIS_GRANULARITY": 568,
+      "DERIVED_PRESENT": 12994,
+      "ASSESSED_SOURCE_ABSENT": 1832,
+      "NEVER_ASSESSED": 4920,
+      "SOURCE_EXPLICIT_PRESENT": 2223
+    },
+    "chandas": {
+      "NOT_APPLICABLE_AT_THIS_GRANULARITY": 568,
+      "DERIVED_PRESENT": 9173,
+      "SOURCE_EXPLICIT_PRESENT": 5892,
+      "ASSESSED_SOURCE_ABSENT": 1984,
+      "NEVER_ASSESSED": 4920
+    }
+  },
+  "checks_run": 18,
+  "checks_failed": 1,
+  "verdict": "GATE_B_FINDINGS"
+}

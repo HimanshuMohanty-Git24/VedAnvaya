@@ -62,7 +62,7 @@ not something the source said about any of those mantras.
 |---|---|---|
 | UNKNOWN_LABEL_RATE | 59.2% | **0.00%** |
 | product nodes without a readable label | 22,541 | **0** |
-| product nodes with `display_type` | 0 | 36,265 |
+| product nodes with `display_type` | 0 | 39,386 |
 
 ## 4. Devatā model
 

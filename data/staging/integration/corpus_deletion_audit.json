@@ -1,0 +1,84 @@
+{
+  "artifact": "CORPUS_DELETION_AUDIT",
+  "owner_decision": "section 1 -- deletions ratified, enumeration required",
+  "recoverable_from": "D:/vedanvaya-backups/wave3-pre-import-20260915T155144/neo4j.dump",
+  "graph_nodes_now": 116825,
+  "keys_the_plan_withholds": 54,
+  "of_those_still_present_in_the_graph": 13,
+  "of_those_deleted": 41,
+  "batch_reasons": {
+    "BATCH_1_EVIDENCE_NOT_IMPORTED": "Attested only in a Brahmana or Srautasutra. That evidence lives in ritual/supplementary_passages.jsonl, which this wave declares not-imported, so the entity would assert what the graph cannot support.",
+    "BATCH_2_ATTESTATION_WITHOUT_LOCATOR": "Carried samhita_attested with no example recorded; roles.jsonl has no attestation-example field at all, so the claim cannot be located.",
+    "BATCH_3_REACHABLE_ONLY_VIA_A_REFUSED_EDGE": "Named only by a rite edge staged PROBABLE. Once the importability filter refused those edges, the entity's only path into the graph was an edge nobody would write."
+  },
+  "batches": {
+    "BATCH_3_REACHABLE_ONLY_VIA_A_REFUSED_EDGE": {
+      "count": 27,
+      "keys": [
+        "VG:CONCEPT:ABHIGHARANA-BASTING",
+        "VG:CONCEPT:ACARYA-TEACHER",
+        "VG:CONCEPT:ACCHAVAKA-PRIEST",
+        "VG:CONCEPT:AGNIHOTRAHAVANI-LADLE",
+        "VG:CONCEPT:BRAHMANACCHAMSIN-PRIEST",
+        "VG:CONCEPT:DIKSITA-CONSECRATED",
+        "VG:CONCEPT:GRAVASTUT-PRIEST",
+        "VG:CONCEPT:GRHAPATI-HOUSEHOLDER",
+        "VG:CONCEPT:JAPA-MUTTERING",
+        "VG:CONCEPT:MAITRAVARUNA-PRIEST",
+        "VG:CONCEPT:NIRVAPA-TAKING-OUT",
+        "VG:CONCEPT:PALASA-WOOD",
+        "VG:CONCEPT:PARISAMUHANA-SWEEPING",
+        "VG:CONCEPT:PATNI-SACRIFICERS-WIFE",
+        "VG:CONCEPT:PATRI-DISH",
+        "VG:CONCEPT:PLAKSA-WOOD",
+        "VG:CONCEPT:PRASITRA-THE-BRAHMANS-PORTION",
+        "VG:CONCEPT:PRASTOTR-PRIEST",
+        "VG:CONCEPT:PRATIHARTR-PRIEST",
+        "VG:CONCEPT:PRATIPRASTHATR-PRIEST",
+        "VG:CONCEPT:RTVIJ-OFFICIANT",
+        "VG:CONCEPT:SAMIDADHANA-KINDLING",
+        "VG:CONCEPT:SAMISTAYAJUS-CLOSING-FORMULA",
+        "VG:CONCEPT:SRAPANA-COOKING",
+        "VG:CONCEPT:SRUVA-DIPPING-SPOON",
+        "VG:CONCEPT:SUBRAHMANYA-PRIEST",
+        "VG:CONCEPT:VYUHANA-SPREADING-OUT"
+      ]
+    },
+    "BATCH_1_EVIDENCE_NOT_IMPORTED": {
+      "count": 12,
+      "keys": [
+        "VG:CONCEPT:AGHARA-BUTTER-STREAM",
+        "VG:CONCEPT:BILVA-WOOD",
+        "VG:CONCEPT:KARSMARYA-WOOD",
+        "VG:CONCEPT:KUSA-GRASS",
+        "VG:CONCEPT:LAVANA-SALT",
+        "VG:CONCEPT:PRASITRAHARANA-DISH",
+        "VG:CONCEPT:PRIYANGU-MILLET",
+        "VG:CONCEPT:SPHYA-WOODEN-SWORD",
+        "VG:CONCEPT:ULLEKHANA-DRAWING-LINES",
+        "VG:CONCEPT:UNNETR-PRIEST",
+        "VG:CONCEPT:UPABHRT-SPOON",
+        "VG:CONCEPT:UTPAVANA-STRAINING"
+      ]
+    },
+    "BATCH_2_ATTESTATION_WITHOUT_LOCATOR": {
+      "count": 2,
+      "keys": [
+        "VG:CONCEPT:SADASYA-PRIEST",
+        "VG:CONCEPT:SAMITR-BUTCHER"
+      ]
+    }
+  },
+  "every_deleted_key_is_withheld_by_the_current_plan": true,
+  "ratified_counts": {
+    "BATCH_1_EVIDENCE_NOT_IMPORTED": 12,
+    "BATCH_2_ATTESTATION_WITHOUT_LOCATOR": 2,
+    "BATCH_3_REACHABLE_ONLY_VIA_A_REFUSED_EDGE": 27
+  },
+  "replay_reproduces_the_ratified_counts": {
+    "BATCH_1_EVIDENCE_NOT_IMPORTED": true,
+    "BATCH_2_ATTESTATION_WITHOUT_LOCATOR": true,
+    "BATCH_3_REACHABLE_ONLY_VIA_A_REFUSED_EDGE": true
+  },
+  "note": "A key is listed here because the current plan refuses it AND the graph does not hold it. Both halves are recomputed, so this file cannot drift from the plan: if a future change made one of these importable again, it would leave this list."
+}

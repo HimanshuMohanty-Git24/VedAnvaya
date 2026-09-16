@@ -177,6 +177,7 @@ TRAVERSABLE_RELATIONSHIPS: Final[frozenset[str]] = frozenset(
         "IS_ASKED_TO",
         "HAS_SEMANTIC_ASSERTION",
         # ritual structure
+        "HAS_RITUAL_STEP",
         "USES_OBJECT",
         "USES_SUBSTANCE",
         "USES_OFFERING",
@@ -237,15 +238,10 @@ NON_TRAVERSABLE_REASONS: Final[dict[str, str]] = {
     # edges, so traversing it would traverse nothing". Wave 3 wrote 6,148 of them and the
     # sentence became a false statement about the graph -- the worst kind of refusal, because
     # it tells a reader the layer is empty. It is traversable above.
-    # Refused for now, and the reason is measurable rather than editorial: the 3,121
-    # :RitualStep nodes carry no display_type, which every non-internal node in this
-    # graph is contracted to have and which PRODUCT_TYPE_BY_DISPLAY_TYPE is keyed on, and
-    # step_key is not in STABLE_ID_PROPERTIES, so a traversal reaching one could not give
-    # it a product id. The layer is fully readable at /api/v1/rituals/{id}. Making it
-    # traversable means fixing those two things first, not relaxing the invariants.
-    "HAS_RITUAL_STEP": "the step nodes carry no display_type and no resolvable product "
-    "id yet; read the procedure through /api/v1/rituals/{id}, which returns it grouped "
-    "by source work",
+    # HAS_RITUAL_STEP was refused here until M7. The reason was measurable and it is now
+    # false: the step nodes carry display_type = RITUAL_STEP and a step_key that is
+    # deterministic, URN-backed and collision-free over all 3,121 of them, so a traversal
+    # reaching one can name it. See docs/reports/data-completeness/SCHEMA_MIGRATION_CARDS.md.
     "ASSERTION_ROLE": "internal wiring of a reified assertion node",
     "REFERS_TO": "internal wiring of the semantic-role layer: it resolves a role filler to "
     "its referent, and the filler is not a thing a reader asked to see",
@@ -462,6 +458,7 @@ RESOLVABLE_KINDS: Final[tuple[NodeKind, ...]] = (
     NodeKind("RishiFamily", "family_key", "RISHI_FAMILY"),
     NodeKind("DerivedMetric", "metric_id", "DERIVED_METRIC"),
     NodeKind("InterpretiveClaim", "claim_id", "INTERPRETIVE_CLAIM"),
+    NodeKind("RitualStep", "step_key", "RITUAL_STEP"),
     NodeKind("Work", "work_id", "WORK"),
     NodeKind("DevataAscription", "entity_key", "DEVATA_ASCRIPTION", indexed=False),
     NodeKind("ActionPredicate", "predicate", "ACTION_PREDICATE", indexed=False),
@@ -482,6 +479,7 @@ STABLE_ID_PROPERTIES: Final[tuple[str, ...]] = (
     "group_key",
     "metric_id",
     "claim_id",
+    "step_key",
     "work_id",
     "assertion_id",
     "lemma",
@@ -493,6 +491,7 @@ STABLE_ID_PROPERTIES: Final[tuple[str, ...]] = (
 #: ``tests/api/test_graph.py`` asserts against the live graph that it still does, so a
 #: rebuild that introduces a new type fails a test instead of shipping a raw label.
 PRODUCT_TYPE_BY_DISPLAY_TYPE: Final[dict[str, str]] = {
+    "RITUAL_STEP": "RITUAL_STEP",
     "MANTRA": "MANTRA",
     "HYMN": "HYMN",
     "SECTION": "SECTION",
@@ -1078,6 +1077,14 @@ PREDICATE_SEMANTICS: Final[dict[str, PredicateSemantics]] = {
         "without them is unmodelled rather than stepless. The sutra-attested procedure is a "
         "separate predicate, HAS_RITUAL_STEP, and the two must not be added together.",
     ),
+    "HAS_RITUAL_STEP": PredicateSemantics(
+        "has the procedural step",
+        "A Srautasutra or Grhyasutra prints this step as part of the rite.",
+        "Not the Samhita's own numbering -- that is HAS_STEP, and the two are never summed. "
+        "Each source work numbers its own sequence from 1, so these edges do not compose "
+        "into one procedure, and most state a position without printing the run it falls "
+        "in. Read /api/v1/rituals/{id}, which returns them grouped by source work.",
+    ),
     "ATTESTED_IN": PredicateSemantics(
         "is attested in",
         "The registry records this passage as an attestation of the entity.",
@@ -1552,7 +1559,12 @@ def node_view(properties: dict[str, Any], labels: list[str]) -> GraphNodeView:
         id=node_id or "",
         type=product_type(properties, labels),
         label=str(label) if label else (node_id or ""),
-        description=_first_string(properties, ("short_description", "definition", "scope_note")),
+        # text_iast last, and only reached by nodes that carry no curated description:
+        # a :RitualStep IS its sutra, so projecting the locator as the label and nothing as
+        # the description showed a reader a citation with no content behind it.
+        description=_first_string(
+            properties, ("short_description", "definition", "scope_note", "text_iast")
+        ),
         is_deity=is_deity,
         metadata=_node_metadata(properties),
     )
