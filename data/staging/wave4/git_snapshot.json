@@ -1,0 +1,9 @@
+{
+  "artifact": "WAVE4_GIT_SNAPSHOT",
+  "at": "2026-09-16T07:54:55.303328+00:00",
+  "head": "c57ec2dc1d76995a630c3c2573c5d567e5b8f240",
+  "head_subject": "docs(round4): ledger and STATUS for M9 and the blocked Ask regrade",
+  "branch": "phase-data-completeness-v2",
+  "working_tree_clean": false,
+  "porcelain": "?? scripts/wave4_baseline.py"
+}
