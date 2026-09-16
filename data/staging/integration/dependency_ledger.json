@@ -10,13 +10,13 @@
       "type:VARIANT_OF": "n=788;unnamed=0;pairs=76e3fd14b7e11b6bc5525f30f0fe368d1a9511efff2635d42dc6b0ea2fbfddc5",
       "builder:scripts/build_enrichment.py": "011eee43b34b8798754e293bc0b0ba544e13a42385d3bfd24b6338fb272debf4"
     },
-    "built_at": "2026-09-16T06:06:20.647649+00:00",
+    "built_at": "2026-09-16T07:24:56.842671+00:00",
     "graph_census": {
       "nodes": 116838,
-      "relationships": 281290
+      "relationships": 281257
     },
     "output_file": "data/enrichment/vedagraph_enrichment_v1/manifest.json",
-    "output_hash": "c1a2a0de831a7a8fd89fc65d5057a402ec23356ea67db2f60e7936e7d216e51a"
+    "output_hash": "058439bd121d39caaab3b9396e8eeed541d2d7251afdfce45193fe928f36d1fb"
   },
   "formula / parallel / variant relations": {
     "consumer": "formula / parallel / variant relations",
@@ -28,13 +28,13 @@
       "type:MEMBER_OF_FAMILY": "n=2037;unnamed=0;pairs=dcc907998607eb2fe09c1398b2d633cb855d78b6bb9771fc9b5f4e384033ce49",
       "type:SHARES_FORMULA_WITH": "n=6148;unnamed=0;pairs=ff2ed3a01406f466f726dc35de97929201961388869fe32e93e1e96835fdf406",
       "type:USES_FORMULA": "n=22686;unnamed=0;pairs=f5aece67e80837ed2dce219d18a17b78cb60c1609018f4f92be0bff9dde68a38",
-      "file:data/enrichment/vedagraph_enrichment_v1/manifest.json": "c1a2a0de831a7a8fd89fc65d5057a402ec23356ea67db2f60e7936e7d216e51a",
+      "file:data/enrichment/vedagraph_enrichment_v1/manifest.json": "058439bd121d39caaab3b9396e8eeed541d2d7251afdfce45193fe928f36d1fb",
       "builder:scripts/build_formula_families.py": "95281a9571b3addb8c2736c6e51bac4398e73a8b7ed016caf712cd1d1b426375"
     },
-    "built_at": "2026-09-16T06:06:21.903084+00:00",
+    "built_at": "2026-09-16T07:24:58.292677+00:00",
     "graph_census": {
       "nodes": 116838,
-      "relationships": 281290
+      "relationships": 281257
     },
     "output_file": "data/enrichment/vedagraph_enrichment_v1/formula_families.jsonl",
     "output_hash": "cc1ff965df087692a091604cf7c80cb39ed32bdf308afa35ac916b4cd499b945"
@@ -51,16 +51,16 @@
       "type:HAS_DEVATA": "n=10558;unnamed=0;pairs=8e4eea692c244357e1b3bdd2106719549f5a37430fa668977c59636ac0fedde8",
       "type:MENTIONS_DEVATA": "n=17165;unnamed=0;pairs=bd51583b55154c393e05621ca50cb935896b3420a14061f530b27794519c22da",
       "type:MENTIONS_ENTITY": "n=28110;unnamed=0;pairs=2c66d80eada586d6f80aa587673228c4b7c02cc05dbba7200fceb174fa6afa62",
-      "file:data/domain/vedagraph_domain_v2/veda_coverage_v3.json": "ade0e58aefd4a59e2828263ac37d2d64d44baa9047f8d2a9df4fd5a08037eedb",
+      "file:data/domain/vedagraph_domain_v2/veda_coverage_v3.json": "3ec8b28f704eb65ad96b0a9dd45f6f8fd58719d81ec77142daed4e1597096f46",
       "builder:scripts/build_veda_coverage_and_metrics.py": "00644458ec6689d01e2d0e00d122541f43c4aa077165d22c84ad70739ec71851"
     },
-    "built_at": "2026-09-16T06:06:23.585242+00:00",
+    "built_at": "2026-09-16T07:25:00.199719+00:00",
     "graph_census": {
       "nodes": 116838,
-      "relationships": 281290
+      "relationships": 281257
     },
     "output_file": "data/domain/vedagraph_domain_v2/veda_coverage_v3.json",
-    "output_hash": "ade0e58aefd4a59e2828263ac37d2d64d44baa9047f8d2a9df4fd5a08037eedb"
+    "output_hash": "3ec8b28f704eb65ad96b0a9dd45f6f8fd58719d81ec77142daed4e1597096f46"
   },
   "quality evaluation": {
     "consumer": "quality evaluation",
@@ -72,13 +72,13 @@
       "type:QUALITY_VERDICT_ABOUT": "n=2568;unnamed=0;pairs=81b929c8b243d02d718fa8b26866b0a9a63b7aff37bd4bd8f47df6cb0b3b281c",
       "builder:scripts/graph_quality_scorecard.py": "76fd47c8b4a10e509326cd85cfc79119ec471995292b6e77c995b7544cd8b913"
     },
-    "built_at": "2026-09-16T07:01:01.978614+00:00",
+    "built_at": "2026-09-16T07:25:01.065381+00:00",
     "graph_census": {
       "nodes": 116838,
-      "relationships": 281290
+      "relationships": 281257
     },
     "output_file": "docs/reports/GRAPH_QUALITY_V2_SCORECARD.md",
-    "output_hash": "cf389cf9ccb2f6f425ca76fa23ff55b29d09bd4472f42547c7147b85b191ceb0"
+    "output_hash": "9438cca1cfe69729b9c96f2a2977fa4a7e95e4316efbd34581368d81113f90c5"
   },
   "Visualization Lab aggregates": {
     "consumer": "Visualization Lab aggregates",
@@ -93,13 +93,13 @@
       "type:MENTIONS_ENTITY": "n=28110;unnamed=0;pairs=2c66d80eada586d6f80aa587673228c4b7c02cc05dbba7200fceb174fa6afa62",
       "builder:scripts/export_graph_world.py": "721086cd74807f9167254dc91d921165d0a86d36dcf75d1d9a0c74af07659fda"
     },
-    "built_at": "2026-09-16T06:06:25.879183+00:00",
+    "built_at": "2026-09-16T07:25:02.700085+00:00",
     "graph_census": {
       "nodes": 116838,
-      "relationships": 281290
+      "relationships": 281257
     },
     "output_file": "frontend/.world/world.raw.json",
-    "output_hash": "9e2dec2c80f9983ac89cf9b574aca878d78d6a38bce483e0f1e2d158ce0776a6"
+    "output_hash": "2e59ff42c3844e4191a26052f6944368e7514c7289705dcf8ebaf797f85fd05c"
   },
   "Knowledge World public projection": {
     "consumer": "Knowledge World public projection",
@@ -113,13 +113,13 @@
       "type:SPECIALIZED_FORM_OF": "n=1;unnamed=0;pairs=312df33d6faee2051c8ae81913aa8f94d6e5cc63fb73b4cd7e8302b932dffea4",
       "builder:scripts/export_graph_world.py": "721086cd74807f9167254dc91d921165d0a86d36dcf75d1d9a0c74af07659fda"
     },
-    "built_at": "2026-09-16T06:06:27.376483+00:00",
+    "built_at": "2026-09-16T07:25:04.236918+00:00",
     "graph_census": {
       "nodes": 116838,
-      "relationships": 281290
+      "relationships": 281257
     },
     "output_file": "frontend/.world/world.raw.json",
-    "output_hash": "9e2dec2c80f9983ac89cf9b574aca878d78d6a38bce483e0f1e2d158ce0776a6"
+    "output_hash": "2e59ff42c3844e4191a26052f6944368e7514c7289705dcf8ebaf797f85fd05c"
   },
   "ritual aggregates": {
     "consumer": "ritual aggregates",

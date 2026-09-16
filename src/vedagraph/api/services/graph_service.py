@@ -928,7 +928,7 @@ PREDICATE_SEMANTICS: Final[dict[str, PredicateSemantics]] = {
     "HAS_CHANDAS": PredicateSemantics(
         "is in the metre",
         "The Anukramani names this metre for this passage.",
-        "10,388 of 16,331 arrive by projecting a hymn's label downward. The Samaveda "
+        "10,399 of 16,298 arrive by projecting a hymn's label downward. The Samaveda "
         "carries no metre layer at all, so its absence there is a missing layer.",
     ),
     "HAS_DEVATA": PredicateSemantics(

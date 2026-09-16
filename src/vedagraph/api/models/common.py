@@ -58,7 +58,7 @@ class EvidenceBasis(StrEnum):
        **This enum is NOT the graph's ``evidence_basis`` property.** The two share a name
        and describe different axes, and the collision is a trap that was walked into during
        this build: reading ``r.evidence_basis`` straight into this enum mapped *every*
-       attribution edge in the corpus to ``UNKNOWN`` -- all 17,889 seer edges, all 16,331
+       attribution edge in the corpus to ``UNKNOWN`` -- all 17,889 seer edges, all 16,298
        metre edges, all 10,558 deity edges -- because the value spaces are disjoint.
 
        The graph property answers "off which textual surface was the evidence read?" and

@@ -39,9 +39,9 @@
      "status": "ABSENT_FROM_SOURCE"
     },
     "chandas_attribution": {
-     "covered_mantras": 4082,
+     "covered_mantras": 4068,
      "reason": "",
-     "share": 0.6991,
+     "share": 0.6967,
      "status": "PRESENT"
     },
     "concept_salience": {

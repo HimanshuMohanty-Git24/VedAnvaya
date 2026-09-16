@@ -27,7 +27,7 @@ at a different edge, or at nothing. So an edge id here is one of exactly two thi
 **Confidence is a pipeline prior on part of this graph, and these models refuse to launder
 it.** The frozen query ``confidence_is_a_pipeline_constant`` measures the field, and five
 predicates carry a single value on every edge they have: ``HAS_RISHI`` (17,889 edges, all
-1.0), ``HAS_CHANDAS`` (16,331, all 1.0), ``HAS_DEVATA`` (10,558, all 1.0),
+1.0), ``HAS_CHANDAS`` (16,298, all 1.0), ``HAS_DEVATA`` (10,558, all 1.0),
 ``HAS_DEVATA_ASCRIPTION`` (5,385, all 1.0) and ``BELONGS_TO_FAMILY`` (305, all 1.0). A
 number identical on every edge of a predicate ranks nothing and measures nothing. So on
 those predicates :attr:`GraphEdgeView.confidence_basis` is ``PIPELINE_CONSTANT``,

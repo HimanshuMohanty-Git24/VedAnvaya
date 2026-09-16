@@ -1,9 +1,9 @@
 {
   "artifact": "DEPENDENCY_STATUS",
-  "at": "2026-09-16T07:01:09.542877+00:00",
+  "at": "2026-09-16T07:25:19.220658+00:00",
   "graph_census": {
     "nodes": 116838,
-    "relationships": 281290
+    "relationships": 281257
   },
   "consumers": [
     {
@@ -26,8 +26,8 @@
       "inputs_that_moved": [],
       "reason": null,
       "output_file": "data/enrichment/vedagraph_enrichment_v1/manifest.json",
-      "output_hash": "c1a2a0de831a7a8fd89fc65d5057a402ec23356ea67db2f60e7936e7d216e51a",
-      "built_at": "2026-09-16T06:06:20.647649+00:00",
+      "output_hash": "058439bd121d39caaab3b9396e8eeed541d2d7251afdfce45193fe928f36d1fb",
+      "built_at": "2026-09-16T07:24:56.842671+00:00",
       "rebuilt_by": "vedagraph.enrich.crossveda over the canonical corpora",
       "current_input_digest": "d17f0e8ae2688f2761d6ebd97150356f33fe7e85822261f233d51b0246558027",
       "recorded_input_digest": "d17f0e8ae2688f2761d6ebd97150356f33fe7e85822261f233d51b0246558027"
@@ -40,10 +40,10 @@
       "reason": null,
       "output_file": "data/enrichment/vedagraph_enrichment_v1/formula_families.jsonl",
       "output_hash": "cc1ff965df087692a091604cf7c80cb39ed32bdf308afa35ac916b4cd499b945",
-      "built_at": "2026-09-16T06:06:21.903084+00:00",
+      "built_at": "2026-09-16T07:24:58.292677+00:00",
       "rebuilt_by": "scripts/build_formula_families.py",
-      "current_input_digest": "5df2b3eaa06298a943c386a4d405937b1d133258f15a33a223c12200b1890d56",
-      "recorded_input_digest": "5df2b3eaa06298a943c386a4d405937b1d133258f15a33a223c12200b1890d56"
+      "current_input_digest": "cf9a830fa9c6ddcdb5d6e652147b2147f7fb854ee713929acb6a58bcc454a591",
+      "recorded_input_digest": "cf9a830fa9c6ddcdb5d6e652147b2147f7fb854ee713929acb6a58bcc454a591"
     },
     {
       "consumer": "entity coverage",
@@ -52,11 +52,11 @@
       "inputs_that_moved": [],
       "reason": null,
       "output_file": "data/domain/vedagraph_domain_v2/veda_coverage_v3.json",
-      "output_hash": "ade0e58aefd4a59e2828263ac37d2d64d44baa9047f8d2a9df4fd5a08037eedb",
-      "built_at": "2026-09-16T06:06:23.585242+00:00",
+      "output_hash": "3ec8b28f704eb65ad96b0a9dd45f6f8fd58719d81ec77142daed4e1597096f46",
+      "built_at": "2026-09-16T07:25:00.199719+00:00",
       "rebuilt_by": "scripts/build_veda_coverage_and_metrics.py",
-      "current_input_digest": "e9e0d494dc6b7bea615c1cbb1ff4fb76aa21d796a0725898e9d1a561d26d3191",
-      "recorded_input_digest": "e9e0d494dc6b7bea615c1cbb1ff4fb76aa21d796a0725898e9d1a561d26d3191"
+      "current_input_digest": "8f3a5fba2bf708a9eb195b4e3c75c250ad4f24258292219a75aa3de82e72c7ff",
+      "recorded_input_digest": "8f3a5fba2bf708a9eb195b4e3c75c250ad4f24258292219a75aa3de82e72c7ff"
     },
     {
       "consumer": "ritual aggregates",
@@ -78,8 +78,8 @@
       "inputs_that_moved": [],
       "reason": null,
       "output_file": "docs/reports/GRAPH_QUALITY_V2_SCORECARD.md",
-      "output_hash": "cf389cf9ccb2f6f425ca76fa23ff55b29d09bd4472f42547c7147b85b191ceb0",
-      "built_at": "2026-09-16T07:01:01.978614+00:00",
+      "output_hash": "9438cca1cfe69729b9c96f2a2977fa4a7e95e4316efbd34581368d81113f90c5",
+      "built_at": "2026-09-16T07:25:01.065381+00:00",
       "rebuilt_by": "scripts/graph_quality_scorecard.py",
       "current_input_digest": "80f34c13361e0f9af03e7e23448e02732de8445a70ea304d1f48f2f9dead61d4",
       "recorded_input_digest": "80f34c13361e0f9af03e7e23448e02732de8445a70ea304d1f48f2f9dead61d4"
@@ -104,8 +104,8 @@
       "inputs_that_moved": [],
       "reason": null,
       "output_file": "frontend/.world/world.raw.json",
-      "output_hash": "9e2dec2c80f9983ac89cf9b574aca878d78d6a38bce483e0f1e2d158ce0776a6",
-      "built_at": "2026-09-16T06:06:25.879183+00:00",
+      "output_hash": "2e59ff42c3844e4191a26052f6944368e7514c7289705dcf8ebaf797f85fd05c",
+      "built_at": "2026-09-16T07:25:02.700085+00:00",
       "rebuilt_by": "scripts/export_graph_world.py and the metrics build",
       "current_input_digest": "1c461291907acef7faa4523ef167aa2ff9e1967ea7ee97c0fa95386198bbb09e",
       "recorded_input_digest": "1c461291907acef7faa4523ef167aa2ff9e1967ea7ee97c0fa95386198bbb09e"
@@ -117,8 +117,8 @@
       "inputs_that_moved": [],
       "reason": null,
       "output_file": "frontend/.world/world.raw.json",
-      "output_hash": "9e2dec2c80f9983ac89cf9b574aca878d78d6a38bce483e0f1e2d158ce0776a6",
-      "built_at": "2026-09-16T06:06:27.376483+00:00",
+      "output_hash": "2e59ff42c3844e4191a26052f6944368e7514c7289705dcf8ebaf797f85fd05c",
+      "built_at": "2026-09-16T07:25:04.236918+00:00",
       "rebuilt_by": "scripts/export_graph_world.py",
       "current_input_digest": "c8ffa1dcc9dc2c9e912986cb9e2b89f542d0a730f296bfe5ba250b8f4b5d288c",
       "recorded_input_digest": "c8ffa1dcc9dc2c9e912986cb9e2b89f542d0a730f296bfe5ba250b8f4b5d288c"
