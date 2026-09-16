@@ -578,5 +578,16 @@
     }
   ],
   "complete": false,
-  "sha256": "62557895e41423593f9766e17a27efd147a7785dff3c180a45710a1fdfc0fe76"
+  "sha256": "62557895e41423593f9766e17a27efd147a7785dff3c180a45710a1fdfc0fe76",
+  "complete_flag_annotation": {
+    "at": "2026-09-16T11:38:26.704690+00:00",
+    "original_complete_flag": false,
+    "why_it_was_false": "The executed run's `old_attachments_still_present` check asked whether each moved row's old translation_id still existed anywhere, and reported 12 survivors. That is the wrong question: translation_id is derived from the passage it attaches to, so unit 3's old id (derived from V003) is legitimately reused by unit 2 once unit 2 lands on V003. Every measured fact in this receipt is correct; only the flag computed from that check is not.",
+    "corrected_check": "whether the verse a row moved AWAY from still serves that row's text. Fixed in scripts/m13_rv_dvipada_spine_realignment.py after execution, so a future run computes the flag correctly.",
+    "settled_by": "data/staging/translation/m13_readback.json",
+    "readback_verdict": "clean: 0 findings over all 31 rows",
+    "measured_facts_unaltered": true,
+    "note": "The executed record is left as it was written. Rewriting a receipt to agree with a later verdict is how a receipt stops being evidence."
+  },
+  "annotation_sha256": "8fc6aa2c4333449ebc96bccdee16048c090bdb3662cf02004123736627905104"
 }
