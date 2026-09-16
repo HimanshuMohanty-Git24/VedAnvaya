@@ -1,17 +1,17 @@
 {
   "artifact": "ATTRIBUTION_IMPORT_RECEIPT",
-  "at": "2026-09-16T05:03:11.409791+00:00",
+  "at": "2026-09-16T05:03:38.106807+00:00",
   "executed": false,
   "backup": null,
-  "git_commit": "44e4222f4bb99746f2724b04f2c833340495a7f7",
-  "working_tree_clean": false,
+  "git_commit": "477da976bc11799bbcc3d2b41a45a1026feccc4b",
+  "working_tree_clean": true,
   "gates": {
     "gate_b_verdict": "GATE_B_FINDINGS",
     "gate_b_failed_checks": 1,
     "gate_c_verdict": "GATE_C_PASS",
     "gate_c_census_contradicted": 0,
     "gate_c_defect_class": "NONE",
-    "preconditions_met": false
+    "preconditions_met": true
   },
   "promised": {
     "nodes_create": 0,
@@ -61,5 +61,5 @@
       "classification": "RETAINED_NON_IMPORTABLE_UNRESOLVED_OBJECT"
     }
   },
-  "sha256": "d1a5f17a0927bfbba0b719f8027f062eec5b36444fc9e998b8d0ce51405b9b84"
+  "sha256": "2506cf4e07b8c08df2aac6b6acae798e19cec1a7c4ab13518ab032d6bead4008"
 }
