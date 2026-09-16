@@ -1,0 +1,97 @@
+{
+  "artifact": "WAVE4_AUDIO_HARNESS_QA",
+  "at": "2026-09-16T10:10:14.289657+00:00",
+  "queue_rows": 1021,
+  "queue_sha256": "9310fe4dad2064bcecf2253843321885b44b885549f4b59d8f86f999eb8f58dd",
+  "decisions_recorded": 0,
+  "rows_listened_to": 0,
+  "listening_note": "No audio was played by this script and none was simulated. The refusal tests use a synthetic review_id in a sandbox copy of the queue; the real queue and the real decision log were opened read-only.",
+  "checks": [
+    {
+      "check": "every row is queued for audible review and none carries a verdict",
+      "outcome": "PASS",
+      "why_it_matters": "0 of 1,021 rows have been listened to, and the file must say so."
+    },
+    {
+      "check": "every row names the source whose recording it is",
+      "outcome": "PASS",
+      "why_it_matters": "804 rows carried source_name null before Wave 4, because the builder read a payload field the staged rows do not have. A reviewer was given a URL and left to infer whose recording it is."
+    },
+    {
+      "check": "every row has something to play",
+      "outcome": "PASS",
+      "why_it_matters": "A row with no media cannot be reviewed and would sit forever."
+    },
+    {
+      "check": "no row asserts a timestamp nobody measured",
+      "outcome": "PASS",
+      "why_it_matters": "is_segmented must mean exactly 'a start offset is asserted'. The campaign's rule is that no boundary is invented, so the flag and the field must agree."
+    },
+    {
+      "check": "no row awaiting its first hearing has promoted itself into the catalogue",
+      "catalogue_rows": 16834,
+      "queued_rows": 1021,
+      "rows_awaiting_a_first_hearing": 960,
+      "queued_keys_already_served": 0,
+      "examples": [],
+      "strata_already_served_by_design": {
+        "RV_1_65_TO_1_70_AFFECTED_SPAN": "These 61 rows were shipped before this campaign and are queued for audible RE-review, not for promotion: the span is where an edition merges verse pairs, so the risk is a recording of the pair rather than of the verse. Their presence in the catalogue is the reason they are in the queue, not evidence that the queue leaked."
+      },
+      "outcome": "PASS",
+      "why_it_matters": "A staged mapping that reaches a reader without a listener is exactly what the queue exists to prevent, and the registry already described these rows as closed."
+    },
+    {
+      "check": "an unknown verdict is refused",
+      "expected_status": 400,
+      "actual_status": 400,
+      "outcome": "PASS",
+      "server_said": "verdict must be one of AUDIBLY_VERIFIED, AUDIBLY_REJECTED, AUDIBLE_REVIEW_UNCERTAIN",
+      "why_it_matters": "a fourth verdict would be a way to avoid deciding"
+    },
+    {
+      "check": "an anonymous verdict is refused",
+      "expected_status": 400,
+      "actual_status": 400,
+      "outcome": "PASS",
+      "server_said": "a verdict needs a named reviewer",
+      "why_it_matters": "a listening claim with no listener is what the queue exists to prevent"
+    },
+    {
+      "check": "AUDIBLY_VERIFIED is refused when nothing played",
+      "expected_status": 400,
+      "actual_status": 400,
+      "outcome": "PASS",
+      "server_said": "AUDIBLY_VERIFIED requires the audio to have played. Nothing was heard for this row, so the only honest verdict available is AUDIBLE_REVIEW_UNCERTAIN.",
+      "why_it_matters": "this is the rule that makes 'do not simulate listening' mechanical"
+    },
+    {
+      "check": "an unknown review_id is refused",
+      "expected_status": 400,
+      "actual_status": 400,
+      "outcome": "PASS",
+      "server_said": "REV-DOES-NOT-EXIST is not in the queue",
+      "why_it_matters": "a verdict on a row that is not in the queue would be unattributable"
+    },
+    {
+      "check": "UNCERTAIN is accepted with nothing played (the control)",
+      "expected_status": 200,
+      "actual_status": 200,
+      "outcome": "PASS",
+      "server_said": "{'review_id': 'REV-WAVE4-QA-SYNTHETIC-NOT-A-REAL-ROW', 'verdict': 'AUDIBLE_REVIEW_UNCERTAIN', 'reviewer': 'wave4-qa', 'reviewed_at': '2026-09-16T10:10:14.269663+00:00', 'notes': 'synthetic QA row; nothing was heard and n",
+      "why_it_matters": "Uncertain must be as easy to record as the other two. A queue that makes uncertainty inconvenient collects false certainty -- and if every verdict were refused, the refusal tests above would be meaningless."
+    },
+    {
+      "check": "the decision reached the append-only log on disk",
+      "expected_status": null,
+      "actual_status": null,
+      "outcome": "PASS",
+      "server_said": "1 log entries",
+      "why_it_matters": "The log is the record and the queue is a projection of it, so a decision has to survive the process dying immediately after the response."
+    }
+  ],
+  "failed": [],
+  "sample_manifest": "data/staging/wave4/audio_owner_sample_manifest.json",
+  "sample_rows": 100,
+  "sample_seed": "vedanvaya-wave4-audio-sample",
+  "sha256": "206725312e91ba771d1f5a8b69d28dc80fa565dd1f5fdb95785b21b9284c47b6"
+}

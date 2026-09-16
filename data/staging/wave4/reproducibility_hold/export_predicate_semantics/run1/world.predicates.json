@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated": "2026-09-16T10:10:17Z",
+  "generated": "2026-09-16T10:10:16Z",
   "source": "vedagraph.api.services.graph_service.PREDICATE_SEMANTICS",
   "counts": {
     "predicates": 68,

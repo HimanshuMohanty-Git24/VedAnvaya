@@ -1,0 +1,2690 @@
+{
+  "artifact": "WAVE4_AUDIO_OWNER_SAMPLE_MANIFEST",
+  "at": "2026-09-16T10:10:14.285661+00:00",
+  "seed": "vedanvaya-wave4-audio-sample",
+  "method": "Stratified by review stratum, proportional to stratum size with a floor of one, sampled from a citation-sorted list with a fixed seed. Re-running with the same seed over the same queue reproduces the same rows.",
+  "not_a_verification": "Every row here is NEEDS_AUDIBLE_REVIEW and carries no verdict field. Nothing in this manifest has been heard. Producing it is not reviewing, and it must not be read as a sample that passed.",
+  "requested": 100,
+  "selected": 100,
+  "quota_by_stratum": {
+    "AV_COORDINATE_REMAPPED": 75,
+    "RV_1_65_TO_1_70_AFFECTED_SPAN": 6,
+    "RV_RECOVERED_150": 15,
+    "SV_CONTAINER_SCOPE": 1,
+    "YV_RECOVERED": 3
+  },
+  "rows": [
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K11:S003:V048",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K11:S003:V048",
+      "canonical_key": "VG:AV:SAU:K11:S003:V048",
+      "canonical_sanskrit": "tátaś cainam anyā́bhyāṃ hástābhyāṃ prā́śīr yā́bhyāṃ caitáṃ pū́rva ŕ̥ṣayaḥ prā́śnan |\nbrāhmaṇáṃ haniṣyasī́ty enam āha |\ntáṃ vā́ aháṃ nā́rvā́ñcaṃ ná párāñcaṃ ná pratyáñcam |\nr̥tásya hástābhyām |\ntā́bhyām enaṃ prā́śiṣaṃ tā́bhyām enam ajīgamam |\neṣá vā́ odanáḥ sárvāṅgaḥ sárvaparuḥ sárvatanūḥ |\nsárvāṅga evá sárvaparuḥ sárvatanūḥ sáṃ bhavati yá eváṃ véda ||48|| [17]",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/11.5.17/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "A",
+            "sanskrit": "tátaś cainam anyā́bhyāṃ hástābhyāṃ prā́śīr yā́bhyāṃ caitáṃ pū́rva ŕ̥ṣayaḥ prā́śnan |\nbrāhmaṇáṃ haniṣyasī́ty enam āha |\ntáṃ vā́ aháṃ nā́rvā́ñcaṃ ná párāñcaṃ ná pratyáñcam |\nr̥tásya hástābhyām |\ntā́bhyām enaṃ prā́śiṣaṃ tā́bhyām enam ajīgamam |\neṣá vā́ odanáḥ sárvāṅgaḥ sárvaparuḥ sárvatanūḥ |\nsárvāṅga evá sárvaparuḥ sárvatanūḥ sáṃ bhavati yá eváṃ véda ||48|| [17]"
+          },
+          {
+            "label": "B",
+            "sanskrit": "tátaś cainam anyáyā pratiṣṭháyā prā́śīr yáyā caitáṃ pū́rva ŕ̥ṣayaḥ prā́śnan |\napratiṣṭhānò 'nāyatanó mariṣyasī́ty enam āha |\ntáṃ vā́ aháṃ nā́rvā́ñcaṃ ná párāñcaṃ ná pratyáñcam |\nsatyé pratiṣṭhā́ya |\ntáyainaṃ prā́śiṣaṃ táyainam ajīgamam |\neṣá vā́ odanáḥ sárvāṅgaḥ sárvaparuḥ sárvatanūḥ |\nsárvāṅga evá sárvaparuḥ sárvatanūḥ sáṃ bhavati yá eváṃ véda ||49|| [18] {9}"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K07:S076:V002",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K07:S076:V002",
+      "canonical_key": "VG:AV:SAU:K07:S076:V002",
+      "canonical_sanskrit": "yā́ gráivyā apacító 'tho yā́ upapakṣyā̀ḥ |\nvijā́mni yā́ apacítaḥ svayaṃsrásaḥ ||2||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/7.80.2/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "yáḥ kī́kasāḥ praśr̥ṇā́ti talīdyàm avatíṣṭhati |\nnír hās táṃ sárvaṃ jāyā́nyam yáḥ káś ca kakúdi śritáḥ ||3||"
+          },
+          {
+            "label": "A",
+            "sanskrit": "yā́ gráivyā apacító 'tho yā́ upapakṣyā̀ḥ |\nvijā́mni yā́ apacítaḥ svayaṃsrásaḥ ||2||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K07:S014:V003",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K07:S014:V003",
+      "canonical_key": "VG:AV:SAU:K07:S014:V003",
+      "canonical_sanskrit": "sā́vīr hí deva prathamā́ya pitré varṣmā́ṇam asmai varimā́ṇam asmai |\náthāsmábhyaṃ savitar vā́ryāṇi divódiva ā́ suvā bhū́ri paśváḥ ||3||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/7.15.3/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "dámūnā deváḥ savitā́ váreṇyo dádhad rátnaṃ pitŕ̥bhya ā́yūṃṣi |\npíbāt sómaṃ mamádad enam iṣṭé párijmā cit kramate asya dhármaṇi ||4||"
+          },
+          {
+            "label": "A",
+            "sanskrit": "sā́vīr hí deva prathamā́ya pitré varṣmā́ṇam asmai varimā́ṇam asmai |\náthāsmábhyaṃ savitar vā́ryāṇi divódiva ā́ suvā bhū́ri paśváḥ ||3||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K12:S005:V035",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K12:S005:V035",
+      "canonical_key": "VG:AV:SAU:K12:S005:V035",
+      "canonical_sanskrit": "ábhūtir upahriyámāṇā párābhūtir úpahr̥tā ||35||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/12.8.8/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "śarváḥ kruddháḥ piśyámānā śímidā piśitā́ ||36||"
+          },
+          {
+            "label": "A",
+            "sanskrit": "ábhūtir upahriyámāṇā párābhūtir úpahr̥tā ||35||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K11:S006:V009",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K11:S006:V009",
+      "canonical_key": "VG:AV:SAU:K11:S006:V009",
+      "canonical_sanskrit": "bhavāśarvā́v idáṃ brūmo rudráṃ paśupátiś ca yáḥ |\níṣūr yā́ eṣāṃ saṃvidmá tā́ naḥ santu sádā śivā́ḥ ||9||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/11.8.9/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "dívaṃ brūmo nákṣatrāṇi bhū́miṃ yakṣā́ṇi párvatān |\nsamudrā́ nadyò veśantā́s té no muñcantv áṃhasaḥ ||10|| {17}"
+          },
+          {
+            "label": "A",
+            "sanskrit": "bhavāśarvā́v idáṃ brūmo rudráṃ paśupátiś ca yáḥ |\níṣūr yā́ eṣāṃ saṃvidmá tā́ naḥ santu sádā śivā́ḥ ||9||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K07:S056:V006",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K07:S056:V006",
+      "canonical_key": "VG:AV:SAU:K07:S056:V006",
+      "canonical_sanskrit": "ná te bāhvór bálam asti ná śīrṣé nótá madhyatáḥ |\nátha kíṃ pāpáyā 'muyā́ púche bibharṣy arbhakám ||6||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/7.58.6/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "A",
+            "sanskrit": "ná te bāhvór bálam asti ná śīrṣé nótá madhyatáḥ |\nátha kíṃ pāpáyā 'muyā́ púche bibharṣy arbhakám ||6||"
+          },
+          {
+            "label": "B",
+            "sanskrit": "adánti tvā pipī́likā ví vr̥ścanti mayūryàḥ |\nsárve bhala bravātha śā́rkoṭam arasáṃ viṣám ||7||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K11:S004:V009",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K11:S004:V009",
+      "canonical_key": "VG:AV:SAU:K11:S004:V009",
+      "canonical_sanskrit": "yā́ te prāṇa priyā́ tanū́r yó te prāṇa préyasī |\nátho yád bheṣajáṃ táva tásya no dhehi jīváse ||9||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/11.6.9/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "prāṇáḥ prajā́ ánu vaste pitā́ putrám iva priyám |\nprāṇó ha sárvasyeśvaró yác ca prāṇáti yác ca ná ||10|| {11}"
+          },
+          {
+            "label": "A",
+            "sanskrit": "yā́ te prāṇa priyā́ tanū́r yó te prāṇa préyasī |\nátho yád bheṣajáṃ táva tásya no dhehi jīváse ||9||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K07:S090:V001",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K07:S090:V001",
+      "canonical_key": "VG:AV:SAU:K07:S090:V001",
+      "canonical_sanskrit": "ápi vr̥śca purāṇavád vratáter iva guṣpitám |\nójo dāsásya dambhaya ||1||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/7.95.1/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "vayáṃ tád asya sámbhr̥taṃ vásv índrena ví bhajāmahai |\nmlāpáyāmi bhrajáḥ śibhráṃ váruṇasya vraténa te ||2||"
+          },
+          {
+            "label": "A",
+            "sanskrit": "ápi vr̥śca purāṇavád vratáter iva guṣpitám |\nójo dāsásya dambhaya ||1||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K11:S006:V007",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K11:S006:V007",
+      "canonical_key": "VG:AV:SAU:K11:S006:V007",
+      "canonical_sanskrit": "muñcántu mā śapathyā̀d ahorātré átho uṣā́ḥ |\nsómo mā devó muñcatu yám āhúś candrámā íti ||7||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/11.8.7/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "A",
+            "sanskrit": "muñcántu mā śapathyā̀d ahorātré átho uṣā́ḥ |\nsómo mā devó muñcatu yám āhúś candrámā íti ||7||"
+          },
+          {
+            "label": "B",
+            "sanskrit": "pā́rthivā divyā́ḥ paśáva āraṇyā́ utá yé mr̥gā́ḥ |\nśakúntān pakṣíṇo brūmas té no muñcantv áṃhasaḥ ||8||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K11:S007:V014",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K11:S007:V014",
+      "canonical_key": "VG:AV:SAU:K11:S007:V014",
+      "canonical_sanskrit": "náva bhū́mīḥ samudrā́ úcchiṣṭé 'dhi śritā́ dívaḥ |\nā́ sū́ryo bhāty úcchiṣṭe 'horātré ápi tán máyi ||14||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/11.9.14/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "upahávyaṃ viṣūvántaṃ yé ca yajñā́ gúhā hitā́ḥ |\nbíbharti bhartā́ víśvasyócchiṣṭo janitúḥ pitā́ ||15||"
+          },
+          {
+            "label": "A",
+            "sanskrit": "náva bhū́mīḥ samudrā́ úcchiṣṭé 'dhi śritā́ dívaḥ |\nā́ sū́ryo bhāty úcchiṣṭe 'horātré ápi tán máyi ||14||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K12:S005:V049",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K12:S005:V049",
+      "canonical_key": "VG:AV:SAU:K12:S005:V049",
+      "canonical_sanskrit": "kṣipráṃ vái tásya vā́stuṣu vŕ̥kāḥ kurvata ailabám ||49||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/12.10.3/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "A",
+            "sanskrit": "kṣipráṃ vái tásya vā́stuṣu vŕ̥kāḥ kurvata ailabám ||49||"
+          },
+          {
+            "label": "B",
+            "sanskrit": "kṣipráṃ vái tásya pr̥chanti yát tád ā́sī3d idáṃ nú tā́3d íti ||50||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K12:S005:V044",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K12:S005:V044",
+      "canonical_key": "VG:AV:SAU:K12:S005:V044",
+      "canonical_sanskrit": "vivāhā́ṃ jñātī́nt sárvān ápi kṣāpayati brahmagavī́ brahmajyásya kṣatríyeṇā́punardīyamānā ||44||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/12.9.6/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "A",
+            "sanskrit": "vivāhā́ṃ jñātī́nt sárvān ápi kṣāpayati brahmagavī́ brahmajyásya kṣatríyeṇā́punardīyamānā ||44||"
+          },
+          {
+            "label": "B",
+            "sanskrit": "avāstúm enam ásvagam áprajasaṃ karoty aparāparaṇó bhavati kṣīyáte ||45||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K09:S008:V019",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K09:S008:V019",
+      "canonical_key": "VG:AV:SAU:K09:S008:V019",
+      "canonical_sanskrit": "yé áṅgāni madáyanti yákṣmāso ropaṇā́s táva |\nyákṣmāṇāṃ sárveṣāṃ viṣáṃ nír avocam aháṃ tvát ||19||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/9.13.19/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "A",
+            "sanskrit": "yé áṅgāni madáyanti yákṣmāso ropaṇā́s táva |\nyákṣmāṇāṃ sárveṣāṃ viṣáṃ nír avocam aháṃ tvát ||19||"
+          },
+          {
+            "label": "B",
+            "sanskrit": "visalpásya vidradhásya vātīkārásya vālajéḥ |\nyákṣmāṇāṃ sárveṣāṃ viṣáṃ nír avocam aháṃ tvát ||20||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K11:S008:V029",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K11:S008:V029",
+      "canonical_key": "VG:AV:SAU:K11:S008:V029",
+      "canonical_sanskrit": "ásthi kr̥tvā́ samídhaṃ tád aṣṭā́po asādayan |\nrétaḥ kr̥tvā́jyaṃ devā́ḥ púruṣam ā́viśan ||29||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/11.10.29/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "A",
+            "sanskrit": "ásthi kr̥tvā́ samídhaṃ tád aṣṭā́po asādayan |\nrétaḥ kr̥tvā́jyaṃ devā́ḥ púruṣam ā́viśan ||29||"
+          },
+          {
+            "label": "B",
+            "sanskrit": "yā́ ā́po yā́ś ca devátā yā́ virā́ḍ bráhmaṇā sahá |\nśárīraṃ bráhma prā́viśac chárīré 'dhi prajā́patiḥ ||30||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K07:S070:V005",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K07:S070:V005",
+      "canonical_key": "VG:AV:SAU:K07:S070:V005",
+      "canonical_sanskrit": "ápi nahyāmi te bāhū́ ápi nahyāmy āsyàm |\nagnér ghorásya manyúnā téna 'vadhiṣaṃ havíḥ ||5||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/7.73.5/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": null,
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K11:S007:V021",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K11:S007:V021",
+      "canonical_key": "VG:AV:SAU:K11:S007:V021",
+      "canonical_sanskrit": "śárkarāḥ síkatā áśmāna óṣadhayo vīrúdhas tŕ̥ṇā |\nabhrā́ṇi vidyúto varṣám úcchiṣṭe sáṃśritā śritā́ ||21||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/11.9.21/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "A",
+            "sanskrit": "śárkarāḥ síkatā áśmāna óṣadhayo vīrúdhas tŕ̥ṇā |\nabhrā́ṇi vidyúto varṣám úcchiṣṭe sáṃśritā śritā́ ||21||"
+          },
+          {
+            "label": "B",
+            "sanskrit": "rā́ddhiḥ prā́ptiḥ sámāptir vyā̀ptir máha edhatúḥ |\nátyāptir úcchiṣṭe bhū́tiś cā́hitā níhitā hitā́ ||22||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K11:S005:V001",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K11:S005:V001",
+      "canonical_key": "VG:AV:SAU:K11:S005:V001",
+      "canonical_sanskrit": "brahmacārī́ṣṇáṃś carati ródasī ubhé tásmin devā́ḥ sáṃmanaso bhavanti |\nsá dādhāra pr̥thivī́ṃ dívaṃ ca sá ācāryàṃ tápasā piparti ||1||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/11.7.1/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "A",
+            "sanskrit": "brahmacārī́ṣṇáṃś carati ródasī ubhé tásmin devā́ḥ sáṃmanaso bhavanti |\nsá dādhāra pr̥thivī́ṃ dívaṃ ca sá ācāryàṃ tápasā piparti ||1||"
+          },
+          {
+            "label": "B",
+            "sanskrit": "brahmacāríṇaṃ pitáro devajanā́ḥ pŕ̥thag devā́ anusáṃyanti sárve |\ngandharvā́ enam ánv āyan tráyastriṃśat triśatā́ḥ ṣaṭsahasrā́ḥ sárvānt sá devā́ṃs tápasā piparti ||2||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K12:S005:V038",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K12:S005:V038",
+      "canonical_key": "VG:AV:SAU:K12:S005:V038",
+      "canonical_sanskrit": "aśitā́ lokā́c chinatti brahmagavī́ brahmajyám asmā́c cāmúṣmāc ca ||38|| {27}",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/12.8.11/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "tásyā āhánanaṃ kr̥tyā́ menír āśásanaṃ valagá ū́badhyam ||39||"
+          },
+          {
+            "label": "A",
+            "sanskrit": "aśitā́ lokā́c chinatti brahmagavī́ brahmajyám asmā́c cāmúṣmāc ca ||38|| {27}"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K08:S010:V001",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K08:S010:V001",
+      "canonical_key": "VG:AV:SAU:K08:S010:V001",
+      "canonical_sanskrit": "virā́ḍ vā́ idám ágra āsīt tásyā jātā́yāḥ sárvam abibhed iyám evédáṃ bhaviṣyátī́ti ||1||",
+      "media_url": "https://huggingface.co/datasets/sanganaka/Vedavani-Dataset/resolve/main/AudioFiles/batch_1/Atharvaveda_Kanda_8_0425.wav",
+      "source_name": "Vedavani",
+      "performer": null,
+      "licence": "Apache-2.0",
+      "duration_seconds": 9.159,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "sód akrāmat sā́ gā́rhapatye ny àkrāmat |\ngr̥hamedhī́ gr̥hápatir bhavati yá eváṃ véda ||2||"
+          },
+          {
+            "label": "A",
+            "sanskrit": "virā́ḍ vā́ idám ágra āsīt tásyā jātā́yāḥ sárvam abibhed iyám evédáṃ bhaviṣyátī́ti ||1||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K09:S009:V019",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K09:S009:V019",
+      "canonical_key": "VG:AV:SAU:K09:S009:V019",
+      "canonical_sanskrit": "yé arvā́ñcas tā́m u párāca āhur yé párāñcas tā́m̐ u arvā́ca āhuḥ |\níndraś ca yā́ cakráthuḥ soma tā́ni dhurā́ ná yuktā́ rájaso vahanti ||19||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/9.14.19/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "A",
+            "sanskrit": "yé arvā́ñcas tā́m u párāca āhur yé párāñcas tā́m̐ u arvā́ca āhuḥ |\níndraś ca yā́ cakráthuḥ soma tā́ni dhurā́ ná yuktā́ rájaso vahanti ||19||"
+          },
+          {
+            "label": "B",
+            "sanskrit": "dvā́ suparṇā́ sayújā sákhāyā samānáṃ vr̥kṣáṃ pári ṣasvajāte |\ntáyor anyáḥ píppalaṃ svādv átty ánaśnann anyó abhí cākaśīti ||20||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K07:S117:V001",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K07:S117:V001",
+      "canonical_key": "VG:AV:SAU:K07:S117:V001",
+      "canonical_sanskrit": "ā́ mandráir indra háribhir yāhí mayū́raromabhiḥ |\nmā́ tvā ké cid ví yaman víṃ ná pāśíno 'ti dhánveva tā́m̐ ihi ||1||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/7.122.1/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": null,
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K09:S009:V003",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K09:S009:V003",
+      "canonical_key": "VG:AV:SAU:K09:S009:V003",
+      "canonical_sanskrit": "imáṃ rátham ádhi yé saptá tasthúḥ saptácakraṃ saptá vahanty áśvāḥ |\nsaptá svásāro abhí sáṃ navanta yátra gávām níhitā saptá nā́ma ||3||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/9.14.3/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "kó dadarśa prathamáṃ jā́yamānam asthanvántaṃ yád anasthā́ bíbharti |\nbhū́myā ásur ásr̥g ātmā́ kvà svit kó vidvā́ṃsam úpa gāt práṣṭum etát ||4||"
+          },
+          {
+            "label": "A",
+            "sanskrit": "imáṃ rátham ádhi yé saptá tasthúḥ saptácakraṃ saptá vahanty áśvāḥ |\nsaptá svásāro abhí sáṃ navanta yátra gávām níhitā saptá nā́ma ||3||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K07:S077:V001",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K07:S077:V001",
+      "canonical_key": "VG:AV:SAU:K07:S077:V001",
+      "canonical_sanskrit": "sā́ṃtapanā idáṃ havír márutas táj jujuṣṭana |\nasmā́kotī́ riśādasaḥ ||1||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/7.82.1/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "A",
+            "sanskrit": "sā́ṃtapanā idáṃ havír márutas táj jujuṣṭana |\nasmā́kotī́ riśādasaḥ ||1||"
+          },
+          {
+            "label": "B",
+            "sanskrit": "yó no márto maruto durhr̥ṇāyús tiráś cittā́ni vasavo jíghāṃsati |\ndruháḥ pā́śān práti muñcatāṃ sás tápiṣṭhena tápasā hantanā tám ||2||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K11:S006:V018",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K11:S006:V018",
+      "canonical_key": "VG:AV:SAU:K11:S006:V018",
+      "canonical_sanskrit": "éta devā dakṣiṇatáḥ paścā́t prā́ñca udéta |\npurástād uttarā́c chakrā́ víśve devā́ḥ samétya té no muñcantv áṃhasaḥ ||18||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/11.8.18/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "víśvān devā́n idáṃ brūmaḥ satyásandhān r̥tāvŕ̥dhaḥ |\nvíśvābhiḥ pátnībhiḥ sahá té no muñcantv áṃhasaḥ ||19||"
+          },
+          {
+            "label": "A",
+            "sanskrit": "éta devā dakṣiṇatáḥ paścā́t prā́ñca udéta |\npurástād uttarā́c chakrā́ víśve devā́ḥ samétya té no muñcantv áṃhasaḥ ||18||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K07:S110:V001",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K07:S110:V001",
+      "canonical_key": "VG:AV:SAU:K07:S110:V001",
+      "canonical_sanskrit": "ágna índraś ca dāśúṣe ható vr̥trā́ṇy apratí |\nubhā́ hí vr̥trahántamā ||1||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/7.115.1/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "yā́bhyām ájayant svàr ágra evá yā́v ātasthátur bhúvanāni víśvā |\nprá carṣaṇī́vŕ̥ṣaṇā vájrabāhū agním índram vr̥traháṇā huve 'hám ||2||"
+          },
+          {
+            "label": "A",
+            "sanskrit": "ágna índraś ca dāśúṣe ható vr̥trā́ṇy apratí |\nubhā́ hí vr̥trahántamā ||1||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K07:S076:V003",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K07:S076:V003",
+      "canonical_key": "VG:AV:SAU:K07:S076:V003",
+      "canonical_sanskrit": "yáḥ kī́kasāḥ praśr̥ṇā́ti talīdyàm avatíṣṭhati |\nnír hās táṃ sárvaṃ jāyā́nyam yáḥ káś ca kakúdi śritáḥ ||3||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/7.80.3/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "A",
+            "sanskrit": "yáḥ kī́kasāḥ praśr̥ṇā́ti talīdyàm avatíṣṭhati |\nnír hās táṃ sárvaṃ jāyā́nyam yáḥ káś ca kakúdi śritáḥ ||3||"
+          },
+          {
+            "label": "B",
+            "sanskrit": "pakṣī́ jāyā́nyaḥ patati sá ā́ viśati pū́ruṣam |\ntád ákṣitasya bheṣajám ubháyoḥ súkṣatasya ca ||4||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K09:S010:V005",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K09:S010:V005",
+      "canonical_key": "VG:AV:SAU:K09:S010:V005",
+      "canonical_sanskrit": "hiṅkr̥ṇvatī́ vasupátnī vásūnāṃ vatsám ichántī mánasābhyā́gāt |\nduhā́m aśvíbhyāṃ páyo aghnyéyáṃ sā́ vardhatāṃ mahaté sáubhagāya ||5||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/9.15.5/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "A",
+            "sanskrit": "hiṅkr̥ṇvatī́ vasupátnī vásūnāṃ vatsám ichántī mánasābhyā́gāt |\nduhā́m aśvíbhyāṃ páyo aghnyéyáṃ sā́ vardhatāṃ mahaté sáubhagāya ||5||"
+          },
+          {
+            "label": "B",
+            "sanskrit": "gáur amīmed abhí vatsáṃ miṣántaṃ mūrdhā́naṃ híṅṅ akr̥ṇon mātavā́ u |\nsŕ̥kvāṇaṃ gharmám abhí vāvaśānā́ mímāti māyúṃ páyate páyobhiḥ ||6||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K07:S068:V002",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K07:S068:V002",
+      "canonical_key": "VG:AV:SAU:K07:S068:V002",
+      "canonical_sanskrit": "idáṃ te havyáṃ ghr̥távat sarasvatīdáṃ pitr̥̄ṇā́ṃ havír āsyàṃ yát |\nimā́ni ta uditā́ śámtamāni tébhir vayáṃ mádhumantaḥ syāma ||2||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/7.70.2/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "A",
+            "sanskrit": "idáṃ te havyáṃ ghr̥távat sarasvatīdáṃ pitr̥̄ṇā́ṃ havír āsyàṃ yát |\nimā́ni ta uditā́ śámtamāni tébhir vayáṃ mádhumantaḥ syāma ||2||"
+          },
+          {
+            "label": "B",
+            "sanskrit": "śivā́ naḥ śáṃtamā bhava sumr̥ḍīkā́ sarasvati |\nmā́ te yuyoma saṃdŕ̥śaḥ ||1||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K09:S007:V013",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K09:S007:V013",
+      "canonical_key": "VG:AV:SAU:K09:S007:V013",
+      "canonical_sanskrit": "kródho vr̥kkáu manyúr āṇḍáu prajā́ śépaḥ ||13||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/9.12.13/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "A",
+            "sanskrit": "kródho vr̥kkáu manyúr āṇḍáu prajā́ śépaḥ ||13||"
+          },
+          {
+            "label": "B",
+            "sanskrit": "nadī́ sūtrī́ varṣásya pátaya stánā stanayitnúr ū́dhaḥ ||14||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K11:S006:V011",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K11:S006:V011",
+      "canonical_key": "VG:AV:SAU:K11:S006:V011",
+      "canonical_sanskrit": "saptar̥ṣī́n vā́ idáṃ brūmo 'pó devī́ḥ prajā́patim |\npitr̥̄́n yamáśreṣṭhān brūmas té no muñcantv áṃhasaḥ |11||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/11.8.11/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "yé devā́ diviṣádo antarikṣasádaś ca yé |\npr̥thivyā́ṃ śakrā́ yé śritā́s té no muñcantv áṃhasaḥ ||12||"
+          },
+          {
+            "label": "A",
+            "sanskrit": "saptar̥ṣī́n vā́ idáṃ brūmo 'pó devī́ḥ prajā́patim |\npitr̥̄́n yamáśreṣṭhān brūmas té no muñcantv áṃhasaḥ |11||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K12:S005:V013",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K12:S005:V013",
+      "canonical_key": "VG:AV:SAU:K12:S005:V013",
+      "canonical_sanskrit": "sárvāṇy asyāṃ ghorā́ṇi sárve ca mr̥tyávaḥ ||13||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/12.7.2/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "sárvāṇy asyāṃ krūrā́ṇi sárve puruṣavadhā́ḥ ||14||"
+          },
+          {
+            "label": "A",
+            "sanskrit": "sárvāṇy asyāṃ ghorā́ṇi sárve ca mr̥tyávaḥ ||13||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K07:S017:V004",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K07:S017:V004",
+      "canonical_key": "VG:AV:SAU:K07:S017:V004",
+      "canonical_sanskrit": "dhātā́ rātíḥ savitédáṃ juṣantāṃ prajā́patir nidhípatir no agníḥ |\ntváṣṭā víṣṇuḥ prajáyā saṃrarāṇó yájamānāya dráviṇaṃ dadhātu ||4||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/7.18.4/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": null,
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K07:S053:V002",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K07:S053:V002",
+      "canonical_key": "VG:AV:SAU:K07:S053:V002",
+      "canonical_sanskrit": "sáṃ krāmataṃ mā́ jahītaṃ śárīraṃ prāṇāpānáu te sayújāv ihá stām |\nśatáṃ jīva śarádo várdhamāno 'gníṣ ṭe gopā́ adhipā́ vásiṣṭhaḥ ||2||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/7.55.2/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "A",
+            "sanskrit": "sáṃ krāmataṃ mā́ jahītaṃ śárīraṃ prāṇāpānáu te sayújāv ihá stām |\nśatáṃ jīva śarádo várdhamāno 'gníṣ ṭe gopā́ adhipā́ vásiṣṭhaḥ ||2||"
+          },
+          {
+            "label": "B",
+            "sanskrit": "ā́yur yát te átihitaṃ parācáir apānáḥ prāṇáḥ púnar ā́ tā́v itām |\nagníṣ ṭád ā́hār nírr̥ter upásthāt tád ātmáni púnar ā́ veśayāmi te ||3||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K09:S006:V018",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K09:S006:V018",
+      "canonical_key": "VG:AV:SAU:K09:S006:V018",
+      "canonical_sanskrit": "yajamānabrāhmaṇáṃ vā́ etád átithipatiḥ kurute yád āhāryā̀ṇi prékṣata idáṃ bhū́yā3 idā́3m íti ||18||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/9.7.1/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "yád ā́ha bhū́ya úd dharéti prāṇám evá téna várṣīyāṃsaṃ kurute ||19||"
+          },
+          {
+            "label": "A",
+            "sanskrit": "yajamānabrāhmaṇáṃ vā́ etád átithipatiḥ kurute yád āhāryā̀ṇi prékṣata idáṃ bhū́yā3 idā́3m íti ||18||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K07:S079:V001",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K07:S079:V001",
+      "canonical_key": "VG:AV:SAU:K07:S079:V001",
+      "canonical_sanskrit": "yát te devā́ ákr̥ṇvan bhāgadhéyam ámāvāsye saṃvásanto mahitvā́ |\nténā no yajñáṃ pipr̥hi viśvavāre rayíṃ no dhehi subhage suvī́ram ||1||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/7.84.1/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "ahám evā́smy amāvāsyā̀ mā́m ā́ vasanti sukŕ̥to máyīmé |\nmáyi devā́ ubháye sādyā́ś céndrajyeṣṭhāḥ sám agachanta sárve ||2||"
+          },
+          {
+            "label": "A",
+            "sanskrit": "yát te devā́ ákr̥ṇvan bhāgadhéyam ámāvāsye saṃvásanto mahitvā́ |\nténā no yajñáṃ pipr̥hi viśvavāre rayíṃ no dhehi subhage suvī́ram ||1||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K07:S056:V007",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K07:S056:V007",
+      "canonical_key": "VG:AV:SAU:K07:S056:V007",
+      "canonical_sanskrit": "adánti tvā pipī́likā ví vr̥ścanti mayūryàḥ |\nsárve bhala bravātha śā́rkoṭam arasáṃ viṣám ||7||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/7.58.7/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "A",
+            "sanskrit": "adánti tvā pipī́likā ví vr̥ścanti mayūryàḥ |\nsárve bhala bravātha śā́rkoṭam arasáṃ viṣám ||7||"
+          },
+          {
+            "label": "B",
+            "sanskrit": "yá ubhā́bhyāṃ prahárasi púchena cāsyèna ca |\nāsyè ná te viṣáṃ kím u te puchadhā́v asat ||8||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K07:S057:V001",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K07:S057:V001",
+      "canonical_key": "VG:AV:SAU:K07:S057:V001",
+      "canonical_sanskrit": "yád āśásā vádato me vicukṣubhé yád yā́camānasya cárato jánām̐ ánu |\nyád ātmáni tanvò me víriṣṭaṃ sárasvatī tád ā́ pr̥ṇad ghr̥téna ||1||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/7.59.1/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "saptá kṣaranti síśave marútvate pitré putrā́so ápy avīvr̥tann r̥tā́ni |\nubhé íd asyobhé asya rājata ubhé yatete ubhé asya puṣyataḥ ||2||"
+          },
+          {
+            "label": "A",
+            "sanskrit": "yád āśásā vádato me vicukṣubhé yád yā́camānasya cárato jánām̐ ánu |\nyád ātmáni tanvò me víriṣṭaṃ sárasvatī tád ā́ pr̥ṇad ghr̥téna ||1||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K07:S056:V003",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K07:S056:V003",
+      "canonical_key": "VG:AV:SAU:K07:S056:V003",
+      "canonical_sanskrit": "yáto daṣṭáṃ yáto dhītáṃ tátas te nír hvayāmasi |\narbhásya tr̥pradaṃśíno maśákasyārasáṃ viṣám ||3||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/7.58.3/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "ayáṃ yó vakró víparur vyàṅgo múkhāni vakrā́ vr̥jinā́ kr̥ṇóṣi |\ntā́ni tváṃ brahmaṇas pate iṣī́kām iva sáṃ namaḥ ||4||"
+          },
+          {
+            "label": "A",
+            "sanskrit": "yáto daṣṭáṃ yáto dhītáṃ tátas te nír hvayāmasi |\narbhásya tr̥pradaṃśíno maśákasyārasáṃ viṣám ||3||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K07:S062:V001",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K07:S062:V001",
+      "canonical_key": "VG:AV:SAU:K07:S062:V001",
+      "canonical_sanskrit": "ayám agníḥ sátpatir vr̥ddhávr̥ṣṇo rathī́va pattī́n ajayat puróhitaḥ |\nnā́bhā pr̥thivyā́ṃ níhito dávidyutad adhaspadáṃ kr̥ṇutāṃ yé pr̥tanyávaḥ ||1||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/7.64.1/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": null,
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K07:S111:V001",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K07:S111:V001",
+      "canonical_key": "VG:AV:SAU:K07:S111:V001",
+      "canonical_sanskrit": "índrasya kukṣír asi somadhā́na ātmā́ devā́nām utá mā́nuṣāṇām |\nihá prajā́ janaya yā́s ta āsú yā́ anyátrehá tā́s te ramantām ||1||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/7.116.1/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": null,
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K11:S008:V022",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K11:S008:V022",
+      "canonical_key": "VG:AV:SAU:K11:S008:V022",
+      "canonical_sanskrit": "nindā́ś ca vā́ ánindāś ca yác ca hántéti néti ca |\nśárīraṃ śraddhā́ dákṣiṇā́śraddhā cā́nu prā́viśan ||22||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/11.10.22/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "vidyā́ś ca vā́ ávidyāś ca yác cānyád upadeśyàm |\nśárīraṃ bráhma prā́viśad ŕ̥caḥ sā́mā́tho yájuḥ ||23||"
+          },
+          {
+            "label": "A",
+            "sanskrit": "nindā́ś ca vā́ ánindāś ca yác ca hántéti néti ca |\nśárīraṃ śraddhā́ dákṣiṇā́śraddhā cā́nu prā́viśan ||22||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K07:S056:V005",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K07:S056:V005",
+      "canonical_key": "VG:AV:SAU:K07:S056:V005",
+      "canonical_sanskrit": "arasásya śarkóṭasya nīcī́nasyopasárpataḥ |\nviṣáṃ hy àsyā́diṣy átho enam ajījabham ||5||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/7.58.5/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "A",
+            "sanskrit": "arasásya śarkóṭasya nīcī́nasyopasárpataḥ |\nviṣáṃ hy àsyā́diṣy átho enam ajījabham ||5||"
+          },
+          {
+            "label": "B",
+            "sanskrit": "ná te bāhvór bálam asti ná śīrṣé nótá madhyatáḥ |\nátha kíṃ pāpáyā 'muyā́ púche bibharṣy arbhakám ||6||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K11:S006:V010",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K11:S006:V010",
+      "canonical_key": "VG:AV:SAU:K11:S006:V010",
+      "canonical_sanskrit": "dívaṃ brūmo nákṣatrāṇi bhū́miṃ yakṣā́ṇi párvatān |\nsamudrā́ nadyò veśantā́s té no muñcantv áṃhasaḥ ||10|| {17}",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/11.8.10/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "saptar̥ṣī́n vā́ idáṃ brūmo 'pó devī́ḥ prajā́patim |\npitr̥̄́n yamáśreṣṭhān brūmas té no muñcantv áṃhasaḥ |11||"
+          },
+          {
+            "label": "A",
+            "sanskrit": "dívaṃ brūmo nákṣatrāṇi bhū́miṃ yakṣā́ṇi párvatān |\nsamudrā́ nadyò veśantā́s té no muñcantv áṃhasaḥ ||10|| {17}"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K11:S009:V014",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K11:S009:V014",
+      "canonical_key": "VG:AV:SAU:K11:S009:V014",
+      "canonical_sanskrit": "pratighnānā́ḥ sáṃ dhāvantū́raḥ paṭaurā́v āghnānā́ḥ |\naghāríṇīr vikeśyò rudatyàḥ púruṣe haté radité arbude táva ||14||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/11.11.14/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "śvànvatīr apsaráso rū́pakā utā́rbude |\nantaḥpātré rérihatīṃ riśā́ṃ durṇihitaiṣíṇīm |\nsárvās tā́ arbude tvám amítrebhyo dr̥śé kurūdārā́ṃś ca prá darśaya ||15||"
+          },
+          {
+            "label": "A",
+            "sanskrit": "pratighnānā́ḥ sáṃ dhāvantū́raḥ paṭaurā́v āghnānā́ḥ |\naghāríṇīr vikeśyò rudatyàḥ púruṣe haté radité arbude táva ||14||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K13:S004:V047",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K13:S004:V047",
+      "canonical_key": "VG:AV:SAU:K13:S004:V047",
+      "canonical_sanskrit": "bhū́yān árātyāḥ śácyāḥ pátis tvám indrāsi vibhū́ḥ prabhū́r íti tvópāsmahe vayám ||47||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/13.8.2/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "námas te astu paśyata páśya mā paśyata ||48||"
+          },
+          {
+            "label": "A",
+            "sanskrit": "bhū́yān árātyāḥ śácyāḥ pátis tvám indrāsi vibhū́ḥ prabhū́r íti tvópāsmahe vayám ||47||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K11:S009:V018",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K11:S009:V018",
+      "canonical_key": "VG:AV:SAU:K11:S009:V018",
+      "canonical_sanskrit": "úd vepaya tvám arbude 'mítrāṇām amū́ḥ sícaḥ |\njáyaṃś ca jiṣṇúś cāmítrāṃ jáyatām índramedinau ||18||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/11.11.18/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "práblīno mr̥ditáḥ śayāṃ hatò 'mítro nyarbude |\nagnijihvā́ dhūmaśikhā́ jáyantīr yantu sénayā ||19||"
+          },
+          {
+            "label": "A",
+            "sanskrit": "úd vepaya tvám arbude 'mítrāṇām amū́ḥ sícaḥ |\njáyaṃś ca jiṣṇúś cāmítrāṃ jáyatām índramedinau ||18||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K13:S004:V027",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K13:S004:V027",
+      "canonical_key": "VG:AV:SAU:K13:S004:V027",
+      "canonical_sanskrit": "tásyemé sárve yātáva úpa praśíṣam āsate ||27||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/13.6.6/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "tásyāmū́ sárvā nákṣatrā váśe candrámasā sahá ||28|| {17}"
+          },
+          {
+            "label": "A",
+            "sanskrit": "tásyemé sárve yātáva úpa praśíṣam āsate ||27||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K07:S080:V002",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K07:S080:V002",
+      "canonical_key": "VG:AV:SAU:K07:S080:V002",
+      "canonical_sanskrit": "vr̥ṣabháṃ vājínaṃ vayáṃ paurṇamāsáṃ yajāmahe |\nsá no dadātv ákṣitāṃ rayím ánupadasvatīm ||2||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/7.85.2/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "A",
+            "sanskrit": "vr̥ṣabháṃ vājínaṃ vayáṃ paurṇamāsáṃ yajāmahe |\nsá no dadātv ákṣitāṃ rayím ánupadasvatīm ||2||"
+          },
+          {
+            "label": "B",
+            "sanskrit": "prájāpate ná tvád etā́ny anyó víśvā rūpā́ṇi paribhū́r jajāna |\nyátkāmās te juhumás tán no astu vayáṃ syāma pátayo rayīṇā́m ||3||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K07:S060:V004",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K07:S060:V004",
+      "canonical_key": "VG:AV:SAU:K07:S060:V004",
+      "canonical_sanskrit": "úpahūtā bhū́ridhanāḥ sákhāyaḥ svādúsaṃmudaḥ |\nakṣudhyā́ atr̥ṣyā́ sta gŕ̥hā mā́smád bibhītana ||4||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/7.62.4/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "úpahūtā ihá gā́va úpahūtā ajāváyaḥ |\nátho ánnasya kīlā́la úpahūto gr̥héṣu ||5||"
+          },
+          {
+            "label": "A",
+            "sanskrit": "úpahūtā bhū́ridhanāḥ sákhāyaḥ svādúsaṃmudaḥ |\nakṣudhyā́ atr̥ṣyā́ sta gŕ̥hā mā́smád bibhītana ||4||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K09:S010:V004",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K09:S010:V004",
+      "canonical_key": "VG:AV:SAU:K09:S010:V004",
+      "canonical_sanskrit": "úpa hvaye sudúghāṃ dhenúm etā́ṃ suhásto godhúg utá dohad enām |\nśréṣṭhaṃ saváṃ savitā́ sāviṣan no 'bhī́ddho gharmás tád u ṣú prá vocat ||4||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/9.15.4/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "hiṅkr̥ṇvatī́ vasupátnī vásūnāṃ vatsám ichántī mánasābhyā́gāt |\nduhā́m aśvíbhyāṃ páyo aghnyéyáṃ sā́ vardhatāṃ mahaté sáubhagāya ||5||"
+          },
+          {
+            "label": "A",
+            "sanskrit": "úpa hvaye sudúghāṃ dhenúm etā́ṃ suhásto godhúg utá dohad enām |\nśréṣṭhaṃ saváṃ savitā́ sāviṣan no 'bhī́ddho gharmás tád u ṣú prá vocat ||4||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K12:S005:V056",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K12:S005:V056",
+      "canonical_key": "VG:AV:SAU:K12:S005:V056",
+      "canonical_sanskrit": "ā́ datse jinatā́ṃ várca iṣṭáṃ pūrtáṃ cāśíṣaḥ ||56||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/12.10.10/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "A",
+            "sanskrit": "ā́ datse jinatā́ṃ várca iṣṭáṃ pūrtáṃ cāśíṣaḥ ||56||"
+          },
+          {
+            "label": "B",
+            "sanskrit": "ādā́ya jītáṃ jītā́ya lokè 'múṣmin prá yachasi ||57||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K07:S073:V003",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K07:S073:V003",
+      "canonical_key": "VG:AV:SAU:K07:S073:V003",
+      "canonical_sanskrit": "ivā́hākr̥taḥ śúcir devéṣu yajñó yó aśvínoś camasó devapā́naḥ |\ntám u víśve amŕ̥tāso juṣāṇā́ gandharvásya práty āsnā́ rihanti ||3||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/7.77.3/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "yád usríyāsv ā́hutaṃ ghr̥táṃ páyo 'yáṃ sá vām aśvinā bhāgá ā́ gatam |\nmā́dhvī dhartārā vidathasya satpatī taptáṃ gharmáṃ pibatam diváḥ ||4||"
+          },
+          {
+            "label": "A",
+            "sanskrit": "ivā́hākr̥taḥ śúcir devéṣu yajñó yó aśvínoś camasó devapā́naḥ |\ntám u víśve amŕ̥tāso juṣāṇā́ gandharvásya práty āsnā́ rihanti ||3||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K12:S005:V034",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K12:S005:V034",
+      "canonical_key": "VG:AV:SAU:K12:S005:V034",
+      "canonical_sanskrit": "ásaṃjñā gandhéna śúg uddhriyámāṇāśīviṣá úddhr̥tā ||34||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/12.8.7/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "A",
+            "sanskrit": "ásaṃjñā gandhéna śúg uddhriyámāṇāśīviṣá úddhr̥tā ||34||"
+          },
+          {
+            "label": "B",
+            "sanskrit": "ábhūtir upahriyámāṇā párābhūtir úpahr̥tā ||35||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K07:S092:V001",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K07:S092:V001",
+      "canonical_key": "VG:AV:SAU:K07:S092:V001",
+      "canonical_sanskrit": "sá sutrā́mā svávām̐ índro asmád ārā́c cid dvéṣaḥ sanutár yuyotu |\ntásya vayáṃ sumatáu yajñíyasyā́pi bhadré saumanasé syāma ||1||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/7.97.1/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": null,
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K07:S097:V003",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K07:S097:V003",
+      "canonical_key": "VG:AV:SAU:K07:S097:V003",
+      "canonical_sanskrit": "yā́n ā́vaha uśató deva devā́ṃs tā́n préraya své agne sadhásthe |\njakṣivā́ṃsaḥ papivā́ṃso mádhūny asmái dhatta vasavo vásūni ||3||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/7.102.3/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "A",
+            "sanskrit": "yā́n ā́vaha uśató deva devā́ṃs tā́n préraya své agne sadhásthe |\njakṣivā́ṃsaḥ papivā́ṃso mádhūny asmái dhatta vasavo vásūni ||3||"
+          },
+          {
+            "label": "B",
+            "sanskrit": "sugā́ vo devāḥ sádanā akarma yá ājagmá sávane mā juṣāṇā́ḥ |\nváhamānā bháramāṇāḥ svā́ vásūni vásuṃ gharmáṃ dívam ā́ rohatā́nu ||4||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K11:S008:V004",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K11:S008:V004",
+      "canonical_key": "VG:AV:SAU:K11:S008:V004",
+      "canonical_sanskrit": "prāṇāpānáu cákṣuḥ śrótram ákṣitiś ca kṣítiś ca yā́ |\nvyānodānáu vā́ṅ mánas té vā́ ā́kūtim ā́vahan ||4||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/11.10.4/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "ájātā āsann r̥távó 'tho dhātā́ bŕ̥haspátiḥ |\nindrāgnī́ aśvínā tárhi káṃ té jyeṣṭhám úpāsata ||5||"
+          },
+          {
+            "label": "A",
+            "sanskrit": "prāṇāpānáu cákṣuḥ śrótram ákṣitiś ca kṣítiś ca yā́ |\nvyānodānáu vā́ṅ mánas té vā́ ā́kūtim ā́vahan ||4||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K09:S008:V016",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K09:S008:V016",
+      "canonical_key": "VG:AV:SAU:K09:S008:V016",
+      "canonical_sanskrit": "yā́s tiráścīḥ uparṣánty arṣaṇī́r vakṣáṇāsu te |\náhiṃsantīr anāmayā́ nír dravantu bahír bílam ||16||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/9.13.16/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "A",
+            "sanskrit": "yā́s tiráścīḥ uparṣánty arṣaṇī́r vakṣáṇāsu te |\náhiṃsantīr anāmayā́ nír dravantu bahír bílam ||16||"
+          },
+          {
+            "label": "B",
+            "sanskrit": "yā́ gúdā anusárpanty āntrā́ṇi moháyanti ca |\náhiṃsantīr anāmayā́ nír dravantu bahír bílam ||17||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K11:S009:V020",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K11:S009:V020",
+      "canonical_key": "VG:AV:SAU:K11:S009:V020",
+      "canonical_sanskrit": "táyārbude práṇuttānām índro hantu váraṃvaram |\namítrāṇāṃ śácīpátir mā́mī́ṣāṃ moci káś caná ||20|| {26}",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/11.11.20/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "út kasantu hŕ̥dayāny ūrdhváḥ prāṇá úd īṣatu |\nśauṣkāsyám ánu vartatām amítrān mótá mitríṇaḥ ||21||"
+          },
+          {
+            "label": "A",
+            "sanskrit": "táyārbude práṇuttānām índro hantu váraṃvaram |\namítrāṇāṃ śácīpátir mā́mī́ṣāṃ moci káś caná ||20|| {26}"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K07:S037:V001",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K07:S037:V001",
+      "canonical_key": "VG:AV:SAU:K07:S037:V001",
+      "canonical_sanskrit": "abhí tvā mánujātena dádhāmi máma vā́sasā |\nyā́thā́ 'so máma kévalo nā́nyā́sāṃ kīrtáyāś caná ||1||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/7.38.1/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": null,
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K16:S008:V027",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K16:S008:V027",
+      "canonical_key": "VG:AV:SAU:K16:S008:V027",
+      "canonical_sanskrit": "jitám asmā́kam údbhinnam asmā́kam r̥tám asmā́kaṃ téjo 'smā́kaṃ bráhmāsmā́kaṃ svàr asmā́kaṃ yajñò 'smā́kaṃ paśávo 'smā́kaṃ prajā́ asmā́kaṃ vīrā́ asmā́kam ||27||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/16.8.30/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": null,
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K11:S009:V017",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K11:S009:V017",
+      "canonical_key": "VG:AV:SAU:K11:S009:V017",
+      "canonical_sanskrit": "cáturdaṃṣṭrāṃ chyāvádataḥ kumbhámuṣkām̐ ásr̥ṅmukhān |\nsvabhyasā́ yé codbhyasā́ḥ ||17||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/11.11.17/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "A",
+            "sanskrit": "cáturdaṃṣṭrāṃ chyāvádataḥ kumbhámuṣkām̐ ásr̥ṅmukhān |\nsvabhyasā́ yé codbhyasā́ḥ ||17||"
+          },
+          {
+            "label": "B",
+            "sanskrit": "úd vepaya tvám arbude 'mítrāṇām amū́ḥ sícaḥ |\njáyaṃś ca jiṣṇúś cāmítrāṃ jáyatām índramedinau ||18||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K09:S009:V006",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K09:S009:V006",
+      "canonical_key": "VG:AV:SAU:K09:S009:V006",
+      "canonical_sanskrit": "pā́kaḥ pr̥chāmi mánasā́ 'vijānan devā́nām enā́ níhitā padā́ni |\nvatsé baṣkáyé 'dhi saptá tántūn ví tatnire kaváya ótavā́ u ||6||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/9.14.6/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "ácikitvāṃs cikitúṣaś cid átra kavī́n pr̥chāmi vidváno ná vidvā́n |\nví yás tastámbha ṣáṭ imā́ rájāṃsy ajásya rūpé kíṃ ápi svid ékam ||7||"
+          },
+          {
+            "label": "A",
+            "sanskrit": "pā́kaḥ pr̥chāmi mánasā́ 'vijānan devā́nām enā́ níhitā padā́ni |\nvatsé baṣkáyé 'dhi saptá tántūn ví tatnire kaváya ótavā́ u ||6||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K11:S003:V049",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K11:S003:V049",
+      "canonical_key": "VG:AV:SAU:K11:S003:V049",
+      "canonical_sanskrit": "tátaś cainam anyáyā pratiṣṭháyā prā́śīr yáyā caitáṃ pū́rva ŕ̥ṣayaḥ prā́śnan |\napratiṣṭhānò 'nāyatanó mariṣyasī́ty enam āha |\ntáṃ vā́ aháṃ nā́rvā́ñcaṃ ná párāñcaṃ ná pratyáñcam |\nsatyé pratiṣṭhā́ya |\ntáyainaṃ prā́śiṣaṃ táyainam ajīgamam |\neṣá vā́ odanáḥ sárvāṅgaḥ sárvaparuḥ sárvatanūḥ |\nsárvāṅga evá sárvaparuḥ sárvatanūḥ sáṃ bhavati yá eváṃ véda ||49|| [18] {9}",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/11.5.18/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "etád vái bradhnásya viṣṭápaṃ yád odanáḥ ||50|| [1]"
+          },
+          {
+            "label": "A",
+            "sanskrit": "tátaś cainam anyáyā pratiṣṭháyā prā́śīr yáyā caitáṃ pū́rva ŕ̥ṣayaḥ prā́śnan |\napratiṣṭhānò 'nāyatanó mariṣyasī́ty enam āha |\ntáṃ vā́ aháṃ nā́rvā́ñcaṃ ná párāñcaṃ ná pratyáñcam |\nsatyé pratiṣṭhā́ya |\ntáyainaṃ prā́śiṣaṃ táyainam ajīgamam |\neṣá vā́ odanáḥ sárvāṅgaḥ sárvaparuḥ sárvatanūḥ |\nsárvāṅga evá sárvaparuḥ sárvatanūḥ sáṃ bhavati yá eváṃ véda ||49|| [18] {9}"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K06:S088:V001",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K06:S088:V001",
+      "canonical_key": "VG:AV:SAU:K06:S088:V001",
+      "canonical_sanskrit": "dhruvā́ dyáur dhruvā́ pr̥thivī́ dhruváṃ víśvam idáṃ jágat |\ndhruvā́saḥ párvatā imé dhruvó rā́jā viśā́m ayám ||1||",
+      "media_url": "https://huggingface.co/datasets/sanganaka/Vedavani-Dataset/resolve/main/AudioFiles/batch_1/Atharvaveda_Kanda_6_0448.wav",
+      "source_name": "Vedavani",
+      "performer": null,
+      "licence": "Apache-2.0",
+      "duration_seconds": 9.168,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "dhruváṃ te rā́jā váruṇo dhruvám devó bŕ̥haspátiḥ |\ndhruváṃ ta índraś cā́gníś ca rāṣṭráṃ dhārayatāṃ dhruvám ||2||"
+          },
+          {
+            "label": "A",
+            "sanskrit": "dhruvā́ dyáur dhruvā́ pr̥thivī́ dhruváṃ víśvam idáṃ jágat |\ndhruvā́saḥ párvatā imé dhruvó rā́jā viśā́m ayám ||1||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K06:S083:V004",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K06:S083:V004",
+      "canonical_key": "VG:AV:SAU:K06:S083:V004",
+      "canonical_sanskrit": "vīhí svā́m ā́hutiṃ juṣānó mánasā svā́hā mánasā yád idáṃ juhómi ||4||",
+      "media_url": "https://huggingface.co/datasets/sanganaka/Vedavani-Dataset/resolve/main/AudioFiles/batch_1/Atharvaveda_Kanda_6_0426.wav",
+      "source_name": "Vedavani",
+      "performer": null,
+      "licence": "Apache-2.0",
+      "duration_seconds": 6.073,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": null,
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K11:S006:V022",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K11:S006:V022",
+      "canonical_key": "VG:AV:SAU:K11:S006:V022",
+      "canonical_sanskrit": "yā́ devī́ḥ páñca pradíśo yé devā́ dvā́daśa r̥távaḥ |\nsaṃvatsarásya yé dáṃṣṭrās té naḥ santu sádā śivā́ḥ ||22||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/11.8.22/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "A",
+            "sanskrit": "yā́ devī́ḥ páñca pradíśo yé devā́ dvā́daśa r̥távaḥ |\nsaṃvatsarásya yé dáṃṣṭrās té naḥ santu sádā śivā́ḥ ||22||"
+          },
+          {
+            "label": "B",
+            "sanskrit": "yán mā́talī rathakrītám amŕ̥taṃ véda bheṣajám |\ntád índro apsú prā́veśayat tád āpo datta bheṣajám ||23|| {18}"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K09:S010:V007",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K09:S010:V007",
+      "canonical_key": "VG:AV:SAU:K09:S010:V007",
+      "canonical_sanskrit": "ayáṃ sá śiṅkte yéna gáur abhívr̥tā mímāti mayúṃ dhvasánāv ádhi śritā́ |\nsā́ cittíbhir ní hí cakā́ra mártyān vidyúd bhávantī práti vavrím auhata ||7||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/9.15.7/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "A",
+            "sanskrit": "ayáṃ sá śiṅkte yéna gáur abhívr̥tā mímāti mayúṃ dhvasánāv ádhi śritā́ |\nsā́ cittíbhir ní hí cakā́ra mártyān vidyúd bhávantī práti vavrím auhata ||7||"
+          },
+          {
+            "label": "B",
+            "sanskrit": "anác chaye turágātu jīvám éjad dhruváṃ mádhya ā́ pastyā̀nām |\njīvó mr̥tásya carati svadhā́bhir ámartyo mártyenā sáyoniḥ ||8||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K11:S006:V017",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K11:S006:V017",
+      "canonical_key": "VG:AV:SAU:K11:S006:V017",
+      "canonical_sanskrit": "r̥tū́n brūma r̥tupátīn ārtavā́n utá hāyanā́n |\nsámāḥ saṃvatsarā́n mā́sāṃs té no muñcantv áṃhasaḥ ||17||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/11.8.17/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "A",
+            "sanskrit": "r̥tū́n brūma r̥tupátīn ārtavā́n utá hāyanā́n |\nsámāḥ saṃvatsarā́n mā́sāṃs té no muñcantv áṃhasaḥ ||17||"
+          },
+          {
+            "label": "B",
+            "sanskrit": "éta devā dakṣiṇatáḥ paścā́t prā́ñca udéta |\npurástād uttarā́c chakrā́ víśve devā́ḥ samétya té no muñcantv áṃhasaḥ ||18||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K07:S010:V001",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K07:S010:V001",
+      "canonical_key": "VG:AV:SAU:K07:S010:V001",
+      "canonical_sanskrit": "yás te stánaḥ śaśayúr yó mayobhū́r yáḥ sumnayúḥ suhávo yáḥ sudátraḥ |\nyéna víśvā púṣyasi vā́ryāṇi sárasvati tám ihá dhā́tave kaḥ ||1||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/7.11.1/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": null,
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K06:S063:V004",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K06:S063:V004",
+      "canonical_key": "VG:AV:SAU:K06:S063:V004",
+      "canonical_sanskrit": "sáṃsam íd yuvase vr̥ṣann ágne víśvāny aryá ā́ |\niḍás padé sám idhyase sá no vásūny ā́ bhara ||4||",
+      "media_url": "https://huggingface.co/datasets/sanganaka/Vedavani-Dataset/resolve/main/AudioFiles/batch_1/Atharvaveda_Kanda_6_0323.wav",
+      "source_name": "Vedavani",
+      "performer": null,
+      "licence": "Apache-2.0",
+      "duration_seconds": 8.777,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": null,
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K11:S004:V005",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K11:S004:V005",
+      "canonical_key": "VG:AV:SAU:K11:S004:V005",
+      "canonical_sanskrit": "yadā́ prāṇó abhyávarṣīd varṣéṇa pr̥thivī́ṃ mahī́m |\npaśávas tát prá modante máho vái no bhaviṣyati ||5||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/11.6.5/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "abhívr̥ṣṭā óṣadhayaḥ prāṇéna sám avādiran |\nā́yur vái naḥ prā́tītaraḥ sárvā naḥ surabhī́r akaḥ ||6||"
+          },
+          {
+            "label": "A",
+            "sanskrit": "yadā́ prāṇó abhyávarṣīd varṣéṇa pr̥thivī́ṃ mahī́m |\npaśávas tát prá modante máho vái no bhaviṣyati ||5||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K11:S008:V033",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K11:S008:V033",
+      "canonical_key": "VG:AV:SAU:K11:S008:V033",
+      "canonical_sanskrit": "prathaména pramāréṇa tredhā́ víṣvaṅ ví gachati |\nadá ékena gáchaty adá ékena gachatīháikena ní ṣevate ||33||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/11.10.33/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "A",
+            "sanskrit": "prathaména pramāréṇa tredhā́ víṣvaṅ ví gachati |\nadá ékena gáchaty adá ékena gachatīháikena ní ṣevate ||33||"
+          },
+          {
+            "label": "B",
+            "sanskrit": "apsú stīmā́su vr̥ddhā́su śárīram antarā́ hitám |\ntásmiṃ chávó 'dhy antarā́ tásmāc chávó 'dhy ucyate ||34|| {24}"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K09:S007:V014",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K09:S007:V014",
+      "canonical_key": "VG:AV:SAU:K09:S007:V014",
+      "canonical_sanskrit": "nadī́ sūtrī́ varṣásya pátaya stánā stanayitnúr ū́dhaḥ ||14||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/9.12.14/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "A",
+            "sanskrit": "nadī́ sūtrī́ varṣásya pátaya stánā stanayitnúr ū́dhaḥ ||14||"
+          },
+          {
+            "label": "B",
+            "sanskrit": "viśvávyacās cármáuṣadhayo lómāni nákṣatrāṇi rūpám ||15||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K07:S076:V001",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K07:S076:V001",
+      "canonical_key": "VG:AV:SAU:K07:S076:V001",
+      "canonical_sanskrit": "ā́ susrásaḥ susráso ásatībhyo ásattarāḥ |\nséhor arasátarā havaṇā́d víkledīyasīḥ ||1||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/7.80.1/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "yā́ gráivyā apacító 'tho yā́ upapakṣyā̀ḥ |\nvijā́mni yā́ apacítaḥ svayaṃsrásaḥ ||2||"
+          },
+          {
+            "label": "A",
+            "sanskrit": "ā́ susrásaḥ susráso ásatībhyo ásattarāḥ |\nséhor arasátarā havaṇā́d víkledīyasīḥ ||1||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-AV_COORDINATE_REMAPPED-VG:AV:SAU:K13:S004:V026",
+      "stratum": "AV_COORDINATE_REMAPPED",
+      "review_priority": 7,
+      "citation": "VG:AV:SAU:K13:S004:V026",
+      "canonical_key": "VG:AV:SAU:K13:S004:V026",
+      "canonical_sanskrit": "sá rudró vasuvánir vasudéye namovāké vaṣaṭkāró 'nu sáṃhitaḥ ||26||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/atharved/13.6.5/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "tásyemé sárve yātáva úpa praśíṣam āsate ||27||"
+          },
+          {
+            "label": "A",
+            "sanskrit": "sá rudró vasuvánir vasudéye namovāké vaṣaṭkāró 'nu sáṃhitaḥ ||26||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-SPAN-VG:RV:SAK:M01:S067:V007",
+      "stratum": "RV_1_65_TO_1_70_AFFECTED_SPAN",
+      "review_priority": 1,
+      "citation": "RV 1.67.7",
+      "canonical_key": "VG:RV:SAK:M01:S067:V007",
+      "canonical_sanskrit": "ya ī̍ṁ ci̱keta̱ guhā̱ bhava̍nta̱m ā yaḥ sa̱sāda̱ dhārā̍m ṛ̱tasya̍ ||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/rigved/1.67.7/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Does the recitation match the Sanskrit shown, verse for verse? These hymns are where an edition merges verse pairs, so the specific risk is a recording of the verse pair rather than of this verse alone.",
+      "blind_candidates": null,
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-SPAN-VG:RV:SAK:M01:S070:V006",
+      "stratum": "RV_1_65_TO_1_70_AFFECTED_SPAN",
+      "review_priority": 1,
+      "citation": "RV 1.70.6",
+      "canonical_key": "VG:RV:SAK:M01:S070:V006",
+      "canonical_sanskrit": "e̱tā ci̍kitvo̱ bhūmā̱ ni pā̍hi de̱vānā̱ṁ janma̱ martā̍m̐ś ca vi̱dvān ||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/rigved/1.70.6/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Does the recitation match the Sanskrit shown, verse for verse? These hymns are where an edition merges verse pairs, so the specific risk is a recording of the verse pair rather than of this verse alone.",
+      "blind_candidates": null,
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-SPAN-VG:RV:SAK:M01:S067:V010",
+      "stratum": "RV_1_65_TO_1_70_AFFECTED_SPAN",
+      "review_priority": 1,
+      "citation": "RV 1.67.10",
+      "canonical_key": "VG:RV:SAK:M01:S067:V010",
+      "canonical_sanskrit": "citti̍r a̱pāṁ dame̍ vi̱śvāyu̱ḥ sadme̍va̱ dhīrā̍ḥ sa̱mmāya̍ cakruḥ ||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/rigved/1.67.10/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Does the recitation match the Sanskrit shown, verse for verse? These hymns are where an edition merges verse pairs, so the specific risk is a recording of the verse pair rather than of this verse alone.",
+      "blind_candidates": null,
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-SPAN-VG:RV:SAK:M01:S068:V001",
+      "stratum": "RV_1_65_TO_1_70_AFFECTED_SPAN",
+      "review_priority": 1,
+      "citation": "RV 1.68.1",
+      "canonical_key": "VG:RV:SAK:M01:S068:V001",
+      "canonical_sanskrit": "śrī̱ṇann upa̍ sthā̱d diva̍m bhura̱ṇyuḥ sthā̱tuś ca̱ratha̍m a̱ktūn vy ū̍rṇot ||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/rigved/1.68.1/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Does the recitation match the Sanskrit shown, verse for verse? These hymns are where an edition merges verse pairs, so the specific risk is a recording of the verse pair rather than of this verse alone.",
+      "blind_candidates": null,
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-SPAN-VG:RV:SAK:M01:S069:V001",
+      "stratum": "RV_1_65_TO_1_70_AFFECTED_SPAN",
+      "review_priority": 1,
+      "citation": "RV 1.69.1",
+      "canonical_key": "VG:RV:SAK:M01:S069:V001",
+      "canonical_sanskrit": "śu̱kraḥ śu̍śu̱kvām̐ u̱ṣo na jā̱raḥ pa̱prā sa̍mī̱cī di̱vo na jyoti̍ḥ ||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/rigved/1.69.1/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Does the recitation match the Sanskrit shown, verse for verse? These hymns are where an edition merges verse pairs, so the specific risk is a recording of the verse pair rather than of this verse alone.",
+      "blind_candidates": null,
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-SPAN-VG:RV:SAK:M01:S067:V001",
+      "stratum": "RV_1_65_TO_1_70_AFFECTED_SPAN",
+      "review_priority": 1,
+      "citation": "RV 1.67.1",
+      "canonical_key": "VG:RV:SAK:M01:S067:V001",
+      "canonical_sanskrit": "vane̍ṣu jā̱yur marte̍ṣu mi̱tro vṛ̍ṇī̱te śru̱ṣṭiṁ rāje̍vāju̱ryam ||",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/rigved/1.67.1/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Does the recitation match the Sanskrit shown, verse for verse? These hymns are where an edition merges verse pairs, so the specific risk is a recording of the verse pair rather than of this verse alone.",
+      "blind_candidates": null,
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-RV_RECOVERED_150-VG:RV:SAK:M06:S075:V006",
+      "stratum": "RV_RECOVERED_150",
+      "review_priority": 4,
+      "citation": "VG:RV:SAK:M06:S075:V006",
+      "canonical_key": "VG:RV:SAK:M06:S075:V006",
+      "canonical_sanskrit": "rathe̱ tiṣṭha̍n nayati vā̱jina̍ḥ pu̱ro yatra̍-yatra kā̱maya̍te suṣāra̱thiḥ | a̱bhīśū̍nām mahi̱māna̍m panāyata̱ mana̍ḥ pa̱ścād anu̍ yacchanti ra̱śmaya̍ḥ ||",
+      "media_url": "https://vedaweb.uni-koeln.de/media/recitations/rv/kirchheiner/06.075.06.ogg",
+      "source_name": "VedaWeb (Kirchheiner collection, National Library of Denmark)",
+      "performer": "Pt. D. P. Kinjawadekar",
+      "licence": null,
+      "duration_seconds": 12.334989,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "A",
+            "sanskrit": "rathe̱ tiṣṭha̍n nayati vā̱jina̍ḥ pu̱ro yatra̍-yatra kā̱maya̍te suṣāra̱thiḥ | a̱bhīśū̍nām mahi̱māna̍m panāyata̱ mana̍ḥ pa̱ścād anu̍ yacchanti ra̱śmaya̍ḥ ||"
+          },
+          {
+            "label": "B",
+            "sanskrit": "tī̱vrān ghoṣā̍n kṛṇvate̱ vṛṣa̍pāṇa̱yo 'śvā̱ rathe̍bhiḥ sa̱ha vā̱jaya̍ntaḥ | a̱va̱krāma̍nta̱ḥ prapa̍dair a̱mitrā̍n kṣi̱ṇanti̱ śatrū̱m̐r ana̍pavyayantaḥ ||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-RV_RECOVERED_150-VG:RV:SAK:M08:S051:V002",
+      "stratum": "RV_RECOVERED_150",
+      "review_priority": 4,
+      "citation": "VG:RV:SAK:M08:S051:V002",
+      "canonical_key": "VG:RV:SAK:M08:S051:V002",
+      "canonical_sanskrit": "pā̱rṣa̱dvā̱ṇaḥ praska̍ṇva̱ṁ sam a̍sādaya̱c chayā̍na̱ṁ jivri̱m uddhi̍tam | sa̱hasrā̍ṇy asiṣāsa̱d gavā̱m ṛṣi̱s tvoto̱ dasya̍ve̱ vṛka̍ḥ ||",
+      "media_url": "https://vedaweb.uni-koeln.de/media/recitations/rv/kirchheiner/08.051.02.ogg",
+      "source_name": "VedaWeb (Kirchheiner collection, National Library of Denmark)",
+      "performer": "Pt. D. P. Kinjawadekar",
+      "licence": null,
+      "duration_seconds": 10.948005,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "ya u̱kthebhi̱r na vi̱ndhate̍ ci̱kid ya ṛ̍ṣi̱coda̍naḥ | indra̱ṁ tam acchā̍ vada̱ navya̍syā ma̱ty ari̍ṣyanta̱ṁ na bhoja̍se ||"
+          },
+          {
+            "label": "A",
+            "sanskrit": "pā̱rṣa̱dvā̱ṇaḥ praska̍ṇva̱ṁ sam a̍sādaya̱c chayā̍na̱ṁ jivri̱m uddhi̍tam | sa̱hasrā̍ṇy asiṣāsa̱d gavā̱m ṛṣi̱s tvoto̱ dasya̍ve̱ vṛka̍ḥ ||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-RV_RECOVERED_150-VG:RV:SAK:M09:S097:V052",
+      "stratum": "RV_RECOVERED_150",
+      "review_priority": 4,
+      "citation": "VG:RV:SAK:M09:S097:V052",
+      "canonical_key": "VG:RV:SAK:M09:S097:V052",
+      "canonical_sanskrit": "a̱yā pa̱vā pa̍vasvai̱nā vasū̍ni mām̐śca̱tva i̍ndo̱ sara̍si̱ pra dha̍nva | bra̱dhnaś ci̱d atra̱ vāto̱ na jū̱taḥ pu̍ru̱medha̍ś ci̱t taka̍ve̱ nara̍ṁ dāt ||",
+      "media_url": "https://vedaweb.uni-koeln.de/media/recitations/rv/kirchheiner/09.097.52.ogg",
+      "source_name": "VedaWeb (Kirchheiner collection, National Library of Denmark)",
+      "performer": "Pt. D. P. Kinjawadekar",
+      "licence": null,
+      "duration_seconds": 11.91,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "u̱ta na̍ e̱nā pa̍va̱yā pa̍va̱svādhi̍ śru̱te śra̱vāyya̍sya tī̱rthe | ṣa̱ṣṭiṁ sa̱hasrā̍ naigu̱to vasū̍ni vṛ̱kṣaṁ na pa̱kvaṁ dhū̍nava̱d raṇā̍ya ||"
+          },
+          {
+            "label": "A",
+            "sanskrit": "a̱yā pa̱vā pa̍vasvai̱nā vasū̍ni mām̐śca̱tva i̍ndo̱ sara̍si̱ pra dha̍nva | bra̱dhnaś ci̱d atra̱ vāto̱ na jū̱taḥ pu̍ru̱medha̍ś ci̱t taka̍ve̱ nara̍ṁ dāt ||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-RV_RECOVERED_150-VG:RV:SAK:M08:S013:V025",
+      "stratum": "RV_RECOVERED_150",
+      "review_priority": 4,
+      "citation": "VG:RV:SAK:M08:S013:V025",
+      "canonical_key": "VG:RV:SAK:M08:S013:V025",
+      "canonical_sanskrit": "vardha̍svā̱ su pu̍ruṣṭuta̱ ṛṣi̍ṣṭutābhir ū̱tibhi̍ḥ | dhu̱kṣasva̍ pi̱pyuṣī̱m iṣa̱m avā̍ ca naḥ ||",
+      "media_url": "https://vedaweb.uni-koeln.de/media/recitations/rv/kirchheiner/08.013.25.ogg",
+      "source_name": "VedaWeb (Kirchheiner collection, National Library of Denmark)",
+      "performer": "Pt. D. P. Kinjawadekar",
+      "licence": null,
+      "duration_seconds": 7.3,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "indra̱ tvam a̍vi̱ted a̍sī̱tthā stu̍va̱to a̍drivaḥ | ṛ̱tād i̍yarmi te̱ dhiya̍m mano̱yuja̍m ||"
+          },
+          {
+            "label": "A",
+            "sanskrit": "vardha̍svā̱ su pu̍ruṣṭuta̱ ṛṣi̍ṣṭutābhir ū̱tibhi̍ḥ | dhu̱kṣasva̍ pi̱pyuṣī̱m iṣa̱m avā̍ ca naḥ ||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-RV_RECOVERED_150-VG:RV:SAK:M08:S059:V004",
+      "stratum": "RV_RECOVERED_150",
+      "review_priority": 4,
+      "citation": "VG:RV:SAK:M08:S059:V004",
+      "canonical_key": "VG:RV:SAK:M08:S059:V004",
+      "canonical_sanskrit": "ghṛ̱ta̱pruṣa̱ḥ saumyā̍ jī̱radā̍navaḥ sa̱pta svasā̍ra̱ḥ sada̍na ṛ̱tasya̍ | yā ha̍ vām indrāvaruṇā ghṛta̱ścuta̱s tābhi̍r dhatta̱ṁ yaja̍mānāya śikṣatam ||",
+      "media_url": "https://vedaweb.uni-koeln.de/media/recitations/rv/kirchheiner/08.059.04.ogg",
+      "source_name": "VedaWeb (Kirchheiner collection, National Library of Denmark)",
+      "performer": "Pt. D. P. Kinjawadekar",
+      "licence": null,
+      "duration_seconds": 11.873016,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "A",
+            "sanskrit": "ghṛ̱ta̱pruṣa̱ḥ saumyā̍ jī̱radā̍navaḥ sa̱pta svasā̍ra̱ḥ sada̍na ṛ̱tasya̍ | yā ha̍ vām indrāvaruṇā ghṛta̱ścuta̱s tābhi̍r dhatta̱ṁ yaja̍mānāya śikṣatam ||"
+          },
+          {
+            "label": "B",
+            "sanskrit": "avo̍cāma maha̱te saubha̍gāya sa̱tyaṁ tve̱ṣābhyā̍m mahi̱māna̍m indri̱yam | a̱smān sv i̍ndrāvaruṇā ghṛta̱ścuta̱s tribhi̍ḥ sā̱ptebhi̍r avataṁ śubhas patī ||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-RV_RECOVERED_150-VG:RV:SAK:M08:S050:V008",
+      "stratum": "RV_RECOVERED_150",
+      "review_priority": 4,
+      "citation": "VG:RV:SAK:M08:S050:V008",
+      "canonical_key": "VG:RV:SAK:M08:S050:V008",
+      "canonical_sanskrit": "ra̱thi̱rāso̱ hara̍yo̱ ye te̍ a̱sridha̱ ojo̱ vāta̍sya̱ pipra̍ti | yebhi̱r ni dasyu̱m manu̍ṣo ni̱ghoṣa̍yo̱ yebhi̱ḥ sva̍ḥ pa̱rīya̍se ||",
+      "media_url": "https://vedaweb.uni-koeln.de/media/recitations/rv/kirchheiner/08.050.08.ogg",
+      "source_name": "VedaWeb (Kirchheiner collection, National Library of Denmark)",
+      "performer": "Pt. D. P. Kinjawadekar",
+      "licence": null,
+      "duration_seconds": 10.054989,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "e̱tāva̍tas te vaso vi̱dyāma̍ śūra̱ navya̍saḥ | yathā̱ prāva̱ eta̍śa̱ṁ kṛtvye̱ dhane̱ yathā̱ vaśa̱ṁ daśa̍vraje ||"
+          },
+          {
+            "label": "A",
+            "sanskrit": "ra̱thi̱rāso̱ hara̍yo̱ ye te̍ a̱sridha̱ ojo̱ vāta̍sya̱ pipra̍ti | yebhi̱r ni dasyu̱m manu̍ṣo ni̱ghoṣa̍yo̱ yebhi̱ḥ sva̍ḥ pa̱rīya̍se ||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-RV_RECOVERED_150-VG:RV:SAK:M01:S117:V006",
+      "stratum": "RV_RECOVERED_150",
+      "review_priority": 4,
+      "citation": "VG:RV:SAK:M01:S117:V006",
+      "canonical_key": "VG:RV:SAK:M01:S117:V006",
+      "canonical_sanskrit": "tad vā̍ṁ narā̱ śaṁsya̍m pajri̱yeṇa̍ ka̱kṣīva̍tā nāsatyā̱ pari̍jman | śa̱phād aśva̍sya vā̱jino̱ janā̍ya śa̱taṁ ku̱mbhām̐ a̍siñcata̱m madhū̍nām ||",
+      "media_url": "https://vedaweb.uni-koeln.de/media/recitations/rv/kirchheiner/01.117.06.ogg",
+      "source_name": "VedaWeb (Kirchheiner collection, National Library of Denmark)",
+      "performer": "Pt. D. P. Kinjawadekar",
+      "licence": null,
+      "duration_seconds": 10.672018,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "yu̱vaṁ na̍rā stuva̱te kṛ̍ṣṇi̱yāya̍ viṣṇā̱pva̍ṁ dadathu̱r viśva̍kāya | ghoṣā̍yai cit pitṛ̱ṣade̍ duro̱ṇe pati̱ṁ jūrya̍ntyā aśvināv adattam ||"
+          },
+          {
+            "label": "A",
+            "sanskrit": "tad vā̍ṁ narā̱ śaṁsya̍m pajri̱yeṇa̍ ka̱kṣīva̍tā nāsatyā̱ pari̍jman | śa̱phād aśva̍sya vā̱jino̱ janā̍ya śa̱taṁ ku̱mbhām̐ a̍siñcata̱m madhū̍nām ||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-RV_RECOVERED_150-VG:RV:SAK:M08:S013:V022",
+      "stratum": "RV_RECOVERED_150",
+      "review_priority": 4,
+      "citation": "VG:RV:SAK:M08:S013:V022",
+      "canonical_key": "VG:RV:SAK:M08:S013:V022",
+      "canonical_sanskrit": "ka̱dā ta̍ indra girvaṇaḥ sto̱tā bha̍vāti̱ śaṁta̍maḥ | ka̱dā no̱ gavye̱ aśvye̱ vasau̍ dadhaḥ ||",
+      "media_url": "https://vedaweb.uni-koeln.de/media/recitations/rv/kirchheiner/08.013.22.ogg",
+      "source_name": "VedaWeb (Kirchheiner collection, National Library of Denmark)",
+      "performer": "Pt. D. P. Kinjawadekar",
+      "licence": null,
+      "duration_seconds": 7.063991,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "u̱ta te̱ suṣṭu̍tā̱ harī̱ vṛṣa̍ṇā vahato̱ ratha̍m | a̱ju̱ryasya̍ ma̱dinta̍ma̱ṁ yam īma̍he ||"
+          },
+          {
+            "label": "A",
+            "sanskrit": "ka̱dā ta̍ indra girvaṇaḥ sto̱tā bha̍vāti̱ śaṁta̍maḥ | ka̱dā no̱ gavye̱ aśvye̱ vasau̍ dadhaḥ ||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-RV_RECOVERED_150-VG:RV:SAK:M06:S075:V015",
+      "stratum": "RV_RECOVERED_150",
+      "review_priority": 4,
+      "citation": "VG:RV:SAK:M06:S075:V015",
+      "canonical_key": "VG:RV:SAK:M06:S075:V015",
+      "canonical_sanskrit": "ālā̍ktā̱ yā ruru̍śī̱rṣṇy atho̱ yasyā̱ ayo̱ mukha̍m | i̱dam pa̱rjanya̍retasa̱ iṣvai̍ de̱vyai bṛ̱han nama̍ḥ ||",
+      "media_url": "https://vedaweb.uni-koeln.de/media/recitations/rv/kirchheiner/06.075.15.ogg",
+      "source_name": "VedaWeb (Kirchheiner collection, National Library of Denmark)",
+      "performer": "Pt. D. P. Kinjawadekar",
+      "licence": null,
+      "duration_seconds": 9.702993,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "ava̍sṛṣṭā̱ parā̍ pata̱ śara̍vye̱ brahma̍saṁśite | gacchā̱mitrā̱n pra pa̍dyasva̱ māmīṣā̱ṁ kaṁ ca̱noc chi̍ṣaḥ ||"
+          },
+          {
+            "label": "A",
+            "sanskrit": "ālā̍ktā̱ yā ruru̍śī̱rṣṇy atho̱ yasyā̱ ayo̱ mukha̍m | i̱dam pa̱rjanya̍retasa̱ iṣvai̍ de̱vyai bṛ̱han nama̍ḥ ||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-RV_RECOVERED_150-VG:RV:SAK:M08:S051:V010",
+      "stratum": "RV_RECOVERED_150",
+      "review_priority": 4,
+      "citation": "VG:RV:SAK:M08:S051:V010",
+      "canonical_key": "VG:RV:SAK:M08:S051:V010",
+      "canonical_sanskrit": "tu̱ra̱ṇyavo̱ madhu̍mantaṁ ghṛta̱ścuta̱ṁ viprā̍so a̱rkam ā̍nṛcuḥ | a̱sme ra̱yiḥ pa̍prathe̱ vṛṣṇya̱ṁ śavo̱ 'sme su̍vā̱nāsa̱ inda̍vaḥ ||",
+      "media_url": "https://vedaweb.uni-koeln.de/media/recitations/rv/kirchheiner/08.051.10.ogg",
+      "source_name": "VedaWeb (Kirchheiner collection, National Library of Denmark)",
+      "performer": "Pt. D. P. Kinjawadekar",
+      "licence": null,
+      "duration_seconds": 10.625986,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": null,
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-RV_RECOVERED_150-VG:RV:SAK:M06:S075:V014",
+      "stratum": "RV_RECOVERED_150",
+      "review_priority": 4,
+      "citation": "VG:RV:SAK:M06:S075:V014",
+      "canonical_key": "VG:RV:SAK:M06:S075:V014",
+      "canonical_sanskrit": "ahi̍r iva bho̱gaiḥ pary e̍ti bā̱huṁ jyāyā̍ he̱tim pa̍ri̱bādha̍mānaḥ | ha̱sta̱ghno viśvā̍ va̱yunā̍ni vi̱dvān pumā̱n pumā̍ṁsa̱m pari̍ pātu vi̱śvata̍ḥ ||",
+      "media_url": "https://vedaweb.uni-koeln.de/media/recitations/rv/kirchheiner/06.075.14.ogg",
+      "source_name": "VedaWeb (Kirchheiner collection, National Library of Denmark)",
+      "performer": "Pt. D. P. Kinjawadekar",
+      "licence": null,
+      "duration_seconds": 13.047007,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "ālā̍ktā̱ yā ruru̍śī̱rṣṇy atho̱ yasyā̱ ayo̱ mukha̍m | i̱dam pa̱rjanya̍retasa̱ iṣvai̍ de̱vyai bṛ̱han nama̍ḥ ||"
+          },
+          {
+            "label": "A",
+            "sanskrit": "ahi̍r iva bho̱gaiḥ pary e̍ti bā̱huṁ jyāyā̍ he̱tim pa̍ri̱bādha̍mānaḥ | ha̱sta̱ghno viśvā̍ va̱yunā̍ni vi̱dvān pumā̱n pumā̍ṁsa̱m pari̍ pātu vi̱śvata̍ḥ ||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-RV_RECOVERED_150-VG:RV:SAK:M08:S059:V001",
+      "stratum": "RV_RECOVERED_150",
+      "review_priority": 4,
+      "citation": "VG:RV:SAK:M08:S059:V001",
+      "canonical_key": "VG:RV:SAK:M08:S059:V001",
+      "canonical_sanskrit": "i̱māni̍ vām bhāga̱dheyā̍ni sisrata̱ indrā̍varuṇā̱ pra ma̱he su̱teṣu̍ vām | ya̱jñe-ya̍jñe ha̱ sava̍nā bhura̱ṇyatho̱ yat su̍nva̱te yaja̍mānāya̱ śikṣa̍thaḥ ||",
+      "media_url": "https://vedaweb.uni-koeln.de/media/recitations/rv/kirchheiner/08.059.01.ogg",
+      "source_name": "VedaWeb (Kirchheiner collection, National Library of Denmark)",
+      "performer": "Pt. D. P. Kinjawadekar",
+      "licence": null,
+      "duration_seconds": 12.44102,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "A",
+            "sanskrit": "i̱māni̍ vām bhāga̱dheyā̍ni sisrata̱ indrā̍varuṇā̱ pra ma̱he su̱teṣu̍ vām | ya̱jñe-ya̍jñe ha̱ sava̍nā bhura̱ṇyatho̱ yat su̍nva̱te yaja̍mānāya̱ śikṣa̍thaḥ ||"
+          },
+          {
+            "label": "B",
+            "sanskrit": "ni̱ṣṣidhva̍rī̱r oṣa̍dhī̱r āpa̍ āstā̱m indrā̍varuṇā mahi̱māna̱m āśa̍ta | yā sisra̍tū̱ raja̍saḥ pā̱re adhva̍no̱ yayo̱ḥ śatru̱r naki̱r āde̍va̱ oha̍te ||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-RV_RECOVERED_150-VG:RV:SAK:M03:S008:V005",
+      "stratum": "RV_RECOVERED_150",
+      "review_priority": 4,
+      "citation": "VG:RV:SAK:M03:S008:V005",
+      "canonical_key": "VG:RV:SAK:M03:S008:V005",
+      "canonical_sanskrit": "jā̱to jā̍yate sudina̱tve ahnā̍ṁ sama̱rya ā vi̱dathe̱ vardha̍mānaḥ | pu̱nanti̱ dhīrā̍ a̱paso̍ manī̱ṣā de̍va̱yā vipra̱ ud i̍yarti̱ vāca̍m ||",
+      "media_url": "https://vedaweb.uni-koeln.de/media/recitations/rv/kirchheiner/03.008.05.ogg",
+      "source_name": "VedaWeb (Kirchheiner collection, National Library of Denmark)",
+      "performer": "Pt. D. P. Kinjawadekar",
+      "licence": null,
+      "duration_seconds": 11.204014,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "yān vo̱ naro̍ deva̱yanto̍ nimi̱myur vana̍spate̱ svadhi̍tir vā ta̱takṣa̍ | te de̱vāsa̱ḥ svara̍vas tasthi̱vāṁsa̍ḥ pra̱jāva̍d a̱sme di̍dhiṣantu̱ ratna̍m ||"
+          },
+          {
+            "label": "A",
+            "sanskrit": "jā̱to jā̍yate sudina̱tve ahnā̍ṁ sama̱rya ā vi̱dathe̱ vardha̍mānaḥ | pu̱nanti̱ dhīrā̍ a̱paso̍ manī̱ṣā de̍va̱yā vipra̱ ud i̍yarti̱ vāca̍m ||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-RV_RECOVERED_150-VG:RV:SAK:M08:S052:V009",
+      "stratum": "RV_RECOVERED_150",
+      "review_priority": 4,
+      "citation": "VG:RV:SAK:M08:S052:V009",
+      "canonical_key": "VG:RV:SAK:M08:S052:V009",
+      "canonical_sanskrit": "astā̍vi̱ manma̍ pū̱rvyam brahmendrā̍ya vocata | pū̱rvīr ṛ̱tasya̍ bṛha̱tīr a̍nūṣata sto̱tur me̱dhā a̍sṛkṣata ||",
+      "media_url": "https://vedaweb.uni-koeln.de/media/recitations/rv/kirchheiner/08.052.09.ogg",
+      "source_name": "VedaWeb (Kirchheiner collection, National Library of Denmark)",
+      "performer": "Pt. D. P. Kinjawadekar",
+      "licence": null,
+      "duration_seconds": 10.264989,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "A",
+            "sanskrit": "astā̍vi̱ manma̍ pū̱rvyam brahmendrā̍ya vocata | pū̱rvīr ṛ̱tasya̍ bṛha̱tīr a̍nūṣata sto̱tur me̱dhā a̍sṛkṣata ||"
+          },
+          {
+            "label": "B",
+            "sanskrit": "sam indro̱ rāyo̍ bṛha̱tīr a̍dhūnuta̱ saṁ kṣo̱ṇī sam u̱ sūrya̍m | saṁ śu̱krāsa̱ḥ śuca̍ya̱ḥ saṁ gavā̍śira̱ḥ somā̱ indra̍m amandiṣuḥ ||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-RV_RECOVERED_150-VG:RV:SAK:M08:S051:V001",
+      "stratum": "RV_RECOVERED_150",
+      "review_priority": 4,
+      "citation": "VG:RV:SAK:M08:S051:V001",
+      "canonical_key": "VG:RV:SAK:M08:S051:V001",
+      "canonical_sanskrit": "yathā̱ manau̱ sāṁva̍raṇau̱ soma̍m i̱ndrāpi̍baḥ su̱tam | nīpā̍tithau maghava̱n medhyā̍tithau̱ puṣṭi̍gau̱ śruṣṭi̍gau̱ sacā̍ ||",
+      "media_url": "https://vedaweb.uni-koeln.de/media/recitations/rv/kirchheiner/08.051.01.ogg",
+      "source_name": "VedaWeb (Kirchheiner collection, National Library of Denmark)",
+      "performer": "Pt. D. P. Kinjawadekar",
+      "licence": null,
+      "duration_seconds": 10.350998,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "A",
+            "sanskrit": "yathā̱ manau̱ sāṁva̍raṇau̱ soma̍m i̱ndrāpi̍baḥ su̱tam | nīpā̍tithau maghava̱n medhyā̍tithau̱ puṣṭi̍gau̱ śruṣṭi̍gau̱ sacā̍ ||"
+          },
+          {
+            "label": "B",
+            "sanskrit": "pā̱rṣa̱dvā̱ṇaḥ praska̍ṇva̱ṁ sam a̍sādaya̱c chayā̍na̱ṁ jivri̱m uddhi̍tam | sa̱hasrā̍ṇy asiṣāsa̱d gavā̱m ṛṣi̱s tvoto̱ dasya̍ve̱ vṛka̍ḥ ||"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-SV_CONTAINER_SCOPE-VG:SV:KAU:UTTARA:P01:R01",
+      "stratum": "SV_CONTAINER_SCOPE",
+      "review_priority": 5,
+      "citation": "VG:SV:KAU:UTTARA:P01:R01",
+      "canonical_key": "VG:SV:KAU:UTTARA:P01:R01",
+      "canonical_sanskrit": null,
+      "media_url": "https://commons.wikimedia.org/wiki/File:%E0%A4%86%E0%A4%9C%E0%A5%8D%E0%A4%AF%E0%A4%B8%E0%A5%8D%E0%A4%A4%E0%A5%8B%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A4%AE%E0%A5%8D_(%E0%A4%A4%E0%A5%83%E0%A4%A4%E0%A5%80%E0%A4%AF%E0%A4%AE%E0%A5%8D)_Aajya_stotram_(_III).ogg",
+      "source_name": "Wikimedia Commons",
+      "performer": "Puranastudy",
+      "licence": null,
+      "duration_seconds": 121.417143,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": null,
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-YV_RECOVERED-VG:YV:VSM:A03:V042",
+      "stratum": "YV_RECOVERED",
+      "review_priority": 6,
+      "citation": "VG:YV:VSM:A03:V042",
+      "canonical_key": "VG:YV:VSM:A03:V042",
+      "canonical_sanskrit": "येषा॑म॒ध्येति॑ प्र॒वस॒न्येषु॑ सौमन॒सो ब॒हुः । गृ॒हानुप॑ह्वयामहे॒ ते नो॑ जानन्तु जान॒तः ।। ४२ ।।",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/yajurved/3.1.42/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "A",
+            "sanskrit": "येषा॑म॒ध्येति॑ प्र॒वस॒न्येषु॑ सौमन॒सो ब॒हुः । गृ॒हानुप॑ह्वयामहे॒ ते नो॑ जानन्तु जान॒तः ।। ४२ ।।"
+          },
+          {
+            "label": "B",
+            "sanskrit": "उप॑हूता इ॒ह गाव॒ उप॑हूता अजा॒वय॑: । अथो॒ अन्न॑स्य की॒लाल॒ उप॑हूतो गृ॒हेषु॑ नः । क्षेमा॑य व॒: शान्त्यै॒ प्रप॑द्ये शि॒वᳪं᳭ श॒ग्मᳪं᳭ शं॒यो: शं॒यो:।। ४३ ।।"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-YV_RECOVERED-VG:YV:VSM:A09:V034",
+      "stratum": "YV_RECOVERED",
+      "review_priority": 6,
+      "citation": "VG:YV:VSM:A09:V034",
+      "canonical_key": "VG:YV:VSM:A09:V034",
+      "canonical_sanskrit": "वस॑व॒स्त्रयो॑दशाक्षरेण त्रयोद॒शᳪं᳭ स्तोम॒मुद॑जयँ॒स्तमुज्जे॑षंᳪं᳭ रु॒द्राश्चतु॑र्दशाक्षरेण चतुर्द॒शᳪं᳭ स्तोम॒मुद॑जयँ॒स्तमुज्जे॑षमादि॒त्याः पञ्च॑दशाक्षरेण पञ्चद॒शᳪं᳭ स्तोम॒मुद॑जयँ॒स्तमुज्जे॑ष॒मदि॑ति॒: षोड॑शाक्षरेण षोड॒शᳪं᳭ स्तोम॒मुद॑जय॒त्तमुज्जे॑षं प्र॒जाप॑तिः स॒प्तद॑शाक्षरेण सप्तद॒शᳪं᳭ स्तोम॒मुद॑जय॒त्तमुज्जे॑षम् ।। ३४ ।।",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/yajurved/9.1.34/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "ए॒ष ते॑ निरृते भा॒गस्तं जु॑षस्व॒ स्वाहा॒ऽग्निने॑त्रेभ्यो दे॒वेभ्य॑: पुर॒:सद्भ्य॒: स्वाहा॑ य॒मने॑त्रेभ्यो दे॒वेभ्यो॑ दक्षि॒णासद्भ्य॒: स्वाहा॑ वि॒श्वदे॑वनेत्रेभ्यो दे॒वेभ्य॑: पश्चा॒त्सद्भ्य॒: स्वाहा॑ मि॒त्रावरु॑णनेत्रेभ्यो वा म॒रुन्ने॑त्रेभ्यो वा दे॒वेभ्य॑ उत्तरा॒सद्भ्य॒: स्वाहा॒ सोम॑नेत्रेभ्यो दे॒वेभ्य॑ उपरि॒सद्भ्यो॒ दुव॑स्वद्भ्य॒: स्वाहा॑ ।। ३५ ।।"
+          },
+          {
+            "label": "A",
+            "sanskrit": "वस॑व॒स्त्रयो॑दशाक्षरेण त्रयोद॒शᳪं᳭ स्तोम॒मुद॑जयँ॒स्तमुज्जे॑षंᳪं᳭ रु॒द्राश्चतु॑र्दशाक्षरेण चतुर्द॒शᳪं᳭ स्तोम॒मुद॑जयँ॒स्तमुज्जे॑षमादि॒त्याः पञ्च॑दशाक्षरेण पञ्चद॒शᳪं᳭ स्तोम॒मुद॑जयँ॒स्तमुज्जे॑ष॒मदि॑ति॒: षोड॑शाक्षरेण षोड॒शᳪं᳭ स्तोम॒मुद॑जय॒त्तमुज्जे॑षं प्र॒जाप॑तिः स॒प्तद॑शाक्षरेण सप्तद॒शᳪं᳭ स्तोम॒मुद॑जय॒त्तमुज्जे॑षम् ।। ३४ ।।"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    },
+    {
+      "review_id": "REV-YV_RECOVERED-VG:YV:VSM:A05:V007",
+      "stratum": "YV_RECOVERED",
+      "review_priority": 6,
+      "citation": "VG:YV:VSM:A05:V007",
+      "canonical_key": "VG:YV:VSM:A05:V007",
+      "canonical_sanskrit": "अ॒ᳪं᳭शुर॑ᳪं᳭शुष्टे देव सो॒माप्या॑यता॒मिन्द्रा॑यैकधन॒विदे॑ । आ तुभ्य॒मिन्द्र॒: प्याय॑ता॒मा त्वमिन्द्रा॑य प्यायस्व । आ प्या॑यया॒स्मान्त्सखी॑न्त्स॒न्या मे॒धया॑ स्व॒स्ति ते॑ देव सोम सु॒त्याम॑शीय । एष्टा॒ राय॒: प्रेषे भगा॑य ऋ॒तमृ॑तवा॒दिभ्यो॒ नमो॒ द्यावा॑पृथि॒वीभ्या॑म् ।। ७ ।।",
+      "media_url": "https://vedsearch.org/api/v1/attachment/audio/yajurved/5.1.7/sanskrit",
+      "source_name": "VedSearch",
+      "performer": null,
+      "licence": null,
+      "duration_seconds": null,
+      "is_segmented": false,
+      "listen_for": "Is this the mapped verse, recited in the recension claimed, whole and not truncated? If a start/end time is present, do the boundaries fall at the verse edges?",
+      "blind_candidates": {
+        "instruction": "One of these is the verse this recording is mapped to and one is its neighbour. Say which you hear, without consulting the key.",
+        "candidates": [
+          {
+            "label": "B",
+            "sanskrit": "या ते॑ अग्नेऽयःश॒या त॒नूर्वर्षि॑ष्ठा गह्वरे॒ष्ठा । उ॒ग्रं वचो॒ अपा॑वधीत्त्वे॒षं वचो॒ अपा॑वधी॒त्स्वाहा॑ । या ते॑ अग्ने रजःश॒या त॒नूर्वर्षि॑ष्ठा गह्वरे॒ष्ठा । उ॒ग्रं वचो॒ अपा॑वधीत्त्वे॒षं वचो॒ अपा॑वधी॒त्स्वाहा॑ । या ते॑ अग्ने हरिश॒या त॒नूर्वर्षि॑ष्ठा गह्वरे॒ष्ठा । उ॒ग्रं वचो॒ अपा॑वधीत्त्वे॒षं वचो॒ अपा॑वधी॒त्स्वाहा॑ ।। ८ ।।"
+          },
+          {
+            "label": "A",
+            "sanskrit": "अ॒ᳪं᳭शुर॑ᳪं᳭शुष्टे देव सो॒माप्या॑यता॒मिन्द्रा॑यैकधन॒विदे॑ । आ तुभ्य॒मिन्द्र॒: प्याय॑ता॒मा त्वमिन्द्रा॑य प्यायस्व । आ प्या॑यया॒स्मान्त्सखी॑न्त्स॒न्या मे॒धया॑ स्व॒स्ति ते॑ देव सोम सु॒त्याम॑शीय । एष्टा॒ राय॒: प्रेषे भगा॑य ऋ॒तमृ॑तवा॒दिभ्यो॒ नमो॒ द्यावा॑पृथि॒वीभ्या॑म् ।। ७ ।।"
+          }
+        ]
+      },
+      "review_status": "NEEDS_AUDIBLE_REVIEW"
+    }
+  ]
+}

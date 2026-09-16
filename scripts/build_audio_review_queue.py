@@ -98,6 +98,37 @@ def main() -> int:
         ),
     ]
 
+    # Each domain's sources.jsonl, keyed by source_id, so a queued row can name the source it
+    # came from. Wave 4 finding: 804 of 1,021 rows carried source_name null, because this
+    # builder read payload.source_name and the staged payloads do not have that field -- the
+    # source is on the row as source_id and its name is in the domain's sources.jsonl. A
+    # reviewer was given a media URL and left to infer whose recording it is, on the one
+    # surface in this campaign whose entire purpose is a human judgement.
+    #
+    # The two files disagree about the field name (audio_yv writes source_name, audio_av
+    # writes name), which is why both are read rather than one assumed.
+    source_names: dict[str, str] = {}
+    for domain, _, _, _ in strata:
+        for source in read_jsonl(STAGING / domain / "sources.jsonl"):
+            name = source.get("source_name") or source.get("name")
+            if source.get("source_id") and name:
+                source_names[str(source["source_id"])] = str(name)
+
+    def named_source(row: dict[str, Any], payload: dict[str, Any]) -> str | None:
+        """The source's name, or its id, or its attribution -- never silently nothing.
+
+        Falls back to the id rather than to null: an opaque identifier a reviewer can look up
+        beats an empty field that reads as "no source recorded".
+        """
+        explicit = payload.get("source_name")
+        if explicit:
+            return str(explicit)
+        source_id = row.get("source_id")
+        if source_id:
+            return source_names.get(str(source_id), str(source_id))
+        attribution = payload.get("attribution")
+        return str(attribution) if attribution else None
+
     staged: dict[str, list[dict[str, Any]]] = {}
     for domain, _, _, _ in strata:
         picked = []
@@ -239,7 +270,10 @@ def main() -> int:
                     "canonical_sanskrit": sanskrit.get(key),
                     "media_url": payload.get("media_url"),
                     "duration_seconds": payload.get("duration_seconds"),
-                    "source_name": payload.get("source_name"),
+                    "source_name": named_source(r, payload),
+                    "source_id": r.get("source_id"),
+                    "licence": payload.get("licence"),
+                    "attribution": payload.get("attribution"),
                     "performer": payload.get("performer"),
                     "start_seconds": payload.get("start_seconds"),
                     "end_seconds": payload.get("end_seconds"),
