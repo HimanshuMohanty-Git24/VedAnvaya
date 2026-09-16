@@ -48,6 +48,9 @@ from vedagraph.domain.registry import (  # noqa: E402
     load_domain_entities,
 )
 from vedagraph.domain.taxonomy import load_taxonomy  # noqa: E402
+from vedagraph.enrich.predicates import (  # noqa: E402
+    UNPOPULATED_BY_DESIGN as ENRICH_UNPOPULATED_BY_DESIGN,
+)
 
 #: Individual nodes exempted by name, with the evidence. Named rather than label-exempted
 #: because :ActionPredicate has 41 nodes and 40 carry edges -- exempting the label would hide
@@ -271,6 +274,27 @@ def measure(session: Any) -> dict[str, Any]:
             orphans[label] = count
     out["orphan_public_nodes_by_label"] = orphans
     out["orphan_public_nodes"] = sum(orphans.values())
+
+    # A declaration of emptiness is a claim about the graph, and nothing checked it against
+    # the graph. Wave 4 finding: enrich.predicates declared SHARES_FORMULA_WITH deliberately
+    # unpopulated -- "materialising it would add 87,296 edges and defeat the Formula hub" --
+    # and Wave 3 then materialised 6,148 of them on a distinctiveness criterion the reasoning
+    # had not considered. The declaration stayed, so generate_ontology_reference.py published
+    # it and GAP-FORMULA-001 recorded the predicate as the graph's only declared-but-empty
+    # type while it held 6,148 edges.
+    #
+    # BOTH maps, deliberately. The signature gate below reads only the domain one, so a
+    # populated predicate declared empty in the enrichment map would skip nothing there and be
+    # noticed by nothing here either.
+    falsely_empty: dict[str, int] = {}
+    for predicate in sorted(set(UNPOPULATED_BY_DESIGN) | set(ENRICH_UNPOPULATED_BY_DESIGN)):
+        edges = _one(session, f"MATCH ()-[r:{predicate}]->() RETURN count(r)")
+        if edges:
+            falsely_empty[predicate] = edges
+    out["falsely_declared_unpopulated"] = falsely_empty
+    out["declared_unpopulated"] = sorted(
+        set(UNPOPULATED_BY_DESIGN) | set(ENRICH_UNPOPULATED_BY_DESIGN)
+    )
     out["orphans_exempted_by_name"] = {
         f"{label}.{prop}={value}": reason
         for (label, prop, value), reason in ORPHANS_EXEMPT_BY_NAME.items()
@@ -724,6 +748,9 @@ def main() -> int:
         # in the world export as Vedic metres. This one sweeps every product label, with
         # ORPHANED_BY_DESIGN carrying a stated reason per exempt label.
         "orphan_public_nodes": measured["orphan_public_nodes"],
+        # Added in Wave 4. A predicate declared deliberately empty that carries edges is a
+        # false statement on a published surface, and both declaration maps are read.
+        "falsely_declared_unpopulated": len(measured["falsely_declared_unpopulated"]),
     }
     print(f"wrote {REPORT_PATH}\n")
     print("integrity gates (all must be 0):")

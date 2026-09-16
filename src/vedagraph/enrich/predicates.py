@@ -220,16 +220,21 @@ SIGNATURES: Final[dict[str, Signature]] = {
 #: with no rows and correctly reported it as an undocumented dead filter option -- the
 #: rationale existed, in a place nothing querying the database would look. The ontology
 #: reference reads this map together with the domain layer's own.
-UNPOPULATED_BY_DESIGN: Final[dict[str, str]] = {
-    str(TextualPredicate.SHARES_FORMULA_WITH): (
-        "The Formula hub already carries this relation losslessly: "
-        "(a)-[:USES_FORMULA]->(f)<-[:USES_FORMULA]-(b) is the same fact in two hops. "
-        "Materialising it would defeat the point of the hub -- the widest formula spans "
-        "93 passages, so that one node alone would emit 4,278 edges and the layer would "
-        "add 87,296 edges in place of 27,511. V3's FormulaFamily layer supersedes it "
-        "further, grouping the formulas themselves rather than joining their passages."
-    ),
-}
+#: Empty in this release, and Wave 4 found this map's one entry had stopped being true.
+#:
+#: ``SHARES_FORMULA_WITH`` was declared here as deliberately unpopulated, on the reasoning
+#: that materialising the full closure would add 87,296 edges and defeat the Formula hub. Wave
+#: 3 then materialised 6,148 of them -- not the closure, but the pairs selected on rarity-
+#: weighted distinctiveness, which is the criterion the original reasoning had not considered.
+#: The declaration was not revised, so ``generate_ontology_reference.py`` published "declared
+#: and deliberately carries zero edges" about a predicate holding 6,148, and
+#: ``GAP-FORMULA-001`` recorded the same thing as the graph's only declared-but-empty type.
+#:
+#: The entry is gone rather than reworded, because the predicate is populated and this map is
+#: for predicates that are not. ``scripts/graph_quality_scorecard.py`` now gates on exactly
+#: that: a predicate declared here that carries an edge is a false declaration, and nothing
+#: checked these two maps against the graph before.
+UNPOPULATED_BY_DESIGN: Final[dict[str, str]] = {}
 
 
 #: Where each predicate the enrichment brief named actually ended up. Kept as data so a

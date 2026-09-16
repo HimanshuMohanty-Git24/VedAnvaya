@@ -37,7 +37,8 @@ from vedagraph.domain.ontology import (  # noqa: E402
     DOMAIN_RELATIONSHIP_TYPES,
     INTERNAL_LABELS,
     PRODUCT_LABELS,
-    RELATIONSHIP_SIGNATURES,
+    all_declared_relationship_types,
+    all_endpoint_signatures,
 )
 from vedagraph.domain.ontology import (  # noqa: E402
     UNPOPULATED_BY_DESIGN as _DOMAIN_UNPOPULATED,
@@ -623,7 +624,15 @@ def _measure(session: Any) -> dict[str, dict[str, Any]]:
 
 
 def _endpoints(name: str) -> str:
-    signature = RELATIONSHIP_SIGNATURES.get(name)
+    """The declared endpoints, read from the COMPOSED declaration.
+
+    ``RELATIONSHIP_SIGNATURES`` alone is the domain layer's slice. Reading it as though it
+    were the whole contract printed "not declared" beside HAS_DEVATA, CONTAINS,
+    EXACT_PARALLEL_OF and 36 others in a published reference, while the composed declaration
+    covered every one of them and the scorecard's gate read 0. Same blind spot the scorecard
+    had, still live in the document a reader consults to learn what the contract is.
+    """
+    signature = all_endpoint_signatures().get(name)
     if signature is None:
         return "— *(not declared)*"
     domain, target = signature
@@ -641,10 +650,14 @@ def build(session: Any) -> str:
     total_nodes = session.run("MATCH (n) RETURN count(n) AS c").single()["c"]
     total_rels = session.run("MATCH ()-[r]->() RETURN count(r) AS c").single()["c"]
 
-    declared = set(DOMAIN_RELATIONSHIP_TYPES)
+    # Every layer's declaration, composed. See _endpoints above for what reading one slice
+    # of it cost: a self-audit section asserting 39 live predicates were undeclared.
+    declared = all_declared_relationship_types()
     live_types = set(live)
-    undocumented = sorted(declared - set(DEFINITIONS))
-    undeclared_live = sorted(live_types - declared - {"QA_ISSUE_ON"})
+    # Prose definitions are written for the domain contract, so the documentation gap is
+    # still measured against that set rather than against all 90.
+    undocumented = sorted(set(DOMAIN_RELATIONSHIP_TYPES) - set(DEFINITIONS))
+    undeclared_live = sorted(live_types - declared)
     declared_empty = sorted(declared - live_types)
 
     out: list[str] = []
@@ -745,10 +758,21 @@ def build(session: Any) -> str:
         f"{'— ' + ', '.join(f'`{x}`' for x in undocumented) if undocumented else ''}"
     )
     add(
-        "\nThe undeclared-but-live types are the corpus, lexical, enrichment and semantic "
-        "predicates that predate the V2 contract. They are graded and filterable like "
-        "everything else; the contract governs what V2 and V3 introduced."
+        "\nThe declared set is composed from every layer that declares one — domain, corpus, "
+        "campaign and enrichment — so a predicate introduced by any of them is inside the "
+        "contract. This section used to report 39 live predicates as undeclared, including "
+        "`HAS_DEVATA` and `CONTAINS`, because it read the domain layer's slice as though it "
+        "were the whole contract."
     )
+    if declared_empty:
+        with_reason = len(set(declared_empty) & set(UNPOPULATED_BY_DESIGN))
+        add(
+            f"\nOf the {len(declared_empty)} declared-but-unpopulated types, "
+            f"{with_reason} {'carries' if with_reason == 1 else 'carry'} a stated reason in "
+            "`UNPOPULATED_BY_DESIGN`. The rest are declarations whose layer was built and "
+            "whose population is zero, which is architecture without a rationale attached — "
+            "recorded here rather than presented as intent."
+        )
     return "\n".join(out) + "\n"
 
 
