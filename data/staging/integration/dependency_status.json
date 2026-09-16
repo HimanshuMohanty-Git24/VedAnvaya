@@ -1,6 +1,6 @@
 {
   "artifact": "DEPENDENCY_STATUS",
-  "at": "2026-09-16T05:21:56.100612+00:00",
+  "at": "2026-09-16T05:47:16.934563+00:00",
   "graph_census": {
     "nodes": 116838,
     "relationships": 281290
@@ -8,12 +8,13 @@
   "consumers": [
     {
       "consumer": "semantic resemblance",
-      "status": "STALE_INPUT",
+      "status": "BLOCKED",
       "input_hash": "aff19bb4a419cde32a58d9110d4b07a9fe9574a78ec2b0e15a05bc00225920d8",
-      "recorded_input_hash": null,
+      "recorded_input_hash": "aff19bb4a419cde32a58d9110d4b07a9fe9574a78ec2b0e15a05bc00225920d8",
       "output_hash": null,
-      "rebuilt_at": null,
-      "blocked_reason": null,
+      "rebuilt_at": "2026-09-16T05:22:58.050918+00:00",
+      "blocked_reason": "Requires re-derivation, not a rebuild. The staged artifact is semantic-resemblance-hybrid-v2, computed before the Wave 3 import, and owner section 8 bars importing an old score artifact merely because it exists. Re-derivation needs the embedding pipeline run against the final canonical snapshot plus the full validity report (pool size, corpus-product recall, dev/test metrics, lexical-control comparison, translation-confound exclusions, threshold, refusal conditions). Not attempted here; zero rows imported.",
+      "not_applicable_reason": null,
       "rebuilt_by": "the domain's own pipeline, from the post-import snapshot"
     },
     {
@@ -24,6 +25,7 @@
       "output_hash": "9757dd1d44dd0d1c2c584452e42956b8e7f98e4506aa9157355498739df9a8f2",
       "rebuilt_at": "2026-09-16T05:21:39.384029+00:00",
       "blocked_reason": null,
+      "not_applicable_reason": null,
       "rebuilt_by": "vedagraph.enrich.crossveda over the canonical corpora"
     },
     {
@@ -34,6 +36,7 @@
       "output_hash": "524404d015c448fcf10fb69b6fac67d17ea616e88d142006c20df2ca2bcfaf21",
       "rebuilt_at": "2026-09-16T05:18:51.665933+00:00",
       "blocked_reason": null,
+      "not_applicable_reason": null,
       "rebuilt_by": "scripts/build_formula_families.py"
     },
     {
@@ -44,16 +47,18 @@
       "output_hash": "ade0e58aefd4a59e2828263ac37d2d64d44baa9047f8d2a9df4fd5a08037eedb",
       "rebuilt_at": "2026-09-16T05:19:50.816004+00:00",
       "blocked_reason": null,
+      "not_applicable_reason": null,
       "rebuilt_by": "scripts/build_veda_coverage_and_metrics.py"
     },
     {
       "consumer": "ritual aggregates",
-      "status": "STALE_INPUT",
+      "status": "NOT_APPLICABLE",
       "input_hash": "5561283d5e65b3bd7df8db38fb4695e88ba95d70653213c1d00e5d4fb8ff70e5",
-      "recorded_input_hash": null,
+      "recorded_input_hash": "5561283d5e65b3bd7df8db38fb4695e88ba95d70653213c1d00e5d4fb8ff70e5",
       "output_hash": null,
-      "rebuilt_at": null,
+      "rebuilt_at": "2026-09-16T05:22:22.600043+00:00",
       "blocked_reason": null,
+      "not_applicable_reason": "No ritual aggregate exists. The layer arrived in Wave 3 and nothing downstream consumes it yet, so there is no artifact to rebuild -- as distinct from a rebuild that has not happened.",
       "rebuilt_by": "no aggregate exists yet -- this layer is new in Wave 3"
     },
     {
@@ -64,16 +69,18 @@
       "output_hash": "a9847e4c0310bde50cdb3d8f6eac7587dbf13a6c48482e6aace24285c0079110",
       "rebuilt_at": "2026-09-16T05:19:51.273802+00:00",
       "blocked_reason": null,
+      "not_applicable_reason": null,
       "rebuilt_by": "scripts/graph_quality_scorecard.py"
     },
     {
       "consumer": "Ask retrieval",
-      "status": "STALE_INPUT",
+      "status": "BLOCKED",
       "input_hash": "acea577a1250fb5c2a4ac31828012aa4c58495d1a7bfa87c04f7ecfbef52210f",
-      "recorded_input_hash": null,
+      "recorded_input_hash": "acea577a1250fb5c2a4ac31828012aa4c58495d1a7bfa87c04f7ecfbef52210f",
       "output_hash": null,
-      "rebuilt_at": null,
-      "blocked_reason": null,
+      "rebuilt_at": "2026-09-16T05:23:37.763661+00:00",
+      "blocked_reason": "Retrieval itself reads the graph live -- there is no stored index artifact to rebuild, and its 280 contract tests pass against the final graph. What is stale is the GRADED benchmark: re-grading needs a live LLM provider and burns a daily quota, and owner section 13 bars a speculative re-grade. Blocked on a deliberate benchmark run, not on engineering.",
+      "not_applicable_reason": null,
       "rebuilt_by": "the search index build, then scripts/run_ask_benchmark.py to re-grade"
     },
     {
@@ -84,6 +91,7 @@
       "output_hash": "76dca4800c487eb3f2a79bf3b7e4bd452cbb6806a70e67c9c060a829db820088",
       "rebuilt_at": "2026-09-16T05:21:54.763687+00:00",
       "blocked_reason": null,
+      "not_applicable_reason": null,
       "rebuilt_by": "scripts/export_graph_world.py and the metrics build"
     },
     {
@@ -94,14 +102,15 @@
       "output_hash": "76dca4800c487eb3f2a79bf3b7e4bd452cbb6806a70e67c9c060a829db820088",
       "rebuilt_at": "2026-09-16T05:21:55.428638+00:00",
       "blocked_reason": null,
+      "not_applicable_reason": null,
       "rebuilt_by": "scripts/export_graph_world.py"
     }
   ],
   "counts": {
     "CURRENT": 6,
-    "STALE_INPUT": 3,
-    "BLOCKED": 0,
-    "NOT_APPLICABLE": 0
+    "STALE_INPUT": 0,
+    "BLOCKED": 2,
+    "NOT_APPLICABLE": 1
   },
   "rule": "CURRENT means the ledger holds a rebuild whose input hash equals the current one. The hash covers only the labels and predicates the consumer declares it reads, so an unrelated write does not make it stale and a related one does."
 }
