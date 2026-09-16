@@ -1,6 +1,6 @@
 {
   "artifact": "DEPENDENCY_STATUS",
-  "at": "2026-09-16T10:13:50.448774+00:00",
+  "at": "2026-09-16T10:16:04.872102+00:00",
   "graph_census": {
     "nodes": 116838,
     "relationships": 281257
@@ -78,21 +78,19 @@
     },
     {
       "consumer": "quality evaluation",
-      "status": "STALE_INPUT",
+      "status": "CURRENT",
       "declared_inputs": 6,
-      "inputs_that_moved": [
-        "builder:scripts/graph_quality_scorecard.py"
-      ],
+      "inputs_that_moved": [],
       "reason": null,
       "output_file": null,
       "output_hash": null,
       "declared_outputs": [
         "docs/reports/GRAPH_QUALITY_V2_SCORECARD.md"
       ],
-      "built_at": "2026-09-16T09:23:23.507772+00:00",
+      "built_at": "2026-09-16T10:15:54.317380+00:00",
       "rebuilt_by": "scripts/graph_quality_scorecard.py",
       "current_input_digest": "6a33b93c526be4d66e9810e9c82824fa3cdc7fa72c71e32863263f76a686b5aa",
-      "recorded_input_digest": "c25f2c2946d15b0a87fad6f952f2f6c212fb7d48a77eb7a9abede7d6e736dcdf"
+      "recorded_input_digest": "6a33b93c526be4d66e9810e9c82824fa3cdc7fa72c71e32863263f76a686b5aa"
     },
     {
       "consumer": "Ask retrieval",
@@ -110,11 +108,9 @@
     },
     {
       "consumer": "Visualization Lab aggregates",
-      "status": "STALE_INPUT",
+      "status": "CURRENT",
       "declared_inputs": 11,
-      "inputs_that_moved": [
-        "file:frontend/.world/world.raw.json"
-      ],
+      "inputs_that_moved": [],
       "reason": null,
       "output_file": null,
       "output_hash": null,
@@ -124,32 +120,32 @@
         "frontend/public/world/world.json",
         "frontend/public/world/world.labels.json"
       ],
-      "built_at": "2026-09-16T09:23:26.808485+00:00",
+      "built_at": "2026-09-16T10:15:57.262961+00:00",
       "rebuilt_by": "scripts/export_graph_world.py and the metrics build",
       "current_input_digest": "99a9cc6f5ce0d4568d3237faef6aa2e02d1f0cacc064c9654ed0245547b84ead",
-      "recorded_input_digest": "cdcad21eb3ab761a71838645541e3a376015ebdbdce9e2df3ad1e35d436b867d"
+      "recorded_input_digest": "99a9cc6f5ce0d4568d3237faef6aa2e02d1f0cacc064c9654ed0245547b84ead"
     },
     {
       "consumer": "Knowledge World public projection",
-      "status": "STALE_INPUT",
+      "status": "CURRENT",
       "declared_inputs": 9,
       "inputs_that_moved": [],
-      "reason": "declared output frontend/.world/world.raw.json no longer matches its recorded digest",
+      "reason": null,
       "output_file": null,
       "output_hash": null,
       "declared_outputs": [
         "frontend/.world/world.raw.json",
         "frontend/public/world/world.predicates.json"
       ],
-      "built_at": "2026-09-16T09:23:25.010385+00:00",
+      "built_at": "2026-09-16T10:15:55.664059+00:00",
       "rebuilt_by": "scripts/export_graph_world.py",
       "current_input_digest": "f55abbe71c8b362ac95f98705b21ab4a5cd35d40cfa431c6cd0eb7bc984b8b0f",
       "recorded_input_digest": "f55abbe71c8b362ac95f98705b21ab4a5cd35d40cfa431c6cd0eb7bc984b8b0f"
     }
   ],
   "counts": {
-    "CURRENT": 3,
-    "STALE_INPUT": 3,
+    "CURRENT": 6,
+    "STALE_INPUT": 0,
     "BLOCKED": 2,
     "NOT_APPLICABLE": 1
   },

@@ -146,6 +146,21 @@ export const FAMILY_COPY: Record<RelationshipFamily, { heading: string; absent: 
  * represented a family it has not, and the reader loses a whole kind of relationship with no
  * symptom. `tests/unit/focus-curation.test.ts` asserts totality against both files, so adding
  * a predicate to the ontology fails a test rather than landing quietly in OTHER.
+ *
+ * ## Wave 4: eight predicates had landed in OTHER, and the test is why we know
+ *
+ * Regenerating `world.predicates.json` against the current graph made the totality assertion
+ * fail on eight names, seven of them from Wave 3's ritual and scholarship layers and one --
+ * `SHARES_FORMULA_WITH`, 6,148 edges -- from a predicate the ontology had declared
+ * deliberately empty. The mechanism is exactly the one the paragraph above describes: the
+ * sidebar still counted them, the coverage round still showed them, and a reader browsing a
+ * rite saw its 3,121 procedural steps filed under "Other".
+ *
+ * The four scholarship predicates would arguably read better as a family of their own -- 113
+ * recorded disagreements with named asserters and page-precise locators is a distinct kind of
+ * thing from an evidence record. They are filed under EVIDENCE here deliberately: adding a
+ * fourteenth family changes the sidebar's accounted set and its layout, which is a product
+ * decision rather than a defect fix, and this change is the defect fix.
  */
 const FAMILY_PREDICATES: Record<RelationshipFamily, readonly string[]> = {
     ATTRIBUTION: ["HAS_DEVATA", "HAS_RISHI", "HAS_DEVATA_ASCRIPTION"],
@@ -161,19 +176,23 @@ const FAMILY_PREDICATES: Record<RelationshipFamily, readonly string[]> = {
         "EXACT_PARALLEL_OF", "NEAR_PARALLEL_OF", "PARALLEL_TO", "VARIANT_OF",
         "REUSES_TEXT_FROM", "SHARES_ENTITY_VOCABULARY_WITH",
     ],
-    FORMULA: ["USES_FORMULA", "HAS_FORMULA", "MEMBER_OF_FAMILY"],
+    FORMULA: ["USES_FORMULA", "HAS_FORMULA", "MEMBER_OF_FAMILY", "SHARES_FORMULA_WITH"],
     RITE: [
         "USED_FOR_RITE", "DESCRIBED_IN", "INVOLVES_RITUAL", "INVOLVES_OFFERING",
         "INVOLVES_SUBSTANCE", "USES_OBJECT", "USES_OFFERING", "USES_SUBSTANCE",
         "PERFORMED_BY", "PERFORMED_FOR", "HAS_STEP", "PERFORMS_ACTION",
+        "HAS_RITUAL_STEP",
     ],
     REGISTRY: [
         "COMPOSED_OF", "EPITHET_VARIANT_OF", "BROADER_THAN", "DEVATA_ASSOCIATED_WITH",
         "BELONGS_TO_FAMILY", "HAS_AXIS", "HAS_EPITHET", "MEMBER_OF",
+        "SPECIALIZED_FORM_OF", "ATTESTED_IN",
     ],
     EVIDENCE: [
         "HAS_SEMANTIC_ASSERTION", "ASSERTION_AGENT", "ASSERTION_TARGET", "MEASURES",
         "CONTRADICTS", "SUPPORTED_BY", "SUPPORTED_BY_STATISTIC",
+        "POSITION_ASSERTED_BY", "POSITION_STATED_IN", "REPORTED_IN",
+        "SCHOLARLY_CLAIM_ABOUT",
     ],
     PROSODY: ["HAS_CHANDAS"],
     CONTAINMENT: ["CONTAINS"],
