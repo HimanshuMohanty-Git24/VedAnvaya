@@ -1,0 +1,75 @@
+{
+  "migration": "M8_INTERNAL_LABEL_BOUNDARY",
+  "at": "2026-09-16T05:59:56.179527+00:00",
+  "executed": false,
+  "backup": null,
+  "demoted_classes": [
+    "QualityVerdict",
+    "RoleFiller",
+    "DeityCommunity"
+  ],
+  "census_before": {
+    "nodes": 116838,
+    "relationships": 281290,
+    "public_nodes": 44324,
+    "core": {
+      "AV": 5839,
+      "RV": 10552,
+      "SV": 1844,
+      "YV": 1975
+    }
+  },
+  "census_after": {
+    "nodes": 116838,
+    "relationships": 281290,
+    "public_nodes": 44324,
+    "core": {
+      "AV": 5839,
+      "RV": 10552,
+      "SV": 1844,
+      "YV": 1975
+    }
+  },
+  "node_delta": 0,
+  "relationship_delta": 0,
+  "public_node_delta": 0,
+  "core_corpus_unchanged": true,
+  "labels_before": {
+    "QualityVerdict": {
+      "total": 2568,
+      "already_internal": 0,
+      "carries_an_id_key": 2568
+    },
+    "RoleFiller": {
+      "total": 2052,
+      "already_internal": 0,
+      "carries_an_id_key": 0
+    },
+    "DeityCommunity": {
+      "total": 12,
+      "already_internal": 0,
+      "carries_an_id_key": 0
+    }
+  },
+  "labels_after": {
+    "QualityVerdict": {
+      "total": 2568,
+      "already_internal": 0,
+      "carries_an_id_key": 2568
+    },
+    "RoleFiller": {
+      "total": 2052,
+      "already_internal": 0,
+      "carries_an_id_key": 0
+    },
+    "DeityCommunity": {
+      "total": 12,
+      "already_internal": 0,
+      "carries_an_id_key": 0
+    }
+  },
+  "nodes_marked": 0,
+  "additive": true,
+  "complete": false,
+  "sha256": "9b198f968323757b97d853528975912b7b53f5685a35b849dc5edd850257ab4e"
+}
