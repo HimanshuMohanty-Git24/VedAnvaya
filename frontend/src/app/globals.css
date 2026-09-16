@@ -3313,6 +3313,7 @@ table {
 
 .ritual-shape,
 .ritual-steps-section,
+.ritual-procedure-section,
 .ritual-children,
 .passage-rail,
 .occurrence-section,
@@ -3325,6 +3326,7 @@ table {
 
 .ritual-shape h2,
 .ritual-steps-section h2,
+.ritual-procedure-section h2,
 .ritual-children h2,
 .passage-rail h2,
 .occurrence-section h2,
@@ -5776,4 +5778,71 @@ a.ask-entity:hover small {
     vertical-align: -3px;
     margin-right: 5px;
     color: var(--va-accent-text);
+}
+
+/* The sutra procedure layer.
+
+   Deliberately not styled like .ritual-steps. That block renders a numbered run with a
+   circled ordinal per row, and this layer is not a run: each source work numbers its own
+   sequence from 1, and most steps state a position without printing the run it falls in.
+   Borrowing the run's visual grammar would assert with layout the very thing the prose
+   beside it denies. So the citation leads, and the grouping by work is the strongest
+   visual boundary in the section. */
+.ritual-layer-note {
+    color: var(--muted);
+    font-size: 0.92rem;
+    max-width: 68ch;
+}
+
+.ritual-procedure-source {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 18px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+}
+
+.ritual-procedure-source h3 {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 10px;
+    font-size: 1.02rem;
+}
+
+.ritual-procedure-meta {
+    color: var(--muted);
+    font-size: 0.84rem;
+    font-weight: 400;
+}
+
+.ritual-procedure-steps {
+    display: grid;
+    gap: 8px;
+}
+
+.ritual-procedure-steps li {
+    display: grid;
+    grid-template-columns: minmax(96px, auto) 1fr;
+    gap: 14px;
+    padding: 10px 0;
+    border-top: 1px solid var(--line);
+}
+
+.ritual-procedure-citation {
+    color: var(--muted);
+    font-size: 0.86rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.ritual-procedure-steps p[lang="sa"] {
+    font-size: 0.98rem;
+}
+
+.ritual-procedure-partial {
+    color: var(--faint);
+    font-size: 0.82rem;
+    margin-top: 4px;
 }

@@ -651,16 +651,24 @@ export interface paths {
         };
         /**
          * List the modelled rites
-         * @description All eight, ordered by lexical mention count.
-         *     **Eight modelled rites, not a taxonomy.** The `Ritual` class holds 8 nodes against a
-         *     corpus that names considerably more, so a rank in this list is a rank within 8 and says
-         *     nothing about Vedic ritual as a whole. Elaborate procedure is Brahmana and Sutra material
-         *     and was deliberately not imported into Samhita passages: **3** `HAS_STEP` edges exist in
-         *     the entire graph, all three on the soma pressing, whose morning, midday and third
-         *     libations the text itself numbers. A rite with no steps therefore returns a
-         *     `dimension_status` row saying NOT_BUILT rather than an empty array, and all 25 apparatus
-         *     edges are TIER_D curation whose "purpose" is a curator's statement rather than a purpose
-         *     clause quoted from a passage.
+         * @description Every modelled rite, ordered by lexical mention count.
+         *     **An inventory of rites, not a taxonomy.** The `Ritual` class holds fewer nodes than the
+         *     corpus names, so a rank in this list is a rank within the inventory and says nothing about
+         *     Vedic ritual as a whole. The exact figures are measured per request and returned in
+         *     `coverage_statement` — they are not written into this description, because a number typed
+         *     into prose is the one nothing checks.
+         *
+         *     **Two step layers, and they are not interchangeable.** `steps` is what the Samhita text
+         *     itself numbers: 3 such edges exist in the whole graph, all on the soma pressing, whose
+         *     morning, midday and third libations the hymn numbers in its own words. `procedure` is what
+         *     a Srautasutra or Grhyasutra prints, which is a different claim about a different source —
+         *     and most of those sequences state a step's position without printing the run it falls in,
+         *     so a `procedure` list is a set of located steps rather than a complete procedure. Every
+         *     row says which, and each layer gets its own `dimension_status` entry, so an empty array is
+         *     never left to be read as an absence of ritual structure.
+         *
+         *     Apparatus edges are all TIER_D curation, and a rite's "purpose" is a curator's statement
+         *     rather than a purpose clause quoted from a passage.
          */
         get: operations["list_rituals_endpoint_api_v1_rituals_get"];
         put?: never;
@@ -683,15 +691,23 @@ export interface paths {
          * @description One rite: recorded steps where the text states an order, officiants, offerings, substances, objects, invoked deities, stated purposes, narrower rites and the passages said to describe it.
          *
          *     The invoked deities pass the deity population contract, so a rite cannot list a human patron among the gods it invokes.
-         *     **Eight modelled rites, not a taxonomy.** The `Ritual` class holds 8 nodes against a
-         *     corpus that names considerably more, so a rank in this list is a rank within 8 and says
-         *     nothing about Vedic ritual as a whole. Elaborate procedure is Brahmana and Sutra material
-         *     and was deliberately not imported into Samhita passages: **3** `HAS_STEP` edges exist in
-         *     the entire graph, all three on the soma pressing, whose morning, midday and third
-         *     libations the text itself numbers. A rite with no steps therefore returns a
-         *     `dimension_status` row saying NOT_BUILT rather than an empty array, and all 25 apparatus
-         *     edges are TIER_D curation whose "purpose" is a curator's statement rather than a purpose
-         *     clause quoted from a passage.
+         *     **An inventory of rites, not a taxonomy.** The `Ritual` class holds fewer nodes than the
+         *     corpus names, so a rank in this list is a rank within the inventory and says nothing about
+         *     Vedic ritual as a whole. The exact figures are measured per request and returned in
+         *     `coverage_statement` — they are not written into this description, because a number typed
+         *     into prose is the one nothing checks.
+         *
+         *     **Two step layers, and they are not interchangeable.** `steps` is what the Samhita text
+         *     itself numbers: 3 such edges exist in the whole graph, all on the soma pressing, whose
+         *     morning, midday and third libations the hymn numbers in its own words. `procedure` is what
+         *     a Srautasutra or Grhyasutra prints, which is a different claim about a different source —
+         *     and most of those sequences state a step's position without printing the run it falls in,
+         *     so a `procedure` list is a set of located steps rather than a complete procedure. Every
+         *     row says which, and each layer gets its own `dimension_status` entry, so an empty array is
+         *     never left to be read as an absence of ritual structure.
+         *
+         *     Apparatus edges are all TIER_D curation, and a rite's "purpose" is a curator's statement
+         *     rather than a purpose clause quoted from a passage.
          */
         get: operations["get_ritual_endpoint_api_v1_rituals__ritual_id__get"];
         put?: never;
@@ -805,7 +821,7 @@ export interface paths {
          *     a deity's prominence.
          *
          *     **`include_internal` cannot leak a QA finding.** Measured over the live graph, none of the
-         *     57 traversable predicates has an endpoint labelled `Internal`,
+         *     62 traversable predicates has an endpoint labelled `Internal`,
          *     `QAIssue`, `TextVersion`, `Translation`, `Source` or `SourceArtifact` -- so no value of any
          *     parameter can return one. What `include_internal=true` does, and the only thing it does, is
          *     add `MENTIONS_LEMMA` so that `:Lemma` nodes become reachable. That layer is marked internal
@@ -5209,17 +5225,50 @@ export interface components {
          * RitualCoverageView
          * @description What the ritual layer holds, stated as the numbers that bound it.
          *
-         *     Eight modelled rites and three step edges across all of them. That is not a taxonomy of
-         *     Vedic ritual, and a list of eight is not evidence that there are eight, so the bounding
-         *     figures are measured and returned rather than described as "curated".
+         *     The inventory is not a taxonomy of Vedic ritual, and the length of a list is not evidence
+         *     of how many there are, so every bounding figure here is measured and returned rather than
+         *     described as "curated".
+         *
+         *     The two step layers are separate fields because they are separate claims. ``step_edges``
+         *     counts what a Samhita text numbers in its own words; ``procedure_step_edges`` counts what
+         *     a Srautasutra or Grhyasutra prints. Summing them would assert a procedural coverage the
+         *     Samhita layer does not have, and reporting only the first — which this view did for a
+         *     whole import — states that no rite has a recoverable sequence while thousands of located
+         *     sutra steps sit in the graph.
          */
         RitualCoverageView: {
             /** Rituals Modelled */
             rituals_modelled: number;
-            /** Rituals With Steps */
+            /**
+             * Rituals With Steps
+             * @description Rites with at least one step the Samhita text itself numbers.
+             */
             rituals_with_steps: number;
-            /** Step Edges */
+            /**
+             * Step Edges
+             * @description Samhita-numbered step edges, whole graph.
+             */
             step_edges: number;
+            /**
+             * Rituals With Procedure
+             * @description Rites with at least one sutra-attested procedural step.
+             */
+            rituals_with_procedure?: number | null;
+            /**
+             * Procedure Step Edges
+             * @description Sutra-attested procedural step edges, whole graph.
+             */
+            procedure_step_edges?: number | null;
+            /**
+             * Procedure Partial Steps
+             * @description Of those, the ones stating a position without printing the run it falls in. A high share means the sequences are located steps, not procedures.
+             */
+            procedure_partial_steps?: number | null;
+            /**
+             * Procedure Source Works
+             * @description Distinct source works cited. None of them has a node in this graph.
+             */
+            procedure_source_works?: number | null;
             /** Implements Curated */
             implements_curated?: number | null;
             /** Implements Reached By Mentions */
@@ -5249,12 +5298,97 @@ export interface components {
             evidence_status: string;
         };
         /**
-         * RitualProfile
-         * @description One of the eight modelled rites.
+         * RitualProcedureSource
+         * @description One source work's account of a rite's procedure.
          *
-         *     Eight is not a taxonomy of Vedic ritual and the response says so in
-         *     ``coverage_statement`` rather than leaving a client to infer completeness from a list
-         *     that happens to have eight entries in it.
+         *     The grouping is the claim. A rite drawing on eight sutras has eight independently
+         *     numbered sequences, not one procedure of eight parts, and flattening them into a single
+         *     ordered list would assert a composition nobody recorded.
+         *
+         *     ``work_key`` has no node behind it. The 11 work identities these steps cite are not in
+         *     the graph, so ``work_label`` is read off the key rather than from a work record, and
+         *     there is nothing further to follow.
+         */
+        RitualProcedureSource: {
+            /** Work Key */
+            work_key?: string | null;
+            /**
+             * Work Label
+             * @description Derived from `work_key`; there is no work node to fetch a name from.
+             */
+            work_label?: string | null;
+            /**
+             * Source Type
+             * @description SRAUTASUTRA or GRHYASUTRA. Never a Samhita passage.
+             */
+            source_type?: string | null;
+            /** Veda School */
+            veda_school?: string | null;
+            /**
+             * Step Count
+             * @description Steps this source records, before any display cap.
+             */
+            step_count?: number | null;
+            /**
+             * Anchoring Basis
+             * @description Why these steps attach to this rite, as the staging recorded it. Carried per source rather than once per rite, so a source anchored on a different basis cannot hide behind a shared note.
+             */
+            anchoring_basis?: string | null;
+            /** Steps */
+            steps?: components["schemas"]["RitualProcedureStep"][];
+        };
+        /**
+         * RitualProcedureStep
+         * @description One step in one source's sequence for a rite.
+         *
+         *     Kept separate from :class:`RitualStep` for the reason the graph keeps
+         *     ``HAS_RITUAL_STEP`` separate from ``HAS_STEP``: a libation the hymn itself numbers and a
+         *     procedural step a sutra prints are not the same kind of evidence, and merging them would
+         *     silently widen what an ordered step list means.
+         *
+         *     ``position`` is an ordinal **within this source's sequence only**. It is not a position
+         *     in the rite: 2,666 of the 3,121 steps share a position with another step of the same
+         *     rite, because eight or more works each number their own procedure from 1. That is why
+         *     steps arrive grouped under :class:`RitualProcedureSource` rather than in one list.
+         */
+        RitualProcedureStep: {
+            /**
+             * Position
+             * @description Ordinal within THIS source's sequence, not within the rite. Read `order_completeness` before treating a run of these as contiguous.
+             */
+            position?: number | null;
+            /** Display Label */
+            display_label: string;
+            /**
+             * Text
+             * @description The sutra's own words, IAST. This is the step; `display_label` is only where to find it.
+             */
+            text?: string | null;
+            /**
+             * Citation
+             * @description The sutra locator this step was read from.
+             */
+            citation?: string | null;
+            /** Stated Position */
+            stated_position?: string | null;
+            /**
+             * Order Basis
+             * @description SOURCE_PRINTED_SUTRA_SEQUENCE or SOURCE_STATED_SEQUENCE_MARKER.
+             */
+            order_basis?: string | null;
+            /**
+             * Order Completeness
+             * @description PARTIAL_STATED_POSITIONS or CONTIGUOUS_PRINTED_RUN. A partial sequence has gaps the source does not fill.
+             */
+            order_completeness?: string | null;
+        };
+        /**
+         * RitualProfile
+         * @description One modelled rite.
+         *
+         *     The rite inventory is not a taxonomy of Vedic ritual and the response says so in
+         *     ``coverage_statement`` rather than leaving a client to infer completeness from the
+         *     length of a list.
          */
         RitualProfile: {
             /**
@@ -5272,9 +5406,19 @@ export interface components {
             short_description?: string | null;
             /**
              * Steps
-             * @description Only 3 HAS_STEP edges exist across all 8 rites, all of them on the soma pressing, so this list is empty for 7 of the 8. An empty list here is NOT an unstructured rite -- read `dimension_status` for which it is.
+             * @description Steps the Samhita text itself numbers. 3 such edges exist in the whole graph, all on the soma pressing, so this list is empty for every other rite. An empty list here is NOT an unstructured rite, and it is NOT an absence of procedure either -- read `procedure`, then `dimension_status`.
              */
             steps?: components["schemas"]["RitualStep"][];
+            /**
+             * Procedure
+             * @description Procedure attested in Srautasutras and Grhyasutras, grouped by the work that records it. A separate field from `steps` because it is a separate claim, and grouped because each work numbers its own sequence from 1 — the groups do not compose into one procedure. Most sequences are partial; every step says which.
+             */
+            procedure?: components["schemas"]["RitualProcedureSource"][];
+            /**
+             * Procedure Step Count
+             * @description Total sutra-attested steps across every source.
+             */
+            procedure_step_count?: number | null;
             /** Roles */
             roles?: components["schemas"]["EntityRef"][];
             /** Offerings */
@@ -5304,7 +5448,10 @@ export interface components {
             /** Caveats */
             caveats?: components["schemas"]["CaveatView"][];
         };
-        /** RitualStep */
+        /**
+         * RitualStep
+         * @description A step the Samhita text itself numbers. Three of these exist in the whole graph.
+         */
         RitualStep: {
             /** Order */
             order?: number | null;
@@ -5315,7 +5462,7 @@ export interface components {
         };
         /**
          * RitualSummary
-         * @description A rite list row. Carries the eight-rite bound on the row, not only in the header.
+         * @description A rite list row. Carries the inventory bound on the row, not only in the header.
          */
         RitualSummary: {
             /** Type */
@@ -5334,11 +5481,19 @@ export interface components {
             passage_count?: number | null;
             /**
              * Inventory Coverage
-             * @description Stated per row because a list of eight implies a taxonomy of eight.
+             * @description Stated per row, because the length of a list reads as a taxonomy.
              */
             inventory_coverage: string;
-            /** Step Count */
+            /**
+             * Step Count
+             * @description Samhita-numbered steps only. 3 exist in the whole graph.
+             */
             step_count?: number | null;
+            /**
+             * Procedure Step Count
+             * @description Sutra-attested procedural steps. A different evidence class from `step_count`, so it is a different field.
+             */
+            procedure_step_count?: number | null;
             /** Devata Count */
             devata_count?: number | null;
             /** Described In Count */

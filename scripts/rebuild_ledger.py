@@ -86,6 +86,12 @@ def main() -> int:
         default="",
         help="Record the consumer as BLOCKED with this reason instead of rebuilt.",
     )
+    parser.add_argument(
+        "--not-applicable",
+        default="",
+        help="Record the consumer as NOT_APPLICABLE with this reason: there is nothing to "
+        "rebuild, as distinct from a rebuild that has not happened.",
+    )
     args = parser.parse_args()
 
     ledger = load_ledger()
@@ -103,7 +109,10 @@ def main() -> int:
                     "at": datetime.datetime.now(datetime.UTC).isoformat(),
                     "graph_census": {"nodes": nodes, "relationships": rels},
                 }
-                if args.blocked:
+                if args.not_applicable:
+                    entry["not_applicable_reason"] = args.not_applicable
+                    entry["output_hash"] = None
+                elif args.blocked:
                     entry["blocked_reason"] = args.blocked
                     entry["output_hash"] = None
                 elif args.output_file:
@@ -114,7 +123,9 @@ def main() -> int:
                     entry["output_file"] = str(path)
                     entry["output_hash"] = hashlib.sha256(path.read_bytes()).hexdigest()
                 else:
-                    print("  --record needs either --output-file or --blocked")
+                    print(
+                        "  --record needs --output-file, --blocked or --not-applicable"
+                    )
                     return 1
                 ledger[args.record] = entry
                 LEDGER.write_text(
@@ -128,7 +139,9 @@ def main() -> int:
                 name = str(consumer["consumer"])
                 current_hash = input_hash(session, consumer)
                 recorded = ledger.get(name) or {}
-                if recorded.get("blocked_reason"):
+                if recorded.get("not_applicable_reason"):
+                    status = "NOT_APPLICABLE"
+                elif recorded.get("blocked_reason"):
                     status = "BLOCKED"
                 elif not recorded:
                     status = "STALE_INPUT"
@@ -145,6 +158,7 @@ def main() -> int:
                         "output_hash": recorded.get("output_hash"),
                         "rebuilt_at": recorded.get("at"),
                         "blocked_reason": recorded.get("blocked_reason"),
+                        "not_applicable_reason": recorded.get("not_applicable_reason"),
                         "rebuilt_by": consumer.get("rebuilt_by"),
                     }
                 )
