@@ -859,25 +859,32 @@ class TestLiveNeighbourhood:
             edge = next(e for e in body["edges"] if e["id_basis"] == basis)
             assert live_client.get(f"/api/v1/graph/relationships/{edge['id']}").status_code == 200
 
-    def test_exact_parallel_edges_without_a_domain_id_still_get_an_identity(
-        self, live_client: TestClient, live_repository: Neo4jRepository
+    def test_every_exact_parallel_edge_now_carries_a_domain_id(
+        self, live_repository: Neo4jRepository
     ) -> None:
-        """256 of the 1,006 EXACT_PARALLEL_OF edges carry no parallel_id. Deciding the basis
-        per type instead of per edge would have minted a broken token for every one."""
+        """M12 closed the 256, so this asserts the closure rather than skipping past it.
+
+        It used to read: "256 of the 1,006 EXACT_PARALLEL_OF edges carry no parallel_id", and
+        it exercised the ENDPOINT_TRIPLE fallback on one of them. When Wave 4 gave all 256 an
+        id the test began SKIPPING -- quietly turning the one assertion about this population
+        into nothing. A test that goes silent when its subject is fixed is a test that stops
+        noticing a regression, so it is inverted here.
+
+        The fallback mechanism itself stays covered by the test above, which asserts both
+        ``DOMAIN_ID`` and ``ENDPOINT_TRIPLE`` are still reachable on other predicates.
+        """
         row = live_repository.run_one(
-            "MATCH (a:Passage)-[r:EXACT_PARALLEL_OF]->(b:Passage) "
-            "WHERE r.parallel_id IS NULL "
-            "RETURN a.canonical_key AS source LIMIT 1"
+            "MATCH ()-[r:EXACT_PARALLEL_OF]->() "
+            "RETURN count(r) AS total, "
+            "sum(CASE WHEN r.parallel_id IS NULL THEN 1 ELSE 0 END) AS idless"
         )
-        if row is None:
-            pytest.skip("every EXACT_PARALLEL_OF edge now carries a parallel_id")
-        body = live_client.get(
-            f"/api/v1/graph/neighborhood/{row['source']}",
-            params={"types": ["EXACT_PARALLEL_OF"], "limit_per_type": 50},
-        ).json()
-        idless = [e for e in body["edges"] if e["id_basis"] == "ENDPOINT_TRIPLE"]
-        assert idless, "an EXACT_PARALLEL_OF edge with no parallel_id must fall back"
-        assert live_client.get(f"/api/v1/graph/relationships/{idless[0]['id']}").status_code == 200
+        assert row is not None
+        assert int(row["total"]) > 0, "no EXACT_PARALLEL_OF edges, so this proves nothing"
+        assert int(row["idless"]) == 0, (
+            f"{row['idless']} EXACT_PARALLEL_OF edge(s) carry no parallel_id. Two writers "
+            "share this predicate and only one of them minted ids; M12 gave the lexical "
+            "writer's 256 the enrichment convention."
+        )
 
 
 @pytest.mark.neo4j
