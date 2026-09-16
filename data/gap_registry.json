@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "campaign": "post-v1-data-completeness",
-  "generated_at": "2026-09-16T10:01:41.512670+00:00",
+  "generated_at": "2026-09-16T11:18:59.137461+00:00",
   "baseline_commit": "d6e93a92c4e3ff1a5682a17b20bf32c6ce8fa19c",
   "gaps": [
     {
@@ -49,7 +49,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-ATTRIBUTION-002",
@@ -96,7 +96,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-ATTRIBUTION-003",
@@ -143,7 +143,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-ATTRIBUTION-004",
@@ -196,7 +196,7 @@
         "why_no_lawful_source": "No source addresses Kauthuma arcika verses by the coordinate this corpus holds. Acquiring the ganas would be a new work identifier, not a fix to this one.",
         "absence_not_inferred_from_not_looking": "Recorded as a measured zero over an assessed population of 1,844 in veda_coverage_v3.json, with the join-key reason stated verbatim."
       },
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-ATTRIBUTION-005",
@@ -243,7 +243,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-ATTRIBUTION-006",
@@ -296,7 +296,7 @@
         "why_no_lawful_source": "No source addresses Kauthuma arcika verses by the coordinate this corpus holds. Acquiring the ganas would be a new work identifier, not a fix to this one.",
         "absence_not_inferred_from_not_looking": "Recorded as a measured zero over an assessed population of 1,844 in veda_coverage_v3.json, with the join-key reason stated verbatim."
       },
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-ATTRIBUTION-007",
@@ -343,7 +343,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-ATTRIBUTION-008",
@@ -390,7 +390,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-ATTRIBUTION-009",
@@ -437,7 +437,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-AUDIO-001",
@@ -493,7 +493,7 @@
       "closure_citation": "data/registry/works.yaml:290-297 (ganas need their own work_id)",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-AUDIO-002",
@@ -548,7 +548,7 @@
       "closure_citation": null,
       "closure_owner_decision": "OWNER_DECISION_E_AUDIO_GATE",
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-AUDIO-003",
@@ -603,7 +603,7 @@
       "closure_citation": null,
       "closure_owner_decision": "OWNER_DECISION_E_AUDIO_GATE",
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-AUDIO-004",
@@ -659,7 +659,7 @@
       "closure_citation": null,
       "closure_owner_decision": "OWNER_DECISION_E_AUDIO_GATE",
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-AUDIO-005",
@@ -706,7 +706,7 @@
       "closure_citation": "docs/PRODUCT_V1_SCOPE.md:212-221 (no audio redistribution)",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-AUDIO-006",
@@ -753,7 +753,7 @@
       "closure_citation": "docs/PRODUCT_V1_SCOPE.md:212-221",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-COMMUNITIES-001",
@@ -808,7 +808,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-COMMUNITIES-002",
@@ -863,7 +863,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-COMMUNITIES-003",
@@ -910,7 +910,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-CROSS_VEDA-001",
@@ -957,7 +957,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-CROSS_VEDA-002",
@@ -1004,7 +1004,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-CROSS_VEDA-003",
@@ -1058,7 +1058,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-CROSS_VEDA-004",
@@ -1105,7 +1105,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-ENTITY_COVERAGE-001",
@@ -1152,7 +1152,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-ENTITY_COVERAGE-002",
@@ -1199,7 +1199,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-ENTITY_COVERAGE-003",
@@ -1246,7 +1246,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-ENTITY_COVERAGE-004",
@@ -1293,7 +1293,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-ENTITY_COVERAGE-005",
@@ -1340,7 +1340,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-ENTITY_COVERAGE-006",
@@ -1387,7 +1387,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-ENTITY_COVERAGE-007",
@@ -1434,7 +1434,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-ENTITY_COVERAGE-008",
@@ -1481,7 +1481,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-FORMULA-001",
@@ -1528,7 +1528,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-FORMULA-002",
@@ -1584,7 +1584,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-FORMULA-003",
@@ -1631,7 +1631,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-MORPHOLOGY-001",
@@ -1678,7 +1678,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-MORPHOLOGY-002",
@@ -1731,7 +1731,7 @@
         "why_no_lawful_source": "No equivalent manual morphological annotation is published for the Samaveda, the Shukla Yajurveda or the Saunaka Atharvaveda. Generating one by machine would be model output presented as annotation.",
         "absence_not_inferred_from_not_looking": "9,658 mantras measured as carrying no lemma layer, against a corpus where the RV's 10,552 are complete -- the contrast is what establishes it as a source absence."
       },
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-MORPHOLOGY-003",
@@ -1778,7 +1778,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-MORPHOLOGY-004",
@@ -1825,7 +1825,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-MORPHOLOGY-005",
@@ -1872,7 +1872,7 @@
       "closure_citation": "docs/reports/data-completeness/morphology.md; the AV accent calibration record in the owner ledger",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-MORPHOLOGY-006",
@@ -1919,7 +1919,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-OTHER-001",
@@ -1966,7 +1966,7 @@
       "closure_citation": "data/registry/works.yaml (YV work scope); tests/domain/test_domain_layer.py",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-OTHER-002",
@@ -2013,7 +2013,7 @@
       "closure_citation": "data/registry/works.yaml (AV work scope)",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-OTHER-003",
@@ -2060,7 +2060,7 @@
       "closure_citation": "the AV image-transcription cancellation in the owner ledger",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-OTHER-004",
@@ -2107,7 +2107,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-OTHER-005",
@@ -2154,7 +2154,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-OTHER-006",
@@ -2207,7 +2207,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-PRODUCT_SURFACE-001",
@@ -2254,7 +2254,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-PRODUCT_SURFACE-002",
@@ -2301,7 +2301,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-PRODUCT_SURFACE-003",
@@ -2348,7 +2348,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-PRODUCT_SURFACE-004",
@@ -2395,7 +2395,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-PRODUCT_SURFACE-005",
@@ -2442,7 +2442,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-QUALITY-001",
@@ -2489,7 +2489,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-QUALITY-002",
@@ -2536,7 +2536,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-QUALITY-003",
@@ -2583,7 +2583,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-QUALITY-004",
@@ -2630,7 +2630,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-QUALITY-005",
@@ -2677,7 +2677,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-QUALITY-006",
@@ -2724,7 +2724,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-RITUAL-001",
@@ -2771,7 +2771,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-RITUAL-002",
@@ -2818,7 +2818,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-RITUAL-003",
@@ -2865,7 +2865,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-RITUAL-004",
@@ -2912,7 +2912,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-RITUAL-005",
@@ -2959,7 +2959,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-RITUAL-006",
@@ -3006,7 +3006,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-RITUAL-007",
@@ -3053,7 +3053,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-SAMAVEDA_MUSIC-001",
@@ -3100,7 +3100,7 @@
       "closure_citation": "data/registry/works.yaml:290-297",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-SAMAVEDA_MUSIC-002",
@@ -3147,7 +3147,7 @@
       "closure_citation": null,
       "closure_owner_decision": "OWNER_DECISION_E_AUDIO_GATE",
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-SAMAVEDA_MUSIC-003",
@@ -3194,7 +3194,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-SCHOLARSHIP-001",
@@ -3241,7 +3241,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-SCHOLARSHIP-002",
@@ -3288,7 +3288,7 @@
       "closure_citation": "data/registry/works.yaml (all four work scopes); docs/PRODUCT_V1_SCOPE.md",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-SEMANTICS-001",
@@ -3335,7 +3335,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-SEMANTICS-002",
@@ -3382,7 +3382,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-SEMANTICS-003",
@@ -3429,7 +3429,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-SEMANTICS-004",
@@ -3476,7 +3476,7 @@
       "closure_citation": "this audit entry, and docs/reports/data-completeness/semantics.md",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-SEMANTICS-005",
@@ -3523,7 +3523,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-SEMANTICS-006",
@@ -3570,7 +3570,7 @@
       "closure_citation": "docs/PRODUCT_V1_SCOPE.md:212-221 (no vector database, no embedding retrieval)",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-TRANSLATION-001",
@@ -3623,7 +3623,7 @@
         "why_no_lawful_source": "",
         "absence_not_inferred_from_not_looking": "0 of 1,844 measured in the graph; 1,242 measured as staged and unimported."
       },
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-TRANSLATION-002",
@@ -3677,7 +3677,7 @@
       "closure_citation": null,
       "closure_owner_decision": "OWNER_DECISION_A_RV_SPAN + OWNER_DECISION_C_FORCED_ADDRESSES",
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-TRANSLATION-003",
@@ -3731,7 +3731,7 @@
       "closure_citation": null,
       "closure_owner_decision": "OWNER_DECISION_A_RV_SPAN + OWNER_DECISION_C_FORCED_ADDRESSES",
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-TRANSLATION-004",
@@ -3786,7 +3786,7 @@
       "closure_citation": null,
       "closure_owner_decision": "OWNER_DECISION_A_RV_SPAN",
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-TRANSLATION-005",
@@ -3833,7 +3833,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-TRANSLATION-006",
@@ -3850,7 +3850,7 @@
       "implementation_dependency": "Realign the 25 rows to 2N-1 with per-verse Sanskrit verification rather than by applying the formula blindly, since RV 1.70's 11 verses against 6 units show the mapping is not uniformly a doubling. Only then import the absent verses: filling the hymn first would make every verse carry text while 25 still carried the wrong text, which is strictly worse than the gap. Add an import invariant that fails when a hymn's translated count is a near-half of its verse count.",
       "owner_agent": 3,
       "closure_test": "Each of the 31 rows reads correctly against its own verse's Sanskrit -- not that the hymn is full. Plus an invariant in the test suite that rejects a near-half translated-to-verse ratio at hymn scope.",
-      "status": "STILL_IMPLEMENTATION_FIXABLE",
+      "status": "CLOSED_DERIVED",
       "causation_status": "MEASURED",
       "observed_gap": "Griffith renders each pair of our Sakala verses as one unit, so his unit N belongs to our verse 2N-1. The import bound his units one-for-one, leaving 25 of 31 translations attached to the wrong verse.",
       "initial_hypothesis": "A positional bind where the two editions do not share a verse spine. Nothing caught it because all three available safeguards were satisfied: the totals balance at 31 units in and 31 rows out, every canonical key resolves and is Rigvedic so the staging graph checks pass, and the 30 unbound verses present as a coverage gap rather than as a defect. This campaign's own baseline recorded them that way. The missing verses were the visible symptom of the misalignment, and reading them as a gap hid the defect behind them.",
@@ -3880,13 +3880,13 @@
       "source_availability": "NOT_REQUIRED",
       "initial_hypothesis_status": "SUPERSEDED_BY_MEASUREMENT",
       "closure_method": null,
-      "closure_basis": "25 of 31 shipped translations in RV 1.65-1.70 sit on the wrong verse, because Griffith's unit N covers verses 2N-1 and 2N and the import bound his units one-for-one. This is wrong data on a public surface, not missing data, and the registry says nothing needs acquiring. Deferred behind the same coordinate repair as GAP-TRANSLATION-004 and not executed.",
-      "closure_measure": null,
-      "closure_measured_value": null,
+      "closure_basis": "25 of 31 shipped translations in RV 1.65-1.70 read against the wrong Sanskrit. Re-measured independently before any mutation -- 61 verses, 31 translated, 6 correct, 25 wrong, 0 ambiguous -- which reproduced the figure rather than inheriting it. Not a source defect: Griffith's edition numbers each four-pada group as one verse where ours numbers each hemistich, established from our own canonical text (every verse in the span is a single hemistich where the neighbours are two), our own Anukramani metre (viraj throughout, against tristup and jagati either side) and the source's own structure (ceil(V/2) units, the odd hymn's last unit one line rather than two). Fixed at the generator: six hymn-level declarations under translation_verse_spine in upstream_corrections.yaml, applied by the projection, so a rebuild produces the corrected anchors -- the corpus stays byte-identical because translations.jsonl is inside the sealed semantic freeze. build.py's coverage guard had detected the shortfall and named it translation_coverage_incomplete, which is why the campaign recorded 30 absent verses and not the 25 wrong ones; it now raises translation_verse_spine_mismatch as an ERROR. M13 re-anchored the 25 with a readback driven by the executed receipt: 0 old attachments serving, 0 text bytes changed, 0 provenance mismatches, neighbours at their pre-fix baseline. The 30 uncovered verses stay open under GAP-TRANSLATION-004, which is the honest state -- Griffith renders the pair as one unit and splitting it at his line break would fabricate.",
+      "closure_measure": "MATCH (m:Mantra {veda:'RV'})-[:HAS_TRANSLATION]->() WHERE m.canonical_key STARTS WITH 'VG:RV:SAK:M01:S065:'   OR m.canonical_key STARTS WITH 'VG:RV:SAK:M01:S066:'   OR m.canonical_key STARTS WITH 'VG:RV:SAK:M01:S067:'   OR m.canonical_key STARTS WITH 'VG:RV:SAK:M01:S068:'   OR m.canonical_key STARTS WITH 'VG:RV:SAK:M01:S069:'   OR m.canonical_key STARTS WITH 'VG:RV:SAK:M01:S070:' RETURN sum(CASE WHEN toInteger(substring(split(m.canonical_key,':')[5],1)) % 2 = 0   THEN 1 ELSE 0 END)",
+      "closure_measured_value": 0,
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-CROSS-VEDA-DEVATA-IDENTITY-BRIDGE-001",
@@ -3931,7 +3931,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-ATTRIBUTION-WHITNEY-UNRESOLVED-OBJECT-001",
@@ -3967,7 +3967,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-RITUAL-STEP-LOCATOR-COLLISION-001",
@@ -4001,7 +4001,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-AV-CHANDOMETRE-SEGMENTATION-001",
@@ -4329,7 +4329,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     },
     {
       "gap_id": "GAP-SEMANTIC-SIGNATURE-COVERAGE-001",
@@ -4364,7 +4364,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T10:01:41.512670+00:00"
+      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
     }
   ],
   "root_cause_taxonomy": [

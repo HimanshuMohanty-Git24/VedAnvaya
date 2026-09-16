@@ -1,20 +1,20 @@
 {
   "artifact": "WAVE4_REGISTRY_CLOSURE_AUDIT",
-  "at": "2026-09-16T10:34:10.988419+00:00",
+  "at": "2026-09-16T11:18:59.137461+00:00",
   "entries": 85,
   "entries_without_a_ruling": [],
   "rulings_for_no_entry": [],
   "counts": {
     "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE": 3,
     "BLOCKED_OWNER_DECISION_REQUIRED": 5,
-    "CLOSED_DERIVED": 20,
+    "CLOSED_DERIVED": 21,
     "CLOSED_NOT_APPLICABLE": 1,
     "CLOSED_SCOPE_DECISION": 9,
     "CLOSED_VERIFIED_ZERO": 4,
     "NEEDS_AUDIBLE_REVIEW": 3,
-    "STILL_IMPLEMENTATION_FIXABLE": 40
+    "STILL_IMPLEMENTATION_FIXABLE": 39
   },
-  "closed": 37,
+  "closed": 38,
   "execution_blockers": 8,
   "not_terminated": [
     "GAP-ATTRIBUTION-001",
@@ -55,8 +55,7 @@
     "GAP-SEMANTICS-002",
     "GAP-SEMANTICS-003",
     "GAP-SEMANTICS-005",
-    "GAP-TRANSLATION-005",
-    "GAP-TRANSLATION-006"
+    "GAP-TRANSLATION-005"
   ],
   "measurement_disagreements": [],
   "rows": [
@@ -1350,19 +1349,19 @@
     },
     {
       "gap_id": "GAP-TRANSLATION-006",
-      "closure_status": "STILL_IMPLEMENTATION_FIXABLE",
-      "declared_status": "STILL_IMPLEMENTATION_FIXABLE",
+      "closure_status": "CLOSED_DERIVED",
+      "declared_status": "CLOSED_DERIVED",
       "downgraded": false,
-      "closure_basis": "25 of 31 shipped translations in RV 1.65-1.70 sit on the wrong verse, because Griffith's unit N covers verses 2N-1 and 2N and the import bound his units one-for-one. This is wrong data on a public surface, not missing data, and the registry says nothing needs acquiring. Deferred behind the same coordinate repair as GAP-TRANSLATION-004 and not executed.",
-      "closure_measure": null,
-      "closure_measured_value": null,
-      "closure_expected_value": null,
+      "closure_basis": "25 of 31 shipped translations in RV 1.65-1.70 read against the wrong Sanskrit. Re-measured independently before any mutation -- 61 verses, 31 translated, 6 correct, 25 wrong, 0 ambiguous -- which reproduced the figure rather than inheriting it. Not a source defect: Griffith's edition numbers each four-pada group as one verse where ours numbers each hemistich, established from our own canonical text (every verse in the span is a single hemistich where the neighbours are two), our own Anukramani metre (viraj throughout, against tristup and jagati either side) and the source's own structure (ceil(V/2) units, the odd hymn's last unit one line rather than two). Fixed at the generator: six hymn-level declarations under translation_verse_spine in upstream_corrections.yaml, applied by the projection, so a rebuild produces the corrected anchors -- the corpus stays byte-identical because translations.jsonl is inside the sealed semantic freeze. build.py's coverage guard had detected the shortfall and named it translation_coverage_incomplete, which is why the campaign recorded 30 absent verses and not the 25 wrong ones; it now raises translation_verse_spine_mismatch as an ERROR. M13 re-anchored the 25 with a readback driven by the executed receipt: 0 old attachments serving, 0 text bytes changed, 0 provenance mismatches, neighbours at their pre-fix baseline. The 30 uncovered verses stay open under GAP-TRANSLATION-004, which is the honest state -- Griffith renders the pair as one unit and splitting it at his line break would fabricate.",
+      "closure_measure": "MATCH (m:Mantra {veda:'RV'})-[:HAS_TRANSLATION]->() WHERE m.canonical_key STARTS WITH 'VG:RV:SAK:M01:S065:'   OR m.canonical_key STARTS WITH 'VG:RV:SAK:M01:S066:'   OR m.canonical_key STARTS WITH 'VG:RV:SAK:M01:S067:'   OR m.canonical_key STARTS WITH 'VG:RV:SAK:M01:S068:'   OR m.canonical_key STARTS WITH 'VG:RV:SAK:M01:S069:'   OR m.canonical_key STARTS WITH 'VG:RV:SAK:M01:S070:' RETURN sum(CASE WHEN toInteger(substring(split(m.canonical_key,':')[5],1)) % 2 = 0   THEN 1 ELSE 0 END)",
+      "closure_measured_value": 0,
+      "closure_expected_value": 0,
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
       "closure_blocked_evidence_missing": null,
-      "terminates": false,
-      "is_data_completeness_closure": false
+      "terminates": true,
+      "is_data_completeness_closure": true
     },
     {
       "gap_id": "GAP-CROSS-VEDA-DEVATA-IDENTITY-BRIDGE-001",
@@ -1445,5 +1444,5 @@
       "is_data_completeness_closure": true
     }
   ],
-  "sha256": "fe2d2ccb18b7698045f9660de6b53874c31b4b69691ac8d08c8ce4b8ae90fbd3"
+  "sha256": "c412df23cafea466d5e1f1d7b989dcd266194b1e261b228d86ecafd7d533343a"
 }

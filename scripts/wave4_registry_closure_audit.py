@@ -922,14 +922,36 @@ RULINGS: Final[dict[str, Ruling]] = {
         0,
     ),
     "GAP-TRANSLATION-006": Ruling(
-        "STILL_IMPLEMENTATION_FIXABLE",
-        "25 of 31 shipped translations in RV 1.65-1.70 sit on the wrong verse, because "
-        "Griffith's unit N covers verses 2N-1 and 2N and the import bound his units "
-        "one-for-one. This is wrong data on a public surface, not missing data, and the "
-        "registry says nothing needs acquiring. Deferred behind the same coordinate repair as "
-        "GAP-TRANSLATION-004 and not executed.",
-        "",
-        None,
+        "CLOSED_DERIVED",
+        "25 of 31 shipped translations in RV 1.65-1.70 read against the wrong Sanskrit. "
+        "Re-measured independently before any mutation -- 61 verses, 31 translated, 6 "
+        "correct, 25 wrong, 0 ambiguous -- which reproduced the figure rather than inheriting "
+        "it. Not a source defect: Griffith's edition numbers each four-pada group as one "
+        "verse where ours numbers each hemistich, established from our own canonical text "
+        "(every verse in the span is a single hemistich where the neighbours are two), our "
+        "own Anukramani metre (viraj throughout, against tristup and jagati either side) and "
+        "the source's own structure (ceil(V/2) units, the odd hymn's last unit one line "
+        "rather than two). Fixed at the generator: six hymn-level declarations under "
+        "translation_verse_spine in upstream_corrections.yaml, applied by the projection, so "
+        "a rebuild produces the corrected anchors -- the corpus stays byte-identical because "
+        "translations.jsonl is inside the sealed semantic freeze. build.py's coverage guard "
+        "had detected the shortfall and named it translation_coverage_incomplete, which is "
+        "why the campaign recorded 30 absent verses and not the 25 wrong ones; it now raises "
+        "translation_verse_spine_mismatch as an ERROR. M13 re-anchored the 25 with a readback "
+        "driven by the executed receipt: 0 old attachments serving, 0 text bytes changed, 0 "
+        "provenance mismatches, neighbours at their pre-fix baseline. The 30 uncovered verses "
+        "stay open under GAP-TRANSLATION-004, which is the honest state -- Griffith renders "
+        "the pair as one unit and splitting it at his line break would fabricate.",
+        "MATCH (m:Mantra {veda:'RV'})-[:HAS_TRANSLATION]->() "
+        "WHERE m.canonical_key STARTS WITH 'VG:RV:SAK:M01:S065:' "
+        "  OR m.canonical_key STARTS WITH 'VG:RV:SAK:M01:S066:' "
+        "  OR m.canonical_key STARTS WITH 'VG:RV:SAK:M01:S067:' "
+        "  OR m.canonical_key STARTS WITH 'VG:RV:SAK:M01:S068:' "
+        "  OR m.canonical_key STARTS WITH 'VG:RV:SAK:M01:S069:' "
+        "  OR m.canonical_key STARTS WITH 'VG:RV:SAK:M01:S070:' "
+        "RETURN sum(CASE WHEN toInteger(substring(split(m.canonical_key,':')[5],1)) % 2 = 0 "
+        "  THEN 1 ELSE 0 END)",
+        0,
     ),
     # ---- named Wave 3/4 findings -----------------------------------------------------
     "GAP-CROSS-VEDA-DEVATA-IDENTITY-BRIDGE-001": Ruling(
