@@ -180,11 +180,11 @@
       "type:MENTIONS_ENTITY": "n=28110;unnamed=0;pairs=2c66d80eada586d6f80aa587673228c4b7c02cc05dbba7200fceb174fa6afa62",
       "file:data/gold/ask_benchmark_v1.jsonl": "bdeb057586b2f0df25cef1dba4a0f309c9b329bbfe7d1080539bdc2bde3be9a5"
     },
-    "built_at": "2026-09-16T07:00:23.054405+00:00",
+    "built_at": "2026-09-16T07:37:46.147805+00:00",
     "graph_census": {
       "nodes": 116838,
-      "relationships": 281290
+      "relationships": 281257
     },
-    "blocked_reason": "ASK_FORMAL_REGRADE_BLOCKED_EXTERNAL_PROVIDER. The graded run reached 31 of 60 and stopped at Q32 with vedagraph.llm.errors.LLMResponseError: Unexpected error (APIConnectionError) from the OpenRouter provider -- a transient upstream failure, not quota exhaustion. Run identity is commit-keyed, so the 31 answers cannot be resumed from a later commit: a fresh run is needed. On the 31 answered: 115 citations, 0 invented citations surviving, 2 uncited answers (Q05, Q20), 4 safety probes fired and all 4 correctly refused their false premise. MISLEADING and HALLUCINATED are adjudicated by reading and cannot be certified from a partial run, so misleading=0 is NOT claimed."
+    "blocked_reason": "ASK_FORMAL_REGRADE_BLOCKED_EXTERNAL_QUOTA. The fresh commit-keyed run at b98d988 reached 19 of 60 and stopped at Q20 with vedagraph.llm.errors.LLMRateLimitError: 'Rate limit reached for provider openrouter. The daily allowance is exhausted; waiting will not clear it.' Only OpenRouter is credentialed -- Gemini and Anthropic providers exist in code with no keys -- and switching model would produce a different grade rather than a resumption. The earlier 31/60 run is diagnostic only and is NOT combined with this one, per owner instruction. Resume with a fresh run when the daily allowance resets. On the 19: 94 citations, 0 invented citations surviving, 0 invalid, 1 uncited answer (Q03, a reasoning-preamble leak). misleading/hallucinated NOT certified."
   }
 }

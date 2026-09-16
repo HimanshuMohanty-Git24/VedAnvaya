@@ -585,3 +585,51 @@ AUC is the baseline instead.
 `SHARED_PHRASING_ONLY` stays withheld on **7** adjudicated labels of 486. Seven cannot
 establish a boundary. The gold labels are LLM-adjudicated with 162 of 486 left
 `UNADJUDICATED_QUOTA_EXHAUSTED`, and are not reported as a human gold standard.
+
+## 27. M9 — the 33 malformed metre assertions, withdrawn under authorisation
+
+**Applied.** The correction stops at the demonstrable 33 because the criterion is Whitney's
+own notation, not a reading of Sanskrit: `:` separates his hymn statement from its per-verse
+exceptions and a bare `N.` is a verse number, and neither can occur inside a metre *name*.
+Three heuristics for the wider population gave **17, 28, 39**, and an unbounded criterion
+cannot authorise a deletion.
+
+33 assertions · 28 entities · 33 passages · `HAS_CHANDAS` 16,331 → 16,298 · 0 nodes touched ·
+`:Chandas` population 575 unchanged · core corpus exact.
+
+**17 passages keep a well-formed metre edge; 16 are left with none.** Replacements created:
+**0**, measured — every metre assertion for these passages traces to the same source whose
+segmentation is the defect, so no independent evidence exists, and reading the metre out of
+the mixed string was barred. On `K03:S003:V005` it would also have been wrong: the `6.` in
+`'6. anuṣṭubh'` addresses verse 6 while the edge sat on verse 5.
+
+The literal and its provenance move onto the passage **before** the edge is deleted, in that
+order inside one transaction — if it fails between them the assertion survives, which is the
+safer half to hold. All 33 affected IDs, literals, scopes and outcomes are in the gap
+registry.
+
+**My own readback could not fail, and it is recorded rather than quietly fixed.** Its first
+version rebuilt its expectation by querying the graph for the malformed edges, found none
+after the withdrawal, and printed `READBACK_CLEAN` having compared 0 against 0. That is the
+vacuous-gate defect of §23 inside the tool built to catch it. The expectation now comes from
+the executed receipt and it refuses to report a verdict without one.
+
+**The gap stays open.** The registry *builder* is unchanged, so re-running
+`build_anukramani_knowledge_layer.py` would recreate the same fragments.
+
+## 28. Ask — blocked by the daily allowance, not faked
+
+A fresh commit-keyed run at `b98d988` from Q1 reached **19 of 60** and stopped at Q20 with
+`LLMRateLimitError: the daily allowance is exhausted; waiting will not clear it`. Only
+OpenRouter is credentialed — Gemini and Anthropic providers exist in code without keys — and
+switching model would produce a different grade rather than a resumption.
+
+The earlier 31/60 run is **diagnostic only and is not combined**, per the instruction.
+`ASK_FORMAL_REGRADE_BLOCKED_EXTERNAL_QUOTA` is recorded in the dependency ledger with the
+exact error. **`misleading = 0` is not claimed.**
+
+Investigating the uncited answers found a real product defect: the citation extractor did not
+recognise round parentheses, so Q20's `(E11)`-cited answer was scored uncited and graded
+`INSUFFICIENT_EVIDENCE`. Fixed, with a test that ordinary prose parentheses still yield no
+citation. The other two uncited answers are a truncated generation and a reasoning-preamble
+leak — model-side, already flagged, not hidden.

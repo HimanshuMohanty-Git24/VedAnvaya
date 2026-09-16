@@ -376,7 +376,7 @@
     },
     {
       "predicate": "HAS_CHANDAS",
-      "edges": 16331,
+      "edges": 16298,
       "declared_in": "ontology.CORPUS_RELATIONSHIP_TYPES",
       "signature_enforced": true,
       "subject_labels": [

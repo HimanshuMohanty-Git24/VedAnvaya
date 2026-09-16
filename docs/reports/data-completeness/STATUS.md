@@ -16,7 +16,7 @@ mutation.** Wave 4 has not started.
 |---|---|
 | `attribution_import.py --readback` | `READBACK_CLEAN`, 0 findings |
 | `graph_quality_scorecard.py` | **9 of 9**, two of them previously unable to fail |
-| `pytest tests/api` | **1,372 passed** |
+| `pytest tests/api` | **1,385 passed** |
 | `pytest tests/unit` | **1,147 passed**, 41 skipped |
 | `pnpm test` | **434 passed** |
 
@@ -130,6 +130,22 @@ Five regression tests in `tests/api/test_chandas_integrity.py`, whose negative c
 real metre names carrying structural qualifiers like `3-av.` so the criterion cannot degrade
 into a digit-and-dot rule.
 
+### Ask — a third vendor's citation brackets
+
+Investigating the uncited answers found a product defect, not a model failure. Q20 answered
+*"Which Veda does not mention Agni?"* with per-corpus counts and the markers `(E11)`, `(E5)`,
+`(E6, E12)` — and was scored uncited, `INSUFFICIENT_EVIDENCE`, `citation_ids []`. The
+extractor knew `[`, `【`, `〚` and `［` but not round parentheses.
+
+`citation.py`'s own docstring predicted it: *"support grading is citation-derived, so a
+properly grounded answer was reported INSUFFICIENT_EVIDENCE with an empty citation list."*
+Third vendor, same cause. Round brackets are admitted now, and a test asserts that ordinary
+parentheses — `(the pressed plant)`, `(1896)`, `(1-11)` — still yield no citation, which is
+what keeps a permissive delimiter from becoming a permissive citation.
+
+Two uncited answers had a different cause and are not hidden: one truncated generation, one
+reasoning-preamble leak. Both already flagged in the checkpoint.
+
 ### Semantic resemblance — outcome C, measured
 
 **0 assertions imported.** The prior artifact declares a 108,779-node snapshot against this
@@ -164,16 +180,23 @@ blocker recorded in the ledger.
 3. **Semantic resemblance needs an embedding runtime** in the checkout plus adjudication
    capacity for the 162 unadjudicated gold pairs. The control's AUC 0.754 is the baseline any
    candidate must beat.
-4. **The Ask formal regrade is incomplete.** The run reached 31 of 60 and stopped at Q32
-   with an `APIConnectionError` from the provider — transient, not quota. Run identity is
-   commit-keyed so the 31 cannot be resumed from a later commit; a fresh run is needed. On
-   the 31: 115 citations, **0 invented citations surviving**, 2 uncited answers (Q05, Q20), 4
-   safety probes fired and all four correctly refused their false premise. `MISLEADING` is
-   adjudicated by reading, so **misleading = 0 is not claimed**.
+4. **`ASK_FORMAL_REGRADE_BLOCKED_EXTERNAL_QUOTA`.** A fresh commit-keyed run at `b98d988`
+   reached 19 of 60 and stopped at Q20 with
+   `LLMRateLimitError: the daily allowance is exhausted; waiting will not clear it`. Only
+   OpenRouter is credentialed, and switching model would produce a different grade rather
+   than a resumption. The earlier 31/60 run is **diagnostic only and is not combined** with
+   it. Resume with a fresh run when the allowance resets.
+
+   What the 19 show: 94 citations, **0 invented citations surviving**, 0 invalid, 1 uncited
+   answer. `MISLEADING`/`HALLUCINATED` are adjudicated by reading and the grader refuses to
+   compute them, so **misleading = 0 is not claimed**.
 5. **`GAP-SEMANTIC-SIGNATURE-COVERAGE-001`** — 15 declared predicates, the model-extracted
    semantic layer plus `QA_ISSUE_ON`, have no endpoint signature. Pinned as an exact set so
    the population cannot grow.
-6. **The 1,021 audible reviews.** 0 heard. Parallel track; blocks nothing here.
+6. **The 1,021 audible reviews.** `audio_review_harness.py --progress`: **0 decided, 1,021
+   remaining**, all `NEEDS_AUDIBLE_REVIEW` across five strata (AV coordinate-remapped 771, RV
+   recovered 150, RV 1.65–1.70 span 61, YV recovered 33, SV container scope 6). Nothing
+   promoted. Parallel track; blocks nothing here.
 
 ## Registry
 
