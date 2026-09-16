@@ -1,6 +1,6 @@
 {
   "artifact": "ATTRIBUTION_READBACK",
-  "at": "2026-09-16T05:03:56.222111+00:00",
+  "at": "2026-09-16T05:34:38.618861+00:00",
   "passages_stamped": 22537,
   "passages_promised": 22537,
   "state_distribution_read_from_the_graph": {
@@ -27,7 +27,7 @@
     }
   },
   "census": {
-    "nodes": 116825,
+    "nodes": 116838,
     "relationships": 281290,
     "core": {
       "AV": 5839,

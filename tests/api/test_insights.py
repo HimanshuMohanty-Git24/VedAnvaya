@@ -1105,7 +1105,11 @@ def test_g04_civilization_overrun_keeps_the_real_total_and_carries_the_paging_ca
     assert sections[SectionKind.DATA]["returned"] == 0
     assert sections[SectionKind.DATA]["total_available"] == 22
     # 900 is inside 1,072, so this section is genuinely non-empty and keeps its total.
-    assert sections[SectionKind.DERIVED_METRIC]["total_available"] == 1072
+    # 1,072 before the round-three coverage rebuild. The attribution census gave
+    # that build 13 more metrics to compute. This assertion exists to prove the
+    # paging caveat reports the REAL total rather than the page, so the figure is
+    # expected to track the metric layer -- re-derived, not loosened.
+    assert sections[SectionKind.DERIVED_METRIC]["total_available"] == 1085
     assert sections[SectionKind.DERIVED_METRIC]["returned"] > 0
 
 

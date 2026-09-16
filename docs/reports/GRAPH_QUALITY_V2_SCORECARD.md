@@ -12,9 +12,9 @@ weighted towards what a reader can rely on.
 
 | metric | V1 baseline | V2 | delta |
 |---|---|---|---|
-| nodes | 100,584 | 116,825 | +16,241 |
+| nodes | 100,584 | 116,838 | +16,254 |
 | relationships | 212,336 | 281,290 | +68,954 |
-| product nodes | — | 44,311 | — |
+| product nodes | — | 44,324 | — |
 | internal nodes | 0 (unmarked) | 72,514 | +72,514 |
 | domain entities | 89 | 375 | +286 |
 | typed domain labels | 0 | 24 | +24 |
@@ -62,7 +62,7 @@ not something the source said about any of those mantras.
 |---|---|---|
 | UNKNOWN_LABEL_RATE | 59.2% | **0.00%** |
 | product nodes without a readable label | 22,541 | **0** |
-| product nodes with `display_type` | 0 | 39,386 |
+| product nodes with `display_type` | 0 | 39,399 |
 
 ## 4. Devatā model
 
@@ -176,8 +176,8 @@ assertions rested on a word in Griffith or Whitney and no Sanskrit at all.
 | claims citing a computed metric | 6 |
 | claims graded other than TIER_D | **0** (must be 0) |
 | live contradiction pairs | 1 |
-| DerivedMetric nodes | 1072 |
-| metrics with no subject node | 996 |
+| DerivedMetric nodes | 1085 |
+| metrics with no subject node | 1009 |
 
 Claim summary: `{"claims": 6, "with_passage_evidence": 2, "with_statistical_evidence": 6, "with_both": 2, "with_external_source": 0, "by_status": {"MODEL_SYNTHESIS": 4, "RESEARCH_HYPOTHESIS": 2}}`
 

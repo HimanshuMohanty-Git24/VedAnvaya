@@ -174,8 +174,12 @@ def test_live_readiness_passes_against_the_frozen_graph(live_client: TestClient)
 #: ``data/staging/integration/wave3_readback.json`` read back out of Neo4j and matched
 #: against the dry-run's promise, not numbers edited until a test went green.
 #:
+#: Raised again after the round-three coverage rebuild, which DETACH DELETEs :DerivedMetric
+#: and recomputes it: the attribution census gave it 13 more metrics to compute, so the node
+#: count moved 116,825 -> 116,838 while the relationship count and the four corpora did not.
+#:
 #: Raising this pair is a deliberate act, and the docstring below says what it costs.
-FROZEN_NODES = 116_825
+FROZEN_NODES = 116_838
 FROZEN_RELATIONSHIPS = 281_290
 
 #: The figures that must NEVER move, whatever an import does. The whole-graph census grows
