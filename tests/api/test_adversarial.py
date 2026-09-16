@@ -29,17 +29,22 @@ import pytest
 from fastapi.testclient import TestClient
 
 from tests.api.conftest import FakeRepository
-from vedagraph.api.repositories.neo4j_repository import Neo4jRepository
 
 # ---------------------------------------------------------------------------
 # Measured constants. Every figure here was read off the live frozen graph during the
 # adversarial sweep, so a rebuild that moves one fails a test rather than quietly
 # invalidating the finding it anchors.
 # ---------------------------------------------------------------------------
-
-#: The frozen graph, as declared and as measured before and after the whole sweep.
-EXPECTED_NODES = 108_779
-EXPECTED_RELATIONSHIPS = 265_295
+#: The frozen graph, as declared and as measured before and after the whole sweep. Imported
+#: rather than restated: two copies of one census drift, and this file's copy said 108,779
+#: for a whole import after the other was re-derived.
+from tests.api.test_app_health import (
+    FROZEN_NODES as EXPECTED_NODES,
+)
+from tests.api.test_app_health import (
+    FROZEN_RELATIONSHIPS as EXPECTED_RELATIONSHIPS,
+)
+from vedagraph.api.repositories.neo4j_repository import Neo4jRepository
 
 #: Anukramani devata-slot entries that are not gods, one per non-deity structure.
 NON_DEITY_IDS: tuple[tuple[str, str], ...] = (
@@ -530,18 +535,29 @@ def test_q23_deity_communities_is_a_typed_refusal_not_an_empty_list(
 
 
 @pytest.mark.neo4j
-def test_q25_ritual_layer_is_partial_and_names_its_three_step_edges(
+def test_q25_ritual_layer_is_partial_and_names_both_step_layers(
     live_client: TestClient, live_repository: Neo4jRepository
 ) -> None:
-    row = live_repository.run_one("MATCH ()-[s:HAS_STEP]->() RETURN count(s) AS c")
-    assert row is not None
-    assert int(row["c"]) == 3
+    """Both layers by their own count, and neither one standing in for the other.
+
+    The original form asserted the literal "3 step edges", which was the whole ritual
+    procedure figure at the time. Wave 3 added a second layer of 3,121 sutra-attested steps,
+    and a caveat quoting only the Samhita's 3 would state that this graph holds almost no
+    procedure while the larger layer sat beside it. So the caveat must name both, and the
+    counts are read out of the graph rather than written here.
+    """
+    samhita = live_repository.run_one("MATCH ()-[s:HAS_STEP]->() RETURN count(s) AS c")
+    sutra = live_repository.run_one("MATCH ()-[s:HAS_RITUAL_STEP]->() RETURN count(s) AS c")
+    assert samhita is not None and sutra is not None
+    assert int(samhita["c"]) == 3, "the Samhita step layer must not be widened in place"
+
     response = live_client.get("/api/v1/insights/rituals?limit=200")
     assert response.status_code == 200
     body = response.json()
     assert body["data_status"] == "PARTIAL"
     text = " ".join(caveat["text"] for caveat in body["caveats"])
-    assert "3 step edges" in text
+    assert f"{int(samhita['c'])} such edges" in text
+    assert f"{int(sutra['c']):,} steps" in text
     assert body["not_covered"]
 
 

@@ -1,9 +1,14 @@
-"""The eight modelled rites. Not a taxonomy of Vedic ritual.
+"""The modelled rites. Not a taxonomy of Vedic ritual.
 
 Both routes carry `coverage_statement` in the payload and not only in this documentation,
-because a list with eight rows in it reads as a complete list unless the rows say
-otherwise. The step list is empty for seven of the eight rites and that emptiness is a
-status, never an array.
+because a list reads as a complete list unless the rows say otherwise — and because the
+figures inside that statement are measured per request rather than typed here, where they
+would go stale silently. They did: this module said "eight modelled rites" for a whole
+import after the inventory became 103.
+
+Two step layers are returned separately. `steps` is the Samhita's own numbering and is
+empty for every rite but one; `procedure` is what a sutra prints. Each gets a
+`dimension_status` row, so an empty array is a status and never a claim of absence.
 """
 
 from __future__ import annotations
@@ -22,22 +27,30 @@ from vedagraph.api.services.entity_service import EntityService
 router = APIRouter(tags=["Rituals"], responses=COMMON_ERROR_RESPONSES)
 
 _COVERAGE_NOTE = """
-**Eight modelled rites, not a taxonomy.** The `Ritual` class holds 8 nodes against a
-corpus that names considerably more, so a rank in this list is a rank within 8 and says
-nothing about Vedic ritual as a whole. Elaborate procedure is Brahmana and Sutra material
-and was deliberately not imported into Samhita passages: **3** `HAS_STEP` edges exist in
-the entire graph, all three on the soma pressing, whose morning, midday and third
-libations the text itself numbers. A rite with no steps therefore returns a
-`dimension_status` row saying NOT_BUILT rather than an empty array, and all 25 apparatus
-edges are TIER_D curation whose "purpose" is a curator's statement rather than a purpose
-clause quoted from a passage.
+**An inventory of rites, not a taxonomy.** The `Ritual` class holds fewer nodes than the
+corpus names, so a rank in this list is a rank within the inventory and says nothing about
+Vedic ritual as a whole. The exact figures are measured per request and returned in
+`coverage_statement` — they are not written into this description, because a number typed
+into prose is the one nothing checks.
+
+**Two step layers, and they are not interchangeable.** `steps` is what the Samhita text
+itself numbers: 3 such edges exist in the whole graph, all on the soma pressing, whose
+morning, midday and third libations the hymn numbers in its own words. `procedure` is what
+a Srautasutra or Grhyasutra prints, which is a different claim about a different source —
+and most of those sequences state a step's position without printing the run it falls in,
+so a `procedure` list is a set of located steps rather than a complete procedure. Every
+row says which, and each layer gets its own `dimension_status` entry, so an empty array is
+never left to be read as an absence of ritual structure.
+
+Apparatus edges are all TIER_D curation, and a rite's "purpose" is a curator's statement
+rather than a purpose clause quoted from a passage.
 """
 
 
 @router.get(
     "/rituals",
     summary="List the modelled rites",
-    description="All eight, ordered by lexical mention count." + _COVERAGE_NOTE,
+    description="Every modelled rite, ordered by lexical mention count." + _COVERAGE_NOTE,
     response_model=Paginated[RitualSummary],
     responses=COMMON_ERROR_RESPONSES,
 )

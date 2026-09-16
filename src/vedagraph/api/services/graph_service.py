@@ -157,6 +157,7 @@ TRAVERSABLE_RELATIONSHIPS: Final[frozenset[str]] = frozenset(
         "HAS_AXIS",
         "HAS_EPITHET",
         "EPITHET_VARIANT_OF",
+        "SPECIALIZED_FORM_OF",
         "MEMBER_OF",
         "COMPOSED_OF",
         # what a passage is for
@@ -165,7 +166,12 @@ TRAVERSABLE_RELATIONSHIPS: Final[frozenset[str]] = frozenset(
         "ADDRESSES_CONCERN",
         "USED_FOR_RITE",
         "DESCRIBED_IN",
+        "ATTESTED_IN",
         "BROADER_THAN",
+        # what a scholar says about a passage
+        "SCHOLARLY_CLAIM_ABOUT",
+        # the formula layer, populated by Wave 3
+        "SHARES_FORMULA_WITH",
         # the morphology-derived agentive layer
         "PERFORMS_ACTION",
         "IS_ASKED_TO",
@@ -227,8 +233,28 @@ NON_TRAVERSABLE_REASONS: Final[dict[str, str]] = {
     "ASSERTION_PREDICATE": "internal wiring of a reified assertion node",
     "ASSERTION_AGENT": "internal wiring of a reified assertion node",
     "ASSERTION_TARGET": "internal wiring of a reified assertion node",
-    "SHARES_FORMULA_WITH": "declared in the ontology and deliberately unpopulated; "
-    "it carries 0 edges, so traversing it would traverse nothing",
+    # SHARES_FORMULA_WITH used to be refused here, on the stated grounds that it "carries 0
+    # edges, so traversing it would traverse nothing". Wave 3 wrote 6,148 of them and the
+    # sentence became a false statement about the graph -- the worst kind of refusal, because
+    # it tells a reader the layer is empty. It is traversable above.
+    # Refused for now, and the reason is measurable rather than editorial: the 3,121
+    # :RitualStep nodes carry no display_type, which every non-internal node in this
+    # graph is contracted to have and which PRODUCT_TYPE_BY_DISPLAY_TYPE is keyed on, and
+    # step_key is not in STABLE_ID_PROPERTIES, so a traversal reaching one could not give
+    # it a product id. The layer is fully readable at /api/v1/rituals/{id}. Making it
+    # traversable means fixing those two things first, not relaxing the invariants.
+    "HAS_RITUAL_STEP": "the step nodes carry no display_type and no resolvable product "
+    "id yet; read the procedure through /api/v1/rituals/{id}, which returns it grouped "
+    "by source work",
+    "ASSERTION_ROLE": "internal wiring of a reified assertion node",
+    "REFERS_TO": "internal wiring of the semantic-role layer: it resolves a role filler to "
+    "its referent, and the filler is not a thing a reader asked to see",
+    "QUALITY_VERDICT_ABOUT": "this repository's assessment of its own passages; never "
+    "product content, on the same footing as QA_ISSUE_ON",
+    "POSITION_ASSERTED_BY": "internal wiring of a reified scholarly position; read the "
+    "position through /api/v1/insights, where it arrives with its falsifier",
+    "POSITION_STATED_IN": "internal wiring of a reified scholarly position",
+    "REPORTED_IN": "internal wiring of a reified scholarly position",
 }
 
 #: Predicates a path may cross. Narrower than the neighbourhood set on purpose: a path is a
@@ -1047,9 +1073,37 @@ PREDICATE_SEMANTICS: Final[dict[str, PredicateSemantics]] = {
     ),
     "HAS_STEP": PredicateSemantics(
         "has the step",
-        "This action is a step of the rite.",
-        "Three steps exist across the whole layer, so a rite without them is unmodelled "
-        "rather than stepless.",
+        "This action is a step of the rite, in the Samhita text's own numbering.",
+        "Three steps exist across the whole layer, all on the soma pressing, so a rite "
+        "without them is unmodelled rather than stepless. The sutra-attested procedure is a "
+        "separate predicate, HAS_RITUAL_STEP, and the two must not be added together.",
+    ),
+    "ATTESTED_IN": PredicateSemantics(
+        "is attested in",
+        "The registry records this passage as an attestation of the entity.",
+        "An attestation locator taken from the entity registry, not a re-reading of the "
+        "passage. Absence means the registry recorded no example, not that the passage "
+        "does not name the entity.",
+    ),
+    "SCHOLARLY_CLAIM_ABOUT": PredicateSemantics(
+        "is a scholarly claim about",
+        "A named scholar's recorded position concerns this passage.",
+        "A position held, not a finding accepted. The graph records that someone argued it "
+        "and where; it takes no view on whether they were right, and a passage with several "
+        "of these has a disagreement rather than an answer.",
+    ),
+    "SHARES_FORMULA_WITH": PredicateSemantics(
+        "shares a formula with",
+        "Both mantras contain the same registered formula.",
+        "Derived from the formula layer rather than stated by any source: nothing in a text "
+        "says these two are related. A shared formula is a shared phrase, which is weaker "
+        "than a parallel and much weaker than textual reuse.",
+    ),
+    "SPECIALIZED_FORM_OF": PredicateSemantics(
+        "is a specialized form of",
+        "This deity name is a narrower form of the broader one.",
+        "Narrower than the broader name, not an alias for it: unlike EPITHET_VARIANT_OF it "
+        "does not assert the two are the same referent under two names.",
     ),
     "INVOKES": PredicateSemantics(
         "invokes",

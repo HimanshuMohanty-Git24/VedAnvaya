@@ -235,6 +235,63 @@ class TestWhitelists:
             assert semantics.limit.strip(), f"{name} has no stated limit"
             assert semantics.asserts.strip(), f"{name} has no stated assertion"
 
+    @pytest.mark.neo4j
+    def test_every_relationship_type_in_the_graph_is_classified(
+        self, live_repository: Neo4jRepository
+    ) -> None:
+        """Every type is traversable or refused for a stated reason. No third state.
+
+        An unclassified type is invisible: the graph endpoints will not cross it and nothing
+        tells the reader it exists. Wave 3 added eleven and this test did not exist, so the
+        ritual procedure layer and the shared-formula layer were both unreachable through
+        /api/v1/graph while sitting in the database.
+
+        Read from the database rather than from the ontology declaration, because the
+        question is what the graph HOLDS, not what it is allowed to hold.
+        """
+        live = {
+            str(row["relationshipType"])
+            for row in live_repository.run("CALL db.relationshipTypes()")
+        }
+        # Types the ontology declares but nothing has written are not this test's business:
+        # an empty predicate cannot surprise a reader.
+        populated = {
+            name
+            for name in live
+            if (row := live_repository.run_one(f"MATCH ()-[r:{name}]->() RETURN count(r) AS c"))
+            is not None
+            and int(row["c"]) > 0
+        }
+        classified = (
+            TRAVERSABLE_RELATIONSHIPS | set(NON_TRAVERSABLE_REASONS) | {LEMMA_RELATIONSHIP}
+        )
+        unclassified = sorted(populated - classified)
+        assert not unclassified, (
+            f"{len(unclassified)} populated relationship type(s) are neither traversable nor "
+            f"refused for a stated reason, so they are invisible to /api/v1/graph: "
+            f"{unclassified}. Classify each one deliberately."
+        )
+
+    @pytest.mark.neo4j
+    def test_no_predicate_is_refused_for_being_empty_while_carrying_edges(
+        self, live_repository: Neo4jRepository
+    ) -> None:
+        """A refusal that describes the graph must still describe it.
+
+        SHARES_FORMULA_WITH was declined with "it carries 0 edges, so traversing it would
+        traverse nothing" while carrying 6,148. A reason that has become false is worse than
+        no reason: it tells the reader the layer is empty.
+        """
+        for name, reason in sorted(NON_TRAVERSABLE_REASONS.items()):
+            if "0 edges" not in reason and "unpopulated" not in reason:
+                continue
+            row = live_repository.run_one(f"MATCH ()-[r:{name}]->() RETURN count(r) AS c")
+            assert row is not None and int(row["c"]) == 0, (
+                f"{name} is refused on the grounds that it is unpopulated and it carries "
+                f"{int(row['c']) if row else '?'} edges. Re-decide it, or state a reason "
+                f"that is true."
+            )
+
     def test_path_whitelist_excludes_the_plumbing(self) -> None:
         for excluded in (
             "CONTAINS",

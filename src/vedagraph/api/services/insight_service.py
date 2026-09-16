@@ -282,12 +282,28 @@ LIMIT 1
 RETURN p.canonical_citation AS citation, metals_named, metals
 """
 
-#: The ritual layer's bounding figures. Three step edges over eight rites is the number that
-#: makes the layer PARTIAL, and it is measured here rather than described.
+#: The ritual layer's bounding figures, measured here rather than described.
+#:
+#: Both step layers are counted. Counting only ``HAS_STEP`` made this insight state that one
+#: rite of 103 "carries any procedure at all" and that "no rite has a recoverable sequence",
+#: while 3,121 located sutra steps over 103 rites sat in the graph. The layers stay separate
+#: rather than summed: a libation a hymn numbers and a sutra a work prints are different
+#: claims, and one total would describe coverage neither layer has.
 _RITUAL_COVERAGE_QUERY: Final = """
 CALL () { MATCH (r:Ritual) RETURN count(r) AS rituals_modelled }
 CALL () { MATCH (r:Ritual) WHERE (r)-[:HAS_STEP]->() RETURN count(r) AS rituals_with_steps }
 CALL () { MATCH (:Ritual)-[s:HAS_STEP]->() RETURN count(s) AS step_edges }
+CALL () {
+    MATCH (r:Ritual) WHERE (r)-[:HAS_RITUAL_STEP]->()
+    RETURN count(r) AS rituals_with_procedure
+}
+CALL () {
+    MATCH (:Ritual)-[s:HAS_RITUAL_STEP]->()
+    RETURN count(s) AS procedure_step_edges,
+           sum(CASE WHEN s.order_completeness = 'PARTIAL_STATED_POSITIONS' THEN 1 ELSE 0 END)
+               AS procedure_partial_steps,
+           count(DISTINCT s.work_key) AS procedure_source_works
+}
 CALL () { MATCH (:Ritual)-[:USES_OBJECT]->(o) RETURN count(DISTINCT o) AS implements_curated }
 CALL () {
     MATCH (:Ritual)-[:USES_OBJECT]->(o)
@@ -295,8 +311,9 @@ CALL () {
     RETURN count(DISTINCT o) AS implements_reached
 }
 CALL () { MATCH (o:Object) RETURN count(o) AS objects_in_registry }
-RETURN rituals_modelled, rituals_with_steps, step_edges, implements_curated,
-       implements_reached, objects_in_registry
+RETURN rituals_modelled, rituals_with_steps, step_edges, rituals_with_procedure,
+       procedure_step_edges, procedure_partial_steps, procedure_source_works,
+       implements_curated, implements_reached, objects_in_registry
 """
 
 #: Each modelled rite with its curated inventory sizes. Separate from ``ritual_profile``,
@@ -1705,6 +1722,10 @@ class InsightService:
         modelled = _as_int(coverage_row.get("rituals_modelled")) or 0
         with_steps = _as_int(coverage_row.get("rituals_with_steps")) or 0
         step_edges = _as_int(coverage_row.get("step_edges")) or 0
+        with_procedure = _as_int(coverage_row.get("rituals_with_procedure")) or 0
+        procedure_edges = _as_int(coverage_row.get("procedure_step_edges")) or 0
+        procedure_partial = _as_int(coverage_row.get("procedure_partial_steps")) or 0
+        procedure_works = _as_int(coverage_row.get("procedure_source_works")) or 0
         curated = _as_int(coverage_row.get("implements_curated"))
         reached = _as_int(coverage_row.get("implements_reached"))
         registry = _as_int(coverage_row.get("objects_in_registry"))
@@ -1752,11 +1773,15 @@ class InsightService:
             _frozen_caveat("ritual_objects_recurring"),
             _frozen_caveat("ritual_profile"),
             _measured_caveat(
-                f"PARTIAL, and here is the bound: {modelled} rites are modelled, "
-                f"{with_steps} of them {'carries' if with_steps == 1 else 'carry'} any "
-                f"procedure at all, and there are {step_edges} step edges in the whole "
-                f"graph. A ranking here is a ranking within {modelled} curated rites and "
-                "is not a statement about Vedic ritual."
+                f"PARTIAL, and here is the bound: {modelled} rites are modelled. "
+                f"{with_steps} of them {'carries' if with_steps == 1 else 'carry'} a step "
+                f"the Samhita text numbers in its own words ({step_edges} such edges in the "
+                f"whole graph), and {with_procedure} carry sutra-attested procedure "
+                f"({procedure_edges:,} steps from {procedure_works} works, of which "
+                f"{procedure_partial:,} state a position without printing the run it falls "
+                "in). The two are not one figure and neither is a complete procedure. A "
+                f"ranking here is a ranking within {modelled} curated rites and is not a "
+                "statement about Vedic ritual."
             ),
         ]
         caveats.extend(
@@ -1787,11 +1812,21 @@ class InsightService:
                 rituals_modelled=modelled,
                 rituals_with_steps=with_steps,
                 step_edges=step_edges,
+                rituals_with_procedure=with_procedure,
+                procedure_step_edges=procedure_edges,
+                procedure_partial_steps=procedure_partial,
+                procedure_source_works=procedure_works,
                 implements_curated=curated,
                 implements_reached_by_mentions=reached,
                 statement=(
-                    f"{modelled} modelled rites and {step_edges} step edges across all of "
-                    f"them, so no rite has a recoverable sequence. "
+                    f"{modelled} modelled rites, and no rite has a recoverable sequence on "
+                    f"either layer. {step_edges} step edges state an order in the Samhita's "
+                    f"own words. A second and much larger layer is sutra-attested -- "
+                    f"{procedure_edges:,} steps over {with_procedure} rites from "
+                    f"{procedure_works} works -- but it does not close the gap: each work "
+                    f"numbers its own sequence, so the works do not compose into one "
+                    f"procedure, and {procedure_partial:,} of those steps state a position "
+                    f"without printing the run it falls in. Located steps, not procedures. "
                     f"{curated if curated is not None else 'Some'} of "
                     f"{registry if registry is not None else 'the'} curated objects are "
                     "linked to a rite and so eligible for the implement ranking, and "
@@ -1817,9 +1852,11 @@ class InsightService:
                 "to a rite, so genuine ritual objects are missing here for want of a link "
                 "rather than for want of attestation -- the amulet and the drum among them. "
                 "Their absence is not an absence from the corpus.",
-                "Procedure is essentially absent: with "
-                f"{step_edges} step edges over {modelled} rites, no rite in this graph has a "
-                "recoverable full sequence.",
+                "No rite has a full recoverable sequence. The Samhita layer holds "
+                f"{step_edges} step edges over {modelled} rites, and the sutra layer's "
+                f"{procedure_edges:,} steps are located points in {procedure_works} "
+                "independently numbered works rather than one procedure; "
+                f"{procedure_partial:,} of them do not print the run they fall in.",
                 "The Brahmana and Srautasutra prose that actually describes the srauta "
                 "apparatus is not held by this product at all, so the apparatus is visible "
                 "only where a Samhita verse happens to name it.",
@@ -2419,11 +2456,20 @@ class InsightService:
         curated = _as_int(row.get("implements_curated"))
         reached = _as_int(row.get("implements_reached"))
         registry = _as_int(row.get("objects_in_registry"))
+        procedure_edges = _as_int(row.get("procedure_step_edges"))
+        procedure_works = _as_int(row.get("procedure_source_works"))
         reached_text = "some" if reached is None else f"{reached}"
         curated_text = "the" if curated is None else f"{curated}"
         steps_text = "a handful of" if step_edges is None else f"{step_edges}"
         rites_text = "the" if modelled is None else f"{modelled}"
         registry_text = "the object registry" if registry is None else f"{registry} objects"
+        procedure_text = (
+            "a sutra-attested layer exists but was not measured"
+            if procedure_edges is None
+            else f"a second layer holds {procedure_edges:,} sutra-attested steps from "
+            f"{procedure_works or 'several'} works, which are located points in "
+            "independently numbered sources rather than one procedure"
+        )
         return CapabilityLimit(
             limit_id="recurring_ritual_objects",
             question_number=25,
@@ -2438,8 +2484,9 @@ class InsightService:
                 "layer at all. What is partial is per-implement recall rather than class "
                 "membership: every count is a lexical minimum over registered whole-word "
                 "aliases, and the caveat sourced 'ritual_objects_recurring' measures the "
-                "shortfall for the sacrificial post and the altar. Procedure is thinner "
-                f"still, at {steps_text} step edges across {rites_text} rites."
+                "shortfall for the sacrificial post and the altar. Procedure in the "
+                f"Samhita's own words is thinner still, at {steps_text} step edges across "
+                f"{rites_text} rites; {procedure_text}."
             ),
             what_this_is_not=(
                 "The ranking is NOT a census of Vedic ritual apparatus and a low count is NOT "
@@ -2459,8 +2506,16 @@ class InsightService:
                 CapabilityMeasurement(
                     name="step_edges",
                     value=step_edges,
-                    means="Procedure edges in the entire graph. No rite has a recoverable "
-                    "full sequence.",
+                    means="Steps a Samhita text numbers in its own words, whole graph. On "
+                    "this evidence no rite has a recoverable full sequence.",
+                ),
+                CapabilityMeasurement(
+                    name="procedure_step_edges",
+                    value=procedure_edges,
+                    means="Steps a Srautasutra or Grhyasutra prints -- a different claim "
+                    "about a different source, so a separate measurement and never summed "
+                    "with step_edges. Each work numbers its own sequence, so these are "
+                    "located points and still not a recoverable procedure.",
                 ),
                 CapabilityMeasurement(
                     name="curated_implements",

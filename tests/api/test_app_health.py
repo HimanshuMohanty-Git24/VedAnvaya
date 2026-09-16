@@ -169,13 +169,35 @@ def test_live_readiness_passes_against_the_frozen_graph(live_client: TestClient)
     assert all(check["ok"] for check in body["checks"])
 
 
+#: The graph this API is written against. Raised from Product-V1's 108,779 / 265,295 by the
+#: Wave 3 canonical import, and re-derived rather than bumped: the figures are the ones
+#: ``data/staging/integration/wave3_readback.json`` read back out of Neo4j and matched
+#: against the dry-run's promise, not numbers edited until a test went green.
+#:
+#: Raising this pair is a deliberate act, and the docstring below says what it costs.
+FROZEN_NODES = 116_825
+FROZEN_RELATIONSHIPS = 281_290
+
+#: The figures that must NEVER move, whatever an import does. The whole-graph census grows
+#: with every wave; the four corpora are closed sets, and a drift here is corruption rather
+#: than growth. Asserted alongside the census so that raising one cannot quietly excuse the
+#: other.
+CORPUS_MANTRAS = {"RV": 10_552, "SV": 1_844, "YV": 1_975, "AV": 5_839}
+
+
 @pytest.mark.neo4j
 def test_live_graph_matches_the_frozen_census(live_repository: object) -> None:
     """The graph this API was written against, asserted by size rather than assumed.
 
-    108,779 nodes and 265,295 relationships is the frozen Product-V1 figure. If a later
-    session reloads the corpus and this drifts, every measured caveat in the API is
-    describing a graph that no longer exists, and that is worth failing a test over.
+    If a later session reloads the corpus and this drifts, every measured caveat in the API
+    is describing a graph that no longer exists, and that is worth failing a test over. It
+    did drift, exactly as intended: Wave 3 added 8,046 nodes and 15,995 relationships, this
+    test failed, and the failure is what sent the ritual endpoints back to be re-derived
+    against the layer the import had actually added.
+
+    So raising the pair is only legitimate together with that work. A bumped constant on its
+    own would have left `/api/v1/rituals` reporting 92 rites as having no procedure while
+    3,121 sutra-attested steps sat in the graph.
     """
     from vedagraph.api.repositories.neo4j_repository import Neo4jRepository
 
@@ -183,8 +205,19 @@ def test_live_graph_matches_the_frozen_census(live_repository: object) -> None:
     nodes = live_repository.run_one("MATCH (n) RETURN count(n) AS c")
     rels = live_repository.run_one("MATCH ()-[r]->() RETURN count(r) AS c")
     assert nodes is not None and rels is not None
-    assert int(nodes["c"]) == 108_779
-    assert int(rels["c"]) == 265_295
+    assert int(nodes["c"]) == FROZEN_NODES
+    assert int(rels["c"]) == FROZEN_RELATIONSHIPS
+
+    corpus = {
+        str(row["veda"]): int(row["n"])
+        for row in live_repository.run(
+            "MATCH (m:Mantra) RETURN m.veda AS veda, count(*) AS n ORDER BY veda"
+        )
+    }
+    assert corpus == CORPUS_MANTRAS, (
+        "the four corpora are closed sets. The census above may grow with an import; these "
+        "may not, and a drift here is corruption rather than growth."
+    )
 
 
 # ---------------------------------------------------------------------------

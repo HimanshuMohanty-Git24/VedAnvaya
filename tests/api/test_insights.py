@@ -33,6 +33,14 @@ from fastapi.testclient import TestClient
 from pydantic import ValidationError
 
 from tests.api.conftest import FakeRepository, build_client
+
+# Imported rather than restated. The rite inventory moved from 8 to 103 in one import and
+# four files asserted it independently; the one that is about rites owns the figure.
+from tests.api.test_rituals import (
+    HAS_STEP_TOTAL,
+    PROCEDURE_STEP_TOTAL,
+    RITUAL_TOTAL,
+)
 from tests.api.test_stats import FORBIDDEN_IN_BODY, _population_row, _works_rows
 from vedagraph.api.models.common import CaveatView, KnowledgeStatus, PaginationMeta
 from vedagraph.api.models.entity import NON_DEITY_STRUCTURES
@@ -585,13 +593,33 @@ def test_q25_is_labelled_partial_with_what_is_and_is_not_covered(
     assert "vajra" not in labels
 
     coverage = body["coverage_view"]
-    assert coverage["rituals_modelled"] == 8
-    assert coverage["step_edges"] == 3
+    assert coverage["rituals_modelled"] == RITUAL_TOTAL
+    assert coverage["step_edges"] == HAS_STEP_TOTAL
+    assert coverage["procedure_step_edges"] == PROCEDURE_STEP_TOTAL
+    # The layers are reported apart and never summed. Reporting only the Samhita figure made
+    # this view state that one rite of 103 carried "any procedure at all", and that no rite
+    # had a recoverable sequence, while 3,121 located sutra steps sat in the graph.
+    assert coverage["step_edges"] != coverage["procedure_step_edges"]
+    assert coverage["procedure_partial_steps"] < coverage["procedure_step_edges"], (
+        "if every step were partial the share would stop discriminating; if none were, the "
+        "caveat about non-contiguous runs would be describing nothing"
+    )
+    assert coverage["procedure_source_works"] > 1, (
+        "the per-work grouping only means something if more than one work is cited"
+    )
     assert coverage["statement"]
+    assert str(HAS_STEP_TOTAL + PROCEDURE_STEP_TOTAL) not in coverage["statement"].replace(
+        ",", ""
+    ), "the two step layers must not be added together anywhere in the prose"
+
     assert body["not_covered"], "a partial layer must say what it omits"
     omitted = " ".join(body["not_covered"]).lower()
     assert "chariot" in omitted and "thunderbolt" in omitted
     assert "brahmana" in omitted
+    assert "do not compose" in omitted or "independently numbered" in omitted, (
+        "the sutra layer is large enough now that omitting to say it does not compose into "
+        "a procedure would read as procedural coverage"
+    )
 
 
 @pytest.mark.neo4j
@@ -605,10 +633,16 @@ def test_q25_partial_semantics_are_reachable_through_the_capability_catalogue(
     assert limit["data_status"] == KnowledgeStatus.PARTIAL
     assert limit["endpoint"] == RITUALS
     measured = {row["name"]: row["value"] for row in limit["measurements"]}
-    assert measured["rituals_modelled"] == 8
-    assert measured["step_edges"] == 3
+    assert measured["rituals_modelled"] == RITUAL_TOTAL
+    assert measured["step_edges"] == HAS_STEP_TOTAL
+    assert measured["procedure_step_edges"] == PROCEDURE_STEP_TOTAL
     assert measured["curated_implements"] == 14
-    assert measured["objects_in_the_registry"] == 23
+    # Grew from 23 with the Wave 3 object registry. The curation ceiling is the point of the
+    # pair, so what matters is that the registry stays the larger of the two.
+    assert measured["objects_in_the_registry"] == 41
+    assert measured["curated_implements"] < measured["objects_in_the_registry"], (
+        "if these ever match, the curation ceiling this measurement exists to expose is gone"
+    )
     assert "NOT a census" in limit["what_this_is_not"]
 
 
@@ -1175,9 +1209,18 @@ def test_every_ritual_collection_has_bounds_that_describe_itself(
     bounds = body["collections"]
     assert set(bounds) == {"objects", "rituals"}
     assert bounds["objects"]["returned"] == len(body["objects"]) == 14
-    assert bounds["rituals"]["returned"] == len(body["rituals"]) == 8
     assert bounds["objects"]["total"] == 14
-    assert bounds["rituals"]["total"] == 8
+    assert not bounds["objects"]["has_more"]
+
+    # The rite collection now overruns its page, which is the case this block was built for:
+    # `returned` describes the page and `total` describes the collection, and one shared
+    # block once reported returned=0 beside eight rites in the body.
+    assert bounds["rituals"]["returned"] == len(body["rituals"])
+    assert bounds["rituals"]["total"] == RITUAL_TOTAL
+    assert bounds["rituals"]["returned"] < bounds["rituals"]["total"]
+    assert bounds["rituals"]["has_more"], (
+        "a truncated collection that does not say so reads as the whole collection"
+    )
 
 
 @pytest.mark.neo4j

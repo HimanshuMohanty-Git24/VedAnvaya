@@ -677,14 +677,38 @@ class MaterialCultureResponse(InsightEnvelope):
 class RitualCoverageView(ApiModel):
     """What the ritual layer holds, stated as the numbers that bound it.
 
-    Eight modelled rites and three step edges across all of them. That is not a taxonomy of
-    Vedic ritual, and a list of eight is not evidence that there are eight, so the bounding
-    figures are measured and returned rather than described as "curated".
+    The inventory is not a taxonomy of Vedic ritual, and the length of a list is not evidence
+    of how many there are, so every bounding figure here is measured and returned rather than
+    described as "curated".
+
+    The two step layers are separate fields because they are separate claims. ``step_edges``
+    counts what a Samhita text numbers in its own words; ``procedure_step_edges`` counts what
+    a Srautasutra or Grhyasutra prints. Summing them would assert a procedural coverage the
+    Samhita layer does not have, and reporting only the first — which this view did for a
+    whole import — states that no rite has a recoverable sequence while thousands of located
+    sutra steps sit in the graph.
     """
 
     rituals_modelled: int
-    rituals_with_steps: int
-    step_edges: int
+    rituals_with_steps: int = Field(
+        description="Rites with at least one step the Samhita text itself numbers."
+    )
+    step_edges: int = Field(description="Samhita-numbered step edges, whole graph.")
+    rituals_with_procedure: int | None = Field(
+        default=None, description="Rites with at least one sutra-attested procedural step."
+    )
+    procedure_step_edges: int | None = Field(
+        default=None, description="Sutra-attested procedural step edges, whole graph."
+    )
+    procedure_partial_steps: int | None = Field(
+        default=None,
+        description="Of those, the ones stating a position without printing the run it "
+        "falls in. A high share means the sequences are located steps, not procedures.",
+    )
+    procedure_source_works: int | None = Field(
+        default=None,
+        description="Distinct source works cited. None of them has a node in this graph.",
+    )
     implements_curated: int | None = None
     implements_reached_by_mentions: int | None = None
     statement: str

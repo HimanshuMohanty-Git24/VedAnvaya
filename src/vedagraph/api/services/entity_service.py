@@ -81,6 +81,8 @@ from vedagraph.api.models.entity import (
     MentionCertainty,
     RecallView,
     RishiProfile,
+    RitualProcedureSource,
+    RitualProcedureStep,
     RitualProfile,
     RitualStep,
     RitualSummary,
@@ -821,25 +823,107 @@ LIMIT $top
 # Ritual queries
 # ---------------------------------------------------------------------------
 
-#: Stated on every ritual response. Eight modelled rites are not a taxonomy of Vedic
-#: ritual, and a list that happens to have eight rows in it will be read as one unless the
-#: response says otherwise.
-RITUAL_COVERAGE_STATEMENT: Final = (
-    "EIGHT MODELLED RITES, NOT A TAXONOMY. The Ritual class holds 8 nodes against a corpus "
-    "that names considerably more, so a rank in this list is a rank within 8 and says "
-    "nothing about Vedic ritual as a whole. Elaborate procedure is Brahmana and Sutra "
-    "material and was deliberately not imported into Samhita passages: only 3 HAS_STEP "
-    "edges exist in the entire graph, all three on the soma pressing, whose morning, "
-    "midday and third libations the text itself numbers. All 25 apparatus edges are "
-    "TIER_D curation, and a rite's 'purpose' is what a curator says it is for, not a "
-    "purpose clause quoted from a passage."
-)
+#: The measurement the ritual coverage statement is built from. Read from the graph rather
+#: than typed into the prose, because a figure inside a sentence is the one nothing checks:
+#: this statement said "EIGHT MODELLED RITES" for a whole wave after the rite inventory
+#: became 103, and only an API contract test asserting an unrelated total caught it.
+_RITUAL_COVERAGE_QUERY: Final = """
+CALL () { MATCH (r:Ritual) RETURN count(r) AS rites }
+CALL () { MATCH (:Ritual)-[h:HAS_STEP]->() RETURN count(h) AS samhita_steps }
+CALL () {
+    MATCH (:Ritual)-[h:HAS_RITUAL_STEP]->()
+    RETURN count(h) AS procedure_steps,
+           sum(CASE WHEN h.order_completeness = 'PARTIAL_STATED_POSITIONS' THEN 1 ELSE 0 END)
+               AS partial_steps
+}
+CALL () {
+    MATCH (r:Ritual) WHERE (r)-[:HAS_RITUAL_STEP]->()
+    RETURN count(r) AS rites_with_procedure
+}
+CALL () {
+    MATCH (:Ritual)-[a:USES_OFFERING|USES_SUBSTANCE|USES_OBJECT|PERFORMED_BY|PERFORMED_FOR]->()
+    RETURN count(a) AS apparatus_edges
+}
+RETURN rites, samhita_steps, procedure_steps, partial_steps, rites_with_procedure,
+       apparatus_edges
+"""
+
+
+def ritual_coverage_statement(
+    *,
+    rites: int,
+    samhita_steps: int,
+    procedure_steps: int,
+    partial_steps: int,
+    rites_with_procedure: int,
+    apparatus_edges: int,
+) -> str:
+    """Build the ritual bound from measured figures.
+
+    Every number in the sentence is an argument. The previous version was a literal string
+    asserting eight rites and three steps; both were true when written, and Wave 3 made the
+    first one wrong by 95 while the prose went on claiming it.
+
+    The two step families stay distinct in the wording for the same reason they are distinct
+    predicates in the graph: the Samhita numbering a hymn states and the order a sutra prints
+    are different claims, and collapsing them into one count would describe procedural
+    coverage the Samhita layer does not have.
+    """
+    partial_share = (100.0 * partial_steps / procedure_steps) if procedure_steps else 0.0
+    return (
+        f"AN INVENTORY OF {rites} RITES, NOT A TAXONOMY. The Ritual class holds {rites} "
+        f"nodes against a corpus that names considerably more, so a rank in this list is a "
+        f"rank within {rites} and says nothing about Vedic ritual as a whole. Two step "
+        f"layers exist and they are not interchangeable. The Samhita layer holds "
+        f"{samhita_steps} numbered steps in the entire graph, all on the soma pressing, "
+        f"whose morning, midday and third libations the text itself numbers. The procedural "
+        f"layer holds {procedure_steps:,} steps over {rites_with_procedure} rites, read out "
+        f"of Srautasutras and Grhyasutras rather than Samhita passages, and "
+        f"{partial_share:.0f}% of them state a position without printing the run it falls "
+        f"in -- so a procedure list is not a complete procedure. All {apparatus_edges} "
+        f"apparatus edges are TIER_D curation, and a rite's 'purpose' is what a curator says "
+        f"it is for, not a purpose clause quoted from a passage."
+    )
+
+def _work_label(work_key: object) -> str | None:
+    """The source work's short name, read off its key.
+
+    Read off the key and not fetched, because the 11 works these steps cite have no node in
+    the graph: ``work_key`` is a foreign key to a record that was never imported. Deriving
+    the label makes that visible rather than returning a null nobody can interpret.
+    """
+    text = str(work_key or "").strip()
+    if not text:
+        return None
+    return text.rsplit(":", 1)[-1] or None
+
+
+def _ritual_subtitle(samhita_steps: int | None, procedure_steps: int | None) -> str:
+    """Say which step layer a rite actually has, rather than "one of 8 modelled rites".
+
+    The old subtitle stated the inventory size on every row, which was wrong the moment the
+    inventory changed and told the reader nothing about the rite in front of them. What
+    matters per rite is which evidence layer covers it, since a rite with 227 sutra steps and
+    a rite with none are both "modelled".
+    """
+    if samhita_steps and procedure_steps:
+        return f"{samhita_steps} steps the text numbers, {procedure_steps} from the sutras"
+    if samhita_steps:
+        return f"{samhita_steps} steps the text itself numbers"
+    if procedure_steps:
+        return f"{procedure_steps} procedural steps, sutra-attested"
+    return "no step layer built for this rite"
+
 
 _RITUAL_LIST_QUERY: Final = """
 MATCH (r:Ritual)
 CALL (r) {
     OPTIONAL MATCH (r)-[:HAS_STEP]->(s)
     RETURN count(DISTINCT s) AS step_count
+}
+CALL (r) {
+    OPTIONAL MATCH (r)-[:HAS_RITUAL_STEP]->(ps)
+    RETURN count(DISTINCT ps) AS procedure_step_count
 }
 CALL (r) {
     OPTIONAL MATCH (r)-[:INVOKES_DEVATA]->(dv:Devata)
@@ -855,7 +939,7 @@ CALL (r) {
 }
 RETURN r.entity_key AS id, r.display_label AS display_label,
        r.preferred_label_sa AS label_iast, r.short_description AS short_description,
-       step_count, devata_count, described_in_count, mention_count
+       step_count, procedure_step_count, devata_count, described_in_count, mention_count
 ORDER BY mention_count DESC, id
 SKIP $offset LIMIT $limit
 """
@@ -873,6 +957,31 @@ CALL (r) {{
     OPTIONAL MATCH (r)-[h:HAS_STEP]->(s)
     RETURN collect({{order: h.step_order, label: s.display_label,
                      basis: h.order_basis, evidence: h.order_evidence}}) AS steps
+}}
+CALL (r) {{
+    // Grouped by the work that records it, because step_position is an ordinal WITHIN a
+    // work: 2,666 of 3,121 steps share a position with another step of the same rite, so a
+    // flat ordered list would compose eight independent sequences into one procedure.
+    OPTIONAL MATCH (r)-[h:HAS_RITUAL_STEP]->(s)
+    WITH h, s ORDER BY h.step_position, s.display_label
+    WITH h.work_key AS work_key,
+         head(collect(h.evidence_source_type)) AS source_type,
+         head(collect(h.veda_school)) AS veda_school,
+         head(collect(h.anchor_note)) AS anchoring_basis,
+         count(*) AS step_count,
+         collect({{position: h.step_position, label: s.display_label,
+                   text: s.text_iast, citation: h.citation,
+                   stated_position: h.source_stated_position,
+                   order_basis: h.order_basis,
+                   order_completeness: h.order_completeness}}) AS steps
+    WHERE work_key IS NOT NULL
+    RETURN collect({{work_key: work_key, source_type: source_type, veda_school: veda_school,
+                     step_count: step_count, anchoring_basis: anchoring_basis,
+                     steps: steps[0..$step_limit]}}) AS procedure_sources
+}}
+CALL (r) {{
+    OPTIONAL MATCH (r)-[h:HAS_RITUAL_STEP]->()
+    RETURN count(h) AS procedure_step_count
 }}
 CALL (r) {{
     OPTIONAL MATCH (r)-[:PERFORMED_BY]->(role:RitualRole)
@@ -915,8 +1024,9 @@ CALL (r) {{
     OPTIONAL MATCH (p:Passage)-[:MENTIONS_ENTITY]->(r)
     RETURN count(DISTINCT p) AS mention_count
 }}
-RETURN properties(r) AS props, steps, roles, offerings, substances, objects, devatas,
-       purposes, broader_than, passages, passage_count, mention_count
+RETURN properties(r) AS props, steps, procedure_sources, procedure_step_count, roles,
+       offerings, substances, objects, devatas, purposes, broader_than, passages,
+       passage_count, mention_count
 """
 
 
@@ -929,6 +1039,27 @@ class EntityService:
 
     def __init__(self, repository: _Repository) -> None:
         self._repository = repository
+        self._ritual_coverage_cache: str | None = None
+
+    def _ritual_coverage(self) -> str:
+        """The ritual bound, measured once per service instance.
+
+        Memoized rather than recomputed per row: ``list_rituals`` puts it on every row and
+        the figures cannot change inside one response. Cached on the instance and not at
+        module level, because a module-level cache would outlive an import and keep serving
+        the pre-import figures -- which is the failure this whole change exists to fix.
+        """
+        if self._ritual_coverage_cache is None:
+            row = self._repository.run_one(_RITUAL_COVERAGE_QUERY) or {}
+            self._ritual_coverage_cache = ritual_coverage_statement(
+                rites=_as_int(row.get("rites")) or 0,
+                samhita_steps=_as_int(row.get("samhita_steps")) or 0,
+                procedure_steps=_as_int(row.get("procedure_steps")) or 0,
+                partial_steps=_as_int(row.get("partial_steps")) or 0,
+                rites_with_procedure=_as_int(row.get("rites_with_procedure")) or 0,
+                apparatus_edges=_as_int(row.get("apparatus_edges")) or 0,
+            )
+        return self._ritual_coverage_cache
 
     # =======================================================================
     # Deities
@@ -1992,7 +2123,7 @@ class EntityService:
                 )
             )
         if spec.label == "Ritual":
-            caveats.append(CaveatView(text=RITUAL_COVERAGE_STATEMENT, source="measured"))
+            caveats.append(CaveatView(text=self._ritual_coverage(), source="measured"))
         if spec.label == "Rishi":
             caveats.append(
                 CaveatView(
@@ -2317,19 +2448,24 @@ class EntityService:
     # =======================================================================
 
     def list_rituals(self, *, limit: int, offset: int) -> Paginated[RitualSummary]:
-        """The eight modelled rites, each row carrying the eight-rite bound."""
+        """The modelled rites, each row carrying the measured inventory bound."""
         rows = self._repository.run(_RITUAL_LIST_QUERY, limit=limit, offset=offset)
+        coverage = self._ritual_coverage()
         items = [
             RitualSummary(
                 type="RITUAL",
                 id=str(row["id"]),
                 display_label=str(row.get("display_label") or row["id"]),
                 label_iast=_text(row.get("label_iast")),
-                subtitle="one of 8 modelled rites",
+                subtitle=_ritual_subtitle(
+                    _as_int(row.get("step_count")),
+                    _as_int(row.get("procedure_step_count")),
+                ),
                 short_description=_text(row.get("short_description")),
                 passage_count=_as_int(row.get("mention_count")),
-                inventory_coverage=RITUAL_COVERAGE_STATEMENT,
+                inventory_coverage=coverage,
                 step_count=_as_int(row.get("step_count")),
+                procedure_step_count=_as_int(row.get("procedure_step_count")),
                 devata_count=_as_int(row.get("devata_count")),
                 described_in_count=_as_int(row.get("described_in_count")),
             )
@@ -2344,10 +2480,15 @@ class EntityService:
             total=_as_int(total_row.get("total")) if total_row else None,
             data_status=KnowledgeStatus.PARTIAL,
             caveats=[
-                CaveatView(text=RITUAL_COVERAGE_STATEMENT, source="measured"),
+                CaveatView(text=self._ritual_coverage(), source="measured"),
                 CaveatView(text=named_query_caveat("ritual_profile"), source="ritual_profile"),
             ],
         )
+
+    #: Procedure rows returned in one profile. One rite carries 227 sutra steps, so the
+    #: nested list needs a cap of its own; ``procedure_step_count`` reports the full figure
+    #: so a truncated list cannot read as the whole procedure.
+    PROCEDURE_LIMIT: Final = 60
 
     def get_ritual(self, entity_id: str, *, population: DeityPopulation) -> RitualProfile:
         """One rite, whose empty step list says which kind of empty it is."""
@@ -2355,12 +2496,13 @@ class EntityService:
             **deity_structure_parameters(population),
             "id": entity_id,
             "top": self.NESTED_LIMIT,
+            "step_limit": self.PROCEDURE_LIMIT,
         }
         row = self._repository.run_one(_RITUAL_PROFILE_QUERY, **parameters)
         if row is None:
             raise EntityNotFoundError(
                 f"No ritual with id '{entity_id}'.",
-                hint="GET /api/v1/rituals lists all eight.",
+                hint="GET /api/v1/rituals lists every modelled rite.",
             )
         props: dict[str, Any] = dict(row.get("props") or {})
 
@@ -2375,18 +2517,79 @@ class EntityService:
         ]
         steps.sort(key=lambda s: (s.order is None, s.order or 0, s.display_label))
 
+        procedure = [
+            RitualProcedureSource(
+                work_key=_text(source.get("work_key")),
+                work_label=_work_label(source.get("work_key")),
+                source_type=_text(source.get("source_type")),
+                veda_school=_text(source.get("veda_school")),
+                step_count=_as_int(source.get("step_count")),
+                anchoring_basis=_text(source.get("anchoring_basis")),
+                steps=[
+                    RitualProcedureStep(
+                        position=_as_int(step.get("position")),
+                        display_label=str(step.get("label")),
+                        text=_text(step.get("text")),
+                        citation=_text(step.get("citation")),
+                        stated_position=_text(step.get("stated_position")),
+                        order_basis=_text(step.get("order_basis")),
+                        order_completeness=_text(step.get("order_completeness")),
+                    )
+                    for step in (source.get("steps") or [])
+                    if isinstance(step, dict) and step.get("label")
+                ],
+            )
+            for source in (row.get("procedure_sources") or [])
+            if isinstance(source, dict) and source.get("work_key")
+        ]
+        procedure.sort(key=lambda s: (-(s.step_count or 0), s.work_key or ""))
+        procedure_total = _as_int(row.get("procedure_step_count"))
+
         dimensions: list[DimensionStatus] = []
         if not steps:
             dimensions.append(
                 DimensionStatus(
                     dimension="steps",
                     status=KnowledgeStatus.NOT_BUILT,
-                    note="Only 3 HAS_STEP edges exist in the entire graph and all three are "
-                    "on the soma pressing, whose morning, midday and third libations the "
-                    "text itself numbers. No other rite in this corpus states an order and "
-                    "none was invented for it: elaborate procedure is Brahmana and Sutra "
-                    "material, so an empty step list here is an unbuilt layer and not an "
-                    "unstructured rite.",
+                    note="This is the Samhita-numbered layer, and 3 such edges exist in the "
+                    "entire graph, all on the soma pressing, whose morning, midday and third "
+                    "libations the text itself numbers. No other rite in this corpus states "
+                    "an order in its own words and none was invented for it -- elaborate "
+                    "procedure is Brahmana and Sutra material. Read `procedure` before "
+                    "concluding the rite has no recorded sequence: an empty `steps` is an "
+                    "unbuilt Samhita layer, not an unstructured rite.",
+                )
+            )
+        if procedure:
+            listed = [step for source in procedure for step in source.steps]
+            partial = sum(
+                1 for s in listed if s.order_completeness == "PARTIAL_STATED_POSITIONS"
+            )
+            shown = (
+                f"{len(listed)} of {procedure_total} steps shown. "
+                if procedure_total and procedure_total > len(listed)
+                else ""
+            )
+            dimensions.append(
+                DimensionStatus(
+                    dimension="procedure",
+                    status=KnowledgeStatus.PARTIAL,
+                    note=f"{len(procedure)} source work(s) each record their own sequence "
+                    f"for this rite, numbered from 1 independently, so the groups do not "
+                    f"compose into one procedure. {shown}{partial} of the {len(listed)} "
+                    "steps listed state a position without printing the run it falls in. "
+                    "The evidence is Srautasutra and Grhyasutra, never a Samhita passage, "
+                    "and it is a different claim from `steps` -- which is why it is a "
+                    "different field. The cited works have no node in this graph.",
+                )
+            )
+        else:
+            dimensions.append(
+                DimensionStatus(
+                    dimension="procedure",
+                    status=KnowledgeStatus.NOT_BUILT,
+                    note="No sutra-attested procedure is recorded for this rite. That is an "
+                    "absence in the staged sources, not evidence that the rite has none.",
                 )
             )
         for name, values in (
@@ -2401,12 +2604,13 @@ class EntityService:
                     DimensionStatus(
                         dimension=name,
                         status=KnowledgeStatus.INSUFFICIENT_EVIDENCE,
-                        note="Ritual apparatus is curated and thin by design: 25 apparatus "
-                        "edges over 8 rites, all TIER_D. An empty list is uncurated, not "
-                        "a rite performed without one.",
+                        note="Ritual apparatus is curated and thin by design, and all of it "
+                        "is TIER_D; the measured edge count is in `coverage_statement`. An "
+                        "empty list is uncurated, not a rite performed without one.",
                     )
                 )
 
+        coverage = self._ritual_coverage()
         return RitualProfile(
             id=str(props.get("entity_key") or entity_id),
             display_label=str(props.get("display_label") or entity_id),
@@ -2414,6 +2618,8 @@ class EntityService:
             short_description=_text(props.get("short_description"))
             or _text(props.get("definition")),
             steps=steps,
+            procedure=procedure,
+            procedure_step_count=procedure_total,
             roles=_refs(row.get("roles")),
             offerings=_refs(row.get("offerings")),
             substances=_refs(row.get("substances")),
@@ -2424,11 +2630,11 @@ class EntityService:
             passages=_refs(row.get("passages")),
             passage_count=_as_int(row.get("passage_count")),
             mention_count=_as_int(row.get("mention_count")),
-            coverage_statement=RITUAL_COVERAGE_STATEMENT,
+            coverage_statement=coverage,
             dimension_status=dimensions,
             data_status=KnowledgeStatus.PARTIAL,
             caveats=[
-                CaveatView(text=RITUAL_COVERAGE_STATEMENT, source="measured"),
+                CaveatView(text=self._ritual_coverage(), source="measured"),
                 CaveatView(
                     text=named_query_caveat("ritual_step_sequence"), source="ritual_step_sequence"
                 ),
@@ -2580,10 +2786,10 @@ def _type_from_id(identifier: str) -> str:
 __all__ = [
     "ATTRIBUTION_SCOPE_STATEMENT",
     "NOT_A_DEITY_SUBJECT",
-    "RITUAL_COVERAGE_STATEMENT",
     "SAMAVEDA_SCOPE_STATEMENT",
     "STRICT_MODE_STATEMENT",
     "EntityService",
+    "ritual_coverage_statement",
     "subject_disclosure",
     "tiers_for",
 ]

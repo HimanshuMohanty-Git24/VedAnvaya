@@ -20,8 +20,8 @@ Three gates were run, and two of them are not mine:
   unreachable.
 - `scripts/graph_quality_scorecard.py` → **9 of 9 integrity gates PASS**, including the two
   that were red for everything this wave wrote until the contracts were met.
-- `pytest tests/api` → **6 failed, 1,356 passed.** All six are the frozen Product-V1
-  caveats, and they are the next piece of work. See *Blocking*.
+- `pytest tests/api` → **green.** The six frozen-caveat failures are re-derived, and the
+  ritual surface was rebuilt around what the import actually added. See *The API rebuild*.
 
 Coverage figures from the imported domains are now **canonical readback figures** rather
 than `STAGED_PROJECTED_COVERAGE`. The withheld domains' figures are still projected and may
@@ -87,8 +87,8 @@ New predicates: `ASSERTION_ROLE` `REFERS_TO` `SHARES_FORMULA_WITH` `HAS_RITUAL_S
 
 `HAS_RITUAL_STEP` rather than the existing `HAS_STEP`, whose 3 edges point at an `:Action`:
 widening its range would change what an existing predicate means, and the readback asserts
-it still holds exactly 3. **The API has not been told about the new predicate** — see
-*Blocking* item 1, which is the cost of that choice rather than an argument against it.
+it still holds exactly 3. Teaching every consumer the new predicate is the cost of that
+choice rather than an argument against it — see *The API rebuild*.
 
 ## Remaining — withheld, with the reason
 
@@ -106,28 +106,42 @@ it still holds exactly 3. **The API has not been told about the new predicate** 
 
 Nothing blocks a resumed session. Four named pieces of work remain, in this order:
 
-1. **Six API contract tests fail, and all six should.** They are not six wrong numbers.
-   - `test_app_health` and `test_adversarial` assert the frozen census 108,779 / 265,295.
-     Re-derive both figures by measurement; a constant edited to match is a caveat nobody
-     measured.
-   - `test_rituals` asserts `RITUAL_TOTAL = 8` and gets **103**. The 103 is truthful: every
-     one of them has modelled steps, 92 arrived in this wave, and 11 pre-existed.
-   - **The real defect is underneath it.** The endpoint reads `HAS_STEP` (3 edges), so 92
-     rites that now hold 3,121 `HAS_RITUAL_STEP` steps report their step dimension as
-     `NOT_BUILT`. The API is a stale consumer, and this one is a product regression rather
-     than a stale figure: it tells the reader a rite is unmodelled while the graph models it.
-   - The three `test_insights` failures are the q25 partial-coverage statements and the
-     ritual collection bounds, all written against a graph of 8 rites. `q25`'s own assertion
-     — chariot and thunderbolt must not rank as foremost implements — is **still safe**: no
-     rite edges were imported, so `USES_OBJECT` did not move.
-2. **Dependent re-derivation (owner section 13).** 9 of 9 named consumers are `STALE_INPUT`
-   and nothing is rebuilt; `scripts/wave3_dependency_invalidation.py` holds the order.
+1. **Dependent re-derivation (owner section 13).** The API is done (below). 8 of 9 remaining
+   consumers are `STALE_INPUT`; `scripts/wave3_dependency_invalidation.py` holds the order.
    `build_veda_coverage_and_metrics.py` does a destructive `DETACH DELETE` on
    `:DerivedMetric` and needs its own before/after census. Do not regenerate the frontend
    design; do not re-grade the Ask benchmark speculatively — a retry burns a daily quota.
+2. **`:RitualStep` carries no `display_type`** and `step_key` is not in the graph service's
+   `STABLE_ID_PROPERTIES`, so `HAS_RITUAL_STEP` is refused by `/api/v1/graph` for a stated
+   and measurable reason. Fixing those two makes the layer traversable; relaxing the
+   invariant instead would ship 3,121 nodes with no product type.
 3. **`attribution` gates B and C.** 23,003 rows, no semantic review and no adversarial test.
    The largest single piece of remaining work.
 4. **The 1,021 audible reviews.** `python scripts/audio_review_harness.py`.
+
+## The API rebuild
+
+The six failures were not six wrong numbers, and bumping them would have shipped a
+regression. `/api/v1/rituals` read `HAS_STEP` only, so 92 rites holding 3,121
+`HAS_RITUAL_STEP` steps reported their procedure as `NOT_BUILT` — the API telling a reader a
+rite is unmodelled while the graph modelled it.
+
+- **Two step layers, returned separately.** `steps` is the Samhita's own numbering (3 edges,
+  all on the soma pressing); `procedure` is what a sutra prints. Never summed.
+- **`procedure` is grouped by source work.** `step_position` is an ordinal *within a work*,
+  and 2,666 of the 3,121 steps share a position with another step of the same rite. One flat
+  list would have composed 11 independent accounts into a procedure nobody recorded.
+- **The steps now carry their text.** They were returning bare locators; every step holds the
+  sutra's own words and an anchoring basis.
+- **`coverage_statement` is measured per request**, not a literal. It asserted "EIGHT
+  MODELLED RITES" for a whole import after the inventory became 103.
+- **The graph service was 11 predicate types behind**, and refused `SHARES_FORMULA_WITH` on
+  the stated grounds that "it carries 0 edges" while it carried 6,148. Six are now
+  traversable with semantics, six refused with a true reason, and a live test asserts every
+  populated type is one or the other.
+- **The frozen census is re-derived to 116,825 / 281,290** with its provenance, imported from
+  one place rather than restated in two, and now sits beside an assertion that the four
+  corpora have not moved — the figure that may never grow.
 
 ## Registry
 
@@ -138,15 +152,10 @@ against canonical readback, and the seven imported domains' closure tests are in
 
 ## Current wave artifacts
 
-```
-data/staging/integration/wave3_import_plan.json      element-level plan
-data/staging/integration/wave3_dry_run_v2.json       the GO, with its 16 conditions
-data/staging/integration/wave3_import_receipt.json   what landed, per group
-data/staging/integration/wave3_readback.json         read out of the database
-data/staging/integration/wave3_scope_grain.json      M6-prime populations
-data/staging/integration/wave3_soma_pressing_correction.json
-data/staging/integration/wave3_devata_identity_bridge.json
-```
+In `data/staging/integration/`: `wave3_import_plan.json` (the plan), `wave3_dry_run_v2.json`
+(the GO and its 16 conditions), `wave3_import_receipt.json`, `wave3_readback.json`,
+`wave3_scope_grain.json`, `wave3_soma_pressing_correction.json`,
+`wave3_devata_identity_bridge.json`, `wave3_dependency_invalidation.json`.
 
 ## What the import cost, and why
 
@@ -168,6 +177,8 @@ found things no amount of reading the plan would have.
 | API suite | `:InterpretiveClaim` overloaded; `/insights` returned `about: None` against its own schema |
 | API suite | `ASSERTED_BY` reused, whose signature is `InterpretiveClaim → Source` |
 | API suite | `SET n += row` overwrote 102 curated `display_label`s; `AYAS-METAL` lost "(ayas)" |
+| API suite | the rituals endpoint reported 92 rites as having no procedure while holding 3,121 of their steps |
+| API suite | the graph service was 11 predicate types behind, and refused one for "0 edges" while it held 6,148 |
 | scorecard | 22,981 edges with no `quality_tier` and 14,209 nodes with no `display_label` |
 | API suite | **13,187 elements imported that the domain staged `PROBABLE` and said never to import** |
 
@@ -175,33 +186,21 @@ Each is now guarded by a test on the spec, so it fails offline rather than in th
 **The lesson, in one line: an importer's own per-group report is not evidence.** Every pass
 printed a clean table.
 
-### The worst of them, recorded in full
+### The worst of them
 
-`NOT_IMPORTABLE = {"PROBABLE", "UNVERIFIED"}` had been a constant in the dry-run from the
-start. It was applied to each domain's `rows.jsonl` and to **none of the side files**, which
-is where most elements come from. So the ritual domain's side files imported entire:
-6,150 step nodes, 6,150 step edges, all 685 rite edges, all 179 role assignments and all 23
-rite relations — 13,187 elements.
+`NOT_IMPORTABLE = {"PROBABLE", "UNVERIFIED"}` was applied to each domain's `rows.jsonl` and
+to **none of the side files**, which is where most elements come from. The ritual domain's
+side files imported entire: 6,150 step nodes and edges, all 685 rite edges, all 179 role
+assignments, all 23 rite relations — 13,187 elements. Every `rite_edges` row carries the
+instruction *"Staged PROBABLE, never imported as an assertion, because a sūtra may mention an
+implement in order to forbid it"*, naming GAP-RITUAL-005 as the precedent, and the report adds
+that PROBABLE exists *"precisely because they need a human read, and none has had one"*.
 
-The artifact does not merely grade them. Every `rite_edges` row carries the instruction:
-
-> *"Staged PROBABLE, never imported as an assertion, because a sūtra may mention an
-> implement in order to forbid it. The campaign's own record of this error is
-> GAP-RITUAL-005."*
-
-Its report adds that PROBABLE exists *"precisely because they need a human read, and none
-has had one"*, and that *"some unknown share of the 2,053 PROBABLE rows are correct."*
-
-The cost reached the reader inside one import. `q25` asserts that chariot and thunderbolt
-must not rank as foremost ritual implements: a version that ranked them was graded
-MISLEADING, and the fix defined an implement as an object a modelled rite *uses*. Seven
-`USES_OBJECT` edges put them back — and read one by one they are a mix, which is the point.
-The Vājapeya genuinely yokes a chariot at the altar's southern hip; `ṣoḍaśī vajraḥ` is a
-metaphor; several are a word in a mantra the rite *recites* rather than an implement.
-
-The filter now lives in `passes()`, which every group goes through. With it the ritual
-domain contributes 3,121 anchored steps and their edges, and **no** rite edges, role
-assignments or rite relations at all.
+The cost reached the reader inside one import: `q25` asserts chariot and thunderbolt must not
+rank as foremost ritual implements, and seven `USES_OBJECT` edges put them back. The filter
+now lives in `passes()`, which every group goes through. With it the ritual domain contributes
+3,121 anchored steps and their edges, and **no** rite edges, role assignments or rite
+relations at all.
 
 ### Nodes deleted from the owner's corpus, on my reading
 
@@ -223,9 +222,9 @@ a row the current plan withholds, and holding no relationship at all.
 D:\vedanvaya-backups\wave3-pre-import-20260915T155144\neo4j.dump
 96,841,712 bytes · sha256 a0ab27b6…d6957
 ```
-Restored five times during this session, and verified exact every time: 108,779 / 265,295, four
-corpora exact, 0 Wave 3 residue, 0 shared `entity_key`. The dump must be named `neo4j.dump`
-inside a timestamped directory — `neo4j-admin database load` matches by database name.
+Restored five times and verified exact every time: 108,779 / 265,295, four corpora exact, 0
+Wave 3 residue, 0 shared `entity_key`. The dump must be named `neo4j.dump` inside a
+timestamped directory — `neo4j-admin database load` matches by database name.
 
 ```
 docker stop vedagraph-neo4j

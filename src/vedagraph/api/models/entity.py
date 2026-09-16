@@ -501,17 +501,92 @@ class RishiProfile(ApiModel):
 
 
 class RitualStep(ApiModel):
+    """A step the Samhita text itself numbers. Three of these exist in the whole graph."""
+
     order: int | None = None
     display_label: str
     description: str | None = None
 
 
-class RitualProfile(ApiModel):
-    """One of the eight modelled rites.
+class RitualProcedureStep(ApiModel):
+    """One step in one source's sequence for a rite.
 
-    Eight is not a taxonomy of Vedic ritual and the response says so in
-    ``coverage_statement`` rather than leaving a client to infer completeness from a list
-    that happens to have eight entries in it.
+    Kept separate from :class:`RitualStep` for the reason the graph keeps
+    ``HAS_RITUAL_STEP`` separate from ``HAS_STEP``: a libation the hymn itself numbers and a
+    procedural step a sutra prints are not the same kind of evidence, and merging them would
+    silently widen what an ordered step list means.
+
+    ``position`` is an ordinal **within this source's sequence only**. It is not a position
+    in the rite: 2,666 of the 3,121 steps share a position with another step of the same
+    rite, because eight or more works each number their own procedure from 1. That is why
+    steps arrive grouped under :class:`RitualProcedureSource` rather than in one list.
+    """
+
+    position: int | None = Field(
+        default=None,
+        description="Ordinal within THIS source's sequence, not within the rite. Read "
+        "`order_completeness` before treating a run of these as contiguous.",
+    )
+    display_label: str
+    text: str | None = Field(
+        default=None,
+        description="The sutra's own words, IAST. This is the step; `display_label` is only "
+        "where to find it.",
+    )
+    citation: str | None = Field(
+        default=None, description="The sutra locator this step was read from."
+    )
+    stated_position: str | None = None
+    order_basis: str | None = Field(
+        default=None,
+        description="SOURCE_PRINTED_SUTRA_SEQUENCE or SOURCE_STATED_SEQUENCE_MARKER.",
+    )
+    order_completeness: str | None = Field(
+        default=None,
+        description="PARTIAL_STATED_POSITIONS or CONTIGUOUS_PRINTED_RUN. A partial sequence "
+        "has gaps the source does not fill.",
+    )
+
+
+class RitualProcedureSource(ApiModel):
+    """One source work's account of a rite's procedure.
+
+    The grouping is the claim. A rite drawing on eight sutras has eight independently
+    numbered sequences, not one procedure of eight parts, and flattening them into a single
+    ordered list would assert a composition nobody recorded.
+
+    ``work_key`` has no node behind it. The 11 work identities these steps cite are not in
+    the graph, so ``work_label`` is read off the key rather than from a work record, and
+    there is nothing further to follow.
+    """
+
+    work_key: str | None = None
+    work_label: str | None = Field(
+        default=None,
+        description="Derived from `work_key`; there is no work node to fetch a name from.",
+    )
+    source_type: str | None = Field(
+        default=None, description="SRAUTASUTRA or GRHYASUTRA. Never a Samhita passage."
+    )
+    veda_school: str | None = None
+    step_count: int | None = Field(
+        default=None, description="Steps this source records, before any display cap."
+    )
+    anchoring_basis: str | None = Field(
+        default=None,
+        description="Why these steps attach to this rite, as the staging recorded it. "
+        "Carried per source rather than once per rite, so a source anchored on a different "
+        "basis cannot hide behind a shared note.",
+    )
+    steps: list[RitualProcedureStep] = Field(default_factory=list)
+
+
+class RitualProfile(ApiModel):
+    """One modelled rite.
+
+    The rite inventory is not a taxonomy of Vedic ritual and the response says so in
+    ``coverage_statement`` rather than leaving a client to infer completeness from the
+    length of a list.
     """
 
     type: str = "RITUAL"
@@ -521,9 +596,20 @@ class RitualProfile(ApiModel):
     short_description: str | None = None
     steps: list[RitualStep] = Field(
         default_factory=list,
-        description="Only 3 HAS_STEP edges exist across all 8 rites, all of them on the "
-        "soma pressing, so this list is empty for 7 of the 8. An empty list here is NOT "
-        "an unstructured rite -- read `dimension_status` for which it is.",
+        description="Steps the Samhita text itself numbers. 3 such edges exist in the whole "
+        "graph, all on the soma pressing, so this list is empty for every other rite. An "
+        "empty list here is NOT an unstructured rite, and it is NOT an absence of procedure "
+        "either -- read `procedure`, then `dimension_status`.",
+    )
+    procedure: list[RitualProcedureSource] = Field(
+        default_factory=list,
+        description="Procedure attested in Srautasutras and Grhyasutras, grouped by the work "
+        "that records it. A separate field from `steps` because it is a separate claim, and "
+        "grouped because each work numbers its own sequence from 1 — the groups do not "
+        "compose into one procedure. Most sequences are partial; every step says which.",
+    )
+    procedure_step_count: int | None = Field(
+        default=None, description="Total sutra-attested steps across every source."
     )
     roles: list[EntityRef] = Field(default_factory=list)
     offerings: list[EntityRef] = Field(default_factory=list)
@@ -542,12 +628,19 @@ class RitualProfile(ApiModel):
 
 
 class RitualSummary(EntitySummary):
-    """A rite list row. Carries the eight-rite bound on the row, not only in the header."""
+    """A rite list row. Carries the inventory bound on the row, not only in the header."""
 
     inventory_coverage: str = Field(
-        description="Stated per row because a list of eight implies a taxonomy of eight."
+        description="Stated per row, because the length of a list reads as a taxonomy."
     )
-    step_count: int | None = None
+    step_count: int | None = Field(
+        default=None, description="Samhita-numbered steps only. 3 exist in the whole graph."
+    )
+    procedure_step_count: int | None = Field(
+        default=None,
+        description="Sutra-attested procedural steps. A different evidence class from "
+        "`step_count`, so it is a different field.",
+    )
     devata_count: int | None = None
     described_in_count: int | None = None
 
