@@ -13,7 +13,7 @@ weighted towards what a reader can rely on.
 | metric | V1 baseline | V2 | delta |
 |---|---|---|---|
 | nodes | 100,584 | 116,838 | +16,254 |
-| relationships | 212,336 | 281,290 | +68,954 |
+| relationships | 212,336 | 281,257 | +68,921 |
 | product nodes | — | 39,692 | — |
 | internal nodes | 0 (unmarked) | 77,146 | +77,146 |
 | domain entities | 89 | 375 | +286 |
@@ -26,7 +26,7 @@ query could ask across them. `quality_tier` is the single derived grade.
 
 | metric | value |
 |---|---|
-| edges carrying `quality_tier` | 281,290 (100.0%) |
+| edges carrying `quality_tier` | 281,257 (100.0%) |
 | edges carrying `evidence` | 108,795 (38.7%) |
 | edges carrying `trust` | 106,040 (37.7%) |
 | ungraded edges | **0** |
@@ -35,7 +35,7 @@ query could ask across them. `quality_tier` is the single derived grade.
 
 | tier | meaning | edges |
 |---|---|---|
-| `TIER_A` | a source states it | 107,219 |
+| `TIER_A` | a source states it | 107,186 |
 | `TIER_B` | reproducible derivation, including scope inheritance | 168,925 |
 | `TIER_C` | model-extracted, evidence survived review | 598 |
 | `TIER_D` | interpretation, or an unreviewed model proposal | 4,548 |
@@ -52,7 +52,7 @@ not something the source said about any of those mantras.
 
 | predicate | source-stated | container-inherited | inherited share |
 |---|---|---|---|
-| `HAS_CHANDAS` | 5,932 | 10,399 | **63.7%** |
+| `HAS_CHANDAS` | 5,899 | 10,399 | **63.8%** |
 | `HAS_DEVATA` | 2,229 | 8,329 | **78.9%** |
 | `HAS_RISHI` | 2,712 | 15,177 | **84.8%** |
 
@@ -219,7 +219,7 @@ judgement is recorded.
 | `HAS_RISHI` | 17,889 |
 | `HAS_TRANSLATION` | 17,283 |
 | `MENTIONS_DEVATA` | 17,165 |
-| `HAS_CHANDAS` | 16,331 |
+| `HAS_CHANDAS` | 16,298 |
 | `HAS_DEVATA` | 10,558 |
 | `MENTIONS_LEMMA` | 9,000 |
 | `SHARES_FORMULA_WITH` | 6,148 |

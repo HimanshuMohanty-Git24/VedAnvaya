@@ -178,9 +178,14 @@ def test_live_readiness_passes_against_the_frozen_graph(live_client: TestClient)
 #: and recomputes it: the attribution census gave it 13 more metrics to compute, so the node
 #: count moved 116,825 -> 116,838 while the relationship count and the four corpora did not.
 #:
+#: LOWERED once, by M9: 33 HAS_CHANDAS assertions were withdrawn because their object was
+#: an unsegmented fragment of Whitney's printed bracket carrying a deity, a metre and a
+#: per-verse exception in one string, not a metre name. 281,290 -> 281,257. The node count
+#: did not move, because the :Chandas entities stay in the graph holding the literal.
+#:
 #: Raising this pair is a deliberate act, and the docstring below says what it costs.
 FROZEN_NODES = 116_838
-FROZEN_RELATIONSHIPS = 281_290
+FROZEN_RELATIONSHIPS = 281_257
 
 #: The figures that must NEVER move, whatever an import does. The whole-graph census grows
 #: with every wave; the four corpora are closed sets, and a drift here is corruption rather
