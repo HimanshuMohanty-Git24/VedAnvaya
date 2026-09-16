@@ -13,8 +13,13 @@ works:
       SAMHITA ONLY, Sakala recension. This work_id addresses the 10,552 mantras of the
       Rigveda Samhita in the Sakala recension and nothing else. It does not address a
       second Rigvedic recension, nor any post-samhita layer: no Brahmana, no Aranyaka and
-      no Upanisad are held. Padapatha and the accented samhitapatha are carried as text
-      versions of these same mantras, not as separate works.
+      no Upanisad are held. The accented samhitapatha is carried as two text versions of
+      these same mantras -- a primary and a parallel reading, 10,552 each -- not as
+      separate works. NO PADAPATHA IS CARRIED: text_versions.yaml declares one
+      (VEDAWEB.PADAPATHA) and it was never ingested, so the graph holds 0 padapatha text
+      versions and every text_form in it is SAMHITA. The declared artifact covers Mandala 1
+      alone, so even acquiring it would not make the word-analysed text available for the
+      corpus.
     completeness: >-
       10,552 of 10,552 attested mantras carry a canonical key and a canonical citation
       (100.0%). 10,502 of 10,552 carry a translation (99.5%). No shortfall in addressing.
