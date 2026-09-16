@@ -130,10 +130,23 @@ class DevataTaxonomyEntry:
             # layer at all and 571 of its passages contain the word `indra`. A scope note
             # present on 25 of 214 nodes is a scope note that will be missed.
             "attribution_scope": ["RV"],
+            # The second sentence used to read "means that corpus has no attribution
+            # layer", which was false for the Atharvaveda and reached the reader on all 214
+            # nodes -- and reached Ask, which passes this string through as the qualifier on
+            # an absence, so a false "no attribution layer" became a model-visible
+            # justification for a false answer.
             "attribution_scope_note": (
-                "The Anukramani attribution layer covers the Rigveda only. A zero for SV, "
-                "YV or AV means that corpus has no attribution layer, NOT that the deity "
-                "is absent from it."
+                "attribution_scope names the corpora whose dedications are RESOLVED to this "
+                "node. HAS_DEVATA is Rigveda-only, so a zero for SV, YV or AV means this "
+                "predicate does not reach that corpus -- NOT that the deity is absent from "
+                "it, and NOT that the corpus records no dedication. The Atharvaveda records "
+                "its own: 5,385 HAS_DEVATA_ASCRIPTION edges over 4,665 of its 5,839 mantras, "
+                "pointing at a :DevataAscription that carries Whitney's verbatim descriptor "
+                "rather than a resolved deity. The two layers share no label value, by "
+                "category rather than by coverage, which is why they are not joined and why "
+                "an Atharvavedic dedication does not raise this figure "
+                "(GAP-CROSS-VEDA-DEVATA-IDENTITY-BRIDGE-001). The Samaveda and Yajurveda "
+                "carry neither layer."
             ),
             "domain_model_version": DOMAIN_MODEL_VERSION,
         }
