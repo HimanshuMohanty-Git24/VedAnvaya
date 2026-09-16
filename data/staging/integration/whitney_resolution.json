@@ -1,0 +1,322 @@
+{
+  "artifact": "WHITNEY_RESOLUTION",
+  "owner_phase": "D",
+  "target_vocabulary_audit": {
+    "entities": 541,
+    "not_a_metre_name_by_colon": 17,
+    "not_a_metre_name_by_colon_or_embedded_verse_reference": 28,
+    "not_a_metre_name_by_two_statement_test": 39,
+    "the_three_tests_disagree": true,
+    "why_that_matters": "Each test is a parsing heuristic written here, and they do not agree. Separating a deity adjective from a metre name inside these strings is philological adjudication, which the owner bars from acting as identity evidence -- so the contaminated share cannot be bounded and a partial import cannot be made safe.",
+    "examples": [
+      "3-av. 6-p. virāḍ atijagatī: 24. 5-p. virāḍ atijagatī",
+      "3-p. pipīlikamadhyā purauṣṇih: 1-11. ekāvasāna",
+      "bhāumī. ānuṣṭubham: 1, 3. pathyāpan̄kti",
+      "brāhmaṇaspatyā. ānuṣṭubham: 4. virāṭprastārapan̄kti",
+      "mantroktadevatyā. anuṣṭubham: 1. bhurik triṣṭubh"
+    ]
+  },
+  "characterisation": {
+    "rows": 466,
+    "by_dimension": {
+      "devata": 83,
+      "chandas": 383
+    },
+    "distinct_printed_literals": 88,
+    "hymns": 84,
+    "kandas": {
+      "K03": 11,
+      "K05": 87,
+      "K06": 28,
+      "K07": 15,
+      "K16": 8,
+      "K19": 81,
+      "K01": 8,
+      "K08": 21,
+      "K12": 41,
+      "K02": 17,
+      "K09": 22,
+      "K04": 11,
+      "K10": 43,
+      "K18": 45,
+      "K11": 3,
+      "K17": 2,
+      "K13": 23
+    },
+    "most_repeated_literals": [
+      [
+        "anuṣṭubh",
+        83
+      ],
+      [
+        "triṣṭubh",
+        32
+      ],
+      [
+        "jagatī",
+        22
+      ],
+      [
+        "4-p. atiçakvarī",
+        17
+      ],
+      [
+        "ārṣī gāyatrī",
+        16
+      ],
+      [
+        "mārtvyaḥ. trāiṣṭubham",
+        13
+      ],
+      [
+        "4-av",
+        11
+      ],
+      [
+        "pathyāpan̄kti",
+        10
+      ],
+      [
+        "6-p. jagatī",
+        9
+      ],
+      [
+        "3-p. bhurin̄ mahābṛhatī",
+        9
+      ]
+    ],
+    "rows_carrying_more_than_one_literal": 11,
+    "registry_entities": {
+      "chandas": 541,
+      "devata": 324
+    },
+    "registry_variants": {
+      "chandas": 567,
+      "devata": 336
+    }
+  },
+  "channels_attempted": [
+    {
+      "channel": "REGISTRY_SOURCE_VARIANT_LOOKUP",
+      "permitted_because": "an existing source-backed entity mapping: the registry was generated from the same Whitney index and records which printed spellings fold into which entity",
+      "proposals": 477,
+      "single_candidate": 405,
+      "ambiguous": 0,
+      "no_candidate": 72
+    },
+    {
+      "channel": "SURFACE_OR_NORMALIZED_EQUALITY",
+      "permitted_because": null,
+      "refused": ":Chandas carries normalized_name and label_iast, so this join is trivially available and is barred: normalization generates candidates and cannot establish identity."
+    },
+    {
+      "channel": "VERSE_LOCAL_STRUCTURAL_CONTEXT",
+      "permitted_because": null,
+      "refused": "the rows are EXCEPTIONS to their hymn's ascription and say so verbatim, so the verse's existing edge names a different metre. Using it would resolve to the value the source is contradicting."
+    },
+    {
+      "channel": "RV_REGISTRY_NAME_MATCH",
+      "permitted_because": null,
+      "refused": "the AV registry's own header states rv_registry_name_match 'asserts nothing about whether the two indices mean the same person'. A field its author declares non-evidential cannot become evidence here."
+    }
+  ],
+  "adversarial": {
+    "resolved_entities_checked": 51,
+    "entities_present_in_graph": 51,
+    "findings": [],
+    "proposals_whose_edge_already_exists": 0,
+    "existing_hymn_scope_chandas_edges": 3747,
+    "over_matched_entities": []
+  },
+  "outcome_counts": {
+    "RESOLVED_SOURCE_EXPLICIT": 0,
+    "RESOLVED_DETERMINISTIC_INDEPENDENT_EVIDENCE": 0,
+    "RETAINED_LITERAL_NON_ENTITY": 0,
+    "RETAINED_NON_IMPORTABLE_UNRESOLVED_OBJECT": 466,
+    "REJECTED_SOURCE_ERROR": 0
+  },
+  "mechanical_resolution": {
+    "proposals": 477,
+    "single_registry_candidate": 405,
+    "ambiguous_in_the_registry": 0,
+    "no_registry_variant": 72,
+    "adversarial_findings_against_individual_resolutions": 0
+  },
+  "disposition": "ALL_466_WITHHELD",
+  "disposition_reason": "The resolution channel works -- 405 of 477 proposals resolve through the registry's own source_variants with zero ambiguity and no finding against any individual resolution. The vocabulary they resolve INTO is contaminated: an unbounded share of the AV_WHITNEY :Chandas entities are unsegmented bracket fragments carrying a deity, a metre and sometimes a verse exception in one string. Importing would record a verse's metre as a string containing a deity name, which is worse than recording no verse-level metre at all.",
+  "pre_existing_defect_found": {
+    "what": "33 canonical HAS_CHANDAS edges already point at :Chandas entities that are bracket fragments rather than metre names.",
+    "not_repaired_here": "Re-segmenting the vocabulary re-identifies its entities, which is an owner decision and not an approved cleanup rule.",
+    "gap": "GAP-AV-CHANDAS-SEGMENTATION-001"
+  },
+  "resolved_sample": [
+    {
+      "row_id": "VG:AV:SAU:K19:S015:V001:devata",
+      "canonical_key": "VG:AV:SAU:K19:S015:V001",
+      "verse_coordinate": "VG:AV:SAU:K19:S015",
+      "dimension": "devata",
+      "printed_string": "āindram",
+      "candidate_entity_keys": [
+        "VG:ASCRIPTION:AV:AINDRAM-31DF"
+      ],
+      "method": "REGISTRY_SOURCE_VARIANT_LOOKUP",
+      "independent_evidence": "devata_ascriptions_av.yaml lists this exact printed spelling in the source_variants of 1 entity(ies). That registry was generated from the same Whitney index these rows come from, so the mapping is the source's own, not a comparison made here.",
+      "identity_is": "EXPLICIT_IN_A_SOURCE_BACKED_REGISTRY",
+      "predicate": "HAS_DEVATA_ASCRIPTION",
+      "scope_type": "SINGLE_MANTRA"
+    },
+    {
+      "row_id": "VG:AV:SAU:K19:S015:V002:devata",
+      "canonical_key": "VG:AV:SAU:K19:S015:V002",
+      "verse_coordinate": "VG:AV:SAU:K19:S015",
+      "dimension": "devata",
+      "printed_string": "āindram",
+      "candidate_entity_keys": [
+        "VG:ASCRIPTION:AV:AINDRAM-31DF"
+      ],
+      "method": "REGISTRY_SOURCE_VARIANT_LOOKUP",
+      "independent_evidence": "devata_ascriptions_av.yaml lists this exact printed spelling in the source_variants of 1 entity(ies). That registry was generated from the same Whitney index these rows come from, so the mapping is the source's own, not a comparison made here.",
+      "identity_is": "EXPLICIT_IN_A_SOURCE_BACKED_REGISTRY",
+      "predicate": "HAS_DEVATA_ASCRIPTION",
+      "scope_type": "SINGLE_MANTRA"
+    },
+    {
+      "row_id": "VG:AV:SAU:K19:S015:V003:devata",
+      "canonical_key": "VG:AV:SAU:K19:S015:V003",
+      "verse_coordinate": "VG:AV:SAU:K19:S015",
+      "dimension": "devata",
+      "printed_string": "āindram",
+      "candidate_entity_keys": [
+        "VG:ASCRIPTION:AV:AINDRAM-31DF"
+      ],
+      "method": "REGISTRY_SOURCE_VARIANT_LOOKUP",
+      "independent_evidence": "devata_ascriptions_av.yaml lists this exact printed spelling in the source_variants of 1 entity(ies). That registry was generated from the same Whitney index these rows come from, so the mapping is the source's own, not a comparison made here.",
+      "identity_is": "EXPLICIT_IN_A_SOURCE_BACKED_REGISTRY",
+      "predicate": "HAS_DEVATA_ASCRIPTION",
+      "scope_type": "SINGLE_MANTRA"
+    },
+    {
+      "row_id": "VG:AV:SAU:K19:S015:V004:devata",
+      "canonical_key": "VG:AV:SAU:K19:S015:V004",
+      "verse_coordinate": "VG:AV:SAU:K19:S015",
+      "dimension": "devata",
+      "printed_string": "āindram",
+      "candidate_entity_keys": [
+        "VG:ASCRIPTION:AV:AINDRAM-31DF"
+      ],
+      "method": "REGISTRY_SOURCE_VARIANT_LOOKUP",
+      "independent_evidence": "devata_ascriptions_av.yaml lists this exact printed spelling in the source_variants of 1 entity(ies). That registry was generated from the same Whitney index these rows come from, so the mapping is the source's own, not a comparison made here.",
+      "identity_is": "EXPLICIT_IN_A_SOURCE_BACKED_REGISTRY",
+      "predicate": "HAS_DEVATA_ASCRIPTION",
+      "scope_type": "SINGLE_MANTRA"
+    },
+    {
+      "row_id": "VG:AV:SAU:K19:S015:V005:devata",
+      "canonical_key": "VG:AV:SAU:K19:S015:V005",
+      "verse_coordinate": "VG:AV:SAU:K19:S015",
+      "dimension": "devata",
+      "printed_string": "mantroktabahudevatyam",
+      "candidate_entity_keys": [
+        "VG:ASCRIPTION:AV:MANTROKTABAHUDEVATYAM-1968"
+      ],
+      "method": "REGISTRY_SOURCE_VARIANT_LOOKUP",
+      "independent_evidence": "devata_ascriptions_av.yaml lists this exact printed spelling in the source_variants of 1 entity(ies). That registry was generated from the same Whitney index these rows come from, so the mapping is the source's own, not a comparison made here.",
+      "identity_is": "EXPLICIT_IN_A_SOURCE_BACKED_REGISTRY",
+      "predicate": "HAS_DEVATA_ASCRIPTION",
+      "scope_type": "SINGLE_MANTRA"
+    },
+    {
+      "row_id": "VG:AV:SAU:K19:S015:V006:devata",
+      "canonical_key": "VG:AV:SAU:K19:S015:V006",
+      "verse_coordinate": "VG:AV:SAU:K19:S015",
+      "dimension": "devata",
+      "printed_string": "mantroktabahudevatyam",
+      "candidate_entity_keys": [
+        "VG:ASCRIPTION:AV:MANTROKTABAHUDEVATYAM-1968"
+      ],
+      "method": "REGISTRY_SOURCE_VARIANT_LOOKUP",
+      "independent_evidence": "devata_ascriptions_av.yaml lists this exact printed spelling in the source_variants of 1 entity(ies). That registry was generated from the same Whitney index these rows come from, so the mapping is the source's own, not a comparison made here.",
+      "identity_is": "EXPLICIT_IN_A_SOURCE_BACKED_REGISTRY",
+      "predicate": "HAS_DEVATA_ASCRIPTION",
+      "scope_type": "SINGLE_MANTRA"
+    },
+    {
+      "row_id": "VG:AV:SAU:K19:S045:V006:devata",
+      "canonical_key": "VG:AV:SAU:K19:S045:V006",
+      "verse_coordinate": "VG:AV:SAU:K19:S045",
+      "dimension": "devata",
+      "printed_string": "mantroktadevatyam",
+      "candidate_entity_keys": [
+        "VG:ASCRIPTION:AV:MANTROKTADEVATYAM-0A39"
+      ],
+      "method": "REGISTRY_SOURCE_VARIANT_LOOKUP",
+      "independent_evidence": "devata_ascriptions_av.yaml lists this exact printed spelling in the source_variants of 1 entity(ies). That registry was generated from the same Whitney index these rows come from, so the mapping is the source's own, not a comparison made here.",
+      "identity_is": "EXPLICIT_IN_A_SOURCE_BACKED_REGISTRY",
+      "predicate": "HAS_DEVATA_ASCRIPTION",
+      "scope_type": "SINGLE_MANTRA"
+    },
+    {
+      "row_id": "VG:AV:SAU:K19:S045:V007:devata",
+      "canonical_key": "VG:AV:SAU:K19:S045:V007",
+      "verse_coordinate": "VG:AV:SAU:K19:S045",
+      "dimension": "devata",
+      "printed_string": "mantroktadevatyam",
+      "candidate_entity_keys": [
+        "VG:ASCRIPTION:AV:MANTROKTADEVATYAM-0A39"
+      ],
+      "method": "REGISTRY_SOURCE_VARIANT_LOOKUP",
+      "independent_evidence": "devata_ascriptions_av.yaml lists this exact printed spelling in the source_variants of 1 entity(ies). That registry was generated from the same Whitney index these rows come from, so the mapping is the source's own, not a comparison made here.",
+      "identity_is": "EXPLICIT_IN_A_SOURCE_BACKED_REGISTRY",
+      "predicate": "HAS_DEVATA_ASCRIPTION",
+      "scope_type": "SINGLE_MANTRA"
+    },
+    {
+      "row_id": "VG:AV:SAU:K19:S045:V008:devata",
+      "canonical_key": "VG:AV:SAU:K19:S045:V008",
+      "verse_coordinate": "VG:AV:SAU:K19:S045",
+      "dimension": "devata",
+      "printed_string": "mantroktadevatyam",
+      "candidate_entity_keys": [
+        "VG:ASCRIPTION:AV:MANTROKTADEVATYAM-0A39"
+      ],
+      "method": "REGISTRY_SOURCE_VARIANT_LOOKUP",
+      "independent_evidence": "devata_ascriptions_av.yaml lists this exact printed spelling in the source_variants of 1 entity(ies). That registry was generated from the same Whitney index these rows come from, so the mapping is the source's own, not a comparison made here.",
+      "identity_is": "EXPLICIT_IN_A_SOURCE_BACKED_REGISTRY",
+      "predicate": "HAS_DEVATA_ASCRIPTION",
+      "scope_type": "SINGLE_MANTRA"
+    },
+    {
+      "row_id": "VG:AV:SAU:K19:S045:V009:devata",
+      "canonical_key": "VG:AV:SAU:K19:S045:V009",
+      "verse_coordinate": "VG:AV:SAU:K19:S045",
+      "dimension": "devata",
+      "printed_string": "mantroktadevatyam",
+      "candidate_entity_keys": [
+        "VG:ASCRIPTION:AV:MANTROKTADEVATYAM-0A39"
+      ],
+      "method": "REGISTRY_SOURCE_VARIANT_LOOKUP",
+      "independent_evidence": "devata_ascriptions_av.yaml lists this exact printed spelling in the source_variants of 1 entity(ies). That registry was generated from the same Whitney index these rows come from, so the mapping is the source's own, not a comparison made here.",
+      "identity_is": "EXPLICIT_IN_A_SOURCE_BACKED_REGISTRY",
+      "predicate": "HAS_DEVATA_ASCRIPTION",
+      "scope_type": "SINGLE_MANTRA"
+    }
+  ],
+  "unmatched_sample": [
+    "kāmadevatyā",
+    "bhāumī",
+    "agnim astāut",
+    "agnim astāut",
+    "devān",
+    "devān",
+    "draviṇodādiprārthanam",
+    "vāiçvadevī",
+    "vāiçvadevī",
+    "vāiçvadevī",
+    "sāumī",
+    "āindrī",
+    "āindrī",
+    "brahmādityam",
+    "karmāṇi"
+  ],
+  "ambiguous_sample": []
+}

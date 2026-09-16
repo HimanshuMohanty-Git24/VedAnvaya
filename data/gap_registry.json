@@ -3396,6 +3396,33 @@
       "observed_gap": "2 sutras unrepresentable under the current identity",
       "initial_hypothesis": "the staging duplicated a row",
       "initial_hypothesis_status": "DISPROVED. The two rows carry different text and different printed ordinals; they are two sutras, not one recorded twice."
+    },
+    {
+      "gap_id": "GAP-AV-CHANDOMETRE-SEGMENTATION-001",
+      "domain": "attribution",
+      "surface": "Any Atharvavedic metre surface: the chandas dimension of GET /api/v1/passages/{key}, the metre facets of the coverage views, and the :Chandas nodes of the Knowledge World projection.",
+      "evidence": "Of the 541 AV_WHITNEY_ANUKRAMANI :Chandas entities, a number are unsegmented fragments of Whitney's printed bracket rather than metre names -- 'aindryas. anustubham: 2. 3-av. 6-p. jagati' carries a deity, a metre and a per-verse exception in one string. 33 canonical HAS_CHANDAS edges already point at such entities. Three tests were written to bound the population and they disagree: 17 by Whitney's colon, 28 by colon-or-embedded-verse-reference, 39 by a two-statement test. Probe: scripts/whitney_resolution.py, section target_vocabulary_audit.",
+      "classification": "STAGING_DEFECT",
+      "description": "The AV chandas registry's segmentation of Whitney's bracket is incomplete, so some entities are compound statements promoted to metre identities. The graph already holds 33 metre assertions whose object is such a fragment, which means a reader asking a verse's metre can be told a string containing a deity name. The population cannot be bounded mechanically: separating a deity adjective from a metre name inside these strings is philological adjudication, and every heuristic written to approximate it gives a different answer.",
+      "current_count": 33,
+      "expected_population": 541,
+      "missing_count": 0,
+      "status": "OPEN",
+      "causation_status": "MEASURED",
+      "root_cause": "INCOMPLETE_SOURCE_BRACKET_SEGMENTATION",
+      "measured_root_cause": "scripts/build_anukramani_knowledge_layer.py records the index's own strings and folds spelling variants, but does not split a bracket segment into its deity, metre and per-verse exception parts. Where the segment was already one metre name the result is correct, which is why the defect is partial and was not noticed.",
+      "closure_method": "Re-segment the bracket in the registry builder, which re-identifies the affected entities -- an owner decision, not a cleanup rule -- or model the compound strings as source evidence rather than as :Chandas identities.",
+      "closure_test": "No :Chandas entity's preferred_label holds more than one statement of Whitney's notation, and 0 HAS_CHANDAS edges point at one that does. Read back from canonical Neo4j.",
+      "owner_agent": "attribution",
+      "source_availability": "SOURCE_HELD",
+      "source_dependency": "none -- the bracket is already transcribed",
+      "implementation_dependency": "bracket segmentation in the registry builder",
+      "diagnostics_run": [
+        "scripts/whitney_resolution.py"
+      ],
+      "observed_gap": "33 metre assertions whose object is not a metre",
+      "initial_hypothesis": "the Whitney 466 were unimportable only because nothing had resolved their objects to entities",
+      "initial_hypothesis_status": "PARTLY DISPROVED. A permitted resolution channel exists and works -- the registry's own source_variants resolve 405 of 477 proposals with zero ambiguity -- but the vocabulary it resolves into is contaminated, so the rows stay withheld for a different and stronger reason than 'no evidence'."
     }
   ],
   "root_cause_taxonomy": [
