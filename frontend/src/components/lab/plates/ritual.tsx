@@ -13,11 +13,20 @@ import { count, PLATES_BY_SLUG, plural } from "@/lib/lab";
 /**
  * The rite, as far as it is modelled.
  *
- * This is the plate most easily made dishonest, because a ritual layer with eight rites in it
- * renders perfectly well as a confident diagram of Vedic ritual. So the coverage statement is
- * the first thing on the page and the content comes second: eight modelled rites, three step
- * edges across all eight, and therefore no rite anywhere in this graph with a recoverable
- * sequence.
+ * This is the plate most easily made dishonest, because a small curated ritual layer renders
+ * perfectly well as a confident diagram of Vedic ritual. So the coverage statement is the
+ * first thing on the page and the content comes second.
+ *
+ * Every figure here is read from `coverage` in the payload. The previous version typed them
+ * into prose -- "eight rites, fourteen implements, three step edges" -- and went on saying so
+ * after the graph held 103 rites and 3,121 sutra-attested steps, because nothing compares a
+ * sentence to the data beside it.
+ *
+ * Two step layers are reported apart, and never summed. `step_edges` is what a Samhita text
+ * numbers in its own words; `procedure_step_edges` is what a Srautasutra prints. Neither one
+ * gives a rite a recoverable sequence, and they fail to for different reasons: the first
+ * barely exists, and the second is independently numbered per source work so its groups do
+ * not compose.
  *
  * The endpoint's own `not_covered` list is printed rather than paraphrased. It records, among
  * other things, that the chariot and the thunderbolt are absent because no modelled rite uses
@@ -65,7 +74,7 @@ export async function RitualPlate() {
     return (
         <>
             <PlateHeader
-                lede="The Vedas are, among other things, the libretto of a sacrifice. What this build holds of that sacrifice is a small, curated layer — eight rites, fourteen implements, three step edges — and the honest thing to show first is the size of what is missing."
+                lede="The Vedas are, among other things, the libretto of a sacrifice. What this build holds of that sacrifice is a curated layer whose exact size is measured beneath, and the honest thing to show first is the shape of what is missing."
                 plate={plate}
             />
 
@@ -75,30 +84,38 @@ export async function RitualPlate() {
             </div>
 
             <PlateFigure
-                description="The eight rites this build models, by the number of verses in which a registered alias for the rite occurs. The figure beside each row is what has been attached to it: objects, offerings, deities, and whether any sequence at all was recorded."
+                description={`The ${count(coverage?.rituals_modelled) ?? "—"} rites this build models, by the number of verses in which a registered alias for the rite occurs. The figure beside each row is what has been attached to it: objects, offerings, deities, and whether any sequence was recorded.`}
                 footnote={
                     <>
-                        The prose that actually describes the srauta apparatus — the Brahmanas and
-                        the Srautasutras — is not held by this product at all. A rite is visible
-                        here only where a Samhita verse happens to name it, which is the reason the
-                        step count is what it is.
+                        The Brahmana and Srautasutra prose that describes the srauta apparatus is
+                        not held as text by this product. What it does hold is{" "}
+                        {count(coverage?.procedure_step_edges) ?? "—"} located sutra steps drawn
+                        from {count(coverage?.procedure_source_works) ?? "—"} works, each numbering
+                        its own sequence from 1 — so they are points a source fixes, not a
+                        procedure that runs. The apparatus itself is still visible only where a
+                        Samhita verse names it.
                     </>
                 }
                 id="rites"
-                title="Eight rites, and what is attached to them"
+                title="The modelled rites, and what is attached to them"
             >
                 <div className="va-figure-split">
                     <Figure
                         note={
                             <>
-                                across all eight rites, so no rite in this graph has a recoverable
-                                sequence.{" "}
+                                in the whole graph, all on one rite.{" "}
                                 {withSteps.length
                                     ? `Only ${withSteps.map((row) => row.ritual).join(", ")} carries any.`
-                                    : null}
+                                    : null}{" "}
+                                A second and much larger layer is sutra-attested —{" "}
+                                {count(coverage?.procedure_step_edges) ?? "—"} steps over{" "}
+                                {count(coverage?.rituals_with_procedure) ?? "—"} rites — and it does
+                                not close the gap: each work numbers its own sequence, and{" "}
+                                {count(coverage?.procedure_partial_steps) ?? "—"} of those steps
+                                state a position without printing the run it falls in.
                             </>
                         }
-                        unit="step edges in the whole layer"
+                        unit="steps the Samhita numbers in its own words"
                         value={count(coverage?.step_edges) ?? "—"}
                     />
                     <BarTable
@@ -113,10 +130,10 @@ export async function RitualPlate() {
                 description={`The ${objects.length} implements linked to a modelled rite, by the number of verses in which each is named. These are the objects the sacrifice is performed with, as far as the curation reaches.`}
                 footnote={
                     <>
-                        Fourteen of twenty-three curated objects are linked to a rite and so
-                        eligible for this ranking. The amulet and the drum are among the nine that
-                        are not, and their absence here is a missing link rather than a missing
-                        attestation.
+                        {count(coverage?.implements_curated) ?? "—"} curated objects are linked to a
+                        rite and so eligible for this ranking. The amulet and the drum are among
+                        those that are not, and their absence here is a missing link rather than a
+                        missing attestation.
                     </>
                 }
                 id="implements"
@@ -171,7 +188,7 @@ export async function RitualPlate() {
                 links={[
                     {
                         href: "/rituals",
-                        label: "The eight rites",
+                        label: "The modelled rites",
                         note: "Each with its objects, offerings, performers and verses",
                     },
                     {

@@ -179,7 +179,7 @@ export const PLATES: Plate[] = [
             measures:
                 "Rites and ritual implements in the curated layer, with the number of verses in which each is named.",
             mark: "One row is one modelled rite or one implement. Its figure is the number of verses a registered alias matched.",
-            scope: "The eight rites and fourteen implements that have been modelled. Named explicitly, so the denominator is visible.",
+            scope: "The rites and implements that have been modelled, with the denominator measured in the payload rather than written here. Two step layers are reported apart: what a Samhita text numbers, and what a sutra prints.",
             excluded:
                 "Every rite the corpus names that has not been modelled, and the sequence of any rite: there are three step edges in the whole layer.",
             notInfer:
