@@ -2,7 +2,10 @@
 
 Written for: the project owner, reading to decide whether to release.
 
-Branch `phase-data-completeness-v2` · Wave 4 baseline `df102bf` · 13 commits · 2026-09-16
+Branch `phase-data-completeness-v2` · Wave 4 baseline `df102bf` · 2026-09-16
+
+(Commit count deliberately not stated. Run `git log --oneline df102bf..HEAD` — a number
+typed into prose here is the one figure on this page that nothing checks.)
 
 ---
 
