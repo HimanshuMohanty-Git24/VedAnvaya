@@ -1,0 +1,3004 @@
+{
+ "phase": 5,
+ "what_this_checks": "whether the pinned Griffith White Yajurveda snapshot actually prints a verse label for each staged row's unit, independently of the generator's claim that it does not",
+ "pages_on_disk": 45,
+ "pages_parsed": 16,
+ "summaries": [
+  {
+   "population": "address_forced_without_content_control=true",
+   "rows": 31,
+   "source_available": 31,
+   "literal_found_in_pinned_source": 30,
+   "printed_label_present_in_source": 30,
+   "printed_label_equals_canonical_verse": 15,
+   "label_monotonic_with_neighbours": 12,
+   "rows_pinning_own_bytes": 31
+  },
+  {
+   "population": "address_forced_without_content_control=false",
+   "rows": 8,
+   "source_available": 8,
+   "literal_found_in_pinned_source": 8,
+   "printed_label_present_in_source": 8,
+   "printed_label_equals_canonical_verse": 3,
+   "label_monotonic_with_neighbours": 3,
+   "rows_pinning_own_bytes": 8
+  },
+  {
+   "population": "flag absent (adhyaya 12 population)",
+   "rows": 12,
+   "source_available": 12,
+   "literal_found_in_pinned_source": 11,
+   "printed_label_present_in_source": 11,
+   "printed_label_equals_canonical_verse": 0,
+   "label_monotonic_with_neighbours": 11,
+   "rows_pinning_own_bytes": 0
+  }
+ ],
+ "rows": [
+  {
+   "staged_row_id": "TR02203",
+   "canonical_key": "VG:YV:VSM:A06:V023",
+   "adhyaya": 6,
+   "canonical_verse_number": 23,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": true,
+   "source_label_defect": "LABEL_PRINTED_BUT_CORRUPT",
+   "stage_gap_defect": "LABEL_NOT_PRINTED",
+   "declared_locator": "book page wyvbk06.htm, printed page 48, document unit 22, printed label '23'",
+   "snapshot_sha256": "f25a03e42b5975bb480102742a6080ffe5e391d89a65ef671e8e117b8b71a00a",
+   "row_pins_its_own_bytes": true,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk06.htm",
+   "best_matching_unit": {
+    "document_unit_index": 38,
+    "printed_label": 23,
+    "printed_label_candidates": [
+     23
+    ],
+    "printed_label_glyphs": "23",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "These waters teem with sacred food: rich in that food, one longs for them. Rich be the holy rite therein. In s"
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 23,
+   "printed_label_candidates": [
+    23
+   ],
+   "printed_label_equals_canonical_verse": true,
+   "canonical_among_printed_label_candidates": true,
+   "neighbours": {
+    "previous": {
+     "printed_label": 0,
+     "printed_label_candidates": [
+      0
+     ],
+     "printed_label_glyphs": "O",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 24,
+     "printed_label_candidates": [
+      24
+     ],
+     "printed_label_glyphs": "24",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": true,
+   "neighbours_bracket_canonical_slot_exactly": false,
+   "constant_offset_consistent_with_neighbours": [],
+   "monotone_offset_determined": false,
+   "source_local_address_determination": "PRINTED_LABEL_READ_DIRECTLY"
+  },
+  {
+   "staged_row_id": "TR02204",
+   "canonical_key": "VG:YV:VSM:A06:V025",
+   "adhyaya": 6,
+   "canonical_verse_number": 25,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": true,
+   "source_label_defect": "LABEL_PRINTED_BUT_CORRUPT",
+   "stage_gap_defect": "LABEL_NOT_PRINTED",
+   "declared_locator": "book page wyvbk06.htm, printed page 48, document unit 24, printed label '23'",
+   "snapshot_sha256": "f25a03e42b5975bb480102742a6080ffe5e391d89a65ef671e8e117b8b71a00a",
+   "row_pins_its_own_bytes": true,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk06.htm",
+   "best_matching_unit": {
+    "document_unit_index": 40,
+    "printed_label": 23,
+    "printed_label_candidates": [
+     23
+    ],
+    "printed_label_glyphs": "23",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "Thee for the heart, thee for the mind, thee for the heaven, thee for the Sun. Bear up erect to heaven, to Gods"
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 23,
+   "printed_label_candidates": [
+    23
+   ],
+   "printed_label_equals_canonical_verse": false,
+   "canonical_among_printed_label_candidates": false,
+   "neighbours": {
+    "previous": {
+     "printed_label": 24,
+     "printed_label_candidates": [
+      24
+     ],
+     "printed_label_glyphs": "24",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 26,
+     "printed_label_candidates": [
+      26
+     ],
+     "printed_label_glyphs": "26",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": false,
+   "neighbours_bracket_canonical_slot_exactly": true,
+   "constant_offset_consistent_with_neighbours": [],
+   "monotone_offset_determined": false,
+   "source_local_address_determination": "UNIQUELY_BRACKETED_BY_PRINTED_NEIGHBOURS"
+  },
+  {
+   "staged_row_id": "TR02205",
+   "canonical_key": "VG:YV:VSM:A08:V017",
+   "adhyaya": 8,
+   "canonical_verse_number": 17,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": true,
+   "source_label_defect": "LABEL_PRINTED_BUT_CORRUPT",
+   "stage_gap_defect": "LABEL_NOT_PRINTED",
+   "declared_locator": "book page wyvbk08.htm, printed page 62, document unit 16, printed label '17'",
+   "snapshot_sha256": "25bfb45ae663d263ce535e85c4f23b96f1d82fdfca1a4d380246824bcd53b390",
+   "row_pins_its_own_bytes": true,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk08.htm",
+   "best_matching_unit": {
+    "document_unit_index": 30,
+    "printed_label": 17,
+    "printed_label_candidates": [
+     17
+    ],
+    "printed_label_glyphs": "17",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "May this please Savitar and liberal Dhâtar, Prajâpati the Treasure-Guard, bright Agni, Tvashtar, and Vishnu: b"
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 17,
+   "printed_label_candidates": [
+    17
+   ],
+   "printed_label_equals_canonical_verse": true,
+   "canonical_among_printed_label_candidates": true,
+   "neighbours": {
+    "previous": {
+     "printed_label": 16,
+     "printed_label_candidates": [
+      16
+     ],
+     "printed_label_glyphs": "16",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 18,
+     "printed_label_candidates": [
+      18
+     ],
+     "printed_label_glyphs": "18",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": true,
+   "neighbours_bracket_canonical_slot_exactly": true,
+   "constant_offset_consistent_with_neighbours": [
+    0
+   ],
+   "monotone_offset_determined": false,
+   "source_local_address_determination": "PRINTED_LABEL_READ_DIRECTLY"
+  },
+  {
+   "staged_row_id": "TR02206",
+   "canonical_key": "VG:YV:VSM:A08:V027",
+   "adhyaya": 8,
+   "canonical_verse_number": 27,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": true,
+   "source_label_defect": "LABEL_PRINTED_BUT_CORRUPT",
+   "stage_gap_defect": "LABEL_NOT_PRINTED",
+   "declared_locator": "book page wyvbk08.htm, printed page 64, document unit 26, printed label '17'",
+   "snapshot_sha256": "25bfb45ae663d263ce535e85c4f23b96f1d82fdfca1a4d380246824bcd53b390",
+   "row_pins_its_own_bytes": true,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk08.htm",
+   "best_matching_unit": {
+    "document_unit_index": 41,
+    "printed_label": 17,
+    "printed_label_candidates": [
+     17
+    ],
+    "printed_label_glyphs": "17",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "O restless Purifying Bath, thou glidest onward restlessly. May I with aid of Gods remove the stain of sin agai"
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 17,
+   "printed_label_candidates": [
+    17
+   ],
+   "printed_label_equals_canonical_verse": false,
+   "canonical_among_printed_label_candidates": false,
+   "neighbours": {
+    "previous": {
+     "printed_label": 26,
+     "printed_label_candidates": [
+      26
+     ],
+     "printed_label_glyphs": "26",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 28,
+     "printed_label_candidates": [
+      28
+     ],
+     "printed_label_glyphs": "28",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": false,
+   "neighbours_bracket_canonical_slot_exactly": true,
+   "constant_offset_consistent_with_neighbours": [],
+   "monotone_offset_determined": false,
+   "source_local_address_determination": "UNIQUELY_BRACKETED_BY_PRINTED_NEIGHBOURS"
+  },
+  {
+   "staged_row_id": "TR02207",
+   "canonical_key": "VG:YV:VSM:A12:V014",
+   "adhyaya": 12,
+   "canonical_verse_number": 14,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": false,
+   "source_label_defect": "LABEL_PRINTED_BUT_CORRUPT",
+   "stage_gap_defect": "LABEL_NOT_PRINTED",
+   "declared_locator": "book page wyvbk12.htm, printed page 102, document unit 13, printed label '14'",
+   "snapshot_sha256": "67559e80228d45270c24e04c7cda58a74d07bf4aeb4c3020a012b77471ef2940",
+   "row_pins_its_own_bytes": true,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk12.htm",
+   "best_matching_unit": {
+    "document_unit_index": 11,
+    "printed_label": 14,
+    "printed_label_candidates": [
+     14
+    ],
+    "printed_label_glyphs": "14",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "The Hamsa homed in light, the Vasu in mid-air, the Priest beside the altar, Guest within the house, Dweller in"
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 14,
+   "printed_label_candidates": [
+    14
+   ],
+   "printed_label_equals_canonical_verse": true,
+   "canonical_among_printed_label_candidates": true,
+   "neighbours": {
+    "previous": {
+     "printed_label": 12,
+     "printed_label_candidates": [
+      12
+     ],
+     "printed_label_glyphs": "12",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 15,
+     "printed_label_candidates": [
+      15
+     ],
+     "printed_label_glyphs": "15",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": true,
+   "neighbours_bracket_canonical_slot_exactly": false,
+   "constant_offset_consistent_with_neighbours": [],
+   "monotone_offset_determined": false,
+   "source_local_address_determination": "PRINTED_LABEL_READ_DIRECTLY"
+  },
+  {
+   "staged_row_id": "TR02208",
+   "canonical_key": "VG:YV:VSM:A12:V044",
+   "adhyaya": 12,
+   "canonical_verse_number": 44,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": true,
+   "source_label_defect": "LABEL_PRINTED_BUT_CORRUPT",
+   "stage_gap_defect": "LABEL_NOT_PRINTED",
+   "declared_locator": "book page wyvbk12.htm, printed page 105, document unit 42, printed label '14'",
+   "snapshot_sha256": "67559e80228d45270c24e04c7cda58a74d07bf4aeb4c3020a012b77471ef2940",
+   "row_pins_its_own_bytes": true,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk12.htm",
+   "best_matching_unit": {
+    "document_unit_index": 54,
+    "printed_label": 14,
+    "printed_label_candidates": [
+     14
+    ],
+    "printed_label_glyphs": "14",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "Again let the Âdityas, Rudras, Yams, and Brahmans with their rites light thee, Wealth-bringer! Increase thy bo"
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 14,
+   "printed_label_candidates": [
+    14
+   ],
+   "printed_label_equals_canonical_verse": false,
+   "canonical_among_printed_label_candidates": false,
+   "neighbours": {
+    "previous": {
+     "printed_label": 43,
+     "printed_label_candidates": [
+      43
+     ],
+     "printed_label_glyphs": "43",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 45,
+     "printed_label_candidates": [
+      45
+     ],
+     "printed_label_glyphs": "45",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": false,
+   "neighbours_bracket_canonical_slot_exactly": true,
+   "constant_offset_consistent_with_neighbours": [],
+   "monotone_offset_determined": false,
+   "source_local_address_determination": "UNIQUELY_BRACKETED_BY_PRINTED_NEIGHBOURS"
+  },
+  {
+   "staged_row_id": "TR02209",
+   "canonical_key": "VG:YV:VSM:A12:V071",
+   "adhyaya": 12,
+   "canonical_verse_number": 71,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": true,
+   "source_label_defect": "LABEL_PRINTED_BUT_CORRUPT",
+   "stage_gap_defect": "LABEL_NOT_PRINTED",
+   "declared_locator": "book page wyvbk12.htm, printed page 109, document unit 69, printed label '71'",
+   "snapshot_sha256": "67559e80228d45270c24e04c7cda58a74d07bf4aeb4c3020a012b77471ef2940",
+   "row_pins_its_own_bytes": true,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk12.htm",
+   "best_matching_unit": {
+    "document_unit_index": 82,
+    "printed_label": 71,
+    "printed_label_candidates": [
+     71
+    ],
+    "printed_label_glyphs": "71",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "The keen-shared plough that bringeth bliss, good for the Soma-drinker's need, Shear out for me a cow, a sheep,"
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 71,
+   "printed_label_candidates": [
+    71
+   ],
+   "printed_label_equals_canonical_verse": true,
+   "canonical_among_printed_label_candidates": true,
+   "neighbours": {
+    "previous": {
+     "printed_label": 70,
+     "printed_label_candidates": [
+      70
+     ],
+     "printed_label_glyphs": "70",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 72,
+     "printed_label_candidates": [
+      72
+     ],
+     "printed_label_glyphs": "72",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": true,
+   "neighbours_bracket_canonical_slot_exactly": true,
+   "constant_offset_consistent_with_neighbours": [
+    0
+   ],
+   "monotone_offset_determined": false,
+   "source_local_address_determination": "PRINTED_LABEL_READ_DIRECTLY"
+  },
+  {
+   "staged_row_id": "TR02210",
+   "canonical_key": "VG:YV:VSM:A12:V074",
+   "adhyaya": 12,
+   "canonical_verse_number": 74,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": true,
+   "source_label_defect": "LABEL_PRINTED_BUT_CORRUPT",
+   "stage_gap_defect": "LABEL_NOT_PRINTED",
+   "declared_locator": "book page wyvbk12.htm, printed page 109, document unit 72, printed label '71'",
+   "snapshot_sha256": "67559e80228d45270c24e04c7cda58a74d07bf4aeb4c3020a012b77471ef2940",
+   "row_pins_its_own_bytes": true,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk12.htm",
+   "best_matching_unit": {
+    "document_unit_index": 85,
+    "printed_label": 71,
+    "printed_label_candidates": [
+     71
+    ],
+    "printed_label_glyphs": "71",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "The year together with the darksome fortnights; Dawn with the ruddy-coloured cows about her; the Asvins with t"
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 71,
+   "printed_label_candidates": [
+    71
+   ],
+   "printed_label_equals_canonical_verse": false,
+   "canonical_among_printed_label_candidates": false,
+   "neighbours": {
+    "previous": {
+     "printed_label": 73,
+     "printed_label_candidates": [
+      73
+     ],
+     "printed_label_glyphs": "73",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 75,
+     "printed_label_candidates": [
+      75
+     ],
+     "printed_label_glyphs": "75",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": false,
+   "neighbours_bracket_canonical_slot_exactly": true,
+   "constant_offset_consistent_with_neighbours": [],
+   "monotone_offset_determined": false,
+   "source_local_address_determination": "UNIQUELY_BRACKETED_BY_PRINTED_NEIGHBOURS"
+  },
+  {
+   "staged_row_id": "TR02211",
+   "canonical_key": "VG:YV:VSM:A12:V106",
+   "adhyaya": 12,
+   "canonical_verse_number": 106,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": null,
+   "source_label_defect": null,
+   "stage_gap_defect": null,
+   "declared_locator": "book page wyvbk12.htm, printed label '107', printed page 112",
+   "snapshot_sha256": null,
+   "snapshot_sha256_resolved_from_locator": "67559e80228d45270c24e04c7cda58a74d07bf4aeb4c3020a012b77471ef2940",
+   "row_pins_its_own_bytes": false,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk12.htm",
+   "best_matching_unit": {
+    "document_unit_index": 119,
+    "printed_label": 107,
+    "printed_label_candidates": [
+     107
+    ],
+    "printed_label_glyphs": "107",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "Agni, life-power and fame are thine: thy fires blaze mightily, thou rich in wealth of beams! Sage, passing bri"
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 107,
+   "printed_label_candidates": [
+    107
+   ],
+   "printed_label_equals_canonical_verse": false,
+   "canonical_among_printed_label_candidates": false,
+   "neighbours": {
+    "previous": {
+     "printed_label": 106,
+     "printed_label_candidates": [
+      106
+     ],
+     "printed_label_glyphs": "106",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 108,
+     "printed_label_candidates": [
+      108
+     ],
+     "printed_label_glyphs": "108",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": true,
+   "neighbours_bracket_canonical_slot_exactly": false,
+   "constant_offset_consistent_with_neighbours": [
+    1
+   ],
+   "monotone_offset_determined": true,
+   "source_local_address_determination": "CONSTANT_OFFSET_SPINE_WITH_NEIGHBOURS"
+  },
+  {
+   "staged_row_id": "TR02212",
+   "canonical_key": "VG:YV:VSM:A12:V107",
+   "adhyaya": 12,
+   "canonical_verse_number": 107,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": null,
+   "source_label_defect": null,
+   "stage_gap_defect": null,
+   "declared_locator": "book page wyvbk12.htm, printed label '108', printed page 112",
+   "snapshot_sha256": null,
+   "snapshot_sha256_resolved_from_locator": "67559e80228d45270c24e04c7cda58a74d07bf4aeb4c3020a012b77471ef2940",
+   "row_pins_its_own_bytes": false,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk12.htm",
+   "best_matching_unit": {
+    "document_unit_index": 120,
+    "printed_label": 108,
+    "printed_label_candidates": [
+     108
+    ],
+    "printed_label_glyphs": "108",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "With brilliant, purifying sheen, with perfect sheen thou liftest up thyself in light. Thou, visiting both thy "
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 108,
+   "printed_label_candidates": [
+    108
+   ],
+   "printed_label_equals_canonical_verse": false,
+   "canonical_among_printed_label_candidates": false,
+   "neighbours": {
+    "previous": {
+     "printed_label": 107,
+     "printed_label_candidates": [
+      107
+     ],
+     "printed_label_glyphs": "107",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 109,
+     "printed_label_candidates": [
+      109
+     ],
+     "printed_label_glyphs": "109",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": true,
+   "neighbours_bracket_canonical_slot_exactly": false,
+   "constant_offset_consistent_with_neighbours": [
+    1
+   ],
+   "monotone_offset_determined": true,
+   "source_local_address_determination": "CONSTANT_OFFSET_SPINE_WITH_NEIGHBOURS"
+  },
+  {
+   "staged_row_id": "TR02213",
+   "canonical_key": "VG:YV:VSM:A12:V108",
+   "adhyaya": 12,
+   "canonical_verse_number": 108,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": null,
+   "source_label_defect": null,
+   "stage_gap_defect": null,
+   "declared_locator": "book page wyvbk12.htm, printed label '109', printed page 113",
+   "snapshot_sha256": null,
+   "snapshot_sha256_resolved_from_locator": "67559e80228d45270c24e04c7cda58a74d07bf4aeb4c3020a012b77471ef2940",
+   "row_pins_its_own_bytes": false,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk12.htm",
+   "best_matching_unit": {
+    "document_unit_index": 121,
+    "printed_label": 109,
+    "printed_label_candidates": [
+     109
+    ],
+    "printed_label_glyphs": "109",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "O Jâtavedas, Son of Strength, rejoice thyself, gracious, in our fair hymns and songs. In thee are treasured va"
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 109,
+   "printed_label_candidates": [
+    109
+   ],
+   "printed_label_equals_canonical_verse": false,
+   "canonical_among_printed_label_candidates": false,
+   "neighbours": {
+    "previous": {
+     "printed_label": 108,
+     "printed_label_candidates": [
+      108
+     ],
+     "printed_label_glyphs": "108",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 110,
+     "printed_label_candidates": [
+      110
+     ],
+     "printed_label_glyphs": "110",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": true,
+   "neighbours_bracket_canonical_slot_exactly": false,
+   "constant_offset_consistent_with_neighbours": [
+    1
+   ],
+   "monotone_offset_determined": true,
+   "source_local_address_determination": "CONSTANT_OFFSET_SPINE_WITH_NEIGHBOURS"
+  },
+  {
+   "staged_row_id": "TR02214",
+   "canonical_key": "VG:YV:VSM:A12:V109",
+   "adhyaya": 12,
+   "canonical_verse_number": 109,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": null,
+   "source_label_defect": null,
+   "stage_gap_defect": null,
+   "declared_locator": "book page wyvbk12.htm, printed label '110', printed page 113",
+   "snapshot_sha256": null,
+   "snapshot_sha256_resolved_from_locator": "67559e80228d45270c24e04c7cda58a74d07bf4aeb4c3020a012b77471ef2940",
+   "row_pins_its_own_bytes": false,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk12.htm",
+   "best_matching_unit": {
+    "document_unit_index": 122,
+    "printed_label": 110,
+    "printed_label_candidates": [
+     110
+    ],
+    "printed_label_glyphs": "110",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "Agni, spread forth, as Ruler, over living things: give wealth to us, Immortal God. Thou shinest out from beaut"
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 110,
+   "printed_label_candidates": [
+    110
+   ],
+   "printed_label_equals_canonical_verse": false,
+   "canonical_among_printed_label_candidates": false,
+   "neighbours": {
+    "previous": {
+     "printed_label": 109,
+     "printed_label_candidates": [
+      109
+     ],
+     "printed_label_glyphs": "109",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 111,
+     "printed_label_candidates": [
+      111
+     ],
+     "printed_label_glyphs": "111",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": true,
+   "neighbours_bracket_canonical_slot_exactly": false,
+   "constant_offset_consistent_with_neighbours": [
+    1
+   ],
+   "monotone_offset_determined": true,
+   "source_local_address_determination": "CONSTANT_OFFSET_SPINE_WITH_NEIGHBOURS"
+  },
+  {
+   "staged_row_id": "TR02215",
+   "canonical_key": "VG:YV:VSM:A12:V110",
+   "adhyaya": 12,
+   "canonical_verse_number": 110,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": null,
+   "source_label_defect": null,
+   "stage_gap_defect": null,
+   "declared_locator": "book page wyvbk12.htm, printed label '111', printed page 113",
+   "snapshot_sha256": null,
+   "snapshot_sha256_resolved_from_locator": "67559e80228d45270c24e04c7cda58a74d07bf4aeb4c3020a012b77471ef2940",
+   "row_pins_its_own_bytes": false,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk12.htm",
+   "best_matching_unit": {
+    "document_unit_index": 123,
+    "printed_label": 111,
+    "printed_label_candidates": [
+     111
+    ],
+    "printed_label_glyphs": "111",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "To him, the wise, who orders sacrifice, who hath great riches under his control, Thou givest blest award of go"
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 111,
+   "printed_label_candidates": [
+    111
+   ],
+   "printed_label_equals_canonical_verse": false,
+   "canonical_among_printed_label_candidates": false,
+   "neighbours": {
+    "previous": {
+     "printed_label": 110,
+     "printed_label_candidates": [
+      110
+     ],
+     "printed_label_glyphs": "110",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 112,
+     "printed_label_candidates": [
+      112
+     ],
+     "printed_label_glyphs": "112",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": true,
+   "neighbours_bracket_canonical_slot_exactly": false,
+   "constant_offset_consistent_with_neighbours": [
+    1
+   ],
+   "monotone_offset_determined": true,
+   "source_local_address_determination": "CONSTANT_OFFSET_SPINE_WITH_NEIGHBOURS"
+  },
+  {
+   "staged_row_id": "TR02216",
+   "canonical_key": "VG:YV:VSM:A12:V111",
+   "adhyaya": 12,
+   "canonical_verse_number": 111,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": null,
+   "source_label_defect": null,
+   "stage_gap_defect": null,
+   "declared_locator": "book page wyvbk12.htm, printed label '112', printed page 113",
+   "snapshot_sha256": null,
+   "snapshot_sha256_resolved_from_locator": "67559e80228d45270c24e04c7cda58a74d07bf4aeb4c3020a012b77471ef2940",
+   "row_pins_its_own_bytes": false,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk12.htm",
+   "best_matching_unit": {
+    "document_unit_index": 124,
+    "printed_label": 112,
+    "printed_label_candidates": [
+     112
+    ],
+    "printed_label_glyphs": "112",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "The men have set before them for their welfare Agni, strong, visible to all, the Holy. Thee, Godlike One, with"
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 112,
+   "printed_label_candidates": [
+    112
+   ],
+   "printed_label_equals_canonical_verse": false,
+   "canonical_among_printed_label_candidates": false,
+   "neighbours": {
+    "previous": {
+     "printed_label": 111,
+     "printed_label_candidates": [
+      111
+     ],
+     "printed_label_glyphs": "111",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 113,
+     "printed_label_candidates": [
+      113
+     ],
+     "printed_label_glyphs": "113",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": true,
+   "neighbours_bracket_canonical_slot_exactly": false,
+   "constant_offset_consistent_with_neighbours": [
+    1
+   ],
+   "monotone_offset_determined": true,
+   "source_local_address_determination": "CONSTANT_OFFSET_SPINE_WITH_NEIGHBOURS"
+  },
+  {
+   "staged_row_id": "TR02217",
+   "canonical_key": "VG:YV:VSM:A12:V112",
+   "adhyaya": 12,
+   "canonical_verse_number": 112,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": null,
+   "source_label_defect": null,
+   "stage_gap_defect": null,
+   "declared_locator": "book page wyvbk12.htm, printed label '113', printed page 113",
+   "snapshot_sha256": null,
+   "snapshot_sha256_resolved_from_locator": "67559e80228d45270c24e04c7cda58a74d07bf4aeb4c3020a012b77471ef2940",
+   "row_pins_its_own_bytes": false,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk12.htm",
+   "best_matching_unit": {
+    "document_unit_index": 125,
+    "printed_label": 113,
+    "printed_label_candidates": [
+     113
+    ],
+    "printed_label_glyphs": "113",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "Soma, wax great. From every side may vigorous powers unite in thee. Be in the gathering-place of strength."
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 113,
+   "printed_label_candidates": [
+    113
+   ],
+   "printed_label_equals_canonical_verse": false,
+   "canonical_among_printed_label_candidates": false,
+   "neighbours": {
+    "previous": {
+     "printed_label": 112,
+     "printed_label_candidates": [
+      112
+     ],
+     "printed_label_glyphs": "112",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 114,
+     "printed_label_candidates": [
+      114
+     ],
+     "printed_label_glyphs": "114",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": true,
+   "neighbours_bracket_canonical_slot_exactly": false,
+   "constant_offset_consistent_with_neighbours": [
+    1
+   ],
+   "monotone_offset_determined": true,
+   "source_local_address_determination": "CONSTANT_OFFSET_SPINE_WITH_NEIGHBOURS"
+  },
+  {
+   "staged_row_id": "TR02218",
+   "canonical_key": "VG:YV:VSM:A12:V113",
+   "adhyaya": 12,
+   "canonical_verse_number": 113,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": null,
+   "source_label_defect": null,
+   "stage_gap_defect": null,
+   "declared_locator": "book page wyvbk12.htm, printed label '114', printed page 113",
+   "snapshot_sha256": null,
+   "snapshot_sha256_resolved_from_locator": "67559e80228d45270c24e04c7cda58a74d07bf4aeb4c3020a012b77471ef2940",
+   "row_pins_its_own_bytes": false,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk12.htm",
+   "best_matching_unit": {
+    "document_unit_index": 126,
+    "printed_label": 114,
+    "printed_label_candidates": [
+     114
+    ],
+    "printed_label_glyphs": "114",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "In thee be juicy nutriments united, and power and mighty foe-subduing vigour. Waxing to immortality, O Soma, w"
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 114,
+   "printed_label_candidates": [
+    114
+   ],
+   "printed_label_equals_canonical_verse": false,
+   "canonical_among_printed_label_candidates": false,
+   "neighbours": {
+    "previous": {
+     "printed_label": 113,
+     "printed_label_candidates": [
+      113
+     ],
+     "printed_label_glyphs": "113",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 115,
+     "printed_label_candidates": [
+      115
+     ],
+     "printed_label_glyphs": "115",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": true,
+   "neighbours_bracket_canonical_slot_exactly": false,
+   "constant_offset_consistent_with_neighbours": [
+    1
+   ],
+   "monotone_offset_determined": true,
+   "source_local_address_determination": "CONSTANT_OFFSET_SPINE_WITH_NEIGHBOURS"
+  },
+  {
+   "staged_row_id": "TR02219",
+   "canonical_key": "VG:YV:VSM:A12:V114",
+   "adhyaya": 12,
+   "canonical_verse_number": 114,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": null,
+   "source_label_defect": null,
+   "stage_gap_defect": null,
+   "declared_locator": "book page wyvbk12.htm, printed label '115', printed page 113",
+   "snapshot_sha256": null,
+   "snapshot_sha256_resolved_from_locator": "67559e80228d45270c24e04c7cda58a74d07bf4aeb4c3020a012b77471ef2940",
+   "row_pins_its_own_bytes": false,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk12.htm",
+   "best_matching_unit": {
+    "document_unit_index": 127,
+    "printed_label": 115,
+    "printed_label_candidates": [
+     115
+    ],
+    "printed_label_glyphs": "115",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "Wax, O most gladdening Soma, great through all thy filaments, and be A friend of most illustrious fame to pros"
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 115,
+   "printed_label_candidates": [
+    115
+   ],
+   "printed_label_equals_canonical_verse": false,
+   "canonical_among_printed_label_candidates": false,
+   "neighbours": {
+    "previous": {
+     "printed_label": 114,
+     "printed_label_candidates": [
+      114
+     ],
+     "printed_label_glyphs": "114",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 116,
+     "printed_label_candidates": [
+      116
+     ],
+     "printed_label_glyphs": "116",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": true,
+   "neighbours_bracket_canonical_slot_exactly": false,
+   "constant_offset_consistent_with_neighbours": [
+    1
+   ],
+   "monotone_offset_determined": true,
+   "source_local_address_determination": "CONSTANT_OFFSET_SPINE_WITH_NEIGHBOURS"
+  },
+  {
+   "staged_row_id": "TR02220",
+   "canonical_key": "VG:YV:VSM:A12:V115",
+   "adhyaya": 12,
+   "canonical_verse_number": 115,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": null,
+   "source_label_defect": null,
+   "stage_gap_defect": null,
+   "declared_locator": "book page wyvbk12.htm, printed label '116', printed page 113",
+   "snapshot_sha256": null,
+   "snapshot_sha256_resolved_from_locator": "67559e80228d45270c24e04c7cda58a74d07bf4aeb4c3020a012b77471ef2940",
+   "row_pins_its_own_bytes": false,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk12.htm",
+   "best_matching_unit": {
+    "document_unit_index": 128,
+    "printed_label": 116,
+    "printed_label_candidates": [
+     116
+    ],
+    "printed_label_glyphs": "116",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "May Vatsa draw thy mind away, even from thy loftiest dwelling-place, Agni, with song that yearns for thee."
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 116,
+   "printed_label_candidates": [
+    116
+   ],
+   "printed_label_equals_canonical_verse": false,
+   "canonical_among_printed_label_candidates": false,
+   "neighbours": {
+    "previous": {
+     "printed_label": 115,
+     "printed_label_candidates": [
+      115
+     ],
+     "printed_label_glyphs": "115",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 117,
+     "printed_label_candidates": [
+      117
+     ],
+     "printed_label_glyphs": "117",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": true,
+   "neighbours_bracket_canonical_slot_exactly": false,
+   "constant_offset_consistent_with_neighbours": [
+    1
+   ],
+   "monotone_offset_determined": true,
+   "source_local_address_determination": "CONSTANT_OFFSET_SPINE_WITH_NEIGHBOURS"
+  },
+  {
+   "staged_row_id": "TR02221",
+   "canonical_key": "VG:YV:VSM:A12:V116",
+   "adhyaya": 12,
+   "canonical_verse_number": 116,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": null,
+   "source_label_defect": null,
+   "stage_gap_defect": null,
+   "declared_locator": "book page wyvbk12.htm, printed label '117', printed page 113",
+   "snapshot_sha256": null,
+   "snapshot_sha256_resolved_from_locator": "67559e80228d45270c24e04c7cda58a74d07bf4aeb4c3020a012b77471ef2940",
+   "row_pins_its_own_bytes": false,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk12.htm",
+   "best_matching_unit": {
+    "document_unit_index": 129,
+    "printed_label": 117,
+    "printed_label_candidates": [
+     117
+    ],
+    "printed_label_glyphs": "117",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "Agni, best Angiras, to thee all people who have pleasant homes Apart have turned to gain their wish."
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 117,
+   "printed_label_candidates": [
+    117
+   ],
+   "printed_label_equals_canonical_verse": false,
+   "canonical_among_printed_label_candidates": false,
+   "neighbours": {
+    "previous": {
+     "printed_label": 116,
+     "printed_label_candidates": [
+      116
+     ],
+     "printed_label_glyphs": "116",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 118,
+     "printed_label_candidates": [
+      118
+     ],
+     "printed_label_glyphs": "118",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": true,
+   "neighbours_bracket_canonical_slot_exactly": false,
+   "constant_offset_consistent_with_neighbours": [
+    1
+   ],
+   "monotone_offset_determined": true,
+   "source_local_address_determination": "CONSTANT_OFFSET_SPINE_WITH_NEIGHBOURS"
+  },
+  {
+   "staged_row_id": "TR02222",
+   "canonical_key": "VG:YV:VSM:A12:V117",
+   "adhyaya": 12,
+   "canonical_verse_number": 117,
+   "mapping_confidence": "PROBABLE",
+   "address_forced_without_content_control": null,
+   "source_label_defect": null,
+   "stage_gap_defect": null,
+   "declared_locator": "book page wyvbk12.htm, printed label '118', printed page 113",
+   "snapshot_sha256": null,
+   "snapshot_sha256_resolved_from_locator": "67559e80228d45270c24e04c7cda58a74d07bf4aeb4c3020a012b77471ef2940",
+   "row_pins_its_own_bytes": false,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk12.htm",
+   "best_matching_unit": {
+    "document_unit_index": 130,
+    "printed_label": 118,
+    "printed_label_candidates": [
+     118
+    ],
+    "printed_label_glyphs": "118",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 0.5806,
+    "unit_text_prefix": "In dear homes, Agni, the desire of all that is and is to be, Shines forth the One Imperial Lord. Read ad-free "
+   },
+   "literal_found_in_pinned_source": false
+  },
+  {
+   "staged_row_id": "TR02223",
+   "canonical_key": "VG:YV:VSM:A16:V031",
+   "adhyaya": 16,
+   "canonical_verse_number": 31,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": true,
+   "source_label_defect": "LABEL_PRINTED_BUT_CORRUPT",
+   "stage_gap_defect": "LABEL_NOT_PRINTED",
+   "declared_locator": "book page wyvbk16.htm, printed page 143, document unit 30, printed label '31'",
+   "snapshot_sha256": "34faf33a4c2447a63930a8d77d6a310a9d0c2795c4c8544f6af990e52351bd20",
+   "row_pins_its_own_bytes": true,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk16.htm",
+   "best_matching_unit": {
+    "document_unit_index": 47,
+    "printed_label": 31,
+    "printed_label_candidates": [
+     31
+    ],
+    "printed_label_glyphs": "31",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "Homage to the swift, and to the active be homage, and to the hasty and to the rapid mover be homage! Homage to"
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 31,
+   "printed_label_candidates": [
+    31
+   ],
+   "printed_label_equals_canonical_verse": true,
+   "canonical_among_printed_label_candidates": true,
+   "neighbours": {
+    "previous": {
+     "printed_label": 30,
+     "printed_label_candidates": [
+      30
+     ],
+     "printed_label_glyphs": "30",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 32,
+     "printed_label_candidates": [
+      32
+     ],
+     "printed_label_glyphs": "32",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": true,
+   "neighbours_bracket_canonical_slot_exactly": true,
+   "constant_offset_consistent_with_neighbours": [
+    0
+   ],
+   "monotone_offset_determined": false,
+   "source_local_address_determination": "PRINTED_LABEL_READ_DIRECTLY"
+  },
+  {
+   "staged_row_id": "TR02224",
+   "canonical_key": "VG:YV:VSM:A16:V034",
+   "adhyaya": 16,
+   "canonical_verse_number": 34,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": true,
+   "source_label_defect": "LABEL_PRINTED_BUT_CORRUPT",
+   "stage_gap_defect": "LABEL_NOT_PRINTED",
+   "declared_locator": "book page wyvbk16.htm, printed page 144, document unit 33, printed label '31'",
+   "snapshot_sha256": "34faf33a4c2447a63930a8d77d6a310a9d0c2795c4c8544f6af990e52351bd20",
+   "row_pins_its_own_bytes": true,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk16.htm",
+   "best_matching_unit": {
+    "document_unit_index": 50,
+    "printed_label": 31,
+    "printed_label_candidates": [
+     31
+    ],
+    "printed_label_glyphs": "31",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "Homage to him in woods and to him in bushes, homage! Homage to him as sound and to him as echo, homage! Homage"
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 31,
+   "printed_label_candidates": [
+    31
+   ],
+   "printed_label_equals_canonical_verse": false,
+   "canonical_among_printed_label_candidates": false,
+   "neighbours": {
+    "previous": {
+     "printed_label": 33,
+     "printed_label_candidates": [
+      33
+     ],
+     "printed_label_glyphs": "33",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 35,
+     "printed_label_candidates": [
+      35
+     ],
+     "printed_label_glyphs": "35",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": false,
+   "neighbours_bracket_canonical_slot_exactly": true,
+   "constant_offset_consistent_with_neighbours": [],
+   "monotone_offset_determined": false,
+   "source_local_address_determination": "UNIQUELY_BRACKETED_BY_PRINTED_NEIGHBOURS"
+  },
+  {
+   "staged_row_id": "TR02225",
+   "canonical_key": "VG:YV:VSM:A19:V023",
+   "adhyaya": 19,
+   "canonical_verse_number": 23,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": true,
+   "source_label_defect": "LABEL_PRINTED_BUT_CORRUPT",
+   "stage_gap_defect": "LABEL_NOT_PRINTED",
+   "declared_locator": "book page wyvbk19.htm, printed page 175, document unit 22, printed label '23'",
+   "snapshot_sha256": "182c5e3a3eb47445036cdf3c4d6c416ae5e8609cc65373c7cde1e6be5d66dd6e",
+   "row_pins_its_own_bytes": true,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk19.htm",
+   "best_matching_unit": {
+    "document_unit_index": 39,
+    "printed_label": 23,
+    "printed_label_candidates": [
+     23
+    ],
+    "printed_label_glyphs": "23",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "Symbol of milk are barley-grains, symbol of curd are jujube-fruits. Whey is the type of Soma, and milk-mixture"
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 23,
+   "printed_label_candidates": [
+    23
+   ],
+   "printed_label_equals_canonical_verse": true,
+   "canonical_among_printed_label_candidates": true,
+   "neighbours": {
+    "previous": {
+     "printed_label": 22,
+     "printed_label_candidates": [
+      22
+     ],
+     "printed_label_glyphs": "22",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 24,
+     "printed_label_candidates": [
+      24
+     ],
+     "printed_label_glyphs": "24",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": true,
+   "neighbours_bracket_canonical_slot_exactly": true,
+   "constant_offset_consistent_with_neighbours": [
+    0
+   ],
+   "monotone_offset_determined": false,
+   "source_local_address_determination": "PRINTED_LABEL_READ_DIRECTLY"
+  },
+  {
+   "staged_row_id": "TR02226",
+   "canonical_key": "VG:YV:VSM:A19:V028",
+   "adhyaya": 19,
+   "canonical_verse_number": 28,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": true,
+   "source_label_defect": "LABEL_PRINTED_BUT_CORRUPT",
+   "stage_gap_defect": "LABEL_NOT_PRINTED",
+   "declared_locator": "book page wyvbk19.htm, printed page 176, document unit 27, printed label '23'",
+   "snapshot_sha256": "182c5e3a3eb47445036cdf3c4d6c416ae5e8609cc65373c7cde1e6be5d66dd6e",
+   "row_pins_its_own_bytes": true,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk19.htm",
+   "best_matching_unit": {
+    "document_unit_index": 44,
+    "printed_label": 23,
+    "printed_label_candidates": [
+     23
+    ],
+    "printed_label_glyphs": "23",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "By sacrificial texts are gained the Grahas, and by the Grahas lauds and laud-arrangements. By metres are obtai"
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 23,
+   "printed_label_candidates": [
+    23
+   ],
+   "printed_label_equals_canonical_verse": false,
+   "canonical_among_printed_label_candidates": false,
+   "neighbours": {
+    "previous": {
+     "printed_label": 27,
+     "printed_label_candidates": [
+      27
+     ],
+     "printed_label_glyphs": "27",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 29,
+     "printed_label_candidates": [
+      29
+     ],
+     "printed_label_glyphs": "29",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": false,
+   "neighbours_bracket_canonical_slot_exactly": true,
+   "constant_offset_consistent_with_neighbours": [],
+   "monotone_offset_determined": false,
+   "source_local_address_determination": "UNIQUELY_BRACKETED_BY_PRINTED_NEIGHBOURS"
+  },
+  {
+   "staged_row_id": "TR02227",
+   "canonical_key": "VG:YV:VSM:A19:V033",
+   "adhyaya": 19,
+   "canonical_verse_number": 33,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": true,
+   "source_label_defect": "LABEL_PRINTED_BUT_CORRUPT",
+   "stage_gap_defect": "LABEL_NOT_PRINTED",
+   "declared_locator": "book page wyvbk19.htm, printed page 177, document unit 32, printed label '33'",
+   "snapshot_sha256": "182c5e3a3eb47445036cdf3c4d6c416ae5e8609cc65373c7cde1e6be5d66dd6e",
+   "row_pins_its_own_bytes": true,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk19.htm",
+   "best_matching_unit": {
+    "document_unit_index": 49,
+    "printed_label": 33,
+    "printed_label_candidates": [
+     33
+    ],
+    "printed_label_glyphs": "33",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "All essence of thine own in plants collected, all strength of Soma when poured out with Surâ— Therewith impel "
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 33,
+   "printed_label_candidates": [
+    33
+   ],
+   "printed_label_equals_canonical_verse": true,
+   "canonical_among_printed_label_candidates": true,
+   "neighbours": {
+    "previous": {
+     "printed_label": 32,
+     "printed_label_candidates": [
+      32
+     ],
+     "printed_label_glyphs": "32",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 34,
+     "printed_label_candidates": [
+      34
+     ],
+     "printed_label_glyphs": "34",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": true,
+   "neighbours_bracket_canonical_slot_exactly": true,
+   "constant_offset_consistent_with_neighbours": [
+    0
+   ],
+   "monotone_offset_determined": false,
+   "source_local_address_determination": "PRINTED_LABEL_READ_DIRECTLY"
+  },
+  {
+   "staged_row_id": "TR02228",
+   "canonical_key": "VG:YV:VSM:A19:V038",
+   "adhyaya": 19,
+   "canonical_verse_number": 38,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": false,
+   "source_label_defect": "LABEL_PRINTED_BUT_CORRUPT",
+   "stage_gap_defect": "LABEL_NOT_PRINTED",
+   "declared_locator": "book page wyvbk19.htm, printed page 177, document unit 37, printed label '33'",
+   "snapshot_sha256": "182c5e3a3eb47445036cdf3c4d6c416ae5e8609cc65373c7cde1e6be5d66dd6e",
+   "row_pins_its_own_bytes": true,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk19.htm",
+   "best_matching_unit": {
+    "document_unit_index": 54,
+    "printed_label": 33,
+    "printed_label_candidates": [
+     33
+    ],
+    "printed_label_glyphs": "33",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "Agni, thou poorest life: send down upon us food and vigorous strength. Drive thou misfortune far away."
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 33,
+   "printed_label_candidates": [
+    33
+   ],
+   "printed_label_equals_canonical_verse": false,
+   "canonical_among_printed_label_candidates": false,
+   "neighbours": {
+    "previous": {
+     "printed_label": 37,
+     "printed_label_candidates": [
+      37
+     ],
+     "printed_label_glyphs": "37",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 39,
+     "printed_label_candidates": [
+      39
+     ],
+     "printed_label_glyphs": "39",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": false,
+   "neighbours_bracket_canonical_slot_exactly": true,
+   "constant_offset_consistent_with_neighbours": [],
+   "monotone_offset_determined": false,
+   "source_local_address_determination": "UNIQUELY_BRACKETED_BY_PRINTED_NEIGHBOURS"
+  },
+  {
+   "staged_row_id": "TR02229",
+   "canonical_key": "VG:YV:VSM:A20:V084",
+   "adhyaya": 20,
+   "canonical_verse_number": 84,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": true,
+   "source_label_defect": "LABEL_PRINTED_BUT_CORRUPT",
+   "stage_gap_defect": "LABEL_NOT_PRINTED",
+   "declared_locator": "book page wyvbk20.htm, printed page 195, document unit 83, printed label '84'",
+   "snapshot_sha256": "c01ea3ec846b9f155dbd8c8e7f3215b4bf056f0269ea94813632a139ef90528d",
+   "row_pins_its_own_bytes": true,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk20.htm",
+   "best_matching_unit": {
+    "document_unit_index": 98,
+    "printed_label": 84,
+    "printed_label_candidates": [
+     84
+    ],
+    "printed_label_glyphs": "84",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "Wealthy in spoil, enriched with hymns, may pure Sarasvatî desire with eager love our sacrifice."
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 84,
+   "printed_label_candidates": [
+    84
+   ],
+   "printed_label_equals_canonical_verse": true,
+   "canonical_among_printed_label_candidates": true,
+   "neighbours": {
+    "previous": {
+     "printed_label": 83,
+     "printed_label_candidates": [
+      83
+     ],
+     "printed_label_glyphs": "83",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": null,
+     "printed_label_candidates": [
+      55,
+      85
+     ],
+     "printed_label_glyphs": "S5",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": false,
+   "neighbours_bracket_canonical_slot_exactly": true,
+   "constant_offset_consistent_with_neighbours": [
+    0
+   ],
+   "monotone_offset_determined": false,
+   "source_local_address_determination": "PRINTED_LABEL_READ_DIRECTLY"
+  },
+  {
+   "staged_row_id": "TR02230",
+   "canonical_key": "VG:YV:VSM:A20:V085",
+   "adhyaya": 20,
+   "canonical_verse_number": 85,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": true,
+   "source_label_defect": "LABEL_PRINTED_BUT_CORRUPT",
+   "stage_gap_defect": "LABEL_NOT_PRINTED",
+   "declared_locator": "book page wyvbk20.htm, printed page 195, document unit 84, printed label 'S5'",
+   "snapshot_sha256": "c01ea3ec846b9f155dbd8c8e7f3215b4bf056f0269ea94813632a139ef90528d",
+   "row_pins_its_own_bytes": true,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk20.htm",
+   "best_matching_unit": {
+    "document_unit_index": 99,
+    "printed_label": null,
+    "printed_label_candidates": [
+     55,
+     85
+    ],
+    "printed_label_glyphs": "S5",
+    "label_glyphs_corrupt": true,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "She who awakens sounds of joy, inspires our hymns, Sarasvatî, she hath allowed our sacrifice."
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": null,
+   "printed_label_candidates": [
+    55,
+    85
+   ],
+   "printed_label_equals_canonical_verse": false,
+   "canonical_among_printed_label_candidates": true,
+   "neighbours": {
+    "previous": {
+     "printed_label": 84,
+     "printed_label_candidates": [
+      84
+     ],
+     "printed_label_glyphs": "84",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 85,
+     "printed_label_candidates": [
+      85
+     ],
+     "printed_label_glyphs": "85",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": false,
+   "neighbours_bracket_canonical_slot_exactly": false,
+   "constant_offset_consistent_with_neighbours": [],
+   "monotone_offset_determined": false,
+   "source_local_address_determination": "ORDER_AND_COUNT_ONLY"
+  },
+  {
+   "staged_row_id": "TR02231",
+   "canonical_key": "VG:YV:VSM:A20:V086",
+   "adhyaya": 20,
+   "canonical_verse_number": 86,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": true,
+   "source_label_defect": "LABEL_PRINTED_BUT_CORRUPT",
+   "stage_gap_defect": "LABEL_NOT_PRINTED",
+   "declared_locator": "book page wyvbk20.htm, printed page 195, document unit 85, printed label '85'",
+   "snapshot_sha256": "c01ea3ec846b9f155dbd8c8e7f3215b4bf056f0269ea94813632a139ef90528d",
+   "row_pins_its_own_bytes": true,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk20.htm",
+   "best_matching_unit": {
+    "document_unit_index": 100,
+    "printed_label": 85,
+    "printed_label_candidates": [
+     85
+    ],
+    "printed_label_glyphs": "85",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "Sarasvatî, the mighty flood, she with her light illuminates, she brightens every pious thought."
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 85,
+   "printed_label_candidates": [
+    85
+   ],
+   "printed_label_equals_canonical_verse": false,
+   "canonical_among_printed_label_candidates": false,
+   "neighbours": {
+    "previous": {
+     "printed_label": null,
+     "printed_label_candidates": [
+      55,
+      85
+     ],
+     "printed_label_glyphs": "S5",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 87,
+     "printed_label_candidates": [
+      87
+     ],
+     "printed_label_glyphs": "87",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": false,
+   "neighbours_bracket_canonical_slot_exactly": true,
+   "constant_offset_consistent_with_neighbours": [],
+   "monotone_offset_determined": false,
+   "source_local_address_determination": "UNIQUELY_BRACKETED_BY_PRINTED_NEIGHBOURS"
+  },
+  {
+   "staged_row_id": "TR02232",
+   "canonical_key": "VG:YV:VSM:A21:V043",
+   "adhyaya": 21,
+   "canonical_verse_number": 43,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": true,
+   "source_label_defect": "LABEL_PRINTED_BUT_CORRUPT",
+   "stage_gap_defect": "LABEL_NOT_PRINTED",
+   "declared_locator": "book page wyvbk21.htm, printed page 201, document unit 42, printed label '43'",
+   "snapshot_sha256": "91d37c772a0f04224b0c103fbb6790dd7aeb3ea8c91eda1d1c38c9abec2dbeac",
+   "row_pins_its_own_bytes": true,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk21.htm",
+   "best_matching_unit": {
+    "document_unit_index": 61,
+    "printed_label": 43,
+    "printed_label_candidates": [
+     43
+    ],
+    "printed_label_glyphs": "43",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "Let the Hotar worship the Asvins. Let them eat of the he-goat, the sacrifice. Let them to-day eat the fat, tak"
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 43,
+   "printed_label_candidates": [
+    43
+   ],
+   "printed_label_equals_canonical_verse": true,
+   "canonical_among_printed_label_candidates": true,
+   "neighbours": {
+    "previous": {
+     "printed_label": 42,
+     "printed_label_candidates": [
+      42
+     ],
+     "printed_label_glyphs": "42",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 44,
+     "printed_label_candidates": [
+      44
+     ],
+     "printed_label_glyphs": "44",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": true,
+   "neighbours_bracket_canonical_slot_exactly": true,
+   "constant_offset_consistent_with_neighbours": [
+    0
+   ],
+   "monotone_offset_determined": false,
+   "source_local_address_determination": "PRINTED_LABEL_READ_DIRECTLY"
+  },
+  {
+   "staged_row_id": "TR02233",
+   "canonical_key": "VG:YV:VSM:A21:V045",
+   "adhyaya": 21,
+   "canonical_verse_number": 45,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": true,
+   "source_label_defect": "LABEL_PRINTED_BUT_CORRUPT",
+   "stage_gap_defect": "LABEL_NOT_PRINTED",
+   "declared_locator": "book page wyvbk21.htm, printed page 202, document unit 44, printed label '43'",
+   "snapshot_sha256": "91d37c772a0f04224b0c103fbb6790dd7aeb3ea8c91eda1d1c38c9abec2dbeac",
+   "row_pins_its_own_bytes": true,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk21.htm",
+   "best_matching_unit": {
+    "document_unit_index": 63,
+    "printed_label": 43,
+    "printed_label_candidates": [
+     43
+    ],
+    "printed_label_glyphs": "43",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "Let the Hotar worship Indra, etc., as in 44 mutatis mutandis."
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 43,
+   "printed_label_candidates": [
+    43
+   ],
+   "printed_label_equals_canonical_verse": false,
+   "canonical_among_printed_label_candidates": false,
+   "neighbours": {
+    "previous": {
+     "printed_label": 44,
+     "printed_label_candidates": [
+      44
+     ],
+     "printed_label_glyphs": "44",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 46,
+     "printed_label_candidates": [
+      46
+     ],
+     "printed_label_glyphs": "46",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": false,
+   "neighbours_bracket_canonical_slot_exactly": true,
+   "constant_offset_consistent_with_neighbours": [],
+   "monotone_offset_determined": false,
+   "source_local_address_determination": "UNIQUELY_BRACKETED_BY_PRINTED_NEIGHBOURS"
+  },
+  {
+   "staged_row_id": "TR02234",
+   "canonical_key": "VG:YV:VSM:A22:V023",
+   "adhyaya": 22,
+   "canonical_verse_number": 23,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": true,
+   "source_label_defect": "LABEL_PRINTED_BUT_CORRUPT",
+   "stage_gap_defect": "LABEL_NOT_PRINTED",
+   "declared_locator": "book page wyvbk22.htm, printed page 208, document unit 22, printed label '23'",
+   "snapshot_sha256": "14da2171caf0a2a7264432b7094989c75a076dfce8eadbc0e4ea6feea989e742",
+   "row_pins_its_own_bytes": true,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk22.htm",
+   "best_matching_unit": {
+    "document_unit_index": 35,
+    "printed_label": 23,
+    "printed_label_candidates": [
+     23
+    ],
+    "printed_label_glyphs": "23",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "Hail to vital breath! Hail to out-breathing! Hail to diffusive breath! Hail to the eye! Hail to the ear! Hail "
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 23,
+   "printed_label_candidates": [
+    23
+   ],
+   "printed_label_equals_canonical_verse": true,
+   "canonical_among_printed_label_candidates": true,
+   "neighbours": {
+    "previous": {
+     "printed_label": 22,
+     "printed_label_candidates": [
+      22
+     ],
+     "printed_label_glyphs": "22",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 24,
+     "printed_label_candidates": [
+      24
+     ],
+     "printed_label_glyphs": "24",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": true,
+   "neighbours_bracket_canonical_slot_exactly": true,
+   "constant_offset_consistent_with_neighbours": [
+    0
+   ],
+   "monotone_offset_determined": false,
+   "source_local_address_determination": "PRINTED_LABEL_READ_DIRECTLY"
+  },
+  {
+   "staged_row_id": "TR02235",
+   "canonical_key": "VG:YV:VSM:A22:V028",
+   "adhyaya": 22,
+   "canonical_verse_number": 28,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": true,
+   "source_label_defect": "LABEL_PRINTED_BUT_CORRUPT",
+   "stage_gap_defect": "LABEL_NOT_PRINTED",
+   "declared_locator": "book page wyvbk22.htm, printed page 209, document unit 27, printed label '23'",
+   "snapshot_sha256": "14da2171caf0a2a7264432b7094989c75a076dfce8eadbc0e4ea6feea989e742",
+   "row_pins_its_own_bytes": true,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk22.htm",
+   "best_matching_unit": {
+    "document_unit_index": 40,
+    "printed_label": 23,
+    "printed_label_candidates": [
+     23
+    ],
+    "printed_label_glyphs": "23",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "Hail to the lunar asterisms! Hail to those connected with the lunar asterisms! Hail to Day and Night! Hail to "
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 23,
+   "printed_label_candidates": [
+    23
+   ],
+   "printed_label_equals_canonical_verse": false,
+   "canonical_among_printed_label_candidates": false,
+   "neighbours": {
+    "previous": {
+     "printed_label": 27,
+     "printed_label_candidates": [
+      27
+     ],
+     "printed_label_glyphs": "27",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 29,
+     "printed_label_candidates": [
+      29
+     ],
+     "printed_label_glyphs": "29",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": false,
+   "neighbours_bracket_canonical_slot_exactly": true,
+   "constant_offset_consistent_with_neighbours": [],
+   "monotone_offset_determined": false,
+   "source_local_address_determination": "UNIQUELY_BRACKETED_BY_PRINTED_NEIGHBOURS"
+  },
+  {
+   "staged_row_id": "TR02236",
+   "canonical_key": "VG:YV:VSM:A23:V058",
+   "adhyaya": 23,
+   "canonical_verse_number": 58,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": true,
+   "source_label_defect": "LABEL_PRINTED_BUT_CORRUPT",
+   "stage_gap_defect": "LABEL_NOT_PRINTED",
+   "declared_locator": "book page wyvbk23.htm, printed page 216, document unit 45, printed label '68'",
+   "snapshot_sha256": "e93469620d454bb567b6b8446d91b9d9e4c174a0671e029741f0f0e1b00ead4f",
+   "row_pins_its_own_bytes": true,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk23.htm",
+   "best_matching_unit": {
+    "document_unit_index": 59,
+    "printed_label": 68,
+    "printed_label_candidates": [
+     68
+    ],
+    "printed_label_glyphs": "68",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "Sixfold its form, its syllables a hundred, eighty burnt-offerings, just three brands for kindling. To thee I t"
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 68,
+   "printed_label_candidates": [
+    68
+   ],
+   "printed_label_equals_canonical_verse": false,
+   "canonical_among_printed_label_candidates": false,
+   "neighbours": {
+    "previous": {
+     "printed_label": 57,
+     "printed_label_candidates": [
+      57
+     ],
+     "printed_label_glyphs": "57",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 59,
+     "printed_label_candidates": [
+      59
+     ],
+     "printed_label_glyphs": "59",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": false,
+   "neighbours_bracket_canonical_slot_exactly": true,
+   "constant_offset_consistent_with_neighbours": [],
+   "monotone_offset_determined": false,
+   "source_local_address_determination": "UNIQUELY_BRACKETED_BY_PRINTED_NEIGHBOURS"
+  },
+  {
+   "staged_row_id": "TR02237",
+   "canonical_key": "VG:YV:VSM:A26:V023",
+   "adhyaya": 26,
+   "canonical_verse_number": 23,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": true,
+   "source_label_defect": "LABEL_PRINTED_BUT_CORRUPT",
+   "stage_gap_defect": "LABEL_NOT_PRINTED",
+   "declared_locator": "book page wyvbk26.htm, printed page 234, document unit 22, printed label '28'",
+   "snapshot_sha256": "3a6a59a59f0769e9382cb48abde5572e268f0b0d4bb2aab2df61649d5ec8b002",
+   "row_pins_its_own_bytes": true,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk26.htm",
+   "best_matching_unit": {
+    "document_unit_index": 34,
+    "printed_label": 28,
+    "printed_label_candidates": [
+     28
+    ],
+    "printed_label_glyphs": "28",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "Thine is this Soma: come thou near, approach it. Drink thou thereof, benevolent, and cease not. Sit on the sac"
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 28,
+   "printed_label_candidates": [
+    28
+   ],
+   "printed_label_equals_canonical_verse": false,
+   "canonical_among_printed_label_candidates": false,
+   "neighbours": {
+    "previous": {
+     "printed_label": 22,
+     "printed_label_candidates": [
+      22
+     ],
+     "printed_label_glyphs": "22",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 24,
+     "printed_label_candidates": [
+      24
+     ],
+     "printed_label_glyphs": "24",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": false,
+   "neighbours_bracket_canonical_slot_exactly": true,
+   "constant_offset_consistent_with_neighbours": [],
+   "monotone_offset_determined": false,
+   "source_local_address_determination": "UNIQUELY_BRACKETED_BY_PRINTED_NEIGHBOURS"
+  },
+  {
+   "staged_row_id": "TR02238",
+   "canonical_key": "VG:YV:VSM:A27:V012",
+   "adhyaya": 27,
+   "canonical_verse_number": 12,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": true,
+   "source_label_defect": "LABEL_PRINTED_BUT_CORRUPT",
+   "stage_gap_defect": "LABEL_NOT_PRINTED",
+   "declared_locator": "book page wyvbk27.htm, printed page 236, document unit 11, printed label '13'",
+   "snapshot_sha256": "84b0e52553931e7e18388f0666c88da3daa4d972f64be6350abf0f93aaa51b10",
+   "row_pins_its_own_bytes": true,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk27.htm",
+   "best_matching_unit": {
+    "document_unit_index": 10,
+    "printed_label": 13,
+    "printed_label_candidates": [
+     13
+    ],
+    "printed_label_glyphs": "13",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "Tanûnapât the Asura, all-possessing, God among Gods, the God with mead and butter shall bedew the paths."
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 13,
+   "printed_label_candidates": [
+    13
+   ],
+   "printed_label_equals_canonical_verse": false,
+   "canonical_among_printed_label_candidates": false,
+   "neighbours": {
+    "previous": {
+     "printed_label": 11,
+     "printed_label_candidates": [
+      11
+     ],
+     "printed_label_glyphs": "11",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 13,
+     "printed_label_candidates": [
+      13
+     ],
+     "printed_label_glyphs": "13",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": false,
+   "neighbours_bracket_canonical_slot_exactly": true,
+   "constant_offset_consistent_with_neighbours": [],
+   "monotone_offset_determined": false,
+   "source_local_address_determination": "UNIQUELY_BRACKETED_BY_PRINTED_NEIGHBOURS"
+  },
+  {
+   "staged_row_id": "TR02239",
+   "canonical_key": "VG:YV:VSM:A27:V013",
+   "adhyaya": 27,
+   "canonical_verse_number": 13,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": true,
+   "source_label_defect": "LABEL_PRINTED_BUT_CORRUPT",
+   "stage_gap_defect": "LABEL_NOT_PRINTED",
+   "declared_locator": "book page wyvbk27.htm, printed page 236, document unit 12, printed label '13'",
+   "snapshot_sha256": "84b0e52553931e7e18388f0666c88da3daa4d972f64be6350abf0f93aaa51b10",
+   "row_pins_its_own_bytes": true,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk27.htm",
+   "best_matching_unit": {
+    "document_unit_index": 11,
+    "printed_label": 13,
+    "printed_label_candidates": [
+     13
+    ],
+    "printed_label_glyphs": "13",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "With mead to sacrifice thou comest, Agni, earnest as friendly- minded Narâsamsa, and Savitar righteous God who"
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 13,
+   "printed_label_candidates": [
+    13
+   ],
+   "printed_label_equals_canonical_verse": true,
+   "canonical_among_printed_label_candidates": true,
+   "neighbours": {
+    "previous": {
+     "printed_label": 13,
+     "printed_label_candidates": [
+      13
+     ],
+     "printed_label_glyphs": "13",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 14,
+     "printed_label_candidates": [
+      14
+     ],
+     "printed_label_glyphs": "14",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": false,
+   "neighbours_bracket_canonical_slot_exactly": false,
+   "constant_offset_consistent_with_neighbours": [],
+   "monotone_offset_determined": false,
+   "source_local_address_determination": "PRINTED_LABEL_READ_DIRECTLY"
+  },
+  {
+   "staged_row_id": "TR02240",
+   "canonical_key": "VG:YV:VSM:A27:V025",
+   "adhyaya": 27,
+   "canonical_verse_number": 25,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": false,
+   "source_label_defect": "LABEL_PRINTED_BUT_CORRUPT",
+   "stage_gap_defect": "LABEL_NOT_PRINTED",
+   "declared_locator": "book page wyvbk27.htm, printed page 237, document unit 24, printed label '26'",
+   "snapshot_sha256": "84b0e52553931e7e18388f0666c88da3daa4d972f64be6350abf0f93aaa51b10",
+   "row_pins_its_own_bytes": true,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk27.htm",
+   "best_matching_unit": {
+    "document_unit_index": 42,
+    "printed_label": 26,
+    "printed_label_candidates": [
+     26
+    ],
+    "printed_label_glyphs": "26",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "What time the mighty waters came containing the universal germ, producing Agni, Thence sprang the Gods’ one sp"
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 26,
+   "printed_label_candidates": [
+    26
+   ],
+   "printed_label_equals_canonical_verse": false,
+   "canonical_among_printed_label_candidates": false,
+   "neighbours": {
+    "previous": {
+     "printed_label": 24,
+     "printed_label_candidates": [
+      24
+     ],
+     "printed_label_glyphs": "24",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 26,
+     "printed_label_candidates": [
+      26
+     ],
+     "printed_label_glyphs": "26",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": false,
+   "neighbours_bracket_canonical_slot_exactly": true,
+   "constant_offset_consistent_with_neighbours": [],
+   "monotone_offset_determined": false,
+   "source_local_address_determination": "UNIQUELY_BRACKETED_BY_PRINTED_NEIGHBOURS"
+  },
+  {
+   "staged_row_id": "TR02241",
+   "canonical_key": "VG:YV:VSM:A27:V026",
+   "adhyaya": 27,
+   "canonical_verse_number": 26,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": true,
+   "source_label_defect": "LABEL_PRINTED_BUT_CORRUPT",
+   "stage_gap_defect": "LABEL_NOT_PRINTED",
+   "declared_locator": "book page wyvbk27.htm, printed page 237, document unit 25, printed label '26'",
+   "snapshot_sha256": "84b0e52553931e7e18388f0666c88da3daa4d972f64be6350abf0f93aaa51b10",
+   "row_pins_its_own_bytes": true,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk27.htm",
+   "best_matching_unit": {
+    "document_unit_index": 43,
+    "printed_label": 26,
+    "printed_label_candidates": [
+     26
+    ],
+    "printed_label_glyphs": "26",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "Who in his might surveyed the floods enclosing productive force and generating Worship, He who is God mid Gods"
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 26,
+   "printed_label_candidates": [
+    26
+   ],
+   "printed_label_equals_canonical_verse": true,
+   "canonical_among_printed_label_candidates": true,
+   "neighbours": {
+    "previous": {
+     "printed_label": 26,
+     "printed_label_candidates": [
+      26
+     ],
+     "printed_label_glyphs": "26",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 27,
+     "printed_label_candidates": [
+      27
+     ],
+     "printed_label_glyphs": "27",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": false,
+   "neighbours_bracket_canonical_slot_exactly": false,
+   "constant_offset_consistent_with_neighbours": [],
+   "monotone_offset_determined": false,
+   "source_local_address_determination": "PRINTED_LABEL_READ_DIRECTLY"
+  },
+  {
+   "staged_row_id": "TR02242",
+   "canonical_key": "VG:YV:VSM:A28:V021",
+   "adhyaya": 28,
+   "canonical_verse_number": 21,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": true,
+   "source_label_defect": "LABEL_PRINTED_BUT_CORRUPT",
+   "stage_gap_defect": "LABEL_NOT_PRINTED",
+   "declared_locator": "book page wyvbk28.htm, printed page 243, document unit 20, printed label '21'",
+   "snapshot_sha256": "288452a35fcb7c04403d69fc4afa1cd1ef29c082f641ac34704ac787f81212c3",
+   "row_pins_its_own_bytes": true,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk28.htm",
+   "best_matching_unit": {
+    "document_unit_index": 32,
+    "printed_label": 21,
+    "printed_label_candidates": [
+     21
+    ],
+    "printed_label_glyphs": "21",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "The grassy robe of water-plants, divine, hath heightened Indra's strength. This, the fair seat where Indra sit"
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 21,
+   "printed_label_candidates": [
+    21
+   ],
+   "printed_label_equals_canonical_verse": true,
+   "canonical_among_printed_label_candidates": true,
+   "neighbours": {
+    "previous": {
+     "printed_label": 20,
+     "printed_label_candidates": [
+      20
+     ],
+     "printed_label_glyphs": "20",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 22,
+     "printed_label_candidates": [
+      22
+     ],
+     "printed_label_glyphs": "22",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": true,
+   "neighbours_bracket_canonical_slot_exactly": true,
+   "constant_offset_consistent_with_neighbours": [
+    0
+   ],
+   "monotone_offset_determined": false,
+   "source_local_address_determination": "PRINTED_LABEL_READ_DIRECTLY"
+  },
+  {
+   "staged_row_id": "TR02243",
+   "canonical_key": "VG:YV:VSM:A28:V024",
+   "adhyaya": 28,
+   "canonical_verse_number": 24,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": true,
+   "source_label_defect": "LABEL_PRINTED_BUT_CORRUPT",
+   "stage_gap_defect": "LABEL_NOT_PRINTED",
+   "declared_locator": "book page wyvbk28.htm, printed page 243, document unit 23, printed label '21'",
+   "snapshot_sha256": "288452a35fcb7c04403d69fc4afa1cd1ef29c082f641ac34704ac787f81212c3",
+   "row_pins_its_own_bytes": true,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk28.htm",
+   "best_matching_unit": {
+    "document_unit_index": 35,
+    "printed_label": 21,
+    "printed_label_candidates": [
+     21
+    ],
+    "printed_label_glyphs": "21",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "Let the Priest worship Agni, Indra, kindled, splendidly kindled, excellent strength-giver, Lending him mighty "
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 21,
+   "printed_label_candidates": [
+    21
+   ],
+   "printed_label_equals_canonical_verse": false,
+   "canonical_among_printed_label_candidates": false,
+   "neighbours": {
+    "previous": {
+     "printed_label": 23,
+     "printed_label_candidates": [
+      23
+     ],
+     "printed_label_glyphs": "23",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 25,
+     "printed_label_candidates": [
+      25
+     ],
+     "printed_label_glyphs": "25",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": false,
+   "neighbours_bracket_canonical_slot_exactly": true,
+   "constant_offset_consistent_with_neighbours": [],
+   "monotone_offset_determined": false,
+   "source_local_address_determination": "UNIQUELY_BRACKETED_BY_PRINTED_NEIGHBOURS"
+  },
+  {
+   "staged_row_id": "TR02244",
+   "canonical_key": "VG:YV:VSM:A29:V021",
+   "adhyaya": 29,
+   "canonical_verse_number": 21,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": false,
+   "source_label_defect": "LABEL_PRINTED_BUT_CORRUPT",
+   "stage_gap_defect": "LABEL_NOT_PRINTED",
+   "declared_locator": "book page wyvbk29.htm, printed page 249, document unit 20, printed label '21'",
+   "snapshot_sha256": "104d9d1b100f62896a40f7bc3a58cfdb9b4c7b3cc9de4666f45df7671dce4cec",
+   "row_pins_its_own_bytes": true,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk29.htm",
+   "best_matching_unit": {
+    "document_unit_index": 36,
+    "printed_label": 21,
+    "printed_label_candidates": [
+     21
+    ],
+    "printed_label_glyphs": "21",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "Symmetrical in flank, with rounded haunches, mettled like heroes, the celestial Coursers Put forth their stren"
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 21,
+   "printed_label_candidates": [
+    21
+   ],
+   "printed_label_equals_canonical_verse": true,
+   "canonical_among_printed_label_candidates": true,
+   "neighbours": {
+    "previous": {
+     "printed_label": 20,
+     "printed_label_candidates": [
+      20
+     ],
+     "printed_label_glyphs": "20",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 22,
+     "printed_label_candidates": [
+      22
+     ],
+     "printed_label_glyphs": "22",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": true,
+   "neighbours_bracket_canonical_slot_exactly": true,
+   "constant_offset_consistent_with_neighbours": [
+    0
+   ],
+   "monotone_offset_determined": false,
+   "source_local_address_determination": "PRINTED_LABEL_READ_DIRECTLY"
+  },
+  {
+   "staged_row_id": "TR02245",
+   "canonical_key": "VG:YV:VSM:A29:V024",
+   "adhyaya": 29,
+   "canonical_verse_number": 24,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": false,
+   "source_label_defect": "LABEL_PRINTED_BUT_CORRUPT",
+   "stage_gap_defect": "LABEL_NOT_PRINTED",
+   "declared_locator": "book page wyvbk29.htm, printed page 250, document unit 23, printed label '21'",
+   "snapshot_sha256": "104d9d1b100f62896a40f7bc3a58cfdb9b4c7b3cc9de4666f45df7671dce4cec",
+   "row_pins_its_own_bytes": true,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk29.htm",
+   "best_matching_unit": {
+    "document_unit_index": 39,
+    "printed_label": 21,
+    "printed_label_candidates": [
+     21
+    ],
+    "printed_label_glyphs": "21",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "The Steed is come unto the noblest mansion, is come unto his Father and his Mother. This day shall he approach"
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 21,
+   "printed_label_candidates": [
+    21
+   ],
+   "printed_label_equals_canonical_verse": false,
+   "canonical_among_printed_label_candidates": false,
+   "neighbours": {
+    "previous": {
+     "printed_label": 23,
+     "printed_label_candidates": [
+      23
+     ],
+     "printed_label_glyphs": "23",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 25,
+     "printed_label_candidates": [
+      25
+     ],
+     "printed_label_glyphs": "25",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": false,
+   "neighbours_bracket_canonical_slot_exactly": true,
+   "constant_offset_consistent_with_neighbours": [],
+   "monotone_offset_determined": false,
+   "source_local_address_determination": "UNIQUELY_BRACKETED_BY_PRINTED_NEIGHBOURS"
+  },
+  {
+   "staged_row_id": "TR02246",
+   "canonical_key": "VG:YV:VSM:A29:V050",
+   "adhyaya": 29,
+   "canonical_verse_number": 50,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": false,
+   "source_label_defect": "LABEL_PRINTED_BUT_CORRUPT",
+   "stage_gap_defect": "LABEL_NOT_PRINTED",
+   "declared_locator": "book page wyvbk29.htm, printed page 253, document unit 49, printed label '59'",
+   "snapshot_sha256": "104d9d1b100f62896a40f7bc3a58cfdb9b4c7b3cc9de4666f45df7671dce4cec",
+   "row_pins_its_own_bytes": true,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk29.htm",
+   "best_matching_unit": {
+    "document_unit_index": 65,
+    "printed_label": 59,
+    "printed_label_candidates": [
+     59
+    ],
+    "printed_label_glyphs": "59",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "He lays his blows upon their backs, He deals his strokes upon their thighs. Thou Whip who urgest horses, drive"
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 59,
+   "printed_label_candidates": [
+    59
+   ],
+   "printed_label_equals_canonical_verse": false,
+   "canonical_among_printed_label_candidates": false,
+   "neighbours": {
+    "previous": {
+     "printed_label": 49,
+     "printed_label_candidates": [
+      49
+     ],
+     "printed_label_glyphs": "49",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 51,
+     "printed_label_candidates": [
+      51
+     ],
+     "printed_label_glyphs": "51",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": false,
+   "neighbours_bracket_canonical_slot_exactly": true,
+   "constant_offset_consistent_with_neighbours": [],
+   "monotone_offset_determined": false,
+   "source_local_address_determination": "UNIQUELY_BRACKETED_BY_PRINTED_NEIGHBOURS"
+  },
+  {
+   "staged_row_id": "TR02247",
+   "canonical_key": "VG:YV:VSM:A29:V059",
+   "adhyaya": 29,
+   "canonical_verse_number": 59,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": true,
+   "source_label_defect": "LABEL_PRINTED_BUT_CORRUPT",
+   "stage_gap_defect": "LABEL_NOT_PRINTED",
+   "declared_locator": "book page wyvbk29.htm, printed page 254, document unit 58, printed label '59'",
+   "snapshot_sha256": "104d9d1b100f62896a40f7bc3a58cfdb9b4c7b3cc9de4666f45df7671dce4cec",
+   "row_pins_its_own_bytes": true,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk29.htm",
+   "best_matching_unit": {
+    "document_unit_index": 75,
+    "printed_label": 59,
+    "printed_label_candidates": [
+     59
+    ],
+    "printed_label_glyphs": "59",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "To Agni Anîkavân is sacrificed a red-marked ox; two with white spots below are for Savitar; two with silvery n"
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 59,
+   "printed_label_candidates": [
+    59
+   ],
+   "printed_label_equals_canonical_verse": true,
+   "canonical_among_printed_label_candidates": true,
+   "neighbours": {
+    "previous": {
+     "printed_label": 58,
+     "printed_label_candidates": [
+      58
+     ],
+     "printed_label_glyphs": "58",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 60,
+     "printed_label_candidates": [
+      60
+     ],
+     "printed_label_glyphs": "60",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": true,
+   "neighbours_bracket_canonical_slot_exactly": true,
+   "constant_offset_consistent_with_neighbours": [
+    0
+   ],
+   "monotone_offset_determined": false,
+   "source_local_address_determination": "PRINTED_LABEL_READ_DIRECTLY"
+  },
+  {
+   "staged_row_id": "TR02248",
+   "canonical_key": "VG:YV:VSM:A33:V038",
+   "adhyaya": 33,
+   "canonical_verse_number": 38,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": false,
+   "source_label_defect": "LABEL_PRINTED_BUT_CORRUPT",
+   "stage_gap_defect": "LABEL_NOT_PRINTED",
+   "declared_locator": "book page wyvbk33.htm, printed page 272, document unit 36, printed label '38'",
+   "snapshot_sha256": "76f63fef39a535dd8ba6d48260a2e0a464826a9ba923a553a4155f0edf1c577a",
+   "row_pins_its_own_bytes": true,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk33.htm",
+   "best_matching_unit": {
+    "document_unit_index": 52,
+    "printed_label": 38,
+    "printed_label_candidates": [
+     38
+    ],
+    "printed_label_glyphs": "38",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "In the sky's lap the Sun this form assumeth that Varuna and Mitra may behold it. His Bay Steeds well maintain "
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 38,
+   "printed_label_candidates": [
+    38
+   ],
+   "printed_label_equals_canonical_verse": true,
+   "canonical_among_printed_label_candidates": true,
+   "neighbours": {
+    "previous": {
+     "printed_label": 37,
+     "printed_label_candidates": [
+      37
+     ],
+     "printed_label_glyphs": "37",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 39,
+     "printed_label_candidates": [
+      39
+     ],
+     "printed_label_glyphs": "39",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": true,
+   "neighbours_bracket_canonical_slot_exactly": true,
+   "constant_offset_consistent_with_neighbours": [
+    0
+   ],
+   "monotone_offset_determined": false,
+   "source_local_address_determination": "PRINTED_LABEL_READ_DIRECTLY"
+  },
+  {
+   "staged_row_id": "TR02249",
+   "canonical_key": "VG:YV:VSM:A33:V088",
+   "adhyaya": 33,
+   "canonical_verse_number": 88,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": false,
+   "source_label_defect": "LABEL_PRINTED_BUT_CORRUPT",
+   "stage_gap_defect": "LABEL_NOT_PRINTED",
+   "declared_locator": "book page wyvbk33.htm, printed page 278, document unit 86, printed label '38'",
+   "snapshot_sha256": "76f63fef39a535dd8ba6d48260a2e0a464826a9ba923a553a4155f0edf1c577a",
+   "row_pins_its_own_bytes": true,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk33.htm",
+   "best_matching_unit": {
+    "document_unit_index": 101,
+    "printed_label": 38,
+    "printed_label_candidates": [
+     38
+    ],
+    "printed_label_glyphs": "38",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "Approach ye, and be near to us. Drink, O ye Asvins, of the mead. Draw forth the milk, ye mighty, rich in genui"
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 38,
+   "printed_label_candidates": [
+    38
+   ],
+   "printed_label_equals_canonical_verse": false,
+   "canonical_among_printed_label_candidates": false,
+   "neighbours": {
+    "previous": {
+     "printed_label": 87,
+     "printed_label_candidates": [
+      87
+     ],
+     "printed_label_glyphs": "87",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 89,
+     "printed_label_candidates": [
+      89
+     ],
+     "printed_label_glyphs": "89",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": false,
+   "neighbours_bracket_canonical_slot_exactly": true,
+   "constant_offset_consistent_with_neighbours": [],
+   "monotone_offset_determined": false,
+   "source_local_address_determination": "UNIQUELY_BRACKETED_BY_PRINTED_NEIGHBOURS"
+  },
+  {
+   "staged_row_id": "TR02250",
+   "canonical_key": "VG:YV:VSM:A34:V013",
+   "adhyaya": 34,
+   "canonical_verse_number": 13,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": true,
+   "source_label_defect": "LABEL_PRINTED_BUT_CORRUPT",
+   "stage_gap_defect": "LABEL_NOT_PRINTED",
+   "declared_locator": "book page wyvbk34.htm, printed page 281, document unit 12, printed label '15'",
+   "snapshot_sha256": "75cc47536cce13343b8eaf32112bc726093f86075ca2eeef3cd695e532f7e331",
+   "row_pins_its_own_bytes": true,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk34.htm",
+   "best_matching_unit": {
+    "document_unit_index": 11,
+    "printed_label": 15,
+    "printed_label_candidates": [
+     15
+    ],
+    "printed_label_glyphs": "15",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "Worthy to be revered, O Agni, God, preserve our wealthy patrons with thy succours, and ourselves. Guard art th"
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 15,
+   "printed_label_candidates": [
+    15
+   ],
+   "printed_label_equals_canonical_verse": false,
+   "canonical_among_printed_label_candidates": false,
+   "neighbours": {
+    "previous": {
+     "printed_label": 12,
+     "printed_label_candidates": [
+      12
+     ],
+     "printed_label_glyphs": "12",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 14,
+     "printed_label_candidates": [
+      14
+     ],
+     "printed_label_glyphs": "14",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": false,
+   "neighbours_bracket_canonical_slot_exactly": true,
+   "constant_offset_consistent_with_neighbours": [],
+   "monotone_offset_determined": false,
+   "source_local_address_determination": "UNIQUELY_BRACKETED_BY_PRINTED_NEIGHBOURS"
+  },
+  {
+   "staged_row_id": "TR02251",
+   "canonical_key": "VG:YV:VSM:A34:V015",
+   "adhyaya": 34,
+   "canonical_verse_number": 15,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": true,
+   "source_label_defect": "LABEL_PRINTED_BUT_CORRUPT",
+   "stage_gap_defect": "LABEL_NOT_PRINTED",
+   "declared_locator": "book page wyvbk34.htm, printed page 281, document unit 14, printed label '15'",
+   "snapshot_sha256": "75cc47536cce13343b8eaf32112bc726093f86075ca2eeef3cd695e532f7e331",
+   "row_pins_its_own_bytes": true,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk34.htm",
+   "best_matching_unit": {
+    "document_unit_index": 13,
+    "printed_label": 15,
+    "printed_label_candidates": [
+     15
+    ],
+    "printed_label_glyphs": "15",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "In Idâ's place, the centre of the earth, will we deposit thee, That, Agni Jâtavedas, thou mayst bear our offer"
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 15,
+   "printed_label_candidates": [
+    15
+   ],
+   "printed_label_equals_canonical_verse": true,
+   "canonical_among_printed_label_candidates": true,
+   "neighbours": {
+    "previous": {
+     "printed_label": 14,
+     "printed_label_candidates": [
+      14
+     ],
+     "printed_label_glyphs": "14",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 16,
+     "printed_label_candidates": [
+      16
+     ],
+     "printed_label_glyphs": "16",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": true,
+   "neighbours_bracket_canonical_slot_exactly": true,
+   "constant_offset_consistent_with_neighbours": [
+    0
+   ],
+   "monotone_offset_determined": false,
+   "source_local_address_determination": "PRINTED_LABEL_READ_DIRECTLY"
+  },
+  {
+   "staged_row_id": "TR02252",
+   "canonical_key": "VG:YV:VSM:A36:V021",
+   "adhyaya": 36,
+   "canonical_verse_number": 21,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": true,
+   "source_label_defect": "LABEL_PRINTED_BUT_CORRUPT",
+   "stage_gap_defect": "LABEL_NOT_PRINTED",
+   "declared_locator": "book page wyvbk36.htm, printed page 292, document unit 19, printed label '21'",
+   "snapshot_sha256": "85c85911f6e90008490220b7c464ce49b76ff4a801eed031f762516ed4aa075b",
+   "row_pins_its_own_bytes": true,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk36.htm",
+   "best_matching_unit": {
+    "document_unit_index": 17,
+    "printed_label": 21,
+    "printed_label_candidates": [
+     21
+    ],
+    "printed_label_glyphs": "21",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 1.0,
+    "unit_text_prefix": "Homage to thee the lightning flash, homage to thee the thunder's roar! Homage, O Bounteous Lord, to thee where"
+   },
+   "literal_found_in_pinned_source": true,
+   "printed_label_present_in_source": true,
+   "printed_label": 21,
+   "printed_label_candidates": [
+    21
+   ],
+   "printed_label_equals_canonical_verse": true,
+   "canonical_among_printed_label_candidates": true,
+   "neighbours": {
+    "previous": {
+     "printed_label": 20,
+     "printed_label_candidates": [
+      20
+     ],
+     "printed_label_glyphs": "20",
+     "label_was_printed": true
+    },
+    "next": {
+     "printed_label": 22,
+     "printed_label_candidates": [
+      22
+     ],
+     "printed_label_glyphs": "22",
+     "label_was_printed": true
+    }
+   },
+   "label_monotonic_with_neighbours": true,
+   "neighbours_bracket_canonical_slot_exactly": true,
+   "constant_offset_consistent_with_neighbours": [
+    0
+   ],
+   "monotone_offset_determined": false,
+   "source_local_address_determination": "PRINTED_LABEL_READ_DIRECTLY"
+  },
+  {
+   "staged_row_id": "TR02253",
+   "canonical_key": "VG:YV:VSM:A36:V024",
+   "adhyaya": 36,
+   "canonical_verse_number": 24,
+   "mapping_confidence": "EXACT",
+   "address_forced_without_content_control": true,
+   "source_label_defect": "LABEL_PRINTED_BUT_CORRUPT",
+   "stage_gap_defect": "LABEL_NOT_PRINTED",
+   "declared_locator": "book page wyvbk36.htm, printed page 292, document unit 22, printed label '21'",
+   "snapshot_sha256": "85c85911f6e90008490220b7c464ce49b76ff4a801eed031f762516ed4aa075b",
+   "row_pins_its_own_bytes": true,
+   "source_available": true,
+   "page": "https://sacred-texts.com/hin/wyv/wyvbk36.htm",
+   "best_matching_unit": {
+    "document_unit_index": 42,
+    "printed_label": 21,
+    "printed_label_candidates": [
+     21
+    ],
+    "printed_label_glyphs": "21",
+    "label_glyphs_corrupt": false,
+    "label_was_printed": true,
+    "match_score": 0.6061,
+    "unit_text_prefix": "Through hundred autumns may we see that bright Eye, God-appointed, rise, A hundred autumns may we live. Throug"
+   },
+   "literal_found_in_pinned_source": false
+  }
+ ]
+}

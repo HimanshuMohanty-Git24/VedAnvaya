@@ -1,0 +1,105 @@
+{
+ "phase": 10,
+ "warning": "these four figures must not be summed into one percentage. A verse with a dedicated Griffith rendering of its own corpus, a verse sharing one rendering with its neighbour, and a verse showing another corpus's rendering are three different claims, and the campaign has already graded a collapsed coverage figure as MISLEADING.",
+ "per_veda": {
+  "AV": {
+   "corpus": 5839,
+   "covered_today": 4878,
+   "uncovered_today": 961,
+   "today_split": {
+    "verse_with_a_dedicated_1_to_1_translation": 4878,
+    "verse_carrying_a_multi_verse_range_translation": 0,
+    "verse_covered_only_by_a_sibling_s_range_and_carrying_no_edge": 0
+   },
+   "plan_adds": {
+    "dedicated_1_to_1": 838,
+    "multi_verse_range": 68,
+    "reused_cross_corpus_rendering": 21,
+    "total_new_edges": 927
+   },
+   "predicted_after_import": {
+    "verses_carrying_an_edge": 5805,
+    "of_which_dedicated_own_corpus_translation": 5716,
+    "of_which_multi_verse_range": 68,
+    "of_which_reused_cross_corpus_rendering": 21,
+    "still_carrying_no_edge": 34
+   }
+  },
+  "RV": {
+   "corpus": 10552,
+   "covered_today": 10502,
+   "uncovered_today": 50,
+   "today_split": {
+    "verse_with_a_dedicated_1_to_1_translation": 10314,
+    "verse_carrying_a_multi_verse_range_translation": 30,
+    "verse_covered_only_by_a_sibling_s_range_and_carrying_no_edge": 30
+   },
+   "plan_adds": {
+    "dedicated_1_to_1": 8,
+    "multi_verse_range": 0,
+    "reused_cross_corpus_rendering": 0,
+    "total_new_edges": 8
+   },
+   "predicted_after_import": {
+    "verses_carrying_an_edge": 10510,
+    "of_which_dedicated_own_corpus_translation": 10322,
+    "of_which_multi_verse_range": 30,
+    "of_which_reused_cross_corpus_rendering": 0,
+    "still_carrying_no_edge": 42
+   }
+  },
+  "SV": {
+   "corpus": 1844,
+   "covered_today": 0,
+   "uncovered_today": 1844,
+   "today_split": {
+    "verse_with_a_dedicated_1_to_1_translation": 0,
+    "verse_carrying_a_multi_verse_range_translation": 0,
+    "verse_covered_only_by_a_sibling_s_range_and_carrying_no_edge": 0
+   },
+   "plan_adds": {
+    "dedicated_1_to_1": 0,
+    "multi_verse_range": 0,
+    "reused_cross_corpus_rendering": 173,
+    "total_new_edges": 173
+   },
+   "predicted_after_import": {
+    "verses_carrying_an_edge": 173,
+    "of_which_dedicated_own_corpus_translation": 0,
+    "of_which_multi_verse_range": 0,
+    "of_which_reused_cross_corpus_rendering": 173,
+    "still_carrying_no_edge": 1671
+   }
+  },
+  "YV": {
+   "corpus": 1975,
+   "covered_today": 1903,
+   "uncovered_today": 72,
+   "today_split": {
+    "verse_with_a_dedicated_1_to_1_translation": 1903,
+    "verse_carrying_a_multi_verse_range_translation": 0,
+    "verse_covered_only_by_a_sibling_s_range_and_carrying_no_edge": 0
+   },
+   "plan_adds": {
+    "dedicated_1_to_1": 36,
+    "multi_verse_range": 0,
+    "reused_cross_corpus_rendering": 0,
+    "total_new_edges": 36
+   },
+   "predicted_after_import": {
+    "verses_carrying_an_edge": 1939,
+    "of_which_dedicated_own_corpus_translation": 1939,
+    "of_which_multi_verse_range": 0,
+    "of_which_reused_cross_corpus_rendering": 0,
+    "still_carrying_no_edge": 36
+   }
+  }
+ },
+ "totals": {
+  "corpus": 20210,
+  "covered_today": 17283,
+  "new_edges_if_approved": 1144,
+  "predicted_verses_with_an_edge": 18427,
+  "predicted_still_uncovered": 1783
+ }
+}

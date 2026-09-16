@@ -1,0 +1,65 @@
+{
+ "phase": 10,
+ "executed": false,
+ "statement": "THIS PLAN WAS NOT EXECUTED. No canonical translation was created, updated or deleted by this task. The graph census and the translation attachment digest are re-read at the end of the run and compared against the phase-0 baseline.",
+ "rows_in_plan": 1144,
+ "distinct_target_passages": 1144,
+ "rows_per_target": 1.0,
+ "translations_to_create": 1144,
+ "translations_to_update": 0,
+ "why_zero_updates": "every row in the plan targets a passage that carries no English translation today; Gate B routes any row whose target is already translated to B_CONFLICT_EXISTING_TRANSLATION, and this task does not overwrite live text",
+ "nodes_created": {
+  "Translation": 1144
+ },
+ "relationships_created": {
+  "HAS_TRANSLATION": 1144
+ },
+ "properties_set_per_node": [
+  "text",
+  "translator",
+  "work_edition",
+  "year",
+  "language",
+  "source_id",
+  "alignment_level",
+  "quality_status",
+  "rights_status",
+  "translation_id",
+  "passage_id"
+ ],
+ "conflicts": 0,
+ "per_veda_delta": {
+  "AV": 927,
+  "RV": 8,
+  "SV": 173,
+  "YV": 36
+ },
+ "per_source_breakdown": {
+  "IA_WAYBACK_GRIFFITH_AV_1895": 906,
+  "VEDAGRAPH_CANONICAL_RV_GRIFFITH": 194,
+  "SACRED_TEXTS_WYV_SNAPSHOT_2026_09_07": 36,
+  "IA_WAYBACK_GRIFFITH_RV_1896": 8
+ },
+ "alignment_level_breakdown": {
+  "MANTRA": 1076,
+  "MANTRA_RANGE": 68
+ },
+ "per_class_breakdown": {
+  "SAFE_IMPORT_SOURCE_EXPLICIT": 846,
+  "SAFE_IMPORT_REUSED_RENDERING_WITH_DISCLOSURE": 194,
+  "SAFE_IMPORT_MULTI_VERSE_RANGE": 68,
+  "SAFE_IMPORT_DETERMINISTIC_VERIFIED_ALIGNMENT": 36
+ },
+ "owner_decision_dependencies": {
+  "OWNER_DECISION_C_FORCED_ADDRESSES": 36,
+  "OWNER_DECISION_D_REUSED_RENDERING_POLICY": 194,
+  "OWNER_DECISION_A_RV_SPAN": 0
+ },
+ "census_effect": {
+  "nodes": "+1144",
+  "relationships": "+1144",
+  "predicted_nodes": 117982,
+  "predicted_relationships": 282401,
+  "core_corpus_change": "none; no :Mantra is created or deleted"
+ }
+}

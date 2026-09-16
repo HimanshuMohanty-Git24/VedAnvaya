@@ -1,0 +1,115 @@
+{
+ "phase": 0,
+ "git": {
+  "head": "8e07086dac4f8afcf268bfe835407f227ecf30ac",
+  "branch": "phase-data-completeness-v2",
+  "clean": false,
+  "clean_of_everything_but_this_packet": true,
+  "dirty_paths": [
+   "?? data/staging/translation/gate_bc/",
+   "?? scripts/gate_bc_common.py",
+   "?? scripts/gate_bc_phase0_baseline.py"
+  ],
+  "foreign_dirty_paths": []
+ },
+ "graph_fingerprint": {
+  "nodes": 116838,
+  "relationships": 281257,
+  "translation_nodes": 17283,
+  "has_translation_edges": 17283
+ },
+ "core_corpus": {
+  "measured": {
+   "AV": 5839,
+   "RV": 10552,
+   "SV": 1844,
+   "YV": 1975
+  },
+  "invariant": {
+   "RV": 10552,
+   "SV": 1844,
+   "YV": 1975,
+   "AV": 5839
+  },
+  "agrees": {
+   "RV": true,
+   "SV": true,
+   "YV": true,
+   "AV": true
+  },
+  "all_agree": true,
+  "measured_total": 20210
+ },
+ "live_translation_coverage": {
+  "per_veda": {
+   "AV": {
+    "covered_mantras": 4878,
+    "translation_nodes": 4878,
+    "corpus": 5839,
+    "observed_row": true
+   },
+   "RV": {
+    "covered_mantras": 10502,
+    "translation_nodes": 10502,
+    "corpus": 10552,
+    "observed_row": true
+   },
+   "SV": {
+    "covered_mantras": 0,
+    "translation_nodes": 0,
+    "corpus": 1844,
+    "observed_row": false
+   },
+   "YV": {
+    "covered_mantras": 1903,
+    "translation_nodes": 1903,
+    "corpus": 1975,
+    "observed_row": true
+   }
+  },
+  "by_alignment_level": {
+   "AV": {
+    "MANTRA": 4878
+   },
+   "RV": {
+    "HYMN": 158,
+    "MANTRA": 10314,
+    "MANTRA_RANGE": 30
+   },
+   "YV": {
+    "MANTRA": 1903
+   }
+  },
+  "by_source_id": {
+   "AV": {
+    "VEDAWEB": 4878
+   },
+   "RV": {
+    "WIKISOURCE_GRIFFITH_RV": 10502
+   },
+   "YV": {
+    "SACRED_TEXTS": 1903
+   }
+  }
+ },
+ "translation_attachment_digest": {
+  "attachments": 17283,
+  "digest_sha256": "a9c93bf9620f015491de278b6c0d65dae61aa8f393f5f8a1b2ddd3b2f21e163f"
+ },
+ "central_policy": {
+  "not_importable_confidences": [
+   "PROBABLE",
+   "UNVERIFIED"
+  ],
+  "read_from": "scripts/validate_staging_artifact.py::NOT_IMPORTABLE",
+  "note": "imported rather than re-declared, so this packet cannot soften it"
+ },
+ "pre_existing_baseline_failure": {
+  "test": "tests/enrich/test_formula_families.py",
+  "gap": "GAP-FORMULA-003",
+  "expected_nested_formulas": 1103,
+  "measured_nested_formulas": 1064,
+  "in_scope_of_this_task": false,
+  "note": "baselined at phase 0 and re-measured at phase 14; the translation analysis touches no formula input, so any movement means this task's scope leaked"
+ }
+}

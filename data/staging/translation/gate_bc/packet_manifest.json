@@ -1,0 +1,199 @@
+{
+ "phase": "J",
+ "no_canonical_import_performed": true,
+ "statement": "no :Translation node and no HAS_TRANSLATION edge was created, updated or deleted by this task. Every graph interaction was a read.",
+ "baseline": {
+  "census": {
+   "nodes": 116838,
+   "relationships": 281257,
+   "translation_nodes": 17283,
+   "has_translation_edges": 17283
+  },
+  "core_corpus": {
+   "AV": 5839,
+   "RV": 10552,
+   "SV": 1844,
+   "YV": 1975
+  },
+  "coverage": {
+   "AV": 4878,
+   "RV": 10502,
+   "SV": 0,
+   "YV": 1903
+  },
+  "attachment_digest": {
+   "attachments": 17283,
+   "digest_sha256": "a9c93bf9620f015491de278b6c0d65dae61aa8f393f5f8a1b2ddd3b2f21e163f"
+  }
+ },
+ "final": {
+  "census": {
+   "nodes": 116838,
+   "relationships": 281257,
+   "translation_nodes": 17283,
+   "has_translation_edges": 17283
+  },
+  "core_corpus": {
+   "AV": 5839,
+   "RV": 10552,
+   "SV": 1844,
+   "YV": 1975
+  },
+  "coverage": {
+   "AV": 4878,
+   "RV": 10502,
+   "SV": 0,
+   "YV": 1903
+  },
+  "attachment_digest": {
+   "attachments": 17283,
+   "digest_sha256": "a9c93bf9620f015491de278b6c0d65dae61aa8f393f5f8a1b2ddd3b2f21e163f"
+  }
+ },
+ "checks": {
+  "graph_census_unchanged": true,
+  "core_corpus_unchanged": true,
+  "core_corpus_matches_invariant": true,
+  "translation_coverage_unchanged": true,
+  "translation_attachment_digest_unchanged": true,
+  "translation_attachment_count_unchanged": true
+ },
+ "all_checks_pass": true,
+ "pre_existing_baseline_failure": {
+  "test": "tests/enrich/test_formula_families.py",
+  "case": "test_real_artifact_reproduces_the_v1_substring_figure_on_the_identity_surface",
+  "gap": "GAP-FORMULA-003",
+  "expected": 1103,
+  "measured_at_phase_0": 1064,
+  "measured_at_phase_14": 1064,
+  "unchanged": true,
+  "assertion_text": "assert 1064 == 1103",
+  "rest_of_file": "37 passed",
+  "scope_leak": false,
+  "why_no_leak_is_possible": "this task read the graph and wrote only files under data/staging/translation/gate_bc, scripts/gate_bc_* and one new test file. It touched no formula artifact, no enrichment code and no graph data."
+ },
+ "git": {
+  "clean_of_everything_but_this_packet": true,
+  "foreign_dirty_paths": [],
+  "packet_owned_dirty_paths": [
+   "?? data/staging/translation/gate_bc/",
+   "?? scripts/gate_bc_common.py",
+   "?? scripts/gate_bc_decisions.py",
+   "?? scripts/gate_bc_fetch_facts.py",
+   "?? scripts/gate_bc_final_verification.py",
+   "?? scripts/gate_bc_gate_b.py",
+   "?? scripts/gate_bc_gate_c.py",
+   "?? scripts/gate_bc_phase0_baseline.py",
+   "?? scripts/gate_bc_product_and_registry.py",
+   "?? scripts/gate_bc_textfold.py",
+   "?? scripts/gate_bc_yv_source_check.py",
+   "?? tests/unit/test_translation_gate_bc.py"
+  ]
+ },
+ "packet": {
+  "files": [
+   {
+    "path": "adversarial_gate_tests.json",
+    "sha256": "ee3517ec1a0e04187f782941a6f2f8c86dfcb37496e23028b59b319ba110c8fb",
+    "bytes": 5590
+   },
+   {
+    "path": "baseline.json",
+    "sha256": "0ecfdab0ae4388213cd88e425c74ef90eaaf4efb86460a32bfb2b58c955c775c",
+    "bytes": 2582
+   },
+   {
+    "path": "forced_address_decision_table.json",
+    "sha256": "4432026cf034241b98ba13b9b3aa7a5aefa2a8aba95123f84bdae37c5901aaa3",
+    "bytes": 69733
+   },
+   {
+    "path": "gate_b_failures.jsonl",
+    "sha256": "60c48b25ec4ded0005f1fc0431a3b0c38022aa231e548f6ebf95c3a13ee3f3bc",
+    "bytes": 4221605
+   },
+   {
+    "path": "gate_b_rows.jsonl",
+    "sha256": "d08addfe622bddeeb305e8a1fda16348f6bdfbd1d7e735f3d89a34ffb0099a90",
+    "bytes": 7729162
+   },
+   {
+    "path": "gate_b_summary.json",
+    "sha256": "5f3c9d26b7cc2d520c84cc775fedc15ad0883b3cf605156fd80f8d7aeabb87e4",
+    "bytes": 9166
+   },
+   {
+    "path": "gate_c_findings.jsonl",
+    "sha256": "faa0f0ff70237fb739bbe3b85dfd793f123616f9fe426bf39cd4934237ebddbb",
+    "bytes": 2102
+   },
+   {
+    "path": "gate_c_rows.jsonl",
+    "sha256": "eb036e934884f48073ba95252d50d3fa701de668bf0137a1e2938f09ba30a807",
+    "bytes": 5855489
+   },
+   {
+    "path": "gate_c_summary.json",
+    "sha256": "b317f811be80bb0e2c28a18658f4c1b761191ce2ffb4d6e7a45d72bf5a9b0d6d",
+    "bytes": 5960
+   },
+   {
+    "path": "import_dry_run.json",
+    "sha256": "f1df9dc4e041f935bcae03dcc8ba689d0320da0dab9f11dface1b937ce9b114a",
+    "bytes": 1994
+   },
+   {
+    "path": "input_manifest.json",
+    "sha256": "4ea27fd439494bcf36439693637a30b2f806efbc8a006ab5d0b4487aff4ea8ae",
+    "bytes": 6804
+   },
+   {
+    "path": "OWNER_DECISION_PACKET.md",
+    "sha256": "ce01a11bb452984713cc1588783abb8843e3531fbfd4658551b40684886b968b",
+    "bytes": 28882
+   },
+   {
+    "path": "population_census.json",
+    "sha256": "067ae8793a4d6947f8c54fafc1c4a6f5f839af1340b5abbd1a6c020607c9c20f",
+    "bytes": 3059
+   },
+   {
+    "path": "population_partitions.json",
+    "sha256": "6b7829a7e16ac53c3094e236de0a83f6bb3ade0468e6678162347bab51b32b9d",
+    "bytes": 10728
+   },
+   {
+    "path": "predicted_coverage.json",
+    "sha256": "621894e162c2286c13a30e6e009fb01b7ac22c71f3c32d9b4674f12e650633e2",
+    "bytes": 3413
+   },
+   {
+    "path": "product_semantics_check.json",
+    "sha256": "b55071d7c6960709d76785e2795d670d76282efa9e85d4cadf6726ab20f00e69",
+    "bytes": 8106
+   },
+   {
+    "path": "registry_consequences.json",
+    "sha256": "185b1f6b8f0f49f7ccfa851bb935ffbfbed94ac50b9332f548891c94fa4b7f15",
+    "bytes": 10914
+   },
+   {
+    "path": "rv_span_decision.json",
+    "sha256": "24bd19c810582d28142c4693824c6a31b1d1a8be7b4070ae9f65ff82ba094539",
+    "bytes": 13562
+   },
+   {
+    "path": "translation_decision_matrix.json",
+    "sha256": "8cf34e811955662be6c45d6274b57235c0f33d0b323de979daf46e1e471b0934",
+    "bytes": 628855
+   },
+   {
+    "path": "yv_source_verification.json",
+    "sha256": "020f69155feb73fc881447f0eaa3e159a30e19cd6c117fac6c0c95da5be26384",
+    "bytes": 100800
+   }
+  ],
+  "file_count": 20,
+  "packet_sha256": "90a21e37cca1c7db9fc27d1a8198b56a2f4e229209ee6009a239eb962c45719a"
+ }
+}
