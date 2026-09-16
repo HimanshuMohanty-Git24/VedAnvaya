@@ -2,7 +2,7 @@
 
 Written for: the project owner, reading to decide whether to release.
 
-Branch `phase-data-completeness-v2` · Wave 4 baseline `df102bf` · head `bb4179d` · 2026-09-16
+Branch `phase-data-completeness-v2` · Wave 4 baseline `df102bf` · 13 commits · 2026-09-16
 
 ---
 
@@ -28,10 +28,11 @@ Now that every entry terminates, the count is:
 | **still implementation-fixable** | **40** |
 
 Forty entries describe work over material this repository already holds, and the owner's rule
-for those is "fix it or report NOT_READY." Wave 4 fixed eleven defects at their generators and
-closed twelve more entries by measurement; it cannot build forty unbuilt layers, and
-relabelling them `CLOSED_SCOPE_DECISION` was available and is barred — the audit refuses an
-uncited scope decision for exactly that reason.
+for those is "fix it or report NOT_READY." Wave 4 fixed eleven defects at their generators —
+which closed six entries outright — and terminated the rest by measurement, mostly by
+discovering that a claim had gone stale because the layer it described had since been built.
+It cannot build forty unbuilt layers, and relabelling them `CLOSED_SCOPE_DECISION` was
+available and is barred: the audit refuses an uncited scope decision for exactly that reason.
 
 The verdict is **not** `COMPLETE_WITH_EXTERNAL_SOURCE_BLOCKERS`, because the blockers are not
 external. Three entries are genuinely source-blocked with all five required evidence fields.
@@ -48,7 +49,7 @@ Measured: the graph holds 4,878 of 5,839 Atharvavedic translations — **exactly
 pre-closure figure**. All 2,254 accepted rows in `data/staging/translation/rows.jsonl` target
 mantras that exist in the graph, and **not one of them carries a translation**:
 
-```
+```text
 of the staged keys: {'found': 2254, 'with_tr': 0}
 ```
 
@@ -171,7 +172,7 @@ residual count.
 
 ## G. Dependency finality and the perturbation test (Phase 8)
 
-```
+```text
 CURRENT=6  STALE_INPUT=0  BLOCKED=2  NOT_APPLICABLE=1   unexplained stale: none
 ```
 
@@ -288,9 +289,32 @@ In the order that unblocks the most.
    verse. This is *wrong data on a public surface*, not missing data, and it is the one item on
    this list I would fix before any of the others.
 
-### L1. Ask formal grade
+### L1. Ask formal grade — `ASK_FORMAL_REGRADE_BLOCKED_EXTERNAL_QUOTA` stands
 
-See the appended run record. If it reads
-`ASK_FORMAL_REGRADE_BLOCKED_EXTERNAL_QUOTA`, that blocker stands and `misleading = 0` is **not
-claimed** — a deterministic suite is not a formal grade, and the earlier partial runs are not
-combined into one.
+Attempted at the final commit, on a clean tree:
+
+```text
+run_id      openrouter-nvidia_nemotron-3-ultra-550b-a55b:free-7d11e3b6f56b76ad
+commit      b986193   questions 60
+answered    0/60
+
+STOPPING at Q01: LLMRateLimitError
+  Rate limit reached for provider 'openrouter'.
+  The daily allowance is exhausted; waiting will not clear it.
+```
+
+Only OpenRouter is credentialed; the Gemini and Anthropic adapters exist in code without keys,
+and switching model would produce a different grade rather than a resumption. The earlier
+19/60 and 31/60 runs are **diagnostic only and are not combined** with this one — and both are
+keyed to earlier commits, so combining them would also be dishonest about which code was
+graded.
+
+**`misleading = 0` is not claimed.** None of the required figures — supported-correct,
+partial-correct, correctly-refused, misleading, citation count, uncited factual answers,
+invented citations — can be reported from 0 of 60 answers, and a deterministic suite is not a
+formal grade. The blocker is recorded verbatim in the dependency ledger under `Ask retrieval`.
+
+What *can* be said: the deterministic Ask suites pass (388 + 91), and the Wave 4 fixes that
+touch Ask's evidence handling are real — the 214 deity notes it read as an absence qualifier,
+and the caveat that denied the Atharvaveda's ascription layer. Whether those improve the grade
+is exactly the question the grade would answer, so it is left open rather than assumed.

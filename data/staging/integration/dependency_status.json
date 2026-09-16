@@ -1,6 +1,6 @@
 {
   "artifact": "DEPENDENCY_STATUS",
-  "at": "2026-09-16T10:16:04.872102+00:00",
+  "at": "2026-09-16T10:32:59.073800+00:00",
   "graph_census": {
     "nodes": 116838,
     "relationships": 281257
@@ -97,11 +97,11 @@
       "status": "BLOCKED",
       "declared_inputs": 10,
       "inputs_that_moved": [],
-      "reason": "ASK_FORMAL_REGRADE_BLOCKED_EXTERNAL_QUOTA. The fresh commit-keyed run at b98d988 reached 19 of 60 and stopped at Q20 with vedagraph.llm.errors.LLMRateLimitError: 'Rate limit reached for provider openrouter. The daily allowance is exhausted; waiting will not clear it.' Only OpenRouter is credentialed -- Gemini and Anthropic providers exist in code with no keys -- and switching model would produce a different grade rather than a resumption. The earlier 31/60 run is diagnostic only and is NOT combined with this one, per owner instruction. Resume with a fresh run when the daily allowance resets. On the 19: 94 citations, 0 invented citations surviving, 0 invalid, 1 uncited answer (Q03, a reasoning-preamble leak). misleading/hallucinated NOT certified.",
+      "reason": "ASK_FORMAL_REGRADE_BLOCKED_EXTERNAL_QUOTA. A fresh commit-keyed run at b986193, run_id openrouter-nvidia_nemotron-3-ultra-550b-a55b:free-7d11e3b6f56b76ad, reached 0 of 60 and stopped at Q01 with vedagraph.llm.errors.LLMRateLimitError: 'Rate limit reached for provider openrouter. The daily allowance is exhausted; waiting will not clear it.' Only OpenRouter is credentialed; the Gemini and Anthropic adapters exist without keys, and switching model would produce a different grade rather than a resumption. The earlier 19/60 and 31/60 runs are diagnostic only and are NOT combined with this one. misleading = 0 is not claimed. The deterministic Ask suites pass: tests/api/ask + tests/product 388, tests/llm 91.",
       "output_file": null,
       "output_hash": null,
       "declared_outputs": [],
-      "built_at": "2026-09-16T07:37:46.147805+00:00",
+      "built_at": "2026-09-16T10:32:50.832825+00:00",
       "rebuilt_by": "the search index build, then scripts/run_ask_benchmark.py to re-grade",
       "current_input_digest": "1d6bd21c84f8ecca59befc49b655ac072219cc231651039e2ac659a5ad620eb4",
       "recorded_input_digest": "1d6bd21c84f8ecca59befc49b655ac072219cc231651039e2ac659a5ad620eb4"
