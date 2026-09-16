@@ -342,7 +342,10 @@ _LAYER_SPECS: Final[tuple[LayerSpec, ...]] = (
         "CONCEPT_ASSERTION",
         "ABOUT_CONCEPT",
         "Reaches all four corpora, partly through the English translation, so its reach "
-        "into the Samaveda is bounded by that corpus having no translation at all.",
+        "into the Samaveda is bounded by that corpus having no translation of its own. The "
+        "173 reused Rigvedic renderings do not lift that bound: this layer was built before "
+        "them, and a rendering of the Rigvedic parallel is not independent evidence about "
+        "the Samavedic verse.",
     ),
     LayerSpec(
         "ENTITY_MENTION",
@@ -359,8 +362,12 @@ _LAYER_SPECS: Final[tuple[LayerSpec, ...]] = (
     LayerSpec(
         "TRANSLATION",
         "HAS_TRANSLATION",
-        "Three corpora. The Samaveda has zero released translations, so every "
-        "translation-derived layer is empty for it and none of those zeros is textual.",
+        "Counts the HAS_TRANSLATION relation, which reaches all four corpora and does "
+        "not mean all four are translated. The Samaveda still has zero released "
+        "translations of its own: the 173 verses this layer reaches there carry "
+        "Griffith's Rigvedic rendering of text verified character-identical, disclosed "
+        "as reuse, so every translation-derived layer is still empty for that corpus and "
+        "none of those zeros is textual.",
     ),
 )
 
@@ -552,10 +559,22 @@ CALL (w) {
     RETURN count(p) AS passage_count,
            count(CASE WHEN p.display_type = 'MANTRA' THEN 1 END) AS mantra_count
 }
+// Scoped to the population `translated` counts, so the two agree. Collecting from every
+// HAS_TRANSLATION edge put "Ralph T. H. Griffith" beside a Samavedic `translated: 0`,
+// which reads as a contradiction: his name is there because 173 of its verses show his
+// Rigvedic rendering, and that is disclosed in a caveat rather than by listing him as a
+// translator of the Samaveda.
 CALL (w) {
     MATCH (p:Passage {work_id: w.work_id, display_type: 'MANTRA'})
           -[:HAS_TRANSLATION]->(t:Translation)
+    WHERE t.reuse_kind IS NULL AND t.language = 'en'
     RETURN collect(DISTINCT t.translator) AS translators
+}
+CALL (w) {
+    MATCH (p:Passage {work_id: w.work_id, display_type: 'MANTRA'})
+          -[:HAS_TRANSLATION]->(t:Translation)
+    WHERE t.reuse_kind IS NOT NULL
+    RETURN collect(DISTINCT t.translator) AS reused_translators
 }
 // The four coverage populations, each on its own definition. A single
 // `count(DISTINCT p)` over HAS_TRANSLATION was the whole measurement until
@@ -590,7 +609,7 @@ RETURN w.work_id AS work_id, w.veda AS veda, w.abbreviation AS abbreviation,
        w.scope_source AS scope_source, w.scope_evidence AS scope_evidence,
        w.completeness AS completeness, w.excluded_corpora AS excluded_corpora,
        w.rights AS rights,
-       passage_count, mantra_count, translators,
+       passage_count, mantra_count, translators, reused_translators,
        dedicated_count, range_covered_count, reused_count, other_language_count,
        any_coverage_count
 ORDER BY w.work_id
@@ -1957,6 +1976,9 @@ class PassageService:
             uncovered=uncovered,
             any_coverage=any_coverage,
             translators=sorted(str(item) for item in row.get("translators") or []),
+            reused_from_translators=sorted(
+                str(item) for item in row.get("reused_translators") or []
+            ),
             status=status,
             caveats=caveats,
         )

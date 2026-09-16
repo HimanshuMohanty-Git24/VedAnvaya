@@ -105,8 +105,13 @@ CASES: Final[tuple[dict[str, Any], ...]] = (
         "expect_no_translation": True,
     },
     {
+        # RV 10.86.16 and .17 are two of the seven Rigvedic verses still uncovered: the
+        # source's page for the hymn does not print them, its printed labels skip them, and
+        # the block line-count arithmetic leaves no room for a merged unit. RV 1.179.1 was
+        # the case here before and this round translated it, which is the point -- the
+        # uncovered fixture has to be a verse that is actually uncovered now.
         "label": "9. uncovered verse",
-        "key": "VG:RV:SAK:M01:S179:V001",
+        "key": "VG:RV:SAK:M10:S086:V016",
         "expect_no_translation": True,
     },
     {
@@ -283,7 +288,11 @@ def ask_evidence_check() -> dict[str, Any]:
         )
         packet = build_evidence_packet(result)
         items = [i for i in packet.items if i.passage_key == key]
-        rendered = packet.prompt_block if hasattr(packet, "prompt_block") else ""
+        # as_prompt() is the text the model actually sees. Read by its real name: an
+        # earlier version of this check read a `prompt_block` attribute that does not
+        # exist, so `hasattr` returned False, the assertion below was skipped, and the
+        # report said "false" where it meant "never looked".
+        rendered = packet.as_prompt()
         disclosures = [i.translation_disclosure for i in items if i.translation_disclosure]
         quoted = [i for i in items if i.translation]
         row = {
@@ -305,7 +314,12 @@ def ask_evidence_check() -> dict[str, Any]:
             )
         if not quoted:
             failures.append(f"{label}: Ask retrieved no English for {key}, so nothing to disclose")
-        row["rendered_mentions_translation_is"] = "translation_is:" in rendered
+        row["prompt_carries_the_disclosure_line"] = "translation_is:" in rendered
+        if quoted and "translation_is:" not in rendered:
+            failures.append(
+                f"{label}: the prompt quotes the English without the translation_is line, so "
+                "the model is handed the text with nothing qualifying it"
+            )
         checks.append(row)
 
     return {"surface": "retriever + build_evidence_packet", "checks": checks, "failures": failures}

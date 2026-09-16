@@ -12,9 +12,11 @@ null.
 
 *A collection too small to paginate still has to say why it is empty.* A passage has at
 most one translation, so wrapping it in :class:`~vedagraph.api.models.common.Paginated`
-would be theatre -- but the Samaveda has zero translations across all 1,844 verses, and an
-empty list there means "no translation was ever released for this corpus" rather than
-"this verse is untranslated". :class:`AttestedSet` is the small-collection counterpart of
+would be theatre -- but the Samaveda has zero translations of its own across all 1,844
+verses, and an empty list there means "no translation was ever released for this corpus"
+rather than "this verse is untranslated". The 173 Samavedic verses that do return an item
+return a rendering reused from the Rigvedic parallel, which the item discloses.
+:class:`AttestedSet` is the small-collection counterpart of
 ``Paginated`` and carries the same refusal: an empty set cannot claim ``SUPPORTED``
 without a caveat.
 
@@ -81,7 +83,8 @@ class AttestedSet[T](ApiModel):
         if not self.items and self.data_status is KnowledgeStatus.SUPPORTED and not self.caveats:
             raise ValueError(
                 "An empty AttestedSet must carry a non-SUPPORTED data_status or a caveat: "
-                "the Samaveda's zero translations and the Yajurveda's absent deity "
+                "the Samaveda's zero translations of its own and the Yajurveda's absent "
+                "deity "
                 "ascription layer are both empty lists and neither is textual absence."
             )
         return self

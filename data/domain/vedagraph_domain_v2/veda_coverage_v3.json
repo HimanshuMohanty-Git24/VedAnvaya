@@ -30,7 +30,7 @@
  ],
  "vedas": {
   "AV": {
-   "coverage_score": 52.7,
+   "coverage_score": 54.1,
    "dimensions": {
     "agentive_assertion": {
      "covered_mantras": 0,
@@ -105,9 +105,9 @@
      "status": "PRESENT"
     },
     "translation": {
-     "covered_mantras": 4878,
+     "covered_mantras": 5783,
      "reason": "",
-     "share": 0.8354,
+     "share": 0.9904,
      "status": "PRESENT"
     }
    },
@@ -118,7 +118,7 @@
    "work_id": "VG:WORK:AV:SAU"
   },
   "RV": {
-   "coverage_score": 60.0,
+   "coverage_score": 60.1,
    "dimensions": {
     "agentive_assertion": {
      "covered_mantras": 2228,
@@ -193,9 +193,9 @@
      "status": "PRESENT"
     },
     "translation": {
-     "covered_mantras": 10502,
+     "covered_mantras": 10539,
      "reason": "",
-     "share": 0.9953,
+     "share": 0.9988,
      "status": "PRESENT"
     }
    },
@@ -282,7 +282,7 @@
     },
     "translation": {
      "covered_mantras": 0,
-     "reason": "No complete translation of the Kauthuma arcika is ingested; the only one located is Ranayaniya and does not align.",
+     "reason": "No complete translation of the Kauthuma arcika is ingested; the only one located is Ranayaniya and does not align. 173 Samavedic verses do now show Griffith's Rigvedic English on text verified character-identical, disclosed as a reused rendering; that is translation assistance and not a Samavedic translation, so it is deliberately not counted here.",
      "share": 0.0,
      "status": "ABSENT_FROM_SOURCE"
     }
@@ -294,7 +294,7 @@
    "work_id": "VG:WORK:SV:KAU"
   },
   "YV": {
-   "coverage_score": 55.0,
+   "coverage_score": 55.2,
    "dimensions": {
     "agentive_assertion": {
      "covered_mantras": 0,
@@ -369,9 +369,9 @@
      "status": "PRESENT"
     },
     "translation": {
-     "covered_mantras": 1903,
+     "covered_mantras": 1939,
      "reason": "",
-     "share": 0.9635,
+     "share": 0.9818,
      "status": "PRESENT"
     }
    },

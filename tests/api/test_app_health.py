@@ -183,9 +183,17 @@ def test_live_readiness_passes_against_the_frozen_graph(live_client: TestClient)
 #: per-verse exception in one string, not a metre name. 281,290 -> 281,257. The node count
 #: did not move, because the :Chandas entities stay in the graph holding the literal.
 #:
+#: Raised again by the translation bulk integration, which created 1,132 :Translation nodes
+#: and 1,132 HAS_TRANSLATION edges: 116,838 -> 117,970 and 281,257 -> 282,389. The pair moves
+#: by the same 1,132 because every node this round created carries exactly one edge, and the
+#: migration refused to commit unless that held -- a node count that grew by more than the
+#: edge count would mean something other than a translation was created. The figures are the
+#: ones data/staging/translation/integration/translation_bulk_readback.json read back out of
+#: Neo4j and matched against the plan's promise.
+#:
 #: Raising this pair is a deliberate act, and the docstring below says what it costs.
-FROZEN_NODES = 116_838
-FROZEN_RELATIONSHIPS = 281_257
+FROZEN_NODES = 117_970
+FROZEN_RELATIONSHIPS = 282_389
 
 #: The figures that must NEVER move, whatever an import does. The whole-graph census grows
 #: with every wave; the four corpora are closed sets, and a drift here is corruption rather

@@ -165,7 +165,17 @@ class TranslationCoverage(ApiModel):
         description="Verses reached by a rendering of any kind. The honest answer to "
         "'can I read something here', which is a different question to 'is it translated'.",
     )
-    translators: list[str] = Field(default_factory=list)
+    translators: list[str] = Field(
+        default_factory=list,
+        description="Translators of this work's own English, scoped to the population "
+        "`translated` counts. A name reaches this list only if it translated this corpus.",
+    )
+    reused_from_translators: list[str] = Field(
+        default_factory=list,
+        description="Translators whose rendering of another corpus is shown against verses "
+        "of this one. Kept apart from `translators` because 'Griffith' beside a Samavedic "
+        "`translated: 0` reads as a contradiction rather than as reuse.",
+    )
     status: KnowledgeStatus = KnowledgeStatus.SUPPORTED
     caveats: list[CaveatView] = Field(default_factory=list)
 

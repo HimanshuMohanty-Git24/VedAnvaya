@@ -26,15 +26,22 @@ has, because it is a claim about the Sanskrit.
 *Sanskrit on the sandhi surface, for the Samaveda only.* See
 :data:`SANDHI_MATCH_VEDAS` for the measurement and the false-positive cost.
 
-*English translations.* 17,281 of the corpus's 20,210 mantras carry one (RV 10,500 of
-10,552, YV 1,903 of 1,975, AV 4,878 of 5,839, **SV 0 of 1,844**). Griffith translated the
+*English translations.* This layer was built when 17,281 of the corpus's 20,210 mantras
+carried one (RV 10,500 of 10,552, YV 1,903 of 1,975, AV 4,878 of 5,839, **SV 0 of 1,844**),
+and those are the figures it was measured against. The layer has since grown -- RV 10,539,
+YV 1,939 and AV 5,783 reached by independent English, the Samaveda still 0 of its own -- so
+this concept layer is stale with respect to the translation layer, and
+``scripts/dependency_state.py`` is what says so. Griffith translated the
 Rigveda and the Yajurveda; Whitney and Lanman translated the Atharvaveda, and their diction
 is not the same, which is why the registry's English aliases were measured against all
 three and not assumed from one. An English match is a claim about a nineteenth-century
 translator's word choice, so it always scores below a Sanskrit match and can never
 outrank one.
 
-**The Samaveda's coverage rests entirely on Sanskrit.** It has no translations at all. Any
+**The Samaveda's coverage rests entirely on Sanskrit.** It has no translation of its own,
+and the 173 reused Rigvedic renderings are excluded from this layer by policy rather than by
+accident: a rendering of the Rigvedic parallel cannot be independent English evidence about
+the Samavedic verse. Any
 report of this layer that quotes a single corpus-wide coverage number is hiding that, so
 :func:`assign_concepts` reports coverage per Veda and per evidence path.
 """

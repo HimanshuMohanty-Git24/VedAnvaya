@@ -242,19 +242,34 @@ def test_declared_surface_coverage_matches_the_graph(live_repository: Neo4jRepos
 def test_the_samaveda_has_no_english_translation_and_the_response_says_so(
     live_repository: Neo4jRepository, live_client: TestClient
 ) -> None:
-    row = live_repository.run_one(
-        "MATCH (p:Passage {veda: 'SV'})-[:HAS_TRANSLATION]->(:Translation) RETURN count(p) AS n"
+    own = live_repository.run_one(
+        "MATCH (p:Passage {veda: 'SV'})-[:HAS_TRANSLATION]->(t:Translation) "
+        "WHERE t.reuse_kind IS NULL RETURN count(p) AS n"
     )
-    assert row is not None and int(row["n"]) == 0, (
-        "a Samavedic translation has landed; the caveat must be re-measured"
+    assert own is not None and int(own["n"]) == 0, (
+        "a Samavedic translation of its own has landed; the caveat must be re-measured"
+    )
+    reused = live_repository.run_one(
+        "MATCH (p:Passage {veda: 'SV'})-[:HAS_TRANSLATION]->(t:Translation) "
+        "WHERE t.reuse_kind = 'REUSED_RENDERING' RETURN count(p) AS n"
+    )
+    assert reused is not None and int(reused["n"]) == 173, (
+        "the reused population moved; the note quotes its size and must be re-measured"
     )
     body = live_client.get("/api/v1/search", params={"q": "thunderbolt"}).json()
     english = [
         view for view in body["surface_coverage"] if view["surface"] == "ENGLISH_TRANSLATION"
     ]
     assert english, "the English surface was read but not declared"
-    assert "SV" in english[0]["vedas_not_covered"]
-    assert any("NO SAMAVEDIC TRANSLATION" in c["text"] for c in body["caveats"])
+    # SV is no longer in vedas_not_covered, because an English search *can* now return a
+    # Samavedic passage. That makes the note the only thing standing between a caller and
+    # the wrong conclusion, so the note is what this asserts.
+    assert english[0]["passages_by_veda"].get("SV") == 173
+    note = english[0]["note"]
+    assert "NO INDEPENDENT SAMAVEDIC TRANSLATION" in note, note
+    assert "Rigvedic rendering" in note, note
+    assert "1,671" in note, "the note must say how much of the corpus English cannot reach"
+    assert any("NO INDEPENDENT SAMAVEDIC TRANSLATION" in c["text"] for c in body["caveats"])
 
 
 @pytest.mark.neo4j

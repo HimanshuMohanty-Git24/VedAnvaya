@@ -94,22 +94,8 @@
   ],
   "system_exceptions": [],
   "signature_coverage": {
-    "predicates_with_a_signature": 75,
-    "populated_predicates_without_one": [
-      "CONTRASTS_WITH",
-      "DESCRIBES",
-      "DESCRIBES_ACTION",
-      "HAS_THEME",
-      "INVOKES",
-      "INVOLVES_OFFERING",
-      "INVOLVES_RITUAL",
-      "INVOLVES_SUBSTANCE",
-      "PRAISES",
-      "QA_ISSUE_ON",
-      "REFERS_TO_NATURAL_PHENOMENON",
-      "REFERS_TO_PLACE",
-      "REQUESTS"
-    ]
+    "predicates_with_a_signature": 90,
+    "populated_predicates_without_one": []
   },
   "predicates": [
     {
@@ -281,9 +267,14 @@
       "predicate": "CONTRASTS_WITH",
       "edges": 8,
       "declared_in": "enrich.predicates.CONTROLLED_PREDICATES",
-      "signature_enforced": false,
-      "subject_labels": [],
-      "object_labels": []
+      "signature_enforced": true,
+      "subject_labels": [
+        "Passage"
+      ],
+      "object_labels": [
+        "Concept",
+        "Devata"
+      ]
     },
     {
       "predicate": "CO_OCCURS_WITH",
@@ -314,17 +305,27 @@
       "predicate": "DESCRIBES",
       "edges": 199,
       "declared_in": "enrich.predicates.CONTROLLED_PREDICATES",
-      "signature_enforced": false,
-      "subject_labels": [],
-      "object_labels": []
+      "signature_enforced": true,
+      "subject_labels": [
+        "Passage"
+      ],
+      "object_labels": [
+        "Concept",
+        "Devata"
+      ]
     },
     {
       "predicate": "DESCRIBES_ACTION",
       "edges": 35,
       "declared_in": "enrich.predicates.CONTROLLED_PREDICATES",
-      "signature_enforced": false,
-      "subject_labels": [],
-      "object_labels": []
+      "signature_enforced": true,
+      "subject_labels": [
+        "Passage"
+      ],
+      "object_labels": [
+        "Concept",
+        "Devata"
+      ]
     },
     {
       "predicate": "DEVATA_ASSOCIATED_WITH",
@@ -503,13 +504,18 @@
       "predicate": "HAS_THEME",
       "edges": 8,
       "declared_in": "enrich.predicates.CONTROLLED_PREDICATES",
-      "signature_enforced": false,
-      "subject_labels": [],
-      "object_labels": []
+      "signature_enforced": true,
+      "subject_labels": [
+        "Passage"
+      ],
+      "object_labels": [
+        "Concept",
+        "Devata"
+      ]
     },
     {
       "predicate": "HAS_TRANSLATION",
-      "edges": 17283,
+      "edges": 18415,
       "declared_in": "ontology.CORPUS_RELATIONSHIP_TYPES",
       "signature_enforced": true,
       "subject_labels": [
@@ -524,9 +530,14 @@
       "predicate": "INVOKES",
       "edges": 207,
       "declared_in": "enrich.predicates.CONTROLLED_PREDICATES",
-      "signature_enforced": false,
-      "subject_labels": [],
-      "object_labels": []
+      "signature_enforced": true,
+      "subject_labels": [
+        "Passage"
+      ],
+      "object_labels": [
+        "Concept",
+        "Devata"
+      ]
     },
     {
       "predicate": "INVOKES_DEVATA",
@@ -544,25 +555,40 @@
       "predicate": "INVOLVES_OFFERING",
       "edges": 11,
       "declared_in": "enrich.predicates.CONTROLLED_PREDICATES",
-      "signature_enforced": false,
-      "subject_labels": [],
-      "object_labels": []
+      "signature_enforced": true,
+      "subject_labels": [
+        "Passage"
+      ],
+      "object_labels": [
+        "Concept",
+        "Devata"
+      ]
     },
     {
       "predicate": "INVOLVES_RITUAL",
       "edges": 9,
       "declared_in": "enrich.predicates.CONTROLLED_PREDICATES",
-      "signature_enforced": false,
-      "subject_labels": [],
-      "object_labels": []
+      "signature_enforced": true,
+      "subject_labels": [
+        "Passage"
+      ],
+      "object_labels": [
+        "Concept",
+        "Devata"
+      ]
     },
     {
       "predicate": "INVOLVES_SUBSTANCE",
       "edges": 3,
       "declared_in": "enrich.predicates.CONTROLLED_PREDICATES",
-      "signature_enforced": false,
-      "subject_labels": [],
-      "object_labels": []
+      "signature_enforced": true,
+      "subject_labels": [
+        "Passage"
+      ],
+      "object_labels": [
+        "Concept",
+        "Devata"
+      ]
     },
     {
       "predicate": "IS_ASKED_TO",
@@ -747,9 +773,14 @@
       "predicate": "PRAISES",
       "edges": 38,
       "declared_in": "enrich.predicates.CONTROLLED_PREDICATES",
-      "signature_enforced": false,
-      "subject_labels": [],
-      "object_labels": []
+      "signature_enforced": true,
+      "subject_labels": [
+        "Passage"
+      ],
+      "object_labels": [
+        "Concept",
+        "Devata"
+      ]
     },
     {
       "predicate": "PROTECTS_FROM",
@@ -768,9 +799,13 @@
       "predicate": "QA_ISSUE_ON",
       "edges": 915,
       "declared_in": "enrich.predicates.CONTROLLED_PREDICATES",
-      "signature_enforced": false,
-      "subject_labels": [],
-      "object_labels": []
+      "signature_enforced": true,
+      "subject_labels": [
+        "QAIssue"
+      ],
+      "object_labels": [
+        "Work"
+      ]
     },
     {
       "predicate": "QUALITY_VERDICT_ABOUT",
@@ -802,17 +837,27 @@
       "predicate": "REFERS_TO_NATURAL_PHENOMENON",
       "edges": 5,
       "declared_in": "enrich.predicates.CONTROLLED_PREDICATES",
-      "signature_enforced": false,
-      "subject_labels": [],
-      "object_labels": []
+      "signature_enforced": true,
+      "subject_labels": [
+        "Passage"
+      ],
+      "object_labels": [
+        "Concept",
+        "Devata"
+      ]
     },
     {
       "predicate": "REFERS_TO_PLACE",
       "edges": 1,
       "declared_in": "enrich.predicates.CONTROLLED_PREDICATES",
-      "signature_enforced": false,
-      "subject_labels": [],
-      "object_labels": []
+      "signature_enforced": true,
+      "subject_labels": [
+        "Passage"
+      ],
+      "object_labels": [
+        "Concept",
+        "Devata"
+      ]
     },
     {
       "predicate": "REPORTED_IN",
@@ -830,9 +875,14 @@
       "predicate": "REQUESTS",
       "edges": 89,
       "declared_in": "enrich.predicates.CONTROLLED_PREDICATES",
-      "signature_enforced": false,
-      "subject_labels": [],
-      "object_labels": []
+      "signature_enforced": true,
+      "subject_labels": [
+        "Passage"
+      ],
+      "object_labels": [
+        "Concept",
+        "Devata"
+      ]
     },
     {
       "predicate": "REUSES_TEXT_FROM",
@@ -1103,7 +1153,7 @@
     },
     {
       "label": "Internal",
-      "nodes": 77146,
+      "nodes": 78306,
       "classification": "INTERNAL"
     },
     {
@@ -1263,7 +1313,7 @@
     },
     {
       "label": "Translation",
-      "nodes": 17283,
+      "nodes": 18415,
       "classification": "INTERNAL"
     },
     {

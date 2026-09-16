@@ -1,6 +1,6 @@
 # Project status
 
-Updated: 2026-09-09 (Neo4j graph enrichment V1)
+Updated: 2026-09-16 (translation bulk integration)
 
 ## DONE
 
@@ -518,3 +518,55 @@ relationships, up from 94,753 and 134,065.
 `NEXT_PROJECT_PHASE = FASTAPI_SEARCH_AND_GRAPH_API`. Every enrichment edge already carries
 the full provenance envelope the API needs to answer "why are these connected?" from the
 edge alone.
+
+## Translation bulk integration (2026-09-16)
+
+1,132 `Translation` nodes and 1,132 `HAS_TRANSLATION` edges imported from the 2,254-row
+Gate B/C packet, in one migration. Census 116,838 / 281,257 -> 117,970 / 282,389; the four
+corpora unchanged at RV 10,552 / SV 1,844 / YV 1,975 / AV 5,839; the content digest of all
+17,283 pre-existing translations byte-identical before and after.
+
+**Coverage is four populations per corpus, not one percentage.** `translated` narrowed to
+mean a verse's own rendering, which is why the Rigvedic figure reads 10,479 where it read
+10,502: the 30 anchors of the RV 1.65-1.70 spans left it, because Griffith renders each
+pair of dvipada verses as one unit and none of the 60 verses those cover has a translation
+aligned to it alone.
+
+| corpus | own English | range-covered | reused rendering | non-English | uncovered |
+|---|---|---|---|---|---|
+| Rigveda 10,552 | 10,479 | 60 | 0 | 6 | 7 |
+| Samaveda 1,844 | **0** | 0 | 173 | 0 | 1,671 |
+| Yajurveda 1,975 | 1,939 | 0 | 0 | 0 | 36 |
+| Atharvaveda 5,839 | 5,715 | 68 | 21 | 18 | 17 |
+
+The five columns partition each corpus exactly, and the Samavedic zero is the one to read
+carefully: 173 of its verses now show Griffith's Rigvedic English on text verified
+character-identical, disclosed as a reused rendering. That is translation assistance and
+not a Samavedic translation, so it is counted in no Samavedic translation figure anywhere
+in the product.
+
+Imported this round, by class: 844 source-explicit, 34 multi-verse print units covering 68
+verses, 194 reused renderings, 36 independently verified Yajurvedic forced addresses, 24
+Latin. 1,166 staged rows produced 1,132 nodes because 34 print units were staged once per
+covered verse, and importing a node per row would have created the duplicated 1:1
+translations the owner decision forbade.
+
+Withheld: 740 rows on `mapping_confidence = PROBABLE`, 285 on an unresolved source
+coordinate, 60 on provenance, 2 forced addresses withheld by name, 1 rejected as an
+editorial cross-reference rather than a translation.
+
+## What is NOT resolved by the translation round
+
+- **No translation gap closed.** GAP-TRANSLATION-001, -002, -003 and -004 all moved a long
+  way and none of their closure tests passes: 1,671 Samavedic, 17 Atharvavedic, 36
+  Yajurvedic and 7 Rigvedic verses are reached by no rendering of any kind. Improved
+  coverage is not closure, and the Samavedic case is why the distinction is kept.
+- **The owner decision quoted 22 Latin rows and the measured population is 24.** AV 20.136.1
+  and RV 10.61.6 carry Latin literals and had been classified source-explicit English. Both
+  were verified against the pinned source pages -- sacred-texts heads its AV 20.136 page
+  "Erotica" and prints verses 1-16 in Latin -- and both are imported as `language: la`.
+- **Two consumers are stale and blocked, both for reasons outside this round.** The semantic
+  resemblance layer needs re-derivation from the post-import snapshot per owner ruling, and
+  the Ask benchmark re-grade is blocked on LLM quota.
+- **GAP-FORMULA-003 is unchanged**, deliberately: `formulas_strictly_contained_in_another`
+  measures 1,064 against an expected 1,103, exactly as before the import.

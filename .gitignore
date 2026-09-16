@@ -58,3 +58,9 @@ data/enrichment/**/*.jsonl
 # and most of it belongs to a publisher who permits streaming rather than redistribution.
 data/audio/cache/**
 !data/audio/cache/.gitkeep
+
+# Neo4j dumps taken before a canonical mutation. The dump itself is a ~120MB binary and is
+# reproducible from the graph it was taken from; its sha256 is tracked beside it, because
+# what a later reader needs is the identity of the backup a migration was gated on, not the
+# bytes.
+data/backup/*.dump

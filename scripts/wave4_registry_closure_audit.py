@@ -878,7 +878,9 @@ RULINGS: Final[dict[str, Ruling]] = {
         "translation. The addressing works; the import gate is closed. Blocked on "
         "OWNER_DECISION_A_RV_SPAN and OWNER_DECISION_C_FORCED_ADDRESSES, with Gate B UNKNOWN "
         "and Gate C NOT_RUN, so it is neither closed nor source-limited.",
-        "MATCH (m:Mantra {veda:'SV'})-[:HAS_TRANSLATION]->() RETURN count(m)",
+        "MATCH (m:Mantra {veda:'SV'})-[:HAS_TRANSLATION]->(t:Translation) "
+        "WHERE t.language = 'en' AND t.reuse_kind IS NULL "
+        "AND t.alignment_level <> 'MANTRA_RANGE' RETURN count(DISTINCT m)",
         0,
         owner_decision="OWNER_DECISION_A_RV_SPAN + OWNER_DECISION_C_FORCED_ADDRESSES",
         blocked_evidence=_SOURCE_ABSENT_SV_TRANSLATION,
@@ -889,8 +891,10 @@ RULINGS: Final[dict[str, Ruling]] = {
         "registry records the gap as closed. Measured: AV translation coverage is 4,878 of "
         "5,839, exactly the pre-closure figure, and the 944 are staged and unimported behind "
         "the same two owner decisions. Acquisition succeeded; promotion did not happen.",
-        "MATCH (m:Mantra {veda:'AV'})-[:HAS_TRANSLATION]->() RETURN count(DISTINCT m)",
-        4878,
+        "MATCH (m:Mantra {veda:'AV'})-[:HAS_TRANSLATION]->(t:Translation) "
+        "WHERE t.language = 'en' AND t.reuse_kind IS NULL "
+        "AND t.alignment_level <> 'MANTRA_RANGE' RETURN count(DISTINCT m)",
+        5715,
         owner_decision="OWNER_DECISION_A_RV_SPAN + OWNER_DECISION_C_FORCED_ADDRESSES",
     ),
     "GAP-TRANSLATION-003": Ruling(
@@ -898,8 +902,10 @@ RULINGS: Final[dict[str, Ruling]] = {
         "39 of 72 Yajurvedic gap labels were digit-confusion OCR with the translated text "
         "present throughout -- never a source gap. 51 rows staged; the graph holds 1,903 of "
         "1,975, the pre-closure figure.",
-        "MATCH (m:Mantra {veda:'YV'})-[:HAS_TRANSLATION]->() RETURN count(DISTINCT m)",
-        1903,
+        "MATCH (m:Mantra {veda:'YV'})-[:HAS_TRANSLATION]->(t:Translation) "
+        "WHERE t.language = 'en' AND t.reuse_kind IS NULL "
+        "AND t.alignment_level <> 'MANTRA_RANGE' RETURN count(DISTINCT m)",
+        1939,
         owner_decision="OWNER_DECISION_A_RV_SPAN + OWNER_DECISION_C_FORCED_ADDRESSES",
     ),
     "GAP-TRANSLATION-004": Ruling(
@@ -908,8 +914,10 @@ RULINGS: Final[dict[str, Ruling]] = {
         "verses as one merged unit, so 30 are barred from import until the coordinate repair "
         "is verified -- per owner decision A, correctly. 17 staged; the graph holds 10,502 of "
         "10,552, the pre-closure figure.",
-        "MATCH (m:Mantra {veda:'RV'})-[:HAS_TRANSLATION]->() RETURN count(DISTINCT m)",
-        10502,
+        "MATCH (m:Mantra {veda:'RV'})-[:HAS_TRANSLATION]->(t:Translation) "
+        "WHERE t.language = 'en' AND t.reuse_kind IS NULL "
+        "AND t.alignment_level <> 'MANTRA_RANGE' RETURN count(DISTINCT m)",
+        10479,
         owner_decision="OWNER_DECISION_A_RV_SPAN",
     ),
     "GAP-TRANSLATION-005": Ruling(

@@ -1,0 +1,200 @@
+{
+ "phase": "L",
+ "measured_at": "2026-09-16T15:42:41.712600+00:00",
+ "rule_applied": "a gap closes only when its own closure_test passes. Improved coverage is not closure, and the Samavedic case is why: 173 of its verses now show a rendering and none of them is the Samaveda's own translation.",
+ "measured": {
+  "GAP-TRANSLATION-001": {
+   "veda": "SV",
+   "corpus_mantras": 1844,
+   "closure_test_as_written": {
+    "cypher": "MATCH (p:Mantra) WHERE p.veda='SV' AND NOT (p)-[:HAS_TRANSLATION]->() RETURN count(p)",
+    "demands": 0,
+    "measured": 1671,
+    "passes": false,
+    "caveat": "this predicate counts a verse inside a multi-verse print unit as untranslated, which it is not"
+   },
+   "populations": {
+    "dedicated_translation": 0,
+    "range_covered": 0,
+    "reused_rendering": 173,
+    "other_language": 0,
+    "uncovered": 1671
+   },
+   "verses_no_rendering_of_any_kind_reaches": 1671,
+   "closure_condition_met": false
+  },
+  "GAP-TRANSLATION-002": {
+   "veda": "AV",
+   "corpus_mantras": 5839,
+   "closure_test_as_written": {
+    "cypher": "MATCH (p:Mantra) WHERE p.veda='AV' AND NOT (p)-[:HAS_TRANSLATION]->() RETURN count(p)",
+    "demands": 0,
+    "measured": 51,
+    "passes": false,
+    "caveat": "this predicate counts a verse inside a multi-verse print unit as untranslated, which it is not"
+   },
+   "populations": {
+    "dedicated_translation": 5715,
+    "range_covered": 68,
+    "reused_rendering": 21,
+    "other_language": 18,
+    "uncovered": 17
+   },
+   "verses_no_rendering_of_any_kind_reaches": 17,
+   "closure_condition_met": false
+  },
+  "GAP-TRANSLATION-003": {
+   "veda": "YV",
+   "corpus_mantras": 1975,
+   "closure_test_as_written": {
+    "cypher": "MATCH (p:Mantra) WHERE p.veda='YV' AND NOT (p)-[:HAS_TRANSLATION]->() RETURN count(p)",
+    "demands": 0,
+    "measured": 36,
+    "passes": false,
+    "caveat": "this predicate counts a verse inside a multi-verse print unit as untranslated, which it is not"
+   },
+   "populations": {
+    "dedicated_translation": 1939,
+    "range_covered": 0,
+    "reused_rendering": 0,
+    "other_language": 0,
+    "uncovered": 36
+   },
+   "verses_no_rendering_of_any_kind_reaches": 36,
+   "closure_condition_met": false
+  },
+  "GAP-TRANSLATION-004": {
+   "veda": "RV",
+   "corpus_mantras": 10552,
+   "closure_test_as_written": {
+    "cypher": "MATCH (p:Mantra) WHERE p.veda='RV' AND NOT (p)-[:HAS_TRANSLATION]->() RETURN count(p)",
+    "demands": 0,
+    "measured": 37,
+    "passes": false,
+    "caveat": "this predicate counts a verse inside a multi-verse print unit as untranslated, which it is not"
+   },
+   "populations": {
+    "dedicated_translation": 10479,
+    "range_covered": 60,
+    "reused_rendering": 0,
+    "other_language": 6,
+    "uncovered": 7
+   },
+   "verses_no_rendering_of_any_kind_reaches": 7,
+   "closure_condition_met": false
+  }
+ },
+ "verdicts": {
+  "GAP-TRANSLATION-001": {
+   "status_now": "STILL_IMPLEMENTATION_FIXABLE",
+   "reason": "173 of 1,844 Samavedic verses now show a rendering, and every one of them is Griffith's Rigvedic English on verified-identical text, disclosed as reuse. The gap asks for a Kauthuma-aligned Samaveda translation and the count of those is still 0, so this is not partial closure: 1671 verses have nothing, and the other 173 have another corpus's.",
+   "closed_this_round": false
+  },
+  "GAP-TRANSLATION-002": {
+   "status_now": "STILL_IMPLEMENTATION_FIXABLE",
+   "reason": "17 AV verses are reached by no rendering of any kind, so the gap's own closure test is not met. Coverage improved substantially and that is not closure.",
+   "closed_this_round": false
+  },
+  "GAP-TRANSLATION-003": {
+   "status_now": "STILL_IMPLEMENTATION_FIXABLE",
+   "reason": "36 YV verses are reached by no rendering of any kind, so the gap's own closure test is not met. Coverage improved substantially and that is not closure.",
+   "closed_this_round": false
+  },
+  "GAP-TRANSLATION-004": {
+   "status_now": "STILL_IMPLEMENTATION_FIXABLE",
+   "reason": "7 RV verses are reached by no rendering of any kind, so the gap's own closure test is not met. Coverage improved substantially and that is not closure.",
+   "closed_this_round": false
+  }
+ },
+ "changes": [
+  {
+   "gap_id": "GAP-TRANSLATION-001",
+   "status_before": "BLOCKED_OWNER_DECISION_REQUIRED",
+   "status_after": "STILL_IMPLEMENTATION_FIXABLE",
+   "current_count_before": 0,
+   "current_count_after": 0,
+   "missing_count_before": 1844,
+   "missing_count_after": 1671,
+   "reason": "173 of 1,844 Samavedic verses now show a rendering, and every one of them is Griffith's Rigvedic English on verified-identical text, disclosed as reuse. The gap asks for a Kauthuma-aligned Samaveda translation and the count of those is still 0, so this is not partial closure: 1671 verses have nothing, and the other 173 have another corpus's."
+  },
+  {
+   "gap_id": "GAP-TRANSLATION-002",
+   "status_before": "BLOCKED_OWNER_DECISION_REQUIRED",
+   "status_after": "STILL_IMPLEMENTATION_FIXABLE",
+   "current_count_before": 4878,
+   "current_count_after": 5715,
+   "missing_count_before": 961,
+   "missing_count_after": 17,
+   "reason": "17 AV verses are reached by no rendering of any kind, so the gap's own closure test is not met. Coverage improved substantially and that is not closure."
+  },
+  {
+   "gap_id": "GAP-TRANSLATION-003",
+   "status_before": "BLOCKED_OWNER_DECISION_REQUIRED",
+   "status_after": "STILL_IMPLEMENTATION_FIXABLE",
+   "current_count_before": 1903,
+   "current_count_after": 1939,
+   "missing_count_before": 72,
+   "missing_count_after": 36,
+   "reason": "36 YV verses are reached by no rendering of any kind, so the gap's own closure test is not met. Coverage improved substantially and that is not closure."
+  },
+  {
+   "gap_id": "GAP-TRANSLATION-004",
+   "status_before": "BLOCKED_OWNER_DECISION_REQUIRED",
+   "status_after": "STILL_IMPLEMENTATION_FIXABLE",
+   "current_count_before": 10502,
+   "current_count_after": 10479,
+   "missing_count_before": 50,
+   "missing_count_after": 7,
+   "reason": "7 RV verses are reached by no rendering of any kind, so the gap's own closure test is not met. Coverage improved substantially and that is not closure."
+  }
+ ],
+ "owner_decisions": {
+  "OWNER_DECISION_A_RV_SPAN": {
+   "resolution": "CLOSED",
+   "basis": "Mechanically resolved. M13 re-anchored RV 1.65-1.70 onto the paired-dvipada spine and typed the 30 renderings MANTRA_RANGE with their complete covered-key lists; this round made the product read that typing, so the 30 paired verses are served their covering unit, marked as anchored elsewhere, instead of being told no translation covers them. No row was imported for the span: the decision was that those verses are not independently missing a translation, and they are not.",
+   "measured_at_closure": {
+    "range_translations_in_the_span": 30,
+    "canonical_verses_the_span_covers": 60,
+    "verses_served_their_covering_unit": 30,
+    "rows_imported_for_the_span": 0
+   }
+  },
+  "OWNER_DECISION_C_FORCED_ADDRESSES": {
+   "resolution": "NARROWED_TO_THREE_WITHHELD",
+   "basis": "36 of the 39 Yajurvedic forced-address rows are imported, each independently verified against the printed source's own labels. Three are withheld by name and remain withheld unless new independent evidence appears. The decision is not closed because those three are a standing exception rather than a finished question.",
+   "approved": 36,
+   "withheld": {
+    "VG:YV:VSM:A20:V085": "ambiguous source glyph S5",
+    "VG:YV:VSM:A36:V024": "not independently machine-located",
+    "VG:YV:VSM:A21:V045": "address is correct but the literal is an editorial cross-reference, not a translation of the verse"
+   }
+  },
+  "OWNER_DECISION_D_REUSED_RENDERING_POLICY": {
+   "resolution": "CLOSED",
+   "basis": "194 reused renderings are imported with reuse_kind=REUSED_RENDERING, the source Veda, the source passage, the source translation's identity, the translator and the basis on which the text equivalence was established. None counts toward any corpus's independent English coverage, and the API, the reader, the cross-corpus comparison and Ask's evidence packet each disclose the reuse.",
+   "measured_at_closure": {
+    "reused_renderings": 194,
+    "SV": 173,
+    "AV": 21
+   }
+  },
+  "OWNER_DECISION_LATIN_SUBSTITUTION": {
+   "resolution": "CLOSED_WITH_A_CORRECTED_POPULATION",
+   "basis": "The decision names 22 rows; the measured population is 24. AV 20.136.1 and RV 10.61.6 carry Latin literals and were classified source-explicit English. Both were verified against the pinned source pages -- sacred-texts heads its AV 20.136 page 'Erotica' and prints verses 1-16 in Latin -- and both are imported as language='la'. The decision's operative clause is that a Latin row must never increase English coverage, so it is applied to the measured population rather than to the quoted count.",
+   "measured_at_closure": {
+    "owner_quoted": 22,
+    "measured": 24,
+    "language": "la",
+    "counted_as_english": 0
+   }
+  }
+ },
+ "gaps_closed_this_round": [],
+ "gaps_remaining": [
+  "GAP-TRANSLATION-001",
+  "GAP-TRANSLATION-002",
+  "GAP-TRANSLATION-003",
+  "GAP-TRANSLATION-004"
+ ],
+ "registry_written": true
+}

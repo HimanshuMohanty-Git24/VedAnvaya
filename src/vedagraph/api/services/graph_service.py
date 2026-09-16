@@ -216,7 +216,7 @@ LEMMA_RELATIONSHIP: Final = "MENTIONS_LEMMA"
 #: Predicates deliberately NOT traversable, with the reason, because "we forgot" and "we
 #: decided" are indistinguishable from the outside.
 #:
-#: ``CONTAINS`` (22,537), ``HAS_TEXT_VERSION`` (44,276), ``HAS_TRANSLATION`` (17,283) are
+#: ``CONTAINS`` (22,537), ``HAS_TEXT_VERSION`` (44,276), ``HAS_TRANSLATION`` (18,415) are
 #: the corpus's own tree and its stored surfaces: structure and text, not claims, and
 #: navigating them is what the passage endpoints are for. ``MENTIONS_LEMMA`` (9,000) is
 #: behind ``include_internal``. ``QA_ISSUE_ON`` (915) attaches this repository's doubts about

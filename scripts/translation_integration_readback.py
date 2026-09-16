@@ -30,6 +30,7 @@ import translation_integration_common as T
 PLAN_PATH: Final = T.INTEGRATION / "translation_import_plan.json"
 DIGEST_PATH: Final = T.INTEGRATION / "translation_import_plan.sha256.json"
 RECEIPT_PATH: Final = T.INTEGRATION / "translation_bulk_import_receipt.json"
+COMPLETION_PATH: Final = T.INTEGRATION / "translation_import_shape_completion.json"
 
 #: Properties a reused rendering must carry. The owner policy names five things the
 #: provenance must include, and this is them: source Veda, source passage, source
@@ -55,13 +56,48 @@ def main() -> int:
     plan = json.loads(PLAN_PATH.read_text(encoding="utf-8"))
     receipt = json.loads(RECEIPT_PATH.read_text(encoding="utf-8"))
 
-    if receipt.get("plan_sha256") != declared["sha256"]:
-        raise SystemExit(
-            "the receipt was produced against a different plan: "
-            f"{receipt.get('plan_sha256')} != {declared['sha256']}"
-        )
     if receipt.get("verdict") != "EXECUTED":
         raise SystemExit(f"the receipt's verdict is {receipt.get('verdict')!r}, not EXECUTED")
+
+    # The import ran in two passes against two plan versions, and the lineage is checked
+    # rather than waved through. Plan v1 created the 1,132 nodes and edges; the quality
+    # scorecard then reported 1,132 internal_leaked and 1,132 ungraded edges, because v1
+    # omitted the :Internal label and the seven HAS_TRANSLATION grade properties every
+    # pre-existing edge carries. Plan v2 adds both, and the shape-completion pass applied
+    # them without creating anything. So the current plan must match the completion
+    # receipt, and the creation receipt must name a plan that differs from it only in those
+    # two respects -- which is why the node-level expectations below are read from v2 and
+    # still describe exactly what v1 wrote: neither addition changes a translation_id or
+    # any value in `properties`.
+    lineage = {
+        "current_plan_sha256": declared["sha256"],
+        "creation_receipt_plan_sha256": receipt.get("plan_sha256"),
+        "creation_receipt_verdict": receipt.get("verdict"),
+        "plan_was_amended_after_creation": receipt.get("plan_sha256") != declared["sha256"],
+    }
+    if lineage["plan_was_amended_after_creation"]:
+        if not COMPLETION_PATH.exists():
+            raise SystemExit(
+                "the plan was amended after the import and no shape-completion receipt "
+                "exists, so the graph cannot hold what the current plan promises"
+            )
+        completion = json.loads(COMPLETION_PATH.read_text(encoding="utf-8"))
+        lineage["completion_receipt_plan_sha256"] = completion.get("plan_sha256")
+        lineage["completion_receipt_verdict"] = completion.get("verdict")
+        if completion.get("plan_sha256") != declared["sha256"]:
+            raise SystemExit(
+                "the shape-completion receipt was produced against a different plan: "
+                f"{completion.get('plan_sha256')} != {declared['sha256']}"
+            )
+        if completion.get("verdict") != "SHAPE_COMPLETED":
+            raise SystemExit(
+                f"the completion verdict is {completion.get('verdict')!r}, not SHAPE_COMPLETED"
+            )
+        if any(completion.get("measured_delta", {"x": 1}).values()):
+            raise SystemExit(
+                "the shape-completion pass changed the census, which it promised not to: "
+                f"{completion.get('measured_delta')}"
+            )
 
     expected = {node["translation_id"]: node for node in plan["nodes_detail"]}
     findings: list[dict[str, Any]] = []
@@ -138,6 +174,37 @@ def main() -> int:
                                 "property": key,
                                 "expected": _clip(value),
                                 "found": _clip(got[key]),
+                            }
+                        )
+
+            # 3b. The shape the completion pass promised: the label on every node and the
+            #     grade on every edge. Checked here and not only by the scorecard, because
+            #     the scorecard reports a graph-wide zero and this attributes it to rows.
+            shape = list(
+                session.run(
+                    """
+                    UNWIND $ids AS id
+                    MATCH (m:Mantra)-[r:HAS_TRANSLATION]->(t:Translation {translation_id: id})
+                    RETURN id AS id, t:Internal AS internal, properties(r) AS rp
+                    """,
+                    ids=sorted(expected),
+                )
+            )
+            for record in shape:
+                want_edge = expected[record["id"]].get("edge_properties", {})
+                if not record["internal"]:
+                    findings.append(
+                        {"check": "node_missing_internal_label", "translation_id": record["id"]}
+                    )
+                for key, value in want_edge.items():
+                    if record["rp"].get(key) != value:
+                        findings.append(
+                            {
+                                "check": "edge_grade_differs",
+                                "translation_id": record["id"],
+                                "property": key,
+                                "expected": _clip(value),
+                                "found": _clip(record["rp"].get(key)),
                             }
                         )
 
@@ -307,6 +374,7 @@ def main() -> int:
                     "the graph."
                 ),
                 "plan_sha256": declared["sha256"],
+                "receipt_lineage": lineage,
                 "promised": {
                     "nodes": plan["nodes"]["total"],
                     "edges": plan["relationships"]["HAS_TRANSLATION"],
@@ -349,6 +417,13 @@ def main() -> int:
                         ]
                     ),
                     "range_failures": len([f for f in findings if f["check"].startswith("range_")]),
+                    "shape_failures": len(
+                        [
+                            f
+                            for f in findings
+                            if f["check"] in ("node_missing_internal_label", "edge_grade_differs")
+                        ]
+                    ),
                     "policy_leakage": len(
                         [
                             f

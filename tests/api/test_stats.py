@@ -292,9 +292,23 @@ def test_stats_reports_the_samavedic_translation_zero_as_a_measured_zero(
     note = translations["by_veda"]["note"] or ""
     assert "SV" in note
     assert "absent layer, not an absent text" in note
-    assert translations["by_veda"]["rv"] == 10502
-    assert translations["by_veda"]["yv"] == 1903
-    assert translations["by_veda"]["av"] == 4878
+    assert translations["by_veda"]["rv"] == 10509
+    assert translations["by_veda"]["yv"] == 1939
+    assert translations["by_veda"]["av"] == 5749
+
+    # The Samavedic zero survived an import that put a rendering on 173 of its verses, and
+    # it survived because this figure counts a corpus's own English and the reuse is a
+    # figure of its own. Both are asserted: a zero that is right by accident -- because the
+    # reuse was dropped rather than reported -- would leave a reader unable to find out
+    # that any English reaches the corpus at all.
+    reused = next(figure for figure in body["corpus"] if figure["name"] == "reused_renderings")
+    assert reused["by_veda"]["sv"] == 173
+    assert reused["by_veda"]["av"] == 21
+    assert reused["by_veda"]["rv"] == 0
+    assert reused["total"] == 194
+    reused_note = reused["note"] or ""
+    assert "Rigvedic" in reused_note, reused_note
+    assert "would report a translated Samaveda" in reused_note, reused_note
 
 
 @pytest.mark.neo4j

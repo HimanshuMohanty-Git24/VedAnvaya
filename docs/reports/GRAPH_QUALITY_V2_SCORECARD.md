@@ -12,10 +12,10 @@ weighted towards what a reader can rely on.
 
 | metric | V1 baseline | V2 | delta |
 |---|---|---|---|
-| nodes | 100,584 | 116,838 | +16,254 |
-| relationships | 212,336 | 281,257 | +68,921 |
+| nodes | 100,584 | 117,970 | +17,386 |
+| relationships | 212,336 | 282,389 | +70,053 |
 | product nodes | — | 39,664 | — |
-| internal nodes | 0 (unmarked) | 77,174 | +77,174 |
+| internal nodes | 0 (unmarked) | 78,306 | +78,306 |
 | domain entities | 89 | 375 | +286 |
 | typed domain labels | 0 | 24 | +24 |
 
@@ -26,17 +26,17 @@ query could ask across them. `quality_tier` is the single derived grade.
 
 | metric | value |
 |---|---|
-| edges carrying `quality_tier` | 281,257 (100.0%) |
-| edges carrying `evidence` | 108,795 (38.7%) |
-| edges carrying `trust` | 106,040 (37.7%) |
+| edges carrying `quality_tier` | 282,389 (100.0%) |
+| edges carrying `evidence` | 108,795 (38.5%) |
+| edges carrying `trust` | 106,040 (37.6%) |
 | ungraded edges | **0** |
 
 ### Quality tier distribution
 
 | tier | meaning | edges |
 |---|---|---|
-| `TIER_A` | a source states it | 107,186 |
-| `TIER_B` | reproducible derivation, including scope inheritance | 168,925 |
+| `TIER_A` | a source states it | 108,088 |
+| `TIER_B` | reproducible derivation, including scope inheritance | 169,155 |
 | `TIER_C` | model-extracted, evidence survived review | 598 |
 | `TIER_D` | interpretation, or an unreviewed model proposal | 4,548 |
 
@@ -217,8 +217,8 @@ judgement is recorded.
 | `ABOUT_CONCEPT` | 24,861 |
 | `USES_FORMULA` | 22,686 |
 | `CONTAINS` | 22,537 |
+| `HAS_TRANSLATION` | 18,415 |
 | `HAS_RISHI` | 17,889 |
-| `HAS_TRANSLATION` | 17,283 |
 | `MENTIONS_DEVATA` | 17,165 |
 | `HAS_CHANDAS` | 16,298 |
 | `HAS_DEVATA` | 10,558 |

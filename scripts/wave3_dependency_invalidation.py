@@ -96,8 +96,26 @@ CONSUMERS: tuple[dict[str, Any], ...] = (
     },
     {
         "consumer": "entity coverage",
-        "reads_labels": ("Devata", "Concept", "DomainEntity", "Rishi", "Chandas"),
-        "reads_types": ("MENTIONS_ENTITY", "ABOUT_CONCEPT", "HAS_DEVATA", "MENTIONS_DEVATA"),
+        # Translation is declared here because this consumer measurably reads it and did not
+        # say so. veda_coverage_v3.json carries a per-Veda translation dimension, and the
+        # bulk integration round moved that dimension on three corpora while this consumer
+        # reported CURRENT -- its declared inputs could not see 1,132 new Translation nodes,
+        # so the shipped artifact held 4,878 against a live 5,783 and nothing flagged it.
+        "reads_labels": (
+            "Devata",
+            "Concept",
+            "DomainEntity",
+            "Rishi",
+            "Chandas",
+            "Translation",
+        ),
+        "reads_types": (
+            "MENTIONS_ENTITY",
+            "ABOUT_CONCEPT",
+            "HAS_DEVATA",
+            "MENTIONS_DEVATA",
+            "HAS_TRANSLATION",
+        ),
         "rebuilt_by": "scripts/build_veda_coverage_and_metrics.py",
         "owner_ruling": (
             "Coverage figures must come from canonical readback, not staging manifests "

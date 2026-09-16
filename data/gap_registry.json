@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "campaign": "post-v1-data-completeness",
-  "generated_at": "2026-09-16T11:18:59.137461+00:00",
+  "generated_at": "2026-09-16T15:42:41.712600+00:00",
   "baseline_commit": "d6e93a92c4e3ff1a5682a17b20bf32c6ce8fa19c",
   "gaps": [
     {
@@ -3581,13 +3581,13 @@
       "description": "The Samaveda has no translation at all: 0 of 1,844 mantras carry HAS_TRANSLATION.",
       "current_count": 0,
       "expected_population": 1844,
-      "missing_count": 1844,
+      "missing_count": 1671,
       "root_cause": "Source-blocked, and the block is on record rather than assumed. data/domain/vedagraph_domain_v2/veda_coverage_v3.json:285 gives the reason verbatim: \"No complete translation of the Kauthuma arcika is ingested; the only one located is Ranayaniya and does not align.\" A Source node WIKISOURCE_GRIFFITH_SV exists in the graph and feeds ZERO Translation nodes (Cypher: MATCH (n) WHERE n.source_id='WIKISOURCE_GRIFFITH_SV' RETURN labels(n) -> a single :Source, no Translation). So the registry declares an SV translation source that was never used, because using it would map Ranayaniya material onto the Kauthuma arcika we hold.",
       "source_dependency": "A Kauthuma-aligned public-domain Samaveda translation. The located candidate is Ranayaniya and must NOT be force-aligned: campaign rule 3 forbids mapping another recension onto the one held. This is the binding dependency.",
       "implementation_dependency": "A verse-level aligner that refuses rather than approximates, plus a per-verse recension provenance field so a Ranayaniya-derived rendering is never silently presented as a Kauthuma translation.",
       "owner_agent": 3,
       "closure_test": "MATCH (p:Mantra) WHERE p.veda='SV' AND NOT (p)-[:HAS_TRANSLATION]->() RETURN count(p) returns 0, every SV Translation node carries a Kauthuma-aligned source_id, and /api/v1/works reports VG:WORK:SV:KAU as SUPPORTED.",
-      "status": "BLOCKED_OWNER_DECISION_REQUIRED",
+      "status": "STILL_IMPLEMENTATION_FIXABLE",
       "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
       "observed_gap": "The Samaveda has no translation at all: 0 of 1,844 mantras carry HAS_TRANSLATION.",
       "initial_hypothesis": "Source-blocked, and the block is on record rather than assumed. data/domain/vedagraph_domain_v2/veda_coverage_v3.json:285 gives the reason verbatim: \"No complete translation of the Kauthuma arcika is ingested; the only one located is Ranayaniya and does not align.\" A Source node WIKISOURCE_GRIFFITH_SV exists in the graph and feeds ZERO Translation nodes (Cypher: MATCH (n) WHERE n.source_id='WIKISOURCE_GRIFFITH_SV' RETURN labels(n) -> a single :Source, no Translation). So the registry declares an SV translation source that was never used, because using it would map Ranayaniya material onto the Kauthuma arcika we hold.",
@@ -3623,7 +3623,29 @@
         "why_no_lawful_source": "",
         "absence_not_inferred_from_not_looking": "0 of 1,844 measured in the graph; 1,242 measured as staged and unimported."
       },
-      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
+      "closure_measured_at": "2026-09-16T15:42:41.712600+00:00",
+      "translation_populations_measured": {
+        "dedicated_translation": 0,
+        "range_covered": 0,
+        "reused_rendering": 173,
+        "other_language": 0,
+        "uncovered": 1671
+      },
+      "closure_test_as_written_measured": {
+        "cypher": "MATCH (p:Mantra) WHERE p.veda='SV' AND NOT (p)-[:HAS_TRANSLATION]->() RETURN count(p)",
+        "demands": 0,
+        "measured": 1671,
+        "passes": false,
+        "caveat": "this predicate counts a verse inside a multi-verse print unit as untranslated, which it is not"
+      },
+      "closure_condition_met": false,
+      "post_bulk_import_note": "173 of 1,844 Samavedic verses now show a rendering, and every one of them is Griffith's Rigvedic English on verified-identical text, disclosed as reuse. The gap asks for a Kauthuma-aligned Samaveda translation and the count of those is still 0, so this is not partial closure: 1671 verses have nothing, and the other 173 have another corpus's.",
+      "owner_decisions_resolved": {
+        "OWNER_DECISION_A_RV_SPAN": "CLOSED",
+        "OWNER_DECISION_C_FORCED_ADDRESSES": "NARROWED_TO_THREE_WITHHELD",
+        "OWNER_DECISION_D_REUSED_RENDERING_POLICY": "CLOSED",
+        "OWNER_DECISION_LATIN_SUBSTITUTION": "CLOSED_WITH_A_CORRECTED_POPULATION"
+      }
     },
     {
       "gap_id": "GAP-TRANSLATION-002",
@@ -3632,15 +3654,15 @@
       "evidence": "Cypher grouping AV untranslated mantras by kanda: AVS 20 -> 958, AVS 3 -> 1, AVS 5 -> 1, AVS 10 -> 1; total 961. data/knowledge/atharvaveda_deterministic_v1/manifest.json notes: \"Kanda 20 (143 hymns / 958 mantras) contributes nothing: Whitney excluded it. ... Any per-Veda coverage figure must carry the K20 gap explicitly or the Atharvaveda will look uniformly attributed when a sixth of it is untouched.\"",
       "classification": "IMPLEMENTATION_GAP",
       "description": "961 Atharvaveda mantras have no translation, and 958 of them are the whole of kanda 20.",
-      "current_count": 4878,
+      "current_count": 5715,
       "expected_population": 5839,
-      "missing_count": 961,
+      "missing_count": 17,
       "root_cause": "The ingested AV translation is Whitney/Lanman via VEDAWEB (4,878 Translation nodes), and Whitney excluded kanda 20 because it is largely Rigvedic redaction. The gap is therefore one contiguous book plus three isolated verses, not scattered attrition.",
       "source_dependency": "A public-domain AV translation that covers kanda 20. Griffith's Atharvaveda does translate book 20 and is a separate source from the Whitney text already ingested.",
       "implementation_dependency": "Kanda 20 is mostly RV redaction, so the importer must not substitute the RV translation of the parallel verse: that would assert a translation this work does not make. The 958 verses need their own source, marked as such.",
       "owner_agent": 3,
       "closure_test": "MATCH (p:Mantra) WHERE p.veda='AV' AND NOT (p)-[:HAS_TRANSLATION]->() RETURN count(p) returns 0, and no AVS 20 mantra is untranslated.",
-      "status": "BLOCKED_OWNER_DECISION_REQUIRED",
+      "status": "STILL_IMPLEMENTATION_FIXABLE",
       "observed_gap": "961 of 5,839 Saunaka mantras had no translation, 958 of them the whole of kanda 20 plus exactly three strays at AVS 3.9.4, 5.12.11 and 10.8.30.",
       "suspected_cause": "The ingested AV translation is Whitney/Lanman via VEDAWEB (4,878 Translation nodes), and Whitney excluded kanda 20 because it is largely Rigvedic redaction. The gap is therefore one contiguous book plus three isolated verses, not scattered attrition.",
       "measured_cause": "Both incumbent Atharvavedic sources omit kanda 20 for the same Whitney-related reason, so it was a single source dependency rather than 961 separate absences.",
@@ -3673,11 +3695,33 @@
       "initial_hypothesis_status": "SUPERSEDED_BY_MEASUREMENT",
       "closure_basis": "944 of 961 Atharvavedic translations were located via the Wayback Machine and the registry records the gap as closed. Measured: AV translation coverage is 4,878 of 5,839, exactly the pre-closure figure, and the 944 are staged and unimported behind the same two owner decisions. Acquisition succeeded; promotion did not happen.",
       "closure_measure": "MATCH (m:Mantra {veda:'AV'})-[:HAS_TRANSLATION]->() RETURN count(DISTINCT m)",
-      "closure_measured_value": 4878,
+      "closure_measured_value": 5715,
       "closure_citation": null,
       "closure_owner_decision": "OWNER_DECISION_A_RV_SPAN + OWNER_DECISION_C_FORCED_ADDRESSES",
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
+      "closure_measured_at": "2026-09-16T15:42:41.712600+00:00",
+      "translation_populations_measured": {
+        "dedicated_translation": 5715,
+        "range_covered": 68,
+        "reused_rendering": 21,
+        "other_language": 18,
+        "uncovered": 17
+      },
+      "closure_test_as_written_measured": {
+        "cypher": "MATCH (p:Mantra) WHERE p.veda='AV' AND NOT (p)-[:HAS_TRANSLATION]->() RETURN count(p)",
+        "demands": 0,
+        "measured": 51,
+        "passes": false,
+        "caveat": "this predicate counts a verse inside a multi-verse print unit as untranslated, which it is not"
+      },
+      "closure_condition_met": false,
+      "post_bulk_import_note": "17 AV verses are reached by no rendering of any kind, so the gap's own closure test is not met. Coverage improved substantially and that is not closure.",
+      "owner_decisions_resolved": {
+        "OWNER_DECISION_A_RV_SPAN": "CLOSED",
+        "OWNER_DECISION_C_FORCED_ADDRESSES": "NARROWED_TO_THREE_WITHHELD",
+        "OWNER_DECISION_D_REUSED_RENDERING_POLICY": "CLOSED",
+        "OWNER_DECISION_LATIN_SUBSTITUTION": "CLOSED_WITH_A_CORRECTED_POPULATION"
+      }
     },
     {
       "gap_id": "GAP-TRANSLATION-003",
@@ -3686,15 +3730,15 @@
       "evidence": "Cypher: MATCH (p:Mantra) WHERE p.veda='YV' AND NOT (p)-[:HAS_TRANSLATION]->() RETURN count(p) -> 72. Translation source for YV is SACRED_TEXTS / Griffith, 1,903 nodes.",
       "classification": "IMPLEMENTATION_GAP",
       "description": "72 Yajurveda mantras have no translation.",
-      "current_count": 1903,
+      "current_count": 1939,
       "expected_population": 1975,
-      "missing_count": 72,
+      "missing_count": 36,
       "root_cause": "Residual alignment misses against a source that covers the whole Vajasaneyi Samhita. Not source-blocked.",
       "source_dependency": "NONE - the ingested Griffith White Yajurveda covers the Vajasaneyi Samhita in full.",
       "implementation_dependency": "Per-verse alignment repair against the existing source artifact.",
       "owner_agent": 3,
       "closure_test": "MATCH (p:Mantra) WHERE p.veda='YV' AND NOT (p)-[:HAS_TRANSLATION]->() RETURN count(p) returns 0.",
-      "status": "BLOCKED_OWNER_DECISION_REQUIRED",
+      "status": "STILL_IMPLEMENTATION_FIXABLE",
       "observed_gap": "72 of 1,975 Madhyandina mantras had no translation.",
       "suspected_cause": "Residual alignment misses against a source that covers the whole Vajasaneyi Samhita. Not source-blocked.",
       "measured_cause": "39 of the 72 were never missing. The stage file's own gap labels decompose as 39 LABEL_NOT_PRINTED, 21 spine divergence and 12 printed omission, and re-parsing the pinned snapshots shows the 39 are digit-confusion OCR of the printed verse label -- '22 23 24 23 26' for 25, '84 S5 85 87' for 84/85/86 -- with the translated text present throughout. Adhyaya 23.20-31 is by contrast a true omission: Griffith printed a row of ellipsis dots.",
@@ -3727,11 +3771,33 @@
       "initial_hypothesis_status": "SUPERSEDED_BY_MEASUREMENT",
       "closure_basis": "39 of 72 Yajurvedic gap labels were digit-confusion OCR with the translated text present throughout -- never a source gap. 51 rows staged; the graph holds 1,903 of 1,975, the pre-closure figure.",
       "closure_measure": "MATCH (m:Mantra {veda:'YV'})-[:HAS_TRANSLATION]->() RETURN count(DISTINCT m)",
-      "closure_measured_value": 1903,
+      "closure_measured_value": 1939,
       "closure_citation": null,
       "closure_owner_decision": "OWNER_DECISION_A_RV_SPAN + OWNER_DECISION_C_FORCED_ADDRESSES",
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
+      "closure_measured_at": "2026-09-16T15:42:41.712600+00:00",
+      "translation_populations_measured": {
+        "dedicated_translation": 1939,
+        "range_covered": 0,
+        "reused_rendering": 0,
+        "other_language": 0,
+        "uncovered": 36
+      },
+      "closure_test_as_written_measured": {
+        "cypher": "MATCH (p:Mantra) WHERE p.veda='YV' AND NOT (p)-[:HAS_TRANSLATION]->() RETURN count(p)",
+        "demands": 0,
+        "measured": 36,
+        "passes": false,
+        "caveat": "this predicate counts a verse inside a multi-verse print unit as untranslated, which it is not"
+      },
+      "closure_condition_met": false,
+      "post_bulk_import_note": "36 YV verses are reached by no rendering of any kind, so the gap's own closure test is not met. Coverage improved substantially and that is not closure.",
+      "owner_decisions_resolved": {
+        "OWNER_DECISION_A_RV_SPAN": "CLOSED",
+        "OWNER_DECISION_C_FORCED_ADDRESSES": "NARROWED_TO_THREE_WITHHELD",
+        "OWNER_DECISION_D_REUSED_RENDERING_POLICY": "CLOSED",
+        "OWNER_DECISION_LATIN_SUBSTITUTION": "CLOSED_WITH_A_CORRECTED_POPULATION"
+      }
     },
     {
       "gap_id": "GAP-TRANSLATION-004",
@@ -3740,15 +3806,15 @@
       "evidence": "Cypher: MATCH (p:Mantra) WHERE p.veda='RV' AND NOT (p)-[:HAS_TRANSLATION]->() RETURN count(p) -> 50. docs/reports/rv_m1_translation_coverage_report.md:21 \"Every mantra listed here has no translation record at all; none was fabricated.\"",
       "classification": "IMPLEMENTATION_GAP",
       "description": "50 Rigveda mantras have no translation.",
-      "current_count": 10502,
+      "current_count": 10479,
       "expected_population": 10552,
-      "missing_count": 50,
+      "missing_count": 7,
       "root_cause": "Residual alignment misses against WIKISOURCE_GRIFFITH_RV, which covers the Sakala Samhita in full. Note that PRODUCT_V1_SCOPE.md:58-59 states 52; the live measurement is 50, so the scope document is two out of date.",
       "source_dependency": "NONE - the ingested Griffith RV covers the Sakala Samhita in full.",
       "implementation_dependency": "Per-verse alignment repair against the existing source artifact.",
       "owner_agent": 3,
       "closure_test": "MATCH (p:Mantra) WHERE p.veda='RV' AND NOT (p)-[:HAS_TRANSLATION]->() RETURN count(p) returns 0.",
-      "status": "BLOCKED_OWNER_DECISION_REQUIRED",
+      "status": "STILL_IMPLEMENTATION_FIXABLE",
       "observed_gap": "50 of 10,552 Sakala mantras had no translation.",
       "suspected_cause": "Residual alignment misses against WIKISOURCE_GRIFFITH_RV, which covers the Sakala Samhita in full. Note that PRODUCT_V1_SCOPE.md:58-59 states 52; the live measurement is 50, so the scope document is two out of date.",
       "measured_cause": "30 of the 50 are not a source gap. They are the unbound halves of RV 1.65-1.70, where Griffith renders each pair of our verses as one merged unit -- so no printed unit addresses them individually, and the 25 units that ARE bound in that span sit on the wrong verses. The gap was the visible symptom of a misalignment, which is why reading it as a gap hid the defect. See GAP-TRANSLATION-006.",
@@ -3782,11 +3848,32 @@
       "initial_hypothesis_status": "SUPERSEDED_BY_MEASUREMENT",
       "closure_basis": "50 Rigvedic mantras without a translation. Griffith renders each pair of Sakala verses as one merged unit, so 30 are barred from import until the coordinate repair is verified -- per owner decision A, correctly. 17 staged; the graph holds 10,502 of 10,552, the pre-closure figure.",
       "closure_measure": "MATCH (m:Mantra {veda:'RV'})-[:HAS_TRANSLATION]->() RETURN count(DISTINCT m)",
-      "closure_measured_value": 10502,
+      "closure_measured_value": 10479,
       "closure_citation": null,
       "closure_owner_decision": "OWNER_DECISION_A_RV_SPAN",
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-16T11:18:59.137461+00:00"
+      "closure_measured_at": "2026-09-16T15:42:41.712600+00:00",
+      "translation_populations_measured": {
+        "dedicated_translation": 10479,
+        "range_covered": 60,
+        "reused_rendering": 0,
+        "other_language": 6,
+        "uncovered": 7
+      },
+      "closure_test_as_written_measured": {
+        "cypher": "MATCH (p:Mantra) WHERE p.veda='RV' AND NOT (p)-[:HAS_TRANSLATION]->() RETURN count(p)",
+        "demands": 0,
+        "measured": 37,
+        "passes": false,
+        "caveat": "this predicate counts a verse inside a multi-verse print unit as untranslated, which it is not"
+      },
+      "closure_condition_met": false,
+      "post_bulk_import_note": "7 RV verses are reached by no rendering of any kind, so the gap's own closure test is not met. Coverage improved substantially and that is not closure.",
+      "owner_decisions_resolved": {
+        "OWNER_DECISION_A_RV_SPAN": "CLOSED",
+        "OWNER_DECISION_D_REUSED_RENDERING_POLICY": "CLOSED",
+        "OWNER_DECISION_LATIN_SUBSTITUTION": "CLOSED_WITH_A_CORRECTED_POPULATION"
+      }
     },
     {
       "gap_id": "GAP-TRANSLATION-005",

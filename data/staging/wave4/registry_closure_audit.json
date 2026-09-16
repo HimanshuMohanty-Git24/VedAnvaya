@@ -1,6 +1,6 @@
 {
   "artifact": "WAVE4_REGISTRY_CLOSURE_AUDIT",
-  "at": "2026-09-16T11:18:59.137461+00:00",
+  "at": "2026-09-16T16:06:14.649147+00:00",
   "entries": 85,
   "entries_without_a_ruling": [],
   "rulings_for_no_entry": [],
@@ -1267,7 +1267,7 @@
       "declared_status": "BLOCKED_OWNER_DECISION_REQUIRED",
       "downgraded": false,
       "closure_basis": "The Samaveda has 0 of 1,844 translations in the graph, and the registry records the block as a source limitation. Wave 4 measured otherwise: 1,242 Samavedic translations are staged against this corpus's own canonical keys and every one of the 2,254 staged translation rows targets a mantra that exists and carries no translation. The addressing works; the import gate is closed. Blocked on OWNER_DECISION_A_RV_SPAN and OWNER_DECISION_C_FORCED_ADDRESSES, with Gate B UNKNOWN and Gate C NOT_RUN, so it is neither closed nor source-limited.",
-      "closure_measure": "MATCH (m:Mantra {veda:'SV'})-[:HAS_TRANSLATION]->() RETURN count(m)",
+      "closure_measure": "MATCH (m:Mantra {veda:'SV'})-[:HAS_TRANSLATION]->(t:Translation) WHERE t.language = 'en' AND t.reuse_kind IS NULL AND t.alignment_level <> 'MANTRA_RANGE' RETURN count(DISTINCT m)",
       "closure_measured_value": 0,
       "closure_expected_value": 0,
       "closure_citation": null,
@@ -1289,9 +1289,9 @@
       "declared_status": "BLOCKED_OWNER_DECISION_REQUIRED",
       "downgraded": false,
       "closure_basis": "944 of 961 Atharvavedic translations were located via the Wayback Machine and the registry records the gap as closed. Measured: AV translation coverage is 4,878 of 5,839, exactly the pre-closure figure, and the 944 are staged and unimported behind the same two owner decisions. Acquisition succeeded; promotion did not happen.",
-      "closure_measure": "MATCH (m:Mantra {veda:'AV'})-[:HAS_TRANSLATION]->() RETURN count(DISTINCT m)",
-      "closure_measured_value": 4878,
-      "closure_expected_value": 4878,
+      "closure_measure": "MATCH (m:Mantra {veda:'AV'})-[:HAS_TRANSLATION]->(t:Translation) WHERE t.language = 'en' AND t.reuse_kind IS NULL AND t.alignment_level <> 'MANTRA_RANGE' RETURN count(DISTINCT m)",
+      "closure_measured_value": 5715,
+      "closure_expected_value": 5715,
       "closure_citation": null,
       "closure_owner_decision": "OWNER_DECISION_A_RV_SPAN + OWNER_DECISION_C_FORCED_ADDRESSES",
       "closure_blocked_evidence": null,
@@ -1305,9 +1305,9 @@
       "declared_status": "BLOCKED_OWNER_DECISION_REQUIRED",
       "downgraded": false,
       "closure_basis": "39 of 72 Yajurvedic gap labels were digit-confusion OCR with the translated text present throughout -- never a source gap. 51 rows staged; the graph holds 1,903 of 1,975, the pre-closure figure.",
-      "closure_measure": "MATCH (m:Mantra {veda:'YV'})-[:HAS_TRANSLATION]->() RETURN count(DISTINCT m)",
-      "closure_measured_value": 1903,
-      "closure_expected_value": 1903,
+      "closure_measure": "MATCH (m:Mantra {veda:'YV'})-[:HAS_TRANSLATION]->(t:Translation) WHERE t.language = 'en' AND t.reuse_kind IS NULL AND t.alignment_level <> 'MANTRA_RANGE' RETURN count(DISTINCT m)",
+      "closure_measured_value": 1939,
+      "closure_expected_value": 1939,
       "closure_citation": null,
       "closure_owner_decision": "OWNER_DECISION_A_RV_SPAN + OWNER_DECISION_C_FORCED_ADDRESSES",
       "closure_blocked_evidence": null,
@@ -1321,9 +1321,9 @@
       "declared_status": "BLOCKED_OWNER_DECISION_REQUIRED",
       "downgraded": false,
       "closure_basis": "50 Rigvedic mantras without a translation. Griffith renders each pair of Sakala verses as one merged unit, so 30 are barred from import until the coordinate repair is verified -- per owner decision A, correctly. 17 staged; the graph holds 10,502 of 10,552, the pre-closure figure.",
-      "closure_measure": "MATCH (m:Mantra {veda:'RV'})-[:HAS_TRANSLATION]->() RETURN count(DISTINCT m)",
-      "closure_measured_value": 10502,
-      "closure_expected_value": 10502,
+      "closure_measure": "MATCH (m:Mantra {veda:'RV'})-[:HAS_TRANSLATION]->(t:Translation) WHERE t.language = 'en' AND t.reuse_kind IS NULL AND t.alignment_level <> 'MANTRA_RANGE' RETURN count(DISTINCT m)",
+      "closure_measured_value": 10479,
+      "closure_expected_value": 10479,
       "closure_citation": null,
       "closure_owner_decision": "OWNER_DECISION_A_RV_SPAN",
       "closure_blocked_evidence": null,
@@ -1444,5 +1444,5 @@
       "is_data_completeness_closure": true
     }
   ],
-  "sha256": "c412df23cafea466d5e1f1d7b989dcd266194b1e261b228d86ecafd7d533343a"
+  "sha256": "9db49e11fa0ff807ef5482ebf9fcf450b919ff5a424fc6e803b85206cbe7e262"
 }

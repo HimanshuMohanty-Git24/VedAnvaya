@@ -34,13 +34,33 @@ DIGEST_PATH: Final = T.INTEGRATION / "translation_import_plan.sha256.json"
 
 #: The one write. ``MERGE`` on ``translation_id`` rather than ``CREATE`` so an interrupted
 #: run can be repeated without a duplicate beside the node that landed, and ``ON CREATE``
-#: only, so a second run cannot silently rewrite a node this one already wrote.
+#: only for the payload, so a second run cannot silently rewrite a literal this one wrote.
+#:
+#: The label and the edge grade are set unconditionally, because they are the plan's
+#: promise about shape rather than content and a node that already exists may be missing
+#: them -- which is exactly what happened: plan version 1 omitted both, the quality
+#: scorecard reported 1,132 internal_leaked and 1,132 ungraded edges, and :func:`_COMPLETE`
+#: exists to finish those 1,132 without touching a single literal.
 _WRITE: Final = """
 UNWIND $rows AS row
 MATCH (m:Mantra {canonical_key: row.attach_to})
 MERGE (t:Translation {translation_id: row.translation_id})
 ON CREATE SET t += row.props
-MERGE (m)-[:HAS_TRANSLATION]->(t)
+SET t:Internal
+MERGE (m)-[r:HAS_TRANSLATION]->(t)
+SET r += row.edge_props
+RETURN count(*) AS touched
+"""
+
+#: The completion pass. Sets only the label and the edge grade, never a property that
+#: carries text, so it cannot alter a translation's content. Its promised delta is zero
+#: nodes and zero relationships, and the executor refuses to commit if it sees any.
+_COMPLETE: Final = """
+UNWIND $rows AS row
+MATCH (m:Mantra {canonical_key: row.attach_to})
+      -[r:HAS_TRANSLATION]->(t:Translation {translation_id: row.translation_id})
+SET t:Internal
+SET r += row.edge_props
 RETURN count(*) AS touched
 """
 
@@ -67,6 +87,9 @@ def _rows(plan: dict[str, Any]) -> list[dict[str, Any]]:
             "attach_to": node["attach_to_canonical_key"],
             "translation_id": node["translation_id"],
             "props": {k: v for k, v in node["properties"].items() if v is not None},
+            "edge_props": {
+                k: v for k, v in node.get("edge_properties", {}).items() if v is not None
+            },
         }
         for node in plan["nodes_detail"]
     ]
@@ -215,6 +238,12 @@ def main() -> int:
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument("--dry-run", action="store_true")
     mode.add_argument("--execute", action="store_true")
+    mode.add_argument(
+        "--complete-shape",
+        action="store_true",
+        help="set the :Internal label and the HAS_TRANSLATION grade on rows this plan "
+        "already imported. Creates nothing and writes no text.",
+    )
     args = parser.parse_args()
 
     import gate_bc_common as G
@@ -252,6 +281,64 @@ def main() -> int:
                 f"{pre['reuse_sources']['declared']}",
             ):
                 print(line)
+
+            if args.complete_shape:
+                # The population must already be present and complete. Anything else means
+                # this is being run instead of the import rather than after it.
+                present = session.run(
+                    "UNWIND $ids AS id MATCH (:Mantra)-[:HAS_TRANSLATION]->"
+                    "(t:Translation {translation_id: id}) RETURN count(t) AS c",
+                    ids=[r["translation_id"] for r in rows],
+                ).single()["c"]
+                report["rows_already_present"] = present
+                if present != len(rows):
+                    report["verdict"] = "BLOCKED"
+                    print(
+                        f"BLOCKER: {present} of {len(rows)} planned rows are present; "
+                        "--complete-shape finishes an executed import and does not replace it"
+                    )
+                    _write(report, args)
+                    return 1
+
+                before_shape = _shape_census(session)
+                with session.begin_transaction() as tx:
+                    tx.run(_COMPLETE, rows=rows).consume()
+                    after = G.graph_census(tx)
+                    delta = measured_delta(pre["census_before"], after)
+                    if any(delta.values()):
+                        tx.rollback()
+                        report["measured_delta"] = delta
+                        report["verdict"] = "ROLLED_BACK_CREATED_SOMETHING"
+                        print("CREATED SOMETHING -- rolled back:", delta)
+                        _write(report, args)
+                        return 1
+                    tx.commit()
+                report["promised_delta"] = dict.fromkeys(pre["census_before"], 0)
+                report["measured_delta"] = measured_delta(
+                    pre["census_before"], G.graph_census(session)
+                )
+                report["shape_before"] = before_shape
+                report["shape_after"] = _shape_census(session)
+                report["attachment_digest_after"] = G.attachment_digest(session)
+                report["translation_text_unchanged"] = (
+                    report["attachment_digest_after"]["digest_sha256"]
+                    == pre["attachment_digest_before"]["digest_sha256"]
+                )
+                report["verdict"] = (
+                    "SHAPE_COMPLETED"
+                    if not any(report["measured_delta"].values())
+                    and report["shape_after"]["translations_without_internal"] == 0
+                    and report["shape_after"]["ungraded_has_translation_edges"] == 0
+                    and report["translation_text_unchanged"]
+                    else "SHAPE_COMPLETION_FAILED"
+                )
+                print()
+                print("shape before:", json.dumps(before_shape))
+                print("shape after :", json.dumps(report["shape_after"]))
+                print("text unchanged:", report["translation_text_unchanged"])
+                print("VERDICT     :", report["verdict"])
+                _write(report, args)
+                return 0 if report["verdict"] == "SHAPE_COMPLETED" else 1
 
             if pre["blockers"]:
                 print()
@@ -351,6 +438,26 @@ def main() -> int:
         driver.close()
 
 
+def _shape_census(session: Any) -> dict[str, int]:
+    """The two shape gates the quality scorecard reads, measured graph-wide.
+
+    Graph-wide and not restricted to this batch, because the gates are graph-wide: if some
+    other population also lacks the label, reporting only this batch's zero would claim a
+    clean scorecard that the scorecard will not agree with.
+    """
+    return {
+        "translations_without_internal": session.run(
+            "MATCH (t:Translation) WHERE NOT t:Internal RETURN count(t) AS c"
+        ).single()["c"],
+        "ungraded_has_translation_edges": session.run(
+            "MATCH ()-[r:HAS_TRANSLATION]->() WHERE r.quality_tier IS NULL RETURN count(r) AS c"
+        ).single()["c"],
+        "translation_nodes": session.run("MATCH (t:Translation) RETURN count(t) AS c").single()[
+            "c"
+        ],
+    }
+
+
 def _mutation_outside_translations(
     before: dict[str, int], after: dict[str, int], promised: dict[str, int]
 ) -> dict[str, Any]:
@@ -375,11 +482,12 @@ def _mutation_outside_translations(
 
 
 def _write(report: dict[str, Any], args: argparse.Namespace) -> pathlib.Path:
-    name = (
-        "translation_import_dry_run.json"
-        if args.dry_run
-        else "translation_bulk_import_receipt.json"
-    )
+    if args.dry_run:
+        name = "translation_import_dry_run.json"
+    elif args.complete_shape:
+        name = "translation_import_shape_completion.json"
+    else:
+        name = "translation_bulk_import_receipt.json"
     path = T.write_json(T.INTEGRATION / name, report)
     print("wrote", path)
     return path

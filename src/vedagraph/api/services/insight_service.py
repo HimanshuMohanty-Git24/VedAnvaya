@@ -147,7 +147,20 @@ CALL () { MATCH (w:Work) RETURN count(w) AS works }
 CALL () { MATCH (p:Passage) RETURN count(p) AS passages }
 CALL () { MATCH (m:Mantra) RETURN m.veda AS mv, count(*) AS mc }
 CALL () { MATCH (:Passage)-[t:HAS_TRANSLATION]->() RETURN count(t) AS translations }
-CALL () { MATCH (p:Passage)-[:HAS_TRANSLATION]->() RETURN p.veda AS tv, count(*) AS tc }
+// Two per-Veda tallies rather than one. A bare HAS_TRANSLATION count reports the Samaveda
+// at 173, and every one of those 173 is Griffith's Rigvedic rendering attached to a verse
+// whose Sanskrit is verified identical -- so the single figure reads as "the Samaveda is
+// partly translated", which is the one thing it must not say.
+CALL () {
+    MATCH (p:Passage)-[:HAS_TRANSLATION]->(t:Translation)
+    WHERE t.reuse_kind IS NULL AND t.language = 'en'
+    RETURN p.veda AS tv, count(*) AS tc
+}
+CALL () {
+    MATCH (p:Passage)-[:HAS_TRANSLATION]->(t:Translation)
+    WHERE t.reuse_kind IS NOT NULL
+    RETURN p.veda AS reuse_veda, count(*) AS reuse_count
+}
 CALL () { MATCH (d:Devata) RETURN d.structure AS ds, count(*) AS dc }
 CALL () { MATCH (r:Rishi) RETURN r.is_seer AS seer, r.non_seer_kind AS kind, count(*) AS rc }
 CALL () { MATCH (f:RishiFamily) RETURN count(f) AS rishi_families }
@@ -164,6 +177,7 @@ RETURN works, passages, translations, rishi_families, chandas, concepts,
        interpretive_claims,
        collect(DISTINCT [mv, mc]) AS mantras_by_veda,
        collect(DISTINCT [tv, tc]) AS translations_by_veda,
+       collect(DISTINCT [reuse_veda, reuse_count]) AS reused_renderings_by_veda,
        collect(DISTINCT [ds, dc]) AS devata_structures,
        collect(DISTINCT [seer, kind, rc]) AS rishi_kinds
 """
@@ -713,6 +727,7 @@ class InsightService:
 
         mantras = _pairs_to_counts(row.get("mantras_by_veda"))
         translations = _pairs_to_counts(row.get("translations_by_veda"))
+        reused = _pairs_to_counts(row.get("reused_renderings_by_veda"))
         structures = _pairs_to_counts(row.get("devata_structures"))
         seer_rows = row.get("rishi_kinds")
 
@@ -744,10 +759,24 @@ class InsightService:
                 total=_as_int(row.get("translations")),
                 by_veda=self._translation_counts(translations),
                 denominator=dict(figures.CORPUS_MANTRAS),
-                note="A corpus with 0 here has no released translation at all, which is a "
-                "measured fact about the product's holdings. What it implies downstream is "
-                "the part that misleads: every translation-derived layer is absent for that "
-                "corpus rather than empty in it.",
+                note="Counts a corpus's own English renderings and nothing else. A corpus "
+                "with 0 here has no released translation at all, which is a measured fact "
+                "about the product's holdings. What it implies downstream is the part that "
+                "misleads: every translation-derived layer is absent for that corpus rather "
+                "than empty in it. Renderings reused from another corpus are counted under "
+                "'reused_renderings' and never here, and Griffith's Latin substitutions are "
+                "in neither.",
+            ),
+            CorpusFigure(
+                name="reused_renderings",
+                total=sum(reused.values()),
+                by_veda=self._translation_counts(reused),
+                denominator=dict(figures.CORPUS_MANTRAS),
+                note="Another corpus's published English shown against a verse whose "
+                "Sanskrit is verified character-identical. Reported apart from "
+                "'translations' because it is translation assistance and not evidence about "
+                "the corpus it appears in: every one of the Samaveda's is Rigvedic, so "
+                "adding the two figures would report a translated Samaveda.",
             ),
         ]
 

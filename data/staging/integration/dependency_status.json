@@ -1,9 +1,9 @@
 {
   "artifact": "DEPENDENCY_STATUS",
-  "at": "2026-09-16T11:30:33.580769+00:00",
+  "at": "2026-09-16T16:34:32.845914+00:00",
   "graph_census": {
-    "nodes": 116838,
-    "relationships": 281257
+    "nodes": 117970,
+    "relationships": 282389
   },
   "consumers": [
     {
@@ -17,7 +17,7 @@
       "declared_outputs": [],
       "built_at": "2026-09-16T06:06:39.974394+00:00",
       "rebuilt_by": "the domain's own pipeline, from the post-import snapshot",
-      "current_input_digest": "f3fca6d10150c0a1a8e0b310751aaa18b708b5deb7f37cc3a622f725e5a089a4",
+      "current_input_digest": "6ccdbb3d43ba34d90e49c40485a21e24bcb9151eb97842d7021ef0b85f148245",
       "recorded_input_digest": "f3fca6d10150c0a1a8e0b310751aaa18b708b5deb7f37cc3a622f725e5a089a4"
     },
     {
@@ -51,16 +51,18 @@
     {
       "consumer": "entity coverage",
       "status": "CURRENT",
-      "declared_inputs": 11,
+      "declared_inputs": 13,
       "inputs_that_moved": [],
       "reason": null,
-      "output_file": "data/domain/vedagraph_domain_v2/veda_coverage_v3.json",
-      "output_hash": "3ec8b28f704eb65ad96b0a9dd45f6f8fd58719d81ec77142daed4e1597096f46",
-      "declared_outputs": [],
-      "built_at": "2026-09-16T07:25:00.199719+00:00",
+      "output_file": null,
+      "output_hash": null,
+      "declared_outputs": [
+        "data/domain/vedagraph_domain_v2/veda_coverage_v3.json"
+      ],
+      "built_at": "2026-09-16T15:52:11.665223+00:00",
       "rebuilt_by": "scripts/build_veda_coverage_and_metrics.py",
-      "current_input_digest": "8f3a5fba2bf708a9eb195b4e3c75c250ad4f24258292219a75aa3de82e72c7ff",
-      "recorded_input_digest": "8f3a5fba2bf708a9eb195b4e3c75c250ad4f24258292219a75aa3de82e72c7ff"
+      "current_input_digest": "87475a818ca7c850d2de0cf76473a954706c0e84d17588e65265e3bd593e1517",
+      "recorded_input_digest": "87475a818ca7c850d2de0cf76473a954706c0e84d17588e65265e3bd593e1517"
     },
     {
       "consumer": "ritual aggregates",
@@ -87,7 +89,7 @@
       "declared_outputs": [
         "docs/reports/GRAPH_QUALITY_V2_SCORECARD.md"
       ],
-      "built_at": "2026-09-16T10:15:54.317380+00:00",
+      "built_at": "2026-09-16T16:34:23.642905+00:00",
       "rebuilt_by": "scripts/graph_quality_scorecard.py",
       "current_input_digest": "6a33b93c526be4d66e9810e9c82824fa3cdc7fa72c71e32863263f76a686b5aa",
       "recorded_input_digest": "6a33b93c526be4d66e9810e9c82824fa3cdc7fa72c71e32863263f76a686b5aa"
@@ -103,7 +105,7 @@
       "declared_outputs": [],
       "built_at": "2026-09-16T10:32:50.832825+00:00",
       "rebuilt_by": "the search index build, then scripts/run_ask_benchmark.py to re-grade",
-      "current_input_digest": "1d6bd21c84f8ecca59befc49b655ac072219cc231651039e2ac659a5ad620eb4",
+      "current_input_digest": "05aa2c7fc73579ef933402898e431f4b2280cff0a9d2b9cccf1b9111fc38cf58",
       "recorded_input_digest": "1d6bd21c84f8ecca59befc49b655ac072219cc231651039e2ac659a5ad620eb4"
     },
     {

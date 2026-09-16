@@ -3,7 +3,7 @@
 **No fulltext index, on purpose.** ``Passage``, ``TextVersion`` and ``Translation`` carry
 none, and this API creates none -- an API that alters a frozen graph's schema to answer a
 GET is not a read-only API. Measured against the live graph that costs nothing worth
-having: a substring scan of all 17,283 English translations takes 17ms, of all 36,462
+having: a substring scan of all 18,391 English translations takes 17ms, of all 36,462
 Sanskrit text versions 89ms, an exact citation lookup 15ms, and the whole 1,917-node
 knowledge-object scan 34ms. Two fulltext indexes do exist (``enrichment_concept_text``,
 ``enrichment_formula_text``) and are deliberately unused: Lucene would mean escaping
@@ -35,12 +35,16 @@ surface                      passages carrying it
 ===========================  =====================================================
 Sanskrit as transmitted       RV 10,552 - AV 5,839 - SV 1,844 - YV 1,836
 Normalised Sanskrit           AV 5,839 and nothing else
-English translation           RV 10,502 - AV 4,878 - YV 1,903 - **SV none**
+English translation           RV 10,509 - AV 5,770 - YV 1,939 - SV 173, all reused
 Lemma (dictionary headword)   RV 6,560 and nothing else
 ===========================  =====================================================
 
 So an English phrase search returning nothing Samavedic has established nothing about the
-Samaveda, and a caller who cannot see that will conclude the opposite.
+Samaveda, and a caller who cannot see that will conclude the opposite. The Samavedic 173 is
+the case to read carefully rather than the exception that closes the gap: those verses are
+searchable in English because each carries Griffith's Rigvedic rendering of text verified
+character-identical, so a Samavedic hit is a hit on another corpus's English and 1,671
+verses remain unreachable in English.
 :data:`SURFACE_COVERAGE` holds those figures, :func:`measure_surface_coverage` re-derives
 them from a live session and ``tests/api/test_search.py`` asserts the two agree -- the same
 discipline as :mod:`vedagraph.domain.layer_figures`, adopted because this project has
@@ -454,7 +458,16 @@ SEARCH_WINDOW_LIMIT: Final = MAX_PAGE_SIZE
 SURFACE_COVERAGE: Final[dict[SearchSurface, dict[str, int]]] = {
     SearchSurface.SANSKRIT_TEXT: {"RV": 10_552, "AV": 5_839, "YV": 1_836, "SV": 1_844},
     SearchSurface.NORMALIZED_SANSKRIT: {"AV": 5_839},
-    SearchSurface.ENGLISH_TRANSLATION: {"RV": 10_502, "AV": 4_878, "YV": 1_903},
+    # Raised by the translation bulk integration. The Samavedic 173 is the figure that
+    # needs reading carefully and the note below does the reading: those verses are
+    # searchable in English because they carry Griffith's Rigvedic rendering of
+    # verified-identical text, not because the Samaveda gained a translation.
+    SearchSurface.ENGLISH_TRANSLATION: {
+        "RV": 10_509,
+        "AV": 5_770,
+        "YV": 1_939,
+        "SV": 173,
+    },
     SearchSurface.LEMMA: {"RV": 6_560},
 }
 
@@ -474,9 +487,14 @@ SURFACE_NOTES: Final[dict[SearchSurface, str]] = {
     ),
     SearchSurface.ENGLISH_TRANSLATION: (
         "Public-domain translations only: Griffith for the Rigveda and Yajurveda, "
-        "Whitney-Lanman for the Atharvaveda. NO SAMAVEDIC TRANSLATION EXISTS IN THIS "
-        "GRAPH, so an English search can never return a Samavedic passage, and its "
-        "silence about the Samaveda is a silence about this API and not about the text."
+        "Whitney-Lanman and Griffith for the Atharvaveda. NO INDEPENDENT SAMAVEDIC "
+        "TRANSLATION EXISTS IN THIS GRAPH. An English search can now reach 173 Samavedic "
+        "verses, and every one of them carries Griffith's Rigvedic rendering of text "
+        "verified character-identical rather than a translation of the Samaveda -- so a "
+        "Samavedic hit here is a hit on another corpus's English, and the remaining 1,671 "
+        "verses cannot be reached in English at all. Some matches are also Latin: Griffith "
+        "put the passages he judged too explicit into Latin, so an English query will not "
+        "find them and their absence is his editorial choice rather than a gap here."
     ),
     SearchSurface.LEMMA: (
         "The lemma layer comes from the manual Rigvedic morphological annotation and "

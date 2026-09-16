@@ -1171,7 +1171,7 @@ export interface paths {
          *
          *     **Seers are separated from non-seer addressees.** The seer slot also names deities, abstractions, mythic beings, a plant and an object; those are counted apart and their kinds enumerated, because a combined figure is a category error.
          *
-         *     **A corpus with no translation is null, not zero.** The Samaveda has no released translation, so every translation-derived layer is absent for it rather than empty in it, and the per-corpus breakdown says so.
+         *     **A corpus with no translation is null, not zero.** The Samaveda has no released translation of its own, so every translation-derived layer is absent for it rather than empty in it, and the per-corpus breakdown says so. 173 of its verses do carry an English rendering reused from the Rigvedic parallel; that is reported as `reused_renderings` and never inside `translations`, because adding the two would report a translated Samaveda.
          *
          *     **The graph's relationship total is deliberately absent.** Cross-corpus connections are reported per class instead, with intra-corpus edges excluded and counted separately: an exact parallel, a directed reuse and a shared entity vocabulary assert different things and one total over them would rank a vocabulary overlap beside a verbatim repetition.
          */
@@ -5954,8 +5954,16 @@ export interface components {
              * @description Verses reached by a rendering of any kind. The honest answer to 'can I read something here', which is a different question to 'is it translated'.
              */
             any_coverage?: number | null;
-            /** Translators */
+            /**
+             * Translators
+             * @description Translators of this work's own English, scoped to the population `translated` counts. A name reaches this list only if it translated this corpus.
+             */
             translators?: string[];
+            /**
+             * Reused From Translators
+             * @description Translators whose rendering of another corpus is shown against verses of this one. Kept apart from `translators` because 'Griffith' beside a Samavedic `translated: 0` reads as a contradiction rather than as reuse.
+             */
+            reused_from_translators?: string[];
             /** @default SUPPORTED */
             status: components["schemas"]["KnowledgeStatus"];
             /** Caveats */

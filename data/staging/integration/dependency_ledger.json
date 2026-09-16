@@ -47,20 +47,23 @@
       "label:Devata": "n=214;keyless=0;keys=2c4a14b6bf91f0806acbb0870661713c886928d869db02685e6f05dd38a2f8f4",
       "label:DomainEntity": "n=375;keyless=0;keys=dceeb64027c86c4fe9f1f5db531cfa94361458b2b8b78b21b7a3933d111fc83c",
       "label:Rishi": "n=729;keyless=0;keys=ef3dc133d32b2d4096d7a4ffdac456fc38d84200fad0f6732eefa785b158cf3b",
+      "label:Translation": "n=18415;keyless=18415;keys=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "type:ABOUT_CONCEPT": "n=24861;unnamed=0;pairs=499c5d65713399051f8903e60791ef04e3c2bd911d799cd6eff0892d7bd89999",
       "type:HAS_DEVATA": "n=10558;unnamed=0;pairs=8e4eea692c244357e1b3bdd2106719549f5a37430fa668977c59636ac0fedde8",
+      "type:HAS_TRANSLATION": "n=18415;unnamed=18415;pairs=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "type:MENTIONS_DEVATA": "n=17165;unnamed=0;pairs=bd51583b55154c393e05621ca50cb935896b3420a14061f530b27794519c22da",
       "type:MENTIONS_ENTITY": "n=28110;unnamed=0;pairs=2c66d80eada586d6f80aa587673228c4b7c02cc05dbba7200fceb174fa6afa62",
-      "file:data/domain/vedagraph_domain_v2/veda_coverage_v3.json": "3ec8b28f704eb65ad96b0a9dd45f6f8fd58719d81ec77142daed4e1597096f46",
-      "builder:scripts/build_veda_coverage_and_metrics.py": "00644458ec6689d01e2d0e00d122541f43c4aa077165d22c84ad70739ec71851"
+      "file:data/domain/vedagraph_domain_v2/veda_coverage_v3.json": "79da02e985e8935c5b70b5ab1a8a0ae437e0129baeee6f29dbef203eed325918",
+      "builder:scripts/build_veda_coverage_and_metrics.py": "ad68c690bda27ea45d1979b6eac517f79610029708a1671493f747a33f4fee45"
     },
-    "built_at": "2026-09-16T07:25:00.199719+00:00",
+    "built_at": "2026-09-16T15:52:11.665223+00:00",
     "graph_census": {
-      "nodes": 116838,
-      "relationships": 281257
+      "nodes": 117970,
+      "relationships": 282389
     },
-    "output_file": "data/domain/vedagraph_domain_v2/veda_coverage_v3.json",
-    "output_hash": "3ec8b28f704eb65ad96b0a9dd45f6f8fd58719d81ec77142daed4e1597096f46"
+    "output_hashes": {
+      "data/domain/vedagraph_domain_v2/veda_coverage_v3.json": "79da02e985e8935c5b70b5ab1a8a0ae437e0129baeee6f29dbef203eed325918"
+    }
   },
   "quality evaluation": {
     "consumer": "quality evaluation",
@@ -72,13 +75,13 @@
       "type:QUALITY_VERDICT_ABOUT": "n=2568;unnamed=0;pairs=81b929c8b243d02d718fa8b26866b0a9a63b7aff37bd4bd8f47df6cb0b3b281c",
       "builder:scripts/graph_quality_scorecard.py": "a2a352a3941c637bed6eed8852094b7d8ac69cd6456050abbbbaee49005891a7"
     },
-    "built_at": "2026-09-16T10:15:54.317380+00:00",
+    "built_at": "2026-09-16T16:34:23.642905+00:00",
     "graph_census": {
-      "nodes": 116838,
-      "relationships": 281257
+      "nodes": 117970,
+      "relationships": 282389
     },
     "output_hashes": {
-      "docs/reports/GRAPH_QUALITY_V2_SCORECARD.md": "fe5803ad823606cd4554c928fa2e74bcdca08463498322ffddd3c16d45950fbe"
+      "docs/reports/GRAPH_QUALITY_V2_SCORECARD.md": "f447d05622028e498298336738c15f3e456314434979476aca31195fc0191f8e"
     }
   },
   "Visualization Lab aggregates": {

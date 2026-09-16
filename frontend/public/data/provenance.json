@@ -45,7 +45,7 @@
         "Mantra"
       ],
       "scope": "SAMHITA ONLY, Saunaka recension, held as a WORKING_PRIVATE digital corpus: 5,839 mantras. The PAIPPALADA recension is NOT HELD, and it is not a minor variant -- it is a substantially different collection with its own hymn order, so an Atharvavedic absence measured here is an absence from the Saunaka recension only. The Gopatha Brahmana is not held. Every one of this work's 5,084 seer attributions is a sukta label projected downward onto its mantras rather than a per-verse statement, so a per-verse Atharvavedic seer claim cannot be made from this corpus.",
-      "completeness": "5,839 mantras carry a canonical key and a canonical citation against an attested total of approximately 5,977 (97.7%). 4,878 of 5,839 carry a translation (83.5%). The divergence from the attested total is OPEN_RESEARCH, attributed to edition-relative verse totals, with one candidate mechanism raised and falsified.",
+      "completeness": "5,839 mantras carry a canonical key and a canonical citation against an attested total of approximately 5,977 (97.7%). Translation coverage is four populations and not one percentage: 5,715 verses carry an English rendering of their own (97.9%), the Whitney/Lanman text extended over kanda 20 from Griffith's Atharvaveda, which Whitney excluded; 68 more are covered by a multi-verse print unit; 21 show Griffith's Rigvedic rendering of verified-identical text, disclosed as reuse; 18 carry his Latin rather than English; and 17 are reached by no rendering at all. The divergence from the attested total is OPEN_RESEARCH, attributed to edition-relative verse totals, with one candidate mechanism raised and falsified.",
       "excluded_corpora": [
         "ATHARVAVEDA_PAIPPALADA_RECENSION",
         "GOPATHA_BRAHMANA",
@@ -64,8 +64,8 @@
         "Sukta",
         "Mantra"
       ],
-      "scope": "SAMHITA ONLY, Sakala recension. This work_id addresses the 10,552 mantras of the Rigveda Samhita in the Sakala recension and nothing else. It does not address a second Rigvedic recension, nor any post-samhita layer: no Brahmana, no Aranyaka and no Upanisad are held. Padapatha and the accented samhitapatha are carried as text versions of these same mantras, not as separate works.",
-      "completeness": "10,552 of 10,552 attested mantras carry a canonical key and a canonical citation (100.0%). 10,502 of 10,552 carry a translation (99.5%). No shortfall in addressing.",
+      "scope": "SAMHITA ONLY, Sakala recension. This work_id addresses the 10,552 mantras of the Rigveda Samhita in the Sakala recension and nothing else. It does not address a second Rigvedic recension, nor any post-samhita layer: no Brahmana, no Aranyaka and no Upanisad are held. The accented samhitapatha is carried as two text versions of these same mantras -- a primary and a parallel reading, 10,552 each -- not as separate works. NO PADAPATHA IS CARRIED: text_versions.yaml declares one (VEDAWEB.PADAPATHA) and it was never ingested, so the graph holds 0 padapatha text versions and every text_form in it is SAMHITA. The declared artifact covers Mandala 1 alone, so even acquiring it would not make the word-analysed text available for the corpus.",
+      "completeness": "10,552 of 10,552 attested mantras carry a canonical key and a canonical citation (100.0%). No shortfall in addressing. Translation coverage is four populations and not one percentage: 10,479 verses carry an English rendering of their own (99.3%); 60 more are covered by a multi-verse print unit anchored on a neighbour, because Griffith renders each pair of dvipada verses in RV 1.65-1.70 as one unit; 6 carry his Latin rather than English, the passages he judged too explicit for an English readership; and 7 are reached by no rendering at all.",
       "excluded_corpora": [
         "SECOND_RIGVEDIC_RECENSION",
         "RIGVEDIC_BRAHMANA",
@@ -88,7 +88,7 @@
         "Verse"
       ],
       "scope": "ARCIKA ONLY. THIS IS NOT THE COMPLETE SAMAVEDA. This work_id addresses the Kauthuma arcika verse corpus and cannot address the gana collections: the gramageya, aranyakageya, uhagana and uhyagana books are a PARALLEL AND LARGER body (roughly 2,639 ganas against 1,875 arcika verses) which requires its own work_id. The sung dimension is not a decoration on the verse skeleton; it is the reason the Samaveda is a distinct Veda rather than a Rigveda excerpt. Any claim that VedaGraph \"has the Samaveda\" while holding only the arcika is FALSE. No second recension and no post-samhita layer are held.",
-      "completeness": "1,844 of the traditional 1,875 verses carry a canonical key (98.3%). The 31 without one are enumerated with causes: 2 running numbers the selected witness does not print, 9 verses in one Uttararcika dasati whose printed run is non-contiguous, and 21 verses in four Uttararcika dasati groups where two witnesses disagree about the partition. ZERO translations are released (0.0%) -- an SV zero in any translation-derived layer is an absent layer, not an absent text.",
+      "completeness": "1,844 of the traditional 1,875 verses carry a canonical key (98.3%). The 31 without one are enumerated with causes: 2 running numbers the selected witness does not print, 9 verses in one Uttararcika dasati whose printed run is non-contiguous, and 21 verses in four Uttararcika dasati groups where two witnesses disagree about the partition. ZERO Samavedic translations are released (0.0%), and that is unchanged: 173 verses now show Griffith's Rigvedic English on text verified character-identical, disclosed as a reused rendering and counted in no Samavedic translation figure, and the remaining 1,671 are reached by nothing. An SV zero in any translation-derived layer is an absent layer, not an absent text.",
       "excluded_corpora": [
         "SAMAVEDA_GRAMAGEYA_GANA",
         "SAMAVEDA_ARANYAKAGEYA_GANA",
@@ -111,7 +111,7 @@
         "Mantra"
       ],
       "scope": "SAMHITA ONLY, and only the SHUKLA (White) Yajurveda in the Vajasaneyi Madhyandina recension: 1,975 mantras. The KRISHNA (Black) Yajurveda is NOT HELD AT ALL -- no Taittiriya, no Kathaka, no Maitrayani, no Kapisthala samhita is present. This is the exclusion most likely to mislead, because \"the Yajurveda\" in ordinary use covers both and the Krishna recensions carry prose brahmana passages interleaved with the mantras that have no counterpart here. The Kanva recension of the Shukla Yajurveda is also absent, as is the Satapatha Brahmana.",
-      "completeness": "1,975 of 1,975 attested mantras carry a canonical key and a canonical citation (100.0%). 1,903 of 1,975 carry a translation (96.4%). No shortfall in addressing. Every one of this work's 2,240 seer attributions is source-stated rather than container-inherited, which is the opposite of the Atharvavedic pattern.",
+      "completeness": "1,975 of 1,975 attested mantras carry a canonical key and a canonical citation (100.0%). 1,939 of 1,975 carry a translation (98.2%), 36 of which were recovered by forced address independently verified against Griffith's printed labels; three more such addresses are withheld by owner decision. 36 verses are reached by no rendering. No shortfall in addressing. Every one of this work's 2,240 seer attributions is source-stated rather than container-inherited, which is the opposite of the Atharvavedic pattern.",
       "excluded_corpora": [
         "KRISHNA_YAJURVEDA_TAITTIRIYA",
         "KRISHNA_YAJURVEDA_KATHAKA",
@@ -429,6 +429,83 @@
           "work_id": "VG:WORK:AV:SAU"
         }
       ]
+    },
+    {
+      "layer": "translation",
+      "source_id": "IA_WAYBACK_GRIFFITH_AV_1895",
+      "name": "The Hymns of the Atharvaveda, Griffith translation",
+      "organization": "Internet Archive Wayback Machine capture of sacred-texts.com/hin/av/",
+      "url": "https://web.archive.org/web/20230325113203/https://www.sacred-texts.com/hin/av/",
+      "authority_tier": "HISTORICAL_TRANSLATION",
+      "rights_status": [
+        "PUBLIC_DOMAIN"
+      ],
+      "site_rights_status": "PUBLIC_DOMAIN",
+      "rights_url": null,
+      "vedas": [
+        "AV"
+      ],
+      "contributes": "The English of 871 further Atharvavedic verses, almost all of kanda 20, which Whitney excluded from his translation because it is largely Rigvedic redaction. 34 of them are one rendering printed across a pair of verses. A further 18 verses from this source are in Latin, not English: Griffith put the passages he judged too explicit for an English readership into Latin, and those are his real published text rather than a translation into English.",
+      "evidence": "data/staging/translation/proofs/source_pages.json",
+      "artifacts": []
+    },
+    {
+      "layer": "translation",
+      "source_id": "IA_WAYBACK_GRIFFITH_RV_1896",
+      "name": "The Hymns of the Rigveda, Griffith translation, second edition",
+      "organization": "Internet Archive Wayback Machine captures of sacred-texts.com/hin/rigveda/",
+      "url": "https://web.archive.org/web/2023/https://www.sacred-texts.com/hin/rigveda/",
+      "authority_tier": "HISTORICAL_TRANSLATION",
+      "rights_status": [
+        "PUBLIC_DOMAIN"
+      ],
+      "site_rights_status": "PUBLIC_DOMAIN",
+      "rights_url": null,
+      "vedas": [
+        "RV"
+      ],
+      "contributes": "The English of 7 Rigvedic verses the Wikisource transcription of the same translation leaves out, and 6 more in Griffith's Latin rather than English.",
+      "evidence": "data/staging/translation/integration/translation_bulk_import_receipt.json",
+      "artifacts": []
+    },
+    {
+      "layer": "translation",
+      "source_id": "SACRED_TEXTS_WYV_SNAPSHOT_2026_09_07",
+      "name": "The Texts of the White Yajurveda, Griffith translation, pinned snapshot",
+      "organization": "sacred-texts.com, pinned on disk at data/raw/sacred_texts/2026-09-07/wyv",
+      "url": "https://www.sacred-texts.com/hin/wyv/",
+      "authority_tier": "HISTORICAL_TRANSLATION",
+      "rights_status": [
+        "PUBLIC_DOMAIN"
+      ],
+      "site_rights_status": "PUBLIC_DOMAIN",
+      "rights_url": null,
+      "vedas": [
+        "YV"
+      ],
+      "contributes": "The English of 36 Yajurvedic verses whose printed labels the shipped alignment had misread, each one re-located against the printed page and verified independently. Three further verses were located the same way and are withheld by owner decision rather than shown.",
+      "evidence": "data/staging/translation/integration/translation_bulk_import_receipt.json",
+      "artifacts": []
+    },
+    {
+      "layer": "translation",
+      "source_id": "VEDAGRAPH_CANONICAL_RV_GRIFFITH",
+      "name": "Griffith's Rigveda translation as already held in this graph",
+      "organization": "the VedaGraph Neo4j store, source_id WIKISOURCE_GRIFFITH_RV",
+      "url": "https://en.wikisource.org/wiki/The_Hymns_of_the_Rigveda",
+      "authority_tier": "HISTORICAL_TRANSLATION",
+      "rights_status": [
+        "PUBLIC_DOMAIN"
+      ],
+      "site_rights_status": "PUBLIC_DOMAIN",
+      "rights_url": null,
+      "vedas": [
+        "SV",
+        "AV"
+      ],
+      "contributes": "Griffith's Rigvedic English shown beside 173 Samavedic and 21 Atharvavedic verses whose Sanskrit is verified character-identical to the Rigvedic verse he was translating. Each is disclosed as a reused rendering and names the verse it came from. None of them counts as a translation of its own corpus: the Samaveda still has no released translation of its own, and this is the only English that reaches it.",
+      "evidence": "data/staging/translation/integration/translation_bulk_import_receipt.json",
+      "artifacts": []
     },
     {
       "layer": "traditional-apparatus",
@@ -1082,9 +1159,9 @@
     }
   ],
   "totals": {
-    "sources": 9,
+    "sources": 13,
     "artifacts": 33,
-    "registered_sources": 18,
+    "registered_sources": 22,
     "registered_artifacts": 53
   }
 }

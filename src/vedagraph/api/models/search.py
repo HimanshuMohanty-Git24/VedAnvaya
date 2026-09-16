@@ -2,7 +2,7 @@
 
 **Why a ladder and not a score.** There is no fulltext index on ``Passage``,
 ``TextVersion`` or ``Translation``, and this API does not create one. Measured against the
-live graph a substring scan of all 17,283 translations takes 19ms and of all 18,235 primary
+live graph a substring scan of all 18,391 translations takes 19ms and of all 18,235 primary
 Sanskrit texts 89ms, so the corpus is small enough that deterministic matching is fast
 enough -- and deterministic matching has the property that matters more than speed: every
 result can say *why* it is a result.
@@ -17,8 +17,11 @@ exists to refuse -- a number a reader trusts because it looks measured.
 
 **Why the surfaces are declared.** The searchable surfaces do not cover the corpus evenly,
 and the gaps are invisible in a result list. Measured per passage against the live graph:
-English translation reaches the Rigveda (10,502), Atharvaveda (4,878) and Yajurveda (1,903)
-and **not one Samavedic passage**; the normalised Sanskrit surface exists for the
+English translation reaches the Rigveda (10,509), Atharvaveda (5,770), Yajurveda (1,939) and
+173 Samavedic passages -- every one of those carrying Griffith's Rigvedic rendering of
+verified-identical text rather than a Samavedic translation, so **the Samaveda still has no
+English of its own** and 1,671 of its verses cannot be reached in English at all; the
+normalised Sanskrit surface exists for the
 Atharvaveda alone (5,839); the lemma layer is Rigvedic alone (6,560). A caller who searches
 an English phrase and finds nothing Samavedic has learnt nothing about the Samaveda, so
 :class:`SearchResponse` carries the surfaces it actually read and the coverage they have.

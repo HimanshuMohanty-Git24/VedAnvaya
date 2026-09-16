@@ -1,6 +1,6 @@
 {
  "mode": "DRY_RUN",
- "started_at": "2026-09-16T15:25:45.376668+00:00",
+ "started_at": "2026-09-16T15:34:46.524052+00:00",
  "plan_sha256": "954a8b7b8d0efabd9554cd260f38e2d879500e15f96478fb20b1cae2825e21df",
  "import_batch": "TRANSLATION_BULK_2026_09_16",
  "rows_to_write": 1132,

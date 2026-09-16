@@ -172,13 +172,35 @@ DIMENSIONS: Final[tuple[Dimension, ...]] = (
     Dimension(
         "human_concern", "(p)-[:ADDRESSES_CONCERN|TREATS|PROTECTS_FROM|USED_FOR_RITE]->()", {}
     ),
+    # The predicate here is not a bare HAS_TRANSLATION, and the difference is load-bearing.
+    # This dimension measures whether the independent English layer reaches a verse, so it
+    # excludes two things a plain edge test would count. A reused rendering is another
+    # corpus's published English on verified-identical text: counting it flipped the
+    # Samavedic translation dimension out of ABSENT_FROM_SOURCE and reported that corpus at
+    # 9.4% translated, which contradicts every other surface and is the exact kind of lie
+    # the three-kinds-of-zero distinction exists to prevent. And Griffith's Latin
+    # substitutions are his real text but are not the English layer.
+    #
+    # A MANTRA_RANGE rendering *is* counted, through its declared span rather than through
+    # its edge: one print unit over two verses reaches both of them, and counting only the
+    # anchor would report the second verse of every pair as untouched by the layer.
     Dimension(
         "translation",
-        "(p)-[:HAS_TRANSLATION]->()",
+        "("
+        "  EXISTS { (p)-[:HAS_TRANSLATION]->(t:Translation)"
+        "           WHERE t.language = 'en' AND t.reuse_kind IS NULL }"
+        "  OR EXISTS { (:Mantra)-[:HAS_TRANSLATION]->(t:Translation)"
+        "              WHERE t.alignment_level = 'MANTRA_RANGE' AND t.language = 'en'"
+        "                AND t.reuse_kind IS NULL"
+        "                AND p.canonical_key IN t.covers_canonical_keys }"
+        ")",
         {
             "SV": (
                 "No complete translation of the Kauthuma arcika is ingested; the only one "
-                "located is Ranayaniya and does not align."
+                "located is Ranayaniya and does not align. 173 Samavedic verses do now show "
+                "Griffith's Rigvedic English on text verified character-identical, disclosed "
+                "as a reused rendering; that is translation assistance and not a Samavedic "
+                "translation, so it is deliberately not counted here."
             )
         },
     ),

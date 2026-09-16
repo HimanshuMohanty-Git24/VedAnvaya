@@ -40,6 +40,87 @@ IMPORT_BATCH: Final = "TRANSLATION_BULK_2026_09_16"
 QUALITY_STATUS: Final = "MACHINE_ALIGNED"
 RIGHTS_STATUS: Final = "PUBLIC_DOMAIN"
 
+#: Every :Translation node in this graph also carries :Internal -- ``Translation`` is a
+#: member of ``ontology.INTERNAL_LABELS``, and the label is what keeps a translation out of
+#: the product-node population. Version 1 of this plan omitted it, and the quality
+#: scorecard caught it as 1,132 internal_leaked and 1,132 product nodes with no readable
+#: label: a :Translation with no :Internal is counted as a public node that forgot its name.
+NODE_LABELS: Final[tuple[str, ...]] = ("Translation", "Internal")
+
+#: The grade every ``HAS_TRANSLATION`` edge carries. All 17,283 pre-existing edges have
+#: these seven properties and version 1 of this plan wrote none of them, which the
+#: scorecard reported as 1,132 ungraded edges. The two axes are deliberately independent:
+#: ``knowledge_layer`` says how the *alignment* was established and ``quality_tier`` says
+#: how much weight it carries, and a reused rendering differs from a printed one on both.
+EDGE_GRADES: Final[dict[str, dict[str, str]]] = {
+    "IMPORT_SOURCE_EXPLICIT": {
+        "knowledge_layer": "L1_SOURCE_EXPLICIT",
+        "evidence_basis": "STRUCTURAL",
+        "quality_tier": "TIER_A",
+        "grade_basis": "corpus structure as printed by the edition",
+    },
+    "IMPORT_MANTRA_RANGE": {
+        "knowledge_layer": "L1_SOURCE_EXPLICIT",
+        "evidence_basis": "STRUCTURAL",
+        "quality_tier": "TIER_A",
+        "grade_basis": (
+            "corpus structure as printed by the edition, which numbers this rendering "
+            "across a span of two of this corpus's verses"
+        ),
+    },
+    "IMPORT_NON_ENGLISH_TRANSLATION": {
+        "knowledge_layer": "L1_SOURCE_EXPLICIT",
+        "evidence_basis": "STRUCTURAL",
+        "quality_tier": "TIER_A",
+        "grade_basis": (
+            "corpus structure as printed by the edition; the literal is the translator's "
+            "Latin substitution rather than his English"
+        ),
+    },
+    "IMPORT_VERIFIED_FORCED_ADDRESS": {
+        "knowledge_layer": "L1_SOURCE_EXPLICIT",
+        # TIER_B and not TIER_A, because the two axes answer different questions. The
+        # source does print this translation, so the layer is source-explicit; but its
+        # printed label was defective and the address was recovered by interpolation and
+        # then verified against the page, so the alignment is a reproducible derivation
+        # rather than something a source states.
+        "evidence_basis": "STRUCTURAL",
+        "quality_tier": "TIER_B",
+        "grade_basis": (
+            "the source prints this translation but mislabels it; the address was "
+            "recovered deterministically and verified against the printed page"
+        ),
+    },
+    "IMPORT_REUSED_RENDERING": {
+        # Not source-explicit for this verse: no edition prints this English against this
+        # passage. It is derived from a character-identity comparison of the two Sanskrit
+        # texts, which is why the basis is SANSKRIT rather than STRUCTURAL.
+        "knowledge_layer": "L2_DETERMINISTIC_DERIVED",
+        "evidence_basis": "SANSKRIT",
+        "quality_tier": "TIER_B",
+        "grade_basis": (
+            "another corpus's published rendering, attached because this verse's canonical "
+            "Sanskrit is verified character-identical to the verse it translates"
+        ),
+    },
+}
+
+#: A translation attaches a rendering, not a claim about who composed the verse.
+ATTRIBUTION_PRECISION: Final = "NOT_AN_ATTRIBUTION"
+
+#: Translation coverage as measured immediately before this migration, at graph census
+#: 116,838 nodes / 281,257 relationships. Pinned so the forecast below stays reproducible
+#: after execution, rather than being computed against a baseline the execution moved:
+#: reading the live figures made a post-execution rebuild add this round's rows on top of
+#: themselves and forecast -927 uncovered Atharvavedic verses.
+PRE_IMPORT_BASELINE: Final[dict[str, dict[str, int]]] = {
+    "corpus": {"RV": 10_552, "SV": 1_844, "YV": 1_975, "AV": 5_839},
+    "dedicated": {"RV": 10_472, "SV": 0, "YV": 1_903, "AV": 4_878},
+    "range_covered": {"RV": 60, "SV": 0, "YV": 0, "AV": 0},
+    "reused_rendering": {"RV": 0, "SV": 0, "YV": 0, "AV": 0},
+    "other_language": {"RV": 0, "SV": 0, "YV": 0, "AV": 0},
+}
+
 #: Citation prefixes per Veda, for rendering a reused-from key as a human citation.
 _CITATION: Final[dict[str, str]] = {"RV": "RV", "SV": "SV", "YV": "VS", "AV": "AVS"}
 
@@ -116,6 +197,7 @@ def _node_for(
     is_range = final == "IMPORT_MANTRA_RANGE"
     is_reuse = final == "IMPORT_REUSED_RENDERING"
 
+    grade = EDGE_GRADES[final]
     node: dict[str, Any] = {
         "translation_id": translation_id_for(anchor, staged["source_id"]),
         "attach_to_canonical_key": anchor,
@@ -123,6 +205,13 @@ def _node_for(
         "final_class": final,
         "staged_row_ids": sorted(row["row_id"] for row in group),
         "covers_canonical_keys": covered,
+        "labels": list(NODE_LABELS),
+        "edge_properties": {
+            **grade,
+            "attribution_precision": ATTRIBUTION_PRECISION,
+            "language": lead["import_language"],
+            "translator": payload["translator"],
+        },
         "properties": {
             "text": payload["text"],
             "translator": payload["translator"],
@@ -277,15 +366,13 @@ def _report(
     forced = [n for n in nodes if n["final_class"] == "IMPORT_VERIFIED_FORCED_ADDRESS"]
 
     # -- predicted post-import coverage, per Veda, per population -------------------
-    from vedagraph.domain import layer_figures
-
     predicted = {}
     for veda in ("RV", "SV", "YV", "AV"):
-        corpus = layer_figures.CORPUS_MANTRAS[veda]
-        before_dedicated = layer_figures.DEDICATED_ENGLISH_MANTRAS[veda]
-        before_range = layer_figures.RANGE_COVERED_MANTRAS[veda]
-        before_reused = layer_figures.REUSED_RENDERING_MANTRAS[veda]
-        before_other = layer_figures.NON_ENGLISH_MANTRAS[veda]
+        corpus = PRE_IMPORT_BASELINE["corpus"][veda]
+        before_dedicated = PRE_IMPORT_BASELINE["dedicated"][veda]
+        before_range = PRE_IMPORT_BASELINE["range_covered"][veda]
+        before_reused = PRE_IMPORT_BASELINE["reused_rendering"][veda]
+        before_other = PRE_IMPORT_BASELINE["other_language"][veda]
 
         add_dedicated = len(
             [
@@ -322,7 +409,7 @@ def _report(
         }
 
     return {
-        "plan_version": 1,
+        "plan_version": 2,
         "import_batch": IMPORT_BATCH,
         "phase": "F-G",
         "staged_rows_total": T.EXPECTED_ROWS,
@@ -389,6 +476,19 @@ def _report(
             ),
         },
         "properties_written": sorted({k for n in nodes for k in n["properties"]}),
+        "node_labels": sorted({label for n in nodes for label in n["labels"]}),
+        "edge_properties_written": sorted({k for n in nodes for k in n["edge_properties"]}),
+        "edge_grades_by_class": {
+            name: dict(sorted(grade.items())) for name, grade in sorted(EDGE_GRADES.items())
+        },
+        "edge_quality_tier_counts": dict(
+            sorted(collections.Counter(n["edge_properties"]["quality_tier"] for n in nodes).items())
+        ),
+        "edge_knowledge_layer_counts": dict(
+            sorted(
+                collections.Counter(n["edge_properties"]["knowledge_layer"] for n in nodes).items()
+            )
+        ),
         "owner_decisions_applied": {
             "OWNER_DECISION_A_RV_SPAN": (
                 "CLOSE. No rows are imported for RV 1.65-1.70: M13 already resolved the "
@@ -433,7 +533,7 @@ def _report(
         },
         "predicted_coverage_after_import": predicted,
         "invariants_the_migration_must_hold": {
-            "core_corpus_unchanged": {"RV": 10552, "SV": 1844, "YV": 1975, "AV": 5839},
+            "core_corpus_unchanged": dict(PRE_IMPORT_BASELINE["corpus"]),
             "nodes_created": len(nodes),
             "relationships_created": len(nodes),
             "existing_translations_modified": 0,

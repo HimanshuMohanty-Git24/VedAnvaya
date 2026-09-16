@@ -160,13 +160,14 @@ def test_the_reader_reports_the_right_coverage_kind(
 def test_an_uncovered_verse_is_named_as_uncovered(live_client: TestClient) -> None:
     """The range lookup must not start matching verses it does not cover.
 
-    RV 1.179.1 has no translation of any kind and no unit spans it. A range query written
-    without the membership test would return every range translation for every verse, and
-    the symptom would be a corpus that looks fully covered rather than an error.
+    RV 10.86.16 has no translation of any kind and no unit spans it: the source's page for
+    the hymn does not print the verse at all. A range query written without the membership
+    test would return every range translation for every verse, and the symptom would be a
+    corpus that looks fully covered rather than an error.
     """
-    body = _reader(live_client, "VG:RV:SAK:M01:S179:V001")
+    body = _reader(live_client, "VG:RV:SAK:M10:S086:V016")
     block = body["translations"]
-    assert block["items"] == [], "RV 1.179.1 has no rendering of any kind"
+    assert block["items"] == [], "RV 10.86.16 has no rendering of any kind"
     assert block["data_status"] != "SUPPORTED", "an empty translation set must not claim SUPPORTED"
     text = " ".join(c["text"] for c in block["caveats"])
     assert "multi-verse print unit" in text, (
@@ -187,8 +188,15 @@ def test_range_coverage_is_reported_separately_from_dedicated(live_client: TestC
     assert coverage["dedicated"] == coverage["translated"], (
         "`translated` must mean the dedicated population and nothing wider"
     )
-    assert coverage["any_coverage"] == coverage["dedicated"] + coverage["range_covered"], (
-        "any_coverage is the union; if it differs, a verse is in two populations at once"
+    assert coverage["any_coverage"] == (
+        coverage["dedicated"]
+        + coverage["range_covered"]
+        + coverage["reused_rendering"]
+        + coverage["other_language"]
+    ), (
+        "any_coverage is the union of all four populations, and the Rigveda is why naming "
+        "only two is wrong: it has 6 verses whose sole rendering is Griffith's Latin, so "
+        "dedicated + range_covered is 6 short of what a rendering actually reaches"
     )
     assert coverage["uncovered"] == coverage["mantras"] - coverage["any_coverage"]
     assert coverage["percent"] == round(100 * coverage["dedicated"] / coverage["mantras"], 2), (

@@ -343,26 +343,35 @@ def test_samaveda_translation_count_is_measured_as_zero(live_client: TestClient)
     assert coverage["translated"] == 0
     assert coverage["percent"] == 0.0
     assert coverage["status"] == KnowledgeStatus.NOT_BUILT
-    assert coverage["translators"] == []
+    assert coverage["translators"] == [], (
+        "a name reaches `translators` only if it translated this corpus; Griffith appears "
+        "on 173 Samavedic verses and translated none of them"
+    )
+    assert coverage["reused_from_translators"] == ["Ralph T. H. Griffith"], (
+        "the reuse must be visible somewhere, and this is where: apart from `translators` "
+        "rather than absent from the response"
+    )
+    assert coverage["reused_rendering"] == 173
 
 
 #: Per corpus: mantras, verses with a rendering of their own, and verses reached only by a
 #: multi-verse print unit.
 #:
-#: The Rigvedic figure is 10,472 and not the 10,502 this case asserted before. The 30 that
-#: moved are the anchors of the RV 1.65-1.70 spans: Griffith renders each pair of dvipada
-#: verses as one unit, so those renderings cover 60 verses and none of the 60 has a
-#: translation aligned to it alone. They are counted in `range_covered` instead, and the
-#: third column is here so the restatement is asserted rather than absorbed -- a coverage
-#: figure that fell by 30 with nothing to account for it would be indistinguishable from a
-#: regression.
+#: Two things moved these figures and they moved in opposite directions, which is why the
+#: third column exists. The bulk translation import raised all three translated counts. And
+#: `translated` narrowed to mean a verse's *own* rendering, so the 30 anchors of the
+#: RV 1.65-1.70 spans left it: Griffith renders each pair of dvipada verses as one unit, so
+#: those renderings cover 60 verses and none of the 60 has a translation aligned to it
+#: alone. The Atharvaveda gained 34 more such spans over 68 verses. Asserting the range
+#: population beside the dedicated one is what makes the narrowing visible -- a coverage
+#: figure that fell with nothing to account for it is indistinguishable from a regression.
 @pytest.mark.neo4j
 @pytest.mark.parametrize(
     ("work_id", "mantras", "translated", "range_covered"),
     [
-        ("VG:WORK:RV:SAK", 10_552, 10_472, 60),
-        ("VG:WORK:YV:VSM", 1_975, 1_903, 0),
-        ("VG:WORK:AV:SAU", 5_839, 4_878, 0),
+        ("VG:WORK:RV:SAK", 10_552, 10_479, 60),
+        ("VG:WORK:YV:VSM", 1_975, 1_939, 0),
+        ("VG:WORK:AV:SAU", 5_839, 5_715, 68),
         ("VG:WORK:SV:KAU", 1_844, 0, 0),
     ],
 )
@@ -406,6 +415,21 @@ def test_each_work_reports_its_own_hierarchy_in_depth_order(
 
 
 @pytest.mark.neo4j
+@pytest.mark.neo4j
+def test_the_samavedic_translation_layer_discloses_its_reuse(live_client: TestClient) -> None:
+    """The layer reaches the Samaveda; the note must say what it reaches it with.
+
+    Without this, ``TRANSLATION`` appearing beside all four work ids is indistinguishable
+    from a translated Samaveda -- and the corpus has no released translation of its own.
+    """
+    detail = live_client.get("/api/v1/works/VG:WORK:SV:KAU").json()
+    layer = next(row for row in detail["knowledge_layers"] if row["layer"] == "TRANSLATION")
+    assert layer["passages"] == 173
+    note = layer["note"]
+    assert "zero released" in note, f"the note must not imply a translated Samaveda: {note}"
+    assert "reuse" in note.lower(), f"the note must name the reuse: {note}"
+
+
 def test_the_samavedic_collection_level_is_declared_name_valued(live_client: TestClient) -> None:
     """A client that assumed integers throughout would fail on 1,844 verses."""
     detail = live_client.get("/api/v1/works/VG:WORK:SV:KAU").json()
@@ -423,7 +447,12 @@ def test_the_samavedic_collection_level_is_declared_name_valued(live_client: Tes
         ("DEVATA_ASCRIPTION_DESCRIPTOR", {"VG:WORK:AV:SAU"}),
         ("CHANDAS_ATTRIBUTION", {"VG:WORK:RV:SAK", "VG:WORK:AV:SAU"}),
         ("RISHI_ATTRIBUTION", {"VG:WORK:RV:SAK", "VG:WORK:AV:SAU", "VG:WORK:YV:VSM"}),
-        ("TRANSLATION", {"VG:WORK:RV:SAK", "VG:WORK:AV:SAU", "VG:WORK:YV:VSM"}),
+        # All four, and the Samavedic reach is not a translated Samaveda. The
+        # HAS_TRANSLATION relation now touches 173 of its verses because each carries
+        # Griffith's Rigvedic rendering of verified-identical text; the layer's own note
+        # says so, and test_the_samavedic_translation_layer_discloses_its_reuse below
+        # asserts that it does rather than trusting this set to carry the meaning.
+        ("TRANSLATION", set(EXPECTED_WORK_IDS)),
         ("DEVATA_MENTION", set(EXPECTED_WORK_IDS)),
         ("FORMULA_OCCURRENCE", set(EXPECTED_WORK_IDS)),
         ("ENTITY_MENTION", set(EXPECTED_WORK_IDS)),

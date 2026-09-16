@@ -1,0 +1,125 @@
+{
+ "phase": "J",
+ "ran_at": "2026-09-16T16:33:47.124469+00:00",
+ "expectation_source": "translation_import_plan.json (sha256 verified) and translation_bulk_import_receipt.json. No expectation is derived from the graph.",
+ "plan_sha256": "f359c8456cd8c6cf505943735d30802b24d3d08dbd843000072bfae805db1e69",
+ "receipt_lineage": {
+  "current_plan_sha256": "f359c8456cd8c6cf505943735d30802b24d3d08dbd843000072bfae805db1e69",
+  "creation_receipt_plan_sha256": "954a8b7b8d0efabd9554cd260f38e2d879500e15f96478fb20b1cae2825e21df",
+  "creation_receipt_verdict": "EXECUTED",
+  "plan_was_amended_after_creation": true,
+  "completion_receipt_plan_sha256": "f359c8456cd8c6cf505943735d30802b24d3d08dbd843000072bfae805db1e69",
+  "completion_receipt_verdict": "SHAPE_COMPLETED"
+ },
+ "promised": {
+  "nodes": 1132,
+  "edges": 1132,
+  "verses_reached": 1166
+ },
+ "observed": {
+  "promised_nodes_found": 1132,
+  "batch_stamped_nodes": 1132,
+  "verses_reached": 1166
+ },
+ "checks": {
+  "missing_expected": 0,
+  "unexpected_imported": 0,
+  "wrong_target": 0,
+  "property_failures": 0,
+  "reuse_disclosure_failures": 0,
+  "language_failures": 0,
+  "range_failures": 0,
+  "shape_failures": 0,
+  "policy_leakage": 0
+ },
+ "cross_veda_contamination": {
+  "mismatches": [],
+  "count": 0,
+  "by_veda_landed": {
+   "AV": 910,
+   "RV": 13,
+   "SV": 173,
+   "YV": 36
+  }
+ },
+ "forced_addresses": {
+  "approved_planned": 36,
+  "approved_present": 36,
+  "withheld_by_name": [
+   "VG:YV:VSM:A20:V085",
+   "VG:YV:VSM:A21:V045",
+   "VG:YV:VSM:A36:V024"
+  ],
+  "withheld_absent": 3
+ },
+ "existing_translations": {
+  "attachments_before": 17283,
+  "attachments_now": 18391,
+  "expected_growth": 1108,
+  "measured_growth": 1108,
+  "growth_matches": true,
+  "pre_existing_digest_before": "a9c93bf9620f015491de278b6c0d65dae61aa8f393f5f8a1b2ddd3b2f21e163f",
+  "pre_existing_digest_now": "a9c93bf9620f015491de278b6c0d65dae61aa8f393f5f8a1b2ddd3b2f21e163f",
+  "pre_existing_attachments_now": 17283,
+  "existing_attachments_unchanged": true
+ },
+ "census_now": {
+  "nodes": 117970,
+  "relationships": 282389,
+  "translation_nodes": 18415,
+  "has_translation_edges": 18415
+ },
+ "core_corpus_now": {
+  "AV": 5839,
+  "RV": 10552,
+  "SV": 1844,
+  "YV": 1975
+ },
+ "core_corpus_invariant_holds": true,
+ "coverage_now": {
+  "AV": {
+   "covered_mantras": 5770,
+   "translation_nodes": 5770,
+   "corpus": 5839,
+   "observed_row": true
+  },
+  "RV": {
+   "covered_mantras": 10509,
+   "translation_nodes": 10509,
+   "corpus": 10552,
+   "observed_row": true
+  },
+  "SV": {
+   "covered_mantras": 173,
+   "translation_nodes": 173,
+   "corpus": 1844,
+   "observed_row": true
+  },
+  "YV": {
+   "covered_mantras": 1939,
+   "translation_nodes": 1939,
+   "corpus": 1975,
+   "observed_row": true
+  }
+ },
+ "coverage_by_alignment_level": {
+  "AV": {
+   "MANTRA": 5736,
+   "MANTRA_RANGE": 34
+  },
+  "RV": {
+   "HYMN": 158,
+   "MANTRA": 10321,
+   "MANTRA_RANGE": 30
+  },
+  "SV": {
+   "MANTRA": 173
+  },
+  "YV": {
+   "MANTRA": 1939
+  }
+ },
+ "findings": [],
+ "findings_total": 0,
+ "verdict": "READBACK_CLEAN"
+}

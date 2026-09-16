@@ -22,7 +22,12 @@ works:
       corpus.
     completeness: >-
       10,552 of 10,552 attested mantras carry a canonical key and a canonical citation
-      (100.0%). 10,502 of 10,552 carry a translation (99.5%). No shortfall in addressing.
+      (100.0%). No shortfall in addressing. Translation coverage is four populations and
+      not one percentage: 10,479 verses carry an English rendering of their own (99.3%);
+      60 more are covered by a multi-verse print unit anchored on a neighbour, because
+      Griffith renders each pair of dvipada verses in RV 1.65-1.70 as one unit; 6 carry
+      his Latin rather than English, the passages he judged too explicit for an English
+      readership; and 7 are reached by no rendering at all.
     excluded_corpora:
       - SECOND_RIGVEDIC_RECENSION
       - RIGVEDIC_BRAHMANA
@@ -63,8 +68,11 @@ works:
       one are enumerated with causes: 2 running numbers the selected witness does not
       print, 9 verses in one Uttararcika dasati whose printed run is non-contiguous, and
       21 verses in four Uttararcika dasati groups where two witnesses disagree about the
-      partition. ZERO translations are released (0.0%) -- an SV zero in any
-      translation-derived layer is an absent layer, not an absent text.
+      partition. ZERO Samavedic translations are released (0.0%), and that is unchanged:
+      173 verses now show Griffith's Rigvedic English on text verified
+      character-identical, disclosed as a reused rendering and counted in no Samavedic
+      translation figure, and the remaining 1,671 are reached by nothing. An SV zero in
+      any translation-derived layer is an absent layer, not an absent text.
     excluded_corpora:
       - SAMAVEDA_GRAMAGEYA_GANA
       - SAMAVEDA_ARANYAKAGEYA_GANA
@@ -322,7 +330,10 @@ works:
       is also absent, as is the Satapatha Brahmana.
     completeness: >-
       1,975 of 1,975 attested mantras carry a canonical key and a canonical citation
-      (100.0%). 1,903 of 1,975 carry a translation (96.4%). No shortfall in addressing.
+      (100.0%). 1,939 of 1,975 carry a translation (98.2%), 36 of which were recovered by
+      forced address independently verified against Griffith's printed labels; three more
+      such addresses are withheld by owner decision. 36 verses are reached by no
+      rendering. No shortfall in addressing.
       Every one of this work's 2,240 seer attributions is source-stated rather than
       container-inherited, which is the opposite of the Atharvavedic pattern.
     excluded_corpora:
@@ -363,7 +374,12 @@ works:
       statement, so a per-verse Atharvavedic seer claim cannot be made from this corpus.
     completeness: >-
       5,839 mantras carry a canonical key and a canonical citation against an attested
-      total of approximately 5,977 (97.7%). 4,878 of 5,839 carry a translation (83.5%).
+      total of approximately 5,977 (97.7%). Translation coverage is four populations and
+      not one percentage: 5,715 verses carry an English rendering of their own (97.9%),
+      the Whitney/Lanman text extended over kanda 20 from Griffith's Atharvaveda, which
+      Whitney excluded; 68 more are covered by a multi-verse print unit; 21 show
+      Griffith's Rigvedic rendering of verified-identical text, disclosed as reuse; 18
+      carry his Latin rather than English; and 17 are reached by no rendering at all.
       The divergence from the attested total is OPEN_RESEARCH, attributed to
       edition-relative verse totals, with one candidate mechanism raised and falsified.
     excluded_corpora:

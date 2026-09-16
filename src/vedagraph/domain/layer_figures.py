@@ -54,9 +54,9 @@ CORPUS_MANTRAS: Final[dict[str, int]] = {
 #: whose only rendering is Griffith's Latin (:data:`NON_ENGLISH_MANTRAS`). Summing those
 #: into one percentage is what let the reader present all four as the same thing.
 DEDICATED_ENGLISH_MANTRAS: Final[dict[str, int]] = {
-    "RV": 10_472,
-    "AV": 4_878,
-    "YV": 1_903,
+    "RV": 10_479,
+    "AV": 5_715,
+    "YV": 1_939,
     "SV": 0,
 }
 
@@ -65,7 +65,7 @@ DEDICATED_ENGLISH_MANTRAS: Final[dict[str, int]] = {
 #: alone either.
 RANGE_COVERED_MANTRAS: Final[dict[str, int]] = {
     "RV": 60,
-    "AV": 0,
+    "AV": 68,
     "YV": 0,
     "SV": 0,
 }
@@ -76,17 +76,17 @@ RANGE_COVERED_MANTRAS: Final[dict[str, int]] = {
 #: reaches that corpus and it is Rigvedic.
 REUSED_RENDERING_MANTRAS: Final[dict[str, int]] = {
     "RV": 0,
-    "AV": 0,
+    "AV": 21,
     "YV": 0,
-    "SV": 0,
+    "SV": 173,
 }
 
 #: Verses whose only rendering is not in English. Griffith rendered passages he judged too
 #: explicit for an English readership into Latin; the literal is his real published text
 #: and it is not the English layer.
 NON_ENGLISH_MANTRAS: Final[dict[str, int]] = {
-    "RV": 0,
-    "AV": 0,
+    "RV": 6,
+    "AV": 18,
     "YV": 0,
     "SV": 0,
 }
