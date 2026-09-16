@@ -1,0 +1,74 @@
+{
+  "migration": "M7_RITUAL_STEP_PRODUCT_IDENTITY",
+  "at": "2026-09-16T04:44:42.829825+00:00",
+  "executed": false,
+  "backup": null,
+  "display_type": "RITUAL_STEP",
+  "grain": "RITE_SPECIFIC_OCCURRENCE",
+  "grain_evidence": "scripts/ritual_step_identity_probe.py",
+  "census_before": {
+    "nodes": 116825,
+    "relationships": 281290,
+    "core": {
+      "AV": 5839,
+      "RV": 10552,
+      "SV": 1844,
+      "YV": 1975
+    }
+  },
+  "census_after": {
+    "nodes": 116825,
+    "relationships": 281290,
+    "core": {
+      "AV": 5839,
+      "RV": 10552,
+      "SV": 1844,
+      "YV": 1975
+    }
+  },
+  "node_delta": 0,
+  "relationship_delta": 0,
+  "core_corpus_unchanged": true,
+  "nodes_written": 0,
+  "preconditions": {
+    "nodes": 3121,
+    "with_key": 3121,
+    "with_urn": 3121,
+    "with_uuid": 3121,
+    "distinct_keys": 3121,
+    "distinct_urns": 3121,
+    "distinct_uuids": 3121,
+    "already_typed": 0,
+    "missing_locator": 0,
+    "every_node_carries_a_key": true,
+    "every_node_carries_a_urn": true,
+    "every_node_carries_a_uuid": true,
+    "key_collisions": 0,
+    "urn_collisions": 0,
+    "uuid_collisions": 0,
+    "foreign_display_type": 0,
+    "ok": true
+  },
+  "postconditions": {
+    "nodes": 3121,
+    "with_key": 3121,
+    "with_urn": 3121,
+    "with_uuid": 3121,
+    "distinct_keys": 3121,
+    "distinct_urns": 3121,
+    "distinct_uuids": 3121,
+    "already_typed": 0,
+    "missing_locator": 0,
+    "every_node_carries_a_key": true,
+    "every_node_carries_a_urn": true,
+    "every_node_carries_a_uuid": true,
+    "key_collisions": 0,
+    "urn_collisions": 0,
+    "uuid_collisions": 0,
+    "foreign_display_type": 0,
+    "ok": true
+  },
+  "additive": true,
+  "complete": false,
+  "receipt_sha256": "3a6e82e703c7e311d30a4e2680983d12c0d4ea5498eb40104bf42635a325a8b1"
+}

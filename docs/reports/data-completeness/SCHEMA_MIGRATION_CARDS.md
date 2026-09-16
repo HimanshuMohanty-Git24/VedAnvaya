@@ -291,3 +291,74 @@ ROLLBACK_DEFINED = true · OLD_PREDICATE_MEANING_CHANGED = false
 
 **Pre-approved under owner decision 3**, because the flag that sent M6 back is now false and
 measured rather than argued.
+
+## M7 — `:RitualStep` product identity
+
+**Owner decision 2.** `HAS_RITUAL_STEP` may not become traversable until the step nodes carry
+a product identity that is deterministic, additive, and independent of display text and of
+`step_position`.
+
+**What this writes.** One property: `display_type = "RITUAL_STEP"` on 3,121 nodes. That is
+all. No node, relationship, label or key is created, moved or removed.
+
+**Why that is the whole migration.** The identity the owner asked for already exists. Wave 3
+staged every step with a `step_key`, a `canonical_urn` and a `uuid5` `entity_id`, and the
+graph holds all three on all 3,121 nodes. What it does not hold is `display_type`, which
+`PRODUCT_TYPE_BY_DISPLAY_TYPE` is keyed on and which every non-internal node in this graph is
+contracted to carry. That absence, not the identity, was the reason for the refusal.
+
+**Grain, measured rather than chosen.** `scripts/ritual_step_identity_probe.py` tested three
+candidate grains over the 3,123 importable rows:
+
+| grain | distinct values | values covering rows that **disagree** |
+|---|---:|---:|
+| `SOURCE_OCCURRENCE` (work + coordinate) | 2,767 | 308 |
+| `RITE_SPECIFIC_OCCURRENCE` (rite + work + coordinate) | 3,122 | 1 |
+| `POSITION_BASED` (rite + `step_position`) | 1,137 | 680 |
+
+A source-occurrence key would merge 308 identities standing for different claims, because one
+sutra is cited for several rites. A position-based key fails outright: `step_position`
+restarts at 1 inside every work, which is the same measurement that produced 2,666 (rite,
+position) collisions and forced the API to group procedure by source work. **The grain is
+`RITE_SPECIFIC_OCCURRENCE`**, and the staged `step_key` is already exactly that.
+
+**Identity rule.** Unchanged, and reproduced rather than redefined:
+
+```
+key   VG:RITESTEP:<rite>:<work>:<source coordinate>
+urn   urn:vedagraph:ritual-step:<rite>:<work>:<source coordinate>
+uuid  uuid5(7c8cde94-2bc0-50e2-8819-568ae65a3ec4, canonical_urn)
+```
+
+Verified over all 3,123 importable rows: `entity_id` equals `uuid5(namespace, canonical_urn)`
+for every one, so the same input reproduces the same identity byte for byte. No component is
+display text, normalizer output, or `step_position`, so the identity survives a relabelling, a
+transliteration change, a UI change and a reordering of artifact rows.
+
+**The one collision, and why it is not fixed here.** `VG:RITESTEP:VISVAJIT:SankhSS:16:15:13`
+covers two printed sutras — ordinals 4535 and 4536 — that the edition the staging read prints
+under a single citation. The locator cannot separate them. The pair is withheld from the
+graph and stays withheld; the graph holds 0 key, URN and UUID collisions. The only available
+discriminator is `printed_ordinal_in_work`, and putting it in the key would change all 3,121
+existing identities to accommodate one row. Recorded as a gap against the artifact's locator
+extraction instead.
+
+**Backward compatibility.** `HAS_STEP` is untouched and still means what it meant: 3 edges,
+the Samhita's own numbering. The two step layers stay distinct in the graph and in the API.
+No existing property is overwritten — the migration writes only where `display_type` is null
+and refuses to run if any node carries a different one.
+
+**Rollback.** `MATCH (s:RitualStep) REMOVE s.display_type, s.m7_applied`. Nothing else to
+undo, and the verified dump covers it regardless.
+
+**Migration test.** `scripts/m7_ritual_step_product_identity.py` asserts, before writing, that
+every node carries all three identity components, that key, URN and UUID collisions are each
+0, that no node lacks a source locator, and that no node already carries a foreign
+`display_type`; and after writing, that the node and relationship deltas are both 0 and the
+four corpus totals have not moved. `tests/api/test_graph.py` asserts the traversal returns a
+stable product id.
+
+```
+ADDITIVE = true · DETERMINISTIC_IDENTITY = true · BACKWARD_COMPATIBLE = true
+ROLLBACK_DEFINED = true · OLD_PREDICATE_MEANING_CHANGED = false
+```
