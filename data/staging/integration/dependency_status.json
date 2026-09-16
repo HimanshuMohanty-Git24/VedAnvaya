@@ -1,6 +1,6 @@
 {
   "artifact": "DEPENDENCY_STATUS",
-  "at": "2026-09-16T06:40:48.330442+00:00",
+  "at": "2026-09-16T07:01:09.542877+00:00",
   "graph_census": {
     "nodes": 116838,
     "relationships": 281290
@@ -79,34 +79,23 @@
       "reason": null,
       "output_file": "docs/reports/GRAPH_QUALITY_V2_SCORECARD.md",
       "output_hash": "cf389cf9ccb2f6f425ca76fa23ff55b29d09bd4472f42547c7147b85b191ceb0",
-      "built_at": "2026-09-16T06:06:24.338565+00:00",
+      "built_at": "2026-09-16T07:01:01.978614+00:00",
       "rebuilt_by": "scripts/graph_quality_scorecard.py",
-      "current_input_digest": "0ec30e282f3d947dd3230ca8ed873db3157ea9b2551f0c795e46863f36b7c5cd",
-      "recorded_input_digest": "0ec30e282f3d947dd3230ca8ed873db3157ea9b2551f0c795e46863f36b7c5cd"
+      "current_input_digest": "80f34c13361e0f9af03e7e23448e02732de8445a70ea304d1f48f2f9dead61d4",
+      "recorded_input_digest": "80f34c13361e0f9af03e7e23448e02732de8445a70ea304d1f48f2f9dead61d4"
     },
     {
       "consumer": "Ask retrieval",
-      "status": "STALE_INPUT",
+      "status": "BLOCKED",
       "declared_inputs": 10,
-      "inputs_that_moved": [
-        "file:data/gold/ask_benchmark_v1.jsonl",
-        "label:Concept",
-        "label:Devata",
-        "label:Mantra",
-        "label:Passage",
-        "label:Translation",
-        "type:ABOUT_CONCEPT",
-        "type:HAS_DEVATA",
-        "type:HAS_TRANSLATION",
-        "type:MENTIONS_ENTITY"
-      ],
-      "reason": "never built",
+      "inputs_that_moved": [],
+      "reason": "ASK_FORMAL_REGRADE_BLOCKED_EXTERNAL_PROVIDER. The graded run reached 31 of 60 and stopped at Q32 with vedagraph.llm.errors.LLMResponseError: Unexpected error (APIConnectionError) from the OpenRouter provider -- a transient upstream failure, not quota exhaustion. Run identity is commit-keyed, so the 31 answers cannot be resumed from a later commit: a fresh run is needed. On the 31 answered: 115 citations, 0 invented citations surviving, 2 uncited answers (Q05, Q20), 4 safety probes fired and all 4 correctly refused their false premise. MISLEADING and HALLUCINATED are adjudicated by reading and cannot be certified from a partial run, so misleading=0 is NOT claimed.",
       "output_file": null,
       "output_hash": null,
-      "built_at": null,
+      "built_at": "2026-09-16T07:00:23.054405+00:00",
       "rebuilt_by": "the search index build, then scripts/run_ask_benchmark.py to re-grade",
       "current_input_digest": "1d6bd21c84f8ecca59befc49b655ac072219cc231651039e2ac659a5ad620eb4",
-      "recorded_input_digest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      "recorded_input_digest": "1d6bd21c84f8ecca59befc49b655ac072219cc231651039e2ac659a5ad620eb4"
     },
     {
       "consumer": "Visualization Lab aggregates",
@@ -137,8 +126,8 @@
   ],
   "counts": {
     "CURRENT": 6,
-    "STALE_INPUT": 1,
-    "BLOCKED": 1,
+    "STALE_INPUT": 0,
+    "BLOCKED": 2,
     "NOT_APPLICABLE": 1
   },
   "model": "Content-addressed. Each declared input -- graph label, graph predicate, file, builder source -- is hashed separately, so a STALE_INPUT report names which one moved. Label and predicate fingerprints digest sorted identity keys and endpoint pairs rather than counting, because a count is unchanged by a swap of equal size. built_at is metadata and is never read when deciding status.",

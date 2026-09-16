@@ -17,7 +17,7 @@ mutation.** Wave 4 has not started.
 | `attribution_import.py --readback` | `READBACK_CLEAN`, 0 findings |
 | `graph_quality_scorecard.py` | **9 of 9**, two of them previously unable to fail |
 | `pytest tests/api` | **1,372 passed** |
-| `pytest tests/unit` | **1,145 passed**, 41 skipped |
+| `pytest tests/unit` | **1,147 passed**, 41 skipped |
 | `pnpm test` | **434 passed** |
 
 ## Canonical graph
@@ -53,15 +53,17 @@ edges, whose constants sat in the ontology under the comment *"listed so the clo
 is complete"* and reached no declared set. Now: declared 90 · populated 76 · **undeclared 0**
 · declared-but-unused 14 · system exceptions 0.
 
-The signature gate was widened with them. It iterated `RELATIONSHIP_SIGNATURES` only, so
-those 18 predicates — **141,264 edges** — had their endpoints checked by nothing.
+The signature gate was widened with them, then again: `all_endpoint_signatures()` composes
+all three declaring layers. It had iterated `RELATIONSHIP_SIGNATURES` only, so 18 predicates
+carrying **141,264 edges** had their endpoints checked by nothing. Coverage is now 63 of 76
+populated predicates, and the uncovered 15 are pinned as an exact set.
 
 **Dependency staleness.** Counts are unchanged by a swap of equal size, so labels now digest
 sorted identity keys and predicates sorted endpoint pairs; declared **file** inputs and the
 **builder's** own source are inputs too. `built_at` is metadata, and a test greps
 `classify()` for `built_at`, `wave3_` and `datetime.now`.
 
-**40 tests**, including one that reconstructs the original tautology and shows it reports
+**42 tests**, including one that reconstructs the original tautology and shows it reports
 nothing for the very input the repaired gate catches.
 
 ### The label leak was live
@@ -113,13 +115,13 @@ labels of 486.
 
 ## Dependents
 
-`scripts/dependency_state.py --status` — **6 CURRENT · 1 STALE_INPUT · 1 BLOCKED · 1
+`scripts/dependency_state.py --status` — **6 CURRENT · 0 STALE_INPUT · 2 BLOCKED · 1
 NOT_APPLICABLE · 0 unexplained**.
 
 CURRENT: cross-Veda matrices · formula relations · entity coverage · quality evaluation ·
 Visualization Lab · Knowledge World. `ritual aggregates` is NOT_APPLICABLE (no artifact
-exists). `semantic resemblance` is BLOCKED (re-derivation, not rebuild). `Ask retrieval` is
-STALE until its graded run completes.
+exists). `semantic resemblance` and `Ask retrieval` are BLOCKED, each with a concrete
+blocker recorded in the ledger.
 
 ## Blocking
 
@@ -130,17 +132,27 @@ STALE until its graded run completes.
 3. **Semantic resemblance needs an embedding runtime** in the checkout plus adjudication
    capacity for the 162 unadjudicated gold pairs. The control's AUC 0.754 is the baseline any
    candidate must beat.
-4. **The 1,021 audible reviews.** 0 heard. Parallel track; blocks nothing here.
+4. **The Ask formal regrade is incomplete.** The run reached 31 of 60 and stopped at Q32
+   with an `APIConnectionError` from the provider — transient, not quota. Run identity is
+   commit-keyed so the 31 cannot be resumed from a later commit; a fresh run is needed. On
+   the 31: 115 citations, **0 invented citations surviving**, 2 uncited answers (Q05, Q20), 4
+   safety probes fired and all four correctly refused their false premise. `MISLEADING` is
+   adjudicated by reading, so **misleading = 0 is not claimed**.
+5. **`GAP-SEMANTIC-SIGNATURE-COVERAGE-001`** — 15 declared predicates, the model-extracted
+   semantic layer plus `QA_ISSUE_ON`, have no endpoint signature. Pinned as an exact set so
+   the population cannot grow.
+6. **The 1,021 audible reviews.** 0 heard. Parallel track; blocks nothing here.
 
 ## Registry
 
-`data/gap_registry.json` — **84 gaps**. One opened this round,
-`GAP-AV-CHANDOMETRE-SEGMENTATION-001`, `MEASURED`, produced by a resolution attempt that
-tried to falsify its own result.
+`data/gap_registry.json` — **85 gaps**. Two opened this round,
+`GAP-AV-CHANDOMETRE-SEGMENTATION-001` and `GAP-SEMANTIC-SIGNATURE-COVERAGE-001`, both
+`MEASURED` and both produced by a check that tried to falsify its own result.
 
 ## Artifacts
 
 In `data/staging/integration/`: `whitney_resolution.json`, `semantic_rederivation.json`,
+`declaration_provenance.json`,
 `m8_internal_boundary_receipt.json`, `dependency_ledger.json`, `dependency_status.json`,
 `corpus_deletion_audit.json`, `ritual_step_identity_probe.json`,
 `m7_ritual_step_identity_receipt.json`, `attribution_gate_b.json`,

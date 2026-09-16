@@ -70,9 +70,9 @@
       "label:QualityVerdict": "n=2568;keyless=0;keys=a5c86f381d9a071f796af09129c4d1f378658c95df8c702345036780301a3b30",
       "type:QA_ISSUE_ON": "n=915;unnamed=915;pairs=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "type:QUALITY_VERDICT_ABOUT": "n=2568;unnamed=0;pairs=81b929c8b243d02d718fa8b26866b0a9a63b7aff37bd4bd8f47df6cb0b3b281c",
-      "builder:scripts/graph_quality_scorecard.py": "0e43073e187f1cbd3e0570bf6f89718f738aedefad748cfd320048fafa11059e"
+      "builder:scripts/graph_quality_scorecard.py": "76fd47c8b4a10e509326cd85cfc79119ec471995292b6e77c995b7544cd8b913"
     },
-    "built_at": "2026-09-16T06:06:24.338565+00:00",
+    "built_at": "2026-09-16T07:01:01.978614+00:00",
     "graph_census": {
       "nodes": 116838,
       "relationships": 281290
@@ -165,5 +165,26 @@
       "relationships": 281290
     },
     "blocked_reason": "Requires re-derivation from the final canonical snapshot, not a rebuild: the staged artifact is pre-Wave-3 semantic-resemblance-hybrid-v2 and owner section 5 bars importing an old score artifact. See PHASE E in the round-four report for the refusal and its evidence."
+  },
+  "Ask retrieval": {
+    "consumer": "Ask retrieval",
+    "input_hashes": {
+      "label:Concept": "n=375;keyless=0;keys=dceeb64027c86c4fe9f1f5db531cfa94361458b2b8b78b21b7a3933d111fc83c",
+      "label:Devata": "n=214;keyless=0;keys=2c4a14b6bf91f0806acbb0870661713c886928d869db02685e6f05dd38a2f8f4",
+      "label:Mantra": "n=20210;keyless=0;keys=a83c3a79343bf58135f64d89d8c1befe87455f09765662257388aac6507523a6",
+      "label:Passage": "n=22537;keyless=0;keys=39a13384921e22b23f9cd72bd9b4b26b462b22a089de2a09f6b2f6ecfb2eaaf7",
+      "label:Translation": "n=17283;keyless=17283;keys=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "type:ABOUT_CONCEPT": "n=24861;unnamed=0;pairs=499c5d65713399051f8903e60791ef04e3c2bd911d799cd6eff0892d7bd89999",
+      "type:HAS_DEVATA": "n=10558;unnamed=0;pairs=8e4eea692c244357e1b3bdd2106719549f5a37430fa668977c59636ac0fedde8",
+      "type:HAS_TRANSLATION": "n=17283;unnamed=17283;pairs=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "type:MENTIONS_ENTITY": "n=28110;unnamed=0;pairs=2c66d80eada586d6f80aa587673228c4b7c02cc05dbba7200fceb174fa6afa62",
+      "file:data/gold/ask_benchmark_v1.jsonl": "bdeb057586b2f0df25cef1dba4a0f309c9b329bbfe7d1080539bdc2bde3be9a5"
+    },
+    "built_at": "2026-09-16T07:00:23.054405+00:00",
+    "graph_census": {
+      "nodes": 116838,
+      "relationships": 281290
+    },
+    "blocked_reason": "ASK_FORMAL_REGRADE_BLOCKED_EXTERNAL_PROVIDER. The graded run reached 31 of 60 and stopped at Q32 with vedagraph.llm.errors.LLMResponseError: Unexpected error (APIConnectionError) from the OpenRouter provider -- a transient upstream failure, not quota exhaustion. Run identity is commit-keyed, so the 31 answers cannot be resumed from a later commit: a fresh run is needed. On the 31 answered: 115 citations, 0 invented citations surviving, 2 uncited answers (Q05, Q20), 4 safety probes fired and all 4 correctly refused their false premise. MISLEADING and HALLUCINATED are adjudicated by reading and cannot be certified from a partial run, so misleading=0 is NOT claimed."
   }
 }
