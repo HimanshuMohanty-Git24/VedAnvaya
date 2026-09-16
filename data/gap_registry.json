@@ -3405,15 +3405,15 @@
       "evidence": "Of the 541 AV_WHITNEY_ANUKRAMANI :Chandas entities, a number are unsegmented fragments of Whitney's printed bracket rather than metre names -- 'aindryas. anustubham: 2. 3-av. 6-p. jagati' carries a deity, a metre and a per-verse exception in one string. 33 canonical HAS_CHANDAS edges already point at such entities. Three tests were written to bound the population and they disagree: 17 by Whitney's colon, 28 by colon-or-embedded-verse-reference, 39 by a two-statement test. Probe: scripts/whitney_resolution.py, section target_vocabulary_audit.",
       "classification": "STAGING_DEFECT",
       "description": "The AV chandas registry's segmentation of Whitney's bracket is incomplete, so some entities are compound statements promoted to metre identities. The graph already holds 33 metre assertions whose object is such a fragment, which means a reader asking a verse's metre can be told a string containing a deity name. The population cannot be bounded mechanically: separating a deity adjective from a metre name inside these strings is philological adjudication, and every heuristic written to approximate it gives a different answer.",
-      "current_count": 33,
+      "current_count": 0,
       "expected_population": 541,
       "missing_count": 0,
-      "status": "OPEN",
+      "status": "PARTIALLY_ADDRESSED",
       "causation_status": "MEASURED",
       "root_cause": "INCOMPLETE_SOURCE_BRACKET_SEGMENTATION",
       "measured_root_cause": "scripts/build_anukramani_knowledge_layer.py records the index's own strings and folds spelling variants, but does not split a bracket segment into its deity, metre and per-verse exception parts. Where the segment was already one metre name the result is correct, which is why the defect is partial and was not noticed.",
       "closure_method": "Re-segment the bracket in the registry builder, which re-identifies the affected entities -- an owner decision, not a cleanup rule -- or model the compound strings as source evidence rather than as :Chandas identities.",
-      "closure_test": "No :Chandas entity's preferred_label holds more than one statement of Whitney's notation, and 0 HAS_CHANDAS edges point at one that does. Read back from canonical Neo4j.",
+      "closure_test": "tests/api/test_chandas_integrity.py holds the assertion side: no HAS_CHANDAS edge points at a label containing a colon or an embedded verse reference. Full closure additionally requires that no :Chandas preferred_label holds more than one statement of Whitney's notation.",
       "owner_agent": "attribution",
       "source_availability": "SOURCE_HELD",
       "source_dependency": "none -- the bracket is already transcribed",
@@ -3423,7 +3423,301 @@
       ],
       "observed_gap": "33 metre assertions whose object is not a metre",
       "initial_hypothesis": "the Whitney 466 were unimportable only because nothing had resolved their objects to entities",
-      "initial_hypothesis_status": "PARTLY DISPROVED. A permitted resolution channel exists and works -- the registry's own source_variants resolve 405 of 477 proposals with zero ambiguity -- but the vocabulary it resolves into is contaminated, so the rows stay withheld for a different and stronger reason than 'no evidence'."
+      "initial_hypothesis_status": "PARTLY DISPROVED. A permitted resolution channel exists and works -- the registry's own source_variants resolve 405 of 477 proposals with zero ambiguity -- but the vocabulary it resolves into is contaminated, so the rows stay withheld for a different and stronger reason than 'no evidence'.",
+      "outcome": {
+        "authorised_by": "owner round four, item 1 -- targeted correction",
+        "migration": "M9_MALFORMED_CHANDAS_WITHDRAWAL",
+        "assertions_withdrawn": 33,
+        "distinct_chandas_entities": 28,
+        "passages_affected": 33,
+        "passages_keeping_a_well_formed_metre_edge": 17,
+        "passages_left_with_no_metre_edge": 16,
+        "replacements_created": 0,
+        "why_no_replacement": "Every metre assertion for these passages traces to WIKISOURCE_WHITNEY_AV, the source whose segmentation is the defect. Building a replacement would mean reading the metre out of the mixed string, which the owner barred -- and on K03:S003:V005 it would also be wrong, because the '6.' in '6. anustubh' addresses verse 6 while the edge sits on verse 5.",
+        "chandas_entity_population_unchanged": true,
+        "has_chandas_before": 16331,
+        "has_chandas_after": 16298,
+        "literal_and_provenance_preserved_on": [
+          "chandas_withheld_literal",
+          "chandas_withheld_entity_key",
+          "chandas_withheld_scope_origin",
+          "chandas_withheld_source_id",
+          "chandas_withheld_signals",
+          "chandas_withheld_reason",
+          "chandas_withheld_gap"
+        ],
+        "regression_tests": "tests/api/test_chandas_integrity.py",
+        "receipt": "data/staging/integration/m9_receipt.json",
+        "readback": "data/staging/integration/m9_readback.json",
+        "backup_taken_before": "D:/vedanvaya-backups/round4-pre-m9-20260916T124347/neo4j.dump"
+      },
+      "affected_ids": [
+        {
+          "passage": "VG:AV:SAU:K02:S016:V004",
+          "chandas_entity": "VG:CHANDAS:AV:5-2-P-ASURI-GAYATRI-65E4",
+          "printed_literal": "5. 2-p. āsurī gāyatrī",
+          "original_scope": "SINGLE_MANTRA",
+          "signals": "EMBEDDED_VERSE_REFERENCE",
+          "outcome": "ASSERTION_WITHDRAWN_LITERAL_PRESERVED"
+        },
+        {
+          "passage": "VG:AV:SAU:K03:S003:V005",
+          "chandas_entity": "VG:CHANDAS:AV:6-ANUSTUBH-E1BD",
+          "printed_literal": "6. anuṣṭubh",
+          "original_scope": "SINGLE_MANTRA",
+          "signals": "EMBEDDED_VERSE_REFERENCE",
+          "outcome": "ASSERTION_WITHDRAWN_LITERAL_PRESERVED"
+        },
+        {
+          "passage": "VG:AV:SAU:K03:S029:V008",
+          "chandas_entity": "VG:CHANDAS:AV:BHAUMI-ANUSTUBHAM-1-3-PATHYAPANKTI-3126",
+          "printed_literal": "bhāumī. ānuṣṭubham: 1, 3. pathyāpan̄kti",
+          "original_scope": "SINGLE_MANTRA",
+          "signals": "COLON_SEPARATES_HYMN_STATEMENT_FROM_VERSE_EXCEPTIONS,EMBEDDED_VERSE_REFERENCE",
+          "outcome": "ASSERTION_WITHDRAWN_LITERAL_PRESERVED"
+        },
+        {
+          "passage": "VG:AV:SAU:K05:S003:V008",
+          "chandas_entity": "VG:CHANDAS:AV:AINDRI-TRAISTUBHAM-2-BHURIJ-E5EA",
+          "printed_literal": "āindrī. trāiṣṭubham: 2. bhurij",
+          "original_scope": "SINGLE_MANTRA",
+          "signals": "COLON_SEPARATES_HYMN_STATEMENT_FROM_VERSE_EXCEPTIONS,EMBEDDED_VERSE_REFERENCE",
+          "outcome": "ASSERTION_WITHDRAWN_LITERAL_PRESERVED"
+        },
+        {
+          "passage": "VG:AV:SAU:K05:S003:V011",
+          "chandas_entity": "VG:CHANDAS:AV:AINDRI-TRAISTUBHAM-2-BHURIJ-E5EA",
+          "printed_literal": "āindrī. trāiṣṭubham: 2. bhurij",
+          "original_scope": "SINGLE_MANTRA",
+          "signals": "COLON_SEPARATES_HYMN_STATEMENT_FROM_VERSE_EXCEPTIONS,EMBEDDED_VERSE_REFERENCE",
+          "outcome": "ASSERTION_WITHDRAWN_LITERAL_PRESERVED"
+        },
+        {
+          "passage": "VG:AV:SAU:K05:S006",
+          "chandas_entity": "VG:CHANDAS:AV:SARVATMAKAM-RUDRAM-TRAISTUBHAM-2-ANUSTUBH-B201",
+          "printed_literal": "sarvātmakaṁ rudram. trāiṣṭubham: 2. anuṣṭubh",
+          "original_scope": "MANTRA_RANGE",
+          "signals": "COLON_SEPARATES_HYMN_STATEMENT_FROM_VERSE_EXCEPTIONS,EMBEDDED_VERSE_REFERENCE",
+          "outcome": "ASSERTION_WITHDRAWN_LITERAL_PRESERVED"
+        },
+        {
+          "passage": "VG:AV:SAU:K05:S008",
+          "chandas_entity": "VG:CHANDAS:AV:AINDRYAS-ANUSTUBHAM-2-3-AV-6-P-JAGATI-1341",
+          "printed_literal": "āindryas. ānuṣṭubham: 2. 3-av. 6-p. jagatī",
+          "original_scope": "MANTRA_RANGE",
+          "signals": "COLON_SEPARATES_HYMN_STATEMENT_FROM_VERSE_EXCEPTIONS,EMBEDDED_VERSE_REFERENCE",
+          "outcome": "ASSERTION_WITHDRAWN_LITERAL_PRESERVED"
+        },
+        {
+          "passage": "VG:AV:SAU:K05:S026:V009",
+          "chandas_entity": "VG:CHANDAS:AV:3-P-PIPILIKAMADHYA-PURAUSNIH-1-11-EKAVASANA-2657",
+          "printed_literal": "3-p. pipīlikamadhyā purauṣṇih: 1-11. ekāvasāna",
+          "original_scope": "SINGLE_MANTRA",
+          "signals": "COLON_SEPARATES_HYMN_STATEMENT_FROM_VERSE_EXCEPTIONS",
+          "outcome": "ASSERTION_WITHDRAWN_LITERAL_PRESERVED"
+        },
+        {
+          "passage": "VG:AV:SAU:K06:S010:V001",
+          "chandas_entity": "VG:CHANDAS:AV:AGNEYI-2-VAYAVYA-3-SAURYA-1-SAMNI-TRISTUBH-2-PRAJAPATYA-BRHATI-3-SAMNI-BRHATI-48A1",
+          "printed_literal": "āgneyī, 2. vāyavyā, 3. sāuryā. 1. sāmnī triṣṭubh, 2. prājāpatyā bṛhatī, 3. sāmnī bṛhatī",
+          "original_scope": "SINGLE_MANTRA",
+          "signals": "EMBEDDED_VERSE_REFERENCE",
+          "outcome": "ASSERTION_WITHDRAWN_LITERAL_PRESERVED"
+        },
+        {
+          "passage": "VG:AV:SAU:K06:S040",
+          "chandas_entity": "VG:CHANDAS:AV:MANTROKTADEVATYE-JAGATYAU-3-AINDRI-ANUSTUBH-9752",
+          "printed_literal": "mantroktadevatye. jagatyāu. 3. āindrī. anuṣṭubh",
+          "original_scope": "MANTRA_RANGE",
+          "signals": "EMBEDDED_VERSE_REFERENCE",
+          "outcome": "ASSERTION_WITHDRAWN_LITERAL_PRESERVED"
+        },
+        {
+          "passage": "VG:AV:SAU:K06:S042:V001",
+          "chandas_entity": "VG:CHANDAS:AV:2-BHURIJ-BCC4",
+          "printed_literal": "2. bhurij",
+          "original_scope": "SINGLE_MANTRA",
+          "signals": "EMBEDDED_VERSE_REFERENCE",
+          "outcome": "ASSERTION_WITHDRAWN_LITERAL_PRESERVED"
+        },
+        {
+          "passage": "VG:AV:SAU:K06:S051:V003",
+          "chandas_entity": "VG:CHANDAS:AV:VARUNASTUTI-TRAISTUBHAM-1-GAYATRI-4B5D",
+          "printed_literal": "varuṇastuti. trāiṣṭubham: 1. gāyatrī",
+          "original_scope": "SINGLE_MANTRA",
+          "signals": "COLON_SEPARATES_HYMN_STATEMENT_FROM_VERSE_EXCEPTIONS,EMBEDDED_VERSE_REFERENCE",
+          "outcome": "ASSERTION_WITHDRAWN_LITERAL_PRESERVED"
+        },
+        {
+          "passage": "VG:AV:SAU:K06:S055:V002",
+          "chandas_entity": "VG:CHANDAS:AV:RAUDRYAU-2-TRISTUBH-AC19",
+          "printed_literal": "rāudryāu: 2. triṣṭubh",
+          "original_scope": "SINGLE_MANTRA",
+          "signals": "COLON_SEPARATES_HYMN_STATEMENT_FROM_VERSE_EXCEPTIONS,EMBEDDED_VERSE_REFERENCE",
+          "outcome": "ASSERTION_WITHDRAWN_LITERAL_PRESERVED"
+        },
+        {
+          "passage": "VG:AV:SAU:K06:S055:V003",
+          "chandas_entity": "VG:CHANDAS:AV:RAUDRYAU-2-TRISTUBH-AC19",
+          "printed_literal": "rāudryāu: 2. triṣṭubh",
+          "original_scope": "SINGLE_MANTRA",
+          "signals": "COLON_SEPARATES_HYMN_STATEMENT_FROM_VERSE_EXCEPTIONS,EMBEDDED_VERSE_REFERENCE",
+          "outcome": "ASSERTION_WITHDRAWN_LITERAL_PRESERVED"
+        },
+        {
+          "passage": "VG:AV:SAU:K06:S056:V002",
+          "chandas_entity": "VG:CHANDAS:AV:RAUDRYAU-2-ANUSTUBH-7C91",
+          "printed_literal": "rāudryāu: 2. anuṣṭubh",
+          "original_scope": "SINGLE_MANTRA",
+          "signals": "COLON_SEPARATES_HYMN_STATEMENT_FROM_VERSE_EXCEPTIONS,EMBEDDED_VERSE_REFERENCE",
+          "outcome": "ASSERTION_WITHDRAWN_LITERAL_PRESERVED"
+        },
+        {
+          "passage": "VG:AV:SAU:K06:S056:V003",
+          "chandas_entity": "VG:CHANDAS:AV:RAUDRYAU-2-ANUSTUBH-7C91",
+          "printed_literal": "rāudryāu: 2. anuṣṭubh",
+          "original_scope": "SINGLE_MANTRA",
+          "signals": "COLON_SEPARATES_HYMN_STATEMENT_FROM_VERSE_EXCEPTIONS,EMBEDDED_VERSE_REFERENCE",
+          "outcome": "ASSERTION_WITHDRAWN_LITERAL_PRESERVED"
+        },
+        {
+          "passage": "VG:AV:SAU:K06:S063:V004",
+          "chandas_entity": "VG:CHANDAS:AV:AGNEYI-JAGATAM-1-ATIJAGATIGARBHA-900C",
+          "printed_literal": "āgneyī. jāgatam: 1. atijagatīgarbhā",
+          "original_scope": "SINGLE_MANTRA",
+          "signals": "COLON_SEPARATES_HYMN_STATEMENT_FROM_VERSE_EXCEPTIONS,EMBEDDED_VERSE_REFERENCE",
+          "outcome": "ASSERTION_WITHDRAWN_LITERAL_PRESERVED"
+        },
+        {
+          "passage": "VG:AV:SAU:K06:S071:V003",
+          "chandas_entity": "VG:CHANDAS:AV:VAICVADEVI-JAGATYAM-3-TRISTUBH-5A74",
+          "printed_literal": "vāiçvadevī. jāgatyam: 3. triṣṭubh",
+          "original_scope": "SINGLE_MANTRA",
+          "signals": "COLON_SEPARATES_HYMN_STATEMENT_FROM_VERSE_EXCEPTIONS,EMBEDDED_VERSE_REFERENCE",
+          "outcome": "ASSERTION_WITHDRAWN_LITERAL_PRESERVED"
+        },
+        {
+          "passage": "VG:AV:SAU:K06:S096:V003",
+          "chandas_entity": "VG:CHANDAS:AV:SAUMYA-ANUSTUBHAM-3-3-P-VIRAN-NAMA-GAYATRI-1454",
+          "printed_literal": "sāumyā. ānuṣṭubham: 3. 3-p. virāṇ nāma gāyatrī",
+          "original_scope": "SINGLE_MANTRA",
+          "signals": "COLON_SEPARATES_HYMN_STATEMENT_FROM_VERSE_EXCEPTIONS,EMBEDDED_VERSE_REFERENCE",
+          "outcome": "ASSERTION_WITHDRAWN_LITERAL_PRESERVED"
+        },
+        {
+          "passage": "VG:AV:SAU:K06:S099:V003",
+          "chandas_entity": "VG:CHANDAS:AV:SAUMYA-SAVITRI-CA-ANUSTUBHAM-3-BHURIG-BRHATI-7B05",
+          "printed_literal": "sāumyā sāvitrī ca. ānuṣṭubham: 3. bhurig bṛhatī",
+          "original_scope": "SINGLE_MANTRA",
+          "signals": "COLON_SEPARATES_HYMN_STATEMENT_FROM_VERSE_EXCEPTIONS,EMBEDDED_VERSE_REFERENCE",
+          "outcome": "ASSERTION_WITHDRAWN_LITERAL_PRESERVED"
+        },
+        {
+          "passage": "VG:AV:SAU:K06:S122:V004",
+          "chandas_entity": "VG:CHANDAS:AV:5-JAGATI-1789",
+          "printed_literal": "5. jagatī",
+          "original_scope": "SINGLE_MANTRA",
+          "signals": "EMBEDDED_VERSE_REFERENCE",
+          "outcome": "ASSERTION_WITHDRAWN_LITERAL_PRESERVED"
+        },
+        {
+          "passage": "VG:AV:SAU:K07:S012:V004",
+          "chandas_entity": "VG:CHANDAS:AV:MANTROKTADEVATYA-ANUSTUBHAM-1-BHURIK-TRISTUBH-D1B1",
+          "printed_literal": "mantroktadevatyā. anuṣṭubham: 1. bhurik triṣṭubh",
+          "original_scope": "SINGLE_MANTRA",
+          "signals": "COLON_SEPARATES_HYMN_STATEMENT_FROM_VERSE_EXCEPTIONS,EMBEDDED_VERSE_REFERENCE",
+          "outcome": "ASSERTION_WITHDRAWN_LITERAL_PRESERVED"
+        },
+        {
+          "passage": "VG:AV:SAU:K07:S056:V004",
+          "chandas_entity": "VG:CHANDAS:AV:BRAHMANASPATYA-ANUSTUBHAM-4-VIRATPRASTARAPANKTI-5B81",
+          "printed_literal": "brāhmaṇaspatyā. ānuṣṭubham: 4. virāṭprastārapan̄kti",
+          "original_scope": "SINGLE_MANTRA",
+          "signals": "COLON_SEPARATES_HYMN_STATEMENT_FROM_VERSE_EXCEPTIONS,EMBEDDED_VERSE_REFERENCE",
+          "outcome": "ASSERTION_WITHDRAWN_LITERAL_PRESERVED"
+        },
+        {
+          "passage": "VG:AV:SAU:K07:S080:V003",
+          "chandas_entity": "VG:CHANDAS:AV:PRAJAPATYA-TRAISTUBHAM-2-ANUSTUBH-6B49",
+          "printed_literal": "prājāpatyā. trāiṣṭubham: 2. anuṣṭubh",
+          "original_scope": "SINGLE_MANTRA",
+          "signals": "COLON_SEPARATES_HYMN_STATEMENT_FROM_VERSE_EXCEPTIONS,EMBEDDED_VERSE_REFERENCE",
+          "outcome": "ASSERTION_WITHDRAWN_LITERAL_PRESERVED"
+        },
+        {
+          "passage": "VG:AV:SAU:K07:S084:V001",
+          "chandas_entity": "VG:CHANDAS:AV:AGNEYI-TRAISTUBHAM-1-JAGATI-F59B",
+          "printed_literal": "āgneyī. trāiṣṭubham: 1. jagatī",
+          "original_scope": "SINGLE_MANTRA",
+          "signals": "COLON_SEPARATES_HYMN_STATEMENT_FROM_VERSE_EXCEPTIONS,EMBEDDED_VERSE_REFERENCE",
+          "outcome": "ASSERTION_WITHDRAWN_LITERAL_PRESERVED"
+        },
+        {
+          "passage": "VG:AV:SAU:K12:S001:V022",
+          "chandas_entity": "VG:CHANDAS:AV:3-AV-6-P-VIRAD-ATIJAGATI-24-5-P-VIRAD-ATIJAGATI-D77A",
+          "printed_literal": "3-av. 6-p. virāḍ atijagatī: 24. 5-p. virāḍ atijagatī",
+          "original_scope": "SINGLE_MANTRA",
+          "signals": "COLON_SEPARATES_HYMN_STATEMENT_FROM_VERSE_EXCEPTIONS,EMBEDDED_VERSE_REFERENCE",
+          "outcome": "ASSERTION_WITHDRAWN_LITERAL_PRESERVED"
+        },
+        {
+          "passage": "VG:AV:SAU:K16:S009:V003",
+          "chandas_entity": "VG:CHANDAS:AV:SAURYE-1-ARCY-ANUSTUBH-C81A",
+          "printed_literal": "sāurye. 1. ārcy anuṣṭubh",
+          "original_scope": "SINGLE_MANTRA",
+          "signals": "EMBEDDED_VERSE_REFERENCE",
+          "outcome": "ASSERTION_WITHDRAWN_LITERAL_PRESERVED"
+        },
+        {
+          "passage": "VG:AV:SAU:K16:S009:V004",
+          "chandas_entity": "VG:CHANDAS:AV:SAURYE-1-ARCY-ANUSTUBH-C81A",
+          "printed_literal": "sāurye. 1. ārcy anuṣṭubh",
+          "original_scope": "SINGLE_MANTRA",
+          "signals": "EMBEDDED_VERSE_REFERENCE",
+          "outcome": "ASSERTION_WITHDRAWN_LITERAL_PRESERVED"
+        },
+        {
+          "passage": "VG:AV:SAU:K19:S015:V005",
+          "chandas_entity": "VG:CHANDAS:AV:MANTROKTABAHUDEVATYAM-1-PATHYABRHATI-F814",
+          "printed_literal": "mantroktabahudevatyam. 1. pathyābṛhatī",
+          "original_scope": "SINGLE_MANTRA",
+          "signals": "EMBEDDED_VERSE_REFERENCE",
+          "outcome": "ASSERTION_WITHDRAWN_LITERAL_PRESERVED"
+        },
+        {
+          "passage": "VG:AV:SAU:K19:S015:V006",
+          "chandas_entity": "VG:CHANDAS:AV:MANTROKTABAHUDEVATYAM-1-PATHYABRHATI-F814",
+          "printed_literal": "mantroktabahudevatyam. 1. pathyābṛhatī",
+          "original_scope": "SINGLE_MANTRA",
+          "signals": "EMBEDDED_VERSE_REFERENCE",
+          "outcome": "ASSERTION_WITHDRAWN_LITERAL_PRESERVED"
+        },
+        {
+          "passage": "VG:AV:SAU:K19:S045",
+          "chandas_entity": "VG:CHANDAS:AV:MANTROKTADEVATYAM-1-2-ANUSTUBH-49AE",
+          "printed_literal": "mantroktadevatyam. 1, 2. anuṣṭubh",
+          "original_scope": "MANTRA_RANGE",
+          "signals": "EMBEDDED_VERSE_REFERENCE",
+          "outcome": "ASSERTION_WITHDRAWN_LITERAL_PRESERVED"
+        },
+        {
+          "passage": "VG:AV:SAU:K19:S046:V003",
+          "chandas_entity": "VG:CHANDAS:AV:7-5-P-PATHYAPANKTI-5CD7",
+          "printed_literal": "7. 5-p. pathyāpan̄kti",
+          "original_scope": "SINGLE_MANTRA",
+          "signals": "EMBEDDED_VERSE_REFERENCE",
+          "outcome": "ASSERTION_WITHDRAWN_LITERAL_PRESERVED"
+        },
+        {
+          "passage": "VG:AV:SAU:K19:S051:V002",
+          "chandas_entity": "VG:CHANDAS:AV:SAVITRI-1-1-P-BRAHMY-ANUSTUBH-EBBD",
+          "printed_literal": "sāvitrī. 1. 1-p. brāhmy anuṣṭubh",
+          "original_scope": "SINGLE_MANTRA",
+          "signals": "EMBEDDED_VERSE_REFERENCE",
+          "outcome": "ASSERTION_WITHDRAWN_LITERAL_PRESERVED"
+        }
+      ],
+      "still_open_because": "Only the demonstrable 33 were corrected. The registry BUILDER is unchanged, so a re-run of scripts/build_anukramani_knowledge_layer.py would recreate the same fragments, and the wider malformed population cannot be bounded mechanically -- three tests gave 17, 28 and 39. Closing this gap means re-segmenting the bracket in the builder, which re-identifies entities and remains an owner decision."
     },
     {
       "gap_id": "GAP-SEMANTIC-SIGNATURE-COVERAGE-001",

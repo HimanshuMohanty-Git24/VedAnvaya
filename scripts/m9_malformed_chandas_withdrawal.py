@@ -199,8 +199,35 @@ def replacement_evidence(session: Session, payload: list[dict[str, Any]]) -> dic
     }
 
 
-def do_readback(session: Session, payload: list[dict[str, Any]]) -> int:
+def do_readback(session: Session) -> int:
+    """Check the graph against the RECEIPT, never against the graph.
+
+    The first version of this function rebuilt its expectation with build_payload(), which
+    queries the graph for the malformed edges. After the withdrawal there are none, so it
+    compared 0 against 0 and printed READBACK_CLEAN having verified nothing -- the same
+    defect as the undeclared-type gate, in the tool meant to catch it.
+
+    The expectation is the executor's own receipt. No receipt, no readback: "nothing to
+    check" is not "clean".
+    """
     findings: list[str] = []
+    if not RECEIPT.exists():
+        print("  no executed receipt. Nothing has been withdrawn, so there is nothing to "
+              "read back -- and that is not a pass.")
+        return 1
+    receipt = json.loads(RECEIPT.read_text(encoding="utf-8"))
+    if not receipt.get("executed"):
+        print("  the receipt records a plan, not an execution. Refusing to report a verdict.")
+        return 1
+    payload = list(receipt.get("affected") or [])
+    if not payload:
+        print("  the receipt names no affected assertions. Refusing to report a verdict.")
+        return 1
+    expected = int(receipt.get("promised_withdrawals") or 0)
+    if len(payload) != expected:
+        findings.append(
+            f"the receipt promises {expected} withdrawals and lists {len(payload)}"
+        )
     entity_keys = sorted({row["entity_key"] for row in payload})
     passages = sorted({row["passage"] for row in payload})
 
@@ -250,6 +277,29 @@ def do_readback(session: Session, payload: list[dict[str, Any]]) -> int:
     if untyped:
         findings.append(f"{untyped} withheld record(s) are missing reason or provenance")
 
+    # Every field the claim covers, not one of them: the literal on the node must be the
+    # string the receipt says was printed, and it must point at the entity it came from.
+    mismatched = [
+        str(row["passage"])
+        for row in payload
+        if (
+            found := session.run(
+                "MATCH (p:Passage {canonical_key: $k}) "
+                "RETURN p.chandas_withheld_literal AS lit, "
+                "p.chandas_withheld_entity_key AS ent",
+                k=row["passage"],
+            ).single()
+        )
+        is None
+        or str(found["lit"]) != str(row["printed_label"])
+        or str(found["ent"]) != str(row["entity_key"])
+    ]
+    if mismatched:
+        findings.append(
+            f"{len(mismatched)} passage(s) carry a withheld record that does not match the "
+            f"receipt: {mismatched[:5]}"
+        )
+
     live = census(session)
     if live["core"] != CORE:
         findings.append(f"core corpus moved: {live['core']}")
@@ -261,6 +311,12 @@ def do_readback(session: Session, payload: list[dict[str, Any]]) -> int:
         "chandas_entities_intact": entities_present == len(entity_keys),
         "passages_with_a_withheld_record": recorded,
         "passages_expected": len(passages),
+        "expectation_source": (
+            "the executed receipt, not the graph. An earlier version rebuilt the expectation "
+            "by querying the graph for the malformed edges, found none after the withdrawal, "
+            "and reported READBACK_CLEAN having compared 0 against 0."
+        ),
+        "receipt_records_matched": not mismatched,
         "census": live,
         "findings": findings,
         "verdict": "READBACK_CLEAN" if not findings else "READBACK_DEFECT",
@@ -295,10 +351,10 @@ def main() -> int:
     driver = GraphDatabase.driver(URI, auth=AUTH)
     try:
         with driver.session(database=DB) as session:
-            payload = build_payload(session, suspect)
             if args.readback:
-                return do_readback(session, payload)
+                return do_readback(session)
 
+            payload = build_payload(session, suspect)
             before = census(session)
             evidence = replacement_evidence(session, payload)
 

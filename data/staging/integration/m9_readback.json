@@ -1,0 +1,24 @@
+{
+  "artifact": "M9_READBACK",
+  "at": "2026-09-16T07:16:40.408586+00:00",
+  "malformed_assertions_remaining": 0,
+  "chandas_entities_intact": true,
+  "passages_with_a_withheld_record": 33,
+  "passages_expected": 33,
+  "expectation_source": "the executed receipt, not the graph. An earlier version rebuilt the expectation by querying the graph for the malformed edges, found none after the withdrawal, and reported READBACK_CLEAN having compared 0 against 0.",
+  "receipt_records_matched": true,
+  "census": {
+    "nodes": 116838,
+    "relationships": 281257,
+    "has_chandas": 16298,
+    "chandas_nodes": 575,
+    "core": {
+      "AV": 5839,
+      "RV": 10552,
+      "SV": 1844,
+      "YV": 1975
+    }
+  },
+  "findings": [],
+  "verdict": "READBACK_CLEAN"
+}

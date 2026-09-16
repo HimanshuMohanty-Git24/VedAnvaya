@@ -417,3 +417,77 @@ proof the check can fail — an invented label added to the observed set is repo
 ADDITIVE = true · DETERMINISTIC_IDENTITY = true · BACKWARD_COMPATIBLE = true
 ROLLBACK_DEFINED = true · OLD_PREDICATE_MEANING_CHANGED = false
 ```
+
+## M9 — withdraw 33 metre assertions whose object is not a metre
+
+**Owner round four, item 1.** A targeted correction of
+`GAP-AV-CHANDOMETRE-SEGMENTATION-001`, authorised for the demonstrable 33 only.
+
+**The defect.** The AV registry's segmentation of Whitney's printed bracket is incomplete, so
+some `:Chandas` entities are whole fragments carrying a deity, a metre and a per-verse
+exception in one string. 33 canonical `HAS_CHANDAS` edges pointed at 28 of them, all
+`L1_SOURCE_EXPLICIT` from `WIKISOURCE_WHITNEY_AV`. A reader asking a verse's metre was told
+`'āindryas. ānuṣṭubham: 2. 3-av. 6-p. jagatī'`.
+
+**The criterion is Whitney's own notation, not a reading of Sanskrit.** He uses `:` to
+separate a hymn-level statement from its per-verse exceptions, and a bare `N.` inside a
+string is a verse number. Neither can occur inside a metre *name*. That is what makes these
+33 demonstrable, and it is the reason the correction stops there: three heuristics written to
+bound the wider population gave **17, 28 and 39**, and an unbounded criterion cannot
+authorise a deletion.
+
+**What it writes.** 33 `HAS_CHANDAS` edges deleted; 33 withheld-claim records written first,
+in the same transaction and in that order — if it fails between them the assertion is still
+there, which is the safer half to be left holding.
+
+| | before | after |
+|---|---:|---:|
+| Nodes | 116,838 | **116,838** |
+| Relationships | 281,290 | **281,257** |
+| `HAS_CHANDAS` | 16,331 | **16,298** |
+| `:Chandas` nodes | 575 | **575** |
+
+**What it deliberately does not do.**
+
+- **No metre is inferred** from the mixed string. `'6. anuṣṭubh'` is not read as *anuṣṭubh* —
+  and on `K03:S003:V005` that reading would be wrong anyway, because the `6.` addresses verse
+  6 while the edge sat on verse 5.
+- **No replacement edge is created.** Measured rather than assumed: every metre assertion for
+  these 33 passages traces to the same source whose segmentation is the defect, so there is
+  no independent evidence to build one from. 17 of the 33 passages keep a well-formed metre
+  edge; 16 are left with none.
+- **No `:Chandas` entity is re-keyed, merged, renamed or migrated.** All 541 AV_WHITNEY and 34
+  RV entities stay exactly as they are, which is what preserves the printed literal.
+
+**The literal and its provenance travel onto the passage** —
+`chandas_withheld_literal`, `_entity_key`, `_scope_origin`, `_source_id`, `_signals`,
+`_reason`, `_gap`. Deleting without recording would turn a malformed assertion into silence,
+and silence reads as *the source says nothing here*: false for all 33, and for the 16 with no
+other metre edge that record is the only thing between a reader and a false zero.
+
+**Identity rule.** Not an identity element. No key, URN or UUID changes anywhere.
+
+**Backward compatibility.** `HAS_CHANDAS` keeps its meaning and its signature. The change is
+a withdrawal of 33 instances, not a redefinition, and nothing was published that depended on
+them.
+
+**Rollback.** `round4-pre-m9-20260916T124347` (sha256 `50f27ea8…0543`). The withheld records
+also make the withdrawal reconstructible without the dump: each names the passage, the entity
+and the original scope.
+
+**Migration test.** `tests/api/test_chandas_integrity.py`, five tests: the criterion
+recognises the real fragments and clears real metre names carrying structural qualifiers like
+`3-av.`; no canonical assertion points at a fragment; the literals are preserved and every
+record carries its reason and provenance; no inferred replacement exists; the entity
+population was not migrated.
+
+The readback is worth recording separately. Its first version rebuilt its expectation by
+querying the graph for the malformed edges — which, after the withdrawal, is empty — and
+printed `READBACK_CLEAN` having compared 0 against 0. That is the same vacuous-gate defect
+this round exists to fix, inside the tool meant to catch it. The expectation now comes from
+the executed receipt, and the readback refuses to report a verdict when no receipt exists.
+
+```
+ADDITIVE = false (a withdrawal) · DETERMINISTIC_IDENTITY = true · BACKWARD_COMPATIBLE = true
+ROLLBACK_DEFINED = true · OLD_PREDICATE_MEANING_CHANGED = false
+```
