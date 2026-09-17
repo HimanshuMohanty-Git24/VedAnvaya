@@ -44,7 +44,8 @@ import sys
 from dataclasses import dataclass
 from typing import Any, Final
 
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+if hasattr(sys.stdout, "reconfigure"):  # pragma: no cover - stream setup
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 PROJECT_ROOT = pathlib.Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT / "src"))
@@ -404,13 +405,15 @@ def land_metrics(session: Any) -> dict[str, Any]:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check", action="store_true")
+    parser.add_argument("--read-only-output", action="store_true",
+                        help="Write measured coverage without creating or updating graph metrics")
     parser.add_argument("--out", type=pathlib.Path, default=None)
     args = parser.parse_args()
 
     from neo4j import GraphDatabase
 
     driver = GraphDatabase.driver(BOLT_URI, auth=BOLT_AUTH)
-    with driver.session() as session:
+    with driver.session(default_access_mode="READ" if args.check or args.read_only_output else "WRITE") as session:
         coverage = measure(session)
         print("=== VEDA_KNOWLEDGE_COVERAGE_SCORE ===")
         for veda, row in coverage["vedas"].items():
@@ -421,7 +424,7 @@ def main() -> int:
             )
             if row["dimensions_absent_from_graph"]:
                 print(f"        ABSENT FROM GRAPH: {row['dimensions_absent_from_graph']}")
-        if not args.check:
+        if not args.check and not args.read_only_output:
             metrics = land_metrics(session)
             coverage["derived_metrics"] = metrics
             print("\n=== DerivedMetric rows landed ===")
@@ -434,7 +437,7 @@ def main() -> int:
     out = args.out or (
         PROJECT_ROOT / "data" / "domain" / "vedagraph_domain_v2" / "veda_coverage_v3.json"
     )
-    if not args.check:
+    if not args.check or args.read_only_output:
         out.write_text(
             json.dumps(coverage, ensure_ascii=False, indent=1, sort_keys=True) + "\n",
             encoding="utf-8",

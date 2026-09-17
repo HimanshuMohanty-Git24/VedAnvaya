@@ -1,0 +1,304 @@
+{
+  "artifact": "RELEASE_BLOCKER_R1_HOSTILE_VERIFICATION",
+  "phase": "PHASE 10 -- hostile independent verification, including of my own Phase 6 work",
+  "at": "2026-09-17T16:19:00.732108+00:00",
+  "neo4j_access": "READ_ONLY -- every session default_access_mode='READ'",
+  "graph_mutation": false,
+  "closing_census": {
+    "nodes": 164201,
+    "relationships": 508042,
+    "core_corpus": 20210,
+    "derived_metric": 1085
+  },
+  "closing_census_expected": {
+    "nodes": 164201,
+    "relationships": 508042,
+    "core_corpus": 20210,
+    "derived_metric": 1085
+  },
+  "closing_census_unchanged": true,
+  "integrity_gates": {
+    "source": "scripts/graph_quality_scorecard.py, re-run 2026-09-17",
+    "all_eleven_zero": true,
+    "gates": [
+      "internal_leaked",
+      "ungraded_edges",
+      "nodes_without_label",
+      "orphan_entities",
+      "signature_violations",
+      "undeclared_rel_types",
+      "claims_non_candidate",
+      "claims_to_passages",
+      "metrics_to_passages",
+      "orphan_public_nodes",
+      "falsely_declared_unpopulated"
+    ]
+  },
+  "severity_counts": {
+    "CRITICAL": 1,
+    "MAJOR": 6,
+    "MINOR": 9
+  },
+  "registry_implementation_fixable": {
+    "r1_reported": 18,
+    "after_hostile_review": 20,
+    "answer": "20, not 18 and not 19. Two R1 rulings did not survive: GAP-ENTITY_COVERAGE-008 (CRITICAL, a wrong CLOSED_DERIVED) and GAP-SAMAVEDA_MUSIC-003 (the call R1 itself flagged as least certain).",
+    "remaining": [
+      "GAP-ATTRIBUTION-002",
+      "GAP-COMMUNITIES-002",
+      "GAP-ENTITY_COVERAGE-001",
+      "GAP-ENTITY_COVERAGE-002",
+      "GAP-ENTITY_COVERAGE-003",
+      "GAP-ENTITY_COVERAGE-004",
+      "GAP-ENTITY_COVERAGE-006",
+      "GAP-ENTITY_COVERAGE-007",
+      "GAP-ENTITY_COVERAGE-008",
+      "GAP-FORMULA-003",
+      "GAP-PRODUCT_SURFACE-005",
+      "GAP-QUALITY-003",
+      "GAP-RITUAL-003",
+      "GAP-RITUAL-004",
+      "GAP-RITUAL-005",
+      "GAP-RITUAL-006",
+      "GAP-SAMAVEDA_MUSIC-003",
+      "GAP-SEMANTICS-001",
+      "GAP-SEMANTICS-003",
+      "GAP-TRANSLATION-004"
+    ]
+  },
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "surface": "7. Registry closure evidence / 8. entity-gap dispositions",
+      "finding": "My own GAP-ENTITY_COVERAGE-008 CLOSED_DERIVED was wrong: two documented deity predicates disagree on 29 of 214 nodes",
+      "evidence": "Live Neo4j, READ session, 2026-09-17. The predicate the API actually runs is src/vedagraph/api/services/deity_population.py:deity_structure_clause, filtering on `structure` against DEITY_STRUCTURES={ABSTRACT,GROUP,INDIVIDUAL,PAIR} and NON_DEITY_STRUCTURES={HUMAN,PATRON_PRAISE,UNSPECIFIED}: it excludes 30 and admits 184. The predicate the eligibility contract wrote is deity_eligibility_ruling / is_deity: 57 NOT_DEITY, 157 admitted. Cross-tabulated, the disagreement is exactly 29 rows: 28 ABSTRACT nodes ruled NOT_DEITY with non_deity_kind ABSTRACTION_NOT_AN_ADDRESSEE are nevertheless ADMITTED to the served population because ABSTRACT is in DEITY_STRUCTURES, and 1 UNSPECIFIED node ruled DEITY is EXCLUDED. Clause 1 of the entry's test ('derivable by ONE documented predicate') therefore fails; clause 3 ('the ABSTRACT decision recorded ... rather than applied implicitly') is recorded and not applied, since all 42 ABSTRACT rows carry basis ABSTRACT_LABEL_RULING and the served population honours none of it. Clause 2's '29 non-deities' has four competing referents: the test says 29, the live filter excludes 30, deity_population.py's own caveat says '30 of the 214 are not gods ... and one dog. This response excludes all 30', and the eligibility contract identifies 57.",
+      "verdict": "MY ERROR. The R1 gate asked 'deity_eligibility_ruling IS NULL -> 0', which measures that the field is POPULATED and never that it is CONSUMED -- the exact 'validator that silently skips / measure coverage, not just precision' trap I cited in my own receipt. Product consequence: clients receive 28 abstractions the eligibility ruling says are not addressees, and GAP-ENTITY_COVERAGE-002's materialisation denominator is 152 or 184 depending on which predicate it reads.",
+      "fixed_and_reaudited": "REVERTED to STILL_IMPLEMENTATION_FIXABLE at the generator, with a replacement gate that measures the two predicates against each other (expect 29, closed state 0). Re-ran the audit and --write; drift 0, fixable 43->20."
+    },
+    {
+      "severity": "MAJOR",
+      "surface": "7. Registry closure evidence",
+      "finding": "My Phase 6 renderer split strings at hyphens, corrupting 19 evidence strings including an unfollowable citation path and three gap IDs",
+      "evidence": "textwrap.wrap(break_long_words=False) still breaks on hyphens, and each wrapped line was emitted as a literal ending in a space. Detected by regex [A-Za-z0-9_]- [A-Za-z0-9_] over every RULINGS string: 15 in basis/citation/reaudit plus 4 in the blocked-evidence dicts. The worst was GAP-ATTRIBUTION-WHITNEY-UNRESOLVED-OBJECT-001's CLOSED_SCOPE_DECISION citation, which read 'docs/reports/data- completeness/OWNER_DECISIONS.md:589-600' -- a path no reader can open, in the one field the status guard exists to protect. Also corrupted: 'GAP- ATTRIBUTION-004', 'GAP- MORPHOLOGY-005', 'GAP- ATTRIBUTION-002' (gap ids a grep will not find), and 'pratika- keyed', 'search- normalised', 'multi- word', 'per- epithet', 'MIS- GRAINED', 'sacred- texts.com', 'rights- compatible', 'arcika- verse', 'range- covered', 'mantras- reached', 'pair- scope'.",
+      "verdict": "MY ERROR, in a durable evidence artifact. My own new citation gate did not catch it because the same citation string also named one intact path, and the gate used any() over the paths.",
+      "fixed_and_reaudited": "Fixed the renderer (break_on_hyphens=False) and re-rendered all 46 authored rulings from their source text plus 4 literal boundaries in the evidence dicts. Re-verified: 0 remaining artifacts, every CLOSED_SCOPE_DECISION citation path now resolves on disk, statuses unchanged, audit re-run and re-written, drift 0."
+    },
+    {
+      "severity": "MAJOR",
+      "surface": "7. Registry closure evidence",
+      "finding": "GAP-SEMANTICS-004's CLOSED_SCOPE_DECISION is self-cited: the decision it rests on is recorded nowhere but the audit that closed it",
+      "evidence": "Its citation named docs/reports/data-completeness/semantics.md, which is not on disk, plus 'this audit entry'. I searched docs/reports/data-completeness/OWNER_DECISIONS.md and PRODUCT_V1_SCOPE.md on 2026-09-17 for stratigraphy / stratum / chronology / dating / period: the only hit is an unrelated sampling stratum at OWNER_DECISIONS.md:731. The capability catalogue publishes no dating card among its 22. So no independent record of the decision exists. The generator's guard only required a non-empty citation string, which this satisfied while naming a nonexistent file.",
+      "verdict": "REAL. The entry's test offers two disjuncts and the second ('the absence is recorded as a deliberate decision with its reasoning') is met by the registry entry itself, a tracked file -- so the closure is defensible on substance. But it is the weakest closure in the registry and the owner should write the decision into OWNER_DECISIONS.md. I did not downgrade a closure whose substance I had not investigated in Phase 6.",
+      "fixed_and_reaudited": "Citation corrected to name only paths that exist. Added a second, separate gate: scope_citations_only_self_cited, which now reports ['GAP-SEMANTICS-004'] in the artifact and prints on every run, so the weakness is named rather than hidden. Its first version had a false negative (it admitted 'GAP-SEMANTICS-004.closure_basis' as a path); the tokeniser now requires a separator or a known extension, and was re-run."
+    },
+    {
+      "severity": "MAJOR",
+      "surface": "4. API vs export identity / product truthfulness",
+      "finding": "CONFIRMED defect (b): the /insights/cross-veda SEMANTIC_ASSERTION row contradicts itself inside one sentence and renders as 'the layer does not exist anywhere in this graph' about a 35,131-node layer",
+      "evidence": "Frozen prose at src/vedagraph/api/services/insight_service.py:611-615 reads 'every one of its assertions is Rigvedic, so it has no non-Rigvedic endpoint to pair with'; :1247-1251 appends the LIVE measurement, producing 'Measured: 35,131 assertions over AV, RV, SV, YV' in the same string. My independent count: 8,074 non-Rigvedic assertions (AV 6,167 / YV 1,543 / SV 364) over 4,080 non-RV mantras -- the coordinator's figures reproduce exactly. The cell is emitted status=NOT_BUILT with edges=None for all six pairs, and frontend/src/components/lab/plates/transmission.tsx:90 maps NOT_BUILT to '∅ -- The layer does not exist anywhere in this graph.'",
+      "verdict": "REAL, and verified end to end rather than taken from the coordinator. This is the inverse of the project's own 'figures typed into prose are the unchecked ones' lesson: the live figure is right and the frozen prose is false. capability_probes.py's own editing rule ('a card's prose must not restate a figure the probe measures') is violated in the neighbouring module. If the owner grades a false statement about the corpus on a shipped surface as CRITICAL -- which the Ask MISLEADING=0 gate does -- this is CRITICAL."
+    },
+    {
+      "severity": "MAJOR",
+      "surface": "6. Consumer input-hash mismatches",
+      "finding": "The whitespace-only CRLF normalisation moved two builder hashes AFTER the artifacts were built, so the release dependency gate is red with no content behind it",
+      "evidence": "scripts/dependency_state.py --status: VERDICT FAIL, 2 consumers STALE_INPUT -- 'entity coverage' on moved input builder:scripts/build_veda_coverage_and_metrics.py, and 'Knowledge World public projection' on moved input builder:scripts/export_graph_world.py. Timeline by mtime: frontend/.world/world.raw.json 14:31:03, frontend/public/world/world.json and world.bin 20:42:08, scripts/export_graph_world.py 21:23:31 -- the builder was touched 41 minutes after the artifacts it built. unexplained stale: none, so the gate is behaving correctly.",
+      "verdict": "REAL as a process defect, verified benign in content: the payload chain is intact (I hashed frontend/.world/world.raw.json myself at 4ffe27f7b2fd236a3752ea689f11408b057cd873d0aa87c78a69c973c4533788 and both world.json.inputPublicExportHash and frontend/.world/constellations.json.inputPublicExportHash equal it), and the shipped ids are proven identical to the live graph. Not fixed: re-running the two builders is a build action, and loosening the hash would be the wrong fix."
+    },
+    {
+      "severity": "MAJOR",
+      "surface": "5. Knowledge World dropped nodes / 6. consumer hashes",
+      "finding": "The inputPublicExportHash chain can be satisfied while two shipped artifacts disagree: world.labels.json and world.predicates.json carry no input hash at all",
+      "evidence": "Of the four files in frontend/public/world/, only world.json carries inputPublicExportHash. world.labels.json (4.4 MB, keys: ids, labels) and world.predicates.json (keys: version, generated, source, counts, predicates) carry none. world.predicates.json's mtime is 21:31:32 -- later than the other three (20:42:08) and later than its builder. This repository has already shipped 28 wrong labels through exactly this hole (OWNER_DECISIONS.md decision 30: 'the export dropped the 28 and world.labels.json still carried all 28 ... world.predicates.json was in no consumer's hash').",
+      "verdict": "REAL as a latent hole and the direct answer to 'find a way that chain can be satisfied while the artifacts still disagree'. Content currently AGREES -- see the CLEAN finding below -- so this is a live gap in the guard, not a live corruption. Both files are now named in dependency_ledger.json, which is ledger-level coverage, not artifact-level."
+    },
+    {
+      "severity": "MAJOR",
+      "surface": "7. Registry closure evidence (documentation)",
+      "finding": "docs/reports/GRAPH_QUALITY_V2_SCORECARD.md shipped a full campaign out of date, under-reporting the graph by 46,231 nodes and 225,653 relationships",
+      "evidence": "Running scripts/graph_quality_scorecard.py regenerated it and changed 23 lines: nodes 117,970 -> 164,201, relationships 282,389 -> 508,042, product nodes 39,664 -> 71,373, internal 78,306 -> 92,828, domain entities 375 -> 384, TIER_B 169,155 -> 394,775, product nodes with display_type 39,371 -> 71,080. So the document on disk held the pre-integration baseline.",
+      "verdict": "REAL. Also a genuine dilution finding the regeneration exposes: edges carrying `evidence` fell 38.5% -> 21.4% and `trust` 37.6% -> 21.7% while the absolute counts barely moved (evidence 108,795 unchanged, trust 106,040 -> 110,430) -- the denominator grew, which is this repo's own 'normalising can invert the ordering' hazard.",
+      "fixed_and_reaudited": "Regenerated rather than hand-edited, and re-audited: all 11 integrity gates PASS at 0, including ungraded_edges and nodes_without_label, which the prior sprint recorded FAILING at 77,121 and 30,266."
+    },
+    {
+      "severity": "MINOR",
+      "surface": "7. Registry closure evidence",
+      "finding": "GAP-SAMAVEDA_MUSIC-003, which R1 flagged as its least certain call, decided against R1",
+      "evidence": "The entry has two clauses and only the second is gated. Clause 1 ('every Samavedic mantra exposes its running Samhita number') is unblocked and undone: live Neo4j 2026-09-17, 0 of 1,844 SV mantras carry running_samhita_number or source_locator, and the source_locator on 1,844 SV TextVersion rows holds ONE distinct value across all 1,844 -- the derivation recipe 'derived:normalize_nfc+fold_devanagari_source_conventions+to_iast+comparison_form:SEARCH_NORMALIZED', which is not a locator. The entry's own source_dependency says 'NONE. The number is already captured in the staging artifact.' Clause 2 (re-deriving 495 MUSICALIZED_AS edges) is genuinely behind OWNER_DECISION_E_AUDIO_GATE, and MUSICALIZED_AS carries 0 edges.",
+      "verdict": "R1 WAS WRONG. An execution blocker on a row that also contains undone internal work is the disguise the vocabulary exists to prevent; decision 29 reserves BLOCKED_OWNER_DECISION_REQUIRED for rows whose obstacle IS the ungiven decision.",
+      "fixed_and_reaudited": "REVERTED to STILL_IMPLEMENTATION_FIXABLE with a gate on clause 1 (expect 1,844, closed state 0). Audit re-run and re-written."
+    },
+    {
+      "severity": "MINOR",
+      "surface": "1. Public ID uniqueness / 3. cross-type collisions",
+      "finding": "The export's `sid <> tid` self-loop guard was removed with nothing pinning the zero",
+      "evidence": "scripts/export_graph_world.py:78 now reads 'WHERE sid IS NOT NULL AND tid IS NOT NULL' where it previously also required sid <> tid (with trailing whitespace left on the line). Measured: 0 edges where the two endpoints resolve to the same public id, and 0 true (a)-[e]->(a) self-loops among non-Internal nodes, so the removal has no current effect.",
+      "verdict": "REAL but latent. Removing the guard is arguably the correct behaviour -- a real self-loop should export -- but it means a future public-id collision would ship as a self-loop rather than being dropped, and no test asserts the 0."
+    },
+    {
+      "severity": "MINOR",
+      "surface": "4. API vs export identity consistency",
+      "finding": "The PRODUCT_SURFACE-001 coverage guard is level-local and does not detect a cross-level contradiction",
+      "evidence": "Falsification probes against src/vedagraph/api/models/common.py: a Veda in both vedas_in_scope and vedas_not_covered RAISES at both CoverageView and CoverageDimension level; a non-zero measured figure beside vedas_not_covered RAISES at both; a measured ZERO beside not_covered is correctly ACCEPTED. But a CoverageView with top-level measured={'AV':635} and a dimension declaring AV not_covered is ACCEPTED, because each validator reads only its own fields.",
+      "verdict": "REAL but not a live defect. The shipped devata insight uses this shape correctly -- the top-level figure is the NAMING axis and the ascription dimension's not_covered is about ascription -- and every dimension carries a `means` stating what it must not be added to. The declared closure test is satisfied; the guard's reach is narrower than the invariant."
+    },
+    {
+      "severity": "MINOR",
+      "surface": "3. Assertion/passage cross-type collisions",
+      "finding": "CONFIRMED defect (a): :SemanticAssertion carries two display_type values for one object type, and both reach the shipped export",
+      "evidence": "Live Neo4j 2026-09-17: display_type 'SEMANTIC_ASSERTION' on 30,266 nodes (all assertion_key, 0 assertion_id) and 'SemanticAssertion' on 4,865 (all assertion_id, 0 assertion_key) -- a clean partition with no overlap. Both appear in frontend/public/world/world.json's `types` list, which holds 48 entries including both spellings, so both reach the browser.",
+      "verdict": "REAL, and MINOR rather than MAJOR on measurement: public ids remain unique (71,373 of 71,373, 0 duplicates, 0 cross-type collisions) and no count is wrong. The cost is that a client filtering by display_type must know both spellings, and a type census over the graph reports one object type twice. It is a naming-convention split along the same seam as the two identity properties."
+    },
+    {
+      "severity": "MINOR",
+      "surface": "4. API vs export identity consistency",
+      "finding": "CONFIRMED defect (c): AgentiveAssertionView's '4,865' is true but unscoped",
+      "evidence": "Live Neo4j 2026-09-17: the 4,865 assertion_id population IS entirely Rigvedic (RV 4,865, no other corpus), so the docstring's figure is correct. But the assertion_key population of 30,266 splits RV 22,192 / AV 6,167 / YV 1,543 / SV 364, so 'All 4,865 SemanticAssertion nodes hang off Rigvedic passages' describes 14% of a 35,131-node layer while naming the label, not the subset.",
+      "verdict": "REAL and MISLEADING in the project's own sense -- it is a metric row whose keys are labels rather than counts, the same defect class as 'a grade can be wrong while every figure is right'. MINOR because it is an internal docstring, not a served surface; the served instance of the same error is defect (b), graded MAJOR above."
+    },
+    {
+      "severity": "MINOR",
+      "surface": "7. Registry closure evidence",
+      "finding": "GAP-MORPHOLOGY-006's clause 3 holds only on the IAST path; a Devanagari accent-bearing query is mangled by the fold",
+      "evidence": "vedagraph.api.services.search_service.fold_diacritics: 'agním' -> 'agnim' and 'ayás' -> 'ayas' (the IAST path works, and the SEARCH_DERIVATIVE layer carries 0 accented rows of 20,210, so one instrument serves all four corpora -- 'agni' reaches RV 587 / AV 275 / YV 170 / SV 108). But 'अग्नि॑' -> 'अगन॑': the fold strips the virama and the vowel sign while LEAVING the udatta U+0951 in place, so the token is both mangled and still accented. search_service.py:298-302 shows the Devanagari mark folding is deliberate.",
+      "verdict": "My R1 closure rested on a charitable reading of an ambiguous clause and I said so. The charitable reading is now MEASURED rather than assumed on the IAST path, which is the path the entry's own root_cause describes ('an accent-bearing query can match AV and RV and miss SV'). The Devanagari residual is real and is named. UNVERIFIED: whether Devanagari verse search routes through this fold at all -- the fold's docstring scopes it to label surfaces."
+    },
+    {
+      "severity": "MINOR",
+      "surface": "7. Registry closure evidence",
+      "finding": "GAP-MORPHOLOGY-004 closes with 74 of its 711 tokens pinned to a still-open deferral",
+      "evidence": "RIGVEDA_LEXICAL_MENTION_POLICY.md:146 says DEVATA_OR_RISHI_UNDECIDABLE 'is the same question ADR-013 defers for Ṛṣi lexical mention and closes with it, not separately', and :164 still records 'Ṛṣi is deferred'. 74 of the 711 carry that reason.",
+      "verdict": "The closure SURVIVES on the test as written -- 'this' in 'no longer lists this as deferred' refers to the feature-conditioned alias deferral, which :122-129 explicitly declares closed -- but 74 tokens' disposition depends on a different, open deferral."
+    },
+    {
+      "severity": "MINOR",
+      "surface": "Focus budget (lead's workstream)",
+      "finding": "focusBudgetForBand's CRAMPED floor is not clamped by the seat count it is derived from",
+      "evidence": "focusRingSeats(shortAxis) = floor(2π(shortAxis/2 − 11)/44). At shortAxis 120 this is 6, yet focusBudgetForBand returns min(22, max(12, 6)) = 12 -- twelve orbs into a band that seats six, which the function's own docstring calls 'the defect focusBudgetForBand exists to prevent'. The docstring justifies only the 11->12 step as a deliberate 2px concession.",
+      "verdict": "REAL but unquantified: I did not establish that any real viewport produces a band under ~163px. Everything else in the lead's derivation REPRODUCES exactly -- see the CLEAN findings."
+    },
+    {
+      "severity": "MINOR",
+      "surface": "9. Formula ID resolution",
+      "finding": "The formula identity receipt asserts 217 affected ids without enumerating them",
+      "evidence": "data/staging/release_blocker_r1/formula_identity_verification_receipt.json publishes affected_formula_ids_declared 217 / affected_formula_ids_read 217 / affected_distinct 217 and exactly 5 per_formula_examples, so a reader can re-check 5 of 217.",
+      "verdict": "REAL as an evidence gap, but the substance is covered by a stronger check I ran: ALL 4,825 Formula ids and ALL 720 FormulaFamily ids are present in the shipped world.labels.json, so the 217 are a subset of a verified-complete set."
+    }
+  ],
+  "surfaces_clean": [
+    {
+      "surface": "1. Public ID uniqueness",
+      "result": "CLEAN",
+      "evidence": "Live Neo4j 2026-09-17 using the repo's own public_id_cypher: 71,373 non-Internal nodes, 71,373 with a public id, 0 null, 0 ids shared by more than one node. scripts/audit_public_identity.py independently reports duplicate_public_ids 0, cross_type_collisions 0, same_type_collisions 0, api_export_mismatches 0, internal_leakage 0."
+    },
+    {
+      "surface": "2. Assertion ID determinism",
+      "result": "CLEAN, with a named methodological limit",
+      "evidence": "4,865 assertion_id values, 4,865 distinct; 30,266 assertion_key values, 30,266 distinct. The contract receipt's build_1 / build_2 / live key digests are all 64a9966d957222c7d3c38a8a09b64dd9855ac40ae665fc86ba13c296af70638d, and the live-vs-source match is a genuine independent readback. LIMIT: the two builds are two calls to one function, not two implementations, so repeat-determinism rests on one code path."
+    },
+    {
+      "surface": "3. Assertion/passage cross-type collisions",
+      "result": "CLEAN",
+      "evidence": "0 :SemanticAssertion whose assertion_id equals any node's canonical_key; audit_public_identity passage_assertion_intersection 0; 0 edges whose endpoints resolve to the same public id."
+    },
+    {
+      "surface": "4. API vs export identity consistency",
+      "result": "CLEAN",
+      "evidence": "api_export_mismatches 0. I independently hashed the sorted public ids from the live graph and from the shipped world.labels.json: both 3ddcc25dad3d37e8aab0fda652e06a088a3ef70854242835dc6432ecc7219cf0, sets identical, 0 in graph not shipped, 0 shipped not in graph."
+    },
+    {
+      "surface": "5. Knowledge World dropped nodes",
+      "result": "CLEAN -- Agent A's un-decoded binary payload now decoded",
+      "evidence": "I decoded frontend/public/world/world.bin against its own section table: 8 sections, highest declared end 3,991,198 == file size exactly, slack 0. positions 214,119 == 3N; nodeType/nodeGroup/nodeDegree/nodeRegion each 71,373; edgePairs 541,292 == 2E; max edge index 71,372 < N so no dangling reference; nodeType max 47 < 48 types; nodeGroup max 10 < 11 groups; max(nodeDegree) 7,498 == world.json maxDegree; hubs and all 798 constellation node references < N; labels.ids 71,373 and all unique. 0 nodes dropped."
+    },
+    {
+      "surface": "Agent A residual: cross_veda_matrix re-derivation",
+      "result": "CLEAN -- reproduced from a second implementation",
+      "evidence": "I re-derived every cell of data/derived/release_blocker_r1/cross_veda_matrix.json with my own Cypher over the 8 declared relationship classes. All 6 per-pair totals match (AV-RV 2,812 / AV-SV 551 / AV-YV 346 / RV-SV 3,789 / RV-YV 953 / SV-YV 272) and all 30 numeric class-by-pair cells match. 0 disagreements."
+    },
+    {
+      "surface": "Agent A residual: formula ids in the built bundle",
+      "result": "CLEAN -- closed with a negative result",
+      "evidence": "A read-only grep of frontend/.next for a known formula id returns nothing: formula ids are not inlined in the bundle, they are fetched at runtime, so there is nothing to crawl. The shipped artifact check is the meaningful one and it passes (4,825 of 4,825 formula ids and 720 of 720 family ids present in world.labels.json). No build was run."
+    },
+    {
+      "surface": "9. Formula ID resolution",
+      "result": "CLEAN",
+      "evidence": "4,825 :Formula nodes, 4,825 distinct formula_id, 0 keyless, 0 :Internal. Agent A's rekey digests are identical before and after (a2821991639882b6cf84b845ede27de8d7838c84f3c647c238a65f5640949705 for Formula, 9855069860f5ce30abef0302cf2be6da893b29f01efae542c664da502b4af04c for FormulaFamily), and all ids resolve in the shipped export."
+    },
+    {
+      "surface": "10. Accidental graph mutation",
+      "result": "CLEAN",
+      "evidence": "Census identical at the start and the end of this pass: 164,201 nodes / 508,042 relationships / DerivedMetric 1,085 / core corpus 20,210. 56 labels, 80 relationship types, 719 property keys. Every session I opened used default_access_mode='READ'; my harness additionally refuses any query containing a write token, and correctly refused one of my own read queries because 'DROP' appeared inside the column alias 'dropped' -- it erred in the safe direction."
+    },
+    {
+      "surface": "Lead's change: PIPELINE_CONSTANT_PREDICATES",
+      "result": "CONFIRMED CORRECT",
+      "evidence": "Live Neo4j 2026-09-17: HAS_DEVATA_DERIVED 882 edges, 882 carrying confidence, single distinct value 1.0; ASCRIBES_TO_DEVATA 39 edges, 39 carrying confidence, single distinct value 1.0. The comment the lead replaced ('neither carries a confidence property at all -- 0 of 882 and 0 of 39') was FALSE, and adding both predicates at 1.0 is right. This also corroborates my GAP-QUALITY-003 ruling, which counts these two among the seven constant-confidence predicates."
+    },
+    {
+      "surface": "Lead's change: CRLF normalisation",
+      "result": "NO CODE CHANGED BEYOND LINE TERMINATORS, where I could prove it",
+      "evidence": "Round-trip hash test against the per-file sha256 in starting_worktree_receipt.json: ontology.py, formula_families.py, formulas.py and test_formula_families.py hash EXACTLY to the 09:23 content when their LF is converted back to CRLF -- pure line-terminator normalisation, proven. The phantom diffs are gone: ontology.py 2,707 changed lines -> 73, formula_families.py 2,254 -> 54, formulas.py 1,745 -> 43, test_formula_families.py 1,427 -> 85, dependency_state.py 971 -> 113, export_graph_world.py 362 -> 51. `git diff --stat` and `git diff --ignore-cr-at-eol --stat` are now byte-identical over all ten files, so no CR noise remains. graph_service.py and focus.ts legitimately changed (declared). build_veda_coverage_and_metrics.py, dependency_state.py and export_graph_world.py also changed content after 09:23, which the lead's message did not declare for them -- I READ all three diffs and they are coherent sprint work (a --read-only-output flag and a READ access mode; the dependency_state STALE_INPUT exit; agent A's public-identity unification), not corruption."
+    },
+    {
+      "surface": "Lead's change: FOCUS_BUDGET_COMPACT 17 -> 22 and CRAMPED 12",
+      "result": "CONFIRMED -- both survive",
+      "evidence": "I reproduced the ring arithmetic independently from focusRingSeats(shortAxis) = floor(2π(shortAxis/2 − 11)/44): 183.1px -> 11 seats (the claim), 390px -> 26 (so compact 22 stands), 434.4px -> 29, and 12 orbs at radius 80.55 sit at a 42.18px pitch (the stated 2px concession). Then ran the project's own harness: frontend/tests/unit/focus-curation.test.ts, 22 tests passed, which pins focusRingSeats(183.1)===11, focusBudgetForBand(390,434.4)===22, the coverage floor at 22 over the 471 engaged nodes with Agni as worst case, and that budget 21 loses coverage. My initial suspicion that 183.1/44 could not seat 11 was MY error: I mis-modelled a ring as a linear band."
+    },
+    {
+      "surface": "7. Registry closure evidence -- PRODUCT_SURFACE-002",
+      "result": "SURVIVES ATTACK",
+      "evidence": "I computed the union of published card question numbers rather than trusting the validator: 15 PROBED_LIMIT_SPECS {7,37,49,53,54,58,59,61,68,72,78,84,93,97,98} plus 7 hand-written cards {22,23,25,28,52,77,82} cover all 21 BENCHMARK_NOT_ANSWERABLE entries with nothing missing and one extra (Q25). tests/api/test_capability_catalogue.py: 42 tests pass."
+    },
+    {
+      "surface": "7. Registry closure evidence -- PRODUCT_SURFACE-001",
+      "result": "SURVIVES ATTACK",
+      "evidence": "Six falsification probes constructed against the live models; the four that must raise raise, at both CoverageView and CoverageDimension level, and the measured-zero case that must stay legal stays legal. The guard is a @model_validator(mode='after') wired at two call sites, not merely defined."
+    },
+    {
+      "surface": "7. Registry closure evidence -- MORPHOLOGY-004",
+      "result": "SURVIVES ATTACK",
+      "evidence": "Re-derived from the generator's INPUT rather than its output: data/knowledge/rigveda_lexical_v1/ambiguous_mentions.jsonl holds 711 rows over 10 lemmas, every lemma has a typed reason in LEMMA_REASON, and my recomputed histogram is 625 / 74 / 12 -- matching the output jsonl AND the policy doc's table per lemma (áp- 547, yamá- 60, mr̥tyú- 16, sī́tā- 2; átri- 46, vená- 19, viśvā́mitra- 7, vāmádeva- 1, venā́- 1; dadhikrā́- 12). 7 feature-conditioned aliases exist and sárasvant- appears 0 times, confirming the doc's claim."
+    },
+    {
+      "surface": "7. Registry closure evidence -- CROSS_VEDA-004",
+      "result": "SURVIVES ATTACK, more strongly than R1 credited",
+      "evidence": "I doubted clause 2 ('their RV-only reach is stated on the surface that reports them') because no prose states it. insight_service.py:267-274's _PARALLEL_GRANULARITY_QUERY is that surface and it publishes the reach as a live census: I ran it and it returns PADA / 4,079 edges / vedas ['RV'] beside VERSE / 6,907 / ['RV','SV','AV']. Its docstring states the intent: 'so that the pada layer's reach is a figure a reader can check, and so that a pada row appearing for a second corpus would show up here rather than in a sentence nobody re-measures.'"
+    },
+    {
+      "surface": "7. Registry closure evidence -- OWNER DECISION 4 and 25 coverage",
+      "result": "3 of 4 squarely covered, 1 refined",
+      "evidence": "Decision 25 (OWNER_DECISIONS.md:542-566) names the row it is attached to explicitly: 'All 466 stay RETAINED_NON_IMPORTABLE_UNRESOLVED_OBJECT; the graph is not mutated' -- squarely on GAP-ATTRIBUTION-WHITNEY. I corroborated its authorised half independently: 28 :Chandas are :Internal, HAS_CHANDAS is 16,298, 0 public :Chandas carries a colon, matching decision 27's '16,331 -> 16,298 / 28 entities' to the digit. Decision 4 (:106-119) squarely covers GAP-QUALITY-001 (empty gold scaffold) and GAP-QUALITY-002 (model-adjudicated set; the decision addresses that case by name). For GAP-SEMANTICS-002 decision 4 is ADJACENT rather than on point -- it governs reference sets for scoring, not review_state on production assertions -- so the load-bearing citation there is the review-frame manifest's own measured conclusion, 'That is reviewer time, not an unavailable external source, and it is not an implementation gap either.' Status kept, confidence lowered, recorded."
+    },
+    {
+      "surface": "Integrity gates",
+      "result": "ALL 11 PASS AT 0",
+      "evidence": "scripts/graph_quality_scorecard.py: internal_leaked 0, ungraded_edges 0, nodes_without_label 0, orphan_entities 0, signature_violations 0, undeclared_rel_types 0, claims_non_candidate 0, claims_to_passages 0, metrics_to_passages 0, orphan_public_nodes 0, falsely_declared_unpopulated 0. UNKNOWN_LABEL_RATE 0.0000%, tier coverage 100.00%."
+    }
+  ],
+  "defects_handed_to_me_for_independent_check": {
+    "a_two_display_types": "CONFIRMED (MINOR) -- 30,266 SEMANTIC_ASSERTION + 4,865 SemanticAssertion, clean partition, both in world.json types",
+    "b_cross_veda_not_built": "CONFIRMED (MAJOR) -- 8,074 non-RV assertions over 4,080 non-RV mantras; the coordinator's figures reproduce; the Lab renders 'The layer does not exist anywhere in this graph'",
+    "c_agentive_docstring": "CONFIRMED (MINOR) -- the 4,865 population is entirely RV so the figure is true; the scope is unstated against 35,131"
+  },
+  "files_modified_by_this_pass": [
+    "scripts/wave4_registry_closure_audit.py -- two ruling reverts, one citation correction, the hyphen-wrapping repair across 46 rulings, a self-citation gate and its tokeniser fix. LF preserved (0 CRLF), parses, re-run.",
+    "data/gap_registry.json -- rewritten by the generator's own --write path only.",
+    "data/staging/wave4/registry_closure_audit.json -- regenerated, never hand-edited. sha256 010a8b2d1a0fcbd6010bb8f887a470377c71aad9b536936c650c845cbc6c24d2",
+    "data/staging/release_blocker_r1/registry_adjudication_receipt.json -- rebuilt from the re-audited artifact so no figure is carried over.",
+    "docs/reports/GRAPH_QUALITY_V2_SCORECARD.md -- regenerated by its own generator; it was a full campaign stale.",
+    "data/staging/release_blocker_r1/hostile_verification_receipt.json -- this file."
+  ],
+  "could_not_verify": [
+    "Whether Devanagari verse search routes through search_service.fold_diacritics. The fold demonstrably mangles 'अग्नि॑' to 'अगन॑' while keeping the udatta, but its docstring scopes it to label surfaces, so the user-facing blast radius is unestablished.",
+    "Whether any real viewport produces a Focus band shorter than ~163px, which is what would make the unclamped CRAMPED floor visible.",
+    "Assertion-key repeat determinism rests on one code path (build_assertions called twice). The source-vs-live match is a real independent readback; a second implementation is not.",
+    "The 217 'affected' formula ids are not enumerated in their receipt, so I verified the superset (all 4,825) rather than that specific list.",
+    "I did not start the API or build the frontend. Every product-surface claim rests on reading the implementing code plus running its tests (tests/api/test_capability_catalogue.py, tests/domain/test_rishi_families.py: 42 passed 1 skipped; frontend focus-curation.test.ts: 22 passed).",
+    "docs/design/research/04-visualization-research.md:1797 still calls a surface 'blocked on VIZ_BLOCKER_01' while the same document marks it CLOSED at :1071. Read as stale prose in a forward-looking section; not confirmed with the author.",
+    "OWNER_DECISIONS.md:646 records the registry as 37 closures / 8 blockers / 40 fixable; the artifact now reads 60 / 5 / 20. The discrepancy predates this work and I did not reconcile the historical figures.",
+    "tests/api/test_graph.py::TestWhitelists::test_every_relationship_type_in_the_graph_is_classified remains red on HAS_PARALLEL_PADA (4,079) and RECEIVES_OFFERING (4). Left alone as instructed; I did not independently confirm it is only those two types."
+  ],
+  "sha256": "fa81c9a0ad3b3542bf76a72eb95d7d3a4f55633017d4681950ee2b152337d2f7"
+}

@@ -1,0 +1,49 @@
+{
+  "withheld_rows": 466,
+  "distinct_passages": 443,
+  "by_graph_state": {
+    "devata_withheld__graph_says_DERIVED_PRESENT": 50,
+    "chandas_withheld__graph_says_ASSESSED_SOURCE_ABSENT": 117,
+    "chandas_withheld__graph_says_SOURCE_EXPLICIT_PRESENT": 8,
+    "devata_withheld__graph_says_ASSESSED_SOURCE_ABSENT": 33,
+    "chandas_withheld__graph_says_DERIVED_PRESENT": 258
+  },
+  "false_absence_total": 150,
+  "examples": {
+    "devata_withheld__graph_says_DERIVED_PRESENT": [
+      "VG:AV:SAU:K03:S029:V007",
+      "VG:AV:SAU:K03:S029:V008",
+      "VG:AV:SAU:K05:S003:V001",
+      "VG:AV:SAU:K05:S003:V002",
+      "VG:AV:SAU:K05:S003:V003"
+    ],
+    "chandas_withheld__graph_says_ASSESSED_SOURCE_ABSENT": [
+      "VG:AV:SAU:K05:S006:V005",
+      "VG:AV:SAU:K05:S006:V006",
+      "VG:AV:SAU:K05:S006:V007",
+      "VG:AV:SAU:K05:S006:V011",
+      "VG:AV:SAU:K05:S006:V012"
+    ],
+    "chandas_withheld__graph_says_SOURCE_EXPLICIT_PRESENT": [
+      "VG:AV:SAU:K05:S006:V010",
+      "VG:AV:SAU:K05:S008:V004",
+      "VG:AV:SAU:K05:S008:V006",
+      "VG:AV:SAU:K05:S008:V007",
+      "VG:AV:SAU:K05:S008:V009"
+    ],
+    "devata_withheld__graph_says_ASSESSED_SOURCE_ABSENT": [
+      "VG:AV:SAU:K06:S040:V001",
+      "VG:AV:SAU:K06:S040:V002",
+      "VG:AV:SAU:K06:S055:V002",
+      "VG:AV:SAU:K06:S055:V003",
+      "VG:AV:SAU:K06:S056:V002"
+    ],
+    "chandas_withheld__graph_says_DERIVED_PRESENT": [
+      "VG:AV:SAU:K01:S003:V001",
+      "VG:AV:SAU:K01:S003:V002",
+      "VG:AV:SAU:K01:S003:V003",
+      "VG:AV:SAU:K01:S003:V004",
+      "VG:AV:SAU:K01:S003:V005"
+    ]
+  }
+}

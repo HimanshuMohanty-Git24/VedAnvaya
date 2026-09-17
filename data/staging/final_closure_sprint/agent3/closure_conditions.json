@@ -1,0 +1,61 @@
+{
+  "artifact": "AGENT_3_CLOSURE_CONDITIONS",
+  "agent": "AGENT_3_MORPHOLOGY_SEMANTICS",
+  "stated_before_any_fix": true,
+  "rule": "A gap closes only when its OWN declared closure_test passes as written. 'Coverage improved' is not closure.",
+  "provenance_vocabulary": ["human-published", "deterministic", "model-assisted"],
+  "gaps": {
+    "GAP-MORPHOLOGY-001": {
+      "declared_closure_test": "MATCH (l:Lemma) WHERE size([(l)<--()|1])=0 RETURN count(l) falls far below 9,992, and any product surface reporting lemma coverage states distinct lemmas reached alongside mantras reached.",
+      "measured_before": {"zero_indegree_lemmas": 9992, "distinct_lemmas_reached": 39, "mentions_lemma_edges": 9000, "mantras_reached": 6560},
+      "closure_condition_i_will_hold_myself_to": "zero_indegree_lemmas == 0 (all 10,031), distinct_lemmas_reached == 10,031, and the lemma-coverage surface reports distinct_lemmas_reached AND mantras_reached as two separate figures with the projection policy named.",
+      "provenance_of_what_i_produce": "deterministic",
+      "registry_claim_under_test": "implementation_dependency says 'projecting all 10,031 lemmas would add on the order of a million edges'. Measured: 154,261 distinct (mantra, lemma) pairs over 164,758 tokens. The registry's order-of-magnitude is wrong by ~6.5x and the scale objection does not hold."
+    },
+    "GAP-MORPHOLOGY-004": {
+      "declared_closure_test": "The 711 tokens are resolved or each carries a typed reason for non-resolution, and RIGVEDA_LEXICAL_MENTION_POLICY.md no longer lists this as deferred.",
+      "measured_before": {"unresolved_tokens": 711, "distinct_lemmas": 10, "reason_recorded": "lexical alias exists but is not reviewed as ACCEPTED (a workflow state, not a linguistic reason)"},
+      "closure_condition_i_will_hold_myself_to": "every one of the 711 rows carries a typed non-resolution reason drawn from a declared closed vocabulary that names the LINGUISTIC obstruction, not the workflow state; the count of rows carrying only the workflow reason is 0; and the policy document's deferral paragraph is replaced by the measured state.",
+      "provenance_of_what_i_produce": "deterministic (the typed reason is propagated from the alias registry's own curated evidence field; no new resolution is asserted)",
+      "registry_claim_under_test": "description says the tokens are unresolved 'because no feature-conditioned alias mechanism exists'. To be tested against data/knowledge/rigveda_lexical_v1/lexical_aliases.jsonl."
+    },
+    "GAP-MORPHOLOGY-006": {
+      "declared_closure_test": "Every work carries a search-normalised text version, the 139 YV mantras gain an unaccented form, and a single accent-bearing query is shown to reach all four corpora equally.",
+      "measured_before": {"search_derivative_textversions": 5839, "works_with_search_derivative": 1, "yv_mantras_without_unaccented_form": 139},
+      "closure_condition_i_will_hold_myself_to": "SEARCH_DERIVATIVE TextVersion count == 20,210 spanning all 4 works (RV 10,552 + SV 1,844 + YV 1,975 + AV 5,839); YV mantras with no accented=false TextVersion == 0; and one accent-bearing query string, normalised by the SAME instrument, returns a non-zero hit count in each of RV, SV, YV, AV with the per-corpus figure stated.",
+      "provenance_of_what_i_produce": "deterministic (comparison_form(text, SEARCH_NORMALIZED) over the already-ingested primary text; no new source is acquired)",
+      "explicit_non_claim": "A search-normalised derivative is NOT an accented Samavedic text. The Samaveda still has no accented witness in this graph and this artifact does not claim one."
+    },
+    "GAP-SEMANTICS-001": {
+      "declared_closure_test": "HAS_SEMANTIC_ASSERTION reaches a non-Rigvedic corpus, RV coverage rises above 2,542, and no surface reports a blended assertion total.",
+      "measured_before": {"has_semantic_assertion_edges": 4865, "rv_mantras_covered": 2542, "sv_yv_av_mantras_covered": 0, "derivations_live": {"MORPHOLOGY_RULE": 2406, "MODEL_EXTRACTION": 2459}},
+      "closure_condition_i_will_hold_myself_to": "the proposed canonical delta makes HAS_SEMANTIC_ASSERTION reach SV, YV and AV; RV mantras covered rises to 10,150; and every assertion carries a role_derivation that makes the five instruments unsummable, with the surface contract stated. Because I may not write canonical Neo4j, closure is PROPOSED with an exact readback test the lead runs post-import.",
+      "provenance_of_what_i_produce": "deterministic (the staged layer is treebank- and morphology-rule-derived; NO model-assisted extraction is in it)"
+    },
+    "GAP-SEMANTICS-002": {
+      "declared_closure_test": "MATCH (a:SemanticAssertion) WHERE a.review_state='UNREVIEWED' RETURN count(a) falls below 4,865, with the reviewed sample stratified by derivation and its reviewer recorded.",
+      "property_name_check": "The property is review_state. Read from the live graph, not restated from memory: review_state exists with one value UNREVIEWED on 4,865 nodes; review_status does not exist as a property key at all.",
+      "measured_before": {"review_state_UNREVIEWED": 4865, "review_state_null": 0, "review_status_key_exists": false},
+      "closure_condition_i_will_hold_myself_to": "I will build the review harness and stage a stratified sample. I will NOT set review_state to anything that implies a human check. If the only remaining work is a human reviewer's time, the gap does not close and I say so.",
+      "provenance_constraint": "A model-adjudicated or source-adjudicated review is NEVER to be recorded as human annotation."
+    },
+    "GAP-SEMANTICS-003": {
+      "declared_closure_test": "MATCH (a:SemanticAssertion) with all three slots present returns a non-zero count, and at least one assertion has a non-Devata target.",
+      "measured_before": {"three_slot_assertions": 0, "no_slot_assertions": 1522, "assertion_agent_ranges": ["Devata"], "assertion_target_ranges": ["Devata"], "assertion_role_edges_from_SemanticAssertion": 0, "assertion_role_edges_from_Passage": 2052},
+      "closure_condition_i_will_hold_myself_to": "after the proposed delta, count of SemanticAssertion carrying an agent slot AND a predicate slot AND a target slot is > 0, read back from the database; and at least one of those target slots resolves to something that is not a :Devata. A RoleFiller stays an occurrence: it is only counted as filling a slot, never promoted to an entity by string match.",
+      "provenance_of_what_i_produce": "deterministic (DCS dependency labels; parse-backed only)"
+    },
+    "GAP-SEMANTICS-005": {
+      "declared_closure_test": "MATCH (e:DomainEntity) WHERE e.domain IS NULL RETURN count(e) returns 0, with multi-domain entities carrying every applicable domain rather than one.",
+      "measured_before": {"domain_entity_nodes": 375, "domain_is_null": 375, "domain_property_key_exists_in_db": false},
+      "registry_disagreement": "The registry ROW says 229 DomainEntity nodes in its description and evidence; its own closure_basis says 375. Live measurement: 375. The 229 figure is stale by 146 nodes and the description must be corrected.",
+      "closure_condition_i_will_hold_myself_to": "domain IS NULL count == 0 over all 375; the property is list-valued so a multi-domain entity carries every applicable domain; the vocabulary is declared BEFORE assignment and is closed; and an entity whose domain cannot be decided carries an explicit UNDETERMINED value with a reason rather than a guess.",
+      "provenance_of_what_i_produce": "deterministic where the domain follows from the node's own registry labels; curated where it does not, and the two are typed apart on the node."
+    }
+  },
+  "samaveda_two_axes": {
+    "rule": "Published human annotation absence != morphology not processed. These are reported separately and never conflated.",
+    "PUBLISHED_HUMAN_ANNOTATION": "to be measured against the enumerated source searches",
+    "MORPHOLOGICAL_ANALYSIS": "to be measured against what the deterministic pipeline actually processed"
+  }
+}

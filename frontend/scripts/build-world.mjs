@@ -32,6 +32,7 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { validatePublicGraph, exportHash } from "./public-identity-contract.mjs";
 import { forceCenter, forceLink, forceManyBody, forceSimulation } from "d3-force-3d";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -104,7 +105,10 @@ for (const [path, how] of [
 }
 
 console.log(`reading ${IN} ...`);
-const raw = JSON.parse(readFileSync(IN, "utf8"));
+const rawBytes = readFileSync(IN);
+const raw = JSON.parse(rawBytes.toString("utf8"));
+const identityAudit = validatePublicGraph(raw);
+const inputPublicExportHash = exportHash(rawBytes);
 const nodes = raw.nodes;
 const edges = raw.edges;
 const detected = JSON.parse(readFileSync(CONSTELLATIONS, "utf8"));
@@ -119,10 +123,12 @@ const detected = JSON.parse(readFileSync(CONSTELLATIONS, "utf8"));
  * first divergence taking another node's constellation, and the last 278 reading `undefined`
  * out of the end of a typed array.
  *
- * A length equality is the whole check. It is not sufficient in theory (two worlds of equal
- * size would pass) but it catches the failure that actually happens, which is a rebuild of one
- * stage and not the other, and it converts a silent mis-join into a refusal that names the fix.
+ * The exact public-export hash and assignment count must both match. Equal-size exports
+ * can contain different identities or node order; a length check alone cannot detect that.
  */
+if (detected.inputPublicExportHash !== inputPublicExportHash) {
+    throw new Error("Constellation partition input hash does not match this public export; rebuild it");
+}
 if (detected.community.length !== nodes.length) {
     console.error(
         `\nConstellation partition does not fit this world.\n` +
@@ -502,6 +508,8 @@ const constellations = regionIds.map((id, i) => {
 
 const manifest = {
     version: 2,
+    inputPublicExportHash,
+    identityAudit,
     generated: raw.generated,
     source: { nodes: raw.counts.nodes, edges: raw.counts.edges },
     counts: { nodes: nodes.length, edges: edges.length },

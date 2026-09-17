@@ -1,0 +1,14 @@
+{
+  "artifact": "FINAL_CLOSURE_SPRINT_BASELINE_BACKUP",
+  "taken_at": "2026-09-16T16:50:52.821790+00:00",
+  "head": "b4b1b0beba1c499e832150b0b9363d7258e40a26",
+  "path": "D:/vedanvaya-backups/final-closure-sprint-baseline-20260916T164452/neo4j.dump",
+  "sha256": "e0583308f8942c4546fe21c0db8ea7179b1c91cb668b7978f6e6cc4b1f5ec906",
+  "bytes": 122008874,
+  "method": "offline neo4j-admin database dump against infra_neo4j_data volume",
+  "graph_at_backup": {
+    "nodes": 117970,
+    "relationships": 282389,
+    "core_total": 20210
+  }
+}

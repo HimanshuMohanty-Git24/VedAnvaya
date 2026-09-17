@@ -210,14 +210,18 @@ export default async function AboutPage() {
                         </p>
                         <p>
                             If you ask this product how many Samavedic verses carry an English
-                            translation, the answer is zero — and that zero means no translation has
-                            been released here, not that the Samaveda resists translation. If you
-                            ask which Atharvavedic hymns are dedicated to Indra, the answer is that
-                            the traditional index which records dedications exists for the Rigveda
-                            and not for the Atharvaveda, so the question has no Atharvavedic answer
-                            in this build. Neither of those is a zero you could have inferred, and
-                            both are the kind of thing an interface returns as an empty list if
-                            nobody makes it do otherwise.
+                            translation of their own, the answer is zero — and that zero means no
+                            Samavedic translation has been released here, not that the Samaveda
+                            resists translation. A few of its verses do show an English rendering,
+                            and it is Griffith&rsquo;s Rigvedic one, shown because the text was
+                            verified identical; it is labelled as borrowed and it is not this
+                            collection&rsquo;s own. If you ask which Atharvavedic hymns are
+                            dedicated to Indra, the answer is a list — but the dedications are
+                            recorded as the index&rsquo;s own descriptive phrases rather than as
+                            names in the deity registry, so they answer the question in the
+                            index&rsquo;s words and not in ours. Neither of those is a zero or a
+                            list you could have inferred, and both are the kind of thing an
+                            interface returns as an empty list if nobody makes it do otherwise.
                         </p>
                         <p>
                             That is why coverage statements travel with the data rather than sitting

@@ -875,9 +875,12 @@ export interface paths {
          *
          *     **`review_status` is spelled out because the honest answer is uniform.** Nothing in this
          *     graph is HUMAN_REVIEWED. The strongest state that exists is MODEL_ADJUDICATED, on 613 edges
-         *     across ten predicates, where a model re-read the passage and accepted the edge with a
-         *     stated reason. Most edges carry no review record at all, which is not the same as having
-         *     been reviewed and passed.
+         *     across twelve predicates, where a model re-read the passage and accepted the edge with a
+         *     stated reason. TIER_C is wider by 11: 598 edges, of which the 11 that hang off no passage
+         *     are Devata-to-Devata epithet identities carrying review_state UNREVIEWED. The figures are
+         *     :data:`~vedagraph.domain.layer_figures.REVIEW_POPULATION`, measured against the graph.
+         *     Most edges carry no review record at all, which is not the same as having been reviewed
+         *     and passed.
          */
         get: operations["relationship_endpoint_api_v1_graph_relationships__relationship_id__get"];
         put?: never;
@@ -954,6 +957,82 @@ export interface paths {
          *     The semantic-resemblance and semantic-assertion rows are `NOT_BUILT` for every pair and are returned anyway -- the first because no non-lexical measure exists in this graph, the second because every semantic assertion is Rigvedic and so has no non-Rigvedic endpoint to pair with.
          */
         get: operations["cross_veda_matrix_api_v1_insights_cross_veda_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/insights/devatas/{devata_id}/by-book": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * One deity's distribution across the books of every corpus (aggregate)
+         * @description **Cost class: AGGREGATE.** Walks the containment tree and is exempt from the median latency target.
+         *
+         *     Closes `VIZ_BLOCKER_02`. A deity x mandala heatmap could not be served: `named_by_veda` is per-*Veda* only, and building the breakdown client-side from `/devatas/{id}/passages` would hit the 200-row page cap and truncate without saying so.
+         *
+         *     **Every book is returned, including the ones with no mention.** A book the deity is absent from carries `MEASURED_ZERO` and a note, because a query that returns only its positive rows lets a reader infer a zero nobody measured.
+         *
+         *     Each row carries the book's own mantra total and a per-1,000 figure. Books differ in size by more than an order of magnitude, and a heatmap read on raw counts puts every deity in the largest book.
+         */
+        get: operations["devata_by_book_api_v1_insights_devatas__devata_id__by_book_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/insights/devatas/{devata_id}/by-metre": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * One deity against the metre layer, with the corpora it misses typed (aggregate)
+         * @description **Cost class: AGGREGATE.**
+         *
+         *     Closes `VIZ_BLOCKER_03`, which was deferred on the grounds that the metre layer reaches only two corpora so the matrix would be two thirds hatched -- honest, but thin. Thin and honest is what is served: the corpora the metre layer does not reach are **returned** as rows typed `NOT_BUILT`, never omitted. A matrix with two corpora silently missing is read as a matrix of two corpora, and the Samaveda's verses are metrical whatever this graph knows about them.
+         *
+         *     The layer's reach is measured on each request rather than listed, so a metre layer that grows shrinks the hatched rows without anyone editing a constant.
+         */
+        get: operations["devata_by_metre_api_v1_insights_devatas__devata_id__by_metre_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/insights/devatas/{devata_id}/dispersion": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Every position at which a deity is attested, unbounded by the page cap
+         * @description **Cost class: AGGREGATE.**
+         *
+         *     Closes `VIZ_BLOCKER_01`. An Invocation Landscape for a major deity needs every attesting position, and `/devatas/{id}/passages` is capped at 200 rows a page -- Indra's 2,305 Rigvedic verses were eighteen round trips, and a caller who stopped early got a landscape that looked sparse rather than truncated.
+         *
+         *     Returns **integer positions only**, never passage payloads, so the response stays small whatever the deity's size. A position is the verse's rank in its corpus's canonical order: reading order, which is not order of composition.
+         *
+         *     Every corpus is present. An empty `positions` array is `MEASURED_ZERO` with a note, so it is distinguishable from an absent layer.
+         */
+        get: operations["devata_dispersion_api_v1_insights_devatas__devata_id__dispersion_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1815,6 +1894,38 @@ export interface components {
          */
         Availability: "AVAILABLE" | "TEMPORARILY_UNAVAILABLE" | "BROKEN" | "EXTERNAL_ONLY";
         /**
+         * BookCountRow
+         * @description One book of one corpus, with the deity's count in it and the book's own size.
+         *
+         *     ``denominator`` is the book's mantra total and it is not optional. Mandala 9 is four
+         *     times the size of Mandala 2; a heatmap read on raw counts says the Soma book is where
+         *     every deity lives.
+         */
+        BookCountRow: {
+            /** Book Key */
+            book_key: string;
+            /** Book Label */
+            book_label: string;
+            /** Veda */
+            veda: string;
+            /**
+             * Count
+             * @description Null unless status is MEASURED or MEASURED_ZERO.
+             */
+            count?: number | null;
+            /**
+             * Denominator
+             * @description Mantras in this book.
+             */
+            denominator: number;
+            /** Per 1000 */
+            per_1000?: number | null;
+            /** @default MEASURED */
+            status: components["schemas"]["CellStatus"];
+            /** Note */
+            note?: string | null;
+        };
+        /**
          * BreadcrumbView
          * @description One step of a passage's position in its Veda's own structure.
          *
@@ -1902,6 +2013,23 @@ export interface components {
             total_available: number;
             /** Requested Question */
             requested_question?: number | null;
+            /**
+             * Benchmark Not Answerable Total
+             * @description How many questions the frozen 100-question benchmark graded NOT_ANSWERABLE. The population this catalogue must cover.
+             * @default 0
+             */
+            benchmark_not_answerable_total: number;
+            /**
+             * Benchmark Not Answerable Published
+             * @description How many of those this catalogue publishes a probed card for. The catalogue published 7 against 21 once, and said so rather than implying completeness; these two fields are what make that claim checkable.
+             * @default 0
+             */
+            benchmark_not_answerable_published: number;
+            /**
+             * Unpublished Not Answerable
+             * @description Benchmark question numbers graded NOT_ANSWERABLE with no card here. Empty is the closed state, and it is a measurement rather than an assurance.
+             */
+            unpublished_not_answerable?: number[];
         };
         /**
          * CapabilityLimit
@@ -1920,6 +2048,8 @@ export interface components {
             /** Question */
             question: string;
             verdict: components["schemas"]["CapabilityVerdict"];
+            /** @description The frozen V3.3 benchmark's grade, kept beside the live one. They can differ, and when they do the difference is the finding: the graph has moved since the benchmark was frozen, and copying the frozen grade forward would publish a limitation that no longer holds. */
+            benchmark_verdict?: components["schemas"]["CapabilityVerdict"] | null;
             data_status: components["schemas"]["KnowledgeStatus"];
             /**
              * Why
@@ -1994,6 +2124,17 @@ export interface components {
              */
             source: string;
         };
+        /**
+         * CellStatus
+         * @description Why a cell in a deity aggregate holds the value it holds.
+         *
+         *     ``MEASURED_ZERO`` and ``NOT_BUILT`` both render as an empty cell and mean opposite
+         *     things: the first says the deity is not named in that book and the layer looked, the
+         *     second says the layer does not reach that corpus and nothing was looked at. A heatmap
+         *     that drew both as a pale square would assert the Samaveda has no metre.
+         * @enum {string}
+         */
+        CellStatus: "MEASURED" | "MEASURED_ZERO" | "NOT_BUILT";
         /**
          * CentralityView
          * @description A domain entity's measured prominence, with its unbuilt half kept unbuilt.
@@ -2240,6 +2381,53 @@ export interface components {
             note?: string | null;
         };
         /**
+         * CoverageDimension
+         * @description One dimension's reach, where a response carries more than one.
+         *
+         *     A deity's *naming* is read off the verse text and spans all four corpora; its
+         *     *ascription* is the traditional apparatus and reaches the Rigveda alone. Those are two
+         *     populations with two different scopes, and a single ``vedas_not_covered`` cannot state
+         *     both -- it once stated the ascription scope beside the naming figures, so the endpoint
+         *     published AV 635, YV 221 and SV 405 and simultaneously told a machine consumer that
+         *     AV, YV and SV were not covered.
+         */
+        CoverageDimension: {
+            /**
+             * Dimension
+             * @description What is being counted, e.g. 'naming' or 'ascription'. Names the axis, so a reader never has to infer which figures a scope applies to.
+             */
+            dimension: string;
+            /**
+             * Vedas In Scope
+             * @description Veda codes THIS dimension measurably reaches.
+             */
+            vedas_in_scope?: string[];
+            /**
+             * Vedas Not Covered
+             * @description Veda codes where THIS dimension's zero means an absent layer.
+             */
+            vedas_not_covered?: string[];
+            /**
+             * Measured
+             * @description Per-Veda counts for this dimension.
+             */
+            measured?: {
+                [key: string]: number;
+            };
+            /**
+             * Denominator
+             * @description Per-Veda mantra totals for normalisation.
+             */
+            denominator?: {
+                [key: string]: number;
+            };
+            /**
+             * Means
+             * @description What this dimension counts and what it must not be added to.
+             */
+            means: string;
+        };
+        /**
          * CoverageView
          * @description What corpus this answer actually reached.
          *
@@ -2247,6 +2435,11 @@ export interface components {
          *     graph is treating a Veda's zero as textual absence when the annotation layer simply
          *     does not reach that corpus, and a coverage block beside the counts is what makes the
          *     two distinguishable without reading prose.
+         *
+         *     The top-level fields describe the dimension ``measured`` belongs to. Where a response
+         *     carries figures from more than one dimension, each gets a :class:`CoverageDimension`
+         *     in ``dimensions`` rather than having its scope folded into the block above -- folding
+         *     is what made three Vedas in-scope, not-covered and measured at the same time.
          */
         CoverageView: {
             /**
@@ -2273,6 +2466,11 @@ export interface components {
             denominator?: {
                 [key: string]: number;
             };
+            /**
+             * Dimensions
+             * @description Per-dimension coverage, present whenever this response reports figures from more than one dimension with different corpus reach.
+             */
+            dimensions?: components["schemas"]["CoverageDimension"][];
         };
         /**
          * CrossVedaCell
@@ -2541,6 +2739,154 @@ export interface components {
             quality_tier?: string | null;
             /** Knowledge Layer */
             knowledge_layer?: string | null;
+        };
+        /**
+         * DevataByBookResponse
+         * @description VIZ_BLOCKER_02. The per-book aggregate a deity x mandala heatmap needs.
+         *
+         *     The blocker's own warning is the reason this is an endpoint rather than a client-side
+         *     roll-up of ``/devatas/{id}/passages``: that route is capped at 200 rows a page, so a
+         *     heatmap built by paging it would truncate silently and a truncated heatmap is
+         *     indistinguishable from a sparse one.
+         */
+        DevataByBookResponse: {
+            /**
+             * Insight
+             * @description Stable identifier for this view, safe to key on.
+             */
+            insight: string;
+            /**
+             * Question
+             * @description The question this view answers, in words.
+             */
+            question: string;
+            data_status: components["schemas"]["KnowledgeStatus"];
+            cost_class: components["schemas"]["CostClass"];
+            /**
+             * Cost Note
+             * @description What this endpoint scans, so a slow response is legible rather than surprising.
+             */
+            cost_note: string;
+            /**
+             * Vedas Reported
+             * @description Corpora whose figures appear below. Each one's exclusions are attached.
+             */
+            vedas_reported?: string[];
+            /** Scope Statements */
+            scope_statements?: components["schemas"]["WorkScopeView"][];
+            coverage?: components["schemas"]["CoverageView"] | null;
+            /** Caveats */
+            caveats?: components["schemas"]["CaveatView"][];
+            /** Devata Id */
+            devata_id: string;
+            /** Display Label */
+            display_label: string;
+            /**
+             * Basis
+             * @description Which layer the counts come from: 'naming' spans four corpora, 'ascription' reaches the Rigveda alone. Never mixed in one response.
+             */
+            basis: string;
+            /** Books */
+            books?: components["schemas"]["BookCountRow"][];
+            /**
+             * Total
+             * @description Sum over the measured books. Equals the naming total.
+             */
+            total: number;
+        };
+        /**
+         * DevataByMetreResponse
+         * @description VIZ_BLOCKER_03. The deity x metre aggregate, with two thirds of it typed unbuilt.
+         *
+         *     The blocker called this low priority because "the metre layer reaches only RV and AV,
+         *     so the matrix would be two-thirds hatched -- honest, but thin". Thin and honest is the
+         *     right trade and it is served here: the Samavedic and Yajurvedic rows are present and
+         *     typed ``NOT_BUILT`` rather than omitted, because a matrix with two corpora silently
+         *     missing is read as a matrix of two corpora.
+         */
+        DevataByMetreResponse: {
+            /**
+             * Insight
+             * @description Stable identifier for this view, safe to key on.
+             */
+            insight: string;
+            /**
+             * Question
+             * @description The question this view answers, in words.
+             */
+            question: string;
+            data_status: components["schemas"]["KnowledgeStatus"];
+            cost_class: components["schemas"]["CostClass"];
+            /**
+             * Cost Note
+             * @description What this endpoint scans, so a slow response is legible rather than surprising.
+             */
+            cost_note: string;
+            /**
+             * Vedas Reported
+             * @description Corpora whose figures appear below. Each one's exclusions are attached.
+             */
+            vedas_reported?: string[];
+            /** Scope Statements */
+            scope_statements?: components["schemas"]["WorkScopeView"][];
+            coverage?: components["schemas"]["CoverageView"] | null;
+            /** Caveats */
+            caveats?: components["schemas"]["CaveatView"][];
+            /** Devata Id */
+            devata_id: string;
+            /** Display Label */
+            display_label: string;
+            /** Cells */
+            cells?: components["schemas"]["MetreCountRow"][];
+            /** Vedas With A Metre Layer */
+            vedas_with_a_metre_layer?: string[];
+            /** Total */
+            total: number;
+        };
+        /**
+         * DevataDispersionResponse
+         * @description VIZ_BLOCKER_01. Dispersion for a deity of any size, unbounded by the page cap.
+         */
+        DevataDispersionResponse: {
+            /**
+             * Insight
+             * @description Stable identifier for this view, safe to key on.
+             */
+            insight: string;
+            /**
+             * Question
+             * @description The question this view answers, in words.
+             */
+            question: string;
+            data_status: components["schemas"]["KnowledgeStatus"];
+            cost_class: components["schemas"]["CostClass"];
+            /**
+             * Cost Note
+             * @description What this endpoint scans, so a slow response is legible rather than surprising.
+             */
+            cost_note: string;
+            /**
+             * Vedas Reported
+             * @description Corpora whose figures appear below. Each one's exclusions are attached.
+             */
+            vedas_reported?: string[];
+            /** Scope Statements */
+            scope_statements?: components["schemas"]["WorkScopeView"][];
+            coverage?: components["schemas"]["CoverageView"] | null;
+            /** Caveats */
+            caveats?: components["schemas"]["CaveatView"][];
+            /** Devata Id */
+            devata_id: string;
+            /** Display Label */
+            display_label: string;
+            /** Basis */
+            basis: string;
+            /** By Veda */
+            by_veda?: {
+                [key: string]: components["schemas"]["DispersionSeries"];
+            };
+            /** Total Positions */
+            total_positions: number;
         };
         /**
          * DevataInsightResponse
@@ -2948,6 +3294,30 @@ export interface components {
              * @description Why the field is empty. Never 'no data'.
              */
             note: string;
+        };
+        /**
+         * DispersionSeries
+         * @description Where in one corpus a deity is attested, as ordinal positions and nothing else.
+         *
+         *     ``positions`` are 1-based indices into the corpus's canonical mantra order, not
+         *     citations and not payloads. That is the point: an Invocation Landscape for a major
+         *     deity needs every attesting position, and returning the passages would be 2,305 objects
+         *     behind an endpoint capped at 200 rows a page.
+         */
+        DispersionSeries: {
+            /** Veda */
+            veda: string;
+            /** Positions */
+            positions?: number[];
+            /**
+             * Denominator
+             * @description Mantras in this corpus, the axis length.
+             */
+            denominator: number;
+            /** @default MEASURED */
+            status: components["schemas"]["CellStatus"];
+            /** Note */
+            note?: string | null;
         };
         /**
          * EntityListRow
@@ -4328,6 +4698,24 @@ export interface components {
             note?: string | null;
         };
         /**
+         * MetreCountRow
+         * @description One deity x metre cell.
+         */
+        MetreCountRow: {
+            /** Metre Key */
+            metre_key: string;
+            /** Metre Label */
+            metre_label: string;
+            /** Veda */
+            veda: string;
+            /** Count */
+            count?: number | null;
+            /** @default MEASURED */
+            status: components["schemas"]["CellStatus"];
+            /** Note */
+            note?: string | null;
+        };
+        /**
          * NavigationRelation
          * @enum {string}
          */
@@ -4764,7 +5152,7 @@ export interface components {
             review_state: string;
             /**
              * Review Note
-             * @default No node or edge in this graph carries HUMAN_REVIEWED. The strongest review state present is MODEL_ADJUDICATED, on 587 edges, none of them Rigvedic.
+             * @default No edge in this graph is HUMAN_REVIEWED and none may claim to be (0 carry it); there is still no human gold set. The strongest review state that exists is MODEL_ADJUDICATED, on 613 edges across 12 predicates, where a model re-read the passage and accepted the edge with a stated reason. TIER_C is wider than that: of its 598 edges, 587 hang off a passage (320 Yajurvedic, 267 Atharvavedic, 0 Rigvedic) and 11 are Devata-to-Devata epithet identities, adjudicated as labels with no passage to read and carrying review_state UNREVIEWED for that reason.
              */
             review_note: string;
         };
@@ -8751,6 +9139,252 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["CrossVedaMatrixResponse"];
+                };
+            };
+            /** @description The request is well-formed but unsupported. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description No such passage, entity or work. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A parameter failed validation. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description The knowledge graph is unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    devata_by_book_api_v1_insights_devatas__devata_id__by_book_get: {
+        parameters: {
+            query?: {
+                /** @description Which mention certainty tiers to count. */
+                certainty?: components["schemas"]["MentionCertainty"];
+                /** @description `deities` (default) refuses the 30 non-divine devata-slot ascriptions; `all_ascriptions` serves them with their structure and a not-a-deity caveat. */
+                population?: components["schemas"]["DeityPopulation"];
+            };
+            header?: never;
+            path: {
+                /** @description Product id of the deity, e.g. VG:DEVATA:INDRAH. */
+                devata_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DevataByBookResponse"];
+                };
+            };
+            /** @description The request is well-formed but unsupported. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description No such passage, entity or work. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A parameter failed validation. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description The knowledge graph is unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    devata_by_metre_api_v1_insights_devatas__devata_id__by_metre_get: {
+        parameters: {
+            query?: {
+                /** @description Which mention certainty tiers to count. */
+                certainty?: components["schemas"]["MentionCertainty"];
+                /** @description `deities` (default) refuses the 30 non-divine devata-slot ascriptions; `all_ascriptions` serves them with their structure and a not-a-deity caveat. */
+                population?: components["schemas"]["DeityPopulation"];
+            };
+            header?: never;
+            path: {
+                /** @description Product id of the deity, e.g. VG:DEVATA:INDRAH. */
+                devata_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DevataByMetreResponse"];
+                };
+            };
+            /** @description The request is well-formed but unsupported. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description No such passage, entity or work. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description The record exists but this product holds no bytes for it. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A parameter failed validation. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description A third-party media source did not answer. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description The knowledge graph is unavailable. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    devata_dispersion_api_v1_insights_devatas__devata_id__dispersion_get: {
+        parameters: {
+            query?: {
+                /** @description Which mention certainty tiers to count. */
+                certainty?: components["schemas"]["MentionCertainty"];
+                /** @description `deities` (default) refuses the 30 non-divine devata-slot ascriptions; `all_ascriptions` serves them with their structure and a not-a-deity caveat. */
+                population?: components["schemas"]["DeityPopulation"];
+            };
+            header?: never;
+            path: {
+                /** @description Product id of the deity, e.g. VG:DEVATA:INDRAH. */
+                devata_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DevataDispersionResponse"];
                 };
             };
             /** @description The request is well-formed but unsupported. */

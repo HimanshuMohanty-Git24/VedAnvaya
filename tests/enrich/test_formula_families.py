@@ -48,6 +48,7 @@ from vedagraph.enrich.formula_families import (
     FormulaFamilyMemberRow,
     FormulaFamilyRow,
     MemberRole,
+    assert_formula_surfaces_are_folded,
     build_formula_families,
     recommend_removals,
 )
@@ -614,11 +615,87 @@ def test_real_artifact_accounts_for_every_formula_it_read() -> None:
     assert report.notes["formulas_accounted_for"] == report.notes["formulas_read"]
 
 
-def test_real_artifact_reproduces_the_v1_substring_figure_on_the_identity_surface() -> None:
-    """1,103 is V1's number and it is right; the audit that could not reproduce it
-    measured ``normalized`` and ``display_form`` instead of the collapsed identity."""
+def test_real_artifact_substring_figure_equals_an_independent_recomputation() -> None:
+    """The substring figure is checked against a second implementation, not a constant.
+
+    HISTORY, because the constant this replaces is the reason the test exists. V1 reported
+    1,103 strict substrings of 4,825 formulas; a later audit measured ``normalized`` and
+    ``display_form``, got 1,039 and 984, and called V1 unreproducible. Both were right
+    about their own surface, and on the *collapsed identity* -- the surface ``formula_id``
+    is derived from -- V1's 1,103 reproduced exactly, so this test pinned 1103.
+
+    Then it started failing at 1,064, and the 39 was neither a regression nor a stale
+    number. ``vedagraph.normalize.unicode`` gained the Yajurvedic anusvara run collapse at
+    commit 3f2b0d8; rebuilt over the corrected fold the *population* is 4,729 rather than
+    4,825, and 1,064 is that population's correct figure. 78 formulas lost nested status --
+    51 because the formula itself no longer exists and 27 because every container of it no
+    longer exists -- and 39 gained it.
+
+    A pinned integer could not tell those three cases apart, so it is gone. What is pinned
+    instead is that the layer's own containment implementation agrees with a naive one over
+    whatever population it actually read. That can fail: break ``_containment_pairs``'s
+    length bucketing and the two disagree immediately.
+    """
+    formulas = read_artifact(PROJECT_ROOT, FORMULAS_FILE)
+    if not formulas:
+        pytest.skip("enrichment artifacts not built")
     _, _, report = _real()
-    assert report.notes["formulas_strictly_contained_in_another"] == 1103
+
+    identities = {
+        str(row["formula_id"]): "".join(str(row["normalized"]).split()) for row in formulas
+    }
+    naive = sum(
+        1
+        for key, value in identities.items()
+        if any(
+            value in other and len(other) > len(value)
+            for other_key, other in identities.items()
+            if other_key != key
+        )
+    )
+    assert report.notes["formulas_strictly_contained_in_another"] == naive
+    assert report.notes["formulas_read"] == len(formulas)
+
+
+def test_the_family_builder_refuses_an_unfolded_comparison_surface() -> None:
+    """BAD -> FAIL. The guard that did not exist when the 1,103 population was built.
+
+    The artifact the canonical graph's 4,825 formulas came from carried a doubled anusvara
+    in ``normalized`` and a raw U+1CEA in ``display_form``. The builder read it without a
+    word. Both spellings must now raise, and the real artifact must not.
+    """
+    good = [
+        {"formula_id": "A", "normalized": "agnim īḷe", "display_form": "agnim īḷe"}
+    ]
+    assert_formula_surfaces_are_folded(good)
+
+    doubled = [
+        {"formula_id": "B", "normalized": "pāvako asmabhyaṃṃ śivo bhava",
+         "display_form": "pāvako asmabhyaṃ śivo bhava"}
+    ]
+    with pytest.raises(ValueError, match="not a finished transliteration"):
+        assert_formula_surfaces_are_folded(doubled)
+
+    devanagari = [
+        {"formula_id": "C", "normalized": "apāṃ retāṃsi",
+         "display_form": "apāᳪṃ retāᳪṃsi"}
+    ]
+    with pytest.raises(ValueError, match="not a finished transliteration"):
+        assert_formula_surfaces_are_folded(devanagari)
+
+    private_use = [
+        {"formula_id": "D", "normalized": "soma", "display_form": "somaṃ"}
+    ]
+    with pytest.raises(ValueError, match="not a finished transliteration"):
+        assert_formula_surfaces_are_folded(private_use)
+
+
+def test_the_real_artifact_passes_the_unfolded_surface_guard() -> None:
+    """GOOD -> PASS, over the artifact the tests above actually read."""
+    formulas = read_artifact(PROJECT_ROOT, FORMULAS_FILE)
+    if not formulas:
+        pytest.skip("enrichment artifacts not built")
+    assert_formula_surfaces_are_folded(formulas)
 
 
 def test_real_artifact_resolves_more_rows_than_it_leaves_for_the_three_veda_question() -> None:

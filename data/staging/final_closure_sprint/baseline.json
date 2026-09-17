@@ -1,0 +1,44 @@
+{
+  "artifact": "FINAL_CLOSURE_SPRINT_BASELINE",
+  "at": "2026-09-16T16:50:52.821790+00:00",
+  "head": "b4b1b0beba1c499e832150b0b9363d7258e40a26",
+  "branch": "phase-data-completeness-v2",
+  "tree_clean": false,
+  "graph": {
+    "nodes": 117970,
+    "relationships": 282389,
+    "core_corpus": {
+      "RV": 10552,
+      "SV": 1844,
+      "YV": 1975,
+      "AV": 5839
+    },
+    "core_total": 20210,
+    "core_invariant_holds": true
+  },
+  "registry": {
+    "entries": 85,
+    "status_counts": {
+      "STILL_IMPLEMENTATION_FIXABLE": 43,
+      "CLOSED_DERIVED": 21,
+      "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE": 3,
+      "CLOSED_NOT_APPLICABLE": 1,
+      "CLOSED_VERIFIED_ZERO": 4,
+      "NEEDS_AUDIBLE_REVIEW": 3,
+      "CLOSED_SCOPE_DECISION": 9,
+      "BLOCKED_OWNER_DECISION_REQUIRED": 1
+    },
+    "implementation_fixable_measured": 43
+  },
+  "measured_not_inherited": {
+    "wave4_status_md_claimed_fixable": 40,
+    "wave4_audit_script_rulings_fixable": 39,
+    "registry_file_measured_fixable": 43,
+    "discrepancy": "scripts/wave4_registry_closure_audit.py carries a STALE hard-coded ruling table: it rules GAP-TRANSLATION-001..004 BLOCKED_OWNER_DECISION_REQUIRED, but OWNER_DECISION_A_RV_SPAN and _D are CLOSED and _C is NARROWED_TO_THREE_WITHHELD as of commit b4b1b0b, so the registry correctly holds those four STILL_IMPLEMENTATION_FIXABLE. The audit gate must be refreshed by the lead; until then it under-reports by 4."
+  },
+  "backup": {
+    "path": "D:/vedanvaya-backups/final-closure-sprint-baseline-20260916T164452/neo4j.dump",
+    "sha256": "e0583308f8942c4546fe21c0db8ea7179b1c91cb668b7978f6e6cc4b1f5ec906"
+  },
+  "fingerprint_sha256": "b210e36b631bfa34c909f6a71237371616aeea83b8a1587aa2924b3fd6ee9250"
+}

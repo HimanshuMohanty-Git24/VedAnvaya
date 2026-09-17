@@ -50,6 +50,7 @@ from vedagraph.api.models.common import (
     ReferentCertaintyCounts,
 )
 from vedagraph.api.models.entity import AttributedRef, EntityRef, MentionCertainty
+from vedagraph.domain import layer_figures
 from vedagraph.domain.translation_semantics import TranslationCoverageKind
 
 # ---------------------------------------------------------------------------
@@ -694,10 +695,10 @@ class PassageProvenance(ApiModel):
     rights: list[str] = Field(default_factory=list)
     status: str | None = Field(default=None, description="The passage's canonical status.")
     review_state: str = "NOT_HUMAN_REVIEWED"
-    review_note: str = (
-        "No node or edge in this graph carries HUMAN_REVIEWED. The strongest review state "
-        "present is MODEL_ADJUDICATED, on 587 edges, none of them Rigvedic."
-    )
+    # Built from the measured figures rather than typed. The sentence this replaces said
+    # "MODEL_ADJUDICATED, on 587 edges, none of them Rigvedic", which is the TIER_C
+    # passage-anchored count wearing the MODEL_ADJUDICATED label: MODEL_ADJUDICATED is 613.
+    review_note: str = layer_figures.adjudication_disclosure()
 
 
 class PassageDetail(ApiModel):

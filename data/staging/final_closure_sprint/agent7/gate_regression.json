@@ -1,0 +1,166 @@
+{
+ "artifact": "AGENT7_GATE_REGRESSION",
+ "control_population": 2254,
+ "treatment_population": 2255,
+ "rows_agent7_touched": [
+  "VG:RV:SAK:M08:S093:V029",
+  "VG:YV:VSM:A12:V106",
+  "VG:YV:VSM:A12:V107",
+  "VG:YV:VSM:A12:V108",
+  "VG:YV:VSM:A12:V109",
+  "VG:YV:VSM:A12:V110",
+  "VG:YV:VSM:A12:V111",
+  "VG:YV:VSM:A12:V112",
+  "VG:YV:VSM:A12:V113",
+  "VG:YV:VSM:A12:V114",
+  "VG:YV:VSM:A12:V115",
+  "VG:YV:VSM:A12:V116",
+  "VG:YV:VSM:A12:V117"
+ ],
+ "verdicts_that_moved": 12,
+ "intended_moves": [
+  {
+   "canonical_key": "VG:RV:SAK:M08:S093:V029",
+   "control": null,
+   "treatment": {
+    "B": "B_PASS",
+    "C": "C_PASS"
+   },
+   "touched_by_agent7": true
+  },
+  {
+   "canonical_key": "VG:YV:VSM:A12:V106",
+   "control": {
+    "B": "B_FAIL_PROVENANCE",
+    "C": "C_PASS"
+   },
+   "treatment": {
+    "B": "B_PASS",
+    "C": "C_PASS"
+   },
+   "touched_by_agent7": true
+  },
+  {
+   "canonical_key": "VG:YV:VSM:A12:V107",
+   "control": {
+    "B": "B_FAIL_PROVENANCE",
+    "C": "C_PASS"
+   },
+   "treatment": {
+    "B": "B_PASS",
+    "C": "C_PASS"
+   },
+   "touched_by_agent7": true
+  },
+  {
+   "canonical_key": "VG:YV:VSM:A12:V108",
+   "control": {
+    "B": "B_FAIL_PROVENANCE",
+    "C": "C_PASS"
+   },
+   "treatment": {
+    "B": "B_PASS",
+    "C": "C_PASS"
+   },
+   "touched_by_agent7": true
+  },
+  {
+   "canonical_key": "VG:YV:VSM:A12:V109",
+   "control": {
+    "B": "B_FAIL_PROVENANCE",
+    "C": "C_PASS"
+   },
+   "treatment": {
+    "B": "B_PASS",
+    "C": "C_PASS"
+   },
+   "touched_by_agent7": true
+  },
+  {
+   "canonical_key": "VG:YV:VSM:A12:V110",
+   "control": {
+    "B": "B_FAIL_PROVENANCE",
+    "C": "C_PASS"
+   },
+   "treatment": {
+    "B": "B_PASS",
+    "C": "C_PASS"
+   },
+   "touched_by_agent7": true
+  },
+  {
+   "canonical_key": "VG:YV:VSM:A12:V111",
+   "control": {
+    "B": "B_FAIL_PROVENANCE",
+    "C": "C_PASS"
+   },
+   "treatment": {
+    "B": "B_PASS",
+    "C": "C_PASS"
+   },
+   "touched_by_agent7": true
+  },
+  {
+   "canonical_key": "VG:YV:VSM:A12:V112",
+   "control": {
+    "B": "B_FAIL_PROVENANCE",
+    "C": "C_PASS"
+   },
+   "treatment": {
+    "B": "B_PASS",
+    "C": "C_PASS"
+   },
+   "touched_by_agent7": true
+  },
+  {
+   "canonical_key": "VG:YV:VSM:A12:V113",
+   "control": {
+    "B": "B_FAIL_PROVENANCE",
+    "C": "C_PASS"
+   },
+   "treatment": {
+    "B": "B_PASS",
+    "C": "C_PASS"
+   },
+   "touched_by_agent7": true
+  },
+  {
+   "canonical_key": "VG:YV:VSM:A12:V114",
+   "control": {
+    "B": "B_FAIL_PROVENANCE",
+    "C": "C_PASS"
+   },
+   "treatment": {
+    "B": "B_PASS",
+    "C": "C_PASS"
+   },
+   "touched_by_agent7": true
+  },
+  {
+   "canonical_key": "VG:YV:VSM:A12:V115",
+   "control": {
+    "B": "B_FAIL_PROVENANCE",
+    "C": "C_PASS"
+   },
+   "treatment": {
+    "B": "B_PASS",
+    "C": "C_PASS"
+   },
+   "touched_by_agent7": true
+  },
+  {
+   "canonical_key": "VG:YV:VSM:A12:V116",
+   "control": {
+    "B": "B_FAIL_PROVENANCE",
+    "C": "C_PASS"
+   },
+   "treatment": {
+    "B": "B_PASS",
+    "C": "C_PASS"
+   },
+   "touched_by_agent7": true
+  }
+ ],
+ "regressions_on_untouched_rows": [],
+ "regression_free": true
+}

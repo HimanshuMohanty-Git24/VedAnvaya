@@ -1,0 +1,1171 @@
+{
+ "artifact": "AGENT7_RESIDUAL_DISPOSITION",
+ "rule": "no residual is called absent until its applicable addressing diagnostics have run; each verdict cites the probe that produced it",
+ "counts": {
+  "named_and_dispositioned": 60,
+  "RV": 7,
+  "YV": 36,
+  "AV": 17,
+  "SV_population_not_enumerated": 1671
+ },
+ "resolved_by_this_agent": [
+  "VG:RV:SAK:M08:S093:V029",
+  "VG:YV:VSM:A12:V106",
+  "VG:YV:VSM:A12:V107",
+  "VG:YV:VSM:A12:V108",
+  "VG:YV:VSM:A12:V109",
+  "VG:YV:VSM:A12:V110",
+  "VG:YV:VSM:A12:V111",
+  "VG:YV:VSM:A12:V112",
+  "VG:YV:VSM:A12:V113",
+  "VG:YV:VSM:A12:V114",
+  "VG:YV:VSM:A12:V115",
+  "VG:YV:VSM:A12:V116"
+ ],
+ "confirmed_absent": [
+  "VG:AV:SAU:K20:S017:V001",
+  "VG:AV:SAU:K20:S047:V005",
+  "VG:AV:SAU:K20:S047:V007",
+  "VG:AV:SAU:K20:S052:V003",
+  "VG:AV:SAU:K20:S057:V013",
+  "VG:AV:SAU:K20:S059:V001",
+  "VG:AV:SAU:K20:S059:V002",
+  "VG:AV:SAU:K20:S062:V003",
+  "VG:AV:SAU:K20:S069:V009",
+  "VG:AV:SAU:K20:S096:V024",
+  "VG:AV:SAU:K20:S129:V002",
+  "VG:AV:SAU:K20:S131:V002",
+  "VG:AV:SAU:K20:S133:V002",
+  "VG:AV:SAU:K20:S133:V003",
+  "VG:AV:SAU:K20:S133:V004",
+  "VG:AV:SAU:K20:S133:V005",
+  "VG:AV:SAU:K20:S133:V006",
+  "VG:RV:SAK:M10:S086:V016",
+  "VG:RV:SAK:M10:S086:V017",
+  "VG:YV:VSM:A23:V020",
+  "VG:YV:VSM:A23:V021",
+  "VG:YV:VSM:A23:V022",
+  "VG:YV:VSM:A23:V023",
+  "VG:YV:VSM:A23:V024",
+  "VG:YV:VSM:A23:V025",
+  "VG:YV:VSM:A23:V026",
+  "VG:YV:VSM:A23:V027",
+  "VG:YV:VSM:A23:V028",
+  "VG:YV:VSM:A23:V029",
+  "VG:YV:VSM:A23:V030",
+  "VG:YV:VSM:A23:V031"
+ ],
+ "still_implementation_fixable": [
+  "VG:RV:SAK:M05:S055:V008",
+  "VG:RV:SAK:M09:S007:V009",
+  "VG:RV:SAK:M10:S048:V007",
+  "VG:RV:SAK:M10:S132:V005",
+  "VG:YV:VSM:A12:V097",
+  "VG:YV:VSM:A12:V098",
+  "VG:YV:VSM:A12:V099",
+  "VG:YV:VSM:A12:V100",
+  "VG:YV:VSM:A12:V101",
+  "VG:YV:VSM:A12:V102",
+  "VG:YV:VSM:A12:V103",
+  "VG:YV:VSM:A12:V104",
+  "VG:YV:VSM:A12:V105",
+  "VG:YV:VSM:A12:V117",
+  "VG:YV:VSM:A20:V085",
+  "VG:YV:VSM:A21:V045",
+  "VG:YV:VSM:A36:V024"
+ ],
+ "per_key": {
+  "VG:RV:SAK:M05:S055:V008": {
+   "addressing_verdict": "MIS-GRAINED, NOT ABSENT",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "B_source_coordinate_system",
+    "C_edition_numbering",
+    "H_ocr_digit_confusion",
+    "I_sort_order",
+    "L_granularity"
+   ],
+   "measured": "the source prints no label for this verse. The preceding printed unit carries 4 lines where every other unit in the hymn carries [2, 3], so this verse's English is inside its neighbour's block, already imported under the neighbour's key.",
+   "printed_line_counts": [
+    2,
+    3,
+    2,
+    3,
+    2,
+    2,
+    4,
+    2,
+    2
+   ],
+   "merged_into_printed_label": "7",
+   "split_is_forced": false,
+   "disposition": "STILL_IMPLEMENTATION_FIXABLE. Two honest routes and neither is a split of Griffith's prose by this agent: (a) re-type the neighbour's rendering MANTRA_RANGE with both covered keys, the mechanism M13 already used for the RV 1.65-1.70 span under owner decision A; or (b) a second English witness. Splitting the block on a line count is refused: RV 5.55 alone prints units of 2 and 3 lines, so 4 lines is not forced to be 2+2.",
+   "staged_by_wave1_at": "PROBABLE",
+   "why_not_imported": "B_FAIL_POLICY: mapping_confidence PROBABLE is centrally NOT_IMPORTABLE",
+   "source_absent": false,
+   "canonical_key": "VG:RV:SAK:M05:S055:V008",
+   "gate_b": "B_FAIL_POLICY",
+   "gate_c": "C_PASS"
+  },
+  "VG:RV:SAK:M09:S007:V009": {
+   "addressing_verdict": "MIS-GRAINED, NOT ABSENT",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "B_source_coordinate_system",
+    "C_edition_numbering",
+    "H_ocr_digit_confusion",
+    "I_sort_order",
+    "L_granularity"
+   ],
+   "measured": "the source prints no label for this verse. The preceding printed unit carries 4 lines where every other unit in the hymn carries [2], so this verse's English is inside its neighbour's block, already imported under the neighbour's key.",
+   "printed_line_counts": [
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    4
+   ],
+   "merged_into_printed_label": "8",
+   "split_is_forced": true,
+   "disposition": "STILL_IMPLEMENTATION_FIXABLE. Two honest routes and neither is a split of Griffith's prose by this agent: (a) re-type the neighbour's rendering MANTRA_RANGE with both covered keys, the mechanism M13 already used for the RV 1.65-1.70 span under owner decision A; or (b) a second English witness. Splitting the block on a line count is refused: RV 5.55 alone prints units of 2 and 3 lines, so 4 lines is not forced to be 2+2.",
+   "staged_by_wave1_at": "PROBABLE",
+   "why_not_imported": "B_FAIL_POLICY: mapping_confidence PROBABLE is centrally NOT_IMPORTABLE",
+   "source_absent": false,
+   "canonical_key": "VG:RV:SAK:M09:S007:V009",
+   "gate_b": "B_FAIL_POLICY",
+   "gate_c": "C_PASS"
+  },
+  "VG:RV:SAK:M10:S048:V007": {
+   "addressing_verdict": "MIS-GRAINED, NOT ABSENT",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "B_source_coordinate_system",
+    "C_edition_numbering",
+    "H_ocr_digit_confusion",
+    "I_sort_order",
+    "L_granularity"
+   ],
+   "measured": "the source prints no label for this verse. The preceding printed unit carries 4 lines where every other unit in the hymn carries [2], so this verse's English is inside its neighbour's block, already imported under the neighbour's key.",
+   "printed_line_counts": [
+    2,
+    2,
+    2,
+    2,
+    2,
+    4,
+    2,
+    2,
+    2,
+    2
+   ],
+   "merged_into_printed_label": "6",
+   "split_is_forced": true,
+   "disposition": "STILL_IMPLEMENTATION_FIXABLE. Two honest routes and neither is a split of Griffith's prose by this agent: (a) re-type the neighbour's rendering MANTRA_RANGE with both covered keys, the mechanism M13 already used for the RV 1.65-1.70 span under owner decision A; or (b) a second English witness. Splitting the block on a line count is refused: RV 5.55 alone prints units of 2 and 3 lines, so 4 lines is not forced to be 2+2.",
+   "staged_by_wave1_at": "PROBABLE",
+   "why_not_imported": "B_FAIL_POLICY: mapping_confidence PROBABLE is centrally NOT_IMPORTABLE",
+   "source_absent": false,
+   "canonical_key": "VG:RV:SAK:M10:S048:V007",
+   "gate_b": "B_FAIL_POLICY",
+   "gate_c": "C_PASS"
+  },
+  "VG:RV:SAK:M10:S132:V005": {
+   "addressing_verdict": "MIS-GRAINED, NOT ABSENT",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "B_source_coordinate_system",
+    "C_edition_numbering",
+    "H_ocr_digit_confusion",
+    "I_sort_order",
+    "L_granularity"
+   ],
+   "measured": "the source prints no label for this verse. The preceding printed unit carries 4 lines where every other unit in the hymn carries [2], so this verse's English is inside its neighbour's block, already imported under the neighbour's key.",
+   "printed_line_counts": [
+    2,
+    2,
+    2,
+    4,
+    2,
+    2
+   ],
+   "merged_into_printed_label": "4",
+   "split_is_forced": true,
+   "disposition": "STILL_IMPLEMENTATION_FIXABLE. Two honest routes and neither is a split of Griffith's prose by this agent: (a) re-type the neighbour's rendering MANTRA_RANGE with both covered keys, the mechanism M13 already used for the RV 1.65-1.70 span under owner decision A; or (b) a second English witness. Splitting the block on a line count is refused: RV 5.55 alone prints units of 2 and 3 lines, so 4 lines is not forced to be 2+2.",
+   "staged_by_wave1_at": "PROBABLE",
+   "why_not_imported": "B_FAIL_POLICY: mapping_confidence PROBABLE is centrally NOT_IMPORTABLE",
+   "source_absent": false,
+   "canonical_key": "VG:RV:SAK:M10:S132:V005",
+   "gate_b": "B_FAIL_POLICY",
+   "gate_c": "C_PASS"
+  },
+  "VG:RV:SAK:M08:S093:V029": {
+   "addressing_verdict": "MIS-READ, NOT ABSENT -- RESOLVED",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "B_source_coordinate_system",
+    "C_edition_numbering",
+    "H_ocr_digit_confusion",
+    "I_sort_order",
+    "J_comparator_behaviour"
+   ],
+   "measured": "the held Wikisource snapshot prints this verse's own label as 2 followed by a section sign, between the literal labels 28 and 30, in a page of 34 units against this hymn's 34 canonical verses. The English is present. It is currently glued to RV 8.93.28's imported literal, label and all.",
+   "wave1_rejection_reason": "'the Valakhilya permutation, refused rather than guessed' -- which diagnosed the wrong page: the pass read sacred-texts rv08093.htm, and griffith_page(8, 93) is 82. rv08093.htm is canonical RV 8.49.",
+   "disposition": "CLOSED_DERIVED for this verse; staged, B_PASS and C_PASS on the unmodified gates",
+   "source_absent": false,
+   "canonical_key": "VG:RV:SAK:M08:S093:V029",
+   "gate_b": "B_PASS",
+   "gate_c": "C_PASS"
+  },
+  "VG:RV:SAK:M10:S086:V016": {
+   "addressing_verdict": "CONFIRMED ABSENT FROM THE ONLY INGESTED SOURCE",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "B_source_coordinate_system",
+    "C_edition_numbering",
+    "H_ocr_digit_confusion",
+    "I_sort_order"
+   ],
+   "measured": "the held snapshot's printed label sequence for RV 10.86 runs 1..15 then 18..23: 21 units for 23 canonical verses, with no corrupt token anywhere in the sequence and no over-length unit that could hold the two. Griffith suppresses the Vrsakapi dialogue here.",
+   "note": "Griffith renders other explicit passages into Latin and six such Rigvedic rows are already imported (RV 1.179.3-4, 10.61.5-8). He does not do so here: these two are omitted outright, not Latinised.",
+   "disposition": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE",
+   "source_absent": true,
+   "canonical_key": "VG:RV:SAK:M10:S086:V016",
+   "gate_b": null,
+   "gate_c": null
+  },
+  "VG:RV:SAK:M10:S086:V017": {
+   "addressing_verdict": "CONFIRMED ABSENT FROM THE ONLY INGESTED SOURCE",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "B_source_coordinate_system",
+    "C_edition_numbering",
+    "H_ocr_digit_confusion",
+    "I_sort_order"
+   ],
+   "measured": "the held snapshot's printed label sequence for RV 10.86 runs 1..15 then 18..23: 21 units for 23 canonical verses, with no corrupt token anywhere in the sequence and no over-length unit that could hold the two. Griffith suppresses the Vrsakapi dialogue here.",
+   "note": "Griffith renders other explicit passages into Latin and six such Rigvedic rows are already imported (RV 1.179.3-4, 10.61.5-8). He does not do so here: these two are omitted outright, not Latinised.",
+   "disposition": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE",
+   "source_absent": true,
+   "canonical_key": "VG:RV:SAK:M10:S086:V017",
+   "gate_b": null,
+   "gate_c": null
+  },
+  "VG:YV:VSM:A12:V097": {
+   "addressing_verdict": "UNDECIDABLE SPINE DIVERGENCE -- NOT SHOWN ABSENT",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "C_edition_numbering",
+    "L_granularity"
+   ],
+   "measured": "Griffith's adhyaya 12 prints 118 numbered units against this graph's 117 verses, so exactly one of his units splits one of ours. Ten printed units stand against nine canonical slots here and none of the nine has a Rigvedic parallel in this graph to locate the split with.",
+   "disposition": "STILL_IMPLEMENTATION_FIXABLE. The English is on disk and deliberately withheld; binding it is a one-in-ten guess whose failure mode is silent. Unblocked by a Rigvedic parallel for any one of the nine, or by an independent witness to the split.",
+   "source_absent": false,
+   "canonical_key": "VG:YV:VSM:A12:V097",
+   "gate_b": null,
+   "gate_c": null
+  },
+  "VG:YV:VSM:A12:V098": {
+   "addressing_verdict": "UNDECIDABLE SPINE DIVERGENCE -- NOT SHOWN ABSENT",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "C_edition_numbering",
+    "L_granularity"
+   ],
+   "measured": "Griffith's adhyaya 12 prints 118 numbered units against this graph's 117 verses, so exactly one of his units splits one of ours. Ten printed units stand against nine canonical slots here and none of the nine has a Rigvedic parallel in this graph to locate the split with.",
+   "disposition": "STILL_IMPLEMENTATION_FIXABLE. The English is on disk and deliberately withheld; binding it is a one-in-ten guess whose failure mode is silent. Unblocked by a Rigvedic parallel for any one of the nine, or by an independent witness to the split.",
+   "source_absent": false,
+   "canonical_key": "VG:YV:VSM:A12:V098",
+   "gate_b": null,
+   "gate_c": null
+  },
+  "VG:YV:VSM:A12:V099": {
+   "addressing_verdict": "UNDECIDABLE SPINE DIVERGENCE -- NOT SHOWN ABSENT",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "C_edition_numbering",
+    "L_granularity"
+   ],
+   "measured": "Griffith's adhyaya 12 prints 118 numbered units against this graph's 117 verses, so exactly one of his units splits one of ours. Ten printed units stand against nine canonical slots here and none of the nine has a Rigvedic parallel in this graph to locate the split with.",
+   "disposition": "STILL_IMPLEMENTATION_FIXABLE. The English is on disk and deliberately withheld; binding it is a one-in-ten guess whose failure mode is silent. Unblocked by a Rigvedic parallel for any one of the nine, or by an independent witness to the split.",
+   "source_absent": false,
+   "canonical_key": "VG:YV:VSM:A12:V099",
+   "gate_b": null,
+   "gate_c": null
+  },
+  "VG:YV:VSM:A12:V100": {
+   "addressing_verdict": "UNDECIDABLE SPINE DIVERGENCE -- NOT SHOWN ABSENT",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "C_edition_numbering",
+    "L_granularity"
+   ],
+   "measured": "Griffith's adhyaya 12 prints 118 numbered units against this graph's 117 verses, so exactly one of his units splits one of ours. Ten printed units stand against nine canonical slots here and none of the nine has a Rigvedic parallel in this graph to locate the split with.",
+   "disposition": "STILL_IMPLEMENTATION_FIXABLE. The English is on disk and deliberately withheld; binding it is a one-in-ten guess whose failure mode is silent. Unblocked by a Rigvedic parallel for any one of the nine, or by an independent witness to the split.",
+   "source_absent": false,
+   "canonical_key": "VG:YV:VSM:A12:V100",
+   "gate_b": null,
+   "gate_c": null
+  },
+  "VG:YV:VSM:A12:V101": {
+   "addressing_verdict": "UNDECIDABLE SPINE DIVERGENCE -- NOT SHOWN ABSENT",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "C_edition_numbering",
+    "L_granularity"
+   ],
+   "measured": "Griffith's adhyaya 12 prints 118 numbered units against this graph's 117 verses, so exactly one of his units splits one of ours. Ten printed units stand against nine canonical slots here and none of the nine has a Rigvedic parallel in this graph to locate the split with.",
+   "disposition": "STILL_IMPLEMENTATION_FIXABLE. The English is on disk and deliberately withheld; binding it is a one-in-ten guess whose failure mode is silent. Unblocked by a Rigvedic parallel for any one of the nine, or by an independent witness to the split.",
+   "source_absent": false,
+   "canonical_key": "VG:YV:VSM:A12:V101",
+   "gate_b": null,
+   "gate_c": null
+  },
+  "VG:YV:VSM:A12:V102": {
+   "addressing_verdict": "UNDECIDABLE SPINE DIVERGENCE -- NOT SHOWN ABSENT",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "C_edition_numbering",
+    "L_granularity"
+   ],
+   "measured": "Griffith's adhyaya 12 prints 118 numbered units against this graph's 117 verses, so exactly one of his units splits one of ours. Ten printed units stand against nine canonical slots here and none of the nine has a Rigvedic parallel in this graph to locate the split with.",
+   "disposition": "STILL_IMPLEMENTATION_FIXABLE. The English is on disk and deliberately withheld; binding it is a one-in-ten guess whose failure mode is silent. Unblocked by a Rigvedic parallel for any one of the nine, or by an independent witness to the split.",
+   "source_absent": false,
+   "canonical_key": "VG:YV:VSM:A12:V102",
+   "gate_b": null,
+   "gate_c": null
+  },
+  "VG:YV:VSM:A12:V103": {
+   "addressing_verdict": "UNDECIDABLE SPINE DIVERGENCE -- NOT SHOWN ABSENT",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "C_edition_numbering",
+    "L_granularity"
+   ],
+   "measured": "Griffith's adhyaya 12 prints 118 numbered units against this graph's 117 verses, so exactly one of his units splits one of ours. Ten printed units stand against nine canonical slots here and none of the nine has a Rigvedic parallel in this graph to locate the split with.",
+   "disposition": "STILL_IMPLEMENTATION_FIXABLE. The English is on disk and deliberately withheld; binding it is a one-in-ten guess whose failure mode is silent. Unblocked by a Rigvedic parallel for any one of the nine, or by an independent witness to the split.",
+   "source_absent": false,
+   "canonical_key": "VG:YV:VSM:A12:V103",
+   "gate_b": null,
+   "gate_c": null
+  },
+  "VG:YV:VSM:A12:V104": {
+   "addressing_verdict": "UNDECIDABLE SPINE DIVERGENCE -- NOT SHOWN ABSENT",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "C_edition_numbering",
+    "L_granularity"
+   ],
+   "measured": "Griffith's adhyaya 12 prints 118 numbered units against this graph's 117 verses, so exactly one of his units splits one of ours. Ten printed units stand against nine canonical slots here and none of the nine has a Rigvedic parallel in this graph to locate the split with.",
+   "disposition": "STILL_IMPLEMENTATION_FIXABLE. The English is on disk and deliberately withheld; binding it is a one-in-ten guess whose failure mode is silent. Unblocked by a Rigvedic parallel for any one of the nine, or by an independent witness to the split.",
+   "source_absent": false,
+   "canonical_key": "VG:YV:VSM:A12:V104",
+   "gate_b": null,
+   "gate_c": null
+  },
+  "VG:YV:VSM:A12:V105": {
+   "addressing_verdict": "UNDECIDABLE SPINE DIVERGENCE -- NOT SHOWN ABSENT",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "C_edition_numbering",
+    "L_granularity"
+   ],
+   "measured": "Griffith's adhyaya 12 prints 118 numbered units against this graph's 117 verses, so exactly one of his units splits one of ours. Ten printed units stand against nine canonical slots here and none of the nine has a Rigvedic parallel in this graph to locate the split with.",
+   "disposition": "STILL_IMPLEMENTATION_FIXABLE. The English is on disk and deliberately withheld; binding it is a one-in-ten guess whose failure mode is silent. Unblocked by a Rigvedic parallel for any one of the nine, or by an independent witness to the split.",
+   "source_absent": false,
+   "canonical_key": "VG:YV:VSM:A12:V105",
+   "gate_b": null,
+   "gate_c": null
+  },
+  "VG:YV:VSM:A12:V106": {
+   "addressing_verdict": "ADDRESS CORRECT -- BLOCKED BY A PROVENANCE DEFECT, RESOLVED",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "C_edition_numbering",
+    "N_stale_transform"
+   ],
+   "measured": "the +1 offset is established per verse against Griffith's own Rigvedic rendering. The row failed Gate B only on source_revision_identified, because its generator omitted payload.snapshot_sha256 -- while writing it on the other 39 Yajurveda rows from the same local snapshot tree. The page is held: wyvbk12.htm, sha256 67559e80..., and this row's literal is verbatim in it with its declared printed label adjacent.",
+   "provenance_rederived": true,
+   "disposition": "CLOSED_DERIVED for this row; staged, B_PASS and C_PASS on the unmodified gates",
+   "source_absent": false,
+   "canonical_key": "VG:YV:VSM:A12:V106",
+   "gate_b": "B_PASS",
+   "gate_c": "C_PASS"
+  },
+  "VG:YV:VSM:A12:V107": {
+   "addressing_verdict": "ADDRESS CORRECT -- BLOCKED BY A PROVENANCE DEFECT, RESOLVED",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "C_edition_numbering",
+    "N_stale_transform"
+   ],
+   "measured": "the +1 offset is established per verse against Griffith's own Rigvedic rendering. The row failed Gate B only on source_revision_identified, because its generator omitted payload.snapshot_sha256 -- while writing it on the other 39 Yajurveda rows from the same local snapshot tree. The page is held: wyvbk12.htm, sha256 67559e80..., and this row's literal is verbatim in it with its declared printed label adjacent.",
+   "provenance_rederived": true,
+   "disposition": "CLOSED_DERIVED for this row; staged, B_PASS and C_PASS on the unmodified gates",
+   "source_absent": false,
+   "canonical_key": "VG:YV:VSM:A12:V107",
+   "gate_b": "B_PASS",
+   "gate_c": "C_PASS"
+  },
+  "VG:YV:VSM:A12:V108": {
+   "addressing_verdict": "ADDRESS CORRECT -- BLOCKED BY A PROVENANCE DEFECT, RESOLVED",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "C_edition_numbering",
+    "N_stale_transform"
+   ],
+   "measured": "the +1 offset is established per verse against Griffith's own Rigvedic rendering. The row failed Gate B only on source_revision_identified, because its generator omitted payload.snapshot_sha256 -- while writing it on the other 39 Yajurveda rows from the same local snapshot tree. The page is held: wyvbk12.htm, sha256 67559e80..., and this row's literal is verbatim in it with its declared printed label adjacent.",
+   "provenance_rederived": true,
+   "disposition": "CLOSED_DERIVED for this row; staged, B_PASS and C_PASS on the unmodified gates",
+   "source_absent": false,
+   "canonical_key": "VG:YV:VSM:A12:V108",
+   "gate_b": "B_PASS",
+   "gate_c": "C_PASS"
+  },
+  "VG:YV:VSM:A12:V109": {
+   "addressing_verdict": "ADDRESS CORRECT -- BLOCKED BY A PROVENANCE DEFECT, RESOLVED",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "C_edition_numbering",
+    "N_stale_transform"
+   ],
+   "measured": "the +1 offset is established per verse against Griffith's own Rigvedic rendering. The row failed Gate B only on source_revision_identified, because its generator omitted payload.snapshot_sha256 -- while writing it on the other 39 Yajurveda rows from the same local snapshot tree. The page is held: wyvbk12.htm, sha256 67559e80..., and this row's literal is verbatim in it with its declared printed label adjacent.",
+   "provenance_rederived": true,
+   "disposition": "CLOSED_DERIVED for this row; staged, B_PASS and C_PASS on the unmodified gates",
+   "source_absent": false,
+   "canonical_key": "VG:YV:VSM:A12:V109",
+   "gate_b": "B_PASS",
+   "gate_c": "C_PASS"
+  },
+  "VG:YV:VSM:A12:V110": {
+   "addressing_verdict": "ADDRESS CORRECT -- BLOCKED BY A PROVENANCE DEFECT, RESOLVED",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "C_edition_numbering",
+    "N_stale_transform"
+   ],
+   "measured": "the +1 offset is established per verse against Griffith's own Rigvedic rendering. The row failed Gate B only on source_revision_identified, because its generator omitted payload.snapshot_sha256 -- while writing it on the other 39 Yajurveda rows from the same local snapshot tree. The page is held: wyvbk12.htm, sha256 67559e80..., and this row's literal is verbatim in it with its declared printed label adjacent.",
+   "provenance_rederived": true,
+   "disposition": "CLOSED_DERIVED for this row; staged, B_PASS and C_PASS on the unmodified gates",
+   "source_absent": false,
+   "canonical_key": "VG:YV:VSM:A12:V110",
+   "gate_b": "B_PASS",
+   "gate_c": "C_PASS"
+  },
+  "VG:YV:VSM:A12:V111": {
+   "addressing_verdict": "ADDRESS CORRECT -- BLOCKED BY A PROVENANCE DEFECT, RESOLVED",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "C_edition_numbering",
+    "N_stale_transform"
+   ],
+   "measured": "the +1 offset is established per verse against Griffith's own Rigvedic rendering. The row failed Gate B only on source_revision_identified, because its generator omitted payload.snapshot_sha256 -- while writing it on the other 39 Yajurveda rows from the same local snapshot tree. The page is held: wyvbk12.htm, sha256 67559e80..., and this row's literal is verbatim in it with its declared printed label adjacent.",
+   "provenance_rederived": true,
+   "disposition": "CLOSED_DERIVED for this row; staged, B_PASS and C_PASS on the unmodified gates",
+   "source_absent": false,
+   "canonical_key": "VG:YV:VSM:A12:V111",
+   "gate_b": "B_PASS",
+   "gate_c": "C_PASS"
+  },
+  "VG:YV:VSM:A12:V112": {
+   "addressing_verdict": "ADDRESS CORRECT -- BLOCKED BY A PROVENANCE DEFECT, RESOLVED",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "C_edition_numbering",
+    "N_stale_transform"
+   ],
+   "measured": "the +1 offset is established per verse against Griffith's own Rigvedic rendering. The row failed Gate B only on source_revision_identified, because its generator omitted payload.snapshot_sha256 -- while writing it on the other 39 Yajurveda rows from the same local snapshot tree. The page is held: wyvbk12.htm, sha256 67559e80..., and this row's literal is verbatim in it with its declared printed label adjacent.",
+   "provenance_rederived": true,
+   "disposition": "CLOSED_DERIVED for this row; staged, B_PASS and C_PASS on the unmodified gates",
+   "source_absent": false,
+   "canonical_key": "VG:YV:VSM:A12:V112",
+   "gate_b": "B_PASS",
+   "gate_c": "C_PASS"
+  },
+  "VG:YV:VSM:A12:V113": {
+   "addressing_verdict": "ADDRESS CORRECT -- BLOCKED BY A PROVENANCE DEFECT, RESOLVED",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "C_edition_numbering",
+    "N_stale_transform"
+   ],
+   "measured": "the +1 offset is established per verse against Griffith's own Rigvedic rendering. The row failed Gate B only on source_revision_identified, because its generator omitted payload.snapshot_sha256 -- while writing it on the other 39 Yajurveda rows from the same local snapshot tree. The page is held: wyvbk12.htm, sha256 67559e80..., and this row's literal is verbatim in it with its declared printed label adjacent.",
+   "provenance_rederived": true,
+   "disposition": "CLOSED_DERIVED for this row; staged, B_PASS and C_PASS on the unmodified gates",
+   "source_absent": false,
+   "canonical_key": "VG:YV:VSM:A12:V113",
+   "gate_b": "B_PASS",
+   "gate_c": "C_PASS"
+  },
+  "VG:YV:VSM:A12:V114": {
+   "addressing_verdict": "ADDRESS CORRECT -- BLOCKED BY A PROVENANCE DEFECT, RESOLVED",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "C_edition_numbering",
+    "N_stale_transform"
+   ],
+   "measured": "the +1 offset is established per verse against Griffith's own Rigvedic rendering. The row failed Gate B only on source_revision_identified, because its generator omitted payload.snapshot_sha256 -- while writing it on the other 39 Yajurveda rows from the same local snapshot tree. The page is held: wyvbk12.htm, sha256 67559e80..., and this row's literal is verbatim in it with its declared printed label adjacent.",
+   "provenance_rederived": true,
+   "disposition": "CLOSED_DERIVED for this row; staged, B_PASS and C_PASS on the unmodified gates",
+   "source_absent": false,
+   "canonical_key": "VG:YV:VSM:A12:V114",
+   "gate_b": "B_PASS",
+   "gate_c": "C_PASS"
+  },
+  "VG:YV:VSM:A12:V115": {
+   "addressing_verdict": "ADDRESS CORRECT -- BLOCKED BY A PROVENANCE DEFECT, RESOLVED",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "C_edition_numbering",
+    "N_stale_transform"
+   ],
+   "measured": "the +1 offset is established per verse against Griffith's own Rigvedic rendering. The row failed Gate B only on source_revision_identified, because its generator omitted payload.snapshot_sha256 -- while writing it on the other 39 Yajurveda rows from the same local snapshot tree. The page is held: wyvbk12.htm, sha256 67559e80..., and this row's literal is verbatim in it with its declared printed label adjacent.",
+   "provenance_rederived": true,
+   "disposition": "CLOSED_DERIVED for this row; staged, B_PASS and C_PASS on the unmodified gates",
+   "source_absent": false,
+   "canonical_key": "VG:YV:VSM:A12:V115",
+   "gate_b": "B_PASS",
+   "gate_c": "C_PASS"
+  },
+  "VG:YV:VSM:A12:V116": {
+   "addressing_verdict": "ADDRESS CORRECT -- BLOCKED BY A PROVENANCE DEFECT, RESOLVED",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "C_edition_numbering",
+    "N_stale_transform"
+   ],
+   "measured": "the +1 offset is established per verse against Griffith's own Rigvedic rendering. The row failed Gate B only on source_revision_identified, because its generator omitted payload.snapshot_sha256 -- while writing it on the other 39 Yajurveda rows from the same local snapshot tree. The page is held: wyvbk12.htm, sha256 67559e80..., and this row's literal is verbatim in it with its declared printed label adjacent.",
+   "provenance_rederived": true,
+   "disposition": "CLOSED_DERIVED for this row; staged, B_PASS and C_PASS on the unmodified gates",
+   "source_absent": false,
+   "canonical_key": "VG:YV:VSM:A12:V116",
+   "gate_b": "B_PASS",
+   "gate_c": "C_PASS"
+  },
+  "VG:YV:VSM:A12:V117": {
+   "addressing_verdict": "ADDRESS FORCED BY THE BOUNDARY, NO CONTENT CONTROL",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "C_edition_numbering"
+   ],
+   "measured": "the last printed unit against the last canonical verse. Forced by the boundary but with no independent control of its own, so it is staged PROBABLE and the central importability policy withholds it. Its provenance was re-derived with the other eleven and it still fails, on policy -- which is the gate working.",
+   "disposition": "STILL_IMPLEMENTATION_FIXABLE, awaiting a content control",
+   "source_absent": false,
+   "canonical_key": "VG:YV:VSM:A12:V117",
+   "gate_b": "B_FAIL_POLICY",
+   "gate_c": "C_PASS"
+  },
+  "VG:YV:VSM:A23:V020": {
+   "addressing_verdict": "CONFIRMED ABSENT -- PRINTED AS AN OMISSION",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "C_edition_numbering",
+    "H_ocr_digit_confusion",
+    "M_scope"
+   ],
+   "measured": "Griffith's adhyaya 23 prints unit 19 ending in a row of ellipsis dots and the next printed label is 32. The omission is declared by the print itself, not inferred from a parse failure.",
+   "disposition": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE",
+   "source_absent": true,
+   "canonical_key": "VG:YV:VSM:A23:V020",
+   "gate_b": null,
+   "gate_c": null
+  },
+  "VG:YV:VSM:A23:V021": {
+   "addressing_verdict": "CONFIRMED ABSENT -- PRINTED AS AN OMISSION",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "C_edition_numbering",
+    "H_ocr_digit_confusion",
+    "M_scope"
+   ],
+   "measured": "Griffith's adhyaya 23 prints unit 19 ending in a row of ellipsis dots and the next printed label is 32. The omission is declared by the print itself, not inferred from a parse failure.",
+   "disposition": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE",
+   "source_absent": true,
+   "canonical_key": "VG:YV:VSM:A23:V021",
+   "gate_b": null,
+   "gate_c": null
+  },
+  "VG:YV:VSM:A23:V022": {
+   "addressing_verdict": "CONFIRMED ABSENT -- PRINTED AS AN OMISSION",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "C_edition_numbering",
+    "H_ocr_digit_confusion",
+    "M_scope"
+   ],
+   "measured": "Griffith's adhyaya 23 prints unit 19 ending in a row of ellipsis dots and the next printed label is 32. The omission is declared by the print itself, not inferred from a parse failure.",
+   "disposition": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE",
+   "source_absent": true,
+   "canonical_key": "VG:YV:VSM:A23:V022",
+   "gate_b": null,
+   "gate_c": null
+  },
+  "VG:YV:VSM:A23:V023": {
+   "addressing_verdict": "CONFIRMED ABSENT -- PRINTED AS AN OMISSION",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "C_edition_numbering",
+    "H_ocr_digit_confusion",
+    "M_scope"
+   ],
+   "measured": "Griffith's adhyaya 23 prints unit 19 ending in a row of ellipsis dots and the next printed label is 32. The omission is declared by the print itself, not inferred from a parse failure.",
+   "disposition": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE",
+   "source_absent": true,
+   "canonical_key": "VG:YV:VSM:A23:V023",
+   "gate_b": null,
+   "gate_c": null
+  },
+  "VG:YV:VSM:A23:V024": {
+   "addressing_verdict": "CONFIRMED ABSENT -- PRINTED AS AN OMISSION",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "C_edition_numbering",
+    "H_ocr_digit_confusion",
+    "M_scope"
+   ],
+   "measured": "Griffith's adhyaya 23 prints unit 19 ending in a row of ellipsis dots and the next printed label is 32. The omission is declared by the print itself, not inferred from a parse failure.",
+   "disposition": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE",
+   "source_absent": true,
+   "canonical_key": "VG:YV:VSM:A23:V024",
+   "gate_b": null,
+   "gate_c": null
+  },
+  "VG:YV:VSM:A23:V025": {
+   "addressing_verdict": "CONFIRMED ABSENT -- PRINTED AS AN OMISSION",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "C_edition_numbering",
+    "H_ocr_digit_confusion",
+    "M_scope"
+   ],
+   "measured": "Griffith's adhyaya 23 prints unit 19 ending in a row of ellipsis dots and the next printed label is 32. The omission is declared by the print itself, not inferred from a parse failure.",
+   "disposition": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE",
+   "source_absent": true,
+   "canonical_key": "VG:YV:VSM:A23:V025",
+   "gate_b": null,
+   "gate_c": null
+  },
+  "VG:YV:VSM:A23:V026": {
+   "addressing_verdict": "CONFIRMED ABSENT -- PRINTED AS AN OMISSION",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "C_edition_numbering",
+    "H_ocr_digit_confusion",
+    "M_scope"
+   ],
+   "measured": "Griffith's adhyaya 23 prints unit 19 ending in a row of ellipsis dots and the next printed label is 32. The omission is declared by the print itself, not inferred from a parse failure.",
+   "disposition": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE",
+   "source_absent": true,
+   "canonical_key": "VG:YV:VSM:A23:V026",
+   "gate_b": null,
+   "gate_c": null
+  },
+  "VG:YV:VSM:A23:V027": {
+   "addressing_verdict": "CONFIRMED ABSENT -- PRINTED AS AN OMISSION",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "C_edition_numbering",
+    "H_ocr_digit_confusion",
+    "M_scope"
+   ],
+   "measured": "Griffith's adhyaya 23 prints unit 19 ending in a row of ellipsis dots and the next printed label is 32. The omission is declared by the print itself, not inferred from a parse failure.",
+   "disposition": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE",
+   "source_absent": true,
+   "canonical_key": "VG:YV:VSM:A23:V027",
+   "gate_b": null,
+   "gate_c": null
+  },
+  "VG:YV:VSM:A23:V028": {
+   "addressing_verdict": "CONFIRMED ABSENT -- PRINTED AS AN OMISSION",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "C_edition_numbering",
+    "H_ocr_digit_confusion",
+    "M_scope"
+   ],
+   "measured": "Griffith's adhyaya 23 prints unit 19 ending in a row of ellipsis dots and the next printed label is 32. The omission is declared by the print itself, not inferred from a parse failure.",
+   "disposition": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE",
+   "source_absent": true,
+   "canonical_key": "VG:YV:VSM:A23:V028",
+   "gate_b": null,
+   "gate_c": null
+  },
+  "VG:YV:VSM:A23:V029": {
+   "addressing_verdict": "CONFIRMED ABSENT -- PRINTED AS AN OMISSION",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "C_edition_numbering",
+    "H_ocr_digit_confusion",
+    "M_scope"
+   ],
+   "measured": "Griffith's adhyaya 23 prints unit 19 ending in a row of ellipsis dots and the next printed label is 32. The omission is declared by the print itself, not inferred from a parse failure.",
+   "disposition": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE",
+   "source_absent": true,
+   "canonical_key": "VG:YV:VSM:A23:V029",
+   "gate_b": null,
+   "gate_c": null
+  },
+  "VG:YV:VSM:A23:V030": {
+   "addressing_verdict": "CONFIRMED ABSENT -- PRINTED AS AN OMISSION",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "C_edition_numbering",
+    "H_ocr_digit_confusion",
+    "M_scope"
+   ],
+   "measured": "Griffith's adhyaya 23 prints unit 19 ending in a row of ellipsis dots and the next printed label is 32. The omission is declared by the print itself, not inferred from a parse failure.",
+   "disposition": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE",
+   "source_absent": true,
+   "canonical_key": "VG:YV:VSM:A23:V030",
+   "gate_b": null,
+   "gate_c": null
+  },
+  "VG:YV:VSM:A23:V031": {
+   "addressing_verdict": "CONFIRMED ABSENT -- PRINTED AS AN OMISSION",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "C_edition_numbering",
+    "H_ocr_digit_confusion",
+    "M_scope"
+   ],
+   "measured": "Griffith's adhyaya 23 prints unit 19 ending in a row of ellipsis dots and the next printed label is 32. The omission is declared by the print itself, not inferred from a parse failure.",
+   "disposition": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE",
+   "source_absent": true,
+   "canonical_key": "VG:YV:VSM:A23:V031",
+   "gate_b": null,
+   "gate_c": null
+  },
+  "VG:YV:VSM:A20:V085": {
+   "addressing_verdict": "ADDRESS SETTLED -- WITHHELD BY A STANDING OWNER DECISION",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "C_edition_numbering",
+    "H_ocr_digit_confusion"
+   ],
+   "measured": "ambiguous source glyph S5",
+   "disposition": "Not reopened. OWNER_DECISION_C_FORCED_ADDRESSES is NARROWED_TO_THREE_WITHHELD and names these three by key; the decision is settled and withholding them is its content, not an unfinished implementation.",
+   "source_absent": false,
+   "canonical_key": "VG:YV:VSM:A20:V085",
+   "gate_b": "B_NEEDS_INDEPENDENT_CONTENT_CONTROL",
+   "gate_c": "C_FAIL_UNVERIFIED_FORCED_ADDRESS"
+  },
+  "VG:YV:VSM:A36:V024": {
+   "addressing_verdict": "ADDRESS SETTLED -- WITHHELD BY A STANDING OWNER DECISION",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "C_edition_numbering",
+    "H_ocr_digit_confusion"
+   ],
+   "measured": "not independently machine-located",
+   "disposition": "Not reopened. OWNER_DECISION_C_FORCED_ADDRESSES is NARROWED_TO_THREE_WITHHELD and names these three by key; the decision is settled and withholding them is its content, not an unfinished implementation.",
+   "source_absent": false,
+   "canonical_key": "VG:YV:VSM:A36:V024",
+   "gate_b": "B_NEEDS_INDEPENDENT_CONTENT_CONTROL",
+   "gate_c": "C_FAIL_UNVERIFIED_FORCED_ADDRESS"
+  },
+  "VG:YV:VSM:A21:V045": {
+   "addressing_verdict": "ADDRESS SETTLED -- WITHHELD BY A STANDING OWNER DECISION",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "C_edition_numbering",
+    "H_ocr_digit_confusion"
+   ],
+   "measured": "address is correct but the literal is an editorial cross-reference, not a translation",
+   "disposition": "Not reopened. OWNER_DECISION_C_FORCED_ADDRESSES is NARROWED_TO_THREE_WITHHELD and names these three by key; the decision is settled and withholding them is its content, not an unfinished implementation.",
+   "source_absent": false,
+   "canonical_key": "VG:YV:VSM:A21:V045",
+   "gate_b": "B_NEEDS_INDEPENDENT_CONTENT_CONTROL",
+   "gate_c": "C_FAIL_SOURCE_GRANULARITY"
+  },
+  "VG:AV:SAU:K20:S017:V001": {
+   "addressing_verdict": "CONFIRMED ABSENT FROM THE PRINT; CROSS-CORPUS REUSE REFUSED ON MEASUREMENT",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "D_recension_identity",
+    "E_transliteration_script",
+    "F_unicode_normalization",
+    "G_accent_normalization",
+    "J_comparator_behaviour",
+    "M_scope"
+   ],
+   "measured": "Griffith's kanda-20 print does not carry this verse. The reuse route was then tested against EVERY Rigvedic text version in the store (21104 of them), not only the asserted parallel, so the absence is measured rather than unlooked-for.",
+   "wave1_nearest_parallel": "VG:RV:SAK:M10:S043:V001",
+   "wave1_declared_similarity": 0.9864,
+   "remeasured_best_pair_char_ratio": 0.9773,
+   "exact_match_anywhere_in_rigveda": false,
+   "disposition": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE",
+   "source_absent": true,
+   "canonical_key": "VG:AV:SAU:K20:S017:V001",
+   "gate_b": null,
+   "gate_c": null
+  },
+  "VG:AV:SAU:K20:S047:V005": {
+   "addressing_verdict": "CONFIRMED ABSENT FROM THE PRINT; CROSS-CORPUS REUSE REFUSED ON MEASUREMENT",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "D_recension_identity",
+    "E_transliteration_script",
+    "F_unicode_normalization",
+    "G_accent_normalization",
+    "J_comparator_behaviour",
+    "M_scope"
+   ],
+   "measured": "Griffith's kanda-20 print does not carry this verse. The reuse route was then tested against EVERY Rigvedic text version in the store (21104 of them), not only the asserted parallel, so the absence is measured rather than unlooked-for.",
+   "wave1_nearest_parallel": "VG:RV:SAK:M01:S007:V002",
+   "wave1_declared_similarity": 0.9907,
+   "remeasured_best_pair_char_ratio": 0.9844,
+   "exact_match_anywhere_in_rigveda": false,
+   "disposition": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE",
+   "source_absent": true,
+   "canonical_key": "VG:AV:SAU:K20:S047:V005",
+   "gate_b": null,
+   "gate_c": null
+  },
+  "VG:AV:SAU:K20:S047:V007": {
+   "addressing_verdict": "CONFIRMED ABSENT FROM THE PRINT; CROSS-CORPUS REUSE REFUSED ON MEASUREMENT",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "D_recension_identity",
+    "E_transliteration_script",
+    "F_unicode_normalization",
+    "G_accent_normalization",
+    "J_comparator_behaviour",
+    "M_scope"
+   ],
+   "measured": "Griffith's kanda-20 print does not carry this verse. The reuse route was then tested against EVERY Rigvedic text version in the store (21104 of them), not only the asserted parallel, so the absence is measured rather than unlooked-for.",
+   "wave1_nearest_parallel": "VG:RV:SAK:M08:S017:V001",
+   "wave1_declared_similarity": 0.9388,
+   "remeasured_best_pair_char_ratio": 0.9683,
+   "exact_match_anywhere_in_rigveda": false,
+   "disposition": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE",
+   "source_absent": true,
+   "canonical_key": "VG:AV:SAU:K20:S047:V007",
+   "gate_b": null,
+   "gate_c": null
+  },
+  "VG:AV:SAU:K20:S052:V003": {
+   "addressing_verdict": "CONFIRMED ABSENT FROM THE PRINT; CROSS-CORPUS REUSE REFUSED ON MEASUREMENT",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "D_recension_identity",
+    "E_transliteration_script",
+    "F_unicode_normalization",
+    "G_accent_normalization",
+    "J_comparator_behaviour",
+    "M_scope"
+   ],
+   "measured": "Griffith's kanda-20 print does not carry this verse. The reuse route was then tested against EVERY Rigvedic text version in the store (21104 of them), not only the asserted parallel, so the absence is measured rather than unlooked-for.",
+   "wave1_nearest_parallel": "VG:RV:SAK:M08:S033:V003",
+   "wave1_declared_similarity": 0.9708,
+   "remeasured_best_pair_char_ratio": 0.9804,
+   "exact_match_anywhere_in_rigveda": false,
+   "disposition": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE",
+   "source_absent": true,
+   "canonical_key": "VG:AV:SAU:K20:S052:V003",
+   "gate_b": null,
+   "gate_c": null
+  },
+  "VG:AV:SAU:K20:S057:V013": {
+   "addressing_verdict": "CONFIRMED ABSENT FROM THE PRINT; APPARENT REUSE REFUSED BY THE GATE",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "D_recension_identity",
+    "E_transliteration_script",
+    "F_unicode_normalization",
+    "G_accent_normalization",
+    "J_comparator_behaviour",
+    "M_scope"
+   ],
+   "measured": "Griffith's kanda-20 print does not carry this verse. The reuse route was then tested against EVERY Rigvedic text version in the store (21104 of them), not only the asserted parallel, so the absence is measured rather than unlooked-for.",
+   "wave1_nearest_parallel": "VG:RV:SAK:M08:S033:V009",
+   "wave1_declared_similarity": 0.9818,
+   "remeasured_best_pair_char_ratio": 1.0,
+   "exact_match_anywhere_in_rigveda": true,
+   "disposition": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE. Two of six text-version pairings reach exactly 1.0, but Gate B fixes the PRIMARY_TEXT pair and measures token Dice 0.9375, still unequal ignoring word division, the residue being the visarga in aniṣṭṛtaḥ. A best-of-six identity is not identity; the gate refused it and the refusal is right. Wave 1's declared 0.9818 does not reproduce either.",
+   "source_absent": true,
+   "canonical_key": "VG:AV:SAU:K20:S057:V013",
+   "gate_b": null,
+   "gate_c": null
+  },
+  "VG:AV:SAU:K20:S059:V001": {
+   "addressing_verdict": "CONFIRMED ABSENT FROM THE PRINT; CROSS-CORPUS REUSE REFUSED ON MEASUREMENT",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "D_recension_identity",
+    "E_transliteration_script",
+    "F_unicode_normalization",
+    "G_accent_normalization",
+    "J_comparator_behaviour",
+    "M_scope"
+   ],
+   "measured": "Griffith's kanda-20 print does not carry this verse. The reuse route was then tested against EVERY Rigvedic text version in the store (21104 of them), not only the asserted parallel, so the absence is measured rather than unlooked-for.",
+   "wave1_nearest_parallel": "VG:RV:SAK:M08:S003:V015",
+   "wave1_declared_similarity": 0.9804,
+   "remeasured_best_pair_char_ratio": 0.9944,
+   "exact_match_anywhere_in_rigveda": false,
+   "disposition": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE",
+   "source_absent": true,
+   "canonical_key": "VG:AV:SAU:K20:S059:V001",
+   "gate_b": null,
+   "gate_c": null
+  },
+  "VG:AV:SAU:K20:S059:V002": {
+   "addressing_verdict": "CONFIRMED ABSENT FROM THE PRINT; CROSS-CORPUS REUSE REFUSED ON MEASUREMENT",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "D_recension_identity",
+    "E_transliteration_script",
+    "F_unicode_normalization",
+    "G_accent_normalization",
+    "J_comparator_behaviour",
+    "M_scope"
+   ],
+   "measured": "Griffith's kanda-20 print does not carry this verse. The reuse route was then tested against EVERY Rigvedic text version in the store (21104 of them), not only the asserted parallel, so the absence is measured rather than unlooked-for.",
+   "wave1_nearest_parallel": "VG:RV:SAK:M08:S003:V016",
+   "wave1_declared_similarity": 0.9778,
+   "remeasured_best_pair_char_ratio": 0.9907,
+   "exact_match_anywhere_in_rigveda": false,
+   "disposition": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE",
+   "source_absent": true,
+   "canonical_key": "VG:AV:SAU:K20:S059:V002",
+   "gate_b": null,
+   "gate_c": null
+  },
+  "VG:AV:SAU:K20:S062:V003": {
+   "addressing_verdict": "CONFIRMED ABSENT FROM THE PRINT; CROSS-CORPUS REUSE REFUSED ON MEASUREMENT",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "D_recension_identity",
+    "E_transliteration_script",
+    "F_unicode_normalization",
+    "G_accent_normalization",
+    "J_comparator_behaviour",
+    "M_scope"
+   ],
+   "measured": "Griffith's kanda-20 print does not carry this verse. The reuse route was then tested against EVERY Rigvedic text version in the store (21104 of them), not only the asserted parallel, so the absence is measured rather than unlooked-for.",
+   "wave1_nearest_parallel": "VG:RV:SAK:M08:S021:V009",
+   "wave1_declared_similarity": 0.9492,
+   "remeasured_best_pair_char_ratio": 0.9796,
+   "exact_match_anywhere_in_rigveda": false,
+   "disposition": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE",
+   "source_absent": true,
+   "canonical_key": "VG:AV:SAU:K20:S062:V003",
+   "gate_b": null,
+   "gate_c": null
+  },
+  "VG:AV:SAU:K20:S069:V009": {
+   "addressing_verdict": "CONFIRMED ABSENT FROM THE PRINT; CROSS-CORPUS REUSE REFUSED ON MEASUREMENT",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "D_recension_identity",
+    "E_transliteration_script",
+    "F_unicode_normalization",
+    "G_accent_normalization",
+    "J_comparator_behaviour",
+    "M_scope"
+   ],
+   "measured": "Griffith's kanda-20 print does not carry this verse. The reuse route was then tested against EVERY Rigvedic text version in the store (21104 of them), not only the asserted parallel, so the absence is measured rather than unlooked-for.",
+   "wave1_nearest_parallel": "VG:RV:SAK:M01:S006:V001",
+   "wave1_declared_similarity": 0.9655,
+   "remeasured_best_pair_char_ratio": 0.971,
+   "exact_match_anywhere_in_rigveda": false,
+   "disposition": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE",
+   "source_absent": true,
+   "canonical_key": "VG:AV:SAU:K20:S069:V009",
+   "gate_b": null,
+   "gate_c": null
+  },
+  "VG:AV:SAU:K20:S096:V024": {
+   "addressing_verdict": "CONFIRMED ABSENT FROM THE PRINT; CROSS-CORPUS REUSE REFUSED ON MEASUREMENT",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "D_recension_identity",
+    "E_transliteration_script",
+    "F_unicode_normalization",
+    "G_accent_normalization",
+    "J_comparator_behaviour",
+    "M_scope"
+   ],
+   "measured": "Griffith's kanda-20 print does not carry this verse. The reuse route was then tested against EVERY Rigvedic text version in the store (21104 of them), not only the asserted parallel, so the absence is measured rather than unlooked-for.",
+   "wave1_nearest_parallel": "VG:RV:SAK:M10:S164:V001",
+   "wave1_declared_similarity": 0.9771,
+   "remeasured_best_pair_char_ratio": 0.9938,
+   "exact_match_anywhere_in_rigveda": false,
+   "disposition": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE",
+   "source_absent": true,
+   "canonical_key": "VG:AV:SAU:K20:S096:V024",
+   "gate_b": null,
+   "gate_c": null
+  },
+  "VG:AV:SAU:K20:S129:V002": {
+   "addressing_verdict": "CONFIRMED ABSENT FROM THE PRINT; CROSS-CORPUS REUSE REFUSED ON MEASUREMENT",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "D_recension_identity",
+    "E_transliteration_script",
+    "F_unicode_normalization",
+    "G_accent_normalization",
+    "J_comparator_behaviour",
+    "M_scope"
+   ],
+   "measured": "Griffith's kanda-20 print does not carry this verse. The reuse route was then tested against EVERY Rigvedic text version in the store (21104 of them), not only the asserted parallel, so the absence is measured rather than unlooked-for.",
+   "wave1_nearest_parallel": null,
+   "wave1_declared_similarity": null,
+   "remeasured_best_pair_char_ratio": null,
+   "exact_match_anywhere_in_rigveda": false,
+   "disposition": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE",
+   "source_absent": true,
+   "canonical_key": "VG:AV:SAU:K20:S129:V002",
+   "gate_b": null,
+   "gate_c": null
+  },
+  "VG:AV:SAU:K20:S131:V002": {
+   "addressing_verdict": "CONFIRMED ABSENT FROM THE PRINT; CROSS-CORPUS REUSE REFUSED ON MEASUREMENT",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "D_recension_identity",
+    "E_transliteration_script",
+    "F_unicode_normalization",
+    "G_accent_normalization",
+    "J_comparator_behaviour",
+    "M_scope"
+   ],
+   "measured": "Griffith's kanda-20 print does not carry this verse. The reuse route was then tested against EVERY Rigvedic text version in the store (21104 of them), not only the asserted parallel, so the absence is measured rather than unlooked-for.",
+   "wave1_nearest_parallel": null,
+   "wave1_declared_similarity": null,
+   "remeasured_best_pair_char_ratio": null,
+   "exact_match_anywhere_in_rigveda": false,
+   "disposition": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE",
+   "source_absent": true,
+   "canonical_key": "VG:AV:SAU:K20:S131:V002",
+   "gate_b": null,
+   "gate_c": null
+  },
+  "VG:AV:SAU:K20:S133:V002": {
+   "addressing_verdict": "CONFIRMED ABSENT FROM THE PRINT; CROSS-CORPUS REUSE REFUSED ON MEASUREMENT",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "D_recension_identity",
+    "E_transliteration_script",
+    "F_unicode_normalization",
+    "G_accent_normalization",
+    "J_comparator_behaviour",
+    "M_scope"
+   ],
+   "measured": "Griffith's kanda-20 print does not carry this verse. The reuse route was then tested against EVERY Rigvedic text version in the store (21104 of them), not only the asserted parallel, so the absence is measured rather than unlooked-for.",
+   "wave1_nearest_parallel": null,
+   "wave1_declared_similarity": null,
+   "remeasured_best_pair_char_ratio": null,
+   "exact_match_anywhere_in_rigveda": false,
+   "disposition": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE",
+   "source_absent": true,
+   "canonical_key": "VG:AV:SAU:K20:S133:V002",
+   "gate_b": null,
+   "gate_c": null
+  },
+  "VG:AV:SAU:K20:S133:V003": {
+   "addressing_verdict": "CONFIRMED ABSENT FROM THE PRINT; CROSS-CORPUS REUSE REFUSED ON MEASUREMENT",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "D_recension_identity",
+    "E_transliteration_script",
+    "F_unicode_normalization",
+    "G_accent_normalization",
+    "J_comparator_behaviour",
+    "M_scope"
+   ],
+   "measured": "Griffith's kanda-20 print does not carry this verse. The reuse route was then tested against EVERY Rigvedic text version in the store (21104 of them), not only the asserted parallel, so the absence is measured rather than unlooked-for.",
+   "wave1_nearest_parallel": null,
+   "wave1_declared_similarity": null,
+   "remeasured_best_pair_char_ratio": null,
+   "exact_match_anywhere_in_rigveda": false,
+   "disposition": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE",
+   "source_absent": true,
+   "canonical_key": "VG:AV:SAU:K20:S133:V003",
+   "gate_b": null,
+   "gate_c": null
+  },
+  "VG:AV:SAU:K20:S133:V004": {
+   "addressing_verdict": "CONFIRMED ABSENT FROM THE PRINT; CROSS-CORPUS REUSE REFUSED ON MEASUREMENT",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "D_recension_identity",
+    "E_transliteration_script",
+    "F_unicode_normalization",
+    "G_accent_normalization",
+    "J_comparator_behaviour",
+    "M_scope"
+   ],
+   "measured": "Griffith's kanda-20 print does not carry this verse. The reuse route was then tested against EVERY Rigvedic text version in the store (21104 of them), not only the asserted parallel, so the absence is measured rather than unlooked-for.",
+   "wave1_nearest_parallel": null,
+   "wave1_declared_similarity": null,
+   "remeasured_best_pair_char_ratio": null,
+   "exact_match_anywhere_in_rigveda": false,
+   "disposition": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE",
+   "source_absent": true,
+   "canonical_key": "VG:AV:SAU:K20:S133:V004",
+   "gate_b": null,
+   "gate_c": null
+  },
+  "VG:AV:SAU:K20:S133:V005": {
+   "addressing_verdict": "CONFIRMED ABSENT FROM THE PRINT; CROSS-CORPUS REUSE REFUSED ON MEASUREMENT",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "D_recension_identity",
+    "E_transliteration_script",
+    "F_unicode_normalization",
+    "G_accent_normalization",
+    "J_comparator_behaviour",
+    "M_scope"
+   ],
+   "measured": "Griffith's kanda-20 print does not carry this verse. The reuse route was then tested against EVERY Rigvedic text version in the store (21104 of them), not only the asserted parallel, so the absence is measured rather than unlooked-for.",
+   "wave1_nearest_parallel": null,
+   "wave1_declared_similarity": null,
+   "remeasured_best_pair_char_ratio": null,
+   "exact_match_anywhere_in_rigveda": false,
+   "disposition": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE",
+   "source_absent": true,
+   "canonical_key": "VG:AV:SAU:K20:S133:V005",
+   "gate_b": null,
+   "gate_c": null
+  },
+  "VG:AV:SAU:K20:S133:V006": {
+   "addressing_verdict": "CONFIRMED ABSENT FROM THE PRINT; CROSS-CORPUS REUSE REFUSED ON MEASUREMENT",
+   "diagnostics_run": [
+    "A_canonical_key_correctness",
+    "D_recension_identity",
+    "E_transliteration_script",
+    "F_unicode_normalization",
+    "G_accent_normalization",
+    "J_comparator_behaviour",
+    "M_scope"
+   ],
+   "measured": "Griffith's kanda-20 print does not carry this verse. The reuse route was then tested against EVERY Rigvedic text version in the store (21104 of them), not only the asserted parallel, so the absence is measured rather than unlooked-for.",
+   "wave1_nearest_parallel": null,
+   "wave1_declared_similarity": null,
+   "remeasured_best_pair_char_ratio": null,
+   "exact_match_anywhere_in_rigveda": false,
+   "disposition": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE",
+   "source_absent": true,
+   "canonical_key": "VG:AV:SAU:K20:S133:V006",
+   "gate_b": null,
+   "gate_c": null
+  }
+ },
+ "samaveda": {
+  "population": 1671,
+  "addressing_verdict": "ADDRESSING WORKS; THE BLOCK IS THE RECENSION, NOT THE COORDINATE",
+  "diagnostics_run": [
+   "A_canonical_key_correctness",
+   "D_recension_identity",
+   "E_transliteration_script",
+   "F_unicode_normalization",
+   "G_accent_normalization",
+   "I_sort_order"
+  ],
+  "measured": "1,242 Samavedic rows were staged against this corpus's own canonical keys and every one resolved, so the coordinate system is not the problem. Every located English Samaveda translation -- Griffith, Benfey, Stevenson, Samasrami -- is Ranayaniya, confirmed from Griffith's own preface ('I have followed Benfey's text'). Mapping it onto the Kauthuma arcika this graph holds is the cross-recension substitution the campaign forbids.",
+  "not_enumerated_here": "1,671 keys is a population, not a list; the set is in uncovered_sets.json",
+  "disposition": "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE"
+ }
+}

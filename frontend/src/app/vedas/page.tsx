@@ -40,7 +40,7 @@ const RECENSION: Record<string, string> = {
 /** The levels each collection actually uses. None of them is forced into another's shape. */
 const STRUCTURE: Record<string, string> = {
     RV: "Mandala → Sukta → Mantra",
-    SV: "Collection → Parvan → Dasati → Verse",
+    SV: "Collection → Prapathaka → Ardha → Dasati → Verse",
     YV: "Adhyaya → Mantra",
     AV: "Kanda → Sukta → Mantra",
 };

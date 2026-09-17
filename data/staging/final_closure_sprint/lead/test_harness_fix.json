@@ -1,0 +1,42 @@
+{
+  "artifact": "FINAL_CLOSURE_SPRINT_TEST_HARNESS_FIX",
+  "at": "2026-09-16T17:59:37.200831+00:00",
+  "found_by": "Agent 7 (defect D7); independently flagged by Agent 3; reproduced and quantified by the lead",
+  "severity": "invalidated this sprint's own verification plan",
+  "defect": {
+    "statement": "`pytest tests/unit tests/api tests/domain` -- the command this sprint prescribed -- aborts collection partway through tests/unit with ValueError: I/O operation on closed file, in _pytest/capture.py snap() at self.tmpfile.seek(0).",
+    "root_cause": "22 modules ran `sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')` at import time. io.TextIOWrapper takes OWNERSHIP of the buffer it wraps and closes it when garbage collected; under pytest that buffer is the capture tmpfile. Importing any one of them mid-session killed collection for every test after it.",
+    "measured_before": {
+      "combined_collect_only": 349,
+      "separate_totals": {
+        "tests/unit": 1357,
+        "tests/api": 1524,
+        "tests/domain": 345
+      },
+      "separate_sum": 3226,
+      "pct_of_suite_actually_collected": 10.8,
+      "wall_time_to_abort_seconds": 2.77
+    },
+    "why_it_was_invisible": "the run exits after reporting on the tests it DID collect, so it looks like a normal short run. Nothing measured collection COVERAGE -- only that the tests which ran, passed. Same class as 'a validator that silently skips is worse than none'.",
+    "prior_history": "Wave 4 found this in exactly ONE module (the chandas builder, whose documented residual shipped BECAUSE pytest could not import it) and fixed that one. The other 21 kept doing it for two further waves."
+  },
+  "fix": {
+    "change": "sys.stdout.reconfigure(encoding='utf-8', errors='replace') behind a hasattr guard, in all 22 modules. reconfigure MUTATES the existing stream instead of wrapping it, so nothing takes ownership and capture survives.",
+    "files_changed": 22,
+    "diff_shape": "every file 2 insertions / 1 deletion; CRLF files stayed CRLF; no whole-file rewrite (diff stat checked explicitly)"
+  },
+  "measured_after": {
+    "combined_collect_only": 3226,
+    "equals_separate_sum": true
+  },
+  "consequence_for_this_sprint": "every specialist that ran the prescribed combined command reported green over 10.8% of the suite. All per-suite results in the final report are therefore run SEPARATELY, and the combined command is now also valid.",
+  "test": {
+    "file": "tests/unit/test_stdout_capture_safety.py",
+    "tests": [
+      "test_no_module_reassigns_sys_stdout",
+      "test_the_sweep_can_actually_see_an_offender"
+    ],
+    "proved_can_fail": "reintroducing the swap in exactly one module (scripts/show_passage.py) fails the guard naming 'scripts/show_passage.py:27'; restoring it passes. The second test is the control -- it asserts the regex matches the defect form and both an indented variant, and does NOT match the remedy or a comparison, so an over-narrow regex cannot pass by matching nothing.",
+    "sweep_coverage": "every .py under scripts/ and src/, with an assertion that more than 100 files were reached"
+  }
+}

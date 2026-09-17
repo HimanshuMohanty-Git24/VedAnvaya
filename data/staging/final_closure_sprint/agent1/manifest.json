@@ -1,0 +1,71 @@
+{
+  "agent": 1,
+  "artifact": "AGENT_1_FINAL_CLOSURE_SPRINT",
+  "direction_method": "compilation-asymmetry-v1",
+  "domain": "formula / parallel / cross-veda",
+  "files": [
+    {
+      "path": "deferred_formula_layer_refresh.json",
+      "sha256": "029b8957f80b730c7ce44ca52fd73ff30da9345c6ac38f16b874c101218f96ff"
+    },
+    {
+      "path": "formula_1103_vs_1064_accounting.json",
+      "sha256": "ccf3e2d6344ff70cccb6cca65e15eabff5008c5bd4e070c0b2c6f85d027b4bc9"
+    },
+    {
+      "path": "formula_display_form_basis_partition.json",
+      "sha256": "35fdbb0e970fd33a190c2386d78f1a4ef404851107df7bfa4d2c138036855184"
+    },
+    {
+      "path": "formula_display_form_repair.json",
+      "sha256": "6b1df86a75d58c7f76a36f4c5face48a1263021cdc03de141acd711d8efec39a"
+    },
+    {
+      "path": "formula_nesting_audit.json",
+      "sha256": "44575a60dbbf8d7858efeb6032163fe6d155145de28fe1d35328f055ec21dd15"
+    },
+    {
+      "path": "pada_parallel_groups.jsonl",
+      "sha256": "4d5d210b034be7efb79ca22bcc9412909a809742c9420c76a05666b357d07306"
+    },
+    {
+      "path": "pada_parallel_report.json",
+      "sha256": "95e7766065ce922d2a1b3be76152e76de7f4c6c69a760f3041837e3ec8b0b2ab"
+    },
+    {
+      "path": "proposed_mutations.json",
+      "sha256": "7f79ada3e15ef9093fc44b05a39039061c2bdac2f57f673f3c6703936ee34870"
+    },
+    {
+      "path": "reuse_direction_edges.jsonl",
+      "sha256": "65a4ae3ffe158e6f511b4caa37531ba921f54987d560fdbc5aeb961b0f95afff"
+    },
+    {
+      "path": "reuse_direction_pairs.jsonl",
+      "sha256": "44de251c20eb15006e5e58112453513f46a41fbf6dfd2d2aab46548020fb2450"
+    }
+  ],
+  "gaps": [
+    "GAP-FORMULA-003",
+    "GAP-CROSS_VEDA-001",
+    "GAP-CROSS_VEDA-004"
+  ],
+  "generated_at": "2026-09-16T18:08:36.317628+00:00",
+  "graph_census_before": {
+    "nodes": 117970,
+    "relationships": 282389
+  },
+  "pada_method": "pada-identity-groups-v1",
+  "pair_verdicts": {
+    "AV-RV": "DIRECTED",
+    "AV-SV": "REFUSED_MEDIATED_BY_THIRD_CORPUS",
+    "AV-YV": "REFUSED_UNIT_GRANULARITY_INCOMPARABLE",
+    "RV-SV": "DIRECTED",
+    "RV-YV": "REFUSED_UNIT_GRANULARITY_INCOMPARABLE",
+    "SV-YV": "REFUSED_UNIT_GRANULARITY_INCOMPARABLE"
+  },
+  "reuse_pairs_directed": [
+    "AV-RV",
+    "RV-SV"
+  ]
+}

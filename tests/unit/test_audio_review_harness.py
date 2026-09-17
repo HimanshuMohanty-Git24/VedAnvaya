@@ -145,3 +145,64 @@ def test_progress_counts_only_the_three_final_states(sandbox: pathlib.Path) -> N
     state = harness.progress(harness.load_queue())
     assert state["decided"] == 0, "a non-final status must not count as a review"
     assert state["by_status"] == {"TEXT_VERIFIED": 1}
+
+
+# --- the queue's own provenance coverage -------------------------------------------------
+#
+# Wave 4 fixed `source_name` on 804 rows and recorded that every row thereafter carried
+# "licence and attribution". It did not. 61 rows -- the RV 1.65-1.70 span stratum, appended
+# after that fix -- were built by a second, hand-written row literal that carried neither
+# field, and a further 914 carried the `licence` key with a null value. Measuring presence
+# of the KEY rather than of a VALUE is what let that read as covered.
+#
+# These are coverage assertions, not precision assertions: they count how many rows the
+# check actually reached, because a validator that silently skips is worse than none.
+
+QUEUE = pathlib.Path("data/staging/audio_review_queue.jsonl")
+
+
+def _real_queue() -> list[dict[str, Any]]:
+    if not QUEUE.exists():  # pragma: no cover - the queue is a committed artifact
+        pytest.skip(f"{QUEUE} not built")
+    return [json.loads(line) for line in QUEUE.read_text(encoding="utf-8").splitlines() if line.strip()]
+
+
+def test_every_queued_row_states_its_rights_position() -> None:
+    """No reviewer is shown a blank licence cell.
+
+    A blank reads as "unencumbered", which for 786 of these rows is the opposite of the
+    truth: VedSearch publishes no licence statement at all. The absence is typed into the
+    row so a researched finding cannot be mistaken for a field nobody filled in.
+    """
+    rows = _real_queue()
+    assert rows, "the queue is empty"
+    blank = [r["review_id"] for r in rows if not r.get("licence")]
+    assert blank == [], f"{len(blank)} of {len(rows)} rows carry no rights position: {blank[:5]}"
+    unattributed = [r["review_id"] for r in rows if "attribution" not in r]
+    assert unattributed == [], f"{len(unattributed)} rows lack the attribution field"
+
+
+def test_rights_coverage_is_measured_over_every_stratum() -> None:
+    """Every stratum is reached, so a second row-construction path cannot hide in one.
+
+    The defect this pins was confined to a single stratum. A check that sampled the queue,
+    or that stopped at the first stratum, would have passed while 61 rows went out bare.
+    """
+    rows = _real_queue()
+    strata = {str(r.get("stratum")) for r in rows}
+    assert len(strata) > 1, "expected several strata; a single-stratum queue hides path bugs"
+    for stratum in sorted(strata):
+        in_stratum = [r for r in rows if str(r.get("stratum")) == stratum]
+        covered = [r for r in in_stratum if r.get("licence")]
+        assert len(covered) == len(in_stratum), (
+            f"stratum {stratum}: {len(in_stratum) - len(covered)} of {len(in_stratum)} "
+            "rows carry no rights position"
+        )
+
+
+def test_no_queued_row_claims_to_have_been_heard() -> None:
+    """The campaign figure is 1,021 needing review and 0 decided. Nothing may pre-empt it."""
+    rows = _real_queue()
+    heard = [r["review_id"] for r in rows if r.get("verdict") or r.get("reviewer")]
+    assert heard == [], f"{len(heard)} rows carry a verdict without a human: {heard[:5]}"
+    assert {str(r.get("review_status")) for r in rows} == {"NEEDS_AUDIBLE_REVIEW"}

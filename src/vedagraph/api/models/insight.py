@@ -1132,6 +1132,13 @@ class CapabilityLimit(ApiModel):
     question_number: int | None = None
     question: str
     verdict: CapabilityVerdict
+    benchmark_verdict: CapabilityVerdict | None = Field(
+        default=None,
+        description="The frozen V3.3 benchmark's grade, kept beside the live one. They can "
+        "differ, and when they do the difference is the finding: the graph has moved since "
+        "the benchmark was frozen, and copying the frozen grade forward would publish a "
+        "limitation that no longer holds.",
+    )
     data_status: KnowledgeStatus
     why: str = Field(description="What is missing, in terms of the graph rather than the corpus.")
     what_this_is_not: str = Field(
@@ -1162,6 +1169,46 @@ class CapabilitiesResponse(InsightEnvelope):
     limits: list[CapabilityLimit] = Field(default_factory=list)
     total_available: int
     requested_question: int | None = None
+    benchmark_not_answerable_total: int = Field(
+        default=0,
+        description="How many questions the frozen 100-question benchmark graded "
+        "NOT_ANSWERABLE. The population this catalogue must cover.",
+    )
+    benchmark_not_answerable_published: int = Field(
+        default=0,
+        description="How many of those this catalogue publishes a probed card for. The "
+        "catalogue published 7 against 21 once, and said so rather than implying "
+        "completeness; these two fields are what make that claim checkable.",
+    )
+    unpublished_not_answerable: list[int] = Field(
+        default_factory=list,
+        description="Benchmark question numbers graded NOT_ANSWERABLE with no card here. "
+        "Empty is the closed state, and it is a measurement rather than an assurance.",
+    )
+
+    @model_validator(mode="after")
+    def _the_published_count_must_match_the_cards(self) -> Self:
+        """The completeness claim is recomputed from ``limits``, never asserted.
+
+        A hand-set ``benchmark_not_answerable_published`` is exactly the sort of figure
+        typed into a payload that nothing checks. Deriving it here means a card that is
+        dropped moves the number and repopulates ``unpublished_not_answerable``.
+        """
+        if self.requested_question is not None:
+            return self
+        covered = {
+            limit.question_number
+            for limit in self.limits
+            if limit.question_number is not None
+            and limit.benchmark_verdict is CapabilityVerdict.NOT_ANSWERABLE
+        }
+        if len(covered) != self.benchmark_not_answerable_published:
+            raise ValueError(
+                f"benchmark_not_answerable_published says "
+                f"{self.benchmark_not_answerable_published} but {len(covered)} cards carry a "
+                "NOT_ANSWERABLE benchmark verdict"
+            )
+        return self
 
     @model_validator(mode="after")
     def _a_refusal_is_never_an_empty_list(self) -> Self:
@@ -1172,6 +1219,118 @@ class CapabilitiesResponse(InsightEnvelope):
             )
         reject_meaningless_empty(self.limits, status=self.data_status, caveats=self.caveats)
         return self
+
+
+# ---------------------------------------------------------------------------
+# /insights/devatas/{id}/by-book, /by-metre, /dispersion -- the three viz blockers
+# ---------------------------------------------------------------------------
+
+
+class CellStatus(StrEnum):
+    """Why a cell in a deity aggregate holds the value it holds.
+
+    ``MEASURED_ZERO`` and ``NOT_BUILT`` both render as an empty cell and mean opposite
+    things: the first says the deity is not named in that book and the layer looked, the
+    second says the layer does not reach that corpus and nothing was looked at. A heatmap
+    that drew both as a pale square would assert the Samaveda has no metre.
+    """
+
+    MEASURED = "MEASURED"
+    MEASURED_ZERO = "MEASURED_ZERO"
+    NOT_BUILT = "NOT_BUILT"
+
+
+class BookCountRow(ApiModel):
+    """One book of one corpus, with the deity's count in it and the book's own size.
+
+    ``denominator`` is the book's mantra total and it is not optional. Mandala 9 is four
+    times the size of Mandala 2; a heatmap read on raw counts says the Soma book is where
+    every deity lives.
+    """
+
+    book_key: str
+    book_label: str
+    veda: str
+    count: int | None = Field(
+        default=None, description="Null unless status is MEASURED or MEASURED_ZERO."
+    )
+    denominator: int = Field(description="Mantras in this book.")
+    per_1000: float | None = None
+    status: CellStatus = CellStatus.MEASURED
+    note: str | None = None
+
+
+class DevataByBookResponse(InsightEnvelope):
+    """VIZ_BLOCKER_02. The per-book aggregate a deity x mandala heatmap needs.
+
+    The blocker's own warning is the reason this is an endpoint rather than a client-side
+    roll-up of ``/devatas/{id}/passages``: that route is capped at 200 rows a page, so a
+    heatmap built by paging it would truncate silently and a truncated heatmap is
+    indistinguishable from a sparse one.
+    """
+
+    devata_id: str
+    display_label: str
+    basis: str = Field(
+        description="Which layer the counts come from: 'naming' spans four corpora, "
+        "'ascription' reaches the Rigveda alone. Never mixed in one response."
+    )
+    books: list[BookCountRow] = Field(default_factory=list)
+    total: int = Field(description="Sum over the measured books. Equals the naming total.")
+
+
+class MetreCountRow(ApiModel):
+    """One deity x metre cell."""
+
+    metre_key: str
+    metre_label: str
+    veda: str
+    count: int | None = None
+    status: CellStatus = CellStatus.MEASURED
+    note: str | None = None
+
+
+class DevataByMetreResponse(InsightEnvelope):
+    """VIZ_BLOCKER_03. The deity x metre aggregate, with two thirds of it typed unbuilt.
+
+    The blocker called this low priority because "the metre layer reaches only RV and AV,
+    so the matrix would be two-thirds hatched -- honest, but thin". Thin and honest is the
+    right trade and it is served here: the Samavedic and Yajurvedic rows are present and
+    typed ``NOT_BUILT`` rather than omitted, because a matrix with two corpora silently
+    missing is read as a matrix of two corpora.
+    """
+
+    devata_id: str
+    display_label: str
+    cells: list[MetreCountRow] = Field(default_factory=list)
+    vedas_with_a_metre_layer: list[str] = Field(default_factory=list)
+    total: int
+
+
+class DispersionSeries(ApiModel):
+    """Where in one corpus a deity is attested, as ordinal positions and nothing else.
+
+    ``positions`` are 1-based indices into the corpus's canonical mantra order, not
+    citations and not payloads. That is the point: an Invocation Landscape for a major
+    deity needs every attesting position, and returning the passages would be 2,305 objects
+    behind an endpoint capped at 200 rows a page.
+    """
+
+    veda: str
+    positions: list[int] = Field(default_factory=list)
+    denominator: int = Field(description="Mantras in this corpus, the axis length.")
+    status: CellStatus = CellStatus.MEASURED
+    note: str | None = None
+
+
+class DevataDispersionResponse(InsightEnvelope):
+    """VIZ_BLOCKER_01. Dispersion for a deity of any size, unbounded by the page cap."""
+
+    devata_id: str
+    display_label: str
+    basis: str
+    by_veda: dict[str, DispersionSeries] = Field(default_factory=dict)
+    total_positions: int
 
 
 # ---------------------------------------------------------------------------

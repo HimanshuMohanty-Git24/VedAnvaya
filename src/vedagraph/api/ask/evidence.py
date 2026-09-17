@@ -31,6 +31,7 @@ from typing import Any, Final
 
 from vedagraph.api.ask.models import EvidenceItem, EvidenceItemType
 from vedagraph.api.ask.retriever import SURFACE_LIMITS, RetrievalResult
+from vedagraph.api.repositories.neo4j_repository import named_query_caveat
 from vedagraph.domain import translation_semantics
 
 #: How many items reach the prompt. Bounded because a packet that dumps 200 passages
@@ -276,6 +277,14 @@ def build_evidence_packet(
                 "Found by matching the English translation, so the match is in the "
                 "translator's wording and not necessarily in the Sanskrit."
             )
+        if row.get("_ambiguous_citation"):
+            qualifier_parts.append(
+                f"The citation as asked, '{row['_ambiguous_citation']}', names no section "
+                "of the Kauthuma arcika and matches no verse on its own. This is one of "
+                "the loci it could have meant, found by trying each arcika section. Cite "
+                "it by the full citation shown here, and say that the question's citation "
+                "was incomplete."
+            )
         disclosure = _translation_disclosure(row)
         if disclosure:
             qualifier_parts.append(disclosure)
@@ -417,6 +426,57 @@ def build_evidence_packet(
                     "with no row here was not reached by this annotation layer, which is "
                     "not the same as the text being silent."
                 ),
+                knowledge_status="SUPPORTED",
+            )
+        )
+
+    # -- material culture ---------------------------------------------------
+    # One item per subject, not per row: the frozen grids return a row per (subject, Veda)
+    # and a packet holding fourteen separate "gold in RV" items would spend its whole
+    # budget on one dimension while telling the reader nothing it could not read off a
+    # single line. The caveat is *read from the query* rather than written here -- this
+    # project has twice shipped hand-copied caveat prose that drifted from the data it
+    # described, and the metals caveat in particular carries a known-false cell (Yajurvedic
+    # ayas) whose wording must be the graded one.
+    by_subject: dict[tuple[str, str], list[dict[str, Any]]] = {}
+    for row in result.material_culture:
+        subject = str(row.get("_subject") or "")
+        if not subject:
+            continue
+        by_subject.setdefault((str(row.get("_query_name")), subject), []).append(row)
+
+    for (query_name, subject), rows in by_subject.items():
+        matched = [row for row in rows if int(row.get("mantras") or 0) > 0]
+        if not matched:
+            # A cell that matched nothing is carried by the caveat, not by its own item:
+            # the metals grid returns every metal against every Veda, so emitting the
+            # empty ones would be a packet of zeros.
+            continue
+        per_corpus: list[str] = []
+        for row in sorted(matched, key=lambda r: str(r.get("veda"))):
+            detail = f"{row['veda']}: {int(row.get('mantras') or 0)} verses"
+            if row.get("per_1000_mantras") is not None:
+                detail += f" ({row['per_1000_mantras']} per 1,000 mantras)"
+            if row.get("evidence_status"):
+                detail += f" [{row['evidence_status']}]"
+            per_corpus.append(detail)
+        silent = sorted(
+            str(row.get("veda"))
+            for row in rows
+            if int(row.get("mantras") or 0) == 0 and row.get("veda")
+        )
+        staged.append(
+            EvidenceItem(
+                id=next(ids),
+                type=EvidenceItemType.CORPUS_DISTRIBUTION,
+                entity_label=subject,
+                fact=(
+                    f"Verses naming {subject} per corpus — "
+                    + "; ".join(per_corpus)
+                    + "."
+                    + (f" No lexical match in: {', '.join(silent)}." if silent else "")
+                ),
+                qualifier=named_query_caveat(query_name),
                 knowledge_status="SUPPORTED",
             )
         )

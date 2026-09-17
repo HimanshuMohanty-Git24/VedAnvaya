@@ -38,6 +38,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { validatePublicGraph, exportHash } from "./public-identity-contract.mjs";
 import Graph from "graphology";
 import louvain from "graphology-communities-louvain";
 
@@ -68,7 +69,10 @@ const RESOLUTION = Number(args.get("resolution") ?? 1.05);
 const STRUCTURAL = new Set(["CONTAINS", "HAS_CHANDAS", "HAS_TEXT_VERSION", "HAS_TRANSLATION"]);
 
 console.log(`reading ${IN} ...`);
-const raw = JSON.parse(readFileSync(IN, "utf8"));
+const rawBytes = readFileSync(IN);
+const raw = JSON.parse(rawBytes.toString("utf8"));
+const identityAudit = validatePublicGraph(raw);
+const inputPublicExportHash = exportHash(rawBytes);
 const nodes = raw.nodes;
 const edges = raw.edges;
 console.log(`  ${nodes.length.toLocaleString()} nodes, ${edges.length.toLocaleString()} edges`);
@@ -329,7 +333,9 @@ if (disconnected.length) {
 writeFileSync(
     OUT,
     JSON.stringify({
-        generated: new Date().toISOString(),
+        generated: raw.generated,
+        inputPublicExportHash,
+        identityAudit,
         algorithm: "louvain",
         resolution: RESOLUTION,
         seed: SEED,

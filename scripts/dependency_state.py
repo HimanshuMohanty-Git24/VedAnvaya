@@ -94,6 +94,9 @@ CONSUMER_FILES: dict[str, tuple[str, ...]] = {
     ),
     "entity coverage": ("data/domain/vedagraph_domain_v2/veda_coverage_v3.json",),
     "Ask retrieval": ("data/gold/ask_benchmark_v1.jsonl",),
+    "ritual aggregates": (
+        "data/staging/final_closure_sprint/agent4/ritual_context.jsonl",
+    ),
     # The Lab stage does not read the graph at all: it reads the Python export's output. Until
     # Wave 4 that dependency was expressed nowhere, so re-exporting the world left the Lab
     # CURRENT against a partition measured on the previous one.
@@ -107,6 +110,9 @@ CONSUMER_BUILDERS: dict[str, tuple[str, ...]] = {
     "formula / parallel / variant relations": ("scripts/build_formula_families.py",),
     "entity coverage": ("scripts/build_veda_coverage_and_metrics.py",),
     "quality evaluation": ("scripts/graph_quality_scorecard.py",),
+    "ritual aggregates": (
+        "data/staging/final_closure_sprint/agent4/build_agent4_ritual_closure.py",
+    ),
     # Three stages, so three builders. Round three recorded only the Python export for both
     # world consumers, which is the stage that applies NOT n:Internal -- and the two JS stages
     # that turn its output into the files a browser downloads were in nothing's hash.
@@ -139,6 +145,12 @@ CONSUMER_OUTPUTS: dict[str, tuple[str, ...]] = {
     ),
     "entity coverage": ("data/domain/vedagraph_domain_v2/veda_coverage_v3.json",),
     "quality evaluation": ("docs/reports/GRAPH_QUALITY_V2_SCORECARD.md",),
+    # The ritual aggregate the final closure sprint produced. Declared here the moment it
+    # existed, because the previous NOT_APPLICABLE ruling rested on there being no such
+    # artifact -- a reason that expires silently the first time one is built.
+    "ritual aggregates": (
+        "data/staging/final_closure_sprint/agent4/material_culture_by_ritual_context.json",
+    ),
     "Knowledge World public projection": (
         "frontend/.world/world.raw.json",
         "frontend/public/world/world.predicates.json",
@@ -205,6 +217,86 @@ def predicate_fingerprint(session: Session, predicate: str) -> str:
     )
 
 
+#: Consumers whose builder reads a WHOLE subgraph rather than an enumerated set of labels,
+#: and the Cypher predicate that defines it.
+#:
+#: Wave 4 fixed the world consumers' declared *outputs* after 28 retired metre identities
+#: shipped to the browser from a stage judged on an intermediate. The same defect survived on
+#: the *input* side and this is the fix for it. ``export_graph_world.py`` selects
+#: ``MATCH (n) WHERE NOT n:Internal`` -- every public label there is -- while the two world
+#: consumers between them declared five. Measured at the final closure sprint's baseline:
+#: **39.0% of public nodes and 68.8% of public edges were invisible to every declared hash**,
+#: including ``:Chandas`` -- the very label whose 28 malformed identities shipped -- and
+#: ``Rishi``, ``Ritual``, ``Object``, ``Epithet``, ``DevataAscription``, ``Formula`` and
+#: ``SemanticAssertion``. A mutation to any of them moved no declared input, so the report
+#: said CURRENT while the bundle a browser downloads was stale.
+#:
+#: Declared as a subgraph predicate rather than as a longer list of labels on purpose: an
+#: enumerated list is only correct until the next label is added, and being correct-until-
+#: then is exactly how this defect arose. ``graph_quality_scorecard.py`` is here for the same
+#: reason -- it reads ``MATCH (n)`` and every predicate, and declared three labels.
+CONSUMER_SUBGRAPHS: dict[str, tuple[str, str]] = {
+    "Knowledge World public projection": (
+        "public",
+        "NOT n:Internal",
+    ),
+    "Visualization Lab aggregates": (
+        "public",
+        "NOT n:Internal",
+    ),
+    "quality evaluation": (
+        "whole-graph",
+        "true",
+    ),
+}
+
+
+def subgraph_fingerprint(session: Session, where: str) -> str:
+    """Census and identity digest of every node and edge a whole-subgraph reader can see.
+
+    Counts *and* a digest of the sorted identities, for the same reason
+    ``predicate_fingerprint`` does both: deleting one element and adding another of the same
+    kind leaves the count unmoved. Labels and predicate types are folded in per element, so
+    relabelling a node moves the value even when its identity does not.
+    """
+    node = session.run(
+        f"MATCH (n) WHERE {where} "
+        f"WITH {_IDENTITY} AS k "
+        "RETURN count(*) AS total, "
+        "sum(CASE WHEN k IS NULL THEN 1 ELSE 0 END) AS keyless, "
+        "collect(k) AS keys"
+    ).single()
+    # Label and type censuses alongside the identity digests, so a pure RELABELLING moves the
+    # value too. That is not hypothetical here: M10 fixed 28 malformed metre identities by
+    # marking them ``:Internal``, which changes no node's identity and no edge's endpoints.
+    # Computed as a census rather than by sorting each node's label list in Cypher, because
+    # the compose file requires that nothing in the pipeline depend on APOC.
+    labels = ";".join(
+        f"{row['label']}={int(row['c'])}"
+        for row in session.run(
+            f"MATCH (n) WHERE {where} UNWIND labels(n) AS label "
+            "RETURN label, count(*) AS c ORDER BY label"
+        )
+    )
+    edge_where = where.replace("n:", "a:") if where != "true" else "true"
+    edge_where_b = where.replace("n:", "b:") if where != "true" else "true"
+    edge = session.run(
+        f"MATCH (a)-[r]->(b) WHERE {edge_where} AND {edge_where_b} "
+        f"WITH {_A_IDENTITY} AS ka, {_B_IDENTITY} AS kb, type(r) AS t "
+        "RETURN count(*) AS total, "
+        "sum(CASE WHEN ka IS NULL OR kb IS NULL THEN 1 ELSE 0 END) AS unnamed, "
+        "collect(CASE WHEN ka IS NULL OR kb IS NULL THEN NULL ELSE ka + '-' + t + '>' + kb END) AS pairs"
+    ).single()
+    keys = sorted(str(k) for k in ((node["keys"] if node else None) or []) if k is not None)
+    pairs = sorted(str(p) for p in ((edge["pairs"] if edge else None) or []) if p is not None)
+    return (
+        f"nodes={int(node['total']) if node else 0};keyless={int(node['keyless']) if node else 0};"
+        f"nodekeys={digest(chr(10).join(keys))};labels={digest(labels)};"
+        f"edges={int(edge['total']) if edge else 0};unnamed={int(edge['unnamed']) if edge else 0};"
+        f"edgekeys={digest(chr(10).join(pairs))}"
+    )
+
+
 def upstream_hashes(session: Session, consumer: dict[str, Any]) -> dict[str, str]:
     """Every declared input, each hashed separately.
 
@@ -213,6 +305,9 @@ def upstream_hashes(session: Session, consumer: dict[str, Any]) -> dict[str, str
     """
     name = str(consumer["consumer"])
     inputs: dict[str, str] = {}
+    if name in CONSUMER_SUBGRAPHS:
+        scope, where = CONSUMER_SUBGRAPHS[name]
+        inputs[f"subgraph:{scope}"] = subgraph_fingerprint(session, where)
     for label in sorted(consumer["reads_labels"]):
         inputs[f"label:{label}"] = label_fingerprint(session, label)
     for predicate in sorted(consumer["reads_types"]):
@@ -311,7 +406,11 @@ def main() -> int:
     ledger = load_ledger()
     driver = GraphDatabase.driver(URI, auth=AUTH)
     try:
-        with driver.session(database=DB) as session:
+        # Every query below is a MATCH/RETURN. The session is opened READ so that a
+        # mutation added here later is refused by the driver rather than executed:
+        # this script runs against a frozen graph and must never be the thing that
+        # moves it.
+        with driver.session(database=DB, default_access_mode="READ") as session:
             nodes = int(session.run("MATCH (n) RETURN count(n) AS c").single()["c"])
             rels = int(session.run("MATCH ()-[r]->() RETURN count(r) AS c").single()["c"])
 
@@ -425,6 +524,18 @@ def main() -> int:
     print("  " + "  ".join(f"{k}={v}" for k, v in counts.items()))
     print(f"  unexplained stale: {summary['unexplained_stale'] or 'none'}")
     print(f"  report: {OUT}")
+
+    # The exit code is a verdict, not a crash report. Until the final closure sprint this
+    # returned 0 unconditionally, so `STALE_INPUT=5` still exited 0 and anything wired on the
+    # exit code -- a CI step, a release gate, a `&&` in a shell -- caught nothing. Only
+    # `--status` gates: `--record` is how a consumer is brought back to CURRENT, and it would
+    # be absurd for recording to fail because the thing it is recording was stale.
+    if args.status and (counts["STALE_INPUT"] or summary["unexplained_stale"]):
+        print(
+            f"  VERDICT: FAIL -- {counts['STALE_INPUT']} consumer(s) STALE_INPUT"
+            f"{', unexplained: ' + ', '.join(summary['unexplained_stale']) if summary['unexplained_stale'] else ''}"
+        )
+        return 1
     return 0
 
 

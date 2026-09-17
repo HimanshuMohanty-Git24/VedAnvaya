@@ -1,0 +1,74 @@
+{
+  "artifact": "AGENT_3_TEXT_VERSION_DERIVATIVES",
+  "gap": "GAP-MORPHOLOGY-006",
+  "at": "2026-09-16T17:04:43.088852+00:00",
+  "neo4j_access": "READ_ONLY",
+  "search_derivative": {
+    "staged_rows": 14371,
+    "per_veda": {
+      "RV": 10552,
+      "SV": 1844,
+      "YV": 1975
+    },
+    "already_live_AV": 5839,
+    "post_import_total": 20210
+  },
+  "yv_unaccented_derived": {
+    "staged_rows": 139,
+    "accent_source": "DERIVED_ACCENT_STRIPPED"
+  },
+  "accent_bearing_probes": [
+    {
+      "query": "agním",
+      "query_is_accent_bearing": true,
+      "folded_query": "agnim",
+      "hits_per_veda": {
+        "AV": 19,
+        "RV": 102,
+        "SV": 15,
+        "YV": 19
+      },
+      "reaches_all_four": true
+    },
+    {
+      "query": "sómam",
+      "query_is_accent_bearing": true,
+      "folded_query": "somam",
+      "hits_per_veda": {
+        "AV": 23,
+        "RV": 148,
+        "SV": 16,
+        "YV": 15
+      },
+      "reaches_all_four": true
+    },
+    {
+      "query": "índra",
+      "query_is_accent_bearing": true,
+      "folded_query": "indra",
+      "hits_per_veda": {
+        "AV": 571,
+        "RV": 1613,
+        "SV": 334,
+        "YV": 211
+      },
+      "reaches_all_four": true
+    },
+    {
+      "query": "devásya",
+      "query_is_accent_bearing": true,
+      "folded_query": "devasya",
+      "hits_per_veda": {
+        "AV": 40,
+        "RV": 65,
+        "SV": 11,
+        "YV": 40
+      },
+      "reaches_all_four": true
+    }
+  ],
+  "files": {
+    "text_versions_search_derivative.jsonl": "eb442cc6972f69f4542d82de3b7c6c0e813e887dc0a4a1d343c816c1c5a5b4d4",
+    "text_versions_yv_unaccented_derived.jsonl": "2a516931e41b3c5d711f155b94a57c963f1bade34d58ac3c7e927eccac0fecd9"
+  }
+}

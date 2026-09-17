@@ -85,11 +85,29 @@ DECLARED_STATES: frozenset[str] = frozenset(
         "ASSESSED_SOURCE_ABSENT",
         "NEVER_ASSESSED",
         "NOT_APPLICABLE_AT_THIS_GRANULARITY",
+        # Added for the Whitney verse-level correction, approved by the lead against
+        # OWNER_DECISIONS.md sections 20 and 25. It is the sixth thing that can be true of a
+        # dimension and it was not expressible: **the source was read, it states a value at
+        # this granularity, and we could not resolve that value to an identity.**
+        #
+        # 150 verse-dimension pairs held ASSESSED_SOURCE_ABSENT while Whitney's bracket
+        # printed a verse-level value this repository holds -- 117 chandas and 33 devata.
+        # The reason codes they carried, SOURCE_STATES_NO_DEFAULT_METRE_FOR_THIS_HYMN and
+        # SOURCE_STATES_NO_DEVATA_FOR_THIS_HYMN, were TRUE about the hymn and were being
+        # used to justify a FALSE claim about the verse. Both are removed with the state.
+        #
+        # This is the opposite of an absence and must never be added to ABSENCE_STATES.
+        # Doing so would demand a reason code explaining why the source is silent about a
+        # verse it demonstrably speaks about, which is the exact inversion this entry
+        # exists to correct. tests/unit/test_attribution_states.py fails on it.
+        "SOURCE_ASSERTS_UNRESOLVED_OBJECT",
     }
 )
 
 #: States that record an ABSENCE, and therefore must carry a reason code. The whole point of
 #: importing the census is that these two are different from each other and from silence.
+#:
+#: ``SOURCE_ASSERTS_UNRESOLVED_OBJECT`` is deliberately NOT here; see its note above.
 ABSENCE_STATES: frozenset[str] = frozenset(
     {"ASSESSED_SOURCE_ABSENT", "NOT_APPLICABLE_AT_THIS_GRANULARITY"}
 )

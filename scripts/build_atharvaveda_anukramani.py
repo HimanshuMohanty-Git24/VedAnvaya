@@ -134,7 +134,8 @@ def use_utf8_console() -> None:
     33 malformed values as a known residual and shipped them; a parser no test can import
     is a parser whose residual cannot become a failing test. Same fact, two symptoms.
     """
-    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+    if hasattr(sys.stdout, "reconfigure"):  # pragma: no cover - stream setup
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 CORPUS = Path("data/canonical/atharvaveda_saunaka_digital_working_v1")
 MANIFEST = Path("data/raw/wikisource_whitney_avs/anukramani_page_manifest.jsonl")

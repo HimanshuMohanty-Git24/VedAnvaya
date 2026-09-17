@@ -38,7 +38,8 @@ from typing import Any
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[2] / "src"))
 
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+if hasattr(sys.stdout, "reconfigure"):  # pragma: no cover - stream setup
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 warnings.filterwarnings("ignore")
 
 from vedagraph.product.audio.net import USER_AGENT  # noqa: E402

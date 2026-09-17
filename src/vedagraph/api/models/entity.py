@@ -291,8 +291,12 @@ class DevataProfile(ApiModel):
     )
     attribution_scope: list[str] = Field(
         default_factory=list,
-        description="Vedas the Anukramani attribution layer reaches. It is Rigveda-only, "
-        "so a zero elsewhere is a missing layer and not an absent deity.",
+        description="Vedas the HAS_DEVATA attribution layer reaches, which is the Rigveda "
+        "alone, so a zero elsewhere is a missing layer and not an absent deity. NOT the same "
+        "as 'the Anukramani is Rigveda-only', which is false: the Atharvaveda has one, and "
+        "4,160 of its mantras carry ascription descriptors from it. Those descriptors are "
+        "not resolved into the deity registry, which is why they are a separate predicate "
+        "and are out of scope here.",
     )
 
     top_rishis: list[str] = Field(default_factory=list)

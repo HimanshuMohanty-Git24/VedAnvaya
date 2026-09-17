@@ -1,0 +1,380 @@
+{
+  "at": "2026-09-16T16:57:47.679452+00:00",
+  "relationship_confidence": [
+    {
+      "predicate": "ABOUT_CONCEPT",
+      "edges": 24861,
+      "distinct_values": 10,
+      "values": [
+        0.85,
+        0.8,
+        0.89,
+        0.93,
+        0.84,
+        0.95,
+        0.88,
+        0.92,
+        0.55,
+        0.59
+      ],
+      "lo": 0.55,
+      "hi": 0.95
+    },
+    {
+      "predicate": "HAS_RISHI",
+      "edges": 17889,
+      "distinct_values": 1,
+      "values": [
+        1.0
+      ],
+      "lo": 1.0,
+      "hi": 1.0
+    },
+    {
+      "predicate": "HAS_CHANDAS",
+      "edges": 16298,
+      "distinct_values": 1,
+      "values": [
+        1.0
+      ],
+      "lo": 1.0,
+      "hi": 1.0
+    },
+    {
+      "predicate": "HAS_DEVATA",
+      "edges": 10558,
+      "distinct_values": 1,
+      "values": [
+        1.0
+      ],
+      "lo": 1.0,
+      "hi": 1.0
+    },
+    {
+      "predicate": "HAS_DEVATA_ASCRIPTION",
+      "edges": 5385,
+      "distinct_values": 1,
+      "values": [
+        1.0
+      ],
+      "lo": 1.0,
+      "hi": 1.0
+    },
+    {
+      "predicate": "BELONGS_TO_FAMILY",
+      "edges": 305,
+      "distinct_values": 1,
+      "values": [
+        1.0
+      ],
+      "lo": 1.0,
+      "hi": 1.0
+    },
+    {
+      "predicate": "INVOKES",
+      "edges": 207,
+      "distinct_values": 6,
+      "values": [
+        0.85,
+        0.9,
+        0.8,
+        0.75,
+        0.7,
+        0.95
+      ],
+      "lo": 0.7,
+      "hi": 0.95
+    },
+    {
+      "predicate": "DESCRIBES",
+      "edges": 199,
+      "distinct_values": 7,
+      "values": [
+        0.65,
+        0.85,
+        0.6,
+        0.75,
+        0.8,
+        0.7,
+        0.9
+      ],
+      "lo": 0.6,
+      "hi": 0.9
+    },
+    {
+      "predicate": "REQUESTS",
+      "edges": 89,
+      "distinct_values": 5,
+      "values": [
+        0.9,
+        0.8,
+        0.85,
+        0.75,
+        0.7
+      ],
+      "lo": 0.7,
+      "hi": 0.9
+    },
+    {
+      "predicate": "PRAISES",
+      "edges": 38,
+      "distinct_values": 4,
+      "values": [
+        0.9,
+        0.7,
+        0.8,
+        0.85
+      ],
+      "lo": 0.7,
+      "hi": 0.9
+    },
+    {
+      "predicate": "DESCRIBES_ACTION",
+      "edges": 35,
+      "distinct_values": 5,
+      "values": [
+        0.7,
+        0.65,
+        0.75,
+        0.8,
+        0.85
+      ],
+      "lo": 0.65,
+      "hi": 0.85
+    },
+    {
+      "predicate": "INVOLVES_OFFERING",
+      "edges": 11,
+      "distinct_values": 4,
+      "values": [
+        0.85,
+        0.75,
+        0.8,
+        0.9
+      ],
+      "lo": 0.75,
+      "hi": 0.9
+    },
+    {
+      "predicate": "INVOLVES_RITUAL",
+      "edges": 9,
+      "distinct_values": 3,
+      "values": [
+        0.8,
+        0.7,
+        0.75
+      ],
+      "lo": 0.7,
+      "hi": 0.8
+    },
+    {
+      "predicate": "HAS_THEME",
+      "edges": 8,
+      "distinct_values": 4,
+      "values": [
+        0.55,
+        0.7,
+        0.75,
+        0.85
+      ],
+      "lo": 0.55,
+      "hi": 0.85
+    },
+    {
+      "predicate": "CONTRASTS_WITH",
+      "edges": 8,
+      "distinct_values": 4,
+      "values": [
+        0.6,
+        0.7,
+        0.65,
+        0.75
+      ],
+      "lo": 0.6,
+      "hi": 0.75
+    },
+    {
+      "predicate": "REFERS_TO_NATURAL_PHENOMENON",
+      "edges": 5,
+      "distinct_values": 3,
+      "values": [
+        0.85,
+        0.7,
+        0.8
+      ],
+      "lo": 0.7,
+      "hi": 0.85
+    },
+    {
+      "predicate": "INVOLVES_SUBSTANCE",
+      "edges": 3,
+      "distinct_values": 1,
+      "values": [
+        0.85
+      ],
+      "lo": 0.85,
+      "hi": 0.85
+    },
+    {
+      "predicate": "REFERS_TO_PLACE",
+      "edges": 1,
+      "distinct_values": 1,
+      "values": [
+        0.75
+      ],
+      "lo": 0.75,
+      "hi": 0.75
+    }
+  ],
+  "total_conf_edges": 75909,
+  "single_constant_predicates": [
+    {
+      "predicate": "HAS_RISHI",
+      "edges": 17889,
+      "distinct_values": 1,
+      "values": [
+        1.0
+      ],
+      "lo": 1.0,
+      "hi": 1.0
+    },
+    {
+      "predicate": "HAS_CHANDAS",
+      "edges": 16298,
+      "distinct_values": 1,
+      "values": [
+        1.0
+      ],
+      "lo": 1.0,
+      "hi": 1.0
+    },
+    {
+      "predicate": "HAS_DEVATA",
+      "edges": 10558,
+      "distinct_values": 1,
+      "values": [
+        1.0
+      ],
+      "lo": 1.0,
+      "hi": 1.0
+    },
+    {
+      "predicate": "HAS_DEVATA_ASCRIPTION",
+      "edges": 5385,
+      "distinct_values": 1,
+      "values": [
+        1.0
+      ],
+      "lo": 1.0,
+      "hi": 1.0
+    },
+    {
+      "predicate": "BELONGS_TO_FAMILY",
+      "edges": 305,
+      "distinct_values": 1,
+      "values": [
+        1.0
+      ],
+      "lo": 1.0,
+      "hi": 1.0
+    },
+    {
+      "predicate": "INVOLVES_SUBSTANCE",
+      "edges": 3,
+      "distinct_values": 1,
+      "values": [
+        0.85
+      ],
+      "lo": 0.85,
+      "hi": 0.85
+    },
+    {
+      "predicate": "REFERS_TO_PLACE",
+      "edges": 1,
+      "distinct_values": 1,
+      "values": [
+        0.75
+      ],
+      "lo": 0.75,
+      "hi": 0.75
+    }
+  ],
+  "node_confidence": [
+    {
+      "label": "InterpretiveClaim",
+      "nodes": 6,
+      "distinct_values": 3,
+      "values": [
+        "HIGH",
+        "MEDIUM",
+        "LOW"
+      ]
+    }
+  ],
+  "value_histogram": [
+    {
+      "v": 1.0,
+      "c": 50435
+    },
+    {
+      "v": 0.85,
+      "c": 12781
+    },
+    {
+      "v": 0.8,
+      "c": 11203
+    },
+    {
+      "v": 0.55,
+      "c": 456
+    },
+    {
+      "v": 0.89,
+      "c": 447
+    },
+    {
+      "v": 0.84,
+      "c": 243
+    },
+    {
+      "v": 0.9,
+      "c": 145
+    },
+    {
+      "v": 0.75,
+      "c": 75
+    },
+    {
+      "v": 0.7,
+      "c": 49
+    },
+    {
+      "v": 0.93,
+      "c": 22
+    },
+    {
+      "v": 0.59,
+      "c": 21
+    },
+    {
+      "v": 0.65,
+      "c": 11
+    },
+    {
+      "v": 0.88,
+      "c": 8
+    },
+    {
+      "v": 0.6,
+      "c": 7
+    },
+    {
+      "v": 0.95,
+      "c": 5
+    },
+    {
+      "v": 0.92,
+      "c": 1
+    }
+  ]
+}

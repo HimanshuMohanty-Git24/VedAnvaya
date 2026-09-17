@@ -233,7 +233,7 @@ export const NOT_DRAWN: { title: string; why: string; href?: string; hrefLabel?:
     },
     {
         title: "Communities of deities",
-        why: "No node in this graph carries a community, partition or cluster assignment, and none was computed. Deity pairs that share verses exist and are a different object: pairs are not a partition.",
+        why: "No deity carries a community membership. A partition was computed and its twelve community records are stored, and not one of them has a member, so there is a partition and nothing in it. The Louvain partition this map draws is over the whole world graph, not over the deities, and must not be read as a grouping of gods. Deity pairs that share verses exist and are a third thing: pairs are not a partition either.",
         href: "/limits",
         hrefLabel: "Read the recorded limit",
     },

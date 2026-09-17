@@ -35,6 +35,7 @@ silently return nothing.
 from __future__ import annotations
 
 import logging
+import re
 import time
 from dataclasses import dataclass, field
 from typing import Any, Final
@@ -367,6 +368,40 @@ RETURN m.metric_id AS metric_id,
 LIMIT 4
 """
 
+# ---------------------------------------------------------------------------
+# Material culture: the classes of entity no name resolves to
+# ---------------------------------------------------------------------------
+
+#: A planner topic, the frozen domain query that answers it, and that query's subject
+#: column. Routed *by name* through :meth:`Neo4jRepository.run_named` rather than retyped
+#: here, so Ask and ``/api/v1/insights/metals`` read the same rows under the same graded
+#: caveat. Re-typing ``metals_by_veda`` into this module would fork it from the version
+#: the 100-question benchmark measured, which is the whole reason the named library exists.
+MATERIAL_TOPIC_QUERIES: Final[dict[str, tuple[str, str]]] = {
+    "metals": ("metals_by_veda", "metal"),
+    "crops": ("crops_by_veda", "crop"),
+    "animals": ("animals_by_veda", "animal"),
+}
+
+# ---------------------------------------------------------------------------
+# Samavedic citation disambiguation
+# ---------------------------------------------------------------------------
+
+#: The four sections of the modelled Kauthuma arcika, in the order the graph holds them.
+#: Every one of the 1,844 Samavedic mantras is cited through one of these, so a bare
+#: ``SV 1.1`` matches no ``canonical_citation`` whatsoever. Left at that, the packet is
+#: empty -- and the graded failure this guards against is precisely a model reading an
+#: empty packet as proof that a verse the graph stores does not exist. Trying the sections
+#: by name turns "nothing found" into "here are the loci that citation could mean".
+#:
+#: These are structural divisions of the arcika. They are NOT the gana corpus, which this
+#: graph does not hold, and an ``SV ARANYA`` locus is arcika verse text rather than an
+#: Aranyaka-genre text or an Aranyaka-gana section.
+SV_ARCIKA_SECTIONS: Final[tuple[str, ...]] = ("ARANYA", "UTTARA", "CHANDA", "MAHANAMNYA")
+
+#: A Samavedic citation with no section named: "SV" then digits only.
+_BARE_SV_LOCUS: Final = re.compile(r"^SV\s+(?P<locus>[\d.]+)$")
+
 #: Which relations answer "named here" versus "dedicated to". Kept as named sets so a
 #: channel cannot accidentally union them.
 MENTION_RELATIONS: Final[tuple[str, ...]] = ("MENTIONS_DEVATA", "MENTIONS_ENTITY")
@@ -419,6 +454,8 @@ class RetrievalResult:
     interpretive_claims: list[dict[str, Any]] = field(default_factory=list)
     derived_metrics: list[dict[str, Any]] = field(default_factory=list)
     lexical: LexicalPresence | None = None
+    material_culture: list[dict[str, Any]] = field(default_factory=list)
+    """Rows from a frozen material-culture query, each tagged with its topic and subject."""
     retrieval_ms: float = 0.0
 
     def note(self, channel: str, rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -441,6 +478,32 @@ def _relations_for(entity_type: str) -> tuple[str, ...]:
     return CONCEPT_RELATIONS
 
 
+def _sv_section_candidates(
+    passage_key: str, repository: Neo4jRepository, result: RetrievalResult
+) -> list[dict[str, Any]]:
+    """Every arcika section a bare Samavedic locus could have meant.
+
+    Returns ``[]`` for anything that is not a sectionless ``SV`` citation, so the cost is
+    one regex for every other corpus. See :data:`SV_ARCIKA_SECTIONS` for why this exists:
+    the alternative is an empty packet, which this product has already once let a model
+    read as proof that a stored verse does not exist.
+    """
+    match = _BARE_SV_LOCUS.match(passage_key.strip().upper())
+    if match is None:
+        return []
+    locus = match.group("locus")
+    found: list[dict[str, Any]] = []
+    for section in SV_ARCIKA_SECTIONS:
+        rows = repository.run(_PASSAGE_BY_KEY, key=f"SV {section} {locus}")
+        for row in rows:
+            # Carried so the evidence item can say the citation as asked was incomplete,
+            # rather than presenting one section's verse as though it had been named.
+            row["_ambiguous_citation"] = passage_key
+        found.extend(rows)
+    result.note("sv_section_disambiguation", found)
+    return found
+
+
 def retrieve(
     plan: QueryPlan,
     resolved_entities: list[ResolvedEntity],
@@ -457,9 +520,17 @@ def retrieve(
     focus_key: str | None = None
     if plan.passage_key:
         rows = result.note("passage_by_key", repository.run(_PASSAGE_BY_KEY, key=plan.passage_key))
-        result.passages.extend(rows)
         if rows:
             focus_key = str(rows[0]["canonical_key"])
+        else:
+            rows = _sv_section_candidates(plan.passage_key, repository, result)
+            # Only one surviving candidate is an unambiguous hit, so it may anchor the
+            # parallel and formula channels. Several are a disambiguation offered to the
+            # reader, and picking one of them to build further evidence from would be
+            # guessing which verse was meant.
+            if len(rows) == 1:
+                focus_key = str(rows[0]["canonical_key"])
+        result.passages.extend(rows)
 
     if focus_key:
         result.parallels.extend(
@@ -576,6 +647,21 @@ def retrieve(
         term = fold_query_name(plan.lexical_terms[0])
         rows = result.note("lexical_presence", repository.run(_LEXICAL_PRESENCE, term=term))
         result.lexical = LexicalPresence(term=plan.lexical_terms[0], rows=rows)
+
+    # -- material culture ---------------------------------------------------
+    # A class of entity rather than a named one, so entity resolution cannot reach it.
+    # Run by query name: see MATERIAL_TOPIC_QUERIES.
+    if "materials" in channels:
+        for topic in plan.material_topics:
+            query_name, subject_column = MATERIAL_TOPIC_QUERIES.get(topic, ("", ""))
+            if not query_name:
+                continue
+            rows = repository.run_named(query_name)
+            for row in rows:
+                row["_topic"] = topic
+                row["_query_name"] = query_name
+                row["_subject"] = row.get(subject_column)
+            result.material_culture.extend(result.note("materials", rows))
 
     # -- free-text fallback -------------------------------------------------
     if "search" in channels and plan.search_term and len(result.passages) < 3:

@@ -1,0 +1,220 @@
+{
+  "agent": "AGENT_2_ENTITY_DEVATA_IDENTITY",
+  "artifact": "AGENT2_PROPOSED_CANONICAL_MUTATIONS",
+  "at": "2026-09-16T19:05:44.999113+00:00",
+  "graph_at_read": {
+    "nodes": 133914,
+    "rels": 396220
+  },
+  "mutations": [
+    {
+      "artifact": "occurrence_contract_rows.jsonl",
+      "census_delta": {
+        "nodes": 0,
+        "relationships": 0
+      },
+      "cypher": "UNWIND $rows AS row MATCH (n) WHERE n.entity_key = row.entity_key AND row.node_labels[0] IN labels(n) SET n.occurrence_count = row.occurrence_count, n.occurrence_count_mantra_scope = row.occurrence_count_mantra_scope, n.occurrence_count_container_scope = row.occurrence_count_container_scope, n.occurrence_scope = row.occurrence_scope, n.occurrence_predicate = row.occurrence_predicate, n.occurrence_contract_version = row.occurrence_contract_version",
+      "gap_id": "GAP-QUALITY-006",
+      "labels": [
+        "Chandas",
+        "Devata",
+        "Rishi"
+      ],
+      "match_on": "entity_key",
+      "operation": "PROPERTY_UPDATE",
+      "properties": [
+        "occurrence_count",
+        "occurrence_count_mantra_scope",
+        "occurrence_count_container_scope",
+        "occurrence_scope",
+        "occurrence_predicate",
+        "occurrence_contract_version"
+      ],
+      "rows": 1518
+    },
+    {
+      "artifact": "deity_eligibility_rows.jsonl",
+      "census_delta": {
+        "nodes": 0,
+        "relationships": 0
+      },
+      "cypher": "UNWIND $rows AS row MATCH (d:Devata {entity_key: row.entity_key}) SET d.is_deity = row.is_deity, d.non_deity_kind = row.non_deity_kind, d.deity_eligibility_ruling = row.deity_eligibility_ruling, d.deity_eligibility_basis = row.deity_eligibility_basis, d.deity_eligibility_reason = row.deity_eligibility_reason, d.deity_eligibility_contract_version = row.deity_eligibility_contract_version",
+      "gap_id": "GAP-ENTITY_COVERAGE-008",
+      "labels": [
+        "Devata"
+      ],
+      "match_on": "entity_key",
+      "note": "No node is deleted. A human patron stays discoverable as a patron; eligibility is applied at query time by one predicate.",
+      "operation": "PROPERTY_UPDATE",
+      "properties": [
+        "is_deity",
+        "non_deity_kind",
+        "deity_eligibility_ruling",
+        "deity_eligibility_basis",
+        "deity_eligibility_reason",
+        "deity_eligibility_contract_version"
+      ],
+      "rows": 214
+    },
+    {
+      "artifact": "ascription_resolutions.jsonl",
+      "census_delta": {
+        "nodes": 0,
+        "relationships": 0
+      },
+      "cypher": "UNWIND $rows AS row WITH row WHERE row.resolves_to_devata IS NOT NULL MATCH (a:DevataAscription {entity_key: row.ascription_key}) MATCH (d:Devata {entity_key: row.resolves_to_devata}) OPTIONAL MATCH (a)-[old:RESOLVES_TO_DEVATA]->(d) DELETE old MERGE (a)-[r:ASCRIBES_TO_DEVATA]->(d) SET r.evidence_basis = row.evidence_basis, r.attribution_precision = row.attribution_precision, r.quality_tier = row.quality_tier, r.knowledge_layer = row.knowledge_layer, r.confidence = row.confidence, r.ascription_resolution_method = row.ascription_resolution_method, r.ascription_resolution_path = row.ascription_resolution_path, r.ascription_resolution_stem = row.ascription_resolution_stem, r.ascription_resolution_comparison_tier = row.ascription_resolution_comparison_tier, r.ascription_bridge_version = row.ascription_bridge_version",
+      "from": ":DevataAscription(entity_key)",
+      "gap_id": "GAP-CROSS-VEDA-DEVATA-IDENTITY-BRIDGE-001",
+      "note": "RESOLVES_TO_DEVATA was invented for a relation the ontology ALREADY declares. REL_ASCRIBES_TO_DEVATA exists at ontology.py:852 with the signature (:DevataAscription)->(:Devata) and a docstring that describes this exact work -- 'the deity a descriptor is derived from, where the derivation is a morphological fact'. It sat at 0 edges waiting for it. Two names for one relation is a silent precedence rule, and the undeclared half is invisible to /api/v1/graph. The 39 live edges are retyped, not duplicated: census delta is 0.",
+      "operation": "RELATIONSHIP_RETYPE_AND_CORRECT",
+      "replaces_type": "RESOLVES_TO_DEVATA",
+      "rows": 39,
+      "to": ":Devata(entity_key)",
+      "type": "ASCRIBES_TO_DEVATA"
+    },
+    {
+      "artifact": "ascription_resolutions.jsonl",
+      "census_delta": {
+        "nodes": 0,
+        "relationships": 0
+      },
+      "gap_id": "GAP-ATTRIBUTION-002",
+      "labels": [
+        "DevataAscription"
+      ],
+      "match_on": "entity_key",
+      "note": "Every unresolvable descriptor carries an explicit typed reason.",
+      "operation": "PROPERTY_UPDATE",
+      "properties": [
+        "ascription_resolution_status",
+        "ascription_resolution_reason",
+        "ascription_derivation_path",
+        "ascription_comparison_tier",
+        "ascription_bridge_version"
+      ],
+      "rows": 324
+    },
+    {
+      "already_live": true,
+      "artifact": "av_derived_dedications.jsonl",
+      "census_delta": {
+        "nodes": 0,
+        "relationships": 0
+      },
+      "corrects": "evidence_basis DERIVED_FROM_ANUKRAMANI_ASCRIPTION_MORPHOLOGY -> SOURCE_METADATA; attribution_precision SOURCE_EXPLICIT_ASCRIPTION_RESOLVED -> CONTAINER_INHERITED. Both old values were outside the product's closed vocabularies and resolved to UNKNOWN. attribution_method is cleared because its content now lives on ascription_resolution_method, in its own namespace.",
+      "cypher": "UNWIND $rows AS row MATCH (m:Mantra {canonical_key: row.mantra_key}) MATCH (d:Devata {entity_key: row.devata_key}) MERGE (m)-[r:HAS_DEVATA_DERIVED]->(d) SET r.evidence_basis = row.evidence_basis, r.attribution_precision = row.attribution_precision, r.scope_origin = row.scope_origin, r.scope_container_key = row.scope_container_key, r.quality_tier = row.quality_tier, r.knowledge_layer = row.knowledge_layer, r.confidence = row.confidence, r.via_ascription = row.via_ascription, r.ascription_resolution_method = row.ascription_resolution_method, r.ascription_resolution_path = row.ascription_resolution_path, r.ascription_resolution_comparison_tier = row.ascription_resolution_comparison_tier, r.ascription_bridge_version = row.ascription_bridge_version, r.attribution_method = NULL",
+      "from": ":Mantra(canonical_key) WHERE veda='AV'",
+      "gap_id": "GAP-ATTRIBUTION-001",
+      "note": "A SEPARATE predicate from HAS_DEVATA on purpose. HAS_DEVATA is the Rigvedic Anukramani's own statement; this is a morphological resolution of the Atharvavedic apparatus. Merging the two would make the per-Veda method unrecoverable, which is exactly what the closure test asks to be stated.",
+      "operation": "RELATIONSHIP_PROPERTY_CORRECTION",
+      "rows": 882,
+      "to": ":Devata(entity_key)",
+      "type": "HAS_DEVATA_DERIVED"
+    },
+    {
+      "artifact": "sv_derived_dedications.jsonl",
+      "census_delta": {
+        "nodes": 0,
+        "relationships": 0
+      },
+      "from": ":Mantra(canonical_key) WHERE veda='SV'",
+      "gap_id": "GAP-ATTRIBUTION-001",
+      "operation": "RELATIONSHIP_CREATE_WITHHELD",
+      "reopen_condition": "A Samavedic ascriptive source -- the tradition's own, not the Rigveda's read across a text-reuse edge. This queue is then the thing that source is checked against.",
+      "rows": 1685,
+      "ruling_authority": "FINAL_CLOSURE_SPRINT_LEAD",
+      "ruling_reason": "WITHHELD in full by the final closure sprint lead. (1) It is not a source attribution at all: attribution_precision = DERIVED_FROM_A_COMPARISON_GRADE_EDGE is the field's own admission that the evidence is the recurrence of an RV mantra's text, not a Samavedic authority ascribing a deity. The Samaveda is a liturgical rearrangement with its own ascriptive tradition, and projecting the Rigvedic dedication onto 1,662 of its 1,844 mantras would put attributions in the graph that no source states. (2) Owner decision 11 is directly on point: a fold may establish NORMALIZED_SURFACE_MATCH and may not be read as SAME_CANONICAL_PASSAGE, and 504 of these 1,685 rest on the looser tiers (SANDHI_INSENSITIVE 415, SCRIPT_FOLDED 89). (3) Consistency: 8 assertions were withheld from Agent 3 for resting on NEAR_PARALLEL_OF rather than exact, and Agent 7 refused a translation row whose 1.0 identity held on 2 of 6 pairings -- 'a best-of-six identity is not identity'. What was refused over 8 assertions and 1 verse is not accepted over 1,662. The AV 882 land because they ARE the Atharvaveda's own Anukramani, recovered by grammar; these are not the Samaveda's.",
+      "status": "WITHHELD_BY_RULING",
+      "to": ":Devata(entity_key)",
+      "type": "HAS_DEVATA_DERIVED"
+    },
+    {
+      "artifact": "devata_profile_metrics.jsonl",
+      "census_delta": {
+        "nodes": 567,
+        "relationships": 567
+      },
+      "gap_id": "GAP-ENTITY_COVERAGE-002",
+      "labels": [
+        "DerivedMetric",
+        "Devata"
+      ],
+      "note": "MERGE on metric_id, so the 75 existing rows are updated rather than duplicated; MEASURES edges are one per metric, label-scoped to :Devata.",
+      "operation": "NODE_CREATE_AND_PROPERTY_UPDATE",
+      "rows": 642
+    },
+    {
+      "artifact": "composite_decomposition_packet.jsonl",
+      "census_delta": {
+        "nodes": 0,
+        "relationships": 0
+      },
+      "gap_id": "GAP-COMMUNITIES-002",
+      "labels": [
+        "Devata"
+      ],
+      "match_on": "entity_key",
+      "note": "The GROUP half of the closure test -- a typed reason why membership is not enumerable -- is closable now. The PAIR half needs reviewed curation rows in data/registry/devata_components.yaml; the packet is the input to that review, not a substitute for it.",
+      "operation": "PROPERTY_UPDATE",
+      "properties": [
+        "decomposition_state",
+        "decomposition_reason"
+      ],
+      "rows": 57
+    },
+    {
+      "artifact": "deity_community_labels.jsonl",
+      "census_delta": {
+        "nodes": 0,
+        "relationships": 0
+      },
+      "cypher": "UNWIND $rows AS row MATCH (c:DeityCommunity {community_id: toString(row.community_id)}) SET c.display_label = row.display_label_after",
+      "gap_id": "LEAD_ITEM_DEITY_COMMUNITY_LABEL_TYPE",
+      "labels": [
+        "DeityCommunity"
+      ],
+      "match_on": "community_id",
+      "note": "Type-only. INTEGER 0-11 becomes STRING 'DEITY_COMMUNITY_0'-'_11'. No node is renamed in any sense a reader could mistake for a name, and community_id, identity and config_hash are untouched.",
+      "operation": "PROPERTY_UPDATE",
+      "properties": [
+        "display_label"
+      ],
+      "rows": 12
+    }
+  ],
+  "required_follow_on_after_the_mutations_land": [
+    {
+      "after": "Add both to PIPELINE_CONSTANT_PREDICATES at 1.0, and DELETE the RESOLVES_TO_DEVATA refusal entirely.",
+      "current": "ASCRIBES_TO_DEVATA and HAS_DEVATA_DERIVED are deliberately ABSENT from PIPELINE_CONSTANT_PREDICATES, and RESOLVES_TO_DEVATA is listed in NON_TRAVERSABLE_REASONS as superseded.",
+      "file": "src/vedagraph/api/services/graph_service.py",
+      "gap_id": "GAP-ATTRIBUTION-001 / BRIDGE-001",
+      "removal_condition": "the RELATIONSHIP_PROPERTY_CORRECTION and RELATIONSHIP_RETYPE_AND_CORRECT groups in this file have been applied",
+      "symbol": "PIPELINE_CONSTANT_PREDICATES and NON_TRAVERSABLE_REASONS",
+      "why_not_done_now": "Neither predicate carries a confidence property today -- 0 of 882 and 0 of 39 -- so listing them asserts a pipeline constant over a property that does not exist, and the live invariant test goes red on '0 distinct values, expected 1'. They were listed for one iteration and that is exactly what happened. The correction sets confidence = 1.0 on both, matching the 5,385 parent HAS_DEVATA_ASCRIPTION edges; the declaration becomes true in the same change and not before."
+    },
+    {
+      "after": "ELIGIBLE_DEITY_PREDICATE, i.e. d.is_deity = true",
+      "current": "coalesce(d.is_deity, NOT coalesce(d.structure,'UNSPECIFIED') IN ['HUMAN','PATRON_PRAISE']) -- used by deity_community_capability, deity_co_occurrence, deity_pairs_far_above_chance and deity_pairs_not_rigvedic",
+      "file": "src/vedagraph/domain/deity_eligibility.py :: eligible_predicate()",
+      "gap_id": "GAP-ENTITY_COVERAGE-008",
+      "removal_condition": "MATCH (d:Devata) WHERE d.is_deity IS NULL RETURN count(d) == 0",
+      "symbol": "the convergent eligibility shim",
+      "why_the_shim_exists": "A query is code and the property is data, and they land in different changes. A shipped query gating on is_deity = true before the property exists does not error: Neo4j returns null, the WHERE drops every row, and /api/v1/insights/capabilities?question=23 answered with a null pairwise_co_occurrence_edges. That was reproduced and fixed here; tests/api/test_cypher_property_hygiene.py is the standing guard. The shim reads 185 today and 157 once the ruling lands, and both figures exclude the 29 curated non-members the closure test names."
+    },
+    {
+      "file": "src/vedagraph/domain/profiles.py:49 + api/services/insight_service.py:468-477",
+      "gap_id": "GAP-ATTRIBUTION-002",
+      "status": "WITHDRAWN_BY_THIS_AGENT",
+      "symbol": "ATTRIBUTION_VEDAS and the ascribed_* CALL blocks",
+      "was_proposed": "widen ATTRIBUTION_VEDAS to ('RV','AV') and read HAS_DEVATA|HAS_DEVATA_DERIVED",
+      "why_withdrawn": "ATTRIBUTION_VEDAS is the declared scope of the HAS_DEVATA layer, and HAS_DEVATA has zero AV edges. Widening it makes every scope_note in profiles.py read as though HAS_DEVATA reaches the Atharvaveda, which is false: the AV dedication sits on a SEPARATE predicate precisely so the per-Veda method stays recoverable, and widening the constant would destroy the distinction the separate predicate exists to preserve. Agent 6 refused this and pinned the refusal with a test; I agree and withdraw my own proposal. The honest route is a separate declared scope for HAS_DEVATA_DERIVED, reported beside the HAS_DEVATA one and never summed into it -- and if insight_service ever does widen, COUNTED_ATTRIBUTION_PREDICATES must widen in the SAME edit or `values` grows while `method` and `scope_note` describe the narrower set. GAP-ATTRIBUTION-002's API clause stays unmet and VISIBLE rather than met by a widening that overstates the layer."
+    }
+  ],
+  "totals": {
+    "deletes": 0,
+    "nodes_created": 567,
+    "property_update_rows": 2125,
+    "relationships_created": 567
+  },
+  "written_to_canonical": false
+}

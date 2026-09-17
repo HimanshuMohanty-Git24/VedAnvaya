@@ -1,0 +1,52 @@
+{
+ "artifact": "AGENT_8_AUDIT_FINDINGS",
+ "at": "2026-09-16T17:20Z",
+ "neo4j_access": "READ_ONLY",
+ "task1": {
+  "registry_status_disagreements_before": 4,
+  "measurement_disagreements_before": 0,
+  "why_zero": "the check only compared a graph measurement to a pre-declared int; it never read data/gap_registry.json's status field",
+  "after_fix": {
+   "STILL_IMPLEMENTATION_FIXABLE": 43,
+   "BLOCKED_OWNER_DECISION_REQUIRED": 1
+  },
+  "gate_coverage": {
+   "gated": 53,
+   "ungated": 32,
+   "closures_with_no_live_measurement": 9
+  }
+ },
+ "task3": {
+  "world_export_input_under_declaration": {
+   "exported_labels": 36,
+   "undeclared": 31,
+   "exported_node_rows_invisible_to_the_hash": 32044,
+   "exported_types": 55,
+   "types_undeclared": 50,
+   "exported_edges_invisible": 129691
+  },
+  "public_nodes_dropped_by_the_export_silently": 4016,
+  "quality_evaluation_consumer_declares": 3,
+  "scorecard_actually_reads": "the whole graph"
+ },
+ "task4_agent3": {
+  "assertion_role_signature_conflict": {
+   "declared": "(Mantra|Passage)->RoleFiller",
+   "proposed": "SemanticAssertion->RoleFiller",
+   "semantic_assertions_carrying_Passage": 0,
+   "predicted_signature_violations": 2052
+  },
+  "search_sentinel": {
+   "live_search_derivative": 5839,
+   "carrying_a_private_use_sentinel": 5123,
+   "query_rtasya_hits": 0,
+   "query_sentinel_form_hits": 94
+  },
+  "repertoire_drift": {
+   "trigrams_before": 2419,
+   "after": 321,
+   "bigrams_before": 308
+  },
+  "review_state_after_import": 35139
+ }
+}

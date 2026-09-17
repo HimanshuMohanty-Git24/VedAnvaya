@@ -313,12 +313,14 @@ export default async function SourcesPage() {
                         </p>
                         <p>
                             They also have different scopes, and this is where a merged count goes
-                            wrong. The naming layer reaches all four collections. The traditional
-                            ascription exists for the Rigveda. So a merged &ldquo;Indra count&rdquo;
-                            would be four collections of one measure plus one collection of another,
-                            and a zero for the Atharvaveda would look like a statement about the
-                            Atharvaveda when it is a statement about which collections have a
-                            surviving index in this build.
+                            wrong. The naming layer reaches all four collections. The ascription that
+                            resolves to a named deity exists for the Rigveda; the Atharvaveda has an
+                            index of its own, and it records descriptive phrases rather than registry
+                            names, so its dedications are real and are not the same measurement. So a
+                            merged &ldquo;Indra count&rdquo; would be four collections of one measure
+                            plus one collection of another, and a zero for the Atharvaveda would look
+                            like a statement about the Atharvaveda when it is a statement about which
+                            index this build can join to the deity registry.
                         </p>
                         {example ? (
                             <div className="va-doc-example">
@@ -517,14 +519,20 @@ export default async function SourcesPage() {
                                 different collections rather than minor variants.
                             </li>
                             <li>
-                                <b>The Samaveda has no released translation</b>, so every
+                                <b>The Samaveda has no translation of its own</b>, so every
                                 translation-derived layer excludes it rather than being empty in it.
+                                Where a Samavedic verse is verified identical to a Rigvedic one, the
+                                Rigvedic rendering is shown and labelled as borrowed; it is never
+                                counted as this collection&rsquo;s English and never used as
+                                independent evidence about it.
                             </li>
                             <li>
-                                <b>Several layers reach one collection and not the others.</b> The
-                                traditional deity ascription is Rigvedic; the semantic layer is
-                                Rigvedic; the metre layer does not reach outside the Rigveda in a
-                                form these surfaces can read.
+                                <b>Several layers reach some collections and not others.</b> The
+                                deity ascription that resolves to a named god is Rigvedic; the
+                                Atharvaveda has its own index and it records descriptive phrases
+                                rather than registry names, so the two are not one layer. The
+                                semantic layer is Rigvedic. The metre layer reaches the Rigveda and
+                                the Atharvaveda and neither of the other two.
                             </li>
                             <li>
                                 <b>The mention layer is not one instrument.</b> Rigvedic mentions

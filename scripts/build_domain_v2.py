@@ -29,7 +29,8 @@ import sys
 import warnings
 from typing import Any
 
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+if hasattr(sys.stdout, "reconfigure"):  # pragma: no cover - stream setup
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 warnings.filterwarnings("ignore")
 
 PROJECT_ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -46,6 +47,7 @@ from vedagraph.domain.profiles import (  # noqa: E402
     attribution_metrics,
     compute_profile,
     corpus_metrics,
+    measure_attribution_scope,
     top_devatas,
 )
 from vedagraph.domain.registry import (  # noqa: E402
@@ -284,7 +286,12 @@ def main() -> int:
             ]
 
             keys = top_devatas(session, PROFILE_COUNT)
-            profiles = [compute_profile(session, key) for key in keys]
+            # Measured once. It is the same for every deity, and the scope note each
+            # profile publishes is assembled from it.
+            attribution_scope = measure_attribution_scope(session)
+            profiles = [
+                compute_profile(session, key, attribution_scope=attribution_scope) for key in keys
+            ]
             metrics = [m for p in profiles for m in attribution_metrics(p)]
             metrics.extend(corpus_metrics(session))
 

@@ -135,9 +135,18 @@ CONSUMERS: tuple[dict[str, Any], ...] = (
             "RITE_INVOLVES_ACTION",
             "ATTESTED_IN",
         ),
-        "rebuilt_by": "no aggregate exists yet -- this layer is new in Wave 3",
+        "rebuilt_by": (
+            "data/staging/final_closure_sprint/agent4/build_agent4_ritual_closure.py, which "
+            "produces material_culture_by_ritual_context.json"
+        ),
         "owner_ruling": None,
-        "cost": "n/a: nothing to invalidate, and nothing consumes it yet",
+        # NOT_APPLICABLE until the final closure sprint, on the ground that "no ritual
+        # aggregate artifact exists ... nothing downstream consumes it". That ceased to be
+        # true when the ritual specialist produced material_culture_by_ritual_context.json:
+        # 1,777 Crop/Metal/Animal mentions split by `Mantra.ritual_context`. The aggregate
+        # goes stale the instant the 20,210 ritual_context property writes land -- which is
+        # precisely the rebuild the ledger previously could not express.
+        "cost": "minutes; re-reads the ritual layer and the material-culture mentions",
     },
     {
         "consumer": "quality evaluation",

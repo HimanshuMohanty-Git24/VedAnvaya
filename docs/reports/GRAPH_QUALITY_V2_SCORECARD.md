@@ -12,11 +12,11 @@ weighted towards what a reader can rely on.
 
 | metric | V1 baseline | V2 | delta |
 |---|---|---|---|
-| nodes | 100,584 | 117,970 | +17,386 |
-| relationships | 212,336 | 282,389 | +70,053 |
-| product nodes | — | 39,664 | — |
-| internal nodes | 0 (unmarked) | 78,306 | +78,306 |
-| domain entities | 89 | 375 | +286 |
+| nodes | 100,584 | 164,201 | +63,617 |
+| relationships | 212,336 | 508,042 | +295,706 |
+| product nodes | — | 71,373 | — |
+| internal nodes | 0 (unmarked) | 92,828 | +92,828 |
+| domain entities | 89 | 384 | +295 |
 | typed domain labels | 0 | 24 | +24 |
 
 ## 2. Provenance coverage
@@ -26,17 +26,17 @@ query could ask across them. `quality_tier` is the single derived grade.
 
 | metric | value |
 |---|---|
-| edges carrying `quality_tier` | 282,389 (100.0%) |
-| edges carrying `evidence` | 108,795 (38.5%) |
-| edges carrying `trust` | 106,040 (37.6%) |
+| edges carrying `quality_tier` | 508,042 (100.0%) |
+| edges carrying `evidence` | 108,795 (21.4%) |
+| edges carrying `trust` | 110,430 (21.7%) |
 | ungraded edges | **0** |
 
 ### Quality tier distribution
 
 | tier | meaning | edges |
 |---|---|---|
-| `TIER_A` | a source states it | 108,088 |
-| `TIER_B` | reproducible derivation, including scope inheritance | 169,155 |
+| `TIER_A` | a source states it | 108,121 |
+| `TIER_B` | reproducible derivation, including scope inheritance | 394,775 |
 | `TIER_C` | model-extracted, evidence survived review | 598 |
 | `TIER_D` | interpretation, or an unreviewed model proposal | 4,548 |
 
@@ -62,7 +62,7 @@ not something the source said about any of those mantras.
 |---|---|---|
 | UNKNOWN_LABEL_RATE | 59.2% | **0.00%** |
 | product nodes without a readable label | 22,541 | **0** |
-| product nodes with `display_type` | 0 | 39,371 |
+| product nodes with `display_type` | 0 | 71,080 |
 
 ## 4. Devatā model
 
@@ -117,13 +117,13 @@ axis and **20** carry a corpus profile.
 | `None` | 146 |
 | `Condition` | 36 |
 | `Concept` | 23 |
+| `RitualRole` | 19 |
 | `Object` | 18 |
 | `Plant` | 17 |
 | `Animal` | 15 |
 | `NaturalPhenomenon` | 13 |
 | `PhilosophicalConcept` | 13 |
 | `Action` | 12 |
-| `RitualRole` | 10 |
 | `Ritual` | 8 |
 | `River` | 8 |
 | `Substance` | 8 |
@@ -146,13 +146,13 @@ Registry composition: `{"ACTION": 12, "ANIMAL": 15, "CONCEPT": 23, "CONDITION": 
 | Veda | mantras | with a domain mention | coverage |
 |---|---|---|---|
 | AV | 5,839 | 4,288 | 73.4% |
-| RV | 10,552 | 8,119 | 76.9% |
+| RV | 10,552 | 8,120 | 77.0% |
 | SV | 1,844 | 1,302 | 70.6% |
-| YV | 1,975 | 1,358 | 68.8% |
+| YV | 1,975 | 1,359 | 68.8% |
 
-- mention edges: **28,110**
+- mention edges: **28,116**
 - flagged `theonym_ambiguous`: **2,514** (8.9%) — an upper bound on deity/entity conflation, not a count of errors
-- entities attested in 3+ Vedas: **129**
+- entities attested in 3+ Vedas: **130**
 
 The V1 concept layer reported 96.1% Rigvedic coverage. This layer reports lower
 because it admits **no English-translation evidence**: 44.7% of V1 concept
@@ -212,22 +212,22 @@ judgement is recorded.
 
 | relationship type | edges |
 |---|---|
-| `HAS_TEXT_VERSION` | 44,276 |
-| `MENTIONS_ENTITY` | 28,110 |
+| `MENTIONS_LEMMA` | 154,261 |
+| `HAS_TEXT_VERSION` | 58,786 |
+| `HAS_SEMANTIC_ASSERTION` | 35,131 |
+| `ASSERTION_PREDICATE` | 32,938 |
+| `MENTIONS_ENTITY` | 28,116 |
 | `ABOUT_CONCEPT` | 24,861 |
 | `USES_FORMULA` | 22,686 |
 | `CONTAINS` | 22,537 |
-| `HAS_TRANSLATION` | 18,415 |
+| `HAS_TRANSLATION` | 18,427 |
 | `HAS_RISHI` | 17,889 |
 | `MENTIONS_DEVATA` | 17,165 |
 | `HAS_CHANDAS` | 16,298 |
 | `HAS_DEVATA` | 10,558 |
-| `MENTIONS_LEMMA` | 9,000 |
 | `SHARES_FORMULA_WITH` | 6,148 |
 | `HAS_DEVATA_ASCRIPTION` | 5,385 |
-| `HAS_SEMANTIC_ASSERTION` | 4,865 |
-| `HAS_RITUAL_STEP` | 3,121 |
-| `NEAR_PARALLEL_OF` | 3,049 |
+| `HAS_PARALLEL_PADA` | 4,079 |
 
 During this pass an unlabelled `MATCH (t) WHERE t.work_id = $k` produced **39,461**
 `CONCERNS` edges from 9 claim targets, because every Passage carries a `work_id`

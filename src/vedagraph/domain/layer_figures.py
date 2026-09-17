@@ -153,7 +153,132 @@ AGNI_INDRA_CO_MENTION_BY_VEDA: Final[dict[str, int]] = {
     "SV": 7,
 }
 
+#: Every figure a client-facing sentence quotes about *review*, in one place, because five
+#: sentences across three modules each typed their own and three of them were wrong. ``587``
+#: was quoted as the whole of ``TIER_C`` (598) and as the whole of ``MODEL_ADJUDICATED``
+#: (613), and ``613`` was said to span ten predicates (twelve).
+#:
+#: **TIER_C is two populations, and a sentence naming only one states a false zero.** 587
+#: edges hang off a ``:Passage``: a model re-read that passage and accepted the edge, which
+#: is the definition ``vedagraph.domain.tiers`` applies. The other 11 are
+#: ``EPITHET_VARIANT_OF`` / ``SPECIALIZED_FORM_OF`` between two ``:Devata`` nodes, where the
+#: adjudication is of a *label* against its base and there is no passage to read. They carry
+#: ``review_state = UNREVIEWED`` because no passage review happened, and TIER_C because
+#: ``LAYER_OWNED_GRADES`` grades that predicate L3/C by design. The published sentence said
+#: "all 587 TIER_C edges are Yajurvedic (320) or Atharvavedic (267) and not one is
+#: Rigvedic", which typed those 11 out of existence -- and their evidence cites RV 3.53,
+#: RV 4.55 and the ninth mandala.
+#:
+#: ``HUMAN_REVIEWED`` is here because it is the single most consequential claim the product
+#: makes about itself, and a zero nothing measures is a zero nobody would notice moving.
+REVIEW_POPULATION: Final[dict[str, int]] = {
+    "MODEL_ADJUDICATED_EDGES": 613,
+    "MODEL_ADJUDICATED_PREDICATES": 12,
+    "TIER_C_EDGES": 598,
+    "TIER_C_PASSAGE_ANCHORED": 587,
+    "TIER_C_PASSAGE_ANCHORED_YV": 320,
+    "TIER_C_PASSAGE_ANCHORED_AV": 267,
+    "TIER_C_PASSAGE_ANCHORED_RV": 0,
+    "TIER_C_LABEL_LEVEL": 11,
+    "HUMAN_REVIEWED_EDGES": 0,
+}
+
+
+#: The formula layer's nesting census, because a formula frequency ranking is a ranking
+#: over a population that double-counts itself and no surface said so.
+#:
+#: 1,103 of the 4,825 ``Formula`` nodes are a strict substring of another formula on the
+#: collapsed identity surface, so a ranking by occurrence count returns the same piece of
+#: phraseology several times at several lengths. Measured on the live graph, 26 of the 30
+#: rows the cross-Veda formula ranking returns are nested wordings -- so this is not a
+#: footnote about a tail, it is a description of the head of the list.
+#:
+#: The project's contract is that the nesting is *typed and published*, not deduplicated:
+#: a sub-span attested where its container is not is a separate fact about the corpus and
+#: survives as its own node. Every surface that ranks formulas by frequency therefore has
+#: to say which reading it applies, and :func:`formula_nesting_policy` is the sentence all
+#: of them quote so that the three readings cannot drift apart.
+FORMULA_NESTING: Final[dict[str, int]] = {
+    "FORMULAS": 4825,
+    "INDEPENDENT": 2788,
+    "NESTED_IN_ANOTHER": 918,
+    "NESTED_AND_CONTAINING": 185,
+    "CONTAINS_ANOTHER": 934,
+    "STRICT_SUBSTRING_OF_ANOTHER": 1103,
+    "TYPED": 4825,
+}
+
+
+def formula_nesting_policy() -> str:
+    """The nesting policy sentence every formula frequency ranking states.
+
+    Built from :data:`FORMULA_NESTING` rather than typed, so a ranking cannot publish a
+    stale share, and so a population change fails ``tests/domain/test_layer_figures.py``
+    before it reaches a reader.
+    """
+    f = FORMULA_NESTING
+    return (
+        f"NESTING POLICY: EVERY_FORMULA_COUNTED_ONCE_AND_TYPED. "
+        f"{f['STRICT_SUBSTRING_OF_ANOTHER']:,} of {f['FORMULAS']:,} formulas are a strict "
+        f"substring of another on the collapsed identity surface, so this ranking returns "
+        f"one piece of phraseology at several lengths rather than several phrases. Nothing "
+        f"is deduplicated and nothing is rolled up: every formula carries "
+        f"formula_nesting_type ({f['INDEPENDENT']:,} INDEPENDENT, "
+        f"{f['NESTED_IN_ANOTHER']:,} NESTED_IN_ANOTHER, {f['CONTAINS_ANOTHER']:,} "
+        f"CONTAINS_ANOTHER, {f['NESTED_AND_CONTAINING']:,} NESTED_AND_CONTAINING) and the "
+        f"reader applies whichever reading the question needs. For a ranking of distinct "
+        f"phraseology rather than of strings, rank FormulaFamily instead."
+    )
+
+
+def adjudication_disclosure() -> str:
+    """The sentence every surface exposing ``review_state`` or ``TIER_C`` says.
+
+    Built from :data:`REVIEW_POPULATION` rather than typed, so the three modules that quote
+    it cannot drift apart again, and so a figure that moves fails
+    ``tests/domain/test_layer_figures.py`` before it reaches a reader.
+    """
+    f = REVIEW_POPULATION
+    return (
+        f"No edge in this graph is HUMAN_REVIEWED and none may claim to be "
+        f"({f['HUMAN_REVIEWED_EDGES']} carry it); there is still no human gold set. The "
+        f"strongest review state that exists is MODEL_ADJUDICATED, on "
+        f"{f['MODEL_ADJUDICATED_EDGES']} edges across {f['MODEL_ADJUDICATED_PREDICATES']} "
+        f"predicates, where a model re-read the passage and accepted the edge with a stated "
+        f"reason. TIER_C is wider than that: of its {f['TIER_C_EDGES']} edges, "
+        f"{f['TIER_C_PASSAGE_ANCHORED']} hang off a passage "
+        f"({f['TIER_C_PASSAGE_ANCHORED_YV']} Yajurvedic, "
+        f"{f['TIER_C_PASSAGE_ANCHORED_AV']} Atharvavedic, "
+        f"{f['TIER_C_PASSAGE_ANCHORED_RV']} Rigvedic) and {f['TIER_C_LABEL_LEVEL']} are "
+        f"Devata-to-Devata epithet identities, adjudicated as labels with no passage to "
+        f"read and carrying review_state UNREVIEWED for that reason."
+    )
+
+
 _TOTALS_QUERY = "MATCH ()-[r]->() RETURN type(r) AS t, count(*) AS c"
+
+# One query per figure, and deliberately not one query with eight aggregations: the whole
+# point of the block above is that the passage-anchored and label-level halves of TIER_C
+# are counted apart, and a single grouped query is how they got merged.
+_REVIEW_POPULATION_QUERY = """
+RETURN
+  count { ()-[r]->() WHERE r.review_state = 'MODEL_ADJUDICATED' }
+    AS MODEL_ADJUDICATED_EDGES,
+  size([t IN collect { MATCH ()-[r]->() WHERE r.review_state = 'MODEL_ADJUDICATED'
+        RETURN DISTINCT type(r) } | t]) AS MODEL_ADJUDICATED_PREDICATES,
+  count { ()-[r]->() WHERE r.quality_tier = 'TIER_C' } AS TIER_C_EDGES,
+  count { (:Passage)-[r]->() WHERE r.quality_tier = 'TIER_C' } AS TIER_C_PASSAGE_ANCHORED,
+  count { (p:Passage)-[r]->() WHERE r.quality_tier = 'TIER_C' AND p.veda = 'YV' }
+    AS TIER_C_PASSAGE_ANCHORED_YV,
+  count { (p:Passage)-[r]->() WHERE r.quality_tier = 'TIER_C' AND p.veda = 'AV' }
+    AS TIER_C_PASSAGE_ANCHORED_AV,
+  count { (p:Passage)-[r]->() WHERE r.quality_tier = 'TIER_C' AND p.veda = 'RV' }
+    AS TIER_C_PASSAGE_ANCHORED_RV,
+  count { (a)-[r]->() WHERE r.quality_tier = 'TIER_C' AND NOT a:Passage }
+    AS TIER_C_LABEL_LEVEL,
+  count { ()-[r]->() WHERE r.review_state = 'HUMAN_REVIEWED'
+          OR r.provenance_class = 'HUMAN_REVIEWED' } AS HUMAN_REVIEWED_EDGES
+"""
 
 _BY_VEDA_QUERY = "MATCH ()-[r:MENTIONS_DEVATA]->() RETURN r.veda AS veda, count(*) AS c"
 
@@ -202,6 +327,25 @@ RETURN m.veda AS veda, count(DISTINCT m) AS c
 """
 
 _ASSERTION_QUERY = "MATCH (a:SemanticAssertion) RETURN a.derivation AS value, count(*) AS c"
+
+# The nesting census is taken from the stored type AND from the stored containment list, so
+# a type that stopped agreeing with the relation it describes shows up as drift rather than
+# as two consistent-looking halves of one wrong figure.
+_FORMULA_NESTING_QUERY = """
+MATCH (f:Formula)
+RETURN
+  count(f) AS FORMULAS,
+  count(CASE WHEN f.formula_nesting_type = 'INDEPENDENT' THEN 1 END) AS INDEPENDENT,
+  count(CASE WHEN f.formula_nesting_type = 'NESTED_IN_ANOTHER' THEN 1 END)
+    AS NESTED_IN_ANOTHER,
+  count(CASE WHEN f.formula_nesting_type = 'NESTED_AND_CONTAINING' THEN 1 END)
+    AS NESTED_AND_CONTAINING,
+  count(CASE WHEN f.formula_nesting_type = 'CONTAINS_ANOTHER' THEN 1 END)
+    AS CONTAINS_ANOTHER,
+  count(CASE WHEN size(f.formula_contained_in_formula_ids) > 0 THEN 1 END)
+    AS STRICT_SUBSTRING_OF_ANOTHER,
+  count(CASE WHEN f.formula_nesting_type IS NOT NULL THEN 1 END) AS TYPED
+"""
 
 _MULTI_DEVATA_QUERY = (
     "MATCH (p:Passage)-[:HAS_DEVATA]->(d:Devata) "
@@ -256,7 +400,23 @@ def measure(session: Session) -> dict[str, Any]:
         "ASSERTION_LAYERS": _grouped(session, _ASSERTION_QUERY, "value"),
         "MULTI_DEVATA_MANTRAS": int(record["c"]) if record else 0,
         "AGNI_INDRA_CO_MENTION_BY_VEDA": _grouped(session, _AGNI_INDRA_QUERY, "veda"),
+        "REVIEW_POPULATION": _review_population(session),
+        "FORMULA_NESTING": _formula_nesting(session),
     }
+
+
+def _formula_nesting(session: Session) -> dict[str, int]:
+    record = session.run(_FORMULA_NESTING_QUERY).single()
+    if record is None:  # pragma: no cover - an aggregation always yields one row
+        return dict.fromkeys(FORMULA_NESTING, 0)
+    return {name: int(record[name]) for name in FORMULA_NESTING}
+
+
+def _review_population(session: Session) -> dict[str, int]:
+    record = session.run(_REVIEW_POPULATION_QUERY).single()
+    if record is None:  # pragma: no cover - a RETURN-only query always yields one row
+        return dict.fromkeys(REVIEW_POPULATION, 0)
+    return {name: int(record[name]) for name in REVIEW_POPULATION}
 
 
 def declared() -> dict[str, Any]:
@@ -273,6 +433,8 @@ def declared() -> dict[str, Any]:
         "ASSERTION_LAYERS": dict(ASSERTION_LAYERS),
         "MULTI_DEVATA_MANTRAS": MULTI_DEVATA_MANTRAS,
         "AGNI_INDRA_CO_MENTION_BY_VEDA": dict(AGNI_INDRA_CO_MENTION_BY_VEDA),
+        "REVIEW_POPULATION": dict(REVIEW_POPULATION),
+        "FORMULA_NESTING": dict(FORMULA_NESTING),
     }
 
 

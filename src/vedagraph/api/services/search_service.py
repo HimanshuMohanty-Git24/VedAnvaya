@@ -85,6 +85,7 @@ from vedagraph.api.models.search import (
 from vedagraph.api.repositories.neo4j_repository import validated_label
 from vedagraph.api.services.deity_population import is_deity
 from vedagraph.domain.layer_figures import CORPUS_MANTRAS
+from vedagraph.normalize.unicode import ComparisonForm, comparison_form
 
 # ---------------------------------------------------------------------------
 # The Sanskrit repertoire prefilter: proving a scan cannot match, before running it
@@ -760,9 +761,34 @@ _SANSKRIT_PHRASE_QUERY: Final = (
     "     1 AS weight\n" + _PASSAGE_RETURN
 )
 
+#: The normalized Sanskrit rung, and the one place in this service where the query must be
+#: folded by the *same* fold that produced the text it is matched against.
+#:
+#: This rung was dead for every query containing a non-ASCII letter. It matched ``$q``,
+#: which is ``query.strip().lower()`` -- the raw query -- against ``SEARCH_DERIVATIVE``
+#: text, which is ``comparison_form(..., SEARCH_NORMALIZED)``: casefolded, Vedic tone marks
+#: stripped, and four sounds folded onto private-use sentinels. A raw IAST vocalic-r query
+#: therefore shares no code point with the stored U+E000 form and matched nothing. Measured
+#: on this rung against the live graph, before and after:
+#:
+#:     rtasya (vocalic r)   0 -> 94        rsi (vocalic r)    0 -> 33
+#:     somam (anusvara)     0 -> 34        indra (udatta)     0 -> 571
+#:     agnim (udatta)       0 -> 19        devasya (udatta)   0 -> 40
+#:
+#: The sentinel characters were the reported symptom. The measurement is wider than the
+#: report: because the fold also strips Vedic tone marks, the rung returned nothing for
+#: *every* non-ASCII query, accented ones included. The existing probe set could not see
+#: it -- agnim, somam, indra and devasya all carry the acute and all returned 0 -- and
+#: other rungs partly masked the hole, so the page still had results.
+#:
+#: The fix binds the folded query and does NOT widen the fold on the text side. Widening is
+#: the dangerous direction: the IAST acute is both a consonant diacritic and the udatta, so
+#: a fold that reached further would merge distinct readings, and over-normalising and
+#: under-normalising both look like a clean run.
 _NORMALIZED_PHRASE_QUERY: Final = (
     "MATCH (p:Passage)-[:HAS_TEXT_VERSION]->(tv:TextVersion)\n"
-    "WHERE tv.text_role = 'SEARCH_DERIVATIVE' AND toLower(tv.text_nfc) CONTAINS $q\n"
+    "WHERE tv.text_role = 'SEARCH_DERIVATIVE'\n"
+    "  AND toLower(tv.text_nfc) CONTAINS $q_search_normalized\n"
     + _PASSAGE_FILTER
     + "WITH p, 'NORMALIZED_SANSKRIT_PHRASE' AS match_type, tv.text_nfc AS snippet_source,\n"
     "     1 AS weight\n" + _PASSAGE_RETURN
@@ -1049,6 +1075,11 @@ class SearchService:
             # A type filter has to silence the surfaces it does not name, or type=devata
             # would still be served Rigvedic passages by the text rungs.
             "passages_wanted": type_labels is None or "Passage" in type_labels,
+            # The normalized Sanskrit rung matches against text produced by
+            # SEARCH_NORMALIZED, so the query travels through the identical call.
+            # Binding the raw query there made that rung return nothing for every
+            # query with a non-ASCII letter in it.
+            "q_search_normalized": comparison_form(cleaned, ComparisonForm.SEARCH_NORMALIZED),
             "q_folded": folded,
             "fold_marks": list(DIACRITIC_MARKS),
             "rung_order": RUNG_ORDER,

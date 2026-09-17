@@ -1,0 +1,19 @@
+{
+  "accent_ambiguous_padas": 0,
+  "granularity": "PADA",
+  "groups": 1434,
+  "implied_verse_pairs": 11631,
+  "largest_group": 82,
+  "memberships": 4079,
+  "padas_eligible": 39742,
+  "padas_read": 39832,
+  "rejected": {
+    "pada_attested_in_one_mantra_only": 35663,
+    "pada_below_comparison_char_floor": 1,
+    "pada_below_token_floor": 89
+  },
+  "veda_scope": [
+    "RV"
+  ],
+  "veda_scope_reason": "Pada tags exist only in the Rigvedic token annotation (VedaWeb/Zurich). No other corpus in this graph carries a quarter-verse division, so this layer covers one of four corpora by the reach of its annotation and not by a property of the texts."
+}

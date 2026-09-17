@@ -30,7 +30,7 @@ import re
 from vedagraph.domain.queries import QUERIES, DomainQuery
 
 #: Variables bound to the ``Devata`` label, e.g. ``(dv:Devata)`` -> ``dv``.
-_DEVATA_BINDING = re.compile(r"\(\s*(\w+)\s*:Devata")
+_DEVATA_BINDING = re.compile(r"\(\s*(\w+)\s*:Devata\b")
 
 #: Naming a deity by parameter means the query is about that deity, not about the
 #: population, so a structure breakdown would be noise.
@@ -60,17 +60,75 @@ def _aggregates_over_the_population(query: DomainQuery) -> bool:
 
 
 def _states_which_subjects(query: DomainQuery) -> bool:
-    """True when the query constrains ``structure`` or hands it back to the reader."""
-    return "structure" in query.cypher
+    """True when the query says which subjects it counts, by either sanctioned route.
+
+    Two routes, not one. ``structure`` was the original, and it is still valid when the
+    query hands the axis back to the reader. The second is
+    ``vedagraph.domain.deity_eligibility.ELIGIBLE_DEITY_PREDICATE`` -- ``d.is_deity = true``
+    -- which is the one documented predicate for the eligible population and is strictly
+    more precise than a structure list, because a structure list cannot express the
+    per-label ABSTRACT rulings and got spelled four different ways while it tried.
+    """
+    return "structure" in query.cypher or "is_deity" in query.cypher
+
+
+def test_the_population_guard_can_actually_fail() -> None:
+    """The guard above spent a whole campaign unable to match anything.
+
+    ``_DEVATA_BINDING`` was written ``r"\\(\\s*(\\w+)\\s*:Devata\\b"`` and the file held a
+    literal U+0008 BACKSPACE where the ``\\b`` was meant, so the pattern demanded a control
+    character after ``:Devata`` and ``findall`` returned ``[]`` for every query in the
+    suite. ``_aggregates_over_the_population`` was therefore false for all 91 queries and
+    the contract test passed over an empty offender list -- a third instance of the failure
+    mode recorded in OWNER_DECISIONS sections 21 and 23, a gate that could not fail.
+
+    This test is the guard's own BAD -> FAIL case: a hand-built query that certainly counts
+    the population and certainly does not say which subjects, plus its GOOD counterpart.
+    """
+    bad = DomainQuery(
+        name="_probe_bare_population_count",
+        question="probe",
+        cypher="MATCH (d:Devata) RETURN count(d) AS deities",
+        caveat="probe",
+        serves=(),
+    )
+    assert _aggregates_over_the_population(bad), (
+        "the binding regex no longer matches (d:Devata); the guard is vacuous again"
+    )
+    assert not _states_which_subjects(bad)
+
+    for good in (
+        "MATCH (d:Devata) WHERE d.is_deity = true RETURN count(d) AS deities",
+        "MATCH (d:Devata) RETURN d.structure AS structure, count(d) AS deities",
+    ):
+        query = DomainQuery(
+            name="_probe_good",
+            question="probe",
+            cypher=good,
+            caveat="probe",
+            serves=(),
+        )
+        assert _aggregates_over_the_population(query)
+        assert _states_which_subjects(query)
+
+    # And the pattern source must hold no control character. That is the exact regression:
+    # the source byte was U+0008, not the two characters backslash-b, and a control
+    # character in a regex source is never intentional.
+    assert not [c for c in _DEVATA_BINDING.pattern if ord(c) < 32], (
+        "the binding pattern contains a control character; it was written as a literal "
+        "U+0008 BACKSPACE once, which made the whole contract vacuous"
+    )
 
 
 def test_every_devata_population_count_states_which_subjects_it_counts() -> None:
     """A bare count over :Devata is not a count of deities.
 
-    If this fails for a new query, the fix is one of two lines: add
-    ``WHERE dv.structure = 'INDIVIDUAL'`` if the question is about deities, or return
-    ``dv.structure`` if the question is about hymn addressees. Do NOT add the query to an
-    exemption list -- the whole point is that the reader cannot tell which was meant.
+    If this fails for a new query, the fix is one of three lines: add
+    ``WHERE dv.is_deity = true`` if the question is about the eligible deity population,
+    ``WHERE dv.structure = 'INDIVIDUAL'`` if it is about individual deities specifically,
+    or return ``dv.structure`` if the question is about hymn addressees. Do NOT add the
+    query to an exemption list -- the whole point is that the reader cannot tell which was
+    meant.
     """
     offenders = [
         query.name

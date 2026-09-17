@@ -1,0 +1,52 @@
+{
+ "exported_nodes": 35648,
+ "exported_edges": 193527,
+ "declared_labels": [
+  "Concept",
+  "DerivedMetric",
+  "Devata",
+  "DomainEntity",
+  "Passage"
+ ],
+ "declared_types": [
+  "ABOUT_CONCEPT",
+  "CO_OCCURS_WITH",
+  "HAS_DEVATA",
+  "MENTIONS_ENTITY",
+  "SPECIALIZED_FORM_OF"
+ ],
+ "exported_labels": 36,
+ "exported_labels_undeclared": 31,
+ "exported_label_instances_undeclared": 32044,
+ "top_undeclared_labels": {
+  "Mantra": 20210,
+  "SemanticAssertion": 4865,
+  "Formula": 4825,
+  "Rishi": 729,
+  "Chandas": 547,
+  "DevataAscription": 324,
+  "ScholarlyDisagreement": 113,
+  "Ritual": 103,
+  "Object": 41,
+  "Condition": 36,
+  "Substance": 33,
+  "Action": 26
+ },
+ "exported_types": 55,
+ "exported_types_undeclared": 50,
+ "exported_edge_instances_undeclared": 129691,
+ "top_undeclared_types": {
+  "USES_FORMULA": 22686,
+  "CONTAINS": 22463,
+  "HAS_RISHI": 17889,
+  "MENTIONS_DEVATA": 17165,
+  "HAS_CHANDAS": 16298,
+  "SHARES_FORMULA_WITH": 6148,
+  "HAS_DEVATA_ASCRIPTION": 5385,
+  "HAS_SEMANTIC_ASSERTION": 4865,
+  "NEAR_PARALLEL_OF": 3049,
+  "ASSERTION_AGENT": 2502,
+  "SHARES_ENTITY_VOCABULARY_WITH": 2141,
+  "REUSES_TEXT_FROM": 1684
+ }
+}

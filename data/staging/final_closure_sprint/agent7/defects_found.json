@@ -1,0 +1,85 @@
+{
+ "artifact": "AGENT7_DEFECTS_FOUND",
+ "note": "Defects Agent 7 measured while working the translation residuals. Each says whether Agent 7 fixed it, staged a fix, or is handing it over.",
+ "defects": [
+  {
+   "id": "D1_YV_A12_PROVENANCE_OMITTED_BY_THE_GENERATOR",
+   "severity": "HIGH",
+   "surface": "data/staging/translation/rows.jsonl, twelve Yajurvedic rows",
+   "measured": "Twelve rows citing wyvbk12.htm carry payload.snapshot_sha256 = null while the other 39 Yajurveda rows, read from the same local snapshot tree, carry it. Gate B fails them on source_revision_identified. The page IS held: data/raw/sacred_texts/2026-09-07/wyv, sha256 67559e80228d4527..., and every one of the twelve literals is verbatim in it with its declared printed label adjacent.",
+   "root_cause": "one generator path wrote the page hash and another did not. Not a source that lacks provenance.",
+   "consequence": "eleven verses at EXACT with per-verse content control were withheld from import for a missing field, and were counted in the gap census as untranslated.",
+   "status": "FIXED BY RE-DERIVATION. Provenance recomputed from the held bytes, never asserted; a row whose text was not in the bytes would have been refused. Eleven rows now pass the unmodified Gate B and Gate C.",
+   "artifact": "yv_provenance_rederivation.json"
+  },
+  {
+   "id": "D2_RV_8_93_28_CARRIES_VERSE_29_AND_ITS_OCR_LABEL",
+   "severity": "HIGH",
+   "surface": "canonical Neo4j, one imported :Translation node",
+   "measured": "The literal for RV 8.93.28 ends '... kind to us. 2§ O Satakratu, bring to us all blessings, all felicity: Fbr, Indra, thou art kind to us.' -- the OCR'd printed label 29 and the whole of verse 29's English, inside a canonical literal. Verse 29 is simultaneously reported as having no translation.",
+   "root_cause": "the label 29 was set as 2 + SECTION SIGN, an integer parse failed, the unit boundary was lost, and the two verses were concatenated under the first key.",
+   "consequence": "verse 29's English is in the store pointing at the wrong verse; verse 28's literal contains page furniture; and the gap census counts a verse as untranslated whose text it already holds.",
+   "status": "STAGED. M1 creates the verse-29 translation, M2 trims verse 28's literal; both must run together or verse 29's English is deleted rather than moved.",
+   "artifact": "proposed_mutations.json"
+  },
+  {
+   "id": "D3_THE_158_WAS_NEVER_UNVERIFIABLE",
+   "severity": "MEDIUM",
+   "surface": "data/gap_registry.json, GAP-TRANSLATION-005",
+   "measured": "The registry rules that 'no property on any Translation node carries that record, so the claim is unverifiable from the data'. Exactly 158 WIKISOURCE_GRIFFITH_RV translations carry alignment_level = 'HYMN'.",
+   "root_cause": "the audit searched for a property named after the value it expected ('uncertain') instead of enumerating the value space of alignment_level. Same shape as the two stale-claim audits that certified absence on the wrong vocabulary.",
+   "status": "CLOSED BY MEASUREMENT. The claim is reproducible and must not be withdrawn.",
+   "artifact": "alignment_confidence.json"
+  },
+  {
+   "id": "D4_THE_158s_TWO_NEIGHBOURS_IN_THE_SAME_SENTENCE_ARE_STALE",
+   "severity": "MEDIUM",
+   "surface": "PRODUCT_V1_SCOPE.md:57, docs/STATUS.md:67 and :367",
+   "measured": "'10,344 exact mantra alignments ... 158 recorded as uncertain; 52 mantras have none.' The 158 holds. The 10,344 is now 10,314 at MANTRA plus 30 at MANTRA_RANGE, because M13 re-typed the RV 1.65-1.70 span. The 52 is now 37 without an edge of their own and 7 reached by no rendering at all.",
+   "status": "HANDED OVER. Both files are outside this agent's write surface. Two figures typed into prose, in the one sentence where nothing reads them from the API.",
+   "artifact": "alignment_confidence.json"
+  },
+  {
+   "id": "D5_GAP_SAMAVEDA_MUSIC_003_PREMISE_IS_PARTLY_FALSE",
+   "severity": "MEDIUM",
+   "surface": "data/gap_registry.json, GAP-SAMAVEDA_MUSIC-003",
+   "measured": "The entry says the 495 MUSICALIZED_AS edges 'cannot be re-derived or audited after import'. The graph holds ZERO MUSICALIZED_AS edges and the relationship type does not exist. Nothing was imported, so the clause is unsatisfiable rather than failing, and a gate written against it could not fail.",
+   "status": "REPORTED. The second clause of that closure test needs rewriting or the 495 need importing.",
+   "artifact": "sv_running_number_probe.json"
+  },
+  {
+   "id": "D6_PRIVATE_USE_CODEPOINTS_IN_A_SEARCH_TEXT_VERSION",
+   "severity": "HIGH",
+   "surface": "canonical Neo4j, :TextVersion.text_nfc",
+   "measured": "5,123 VEDAGRAPH.AVS.SEARCH_NORMALIZED and 20 WIKISOURCE_SA.YV.VSM.UNACCENTED text versions carry Unicode private-use codepoints where phonemes should be: U+E000 stands where the vocalic r belongs (dh\\ue000ṣṇav for dhṛṣṇav) and U+E003 where the anusvara belongs (soma\\ue003 for somaṃ).",
+   "consequence": "these are the SEARCH derivative versions, so every similarity, fold and search that reads them is comparing placeholder glyphs. It depressed the Atharvavedic cross-corpus similarity scores measured in this pass by up to five points against the same pair's accented version.",
+   "status": "HANDED OVER. Outside this agent's domain; found because the residual scan reported every candidate pair rather than the best one.",
+   "artifact": "av_residual_scan.json"
+  },
+  {
+   "id": "D7_THE_PRESCRIBED_TEST_COMMAND_SILENTLY_RUNS_11_PERCENT_OF_THE_SUITE",
+   "severity": "HIGH",
+   "surface": "the test harness",
+   "measured": "`pytest tests/unit tests/api tests/domain` collects 349 tests and exits 0. The same three directories collect 1,357 + 1,496 + 316 = 3,169 when invoked separately, and 3,169 when invoked together with --capture=no. Collection aborts silently partway through tests/unit under default capture; the teardown surfaces `ValueError: I/O operation on closed file` in _pytest/capture.py.",
+   "root_cause": "at least twenty scripts do `sys.stdout = io.TextIOWrapper(sys.stdout.buffer, ...)` at import time. Under pytest capture, sys.stdout.buffer is a capture temp file, and wrapping it leaves a handle pytest then closes. This is the same import-time stdout swap that once made a builder unimportable by pytest and let its documented residual ship.",
+   "consequence": "the command the sprint prescribes reports a green run over 11 percent of the suite. A gate that cannot see 2,820 tests cannot fail on them.",
+   "status": "REPORTED, NOT FIXED. It predates Agent 7 and is reproducible with Agent 7's two new test files removed. Agent 7 ran the three suites separately instead; results are in the report.",
+   "workaround": "invoke the suites separately, or pass --capture=no"
+  },
+  {
+   "id": "D8_WIKI_MARKUP_AND_PARYAYA_SUBNUMBERS_INSIDE_AV_LITERALS",
+   "severity": "LOW",
+   "surface": "canonical Neo4j, Whitney Atharvavedic translations in kandas 15 and 16",
+   "measured": "Eight literals carry Whitney's paryaya sub-numbering inline ('...quarter; ''b.''' 10. after him moved out...') together with wiki bold markup. The verses those sub-numbers belong to each carry their own separate translation, so the text is duplicated across keys rather than missing.",
+   "status": "REPORTED. Not a missing verse and not in this agent's residual population; surfaced by the embedded-label sweep and named so the sweep's negative result can be trusted.",
+   "artifact": "embedded_label_sweep.json"
+  },
+  {
+   "id": "D9_THE_EMBEDDED_LABEL_RULE_HAS_A_LOW_PRECISION_AND_SAYS_SO",
+   "severity": "INFORMATIONAL",
+   "surface": "Agent 7's own sweep",
+   "measured": "The sweep over all 18,415 imported translations fired 11 times and exactly 1 is a real recoverable verse (RV 8.93.29). Two are the English word 'is' read as 15 under the I->1, s->5 substitutions (RV 2.12.14, RV 8.102.14); eight are D8.",
+   "status": "DECLARED. The value of the sweep is its negative: no other imported literal hides a verse. That negative is only worth anything because the instrument returns positives and every false one is named rather than filtered away."
+  }
+ ]
+}

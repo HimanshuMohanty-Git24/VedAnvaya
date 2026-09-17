@@ -1,0 +1,184 @@
+{
+ "phase": "4-6",
+ "rows_carried_into_gate_c": 2255,
+ "rows_that_passed_gate_b_and_were_adversarially_assessed": 119,
+ "note": "every staged row is carried through Gate C's deterministic checks so the packet can report on the withheld populations too, but only the Gate B passes are eligible for an import recommendation",
+ "by_category_assessed": {
+  "C_WITHHOLD_AMBIGUOUS": 56,
+  "C_FAIL_ARCHIVE_EVIDENCE": 49,
+  "C_PASS": 14
+ },
+ "by_category_and_veda_assessed": {
+  "C_WITHHOLD_AMBIGUOUS|AV": 51,
+  "C_FAIL_ARCHIVE_EVIDENCE|SV": 49,
+  "C_PASS|YV": 11,
+  "C_WITHHOLD_AMBIGUOUS|RV": 5,
+  "C_PASS|RV": 2,
+  "C_PASS|AV": 1
+ },
+ "by_category_and_source_assessed": {
+  "C_WITHHOLD_AMBIGUOUS|IA_WAYBACK_GRIFFITH_AV_1895": 51,
+  "C_FAIL_ARCHIVE_EVIDENCE|IA_WAYBACK_GRIFFITH_SV_1893": 49,
+  "C_PASS|SACRED_TEXTS_WYV_SNAPSHOT_2026_09_07": 11,
+  "C_WITHHOLD_AMBIGUOUS|IA_WAYBACK_GRIFFITH_RV_1896": 5,
+  "C_PASS|IA_WAYBACK_GRIFFITH_AV_1895": 1,
+  "C_PASS|IA_WAYBACK_GRIFFITH_RV_1896": 1,
+  "C_PASS|WIKISOURCE_GRIFFITH_RV": 1
+ },
+ "source_level_diagnosis": {
+  "IA_WAYBACK_GRIFFITH_AV_1895": {
+   "rows": 923,
+   "rows_carrying_source_local_running_index": 0,
+   "rows_with_ambiguous_printed_locator": 68,
+   "rows_with_source_byte_hash": 923,
+   "rows_with_immutable_archive_timestamp": 923,
+   "rows_with_an_independent_per_row_control": 0,
+   "addressing_rests_only_on_a_source_local_index": false
+  },
+  "IA_WAYBACK_GRIFFITH_RV_1896": {
+   "rows": 17,
+   "rows_carrying_source_local_running_index": 0,
+   "rows_with_ambiguous_printed_locator": 0,
+   "rows_with_source_byte_hash": 17,
+   "rows_with_immutable_archive_timestamp": 17,
+   "rows_with_an_independent_per_row_control": 0,
+   "addressing_rests_only_on_a_source_local_index": false
+  },
+  "IA_WAYBACK_GRIFFITH_SV_1893": {
+   "rows": 1069,
+   "rows_carrying_source_local_running_index": 1069,
+   "rows_with_ambiguous_printed_locator": 800,
+   "rows_with_source_byte_hash": 0,
+   "rows_with_immutable_archive_timestamp": 1069,
+   "rows_with_an_independent_per_row_control": 548,
+   "addressing_rests_only_on_a_source_local_index": true
+  },
+  "SACRED_TEXTS_WYV_SNAPSHOT_2026_09_07": {
+   "rows": 51,
+   "rows_carrying_source_local_running_index": 0,
+   "rows_with_ambiguous_printed_locator": 0,
+   "rows_with_source_byte_hash": 51,
+   "rows_with_immutable_archive_timestamp": 0,
+   "rows_with_an_independent_per_row_control": 19,
+   "addressing_rests_only_on_a_source_local_index": false
+  },
+  "VEDAGRAPH_CANONICAL_RV_GRIFFITH": {
+   "rows": 194,
+   "rows_carrying_source_local_running_index": 0,
+   "rows_with_ambiguous_printed_locator": 0,
+   "rows_with_source_byte_hash": 0,
+   "rows_with_immutable_archive_timestamp": 0,
+   "rows_with_an_independent_per_row_control": 194,
+   "addressing_rests_only_on_a_source_local_index": false
+  },
+  "WIKISOURCE_GRIFFITH_RV": {
+   "rows": 1,
+   "rows_carrying_source_local_running_index": 0,
+   "rows_with_ambiguous_printed_locator": 0,
+   "rows_with_source_byte_hash": 1,
+   "rows_with_immutable_archive_timestamp": 0,
+   "rows_with_an_independent_per_row_control": 1,
+   "addressing_rests_only_on_a_source_local_index": false
+  }
+ },
+ "forced_address_verdicts": {
+  "NOT_VERIFIED": 39
+ },
+ "shift_attack": {
+  "target_axis": {
+   "rows_with_a_comparable_neighbour_translation": 1077,
+   "rows_flagged_suspicious": 37,
+   "limitation": "only evaluable where a canonical neighbour already carries an English translation; the staged rows sit in the regions that have none, so this axis covers a small fraction and its zero is a coverage statement"
+  },
+  "reference_axis": {
+   "rows_with_a_rigveda_control": 1069,
+   "rows_evaluated": 1069,
+   "rows_where_a_neighbour_explains_it_better": 0,
+   "declared_control_score_reproduced": 1036,
+   "declared_control_score_not_reproduced": 33
+  }
+ },
+ "duplication": {
+  "rows_sharing_a_literal_with_another_row": 327,
+  "sharing_where_the_targets_sanskrit_is_identical": 213,
+  "sharing_where_the_targets_sanskrit_differs": 126,
+  "rows_sharing_one_printed_source_unit": 68,
+  "rows_where_the_source_itself_repeats_the_verse": 259,
+  "legitimate_repetition_rows": 201,
+  "explained_by_a_declared_range": 68,
+  "canonical_keys_claimed_twice": 0
+ },
+ "archive_evidence": {
+  "rows_citing_an_archive_capture": 2009,
+  "rows_whose_hash_is_in_the_page_proofs": 940
+ },
+ "literal_integrity": {
+  "language_verdicts": {
+   "ENGLISH": 2233,
+   "LATIN": 22
+  },
+  "editorial_cross_references": 1
+ },
+ "check_coverage": {
+  "C1.shift_attack_had_a_neighbour_to_compare_against": {
+   "eligible": 2255,
+   "evaluated": 1095,
+   "coverage": 0.4856,
+   "vacuous": false
+  },
+  "C1b.declared_control_score_reproducible": {
+   "eligible": 1069,
+   "evaluated": 1069,
+   "coverage": 1.0,
+   "vacuous": false
+  },
+  "C1b.reference_axis_shift_attack_was_evaluable": {
+   "eligible": 1069,
+   "evaluated": 1069,
+   "coverage": 1.0,
+   "vacuous": false
+  },
+  "C3.forced_address_had_independent_source_evidence": {
+   "eligible": 39,
+   "evaluated": 0,
+   "coverage": 0.0,
+   "vacuous": true
+  },
+  "C5.archive_capture_traceable_to_a_page_proof": {
+   "eligible": 2009,
+   "evaluated": 940,
+   "coverage": 0.4679,
+   "vacuous": false
+  },
+  "C6.duplication_could_compare_target_sanskrit": {
+   "eligible": 327,
+   "evaluated": 327,
+   "coverage": 1.0,
+   "vacuous": false
+  }
+ },
+ "vacuous_checks": [
+  "C3.forced_address_had_independent_source_evidence"
+ ],
+ "categories_declared": [
+  "C_PASS",
+  "C_FAIL_WRONG_TARGET",
+  "C_FAIL_DUPLICATE_GENERATION",
+  "C_FAIL_CROSS_CORPUS_CONTAMINATION",
+  "C_FAIL_UNVERIFIED_FORCED_ADDRESS",
+  "C_FAIL_SOURCE_GRANULARITY",
+  "C_FAIL_ARCHIVE_EVIDENCE",
+  "C_WITHHOLD_REUSED_RENDERING_POLICY",
+  "C_WITHHOLD_AMBIGUOUS"
+ ],
+ "precedence": [
+  "C_FAIL_WRONG_TARGET",
+  "C_FAIL_ARCHIVE_EVIDENCE",
+  "C_FAIL_SOURCE_GRANULARITY",
+  "C_FAIL_DUPLICATE_GENERATION",
+  "C_FAIL_UNVERIFIED_FORCED_ADDRESS",
+  "C_FAIL_CROSS_CORPUS_CONTAMINATION",
+  "C_WITHHOLD_REUSED_RENDERING_POLICY",
+  "C_WITHHOLD_AMBIGUOUS"
+ ]
+}

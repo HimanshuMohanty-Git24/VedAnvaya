@@ -188,3 +188,204 @@ def test_the_audit_refuses_an_uncited_scope_decision() -> None:
     assert all(r.citation for r in cited)
     assert "CLOSED_SCOPE_DECISION" in module.CLOSED  # type: ignore[attr-defined]
     assert "STILL_IMPLEMENTATION_FIXABLE" in module.NOT_TERMINAL  # type: ignore[attr-defined]
+
+
+# --------------------------------------------------------------------------------------
+# The gate must be able to fail. Every test below constructs a BAD input and asserts the
+# audit rejects it, against a stub session so nothing touches the live graph.
+#
+# The defect they exist for: ``measurement_disagreements`` compared a graph measurement to a
+# pre-declared number and nothing else. It never compared the ruling's *status* to the status
+# the registry holds -- so when ``translation_integration_registry.py`` wrote
+# STILL_IMPLEMENTATION_FIXABLE onto four translation entries whose owner decisions had been
+# made, while the ruling table still said BLOCKED_OWNER_DECISION_REQUIRED, the audit printed
+# "0 disagreements" over four plain disagreements and reported 39 fixable against a measured
+# 43. A disagreement detector that reports 0 during a real disagreement is worse than none.
+# --------------------------------------------------------------------------------------
+
+
+class _StubRecord:
+    def __init__(self, value: int) -> None:
+        self._value = value
+
+    def __getitem__(self, _index: int) -> int:
+        return self._value
+
+
+class _StubResult:
+    def __init__(self, value: int) -> None:
+        self._value = value
+
+    def single(self) -> _StubRecord:
+        return _StubRecord(self._value)
+
+
+class _StubSession:
+    """Answers every Cypher with one fixed number. No graph, no network."""
+
+    def __init__(self, value: int = 0) -> None:
+        self.value = value
+        self.queries: list[str] = []
+
+    def run(self, cypher: str) -> _StubResult:
+        self.queries.append(cypher)
+        return _StubResult(self.value)
+
+
+def _one_entry_audit(module, ruling, registry_status: str) -> dict:
+    """Run the audit over a single synthetic entry with a stubbed measurement."""
+    gid = "GAP-SYNTHETIC-001"
+    saved = dict(module.RULINGS)
+    try:
+        module.RULINGS.clear()
+        module.RULINGS[gid] = ruling
+        expect = getattr(ruling, "expect", None)
+        session = _StubSession(0 if expect is None else expect)
+        return module.audit(session, [{"gap_id": gid, "status": registry_status}])
+    finally:
+        module.RULINGS.clear()
+        module.RULINGS.update(saved)
+
+
+def test_the_ruling_table_agrees_with_every_registry_status(
+    registry: dict[str, object],
+) -> None:
+    """GOOD input, and the one that was failing silently.
+
+    Two mechanisms write ``status`` into the registry: this audit's ``--write``, and
+    ``scripts/translation_integration_registry.py``. Two writers on one field need a
+    reconciliation, and this is it.
+    """
+    if not AUDIT.exists():
+        pytest.skip("audit script not present in this checkout")
+    module = _audit_module()
+    rulings = module.RULINGS
+    gaps = registry["gaps"]
+    assert isinstance(gaps, list)
+    disagreements = {
+        str(gap["gap_id"]): (rulings[str(gap["gap_id"])].status, str(gap["status"]))
+        for gap in gaps
+        if str(gap["gap_id"]) in rulings
+        and rulings[str(gap["gap_id"])].status != str(gap["status"])
+    }
+    assert not disagreements, (
+        f"{len(disagreements)} entries where the audit's ruling and the registry's status "
+        f"disagree (ruling, registry): {disagreements}"
+    )
+
+
+def test_a_registry_status_disagreement_is_reported() -> None:
+    """BAD input -> the audit must say so. This is the recurrence guard."""
+    if not AUDIT.exists():
+        pytest.skip("audit script not present in this checkout")
+    module = _audit_module()
+    ruling = module.Ruling(
+        "BLOCKED_OWNER_DECISION_REQUIRED",
+        "synthetic",
+        owner_decision="OWNER_DECISION_SYNTHETIC",
+    )
+    report = _one_entry_audit(module, ruling, "STILL_IMPLEMENTATION_FIXABLE")
+    assert report["registry_status_disagreements"], (
+        "the ruling said BLOCKED_OWNER_DECISION_REQUIRED and the registry said "
+        "STILL_IMPLEMENTATION_FIXABLE, and the audit reported no disagreement"
+    )
+    assert "GAP-SYNTHETIC-001" in report["registry_status_disagreements"][0]
+
+
+def test_an_agreeing_registry_status_is_not_reported() -> None:
+    """The control. If every input were rejected the test above would prove nothing."""
+    if not AUDIT.exists():
+        pytest.skip("audit script not present in this checkout")
+    module = _audit_module()
+    ruling = module.Ruling("STILL_IMPLEMENTATION_FIXABLE", "synthetic")
+    report = _one_entry_audit(module, ruling, "STILL_IMPLEMENTATION_FIXABLE")
+    assert report["registry_status_disagreements"] == []
+
+
+def test_the_audit_downgrades_a_constructed_uncited_scope_decision() -> None:
+    """BAD input, built rather than looked for.
+
+    The earlier version of this check asserted that the scope decisions in the shipped table
+    all carry citations -- a fact about the data, not a demonstration that the rule fires. It
+    would have passed unchanged if the downgrade branch had been deleted.
+    """
+    if not AUDIT.exists():
+        pytest.skip("audit script not present in this checkout")
+    module = _audit_module()
+    ruling = module.Ruling("CLOSED_SCOPE_DECISION", "synthetic", citation="")
+    report = _one_entry_audit(module, ruling, "CLOSED_SCOPE_DECISION")
+    row = report["rows"][0]
+    assert row["closure_status"] == "STILL_IMPLEMENTATION_FIXABLE"
+    assert row["downgraded"] is True
+    assert report["closed"] == 0
+    assert any("no citation" in f for f in report["measurement_disagreements"])
+
+
+def test_a_cited_scope_decision_survives() -> None:
+    """The control for the downgrade."""
+    if not AUDIT.exists():
+        pytest.skip("audit script not present in this checkout")
+    module = _audit_module()
+    ruling = module.Ruling(
+        "CLOSED_SCOPE_DECISION", "synthetic", citation="docs/PRODUCT_V1_SCOPE.md:212-221"
+    )
+    report = _one_entry_audit(module, ruling, "CLOSED_SCOPE_DECISION")
+    assert report["rows"][0]["closure_status"] == "CLOSED_SCOPE_DECISION"
+    assert report["closed"] == 1
+
+
+def test_a_graph_measurement_that_misses_its_expectation_is_reported() -> None:
+    """BAD input: the stub returns a number the ruling did not declare."""
+    if not AUDIT.exists():
+        pytest.skip("audit script not present in this checkout")
+    module = _audit_module()
+    gid = "GAP-SYNTHETIC-001"
+    saved = dict(module.RULINGS)
+    try:
+        module.RULINGS.clear()
+        module.RULINGS[gid] = module.Ruling(
+            "CLOSED_DERIVED", "synthetic", "MATCH (n) RETURN count(n)", 5385
+        )
+        report = module.audit(
+            _StubSession(5384), [{"gap_id": gid, "status": "CLOSED_DERIVED"}]
+        )
+    finally:
+        module.RULINGS.clear()
+        module.RULINGS.update(saved)
+    assert report["measurement_disagreements"], (
+        "5,384 measured against 5,385 declared, and the audit reported no disagreement"
+    )
+    assert report["rows"][0]["closure_measured_value"] == 5384
+
+
+def test_an_external_source_block_missing_a_field_is_downgraded() -> None:
+    """BAD input: four of the five required fields, which is not five."""
+    if not AUDIT.exists():
+        pytest.skip("audit script not present in this checkout")
+    module = _audit_module()
+    partial = {field: "stated" for field in module.BLOCKED_EVIDENCE_FIELDS[:-1]}
+    ruling = module.Ruling(
+        "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE", "synthetic", blocked_evidence=partial
+    )
+    report = _one_entry_audit(module, ruling, "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE")
+    row = report["rows"][0]
+    assert row["closure_status"] == "BLOCKED_EVIDENCE_INCOMPLETE"
+    assert row["closure_blocked_evidence_missing"] == [module.BLOCKED_EVIDENCE_FIELDS[-1]]
+    assert report["closed"] == 0
+
+
+def test_gate_coverage_is_reported_so_a_skipped_row_is_visible() -> None:
+    """A ruling with no ``expect`` is never compared to anything and passes by being skipped.
+
+    Precision without coverage is how a validator reports a clean run over rows it never
+    looked at, so the count of ungated entries -- and of closures asserted with no live
+    measurement -- is published rather than left to be noticed.
+    """
+    if not AUDIT.exists():
+        pytest.skip("audit script not present in this checkout")
+    module = _audit_module()
+    ruling = module.Ruling("CLOSED_DERIVED", "synthetic")
+    report = _one_entry_audit(module, ruling, "CLOSED_DERIVED")
+    cov = report["gate_coverage"]
+    assert cov["without_a_gating_measurement"] == 1
+    assert cov["closures_asserted_with_no_live_measurement"] == ["GAP-SYNTHETIC-001"]

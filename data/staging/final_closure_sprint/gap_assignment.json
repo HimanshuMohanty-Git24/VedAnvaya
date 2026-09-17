@@ -1,0 +1,502 @@
+{
+  "artifact": "FINAL_CLOSURE_SPRINT_GAP_ASSIGNMENT",
+  "at": "2026-09-16T16:50:52.821790+00:00",
+  "rule": "every STILL_IMPLEMENTATION_FIXABLE row has exactly one owner agent; no unassigned rows",
+  "total_assigned": 43,
+  "assignments": {
+    "AGENT_1_FORMULA_CROSS_VEDA": [
+      "GAP-FORMULA-003",
+      "GAP-CROSS_VEDA-001",
+      "GAP-CROSS_VEDA-004"
+    ],
+    "AGENT_2_ENTITY_DEVATA_IDENTITY": [
+      "GAP-ENTITY_COVERAGE-001",
+      "GAP-ENTITY_COVERAGE-002",
+      "GAP-ENTITY_COVERAGE-003",
+      "GAP-ENTITY_COVERAGE-004",
+      "GAP-ENTITY_COVERAGE-006",
+      "GAP-ENTITY_COVERAGE-007",
+      "GAP-ENTITY_COVERAGE-008",
+      "GAP-COMMUNITIES-002",
+      "GAP-ATTRIBUTION-001",
+      "GAP-ATTRIBUTION-002",
+      "GAP-CROSS-VEDA-DEVATA-IDENTITY-BRIDGE-001",
+      "GAP-QUALITY-006"
+    ],
+    "AGENT_3_MORPHOLOGY_SEMANTICS": [
+      "GAP-MORPHOLOGY-001",
+      "GAP-MORPHOLOGY-004",
+      "GAP-MORPHOLOGY-006",
+      "GAP-SEMANTICS-001",
+      "GAP-SEMANTICS-002",
+      "GAP-SEMANTICS-003",
+      "GAP-SEMANTICS-005"
+    ],
+    "AGENT_4_RITUAL": [
+      "GAP-RITUAL-003",
+      "GAP-RITUAL-004",
+      "GAP-RITUAL-005",
+      "GAP-RITUAL-006"
+    ],
+    "AGENT_5_QUALITY_REFERENCE": [
+      "GAP-QUALITY-001",
+      "GAP-QUALITY-002",
+      "GAP-QUALITY-003",
+      "GAP-QUALITY-004",
+      "GAP-ATTRIBUTION-007",
+      "GAP-ATTRIBUTION-WHITNEY-UNRESOLVED-OBJECT-001"
+    ],
+    "AGENT_6_PRODUCT_SURFACE": [
+      "GAP-PRODUCT_SURFACE-001",
+      "GAP-PRODUCT_SURFACE-002",
+      "GAP-PRODUCT_SURFACE-003",
+      "GAP-PRODUCT_SURFACE-004",
+      "GAP-PRODUCT_SURFACE-005"
+    ],
+    "AGENT_7_TRANSLATION_SAMAVEDA": [
+      "GAP-TRANSLATION-001",
+      "GAP-TRANSLATION-002",
+      "GAP-TRANSLATION-003",
+      "GAP-TRANSLATION-004",
+      "GAP-TRANSLATION-005",
+      "GAP-SAMAVEDA_MUSIC-003"
+    ]
+  },
+  "detail": {
+    "GAP-ATTRIBUTION-001": {
+      "domain": "attribution",
+      "description": "Deity dedication resolved to a Devata node is Rigveda-only, and 5,498 mantras carry no dedication record at all.",
+      "closure_test": "HAS_DEVATA (or an equivalently typed dedication predicate) reaches SV, YV and AV, and /api/v1/insights/devatas/{id} returns an ascribed_scope of more than one Veda with the per-Veda method stated.",
+      "closure_measure": "MATCH (a:DevataAscription) WHERE (a)-->(:Devata) RETURN count(a)",
+      "current_count": 10552,
+      "missing_count": 5498,
+      "must_not_do": null,
+      "source_availability": "UNDIAGNOSED"
+    },
+    "GAP-ATTRIBUTION-002": {
+      "domain": "attribution",
+      "description": "The Atharvaveda's Anukramani deity ascription IS held, as 4,816 edges over 4,160 mantras, but none of its 324 descriptors resolves to a Devata node, so the product reports it as absent.",
+      "closure_test": "MATCH (a:DevataAscription) WHERE size([(a)-[]->(:Devata)|1])>0 RETURN count(a) is greater than 0 for every resolvable descriptor, /api/v1/insights/devatas/{id} returns AV in ascribed_scope with its method stated, and the unresolvable descriptors carry an explicit reason.",
+      "closure_measure": "MATCH (a:DevataAscription) WHERE (a)-->(:Devata) RETURN count(a)",
+      "current_count": 0,
+      "missing_count": 324,
+      "must_not_do": null,
+      "source_availability": "UNDIAGNOSED"
+    },
+    "GAP-ATTRIBUTION-007": {
+      "domain": "attribution",
+      "description": "427 of 729 seers are not resolved to a family.",
+      "closure_test": "MATCH (r:Rishi) WHERE NOT (r)-[:BELONGS_TO_FAMILY]->() RETURN count(r) falls well below 427, and tests/domain/test_rishi_families.py runs rather than skipping.",
+      "closure_measure": "MATCH (r:Rishi) WHERE NOT (r)-[:BELONGS_TO_FAMILY]->() RETURN count(r)",
+      "current_count": 302,
+      "missing_count": 427,
+      "must_not_do": null,
+      "source_availability": "UNDIAGNOSED"
+    },
+    "GAP-ATTRIBUTION-WHITNEY-UNRESOLVED-OBJECT-001": {
+      "domain": "attribution",
+      "description": "466 verse-level attributions from Whitney's Atharvaveda index cannot be imported because their objects are verbatim printed Sanskrit strings that resolve to no node -- 'kamadevatya', 'pathyapankti' and the like. An edge needs a node at the far end. The only mechanism available is a normalized-string join against :Chandas and :DevataAscription, and normalization is a comparison instrument rather than identity evidence, so that join is barred. The rows are correct and are retained; what is missing is an entity resolution step.",
+      "closure_test": "Every one of the 466 rows either resolves to an identity and lands as an edge, or is rejected with a stated reason. Read back from canonical Neo4j.",
+      "closure_measure": null,
+      "current_count": 0,
+      "missing_count": 466,
+      "must_not_do": null,
+      "source_availability": "SOURCE_HELD"
+    },
+    "GAP-COMMUNITIES-002": {
+      "domain": "communities",
+      "description": "57 of 71 composite deities carry no components: every one of the 33 GROUP deities is undecomposed, and 24 of 38 PAIR deities are.",
+      "closure_test": "Every PAIR deity carries components, and every GROUP deity either carries components or a typed reason why its membership is not enumerable.",
+      "closure_measure": null,
+      "current_count": 14,
+      "missing_count": 57,
+      "must_not_do": null,
+      "source_availability": "NOT_REQUIRED"
+    },
+    "GAP-CROSS-VEDA-DEVATA-IDENTITY-BRIDGE-001": {
+      "domain": "cross_veda",
+      "description": "The Rigvedic and Atharvavedic dedication layers cannot be joined. HAS_DEVATA points at a :Devata whose display label is an English deity name; HAS_DEVATA_ASCRIPTION points at a :DevataAscription whose display label is a Sanskrit adjective meaning 'having X as its deity'. The intersection is zero by category rather than by coverage, so a join on display labels returns nothing and reports it as absence of shared deities.",
+      "closure_test": "A cross-Veda deity query returns RV and AV dedications for one canonical Devata without joining on any display label, every unresolved ascription is still addressable in its ascription form, and the resolved share is read back out of the database rather than out of the resolver.",
+      "closure_measure": "MATCH (a:DevataAscription) WHERE (a)-->(:Devata) RETURN count(a)",
+      "current_count": 8,
+      "missing_count": 316,
+      "must_not_do": [
+        "joining the two dedication layers on display_label",
+        "resolving an ambiguous stem by picking the more frequent Devata",
+        "resolving a plurality ascription such as bahudevatyam to a single deity",
+        "resolving a subject descriptor such as bhaisajyam to a deity at all"
+      ],
+      "source_availability": "HELD_LOCALLY"
+    },
+    "GAP-CROSS_VEDA-001": {
+      "domain": "cross_veda",
+      "description": "Directed textual reuse was established for the RV-SV pair only; the other five corpus pairs have no direction at all despite carrying thousands of undirected parallel edges.",
+      "closure_test": "/api/v1/insights/cross-veda reports measured REUSES_TEXT_FROM counts for more than one pair, and each directed edge carries per-edge directional evidence rather than a pipeline constant.",
+      "closure_measure": "MATCH (a)-[:REUSES_TEXT_FROM]->(b) RETURN count(DISTINCT a.veda + '-' + b.veda)",
+      "current_count": 1,
+      "missing_count": 5,
+      "must_not_do": null,
+      "source_availability": "UNDIAGNOSED"
+    },
+    "GAP-CROSS_VEDA-004": {
+      "domain": "cross_veda",
+      "description": "Parallels are detected at whole-verse granularity only; pada-level parallels are unimplemented although the schema and token pada tags already support them.",
+      "closure_test": "Pada-level parallel edges exist with their granularity typed distinctly from verse-level parallels, and their RV-only reach is stated on the surface that reports them.",
+      "closure_measure": null,
+      "current_count": 0,
+      "missing_count": null,
+      "must_not_do": null,
+      "source_availability": "UNDIAGNOSED"
+    },
+    "GAP-ENTITY_COVERAGE-001": {
+      "domain": "entity_coverage",
+      "description": "The epithet layer reaches 4 of 214 deities and no epithet is linked to a single passage, so no question about where an epithet occurs can be answered.",
+      "closure_test": "Epithets carry passage edges, the inventory reaches well beyond 4 deities, and per-epithet recall is measured rather than assumed.",
+      "closure_measure": "MATCH (e:Epithet)-[r]-(:Passage) RETURN count(r)",
+      "current_count": 4,
+      "missing_count": 210,
+      "must_not_do": null,
+      "source_availability": "UNDIAGNOSED"
+    },
+    "GAP-ENTITY_COVERAGE-002": {
+      "domain": "entity_coverage",
+      "description": "Deity profile statistics were materialised for only 25 of 214 deities, so 189 deity pages report null for every corpus.",
+      "closure_test": "MATCH (m:DerivedMetric) WHERE m.subject_key STARTS WITH 'VG:DEVATA:' RETURN count(DISTINCT m.subject_key) reaches the resolved-deity population, and /api/v1/devatas/VG:DEVATA:SARASVATI returns per-corpus figures rather than nulls.",
+      "closure_measure": "MATCH (d:Devata) WHERE d.profile_attributed_total IS NULL RETURN count(d)",
+      "current_count": 25,
+      "missing_count": 189,
+      "must_not_do": null,
+      "source_availability": "UNDIAGNOSED"
+    },
+    "GAP-ENTITY_COVERAGE-003": {
+      "domain": "entity_coverage",
+      "description": "No healing or remedy entity exists: bhesaja was never curated, so the Atharvaveda's central concern can only be approached through afflictions and plants.",
+      "closure_test": "A remedy entity class exists with registered aliases, a stated-remedy relation carries verse evidence, and the concerns endpoint no longer needs to caveat the absence of a healing entity.",
+      "closure_measure": "MATCH (n) WHERE n:Remedy OR n:Bhesaja RETURN count(n)",
+      "current_count": 0,
+      "missing_count": null,
+      "must_not_do": null,
+      "source_availability": "UNDIAGNOSED"
+    },
+    "GAP-ENTITY_COVERAGE-004": {
+      "domain": "entity_coverage",
+      "description": "No expected-entity manifest exists, so an entity the corpus attests but the registry omits cannot be detected by any query.",
+      "closure_test": "Entity nodes carry an expected_source, and a coverage report names entities the expectation lists but the registry lacks - the query that would have found trapu without a human reading the text.",
+      "closure_measure": null,
+      "current_count": 0,
+      "missing_count": null,
+      "must_not_do": null,
+      "source_availability": "UNDIAGNOSED"
+    },
+    "GAP-ENTITY_COVERAGE-006": {
+      "domain": "entity_coverage",
+      "description": "Lexical alias recall is unmeasured across the entity layer, and at least one cell is known to be false: ayas in the Yajurveda is attested at VSM 18.13 and matched by nothing.",
+      "closure_test": "Every entity carries a measured recall figure with its sample size, the ayas YV cell matches VSM 18.13, and no cell is known-false without being typed.",
+      "closure_measure": null,
+      "current_count": null,
+      "missing_count": null,
+      "must_not_do": null,
+      "source_availability": "UNDIAGNOSED"
+    },
+    "GAP-ENTITY_COVERAGE-007": {
+      "domain": "entity_coverage",
+      "description": "Phrase matching was never built, and personification resolution is materialised for 9 NaturalPhenomenon nodes only, leaving the other 200-odd entities with no way to distinguish a refusal from a gap.",
+      "closure_test": "Phrase matching reaches multi-word entities, and every entity that could be personified carries a resolution status distinguishing refusal from absence.",
+      "closure_measure": null,
+      "current_count": 9,
+      "missing_count": 220,
+      "must_not_do": null,
+      "source_availability": "UNDIAGNOSED"
+    },
+    "GAP-ENTITY_COVERAGE-008": {
+      "domain": "entity_coverage",
+      "description": "The deity, seer and metre registries carry typed non-members that inflate every count taken over them, including the deity population any community detection would partition.",
+      "closure_test": "The eligible deity population is derivable by one documented predicate; counts over it exclude the 29 non-deities; and the ABSTRACT decision is recorded with its reasoning rather than applied implicitly.",
+      "closure_measure": null,
+      "current_count": 159,
+      "missing_count": null,
+      "must_not_do": null,
+      "source_availability": "UNDIAGNOSED"
+    },
+    "GAP-FORMULA-003": {
+      "domain": "formula",
+      "description": "1,103 of 4,825 formulas are strict substrings of another formula, so formula counts double-count nested wordings.",
+      "closure_test": "Every formula either has no strict-substring relation to another or carries an explicit nesting type, and formula frequency rankings state which policy they apply.",
+      "closure_measure": "MATCH (f:Formula) RETURN count(f)",
+      "current_count": 3722,
+      "missing_count": 1103,
+      "must_not_do": null,
+      "source_availability": "UNDIAGNOSED"
+    },
+    "GAP-MORPHOLOGY-001": {
+      "domain": "morphology",
+      "description": "The lemma layer is an inert registry: 10,031 Lemma nodes exist, only 39 of them are reached by any edge, and all 39 are deity names.",
+      "closure_test": "MATCH (l:Lemma) WHERE size([(l)<--()|1])=0 RETURN count(l) falls far below 9,992, and any product surface reporting lemma coverage states distinct lemmas reached alongside mantras reached.",
+      "closure_measure": "MATCH (:Mantra)-[:MENTIONS_LEMMA]->(l:Lemma) RETURN count(DISTINCT l)",
+      "current_count": 39,
+      "missing_count": 9992,
+      "must_not_do": null,
+      "source_availability": "UNDIAGNOSED"
+    },
+    "GAP-MORPHOLOGY-004": {
+      "domain": "morphology",
+      "description": "711 Rigvedic lexical tokens are left unresolved because no feature-conditioned alias mechanism exists, a deferral the architecture document itself calls the highest-value one.",
+      "closure_test": "The 711 tokens are resolved or each carries a typed reason for non-resolution, and RIGVEDA_LEXICAL_MENTION_POLICY.md no longer lists this as deferred.",
+      "closure_measure": null,
+      "current_count": 0,
+      "missing_count": 711,
+      "must_not_do": null,
+      "source_availability": "UNDIAGNOSED"
+    },
+    "GAP-MORPHOLOGY-006": {
+      "domain": "morphology",
+      "description": "Text-version provision is uneven: the Samaveda has no accented and no search-normalised text, 139 Yajurveda mantras have no unaccented form, and only the Atharvaveda has a search-normalised version.",
+      "closure_test": "Every work carries a search-normalised text version, the 139 YV mantras gain an unaccented form, and a single accent-bearing query is shown to reach all four corpora equally.",
+      "closure_measure": "MATCH (t:TextVersion) WHERE t.text_role = 'SEARCH_DERIVATIVE' RETURN count(t)",
+      "current_count": null,
+      "missing_count": null,
+      "must_not_do": null,
+      "source_availability": "UNDIAGNOSED"
+    },
+    "GAP-PRODUCT_SURFACE-001": {
+      "domain": "product_surface",
+      "description": "The deity insight endpoint reports AV, YV and SV as both in scope and not covered while returning measured counts for all three.",
+      "closure_test": "No endpoint returns a Veda in both vedas_in_scope and vedas_not_covered, and any multi-dimension response reports coverage per dimension.",
+      "closure_measure": null,
+      "current_count": null,
+      "missing_count": null,
+      "must_not_do": null,
+      "source_availability": "UNDIAGNOSED"
+    },
+    "GAP-PRODUCT_SURFACE-002": {
+      "domain": "product_surface",
+      "description": "The limits catalogue publishes 7 of at least 21 structurally unanswerable dimensions, and says so rather than implying completeness.",
+      "closure_test": "The limits catalogue covers every dimension the benchmark grades NOT_ANSWERABLE, each with a reproducible probe, and total_available matches that population.",
+      "closure_measure": null,
+      "current_count": 7,
+      "missing_count": 14,
+      "must_not_do": null,
+      "source_availability": "UNDIAGNOSED"
+    },
+    "GAP-PRODUCT_SURFACE-003": {
+      "domain": "product_surface",
+      "description": "Three visualizations are blocked by missing API aggregates: no per-book deity breakdown, no deity-by-metre aggregate, and dispersion capped at 200 passages per request.",
+      "closure_test": "Per-book and deity-by-metre aggregates are served, dispersion is fetchable for a deity with more than 200 passages, and the three VIZ_BLOCKER entries are closed in the design spec.",
+      "closure_measure": null,
+      "current_count": 0,
+      "missing_count": 3,
+      "must_not_do": null,
+      "source_availability": "UNDIAGNOSED"
+    },
+    "GAP-PRODUCT_SURFACE-004": {
+      "domain": "product_surface",
+      "description": "Ask cannot retrieve Samavedic passages at all and cannot reach several insight endpoints, so it refuses or misleads on questions the API answers directly.",
+      "closure_test": "Ask returns a Samavedic passage for a direct SV citation, routes a metals question to the metals insight, and a re-run of the 60-question benchmark holds MISLEADING at 0 with Q34 answered.",
+      "closure_measure": "MATCH (m:Mantra {veda:'SV'}) RETURN count(m)",
+      "current_count": 0,
+      "missing_count": 1844,
+      "must_not_do": null,
+      "source_availability": "UNDIAGNOSED"
+    },
+    "GAP-PRODUCT_SURFACE-005": {
+      "domain": "product_surface",
+      "description": "The whole canonical corpus is gitignored, so no released corpus text is protected by version history, and 4 released Samavedic verses carry printed apparatus welded into the text.",
+      "closure_test": "Every canonical release artifact is either tracked or covered by a verified external snapshot with a recorded checksum, and the 4 apparatus-contaminated SV verses are corrected.",
+      "closure_measure": null,
+      "current_count": 0,
+      "missing_count": 4,
+      "must_not_do": null,
+      "source_availability": "UNDIAGNOSED"
+    },
+    "GAP-QUALITY-001": {
+      "domain": "quality",
+      "description": "The Rigveda semantic gold set is a 120-row empty scaffold: every row is UNANNOTATED with epoch-zero timestamp, no entities and no relations, and its declared adjudication and manifest files do not exist.",
+      "closure_test": "data/gold/rigveda_semantic_gold_v1.jsonl has zero rows with annotator UNANNOTATED, the adjudication and manifest files exist, and /api/v1/insights/capabilities reports human_annotated_assertions above 0.",
+      "closure_measure": null,
+      "current_count": 0,
+      "missing_count": 120,
+      "must_not_do": null,
+      "source_availability": "UNDIAGNOSED"
+    },
+    "GAP-QUALITY-002": {
+      "domain": "quality",
+      "description": "The only populated gold set is model-adjudicated: all 575 theonym rows were labelled by claude-opus-5, so no human-labelled evaluation data exists anywhere.",
+      "closure_test": "A human-annotated subsample of theonym_mention_gold_v1.jsonl exists with its agreement against the model labels measured and reported per ambiguity class.",
+      "closure_measure": null,
+      "current_count": 0,
+      "missing_count": 575,
+      "must_not_do": null,
+      "source_availability": "UNDIAGNOSED"
+    },
+    "GAP-QUALITY-003": {
+      "domain": "quality",
+      "description": "No confidence value in the graph is calibrated; several predicates carry a single constant on every edge, so filtering by confidence selects nothing.",
+      "closure_test": "Each predicate carrying a confidence has a calibration curve measured against a human-labelled sample, and no predicate carries a single constant confidence on every edge.",
+      "closure_measure": null,
+      "current_count": 0,
+      "missing_count": null,
+      "must_not_do": null,
+      "source_availability": "UNDIAGNOSED"
+    },
+    "GAP-QUALITY-004": {
+      "domain": "quality",
+      "description": "89 of the 100 benchmark questions remain non-pass, and only 11 are fully answerable.",
+      "closure_test": "A re-run of the 100-question benchmark against the post-campaign graph shows FULLY_ANSWERABLE well above 11 with MISLEADING still 0, and the re-grade is a re-run rather than a re-scoring of the frozen answers.",
+      "closure_measure": null,
+      "current_count": 11,
+      "missing_count": 89,
+      "must_not_do": null,
+      "source_availability": "UNDIAGNOSED"
+    },
+    "GAP-QUALITY-006": {
+      "domain": "quality",
+      "description": "occurrence_count is null on every Devata and every Chandas node, and on Rishi it is written to two mutually incompatible conventions, so all 367 Rigveda-only seers report zero occurrences over the most complete seer layer in the corpus.",
+      "closure_test": "Every :Rishi, :Devata and :Chandas node carries occurrence_count; the value for each equals its edge count under one declared scope; a Rigvedic seer's figure matches its HAS_RISHI degree; and the scope is recorded on the node so a reader can tell mantra-scope from container-scope.",
+      "closure_measure": "MATCH (r:Rishi) WHERE r.occurrence_count = 0 RETURN count(r)",
+      "current_count": 729,
+      "missing_count": 789,
+      "must_not_do": null,
+      "source_availability": "UNDIAGNOSED"
+    },
+    "GAP-RITUAL-003": {
+      "domain": "ritual",
+      "description": "Only 14 of 23 registry objects are linked to a rite, so mani at 86 mentions, dundubhi at 17 and the udumbara amulet are absent from the ritual-object ranking despite being genuine ritual objects.",
+      "closure_test": "USES_OBJECT reaches mani, dundubhi and the udumbara amulet, and yupa's vedas_with_matches reads 3 with VSM 19.17 and 25.29 both matched.",
+      "closure_measure": null,
+      "current_count": 14,
+      "missing_count": 9,
+      "must_not_do": null,
+      "source_availability": "UNDIAGNOSED"
+    },
+    "GAP-RITUAL-004": {
+      "domain": "ritual",
+      "description": "11 ritual roles are modelled against the classical set of sixteen, and the hotr - the principal Rigvedic officiant - is wired to no rite at all.",
+      "closure_test": "RitualRole holds the classical sixteen with their source stated, the hotr carries PERFORMED_BY edges, and any completeness figure names the schema its denominator comes from.",
+      "closure_measure": "MATCH (r:RitualRole) RETURN count(r)",
+      "current_count": 11,
+      "missing_count": 5,
+      "must_not_do": null,
+      "source_availability": "UNDIAGNOSED"
+    },
+    "GAP-RITUAL-005": {
+      "domain": "ritual",
+      "description": "There is no typed deity-to-offering predicate; the relation is representable only as 10 generic association edges, and none of the 8 modelled rites is linked to an offering at all.",
+      "closure_test": "A typed deity-to-offering predicate exists with per-edge verse evidence, every modelled rite carries its offerings, and no surface presents co-occurrence as an asserted offering.",
+      "closure_measure": "MATCH ()-[r:RECEIVES_OFFERING]->() RETURN count(r)",
+      "current_count": 10,
+      "missing_count": null,
+      "must_not_do": null,
+      "source_availability": "UNDIAGNOSED"
+    },
+    "GAP-RITUAL-006": {
+      "domain": "ritual",
+      "description": "No passage carries a ritual-context assignment, so a mention of a crop, metal or animal cannot be distinguished as ritual or everyday.",
+      "closure_test": "Passages carry a ritual_context assignment with its method declared and its precision measured against a reviewed sample, and material-culture counts are reported split by context.",
+      "closure_measure": "MATCH (p:Mantra) WHERE p.ritual_context IS NOT NULL RETURN count(p)",
+      "current_count": 0,
+      "missing_count": 20210,
+      "must_not_do": null,
+      "source_availability": "UNDIAGNOSED"
+    },
+    "GAP-SAMAVEDA_MUSIC-003": {
+      "domain": "samaveda_music",
+      "description": "The running Samhita number is the only key joining an arcika verse to a gana rendering, and it exists nowhere in the graph, so the 495 MUSICALIZED_AS edges cannot be re-derived or audited after import.",
+      "closure_test": "Every Samavedic mantra exposes its running Samhita number, and re-deriving the MUSICALIZED_AS edges from the graph alone reproduces all 495.",
+      "closure_measure": null,
+      "current_count": 0,
+      "missing_count": 1844,
+      "must_not_do": null,
+      "source_availability": "UNDIAGNOSED"
+    },
+    "GAP-SEMANTICS-001": {
+      "domain": "semantics",
+      "description": "The semantic assertion layer is Rigveda-only and covers 2,542 of 10,552 RV mantras, so 17,668 mantras carry no assertion.",
+      "closure_test": "HAS_SEMANTIC_ASSERTION reaches a non-Rigvedic corpus, RV coverage rises above 2,542, and no surface reports a blended assertion total.",
+      "closure_measure": "MATCH (:Mantra)-[:HAS_SEMANTIC_ASSERTION]->() RETURN count(*)",
+      "current_count": 2542,
+      "missing_count": 17668,
+      "must_not_do": null,
+      "source_availability": "UNDIAGNOSED"
+    },
+    "GAP-SEMANTICS-002": {
+      "domain": "semantics",
+      "description": "Every one of the 4,865 semantic assertions is UNREVIEWED; no assertion in the graph has ever been checked by a human.",
+      "closure_test": "MATCH (a:SemanticAssertion) WHERE a.review_state='UNREVIEWED' RETURN count(a) falls below 4,865, with the reviewed sample stratified by derivation and its reviewer recorded.",
+      "closure_measure": "MATCH (a:SemanticAssertion) WHERE a.review_state = 'UNREVIEWED' RETURN count(a)",
+      "current_count": 0,
+      "missing_count": 4865,
+      "must_not_do": null,
+      "source_availability": "UNDIAGNOSED"
+    },
+    "GAP-SEMANTICS-003": {
+      "domain": "semantics",
+      "description": "Not one of the 4,865 assertions carries a complete agent-predicate-target triple, 1,522 carry no role slot at all, and the role slots can only point at deities.",
+      "closure_test": "MATCH (a:SemanticAssertion) with all three slots present returns a non-zero count, and at least one assertion has a non-Devata target.",
+      "closure_measure": null,
+      "current_count": 0,
+      "missing_count": 4865,
+      "must_not_do": null,
+      "source_availability": "UNDIAGNOSED"
+    },
+    "GAP-SEMANTICS-005": {
+      "domain": "semantics",
+      "description": "All 229 DomainEntity nodes lack a domain assignment, so the entity population cannot be partitioned into ritual, cosmological or material spheres.",
+      "closure_test": "MATCH (e:DomainEntity) WHERE e.domain IS NULL RETURN count(e) returns 0, with multi-domain entities carrying every applicable domain rather than one.",
+      "closure_measure": "MATCH (e:DomainEntity) WHERE e.domain IS NULL RETURN count(e)",
+      "current_count": 0,
+      "missing_count": 229,
+      "must_not_do": null,
+      "source_availability": "UNDIAGNOSED"
+    },
+    "GAP-TRANSLATION-001": {
+      "domain": "translation",
+      "description": "The Samaveda has no translation at all: 0 of 1,844 mantras carry HAS_TRANSLATION.",
+      "closure_test": "MATCH (p:Mantra) WHERE p.veda='SV' AND NOT (p)-[:HAS_TRANSLATION]->() RETURN count(p) returns 0, every SV Translation node carries a Kauthuma-aligned source_id, and /api/v1/works reports VG:WORK:SV:KAU as SUPPORTED.",
+      "closure_measure": "MATCH (m:Mantra {veda:'SV'})-[:HAS_TRANSLATION]->() RETURN count(m)",
+      "current_count": 0,
+      "missing_count": 1671,
+      "must_not_do": null,
+      "source_availability": "UNDIAGNOSED"
+    },
+    "GAP-TRANSLATION-002": {
+      "domain": "translation",
+      "description": "961 Atharvaveda mantras have no translation, and 958 of them are the whole of kanda 20.",
+      "closure_test": "MATCH (p:Mantra) WHERE p.veda='AV' AND NOT (p)-[:HAS_TRANSLATION]->() RETURN count(p) returns 0, and no AVS 20 mantra is untranslated.",
+      "closure_measure": "MATCH (m:Mantra {veda:'AV'})-[:HAS_TRANSLATION]->() RETURN count(DISTINCT m)",
+      "current_count": 5715,
+      "missing_count": 17,
+      "must_not_do": null,
+      "source_availability": "PUBLICLY_REACHABLE"
+    },
+    "GAP-TRANSLATION-003": {
+      "domain": "translation",
+      "description": "72 Yajurveda mantras have no translation.",
+      "closure_test": "MATCH (p:Mantra) WHERE p.veda='YV' AND NOT (p)-[:HAS_TRANSLATION]->() RETURN count(p) returns 0.",
+      "closure_measure": "MATCH (m:Mantra {veda:'YV'})-[:HAS_TRANSLATION]->() RETURN count(DISTINCT m)",
+      "current_count": 1939,
+      "missing_count": 36,
+      "must_not_do": null,
+      "source_availability": "HELD_LOCALLY"
+    },
+    "GAP-TRANSLATION-004": {
+      "domain": "translation",
+      "description": "50 Rigveda mantras have no translation.",
+      "closure_test": "MATCH (p:Mantra) WHERE p.veda='RV' AND NOT (p)-[:HAS_TRANSLATION]->() RETURN count(p) returns 0.",
+      "closure_measure": "MATCH (m:Mantra {veda:'RV'})-[:HAS_TRANSLATION]->() RETURN count(DISTINCT m)",
+      "current_count": 10479,
+      "missing_count": 7,
+      "must_not_do": null,
+      "source_availability": "HELD_LOCALLY"
+    },
+    "GAP-TRANSLATION-005": {
+      "domain": "translation",
+      "description": "All 17,283 translations are single-witness and machine-aligned with no per-translation alignment confidence recorded.",
+      "closure_test": "MATCH (t:Translation) WHERE t.alignment_confidence IS NULL RETURN count(t) returns 0, and the 158-uncertain claim is either reproducible from the data or removed.",
+      "closure_measure": "MATCH (t:Translation) WHERE t.alignment_confidence IS NOT NULL RETURN count(t)",
+      "current_count": 0,
+      "missing_count": 17283,
+      "must_not_do": null,
+      "source_availability": "UNDIAGNOSED"
+    }
+  }
+}

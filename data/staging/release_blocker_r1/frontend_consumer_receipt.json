@@ -1,0 +1,167 @@
+{
+  "artifact": "RELEASE_BLOCKER_R1_FRONTEND_CONSUMER_RECEIPT",
+  "head_at_start": "b4b1b0beba1c499e832150b0b9363d7258e40a26",
+  "takeover_finding": {
+    "last_codex_command": "node scripts/build-constellations.mjs; node scripts/build-world.mjs",
+    "outcome": "build-constellations.mjs COMPLETED (constellations.json carried inputPublicExportHash and identityAudit); build-world.mjs DID NOT RUN with the new code (public/world/world.json carried neither key and predated constellations.json)",
+    "resolution": "build-world.mjs re-run to completion in this session; interiors settled in 283.9s"
+  },
+  "input_public_export": {
+    "path": "frontend/.world/world.raw.json",
+    "sha256": "4ffe27f7b2fd236a3752ea689f11408b057cd873d0aa87c78a69c973c4533788",
+    "nodes": 71373,
+    "edges": 270646,
+    "counts_field": {
+      "nodes": 71373,
+      "edges": 270646,
+      "dropped_edges": 0
+    },
+    "generated": "2026-09-17T09:01:02Z"
+  },
+  "hash_chain": {
+    "raw_export_sha256": "4ffe27f7b2fd236a3752ea689f11408b057cd873d0aa87c78a69c973c4533788",
+    "constellations_inputPublicExportHash": "4ffe27f7b2fd236a3752ea689f11408b057cd873d0aa87c78a69c973c4533788",
+    "world_manifest_inputPublicExportHash": "4ffe27f7b2fd236a3752ea689f11408b057cd873d0aa87c78a69c973c4533788",
+    "all_three_agree": true
+  },
+  "identity_audit": {
+    "constellations": {
+      "nodes": 71373,
+      "edges": 270646,
+      "duplicateIdentifiers": 0,
+      "unknownReferences": 0
+    },
+    "world_manifest": {
+      "nodes": 71373,
+      "edges": 270646,
+      "duplicateIdentifiers": 0,
+      "unknownReferences": 0
+    },
+    "duplicate_public_ids": 0,
+    "null_public_ids": 0,
+    "distinct_public_ids": 71373,
+    "unknown_endpoint_references": 0,
+    "browser_label_ids_equal_export_ids_in_order": true
+  },
+  "artifact_hashes": {
+    "frontend/public/world/world.bin": "61deed6dff14e2404e3acc294af6b7a4ccaf7c01899269e1d783a61da8723674",
+    "frontend/public/world/world.json": "79c9e8b7924c896d6e8b600184eb6ffc28479b7440517bb841b15f88e65c5ca8",
+    "frontend/public/world/world.labels.json": "37f3dce658e77b6a5c4e251cc0c8e718d6f7bd0d322aefc486f46bbcf0005fd1",
+    "frontend/public/world/world.predicates.json": "54a49078d9ad11e496bec5500de8e09e88ad60976768f5f2783cac1facfa7254",
+    "frontend/.world/constellations.json": "a379f27f14a89d59a4ac20d24f59f1de8be759f4a2cddea2ef94ff5ebf29f44b"
+  },
+  "focus_budget_rederivation": {
+    "defect": "FOCUS_BUDGET_COMPACT had been raised 16 -> 17 by an earlier stabilization step on Indra alone, which left focus-curation.test.ts 'computes the mobile budget from the visible band, not the viewport' failing (focusRingSeats(250)=16 < 17) and left the constant contradicting its own declared derivation.",
+    "why_in_scope": "the coverage floor moved because this pass's identity repair restored 30,266 assertion edges; the test file's own contract states that a corpus whose distribution has moved needs the budgets re-derived rather than the assertions relaxed",
+    "measurement_method": "selectFocus run over every engaged node (distinct neighbours > FOCUS_BUDGET) for budgets 1..64, taking the smallest budget covering every predicate, every family and every node group the subject has",
+    "measured": {
+      "engaged_population": 471,
+      "floor_median": 3,
+      "floor_p99": 14,
+      "floor_max": 22,
+      "worst_case_node": "VG:DEVATA:AGNIH",
+      "previous_worst_case": "VG:DEVATA:INDRAH",
+      "unreachable_at_64": 0,
+      "indra": {
+        "floor": 17,
+        "predicates": 20,
+        "groups": 7,
+        "neighbours": 5634
+      },
+      "agni": {
+        "floor": 22,
+        "predicates": 21,
+        "groups": 8,
+        "neighbours": 4195,
+        "binding_axis": "node group, not predicate",
+        "missing_groups_by_budget": {
+          "17-19": [
+            "thing",
+            "unresolved-deity"
+          ],
+          "20-21": [
+            "unresolved-deity"
+          ],
+          "22": []
+        }
+      }
+    },
+    "changes": {
+      "FOCUS_BUDGET_COMPACT": {
+        "from": 17,
+        "to": 22,
+        "basis": "measured worst-case coverage floor"
+      },
+      "FOCUS_BUDGET_CRAMPED": {
+        "from": 12,
+        "to": 12,
+        "basis": "UNCHANGED - it is a geometric floor (183.1px band seats 11 orbs) not a coverage one; raising it to the re-derived p99 of 14 would draw 14 orbs into space for 11"
+      },
+      "test_assertion": "the hardcoded 250px literal replaced by walking the ring arithmetic to the first band that seats the compact budget, plus the inverse assertion one pixel below, so the assertion moves with the constant",
+      "test_coverage": "coverage test extended from Indra alone to Indra AND Agni over predicates AND node groups, plus a minimality assertion at COMPACT-1"
+    },
+    "product_behaviour_change": "the narrow-viewport Focus budget rises from 17 to 22 orbs; geometry permits it (a 390px-wide phone seats 26). Flagged for owner override.",
+    "residual_disclosed": "455 of the 471 engaged nodes cover fully at FOCUS_BUDGET_CRAMPED=12; 16 do not. Previously stated as 331 of 335 with 4 exceptions."
+  },
+  "line_ending_repairs": {
+    "frontend/scripts/build-constellations.mjs": "HEAD blob is pure LF; the working file had been converted to CRLF, producing a 722-line phantom diff for a 10-line change. Converted back to LF; diff is now 10 lines.",
+    "frontend/src/lib/world/focus.ts": "HEAD blob is pure CRLF; the working file had 15 lone-LF lines introduced by earlier edits. Normalized to CRLF; diff reduced to 51 lines."
+  },
+  "typecheck_defect_fixed": "tests/unit/public-identity.test.ts carried an unused @ts-expect-error directive that failed `tsc --noEmit` with TS2578. Removed.",
+  "targeted_tests": {
+    "command_world_set": "node node_modules/vitest/vitest.mjs run tests/unit/{focus-curation,focus-layout,public-identity,world-artifact,world-figures,graph-semantics,knowledge,predicate-vocabulary,world-transition,local-physics,planar-physics,mode-stability}.test.ts",
+    "files": 12,
+    "passed": 272,
+    "failed": 0,
+    "typecheck": "pnpm run typecheck -> clean",
+    "lint": "pnpm run lint -> clean",
+    "component": {
+      "files": 5,
+      "passed": 60,
+      "failed": 0,
+      "command": "node node_modules/vitest/vitest.mjs run tests/component"
+    },
+    "unit_all": {
+      "files": 18,
+      "passed": 405,
+      "failed": 0,
+      "note": "the full tests/unit directory, not a subset"
+    },
+    "frontend_total": {
+      "passed": 465,
+      "failed": 0,
+      "note": "exceeds the historical 459 passed / 2 failed; both historical failures are closed"
+    }
+  },
+  "historical_second_failure_identified": "focus-curation.test.ts > the budgets > computes the mobile budget from the visible band, not the viewport -- this was the second of the historical '459 passed / 2 failed'. Both are now closed: the first by the identity repair, this one by the budget re-derivation.",
+  "restored_relationship_accounting": {
+    "method": "counted independently from the export artifact, not from the exporter's own report",
+    "exported_nodes": 71373,
+    "exported_relationships": 270646,
+    "nodes_under_semantic_assertion_namespace": 30266,
+    "HAS_SEMANTIC_ASSERTION_edges_touching_them": 30266,
+    "ASSERTION_PREDICATE_edges_touching_them": 30266,
+    "self_edges_in_export": 0,
+    "arithmetic": "270,646 - 30,266 = 240,380, which is exactly the pre-repair planning expectation",
+    "conclusion": "the entire relationship increase is the restored assertion->passage population and nothing else; ASSERTION_PREDICATE edges survived the old export because their far endpoint was an ActionPredicate rather than the colliding passage, so sid != tid even under the collision"
+  },
+  "predicate_consumer": {
+    "artifact": "frontend/public/world/world.predicates.json",
+    "producer": "scripts/export_predicate_semantics.py (reads graph_service.PREDICATE_SEMANTICS and the world manifest; touches no Neo4j)",
+    "verification": "scripts/export_predicate_semantics.py --check -> IN SYNC, exit 0",
+    "population": "73 entries = 64 curated + 9 derived fallback; exactly equals the rebuilt world manifest's 73 edgeTypes, with 0 missing and 0 extra",
+    "note": "MENTIONS_LEMMA is curated but is not a world edge type, which is why 65 code entries yield 64 curated ones",
+    "status": "CURRENT -- older mtime than the rebuild, but semantically in sync, so no rebuild was performed"
+  },
+  "commit_hazard_found": {
+    "path": "data/staging/final_stabilization/neo4j_backup_20260917/neo4j.dump",
+    "size": "162 MB",
+    "gitignored": false,
+    "action": "NOT staged. Preserved on disk. Flagged because a future `git add -A` in this dirty tree would commit a 162 MB local database dump."
+  },
+  "gitignore_figure_check": {
+    "claim": "the .gitignore comment states '20 manifests total ~875 KB'",
+    "measured": "20 files, 875,702 bytes",
+    "verdict": "prose figure correct"
+  }
+}

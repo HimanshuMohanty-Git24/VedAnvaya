@@ -1,14 +1,14 @@
 {
   "version": 1,
-  "generated": "2026-09-16T10:10:17Z",
+  "generated": "2026-09-17T16:01:33Z",
   "source": "vedagraph.api.services.graph_service.PREDICATE_SEMANTICS",
   "counts": {
-    "predicates": 68,
-    "curated": 62,
-    "derived": 6,
+    "predicates": 73,
+    "curated": 65,
+    "derived": 8,
     "symmetric": 4,
     "directed": 17,
-    "undeclared": 47
+    "undeclared": 52
   },
   "predicates": {
     "ABOUT_CONCEPT": {
@@ -25,9 +25,23 @@
       "direction": "UNDECLARED",
       "basis": "CURATED"
     },
+    "ASCRIBES_TO_DEVATA": {
+      "phrase": "is derived from the deity",
+      "asserts": "This ascription descriptor is morphologically derived from that deity's name.",
+      "limit": "A grammatical fact, not a reading: aagneyam is the vrddhi taddhita of agni under Panini 4.2.24 sasya devata. 39 of 324 descriptors resolve; the other 285 keep their descriptor form and a typed reason, and are NOT silently absent.",
+      "direction": "UNDECLARED",
+      "basis": "CURATED"
+    },
     "ASSERTION_AGENT": {
       "phrase": "assertion agent",
       "asserts": "The graph records a assertion agent relationship between these two.",
+      "limit": "This API carries no curated explanation for this predicate, so what the edge does and does not establish is not stated here. Treat it as unexplained rather than as unqualified.",
+      "direction": "UNDECLARED",
+      "basis": "DERIVED_FROM_NAME"
+    },
+    "ASSERTION_PREDICATE": {
+      "phrase": "assertion predicate",
+      "asserts": "The graph records a assertion predicate relationship between these two.",
       "limit": "This API carries no curated explanation for this predicate, so what the edge does and does not establish is not stated here. Treat it as unexplained rather than as unqualified.",
       "direction": "UNDECLARED",
       "basis": "DERIVED_FROM_NAME"
@@ -105,7 +119,7 @@
     "DESCRIBED_IN": {
       "phrase": "is described in",
       "asserts": "This rite or role is described in the passage.",
-      "limit": "A curated pointer for the eight modelled rites, not a concordance.",
+      "limit": "A curated pointer for the modelled rites, not a concordance.",
       "direction": "UNDECLARED",
       "basis": "CURATED"
     },
@@ -172,6 +186,13 @@
       "direction": "UNDECLARED",
       "basis": "CURATED"
     },
+    "HAS_DEVATA_DERIVED": {
+      "phrase": "is dedicated by resolved ascription",
+      "asserts": "The Atharvavedic index dedicates this passage's hymn to that deity.",
+      "limit": "Separate from HAS_DEVATA on purpose: HAS_DEVATA is the Rigvedic Anukramani naming a deity directly, this is the Atharvavedic apparatus naming an adjective that a morphological derivation resolves. Every edge is CONTAINER_INHERITED at SUKTA_WIDE scope -- the index states a deity for the hymn, and no Atharvavedic verse is ascribed differently from its sukta. The resolution being exact does not make the scope per-verse; read `ascription_resolution_*` for that axis.",
+      "direction": "UNDECLARED",
+      "basis": "CURATED"
+    },
     "HAS_EPITHET": {
       "phrase": "is called",
       "asserts": "This epithet is applied to the deity.",
@@ -185,6 +206,13 @@
       "limit": "The outward mirror of MEMBER_OF_FAMILY over the same 2,037 memberships; the two must never both be counted.",
       "direction": "UNDECLARED",
       "basis": "CURATED"
+    },
+    "HAS_PARALLEL_PADA": {
+      "phrase": "has parallel pada",
+      "asserts": "The graph records a has parallel pada relationship between these two.",
+      "limit": "This API carries no curated explanation for this predicate, so what the edge does and does not establish is not stated here. Treat it as unexplained rather than as unqualified.",
+      "direction": "UNDECLARED",
+      "basis": "DERIVED_FROM_NAME"
     },
     "HAS_RISHI": {
       "phrase": "is ascribed to the seer",
@@ -231,7 +259,7 @@
     "INVOKES_DEVATA": {
       "phrase": "invokes the deity",
       "asserts": "The rite invokes this deity.",
-      "limit": "Curated for the eight modelled rites only.",
+      "limit": "Curated for the modelled rites only.",
       "direction": "UNDECLARED",
       "basis": "CURATED"
     },
@@ -361,6 +389,13 @@
       "direction": "UNDECLARED",
       "basis": "CURATED"
     },
+    "RECEIVES_OFFERING": {
+      "phrase": "receives the offering",
+      "asserts": "The deity is named as the recipient of this offering.",
+      "limit": "Four edges, on 3 of the 103 modelled rites. Each carries its cited verse loci, so an edge can be checked; the layer is too sparse to support a count over deities.",
+      "direction": "UNDECLARED",
+      "basis": "CURATED"
+    },
     "REFERS_TO_NATURAL_PHENOMENON": {
       "phrase": "refers to the natural phenomenon",
       "asserts": "A model reading found the passage referring to this phenomenon.",
@@ -462,21 +497,21 @@
     "USES_OBJECT": {
       "phrase": "uses the object",
       "asserts": "The rite uses this object.",
-      "limit": "Curated for the eight modelled rites only.",
+      "limit": "Curated for the modelled rites only.",
       "direction": "UNDECLARED",
       "basis": "CURATED"
     },
     "USES_OFFERING": {
       "phrase": "uses the offering",
       "asserts": "The rite uses this offering.",
-      "limit": "Curated for the eight modelled rites only.",
+      "limit": "Curated for the modelled rites only.",
       "direction": "UNDECLARED",
       "basis": "CURATED"
     },
     "USES_SUBSTANCE": {
       "phrase": "uses the substance",
       "asserts": "The rite uses this substance.",
-      "limit": "Curated for the eight modelled rites only.",
+      "limit": "Curated for the modelled rites only.",
       "direction": "UNDECLARED",
       "basis": "CURATED"
     },

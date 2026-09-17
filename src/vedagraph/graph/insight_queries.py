@@ -39,6 +39,8 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any, Final
 
+from vedagraph.domain import layer_figures
+
 
 @dataclass(frozen=True)
 class InsightQuery:
@@ -790,12 +792,11 @@ QUERIES: Final[tuple[InsightQuery, ...]] = (
         """,
         {"limit": 30},
         caveat=(
-            "A top-30 by citation of 587 TIER_C edges. TIER_C is MODEL_ADJUDICATED, not "
-            "human-reviewed: a model re-read each passage and accepted the edge with a "
-            "stated reason. No edge anywhere in this graph carries HUMAN_REVIEWED and none "
-            "may claim to. The layer's reach runs opposite to the assertion layer's -- all "
-            "587 are Yajurvedic (320) or Atharvavedic (267) and not one is Rigvedic -- so "
-            "this reviews exactly the two corpora the assertion layer never touches, and "
+            "A top-30 by citation of the "
+            f"{layer_figures.REVIEW_POPULATION['TIER_C_PASSAGE_ANCHORED']} passage-anchored "
+            "TIER_C edges, which is what this query's MATCH selects and is not the whole of "
+            "TIER_C. " + layer_figures.adjudication_disclosure() + " The passage-anchored "
+            "half reviews exactly the two corpora the assertion layer never touches, and "
             "the two are not comparable. 16 NEEDS_MORE_EVIDENCE and 10 AMBIGUOUS verdicts "
             "stayed TIER_D rather than being deleted, so the rejections remain auditable."
         ),

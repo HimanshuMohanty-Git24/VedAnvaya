@@ -1,18 +1,4 @@
 {
- "derived_metrics": {
-  "ANIMAL_MENTION_DISTRIBUTION": 46,
-  "ATTRIBUTION_PRECISION_BY_VEDA": 10,
-  "CONDITION_TREATMENT_DISTRIBUTION": 23,
-  "CROP_MENTION_DISTRIBUTION": 10,
-  "DEVATA_ACTION_DISTRIBUTION": 441,
-  "DEVATA_RELATIVE_FREQUENCY_BY_VEDA": 155,
-  "DEVATA_REQUESTED_ACTION_DISTRIBUTION": 224,
-  "EVIDENCE_BASIS_BY_VEDA": 18,
-  "HUMAN_CONCERN_DISTRIBUTION": 20,
-  "METAL_MENTION_DISTRIBUTION": 15,
-  "RITUAL_ENTITY_DENSITY": 31,
-  "THEONYM_CERTAINTY_BY_VEDA": 12
- },
  "dimensions": [
   "devata_attribution",
   "devata_ascription_index",
@@ -157,9 +143,9 @@
      "status": "PRESENT"
     },
     "entity_mention": {
-     "covered_mantras": 8119,
+     "covered_mantras": 8120,
      "reason": "",
-     "share": 0.7694,
+     "share": 0.7695,
      "status": "PRESENT"
     },
     "formula": {
@@ -193,9 +179,9 @@
      "status": "PRESENT"
     },
     "translation": {
-     "covered_mantras": 10539,
+     "covered_mantras": 10540,
      "reason": "",
-     "share": 0.9988,
+     "share": 0.9989,
      "status": "PRESENT"
     }
    },
@@ -294,7 +280,7 @@
    "work_id": "VG:WORK:SV:KAU"
   },
   "YV": {
-   "coverage_score": 55.2,
+   "coverage_score": 55.3,
    "dimensions": {
     "agentive_assertion": {
      "covered_mantras": 0,
@@ -333,9 +319,9 @@
      "status": "ABSENT_FROM_SOURCE"
     },
     "entity_mention": {
-     "covered_mantras": 1358,
+     "covered_mantras": 1359,
      "reason": "",
-     "share": 0.6876,
+     "share": 0.6881,
      "status": "PRESENT"
     },
     "formula": {
@@ -369,9 +355,9 @@
      "status": "PRESENT"
     },
     "translation": {
-     "covered_mantras": 1939,
+     "covered_mantras": 1950,
      "reason": "",
-     "share": 0.9818,
+     "share": 0.9873,
      "status": "PRESENT"
     }
    },

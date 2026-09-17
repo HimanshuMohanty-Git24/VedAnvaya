@@ -202,9 +202,20 @@ NOT_IMPORTED: dict[str, str] = {
         "3,045 evidence rows recording which supplementary work cites which Samhita "
         "passage. The elements are in rites, steps, rite_edges and role_assignments"
     ),
+    # CORRECTED: this entry was wrong and it is the reason GAP-SEMANTICS-001 stayed open.
+    # The rows are not evidence for the fillers -- they CARRY the 30,274 assertions, and
+    # the fillers are elements of those. Filing them here left the role layer imported and
+    # the assertion layer it belongs to absent, so 2,052 fillers hung off passages that
+    # hold no assertion at all. Retained as a NOT_IMPORTED key only so the stale-entry
+    # check still sees the file; the assertions themselves are imported by the
+    # SR_SEMANTIC_ASSERTION_NODES group from
+    # data/staging/final_closure_sprint/agent3/semantic_assertions.jsonl, which is the
+    # same rows projected one assertion per line.
     "semantic_roles/rows.jsonl": (
-        "14,235 evidence rows. The elements are the role fillers; the rows carry the "
-        "assertion-level provenance and the withheld counts"
+        "14,235 rows carrying 30,274 assertions, imported in projected form from "
+        "data/staging/final_closure_sprint/agent3/semantic_assertions.jsonl rather than "
+        "from this file directly; this file also carries the row-level provenance and the "
+        "withheld counts, which are evidence"
     ),
     "scholarship/rejected.jsonl": "2,348 refused extractions",
     "scholarship/sources.jsonl": "13 source descriptors, already registered",
@@ -243,18 +254,28 @@ GROUPS: tuple[ElementGroup, ...] = (
         kind="RELATIONSHIP",
         source="role_fillers.jsonl",
         element="ASSERTION_ROLE",
-        identity_fields=("canonical_key", "role_filler_key"),
-        start_field="canonical_key",
+        identity_fields=("assertion_key", "role_filler_key"),
+        start_field="assertion_key",
         end_field="role_filler_key",
-        start_label="Passage",
+        start_label="SemanticAssertion",
+        start_key_property="assertion_key",
         end_label="RoleFiller",
         end_key_property="role_filler_key",
         require=(("importable", True),),
         notes=(
-            "Anchored on the passage rather than the :SemanticAssertion node, because the "
-            "filler rows carry canonical_key and an assertion ordinal, not an assertion id. "
-            "The importer resolves the ordinal to the assertion; the dangling check here is "
-            "therefore on the passage, which is the endpoint the artifact actually names."
+            "CORRECTED. This group previously read start_label='Passage' with a note saying "
+            "'the importer resolves the ordinal to the assertion'. Nothing resolved it: the "
+            "assertion nodes were never imported, because semantic_roles/rows.jsonl was "
+            "filed under NOT_IMPORTED as evidence when it in fact carries the assertions. "
+            "All 2,052 edges therefore landed on a :Passage, and migration card M1's own "
+            "test -- 'every :RoleFiller resolves to exactly one :SemanticAssertion' -- "
+            "measured 0 of 2,052 live. "
+            "The assertion key is not invented: role_filler_key is "
+            "'{canonical_key}:A{ordinal:03d}:R{n:02d}', so the assertion segment is read "
+            "back out of a key the artifact already ships. This group is only valid "
+            "alongside the SemanticAssertion node group and the corrected "
+            "RELATIONSHIP_SIGNATURES[ASSERTION_ROLE] in vedagraph.domain.ontology, which "
+            "now reads SemanticAssertion -> RoleFiller as card M1 declared."
         ),
     ),
     ElementGroup(
@@ -906,7 +927,13 @@ GROUPS: tuple[ElementGroup, ...] = (
     # ---- communities: the artifact and its refusal, never a membership claim ---------
     ElementGroup(
         group_id="COMMUNITIES_ARTIFACT_NODES",
-        display_label_field="community_id",
+        # Was "community_id", which is an INTEGER in communities.jsonl, so all 12
+        # :DeityCommunity nodes landed with an integer display_label (0-11). display_label
+        # is the product's one universal text slot and a graph-wide toLower() over it
+        # raises a Neo4j type error on an integer; two benchmark probes died on it. The
+        # staging build now emits a string display_label beside the id, and the id itself
+        # is untouched so identity and config hash do not move.
+        display_label_field="display_label",
         domain="communities",
         kind="NODE",
         source="communities.jsonl",

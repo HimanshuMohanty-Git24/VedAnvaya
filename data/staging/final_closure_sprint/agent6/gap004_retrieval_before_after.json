@@ -1,0 +1,326 @@
+{
+  "gap": "GAP-PRODUCT_SURFACE-004",
+  "measured_at_commit": "b4b1b0beba1c499e832150b0b9363d7258e40a26",
+  "tree_dirty": true,
+  "note": "Tree is dirty (five agents mid-sprint). Any benchmark run stamped here would fork the run identity; see the restart-not-restamp rule.",
+  "before": {
+    "Q34_benchmark_wording": {
+      "passage_key": "SV ARANYA 1.1",
+      "channels_used": [
+        "passage_by_key"
+      ],
+      "evidence_items": 1,
+      "note": "Already closed by commit 6823827, after the frozen evaluation ran. The graded MISLEADING is stale for this exact wording."
+    },
+    "Q34_natural_wording": {
+      "passage_key": null,
+      "channels_used": [],
+      "channels_empty": [
+        "translation_search"
+      ],
+      "evidence_items": 0,
+      "note": "LIVE DEFECT: a spelled-out corpus name never formed a passage key, in any corpus."
+    },
+    "ux_spec_metals": {
+      "channels_used": [
+        "lexical_presence"
+      ],
+      "evidence_items": 1,
+      "evidence_types": [
+        "LEXICAL_PRESENCE"
+      ],
+      "note": "LIVE DEFECT: the only channel that ran scanned the corpora for the English string 'metals'. No insight endpoint was reachable from Ask at all."
+    },
+    "materials": {
+      "channels_used": [],
+      "evidence_items": 0,
+      "note": "LIVE DEFECT: zero evidence items, as the UX spec recorded."
+    },
+    "av_code": {
+      "passage_key": "AV 1.1.1",
+      "channels_used": [],
+      "evidence_items": 0,
+      "note": "LIVE DEFECT: the graph cites the Atharvaveda AVS 1.1.1, so the planned key matched nothing."
+    },
+    "yv_code": {
+      "passage_key": "YV 1.1",
+      "evidence_items": 0,
+      "note": "LIVE DEFECT: the graph cites the Yajurveda VSM 1.1."
+    },
+    "bare_sv_locus": {
+      "passage_key": "SV 1.1",
+      "channels_used": [],
+      "evidence_items": 0,
+      "note": "LIVE DEFECT: no Samavedic verse is cited without its arcika section, so a bare SV locus returned an empty packet."
+    },
+    "insight_endpoints_reachable_from_ask": []
+  },
+  "after": [
+    {
+      "id": "Q34_benchmark_wording",
+      "question": "What does SV ARANYA 1.1 contain?",
+      "planned_passage_key": "SV ARANYA 1.1",
+      "planned_channels": [
+        "passages",
+        "search"
+      ],
+      "material_topics": [],
+      "channels_used": [
+        "passage_by_key"
+      ],
+      "channels_empty": [
+        "parallels",
+        "translation_search"
+      ],
+      "evidence_items": 1,
+      "evidence_types": [
+        "PASSAGE"
+      ],
+      "passage_citations": [
+        "SV ARANYA 1.1"
+      ],
+      "distribution_subjects": []
+    },
+    {
+      "id": "Q34_natural_wording",
+      "question": "What does Samaveda Aranyaka 1.1 say?",
+      "planned_passage_key": "SV ARANYA 1.1",
+      "planned_channels": [
+        "passages",
+        "entities",
+        "search"
+      ],
+      "material_topics": [],
+      "channels_used": [
+        "passage_by_key"
+      ],
+      "channels_empty": [
+        "parallels",
+        "translation_search"
+      ],
+      "evidence_items": 1,
+      "evidence_types": [
+        "PASSAGE"
+      ],
+      "passage_citations": [
+        "SV ARANYA 1.1"
+      ],
+      "distribution_subjects": []
+    },
+    {
+      "id": "Q45",
+      "question": "Does the Samaveda mention Varuna?",
+      "planned_passage_key": null,
+      "planned_channels": [
+        "entities",
+        "lexical",
+        "search"
+      ],
+      "material_topics": [],
+      "channels_used": [
+        "entity_profile",
+        "entity_by_veda",
+        "entity_passages",
+        "derived_metrics",
+        "lexical_presence"
+      ],
+      "channels_empty": [
+        "ascriptions",
+        "interpretive_claims"
+      ],
+      "evidence_items": 10,
+      "evidence_types": [
+        "CORPUS_DISTRIBUTION",
+        "ENTITY_FACT",
+        "LEXICAL_PRESENCE",
+        "METRIC",
+        "PASSAGE"
+      ],
+      "passage_citations": [
+        "SV ARANYA 1.4",
+        "SV ARANYA 1.7",
+        "SV ARANYA 5.11",
+        "SV ARANYA 5.3"
+      ],
+      "distribution_subjects": [
+        "Varuna"
+      ]
+    },
+    {
+      "id": "ux_spec_metals",
+      "question": "Which metals appear in the Vedas?",
+      "planned_passage_key": null,
+      "planned_channels": [
+        "materials",
+        "entities",
+        "lexical",
+        "search"
+      ],
+      "material_topics": [
+        "metals"
+      ],
+      "channels_used": [
+        "lexical_presence",
+        "materials"
+      ],
+      "channels_empty": [
+        "translation_search"
+      ],
+      "evidence_items": 8,
+      "evidence_types": [
+        "CORPUS_DISTRIBUTION",
+        "LEXICAL_PRESENCE"
+      ],
+      "passage_citations": [],
+      "distribution_subjects": [
+        "copper (loha)",
+        "dark metal (śyāma)",
+        "gold (hiraṇya)",
+        "lead (sīsa)",
+        "metal (ayas)",
+        "silver (rajata)",
+        "tin (trapu)"
+      ]
+    },
+    {
+      "id": "materials",
+      "question": "Which materials and metals does the corpus attest?",
+      "planned_passage_key": null,
+      "planned_channels": [
+        "materials",
+        "entities",
+        "search"
+      ],
+      "material_topics": [
+        "metals"
+      ],
+      "channels_used": [
+        "materials"
+      ],
+      "channels_empty": [
+        "translation_search"
+      ],
+      "evidence_items": 7,
+      "evidence_types": [
+        "CORPUS_DISTRIBUTION"
+      ],
+      "passage_citations": [],
+      "distribution_subjects": [
+        "copper (loha)",
+        "dark metal (śyāma)",
+        "gold (hiraṇya)",
+        "lead (sīsa)",
+        "metal (ayas)",
+        "silver (rajata)",
+        "tin (trapu)"
+      ]
+    },
+    {
+      "id": "bare_sv_locus",
+      "question": "What does SV 1.1 say?",
+      "planned_passage_key": "SV 1.1",
+      "planned_channels": [
+        "passages",
+        "search"
+      ],
+      "material_topics": [],
+      "channels_used": [
+        "sv_section_disambiguation"
+      ],
+      "channels_empty": [
+        "passage_by_key"
+      ],
+      "evidence_items": 3,
+      "evidence_types": [
+        "PASSAGE"
+      ],
+      "passage_citations": [
+        "SV ARANYA 1.1",
+        "SV CHANDA 1.1",
+        "SV UTTARA 1.1"
+      ],
+      "distribution_subjects": []
+    },
+    {
+      "id": "yv_code",
+      "question": "What does YV 1.1 say?",
+      "planned_passage_key": "VSM 1.1",
+      "planned_channels": [
+        "passages",
+        "search"
+      ],
+      "material_topics": [],
+      "channels_used": [
+        "passage_by_key"
+      ],
+      "channels_empty": [
+        "parallels",
+        "translation_search"
+      ],
+      "evidence_items": 1,
+      "evidence_types": [
+        "PASSAGE"
+      ],
+      "passage_citations": [
+        "VSM 1.1"
+      ],
+      "distribution_subjects": []
+    },
+    {
+      "id": "av_code",
+      "question": "What does AV 1.1.1 say?",
+      "planned_passage_key": "AVS 1.1.1",
+      "planned_channels": [
+        "passages",
+        "search"
+      ],
+      "material_topics": [],
+      "channels_used": [
+        "passage_by_key"
+      ],
+      "channels_empty": [
+        "parallels",
+        "translation_search"
+      ],
+      "evidence_items": 1,
+      "evidence_types": [
+        "PASSAGE"
+      ],
+      "passage_citations": [
+        "AVS 1.1.1"
+      ],
+      "distribution_subjects": []
+    },
+    {
+      "id": "rv_spelled",
+      "question": "What does Rigveda 1.1.1 say?",
+      "planned_passage_key": "RV 1.1.1",
+      "planned_channels": [
+        "passages",
+        "search"
+      ],
+      "material_topics": [],
+      "channels_used": [
+        "passage_by_key",
+        "parallels"
+      ],
+      "channels_empty": [
+        "translation_search"
+      ],
+      "evidence_items": 3,
+      "evidence_types": [
+        "PASSAGE",
+        "TEXTUAL_REUSE"
+      ],
+      "passage_citations": [
+        "RV 1.1.1"
+      ],
+      "distribution_subjects": []
+    }
+  ],
+  "benchmark_clause": {
+    "status": "NOT_RE_RUN",
+    "reason": "The configured provider (openrouter, nvidia/nemotron-3-ultra-550b-a55b:free) returned HTTP 429 free-models-per-day with X-RateLimit-Remaining 0 against a daily limit of 50. The allowance was already exhausted before this session; the adapter classified it non-retryable and did not loop. Reset at X-RateLimit-Reset 1789603200000.",
+    "substitute": "Deterministic retrieval replay, recorded in `after` above. No run identity was stamped."
+  }
+}

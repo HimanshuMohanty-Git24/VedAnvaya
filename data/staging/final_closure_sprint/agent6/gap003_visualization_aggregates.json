@@ -1,0 +1,48 @@
+{
+  "artifact": "gap003_visualization_aggregates",
+  "at": "2026-09-16T17:48:28.069194+00:00",
+  "head": "b4b1b0beba1c499e832150b0b9363d7258e40a26",
+  "agent": "AGENT_6_PRODUCT_SURFACE",
+  "gap": "GAP-PRODUCT_SURFACE-003",
+  "declared_closure_test": "Per-book and deity-by-metre aggregates are served, dispersion is fetchable for a deity with more than 200 passages, and the three VIZ_BLOCKER entries are closed in the design spec.",
+  "VIZ_BLOCKER_02_per_book": {
+    "endpoint": "GET /api/v1/insights/devatas/{id}/by-book",
+    "books_returned": 74,
+    "books_by_veda": {
+      "AV": 20,
+      "RV": 10,
+      "SV": 4,
+      "YV": 40
+    },
+    "measured_zero_books": 6,
+    "total": 3566
+  },
+  "VIZ_BLOCKER_03_by_metre": {
+    "endpoint": "GET /api/v1/insights/devatas/{id}/by-metre",
+    "vedas_with_a_metre_layer": [
+      "RV",
+      "AV"
+    ],
+    "cells": 90,
+    "not_built_rows": [
+      "SV",
+      "YV"
+    ],
+    "total": 2598
+  },
+  "VIZ_BLOCKER_01_dispersion": {
+    "endpoint": "GET /api/v1/insights/devatas/{id}/dispersion",
+    "page_cap_it_replaces": 200,
+    "total_positions_for_indra": 3566,
+    "positions_by_veda": {
+      "RV": 2305,
+      "AV": 635,
+      "YV": 221,
+      "SV": 405
+    }
+  },
+  "design_spec_closed": "docs/design/research/04-visualization-research.md sections 5.1, 5.2, 5.3",
+  "tests": [
+    "tests/api/test_visualization_aggregates.py"
+  ]
+}

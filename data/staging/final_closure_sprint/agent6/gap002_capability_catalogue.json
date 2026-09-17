@@ -1,0 +1,274 @@
+{
+  "artifact": "gap002_capability_catalogue",
+  "at": "2026-09-16T17:48:28.069194+00:00",
+  "head": "b4b1b0beba1c499e832150b0b9363d7258e40a26",
+  "agent": "AGENT_6_PRODUCT_SURFACE",
+  "gap": "GAP-PRODUCT_SURFACE-002",
+  "declared_closure_test": "The limits catalogue covers every dimension the benchmark grades NOT_ANSWERABLE, each with a reproducible probe, and total_available matches that population.",
+  "before": {
+    "total_available": 7,
+    "benchmark_not_answerable": 21,
+    "unpublished": 14
+  },
+  "after": {
+    "total_available": 22,
+    "benchmark_not_answerable_total": 21,
+    "benchmark_not_answerable_published": 21,
+    "unpublished_not_answerable": []
+  },
+  "cards": [
+    {
+      "question_number": 7,
+      "limit_id": "reuse_transformation_typology",
+      "live_verdict": "PARTIALLY_ANSWERABLE",
+      "benchmark_verdict": "NOT_ANSWERABLE",
+      "measurements": {
+        "reuse_edges": 6596,
+        "edges_with_a_transformation_type": 6271,
+        "formula_edges_with_a_transformation_type": 4368,
+        "transformation_vocabulary_size": 15
+      }
+    },
+    {
+      "question_number": 22,
+      "limit_id": "conceptual_similarity_without_shared_text",
+      "live_verdict": "NOT_ANSWERABLE",
+      "benchmark_verdict": "NOT_ANSWERABLE",
+      "measurements": {
+        "semantic_resemblance_edges": null,
+        "built_relatedness_edges": 8412
+      }
+    },
+    {
+      "question_number": 23,
+      "limit_id": "deity_communities",
+      "live_verdict": "NOT_ANSWERABLE",
+      "benchmark_verdict": "NOT_ANSWERABLE",
+      "measurements": {
+        "stored_community_partitions": 12,
+        "deities_with_a_community_assignment": 0,
+        "eligible_deities": 185,
+        "devatas_without_an_eligibility_ruling": 214,
+        "pairwise_co_occurrence_edges": 306
+      }
+    },
+    {
+      "question_number": 25,
+      "limit_id": "recurring_ritual_objects",
+      "live_verdict": "PARTIALLY_ANSWERABLE",
+      "benchmark_verdict": "PARTIALLY_ANSWERABLE",
+      "measurements": {
+        "rituals_modelled": 103,
+        "step_edges": 3,
+        "procedure_step_edges": 3121,
+        "curated_implements": 14,
+        "objects_in_the_registry": 41,
+        "implements_reached_by_the_mention_layer": 14
+      }
+    },
+    {
+      "question_number": 28,
+      "limit_id": "rival_scholarly_readings",
+      "live_verdict": "NOT_ANSWERABLE",
+      "benchmark_verdict": "NOT_ANSWERABLE",
+      "measurements": {
+        "recorded_contradiction_pairs": 1
+      }
+    },
+    {
+      "question_number": 37,
+      "limit_id": "mantra_bridges_between_concept_communities",
+      "live_verdict": "NOT_ANSWERABLE",
+      "benchmark_verdict": "NOT_ANSWERABLE",
+      "measurements": {
+        "stored_community_partitions": 12,
+        "deities_assigned_to_a_community": 0,
+        "mantras_with_a_bridge_score": 0,
+        "stored_bridging_metrics": 0
+      }
+    },
+    {
+      "question_number": 49,
+      "limit_id": "cross_veda_resemblance_without_reuse",
+      "live_verdict": "NOT_ANSWERABLE",
+      "benchmark_verdict": "NOT_ANSWERABLE",
+      "measurements": {
+        "lexical_relatedness_edges": 6596,
+        "asserted_resemblance_edges": 0,
+        "nodes_carrying_an_embedding": 0
+      }
+    },
+    {
+      "question_number": 52,
+      "limit_id": "semantic_roles_outside_the_rigveda",
+      "live_verdict": "NOT_ANSWERABLE",
+      "benchmark_verdict": "NOT_ANSWERABLE",
+      "measurements": {
+        "assertions": 4865
+      }
+    },
+    {
+      "question_number": 53,
+      "limit_id": "concept_route_between_deities",
+      "live_verdict": "NOT_ANSWERABLE",
+      "benchmark_verdict": "NOT_ANSWERABLE",
+      "measurements": {
+        "concept_to_concept_relations": 163,
+        "curated_interpretive_relations": 66,
+        "nodes_carrying_an_embedding": 0
+      }
+    },
+    {
+      "question_number": 54,
+      "limit_id": "ontology_domain_bridges",
+      "live_verdict": "NOT_ANSWERABLE",
+      "benchmark_verdict": "NOT_ANSWERABLE",
+      "measurements": {
+        "concepts": 375,
+        "concepts_assigned_to_a_domain": 219,
+        "declared_domains": 1
+      }
+    },
+    {
+      "question_number": 58,
+      "limit_id": "semantic_function_change_under_reuse",
+      "live_verdict": "NOT_ANSWERABLE",
+      "benchmark_verdict": "NOT_ANSWERABLE",
+      "measurements": {
+        "semantic_assertions": 4865,
+        "derivation_paths": 2,
+        "assertions_outside_the_rigveda": 0
+      }
+    },
+    {
+      "question_number": 59,
+      "limit_id": "directional_textual_reuse",
+      "live_verdict": "NOT_ANSWERABLE",
+      "benchmark_verdict": "NOT_ANSWERABLE",
+      "measurements": {
+        "reuse_edges": 6596,
+        "edges_stored_as_directed": 1684,
+        "distinct_direction_bases": 2
+      }
+    },
+    {
+      "question_number": 61,
+      "limit_id": "deity_to_offering_assignment",
+      "live_verdict": "NOT_ANSWERABLE",
+      "benchmark_verdict": "NOT_ANSWERABLE",
+      "measurements": {
+        "deity_to_offering_edges": 10,
+        "edges_with_per_verse_evidence": 0,
+        "passages_naming_both": 2154
+      }
+    },
+    {
+      "question_number": 68,
+      "limit_id": "epithet_occurrence_layer",
+      "live_verdict": "NOT_ANSWERABLE",
+      "benchmark_verdict": "NOT_ANSWERABLE",
+      "measurements": {
+        "epithets": 13,
+        "passage_level_epithet_occurrences": 0,
+        "deity_level_epithet_edges": 13
+      }
+    },
+    {
+      "question_number": 72,
+      "limit_id": "conflicting_interpretive_claims",
+      "live_verdict": "NOT_ANSWERABLE",
+      "benchmark_verdict": "NOT_ANSWERABLE",
+      "measurements": {
+        "interpretive_claims": 6,
+        "claims_about_the_vedic_text": 2,
+        "claims_attributed_to_a_named_position": 0,
+        "claims_with_a_recorded_contradiction": 2
+      }
+    },
+    {
+      "question_number": 77,
+      "limit_id": "calibrated_confidence",
+      "live_verdict": "NOT_ANSWERABLE",
+      "benchmark_verdict": "NOT_ANSWERABLE",
+      "measurements": {
+        "human_annotated_assertions": 0
+      }
+    },
+    {
+      "question_number": 78,
+      "limit_id": "entities_too_thin_to_support_a_claim",
+      "live_verdict": "NOT_ANSWERABLE",
+      "benchmark_verdict": "NOT_ANSWERABLE",
+      "measurements": {
+        "entities_in_the_graph": 375,
+        "entities_with_a_curated_attestation_count": 100,
+        "entities_with_an_external_expectation": 0
+      }
+    },
+    {
+      "question_number": 82,
+      "limit_id": "samavedic_melodic_layer",
+      "live_verdict": "NOT_ANSWERABLE",
+      "benchmark_verdict": "NOT_ANSWERABLE",
+      "measurements": {
+        "excluded_samavedic_corpora": 7
+      }
+    },
+    {
+      "question_number": 84,
+      "limit_id": "ritual_versus_non_ritual_context",
+      "live_verdict": "NOT_ANSWERABLE",
+      "benchmark_verdict": "NOT_ANSWERABLE",
+      "measurements": {
+        "mantras": 20210,
+        "mantras_linked_to_a_rite": 513,
+        "mantras_with_a_context_assignment": 0
+      }
+    },
+    {
+      "question_number": 93,
+      "limit_id": "narrative_and_myth_episode_layer",
+      "live_verdict": "NOT_ANSWERABLE",
+      "benchmark_verdict": "NOT_ANSWERABLE",
+      "measurements": {
+        "weapons_in_the_registry": 5,
+        "passage_theme_edges": 8,
+        "narrative_labels": 0
+      }
+    },
+    {
+      "question_number": 97,
+      "limit_id": "communities_over_high_confidence_edges",
+      "live_verdict": "NOT_ANSWERABLE",
+      "benchmark_verdict": "NOT_ANSWERABLE",
+      "measurements": {
+        "tier_a_passage_to_entity_edges": 8129,
+        "tier_a_passage_to_concept_edges": 0,
+        "subjects_assigned_to_a_community": 0
+      }
+    },
+    {
+      "question_number": 98,
+      "limit_id": "path_interpretability_score",
+      "live_verdict": "NOT_ANSWERABLE",
+      "benchmark_verdict": "NOT_ANSWERABLE",
+      "measurements": {
+        "stored_path_metrics": 0,
+        "human_reviewed_edges": 0,
+        "graded_edges": 282389
+      }
+    }
+  ],
+  "verdicts_that_moved_since_the_frozen_benchmark": [
+    {
+      "question_number": 7,
+      "limit_id": "reuse_transformation_typology",
+      "benchmark": "NOT_ANSWERABLE",
+      "live": "PARTIALLY_ANSWERABLE"
+    }
+  ],
+  "note_on_total_available": "22 rather than 21 because Q25 is a genuine PARTIALLY_ANSWERABLE limit -- a real answer with its recall shortfall measured -- and deleting a truthful limitation to make two numbers equal was refused. The population match is published explicitly as benchmark_not_answerable_total == benchmark_not_answerable_published == 21 with unpublished_not_answerable empty, which is checkable where total_available alone was not.",
+  "tests": [
+    "tests/api/test_capability_catalogue.py"
+  ]
+}

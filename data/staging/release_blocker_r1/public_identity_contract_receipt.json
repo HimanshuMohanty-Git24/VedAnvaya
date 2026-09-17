@@ -1,0 +1,338 @@
+{
+  "graph_census": {
+    "nodes": 164201,
+    "relationships": 508042
+  },
+  "diagnosis": {
+    "A_existing_uuid": false,
+    "B_existing_deterministic_identity": "30,266 persisted assertion_key values; 4,865 existing assertion_id values",
+    "C_new_identity_required": false,
+    "root_cause": "assertion_key omitted from public ID precedence; contextual canonical_key collided with Passage; sid != tid then dropped 30,266 HAS_SEMANTIC_ASSERTION relationships",
+    "strategy": "Promote persisted assertion_key verbatim with semantic-assertion: prefix; retain existing assertion_id and all non-assertion IDs",
+    "normalization": "None. Existing keys are opaque, case-sensitive, preserved verbatim. No UUIDv5 namespace or tuple is minted.",
+    "historical_key_origin": "Pinned semantic_roles rows have a source assertion ordinal encoded in assertion_key and role_filler_key. The existing builder enumerates that frozen source array. This publication repair never re-enumerates nodes or creates a new ordinal identity; changing the pinned assertion source is outside this frozen release contract."
+  },
+  "assertion_property_counts": {
+    "action_head": 2459,
+    "agent_case": 2406,
+    "agent_incomplete": 2406,
+    "agent_surface": 2406,
+    "algorithm_version": 30266,
+    "asserted_role_count": 30266,
+    "assertion_id": 4865,
+    "assertion_key": 30266,
+    "assertion_node_id": 2459,
+    "assertion_ordinal": 30266,
+    "attempt_id": 2459,
+    "attribution_precision": 4865,
+    "authored_at": 2459,
+    "beneficiary": 2406,
+    "build_pass": 4865,
+    "candidate_status": 2459,
+    "canonical_key": 30266,
+    "cautions": 30266,
+    "code_commit": 30266,
+    "config_hash": 30266,
+    "derivation": 35131,
+    "devata_id": 2406,
+    "display_label": 35131,
+    "display_type": 35131,
+    "domain_model_version": 2459,
+    "evidence": 2406,
+    "evidence_basis": 4865,
+    "evidence_count": 2406,
+    "evidence_layer": 30266,
+    "evidence_packet_sha256": 2459,
+    "evidence_passage_ids": 2459,
+    "evidence_span_end": 2459,
+    "evidence_span_start": 2459,
+    "evidence_translation_record_id": 2459,
+    "execution_contract_version": 2459,
+    "execution_version": 2459,
+    "explicitness": 2459,
+    "extraction_model": 2459,
+    "frame": 32672,
+    "grade_basis": 4865,
+    "human_annotated": 30266,
+    "human_gold_status": 2459,
+    "independently_annotated": 364,
+    "instrument": 2406,
+    "is_samavedic_annotation": 364,
+    "knowledge_layer": 4865,
+    "layer_veda_scope": 4865,
+    "layer_veda_scope_note": 4865,
+    "layer_veda_scope_source": 4865,
+    "location": 2406,
+    "mapping_confidence": 30266,
+    "method": 2406,
+    "model": 2406,
+    "model_assisted": 30266,
+    "model_provenance_classification": 2459,
+    "model_reported": 2459,
+    "model_requested": 2459,
+    "morphological_roles_present": 2406,
+    "normalization_status": 2459,
+    "normalized_head": 2459,
+    "object_kind": 2459,
+    "ontology_gap_code": 2459,
+    "pada": 2406,
+    "participant_count": 2459,
+    "participants": 2459,
+    "passage_key": 4865,
+    "patient": 2406,
+    "pipeline_version": 2406,
+    "predicate": 32672,
+    "predicate_confidence": 2406,
+    "predicate_status": 30266,
+    "preverbs": 2406,
+    "projected_from_canonical_key": 364,
+    "projection_edge_types": 364,
+    "projection_graph_score": 364,
+    "projection_identity_basis": 364,
+    "prompt_policy": 2406,
+    "prompt_sha256": 2459,
+    "prompt_version": 2459,
+    "provenance": 30266,
+    "qualifiers": 2459,
+    "quality_tier": 4865,
+    "reasoning": 2459,
+    "response_sha256": 2459,
+    "review_state": 35131,
+    "role_count": 2406,
+    "role_derivation": 30266,
+    "role_scope": 30266,
+    "roles_json": 2406,
+    "roles_withheld": 30266,
+    "roles_withheld_reason": 28734,
+    "root": 2406,
+    "root_label": 32672,
+    "run_id": 4865,
+    "runtime": 2459,
+    "schema_version": 2459,
+    "score": 2406,
+    "seal_sha256": 2459,
+    "seal_status": 2459,
+    "semantic_predicate": 2459,
+    "source_id": 30266,
+    "source_snapshot": 30266,
+    "state": 4865,
+    "task_id": 2459,
+    "three_slot_complete": 30266,
+    "trust": 2406,
+    "veda": 32672,
+    "verb_feature_scheme": 30266,
+    "verb_features": 2406,
+    "verb_features_json": 30266,
+    "verb_surface": 32672
+  },
+  "id_strategy_by_node_type": {
+    "Action": {
+      "entity_key": 26
+    },
+    "ActionPredicate": {
+      "predicate": 41
+    },
+    "Animal": {
+      "entity_key": 15
+    },
+    "Chandas": {
+      "entity_key": 547
+    },
+    "Concept": {
+      "entity_key": 155
+    },
+    "Condition": {
+      "entity_key": 36
+    },
+    "CosmicEntity": {
+      "entity_key": 4
+    },
+    "Crop": {
+      "entity_key": 5
+    },
+    "DeityAxis": {
+      "axis_key": 22
+    },
+    "DeityGroup": {
+      "group_key": 2
+    },
+    "DerivedMetric": {
+      "metric_id": 1085
+    },
+    "Devata": {
+      "entity_key": 214
+    },
+    "DevataAscription": {
+      "entity_key": 324
+    },
+    "Epithet": {
+      "epithet_key": 13
+    },
+    "Formula": {
+      "formula_id": 4825
+    },
+    "FormulaFamily": {
+      "family_id": 720
+    },
+    "HYMN": {
+      "canonical_key": 1759
+    },
+    "HumanConcern": {
+      "entity_key": 7
+    },
+    "InterpretiveClaim": {
+      "claim_id": 6
+    },
+    "MANTRA": {
+      "canonical_key": 20210
+    },
+    "Metal": {
+      "entity_key": 7
+    },
+    "NaturalPhenomenon": {
+      "entity_key": 13
+    },
+    "Object": {
+      "entity_key": 18
+    },
+    "Offering": {
+      "entity_key": 2
+    },
+    "PADA_PARALLEL_GROUP": {
+      "group_id": 1434
+    },
+    "PhilosophicalConcept": {
+      "entity_key": 13
+    },
+    "Place": {
+      "entity_key": 3
+    },
+    "Plant": {
+      "entity_key": 17
+    },
+    "Quality": {
+      "entity_key": 3
+    },
+    "RITUAL_STEP": {
+      "step_key": 3121
+    },
+    "Rishi": {
+      "entity_key": 729
+    },
+    "RishiFamily": {
+      "family_key": 87
+    },
+    "Ritual": {
+      "entity_key": 8
+    },
+    "RitualRole": {
+      "entity_key": 19
+    },
+    "River": {
+      "entity_key": 8
+    },
+    "SECTION": {
+      "canonical_key": 70
+    },
+    "SEMANTIC_ASSERTION": {
+      "semantic-assertion:<persisted assertion_key>": 30266
+    },
+    "STRUCTURAL_CONTAINER": {
+      "canonical_key": 498
+    },
+    "Scholar": {
+      "entity_key": 17
+    },
+    "ScholarlyDisagreement": {
+      "entity_key": 113
+    },
+    "ScholarlyWork": {
+      "entity_key": 17
+    },
+    "SemanticAssertion": {
+      "assertion_id": 4865
+    },
+    "SocialRite": {
+      "entity_key": 5
+    },
+    "State": {
+      "entity_key": 2
+    },
+    "Substance": {
+      "entity_key": 8
+    },
+    "Tribe": {
+      "entity_key": 5
+    },
+    "Weapon": {
+      "entity_key": 5
+    },
+    "Work": {
+      "work_id": 4
+    }
+  },
+  "counts": {
+    "exported_nodes": 71373,
+    "distinct_public_ids": 71373,
+    "duplicate_public_ids": 0,
+    "cross_type_collisions": 0,
+    "same_type_collisions": 0,
+    "null_public_ids": 0,
+    "public_relationships": 270646,
+    "passage_assertion_intersection": 0,
+    "api_export_mismatches": 0,
+    "missing_labels": 0,
+    "ungraded_public_relationships": 0,
+    "internal_leakage": 0
+  },
+  "determinism": {
+    "same_input_same_id": true,
+    "two_independent_source_builds_match_live_keys": true,
+    "build_1_keys_sha256": "64a9966d957222c7d3c38a8a09b64dd9855ac40ae665fc86ba13c296af70638d",
+    "build_2_keys_sha256": "64a9966d957222c7d3c38a8a09b64dd9855ac40ae665fc86ba13c296af70638d",
+    "live_keys_sha256": "64a9966d957222c7d3c38a8a09b64dd9855ac40ae665fc86ba13c296af70638d",
+    "source_files": {
+      "data/staging/semantic_roles/rows.jsonl": "9ec93cae78c1d1d90bc6873fc1c28cfabb496601f5838e87dccb3e52c319ef35",
+      "data/staging/semantic_roles/role_fillers.jsonl": "332d7733a3ddb81d631aada347b2899043605b18eaaa69c48aae82bb81c7ce2a"
+    },
+    "sorted_public_ids_sha256": "b24d205e5d0a1db55c22621d8974b1b686bb352908e8b697ac6b8fda97e0b44c"
+  },
+  "examples": [
+    {
+      "public_id": "C32A:VG:SEMOBJ:001C33E362690FAA3394",
+      "assertion_key": null,
+      "assertion_id": "C32A:VG:SEMOBJ:001C33E362690FAA3394",
+      "passage": "VG:RV:SAK:M04:S026:V007"
+    },
+    {
+      "public_id": "semantic-assertion:VG:AV:SAU:K06:S050:V003:A003",
+      "assertion_key": "VG:AV:SAU:K06:S050:V003:A003",
+      "assertion_id": null,
+      "passage": "VG:AV:SAU:K06:S050:V003"
+    },
+    {
+      "public_id": "semantic-assertion:VG:RV:SAK:M01:S129:V009:A003",
+      "assertion_key": "VG:RV:SAK:M01:S129:V009:A003",
+      "assertion_id": null,
+      "passage": "VG:RV:SAK:M01:S129:V009"
+    },
+    {
+      "public_id": "semantic-assertion:VG:RV:SAK:M06:S020:V005:A002",
+      "assertion_key": "VG:RV:SAK:M06:S020:V005:A002",
+      "assertion_id": null,
+      "passage": "VG:RV:SAK:M06:S020:V005"
+    },
+    {
+      "public_id": "semantic-assertion:VG:RV:SAK:M09:S071:V006:A002",
+      "assertion_key": "VG:RV:SAK:M09:S071:V006:A002",
+      "assertion_id": null,
+      "passage": "VG:RV:SAK:M09:S071:V006"
+    },
+    {
+      "public_id": "semantic-assertion:VG:YV:VSM:A13:V058:A003",
+      "assertion_key": "VG:YV:VSM:A13:V058:A003",
+      "assertion_id": null,
+      "passage": "VG:YV:VSM:A13:V058"
+    }
+  ]
+}

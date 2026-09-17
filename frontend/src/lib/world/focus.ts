@@ -163,7 +163,10 @@ export const FAMILY_COPY: Record<RelationshipFamily, { heading: string; absent: 
  * decision rather than a defect fix, and this change is the defect fix.
  */
 const FAMILY_PREDICATES: Record<RelationshipFamily, readonly string[]> = {
-    ATTRIBUTION: ["HAS_DEVATA", "HAS_RISHI", "HAS_DEVATA_ASCRIPTION"],
+    ATTRIBUTION: [
+        "HAS_DEVATA", "HAS_RISHI", "HAS_DEVATA_ASCRIPTION", "HAS_DEVATA_DERIVED",
+        "ASCRIBES_TO_DEVATA",
+    ],
     MENTION: ["MENTIONS_DEVATA", "MENTIONS_ENTITY"],
     TOPIC: [
         "ABOUT_CONCEPT", "ADDRESSES_CONCERN", "HAS_THEME", "TREATS", "DESCRIBES",
@@ -175,6 +178,7 @@ const FAMILY_PREDICATES: Record<RelationshipFamily, readonly string[]> = {
     PARALLEL: [
         "EXACT_PARALLEL_OF", "NEAR_PARALLEL_OF", "PARALLEL_TO", "VARIANT_OF",
         "REUSES_TEXT_FROM", "SHARES_ENTITY_VOCABULARY_WITH",
+        "HAS_PARALLEL_PADA",
     ],
     FORMULA: ["USES_FORMULA", "HAS_FORMULA", "MEMBER_OF_FAMILY", "SHARES_FORMULA_WITH"],
     RITE: [
@@ -182,6 +186,7 @@ const FAMILY_PREDICATES: Record<RelationshipFamily, readonly string[]> = {
         "INVOLVES_SUBSTANCE", "USES_OBJECT", "USES_OFFERING", "USES_SUBSTANCE",
         "PERFORMED_BY", "PERFORMED_FOR", "HAS_STEP", "PERFORMS_ACTION",
         "HAS_RITUAL_STEP",
+        "RECEIVES_OFFERING",
     ],
     REGISTRY: [
         "COMPOSED_OF", "EPITHET_VARIANT_OF", "BROADER_THAN", "DEVATA_ASSOCIATED_WITH",
@@ -189,7 +194,7 @@ const FAMILY_PREDICATES: Record<RelationshipFamily, readonly string[]> = {
         "SPECIALIZED_FORM_OF", "ATTESTED_IN",
     ],
     EVIDENCE: [
-        "HAS_SEMANTIC_ASSERTION", "ASSERTION_AGENT", "ASSERTION_TARGET", "MEASURES",
+        "HAS_SEMANTIC_ASSERTION", "ASSERTION_AGENT", "ASSERTION_TARGET", "ASSERTION_PREDICATE", "MEASURES",
         "CONTRADICTS", "SUPPORTED_BY", "SUPPORTED_BY_STATISTIC",
         "POSITION_ASSERTED_BY", "POSITION_STATED_IN", "REPORTED_IN",
         "SCHOLARLY_CLAIM_ABOUT",
@@ -244,21 +249,44 @@ export const FOCUS_BUDGET = 40;
 /**
  * The narrow-viewport budget.
  *
- * 16, and it is not an arbitrary halving. It is the measured *coverage floor*: over all 335
+ * 22, and it is not an arbitrary halving. It is the measured *coverage floor*: over all 471
  * curated nodes, the smallest budget that still shows every predicate, every family and every
- * node group the subject has is 4 at the median, 12 at the 99th percentile and 16 at the
- * worst case, which is Indra. So 16 is the smallest budget at which no subject in this corpus
+ * node group the subject has is 3 at the median, 14 at the 99th percentile and 22 at the
+ * worst case, which is Agni. So 22 is the smallest budget at which no subject in this corpus
  * loses a kind of relationship - below it, curation stops being a choice about crowding and
  * starts withholding information.
+ *
+ * Re-derived after the publication-identity repair restored the 30,266 assertion edges the
+ * old export had dropped as self-edges. Two things moved. The engaged population went from
+ * 335 nodes to 471; and the worst case moved from Indra to Agni, who binds on *node groups*
+ * rather than on predicates. Predicate coverage alone floors at 17 - Indra and Agni each
+ * lose HAS_DEVATA at 16 - but Agni's `thing` and `unresolved-deity` neighbours are not
+ * reached until 20 and 22. A budget of 17 therefore shows every relationship kind Agni has
+ * while still omitting two whole groups of what he is related to, which is the same
+ * withholding along a different axis.
  */
-export const FOCUS_BUDGET_COMPACT = 16;
+export const FOCUS_BUDGET_COMPACT = 22;
 
 /**
  * The floor when even the compact budget will not physically seat.
  *
- * 12 is the 99th-percentile coverage floor: 331 of the 335 curated nodes still show every
- * relationship kind they have at 12. Four do not - Indra, Agni, Vayu and AVS 6.125.2 - and
- * that is the stated cost of a band this short.
+ * 12 is a geometric floor rather than a coverage one, which is why it has not moved with
+ * FOCUS_BUDGET_COMPACT. The band that forces it - the 183.1px canvas under a half-raised
+ * sheet - seats 11 orbs at the touch pitch, and 12 is the documented two-pixel concession
+ * above that. Raising it to the re-derived 99th percentile of 14 would draw fourteen orbs
+ * into space for eleven, which is the defect `focusBudgetForBand` exists to prevent.
+ *
+ * The cost is larger than it was, and is stated rather than implied: 455 of the 471 curated
+ * nodes still show every relationship kind they have at 12, and 16 do not.
+ *
+ * Where the geometric argument stops. 12 is a FLOOR, not a clamp: `focusBudgetForBand`
+ * returns `max(FOCUS_BUDGET_CRAMPED, seats)`, so below the band that seats 12 the budget
+ * stops tracking the seats. At the 183.1px band this costs one orb of overdraw, which is the
+ * 2px concession above. At a 120px band it seats 6 and still returns 12, which is a six-orb
+ * overdraw and not a concession. No measured viewport in this product produces a band that
+ * short - the shortest one on record is the 183.1px half-sheet - so the floor is left as it
+ * is rather than clamped, because clamping costs a relationship kind on 16 nodes to fix a
+ * band nobody has. If a band under about 163px ever appears, this is the line to revisit.
  */
 export const FOCUS_BUDGET_CRAMPED = 12;
 
@@ -327,10 +355,11 @@ export function focusRingSeats(shortAxis: number): number {
  * shorter, so a short desktop band is treated as the short band it is rather than being given
  * the desktop budget because the window is wide.
  *
- * The measured phone case falls out: collapsed band 434px seats 29, so the compact 16 stands;
- * half-sheet band 183px seats 11, so it drops to 12. Twelve rather than eleven is a deliberate
- * 2px concession - twelve orbs at that radius sit at a 42px pitch, and going to 11 would cost
- * a relationship kind on Indra, Agni and Vayu for two pixels of finger room.
+ * The measured phone case falls out. Under a collapsed sheet on a 390x844 phone the short
+ * axis is the 390px width, which seats 26, so the compact 22 stands; the half-sheet band of
+ * 183px is shorter than the width and seats 11, so it drops to 12. Twelve rather than eleven
+ * is a deliberate 2px concession - twelve orbs at that radius sit at a 42px pitch, and going
+ * to 11 would cost a relationship kind for two pixels of finger room.
  *
  * `bandHeight` may be 0 or non-finite where a caller genuinely has not measured yet; the width
  * rule then stands alone, which is the previous behaviour rather than a collapsed scene.
@@ -980,8 +1009,9 @@ export function selectFocus(
             (edgeTypeNames[a] ?? "").localeCompare(edgeTypeNames[b] ?? ""),
     );
     for (const type of typeOrder) {
-        // Coverage may spend everything except the constellation reserve.
-        if (room() <= reserve) break;
+        // Predicate coverage is the contractual first round: a compact scene may forgo a
+        // constellation before it omits a relationship kind the subject actually has.
+        if (room() <= 0) break;
         // A neighbour already on screen that carries this predicate has represented it. Two
         // rounds agreeing about the same pair must not also cost two coverage slots.
         if (

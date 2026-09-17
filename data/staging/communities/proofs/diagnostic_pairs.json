@@ -27,10 +27,6 @@
       "VG:DEVATA:INDRAH"
     ],
     [
-      "VG:DEVATA:PAVAMANAH-SOMAH",
-      "VG:DEVATA:SOMAH"
-    ],
-    [
       "VG:DEVATA:PAVAMANO-AGNIH",
       "VG:DEVATA:AGNIH"
     ],
@@ -147,7 +143,7 @@
       "b": "VG:DEVATA:PAVAMANAH-SOMAH",
       "blocked_by": "CURATION_CONTRADICTION_SOMA_PAVAMANA",
       "graph_evidence": {
-        "declared_same_deity_by_EPITHET_VARIANT_OF": true,
+        "declared_same_deity_by_EPITHET_VARIANT_OF": false,
         "direct_edge_exists": false,
         "hymns_a": 12,
         "hymns_b": 113,

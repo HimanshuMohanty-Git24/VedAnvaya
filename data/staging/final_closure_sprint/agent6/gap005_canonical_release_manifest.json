@@ -1,0 +1,2456 @@
+{
+  "backlog_id": "SV-UNTRACKED-RELEASE-01",
+  "canonical_root": "data/canonical",
+  "entries": [
+    {
+      "dataset": "atharvaveda_pilot_v1",
+      "mtime": "2026-09-07T05:52:24Z",
+      "path": "data/canonical/atharvaveda_pilot_v1/audio_recordings.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "atharvaveda_pilot_v1",
+      "mtime": "2026-09-07T05:52:24Z",
+      "path": "data/canonical/atharvaveda_pilot_v1/audio_segments.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "atharvaveda_pilot_v1",
+      "mtime": "2026-09-07T05:52:24Z",
+      "path": "data/canonical/atharvaveda_pilot_v1/citations.jsonl",
+      "sha256": "c8fafc3d85a3b17a95e15540afaecea2a76cee91cb9feb6b14b892327d0ff890",
+      "size": 35756,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "atharvaveda_pilot_v1",
+      "mtime": "2026-09-07T05:52:25Z",
+      "path": "data/canonical/atharvaveda_pilot_v1/manifest.json",
+      "sha256": "0af8568cc8c5627e0912c652af20b35edf1caa733376ec182a1de13830faa2a6",
+      "size": 6596,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "atharvaveda_pilot_v1",
+      "mtime": "2026-09-07T05:52:24Z",
+      "path": "data/canonical/atharvaveda_pilot_v1/passages.jsonl",
+      "sha256": "cf2d847d07df51647a8f3ec99de4c9b28a93d5f6fd0c6dbfb3e9e199009c60b4",
+      "size": 84079,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "atharvaveda_pilot_v1",
+      "mtime": "2026-09-07T05:52:24Z",
+      "path": "data/canonical/atharvaveda_pilot_v1/qa_issues.jsonl",
+      "sha256": "a46d076f2919e6e49636ba66e6a94b5a0547af55a00592424a5b3dae159e7551",
+      "size": 475,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "atharvaveda_pilot_v1",
+      "mtime": "2026-09-07T05:52:24Z",
+      "path": "data/canonical/atharvaveda_pilot_v1/source_artifacts.jsonl",
+      "sha256": "0b9a9c8027449238f3f1bd4101897b630bf810126c25d0cefe9f65209e168c87",
+      "size": 12285,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "atharvaveda_pilot_v1",
+      "mtime": "2026-09-07T05:52:24Z",
+      "path": "data/canonical/atharvaveda_pilot_v1/source_assertions.jsonl",
+      "sha256": "e52cc02b96ea5f274f52fd73ed8265deb3ff4393d483d46653c165e6d4b54dab",
+      "size": 123541,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "atharvaveda_pilot_v1",
+      "mtime": "2026-09-07T05:52:24Z",
+      "path": "data/canonical/atharvaveda_pilot_v1/sources.jsonl",
+      "sha256": "81160791d28c556bf84b2f77ca03d1fa3dc1d3f09b8a9bc172b6e3fb6f62a2ef",
+      "size": 1652,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "atharvaveda_pilot_v1",
+      "mtime": "2026-09-07T05:52:24Z",
+      "path": "data/canonical/atharvaveda_pilot_v1/text_comparisons.jsonl",
+      "sha256": "1e8d1444d1a88374009d1ff0d07f006ee43a8b021edbd03c431392e875d1e397",
+      "size": 83673,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "atharvaveda_pilot_v1",
+      "mtime": "2026-09-07T05:52:24Z",
+      "path": "data/canonical/atharvaveda_pilot_v1/text_versions.jsonl",
+      "sha256": "afbdcb617c0f3828e1791a0c04d58f814e021114330573b8cdfaf8fe4391170d",
+      "size": 386541,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "atharvaveda_pilot_v1",
+      "mtime": "2026-09-07T05:52:24Z",
+      "path": "data/canonical/atharvaveda_pilot_v1/traditional_metadata.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "atharvaveda_pilot_v1",
+      "mtime": "2026-09-07T05:52:24Z",
+      "path": "data/canonical/atharvaveda_pilot_v1/translations.jsonl",
+      "sha256": "43d0d0cc900cba4905441b17224965d6d838008aeb1b1121a946f095b5f7d81c",
+      "size": 105111,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "atharvaveda_pilot_v1",
+      "mtime": "2026-09-07T05:52:24Z",
+      "path": "data/canonical/atharvaveda_pilot_v1/works.jsonl",
+      "sha256": "17e7ca77a3bf6672c09e105d06ec162686e564dcfbac3ea73d1a9deba52dfe40",
+      "size": 334,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_1856_provisional",
+      "mtime": "2026-09-08T17:06:53Z",
+      "path": "data/canonical/atharvaveda_saunaka_1856_provisional/audio_recordings.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_1856_provisional",
+      "mtime": "2026-09-08T17:06:53Z",
+      "path": "data/canonical/atharvaveda_saunaka_1856_provisional/audio_segments.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_1856_provisional",
+      "mtime": "2026-09-08T17:06:53Z",
+      "path": "data/canonical/atharvaveda_saunaka_1856_provisional/citations.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_1856_provisional",
+      "mtime": "2026-09-08T17:06:53Z",
+      "path": "data/canonical/atharvaveda_saunaka_1856_provisional/manifest.json",
+      "sha256": "e67c8088a8de28735023521f0178fe69ef9f6123b45dd963fc598f637f2d8550",
+      "size": 3346,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_1856_provisional",
+      "mtime": "2026-09-08T17:06:53Z",
+      "path": "data/canonical/atharvaveda_saunaka_1856_provisional/passages.jsonl",
+      "sha256": "c2d96c0d9394d9b541dccc5c31df1933fb6b1db1efb0d6b5bf76f9dea4bae5e7",
+      "size": 15635,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_1856_provisional",
+      "mtime": "2026-09-08T17:06:53Z",
+      "path": "data/canonical/atharvaveda_saunaka_1856_provisional/qa_issues.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_1856_provisional",
+      "mtime": "2026-09-08T17:06:53Z",
+      "path": "data/canonical/atharvaveda_saunaka_1856_provisional/referent_bindings.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_1856_provisional",
+      "mtime": "2026-09-08T17:06:53Z",
+      "path": "data/canonical/atharvaveda_saunaka_1856_provisional/source_artifacts.jsonl",
+      "sha256": "0d4b5e9478e1e563aeba0b291c95908e5899ddab9d7f0b04653e5df165d2609a",
+      "size": 6231,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_1856_provisional",
+      "mtime": "2026-09-08T17:06:53Z",
+      "path": "data/canonical/atharvaveda_saunaka_1856_provisional/source_assertions.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_1856_provisional",
+      "mtime": "2026-09-08T17:06:53Z",
+      "path": "data/canonical/atharvaveda_saunaka_1856_provisional/sources.jsonl",
+      "sha256": "e17d96dbc83b9ace18009430427a8753e0be82253bd64179097749ce30602564",
+      "size": 3161,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_1856_provisional",
+      "mtime": "2026-09-08T17:06:53Z",
+      "path": "data/canonical/atharvaveda_saunaka_1856_provisional/text_versions.jsonl",
+      "sha256": "303bf312a1a5bb98b2eede943f64135db3d61c1b8b74f0741cdb93198f36e350",
+      "size": 26008,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_1856_provisional",
+      "mtime": "2026-09-08T17:06:53Z",
+      "path": "data/canonical/atharvaveda_saunaka_1856_provisional/traditional_metadata.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_1856_provisional",
+      "mtime": "2026-09-08T17:06:53Z",
+      "path": "data/canonical/atharvaveda_saunaka_1856_provisional/translations.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_1856_provisional",
+      "mtime": "2026-09-08T17:06:53Z",
+      "path": "data/canonical/atharvaveda_saunaka_1856_provisional/works.jsonl",
+      "sha256": "c028b32482de5d4b2e6ebcbcf5be541c04aabd885d4a6461080c1846f161d7bc",
+      "size": 363,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_1856_v1",
+      "mtime": "2026-09-08T05:10:00Z",
+      "path": "data/canonical/atharvaveda_saunaka_1856_v1/audio_recordings.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_1856_v1",
+      "mtime": "2026-09-08T05:10:00Z",
+      "path": "data/canonical/atharvaveda_saunaka_1856_v1/audio_segments.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_1856_v1",
+      "mtime": "2026-09-08T05:10:00Z",
+      "path": "data/canonical/atharvaveda_saunaka_1856_v1/citations.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_1856_v1",
+      "mtime": "2026-09-08T05:10:00Z",
+      "path": "data/canonical/atharvaveda_saunaka_1856_v1/manifest.json",
+      "sha256": "467f4c9ce0ecec1e0c48e4a0cae52fde04ed85f1d018cb1dd771cf6a95037e84",
+      "size": 3287,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_1856_v1",
+      "mtime": "2026-09-08T05:10:00Z",
+      "path": "data/canonical/atharvaveda_saunaka_1856_v1/passages.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_1856_v1",
+      "mtime": "2026-09-08T05:10:00Z",
+      "path": "data/canonical/atharvaveda_saunaka_1856_v1/qa_issues.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_1856_v1",
+      "mtime": "2026-09-08T05:10:00Z",
+      "path": "data/canonical/atharvaveda_saunaka_1856_v1/referent_bindings.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_1856_v1",
+      "mtime": "2026-09-08T05:10:00Z",
+      "path": "data/canonical/atharvaveda_saunaka_1856_v1/source_artifacts.jsonl",
+      "sha256": "0d4b5e9478e1e563aeba0b291c95908e5899ddab9d7f0b04653e5df165d2609a",
+      "size": 6231,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_1856_v1",
+      "mtime": "2026-09-08T05:10:00Z",
+      "path": "data/canonical/atharvaveda_saunaka_1856_v1/source_assertions.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_1856_v1",
+      "mtime": "2026-09-08T05:10:00Z",
+      "path": "data/canonical/atharvaveda_saunaka_1856_v1/sources.jsonl",
+      "sha256": "e17d96dbc83b9ace18009430427a8753e0be82253bd64179097749ce30602564",
+      "size": 3161,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_1856_v1",
+      "mtime": "2026-09-08T05:10:00Z",
+      "path": "data/canonical/atharvaveda_saunaka_1856_v1/text_versions.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_1856_v1",
+      "mtime": "2026-09-08T05:10:00Z",
+      "path": "data/canonical/atharvaveda_saunaka_1856_v1/traditional_metadata.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_1856_v1",
+      "mtime": "2026-09-08T05:10:00Z",
+      "path": "data/canonical/atharvaveda_saunaka_1856_v1/translations.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_1856_v1",
+      "mtime": "2026-09-08T05:10:00Z",
+      "path": "data/canonical/atharvaveda_saunaka_1856_v1/works.jsonl",
+      "sha256": "c028b32482de5d4b2e6ebcbcf5be541c04aabd885d4a6461080c1846f161d7bc",
+      "size": 363,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_digital_working_v1",
+      "mtime": "2026-09-08T18:00:08Z",
+      "path": "data/canonical/atharvaveda_saunaka_digital_working_v1/audio_recordings.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_digital_working_v1",
+      "mtime": "2026-09-08T18:00:08Z",
+      "path": "data/canonical/atharvaveda_saunaka_digital_working_v1/audio_segments.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_digital_working_v1",
+      "mtime": "2026-09-08T18:00:08Z",
+      "path": "data/canonical/atharvaveda_saunaka_digital_working_v1/citations.jsonl",
+      "sha256": "b24b2b666ea18f211df5fe50f6ef63e6b559455759031cb1d94329eaff5cd2ad",
+      "size": 1388790,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_digital_working_v1",
+      "mtime": "2026-09-16T10:10:33Z",
+      "path": "data/canonical/atharvaveda_saunaka_digital_working_v1/manifest.json",
+      "sha256": "2212989d33b8f41b16f32b4f89ef04ded8f18f9f72e98b2f791cd28cf49e6434",
+      "size": 78989,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_digital_working_v1",
+      "mtime": "2026-09-08T18:00:08Z",
+      "path": "data/canonical/atharvaveda_saunaka_digital_working_v1/passages.jsonl",
+      "sha256": "a6026dfd2b0184c0920bd5dcf7d9ad56e406067d4838adb2801ad6107a07fb7c",
+      "size": 3207549,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_digital_working_v1",
+      "mtime": "2026-09-08T18:00:08Z",
+      "path": "data/canonical/atharvaveda_saunaka_digital_working_v1/qa_issues.jsonl",
+      "sha256": "aab188694d6655ed566f5625edec7582a759394ceab29c9ad72d80a4b76187e0",
+      "size": 2663,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_digital_working_v1",
+      "mtime": "2026-09-08T18:00:08Z",
+      "path": "data/canonical/atharvaveda_saunaka_digital_working_v1/source_artifacts.jsonl",
+      "sha256": "b140973ad7d390cc744fdaed764603ffc05570b13526f28badd1ceb890ed79d3",
+      "size": 12837,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_digital_working_v1",
+      "mtime": "2026-09-08T18:00:08Z",
+      "path": "data/canonical/atharvaveda_saunaka_digital_working_v1/source_assertions.jsonl",
+      "sha256": "ea41a566c9ffe9da6a92122b15e496f179251673b935e7700fe76c9ac2ba8944",
+      "size": 4425106,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_digital_working_v1",
+      "mtime": "2026-09-08T18:00:08Z",
+      "path": "data/canonical/atharvaveda_saunaka_digital_working_v1/sources.jsonl",
+      "sha256": "81160791d28c556bf84b2f77ca03d1fa3dc1d3f09b8a9bc172b6e3fb6f62a2ef",
+      "size": 1652,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_digital_working_v1",
+      "mtime": "2026-09-08T18:00:08Z",
+      "path": "data/canonical/atharvaveda_saunaka_digital_working_v1/text_comparisons.jsonl",
+      "sha256": "5a152da5e7ce53208e0f6d381157b543a364d5b420ce291f3d6d275bc3217df7",
+      "size": 3195499,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_digital_working_v1",
+      "mtime": "2026-09-08T18:00:08Z",
+      "path": "data/canonical/atharvaveda_saunaka_digital_working_v1/text_versions.jsonl",
+      "sha256": "97712ddeaeb3032a7e41b22696f4a2e3b1f8f2bde6b5981d6936cca435bc3a48",
+      "size": 15180274,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_digital_working_v1",
+      "mtime": "2026-09-16T10:10:33Z",
+      "path": "data/canonical/atharvaveda_saunaka_digital_working_v1/traditional_metadata.jsonl",
+      "sha256": "4875a75b23d66d6a40897f0b49f6a2f9f0a4101b06596ef72b2a20fbcee97119",
+      "size": 2695808,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_digital_working_v1",
+      "mtime": "2026-09-16T10:10:33Z",
+      "path": "data/canonical/atharvaveda_saunaka_digital_working_v1/traditional_metadata_provenance.jsonl",
+      "sha256": "8e0003246d49f5d3784df5e5d36eca0fc77646bd8dce63184652952928c1dddd",
+      "size": 816260,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_digital_working_v1",
+      "mtime": "2026-09-08T18:00:08Z",
+      "path": "data/canonical/atharvaveda_saunaka_digital_working_v1/translations.jsonl",
+      "sha256": "1b85ace9603e274b492c2a82426310488549220e12a3174737d9eab3562c3d13",
+      "size": 4552053,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "atharvaveda_saunaka_digital_working_v1",
+      "mtime": "2026-09-08T18:00:08Z",
+      "path": "data/canonical/atharvaveda_saunaka_digital_working_v1/works.jsonl",
+      "sha256": "c028b32482de5d4b2e6ebcbcf5be541c04aabd885d4a6461080c1846f161d7bc",
+      "size": 363,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "rigveda_full_v1",
+      "mtime": "2026-09-04T12:29:32Z",
+      "path": "data/canonical/rigveda_full_v1/REPORT.md",
+      "sha256": "4f35d3e90707fe25b6b0dc34e534768c99b7d99bc5ef8d02d5fb4f82fd34a8d5",
+      "size": 5828,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "rigveda_full_v1",
+      "mtime": "2026-09-04T12:29:32Z",
+      "path": "data/canonical/rigveda_full_v1/audio_recordings.jsonl",
+      "sha256": "cb18b20dedd2bfdb06457b73adfcd90f1f700cee81404ffe59d555695efc0bb9",
+      "size": 2080,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "rigveda_full_v1",
+      "mtime": "2026-09-04T12:29:32Z",
+      "path": "data/canonical/rigveda_full_v1/audio_segments.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "rigveda_full_v1",
+      "mtime": "2026-09-04T12:29:32Z",
+      "path": "data/canonical/rigveda_full_v1/citations.jsonl",
+      "sha256": "2b928096489b28c9c1e56fa908896f0c082ab06cfe6ef9576d6bd0ee0d7672b6",
+      "size": 2062986,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "rigveda_full_v1",
+      "mtime": "2026-09-04T12:29:32Z",
+      "path": "data/canonical/rigveda_full_v1/discoveries.jsonl",
+      "sha256": "25089380097609c9d6047c9596599c93dc397aee60062e321e471a0519f19165",
+      "size": 1015699,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "rigveda_full_v1",
+      "mtime": "2026-09-04T12:29:33Z",
+      "path": "data/canonical/rigveda_full_v1/manifest.json",
+      "sha256": "b67c3175cc35f1b6a1eb6766ed085a56785194cd731f8c05a2343e847df19736",
+      "size": 330952,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "rigveda_full_v1",
+      "mtime": "2026-09-04T12:29:32Z",
+      "path": "data/canonical/rigveda_full_v1/passages.jsonl",
+      "sha256": "3607a94a578f484ce8c2b90a8639e7cbdcd7f28d05c8bc88bb4ca5cab408271b",
+      "size": 4758223,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "rigveda_full_v1",
+      "mtime": "2026-09-04T12:29:32Z",
+      "path": "data/canonical/rigveda_full_v1/qa_issues.jsonl",
+      "sha256": "7fcc14f5d03bac5eab72392575ddb1b6c3a9c4680d3a512138793224128b07f8",
+      "size": 364988,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "rigveda_full_v1",
+      "mtime": "2026-09-04T12:29:32Z",
+      "path": "data/canonical/rigveda_full_v1/rigveda_stats.json",
+      "sha256": "d30bf285a6269270d10ef783f3065cb1f3a63a76f6a8ea7e677604ec470f2269",
+      "size": 5941,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "rigveda_full_v1",
+      "mtime": "2026-09-04T12:29:32Z",
+      "path": "data/canonical/rigveda_full_v1/source_artifacts.jsonl",
+      "sha256": "691fe9f0a5d810b904a055ddcacd25268c6c263d4c60479bfad04acbb6ca63eb",
+      "size": 16991,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "rigveda_full_v1",
+      "mtime": "2026-09-04T12:29:32Z",
+      "path": "data/canonical/rigveda_full_v1/source_assertions.jsonl",
+      "sha256": "bd205ea0a20380e0008522c4f86db53ef5851a37c85df53979b69ef905e77f4f",
+      "size": 11111494,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "rigveda_full_v1",
+      "mtime": "2026-09-04T12:29:32Z",
+      "path": "data/canonical/rigveda_full_v1/sources.jsonl",
+      "sha256": "47de4d35e96d86046a8a7af77171bef84ae59af3b2b4a68c148b3655983b3547",
+      "size": 5958,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "rigveda_full_v1",
+      "mtime": "2026-09-04T12:29:32Z",
+      "path": "data/canonical/rigveda_full_v1/text_versions.jsonl",
+      "sha256": "2cce2b441c6fca416fd71f68a227415c65aac4996093eecd92a18be85439d156",
+      "size": 17254806,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "rigveda_full_v1",
+      "mtime": "2026-09-04T12:29:32Z",
+      "path": "data/canonical/rigveda_full_v1/traditional_metadata.jsonl",
+      "sha256": "393899582caa01c4f1642df6633c88d0f06bbe798ec36691ae693ffeb317a109",
+      "size": 2923,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "rigveda_full_v1",
+      "mtime": "2026-09-04T12:29:32Z",
+      "path": "data/canonical/rigveda_full_v1/translations.jsonl",
+      "sha256": "9309e3b3c1ac579ea23eefa990a61f1336ced8378474fbc2d21d2d346874352c",
+      "size": 9486941,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "rigveda_full_v1",
+      "mtime": "2026-09-04T12:29:32Z",
+      "path": "data/canonical/rigveda_full_v1/works.jsonl",
+      "sha256": "477cde9b833ea9e46b3dd41a1939dce763f5984199304cb4375d53a28f299056",
+      "size": 329,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "rv_1_1_pilot",
+      "mtime": "2026-09-04T06:15:33Z",
+      "path": "data/canonical/rv_1_1_pilot/audio_recordings.jsonl",
+      "sha256": "d0800366c5508d5eb80a549ec80ff00d77483e3964d1aa056c10ed9b54b1a7d0",
+      "size": 416,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_1_1_pilot",
+      "mtime": "2026-09-04T06:15:33Z",
+      "path": "data/canonical/rv_1_1_pilot/audio_segments.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_1_1_pilot",
+      "mtime": "2026-09-04T06:15:33Z",
+      "path": "data/canonical/rv_1_1_pilot/citations.jsonl",
+      "sha256": "1a6f0dc19d9c5b020d01b72059866c8c9445b42850fd7b0428ea8e2898d696f2",
+      "size": 1746,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_1_1_pilot",
+      "mtime": "2026-09-04T06:15:33Z",
+      "path": "data/canonical/rv_1_1_pilot/manifest.json",
+      "sha256": "f66f0e8d141b6d1d241471ea691b1dbc6d63603fead74956327bc76d39a58ed2",
+      "size": 3040,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_1_1_pilot",
+      "mtime": "2026-09-04T06:15:33Z",
+      "path": "data/canonical/rv_1_1_pilot/passages.jsonl",
+      "sha256": "efad6c2ee0eb32a9b95b2f724df9397062179d8f819d78e0d68e921082818724",
+      "size": 4379,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_1_1_pilot",
+      "mtime": "2026-09-04T06:15:33Z",
+      "path": "data/canonical/rv_1_1_pilot/qa_issues.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_1_1_pilot",
+      "mtime": "2026-09-04T06:15:33Z",
+      "path": "data/canonical/rv_1_1_pilot/source_assertions.jsonl",
+      "sha256": "e7f48902d7a13671642d6eaa0079d7a3054341a99d52bc17cadc62e228c19a5e",
+      "size": 315,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_1_1_pilot",
+      "mtime": "2026-09-04T06:15:33Z",
+      "path": "data/canonical/rv_1_1_pilot/sources.jsonl",
+      "sha256": "2b30dc99ff23e3e210800bdcec1ab73abc1ea0560237571857b79575bdc85195",
+      "size": 4957,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_1_1_pilot",
+      "mtime": "2026-09-04T06:15:33Z",
+      "path": "data/canonical/rv_1_1_pilot/text_versions.jsonl",
+      "sha256": "f52a8a12f93f4afefcbc298d520438603214874e61912d3e9ab2e21cc658864a",
+      "size": 7189,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_1_1_pilot",
+      "mtime": "2026-09-04T06:15:33Z",
+      "path": "data/canonical/rv_1_1_pilot/traditional_metadata.jsonl",
+      "sha256": "4278f783424f48853d2bc37c8c29c577b4f148fa1a49d7e3c1684fd2bcb75caf",
+      "size": 880,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_1_1_pilot",
+      "mtime": "2026-09-04T06:15:33Z",
+      "path": "data/canonical/rv_1_1_pilot/translations.jsonl",
+      "sha256": "d632c75e7356327a586f954f9d42732148a723f0fd4dcb0d330ddb2154d49570",
+      "size": 4366,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_1_1_pilot",
+      "mtime": "2026-09-04T06:15:33Z",
+      "path": "data/canonical/rv_1_1_pilot/works.jsonl",
+      "sha256": "543e70599ed9cff3a7a351eb759ae13d68f8204969188e249f0cd5c4e9d9c8f8",
+      "size": 1552,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_10_full_v1",
+      "mtime": "2026-09-04T12:26:58Z",
+      "path": "data/canonical/rv_mandala_10_full_v1/REPORT.md",
+      "sha256": "0836faf58ca6b7aebef13e74c4b9be5fe3f0058ba6b72346af20e50297ba7f1c",
+      "size": 1304,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_10_full_v1",
+      "mtime": "2026-09-04T12:26:58Z",
+      "path": "data/canonical/rv_mandala_10_full_v1/audio_recordings.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_10_full_v1",
+      "mtime": "2026-09-04T12:26:58Z",
+      "path": "data/canonical/rv_mandala_10_full_v1/audio_segments.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_10_full_v1",
+      "mtime": "2026-09-04T12:26:58Z",
+      "path": "data/canonical/rv_mandala_10_full_v1/citations.jsonl",
+      "sha256": "8de87d91e26198491a51673d0e47a73f2c88e3f3488de0da7190019ed37d58fb",
+      "size": 344683,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_10_full_v1",
+      "mtime": "2026-09-04T12:26:58Z",
+      "path": "data/canonical/rv_mandala_10_full_v1/discoveries.jsonl",
+      "sha256": "c6600d6c4c26b299d55588ea92dffb889c7105f433b025ae9a5ccda3a80ccb32",
+      "size": 176605,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_10_full_v1",
+      "mtime": "2026-09-04T12:26:58Z",
+      "path": "data/canonical/rv_mandala_10_full_v1/manifest.json",
+      "sha256": "700caed9a676b19c73e0cf3e8431bb2fe64b6a4a8af6f445491fb72c480746ea",
+      "size": 55350,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_10_full_v1",
+      "mtime": "2026-09-04T12:26:57Z",
+      "path": "data/canonical/rv_mandala_10_full_v1/passages.jsonl",
+      "sha256": "e2ae85d024a3d4335f6761b35971c5d14380b80aa628ea16d8c5f6cbe330c48d",
+      "size": 804213,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_10_full_v1",
+      "mtime": "2026-09-04T12:26:58Z",
+      "path": "data/canonical/rv_mandala_10_full_v1/qa_issues.jsonl",
+      "sha256": "e8c741f3eab82805ec6da0d9fff387a956bf92882e8ca58a821b7effcc36c15c",
+      "size": 73500,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_10_full_v1",
+      "mtime": "2026-09-04T12:26:57Z",
+      "path": "data/canonical/rv_mandala_10_full_v1/source_artifacts.jsonl",
+      "sha256": "691fe9f0a5d810b904a055ddcacd25268c6c263d4c60479bfad04acbb6ca63eb",
+      "size": 16991,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_10_full_v1",
+      "mtime": "2026-09-04T12:26:58Z",
+      "path": "data/canonical/rv_mandala_10_full_v1/source_assertions.jsonl",
+      "sha256": "d637d97632a811b01f946deedfcb781bc91b0dffe4ca90b3bee64dc5f805b774",
+      "size": 1905882,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_10_full_v1",
+      "mtime": "2026-09-04T12:26:57Z",
+      "path": "data/canonical/rv_mandala_10_full_v1/sources.jsonl",
+      "sha256": "47de4d35e96d86046a8a7af77171bef84ae59af3b2b4a68c148b3655983b3547",
+      "size": 5958,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_10_full_v1",
+      "mtime": "2026-09-04T12:26:57Z",
+      "path": "data/canonical/rv_mandala_10_full_v1/text_versions.jsonl",
+      "sha256": "dd641ea95f6b71b7493e2d75113ad28b3c1fcad1e2024ee9012bf6aae0fb4ca5",
+      "size": 2972211,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_10_full_v1",
+      "mtime": "2026-09-04T12:26:57Z",
+      "path": "data/canonical/rv_mandala_10_full_v1/traditional_metadata.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_10_full_v1",
+      "mtime": "2026-09-04T12:26:57Z",
+      "path": "data/canonical/rv_mandala_10_full_v1/translations.jsonl",
+      "sha256": "d529d29794b26f17ef4580ccc7e62b9fb529068c4056e11f0ade039ed8883792",
+      "size": 1604170,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_10_full_v1",
+      "mtime": "2026-09-04T12:26:57Z",
+      "path": "data/canonical/rv_mandala_10_full_v1/works.jsonl",
+      "sha256": "477cde9b833ea9e46b3dd41a1939dce763f5984199304cb4375d53a28f299056",
+      "size": 329,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_1_full_v1",
+      "mtime": "2026-09-04T12:25:44Z",
+      "path": "data/canonical/rv_mandala_1_full_v1/REPORT.md",
+      "sha256": "479544929b002747e3337b23205230dab88aca7fe2b4711d43b006820e943106",
+      "size": 1302,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_1_full_v1",
+      "mtime": "2026-09-04T12:25:44Z",
+      "path": "data/canonical/rv_mandala_1_full_v1/audio_recordings.jsonl",
+      "sha256": "cb18b20dedd2bfdb06457b73adfcd90f1f700cee81404ffe59d555695efc0bb9",
+      "size": 2080,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_1_full_v1",
+      "mtime": "2026-09-04T12:25:44Z",
+      "path": "data/canonical/rv_mandala_1_full_v1/audio_segments.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_1_full_v1",
+      "mtime": "2026-09-04T12:25:44Z",
+      "path": "data/canonical/rv_mandala_1_full_v1/citations.jsonl",
+      "sha256": "923da3aedae8458977088573e9d8dc800665abfc8e8acf55e0ee888165c18b04",
+      "size": 392499,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_1_full_v1",
+      "mtime": "2026-09-04T12:25:44Z",
+      "path": "data/canonical/rv_mandala_1_full_v1/discoveries.jsonl",
+      "sha256": "a4ad06493c1cd3d2903e0c28c8d6c4548118f205fd78ee1cf6665d9645801396",
+      "size": 244352,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_1_full_v1",
+      "mtime": "2026-09-04T12:25:44Z",
+      "path": "data/canonical/rv_mandala_1_full_v1/manifest.json",
+      "sha256": "c43c36028108593460880fcf91521652e43b68e50ca5527d4b7d3ab1ed1f86ed",
+      "size": 104782,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_1_full_v1",
+      "mtime": "2026-09-04T12:25:44Z",
+      "path": "data/canonical/rv_mandala_1_full_v1/passages.jsonl",
+      "sha256": "1f50402834dd16fc4efc5852bf69bebf587bbf761243bfe7624df78933bfef49",
+      "size": 903624,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_1_full_v1",
+      "mtime": "2026-09-04T12:25:44Z",
+      "path": "data/canonical/rv_mandala_1_full_v1/qa_issues.jsonl",
+      "sha256": "6e3f0883a49cc76b92f0b77b845a93562b989e20ed2cca0d7eaf0f4cc47c38ae",
+      "size": 80029,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_1_full_v1",
+      "mtime": "2026-09-04T12:25:44Z",
+      "path": "data/canonical/rv_mandala_1_full_v1/source_artifacts.jsonl",
+      "sha256": "691fe9f0a5d810b904a055ddcacd25268c6c263d4c60479bfad04acbb6ca63eb",
+      "size": 16991,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_1_full_v1",
+      "mtime": "2026-09-04T12:25:44Z",
+      "path": "data/canonical/rv_mandala_1_full_v1/source_assertions.jsonl",
+      "sha256": "701779b58b74167a62e3c163cf52f08e72844a1844720fdce92afdb04f4d44f6",
+      "size": 2131904,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_1_full_v1",
+      "mtime": "2026-09-04T12:25:44Z",
+      "path": "data/canonical/rv_mandala_1_full_v1/sources.jsonl",
+      "sha256": "47de4d35e96d86046a8a7af77171bef84ae59af3b2b4a68c148b3655983b3547",
+      "size": 5958,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_1_full_v1",
+      "mtime": "2026-09-04T12:25:44Z",
+      "path": "data/canonical/rv_mandala_1_full_v1/text_versions.jsonl",
+      "sha256": "268b51c31150cab08c3ddd468c6a070bb26a9fb349c8d63247545689096d97cd",
+      "size": 3328901,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_1_full_v1",
+      "mtime": "2026-09-04T12:25:44Z",
+      "path": "data/canonical/rv_mandala_1_full_v1/traditional_metadata.jsonl",
+      "sha256": "393899582caa01c4f1642df6633c88d0f06bbe798ec36691ae693ffeb317a109",
+      "size": 2923,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_1_full_v1",
+      "mtime": "2026-09-04T12:25:44Z",
+      "path": "data/canonical/rv_mandala_1_full_v1/translations.jsonl",
+      "sha256": "642b9cbf3e874e630d2da86263c53734aa941cb3a67927844ea2480f8f420260",
+      "size": 1796943,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_1_full_v1",
+      "mtime": "2026-09-04T12:25:44Z",
+      "path": "data/canonical/rv_mandala_1_full_v1/works.jsonl",
+      "sha256": "477cde9b833ea9e46b3dd41a1939dce763f5984199304cb4375d53a28f299056",
+      "size": 329,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_1_sample_v2",
+      "mtime": "2026-09-04T07:59:32Z",
+      "path": "data/canonical/rv_mandala_1_sample_v2/REPORT.md",
+      "sha256": "309e020e8f0a1851eb8043240df03a81d74fa74bc7345e8ba9aa4993ab5059f0",
+      "size": 908,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_1_sample_v2",
+      "mtime": "2026-09-04T07:59:32Z",
+      "path": "data/canonical/rv_mandala_1_sample_v2/audio_recordings.jsonl",
+      "sha256": "cb18b20dedd2bfdb06457b73adfcd90f1f700cee81404ffe59d555695efc0bb9",
+      "size": 2080,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_1_sample_v2",
+      "mtime": "2026-09-04T07:59:32Z",
+      "path": "data/canonical/rv_mandala_1_sample_v2/audio_segments.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_1_sample_v2",
+      "mtime": "2026-09-04T07:59:32Z",
+      "path": "data/canonical/rv_mandala_1_sample_v2/citations.jsonl",
+      "sha256": "b2bab5a0b3daaf3da0ede7736c24e5cfe98195d10aa37a83966ec703f8d0445a",
+      "size": 21770,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_1_sample_v2",
+      "mtime": "2026-09-04T07:59:32Z",
+      "path": "data/canonical/rv_mandala_1_sample_v2/discoveries.jsonl",
+      "sha256": "cd7a65f833c126bff735dc7d4f23f6979401820e62bc67d1265fe68ce90615e6",
+      "size": 154779,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_1_sample_v2",
+      "mtime": "2026-09-04T07:59:32Z",
+      "path": "data/canonical/rv_mandala_1_sample_v2/manifest.json",
+      "sha256": "fdc2d60f531a70ead88752cfc1ce89a603fcfcabc6f1ce8838dfe7b4e2461988",
+      "size": 8386,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_1_sample_v2",
+      "mtime": "2026-09-04T07:59:32Z",
+      "path": "data/canonical/rv_mandala_1_sample_v2/passages.jsonl",
+      "sha256": "a9cfefb4a9642057141a34fbbab8abadf11f10f96b16c95a0f98e82ec0072793",
+      "size": 48387,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_1_sample_v2",
+      "mtime": "2026-09-04T07:59:32Z",
+      "path": "data/canonical/rv_mandala_1_sample_v2/qa_issues.jsonl",
+      "sha256": "4ff4eac25f0c5d88e8939e70fbd1d1651bc2ca194198c3c787111ecefefb20cc",
+      "size": 4670,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_1_sample_v2",
+      "mtime": "2026-09-04T07:59:32Z",
+      "path": "data/canonical/rv_mandala_1_sample_v2/source_artifacts.jsonl",
+      "sha256": "a3ce182bb3abb0f58e192bd14278ff37e15f586df7c847611f9ad75606c13d99",
+      "size": 7368,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_1_sample_v2",
+      "mtime": "2026-09-04T07:59:32Z",
+      "path": "data/canonical/rv_mandala_1_sample_v2/source_assertions.jsonl",
+      "sha256": "ec609701d925c3cddbf753c40f7bfc04fa8b26cb08130e2de6f826fa5606e029",
+      "size": 120851,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_1_sample_v2",
+      "mtime": "2026-09-04T07:59:32Z",
+      "path": "data/canonical/rv_mandala_1_sample_v2/sources.jsonl",
+      "sha256": "47de4d35e96d86046a8a7af77171bef84ae59af3b2b4a68c148b3655983b3547",
+      "size": 5958,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_1_sample_v2",
+      "mtime": "2026-09-04T07:59:32Z",
+      "path": "data/canonical/rv_mandala_1_sample_v2/text_versions.jsonl",
+      "sha256": "bcd77f46076cd201ce71596cc3d89ce200702d37cfd5908f17c01cbc44041fec",
+      "size": 90824,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_1_sample_v2",
+      "mtime": "2026-09-04T07:59:32Z",
+      "path": "data/canonical/rv_mandala_1_sample_v2/traditional_metadata.jsonl",
+      "sha256": "393899582caa01c4f1642df6633c88d0f06bbe798ec36691ae693ffeb317a109",
+      "size": 2923,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_1_sample_v2",
+      "mtime": "2026-09-04T07:59:32Z",
+      "path": "data/canonical/rv_mandala_1_sample_v2/translations.jsonl",
+      "sha256": "dff0aa5673295813a0faa5add2b052ea42f01c7192236d08042579847fd6b6dd",
+      "size": 99178,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_1_sample_v2",
+      "mtime": "2026-09-04T07:59:32Z",
+      "path": "data/canonical/rv_mandala_1_sample_v2/works.jsonl",
+      "sha256": "477cde9b833ea9e46b3dd41a1939dce763f5984199304cb4375d53a28f299056",
+      "size": 329,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_2_full_v1",
+      "mtime": "2026-09-04T12:25:51Z",
+      "path": "data/canonical/rv_mandala_2_full_v1/REPORT.md",
+      "sha256": "0eca303be68c4680cfe837c1cee9548c5b065f0bd3bcb9a1e9a3af986735574d",
+      "size": 1287,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_2_full_v1",
+      "mtime": "2026-09-04T12:25:51Z",
+      "path": "data/canonical/rv_mandala_2_full_v1/audio_recordings.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_2_full_v1",
+      "mtime": "2026-09-04T12:25:51Z",
+      "path": "data/canonical/rv_mandala_2_full_v1/audio_segments.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_2_full_v1",
+      "mtime": "2026-09-04T12:25:51Z",
+      "path": "data/canonical/rv_mandala_2_full_v1/citations.jsonl",
+      "sha256": "e6bb05092aa2f5141beaa2d9b38c51d26dd9aa748d2db87b17f80abde0194713",
+      "size": 83672,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_2_full_v1",
+      "mtime": "2026-09-04T12:25:51Z",
+      "path": "data/canonical/rv_mandala_2_full_v1/discoveries.jsonl",
+      "sha256": "0a0270eb2d3a3d141b00f30b1d9885be3f0f122ed0d86870cd622e06dee9c0e6",
+      "size": 39578,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_2_full_v1",
+      "mtime": "2026-09-04T12:25:51Z",
+      "path": "data/canonical/rv_mandala_2_full_v1/manifest.json",
+      "sha256": "9db55eda4ff40d467c7112631e700e106b4d85dc4844df6610e7350c23742397",
+      "size": 16349,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_2_full_v1",
+      "mtime": "2026-09-04T12:25:51Z",
+      "path": "data/canonical/rv_mandala_2_full_v1/passages.jsonl",
+      "sha256": "c32b5650d0ee693fb2b92d7e197940cf1df9d28b75fd893634eb3e7a8872e0b2",
+      "size": 193399,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_2_full_v1",
+      "mtime": "2026-09-04T12:25:51Z",
+      "path": "data/canonical/rv_mandala_2_full_v1/qa_issues.jsonl",
+      "sha256": "5b8e8b0482d3827b4839d76041d0263cc651cbc4dd276f22dc0a6344acd88527",
+      "size": 13482,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_2_full_v1",
+      "mtime": "2026-09-04T12:25:51Z",
+      "path": "data/canonical/rv_mandala_2_full_v1/source_artifacts.jsonl",
+      "sha256": "691fe9f0a5d810b904a055ddcacd25268c6c263d4c60479bfad04acbb6ca63eb",
+      "size": 16991,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_2_full_v1",
+      "mtime": "2026-09-04T12:25:51Z",
+      "path": "data/canonical/rv_mandala_2_full_v1/source_assertions.jsonl",
+      "sha256": "0a276e94e3dc84e6e74a5f545ce6cd3b7581c749b799e58f584f027a24360ca3",
+      "size": 473637,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_2_full_v1",
+      "mtime": "2026-09-04T12:25:51Z",
+      "path": "data/canonical/rv_mandala_2_full_v1/sources.jsonl",
+      "sha256": "47de4d35e96d86046a8a7af77171bef84ae59af3b2b4a68c148b3655983b3547",
+      "size": 5958,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_2_full_v1",
+      "mtime": "2026-09-04T12:25:51Z",
+      "path": "data/canonical/rv_mandala_2_full_v1/text_versions.jsonl",
+      "sha256": "3ed99e7460580a010e48856330ed2231f00fb73cbe3712cfa00b47ec475dfeac",
+      "size": 740542,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_2_full_v1",
+      "mtime": "2026-09-04T12:25:51Z",
+      "path": "data/canonical/rv_mandala_2_full_v1/traditional_metadata.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_2_full_v1",
+      "mtime": "2026-09-04T12:25:51Z",
+      "path": "data/canonical/rv_mandala_2_full_v1/translations.jsonl",
+      "sha256": "d7ef5a4d910ea25669b7121756a4a770b4c43899efc6ffbe1427badd34824878",
+      "size": 397209,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_2_full_v1",
+      "mtime": "2026-09-04T12:25:51Z",
+      "path": "data/canonical/rv_mandala_2_full_v1/works.jsonl",
+      "sha256": "477cde9b833ea9e46b3dd41a1939dce763f5984199304cb4375d53a28f299056",
+      "size": 329,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_3_full_v1",
+      "mtime": "2026-09-04T12:25:58Z",
+      "path": "data/canonical/rv_mandala_3_full_v1/REPORT.md",
+      "sha256": "34af752cc94d81c69b5bef959e6f92c41c004dc343a0bc8f4bd6154298db7bc4",
+      "size": 1287,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_3_full_v1",
+      "mtime": "2026-09-04T12:25:58Z",
+      "path": "data/canonical/rv_mandala_3_full_v1/audio_recordings.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_3_full_v1",
+      "mtime": "2026-09-04T12:25:58Z",
+      "path": "data/canonical/rv_mandala_3_full_v1/audio_segments.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_3_full_v1",
+      "mtime": "2026-09-04T12:25:58Z",
+      "path": "data/canonical/rv_mandala_3_full_v1/citations.jsonl",
+      "sha256": "7fc8730c89165004230a8d8710d6e81ee5a7bd8154554d9a1a2fc636fa515cd5",
+      "size": 120347,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_3_full_v1",
+      "mtime": "2026-09-04T12:25:58Z",
+      "path": "data/canonical/rv_mandala_3_full_v1/discoveries.jsonl",
+      "sha256": "717c4275708ff441c64099bdd7f76f8812796d1fddc24f4e007f0cac30cc6a8d",
+      "size": 57070,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_3_full_v1",
+      "mtime": "2026-09-04T12:25:58Z",
+      "path": "data/canonical/rv_mandala_3_full_v1/manifest.json",
+      "sha256": "d4ce738344fbdf7cb590d9712712707d9a91e7c5ad92362d19ec95a9c7e226aa",
+      "size": 21515,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_3_full_v1",
+      "mtime": "2026-09-04T12:25:58Z",
+      "path": "data/canonical/rv_mandala_3_full_v1/passages.jsonl",
+      "sha256": "52ff88c34807213dc57e9b73c95387bc21e0e6403abd76731d62ebfd5c46582d",
+      "size": 278108,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_3_full_v1",
+      "mtime": "2026-09-04T12:25:58Z",
+      "path": "data/canonical/rv_mandala_3_full_v1/qa_issues.jsonl",
+      "sha256": "4eea628e13ae30f8d97716a72d92cb428e9789ea7846880beb467b65e8759b32",
+      "size": 22143,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_3_full_v1",
+      "mtime": "2026-09-04T12:25:58Z",
+      "path": "data/canonical/rv_mandala_3_full_v1/source_artifacts.jsonl",
+      "sha256": "691fe9f0a5d810b904a055ddcacd25268c6c263d4c60479bfad04acbb6ca63eb",
+      "size": 16991,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_3_full_v1",
+      "mtime": "2026-09-04T12:25:58Z",
+      "path": "data/canonical/rv_mandala_3_full_v1/source_assertions.jsonl",
+      "sha256": "f793a2962d0b1762b00e55c95fb92b21818df8a78e7ff844183f34c302393d7f",
+      "size": 663875,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_3_full_v1",
+      "mtime": "2026-09-04T12:25:58Z",
+      "path": "data/canonical/rv_mandala_3_full_v1/sources.jsonl",
+      "sha256": "47de4d35e96d86046a8a7af77171bef84ae59af3b2b4a68c148b3655983b3547",
+      "size": 5958,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_3_full_v1",
+      "mtime": "2026-09-04T12:25:58Z",
+      "path": "data/canonical/rv_mandala_3_full_v1/text_versions.jsonl",
+      "sha256": "50775867deadc69c4a137ac0c6f9415b8830d0226a9233d79ae5b4a8c10a03cb",
+      "size": 1032931,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_3_full_v1",
+      "mtime": "2026-09-04T12:25:58Z",
+      "path": "data/canonical/rv_mandala_3_full_v1/traditional_metadata.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_3_full_v1",
+      "mtime": "2026-09-04T12:25:58Z",
+      "path": "data/canonical/rv_mandala_3_full_v1/translations.jsonl",
+      "sha256": "70ae0fb3f2a7d3ebaab2acd27772389d92fc2cf13c87f94b8edffb939e8ce636",
+      "size": 562703,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_3_full_v1",
+      "mtime": "2026-09-04T12:25:58Z",
+      "path": "data/canonical/rv_mandala_3_full_v1/works.jsonl",
+      "sha256": "477cde9b833ea9e46b3dd41a1939dce763f5984199304cb4375d53a28f299056",
+      "size": 329,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_4_full_v1",
+      "mtime": "2026-09-04T12:26:05Z",
+      "path": "data/canonical/rv_mandala_4_full_v1/REPORT.md",
+      "sha256": "1567bf482c7e453f983bd56a7d669d010b807ede4df8211ddf29e063a6536c36",
+      "size": 1287,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_4_full_v1",
+      "mtime": "2026-09-04T12:26:05Z",
+      "path": "data/canonical/rv_mandala_4_full_v1/audio_recordings.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_4_full_v1",
+      "mtime": "2026-09-04T12:26:05Z",
+      "path": "data/canonical/rv_mandala_4_full_v1/audio_segments.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_4_full_v1",
+      "mtime": "2026-09-04T12:26:05Z",
+      "path": "data/canonical/rv_mandala_4_full_v1/citations.jsonl",
+      "sha256": "d707dc9a5be856271197b4037c2287f316e5e1b6de125dfd402e18d46824f977",
+      "size": 114868,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_4_full_v1",
+      "mtime": "2026-09-04T12:26:05Z",
+      "path": "data/canonical/rv_mandala_4_full_v1/discoveries.jsonl",
+      "sha256": "48948a49296be5bf9c071bf6f210c34c7341e06c54518980ce46baf5690593b3",
+      "size": 53400,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_4_full_v1",
+      "mtime": "2026-09-04T12:26:05Z",
+      "path": "data/canonical/rv_mandala_4_full_v1/manifest.json",
+      "sha256": "b0bb6a3aa5236d8e6128dd0ad74391f5df1c59e849ad6a047af7c107c8b8f179",
+      "size": 20483,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_4_full_v1",
+      "mtime": "2026-09-04T12:26:05Z",
+      "path": "data/canonical/rv_mandala_4_full_v1/passages.jsonl",
+      "sha256": "1c07686f055025e1a22f7ab1a783b85f4d5b52496709a39caa8cab3799333b9e",
+      "size": 264999,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_4_full_v1",
+      "mtime": "2026-09-04T12:26:05Z",
+      "path": "data/canonical/rv_mandala_4_full_v1/qa_issues.jsonl",
+      "sha256": "6208fa121c8a15738d21a78c9311828ae1a7dd84f36950397c59e0a424e9a098",
+      "size": 19537,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_4_full_v1",
+      "mtime": "2026-09-04T12:26:05Z",
+      "path": "data/canonical/rv_mandala_4_full_v1/source_artifacts.jsonl",
+      "sha256": "691fe9f0a5d810b904a055ddcacd25268c6c263d4c60479bfad04acbb6ca63eb",
+      "size": 16991,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_4_full_v1",
+      "mtime": "2026-09-04T12:26:05Z",
+      "path": "data/canonical/rv_mandala_4_full_v1/source_assertions.jsonl",
+      "sha256": "9dde2ad26c96e1c7a8f963c1c04345bd0c71469c828e2a340ca624c2b5bd76a6",
+      "size": 631041,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_4_full_v1",
+      "mtime": "2026-09-04T12:26:05Z",
+      "path": "data/canonical/rv_mandala_4_full_v1/sources.jsonl",
+      "sha256": "47de4d35e96d86046a8a7af77171bef84ae59af3b2b4a68c148b3655983b3547",
+      "size": 5958,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_4_full_v1",
+      "mtime": "2026-09-04T12:26:05Z",
+      "path": "data/canonical/rv_mandala_4_full_v1/text_versions.jsonl",
+      "sha256": "841ef3c1de5b3f3e20eba0f86088979596bb20a6ea6d81cb5b856da3eeffe281",
+      "size": 983754,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_4_full_v1",
+      "mtime": "2026-09-04T12:26:05Z",
+      "path": "data/canonical/rv_mandala_4_full_v1/traditional_metadata.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_4_full_v1",
+      "mtime": "2026-09-04T12:26:05Z",
+      "path": "data/canonical/rv_mandala_4_full_v1/translations.jsonl",
+      "sha256": "7c877213f659110f5afc6cae2516718db66492ad44ba5ef15c6de32b6fe42d2a",
+      "size": 535627,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_4_full_v1",
+      "mtime": "2026-09-04T12:26:05Z",
+      "path": "data/canonical/rv_mandala_4_full_v1/works.jsonl",
+      "sha256": "477cde9b833ea9e46b3dd41a1939dce763f5984199304cb4375d53a28f299056",
+      "size": 329,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_5_full_v1",
+      "mtime": "2026-09-04T12:26:13Z",
+      "path": "data/canonical/rv_mandala_5_full_v1/REPORT.md",
+      "sha256": "11002aee6b13986a16acb8f87e32b4b0256a8e1629532b4291521a15257581a9",
+      "size": 1286,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_5_full_v1",
+      "mtime": "2026-09-04T12:26:13Z",
+      "path": "data/canonical/rv_mandala_5_full_v1/audio_recordings.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_5_full_v1",
+      "mtime": "2026-09-04T12:26:13Z",
+      "path": "data/canonical/rv_mandala_5_full_v1/audio_segments.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_5_full_v1",
+      "mtime": "2026-09-04T12:26:13Z",
+      "path": "data/canonical/rv_mandala_5_full_v1/citations.jsonl",
+      "sha256": "4d2484ad491a7b12666af6bf70a1a145fef26bbb85866fac2097743886abff1e",
+      "size": 141786,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_5_full_v1",
+      "mtime": "2026-09-04T12:26:13Z",
+      "path": "data/canonical/rv_mandala_5_full_v1/discoveries.jsonl",
+      "sha256": "0041474a3461427f2ae0b71a7d44eeaac03d6d734c381e469b5e3a8405378f8b",
+      "size": 80076,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_5_full_v1",
+      "mtime": "2026-09-04T12:26:13Z",
+      "path": "data/canonical/rv_mandala_5_full_v1/manifest.json",
+      "sha256": "b308c95d349bbac91bd5cb89618b5fb3c7afa994b6d4e8edf8c247a057a87c8e",
+      "size": 27965,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_5_full_v1",
+      "mtime": "2026-09-04T12:26:13Z",
+      "path": "data/canonical/rv_mandala_5_full_v1/passages.jsonl",
+      "sha256": "f10467054ebc1cc850c39fc487531b7129ce547058e64cd00412dc4219d0a28b",
+      "size": 332788,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_5_full_v1",
+      "mtime": "2026-09-04T12:26:13Z",
+      "path": "data/canonical/rv_mandala_5_full_v1/qa_issues.jsonl",
+      "sha256": "4141af63cf8f3c3b233165967835e4547dd76abeaf4644d852c577ff330cfe41",
+      "size": 24773,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_5_full_v1",
+      "mtime": "2026-09-04T12:26:13Z",
+      "path": "data/canonical/rv_mandala_5_full_v1/source_artifacts.jsonl",
+      "sha256": "691fe9f0a5d810b904a055ddcacd25268c6c263d4c60479bfad04acbb6ca63eb",
+      "size": 16991,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_5_full_v1",
+      "mtime": "2026-09-04T12:26:13Z",
+      "path": "data/canonical/rv_mandala_5_full_v1/source_assertions.jsonl",
+      "sha256": "b54c66be307a310ebbdcc08ff3cb25c91f8ea6ccd1f1a6a0dd4f2168f504fbb8",
+      "size": 777804,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_5_full_v1",
+      "mtime": "2026-09-04T12:26:13Z",
+      "path": "data/canonical/rv_mandala_5_full_v1/sources.jsonl",
+      "sha256": "47de4d35e96d86046a8a7af77171bef84ae59af3b2b4a68c148b3655983b3547",
+      "size": 5958,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_5_full_v1",
+      "mtime": "2026-09-04T12:26:13Z",
+      "path": "data/canonical/rv_mandala_5_full_v1/text_versions.jsonl",
+      "sha256": "03fbd662539fd0370d4fbd56831a7ace0b4db30eab795a52f1c05d0e7ce401ee",
+      "size": 1199752,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_5_full_v1",
+      "mtime": "2026-09-04T12:26:13Z",
+      "path": "data/canonical/rv_mandala_5_full_v1/traditional_metadata.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_5_full_v1",
+      "mtime": "2026-09-04T12:26:13Z",
+      "path": "data/canonical/rv_mandala_5_full_v1/translations.jsonl",
+      "sha256": "4a1b49713d32af4d51ce90948253294ed1eae347e73a13cfc84f05dfc3a54bd0",
+      "size": 658990,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_5_full_v1",
+      "mtime": "2026-09-04T12:26:13Z",
+      "path": "data/canonical/rv_mandala_5_full_v1/works.jsonl",
+      "sha256": "477cde9b833ea9e46b3dd41a1939dce763f5984199304cb4375d53a28f299056",
+      "size": 329,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_6_full_v1",
+      "mtime": "2026-09-04T12:26:21Z",
+      "path": "data/canonical/rv_mandala_6_full_v1/REPORT.md",
+      "sha256": "688948699591fe8c8ff5aba5e750b37411e306914c20d01767f2b1c453fc6c09",
+      "size": 1287,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_6_full_v1",
+      "mtime": "2026-09-04T12:26:21Z",
+      "path": "data/canonical/rv_mandala_6_full_v1/audio_recordings.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_6_full_v1",
+      "mtime": "2026-09-04T12:26:21Z",
+      "path": "data/canonical/rv_mandala_6_full_v1/audio_segments.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_6_full_v1",
+      "mtime": "2026-09-04T12:26:21Z",
+      "path": "data/canonical/rv_mandala_6_full_v1/citations.jsonl",
+      "sha256": "5cc6c0276845fe56252b2f072cf46336f41fb2e120b766e0bc294dddca9300e3",
+      "size": 149322,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_6_full_v1",
+      "mtime": "2026-09-04T12:26:21Z",
+      "path": "data/canonical/rv_mandala_6_full_v1/discoveries.jsonl",
+      "sha256": "41385b398ccc7cd06baeb2f2dc4bd247166b533a5c947ec509426a43de1d0bfc",
+      "size": 69046,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_6_full_v1",
+      "mtime": "2026-09-04T12:26:21Z",
+      "path": "data/canonical/rv_mandala_6_full_v1/manifest.json",
+      "sha256": "2ea908d39902d1ac71023d0dd0b66c940169ad2fd573e294e6face9b9a5dec8a",
+      "size": 24869,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_6_full_v1",
+      "mtime": "2026-09-04T12:26:21Z",
+      "path": "data/canonical/rv_mandala_6_full_v1/passages.jsonl",
+      "sha256": "f8cc5933a1c903697e1dc331ec915ad111076456bb62d039fa440af4b5a03713",
+      "size": 344407,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_6_full_v1",
+      "mtime": "2026-09-04T12:26:21Z",
+      "path": "data/canonical/rv_mandala_6_full_v1/qa_issues.jsonl",
+      "sha256": "66f8059de1a2efde2db0ace70713efdb788922b40bd560e12cb9c2671b641e4c",
+      "size": 31776,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_6_full_v1",
+      "mtime": "2026-09-04T12:26:21Z",
+      "path": "data/canonical/rv_mandala_6_full_v1/source_artifacts.jsonl",
+      "sha256": "691fe9f0a5d810b904a055ddcacd25268c6c263d4c60479bfad04acbb6ca63eb",
+      "size": 16991,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_6_full_v1",
+      "mtime": "2026-09-04T12:26:21Z",
+      "path": "data/canonical/rv_mandala_6_full_v1/source_assertions.jsonl",
+      "sha256": "eb44c358e7d6326ed473776039522e28952851e8b01ce9516d31ecd3afde99b4",
+      "size": 817705,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_6_full_v1",
+      "mtime": "2026-09-04T12:26:21Z",
+      "path": "data/canonical/rv_mandala_6_full_v1/sources.jsonl",
+      "sha256": "47de4d35e96d86046a8a7af77171bef84ae59af3b2b4a68c148b3655983b3547",
+      "size": 5958,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_6_full_v1",
+      "mtime": "2026-09-04T12:26:21Z",
+      "path": "data/canonical/rv_mandala_6_full_v1/text_versions.jsonl",
+      "sha256": "8f82aa1959046b259fb60c6bf0f510967f119606007cdb3ce321370f2f83f1a1",
+      "size": 1271444,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_6_full_v1",
+      "mtime": "2026-09-04T12:26:21Z",
+      "path": "data/canonical/rv_mandala_6_full_v1/traditional_metadata.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_6_full_v1",
+      "mtime": "2026-09-04T12:26:21Z",
+      "path": "data/canonical/rv_mandala_6_full_v1/translations.jsonl",
+      "sha256": "982a7a389510b29291e0dfc3db41b232f51071525580e6ac03a468a14fa87fc3",
+      "size": 696037,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_6_full_v1",
+      "mtime": "2026-09-04T12:26:21Z",
+      "path": "data/canonical/rv_mandala_6_full_v1/works.jsonl",
+      "sha256": "477cde9b833ea9e46b3dd41a1939dce763f5984199304cb4375d53a28f299056",
+      "size": 329,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_7_full_v1",
+      "mtime": "2026-09-04T12:26:29Z",
+      "path": "data/canonical/rv_mandala_7_full_v1/REPORT.md",
+      "sha256": "c7f1ccff2282eefa78fdf07a34275e2ae081b7a0eca87a75283f5eee364fa8d9",
+      "size": 1293,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_7_full_v1",
+      "mtime": "2026-09-04T12:26:29Z",
+      "path": "data/canonical/rv_mandala_7_full_v1/audio_recordings.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_7_full_v1",
+      "mtime": "2026-09-04T12:26:29Z",
+      "path": "data/canonical/rv_mandala_7_full_v1/audio_segments.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_7_full_v1",
+      "mtime": "2026-09-04T12:26:29Z",
+      "path": "data/canonical/rv_mandala_7_full_v1/citations.jsonl",
+      "sha256": "5688b1fde5f1706574d64afc36ee3693dc783f479a76857d62fd3bfe8cdc3588",
+      "size": 164107,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_7_full_v1",
+      "mtime": "2026-09-04T12:26:29Z",
+      "path": "data/canonical/rv_mandala_7_full_v1/discoveries.jsonl",
+      "sha256": "dbc909aeb64e7b128a46a786c6777bc0c1fb06f1fc75cbd545dbf663ce0cc803",
+      "size": 95724,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_7_full_v1",
+      "mtime": "2026-09-04T12:26:29Z",
+      "path": "data/canonical/rv_mandala_7_full_v1/manifest.json",
+      "sha256": "8ccf9c6678c06394dbedc33e99b31c2872b30041caf4ee683dc4af5e2e47e49e",
+      "size": 32609,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_7_full_v1",
+      "mtime": "2026-09-04T12:26:29Z",
+      "path": "data/canonical/rv_mandala_7_full_v1/passages.jsonl",
+      "sha256": "e6715357534e834c34bf5b0ac69dddd70d96f4376632782c82aa30d4103354d2",
+      "size": 386498,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_7_full_v1",
+      "mtime": "2026-09-04T12:26:29Z",
+      "path": "data/canonical/rv_mandala_7_full_v1/qa_issues.jsonl",
+      "sha256": "a8ac311b43670a1f47dce8edfe8fda74a1e6aca7739cb1a82e059a7b5397d966",
+      "size": 37823,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_7_full_v1",
+      "mtime": "2026-09-04T12:26:29Z",
+      "path": "data/canonical/rv_mandala_7_full_v1/source_artifacts.jsonl",
+      "sha256": "691fe9f0a5d810b904a055ddcacd25268c6c263d4c60479bfad04acbb6ca63eb",
+      "size": 16991,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_7_full_v1",
+      "mtime": "2026-09-04T12:26:29Z",
+      "path": "data/canonical/rv_mandala_7_full_v1/source_assertions.jsonl",
+      "sha256": "f2ba7e50650e4b1954d5c7194a62a6891dbc4b64fc60b5d5355e2be5793d6d07",
+      "size": 912699,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_7_full_v1",
+      "mtime": "2026-09-04T12:26:29Z",
+      "path": "data/canonical/rv_mandala_7_full_v1/sources.jsonl",
+      "sha256": "47de4d35e96d86046a8a7af77171bef84ae59af3b2b4a68c148b3655983b3547",
+      "size": 5958,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_7_full_v1",
+      "mtime": "2026-09-04T12:26:29Z",
+      "path": "data/canonical/rv_mandala_7_full_v1/text_versions.jsonl",
+      "sha256": "17db26cc97fe95e07be5b2d8eef91b8328f0a556229d0835678e14e6e608749e",
+      "size": 1414791,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_7_full_v1",
+      "mtime": "2026-09-04T12:26:29Z",
+      "path": "data/canonical/rv_mandala_7_full_v1/traditional_metadata.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_7_full_v1",
+      "mtime": "2026-09-04T12:26:29Z",
+      "path": "data/canonical/rv_mandala_7_full_v1/translations.jsonl",
+      "sha256": "4f1aaffd2953fe7744d83657968574ff09f7d5a02b33f158d6faf54e80725985",
+      "size": 767755,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_7_full_v1",
+      "mtime": "2026-09-04T12:26:29Z",
+      "path": "data/canonical/rv_mandala_7_full_v1/works.jsonl",
+      "sha256": "477cde9b833ea9e46b3dd41a1939dce763f5984199304cb4375d53a28f299056",
+      "size": 329,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_8_full_v1",
+      "mtime": "2026-09-04T12:26:38Z",
+      "path": "data/canonical/rv_mandala_8_full_v1/REPORT.md",
+      "sha256": "da4af8905bf2cffff269c18c82196819a4efd98d000348703f85e058ef61fa45",
+      "size": 1302,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_8_full_v1",
+      "mtime": "2026-09-04T12:26:38Z",
+      "path": "data/canonical/rv_mandala_8_full_v1/audio_recordings.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_8_full_v1",
+      "mtime": "2026-09-04T12:26:38Z",
+      "path": "data/canonical/rv_mandala_8_full_v1/audio_segments.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_8_full_v1",
+      "mtime": "2026-09-04T12:26:38Z",
+      "path": "data/canonical/rv_mandala_8_full_v1/citations.jsonl",
+      "sha256": "d889e6e3a3b6ef3ff06a6ae22bcd3045c2d96917d2014dd8a900d0985eb0069e",
+      "size": 335245,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_8_full_v1",
+      "mtime": "2026-09-04T12:26:38Z",
+      "path": "data/canonical/rv_mandala_8_full_v1/discoveries.jsonl",
+      "sha256": "9cb973a7cf5cc242731590b623ddcebd3794168261c7d5678392cebf510f0a61",
+      "size": 94902,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_8_full_v1",
+      "mtime": "2026-09-04T12:26:38Z",
+      "path": "data/canonical/rv_mandala_8_full_v1/manifest.json",
+      "sha256": "71555b23dd8263ed30ee9bd8136d0204dbb229e5cf9d554bf44977e38654dfda",
+      "size": 32360,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_8_full_v1",
+      "mtime": "2026-09-04T12:26:38Z",
+      "path": "data/canonical/rv_mandala_8_full_v1/passages.jsonl",
+      "sha256": "d330b10a5c34d2ab1c19448818d645c9cfb8720e2d3a7c93d39ac5ee2586121d",
+      "size": 748852,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_8_full_v1",
+      "mtime": "2026-09-04T12:26:38Z",
+      "path": "data/canonical/rv_mandala_8_full_v1/qa_issues.jsonl",
+      "sha256": "fec56436eb2194a9e9f60c64b1a4f793fd0a27b00d7793bad91d220b7811615f",
+      "size": 44606,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_8_full_v1",
+      "mtime": "2026-09-04T12:26:38Z",
+      "path": "data/canonical/rv_mandala_8_full_v1/source_artifacts.jsonl",
+      "sha256": "691fe9f0a5d810b904a055ddcacd25268c6c263d4c60479bfad04acbb6ca63eb",
+      "size": 16991,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_8_full_v1",
+      "mtime": "2026-09-04T12:26:38Z",
+      "path": "data/canonical/rv_mandala_8_full_v1/source_assertions.jsonl",
+      "sha256": "fbd177fd4f55e3086ca7a18976b8a369aa315cef5bd1a4ae7cc01c940975cd35",
+      "size": 1682759,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_8_full_v1",
+      "mtime": "2026-09-04T12:26:38Z",
+      "path": "data/canonical/rv_mandala_8_full_v1/sources.jsonl",
+      "sha256": "47de4d35e96d86046a8a7af77171bef84ae59af3b2b4a68c148b3655983b3547",
+      "size": 5958,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_8_full_v1",
+      "mtime": "2026-09-04T12:26:38Z",
+      "path": "data/canonical/rv_mandala_8_full_v1/text_versions.jsonl",
+      "sha256": "6b2b43191799ed1ef665932e01418b199ce3f328757153207f418143226895e6",
+      "size": 2609705,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_8_full_v1",
+      "mtime": "2026-09-04T12:26:38Z",
+      "path": "data/canonical/rv_mandala_8_full_v1/traditional_metadata.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_8_full_v1",
+      "mtime": "2026-09-04T12:26:38Z",
+      "path": "data/canonical/rv_mandala_8_full_v1/translations.jsonl",
+      "sha256": "9720f630811cf89e3966ef4857d940212375f18a83d14eca00c4dff042c94e39",
+      "size": 1494323,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_8_full_v1",
+      "mtime": "2026-09-04T12:26:38Z",
+      "path": "data/canonical/rv_mandala_8_full_v1/works.jsonl",
+      "sha256": "477cde9b833ea9e46b3dd41a1939dce763f5984199304cb4375d53a28f299056",
+      "size": 329,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_9_full_v1",
+      "mtime": "2026-09-04T12:26:46Z",
+      "path": "data/canonical/rv_mandala_9_full_v1/REPORT.md",
+      "sha256": "de94d8e00ea5e70f7fabc5d3035055546ef4865bf9849676796bb744a75258dd",
+      "size": 1301,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_9_full_v1",
+      "mtime": "2026-09-04T12:26:46Z",
+      "path": "data/canonical/rv_mandala_9_full_v1/audio_recordings.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_9_full_v1",
+      "mtime": "2026-09-04T12:26:46Z",
+      "path": "data/canonical/rv_mandala_9_full_v1/audio_segments.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_9_full_v1",
+      "mtime": "2026-09-04T12:26:46Z",
+      "path": "data/canonical/rv_mandala_9_full_v1/citations.jsonl",
+      "sha256": "eb9dc245263055099fccdb6df6416ccf67b5936f3ef40c7b27554de8b7aca806",
+      "size": 216457,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_9_full_v1",
+      "mtime": "2026-09-04T12:26:46Z",
+      "path": "data/canonical/rv_mandala_9_full_v1/discoveries.jsonl",
+      "sha256": "58a1ce5638b7c03032de1899d5fbe2bf3217bd07ea435ec07b06e2c125203194",
+      "size": 104946,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_9_full_v1",
+      "mtime": "2026-09-04T12:26:46Z",
+      "path": "data/canonical/rv_mandala_9_full_v1/manifest.json",
+      "sha256": "16a0eb06ba5cb7fa517ae2639eca826a02d9d7cf7b854aaf56ba5bc43ccd7684",
+      "size": 35196,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_9_full_v1",
+      "mtime": "2026-09-04T12:26:46Z",
+      "path": "data/canonical/rv_mandala_9_full_v1/passages.jsonl",
+      "sha256": "dd8632f2d4fa0d7d519c9cdd8f7d3b102c4fbce46db5b4585bd1588390ecdb15",
+      "size": 501335,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_9_full_v1",
+      "mtime": "2026-09-04T12:26:46Z",
+      "path": "data/canonical/rv_mandala_9_full_v1/qa_issues.jsonl",
+      "sha256": "292cc86167e4807d560b60767a40e40383b64e05327e01265a2a6e3006881180",
+      "size": 17319,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_9_full_v1",
+      "mtime": "2026-09-04T12:26:46Z",
+      "path": "data/canonical/rv_mandala_9_full_v1/source_artifacts.jsonl",
+      "sha256": "691fe9f0a5d810b904a055ddcacd25268c6c263d4c60479bfad04acbb6ca63eb",
+      "size": 16991,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_9_full_v1",
+      "mtime": "2026-09-04T12:26:46Z",
+      "path": "data/canonical/rv_mandala_9_full_v1/source_assertions.jsonl",
+      "sha256": "425cc950ad01edd4e60ea8d323f79dfdfe021d577dd5c3c59aead10b0d05b894",
+      "size": 1114188,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_9_full_v1",
+      "mtime": "2026-09-04T12:26:46Z",
+      "path": "data/canonical/rv_mandala_9_full_v1/sources.jsonl",
+      "sha256": "47de4d35e96d86046a8a7af77171bef84ae59af3b2b4a68c148b3655983b3547",
+      "size": 5958,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_9_full_v1",
+      "mtime": "2026-09-04T12:26:46Z",
+      "path": "data/canonical/rv_mandala_9_full_v1/text_versions.jsonl",
+      "sha256": "199afaad5cbbaa2e73cfb36aad98daa5bd7c8116ba6b21b74bff97f22324cffc",
+      "size": 1700775,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_9_full_v1",
+      "mtime": "2026-09-04T12:26:46Z",
+      "path": "data/canonical/rv_mandala_9_full_v1/traditional_metadata.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_9_full_v1",
+      "mtime": "2026-09-04T12:26:46Z",
+      "path": "data/canonical/rv_mandala_9_full_v1/translations.jsonl",
+      "sha256": "644f47c9ba7467ab732aa2a0b42014ee242e3adb8a810bf8e70abb364db0ff4a",
+      "size": 973184,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "rv_mandala_9_full_v1",
+      "mtime": "2026-09-04T12:26:46Z",
+      "path": "data/canonical/rv_mandala_9_full_v1/works.jsonl",
+      "sha256": "477cde9b833ea9e46b3dd41a1939dce763f5984199304cb4375d53a28f299056",
+      "size": 329,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "samaveda_arcika_v1",
+      "mtime": "2026-09-07T15:45:09Z",
+      "path": "data/canonical/samaveda_arcika_v1/audio_recordings.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "samaveda_arcika_v1",
+      "mtime": "2026-09-07T15:45:09Z",
+      "path": "data/canonical/samaveda_arcika_v1/audio_segments.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "samaveda_arcika_v1",
+      "mtime": "2026-09-07T15:45:09Z",
+      "path": "data/canonical/samaveda_arcika_v1/citations.jsonl",
+      "sha256": "471b83b3dc2dff88517ee74c68249217212c94c0b1452df154ab278eae5d0e09",
+      "size": 874062,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "samaveda_arcika_v1",
+      "mtime": "2026-09-07T15:45:09Z",
+      "path": "data/canonical/samaveda_arcika_v1/manifest.json",
+      "sha256": "173dd473659a26e598b1d66daec205dfa34357af00cf7729a1cce77c664c7328",
+      "size": 42879,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "samaveda_arcika_v1",
+      "mtime": "2026-09-07T15:45:09Z",
+      "path": "data/canonical/samaveda_arcika_v1/passages.jsonl",
+      "sha256": "d65d679e35572966fd4f838113eaba7c80da1655ab56df74f783dbce2a080eb4",
+      "size": 1375177,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "samaveda_arcika_v1",
+      "mtime": "2026-09-07T15:45:09Z",
+      "path": "data/canonical/samaveda_arcika_v1/qa_issues.jsonl",
+      "sha256": "a0775570dc4ea3c1450677eb6332d982513af8f4d737ca7eb2a49fd5627132b0",
+      "size": 31927,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "samaveda_arcika_v1",
+      "mtime": "2026-09-07T15:45:09Z",
+      "path": "data/canonical/samaveda_arcika_v1/referent_bindings.jsonl",
+      "sha256": "53df3ea417db66b8f2a5f66d6ae5f2ca6be16a87c0ebce8b4e9d81ce1e29d995",
+      "size": 1725516,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "samaveda_arcika_v1",
+      "mtime": "2026-09-07T15:45:09Z",
+      "path": "data/canonical/samaveda_arcika_v1/source_artifacts.jsonl",
+      "sha256": "4d418d568e0a8b5f4710be67f0c4af522837620f31fdf7a612256202b20febbe",
+      "size": 7477,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "samaveda_arcika_v1",
+      "mtime": "2026-09-07T15:45:09Z",
+      "path": "data/canonical/samaveda_arcika_v1/source_assertions.jsonl",
+      "sha256": "b5a002a7cf914818d6175569eadf7fe4b876f3ddd88767e42add61ad53c2eaad",
+      "size": 37070,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "samaveda_arcika_v1",
+      "mtime": "2026-09-07T15:45:09Z",
+      "path": "data/canonical/samaveda_arcika_v1/sources.jsonl",
+      "sha256": "1ae966f26d7d65e9e945b4dea0353eb25e81c84d2edaa3e9027646f52f9bbc12",
+      "size": 3142,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "samaveda_arcika_v1",
+      "mtime": "2026-09-07T15:45:09Z",
+      "path": "data/canonical/samaveda_arcika_v1/text_versions.jsonl",
+      "sha256": "cc4c69223c559a05c3d6db9029e0618fe81dff4c280d3b55cf57007c6f4cedc5",
+      "size": 1793121,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "samaveda_arcika_v1",
+      "mtime": "2026-09-07T15:45:09Z",
+      "path": "data/canonical/samaveda_arcika_v1/traditional_metadata.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "samaveda_arcika_v1",
+      "mtime": "2026-09-07T15:45:09Z",
+      "path": "data/canonical/samaveda_arcika_v1/translations.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "samaveda_arcika_v1",
+      "mtime": "2026-09-07T15:45:09Z",
+      "path": "data/canonical/samaveda_arcika_v1/works.jsonl",
+      "sha256": "601ddc745bed396f468da0cca0c2c843d705712638cae69d48017192745372f1",
+      "size": 17214,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "samaveda_pilot_v1",
+      "mtime": "2026-09-07T11:10:48Z",
+      "path": "data/canonical/samaveda_pilot_v1/citations.jsonl",
+      "sha256": "6880951fc01ce0a451bfd0b1a5345344bfae56cd66cba08aa33e5a61bf78142e",
+      "size": 46376,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "samaveda_pilot_v1",
+      "mtime": "2026-09-07T11:10:48Z",
+      "path": "data/canonical/samaveda_pilot_v1/passages.jsonl",
+      "sha256": "73913fae6e599780294e182a75b729e9e058f9ae0209bd7d373387affa3d7317",
+      "size": 77472,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "samaveda_pilot_v1",
+      "mtime": "2026-09-07T11:10:48Z",
+      "path": "data/canonical/samaveda_pilot_v1/source_artifacts.jsonl",
+      "sha256": "6f27b7c369fba54c3f00a382fd72522f24e4175cb647a43249adbe3f22266377",
+      "size": 3456,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "samaveda_pilot_v1",
+      "mtime": "2026-09-07T11:10:48Z",
+      "path": "data/canonical/samaveda_pilot_v1/source_assertions.jsonl",
+      "sha256": "5e42c4dddaf120d1fd3d047884fa890c3126440a0080ed922a23319b3d4ef9d0",
+      "size": 121576,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "samaveda_pilot_v1",
+      "mtime": "2026-09-07T11:10:48Z",
+      "path": "data/canonical/samaveda_pilot_v1/sources.jsonl",
+      "sha256": "faf23ba55fefab9c1a8f9160ded0ad3bfee7c90e3a43148432e037b04273574f",
+      "size": 651,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "samaveda_pilot_v1",
+      "mtime": "2026-09-07T05:18:10Z",
+      "path": "data/canonical/samaveda_pilot_v1/text_comparisons.jsonl",
+      "sha256": "e378ee3e0058cd7da0cc0a10a65732c9ba55f82bc3f66a04fe56bfd356ade25b",
+      "size": 16641,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "samaveda_pilot_v1",
+      "mtime": "2026-09-07T11:10:48Z",
+      "path": "data/canonical/samaveda_pilot_v1/text_versions.jsonl",
+      "sha256": "0dc410bc6ec57d088dd25d75a54801c557d83b15f46fe3087df1e82093f526ea",
+      "size": 78124,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "samaveda_pilot_v1",
+      "mtime": "2026-09-07T11:10:48Z",
+      "path": "data/canonical/samaveda_pilot_v1/translations.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "samaveda_pilot_v1",
+      "mtime": "2026-09-07T11:10:48Z",
+      "path": "data/canonical/samaveda_pilot_v1/works.jsonl",
+      "sha256": "e1f711c9c2bc785c21a71017418f33c1ec12a7f1704dbf10a7fb71ada409c7d9",
+      "size": 5388,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "yajurveda_pilot_v1",
+      "mtime": "2026-09-07T06:20:56Z",
+      "path": "data/canonical/yajurveda_pilot_v1/audio_recordings.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "yajurveda_pilot_v1",
+      "mtime": "2026-09-07T06:20:56Z",
+      "path": "data/canonical/yajurveda_pilot_v1/audio_segments.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "yajurveda_pilot_v1",
+      "mtime": "2026-09-07T06:20:56Z",
+      "path": "data/canonical/yajurveda_pilot_v1/citations.jsonl",
+      "sha256": "ae4c2ff6598067a9fdfbc4b4473f737edac12bb2f94e57eb86a06f055ce1a5c4",
+      "size": 35767,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "yajurveda_pilot_v1",
+      "mtime": "2026-09-07T06:20:56Z",
+      "path": "data/canonical/yajurveda_pilot_v1/manifest.json",
+      "sha256": "c7869eef9533f950b32656fca3470a01ff02c13b9eebd743a4b14cbeb16aa119",
+      "size": 13295,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "yajurveda_pilot_v1",
+      "mtime": "2026-09-07T06:20:56Z",
+      "path": "data/canonical/yajurveda_pilot_v1/passages.jsonl",
+      "sha256": "4ace14c13fed2a4d2f29fc118ac98217bd8b6b85850eabb1cc5f6330d030a36e",
+      "size": 61691,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "yajurveda_pilot_v1",
+      "mtime": "2026-09-07T06:20:56Z",
+      "path": "data/canonical/yajurveda_pilot_v1/source_artifacts.jsonl",
+      "sha256": "161bca232c0a4f8a0a264f2fcdef40647a3660ccceed9063c00a369f823bfc64",
+      "size": 10359,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "yajurveda_pilot_v1",
+      "mtime": "2026-09-07T06:20:56Z",
+      "path": "data/canonical/yajurveda_pilot_v1/source_assertions.jsonl",
+      "sha256": "e56547cb7c91843f35b188043461255c0f68c7e37d96296d50d8036904809970",
+      "size": 5597,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "yajurveda_pilot_v1",
+      "mtime": "2026-09-07T06:20:56Z",
+      "path": "data/canonical/yajurveda_pilot_v1/sources.jsonl",
+      "sha256": "1ae966f26d7d65e9e945b4dea0353eb25e81c84d2edaa3e9027646f52f9bbc12",
+      "size": 3142,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "yajurveda_pilot_v1",
+      "mtime": "2026-09-07T06:20:56Z",
+      "path": "data/canonical/yajurveda_pilot_v1/structure_reconciliation.jsonl",
+      "sha256": "c631a978d753045bffd939e159992251111d9bcf5b634d20bf7ad53b739ecee1",
+      "size": 22838,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "yajurveda_pilot_v1",
+      "mtime": "2026-09-07T06:20:56Z",
+      "path": "data/canonical/yajurveda_pilot_v1/text_comparisons.jsonl",
+      "sha256": "b490e0a6267d12dc2bd4d39fc0dbc8cd444ab4a27865f8a7ccd7ce03fd5e9f9a",
+      "size": 72792,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "yajurveda_pilot_v1",
+      "mtime": "2026-09-07T06:20:56Z",
+      "path": "data/canonical/yajurveda_pilot_v1/text_versions.jsonl",
+      "sha256": "97cb55863334c6f8037854bd839de58bd8dc6e74eb884a39e056f5577f040acd",
+      "size": 364664,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "yajurveda_pilot_v1",
+      "mtime": "2026-09-07T06:20:56Z",
+      "path": "data/canonical/yajurveda_pilot_v1/traditional_metadata.jsonl",
+      "sha256": "cd63115278aec8740d83aa4d9ced503cf8e9ac7205720c056c112ea21900f0d5",
+      "size": 162957,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "yajurveda_pilot_v1",
+      "mtime": "2026-09-07T06:20:56Z",
+      "path": "data/canonical/yajurveda_pilot_v1/translations.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "CANONICAL_OTHER"
+    },
+    {
+      "dataset": "yajurveda_vsm_v1",
+      "mtime": "2026-09-07T16:54:19Z",
+      "path": "data/canonical/yajurveda_vsm_v1/audio_recordings.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "yajurveda_vsm_v1",
+      "mtime": "2026-09-07T16:54:19Z",
+      "path": "data/canonical/yajurveda_vsm_v1/audio_segments.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "yajurveda_vsm_v1",
+      "mtime": "2026-09-07T16:54:19Z",
+      "path": "data/canonical/yajurveda_vsm_v1/citations.jsonl",
+      "sha256": "f5f357e4e897571f12c3eecf3f1a685fc8419bc8d3b58b553e13dbccd8847762",
+      "size": 458066,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "yajurveda_vsm_v1",
+      "mtime": "2026-09-07T16:54:20Z",
+      "path": "data/canonical/yajurveda_vsm_v1/manifest.json",
+      "sha256": "e30603043dbe615bf87d4f956bdae3089df27385e94b5b6a0512cc27da5372a1",
+      "size": 13454,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "yajurveda_vsm_v1",
+      "mtime": "2026-09-07T16:54:19Z",
+      "path": "data/canonical/yajurveda_vsm_v1/passages.jsonl",
+      "sha256": "aaf682dfa105adf1021797b9c4251cd8e4b76f2da2407a715f4900f92729d42e",
+      "size": 942886,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "yajurveda_vsm_v1",
+      "mtime": "2026-09-07T16:54:19Z",
+      "path": "data/canonical/yajurveda_vsm_v1/qa_issues.jsonl",
+      "sha256": "3d53e4ee40939f7af5f06297f46092a4c6bbd4241c1a4740a59b04a3bab478ed",
+      "size": 10331,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "yajurveda_vsm_v1",
+      "mtime": "2026-09-07T16:54:19Z",
+      "path": "data/canonical/yajurveda_vsm_v1/referent_bindings.jsonl",
+      "sha256": "b7ac1598953125af4edeca6884b8f212aff7e1b44a18c716e01327f2bb3e86ba",
+      "size": 1644192,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "yajurveda_vsm_v1",
+      "mtime": "2026-09-07T16:54:20Z",
+      "path": "data/canonical/yajurveda_vsm_v1/reports/build_report.json",
+      "sha256": "a51ca370c46ae8bc95dd995da7568161d36ea350f46da3753fe9bad5680c6849",
+      "size": 14162,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "yajurveda_vsm_v1",
+      "mtime": "2026-09-07T16:54:20Z",
+      "path": "data/canonical/yajurveda_vsm_v1/reports/layer_statistics.json",
+      "sha256": "292efbe96a3c7b3741dc9d613fb01fa1d31897d450f08e14e1db81169f14fbb4",
+      "size": 8726,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "yajurveda_vsm_v1",
+      "mtime": "2026-09-07T16:54:20Z",
+      "path": "data/canonical/yajurveda_vsm_v1/reports/rishi_index.json",
+      "sha256": "63506a9806282bee487c75a57352df124e17247e83de6f392049245739fb572f",
+      "size": 1237,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "yajurveda_vsm_v1",
+      "mtime": "2026-09-07T16:54:19Z",
+      "path": "data/canonical/yajurveda_vsm_v1/source_artifacts.jsonl",
+      "sha256": "161bca232c0a4f8a0a264f2fcdef40647a3660ccceed9063c00a369f823bfc64",
+      "size": 10359,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "yajurveda_vsm_v1",
+      "mtime": "2026-09-07T16:54:19Z",
+      "path": "data/canonical/yajurveda_vsm_v1/source_assertions.jsonl",
+      "sha256": "320f6edd75a817dd1e0812e3e2e4017f5be353a250e3c46974ac54b1ff87ee41",
+      "size": 4049143,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "yajurveda_vsm_v1",
+      "mtime": "2026-09-07T16:54:19Z",
+      "path": "data/canonical/yajurveda_vsm_v1/sources.jsonl",
+      "sha256": "1ae966f26d7d65e9e945b4dea0353eb25e81c84d2edaa3e9027646f52f9bbc12",
+      "size": 3142,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "yajurveda_vsm_v1",
+      "mtime": "2026-09-07T16:54:19Z",
+      "path": "data/canonical/yajurveda_vsm_v1/text_versions.jsonl",
+      "sha256": "f723e10238704e78a3376b81de3a7b9bea202082e71e3c362724b96e55ee322c",
+      "size": 5287357,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "yajurveda_vsm_v1",
+      "mtime": "2026-09-07T16:54:19Z",
+      "path": "data/canonical/yajurveda_vsm_v1/traditional_metadata.jsonl",
+      "sha256": "c214a3d1c932c93dc05fbfb1dabd286d0d32d2dd96e85ee2006221e4b1acaae6",
+      "size": 1890599,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "yajurveda_vsm_v1",
+      "mtime": "2026-09-07T16:54:19Z",
+      "path": "data/canonical/yajurveda_vsm_v1/translations.jsonl",
+      "sha256": "851c7cb4b12a4e6e9503b367f55a7f7f49b3c78982eb0fe521228f6ef423f834",
+      "size": 1496911,
+      "tier": "RELEASE"
+    },
+    {
+      "dataset": "yajurveda_vsm_v1",
+      "mtime": "2026-09-07T16:54:19Z",
+      "path": "data/canonical/yajurveda_vsm_v1/works.jsonl",
+      "sha256": "e17656cab9b92250ac1355708eb0b4b7626595cb75d5f2912f18205790914ed6",
+      "size": 347,
+      "tier": "RELEASE"
+    }
+  ],
+  "file_count": 303,
+  "fingerprint_sha256": "d93bfde5b144d29e384b32771198a12655786466d39f92cb3715510a131a7856",
+  "gap_id": "GAP-PRODUCT_SURFACE-005",
+  "generated_at": "2026-09-16T17:24:40Z",
+  "gitignore_rule": "data/canonical/** (.gitignore line 17)",
+  "manifest_version": "canonical-release-manifest-v1",
+  "release_file_count": 62,
+  "release_fingerprint_sha256": "342d7eb957ec45cebfd75af9e727ab34b1ba7738073ba057d028548b16559f1f",
+  "release_total_bytes": 103722479,
+  "released_datasets": {
+    "AV": "atharvaveda_saunaka_digital_working_v1",
+    "RV": "rigveda_full_v1",
+    "SV": "samaveda_arcika_v1",
+    "YV": "yajurveda_vsm_v1"
+  },
+  "tier_totals": {
+    "CANONICAL_OTHER": {
+      "bytes": 49285200,
+      "files": 241
+    },
+    "RELEASE": {
+      "bytes": 103722479,
+      "files": 62
+    }
+  },
+  "total_bytes": 153007679
+}

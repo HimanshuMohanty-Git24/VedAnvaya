@@ -1,0 +1,336 @@
+{
+  "proposal_version": "gap005-sv-apparatus-corrections-v1",
+  "gap_id": "GAP-PRODUCT_SURFACE-005",
+  "backlog_id": "SV-APPARATUS-LIFT-01",
+  "work_id": "VG:WORK:SV:KAU",
+  "generated_at": "2026-09-16T17:29:48Z",
+  "status": "STAGED_PROPOSAL_NOT_APPLIED",
+  "applied_by": null,
+  "scope_note": "Nothing here has been written. data/canonical/** was not edited and no Cypher was executed. The proposal is complete and reversible: each correction deletes a leading substring and changes no other codepoint.",
+  "completeness_check": {
+    "method": "Independent scan of every VG:WORK:SV:KAU TextVersion node in the live graph for parentheses, brackets, asterisk, dagger, double dagger, Latin letters, ASCII digits, 'cf.' and the Devanagari cross-reference marker द्र.",
+    "matches": 4,
+    "matches_equal_backlog_unit_count": true
+  },
+  "corrections": [
+    {
+      "canonical_key": "VG:SV:KAU:CHANDA:P01:D08:V04",
+      "canonical_citation": "SV CHANDA 1.8.4",
+      "canonical_urn": "urn:vedagraph:mantra:samaveda:kauthuma:chanda:prapathaka:1:dasati:8:verse:4",
+      "passage_entity_id": "80fd1949-3f63-58a5-905b-37de341a59d4",
+      "text_id": "8b9854cb-55eb-5947-96ec-0fa1b0584a6d",
+      "source_locator": "WS CHANDA.P1.D8 RN76",
+      "source_page_verse_number": 76,
+      "current": {
+        "text_original": "द्र. इडामग्ने पुरुदंसं सनिं गोः शश्वत्तमं हवमानाय साध । स्यान्नः सूनुस्तनयो विजावाग्ने सा ते सुमतिर्भूत्वस्मे",
+        "text_nfc": "द्र. इडामग्ने पुरुदंसं सनिं गोः शश्वत्तमं हवमानाय साध । स्यान्नः सूनुस्तनयो विजावाग्ने सा ते सुमतिर्भूत्वस्मे",
+        "content_sha256": "fa4f67688ead62938d12d7d65a916e0fd86963c91735738a28ae4d1594697dde",
+        "length_codepoints": 109
+      },
+      "apparatus_removed": {
+        "substring": "द्र. ",
+        "length_codepoints": 5,
+        "codepoints": [
+          "U+0926",
+          "U+094D",
+          "U+0930",
+          "U+002E",
+          "U+0020"
+        ],
+        "position": "LEADING",
+        "kind": "SAMAN_NAME_AND_CROSS_REFERENCE_ANNOTATION"
+      },
+      "proposed": {
+        "text_original": "इडामग्ने पुरुदंसं सनिं गोः शश्वत्तमं हवमानाय साध । स्यान्नः सूनुस्तनयो विजावाग्ने सा ते सुमतिर्भूत्वस्मे",
+        "text_nfc": "इडामग्ने पुरुदंसं सनिं गोः शश्वत्तमं हवमानाय साध । स्यान्नः सूनुस्तनयो विजावाग्ने सा ते सुमतिर्भूत्वस्मे",
+        "content_sha256": "f9459f7dfdd606d011f6134189edd6eb2fc679dd3dd566d21dba441181b49d4e",
+        "length_codepoints": 104
+      },
+      "source_evidence": {
+        "artifact_id": "WIKISOURCE_SA.SV.KAU.SAMHITA.DEVANAGARI",
+        "snapshot_sha256": "3f200620fb4ac1c694ae31f69f71c1e52e94462e4429816a710813140f4b4a54",
+        "snapshot_path": "data/raw/wikisource_sa/2026-09-07/3f200620fb4ac1c694ae31f69f71c1e52e94462e4429816a710813140f4b4a54.php",
+        "page_title": "सामवेदः/कौथुमीया/संहिता/पूर्वार्चिकः/छन्द आर्चिकः/1.1.1 प्रथमप्रपाठकः/1.1.1.8 अष्टमी दशतिः",
+        "apparatus_line_in_wikitext": "द्र. [https://sa.wikisource.org/s/258z पौषम्]",
+        "apparatus_annotates_verse": 75,
+        "argument": "In the pinned wikitext the apparatus stands on its own line AFTER the ॥ 75 ॥ verse-number marker that closes verse 75, and is separated from verse 76 by a blank line. It is the saman-name / cross-reference annotation of the PRECEDING verse, not the opening of this one. The parser's unit boundary attached it forward. Every remaining codepoint is unchanged, so the ORIGINAL text policy still holds: this narrows the unit, it does not correct a reading.",
+        "corrected_reading_in_page_line_form": "इडामग्ने पुरुदंसं सनिं गोः शश्वत्तमं हवमानाय साध ।\\nस्यान्नः सूनुस्तनयो विजावाग्ने सा ते सुमतिर्भूत्वस्मे",
+        "corrected_reading_occurs_verbatim_in_pinned_page_line_form": true,
+        "corrected_reading_occurs_verbatim_in_pinned_page_joined_form": false,
+        "corrected_reading_halves_occur_verbatim_in_pinned_page": true,
+        "line_form_note": "The pinned page writes each pada on its own line. The parser joins them at the danda with a single space, which is why the joined form is not a literal substring of the page while the line form is. The join is the parser's, is unchanged by this correction, and is the same join every other released arcika verse carries.",
+        "in_corpus_duplicates_of_corrected_reading": []
+      },
+      "downstream": {
+        "referent_bindings_rows_keyed_on_old_sha256": 1,
+        "graph_text_version_properties_to_update": [
+          "text_nfc",
+          "content_sha256"
+        ],
+        "note": "The graph TextVersion node carries text_nfc and content_sha256 but no text_original property; text_original lives only in the canonical JSONL. Derived edges computed from the contaminated string (USES_FORMULA, SHARES_FORMULA_WITH, REUSES_TEXT_FROM, NEAR_PARALLEL_OF) were built over the apparatus and should be rebuilt for these four passages after the text is corrected."
+      },
+      "cypher": "// VG:SV:KAU:CHANDA:P01:D08:V04  (WS CHANDA.P1.D8 RN76)\nMATCH (p:Passage {canonical_key: $canonical_key})-[:HAS_TEXT_VERSION]->(t:TextVersion)\nWHERE t.content_sha256 = $old_sha256\n  AND t.text_nfc STARTS WITH $apparatus\nSET t.text_nfc       = $new_text,\n    t.content_sha256 = $new_sha256\nRETURN p.canonical_key AS key, t.text_nfc AS text, t.content_sha256 AS sha;",
+      "cypher_parameters": {
+        "canonical_key": "VG:SV:KAU:CHANDA:P01:D08:V04",
+        "old_sha256": "fa4f67688ead62938d12d7d65a916e0fd86963c91735738a28ae4d1594697dde",
+        "apparatus": "द्र. ",
+        "new_text": "इडामग्ने पुरुदंसं सनिं गोः शश्वत्तमं हवमानाय साध । स्यान्नः सूनुस्तनयो विजावाग्ने सा ते सुमतिर्भूत्वस्मे",
+        "new_sha256": "f9459f7dfdd606d011f6134189edd6eb2fc679dd3dd566d21dba441181b49d4e"
+      }
+    },
+    {
+      "canonical_key": "VG:SV:KAU:ARANYA:D01:V04",
+      "canonical_citation": "SV ARANYA 1.4",
+      "canonical_urn": "urn:vedagraph:mantra:samaveda:kauthuma:aranya:dasati:1:verse:4",
+      "passage_entity_id": "c6ffa77f-89ce-5833-a54e-15fa1616019a",
+      "text_id": "11871cc7-720a-55da-9750-666de346a457",
+      "source_locator": "WS ARANYA.D1 RN589",
+      "source_page_verse_number": 589,
+      "current": {
+        "text_original": "(आरण्यकगानम्) द्र. आर्षेयब्राह्मणम् भाष्यम् उदुत्तमं वरुण पाशमस्मदवाधमं वि मध्यमं श्रथाय । अथादित्य व्रते वयं तवानागसो अदितये स्याम",
+        "text_nfc": "(आरण्यकगानम्) द्र. आर्षेयब्राह्मणम् भाष्यम् उदुत्तमं वरुण पाशमस्मदवाधमं वि मध्यमं श्रथाय । अथादित्य व्रते वयं तवानागसो अदितये स्याम",
+        "content_sha256": "85ce20a26dfbff0039220cff4ddb1c2c29733b3f4925fe9619df8172bd7fcfef",
+        "length_codepoints": 131
+      },
+      "apparatus_removed": {
+        "substring": "(आरण्यकगानम्) द्र. आर्षेयब्राह्मणम् भाष्यम् ",
+        "length_codepoints": 44,
+        "codepoints": [
+          "U+0028",
+          "U+0906",
+          "U+0930",
+          "U+0923",
+          "U+094D",
+          "U+092F",
+          "U+0915",
+          "U+0917",
+          "U+093E",
+          "U+0928",
+          "U+092E",
+          "U+094D",
+          "U+0029",
+          "U+0020",
+          "U+0926",
+          "U+094D",
+          "U+0930",
+          "U+002E",
+          "U+0020",
+          "U+0906",
+          "U+0930",
+          "U+094D",
+          "U+0937",
+          "U+0947",
+          "U+092F",
+          "U+092C",
+          "U+094D",
+          "U+0930",
+          "U+093E",
+          "U+0939",
+          "U+094D",
+          "U+092E",
+          "U+0923",
+          "U+092E",
+          "U+094D",
+          "U+0020",
+          "U+092D",
+          "U+093E",
+          "U+0937",
+          "U+094D",
+          "U+092F",
+          "U+092E",
+          "U+094D",
+          "U+0020"
+        ],
+        "position": "LEADING",
+        "kind": "SAMAN_NAME_AND_CROSS_REFERENCE_ANNOTATION"
+      },
+      "proposed": {
+        "text_original": "उदुत्तमं वरुण पाशमस्मदवाधमं वि मध्यमं श्रथाय । अथादित्य व्रते वयं तवानागसो अदितये स्याम",
+        "text_nfc": "उदुत्तमं वरुण पाशमस्मदवाधमं वि मध्यमं श्रथाय । अथादित्य व्रते वयं तवानागसो अदितये स्याम",
+        "content_sha256": "aced94b37144c070c87e3061170abb78aba6e57183019fe7c73cb3bff51ed287",
+        "length_codepoints": 87
+      },
+      "source_evidence": {
+        "artifact_id": "WIKISOURCE_SA.SV.KAU.SAMHITA.DEVANAGARI",
+        "snapshot_sha256": "eeffe2eeff9ab43463b4d942fe1040eb013a7e975dbb12f8c7b9db55be72d80d",
+        "snapshot_path": "data/raw/wikisource_sa/2026-09-07/eeffe2eeff9ab43463b4d942fe1040eb013a7e975dbb12f8c7b9db55be72d80d.php",
+        "page_title": "सामवेदः/कौथुमीया/संहिता/पूर्वार्चिकः/अथारण्यार्चिकः/1.2.1 प्रथमा दशतिः",
+        "apparatus_line_in_wikitext": "[https://sa.wikisource.org/s/2k8p कश्यपव्रतम्] (आरण्यकगानम्)\nद्र. आर्षेयब्राह्मणम् [https://sa.wikisource.org/s/20sh ६.३.७.२] भाष्यम्",
+        "apparatus_annotates_verse": 588,
+        "argument": "In the pinned wikitext the apparatus stands on its own line AFTER the ॥ 588 ॥ verse-number marker that closes verse 588, and is separated from verse 589 by a blank line. It is the saman-name / cross-reference annotation of the PRECEDING verse, not the opening of this one. The parser's unit boundary attached it forward. Every remaining codepoint is unchanged, so the ORIGINAL text policy still holds: this narrows the unit, it does not correct a reading.",
+        "corrected_reading_in_page_line_form": "उदुत्तमं वरुण पाशमस्मदवाधमं वि मध्यमं श्रथाय ।\\nअथादित्य व्रते वयं तवानागसो अदितये स्याम",
+        "corrected_reading_occurs_verbatim_in_pinned_page_line_form": true,
+        "corrected_reading_occurs_verbatim_in_pinned_page_joined_form": false,
+        "corrected_reading_halves_occur_verbatim_in_pinned_page": true,
+        "line_form_note": "The pinned page writes each pada on its own line. The parser joins them at the danda with a single space, which is why the joined form is not a literal substring of the page while the line form is. The join is the parser's, is unchanged by this correction, and is the same join every other released arcika verse carries.",
+        "in_corpus_duplicates_of_corrected_reading": []
+      },
+      "downstream": {
+        "referent_bindings_rows_keyed_on_old_sha256": 1,
+        "graph_text_version_properties_to_update": [
+          "text_nfc",
+          "content_sha256"
+        ],
+        "note": "The graph TextVersion node carries text_nfc and content_sha256 but no text_original property; text_original lives only in the canonical JSONL. Derived edges computed from the contaminated string (USES_FORMULA, SHARES_FORMULA_WITH, REUSES_TEXT_FROM, NEAR_PARALLEL_OF) were built over the apparatus and should be rebuilt for these four passages after the text is corrected."
+      },
+      "cypher": "// VG:SV:KAU:ARANYA:D01:V04  (WS ARANYA.D1 RN589)\nMATCH (p:Passage {canonical_key: $canonical_key})-[:HAS_TEXT_VERSION]->(t:TextVersion)\nWHERE t.content_sha256 = $old_sha256\n  AND t.text_nfc STARTS WITH $apparatus\nSET t.text_nfc       = $new_text,\n    t.content_sha256 = $new_sha256\nRETURN p.canonical_key AS key, t.text_nfc AS text, t.content_sha256 AS sha;",
+      "cypher_parameters": {
+        "canonical_key": "VG:SV:KAU:ARANYA:D01:V04",
+        "old_sha256": "85ce20a26dfbff0039220cff4ddb1c2c29733b3f4925fe9619df8172bd7fcfef",
+        "apparatus": "(आरण्यकगानम्) द्र. आर्षेयब्राह्मणम् भाष्यम् ",
+        "new_text": "उदुत्तमं वरुण पाशमस्मदवाधमं वि मध्यमं श्रथाय । अथादित्य व्रते वयं तवानागसो अदितये स्याम",
+        "new_sha256": "aced94b37144c070c87e3061170abb78aba6e57183019fe7c73cb3bff51ed287"
+      }
+    },
+    {
+      "canonical_key": "VG:SV:KAU:CHANDA:P04:D05:V06",
+      "canonical_citation": "SV CHANDA 4.5.6",
+      "canonical_urn": "urn:vedagraph:mantra:samaveda:kauthuma:chanda:prapathaka:4:dasati:5:verse:6",
+      "passage_entity_id": "2d95006a-f3a3-5384-bdf0-c3bfc9a4e7a7",
+      "text_id": "a6749316-5598-5393-b769-aa510c75422b",
+      "source_locator": "WS CHANDA.P4.D5 RN337",
+      "source_page_verse_number": 337,
+      "current": {
+        "text_original": "(आरण्यकगानम्) यं वृत्रेषु क्षितय स्पर्धमाना यं युक्तेषु तुरयन्तो हवन्ते । यं शूरसातौ यमपामुपज्मन्यं विप्रासो वाजयन्ते स इन्द्रः",
+        "text_nfc": "(आरण्यकगानम्) यं वृत्रेषु क्षितय स्पर्धमाना यं युक्तेषु तुरयन्तो हवन्ते । यं शूरसातौ यमपामुपज्मन्यं विप्रासो वाजयन्ते स इन्द्रः",
+        "content_sha256": "506e5940ec5792020292b0c2e2c4f0cff22fbf028b7dc8c0a5f2dc7977a98827",
+        "length_codepoints": 127
+      },
+      "apparatus_removed": {
+        "substring": "(आरण्यकगानम्) ",
+        "length_codepoints": 14,
+        "codepoints": [
+          "U+0028",
+          "U+0906",
+          "U+0930",
+          "U+0923",
+          "U+094D",
+          "U+092F",
+          "U+0915",
+          "U+0917",
+          "U+093E",
+          "U+0928",
+          "U+092E",
+          "U+094D",
+          "U+0029",
+          "U+0020"
+        ],
+        "position": "LEADING",
+        "kind": "SAMAN_NAME_AND_CROSS_REFERENCE_ANNOTATION"
+      },
+      "proposed": {
+        "text_original": "यं वृत्रेषु क्षितय स्पर्धमाना यं युक्तेषु तुरयन्तो हवन्ते । यं शूरसातौ यमपामुपज्मन्यं विप्रासो वाजयन्ते स इन्द्रः",
+        "text_nfc": "यं वृत्रेषु क्षितय स्पर्धमाना यं युक्तेषु तुरयन्तो हवन्ते । यं शूरसातौ यमपामुपज्मन्यं विप्रासो वाजयन्ते स इन्द्रः",
+        "content_sha256": "8363fd84fed182056da27a1c523a4141f4fd75a10e327268fc872b6337c11003",
+        "length_codepoints": 113
+      },
+      "source_evidence": {
+        "artifact_id": "WIKISOURCE_SA.SV.KAU.SAMHITA.DEVANAGARI",
+        "snapshot_sha256": "0b7b9caed6a5bf7325329aa9d9d82a39ebfeb705dd47d82ba3707e79f0154c1c",
+        "snapshot_path": "data/raw/wikisource_sa/2026-09-07/0b7b9caed6a5bf7325329aa9d9d82a39ebfeb705dd47d82ba3707e79f0154c1c.php",
+        "page_title": "सामवेदः/कौथुमीया/संहिता/पूर्वार्चिकः/छन्द आर्चिकः/1.1.4 चतुर्थप्रपाठकः/1.1.4.5 पञ्चमी दशतिः",
+        "apparatus_line_in_wikitext": "[https://sa.wikisource.org/s/2jwl कश्यपव्रतम्] (आरण्यकगानम्)",
+        "apparatus_annotates_verse": 336,
+        "argument": "In the pinned wikitext the apparatus stands on its own line AFTER the ॥ 336 ॥ verse-number marker that closes verse 336, and is separated from verse 337 by a blank line. It is the saman-name / cross-reference annotation of the PRECEDING verse, not the opening of this one. The parser's unit boundary attached it forward. Every remaining codepoint is unchanged, so the ORIGINAL text policy still holds: this narrows the unit, it does not correct a reading.",
+        "corrected_reading_in_page_line_form": "यं वृत्रेषु क्षितय स्पर्धमाना यं युक्तेषु तुरयन्तो हवन्ते ।\\nयं शूरसातौ यमपामुपज्मन्यं विप्रासो वाजयन्ते स इन्द्रः",
+        "corrected_reading_occurs_verbatim_in_pinned_page_line_form": true,
+        "corrected_reading_occurs_verbatim_in_pinned_page_joined_form": false,
+        "corrected_reading_halves_occur_verbatim_in_pinned_page": true,
+        "line_form_note": "The pinned page writes each pada on its own line. The parser joins them at the danda with a single space, which is why the joined form is not a literal substring of the page while the line form is. The join is the parser's, is unchanged by this correction, and is the same join every other released arcika verse carries.",
+        "in_corpus_duplicates_of_corrected_reading": []
+      },
+      "downstream": {
+        "referent_bindings_rows_keyed_on_old_sha256": 1,
+        "graph_text_version_properties_to_update": [
+          "text_nfc",
+          "content_sha256"
+        ],
+        "note": "The graph TextVersion node carries text_nfc and content_sha256 but no text_original property; text_original lives only in the canonical JSONL. Derived edges computed from the contaminated string (USES_FORMULA, SHARES_FORMULA_WITH, REUSES_TEXT_FROM, NEAR_PARALLEL_OF) were built over the apparatus and should be rebuilt for these four passages after the text is corrected."
+      },
+      "cypher": "// VG:SV:KAU:CHANDA:P04:D05:V06  (WS CHANDA.P4.D5 RN337)\nMATCH (p:Passage {canonical_key: $canonical_key})-[:HAS_TEXT_VERSION]->(t:TextVersion)\nWHERE t.content_sha256 = $old_sha256\n  AND t.text_nfc STARTS WITH $apparatus\nSET t.text_nfc       = $new_text,\n    t.content_sha256 = $new_sha256\nRETURN p.canonical_key AS key, t.text_nfc AS text, t.content_sha256 AS sha;",
+      "cypher_parameters": {
+        "canonical_key": "VG:SV:KAU:CHANDA:P04:D05:V06",
+        "old_sha256": "506e5940ec5792020292b0c2e2c4f0cff22fbf028b7dc8c0a5f2dc7977a98827",
+        "apparatus": "(आरण्यकगानम्) ",
+        "new_text": "यं वृत्रेषु क्षितय स्पर्धमाना यं युक्तेषु तुरयन्तो हवन्ते । यं शूरसातौ यमपामुपज्मन्यं विप्रासो वाजयन्ते स इन्द्रः",
+        "new_sha256": "8363fd84fed182056da27a1c523a4141f4fd75a10e327268fc872b6337c11003"
+      }
+    },
+    {
+      "canonical_key": "VG:SV:KAU:CHANDA:P02:D07:V07",
+      "canonical_citation": "SV CHANDA 2.7.7",
+      "canonical_urn": "urn:vedagraph:mantra:samaveda:kauthuma:chanda:prapathaka:2:dasati:7:verse:7",
+      "passage_entity_id": "4db00241-7c66-56a5-b38a-546b57298610",
+      "text_id": "99cd5caf-88e6-59d1-a34d-cdb821296835",
+      "source_locator": "WS CHANDA.P2.D7 RN161",
+      "source_page_verse_number": 161,
+      "current": {
+        "text_original": "(आरण्यकम्) अभि त्वा वृषभा सुते सुतं सृजामि पीतये । तृम्पा व्यश्नुही मदं",
+        "text_nfc": "(आरण्यकम्) अभि त्वा वृषभा सुते सुतं सृजामि पीतये । तृम्पा व्यश्नुही मदं",
+        "content_sha256": "7aac8a3e6079dbfe8f133b2750f8f3d689e60845ccaa97fa186317dcc85e2f0a",
+        "length_codepoints": 71
+      },
+      "apparatus_removed": {
+        "substring": "(आरण्यकम्) ",
+        "length_codepoints": 11,
+        "codepoints": [
+          "U+0028",
+          "U+0906",
+          "U+0930",
+          "U+0923",
+          "U+094D",
+          "U+092F",
+          "U+0915",
+          "U+092E",
+          "U+094D",
+          "U+0029",
+          "U+0020"
+        ],
+        "position": "LEADING",
+        "kind": "SAMAN_NAME_AND_CROSS_REFERENCE_ANNOTATION"
+      },
+      "proposed": {
+        "text_original": "अभि त्वा वृषभा सुते सुतं सृजामि पीतये । तृम्पा व्यश्नुही मदं",
+        "text_nfc": "अभि त्वा वृषभा सुते सुतं सृजामि पीतये । तृम्पा व्यश्नुही मदं",
+        "content_sha256": "b30f7f409718efb2db27a3b9136d421a5230b940a1de0591ba56f39fced49e93",
+        "length_codepoints": 60
+      },
+      "source_evidence": {
+        "artifact_id": "WIKISOURCE_SA.SV.KAU.SAMHITA.DEVANAGARI",
+        "snapshot_sha256": "c8bb7fd1bb17af0a48dfb3275cddebb78b1934cfed184e4057bdd2a7a6c0b153",
+        "snapshot_path": "data/raw/wikisource_sa/2026-09-07/c8bb7fd1bb17af0a48dfb3275cddebb78b1934cfed184e4057bdd2a7a6c0b153.php",
+        "page_title": "सामवेदः/कौथुमीया/संहिता/पूर्वार्चिकः/छन्द आर्चिकः/1.1.2 द्वितीयप्रपाठकः/1.1.2.7 सप्तमी दशतिः",
+        "apparatus_line_in_wikitext": "[https://sa.wikisource.org/s/2hfc माधुच्छन्दसम्] (आरण्यकम्)",
+        "apparatus_annotates_verse": 160,
+        "argument": "In the pinned wikitext the apparatus stands on its own line AFTER the ॥ 160 ॥ verse-number marker that closes verse 160, and is separated from verse 161 by a blank line. It is the saman-name / cross-reference annotation of the PRECEDING verse, not the opening of this one. The parser's unit boundary attached it forward. Every remaining codepoint is unchanged, so the ORIGINAL text policy still holds: this narrows the unit, it does not correct a reading.",
+        "corrected_reading_in_page_line_form": "अभि त्वा वृषभा सुते सुतं सृजामि पीतये ।\\nतृम्पा व्यश्नुही मदं",
+        "corrected_reading_occurs_verbatim_in_pinned_page_line_form": true,
+        "corrected_reading_occurs_verbatim_in_pinned_page_joined_form": false,
+        "corrected_reading_halves_occur_verbatim_in_pinned_page": true,
+        "line_form_note": "The pinned page writes each pada on its own line. The parser joins them at the danda with a single space, which is why the joined form is not a literal substring of the page while the line form is. The join is the parser's, is unchanged by this correction, and is the same join every other released arcika verse carries.",
+        "in_corpus_duplicates_of_corrected_reading": [
+          {
+            "canonical_key": "VG:SV:KAU:UTTARA:P01:R02:D07:V01",
+            "source_locator": "WS UTTARA.P1.R2.D7 RN731"
+          }
+        ]
+      },
+      "downstream": {
+        "referent_bindings_rows_keyed_on_old_sha256": 1,
+        "graph_text_version_properties_to_update": [
+          "text_nfc",
+          "content_sha256"
+        ],
+        "note": "The graph TextVersion node carries text_nfc and content_sha256 but no text_original property; text_original lives only in the canonical JSONL. Derived edges computed from the contaminated string (USES_FORMULA, SHARES_FORMULA_WITH, REUSES_TEXT_FROM, NEAR_PARALLEL_OF) were built over the apparatus and should be rebuilt for these four passages after the text is corrected."
+      },
+      "cypher": "// VG:SV:KAU:CHANDA:P02:D07:V07  (WS CHANDA.P2.D7 RN161)\nMATCH (p:Passage {canonical_key: $canonical_key})-[:HAS_TEXT_VERSION]->(t:TextVersion)\nWHERE t.content_sha256 = $old_sha256\n  AND t.text_nfc STARTS WITH $apparatus\nSET t.text_nfc       = $new_text,\n    t.content_sha256 = $new_sha256\nRETURN p.canonical_key AS key, t.text_nfc AS text, t.content_sha256 AS sha;",
+      "cypher_parameters": {
+        "canonical_key": "VG:SV:KAU:CHANDA:P02:D07:V07",
+        "old_sha256": "7aac8a3e6079dbfe8f133b2750f8f3d689e60845ccaa97fa186317dcc85e2f0a",
+        "apparatus": "(आरण्यकम्) ",
+        "new_text": "अभि त्वा वृषभा सुते सुतं सृजामि पीतये । तृम्पा व्यश्नुही मदं",
+        "new_sha256": "b30f7f409718efb2db27a3b9136d421a5230b940a1de0591ba56f39fced49e93"
+      }
+    }
+  ]
+}

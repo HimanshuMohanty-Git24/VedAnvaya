@@ -23,6 +23,18 @@ data/qa/**
 !data/derived/.gitkeep
 !data/qa/.gitkeep
 
+# ...but each release's own build manifest IS tracked. Ignoring the digest along with the
+# corpus destroys it in exactly the event it exists to detect -- the same way a `schema
+# export` once destroyed the sealed schema, recovered only from a dangling git blob. The 20
+# manifests total ~875 KB, and they hold per-file sha256, record counts and source-snapshot
+# hashes rather than verse text: the only Devanagari in any of them is Wikisource page titles
+# used as hash keys, so tracking them republishes no corpus and merges no licence. Recorded
+# against SV-UNTRACKED-RELEASE-01. The directory must be re-included first; git cannot
+# re-include a file whose parent directory is excluded.
+!data/canonical/*/
+data/canonical/*/*
+!data/canonical/*/manifest.json
+
 
 # Deterministic knowledge layer outputs are reproducible from pinned artifacts.
 data/knowledge/**

@@ -1,0 +1,94 @@
+{
+  "artifact": "FINAL_CLOSURE_SPRINT_INTEGRATION_PLAN",
+  "at": "2026-09-16T18:08:00.397924+00:00",
+  "baseline": {
+    "nodes": 117970,
+    "relationships": 282389,
+    "core_total": 20210,
+    "backup": "D:/vedanvaya-backups/final-closure-sprint-baseline-20260916T164452/neo4j.dump",
+    "backup_sha256": "e0583308f8942c4546fe21c0db8ea7179b1c91cb668b7978f6e6cc4b1f5ec906"
+  },
+  "conflict_analysis": {
+    "method": "extracted every property name, relationship type and created node label from all six proposed_mutations.json files and intersected them pairwise across agents",
+    "properties_written_by_more_than_one_agent": [],
+    "relationship_types_touched_by_more_than_one_agent": [],
+    "node_labels_created_by_more_than_one_agent": [],
+    "result": "CLEAN PARTITION - no reconciliation required before execution",
+    "distinct_properties": 50,
+    "distinct_relationship_types": 11,
+    "distinct_created_labels": 7,
+    "predicted_adjacency_that_did_not_materialise": "Agent 8 flagged that Agent 3's RoleFiller work and Agent 2's DevataAscription bridge might both land on REFERS_TO. Neither proposes REFERS_TO; Agent 2 uses the distinct predicate RESOLVES_TO_DEVATA. No conflict."
+  },
+  "proposed_totals_before_agent6": {
+    "agent1": {
+      "nodes": 1434,
+      "relationships": 4390,
+      "property_writes": 29969
+    },
+    "agent2": {
+      "nodes": 567,
+      "relationships": 1488,
+      "property_rows": 2125
+    },
+    "agent3": {
+      "nodes": 44784,
+      "relationships": 220319,
+      "property_sets": 375
+    },
+    "agent4": {
+      "nodes": 9,
+      "relationships": 27,
+      "property_writes": 20210
+    },
+    "agent5": {
+      "nodes": 0,
+      "relationships": 0,
+      "property_writes": 466
+    },
+    "agent7": {
+      "nodes": 12,
+      "relationships": 12,
+      "property_writes": 18415
+    },
+    "note": "Agent 3 dominates: its MENTIONS_LEMMA projection alone is +145,261 edges. Agent 8 verified that artifact row by row - 154,261 rows, 10,031 distinct lemmas equal to the Lemma node count exactly, 10,552 distinct mantras equal to the RV exactly, 0 duplicate pairs, 0 lemmas absent from the graph, 0 non-RV keys."
+  },
+  "ordering_constraints": [
+    "A3_ASSERTION_ROLE_REANCHOR strictly after A3_SEMANTIC_ASSERTION_NODES, or every re-anchored edge dangles",
+    "Agent 3's ontology signature change (ASSERTION_ROLE -> SemanticAssertion) and its wave3_import_plan.py fix are valid ONLY with the re-anchor; if the delta does not land, all three revert together",
+    "Agent 4: RECEIVES_OFFERING must be minted in the ontology with its endpoint signature BEFORE its 4 edges land",
+    "Agent 7: M2 (repair RV 8.93.28's literal) must run WITH M1 (create RV 8.93.29) or verse 29's English is deleted rather than moved",
+    "Agent 7: M3 (alignment_confidence on 18,415) must run AFTER M1 so the 12 new Translation nodes are graded",
+    "Agent 1: the display_form repair is keyed on LIVE formula_ids; 0 of the 23 appear in the rebuilt artifact, so it must not be re-keyed"
+  ],
+  "withheld_by_lead_ruling": [
+    {
+      "what": "1,685 SV HAS_DEVATA_DERIVED edges over 1,662 of 1,844 SV mantras",
+      "agent": 2,
+      "reason": "attribution_precision is DERIVED_FROM_A_COMPARISON_GRADE_EDGE, not a source ascription; 504 rest on SANDHI_INSENSITIVE/SCRIPT_FOLDED tiers that owner decision 11 forbids reading as SAME_CANONICAL_PASSAGE"
+    },
+    {
+      "what": "8 CROSS_VEDA_TEXT_IDENTITY assertions over 5 pairs",
+      "agent": 3,
+      "reason": "the live graph types those pairs NEAR_PARALLEL_OF; consistency with Agent 7's rejection of AV 20.57.13 on the same basis"
+    },
+    {
+      "what": "the 466 Whitney attributions themselves",
+      "agent": 5,
+      "reason": "OWNER_DECISIONS.md s25 stands; only the false ABSENCE typing is corrected"
+    },
+    {
+      "what": "258 PROBABLE rite-offering rows",
+      "agent": 4,
+      "reason": "GAP-RITUAL-005 clause 3 forbids asserting them"
+    }
+  ],
+  "owner_stop_items": [
+    {
+      "id": "FORMULA_LAYER_REFRESH",
+      "sized_by": "agent1/deferred_formula_layer_refresh.json",
+      "delta": "Formula 4,825->4,729 (-217/+121), FormulaFamily 720->702, USES_FORMULA 22,686->22,422, HAS_FORMULA and MEMBER_OF_FAMILY 2,037->1,969",
+      "why_owner": "formula_id derives from `collapsed`, which the corrected fold changes, so 217 identities disappear and 121 appear. That is a canonical identity change, which this sprint's rules reserve to the owner.",
+      "not_relabelled": "this is NOT recorded as a scope decision"
+    }
+  ]
+}

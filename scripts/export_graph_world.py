@@ -36,32 +36,26 @@ import argparse
 import json
 import time
 from pathlib import Path
+from collections import Counter
 
 from neo4j import GraphDatabase, Query
 
 REPO = Path(__file__).resolve().parent.parent
 DEFAULT_OUT = REPO / "frontend" / ".world" / "world.raw.json"
 
-# A node's stable identifier lives under a different property per label, because each family
-# was built by a different pass. These are tried in order; the first non-null wins, and a node
-# that yields none is dropped rather than given a synthetic id it would not keep across builds.
-ID_KEYS = (
-    "entity_key",
-    "canonical_key",
-    "formula_id",
-    "assertion_id",
-    "concept_id",
-    "ascription_id",
-    "metric_id",
-)
+# Publication identity is shared with the served graph API.
+import sys
+sys.path.insert(0, str(REPO / "src"))
+from vedagraph.graph.public_identity import ID_PROPERTIES, public_id_cypher
 
-NODE_QUERY = """
+ID_KEYS = ID_PROPERTIES
+_coalesce = public_id_cypher
+
+
+NODE_QUERY = f"""
 MATCH (n)
 WHERE NOT n:Internal
-WITH n,
-     coalesce(n.entity_key, n.canonical_key, n.formula_id, n.assertion_id,
-              n.concept_id, n.ascription_id, n.metric_id) AS id
-WHERE id IS NOT NULL
+WITH n, {_coalesce("n")} AS id
 RETURN id,
        coalesce(n.display_type, head(labels(n))) AS type,
        coalesce(n.display_label, n.preferred_label, n.label_en, n.canonical_citation,
@@ -69,21 +63,21 @@ RETURN id,
        n.veda AS veda,
        coalesce(n.is_deity, n.is_classified) AS is_deity,
        n.canonical_citation AS citation
+ORDER BY id
 """
 
 # Both ends public. The relationship type travels; nothing else does, because a renderer
 # cannot draw evidence, and the evidence for any edge a reader actually asks about is one
 # call away on /graph/relationships/{id}.
-EDGE_QUERY = """
+EDGE_QUERY = f"""
 MATCH (a)-[e]->(b)
 WHERE NOT a:Internal AND NOT b:Internal
 WITH a, e, b,
-     coalesce(a.entity_key, a.canonical_key, a.formula_id, a.assertion_id,
-              a.concept_id, a.ascription_id, a.metric_id) AS sid,
-     coalesce(b.entity_key, b.canonical_key, b.formula_id, b.assertion_id,
-              b.concept_id, b.ascription_id, b.metric_id) AS tid
-WHERE sid IS NOT NULL AND tid IS NOT NULL AND sid <> tid
+     {_coalesce("a")} AS sid,
+     {_coalesce("b")} AS tid
+WHERE sid IS NOT NULL AND tid IS NOT NULL 
 RETURN sid, tid, type(e) AS type
+ORDER BY sid, tid, type
 """
 
 
@@ -109,7 +103,7 @@ def main() -> None:
     )
 
     started = time.monotonic()
-    with driver.session() as session:
+    with driver.session(default_access_mode="READ") as session:
         print("reading nodes ...", flush=True)
         nodes = [
             {
@@ -124,6 +118,10 @@ def main() -> None:
         ]
         print(f"  {len(nodes):,} public nodes", flush=True)
 
+        identifiers = [node["id"] for node in nodes]
+        duplicates = {key: count for key, count in Counter(identifiers).items() if count > 1}
+        if any(not key for key in identifiers) or duplicates:
+            raise ValueError(f"Public identity contract violated: null/empty IDs or {len(duplicates)} duplicate IDs")
         print("reading relationships ...", flush=True)
         index = {node["id"]: i for i, node in enumerate(nodes)}
         edges: list[list[int | str]] = []
@@ -139,6 +137,9 @@ def main() -> None:
         print(f"  {len(edges):,} public relationships ({dropped:,} dropped: unknown id key)")
 
     driver.close()
+
+    if dropped:
+        raise ValueError(f"Public export has {dropped} unknown endpoint references")
 
     # Degree is computed here because the API carries it for one node type only, and a world
     # needs it for all of them: it is what decides which nodes are drawn first and labelled.

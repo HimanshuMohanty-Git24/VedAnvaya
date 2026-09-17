@@ -1,0 +1,64 @@
+{
+  "model_adjudicated_edges": 613,
+  "model_adjudicated_predicates": 12,
+  "model_adjudicated_predicate_names": [
+    "CONTRASTS_WITH",
+    "DESCRIBES",
+    "DESCRIBES_ACTION",
+    "HAS_THEME",
+    "INVOKES",
+    "INVOLVES_OFFERING",
+    "INVOLVES_RITUAL",
+    "INVOLVES_SUBSTANCE",
+    "PRAISES",
+    "REFERS_TO_NATURAL_PHENOMENON",
+    "REFERS_TO_PLACE",
+    "REQUESTS"
+  ],
+  "human_reviewed_edges": 0,
+  "tier_c_edges_total": 598,
+  "tier_c_passage_anchored": 587,
+  "tier_c_not_passage_anchored": 11,
+  "tier_c_not_passage_anchored_predicates": [
+    {
+      "p": "EPITHET_VARIANT_OF",
+      "labs": [
+        "Devata"
+      ],
+      "c": 10
+    },
+    {
+      "p": "SPECIALIZED_FORM_OF",
+      "labs": [
+        "Devata"
+      ],
+      "c": 1
+    }
+  ],
+  "tier_c_passage_by_veda": [
+    {
+      "veda": "YV",
+      "c": 320
+    },
+    {
+      "veda": "AV",
+      "c": 267
+    }
+  ],
+  "tier_c_rigvedic": 0,
+  "review_verdicts": [
+    {
+      "v": "ACCEPT_MODEL_REVIEWED",
+      "c": 587
+    },
+    {
+      "v": "NEEDS_MORE_EVIDENCE",
+      "c": 16
+    },
+    {
+      "v": "AMBIGUOUS",
+      "c": 10
+    }
+  ],
+  "at": "2026-09-16T17:08:29.418908+00:00"
+}

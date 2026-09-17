@@ -1,0 +1,62 @@
+{
+  "artifact": "FINAL_CLOSURE_SPRINT_AUDIO_ENGINEERING",
+  "at": "2026-09-16T17:03:17.614739+00:00",
+  "owner": "lead (no specialist owned audio engineering)",
+  "defect": {
+    "claimed_by": "docs/reports/data-completeness/OWNER_DECISIONS.md s32: 'Now 0 unnamed, each row also carrying licence and attribution.'",
+    "measured_before": {
+      "rows": 1021,
+      "missing_licence_key": 61,
+      "null_or_blank_licence_value": 975,
+      "missing_attribution_key": 61
+    },
+    "root_cause": "scripts/build_audio_review_queue.py builds rows on TWO paths. The RV_1_65_TO_1_70_AFFECTED_SPAN stratum, appended after the Wave 4 provenance fix, used a second hand-written row literal carrying neither licence nor attribution (61 rows). Separately, the surviving path read payload.licence only, and the rights statement is spread over three field names across the three source files: 'licence' (declared), 'rights_note' (RV/AV researched finding) and 'licence_note' (YV researched finding). Reading one name left 914 further rows with the KEY present and the VALUE null.",
+    "why_it_read_as_covered": "presence of the licence KEY was what got measured, not presence of a VALUE"
+  },
+  "fix": {
+    "file": "scripts/build_audio_review_queue.py",
+    "change": "one stated_licence() resolver serving both row paths; enumerates the three rights field names; types the absence into the row instead of emitting null",
+    "absence_vocabulary": [
+      "NO_DECLARED_LICENCE -- <researched finding>",
+      "NOT_RECORDED_IN_SOURCE_REGISTRY"
+    ]
+  },
+  "measured_after": {
+    "rows": 1021,
+    "blank_licence": 0,
+    "not_recorded": 0,
+    "missing_attribution_key": 0,
+    "licence_distribution": {
+      "NO_DECLARED_LICENCE -- No licence statement. Streamed throug": 786,
+      "NO_DECLARED_LICENCE -- Royal Danish Library item statement, ": 150,
+      "CC BY-SA 4.0 on 459 files, CC0 on 16, verified per file via ": 6,
+      "NO_DECLARED_LICENCE -- The site publishes no licence. Rows a": 33,
+      "Apache-2.0": 46
+    },
+    "review_status": {
+      "NEEDS_AUDIBLE_REVIEW": 1021
+    },
+    "verdicts": 0,
+    "reviewers": 0
+  },
+  "audio_listening_untouched": {
+    "needs_audible_review": 1021,
+    "verified": 0,
+    "rejected": 0,
+    "note": "Nothing here played or simulated audio. Provenance metadata only."
+  },
+  "tests": {
+    "file": "tests/unit/test_audio_review_harness.py",
+    "added": [
+      "test_every_queued_row_states_its_rights_position",
+      "test_rights_coverage_is_measured_over_every_stratum",
+      "test_no_queued_row_claims_to_have_been_heard"
+    ],
+    "proved_can_fail": [
+      "BAD: strip licence+attribution from the 61 span rows (the exact historical defect) -> 2 tests fail naming all 61",
+      "BAD: set verdict=AUDIBLY_VERIFIED on one row -> test fails naming it",
+      "queue restored BYTE-EXACT after both probes; GOOD input -> 8 passed"
+    ]
+  },
+  "queue_sha256": "fbb7cf876ed7afcced4d2f274f31ea98c5ca6d497c3e917d9e6b5a9503a5503f"
+}

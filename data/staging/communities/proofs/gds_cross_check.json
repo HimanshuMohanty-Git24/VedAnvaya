@@ -1,12 +1,12 @@
 {
   "read_only_accounting": {
     "graph_counts_after": {
-      "nodes": 108779,
-      "relationships": 265295
+      "nodes": 117970,
+      "relationships": 282389
     },
     "graph_counts_before": {
-      "nodes": 108779,
-      "relationships": 265295
+      "nodes": 117970,
+      "relationships": 282389
     },
     "note": "gds.graph.project writes to the in-memory catalog only and the entry is dropped in the same function. No CREATE, MERGE, SET or DELETE was issued against the store at any point in this run.",
     "unchanged": true
@@ -16,18 +16,18 @@
     "gds_version": "2.13.12",
     "in_memory_graph_dropped": true,
     "leiden": {
-      "ari_gds_vs_mine": 0.761683,
+      "ari_gds_vs_mine": 0.879479,
       "community_count_on_5_identical_repeat_calls": [
         9,
         10,
-        9,
+        10,
         10,
         10
       ],
-      "gds_communities": 9,
+      "gds_communities": 10,
       "gds_is_reproducible_across_identical_calls": false,
       "mine_communities": 10,
-      "nmi_gds_vs_mine": 0.902146,
+      "nmi_gds_vs_mine": 0.924357,
       "nodes_compared": 123
     },
     "louvain": {

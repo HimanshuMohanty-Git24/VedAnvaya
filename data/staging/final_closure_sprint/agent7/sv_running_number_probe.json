@@ -1,0 +1,113 @@
+{
+ "artifact": "AGENT7_SV_RUNNING_NUMBER_PROBE",
+ "musicalized_as_edges_in_graph": 0,
+ "sv_mantras_in_graph": 1844,
+ "sv_mantras_carrying_running_samhita_number_property": 0,
+ "staged_rendering_records": 495,
+ "staged_verses_with_a_printed_running_number": 332,
+ "distinct_running_numbers_printed": 332,
+ "derivable_from_canonical_order": {
+  "rule": "enumerate the 1,844 SV mantras in canonical_key order, 1..1844, and compare to the running number the gana source itself printed",
+  "agree": 104,
+  "disagree": 228,
+  "reproduces_the_source_numbering": false,
+  "sample_mismatches": [
+   {
+    "canonical_key": "VG:SV:KAU:ARANYA:D01:V03",
+    "source_printed": [
+     588
+    ],
+    "canonical_order_position": 3,
+    "offset": -585
+   },
+   {
+    "canonical_key": "VG:SV:KAU:ARANYA:D01:V09",
+    "source_printed": [
+     594
+    ],
+    "canonical_order_position": 9,
+    "offset": -585
+   },
+   {
+    "canonical_key": "VG:SV:KAU:ARANYA:D02:V05",
+    "source_printed": [
+     599
+    ],
+    "canonical_order_position": 14,
+    "offset": -585
+   },
+   {
+    "canonical_key": "VG:SV:KAU:ARANYA:D02:V07",
+    "source_printed": [
+     601
+    ],
+    "canonical_order_position": 16,
+    "offset": -585
+   },
+   {
+    "canonical_key": "VG:SV:KAU:ARANYA:D03:V02",
+    "source_printed": [
+     603
+    ],
+    "canonical_order_position": 18,
+    "offset": -585
+   },
+   {
+    "canonical_key": "VG:SV:KAU:ARANYA:D03:V03",
+    "source_printed": [
+     604
+    ],
+    "canonical_order_position": 19,
+    "offset": -585
+   },
+   {
+    "canonical_key": "VG:SV:KAU:ARANYA:D03:V11",
+    "source_printed": [
+     612
+    ],
+    "canonical_order_position": 27,
+    "offset": -585
+   },
+   {
+    "canonical_key": "VG:SV:KAU:ARANYA:D03:V12",
+    "source_printed": [
+     613
+    ],
+    "canonical_order_position": 28,
+    "offset": -585
+   },
+   {
+    "canonical_key": "VG:SV:KAU:ARANYA:D04:V09",
+    "source_printed": [
+     623
+    ],
+    "canonical_order_position": 38,
+    "offset": -585
+   },
+   {
+    "canonical_key": "VG:SV:KAU:ARANYA:D04:V10",
+    "source_printed": [
+     624
+    ],
+    "canonical_order_position": 39,
+    "offset": -585
+   },
+   {
+    "canonical_key": "VG:SV:KAU:ARANYA:D05:V01",
+    "source_printed": [
+     627
+    ],
+    "canonical_order_position": 42,
+    "offset": -585
+   },
+   {
+    "canonical_key": "VG:SV:KAU:ARANYA:D05:V03",
+    "source_printed": [
+     629
+    ],
+    "canonical_order_position": 44,
+    "offset": -585
+   }
+  ]
+ }
+}

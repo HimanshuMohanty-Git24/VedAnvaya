@@ -1,0 +1,103 @@
+{
+  "artifact": "AGENT_6_PROPOSED_CANONICAL_MUTATIONS",
+  "at": "2026-09-16T18:19:40.977011+00:00",
+  "head": "b4b1b0beba1c499e832150b0b9363d7258e40a26",
+  "agent": "AGENT_6_PRODUCT_SURFACE",
+  "status": "STAGED_NOT_APPLIED",
+  "supersedes": "AGENT6-MUT-01, which was APPLIED and is now itself stale. See withdrawn_mutations.",
+  "rule": "Agent 6 may not write to canonical Neo4j. Preferred close for MUT-02 is REGENERATION, not a property write: the generator is fixed and a regenerated node carries this text by construction. The write below exists only if regeneration slips.",
+  "withdrawn_mutations": [
+    {
+      "id": "AGENT6-MUT-01",
+      "state": "APPLIED, AND ALREADY SUPERSEDED",
+      "what_it_did": "Replaced 'The Anukramani attribution layer exists for the Rigveda only' with 'Attribution to a deity in the registry (HAS_DEVATA) exists for the Rigveda only (RV)...' on 26 DerivedMetric nodes.",
+      "why_withdrawn": "That sentence is literally TRUE and no longer ADEQUATE. Measured on the live graph now: HAS_DEVATA_DERIVED carries 882 Atharvavedic edges that landed after MUT-01 was written. A reader of the 26 live notes infers the Atharvaveda has no deity attribution while the graph holds 882 resolved Atharvavedic dedications. Figure right, sentence wrong -- the same defect one predicate over, exactly as the lead predicted, except that it has already happened rather than being pending.",
+      "measured_now": {
+        "live_nodes_carrying_the_superseded_text": {
+          "ATTRIBUTION_PRECISION_CORPUS": 1,
+          "DEVATA_ATTRIBUTION_BY_VEDA": 25
+        }
+      }
+    }
+  ],
+  "measured_live_state": {
+    "attribution_predicate_reach": [
+      {
+        "pred": "HAS_DEVATA",
+        "veda": "RV",
+        "edges": 10558
+      },
+      {
+        "pred": "HAS_DEVATA_DERIVED",
+        "veda": "AV",
+        "edges": 882
+      }
+    ],
+    "HAS_DEVATA_ASCRIPTION": {
+      "AV": 5385,
+      "note": "descriptor layer, hangs off :DevataAscription, never a registry attribution"
+    },
+    "measured_scope_map": {
+      "HAS_DEVATA": [
+        "RV"
+      ],
+      "HAS_DEVATA_DERIVED": [
+        "AV"
+      ],
+      "HAS_DEVATA_ASCRIPTION": [
+        "AV"
+      ]
+    },
+    "graph_relationships": 283310,
+    "delta_from_sprint_baseline": "+921 relationships since 282,389; Agent 2's AV derived dedications have LANDED."
+  },
+  "mutations": [
+    {
+      "id": "AGENT6-MUT-02",
+      "supersedes": "AGENT6-MUT-01",
+      "why": "26 live DerivedMetric scope_notes assert a predicate scope that predates the 882 HAS_DEVATA_DERIVED edges. The text below is produced by the corrected generator against the live graph, so a property write and a regeneration converge on the same string.",
+      "preferred_close": "REGENERATE. Re-run the DerivedMetric layer with the fixed generator; metric_id is deterministic so it MERGEs over both the 26 live nodes and Agent 2's 214 staged rows. The write below is the fallback only.",
+      "targets": [
+        {
+          "metric_name": "DEVATA_ATTRIBUTION_BY_VEDA",
+          "live_nodes": 25,
+          "cypher": "MATCH (m:DerivedMetric {metric_name: 'DEVATA_ATTRIBUTION_BY_VEDA'})\nWHERE m.scope_note <> $new_note\nSET m.scope_note = $new_note\nRETURN count(m) AS updated",
+          "parameters": {
+            "new_note": "This figure counts HAS_DEVATA and nothing else. Measured reach of each deity-attribution predicate in this build: HAS_DEVATA reaches RV (attribution resolved to a deity in the registry, as the source states it); HAS_DEVATA_DERIVED reaches AV (attribution resolved from an Anukramani descriptor by morphology, so the resolution is this project's and the dedication is the source's); HAS_DEVATA_ASCRIPTION reaches AV (the raw Anukramani descriptor, never resolved to a registry deity and never counted as an attribution to a named god). A Veda absent from a predicate's reach carries no edge of THAT predicate. It is not a statement that the deity is absent from the corpus, and it is not a statement that the corpus has no traditional index -- a dedication can be recorded by one predicate and unreachable by another, which is why each is named separately above."
+          }
+        },
+        {
+          "metric_name": "ATTRIBUTION_PRECISION_CORPUS",
+          "live_nodes": 1,
+          "cypher": "MATCH (m:DerivedMetric {metric_name: 'ATTRIBUTION_PRECISION_CORPUS'})\nWHERE m.scope_note <> $new_note\nSET m.scope_note = $new_note\nRETURN count(m) AS updated",
+          "parameters": {
+            "new_note": "This figure counts HAS_DEVATA and nothing else. Measured reach of each deity-attribution predicate in this build: HAS_DEVATA reaches RV (attribution resolved to a deity in the registry, as the source states it); HAS_DEVATA_DERIVED reaches AV (attribution resolved from an Anukramani descriptor by morphology, so the resolution is this project's and the dedication is the source's); HAS_DEVATA_ASCRIPTION reaches AV (the raw Anukramani descriptor, never resolved to a registry deity and never counted as an attribution to a named god). A Veda absent from a predicate's reach carries no edge of THAT predicate, which is not a statement about the corpus."
+          }
+        }
+      ],
+      "idempotent": true,
+      "generator_fixed_at": [
+        "src/vedagraph/domain/profiles.py: ATTRIBUTION_PREDICATES, COUNTED_ATTRIBUTION_PREDICATES, measure_attribution_scope(), _reach_sentence(), _counted_clause()",
+        "src/vedagraph/domain/profiles.py: DevataProfile.attribution_layer_scope, compute_profile(..., attribution_scope=)",
+        "src/vedagraph/domain/profiles.py: attribution_metrics() and corpus_metrics() now interpolate the measurement",
+        "scripts/build_domain_v2.py: measures the scope once and passes it to every profile"
+      ],
+      "survives_a_rebuild": true,
+      "note_on_ATTRIBUTION_VEDAS": "Left at ('RV',) DELIBERATELY. The proposed follow-on to widen it to ('RV','AV') is REFUSED and pinned by a test: the import creates HAS_DEVATA_DERIVED, not HAS_DEVATA, and widening the constant would make 'HAS_DEVATA reaches AV' true in prose while that predicate still has no Atharvavedic edge. Nothing published should read a corpus list out of a constant any more."
+    }
+  ],
+  "handed_off_elsewhere": [
+    {
+      "id": "GAP-005 SV apparatus",
+      "file": "data/staging/final_closure_sprint/agent6/gap005_sv_apparatus_corrections.json",
+      "summary": "4 Samavedic verses carry printed apparatus welded onto the verse text. Apply-ready guarded Cypher staged there; not applied. Downstream: referent_bindings.text_sha256, release manifest regeneration, and the formula/parallel edges on those 4 passages."
+    }
+  ],
+  "not_proposed_and_why": [
+    {
+      "observation": "Devata.is_deity no longer exists, so the frozen deity_community_capability named query returns NO ROW and the Q23 card published a null where its decisive zero belongs.",
+      "decision": "NOT Agent 6's mutation. Agent 6 made the Q23 card measure its own decisive figure from a query that cannot be emptied that way. The named query still needs an owner.",
+      "surfaced_to": "lead"
+    }
+  ]
+}

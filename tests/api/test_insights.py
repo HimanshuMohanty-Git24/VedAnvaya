@@ -531,8 +531,22 @@ def test_q23_is_a_typed_refusal_and_not_an_empty_list(live_client: TestClient) -
     assert measured["deities_with_a_community_assignment"]["value"] == 0
     assert "about the graph" in measured["deities_with_a_community_assignment"]["means"]
     assert measured["pairwise_co_occurrence_edges"]["value"] == 306
-    assert measured["eligible_deities"]["value"] == 192
+    # Was pinned at 192, which is what the query published while it excluded
+    # structure='HUMAN' alone -- 7 danastuti gift-praise labels and one non-divine subject
+    # above even the crude figure, on the endpoint whose whole job is to refuse a deity
+    # table contaminated by patrons. GAP-ENTITY_COVERAGE-008 replaced the predicate. The
+    # assertion is expressed against the row's OWN pending count rather than against a
+    # literal, so it stays true across the mutation that lands the ruling instead of having
+    # to be edited again the day the data changes.
+    unruled = measured["devatas_without_an_eligibility_ruling"]["value"]
+    expected_eligible = 185 if unruled else 157
+    assert measured["eligible_deities"]["value"] == expected_eligible, (
+        f"{unruled} Devata carry no is_deity ruling, so eligible_deities must read "
+        f"{expected_eligible}"
+    )
+    assert measured["eligible_deities"]["value"] != 192
     assert "denominator" in measured["eligible_deities"]["means"]
+    assert "danastuti" in measured["eligible_deities"]["means"]
     # Every measurement must say what it means; a bare figure is what this endpoint refuses.
     assert all(row["means"] for row in limit["measurements"])
 
@@ -557,7 +571,13 @@ def test_capability_catalogue_is_enumerable_and_states_its_own_incompleteness(
     assert body["total_available"] == len(body["limits"]) >= 5
     numbers = {limit["question_number"] for limit in body["limits"]}
     assert {23, 25} <= numbers
-    assert any("not exhaustive" in caveat["text"] for caveat in body["caveats"])
+    # The load-bearing clause, not the old wording. The catalogue used to say "this
+    # catalogue is not exhaustive" while publishing 7 cards against 21 graded questions;
+    # it now covers all 21 and says instead that the benchmark is a hundred questions
+    # rather than every question. Both sentences make the same promise and only this
+    # clause is common to them, so the test asserts the promise.
+    assert any("not thereby answerable" in caveat["text"] for caveat in body["caveats"])
+    assert body["unpublished_not_answerable"] == []
     for limit in body["limits"]:
         assert limit["verdict"] in set(CapabilityVerdict)
         assert limit["data_status"] != KnowledgeStatus.SUPPORTED
@@ -807,8 +827,16 @@ def test_deity_naming_and_ascription_are_separate_fields_with_separate_scopes(
     assert body["named_total"] != body["ascribed_total"]
     assert "missing apparatus" in body["ascription_note"]
     assert body["mention_surplus"] == body["named_total"] - body["ascribed_total"]
-    # The corpora the ascription layer does not reach are named rather than left as zeros.
-    assert set(body["coverage"]["vedas_not_covered"]) == {"AV", "YV", "SV"}
+    # The corpora the ascription layer does not reach are named rather than left as zeros --
+    # in the *ascription* dimension. They used to be named in the response's single coverage
+    # block, beside naming figures for the same three corpora, which told a machine consumer
+    # that AV 635, YV 221 and SV 405 were all uncovered. See
+    # tests/api/test_coverage_dimensions.py.
+    ascription = next(
+        dim for dim in body["coverage"]["dimensions"] if dim["dimension"] == "ascription"
+    )
+    assert set(ascription["vedas_not_covered"]) == {"AV", "YV", "SV"}
+    assert body["coverage"]["vedas_not_covered"] == []
     assert body["named_by_veda"]["per_1000_by_veda"]
 
 

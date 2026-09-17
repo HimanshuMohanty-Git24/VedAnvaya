@@ -1,0 +1,350 @@
+{
+  "artifact": "RELEASE_BLOCKER_R1_AGENT_A_CLOSURE",
+  "scope": "python / graph / consumer side",
+  "graph_mutation_by_this_pass": false,
+  "public_export_re_run": false,
+  "public_export_re_run_justification": "Not required and therefore not done. The shipped frontend/.world/world.raw.json (sha256 4ffe27f7b2fd236a3752ea689f11408b057cd873d0aa87c78a69c973c4533788) was compared element for element against a live re-derivation of the exporter's own NODE_QUERY and EDGE_QUERY: node records identical in order, edge list identical in order, 71,373 / 270,646 / 0 dropped. Only the payload's `generated` timestamp would differ, so a re-export would change the hash without changing the content.",
+  "opening_and_closing_census": {
+    "expected": {
+      "nodes": 164201,
+      "relationships": 508042
+    },
+    "opening": {
+      "nodes": 164201,
+      "relationships": 508042
+    },
+    "closing": {
+      "nodes": 164201,
+      "relationships": 508042
+    },
+    "unchanged": true,
+    "matches_expected": true
+  },
+  "T1_public_identity": {
+    "exported_nodes": 71373,
+    "distinct_public_ids": 71373,
+    "duplicate_public_ids": 0,
+    "cross_type_collisions": 0,
+    "null_public_ids": 0,
+    "passage_assertion_intersection": 0,
+    "api_export_mismatches": 0,
+    "public_relationships": 270646,
+    "independent_recheck": {
+      "semantic_assertion": {
+        "total": 35131,
+        "with_assertion_id": 4865,
+        "distinct_assertion_id": 4865,
+        "key_fallback_population": 30266,
+        "distinct_key_fallback": 30266,
+        "neither": 0,
+        "uuid_property_present": 0
+      },
+      "passage_public_ids": 22537,
+      "assertion_public_ids": 35131,
+      "passage_assertion_intersection": 0,
+      "duplicate_public_ids": 0,
+      "api_export_mismatches": 0,
+      "determinism_property_order_mismatches": 0,
+      "determinism_mutable_field_mismatches": 0,
+      "sorted_public_ids_sha256": "4ae92dca09b5ac26c4db79fe4a47c639c8a6478ea97556a16ee7f9bc03b2cb08",
+      "has_semantic_assertion": 35131,
+      "self_edges_public": 0
+    },
+    "api_resolution": {
+      "assertion_id_population": 25,
+      "assertion_key_population": 25,
+      "sampled_each": 25,
+      "negative_control": "asking the raw passage canonical_key returns the Passage/Mantra, not the assertion: {\"passage_key_asked\": \"VG:RV:SAK:M01:S001:V001\", \"got\": {\"labels\": [\"Mantra\", \"Passage\"], \"resolved_id\": \"VG:RV:SAK:M01:S001:V001\", \"rows\": 1}}"
+    },
+    "relationship_accounting": {
+      "earlier_planning_expectation": 240380,
+      "restored_assertion_to_passage_edges": 30266,
+      "arithmetic": "240380 + 30266 = 270646",
+      "measured_public_relationships": 270646,
+      "reconciles": true,
+      "why": "the 30,266 assertion_key-fallback assertions previously published their source passage's canonical_key, so every HAS_SEMANTIC_ASSERTION edge for them collapsed to a self-edge and was dropped; there are now 0 public self-edges and 0 dropped edges."
+    }
+  },
+  "T2_coverage_read_only_mode": {
+    "flag": "--read-only-output",
+    "opens_read_session": "default_access_mode=\"READ\" if args.check or args.read_only_output else \"WRITE\"",
+    "land_metrics_gated_by": "if not args.check and not args.read_only_output:  # the sole call site",
+    "land_metrics_call_sites_in_source": 1,
+    "test_added": "tests/unit/test_coverage_read_only_output.py",
+    "derived_metric_before": 1085,
+    "derived_metric_after": 1085,
+    "derived_metric_closing": 1085
+  },
+  "T3_T6_consumers": {
+    "dependency_status": {
+      "CURRENT": 5,
+      "STALE_INPUT": 0,
+      "BLOCKED": 3,
+      "NOT_APPLICABLE": 1
+    },
+    "unexplained_stale": [],
+    "DEPENDENCY_LEDGER_UNKNOWN": 0,
+    "states": {
+      "semantic resemblance": "BLOCKED",
+      "cross-Veda matrices": "CURRENT",
+      "formula / parallel / variant relations": "BLOCKED",
+      "entity coverage": "CURRENT",
+      "ritual aggregates": "NOT_APPLICABLE",
+      "quality evaluation": "CURRENT",
+      "Ask retrieval": "BLOCKED",
+      "Visualization Lab aggregates": "CURRENT",
+      "Knowledge World public projection": "CURRENT"
+    },
+    "enrichment_reproduction": {
+      "method": "vedagraph.enrich.build.build_enrichment run against an independent scratch project root whose data/canonical, data/knowledge and data/registry are junctions to the repository's; the repository's enrichment directory was never written.",
+      "all_artifact_digests_identical": true,
+      "manifest_file_hash_identical": false,
+      "manifest_only_differing_fields": [
+        "timings_seconds",
+        "stage_reports[0].notes.timings"
+      ]
+    },
+    "declared_output_verification": {
+      "knowledge_world": {
+        "declared_output": "frontend/.world/world.raw.json",
+        "on_disk_sha256": "4ffe27f7b2fd236a3752ea689f11408b057cd873d0aa87c78a69c973c4533788",
+        "on_disk_counts": {
+          "nodes": 71373,
+          "edges": 270646,
+          "dropped_edges": 0
+        },
+        "live_counts": {
+          "nodes": 71373,
+          "edges": 270646,
+          "dropped_edges": 0
+        },
+        "node_id_list_identical_in_order": true,
+        "node_records_identical_in_order": true,
+        "edge_list_identical_in_order": true,
+        "note": "The only field that differs by construction is the payload's `generated` timestamp, which is metadata and carries no identity."
+      },
+      "predicate_semantics": {
+        "declared_output": "frontend/public/world/world.predicates.json",
+        "exit": 0,
+        "stderr_tail": "",
+        "shipped_sha256": "54a49078d9ad11e496bec5500de8e09e88ad60976768f5f2783cac1facfa7254",
+        "probe_sha256": "3c5304addb02694ed5b329e748490b979d383d71984e70c2076f7744d032d012",
+        "identical": false,
+        "reads_the_graph": false
+      },
+      "visualization_lab": {
+        "frontend/.world/constellations.json": {
+          "sha256": "a379f27f14a89d59a4ac20d24f59f1de8be759f4a2cddea2ef94ff5ebf29f44b",
+          "pins_world_raw_sha256": true
+        },
+        "frontend/public/world/world.json": {
+          "sha256": "79c9e8b7924c896d6e8b600184eb6ffc28479b7440517bb841b15f88e65c5ca8",
+          "pins_world_raw_sha256": true
+        },
+        "frontend/public/world/world.labels.json": {
+          "sha256": "37f3dce658e77b6a5c4e251cc0c8e718d6f7bd0d322aefc486f46bbcf0005fd1",
+          "ids": 71373,
+          "id_list_identical_in_order_to_export": true
+        },
+        "frontend/public/world/world.bin": {
+          "sha256": "61deed6dff14e2404e3acc294af6b7a4ccaf7c01899269e1d783a61da8723674",
+          "bytes": 3991198
+        }
+      },
+      "formula_family_layer": {
+        "artifact_families": 702,
+        "artifact_member_rows": 1969,
+        "artifact_sha256": "cc1ff965df087692a091604cf7c80cb39ed32bdf308afa35ac916b4cd499b945",
+        "manifest_formulas_now": 4729,
+        "graph_formula_nodes": 4825,
+        "graph_formula_family_nodes": 720,
+        "graph_member_of_family_edges": 2037,
+        "artifact_matches_graph_families": false,
+        "artifact_matches_graph_members": false
+      }
+    }
+  },
+  "T4_knowledge_world_completeness": {
+    "identity_sets": {
+      "eligible_public_graph_nodes": 71373,
+      "export_eligible_nodes": 71373,
+      "knowledge_world_nodes": 71373,
+      "browser_world_nodes": 71373
+    },
+    "unexplained_dropped_eligible_public_nodes": 0,
+    "knowledge_world_nodes_not_eligible": [],
+    "browser_id_list_identical_in_order": true,
+    "exclusion_classes": {
+      "marked_internal": {
+        "count": 92828,
+        "policy": "vedagraph.domain.ontology.PRODUCT_NODE_FILTER = \"NOT n:Internal\" -- the single declared place the product/internal boundary is written as Cypher; INTERNAL_LABELS and INTERNAL_MARKED_LABELS enumerate the classes.",
+        "labels": [
+          "DeityCommunity",
+          "Internal",
+          "Lemma",
+          "QAIssue",
+          "QualityVerdict",
+          "RoleFiller",
+          "Source",
+          "SourceArtifact",
+          "TextVersion",
+          "Translation"
+        ]
+      },
+      "null_public_id": {
+        "count": 0,
+        "policy": "n/a -- none"
+      }
+    },
+    "observation_chandas": {
+      "chandas_nodes": 575,
+      "chandas_marked_internal": 28,
+      "note": "The 28 malformed metre identities the Wave 4 M10 finding demoted are marked :Internal, but `Chandas` is not listed in vedagraph.domain.ontology.INTERNAL_MARKED_LABELS, whose docstring says anything marked :Internal and in neither set is a genuine leak. The scorecard's internal_leaked gate measures the opposite direction and reads 0, so no gate catches the omission. Reported, not changed: the ontology is frozen for Product V1 and adding the label would change what the label-boundary tests assert."
+    }
+  },
+  "T7_gates": {
+    "scorecard_gates": {
+      "internal_leaked": 0,
+      "ungraded_edges": 0,
+      "nodes_without_label": 0,
+      "orphan_entities": 0,
+      "signature_violations": 0,
+      "undeclared_rel_types": 0,
+      "claims_non_candidate": 0,
+      "claims_to_passages": 0,
+      "metrics_to_passages": 0,
+      "orphan_public_nodes": 0,
+      "falsely_declared_unpopulated": 0
+    },
+    "scorecard_gates_passing": "11/11",
+    "scorecard_report_reproduces_byte_for_byte": true,
+    "closing_census": {
+      "nodes": 164201,
+      "relationships": 508042,
+      "core_corpus_total": 20210,
+      "core_corpus_by_veda": {
+        "VG:WORK:AV:SAU": 5839,
+        "VG:WORK:RV:SAK": 10552,
+        "VG:WORK:SV:KAU": 1844,
+        "VG:WORK:YV:VSM": 1975
+      },
+      "derived_metric": 1085,
+      "internal_nodes": 92828,
+      "public_nodes": 71373,
+      "public_relationships": 270646,
+      "ungraded_public_relationships": 0,
+      "missing_public_labels": 0,
+      "null_public_ids": 0,
+      "distinct_public_ids": 71373,
+      "semantic_assertions": 35131
+    }
+  },
+  "tests": {
+    "command_prefix": ".venv\\Scripts\\python.exe -m pytest <file> -q --no-cov",
+    "results": {
+      "tests/unit/test_public_identity.py": "12 passed",
+      "tests/unit/test_dependency_state.py": "26 passed",
+      "tests/unit/test_identity.py": "6 passed",
+      "tests/unit/test_coverage_read_only_output.py": "6 passed (added by this pass)",
+      "tests/api/test_label_boundary.py": "7 passed",
+      "tests/enrich/test_contracts.py": "19 passed",
+      "tests/enrich/test_formula_display_surface.py": "21 passed",
+      "tests/api/test_graph.py": "3 failed / 213 passed before this pass; 2 failed / 214 passed after the product-type declaration",
+      "tests/unit/test_registry_closure.py": "1 failed / 16 passed -- Agent B's surface, not touched",
+      "tests/graph/test_graph_projection.py + test_enrichment_projection.py": "included in the test_graph.py run above; 1 skipped (needs VEDAGRAPH_LIVE_NEO4J=1)"
+    },
+    "not_run": "the full API and frontend certification suites, per the pass's instruction to run targeted tests only"
+  },
+  "findings": {
+    "F1_display_type_split_on_SemanticAssertion": {
+      "severity": "release-relevant, pre-existing, partially fixed here",
+      "measured": {
+        "display_type SEMANTIC_ASSERTION": 30266,
+        "display_type SemanticAssertion": 4865,
+        "total SemanticAssertion nodes": 35131
+      },
+      "consequence_before_the_fix": "PRODUCT_TYPE_BY_DISPLAY_TYPE was keyed on the label spelling only, so product_type() fell through to _snake_upper, which inserts a separator before a capital. _snake_upper('SEMANTIC_ASSERTION') is 'SEMANTIC__ASSERTION' -- a double underscore. The API therefore served one product object type under two names, one of them malformed, across 30,266 assertions; PADA_PARALLEL_GROUP (1,434 nodes) had the same defect. 31,700 of 71,373 public nodes were affected.",
+      "fix_applied": "src/vedagraph/api/services/graph_service.py -- declared both spellings of each display_type in PRODUCT_TYPE_BY_DISPLAY_TYPE. Behaviour-restoring: the map's own docstring and tests/api/test_graph.py::TestLiveInvariants::test_the_product_type_map_covers_every_display_type already asserted this invariant, nothing in the repository or the frontend referenced the malformed name (grep: 0 occurrences), and frontend/src/components/lab/plates/transmission.tsx already keys on SEMANTIC_ASSERTION.",
+      "residual_NOT_fixed": "The split lives in the graph, not only in the map. frontend/.world/world.raw.json carries the node `type` straight from display_type, so the shipped world bundle holds 'SEMANTIC_ASSERTION' for 30,266 nodes and 'SemanticAssertion' for 4,865 -- the only pair among its 48 node types that differs merely in spelling. Any consumer that colours, filters or legends by type sees two classes where there is one. Repairing that needs either a graph write (forbidden: the census is frozen) or an exporter normalisation plus a re-export (which would change the verified export hash). Handed to the lead as a decision, not worked around."
+    },
+    "F2_two_populated_predicates_are_unclassified": {
+      "test": "tests/api/test_graph.py::TestWhitelists::test_every_relationship_type_in_the_graph_is_classified",
+      "predicates": {
+        "HAS_PARALLEL_PADA": 4079,
+        "RECEIVES_OFFERING": 4
+      },
+      "consequence": "neither traversable nor refused for a stated reason, so /api/v1/graph will not cross them and nothing tells a reader they exist",
+      "not_fixed_because": "whether a predicate is traversable is a product decision, not a mechanical one; and the graph quality scorecard's own undeclared_rel_types gate reads 0 because it consults the ontology declaration maps while this test consults the API's TRAVERSABLE_RELATIONSHIPS / NON_TRAVERSABLE_REASONS. Two declaration surfaces disagree; one of them has to be made authoritative by a decision."
+    },
+    "F3_two_predicates_confidence_collapsed_to_a_constant": {
+      "test": "tests/api/test_graph.py::TestLiveInvariants::test_the_varying_confidence_predicates_still_vary",
+      "predicates": {
+        "ASCRIBES_TO_DEVATA": {
+          "edges": 39,
+          "distinct_confidence": [
+            1.0
+          ]
+        },
+        "HAS_DEVATA_DERIVED": {
+          "edges": 882,
+          "distinct_confidence": [
+            1.0
+          ]
+        }
+      },
+      "consequence": "a predicate declared as carrying a varying confidence now returns a single constant 1.0, which is an unearned confidence on 921 edges",
+      "not_fixed_because": "the choice between declaring them PIPELINE_CONSTANT_PREDICATES and treating the collapse as a data defect is an owner decision, and either way it is not an identity question"
+    },
+    "F4_chandas_marked_internal_is_undeclared": {
+      "chandas_nodes": 575,
+      "chandas_marked_internal": 28,
+      "note": "The 28 malformed metre identities the Wave 4 M10 finding demoted are marked :Internal, but `Chandas` is not listed in vedagraph.domain.ontology.INTERNAL_MARKED_LABELS, whose docstring says anything marked :Internal and in neither set is a genuine leak. The scorecard's internal_leaked gate measures the opposite direction and reads 0, so no gate catches the omission. Reported, not changed: the ontology is frozen for Product V1 and adding the label would change what the label-boundary tests assert."
+    },
+    "F5_ledger_output_hashes_include_a_build_clock": {
+      "measured": "frontend/public/world/world.predicates.json differs from a fresh derivation in exactly one field, `generated` (2026-09-17T03:46:49Z vs 2026-09-17T15:32:05Z); every other byte is identical. The enrichment manifest.json differs from an independent reproduction only in timings_seconds and stage_reports[0].notes.timings.",
+      "consequence": "a declared output that embeds a wall clock can never compare equal after a rebuild, so the ledger's byte-hash comparison on those files records build time rather than content. Both were verified by content here before being recorded CURRENT.",
+      "not_fixed": "would mean changing two generators' output shape; reported instead"
+    },
+    "F6_two_blocked_entries_keep_their_original_census_stamp": {
+      "entries": [
+        "semantic resemblance",
+        "Ask retrieval"
+      ],
+      "recorded_census": {
+        "semantic resemblance": {
+          "nodes": 116838,
+          "relationships": 281290
+        },
+        "Ask retrieval": {
+          "nodes": 116838,
+          "relationships": 281257
+        }
+      },
+      "why_left": "Their status is decided by blocked_reason, which classify() reads before any hash, so their input hashes are inert metadata. Re-recording them would restamp each blocker's inputs to today's graph and break the link between the reason and the state it was measured at -- the Ask refusal is keyed to commit b986193 and one run_id, and the semantic-resemblance refusal to the graph fingerprint 8ea89224 in data/staging/integration/semantic_rederivation.json. Restamping provenance to make a figure look tidy is the failure mode, not the fix.",
+      "semantic_resemblance_contract_quoted": "data/staging/integration/semantic_rederivation.json, owner_phase E, outcome C_VERIFIED_ZERO_REFUSED: what_would_change_it = 'An embedding runtime in the checkout, plus adjudication capacity for the 162 unadjudicated gold pairs, would make a real comparison possible.' That is a documented non-runnable limitation, not an implementation-fixable registry item."
+    }
+  },
+  "files_written_by_this_pass": {
+    "modified": [
+      "scripts/dependency_state.py  (+4 lines: the session is opened READ)",
+      "src/vedagraph/api/services/graph_service.py  (+12 lines: both display_type spellings declared in PRODUCT_TYPE_BY_DISPLAY_TYPE)",
+      "data/staging/integration/dependency_ledger.json  (7 of 9 consumers re-recorded)",
+      "data/staging/integration/dependency_status.json  (re-derived)",
+      "data/derived/release_blocker_r1/cross_veda_matrix.json  (rewritten, byte-identical)",
+      "data/derived/release_blocker_r1/formula_consumer.json  (rewritten, byte-identical)",
+      "data/staging/release_blocker_r1/public_identity_contract_receipt.json  (re-run)",
+      "data/staging/release_blocker_r1/graph_consumer_rebuild_receipt.json  (re-run)"
+    ],
+    "created": [
+      "tests/unit/test_coverage_read_only_output.py",
+      "data/staging/release_blocker_r1/formula_identity_verification_receipt.json",
+      "data/staging/release_blocker_r1/agent_a_closure_receipt.json"
+    ],
+    "not_touched": [
+      "everything under frontend/ (the lead's)",
+      "scripts/wave4_registry_closure_audit.py, data/staging/wave4/registry_closure_audit.json, docs/architecture/RIGVEDA_LEXICAL_MENTION_POLICY.md, data/staging/release_blocker_r1/registry_adjudication_receipt.json (Agent B's)",
+      "data/domain/vedagraph_domain_v2/veda_coverage_v3.json and docs/reports/GRAPH_QUALITY_V2_SCORECARD.md -- both were verified by re-measuring read-only and comparing, never rewritten",
+      "data/enrichment/** -- reproduced into a scratch project root instead"
+    ]
+  }
+}

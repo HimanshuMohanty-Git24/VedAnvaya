@@ -17,7 +17,7 @@
     "concepts.jsonl": "ef504f60fa6b86b1b0b92fe0c9e6d0cabdd6f911d41b06526545cf52930b945b",
     "cross_veda_parallels.jsonl": "35ec6a82e0444c8497b22308ef8c610413ce79986936991ff198fa8e21311028",
     "formula_occurrences.jsonl": "787dcdc0a7e57e16540bc75d34b5f81b578369967a56c762e5d4524573531d6a",
-    "formulas.jsonl": "2142dcb2afebc18bbcda4510b68bb24ef66cea3ec7828e201d96277ef5d92b36"
+    "formulas.jsonl": "e7bc710ab9b3194a01a2c83251dc65b7d34298d71afbfac4469eb6d7db002671"
   },
   "pipeline_version": "vedagraph-graph-enrichment-v1",
   "stage_reports": [
@@ -77,11 +77,11 @@
         "run_id": "vedagraph-graph-enrichment-v1:crossveda-parallels:5bf3c9ce73209098",
         "surface_contract": "893 of 1,975 Yajurveda mantras write visarga as an ASCII colon. vedagraph.enrich.surfaces folds it to U+0903 before transliterating; without that fold the identical cross-Veda total is 1,404 rather than 1,538.",
         "timings": {
-          "candidate_seconds": 8.025,
-          "guard_seconds": 0.014,
-          "identity_seconds": 0.113,
-          "scoring_seconds": 0.637,
-          "total_seconds": 9.157
+          "candidate_seconds": 18.207,
+          "guard_seconds": 0.056,
+          "identity_seconds": 0.245,
+          "scoring_seconds": 1.895,
+          "total_seconds": 21.867
         }
       },
       "produced": 6285,
@@ -212,10 +212,10 @@
     }
   ],
   "timings_seconds": {
-    "analytics": 0.08,
-    "concepts": 1.95,
-    "cross_veda_parallels": 9.23,
-    "formulas": 5.36,
-    "load_corpus": 5.27
+    "analytics": 0.36,
+    "concepts": 4.61,
+    "cross_veda_parallels": 22.0,
+    "formulas": 15.6,
+    "load_corpus": 14.03
   }
 }

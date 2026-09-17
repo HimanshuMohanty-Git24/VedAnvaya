@@ -1,0 +1,66 @@
+{
+  "artifact": "AGENT_3_LEXICAL_NONRESOLUTION_TYPED",
+  "gap": "GAP-MORPHOLOGY-004",
+  "at": "2026-09-16T17:08:40.749240+00:00",
+  "neo4j_access": "READ_ONLY",
+  "tokens": 711,
+  "distinct_lemmas": 10,
+  "rows_carrying_only_the_workflow_reason_after": 0,
+  "by_reason": {
+    "LEXEME_COVERS_DEITY_AND_APPELLATIVE": 625,
+    "DEVATA_OR_RISHI_UNDECIDABLE": 74,
+    "REGISTRY_HOLDS_TWO_ENTITIES_FOR_ONE_LEMMA": 12
+  },
+  "by_lemma": {
+    "áp-": 547,
+    "venā́-": 1,
+    "yamá-": 60,
+    "átri-": 46,
+    "vená-": 19,
+    "viśvā́mitra-": 7,
+    "dadhikrā́-": 12,
+    "vāmádeva-": 1,
+    "sī́tā-": 2,
+    "mr̥tyú-": 16
+  },
+  "anukramani_corroborated": 79,
+  "edges_created": 0,
+  "registry_and_policy_claims_under_test": {
+    "claim": "the 711 are unresolved because no feature-conditioned alias mechanism exists",
+    "verdict": "FALSE",
+    "feature_conditioned_aliases_present": 7,
+    "feature_conditioned_alias_lemmas": [
+      "aśvín-",
+      "mitrá-",
+      "sárasvant-",
+      "sūryā́-",
+      "sū́rya-",
+      "áditi-"
+    ],
+    "sarasvant_aliases": [
+      {
+        "entity_key": "VG:DEVATA:SARASVAN",
+        "allowed_gender": [
+          "M"
+        ],
+        "review_status": "ACCEPTED"
+      },
+      {
+        "entity_key": "VG:DEVATA:SARASVATI",
+        "allowed_gender": [
+          "F"
+        ],
+        "review_status": "ACCEPTED"
+      }
+    ],
+    "sarasvant_rows_in_the_711": 0,
+    "measured_gender_split_of_sarasvant_tokens": {
+      "F": 70,
+      "M": 5
+    },
+    "residual_lemmas_separable_by_any_annotated_feature": 0
+  },
+  "files": {
+    "lexical_nonresolution_typed.jsonl": "7cf9e23b7be32616a40a110851ec485ab971047f59206784a46f058b35ecac12"
+  }
+}

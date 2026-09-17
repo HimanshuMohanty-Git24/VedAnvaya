@@ -1,0 +1,565 @@
+{
+  "artifact": "A1_FORMULA_DISPLAY_FORM_REPAIR",
+  "corroboration_counts": {
+    "CORROBORATED_BY_INDEPENDENT_REBUILD": 21,
+    "CORROBORATED_ON_THE_COLLAPSED_IDENTITY_ONLY": 1,
+    "UNCORROBORATED_THIS_WORDING_IS_ABSENT_FROM_THE_REBUILT_POPULATION": 1
+  },
+  "derivation": "render_for_display(fold_transcription_cross_script(normalized)) where no attested span is readable IAST; the first readable attested span otherwise. Measured: 0 of the offenders have a readable attested span, so every row is the rendered branch and says so.",
+  "gap": "GAP-FORMULA-003",
+  "mutations": [
+    {
+      "before": {
+        "display_form": "ghāse ajrāṇāṃ yavasaprathamānāᳪṃ sumatkṣarāṇāᳪṃ śatarudriyāṇāmagniṣvāttānāṃ"
+      },
+      "gap": "GAP-FORMULA-003",
+      "group": "A1_FORMULA_DISPLAY_FORM_REPAIR",
+      "key": {
+        "formula_id": "VG:ENRICH:FORMULA:0a01e3772b849398a0b21755eded281b"
+      },
+      "labels": [
+        "Formula"
+      ],
+      "op": "node_update",
+      "set": {
+        "display_form": "ghāse ajrāṇāṃ yavasaprathamānāṃ sumatkṣarāṇāṃ śatarudriyāṇāmagniṣvāttānāṃ",
+        "display_form_basis": "RENDERED_COMPARISON_FORM_NOT_AN_ATTESTED_SPELLING",
+        "display_form_corroboration": "CORROBORATED_BY_INDEPENDENT_REBUILD"
+      },
+      "untouched": [
+        "formula_id",
+        "collapsed",
+        "normalized"
+      ]
+    },
+    {
+      "before": {
+        "display_form": "iṣaᳪṃ stotṛbhya ā bhara"
+      },
+      "gap": "GAP-FORMULA-003",
+      "group": "A1_FORMULA_DISPLAY_FORM_REPAIR",
+      "key": {
+        "formula_id": "VG:ENRICH:FORMULA:0abc667e3490c3f1f077dda2097d263f"
+      },
+      "labels": [
+        "Formula"
+      ],
+      "op": "node_update",
+      "set": {
+        "display_form": "iṣaṃ stotṛbhya ā bhara",
+        "display_form_basis": "RENDERED_COMPARISON_FORM_NOT_AN_ATTESTED_SPELLING",
+        "display_form_corroboration": "CORROBORATED_BY_INDEPENDENT_REBUILD"
+      },
+      "untouched": [
+        "formula_id",
+        "collapsed",
+        "normalized"
+      ]
+    },
+    {
+      "before": {
+        "display_form": "rakṣā mākirno aghaśaᳪṃsa īśata"
+      },
+      "gap": "GAP-FORMULA-003",
+      "group": "A1_FORMULA_DISPLAY_FORM_REPAIR",
+      "key": {
+        "formula_id": "VG:ENRICH:FORMULA:28c0452727f9987428bc1bfe00172842"
+      },
+      "labels": [
+        "Formula"
+      ],
+      "op": "node_update",
+      "set": {
+        "display_form": "rakṣā mākirno aghaśaṃsa īśata",
+        "display_form_basis": "RENDERED_COMPARISON_FORM_NOT_AN_ATTESTED_SPELLING",
+        "display_form_corroboration": "CORROBORATED_ON_THE_COLLAPSED_IDENTITY_ONLY"
+      },
+      "untouched": [
+        "formula_id",
+        "collapsed",
+        "normalized"
+      ]
+    },
+    {
+      "before": {
+        "display_form": "varūthyaḥ vasuragnirvasuśravā acchā nakṣi dyumattamaᳪṃ rayiṃ dāḥ"
+      },
+      "gap": "GAP-FORMULA-003",
+      "group": "A1_FORMULA_DISPLAY_FORM_REPAIR",
+      "key": {
+        "formula_id": "VG:ENRICH:FORMULA:29e4ea947bc842a9f62bc1a448f531de"
+      },
+      "labels": [
+        "Formula"
+      ],
+      "op": "node_update",
+      "set": {
+        "display_form": "varūthyaḥ vasuragnirvasuśravā achā nakṣi dyumattamaṃ rayiṃ dāḥ",
+        "display_form_basis": "RENDERED_COMPARISON_FORM_NOT_AN_ATTESTED_SPELLING",
+        "display_form_corroboration": "CORROBORATED_BY_INDEPENDENT_REBUILD"
+      },
+      "untouched": [
+        "formula_id",
+        "collapsed",
+        "normalized"
+      ]
+    },
+    {
+      "before": {
+        "display_form": "agnirmūrdhā divaḥ kakutpatiḥ pṛthivyā ayam apāᳪṃ retāᳪṃsi jinvati"
+      },
+      "gap": "GAP-FORMULA-003",
+      "group": "A1_FORMULA_DISPLAY_FORM_REPAIR",
+      "key": {
+        "formula_id": "VG:ENRICH:FORMULA:32fde83130fe54d55b733631df0cea89"
+      },
+      "labels": [
+        "Formula"
+      ],
+      "op": "node_update",
+      "set": {
+        "display_form": "agnirmūrdhā divaḥ kakutpatiḥ pṛthivyā ayam apāṃ retāṃsi jinvati",
+        "display_form_basis": "RENDERED_COMPARISON_FORM_NOT_AN_ATTESTED_SPELLING",
+        "display_form_corroboration": "CORROBORATED_BY_INDEPENDENT_REBUILD"
+      },
+      "untouched": [
+        "formula_id",
+        "collapsed",
+        "normalized"
+      ]
+    },
+    {
+      "before": {
+        "display_form": "namaste astu mā mā hiᳪṃsīḥ"
+      },
+      "gap": "GAP-FORMULA-003",
+      "group": "A1_FORMULA_DISPLAY_FORM_REPAIR",
+      "key": {
+        "formula_id": "VG:ENRICH:FORMULA:3df24aab5ec82cff5b1c192cc9d66ea9"
+      },
+      "labels": [
+        "Formula"
+      ],
+      "op": "node_update",
+      "set": {
+        "display_form": "namaste astu mā mā hiṃsīḥ",
+        "display_form_basis": "RENDERED_COMPARISON_FORM_NOT_AN_ATTESTED_SPELLING",
+        "display_form_corroboration": "CORROBORATED_BY_INDEPENDENT_REBUILD"
+      },
+      "untouched": [
+        "formula_id",
+        "collapsed",
+        "normalized"
+      ]
+    },
+    {
+      "before": {
+        "display_form": "svāhā dyāvāpṛthivībhyāᳪṃ svāhā"
+      },
+      "gap": "GAP-FORMULA-003",
+      "group": "A1_FORMULA_DISPLAY_FORM_REPAIR",
+      "key": {
+        "formula_id": "VG:ENRICH:FORMULA:3e42597c5c97b69ea3e5bf0f81a66f10"
+      },
+      "labels": [
+        "Formula"
+      ],
+      "op": "node_update",
+      "set": {
+        "display_form": "svāhā dyāvāpṛthivībhyāṃ svāhā",
+        "display_form_basis": "RENDERED_COMPARISON_FORM_NOT_AN_ATTESTED_SPELLING",
+        "display_form_corroboration": "CORROBORATED_BY_INDEPENDENT_REBUILD"
+      },
+      "untouched": [
+        "formula_id",
+        "collapsed",
+        "normalized"
+      ]
+    },
+    {
+      "before": {
+        "display_form": "vayaᳪṃ syāma patayo"
+      },
+      "gap": "GAP-FORMULA-003",
+      "group": "A1_FORMULA_DISPLAY_FORM_REPAIR",
+      "key": {
+        "formula_id": "VG:ENRICH:FORMULA:4911a1acbc56dce11d436bb1ef45a22a"
+      },
+      "labels": [
+        "Formula"
+      ],
+      "op": "node_update",
+      "set": {
+        "display_form": "vayaṃ syāma patayo",
+        "display_form_basis": "RENDERED_COMPARISON_FORM_NOT_AN_ATTESTED_SPELLING",
+        "display_form_corroboration": "CORROBORATED_BY_INDEPENDENT_REBUILD"
+      },
+      "untouched": [
+        "formula_id",
+        "collapsed",
+        "normalized"
+      ]
+    },
+    {
+      "before": {
+        "display_form": "kiᳪṃ svidāsīd"
+      },
+      "gap": "GAP-FORMULA-003",
+      "group": "A1_FORMULA_DISPLAY_FORM_REPAIR",
+      "key": {
+        "formula_id": "VG:ENRICH:FORMULA:49a4fdcfc5631e8e7d7935adb00b14e7"
+      },
+      "labels": [
+        "Formula"
+      ],
+      "op": "node_update",
+      "set": {
+        "display_form": "kiṃ svidāsīd",
+        "display_form_basis": "RENDERED_COMPARISON_FORM_NOT_AN_ATTESTED_SPELLING",
+        "display_form_corroboration": "UNCORROBORATED_THIS_WORDING_IS_ABSENT_FROM_THE_REBUILT_POPULATION"
+      },
+      "untouched": [
+        "formula_id",
+        "collapsed",
+        "normalized"
+      ]
+    },
+    {
+      "before": {
+        "display_form": "juṣatāᳪṃ havirhotaryaja"
+      },
+      "gap": "GAP-FORMULA-003",
+      "group": "A1_FORMULA_DISPLAY_FORM_REPAIR",
+      "key": {
+        "formula_id": "VG:ENRICH:FORMULA:4ea15c1ec7de0b9ade3e380bd840a8dc"
+      },
+      "labels": [
+        "Formula"
+      ],
+      "op": "node_update",
+      "set": {
+        "display_form": "juṣatāṃ havirhotaryaja",
+        "display_form_basis": "RENDERED_COMPARISON_FORM_NOT_AN_ATTESTED_SPELLING",
+        "display_form_corroboration": "CORROBORATED_BY_INDEPENDENT_REBUILD"
+      },
+      "untouched": [
+        "formula_id",
+        "collapsed",
+        "normalized"
+      ]
+    },
+    {
+      "before": {
+        "display_form": "anyā~ste asmattapantu hetayaḥ pāvako asmabhyaᳪṃ śivo bhava"
+      },
+      "gap": "GAP-FORMULA-003",
+      "group": "A1_FORMULA_DISPLAY_FORM_REPAIR",
+      "key": {
+        "formula_id": "VG:ENRICH:FORMULA:72289aac136197d9e63d395d77fffc9b"
+      },
+      "labels": [
+        "Formula"
+      ],
+      "op": "node_update",
+      "set": {
+        "display_form": "anyāṃste asmattapantu hetayaḥ pāvako asmabhyaṃ śivo bhava",
+        "display_form_basis": "RENDERED_COMPARISON_FORM_NOT_AN_ATTESTED_SPELLING",
+        "display_form_corroboration": "CORROBORATED_BY_INDEPENDENT_REBUILD"
+      },
+      "untouched": [
+        "formula_id",
+        "collapsed",
+        "normalized"
+      ]
+    },
+    {
+      "before": {
+        "display_form": "vayaᳪṃ syāma patayo rayīṇām"
+      },
+      "gap": "GAP-FORMULA-003",
+      "group": "A1_FORMULA_DISPLAY_FORM_REPAIR",
+      "key": {
+        "formula_id": "VG:ENRICH:FORMULA:a1f1ffded3c775c6ad4791eb2d112505"
+      },
+      "labels": [
+        "Formula"
+      ],
+      "op": "node_update",
+      "set": {
+        "display_form": "vayaṃ syāma patayo rayīṇām",
+        "display_form_basis": "RENDERED_COMPARISON_FORM_NOT_AN_ATTESTED_SPELLING",
+        "display_form_corroboration": "CORROBORATED_BY_INDEPENDENT_REBUILD"
+      },
+      "untouched": [
+        "formula_id",
+        "collapsed",
+        "normalized"
+      ]
+    },
+    {
+      "before": {
+        "display_form": "stomaḥ pṛthivyāᳪṃ"
+      },
+      "gap": "GAP-FORMULA-003",
+      "group": "A1_FORMULA_DISPLAY_FORM_REPAIR",
+      "key": {
+        "formula_id": "VG:ENRICH:FORMULA:af57a6f8cc1e08e9eee283bc3826c240"
+      },
+      "labels": [
+        "Formula"
+      ],
+      "op": "node_update",
+      "set": {
+        "display_form": "stomaḥ pṛthivyāṃ",
+        "display_form_basis": "RENDERED_COMPARISON_FORM_NOT_AN_ATTESTED_SPELLING",
+        "display_form_corroboration": "CORROBORATED_BY_INDEPENDENT_REBUILD"
+      },
+      "untouched": [
+        "formula_id",
+        "collapsed",
+        "normalized"
+      ]
+    },
+    {
+      "before": {
+        "display_form": "pāvako asmabhyaᳪṃ śivo bhava"
+      },
+      "gap": "GAP-FORMULA-003",
+      "group": "A1_FORMULA_DISPLAY_FORM_REPAIR",
+      "key": {
+        "formula_id": "VG:ENRICH:FORMULA:b14e07188924fcc40981d67bc744d4ed"
+      },
+      "labels": [
+        "Formula"
+      ],
+      "op": "node_update",
+      "set": {
+        "display_form": "pāvako asmabhyaṃ śivo bhava",
+        "display_form_basis": "RENDERED_COMPARISON_FORM_NOT_AN_ATTESTED_SPELLING",
+        "display_form_corroboration": "CORROBORATED_BY_INDEPENDENT_REBUILD"
+      },
+      "untouched": [
+        "formula_id",
+        "collapsed",
+        "normalized"
+      ]
+    },
+    {
+      "before": {
+        "display_form": "cakṣuryajñena kalpatāᳪṃ"
+      },
+      "gap": "GAP-FORMULA-003",
+      "group": "A1_FORMULA_DISPLAY_FORM_REPAIR",
+      "key": {
+        "formula_id": "VG:ENRICH:FORMULA:b43cb11d18bf35e6846928b0022001b6"
+      },
+      "labels": [
+        "Formula"
+      ],
+      "op": "node_update",
+      "set": {
+        "display_form": "cakṣuryajñena kalpatāṃ",
+        "display_form_basis": "RENDERED_COMPARISON_FORM_NOT_AN_ATTESTED_SPELLING",
+        "display_form_corroboration": "CORROBORATED_BY_INDEPENDENT_REBUILD"
+      },
+      "untouched": [
+        "formula_id",
+        "collapsed",
+        "normalized"
+      ]
+    },
+    {
+      "before": {
+        "display_form": "hotā yakṣadvanaspatiᳪṃ śamitāraᳪṃ śatakratuṃ"
+      },
+      "gap": "GAP-FORMULA-003",
+      "group": "A1_FORMULA_DISPLAY_FORM_REPAIR",
+      "key": {
+        "formula_id": "VG:ENRICH:FORMULA:bb67aba77f54be9e57adb6969f7b8f5a"
+      },
+      "labels": [
+        "Formula"
+      ],
+      "op": "node_update",
+      "set": {
+        "display_form": "hotā yakṣadvanaspatiṃ śamitāraṃ śatakratuṃ",
+        "display_form_basis": "RENDERED_COMPARISON_FORM_NOT_AN_ATTESTED_SPELLING",
+        "display_form_corroboration": "CORROBORATED_BY_INDEPENDENT_REBUILD"
+      },
+      "untouched": [
+        "formula_id",
+        "collapsed",
+        "normalized"
+      ]
+    },
+    {
+      "before": {
+        "display_form": "teṣāᳪṃ sahasrayojane va dhanvāni tanmasi"
+      },
+      "gap": "GAP-FORMULA-003",
+      "group": "A1_FORMULA_DISPLAY_FORM_REPAIR",
+      "key": {
+        "formula_id": "VG:ENRICH:FORMULA:c98114b1c429186ed258f6f975ea7aac"
+      },
+      "labels": [
+        "Formula"
+      ],
+      "op": "node_update",
+      "set": {
+        "display_form": "teṣāṃ sahasrayojane va dhanvāni tanmasi",
+        "display_form_basis": "RENDERED_COMPARISON_FORM_NOT_AN_ATTESTED_SPELLING",
+        "display_form_corroboration": "CORROBORATED_BY_INDEPENDENT_REBUILD"
+      },
+      "untouched": [
+        "formula_id",
+        "collapsed",
+        "normalized"
+      ]
+    },
+    {
+      "before": {
+        "display_form": "mā hiᳪṃsīḥ parame vyoman"
+      },
+      "gap": "GAP-FORMULA-003",
+      "group": "A1_FORMULA_DISPLAY_FORM_REPAIR",
+      "key": {
+        "formula_id": "VG:ENRICH:FORMULA:cfcb186840de90c077f51e0dced50ee6"
+      },
+      "labels": [
+        "Formula"
+      ],
+      "op": "node_update",
+      "set": {
+        "display_form": "mā hiṃsīḥ parame vyoman",
+        "display_form_basis": "RENDERED_COMPARISON_FORM_NOT_AN_ATTESTED_SPELLING",
+        "display_form_corroboration": "CORROBORATED_BY_INDEPENDENT_REBUILD"
+      },
+      "untouched": [
+        "formula_id",
+        "collapsed",
+        "normalized"
+      ]
+    },
+    {
+      "before": {
+        "display_form": "oṣadhe trāyasva svadhite mainaᳪṃ hiᳪṃsīḥ"
+      },
+      "gap": "GAP-FORMULA-003",
+      "group": "A1_FORMULA_DISPLAY_FORM_REPAIR",
+      "key": {
+        "formula_id": "VG:ENRICH:FORMULA:d16ff5f78da09841295931f32b681559"
+      },
+      "labels": [
+        "Formula"
+      ],
+      "op": "node_update",
+      "set": {
+        "display_form": "oṣadhe trāyasva svadhite mainaṃ hiṃsīḥ",
+        "display_form_basis": "RENDERED_COMPARISON_FORM_NOT_AN_ATTESTED_SPELLING",
+        "display_form_corroboration": "CORROBORATED_BY_INDEPENDENT_REBUILD"
+      },
+      "untouched": [
+        "formula_id",
+        "collapsed",
+        "normalized"
+      ]
+    },
+    {
+      "before": {
+        "display_form": "stomaḥ pṛthivyāᳪṃ śrayatu"
+      },
+      "gap": "GAP-FORMULA-003",
+      "group": "A1_FORMULA_DISPLAY_FORM_REPAIR",
+      "key": {
+        "formula_id": "VG:ENRICH:FORMULA:d85c9ef266325c322cf475ef224d3539"
+      },
+      "labels": [
+        "Formula"
+      ],
+      "op": "node_update",
+      "set": {
+        "display_form": "stomaḥ pṛthivyāṃ śrayatu",
+        "display_form_basis": "RENDERED_COMPARISON_FORM_NOT_AN_ATTESTED_SPELLING",
+        "display_form_corroboration": "CORROBORATED_BY_INDEPENDENT_REBUILD"
+      },
+      "untouched": [
+        "formula_id",
+        "collapsed",
+        "normalized"
+      ]
+    },
+    {
+      "before": {
+        "display_form": "tasmādenaso viśvānmuñcatvaᳪṃhasaḥ"
+      },
+      "gap": "GAP-FORMULA-003",
+      "group": "A1_FORMULA_DISPLAY_FORM_REPAIR",
+      "key": {
+        "formula_id": "VG:ENRICH:FORMULA:dc637f20a5ca123a4d9415f9830b9f93"
+      },
+      "labels": [
+        "Formula"
+      ],
+      "op": "node_update",
+      "set": {
+        "display_form": "tasmādenaso viśvānmuñcatvaṃhasaḥ",
+        "display_form_basis": "RENDERED_COMPARISON_FORM_NOT_AN_ATTESTED_SPELLING",
+        "display_form_corroboration": "CORROBORATED_BY_INDEPENDENT_REBUILD"
+      },
+      "untouched": [
+        "formula_id",
+        "collapsed",
+        "normalized"
+      ]
+    },
+    {
+      "before": {
+        "display_form": "pṛthivīṃ dṛᳪṃha"
+      },
+      "gap": "GAP-FORMULA-003",
+      "group": "A1_FORMULA_DISPLAY_FORM_REPAIR",
+      "key": {
+        "formula_id": "VG:ENRICH:FORMULA:e089d47dabafb70fc841c06555962f27"
+      },
+      "labels": [
+        "Formula"
+      ],
+      "op": "node_update",
+      "set": {
+        "display_form": "pṛthivīṃ dṛṃha",
+        "display_form_basis": "RENDERED_COMPARISON_FORM_NOT_AN_ATTESTED_SPELLING",
+        "display_form_corroboration": "CORROBORATED_BY_INDEPENDENT_REBUILD"
+      },
+      "untouched": [
+        "formula_id",
+        "collapsed",
+        "normalized"
+      ]
+    },
+    {
+      "before": {
+        "display_form": "ṛtena satyamindriyaṃ vipānaᳪṃ śukramandhasa indrasyendriyamidaṃ payo mṛtaṃ madhu"
+      },
+      "gap": "GAP-FORMULA-003",
+      "group": "A1_FORMULA_DISPLAY_FORM_REPAIR",
+      "key": {
+        "formula_id": "VG:ENRICH:FORMULA:e4f64186e52e5afb81ee28d15ec98a9e"
+      },
+      "labels": [
+        "Formula"
+      ],
+      "op": "node_update",
+      "set": {
+        "display_form": "ṛtena satyamindriyaṃ vipānaṃ śukramandhasa indrasyendriyamidaṃ payo mṛtaṃ madhu",
+        "display_form_basis": "RENDERED_COMPARISON_FORM_NOT_AN_ATTESTED_SPELLING",
+        "display_form_corroboration": "CORROBORATED_BY_INDEPENDENT_REBUILD"
+      },
+      "untouched": [
+        "formula_id",
+        "collapsed",
+        "normalized"
+      ]
+    }
+  ],
+  "rows": 23
+}

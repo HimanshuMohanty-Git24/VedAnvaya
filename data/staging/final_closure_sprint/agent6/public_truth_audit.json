@@ -1,0 +1,175 @@
+{
+  "artifact": "AGENT_6_PUBLIC_TRUTH_AUDIT",
+  "agent": "AGENT_6_PRODUCT_SURFACE",
+  "scope_searched": [
+    "frontend/src/app/** (about, sources, limits, vedas, insights, ask, explore, rituals, entities, devatas, passage, search, visualizations, connections, reuse, formulas, formula-families, material-culture, graph, home)",
+    "frontend/src/components/** (home, world, lab, reader, corpus, shell, ask, brand)",
+    "frontend/src/lib/** including lib/world",
+    "frontend/public/** (data/home-world.json, data/provenance.json, world/world.json, world/world.labels.json, world/world.predicates.json, manifest.webmanifest)",
+    "frontend/scripts/**",
+    "src/vedagraph/api/** hard-coded caveats, scope statements and literal figures",
+    "src/vedagraph/domain/profiles.py, layer_figures.py"
+  ],
+  "method": "Every statement classified against a live measurement, never against another document. The two rules applied: a figure typed into prose is the only figure nothing can catch, so those were hunted specifically; and a limitation that is REAL was not weakened to reach zero.",
+  "corrected": [
+    {
+      "id": "STALE-01",
+      "surface": "frontend/src/lib/lab.ts:236 (rendered on /visualizations under 'Considered, and not drawn')",
+      "was": "No node in this graph carries a community, partition or cluster assignment, and none was computed.",
+      "classification_before": "STALE_DATA",
+      "falsified_by": [
+        "frontend/public/world/world.json ships communities {algorithm: louvain, resolution: 1.05, modularity: 0.5499637689295325, detected: 3591, drawn: 36, minSize: 24, unattached: 1371} and 36 named constellations, which the map draws",
+        "the canonical graph holds 12 :DeityCommunity partition artifacts (algorithm vg-deity-communities-v1, consensus over seeds 0-199)"
+      ],
+      "now": "No deity carries a community membership. A partition was computed and its twelve community records are stored, and not one of them has a member. The Louvain partition this map draws is over the whole world graph, not over the deities.",
+      "classification_after": "REAL_EVIDENCE_LIMITATION",
+      "still_true_because": "MATCH (d:Devata) WHERE d.community_id IS NOT NULL RETURN count(d) = 0"
+    },
+    {
+      "id": "STALE-02",
+      "surface": "frontend/src/components/home/world-preview-panel.tsx:52 (screen-reader text alternative on the home page)",
+      "was": "This is a small part of a graph of 35,370 subjects.",
+      "classification_before": "STALE_DATA",
+      "falsified_by": "frontend/public/world/world.json counts.nodes = 35648. frontend/scripts/build-world.mjs:118 records the drift: 'build joined 35,370 assignments onto 35,648 nodes without complaint'.",
+      "now": "This is a small part of the whole graph.",
+      "classification_after": "NOT_A_LIMITATION (figure removed rather than retyped, because the next value will drift too)",
+      "residual": "The literal 35,370 survives in ~18 code COMMENTS under frontend/src/lib/world/ and frontend/src/components/world/ (engine.ts, artifact.ts, world-view.tsx, graph-shell.tsx, world-preview.tsx). Not user-visible; they are performance notes recording measurements taken at that size. Left alone deliberately: rewriting a recorded measurement to a new number would destroy the measurement. Flagged for the lead."
+    },
+    {
+      "id": "STALE-03",
+      "surface": "frontend/src/components/world/relationship-inspector.tsx:137-148 (authoring comment asserting a verified figure)",
+      "was": "of the sixty predicates the exported vocabulary declares, eight declare a direction at all - five DIRECTED and three SYMMETRIC ... The figure to quote is 8 of 60, verified against world.predicates.json and the artifact's 48 edge types",
+      "classification_before": "STALE_DATA",
+      "falsified_by": "frontend/public/world/world.predicates.json counts = {predicates: 68, curated: 62, derived: 6, symmetric: 4, directed: 17, undeclared: 47}; world.json edgeTypes = 55",
+      "now": "No figure quoted. The comment records that it has been wrong twice and points at the artifact and at the new test.",
+      "classification_after": "NOT_A_LIMITATION",
+      "note": "The rendering behaviour was always data-driven; only the note was wrong. That is worse, not better: the next author trusts a sentence that says 'verified'."
+    },
+    {
+      "id": "STALE-04",
+      "surface": "frontend/src/app/vedas/page.tsx:43 and frontend/src/app/vedas/[veda]/page.tsx:48",
+      "was": "Collection -> Parvan -> Dasati -> Verse (index page) and Collection -> Prapathaka -> Dasati -> Verse (detail page) -- two contradictory statements, and a third shape in public/data/provenance.json",
+      "classification_before": "STALE_DATA",
+      "falsified_by": "Measured over 1,844 SV mantras: ['Collection','Prapathaka','Ardha','Dasati','Verse'] 1194, ['Collection','Prapathaka','Dasati','Verse'] 585, ['Collection','Dasati','Verse'] 55, ['Collection','Verse'] 10. 'Parvan' occurs nowhere in the Samaveda.",
+      "now": "Collection -> Prapathaka -> Ardha -> Dasati -> Verse on both pages, agreeing with the provenance artifact.",
+      "classification_after": "CURRENT_SCOPE_DECISION",
+      "residual": "The arcikas genuinely differ in depth; one string states the deepest shape. Pinned by frontend/tests/unit/world-figures.test.ts."
+    },
+    {
+      "id": "STALE-05",
+      "surface": "frontend/src/app/explore/page.tsx:27; src/vedagraph/api/app.py OpenAPI tag 'Rituals'; src/vedagraph/api/services/graph_service.py x5",
+      "was": "Eight modelled rites",
+      "classification_before": "STALE_DATA",
+      "falsified_by": "MATCH (r:Ritual) RETURN count(r) = 103; HAS_RITUAL_STEP = 3121",
+      "now": "The count is removed from prose in all six places; the endpoint serves it.",
+      "classification_after": "CURRENT_SCOPE_DECISION",
+      "still_true_because": "103 modelled rites against a corpus that names many more is still a curation ceiling, and the sentence says so without a number that will drift again."
+    },
+    {
+      "id": "STALE-06",
+      "surface": "frontend/src/app/about/page.tsx:211-222",
+      "was": "If you ask this product how many Samavedic verses carry an English translation, the answer is zero ... If you ask which Atharvavedic hymns are dedicated to Indra, the answer is that the traditional index which records dedications exists for the Rigveda and not for the Atharvaveda, so the question has no Atharvavedic answer in this build.",
+      "classification_before": "STALE_DATA (both halves)",
+      "falsified_by": [
+        "173 Samavedic verses carry an English rendering -- Griffith's Rigvedic one, over text verified identical, labelled as reuse. 'Zero' is true only of the corpus's OWN English.",
+        "4,160 Atharvavedic mantras carry 4,816 HAS_DEVATA_ASCRIPTION edges from the Whitney Anukramani, of which about 106 are Indra dedications (aindram 76, 'aindram uta vanaspatyam' 24, indradaivatam 3, aindra 3). The Atharvavedic answer is a list."
+      ],
+      "now": "Both halves rewritten: 'zero' is now scoped to a translation of its own with the borrowed rendering disclosed; the Atharvavedic dedication question returns a list, with the descriptor-versus-registry distinction stated.",
+      "classification_after": "REAL_EVIDENCE_LIMITATION"
+    },
+    {
+      "id": "STALE-07",
+      "surface": "frontend/src/app/sources/page.tsx:521-523",
+      "was": "The Samaveda has no released translation, so every translation-derived layer excludes it rather than being empty in it.",
+      "classification_before": "STALE_COPY",
+      "now": "The Samaveda has no translation of its own ... Where a Samavedic verse is verified identical to a Rigvedic one, the Rigvedic rendering is shown and labelled as borrowed; it is never counted as this collection's English and never used as independent evidence about it.",
+      "classification_after": "REAL_EVIDENCE_LIMITATION",
+      "measured": {"SV_own_english": 0, "SV_reused_rendering": 173, "SV_uncovered": 1671}
+    },
+    {
+      "id": "STALE-08",
+      "surface": "frontend/src/app/sources/page.tsx:530-535",
+      "was": "The traditional deity ascription is Rigvedic; the semantic layer is Rigvedic; the metre layer does not reach outside the Rigveda in a form these surfaces can read.",
+      "classification_before": "STALE_DATA",
+      "falsified_by": "The metre layer reaches 10,518 RV mantras and 4,068 AV mantras, and GET /api/v1/insights/devatas/{id}/by-metre reads the Atharvavedic ones and returns them. The 'in a form these surfaces can read' hedge is no longer true.",
+      "now": "The deity ascription that resolves to a named god is Rigvedic; the Atharvaveda has its own index and it records descriptive phrases rather than registry names. The semantic layer is Rigvedic. The metre layer reaches the Rigveda and the Atharvaveda and neither of the other two.",
+      "classification_after": "REAL_EVIDENCE_LIMITATION"
+    },
+    {
+      "id": "STALE-09",
+      "surface": "frontend/src/app/sources/page.tsx:313-322",
+      "was": "The traditional ascription exists for the Rigveda. ... a zero for the Atharvaveda would look like a statement about the Atharvaveda when it is a statement about which collections have a surviving index in this build.",
+      "classification_before": "STALE_DATA",
+      "falsified_by": "The Atharvaveda has a surviving index and it is in this build.",
+      "now": "Rewritten to name the real distinction: which index this build can join to the deity registry.",
+      "classification_after": "REAL_EVIDENCE_LIMITATION"
+    },
+    {
+      "id": "STALE-10",
+      "surface": "src/vedagraph/domain/profiles.py module docstring, ATTRIBUTION_VEDAS comment, attribution_metrics() scope_note",
+      "was": "The Anukramani attribution layer is Rigveda-only: 10,552 of 10,552 Rigvedic mantras carry a deity, and 0 of 5,839 Atharvavedic ... do.",
+      "classification_before": "STALE_DATA",
+      "falsified_by": "4,816 HAS_DEVATA_ASCRIPTION edges over 4,160 AV mantras, registry_namespace AV_WHITNEY_ANUKRAMANI",
+      "now": "Restated as a claim about HAS_DEVATA specifically, with the Atharvavedic descriptor layer named and the reason it is not counted.",
+      "classification_after": "REAL_EVIDENCE_LIMITATION",
+      "IMPORTANT": "The same false sentence is STORED on 26 DerivedMetric nodes and is SERVED by GET /api/v1/insights/devatas/{id}. Fixing the generating code does NOT reach the shipped payload. See proposed_mutations.json AGENT6-MUT-01."
+    },
+    {
+      "id": "STALE-11",
+      "surface": "src/vedagraph/api/services/insight_service.py, the Q23 capability card",
+      "was": "No community structure exists anywhere in this graph. No node carries a community, louvain or partition assignment, no modularity was computed and no partition is stored.",
+      "classification_before": "STALE_DATA",
+      "falsified_by": "12 :DeityCommunity partition artifacts are stored",
+      "now": "Rebuilt from a live probe: a partition exists, it has no members, and that is why the question is still unanswerable.",
+      "classification_after": "REAL_EVIDENCE_LIMITATION"
+    },
+    {
+      "id": "STALE-12",
+      "surface": "The whole limits catalogue, GET /api/v1/insights/capabilities",
+      "was": "Seven cards, and the frozen V3.3 grade copied forward as the published verdict.",
+      "classification_before": "STALE_DATA for three of the twenty-one dimensions",
+      "falsified_by": "Q7 -- a reuse transformation typology now covers 6,271 of 6,596 edges over a 15-value vocabulary; Q23/Q37/Q97 -- a community partition exists; Q97 -- TIER_A now carries 8,129 passage-to-entity assertions; Q54 -- one ontology domain is now declared (219 concepts).",
+      "now": "Every card carries benchmark_verdict beside a verdict measured on this request, and where they differ the card says the graph has moved. Q7 now publishes PARTIALLY_ANSWERABLE against a frozen NOT_ANSWERABLE.",
+      "classification_after": "REAL_EVIDENCE_LIMITATION (20 cards) / PARTIAL capability (2 cards)"
+    },
+    {
+      "id": "STALE-13",
+      "surface": "src/vedagraph/api/services/search_service.py, the NORMALIZED_SANSKRIT_PHRASE rung",
+      "was": "The rung bound the raw query against sentinel-folded text and returned nothing for every non-ASCII query.",
+      "classification_before": "IMPLEMENTATION_NOT_FINISHED",
+      "now": "The query is folded by the same SEARCH_NORMALIZED call that produced the text. Measured on the rung: rtasya 0 -> 94, rsi 0 -> 33, somam 0 -> 34, indra 0 -> 571, agnim 0 -> 19, devasya 0 -> 40.",
+      "classification_after": "REAL_EVIDENCE_LIMITATION",
+      "surviving_limitation": "The SEARCH_DERIVATIVE layer covers one corpus (AV, 5,839 passages), so the rung reaches AV only. That is a coverage fact, not a query defect, and Agent 3's staged import extends it to all four."
+    }
+  ],
+  "surviving_limitations_verified_real": [
+    {"surface": "frontend/src/app/page.tsx:471-478 and /sources:492-496", "statement": "No Samavedic recording is catalogued here; the source publishes Samavedic verse text and no Samavedic audio.", "classification": "REAL_EXTERNAL_SOURCE_LIMITATION"},
+    {"surface": "frontend/src/app/sources/page.tsx:508-513, /vedas:50, home NOT_HELD", "statement": "The Samavedic gana corpus is absent; nothing here shows, notates or infers melody.", "classification": "REAL_EXTERNAL_SOURCE_LIMITATION"},
+    {"surface": "frontend/src/app/sources/page.tsx:515-518, /vedas:51", "statement": "The Krishna Yajurveda is absent entirely, and the Atharvavedic Paippalada recension with it.", "classification": "CURRENT_SCOPE_DECISION"},
+    {"surface": "frontend/src/app/page.tsx:520-523, insight_service cross-Veda matrix", "statement": "Non-lexical resemblance was never built at all, so that row reads as unbuilt rather than as zero.", "classification": "REAL_EVIDENCE_LIMITATION", "measured": "0 resemblance edges, 0 nodes carrying an embedding, no vector index"},
+    {"surface": "frontend/src/app/sources/page.tsx:115, home:117", "statement": "Direction is expensive to establish and exists here for one corpus pair.", "classification": "REAL_EVIDENCE_LIMITATION", "measured": "1,684 of 6,596 reuse edges stored as directed, all of them RV-SV, on one tradition-level prior"},
+    {"surface": "frontend/src/app/sources/page.tsx:80, :131", "statement": "The semantic layer reaches the Rigveda only and is permanently marked as a candidate.", "classification": "REAL_EVIDENCE_LIMITATION", "measured": "4,865 assertions, 0 outside the Rigveda"},
+    {"surface": "frontend/src/app/sources/page.tsx:537-541", "statement": "Lexical counts are minima. At least one cell in the metals grid is known to be wrong and is labelled rather than corrected.", "classification": "REAL_EVIDENCE_LIMITATION"},
+    {"surface": "frontend/src/app/sources/page.tsx:459-464, :548-551", "statement": "The model is not the database; answer quality depends in part on which model is configured.", "classification": "REAL_EVIDENCE_LIMITATION"},
+    {"surface": "frontend/src/app/limits/page.tsx:46-49", "statement": "This catalogue is not exhaustive. It records the limits the benchmark graded and probed.", "classification": "CURRENT_SCOPE_DECISION", "note": "Still true and must stay, but the API's version of it now states the measured completeness: every one of the 21 NOT_ANSWERABLE dimensions is published, and the residual is that the benchmark is 100 questions rather than every question. The frontend copy should be regenerated from the API's caveat in Wave D/E."},
+    {"surface": "frontend/src/app/sources/page.tsx:144", "statement": "UNKNOWN: No licence statement established.", "classification": "REAL_EXTERNAL_SOURCE_LIMITATION"},
+    {"surface": "frontend/src/app/sources/page.tsx:529-535", "statement": "The mention layer is not one instrument: Rigvedic mentions come from a manual lemma annotation, the other three are surface-token matches.", "classification": "REAL_EVIDENCE_LIMITATION"},
+    {"surface": "audio review state", "statement": "1,021 recordings are NEEDS_AUDIBLE_REVIEW with 0 verified and 0 rejected.", "classification": "PENDING_MANUAL_VERIFICATION", "note": "Owned by the audio agent; Agent 6 did not re-measure it. Listed so it is not mistaken for an evidence limitation -- it is work not yet done by a human."}
+  ],
+  "flagged_not_corrected": [
+    {"surface": "frontend/src/app/sources/page.tsx:85", "statement": "There are six of these [interpretive claims] in the whole build", "measured": "MATCH (c:InterpretiveClaim) RETURN count(c) = 6", "verdict": "CORRECT as of this measurement, but hand-typed. Should read from the API.", "classification": "PENDING_MANUAL_VERIFICATION"},
+    {"surface": "frontend/src/app/sources/page.tsx:418-421 ('Seven kinds are carried') vs frontend/src/app/page.tsx:515-517 ('five kinds') vs the transmission plate ('eight classes')", "verdict": "Three different counts of cross-corpus relationship kinds on three surfaces. All three are hand-typed. Not corrected here: the correct number depends on which population is meant (built classes, drawn classes, or classes including the NOT_BUILT rows) and that is an editorial decision.", "classification": "PENDING_MANUAL_VERIFICATION"},
+    {"surface": "frontend/src/components/veda-audio-panel.tsx:10,88 ('10,402 recitations') vs frontend/public/data/provenance.json VEDSEARCH ('16,834 verse recitations')", "verdict": "Two figures for the same thing on two surfaces, one of them shipped in a public artifact. Not corrected: the audio catalogue is another agent's territory this sprint.", "classification": "PENDING_MANUAL_VERIFICATION"},
+    {"surface": "frontend/src/app/about/page.tsx:182-184 and :352 ('seven figures' / 'Seven plates')", "verdict": "Hand-typed against an array the index page computes from. Correct today.", "classification": "PENDING_MANUAL_VERIFICATION"},
+    {"surface": "frontend/src/app/about/page.tsx:118-120 ('the eight things it would average')", "verdict": "Hand-typed, and it disagrees with the 'five kinds'/'seven kinds' figures elsewhere.", "classification": "PENDING_MANUAL_VERIFICATION"},
+    {"surface": "frontend/src/lib/world/predicates.ts:24 ('44 of 57 predicates') and frontend/src/lib/world/focus.ts:139 ('48 edge types ... 12 further predicates')", "verdict": "Two more stale predicate figures in comments, both contradicted by world.predicates.json (68) and world.json (55 edge types). Left as comments; flagged.", "classification": "PENDING_MANUAL_VERIFICATION"},
+    {"surface": "~18 code comments under frontend/src/lib/world/ and frontend/src/components/world/ quoting 35,370", "verdict": "Performance measurements taken at that graph size. Deliberately not rewritten: changing a recorded measurement destroys it. They should be annotated with the size they were taken at rather than renumbered.", "classification": "PENDING_MANUAL_VERIFICATION"},
+    {"surface": "src/vedagraph/domain/profiles.py DevataProfile.mention_scope docstring and neighbours", "verdict": "Further sentences in the same module use 'attribution' where they mean HAS_DEVATA. Corrected at the three load-bearing sites; the rest is wording, not falsehood.", "classification": "PENDING_MANUAL_VERIFICATION"}
+  ],
+  "target_status": {
+    "STALE_DATA": {"found": 9, "remaining_user_visible": 0, "remaining_in_comments": 3},
+    "STALE_COPY": {"found": 2, "remaining": 0},
+    "IMPLEMENTATION_NOT_FINISHED": {"found": 1, "remaining": 0},
+    "KNOWN_REBUILD_REQUIRED": {"found": 1, "remaining": 1, "which": "AGENT6-MUT-01 -- 26 stored DerivedMetric scope_notes. The code is fixed; the graph is not, and Agent 6 may not write to it."}
+  }
+}

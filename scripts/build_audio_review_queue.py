@@ -108,11 +108,54 @@ def main() -> int:
     # The two files disagree about the field name (audio_yv writes source_name, audio_av
     # writes name), which is why both are read rather than one assumed.
     source_names: dict[str, str] = {}
+    source_rights: dict[str, dict[str, Any]] = {}
     for domain, _, _, _ in strata:
         for source in read_jsonl(STAGING / domain / "sources.jsonl"):
             name = source.get("source_name") or source.get("name")
             if source.get("source_id") and name:
                 source_names[str(source["source_id"])] = str(name)
+            # The rights statement is spread over three field names, not one: `licence`
+            # carries a declared licence where a source has one, and the researched finding
+            # where it does not is under `rights_note` in the RV and AV files but
+            # `licence_note` in the YV one. Reading only `licence` reports every source but
+            # Vedavani as blank; reading only `rights_note` still leaves the 33 YV rows
+            # blank. The value space is enumerated here rather than assumed.
+            if source.get("source_id"):
+                source_rights[str(source["source_id"])] = {
+                    "licence": source.get("licence"),
+                    "rights_note": source.get("rights_note") or source.get("licence_note"),
+                }
+
+    # The same records keyed by source NAME too, because the span rows below carry a name
+    # from the product catalogue and no source_id at all.
+    rights_by_name: dict[str, dict[str, Any]] = {
+        source_names[sid]: rights
+        for sid, rights in source_rights.items()
+        if sid in source_names
+    }
+
+    def stated_licence(row: dict[str, Any], payload: dict[str, Any]) -> str:
+        """The licence, or the researched reason there is none -- never a bare null.
+
+        An empty licence cell reads as "unencumbered", and for the largest source here that
+        is the opposite of the truth: VedSearch serves 819 of these rows under *"No licence
+        statement."* A reviewer seeing a blank cannot tell a researched absence apart from a
+        field nobody filled in, so the absence is typed into the row rather than left to a
+        caveat somewhere else to carry.
+        """
+        explicit = payload.get("licence") or payload.get("license")
+        if explicit:
+            return str(explicit)
+        source_id = row.get("source_id")
+        rights = source_rights.get(str(source_id)) if source_id else None
+        if rights is None:
+            rights = rights_by_name.get(str(payload.get("source_name") or ""))
+        if rights:
+            if rights.get("licence"):
+                return str(rights["licence"])
+            if rights.get("rights_note"):
+                return f"NO_DECLARED_LICENCE -- {rights['rights_note']}"
+        return "NOT_RECORDED_IN_SOURCE_REGISTRY"
 
     def named_source(row: dict[str, Any], payload: dict[str, Any]) -> str | None:
         """The source's name, or its id, or its attribution -- never silently nothing.
@@ -211,6 +254,12 @@ def main() -> int:
                 "media_url": cat.get("media_url"),
                 "duration_seconds": cat.get("duration_seconds"),
                 "source_name": cat.get("source_name"),
+                # This stratum was appended after the Wave 4 provenance fix and built its row
+                # by hand, so it silently skipped both provenance fields the other path
+                # carries -- 61 of 1,021 rows reached a reviewer with no licence and no
+                # attribution at all. One resolver now serves both paths.
+                "licence": stated_licence(cat, cat),
+                "attribution": cat.get("attribution"),
                 "performer": cat.get("performer"),
                 "start_seconds": cat.get("start_seconds"),
                 "end_seconds": cat.get("end_seconds"),
@@ -272,7 +321,7 @@ def main() -> int:
                     "duration_seconds": payload.get("duration_seconds"),
                     "source_name": named_source(r, payload),
                     "source_id": r.get("source_id"),
-                    "licence": payload.get("licence"),
+                    "licence": stated_licence(r, payload),
                     "attribution": payload.get("attribution"),
                     "performer": payload.get("performer"),
                     "start_seconds": payload.get("start_seconds"),

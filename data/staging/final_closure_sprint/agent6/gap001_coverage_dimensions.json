@@ -1,0 +1,115 @@
+{
+  "artifact": "gap001_coverage_dimensions",
+  "at": "2026-09-16T17:48:28.069194+00:00",
+  "head": "b4b1b0beba1c499e832150b0b9363d7258e40a26",
+  "agent": "AGENT_6_PRODUCT_SURFACE",
+  "gap": "GAP-PRODUCT_SURFACE-001",
+  "declared_closure_test": "No endpoint returns a Veda in both vedas_in_scope and vedas_not_covered, and any multi-dimension response reports coverage per dimension.",
+  "before": {
+    "endpoint": "GET /api/v1/insights/devatas/VG:DEVATA:INDRAH",
+    "coverage.vedas_in_scope": [
+      "RV",
+      "AV",
+      "YV",
+      "SV"
+    ],
+    "coverage.vedas_not_covered": [
+      "AV",
+      "YV",
+      "SV"
+    ],
+    "coverage.measured": {
+      "AV": 635,
+      "YV": 221,
+      "SV": 405,
+      "RV": 2305
+    },
+    "vedas_in_both": [
+      "AV",
+      "YV",
+      "SV"
+    ]
+  },
+  "after": {
+    "coverage": {
+      "vedas_in_scope": [
+        "RV",
+        "AV",
+        "YV",
+        "SV"
+      ],
+      "vedas_not_covered": [],
+      "measured": {
+        "AV": 635,
+        "YV": 221,
+        "SV": 405,
+        "RV": 2305
+      },
+      "denominator": {
+        "RV": 10552,
+        "AV": 5839,
+        "YV": 1975,
+        "SV": 1844
+      },
+      "dimensions": [
+        {
+          "dimension": "naming",
+          "vedas_in_scope": [
+            "RV",
+            "AV",
+            "YV",
+            "SV"
+          ],
+          "vedas_not_covered": [],
+          "measured": {
+            "AV": 635,
+            "YV": 221,
+            "SV": 405,
+            "RV": 2305
+          },
+          "denominator": {
+            "RV": 10552,
+            "AV": 5839,
+            "YV": 1975,
+            "SV": 1844
+          },
+          "means": "Passages whose text names this deity, at the requested certainty tiers. The mention layer reaches all four corpora, so a corpus missing from measured had no mention edge at those tiers rather than an absent layer."
+        },
+        {
+          "dimension": "ascription",
+          "vedas_in_scope": [
+            "RV"
+          ],
+          "vedas_not_covered": [
+            "AV",
+            "YV",
+            "SV"
+          ],
+          "measured": {
+            "RV": 2869
+          },
+          "denominator": {
+            "RV": 10552
+          },
+          "means": "Passages the traditional apparatus dedicates to this deity. The scope here is the LAYER's, not this deity's: a deity with no Rigvedic dedication still has RV in scope, because its zero is an absent dedication inside a covered corpus. Never summed with naming."
+        }
+      ]
+    }
+  },
+  "sweep": {
+    "routes_requested": 32,
+    "routes_unreachable": [],
+    "coverage_blocks_inspected": 34,
+    "vedas_in_both_anywhere": []
+  },
+  "measured_value_of_the_closure_test": {
+    "endpoints_with_a_veda_in_both": 0,
+    "multi_dimension_response_reports_per_dimension": [
+      "naming",
+      "ascription"
+    ]
+  },
+  "tests": [
+    "tests/api/test_coverage_dimensions.py"
+  ]
+}

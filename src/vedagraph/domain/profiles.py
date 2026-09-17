@@ -9,12 +9,21 @@ that evolution must be *computed, not asserted* -- there is to be no
 measurement, and :mod:`vedagraph.domain.claims` is the only place allowed to say what a
 measurement might mean.
 
-**The coverage limit is part of the profile, not a footnote to it.** The Anukramaṇī
-attribution layer is Rigveda-only: 10,552 of 10,552 Rigvedic mantras carry a deity, and
-0 of 5,839 Atharvavedic, 0 of 1,975 Yajurvedic and 0 of 1,844 Sāmavedic ones do. So a
-profile that reported "Indra: RV 2869, SV 0, YV 0, AV 0" would be read as *Indra is absent
-from the other three Vedas*, which is false and is the single most misleading sentence
-this layer could produce. Every profile therefore carries
+**The coverage limit is part of the profile, not a footnote to it.** The ``HAS_DEVATA``
+layer -- attribution to a deity in the registry -- is Rigveda-only: 10,552 of 10,552
+Rigvedic mantras carry one and no mantra of any other corpus does. So a profile that
+reported "Indra: RV 2869, SV 0, YV 0, AV 0" would be read as *Indra is absent from the
+other three Vedas*, which is false and is the single most misleading sentence this layer
+could produce.
+
+**This is NOT the same as "the Anukramaṇī is Rigveda-only", and that wider sentence is
+false.** Measured: 4,160 Atharvavedic mantras carry 4,816 ``HAS_DEVATA_ASCRIPTION`` edges
+read off Whitney's Anukramaṇī brackets, and 106 of them are dedications to Indra
+(``āindram`` and its variants). Those ascriptions are *descriptors* -- adjectival phrases
+like ``āgneyam`` -- and are not resolved into the deity registry, which is why they are a
+separate predicate and are not counted here. The distinction to keep is between a layer
+that does not exist for a corpus and a layer that exists in a form this one cannot join
+to; only the first is a coverage limit. Every profile therefore carries
 :attr:`DevataProfile.attribution_scope` naming the Vedas the attribution layer covers, and
 cross-Veda presence is reported separately and only from the mention layer, which does
 span four Vedas.
@@ -44,9 +53,63 @@ from vedagraph.domain.theonyms import (
     mention_verdict,
 )
 
-#: Vedas whose mantras carry an Anukramaṇī deity/ṛṣi/metre attribution. Measured, not
+#: Vedas whose mantras carry a ``HAS_DEVATA`` edge to a resolved deity. Measured, not
 #: assumed: see the module docstring for the counts.
+#:
+#: Deliberately NOT "Vedas with an Anukramaṇī", which this constant used to claim and which
+#: is false: the Atharvaveda has one, and 4,160 of its mantras carry ascription descriptors
+#: from it. Those descriptors are a different predicate with a different value space and
+#: are not resolved into the deity registry, so they are out of scope for this constant and
+#: in scope for any sentence about what the corpus records.
+#:
+#: .. warning::
+#:
+#:    **Do not widen this to ``("RV", "AV")``.** That change has been proposed as the
+#:    follow-on to the Atharvavedic derived-dedication import, and it would be wrong,
+#:    because it collapses three predicates that this build deliberately keeps apart:
+#:
+#:    ``HAS_DEVATA``            attribution resolved to a registry deity. Rigveda-only, and
+#:                              the import does not add one of these.
+#:    ``HAS_DEVATA_DERIVED``    resolved from an Anukramaṇī descriptor by morphology. The
+#:                              import creates these for the Atharvaveda.
+#:    ``HAS_DEVATA_ASCRIPTION`` the raw descriptor, unresolved. Atharvavedic, and never
+#:                              counted as an attribution to a named deity.
+#:
+#:    Widening the constant makes "HAS_DEVATA reaches AV" true in prose while the predicate
+#:    itself still has no Atharvavedic edge, which is the same defect in the other
+#:    direction. Nothing in this module should read a corpus list out of a constant at all
+#:    any more: see :func:`measure_attribution_scope`, which measures the reach of every
+#:    member of the family and is what the published sentences interpolate.
 ATTRIBUTION_VEDAS: tuple[str, ...] = ("RV",)
+
+#: The deity-attribution predicate family, with what each member asserts. Enumerated rather
+#: than discovered, because a predicate with no edges must still be reported -- a family
+#: discovered from the data cannot distinguish "this predicate reaches no corpus" from
+#: "this predicate was never built", and those are the two things the scope note exists to
+#: keep apart. Order is from strongest claim to weakest.
+ATTRIBUTION_PREDICATES: tuple[tuple[str, str], ...] = (
+    (
+        "HAS_DEVATA",
+        "attribution resolved to a deity in the registry, as the source states it",
+    ),
+    (
+        "HAS_DEVATA_DERIVED",
+        "attribution resolved from an Anukramani descriptor by morphology, so the "
+        "resolution is this project's and the dedication is the source's",
+    ),
+    (
+        "HAS_DEVATA_ASCRIPTION",
+        "the raw Anukramani descriptor, never resolved to a registry deity and never "
+        "counted as an attribution to a named god",
+    ),
+)
+
+#: The predicates ``DEVATA_ATTRIBUTION_BY_VEDA`` actually counts. One name, in one place,
+#: read by the metric's ``values``, its ``method`` string and its ``scope_note`` alike, so a
+#: build that widens what it counts cannot leave the method or the note describing the
+#: narrower set. That divergence -- figure right, sentence wrong -- is the failure this
+#: whole module has now produced twice.
+COUNTED_ATTRIBUTION_PREDICATES: tuple[str, ...] = ("HAS_DEVATA",)
 
 #: All four, for the layers that do span the corpus.
 ALL_VEDAS: tuple[str, ...] = ("RV", "SV", "YV", "AV")
@@ -75,6 +138,10 @@ class DevataProfile:
     display_label: str
     #: Every HAS_DEVATA edge, by Veda. Only ``ATTRIBUTION_VEDAS`` can be non-zero.
     attributed_mantras: dict[str, int] = field(default_factory=dict)
+    #: ``{predicate: [veda, ...]}`` for the whole attribution family, measured when this
+    #: profile was computed. Empty means it was not measured, and the metrics built from
+    #: this profile then say so rather than declaring a scope they did not check.
+    attribution_layer_scope: dict[str, list[str]] = field(default_factory=dict)
     #: The subset the source states of the mantra itself, not of its enclosing sūkta.
     attributed_per_passage: int = 0
     attributed_inherited: int = 0
@@ -240,12 +307,23 @@ def _pairs(session: Session, query: str, **parameters: Any) -> list[tuple[str, i
     ]
 
 
-def compute_profile(session: Session, entity_key: str) -> DevataProfile:
+def compute_profile(
+    session: Session,
+    entity_key: str,
+    *,
+    attribution_scope: dict[str, list[str]] | None = None,
+) -> DevataProfile:
     """Count everything the graph already knows about one deity.
 
     One query per dimension rather than one joined query, because a single query joining
     ṛṣis, metres, concepts and co-attributions over 2,869 passages multiplies rows and the
     counts come back inflated. Separate aggregations are slower to write and correct.
+
+    ``attribution_scope`` is the whole family's measured reach. It is the same for every
+    deity, so a caller building many profiles should measure it once with
+    :func:`measure_attribution_scope` and pass it in; a caller that does not gets it
+    measured here rather than declared, because a default that declares is how the scope
+    note came to assert a Rigveda-only layer that nothing had checked.
     """
     header = session.run(
         """
@@ -257,6 +335,11 @@ def compute_profile(session: Session, entity_key: str) -> DevataProfile:
     profile = DevataProfile(
         entity_key=entity_key,
         display_label=str(header["label"]) if header else entity_key,
+        attribution_layer_scope=(
+            attribution_scope
+            if attribution_scope is not None
+            else measure_attribution_scope(session)
+        ),
     )
 
     for record in session.run(
@@ -547,6 +630,90 @@ class DerivedMetric:
         }
 
 
+def measure_attribution_scope(session: Session) -> dict[str, list[str]]:
+    """Which corpora each deity-attribution predicate actually reaches, measured now.
+
+    Returns ``{predicate: [veda, ...]}`` for every member of
+    :data:`ATTRIBUTION_PREDICATES`, including the members that reach nothing -- an absent
+    key and an empty list mean different things, and only the empty list says "this
+    predicate exists in the vocabulary and has no edge".
+
+    **Why this is a measurement and not a constant.** The sentence these figures feed was
+    wrong twice for the same structural reason. First it said the Anukramaṇī layer was
+    Rigveda-only, which was false because a second predicate carried 4,816 Atharvavedic
+    edges. Corrected, it said ``HAS_DEVATA`` is Rigveda-only, which is true and stops being
+    *adequate* the moment a third predicate lands 882 Atharvavedic dedications: the figure
+    stays right and the reader still infers that the Atharvaveda has no deity attribution.
+
+    A prose fix cannot survive that, because the next predicate is always one import away.
+    So the reach is read off the graph at generation time and the sentence is assembled
+    from it. A predicate that appears widens the sentence with no edit; a predicate that is
+    retired narrows it.
+    """
+    reach: dict[str, list[str]] = {name: [] for name, _ in ATTRIBUTION_PREDICATES}
+    for record in session.run(
+        """
+        MATCH (p:Passage)-[r]->(:Devata)
+        WHERE type(r) IN $predicates
+        RETURN type(r) AS predicate, collect(DISTINCT p.veda) AS vedas
+        """,
+        predicates=[name for name, _ in ATTRIBUTION_PREDICATES],
+    ):
+        reach[str(record["predicate"])] = sorted(
+            str(veda) for veda in record["vedas"] if veda is not None
+        )
+    # The descriptor layer hangs off :DevataAscription, not :Devata, so the join above
+    # cannot see it. Measured separately rather than merged, because keeping the two
+    # joins apart is the same distinction the sentence is being built to state.
+    for record in session.run(
+        """
+        MATCH (p:Passage)-[:HAS_DEVATA_ASCRIPTION]->(:DevataAscription)
+        RETURN collect(DISTINCT p.veda) AS vedas
+        """
+    ):
+        reach["HAS_DEVATA_ASCRIPTION"] = sorted(
+            str(veda) for veda in (record["vedas"] or []) if veda is not None
+        )
+    return reach
+
+
+def _reach_sentence(scope: dict[str, list[str]]) -> str:
+    """The measured reach of every attribution predicate, as one readable clause.
+
+    Returns a sentence that says the scope was **not measured** when it was not, rather
+    than falling back on a declaration. A fallback here would be a validator that silently
+    skips: the caller would get a confident Rigveda-only sentence with nothing behind it,
+    which is exactly the state this function replaced.
+    """
+    if not scope:
+        return (
+            "The reach of the deity-attribution predicates was NOT measured for this "
+            "build, so no statement about which corpora carry an attribution is made here. "
+            "Query the predicates directly rather than inferring a scope from this metric."
+        )
+    parts = []
+    for name, means in ATTRIBUTION_PREDICATES:
+        vedas = scope.get(name)
+        if vedas is None:
+            continue
+        where = ", ".join(vedas) if vedas else "no corpus"
+        parts.append(f"{name} reaches {where} ({means})")
+    return (
+        "Measured reach of each deity-attribution predicate in this build: "
+        + "; ".join(parts)
+        + "."
+    )
+
+
+def _counted_clause() -> str:
+    counted = ", ".join(COUNTED_ATTRIBUTION_PREDICATES)
+    return (
+        f"This figure counts {counted} and nothing else."
+        if len(COUNTED_ATTRIBUTION_PREDICATES) == 1
+        else f"This figure counts {counted}, and no other predicate."
+    )
+
+
 def metric_id(metric_name: str, subject_key: str) -> str:
     """Deterministic id, so a rebuild MERGEs rather than duplicating."""
     return f"VG:METRIC:{metric_name}:{subject_key}"
@@ -560,11 +727,20 @@ def attribution_metrics(profile: DevataProfile) -> list[DerivedMetric]:
             metric_name="DEVATA_ATTRIBUTION_BY_VEDA",
             subject_key=profile.entity_key,
             values=dict(sorted(profile.attributed_mantras.items())),
-            method="count of HAS_DEVATA edges grouped by passage veda",
+            method=(
+                "count of "
+                + "/".join(COUNTED_ATTRIBUTION_PREDICATES)
+                + " edges grouped by passage veda"
+            ),
             scope_note=(
-                "The Anukramani attribution layer exists for the Rigveda only "
-                f"({', '.join(ATTRIBUTION_VEDAS)}). A zero for another Veda means that "
-                "Veda has no attribution layer, NOT that the deity is absent from it."
+                _counted_clause()
+                + " "
+                + _reach_sentence(profile.attribution_layer_scope)
+                + " A Veda absent from a predicate's reach carries no edge of THAT "
+                "predicate. It is not a statement that the deity is absent from the "
+                "corpus, and it is not a statement that the corpus has no traditional "
+                "index -- a dedication can be recorded by one predicate and unreachable "
+                "by another, which is why each is named separately above."
             ),
         ),
         DerivedMetric(
@@ -632,7 +808,11 @@ def corpus_metrics(session: Session) -> list[DerivedMetric]:
                 "which is derived from the knowledge layer's scope_origin"
             ),
             scope_note=(
-                "Rigveda only: the Anukramani attribution layer does not cover SV, YV or AV."
+                _counted_clause()
+                + " "
+                + _reach_sentence(measure_attribution_scope(session))
+                + " A Veda absent from a predicate's reach carries no edge of THAT "
+                "predicate, which is not a statement about the corpus."
             ),
         )
     )

@@ -5,7 +5,7 @@
     "finding_name": "PROJECTION_IDENTITY_BLINDNESS",
     "no_shared_dedication": 10,
     "outcome": {
-      "declared_identity_pairs": 11,
+      "declared_identity_pairs": 10,
       "pairs": [
         {
           "canonical": "VG:DEVATA:AGNIH",
@@ -116,24 +116,6 @@
           "variant_label": "Indra accompanied by the Maruts"
         },
         {
-          "canonical": "VG:DEVATA:SOMAH",
-          "canonical_eligibility": "ELIGIBLE",
-          "canonical_label": "Soma",
-          "outcome": "SPLIT_BY_EVERY_METHOD",
-          "per_method": {
-            "leiden|COSINE": "SEPARATED",
-            "leiden|JACCARD": "SEPARATED",
-            "leiden|RAW": "SEPARATED",
-            "louvain|COSINE": "SEPARATED",
-            "louvain|JACCARD": "SEPARATED",
-            "louvain|RAW": "SEPARATED"
-          },
-          "shared_hymns": 0,
-          "variant": "VG:DEVATA:PAVAMANAH-SOMAH",
-          "variant_eligibility": "ELIGIBLE",
-          "variant_label": "Soma Pavamana"
-        },
-        {
           "canonical": "VG:DEVATA:AGNIH",
           "canonical_eligibility": "ELIGIBLE",
           "canonical_label": "Agni",
@@ -206,9 +188,9 @@
           "variant_label": "the All-Gods"
         }
       ],
-      "split_by_every_method": 4
+      "split_by_every_method": 3
     },
-    "pairs_sharing_zero_hymns": 10,
+    "pairs_sharing_zero_hymns": 9,
     "population": 11,
     "probe": "Sweep EVERY pair the graph declares to be one deity via EPITHET_VARIANT_OF -- all 11 of them -- against all six method consensuses.",
     "shared_dedication": 1,
@@ -230,7 +212,7 @@
       "brahmanaspati_partners_in_the_reference_projection": 18,
       "brhaspati_curation_note_verbatim": "PRIESTLY and SPEECH are his standing character as the brahman of the gods. WARRIOR is not padding: the splitting of Vala by his roar is one of the two myths he is defined by, and it is an act of force. The bare stem brhaspati scores zero token hits and is not listed. No epithets are given: ganapati was probed and returns zero token hits, and brahmanaspati is a separate registry entity rather than an epithet slot.",
       "epithet_variant_of_edge_between_them": false,
-      "epithet_variant_of_edges_that_do_exist": 11,
+      "epithet_variant_of_edges_that_do_exist": 10,
       "neighbourhood_jaccard": 0.0667,
       "registry_declares_them_distinct_on_purpose": true,
       "shared_hymn_keys": [

@@ -733,6 +733,14 @@ ATTRIBUTION_CONTRACT: Final[dict[str, AttributionPrecision | None]] = {
     "HAS_CHANDAS": None,
     "USED_FOR_RITE": None,
     "HAS_DEVATA_ASCRIPTION": AttributionPrecision.CONTAINER_INHERITED,
+    # NOT MIXED, unlike its Rigvedic sibling HAS_DEVATA, and measured rather than
+    # assumed. Every one of the 882 edges derives from an ascription carrying
+    # CONTAINER_INHERITED / SUKTA_WIDE; scope_container_key is the sukta on 882 of 882
+    # and the verse on 0; and all 505 ascribed Atharvavedic suktas carry the identical
+    # ascription set on every one of their verses. There is no verse-level Atharvavedic
+    # devata ascription for a PER_PASSAGE half to exist over, so a sentinel of None
+    # would invite a scope_origin branch that can never fire.
+    "HAS_DEVATA_DERIVED": AttributionPrecision.CONTAINER_INHERITED,
     "HAS_SEMANTIC_ASSERTION": AttributionPrecision.PER_PASSAGE,
     "ADDRESSES_CONCERN": AttributionPrecision.PER_PASSAGE,
     "PROTECTS_FROM": AttributionPrecision.PER_PASSAGE,
@@ -777,6 +785,13 @@ ATTRIBUTION_CONTRACT: Final[dict[str, AttributionPrecision | None]] = {
     # -- R2. Passage to passage: two subjects, so no subject. ---------------------------
     "CONTAINS": AttributionPrecision.NOT_AN_ATTRIBUTION,
     "EXACT_PARALLEL_OF": AttributionPrecision.NOT_AN_ATTRIBUTION,
+    # Same shape as the verse-level parallels above, one granularity down: it joins a verse
+    # to a group of identical quarters and attributes nothing to anybody. Added when the
+    # predicate was declared -- `test_the_attribution_contract_covers_every_declared_
+    # relationship` went red the moment the signature landed without this row, which is the
+    # same standing guard that caught the entity layer declaring HAS_DEVATA_DERIVED without
+    # one. A declaration and its contract are one change, not two.
+    "HAS_PARALLEL_PADA": AttributionPrecision.NOT_AN_ATTRIBUTION,
     "NEAR_PARALLEL_OF": AttributionPrecision.NOT_AN_ATTRIBUTION,
     "PARALLEL_TO": AttributionPrecision.NOT_AN_ATTRIBUTION,
     "REUSES_TEXT_FROM": AttributionPrecision.NOT_AN_ATTRIBUTION,

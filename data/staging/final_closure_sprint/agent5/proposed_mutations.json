@@ -1,0 +1,135 @@
+{
+  "artifact": "AGENT_5_PROPOSED_CANONICAL_MUTATIONS",
+  "agent": "AGENT_5_QUALITY_REFERENCE_CONFIDENCE",
+  "rule": "This agent wrote nothing to canonical Neo4j. Every entry below is executable by the lead, with its exact parameters, its verified before-state, its guard and its readback.",
+  "mutations": [
+    {
+      "id": "WHITNEY_ABSENCE_TYPE",
+      "gap": "GAP-ATTRIBUTION-WHITNEY-UNRESOLVED-OBJECT-001",
+      "status": "APPROVED_BY_LEAD",
+      "approved_at": "2026-09-16",
+      "ruling_and_reasoning": [
+        "OWNER_DECISIONS.md section 25 reads 'All 466 stay RETAINED_NON_IMPORTABLE_UNRESOLVED_OBJECT; the graph is not mutated.' That sentence forbids IMPORTING the 466 unresolved objects. This mutation imports none: 0 nodes, 0 relationships, no attribution created, no object resolved, no join on a normalized string.",
+        "What it corrects is a FALSE ABSENCE the withholding itself produced. 150 verse-dimension pairs assert ASSESSED_SOURCE_ABSENT -- 'a source was consulted and states nothing' -- while Whitney's bracket demonstrably states a verse-level value we hold.",
+        "Section 25's own reasoning DEPENDS on the source having stated something unresolvable. A property claiming the source is silent contradicts the owner decision's premise rather than honouring it. A reader cannot tell that false zero from a real one.",
+        "Precedent: section 20 landed as three properties per passage, 0 nodes and 0 edges."
+      ],
+      "reopen_condition": "Reopen only if the owner rules that a verse-level census property may not record a withheld source statement at all, or if a later resolution channel is authorised and the 466 become importable as edges -- at which point SOURCE_ASSERTS_UNRESOLVED_OBJECT is superseded by SOURCE_EXPLICIT_PRESENT on the rows that land, and this entry is closed rather than reverted. A disagreement about the property NAMES is not a reopen; it is a rename.",
+      "what_changed_since_the_prose_proposal": [
+        "The prose proposal listed whitney_verse_level_printed_bracket as a key written on all 466 rows. IT EXISTS ON ONLY 83. All 83 devata rows carry printed_bracket, relation_to_hymn_value, verse_count_gate and source_verse_addresses; none of the 383 chandas rows carry any of them -- they carry source_verse_ranges and defect_closed instead. Writing the key on all 466 would have put a null on 383 passages, which is how one field starts meaning two things. Every value-bearing property is now dimension-suffixed and written only where the source has it.",
+        "23 passages carry BOTH dimensions. Unsuffixed properties would have collided on exactly those 23 with the last writer winning silently.",
+        "The evidence write and the state correction are now separate, separately guarded statements. Folding the flip into the evidence map would let a re-run overwrite a state another process had moved, and the overwrite would look identical to a no-op.",
+        "attribution_absence_reason_{dimension} is REMOVED on every corrected row. All 150 carry one -- 117 SOURCE_STATES_NO_DEFAULT_METRE_FOR_THIS_HYMN and 33 SOURCE_STATES_NO_DEVATA_FOR_THIS_HYMN. Each is a TRUE statement about the HYMN that was being used to justify a FALSE claim about the VERSE. Leaving it would be a reason code explaining an absence that is no longer claimed.",
+        "The readback no longer asserts absolute node and relationship counts. This agent first wrote the sprint baseline 117,970 / 282,389 and the graph had already reached 119,404 / 287,697 when the script ran, because other agents are landing layers. An absolute there fails on a healthy graph and reads as this mutation misbehaving. The contract is a zero DELTA, measured either side of the transaction, plus the core corpus invariant."
+      ],
+      "before_state_verified": {
+        "command": "python data/staging/final_closure_sprint/agent5/apply_whitney_absence.py --verify-before",
+        "rows": 466,
+        "before_values_checked": 4826,
+        "matched": 4826,
+        "mismatches": 0,
+        "distribution": {"DERIVED_PRESENT": 308, "ASSESSED_SOURCE_ABSENT": 150, "SOURCE_EXPLICIT_PRESENT": 8},
+        "whitney_properties_already_present": 0,
+        "note": "Re-run this immediately before --execute. It exits non-zero on any mismatch, and a before-state that has moved means the join is stale rather than that the mutation is safe."
+      },
+      "row_level_source_of_truth": {
+        "file": "data/staging/final_closure_sprint/agent5/whitney_absence_rows.jsonl",
+        "rows": 466,
+        "fields_per_row": ["canonical_key", "dimension", "source_id", "predicate_withheld", "corrects_false_absence", "writes", "corrects", "removes", "before", "leaves_unchanged"],
+        "the_150_are_flagged_by": "corrects_false_absence == true"
+      },
+      "parameters": {
+        "file": "data/staging/final_closure_sprint/agent5/whitney_absence_parameters.json",
+        "evidence_rows": 466,
+        "chandas_corrections": 117,
+        "devata_corrections": 33,
+        "extra_scalars": {"new_state": "SOURCE_ASSERTS_UNRESOLVED_OBJECT", "false_absence": "ASSESSED_SOURCE_ABSENT"}
+      },
+      "cypher": {
+        "run_order": "1 then 2 then 3, in one transaction. Statements 2 and 3 are guarded on the property statement 1 writes, so a correction can never exist without the evidence that justifies it.",
+        "1_evidence": "UNWIND $evidence_rows AS row\nMATCH (p:Passage {canonical_key: row.canonical_key})\nWHERE p.veda = 'AV'\nSET p += row.writes\nRETURN count(p) AS passages_matched",
+        "2_chandas_correction": "UNWIND $chandas_corrections AS key\nMATCH (p:Passage {canonical_key: key})\nWHERE p.veda = 'AV'\n  AND p.whitney_verse_level_state_chandas = $new_state\n  AND p.attribution_state_chandas IN [$false_absence, $new_state]\nSET p.attribution_state_chandas = $new_state\nREMOVE p.attribution_absence_reason_chandas\nRETURN count(p) AS matched",
+        "3_devata_correction": "UNWIND $devata_corrections AS key\nMATCH (p:Passage {canonical_key: key})\nWHERE p.veda = 'AV'\n  AND p.whitney_verse_level_state_devata = $new_state\n  AND p.attribution_state_devata IN [$false_absence, $new_state]\nSET p.attribution_state_devata = $new_state\nREMOVE p.attribution_absence_reason_devata\nRETURN count(p) AS matched",
+        "expected_returns": {"1": 466, "2": 117, "3": 33},
+        "idempotence": "SET += to a value already held is a no-op; REMOVE of an absent property is a no-op; the IN guard still matches once the state is corrected. A second run moves nothing and returns the same counts. The counts are rows MATCHED BY THE GUARD, not rows changed -- the readback is what establishes the end state.",
+        "refusal_behaviour": "If another process has moved a census state to something outside [ASSESSED_SOURCE_ABSENT, SOURCE_ASSERTS_UNRESOLVED_OBJECT], that row is skipped rather than overwritten and the returned count drops below 117 or 33."
+      },
+      "runner": {
+        "script": "data/staging/final_closure_sprint/agent5/apply_whitney_absence.py",
+        "modes": ["--verify-before", "--execute", "--readback"],
+        "shares_one_source_of_truth_with_the_rows_file": true
+      },
+      "readback": {
+        "asserted": {
+          "passages_carrying_evidence": 443,
+          "chandas_evidence": 383,
+          "devata_evidence": 83,
+          "chandas_corrected": 117,
+          "devata_corrected": 33,
+          "chandas_stale_reason_code": 0,
+          "devata_stale_reason_code": 0
+        },
+        "core_corpus_invariant": {"RV": 10552, "SV": 1844, "YV": 1975, "AV": 5839},
+        "census_delta_expected": {"nodes": 0, "relationships": 0},
+        "census_absolutes": "REPORTED, NOT ASSERTED -- they move during the sprint for reasons unrelated to this mutation",
+        "verified_to_parse_and_run_against_the_live_graph_before_application": true
+      },
+      "exact_delta": {
+        "nodes": 0,
+        "relationships": 0,
+        "passages_touched": 443,
+        "rows": 466,
+        "distinct_property_assignments": 3975,
+        "distinct_property_removals": 150,
+        "false_absence_corrections": {"chandas": 117, "devata": 33, "total": 150},
+        "rows_that_correct_nothing_and_only_record_evidence": 316
+      },
+      "vocabulary_change_applied": {
+        "file": "scripts/attribution_import.py",
+        "added_to": "DECLARED_STATES",
+        "value": "SOURCE_ASSERTS_UNRESOLVED_OBJECT",
+        "explicitly_not_added_to": "ABSENCE_STATES",
+        "diff": "18 insertions, 0 deletions",
+        "guard": "tests/unit/test_attribution_states.py, 6 tests. Injecting the name into ABSENCE_STATES fails 3 of them."
+      },
+      "required_companion_or_the_fix_is_reverted": {
+        "finding": "scripts/attribution_import.py --execute rebuilds every attribution_state_* property from data/staging/attribution/rows.jsonl. Those census rows still say ASSESSED_SOURCE_ABSENT for all 150 pairs, so a census re-run REVERTS the whole correction and reports success while doing it.",
+        "patch": "data/staging/final_closure_sprint/agent5/whitney_census_row_patch.jsonl",
+        "patch_rows": 150,
+        "matched_census_rows": "150 of 150, all in the expected before-state",
+        "owner": "the attribution domain -- this agent did not edit another agent's 23,003-row artifact in place",
+        "builder": "data/staging/final_closure_sprint/agent5/build_census_row_patch.py"
+      },
+      "explicitly_not_done": [
+        "no normalized-string join against :Chandas or :DevataAscription",
+        "no segmentation of a printed bracket into a deity part and a metre part",
+        "no HAS_CHANDAS or HAS_DEVATA_ASCRIPTION edge created or withdrawn",
+        "no existing hymn-scope value altered",
+        "no attribution_state changed on the 316 rows that are not false absences"
+      ],
+      "closure_effect": "With this applied, the closure test's second clause -- 'Read back from canonical Neo4j' -- is satisfiable for all 466 rows by a single read, and GAP-ATTRIBUTION-WHITNEY-UNRESOLVED-OBJECT-001 closes CLOSED_SCOPE_DECISION on the owner citation with no residual false absence."
+    }
+  ],
+  "mutations_deliberately_not_proposed": [
+    {
+      "id": "WHITNEY_IMPORT",
+      "what": "importing the 383 chandas and 83 devata attributions as edges",
+      "refused_because": "OWNER_DECISIONS section 25 settles it. The registry row's closure_basis reads as though the Wave 4 segmentation fix were the only precondition; it is not, and the devata half was refused on entity-hood grounds the segmentation fix does not touch."
+    },
+    {
+      "id": "RISHI_FAMILY_EXTENSION",
+      "what": "resolving any of the 427 unassigned :Rishi nodes to a family",
+      "refused_because": "the 5 mechanically reachable ones are reachable only by emending the source's printed spelling, which is normalization used as identity evidence. The other 422 are typed refusals the layer exists to make, or seers whose source prints no patronymic."
+    },
+    {
+      "id": "TIER_C_RETIER",
+      "what": "moving the 11 label-level TIER_C edges to another tier",
+      "refused_because": "tiers.LAYER_OWNED_GRADES grades EPITHET_VARIANT_OF at L3/TIER_C deliberately and with a written argument. The data is right; only the sentences describing it were wrong, and those are fixed."
+    },
+    {
+      "id": "GOLD_SET_POPULATION",
+      "what": "filling data/gold/rigveda_semantic_gold_v1.jsonl or a subsample of theonym_mention_gold_v1.jsonl",
+      "refused_because": "no human is available and a model filling it would be the exact failure ADR-014 names. The harness itself refuses model data, which is the strongest evidence that this is the intended reading."
+    }
+  ]
+}

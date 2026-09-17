@@ -1,0 +1,450 @@
+{
+ "VG:RV:SAK:M05:S055:V008": {
+  "canonical_key": "VG:RV:SAK:M05:S055:V008",
+  "mandala": 5,
+  "sukta": 55,
+  "verse": 8,
+  "A_canonical_key_correctness": null,
+  "B_source_coordinate_system": {
+   "griffith_hymn_page_for_this_sukta": 55,
+   "valakhilya_permuted": false,
+   "note": "the held Wikisource snapshot is indexed by CANONICAL sukta, so the permutation is absorbed upstream and no page re-address applies to it"
+  },
+  "snapshot_path": "data/raw/wikisource_griffith_rv/2026-09-04/1d50e4b9faf3b99079af0f385f557b53b208cd0e84b5a074299fe18193bac47a.php",
+  "declared_sha256": "1d50e4b9faf3b99079af0f385f557b53b208cd0e84b5a074299fe18193bac47a",
+  "measured_sha256": "1d50e4b9faf3b99079af0f385f557b53b208cd0e84b5a074299fe18193bac47a",
+  "sha_agrees": true,
+  "printed_unit_count": 9,
+  "printed_label_sequence": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5",
+   "6",
+   "7",
+   "9",
+   "10"
+  ],
+  "H_ocr_digit_confusion": {
+   "label_printed_literally": false,
+   "recovered_by_single_glyph_substitution": []
+  },
+  "C_edition_numbering": {
+   "printed_units": 9,
+   "unparsed_label_tokens": []
+  },
+  "I_sort_order_monotonic": true,
+  "units_around": [
+   {
+    "token": "6",
+    "text": "When to your car-poles ye have yoked your spotted deer to be your steeds, and put your golden mantles on, O Maruts, ye disperse al"
+   },
+   {
+    "token": "7",
+    "text": "Neither the mountains nor the rivers keep you back: whither ye have resolved thither ye, Maruts, go. Ye compass round about even t"
+   },
+   {
+    "token": "9",
+    "text": "Be gracious unto us, ye Maruts, slay us not extend ye unto us shelter of many a sort. Pay due regard unto our friendship and our p"
+   },
+   {
+    "token": "10",
+    "text": "O Maruts, lead us on to higher fortune deliver us, when lauded, from afflictions. Accept, ye Holy Ones, the gifts we bring you. Ma"
+   }
+  ]
+ },
+ "VG:RV:SAK:M08:S093:V029": {
+  "canonical_key": "VG:RV:SAK:M08:S093:V029",
+  "mandala": 8,
+  "sukta": 93,
+  "verse": 29,
+  "A_canonical_key_correctness": null,
+  "B_source_coordinate_system": {
+   "griffith_hymn_page_for_this_sukta": 82,
+   "valakhilya_permuted": true,
+   "note": "the held Wikisource snapshot is indexed by CANONICAL sukta, so the permutation is absorbed upstream and no page re-address applies to it"
+  },
+  "snapshot_path": "data/raw/wikisource_griffith_rv/2026-09-04/ed0222c19c5ee9f52251ff02949d230a6ee5c19437a5dda6ea483c0d6df3beb5.php",
+  "declared_sha256": "ed0222c19c5ee9f52251ff02949d230a6ee5c19437a5dda6ea483c0d6df3beb5",
+  "measured_sha256": "ed0222c19c5ee9f52251ff02949d230a6ee5c19437a5dda6ea483c0d6df3beb5",
+  "sha_agrees": true,
+  "printed_unit_count": 34,
+  "printed_label_sequence": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5",
+   "6",
+   "7",
+   "8",
+   "9",
+   "10",
+   "11",
+   "12",
+   "13",
+   "14",
+   "15",
+   "16",
+   "17",
+   "18",
+   "19",
+   "20",
+   "21",
+   "22",
+   "23",
+   "24",
+   "25",
+   "26",
+   "27",
+   "28",
+   "2§",
+   "30",
+   "31",
+   "32",
+   "33",
+   "34"
+  ],
+  "H_ocr_digit_confusion": {
+   "label_printed_literally": false,
+   "recovered_by_single_glyph_substitution": [
+    {
+     "unit_index": 28,
+     "printed_token": "2§",
+     "reads_as": [
+      29
+     ],
+     "text": "O Satakratu, bring to us all blessings, all felicity: Fbr, Indra, thou art kind to us."
+    }
+   ]
+  },
+  "C_edition_numbering": {
+   "printed_units": 34,
+   "unparsed_label_tokens": []
+  },
+  "I_sort_order_monotonic": true,
+  "units_around": [
+   {
+    "token": "27",
+    "text": "O Satakratu, wondrous strength and all our lauds I bring to thee: Be gracious to thy worshippers."
+   },
+   {
+    "token": "28",
+    "text": "Bring to us all things excellent, O Satakratu, food and strength: For, Indra, thou art kind to us."
+   },
+   {
+    "token": "2§",
+    "text": "O Satakratu, bring to us all blessings, all felicity: Fbr, Indra, thou art kind to us."
+   },
+   {
+    "token": "30",
+    "text": "Bearing the Soma juice we call, best Vrtra-slayer, unto thee: For, Indra, thou art kind to us."
+   },
+   {
+    "token": "31",
+    "text": "Come, Lord of rapturous, joys, to our libation with thy Bay Steeds, come To our libation with thy Steeds."
+   }
+  ]
+ },
+ "VG:RV:SAK:M09:S007:V009": {
+  "canonical_key": "VG:RV:SAK:M09:S007:V009",
+  "mandala": 9,
+  "sukta": 7,
+  "verse": 9,
+  "A_canonical_key_correctness": null,
+  "B_source_coordinate_system": {
+   "griffith_hymn_page_for_this_sukta": 7,
+   "valakhilya_permuted": false,
+   "note": "the held Wikisource snapshot is indexed by CANONICAL sukta, so the permutation is absorbed upstream and no page re-address applies to it"
+  },
+  "snapshot_path": "data/raw/wikisource_griffith_rv/2026-09-04/01ea2b818ee45521015cd8cfe581ef6c13d6daf6d75d4f06776d2a9b6580a7c4.php",
+  "declared_sha256": "01ea2b818ee45521015cd8cfe581ef6c13d6daf6d75d4f06776d2a9b6580a7c4",
+  "measured_sha256": "01ea2b818ee45521015cd8cfe581ef6c13d6daf6d75d4f06776d2a9b6580a7c4",
+  "sha_agrees": true,
+  "printed_unit_count": 8,
+  "printed_label_sequence": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5",
+   "6",
+   "7",
+   "8"
+  ],
+  "H_ocr_digit_confusion": {
+   "label_printed_literally": false,
+   "recovered_by_single_glyph_substitution": []
+  },
+  "C_edition_numbering": {
+   "printed_units": 8,
+   "unparsed_label_tokens": []
+  },
+  "I_sort_order_monotonic": true,
+  "units_around": [
+   {
+    "token": "7",
+    "text": "He goes to Indra, Vayu, to the Asvins, as his custom is, With gladdening juice which gives them joy."
+   },
+   {
+    "token": "8",
+    "text": "Tle streams of pleasant Soma flow to Bhaga, Mitra-Varuna,- Well-knowing through his mighty powers. Heaven and Earth, riches of mea"
+   }
+  ]
+ },
+ "VG:RV:SAK:M10:S048:V007": {
+  "canonical_key": "VG:RV:SAK:M10:S048:V007",
+  "mandala": 10,
+  "sukta": 48,
+  "verse": 7,
+  "A_canonical_key_correctness": null,
+  "B_source_coordinate_system": {
+   "griffith_hymn_page_for_this_sukta": 48,
+   "valakhilya_permuted": false,
+   "note": "the held Wikisource snapshot is indexed by CANONICAL sukta, so the permutation is absorbed upstream and no page re-address applies to it"
+  },
+  "snapshot_path": "data/raw/wikisource_griffith_rv/2026-09-04/c881aee040bc105337eca7fc28d758020ab337571455a5284ac2da223c6a32ad.php",
+  "declared_sha256": "c881aee040bc105337eca7fc28d758020ab337571455a5284ac2da223c6a32ad",
+  "measured_sha256": "c881aee040bc105337eca7fc28d758020ab337571455a5284ac2da223c6a32ad",
+  "sha_agrees": true,
+  "printed_unit_count": 10,
+  "printed_label_sequence": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5",
+   "6",
+   "8",
+   "9",
+   "10",
+   "11"
+  ],
+  "H_ocr_digit_confusion": {
+   "label_printed_literally": false,
+   "recovered_by_single_glyph_substitution": []
+  },
+  "C_edition_numbering": {
+   "printed_units": 10,
+   "unparsed_label_tokens": []
+  },
+  "I_sort_order_monotonic": true,
+  "units_around": [
+   {
+    "token": "5",
+    "text": "Indra am I none ever wins my wealth from me never at any time am I a thrall to death. Pressing the Soma, ask riches from me alone:"
+   },
+   {
+    "token": "6",
+    "text": "These, breathing loud in fury, two and two, who caused Indra to bring his bolt of thunder to the fray, The challengers, I struck w"
+   },
+   {
+    "token": "8",
+    "text": "Against the Gungus I made Atithigva strong, and kept him mid the folk like Vrtra-conquering strength, When I won glory in the grea"
+   },
+   {
+    "token": "9",
+    "text": "With food for mine enjoyment Sapya Nami came: he joined me as a friend of old in search of kine. As I bestowed on him an arrow for"
+   },
+   {
+    "token": "10",
+    "text": "One of the two hath Soma, seen within it; the Herdsman with the bone shows forth the other. He, fain to fight the Bull whose horns"
+   }
+  ]
+ },
+ "VG:RV:SAK:M10:S086:V016": {
+  "canonical_key": "VG:RV:SAK:M10:S086:V016",
+  "mandala": 10,
+  "sukta": 86,
+  "verse": 16,
+  "A_canonical_key_correctness": null,
+  "B_source_coordinate_system": {
+   "griffith_hymn_page_for_this_sukta": 86,
+   "valakhilya_permuted": false,
+   "note": "the held Wikisource snapshot is indexed by CANONICAL sukta, so the permutation is absorbed upstream and no page re-address applies to it"
+  },
+  "snapshot_path": "data/raw/wikisource_griffith_rv/2026-09-04/36a611cb7eb71be282cc66571a222fb89968724dbf1af17df6fd6448a05f3961.php",
+  "declared_sha256": "36a611cb7eb71be282cc66571a222fb89968724dbf1af17df6fd6448a05f3961",
+  "measured_sha256": "36a611cb7eb71be282cc66571a222fb89968724dbf1af17df6fd6448a05f3961",
+  "sha_agrees": true,
+  "printed_unit_count": 21,
+  "printed_label_sequence": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5",
+   "6",
+   "7",
+   "8",
+   "9",
+   "10",
+   "11",
+   "12",
+   "13",
+   "14",
+   "15",
+   "18",
+   "19",
+   "20",
+   "21",
+   "22",
+   "23"
+  ],
+  "H_ocr_digit_confusion": {
+   "label_printed_literally": false,
+   "recovered_by_single_glyph_substitution": []
+  },
+  "C_edition_numbering": {
+   "printed_units": 21,
+   "unparsed_label_tokens": []
+  },
+  "I_sort_order_monotonic": true,
+  "units_around": [
+   {
+    "token": "14",
+    "text": "The planets and satellites whose motion is seen to be destroyed in the sky are thirty-five. In the beginning, all the planets and "
+   },
+   {
+    "token": "15",
+    "text": "Like as a bull with pointed horn, loud bellowing amid the herds, Sweet to thine heart, O Indra, is the brew which she who tends th"
+   },
+   {
+    "token": "18",
+    "text": "O Indra this Vrsakapi hath found a slain wild animal, Dresser, and new-made pan, and knife, and wagon with a load of wood. Supreme"
+   },
+   {
+    "token": "19",
+    "text": "Distinguishing the Dasa and the Arya, viewing all, I go. I look upon the wise, and drink the simple votary's Soma juice. Supreme i"
+   },
+   {
+    "token": "20",
+    "text": "The desert plains and steep descents, how many leagues in length they spread! Go to the nearest houses, go unto thine home, Vrsaka"
+   }
+  ]
+ },
+ "VG:RV:SAK:M10:S086:V017": {
+  "canonical_key": "VG:RV:SAK:M10:S086:V017",
+  "mandala": 10,
+  "sukta": 86,
+  "verse": 17,
+  "A_canonical_key_correctness": null,
+  "B_source_coordinate_system": {
+   "griffith_hymn_page_for_this_sukta": 86,
+   "valakhilya_permuted": false,
+   "note": "the held Wikisource snapshot is indexed by CANONICAL sukta, so the permutation is absorbed upstream and no page re-address applies to it"
+  },
+  "snapshot_path": "data/raw/wikisource_griffith_rv/2026-09-04/36a611cb7eb71be282cc66571a222fb89968724dbf1af17df6fd6448a05f3961.php",
+  "declared_sha256": "36a611cb7eb71be282cc66571a222fb89968724dbf1af17df6fd6448a05f3961",
+  "measured_sha256": "36a611cb7eb71be282cc66571a222fb89968724dbf1af17df6fd6448a05f3961",
+  "sha_agrees": true,
+  "printed_unit_count": 21,
+  "printed_label_sequence": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5",
+   "6",
+   "7",
+   "8",
+   "9",
+   "10",
+   "11",
+   "12",
+   "13",
+   "14",
+   "15",
+   "18",
+   "19",
+   "20",
+   "21",
+   "22",
+   "23"
+  ],
+  "H_ocr_digit_confusion": {
+   "label_printed_literally": false,
+   "recovered_by_single_glyph_substitution": []
+  },
+  "C_edition_numbering": {
+   "printed_units": 21,
+   "unparsed_label_tokens": []
+  },
+  "I_sort_order_monotonic": true,
+  "units_around": [
+   {
+    "token": "15",
+    "text": "Like as a bull with pointed horn, loud bellowing amid the herds, Sweet to thine heart, O Indra, is the brew which she who tends th"
+   },
+   {
+    "token": "18",
+    "text": "O Indra this Vrsakapi hath found a slain wild animal, Dresser, and new-made pan, and knife, and wagon with a load of wood. Supreme"
+   },
+   {
+    "token": "19",
+    "text": "Distinguishing the Dasa and the Arya, viewing all, I go. I look upon the wise, and drink the simple votary's Soma juice. Supreme i"
+   },
+   {
+    "token": "20",
+    "text": "The desert plains and steep descents, how many leagues in length they spread! Go to the nearest houses, go unto thine home, Vrsaka"
+   },
+   {
+    "token": "21",
+    "text": "Turn thee again Vrsakapi: we twain will bring thee happiness. Thou goest homeward on thy way along this path which leads to sleep."
+   }
+  ]
+ },
+ "VG:RV:SAK:M10:S132:V005": {
+  "canonical_key": "VG:RV:SAK:M10:S132:V005",
+  "mandala": 10,
+  "sukta": 132,
+  "verse": 5,
+  "A_canonical_key_correctness": null,
+  "B_source_coordinate_system": {
+   "griffith_hymn_page_for_this_sukta": 132,
+   "valakhilya_permuted": false,
+   "note": "the held Wikisource snapshot is indexed by CANONICAL sukta, so the permutation is absorbed upstream and no page re-address applies to it"
+  },
+  "snapshot_path": "data/raw/wikisource_griffith_rv/2026-09-04/e16111ada3ac4d5d0f5f689b34813ed3b952b8359b6ace72703c9f20fd330b31.php",
+  "declared_sha256": "e16111ada3ac4d5d0f5f689b34813ed3b952b8359b6ace72703c9f20fd330b31",
+  "measured_sha256": "e16111ada3ac4d5d0f5f689b34813ed3b952b8359b6ace72703c9f20fd330b31",
+  "sha_agrees": true,
+  "printed_unit_count": 6,
+  "printed_label_sequence": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "6",
+   "7"
+  ],
+  "H_ocr_digit_confusion": {
+   "label_printed_literally": false,
+   "recovered_by_single_glyph_substitution": []
+  },
+  "C_edition_numbering": {
+   "printed_units": 6,
+   "unparsed_label_tokens": []
+  },
+  "I_sort_order_monotonic": true,
+  "units_around": [
+   {
+    "token": "3",
+    "text": "And when we seek to win your love and friendship, we who have precious wealth in our possession, Or when the worshipper augments h"
+   },
+   {
+    "token": "4",
+    "text": "That other, Asura! too was born of Heaven. thou art, O Varuna, the King of all men. The chariot's Lord was well content, forbearin"
+   },
+   {
+    "token": "6",
+    "text": "Your Mother Aditi, ye wise, was purified with water even as earth is purified from heaven. Show love and kindness here below: wash"
+   },
+   {
+    "token": "7",
+    "text": "Ye Twain have seated you as Lords of Wealth, as one who mounts a car to him who sits upon the pole, upon the wood. These our dishe"
+   }
+  ]
+ }
+}

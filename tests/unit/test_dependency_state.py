@@ -303,3 +303,107 @@ def test_the_status_report_records_unexplained_stale_separately() -> None:
     payload = json.loads(report.read_text(encoding="utf-8"))
     assert "unexplained_stale" in payload
     assert payload["unexplained_stale"] == []
+
+
+# --- whole-subgraph consumers -------------------------------------------------------------
+#
+# Wave 4 fixed the world consumers' declared OUTPUTS after 28 retired metre identities shipped
+# to the browser from a stage judged on an intermediate. The same defect survived on the INPUT
+# side: `export_graph_world.py` selects `MATCH (n) WHERE NOT n:Internal` -- every public label
+# -- while the two world consumers between them declared five. Measured at the final closure
+# sprint's baseline, 39.0% of public nodes and 68.8% of public edges were invisible to every
+# declared hash, `:Chandas` among them.
+#
+# An enumerated label list is correct only until the next label is added, and being
+# correct-until-then is how the defect arose. These pin the subgraph declaration instead.
+
+
+class _StubSession:
+    """Returns a scripted row per query shape. No database, no APOC."""
+
+    def __init__(self, nodes: list[tuple[str, str]], edges: list[tuple[str, str, str]]) -> None:
+        self._nodes = nodes  # (identity, label)
+        self._edges = edges  # (a, type, b)
+
+    def run(self, query: str, **_: object) -> object:
+        if "UNWIND labels(n) AS label" in query:
+            counts: dict[str, int] = {}
+            for _identity, label in self._nodes:
+                counts[label] = counts.get(label, 0) + 1
+            return [{"label": k, "c": counts[k]} for k in sorted(counts)]
+
+        class _Single:
+            def __init__(self, row: dict[str, object]) -> None:
+                self._row = row
+
+            def single(self) -> dict[str, object]:
+                return self._row
+
+        if "MATCH (a)-[r]->(b)" in query:
+            return _Single(
+                {
+                    "total": len(self._edges),
+                    "unnamed": 0,
+                    "pairs": [f"{a}-{t}>{b}" for a, t, b in self._edges],
+                }
+            )
+        return _Single(
+            {"total": len(self._nodes), "keyless": 0, "keys": [i for i, _ in self._nodes]}
+        )
+
+
+def test_the_subgraph_fingerprint_moves_when_only_a_label_changes() -> None:
+    """The M10 shape exactly: a node marked :Internal, identity and edges untouched.
+
+    This is the case an identity digest alone cannot see, and it is the case that actually
+    shipped 28 malformed metre names to every reader of the Knowledge World.
+    """
+    nodes = [("VG:CH:GAYATRI", "Chandas"), ("VG:CH:TRISTUBH", "Chandas")]
+    edges = [("VG:RV:1.1.1", "HAS_CHANDAS", "VG:CH:GAYATRI")]
+    before = state.subgraph_fingerprint(_StubSession(nodes, edges), "NOT n:Internal")
+    # The same nodes, one of them retired out of the public projection.
+    after = state.subgraph_fingerprint(_StubSession(nodes[:1], edges), "NOT n:Internal")
+    assert before != after, "retiring a public node must move the subgraph fingerprint"
+
+
+def test_the_subgraph_fingerprint_sees_labels_no_consumer_enumerates() -> None:
+    """A label nobody declared still moves the hash. The enumerated list could not do this."""
+    base = [("VG:D:AGNI", "Devata")]
+    session_before = _StubSession(base, [])
+    # `Epithet` and `RitualRole` appear in no consumer's `reads_labels`.
+    session_after = _StubSession([*base, ("VG:EP:JATAVEDAS", "Epithet")], [])
+    assert state.subgraph_fingerprint(session_before, "NOT n:Internal") != (
+        state.subgraph_fingerprint(session_after, "NOT n:Internal")
+    ), "adding an undeclared public label must still move the hash"
+
+
+def test_the_subgraph_fingerprint_is_stable_under_row_order() -> None:
+    """Order out of Cypher is not guaranteed, so the digest must not depend on it."""
+    nodes = [("b", "Devata"), ("a", "Concept")]
+    forward = state.subgraph_fingerprint(_StubSession(nodes, []), "NOT n:Internal")
+    reverse = state.subgraph_fingerprint(_StubSession(list(reversed(nodes)), []), "NOT n:Internal")
+    assert forward == reverse
+
+
+def test_an_edge_swap_of_equal_size_still_moves_the_fingerprint() -> None:
+    """A count is unchanged by deleting one edge and adding another; the digest is not."""
+    a = _StubSession([], [("x", "MENTIONS_ENTITY", "y")])
+    b = _StubSession([], [("x", "MENTIONS_ENTITY", "z")])
+    assert state.subgraph_fingerprint(a, "NOT n:Internal") != state.subgraph_fingerprint(
+        b, "NOT n:Internal"
+    )
+
+
+def test_every_whole_graph_reader_declares_a_subgraph() -> None:
+    """The three consumers whose builders read more than their enumerated labels.
+
+    Pinned by name so that removing a declaration is a test failure rather than a silent
+    return to the state where a mutation to :Chandas moved nothing.
+    """
+    assert set(state.CONSUMER_SUBGRAPHS) == {
+        "Knowledge World public projection",
+        "Visualization Lab aggregates",
+        "quality evaluation",
+    }
+    for name, (_scope, where) in state.CONSUMER_SUBGRAPHS.items():
+        assert where in {"NOT n:Internal", "true"}, f"{name} declares an unknown scope"

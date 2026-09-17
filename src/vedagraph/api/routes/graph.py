@@ -90,9 +90,12 @@ build no longer produces is a 404.
 
 **`review_status` is spelled out because the honest answer is uniform.** Nothing in this
 graph is HUMAN_REVIEWED. The strongest state that exists is MODEL_ADJUDICATED, on 613 edges
-across ten predicates, where a model re-read the passage and accepted the edge with a
-stated reason. Most edges carry no review record at all, which is not the same as having
-been reviewed and passed.
+across twelve predicates, where a model re-read the passage and accepted the edge with a
+stated reason. TIER_C is wider by 11: 598 edges, of which the 11 that hang off no passage
+are Devata-to-Devata epithet identities carrying review_state UNREVIEWED. The figures are
+:data:`~vedagraph.domain.layer_figures.REVIEW_POPULATION`, measured against the graph.
+Most edges carry no review record at all, which is not the same as having been reviewed
+and passed.
 """
 
 _PATH_DESCRIPTION = f"""

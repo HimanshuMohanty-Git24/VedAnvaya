@@ -57,9 +57,15 @@ memberships beside 5 similarity-derived ones.
 ``layer_veda_scope`` on ``Chandas``, ``Rishi``, ``DevataAscription``, ``SemanticAssertion``
 and ``ActionPredicate`` states which corpora each layer measurably reaches, and every row of
 it is single-Veda: no layer carrying the property spans two. The review layer runs the other
-way from everything else -- all 587 TIER_C edges are Yajurvedic (320) or Atharvavedic (267)
-and not one is Rigvedic -- so it adjudicates exactly the two corpora the assertion layer
-never touches. TIER_C means MODEL_ADJUDICATED; nothing in this graph is HUMAN_REVIEWED.
+way from everything else -- of the 598 TIER_C edges, the 587 anchored to a passage are
+Yajurvedic (320) or Atharvavedic (267) and not one is Rigvedic, so that half adjudicates
+exactly the two corpora the assertion layer never touches. The remaining 11 are
+Devata-to-Devata epithet identities with no passage and therefore no Veda, and they are
+stated here rather than rounded away, because a sentence that named only the 587 is what
+let a reader take TIER_C to be wholly non-Rigvedic when those 11 cite RV 3.53 and RV 4.55.
+Every figure in this paragraph is :data:`~vedagraph.domain.layer_figures.REVIEW_POPULATION`,
+measured against the live graph by its test. TIER_C means MODEL_ADJUDICATED; nothing in this
+graph is HUMAN_REVIEWED.
 
 Queries never return internal nodes: :func:`~vedagraph.domain.ontology.product_filter` is
 interpolated rather than each query naming excluded labels itself, so a diagnostic label
@@ -192,12 +198,10 @@ _ACTION_SCOPE_CAVEAT = (
 #: Nothing in this graph is human-reviewed, and the review layer must not be read as if it
 #: were. Stated on every query that surfaces review_verdict or TIER_C.
 _ADJUDICATION_CAVEAT = (
-    "TIER_C means MODEL_ADJUDICATED, not human-reviewed: 587 edges were re-read per passage "
-    "by a model and accepted with a stated reason. No edge anywhere in this graph carries "
-    "HUMAN_REVIEWED and none may claim to; there is still no human gold set. The layer's "
-    "reach also runs opposite to every other derived layer here -- all 587 are Yajurvedic "
-    "(320) or Atharvavedic (267) and not one is Rigvedic -- so it reviews exactly the two "
-    "corpora the assertion layer never reaches, and the two cannot be compared."
+    "TIER_C means MODEL_ADJUDICATED, not human-reviewed. "
+    + figures.adjudication_disclosure()
+    + " The passage-anchored part of the layer therefore reaches exactly the two corpora "
+    "the assertion layer never reaches, and the two cannot be compared."
 )
 
 #: Shared by every single-deity profile query. Hoisted to a constant rather than
@@ -378,27 +382,47 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
             MATCH (:Devata)-[r:CO_OCCURS_WITH]-(:Devata)
             RETURN count(r) / 2 AS pairwise_edges
         }
-        MATCH (d:Devata)
-        WHERE coalesce(d.structure, 'UNSPECIFIED') <> 'HUMAN'
-        WITH pairwise_edges, count(d) AS eligible_deities,
-             sum(CASE WHEN any(key IN ['community', 'louvain', 'partition']
-                               WHERE properties(d)[key] IS NOT NULL)
-                      THEN 1 ELSE 0 END)
-               AS assigned_deities
+        CALL () {
+            MATCH (d:Devata)
+            RETURN count(d) AS devata_nodes,
+                   sum(CASE WHEN coalesce(d.is_deity,
+                                 NOT coalesce(d.structure, 'UNSPECIFIED')
+                                     IN ['HUMAN', 'PATRON_PRAISE'])
+                            THEN 1 ELSE 0 END) AS eligible_deities,
+                   sum(CASE WHEN d.is_deity IS NULL THEN 1 ELSE 0 END)
+                     AS devatas_without_an_eligibility_ruling,
+                   sum(CASE WHEN coalesce(d.is_deity,
+                                 NOT coalesce(d.structure, 'UNSPECIFIED')
+                                     IN ['HUMAN', 'PATRON_PRAISE'])
+                             AND any(key IN ['community', 'louvain', 'partition']
+                                     WHERE properties(d)[key] IS NOT NULL)
+                            THEN 1 ELSE 0 END) AS assigned_deities
+        }
         RETURN CASE WHEN assigned_deities = 0 THEN 'INSUFFICIENT_EVIDENCE'
                     ELSE 'COMMUNITY_ASSIGNMENTS_AVAILABLE' END AS status,
-               assigned_deities, eligible_deities, pairwise_edges,
+               assigned_deities, eligible_deities,
+               devatas_without_an_eligibility_ruling, devata_nodes, pairwise_edges,
                'PAIRWISE_CO_OCCURRENCE_IS_NOT_A_COMMUNITY_PARTITION' AS evidence_scope
         """,
         caveat=(
             "This is a capability result, not a claim that Vedic deity communities do "
             "not exist. INSUFFICIENT_EVIDENCE means the graph has pairwise co-occurrence "
             "but no stored or computed community assignment; absence of that graph layer "
-            "is not absence in the Vedas. `eligible_deities` is the Devata registry minus "
-            "the 22 entries typed structure='HUMAN'; it is a denominator, not a census of "
-            "gods, and still carries 7 danastuti topic labels and one non-divine subject "
-            "that the Anukramani names as a verse's devata. Dual labels are not decomposed "
-            "into communities."
+            "is not absence in the Vedas. `eligible_deities` is the one documented "
+            "eligibility predicate `d.is_deity = true` (vedagraph.domain.deity_eligibility, "
+            "VG:DEITY_ELIGIBILITY:V1), which excludes 22 human patrons, 7 danastuti "
+            "gift-praise labels and the 28 ABSTRACT labels ruled NOT_DEITY per label with a "
+            "recorded reason, and keeps the 5 ruled UNDECIDED. Every excluded node keeps "
+            "`non_deity_kind` and `deity_eligibility_reason` and stays addressable. This "
+            "query published 192 while it excluded structure='HUMAN' alone -- 7 danastuti "
+            "labels and one non-divine subject above even the crude figure. "
+            "`devatas_without_an_eligibility_ruling` is returned BESIDE the count and is the "
+            "figure to read first: while it is 214 the ruling layer has not landed and "
+            "`eligible_deities` falls back to curated structure and reads 185; when it is 0 "
+            "the ruling is in force and the figure is 157. The transitional state is in the "
+            "row rather than in this caveat, because a reader who takes a count from a row "
+            "is exactly the reader who did not read the caveat. It is a denominator, not a "
+            "census of gods. Dual labels are not decomposed into communities."
         ),
         serves=(23,),
     ),
@@ -409,8 +433,10 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
         MATCH (p:Passage)-[:HAS_DEVATA]->(a:Devata)
         MATCH (p)-[:HAS_DEVATA]->(b:Devata)
         WHERE a.entity_key < b.entity_key
-          AND coalesce(a.structure, 'UNSPECIFIED') <> 'HUMAN'
-          AND coalesce(b.structure, 'UNSPECIFIED') <> 'HUMAN'
+          AND coalesce(a.is_deity,
+                NOT coalesce(a.structure, 'UNSPECIFIED') IN ['HUMAN', 'PATRON_PRAISE'])
+          AND coalesce(b.is_deity,
+                NOT coalesce(b.structure, 'UNSPECIFIED') IN ['HUMAN', 'PATRON_PRAISE'])
         RETURN a.display_label AS deity_a, b.display_label AS deity_b,
                count(DISTINCT p) AS shared_mantras
         ORDER BY shared_mantras DESC LIMIT 25
@@ -419,8 +445,15 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
             _SCOPE_CAVEAT
             + " "
             + _INHERIT_CAVEAT
-            + " Human patrons carried in the source Devata registry are excluded; this "
-            "is a pair table, not a community partition."
+            + " Both members are constrained by the one documented eligibility predicate "
+            "`is_deity = true` (vedagraph.domain.deity_eligibility), which excludes the 22 "
+            "human patrons AND the 7 danastuti gift-praise labels AND the 28 ABSTRACT "
+            "labels ruled NOT_DEITY. The earlier `structure <> 'HUMAN'` kept danastuti, "
+            "which has 50 dedications across 15 hymns and would carry 9 partner edges here "
+            "-- and a top-ranked patron in a deity pair table is the exact answer this "
+            "question was graded MISLEADING for once. The top 25 is unchanged by the "
+            "switch today; the point is that it is now unchangeable by accident. This is a "
+            "pair table, not a community partition."
         ),
         serves=(33, 35),
     ),
@@ -631,8 +664,10 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
         cypher="""
         MATCH (a:Devata)-[r:CO_OCCURS_WITH]-(b:Devata)
         WHERE a.entity_key < b.entity_key
-          AND coalesce(a.structure, 'UNSPECIFIED') <> 'HUMAN'
-          AND coalesce(b.structure, 'UNSPECIFIED') <> 'HUMAN'
+          AND coalesce(a.is_deity,
+                NOT coalesce(a.structure, 'UNSPECIFIED') IN ['HUMAN', 'PATRON_PRAISE'])
+          AND coalesce(b.is_deity,
+                NOT coalesce(b.structure, 'UNSPECIFIED') IN ['HUMAN', 'PATRON_PRAISE'])
         RETURN a.display_label AS deity_a, b.display_label AS deity_b,
                r.lift AS lift, r.passage_count AS shared_passages,
                r.rv_passage_count AS rigvedic, r.non_rv_passage_count AS non_rigvedic,
@@ -656,8 +691,10 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
         cypher="""
         MATCH (a:Devata)-[r:CO_OCCURS_WITH]-(b:Devata)
         WHERE a.entity_key < b.entity_key
-          AND coalesce(a.structure, 'UNSPECIFIED') <> 'HUMAN'
-          AND coalesce(b.structure, 'UNSPECIFIED') <> 'HUMAN'
+          AND coalesce(a.is_deity,
+                NOT coalesce(a.structure, 'UNSPECIFIED') IN ['HUMAN', 'PATRON_PRAISE'])
+          AND coalesce(b.is_deity,
+                NOT coalesce(b.structure, 'UNSPECIFIED') IN ['HUMAN', 'PATRON_PRAISE'])
           AND r.non_rv_passage_count > r.rv_passage_count
         RETURN a.display_label AS deity_a, b.display_label AS deity_b,
                r.lift AS lift, r.rv_passage_count AS rigvedic,
@@ -988,6 +1025,7 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
         RETURN s.semantic_predicate AS predicate, s.explicitness AS explicitness,
                s.object_kind AS object_kind, count(DISTINCT s) AS assertions,
                count(DISTINCT p) AS passages, count(DISTINCT t) AS deity_targets,
+               count(DISTINCT CASE WHEN t.is_deity THEN t END) AS eligible_deity_targets,
                collect(DISTINCT s.review_state)[0..3] AS review_state,
                collect(DISTINCT s.human_gold_status)[0..3] AS human_gold
         ORDER BY assertions DESC, predicate
@@ -1000,6 +1038,13 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
             "model's own judgement about its own reach. Extracted from Griffith's English, "
             "so a claim here is evidence about a translation. Only 799 of these carry an "
             "ASSERTION_TARGET, so `deity_targets` is far below `assertions` by design. "
+            "`deity_targets` counts :Devata nodes, and that label is the slot the "
+            "Anukramani deity apparatus projects into, so it holds 22 human patrons and 7 "
+            "danastuti gift-praise labels as well as deities. `eligible_deity_targets` is "
+            "the same count under the one documented predicate `t.is_deity = true`. Both "
+            "read 27 today, so the model layer targets no non-deity; they are returned as "
+            "two columns rather than one so a future divergence is visible instead of "
+            "silent. "
             + _ASSERTION_LAYER_CAVEAT
         ),
         serves=(29, 30),
@@ -1741,7 +1786,10 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
                f.occurrence_count AS occurrences, f.word_count AS words
         ORDER BY occurrences DESC LIMIT 30
         """,
-        caveat="Formula identity is a normalised-string match, not a tradition of reuse.",
+        caveat=(
+            "Formula identity is a normalised-string match, not a tradition of reuse. "
+            + figures.formula_nesting_policy()
+        ),
         serves=(8, 27),
     ),
     DomainQuery(
@@ -1758,7 +1806,7 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
             "Default is the widest-spread formula in the corpus, pata svastibhih sada "
             "nah, occurring 93 times across all four Vedas. Formula identity is a "
             "normalised-string match, so a family is a shared wording rather than a "
-            "demonstrated line of transmission."
+            "demonstrated line of transmission. " + figures.formula_nesting_policy()
         ),
         serves=(8, 27, 50),
     ),
@@ -2309,9 +2357,13 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
         ORDER BY edges DESC, predicate
         """,
         caveat=(
-            "Complete over the 613 reviewed edges. One MATCH pattern, so count(*) counts "
+            "Complete over the "
+            f"{figures.REVIEW_POPULATION['MODEL_ADJUDICATED_EDGES']} reviewed edges. One "
+            "MATCH pattern, so count(*) counts "
             "edges as intended, with the distinct passage and target counts beside it. The "
-            "verdict is what promotes an edge: 587 ACCEPT_MODEL_REVIEWED became TIER_C, "
+            "verdict is what promotes an edge: "
+            f"{figures.REVIEW_POPULATION['TIER_C_PASSAGE_ANCHORED']} ACCEPT_MODEL_REVIEWED "
+            "became TIER_C, "
             "while 16 NEEDS_MORE_EVIDENCE and 10 AMBIGUOUS stayed TIER_D rather than being "
             "deleted, so the rejections are still auditable. " + _ADJUDICATION_CAVEAT
         ),
@@ -2331,8 +2383,11 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
         ORDER BY passage, predicate, target LIMIT 30
         """,
         caveat=(
-            "A top-30 by citation of 587 TIER_C edges; model_adjudicated_edges gives the "
-            "totals. The reasons cite grammar -- 'agne is a vocative with the imperative "
+            "A top-30 by citation of the "
+            f"{figures.REVIEW_POPULATION['TIER_C_PASSAGE_ANCHORED']} passage-anchored "
+            "TIER_C edges, which is what this query's MATCH selects and is NOT the whole of "
+            "TIER_C; model_adjudicated_edges gives the totals. The reasons cite grammar -- "
+            "'agne is a vocative with the imperative "
             "yuksva' -- which is the strongest thing about this layer and also its limit: "
             "the reviewer is a model, `sanskrit_checked` records whether it was shown the "
             "Sanskrit, and a plausible-sounding reason is not a checked one. "

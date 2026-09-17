@@ -1,0 +1,127 @@
+{
+ "artifact": "AGENT_4_CLOSURE_REPORT",
+ "at": "2026-09-16T18:33:24.389949+00:00",
+ "rule": "Each gap's own declared closure_test, run as written. `canonical_now` is the value in the live store at this moment; `after_proposed_mutations` is what the staged artifact would produce. Nothing has been applied.",
+ "gaps": {
+  "GAP-RITUAL-003": {
+   "declared_closure_test": "USES_OBJECT reaches mani, dundubhi and the udumbara amulet, and yupa's vedas_with_matches reads 3 with VSM 19.17 and 25.29 both matched.",
+   "clause_1_uses_object_reaches_the_three": {
+    "canonical_now": {
+     "VG:CONCEPT:MANI-AMULET": false,
+     "VG:CONCEPT:DUNDUBHI-DRUM": false,
+     "VG:CONCEPT:AUDUMBARA-AMULET": false
+    },
+    "after_proposed_mutations": {
+     "VG:CONCEPT:MANI-AMULET": true,
+     "VG:CONCEPT:DUNDUBHI-DRUM": false,
+     "VG:CONCEPT:AUDUMBARA-AMULET": false
+    },
+    "passes": false,
+    "why_not": "mani closes on GobhGS 3.8.6, read, with Oldenberg as an independent witness. dundubhi does not: the corpus holds 21 dundubhi lines and several are genuine drum instructions, but not one names a rite in its own words, and the single staged candidate is a simile inside a quoted mantra. audumbara does not, and the reason is an entity error rather than a coverage one: all 91 audumbara lines in the apparatus are udumbara WOOD and the graph's node is an AV amulet."
+   },
+   "clause_2_yupa": {
+    "canonical_now": {
+     "vedas_with_matches": 2,
+     "mantras": 6,
+     "vsm_19_17": false,
+     "vsm_25_29": false
+    },
+    "after_proposed_mutations": {
+     "vedas_with_matches": 3,
+     "mantras": 12,
+     "vsm_19_17": true,
+     "vsm_25_29": true
+    },
+    "passes": true
+   },
+   "verdict": "STILL_IMPLEMENTATION_FIXABLE",
+   "reason": "The yupa half closes and the mani half closes. The dundubhi and audumbara halves do not, and neither is implementation: the acquired apparatus does not state a rite's use of the drum, and the audumbara node is an amulet against a corpus whose audumbara is wood. Closing the test as written needs either a further source or a correction to the object registry, and the wording of the test should be revisited against the second finding."
+  },
+  "GAP-RITUAL-004": {
+   "declared_closure_test": "RitualRole holds the classical sixteen with their source stated, the hotr carries PERFORMED_BY edges, and any completeness figure names the schema its denominator comes from.",
+   "clause_1_sixteen_held_with_source": {
+    "canonical_now": 7,
+    "after_proposed_mutations": 16,
+    "source_stated": "SankhSS 13.14.1, with Caland's translation",
+    "passes": true
+   },
+   "clause_2_hotr_performed_by": {
+    "canonical_now": 0,
+    "after_proposed_mutations": 1,
+    "passes": true
+   },
+   "clause_3_denominator_named": {
+    "schema": "SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN",
+    "carried_on": "every RitualRole node and every ritual_roles.jsonl row",
+    "passes": true
+   },
+   "verdict": "CLOSED_DERIVED",
+   "gate": "Reads CLOSED_DERIVED only once the lead applies proposed_mutations.json. Until then the declared closure_measure MATCH (r:RitualRole) RETURN count(r) reads 11, and 7 of the classical sixteen are held.",
+   "reason": "No new source was needed. The nine missing officiants are named in one line of the Sankhayana Srautasutra which also states the rite they perform, and Caland's attributed translation is an independent witness to the reading. The registry's own arithmetic was wrong and is corrected in measurements.json."
+  },
+  "GAP-RITUAL-005": {
+   "declared_closure_test": "A typed deity-to-offering predicate exists with per-edge verse evidence, every modelled rite carries its offerings, and no surface presents co-occurrence as an asserted offering.",
+   "clause_1_typed_predicate_with_evidence": {
+    "canonical_now": 0,
+    "after_proposed_mutations": 4,
+    "loci_behind_them": 22,
+    "every_locus_read": true,
+    "passes": true
+   },
+   "clause_2_every_modelled_rite_carries_its_offerings": {
+    "modelled_rites": 103,
+    "rites_with_an_offering_edge_now": 5,
+    "after_proposed_mutations": 5,
+    "passes": false,
+    "why_not": "The only rite-to-offering evidence in the acquired apparatus is 258 rows staged PROBABLE, each resting on one sutra naming both a rite and an offering. Clause 3 of this same test forbids presenting co-occurrence as an asserted offering, so clause 2 cannot be satisfied from held evidence without violating clause 3. That is a conflict inside the test, not an unfinished implementation, and it needs an owner ruling on what counts as a rite's offering."
+   },
+   "clause_3_no_surface_presents_cooccurrence_as_asserted": {
+    "passes": true,
+    "note": "Nothing proposed here is co-occurrence. The 258 PROBABLE rite-to-offering rows remain unimported and the API caveat that flags the current answer as verse co-occurrence is untouched."
+   },
+   "verdict": "STILL_IMPLEMENTATION_FIXABLE",
+   "reason": "Clause 1 closes. Clause 2 is blocked by clause 3 on held evidence. Two defects in the staged predicate had to be fixed first: `apsu` is a locative and carried 100% of the Apah row, and no staged row had an Offering at the far end at all."
+  },
+  "GAP-RITUAL-006": {
+   "declared_closure_test": "Passages carry a ritual_context assignment with its method declared and its precision measured against a reviewed sample, and material-culture counts are reported split by context.",
+   "clause_1_passages_carry_an_assignment": {
+    "canonical_now": 0,
+    "after_proposed_mutations": 20210,
+    "distribution": {
+     "RITE_NAMED_IN_THIS_MANTRA": 212,
+     "NO_RITUAL_CITATION_FOUND": 10538,
+     "EMPLOYED_IN_RITE_PROBABLE": 1275,
+     "UNRESOLVED_SHARED_OPENING": 7769,
+     "EMPLOYED_IN_RITE": 416
+    },
+    "passes": true
+   },
+   "clause_2_method_declared": {
+    "method": "EXTERNAL_RITUAL_CITATION",
+    "carried_on": "every row and every proposed property update",
+    "passes": true
+   },
+   "clause_3_precision_measured_against_a_reviewed_sample": {
+    "reviewed": 24,
+    "precision_over_every_reviewed_row": 0.7917,
+    "precision_over_reproducible_rows": 0.95,
+    "human_reviewed": 0,
+    "passes": true
+   },
+   "clause_4_material_culture_split_by_context": {
+    "mentions_assessed": 1777,
+    "by_context": {
+     "NO_RITUAL_CITATION_FOUND": 936,
+     "EMPLOYED_IN_RITE_PROBABLE": 93,
+     "UNRESOLVED_SHARED_OPENING": 711,
+     "EMPLOYED_IN_RITE": 21,
+     "RITE_NAMED_IN_THIS_MANTRA": 16
+    },
+    "passes": true
+   },
+   "verdict": "CLOSED_DERIVED",
+   "gate": "Reads CLOSED_DERIVED only once the lead applies the 20,210 property updates. The declared closure_measure MATCH (p:Mantra) WHERE p.ritual_context IS NOT NULL RETURN count(p) reads 0 now.",
+   "reason": "The assignment is total and four-valued, so absence is typed in the row instead of inferred from a missing row. NO_RITUAL_CITATION_FOUND is a measured absence against eighteen works and is NOT `non-ritual`; no mantra anywhere in this artifact is marked NON_RITUAL. The split is reportable because every mantra has a value, not because the ritual and everyday sides have both been measured -- they have not, and the artifact says so on every row."
+  }
+ }
+}

@@ -1,0 +1,427 @@
+{
+  "GAP-ATTRIBUTION-001": {
+    "old": 0,
+    "now": 39,
+    "query": "MATCH (a:DevataAscription) WHERE (a)-->(:Devata) RETURN count(a)"
+  },
+  "GAP-ATTRIBUTION-002": {
+    "old": 0,
+    "now": 39,
+    "query": "MATCH (a:DevataAscription) WHERE (a)-->(:Devata) RETURN count(a)"
+  },
+  "GAP-ATTRIBUTION-003": {
+    "old": 5385,
+    "now": 5385,
+    "query": "MATCH ()-[r:HAS_DEVATA_ASCRIPTION]->() RETURN count(r)"
+  },
+  "GAP-ATTRIBUTION-004": {
+    "old": 0,
+    "now": 0,
+    "query": "MATCH (m:Mantra {veda:'SV'})-[:HAS_RISHI]->() RETURN count(m)"
+  },
+  "GAP-ATTRIBUTION-005": {
+    "old": 4542,
+    "now": 4542,
+    "query": "MATCH (m:Mantra {veda:'AV'})-[:HAS_RISHI]->() RETURN count(DISTINCT m)"
+  },
+  "GAP-ATTRIBUTION-006": {
+    "old": 0,
+    "now": 0,
+    "query": "MATCH (m:Mantra)-[:HAS_CHANDAS]->() WHERE m.veda IN ['SV','YV'] RETURN count(m)"
+  },
+  "GAP-ATTRIBUTION-007": {
+    "old": 427,
+    "now": 427,
+    "query": "MATCH (r:Rishi) WHERE NOT (r)-[:BELONGS_TO_FAMILY]->() RETURN count(r)"
+  },
+  "GAP-ATTRIBUTION-008": {
+    "old": 87,
+    "now": 87,
+    "query": "MATCH (f:RishiFamily) RETURN count(f)"
+  },
+  "GAP-ATTRIBUTION-009": {
+    "old": 0,
+    "now": 0,
+    "query": "MATCH (d:Devata) WHERE d.attribution_scope_note CONTAINS 'no attribution layer' RETURN count(d)"
+  },
+  "GAP-AUDIO-001": {
+    "old": null,
+    "now": null,
+    "query": ""
+  },
+  "GAP-AUDIO-002": {
+    "old": null,
+    "now": null,
+    "query": ""
+  },
+  "GAP-AUDIO-003": {
+    "old": null,
+    "now": null,
+    "query": ""
+  },
+  "GAP-AUDIO-004": {
+    "old": null,
+    "now": null,
+    "query": ""
+  },
+  "GAP-AUDIO-005": {
+    "old": null,
+    "now": null,
+    "query": ""
+  },
+  "GAP-AUDIO-006": {
+    "old": null,
+    "now": null,
+    "query": ""
+  },
+  "GAP-COMMUNITIES-001": {
+    "old": 0,
+    "now": 0,
+    "query": "MATCH (c:DeityCommunity) WHERE NOT c:Internal RETURN count(c)"
+  },
+  "GAP-COMMUNITIES-002": {
+    "old": null,
+    "now": null,
+    "query": ""
+  },
+  "GAP-COMMUNITIES-003": {
+    "old": 306,
+    "now": 306,
+    "query": "MATCH ()-[r:CO_OCCURS_WITH]->() RETURN count(r)"
+  },
+  "GAP-CROSS_VEDA-001": {
+    "old": 1,
+    "now": 2,
+    "query": "MATCH (a)-[:REUSES_TEXT_FROM]->(b) RETURN count(DISTINCT a.veda + '-' + b.veda)"
+  },
+  "GAP-CROSS_VEDA-002": {
+    "old": 6271,
+    "now": 6271,
+    "query": "MATCH ()-[r]->() WHERE r.cross_veda_transformation IS NOT NULL RETURN count(r)"
+  },
+  "GAP-CROSS_VEDA-003": {
+    "old": 0,
+    "now": 0,
+    "query": "MATCH ()-[r:EXACT_PARALLEL_OF]->() WHERE r.match_level IS NULL AND r.match_level_absence IS NULL RETURN count(r)"
+  },
+  "GAP-CROSS_VEDA-004": {
+    "old": null,
+    "now": null,
+    "query": ""
+  },
+  "GAP-ENTITY_COVERAGE-001": {
+    "old": 0,
+    "now": 0,
+    "query": "MATCH (e:Epithet)-[r]-(:Passage) RETURN count(r)"
+  },
+  "GAP-ENTITY_COVERAGE-002": {
+    "old": 184,
+    "now": 184,
+    "query": "MATCH (d:Devata) WHERE d.profile_attributed_total IS NULL RETURN count(d)"
+  },
+  "GAP-ENTITY_COVERAGE-003": {
+    "old": 0,
+    "now": 0,
+    "query": "MATCH (n) WHERE n:Remedy OR n:Bhesaja RETURN count(n)"
+  },
+  "GAP-ENTITY_COVERAGE-004": {
+    "old": null,
+    "now": null,
+    "query": ""
+  },
+  "GAP-ENTITY_COVERAGE-005": {
+    "old": 1,
+    "now": 1,
+    "query": "MATCH (m:Metal) WHERE toLower(coalesce(m.entity_key,'')) CONTAINS 'trapu' RETURN count(m)"
+  },
+  "GAP-ENTITY_COVERAGE-006": {
+    "old": null,
+    "now": null,
+    "query": ""
+  },
+  "GAP-ENTITY_COVERAGE-007": {
+    "old": null,
+    "now": null,
+    "query": ""
+  },
+  "GAP-ENTITY_COVERAGE-008": {
+    "old": null,
+    "now": null,
+    "query": ""
+  },
+  "GAP-FORMULA-001": {
+    "old": 6148,
+    "now": 6148,
+    "query": "MATCH ()-[r:SHARES_FORMULA_WITH]->() RETURN count(r)"
+  },
+  "GAP-FORMULA-002": {
+    "old": 4368,
+    "now": 4368,
+    "query": "MATCH ()-[r]->() WHERE r.formula_transformation_type IS NOT NULL RETURN count(r)"
+  },
+  "GAP-FORMULA-003": {
+    "old": 4825,
+    "now": 4825,
+    "query": "MATCH (f:Formula) RETURN count(f)"
+  },
+  "GAP-MORPHOLOGY-001": {
+    "old": 39,
+    "now": 10031,
+    "query": "MATCH (:Mantra)-[:MENTIONS_LEMMA]->(l:Lemma) RETURN count(DISTINCT l)"
+  },
+  "GAP-MORPHOLOGY-002": {
+    "old": 9658,
+    "now": 9658,
+    "query": "MATCH (m:Mantra) WHERE m.veda <> 'RV' AND NOT (m)-[:MENTIONS_LEMMA]->() RETURN count(m)"
+  },
+  "GAP-MORPHOLOGY-003": {
+    "old": 0,
+    "now": 0,
+    "query": "MATCH (t:TextVersion) WHERE t.text_form <> 'SAMHITA' RETURN count(t)"
+  },
+  "GAP-MORPHOLOGY-004": {
+    "old": null,
+    "now": null,
+    "query": ""
+  },
+  "GAP-MORPHOLOGY-005": {
+    "old": 5839,
+    "now": 20210,
+    "query": "MATCH (t:TextVersion) WHERE t.text_role = 'SEARCH_DERIVATIVE' RETURN count(t)"
+  },
+  "GAP-MORPHOLOGY-006": {
+    "old": 5839,
+    "now": 20210,
+    "query": "MATCH (t:TextVersion) WHERE t.text_role = 'SEARCH_DERIVATIVE' RETURN count(t)"
+  },
+  "GAP-OTHER-001": {
+    "old": 1975,
+    "now": 1975,
+    "query": "MATCH (m:Mantra {veda:'YV'}) RETURN count(m)"
+  },
+  "GAP-OTHER-002": {
+    "old": 5839,
+    "now": 5839,
+    "query": "MATCH (m:Mantra {veda:'AV'}) RETURN count(m)"
+  },
+  "GAP-OTHER-003": {
+    "old": 5839,
+    "now": 5839,
+    "query": "MATCH (m:Mantra {veda:'AV'}) RETURN count(m)"
+  },
+  "GAP-OTHER-004": {
+    "old": 1844,
+    "now": 1844,
+    "query": "MATCH (m:Mantra {veda:'SV'}) RETURN count(m)"
+  },
+  "GAP-OTHER-005": {
+    "old": 0,
+    "now": 0,
+    "query": "MATCH (w:Work) WHERE w.scope IS NULL RETURN count(w)"
+  },
+  "GAP-OTHER-006": {
+    "old": null,
+    "now": null,
+    "query": ""
+  },
+  "GAP-PRODUCT_SURFACE-001": {
+    "old": null,
+    "now": null,
+    "query": ""
+  },
+  "GAP-PRODUCT_SURFACE-002": {
+    "old": null,
+    "now": null,
+    "query": ""
+  },
+  "GAP-PRODUCT_SURFACE-003": {
+    "old": null,
+    "now": null,
+    "query": ""
+  },
+  "GAP-PRODUCT_SURFACE-004": {
+    "old": 1844,
+    "now": 1844,
+    "query": "MATCH (m:Mantra {veda:'SV'}) RETURN count(m)"
+  },
+  "GAP-PRODUCT_SURFACE-005": {
+    "old": null,
+    "now": null,
+    "query": ""
+  },
+  "GAP-QUALITY-001": {
+    "old": null,
+    "now": null,
+    "query": ""
+  },
+  "GAP-QUALITY-002": {
+    "old": null,
+    "now": null,
+    "query": ""
+  },
+  "GAP-QUALITY-003": {
+    "old": null,
+    "now": null,
+    "query": ""
+  },
+  "GAP-QUALITY-004": {
+    "old": null,
+    "now": null,
+    "query": ""
+  },
+  "GAP-QUALITY-005": {
+    "old": 39,
+    "now": 10031,
+    "query": "MATCH (:Mantra)-[:MENTIONS_LEMMA]->(l:Lemma) RETURN count(DISTINCT l)"
+  },
+  "GAP-QUALITY-006": {
+    "old": 367,
+    "now": 0,
+    "query": "MATCH (r:Rishi) WHERE r.occurrence_count = 0 RETURN count(r)"
+  },
+  "GAP-RITUAL-001": {
+    "old": 103,
+    "now": 103,
+    "query": "MATCH (n:Ritual) RETURN count(n)"
+  },
+  "GAP-RITUAL-002": {
+    "old": 3121,
+    "now": 3121,
+    "query": "MATCH ()-[r:HAS_RITUAL_STEP]->() RETURN count(r)"
+  },
+  "GAP-RITUAL-003": {
+    "old": null,
+    "now": null,
+    "query": ""
+  },
+  "GAP-RITUAL-004": {
+    "old": 11,
+    "now": 20,
+    "query": "MATCH (r:RitualRole) RETURN count(r)"
+  },
+  "GAP-RITUAL-005": {
+    "old": 0,
+    "now": 4,
+    "query": "MATCH ()-[r:RECEIVES_OFFERING]->() RETURN count(r)"
+  },
+  "GAP-RITUAL-006": {
+    "old": 0,
+    "now": 20210,
+    "query": "MATCH (p:Mantra) WHERE p.ritual_context IS NOT NULL RETURN count(p)"
+  },
+  "GAP-RITUAL-007": {
+    "old": 1,
+    "now": 1,
+    "query": "MATCH (n:Ritual) WHERE n.entity_key = 'VG:CONCEPT:ASVAMEDHA-HORSE-SACRIFICE' RETURN count(n)"
+  },
+  "GAP-SAMAVEDA_MUSIC-001": {
+    "old": null,
+    "now": null,
+    "query": ""
+  },
+  "GAP-SAMAVEDA_MUSIC-002": {
+    "old": 0,
+    "now": 0,
+    "query": "MATCH ()-[r:MUSICALIZED_AS]->() RETURN count(r)"
+  },
+  "GAP-SAMAVEDA_MUSIC-003": {
+    "old": null,
+    "now": null,
+    "query": ""
+  },
+  "GAP-SCHOLARSHIP-001": {
+    "old": 113,
+    "now": 113,
+    "query": "MATCH (d:ScholarlyDisagreement) RETURN count(d)"
+  },
+  "GAP-SCHOLARSHIP-002": {
+    "old": null,
+    "now": null,
+    "query": ""
+  },
+  "GAP-SEMANTICS-001": {
+    "old": null,
+    "now": 35131,
+    "query": "MATCH (:Mantra)-[:HAS_SEMANTIC_ASSERTION]->() RETURN count(*)"
+  },
+  "GAP-SEMANTICS-002": {
+    "old": 4865,
+    "now": 35131,
+    "query": "MATCH (a:SemanticAssertion) WHERE a.review_state = 'UNREVIEWED' RETURN count(a)"
+  },
+  "GAP-SEMANTICS-003": {
+    "old": null,
+    "now": null,
+    "query": ""
+  },
+  "GAP-SEMANTICS-004": {
+    "old": null,
+    "now": null,
+    "query": ""
+  },
+  "GAP-SEMANTICS-005": {
+    "old": 375,
+    "now": 0,
+    "query": "MATCH (e:DomainEntity) WHERE e.domain IS NULL RETURN count(e)"
+  },
+  "GAP-SEMANTICS-006": {
+    "old": null,
+    "now": null,
+    "query": ""
+  },
+  "GAP-TRANSLATION-001": {
+    "old": 1671,
+    "now": 1671,
+    "query": "MATCH (m:Mantra {veda:'SV'}) WHERE NOT (m)-[:HAS_TRANSLATION]->() RETURN count(m)"
+  },
+  "GAP-TRANSLATION-002": {
+    "old": 51,
+    "now": 51,
+    "query": "MATCH (m:Mantra {veda:'AV'}) WHERE NOT (m)-[:HAS_TRANSLATION]->() RETURN count(m)"
+  },
+  "GAP-TRANSLATION-003": {
+    "old": 36,
+    "now": 25,
+    "query": "MATCH (m:Mantra {veda:'YV'}) WHERE NOT (m)-[:HAS_TRANSLATION]->() RETURN count(m)"
+  },
+  "GAP-TRANSLATION-004": {
+    "old": 37,
+    "now": 36,
+    "query": "MATCH (m:Mantra {veda:'RV'}) WHERE NOT (m)-[:HAS_TRANSLATION]->() RETURN count(m)"
+  },
+  "GAP-TRANSLATION-005": {
+    "old": 0,
+    "now": 18427,
+    "query": "MATCH (t:Translation) WHERE t.alignment_confidence IS NOT NULL RETURN count(t)"
+  },
+  "GAP-TRANSLATION-006": {
+    "old": 0,
+    "now": 0,
+    "query": "MATCH (m:Mantra {veda:'RV'})-[:HAS_TRANSLATION]->() WHERE m.canonical_key STARTS WITH 'VG:RV:SAK:M01:S065:'   OR m.canonical_key STARTS WITH 'VG:RV:SAK:M01:S066:'   OR m.canonical_key STARTS WITH 'VG:RV:SAK:M01:S067:'   OR m.canonical_key STARTS WITH 'VG:RV:SAK:M01:S068:'   OR m.canonical_key STARTS WITH 'VG:RV:SAK:M01:S069:'   OR m.canonical_key STARTS WITH 'VG:RV:SAK:M01:S070:' RETURN sum(CASE WHEN toInteger(substring(split(m.canonical_key,':')[5],1)) % 2 = 0   THEN 1 ELSE 0 END)"
+  },
+  "GAP-CROSS-VEDA-DEVATA-IDENTITY-BRIDGE-001": {
+    "old": 0,
+    "now": 39,
+    "query": "MATCH (a:DevataAscription) WHERE (a)-->(:Devata) RETURN count(a)"
+  },
+  "GAP-ATTRIBUTION-WHITNEY-UNRESOLVED-OBJECT-001": {
+    "old": null,
+    "now": null,
+    "query": ""
+  },
+  "GAP-RITUAL-STEP-LOCATOR-COLLISION-001": {
+    "old": 3121,
+    "now": 3121,
+    "query": "MATCH (s:RitualStep) RETURN count(s)"
+  },
+  "GAP-AV-CHANDOMETRE-SEGMENTATION-001": {
+    "old": 0,
+    "now": 0,
+    "query": "MATCH (c:Chandas) WHERE NOT c:Internal AND c.preferred_label CONTAINS ':' RETURN count(c)"
+  },
+  "GAP-SEMANTIC-SIGNATURE-COVERAGE-001": {
+    "old": null,
+    "now": null,
+    "query": ""
+  }
+}

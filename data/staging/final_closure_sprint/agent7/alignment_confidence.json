@@ -1,0 +1,66 @@
+{
+ "artifact": "AGENT7_ALIGNMENT_CONFIDENCE_DERIVATION",
+ "gap_id": "GAP-TRANSLATION-005",
+ "closure_test": "MATCH (t:Translation) WHERE t.alignment_confidence IS NULL RETURN count(t) returns 0, and the 158-uncertain claim is either reproducible from the data or removed",
+ "clause_1_alignment_confidence": {
+  "measured_null_now": 18415,
+  "translations_in_store": 18415,
+  "graded_by_this_derivation": 18415,
+  "ungradable_and_refused": [],
+  "vocabulary": [
+   {
+    "value": "CONTENT_VERIFIED_MANTRA",
+    "basis": "the address was checked against an independent control -- the node carries an address_verification or an owner decision naming it"
+   },
+   {
+    "value": "REUSED_SURFACE_IDENTICAL",
+    "basis": "not this corpus's own translation: another corpus's rendering, admitted only on verified-identical Sanskrit and carrying its full reuse disclosure"
+   },
+   {
+    "value": "SOURCE_LABELLED_MANTRA",
+    "basis": "the source printed this verse's own label and the node records the locator and the bytes it was read from"
+   },
+   {
+    "value": "DECLARED_RANGE",
+    "basis": "one printed unit covering several canonical verses, with the covered keys enumerated on the node, so the grain is disclosed rather than implied"
+   },
+   {
+    "value": "HYMN_GRAIN_ONLY",
+    "basis": "bound to the hymn and not to a verse of it: the verse-level address was not established. This is the population PRODUCT_V1_SCOPE.md calls 'recorded as uncertain'"
+   },
+   {
+    "value": "MACHINE_ALIGNED_NO_PER_ROW_CONTROL",
+    "basis": "a bulk machine alignment at mantra grain with no per-row evidence recorded -- the aligner's output, disclosed as such"
+   }
+  ],
+  "distribution": {
+   "CONTENT_VERIFIED_MANTRA": 36,
+   "REUSED_SURFACE_IDENTICAL": 194,
+   "SOURCE_LABELLED_MANTRA": 868,
+   "DECLARED_RANGE": 64,
+   "HYMN_GRAIN_ONLY": 158,
+   "MACHINE_ALIGNED_NO_PER_ROW_CONTROL": 17095
+  },
+  "partition_is_total": true,
+  "passes_as_written_now": false,
+  "note": "the grade is ordinal and its basis is recorded per node. No numeric confidence is minted, because this project holds no calibration set that would make one mean anything and a number would be read as one."
+ },
+ "clause_2_the_158": {
+  "claim": "PRODUCT_V1_SCOPE.md:57 and docs/STATUS.md:67 -- 10,344 exact mantra alignments to Griffith 1896 (98.03%), 158 recorded as uncertain, 52 missing",
+  "registry_ruling": "'no property on any Translation node carries that record, so the claim is unverifiable from the data'",
+  "reproducible": true,
+  "measured": {
+   "translations_at_HYMN_grain_corpus_wide": 158,
+   "translations_at_HYMN_grain_from_WIKISOURCE_GRIFFITH_RV": 158,
+   "wikisource_griffith_rv_total": 10502,
+   "wikisource_griffith_rv_at_MANTRA": 10314,
+   "wikisource_griffith_rv_at_MANTRA_RANGE": 30
+  },
+  "verdict": "REPRODUCIBLE. The record is alignment_level, whose value space is {MANTRA, HYMN, MANTRA_RANGE}. Exactly 158 Griffith Rigvedic translations sit at HYMN grain -- bound to the hymn rather than to a verse of it, which is what 'recorded as uncertain' asserts about an alignment. The audit searched for a property named after the value instead of enumerating the field's value space, and certified an absence that was not there.",
+  "but_its_two_neighbours_in_the_same_sentence_are_now_stale": {
+   "10344_exact_mantra_alignments": "now 10,314 at MANTRA plus 30 at MANTRA_RANGE. M13 re-typed the RV 1.65-1.70 span, so the 10,344 is one population that has become two.",
+   "52_mantras_have_none": "now 37 carry no HAS_TRANSLATION edge of their own and 7 are reached by no rendering of any kind. Both are lower than 52 and neither is 52.",
+   "action": "the 158 stands and must not be withdrawn; the 10,344 and the 52 in the same sentence need correcting. PRODUCT_V1_SCOPE.md and docs/STATUS.md are outside this agent's write surface, so the correction is proposed here rather than applied."
+  }
+ }
+}

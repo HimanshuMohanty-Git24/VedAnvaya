@@ -31,6 +31,10 @@ export default async function LimitsPage() {
         );
     }
     const data = result.data;
+    // Read, never typed. See the caveat below for why.
+    const total = data.benchmark_not_answerable_total ?? 0;
+    const published = data.benchmark_not_answerable_published ?? 0;
+    const unpublished = data.unpublished_not_answerable ?? [];
 
     return (
         <div className="shell page limits-page">
@@ -40,12 +44,23 @@ export default async function LimitsPage() {
             />
             <KnowledgeStatus
                 status={data.data_status}
-                note="The catalogue itself is complete for the questions the benchmark probed. Each limit below is a separate finding."
+                note={`${published} of the ${total} questions the benchmark grades unanswerable are catalogued here, each with a probe that runs on request. Each limit below is a separate finding.`}
             />
 
-            <Caveat title="This catalogue is not exhaustive" tone="boundary">
-                It records the limits that the benchmark graded and probed. A question absent from
-                this list is not thereby answerable.
+            {/*
+             * The completeness figures are read from the response, not typed. This box used
+             * to say the catalogue was "complete for the questions the benchmark probed"
+             * while the endpoint published seven cards against twenty-one graded questions.
+             * Both numbers now come from the same payload the cards come from, so the claim
+             * cannot drift from the list beneath it.
+             */}
+            <Caveat title="This catalogue is not a complete account of what this atlas cannot do" tone="boundary">
+                It covers every question the hundred-question benchmark graded unanswerable
+                {unpublished.length > 0
+                    ? ` except ${unpublished.length} still unpublished`
+                    : ""}
+                . The benchmark is a hundred questions rather than every question, so a
+                question absent from this list is not thereby answerable.
             </Caveat>
 
             <div className="limit-list">

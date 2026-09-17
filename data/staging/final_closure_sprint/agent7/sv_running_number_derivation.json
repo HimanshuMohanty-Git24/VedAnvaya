@@ -1,0 +1,342 @@
+{
+ "artifact": "AGENT7_SV_RUNNING_NUMBER_DERIVATION",
+ "derivation": "depth-first walk of the Samavedic Passage tree by (parent_key, sequence_in_parent), numbering MANTRA nodes 1..N in that order",
+ "mantras_numbered": 1844,
+ "roots_found": [
+  "VG:SV:KAU:CHANDA",
+  "VG:SV:KAU:ARANYA",
+  "VG:SV:KAU:MAHANAMNYA",
+  "VG:SV:KAU:UTTARA"
+ ],
+ "nodes_missing_sequence_in_parent": [],
+ "control": "the arcika running number the gana source printed, on 332 verses",
+ "control_population": 332,
+ "agree": 256,
+ "disagree": 76,
+ "reproduces_the_source_numbering": false,
+ "mismatches": [
+  {
+   "canonical_key": "VG:SV:KAU:UTTARA:P04:R02:D01:V01",
+   "source_printed": [
+    1116
+   ],
+   "derived": 1107
+  },
+  {
+   "canonical_key": "VG:SV:KAU:UTTARA:P04:R02:D03:V01",
+   "source_printed": [
+    1140
+   ],
+   "derived": 1131
+  },
+  {
+   "canonical_key": "VG:SV:KAU:UTTARA:P04:R02:D07:V01",
+   "source_printed": [
+    1152
+   ],
+   "derived": 1143
+  },
+  {
+   "canonical_key": "VG:SV:KAU:UTTARA:P04:R02:D09:V01",
+   "source_printed": [
+    1157
+   ],
+   "derived": 1148
+  },
+  {
+   "canonical_key": "VG:SV:KAU:UTTARA:P04:R02:D10:V01",
+   "source_printed": [
+    1160
+   ],
+   "derived": 1151
+  },
+  {
+   "canonical_key": "VG:SV:KAU:UTTARA:P04:R02:D11:V01",
+   "source_printed": [
+    1163
+   ],
+   "derived": 1154
+  },
+  {
+   "canonical_key": "VG:SV:KAU:UTTARA:P04:R02:D12:V01",
+   "source_printed": [
+    1166
+   ],
+   "derived": 1157
+  },
+  {
+   "canonical_key": "VG:SV:KAU:UTTARA:P04:R02:D13:V01",
+   "source_printed": [
+    1169
+   ],
+   "derived": 1160
+  },
+  {
+   "canonical_key": "VG:SV:KAU:UTTARA:P05:R01:D01:V01",
+   "source_printed": [
+    1175
+   ],
+   "derived": 1163
+  },
+  {
+   "canonical_key": "VG:SV:KAU:UTTARA:P05:R01:D11:V01",
+   "source_printed": [
+    1225
+   ],
+   "derived": 1204
+  },
+  {
+   "canonical_key": "VG:SV:KAU:UTTARA:P05:R01:D13:V01",
+   "source_printed": [
+    1231
+   ],
+   "derived": 1210
+  },
+  {
+   "canonical_key": "VG:SV:KAU:UTTARA:P05:R01:D14:V01",
+   "source_printed": [
+    1233
+   ],
+   "derived": 1212
+  },
+  {
+   "canonical_key": "VG:SV:KAU:UTTARA:P05:R01:D15:V01",
+   "source_printed": [
+    1235
+   ],
+   "derived": 1214
+  },
+  {
+   "canonical_key": "VG:SV:KAU:UTTARA:P05:R01:D16:V01",
+   "source_printed": [
+    1238
+   ],
+   "derived": 1217
+  },
+  {
+   "canonical_key": "VG:SV:KAU:UTTARA:P05:R01:D18:V01",
+   "source_printed": [
+    1244
+   ],
+   "derived": 1220
+  },
+  {
+   "canonical_key": "VG:SV:KAU:UTTARA:P05:R01:D19:V01",
+   "source_printed": [
+    1247
+   ],
+   "derived": 1223
+  },
+  {
+   "canonical_key": "VG:SV:KAU:UTTARA:P05:R01:D20:V01",
+   "source_printed": [
+    1250
+   ],
+   "derived": 1226
+  },
+  {
+   "canonical_key": "VG:SV:KAU:UTTARA:P05:R02:D11:V01",
+   "source_printed": [
+    1310
+   ],
+   "derived": 1280
+  },
+  {
+   "canonical_key": "VG:SV:KAU:UTTARA:P05:R02:D12:V01",
+   "source_printed": [
+    1313
+   ],
+   "derived": 1283
+  },
+  {
+   "canonical_key": "VG:SV:KAU:UTTARA:P05:R02:D13:V01",
+   "source_printed": [
+    1316
+   ],
+   "derived": 1285
+  },
+  {
+   "canonical_key": "VG:SV:KAU:UTTARA:P05:R02:D14:V01",
+   "source_printed": [
+    1319
+   ],
+   "derived": 1288
+  },
+  {
+   "canonical_key": "VG:SV:KAU:UTTARA:P05:R02:D15:V01",
+   "source_printed": [
+    1321
+   ],
+   "derived": 1290
+  },
+  {
+   "canonical_key": "VG:SV:KAU:UTTARA:P05:R02:D16:V01",
+   "source_printed": [
+    1323
+   ],
+   "derived": 1292
+  },
+  {
+   "canonical_key": "VG:SV:KAU:UTTARA:P05:R02:D17:V01",
+   "source_printed": [
+    1326
+   ],
+   "derived": 1295
+  },
+  {
+   "canonical_key": "VG:SV:KAU:UTTARA:P05:R02:D18:V01",
+   "source_printed": [
+    1329
+   ],
+   "derived": 1298
+  },
+  {
+   "canonical_key": "VG:SV:KAU:UTTARA:P05:R02:D19:V01",
+   "source_printed": [
+    1332
+   ],
+   "derived": 1301
+  },
+  {
+   "canonical_key": "VG:SV:KAU:UTTARA:P05:R02:D20:V01",
+   "source_printed": [
+    1335
+   ],
+   "derived": 1304
+  },
+  {
+   "canonical_key": "VG:SV:KAU:UTTARA:P05:R02:D21:V01",
+   "source_printed": [
+    1338
+   ],
+   "derived": 1307
+  },
+  {
+   "canonical_key": "VG:SV:KAU:UTTARA:P05:R02:D22:V01",
+   "source_printed": [
+    1341
+   ],
+   "derived": 1310
+  },
+  {
+   "canonical_key": "VG:SV:KAU:UTTARA:P05:R02:D23:V01",
+   "source_printed": [
+    1344
+   ],
+   "derived": 1313
+  },
+  {
+   "canonical_key": "VG:SV:KAU:UTTARA:P06:R01:D04:V01",
+   "source_printed": [
+    1357
+   ],
+   "derived": 1326
+  },
+  {
+   "canonical_key": "VG:SV:KAU:UTTARA:P06:R01:D05:V01",
+   "source_printed": [
+    1360
+   ],
+   "derived": 1329
+  },
+  {
+   "canonical_key": "VG:SV:KAU:UTTARA:P06:R01:D06:V01",
+   "source_printed": [
+    1362
+   ],
+   "derived": 1331
+  },
+  {
+   "canonical_key": "VG:SV:KAU:UTTARA:P06:R01:D07:V01",
+   "source_printed": [
+    1364
+   ],
+   "derived": 1333
+  },
+  {
+   "canonical_key": "VG:SV:KAU:UTTARA:P06:R01:D08:V01",
+   "source_printed": [
+    1367
+   ],
+   "derived": 1336
+  },
+  {
+   "canonical_key": "VG:SV:KAU:UTTARA:P06:R01:D09:V01",
+   "source_printed": [
+    1370
+   ],
+   "derived": 1339
+  },
+  {
+   "canonical_key": "VG:SV:KAU:UTTARA:P06:R01:D10:V01",
+   "source_printed": [
+    1373
+   ],
+   "derived": 1342
+  },
+  {
+   "canonical_key": "VG:SV:KAU:UTTARA:P06:R01:D11:V02",
+   "source_printed": [
+    1377
+   ],
+   "derived": 1346
+  },
+  {
+   "canonical_key": "VG:SV:KAU:UTTARA:P06:R02:D03:V01",
+   "source_printed": [
+    1386
+   ],
+   "derived": 1355
+  },
+  {
+   "canonical_key": "VG:SV:KAU:UTTARA:P06:R02:D06:V01",
+   "source_printed": [
+    1394
+   ],
+   "derived": 1363
+  }
+ ],
+ "ascii_key_order_comparison": "see sv_running_number_probe.json: ASCII canonical_key order agrees on only 104 of 332, because it sorts ARANYA before CHANDA. The structural walk is the correct sort.",
+ "offset_profile": "derived = printed - offset. The offset is the number of Samhita verses the edition has before this point that this graph does not hold, so each step is a localised deficit.",
+ "offset_steps": [
+  {
+   "first_control_at_derived_position": 1,
+   "canonical_key": "VG:SV:KAU:CHANDA:P01:D01:V01",
+   "offset_becomes": 0
+  },
+  {
+   "first_control_at_derived_position": 1107,
+   "canonical_key": "VG:SV:KAU:UTTARA:P04:R02:D01:V01",
+   "offset_becomes": 9
+  },
+  {
+   "first_control_at_derived_position": 1163,
+   "canonical_key": "VG:SV:KAU:UTTARA:P05:R01:D01:V01",
+   "offset_becomes": 12
+  },
+  {
+   "first_control_at_derived_position": 1204,
+   "canonical_key": "VG:SV:KAU:UTTARA:P05:R01:D11:V01",
+   "offset_becomes": 21
+  },
+  {
+   "first_control_at_derived_position": 1220,
+   "canonical_key": "VG:SV:KAU:UTTARA:P05:R01:D18:V01",
+   "offset_becomes": 24
+  },
+  {
+   "first_control_at_derived_position": 1280,
+   "canonical_key": "VG:SV:KAU:UTTARA:P05:R02:D11:V01",
+   "offset_becomes": 30
+  },
+  {
+   "first_control_at_derived_position": 1285,
+   "canonical_key": "VG:SV:KAU:UTTARA:P05:R02:D13:V01",
+   "offset_becomes": 31
+  }
+ ],
+ "final_offset": 31,
+ "edition_spine_declared": 1875,
+ "graph_holds": 1844,
+ "declared_deficit": 31
+}

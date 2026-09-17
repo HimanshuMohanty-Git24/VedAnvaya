@@ -1,0 +1,1155 @@
+{
+ "artifact": "AGENT7_AV_RESIDUAL_SURFACE_IDENTITY_SCAN",
+ "rule": "strict fold, exactly 1.0; every candidate pair reported; empty folds refused",
+ "rv_text_versions_scanned": 21104,
+ "rv_versions_refused_empty": 0,
+ "residuals": [
+  {
+   "canonical_key": "VG:AV:SAU:K20:S017:V001",
+   "wave1_nearest_parallel": "VG:RV:SAK:M10:S043:V001",
+   "wave1_declared_similarity": 0.9864,
+   "av_text_versions": [
+    "VEDAGRAPH.AVS.SEARCH_NORMALIZED",
+    "GRETIL.AVS.SAUNAKA.UNACCENTED",
+    "GRETIL.AVS.SAUNAKA.ACCENTED"
+   ],
+   "exact_matches_anywhere_in_rv": [],
+   "pairs": [
+    {
+     "av_text_version": "VEDAGRAPH.AVS.SEARCH_NORMALIZED",
+     "rv_key": "VG:RV:SAK:M10:S043:V001",
+     "rv_text_version": "VEDAWEB.AUFRECHT",
+     "char_ratio": 0.9697,
+     "token_dice": 0.7895,
+     "sandhi_insensitive_char_ratio": 0.9649,
+     "identical_strict": false,
+     "residue": [
+      "- indra",
+      "+ indram",
+      "- pati",
+      "+ patim",
+      "- marya",
+      "+ maryaṃ",
+      "- śundhyu",
+      "+ śundhyum"
+     ]
+    },
+    {
+     "av_text_version": "VEDAGRAPH.AVS.SEARCH_NORMALIZED",
+     "rv_key": "VG:RV:SAK:M10:S043:V001",
+     "rv_text_version": "GRETIL.RV.AUFRECHT",
+     "char_ratio": 0.966,
+     "token_dice": 0.7368,
+     "sandhi_insensitive_char_ratio": 0.9607,
+     "identical_strict": false,
+     "residue": [
+      "- achā",
+      "+ acchā",
+      "- indra",
+      "+ indram",
+      "- pati",
+      "+ patim",
+      "- marya",
+      "+ maryaṃ",
+      "- śundhyu",
+      "+ śundhyum"
+     ]
+    },
+    {
+     "av_text_version": "GRETIL.AVS.SAUNAKA.UNACCENTED",
+     "rv_key": "VG:RV:SAK:M10:S043:V001",
+     "rv_text_version": "VEDAWEB.AUFRECHT",
+     "char_ratio": 0.9773,
+     "token_dice": 0.8421,
+     "sandhi_insensitive_char_ratio": 1.0,
+     "identical_strict": false,
+     "residue": [
+      "- indraṃ",
+      "+ indram",
+      "- patiṃ",
+      "+ patim",
+      "- śundhyuṃ",
+      "+ śundhyum"
+     ]
+    },
+    {
+     "av_text_version": "GRETIL.AVS.SAUNAKA.UNACCENTED",
+     "rv_key": "VG:RV:SAK:M10:S043:V001",
+     "rv_text_version": "GRETIL.RV.AUFRECHT",
+     "char_ratio": 0.9736,
+     "token_dice": 0.7895,
+     "sandhi_insensitive_char_ratio": 0.9956,
+     "identical_strict": false,
+     "residue": [
+      "- achā",
+      "+ acchā",
+      "- indraṃ",
+      "+ indram",
+      "- patiṃ",
+      "+ patim",
+      "- śundhyuṃ",
+      "+ śundhyum"
+     ]
+    },
+    {
+     "av_text_version": "GRETIL.AVS.SAUNAKA.ACCENTED",
+     "rv_key": "VG:RV:SAK:M10:S043:V001",
+     "rv_text_version": "VEDAWEB.AUFRECHT",
+     "char_ratio": 0.9773,
+     "token_dice": 0.8421,
+     "sandhi_insensitive_char_ratio": 1.0,
+     "identical_strict": false,
+     "residue": [
+      "- indraṃ",
+      "+ indram",
+      "- patiṃ",
+      "+ patim",
+      "- śundhyuṃ",
+      "+ śundhyum"
+     ]
+    },
+    {
+     "av_text_version": "GRETIL.AVS.SAUNAKA.ACCENTED",
+     "rv_key": "VG:RV:SAK:M10:S043:V001",
+     "rv_text_version": "GRETIL.RV.AUFRECHT",
+     "char_ratio": 0.9736,
+     "token_dice": 0.7895,
+     "sandhi_insensitive_char_ratio": 0.9956,
+     "identical_strict": false,
+     "residue": [
+      "- achā",
+      "+ acchā",
+      "- indraṃ",
+      "+ indram",
+      "- patiṃ",
+      "+ patim",
+      "- śundhyuṃ",
+      "+ śundhyum"
+     ]
+    }
+   ],
+   "has_exact_match_somewhere": false
+  },
+  {
+   "canonical_key": "VG:AV:SAU:K20:S047:V005",
+   "wave1_nearest_parallel": "VG:RV:SAK:M01:S007:V002",
+   "wave1_declared_similarity": 0.9907,
+   "av_text_versions": [
+    "GRETIL.AVS.SAUNAKA.UNACCENTED",
+    "GRETIL.AVS.SAUNAKA.ACCENTED",
+    "VEDAGRAPH.AVS.SEARCH_NORMALIZED"
+   ],
+   "exact_matches_anywhere_in_rv": [],
+   "pairs": [
+    {
+     "av_text_version": "GRETIL.AVS.SAUNAKA.UNACCENTED",
+     "rv_key": "VG:RV:SAK:M01:S007:V002",
+     "rv_text_version": "GRETIL.RV.AUFRECHT",
+     "char_ratio": 0.9844,
+     "token_dice": 0.9,
+     "sandhi_insensitive_char_ratio": 1.0,
+     "identical_strict": false,
+     "residue": [
+      "- saṃmiśla",
+      "+ sammiśla"
+     ]
+    },
+    {
+     "av_text_version": "GRETIL.AVS.SAUNAKA.UNACCENTED",
+     "rv_key": "VG:RV:SAK:M01:S007:V002",
+     "rv_text_version": "VEDAWEB.AUFRECHT",
+     "char_ratio": 0.9844,
+     "token_dice": 0.9,
+     "sandhi_insensitive_char_ratio": 1.0,
+     "identical_strict": false,
+     "residue": [
+      "- saṃmiśla",
+      "+ sammiśla"
+     ]
+    },
+    {
+     "av_text_version": "GRETIL.AVS.SAUNAKA.ACCENTED",
+     "rv_key": "VG:RV:SAK:M01:S007:V002",
+     "rv_text_version": "GRETIL.RV.AUFRECHT",
+     "char_ratio": 0.9844,
+     "token_dice": 0.9,
+     "sandhi_insensitive_char_ratio": 1.0,
+     "identical_strict": false,
+     "residue": [
+      "- saṃmiśla",
+      "+ sammiśla"
+     ]
+    },
+    {
+     "av_text_version": "GRETIL.AVS.SAUNAKA.ACCENTED",
+     "rv_key": "VG:RV:SAK:M01:S007:V002",
+     "rv_text_version": "VEDAWEB.AUFRECHT",
+     "char_ratio": 0.9844,
+     "token_dice": 0.9,
+     "sandhi_insensitive_char_ratio": 1.0,
+     "identical_strict": false,
+     "residue": [
+      "- saṃmiśla",
+      "+ sammiśla"
+     ]
+    },
+    {
+     "av_text_version": "VEDAGRAPH.AVS.SEARCH_NORMALIZED",
+     "rv_key": "VG:RV:SAK:M01:S007:V002",
+     "rv_text_version": "GRETIL.RV.AUFRECHT",
+     "char_ratio": 0.9844,
+     "token_dice": 0.9,
+     "sandhi_insensitive_char_ratio": 0.9818,
+     "identical_strict": false,
+     "residue": [
+      "- samiśla",
+      "+ sammiśla"
+     ]
+    },
+    {
+     "av_text_version": "VEDAGRAPH.AVS.SEARCH_NORMALIZED",
+     "rv_key": "VG:RV:SAK:M01:S007:V002",
+     "rv_text_version": "VEDAWEB.AUFRECHT",
+     "char_ratio": 0.9844,
+     "token_dice": 0.9,
+     "sandhi_insensitive_char_ratio": 0.9818,
+     "identical_strict": false,
+     "residue": [
+      "- samiśla",
+      "+ sammiśla"
+     ]
+    }
+   ],
+   "has_exact_match_somewhere": false
+  },
+  {
+   "canonical_key": "VG:AV:SAU:K20:S047:V007",
+   "wave1_nearest_parallel": "VG:RV:SAK:M08:S017:V001",
+   "wave1_declared_similarity": 0.9388,
+   "av_text_versions": [
+    "GRETIL.AVS.SAUNAKA.UNACCENTED",
+    "GRETIL.AVS.SAUNAKA.ACCENTED",
+    "VEDAGRAPH.AVS.SEARCH_NORMALIZED"
+   ],
+   "exact_matches_anywhere_in_rv": [],
+   "pairs": [
+    {
+     "av_text_version": "GRETIL.AVS.SAUNAKA.UNACCENTED",
+     "rv_key": "VG:RV:SAK:M08:S017:V001",
+     "rv_text_version": "GRETIL.RV.AUFRECHT",
+     "char_ratio": 0.9683,
+     "token_dice": 0.8462,
+     "sandhi_insensitive_char_ratio": 1.0,
+     "identical_strict": false,
+     "residue": [
+      "- somaṃ",
+      "+ somam",
+      "- edaṃ",
+      "+ edam"
+     ]
+    },
+    {
+     "av_text_version": "GRETIL.AVS.SAUNAKA.UNACCENTED",
+     "rv_key": "VG:RV:SAK:M08:S017:V001",
+     "rv_text_version": "VEDAWEB.AUFRECHT",
+     "char_ratio": 0.9683,
+     "token_dice": 0.8462,
+     "sandhi_insensitive_char_ratio": 1.0,
+     "identical_strict": false,
+     "residue": [
+      "- somaṃ",
+      "+ somam",
+      "- edaṃ",
+      "+ edam"
+     ]
+    },
+    {
+     "av_text_version": "GRETIL.AVS.SAUNAKA.ACCENTED",
+     "rv_key": "VG:RV:SAK:M08:S017:V001",
+     "rv_text_version": "GRETIL.RV.AUFRECHT",
+     "char_ratio": 0.9683,
+     "token_dice": 0.8462,
+     "sandhi_insensitive_char_ratio": 1.0,
+     "identical_strict": false,
+     "residue": [
+      "- somaṃ",
+      "+ somam",
+      "- edaṃ",
+      "+ edam"
+     ]
+    },
+    {
+     "av_text_version": "GRETIL.AVS.SAUNAKA.ACCENTED",
+     "rv_key": "VG:RV:SAK:M08:S017:V001",
+     "rv_text_version": "VEDAWEB.AUFRECHT",
+     "char_ratio": 0.9683,
+     "token_dice": 0.8462,
+     "sandhi_insensitive_char_ratio": 1.0,
+     "identical_strict": false,
+     "residue": [
+      "- somaṃ",
+      "+ somam",
+      "- edaṃ",
+      "+ edam"
+     ]
+    },
+    {
+     "av_text_version": "VEDAGRAPH.AVS.SEARCH_NORMALIZED",
+     "rv_key": "VG:RV:SAK:M08:S017:V001",
+     "rv_text_version": "GRETIL.RV.AUFRECHT",
+     "char_ratio": 0.9683,
+     "token_dice": 0.8462,
+     "sandhi_insensitive_char_ratio": 0.9608,
+     "identical_strict": false,
+     "residue": [
+      "- soma",
+      "+ somam",
+      "- eda",
+      "+ edam"
+     ]
+    },
+    {
+     "av_text_version": "VEDAGRAPH.AVS.SEARCH_NORMALIZED",
+     "rv_key": "VG:RV:SAK:M08:S017:V001",
+     "rv_text_version": "VEDAWEB.AUFRECHT",
+     "char_ratio": 0.9683,
+     "token_dice": 0.8462,
+     "sandhi_insensitive_char_ratio": 0.9608,
+     "identical_strict": false,
+     "residue": [
+      "- soma",
+      "+ somam",
+      "- eda",
+      "+ edam"
+     ]
+    }
+   ],
+   "has_exact_match_somewhere": false
+  },
+  {
+   "canonical_key": "VG:AV:SAU:K20:S052:V003",
+   "wave1_nearest_parallel": "VG:RV:SAK:M08:S033:V003",
+   "wave1_declared_similarity": 0.9708,
+   "av_text_versions": [
+    "VEDAGRAPH.AVS.SEARCH_NORMALIZED",
+    "GRETIL.AVS.SAUNAKA.ACCENTED",
+    "GRETIL.AVS.SAUNAKA.UNACCENTED"
+   ],
+   "exact_matches_anywhere_in_rv": [],
+   "pairs": [
+    {
+     "av_text_version": "VEDAGRAPH.AVS.SEARCH_NORMALIZED",
+     "rv_key": "VG:RV:SAK:M08:S033:V003",
+     "rv_text_version": "VEDAWEB.AUFRECHT",
+     "char_ratio": 0.951,
+     "token_dice": 0.6923,
+     "sandhi_insensitive_char_ratio": 0.9444,
+     "identical_strict": false,
+     "residue": [
+      "- dhṣṇav",
+      "+ dhṛṣṇav",
+      "- dhsad",
+      "+ dhṛṣad",
+      "- vāja",
+      "+ vājaṃ",
+      "- piśaṅgarūpa",
+      "+ piśaṅgarūpam"
+     ]
+    },
+    {
+     "av_text_version": "VEDAGRAPH.AVS.SEARCH_NORMALIZED",
+     "rv_key": "VG:RV:SAK:M08:S033:V003",
+     "rv_text_version": "GRETIL.RV.AUFRECHT",
+     "char_ratio": 0.951,
+     "token_dice": 0.6923,
+     "sandhi_insensitive_char_ratio": 0.9444,
+     "identical_strict": false,
+     "residue": [
+      "- dhṣṇav",
+      "+ dhṛṣṇav",
+      "- dhsad",
+      "+ dhṛṣad",
+      "- vāja",
+      "+ vājaṃ",
+      "- piśaṅgarūpa",
+      "+ piśaṅgarūpam"
+     ]
+    },
+    {
+     "av_text_version": "GRETIL.AVS.SAUNAKA.ACCENTED",
+     "rv_key": "VG:RV:SAK:M08:S033:V003",
+     "rv_text_version": "VEDAWEB.AUFRECHT",
+     "char_ratio": 0.9804,
+     "token_dice": 0.8462,
+     "sandhi_insensitive_char_ratio": 0.9889,
+     "identical_strict": false,
+     "residue": [
+      "- dhṛsad",
+      "+ dhṛṣad",
+      "- piśaṅgarūpaṃ",
+      "+ piśaṅgarūpam"
+     ]
+    },
+    {
+     "av_text_version": "GRETIL.AVS.SAUNAKA.ACCENTED",
+     "rv_key": "VG:RV:SAK:M08:S033:V003",
+     "rv_text_version": "GRETIL.RV.AUFRECHT",
+     "char_ratio": 0.9804,
+     "token_dice": 0.8462,
+     "sandhi_insensitive_char_ratio": 0.9889,
+     "identical_strict": false,
+     "residue": [
+      "- dhṛsad",
+      "+ dhṛṣad",
+      "- piśaṅgarūpaṃ",
+      "+ piśaṅgarūpam"
+     ]
+    },
+    {
+     "av_text_version": "GRETIL.AVS.SAUNAKA.UNACCENTED",
+     "rv_key": "VG:RV:SAK:M08:S033:V003",
+     "rv_text_version": "VEDAWEB.AUFRECHT",
+     "char_ratio": 0.9804,
+     "token_dice": 0.8462,
+     "sandhi_insensitive_char_ratio": 0.9889,
+     "identical_strict": false,
+     "residue": [
+      "- dhṛsad",
+      "+ dhṛṣad",
+      "- piśaṅgarūpaṃ",
+      "+ piśaṅgarūpam"
+     ]
+    },
+    {
+     "av_text_version": "GRETIL.AVS.SAUNAKA.UNACCENTED",
+     "rv_key": "VG:RV:SAK:M08:S033:V003",
+     "rv_text_version": "GRETIL.RV.AUFRECHT",
+     "char_ratio": 0.9804,
+     "token_dice": 0.8462,
+     "sandhi_insensitive_char_ratio": 0.9889,
+     "identical_strict": false,
+     "residue": [
+      "- dhṛsad",
+      "+ dhṛṣad",
+      "- piśaṅgarūpaṃ",
+      "+ piśaṅgarūpam"
+     ]
+    }
+   ],
+   "has_exact_match_somewhere": false
+  },
+  {
+   "canonical_key": "VG:AV:SAU:K20:S057:V013",
+   "wave1_nearest_parallel": "VG:RV:SAK:M08:S033:V009",
+   "wave1_declared_similarity": 0.9818,
+   "av_text_versions": [
+    "GRETIL.AVS.SAUNAKA.ACCENTED",
+    "VEDAGRAPH.AVS.SEARCH_NORMALIZED",
+    "GRETIL.AVS.SAUNAKA.UNACCENTED"
+   ],
+   "exact_matches_anywhere_in_rv": [
+    {
+     "av_text_version": "GRETIL.AVS.SAUNAKA.ACCENTED",
+     "rv_key": "VG:RV:SAK:M08:S033:V009",
+     "rv_text_version": "VEDAWEB.AUFRECHT",
+     "rv_text_role": "PARALLEL_TEXT",
+     "char_ratio": 1.0
+    },
+    {
+     "av_text_version": "GRETIL.AVS.SAUNAKA.UNACCENTED",
+     "rv_key": "VG:RV:SAK:M08:S033:V009",
+     "rv_text_version": "VEDAWEB.AUFRECHT",
+     "rv_text_role": "PARALLEL_TEXT",
+     "char_ratio": 1.0
+    }
+   ],
+   "pairs": [
+    {
+     "av_text_version": "GRETIL.AVS.SAUNAKA.ACCENTED",
+     "rv_key": "VG:RV:SAK:M08:S033:V009",
+     "rv_text_version": "GRETIL.RV.AUFRECHT",
+     "char_ratio": 0.9952,
+     "token_dice": 0.9375,
+     "sandhi_insensitive_char_ratio": 0.9944,
+     "identical_strict": false,
+     "residue": [
+      "- aniṣṭṛta",
+      "+ aniṣṭṛtaḥ"
+     ]
+    },
+    {
+     "av_text_version": "GRETIL.AVS.SAUNAKA.ACCENTED",
+     "rv_key": "VG:RV:SAK:M08:S033:V009",
+     "rv_text_version": "VEDAWEB.AUFRECHT",
+     "char_ratio": 1.0,
+     "token_dice": 1.0,
+     "sandhi_insensitive_char_ratio": 1.0,
+     "identical_strict": true,
+     "residue": []
+    },
+    {
+     "av_text_version": "VEDAGRAPH.AVS.SEARCH_NORMALIZED",
+     "rv_key": "VG:RV:SAK:M08:S033:V009",
+     "rv_text_version": "GRETIL.RV.AUFRECHT",
+     "char_ratio": 0.9469,
+     "token_dice": 0.75,
+     "sandhi_insensitive_char_ratio": 0.9379,
+     "identical_strict": false,
+     "residue": [
+      "- aniṣṭta",
+      "+ aniṣṭṛtaḥ",
+      "- sasktaḥ",
+      "+ saṃskṛtaḥ",
+      "- śṇavad",
+      "+ śṛṇavad",
+      "- dhava",
+      "+ dhavaṃ"
+     ]
+    },
+    {
+     "av_text_version": "VEDAGRAPH.AVS.SEARCH_NORMALIZED",
+     "rv_key": "VG:RV:SAK:M08:S033:V009",
+     "rv_text_version": "VEDAWEB.AUFRECHT",
+     "char_ratio": 0.9515,
+     "token_dice": 0.75,
+     "sandhi_insensitive_char_ratio": 0.9432,
+     "identical_strict": false,
+     "residue": [
+      "- aniṣṭta",
+      "+ aniṣṭṛta",
+      "- sasktaḥ",
+      "+ saṃskṛtaḥ",
+      "- śṇavad",
+      "+ śṛṇavad",
+      "- dhava",
+      "+ dhavaṃ"
+     ]
+    },
+    {
+     "av_text_version": "GRETIL.AVS.SAUNAKA.UNACCENTED",
+     "rv_key": "VG:RV:SAK:M08:S033:V009",
+     "rv_text_version": "GRETIL.RV.AUFRECHT",
+     "char_ratio": 0.9952,
+     "token_dice": 0.9375,
+     "sandhi_insensitive_char_ratio": 0.9944,
+     "identical_strict": false,
+     "residue": [
+      "- aniṣṭṛta",
+      "+ aniṣṭṛtaḥ"
+     ]
+    },
+    {
+     "av_text_version": "GRETIL.AVS.SAUNAKA.UNACCENTED",
+     "rv_key": "VG:RV:SAK:M08:S033:V009",
+     "rv_text_version": "VEDAWEB.AUFRECHT",
+     "char_ratio": 1.0,
+     "token_dice": 1.0,
+     "sandhi_insensitive_char_ratio": 1.0,
+     "identical_strict": true,
+     "residue": []
+    }
+   ],
+   "has_exact_match_somewhere": true
+  },
+  {
+   "canonical_key": "VG:AV:SAU:K20:S059:V001",
+   "wave1_nearest_parallel": "VG:RV:SAK:M08:S003:V015",
+   "wave1_declared_similarity": 0.9804,
+   "av_text_versions": [
+    "VEDAGRAPH.AVS.SEARCH_NORMALIZED",
+    "GRETIL.AVS.SAUNAKA.UNACCENTED",
+    "GRETIL.AVS.SAUNAKA.ACCENTED"
+   ],
+   "exact_matches_anywhere_in_rv": [],
+   "pairs": [
+    {
+     "av_text_version": "VEDAGRAPH.AVS.SEARCH_NORMALIZED",
+     "rv_key": "VG:RV:SAK:M08:S003:V015",
+     "rv_text_version": "VEDAWEB.AUFRECHT",
+     "char_ratio": 0.9944,
+     "token_dice": 0.8889,
+     "sandhi_insensitive_char_ratio": 1.0,
+     "identical_strict": false,
+     "residue": [
+      "+ madhumattamā",
+      "- madhu",
+      "- mattamā"
+     ]
+    },
+    {
+     "av_text_version": "VEDAGRAPH.AVS.SEARCH_NORMALIZED",
+     "rv_key": "VG:RV:SAK:M08:S003:V015",
+     "rv_text_version": "GRETIL.RV.AUFRECHT",
+     "char_ratio": 0.9889,
+     "token_dice": 0.8148,
+     "sandhi_insensitive_char_ratio": 0.9935,
+     "identical_strict": false,
+     "residue": [
+      "+ madhumattamā",
+      "- madhu",
+      "- mattamā",
+      "- gira",
+      "+ giraḥ"
+     ]
+    },
+    {
+     "av_text_version": "GRETIL.AVS.SAUNAKA.UNACCENTED",
+     "rv_key": "VG:RV:SAK:M08:S003:V015",
+     "rv_text_version": "VEDAWEB.AUFRECHT",
+     "char_ratio": 0.9944,
+     "token_dice": 0.8889,
+     "sandhi_insensitive_char_ratio": 1.0,
+     "identical_strict": false,
+     "residue": [
+      "+ madhumattamā",
+      "- madhu",
+      "- mattamā"
+     ]
+    },
+    {
+     "av_text_version": "GRETIL.AVS.SAUNAKA.UNACCENTED",
+     "rv_key": "VG:RV:SAK:M08:S003:V015",
+     "rv_text_version": "GRETIL.RV.AUFRECHT",
+     "char_ratio": 0.9889,
+     "token_dice": 0.8148,
+     "sandhi_insensitive_char_ratio": 0.9935,
+     "identical_strict": false,
+     "residue": [
+      "+ madhumattamā",
+      "- madhu",
+      "- mattamā",
+      "- gira",
+      "+ giraḥ"
+     ]
+    },
+    {
+     "av_text_version": "GRETIL.AVS.SAUNAKA.ACCENTED",
+     "rv_key": "VG:RV:SAK:M08:S003:V015",
+     "rv_text_version": "VEDAWEB.AUFRECHT",
+     "char_ratio": 0.9944,
+     "token_dice": 0.8889,
+     "sandhi_insensitive_char_ratio": 1.0,
+     "identical_strict": false,
+     "residue": [
+      "+ madhumattamā",
+      "- madhu",
+      "- mattamā"
+     ]
+    },
+    {
+     "av_text_version": "GRETIL.AVS.SAUNAKA.ACCENTED",
+     "rv_key": "VG:RV:SAK:M08:S003:V015",
+     "rv_text_version": "GRETIL.RV.AUFRECHT",
+     "char_ratio": 0.9889,
+     "token_dice": 0.8148,
+     "sandhi_insensitive_char_ratio": 0.9935,
+     "identical_strict": false,
+     "residue": [
+      "+ madhumattamā",
+      "- madhu",
+      "- mattamā",
+      "- gira",
+      "+ giraḥ"
+     ]
+    }
+   ],
+   "has_exact_match_somewhere": false
+  },
+  {
+   "canonical_key": "VG:AV:SAU:K20:S059:V002",
+   "wave1_nearest_parallel": "VG:RV:SAK:M08:S003:V016",
+   "wave1_declared_similarity": 0.9778,
+   "av_text_versions": [
+    "GRETIL.AVS.SAUNAKA.UNACCENTED",
+    "GRETIL.AVS.SAUNAKA.ACCENTED",
+    "VEDAGRAPH.AVS.SEARCH_NORMALIZED"
+   ],
+   "exact_matches_anywhere_in_rv": [],
+   "pairs": [
+    {
+     "av_text_version": "GRETIL.AVS.SAUNAKA.UNACCENTED",
+     "rv_key": "VG:RV:SAK:M08:S003:V016",
+     "rv_text_version": "GRETIL.RV.AUFRECHT",
+     "char_ratio": 0.9907,
+     "token_dice": 0.9286,
+     "sandhi_insensitive_char_ratio": 0.9892,
+     "identical_strict": false,
+     "residue": [
+      "- sūrya",
+      "+ sūryā"
+     ]
+    },
+    {
+     "av_text_version": "GRETIL.AVS.SAUNAKA.UNACCENTED",
+     "rv_key": "VG:RV:SAK:M08:S003:V016",
+     "rv_text_version": "VEDAWEB.AUFRECHT",
+     "char_ratio": 0.9907,
+     "token_dice": 0.9286,
+     "sandhi_insensitive_char_ratio": 0.9892,
+     "identical_strict": false,
+     "residue": [
+      "- sūrya",
+      "+ sūryā"
+     ]
+    },
+    {
+     "av_text_version": "GRETIL.AVS.SAUNAKA.ACCENTED",
+     "rv_key": "VG:RV:SAK:M08:S003:V016",
+     "rv_text_version": "GRETIL.RV.AUFRECHT",
+     "char_ratio": 0.9907,
+     "token_dice": 0.9286,
+     "sandhi_insensitive_char_ratio": 0.9892,
+     "identical_strict": false,
+     "residue": [
+      "- sūrya",
+      "+ sūryā"
+     ]
+    },
+    {
+     "av_text_version": "GRETIL.AVS.SAUNAKA.ACCENTED",
+     "rv_key": "VG:RV:SAK:M08:S003:V016",
+     "rv_text_version": "VEDAWEB.AUFRECHT",
+     "char_ratio": 0.9907,
+     "token_dice": 0.9286,
+     "sandhi_insensitive_char_ratio": 0.9892,
+     "identical_strict": false,
+     "residue": [
+      "- sūrya",
+      "+ sūryā"
+     ]
+    },
+    {
+     "av_text_version": "VEDAGRAPH.AVS.SEARCH_NORMALIZED",
+     "rv_key": "VG:RV:SAK:M08:S003:V016",
+     "rv_text_version": "GRETIL.RV.AUFRECHT",
+     "char_ratio": 0.972,
+     "token_dice": 0.7857,
+     "sandhi_insensitive_char_ratio": 0.9677,
+     "identical_strict": false,
+     "residue": [
+      "- bhgavaḥ",
+      "+ bhṛgavaḥ",
+      "- sūrya",
+      "+ sūryā",
+      "- indra",
+      "+ indraṃ"
+     ]
+    },
+    {
+     "av_text_version": "VEDAGRAPH.AVS.SEARCH_NORMALIZED",
+     "rv_key": "VG:RV:SAK:M08:S003:V016",
+     "rv_text_version": "VEDAWEB.AUFRECHT",
+     "char_ratio": 0.972,
+     "token_dice": 0.7857,
+     "sandhi_insensitive_char_ratio": 0.9677,
+     "identical_strict": false,
+     "residue": [
+      "- bhgavaḥ",
+      "+ bhṛgavaḥ",
+      "- sūrya",
+      "+ sūryā",
+      "- indra",
+      "+ indraṃ"
+     ]
+    }
+   ],
+   "has_exact_match_somewhere": false
+  },
+  {
+   "canonical_key": "VG:AV:SAU:K20:S062:V003",
+   "wave1_nearest_parallel": "VG:RV:SAK:M08:S021:V009",
+   "wave1_declared_similarity": 0.9492,
+   "av_text_versions": [
+    "GRETIL.AVS.SAUNAKA.ACCENTED",
+    "VEDAGRAPH.AVS.SEARCH_NORMALIZED",
+    "GRETIL.AVS.SAUNAKA.UNACCENTED"
+   ],
+   "exact_matches_anywhere_in_rv": [],
+   "pairs": [
+    {
+     "av_text_version": "GRETIL.AVS.SAUNAKA.ACCENTED",
+     "rv_key": "VG:RV:SAK:M08:S021:V009",
+     "rv_text_version": "GRETIL.RV.AUFRECHT",
+     "char_ratio": 0.973,
+     "token_dice": 0.8571,
+     "sandhi_insensitive_char_ratio": 0.9917,
+     "identical_strict": false,
+     "residue": [
+      "- idamidaṃ",
+      "+ idam",
+      "+ idam",
+      "- va",
+      "+ vaḥ"
+     ]
+    },
+    {
+     "av_text_version": "GRETIL.AVS.SAUNAKA.ACCENTED",
+     "rv_key": "VG:RV:SAK:M08:S021:V009",
+     "rv_text_version": "VEDAWEB.AUFRECHT",
+     "char_ratio": 0.9796,
+     "token_dice": 0.9286,
+     "sandhi_insensitive_char_ratio": 1.0,
+     "identical_strict": false,
+     "residue": [
+      "- idamidaṃ",
+      "+ idam",
+      "+ idam"
+     ]
+    },
+    {
+     "av_text_version": "VEDAGRAPH.AVS.SEARCH_NORMALIZED",
+     "rv_key": "VG:RV:SAK:M08:S021:V009",
+     "rv_text_version": "GRETIL.RV.AUFRECHT",
+     "char_ratio": 0.973,
+     "token_dice": 0.8571,
+     "sandhi_insensitive_char_ratio": 0.9752,
+     "identical_strict": false,
+     "residue": [
+      "- idamida",
+      "+ idam",
+      "+ idam",
+      "- va",
+      "+ vaḥ"
+     ]
+    },
+    {
+     "av_text_version": "VEDAGRAPH.AVS.SEARCH_NORMALIZED",
+     "rv_key": "VG:RV:SAK:M08:S021:V009",
+     "rv_text_version": "VEDAWEB.AUFRECHT",
+     "char_ratio": 0.9796,
+     "token_dice": 0.9286,
+     "sandhi_insensitive_char_ratio": 0.9833,
+     "identical_strict": false,
+     "residue": [
+      "- idamida",
+      "+ idam",
+      "+ idam"
+     ]
+    },
+    {
+     "av_text_version": "GRETIL.AVS.SAUNAKA.UNACCENTED",
+     "rv_key": "VG:RV:SAK:M08:S021:V009",
+     "rv_text_version": "GRETIL.RV.AUFRECHT",
+     "char_ratio": 0.973,
+     "token_dice": 0.8571,
+     "sandhi_insensitive_char_ratio": 0.9917,
+     "identical_strict": false,
+     "residue": [
+      "- idamidaṃ",
+      "+ idam",
+      "+ idam",
+      "- va",
+      "+ vaḥ"
+     ]
+    },
+    {
+     "av_text_version": "GRETIL.AVS.SAUNAKA.UNACCENTED",
+     "rv_key": "VG:RV:SAK:M08:S021:V009",
+     "rv_text_version": "VEDAWEB.AUFRECHT",
+     "char_ratio": 0.9796,
+     "token_dice": 0.9286,
+     "sandhi_insensitive_char_ratio": 1.0,
+     "identical_strict": false,
+     "residue": [
+      "- idamidaṃ",
+      "+ idam",
+      "+ idam"
+     ]
+    }
+   ],
+   "has_exact_match_somewhere": false
+  },
+  {
+   "canonical_key": "VG:AV:SAU:K20:S069:V009",
+   "wave1_nearest_parallel": "VG:RV:SAK:M01:S006:V001",
+   "wave1_declared_similarity": 0.9655,
+   "av_text_versions": [
+    "GRETIL.AVS.SAUNAKA.UNACCENTED",
+    "GRETIL.AVS.SAUNAKA.ACCENTED",
+    "VEDAGRAPH.AVS.SEARCH_NORMALIZED"
+   ],
+   "exact_matches_anywhere_in_rv": [],
+   "pairs": [
+    {
+     "av_text_version": "GRETIL.AVS.SAUNAKA.UNACCENTED",
+     "rv_key": "VG:RV:SAK:M01:S006:V001",
+     "rv_text_version": "GRETIL.RV.AUFRECHT",
+     "char_ratio": 0.971,
+     "token_dice": 0.7778,
+     "sandhi_insensitive_char_ratio": 1.0,
+     "identical_strict": false,
+     "residue": [
+      "- aruṣam",
+      "+ aruṣaṃ",
+      "- carantaṃ",
+      "+ carantam"
+     ]
+    },
+    {
+     "av_text_version": "GRETIL.AVS.SAUNAKA.UNACCENTED",
+     "rv_key": "VG:RV:SAK:M01:S006:V001",
+     "rv_text_version": "VEDAWEB.AUFRECHT",
+     "char_ratio": 0.971,
+     "token_dice": 0.7778,
+     "sandhi_insensitive_char_ratio": 1.0,
+     "identical_strict": false,
+     "residue": [
+      "- aruṣam",
+      "+ aruṣaṃ",
+      "- carantaṃ",
+      "+ carantam"
+     ]
+    },
+    {
+     "av_text_version": "GRETIL.AVS.SAUNAKA.ACCENTED",
+     "rv_key": "VG:RV:SAK:M01:S006:V001",
+     "rv_text_version": "GRETIL.RV.AUFRECHT",
+     "char_ratio": 0.971,
+     "token_dice": 0.7778,
+     "sandhi_insensitive_char_ratio": 1.0,
+     "identical_strict": false,
+     "residue": [
+      "- aruṣam",
+      "+ aruṣaṃ",
+      "- carantaṃ",
+      "+ carantam"
+     ]
+    },
+    {
+     "av_text_version": "GRETIL.AVS.SAUNAKA.ACCENTED",
+     "rv_key": "VG:RV:SAK:M01:S006:V001",
+     "rv_text_version": "VEDAWEB.AUFRECHT",
+     "char_ratio": 0.971,
+     "token_dice": 0.7778,
+     "sandhi_insensitive_char_ratio": 1.0,
+     "identical_strict": false,
+     "residue": [
+      "- aruṣam",
+      "+ aruṣaṃ",
+      "- carantaṃ",
+      "+ carantam"
+     ]
+    },
+    {
+     "av_text_version": "VEDAGRAPH.AVS.SEARCH_NORMALIZED",
+     "rv_key": "VG:RV:SAK:M01:S006:V001",
+     "rv_text_version": "GRETIL.RV.AUFRECHT",
+     "char_ratio": 0.971,
+     "token_dice": 0.7778,
+     "sandhi_insensitive_char_ratio": 0.9836,
+     "identical_strict": false,
+     "residue": [
+      "- aruṣam",
+      "+ aruṣaṃ",
+      "- caranta",
+      "+ carantam"
+     ]
+    },
+    {
+     "av_text_version": "VEDAGRAPH.AVS.SEARCH_NORMALIZED",
+     "rv_key": "VG:RV:SAK:M01:S006:V001",
+     "rv_text_version": "VEDAWEB.AUFRECHT",
+     "char_ratio": 0.971,
+     "token_dice": 0.7778,
+     "sandhi_insensitive_char_ratio": 0.9836,
+     "identical_strict": false,
+     "residue": [
+      "- aruṣam",
+      "+ aruṣaṃ",
+      "- caranta",
+      "+ carantam"
+     ]
+    }
+   ],
+   "has_exact_match_somewhere": false
+  },
+  {
+   "canonical_key": "VG:AV:SAU:K20:S096:V024",
+   "wave1_nearest_parallel": "VG:RV:SAK:M10:S164:V001",
+   "wave1_declared_similarity": 0.9771,
+   "av_text_versions": [
+    "GRETIL.AVS.SAUNAKA.ACCENTED",
+    "VEDAGRAPH.AVS.SEARCH_NORMALIZED",
+    "GRETIL.AVS.SAUNAKA.UNACCENTED"
+   ],
+   "exact_matches_anywhere_in_rv": [],
+   "pairs": [
+    {
+     "av_text_version": "GRETIL.AVS.SAUNAKA.ACCENTED",
+     "rv_key": "VG:RV:SAK:M10:S164:V001",
+     "rv_text_version": "GRETIL.RV.AUFRECHT",
+     "char_ratio": 0.9938,
+     "token_dice": 0.9286,
+     "sandhi_insensitive_char_ratio": 0.9926,
+     "identical_strict": false,
+     "residue": [
+      "- kāma",
+      "+ krāma"
+     ]
+    },
+    {
+     "av_text_version": "GRETIL.AVS.SAUNAKA.ACCENTED",
+     "rv_key": "VG:RV:SAK:M10:S164:V001",
+     "rv_text_version": "VEDAWEB.AUFRECHT",
+     "char_ratio": 0.9938,
+     "token_dice": 0.9286,
+     "sandhi_insensitive_char_ratio": 0.9926,
+     "identical_strict": false,
+     "residue": [
+      "- kāma",
+      "+ krāma"
+     ]
+    },
+    {
+     "av_text_version": "VEDAGRAPH.AVS.SEARCH_NORMALIZED",
+     "rv_key": "VG:RV:SAK:M10:S164:V001",
+     "rv_text_version": "GRETIL.RV.AUFRECHT",
+     "char_ratio": 0.9814,
+     "token_dice": 0.8571,
+     "sandhi_insensitive_char_ratio": 0.9778,
+     "identical_strict": false,
+     "residue": [
+      "- kāma",
+      "+ krāma",
+      "- nirtyā",
+      "+ nirṛtyā"
+     ]
+    },
+    {
+     "av_text_version": "VEDAGRAPH.AVS.SEARCH_NORMALIZED",
+     "rv_key": "VG:RV:SAK:M10:S164:V001",
+     "rv_text_version": "VEDAWEB.AUFRECHT",
+     "char_ratio": 0.9814,
+     "token_dice": 0.8571,
+     "sandhi_insensitive_char_ratio": 0.9778,
+     "identical_strict": false,
+     "residue": [
+      "- kāma",
+      "+ krāma",
+      "- nirtyā",
+      "+ nirṛtyā"
+     ]
+    },
+    {
+     "av_text_version": "GRETIL.AVS.SAUNAKA.UNACCENTED",
+     "rv_key": "VG:RV:SAK:M10:S164:V001",
+     "rv_text_version": "GRETIL.RV.AUFRECHT",
+     "char_ratio": 0.9938,
+     "token_dice": 0.9286,
+     "sandhi_insensitive_char_ratio": 0.9926,
+     "identical_strict": false,
+     "residue": [
+      "- kāma",
+      "+ krāma"
+     ]
+    },
+    {
+     "av_text_version": "GRETIL.AVS.SAUNAKA.UNACCENTED",
+     "rv_key": "VG:RV:SAK:M10:S164:V001",
+     "rv_text_version": "VEDAWEB.AUFRECHT",
+     "char_ratio": 0.9938,
+     "token_dice": 0.9286,
+     "sandhi_insensitive_char_ratio": 0.9926,
+     "identical_strict": false,
+     "residue": [
+      "- kāma",
+      "+ krāma"
+     ]
+    }
+   ],
+   "has_exact_match_somewhere": false
+  },
+  {
+   "canonical_key": "VG:AV:SAU:K20:S129:V002",
+   "wave1_nearest_parallel": null,
+   "wave1_declared_similarity": null,
+   "av_text_versions": [
+    "GRETIL.AVS.SAUNAKA.ACCENTED",
+    "GRETIL.AVS.SAUNAKA.UNACCENTED",
+    "VEDAGRAPH.AVS.SEARCH_NORMALIZED"
+   ],
+   "exact_matches_anywhere_in_rv": [],
+   "pairs": [],
+   "has_exact_match_somewhere": false
+  },
+  {
+   "canonical_key": "VG:AV:SAU:K20:S131:V002",
+   "wave1_nearest_parallel": null,
+   "wave1_declared_similarity": null,
+   "av_text_versions": [
+    "GRETIL.AVS.SAUNAKA.ACCENTED",
+    "VEDAGRAPH.AVS.SEARCH_NORMALIZED",
+    "GRETIL.AVS.SAUNAKA.UNACCENTED"
+   ],
+   "exact_matches_anywhere_in_rv": [],
+   "pairs": [],
+   "has_exact_match_somewhere": false
+  },
+  {
+   "canonical_key": "VG:AV:SAU:K20:S133:V002",
+   "wave1_nearest_parallel": null,
+   "wave1_declared_similarity": null,
+   "av_text_versions": [
+    "GRETIL.AVS.SAUNAKA.ACCENTED",
+    "GRETIL.AVS.SAUNAKA.UNACCENTED",
+    "VEDAGRAPH.AVS.SEARCH_NORMALIZED"
+   ],
+   "exact_matches_anywhere_in_rv": [],
+   "pairs": [],
+   "has_exact_match_somewhere": false
+  },
+  {
+   "canonical_key": "VG:AV:SAU:K20:S133:V003",
+   "wave1_nearest_parallel": null,
+   "wave1_declared_similarity": null,
+   "av_text_versions": [
+    "GRETIL.AVS.SAUNAKA.ACCENTED",
+    "GRETIL.AVS.SAUNAKA.UNACCENTED",
+    "VEDAGRAPH.AVS.SEARCH_NORMALIZED"
+   ],
+   "exact_matches_anywhere_in_rv": [],
+   "pairs": [],
+   "has_exact_match_somewhere": false
+  },
+  {
+   "canonical_key": "VG:AV:SAU:K20:S133:V004",
+   "wave1_nearest_parallel": null,
+   "wave1_declared_similarity": null,
+   "av_text_versions": [
+    "GRETIL.AVS.SAUNAKA.UNACCENTED",
+    "GRETIL.AVS.SAUNAKA.ACCENTED",
+    "VEDAGRAPH.AVS.SEARCH_NORMALIZED"
+   ],
+   "exact_matches_anywhere_in_rv": [],
+   "pairs": [],
+   "has_exact_match_somewhere": false
+  },
+  {
+   "canonical_key": "VG:AV:SAU:K20:S133:V005",
+   "wave1_nearest_parallel": null,
+   "wave1_declared_similarity": null,
+   "av_text_versions": [
+    "VEDAGRAPH.AVS.SEARCH_NORMALIZED",
+    "GRETIL.AVS.SAUNAKA.UNACCENTED",
+    "GRETIL.AVS.SAUNAKA.ACCENTED"
+   ],
+   "exact_matches_anywhere_in_rv": [],
+   "pairs": [],
+   "has_exact_match_somewhere": false
+  },
+  {
+   "canonical_key": "VG:AV:SAU:K20:S133:V006",
+   "wave1_nearest_parallel": null,
+   "wave1_declared_similarity": null,
+   "av_text_versions": [
+    "VEDAGRAPH.AVS.SEARCH_NORMALIZED",
+    "GRETIL.AVS.SAUNAKA.UNACCENTED",
+    "GRETIL.AVS.SAUNAKA.ACCENTED"
+   ],
+   "exact_matches_anywhere_in_rv": [],
+   "pairs": [],
+   "has_exact_match_somewhere": false
+  }
+ ],
+ "refused_pairs": []
+}

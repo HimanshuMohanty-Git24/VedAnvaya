@@ -64,7 +64,17 @@ def test_q23_maps_to_capability_status_not_a_pair_table() -> None:
     query = QUERIES_BY_NAME["deity_community_capability"]
     assert "INSUFFICIENT_EVIDENCE" in query.cypher
     assert "pairwise_edges" in query.cypher
-    assert "structure, 'UNSPECIFIED') <> 'HUMAN'" in query.cypher
+    # Was `structure, 'UNSPECIFIED') <> 'HUMAN'`, which published eligible_deities: 192 --
+    # 22 human patrons removed and the 7 danastuti labels and 28 NOT_DEITY abstractions
+    # left in. GAP-ENTITY_COVERAGE-008 replaced it with the one documented predicate, which
+    # reads 157. The old spelling is asserted ABSENT so it cannot come back.
+    assert "d.is_deity" in query.cypher
+    assert "devatas_without_an_eligibility_ruling" in query.cypher, (
+        "the transitional state must be typed in the row: while the ruling layer has not "
+        "landed, eligible_deities falls back to curated structure and a reader has no "
+        "other way to know which figure they are holding"
+    )
+    assert "structure, 'UNSPECIFIED') <> 'HUMAN'" not in query.cypher
     assert "not a claim that Vedic deity communities do not exist" in query.caveat
 
 
@@ -75,8 +85,12 @@ def test_neighboring_deity_pair_queries_exclude_human_addressees() -> None:
         "deity_pairs_not_rigvedic",
     ):
         cypher = QUERIES_BY_NAME[name].cypher
-        assert "coalesce(a.structure, 'UNSPECIFIED') <> 'HUMAN'" in cypher, name
-        assert "coalesce(b.structure, 'UNSPECIFIED') <> 'HUMAN'" in cypher, name
+        assert "a.is_deity" in cypher, name
+        assert "b.is_deity" in cypher, name
+        # The danastuti exclusion is the one the old predicate missed, and it is the one
+        # that made this question MISLEADING: 50 dedications across 15 hymns, 9 partners.
+        assert "'HUMAN', 'PATRON_PRAISE'" in cypher, name
+        assert "coalesce(a.structure, 'UNSPECIFIED') <> 'HUMAN'" not in cypher, name
 
 
 def test_q25_uses_curated_ritual_usage_instead_of_the_flat_object_class() -> None:

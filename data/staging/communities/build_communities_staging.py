@@ -1251,6 +1251,21 @@ def main() -> int:
         community_records.append(
             {
                 "community_id": community,
+                # A STRING, and deliberately not the bare integer the id is.
+                #
+                # `wave3_import_plan.py` sets display_label_field="community_id", so the
+                # integer landed straight into `display_label` on all 12 :DeityCommunity
+                # nodes. `display_label` is the product's one universal text slot, and any
+                # graph-wide `toLower(n.display_label)` raises a Neo4j type error on an
+                # integer -- two benchmark probes died on exactly that. The match property
+                # stays the id, so the config hash and the identity are untouched.
+                #
+                # It is an identifier and not a name, because this node's own
+                # interpretation_warning says the community "has no name and must not be
+                # given one in a product surface": naming it would turn a co-occurrence
+                # statistic into a theological claim. DEITY_COMMUNITY_0 can be rendered and
+                # cannot be mistaken for a tradition's word for anything.
+                "display_label": f"DEITY_COMMUNITY_{community}",
                 "algorithm": CONFIG["primary_algorithm"],
                 "algorithm_version": CONFIG["algorithm_version"],
                 "seed": "consensus over seeds 0-199 at co-assignment threshold 0.5",

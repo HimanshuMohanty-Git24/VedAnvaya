@@ -1,0 +1,102 @@
+{
+  "artifact": "FINAL_CLOSURE_SPRINT_FINAL_STATE",
+  "at": "2026-09-16T20:01:24.835347+00:00",
+  "head_at_start": "b4b1b0b",
+  "tree": "dirty (151 entries, 86 modified tracked) -- nothing committed by this sprint",
+  "census": {
+    "nodes": 164201,
+    "relationships": 508042,
+    "baseline": {
+      "nodes": 117970,
+      "relationships": 282389
+    },
+    "delta": {
+      "nodes": 46231,
+      "relationships": 225653
+    },
+    "core_corpus": {
+      "RV": 10552,
+      "SV": 1844,
+      "YV": 1975,
+      "AV": 5839,
+      "total": 20210,
+      "invariant": "asserted after every single group and never moved"
+    }
+  },
+  "declared_closure_tests_measured_after_integration": {
+    "PASSES": {
+      "GAP-MORPHOLOGY-001": "Lemma nodes reached by no edge 9,992 -> 0",
+      "GAP-MORPHOLOGY-006 (clauses 1-2)": "SEARCH_DERIVATIVE 5,839 over 1 work -> 20,210 over 4",
+      "GAP-QUALITY-006": "Devata/Chandas/Rishi with null occurrence_count -> 0",
+      "GAP-RITUAL-006": "mantras with ritual_context 0 -> 20,210, four-valued, absence typed",
+      "GAP-SEMANTICS-005": "DomainEntity with no domain 375 -> 0",
+      "GAP-TRANSLATION-005 (clause 1)": "Translation with null alignment_confidence 18,415 -> 0",
+      "GAP-FORMULA-003": "Formula display_form carrying an unreadable codepoint -> 0"
+    },
+    "MOVED_BUT_DOES_NOT_CLOSE": {
+      "GAP-SEMANTICS-001": "non-RV mantras with an assertion 0 -> 4,080; RV 2,542 -> 10,173",
+      "GAP-SEMANTICS-002": "UNREVIEWED 4,865 -> 35,131. Coverage made the review gap 7.2x LARGER. Recorded as a trade, not a headline.",
+      "GAP-SEMANTICS-003": "three-slot complete 0 -> 341, all AV/YV, 0 in the RV",
+      "GAP-RITUAL-004": "RitualRole 11 -> 20, hotr now carries a PERFORMED_BY edge",
+      "GAP-RITUAL-005": "RECEIVES_OFFERING 0 -> 4, all Devata->Offering. Clause 2 remains blocked by clause 3 of its own test.",
+      "GAP-CROSS_VEDA-001": "directed corpus pairs 1 -> 2 (RV-SV, plus AV-RV inside kanda 20 only)",
+      "GAP-CROSS_VEDA-004": "pada-level parallel edges 0 -> 4,079 over 1,434 groups",
+      "GAP-TRANSLATION-003": "YV untranslated 36 -> 25",
+      "GAP-TRANSLATION-004": "RV untranslated 37 -> 36",
+      "BRIDGE-001": "DevataAscription resolved to a Devata 0 -> 39"
+    },
+    "UNMOVED": {
+      "GAP-TRANSLATION-001": "SV untranslated 1,671 -- no Kauthuma-aligned source exists",
+      "GAP-TRANSLATION-002": "AV untranslated 51 -- kanda 20, confirmed absent from Griffith"
+    }
+  },
+  "gates": {
+    "graph_quality_scorecard": {
+      "exit": 1,
+      "passing": 9,
+      "failing": 2,
+      "PASS": [
+        "internal_leaked 0",
+        "orphan_entities 0",
+        "signature_violations 0",
+        "undeclared_rel_types 0",
+        "claims_non_candidate 0",
+        "claims_to_passages 0",
+        "metrics_to_passages 0",
+        "orphan_public_nodes 0",
+        "falsely_declared_unpopulated 0"
+      ],
+      "FAIL": {
+        "ungraded_edges": 77121,
+        "nodes_without_label": 30266
+      },
+      "failure_attribution": "exact: 30,266 HAS_SEMANTIC_ASSERTION + 30,266 ASSERTION_PREDICATE + 14,510 HAS_TEXT_VERSION + 2,052 ASSERTION_ROLE + 16 PERFORMED_BY + 6 MENTIONS_ENTITY + 4 RECEIVES_OFFERING + 1 USES_OBJECT = 77,121; and all 30,266 unlabelled nodes are :SemanticAssertion",
+      "cause": "the specialists' staged artifacts carry no quality_tier and no display_label. Verified by reading the artifacts: neither key is present on any row. NOT a lead omission, and assigning grades here would be inventing evidence.",
+      "significance": "two DECLARED integrity gates are red on newly landed data. This alone prevents a COMPLETE verdict."
+    },
+    "dependency_state": {
+      "exit": 1,
+      "CURRENT": 0,
+      "STALE_INPUT": 6,
+      "BLOCKED": 2,
+      "NOT_APPLICABLE": 1,
+      "unexplained_stale": "none",
+      "note": "the subgraph:public and subgraph:whole-graph inputs added this sprint are among the moved inputs on both world consumers and on quality evaluation. Before that fix they would have read CURRENT against a stale bundle."
+    },
+    "registry_closure_audit": {
+      "exit": 1,
+      "entries": 85,
+      "still_implementation_fixable": 43,
+      "note": "UNCHANGED at 43 because per-gap status re-derivation has not been run. The audit reports 17 measurement disagreements, every one of them the graph having moved PAST a ruling stated before the measurement -- which is the gate working, not failing."
+    }
+  },
+  "lead_fixes_beyond_the_assignment": [
+    "audio queue provenance: 975 of 1,021 rows had no licence value; one resolver now serves both row paths and types the absence",
+    "dependency declarations: 39.0% of public nodes and 68.8% of public edges were invisible to every declared hash",
+    "dependency_state --status returned 0 unconditionally; now returns 1 on any STALE_INPUT",
+    "test harness: the prescribed combined pytest command collected 349 of 3,226 tests and died; 22 modules reassigned sys.stdout at import. Fixed, 3,226 collected.",
+    "export_graph_world dropped 5,450 public nodes whose id property its list did not know; both queries now derive from one constant",
+    "PadaParallelGroup classified PRODUCT with HAS_PARALLEL_PADA declared and signed",
+    "9 RitualRole nodes agent 4 created after agent 3 ran had no domain; agent 3's own deterministic rule applied"
+  ]
+}

@@ -1,0 +1,539 @@
+{
+  "gained_nested_status": [
+    {
+      "formula_id": "VG:ENRICH:FORMULA:0cbc8c5a40b89a30ba2669ee8d0a8ce0"
+    },
+    {
+      "formula_id": "VG:ENRICH:FORMULA:16db90c219b2178ff3d4a2fd96319e55"
+    },
+    {
+      "formula_id": "VG:ENRICH:FORMULA:1897bb00d551d0ad1bfa2b98581e2b6c"
+    },
+    {
+      "formula_id": "VG:ENRICH:FORMULA:1a61561fc7a7280737a2c89e7a16aa8b"
+    },
+    {
+      "formula_id": "VG:ENRICH:FORMULA:1f950f7d7774099f4ce3a641ee654282"
+    },
+    {
+      "formula_id": "VG:ENRICH:FORMULA:31a70c745a88b066108e8db4b29eabe7"
+    },
+    {
+      "formula_id": "VG:ENRICH:FORMULA:3a9db686eda1882c3a3c96ed5874475c"
+    },
+    {
+      "formula_id": "VG:ENRICH:FORMULA:4ff45945db82ac2ef406ec6706705aba"
+    },
+    {
+      "formula_id": "VG:ENRICH:FORMULA:5f2523fc4691b318eee35d948cdd581f"
+    },
+    {
+      "formula_id": "VG:ENRICH:FORMULA:6334dd3752cf7482df49e3be049f9932"
+    },
+    {
+      "formula_id": "VG:ENRICH:FORMULA:664a926931e1314fa0777f9e7f6057d7"
+    },
+    {
+      "formula_id": "VG:ENRICH:FORMULA:6a0eb2ee28cb2921f46132db7a372f57"
+    },
+    {
+      "formula_id": "VG:ENRICH:FORMULA:76a3a7dc15dda7e987ea294e39c6d8fa"
+    },
+    {
+      "formula_id": "VG:ENRICH:FORMULA:7713d15e86ae70f3058af0bd3847d587"
+    },
+    {
+      "formula_id": "VG:ENRICH:FORMULA:775cbc4a3aa54b061934b61068d70177"
+    },
+    {
+      "formula_id": "VG:ENRICH:FORMULA:86d03caf21d448d67e2bcc2907d29df3"
+    },
+    {
+      "formula_id": "VG:ENRICH:FORMULA:87e19d6f1972c6364463537439d305e0"
+    },
+    {
+      "formula_id": "VG:ENRICH:FORMULA:8f16be005b12aebbfe639b024a646f7a"
+    },
+    {
+      "formula_id": "VG:ENRICH:FORMULA:8fa5dc1a9473794e57569f7b56e41132"
+    },
+    {
+      "formula_id": "VG:ENRICH:FORMULA:91dc65a2a2e6a3f07d0de472617c974a"
+    },
+    {
+      "formula_id": "VG:ENRICH:FORMULA:92640ba1eaf310e9dbfb3bd24f330526"
+    },
+    {
+      "formula_id": "VG:ENRICH:FORMULA:93db93a83b2dacaff9d7b7e44676f661"
+    },
+    {
+      "formula_id": "VG:ENRICH:FORMULA:9d3a59c7e5e078d1f50211bf270d622b"
+    },
+    {
+      "formula_id": "VG:ENRICH:FORMULA:a9ce4d4d1bf8da757a324d444b099a20"
+    },
+    {
+      "formula_id": "VG:ENRICH:FORMULA:aa4d96d3890d2ec127848ea48c0cdd42"
+    },
+    {
+      "formula_id": "VG:ENRICH:FORMULA:aacf66fd64d8e4a030af0c8171a45bff"
+    },
+    {
+      "formula_id": "VG:ENRICH:FORMULA:b2c21653e3ac1f28fda58767a34396aa"
+    },
+    {
+      "formula_id": "VG:ENRICH:FORMULA:c3e77d0729128c062225f2496b62bb12"
+    },
+    {
+      "formula_id": "VG:ENRICH:FORMULA:c64c9fcba0c423e12d7f50b7a1521645"
+    },
+    {
+      "formula_id": "VG:ENRICH:FORMULA:dbc87ff75423e27a1bd589cfc883d7d9"
+    },
+    {
+      "formula_id": "VG:ENRICH:FORMULA:dc6b1b5ee1c0f7aca72ad322a9d03f5a"
+    },
+    {
+      "formula_id": "VG:ENRICH:FORMULA:e5674e2719a5bbc1a727acafcff5a5df"
+    },
+    {
+      "formula_id": "VG:ENRICH:FORMULA:e7f5f0f12d6d6715b784e4685163e6fc"
+    },
+    {
+      "formula_id": "VG:ENRICH:FORMULA:f51666335ef5fee7cb92369c96469ebb"
+    },
+    {
+      "formula_id": "VG:ENRICH:FORMULA:f6ad6981c54e427f4459bcd37487d776"
+    },
+    {
+      "formula_id": "VG:ENRICH:FORMULA:fc40ea17a8d7993efc32a7aa487c341b"
+    },
+    {
+      "formula_id": "VG:ENRICH:FORMULA:fce97f302b21620aed7717a1de25fe9e"
+    },
+    {
+      "formula_id": "VG:ENRICH:FORMULA:fe0e821dac76dda5d60058cc02e047ae"
+    },
+    {
+      "formula_id": "VG:ENRICH:FORMULA:ffb3e801c021f6fc749da13f1011b598"
+    }
+  ],
+  "lost_because_every_container_is_gone": [
+    {
+      "container_before": "pra va indrāya bṛhate maruto brahmārcata vṛtraṃ",
+      "formula_id": "VG:ENRICH:FORMULA:072636b43f08b2b9b6e3fe1ba35d8b8b",
+      "normalized": "indrāya bṛhate"
+    },
+    {
+      "container_before": "havamānāya sādha syānnaḥ sūnustanayo vijāvāgne sā te sumatirbhūtvasme",
+      "formula_id": "VG:ENRICH:FORMULA:0bede7bc91c03d5c7515d029a1880424",
+      "normalized": "sumatir bhūtv asme"
+    },
+    {
+      "container_before": "gotrabhidaṃ govidaṃ vajrabāhuṃ jayantamajma pramṛṇantamojasā",
+      "formula_id": "VG:ENRICH:FORMULA:0f2608dc167d28d613188c71bbcb117e",
+      "normalized": "vajrabāhuṃ jayantam ajma pramṛṇantam ojasā"
+    },
+    {
+      "container_before": "yatsurāmaṃ vyapibaḥ śacībhiḥ sarasvatī tvā maghavannabhiṣṇak",
+      "formula_id": "VG:ENRICH:FORMULA:254ceb3d19b14e17c85ae7a6117e7839",
+      "normalized": "tvā maghavann"
+    },
+    {
+      "container_before": "hanati vṛtrahā śatakraturvajreṇa śataparvaṇā",
+      "formula_id": "VG:ENRICH:FORMULA:2ec6a891a378d49a7183c3d4c3e5597b",
+      "normalized": "vajreṇa śataparvaṇā"
+    },
+    {
+      "container_before": "asi mahas te sato mahimā panasyate ddhā deva",
+      "formula_id": "VG:ENRICH:FORMULA:30fd89cee4a1c2726573a36e5a442d23",
+      "normalized": "mahimā panasyate"
+    },
+    {
+      "container_before": "ideṣi pathibhiḥ sugebhiḥ",
+      "formula_id": "VG:ENRICH:FORMULA:37c49ca5120e7c96982a6fb3467dfea4",
+      "normalized": "pathibhiḥ sugebhiḥ"
+    },
+    {
+      "container_before": "samrājamatithiṃ janānāmāsannā pātraṃ janayanta devāḥ",
+      "formula_id": "VG:ENRICH:FORMULA:42677b766799d97c33dbcc6fef7b0412",
+      "normalized": "pātraṃ janayanta devāḥ"
+    },
+    {
+      "container_before": "yuktā te brahmaṇā harī arvācīnaṃ",
+      "formula_id": "VG:ENRICH:FORMULA:4d74a2cf594653ba69f29b6760abed69",
+      "normalized": "tā te brahmaṇā"
+    },
+    {
+      "container_before": "madhyā kartor vitataṃ",
+      "formula_id": "VG:ENRICH:FORMULA:5f4e3606649d25ea2defb0788d3bda88",
+      "normalized": "madhyā kartor"
+    },
+    {
+      "container_before": "sa tvaṃ naścitra vajrahasta dhṛṣṇuyā maha stavāno adrivaḥ",
+      "formula_id": "VG:ENRICH:FORMULA:64557302d5e041f421e7532c3d68aa4b",
+      "normalized": "sa tvaṃ naścitra vajrahasta dhṛṣṇuyā maha"
+    },
+    {
+      "container_before": "ajījano hi pavamāna sūryaṃ vidhāre śakmanā payaḥ gojīrayā",
+      "formula_id": "VG:ENRICH:FORMULA:686924d8d9b5cb3794ec432a6cd948e6",
+      "normalized": "śakmanā payaḥ"
+    },
+    {
+      "container_before": "hṛdispṛśam ṛdhyāmā ta ohaiḥ",
+      "formula_id": "VG:ENRICH:FORMULA:6c45b09c327c130818b516269b63a2bc",
+      "normalized": "ṛdhyāmā ta ohaiḥ"
+    },
+    {
+      "container_before": "avobhiḥ sumṛḍīko bhavatu viśvavedāḥ bādhatāṃ dveṣo abhayaṃ",
+      "formula_id": "VG:ENRICH:FORMULA:7ee905cff6ccf8ed755168d81d9036e4",
+      "normalized": "bhavatu viśvavedāḥ bādhatāṃ dveṣo abhayaṃ"
+    },
+    {
+      "container_before": "varuṇasyāgneḥ āprā dyāvāpṛthivī antarikṣaṃ",
+      "formula_id": "VG:ENRICH:FORMULA:8b7e354f72107afd16c3274dac292a2b",
+      "normalized": "āprā dyāvāpṛthivī antarikṣaṃ"
+    },
+    {
+      "container_before": "āśavo staṃ nityāso vājina iṣaṃ stotṛbhya ā bhara",
+      "formula_id": "VG:ENRICH:FORMULA:8fd58b61159234fc3547f349a46bee3d",
+      "normalized": "iṣaṃ stotṛbhya ā bhara"
+    },
+    {
+      "container_before": "śavo made sutasya viṣṇavi adyā tamasya mahimānamāyavo",
+      "formula_id": "VG:ENRICH:FORMULA:9065dea810eaa46ddbedc60dd5d2550e",
+      "normalized": "asya mahimānam"
+    },
+    {
+      "container_before": "so agniryo vasurgṛṇe saṃ yamāyanti dhenavaḥ samarvanto raghudruvaḥ",
+      "formula_id": "VG:ENRICH:FORMULA:a17d9435f6ac6a8496909d8fd53e0e80",
+      "normalized": "yanti dhenavaḥ"
+    },
+    {
+      "container_before": "somapā bāhuśardhy ugradhanvā pratihitābhir astā",
+      "formula_id": "VG:ENRICH:FORMULA:b3241fd442b1381f2c4642b01f14660e",
+      "normalized": "pratihitābhir astā"
+    },
+    {
+      "container_before": "avobhiḥ sumṛḍīko bhavatu viśvavedāḥ bādhatāṃ dveṣo abhayaṃ",
+      "formula_id": "VG:ENRICH:FORMULA:c5bf6d77cefdc1690ae9319e2d04abd2",
+      "normalized": "sumṛḍīko bhavatu"
+    },
+    {
+      "container_before": "citraṃ devānāmudagādanīkaṃ cakṣurmitrasya varuṇasyāgneḥ āprā dyāvāpṛthivī",
+      "formula_id": "VG:ENRICH:FORMULA:c9323c69aba8eec744e57c84d4ba353f",
+      "normalized": "citraṃ devānām"
+    },
+    {
+      "container_before": "asyed indro vāvṛdhe vṛṣṇyaṃ",
+      "formula_id": "VG:ENRICH:FORMULA:d4d71cff85eced316b951422407f85e3",
+      "normalized": "indro vāvṛdhe"
+    },
+    {
+      "container_before": "ya ime dyāvāpṛthivī janitrī rūpair",
+      "formula_id": "VG:ENRICH:FORMULA:dd365c8e35269783d159a73c9485660a",
+      "normalized": "ya ime dyāvāpṛthivī"
+    },
+    {
+      "container_before": "pāhi śṛṇudhī giraḥ rakṣā tokamuta tmanā",
+      "formula_id": "VG:ENRICH:FORMULA:ed86c6efa1c3d006d04627e0c93c65f6",
+      "normalized": "giraḥ rakṣā tokamuta tmanā"
+    },
+    {
+      "container_before": "indro asme ārāc cid dveṣaḥ sanutar yuyotu",
+      "formula_id": "VG:ENRICH:FORMULA:f7efd20c4b6b2d1057b7df2d5f95f4a4",
+      "normalized": "ārāc cid dveṣaḥ sanutar yuyotu"
+    },
+    {
+      "container_before": "citraṃ devānāmudagādanīkaṃ cakṣurmitrasya varuṇasyāgneḥ āprā dyāvāpṛthivī",
+      "formula_id": "VG:ENRICH:FORMULA:fd55427a938518549ffcfa11cfbdf5f9",
+      "normalized": "cakṣur mitrasya"
+    },
+    {
+      "container_before": "uccā te jātamandhaso divi sadbhūmyā dade ugraṃ",
+      "formula_id": "VG:ENRICH:FORMULA:ffca82132cfd5df26117908031e28c5a",
+      "normalized": "uccā te jātamandhaso divi"
+    }
+  ],
+  "lost_because_the_formula_itself_is_gone": [
+    {
+      "container_before": "dade ugraṃ śarma mahi śravaḥ",
+      "formula_id": "VG:ENRICH:FORMULA:004487e1b58efabc10da925b77cbd1ea",
+      "normalized": "śarma mahi śravaḥ"
+    },
+    {
+      "container_before": "somapā bāhuśardhy ugradhanvā pratihitābhir astā",
+      "formula_id": "VG:ENRICH:FORMULA:0c07da4cec1cfa82c1de24d27da42c4b",
+      "normalized": "somapā bāhuśardhy"
+    },
+    {
+      "container_before": "bṛhaspate pari dīyā rathena rakṣohāmitrāṃ apabādhamānaḥ",
+      "formula_id": "VG:ENRICH:FORMULA:1037110a02a3d68bf20968efb8163868",
+      "normalized": "bṛhaspate pari dīyā rathena"
+    },
+    {
+      "container_before": "āśavo staṃ nityāso vājina iṣaṃ stotṛbhya ā bhara",
+      "formula_id": "VG:ENRICH:FORMULA:148e91cc02bbae9b2ff92b3487523b37",
+      "normalized": "āśavo staṃ nityāso vājina iṣaṃ"
+    },
+    {
+      "container_before": "giraḥ rathītamaṃ rathīnāṃ vājānāṃ",
+      "formula_id": "VG:ENRICH:FORMULA:1b3fcc6ec9d651fb1c30df4bab1119bb",
+      "normalized": "rathīnāṃ vājānāṃ"
+    },
+    {
+      "container_before": "baṇ mahāṃ asi sūrya baḍ āditya mahāṃ asi",
+      "formula_id": "VG:ENRICH:FORMULA:1bf34bc3630a6150f58524dc8d5987d5",
+      "normalized": "asi sūrya baḍāditya"
+    },
+    {
+      "container_before": "indraṃ sakhāyo anu saṃ",
+      "formula_id": "VG:ENRICH:FORMULA:1bfef2b302da60231c43772e516079e1",
+      "normalized": "sakhāyo anu saṃ"
+    },
+    {
+      "container_before": "maṃhiṣṭho matsad andhasaḥ",
+      "formula_id": "VG:ENRICH:FORMULA:22fb04b8f62574f89e5d64ed99d1480e",
+      "normalized": "matsad andhasaḥ"
+    },
+    {
+      "container_before": "indrehi matsy andhaso viśvebhiḥ somaparvabhiḥ mahāṃ abhiṣṭir ojasā",
+      "formula_id": "VG:ENRICH:FORMULA:2bebec0c8e2f715e4f5ff1623096ff1e",
+      "normalized": "indrehi matsy andhaso viśvebhiḥ somaparvabhiḥ"
+    },
+    {
+      "container_before": "acikradadvṛṣā harirmahānmitro na darśataḥ saṃ sūryeṇa",
+      "formula_id": "VG:ENRICH:FORMULA:350219d4d7fdcb57fb64c87fa6e1d01d",
+      "normalized": "acikradadvṛṣā harirmahānmitro na darśataḥ saṃ"
+    },
+    {
+      "container_before": "rāyas poṣeṇa saṃ sṛja",
+      "formula_id": "VG:ENRICH:FORMULA:38f23d99206a5190d52373d47af0c98f",
+      "normalized": "rāyas poṣeṇa saṃ"
+    },
+    {
+      "container_before": "suśarmāṇam aditiṃ supraṇītim",
+      "formula_id": "VG:ENRICH:FORMULA:3e2a6410dcda5418131b48be564d323c",
+      "normalized": "suśarmāṇam aditiṃ"
+    },
+    {
+      "container_before": "agne tamadyāśvaṃ na stomaiḥ kratuṃ na",
+      "formula_id": "VG:ENRICH:FORMULA:4448cc93b6ebff30c0d0304d4c073c79",
+      "normalized": "tamadyāśvaṃ na stomaiḥ kratuṃ na"
+    },
+    {
+      "container_before": "puruṣa evedaṃ sarvaṃ yad bhūtaṃ yac ca",
+      "formula_id": "VG:ENRICH:FORMULA:452ff413c22232ad5a2d0845769bbdc1",
+      "normalized": "sarvaṃ yad bhūtaṃ yac ca"
+    },
+    {
+      "container_before": "vayaṃṃ syāma patayo rayīṇām",
+      "formula_id": "VG:ENRICH:FORMULA:4911a1acbc56dce11d436bb1ef45a22a",
+      "normalized": "vayaṃṃ syāma patayo"
+    },
+    {
+      "container_before": "avasṛṣṭā parā pata śaravye brahmasaṃśite",
+      "formula_id": "VG:ENRICH:FORMULA:567eac5be07c3df56f3e8b4d2546b157",
+      "normalized": "avasṛṣṭā parā pata śaravye"
+    },
+    {
+      "container_before": "pavim indra tigmaṃ vi śatrūn",
+      "formula_id": "VG:ENRICH:FORMULA:5c882fb4ccd4a090bcf96ca4e88e617c",
+      "normalized": "pavim indra tigmaṃ vi"
+    },
+    {
+      "container_before": "rakṣā mākir no aghaśaṃsa īśata",
+      "formula_id": "VG:ENRICH:FORMULA:6ac90b6ba7f246b3a05e915568c13f4f",
+      "normalized": "rakṣā mākir no"
+    },
+    {
+      "container_before": "indrehi matsy andhaso viśvebhiḥ somaparvabhiḥ mahāṃ abhiṣṭir ojasā",
+      "formula_id": "VG:ENRICH:FORMULA:6df879f68bf363a9f103e628e5a0ee45",
+      "normalized": "abhiṣṭir ojasā"
+    },
+    {
+      "container_before": "sūnuṃ sahaso jātavedasaṃ vipraṃ na jātavedasam ya",
+      "formula_id": "VG:ENRICH:FORMULA:752e72d0338aede222db3b9d2d989b83",
+      "normalized": "sahaso jātavedasaṃ vipraṃ na jātavedasam ya"
+    },
+    {
+      "container_before": "āditya mahāṃ asi mahas te sato mahimā",
+      "formula_id": "VG:ENRICH:FORMULA:77a489ad5088ead8fed69891904ba49e",
+      "normalized": "asi mahaste sato mahimā"
+    },
+    {
+      "container_before": "ayaṃ sahasram ṛṣibhiḥ",
+      "formula_id": "VG:ENRICH:FORMULA:816d42e6afbcf4e0556d9e6df18bd07b",
+      "normalized": "sahasram ṛṣibhiḥ"
+    },
+    {
+      "container_before": "sūnuṃ sahaso jātavedasaṃ",
+      "formula_id": "VG:ENRICH:FORMULA:86fc010a23cafa3567ac705a67f08485",
+      "normalized": "sahaso jātavedasaṃ"
+    },
+    {
+      "container_before": "agnirmūrdhā divaḥ kakutpatiḥ pṛthivyā ayam apāṃṃ retāṃṃsi jinvati",
+      "formula_id": "VG:ENRICH:FORMULA:89b12a8a9662d3bb98d4bd497ba21d54",
+      "normalized": "agnirmūrdhā divaḥ kakutpatiḥ pṛthivyā ayam"
+    },
+    {
+      "container_before": "na pāśino ti dhanveva tāṃ ihi",
+      "formula_id": "VG:ENRICH:FORMULA:8d9fdf020f37bad3907150406a0d7f10",
+      "normalized": "pāśino ti dhanveva"
+    },
+    {
+      "container_before": "teṣāṃ vayaṃ sumatau yajñiyānām api bhadre saumanase syāma",
+      "formula_id": "VG:ENRICH:FORMULA:912c6468d377b4ab7f60dc0ce8c0e2ca",
+      "normalized": "sumatau yajñiyānām api bhadre saumanase syāma"
+    },
+    {
+      "container_before": "sūryasya vayaṃ devānāṃ",
+      "formula_id": "VG:ENRICH:FORMULA:9bf6e178d9237ed5f5a6176459f0161a",
+      "normalized": "vayaṃ devānāṃ"
+    },
+    {
+      "container_before": "smākaṃ senā avatu pra yutsu",
+      "formula_id": "VG:ENRICH:FORMULA:9ff1e82c924b57aff5b3d638d4ffc068",
+      "normalized": "senā avatu pra yutsu"
+    },
+    {
+      "container_before": "nimiṣa ekavīraḥ śataṃ senā ajayat sākam indraḥ",
+      "formula_id": "VG:ENRICH:FORMULA:a7c3447b0307f28e205c6272121b1eeb",
+      "normalized": "senā ajayat sākam indraḥ"
+    },
+    {
+      "container_before": "puruṣa evedaṃ sarvaṃ yad bhūtaṃ yac ca",
+      "formula_id": "VG:ENRICH:FORMULA:aebcd8ed3a6dc098e8804414861fcb28",
+      "normalized": "puruṣa evedaṃ"
+    },
+    {
+      "container_before": "stomaḥ pṛthivyāṃṃ śrayatu",
+      "formula_id": "VG:ENRICH:FORMULA:af57a6f8cc1e08e9eee283bc3826c240",
+      "normalized": "stomaḥ pṛthivyāṃṃ"
+    },
+    {
+      "container_before": "anyā~ste asmattapantu hetayaḥ pāvako asmabhyaṃṃ śivo bhava",
+      "formula_id": "VG:ENRICH:FORMULA:b14e07188924fcc40981d67bc744d4ed",
+      "normalized": "pāvako asmabhyaṃṃ śivo bhava"
+    },
+    {
+      "container_before": "tvaṃ yaviṣṭha dāśuṣo nṝ~ḥ pāhi",
+      "formula_id": "VG:ENRICH:FORMULA:ba0f3d0a26662cd7a4cd8c16051affab",
+      "normalized": "tvaṃ yaviṣṭha dāśuṣo"
+    },
+    {
+      "container_before": "sūnuṃ sahaso jātavedasaṃ vipraṃ na",
+      "formula_id": "VG:ENRICH:FORMULA:be6dd67e52f16c41d462fe8e89740eed",
+      "normalized": "sahaso jātavedasaṃ vipraṃ na"
+    },
+    {
+      "container_before": "tā no muñcantv aṃhasaḥ",
+      "formula_id": "VG:ENRICH:FORMULA:bf0568d28c34d633d840518dc0f1bf7f",
+      "normalized": "tā no muñcantv"
+    },
+    {
+      "container_before": "indro ya ojasā parjanyo",
+      "formula_id": "VG:ENRICH:FORMULA:c178de6ddb1b0a58e16bfe92e04640a9",
+      "normalized": "indro ya ojasā"
+    },
+    {
+      "container_before": "agniṃ sumnāya dadhire puro",
+      "formula_id": "VG:ENRICH:FORMULA:c4258e56834845ec581dec7e72074407",
+      "normalized": "sumnāya dadhire puro"
+    },
+    {
+      "container_before": "padaṃ sadā paśyanti sūrayaḥ divīva cakṣur",
+      "formula_id": "VG:ENRICH:FORMULA:c4268b5f21595bcc094f93cb98b8ab0b",
+      "normalized": "sadā paśyanti"
+    },
+    {
+      "container_before": "somaṃ śrīṇanti pṛśnayaḥ",
+      "formula_id": "VG:ENRICH:FORMULA:c4d6d160fc29814a3235f5d4304b94cd",
+      "normalized": "śrīṇanti pṛśnayaḥ"
+    },
+    {
+      "container_before": "asi mahnā devānām asuryaḥ purohito vibhu jyotir adābhyam",
+      "formula_id": "VG:ENRICH:FORMULA:d11b0311936a84d680a2ef033a6cbe05",
+      "normalized": "asi mahnā devānām asuryaḥ purohito vibhu jyotir"
+    },
+    {
+      "container_before": "vayaṃ syāma patayo rayīṇām",
+      "formula_id": "VG:ENRICH:FORMULA:d23f88b4b0d8b0b797163dfe44fe8e66",
+      "normalized": "syāma patayo rayīṇām"
+    },
+    {
+      "container_before": "sumatau yajñiyasyāpi bhadre saumanase syāma sa sutrāmā",
+      "formula_id": "VG:ENRICH:FORMULA:d755c0b6e0eef4218bba11d1bc521ee5",
+      "normalized": "sumatau yajñiyasyāpi bhadre saumanase syāma"
+    },
+    {
+      "container_before": "samrājamatithiṃ janānāmāsannā pātraṃ janayanta devāḥ",
+      "formula_id": "VG:ENRICH:FORMULA:d7c847969d1db65288beccbf57f407e1",
+      "normalized": "samrājamatithiṃ janānāmāsannā"
+    },
+    {
+      "container_before": "dyāvāpṛthivī antarikṣaṃ sūrya ātmā jagatas tasthuṣaś ca",
+      "formula_id": "VG:ENRICH:FORMULA:d858f0eb3914d9f17d09ae8ed20b3347",
+      "normalized": "sūrya ātmā jagatas tasthuṣaś ca"
+    },
+    {
+      "container_before": "giraḥ rathītamaṃ rathīnāṃ vājānāṃ",
+      "formula_id": "VG:ENRICH:FORMULA:db825929c23f6a9803c487cdfe4869fe",
+      "normalized": "giraḥ rathītamaṃ"
+    },
+    {
+      "container_before": "upāsmai gāyatā naraḥ pavamānāyendave abhi devāṃ iyakṣate",
+      "formula_id": "VG:ENRICH:FORMULA:e4547eefb933fdc5d909d44a0d15b895",
+      "normalized": "upāsmai gāyatā naraḥ pavamānāyendave abhi"
+    },
+    {
+      "container_before": "parasyāḥ sṛkaṃ saṃśāya pavim indra tigmaṃ vi",
+      "formula_id": "VG:ENRICH:FORMULA:e5adb460901eb5f938cf645200ca53a7",
+      "normalized": "parasyāḥ sṛkaṃ"
+    },
+    {
+      "container_before": "saṃ jāspatyaṃ suyamam",
+      "formula_id": "VG:ENRICH:FORMULA:e942a893b93f2fe4c94230406d3c8a3b",
+      "normalized": "saṃ jāspatyaṃ"
+    },
+    {
+      "container_before": "sahasya dhīmahi dhṛṣadvarṇaṃ divedive hantāraṃ",
+      "formula_id": "VG:ENRICH:FORMULA:f605ae39f0aa5883c60edfdef2fa64b1",
+      "normalized": "sahasya dhīmahi dhṛṣadvarṇaṃ dive dive"
+    },
+    {
+      "container_before": "varūthyaḥ vasuragnirvasuśravā achā nakṣi dyumattamaṃṃ rayiṃ dāḥ",
+      "formula_id": "VG:ENRICH:FORMULA:ffd4a884f42ef255e28285d6c754fe19",
+      "normalized": "vasuragnirvasuśravā achā nakṣi"
+    },
+    {
+      "container_before": "nimiṣa ekavīraḥ śataṃ senā ajayat sākam indraḥ",
+      "formula_id": "VG:ENRICH:FORMULA:ffe55ab48e4866b2d7ac739093344425",
+      "normalized": "nimiṣa ekavīraḥ śataṃ"
+    }
+  ],
+  "method": "One containment algorithm, two populations. The pre-fix artifact is data/staging/formula/formula_nesting.jsonl (4,825 rows, written 2026-09-15 16:29, the population the canonical graph holds). The post-fix artifact is the current enrichment release.",
+  "population": {
+    "after": 4729,
+    "arrived": 121,
+    "before": 4825,
+    "left": 217
+  },
+  "question": "1,103 expected vs 1,064 measured: which of the five readings is true?",
+  "ruled_out": {
+    "a_formulas_disappeared_incorrectly": "NO. The 217 formulas that left are the consequence of correcting the Yajurvedic double-fold anusvara defect at commit 3f2b0d8, which changed which n-grams the miner sees. 121 formulas arrived for the same reason.",
+    "b_the_prior_1103_was_stale_or_wrong": "STALE, NOT WRONG. Running today's algorithm over the pre-fix population reproduces 1,103 exactly. It is the correct figure for a population that no longer exists.",
+    "c_a_rebuild_changed_family_semantics": "NO. Family semantics are unchanged: the same module, the same containment surface, the same roles. What changed is the Formula population it reads.",
+    "d_the_containment_algorithm_changed": "NO, and this is the decisive control: today's algorithm over yesterday's population returns 1,103, and over today's population returns 1,064.",
+    "e_filtering_legitimately_removed_them": "NOT FILTERING. No filter was added. The corpus comparison surface was corrected upstream, which is a different thing and has a different fix."
+  },
+  "the_39": {
+    "gained_nested_status": 39,
+    "lost_because_every_container_is_gone": 27,
+    "lost_because_the_formula_itself_is_gone": 51,
+    "lost_nested_status": 78,
+    "net": -39,
+    "self_check": true
+  },
+  "verdict": "STALE_PRIOR_FIGURE_CAUSED_BY_AN_UPSTREAM_FOLD_CORRECTION"
+}

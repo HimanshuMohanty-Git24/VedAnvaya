@@ -9,7 +9,7 @@
   "algorithm_version": "vg-deity-communities-v1",
   "candidate_ledger_is_mixed_grain": "Stated rather than hidden, because the arithmetic would otherwise be comparing unlike things. `accepted` counts BOTH row grains in rows.jsonl: 1028 RV sukta assessments, which are the projection's evidence, and 157 eligible :Devata nodes carrying subject_kind ENTITY, which are the domain's subject. `rejected` counts the :Devata nodes removed from the eligible population, so the 214 deities are split 157 accepted + 57 rejected. `unresolved` counts the 324 :DevataAscription descriptors that cannot enter a :Devata partition at all. Each rejected and unresolved row carries a `candidate_unit` field naming its grain.",
   "closes_gaps": [],
-  "code_commit": "fd3512043c8f9125ba5b9a052b7f25205a4c6db1",
+  "code_commit": "b4b1b0beba1c499e832150b0b9363d7258e40a26",
   "config": {
     "abstract_rulings_file": "abstract_label_rulings.json",
     "algorithm_version": "vg-deity-communities-v1",
@@ -266,14 +266,14 @@
     "unresolved": 324,
     "verified_zero": 880
   },
-  "created_at": "2026-09-15T10:52:33.299046Z",
+  "created_at": "2026-09-16T17:53:44.890140Z",
   "domain": "communities",
   "files": [
     {
       "bytes": 5395455,
       "path": "rows.jsonl",
       "rows": 1185,
-      "sha256": "157794f1ebe74a46fd8c4a084ab25798f3dcba669691d3ad0190746e6c0c1806"
+      "sha256": "96cec83a5b5a5f64f7595274e3be8966ef014279c3e77391f49282674cf0f497"
     },
     {
       "bytes": 46625,
@@ -285,13 +285,13 @@
       "bytes": 1825,
       "path": "sources.jsonl",
       "rows": 3,
-      "sha256": "1e37f8c7a91259137210fdbfb2b1e0635fb7fb9a31f917d5f53709f43dd19935"
+      "sha256": "05409bb8ebd8e0ae3b71b3f6e06b053f5123b37705a48ea550bb3b5502d18176"
     },
     {
-      "bytes": 94282,
+      "bytes": 94740,
       "path": "communities.jsonl",
       "rows": 12,
-      "sha256": "ea9f75b1581fc89b1a8516286bf1dfb3c6dbb700acfc1365ac376d0dfc88f6f7"
+      "sha256": "c96061701e0761e51d20c09635c4f1499b87eb6cf0ccc627b469163c1ad9436b"
     },
     {
       "bytes": 12790,
@@ -306,20 +306,20 @@
       "sha256": "0674d6c7d7071a1e1fb346dce1c9f0f3327b41d4fe20ab818e194146c00612cd"
     },
     {
-      "bytes": 145008,
+      "bytes": 146138,
       "path": "build_communities_staging.py",
       "rows": 0,
-      "sha256": "8158448c61785c5055a7f8818ef4ba7b0b5dc619c0e825efafd03af61679bb15"
+      "sha256": "60147455e1dbc6094a45573b30a716ed32ff4929fa965a66f2cc9ebc009db0f9"
     }
   ],
   "graph_snapshot": {
     "after": {
-      "nodes": 108779,
-      "relationships": 265295
+      "nodes": 117970,
+      "relationships": 282389
     },
     "before": {
-      "nodes": 108779,
-      "relationships": 265295
+      "nodes": 117970,
+      "relationships": 282389
     }
   },
   "integration_blockers": {

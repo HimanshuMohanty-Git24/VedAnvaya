@@ -1,0 +1,226 @@
+{
+ "artifact": "AGENT_4_RITUAL_INDEPENDENT_MEASUREMENT",
+ "at": "2026-09-16T18:33:24.389949+00:00",
+ "graph": {
+  "nodes": 127404,
+  "relationships": 295700,
+  "ritual_nodes": 103,
+  "object_nodes": 41,
+  "offering_nodes": 21,
+  "ritual_role_nodes": 11,
+  "uses_object_edges": 23,
+  "objects_wired_to_a_rite": 14,
+  "performed_by_edges": 16,
+  "receives_offering_edges": 0,
+  "mantras_with_ritual_context": 0,
+  "rite_to_offering_edges": 15,
+  "rites_with_an_offering_edge": 5,
+  "devata_to_offering_edges": 10,
+  "has_step_edges": 3,
+  "has_ritual_step_edges": 3121,
+  "ritual_step_nodes": 3121,
+  "rite_to_offering_by_type": {
+   "USES_SUBSTANCE": 11,
+   "USES_OFFERING": 4
+  },
+  "devata_to_offering_by_type": {
+   "DEVATA_ASSOCIATED_WITH": 10
+  },
+  "ritual_role_keys": [
+   "VG:CONCEPT:ADHVARYU-PRIEST",
+   "VG:CONCEPT:AGNIDH-FIRE-KINDLER",
+   "VG:CONCEPT:BRAHMACARIN-STUDENT",
+   "VG:CONCEPT:BRAHMAN-PRIEST",
+   "VG:CONCEPT:HOTR-PRIEST",
+   "VG:CONCEPT:NESTR-LEADER",
+   "VG:CONCEPT:POTR-PURIFIER",
+   "VG:CONCEPT:PRASASTR-DIRECTOR",
+   "VG:CONCEPT:PUROHITA-CHAPLAIN",
+   "VG:CONCEPT:UDGATR-CHANTER",
+   "VG:CONCEPT:YAJAMANA-SACRIFICER"
+  ],
+  "offering_keys": [
+   "VG:CONCEPT:AJA-GOAT",
+   "VG:CONCEPT:AJYA-MELTED-BUTTER",
+   "VG:CONCEPT:AMIKSA-CURDLED-MILK",
+   "VG:CONCEPT:ANNA-FOOD",
+   "VG:CONCEPT:ASVA-HORSE",
+   "VG:CONCEPT:CARU-GRUEL",
+   "VG:CONCEPT:DADHI-SOUR-MILK",
+   "VG:CONCEPT:DAKSINA-PRIESTLY-GIFT",
+   "VG:CONCEPT:GHRTA-CLARIFIED-BUTTER",
+   "VG:CONCEPT:GO-CATTLE",
+   "VG:CONCEPT:HAVIS-OBLATION",
+   "VG:CONCEPT:MADHU-HONEY",
+   "VG:CONCEPT:PARISRUT-FERMENTED-DRAUGHT",
+   "VG:CONCEPT:PASU-LIVESTOCK",
+   "VG:CONCEPT:PAYAS-MILK",
+   "VG:CONCEPT:PRAJAPATI-PURODASA",
+   "VG:CONCEPT:PURODASA-ASTAKAPALA",
+   "VG:CONCEPT:PURODASA-CAKE",
+   "VG:CONCEPT:SOMA-DRINK",
+   "VG:CONCEPT:SURA-SPIRITUOUS-LIQUOR",
+   "VG:CONCEPT:VAPA-OMENTUM"
+  ],
+  "yupa_mention_passages": [
+   "VG:AV:SAU:K04:S024:V004",
+   "VG:AV:SAU:K09:S006:V022",
+   "VG:AV:SAU:K12:S001:V013",
+   "VG:AV:SAU:K13:S001:V047",
+   "VG:RV:SAK:M01:S051:V014",
+   "VG:RV:SAK:M03:S008:V010"
+  ],
+  "named_object_mentions": {
+   "VG:CONCEPT:AUDUMBARA-AMULET": {
+    "mantras": 7,
+    "vedas": 1
+   },
+   "VG:CONCEPT:DUNDUBHI-DRUM": {
+    "mantras": 17,
+    "vedas": 3
+   },
+   "VG:CONCEPT:MANI-AMULET": {
+    "mantras": 86,
+    "vedas": 2
+   },
+   "VG:CONCEPT:YUPA-SACRIFICIAL-POST": {
+    "mantras": 6,
+    "vedas": 2
+   }
+  },
+  "audumbara_node_claims": {
+   "supplementary_attestation_count": 91,
+   "definition": "The amulet of udumbara wood, worn in AVS 19.31 for prosperity, cattle and fatness in the cow-stall, and addressed as prosperity itself. All seven occurrences are in that one hymn."
+  }
+ },
+ "supplementary_corpus_replay": {
+  "dcs_commit": "8aeed5a1343d0e48b64eb32af8c00e8c6eb29359",
+  "cited_lines": 61393,
+  "works": 18,
+  "reproduces_the_wave2_figure_of_61393": true,
+  "note": "The Wave 2 build's input directory is not in the repository -- it expects flat files named SBM.txt, KatySS.txt and so on, while the DCS repository prints them as 'Brahmana texts/SBM.txt' and the like. The mapping was reconstructed and is recorded in manifest.source_snapshot so the build is replayable."
+ },
+ "registry_disagreements": [
+  {
+   "gap": "GAP-RITUAL-003",
+   "registry_says": "Only 14 of 23 registry objects are linked to a rite.",
+   "measured": "14 of 41. The denominator moved: Wave 3 imported 18 more Object nodes and wired none of them, so the shortfall is larger than the row records, not smaller."
+  },
+  {
+   "gap": "GAP-RITUAL-004",
+   "registry_says": "11 ritual roles are modelled against the classical set of sixteen; missing_count 5.",
+   "measured": "11 RitualRole nodes exist, but only 7 of them are among the classical sixteen. Four of the eleven -- PRASASTR-DIRECTOR, YAJAMANA-SACRIFICER, PUROHITA-CHAPLAIN, BRAHMACARIN-STUDENT -- are not officiants in that schema at all. So 9 are missing, not 5. Eleven and sixteen are both real numbers that do not share a denominator."
+  },
+  {
+   "gap": "GAP-RITUAL-005",
+   "registry_says": "MATCH (r:Ritual) RETURN offerings -> 0 for all 8 rites, so no modelled rite is linked to an offering.",
+   "measured": "15 Ritual->Offering edges exist over 5 rites: {'USES_SUBSTANCE': 11, 'USES_OFFERING': 4}. The claim of zero is false; what is true is that none of them is typed as recipiency."
+  },
+  {
+   "gap": "GAP-RITUAL-005",
+   "registry_says": "Offering holds 8 nodes.",
+   "measured": "21 Offering nodes. Wave 3 imported 13 more."
+  },
+  {
+   "gap": "GAP-RITUAL-006",
+   "registry_says": "0 mantras carry ritual_context, although 3,045 Wave 3 ritual rows were staged.",
+   "measured": "0 confirmed, and the 3,045 staged rows cover 1903 distinct mantras, not 3,045: the file is rows, not passages."
+  }
+ ],
+ "defects_found": [
+  {
+   "id": "A4-RITUAL-D1",
+   "where": "data/staging/ritual/ritual_registries.py:670 (DEITY_DATIVES APAH), consumed at data/staging/ritual/build_ritual_staging.py:994-1004",
+   "defect": "`apsu` is registered as a dative form of Apah. It is the LOCATIVE plural of ap-. All 20 loci behind the Apah RECEIVES_OFFERING row came through it and every one means 'in/into the waters' -- `apsu juhoti`, `apsu somacamasan`. The row was published as Apah ranking third among recipients.",
+   "fix": "Remove apsu; the row then has no witness and is dropped entirely."
+  },
+  {
+   "id": "A4-RITUAL-D2",
+   "where": "data/staging/ritual/build_ritual_staging.py:1029-1045",
+   "defect": "The staged RECEIVES_OFFERING rows carry no offering at the far end. The offering words are used only as a line filter and are never resolved to an :Offering node, so all 27 rows are (:Devata)-[:RECEIVES_OFFERING]->(nothing). An edge needs a node at the far end, so the typed deity-to-offering predicate GAP-RITUAL-005 asks for could not have landed as staged.",
+   "fix": "Resolve the offering word to an :Offering key and emit one row per (Devata, Offering) pair."
+  },
+  {
+   "id": "A4-RITUAL-D3",
+   "where": "data/staging/ritual/ritual_registries.py:708-711 (OFFERING_WORDS_FOR_DEITY_LINK)",
+   "defect": "Nine of the twenty-two offering markers are VERBS -- nirvap, juhoti, juhuyat, yajati, yajeta, alabhate, alabheta, hutam. A line qualifies as a deity-to-offering statement when it names a deity in the dative and contains a verb of offering, with no offering named at all.",
+   "fix": "Require an offering NOUN; keep the verb as a necessary condition rather than a sufficient one."
+  },
+  {
+   "id": "A4-RITUAL-D4",
+   "where": "data/staging/ritual/ritual_registries.py RITE_CANDIDATES, SATTRA",
+   "defect": "SankhSS 13.14.1 is held in canonical Neo4j as an ANCHORED_SUTRA step of VG:CONCEPT:DIKSA-CONSECRATION. The rite the line states in its own words is the SATTRA -- `satram asiran` -- and Caland's translation opens 'A sattra may be performed by sixteen persons'. `diksita` in that line is a participle describing the performers, not a naming of the diksa. ritual_registries.RITE_CANDIDATES registers SATTRA with the prefix `sattrayan` and the exact forms sattram / sattrasya / sattre / sattrani / sattranam, all double-t. The Sankhayana edition prints the single-t `satram`, which no registered form reaches, so the only rite alias that fired on the line was `diksit`.",
+   "fix": "Register the single-t orthographic variants of sattra as aliases."
+  },
+  {
+   "id": "A4-RITUAL-D5",
+   "where": "canonical Neo4j, VG:CONCEPT:AUDUMBARA-AMULET",
+   "defect": "The node is defined from AVS 19.31 as an amulet of udumbara wood and carries supplementary_attestation_count=91. Every one of those lines is udumbara WOOD -- the sadas post, the camasa, the asandi, the danda -- and not one is the amulet. The property asserts corroboration the corpus does not give.",
+   "fix": "Split the wood from the amulet, or reduce the count to the lines that are about the amulet, which is zero in these eighteen works."
+  },
+  {
+   "id": "A4-RITUAL-D6",
+   "where": "data/staging/ritual/rows.jsonl",
+   "defect": "25 of 769 EXACT bridge rows (3.3%) carry a matched_normalised_letters span that cannot be found in the row's own citing text under any text form this graph stores for that mantra. The build's mantra-form input is not in the repository, so the span cannot be re-derived, and a row whose evidence cannot be checked is worse than none because it looks checkable.",
+   "fix": "Hold those rows out of the asserted tier -- done here -- and publish the mantra index the build read."
+  },
+  {
+   "id": "A4-RITUAL-D7",
+   "where": "data/staging/ritual/build_ritual_staging.py, pratika matcher",
+   "defect": "The matcher requires the matched run to END where a citing word ends and does not require it to BEGIN where the quoted unit begins. PB 14.10.3 quotes `yad indra prag apag udag iti`; the run matched VSM 6.36 starting 87 letters in, at `prag`, so a verse VSM 6.36 is not was credited to it. 1 of 24 reviewed rows.",
+   "fix": "Add a quotation-start control symmetrical to the existing end control."
+  }
+ ],
+ "gap_ritual_004_arithmetic": {
+  "ritual_role_nodes_in_graph": 11,
+  "of_those_in_the_classical_sixteen": 7,
+  "of_those_outside_the_schema": [
+   "VG:CONCEPT:BRAHMACARIN-STUDENT",
+   "VG:CONCEPT:PRASASTR-DIRECTOR",
+   "VG:CONCEPT:PUROHITA-CHAPLAIN",
+   "VG:CONCEPT:YAJAMANA-SACRIFICER"
+  ],
+  "classical_sixteen_missing": [
+   "VG:CONCEPT:ACCHAVAKA-PRIEST",
+   "VG:CONCEPT:BRAHMANACCHAMSIN-PRIEST",
+   "VG:CONCEPT:GRAVASTUT-PRIEST",
+   "VG:CONCEPT:MAITRAVARUNA-PRIEST",
+   "VG:CONCEPT:PRASTOTR-PRIEST",
+   "VG:CONCEPT:PRATIHARTR-PRIEST",
+   "VG:CONCEPT:PRATIPRASTHATR-PRIEST",
+   "VG:CONCEPT:SUBRAHMANYA-PRIEST",
+   "VG:CONCEPT:UNNETR-PRIEST"
+  ],
+  "denominator_schema": "SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN",
+  "denominator_note": "The sixteen officiants are a Srautasutra schema, not a Samhita one. Any completeness figure whose denominator is sixteen is a figure against that schema and must say so. GAP-RITUAL-004's own implementation_dependency records this.",
+  "scholarly_disagreement": {
+   "axis": "prasastr / maitravaruna",
+   "statement": "This graph holds VG:CONCEPT:PRASASTR-DIRECTOR as a role outside the sixteen while the sixteen include MAITRAVARUNA-PRIEST. In the Srauta literature prasastr and maitravaruna are widely treated as two names for one office, the hotr's first assistant, and on that reading the graph already holds that officiant under a different key. They are kept distinct here because the enumerating loci print `maitravaruna` and never `prasastr`, and because merging them is an identity claim this artifact has no source for. The disagreement is recorded, not resolved.",
+   "consequence_if_merged": "If a reader treats prasastr as maitravaruna, the graph held 8 of the sixteen before this artifact and 8 were missing, rather than 7 and 9."
+  }
+ },
+ "receives_offering_stats": {
+  "lines_with_a_theonym_dative_and_an_offering_noun": 126,
+  "refused_ambiguous_pairing": 25,
+  "refused_no_verb_of_offering": 70,
+  "pairs_offered_to_the_reader": 11,
+  "pairs_accepted": 4,
+  "loci_accepted": 22,
+  "loci_rejected": 9,
+  "measured_pair_precision_of_the_mechanical_rule": 0.3636,
+  "measured_locus_precision_of_the_mechanical_rule": 0.7097
+ },
+ "ritual_context_distribution": {
+  "RITE_NAMED_IN_THIS_MANTRA": 212,
+  "NO_RITUAL_CITATION_FOUND": 10538,
+  "EMPLOYED_IN_RITE_PROBABLE": 1275,
+  "UNRESOLVED_SHARED_OPENING": 7769,
+  "EMPLOYED_IN_RITE": 416
+ },
+ "sattra_anchor_defect": {
+  "defect": "SankhSS 13.14.1 is held in canonical Neo4j as an ANCHORED_SUTRA step of VG:CONCEPT:DIKSA-CONSECRATION. The rite the line states in its own words is the SATTRA -- `satram asiran` -- and Caland's translation opens 'A sattra may be performed by sixteen persons'. `diksita` in that line is a participle describing the performers, not a naming of the diksa.",
+  "cause": "ritual_registries.RITE_CANDIDATES registers SATTRA with the prefix `sattrayan` and the exact forms sattram / sattrasya / sattre / sattrani / sattranam, all double-t. The Sankhayana edition prints the single-t `satram`, which no registered form reaches, so the only rite alias that fired on the line was `diksit`.",
+  "fix": "Register the single-t orthographic variants of sattra as aliases.",
+  "blast_radius_note": "The PERFORMED_BY edges proposed here do NOT depend on the anchor: they carry the line's own words and Caland's translation as their evidence, so they hold whether or not the lead corrects the step."
+ }
+}
