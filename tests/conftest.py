@@ -1,5 +1,7 @@
-"""Test configuration: make scripts/ importable, and run the untraced timers last."""
+"""Test configuration: make scripts/ importable, keep credentials from leaking between
+tests, and run the untraced timers last."""
 
+import os
 import sys
 from pathlib import Path
 
@@ -12,6 +14,61 @@ import pytest
 _scripts = Path(__file__).resolve().parents[1] / "scripts"
 if str(_scripts) not in sys.path:
     sys.path.insert(0, str(_scripts))
+
+
+#: Environment names that configure a credential. ``load_credential_slots`` reads
+#: ``os.environ`` directly and deliberately -- a slot is a deployment fact rather than a
+#: settings field -- so any of these appearing mid-session silently reconfigures the LLM
+#: factory for every test that follows.
+_CREDENTIAL_MARKERS = ("_API_KEY", "_API_KEYS")
+
+
+def _credential_env() -> dict[str, str]:
+    return {k: v for k, v in os.environ.items() if any(m in k for m in _CREDENTIAL_MARKERS)}
+
+
+@pytest.fixture(scope="session")
+def _credential_baseline() -> dict[str, str]:
+    """The credentials configured before any test ran. The only trustworthy snapshot.
+
+    Taken at session scope on purpose. A per-test snapshot is too late when the leak
+    happens inside a *module*-scoped fixture: higher-scoped fixtures are set up first, so
+    the per-test "before" would already contain the leaked key and would faithfully
+    restore it.
+    """
+    return _credential_env()
+
+
+@pytest.fixture(autouse=True)
+def _no_credential_leaks_between_tests(_credential_baseline: dict[str, str]):
+    """Undo credentials a test publishes into ``os.environ``, however it publishes them.
+
+    Around two dozen one-off scripts under ``data/staging/**`` call ``load_dotenv`` on an
+    absolute path at *import* time, and several tests import one of them with
+    ``spec_from_file_location`` to reach a single pure function. Importing is enough: the
+    developer's real ``VEDAGRAPH_LLM_API_KEY`` lands in ``os.environ`` and stays there.
+
+    ``vedagraph.llm.credentials.load_credential_slots`` then finds it, and four tests in
+    ``tests/llm`` that assert the *no-key* behaviour fail -- ``get_llm_provider`` stops
+    raising on a missing key, and ``/ask/health`` answers 200 where it must answer 503.
+    Whether they fail depends on collection order, so the suite is green on a machine with
+    no ``.env`` and red on a developer's, which is the kind of difference that gets
+    written off as "works in CI". The opposite ordering is the dangerous one: a guard that
+    must fire when no key is configured cannot be trusted while any earlier test can
+    quietly configure one.
+
+    Restoring against the session baseline fixes it once for every importer, rather than
+    once per test that happens to import such a module today, and it edits no sealed
+    staging artifact. Only credential-shaped names are touched, so a test that legitimately
+    manages its own environment is unaffected.
+    """
+    yield
+    current = _credential_env()
+    for name in current.keys() - _credential_baseline.keys():
+        del os.environ[name]
+    for name, value in _credential_baseline.items():
+        if current.get(name) != value:
+            os.environ[name] = value
 
 
 def pytest_collection_modifyitems(items: list[pytest.Item]) -> None:

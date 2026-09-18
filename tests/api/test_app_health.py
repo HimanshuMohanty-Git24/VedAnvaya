@@ -222,8 +222,21 @@ def test_live_readiness_passes_against_the_frozen_graph(live_client: TestClient)
 #:
 #: 164,597 + 2 + 2 = 164,601 and 509,486 + 283 = 509,769. The four corpora did not move,
 #: which is the guard that actually matters and is asserted separately below.
-FROZEN_NODES = 164_601
-FROZEN_RELATIONSHIPS = 509_769
+#:
+#: GAP-SAMAVEDA_MUSIC-002 moved it once more, at 360d9c5, by a single receipted import:
+#: data/staging/samaveda_music_002_final/import_receipt.json records +1,136 TextVersion
+#: nodes and +1,136 HAS_TEXT_VERSION relationships -- one per aligned ARCIKA_NOTATION row,
+#: 1,136 of them against 708 that stay withheld -- with census_promised_after equal to
+#: census_actual_after on every counter, and MUSICALIZED_AS still 0 because
+#: OWNER_DECISION_G rules that predicate out of Product V1. 164,601 + 1,136 = 165,737 and
+#: 509,769 + 1,136 = 510,905. The four corpora did not move: SV is 1,844 before and after,
+#: because the notation attached a text version to existing mantras rather than minting
+#: any. That import landed without moving this pin or the identical one in
+#: scripts/audit_public_identity.py, so both had been failing -- this one red, that one by
+#: aborting the audit before its first finding. New nodes have to join the graph-wide
+#: contracts, not just their own layer's gate.
+FROZEN_NODES = 165_737
+FROZEN_RELATIONSHIPS = 510_905
 
 #: The figures that must NEVER move, whatever an import does. The whole-graph census grows
 #: with every wave; the four corpora are closed sets, and a drift here is corruption rather

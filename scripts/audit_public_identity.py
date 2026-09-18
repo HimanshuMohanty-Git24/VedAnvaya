@@ -46,7 +46,18 @@ def main():
         # (+2 DerivedMetric). Agent B's C06: this assert aborted the whole public-identity
         # audit, and because nothing wires this script to a gate it failed by never being
         # run rather than by going red.
-        assert census == {"nodes": 164601, "relationships": 509769}, census
+        # 164,601/509,769 -> 165,737/510,905. Moved by the single receipted
+        # GAP-SAMAVEDA_MUSIC-002 import at 360d9c5
+        # (data/staging/samaveda_music_002_final/import_receipt.json): +1,136 TextVersion
+        # nodes and +1,136 HAS_TEXT_VERSION relationships, one per aligned ARCIKA_NOTATION
+        # row, with census_promised_after == census_actual_after on every counter and
+        # MUSICALIZED_AS still 0 per OWNER_DECISION_G. The delta reconciles exactly against
+        # the baseline. C06 recurred exactly as its own note predicted: the import moved
+        # the census, nothing moved the pin, and the audit failed by aborting rather than
+        # by reporting -- so this pin is now also asserted by
+        # tests/domain/test_public_identity_census_pin.py, which reads the live graph and
+        # goes red instead of aborting an unrun audit.
+        assert census == {"nodes": 165737, "relationships": 510905}, census
         rows = session.run(
             "MATCH (n) WHERE NOT n:Internal RETURN properties(n) AS p, labels(n) AS labels, "
             + public_id_cypher("n") + " AS id"

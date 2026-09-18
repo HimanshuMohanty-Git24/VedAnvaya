@@ -1161,28 +1161,36 @@ RULINGS: Final[dict[str, Ruling]] = {
         None,
     ),
     "GAP-PRODUCT_SURFACE-004": Ruling(
-        "ASK_FORMAL_REGRADE_BLOCKED_EXTERNAL_QUOTA",
-        "The retrieval work is done, the formal re-grade is not, and the reason is on record "
-        "with its exact error. Clause 1, Ask reaches Samavedic passages: "
-        "src/vedagraph/api/ask/planner.py maps SAMAVEDA to SV and carries a per-corpus "
-        "matcher, and the evidence is in the graded artifact rather than the code -- in "
-        "data/gold/ask_benchmark_runs/ask_product_v1_final_composite.json, Q34 'What does SV "
-        "ARANYA 1.1 contain?' is graded PARTIAL_CORRECT from a POST_FIX_DELTA_RUN at "
-        "code_commit 6467c3b with citation_validation PASS, where it had been the MISLEADING "
-        "this entry was opened for. Clause 2, the metals route: planner.py :246-255 records "
-        "the route to /api/v1/insights/metals and why the English string 'metals' resolved to "
-        "nothing before it. Clause 3 is blocked and is NOT claimed passed. The composite "
-        "artifact holds MISLEADING 0 and HALLUCINATED 0 over its 60 questions, but at commits "
-        "8353167 / 6467c3b / 9dd3ef6 rather than at this HEAD, and owner decision 28 records "
-        "what happened when a fresh commit-keyed run was attempted: it 'reached 19 of 60 and "
-        "stopped at Q20 with LLMRateLimitError: the daily allowance is exhausted; waiting will "
-        "not clear it', only OpenRouter is credentialed, switching model would produce a "
-        "different grade rather than a resumption, the earlier partial run is diagnostic only "
-        "and not combined, and -- stated in the decision and repeated here -- 'misleading = 0 "
-        "is not claimed'. The blocker is recorded with the exact error in "
-        "data/staging/integration/dependency_ledger.json and dependency_status.json. Terminal "
-        "for the purpose of nothing reading OPEN, counted apart from the closures, and "
-        "explicitly not data-completeness closure.",
+        "STILL_IMPLEMENTATION_FIXABLE",
+        "The re-grade is no longer blocked and no longer unrun, and it did not pass. A "
+        "commit-keyed run at de7195c, run_id "
+        "openrouter-nvidia_nemotron-3-ultra-550b-a55b:free-dddb14430cac6c58, answered 60 of "
+        "60 -- slot 1 carried Q1-Q49, reported its allowance exhausted, and slot 2 carried "
+        "Q50-Q60 without changing run_id, config_hash or code_commit -- and was graded "
+        "against this entry's own three clauses. Measurement in "
+        "data/staging/release_prep/ask_formal_60_final.json. CLAUSE 1 PASSES, now from a run "
+        "at this HEAD rather than from the older composite: Q34 returns the Sanskrit held at "
+        "VG:SV:KAU:ARANYA:D01:V01 cited [E1], and Q45 independently returns four SV ARANYA "
+        "loci. CLAUSE 2 PASSES: planner.py carries the metals route and Q13, Q21 and Q47 "
+        "read the known-false lexical zero as a matcher artefact rather than as absence. "
+        "CLAUSE 3 FAILS: it requires MISLEADING at 0 with Q34 answered. Q34 is answered and "
+        "graded PARTIAL_CORRECT; MISLEADING is 1. Q38 'Who are the Maruts?' was returned as "
+        "SUPPORTED / STRONG asserting two rankings the live graph contradicts -- 'the most "
+        "widely mentioned deity group in the corpus' over 560 MENTIONS_DEVATA verses that "
+        "rank third behind apah 761 and asvinau 626, and 'the largest number of hymn-level "
+        "dedications' over 428 HAS_DEVATA edges that rank sixth behind Indra 2,869, Agni "
+        "1,988, Soma Pavamana 1,087, the All-Gods 805 and the Asvins 631. This is NOT the "
+        "defect the entry was opened for and retrieval is not implicated: all 60 packets "
+        "replayed to identical item counts, all 304 citations resolve, 0 invented ids "
+        "survived, 0 Sanskrit runs are fabricated, and 428 is a real figure correctly cited. "
+        "The unsupported tokens are 'most widely' and 'largest', which no check reaches: the "
+        "figure check tests integers and a superlative carries none, and the quantitative "
+        "validator scopes to the rows a sentence cites, which hold no comparison. Same shape "
+        "as the Q02 'all ten mandalas' defect, not covered by the universal rule shipped for "
+        "it, and therefore implementation work on the synthesis guardrail rather than an "
+        "external block -- which is why this is STILL_IMPLEMENTATION_FIXABLE and not an "
+        "execution blocker. Clause 3 is NOT claimed passed and MISLEADING = 0 is NOT claimed. "
+        "Smallest remediation: Q38 alone, by the scripts/grade_ask_delta.py procedure.",
         "MATCH (m:Mantra {veda:'SV'}) RETURN count(m)",
         1844,
     ),
