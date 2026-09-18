@@ -25,6 +25,7 @@ a green suite red on a machine with no Neo4j.
 from __future__ import annotations
 
 import functools
+import hashlib
 import importlib.util
 import io
 import json
@@ -34,7 +35,7 @@ import re
 import sys
 import warnings
 from collections.abc import Iterator, Sequence
-from typing import Any
+from typing import Any, cast
 
 import pytest
 import yaml
@@ -1484,11 +1485,48 @@ def _scalar(session: Any, query: str, **params: Any) -> Any:
     record = session.run(query, **params).single()
     return None if record is None else record["c"]
 
+@functools.lru_cache(maxsize=1)
+def _published_pin() -> dict[str, Any]:
+    """The pinned census of the graph's *published* formula generation.
+
+    Not ``_families()``. The four tests below used to assert the graph against the
+    enrichment JSONL, and that equality is unachievable by owner rule rather than by
+    defect: ``formula_id`` is a published stable product ID served at
+    ``/api/v1/formulas/{formula_id}``, it is a content hash, so re-mining re-keys it, and
+    ``data/staging/final_stabilization/formula_identity_impact.json`` records
+    ``migration_permitted: false`` over all 217 affected formulas. The enrichment layer was
+    rebuilt anyway -- legitimately; ``manifest.json``'s digests match the live
+    ``formulas.jsonl`` and its ``corpus_counts`` are this graph's own 20,210 mantras -- so
+    the disk now holds a *later* generation than the frozen graph.
+
+    Two generations, both correct, and a rule against collapsing them. Asserting they are
+    equal failed on the count and so never reached the invariants these tests exist for.
+    The suite already held the tell: ``tests/api/test_stats.py`` pins
+    ``formula_families: 720``, which is the graph's figure and what the product serves, and
+    it passes.
+
+    So the expectation source is now ``scripts/pin_formula_layer_generation.py``'s pin,
+    which records the published census AND its exact id-set distance from the rebuild.
+    Both are falsifiers: change the graph and the census stops matching; rebuild the
+    enrichment layer differently and the delta stops matching.
+    """
+    path = ENRICHMENT_DIR / "formula_layer_published_pin.json"
+    assert path.exists(), (
+        f"{path} is missing. Regenerate it with "
+        "`python scripts/pin_formula_layer_generation.py --write`."
+    )
+    return cast(dict[str, Any], json.loads(path.read_text(encoding="utf-8")))
+
 
 @pytest.mark.live
 @_LIVE
 def test_live_every_formula_family_has_a_unique_family_id() -> None:
-    """There is a uniqueness constraint; this checks the layer landed whole under it."""
+    """There is a uniqueness constraint; this checks the layer landed whole under it.
+
+    Uniqueness is asserted over the whole graph population, and the population itself is
+    asserted against the published pin -- see :func:`_published_pin` for why not the JSONL.
+    """
+    pin = _published_pin()["published_generation"]
     driver = _driver()
     try:
         with driver.session() as session:
@@ -1496,13 +1534,30 @@ def test_live_every_formula_family_has_a_unique_family_id() -> None:
             distinct = _scalar(
                 session, "MATCH (f:FormulaFamily) RETURN count(DISTINCT f.family_id) AS c"
             )
-            assert total == distinct == len(_families())
+            assert total == distinct, f"{total - distinct} families share a family_id"
+            assert total == pin["families"], (
+                f"the graph holds {total} families and the published pin records "
+                f"{pin['families']}. Either the frozen generation changed -- which the "
+                "owner rule bars -- or the pin is stale."
+            )
             assert (
                 _scalar(
                     session,
                     "MATCH (f:FormulaFamily) WHERE f.family_id IS NULL RETURN count(f) AS c",
                 )
                 == 0
+            )
+            # A content-hash id that collided would put two formulas behind one published
+            # URL, which is the failure the frozen-identity rule protects against.
+            formulas = _scalar(session, "MATCH (f:Formula) RETURN count(f) AS c")
+            assert formulas == pin["formulas"]
+            assert (
+                _scalar(
+                    session,
+                    "MATCH (f:Formula) "
+                    'RETURN count(DISTINCT replace(f.normalized, " ", "")) AS c',
+                )
+                == formulas
             )
     finally:
         driver.close()
@@ -1511,6 +1566,7 @@ def test_live_every_formula_family_has_a_unique_family_id() -> None:
 @pytest.mark.live
 @_LIVE
 def test_live_every_membership_edge_lands_on_a_real_formula() -> None:
+    pin = _published_pin()["published_generation"]
     driver = _driver()
     try:
         with driver.session() as session:
@@ -1522,10 +1578,14 @@ def test_live_every_membership_edge_lands_on_a_real_formula() -> None:
                 )
                 == 0
             )
-            assert _scalar(
-                session,
-                "MATCH (:Formula)-[r:MEMBER_OF_FAMILY]->(:FormulaFamily) RETURN count(r) AS c",
-            ) == len(_members())
+            assert (
+                _scalar(
+                    session,
+                    "MATCH (:Formula)-[r:MEMBER_OF_FAMILY]->(:FormulaFamily) "
+                    "RETURN count(r) AS c",
+                )
+                == pin["members"]
+            )
             tiers = {
                 record["c"]
                 for record in session.run(
@@ -1533,16 +1593,44 @@ def test_live_every_membership_edge_lands_on_a_real_formula() -> None:
                 )
             }
             assert tiers <= {"TIER_B", "TIER_D"}, tiers
+            assert tiers == set(
+                pin["quality_tiers"]
+            ), "the tier vocabulary on landed edges moved away from the pinned one"
+            # One formula joins one family: the layer's whole premise, and something the
+            # count equality never checked.
+            assert (
+                _scalar(
+                    session,
+                    "MATCH (f:Formula)-[:MEMBER_OF_FAMILY]->(x) "
+                    "WITH f, count(DISTINCT x) AS n WHERE n > 1 RETURN count(f) AS c",
+                )
+                == 0
+            )
+            # Each family's own declared member_count must equal what landed under it.
+            assert (
+                _scalar(
+                    session,
+                    "MATCH (fam:FormulaFamily) "
+                    "OPTIONAL MATCH (:Formula)-[r:MEMBER_OF_FAMILY]->(fam) "
+                    "WITH fam, count(r) AS landed "
+                    "WHERE coalesce(fam.member_count, -1) <> landed RETURN count(fam) AS c",
+                )
+                == 0
+            )
     finally:
         driver.close()
 
 
 @pytest.mark.live
 @_LIVE
-def test_live_member_role_counts_are_what_the_artifact_says() -> None:
-    expected: dict[str, int] = {}
-    for member in _members():
-        expected[str(member["role"])] = expected.get(str(member["role"]), 0) + 1
+def test_live_member_role_counts_are_the_published_generations() -> None:
+    """Renamed: the expectation is the published pin, not "what the artifact says".
+
+    The old name described its own defect. The artifact it read is a later generation the
+    owner rule bars from landing, so the phrase "what the artifact says" stopped naming
+    anything the graph is permitted to equal.
+    """
+    pin = _published_pin()["published_generation"]
     driver = _driver()
     try:
         with driver.session() as session:
@@ -1552,7 +1640,12 @@ def test_live_member_role_counts_are_what_the_artifact_says() -> None:
                     "MATCH ()-[r:MEMBER_OF_FAMILY]->() RETURN r.role AS role, count(*) AS n"
                 )
             }
-            assert landed == expected
+            assert landed == pin["roles"]
+            assert sum(landed.values()) == pin["members"]
+            # The role vocabulary is closed, and the two generations agree about *which*
+            # roles exist even where they disagree about how many.
+            assert set(landed) == {"CORE", "EXPANSION", "VARIANT"}
+            assert set(landed) == {str(m["role"]) for m in _members()}
     finally:
         driver.close()
 
@@ -1566,7 +1659,14 @@ def test_live_the_containment_claim_is_recomputable_from_the_graph_alone() -> No
     ``normalized`` and the link between them all come out of the database, which is the
     property the grade claims -- "recomputable from the graph's own data by anyone who
     doubts it".
+
+    That was the docstring before, and the test contradicted it on the next line by sizing
+    its result set from ``_members()``. Dropping that read is what the docstring already
+    asked for, and it widens the recomputation from the artifact's 1,079 expansions to all
+    1,119 the graph holds. The count is pinned separately, against the published
+    generation.
     """
+    pin = _published_pin()["published_generation"]
     driver = _driver()
     try:
         with driver.session() as session:
@@ -1582,10 +1682,75 @@ def test_live_the_containment_claim_is_recomputable_from_the_graph_alone() -> No
                     """
                 )
             )
-            assert len(rows) == sum(1 for m in _members() if m["role"] == "EXPANSION")
+            assert len(rows) == pin["roles"]["EXPANSION"], (
+                "every EXPANSION edge must reach a parent inside its own family; "
+                f"{pin['roles']['EXPANSION'] - len(rows)} did not"
+            )
             for row in rows:
                 child, parent = _identity(row["child"]), _identity(row["parent"])
                 assert parent in child and parent != child, row["child_id"]
+    finally:
+        driver.close()
+
+
+@pytest.mark.live
+@_LIVE
+def test_live_the_published_pin_records_its_distance_from_the_rebuild() -> None:
+    """The rebuild may differ from the graph. It may not differ *silently*.
+
+    Pinning only the graph's census would let the enrichment layer drift with nothing
+    watching, and the drift is precisely what an owner has to re-adjudicate: it is the set
+    of formulas whose published ids a recomputation would re-key. So the delta is pinned by
+    id set, digested, and re-measured here against the live files. A rebuild that swapped
+    one formula for another of equal count would still trip this.
+    """
+    pin = _published_pin()
+    delta = pin["delta_published_to_rebuild"]
+    assert pin["owner_rule"]["migration_permitted"] == "false"
+    assert pin["owner_rule"]["recorded_in"].endswith("formula_identity_impact.json")
+
+    live = {
+        "formulas": {
+            str(row["formula_id"]) for row in _read_jsonl(ENRICHMENT_DIR / "formulas.jsonl")
+        },
+        "families": {str(row["family_id"]) for row in _families()},
+        "members": {f"{m['formula_id']}|{m['family_id']}|{m['role']}" for m in _members()},
+    }
+    for name, rebuilt in live.items():
+        assert len(rebuilt) == delta[name]["rebuilt"], (
+            f"the on-disk {name} generation moved: {len(rebuilt)} rows against the pinned "
+            f"{delta[name]['rebuilt']}. Re-adjudicate the divergence against the owner "
+            "rule, then regenerate the pin."
+        )
+        digest = hashlib.sha256(
+            "\n".join(sorted(rebuilt - _pinned_published_ids(name))).encode("utf-8")
+        ).hexdigest()
+        assert digest == delta[name]["rebuilt_only_sha256"], (
+            f"the {name} rows the rebuild holds and the published generation does not are "
+            "no longer the pinned set"
+        )
+
+
+def _pinned_published_ids(name: str) -> set[str]:
+    """The published-generation id set for ``name``, recovered from the live graph.
+
+    The pin stores digests rather than the id lists themselves -- 4,825 formula ids would
+    dominate a file whose job is to be readable -- so the set is re-read from the graph
+    when the delta is checked. That is sound here because the surrounding test's other
+    assertions have already pinned the graph's census against the same file.
+    """
+    query = {
+        "formulas": "MATCH (f:Formula) RETURN f.formula_id AS i",
+        "families": "MATCH (f:FormulaFamily) RETURN f.family_id AS i",
+        "members": (
+            "MATCH (a:Formula)-[r:MEMBER_OF_FAMILY]->(b:FormulaFamily) "
+            "RETURN a.formula_id + '|' + b.family_id + '|' + r.role AS i"
+        ),
+    }[name]
+    driver = _driver()
+    try:
+        with driver.session() as session:
+            return {record["i"] for record in session.run(query) if record["i"] is not None}
     finally:
         driver.close()
 

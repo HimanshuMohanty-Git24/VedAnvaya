@@ -295,7 +295,7 @@ export async function HumanConcernsPlate() {
                     {
                         href: "/limits",
                         label: "What this layer cannot answer",
-                        note: "Including why there is no healing entity in the registry",
+                        note: "Including which predicates carry evidence and which do not",
                     },
                 ]}
             />

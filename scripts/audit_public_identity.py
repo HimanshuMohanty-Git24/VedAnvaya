@@ -32,7 +32,14 @@ def main():
             "nodes": session.run("MATCH (n) RETURN count(n) AS n").single()["n"],
             "relationships": session.run("MATCH ()-[r]->() RETURN count(r) AS n").single()["n"],
         }
-        assert census == {"nodes": 164201, "relationships": 508042}, census
+        # Pinned so an unexpected mutation cannot slip past this audit. Moved at R4 from
+        # 164,201/508,042 by the single receipted migration in
+        # data/staging/release_blocker_r4/migration_receipt.json: +396 nodes (399
+        # DerivedMetric created, 3 deleted with the danastuti label's deity metrics) and
+        # +1,444 relationships (1,035 MENTIONS_EPITHET, 399 MEASURES, 8
+        # ASCRIBES_TO_DEVATA, 4 COMPOSED_OF, 1 ATTESTED_IN, less the 3 MEASURES that went
+        # with the deleted metrics). The delta reconciles exactly against the baseline.
+        assert census == {"nodes": 164597, "relationships": 509486}, census
         rows = session.run(
             "MATCH (n) WHERE NOT n:Internal RETURN properties(n) AS p, labels(n) AS labels, "
             + public_id_cypher("n") + " AS id"

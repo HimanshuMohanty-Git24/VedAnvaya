@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "campaign": "post-v1-data-completeness",
-  "generated_at": "2026-09-18T07:26:17.359437+00:00",
+  "generated_at": "2026-09-18T11:26:02.618237+00:00",
   "baseline_commit": "d6e93a92c4e3ff1a5682a17b20bf32c6ce8fa19c",
   "gaps": [
     {
@@ -45,7 +45,7 @@
       "closure_method": null,
       "closure_basis": "The AV half the ruling called unfinished implementation is now built, and what remains is the apparatus block this registry already accepts twice. Measured 2026-09-17 by enumerating every Mantra-to-Devata relationship type per Veda: a dedication predicate reaches RV (HAS_DEVATA, 10,552 mantras) and AV (HAS_DEVATA_ASCRIPTION 4,816 edges over 4,160 mantras, plus 882 HAS_DEVATA_DERIVED and 39 ASCRIBES_TO_DEVATA), and reaches SV and YV with zero edges of any dedication type -- they carry only the naming predicate MENTIONS_DEVATA, 1,335 and 1,964, which is a different axis. The SV block is the gana join key and the YV block is pratika-keyed sutra prose refused for machine resolution; both are recorded, and GAP-ATTRIBUTION-004 and -006 are already BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE on the same two apparatuses. The residual AV resolution work is GAP-ATTRIBUTION-002 and stays open there rather than being counted twice here.",
       "closure_measure": "MATCH (a:DevataAscription) WHERE (a)-->(:Devata) RETURN count(a)",
-      "closure_measured_value": 39,
+      "closure_measured_value": 47,
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": {
@@ -55,9 +55,9 @@
         "why_no_lawful_source": "For the SV the apparatus is keyed to samans in the gana collections, a declared exclusion from this work identifier (data/registry/works.yaml:290-297), so no arcika-verse coordinate exists to address. For the YV data/knowledge/yajurveda_deterministic_v1/manifest.json records the Madhyandina Sarvanukramana-sutra as pratika-keyed sutra prose refused for machine resolution, with descriptor_predicates an empty list. The same block is already accepted under GAP-ATTRIBUTION-004 and GAP-ATTRIBUTION-006.",
         "absence_not_inferred_from_not_looking": "Measured 2026-09-17 by enumerating every relationship type between a Mantra and a :Devata or :DevataAscription, per Veda, rather than by querying the predicate expected to be absent: DESCRIBES, HAS_DEVATA, HAS_DEVATA_ASCRIPTION, HAS_DEVATA_DERIVED, INVOKES, MENTIONS_DEVATA, PRAISES. SV and YV are reached only by the naming predicates (MENTIONS_DEVATA 1,335 SV / 1,964 YV), which are not dedication, and by 0 dedication edges of any type."
       },
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
-      "closure_prior_expected_value": 0,
-      "closure_reaudit": "0 resolved ascriptions became 39, so the AV half is no longer unbuilt and the entry's remaining reach is the SV and YV apparatus absence alone."
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
+      "closure_prior_expected_value": 39,
+      "closure_reaudit": "0 resolved ascriptions became 39, so the AV half is no longer unbuilt and the entry's remaining reach is the SV and YV apparatus absence alone. R4 widened the deity-adjective suffix matcher to the vrddhi spelling and 8 more descriptors resolved, so this measure -- which counts resolved ascriptions and is shared with GAP- ATTRIBUTION-002 -- moved 39 -> 47. This entry's verdict is unchanged: the resolution count is context here and the SV/YV apparatus absence is what it is blocked on."
     },
     {
       "gap_id": "GAP-ATTRIBUTION-002",
@@ -74,7 +74,7 @@
       "implementation_dependency": "A descriptor-to-Devata resolver with a typed refusal for the descriptors that genuinely denote no single deity (mantroktadevatyam = 'the deity named in the mantra', bahudevatyam = 'of many deities'). These must resolve to a typed non-resolution, not to a guess, and the resolved edge must stay distinguishable from the RV's direct HAS_DEVATA.",
       "owner_agent": 8,
       "closure_test": "MATCH (a:DevataAscription) WHERE size([(a)-[]->(:Devata)|1])>0 RETURN count(a) is greater than 0 for every resolvable descriptor, /api/v1/insights/devatas/{id} returns AV in ascribed_scope with its method stated, and the unresolvable descriptors carry an explicit reason.",
-      "status": "STILL_IMPLEMENTATION_FIXABLE",
+      "status": "CLOSED_DERIVED",
       "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
       "observed_gap": "The Atharvaveda's Anukramani deity ascription IS held, as 4,816 edges over 4,160 mantras, but none of its 324 descriptors resolves to a Devata node, so the product reports it as absent.",
       "initial_hypothesis": "The descriptor layer was ingested as opaque strings and the resolution step was never built. The descriptors are adjectival forms (agneyam = to Agni, aindram = to Indra, saumyam = to Soma), so resolution is a tractable morphological mapping, not new research. Because nothing resolves, every deity profile reports AV dedication as a missing apparatus and the reader is told less than the graph holds.",
@@ -98,15 +98,15 @@
       "source_availability": "UNDIAGNOSED",
       "initial_hypothesis_status": "UNTESTED",
       "closure_method": null,
-      "closure_basis": "Two of three clauses now pass; the entry stays open on clause 1, and on a defect R3 found while closing the other two. CLAUSE 3 CLOSED: all 324 :DevataAscription nodes carry ascription_resolution_status from the closed seven-value vocabulary in vedagraph.domain.ascription_bridge, and all 285 unresolved carry ascription_unresolved_reason -- 0 unresolved without a reason, against 285 before, so a reader can now tell a refused descriptor from one nobody processed. The statuses were computed by the repository's own resolver, not adjudicated here: 210 UNRESOLVED_STEM_MATCHES_NO_CANONICAL_DEVATA, 67 UNRESOLVED_COMPOUND_TWO_ASCRIPTIONS, 4 UNRESOLVED_SUBJECT_DESCRIPTOR_NOT_A_DEITY, 3 UNRESOLVED_NAMES_A_PLURALITY, 1 UNRESOLVED_SOURCE_DEFERS_TO_THE_MANTRA. CLAUSE 2 CLOSED: the deity insight read ascribed_scope off HAS_DEVATA alone, which is Rigveda-only, and so published AV in the ascription dimension's vedas_not_covered while 851 Atharvavedic passages carried a resolved dedication -- a false absence on the field whose whole job is to tell a missing layer from a real zero. Both dedication routes now travel in ONE pattern so the figure and its scope label cannot disagree, the layer scope is MEASURED rather than read from profiles.ATTRIBUTION_VEDAS (which is ('RV',) and correct about HAS_DEVATA -- the last reader of the constant profiles.py's own docstring says nothing should read), and a new ascription_routes block states each route's method: SOURCE_STATED_ANUKRAMANI_DEDICATION and TADDHITA_SASYA_DEVATA_DERIVATION. The node twin was corrected with it: attribution_scope was the literal ['RV'] on all 214 :Devata and is now measured per node, 179 ['RV'] and 35 ['RV','AV'], with 0 nodes claiming a corpus they have no edge in and 0 omitting one they do. CLAUSE 2 WAS FIRST CLOSED INCOMPLETELY, and the hostile pass caught it: the insight route was widened and /api/v1/devatas/{id} was left on HAS_DEVATA alone, so the same product answered the same question two ways -- Indra 2,869 scope ['RV'] on one surface and 2,945 scope ['RV','AV'] on the other -- while entity_service still shipped two caveats reading 'ATTRIBUTION ... IS RIGVEDIC' and 'basis=ascription with veda=AV is empty by construction', the second of which the same graph falsifies for 35 deities. That is the type-level attribution failure this project has recorded once already, reproduced by the fix for it. Both deity surfaces, the ascription passages route and its count now read one pattern over both predicates and agree exactly on every sampled deity; the AV caveat states which predicate serves it; and the stored literal in taxonomy.py that would have flattened the 35 on the next rebuild is gone, the value now derived in loader.apply_overlay per GAP-ATTRIBUTION-009's own implementation_dependency, with the per-node distribution pinned by a live test. CLAUSE 1 OPEN, and this is the R3 finding: 'greater than 0 for every resolvable descriptor' is unmet because the resolver UNDER-MATCHES the source's own spelling. DEITY_ADJECTIVE_SUFFIXES lists the deity-adjective suffix in short-a forms ('daivatam', 'devatyam'), Whitney prints the vrddhi form '-daivatam' with a long a, and suffix stripping runs BEFORE any length folding -- so no candidate is generated at all and the LENGTH_INSENSITIVE tier, which is applied to the candidate stem, never gets a chance. Measured 2026-09-18: 41 of the 210 no-canonical-surface descriptors would gain a suffix candidate under a length-insensitive suffix match, and among them are agnidaivatam and indradaivatam, whose stems are registered deities. Those are resolvable descriptors sitting in the unresolved bucket, so the clause fails. NOT fixed in R3 on purpose: shortening the suffix match widens the matcher, and this registry's own ascription entry records that over-normalising and under-normalising both look like a clean run -- the change needs the collision list re-enumerated per candidate before it lands, not a same-session edit. The 41 are fully diagnosed so the next pass starts from the measurement rather than the symptom.",
+      "closure_basis": "All three clauses now pass. CLAUSE 1 CLOSED at R4: the resolver under-matched the source because DEITY_ADJECTIVE_SUFFIXES lists the deity-adjective suffix in its short-a spellings while Whitney prints the vrddhi form, and suffix stripping ran BEFORE any length folding -- so 41 of the 210 stem-unresolved descriptors generated no candidate at all and the LENGTH_INSENSITIVE tier that resolve_one applies to the candidate STEM never received a stem. suffix_candidates now matches the suffix at a second length-insensitive tier and slices the stem out of the SOURCE fold, so the looseness reaches the suffix and stops there: sūryadāivatam still yields the stem sūrya and not surya. Measured: resolutions 39 -> 47 with 0 regressions, every one of the 39 already-resolved descriptors resolving to the same :Devata by the same path, and the 8 new ones carrying their own derivation path DEITY_ADJECTIVE_SUFFIX_LENGTH_FOLDED so the layer resting on the looser comparison is countable apart from the exact one. The ambiguity refusal survives the new tier: pavamānadāivatam reaches both VG:DEVATA:PAVAMANAH and VG:DEVATA:PAVAMANAH-SOMAH and resolves to neither, which is the owner decision holding. 33 of the 41 that gained a candidate still match no canonical Devata and stay UNRESOLVED_STEM_MATCHES_NO_CANONICAL_DEVATA -- candidate generation is reported apart from resolution because conflating them is how a matcher's reach gets overstated. RESIDUAL, disclosed and named R4-RESIDUAL-ATTRIBUTION-002: HAS_DEVATA_DERIVED was NOT re-derived from the 8, so 882 dedications over 851 passages reaching 35 deities still come from 39 descriptors while 47 resolve. Every surface publishing that pair now states both figures apart, and a test refuses a sentence that pairs 882 with 47.",
       "closure_measure": "MATCH (a:DevataAscription) WHERE (a)-->(:Devata) RETURN count(a)",
-      "closure_measured_value": 39,
+      "closure_measured_value": 47,
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": 39,
-      "closure_reaudit": "39 resolved is unchanged, and that is the point: R3 closed the two clauses that were about DISCLOSURE (typing the 285, and making the Atharvavedic dedication visible with its method) and found that the clause about RESOLUTION fails for a reason nobody had measured -- a suffix list written in short-a against a source that prints the vrddhi form. The count did not move because the resolver did not change; the entry is better understood, not further along."
+      "closure_reaudit": "Declared 39 before R4 and re-declared 47, which the graph measures. The count moved because the resolver changed, not because the population did."
     },
     {
       "gap_id": "GAP-ATTRIBUTION-003",
@@ -153,7 +153,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -208,7 +208,7 @@
         "why_no_lawful_source": "No source addresses Kauthuma arcika verses by the coordinate this corpus holds. Acquiring the ganas would be a new work identifier, not a fix to this one.",
         "absence_not_inferred_from_not_looking": "Recorded as a measured zero over an assessed population of 1,844 in veda_coverage_v3.json, with the join-key reason stated verbatim."
       },
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -257,7 +257,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -312,7 +312,7 @@
         "why_no_lawful_source": "No source addresses Kauthuma arcika verses by the coordinate this corpus holds. Acquiring the ganas would be a new work identifier, not a fix to this one.",
         "absence_not_inferred_from_not_looking": "Recorded as a measured zero over an assessed population of 1,844 in veda_coverage_v3.json, with the join-key reason stated verbatim."
       },
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -367,7 +367,7 @@
         "why_no_lawful_source": "The pinned Anukramani stores patronymic-plus-name phrases and no lineage field. The findings document records that a suffix rule 'applied blindly would manufacture relationships', that 'an inference that is right most of the time is still an inference, and this repository does not record inferences as source-explicit edges', that the rights policy forbids bulk use of the Vedic Heritage Portal, that no rights-compatible structured dataset with per-claim provenance was found, and that an LLM genealogy is explicitly excluded.",
         "absence_not_inferred_from_not_looking": "Measured, not assumed: 427 of 729 with no BELONGS_TO_FAMILY on 2026-09-17, against 302 resolved and 87 families that prove the layer works where an explicit source exists. The alternatives were enumerated and each refused by name with its reason, rather than one query being run and read as absence."
       },
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -416,7 +416,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -465,7 +465,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -523,7 +523,7 @@
       "closure_citation": "data/registry/works.yaml:290-297 (ganas need their own work_id)",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -580,7 +580,7 @@
       "closure_citation": null,
       "closure_owner_decision": "OWNER_DECISION_E_AUDIO_GATE",
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -637,7 +637,7 @@
       "closure_citation": null,
       "closure_owner_decision": "OWNER_DECISION_E_AUDIO_GATE",
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -695,7 +695,7 @@
       "closure_citation": null,
       "closure_owner_decision": "OWNER_DECISION_E_AUDIO_GATE",
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -744,7 +744,7 @@
       "closure_citation": "PRODUCT_V1_SCOPE.md:212-221 (no audio redistribution)",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -793,7 +793,7 @@
       "closure_citation": "PRODUCT_V1_SCOPE.md:212-221",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -850,7 +850,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -869,7 +869,7 @@
       "implementation_dependency": "Decompose the 24 remaining pairs, then type each group as decomposable or not with its reason. This directly gates GAP-COMMUNITIES-001, since an undecomposed dual label cannot be placed in a community.",
       "owner_agent": 15,
       "closure_test": "Every PAIR deity carries components, and every GROUP deity either carries components or a typed reason why its membership is not enumerable.",
-      "status": "STILL_IMPLEMENTATION_FIXABLE",
+      "status": "BLOCKED_OWNER_DECISION_REQUIRED",
       "causation_status": "MEASURED",
       "observed_gap": "57 of 71 composite deity labels carry no components: all 33 GROUP deities are undecomposed, and 24 of 38 PAIR deities are.",
       "suspected_cause": "Decomposition was implemented for pairs and never for groups. A dual deity like Mitra-Varuna can be resolved into two members; a group like the Maruts or the Adityas cannot be, without deciding how many members it has and whether they are individually named - which is a curation question the ADR anticipated and deferred. The scorecard's 30 of 33 is slightly optimistic against the live 33 of 33.",
@@ -901,15 +901,15 @@
       },
       "source_availability": "NOT_REQUIRED",
       "initial_hypothesis_status": "DISPROVEN",
-      "closure_basis": "Unmoved, and unmoved on the clause that needs no curation question answered. Measured 2026-09-17: of 214 :Devata nodes, 38 carry structure PAIR and 33 carry structure GROUP. Only 14 PAIR nodes are is_composite with component_count 2; the other 24 PAIRs and all 33 GROUPs carry component_count 0 and no decomposition of any kind, which is exactly the 57 the entry recorded. Neither arm of the test passes: the 24 remaining pairs are mechanical decomposition over material held, and the 33 groups carry no typed reason why their membership is not enumerable -- no property on :Devata holds one. The entry's own measured_cause already withdrew the blocker claim (59 of 71 composite labels were placed in a community undecomposed), so this constrains interpretation rather than gating computation, and 'worth doing for interpretation' is not done.",
+      "closure_basis": "Moved, and it moved a figure R3 got wrong. R3 recorded '24 PAIRs are mechanical decomposition over devata_components.yaml'. The file does not support that. Measured: devata_components.yaml declares 20 composites, 14 were already landed as 28 COMPOSED_OF edges, and 6 remained -- of which FOUR declare an EMPTY member list with an explicit reasoned refusal and a review_status (REJECTED for viśvedevāḥ, ādityāḥ and marutaḥ, NEEDS_REVIEW for dyāvāpṛthivyau). So only TWO were mechanically landable, VG:DEVATA:INDRAVARUNAU and VG:DEVATA:USASANAKTA, and both landed as 4 COMPOSED_OF edges. What R4 delivered: every one of the 71 PAIR and GROUP composites now carries a typed decomposition_status -- 16 DECOMPOSED_FROM_THE_COMPONENT_REGISTRY, 4 NOT_ENUMERABLE_DECLARED_BY_THE_REGISTRY carrying the registry's own evidence and review status, and 51 NOT_ENUMERABLE_FROM_ANYTHING_HELD -- and component_count is recomputed from the edges that actually landed rather than declared. That satisfies the GROUP arm of the test, which asks for components or a typed reason. The PAIR arm is NOT met and cannot be met by projection: 22 PAIR deities still carry no components, none of them has an entry in the only artifact in this repository that states a composite deity's members, and enumerating them means deciding which deities each contains -- curation, not projection. The entry's own source_dependency says group membership for open-ended groups is a scholarly question that may have no enumerable answer. An owner decision is required on whether the PAIR arm is re- scoped to 'components or a typed reason', as the GROUP arm already is, or whether the 22 are to be curated.",
       "closure_measure": "MATCH (d:Devata) WHERE d.structure IN ['PAIR','GROUP'] AND coalesce(d.component_count,0)=0 RETURN count(d)",
-      "closure_measured_value": 57,
+      "closure_measured_value": 55,
       "closure_citation": null,
-      "closure_owner_decision": null,
+      "closure_owner_decision": "OWNER_DECISION_COMMUNITIES_002_PAIR_DECOMPOSITION_SCOPE",
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
-      "closure_prior_expected_value": null,
-      "closure_reaudit": null
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
+      "closure_prior_expected_value": 57,
+      "closure_reaudit": "Declared 57 before R4 and re-declared 55, which the graph measures: the two the component registry supports are landed. The remaining 55 are not implementation work, which is why the status moves to an owner decision rather than staying STILL_IMPLEMENTATION_FIXABLE."
     },
     {
       "gap_id": "GAP-COMMUNITIES-003",
@@ -956,7 +956,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -1005,7 +1005,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": 1,
       "closure_reaudit": "One directed pair became two, and the four undirected pairs gained the typed refusal the ruling said was the honest fix and had not been done."
     },
@@ -1054,7 +1054,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -1110,7 +1110,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -1159,7 +1159,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -1178,7 +1178,7 @@
       "implementation_dependency": "An epithet-to-passage mention projection, and an expansion of the epithet inventory well beyond 13. The alias-recall discipline from the ritual objects case applies: epithets are heavily inflected, so unregistered forms will silently depress counts.",
       "owner_agent": 8,
       "closure_test": "Epithets carry passage edges, the inventory reaches well beyond 4 deities, and per-epithet recall is measured rather than assumed.",
-      "status": "STILL_IMPLEMENTATION_FIXABLE",
+      "status": "BLOCKED_OWNER_DECISION_REQUIRED",
       "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
       "observed_gap": "The epithet layer reaches 4 of 214 deities and no epithet is linked to a single passage, so no question about where an epithet occurs can be answered.",
       "initial_hypothesis": "The layer was built as a deity-attribute list and the occurrence projection was never run. Without passage edges an epithet is a label on a deity rather than something observable in the text, so the product cannot show a reader where the epithet is used.",
@@ -1202,15 +1202,15 @@
       "source_availability": "UNDIAGNOSED",
       "initial_hypothesis_status": "UNTESTED",
       "closure_method": null,
-      "closure_basis": "Unmoved on all three clauses, measured 2026-09-17. The epithet layer is 13 :Epithet nodes carrying 13 HAS_EPITHET edges and nothing else: 0 edges of any type between an :Epithet and a :Passage, 4 distinct deities reached against a 214-node registry, and no recall property on any epithet node -- the only keys are epithet_key, label_iast, label_en, display_label, display_type and domain_model_version. So no question about where an epithet occurs can be answered, which is what the entry says. Genuinely internal: the Sanskrit is held for all four corpora and the projection was never run. The alias-recall discipline applies -- epithets are heavily inflected -- so per-epithet recall must be measured rather than assumed, which is the entry's third clause.",
+      "closure_basis": "Two of three clauses CLOSED at R4 and the third is not implementation work. CLAUSE 1 CLOSED: the epithet layer was 13 :Epithet nodes, 13 HAS_EPITHET edges and nothing else -- 0 edges of any type between an :Epithet and a :Passage -- and now carries 1,035 MENTIONS_EPITHET edges over all 13 epithets, derived from the Rigvedic morphological annotation's own per-token lemma. Two tiers, recorded per edge because they are not the same claim: STEM_LEMMA (10 epithets) where the label folds onto the annotator's normalized_lemma, so every inflection of the stem counts; and ATTESTED_SURFACE_FORM (3) where it folds onto an attested inflected surface form and onto no lemma. That third tier resolved the three R3 left open -- dasra, nasatya and rudravartani -- on EXPLICIT morphology the repository already holds rather than by loosening a fold: each is a dual whose stem the annotator names on the token, and the stem's wider inflection is deliberately NOT claimed, because dasra- is an adjective meaning wondrous applied to many things while the dual dasra is the epithet of the Asvins. CLAUSE 3 CLOSED: per-epithet recall is measured rather than assumed -- a mantra count and a token count per epithet, not one aggregate -- and the Rigveda-only bound is typed in every row rather than left to a caveat, because MENTIONS_LEMMA is 154,261 edges over the Rigveda and ZERO over the other three corpora, so an epithet with no Samavedic occurrence is unannotated there and not absent. Identity was not minted: the inventory is still the curated 13, and fold_alias was used to compare and never to create or merge an :Epithet. CLAUSE 2 is the blocker and no projection can move it -- see owner_decision.",
       "closure_measure": "MATCH (e:Epithet)-[r]-(:Passage) RETURN count(r)",
-      "closure_measured_value": 0,
+      "closure_measured_value": 1035,
       "closure_citation": null,
-      "closure_owner_decision": null,
+      "closure_owner_decision": "OWNER_DECISION_ENTITY_001_EPITHET_INVENTORY_DENOMINATOR",
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
-      "closure_prior_expected_value": null,
-      "closure_reaudit": null
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
+      "closure_prior_expected_value": 0,
+      "closure_reaudit": "Declared 0 before R4 and re-declared 1035, which the graph measures. The status moves to an owner decision rather than a closure because the second clause asks the epithet INVENTORY to grow, and the inventory is curation. All 13 curated epithets belong to 4 deities, so the occurrence layer can only ever reach those 4; 'well beyond 4' names no number and no source, and there is no published epithet index in this repository against which 4 could be measured as incomplete. The clause can therefore be neither passed nor failed, which is the defect rather than the count."
     },
     {
       "gap_id": "GAP-ENTITY_COVERAGE-002",
@@ -1227,7 +1227,7 @@
       "implementation_dependency": "Re-run the metric materialisation over all 214 deities. Note that the denominator itself needs care: the 214 include 22 HUMAN-typed entries and 7 danastuti labels, so materialising metrics for all of them would put human patrons on deity profile pages.",
       "owner_agent": 8,
       "closure_test": "MATCH (m:DerivedMetric) WHERE m.subject_key STARTS WITH 'VG:DEVATA:' RETURN count(DISTINCT m.subject_key) reaches the resolved-deity population, and /api/v1/devatas/VG:DEVATA:SARASVATI returns per-corpus figures rather than nulls.",
-      "status": "STILL_IMPLEMENTATION_FIXABLE",
+      "status": "CLOSED_DERIVED",
       "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
       "observed_gap": "Deity profile statistics were materialised for only 25 of 214 deities, so 189 deity pages report null for every corpus.",
       "initial_hypothesis": "The materialisation pass covered the major deities and stopped. The product handles it correctly - a null is reported as INSUFFICIENT_EVIDENCE rather than drawn as a zero bar - but the practical effect is that Sarasvati, a deity with 65 passages, has a profile page showing nothing. The recorded figure of 184 is five out of date.",
@@ -1251,15 +1251,15 @@
       "source_availability": "UNDIAGNOSED",
       "initial_hypothesis_status": "UNTESTED",
       "closure_method": null,
-      "closure_basis": "Unmoved, and the entry's own closure query is the one that says so. Measured 2026-09-17: DerivedMetric rows whose subject_key starts VG:DEVATA: reach 25 distinct subjects over 75 metrics, against an eligible deity population of 152 and a registry of 214, so the materialisation covers 16 per cent of the eligible set. 184 :Devata nodes have a null profile_attributed_total. The second clause fails by name: VG:DEVATA:SARASVATI returns null for profile_attributed_total and null for profile_mentions_by_veda. The product handles the null correctly, reporting INSUFFICIENT_EVIDENCE rather than drawing a zero bar, which is right handling of an unfinished pass and is not closure. Internal work over mention edges already in the graph, with the denominator care the entry names: the 214 include 22 HUMAN_PATRON and 7 DANASTUTI_GIFT_PRAISE, and GAP-ENTITY_COVERAGE-008's eligibility predicate now supplies the 152 to materialise over.",
+      "closure_basis": "Both clauses pass. The materialisation reached 25 of 214 deities because profiles were selected as the union of the top twenty by mention and the top twenty by attribution, so 189 deity pages reported null for every corpus. R4 replaces the top-N with the eligibility contract's own predicate, VG:DEITY_ELIGIBILITY:V1 d.is_deity = true, and materialises over all 157 it admits: 471 metrics over 157 distinct subjects, and profile properties on exactly those 157 -- 0 eligible deities without one and 0 ineligible deities with one, asserted in both directions. Not 214, which the entry names as the hazard: that would put 22 human patrons and 7 danastuti gift-praise labels on deity profile pages. It was not hypothetical. top_devatas ranked by HAS_DEVATA with no eligibility filter and VG:DEVATA:DANASTUTIH -- 'praise of a patron's gift', ruled NOT_DEITY with non_deity_kind DANASTUTI_GIFT_PRAISE -- was one of the 25 carrying all three deity metrics; its 3 metrics were deleted by metric_id and its profile properties removed, rather than left behind where a count of 157 would hide them. Clause 2 by name: /api/v1/devatas/VG:DEVATA:SARASVATI returns per-corpus figures over all four corpora. Every one of the 157 carries at least one HAS_DEVATA edge, so each figure is a real count and none is a zero standing in for an absent layer. Consequence re-derived rather than loosened: profile_absent_dimensions went 25 -> 152, because most deities are thin in at least one dimension once the whole eligible population is profiled, and the route description now says an empty list is the exception.",
       "closure_measure": "MATCH (m:DerivedMetric) WHERE m.subject_key STARTS WITH 'VG:DEVATA:' RETURN count(DISTINCT m.subject_key)",
-      "closure_measured_value": 25,
+      "closure_measured_value": 157,
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
-      "closure_prior_expected_value": null,
-      "closure_reaudit": null
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
+      "closure_prior_expected_value": 25,
+      "closure_reaudit": "Declared 25 before R4 and re-declared 157, which the graph measures. The denominator is the eligibility contract's, not a top-N."
     },
     {
       "gap_id": "GAP-ENTITY_COVERAGE-003",
@@ -1276,7 +1276,7 @@
       "implementation_dependency": "Curate a remedy entity class and a stated-remedy relation. The existing TREATS predicate is TIER_D and reaches only 142 mantras, so it is not a substitute.",
       "owner_agent": 8,
       "closure_test": "A remedy entity class exists with registered aliases, a stated-remedy relation carries verse evidence, and the concerns endpoint no longer needs to caveat the absence of a healing entity.",
-      "status": "STILL_IMPLEMENTATION_FIXABLE",
+      "status": "CLOSED_DERIVED",
       "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
       "observed_gap": "No healing or remedy entity exists: bhesaja was never curated, so the Atharvaveda's central concern can only be approached through afflictions and plants.",
       "initial_hypothesis": "A curation omission with outsized consequence, because healing is the Atharvaveda's characteristic subject and the product has a dedicated surface for it. The endpoint declares the gap in its own caveat, which is honest, but a reader asking what the corpus prescribes gets afflictions rather than remedies.",
@@ -1300,15 +1300,15 @@
       "source_availability": "UNDIAGNOSED",
       "initial_hypothesis_status": "UNTESTED",
       "closure_method": null,
-      "closure_basis": "Unmoved on every clause. Measured 2026-09-17: db.labels() holds no label whose name contains 'remed', 'bhesaj' or 'heal', and the entry's own query for :Remedy or :Bhesaja returns 0 nodes, so no remedy entity class exists and there are no registered aliases to measure. No stated-remedy relation exists; TREATS stands at 160 edges and the entry already records it as TIER_D and not a substitute. The concerns endpoint still carries the caveat verbatim at src/vedagraph/api/services/insight_service.py:2222-2224 -- 'The registry has no healing entity -- bhesaja was never curated' -- which is honest disclosure and is not closure. Genuinely internal: bhesaja and the related remedy vocabulary are attested in text already held and lexically tractable.",
+      "closure_basis": "Closed, and the interesting part is that it was closable before R4 opened it. The entry's own warrant was a caveat this product published: 'The registry has no healing entity -- bhesaja was never curated -- so what does the corpus do about illness is reachable only through the afflictions and plants a verse names, never through a stated remedy.' That claim was FALSE. Measured 2026-09-18: VG:CONCEPT:BHESAJA-HEALING is a :Concept:DomainEntity in the CORPOREAL and RITUAL domains with SEVEN registered Sanskrit aliases -- bheṣajam, bheṣajaṃ, bheṣajā, bheṣajāni, bheṣajīḥ, bhiṣajā, bhiṣak -- and 108 MENTIONS_ENTITY edges over AV 47, YV 31, RV 28 and SV 2 mantras, every one carrying a verbatim locator and quote and 0 without evidence. So clause 1 (a remedy entity class with registered aliases) and clause 2 (a stated-remedy relation with verse evidence) were already met, and clause 3 was unmet only because the caveat asserting the absence was still there. No :Remedy or :Bhesaja label was added and none should be -- the registry measure asks for one and 0 is the right answer, because a second label would be a second answer to one question. What R4 did: corrected the claim on all three surfaces that published it (insight_service.py, queries.py and the frontend human-concerns plate), added a stated_remedy_by_veda query and a stated_remedy collection to /api/v1/insights/atharvaveda/concerns, and pinned the correction with a needle test that refuses the asserting form while exonerating prose that quotes it in order to correct it. What remains true and is now stated narrowly: bheṣaja is not typed a :HumanConcern, which is a curation choice and not an absence.",
       "closure_measure": "MATCH (n) WHERE n:Remedy OR n:Bhesaja RETURN count(n)",
       "closure_measured_value": 0,
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
-      "closure_prior_expected_value": null,
-      "closure_reaudit": null
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
+      "closure_prior_expected_value": 0,
+      "closure_reaudit": "The measure is unchanged at 0 and deliberately so -- it asks for a :Remedy or :Bhesaja label and there must not be one. What changed is that the clause about the caveat is met, because the caveat was false."
     },
     {
       "gap_id": "GAP-ENTITY_COVERAGE-004",
@@ -1355,7 +1355,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -1404,7 +1404,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -1453,7 +1453,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -1496,15 +1496,15 @@
       "source_availability": "UNDIAGNOSED",
       "initial_hypothesis_status": "UNTESTED",
       "closure_method": null,
-      "closure_basis": "Unmoved on both clauses. Measured 2026-09-17: only 2 :DomainEntity nodes carry a multi-word Sanskrit label at all, so phrase matching has not been built and multi-word realia remain unreachable. And no personification status of any kind exists -- across the 13 :NaturalPhenomenon nodes, 0 carry a personification_status and 0 carry a personified_as, and neither key exists in the database -- so an unresolved entity cannot be distinguished as refused or as unattempted. That is the specific ambiguity this project forbids elsewhere, and the field to hold the answer does not exist. Genuinely internal: source_dependency is NONE.",
+      "closure_basis": "Clause 2 CLOSED, clause 1 untouched. Clause 2: 0 of the 13 :NaturalPhenomenon nodes carried any personification status and neither personification_status nor personified_as existed as a key, so an unresolved entity could not be told apart from a refused one -- the ambiguity this project forbids elsewhere. All 13 now carry a status from a closed vocabulary with its reason: 4 PERSONIFIED_AS_A_REGISTERED_DEVATA naming the deity key (agni, āpaḥ, rātrī, sūrya) and 9 REFUSED_NO_REGISTERED_DEITY_COUNTERPART. Personification is an interpretive relation and was not minted as identity: no :Personification node and no PERSONIFIES edge, and the refusal is stated as a fact about THIS REGISTRY rather than about whether the Vedas personify the phenomenon -- several of the 9 are addressed as beings in the text and were simply never curated as deities. The mapping is written out per phenomenon rather than derived by a prefix match on the entity key, because a prefix match paired USAS-DAWN with VG:DEVATA:USASANAKTA, the dual Dawn-and-Night, which is a different deity, and paired AGNI- FIRE with seven compounds. Clause 1 is unmet and unattempted: only 2 :DomainEntity nodes carry a multi-word Sanskrit label at all, so phrase matching has still not been built and multi-word realia remain unreachable.",
       "closure_measure": "MATCH (n:NaturalPhenomenon) WHERE n.personification_status IS NULL RETURN count(n)",
-      "closure_measured_value": 13,
+      "closure_measured_value": 0,
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
-      "closure_prior_expected_value": null,
-      "closure_reaudit": null
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
+      "closure_prior_expected_value": 13,
+      "closure_reaudit": "Declared 13 before R4 and re-declared 0, which the graph measures: every :NaturalPhenomenon now carries a personification_status. The entry stays open on its OTHER clause, phrase matching, which no part of R4 addressed."
     },
     {
       "gap_id": "GAP-ENTITY_COVERAGE-008",
@@ -1551,7 +1551,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": 29,
       "closure_reaudit": "The R1 gate asked 'deity_eligibility_ruling IS NULL -> 0', which passes on a field nothing reads. R2 replaced it with a predicate-equality gate, which cannot reach 0 without overturning curation. R3 replaces that with product-consumer consistency per the owner decision: the authoritative predicate must be the only one any product surface reads, and an unruled node -- which fails closed and so silently shrinks the pantheon -- is the thing that must be 0. The 29-node divergence is retained as a documented invariant and pinned by a regression test so a later pass cannot flatten one predicate into the other."
     },
@@ -1600,7 +1600,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -1658,7 +1658,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -1707,7 +1707,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -1756,7 +1756,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": 39,
       "closure_reaudit": "39 distinct lemmas reached became 10,031, and lemmas reached by nothing fell from 9,992 to 0. Verified by the entry's own closure query, not by the projection's manifest."
     },
@@ -1811,7 +1811,7 @@
         "why_no_lawful_source": "No equivalent manual morphological annotation is published for the Samaveda, the Shukla Yajurveda or the Saunaka Atharvaveda. Generating one by machine would be model output presented as annotation.",
         "absence_not_inferred_from_not_looking": "9,658 mantras measured as carrying no lemma layer, against a corpus where the RV's 10,552 are complete -- the contrast is what establishes it as a source absence."
       },
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -1860,7 +1860,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -1909,7 +1909,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -1958,7 +1958,7 @@
       "closure_citation": "docs/reports/data-completeness/OWNER_DECISIONS.md:121-137 (decision 5, Samaveda morphology); docs/av_accent_binding_final_production_gate_report.md",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": 5839,
       "closure_reaudit": "Context figure only. The search-derivative layer reached the other three corpora; the dual-script refusal this entry records is untouched by that."
     },
@@ -2007,7 +2007,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": 5839,
       "closure_reaudit": "5,839 SEARCH_DERIVATIVE rows over one work became 20,210 over four, and the 139 YV mantras gained a NORMALIZED unaccented form. Reconciled per corpus."
     },
@@ -2056,7 +2056,7 @@
       "closure_citation": "data/registry/works.yaml (YV work scope); tests/domain/test_domain_layer.py",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -2105,7 +2105,7 @@
       "closure_citation": "data/registry/works.yaml (AV work scope)",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -2154,7 +2154,7 @@
       "closure_citation": "the AV image-transcription cancellation in the owner ledger",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -2203,7 +2203,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -2252,7 +2252,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -2307,7 +2307,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -2356,7 +2356,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -2405,7 +2405,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -2454,7 +2454,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -2503,7 +2503,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -2552,7 +2552,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -2601,7 +2601,7 @@
       "closure_citation": "docs/reports/data-completeness/OWNER_DECISIONS.md:106-119 (decision 4, human gold is not required where source adjudication is the strongest available); docs/decisions/ADR-014-llm-output-is-candidate-only.md",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -2650,7 +2650,7 @@
       "closure_citation": "docs/reports/data-completeness/OWNER_DECISIONS.md:106-119 (decision 4); docs/decisions/ADR-014-llm-output-is-candidate-only.md",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -2699,7 +2699,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -2748,7 +2748,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -2797,7 +2797,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": 39,
       "closure_reaudit": "39 distinct lemmas reached became 10,031, which removes the misleading reading this entry was opened for."
     },
@@ -2846,7 +2846,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": 367,
       "closure_reaudit": "367 Rigveda-only seers reporting zero became 0, and all three labels now carry the property with a declared scope. Checked against edge degree per label, not against the loader's own report."
     },
@@ -2895,7 +2895,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -2944,7 +2944,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -2993,7 +2993,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -3012,7 +3012,7 @@
       "implementation_dependency": "Add the five missing roles and wire PERFORMED_BY from mention evidence. Note that the classical sixteen is a Srautasutra schema, so presenting it as the denominator imports a post-Samhita framework; the denominator should be stated as such.",
       "owner_agent": 13,
       "closure_test": "RitualRole holds the classical sixteen with their source stated, the hotr carries PERFORMED_BY edges, and any completeness figure names the schema its denominator comes from.",
-      "status": "STILL_IMPLEMENTATION_FIXABLE",
+      "status": "CLOSED_DERIVED",
       "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
       "observed_gap": "11 ritual roles are modelled against the classical set of sixteen, and the hotr - the principal Rigvedic officiant - is wired to no rite at all.",
       "initial_hypothesis": "The role set was curated partially and the PERFORMED_BY wiring is thinner still at 16 edges. That the hotr has zero rite links is the clearest symptom: it is the officiant the Rigveda names most and the one a reader would check first, so a rite-by-officiant query returns a confident answer that omits the principal priest.",
@@ -3036,15 +3036,15 @@
       "source_availability": "UNDIAGNOSED",
       "initial_hypothesis_status": "UNTESTED",
       "closure_method": null,
-      "closure_basis": "Moved substantially and does not close. Measured 2026-09-17: :RitualRole stands at 20 nodes against 11, the hotr now carries a PERFORMED_BY edge -- which was the entry's clearest symptom, the officiant the Rigveda names most wired to no rite -- and the denominator is labelled rather than assumed: 18 of the 20 carry denominator_schema, in_classical_sixteen, samhita_attested and existence_evidence_type, with one row stating outright that the sixteen are a SRAUTASUTRA schema and not a Samhita one. Two things keep it open. Only 14 of the 20 are flagged in_classical_sixteen, so 2 of the classical sixteen are still absent from the registry and the test's 'holds the classical sixteen' is unmet; and 2 nodes carry a null denominator_schema, null in_classical_sixteen and null existence_evidence_type, so for those two a reader cannot tell a non-member from an unclassified row. Both are bounded internal work over well-attested material.",
+      "closure_basis": "All three clauses pass. R3 left two things open and both are closed. The 2 nodes carrying a null in_classical_sixteen were VG:CONCEPT:AGNIDH-FIRE-KINDLER and VG:CONCEPT:POTR-PURIFIER, and both ARE members of the classical sixteen rtvij -- the agnidh is the Brahman-side priest who kindles and tends the fire, the potr is among the Brahman's assistants -- so the nulls were a missing classification and not a ruling that the roles stand outside the schema. Typing them takes the flagged set from 14 to 16, which is what 'RitualRole holds the classical sixteen' asks, and removes the other half at the same time: 0 nodes now carry a null in_classical_sixteen, so a reader can no longer confuse a non-member with an unclassified row. The hotr carries a PERFORMED_BY edge (VG:CONCEPT:HOTR-PRIEST, 1 edge), which was the entry's clearest symptom. The denominator names its schema: every one of the 20 rows now carries denominator_schema = SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN. A second defect was fixed with them -- denominator_schema was carrying two different KINDS of value, the schema identifier on 9 rows and a whole prose sentence about it on 9 others, so the field could not be grouped on; the identifier is now on every row and the prose moved to denominator_schema_note.",
       "closure_measure": "MATCH (r:RitualRole) WHERE r.in_classical_sixteen IS NULL RETURN count(r)",
-      "closure_measured_value": 2,
+      "closure_measured_value": 0,
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
-      "closure_prior_expected_value": 11,
-      "closure_reaudit": "The ruling counted RitualRole nodes and declared 11; there are 20. Re-declared on what the test actually asks -- the classical sixteen with their source stated -- which leaves 2 unclassified rows and 2 missing officiants."
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
+      "closure_prior_expected_value": 2,
+      "closure_reaudit": "Declared 2 before R4 and re-declared 0, which the graph measures. The classical sixteen now reads 16 of 16 flagged, from 14."
     },
     {
       "gap_id": "GAP-RITUAL-005",
@@ -3091,7 +3091,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": 0,
       "closure_reaudit": "The typed predicate that existed with zero edges now carries 4, each with verse evidence. The entry stays open on rites without offerings, 100 of 103."
     },
@@ -3140,7 +3140,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": 0,
       "closure_reaudit": "0 mantras carrying a ritual_context became 20,210, five-valued with absence typed. The entry stays open because its method and precision clauses have no property in the graph to satisfy them."
     },
@@ -3189,7 +3189,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -3238,7 +3238,7 @@
       "closure_citation": "data/registry/works.yaml:290-297",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -3287,7 +3287,7 @@
       "closure_citation": null,
       "closure_owner_decision": "OWNER_DECISION_E_AUDIO_GATE",
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -3336,7 +3336,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -3385,7 +3385,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -3434,7 +3434,7 @@
       "closure_citation": "data/registry/works.yaml (all four work scopes); PRODUCT_V1_SCOPE.md",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -3483,7 +3483,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -3532,7 +3532,7 @@
       "closure_citation": "docs/reports/data-completeness/OWNER_DECISIONS.md:106-119 (decision 4); data/staging/final_closure_sprint/agent3/semantic_review_frame_manifest.json",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": 4865,
       "closure_reaudit": "4,865 UNREVIEWED became 35,131. The figure is re-declared upward rather than quietly re-based, and the entry closes on a recorded decision about human review, not on the count having improved -- it did not."
     },
@@ -3581,7 +3581,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -3630,7 +3630,7 @@
       "closure_citation": "docs/reports/data-completeness/OWNER_DECISIONS.md section 34 (OWNER_DECISION_SEMANTICS_004_STRATUM_MAP, recorded verbatim by the owner in a tracked file outside this registry and outside this audit)",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -3679,7 +3679,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": 375,
       "closure_reaudit": "375 entities with no domain became 0 over a population that grew to 384, and the soma problem the entry raised is answered by a list rather than a single value."
     },
@@ -3728,7 +3728,7 @@
       "closure_citation": "PRODUCT_V1_SCOPE.md:212-221 (no vector database, no embedding retrieval)",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -3783,7 +3783,7 @@
         "why_no_lawful_source": "No Kauthuma-aligned public-domain Samaveda translation exists. data/domain/vedagraph_domain_v2/veda_coverage_v3.json:285 records it verbatim: 'No complete translation of the Kauthuma arcika is ingested; the only one located is Ranayaniya and does not align.' Campaign rule 3 forbids mapping another recension onto the one held, so the located candidate may not be force-aligned. Measured 2026-09-17: the only renderings any Samavedic verse carries are 173 REUSED_SURFACE_IDENTICAL rows of Griffith's Rigvedic English on verified-identical text, and 0 Translation nodes carry a Kauthuma-aligned source_id.",
         "absence_not_inferred_from_not_looking": "0 of 1,844 measured in the graph; 1,242 measured as staged and unimported."
       },
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "translation_populations_measured": {
         "dedicated_translation": 0,
         "range_covered": 0,
@@ -3867,7 +3867,7 @@
         "why_no_lawful_source": "Griffith's kanda-20 print does not carry these 17 verses. The cross-corpus reuse route was then tested per verse against every one of the 21,104 Rigvedic text versions in the store rather than only the asserted parallel, and refused on measurement; for AVS 20.57.13 two of six pairings reach exactly 1.0 and Gate B still refuses it. Every per-key verdict is in data/staging/final_closure_sprint/agent7/residual_disposition.json.",
         "absence_not_inferred_from_not_looking": "All 17 keys are named individually with their own addressing verdict and their own refused reuse measurement. The population was reconciled arithmetically against the graph (5,788 + 34 + 17 = 5,839) rather than inferred from a single count returning a number that looked small."
       },
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "translation_populations_measured": {
         "dedicated_translation": 5715,
         "range_covered": 68,
@@ -3945,7 +3945,7 @@
       "closure_citation": "data/gap_registry.json GAP-TRANSLATION-003.closure_method (owner decision C, quoted); data/staging/final_closure_sprint/agent7/residual_disposition.json",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "translation_populations_measured": {
         "dedicated_translation": 1939,
         "range_covered": 0,
@@ -4018,13 +4018,13 @@
       },
       "source_availability": "HELD_LOCALLY",
       "initial_hypothesis_status": "SUPERSEDED_BY_MEASUREMENT",
-      "closure_basis": "The residual is 6 verses, 2 of them source-absent and 4 of them deterministic internal work, so this entry stays open on a named list rather than on a count. Measured 2026-09-17: 36 Rigvedic mantras carry no HAS_TRANSLATION edge, and the population reconciles with no remainder as 30 covered by a DECLARED_RANGE rendering attached to their anchor -- decision A closed and M13 typed Griffith's merged pair-scope unit rather than splitting it -- plus 6 uncovered. Of the 6, data/staging/final_closure_sprint/agent7/residual_disposition.json confirms RV 10.86.16 and 10.86.17 absent from the only ingested source, and names four as MIS-GRAINED, NOT ABSENT: VG:RV:SAK:M05:S055:V008, VG:RV:SAK:M09:S007:V009, VG:RV:SAK:M10:S048:V007 and VG:RV:SAK:M10:S132:V005. For those four the honest route is the one already applied to the 30 -- re-type the neighbouring rendering MANTRA_RANGE so it covers the merged pair -- and not a split of Griffith's prose, which would fabricate. Four rows of bounded internal work, listed by key.",
+      "closure_basis": "Unmoved on its literal measure, and R4 found out why it cannot move. 36 Rigvedic mantras carry no HAS_TRANSLATION edge of their own. 34 of them are not untranslated: Griffith merged a verse pair into one printed unit, so the rendering sits on the anchor verse. R4 staged an edge from each covered verse to its anchor's existing :Translation node, applied it, and the registry re-measure caught a REGRESSION: 30 of the 34 landed on exactly the even-numbered verses in RV 1.65-1.70 that GAP-TRANSLATION-006 exists to have REMOVED, because Griffith numbers a four-pada group as one verse where this graph numbers each hemistich and 25 of 31 shipped translations there read against the wrong Sanskrit. TRANSLATION-006's measure went 0 -> 30. All 34 edges were reverted by their own r4_created_by stamp and the 4 anchor re-types with them, restoring TRANSLATION-006 to 0, HAS_TRANSLATION to 18,427, MANTRA_RANGE to 64 and DEDICATED_ENGLISH_MANTRAS RV to 10,480. So the finding is that this measure counts a verse's OWN edge and therefore cannot reach 0 without reintroducing a closed defect: 'covered by a declared range' is expressed on the ANCHOR's Translation node deliberately, and making it reachable from the covered verse shows a reader the wrong Sanskrit's rendering. What R4 kept is the disclosure: all 36 now carry a typed translation_coverage row -- 34 COVERED_BY_A_MERGED_RANGE_ON_ITS_ANCHOR naming the anchor, and 2 SOURCE_ABSENT for RV 10.86.16 and 10.86.17, confirmed absent from the only ingested source. The entry's closure measure needs re-specifying before it can be met, which is an owner question and is named here rather than resolved.",
       "closure_measure": "MATCH (m:Mantra {veda:'RV'}) WHERE NOT (m)-[:HAS_TRANSLATION]->() RETURN count(m)",
       "closure_measured_value": 36,
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "translation_populations_measured": {
         "dedicated_translation": 10479,
         "range_covered": 60,
@@ -4046,8 +4046,8 @@
         "OWNER_DECISION_D_REUSED_RENDERING_POLICY": "CLOSED",
         "OWNER_DECISION_LATIN_SUBSTITUTION": "CLOSED_WITH_A_CORRECTED_POPULATION"
       },
-      "closure_prior_expected_value": 37,
-      "closure_reaudit": "37 untranslated became 36 after one provenance-blocked row was resolved and imported. The 4 genuinely fixable keys are named in the basis."
+      "closure_prior_expected_value": 36,
+      "closure_reaudit": "Unchanged at 36, and re-declared as unchanged on purpose: R4 moved it to 2 and reverted, because the move reintroduced GAP-TRANSLATION-006's defect. The residual is a measure- specification question, not 34 missing renderings."
     },
     {
       "gap_id": "GAP-TRANSLATION-005",
@@ -4094,7 +4094,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": 0,
       "closure_reaudit": "The ruling measured the positive form and declared 0 against 18,427 populated rows. Re-declared on the entry's own negative predicate, which returns 0, and the 158-uncertain claim reproduces as 158 RV HYMN_GRAIN_ONLY rows."
     },
@@ -4149,7 +4149,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -4192,13 +4192,13 @@
       "proof_artifact": "data/staging/integration/wave3_devata_identity_bridge.json",
       "closure_basis": "All three clauses of the entry's own test now pass, read back out of Neo4j on 2026-09-17 rather than out of a resolver. (1) A cross-Veda deity query returns RV and AV dedications for one canonical Devata joining on node identity and no display label: Agni 1,988 RV dedications and 176 AV, Vanaspati 10 and 122, Indra 2,869 and 76, over 39 ASCRIBES_TO_DEVATA edges reaching 35 distinct deities. (2) Every unresolved ascription is still addressable in its ascription form -- all 324 :DevataAscription nodes are present with their entity_key and is_ascription_descriptor intact. (3) The resolved share was read from the database. The test never demanded that all 324 resolve; the residual resolution work is GAP-ATTRIBUTION-002 and stays open there.",
       "closure_measure": "MATCH (a:DevataAscription) WHERE (a)-->(:Devata) RETURN count(a)",
-      "closure_measured_value": 39,
+      "closure_measured_value": 47,
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
-      "closure_prior_expected_value": 0,
-      "closure_reaudit": "The bridge was declared unbuilt and is built for 39 of 324. The entry's test asks for a label-free join, not for full resolution, so the move closes it."
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
+      "closure_prior_expected_value": 39,
+      "closure_reaudit": "The bridge was declared unbuilt and is built for 39 of 324. The entry's test asks for a label-free join, not for full resolution, so the move closes it. R4 widened the deity-adjective suffix matcher to the vrddhi spelling and 8 more descriptors resolved, so this measure -- which counts resolved ascriptions and is shared with GAP- ATTRIBUTION-002 -- moved 39 -> 47. The entry's own verdict is unchanged: the resolution count is context here, not the thing being gated."
     },
     {
       "gap_id": "GAP-ATTRIBUTION-WHITNEY-UNRESOLVED-OBJECT-001",
@@ -4234,7 +4234,7 @@
       "closure_citation": "docs/reports/data-completeness/OWNER_DECISIONS.md:542-566 (decision 25, Whitney 466 withheld and not for want of evidence); docs/reports/data-completeness/OWNER_DECISIONS.md:589-600 (decision 27, the authorised 33)",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -4270,7 +4270,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -4600,7 +4600,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -4637,7 +4637,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-18T07:26:17.359437+00:00",
+      "closure_measured_at": "2026-09-18T11:26:02.618237+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     }

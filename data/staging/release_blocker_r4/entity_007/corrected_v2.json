@@ -1,0 +1,104 @@
+{
+  "artifact": "R4_ENTITY_007_PERSONIFICATION_V2",
+  "correction_id": "R4-FIX-C1",
+  "why": "Agent B's CRITICAL C1. The V1 mapping was HAND-WRITTEN and its stored reason -- 'No :Devata in this registry carries this phenomenon's Sanskrit stem' -- was FALSE on two public nodes: VG:CONCEPT:USAS-DAWN (stem usas) against VG:DEVATA:USAH (label_iast usas, is_deity true) and VG:CONCEPT:CANDRAMAS-MOON (stem candramas) against VG:DEVATA:CANDRAMAH (label_iast candramas). Both are exact primary-stem matches on the same field that matched AGNI-FIRE. The same R4 migration landed a COMPOSED_OF edge to VG:DEVATA:USAH, so one arm used the deity while another denied it existed. V2 DERIVES the mapping from the same surface index that produced the accepted rows instead of hand-writing it, and records the match tier.",
+  "contract": "VG:PERSONIFICATION_STATUS:V2",
+  "distribution": {
+    "PERSONIFIED_AS_A_REGISTERED_DEVATA": 6,
+    "REFUSED_NO_REGISTERED_DEITY_COUNTERPART": 6,
+    "REFUSED_ALIAS_REACHES_A_DIFFERENT_THEONYM": 1
+  },
+  "rows": [
+    {
+      "entity_key": "VG:CONCEPT:AGNI-FIRE",
+      "personification_status": "PERSONIFIED_AS_A_REGISTERED_DEVATA",
+      "personification_status_reason": "VG:DEVATA:AGNIH carries this phenomenon's own Sanskrit stem as a primary label or alias, so the personification is a fact about this registry. Match tier: PRIMARY_STEM.",
+      "personified_as": "VG:DEVATA:AGNIH",
+      "personification_contract": "VG:PERSONIFICATION_STATUS:V2"
+    },
+    {
+      "entity_key": "VG:CONCEPT:AHAN-DAY",
+      "personification_status": "REFUSED_NO_REGISTERED_DEITY_COUNTERPART",
+      "personification_status_reason": "No registered deity carries this phenomenon's stem or any of its alias forms. This is a statement about THIS REGISTRY and NOT about whether the Vedas personify the phenomenon -- several of these are addressed as beings in the text and were simply never curated as deities.",
+      "personified_as": null,
+      "personification_contract": "VG:PERSONIFICATION_STATUS:V2"
+    },
+    {
+      "entity_key": "VG:CONCEPT:AP-WATERS",
+      "personification_status": "PERSONIFIED_AS_A_REGISTERED_DEVATA",
+      "personification_status_reason": "VG:DEVATA:APAH carries this phenomenon's own Sanskrit stem as a primary label or alias, so the personification is a fact about this registry. Match tier: PRIMARY_STEM.",
+      "personified_as": "VG:DEVATA:APAH",
+      "personification_contract": "VG:PERSONIFICATION_STATUS:V2"
+    },
+    {
+      "entity_key": "VG:CONCEPT:CANDRAMAS-MOON",
+      "personification_status": "PERSONIFIED_AS_A_REGISTERED_DEVATA",
+      "personification_status_reason": "VG:DEVATA:CANDRAMAH carries this phenomenon's own Sanskrit stem as a primary label or alias, so the personification is a fact about this registry. Match tier: PRIMARY_STEM.",
+      "personified_as": "VG:DEVATA:CANDRAMAH",
+      "personification_contract": "VG:PERSONIFICATION_STATUS:V2"
+    },
+    {
+      "entity_key": "VG:CONCEPT:JYOTIS-LIGHT",
+      "personification_status": "REFUSED_NO_REGISTERED_DEITY_COUNTERPART",
+      "personification_status_reason": "No registered deity carries this phenomenon's stem or any of its alias forms. This is a statement about THIS REGISTRY and NOT about whether the Vedas personify the phenomenon -- several of these are addressed as beings in the text and were simply never curated as deities.",
+      "personified_as": null,
+      "personification_contract": "VG:PERSONIFICATION_STATUS:V2"
+    },
+    {
+      "entity_key": "VG:CONCEPT:RATRI-NIGHT",
+      "personification_status": "PERSONIFIED_AS_A_REGISTERED_DEVATA",
+      "personification_status_reason": "VG:DEVATA:RATRIH is reached through one of this phenomenon's own alias forms and shares its root, so it is the same theonym under a different inflection. Match tier: ALIAS_SAME_THEONYM.",
+      "personified_as": "VG:DEVATA:RATRIH",
+      "personification_contract": "VG:PERSONIFICATION_STATUS:V2"
+    },
+    {
+      "entity_key": "VG:CONCEPT:SAMUDRA-OCEAN",
+      "personification_status": "REFUSED_NO_REGISTERED_DEITY_COUNTERPART",
+      "personification_status_reason": "No registered deity carries this phenomenon's stem or any of its alias forms. This is a statement about THIS REGISTRY and NOT about whether the Vedas personify the phenomenon -- several of these are addressed as beings in the text and were simply never curated as deities.",
+      "personified_as": null,
+      "personification_contract": "VG:PERSONIFICATION_STATUS:V2"
+    },
+    {
+      "entity_key": "VG:CONCEPT:SURYA-SUN",
+      "personification_status": "PERSONIFIED_AS_A_REGISTERED_DEVATA",
+      "personification_status_reason": "VG:DEVATA:SURYAH carries this phenomenon's own Sanskrit stem as a primary label or alias, so the personification is a fact about this registry. Match tier: PRIMARY_STEM.",
+      "personified_as": "VG:DEVATA:SURYAH",
+      "personification_contract": "VG:PERSONIFICATION_STATUS:V2"
+    },
+    {
+      "entity_key": "VG:CONCEPT:TAMAS-DARKNESS",
+      "personification_status": "REFUSED_NO_REGISTERED_DEITY_COUNTERPART",
+      "personification_status_reason": "No registered deity carries this phenomenon's stem or any of its alias forms. This is a statement about THIS REGISTRY and NOT about whether the Vedas personify the phenomenon -- several of these are addressed as beings in the text and were simply never curated as deities.",
+      "personified_as": null,
+      "personification_contract": "VG:PERSONIFICATION_STATUS:V2"
+    },
+    {
+      "entity_key": "VG:CONCEPT:USAS-DAWN",
+      "personification_status": "PERSONIFIED_AS_A_REGISTERED_DEVATA",
+      "personification_status_reason": "VG:DEVATA:USAH carries this phenomenon's own Sanskrit stem as a primary label or alias, so the personification is a fact about this registry. Match tier: PRIMARY_STEM.",
+      "personified_as": "VG:DEVATA:USAH",
+      "personification_contract": "VG:PERSONIFICATION_STATUS:V2"
+    },
+    {
+      "entity_key": "VG:CONCEPT:VATA-WIND",
+      "personification_status": "REFUSED_ALIAS_REACHES_A_DIFFERENT_THEONYM",
+      "personification_status_reason": "No registered deity carries this phenomenon's own stem. A deity is reachable (VG:DEVATA:VAYUH) only because this concept registers that deity's forms among its own aliases, which is a curation choice about the concept's vocabulary and not evidence that the two are one being. The two are separately hymned in the Rigveda.",
+      "personified_as": null,
+      "personification_contract": "VG:PERSONIFICATION_STATUS:V2"
+    },
+    {
+      "entity_key": "VG:CONCEPT:VIDYUT-LIGHTNING",
+      "personification_status": "REFUSED_NO_REGISTERED_DEITY_COUNTERPART",
+      "personification_status_reason": "No registered deity carries this phenomenon's stem or any of its alias forms. This is a statement about THIS REGISTRY and NOT about whether the Vedas personify the phenomenon -- several of these are addressed as beings in the text and were simply never curated as deities.",
+      "personified_as": null,
+      "personification_contract": "VG:PERSONIFICATION_STATUS:V2"
+    },
+    {
+      "entity_key": "VG:CONCEPT:VRSTI-RAIN",
+      "personification_status": "REFUSED_NO_REGISTERED_DEITY_COUNTERPART",
+      "personification_status_reason": "No registered deity carries this phenomenon's stem or any of its alias forms. This is a statement about THIS REGISTRY and NOT about whether the Vedas personify the phenomenon -- several of these are addressed as beings in the text and were simply never curated as deities.",
+      "personified_as": null,
+      "personification_contract": "VG:PERSONIFICATION_STATUS:V2"
+    }
+  ]
+}

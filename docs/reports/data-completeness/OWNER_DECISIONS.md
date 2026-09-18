@@ -867,3 +867,71 @@ authorise any audio verdict: the queue still holds 1,021 `NEEDS_AUDIBLE_REVIEW`,
 rejected, and §14 stands. It does not grade Ask. And it does not close any entry on unfinished
 implementation: an entry with work left in it stays `STILL_IMPLEMENTATION_FIXABLE` and is
 counted, which is the guard §29 built.
+
+# Owner round six — Release Blocker Closure R4
+
+One correction, and it is about provenance rather than about content.
+
+## 37. §34 is OWNER-SUPPLIED, and here is the attestation it was missing
+
+The R3 hostile pass upheld a narrow objection to §34 and it was a fair one:
+
+> claim 3 SEMANTICS-004 UPHELD_WITH_QUALIFICATION: the decision and the closure landed in the
+> same commit, so the citation is independent at file level and not at change-set level, and
+> nothing attests the owner authored it.
+
+That is exactly right, and it is a real limit on what a self-recorded owner decision can prove.
+A section an agent writes and then cites in the same change-set is independent of the audit only
+in the weakest sense: a reader can find it in a different file, but nothing tells them whose
+position it is. Writing the decision down does not establish authorship of it.
+
+**The repository owner has now supplied the decision directly, in the R4 instruction, and it is
+reproduced below as given:**
+
+> OWNER_DECISION_SEMANTICS_004_STRATUM_MAP
+>
+> VedAnvaya will not ingest or publish an unattributed historical/chronological stratum map.
+>
+> A stratum assignment requires:
+>
+>     named scholarly source
+>     identifiable scholarly work
+>     attributable methodology
+>     source-local citation
+>     provenance to the specific assignment
+>
+> Named asserter alone is insufficient.
+>
+> No generic synthesized/model-generated/unattributed stratum map is to be created for this
+> release.
+>
+> Historical-stratum enrichment is intentionally unsupported until such a source is selected
+> and attributed.
+
+It agrees with §34 clause for clause: the same five conjunctive requirements, the same rejection
+of a named asserter as sufficient, the same refusal of a synthesized map, and the same statement
+that the enrichment is intentionally unsupported rather than unavailable. §34's content stands
+unchanged.
+
+**What changes is its provenance classification.** §34 is hereby marked **OWNER-SUPPLIED**, not
+agent-inferred. The attestation is the R4 instruction itself, which states "Treat this prompt as
+owner-supplied instruction" and "The repository owner explicitly confirms the following
+decision". The independence is now at instruction level rather than at file level, which is the
+strongest attestation available to a repository that has no signing authority for its owner.
+
+**The distinction is worth keeping generally**, because §34 was not the only section at risk of
+it. A decision in this file is one of:
+
+| provenance | what attests it | what it can be cited for |
+| --- | --- | --- |
+| `OWNER-SUPPLIED` | an owner instruction quoting the decision, cited by round | a `CLOSED_SCOPE_DECISION` |
+| `AGENT-INFERRED` | an agent's reading of prior decisions | nothing; it must be escalated first |
+
+§34 and §35 are both `OWNER-SUPPLIED`: §35's text is likewise recorded verbatim from an owner
+instruction, and §34's attestation is this section. An agent-inferred section has never been
+used to close an entry, and must not be.
+
+**`GAP-SEMANTICS-004` is not reopened.** Its status, its basis and its citation are unchanged;
+only the provenance line is corrected. R4's instruction is explicit that recording this
+correction is the whole of the work: *"Do not reopen SEMANTICS-004 after recording that
+provenance correction."*

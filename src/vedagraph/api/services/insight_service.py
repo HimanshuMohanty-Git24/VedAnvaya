@@ -2303,6 +2303,9 @@ class InsightService:
         concern_rows = self._repository.run_named("human_concerns_by_veda")
         affliction_rows = self._repository.run_named("conditions_treated")
         rite_rows = self._repository.run_named("social_rites")
+        # GAP-ENTITY_COVERAGE-003: the remedy side, which this endpoint used to
+        # declare unreachable on a premise that was false.
+        remedy_rows = self._repository.run_named("stated_remedy_by_veda")
         # One resolution for all three collections, so every row a client sees can be
         # followed to its entity rather than ending at a display label.
         keys = self._resolve_entity_keys(
@@ -2336,6 +2339,16 @@ class InsightService:
             keys=keys,
         )
         rites.sort(key=lambda row: (-(row.total_mantras or 0), row.label))
+        stated_remedy = self._fold_veda_rows(
+            remedy_rows,
+            label_column="remedy",
+            count_column="mantras",
+            kind="STATED_REMEDY",
+            keys=self._resolve_entity_keys(
+                [_as_str(row.get("remedy")) or "" for row in remedy_rows]
+            ),
+        )
+        stated_remedy.sort(key=lambda row: (-(row.total_mantras or 0), row.label))
 
         evidence_rows: list[ConcernEvidenceRow] = []
         for row in self._repository.run_named("concerns_addressed_versus_protected_from"):
@@ -2366,11 +2379,13 @@ class InsightService:
         affliction_page, affliction_bounds = _paginate_rows(afflictions, limit=limit, offset=offset)
         rite_page, rite_bounds = _paginate_rows(rites, limit=limit, offset=offset)
         evidence_page, evidence_bounds = _paginate_rows(evidence_rows, limit=limit, offset=offset)
+        remedy_page, remedy_bounds = _paginate_rows(stated_remedy, limit=limit, offset=offset)
         bounds = {
             "concerns": concern_bounds,
             "afflictions": affliction_bounds,
             "protection_and_treatment": evidence_bounds,
             "social_rites": rite_bounds,
+            "stated_remedy": remedy_bounds,
         }
         overruns = [
             caveat
@@ -2382,7 +2397,7 @@ class InsightService:
             question="What human concerns does the corpus address, and on what evidence?",
             data_status=KnowledgeStatus.PARTIAL,
             cost_class=CostClass.AGGREGATE,
-            cost_note="Four grouped mention scans plus the three-predicate concern join and "
+            cost_note="Five grouped mention scans plus the three-predicate concern join and "
             "one label resolution. Labelled an aggregate.",
             vedas_reported=list(VEDA_ORDER),
             scope_statements=self._scope_statements(VEDA_ORDER),
@@ -2392,6 +2407,7 @@ class InsightService:
                     "concerns": len(concerns),
                     "afflictions": len(afflictions),
                     "social_rites": len(rites),
+                    "stated_remedy": len(stated_remedy),
                 },
                 denominator=dict(figures.CORPUS_MANTRAS),
             ),
@@ -2406,10 +2422,18 @@ class InsightService:
                     "worms as diseases; the apotropaic material is still reachable, under "
                     "its own kind."
                 ),
+                _frozen_caveat("stated_remedy_by_veda"),
                 _measured_caveat(
-                    "The registry has no healing entity -- bhesaja was never curated -- so "
-                    "'what does the corpus do about illness' is reachable only through the "
-                    "afflictions and plants a verse names, never through a stated remedy."
+                    "A stated remedy IS reachable, and the caveat that stood here for two "
+                    "rounds saying otherwise -- 'the registry has no healing entity, "
+                    "bhesaja was never curated' -- was false. Measured: "
+                    "VG:CONCEPT:BHESAJA-HEALING carries 7 registered Sanskrit aliases and "
+                    "108 MENTIONS_ENTITY edges with a verbatim locator and quote on every "
+                    "one, over AV 47, YV 31, RV 28 and SV 2 mantras. What is true is "
+                    "narrower and is a curation choice rather than an absence: bheṣaja is "
+                    "typed a :Concept in the CORPOREAL and RITUAL domains and not a "
+                    ":HumanConcern, so it does not appear in the concerns collection above "
+                    "and travels in stated_remedy instead."
                 ),
                 *overruns[:1],
             ],
@@ -2417,8 +2441,9 @@ class InsightService:
             afflictions=affliction_page,
             protection_and_treatment=evidence_page,
             social_rites=rite_page,
-            # Four collections, four blocks. One shared block would have described three of
-            # them wrongly, and a client reading it would read three real lists as empty.
+            stated_remedy=remedy_page,
+            # Five collections, five blocks. One shared block would have described four of
+            # them wrongly, and a client reading it would read four real lists as empty.
             collections=bounds,
         )
 
@@ -3873,9 +3898,11 @@ class InsightService:
                 "spans two routes with two methods and `ascription_routes` separates them: "
                 "the Rigvedic dedication is the Anukramani naming a deity the registry holds, "
                 "the Atharvavedic one is that dedication recovered from a Sanskrit adjective "
-                "under Panini 4.2.24 sasya devata, and 285 of the 324 Atharvavedic descriptors "
+                "under Panini 4.2.24 sasya devata, and 277 of the 324 Atharvavedic descriptors "
                 "are refused a deity rather than resolved -- each carrying its own recorded "
-                "reason. A zero in a corpus the layer reaches is an absent dedication; a zero "
+                "reason. The Atharvavedic dedications counted here were derived from 39 of "
+                "the 47 that resolve, because the derived layer has not been rebuilt from "
+                "the 8 the R4 matcher gained (R4-RESIDUAL-ATTRIBUTION-002). A zero in a corpus the layer reaches is an absent dedication; a zero "
                 "in the Samaveda or Yajurveda is a missing apparatus rather than an absent "
                 "deity. Most ascriptions are a hymn label projected onto each verse inside it "
                 "rather than a per-verse statement."

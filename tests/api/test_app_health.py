@@ -200,8 +200,16 @@ def test_live_readiness_passes_against_the_frozen_graph(live_client: TestClient)
 #: neither figure: the display_type normalisation and the ritual_context method landing are
 #: property writes on existing nodes, promised and read back at 0 nodes and 0 relationships
 #: created or deleted. The pair below is the closed-set guard and it has not moved.
-FROZEN_NODES = 164_201
-FROZEN_RELATIONSHIPS = 508_042
+#: R4 moved the census by one receipted migration:
+#: data/staging/release_blocker_r4/migration_receipt.json. +396 nodes (399 DerivedMetric
+#: created for the widened deity-profile population, 3 deleted with the danastuti label's
+#: deity metrics) and +1,444 relationships (1,035 MENTIONS_EPITHET, 399 MEASURES, 8
+#: ASCRIBES_TO_DEVATA, 4 COMPOSED_OF, 1 ATTESTED_IN, less the 3 MEASURES that went with
+#: the deleted metrics). The delta reconciles exactly against the 164,201/508,042
+#: baseline, and tests/api/test_adversarial.py imports both constants from here so the
+#: pin has one home.
+FROZEN_NODES = 164_597
+FROZEN_RELATIONSHIPS = 509_486
 
 #: The figures that must NEVER move, whatever an import does. The whole-graph census grows
 #: with every wave; the four corpora are closed sets, and a drift here is corruption rather

@@ -1,7 +1,7 @@
 {
   "graph_census": {
-    "nodes": 164201,
-    "relationships": 508042
+    "nodes": 164597,
+    "relationships": 509486
   },
   "diagnosis": {
     "A_existing_uuid": false,
@@ -58,7 +58,7 @@
     "independently_annotated": 364,
     "instrument": 2406,
     "is_samavedic_annotation": 364,
-    "knowledge_layer": 4865,
+    "knowledge_layer": 35131,
     "layer_veda_scope": 4865,
     "layer_veda_scope_note": 4865,
     "layer_veda_scope_source": 4865,
@@ -94,7 +94,7 @@
     "prompt_version": 2459,
     "provenance": 30266,
     "qualifiers": 2459,
-    "quality_tier": 4865,
+    "quality_tier": 35131,
     "reasoning": 2459,
     "response_sha256": 2459,
     "review_state": 35131,
@@ -157,7 +157,7 @@
       "group_key": 2
     },
     "DerivedMetric": {
-      "metric_id": 1085
+      "metric_id": 1481
     },
     "Devata": {
       "entity_key": 214
@@ -270,13 +270,13 @@
     }
   },
   "counts": {
-    "exported_nodes": 71373,
-    "distinct_public_ids": 71373,
+    "exported_nodes": 71769,
+    "distinct_public_ids": 71769,
     "duplicate_public_ids": 0,
     "cross_type_collisions": 0,
     "same_type_collisions": 0,
     "null_public_ids": 0,
-    "public_relationships": 270646,
+    "public_relationships": 272090,
     "passage_assertion_intersection": 0,
     "api_export_mismatches": 0,
     "missing_labels": 0,
@@ -293,7 +293,7 @@
       "data/staging/semantic_roles/rows.jsonl": "9ec93cae78c1d1d90bc6873fc1c28cfabb496601f5838e87dccb3e52c319ef35",
       "data/staging/semantic_roles/role_fillers.jsonl": "332d7733a3ddb81d631aada347b2899043605b18eaaa69c48aae82bb81c7ce2a"
     },
-    "sorted_public_ids_sha256": "b24d205e5d0a1db55c22621d8974b1b686bb352908e8b697ac6b8fda97e0b44c"
+    "sorted_public_ids_sha256": "74a45282d5f39ff9f3d159d3093c8de012f5c49614931d348268051eec398c60"
   },
   "examples": [
     {

@@ -156,8 +156,11 @@ _SCOPE_CAVEAT = (
     "coverage. "
     "The bridge between them is now BUILT and is partial: HAS_DEVATA_DERIVED carries 882 "
     "Atharvavedic dedications over 851 passages, resolved from the descriptor's own morphology "
-    "under Panini 4.2.24 sasya devata, for 39 of the 324 descriptors reaching 35 deities. The "
-    "other 285 are refused rather than unprocessed, each carrying a typed reason: 210 reach no "
+    "under Panini 4.2.24 sasya devata, derived from 39 of them and reaching 35 deities. 47 of "
+    "the 324 descriptors now RESOLVE -- R4 widened the resolver and the derived layer has "
+    "not been rebuilt from the 8 it gained (R4-RESIDUAL-ATTRIBUTION-002) -- so resolution "
+    "and dedication are two figures here and not one. The "
+    "other 277 are refused rather than unprocessed, each carrying a typed reason: 202 reach no "
     "canonical deity surface, 67 are compounds naming two ascriptions, 4 are hymn subjects "
     "rather than deities, 3 name a plurality, and 1 is the Anukramani's own deferral marker "
     "lingokta. So a zero here means this predicate does not reach that corpus, NOT that the "
@@ -1416,9 +1419,42 @@ QUERIES: Final[tuple[DomainQuery, ...]] = (
         parameters={"condition": "VG:CONCEPT:VISA-POISON"},
         caveat=(
             "Co-occurrence within a mantra; no causal or prescriptive claim. Keyed on a "
-            "Condition rather than on a healing HumanConcern because the registry has no "
-            "healing concern entity: bhesaja was not curated, so passages about healing "
-            "are reachable only through the afflictions and plants named in them."
+            "Condition rather than on a healing HumanConcern because bheṣaja is not typed "
+            "as a :HumanConcern -- it is a :Concept in the CORPOREAL and RITUAL domains, "
+            "which is a curation choice and not an absence. It IS curated and IS reachable: "
+            "see `stated_remedy_by_veda`, which reaches VG:CONCEPT:BHESAJA-HEALING through "
+            "7 registered Sanskrit aliases with per-edge verse evidence. An earlier version "
+            "of this caveat said bheṣaja 'was not curated', which was false."
+        ),
+        serves=(12, 15, 47),
+    ),
+    DomainQuery(
+        name="stated_remedy_by_veda",
+        question="Where does the corpus name a remedy, rather than only an affliction?",
+        cypher="""
+        MATCH (n:Concept {entity_key: 'VG:CONCEPT:BHESAJA-HEALING'})
+        CALL (n) {
+            MATCH (m:Mantra)-[r:MENTIONS_ENTITY]->(n)
+            RETURN m.veda AS veda, count(DISTINCT m) AS mantras,
+                   count(r) AS edges,
+                   collect(DISTINCT r.evidence_basis) AS evidence_bases
+        }
+        RETURN n.entity_key AS entity_key, n.display_label AS remedy,
+               n.domain AS domain, size(n.aliases_sa) AS registered_sanskrit_aliases,
+               veda, mantras, edges, evidence_bases
+        ORDER BY mantras DESC
+        """,
+        caveat=(
+            "GAP-ENTITY_COVERAGE-003. This question was published for two rounds as "
+            "unanswerable -- 'the registry has no healing entity, bheṣaja was never "
+            "curated' -- and the claim was false: VG:CONCEPT:BHESAJA-HEALING has been in "
+            "the registry with 7 registered Sanskrit aliases (bheṣajam, bheṣajaṃ, "
+            "bheṣajā, bheṣajāni, bheṣajīḥ, bhiṣajā, bhiṣak) and every mention edge carries "
+            "a verbatim locator and quote. A remedy is a STATED remedy, not an effective "
+            "one: the edge means the verse names bheṣaja, not that the verse prescribes a "
+            "treatment that worked. No separate :Remedy or :Bhesaja label exists and none "
+            "should -- the concept is the authoritative representation and a second label "
+            "would be two answers to one question."
         ),
         serves=(12, 15, 47),
     ),

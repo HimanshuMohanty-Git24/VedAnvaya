@@ -1,0 +1,589 @@
+{
+  "artifact": "R4_ATTRIBUTION_002_CLAUSE_1_STAGING",
+  "at": "2026-09-18T08:00:09.705601+00:00",
+  "gap_id": "GAP-ATTRIBUTION-002",
+  "clause": 1,
+  "descriptor_total": 324,
+  "candidate_generated": 265,
+  "no_candidate_generated": 59,
+  "resolved": 47,
+  "resolved_before": 39,
+  "newly_resolved": 8,
+  "resolved_by_path": {
+    "VRDDHI_TADDHITA": 27,
+    "DEITY_ADJECTIVE_SUFFIX": 12,
+    "DEITY_ADJECTIVE_SUFFIX_LENGTH_FOLDED": 8
+  },
+  "status_distribution": {
+    "UNRESOLVED_STEM_MATCHES_NO_CANONICAL_DEVATA": 202,
+    "RESOLVED_TO_CANONICAL_DEVATA": 47,
+    "UNRESOLVED_COMPOUND_TWO_ASCRIPTIONS": 67,
+    "UNRESOLVED_SUBJECT_DESCRIPTOR_NOT_A_DEITY": 4,
+    "UNRESOLVED_NAMES_A_PLURALITY": 3,
+    "UNRESOLVED_SOURCE_DEFERS_TO_THE_MANTRA": 1
+  },
+  "regressions": [],
+  "unresolved_with_an_explicit_reason": {
+    "UNRESOLVED_STEM_MATCHES_NO_CANONICAL_DEVATA": 202,
+    "UNRESOLVED_COMPOUND_TWO_ASCRIPTIONS": 67,
+    "UNRESOLVED_SUBJECT_DESCRIPTOR_NOT_A_DEITY": 4,
+    "UNRESOLVED_NAMES_A_PLURALITY": 3,
+    "UNRESOLVED_SOURCE_DEFERS_TO_THE_MANTRA": 1
+  },
+  "length_tier_collisions": {
+    "aśva": [
+      "VG:DEVATA:ASHVAAH",
+      "VG:DEVATA:ASHVAH"
+    ],
+    "dadhikra": [
+      "VG:DEVATA:DADHIKRA",
+      "VG:DEVATA:DADHIKRAH"
+    ],
+    "go": [
+      "VG:DEVATA:GAUH",
+      "VG:DEVATA:GAVAH"
+    ],
+    "pavamana": [
+      "VG:DEVATA:PAVAMANAH",
+      "VG:DEVATA:PAVAMANAH-SOMAH"
+    ],
+    "viśve deva": [
+      "VG:DEVATA:VISVE-DEVAH",
+      "VG:DEVATA:VISVEDEVAH"
+    ]
+  },
+  "new_edges": [
+    {
+      "ascription_key": "VG:ASCRIPTION:AV:AGNIDAIVATAM-DFA1",
+      "label_iast": "agnidāivatam",
+      "devata_key": "VG:DEVATA:AGNIH",
+      "occurrence_count": 2,
+      "previous_status": "UNRESOLVED_STEM_MATCHES_NO_CANONICAL_DEVATA",
+      "previous_reason": "No recognised derivation reaches a canonical Devata surface. The ascription keeps its own form and stays addressable as an ascription.",
+      "edge_properties": {
+        "knowledge_layer": "L2_DETERMINISTIC_DERIVED",
+        "ascription_bridge_version": "VG:ASCRIPTION_BRIDGE:V1",
+        "evidence_basis": "SOURCE_METADATA",
+        "ascription_resolution_method": "TADDHITA_SASYA_DEVATA_DERIVATION",
+        "confidence": "1.0",
+        "attribution_precision": "NOT_AN_ATTRIBUTION",
+        "quality_tier": "TIER_B",
+        "ascription_resolution_path": "DEITY_ADJECTIVE_SUFFIX_LENGTH_FOLDED",
+        "ascription_resolution_comparison_tier": "EXACT",
+        "ascription_resolution_stem": "agni",
+        "ascription_resolution_taddhita_suffix": "daivatam"
+      },
+      "reason": "Taddhita of the sasya-devata type: agnidāivatam derives from agni by deity_adjective_suffix_length_folded, matched at the exact tier."
+    },
+    {
+      "ascription_key": "VG:ASCRIPTION:AV:ATMADAIVATAM-8187",
+      "label_iast": "ātmadāivatam",
+      "devata_key": "VG:DEVATA:ATMA",
+      "occurrence_count": 5,
+      "previous_status": "UNRESOLVED_STEM_MATCHES_NO_CANONICAL_DEVATA",
+      "previous_reason": "No recognised derivation reaches a canonical Devata surface. The ascription keeps its own form and stays addressable as an ascription.",
+      "edge_properties": {
+        "knowledge_layer": "L2_DETERMINISTIC_DERIVED",
+        "ascription_bridge_version": "VG:ASCRIPTION_BRIDGE:V1",
+        "evidence_basis": "SOURCE_METADATA",
+        "ascription_resolution_method": "TADDHITA_SASYA_DEVATA_DERIVATION",
+        "confidence": "1.0",
+        "attribution_precision": "NOT_AN_ATTRIBUTION",
+        "quality_tier": "TIER_B",
+        "ascription_resolution_path": "DEITY_ADJECTIVE_SUFFIX_LENGTH_FOLDED",
+        "ascription_resolution_comparison_tier": "LENGTH_INSENSITIVE",
+        "ascription_resolution_stem": "ātma",
+        "ascription_resolution_taddhita_suffix": "daivatam"
+      },
+      "reason": "Taddhita of the sasya-devata type: ātmadāivatam derives from ātma by deity_adjective_suffix_length_folded, matched at the length_insensitive tier."
+    },
+    {
+      "ascription_key": "VG:ASCRIPTION:AV:ATMADEVATAKAM-DCB5",
+      "label_iast": "ātmadevatākam",
+      "devata_key": "VG:DEVATA:ATMA",
+      "occurrence_count": 1,
+      "previous_status": "UNRESOLVED_STEM_MATCHES_NO_CANONICAL_DEVATA",
+      "previous_reason": "No recognised derivation reaches a canonical Devata surface. The ascription keeps its own form and stays addressable as an ascription.",
+      "edge_properties": {
+        "knowledge_layer": "L2_DETERMINISTIC_DERIVED",
+        "ascription_bridge_version": "VG:ASCRIPTION_BRIDGE:V1",
+        "evidence_basis": "SOURCE_METADATA",
+        "ascription_resolution_method": "TADDHITA_SASYA_DEVATA_DERIVATION",
+        "confidence": "1.0",
+        "attribution_precision": "NOT_AN_ATTRIBUTION",
+        "quality_tier": "TIER_B",
+        "ascription_resolution_path": "DEITY_ADJECTIVE_SUFFIX_LENGTH_FOLDED",
+        "ascription_resolution_comparison_tier": "LENGTH_INSENSITIVE",
+        "ascription_resolution_stem": "ātma",
+        "ascription_resolution_taddhita_suffix": "devatakam"
+      },
+      "reason": "Taddhita of the sasya-devata type: ātmadevatākam derives from ātma by deity_adjective_suffix_length_folded, matched at the length_insensitive tier."
+    },
+    {
+      "ascription_key": "VG:ASCRIPTION:AV:CYENADAIVATAM-661A",
+      "label_iast": "çyenadāivatam",
+      "devata_key": "VG:DEVATA:SYENAH",
+      "occurrence_count": 1,
+      "previous_status": "UNRESOLVED_STEM_MATCHES_NO_CANONICAL_DEVATA",
+      "previous_reason": "No recognised derivation reaches a canonical Devata surface. The ascription keeps its own form and stays addressable as an ascription.",
+      "edge_properties": {
+        "knowledge_layer": "L2_DETERMINISTIC_DERIVED",
+        "ascription_bridge_version": "VG:ASCRIPTION_BRIDGE:V1",
+        "evidence_basis": "SOURCE_METADATA",
+        "ascription_resolution_method": "TADDHITA_SASYA_DEVATA_DERIVATION",
+        "confidence": "1.0",
+        "attribution_precision": "NOT_AN_ATTRIBUTION",
+        "quality_tier": "TIER_B",
+        "ascription_resolution_path": "DEITY_ADJECTIVE_SUFFIX_LENGTH_FOLDED",
+        "ascription_resolution_comparison_tier": "EXACT",
+        "ascription_resolution_stem": "śyena",
+        "ascription_resolution_taddhita_suffix": "daivatam"
+      },
+      "reason": "Taddhita of the sasya-devata type: çyenadāivatam derives from śyena by deity_adjective_suffix_length_folded, matched at the exact tier."
+    },
+    {
+      "ascription_key": "VG:ASCRIPTION:AV:INDRADAIVATAM-1AB6",
+      "label_iast": "indradāivatam",
+      "devata_key": "VG:DEVATA:INDRAH",
+      "occurrence_count": 1,
+      "previous_status": "UNRESOLVED_STEM_MATCHES_NO_CANONICAL_DEVATA",
+      "previous_reason": "No recognised derivation reaches a canonical Devata surface. The ascription keeps its own form and stays addressable as an ascription.",
+      "edge_properties": {
+        "knowledge_layer": "L2_DETERMINISTIC_DERIVED",
+        "ascription_bridge_version": "VG:ASCRIPTION_BRIDGE:V1",
+        "evidence_basis": "SOURCE_METADATA",
+        "ascription_resolution_method": "TADDHITA_SASYA_DEVATA_DERIVATION",
+        "confidence": "1.0",
+        "attribution_precision": "NOT_AN_ATTRIBUTION",
+        "quality_tier": "TIER_B",
+        "ascription_resolution_path": "DEITY_ADJECTIVE_SUFFIX_LENGTH_FOLDED",
+        "ascription_resolution_comparison_tier": "EXACT",
+        "ascription_resolution_stem": "indra",
+        "ascription_resolution_taddhita_suffix": "daivatam"
+      },
+      "reason": "Taddhita of the sasya-devata type: indradāivatam derives from indra by deity_adjective_suffix_length_folded, matched at the exact tier."
+    },
+    {
+      "ascription_key": "VG:ASCRIPTION:AV:MANYUDAIVATAM-41AC",
+      "label_iast": "manyudāivatam",
+      "devata_key": "VG:DEVATA:MANYUH",
+      "occurrence_count": 2,
+      "previous_status": "UNRESOLVED_STEM_MATCHES_NO_CANONICAL_DEVATA",
+      "previous_reason": "No recognised derivation reaches a canonical Devata surface. The ascription keeps its own form and stays addressable as an ascription.",
+      "edge_properties": {
+        "knowledge_layer": "L2_DETERMINISTIC_DERIVED",
+        "ascription_bridge_version": "VG:ASCRIPTION_BRIDGE:V1",
+        "evidence_basis": "SOURCE_METADATA",
+        "ascription_resolution_method": "TADDHITA_SASYA_DEVATA_DERIVATION",
+        "confidence": "1.0",
+        "attribution_precision": "NOT_AN_ATTRIBUTION",
+        "quality_tier": "TIER_B",
+        "ascription_resolution_path": "DEITY_ADJECTIVE_SUFFIX_LENGTH_FOLDED",
+        "ascription_resolution_comparison_tier": "EXACT",
+        "ascription_resolution_stem": "manyu",
+        "ascription_resolution_taddhita_suffix": "daivatam"
+      },
+      "reason": "Taddhita of the sasya-devata type: manyudāivatam derives from manyu by deity_adjective_suffix_length_folded, matched at the exact tier."
+    },
+    {
+      "ascription_key": "VG:ASCRIPTION:AV:YAKSMANACANADAIVATAM-223B",
+      "label_iast": "yakṣmanāçanadāivatam",
+      "devata_key": "VG:DEVATA:YAKSMANASANAH",
+      "occurrence_count": 3,
+      "previous_status": "UNRESOLVED_STEM_MATCHES_NO_CANONICAL_DEVATA",
+      "previous_reason": "No recognised derivation reaches a canonical Devata surface. The ascription keeps its own form and stays addressable as an ascription.",
+      "edge_properties": {
+        "knowledge_layer": "L2_DETERMINISTIC_DERIVED",
+        "ascription_bridge_version": "VG:ASCRIPTION_BRIDGE:V1",
+        "evidence_basis": "SOURCE_METADATA",
+        "ascription_resolution_method": "TADDHITA_SASYA_DEVATA_DERIVATION",
+        "confidence": "1.0",
+        "attribution_precision": "NOT_AN_ATTRIBUTION",
+        "quality_tier": "TIER_B",
+        "ascription_resolution_path": "DEITY_ADJECTIVE_SUFFIX_LENGTH_FOLDED",
+        "ascription_resolution_comparison_tier": "EXACT",
+        "ascription_resolution_stem": "yakṣmanāśana",
+        "ascription_resolution_taddhita_suffix": "daivatam"
+      },
+      "reason": "Taddhita of the sasya-devata type: yakṣmanāçanadāivatam derives from yakṣmanāśana by deity_adjective_suffix_length_folded, matched at the exact tier."
+    },
+    {
+      "ascription_key": "VG:ASCRIPTION:AV:YAKSMANACANADEVATAKAM-0A10",
+      "label_iast": "yakṣmanāçanadevatākam",
+      "devata_key": "VG:DEVATA:YAKSMANASANAH",
+      "occurrence_count": 1,
+      "previous_status": "UNRESOLVED_STEM_MATCHES_NO_CANONICAL_DEVATA",
+      "previous_reason": "No recognised derivation reaches a canonical Devata surface. The ascription keeps its own form and stays addressable as an ascription.",
+      "edge_properties": {
+        "knowledge_layer": "L2_DETERMINISTIC_DERIVED",
+        "ascription_bridge_version": "VG:ASCRIPTION_BRIDGE:V1",
+        "evidence_basis": "SOURCE_METADATA",
+        "ascription_resolution_method": "TADDHITA_SASYA_DEVATA_DERIVATION",
+        "confidence": "1.0",
+        "attribution_precision": "NOT_AN_ATTRIBUTION",
+        "quality_tier": "TIER_B",
+        "ascription_resolution_path": "DEITY_ADJECTIVE_SUFFIX_LENGTH_FOLDED",
+        "ascription_resolution_comparison_tier": "EXACT",
+        "ascription_resolution_stem": "yakṣmanāśana",
+        "ascription_resolution_taddhita_suffix": "devatakam"
+      },
+      "reason": "Taddhita of the sasya-devata type: yakṣmanāçanadevatākam derives from yakṣmanāśana by deity_adjective_suffix_length_folded, matched at the exact tier."
+    }
+  ],
+  "no_candidate_detail": [
+    {
+      "entity_key": "VG:ASCRIPTION:AV:ABHIVARTAMANISUKTAM-C947",
+      "label_iast": "abhīvartamaṇisūktam",
+      "folded": "abhīvartamaṇisūktam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:ADITYADEVATYAS-4F2A",
+      "label_iast": "ādityadevatyās",
+      "folded": "ādityadevatyās",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:ADITYADEVATYATN-D567",
+      "label_iast": "ādityadevatyatn",
+      "folded": "ādityadevatyatn",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:ADITYARACMIDEVATYA-M-7604",
+      "label_iast": "ādityaraçmidevatya[m]",
+      "folded": "ādityaraśmidevatya[m]",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:AGNINDRAM-0189",
+      "label_iast": "agnīndram",
+      "folded": "agnīndram",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:AGNISOMIYAM-213E",
+      "label_iast": "agnīṣomīyam",
+      "folded": "agnīṣomīyam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:AINDRA-5E64",
+      "label_iast": "āindra",
+      "folded": "āindra",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:APONAPTRIYANI-C8F9",
+      "label_iast": "aponaptrīyāṇi",
+      "folded": "aponaptrīyāṇi",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:BAHUDAIVATAM-UTA-CANDRAMASAM-7F72",
+      "label_iast": "bahudāivatam uta cāndramasam",
+      "folded": "bahudāivatam uta cāndramasam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:BAHUDEVATYAM-UTA-CANDRAMASAM-DCDD",
+      "label_iast": "bahudevatyam uta cāndramasam",
+      "folded": "bahudevatyam uta cāndramasam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:BAHUDEVATYAM-UTA-GNEYAM-0CEE",
+      "label_iast": "bahudevatyam utā ”gneyam",
+      "folded": "bahudevatyam utā gneyam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:BAHUDEVATYAM-UTAI-NDRAGNAM-12C9",
+      "label_iast": "bahudevatyam utāi ”ndrāgnam",
+      "folded": "bahudevatyam utāi ndrāgnam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:BALASADEVATYATN-FDF6",
+      "label_iast": "balāsadevatyatn",
+      "folded": "balāsadevatyatn",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:BRAHMAPRAKACISUKTAM-B479",
+      "label_iast": "brahmaprakāçisūktam",
+      "folded": "brahmaprakāśisūktam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:BRAHMASYAUDANAM-9141",
+      "label_iast": "brahmāsyāudanam",
+      "folded": "brahmāsyāudanam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:CANDRAMASAM-APYAM-UTA-2444",
+      "label_iast": "cāndramasam āpyam uta",
+      "folded": "cāndramasam āpyam uta",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:CANKHAMANISUKTAM-3596",
+      "label_iast": "çan̄khamaṇisūktam",
+      "folded": "śaṅkhamaṇisūktam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:CEPO-RKADCVATYAM-D714",
+      "label_iast": "çepo ’rkadcvatyam",
+      "folded": "śepo rkadcvatyam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:DADHATYAM-8353",
+      "label_iast": "dadhatyam",
+      "folded": "dadhatyam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:DICVARYAM-A607",
+      "label_iast": "diçvaryam",
+      "folded": "diśvaryam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:GAVYA-69A6",
+      "label_iast": "gavya",
+      "folded": "gavya",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:GAVYAM-03E2",
+      "label_iast": "gavyam",
+      "folded": "gavyam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:GHARMASUKTAM-C90F",
+      "label_iast": "gharmasūktam",
+      "folded": "gharmasūktam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:KRTYAPRATIHARANAM-9618",
+      "label_iast": "kṛtyāpratiharaṇam",
+      "folded": "kṛtyāpratiharaṇam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:KRTYAPRATIHARANASUKTAM-4333",
+      "label_iast": "kṛtyāpratiharaṇasūktam",
+      "folded": "kṛtyāpratiharaṇasūktam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:MADUGHAMANISUKTAM-2F69",
+      "label_iast": "madughamaṇisūktam",
+      "folded": "madughamaṇisūktam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:MAHIDEVATYAM-UTA-CANDRAM-C429",
+      "label_iast": "mahīdevatyam uta cāndram",
+      "folded": "mahīdevatyam uta cāndram",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:MAITRAVARUNAM-KAMESUDEVATAKAM-CA-B62C",
+      "label_iast": "māitrāvaruṇaṁ kāmeṣudevatākaṁ ca",
+      "folded": "māitrāvaruṇaṃ kāmeṣudevatākaṃ ca",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:MANTROKTA-DRVATYA-0A8F",
+      "label_iast": "mantrokta drvatyā",
+      "folded": "mantrokta drvatyā",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:MANTROKTABAHUDEVATYAM-UTA-BRAHMANASPATYAM-ECDF",
+      "label_iast": "mantroktabahudevatyam uta brāhmaṇaspatyam",
+      "folded": "mantroktabahudevatyam uta brāhmaṇaspatyam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:MANTROKTABAHUDEVATYAM-UTA-YAJNIKAM-D6E7",
+      "label_iast": "mantroktabahudevatyam uta yajñikam",
+      "folded": "mantroktabahudevatyam uta yajñikam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:MANTROKTADAIVATAM-UTA-JATAVEDASAM-7DB9",
+      "label_iast": "mantroktadāivatam uta jātavedasam",
+      "folded": "mantroktadāivatam uta jātavedasam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:MANTROKTADEVATYAM-UTA-CANDRAMASAM-91FA",
+      "label_iast": "mantroktadevatyam uta cāndramasam",
+      "folded": "mantroktadevatyam uta cāndramasam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:MANTROKTADEVATYAM-UTA-DITYAM-6AE5",
+      "label_iast": "mantroktadevatyam utā ”dityam",
+      "folded": "mantroktadevatyam utā dityam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:MANTROKTADEVATYAM-UTA-DIVYAPYAM-DFAD",
+      "label_iast": "mantroktadevatyam uta divyāpyam",
+      "folded": "mantroktadevatyam uta divyāpyam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:MANTROKTADEVATYAM-UTA-JATAVEDASAM-3ED8",
+      "label_iast": "mantroktadevatyam uta jātavedasam",
+      "folded": "mantroktadevatyam uta jātavedasam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:MANTROKTADEVATYAM-UTA-NAIRRTAM-1CC7",
+      "label_iast": "mantroktadevatyam uta nāirṛtam",
+      "folded": "mantroktadevatyam uta nāirṛtam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:MANTROKTADEVATYAM-UTA-VANASPATYAM-83F1",
+      "label_iast": "mantroktadevatyam uta vānaspatyam",
+      "folded": "mantroktadevatyam uta vānaspatyam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:MANTROKTADUSVPNANACANADTVATYAM-4667",
+      "label_iast": "mantroktaduṣvpnanāçanadtvatyam",
+      "folded": "mantroktaduṣvpnanāśanadtvatyam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:MANTROKTAINDRAGNAM-308A",
+      "label_iast": "mantroktāindrāgnam",
+      "folded": "mantroktāindrāgnam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:MANTROKTAPHALAMANIDEVATYAM-UTA-VANASPAIYAM-D349",
+      "label_iast": "mantroktaphālamaṇidevatyam uta vānaspaiyam",
+      "folded": "mantroktaphālamaṇidevatyam uta vānaspaiyam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:MANTROKTAVRCCIKADEVATAHAM-7E95",
+      "label_iast": "mantroktavṛçcikadevatāham",
+      "folded": "mantroktavṛścikadevatāham",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:PACAVYAM-23E9",
+      "label_iast": "paçavyam",
+      "folded": "paśavyam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:PACUBHAGAKARANAM-CD85",
+      "label_iast": "paçubhāgakaraṇam",
+      "folded": "paśubhāgakaraṇam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:PARASENAHANANAM-5F6C",
+      "label_iast": "parasenāhananam",
+      "folded": "parasenāhananam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:PURVOKTADEVATYAM-UTA-SVAPNAM-8C34",
+      "label_iast": "pūrvoktadevatyam uta svāpnam",
+      "folded": "pūrvoktadevatyam uta svāpnam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:SABHYAM-A5FB",
+      "label_iast": "sabhyam",
+      "folded": "sabhyam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:SARVACIRSAMAYADYAMAYAM-4FB4",
+      "label_iast": "sarvaçīrṣāmayādyāmayam",
+      "folded": "sarvaśīrṣāmayādyāmayam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:SATYANRTANVIKSANASUKTAM-84FB",
+      "label_iast": "satyānṛtānvīkṣaṇasūktam",
+      "folded": "satyānṛtānvīkṣaṇasūktam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:SATYAUJASAM-0989",
+      "label_iast": "satyāujasam",
+      "folded": "satyāujasam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:SENAMOHANAM-C448",
+      "label_iast": "senāmohanam",
+      "folded": "senāmohanam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:SOMABDAIVATANI-C43C",
+      "label_iast": "somābdāivatāni",
+      "folded": "somābdāivatāni",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:SOMARUDRIYAM-4480",
+      "label_iast": "somārudrīyam",
+      "folded": "somārudrīyam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:SVASTYAYANAM-6CDF",
+      "label_iast": "svastyayanam",
+      "folded": "svastyayanam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:TRIVRDDEVATYAM-UTA-CANDRAMASAM-84F5",
+      "label_iast": "trivṛddevatyam uta cāndramasam",
+      "folded": "trivṛddevatyam uta cāndramasam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:VARCASYAM-DF50",
+      "label_iast": "varcasyam",
+      "folded": "varcasyam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:VARUNAM-VO-TA-YAMYAM-VA-8183",
+      "label_iast": "vāruṇam vo ’ta yāmyaṁ vā",
+      "folded": "vāruṇam vo ta yāmyaṃ vā",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:YAKSMAVIBARHANAM-C165",
+      "label_iast": "yakṣmavibarhaṇam",
+      "folded": "yakṣmavibarhaṇam",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    },
+    {
+      "entity_key": "VG:ASCRIPTION:AV:YAMADEVATYAM-MANTROKTABAHUDEVATYAM-CA-3B1A",
+      "label_iast": "yamadevatyam mantroktabahudevatyaṁ ca",
+      "folded": "yamadevatyam mantroktabahudevatyaṃ ca",
+      "reason": "Neither the explicit deity-adjective suffix family nor the vṛddhi taddhita reversal produces a stem from this surface."
+    }
+  ]
+}

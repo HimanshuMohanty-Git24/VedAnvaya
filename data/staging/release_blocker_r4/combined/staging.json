@@ -1,0 +1,1676 @@
+{
+  "artifact": "R4_COMBINED_STAGING",
+  "at": "2026-09-18T08:37:34.739123+00:00",
+  "GAP-RITUAL-004": {
+    "roles": 20,
+    "in_classical_sixteen_before": 14,
+    "in_classical_sixteen_after": 16,
+    "unclassified_before": 2,
+    "unclassified_after": 0,
+    "hotr_performed_by_edges": 1,
+    "schema_field_kinds_before": {
+      "IDENTIFIER": 9,
+      "PROSE": 9,
+      "NULL": 2
+    },
+    "rows": [
+      {
+        "entity_key": "VG:CONCEPT:ACCHAVAKA-PRIEST",
+        "label": "acchavaka (acchāvāka)",
+        "in_classical_sixteen_before": true,
+        "in_classical_sixteen_after": true,
+        "classified_by_r4": false,
+        "basis": null,
+        "denominator_schema_after": "SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN",
+        "denominator_schema_note_after": "The sixteen officiants are a SRAUTASUTRA schema, not a Samhita one. Any completeness figure over sixteen is a figure against that schema and is labelled so, which is what GAP-RITUAL-004 requires.",
+        "schema_field_before": "SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN"
+      },
+      {
+        "entity_key": "VG:CONCEPT:ADHVARYU-PRIEST",
+        "label": "adhvaryu (adhvaryu)",
+        "in_classical_sixteen_before": true,
+        "in_classical_sixteen_after": true,
+        "classified_by_r4": false,
+        "basis": null,
+        "denominator_schema_after": "SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN",
+        "denominator_schema_note_after": "The sixteen officiants are a SRAUTASUTRA schema, not a Samhita one. Any completeness figure over sixteen is a figure against that schema and is labelled so, which is what GAP-RITUAL-004 requires.",
+        "schema_field_before": "The sixteen officiants are a SRAUTASUTRA schema, not a Samhita one. Any completeness figure over sixteen is a figure against that schema and is labelled so, which is what GAP-RITUAL-004 requires."
+      },
+      {
+        "entity_key": "VG:CONCEPT:AGNIDH-FIRE-KINDLER",
+        "label": "fire kindler (agnīdh)",
+        "in_classical_sixteen_before": null,
+        "in_classical_sixteen_after": true,
+        "classified_by_r4": true,
+        "basis": "The agnīdh is one of the sixteen rtvij of the Srautasutra schema, the Brahman-side priest who kindles and tends the fire. The null was a missing classification and not a ruling that the role stands outside the schema.",
+        "denominator_schema_after": "SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN",
+        "denominator_schema_note_after": "The sixteen officiants are a SRAUTASUTRA schema, not a Samhita one. Any completeness figure over sixteen is a figure against that schema and is labelled so, which is what GAP-RITUAL-004 requires.",
+        "schema_field_before": null
+      },
+      {
+        "entity_key": "VG:CONCEPT:BRAHMACARIN-STUDENT",
+        "label": "vedic student (brahmacārin)",
+        "in_classical_sixteen_before": false,
+        "in_classical_sixteen_after": false,
+        "classified_by_r4": false,
+        "basis": null,
+        "denominator_schema_after": "SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN",
+        "denominator_schema_note_after": "The sixteen officiants are a SRAUTASUTRA schema, not a Samhita one. Any completeness figure over sixteen is a figure against that schema and is labelled so, which is what GAP-RITUAL-004 requires.",
+        "schema_field_before": "The sixteen officiants are a SRAUTASUTRA schema, not a Samhita one. Any completeness figure over sixteen is a figure against that schema and is labelled so, which is what GAP-RITUAL-004 requires."
+      },
+      {
+        "entity_key": "VG:CONCEPT:BRAHMAN-PRIEST",
+        "label": "brahman priest (brahman)",
+        "in_classical_sixteen_before": true,
+        "in_classical_sixteen_after": true,
+        "classified_by_r4": false,
+        "basis": null,
+        "denominator_schema_after": "SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN",
+        "denominator_schema_note_after": "The sixteen officiants are a SRAUTASUTRA schema, not a Samhita one. Any completeness figure over sixteen is a figure against that schema and is labelled so, which is what GAP-RITUAL-004 requires.",
+        "schema_field_before": "The sixteen officiants are a SRAUTASUTRA schema, not a Samhita one. Any completeness figure over sixteen is a figure against that schema and is labelled so, which is what GAP-RITUAL-004 requires."
+      },
+      {
+        "entity_key": "VG:CONCEPT:BRAHMANACCHAMSIN-PRIEST",
+        "label": "brahmanacchamsin (brāhmaṇācchaṃsin)",
+        "in_classical_sixteen_before": true,
+        "in_classical_sixteen_after": true,
+        "classified_by_r4": false,
+        "basis": null,
+        "denominator_schema_after": "SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN",
+        "denominator_schema_note_after": "The sixteen officiants are a SRAUTASUTRA schema, not a Samhita one. Any completeness figure over sixteen is a figure against that schema and is labelled so, which is what GAP-RITUAL-004 requires.",
+        "schema_field_before": "SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN"
+      },
+      {
+        "entity_key": "VG:CONCEPT:GRAVASTUT-PRIEST",
+        "label": "gravastut (grāvastut)",
+        "in_classical_sixteen_before": true,
+        "in_classical_sixteen_after": true,
+        "classified_by_r4": false,
+        "basis": null,
+        "denominator_schema_after": "SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN",
+        "denominator_schema_note_after": "The sixteen officiants are a SRAUTASUTRA schema, not a Samhita one. Any completeness figure over sixteen is a figure against that schema and is labelled so, which is what GAP-RITUAL-004 requires.",
+        "schema_field_before": "SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN"
+      },
+      {
+        "entity_key": "VG:CONCEPT:HOTR-PRIEST",
+        "label": "priest (hotṛ)",
+        "in_classical_sixteen_before": true,
+        "in_classical_sixteen_after": true,
+        "classified_by_r4": false,
+        "basis": null,
+        "denominator_schema_after": "SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN",
+        "denominator_schema_note_after": "The sixteen officiants are a SRAUTASUTRA schema, not a Samhita one. Any completeness figure over sixteen is a figure against that schema and is labelled so, which is what GAP-RITUAL-004 requires.",
+        "schema_field_before": "The sixteen officiants are a SRAUTASUTRA schema, not a Samhita one. Any completeness figure over sixteen is a figure against that schema and is labelled so, which is what GAP-RITUAL-004 requires."
+      },
+      {
+        "entity_key": "VG:CONCEPT:MAITRAVARUNA-PRIEST",
+        "label": "maitravaruna (maitrāvaruṇa)",
+        "in_classical_sixteen_before": true,
+        "in_classical_sixteen_after": true,
+        "classified_by_r4": false,
+        "basis": null,
+        "denominator_schema_after": "SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN",
+        "denominator_schema_note_after": "The sixteen officiants are a SRAUTASUTRA schema, not a Samhita one. Any completeness figure over sixteen is a figure against that schema and is labelled so, which is what GAP-RITUAL-004 requires.",
+        "schema_field_before": "SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN"
+      },
+      {
+        "entity_key": "VG:CONCEPT:NESTR-LEADER",
+        "label": "nestar priest (neṣṭṛ)",
+        "in_classical_sixteen_before": true,
+        "in_classical_sixteen_after": true,
+        "classified_by_r4": false,
+        "basis": null,
+        "denominator_schema_after": "SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN",
+        "denominator_schema_note_after": "The sixteen officiants are a SRAUTASUTRA schema, not a Samhita one. Any completeness figure over sixteen is a figure against that schema and is labelled so, which is what GAP-RITUAL-004 requires.",
+        "schema_field_before": "The sixteen officiants are a SRAUTASUTRA schema, not a Samhita one. Any completeness figure over sixteen is a figure against that schema and is labelled so, which is what GAP-RITUAL-004 requires."
+      },
+      {
+        "entity_key": "VG:CONCEPT:POTR-PURIFIER",
+        "label": "potar priest (potṛ)",
+        "in_classical_sixteen_before": null,
+        "in_classical_sixteen_after": true,
+        "classified_by_r4": true,
+        "basis": "The potṛ is one of the sixteen rtvij, among the Brahman's assistants. As above: the null was an unclassified row, not an exclusion.",
+        "denominator_schema_after": "SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN",
+        "denominator_schema_note_after": "The sixteen officiants are a SRAUTASUTRA schema, not a Samhita one. Any completeness figure over sixteen is a figure against that schema and is labelled so, which is what GAP-RITUAL-004 requires.",
+        "schema_field_before": null
+      },
+      {
+        "entity_key": "VG:CONCEPT:PRASASTR-DIRECTOR",
+        "label": "directing priest (praśāstṛ)",
+        "in_classical_sixteen_before": false,
+        "in_classical_sixteen_after": false,
+        "classified_by_r4": false,
+        "basis": null,
+        "denominator_schema_after": "SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN",
+        "denominator_schema_note_after": "The sixteen officiants are a SRAUTASUTRA schema, not a Samhita one. Any completeness figure over sixteen is a figure against that schema and is labelled so, which is what GAP-RITUAL-004 requires.",
+        "schema_field_before": "The sixteen officiants are a SRAUTASUTRA schema, not a Samhita one. Any completeness figure over sixteen is a figure against that schema and is labelled so, which is what GAP-RITUAL-004 requires."
+      },
+      {
+        "entity_key": "VG:CONCEPT:PRASTOTR-PRIEST",
+        "label": "prastotr (prastotṛ)",
+        "in_classical_sixteen_before": true,
+        "in_classical_sixteen_after": true,
+        "classified_by_r4": false,
+        "basis": null,
+        "denominator_schema_after": "SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN",
+        "denominator_schema_note_after": "The sixteen officiants are a SRAUTASUTRA schema, not a Samhita one. Any completeness figure over sixteen is a figure against that schema and is labelled so, which is what GAP-RITUAL-004 requires.",
+        "schema_field_before": "SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN"
+      },
+      {
+        "entity_key": "VG:CONCEPT:PRATIHARTR-PRIEST",
+        "label": "pratihartr (pratihartṛ)",
+        "in_classical_sixteen_before": true,
+        "in_classical_sixteen_after": true,
+        "classified_by_r4": false,
+        "basis": null,
+        "denominator_schema_after": "SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN",
+        "denominator_schema_note_after": "The sixteen officiants are a SRAUTASUTRA schema, not a Samhita one. Any completeness figure over sixteen is a figure against that schema and is labelled so, which is what GAP-RITUAL-004 requires.",
+        "schema_field_before": "SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN"
+      },
+      {
+        "entity_key": "VG:CONCEPT:PRATIPRASTHATR-PRIEST",
+        "label": "pratiprasthatr (pratiprasthātṛ)",
+        "in_classical_sixteen_before": true,
+        "in_classical_sixteen_after": true,
+        "classified_by_r4": false,
+        "basis": null,
+        "denominator_schema_after": "SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN",
+        "denominator_schema_note_after": "The sixteen officiants are a SRAUTASUTRA schema, not a Samhita one. Any completeness figure over sixteen is a figure against that schema and is labelled so, which is what GAP-RITUAL-004 requires.",
+        "schema_field_before": "SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN"
+      },
+      {
+        "entity_key": "VG:CONCEPT:PUROHITA-CHAPLAIN",
+        "label": "household priest (purohita)",
+        "in_classical_sixteen_before": false,
+        "in_classical_sixteen_after": false,
+        "classified_by_r4": false,
+        "basis": null,
+        "denominator_schema_after": "SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN",
+        "denominator_schema_note_after": "The sixteen officiants are a SRAUTASUTRA schema, not a Samhita one. Any completeness figure over sixteen is a figure against that schema and is labelled so, which is what GAP-RITUAL-004 requires.",
+        "schema_field_before": "The sixteen officiants are a SRAUTASUTRA schema, not a Samhita one. Any completeness figure over sixteen is a figure against that schema and is labelled so, which is what GAP-RITUAL-004 requires."
+      },
+      {
+        "entity_key": "VG:CONCEPT:SUBRAHMANYA-PRIEST",
+        "label": "subrahmanya (subrahmaṇya)",
+        "in_classical_sixteen_before": true,
+        "in_classical_sixteen_after": true,
+        "classified_by_r4": false,
+        "basis": null,
+        "denominator_schema_after": "SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN",
+        "denominator_schema_note_after": "The sixteen officiants are a SRAUTASUTRA schema, not a Samhita one. Any completeness figure over sixteen is a figure against that schema and is labelled so, which is what GAP-RITUAL-004 requires.",
+        "schema_field_before": "SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN"
+      },
+      {
+        "entity_key": "VG:CONCEPT:UDGATR-CHANTER",
+        "label": "chanter priest (udgātṛ)",
+        "in_classical_sixteen_before": true,
+        "in_classical_sixteen_after": true,
+        "classified_by_r4": false,
+        "basis": null,
+        "denominator_schema_after": "SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN",
+        "denominator_schema_note_after": "The sixteen officiants are a SRAUTASUTRA schema, not a Samhita one. Any completeness figure over sixteen is a figure against that schema and is labelled so, which is what GAP-RITUAL-004 requires.",
+        "schema_field_before": "The sixteen officiants are a SRAUTASUTRA schema, not a Samhita one. Any completeness figure over sixteen is a figure against that schema and is labelled so, which is what GAP-RITUAL-004 requires."
+      },
+      {
+        "entity_key": "VG:CONCEPT:UNNETR-PRIEST",
+        "label": "unnetr (unnetṛ)",
+        "in_classical_sixteen_before": true,
+        "in_classical_sixteen_after": true,
+        "classified_by_r4": false,
+        "basis": null,
+        "denominator_schema_after": "SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN",
+        "denominator_schema_note_after": "The sixteen officiants are a SRAUTASUTRA schema, not a Samhita one. Any completeness figure over sixteen is a figure against that schema and is labelled so, which is what GAP-RITUAL-004 requires.",
+        "schema_field_before": "SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN"
+      },
+      {
+        "entity_key": "VG:CONCEPT:YAJAMANA-SACRIFICER",
+        "label": "sacrificer (yajamāna)",
+        "in_classical_sixteen_before": false,
+        "in_classical_sixteen_after": false,
+        "classified_by_r4": false,
+        "basis": null,
+        "denominator_schema_after": "SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN",
+        "denominator_schema_note_after": "The sixteen officiants are a SRAUTASUTRA schema, not a Samhita one. Any completeness figure over sixteen is a figure against that schema and is labelled so, which is what GAP-RITUAL-004 requires.",
+        "schema_field_before": "The sixteen officiants are a SRAUTASUTRA schema, not a Samhita one. Any completeness figure over sixteen is a figure against that schema and is labelled so, which is what GAP-RITUAL-004 requires."
+      }
+    ]
+  },
+  "GAP-ENTITY_COVERAGE-007": {
+    "phenomena": 13,
+    "with_a_status_before": 0,
+    "with_a_status_after": 13,
+    "status_distribution": {
+      "PERSONIFIED_AS_A_REGISTERED_DEVATA": 4,
+      "REFUSED_NO_REGISTERED_DEITY_COUNTERPART": 9
+    },
+    "rows": [
+      {
+        "entity_key": "VG:CONCEPT:AGNI-FIRE",
+        "label": "fire (agni)",
+        "personification_status": "PERSONIFIED_AS_A_REGISTERED_DEVATA",
+        "personification_status_reason": "A :Devata carrying this phenomenon's own Sanskrit stem is registered, so the personification is a fact about this graph's registry and the deity key is recorded beside the status.",
+        "personified_as": "VG:DEVATA:AGNIH",
+        "personification_contract": "VG:PERSONIFICATION_STATUS:V1"
+      },
+      {
+        "entity_key": "VG:CONCEPT:AHAN-DAY",
+        "label": "day (ahan)",
+        "personification_status": "REFUSED_NO_REGISTERED_DEITY_COUNTERPART",
+        "personification_status_reason": "No :Devata in this registry carries this phenomenon's Sanskrit stem. This is a statement about the registry, NOT about whether the Vedas personify the phenomenon -- several of these are addressed as beings in the text and were never curated as deities.",
+        "personified_as": null,
+        "personification_contract": "VG:PERSONIFICATION_STATUS:V1"
+      },
+      {
+        "entity_key": "VG:CONCEPT:AP-WATERS",
+        "label": "waters (āpaḥ)",
+        "personification_status": "PERSONIFIED_AS_A_REGISTERED_DEVATA",
+        "personification_status_reason": "A :Devata carrying this phenomenon's own Sanskrit stem is registered, so the personification is a fact about this graph's registry and the deity key is recorded beside the status.",
+        "personified_as": "VG:DEVATA:APAH",
+        "personification_contract": "VG:PERSONIFICATION_STATUS:V1"
+      },
+      {
+        "entity_key": "VG:CONCEPT:CANDRAMAS-MOON",
+        "label": "moon (candramas)",
+        "personification_status": "REFUSED_NO_REGISTERED_DEITY_COUNTERPART",
+        "personification_status_reason": "No :Devata in this registry carries this phenomenon's Sanskrit stem. This is a statement about the registry, NOT about whether the Vedas personify the phenomenon -- several of these are addressed as beings in the text and were never curated as deities.",
+        "personified_as": null,
+        "personification_contract": "VG:PERSONIFICATION_STATUS:V1"
+      },
+      {
+        "entity_key": "VG:CONCEPT:JYOTIS-LIGHT",
+        "label": "light (jyotis)",
+        "personification_status": "REFUSED_NO_REGISTERED_DEITY_COUNTERPART",
+        "personification_status_reason": "No :Devata in this registry carries this phenomenon's Sanskrit stem. This is a statement about the registry, NOT about whether the Vedas personify the phenomenon -- several of these are addressed as beings in the text and were never curated as deities.",
+        "personified_as": null,
+        "personification_contract": "VG:PERSONIFICATION_STATUS:V1"
+      },
+      {
+        "entity_key": "VG:CONCEPT:RATRI-NIGHT",
+        "label": "night (rātri)",
+        "personification_status": "PERSONIFIED_AS_A_REGISTERED_DEVATA",
+        "personification_status_reason": "A :Devata carrying this phenomenon's own Sanskrit stem is registered, so the personification is a fact about this graph's registry and the deity key is recorded beside the status.",
+        "personified_as": "VG:DEVATA:RATRIH",
+        "personification_contract": "VG:PERSONIFICATION_STATUS:V1"
+      },
+      {
+        "entity_key": "VG:CONCEPT:SAMUDRA-OCEAN",
+        "label": "ocean (samudra)",
+        "personification_status": "REFUSED_NO_REGISTERED_DEITY_COUNTERPART",
+        "personification_status_reason": "No :Devata in this registry carries this phenomenon's Sanskrit stem. This is a statement about the registry, NOT about whether the Vedas personify the phenomenon -- several of these are addressed as beings in the text and were never curated as deities.",
+        "personified_as": null,
+        "personification_contract": "VG:PERSONIFICATION_STATUS:V1"
+      },
+      {
+        "entity_key": "VG:CONCEPT:SURYA-SUN",
+        "label": "sun (sūrya)",
+        "personification_status": "PERSONIFIED_AS_A_REGISTERED_DEVATA",
+        "personification_status_reason": "A :Devata carrying this phenomenon's own Sanskrit stem is registered, so the personification is a fact about this graph's registry and the deity key is recorded beside the status.",
+        "personified_as": "VG:DEVATA:SURYAH",
+        "personification_contract": "VG:PERSONIFICATION_STATUS:V1"
+      },
+      {
+        "entity_key": "VG:CONCEPT:TAMAS-DARKNESS",
+        "label": "darkness (tamas)",
+        "personification_status": "REFUSED_NO_REGISTERED_DEITY_COUNTERPART",
+        "personification_status_reason": "No :Devata in this registry carries this phenomenon's Sanskrit stem. This is a statement about the registry, NOT about whether the Vedas personify the phenomenon -- several of these are addressed as beings in the text and were never curated as deities.",
+        "personified_as": null,
+        "personification_contract": "VG:PERSONIFICATION_STATUS:V1"
+      },
+      {
+        "entity_key": "VG:CONCEPT:USAS-DAWN",
+        "label": "dawn (uṣas)",
+        "personification_status": "REFUSED_NO_REGISTERED_DEITY_COUNTERPART",
+        "personification_status_reason": "No :Devata in this registry carries this phenomenon's Sanskrit stem. This is a statement about the registry, NOT about whether the Vedas personify the phenomenon -- several of these are addressed as beings in the text and were never curated as deities.",
+        "personified_as": null,
+        "personification_contract": "VG:PERSONIFICATION_STATUS:V1"
+      },
+      {
+        "entity_key": "VG:CONCEPT:VATA-WIND",
+        "label": "wind (vāta)",
+        "personification_status": "REFUSED_NO_REGISTERED_DEITY_COUNTERPART",
+        "personification_status_reason": "No :Devata in this registry carries this phenomenon's Sanskrit stem. This is a statement about the registry, NOT about whether the Vedas personify the phenomenon -- several of these are addressed as beings in the text and were never curated as deities.",
+        "personified_as": null,
+        "personification_contract": "VG:PERSONIFICATION_STATUS:V1"
+      },
+      {
+        "entity_key": "VG:CONCEPT:VIDYUT-LIGHTNING",
+        "label": "lightning (vidyut)",
+        "personification_status": "REFUSED_NO_REGISTERED_DEITY_COUNTERPART",
+        "personification_status_reason": "No :Devata in this registry carries this phenomenon's Sanskrit stem. This is a statement about the registry, NOT about whether the Vedas personify the phenomenon -- several of these are addressed as beings in the text and were never curated as deities.",
+        "personified_as": null,
+        "personification_contract": "VG:PERSONIFICATION_STATUS:V1"
+      },
+      {
+        "entity_key": "VG:CONCEPT:VRSTI-RAIN",
+        "label": "rain (vṛṣṭi)",
+        "personification_status": "REFUSED_NO_REGISTERED_DEITY_COUNTERPART",
+        "personification_status_reason": "No :Devata in this registry carries this phenomenon's Sanskrit stem. This is a statement about the registry, NOT about whether the Vedas personify the phenomenon -- several of these are addressed as beings in the text and were never curated as deities.",
+        "personified_as": null,
+        "personification_contract": "VG:PERSONIFICATION_STATUS:V1"
+      }
+    ]
+  },
+  "GAP-COMMUNITIES-002": {
+    "composites": 71,
+    "registry_declares": 20,
+    "already_landed": 14,
+    "unlanded_in_the_registry": [
+      "VG:DEVATA:ADITYAH",
+      "VG:DEVATA:DYAVAPRTHIVYAU",
+      "VG:DEVATA:INDRAVARUNAU",
+      "VG:DEVATA:MARUTAH",
+      "VG:DEVATA:USASANAKTA",
+      "VG:DEVATA:VISVEDEVAH"
+    ],
+    "r3_claimed_mechanical_pairs": 24,
+    "actually_supported_by_the_registry": 6,
+    "r3_figure_correction": "R3 recorded 24 PAIRs as mechanical decomposition over devata_components.yaml. The file declares 20 composites, 14 are landed, and 6 remain -- so 6 are mechanical and the other 51 need curation the repository does not hold.",
+    "component_edges_staged": 4,
+    "status_distribution": {
+      "NOT_ENUMERABLE_DECLARED_BY_THE_REGISTRY": 4,
+      "NOT_ENUMERABLE_FROM_ANYTHING_HELD": 51,
+      "DECOMPOSED_FROM_THE_COMPONENT_REGISTRY": 16
+    },
+    "rows": [
+      {
+        "entity_key": "VG:DEVATA:ADITYAH",
+        "structure": "GROUP",
+        "decomposition_status": "NOT_ENUMERABLE_DECLARED_BY_THE_REGISTRY",
+        "decomposition_status_reason": "Ādityāḥ is a plural group whose membership varies between passages and between later enumerations. No source in this repository fixes the list.",
+        "component_registry_review_status": "REJECTED",
+        "component_registry_notes": null
+      },
+      {
+        "entity_key": "VG:DEVATA:ADITYOSASAH",
+        "structure": "GROUP",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:AGNAMARUTAH",
+        "structure": "PAIR",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:AGNIH-MARUTAH",
+        "structure": "PAIR",
+        "decomposition_status": "DECOMPOSED_FROM_THE_COMPONENT_REGISTRY",
+        "decomposition_status_reason": "Already landed before R4."
+      },
+      {
+        "entity_key": "VG:DEVATA:AGNIH-MITRAVARUNAU-RATRIH-SAVITA",
+        "structure": "GROUP",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:AGNINDRAU",
+        "structure": "PAIR",
+        "decomposition_status": "DECOMPOSED_FROM_THE_COMPONENT_REGISTRY",
+        "decomposition_status_reason": "Already landed before R4."
+      },
+      {
+        "entity_key": "VG:DEVATA:AGNISOMAU",
+        "structure": "PAIR",
+        "decomposition_status": "DECOMPOSED_FROM_THE_COMPONENT_REGISTRY",
+        "decomposition_status_reason": "Already landed before R4."
+      },
+      {
+        "entity_key": "VG:DEVATA:AGNISURYANILAH",
+        "structure": "GROUP",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:AGNISUYAU",
+        "structure": "PAIR",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:AKSAH",
+        "structure": "GROUP",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:APAH",
+        "structure": "GROUP",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:ARTNI",
+        "structure": "PAIR",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:ASHVAAH",
+        "structure": "GROUP",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:ASVINAU",
+        "structure": "PAIR",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:BRAHMANAPITRSOMADYAVAPRTHIVIPUSANAH",
+        "structure": "GROUP",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:DAIVYAU-HOTARAU",
+        "structure": "PAIR",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:DAMPATI",
+        "structure": "PAIR",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:DEVAH",
+        "structure": "GROUP",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:DEVAPATNYAH",
+        "structure": "GROUP",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:DEVIRDVARAH",
+        "structure": "GROUP",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:DEVYAH",
+        "structure": "GROUP",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:DEVYAU-HOTARAU",
+        "structure": "PAIR",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:DYAVABHUMI",
+        "structure": "PAIR",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:DYAVAPRTHIVYAU",
+        "structure": "PAIR",
+        "decomposition_status": "NOT_ENUMERABLE_DECLARED_BY_THE_REGISTRY",
+        "decomposition_status_reason": "dyāvāpṛthivyau is grammatically the dvandva of Dyaus and Pṛthivī, and Pṛthivī is a registered Devatā. Dyaus is not: the Anukramaṇī never assigns it alone, so the canonical registry holds no entity for it. Half a decomposition is not a decomposition, and inventing the missing entity to complete one is exactly what this registry exists to prevent.",
+        "component_registry_review_status": "NEEDS_REVIEW",
+        "component_registry_notes": "Becomes ACCEPTED as soon as a reviewed VG:DEVATA:DYAUH entity exists, with no change to this reasoning."
+      },
+      {
+        "entity_key": "VG:DEVATA:DYUBHUMYASVINAH",
+        "structure": "GROUP",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:GAVAH",
+        "structure": "GROUP",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:GRAVANAH",
+        "structure": "GROUP",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:HAVIRDHANE-SAKATE",
+        "structure": "PAIR",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:ILA-SARASVATI-MAHI",
+        "structure": "GROUP",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:INDRABRAHMANASPATI",
+        "structure": "PAIR",
+        "decomposition_status": "DECOMPOSED_FROM_THE_COMPONENT_REGISTRY",
+        "decomposition_status_reason": "Already landed before R4."
+      },
+      {
+        "entity_key": "VG:DEVATA:INDRABRHASPATI",
+        "structure": "PAIR",
+        "decomposition_status": "DECOMPOSED_FROM_THE_COMPONENT_REGISTRY",
+        "decomposition_status_reason": "Already landed before R4."
+      },
+      {
+        "entity_key": "VG:DEVATA:INDRAGNI",
+        "structure": "PAIR",
+        "decomposition_status": "DECOMPOSED_FROM_THE_COMPONENT_REGISTRY",
+        "decomposition_status_reason": "Already landed before R4."
+      },
+      {
+        "entity_key": "VG:DEVATA:INDRAH-MARUTAH",
+        "structure": "PAIR",
+        "decomposition_status": "DECOMPOSED_FROM_THE_COMPONENT_REGISTRY",
+        "decomposition_status_reason": "Already landed before R4."
+      },
+      {
+        "entity_key": "VG:DEVATA:INDRANI-VARUNANI-AGNAYI",
+        "structure": "GROUP",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:INDRAPARVATAU",
+        "structure": "PAIR",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:INDRAPUSANAU",
+        "structure": "PAIR",
+        "decomposition_status": "DECOMPOSED_FROM_THE_COMPONENT_REGISTRY",
+        "decomposition_status_reason": "Already landed before R4."
+      },
+      {
+        "entity_key": "VG:DEVATA:INDRASOMAU",
+        "structure": "PAIR",
+        "decomposition_status": "DECOMPOSED_FROM_THE_COMPONENT_REGISTRY",
+        "decomposition_status_reason": "Already landed before R4."
+      },
+      {
+        "entity_key": "VG:DEVATA:INDRASYASVAU",
+        "structure": "PAIR",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:INDRAVARUNAU",
+        "structure": "PAIR",
+        "component_count": 2,
+        "decomposition_status": "DECOMPOSED_FROM_THE_COMPONENT_REGISTRY",
+        "decomposition_status_reason": "devata_components.yaml declares this composite's members with its own evidence, and every member is a live :Devata."
+      },
+      {
+        "entity_key": "VG:DEVATA:INDRAVAYU",
+        "structure": "PAIR",
+        "decomposition_status": "DECOMPOSED_FROM_THE_COMPONENT_REGISTRY",
+        "decomposition_status_reason": "Already landed before R4."
+      },
+      {
+        "entity_key": "VG:DEVATA:INDRAVISNU",
+        "structure": "PAIR",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:INDROSASAU",
+        "structure": "PAIR",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:ISAVAH",
+        "structure": "GROUP",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:MANDUKAH",
+        "structure": "GROUP",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:MARUDRUDRAVISNAVAH",
+        "structure": "GROUP",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:MARUTAH",
+        "structure": "GROUP",
+        "decomposition_status": "NOT_ENUMERABLE_DECLARED_BY_THE_REGISTRY",
+        "decomposition_status_reason": "marutaḥ is a plural, not a compound. A plural ending is not evidence of componenthood, and the Maruts have no enumerated members.",
+        "component_registry_review_status": "REJECTED",
+        "component_registry_notes": null
+      },
+      {
+        "entity_key": "VG:DEVATA:MITRAVARUNAU",
+        "structure": "PAIR",
+        "decomposition_status": "DECOMPOSED_FROM_THE_COMPONENT_REGISTRY",
+        "decomposition_status_reason": "Already landed before R4."
+      },
+      {
+        "entity_key": "VG:DEVATA:NADYAH",
+        "structure": "GROUP",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:OSADHAYAH",
+        "structure": "GROUP",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:PANAYAH",
+        "structure": "GROUP",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:PITARAH",
+        "structure": "GROUP",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:PRTHIVYANTARIKSE",
+        "structure": "PAIR",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:RATHANGANI",
+        "structure": "GROUP",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:RBHAVAH",
+        "structure": "GROUP",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:RNANCAYENDRAU",
+        "structure": "PAIR",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:SADHYAH",
+        "structure": "GROUP",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:SARAMEYAU-SVANAU",
+        "structure": "PAIR",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:SARASVATI-ILA-BHARATI",
+        "structure": "GROUP",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:SARATHIH-RASMAYAH",
+        "structure": "GROUP",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:SOMAPUSANAU",
+        "structure": "PAIR",
+        "decomposition_status": "DECOMPOSED_FROM_THE_COMPONENT_REGISTRY",
+        "decomposition_status_reason": "Already landed before R4."
+      },
+      {
+        "entity_key": "VG:DEVATA:SOMARKAU",
+        "structure": "PAIR",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:SOMARUDRAU",
+        "structure": "PAIR",
+        "decomposition_status": "DECOMPOSED_FROM_THE_COMPONENT_REGISTRY",
+        "decomposition_status_reason": "Already landed before R4."
+      },
+      {
+        "entity_key": "VG:DEVATA:SOMAVARUNAU",
+        "structure": "PAIR",
+        "decomposition_status": "DECOMPOSED_FROM_THE_COMPONENT_REGISTRY",
+        "decomposition_status_reason": "Already landed before R4."
+      },
+      {
+        "entity_key": "VG:DEVATA:SUNASIRAU",
+        "structure": "PAIR",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:ULUKHALAMUSALE",
+        "structure": "PAIR",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:USASANAKTA",
+        "structure": "PAIR",
+        "component_count": 2,
+        "decomposition_status": "DECOMPOSED_FROM_THE_COMPONENT_REGISTRY",
+        "decomposition_status_reason": "devata_components.yaml declares this composite's members with its own evidence, and every member is a live :Devata."
+      },
+      {
+        "entity_key": "VG:DEVATA:VAJINAH",
+        "structure": "GROUP",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:VAK-APAH",
+        "structure": "PAIR",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:VISVE-DEVAH",
+        "structure": "GROUP",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      },
+      {
+        "entity_key": "VG:DEVATA:VISVEDEVAH",
+        "structure": "GROUP",
+        "decomposition_status": "NOT_ENUMERABLE_DECLARED_BY_THE_REGISTRY",
+        "decomposition_status_reason": "Viśvedevāḥ is a group deity addressed as a collective. It is not an abbreviation for the set of all individually registered Devatās, and treating it as one would fabricate thousands of edges the tradition does not assert.",
+        "component_registry_review_status": "REJECTED",
+        "component_registry_notes": null
+      },
+      {
+        "entity_key": "VG:DEVATA:YAJNAYAJAMANAU",
+        "structure": "PAIR",
+        "decomposition_status": "NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+        "decomposition_status_reason": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devāḥ, viśve devāḥ, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so."
+      }
+    ],
+    "component_edges": [
+      {
+        "composite": "VG:DEVATA:INDRAVARUNAU",
+        "component": "VG:DEVATA:INDRAH",
+        "properties": {
+          "component_policy_version": "rigveda-devata-component-policy-v1",
+          "knowledge_layer": "SOURCE_EXPLICIT",
+          "quality_tier": "TIER_A",
+          "evidence": "indrāvaruṇau is the nominative dual of the devatā-dvandva indrā́váruṇa-, and it meets the same two conditions as every other ACCEPTED row in this dvandva block, checked against the graph rather than read off the ending: both members exist as separately registered canonical Devatā entities (VG:DEVATA:INDRAH, VG:DEVATA:VARUNAH), and the Anukramaṇī separately assigns the pair and each member -- 70 mantras to the pair, 2,869 to Indra and 99 to Varuṇa. The pair is the seventeenth most frequently assigned devatā in the corpus.",
+          "r4_created_by": "scripts/r4_stage_combined.py"
+        }
+      },
+      {
+        "composite": "VG:DEVATA:INDRAVARUNAU",
+        "component": "VG:DEVATA:VARUNAH",
+        "properties": {
+          "component_policy_version": "rigveda-devata-component-policy-v1",
+          "knowledge_layer": "SOURCE_EXPLICIT",
+          "quality_tier": "TIER_A",
+          "evidence": "indrāvaruṇau is the nominative dual of the devatā-dvandva indrā́váruṇa-, and it meets the same two conditions as every other ACCEPTED row in this dvandva block, checked against the graph rather than read off the ending: both members exist as separately registered canonical Devatā entities (VG:DEVATA:INDRAH, VG:DEVATA:VARUNAH), and the Anukramaṇī separately assigns the pair and each member -- 70 mantras to the pair, 2,869 to Indra and 99 to Varuṇa. The pair is the seventeenth most frequently assigned devatā in the corpus.",
+          "r4_created_by": "scripts/r4_stage_combined.py"
+        }
+      },
+      {
+        "composite": "VG:DEVATA:USASANAKTA",
+        "component": "VG:DEVATA:USAH",
+        "properties": {
+          "component_policy_version": "rigveda-devata-component-policy-v1",
+          "knowledge_layer": "SOURCE_EXPLICIT",
+          "quality_tier": "TIER_A",
+          "evidence": "uṣāsānaktā is the dvandva of Uṣas and Naktā (Night). The second member is registered under the Anukramaṇī's own label rātriḥ.",
+          "r4_created_by": "scripts/r4_stage_combined.py"
+        }
+      },
+      {
+        "composite": "VG:DEVATA:USASANAKTA",
+        "component": "VG:DEVATA:RATRIH",
+        "properties": {
+          "component_policy_version": "rigveda-devata-component-policy-v1",
+          "knowledge_layer": "SOURCE_EXPLICIT",
+          "quality_tier": "TIER_A",
+          "evidence": "uṣāsānaktā is the dvandva of Uṣas and Naktā (Night). The second member is registered under the Anukramaṇī's own label rātriḥ.",
+          "r4_created_by": "scripts/r4_stage_combined.py"
+        }
+      }
+    ]
+  },
+  "GAP-TRANSLATION-004": {
+    "untranslated_before": 36,
+    "source_absent": [
+      "VG:RV:SAK:M10:S086:V016",
+      "VG:RV:SAK:M10:S086:V017"
+    ],
+    "covered_by_a_merged_range": 34,
+    "anchors_needing_a_retype": 4,
+    "unresolved": [],
+    "untranslated_after": 2,
+    "retypes": [
+      {
+        "translation_id": "28a5a479-3db4-5247-87cc-4e4ac99308de",
+        "anchor": "VG:RV:SAK:M05:S055:V007",
+        "covered": "VG:RV:SAK:M05:S055:V008",
+        "alignment_level_before": "HYMN",
+        "alignment_level_after": "MANTRA_RANGE",
+        "basis": "The anchor's printed unit carries 4 lines where every other unit in the hymn carries 2 or 3, so this verse's English is inside it. Re-typing states the scope Griffith printed; splitting his prose would fabricate."
+      },
+      {
+        "translation_id": "293b6b9a-773f-5035-a3b7-40c6dc7e6e86",
+        "anchor": "VG:RV:SAK:M09:S007:V008",
+        "covered": "VG:RV:SAK:M09:S007:V009",
+        "alignment_level_before": "MANTRA",
+        "alignment_level_after": "MANTRA_RANGE",
+        "basis": "The anchor's printed unit carries 4 lines where every other unit in the hymn carries 2 or 3, so this verse's English is inside it. Re-typing states the scope Griffith printed; splitting his prose would fabricate."
+      },
+      {
+        "translation_id": "35d91e79-a941-5e65-8582-737985d0545b",
+        "anchor": "VG:RV:SAK:M10:S048:V006",
+        "covered": "VG:RV:SAK:M10:S048:V007",
+        "alignment_level_before": "HYMN",
+        "alignment_level_after": "MANTRA_RANGE",
+        "basis": "The anchor's printed unit carries 4 lines where every other unit in the hymn carries 2 or 3, so this verse's English is inside it. Re-typing states the scope Griffith printed; splitting his prose would fabricate."
+      },
+      {
+        "translation_id": "d87bcdde-8abd-5a98-9132-b5c2cb609b3e",
+        "anchor": "VG:RV:SAK:M10:S132:V004",
+        "covered": "VG:RV:SAK:M10:S132:V005",
+        "alignment_level_before": "HYMN",
+        "alignment_level_after": "MANTRA_RANGE",
+        "basis": "The anchor's printed unit carries 4 lines where every other unit in the hymn carries 2 or 3, so this verse's English is inside it. Re-typing states the scope Griffith printed; splitting his prose would fabricate."
+      }
+    ],
+    "edges": [
+      {
+        "mantra_key": "VG:RV:SAK:M01:S065:V002",
+        "translation_id": "58115083-de41-5762-a02e-3511a18d3434",
+        "properties": {
+          "alignment_level": "MANTRA_RANGE",
+          "range_anchor": "VG:RV:SAK:M01:S065:V001",
+          "knowledge_layer": "SOURCE_EXPLICIT",
+          "quality_tier": "TIER_B",
+          "evidence_basis": "SOURCE_METADATA",
+          "attribution_precision": "CONTAINER_INHERITED",
+          "language": "en",
+          "translator": "Griffith",
+          "coverage_note": "The source merged this verse with its anchor into one printed unit, so this edge reaches the anchor's rendering rather than a rendering of its own. No text was split or created.",
+          "r4_created_by": "scripts/r4_stage_combined.py"
+        }
+      },
+      {
+        "mantra_key": "VG:RV:SAK:M01:S065:V004",
+        "translation_id": "dc4233cb-0efc-53e0-9048-57654acd61fe",
+        "properties": {
+          "alignment_level": "MANTRA_RANGE",
+          "range_anchor": "VG:RV:SAK:M01:S065:V003",
+          "knowledge_layer": "SOURCE_EXPLICIT",
+          "quality_tier": "TIER_B",
+          "evidence_basis": "SOURCE_METADATA",
+          "attribution_precision": "CONTAINER_INHERITED",
+          "language": "en",
+          "translator": "Griffith",
+          "coverage_note": "The source merged this verse with its anchor into one printed unit, so this edge reaches the anchor's rendering rather than a rendering of its own. No text was split or created.",
+          "r4_created_by": "scripts/r4_stage_combined.py"
+        }
+      },
+      {
+        "mantra_key": "VG:RV:SAK:M01:S065:V006",
+        "translation_id": "eb053d64-c515-5f20-80e7-4d03531a7475",
+        "properties": {
+          "alignment_level": "MANTRA_RANGE",
+          "range_anchor": "VG:RV:SAK:M01:S065:V005",
+          "knowledge_layer": "SOURCE_EXPLICIT",
+          "quality_tier": "TIER_B",
+          "evidence_basis": "SOURCE_METADATA",
+          "attribution_precision": "CONTAINER_INHERITED",
+          "language": "en",
+          "translator": "Griffith",
+          "coverage_note": "The source merged this verse with its anchor into one printed unit, so this edge reaches the anchor's rendering rather than a rendering of its own. No text was split or created.",
+          "r4_created_by": "scripts/r4_stage_combined.py"
+        }
+      },
+      {
+        "mantra_key": "VG:RV:SAK:M01:S065:V008",
+        "translation_id": "21f33d9d-9cb0-5e7c-b71c-370f7944e53c",
+        "properties": {
+          "alignment_level": "MANTRA_RANGE",
+          "range_anchor": "VG:RV:SAK:M01:S065:V007",
+          "knowledge_layer": "SOURCE_EXPLICIT",
+          "quality_tier": "TIER_B",
+          "evidence_basis": "SOURCE_METADATA",
+          "attribution_precision": "CONTAINER_INHERITED",
+          "language": "en",
+          "translator": "Griffith",
+          "coverage_note": "The source merged this verse with its anchor into one printed unit, so this edge reaches the anchor's rendering rather than a rendering of its own. No text was split or created.",
+          "r4_created_by": "scripts/r4_stage_combined.py"
+        }
+      },
+      {
+        "mantra_key": "VG:RV:SAK:M01:S065:V010",
+        "translation_id": "17e3fa55-a3ef-5ec1-9127-66d848cfb9b5",
+        "properties": {
+          "alignment_level": "MANTRA_RANGE",
+          "range_anchor": "VG:RV:SAK:M01:S065:V009",
+          "knowledge_layer": "SOURCE_EXPLICIT",
+          "quality_tier": "TIER_B",
+          "evidence_basis": "SOURCE_METADATA",
+          "attribution_precision": "CONTAINER_INHERITED",
+          "language": "en",
+          "translator": "Griffith",
+          "coverage_note": "The source merged this verse with its anchor into one printed unit, so this edge reaches the anchor's rendering rather than a rendering of its own. No text was split or created.",
+          "r4_created_by": "scripts/r4_stage_combined.py"
+        }
+      },
+      {
+        "mantra_key": "VG:RV:SAK:M01:S066:V002",
+        "translation_id": "ce43fc9d-5f64-508c-8439-55137eca4eee",
+        "properties": {
+          "alignment_level": "MANTRA_RANGE",
+          "range_anchor": "VG:RV:SAK:M01:S066:V001",
+          "knowledge_layer": "SOURCE_EXPLICIT",
+          "quality_tier": "TIER_B",
+          "evidence_basis": "SOURCE_METADATA",
+          "attribution_precision": "CONTAINER_INHERITED",
+          "language": "en",
+          "translator": "Griffith",
+          "coverage_note": "The source merged this verse with its anchor into one printed unit, so this edge reaches the anchor's rendering rather than a rendering of its own. No text was split or created.",
+          "r4_created_by": "scripts/r4_stage_combined.py"
+        }
+      },
+      {
+        "mantra_key": "VG:RV:SAK:M01:S066:V004",
+        "translation_id": "65df036b-78df-5219-93cb-b249409721fe",
+        "properties": {
+          "alignment_level": "MANTRA_RANGE",
+          "range_anchor": "VG:RV:SAK:M01:S066:V003",
+          "knowledge_layer": "SOURCE_EXPLICIT",
+          "quality_tier": "TIER_B",
+          "evidence_basis": "SOURCE_METADATA",
+          "attribution_precision": "CONTAINER_INHERITED",
+          "language": "en",
+          "translator": "Griffith",
+          "coverage_note": "The source merged this verse with its anchor into one printed unit, so this edge reaches the anchor's rendering rather than a rendering of its own. No text was split or created.",
+          "r4_created_by": "scripts/r4_stage_combined.py"
+        }
+      },
+      {
+        "mantra_key": "VG:RV:SAK:M01:S066:V006",
+        "translation_id": "8fbfa11e-cbfb-5fa8-8cc5-4ef846e0f528",
+        "properties": {
+          "alignment_level": "MANTRA_RANGE",
+          "range_anchor": "VG:RV:SAK:M01:S066:V005",
+          "knowledge_layer": "SOURCE_EXPLICIT",
+          "quality_tier": "TIER_B",
+          "evidence_basis": "SOURCE_METADATA",
+          "attribution_precision": "CONTAINER_INHERITED",
+          "language": "en",
+          "translator": "Griffith",
+          "coverage_note": "The source merged this verse with its anchor into one printed unit, so this edge reaches the anchor's rendering rather than a rendering of its own. No text was split or created.",
+          "r4_created_by": "scripts/r4_stage_combined.py"
+        }
+      },
+      {
+        "mantra_key": "VG:RV:SAK:M01:S066:V008",
+        "translation_id": "6a8a63a5-ccc3-50bf-90e8-d0b4f7707e29",
+        "properties": {
+          "alignment_level": "MANTRA_RANGE",
+          "range_anchor": "VG:RV:SAK:M01:S066:V007",
+          "knowledge_layer": "SOURCE_EXPLICIT",
+          "quality_tier": "TIER_B",
+          "evidence_basis": "SOURCE_METADATA",
+          "attribution_precision": "CONTAINER_INHERITED",
+          "language": "en",
+          "translator": "Griffith",
+          "coverage_note": "The source merged this verse with its anchor into one printed unit, so this edge reaches the anchor's rendering rather than a rendering of its own. No text was split or created.",
+          "r4_created_by": "scripts/r4_stage_combined.py"
+        }
+      },
+      {
+        "mantra_key": "VG:RV:SAK:M01:S066:V010",
+        "translation_id": "63991970-3f7a-5678-8d9a-11d055e0df51",
+        "properties": {
+          "alignment_level": "MANTRA_RANGE",
+          "range_anchor": "VG:RV:SAK:M01:S066:V009",
+          "knowledge_layer": "SOURCE_EXPLICIT",
+          "quality_tier": "TIER_B",
+          "evidence_basis": "SOURCE_METADATA",
+          "attribution_precision": "CONTAINER_INHERITED",
+          "language": "en",
+          "translator": "Griffith",
+          "coverage_note": "The source merged this verse with its anchor into one printed unit, so this edge reaches the anchor's rendering rather than a rendering of its own. No text was split or created.",
+          "r4_created_by": "scripts/r4_stage_combined.py"
+        }
+      },
+      {
+        "mantra_key": "VG:RV:SAK:M01:S067:V002",
+        "translation_id": "4fea192e-a8a8-535c-a073-b530c15c0870",
+        "properties": {
+          "alignment_level": "MANTRA_RANGE",
+          "range_anchor": "VG:RV:SAK:M01:S067:V001",
+          "knowledge_layer": "SOURCE_EXPLICIT",
+          "quality_tier": "TIER_B",
+          "evidence_basis": "SOURCE_METADATA",
+          "attribution_precision": "CONTAINER_INHERITED",
+          "language": "en",
+          "translator": "Griffith",
+          "coverage_note": "The source merged this verse with its anchor into one printed unit, so this edge reaches the anchor's rendering rather than a rendering of its own. No text was split or created.",
+          "r4_created_by": "scripts/r4_stage_combined.py"
+        }
+      },
+      {
+        "mantra_key": "VG:RV:SAK:M01:S067:V004",
+        "translation_id": "286f302c-0d5d-5b83-a0fa-0c48d2b60603",
+        "properties": {
+          "alignment_level": "MANTRA_RANGE",
+          "range_anchor": "VG:RV:SAK:M01:S067:V003",
+          "knowledge_layer": "SOURCE_EXPLICIT",
+          "quality_tier": "TIER_B",
+          "evidence_basis": "SOURCE_METADATA",
+          "attribution_precision": "CONTAINER_INHERITED",
+          "language": "en",
+          "translator": "Griffith",
+          "coverage_note": "The source merged this verse with its anchor into one printed unit, so this edge reaches the anchor's rendering rather than a rendering of its own. No text was split or created.",
+          "r4_created_by": "scripts/r4_stage_combined.py"
+        }
+      },
+      {
+        "mantra_key": "VG:RV:SAK:M01:S067:V006",
+        "translation_id": "cb8d44b6-254d-5b78-886c-cf6060c7c97e",
+        "properties": {
+          "alignment_level": "MANTRA_RANGE",
+          "range_anchor": "VG:RV:SAK:M01:S067:V005",
+          "knowledge_layer": "SOURCE_EXPLICIT",
+          "quality_tier": "TIER_B",
+          "evidence_basis": "SOURCE_METADATA",
+          "attribution_precision": "CONTAINER_INHERITED",
+          "language": "en",
+          "translator": "Griffith",
+          "coverage_note": "The source merged this verse with its anchor into one printed unit, so this edge reaches the anchor's rendering rather than a rendering of its own. No text was split or created.",
+          "r4_created_by": "scripts/r4_stage_combined.py"
+        }
+      },
+      {
+        "mantra_key": "VG:RV:SAK:M01:S067:V008",
+        "translation_id": "3e661656-ef4f-580c-8c82-b3f3f2581764",
+        "properties": {
+          "alignment_level": "MANTRA_RANGE",
+          "range_anchor": "VG:RV:SAK:M01:S067:V007",
+          "knowledge_layer": "SOURCE_EXPLICIT",
+          "quality_tier": "TIER_B",
+          "evidence_basis": "SOURCE_METADATA",
+          "attribution_precision": "CONTAINER_INHERITED",
+          "language": "en",
+          "translator": "Griffith",
+          "coverage_note": "The source merged this verse with its anchor into one printed unit, so this edge reaches the anchor's rendering rather than a rendering of its own. No text was split or created.",
+          "r4_created_by": "scripts/r4_stage_combined.py"
+        }
+      },
+      {
+        "mantra_key": "VG:RV:SAK:M01:S067:V010",
+        "translation_id": "83d20a07-4d79-54ed-bdd0-12330250828b",
+        "properties": {
+          "alignment_level": "MANTRA_RANGE",
+          "range_anchor": "VG:RV:SAK:M01:S067:V009",
+          "knowledge_layer": "SOURCE_EXPLICIT",
+          "quality_tier": "TIER_B",
+          "evidence_basis": "SOURCE_METADATA",
+          "attribution_precision": "CONTAINER_INHERITED",
+          "language": "en",
+          "translator": "Griffith",
+          "coverage_note": "The source merged this verse with its anchor into one printed unit, so this edge reaches the anchor's rendering rather than a rendering of its own. No text was split or created.",
+          "r4_created_by": "scripts/r4_stage_combined.py"
+        }
+      },
+      {
+        "mantra_key": "VG:RV:SAK:M01:S068:V002",
+        "translation_id": "1c2b4818-d07f-5c18-9cd1-9c00e67a8916",
+        "properties": {
+          "alignment_level": "MANTRA_RANGE",
+          "range_anchor": "VG:RV:SAK:M01:S068:V001",
+          "knowledge_layer": "SOURCE_EXPLICIT",
+          "quality_tier": "TIER_B",
+          "evidence_basis": "SOURCE_METADATA",
+          "attribution_precision": "CONTAINER_INHERITED",
+          "language": "en",
+          "translator": "Griffith",
+          "coverage_note": "The source merged this verse with its anchor into one printed unit, so this edge reaches the anchor's rendering rather than a rendering of its own. No text was split or created.",
+          "r4_created_by": "scripts/r4_stage_combined.py"
+        }
+      },
+      {
+        "mantra_key": "VG:RV:SAK:M01:S068:V004",
+        "translation_id": "33a76ebf-1369-55a6-8614-62ad3c579e37",
+        "properties": {
+          "alignment_level": "MANTRA_RANGE",
+          "range_anchor": "VG:RV:SAK:M01:S068:V003",
+          "knowledge_layer": "SOURCE_EXPLICIT",
+          "quality_tier": "TIER_B",
+          "evidence_basis": "SOURCE_METADATA",
+          "attribution_precision": "CONTAINER_INHERITED",
+          "language": "en",
+          "translator": "Griffith",
+          "coverage_note": "The source merged this verse with its anchor into one printed unit, so this edge reaches the anchor's rendering rather than a rendering of its own. No text was split or created.",
+          "r4_created_by": "scripts/r4_stage_combined.py"
+        }
+      },
+      {
+        "mantra_key": "VG:RV:SAK:M01:S068:V006",
+        "translation_id": "6f99d21e-2395-57f0-8582-3c9db2fa3b07",
+        "properties": {
+          "alignment_level": "MANTRA_RANGE",
+          "range_anchor": "VG:RV:SAK:M01:S068:V005",
+          "knowledge_layer": "SOURCE_EXPLICIT",
+          "quality_tier": "TIER_B",
+          "evidence_basis": "SOURCE_METADATA",
+          "attribution_precision": "CONTAINER_INHERITED",
+          "language": "en",
+          "translator": "Griffith",
+          "coverage_note": "The source merged this verse with its anchor into one printed unit, so this edge reaches the anchor's rendering rather than a rendering of its own. No text was split or created.",
+          "r4_created_by": "scripts/r4_stage_combined.py"
+        }
+      },
+      {
+        "mantra_key": "VG:RV:SAK:M01:S068:V008",
+        "translation_id": "af9bdb2e-4631-51c2-a34b-b8c064e71254",
+        "properties": {
+          "alignment_level": "MANTRA_RANGE",
+          "range_anchor": "VG:RV:SAK:M01:S068:V007",
+          "knowledge_layer": "SOURCE_EXPLICIT",
+          "quality_tier": "TIER_B",
+          "evidence_basis": "SOURCE_METADATA",
+          "attribution_precision": "CONTAINER_INHERITED",
+          "language": "en",
+          "translator": "Griffith",
+          "coverage_note": "The source merged this verse with its anchor into one printed unit, so this edge reaches the anchor's rendering rather than a rendering of its own. No text was split or created.",
+          "r4_created_by": "scripts/r4_stage_combined.py"
+        }
+      },
+      {
+        "mantra_key": "VG:RV:SAK:M01:S068:V010",
+        "translation_id": "470f089f-f102-5a26-b73e-b25f62b93752",
+        "properties": {
+          "alignment_level": "MANTRA_RANGE",
+          "range_anchor": "VG:RV:SAK:M01:S068:V009",
+          "knowledge_layer": "SOURCE_EXPLICIT",
+          "quality_tier": "TIER_B",
+          "evidence_basis": "SOURCE_METADATA",
+          "attribution_precision": "CONTAINER_INHERITED",
+          "language": "en",
+          "translator": "Griffith",
+          "coverage_note": "The source merged this verse with its anchor into one printed unit, so this edge reaches the anchor's rendering rather than a rendering of its own. No text was split or created.",
+          "r4_created_by": "scripts/r4_stage_combined.py"
+        }
+      },
+      {
+        "mantra_key": "VG:RV:SAK:M01:S069:V002",
+        "translation_id": "0561b2c5-4a03-58aa-91bb-29e603e4a71d",
+        "properties": {
+          "alignment_level": "MANTRA_RANGE",
+          "range_anchor": "VG:RV:SAK:M01:S069:V001",
+          "knowledge_layer": "SOURCE_EXPLICIT",
+          "quality_tier": "TIER_B",
+          "evidence_basis": "SOURCE_METADATA",
+          "attribution_precision": "CONTAINER_INHERITED",
+          "language": "en",
+          "translator": "Griffith",
+          "coverage_note": "The source merged this verse with its anchor into one printed unit, so this edge reaches the anchor's rendering rather than a rendering of its own. No text was split or created.",
+          "r4_created_by": "scripts/r4_stage_combined.py"
+        }
+      },
+      {
+        "mantra_key": "VG:RV:SAK:M01:S069:V004",
+        "translation_id": "ea588a01-6335-5333-b502-e91dd9d299ef",
+        "properties": {
+          "alignment_level": "MANTRA_RANGE",
+          "range_anchor": "VG:RV:SAK:M01:S069:V003",
+          "knowledge_layer": "SOURCE_EXPLICIT",
+          "quality_tier": "TIER_B",
+          "evidence_basis": "SOURCE_METADATA",
+          "attribution_precision": "CONTAINER_INHERITED",
+          "language": "en",
+          "translator": "Griffith",
+          "coverage_note": "The source merged this verse with its anchor into one printed unit, so this edge reaches the anchor's rendering rather than a rendering of its own. No text was split or created.",
+          "r4_created_by": "scripts/r4_stage_combined.py"
+        }
+      },
+      {
+        "mantra_key": "VG:RV:SAK:M01:S069:V006",
+        "translation_id": "44d949bd-6bc4-506e-8db0-51bb2137105d",
+        "properties": {
+          "alignment_level": "MANTRA_RANGE",
+          "range_anchor": "VG:RV:SAK:M01:S069:V005",
+          "knowledge_layer": "SOURCE_EXPLICIT",
+          "quality_tier": "TIER_B",
+          "evidence_basis": "SOURCE_METADATA",
+          "attribution_precision": "CONTAINER_INHERITED",
+          "language": "en",
+          "translator": "Griffith",
+          "coverage_note": "The source merged this verse with its anchor into one printed unit, so this edge reaches the anchor's rendering rather than a rendering of its own. No text was split or created.",
+          "r4_created_by": "scripts/r4_stage_combined.py"
+        }
+      },
+      {
+        "mantra_key": "VG:RV:SAK:M01:S069:V008",
+        "translation_id": "645df11c-b66c-5553-b1ba-a9ecc26d03df",
+        "properties": {
+          "alignment_level": "MANTRA_RANGE",
+          "range_anchor": "VG:RV:SAK:M01:S069:V007",
+          "knowledge_layer": "SOURCE_EXPLICIT",
+          "quality_tier": "TIER_B",
+          "evidence_basis": "SOURCE_METADATA",
+          "attribution_precision": "CONTAINER_INHERITED",
+          "language": "en",
+          "translator": "Griffith",
+          "coverage_note": "The source merged this verse with its anchor into one printed unit, so this edge reaches the anchor's rendering rather than a rendering of its own. No text was split or created.",
+          "r4_created_by": "scripts/r4_stage_combined.py"
+        }
+      },
+      {
+        "mantra_key": "VG:RV:SAK:M01:S069:V010",
+        "translation_id": "49edf9ad-b7f8-5728-8eab-305c35cc12b4",
+        "properties": {
+          "alignment_level": "MANTRA_RANGE",
+          "range_anchor": "VG:RV:SAK:M01:S069:V009",
+          "knowledge_layer": "SOURCE_EXPLICIT",
+          "quality_tier": "TIER_B",
+          "evidence_basis": "SOURCE_METADATA",
+          "attribution_precision": "CONTAINER_INHERITED",
+          "language": "en",
+          "translator": "Griffith",
+          "coverage_note": "The source merged this verse with its anchor into one printed unit, so this edge reaches the anchor's rendering rather than a rendering of its own. No text was split or created.",
+          "r4_created_by": "scripts/r4_stage_combined.py"
+        }
+      },
+      {
+        "mantra_key": "VG:RV:SAK:M01:S070:V002",
+        "translation_id": "93093aeb-50c5-5aa4-a2e6-67f9276633cc",
+        "properties": {
+          "alignment_level": "MANTRA_RANGE",
+          "range_anchor": "VG:RV:SAK:M01:S070:V001",
+          "knowledge_layer": "SOURCE_EXPLICIT",
+          "quality_tier": "TIER_B",
+          "evidence_basis": "SOURCE_METADATA",
+          "attribution_precision": "CONTAINER_INHERITED",
+          "language": "en",
+          "translator": "Griffith",
+          "coverage_note": "The source merged this verse with its anchor into one printed unit, so this edge reaches the anchor's rendering rather than a rendering of its own. No text was split or created.",
+          "r4_created_by": "scripts/r4_stage_combined.py"
+        }
+      },
+      {
+        "mantra_key": "VG:RV:SAK:M01:S070:V004",
+        "translation_id": "fd090d8f-063e-5873-8b6e-2b9da23c77c4",
+        "properties": {
+          "alignment_level": "MANTRA_RANGE",
+          "range_anchor": "VG:RV:SAK:M01:S070:V003",
+          "knowledge_layer": "SOURCE_EXPLICIT",
+          "quality_tier": "TIER_B",
+          "evidence_basis": "SOURCE_METADATA",
+          "attribution_precision": "CONTAINER_INHERITED",
+          "language": "en",
+          "translator": "Griffith",
+          "coverage_note": "The source merged this verse with its anchor into one printed unit, so this edge reaches the anchor's rendering rather than a rendering of its own. No text was split or created.",
+          "r4_created_by": "scripts/r4_stage_combined.py"
+        }
+      },
+      {
+        "mantra_key": "VG:RV:SAK:M01:S070:V006",
+        "translation_id": "77d6a75c-e4d4-5389-b6b0-6f9edbed6874",
+        "properties": {
+          "alignment_level": "MANTRA_RANGE",
+          "range_anchor": "VG:RV:SAK:M01:S070:V005",
+          "knowledge_layer": "SOURCE_EXPLICIT",
+          "quality_tier": "TIER_B",
+          "evidence_basis": "SOURCE_METADATA",
+          "attribution_precision": "CONTAINER_INHERITED",
+          "language": "en",
+          "translator": "Griffith",
+          "coverage_note": "The source merged this verse with its anchor into one printed unit, so this edge reaches the anchor's rendering rather than a rendering of its own. No text was split or created.",
+          "r4_created_by": "scripts/r4_stage_combined.py"
+        }
+      },
+      {
+        "mantra_key": "VG:RV:SAK:M01:S070:V008",
+        "translation_id": "409b1107-a5d6-5e94-b775-b9ae43814d4b",
+        "properties": {
+          "alignment_level": "MANTRA_RANGE",
+          "range_anchor": "VG:RV:SAK:M01:S070:V007",
+          "knowledge_layer": "SOURCE_EXPLICIT",
+          "quality_tier": "TIER_B",
+          "evidence_basis": "SOURCE_METADATA",
+          "attribution_precision": "CONTAINER_INHERITED",
+          "language": "en",
+          "translator": "Griffith",
+          "coverage_note": "The source merged this verse with its anchor into one printed unit, so this edge reaches the anchor's rendering rather than a rendering of its own. No text was split or created.",
+          "r4_created_by": "scripts/r4_stage_combined.py"
+        }
+      },
+      {
+        "mantra_key": "VG:RV:SAK:M01:S070:V010",
+        "translation_id": "6f55c96e-44b5-5047-919a-d95cd5981eea",
+        "properties": {
+          "alignment_level": "MANTRA_RANGE",
+          "range_anchor": "VG:RV:SAK:M01:S070:V009",
+          "knowledge_layer": "SOURCE_EXPLICIT",
+          "quality_tier": "TIER_B",
+          "evidence_basis": "SOURCE_METADATA",
+          "attribution_precision": "CONTAINER_INHERITED",
+          "language": "en",
+          "translator": "Griffith",
+          "coverage_note": "The source merged this verse with its anchor into one printed unit, so this edge reaches the anchor's rendering rather than a rendering of its own. No text was split or created.",
+          "r4_created_by": "scripts/r4_stage_combined.py"
+        }
+      },
+      {
+        "mantra_key": "VG:RV:SAK:M05:S055:V008",
+        "translation_id": "28a5a479-3db4-5247-87cc-4e4ac99308de",
+        "properties": {
+          "alignment_level": "MANTRA_RANGE",
+          "range_anchor": "VG:RV:SAK:M05:S055:V007",
+          "knowledge_layer": "SOURCE_EXPLICIT",
+          "quality_tier": "TIER_B",
+          "evidence_basis": "SOURCE_METADATA",
+          "attribution_precision": "CONTAINER_INHERITED",
+          "language": "en",
+          "translator": "Griffith",
+          "coverage_note": "The source merged this verse with its anchor into one printed unit, so this edge reaches the anchor's rendering rather than a rendering of its own. No text was split or created.",
+          "r4_created_by": "scripts/r4_stage_combined.py"
+        }
+      },
+      {
+        "mantra_key": "VG:RV:SAK:M09:S007:V009",
+        "translation_id": "293b6b9a-773f-5035-a3b7-40c6dc7e6e86",
+        "properties": {
+          "alignment_level": "MANTRA_RANGE",
+          "range_anchor": "VG:RV:SAK:M09:S007:V008",
+          "knowledge_layer": "SOURCE_EXPLICIT",
+          "quality_tier": "TIER_B",
+          "evidence_basis": "SOURCE_METADATA",
+          "attribution_precision": "CONTAINER_INHERITED",
+          "language": "en",
+          "translator": "Griffith",
+          "coverage_note": "The source merged this verse with its anchor into one printed unit, so this edge reaches the anchor's rendering rather than a rendering of its own. No text was split or created.",
+          "r4_created_by": "scripts/r4_stage_combined.py"
+        }
+      },
+      {
+        "mantra_key": "VG:RV:SAK:M10:S048:V007",
+        "translation_id": "35d91e79-a941-5e65-8582-737985d0545b",
+        "properties": {
+          "alignment_level": "MANTRA_RANGE",
+          "range_anchor": "VG:RV:SAK:M10:S048:V006",
+          "knowledge_layer": "SOURCE_EXPLICIT",
+          "quality_tier": "TIER_B",
+          "evidence_basis": "SOURCE_METADATA",
+          "attribution_precision": "CONTAINER_INHERITED",
+          "language": "en",
+          "translator": "Griffith",
+          "coverage_note": "The source merged this verse with its anchor into one printed unit, so this edge reaches the anchor's rendering rather than a rendering of its own. No text was split or created.",
+          "r4_created_by": "scripts/r4_stage_combined.py"
+        }
+      },
+      {
+        "mantra_key": "VG:RV:SAK:M10:S132:V005",
+        "translation_id": "d87bcdde-8abd-5a98-9132-b5c2cb609b3e",
+        "properties": {
+          "alignment_level": "MANTRA_RANGE",
+          "range_anchor": "VG:RV:SAK:M10:S132:V004",
+          "knowledge_layer": "SOURCE_EXPLICIT",
+          "quality_tier": "TIER_B",
+          "evidence_basis": "SOURCE_METADATA",
+          "attribution_precision": "CONTAINER_INHERITED",
+          "language": "en",
+          "translator": "Griffith",
+          "coverage_note": "The source merged this verse with its anchor into one printed unit, so this edge reaches the anchor's rendering rather than a rendering of its own. No text was split or created.",
+          "r4_created_by": "scripts/r4_stage_combined.py"
+        }
+      }
+    ],
+    "rows": [
+      {
+        "canonical_key": "VG:RV:SAK:M01:S065:V002",
+        "translation_coverage": "COVERED_BY_A_MERGED_RANGE_ON_ITS_ANCHOR",
+        "range_anchor": "VG:RV:SAK:M01:S065:V001",
+        "translation_coverage_reason": "Griffith prints this verse inside its anchor's unit. The edge points at the anchor's existing Translation node."
+      },
+      {
+        "canonical_key": "VG:RV:SAK:M01:S065:V004",
+        "translation_coverage": "COVERED_BY_A_MERGED_RANGE_ON_ITS_ANCHOR",
+        "range_anchor": "VG:RV:SAK:M01:S065:V003",
+        "translation_coverage_reason": "Griffith prints this verse inside its anchor's unit. The edge points at the anchor's existing Translation node."
+      },
+      {
+        "canonical_key": "VG:RV:SAK:M01:S065:V006",
+        "translation_coverage": "COVERED_BY_A_MERGED_RANGE_ON_ITS_ANCHOR",
+        "range_anchor": "VG:RV:SAK:M01:S065:V005",
+        "translation_coverage_reason": "Griffith prints this verse inside its anchor's unit. The edge points at the anchor's existing Translation node."
+      },
+      {
+        "canonical_key": "VG:RV:SAK:M01:S065:V008",
+        "translation_coverage": "COVERED_BY_A_MERGED_RANGE_ON_ITS_ANCHOR",
+        "range_anchor": "VG:RV:SAK:M01:S065:V007",
+        "translation_coverage_reason": "Griffith prints this verse inside its anchor's unit. The edge points at the anchor's existing Translation node."
+      },
+      {
+        "canonical_key": "VG:RV:SAK:M01:S065:V010",
+        "translation_coverage": "COVERED_BY_A_MERGED_RANGE_ON_ITS_ANCHOR",
+        "range_anchor": "VG:RV:SAK:M01:S065:V009",
+        "translation_coverage_reason": "Griffith prints this verse inside its anchor's unit. The edge points at the anchor's existing Translation node."
+      },
+      {
+        "canonical_key": "VG:RV:SAK:M01:S066:V002",
+        "translation_coverage": "COVERED_BY_A_MERGED_RANGE_ON_ITS_ANCHOR",
+        "range_anchor": "VG:RV:SAK:M01:S066:V001",
+        "translation_coverage_reason": "Griffith prints this verse inside its anchor's unit. The edge points at the anchor's existing Translation node."
+      },
+      {
+        "canonical_key": "VG:RV:SAK:M01:S066:V004",
+        "translation_coverage": "COVERED_BY_A_MERGED_RANGE_ON_ITS_ANCHOR",
+        "range_anchor": "VG:RV:SAK:M01:S066:V003",
+        "translation_coverage_reason": "Griffith prints this verse inside its anchor's unit. The edge points at the anchor's existing Translation node."
+      },
+      {
+        "canonical_key": "VG:RV:SAK:M01:S066:V006",
+        "translation_coverage": "COVERED_BY_A_MERGED_RANGE_ON_ITS_ANCHOR",
+        "range_anchor": "VG:RV:SAK:M01:S066:V005",
+        "translation_coverage_reason": "Griffith prints this verse inside its anchor's unit. The edge points at the anchor's existing Translation node."
+      },
+      {
+        "canonical_key": "VG:RV:SAK:M01:S066:V008",
+        "translation_coverage": "COVERED_BY_A_MERGED_RANGE_ON_ITS_ANCHOR",
+        "range_anchor": "VG:RV:SAK:M01:S066:V007",
+        "translation_coverage_reason": "Griffith prints this verse inside its anchor's unit. The edge points at the anchor's existing Translation node."
+      },
+      {
+        "canonical_key": "VG:RV:SAK:M01:S066:V010",
+        "translation_coverage": "COVERED_BY_A_MERGED_RANGE_ON_ITS_ANCHOR",
+        "range_anchor": "VG:RV:SAK:M01:S066:V009",
+        "translation_coverage_reason": "Griffith prints this verse inside its anchor's unit. The edge points at the anchor's existing Translation node."
+      },
+      {
+        "canonical_key": "VG:RV:SAK:M01:S067:V002",
+        "translation_coverage": "COVERED_BY_A_MERGED_RANGE_ON_ITS_ANCHOR",
+        "range_anchor": "VG:RV:SAK:M01:S067:V001",
+        "translation_coverage_reason": "Griffith prints this verse inside its anchor's unit. The edge points at the anchor's existing Translation node."
+      },
+      {
+        "canonical_key": "VG:RV:SAK:M01:S067:V004",
+        "translation_coverage": "COVERED_BY_A_MERGED_RANGE_ON_ITS_ANCHOR",
+        "range_anchor": "VG:RV:SAK:M01:S067:V003",
+        "translation_coverage_reason": "Griffith prints this verse inside its anchor's unit. The edge points at the anchor's existing Translation node."
+      },
+      {
+        "canonical_key": "VG:RV:SAK:M01:S067:V006",
+        "translation_coverage": "COVERED_BY_A_MERGED_RANGE_ON_ITS_ANCHOR",
+        "range_anchor": "VG:RV:SAK:M01:S067:V005",
+        "translation_coverage_reason": "Griffith prints this verse inside its anchor's unit. The edge points at the anchor's existing Translation node."
+      },
+      {
+        "canonical_key": "VG:RV:SAK:M01:S067:V008",
+        "translation_coverage": "COVERED_BY_A_MERGED_RANGE_ON_ITS_ANCHOR",
+        "range_anchor": "VG:RV:SAK:M01:S067:V007",
+        "translation_coverage_reason": "Griffith prints this verse inside its anchor's unit. The edge points at the anchor's existing Translation node."
+      },
+      {
+        "canonical_key": "VG:RV:SAK:M01:S067:V010",
+        "translation_coverage": "COVERED_BY_A_MERGED_RANGE_ON_ITS_ANCHOR",
+        "range_anchor": "VG:RV:SAK:M01:S067:V009",
+        "translation_coverage_reason": "Griffith prints this verse inside its anchor's unit. The edge points at the anchor's existing Translation node."
+      },
+      {
+        "canonical_key": "VG:RV:SAK:M01:S068:V002",
+        "translation_coverage": "COVERED_BY_A_MERGED_RANGE_ON_ITS_ANCHOR",
+        "range_anchor": "VG:RV:SAK:M01:S068:V001",
+        "translation_coverage_reason": "Griffith prints this verse inside its anchor's unit. The edge points at the anchor's existing Translation node."
+      },
+      {
+        "canonical_key": "VG:RV:SAK:M01:S068:V004",
+        "translation_coverage": "COVERED_BY_A_MERGED_RANGE_ON_ITS_ANCHOR",
+        "range_anchor": "VG:RV:SAK:M01:S068:V003",
+        "translation_coverage_reason": "Griffith prints this verse inside its anchor's unit. The edge points at the anchor's existing Translation node."
+      },
+      {
+        "canonical_key": "VG:RV:SAK:M01:S068:V006",
+        "translation_coverage": "COVERED_BY_A_MERGED_RANGE_ON_ITS_ANCHOR",
+        "range_anchor": "VG:RV:SAK:M01:S068:V005",
+        "translation_coverage_reason": "Griffith prints this verse inside its anchor's unit. The edge points at the anchor's existing Translation node."
+      },
+      {
+        "canonical_key": "VG:RV:SAK:M01:S068:V008",
+        "translation_coverage": "COVERED_BY_A_MERGED_RANGE_ON_ITS_ANCHOR",
+        "range_anchor": "VG:RV:SAK:M01:S068:V007",
+        "translation_coverage_reason": "Griffith prints this verse inside its anchor's unit. The edge points at the anchor's existing Translation node."
+      },
+      {
+        "canonical_key": "VG:RV:SAK:M01:S068:V010",
+        "translation_coverage": "COVERED_BY_A_MERGED_RANGE_ON_ITS_ANCHOR",
+        "range_anchor": "VG:RV:SAK:M01:S068:V009",
+        "translation_coverage_reason": "Griffith prints this verse inside its anchor's unit. The edge points at the anchor's existing Translation node."
+      },
+      {
+        "canonical_key": "VG:RV:SAK:M01:S069:V002",
+        "translation_coverage": "COVERED_BY_A_MERGED_RANGE_ON_ITS_ANCHOR",
+        "range_anchor": "VG:RV:SAK:M01:S069:V001",
+        "translation_coverage_reason": "Griffith prints this verse inside its anchor's unit. The edge points at the anchor's existing Translation node."
+      },
+      {
+        "canonical_key": "VG:RV:SAK:M01:S069:V004",
+        "translation_coverage": "COVERED_BY_A_MERGED_RANGE_ON_ITS_ANCHOR",
+        "range_anchor": "VG:RV:SAK:M01:S069:V003",
+        "translation_coverage_reason": "Griffith prints this verse inside its anchor's unit. The edge points at the anchor's existing Translation node."
+      },
+      {
+        "canonical_key": "VG:RV:SAK:M01:S069:V006",
+        "translation_coverage": "COVERED_BY_A_MERGED_RANGE_ON_ITS_ANCHOR",
+        "range_anchor": "VG:RV:SAK:M01:S069:V005",
+        "translation_coverage_reason": "Griffith prints this verse inside its anchor's unit. The edge points at the anchor's existing Translation node."
+      },
+      {
+        "canonical_key": "VG:RV:SAK:M01:S069:V008",
+        "translation_coverage": "COVERED_BY_A_MERGED_RANGE_ON_ITS_ANCHOR",
+        "range_anchor": "VG:RV:SAK:M01:S069:V007",
+        "translation_coverage_reason": "Griffith prints this verse inside its anchor's unit. The edge points at the anchor's existing Translation node."
+      },
+      {
+        "canonical_key": "VG:RV:SAK:M01:S069:V010",
+        "translation_coverage": "COVERED_BY_A_MERGED_RANGE_ON_ITS_ANCHOR",
+        "range_anchor": "VG:RV:SAK:M01:S069:V009",
+        "translation_coverage_reason": "Griffith prints this verse inside its anchor's unit. The edge points at the anchor's existing Translation node."
+      },
+      {
+        "canonical_key": "VG:RV:SAK:M01:S070:V002",
+        "translation_coverage": "COVERED_BY_A_MERGED_RANGE_ON_ITS_ANCHOR",
+        "range_anchor": "VG:RV:SAK:M01:S070:V001",
+        "translation_coverage_reason": "Griffith prints this verse inside its anchor's unit. The edge points at the anchor's existing Translation node."
+      },
+      {
+        "canonical_key": "VG:RV:SAK:M01:S070:V004",
+        "translation_coverage": "COVERED_BY_A_MERGED_RANGE_ON_ITS_ANCHOR",
+        "range_anchor": "VG:RV:SAK:M01:S070:V003",
+        "translation_coverage_reason": "Griffith prints this verse inside its anchor's unit. The edge points at the anchor's existing Translation node."
+      },
+      {
+        "canonical_key": "VG:RV:SAK:M01:S070:V006",
+        "translation_coverage": "COVERED_BY_A_MERGED_RANGE_ON_ITS_ANCHOR",
+        "range_anchor": "VG:RV:SAK:M01:S070:V005",
+        "translation_coverage_reason": "Griffith prints this verse inside its anchor's unit. The edge points at the anchor's existing Translation node."
+      },
+      {
+        "canonical_key": "VG:RV:SAK:M01:S070:V008",
+        "translation_coverage": "COVERED_BY_A_MERGED_RANGE_ON_ITS_ANCHOR",
+        "range_anchor": "VG:RV:SAK:M01:S070:V007",
+        "translation_coverage_reason": "Griffith prints this verse inside its anchor's unit. The edge points at the anchor's existing Translation node."
+      },
+      {
+        "canonical_key": "VG:RV:SAK:M01:S070:V010",
+        "translation_coverage": "COVERED_BY_A_MERGED_RANGE_ON_ITS_ANCHOR",
+        "range_anchor": "VG:RV:SAK:M01:S070:V009",
+        "translation_coverage_reason": "Griffith prints this verse inside its anchor's unit. The edge points at the anchor's existing Translation node."
+      },
+      {
+        "canonical_key": "VG:RV:SAK:M05:S055:V008",
+        "translation_coverage": "COVERED_BY_A_MERGED_RANGE_ON_ITS_ANCHOR",
+        "range_anchor": "VG:RV:SAK:M05:S055:V007",
+        "translation_coverage_reason": "Griffith prints this verse inside its anchor's unit. The edge points at the anchor's existing Translation node."
+      },
+      {
+        "canonical_key": "VG:RV:SAK:M09:S007:V009",
+        "translation_coverage": "COVERED_BY_A_MERGED_RANGE_ON_ITS_ANCHOR",
+        "range_anchor": "VG:RV:SAK:M09:S007:V008",
+        "translation_coverage_reason": "Griffith prints this verse inside its anchor's unit. The edge points at the anchor's existing Translation node."
+      },
+      {
+        "canonical_key": "VG:RV:SAK:M10:S048:V007",
+        "translation_coverage": "COVERED_BY_A_MERGED_RANGE_ON_ITS_ANCHOR",
+        "range_anchor": "VG:RV:SAK:M10:S048:V006",
+        "translation_coverage_reason": "Griffith prints this verse inside its anchor's unit. The edge points at the anchor's existing Translation node."
+      },
+      {
+        "canonical_key": "VG:RV:SAK:M10:S086:V016",
+        "translation_coverage": "SOURCE_ABSENT",
+        "translation_coverage_reason": "Absent from the only ingested source, confirmed by agent7's per-key disposition. No edge is created."
+      },
+      {
+        "canonical_key": "VG:RV:SAK:M10:S086:V017",
+        "translation_coverage": "SOURCE_ABSENT",
+        "translation_coverage_reason": "Absent from the only ingested source, confirmed by agent7's per-key disposition. No edge is created."
+      },
+      {
+        "canonical_key": "VG:RV:SAK:M10:S132:V005",
+        "translation_coverage": "COVERED_BY_A_MERGED_RANGE_ON_ITS_ANCHOR",
+        "range_anchor": "VG:RV:SAK:M10:S132:V004",
+        "translation_coverage_reason": "Griffith prints this verse inside its anchor's unit. The edge points at the anchor's existing Translation node."
+      }
+    ]
+  },
+  "promised": {
+    "ritual_role_nodes_updated": 20,
+    "phenomenon_nodes_updated": 13,
+    "composite_nodes_updated": 71,
+    "composed_of_edges_created": 4,
+    "translation_nodes_retyped": 4,
+    "has_translation_edges_created": 34,
+    "mantra_nodes_updated": 36
+  }
+}

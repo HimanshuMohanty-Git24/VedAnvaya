@@ -1,0 +1,787 @@
+{
+  "artifact": "AGENT_B_HOSTILE_AUDIT_RECEIPT",
+  "at": "2026-09-18T11:25:10.088029+00:00",
+  "auditor": "AGENT B, independent hostile closure auditor, one full pass",
+  "scope": "VedAnvaya Release Blocker Closure R4",
+  "method": "Live Neo4j measurement (bolt://localhost:7687, database neo4j, timeouts inside neo4j.Query), logical-backup property diff over all 164,201 backup records, source reading, gate re-runs, test mutation, needle evasion. No graph writes. No source edits.",
+  "self_disclosure": [
+    "Re-running scripts/graph_quality_scorecard.py rewrote docs/reports/GRAPH_QUALITY_V2_SCORECARD.md in the working tree, because the script writes its own report. Agent A's version of that file is therefore replaced. Its value for the one differing figure was read from the diff BEFORE the overwrite and is quoted in M8.",
+    "Re-running scripts/dependency_state.py rewrote data/staging/integration/dependency_status.json.",
+    "The 'quality evaluation' STALE_INPUT row in my dependency run was caused by MY OWN scorecard re-run and is NOT attributed to Agent A. The 'Knowledge World public projection' STALE_INPUT row IS Agent A's, proven by mtime ordering in M2.",
+    "I mutated data/enrichment/vedagraph_enrichment_v1/formula_layer_published_pin.json to prove the repointed tests can fail, then restored it and re-verified published_generation as 720 families / 2037 members / 1119 expansions."
+  ],
+  "findings": [
+    {
+      "id": "C1",
+      "grade": "CRITICAL",
+      "claim": 7,
+      "title": "Personification refusals are contradicted by the graph's own registry; the stored reason is a false statement",
+      "locus": "graph properties personification_status / personification_status_reason on :NaturalPhenomenon",
+      "cypher": [
+        "MATCH (n:NaturalPhenomenon {entity_key:'VG:CONCEPT:USAS-DAWN'}) RETURN n.preferred_label_sa, n.personification_status",
+        "MATCH (d:Devata {entity_key:'VG:DEVATA:USAH'}) RETURN d.label_iast, d.preferred_label, d.is_deity",
+        "MATCH (d:Devata {entity_key:'VG:DEVATA:CANDRAMAH'}) RETURN d.label_iast, d.is_deity"
+      ],
+      "measured": {
+        "USAS-DAWN": {
+          "preferred_label_sa": "usas",
+          "status": "REFUSED_NO_REGISTERED_DEITY_COUNTERPART",
+          "registry_match": {
+            "entity_key": "VG:DEVATA:USAH",
+            "label_iast": "usas",
+            "preferred_label": "usah",
+            "is_deity": true,
+            "structure": "INDIVIDUAL"
+          },
+          "note": "both 'usas' and 'usah' appear in USAS-DAWN's own aliases_sa list"
+        },
+        "CANDRAMAS-MOON": {
+          "preferred_label_sa": "candramas",
+          "status": "REFUSED_NO_REGISTERED_DEITY_COUNTERPART",
+          "registry_match": {
+            "entity_key": "VG:DEVATA:CANDRAMAH",
+            "label_iast": "candramas",
+            "is_deity": true
+          }
+        },
+        "VATA-WIND": {
+          "preferred_label_sa": "vata",
+          "status": "REFUSED_NO_REGISTERED_DEITY_COUNTERPART",
+          "registry_match": {
+            "entity_key": "VG:DEVATA:VAYUH",
+            "label_iast": "vayu"
+          },
+          "note": "weaker case: matched via the concept's own aliases_sa (vayuh/vayum/vayo), not the primary stem field"
+        },
+        "stored_reason_verbatim": "No :Devata in this registry carries this phenomenon's Sanskrit stem. This is a statement about the registry, NOT about whether the Vedas personify the phenomenon -- several of these are addressed as beings in the text and were never curated as deities.",
+        "method": "the same exact-surface index over d.label_iast + d.preferred_label + d.aliases_iast that produces the 4 accepted mappings AGNI-FIRE->AGNIH, AP-WATERS->APAH, RATRI-NIGHT->RATRIH, SURYA-SUN->SURYAH"
+      },
+      "claimed": "4 PERSONIFIED_AS_A_REGISTERED_DEVATA, 9 REFUSED_NO_REGISTERED_DEITY_COUNTERPART",
+      "should_be": "at least 6 PERSONIFIED / 7 REFUSED (USAS-DAWN->VG:DEVATA:USAH, CANDRAMAS-MOON->VG:DEVATA:CANDRAMAH); 7/6 if VATA-WIND is admitted",
+      "why_it_matters": "Two public entity nodes carry a typed statement about the graph's own registry that one Cypher query disproves. The same R4 migration landed VG:DEVATA:USASANAKTA -[COMPOSED_OF]-> VG:DEVATA:USAH, so one arm of R4 uses USAH as a registered Devata while another writes that no such Devata exists. This is the repo's recorded failure mode: a verdict resting on an absence one query disproves."
+    },
+    {
+      "id": "C2",
+      "grade": "CRITICAL",
+      "claim": 13,
+      "title": "A false figure is served live by the API and self-contradicts inside one response",
+      "locus": "src/vedagraph/api/services/entity_service.py:1424",
+      "measured": {
+        "stale_text": "\"deity, or one of the 285 descriptors refused resolution with a typed \"",
+        "live_unresolved_total": 277,
+        "split_reproduced": {
+          "UNRESOLVED_STEM_MATCHES_NO_CANONICAL_DEVATA": 202,
+          "UNRESOLVED_COMPOUND_TWO_ASCRIPTIONS": 67,
+          "UNRESOLVED_SUBJECT_DESCRIPTOR_NOT_A_DEITY": 4,
+          "UNRESOLVED_NAMES_A_PLURALITY": 3,
+          "UNRESOLVED_SOURCE_DEFERS_TO_THE_MANTRA": 1,
+          "sum": 277
+        },
+        "resolved": 47,
+        "resolved_plus_unresolved": 324,
+        "live_api_probe": "FastAPI TestClient over the live Neo4jRepository. GET /api/v1/devatas/VG:DEVATA:AGNIH/passages?basis=ascription&veda=AV&limit=1 returns BOTH caveats in one payload: ATTRIBUTION_SCOPE_STATEMENT saying 'The other 277 are refused with a typed reason each' AND the AV caveat saying 'one of the 285 descriptors refused resolution with a typed reason'. Both carry source=\"measured\"."
+      },
+      "should_be": "277",
+      "why_it_matters": "Claim 13 asserts entity_service.py was updated for 285->277. It was updated at line 143 and missed at line 1424. One API response now publishes two contradictory counts for the same quantity, both labelled 'measured', and one of them is wrong."
+    },
+    {
+      "id": "C3",
+      "grade": "CRITICAL",
+      "claim": 13,
+      "title": "The corrected attribution_scope_note was never landed; all 214 :Devata nodes still publish 285 and omit the R4 residual",
+      "locus": "graph property attribution_scope_note on 214 :Devata nodes; source of truth src/vedagraph/domain/taxonomy.py:157-160",
+      "cypher": "MATCH (n:Devata) RETURN DISTINCT n.attribution_scope_note AS note, count(*) AS c",
+      "measured": {
+        "distinct_stored_notes": 1,
+        "nodes": 214,
+        "stored_length": 1222,
+        "stored_contains_285": true,
+        "stored_contains_277": false,
+        "stored_contains_R4_RESIDUAL": false,
+        "code_constant_contains_277": true,
+        "code_constant_contains_285": false,
+        "code_constant_contains_R4_RESIDUAL": true,
+        "stored_equals_code": false,
+        "corroborating": "CONTAINS 'for 39 of the 324' -> 214 :Devata; CONTAINS 'other 285' -> 214 :Devata; CONTAINS 'for 47 of the 324' OR 'other 277' -> 0 rows"
+      },
+      "served_by": [
+        "src/vedagraph/api/ask/retriever.py:219 selects e.attribution_scope_note",
+        "src/vedagraph/api/ask/evidence.py:352 uses it as the evidence qualifier"
+      ],
+      "should_be": "the 214 nodes re-landed with taxonomy.py's corrected sentence (277 plus the R4-RESIDUAL-ATTRIBUTION-002 disclosure)",
+      "why_it_matters": "tests/domain/test_attribution_scope_note.py:305 names the missing step in its own failure message ('re-land attribution_scope_note onto the 214 :Devata nodes'), and no test compares the stored property to the constant, so the divergence is entirely unguarded. The Ask surface publishes the stale figure and omits the residual disclosure the code-side fix exists to provide."
+    },
+    {
+      "id": "M1",
+      "grade": "MAJOR",
+      "claim": 10,
+      "title": "The TRANSLATION-004 revert is incomplete: 3 Translation nodes remain mutated, and the receipt describes a change that did not persist",
+      "locus": "3 :Translation nodes; data/staging/release_blocker_r4/migration_receipt.json post_migration_corrections[0]",
+      "measured": {
+        "method": "full property diff of all 18,427 :Translation nodes, live vs data/staging/release_blocker_r4/backup/nodes.jsonl",
+        "nodes_differing": 3,
+        "the_change": "alignment_level: HYMN -> MANTRA",
+        "nodes": [
+          {
+            "translation_id": "28a5a479-3db4-5247-87cc-4e4ac99308de",
+            "mantra": "VG:RV:SAK:M05:S055:V007",
+            "translator": "Ralph T. H. Griffith"
+          },
+          {
+            "translation_id": "35d91e79-a941-5e65-8582-737985d0545b",
+            "mantra": "VG:RV:SAK:M10:S048:V006",
+            "translator": "Ralph T. H. Griffith"
+          },
+          {
+            "translation_id": "d87bcdde-8abd-5a98-9132-b5c2cb609b3e",
+            "mantra": "VG:RV:SAK:M10:S132:V004",
+            "translator": "Ralph T. H. Griffith"
+          }
+        ],
+        "alignment_level_distribution": {
+          "backup": {
+            "MANTRA": 18205,
+            "HYMN": 158,
+            "MANTRA_RANGE": 64
+          },
+          "live": {
+            "MANTRA": 18208,
+            "HYMN": 155,
+            "MANTRA_RANGE": 64
+          }
+        },
+        "alignment_level_basis_non_null": {
+          "backup": 0,
+          "live": 0
+        },
+        "self_contradiction": "each of the 3 now carries alignment_level='MANTRA' alongside alignment_confidence_basis = \"bound to the hymn and not to a verse of it: the verse-level address was not established. This is the population PRODUCT_V1_SCOPE.md calls 'recorded as uncertain'\"",
+        "indistinguishable": "all 155 remaining HYMN-aligned Translations attach to exactly 1 mantra each, so the 3 flipped rows are structurally identical to the 155 left alone; no recorded basis distinguishes them"
+      },
+      "receipt_says": {
+        "translation_nodes_retyped": 4,
+        "anchors_retyped_MANTRA_RANGE_kept": 4
+      },
+      "should_be": "MANTRA_RANGE is 64 in BOTH backup and live, so ZERO anchors were re-typed to MANTRA_RANGE; the change that persisted is 3 nodes HYMN->MANTRA, which the receipt does not describe at all",
+      "what_DID_revert_correctly": {
+        "HAS_TRANSLATION_total": 18427,
+        "edges_carrying_r4_created_by": 0,
+        "GAP_TRANSLATION_006_even_verses_with_a_translation": 0,
+        "even_verses_in_RV_1.65-1.70": 30,
+        "RV_mantras_with_no_own_translation_edge": 36,
+        "translation_coverage_rows": 36,
+        "DEDICATED_ENGLISH_MANTRAS_live": {
+          "RV": 10480,
+          "AV": 5715,
+          "YV": 1950,
+          "SV": 0
+        },
+        "RANGE_COVERED_live": {
+          "RV": 60,
+          "AV": 68
+        },
+        "REUSED_RENDERING_live": {
+          "AV": 21,
+          "SV": 173
+        }
+      },
+      "why_it_matters": "The revert is reported complete and is not. No published figure moved, because layer_figures.py:353 _DEDICATED_ENGLISH_QUERY excludes only MANTRA_RANGE, and nothing pins the HYMN-aligned population (no 158 pin in layer_figures.py, passage_service.py or tests), so neither the 11/11 scorecard nor the test accounting can catch it. Three rows now assert a verse-level alignment their own evidence field denies."
+    },
+    {
+      "id": "M2",
+      "grade": "MAJOR",
+      "claim": 14,
+      "title": "The dependency-state claim is false: STALE_INPUT is not 0",
+      "locus": "scripts/dependency_state.py; data/staging/integration/dependency_ledger.json",
+      "measured": {
+        "re_run_result": "CURRENT=3  STALE_INPUT=2  BLOCKED=3  NOT_APPLICABLE=1",
+        "the_agent_a_row": {
+          "consumer": "Knowledge World public projection",
+          "status": "STALE_INPUT",
+          "inputs_that_moved": [
+            "builder:src/vedagraph/api/services/graph_service.py"
+          ]
+        },
+        "mtime_proof_IST": {
+          "frontend/public/world/world.predicates.json": "2026-09-18 14:51:27",
+          "frontend/public/data/home-world.json": "2026-09-18 14:51:36",
+          "data/staging/integration/dependency_ledger.json": "2026-09-18 14:53:00",
+          "src/vedagraph/api/services/graph_service.py": "2026-09-18 15:00:18"
+        },
+        "conclusion": "the builder was edited 9 minutes AFTER the projection was built and after the ledger was stamped, and neither was redone; any run after 15:00 IST reports STALE_INPUT",
+        "mitigation_verified": "the shipped frontend/public/world/world.predicates.json CONTENT is correct: HAS_DEVATA_ASCRIPTION and ASCRIBES_TO_DEVATA both carry the 47/277 text, the string '285' is absent, and MENTIONS_EPITHET is present with a full tier-disclosure limit string"
+      },
+      "claimed": "CURRENT=5 STALE_INPUT=0 BLOCKED=3 NOT_APPLICABLE=1 UNKNOWN=0",
+      "should_be": "CURRENT=4 STALE_INPUT=1 BLOCKED=3 NOT_APPLICABLE=1 as Agent A left it. My own scorecard re-run added the second STALE_INPUT ('quality evaluation'); that one is MINE, not Agent A's.",
+      "why_it_matters": "A gate reported green that its own tool reports amber. The shipped content happens to be right, so this is a false gate reading rather than a wrong artifact -- but it is precisely the repo's recorded failure ('the dependency system read CURRENT while the browser downloaded 28 wrong labels') and the ledger was never re-stamped."
+    },
+    {
+      "id": "M3",
+      "grade": "MAJOR",
+      "claim": 10,
+      "title": "The R4 closure-audit artifact records the pre-revert regressed state and was never regenerated",
+      "locus": "data/staging/wave4/registry_closure_audit.json",
+      "measured": {
+        "artifact_at": "2026-09-18T08:53:08.572566+00:00",
+        "mtime_IST": "2026-09-18 14:23:08 (untouched by me)",
+        "revert_at": "2026-09-18T08:54:24.858376+00:00 -- 76 seconds AFTER the audit was written",
+        "measurement_disagreements": {
+          "before": 0,
+          "after": 10
+        },
+        "the_two_stale_rows": [
+          "GAP-TRANSLATION-006: ruling declared 0 and the graph measures 30.",
+          "GAP-TRANSLATION-004: ruling declared 36 and the graph measures 2."
+        ],
+        "live_truth": {
+          "even_verses_RV_1.65-1.70_with_a_HAS_TRANSLATION": 0,
+          "even_verses_in_span": 30,
+          "RV_mantras_with_no_own_translation_edge": 36,
+          "HAS_TRANSLATION_total": 18427
+        },
+        "the_other_8_are_improvements_the_rulings_have_not_caught_up_with": [
+          "ATTRIBUTION-001 39->47",
+          "ATTRIBUTION-002 39->47",
+          "COMMUNITIES-002 57->55",
+          "ENTITY_COVERAGE-001 0->1035",
+          "ENTITY_COVERAGE-002 25->157",
+          "ENTITY_COVERAGE-007 13->0",
+          "RITUAL-004 2->0",
+          "CROSS-VEDA-DEVATA-IDENTITY-BRIDGE-001 39->47"
+        ]
+      },
+      "should_be": "regenerated after R4-REVERT-01, at which point GAP-TRANSLATION-006 measures 0 and GAP-TRANSLATION-004 measures 36",
+      "why_it_matters": "This is the artifact Agent A credits with catching the regression, and the artifact baseline.json pins by sha256. As shipped it tells a reader the GAP-TRANSLATION-006 defect is live on 30 verses when it is 0, and it directly contradicts the migration receipt's own measures_after_revert block."
+    },
+    {
+      "id": "M4",
+      "grade": "MAJOR",
+      "claim": 14,
+      "title": "The test accounting omits tests/api -- 1,539 tests, including the 4 files Agent A modified",
+      "locus": "data/staging/release_blocker_r4/test_accounting.json .paths; scripts/release_test_accounting.py:196",
+      "measured": {
+        "accounted_paths": [
+          "tests/domain",
+          "tests/graph",
+          "tests/unit",
+          "tests/enrich"
+        ],
+        "script_default_paths": [
+          "tests/domain",
+          "tests/graph",
+          "tests/unit"
+        ],
+        "tests_api_run_by_me_default_gate": "1539 passed, 1 skipped, 0 failed",
+        "tests_api_files_agent_a_modified": [
+          "tests/api/test_adversarial.py",
+          "tests/api/test_app_health.py",
+          "tests/api/test_devatas.py",
+          "tests/api/test_insights.py"
+        ],
+        "live_gate_over_accounted_paths_reproduced_by_me": "2083 passed, 40 skipped, exit 0 -- exactly Agent A's live_neo4j figures",
+        "guard_logic_checked": "default_run_failures and live_gated_failures both include .errored, so errors are caught; pyproject addopts carries no -m filter, so nothing is deselected by default and deselected=0 in both gates"
+      },
+      "should_be": "the accounting should cover the whole suite (~3,663 tests) or state its path scope as an explicit limit on the claim",
+      "why_it_matters": "The guard exists because R3 let one run's totals stand in for the suite. It now lets one path-set's totals stand in for the suite, over exactly the directory Agent A edited. No failure was in fact hidden this round -- I ran it. Secondary: the guard returns 1 whenever never_executed is non-empty and has no allowlist, so with 40 permanent AV-scan skips it has no green state and cannot distinguish a NEW never-executed test from the 40 known ones."
+    },
+    {
+      "id": "M5",
+      "grade": "MAJOR",
+      "claim": 5,
+      "title": "The bhesaja needle can be evaded, including by sentences that assert the false claim verbatim",
+      "locus": "tests/domain/test_r4_gap_closures.py:53-77 (_BHESAJA_CLAIM_SURFACES, _BHESAJA_FALSE_ASSERTIONS, _BHESAJA_EXONERATIONS)",
+      "measured": {
+        "method": "imported the module and applied its own constants to candidate sentences",
+        "baseline_asserting_form": "CAUGHT",
+        "evasions_that_PASS_while_asserting_the_false_claim": [
+          "\"The registry has no healing entity, which makes a stated-remedy question unanswerable.\" -> PASSES, exonerated by the marker 'unanswerable', even though it matches the regex registry\\\\s+has\\\\s+no\\\\s+healing\\\\s+entity",
+          "\"No healing entity in the registry, despite rounds saying otherwise.\" -> PASSES, exonerated by 'saying otherwise'"
+        ],
+        "paraphrases_that_PASS_unmatched": [
+          "The registry contains no healing concept, so this cannot be answered.",
+          "Healing was never curated as an entity in this registry.",
+          "There is no bhesaja entity in the registry.",
+          "The registry never curated bhesaja.",
+          "No stated remedy can be reached: no entity represents healing."
+        ],
+        "scope": "3 files scanned. src/vedagraph/api/services/entity_service.py and frontend/src/app/limits/page.tsx are NOT scanned, and the corrected note now points the reader at /limits. I checked /limits: no healing or bhesaja claim present, so the scope hole is latent, not realised.",
+        "self_test_gap": "test_the_bhesaja_needle_can_still_fail checks that each marker exonerates ONE hand-picked corrective sentence; it never checks that a marker cannot exonerate an ASSERTING sentence -- the exact hole its own docstring warns about ('an over-broad exoneration list would silence the check entirely')"
+      },
+      "should_be": "exonerations should require co-occurrence with a corrective construction rather than either of two generic words, and the surface list should be derived rather than enumerated",
+      "why_it_matters": "The needle certifies that a two-round false claim is gone. Two one-word additions restore the claim and keep the needle green. This is the repo's recorded double failure: wrong surface, then wrong vocabulary."
+    },
+    {
+      "id": "M6",
+      "grade": "MAJOR",
+      "claim": 3,
+      "title": "occurrence_mantras on :Epithet carries two kinds of value under one name, and the narrow rows under-report",
+      "locus": "graph properties occurrence_mantras / occurrence_tokens on the 13 :Epithet nodes",
+      "cypher": "MATCH (e:Epithet) UNWIND e.occurrence_annotator_lemmas AS lem OPTIONAL MATCH (l:Lemma {lemma: lem}) RETURN e.label_iast, e.occurrence_match_tier, e.occurrence_mantras, l.mantra_count, l.mantra_count - e.occurrence_mantras AS shortfall",
+      "measured": {
+        "STEM_LEMMA_10_epithets": "occurrence_mantras == lemma.mantra_count exactly, shortfall 0 for all ten (havyavahana 17, jatavedas 128, maghavan 356, puruhuta 80, tanunapat 8, vaisvanara 60, vajrin 84, vrtrahan 116, sakra 45, sipivista 4)",
+        "ATTESTED_SURFACE_FORM_3_epithets": {
+          "dasra": {
+            "published": 40,
+            "lemma": 50,
+            "shortfall": 10
+          },
+          "nasatya": {
+            "published": 93,
+            "lemma": 101,
+            "shortfall": 8
+          },
+          "rudravartani": {
+            "published": 4,
+            "lemma": 4,
+            "shortfall": 0
+          }
+        },
+        "brief_question_answered": "the brief asks whether dasra's 40 CONFLATES the epithet with the ordinary adjective dasra-. It does NOT. The error runs the other way -- it under-counts.",
+        "dasra_10_excluded_verses_read_in_Sanskrit": {
+          "genuine_Asvin_duals_in_pre_vocalic_sandhi_dasrav_MISSED": [
+            "RV 1.30.18",
+            "RV 1.117.22",
+            "RV 1.118.3",
+            "RV 1.183.4",
+            "RV 3.58.3",
+            "RV 3.58.5",
+            "RV 5.75.9"
+          ],
+          "vocative_singular_addressed_to_Pusan_correctly_excluded": [
+            "RV 1.42.5",
+            "RV 6.56.4"
+          ],
+          "Maruts_address": [
+            "RV 5.55.5"
+          ]
+        },
+        "nasatya_8_excluded": "7 of 8 are the same dual in another case (nasatyabhyam x4, nasatyav x3); the 8th is nasatyaya at RV 4.3.6",
+        "mitigation_verified": [
+          "the shipped frontend/public/world/world.predicates.json MENTIONS_EPITHET limit string explicitly discloses the tier semantics, including that ATTESTED_SURFACE_FORM edges 'cover one attested word form ... whose wider inflection is deliberately not claimed'",
+          "occurrence_mantras is read by NO python source, is absent from world.json and home-world.json, and is asserted by NO test -- it reaches no product surface, but it is also unguarded"
+        ]
+      },
+      "should_be": "one kind of value under the name, or a per-row statement of what the denominator is",
+      "why_it_matters": "A public :Epithet node (epithet_key VG:EPITHET:DASRA) publishes an RV occurrence count meaning 'every mantra the annotator lemma reaches' for 10 rows and 'mantras carrying one of three hand-listed spellings' for 2, differing by 10 and 8 mantras. The Ask surface reads node properties directly (see C3), so graph-only is not the same as harmless. This is the repo's recorded 'two KINDS of value under one field name' defect."
+    },
+    {
+      "id": "M7",
+      "grade": "MAJOR",
+      "claim": 6,
+      "title": "26 of 164 lexical-recall figures measure the matcher against itself",
+      "locus": "graph properties lexical_recall / lexical_recall_matched / lexical_recall_sample_size on :DomainEntity",
+      "cypher": "MATCH (e:DomainEntity) WHERE e.lexical_recall_status='MEASURED_AGAINST_RV_ANNOTATION' OPTIONAL MATCH (m:Mantra {veda:'RV'})-[:MENTIONS_ENTITY]->(e) WITH e, count(DISTINCT m) AS own RETURN sum(CASE WHEN e.lexical_recall_sample_size=own AND e.lexical_recall_matched=own THEN 1 ELSE 0 END) AS trivially_one, sum(CASE WHEN e.lexical_recall=1.0 THEN 1 ELSE 0 END) AS recall_is_one, min(e.lexical_recall_sample_size) AS min_sample, count(*) AS total",
+      "measured": {
+        "total_measured": 164,
+        "sample_equals_matched_equals_own_projection": 26,
+        "recall_exactly_1.0": 32,
+        "min_sample_size": 1,
+        "sample_size_lt_5": 31,
+        "soundness_checks_that_PASSED": {
+          "matched_gt_own_projection": 0,
+          "matched_gt_sample": 0,
+          "bad_arithmetic_recall_ne_matched_over_sample": 0,
+          "sample_equals_own": 30,
+          "matched_equals_own": 111
+        },
+        "worked_example_of_a_SOUND_row": "VG:CONCEPT:AGNI-FIRE matched 629, sample 793, own RV projection 631 -- the denominator is annotation-derived and LARGER than the projection",
+        "coverage_reproduced": {
+          "MEASURED_AGAINST_RV_ANNOTATION": 164,
+          "UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS": 155,
+          "UNMEASURED_NO_ANNOTATION_ANCHOR": 65,
+          "sum": 384,
+          "every_measured_row_has_both_a_figure_and_a_sample_size": true
+        }
+      },
+      "should_be": "rows whose denominator IS the projection being measured should be typed as such, not published as recall 1.0",
+      "why_it_matters": "For 26 of 164 entities the published per-entity recall of 1.0 cannot be anything else, because sample_size IS the matcher's own output. The sample size is published so a careful reader can see a sample of 1, but nothing types the row as self-referential. The denominator is genuinely independent for the other 138, and the arithmetic is exact on all 164."
+    },
+    {
+      "id": "M8",
+      "grade": "MAJOR",
+      "claim": 4,
+      "title": "The scorecard published 158 corpus profiles against a live 157, and the DANASTUTIH profile cleanup is incomplete",
+      "locus": "docs/reports/GRAPH_QUALITY_V2_SCORECARD.md section 4; graph properties profile_* on VG:DEVATA:DANASTUTIH",
+      "measured": {
+        "agent_a_scorecard_row_read_before_my_overwrite": "| with a corpus profile | 0 | 158 |",
+        "live": "MATCH (n:Devata) WHERE n.profile_attributed_total IS NOT NULL RETURN count(n) -> 157, of which is_deity=false -> 0",
+        "my_regeneration_produces": [
+          "| with a corpus profile | 0 | 157 |",
+          "the major-deity table's has_profile for \"praise of a patron's gift\" flips from yes to no"
+        ],
+        "profile_property_residue_on_DANASTUTIH": {
+          "removed": "26 of 29 profile_* properties",
+          "still_present": [
+            "profile_mention_default_tiers",
+            "profile_mention_verdict_by_veda",
+            "profile_mentions_default_scope"
+          ],
+          "cypher": "MATCH (d:Devata) UNWIND keys(d) AS k WITH k,d WHERE k STARTS WITH 'profile' RETURN k, d.is_deity, count(*) -- each of those three returns is_deity=true n=157 AND is_deity=false n=1",
+          "residual_values": "profile_mentions_default_scope=0, profile_mention_verdict_by_veda={AV,RV,SV,YV all NOT_IN_LAYER}, profile_mention_default_tiers=[DEITY_CERTAIN,DEITY_PROBABLE]",
+          "eligibility": "is_deity=false, deity_eligibility_ruling=NOT_DEITY, non_deity_kind=DANASTUTI_GIFT_PRAISE"
+        }
+      },
+      "claimed": "3 metrics DELETED from VG:DEVATA:DANASTUTIH; profile properties also removed from it",
+      "should_be": "157 in the scorecard; zero profile_* properties on the node ruled NOT_DEITY",
+      "why_it_matters": "The metric deletion is real and verified (the metric_id set diff loses exactly the 3 DANASTUTIH metrics, and 0 MEASURES edges remain on the node), but 'profile properties also removed' is not true. DANASTUTIH is the single node where the eligibility contract and the materialised profile shape disagree. The residual values are typed-absence, so no false figure is published. The scorecard's 158 is the only figure in that document I could not reproduce."
+    },
+    {
+      "id": "M9",
+      "grade": "MAJOR",
+      "claim": 13,
+      "title": "The R4 residual is disclosed in 3 surfaces, not everywhere the figure appears",
+      "locus": "grep -rn 'R4-RESIDUAL-ATTRIBUTION-002' src/",
+      "measured": {
+        "discloses": [
+          "src/vedagraph/domain/queries.py:161",
+          "src/vedagraph/api/services/entity_service.py:142",
+          "src/vedagraph/domain/taxonomy.py:158 -- but never landed on the graph, see C3"
+        ],
+        "does_not_disclose": [
+          "src/vedagraph/api/services/graph_service.py:1035",
+          "src/vedagraph/api/services/graph_service.py:1041",
+          "src/vedagraph/domain/profiles.py:111",
+          "src/vedagraph/api/services/entity_service.py:1424"
+        ],
+        "assessment": "defensible for graph_service.py and profiles.py -- they publish the resolution count (47 of 324, 277 refused) and never pair 882 with 47, so there is no conflation to disclose. NOT defensible for the graph property (C3) or for line 1424 (C2).",
+        "unresolved_split_sums_correctly": "queries.py:163 states '202 reach no canonical deity surface, 67 are compounds naming two ascriptions, 4 are hymn subjects rather than deities, 3 name a plurality, and 1 is the Anukramani's own deferral marker lingokta' -- 202+67+4+3+1 = 277, and every term matches my independent re-run of the bridge"
+      },
+      "why_it_matters": "The conflation fix is real where the conflation risk exists, but the reader of an Ask answer or of the AV ascription caveat gets neither the corrected count nor the residual."
+    },
+    {
+      "id": "M10",
+      "grade": "MAJOR",
+      "claim": 1,
+      "title": "The formula pin and both new gate scripts are untracked in git",
+      "locus": "git ls-files --error-unmatch; git check-ignore -v",
+      "measured": {
+        "untracked_and_NOT_gitignored": [
+          "data/enrichment/vedagraph_enrichment_v1/formula_layer_published_pin.json",
+          "scripts/pin_formula_layer_generation.py",
+          "scripts/release_test_accounting.py"
+        ],
+        "tracked_files_in_that_enrichment_dir": [
+          "analytics.json",
+          "manifest.json",
+          "semantic_run_report.json"
+        ],
+        "consequence": "tests/domain/test_v3_layers.py _published_pin() asserts path.exists(); on a fresh checkout all four repointed tests plus the new fifth error out"
+      },
+      "why_it_matters": "The closure's falsifier and its generator, and the release test-accounting guard, are outside version control, so the claimed closure is not reproducible from the repository. This is the repo's recorded pattern -- 'the generator is not in git', 'sealed schema is untracked'."
+    },
+    {
+      "id": "M11",
+      "grade": "MAJOR",
+      "claim": 8,
+      "title": "The NOT_ENUMERABLE_FROM_ANYTHING_HELD reason applies a GROUP argument verbatim to PAIRs",
+      "locus": "graph property decomposition_status_reason on the 21 PAIR and 30 GROUP nodes typed NOT_ENUMERABLE_FROM_ANYTHING_HELD",
+      "measured": {
+        "one_verbatim_string_on_all_21_pairs": "No entry in data/registry/devata_components.yaml, which is the only artifact in this repository that states a composite deity's members. Enumerating this one means deciding which deities it contains, which is curation rather than projection. For an open-ended group -- devah, visve devah, the waters -- membership is a scholarly question and may have no enumerable answer; the registry's own source_dependency says so.",
+        "first_clause_is_true_and_verifiable": true,
+        "second_clause_is_false_of_two_member_dvandvas": "VG:DEVATA:INDRAVISNU, VG:DEVATA:INDRAPARVATAU and VG:DEVATA:SOMARKAU are transparent devata-dvandvas, and VG:DEVATA:VISNUH, VG:DEVATA:INDRAH and VG:DEVATA:SOMAH are all separately registered INDIVIDUAL Devatas -- which is exactly the argument the yaml's own ACCEPTED evidence uses for MITRAVARUNAU"
+      },
+      "should_be": "a reason scoped to the row's structure; the status name and the refusal to curate are correct",
+      "why_it_matters": "The status name and the first clause are honest, and Agent A correctly leaves the PAIR arm open, so this is misleading prose rather than a false closure. But a reader is told membership 'may have no enumerable answer' about a compound whose two members the same registry lists."
+    },
+    {
+      "id": "N1",
+      "grade": "MINOR",
+      "claim": 10,
+      "title": "The brief's own claim-10 wording contradicts the receipt",
+      "measured": "the brief says Agent A 'reverted all 34 edges AND the 4 anchor re-types'; migration_receipt.json post_migration_corrections[0].kept says 'The 36 per-mantra translation_coverage rows and the 4 anchor re-types to MANTRA_RANGE'. Neither statement matches what actually persisted -- see M1."
+    },
+    {
+      "id": "N2",
+      "grade": "MINOR",
+      "claim": 11,
+      "title": "migration_receipt.json carries an unlabelled pre-revert relationship_type_delta",
+      "measured": "relationship_type_delta = {MEASURES 399, COMPOSED_OF 4, ATTESTED_IN 1, HAS_TRANSLATION 34} sums to 438 against its own census_delta.relationships of 404, omits MENTIONS_EPITHET entirely, and includes 34 HAS_TRANSLATION edges that no longer exist. The authoritative delta_against_the_r4_baseline block is arithmetically correct and reconciles exactly."
+    },
+    {
+      "id": "N3",
+      "grade": "MINOR",
+      "claim": 15,
+      "title": "The ENTITY-004 provenance partition does not reproduce",
+      "cypher": "MATCH (n:DomainEntity) RETURN n.existence_evidence_type, count(*)",
+      "measured": {
+        "SAMHITA": 159,
+        "null": 156,
+        "BRAHMANA": 37,
+        "SRAUTASUTRA": 22,
+        "GRHYASUTRA": 10,
+        "sum": 384,
+        "with_existence_evidence_type": 228,
+        "without": 156
+      },
+      "claimed": "229 from concept registries with NO external source citation and 155 from ritual registries WITH existence_evidence_type",
+      "note": "228 carry existence_evidence_type, not 155; 156 lack it, not 229. Nothing was landed for this gap and Agent A declares it open, so this is a reporting error on an open item, not a data defect. Independently confirmed open: expected_source does not exist as a property on any of the 384."
+    },
+    {
+      "id": "N4",
+      "grade": "MINOR",
+      "claim": 14,
+      "title": "The 40 never-executed tests are not all AV-scan skips",
+      "measured": "39 are AV transcription / accent-binder / reproducibility. The 40th is tests/unit/test_semantic_layer.py::test_live_luna_extraction_is_schema_conformant, skipped at line 633 because OPENAI_API_KEY is not set -- a paid-API marker, a different reason to skip."
+    },
+    {
+      "id": "N5",
+      "grade": "MINOR",
+      "claim": 16,
+      "title": "OWNER_DECISIONS.md section 37 classifies 2 of 37 sections under the taxonomy it introduces",
+      "measured": "Section 37 is correct on every point I checked: it marks section 34 OWNER-SUPPLIED rather than agent-inferred, quotes the owner instruction verbatim, states the five conjunctive requirements agree with 34 clause for clause, and explicitly does NOT reopen GAP-SEMANTICS-004 ('Its status, its basis and its citation are unchanged; only the provenance line is corrected'). It then introduces an OWNER-SUPPLIED / AGENT-INFERRED table, classifies only 34 and 35, and asserts 'An agent-inferred section has never been used to close an entry' over 35 unclassified sections."
+    },
+    {
+      "id": "N6",
+      "grade": "MINOR",
+      "claim": 1,
+      "title": "The pin's published_only digests are recorded but never asserted",
+      "measured": "test_live_the_published_pin_records_its_distance_from_the_rebuild reads only delta[name]['rebuilt'] and delta[name]['rebuilt_only_sha256']. published_only (217 formulas / 48 families / 184 members) and published_only_sha256 are never read. Covered indirectly: the census assertions in the sibling tests would catch a graph-side change."
+    }
+  ],
+  "verified_no_finding": {
+    "claim_11_migration_receipt": {
+      "verdict": "RECONCILES EXACTLY",
+      "live_census": {
+        "nodes": 164597,
+        "relationships": 509486
+      },
+      "backup_manifest_census": {
+        "nodes": 164201,
+        "relationships": 508042
+      },
+      "full_fingerprint_diff_live_vs_backup": {
+        "labels_changed": {
+          "DerivedMetric": "+396"
+        },
+        "reltypes_changed": {
+          "MENTIONS_EPITHET": "+1035 (absent from the backup)",
+          "MEASURES": "+396",
+          "ASCRIBES_TO_DEVATA": "+8",
+          "COMPOSED_OF": "+4",
+          "ATTESTED_IN": "+1"
+        },
+        "everything_else": "identical across all 57 labels and all 84 relationship types",
+        "arithmetic": "1035+396+8+4+1 = 1444; 508042+1444 = 509486 CONFIRMED. Nodes 399 created - 3 deleted = +396; 164201+396 = 164597 CONFIRMED."
+      },
+      "backup_hashes": "sha256sum nodes.jsonl = 8f394122ba26801c0f5e77dd3e438d01042d272d3d827238dd1a4438de87ce0b, relationships.jsonl = d1cf8a8e64261332214badfe852fbde8e4da328b7d067eeb86983bfad6de37d7 -- BOTH match MANIFEST.json and the .sha256 sidecars. Backup line count 164,201 = the recorded node census.",
+      "identity_unchanged": "streamed all 164,201 backup node records and compared identity value sets against live: entity_key 4941/4941 (0 lost, 0 new), canonical_key 22537/22537, formula_id 4825/4825, translation_id 18427/18427, family_id 720/720, concept_key 119/119. metric_id 1085 -> 1481 with exactly 3 lost (the DANASTUTIH trio the receipt names) and 399 new. NO identity was altered.",
+      "caveat": "see N2 for the stale delta block, and M1 for a property mutation the receipt does not account for -- per-label fingerprints cannot see it"
+    },
+    "claim_1_formula_layer": {
+      "verdict": "DATA IS INTERNALLY PERFECT; THE TESTS WERE STRENGTHENED, NOT WEAKENED; AND THEY CAN FAIL",
+      "invariants_I_measured": {
+        "families": 720,
+        "distinct_family_id": 720,
+        "null_family_id": 0,
+        "formulas": 4825,
+        "distinct_formula_id": 4825,
+        "distinct_collapsed_normalized": 4825,
+        "member_edges": 2037,
+        "bad_endpoints": 0,
+        "formulas_in_more_than_one_family": 0,
+        "families_whose_member_count_disagrees_with_landed": 0
+      },
+      "roles": {
+        "CORE": 914,
+        "EXPANSION": 1119,
+        "VARIANT": 4,
+        "sum": 2037
+      },
+      "tiers": [
+        "TIER_B",
+        "TIER_D"
+      ],
+      "containment_recomputed_independently": "1119 EXPANSION edges, 1119 rows joined, 0 with no parent inside their own family, 0 null linked_formula_id, 0 children joined more than once, 0 containment violations over the collapsed surface",
+      "falsifiability_PROVEN": "mutated the pin (families 720->719, members 2037->2036, EXPANSION 1119->1118, rebuilt 4729->4728) and ALL FIVE tests failed; restored the pin and all pass. 7 live tests in test_v3_layers.py pass; 11 in test_v3_3_final_closure.py pass.",
+      "is_the_pin_circular": "The published_generation block is measured from the graph, so at the moment of pinning it cannot contradict the graph -- it is a regression pin, not an independent validation. It is two-sided thereafter: the census side falsifies a graph change, the rebuilt_only_sha256 side falsifies a disk change. Net, the tests GAINED real invariants the old count-equality never checked (collapsed-identity uniqueness, one-formula-one-family, family.member_count vs landed) and the containment recomputation widened from the artifact's 1,079 expansions to all 1,119.",
+      "dropped_invariant": "only the graph == on-disk-artifact equality, which was the assertion that was failing, replaced by a pinned id-set delta"
+    },
+    "claim_2_suffix_matcher": {
+      "verdict": "FULLY VERIFIED -- EVERY FIGURE REPRODUCED",
+      "method": "ran the live bridge over 324 :DevataAscription and 214 :Devata, then monkeypatched the pre-change single-tier suffix_candidates and re-ran",
+      "resolutions": {
+        "old": 39,
+        "new": 47,
+        "lost": 0,
+        "target_changed_among_the_original_39": 0,
+        "gained": 8
+      },
+      "looseness_is_confined_to_the_SUFFIX": "CONFIRMED by construction: _LENGTH (ascription_bridge.py:86) is {a-macron->a, i-macron->i, u-macron->u, r-long-vocalic->r-vocalic}, strictly one char to one char, so len(shorten(s))==len(s) and the stem slice folded[:-len(target)] is taken from the SOURCE fold. Live evidence: stems agni, indra, manyu, syena, yaksmanasana keep their own vowel lengths and atma resolves as 'atma' with its long a intact.",
+      "the_8_are_correct_Sanskrit": "all eight are the vrddhi or -ka spellings of the sasya-devata taddhita and all eight targets are right: agnidaivatam->AGNIH, indradaivatam->INDRAH, manyudaivatam->MANYUH, syenadaivatam->SYENAH, yaksmanasanadaivatam->YAKSMANASANAH, yaksmanasanadevatakam->YAKSMANASANAH, atmadaivatam->ATMA, atmadevatakam->ATMA",
+      "docstring_figures_reproduced_exactly": "41 of the 210 old UNRESOLVED_STEM descriptors gained a suffix candidate, broken down 27 -daivatam, 11 -devatakam, 1 -daivatyam, 1 -devata, 1 -devatya",
+      "live_edges_agree_with_my_recomputation": "47 ASCRIBES_TO_DEVATA = DEITY_ADJECTIVE_SUFFIX 11 EXACT + 1 LENGTH_INSENSITIVE, DEITY_ADJECTIVE_SUFFIX_LENGTH_FOLDED 6 EXACT + 2 LENGTH_INSENSITIVE, VRDDHI_TADDHITA 20 EXACT + 7 LENGTH_INSENSITIVE",
+      "length_collisions_priced": "5 buckets -- asva, dadhikra, go, pavamana (PAVAMANAH vs PAVAMANAH-SOMAH), visve deva",
+      "soma_pavamana_answer": "the Soma/Pavamana collision IS in the index, and both nodes share the aliases pavamana/pavamanah, so the ambiguity refusal is structurally live -- but ZERO ascriptions reach it. UNRESOLVED_AMBIGUOUS_TWO_OR_MORE_DEVATAS is 0 under BOTH the old and the new matcher, and no ascription label contains soma or pavam. The guard is unexercised by live data, not defeated."
+    },
+    "claim_3_epithet_layer": {
+      "verdict": "STRUCTURALLY VERIFIED -- see M6 for the count-kind defect",
+      "measured": {
+        "MENTIONS_EPITHET": 1035,
+        "per_epithet_sum": "40+17+128+356+93+80+4+8+60+84+116+45+4 = 1035",
+        "Epithet_nodes": 13,
+        "epithets_reached": 13,
+        "bad_targets": 0,
+        "bad_sources": 0,
+        "non_RV_mantras": 0
+      },
+      "tiers": {
+        "STEM_LEMMA": 10,
+        "ATTESTED_SURFACE_FORM": 3
+      },
+      "rigveda_bound_on_every_edge": "annotated_vedas=['RV'], unannotated_vedas=['SV','YV','AV'], absence_outside_annotated_vedas='UNANNOTATED_NOT_ABSENT' on all 1,035",
+      "identity_not_minted": "Epithet stayed at 13 in the backup-vs-live label diff",
+      "the_3_duals_are_legitimate": "resolved via the annotator's own surface_form->lemma statement (annotator_lemma dasra-/nasatya-/rudravartani- with an explicit surface_forms list), NOT by loosening a fold. This is NOT the stem-equivalence forcing R3 barred -- it is strictly NARROWER than the STEM_LEMMA tier, which is precisely why it under-counts (M6).",
+      "declaration_complete": "ontology signature src/vedagraph/domain/ontology.py:934, 1027, 1241; graph API classification src/vedagraph/api/services/graph_service.py:153 with PredicateSemantics at :977; frontend family frontend/src/lib/world/focus.ts:174 under MENTION; and present in the shipped world.predicates.json",
+      "evidence_axis_correct": "evidence_basis=SANSKRIT with an explicit evidence_surface_note stating that the derivation travels on knowledge_layer and the annotation on provenance_layer, and that evidence_basis must not carry a derivation value"
+    },
+    "claim_4_deity_profiles": {
+      "verdict": "DENOMINATOR AND COVERAGE VERIFIED -- see M8 for the residue and the scorecard figure",
+      "measured": {
+        "Devata_total": 214,
+        "is_deity_true": 157,
+        "is_deity_false": 57,
+        "is_deity_null": 0,
+        "distinct_metric_subjects": 157,
+        "metrics": 471,
+        "157x3": 471
+      },
+      "no_non_deity_is_profiled": "every subject of a VG:DEVATA: DerivedMetric has is_deity=true; 0 exceptions, so no human patron is profiled",
+      "no_eligible_deity_is_missing": "MATCH (d:Devata) WHERE d.is_deity=true AND NOT EXISTS {MATCH (mm:DerivedMetric) WHERE mm.subject_key=d.entity_key} -> 0 rows",
+      "danastuti_metrics_gone": "0 DerivedMetric with subject_key containing DANASTUTI; the 3 metric_ids the receipt names are exactly the 3 lost from the backup identity set",
+      "per_corpus_api_VERIFIED": "GET /api/v1/devatas/VG:DEVATA:SARASVATI returns mentions_by_veda with RV 34, AV 10, YV 21, each carrying its own certain/probable/ambiguous split, and SV typed INSUFFICIENT_EVIDENCE with count null rather than 0 -- absence typed in the row",
+      "eligibility_recorded_per_node": "deity_eligibility_contract_version, deity_eligibility_basis, deity_eligibility_ruling, deity_eligibility_reason and non_deity_kind are all present on the DANASTUTIH row I read",
+      "scope_notes": "the DANASTUTIH attribution_scope_note I read correctly states that HAS_DEVATA is Rigveda-only and that a zero for SV/YV/AV means the predicate does not reach that corpus rather than that the deity is absent -- truthful on the Rigveda-only point, but carrying the stale 39/285 figures (C3)"
+    },
+    "claim_5_bhesaja": {
+      "verdict": "AGENT A IS RIGHT -- THE PRIOR CLAIM WAS FALSE. See M5 for the needle.",
+      "measured": {
+        "entity": "VG:CONCEPT:BHESAJA-HEALING",
+        "labels": [
+          "Concept",
+          "DomainEntity"
+        ],
+        "alias_count": 7,
+        "aliases_sa": "bhesajam, bhesajam(anusvara), bhesaja, bhesajani, bhesajih, bhisaja, bhisak",
+        "MENTIONS_ENTITY_edges": 108,
+        "distinct_mantras": 108,
+        "per_veda": {
+          "AV": 47,
+          "YV": 31,
+          "RV": 28,
+          "SV": 2
+        }
+      },
+      "narrowly_true_point_IS_disclosed": "bhesaja is NOT one of the 7 :HumanConcern nodes (DIRGHAYUTVA, PARIPANA, PUSTI, RNA, SAMJNANA, SAPATNA, VARCAS), and queries.py's caveat says so explicitly: 'bhesaja is not typed as a :HumanConcern -- it is a :Concept in the CORPOREAL and RITUAL domains, which is a curation choice and not an absence'. The prior caveat said 'the registry has no healing entity', which is false.",
+      "new_query_is_honest": "stated_remedy_by_veda groups MENTIONS_ENTITY by veda and returns mantras, edges and evidence_bases; its caveat names the gap, quotes the false claim, lists the 7 aliases verbatim, distinguishes a STATED from an effective remedy, and explains why no :Remedy label should exist",
+      "universal_evidence_claim_FALSIFIED_THEN_CONFIRMED": "the caveat says 'every mention edge carries a verbatim locator and quote'. My first probe looked for top-level locator properties and found none, which would have been a FALSE finding on my part. The locator is nested inside the evidence JSON. I parsed all 108 edges: 0 missing a locator, 0 missing a quote, and 0 whose locator differs from its own mantra's canonical_key. THE CLAIM IS TRUE.",
+      "frontend_corrected": "frontend/src/components/lab/plates/human-concerns.tsx note changed from 'Including why there is no healing entity in the registry' to 'Including which predicates carry evidence and which do not'"
+    },
+    "claim_6_ayas_and_recall": {
+      "verdict": "LANDING VERIFIED; THE LITERAL CLAUSE IS UNMET AND AGENT A SAYS SO. See M7.",
+      "ayas": {
+        "ATTESTED_IN_total": "1266 backup -> 1267 live, +1",
+        "new_edge": "VG:CONCEPT:AYAS-METAL -> VG:YV:VSM:A18:V013 with source_attested=true, lexical_match=NOT_SAFELY_RECOVERABLE, plus lexical_nonrecovery_reason, evidence_quote, witness_locator and r4_created_by",
+        "pre_existing": "3 Wave3 edges to AV 5.28.1, AV 5.28.5 and RV 8.2.40"
+      },
+      "yv_lexical_measure_stays_zero": "MATCH (m:Mantra {veda:'YV'})-[:MENTIONS_ENTITY]->(e) WHERE e.entity_key='VG:CONCEPT:AYAS-METAL' RETURN count(DISTINCT m) -> 0, as the receipt readback claims",
+      "recall_coverage": "164 MEASURED_AGAINST_RV_ANNOTATION (all with both a figure and a sample size) + 155 UNMEASURED_NO_REGISTERED_SANSKRIT_ALIAS + 65 UNMEASURED_NO_ANNOTATION_ANCHOR = 384; every DomainEntity carries a status",
+      "the_literal_clause": "'every entity carries a measured recall figure with its sample size' is NOT met at 164/384 -- 220 carry no figure. Agent A does not claim otherwise; it lists ENTITY-006 clause 1 as open/arguable. Typed absence is the repo's own convention, so I do not grade this a false closure."
+    },
+    "claim_8_communities_002": {
+      "verdict": "EVERY TERM OF AGENT A'S ARITHMETIC REPRODUCES, AND R3'S FIGURE OF 24 WAS WRONG. See M11 for the prose.",
+      "yaml": {
+        "file": "data/registry/devata_components.yaml",
+        "policy_version": "rigveda-devata-component-policy-v1",
+        "declared_composites": 20,
+        "review_status": {
+          "ACCEPTED": 14,
+          "NEEDS_REVIEW": 3,
+          "REJECTED": 3
+        }
+      },
+      "empty_member_lists": {
+        "count": 4,
+        "status": {
+          "REJECTED": 3,
+          "NEEDS_REVIEW": 1
+        },
+        "keys": [
+          "VG:DEVATA:VISVEDEVAH (REJECTED)",
+          "VG:DEVATA:ADITYAH (REJECTED)",
+          "VG:DEVATA:MARUTAH (REJECTED)",
+          "VG:DEVATA:DYAVAPRTHIVYAU (NEEDS_REVIEW)"
+        ],
+        "each_carries_an_explicit_reasoned_refusal": true
+      },
+      "the_2_mechanically_landable": [
+        "VG:DEVATA:INDRAVARUNAU -> [INDRAH, VARUNAH]",
+        "VG:DEVATA:USASANAKTA -> [USAH, RATRIH]"
+      ],
+      "landed": "COMPOSED_OF 28 backup -> 32 live = +4, and the 4 land on exactly those two composites, 2 each",
+      "decomposition_status_coverage": {
+        "PAIR": {
+          "DECOMPOSED_FROM_THE_COMPONENT_REGISTRY": 16,
+          "NOT_ENUMERABLE_DECLARED_BY_THE_REGISTRY": 1,
+          "NOT_ENUMERABLE_FROM_ANYTHING_HELD": 21
+        },
+        "GROUP": {
+          "NOT_ENUMERABLE_DECLARED_BY_THE_REGISTRY": 3,
+          "NOT_ENUMERABLE_FROM_ANYTHING_HELD": 30
+        },
+        "total": 71,
+        "the_51": "30 GROUP + 21 PAIR = 51, as claimed"
+      },
+      "pair_arm_still_unmet": "38 PAIR deities: 16 with components, 22 without. Agent A states the PAIR arm is UNMET for 22 and does NOT claim otherwise -- CONFIRMED HONEST."
+    },
+    "claim_9_ritual_004": {
+      "verdict": "FULLY VERIFIED, INCLUDING THE SCHOLARSHIP",
+      "in_classical_sixteen_true": 16,
+      "the_16_ARE_exactly_the_classical_rtvij": "hotr, maitravaruna, acchavaka, gravastut | adhvaryu, pratiprasthatr, nestr, unnetr | brahman, brahmanacchamsin, agnidh, potr | udgatr, prastotr, pratihartr, subrahmanya -- the four canonical groups of four, complete, with no intruder",
+      "agnidh_and_potr_DO_belong": "both are members of the brahman's group of four; typing them is correct and is not a number made to match",
+      "the_4_excluded_are_correctly_excluded": "brahmacarin (a student, not an officiant), prasastr (a synonym of maitravaruna -- excluding it avoids double-counting), purohita (a household chaplain, not an rtvij), yajamana (the patron, explicitly not an rtvij)",
+      "denominator_schema_split_CONFIRMED": "all 20 RitualRole rows carry the identifier SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN in denominator_schema and the prose sentence in denominator_schema_note -- one kind of value per field",
+      "hotr_performed_by": "VG:CONCEPT:HOTR-PRIEST has exactly 1 PERFORMED_BY edge, from VG:CONCEPT:SATTRA. VG:CONCEPT:HOTR-INVOKER does not exist. PERFORMED_BY totals 32 across 19 roles.",
+      "nulls_closed": "MATCH (r:RitualRole) WHERE r.in_classical_sixteen IS NULL -> 0"
+    },
+    "claim_12_self_inflicted_defects": {
+      "verdict": "BOTH GENUINELY CORRECTED, IN THE GRAPH AND IN THE STAGER",
+      "no_string_confidence_anywhere": "MATCH ()-[r]->() WHERE r.confidence IS NOT NULL AND valueType(r.confidence) CONTAINS 'STRING' -> 0 rows. All 47 ASCRIBES_TO_DEVATA carry FLOAT NOT NULL 1.0.",
+      "no_out_of_vocabulary_evidence_basis": "all 47 carry evidence_basis=SOURCE_METADATA; DERIVED_FROM_SCHOLARLY_ANNOTATION is absent from the graph entirely",
+      "stager_reproduces_the_corrected_values": "ascription_bridge.edge_properties() returns confidence=1.0 (a float literal) and evidence_basis=INHERITED_EVIDENCE_SURFACE='SOURCE_METADATA'; check_property_vocabulary() raises UnmappedPropertyValue against the closed PRODUCT_EVIDENCE_SURFACES frozenset, and its message explicitly refuses 'a derivation written into a surface slot'",
+      "note": "3 :InterpretiveClaim NODES carry string confidence HIGH/MEDIUM/LOW -- a pre-existing node-side ordinal, unchanged from the backup, and not the edge invariant at issue"
+    },
+    "claim_14_gates": {
+      "GRAPH_SCORECARD": "RE-RAN: 11/11 PASS -- internal_leaked, ungraded_edges, nodes_without_label, orphan_entities, signature_violations, undeclared_rel_types, claims_non_candidate, claims_to_passages, metrics_to_passages, orphan_public_nodes, falsely_declared_unpopulated all 0. Tier coverage 100.00%. Every figure reproduced independently EXCEPT the corpus-profile count (M8): nodes 164,597; relationships 509,486; ungraded 0; evidence 108,799; trust 110,430; TIER_A 108,126; TIER_B 396,214; TIER_C 598; TIER_D 4,548.",
+      "PUBLIC_IDENTITY": "RE-RAN: exported_nodes 71769, distinct_public_ids 71769, duplicate_public_ids 0, cross_type_collisions 0, same_type_collisions 0, null_public_ids 0, public_relationships 272090, passage_assertion_intersection 0, api_export_mismatches 0, missing_labels 0, ungraded_public_relationships 0, internal_leakage 0 -- EXACTLY AS CLAIMED. The census pin in scripts/audit_public_identity.py:42 was moved to 164597/509486 with the delta reconciliation written into the comment above it.",
+      "MEASURES_GRADING": "the 399 new MEASURES edges did not invent a grade: ungraded_public_relationships and ungraded_edges are both 0, and TIER_B absorbed the increase (394,775 -> 396,214, i.e. +1,439 of the +1,444 new edges), consistent with the layer's own L2_DETERMINISTIC_DERIVED / TIER_B convention that I also saw on the ASCRIBES_TO_DEVATA and MENTIONS_EPITHET edges I inspected.",
+      "TEST_ACCOUNTING": "RE-RAN the live gate over the four accounted paths: 2083 passed, 40 skipped, exit 0 -- exactly Agent A's live_neo4j figures, and the 5 previously-hidden live-gated failures are genuinely fixed. See M4 for the path omission.",
+      "DEPENDENCY": "FALSE as reported -- see M2."
+    },
+    "claim_15_the_not_closed_list": {
+      "verdict": "HONEST ON EVERYTHING I MEASURED, AND THE REGISTRY RECORDS ZERO R4 CLOSURES",
+      "registry_unchanged": "data/staging/wave4/registry_closure_audit.json counts are identical to HEAD: STILL_IMPLEMENTATION_FIXABLE 17, closed 63, not_terminated 17. Nothing moved out of not_terminated and nothing moved in. Agent A claims no registry closure for any gap.",
+      "spot_checks": {
+        "ENTITY-004": "expected_source does not exist as a property on any of the 384 DomainEntity -- genuinely open. See N3 on the partition figure.",
+        "SAMAVEDA_MUSIC-003": "0 of 1,844 SV mantras carry running_samhita_number -- genuinely open",
+        "QUALITY-003": "EXACTLY 9 relationship types carry a single distinct confidence value -- HAS_RISHI 17889, HAS_CHANDAS 16298, HAS_DEVATA 10558, HAS_DEVATA_ASCRIPTION 5385, HAS_DEVATA_DERIVED 882, BELONGS_TO_FAMILY 305, ASCRIBES_TO_DEVATA 47, INVOLVES_SUBSTANCE 3, REFERS_TO_PLACE 1. Agent A's '9 predicates' is exactly right, and it counts its OWN new layer among the 9 rather than excluding it.",
+        "COMMUNITIES-002 PAIR arm": "22 pairs without components -- Agent A says 22, CONFIRMED",
+        "ENTITY-007 clause 1": "0 PERSONIFIES edges and no relationship type containing PERSONIF exists, consistent with 'phrase matching not done' -- though C1 shows clause 2 is itself defective"
+      },
+      "ENTITY_001_owner_decision_is_NOT_a_scope_closure_in_disguise": "I verified its factual premise: MATCH (d:Devata)-[:HAS_EPITHET]->(e:Epithet) returns 4 distinct deities (ASVINAU, AGNIH, INDRAH, VISNUH), 13 distinct epithets and 13 edges. So 'all 13 curated epithets belong to 4 deities' is true, and the occurrence layer cannot reach a fifth deity without new curation. The decision does NOT close the gap (the registry still counts it), it presents BOTH options with their consequences INCLUDING option (a) which would block closure this release, and it correctly identifies that 'well beyond 4' names no number and no source so the clause cannot be passed or failed. That is a proper escalation, not a disguised closure."
+    },
+    "claim_16_owner_decisions": {
+      "verdict": "CORRECT -- section 37 marks 34 OWNER-SUPPLIED, quotes the owner instruction verbatim, and does not reopen GAP-SEMANTICS-004. See N5 for the one residual."
+    }
+  },
+  "not_audited": {
+    "claim_6_partial": "whether any product surface says 'zero occurrences' for ayas/YV. I verified the graph measure stays 0 and that the entity carries a typed lexical_recall_status, but I did not sweep the product prose exhaustively.",
+    "claim_14_partial": "I did NOT re-run the DEFAULT gate over the four accounted paths (only the live gate), so Agent A's default-gate figures of 2043 executed / 80 skipped are UNVERIFIED by me. I also did not run scripts/release_test_accounting.py end to end.",
+    "claim_15_partial": "PRODUCT_SURFACE-005 (the 4 apparatus-contaminated SV verses), RITUAL-003, RITUAL-005, RITUAL-006 and SEMANTICS-003 were NOT independently measured. I relied on the registry showing them unchanged in not_terminated rather than probing each.",
+    "other": "frontend/public/world/world.bin, world.json, world.labels.json and home-world.json were not diffed against a fresh rebuild; frontend/src/lib/world/focus.ts was read only for the MENTIONS_EPITHET family; the 4 modified tests/api files were RUN (1539 passed) but their diffs were not reviewed."
+  },
+  "counts": {
+    "CRITICAL": 3,
+    "MAJOR": 11,
+    "MINOR": 6
+  },
+  "verdict": "NOT FULLY TRUSTWORTHY. The migration receipt, the backup and its hashes, identity preservation, the formula layer, the suffix matcher, the ritual sixteen, the communities arithmetic, the public-identity gate and the live test gate all verify exactly. But three public surfaces publish a figure or a typed statement the same graph disproves, the dependency gate is reported green while its own tool reports amber, and the closure audit still records the regressed state it was credited with catching."
+}

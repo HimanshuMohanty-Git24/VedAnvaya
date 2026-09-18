@@ -145,6 +145,12 @@ TRAVERSABLE_RELATIONSHIPS: Final[frozenset[str]] = frozenset(
         # what a passage names or is about
         "MENTIONS_DEVATA",
         "MENTIONS_ENTITY",
+        # GAP-ENTITY_COVERAGE-001. Traversable rather than refused: "where does this
+        # epithet occur" is the question the layer was built to answer, and refusing the
+        # predicate would make the answer unreachable from /api/v1/graph while the edges
+        # sit in the graph. Rigveda-only by construction; the bound is on every edge and
+        # in the predicate's own limit.
+        "MENTIONS_EPITHET",
         "ABOUT_CONCEPT",
         "SHARES_ENTITY_VOCABULARY_WITH",
         # the Anukramani's ascriptions
@@ -968,6 +974,19 @@ PREDICATE_SEMANTICS: Final[dict[str, PredicateSemantics]] = {
         "An alias match. Where the alias is also a deity name the edge is flagged "
         "theonym_ambiguous, because agni is fire and it is also Agni.",
     ),
+    "MENTIONS_EPITHET": PredicateSemantics(
+        "attests the epithet",
+        "The passage attests this epithet, per the Rigvedic morphological annotation.",
+        "RIGVEDA ONLY, and the bound is a property of the evidence rather than of the "
+        "epithets: the annotation layer covers the Rigveda's 10,552 mantras and none of "
+        "the other 9,658, so an epithet with no Samavedic edge is UNANNOTATED there and "
+        "not absent. Read `epithet_match_tier`: STEM_LEMMA edges come from the "
+        "annotator's own lemma and cover every inflection of it, while "
+        "ATTESTED_SURFACE_FORM edges cover one attested word form because the epithet is "
+        "itself an inflected form -- the duals dasrā, nāsatyā and rudravartanī, whose "
+        "stems the annotator names and whose wider inflection is deliberately not "
+        "claimed.",
+    ),
     "ABOUT_CONCEPT": PredicateSemantics(
         "is about",
         "The passage was judged to concern this concept.",
@@ -1012,14 +1031,14 @@ PREDICATE_SEMANTICS: Final[dict[str, PredicateSemantics]] = {
         "The Atharvaveda's own dedication layer, 5,385 edges over 4,665 of its 6,590 "
         "passages, holding Whitney's verbatim descriptor rather than a deity name. It is a "
         "descriptor of the dedication's FORM and not itself an attribution to a named god "
-        "-- but 39 of its 324 descriptors now resolve to one through ASCRIBES_TO_DEVATA, "
-        "and the other 285 are refused with a typed reason each rather than unprocessed.",
+        "-- but 47 of its 324 descriptors now resolve to one through ASCRIBES_TO_DEVATA, "
+        "and the other 277 are refused with a typed reason each rather than unprocessed.",
     ),
     "ASCRIBES_TO_DEVATA": PredicateSemantics(
         "is derived from the deity",
         "This ascription descriptor is morphologically derived from that deity's name.",
         "A grammatical fact, not a reading: aagneyam is the vrddhi taddhita of agni under "
-        "Panini 4.2.24 sasya devata. 39 of 324 descriptors resolve; the other 285 keep "
+        "Panini 4.2.24 sasya devata. 47 of 324 descriptors resolve; the other 277 keep "
         "their descriptor form and a typed reason, and are NOT silently absent.",
     ),
     "HAS_DEVATA_DERIVED": PredicateSemantics(

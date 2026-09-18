@@ -40,6 +40,7 @@ import json
 from dataclasses import dataclass, field
 from typing import Any, Final, Protocol
 
+from vedagraph.domain.deity_eligibility import ELIGIBLE_DEITY_PREDICATE
 from vedagraph.domain.ontology import (
     DOMAIN_MODEL_VERSION,
     LABEL_DERIVED_METRIC,
@@ -107,7 +108,7 @@ ATTRIBUTION_PREDICATES: tuple[tuple[str, str], ...] = (
 #: The members of :data:`ATTRIBUTION_PREDICATES` that resolve to a NAMED deity, and so the
 #: only two that can put a corpus in a deity's dedication scope. ``HAS_DEVATA_ASCRIPTION``
 #: is excluded by construction: it points at a ``:DevataAscription`` holding Whitney's
-#: verbatim descriptor, and 285 of those 324 descriptors are refused a deity outright.
+#: verbatim descriptor, and 277 of those 324 descriptors are refused a deity outright.
 RESOLVED_DEDICATION_PREDICATES: tuple[str, ...] = ("HAS_DEVATA", "HAS_DEVATA_DERIVED")
 
 #: The predicates ``DEVATA_ATTRIBUTION_BY_VEDA`` actually counts. One name, in one place,
@@ -618,6 +619,40 @@ def top_devatas(session: Session, limit: int = 20) -> list[str]:
             ORDER BY n DESC, key LIMIT $limit
             """,
             limit=limit,
+        )
+    ]
+
+
+def eligible_devatas(session: Session) -> list[str]:
+    """Every deity the eligibility contract admits, which is the population to profile.
+
+    GAP-ENTITY_COVERAGE-002. Profiles were selected as the union of the top twenty by
+    mention and the top twenty by attribution, which reached 25 deities -- so 189 deity
+    pages reported ``null`` for every corpus, and the closure test asks the materialisation
+    to reach "the resolved-deity population" rather than a top-N.
+
+    Two things make this the right denominator rather than the registry's 214:
+
+    *   ``VG:DEITY_ELIGIBILITY:V1`` already decides it, per node, with a recorded reason.
+        Profiling all 214 would put 22 human patrons and 7 danastuti gift-praise labels on
+        deity profile pages, which the entry names as the hazard.
+    *   It was not a hypothetical hazard. ``top_devatas`` ranks by ``HAS_DEVATA`` with no
+        eligibility filter, and ``VG:DEVATA:DANASTUTIH`` -- "praise of a patron's gift",
+        ruled ``NOT_DEITY`` with ``non_deity_kind: DANASTUTI_GIFT_PRAISE`` -- is one of the
+        25 that already carries all three deity metrics. Selecting by the predicate removes
+        it rather than adding 132 more like it.
+
+    Measured 2026-09-18: 157 eligible of 214, and every one of the 157 carries at least one
+    ``HAS_DEVATA`` edge, so the materialisation writes a real figure for each and never a
+    zero standing in for an absent layer.
+    """
+    return [
+        str(record["key"])
+        for record in session.run(
+            f"""
+            MATCH (d:Devata) WHERE {ELIGIBLE_DEITY_PREDICATE}
+            RETURN d.entity_key AS key ORDER BY key
+            """
         )
     ]
 

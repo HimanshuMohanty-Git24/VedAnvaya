@@ -332,77 +332,47 @@ RULINGS: Final[dict[str, Ruling]] = {
         "same two apparatuses. The residual AV resolution work is GAP-ATTRIBUTION-002 and "
         "stays open there rather than being counted twice here.",
         "MATCH (a:DevataAscription) WHERE (a)-->(:Devata) RETURN count(a)",
-        39,
+        47,
         blocked_evidence=_SOURCE_ABSENT_SV_YV_DEDICATION,
-        prior_expect=0,
+        prior_expect=39,
         reaudit=(
             "0 resolved ascriptions became 39, so the AV half is no longer unbuilt and the "
-            "entry's remaining reach is the SV and YV apparatus absence alone."
+            "entry's remaining reach is the SV and YV apparatus absence alone. "
+            "R4 widened the deity-adjective suffix matcher to the vrddhi spelling and 8 more descriptors "
+            "resolved, so this measure -- which counts resolved ascriptions and is shared with GAP- "
+            "ATTRIBUTION-002 -- moved 39 -> 47. This entry's verdict is unchanged: the resolution count "
+            "is context here and the SV/YV apparatus absence is what it is blocked on."
         ),
     ),
     "GAP-ATTRIBUTION-002": Ruling(
-        "STILL_IMPLEMENTATION_FIXABLE",
-        "Two of three clauses now pass; the entry stays open on clause 1, and on a defect R3 "
-        "found while closing the other two. CLAUSE 3 CLOSED: all 324 :DevataAscription nodes "
-        "carry ascription_resolution_status from the closed seven-value vocabulary in "
-        "vedagraph.domain.ascription_bridge, and all 285 unresolved carry "
-        "ascription_unresolved_reason -- 0 unresolved without a reason, against 285 before, so "
-        "a reader can now tell a refused descriptor from one nobody processed. The statuses "
-        "were computed by the repository's own resolver, not adjudicated here: 210 "
-        "UNRESOLVED_STEM_MATCHES_NO_CANONICAL_DEVATA, 67 UNRESOLVED_COMPOUND_TWO_ASCRIPTIONS, "
-        "4 UNRESOLVED_SUBJECT_DESCRIPTOR_NOT_A_DEITY, 3 UNRESOLVED_NAMES_A_PLURALITY, 1 "
-        "UNRESOLVED_SOURCE_DEFERS_TO_THE_MANTRA. CLAUSE 2 CLOSED: the deity insight read "
-        "ascribed_scope off HAS_DEVATA alone, which is Rigveda-only, and so published AV in "
-        "the ascription dimension's vedas_not_covered while 851 Atharvavedic passages carried "
-        "a resolved dedication -- a false absence on the field whose whole job is to tell a "
-        "missing layer from a real zero. Both dedication routes now travel in ONE pattern so "
-        "the figure and its scope label cannot disagree, the layer scope is MEASURED rather "
-        "than read from profiles.ATTRIBUTION_VEDAS (which is ('RV',) and correct about "
-        "HAS_DEVATA -- the last reader of the constant profiles.py's own docstring says "
-        "nothing should read), and a new ascription_routes block states each route's method: "
-        "SOURCE_STATED_ANUKRAMANI_DEDICATION and TADDHITA_SASYA_DEVATA_DERIVATION. The node "
-        "twin was corrected with it: attribution_scope was the literal ['RV'] on all 214 "
-        ":Devata and is now measured per node, 179 ['RV'] and 35 ['RV','AV'], with 0 nodes "
-        "claiming a corpus they have no edge in and 0 omitting one they do. CLAUSE 2 WAS FIRST "
-        "CLOSED INCOMPLETELY, and the hostile pass caught it: the insight route was widened "
-        "and /api/v1/devatas/{id} was left on HAS_DEVATA alone, so the same product answered "
-        "the same question two ways -- Indra 2,869 scope ['RV'] on one surface and 2,945 scope "
-        "['RV','AV'] on the other -- while entity_service still shipped two caveats reading "
-        "'ATTRIBUTION ... IS RIGVEDIC' and 'basis=ascription with veda=AV is empty by "
-        "construction', the second of which the same graph falsifies for 35 deities. That is "
-        "the type-level attribution failure this project has recorded once already, "
-        "reproduced by the fix for it. Both deity surfaces, the ascription passages route and "
-        "its count now read one pattern over both predicates and agree exactly on every "
-        "sampled deity; the AV caveat states which predicate serves it; and the stored literal "
-        "in taxonomy.py that would have flattened the 35 on the next rebuild is gone, the "
-        "value now derived in loader.apply_overlay per GAP-ATTRIBUTION-009's own "
-        "implementation_dependency, with the per-node distribution pinned by a live test. "
-        "CLAUSE 1 OPEN, and "
-        "this is the R3 finding: 'greater than 0 for every resolvable descriptor' is unmet "
-        "because the resolver UNDER-MATCHES the source's own spelling. "
-        "DEITY_ADJECTIVE_SUFFIXES lists the deity-adjective suffix in short-a forms "
-        "('daivatam', 'devatyam'), Whitney prints the vrddhi form '-daivatam' with a long a, "
-        "and suffix stripping runs BEFORE any length folding -- so no candidate is generated "
-        "at all and the LENGTH_INSENSITIVE tier, which is applied to the candidate stem, never "
-        "gets a chance. Measured 2026-09-18: 41 of the 210 no-canonical-surface descriptors "
-        "would gain a suffix candidate under a length-insensitive suffix match, and among them "
-        "are agnidaivatam and indradaivatam, whose stems are registered deities. Those are "
-        "resolvable descriptors sitting in the unresolved bucket, so the clause fails. NOT "
-        "fixed in R3 on purpose: shortening the suffix match widens the matcher, and this "
-        "registry's own ascription entry records that over-normalising and under-normalising "
-        "both look like a clean run -- the change needs the collision list re-enumerated per "
-        "candidate before it lands, not a same-session edit. The 41 are fully diagnosed so the "
-        "next pass starts from the measurement rather than the symptom.",
+        "CLOSED_DERIVED",
+        "All three clauses now pass. CLAUSE 1 CLOSED at R4: the resolver under-matched the source "
+        "because DEITY_ADJECTIVE_SUFFIXES lists the deity-adjective suffix in its short-a spellings "
+        "while Whitney prints the vrddhi form, and suffix stripping ran BEFORE any length folding -- "
+        "so 41 of the 210 stem-unresolved descriptors generated no candidate at all and the "
+        "LENGTH_INSENSITIVE tier that resolve_one applies to the candidate STEM never received a "
+        "stem. suffix_candidates now matches the suffix at a second length-insensitive tier and "
+        "slices the stem out of the SOURCE fold, so the looseness reaches the suffix and stops there: "
+        "sūryadāivatam still yields the stem sūrya and not surya. Measured: resolutions 39 -> 47 with "
+        "0 regressions, every one of the 39 already-resolved descriptors resolving to the same "
+        ":Devata by the same path, and the 8 new ones carrying their own derivation path "
+        "DEITY_ADJECTIVE_SUFFIX_LENGTH_FOLDED so the layer resting on the looser comparison is "
+        "countable apart from the exact one. The ambiguity refusal survives the new tier: "
+        "pavamānadāivatam reaches both VG:DEVATA:PAVAMANAH and VG:DEVATA:PAVAMANAH-SOMAH and resolves "
+        "to neither, which is the owner decision holding. 33 of the 41 that gained a candidate still "
+        "match no canonical Devata and stay UNRESOLVED_STEM_MATCHES_NO_CANONICAL_DEVATA -- candidate "
+        "generation is reported apart from resolution because conflating them is how a matcher's "
+        "reach gets overstated. RESIDUAL, disclosed and named R4-RESIDUAL-ATTRIBUTION-002: "
+        "HAS_DEVATA_DERIVED was NOT re-derived from the 8, so 882 dedications over 851 passages "
+        "reaching 35 deities still come from 39 descriptors while 47 resolve. Every surface "
+        "publishing that pair now states both figures apart, and a test refuses a sentence that pairs "
+        "882 with 47.",
         "MATCH (a:DevataAscription) WHERE (a)-->(:Devata) RETURN count(a)",
-        39,
+        47,
         prior_expect=39,
         reaudit=(
-            "39 resolved is unchanged, and that is the point: R3 closed the two clauses that "
-            "were about DISCLOSURE (typing the 285, and making the Atharvavedic dedication "
-            "visible with its method) and found that the clause about RESOLUTION fails for a "
-            "reason nobody had measured -- a suffix list written in short-a against a source "
-            "that prints the vrddhi form. The count did not move because the resolver did not "
-            "change; the entry is better understood, not further along."
+            "Declared 39 before R4 and re-declared 47, which the graph measures. The count moved because "
+            "the resolver changed, not because the population did."
         ),
     ),
     "GAP-ATTRIBUTION-003": Ruling(
@@ -547,21 +517,36 @@ RULINGS: Final[dict[str, Ruling]] = {
         0,
     ),
     "GAP-COMMUNITIES-002": Ruling(
-        "STILL_IMPLEMENTATION_FIXABLE",
-        "Unmoved, and unmoved on the clause that needs no curation question answered. Measured "
-        "2026-09-17: of 214 :Devata nodes, 38 carry structure PAIR and 33 carry structure "
-        "GROUP. Only 14 PAIR nodes are is_composite with component_count 2; the other 24 PAIRs "
-        "and all 33 GROUPs carry component_count 0 and no decomposition of any kind, which is "
-        "exactly the 57 the entry recorded. Neither arm of the test passes: the 24 remaining "
-        "pairs are mechanical decomposition over material held, and the 33 groups carry no "
-        "typed reason why their membership is not enumerable -- no property on :Devata holds "
-        "one. The entry's own measured_cause already withdrew the blocker claim (59 of 71 "
-        "composite labels were placed in a community undecomposed), so this constrains "
-        "interpretation rather than gating computation, and 'worth doing for interpretation' "
-        "is not done.",
-        "MATCH (d:Devata) WHERE d.structure IN ['PAIR','GROUP'] AND "
-        "coalesce(d.component_count,0)=0 RETURN count(d)",
-        57,
+        "BLOCKED_OWNER_DECISION_REQUIRED",
+        "Moved, and it moved a figure R3 got wrong. R3 recorded '24 PAIRs are mechanical "
+        "decomposition over devata_components.yaml'. The file does not support that. Measured: "
+        "devata_components.yaml declares 20 composites, 14 were already landed as 28 COMPOSED_OF "
+        "edges, and 6 remained -- of which FOUR declare an EMPTY member list with an explicit "
+        "reasoned refusal and a review_status (REJECTED for viśvedevāḥ, ādityāḥ and marutaḥ, "
+        "NEEDS_REVIEW for dyāvāpṛthivyau). So only TWO were mechanically landable, "
+        "VG:DEVATA:INDRAVARUNAU and VG:DEVATA:USASANAKTA, and both landed as 4 COMPOSED_OF edges. "
+        "What R4 delivered: every one of the 71 PAIR and GROUP composites now carries a typed "
+        "decomposition_status -- 16 DECOMPOSED_FROM_THE_COMPONENT_REGISTRY, 4 "
+        "NOT_ENUMERABLE_DECLARED_BY_THE_REGISTRY carrying the registry's own evidence and review "
+        "status, and 51 NOT_ENUMERABLE_FROM_ANYTHING_HELD -- and component_count is recomputed from "
+        "the edges that actually landed rather than declared. That satisfies the GROUP arm of the "
+        "test, which asks for components or a typed reason. The PAIR arm is NOT met and cannot be met "
+        "by projection: 22 PAIR deities still carry no components, none of them has an entry in the "
+        "only artifact in this repository that states a composite deity's members, and enumerating "
+        "them means deciding which deities each contains -- curation, not projection. The entry's own "
+        "source_dependency says group membership for open-ended groups is a scholarly question that "
+        "may have no enumerable answer. An owner decision is required on whether the PAIR arm is re- "
+        "scoped to 'components or a typed reason', as the GROUP arm already is, or whether the 22 are "
+        "to be curated.",
+        "MATCH (d:Devata) WHERE d.structure IN ['PAIR','GROUP'] AND coalesce(d.component_count,0)=0 RETURN count(d)",
+        55,
+        prior_expect=57,
+        owner_decision="OWNER_DECISION_COMMUNITIES_002_PAIR_DECOMPOSITION_SCOPE",
+        reaudit=(
+            "Declared 57 before R4 and re-declared 55, which the graph measures: the two the component "
+            "registry supports are landed. The remaining 55 are not implementation work, which is why the "
+            "status moves to an owner decision rather than staying STILL_IMPLEMENTATION_FIXABLE."
+        ),
     ),
     "GAP-COMMUNITIES-003": Ruling(
         "CLOSED_DERIVED",
@@ -626,52 +611,97 @@ RULINGS: Final[dict[str, Ruling]] = {
     ),
     # ---- entity coverage -------------------------------------------------------------
     "GAP-ENTITY_COVERAGE-001": Ruling(
-        "STILL_IMPLEMENTATION_FIXABLE",
-        "Unmoved on all three clauses, measured 2026-09-17. The epithet layer is 13 :Epithet "
-        "nodes carrying 13 HAS_EPITHET edges and nothing else: 0 edges of any type between an "
-        ":Epithet and a :Passage, 4 distinct deities reached against a 214-node registry, and "
-        "no recall property on any epithet node -- the only keys are epithet_key, label_iast, "
-        "label_en, display_label, display_type and domain_model_version. So no question about "
-        "where an epithet occurs can be answered, which is what the entry says. Genuinely "
-        "internal: the Sanskrit is held for all four corpora and the projection was never run. "
-        "The alias-recall discipline applies -- epithets are heavily inflected -- so "
-        "per-epithet recall must be measured rather than assumed, which is the entry's third "
-        "clause.",
+        "BLOCKED_OWNER_DECISION_REQUIRED",
+        "Two of three clauses CLOSED at R4 and the third is not implementation work. CLAUSE 1 CLOSED: "
+        "the epithet layer was 13 :Epithet nodes, 13 HAS_EPITHET edges and nothing else -- 0 edges of "
+        "any type between an :Epithet and a :Passage -- and now carries 1,035 MENTIONS_EPITHET edges "
+        "over all 13 epithets, derived from the Rigvedic morphological annotation's own per-token "
+        "lemma. Two tiers, recorded per edge because they are not the same claim: STEM_LEMMA (10 "
+        "epithets) where the label folds onto the annotator's normalized_lemma, so every inflection "
+        "of the stem counts; and ATTESTED_SURFACE_FORM (3) where it folds onto an attested inflected "
+        "surface form and onto no lemma. That third tier resolved the three R3 left open -- dasra, "
+        "nasatya and rudravartani -- on EXPLICIT morphology the repository already holds rather than "
+        "by loosening a fold: each is a dual whose stem the annotator names on the token, and the "
+        "stem's wider inflection is deliberately NOT claimed, because dasra- is an adjective meaning "
+        "wondrous applied to many things while the dual dasra is the epithet of the Asvins. CLAUSE 3 "
+        "CLOSED: per-epithet recall is measured rather than assumed -- a mantra count and a token "
+        "count per epithet, not one aggregate -- and the Rigveda-only bound is typed in every row "
+        "rather than left to a caveat, because MENTIONS_LEMMA is 154,261 edges over the Rigveda and "
+        "ZERO over the other three corpora, so an epithet with no Samavedic occurrence is unannotated "
+        "there and not absent. Identity was not minted: the inventory is still the curated 13, and "
+        "fold_alias was used to compare and never to create or merge an :Epithet. CLAUSE 2 is the "
+        "blocker and no projection can move it -- see owner_decision.",
         "MATCH (e:Epithet)-[r]-(:Passage) RETURN count(r)",
-        0,
+        1035,
+        prior_expect=0,
+        owner_decision="OWNER_DECISION_ENTITY_001_EPITHET_INVENTORY_DENOMINATOR",
+        reaudit=(
+            "Declared 0 before R4 and re-declared 1035, which the graph measures. The status moves to an "
+            "owner decision rather than a closure because the second clause asks the epithet INVENTORY to "
+            "grow, and the inventory is curation. All 13 curated epithets belong to 4 deities, so the "
+            "occurrence layer can only ever reach those 4; 'well beyond 4' names no number and no source, "
+            "and there is no published epithet index in this repository against which 4 could be measured "
+            "as incomplete. The clause can therefore be neither passed nor failed, which is the defect "
+            "rather than the count."
+        ),
     ),
     "GAP-ENTITY_COVERAGE-002": Ruling(
-        "STILL_IMPLEMENTATION_FIXABLE",
-        "Unmoved, and the entry's own closure query is the one that says so. Measured "
-        "2026-09-17: DerivedMetric rows whose subject_key starts VG:DEVATA: reach 25 distinct "
-        "subjects over 75 metrics, against an eligible deity population of 152 and a registry "
-        "of 214, so the materialisation covers 16 per cent of the eligible set. 184 :Devata "
-        "nodes have a null profile_attributed_total. The second clause fails by name: "
-        "VG:DEVATA:SARASVATI returns null for profile_attributed_total and null for "
-        "profile_mentions_by_veda. The product handles the null correctly, reporting "
-        "INSUFFICIENT_EVIDENCE rather than drawing a zero bar, which is right handling of an "
-        "unfinished pass and is not closure. Internal work over mention edges already in the "
-        "graph, with the denominator care the entry names: the 214 include 22 HUMAN_PATRON and "
-        "7 DANASTUTI_GIFT_PRAISE, and GAP-ENTITY_COVERAGE-008's eligibility predicate now "
-        "supplies the 152 to materialise over.",
-        "MATCH (m:DerivedMetric) WHERE m.subject_key STARTS WITH 'VG:DEVATA:' RETURN "
-        "count(DISTINCT m.subject_key)",
-        25,
+        "CLOSED_DERIVED",
+        "Both clauses pass. The materialisation reached 25 of 214 deities because profiles were "
+        "selected as the union of the top twenty by mention and the top twenty by attribution, so 189 "
+        "deity pages reported null for every corpus. R4 replaces the top-N with the eligibility "
+        "contract's own predicate, VG:DEITY_ELIGIBILITY:V1 d.is_deity = true, and materialises over "
+        "all 157 it admits: 471 metrics over 157 distinct subjects, and profile properties on exactly "
+        "those 157 -- 0 eligible deities without one and 0 ineligible deities with one, asserted in "
+        "both directions. Not 214, which the entry names as the hazard: that would put 22 human "
+        "patrons and 7 danastuti gift-praise labels on deity profile pages. It was not hypothetical. "
+        "top_devatas ranked by HAS_DEVATA with no eligibility filter and VG:DEVATA:DANASTUTIH -- "
+        "'praise of a patron's gift', ruled NOT_DEITY with non_deity_kind DANASTUTI_GIFT_PRAISE -- "
+        "was one of the 25 carrying all three deity metrics; its 3 metrics were deleted by metric_id "
+        "and its profile properties removed, rather than left behind where a count of 157 would hide "
+        "them. Clause 2 by name: /api/v1/devatas/VG:DEVATA:SARASVATI returns per-corpus figures over "
+        "all four corpora. Every one of the 157 carries at least one HAS_DEVATA edge, so each figure "
+        "is a real count and none is a zero standing in for an absent layer. Consequence re-derived "
+        "rather than loosened: profile_absent_dimensions went 25 -> 152, because most deities are "
+        "thin in at least one dimension once the whole eligible population is profiled, and the route "
+        "description now says an empty list is the exception.",
+        "MATCH (m:DerivedMetric) WHERE m.subject_key STARTS WITH 'VG:DEVATA:' RETURN count(DISTINCT m.subject_key)",
+        157,
+        prior_expect=25,
+        reaudit=(
+            "Declared 25 before R4 and re-declared 157, which the graph measures. The denominator is the "
+            "eligibility contract's, not a top-N."
+        ),
     ),
     "GAP-ENTITY_COVERAGE-003": Ruling(
-        "STILL_IMPLEMENTATION_FIXABLE",
-        "Unmoved on every clause. Measured 2026-09-17: db.labels() holds no label whose name "
-        "contains 'remed', 'bhesaj' or 'heal', and the entry's own query for :Remedy or "
-        ":Bhesaja returns 0 nodes, so no remedy entity class exists and there are no "
-        "registered aliases to measure. No stated-remedy relation exists; TREATS stands at 160 "
-        "edges and the entry already records it as TIER_D and not a substitute. The concerns "
-        "endpoint still carries the caveat verbatim at "
-        "src/vedagraph/api/services/insight_service.py:2222-2224 -- 'The registry has no "
-        "healing entity -- bhesaja was never curated' -- which is honest disclosure and is not "
-        "closure. Genuinely internal: bhesaja and the related remedy vocabulary are attested "
-        "in text already held and lexically tractable.",
+        "CLOSED_DERIVED",
+        "Closed, and the interesting part is that it was closable before R4 opened it. The entry's "
+        "own warrant was a caveat this product published: 'The registry has no healing entity -- "
+        "bhesaja was never curated -- so what does the corpus do about illness is reachable only "
+        "through the afflictions and plants a verse names, never through a stated remedy.' That claim "
+        "was FALSE. Measured 2026-09-18: VG:CONCEPT:BHESAJA-HEALING is a :Concept:DomainEntity in the "
+        "CORPOREAL and RITUAL domains with SEVEN registered Sanskrit aliases -- bheṣajam, bheṣajaṃ, "
+        "bheṣajā, bheṣajāni, bheṣajīḥ, bhiṣajā, bhiṣak -- and 108 MENTIONS_ENTITY edges over AV 47, "
+        "YV 31, RV 28 and SV 2 mantras, every one carrying a verbatim locator and quote and 0 without "
+        "evidence. So clause 1 (a remedy entity class with registered aliases) and clause 2 (a "
+        "stated-remedy relation with verse evidence) were already met, and clause 3 was unmet only "
+        "because the caveat asserting the absence was still there. No :Remedy or :Bhesaja label was "
+        "added and none should be -- the registry measure asks for one and 0 is the right answer, "
+        "because a second label would be a second answer to one question. What R4 did: corrected the "
+        "claim on all three surfaces that published it (insight_service.py, queries.py and the "
+        "frontend human-concerns plate), added a stated_remedy_by_veda query and a stated_remedy "
+        "collection to /api/v1/insights/atharvaveda/concerns, and pinned the correction with a needle "
+        "test that refuses the asserting form while exonerating prose that quotes it in order to "
+        "correct it. What remains true and is now stated narrowly: bheṣaja is not typed a "
+        ":HumanConcern, which is a curation choice and not an absence.",
         "MATCH (n) WHERE n:Remedy OR n:Bhesaja RETURN count(n)",
         0,
+        prior_expect=0,
+        reaudit=(
+            "The measure is unchanged at 0 and deliberately so -- it asks for a :Remedy or :Bhesaja label "
+            "and there must not be one. What changed is that the clause about the caveat is met, because "
+            "the caveat was false."
+        ),
     ),
     "GAP-ENTITY_COVERAGE-004": Ruling(
         "STILL_IMPLEMENTATION_FIXABLE",
@@ -726,16 +756,29 @@ RULINGS: Final[dict[str, Ruling]] = {
     ),
     "GAP-ENTITY_COVERAGE-007": Ruling(
         "STILL_IMPLEMENTATION_FIXABLE",
-        "Unmoved on both clauses. Measured 2026-09-17: only 2 :DomainEntity nodes carry a "
-        "multi-word Sanskrit label at all, so phrase matching has not been built and "
-        "multi-word realia remain unreachable. And no personification status of any kind "
-        "exists -- across the 13 :NaturalPhenomenon nodes, 0 carry a personification_status "
-        "and 0 carry a personified_as, and neither key exists in the database -- so an "
-        "unresolved entity cannot be distinguished as refused or as unattempted. That is the "
-        "specific ambiguity this project forbids elsewhere, and the field to hold the answer "
-        "does not exist. Genuinely internal: source_dependency is NONE.",
+        "Clause 2 CLOSED, clause 1 untouched. Clause 2: 0 of the 13 :NaturalPhenomenon nodes carried "
+        "any personification status and neither personification_status nor personified_as existed as "
+        "a key, so an unresolved entity could not be told apart from a refused one -- the ambiguity "
+        "this project forbids elsewhere. All 13 now carry a status from a closed vocabulary with its "
+        "reason: 4 PERSONIFIED_AS_A_REGISTERED_DEVATA naming the deity key (agni, āpaḥ, rātrī, sūrya) "
+        "and 9 REFUSED_NO_REGISTERED_DEITY_COUNTERPART. Personification is an interpretive relation "
+        "and was not minted as identity: no :Personification node and no PERSONIFIES edge, and the "
+        "refusal is stated as a fact about THIS REGISTRY rather than about whether the Vedas "
+        "personify the phenomenon -- several of the 9 are addressed as beings in the text and were "
+        "simply never curated as deities. The mapping is written out per phenomenon rather than "
+        "derived by a prefix match on the entity key, because a prefix match paired USAS-DAWN with "
+        "VG:DEVATA:USASANAKTA, the dual Dawn-and-Night, which is a different deity, and paired AGNI- "
+        "FIRE with seven compounds. Clause 1 is unmet and unattempted: only 2 :DomainEntity nodes "
+        "carry a multi-word Sanskrit label at all, so phrase matching has still not been built and "
+        "multi-word realia remain unreachable.",
         "MATCH (n:NaturalPhenomenon) WHERE n.personification_status IS NULL RETURN count(n)",
-        13,
+        0,
+        prior_expect=13,
+        reaudit=(
+            "Declared 13 before R4 and re-declared 0, which the graph measures: every :NaturalPhenomenon "
+            "now carries a personification_status. The entry stays open on its OTHER clause, phrase "
+            "matching, which no part of R4 addressed."
+        ),
     ),
     "GAP-ENTITY_COVERAGE-008": Ruling(
         "CLOSED_DERIVED",
@@ -1265,26 +1308,28 @@ RULINGS: Final[dict[str, Ruling]] = {
         24,
     ),
     "GAP-RITUAL-004": Ruling(
-        "STILL_IMPLEMENTATION_FIXABLE",
-        "Moved substantially and does not close. Measured 2026-09-17: :RitualRole stands at 20 "
-        "nodes against 11, the hotr now carries a PERFORMED_BY edge -- which was the entry's "
-        "clearest symptom, the officiant the Rigveda names most wired to no rite -- and the "
-        "denominator is labelled rather than assumed: 18 of the 20 carry denominator_schema, "
-        "in_classical_sixteen, samhita_attested and existence_evidence_type, with one row "
-        "stating outright that the sixteen are a SRAUTASUTRA schema and not a Samhita one. Two "
-        "things keep it open. Only 14 of the 20 are flagged in_classical_sixteen, so 2 of the "
-        "classical sixteen are still absent from the registry and the test's 'holds the "
-        "classical sixteen' is unmet; and 2 nodes carry a null denominator_schema, null "
-        "in_classical_sixteen and null existence_evidence_type, so for those two a reader "
-        "cannot tell a non-member from an unclassified row. Both are bounded internal work "
-        "over well-attested material.",
+        "CLOSED_DERIVED",
+        "All three clauses pass. R3 left two things open and both are closed. The 2 nodes carrying a "
+        "null in_classical_sixteen were VG:CONCEPT:AGNIDH-FIRE-KINDLER and VG:CONCEPT:POTR-PURIFIER, "
+        "and both ARE members of the classical sixteen rtvij -- the agnidh is the Brahman-side priest "
+        "who kindles and tends the fire, the potr is among the Brahman's assistants -- so the nulls "
+        "were a missing classification and not a ruling that the roles stand outside the schema. "
+        "Typing them takes the flagged set from 14 to 16, which is what 'RitualRole holds the "
+        "classical sixteen' asks, and removes the other half at the same time: 0 nodes now carry a "
+        "null in_classical_sixteen, so a reader can no longer confuse a non-member with an "
+        "unclassified row. The hotr carries a PERFORMED_BY edge (VG:CONCEPT:HOTR-PRIEST, 1 edge), "
+        "which was the entry's clearest symptom. The denominator names its schema: every one of the "
+        "20 rows now carries denominator_schema = SRAUTASUTRA_RTVIJ_SCHEMA_OF_SIXTEEN. A second "
+        "defect was fixed with them -- denominator_schema was carrying two different KINDS of value, "
+        "the schema identifier on 9 rows and a whole prose sentence about it on 9 others, so the "
+        "field could not be grouped on; the identifier is now on every row and the prose moved to "
+        "denominator_schema_note.",
         "MATCH (r:RitualRole) WHERE r.in_classical_sixteen IS NULL RETURN count(r)",
-        2,
-        prior_expect=11,
+        0,
+        prior_expect=2,
         reaudit=(
-            "The ruling counted RitualRole nodes and declared 11; there are 20. Re-declared on "
-            "what the test actually asks -- the classical sixteen with their source stated -- "
-            "which leaves 2 unclassified rows and 2 missing officiants."
+            "Declared 2 before R4 and re-declared 0, which the graph measures. The classical sixteen now "
+            "reads 16 of 16 flagged, from 14."
         ),
     ),
     "GAP-RITUAL-005": Ruling(
@@ -1630,25 +1675,32 @@ RULINGS: Final[dict[str, Ruling]] = {
     ),
     "GAP-TRANSLATION-004": Ruling(
         "STILL_IMPLEMENTATION_FIXABLE",
-        "The residual is 6 verses, 2 of them source-absent and 4 of them deterministic "
-        "internal work, so this entry stays open on a named list rather than on a count. "
-        "Measured 2026-09-17: 36 Rigvedic mantras carry no HAS_TRANSLATION edge, and the "
-        "population reconciles with no remainder as 30 covered by a DECLARED_RANGE rendering "
-        "attached to their anchor -- decision A closed and M13 typed Griffith's merged "
-        "pair-scope unit rather than splitting it -- plus 6 uncovered. Of the 6, "
-        "data/staging/final_closure_sprint/agent7/residual_disposition.json confirms RV "
-        "10.86.16 and 10.86.17 absent from the only ingested source, and names four as "
-        "MIS-GRAINED, NOT ABSENT: VG:RV:SAK:M05:S055:V008, VG:RV:SAK:M09:S007:V009, "
-        "VG:RV:SAK:M10:S048:V007 and VG:RV:SAK:M10:S132:V005. For those four the honest route "
-        "is the one already applied to the 30 -- re-type the neighbouring rendering "
-        "MANTRA_RANGE so it covers the merged pair -- and not a split of Griffith's prose, "
-        "which would fabricate. Four rows of bounded internal work, listed by key.",
+        "Unmoved on its literal measure, and R4 found out why it cannot move. 36 Rigvedic mantras "
+        "carry no HAS_TRANSLATION edge of their own. 34 of them are not untranslated: Griffith merged "
+        "a verse pair into one printed unit, so the rendering sits on the anchor verse. R4 staged an "
+        "edge from each covered verse to its anchor's existing :Translation node, applied it, and the "
+        "registry re-measure caught a REGRESSION: 30 of the 34 landed on exactly the even-numbered "
+        "verses in RV 1.65-1.70 that GAP-TRANSLATION-006 exists to have REMOVED, because Griffith "
+        "numbers a four-pada group as one verse where this graph numbers each hemistich and 25 of 31 "
+        "shipped translations there read against the wrong Sanskrit. TRANSLATION-006's measure went 0 "
+        "-> 30. All 34 edges were reverted by their own r4_created_by stamp and the 4 anchor re-types "
+        "with them, restoring TRANSLATION-006 to 0, HAS_TRANSLATION to 18,427, MANTRA_RANGE to 64 and "
+        "DEDICATED_ENGLISH_MANTRAS RV to 10,480. So the finding is that this measure counts a verse's "
+        "OWN edge and therefore cannot reach 0 without reintroducing a closed defect: 'covered by a "
+        "declared range' is expressed on the ANCHOR's Translation node deliberately, and making it "
+        "reachable from the covered verse shows a reader the wrong Sanskrit's rendering. What R4 kept "
+        "is the disclosure: all 36 now carry a typed translation_coverage row -- 34 "
+        "COVERED_BY_A_MERGED_RANGE_ON_ITS_ANCHOR naming the anchor, and 2 SOURCE_ABSENT for RV "
+        "10.86.16 and 10.86.17, confirmed absent from the only ingested source. The entry's closure "
+        "measure needs re-specifying before it can be met, which is an owner question and is named "
+        "here rather than resolved.",
         "MATCH (m:Mantra {veda:'RV'}) WHERE NOT (m)-[:HAS_TRANSLATION]->() RETURN count(m)",
         36,
-        prior_expect=37,
+        prior_expect=36,
         reaudit=(
-            "37 untranslated became 36 after one provenance-blocked row was resolved and "
-            "imported. The 4 genuinely fixable keys are named in the basis."
+            "Unchanged at 36, and re-declared as unchanged on purpose: R4 moved it to 2 and reverted, "
+            "because the move reintroduced GAP-TRANSLATION-006's defect. The residual is a measure- "
+            "specification question, not 34 missing renderings."
         ),
     ),
     "GAP-TRANSLATION-005": Ruling(
@@ -1718,11 +1770,15 @@ RULINGS: Final[dict[str, Ruling]] = {
         "The test never demanded that all 324 resolve; the residual resolution work is "
         "GAP-ATTRIBUTION-002 and stays open there.",
         "MATCH (a:DevataAscription) WHERE (a)-->(:Devata) RETURN count(a)",
-        39,
-        prior_expect=0,
+        47,
+        prior_expect=39,
         reaudit=(
             "The bridge was declared unbuilt and is built for 39 of 324. The entry's test asks "
-            "for a label-free join, not for full resolution, so the move closes it."
+            "for a label-free join, not for full resolution, so the move closes it. "
+            "R4 widened the deity-adjective suffix matcher to the vrddhi spelling and 8 more descriptors "
+            "resolved, so this measure -- which counts resolved ascriptions and is shared with GAP- "
+            "ATTRIBUTION-002 -- moved 39 -> 47. The entry's own verdict is unchanged: the resolution "
+            "count is context here, not the thing being gated."
         ),
     ),
     "GAP-ATTRIBUTION-WHITNEY-UNRESOLVED-OBJECT-001": Ruling(

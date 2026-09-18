@@ -136,9 +136,13 @@ ATTRIBUTION_SCOPE_STATEMENT: Final = (
     "HAS_DEVATA_DERIVED, 882 Atharvavedic dedications over 851 passages reaching 35 deities, "
     "recovered from the Anukramani's Sanskrit adjective by its own morphology under Panini "
     "4.2.24 sasya devata. The dedication there is the source's and the resolution is this "
-    "project's. It reaches 39 of the Atharvaveda's 324 descriptors; the other 285 are refused "
-    "with a typed reason each, so an Atharvavedic zero here may be a refused descriptor "
-    "rather than no dedication. A Samavedic or Yajurvedic zero means those corpora carry no "
+    "project's. Two figures, deliberately apart: 47 of the Atharvaveda's 324 descriptors "
+    "RESOLVE to a deity, and the 882 dedications above were derived from 39 of them -- R4 "
+    "widened the resolver and the derived layer has not been rebuilt from the 8 it gained "
+    "(R4-RESIDUAL-ATTRIBUTION-002), so a descriptor can be resolved and still contribute no "
+    "dedication here. The other 277 are refused with a typed reason each, so an Atharvavedic "
+    "zero here may be a refused descriptor, a resolved-but-unpropagated one, or no "
+    "dedication at all. A Samavedic or Yajurvedic zero means those corpora carry no "
     "Anukramani apparatus of any kind, NOT that the deity is absent from them -- for that "
     "read `mentions_by_veda`, which spans all four."
 )
@@ -1416,10 +1420,13 @@ class EntityService:
                     text="basis=ascription with veda=AV is served from HAS_DEVATA_DERIVED, "
                     "which resolves the Anukramani's Sanskrit adjective to a deity by its own "
                     "morphology and reaches 851 of the Atharvaveda's passages and 35 of the "
-                    "214 deities. An empty result here is therefore a real absence for THIS "
-                    "deity, or one of the 285 descriptors refused resolution with a typed "
-                    "reason -- not an absent layer. Use basis=mention to ask whether the "
-                    "deity is named in the corpus.",
+                    "214 deities. Those 851 passages were derived from 39 descriptors; 47 "
+                    "now RESOLVE and the derived layer has not been rebuilt from the 8 it "
+                    "gained (R4-RESIDUAL-ATTRIBUTION-002), so an empty result here is a real "
+                    "absence for THIS deity, or one of the 277 descriptors refused "
+                    "resolution with a typed reason, or one of the 8 resolved but not yet "
+                    "propagated -- not an absent layer. Use basis=mention to ask whether "
+                    "the deity is named in the corpus.",
                     source="measured",
                 )
             )

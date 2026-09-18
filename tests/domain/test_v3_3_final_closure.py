@@ -177,18 +177,52 @@ def test_live_q10_normalises_per_veda_counts_for_corpus_size() -> None:
 @pytest.mark.live
 @_LIVE
 def test_live_q23_reports_insufficient_community_evidence() -> None:
+    """Q23's capability row, with the eligibility disclosure it gained pinned too.
+
+    This asserted a five-key dict by equality and broke when GAP-ENTITY_COVERAGE-008 added
+    ``devatas_without_an_eligibility_ruling`` and ``devata_nodes`` to the row. Nothing it
+    cared about had changed -- status, ``assigned_deities``, ``eligible_deities`` and
+    ``evidence_scope`` were all still right -- so the failure was the test refusing a
+    *widening*, and while it failed it was checking nothing at all.
+
+    Rewritten to pin the widened shape rather than tolerate it, and the two new columns are
+    now the more interesting assertions. The query's own caveat says
+    ``devatas_without_an_eligibility_ruling`` "is the figure to read first: while it is 214
+    the ruling layer has not landed and ``eligible_deities`` falls back to curated structure
+    and reads 185; when it is 0 the ruling is in force and the figure is 157". Both figures
+    were typed into prose and checked by nothing. They are checked here.
+
+    The key set is asserted exactly, so the next column added to this row lands in front of
+    someone instead of being absorbed -- which is the failure mode that produced this fix.
+    """
     rows = _run_live_query("deity_community_capability")
-    assert rows == [
-        {
-            "status": "INSUFFICIENT_EVIDENCE",
-            "assigned_deities": 0,
-            "eligible_deities": rows[0]["eligible_deities"],
-            "pairwise_edges": rows[0]["pairwise_edges"],
-            "evidence_scope": "PAIRWISE_CO_OCCURRENCE_IS_NOT_A_COMMUNITY_PARTITION",
-        }
-    ]
-    assert int(rows[0]["eligible_deities"]) > 0
-    assert int(rows[0]["pairwise_edges"]) > 0
+    assert len(rows) == 1
+    row = rows[0]
+    assert set(row) == {
+        "status",
+        "assigned_deities",
+        "eligible_deities",
+        "devatas_without_an_eligibility_ruling",
+        "devata_nodes",
+        "pairwise_edges",
+        "evidence_scope",
+    }
+    assert row["status"] == "INSUFFICIENT_EVIDENCE"
+    assert row["evidence_scope"] == "PAIRWISE_CO_OCCURRENCE_IS_NOT_A_COMMUNITY_PARTITION"
+    # No community partition is stored or computed, which is what the status means. A
+    # non-zero here with this status would make the row contradict itself.
+    assert int(row["assigned_deities"]) == 0
+    # GAP-ENTITY_COVERAGE-008: an unruled node fails closed and silently shrinks the
+    # pantheon, so this is the figure that must be 0 and the one the caveat says to read
+    # first.
+    assert int(row["devatas_without_an_eligibility_ruling"]) == 0
+    assert int(row["devata_nodes"]) == 214
+    # 157 is the ruling-in-force figure the caveat states. Pinned so the prose and the row
+    # cannot drift apart; 185 is the fallback and would mean the ruling layer had come
+    # undone.
+    assert int(row["eligible_deities"]) == 157
+    assert int(row["eligible_deities"]) < int(row["devata_nodes"])
+    assert int(row["pairwise_edges"]) > 0
 
 
 @pytest.mark.live

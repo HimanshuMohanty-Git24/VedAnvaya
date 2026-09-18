@@ -912,7 +912,11 @@ def test_absent_profile_dimensions_are_typed_not_emptied(
         "RETURN dv.entity_key AS key, dv.profile_absent_dimensions AS absent, "
         "dv.structure AS structure"
     )
-    assert len(rows) == 25, f"25 deities carried absent dimensions; found {len(rows)}"
+    # 25 -> 152 at R4. GAP-ENTITY_COVERAGE-002 widened the profile materialisation from a
+    # top-25 union to the 157 deities the eligibility contract admits, and 152 of them are
+    # thin in at least one dimension -- which is the finding, not a defect. Re-derived from
+    # the graph and still an equality, not loosened.
+    assert len(rows) == 152, f"152 deities carry absent dimensions; found {len(rows)}"
     checked = 0
     for row in rows:
         if not is_deity(row["structure"]):

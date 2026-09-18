@@ -833,15 +833,25 @@ class AtharvavedaConcernsResponse(InsightEnvelope):
         "afflictions",
         "protection_and_treatment",
         "social_rites",
+        "stated_remedy",
     )
 
     concerns: list[VedaCountRow] = Field(default_factory=list)
     afflictions: list[VedaCountRow] = Field(default_factory=list)
     protection_and_treatment: list[ConcernEvidenceRow] = Field(default_factory=list)
     social_rites: list[VedaCountRow] = Field(default_factory=list)
+    #: GAP-ENTITY_COVERAGE-003. The remedy side of the question, which this endpoint
+    #: published as unanswerable for two rounds on a premise that was false. The caveat
+    #: stood here for two rounds saying "the registry has no healing entity -- bhesaja
+    #: was never curated", which was false, and
+    #: ``VG:CONCEPT:BHESAJA-HEALING`` had been in the registry all along with 7 registered
+    #: Sanskrit aliases and 108 mention edges carrying verbatim verse evidence across all
+    #: four corpora. A reader could reach afflictions and plants and was told the remedy
+    #: was unreachable.
+    stated_remedy: list[VedaCountRow] = Field(default_factory=list)
     collections: dict[str, PaginationMeta] = Field(
-        description="Bounds per collection, keyed by the field each one describes. Four "
-        "collections travel here, so one shared block would describe three of them wrongly."
+        description="Bounds per collection, keyed by the field each one describes. Five "
+        "collections travel here, so one shared block would describe four of them wrongly."
     )
 
     @model_validator(mode="after")

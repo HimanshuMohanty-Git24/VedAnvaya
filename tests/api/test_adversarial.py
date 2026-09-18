@@ -467,7 +467,11 @@ def test_f10_dimension_status_population_matches_the_documented_figure(
         "AND size(d.profile_absent_dimensions) > 0 RETURN count(d) AS c"
     )
     assert row is not None
-    assert int(row["c"]) == 25, "the graph's profile_absent_dimensions population has moved"
+    # 25 -> 152 at R4. GAP-ENTITY_COVERAGE-002 widened the profile materialisation from a
+    # top-25 union to the 157 deities the eligibility contract admits, and 152 of them are
+    # thin in at least one dimension -- which is the finding, not a defect. Re-derived from
+    # the graph and still an equality, not loosened.
+    assert int(row["c"]) == 152, "the graph's profile_absent_dimensions population has moved"
 
     keys = [
         str(item["k"])

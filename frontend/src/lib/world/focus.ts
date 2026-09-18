@@ -167,7 +167,11 @@ const FAMILY_PREDICATES: Record<RelationshipFamily, readonly string[]> = {
         "HAS_DEVATA", "HAS_RISHI", "HAS_DEVATA_ASCRIPTION", "HAS_DEVATA_DERIVED",
         "ASCRIBES_TO_DEVATA",
     ],
-    MENTION: ["MENTIONS_DEVATA", "MENTIONS_ENTITY"],
+    // MENTIONS_EPITHET joins MENTION rather than ATTRIBUTION: an epithet occurrence is
+    // the text naming a word, which is what this family is, while ATTRIBUTION is the
+    // Anukramani ascribing a passage to a deity. Rigveda-only, so the sidebar shows it
+    // on Rigvedic passages and on the four deities the curated epithets belong to.
+    MENTION: ["MENTIONS_DEVATA", "MENTIONS_ENTITY", "MENTIONS_EPITHET"],
     TOPIC: [
         "ABOUT_CONCEPT", "ADDRESSES_CONCERN", "HAS_THEME", "TREATS", "DESCRIBES",
         "DESCRIBES_ACTION", "CONTRASTS_WITH", "REFERS_TO_NATURAL_PHENOMENON",

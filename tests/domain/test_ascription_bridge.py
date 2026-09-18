@@ -332,3 +332,111 @@ def test_both_predicates_are_declared_with_endpoint_signatures() -> None:
     for predicate in ("ASCRIBES_TO_DEVATA", "HAS_DEVATA_DERIVED"):
         assert predicate in PREDICATE_SEMANTICS, predicate
         assert PREDICATE_SEMANTICS[predicate].limit
+
+
+# ---------------------------------------------------------------------------
+# GAP-ATTRIBUTION-002 clause 1 -- the vrddhi-spelled suffix
+# ---------------------------------------------------------------------------
+
+
+def test_the_vrddhi_spelled_suffix_generates_a_candidate_at_all() -> None:
+    """BAD -> FAIL: no candidate, not a failed match.
+
+    ``DEITY_ADJECTIVE_SUFFIXES`` spells the suffix with a short a and Whitney prints
+    ``-dāivatam`` with a long one. Suffix stripping ran before any length folding, so these
+    surfaces produced an EMPTY candidate list and the ``LENGTH_INSENSITIVE`` tier that
+    ``resolve_one`` applies to the candidate *stem* never received a stem to apply itself
+    to. 41 of the 210 stem-unresolved descriptors were in that state.
+
+    The distinction matters for the diagnosis: a descriptor that generates a candidate and
+    matches nothing is honestly unresolved, and one that generates no candidate has not been
+    tried.
+    """
+    for label in ("agnidāivatam", "indradāivatam", "ātmadevatākam"):
+        assert bridge.suffix_candidates(bridge.fold(label)), label
+
+
+def test_the_two_named_vrddhi_descriptors_resolve_to_their_registered_deities() -> None:
+    """GOOD -> PASS, on the two descriptors the diagnosis named."""
+    agni = _resolve("agnidāivatam")
+    assert agni.status == "RESOLVED_TO_CANONICAL_DEVATA"
+    assert agni.devata_key == "VG:DEVATA:AGNIH"
+    assert agni.stem == "agni"
+
+    indra = _resolve("indradāivatam")
+    assert indra.status == "RESOLVED_TO_CANONICAL_DEVATA"
+    assert indra.devata_key == "VG:DEVATA:INDRAH"
+    assert indra.stem == "indra"
+
+
+def test_the_looser_suffix_tier_is_recorded_on_the_derivation_path() -> None:
+    """A resolution that needed the looser suffix match says so.
+
+    Folding the tier into the existing ``DEITY_ADJECTIVE_SUFFIX`` path would make the two
+    indistinguishable in the graph, and then nobody could count how much of the layer rests
+    on the looser comparison. ``agnidāivatam`` reaches the exact STEM tier because ``agni``
+    is spelled with short vowels; it is the SUFFIX match that was loose, and the path is
+    where that is recorded.
+    """
+    agni = _resolve("agnidāivatam")
+    assert agni.derivation_path == "DEITY_ADJECTIVE_SUFFIX_LENGTH_FOLDED"
+    assert agni.comparison_tier == "EXACT"
+
+    atma = bridge.suffix_candidates(bridge.fold("ātmadāivatam"))
+    assert atma and atma[0].path == "DEITY_ADJECTIVE_SUFFIX_LENGTH_FOLDED"
+
+    # And an exactly-spelled suffix still takes the exact path, so the fix did not
+    # relabel the 12 resolutions that never needed it.
+    aditi = bridge.suffix_candidates(bridge.fold("aditidevatyam"))
+    assert aditi and aditi[0].path == "DEITY_ADJECTIVE_SUFFIX"
+
+
+def test_the_looseness_reaches_the_suffix_and_stops_there() -> None:
+    """The stem keeps its own vowel lengths; only the suffix spelling is folded.
+
+    This is the guard against the fix becoming the global loosening the owner decision
+    bars. ``sūryadāivatam`` must yield the stem ``sūrya`` and not ``surya``: the stem is
+    sliced out of the source fold, never out of the shortened probe. If the slice were
+    taken from the probe, every long vowel in every stem would be destroyed and the
+    resolver would start matching deities that differ only in vowel length.
+    """
+    candidates = bridge.suffix_candidates(bridge.fold("sūryadāivatam"))
+    assert candidates
+    assert candidates[0].stem == "sūrya"
+    assert candidates[0].stem != "surya"
+
+
+def test_a_descriptor_that_is_not_this_formation_still_does_not_resolve() -> None:
+    """BAD -> FAIL: the false-positive controls.
+
+    The looser suffix tier must not turn a non-deity surface into a deity. ``varuṇam`` has
+    no deity-adjective suffix at all and must not be handed one; ``sūryadāivatam`` generates
+    a candidate whose stem is not in this registry and must stay unresolved rather than fall
+    to a near neighbour; and ``somadāivatam`` would resolve only if ``soma`` were reachable,
+    which it is -- so the negative control is the one whose stem genuinely is absent.
+    """
+    # Generates a candidate, stem absent from the registry: honestly unresolved.
+    surya = _resolve("sūryadāivatam")
+    assert surya.status == "UNRESOLVED_STEM_MATCHES_NO_CANONICAL_DEVATA"
+    assert surya.devata_key is None
+
+    # A transcription-damaged tail must not be read as the suffix family.
+    assert not bridge.suffix_candidates(bridge.fold("adtvatyam"))
+
+    # And the ambiguity refusal still holds through the new tier: the shared pavamāna
+    # alias must not be re-merged by a suffix that reaches two deities.
+    ambiguous = _resolve("pavamānadāivatam")
+    assert ambiguous.status == "UNRESOLVED_AMBIGUOUS_TWO_OR_MORE_DEVATAS"
+    assert ambiguous.devata_key is None
+    assert set(ambiguous.candidates_matched) == {
+        "VG:DEVATA:PAVAMANAH",
+        "VG:DEVATA:PAVAMANAH-SOMAH",
+    }
+
+
+def test_the_source_literal_survives_the_resolution() -> None:
+    """Provenance: the stored label is Whitney's spelling, not the folded probe."""
+    resolution = _resolve("agnidāivatam")
+    assert resolution.label == "agnidāivatam"
+    assert "ā" in resolution.label
+    assert resolution.taddhita_suffix == "daivatam"

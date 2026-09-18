@@ -294,7 +294,10 @@ def test_the_atharvavedic_dedication_figures_in_the_caveats_are_live() -> None:
         "derived_passages": 851,
         "derived_deities": 35,
         "descriptors": 324,
-        "resolved": 39,
+        # 39 -> 47 at R4: the suffix matcher gained the vrddhi spelling of the
+        # deity-adjective suffix and 8 descriptors that had generated NO candidate at
+        # all resolved. See GAP-ATTRIBUTION-002 clause 1.
+        "resolved": 47,
     }
     assert measured == expected, (
         "a figure the AV dedication caveats publish has moved. Update the caveats in "
@@ -302,13 +305,20 @@ def test_the_atharvavedic_dedication_figures_in_the_caveats_are_live() -> None:
         "re-land attribution_scope_note onto the 214 :Devata nodes."
     )
     unresolved = expected["descriptors"] - expected["resolved"]
-    assert unresolved == 285
+    assert unresolved == 277
 
     # Each figure must appear in the sentences that quote it, with the RIGHT denominator.
     for sentence in (_SCOPE_CAVEAT, ATTRIBUTION_SCOPE_STATEMENT):
         assert "882" in sentence
         assert "851" in sentence
-        assert "285" in sentence
+        # 277, not 285: R4 resolved 8 more descriptors. And both sentences must keep the
+        # two figures apart -- 47 resolve, 39 produced the 882 derived dedications -- so a
+        # sentence claiming HAS_DEVATA_DERIVED "reaches 47" is refused by name.
+        assert "277" in sentence
+        assert "882 Atharvavedic dedications" not in sentence or "39 of them" in sentence, (
+            "the derived-dedication figure is being published against the resolution "
+            "count; 882 was derived from 39 descriptors and 47 now resolve"
+        )
         # The exact defect: 4,665 is a PASSAGE count and was published against the MANTRA
         # total. Asserted as the forbidden PAIRING, not as the absence of either figure --
         # "4,160 of its 5,839 mantras" is the correct pairing and contains "5,839 mantras".

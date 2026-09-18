@@ -1176,12 +1176,14 @@ def test_g04_civilization_overrun_keeps_the_real_total_and_carries_the_paging_ca
     sections = {section["section_kind"]: section for section in body["sections"]}
     assert sections[SectionKind.DATA]["returned"] == 0
     assert sections[SectionKind.DATA]["total_available"] == 22
-    # 900 is inside 1,072, so this section is genuinely non-empty and keeps its total.
-    # 1,072 before the round-three coverage rebuild. The attribution census gave
-    # that build 13 more metrics to compute. This assertion exists to prove the
-    # paging caveat reports the REAL total rather than the page, so the figure is
-    # expected to track the metric layer -- re-derived, not loosened.
-    assert sections[SectionKind.DERIVED_METRIC]["total_available"] == 1085
+    # 900 is inside 1,481, so this section is genuinely non-empty and keeps its total.
+    # 1,072 -> 1,085 -> 1,481. The last move is R4's: GAP-ENTITY_COVERAGE-002 widened the
+    # deity-profile materialisation from a top-25 union to the 157 deities the eligibility
+    # contract admits, creating 399 metrics and deleting the 3 that had landed on a
+    # danastuti gift-praise label. This assertion exists to prove the paging caveat reports
+    # the REAL total rather than the page, so the figure is expected to track the metric
+    # layer -- re-derived, not loosened.
+    assert sections[SectionKind.DERIVED_METRIC]["total_available"] == 1481
     assert sections[SectionKind.DERIVED_METRIC]["returned"] > 0
 
 
@@ -1304,7 +1306,20 @@ def test_every_ritual_collection_has_bounds_that_describe_itself(
     ("path", "expected"),
     [
         (RITUALS, {"objects", "rituals"}),
-        (CONCERNS, {"concerns", "afflictions", "protection_and_treatment", "social_rites"}),
+        # ``stated_remedy`` joined this endpoint with GAP-ENTITY_COVERAGE-003. The
+        # endpoint had published "the registry has no healing entity -- bhesaja was
+        # never curated" while VG:CONCEPT:BHESAJA-HEALING sat in the registry with 7
+        # registered Sanskrit aliases and 108 evidenced mention edges.
+        (
+            CONCERNS,
+            {
+                "concerns",
+                "afflictions",
+                "protection_and_treatment",
+                "social_rites",
+                "stated_remedy",
+            },
+        ),
         (FORMULAS, {"span_census", "widest_families", "reuse_witnesses"}),
     ],
 )

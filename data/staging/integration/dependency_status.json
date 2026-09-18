@@ -1,9 +1,9 @@
 {
   "artifact": "DEPENDENCY_STATUS",
-  "at": "2026-09-18T06:32:34.662364+00:00",
+  "at": "2026-09-18T11:36:15.909155+00:00",
   "graph_census": {
-    "nodes": 164201,
-    "relationships": 508042
+    "nodes": 164597,
+    "relationships": 509486
   },
   "consumers": [
     {
@@ -77,7 +77,7 @@
       "declared_outputs": [],
       "built_at": "2026-09-17T15:36:26.872019+00:00",
       "rebuilt_by": "data/staging/final_closure_sprint/agent4/build_agent4_ritual_closure.py, which produces material_culture_by_ritual_context.json",
-      "current_input_digest": "9b4abea99f3a5c20f5e3acc59b3188eb86550d64def828483ead59890f8d6359",
+      "current_input_digest": "722e4e54adf988d76ce90b8e2c0f58b5a57270e070058cde7f18c9300a1c849a",
       "recorded_input_digest": "9b4abea99f3a5c20f5e3acc59b3188eb86550d64def828483ead59890f8d6359"
     },
     {
@@ -91,10 +91,10 @@
       "declared_outputs": [
         "docs/reports/GRAPH_QUALITY_V2_SCORECARD.md"
       ],
-      "built_at": "2026-09-17T15:34:45.953278+00:00",
+      "built_at": "2026-09-18T11:35:28.505112+00:00",
       "rebuilt_by": "scripts/graph_quality_scorecard.py",
-      "current_input_digest": "2259292c46307326c59ca01520aef1205ddb9c635414e993ef1f58f512ad22aa",
-      "recorded_input_digest": "2259292c46307326c59ca01520aef1205ddb9c635414e993ef1f58f512ad22aa"
+      "current_input_digest": "5ce81e42d00637ff6b5c332c9e0c037c849cd34ca15cfc5c523197e16db3061f",
+      "recorded_input_digest": "5ce81e42d00637ff6b5c332c9e0c037c849cd34ca15cfc5c523197e16db3061f"
     },
     {
       "consumer": "Ask retrieval",
@@ -124,10 +124,10 @@
         "frontend/public/world/world.json",
         "frontend/public/world/world.labels.json"
       ],
-      "built_at": "2026-09-18T06:26:00.541064+00:00",
+      "built_at": "2026-09-18T11:35:43.481574+00:00",
       "rebuilt_by": "scripts/export_graph_world.py and the metrics build",
-      "current_input_digest": "56ac8f9c329e44f08f70d41b68ecbad39ee51b2ad0a92695b4a68ee9d9f2c810",
-      "recorded_input_digest": "56ac8f9c329e44f08f70d41b68ecbad39ee51b2ad0a92695b4a68ee9d9f2c810"
+      "current_input_digest": "1f51071792633a003673cbb30e91677eb62f262b0c43b13bb607524a28a088be",
+      "recorded_input_digest": "1f51071792633a003673cbb30e91677eb62f262b0c43b13bb607524a28a088be"
     },
     {
       "consumer": "Knowledge World public projection",
@@ -142,10 +142,10 @@
         "frontend/public/data/home-world.json",
         "frontend/public/world/world.predicates.json"
       ],
-      "built_at": "2026-09-18T06:32:01.870339+00:00",
+      "built_at": "2026-09-18T11:35:35.547677+00:00",
       "rebuilt_by": "scripts/export_graph_world.py",
-      "current_input_digest": "f9b52db69ad96a2b1984c43d47ed2124177388c98357077f8ba443fb65a6aa0f",
-      "recorded_input_digest": "f9b52db69ad96a2b1984c43d47ed2124177388c98357077f8ba443fb65a6aa0f"
+      "current_input_digest": "8a06772f5ae9601c63a3de97626c1691a1f7310a925c46c251b38591389b950e",
+      "recorded_input_digest": "8a06772f5ae9601c63a3de97626c1691a1f7310a925c46c251b38591389b950e"
     }
   ],
   "counts": {

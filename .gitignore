@@ -76,3 +76,11 @@ data/audio/cache/**
 # what a later reader needs is the identity of the backup a migration was gated on, not the
 # bytes.
 data/backup/*.dump
+
+# The R4 pre-migration logical export: 484 MB of nodes.jsonl + relationships.jsonl,
+# taken because Neo4j runs in a container on 5.26-community where `neo4j-admin database
+# dump` needs the database stopped. Same rule as the dumps above -- the bytes are
+# reproducible from the graph and what a later reader needs is the IDENTITY of the
+# backup the migration was gated on, so MANIFEST.json and the .sha256 sidecars ARE
+# tracked and the payload is not.
+data/staging/release_blocker_r4/backup/*.jsonl

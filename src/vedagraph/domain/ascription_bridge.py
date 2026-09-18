@@ -222,17 +222,51 @@ class Candidate:
 
 
 def suffix_candidates(folded: str) -> list[Candidate]:
-    """The explicit ``-devatyam`` family."""
-    for suffix in DEITY_ADJECTIVE_SUFFIXES:
-        folded_suffix = fold(suffix)
-        if folded.endswith(folded_suffix) and len(folded) > len(folded_suffix):
-            return [
-                Candidate(
-                    stem=folded[: -len(folded_suffix)],
-                    path="DEITY_ADJECTIVE_SUFFIX",
-                    taddhita_suffix=suffix,
-                )
-            ]
+    """The explicit ``-devatyam`` family, matched at two suffix tiers.
+
+    **Why there are two.** :data:`DEITY_ADJECTIVE_SUFFIXES` was read off the stored labels
+    and records the suffix in its short-a spellings -- ``daivatam``, ``devatakam``. Whitney
+    also prints the vṛddhi spelling, ``-dāivatam`` and ``-devatākam``, and the suffix match
+    below used to run before any length folding, so those labels generated **no candidate
+    at all**. Not a failed match: no candidate, so the ``LENGTH_INSENSITIVE`` tier that
+    :func:`resolve_one` applies to the candidate *stem* never got anything to apply itself
+    to. Measured over the live layer: 41 of the 210
+    ``UNRESOLVED_STEM_MATCHES_NO_CANONICAL_DEVATA`` descriptors were in that state --
+    27 ``-dāivatam``, 11 ``-devatākam``, and one each of ``-dāivatyam``, ``-devatā`` and
+    ``-devatyā``.
+
+    **The looseness is confined to the suffix.** The stem is sliced out of the *source*
+    fold, never out of the shortened probe, so ``agnidāivatam`` yields the stem ``agni``
+    with its own vowel lengths intact and ``sūryadāivatam`` yields ``sūrya`` rather than
+    ``surya``. Vowel length still distinguishes one stem from another; it stops
+    distinguishing one spelling of the suffix from another, which is all this formation's
+    morphology permits. Folding the whole label instead would be the global loosening the
+    owner decision bars, and :func:`length_collisions` already prices what the stem-level
+    looser tier costs.
+
+    Slicing by the shortened length is safe because every mapping in :data:`_LENGTH` is one
+    character to one character, so ``len(shorten(s)) == len(s)``.
+
+    The tier is recorded on the candidate's ``path`` rather than folded into the existing
+    one, so a resolution that needed the looser suffix match says so and a reader can count
+    them apart from the exact ones.
+    """
+    for tier, path in (
+        ("EXACT", "DEITY_ADJECTIVE_SUFFIX"),
+        ("LENGTH_INSENSITIVE", "DEITY_ADJECTIVE_SUFFIX_LENGTH_FOLDED"),
+    ):
+        probe = folded if tier == "EXACT" else shorten(folded)
+        for suffix in DEITY_ADJECTIVE_SUFFIXES:
+            folded_suffix = fold(suffix)
+            target = folded_suffix if tier == "EXACT" else shorten(folded_suffix)
+            if probe.endswith(target) and len(folded) > len(target):
+                return [
+                    Candidate(
+                        stem=folded[: -len(target)],
+                        path=path,
+                        taddhita_suffix=suffix,
+                    )
+                ]
     return []
 
 

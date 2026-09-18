@@ -12,9 +12,9 @@ weighted towards what a reader can rely on.
 
 | metric | V1 baseline | V2 | delta |
 |---|---|---|---|
-| nodes | 100,584 | 164,201 | +63,617 |
-| relationships | 212,336 | 508,042 | +295,706 |
-| product nodes | — | 71,373 | — |
+| nodes | 100,584 | 164,597 | +64,013 |
+| relationships | 212,336 | 509,486 | +297,150 |
+| product nodes | — | 71,769 | — |
 | internal nodes | 0 (unmarked) | 92,828 | +92,828 |
 | domain entities | 89 | 384 | +295 |
 | typed domain labels | 0 | 24 | +24 |
@@ -26,8 +26,8 @@ query could ask across them. `quality_tier` is the single derived grade.
 
 | metric | value |
 |---|---|
-| edges carrying `quality_tier` | 508,042 (100.0%) |
-| edges carrying `evidence` | 108,795 (21.4%) |
+| edges carrying `quality_tier` | 509,486 (100.0%) |
+| edges carrying `evidence` | 108,799 (21.4%) |
 | edges carrying `trust` | 110,430 (21.7%) |
 | ungraded edges | **0** |
 
@@ -35,8 +35,8 @@ query could ask across them. `quality_tier` is the single derived grade.
 
 | tier | meaning | edges |
 |---|---|---|
-| `TIER_A` | a source states it | 108,121 |
-| `TIER_B` | reproducible derivation, including scope inheritance | 394,775 |
+| `TIER_A` | a source states it | 108,126 |
+| `TIER_B` | reproducible derivation, including scope inheritance | 396,214 |
 | `TIER_C` | model-extracted, evidence survived review | 598 |
 | `TIER_D` | interpretation, or an unreviewed model proposal | 4,548 |
 
@@ -62,7 +62,7 @@ not something the source said about any of those mantras.
 |---|---|---|
 | UNKNOWN_LABEL_RATE | 59.2% | **0.00%** |
 | product nodes without a readable label | 22,541 | **0** |
-| product nodes with `display_type` | 0 | 71,080 |
+| product nodes with `display_type` | 0 | 71,476 |
 
 ## 4. Devatā model
 
@@ -73,7 +73,7 @@ not something the source said about any of those mantras.
 | with a functional axis | 5 (subtype only) | 113 |
 | with an English label | 0 | 214 |
 | with probed aliases | 0 | 66 |
-| with a corpus profile | 0 | 30 |
+| with a corpus profile | 0 | 157 |
 | axis nodes / in use | 0 | 22 / 22 |
 | epithets / deity groups | 0 | 13 / 2 |
 
@@ -105,10 +105,10 @@ gap awaiting a guess: a justified UNSPECIFIED is worth more than an invented axi
 | Indra and Varuna | 70 | PAIR | WARRIOR, COSMIC_SOVEREIGN, GUARDIAN_OF_ORDER | 1 | yes |
 | Surya | 63 | INDIVIDUAL | SOLAR | 4 | yes |
 | Vayu | 53 | INDIVIDUAL | ATMOSPHERIC | 3 | yes |
-| praise of a patron's gift | 50 | PATRON_PRAISE | UNSPECIFIED | 0 | yes |
+| praise of a patron's gift | 50 | PATRON_PRAISE | UNSPECIFIED | 0 | no |
 
 Of the top 20: **18** carry a real functional
-axis and **20** carry a corpus profile.
+axis and **19** carry a corpus profile.
 
 ## 5. Domain entity coverage
 
@@ -176,7 +176,7 @@ assertions rested on a word in Griffith or Whitney and no Sanskrit at all.
 | claims citing a computed metric | 6 |
 | claims graded other than TIER_D | **0** (must be 0) |
 | live contradiction pairs | 1 |
-| DerivedMetric nodes | 1085 |
+| DerivedMetric nodes | 1481 |
 | metrics with no subject node | 1009 |
 
 Claim summary: `{"claims": 6, "with_passage_evidence": 2, "with_statistical_evidence": 6, "with_both": 2, "with_external_source": 0, "by_status": {"MODEL_SYNTHESIS": 4, "RESEARCH_HYPOTHESIS": 2}}`
@@ -200,7 +200,7 @@ pseudo-entity `VG:CORPUS:FOUR-VEDA`, which deliberately has no node.
 
 ## 9. Query surface
 
-- named domain queries: **91**
+- named domain queries: **92**
 - killer questions with at least one query: **56** of 50
 - every query carries a `caveat` stating what its answer does not establish
 

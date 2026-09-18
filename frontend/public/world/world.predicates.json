@@ -1,15 +1,15 @@
 {
   "version": 1,
-  "generated": "2026-09-18T06:25:42Z",
-  "inputPublicExportHash": "5aaa1d0345049ead8a8ab7a1a4746fb5e8d6a346f7e8ea420ef97308fa49a978",
+  "generated": "2026-09-18T11:34:53Z",
+  "inputPublicExportHash": "f6e60d87d4ba4229a5b7fcaff2a67bb359118f1cd33144a391f0ba584267fafc",
   "source": "vedagraph.api.services.graph_service.PREDICATE_SEMANTICS",
   "counts": {
-    "predicates": 73,
-    "curated": 65,
+    "predicates": 74,
+    "curated": 66,
     "derived": 8,
     "symmetric": 4,
     "directed": 17,
-    "undeclared": 52
+    "undeclared": 53
   },
   "predicates": {
     "ABOUT_CONCEPT": {
@@ -29,7 +29,7 @@
     "ASCRIBES_TO_DEVATA": {
       "phrase": "is derived from the deity",
       "asserts": "This ascription descriptor is morphologically derived from that deity's name.",
-      "limit": "A grammatical fact, not a reading: aagneyam is the vrddhi taddhita of agni under Panini 4.2.24 sasya devata. 39 of 324 descriptors resolve; the other 285 keep their descriptor form and a typed reason, and are NOT silently absent.",
+      "limit": "A grammatical fact, not a reading: aagneyam is the vrddhi taddhita of agni under Panini 4.2.24 sasya devata. 47 of 324 descriptors resolve; the other 277 keep their descriptor form and a typed reason, and are NOT silently absent.",
       "direction": "UNDECLARED",
       "basis": "CURATED"
     },
@@ -183,7 +183,7 @@
     "HAS_DEVATA_ASCRIPTION": {
       "phrase": "carries the deity ascription",
       "asserts": "The passage carries this Anukramani ascription descriptor.",
-      "limit": "The Atharvaveda's own dedication layer, 5,385 edges over 4,665 of its 6,590 passages, holding Whitney's verbatim descriptor rather than a deity name. It is a descriptor of the dedication's FORM and not itself an attribution to a named god -- but 39 of its 324 descriptors now resolve to one through ASCRIBES_TO_DEVATA, and the other 285 are refused with a typed reason each rather than unprocessed.",
+      "limit": "The Atharvaveda's own dedication layer, 5,385 edges over 4,665 of its 6,590 passages, holding Whitney's verbatim descriptor rather than a deity name. It is a descriptor of the dedication's FORM and not itself an attribution to a named god -- but 47 of its 324 descriptors now resolve to one through ASCRIBES_TO_DEVATA, and the other 277 are refused with a typed reason each rather than unprocessed.",
       "direction": "UNDECLARED",
       "basis": "CURATED"
     },
@@ -324,6 +324,13 @@
       "phrase": "names",
       "asserts": "The passage names this entity in its own text.",
       "limit": "An alias match. Where the alias is also a deity name the edge is flagged theonym_ambiguous, because agni is fire and it is also Agni.",
+      "direction": "UNDECLARED",
+      "basis": "CURATED"
+    },
+    "MENTIONS_EPITHET": {
+      "phrase": "attests the epithet",
+      "asserts": "The passage attests this epithet, per the Rigvedic morphological annotation.",
+      "limit": "RIGVEDA ONLY, and the bound is a property of the evidence rather than of the epithets: the annotation layer covers the Rigveda's 10,552 mantras and none of the other 9,658, so an epithet with no Samavedic edge is UNANNOTATED there and not absent. Read `epithet_match_tier`: STEM_LEMMA edges come from the annotator's own lemma and cover every inflection of it, while ATTESTED_SURFACE_FORM edges cover one attested word form because the epithet is itself an inflected form -- the duals dasrā, nāsatyā and rudravartanī, whose stems the annotator names and whose wider inflection is deliberately not claimed.",
       "direction": "UNDECLARED",
       "basis": "CURATED"
     },

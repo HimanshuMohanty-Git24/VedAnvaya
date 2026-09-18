@@ -864,7 +864,7 @@ REL_HAS_DEVATA_ASCRIPTION: Final = "HAS_DEVATA_ASCRIPTION"
 #: ``āgneyam`` is the vrddhi derivative of ``agni``. Absent where it would be a reading.
 #:
 #: Declared here at 0 edges and filled by :mod:`vedagraph.domain.ascription_bridge`, which
-#: resolves 39 of the 324 descriptors. A second predicate ``RESOLVES_TO_DEVATA`` was
+#: resolves 47 of the 324 descriptors. A second predicate ``RESOLVES_TO_DEVATA`` was
 #: briefly invented for the same relation, which is how a declared-but-empty predicate gets
 #: duplicated: nothing was looking for one. Two names for one relation is not a widening,
 #: it is a silent precedence rule, and the undeclared half is invisible to ``/api/v1/graph``.
@@ -913,6 +913,25 @@ REL_REPORTED_IN: Final = "REPORTED_IN"
 #: A narrower deity name to the broader one. Narrower than, NOT an alias for: unlike
 #: REL_EPITHET_VARIANT_OF it does not assert one referent under two names.
 REL_SPECIALIZED_FORM_OF: Final = "SPECIALIZED_FORM_OF"
+
+#: A passage to an epithet the scholarly annotation layer attests in it.
+#:
+#: GAP-ENTITY_COVERAGE-001. The epithet layer was 13 ``:Epithet`` nodes carrying 13
+#: ``HAS_EPITHET`` edges and nothing else, so no question about *where* an epithet occurs
+#: could be answered at all.
+#:
+#: Not ``HAS_EPITHET``: that runs ``Devata -> Epithet`` and says "this deity is called
+#: this", which is a registry fact. This one runs ``Passage -> Epithet`` and says "this
+#: verse attests this word", which is a corpus fact, and the two must not share a
+#: predicate -- Agni is called ``jātavedas`` whether or not any particular verse says so.
+#:
+#: Not ``MENTIONS_ENTITY`` either: that predicate's range is ``LABEL_DOMAIN_ENTITY`` and an
+#: ``:Epithet`` is not one. Widening it would put epithets into every entity-coverage
+#: aggregate in the product, where they would be counted as realia.
+#:
+#: The evidence is the Rigvedic morphological annotation, so the layer is Rigveda-only by
+#: construction and every edge says so in the row rather than in a caveat.
+REL_MENTIONS_EPITHET: Final = "MENTIONS_EPITHET"
 
 
 #: Relationship types V2 introduces or re-scopes. Anything not here and not already
@@ -1005,6 +1024,7 @@ CAMPAIGN_RELATIONSHIP_TYPES: Final[frozenset[str]] = frozenset(
         REL_POSITION_STATED_IN,
         REL_REPORTED_IN,
         REL_SPECIALIZED_FORM_OF,
+        REL_MENTIONS_EPITHET,
     }
 )
 
@@ -1216,6 +1236,12 @@ CORPUS_AND_CAMPAIGN_SIGNATURES: Final[dict[str, tuple[frozenset[str], frozenset[
     REL_HAS_TEXT_VERSION: (frozenset({LABEL_PASSAGE, LABEL_MANTRA}), frozenset({"TextVersion"})),
     REL_HAS_TRANSLATION: (frozenset({LABEL_PASSAGE, LABEL_MANTRA}), frozenset({"Translation"})),
     REL_MENTIONS_LEMMA: (frozenset({LABEL_PASSAGE, LABEL_MANTRA}), frozenset({LABEL_LEMMA})),
+    #: The epithet-occurrence layer. Same subject set as ``MENTIONS_LEMMA`` because it is
+    #: derived from the same annotation and lands on the same mantras.
+    REL_MENTIONS_EPITHET: (
+        frozenset({LABEL_PASSAGE, LABEL_MANTRA}),
+        frozenset({LABEL_EPITHET}),
+    ),
     #: Anukramani attribution. Subject is a Mantra or the hymn-level Passage that inherits
     #: it; the 525 and 542 container-level edges are the source asserting at hymn scope.
     REL_HAS_RISHI: (frozenset({LABEL_PASSAGE, LABEL_MANTRA}), frozenset({LABEL_RISHI})),
