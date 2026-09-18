@@ -215,3 +215,141 @@ def test_the_named_non_deities_are_really_in_the_graph(live_repository: Neo4jRep
         "VG:DEVATA:PAIJAVANASYA-SUDASO-DANASTUTIH": "PATRON_PRAISE",
     }
     assert not any(is_deity(structure) for structure in found.values())
+
+
+# ---------------------------------------------------------------------------
+# GAP-ENTITY_COVERAGE-008: product consumer consistency
+# ---------------------------------------------------------------------------
+#
+# OWNER_DECISION_ENTITY_008_DEITY_MEMBERSHIP (OWNER_DECISIONS.md section 35) rules that
+# canonical product Deity membership and source addressability-as-deity are NOT the same
+# semantic predicate, and that `d.is_deity` is the authoritative product one. The registry's
+# old closure measure asked the two to AGREE and returned 29 by construction; driving it to 0
+# would mean overturning either the 28 per-label ABSTRACT refusals or the recorded ruling that
+# keeps the dog. These tests pin the replacement measure: the divergence is allowed, and every
+# product surface reads the authoritative predicate.
+
+
+@pytest.mark.neo4j
+def test_the_intentional_divergence_is_exactly_the_recorded_curation(
+    live_repository: Neo4jRepository,
+) -> None:
+    """The 29 are allowed -- and pinned, so a later pass cannot "fix" them by flattening.
+
+    This is clause 4 of the owner decision. If a future rebuild makes the two predicates
+    agree, that is not an improvement: it means one of two recorded curations was overturned
+    to satisfy a metric, and this test is what says so out loud.
+    """
+    rows = live_repository.run(
+        "MATCH (d:Devata) "
+        "WHERE (coalesce(d.structure,'UNSPECIFIED') IN ['HUMAN','PATRON_PRAISE','UNSPECIFIED']) "
+        "      <> (d.is_deity = false) "
+        "RETURN d.structure AS structure, d.is_deity AS is_deity, "
+        "       d.deity_eligibility_ruling AS ruling, count(*) AS n"
+    )
+    divergence = {
+        (str(row["structure"]), bool(row["is_deity"]), str(row["ruling"])): int(row["n"])
+        for row in rows
+    }
+    assert divergence == {
+        # The structure predicate admits every ABSTRACT label; the curation refuses these 28
+        # one at a time, each with its own recorded reason.
+        ("ABSTRACT", False, "NOT_DEITY"): 28,
+        # VG:DEVATA:SUNAH, the dog. The structure predicate excludes it for being UNSPECIFIED
+        # rather than INDIVIDUAL, which the ruling names as a morphological accident.
+        ("UNSPECIFIED", True, "DEITY"): 1,
+    }, (
+        "the intentional predicate divergence has changed. This is NOT a test to re-baseline: "
+        "check whether a recorded curation was overturned, and see "
+        "docs/reports/data-completeness/OWNER_DECISIONS.md section 35."
+    )
+
+
+@pytest.mark.neo4j
+def test_every_divergent_node_carries_its_recorded_reason(
+    live_repository: Neo4jRepository,
+) -> None:
+    """Clause 3. A divergence with no reason is a defect wearing a decision's clothes."""
+    from vedagraph.api.config import get_api_settings
+    from vedagraph.domain.deity_eligibility import check_product_consumers
+
+    with live_repository.driver.session(database=get_api_settings().neo4j_database) as session:
+        measured = check_product_consumers(session)
+    assert measured["every_node_ruled"], f"{measured['unruled']} :Devata carry no ruling"
+    assert measured["divergence_is_explained"], (
+        "these nodes diverge from the source predicate with no recorded reason: "
+        f"{measured['nodes_diverging_without_a_recorded_reason']}"
+    )
+    assert measured["authoritative_population"] == EXPECTED_ELIGIBLE_DEITIES
+    assert measured["passes"]
+
+
+def test_no_consumer_outside_the_contract_substitutes_the_source_predicate() -> None:
+    """Clause 1 and 2, as a fact about the source tree rather than about the graph.
+
+    The R1 gate for this entry asked "is the eligibility field POPULATED", which passes on a
+    field nothing reads -- the validator-that-silently-skips shape. So this asserts the thing
+    that actually matters: no module outside the contract filters deity MEMBERSHIP on
+    `structure`. The allowed list names each exemption and why it is one.
+    """
+    import pathlib
+
+    from vedagraph.domain.deity_eligibility import _STRUCTURE_PREDICATE_ALLOWED_IN
+
+    root = pathlib.Path(__file__).resolve().parents[2] / "src" / "vedagraph"
+    needles = ("DEITY_STRUCTURES", "NON_DEITY_STRUCTURES", "'HUMAN','PATRON_PRAISE'")
+    offenders = sorted(
+        str(path.relative_to(root))
+        for path in root.rglob("*.py")
+        if path.name not in _STRUCTURE_PREDICATE_ALLOWED_IN
+        and any(needle in path.read_text(encoding="utf-8") for needle in needles)
+    )
+    assert not offenders, (
+        f"{offenders} reference a structure-based deity predicate. Product Deity membership "
+        "reads deity_eligibility.ELIGIBLE_DEITY_PREDICATE and nothing else; add a deliberate "
+        "exemption to _STRUCTURE_PREDICATE_ALLOWED_IN with its reason if this is structural "
+        "rather than membership."
+    )
+
+
+def test_no_reader_facing_surface_publishes_a_superseded_deity_population() -> None:
+    """Clause 5. 184 was the structure predicate's population and 192 the pre-contract one.
+
+    Both shipped. R2 corrected them where it found them; this is the sweep that says they are
+    gone from everything a reader sees, because the repeated defect in this campaign is a
+    sentence fixed in one file and alive in another.
+
+    Scoped to READER-FACING copy and generated artifacts, deliberately not to Python
+    docstrings. Two modules describe these figures as defects they fixed --
+    ``insight_service._deity_population_stat`` says it "published 184 resolved deities while
+    every deity route served 157" -- and a sweep that flagged those would be demanding the
+    project forget why the number was wrong. A historical note is not a claim; a rendered
+    string is.
+    """
+    import pathlib
+    import re
+
+    from vedagraph.domain.deity_eligibility import SUPERSEDED_POPULATION_FIGURES
+
+    root = pathlib.Path(__file__).resolve().parents[2]
+    targets = [
+        *(root / "frontend" / "src").rglob("*.ts"),
+        *(root / "frontend" / "src").rglob("*.tsx"),
+        *(root / "frontend" / "public").rglob("*.json"),
+    ]
+    # The figure adjacent to a deity word. A bare 184 is not a claim: entity_service
+    # legitimately says "184 of the 214" about the PROFILED population, 214 minus 30 profiles.
+    pattern = re.compile(
+        r"\b(?:" + "|".join(str(n) for n in SUPERSEDED_POPULATION_FIGURES) + r")\b"
+        r"(?:\s+\w+){0,3}?\s+(?:deities|deity|eligible_deities|pantheon)",
+        re.IGNORECASE,
+    )
+    hits = [
+        f"{path.relative_to(root)}: {match.group(0)!r}"
+        for path in targets
+        for match in pattern.finditer(path.read_text(encoding="utf-8"))
+    ]
+    assert not hits, (
+        "a superseded deity population is still published to a reader: "
+        f"{hits}. The population is 157 by deity_eligibility.ELIGIBLE_DEITY_PREDICATE."
+    )

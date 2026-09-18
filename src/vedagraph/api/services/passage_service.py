@@ -216,11 +216,25 @@ _TEXT_SURFACE_BY_ROLE: Final[dict[str, str]] = {
     "PARALLEL_TEXT": "PARALLEL_WITNESS",
     "SEARCH_DERIVATIVE": "NORMALIZED_FOR_SEARCH",
     "EXTRACTED_FROM_CONTAINER": "EXTRACTED_FROM_CONTAINER",
+    # The 139 Yajurvedic verses that gained an unaccented Devanagari comparison form in the
+    # search-derivative pass. It was unmapped and fell through to a surface named after its
+    # own role, which happened to be excluded from _DISPLAYABLE_SURFACES and so happened to
+    # behave correctly. Mapped explicitly, because "correct by accident" is the state this
+    # project treats as a defect: a fifth role landing tomorrow would have been rendered as
+    # the text.
+    "NORMALIZED": "NORMALIZED_FOR_SEARCH",
 }
 
 #: Surfaces a reader may be shown. A search derivative is real data and not the text.
 _DISPLAYABLE_SURFACES: Final[frozenset[str]] = frozenset(
     {"PRIMARY", "PARALLEL_WITNESS", "EXTRACTED_FROM_CONTAINER"}
+)
+
+#: The graph ``text_role`` values whose surface a reader may be shown. Derived from the two
+#: maps above rather than listed, so a role added to one cannot go missing from the other --
+#: which is exactly how the work-level script list came to count the search derivative.
+_DISPLAYABLE_TEXT_ROLES: Final[tuple[str, ...]] = tuple(
+    sorted(role for role, surface in _TEXT_SURFACE_BY_ROLE.items() if surface in _DISPLAYABLE_SURFACES)
 )
 
 #: Preference order when choosing the single witness a reader view renders.
@@ -664,8 +678,18 @@ RETURN type(r) AS relation, count(r) AS edges,
 ORDER BY relation
 """
 
+# DISPLAYABLE surfaces only, bound as a parameter from _DISPLAYABLE_SURFACES so this list and
+# the per-passage `is_displayable` flag cannot fall out of step.
+#
+# `text_scripts` answers "what scripts is this work readable in". Unscoped, it read the
+# NORMALIZED_FOR_SEARCH derivative too, and that surface is IAST on all 20,210 mantras -- so
+# the Yajurveda, which holds no romanised reader-facing text at all, published
+# ["DEVANAGARI", "IAST"], and the corpus stopped looking script-disjoint on the very field
+# whose caveat asserts that it is. The layer is real data and is disclosed per passage as
+# `normalized_for_search`; it is not a script a reader can be shown.
 _WORK_SCRIPTS: Final = """
 MATCH (:Passage {work_id: $work_id})-[:HAS_TEXT_VERSION]->(tv:TextVersion)
+WHERE tv.text_role IN $displayable_roles
 RETURN collect(DISTINCT tv.script) AS scripts
 """
 
@@ -1294,17 +1318,33 @@ def _text_availability(rows: object, *, is_container: bool) -> TextAvailability:
                 )
             ],
         )
-    scripts = {surface.script for surface in surfaces}
+    # DISPLAYABLE surfaces only, and the distinction is the whole of these two fields.
+    #
+    # `devanagari` and `transliteration` answer "can this verse be RENDERED in that script",
+    # and the search-derivative layer landed a NORMALIZED_FOR_SEARCH surface on all 20,210
+    # mantras whose script is IAST, `is_displayable=False`, and whose text carries private-use
+    # sentinels (U+E000-E003) standing in for the vocalic r, the lateral series and the
+    # anusvara. Counting it made every Devanagari-only corpus report
+    # `transliteration: SUPPORTED`: the Yajurveda has no romanised reader-facing text at all,
+    # and the product said one was available. A client that trusted the field and rendered the
+    # surface would print tofu boxes.
+    #
+    # `normalized_for_search` below is the field that reports the search layer, and it reports
+    # it for what it is. So the search surface is disclosed, never counted as a script a reader
+    # can be shown.
+    displayable_scripts = {surface.script for surface in surfaces if surface.is_displayable}
     caveats = [CaveatView(text=_SCRIPT_DISJOINT_CAVEAT, source="measured")]
     return TextAvailability(
         surfaces=surfaces,
         devanagari=(
             KnowledgeStatus.SUPPORTED
-            if TextScript.DEVANAGARI in scripts
+            if TextScript.DEVANAGARI in displayable_scripts
             else KnowledgeStatus.NOT_BUILT
         ),
         transliteration=(
-            KnowledgeStatus.SUPPORTED if TextScript.IAST in scripts else KnowledgeStatus.NOT_BUILT
+            KnowledgeStatus.SUPPORTED
+            if TextScript.IAST in displayable_scripts
+            else KnowledgeStatus.NOT_BUILT
         ),
         normalized_for_search=(
             KnowledgeStatus.SUPPORTED
@@ -1661,7 +1701,11 @@ class PassageService:
         split_rows = self._repository.run(
             _WORK_ATTRIBUTION_SPLITS, work_id=work_id, split_relations=list(_SPLIT_RELATIONS)
         )
-        script_row = self._repository.run_one(_WORK_SCRIPTS, work_id=work_id)
+        script_row = self._repository.run_one(
+            _WORK_SCRIPTS,
+            work_id=work_id,
+            displayable_roles=list(_DISPLAYABLE_TEXT_ROLES),
+        )
         measured = {str(item.get("relation")): item for item in layer_rows}
         splits = {str(item.get("relation")): item for item in split_rows}
         mantra_count = summary.mantra_count or 0

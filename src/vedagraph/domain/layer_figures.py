@@ -53,10 +53,15 @@ CORPUS_MANTRAS: Final[dict[str, int]] = {
 #: rendering of verified-identical text (:data:`REUSED_RENDERING_MANTRAS`), and a verse
 #: whose only rendering is Griffith's Latin (:data:`NON_ENGLISH_MANTRAS`). Summing those
 #: into one percentage is what let the reader present all four as the same thing.
+#: RV 10,480 and YV 1,950, not 10,479 and 1,939. Both moved upward at b4b1b0b, which
+#: imported 1,132 renderings: one Rigvedic verse and eleven Yajurvedic ones gained a
+#: dedicated English rendering that is neither a reuse row nor a MANTRA_RANGE span, so they
+#: entered this narrow population. Measured against the R3 baseline backup to confirm the
+#: move predates R3 and is not a side effect of this pass.
 DEDICATED_ENGLISH_MANTRAS: Final[dict[str, int]] = {
-    "RV": 10_479,
+    "RV": 10_480,
     "AV": 5_715,
-    "YV": 1_939,
+    "YV": 1_950,
     "SV": 0,
 }
 
@@ -96,22 +101,38 @@ PREDICATE_TOTALS: Final[dict[str, int]] = {
     "MENTIONS_DEVATA": 17_165,
     "HAS_DEVATA": 10_558,
     "HAS_RISHI": 17_889,
-    "HAS_CHANDAS": 16_331,
-    "MENTIONS_LEMMA": 9_000,
-    "HAS_SEMANTIC_ASSERTION": 4_865,
+    # 16,298 and not 16,331: OWNER_DECISIONS section 27 withdrew M9's 33 malformed metre
+    # assertions under authorisation. 16,331 - 33 = 16,298.
+    "HAS_CHANDAS": 16_298,
+    # 154,261 and not 9,000. The 9,000 was the V2 arrangement in which MENTIONS_ENTITY
+    # reached :Devata; the lemma projection GAP-MORPHOLOGY-001 asked for has since been run
+    # and reaches all 10,031 :Lemma nodes over all 10,552 Rigvedic mantras, one edge per
+    # mantra-lemma pair. Still Rigveda-only: the Zurich annotation is the only source and it
+    # covers no other corpus, so an SV/YV/AV zero here is an unannotated corpus.
+    "MENTIONS_LEMMA": 154_261,
+    # 35,131 and not 4,865, and this is the R2 F1 figure surviving in the one module whose
+    # whole contract is that no caveat types its own number. The delta is exactly the 30,266
+    # edges R1's identity repair restored. Reaches four corpora, not the Rigveda alone --
+    # see ASSERTION_LAYERS for the five derivations it must be split into before it is
+    # quoted, because summing them is the defect GAP-SEMANTICS-001 was opened for.
+    "HAS_SEMANTIC_ASSERTION": 35_131,
     "PERFORMS_ACTION": 441,
     "IS_ASKED_TO": 224,
-    # 28,227 and not 28,223: the V3.1 ritual pass withdrew 11 rtvij- edges from hotr
-    # (a generic officiant is not an office) and moved 14 adhvaryu forms to their own
-    # node, while the material-culture pass added 5 aliases that matched 7 verses. V3.3
-    # adds the four exact witnesses whose omission made Q10 misleading: two trapu and
-    # two syama, all four inside metal enumerations the corpus already stored.
-    "MENTIONS_ENTITY": 28_227,
-    # 24,969 and not 26,437: adversarial finding F-7 retired 1,468 edges that sat
-    # under a second run_id whose output no committed artifact asserts. The figure now
-    # reconciles exactly against the artifact: 46,508 rows minus 21,539 english-only
-    # (retired by V3) = 24,969.
-    "ABOUT_CONCEPT": 24_969,
+    # 28,116 landed, against 28,227 rows in data/domain/vedagraph_domain_v2/
+    # domain_mentions.jsonl. The earlier declaration was the ARTIFACT ROW COUNT and not the
+    # landed edge count -- rows sent, not rows landed, which is the one diff this project
+    # requires. Reconciles exactly: 28,227 artifact rows, MINUS 117 VG:CONCEPT:SOMA-PRESSING
+    # rows withheld under OWNER_DECISIONS section 13 (its weak aliases lose assertion
+    # authority), PLUS the 6 yupa- witnesses the alias fix added outside that artifact
+    # (RV 1.162.6, 4.33.3, 5.2.7, VSM 19.17, VSM 25.29, AVS 12.1.38) = 28,116.
+    "MENTIONS_ENTITY": 28_116,
+    # 24,861 landed, against 46,439 rows in data/enrichment/vedagraph_enrichment_v1/
+    # concept_assertions.jsonl. The earlier declaration cited "46,508 rows minus 21,539
+    # english-only = 24,969" and neither operand matches the committed artifact any more.
+    # Reconciles exactly against it: 46,439 rows, MINUS the 21,603 whose evidence is
+    # English-only and which V3 retired, PLUS 25 Sanskrit-evidenced pairs landed outside
+    # this artifact (16 of them hotr-, from the ritual-role pass) = 24,861.
+    "ABOUT_CONCEPT": 24_861,
 }
 
 #: ``MENTIONS_DEVATA`` by corpus. The only deity predicate that reaches all four, which is
@@ -133,10 +154,26 @@ REFERENT_CERTAINTY: Final[dict[str, int]] = {
     "DEITY_AMBIGUOUS": 6_806,
 }
 
-#: The two layers inside the ``SemanticAssertion`` label, which must never be summed.
+#: The derivations inside the ``SemanticAssertion`` label, which must never be summed.
+#:
+#: **Five, not two.** Three were missing -- and the test asserting that these sum to
+#: ``PREDICATE_TOTALS["HAS_SEMANTIC_ASSERTION"]`` passed anyway, because BOTH sides were
+#: stale by the same 30,266: 2,406 + 2,459 = 4,865 exactly. A sum check over two figures
+#: that drift together cannot fail, which is why the live-graph test is the one that finds
+#: this and why it must not be left skipped. All five: 2,406 + 2,459 + 28,370 + 1,532 + 364
+#: = 35,131.
+#:
+#: The split is load-bearing rather than descriptive. ``MODEL_EXTRACTION`` is model-assisted
+#: and ``MORPHOLOGY_RULE`` is deterministic over a manual scholarly annotation, so a blended
+#: total states a confidence about 35,131 assertions that is true of neither population --
+#: the clause-3 defect GAP-SEMANTICS-001 was opened for, and the reason no surface may
+#: publish this label's total without the breakdown beside it.
 ASSERTION_LAYERS: Final[dict[str, int]] = {
     "MORPHOLOGY_RULE": 2_406,
     "MODEL_EXTRACTION": 2_459,
+    "MORPHOLOGY_RULE_PREDICATE_ONLY": 28_370,
+    "TREEBANK_DEPREL": 1_532,
+    "CROSS_VEDA_TEXT_IDENTITY": 364,
 }
 
 #: Rigvedic mantras carrying more than one attributed deity. Load-bearing for the

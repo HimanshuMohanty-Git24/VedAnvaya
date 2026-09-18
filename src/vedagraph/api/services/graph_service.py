@@ -1000,13 +1000,20 @@ PREDICATE_SEMANTICS: Final[dict[str, PredicateSemantics]] = {
         "is ascribed to the deity",
         "The Anukramani names this deity as the passage's addressee.",
         "Rigveda-only -- all 10,558 edges -- and 8,329 of them are inherited from a hymn "
-        "label. The devata slot is also not a theological claim: it holds human patrons and "
-        "praise of a gift as well as gods.",
+        "label. This predicate's Rigvedic bound is NOT the corpus's: the Atharvaveda "
+        "records its dedications under HAS_DEVATA_ASCRIPTION and HAS_DEVATA_DERIVED, so a "
+        "reader must not take a zero here as a corpus that names no addressee. The devata "
+        "slot is also not a theological claim: it holds human patrons and praise of a gift "
+        "as well as gods.",
     ),
     "HAS_DEVATA_ASCRIPTION": PredicateSemantics(
         "carries the deity ascription",
         "The passage carries this Anukramani ascription descriptor.",
-        "A descriptor of the ascription's form, not a second deity attribution.",
+        "The Atharvaveda's own dedication layer, 5,385 edges over 4,665 of its 6,590 "
+        "passages, holding Whitney's verbatim descriptor rather than a deity name. It is a "
+        "descriptor of the dedication's FORM and not itself an attribution to a named god "
+        "-- but 39 of its 324 descriptors now resolve to one through ASCRIBES_TO_DEVATA, "
+        "and the other 285 are refused with a typed reason each rather than unprocessed.",
     ),
     "ASCRIBES_TO_DEVATA": PredicateSemantics(
         "is derived from the deity",

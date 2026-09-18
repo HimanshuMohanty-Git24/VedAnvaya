@@ -342,21 +342,53 @@ RULINGS: Final[dict[str, Ruling]] = {
     ),
     "GAP-ATTRIBUTION-002": Ruling(
         "STILL_IMPLEMENTATION_FIXABLE",
-        "Moved and does not close. Measured 2026-09-17: 39 of 324 descriptors resolve to a "
-        ":Devata through ASCRIBES_TO_DEVATA, reaching 35 distinct deities, against 0 when the "
-        "ruling was written. The entry's third clause fails outright and fails in the way this "
-        "project most consistently forbids: the 285 unresolved descriptors carry no explicit "
-        "reason. There is no resolution_state and no unresolved_reason property anywhere on "
-        ":DevataAscription -- both keys are absent from the database, so a reader cannot tell "
-        "a refused descriptor (mantroktadevatyam, bahudevatyam) from one nobody has processed. "
-        "Typing the 285 is internal work over material already in the graph and in "
-        "data/registry/devata_ascriptions_av.yaml.",
+        "Two of three clauses now pass; the entry stays open on clause 1, and on a defect R3 "
+        "found while closing the other two. CLAUSE 3 CLOSED: all 324 :DevataAscription nodes "
+        "carry ascription_resolution_status from the closed seven-value vocabulary in "
+        "vedagraph.domain.ascription_bridge, and all 285 unresolved carry "
+        "ascription_unresolved_reason -- 0 unresolved without a reason, against 285 before, so "
+        "a reader can now tell a refused descriptor from one nobody processed. The statuses "
+        "were computed by the repository's own resolver, not adjudicated here: 210 "
+        "UNRESOLVED_STEM_MATCHES_NO_CANONICAL_DEVATA, 67 UNRESOLVED_COMPOUND_TWO_ASCRIPTIONS, "
+        "4 UNRESOLVED_SUBJECT_DESCRIPTOR_NOT_A_DEITY, 3 UNRESOLVED_NAMES_A_PLURALITY, 1 "
+        "UNRESOLVED_SOURCE_DEFERS_TO_THE_MANTRA. CLAUSE 2 CLOSED: the deity insight read "
+        "ascribed_scope off HAS_DEVATA alone, which is Rigveda-only, and so published AV in "
+        "the ascription dimension's vedas_not_covered while 851 Atharvavedic passages carried "
+        "a resolved dedication -- a false absence on the field whose whole job is to tell a "
+        "missing layer from a real zero. Both dedication routes now travel in ONE pattern so "
+        "the figure and its scope label cannot disagree, the layer scope is MEASURED rather "
+        "than read from profiles.ATTRIBUTION_VEDAS (which is ('RV',) and correct about "
+        "HAS_DEVATA -- the last reader of the constant profiles.py's own docstring says "
+        "nothing should read), and a new ascription_routes block states each route's method: "
+        "SOURCE_STATED_ANUKRAMANI_DEDICATION and TADDHITA_SASYA_DEVATA_DERIVATION. The node "
+        "twin was corrected with it: attribution_scope was the literal ['RV'] on all 214 "
+        ":Devata and is now measured per node, 179 ['RV'] and 35 ['RV','AV'], with 0 nodes "
+        "claiming a corpus they have no edge in and 0 omitting one they do. CLAUSE 1 OPEN, and "
+        "this is the R3 finding: 'greater than 0 for every resolvable descriptor' is unmet "
+        "because the resolver UNDER-MATCHES the source's own spelling. "
+        "DEITY_ADJECTIVE_SUFFIXES lists the deity-adjective suffix in short-a forms "
+        "('daivatam', 'devatyam'), Whitney prints the vrddhi form '-daivatam' with a long a, "
+        "and suffix stripping runs BEFORE any length folding -- so no candidate is generated "
+        "at all and the LENGTH_INSENSITIVE tier, which is applied to the candidate stem, never "
+        "gets a chance. Measured 2026-09-18: 41 of the 210 no-canonical-surface descriptors "
+        "would gain a suffix candidate under a length-insensitive suffix match, and among them "
+        "are agnidaivatam and indradaivatam, whose stems are registered deities. Those are "
+        "resolvable descriptors sitting in the unresolved bucket, so the clause fails. NOT "
+        "fixed in R3 on purpose: shortening the suffix match widens the matcher, and this "
+        "registry's own ascription entry records that over-normalising and under-normalising "
+        "both look like a clean run -- the change needs the collision list re-enumerated per "
+        "candidate before it lands, not a same-session edit. The 41 are fully diagnosed so the "
+        "next pass starts from the measurement rather than the symptom.",
         "MATCH (a:DevataAscription) WHERE (a)-->(:Devata) RETURN count(a)",
         39,
-        prior_expect=0,
+        prior_expect=39,
         reaudit=(
-            "0 resolved became 39 of 324. The entry stays open on its own third clause, not on "
-            "the count: the 285 unresolved descriptors carry no typed reason at all."
+            "39 resolved is unchanged, and that is the point: R3 closed the two clauses that "
+            "were about DISCLOSURE (typing the 285, and making the Atharvavedic dedication "
+            "visible with its method) and found that the clause about RESOLUTION fails for a "
+            "reason nobody had measured -- a suffix list written in short-a against a source "
+            "that prints the vrddhi form. The count did not move because the resolver did not "
+            "change; the entry is better understood, not further along."
         ),
     ),
     "GAP-ATTRIBUTION-003": Ruling(
@@ -692,45 +724,59 @@ RULINGS: Final[dict[str, Ruling]] = {
         13,
     ),
     "GAP-ENTITY_COVERAGE-008": Ruling(
-        "STILL_IMPLEMENTATION_FIXABLE",
-        "REVERTED from CLOSED_DERIVED by the R1 hostile pass. The R1 adjudication closed this "
-        "on a gate that measured whether the eligibility field was POPULATED and never whether "
-        "it was CONSUMED, which is the exact trap this project records as 'a validator that "
-        "silently skips -- measure coverage, not just precision'. Measured 2026-09-17: TWO "
-        "documented predicates partition the deity population and they DISAGREE on 29 of the "
-        "214 :Devata nodes. The predicate the API actually runs is "
-        "src/vedagraph/api/services/deity_population.py:deity_structure_clause, which filters "
-        "on `structure` against DEITY_STRUCTURES = {ABSTRACT, GROUP, INDIVIDUAL, PAIR} and "
-        "NON_DEITY_STRUCTURES = {HUMAN, PATRON_PRAISE, UNSPECIFIED}: it excludes 30 and admits "
-        "184. The predicate the eligibility contract wrote is deity_eligibility_ruling / "
-        "is_deity: it rules 57 NOT_DEITY and admits 157. The 29 disagreements enumerate "
-        "exactly: 28 ABSTRACT nodes ruled NOT_DEITY with non_deity_kind "
-        "ABSTRACTION_NOT_AN_ADDRESSEE are nevertheless ADMITTED to the served deity population "
-        "because ABSTRACT is in DEITY_STRUCTURES; and 1 UNSPECIFIED node ruled DEITY is "
-        "EXCLUDED because UNSPECIFIED is in NON_DEITY_STRUCTURES. So clause 1, 'derivable by "
-        "one documented predicate', fails on the plain meaning of 'one' -- this is the same "
-        "type-level failure the project already recorded on the attribution axis, where three "
-        "mechanisms wrote one field and disagreed because no single contract was applied last. "
-        "Clause 2 is unresolvable as written: the test says 29, the live filter excludes 30 "
-        "and its own caveat in deity_population.py says '30 of the 214 are not gods ... and "
-        "one dog. This response excludes all 30', the eligibility contract identifies 57, and "
-        "29 is coincidentally also the size of the disagreement -- four figures, no single "
-        "referent. Clause 3 is recorded and NOT applied: all 42 ABSTRACT labels carry "
-        "deity_eligibility_basis ABSTRACT_LABEL_RULING with per-row reasoning, and the served "
-        "population honours none of it. Product consequence, named: the deity population a "
-        "client receives includes 28 abstractions the eligibility ruling says are not "
-        "addressees, and GAP-ENTITY_COVERAGE-002's materialisation denominator would be 152 or "
-        "184 depending on which predicate it reads. Applying one contract last is bounded "
-        "internal work.",
-        "MATCH (d:Devata) WHERE (coalesce(d.structure,'UNSPECIFIED') IN "
-        "['HUMAN','PATRON_PRAISE','UNSPECIFIED']) <> (d.is_deity = false) RETURN count(d)",
-        29,
-        prior_expect=0,
+        "CLOSED_DERIVED",
+        "Closed on PRODUCT CONSUMER CONSISTENCY, which replaces a measure that asked two "
+        "intentionally different predicates to agree. "
+        "OWNER_DECISION_ENTITY_008_DEITY_MEMBERSHIP, recorded at "
+        "docs/reports/data-completeness/OWNER_DECISIONS.md section 35, rules that canonical "
+        "product Deity membership and source addressability-as-deity are NOT the same "
+        "semantic predicate, and that d.is_deity is the authoritative PRODUCT predicate. "
+        "WHY THE OLD MEASURE WAS WRONG, proven before it was replaced. It read `(structure IN "
+        "['HUMAN','PATRON_PRAISE','UNSPECIFIED']) <> (is_deity = false)` and returned 29 BY "
+        "CONSTRUCTION: measured 2026-09-18 the 29 decompose exactly as 28 ABSTRACT labels "
+        "ruled NOT_DEITY, which the structure predicate admits because ABSTRACT is not in its "
+        "exclusion set, plus 1 UNSPECIFIED label ruled DEITY -- VG:DEVATA:SUNAH, the dog -- "
+        "which the structure predicate excludes. Driving it to 0 requires either admitting 28 "
+        "abstractions each carrying its own recorded refusal reason, or expelling the dog on "
+        "the recorded ground that excluding it for a structure of UNSPECIFIED rather than "
+        "INDIVIDUAL would be 'excluding on a morphological accident'. Both are overturning "
+        "recorded curation to satisfy a metric, which the owner decision refuses. AND THE "
+        "COINCIDENCE THAT HID IT: this entry's own closure TEST says 'counts over it exclude "
+        "the 29 non-deities', and that 29 is a DIFFERENT quantity -- 22 HUMAN plus 7 "
+        "PATRON_PRAISE, the figure deity_eligibility.check_rows gates as `excludes_the_29`. "
+        "Two unrelated quantities that both equal 29, one in the test and one in the measure, "
+        "is why a measure comparing the wrong two things read as though it were checking the "
+        "test. That is this project's own recorded trap: a grade can be wrong while every "
+        "figure is right. WHAT IS MEASURED INSTEAD, all five clauses of the owner decision: "
+        "(1) every product surface derives membership from "
+        "deity_eligibility.ELIGIBLE_DEITY_PREDICATE -- 0 modules outside the five recorded "
+        "exemptions in _STRUCTURE_PREDICATE_ALLOWED_IN reference a structure-based deity "
+        "predicate, each exemption naming why it is structural rather than membership; "
+        "(2) no consumer substitutes the source predicate -- pinned by "
+        "test_no_consumer_outside_the_contract_substitutes_the_source_predicate; "
+        "(3) the divergence is documented -- OWNER_DECISIONS section 35 plus this basis, and "
+        "all 29 divergent nodes carry both a recorded ruling and a recorded reason, 0 "
+        "unexplained; (4) a regression test pins the intentional distinction -- "
+        "test_the_intentional_divergence_is_exactly_the_recorded_curation asserts the exact "
+        "28+1 decomposition and says in its own failure message that agreement would mean a "
+        "curation was overturned; (5) no stale consumer exposes the former population -- 0 "
+        "reader-facing surfaces publish 184 or 192 as a deity count, swept over "
+        "frontend/src/**/*.ts(x) and frontend/public/**/*.json. Measured live by "
+        "deity_eligibility.check_product_consumers: 214 :Devata, 157 authoritative, 0 "
+        "unruled, 29 documented divergence, 0 unexplained, passes=true. The 29 is REPORTED "
+        "rather than driven to 0, and it is the real measured number.",
+        "MATCH (d:Devata) WHERE d.is_deity IS NULL RETURN count(d)",
+        0,
+        prior_expect=29,
         reaudit=(
             "The R1 gate asked 'deity_eligibility_ruling IS NULL -> 0', which passes on a "
-            "field nothing reads. The gate is replaced by one that measures the two predicates "
-            "against each other, so this row cannot read as closed while they disagree. 0 is "
-            "the closed state."
+            "field nothing reads. R2 replaced it with a predicate-equality gate, which cannot "
+            "reach 0 without overturning curation. R3 replaces that with product-consumer "
+            "consistency per the owner decision: the authoritative predicate must be the only "
+            "one any product surface reads, and an unruled node -- which fails closed and so "
+            "silently shrinks the pantheon -- is the thing that must be 0. The 29-node "
+            "divergence is retained as a documented invariant and pinned by a regression test "
+            "so a later pass cannot flatten one predicate into the other."
         ),
     ),
     # ---- formula ---------------------------------------------------------------------
@@ -1432,27 +1478,32 @@ RULINGS: Final[dict[str, Ruling]] = {
     "GAP-SEMANTICS-004": Ruling(
         "CLOSED_SCOPE_DECISION",
         "No chronological or stratigraphic dimension, and Veda membership is not a period. "
-        "Deliberately not modelled for a defensible reason -- Vedic stratigraphy is contested "
-        "and a stratum assignment would be an interpretive claim rather than a measurement. "
         "The entry's test offers two disjuncts and the second is the one met: 'the absence is "
-        "recorded as a deliberate decision with its reasoning', and that record is this entry "
-        "in data/gap_registry.json, a tracked file, carrying the reasoning in full. CITATION "
-        "CORRECTED by the R1 hostile pass: the previous citation named "
-        "docs/reports/data-completeness/semantics.md, which is not on disk, so half of it "
-        "could not be followed at all. NAMED WEAKNESS, not smoothed over: what remains is a "
-        "self-citation. A search of docs/reports/data-completeness/OWNER_DECISIONS.md and "
-        "PRODUCT_V1_SCOPE.md on 2026-09-17 for stratigraphy, stratum, chronology, dating and "
-        "period found no recorded owner decision on this dimension, and the capability "
-        "catalogue publishes no dating card among its 22. This is therefore the weakest "
-        "CLOSED_SCOPE_DECISION in the registry: the decision is written down only in the audit "
-        "that closed it. The owner should write it into OWNER_DECISIONS.md, at which point the "
-        "citation becomes independent of this file.",
+        "recorded as a deliberate decision with its reasoning'. SELF-CITATION CLEARED in R3. "
+        "The R1 hostile pass corrected a citation naming a file not on disk and then named the "
+        "residual weakness in terms of its own fix -- 'the decision is written down only in the "
+        "audit that closed it. The owner should write it into OWNER_DECISIONS.md, at which "
+        "point the citation becomes independent of this file.' The owner has now done exactly "
+        "that: OWNER_DECISION_SEMANTICS_004_STRATUM_MAP is recorded verbatim at "
+        "docs/reports/data-completeness/OWNER_DECISIONS.md section 34, outside this registry "
+        "and outside the audit. It rules that VedAnvaya SHALL NOT ingest or publish an "
+        "unattributed historical/chronological stratum map, that a stratum assignment requires "
+        "five conjunctive conditions (a named scholarly source, an identifiable work, "
+        "attributable methodology, source-local citation, and provenance to the specific "
+        "assignment), and that the existence of a named asserter alone is insufficient. "
+        "Historical-stratum enrichment is intentionally unsupported for this release until a "
+        "specific scholarly stratum source is selected and attributed. Explicitly NOT a source "
+        "block: nobody has established that no lawful attributed stratum source exists -- "
+        "several do, each one scholar's position -- so calling it "
+        "BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE would infer unavailability from not choosing. No "
+        "stratum node, edge or property was created; measured 2026-09-18, db.propertyKeys() "
+        "holds no stratum, period or chronological_layer key.",
         "",
         None,
         citation=(
-            "data/gap_registry.json GAP-SEMANTICS-004.closure_basis (the decision and its "
-            "reasoning, recorded in a tracked file); "
-            "data/staging/wave4/registry_closure_audit.json"
+            "docs/reports/data-completeness/OWNER_DECISIONS.md section 34 "
+            "(OWNER_DECISION_SEMANTICS_004_STRATUM_MAP, recorded verbatim by the owner in a "
+            "tracked file outside this registry and outside this audit)"
         ),
     ),
     "GAP-SEMANTICS-005": Ruling(

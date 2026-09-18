@@ -193,13 +193,31 @@ _DIMENSION_STATUS: Final[dict[str, tuple[KnowledgeStatus, str]]] = {
         KnowledgeStatus.NOT_BUILT,
         "IS_ASKED_TO aggregates the same Rigveda-only morphology layer as PERFORMS_ACTION.",
     ),
+    # Was NOT_BUILT, "derived from the Rigveda-only semantic assertion layer", and that was
+    # false twice: this dimension does not touch the assertion layer, and the assertion
+    # layer is not Rigveda-only. profiles.py computes it as MENTIONS_DEVATA (certainty-
+    # filtered) joined to ABOUT_CONCEPT, and BOTH span four corpora -- MENTIONS_DEVATA
+    # RV 10,284 / AV 3,582 / YV 1,964 / SV 1,335, ABOUT_CONCEPT RV 14,470 / AV 6,423 /
+    # SV 2,007 / YV 1,961. profiles.py:178 says so at the source. So an empty list here is a
+    # real zero over a layer that reaches the whole corpus, which is INSUFFICIENT_EVIDENCE
+    # and not an unbuilt layer -- and it was live on 3 :Devata nodes, telling a reader a
+    # corpus-wide measurement was a Rigvedic one.
     "top_objects": (
-        KnowledgeStatus.NOT_BUILT,
-        "The object dimension is derived from the Rigveda-only semantic assertion layer.",
+        KnowledgeStatus.INSUFFICIENT_EVIDENCE,
+        "No passage that mentions this deity at CERTAIN or PROBABLE certainty also carries "
+        "an ABOUT_CONCEPT edge to an object or substance. Both layers reach all four "
+        "corpora, so this is an absence of co-occurrence in the text rather than a layer "
+        "that does not reach this deity.",
     ),
+    # "the Rigveda-only annotation layers", plural, over-generalised: top_concepts joins
+    # HAS_DEVATA, which IS Rigveda-only, to ABOUT_CONCEPT, which is not. The Rigvedic bound
+    # is real and comes from one of the two, so it is named as that one.
     "top_concepts": (
         KnowledgeStatus.NOT_BUILT,
-        "The concept dimension is derived from the Rigveda-only annotation layers.",
+        "The concept dimension joins HAS_DEVATA, the Rigveda-only dedication layer, to "
+        "ABOUT_CONCEPT, which reaches all four corpora. The Rigvedic bound is the "
+        "dedication layer's: a deity with no Rigvedic dedication has no row here, which is "
+        "an absent apparatus rather than an absence of concepts in its verses.",
     ),
     "formula_count": (
         KnowledgeStatus.INSUFFICIENT_EVIDENCE,

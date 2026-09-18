@@ -1,0 +1,22 @@
+status    family                                   file :: quote
+CLEARED   semantic_assertion_coverage              src/vedagraph/domain/layer_figures.py :: '"HAS_SEMANTIC_ASSERTION": 4_865'
+CLEARED   semantic_assertion_coverage              src/vedagraph/api/services/insight_service.py :: 'whose assertion row is NOT_BUILT for every'
+CLEARED   rigveda_only_semantic_claims             src/vedagraph/api/services/entity_service.py :: 'The object dimension is derived from the Rigveda-onl'
+CLEARED   rigveda_only_semantic_claims             src/vedagraph/api/services/entity_service.py :: 'The concept dimension is derived from the Rigveda-on'
+CLEARED   cross_veda_directed_reuse_pair_count     frontend/src/lib/lab.ts :: 'was established for one corpus pair'
+CLEARED   cross_veda_directed_reuse_pair_count     frontend/src/lib/lab.ts :: 'direction is only established separately, for one pa'
+CLEARED   cross_veda_directed_reuse_pair_count     frontend/src/components/lab/plates/transmission.tsx :: 'The Rigveda-to-Samaveda pair is the only one for whi'
+CLEARED   cross_veda_directed_reuse_pair_count     frontend/src/components/lab/plates/transmission.tsx :: 'The other five pairs have no'
+CLEARED   cross_veda_directed_reuse_pair_count     frontend/src/components/lab/plates/transmission.tsx :: 'the direction is recorded for this pair and not'
+CLEARED   cross_veda_directed_reuse_pair_count     frontend/src/app/sources/page.tsx :: 'exists here for one corpus pair'
+CLEARED   cross_veda_directed_reuse_pair_count     frontend/src/components/lab/plates/transmission.tsx :: 'Twelve of its 48 cells were never built and five'
+CLEARED   cross_veda_matrix_cell_statuses          frontend/src/lib/lab.ts :: 'Twelve of the 48 cells are NOT_BUILT and five were n'
+CLEARED   atharvavedic_deity_ascription_scope      src/vedagraph/domain/taxonomy.py :: '4,665 of its 5,839 mantras'
+CLEARED   atharvavedic_deity_ascription_scope      src/vedagraph/domain/queries.py :: '4,665 of its 5,839 mantras'
+CLEARED   atharvavedic_deity_ascription_scope      src/vedagraph/domain/queries.py :: 'TWO DEITY-ATTRIBUTION PREDICATES'
+CLEARED   atharvavedic_deity_ascription_scope      frontend/public/world/world.predicates.json :: "A descriptor of the ascription's form, not a second "
+
+layer_figures_declared_vs_measured  drifted fields: 0 []
+world_type_group_mapping            nodes falling to "other": 0
+
+STALE_PUBLIC_CLAIMS_STILL_PRESENT = 0

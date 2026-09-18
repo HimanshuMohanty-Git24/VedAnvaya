@@ -119,10 +119,35 @@ CONSUMER_BUILDERS: dict[str, tuple[str, ...]] = {
     "Visualization Lab aggregates": (
         "frontend/scripts/build-constellations.mjs",
         "frontend/scripts/build-world.mjs",
+        # R3: the group table BOTH builders read, and it was in nothing's hash. It was
+        # extracted to its own file precisely so the two steps could not disagree -- and
+        # extracting it took it out of the only thing watching it. Seven exported types had
+        # no mapping and 4,708 nodes (6.6% of the world) drew as "other", RITUAL_STEP's 3,121
+        # being the largest; R2 named only PADA_PARALLEL_GROUP's 1,434. Editing this file
+        # changes what a reader sees and must invalidate the bundle -- as the first R3 edit
+        # proved by putting :DeityGroup in the "deity" bucket, which made the Lab's deity
+        # group read 159 against the product's authoritative 157. A group whose label is
+        # "deity" has to hold exactly the ruled deity population or the Lab publishes a
+        # fourth deity count; the two collective labels are curated categories and sit with
+        # :DeityAxis under "idea".
+        "frontend/scripts/world-groups.json",
     ),
     "Knowledge World public projection": (
         "scripts/export_graph_world.py",
         "scripts/export_predicate_semantics.py",
+        # R3: export_predicate_semantics.py imports PREDICATE_SEMANTICS from here and names
+        # it as the source in its own output, so every word of every predicate `limit` the
+        # Lab renders comes from this module. Changing a limit changed
+        # world.predicates.json's content and moved no declared digest.
+        "src/vedagraph/api/services/graph_service.py",
+        # R3: the third JS stage, and the third one to be in nothing's hash. It reads
+        # world.raw.json and writes public/data/home-world.json -- the homepage's own
+        # graph-derived artifact, pinned to inputPublicExportHash like the Lab bundle is.
+        # Rebuilding the export left it stale and this report still read CURRENT; the thing
+        # that caught it was frontend/tests/unit/public-identity.test.ts, which sweeps
+        # public/ for any graph-derived artifact whose pin does not match. A declaration the
+        # dependency report lacks and a frontend test has is a declaration in the wrong place.
+        "frontend/scripts/build-home-world.mjs",
     ),
 }
 
@@ -154,6 +179,10 @@ CONSUMER_OUTPUTS: dict[str, tuple[str, ...]] = {
     "Knowledge World public projection": (
         "frontend/.world/world.raw.json",
         "frontend/public/world/world.predicates.json",
+        # R3: the homepage artifact. Declared as an OUTPUT as well as giving its builder an
+        # input entry, because the Wave 4 lesson this dict exists for applies to it exactly:
+        # an output nothing declares is an output nothing notices going stale.
+        "frontend/public/data/home-world.json",
     ),
     "Visualization Lab aggregates": (
         "frontend/.world/constellations.json",

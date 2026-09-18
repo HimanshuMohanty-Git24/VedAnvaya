@@ -198,11 +198,24 @@ def test_the_deity_insight_reports_coverage_per_dimension(live_client: TestClien
     assert set(naming["measured"]) == {"RV", "AV", "YV", "SV"}
 
     ascription = dimensions["ascription"]
-    assert ascription["vedas_in_scope"] == ["RV"]
-    assert set(ascription["vedas_not_covered"]) == {"AV", "YV", "SV"}
-    # The layer's scope, not this deity's: Indra is ascribed in the Rigveda and the figure
-    # is the one the endpoint reports as ``ascribed_total``.
-    assert ascription["measured"]["RV"] == body["ascribed_total"]
+    # ["RV", "AV"], measured. See
+    # test_a_deity_with_no_rigvedic_ascription_still_has_rv_in_ascription_scope for why this
+    # moved: GAP-ATTRIBUTION-002 clause 2, and 851 Atharvavedic passages carrying a resolved
+    # dedication under HAS_DEVATA_DERIVED.
+    assert ascription["vedas_in_scope"] == ["RV", "AV"]
+    assert set(ascription["vedas_not_covered"]) == {"YV", "SV"}
+    # The layer's scope, not this deity's: Indra is ascribed in the Rigveda, and the per-Veda
+    # figures sum to the one the endpoint reports as ``ascribed_total``. Summed rather than
+    # read off RV alone, because the total now spans both dedication routes and a check that
+    # compared one corpus against the whole would pass while the other corpus went missing.
+    assert sum(ascription["measured"].values()) == body["ascribed_total"]
+    # And the decomposition is published beside the total, each route with its own method, so
+    # the two evidence classes cannot be read as one.
+    routes = {row["predicate"]: row for row in body["ascription_routes"]}
+    assert set(routes) == {"HAS_DEVATA", "HAS_DEVATA_DERIVED"}
+    assert routes["HAS_DEVATA"]["method"] == "SOURCE_STATED_ANUKRAMANI_DEDICATION"
+    assert routes["HAS_DEVATA_DERIVED"]["method"] == "TADDHITA_SASYA_DEVATA_DERIVATION"
+    assert sum(row["passages"] for row in routes.values()) >= body["ascribed_total"]
 
     # And the top-level block now describes exactly one dimension.
     assert coverage["vedas_not_covered"] == []
@@ -218,11 +231,23 @@ def test_a_deity_with_no_rigvedic_ascription_still_has_rv_in_ascription_scope(
     Reporting RV as not-covered for a deity the apparatus simply never dedicates a hymn to
     would invert the very distinction this block exists to draw.
     """
+    # The layer scope is ["RV", "AV"] and is now MEASURED rather than read from
+    # profiles.ATTRIBUTION_VEDAS, which is ("RV",) and correct about HAS_DEVATA alone.
+    # GAP-ATTRIBUTION-002 clause 2: HAS_DEVATA_DERIVED carries 882 Atharvavedic dedications
+    # over 851 passages, so publishing AV in vedas_not_covered was a false absence on the one
+    # field whose job is to tell an absent layer from a real zero. The claim this test makes
+    # is unchanged -- scope belongs to the LAYER, not to the deity -- so it is asserted over
+    # every corpus the layer reaches rather than over the single one it used to.
     listing = live_client.get("/api/v1/devatas?limit=100").json()
     for row in listing["items"]:
         body = live_client.get(f"/api/v1/insights/devatas/{row['id']}").json()
         ascription = next(
             dim for dim in body["coverage"]["dimensions"] if dim["dimension"] == "ascription"
         )
-        assert ascription["vedas_in_scope"] == ["RV"], row["id"]
-        assert "RV" not in ascription["vedas_not_covered"], row["id"]
+        assert ascription["vedas_in_scope"] == ["RV", "AV"], row["id"]
+        for reached in ("RV", "AV"):
+            assert reached not in ascription["vedas_not_covered"], (row["id"], reached)
+        # The Samaveda and Yajurveda carry no dedication layer of any kind, which is
+        # GAP-ATTRIBUTION-001 and a source block. Those zeros ARE absent layers and must stay
+        # named, or this assertion would pass on a block that had quietly stopped disclosing.
+        assert set(ascription["vedas_not_covered"]) == {"SV", "YV"}, row["id"]

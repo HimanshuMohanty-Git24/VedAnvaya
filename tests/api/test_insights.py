@@ -840,27 +840,47 @@ def test_deity_naming_and_ascription_are_separate_fields_with_separate_scopes(
     """The distinction the whole deity surface rests on.
 
     Naming is what the verse says and spans four corpora. Ascription is the traditional
-    apparatus dedicating a hymn and exists for the Rigveda alone. Summed they would add a
-    statement of the text to a projection over a container, for the one corpus that has the
-    container labels -- so they are separate fields, separately scoped, and the response
-    says the sum is not available.
+    apparatus dedicating a hymn and reaches the corpora an apparatus was ingested for --
+    the Rigveda directly, the Atharvaveda through the morphological resolution of its
+    descriptors. Summed they would add a statement of the text to a projection over a
+    container -- so they are separate fields, separately scoped, and the response says the
+    sum is not available.
+
+    ``ascribed_scope`` was pinned to ``["RV"]``, which was this field reading HAS_DEVATA
+    alone while 851 Atharvavedic passages carried a resolved dedication under
+    HAS_DEVATA_DERIVED. GAP-ATTRIBUTION-002 clause 2 asks for exactly the corrected form:
+    "returns AV in ascribed_scope with its method stated".
     """
     body = live_client.get(DEVATA).json()
     assert body["named_by_veda"]["by_veda"]["av"] is not None
-    assert body["ascribed_scope"] == ["RV"]
+    assert body["ascribed_scope"] == ["RV", "AV"]
     assert body["ascribed_total"] is not None
     assert body["named_total"] != body["ascribed_total"]
     assert "missing apparatus" in body["ascription_note"]
     assert body["mention_surplus"] == body["named_total"] - body["ascribed_total"]
+    # The method travels with the figure, per the clause. Both routes are present even where
+    # one reaches nothing, so a zero is distinguishable from a route the response omitted.
+    methods = {row["predicate"]: row["method"] for row in body["ascription_routes"]}
+    assert methods == {
+        "HAS_DEVATA": "SOURCE_STATED_ANUKRAMANI_DEDICATION",
+        "HAS_DEVATA_DERIVED": "TADDHITA_SASYA_DEVATA_DERIVATION",
+    }
     # The corpora the ascription layer does not reach are named rather than left as zeros --
     # in the *ascription* dimension. They used to be named in the response's single coverage
     # block, beside naming figures for the same three corpora, which told a machine consumer
     # that AV 635, YV 221 and SV 405 were all uncovered. See
     # tests/api/test_coverage_dimensions.py.
+    #
+    # Two now, not three: the Atharvaveda IS reached, through HAS_DEVATA_DERIVED. The
+    # Samavedic and Yajurvedic zeros are the layer being absent outright -- the gana join key
+    # and pratika-keyed sutra prose, GAP-ATTRIBUTION-001 -- and must stay named.
     ascription = next(
         dim for dim in body["coverage"]["dimensions"] if dim["dimension"] == "ascription"
     )
-    assert set(ascription["vedas_not_covered"]) == {"AV", "YV", "SV"}
+    assert set(ascription["vedas_not_covered"]) == {"YV", "SV"}
+    # The figure and its scope label cannot disagree about which routes they cover: the
+    # per-Veda figures sum to the total, over one pattern rather than two.
+    assert sum(ascription["measured"].values()) == body["ascribed_total"]
     assert body["coverage"]["vedas_not_covered"] == []
     assert body["named_by_veda"]["per_1000_by_veda"]
 

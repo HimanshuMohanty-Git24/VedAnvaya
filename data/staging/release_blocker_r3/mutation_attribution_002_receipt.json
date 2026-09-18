@@ -1,0 +1,40 @@
+{
+  "artifact": "RELEASE_BLOCKER_R3_MUTATION_RECEIPT_ATTRIBUTION_002",
+  "at": "2026-09-18T05:32:00.851355+00:00",
+  "plan_sha256": "945dce91e5b89052627f2b5b943865bf46b7474b95900c5986761d3503c04ab5",
+  "promised": {
+    "nodes_written": 324,
+    "status_writes": 324,
+    "unresolved_reason_writes": 285,
+    "derivation_path_writes": 39,
+    "nodes_delta": 0,
+    "relationships_delta": 0
+  },
+  "actual": {
+    "nodes_written": 324,
+    "status_writes": 324,
+    "unresolved_reason_writes": 285,
+    "nodes_delta": 0,
+    "relationships_delta": 0
+  },
+  "after": {
+    "nodes": 164201,
+    "relationships": 508042,
+    "status_landed": 324,
+    "unresolved_without_a_reason": 0,
+    "resolved_carrying_an_unresolved_reason": 0,
+    "status_values_live": {
+      "UNRESOLVED_STEM_MATCHES_NO_CANONICAL_DEVATA": 210,
+      "RESOLVED_TO_CANONICAL_DEVATA": 39,
+      "UNRESOLVED_NAMES_A_PLURALITY": 3,
+      "UNRESOLVED_COMPOUND_TWO_ASCRIPTIONS": 67,
+      "UNRESOLVED_SUBJECT_DESCRIPTOR_NOT_A_DEITY": 4,
+      "UNRESOLVED_SOURCE_DEFERS_TO_THE_MANTRA": 1
+    }
+  },
+  "before": {
+    "nodes": 164201,
+    "relationships": 508042
+  },
+  "promised_equals_actual": true
+}

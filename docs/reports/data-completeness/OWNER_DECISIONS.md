@@ -739,3 +739,131 @@ not mine. It did not re-key, merge or mass-migrate any entity. It did not run Ga
 for the four blocked domains — those are a fresh adversarial pass per domain, not a
 by-product of this one. And it did not claim `misleading = 0`: see §L1 of the report for the
 formal Ask grade and its status.
+
+# Owner round five — Release Blocker Closure R3
+
+Two decisions the registry had already asked for by name. The R1 hostile pass left
+`GAP-SEMANTICS-004` closed on a citation that pointed at itself, and wrote down what would fix
+it: *"The owner should write it into OWNER_DECISIONS.md, at which point the citation becomes
+independent of this file."* And R2 left `GAP-ENTITY_COVERAGE-008` open on a measure that asks
+two intentionally different predicates to agree. Both are settled here.
+
+## 34. OWNER_DECISION_SEMANTICS_004_STRATUM_MAP — no unattributed stratum map
+
+Recorded verbatim, as the owner gave it:
+
+> VedAnvaya SHALL NOT ingest or publish an unattributed historical/chronological stratum map
+> for Vedic passages.
+>
+> A stratum assignment is an interpretive scholarly claim and requires:
+>
+>     a named scholarly source
+>     an identifiable work
+>     attributable methodology
+>     source-local citation
+>     provenance to the specific assignment
+>
+> The existence of a named asserter alone is insufficient.
+>
+> No generic, synthesized, model-generated, consensus-looking, or unattributed stratum map may
+> be created merely to satisfy coverage.
+>
+> For this release:
+>
+>     historical-stratum enrichment is intentionally unsupported
+>     until a specific scholarly stratum source is selected and attributed.
+>
+> This is an OWNER SCOPE DECISION, not an external-source claim.
+
+**What this is not.** It is not `BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE`. Nobody has established
+that no lawful attributed stratum source exists — several do, and each is one scholar's
+position. The block is that this release declines to pick one, and declining to pick is a scope
+decision the owner owns. Calling it source-unavailable would be the inverse of inferring absence
+from not looking: inferring unavailability from not choosing.
+
+**What it forbids concretely.** No stratum nodes. No stratum edges. No `stratum`,
+`period`, `chronological_layer` or equivalent property on `:Mantra`, `:Passage`, `:Hymn` or
+`:Work`. Veda membership is not a period and must not be presented as a proxy for one. The five
+requirements above are conjunctive: a map carrying four of them is still refused.
+
+**Where the axis is currently absent, correctly.** `/api/v1/ask` refuses dating questions
+(`ASK_PRODUCT_V1_BENCHMARK_FINAL` Q22), and the capability catalogue publishes no dating card
+among its 22. Benchmark V3_3 Q24, Q30 and Q70 are unanswered on this axis by decision, not by
+oversight.
+
+`GAP-SEMANTICS-004` closes `CLOSED_SCOPE_DECISION` citing this section. Its own closure test
+offers two disjuncts and this is the second: *"the absence is recorded as a deliberate decision
+with its reasoning."* The self-citation the R1 pass named as the registry's weakest closure is
+gone — the decision is now written outside the audit that closed it.
+
+## 35. OWNER_DECISION_ENTITY_008_DEITY_MEMBERSHIP — two predicates, one product surface
+
+Recorded verbatim, as the owner gave it:
+
+> canonical product Deity membership
+> and
+> source/addressability-as-deity evidence
+>
+> are NOT the same semantic predicate.
+>
+> An entity may be addressed, invoked, personified, or treated ritually in a source without
+> automatically belonging to the canonical product Deity class.
+>
+> Therefore:
+>
+>     d.is_deity
+>
+> is the authoritative PRODUCT Deity-membership predicate.
+>
+> Other source-level predicates remain evidence about source usage.
+
+**Why the old measure was wrong, proven before it was replaced.** `GAP-ENTITY_COVERAGE-008`
+carried this closure measure:
+
+```cypher
+MATCH (d:Devata)
+WHERE (coalesce(d.structure,'UNSPECIFIED') IN ['HUMAN','PATRON_PRAISE','UNSPECIFIED'])
+      <> (d.is_deity = false)
+RETURN count(d)
+```
+
+It returns 29, and it returns 29 *by construction*. Measured 2026-09-18, the 29 decompose
+exactly: **28 `ABSTRACT` labels ruled `NOT_DEITY`**, which the structure predicate admits
+because `ABSTRACT` is not in its exclusion set, and **1 `UNSPECIFIED` label ruled `DEITY`** —
+`VG:DEVATA:SUNAH`, the dog — which the structure predicate excludes. Driving that measure to 0
+requires either admitting 28 abstractions each carrying its own recorded refusal reason, or
+expelling the dog on the recorded ground that *"excluding this one because its structure is
+`UNSPECIFIED` rather than `INDIVIDUAL` would be excluding on a morphological accident."* Both
+are overturning recorded curation to satisfy a metric. Refused.
+
+**And the coincidence that hid it.** The entry's own closure *test* reads *"counts over it
+exclude the 29 non-deities"* — and that 29 is a **different 29**: 22 `HUMAN` patrons plus 7
+`PATRON_PRAISE` gift-praise labels, the figure `deity_eligibility`'s docstring opens with. Two
+unrelated quantities that both happen to equal 29, one in the test and one in the measure, is
+why a measure comparing the wrong two things read as though it were checking the test. This is
+the project's own recorded trap — *a grade can be wrong while every figure is right* — and it
+is the reason the measure is replaced rather than merely re-run.
+
+**The replacement measure: product consumer consistency.** Not predicate equality. What must
+hold, and what is now pinned by a regression test:
+
+1. every product surface derives Deity membership from the authoritative predicate
+   `deity_eligibility.ELIGIBLE_DEITY_PREDICATE` (`d.is_deity = true`);
+2. no consumer substitutes a source-level predicate — `structure`, `MENTIONS_DEVATA`,
+   addressability — for product membership;
+3. the divergence is documented, here and on the entry;
+4. a regression test pins the divergence as intentional, so a future pass cannot "fix" it by
+   flattening one predicate into the other;
+5. no stale consumer still exposes the former 184-node population.
+
+**The 29 stays, and is now a documented invariant rather than a defect.** `structure` remains a
+fact about every row and is still asserted to partition, because an unknown structure value must
+fail a test rather than quietly shrink the pantheon.
+
+## 36. What round five does not decide
+
+It does not decide the four staged-material gates (A, C, E) — §29 and §33 stand. It does not
+authorise any audio verdict: the queue still holds 1,021 `NEEDS_AUDIBLE_REVIEW`, 0 verified, 0
+rejected, and §14 stands. It does not grade Ask. And it does not close any entry on unfinished
+implementation: an entry with work left in it stays `STILL_IMPLEMENTATION_FIXABLE` and is
+counted, which is the guard §29 built.

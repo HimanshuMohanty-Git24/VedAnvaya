@@ -112,7 +112,7 @@ const RELATIONSHIPS: { label: string; body: string }[] = [
     },
     {
         label: "Text reuse",
-        body: "One verse carries another's wording, with the direction recorded. Direction is expensive to establish and exists here for one corpus pair.",
+        body: "One verse carries another's wording, with the direction recorded. Direction is expensive to establish and exists here for two of the six corpus pairs — Rigveda to Samaveda, and Atharvaveda to Rigveda.",
     },
     {
         label: "Variant",

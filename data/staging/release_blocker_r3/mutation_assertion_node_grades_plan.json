@@ -1,0 +1,66 @@
+{
+  "artifact": "RELEASE_BLOCKER_R3_MUTATION_PLAN_ASSERTION_NODE_GRADES",
+  "at": "2026-09-18T05:55:43.885621+00:00",
+  "found_by": "tests/api/test_passages.py::test_the_frame_value_space_is_exactly_two_values_plus_the_unframed_stratum",
+  "operation": "SET a.knowledge_layer, a.quality_tier on :SemanticAssertion where null",
+  "mapping": {
+    "MORPHOLOGY_RULE_PREDICATE_ONLY": [
+      "L2_DETERMINISTIC_DERIVED",
+      "TIER_B"
+    ],
+    "TREEBANK_DEPREL": [
+      "L2_DETERMINISTIC_DERIVED",
+      "TIER_B"
+    ],
+    "CROSS_VEDA_TEXT_IDENTITY": [
+      "L2_DETERMINISTIC_DERIVED",
+      "TIER_B"
+    ]
+  },
+  "mapping_warrant": {
+    "MORPHOLOGY_RULE (already graded)": [
+      "L2_DETERMINISTIC_DERIVED",
+      "TIER_B"
+    ],
+    "MODEL_EXTRACTION (already graded)": [
+      "L3_LLM_EXTRACTED",
+      "TIER_D"
+    ]
+  },
+  "test_substantive_claim_remeasured_before_write": {
+    "frame_absent_by_derivation": {
+      "MODEL_EXTRACTION": 2459
+    },
+    "frame_present_by_derivation": {
+      "MORPHOLOGY_RULE": 2406,
+      "MORPHOLOGY_RULE_PREDICATE_ONLY": 28370,
+      "TREEBANK_DEPREL": 1532,
+      "CROSS_VEDA_TEXT_IDENTITY": 364
+    },
+    "claim": "frame absent <=> MODEL_EXTRACTION; frame present <=> deterministic",
+    "holds": true
+  },
+  "frames_among_the_ungraded": [
+    "ASSERTED",
+    "REQUESTED"
+  ],
+  "promised": {
+    "nodes_written": 30266,
+    "by_derivation": {
+      "MORPHOLOGY_RULE_PREDICATE_ONLY": 28370,
+      "TREEBANK_DEPREL": 1532,
+      "CROSS_VEDA_TEXT_IDENTITY": 364
+    },
+    "ungraded_after": 0,
+    "nodes_delta": 0,
+    "relationships_delta": 0
+  },
+  "refusals_checked": [
+    "a derivation outside GRADE_BY_DERIVATION raises rather than defaulting",
+    "the declared census must match before any write",
+    "the frame-absent stratum must still be model-only",
+    "no model-extracted assertion may carry a frame",
+    "the deterministic warrant grade must still read L2/TIER_B"
+  ],
+  "reversal": "REMOVE a.knowledge_layer, a.quality_tier on the same set; all prior values null."
+}

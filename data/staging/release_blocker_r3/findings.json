@@ -1,0 +1,119 @@
+{
+  "artifact": "RELEASE_BLOCKER_R3_FINDINGS",
+  "at": "2026-09-18T06:16:53.739791+00:00",
+  "remaining_implementation_fixable": 17,
+  "per_gap": {
+    "GAP-ATTRIBUTION-002": {
+      "r3_work": "clauses 2 and 3 CLOSED; clause 1 diagnosed and still open",
+      "clause_1": "UNMET. The resolver under-matches the source. DEITY_ADJECTIVE_SUFFIXES lists the deity-adjective suffix in short-a forms ('daivatam', 'devatyam'); Whitney prints the vrddhi form '-daivatam' with a long a; and suffix stripping in suffix_candidates() runs BEFORE any length folding, so no candidate is generated and the LENGTH_INSENSITIVE tier -- which resolve_one applies to the candidate STEM -- never gets a chance. Measured 2026-09-18: 41 of the 210 UNRESOLVED_STEM_MATCHES_NO_CANONICAL_DEVATA descriptors would gain a suffix candidate under a length-insensitive suffix match, and agnidaivatam and indradaivatam among them have stems that are registered deities.",
+      "clause_2": "CLOSED. ascribed_scope now measured over both dedication routes; AV present with its method.",
+      "clause_3": "CLOSED. 0 of 285 unresolved descriptors without a typed reason, from 285.",
+      "next_action": "Make the SUFFIX match length-insensitive as a second tier, then re-enumerate length_collisions() per candidate before landing. Deliberately NOT done in R3: widening a matcher in the same session that measured it is how over-normalising passes as a clean run.",
+      "blocked_on": null
+    },
+    "GAP-COMMUNITIES-002": {
+      "r3_work": "none; re-measured only",
+      "measured": "57 = 24 PAIR + 33 GROUP with component_count 0",
+      "next_action": "24 PAIRs are mechanical decomposition over devata_components.yaml. The 33 GROUPs need a typed reason why membership is not enumerable, and no property on :Devata holds one -- that field has to be added before the reasons can be recorded.",
+      "blocked_on": null
+    },
+    "GAP-ENTITY_COVERAGE-001": {
+      "r3_work": "evidence path proven; occurrence layer NOT built",
+      "measured": "The brief's figure reproduces exactly: folding each epithet label_iast with the repository's own fold_alias and matching against fold_annotation(normalized_lemma) resolves 10 of 13 epithets, and vrtrahan reaches the lemma vr̥trahán- with mantra_count 116. 3 do not resolve and must NOT be forced: dasra (no lemma at any tier), nasatya vs the stem nasatya, and rudravartani vs rudravartani -- the last two differ in vowel LENGTH and dual/feminine stem grain, not in the ISO/IAST fold, so loosening the fold to catch them is the over-normalisation this project bars.",
+      "next_action": "Land the occurrence layer through the existing VG:OCCURRENCE_CONTRACT:V1 (add Epithet to COVERED_LABELS, which raises for an unknown label) with per-edge provenance distinguishing EXACT_LEXICAL from NORMALIZED_COMPARISON, and type the Rigveda-only bound IN THE ROW: MENTIONS_LEMMA is 154,261 edges over 10,552 RV mantras and ZERO in SV/YV/AV, so an epithet with no SV occurrence is unannotated, not absent.",
+      "blocked_on": "Clause 2, 'the inventory reaches well beyond 4 deities', is NOT closable from repository-held evidence. The entry's implementation_dependency asks for \"an expansion of the epithet inventory well beyond 13\", and the only curated epithet evidence held is 13 epithets over 4 deities in devata_taxonomy.yaml plus 6 EPITHET_QUALIFIED Anukramani labels over 4 base deities in devata_variants.yaml -- a union of 6 deities. Expanding further is fresh model-adjudicated curation, which is an owner scope decision, not implementation."
+    },
+    "GAP-ENTITY_COVERAGE-002": {
+      "r3_work": "none; re-measured only",
+      "measured": "25 distinct VG:DEVATA: subject_keys over 75 metrics, against 157 eligible",
+      "next_action": "Materialise per-deity profile metrics over the mention edges already held. The denominator question the entry raises is now settled: use the 157 from deity_eligibility.ELIGIBLE_DEITY_PREDICATE, closed in R3 under GAP-ENTITY_COVERAGE-008.",
+      "blocked_on": null
+    },
+    "GAP-ENTITY_COVERAGE-003": {
+      "r3_work": "none",
+      "next_action": "Decide the authoritative representation before building anything. The product exposes a healing dimension and the graph has no remedy class; the entry's own note records TREATS at 160 edges as TIER_D and not a substitute. Prefer an existing Concept/DomainEntity representation over a new top-level ontology class, per the brief.",
+      "blocked_on": null
+    },
+    "GAP-ENTITY_COVERAGE-004": {
+      "r3_work": "none",
+      "next_action": "Repair the expected-inventory contract rather than decorating the field: 0 of 384 :DomainEntity carry expected_source and the key does not exist. If the expectation list itself was generated without evidence, the contract is the defect.",
+      "blocked_on": null
+    },
+    "GAP-ENTITY_COVERAGE-006": {
+      "r3_work": "none",
+      "next_action": "Represent the attestation truthfully rather than forcing a lexical match. The witness VG:YV:VSM:A18:V013 is pinned and the sandhi-elided form is genuinely unsafe to recover; the system needs SOURCE_ATTESTED_OCCURRENCE separable from LEXICALLY_RECOVERED_OCCURRENCE. Clause 1 (a measured recall figure with its sample size per entity) is the larger half and is untouched.",
+      "blocked_on": null
+    },
+    "GAP-ENTITY_COVERAGE-007": {
+      "r3_work": "none",
+      "next_action": "Add personification_status to the 13 :NaturalPhenomenon nodes so a refusal is distinguishable from an unattempted case, and treat personification as an interpretive relation rather than an identity class. Clause 1 (multi-word phrase matching; only 2 :DomainEntity carry a multi-word Sanskrit label) is separate.",
+      "blocked_on": null
+    },
+    "GAP-PRODUCT_SURFACE-005": {
+      "r3_work": "none",
+      "next_action": "Apply the 4 staged Samavedic apparatus corrections at data/staging/final_closure_sprint/agent6/gap005_sv_apparatus_corrections.json. Clause 1 already passes.",
+      "blocked_on": null
+    },
+    "GAP-QUALITY-003": {
+      "r3_work": "none",
+      "next_action": "Clause 2 is internal: 7 predicates carry a constant 1.0 on every edge over 51,356 edges, which is a tier presented as a probability and filters to everything or nothing. Removing or renaming the field on those predicates is deterministic.",
+      "blocked_on": "Clause 1 (a calibration curve against a human-labelled sample) is blocked through GAP-QUALITY-001."
+    },
+    "GAP-RITUAL-003": {
+      "r3_work": "partial evidence located",
+      "measured": "R3 found the yupa witnesses already in the graph while reconciling MENTIONS_ENTITY: 6 edges outside the domain_mentions artifact reach VG:CONCEPT:YUPA-SACRIFICIAL-POST, and they include VSM 19.17 and VSM 25.29 -- the two the clause names by address. So clause 2's evidence exists; what is missing is the vedas_with_matches property to expose it.",
+      "next_action": "Wire VG:CONCEPT:DUNDUBHI-DRUM and VG:CONCEPT:AUDUMBARA-AMULET to rites, and land vedas_with_matches on the yupa node from the 6 edges already present.",
+      "blocked_on": null
+    },
+    "GAP-RITUAL-004": {
+      "r3_work": "none",
+      "next_action": "2 of the classical sixteen are absent from :RitualRole and 2 rows carry a null denominator_schema / in_classical_sixteen / existence_evidence_type. Both bounded.",
+      "blocked_on": null
+    },
+    "GAP-RITUAL-005": {
+      "r3_work": "none",
+      "next_action": "Clause 1 passes with per-edge verse evidence. Clause 2 fails at 3 of 103 rites carrying any offering -- 100 rites of curation over material the Samhitas state directly.",
+      "blocked_on": null
+    },
+    "GAP-RITUAL-006": {
+      "r3_work": "none beyond R2 clause 1",
+      "next_action": "Clause 1 landed in R2 (ritual_context on all 20,210, five-valued, absence typed; ritual_context_method on all 20,210). Clause 2 needs a precision figure measured against a reviewed sample -- there is no reviewed sample, so its real evidence class must be recorded rather than a precision manufactured. Clause 3 needs material-culture counts reported split by context, and no product surface reads ritual_context at all.",
+      "blocked_on": "Clause 2 needs a human-reviewed sample that does not exist."
+    },
+    "GAP-SAMAVEDA_MUSIC-003": {
+      "r3_work": "none",
+      "next_action": "Clause 1 is unblocked, additive and undone: 0 of 1,844 SV mantras carry a running_samhita_number, and the entry's own source_dependency says the number is already captured in the staging artifact. The source_locator that does exist on 1,844 SV TextVersion rows holds ONE value across all of them -- a derivation recipe, not a locator.",
+      "blocked_on": "Clause 2 (re-deriving all 495 MUSICALIZED_AS edges from the graph alone) is behind the owner audio/music gate."
+    },
+    "GAP-SEMANTICS-003": {
+      "r3_work": "none",
+      "next_action": "Clause 2 fails outright: ASSERTION_TARGET runs to :Devata on all 799 edges, so an assertion about a deity acting on a mortal, a place or an object cannot be expressed. This is a range restriction in the model, not missing data.",
+      "blocked_on": null
+    },
+    "GAP-TRANSLATION-004": {
+      "r3_work": "none",
+      "next_action": "Re-type the 4 MIS-GRAINED neighbouring renderings as MANTRA_RANGE, the route already applied to the other 30: VG:RV:SAK:M05:S055:V008, VG:RV:SAK:M09:S007:V009, VG:RV:SAK:M10:S048:V007, VG:RV:SAK:M10:S132:V005.",
+      "blocked_on": "RV 10.86.16 and 10.86.17 are absent from the only ingested source."
+    }
+  },
+  "other_findings": {
+    "live_gated_failures_found_and_not_all_fixed": {
+      "context": "Running tests/domain with VEDAGRAPH_LIVE_NEO4J=1 -- the gate the default run skips -- surfaced 6 failures that the reported \"5 known failures\" never included, because a skipped test reports neither pass nor fail.",
+      "fixed_in_r3": [
+        "test_live_the_two_assertion_layers_remain_separable_on_the_predicate_edge: 30,266 ASSERTION_PREDICATE edges carried no derivation, so the model-extracted and rule-derived layers were not separable on the edge -- the exact blending GAP-SEMANTICS-001 exists to prevent. Fixed by copying each edge's own source node derivation onto it."
+      ],
+      "still_failing": [
+        "test_live_q23_reports_insufficient_community_evidence",
+        "test_live_every_formula_family_has_a_unique_family_id",
+        "test_live_every_membership_edge_lands_on_a_real_formula",
+        "test_live_member_role_counts_are_what_the_artifact_says",
+        "test_live_the_containment_claim_is_recomputable_from_the_graph_alone (1,119 vs 1,079)"
+      ],
+      "note": "The four formula-family failures sit behind FORMULA_FAMILY_REBUILD_BARRED_BY_FROZEN_IDENTITY_POLICY, which is also why that dependency consumer reads BLOCKED. They are pre-existing, were not introduced by R3, and are NOT part of the five the brief scoped."
+    },
+    "dependency_declaration_gaps_closed": {
+      "frontend/scripts/world-groups.json": "Read by BOTH build-world.mjs and build-constellations.mjs and declared by nothing. It was extracted to its own file so the two steps could not disagree, and extracting it removed it from the only thing watching it. Adding it to the Lab consumer's inputs immediately turned that consumer STALE_INPUT, which is the proof the gap was real.",
+      "src/vedagraph/api/services/graph_service.py": "export_predicate_semantics.py imports PREDICATE_SEMANTICS from it and names it as the source in its own output, so every predicate `limit` the Lab renders comes from this module and no declared digest moved when one changed."
+    }
+  }
+}

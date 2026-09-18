@@ -1345,14 +1345,44 @@ class DevataDispersionResponse(InsightEnvelope):
 # ---------------------------------------------------------------------------
 
 
+class DedicationRouteRow(ApiModel):
+    """One resolved-dedication route, with the method that produced it.
+
+    ``ascribed_total`` sums two routes that are not the same kind of evidence:
+    ``HAS_DEVATA`` is the Anukramani naming a deity the registry already holds, and
+    ``HAS_DEVATA_DERIVED`` is that dedication recovered from a Sanskrit adjective by
+    morphology. A single total with a single method string would be wrong about one of
+    them, so the decomposition is published beside the total rather than folded into it,
+    and each row carries its own method. GAP-ATTRIBUTION-002 clause 2 -- *"returns AV in
+    ascribed_scope with its method stated"*.
+    """
+
+    predicate: str = Field(description="The graph predicate this row counts.")
+    method: str = Field(description="How the dedication was arrived at, as a stable code.")
+    means: str = Field(description="What this route asserts, and what it does not.")
+    vedas_reached: list[str] = Field(
+        default_factory=list, description="Veda codes this route reaches for this deity."
+    )
+    measured: dict[str, int] = Field(
+        default_factory=dict, description="Passages per Veda on this route."
+    )
+    passages: int = Field(description="Passages this route reaches, summed over its own Vedas.")
+
+
 class DevataInsightResponse(InsightEnvelope):
     """A deity's measured reach, with naming and ascription never added together.
 
     ``named`` counts passages whose text says the deity's name and spans all four corpora.
-    ``ascribed`` counts the Anukramani's dedication and exists for the Rigveda only. They
-    diverge in both directions and neither is the corrected version of the other, so they
-    are separate fields with separate scopes, and the per-1,000 figures are what a
-    cross-corpus comparison should be read on.
+    ``ascribed`` counts the Anukramani's dedication and reaches the corpora an Anukramani
+    apparatus was ingested for -- the Rigveda directly, the Atharvaveda through the
+    morphological resolution of its descriptors. They diverge in both directions and
+    neither is the corrected version of the other, so they are separate fields with
+    separate scopes, and the per-1,000 figures are what a cross-corpus comparison should be
+    read on.
+
+    ``ascribed_total`` and ``ascribed_scope`` are computed from ONE pattern over both
+    dedication routes, so the figure and the scope label cannot disagree about which routes
+    they cover; ``ascription_routes`` decomposes the total by route and method.
     """
 
     devata_id: str
@@ -1368,6 +1398,12 @@ class DevataInsightResponse(InsightEnvelope):
     certainty: ReferentCertaintyCounts
     ascribed_total: int | None = None
     ascribed_scope: list[str] = Field(default_factory=list)
+    ascription_routes: list[DedicationRouteRow] = Field(
+        default_factory=list,
+        description="The dedication total decomposed by route and method. Every route is "
+        "present even where it reaches nothing, so a zero is distinguishable from a route "
+        "the response omitted.",
+    )
     ascription_note: str
     mention_surplus: int | None = Field(
         default=None,

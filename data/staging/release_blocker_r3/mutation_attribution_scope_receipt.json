@@ -1,0 +1,39 @@
+{
+  "artifact": "RELEASE_BLOCKER_R3_MUTATION_RECEIPT_ATTRIBUTION_SCOPE",
+  "at": "2026-09-18T06:05:02.720920+00:00",
+  "plan_sha256": "0212744bab178c47435255f4f887de4871e4257005874c9ffa269e8536de7f04",
+  "promised": {
+    "nodes_written": 214,
+    "scope_distribution": {
+      "RV": 179,
+      "RV|AV": 35
+    },
+    "nodes_gaining_AV": 35,
+    "distinct_notes_after": 1,
+    "nodes_delta": 0,
+    "relationships_delta": 0
+  },
+  "actual": {
+    "nodes_written": 214,
+    "scope_distribution": {
+      "RV": 179,
+      "RV|AV": 35
+    },
+    "distinct_notes_after": 1,
+    "nodes_delta": 0,
+    "relationships_delta": 0
+  },
+  "after": {
+    "nodes": 164201,
+    "relationships": 508042,
+    "scope_distribution": {
+      "RV": 179,
+      "RV|AV": 35
+    },
+    "distinct_notes": 1,
+    "note_matches_taxonomy": 0,
+    "nodes_claiming_a_corpus_they_have_no_edge_in": 0,
+    "nodes_omitting_a_corpus_they_do_have_an_edge_in": 0
+  },
+  "promised_equals_actual": true
+}

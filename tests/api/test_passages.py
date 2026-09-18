@@ -275,12 +275,31 @@ def test_rv_1_1_1_returns_its_full_record(live_client: TestClient) -> None:
     assert body["native_hierarchy"][1]["canonical_key"] == "VG:RV:SAK:M01:S001"
     assert body["parent"]["canonical_key"] == "VG:RV:SAK:M01:S001"
 
+    # Three surfaces, not two, and asserted as the displayable/derivative SPLIT rather than
+    # as a length. The search-derivative layer (GAP-MORPHOLOGY-006, closed) landed a
+    # NORMALIZED_FOR_SEARCH surface on all 20,210 mantras, so a bare `len(surfaces) == 2`
+    # broke on a layer landing correctly. The claim worth pinning is not how many surfaces
+    # exist but that exactly the readable ones are marked readable: that derivative carries
+    # private-use sentinels for the vocalic r and the anusvara, and a client that rendered
+    # it because the count looked familiar would print tofu boxes.
     surfaces = body["text"]["surfaces"]
-    assert len(surfaces) == 2
+    displayable = [surface for surface in surfaces if surface["is_displayable"]]
+    derivative = [surface for surface in surfaces if not surface["is_displayable"]]
+    assert [surface["surface"] for surface in displayable] == ["PRIMARY", "PARALLEL_WITNESS"]
+    assert [surface["surface"] for surface in derivative] == ["NORMALIZED_FOR_SEARCH"]
     assert all(surface["script"] == "IAST" for surface in surfaces)
     assert "agnim" in surfaces[0]["text"].replace("̱", "").replace("̍", "")
+    # No displayable surface may carry a private-use sentinel. This is the assertion that
+    # makes the split load-bearing instead of decorative.
+    assert not [
+        character
+        for surface in displayable
+        for character in surface["text"]
+        if 0xE000 <= ord(character) <= 0xF8FF
+    ]
     assert body["text"]["transliteration"] == KnowledgeStatus.SUPPORTED
     assert body["text"]["devanagari"] == KnowledgeStatus.NOT_BUILT
+    assert body["text"]["normalized_for_search"] == KnowledgeStatus.SUPPORTED
 
     assert body["translations"]["items"][0]["translator"] == "Ralph T. H. Griffith"
     assert body["translations"]["items"][0]["quality_status"] == "MACHINE_ALIGNED"
@@ -952,7 +971,12 @@ def test_the_frame_value_space_is_exactly_two_values_plus_the_unframed_stratum(
         ("ASSERTED", "L2_DETERMINISTIC_DERIVED"),
         ("REQUESTED", "L2_DETERMINISTIC_DERIVED"),
         (None, "L3_LLM_EXTRACTED"),
-    }, f"the frame/layer partition has changed: {sorted(by_frame)}"
+        # `key=str` and not a bare sort: the unframed stratum's key is None, and sorting a
+        # tuple containing it against a tuple of strings raises TypeError *inside the failure
+        # message*. That is how this assertion once reported `TypeError: '<' not supported`
+        # instead of naming the partition that had moved -- a diagnostic that fails only when
+        # it is needed.
+    }, f"the frame/layer partition has changed: {sorted(by_frame, key=str)}"
 
     assert live_repository.run_one(
         "CALL db.propertyKeys() YIELD propertyKey "
@@ -1224,7 +1248,14 @@ def test_no_mention_surface_reports_an_ambiguous_row_as_ungraded_fact(
         ("/api/v1/works/VG:WORK:RV:SAK/root?offset=9999", "results", 10),
         ("/api/v1/passages/VG:AV:SAU:K20/children?offset=99999", "results", 143),
         ("/api/v1/passages/VG:RV:SAK:M01:S001:V001/siblings?offset=9999", "results", 8),
-        ("/api/v1/passages/VG:RV:SAK:M03:S035:V011/parallels?offset=500", None, 16),
+        # 17 and not 16: the final-closure pass imported 311 AV-to-RV directed reuse edges
+        # (`pipeline_version = vedagraph-agent1-final-closure-v1`), making REUSES_TEXT_FROM a
+        # two-pair predicate, and one of them joins this verse to AVS 20.11.11 -- which it
+        # already had an EXACT_PARALLEL_OF to, so the new edge records a direction on an
+        # established parallel rather than finding a new neighbour. Enumerated edge by edge
+        # rather than re-baselined: 14 EXACT_PARALLEL_OF, 1 NEAR_PARALLEL_OF, 2
+        # REUSES_TEXT_FROM.
+        ("/api/v1/passages/VG:RV:SAK:M03:S035:V011/parallels?offset=500", None, 17),
         (
             "/api/v1/passages/VG:AV:SAU:K15:S002:V002/parallels?filter=formula&offset=9999",
             None,

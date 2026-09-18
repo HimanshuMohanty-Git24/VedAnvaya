@@ -1,6 +1,6 @@
 {
   "artifact": "DEPENDENCY_STATUS",
-  "at": "2026-09-18T04:57:09.637957+00:00",
+  "at": "2026-09-18T06:32:34.662364+00:00",
   "graph_census": {
     "nodes": 164201,
     "relationships": 508042
@@ -113,7 +113,7 @@
     {
       "consumer": "Visualization Lab aggregates",
       "status": "CURRENT",
-      "declared_inputs": 12,
+      "declared_inputs": 13,
       "inputs_that_moved": [],
       "reason": null,
       "output_file": null,
@@ -124,27 +124,28 @@
         "frontend/public/world/world.json",
         "frontend/public/world/world.labels.json"
       ],
-      "built_at": "2026-09-18T04:01:59.498013+00:00",
+      "built_at": "2026-09-18T06:26:00.541064+00:00",
       "rebuilt_by": "scripts/export_graph_world.py and the metrics build",
-      "current_input_digest": "015bc4fc1d01a2cd5135a43bd9f36532a55681afb5cfa97e1f60f3d71f4991c6",
-      "recorded_input_digest": "015bc4fc1d01a2cd5135a43bd9f36532a55681afb5cfa97e1f60f3d71f4991c6"
+      "current_input_digest": "56ac8f9c329e44f08f70d41b68ecbad39ee51b2ad0a92695b4a68ee9d9f2c810",
+      "recorded_input_digest": "56ac8f9c329e44f08f70d41b68ecbad39ee51b2ad0a92695b4a68ee9d9f2c810"
     },
     {
       "consumer": "Knowledge World public projection",
       "status": "CURRENT",
-      "declared_inputs": 10,
+      "declared_inputs": 12,
       "inputs_that_moved": [],
       "reason": null,
       "output_file": null,
       "output_hash": null,
       "declared_outputs": [
         "frontend/.world/world.raw.json",
+        "frontend/public/data/home-world.json",
         "frontend/public/world/world.predicates.json"
       ],
-      "built_at": "2026-09-18T04:02:04.759319+00:00",
+      "built_at": "2026-09-18T06:32:01.870339+00:00",
       "rebuilt_by": "scripts/export_graph_world.py",
-      "current_input_digest": "eb4e2d408ed7a30c8b109eb88c638434696045a34c8b7a6806d3d3256d15ab19",
-      "recorded_input_digest": "eb4e2d408ed7a30c8b109eb88c638434696045a34c8b7a6806d3d3256d15ab19"
+      "current_input_digest": "f9b52db69ad96a2b1984c43d47ed2124177388c98357077f8ba443fb65a6aa0f",
+      "recorded_input_digest": "f9b52db69ad96a2b1984c43d47ed2124177388c98357077f8ba443fb65a6aa0f"
     }
   ],
   "counts": {

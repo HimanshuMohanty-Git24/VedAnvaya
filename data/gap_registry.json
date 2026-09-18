@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "campaign": "post-v1-data-completeness",
-  "generated_at": "2026-09-17T18:34:16.443544+00:00",
+  "generated_at": "2026-09-18T06:08:08.893075+00:00",
   "baseline_commit": "d6e93a92c4e3ff1a5682a17b20bf32c6ce8fa19c",
   "gaps": [
     {
@@ -55,7 +55,7 @@
         "why_no_lawful_source": "For the SV the apparatus is keyed to samans in the gana collections, a declared exclusion from this work identifier (data/registry/works.yaml:290-297), so no arcika-verse coordinate exists to address. For the YV data/knowledge/yajurveda_deterministic_v1/manifest.json records the Madhyandina Sarvanukramana-sutra as pratika-keyed sutra prose refused for machine resolution, with descriptor_predicates an empty list. The same block is already accepted under GAP-ATTRIBUTION-004 and GAP-ATTRIBUTION-006.",
         "absence_not_inferred_from_not_looking": "Measured 2026-09-17 by enumerating every relationship type between a Mantra and a :Devata or :DevataAscription, per Veda, rather than by querying the predicate expected to be absent: DESCRIBES, HAS_DEVATA, HAS_DEVATA_ASCRIPTION, HAS_DEVATA_DERIVED, INVOKES, MENTIONS_DEVATA, PRAISES. SV and YV are reached only by the naming predicates (MENTIONS_DEVATA 1,335 SV / 1,964 YV), which are not dedication, and by 0 dedication edges of any type."
       },
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": 0,
       "closure_reaudit": "0 resolved ascriptions became 39, so the AV half is no longer unbuilt and the entry's remaining reach is the SV and YV apparatus absence alone."
     },
@@ -98,15 +98,15 @@
       "source_availability": "UNDIAGNOSED",
       "initial_hypothesis_status": "UNTESTED",
       "closure_method": null,
-      "closure_basis": "Moved and does not close. Measured 2026-09-17: 39 of 324 descriptors resolve to a :Devata through ASCRIBES_TO_DEVATA, reaching 35 distinct deities, against 0 when the ruling was written. The entry's third clause fails outright and fails in the way this project most consistently forbids: the 285 unresolved descriptors carry no explicit reason. There is no resolution_state and no unresolved_reason property anywhere on :DevataAscription -- both keys are absent from the database, so a reader cannot tell a refused descriptor (mantroktadevatyam, bahudevatyam) from one nobody has processed. Typing the 285 is internal work over material already in the graph and in data/registry/devata_ascriptions_av.yaml.",
+      "closure_basis": "Two of three clauses now pass; the entry stays open on clause 1, and on a defect R3 found while closing the other two. CLAUSE 3 CLOSED: all 324 :DevataAscription nodes carry ascription_resolution_status from the closed seven-value vocabulary in vedagraph.domain.ascription_bridge, and all 285 unresolved carry ascription_unresolved_reason -- 0 unresolved without a reason, against 285 before, so a reader can now tell a refused descriptor from one nobody processed. The statuses were computed by the repository's own resolver, not adjudicated here: 210 UNRESOLVED_STEM_MATCHES_NO_CANONICAL_DEVATA, 67 UNRESOLVED_COMPOUND_TWO_ASCRIPTIONS, 4 UNRESOLVED_SUBJECT_DESCRIPTOR_NOT_A_DEITY, 3 UNRESOLVED_NAMES_A_PLURALITY, 1 UNRESOLVED_SOURCE_DEFERS_TO_THE_MANTRA. CLAUSE 2 CLOSED: the deity insight read ascribed_scope off HAS_DEVATA alone, which is Rigveda-only, and so published AV in the ascription dimension's vedas_not_covered while 851 Atharvavedic passages carried a resolved dedication -- a false absence on the field whose whole job is to tell a missing layer from a real zero. Both dedication routes now travel in ONE pattern so the figure and its scope label cannot disagree, the layer scope is MEASURED rather than read from profiles.ATTRIBUTION_VEDAS (which is ('RV',) and correct about HAS_DEVATA -- the last reader of the constant profiles.py's own docstring says nothing should read), and a new ascription_routes block states each route's method: SOURCE_STATED_ANUKRAMANI_DEDICATION and TADDHITA_SASYA_DEVATA_DERIVATION. The node twin was corrected with it: attribution_scope was the literal ['RV'] on all 214 :Devata and is now measured per node, 179 ['RV'] and 35 ['RV','AV'], with 0 nodes claiming a corpus they have no edge in and 0 omitting one they do. CLAUSE 1 OPEN, and this is the R3 finding: 'greater than 0 for every resolvable descriptor' is unmet because the resolver UNDER-MATCHES the source's own spelling. DEITY_ADJECTIVE_SUFFIXES lists the deity-adjective suffix in short-a forms ('daivatam', 'devatyam'), Whitney prints the vrddhi form '-daivatam' with a long a, and suffix stripping runs BEFORE any length folding -- so no candidate is generated at all and the LENGTH_INSENSITIVE tier, which is applied to the candidate stem, never gets a chance. Measured 2026-09-18: 41 of the 210 no-canonical-surface descriptors would gain a suffix candidate under a length-insensitive suffix match, and among them are agnidaivatam and indradaivatam, whose stems are registered deities. Those are resolvable descriptors sitting in the unresolved bucket, so the clause fails. NOT fixed in R3 on purpose: shortening the suffix match widens the matcher, and this registry's own ascription entry records that over-normalising and under-normalising both look like a clean run -- the change needs the collision list re-enumerated per candidate before it lands, not a same-session edit. The 41 are fully diagnosed so the next pass starts from the measurement rather than the symptom.",
       "closure_measure": "MATCH (a:DevataAscription) WHERE (a)-->(:Devata) RETURN count(a)",
       "closure_measured_value": 39,
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
-      "closure_prior_expected_value": 0,
-      "closure_reaudit": "0 resolved became 39 of 324. The entry stays open on its own third clause, not on the count: the 285 unresolved descriptors carry no typed reason at all."
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
+      "closure_prior_expected_value": 39,
+      "closure_reaudit": "39 resolved is unchanged, and that is the point: R3 closed the two clauses that were about DISCLOSURE (typing the 285, and making the Atharvavedic dedication visible with its method) and found that the clause about RESOLUTION fails for a reason nobody had measured -- a suffix list written in short-a against a source that prints the vrddhi form. The count did not move because the resolver did not change; the entry is better understood, not further along."
     },
     {
       "gap_id": "GAP-ATTRIBUTION-003",
@@ -153,7 +153,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -208,7 +208,7 @@
         "why_no_lawful_source": "No source addresses Kauthuma arcika verses by the coordinate this corpus holds. Acquiring the ganas would be a new work identifier, not a fix to this one.",
         "absence_not_inferred_from_not_looking": "Recorded as a measured zero over an assessed population of 1,844 in veda_coverage_v3.json, with the join-key reason stated verbatim."
       },
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -257,7 +257,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -312,7 +312,7 @@
         "why_no_lawful_source": "No source addresses Kauthuma arcika verses by the coordinate this corpus holds. Acquiring the ganas would be a new work identifier, not a fix to this one.",
         "absence_not_inferred_from_not_looking": "Recorded as a measured zero over an assessed population of 1,844 in veda_coverage_v3.json, with the join-key reason stated verbatim."
       },
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -367,7 +367,7 @@
         "why_no_lawful_source": "The pinned Anukramani stores patronymic-plus-name phrases and no lineage field. The findings document records that a suffix rule 'applied blindly would manufacture relationships', that 'an inference that is right most of the time is still an inference, and this repository does not record inferences as source-explicit edges', that the rights policy forbids bulk use of the Vedic Heritage Portal, that no rights-compatible structured dataset with per-claim provenance was found, and that an LLM genealogy is explicitly excluded.",
         "absence_not_inferred_from_not_looking": "Measured, not assumed: 427 of 729 with no BELONGS_TO_FAMILY on 2026-09-17, against 302 resolved and 87 families that prove the layer works where an explicit source exists. The alternatives were enumerated and each refused by name with its reason, rather than one query being run and read as absence."
       },
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -416,7 +416,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -465,7 +465,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -523,7 +523,7 @@
       "closure_citation": "data/registry/works.yaml:290-297 (ganas need their own work_id)",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -580,7 +580,7 @@
       "closure_citation": null,
       "closure_owner_decision": "OWNER_DECISION_E_AUDIO_GATE",
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -637,7 +637,7 @@
       "closure_citation": null,
       "closure_owner_decision": "OWNER_DECISION_E_AUDIO_GATE",
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -695,7 +695,7 @@
       "closure_citation": null,
       "closure_owner_decision": "OWNER_DECISION_E_AUDIO_GATE",
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -744,7 +744,7 @@
       "closure_citation": "PRODUCT_V1_SCOPE.md:212-221 (no audio redistribution)",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -793,7 +793,7 @@
       "closure_citation": "PRODUCT_V1_SCOPE.md:212-221",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -850,7 +850,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -907,7 +907,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -956,7 +956,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -1005,7 +1005,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": 1,
       "closure_reaudit": "One directed pair became two, and the four undirected pairs gained the typed refusal the ruling said was the honest fix and had not been done."
     },
@@ -1054,7 +1054,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -1110,7 +1110,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -1159,7 +1159,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -1208,7 +1208,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -1257,7 +1257,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -1306,7 +1306,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -1355,7 +1355,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -1404,7 +1404,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -1453,7 +1453,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -1502,7 +1502,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -1521,7 +1521,7 @@
       "implementation_dependency": "An eligibility predicate, applied at query time rather than by deletion, so a human patron stays discoverable as a patron. The 42 ABSTRACT labels need a curation decision and not a silent rule: Shraddha is both an abstraction and a deity, abhisapa is not. Agent 15 must consume the eligible population rather than the raw label, and must not treat Yajurvedic ritual implements as contamination -- pratimabhuta implements are legitimate devatas.",
       "owner_agent": 15,
       "closure_test": "The eligible deity population is derivable by one documented predicate; counts over it exclude the 29 non-deities; and the ABSTRACT decision is recorded with its reasoning rather than applied implicitly.",
-      "status": "STILL_IMPLEMENTATION_FIXABLE",
+      "status": "CLOSED_DERIVED",
       "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
       "observed_gap": "The deity, seer and metre registries carry typed non-members that inflate every count taken over them, including the deity population any community detection would partition.",
       "initial_hypothesis": "The registries were populated from source apparatus that lists patrons and gift-praise beside deities, and no eligibility predicate was ever applied.",
@@ -1545,15 +1545,15 @@
       "source_availability": "UNDIAGNOSED",
       "initial_hypothesis_status": "UNTESTED",
       "closure_method": null,
-      "closure_basis": "REVERTED from CLOSED_DERIVED by the R1 hostile pass. The R1 adjudication closed this on a gate that measured whether the eligibility field was POPULATED and never whether it was CONSUMED, which is the exact trap this project records as 'a validator that silently skips -- measure coverage, not just precision'. Measured 2026-09-17: TWO documented predicates partition the deity population and they DISAGREE on 29 of the 214 :Devata nodes. The predicate the API actually runs is src/vedagraph/api/services/deity_population.py:deity_structure_clause, which filters on `structure` against DEITY_STRUCTURES = {ABSTRACT, GROUP, INDIVIDUAL, PAIR} and NON_DEITY_STRUCTURES = {HUMAN, PATRON_PRAISE, UNSPECIFIED}: it excludes 30 and admits 184. The predicate the eligibility contract wrote is deity_eligibility_ruling / is_deity: it rules 57 NOT_DEITY and admits 157. The 29 disagreements enumerate exactly: 28 ABSTRACT nodes ruled NOT_DEITY with non_deity_kind ABSTRACTION_NOT_AN_ADDRESSEE are nevertheless ADMITTED to the served deity population because ABSTRACT is in DEITY_STRUCTURES; and 1 UNSPECIFIED node ruled DEITY is EXCLUDED because UNSPECIFIED is in NON_DEITY_STRUCTURES. So clause 1, 'derivable by one documented predicate', fails on the plain meaning of 'one' -- this is the same type-level failure the project already recorded on the attribution axis, where three mechanisms wrote one field and disagreed because no single contract was applied last. Clause 2 is unresolvable as written: the test says 29, the live filter excludes 30 and its own caveat in deity_population.py says '30 of the 214 are not gods ... and one dog. This response excludes all 30', the eligibility contract identifies 57, and 29 is coincidentally also the size of the disagreement -- four figures, no single referent. Clause 3 is recorded and NOT applied: all 42 ABSTRACT labels carry deity_eligibility_basis ABSTRACT_LABEL_RULING with per-row reasoning, and the served population honours none of it. Product consequence, named: the deity population a client receives includes 28 abstractions the eligibility ruling says are not addressees, and GAP-ENTITY_COVERAGE-002's materialisation denominator would be 152 or 184 depending on which predicate it reads. Applying one contract last is bounded internal work.",
-      "closure_measure": "MATCH (d:Devata) WHERE (coalesce(d.structure,'UNSPECIFIED') IN ['HUMAN','PATRON_PRAISE','UNSPECIFIED']) <> (d.is_deity = false) RETURN count(d)",
-      "closure_measured_value": 29,
+      "closure_basis": "Closed on PRODUCT CONSUMER CONSISTENCY, which replaces a measure that asked two intentionally different predicates to agree. OWNER_DECISION_ENTITY_008_DEITY_MEMBERSHIP, recorded at docs/reports/data-completeness/OWNER_DECISIONS.md section 35, rules that canonical product Deity membership and source addressability-as-deity are NOT the same semantic predicate, and that d.is_deity is the authoritative PRODUCT predicate. WHY THE OLD MEASURE WAS WRONG, proven before it was replaced. It read `(structure IN ['HUMAN','PATRON_PRAISE','UNSPECIFIED']) <> (is_deity = false)` and returned 29 BY CONSTRUCTION: measured 2026-09-18 the 29 decompose exactly as 28 ABSTRACT labels ruled NOT_DEITY, which the structure predicate admits because ABSTRACT is not in its exclusion set, plus 1 UNSPECIFIED label ruled DEITY -- VG:DEVATA:SUNAH, the dog -- which the structure predicate excludes. Driving it to 0 requires either admitting 28 abstractions each carrying its own recorded refusal reason, or expelling the dog on the recorded ground that excluding it for a structure of UNSPECIFIED rather than INDIVIDUAL would be 'excluding on a morphological accident'. Both are overturning recorded curation to satisfy a metric, which the owner decision refuses. AND THE COINCIDENCE THAT HID IT: this entry's own closure TEST says 'counts over it exclude the 29 non-deities', and that 29 is a DIFFERENT quantity -- 22 HUMAN plus 7 PATRON_PRAISE, the figure deity_eligibility.check_rows gates as `excludes_the_29`. Two unrelated quantities that both equal 29, one in the test and one in the measure, is why a measure comparing the wrong two things read as though it were checking the test. That is this project's own recorded trap: a grade can be wrong while every figure is right. WHAT IS MEASURED INSTEAD, all five clauses of the owner decision: (1) every product surface derives membership from deity_eligibility.ELIGIBLE_DEITY_PREDICATE -- 0 modules outside the five recorded exemptions in _STRUCTURE_PREDICATE_ALLOWED_IN reference a structure-based deity predicate, each exemption naming why it is structural rather than membership; (2) no consumer substitutes the source predicate -- pinned by test_no_consumer_outside_the_contract_substitutes_the_source_predicate; (3) the divergence is documented -- OWNER_DECISIONS section 35 plus this basis, and all 29 divergent nodes carry both a recorded ruling and a recorded reason, 0 unexplained; (4) a regression test pins the intentional distinction -- test_the_intentional_divergence_is_exactly_the_recorded_curation asserts the exact 28+1 decomposition and says in its own failure message that agreement would mean a curation was overturned; (5) no stale consumer exposes the former population -- 0 reader-facing surfaces publish 184 or 192 as a deity count, swept over frontend/src/**/*.ts(x) and frontend/public/**/*.json. Measured live by deity_eligibility.check_product_consumers: 214 :Devata, 157 authoritative, 0 unruled, 29 documented divergence, 0 unexplained, passes=true. The 29 is REPORTED rather than driven to 0, and it is the real measured number.",
+      "closure_measure": "MATCH (d:Devata) WHERE d.is_deity IS NULL RETURN count(d)",
+      "closure_measured_value": 0,
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
-      "closure_prior_expected_value": 0,
-      "closure_reaudit": "The R1 gate asked 'deity_eligibility_ruling IS NULL -> 0', which passes on a field nothing reads. The gate is replaced by one that measures the two predicates against each other, so this row cannot read as closed while they disagree. 0 is the closed state."
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
+      "closure_prior_expected_value": 29,
+      "closure_reaudit": "The R1 gate asked 'deity_eligibility_ruling IS NULL -> 0', which passes on a field nothing reads. R2 replaced it with a predicate-equality gate, which cannot reach 0 without overturning curation. R3 replaces that with product-consumer consistency per the owner decision: the authoritative predicate must be the only one any product surface reads, and an unruled node -- which fails closed and so silently shrinks the pantheon -- is the thing that must be 0. The 29-node divergence is retained as a documented invariant and pinned by a regression test so a later pass cannot flatten one predicate into the other."
     },
     {
       "gap_id": "GAP-FORMULA-001",
@@ -1600,7 +1600,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -1658,7 +1658,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -1701,15 +1701,15 @@
       "source_availability": "UNDIAGNOSED",
       "initial_hypothesis_status": "UNTESTED",
       "closure_method": "IMPLEMENTATION_R2",
-      "closure_basis": "Both clauses measured 2026-09-18. Clause 1: all 4,825 :Formula carry formula_nesting_type and 0 are untyped, so no formula stands in an undeclared strict-substring relation. Clause 2 was the open one and is closed in R2: the two formula frequency rankings the entry names -- formula_service._formula_caveats and the deity top_formulas ranking at entity_service -- ordered by occurrence count and stated no nesting policy, so the head of either list could be one piece of phraseology at several lengths read as several phrases. Both now carry vedagraph.domain.layer_figures.formula_nesting_policy(), which was already the project's single derived statement of the policy and was applied only to formula-diffusion. It is built from the live FORMULA_NESTING population rather than typed, so the share it quotes cannot drift from the graph.",
+      "closure_basis": "Closed in RELEASE BLOCKER CLOSURE R2. Clause one already passed and clause two now does. Re-measured 2026-09-18: all 4,825 :Formula carry formula_nesting_type, 0 untyped. The open clause was the ranking disclosure, and both rankings the R1 basis names now carry it: formula_service._formula_caveats and the deity top_formulas ranking in entity_service each append vedagraph.domain.layer_figures.formula_nesting_policy(). That sentence was already this project's single derived statement of the policy -- built from the live FORMULA_NESTING population rather than typed, so it cannot quote a stale share -- and it had been applied to formula-diffusion only. Nothing was re-worded and no second spelling was introduced, which is the failure mode the R1 basis named: applying different rules in different queries is how one attribution axis once produced three disagreeing answers. PRIOR RULING, superseded: STILL_IMPLEMENTATION_FIXABLE -- \"Clause one passes and clause two does not, and clause two is the one that protects the reader. Measured 2026-09-17: all 4,825 :Formula nodes carry formula_nesting_type over a four-valued vocabulary -- INDEPENDENT 2,788, CONTAINS_ANOTHER 934, NESTED_IN_ANOTHER 918, NESTED_AND_CONTAINING 185 -- so every formula standing in a strict-substring relation is now explicitly typed and the nesting is no longer invisible. But no surface states which nesting policy its ranking applies: neither src/vedagraph/api/services/formula_service.py nor the top_formulas ranking in entity_service.py:1171-1176 mentions nesting at all, and both order by passage count, so a frequency ranking still leaves all three readings available to the reader. Applying different rules in different queries is how this project previously produced three disagreeing answers for one attribution axis. Internal API work.\"",
       "closure_measure": "MATCH (f:Formula) WHERE f.formula_nesting_type IS NULL RETURN count(f)",
       "closure_measured_value": 0,
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T18:34:16.443544+00:00",
-      "closure_prior_expected_value": 0,
-      "closure_reaudit": "RELEASE_BLOCKER_R2"
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
+      "closure_prior_expected_value": null,
+      "closure_reaudit": null
     },
     {
       "gap_id": "GAP-MORPHOLOGY-001",
@@ -1756,7 +1756,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": 39,
       "closure_reaudit": "39 distinct lemmas reached became 10,031, and lemmas reached by nothing fell from 9,992 to 0. Verified by the entry's own closure query, not by the projection's manifest."
     },
@@ -1811,7 +1811,7 @@
         "why_no_lawful_source": "No equivalent manual morphological annotation is published for the Samaveda, the Shukla Yajurveda or the Saunaka Atharvaveda. Generating one by machine would be model output presented as annotation.",
         "absence_not_inferred_from_not_looking": "9,658 mantras measured as carrying no lemma layer, against a corpus where the RV's 10,552 are complete -- the contrast is what establishes it as a source absence."
       },
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -1860,7 +1860,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -1909,7 +1909,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -1958,7 +1958,7 @@
       "closure_citation": "docs/reports/data-completeness/OWNER_DECISIONS.md:121-137 (decision 5, Samaveda morphology); docs/av_accent_binding_final_production_gate_report.md",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": 5839,
       "closure_reaudit": "Context figure only. The search-derivative layer reached the other three corpora; the dual-script refusal this entry records is untouched by that."
     },
@@ -2007,7 +2007,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": 5839,
       "closure_reaudit": "5,839 SEARCH_DERIVATIVE rows over one work became 20,210 over four, and the 139 YV mantras gained a NORMALIZED unaccented form. Reconciled per corpus."
     },
@@ -2056,7 +2056,7 @@
       "closure_citation": "data/registry/works.yaml (YV work scope); tests/domain/test_domain_layer.py",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -2105,7 +2105,7 @@
       "closure_citation": "data/registry/works.yaml (AV work scope)",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -2154,7 +2154,7 @@
       "closure_citation": "the AV image-transcription cancellation in the owner ledger",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -2203,7 +2203,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -2252,7 +2252,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -2307,7 +2307,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -2356,7 +2356,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -2405,7 +2405,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -2454,7 +2454,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -2503,7 +2503,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -2552,7 +2552,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -2601,7 +2601,7 @@
       "closure_citation": "docs/reports/data-completeness/OWNER_DECISIONS.md:106-119 (decision 4, human gold is not required where source adjudication is the strongest available); docs/decisions/ADR-014-llm-output-is-candidate-only.md",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -2650,7 +2650,7 @@
       "closure_citation": "docs/reports/data-completeness/OWNER_DECISIONS.md:106-119 (decision 4); docs/decisions/ADR-014-llm-output-is-candidate-only.md",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -2699,7 +2699,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -2748,7 +2748,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -2797,7 +2797,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": 39,
       "closure_reaudit": "39 distinct lemmas reached became 10,031, which removes the misleading reading this entry was opened for."
     },
@@ -2846,7 +2846,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": 367,
       "closure_reaudit": "367 Rigveda-only seers reporting zero became 0, and all three labels now carry the property with a declared scope. Checked against edge degree per label, not against the loader's own report."
     },
@@ -2895,7 +2895,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -2944,7 +2944,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -2993,7 +2993,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -3042,7 +3042,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": 11,
       "closure_reaudit": "The ruling counted RitualRole nodes and declared 11; there are 20. Re-declared on what the test actually asks -- the classical sixteen with their source stated -- which leaves 2 unclassified rows and 2 missing officiants."
     },
@@ -3091,7 +3091,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": 0,
       "closure_reaudit": "The typed predicate that existed with zero edges now carries 4, each with verse evidence. The entry stays open on rites without offerings, 100 of 103."
     },
@@ -3140,7 +3140,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": 0,
       "closure_reaudit": "0 mantras carrying a ritual_context became 20,210, five-valued with absence typed. The entry stays open because its method and precision clauses have no property in the graph to satisfy them."
     },
@@ -3189,7 +3189,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -3238,7 +3238,7 @@
       "closure_citation": "data/registry/works.yaml:290-297",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -3287,7 +3287,7 @@
       "closure_citation": null,
       "closure_owner_decision": "OWNER_DECISION_E_AUDIO_GATE",
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -3336,7 +3336,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -3385,7 +3385,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -3434,7 +3434,7 @@
       "closure_citation": "data/registry/works.yaml (all four work scopes); PRODUCT_V1_SCOPE.md",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -3477,15 +3477,15 @@
       "source_availability": "UNDIAGNOSED",
       "initial_hypothesis_status": "UNTESTED",
       "closure_method": "IMPLEMENTATION_R2",
-      "closure_basis": "All three clauses measured 2026-09-18. Clause 1: HAS_SEMANTIC_ASSERTION reaches three non-Rigvedic corpora -- AV 3,295 mantras / 6,167 assertions, YV 574 / 1,543, SV 211 / 364. Clause 2: RV coverage is 10,173 mantras / 27,057 assertions, against the 2,542 the entry names. Clause 3 was the open one and is closed in R2: src/vedagraph/api/services/insight_service.py summed one assertion_total across five derivations and published it in the cross-Veda cell, which reported a morphological rule over manual annotation and a model extraction as one figure. The cell now publishes the total broken out per derivation, names the model-assisted share (2,459 of 35,131) separately from the rule-derived remainder, carries the human-reviewed count (0, counted on the positive predicate review_state='HUMAN_REVIEWED' so a new state cannot be promoted into review by accident), and states that coverage is incomplete and uneven. Regression: tests/api/test_cross_veda_granularity_and_direction.py::test_the_semantic_assertion_row_does_not_claim_the_layer_was_never_built asserts the breakdown, the model-assisted share and the review count are all present.",
+      "closure_basis": "Closed in RELEASE BLOCKER CLOSURE R2. Two clauses already passed and the third now does. Re-measured 2026-09-18: AV 3,295 mantras / 6,167 assertions, YV 574 / 1,543, SV 211 / 364, RV 10,173 / 27,057. The open clause was the blended total, and the cross-Veda cell no longer publishes one: it breaks the figure out per derivation, names the model-assisted share (2,459 of 35,131) apart from the rule-derived remainder, carries the human-reviewed count -- 0, counted on the positive predicate review_state = 'HUMAN_REVIEWED' so that adding a new review state cannot silently promote assertions into review -- and states that coverage is incomplete and uneven. The same cell was the R2 CROSS_VEDA_FALSE_NOT_BUILT defect and its status moved from NOT_BUILT to CLASS_NOT_CROSS_VEDA; both changes are held by tests/api/test_cross_veda_granularity_and_direction.py. PRIOR RULING, superseded: STILL_IMPLEMENTATION_FIXABLE -- \"Two clauses pass, the third fails on a surface, and the third is the one the entry's implementation_dependency was written to protect. Measured 2026-09-17: HAS_SEMANTIC_ASSERTION reaches three non-Rigvedic corpora -- AV 3,295 mantras / 6,167 assertions, YV 574 / 1,543, SV 211 / 364 -- and Rigvedic coverage rose from 2,542 to 10,173 mantras over 27,057 assertions. The derivations are separately typed in the data, five ways. But the cross-Veda insight surface reports a single blended figure: insight_service.py:1249 emits 'Measured: {assertion_total:,} assertions over {vedas}' from one sum across all five derivations, so the reader is shown 35,131 with no indication that 2,459 are TIER_D model extraction over a 19th-century English translation and 2,406 are TIER_B rule output. The entry states the requirement plainly -- 'must not present a blended count' -- and splitting that note by derivation is bounded internal API work.\"",
       "closure_measure": "MATCH (:Mantra)-[:HAS_SEMANTIC_ASSERTION]->() RETURN count(*)",
       "closure_measured_value": 35131,
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T18:34:16.443544+00:00",
-      "closure_prior_expected_value": 35131,
-      "closure_reaudit": "RELEASE_BLOCKER_R2"
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
+      "closure_prior_expected_value": null,
+      "closure_reaudit": null
     },
     {
       "gap_id": "GAP-SEMANTICS-002",
@@ -3532,7 +3532,7 @@
       "closure_citation": "docs/reports/data-completeness/OWNER_DECISIONS.md:106-119 (decision 4); data/staging/final_closure_sprint/agent3/semantic_review_frame_manifest.json",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": 4865,
       "closure_reaudit": "4,865 UNREVIEWED became 35,131. The figure is re-declared upward rather than quietly re-based, and the entry closes on a recorded decision about human review, not on the count having improved -- it did not."
     },
@@ -3581,7 +3581,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -3624,13 +3624,13 @@
       "source_availability": "UNDIAGNOSED",
       "initial_hypothesis_status": "UNTESTED",
       "closure_method": null,
-      "closure_basis": "No chronological or stratigraphic dimension, and Veda membership is not a period. Deliberately not modelled for a defensible reason -- Vedic stratigraphy is contested and a stratum assignment would be an interpretive claim rather than a measurement. The entry's test offers two disjuncts and the second is the one met: 'the absence is recorded as a deliberate decision with its reasoning', and that record is this entry in data/gap_registry.json, a tracked file, carrying the reasoning in full. CITATION CORRECTED by the R1 hostile pass: the previous citation named docs/reports/data-completeness/semantics.md, which is not on disk, so half of it could not be followed at all. NAMED WEAKNESS, not smoothed over: what remains is a self-citation. A search of docs/reports/data-completeness/OWNER_DECISIONS.md and PRODUCT_V1_SCOPE.md on 2026-09-17 for stratigraphy, stratum, chronology, dating and period found no recorded owner decision on this dimension, and the capability catalogue publishes no dating card among its 22. This is therefore the weakest CLOSED_SCOPE_DECISION in the registry: the decision is written down only in the audit that closed it. The owner should write it into OWNER_DECISIONS.md, at which point the citation becomes independent of this file.",
+      "closure_basis": "No chronological or stratigraphic dimension, and Veda membership is not a period. The entry's test offers two disjuncts and the second is the one met: 'the absence is recorded as a deliberate decision with its reasoning'. SELF-CITATION CLEARED in R3. The R1 hostile pass corrected a citation naming a file not on disk and then named the residual weakness in terms of its own fix -- 'the decision is written down only in the audit that closed it. The owner should write it into OWNER_DECISIONS.md, at which point the citation becomes independent of this file.' The owner has now done exactly that: OWNER_DECISION_SEMANTICS_004_STRATUM_MAP is recorded verbatim at docs/reports/data-completeness/OWNER_DECISIONS.md section 34, outside this registry and outside the audit. It rules that VedAnvaya SHALL NOT ingest or publish an unattributed historical/chronological stratum map, that a stratum assignment requires five conjunctive conditions (a named scholarly source, an identifiable work, attributable methodology, source-local citation, and provenance to the specific assignment), and that the existence of a named asserter alone is insufficient. Historical-stratum enrichment is intentionally unsupported for this release until a specific scholarly stratum source is selected and attributed. Explicitly NOT a source block: nobody has established that no lawful attributed stratum source exists -- several do, each one scholar's position -- so calling it BLOCKED_EXTERNAL_SOURCE_UNAVAILABLE would infer unavailability from not choosing. No stratum node, edge or property was created; measured 2026-09-18, db.propertyKeys() holds no stratum, period or chronological_layer key.",
       "closure_measure": null,
       "closure_measured_value": null,
-      "closure_citation": "data/gap_registry.json GAP-SEMANTICS-004.closure_basis (the decision and its reasoning, recorded in a tracked file); data/staging/wave4/registry_closure_audit.json",
+      "closure_citation": "docs/reports/data-completeness/OWNER_DECISIONS.md section 34 (OWNER_DECISION_SEMANTICS_004_STRATUM_MAP, recorded verbatim by the owner in a tracked file outside this registry and outside this audit)",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -3679,7 +3679,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": 375,
       "closure_reaudit": "375 entities with no domain became 0 over a population that grew to 384, and the soma problem the entry raised is answered by a list rather than a single value."
     },
@@ -3728,7 +3728,7 @@
       "closure_citation": "PRODUCT_V1_SCOPE.md:212-221 (no vector database, no embedding retrieval)",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -3783,7 +3783,7 @@
         "why_no_lawful_source": "No Kauthuma-aligned public-domain Samaveda translation exists. data/domain/vedagraph_domain_v2/veda_coverage_v3.json:285 records it verbatim: 'No complete translation of the Kauthuma arcika is ingested; the only one located is Ranayaniya and does not align.' Campaign rule 3 forbids mapping another recension onto the one held, so the located candidate may not be force-aligned. Measured 2026-09-17: the only renderings any Samavedic verse carries are 173 REUSED_SURFACE_IDENTICAL rows of Griffith's Rigvedic English on verified-identical text, and 0 Translation nodes carry a Kauthuma-aligned source_id.",
         "absence_not_inferred_from_not_looking": "0 of 1,844 measured in the graph; 1,242 measured as staged and unimported."
       },
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "translation_populations_measured": {
         "dedicated_translation": 0,
         "range_covered": 0,
@@ -3867,7 +3867,7 @@
         "why_no_lawful_source": "Griffith's kanda-20 print does not carry these 17 verses. The cross-corpus reuse route was then tested per verse against every one of the 21,104 Rigvedic text versions in the store rather than only the asserted parallel, and refused on measurement; for AVS 20.57.13 two of six pairings reach exactly 1.0 and Gate B still refuses it. Every per-key verdict is in data/staging/final_closure_sprint/agent7/residual_disposition.json.",
         "absence_not_inferred_from_not_looking": "All 17 keys are named individually with their own addressing verdict and their own refused reuse measurement. The population was reconciled arithmetically against the graph (5,788 + 34 + 17 = 5,839) rather than inferred from a single count returning a number that looked small."
       },
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "translation_populations_measured": {
         "dedicated_translation": 5715,
         "range_covered": 68,
@@ -3945,7 +3945,7 @@
       "closure_citation": "data/gap_registry.json GAP-TRANSLATION-003.closure_method (owner decision C, quoted); data/staging/final_closure_sprint/agent7/residual_disposition.json",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "translation_populations_measured": {
         "dedicated_translation": 1939,
         "range_covered": 0,
@@ -4024,7 +4024,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "translation_populations_measured": {
         "dedicated_translation": 10479,
         "range_covered": 60,
@@ -4094,7 +4094,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": 0,
       "closure_reaudit": "The ruling measured the positive form and declared 0 against 18,427 populated rows. Re-declared on the entry's own negative predicate, which returns 0, and the 158-uncertain claim reproduces as 158 RV HYMN_GRAIN_ONLY rows."
     },
@@ -4149,7 +4149,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -4196,7 +4196,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": 0,
       "closure_reaudit": "The bridge was declared unbuilt and is built for 39 of 324. The entry's test asks for a label-free join, not for full resolution, so the move closes it."
     },
@@ -4234,7 +4234,7 @@
       "closure_citation": "docs/reports/data-completeness/OWNER_DECISIONS.md:542-566 (decision 25, Whitney 466 withheld and not for want of evidence); docs/reports/data-completeness/OWNER_DECISIONS.md:589-600 (decision 27, the authorised 33)",
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -4270,7 +4270,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -4600,7 +4600,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     },
@@ -4637,7 +4637,7 @@
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
+      "closure_measured_at": "2026-09-18T06:08:08.893075+00:00",
       "closure_prior_expected_value": null,
       "closure_reaudit": null
     }

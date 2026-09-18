@@ -81,6 +81,7 @@ from vedagraph.api.models.insight import (
     CrossVedaPairRow,
     CrossVedaRelationshipStat,
     DeclaredLexicalGap,
+    DedicationRouteRow,
     DeityPopulationStat,
     DerivedMetricRow,
     DevataByBookResponse,
@@ -245,9 +246,12 @@ RETURN 'PARALLEL_TO' AS relationship_class, r.veda_pair AS veda_pair,
        count(CASE WHEN r.subject_veda IS NOT NULL THEN 1 END) AS directed_edges
 """
 
-#: The semantic-assertion layer's corpus reach, split by the two derivations that must never
-#: be summed. Read for the cross-Veda matrix, whose assertion row is NOT_BUILT for every
-#: pair, and this is the measurement that establishes it rather than asserts it.
+#: The semantic-assertion layer's corpus reach, split by the derivations that must never be
+#: summed -- five of them, not two. Read for the cross-Veda matrix, whose assertion row this
+#: measurement establishes rather than asserts. It does NOT read NOT_BUILT: the row is typed
+#: CLASS_NOT_CROSS_VEDA, because an assertion is a statement about one passage and cannot
+#: enter a corpus PAIR at all. "NOT_BUILT for every pair" was the pre-R2 reading, taken from
+#: a 4,865 figure that was itself 30,266 short, and it is the sentence R2 F1 was opened for.
 _ASSERTION_REACH_QUERY: Final = """
 MATCH (p:Passage)-[:HAS_SEMANTIC_ASSERTION]->(s:SemanticAssertion)
 RETURN p.veda AS veda, s.derivation AS derivation,
@@ -476,16 +480,40 @@ CALL (d) {
 }
 WITH d, named_by_veda, collect([certainty, edges]) AS certainty_split,
      collect(surfaces) AS surface_groups, collect(precisions) AS precision_groups
+// Both resolved-dedication predicates, in ONE pattern, so `ascribed` and
+// `ascribed_vedas` cannot disagree about which routes they cover. GAP-ATTRIBUTION-002
+// clause 2: HAS_DEVATA alone made this field Rigveda-only and published the Atharvaveda
+// as an uncovered corpus while 851 AV passages carried a resolved dedication.
+// HAS_DEVATA_ASCRIPTION is deliberately NOT here -- an unresolved descriptor is not an
+// attribution to a named god, and `profiles.ATTRIBUTION_PREDICATES` says so.
 CALL (d) {
-    MATCH (p:Passage)-[:HAS_DEVATA]->(d)
+    MATCH (p:Passage)-[r:HAS_DEVATA|HAS_DEVATA_DERIVED]->(d)
     RETURN count(DISTINCT p) AS ascribed, collect(DISTINCT p.veda) AS ascribed_vedas
 }
 CALL (d) {
-    OPTIONAL MATCH (p:Passage)-[:HAS_DEVATA]->(d)
+    OPTIONAL MATCH (p:Passage)-[r:HAS_DEVATA|HAS_DEVATA_DERIVED]->(d)
     RETURN p.veda AS a_veda, count(DISTINCT p) AS a_count
 }
+// The per-route decomposition, kept apart from the total it sums to. HAS_DEVATA is the
+// source stating the dedication; HAS_DEVATA_DERIVED is this project resolving the
+// source's descriptor by morphology. One figure over both would have to pick a method
+// and would be wrong about the other, so the method traces this edge set.
+// Collected INSIDE the subquery so this CALL returns exactly ONE row. A multi-row CALL
+// here forms a cartesian product with the multi-row `ascribed_by_veda` CALL above it, and
+// `_pairs_to_counts` sums repeated keys -- which silently DOUBLED every per-Veda ascription
+// figure the coverage block publishes (Indra RV 2,869 -> 5,738) while `ascribed_total`,
+// computed in its own single-row subquery, stayed right. Caught by
+// test_the_deity_insight_reports_coverage_per_dimension asserting the per-Veda figures sum
+// to the total, which is exactly the check that makes two numbers about one quantity
+// unable to disagree quietly.
+CALL (d) {
+    OPTIONAL MATCH (p:Passage)-[r:HAS_DEVATA|HAS_DEVATA_DERIVED]->(d)
+    WITH type(r) AS route, p.veda AS r_veda, count(DISTINCT p) AS r_count
+    RETURN collect([route, r_veda, r_count]) AS ascribed_by_route
+}
 WITH d, named_by_veda, certainty_split, surface_groups, precision_groups,
-     ascribed, ascribed_vedas, collect([a_veda, a_count]) AS ascribed_by_veda
+     ascribed, ascribed_vedas, collect([a_veda, a_count]) AS ascribed_by_veda,
+     ascribed_by_route
 CALL (d) {
     MATCH (m:DerivedMetric {subject_key: d.entity_key})
     RETURN collect(m {.metric_name, .metric_id, .display_label, .metric_family,
@@ -495,7 +523,8 @@ CALL (d) {
 }
 RETURN d.entity_key AS entity_key, d.display_label AS display_label,
        d.structure AS structure, named_by_veda, certainty_split, ascribed,
-       ascribed_vedas, ascribed_by_veda, metrics, surface_groups, precision_groups
+       ascribed_vedas, ascribed_by_veda, ascribed_by_route, metrics, surface_groups,
+       precision_groups
 """
 
 # ---------------------------------------------------------------------------
@@ -577,11 +606,48 @@ CALL () { MATCH (d:Devata) WHERE d.community_id IS NOT NULL
 RETURN stored_community_partitions, deities_with_a_community_assignment
 """
 
-#: Vedas the ``HAS_DEVATA`` ascription layer reaches, as a property of the LAYER and not of
-#: any one deity. A deity with no Rigvedic ascription must still see ``RV`` in scope here:
-#: its zero is an absent dedication inside a layer that covers the corpus, which is a
-#: different fact from the Atharvavedic zero, where the layer is absent outright.
-_HAS_DEVATA_LAYER_SCOPE: Final[tuple[str, ...]] = profiles.ATTRIBUTION_VEDAS
+#: Vedas the resolved-dedication layer reaches, as a property of the LAYER and not of any
+#: one deity. A deity with no Rigvedic ascription must still see ``RV`` in scope here: its
+#: zero is an absent dedication inside a layer that covers the corpus, which is a different
+#: fact from the Samavedic zero, where the layer is absent outright.
+#:
+#: **Measured, never a constant.** This read ``profiles.ATTRIBUTION_VEDAS``, which is
+#: ``("RV",)`` and is correct *about ``HAS_DEVATA``* -- and that is exactly the failure
+#: :func:`profiles.measure_attribution_scope` was written to stop. With ``HAS_DEVATA_DERIVED``
+#: carrying 882 Atharvavedic dedications over 851 passages, a scope of ``["RV"]`` published
+#: ``AV`` in ``vedas_not_covered``: a false absence on the one field whose entire job is to
+#: tell a missing layer apart from a real zero. ``profiles.py`` says so in the constant's own
+#: docstring -- *"Nothing in this module should read a corpus list out of a constant at all
+#: any more"* -- and this was the last reader that did. GAP-ATTRIBUTION-002 clause 2.
+_RESOLVED_DEDICATION_PREDICATES: Final[tuple[str, ...]] = (
+    "HAS_DEVATA",
+    "HAS_DEVATA_DERIVED",
+)
+
+#: What each resolved-dedication route asserts, and by what method. Read into the response
+#: so the per-Veda figures can never be summed without their methods travelling with them.
+_DEDICATION_ROUTE_METHODS: Final[dict[str, tuple[str, str]]] = {
+    "HAS_DEVATA": (
+        "SOURCE_STATED_ANUKRAMANI_DEDICATION",
+        "The Anukramani names this deity in the hymn's dedication slot and the registry "
+        "already holds that name, so no resolution step of ours stands between the source "
+        "and the edge.",
+    ),
+    "HAS_DEVATA_DERIVED": (
+        "TADDHITA_SASYA_DEVATA_DERIVATION",
+        "The Anukramani names a Sanskrit ADJECTIVE (agneyam, varunam) rather than a deity, "
+        "and the dedication is recovered from that adjective's own morphology under Panini "
+        "4.2.24 sasya devata. The dedication is the source's; the resolution is this "
+        "project's, and it is refused outright where the derivation is ambiguous, names a "
+        "plurality, or is the source's own deferral marker lingokta.",
+    ),
+}
+
+#: Vedas the resolved-dedication layer reaches, measured. Both routes in one pattern.
+_DEDICATION_LAYER_SCOPE_QUERY: Final = """
+MATCH (p:Passage)-[r:HAS_DEVATA|HAS_DEVATA_DERIVED]->(:Devata)
+RETURN collect(DISTINCT p.veda) AS vedas
+"""
 
 # ---------------------------------------------------------------------------
 # Constants describing what the classes and categories are
@@ -730,6 +796,42 @@ def _pairs_to_counts(value: Any) -> dict[str, int]:
         if isinstance(key, str) and key and count is not None:
             counts[key] = counts.get(key, 0) + count
     return counts
+
+
+def _dedication_routes(value: Any) -> list[DedicationRouteRow]:
+    """Fold ``collect([predicate, veda, count])`` into one row per dedication route.
+
+    Every route in :data:`_DEDICATION_ROUTE_METHODS` is emitted even when it reaches
+    nothing, because an absent row and a zero row say different things: a route with no
+    edges for this deity is a real zero inside a layer that covers the corpus, and a route
+    the response omitted is indistinguishable from a route nobody built. That is the same
+    distinction :func:`profiles.measure_attribution_scope` exists to preserve.
+    """
+    per_route: dict[str, dict[str, int]] = {name: {} for name in _RESOLVED_DEDICATION_PREDICATES}
+    if isinstance(value, (list, tuple)):
+        for item in value:
+            if not isinstance(item, (list, tuple)) or len(item) < 3:
+                continue
+            route, veda, count = item[0], item[1], _as_int(item[2])
+            if not isinstance(route, str) or route not in per_route:
+                continue
+            if isinstance(veda, str) and veda and count:
+                per_route[route][veda] = per_route[route].get(veda, 0) + count
+    rows: list[DedicationRouteRow] = []
+    for route in _RESOLVED_DEDICATION_PREDICATES:
+        method, means = _DEDICATION_ROUTE_METHODS[route]
+        measured = {veda: per_route[route][veda] for veda in VEDA_ORDER if veda in per_route[route]}
+        rows.append(
+            DedicationRouteRow(
+                predicate=route,
+                method=method,
+                means=means,
+                vedas_reached=[veda for veda in VEDA_ORDER if veda in measured],
+                measured=measured,
+                passages=sum(measured.values()),
+            )
+        )
+    return rows
 
 
 def _ruled_deity_count(value: Any) -> int:
@@ -3628,6 +3730,15 @@ class InsightService:
         ascribed_vedas = _as_str_list(row.get("ascribed_vedas"))
         ascribed_by_veda = _pairs_to_counts(row.get("ascribed_by_veda"))
         named_total = sum(named.values()) or None
+        # The layer's reach, measured now over both resolved-dedication predicates. Not a
+        # constant: see _RESOLVED_DEDICATION_PREDICATES.
+        scope_row = self._repository.run_one(_DEDICATION_LAYER_SCOPE_QUERY)
+        dedication_layer_scope = [
+            veda
+            for veda in VEDA_ORDER
+            if veda in set(_as_str_list((scope_row or {}).get("vedas")))
+        ]
+        ascription_routes = _dedication_routes(row.get("ascribed_by_route"))
 
         certainty = ReferentCertaintyCounts(
             certain_count=certainty_split.get("DEITY_CERTAIN", 0),
@@ -3686,21 +3797,28 @@ class InsightService:
                     ),
                     CoverageDimension(
                         dimension="ascription",
-                        vedas_in_scope=list(_HAS_DEVATA_LAYER_SCOPE),
+                        vedas_in_scope=list(dedication_layer_scope),
                         vedas_not_covered=[
-                            veda for veda in VEDA_ORDER if veda not in _HAS_DEVATA_LAYER_SCOPE
+                            veda for veda in VEDA_ORDER if veda not in dedication_layer_scope
                         ],
                         measured={
-                            veda: ascribed_by_veda.get(veda, 0) for veda in _HAS_DEVATA_LAYER_SCOPE
+                            veda: ascribed_by_veda.get(veda, 0)
+                            for veda in dedication_layer_scope
                         },
                         denominator={
-                            veda: figures.CORPUS_MANTRAS[veda] for veda in _HAS_DEVATA_LAYER_SCOPE
+                            veda: figures.CORPUS_MANTRAS[veda] for veda in dedication_layer_scope
                         },
-                        means="Passages the traditional apparatus dedicates to this deity. "
-                        "The scope here is the LAYER's, not this deity's: a deity with no "
-                        "Rigvedic dedication still has RV in scope, because its zero is an "
-                        "absent dedication inside a covered corpus. Never summed with "
-                        "naming.",
+                        means="Passages the traditional apparatus dedicates to this deity, "
+                        "over both resolved-dedication routes -- HAS_DEVATA where the "
+                        "Anukramani names a registry deity, HAS_DEVATA_DERIVED where the "
+                        "dedication is recovered from its descriptor's morphology. "
+                        "`ascription_routes` splits the figure by route and states each "
+                        "method. The scope here is the LAYER's, not this deity's: a deity "
+                        "with no Rigvedic dedication still has RV in scope, because its "
+                        "zero is an absent dedication inside a covered corpus. The "
+                        "Samavedic and Yajurvedic zeros are the layer being absent "
+                        "outright, which is GAP-ATTRIBUTION-001 and a source block. Never "
+                        "summed with naming.",
                     ),
                 ],
             ),
@@ -3746,12 +3864,21 @@ class InsightService:
             certainty=certainty,
             ascribed_total=ascribed,
             ascribed_scope=ascribed_vedas,
+            ascription_routes=ascription_routes,
             ascription_note=(
-                "Ascription is the traditional apparatus dedicating a hymn, and it exists for "
-                f"{', '.join(ascribed_vedas) or 'no corpus in this graph'}. A zero elsewhere "
-                "is a missing apparatus rather than an absent deity, and most ascriptions are "
-                "a hymn label projected onto each verse inside it rather than a per-verse "
-                "statement."
+                "Ascription is the traditional apparatus dedicating a hymn. For this deity it "
+                f"reaches {', '.join(ascribed_vedas) or 'no corpus in this graph'}, and the "
+                "layer as a whole reaches "
+                f"{', '.join(dedication_layer_scope) or 'no corpus in this graph'}. The total "
+                "spans two routes with two methods and `ascription_routes` separates them: "
+                "the Rigvedic dedication is the Anukramani naming a deity the registry holds, "
+                "the Atharvavedic one is that dedication recovered from a Sanskrit adjective "
+                "under Panini 4.2.24 sasya devata, and 285 of the 324 Atharvavedic descriptors "
+                "are refused a deity rather than resolved -- each carrying its own recorded "
+                "reason. A zero in a corpus the layer reaches is an absent dedication; a zero "
+                "in the Samaveda or Yajurveda is a missing apparatus rather than an absent "
+                "deity. Most ascriptions are a hymn label projected onto each verse inside it "
+                "rather than a per-verse statement."
             ),
             mention_surplus=(
                 (named_total or 0) - ascribed if ascribed is not None and named_total else None

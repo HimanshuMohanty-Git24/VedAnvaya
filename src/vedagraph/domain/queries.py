@@ -138,19 +138,33 @@ _NOT_INTERNAL = f"NOT n:{LABEL_INTERNAL}"
 #: The previous wording said "a zero for SV/YV/AV means those corpora carry no Anukramani
 #: deity ascription", which was written about HAS_DEVATA and generalised into a claim about
 #: the corpus. It was false for the Atharvaveda, which carries 5,385 HAS_DEVATA_ASCRIPTION
-#: edges over 4,665 of its 5,839 mantras -- so a reader asking which Vedas record dedications
-#: was told a whole corpus had none while the graph held the answer.
+#: edges over 4,665 of its 6,590 passages -- so a reader asking which Vedas record
+#: dedications was told a whole corpus had none while the graph held the answer.
+#:
+#: The denominator was wrong too, in both copies, for a whole R2 pass: 4,665 is a *passage*
+#: count and it was published against the *mantra* total, 5,839. The mantra-scoped figure is
+#: 4,816 edges over 4,160 mantras, and the gap is 505 hymn-level containers. A numerator from
+#: one population over a denominator from another overstated Atharvavedic verse coverage by
+#: 505 verses while every individual figure in the sentence was correct.
 _SCOPE_CAVEAT = (
-    "TWO DEITY-ATTRIBUTION PREDICATES, NEITHER COMPLETE. HAS_DEVATA resolves a dedication to "
+    "THREE DEITY-ATTRIBUTION PREDICATES, NONE COMPLETE. HAS_DEVATA resolves a dedication to "
     "a :Devata node and is Rigveda-only: 10,558 edges, every one on the RV. The Atharvaveda "
-    "has its own layer under a different predicate -- HAS_DEVATA_ASCRIPTION, 5,385 edges over "
-    "4,665 of its 5,839 mantras -- which points at a :DevataAscription carrying Whitney's "
-    "verbatim descriptor rather than a resolved deity. The two cannot be joined: their label "
-    "sets share no value, by category rather than by coverage, which is registered as "
-    "GAP-CROSS-VEDA-DEVATA-IDENTITY-BRIDGE-001. So a zero here means this predicate does not "
-    "reach that corpus, NOT that the corpus records no dedication and NOT that the deity is "
-    "absent from it. The Samaveda and Yajurveda carry neither layer. MENTIONS_DEVATA answers "
-    "'is this deity named here?' across all "
+    "carries its dedication under HAS_DEVATA_ASCRIPTION, 5,385 edges over 4,665 of its 6,590 "
+    "PASSAGES -- 4,816 of those edges on 4,160 of its 5,839 mantras, the rest on hymn-level "
+    "containers -- pointing at a :DevataAscription that holds Whitney's verbatim descriptor "
+    "rather than a deity name. Those two share no label value, by category rather than by "
+    "coverage. "
+    "The bridge between them is now BUILT and is partial: HAS_DEVATA_DERIVED carries 882 "
+    "Atharvavedic dedications over 851 passages, resolved from the descriptor's own morphology "
+    "under Panini 4.2.24 sasya devata, for 39 of the 324 descriptors reaching 35 deities. The "
+    "other 285 are refused rather than unprocessed, each carrying a typed reason: 210 reach no "
+    "canonical deity surface, 67 are compounds naming two ascriptions, 4 are hymn subjects "
+    "rather than deities, 3 name a plurality, and 1 is the Anukramani's own deferral marker "
+    "lingokta. So a zero here means this predicate does not reach that corpus, NOT that the "
+    "corpus records no dedication and NOT that the deity is absent from it. The Samaveda and "
+    "Yajurveda carry no dedication layer of any of the three kinds, which is "
+    "GAP-ATTRIBUTION-001 and a source block, not an unbuilt projection. MENTIONS_DEVATA "
+    "answers 'is this deity named here?' across all "
     f"four ({figures.PREDICATE_TOTALS['MENTIONS_DEVATA']:,} edges: "
     f"{figures.veda_breakdown(figures.MENTIONS_DEVATA_BY_VEDA)})."
 )

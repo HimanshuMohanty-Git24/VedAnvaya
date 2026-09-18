@@ -97,20 +97,21 @@
       "type:CO_OCCURS_WITH": "n=306;unnamed=0;pairs=6f0e1863edc369837b53bb837d28c4b264c0c6142c7151f4b451e799c372c169",
       "type:HAS_DEVATA": "n=10558;unnamed=0;pairs=8e4eea692c244357e1b3bdd2106719549f5a37430fa668977c59636ac0fedde8",
       "type:MENTIONS_ENTITY": "n=28116;unnamed=0;pairs=5cbd4bf1d73685337092796e0e6479559b11adecb5084c9b500e48b9b77bdd03",
-      "file:frontend/.world/world.raw.json": "a28bac85a71bcac178b4ab13bb95ff7517d51f4f4469a3776fa6f68539a52f87",
+      "file:frontend/.world/world.raw.json": "5aaa1d0345049ead8a8ab7a1a4746fb5e8d6a346f7e8ea420ef97308fa49a978",
       "builder:frontend/scripts/build-constellations.mjs": "202681694940d68dcb9ae0d9d893cd649dfcd07c94d600aaabfc6047a47fa9b4",
-      "builder:frontend/scripts/build-world.mjs": "a0de0bd2952f6c843b6d57b0cd5e47031d08201a43b7da76308118690a9343d6"
+      "builder:frontend/scripts/build-world.mjs": "a0de0bd2952f6c843b6d57b0cd5e47031d08201a43b7da76308118690a9343d6",
+      "builder:frontend/scripts/world-groups.json": "fbf57a21676a5e4c951ebbc0a21f1050509b349d1522a9eb2faf23c5f654e591"
     },
-    "built_at": "2026-09-18T04:01:59.498013+00:00",
+    "built_at": "2026-09-18T06:26:00.541064+00:00",
     "graph_census": {
       "nodes": 164201,
       "relationships": 508042
     },
     "output_hashes": {
-      "frontend/.world/constellations.json": "f063a16a59fbc37285a186464c8d4d11e19c8b66f354474ef598249eb2dae3bd",
-      "frontend/public/world/world.bin": "d451169cf5a15357f68b5504ee9083c21606c1a8750b82b8fb6db18366340317",
-      "frontend/public/world/world.json": "6f4e60ea6241cd168aa84dfb06a0e39a9899c54ce72210c6e47ad5e9af195c3c",
-      "frontend/public/world/world.labels.json": "ec8828e8ad363327b4eee89ff246f15b307c4a091cdc48a89615409d2bd1db0f"
+      "frontend/.world/constellations.json": "f38b430e51fe02f18d533d50764cc63b0e052edf9c3abcd66dbdcfba8582a0b8",
+      "frontend/public/world/world.bin": "2a4e90fc1f70d20dbad91af675e057a27d14a4cc7a55c978270b7118b8d6c016",
+      "frontend/public/world/world.json": "21637ae601c312ab391417ee715a31c8abc42ff80f5f4f9d5cc0458f0cccf511",
+      "frontend/public/world/world.labels.json": "08acd37d2e04b4c0e02e16390bfcdff14366427a611e0ca7cf07b8586776e3f3"
     }
   },
   "Knowledge World public projection": {
@@ -125,16 +126,19 @@
       "type:MENTIONS_ENTITY": "n=28116;unnamed=0;pairs=5cbd4bf1d73685337092796e0e6479559b11adecb5084c9b500e48b9b77bdd03",
       "type:SPECIALIZED_FORM_OF": "n=1;unnamed=0;pairs=312df33d6faee2051c8ae81913aa8f94d6e5cc63fb73b4cd7e8302b932dffea4",
       "builder:scripts/export_graph_world.py": "8f8fd4f41094c673df8e9a366a812752ad2454c0b417736ec11c7d445b65998c",
-      "builder:scripts/export_predicate_semantics.py": "adf5fc1028fbaab5fc48fd1288ec06f1803cb0feed119590355d1889639607a4"
+      "builder:scripts/export_predicate_semantics.py": "adf5fc1028fbaab5fc48fd1288ec06f1803cb0feed119590355d1889639607a4",
+      "builder:src/vedagraph/api/services/graph_service.py": "9d5366d6bc1d0f2fd9918380857129130e780b41ce92a3256e129b659cbede69",
+      "builder:frontend/scripts/build-home-world.mjs": "a5109269ec36a54a6c850026a4617d626923ee35e6b801d859a8498a42c1a771"
     },
-    "built_at": "2026-09-18T04:02:04.759319+00:00",
+    "built_at": "2026-09-18T06:32:01.870339+00:00",
     "graph_census": {
       "nodes": 164201,
       "relationships": 508042
     },
     "output_hashes": {
-      "frontend/.world/world.raw.json": "a28bac85a71bcac178b4ab13bb95ff7517d51f4f4469a3776fa6f68539a52f87",
-      "frontend/public/world/world.predicates.json": "d5aec2cf8c695a9f098015d35d2c5bab4818f1a9690383da623c55e333728cc2"
+      "frontend/.world/world.raw.json": "5aaa1d0345049ead8a8ab7a1a4746fb5e8d6a346f7e8ea420ef97308fa49a978",
+      "frontend/public/world/world.predicates.json": "6c7115ec1db059d37f1088247c2d0b4a760f6a07e14cd5a176a02513286415ba",
+      "frontend/public/data/home-world.json": "b15183ff276b832b94cbc1a4078caa8ee520f1e5e4547afc5e476fd1876b7183"
     }
   },
   "ritual aggregates": {

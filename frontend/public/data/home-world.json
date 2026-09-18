@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "generated": "2026-09-18T04:48:52Z",
+  "generated": "2026-09-18T06:30:38Z",
   "source": "public/world/world.bin",
-  "inputPublicExportHash": "a28bac85a71bcac178b4ab13bb95ff7517d51f4f4469a3776fa6f68539a52f87",
-  "inputWorldBinSha256": "d451169cf5a15357f68b5504ee9083c21606c1a8750b82b8fb6db18366340317",
+  "inputPublicExportHash": "5aaa1d0345049ead8a8ab7a1a4746fb5e8d6a346f7e8ea420ef97308fa49a978",
+  "inputWorldBinSha256": "2a4e90fc1f70d20dbad91af675e057a27d14a4cc7a55c978270b7118b8d6c016",
   "note": "A real slice of the world artifact. Coordinates are the world's own, recentred and uniformly scaled into a unit cube; nothing is moved. Subjects standing within 0.08 of one already selected are refused rather than repositioned, so the slice is sparser than the world at this scale but every position in it is the world's.",
   "minSeparation": 0.08,
   "groups": [
@@ -21,961 +21,1006 @@
   ],
   "nodes": [
     {
+      "id": "VG:CONCEPT:YAJNA-SACRIFICE",
+      "label": "sacrifice (yajña)",
+      "group": "rite",
+      "degree": 1970,
+      "x": 0.119,
+      "y": 0.222,
+      "z": -0.164
+    },
+    {
       "id": "VG:DEVATA:AGNIH",
       "label": "Agni",
       "group": "deity",
       "degree": 5637,
-      "x": 0.065,
-      "y": 0.178,
-      "z": -0.01
-    },
-    {
-      "id": "VG:DEVATA:INDRAH",
-      "label": "Indra",
-      "group": "deity",
-      "degree": 7498,
-      "x": 0.073,
-      "y": 0.025,
-      "z": 0.205
-    },
-    {
-      "id": "VG:DEVATA:SOMAH",
-      "label": "Soma",
-      "group": "deity",
-      "degree": 2077,
-      "x": -0.151,
-      "y": 0.248,
-      "z": -0.221
-    },
-    {
-      "id": "VG:DEVATA:MARUTAH",
-      "label": "the Maruts",
-      "group": "deity",
-      "degree": 1189,
-      "x": 0.309,
-      "y": 0.484,
-      "z": 0.129
-    },
-    {
-      "id": "VG:DEVATA:ASVINAU",
-      "label": "the Asvins",
-      "group": "deity",
-      "degree": 1602,
-      "x": -0.324,
-      "y": -0.019,
-      "z": 0.364
-    },
-    {
-      "id": "VG:DEVATA:APAH",
-      "label": "the Waters",
-      "group": "deity",
-      "degree": 969,
-      "x": 0.031,
-      "y": -0.251,
-      "z": 0.022
-    },
-    {
-      "id": "VG:DEVATA:BRHASPATIH",
-      "label": "Brhaspati",
-      "group": "deity",
-      "degree": 520,
-      "x": 0.081,
-      "y": -0.344,
-      "z": 0.723
-    },
-    {
-      "id": "VG:DEVATA:VARUNAH",
-      "label": "Varuna",
-      "group": "deity",
-      "degree": 869,
-      "x": 0.329,
-      "y": 0.119,
-      "z": -0.081
-    },
-    {
-      "id": "VG:DEVATA:USAH",
-      "label": "Usas",
-      "group": "deity",
-      "degree": 795,
-      "x": 0.291,
-      "y": -0.274,
-      "z": 0.355
-    },
-    {
-      "id": "VG:DEVATA:PUSA",
-      "label": "Pusan",
-      "group": "deity",
-      "degree": 410,
-      "x": 0.162,
-      "y": 0.31,
-      "z": -0.488
-    },
-    {
-      "id": "VG:DEVATA:SAVITA",
-      "label": "Savitr",
-      "group": "deity",
-      "degree": 650,
-      "x": 0.141,
-      "y": 0.23,
-      "z": -0.433
-    },
-    {
-      "id": "VG:DEVATA:ADITYAH",
-      "label": "the Adityas",
-      "group": "deity",
-      "degree": 412,
-      "x": -0.185,
-      "y": 0.3,
-      "z": 0.406
-    },
-    {
-      "id": "VG:DEVATA:SURYAH",
-      "label": "Surya",
-      "group": "deity",
-      "degree": 903,
-      "x": 0.254,
-      "y": -0.178,
-      "z": 0.33
-    },
-    {
-      "id": "VG:DEVATA:SARASVATI",
-      "label": "Sarasvati",
-      "group": "deity",
-      "degree": 327,
-      "x": -0.363,
-      "y": 0.057,
-      "z": 0.641
-    },
-    {
-      "id": "VG:DEVATA:PITARAH",
-      "label": "the Fathers",
-      "group": "deity",
-      "degree": 575,
-      "x": -0.001,
-      "y": -0.248,
-      "z": -0.409
-    },
-    {
-      "id": "VG:DEVATA:ADITIH",
-      "label": "Aditi",
-      "group": "deity",
-      "degree": 332,
-      "x": -0.008,
-      "y": -0.328,
-      "z": -0.013
-    },
-    {
-      "id": "IS_OR_BECOMES",
-      "label": "IS_OR_BECOMES",
-      "group": "idea",
-      "degree": 4308,
-      "x": 0.349,
-      "y": 0.081,
-      "z": -0.166
-    },
-    {
-      "id": "VG:DEVATA:RUDRAH",
-      "label": "Rudra",
-      "group": "deity",
-      "degree": 349,
-      "x": -0.484,
-      "y": 0.155,
-      "z": -0.182
-    },
-    {
-      "id": "VG:DEVATA:VAYUH",
-      "label": "Vayu",
-      "group": "deity",
-      "degree": 362,
-      "x": -0.344,
-      "y": -0.298,
-      "z": -0.371
-    },
-    {
-      "id": "VG:DEVATA:VISNUH",
-      "label": "Visnu",
-      "group": "deity",
-      "degree": 316,
-      "x": 0.007,
-      "y": -0.293,
-      "z": 0.095
-    },
-    {
-      "id": "CREATES",
-      "label": "CREATES",
-      "group": "idea",
-      "degree": 2059,
-      "x": -0.391,
-      "y": -0.227,
-      "z": -0.062
-    },
-    {
-      "id": "VG:DEVATA:MITRAVARUNAU",
-      "label": "Mitra and Varuna",
-      "group": "deity",
-      "degree": 409,
-      "x": -0.414,
-      "y": -0.51,
-      "z": -0.013
-    },
-    {
-      "id": "UNMAPPED_ROOT",
-      "label": "unmapped verbal root",
-      "group": "idea",
-      "degree": 154,
-      "x": -0.162,
-      "y": 0.404,
-      "z": 0.466
-    },
-    {
-      "id": "BLESSES",
-      "label": "BLESSES",
-      "group": "idea",
-      "degree": 652,
-      "x": -0.399,
-      "y": -0.023,
-      "z": 0.324
-    },
-    {
-      "id": "GRANTS",
-      "label": "GRANTS",
-      "group": "idea",
-      "degree": 1384,
-      "x": -0.257,
-      "y": 0.312,
-      "z": 0.457
-    },
-    {
-      "id": "ESTABLISHES",
-      "label": "ESTABLISHES",
-      "group": "idea",
-      "degree": 1792,
-      "x": -0.015,
-      "y": -0.094,
-      "z": 0.654
-    },
-    {
-      "id": "PROTECTS",
-      "label": "PROTECTS",
-      "group": "idea",
-      "degree": 627,
-      "x": 0.235,
-      "y": 0.109,
-      "z": 0.603
-    },
-    {
-      "id": "PERCEIVES",
-      "label": "PERCEIVES",
-      "group": "idea",
-      "degree": 894,
-      "x": 0.391,
-      "y": 0.472,
-      "z": 0.072
-    },
-    {
-      "id": "DWELLS",
-      "label": "DWELLS",
-      "group": "idea",
-      "degree": 1106,
-      "x": 0.051,
-      "y": 0.095,
-      "z": -0.062
-    },
-    {
-      "id": "VG:CONCEPT:AGNI-CITI-FIRE-PILING",
-      "label": "fire altar piling (citi)",
-      "group": "rite",
-      "degree": 25,
-      "x": 0.425,
-      "y": -0.245,
-      "z": -0.01
+      "x": 0.181,
+      "y": 0.166,
+      "z": -0.093
     },
     {
       "id": "VG:CONCEPT:AGNIHOTRA",
       "label": "fire oblation (agnihotra)",
       "group": "rite",
       "degree": 53,
-      "x": 0.302,
-      "y": -0.584,
-      "z": -0.16
+      "x": 0.535,
+      "y": -0.969,
+      "z": -0.317
     },
     {
-      "id": "VG:CONCEPT:GRAHA-SOMA-DRAWING",
-      "label": "soma cup drawing (graha)",
+      "id": "VG:CONCEPT:SOMA-PRESSING",
+      "label": "soma pressing (savana)",
       "group": "rite",
-      "degree": 155,
-      "x": -0.487,
-      "y": -0.396,
-      "z": -1
+      "degree": 1163,
+      "x": -0.206,
+      "y": 0.31,
+      "z": -0.327
+    },
+    {
+      "id": "VG:CONCEPT:SAUTRAMANI",
+      "label": "sautramani rite (sautrāmaṇī)",
+      "group": "rite",
+      "degree": 52,
+      "x": -0.462,
+      "y": 0.01,
+      "z": 0.793
+    },
+    {
+      "id": "VG:CONCEPT:AGNI-CITI-FIRE-PILING",
+      "label": "fire altar piling (citi)",
+      "group": "rite",
+      "degree": 25,
+      "x": 0.718,
+      "y": -0.463,
+      "z": -0.093
     },
     {
       "id": "VG:CONCEPT:ASVAMEDHA-HORSE-SACRIFICE",
       "label": "horse sacrifice (aśvamedha)",
       "group": "rite",
       "degree": 34,
-      "x": -0.333,
-      "y": 0.578,
-      "z": 0.088
+      "x": -0.412,
+      "y": 0.763,
+      "z": 0.053
     },
     {
-      "id": "VG:CONCEPT:PITRYANA-FUNERARY-RITE",
-      "label": "funerary rites (pitṛyāṇa)",
+      "id": "VG:CONCEPT:ADHVARYU-PRIEST",
+      "label": "adhvaryu (adhvaryu)",
       "group": "rite",
-      "degree": 53,
-      "x": 0.221,
-      "y": -0.325,
-      "z": -0.959
-    },
-    {
-      "id": "VG:CONCEPT:VISANAKA-PLANT",
-      "label": "vishanaka (viṣāṇakā)",
-      "group": "thing",
-      "degree": 3,
-      "x": 0.066,
-      "y": -0.365,
-      "z": -0.283
-    },
-    {
-      "id": "VG:CONCEPT:VAYAVYA-VAYU-CUP",
-      "label": "vayu cup (vāyavya)",
-      "group": "thing",
-      "degree": 14,
-      "x": 0.116,
-      "y": 0.218,
-      "z": -0.344
-    },
-    {
-      "id": "VG:CONCEPT:HAVIS-OBLATION",
-      "label": "oblation (havis)",
-      "group": "rite",
-      "degree": 830,
-      "x": 0.119,
-      "y": 0.22,
-      "z": -0.081
-    },
-    {
-      "id": "VG:CONCEPT:ASMAN-PRESSING-STONE",
-      "label": "stone (grāvan)",
-      "group": "thing",
-      "degree": 344,
-      "x": -0.14,
-      "y": 0.293,
-      "z": -0.124
-    },
-    {
-      "id": "VG:CONCEPT:BARHIS-SACRED-GRASS",
-      "label": "sacred grass (barhis)",
-      "group": "thing",
-      "degree": 417,
-      "x": -0.027,
-      "y": 0.228,
-      "z": -0.02
-    },
-    {
-      "id": "VG:CONCEPT:CAMASA-CUP",
-      "label": "cup (camasa)",
-      "group": "thing",
-      "degree": 29,
-      "x": 0.204,
-      "y": 0.201,
-      "z": -0.374
-    },
-    {
-      "id": "VG:CONCEPT:VEDI-ALTAR",
-      "label": "altar (vedi)",
-      "group": "thing",
-      "degree": 34,
-      "x": -0.434,
-      "y": 0.541,
-      "z": 0.082
+      "degree": 43,
+      "x": -0.172,
+      "y": 0.238,
+      "z": -0.303
     },
     {
       "id": "VG:CONCEPT:BRAHMAN-PRIEST",
       "label": "brahman priest (brahman)",
       "group": "rite",
       "degree": 72,
-      "x": -0.205,
-      "y": -0.07,
-      "z": -0.484
+      "x": -0.221,
+      "y": -0.203,
+      "z": -0.8
     },
     {
-      "id": "VG:CONCEPT:OSADHI-PLANTS",
-      "label": "plants (oṣadhi)",
-      "group": "thing",
-      "degree": 454,
-      "x": 0.124,
-      "y": -0.312,
-      "z": 0.009
+      "id": "VG:CONCEPT:HAVIS-OBLATION",
+      "label": "oblation (havis)",
+      "group": "rite",
+      "degree": 830,
+      "x": 0.261,
+      "y": 0.229,
+      "z": -0.2
     },
     {
-      "id": "VG:CONCEPT:DARBHA-PLANT",
-      "label": "darbha grass (darbha)",
-      "group": "thing",
-      "degree": 42,
-      "x": 0.66,
-      "y": -0.135,
-      "z": 0.415
+      "id": "VG:CONCEPT:AYUS-LIFE",
+      "label": "lifespan (āyus)",
+      "group": "idea",
+      "degree": 573,
+      "x": 0.864,
+      "y": -0.467,
+      "z": -0.067
     },
     {
-      "id": "VG:CONCEPT:KUSTHA-PLANT",
-      "label": "kushtha (kuṣṭha)",
+      "id": "VG:CONCEPT:BARHIS-SACRED-GRASS",
+      "label": "sacred grass (barhis)",
       "group": "thing",
-      "degree": 21,
-      "x": 0.121,
-      "y": -0.341,
-      "z": -0.086
+      "degree": 417,
+      "x": 0.044,
+      "y": 0.241,
+      "z": -0.108
+    },
+    {
+      "id": "VG:CONCEPT:PAYAS-MILK",
+      "label": "milk (payas)",
+      "group": "thing",
+      "degree": 322,
+      "x": -0.422,
+      "y": -0.059,
+      "z": 0.773
+    },
+    {
+      "id": "VG:CONCEPT:PRAJA-OFFSPRING",
+      "label": "offspring (prajā)",
+      "group": "idea",
+      "degree": 647,
+      "x": -0.088,
+      "y": -0.683,
+      "z": 0.255
+    },
+    {
+      "id": "VG:CONCEPT:SVASTI-WELLBEING",
+      "label": "wellbeing (svasti)",
+      "group": "idea",
+      "degree": 579,
+      "x": 0.401,
+      "y": 0.195,
+      "z": 0.809
+    },
+    {
+      "id": "VG:CONCEPT:VASU-WEALTH",
+      "label": "wealth (rayi)",
+      "group": "idea",
+      "degree": 1780,
+      "x": 0.322,
+      "y": 0.75,
+      "z": 0.43
+    },
+    {
+      "id": "VG:DEVATA:YAJAMANAH",
+      "label": "the sacrificer",
+      "group": "unresolved-deity",
+      "degree": 4,
+      "x": -0.753,
+      "y": -0.032,
+      "z": -0.361
+    },
+    {
+      "id": "VG:CONCEPT:SAMIDH-FUEL",
+      "label": "kindling (samidh)",
+      "group": "thing",
+      "degree": 223,
+      "x": 0.195,
+      "y": 0.281,
+      "z": -0.106
+    },
+    {
+      "id": "VG:CONCEPT:SRUC-LADLE",
+      "label": "offering ladle (sruc)",
+      "group": "thing",
+      "degree": 23,
+      "x": 0.135,
+      "y": 0.087,
+      "z": -0.132
+    },
+    {
+      "id": "VG:CONCEPT:VEDI-ALTAR",
+      "label": "altar (vedi)",
+      "group": "thing",
+      "degree": 34,
+      "x": -0.563,
+      "y": 0.708,
+      "z": 0.043
+    },
+    {
+      "id": "VG:DEVATA:INDRAH",
+      "label": "Indra",
+      "group": "deity",
+      "degree": 7498,
+      "x": 0.193,
+      "y": -0.061,
+      "z": 0.227
+    },
+    {
+      "id": "VG:DEVATA:SOMAH",
+      "label": "Soma",
+      "group": "deity",
+      "degree": 2077,
+      "x": -0.141,
+      "y": 0.27,
+      "z": -0.407
+    },
+    {
+      "id": "VG:DEVATA:MARUTAH",
+      "label": "the Maruts",
+      "group": "deity",
+      "degree": 1189,
+      "x": 0.545,
+      "y": 0.623,
+      "z": 0.114
+    },
+    {
+      "id": "VG:DEVATA:ASVINAU",
+      "label": "the Asvins",
+      "group": "deity",
+      "degree": 1602,
+      "x": -0.399,
+      "y": -0.126,
+      "z": 0.464
+    },
+    {
+      "id": "VG:DEVATA:APAH",
+      "label": "the Waters",
+      "group": "deity",
+      "degree": 969,
+      "x": 0.131,
+      "y": -0.473,
+      "z": -0.045
+    },
+    {
+      "id": "VG:DEVATA:VARUNAH",
+      "label": "Varuna",
+      "group": "deity",
+      "degree": 869,
+      "x": 0.575,
+      "y": 0.078,
+      "z": -0.199
+    },
+    {
+      "id": "VG:DEVATA:BRHASPATIH",
+      "label": "Brhaspati",
+      "group": "deity",
+      "degree": 520,
+      "x": 0.206,
+      "y": -0.611,
+      "z": 1
+    },
+    {
+      "id": "VG:DEVATA:USAH",
+      "label": "Usas",
+      "group": "deity",
+      "degree": 795,
+      "x": 0.518,
+      "y": -0.508,
+      "z": 0.451
+    },
+    {
+      "id": "VG:DEVATA:PUSA",
+      "label": "Pusan",
+      "group": "deity",
+      "degree": 410,
+      "x": 0.325,
+      "y": 0.364,
+      "z": -0.806
+    },
+    {
+      "id": "MOVES_TO",
+      "label": "MOVES_TO",
+      "group": "idea",
+      "degree": 3720,
+      "x": -0.369,
+      "y": -0.098,
+      "z": 0.369
+    },
+    {
+      "id": "VG:DEVATA:PRTHIVI",
+      "label": "Prthivi",
+      "group": "deity",
+      "degree": 821,
+      "x": 0.127,
+      "y": -0.582,
+      "z": -0.072
+    },
+    {
+      "id": "VG:DEVATA:SAVITA",
+      "label": "Savitr",
+      "group": "deity",
+      "degree": 650,
+      "x": 0.295,
+      "y": 0.244,
+      "z": -0.724
+    },
+    {
+      "id": "VG:DEVATA:ADITYAH",
+      "label": "the Adityas",
+      "group": "deity",
+      "degree": 412,
+      "x": -0.192,
+      "y": 0.348,
+      "z": 0.527
+    },
+    {
+      "id": "VG:DEVATA:SURYAH",
+      "label": "Surya",
+      "group": "deity",
+      "degree": 903,
+      "x": 0.462,
+      "y": -0.364,
+      "z": 0.413
+    },
+    {
+      "id": "VG:DEVATA:SARASVATI",
+      "label": "Sarasvati",
+      "group": "deity",
+      "degree": 327,
+      "x": -0.457,
+      "y": -0.014,
+      "z": 0.878
+    },
+    {
+      "id": "VG:DEVATA:PITARAH",
+      "label": "the Fathers",
+      "group": "deity",
+      "degree": 575,
+      "x": 0.083,
+      "y": -0.469,
+      "z": -0.688
+    },
+    {
+      "id": "IS_OR_BECOMES",
+      "label": "IS_OR_BECOMES",
+      "group": "idea",
+      "degree": 4308,
+      "x": 0.604,
+      "y": 0.022,
+      "z": -0.326
+    },
+    {
+      "id": "VG:DEVATA:RUDRAH",
+      "label": "Rudra",
+      "group": "deity",
+      "degree": 349,
+      "x": -0.638,
+      "y": 0.133,
+      "z": -0.349
+    },
+    {
+      "id": "VG:DEVATA:MITRAH",
+      "label": "Mitra",
+      "group": "deity",
+      "degree": 516,
+      "x": -0.209,
+      "y": 0.464,
+      "z": 0.554
+    },
+    {
+      "id": "VG:DEVATA:VAYUH",
+      "label": "Vayu",
+      "group": "deity",
+      "degree": 362,
+      "x": -0.429,
+      "y": -0.542,
+      "z": -0.631
+    },
+    {
+      "id": "VG:DEVATA:VISNUH",
+      "label": "Visnu",
+      "group": "deity",
+      "degree": 316,
+      "x": 0.094,
+      "y": -0.535,
+      "z": 0.063
+    },
+    {
+      "id": "CREATES",
+      "label": "CREATES",
+      "group": "idea",
+      "degree": 2059,
+      "x": -0.499,
+      "y": -0.436,
+      "z": -0.17
+    },
+    {
+      "id": "UNMAPPED_ROOT",
+      "label": "unmapped verbal root",
+      "group": "idea",
+      "degree": 154,
+      "x": -0.157,
+      "y": 0.503,
+      "z": 0.616
+    },
+    {
+      "id": "BLESSES",
+      "label": "BLESSES",
+      "group": "idea",
+      "degree": 652,
+      "x": -0.51,
+      "y": -0.133,
+      "z": 0.404
+    },
+    {
+      "id": "VG:CONCEPT:ASMAN-PRESSING-STONE",
+      "label": "stone (grāvan)",
+      "group": "thing",
+      "degree": 344,
+      "x": -0.124,
+      "y": 0.338,
+      "z": -0.263
+    },
+    {
+      "id": "VG:CONCEPT:CAMASA-CUP",
+      "label": "cup (camasa)",
+      "group": "thing",
+      "degree": 29,
+      "x": 0.388,
+      "y": 0.201,
+      "z": -0.636
+    },
+    {
+      "id": "VG:CONCEPT:ULUKHALA-MORTAR",
+      "label": "mortar (ulūkhala)",
+      "group": "thing",
+      "degree": 19,
+      "x": -0.068,
+      "y": 0.525,
+      "z": 0.502
+    },
+    {
+      "id": "VG:CONCEPT:KALASA-JAR",
+      "label": "jar (kalaśa)",
+      "group": "thing",
+      "degree": 62,
+      "x": -0.088,
+      "y": 0.199,
+      "z": -0.318
+    },
+    {
+      "id": "VG:DEVATA:SUBANDHOJIVAH",
+      "label": "the reviving of Subandhu",
+      "group": "unresolved-deity",
+      "degree": 7,
+      "x": -0.372,
+      "y": -0.142,
+      "z": -0.96
+    },
+    {
+      "id": "VG:DEVATA:GARBHASMADHANARUPO-ARTHAH",
+      "label": "the matter in the form of implanting an embryo",
+      "group": "unresolved-deity",
+      "degree": 10,
+      "x": -0.368,
+      "y": -0.546,
+      "z": -0.073
     }
   ],
   "edges": [
     {
-      "a": 21,
-      "b": 7,
-      "predicate": "COMPOSED_OF"
+      "a": 0,
+      "b": 9,
+      "predicate": "USES_OFFERING"
     },
     {
-      "a": 32,
-      "b": 41,
+      "a": 0,
+      "b": 12,
+      "predicate": "USES_SUBSTANCE"
+    },
+    {
+      "a": 0,
+      "b": 8,
       "predicate": "PERFORMED_BY"
     },
     {
-      "a": 31,
-      "b": 36,
-      "predicate": "USES_OFFERING"
-    },
-    {
-      "a": 42,
-      "b": 43,
+      "a": 0,
+      "b": 3,
       "predicate": "BROADER_THAN"
-    },
-    {
-      "a": 0,
-      "b": 30,
-      "predicate": "DEVATA_ASSOCIATED_WITH"
-    },
-    {
-      "a": 31,
-      "b": 38,
-      "predicate": "USES_OBJECT"
-    },
-    {
-      "a": 31,
-      "b": 1,
-      "predicate": "INVOKES_DEVATA"
-    },
-    {
-      "a": 1,
-      "b": 16,
-      "predicate": "IS_ASKED_TO"
-    },
-    {
-      "a": 1,
-      "b": 16,
-      "predicate": "PERFORMS_ACTION"
-    },
-    {
-      "a": 0,
-      "b": 1,
-      "predicate": "CO_OCCURS_WITH"
-    },
-    {
-      "a": 30,
-      "b": 36,
-      "predicate": "USES_OFFERING"
-    },
-    {
-      "a": 42,
-      "b": 44,
-      "predicate": "BROADER_THAN"
-    },
-    {
-      "a": 0,
-      "b": 29,
-      "predicate": "DEVATA_ASSOCIATED_WITH"
-    },
-    {
-      "a": 31,
-      "b": 37,
-      "predicate": "USES_OBJECT"
-    },
-    {
-      "a": 30,
-      "b": 0,
-      "predicate": "INVOKES_DEVATA"
-    },
-    {
-      "a": 0,
-      "b": 16,
-      "predicate": "IS_ASKED_TO"
-    },
-    {
-      "a": 0,
-      "b": 16,
-      "predicate": "PERFORMS_ACTION"
     },
     {
       "a": 1,
       "b": 2,
-      "predicate": "CO_OCCURS_WITH"
-    },
-    {
-      "a": 42,
-      "b": 34,
-      "predicate": "BROADER_THAN"
-    },
-    {
-      "a": 14,
-      "b": 33,
       "predicate": "DEVATA_ASSOCIATED_WITH"
     },
     {
-      "a": 31,
-      "b": 40,
+      "a": 0,
+      "b": 15,
+      "predicate": "PERFORMED_FOR"
+    },
+    {
+      "a": 0,
+      "b": 11,
       "predicate": "USES_OBJECT"
     },
     {
-      "a": 29,
-      "b": 0,
+      "a": 3,
+      "b": 20,
       "predicate": "INVOKES_DEVATA"
     },
     {
-      "a": 1,
-      "b": 20,
+      "a": 20,
+      "b": 36,
       "predicate": "IS_ASKED_TO"
+    },
+    {
+      "a": 20,
+      "b": 36,
+      "predicate": "PERFORMS_ACTION"
     },
     {
       "a": 1,
       "b": 20,
-      "predicate": "PERFORMS_ACTION"
+      "predicate": "CO_OCCURS_WITH"
+    },
+    {
+      "a": 2,
+      "b": 9,
+      "predicate": "USES_OFFERING"
     },
     {
       "a": 4,
-      "b": 1,
-      "predicate": "CO_OCCURS_WITH"
+      "b": 12,
+      "predicate": "USES_SUBSTANCE"
     },
     {
-      "a": 39,
-      "b": 35,
+      "a": 0,
+      "b": 7,
+      "predicate": "PERFORMED_BY"
+    },
+    {
+      "a": 0,
+      "b": 2,
       "predicate": "BROADER_THAN"
     },
     {
-      "a": 18,
-      "b": 35,
+      "a": 1,
+      "b": 5,
       "predicate": "DEVATA_ASSOCIATED_WITH"
     },
     {
-      "a": 31,
-      "b": 39,
-      "predicate": "USES_OBJECT"
-    },
-    {
-      "a": 31,
-      "b": 4,
-      "predicate": "INVOKES_DEVATA"
-    },
-    {
-      "a": 1,
-      "b": 25,
-      "predicate": "IS_ASKED_TO"
-    },
-    {
-      "a": 1,
-      "b": 25,
-      "predicate": "PERFORMS_ACTION"
-    },
-    {
-      "a": 1,
-      "b": 3,
-      "predicate": "CO_OCCURS_WITH"
-    },
-    {
-      "a": 17,
-      "b": 34,
-      "predicate": "DEVATA_ASSOCIATED_WITH"
-    },
-    {
-      "a": 31,
-      "b": 35,
-      "predicate": "USES_OBJECT"
-    },
-    {
-      "a": 32,
-      "b": 7,
-      "predicate": "INVOKES_DEVATA"
-    },
-    {
-      "a": 1,
-      "b": 24,
-      "predicate": "IS_ASKED_TO"
-    },
-    {
-      "a": 1,
-      "b": 24,
-      "predicate": "PERFORMS_ACTION"
-    },
-    {
-      "a": 5,
-      "b": 1,
-      "predicate": "CO_OCCURS_WITH"
-    },
-    {
-      "a": 31,
-      "b": 21,
-      "predicate": "INVOKES_DEVATA"
-    },
-    {
-      "a": 1,
-      "b": 28,
-      "predicate": "IS_ASKED_TO"
-    },
-    {
-      "a": 1,
-      "b": 28,
-      "predicate": "PERFORMS_ACTION"
-    },
-    {
-      "a": 1,
-      "b": 12,
-      "predicate": "CO_OCCURS_WITH"
-    },
-    {
-      "a": 31,
-      "b": 18,
-      "predicate": "INVOKES_DEVATA"
-    },
-    {
-      "a": 1,
-      "b": 27,
-      "predicate": "IS_ASKED_TO"
-    },
-    {
-      "a": 1,
-      "b": 27,
-      "predicate": "PERFORMS_ACTION"
-    },
-    {
-      "a": 1,
-      "b": 7,
-      "predicate": "CO_OCCURS_WITH"
-    },
-    {
-      "a": 32,
+      "a": 0,
       "b": 13,
+      "predicate": "PERFORMED_FOR"
+    },
+    {
+      "a": 0,
+      "b": 17,
+      "predicate": "USES_OBJECT"
+    },
+    {
+      "a": 0,
+      "b": 1,
+      "predicate": "INVOKES_DEVATA"
+    },
+    {
+      "a": 20,
+      "b": 29,
+      "predicate": "IS_ASKED_TO"
+    },
+    {
+      "a": 20,
+      "b": 29,
+      "predicate": "PERFORMS_ACTION"
+    },
+    {
+      "a": 20,
+      "b": 21,
+      "predicate": "CO_OCCURS_WITH"
+    },
+    {
+      "a": 3,
+      "b": 7,
+      "predicate": "PERFORMED_BY"
+    },
+    {
+      "a": 0,
+      "b": 4,
+      "predicate": "BROADER_THAN"
+    },
+    {
+      "a": 16,
+      "b": 0,
+      "predicate": "DEVATA_ASSOCIATED_WITH"
+    },
+    {
+      "a": 0,
+      "b": 14,
+      "predicate": "PERFORMED_FOR"
+    },
+    {
+      "a": 0,
+      "b": 19,
+      "predicate": "USES_OBJECT"
+    },
+    {
+      "a": 4,
+      "b": 20,
       "predicate": "INVOKES_DEVATA"
     },
     {
       "a": 1,
-      "b": 23,
+      "b": 36,
       "predicate": "IS_ASKED_TO"
     },
     {
       "a": 1,
-      "b": 23,
+      "b": 36,
       "predicate": "PERFORMS_ACTION"
     },
     {
-      "a": 1,
-      "b": 8,
-      "predicate": "CO_OCCURS_WITH"
-    },
-    {
-      "a": 1,
-      "b": 26,
-      "predicate": "IS_ASKED_TO"
-    },
-    {
-      "a": 1,
-      "b": 26,
-      "predicate": "PERFORMS_ACTION"
-    },
-    {
-      "a": 1,
-      "b": 10,
-      "predicate": "CO_OCCURS_WITH"
-    },
-    {
-      "a": 0,
+      "a": 23,
       "b": 20,
-      "predicate": "IS_ASKED_TO"
-    },
-    {
-      "a": 0,
-      "b": 20,
-      "predicate": "PERFORMS_ACTION"
-    },
-    {
-      "a": 1,
-      "b": 14,
       "predicate": "CO_OCCURS_WITH"
-    },
-    {
-      "a": 1,
-      "b": 22,
-      "predicate": "IS_ASKED_TO"
-    },
-    {
-      "a": 1,
-      "b": 22,
-      "predicate": "PERFORMS_ACTION"
     },
     {
       "a": 6,
-      "b": 1,
-      "predicate": "CO_OCCURS_WITH"
+      "b": 8,
+      "predicate": "PERFORMED_BY"
     },
     {
       "a": 0,
-      "b": 25,
-      "predicate": "IS_ASKED_TO"
+      "b": 6,
+      "predicate": "BROADER_THAN"
     },
     {
-      "a": 0,
-      "b": 25,
-      "predicate": "PERFORMS_ACTION"
-    },
-    {
-      "a": 11,
-      "b": 1,
-      "predicate": "CO_OCCURS_WITH"
-    },
-    {
-      "a": 0,
-      "b": 24,
-      "predicate": "IS_ASKED_TO"
-    },
-    {
-      "a": 0,
-      "b": 24,
-      "predicate": "PERFORMS_ACTION"
-    },
-    {
-      "a": 1,
-      "b": 9,
-      "predicate": "CO_OCCURS_WITH"
-    },
-    {
-      "a": 0,
-      "b": 28,
-      "predicate": "IS_ASKED_TO"
-    },
-    {
-      "a": 0,
-      "b": 28,
-      "predicate": "PERFORMS_ACTION"
-    },
-    {
-      "a": 1,
-      "b": 21,
-      "predicate": "CO_OCCURS_WITH"
-    },
-    {
-      "a": 0,
-      "b": 27,
-      "predicate": "IS_ASKED_TO"
-    },
-    {
-      "a": 0,
-      "b": 27,
-      "predicate": "PERFORMS_ACTION"
-    },
-    {
-      "a": 1,
-      "b": 18,
-      "predicate": "CO_OCCURS_WITH"
-    },
-    {
-      "a": 2,
-      "b": 16,
-      "predicate": "IS_ASKED_TO"
-    },
-    {
-      "a": 2,
-      "b": 16,
-      "predicate": "PERFORMS_ACTION"
-    },
-    {
-      "a": 1,
-      "b": 17,
-      "predicate": "CO_OCCURS_WITH"
-    },
-    {
-      "a": 0,
-      "b": 23,
-      "predicate": "IS_ASKED_TO"
-    },
-    {
-      "a": 0,
-      "b": 23,
-      "predicate": "PERFORMS_ACTION"
-    },
-    {
-      "a": 15,
-      "b": 1,
-      "predicate": "CO_OCCURS_WITH"
-    },
-    {
-      "a": 0,
-      "b": 26,
-      "predicate": "IS_ASKED_TO"
-    },
-    {
-      "a": 0,
-      "b": 26,
-      "predicate": "PERFORMS_ACTION"
-    },
-    {
-      "a": 1,
+      "a": 49,
       "b": 13,
-      "predicate": "CO_OCCURS_WITH"
+      "predicate": "DEVATA_ASSOCIATED_WITH"
     },
     {
       "a": 0,
+      "b": 10,
+      "predicate": "PERFORMED_FOR"
+    },
+    {
+      "a": 0,
+      "b": 18,
+      "predicate": "USES_OBJECT"
+    },
+    {
+      "a": 2,
+      "b": 1,
+      "predicate": "INVOKES_DEVATA"
+    },
+    {
+      "a": 20,
+      "b": 41,
+      "predicate": "IS_ASKED_TO"
+    },
+    {
+      "a": 20,
+      "b": 41,
+      "predicate": "PERFORMS_ACTION"
+    },
+    {
+      "a": 20,
       "b": 22,
-      "predicate": "IS_ASKED_TO"
-    },
-    {
-      "a": 4,
-      "b": 16,
-      "predicate": "PERFORMS_ACTION"
-    },
-    {
-      "a": 1,
-      "b": 19,
       "predicate": "CO_OCCURS_WITH"
-    },
-    {
-      "a": 3,
-      "b": 16,
-      "predicate": "IS_ASKED_TO"
-    },
-    {
-      "a": 0,
-      "b": 22,
-      "predicate": "PERFORMS_ACTION"
-    },
-    {
-      "a": 0,
-      "b": 2,
-      "predicate": "CO_OCCURS_WITH"
-    },
-    {
-      "a": 5,
-      "b": 16,
-      "predicate": "IS_ASKED_TO"
-    },
-    {
-      "a": 3,
-      "b": 16,
-      "predicate": "PERFORMS_ACTION"
-    },
-    {
-      "a": 0,
-      "b": 4,
-      "predicate": "CO_OCCURS_WITH"
-    },
-    {
-      "a": 7,
-      "b": 16,
-      "predicate": "IS_ASKED_TO"
-    },
-    {
-      "a": 5,
-      "b": 16,
-      "predicate": "PERFORMS_ACTION"
-    },
-    {
-      "a": 0,
-      "b": 3,
-      "predicate": "CO_OCCURS_WITH"
-    },
-    {
-      "a": 11,
-      "b": 16,
-      "predicate": "IS_ASKED_TO"
-    },
-    {
-      "a": 12,
-      "b": 16,
-      "predicate": "PERFORMS_ACTION"
     },
     {
       "a": 0,
       "b": 5,
-      "predicate": "CO_OCCURS_WITH"
+      "predicate": "BROADER_THAN"
     },
     {
-      "a": 9,
-      "b": 16,
-      "predicate": "IS_ASKED_TO"
-    },
-    {
-      "a": 7,
-      "b": 16,
-      "predicate": "PERFORMS_ACTION"
-    },
-    {
-      "a": 0,
-      "b": 12,
-      "predicate": "CO_OCCURS_WITH"
-    },
-    {
-      "a": 17,
-      "b": 16,
-      "predicate": "IS_ASKED_TO"
-    },
-    {
-      "a": 8,
-      "b": 16,
-      "predicate": "PERFORMS_ACTION"
-    },
-    {
-      "a": 0,
-      "b": 7,
-      "predicate": "CO_OCCURS_WITH"
-    },
-    {
-      "a": 2,
-      "b": 20,
-      "predicate": "IS_ASKED_TO"
-    },
-    {
-      "a": 10,
-      "b": 16,
-      "predicate": "PERFORMS_ACTION"
-    },
-    {
-      "a": 0,
-      "b": 8,
-      "predicate": "CO_OCCURS_WITH"
-    },
-    {
-      "a": 2,
-      "b": 25,
-      "predicate": "IS_ASKED_TO"
-    },
-    {
-      "a": 14,
-      "b": 16,
-      "predicate": "PERFORMS_ACTION"
-    },
-    {
-      "a": 0,
+      "a": 48,
       "b": 10,
+      "predicate": "DEVATA_ASSOCIATED_WITH"
+    },
+    {
+      "a": 6,
+      "b": 13,
+      "predicate": "PERFORMED_FOR"
+    },
+    {
+      "a": 3,
+      "b": 44,
+      "predicate": "USES_OBJECT"
+    },
+    {
+      "a": 4,
+      "b": 1,
+      "predicate": "INVOKES_DEVATA"
+    },
+    {
+      "a": 1,
+      "b": 29,
+      "predicate": "IS_ASKED_TO"
+    },
+    {
+      "a": 1,
+      "b": 29,
+      "predicate": "PERFORMS_ACTION"
+    },
+    {
+      "a": 24,
+      "b": 20,
+      "predicate": "CO_OCCURS_WITH"
+    },
+    {
+      "a": 34,
+      "b": 4,
+      "predicate": "DEVATA_ASSOCIATED_WITH"
+    },
+    {
+      "a": 5,
+      "b": 10,
+      "predicate": "PERFORMED_FOR"
+    },
+    {
+      "a": 3,
+      "b": 47,
+      "predicate": "USES_OBJECT"
+    },
+    {
+      "a": 5,
+      "b": 1,
+      "predicate": "INVOKES_DEVATA"
+    },
+    {
+      "a": 20,
+      "b": 43,
+      "predicate": "IS_ASKED_TO"
+    },
+    {
+      "a": 20,
+      "b": 43,
+      "predicate": "PERFORMS_ACTION"
+    },
+    {
+      "a": 20,
+      "b": 33,
+      "predicate": "CO_OCCURS_WITH"
+    },
+    {
+      "a": 3,
+      "b": 45,
+      "predicate": "USES_OBJECT"
+    },
+    {
+      "a": 3,
+      "b": 21,
+      "predicate": "INVOKES_DEVATA"
+    },
+    {
+      "a": 1,
+      "b": 41,
+      "predicate": "IS_ASKED_TO"
+    },
+    {
+      "a": 1,
+      "b": 41,
+      "predicate": "PERFORMS_ACTION"
+    },
+    {
+      "a": 20,
+      "b": 25,
+      "predicate": "CO_OCCURS_WITH"
+    },
+    {
+      "a": 3,
+      "b": 46,
+      "predicate": "USES_OBJECT"
+    },
+    {
+      "a": 4,
+      "b": 23,
+      "predicate": "INVOKES_DEVATA"
+    },
+    {
+      "a": 20,
+      "b": 42,
+      "predicate": "IS_ASKED_TO"
+    },
+    {
+      "a": 20,
+      "b": 42,
+      "predicate": "PERFORMS_ACTION"
+    },
+    {
+      "a": 20,
+      "b": 30,
+      "predicate": "CO_OCCURS_WITH"
+    },
+    {
+      "a": 2,
+      "b": 17,
+      "predicate": "USES_OBJECT"
+    },
+    {
+      "a": 6,
+      "b": 25,
+      "predicate": "INVOKES_DEVATA"
+    },
+    {
+      "a": 21,
+      "b": 36,
+      "predicate": "IS_ASKED_TO"
+    },
+    {
+      "a": 21,
+      "b": 36,
+      "predicate": "PERFORMS_ACTION"
+    },
+    {
+      "a": 20,
+      "b": 27,
       "predicate": "CO_OCCURS_WITH"
     },
     {
       "a": 4,
-      "b": 20,
+      "b": 34,
+      "predicate": "INVOKES_DEVATA"
+    },
+    {
+      "a": 1,
+      "b": 43,
       "predicate": "IS_ASKED_TO"
     },
     {
-      "a": 6,
-      "b": 16,
+      "a": 1,
+      "b": 43,
       "predicate": "PERFORMS_ACTION"
     },
     {
-      "a": 0,
-      "b": 14,
+      "a": 20,
+      "b": 31,
       "predicate": "CO_OCCURS_WITH"
+    },
+    {
+      "a": 6,
+      "b": 34,
+      "predicate": "INVOKES_DEVATA"
+    },
+    {
+      "a": 21,
+      "b": 29,
+      "predicate": "IS_ASKED_TO"
+    },
+    {
+      "a": 23,
+      "b": 36,
+      "predicate": "PERFORMS_ACTION"
+    },
+    {
+      "a": 20,
+      "b": 35,
+      "predicate": "CO_OCCURS_WITH"
+    },
+    {
+      "a": 1,
+      "b": 42,
+      "predicate": "IS_ASKED_TO"
+    },
+    {
+      "a": 21,
+      "b": 29,
+      "predicate": "PERFORMS_ACTION"
+    },
+    {
+      "a": 26,
+      "b": 20,
+      "predicate": "CO_OCCURS_WITH"
+    },
+    {
+      "a": 22,
+      "b": 36,
+      "predicate": "IS_ASKED_TO"
+    },
+    {
+      "a": 1,
+      "b": 42,
+      "predicate": "PERFORMS_ACTION"
+    },
+    {
+      "a": 20,
+      "b": 38,
+      "predicate": "CO_OCCURS_WITH"
+    },
+    {
+      "a": 23,
+      "b": 29,
+      "predicate": "IS_ASKED_TO"
+    },
+    {
+      "a": 22,
+      "b": 36,
+      "predicate": "PERFORMS_ACTION"
+    },
+    {
+      "a": 32,
+      "b": 20,
+      "predicate": "CO_OCCURS_WITH"
+    },
+    {
+      "a": 24,
+      "b": 36,
+      "predicate": "IS_ASKED_TO"
+    },
+    {
+      "a": 23,
+      "b": 29,
+      "predicate": "PERFORMS_ACTION"
+    },
+    {
+      "a": 20,
+      "b": 28,
+      "predicate": "CO_OCCURS_WITH"
+    },
+    {
+      "a": 25,
+      "b": 36,
+      "predicate": "IS_ASKED_TO"
+    },
+    {
+      "a": 24,
+      "b": 36,
+      "predicate": "PERFORMS_ACTION"
+    },
+    {
+      "a": 20,
+      "b": 39,
+      "predicate": "CO_OCCURS_WITH"
+    },
+    {
+      "a": 30,
+      "b": 36,
+      "predicate": "IS_ASKED_TO"
+    },
+    {
+      "a": 33,
+      "b": 36,
+      "predicate": "PERFORMS_ACTION"
+    },
+    {
+      "a": 20,
+      "b": 37,
+      "predicate": "CO_OCCURS_WITH"
+    },
+    {
+      "a": 22,
+      "b": 29,
+      "predicate": "IS_ASKED_TO"
+    },
+    {
+      "a": 25,
+      "b": 36,
+      "predicate": "PERFORMS_ACTION"
+    },
+    {
+      "a": 20,
+      "b": 34,
+      "predicate": "CO_OCCURS_WITH"
+    },
+    {
+      "a": 32,
+      "b": 36,
+      "predicate": "IS_ASKED_TO"
+    },
+    {
+      "a": 27,
+      "b": 36,
+      "predicate": "PERFORMS_ACTION"
+    },
+    {
+      "a": 20,
+      "b": 40,
+      "predicate": "CO_OCCURS_WITH"
+    },
+    {
+      "a": 28,
+      "b": 36,
+      "predicate": "IS_ASKED_TO"
+    },
+    {
+      "a": 31,
+      "b": 36,
+      "predicate": "PERFORMS_ACTION"
+    },
+    {
+      "a": 1,
+      "b": 21,
+      "predicate": "CO_OCCURS_WITH"
+    },
+    {
+      "a": 37,
+      "b": 36,
+      "predicate": "IS_ASKED_TO"
+    },
+    {
+      "a": 22,
+      "b": 29,
+      "predicate": "PERFORMS_ACTION"
+    },
+    {
+      "a": 1,
+      "b": 23,
+      "predicate": "CO_OCCURS_WITH"
+    },
+    {
+      "a": 33,
+      "b": 29,
+      "predicate": "IS_ASKED_TO"
+    },
+    {
+      "a": 35,
+      "b": 36,
+      "predicate": "PERFORMS_ACTION"
     }
   ]
 }

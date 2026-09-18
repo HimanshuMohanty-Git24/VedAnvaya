@@ -322,3 +322,144 @@ def check_rows(rows: list[EligibilityRow]) -> dict[str, Any]:
             and not unreasoned
         ),
     }
+
+
+# ---------------------------------------------------------------------------
+# GAP-ENTITY_COVERAGE-008: product consumer consistency
+# ---------------------------------------------------------------------------
+
+#: The Cypher the registry entry used to carry as its closure measure, kept verbatim because
+#: the replacement below is only defensible beside the thing it replaces.
+#:
+#: It asks whether the structure-based exclusion set and ``is_deity = false`` agree, and it
+#: returns 29 *by construction*: 28 ``ABSTRACT`` labels ruled ``NOT_DEITY`` that the structure
+#: predicate admits because ``ABSTRACT`` is not in its exclusion set, plus ``VG:DEVATA:SUNAH``
+#: -- the dog -- ruled ``DEITY`` on the recorded ground that excluding it for a structure of
+#: ``UNSPECIFIED`` rather than ``INDIVIDUAL`` would be excluding on a morphological accident.
+#: Driving it to 0 means overturning one of those two recorded curations to satisfy a metric.
+#:
+#: And the coincidence that hid it: the entry's closure *test* says "counts over it exclude the
+#: 29 non-deities", where that 29 is 22 ``HUMAN`` plus 7 ``PATRON_PRAISE`` -- the figure
+#: :func:`check_rows` gates as ``excludes_the_29``. Two unrelated quantities that both equal 29,
+#: one in the test and one in the measure, which is why a measure comparing the wrong two things
+#: read as though it were checking the test.
+SUPERSEDED_EQUALITY_MEASURE: Final = (
+    "MATCH (d:Devata) WHERE (coalesce(d.structure,'UNSPECIFIED') IN "
+    "['HUMAN','PATRON_PRAISE','UNSPECIFIED']) <> (d.is_deity = false) RETURN count(d)"
+)
+
+#: The replacement, per OWNER_DECISION_ENTITY_008_DEITY_MEMBERSHIP. Product Deity membership
+#: and source addressability-as-deity are not the same predicate, so they are not required to
+#: agree; what must hold is that every product surface reads the authoritative one.
+PRODUCT_CONSUMER_MEASURE: Final = (
+    "MATCH (d:Devata) WHERE d.is_deity IS NULL RETURN count(d)  "
+    "// + the static consumer scan in check_product_consumers()"
+)
+
+#: Modules permitted to mention a structure-based deity predicate, and why each one may.
+#:
+#: ``deity_population``  owns the contract and quotes the superseded clause in its own docstring
+#: ``deity_eligibility`` this module, which names the exclusion structures to READ the curation
+#: ``models/entity``     declares ``DEITY_STRUCTURES`` / ``NON_DEITY_STRUCTURES`` as vocabulary
+#: ``domain/queries``    counts structural SHAPE per axis (individual/pair/group), descriptive
+#:                       and reconciling to 214; it is not a membership filter
+#: ``domain/v3_loader``  selects PAIR/GROUP rows needing decomposition, a structural question
+#: ``entity_service``    validates a CLIENT-SUPPLIED ``structure`` filter against the known
+#:                       value space (``_validate_choice`` at one call site, and nothing else);
+#:                       rejecting an unknown query parameter is not deciding membership, and
+#:                       every membership read in that module goes through
+#:                       ``deity_structure_clause``
+_STRUCTURE_PREDICATE_ALLOWED_IN: Final[frozenset[str]] = frozenset(
+    {
+        "deity_population.py",
+        "deity_eligibility.py",
+        "entity.py",
+        "entity_service.py",
+        "queries.py",
+        "v3_loader.py",
+    }
+)
+
+#: Figures that were the deity population before the eligibility contract landed. A product
+#: surface still publishing one of these as a deity count is a stale consumer, which is clause
+#: 5 of the owner decision.
+SUPERSEDED_POPULATION_FIGURES: Final[tuple[int, ...]] = (184, 192)
+
+
+def check_product_consumers(session: Session) -> dict[str, Any]:
+    """PRODUCT CONSUMER CONSISTENCY: the closure measure for GAP-ENTITY_COVERAGE-008.
+
+    Not predicate equality. The two predicates are intentionally different and the owner
+    decision says so; asking them to agree is asking the curation to be overturned. What this
+    measures instead is that the product only ever reads the authoritative one.
+
+    ``every_node_ruled``
+        ``d.is_deity`` is populated on every ``:Devata``. The clause fails closed, so an
+        unruled node is silently excluded from every deity surface -- a shrinking pantheon
+        with no response saying so.
+    ``divergence_is_explained``
+        every node the two predicates disagree about carries a recorded ruling AND a recorded
+        reason. This is what makes the divergence a documented decision rather than a defect:
+        an unexplained disagreement fails even though the count itself is allowed.
+    ``authoritative_population``
+        the published figure, from ``ELIGIBLE_DEITY_PREDICATE``.
+    ``source_predicate_population``
+        what the structure predicate would have published. Reported, never consumed, so the
+        gap between them stays visible rather than being argued about.
+
+    The static half -- that no consumer outside :data:`_STRUCTURE_PREDICATE_ALLOWED_IN`
+    substitutes the source predicate, and that no surface still publishes 184 or 192 -- is in
+    ``tests/api/test_deity_population.py``, because it is a fact about the source tree and not
+    about the graph.
+    """
+    row = session.run(
+        f"""
+        MATCH (d:Devata)
+        RETURN count(d) AS devata_nodes,
+               sum(CASE WHEN {ELIGIBLE_DEITY_PREDICATE} THEN 1 ELSE 0 END)
+                 AS authoritative_population,
+               sum(CASE WHEN d.is_deity IS NULL THEN 1 ELSE 0 END) AS unruled,
+               sum(CASE WHEN NOT coalesce(d.structure,'UNSPECIFIED')
+                            IN ['HUMAN','PATRON_PRAISE','UNSPECIFIED']
+                        THEN 1 ELSE 0 END) AS source_predicate_population
+        """
+    ).single()
+    divergent = [
+        dict(record)
+        for record in session.run(
+            """
+            MATCH (d:Devata)
+            WHERE (coalesce(d.structure,'UNSPECIFIED') IN ['HUMAN','PATRON_PRAISE','UNSPECIFIED'])
+                  <> (d.is_deity = false)
+            RETURN d.entity_key AS entity_key, d.display_label AS display_label,
+                   d.structure AS structure, d.is_deity AS is_deity,
+                   d.deity_eligibility_ruling AS ruling,
+                   d.deity_eligibility_reason AS reason
+            ORDER BY d.structure, d.entity_key
+            """
+        )
+    ]
+    unexplained = sorted(
+        str(item["entity_key"])
+        for item in divergent
+        if not item.get("ruling") or not item.get("reason")
+    )
+    by_direction: dict[str, int] = {}
+    for item in divergent:
+        key = f"{item['structure']}|is_deity={item['is_deity']}|{item['ruling']}"
+        by_direction[key] = by_direction.get(key, 0) + 1
+    return {
+        "contract_version": CONTRACT_VERSION,
+        "authoritative_predicate": ELIGIBLE_DEITY_PREDICATE,
+        "devata_nodes": int(row["devata_nodes"]),
+        "authoritative_population": int(row["authoritative_population"]),
+        "source_predicate_population": int(row["source_predicate_population"]),
+        "unruled": int(row["unruled"]),
+        "every_node_ruled": int(row["unruled"]) == 0,
+        "documented_intentional_divergence": len(divergent),
+        "divergence_by_direction": dict(sorted(by_direction.items())),
+        "divergence_is_explained": not unexplained,
+        "nodes_diverging_without_a_recorded_reason": unexplained,
+        "superseded_equality_measure": SUPERSEDED_EQUALITY_MEASURE,
+        "passes": int(row["unruled"]) == 0 and not unexplained,
+    }

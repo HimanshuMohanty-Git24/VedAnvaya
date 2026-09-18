@@ -1,0 +1,37 @@
+{
+  "artifact": "RELEASE_BLOCKER_R3_MUTATION_RECEIPT_ASSERTION_PREDICATE_DERIVATION",
+  "at": "2026-09-18T05:49:06.723727+00:00",
+  "plan_sha256": "769ed3a3a28e07dcdc4cb1a5b9a03e7a44bff06952f99995de1d9b6e31a160a5",
+  "promised": {
+    "edges_written": 30266,
+    "by_derivation": {
+      "CROSS_VEDA_TEXT_IDENTITY": 364,
+      "MORPHOLOGY_RULE_PREDICATE_ONLY": 28370,
+      "TREEBANK_DEPREL": 1532
+    },
+    "edges_ungraded_after": 0,
+    "nodes_delta": 0,
+    "relationships_delta": 0,
+    "tiers_touched": 0
+  },
+  "actual": {
+    "edges_written": 30266,
+    "edges_ungraded_after": 0,
+    "nodes_delta": 0,
+    "relationships_delta": 0
+  },
+  "after": {
+    "nodes": 164201,
+    "relationships": 508042,
+    "ungraded_after": 0,
+    "edge_derivation_census": {
+      "MORPHOLOGY_RULE|TIER_B": 2406,
+      "CROSS_VEDA_TEXT_IDENTITY|TIER_B": 364,
+      "MORPHOLOGY_RULE_PREDICATE_ONLY|TIER_B": 28370,
+      "TREEBANK_DEPREL|TIER_B": 1532,
+      "MODEL_EXTRACTION|TIER_D": 266
+    },
+    "edge_node_derivation_disagreements": 0
+  },
+  "promised_equals_actual": true
+}

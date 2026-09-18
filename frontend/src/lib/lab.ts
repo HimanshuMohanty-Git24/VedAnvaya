@@ -109,7 +109,7 @@ export const PLATES: Plate[] = [
         summary:
             "Every corpus pair against every kind of textual relationship, with the empty cells typed rather than drawn as zeroes, and then the Rigveda-to-Samaveda reuse itself, verse by verse.",
         caution:
-            "Directed reuse — one verse carrying another's wording, in that direction — was established for one corpus pair. A pair without it is an unmeasured pair.",
+            "Directed reuse — one verse carrying another's wording, in that direction — was established for some corpus pairs and not others; the plate names which. A pair without it is an unmeasured pair.",
         reads: "Parallel layer, directed reuse edges, variant layer, formula mediation, shared-vocabulary layer",
         label: {
             measures:
@@ -119,7 +119,7 @@ export const PLATES: Plate[] = [
             excluded:
                 "Generic similarity. There is no single similarity score here, because the eight classes are not degrees of one measure.",
             notInfer:
-                "That an empty cell means the two collections share nothing. Twelve of the 48 cells are NOT_BUILT and five were never established for that pair, and those are facts about the graph.",
+                "That an empty cell means the two collections share nothing. Most of the 48 cells are not a measurement — some were never built, some hold a relationship class that cannot enter a corpus pair at all, and some were measured and came back zero. Each cell prints which it is, and those are facts about the graph rather than about the texts.",
         },
     },
     {
@@ -140,7 +140,7 @@ export const PLATES: Plate[] = [
             excluded:
                 "Wording shared by meaning rather than by letters. No semantic resemblance measure exists in this graph.",
             notInfer:
-                "That a family crossing four collections proves one borrowed from another. The census records co-occurrence of a wording, and direction is only established separately, for one pair.",
+                "That a family crossing four collections proves one borrowed from another. The census records co-occurrence of a wording; direction is established separately and only for some corpus pairs.",
         },
     },
     {

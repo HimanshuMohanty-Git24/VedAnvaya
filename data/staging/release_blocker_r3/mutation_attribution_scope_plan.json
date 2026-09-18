@@ -1,0 +1,31 @@
+{
+  "artifact": "RELEASE_BLOCKER_R3_MUTATION_PLAN_ATTRIBUTION_SCOPE",
+  "at": "2026-09-18T06:05:01.968873+00:00",
+  "gap_id": "GAP-ATTRIBUTION-002",
+  "clause": "clause 2, node side -- AV must appear in the dedication scope with its method stated",
+  "operation": "SET attribution_scope (measured, per node) and attribution_scope_note on :Devata",
+  "generator_corrected": "src/vedagraph/domain/taxonomy.py",
+  "promised": {
+    "nodes_written": 214,
+    "scope_distribution": {
+      "RV": 179,
+      "RV|AV": 35
+    },
+    "nodes_gaining_AV": 35,
+    "distinct_notes_after": 1,
+    "nodes_delta": 0,
+    "relationships_delta": 0
+  },
+  "note_sha256": "8b8c13ba8819106cf45e6f87b939f9bc5e66ab3f573cda98bb49cd7a02ef98ce",
+  "note_length": 1222,
+  "previous_scope_was": [
+    "RV"
+  ],
+  "reversal": "data/staging/release_blocker_r3/attribution_scope_backup.jsonl holds the prior scope and note for all 214 nodes.",
+  "never_changed": [
+    "entity_key",
+    "structure",
+    "is_deity",
+    "deity_eligibility_ruling"
+  ]
+}
