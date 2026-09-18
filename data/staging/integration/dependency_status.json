@@ -1,6 +1,6 @@
 {
   "artifact": "DEPENDENCY_STATUS",
-  "at": "2026-09-17T16:24:42.347177+00:00",
+  "at": "2026-09-18T04:57:09.637957+00:00",
   "graph_census": {
     "nodes": 164201,
     "relationships": 508042
@@ -124,10 +124,10 @@
         "frontend/public/world/world.json",
         "frontend/public/world/world.labels.json"
       ],
-      "built_at": "2026-09-17T15:34:57.668113+00:00",
+      "built_at": "2026-09-18T04:01:59.498013+00:00",
       "rebuilt_by": "scripts/export_graph_world.py and the metrics build",
-      "current_input_digest": "62ba570768ae7bac95fd0a7c3bfb2e8038448904f54a90872ac4d356a0a6fdb9",
-      "recorded_input_digest": "62ba570768ae7bac95fd0a7c3bfb2e8038448904f54a90872ac4d356a0a6fdb9"
+      "current_input_digest": "015bc4fc1d01a2cd5135a43bd9f36532a55681afb5cfa97e1f60f3d71f4991c6",
+      "recorded_input_digest": "015bc4fc1d01a2cd5135a43bd9f36532a55681afb5cfa97e1f60f3d71f4991c6"
     },
     {
       "consumer": "Knowledge World public projection",
@@ -141,10 +141,10 @@
         "frontend/.world/world.raw.json",
         "frontend/public/world/world.predicates.json"
       ],
-      "built_at": "2026-09-17T16:23:34.895078+00:00",
+      "built_at": "2026-09-18T04:02:04.759319+00:00",
       "rebuilt_by": "scripts/export_graph_world.py",
-      "current_input_digest": "86f72f93d0d5be70e60909160777ecabf5fb0eccff89aacb7cc838abe0405278",
-      "recorded_input_digest": "86f72f93d0d5be70e60909160777ecabf5fb0eccff89aacb7cc838abe0405278"
+      "current_input_digest": "eb4e2d408ed7a30c8b109eb88c638434696045a34c8b7a6806d3d3256d15ab19",
+      "recorded_input_digest": "eb4e2d408ed7a30c8b109eb88c638434696045a34c8b7a6806d3d3256d15ab19"
     }
   ],
   "counts": {

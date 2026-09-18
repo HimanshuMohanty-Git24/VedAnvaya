@@ -577,10 +577,17 @@ class AssertionModality(StrEnum):
 
 
 class AgentiveAssertionView(ApiModel):
-    """One agent-predicate-target assertion, from the Rigveda-only agentive layer.
+    """One agent-predicate-target assertion from the semantic assertion layer.
 
-    All 4,865 ``SemanticAssertion`` nodes hang off Rigvedic passages. A Yajurvedic verse
-    returning none of these is outside the layer, which is why the set carries a status.
+    This said "the Rigveda-only agentive layer" and "all 4,865 ``SemanticAssertion`` nodes
+    hang off Rigvedic passages". Both were true of an earlier state and are now false: the
+    layer holds 35,131 assertions and reaches all four corpora -- RV 27,057, AV 6,167,
+    YV 1,543, SV 364. A Yajurvedic verse returning none of these is a verse the layer did
+    not reach, not a corpus outside it, which is why the set carries a status.
+
+    What remains Rigveda-only is the *agentive* reading: 2,502 assertions over 2,254
+    Rigvedic passages carry an ``ASSERTION_AGENT``, because that reading is derived from a
+    morphological annotation covering the Rigveda alone.
 
     **The layer is two layers and they do not share their vocabulary.** The 2,406
     deterministic assertions carry ``frame`` (ASSERTED or REQUESTED), ``verb_surface`` and
@@ -629,6 +636,14 @@ class AgentiveAssertionView(ApiModel):
     quality_tier: str | None = None
     evidence_basis: str | None = None
     knowledge_layer: str | None = None
+    cautions: list[str] = Field(
+        default_factory=list,
+        description="Caution codes the assertion node carries, verbatim. The load-bearing "
+        "one is ANALYSIS_IS_OF_A_LETTER_IDENTICAL_RIGVEDIC_VERSE_NOT_OF_A_SAMAVEDIC_"
+        "ANNOTATION, on all 364 Samavedic assertions: the reading was carried across on "
+        "textual identity and is not an analysis of the verse in its own collection. The "
+        "graph has recorded this since the layer was built and this field is what reads it.",
+    )
 
     @model_validator(mode="after")
     def _absent_modality_must_be_typed(self) -> Self:

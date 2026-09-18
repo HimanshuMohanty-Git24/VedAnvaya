@@ -132,7 +132,17 @@ def test_the_shipped_capability_query_uses_the_documented_predicate() -> None:
     # Whitespace-normalised: the query line-wraps the predicate, and a test that demanded
     # one physical line would be testing the formatter.
     flat = " ".join(query.cypher.split())
-    assert eligibility.eligible_predicate("d") in flat
+    # The FINAL predicate, not the transitional shim. This asserted
+    # ``eligible_predicate("d")``, which falls back to a structure test when ``is_deity`` is
+    # null -- correct while the property was landing, and a second eligibility predicate
+    # once it had landed. The module states its own removal condition: when no :Devata has
+    # a null is_deity, use ELIGIBLE_DEITY_PREDICATE. Measured 214 of 214 ruled, 0 unruled,
+    # so the condition is met and the shim is gone from every shipped query.
+    assert eligibility.ELIGIBLE_DEITY_PREDICATE in flat
+    assert "NOT coalesce(d.structure" not in flat, (
+        "the transitional shim is back in a shipped query; that is a second eligibility "
+        "predicate, which is the whole of GAP-ENTITY_COVERAGE-008"
+    )
     assert "structure, 'UNSPECIFIED') <> 'HUMAN'" not in query.cypher
     assert "157" in query.caveat, "the caveat must state the figure the predicate produces"
     assert "192" in query.caveat, "and the figure it replaces, or nobody can tell it moved"
@@ -149,24 +159,30 @@ def test_the_shim_never_reads_a_property_the_graph_may_not_hold() -> None:
     this change reproduced it: ``/api/v1/insights/capabilities?question=23`` returned a null
     ``pairwise_co_occurrence_edges`` because the whole row disappeared.
 
-    BAD: the bare end-state predicate. GOOD: the convergent one, which reads the ruling
-    where it exists and the curated structure where it does not, and reaches the same value
-    once the ruling lands.
+    The shim is GONE, and this test now guards its absence rather than its behaviour. Its
+    own removal condition -- no :Devata with a null ``is_deity`` -- has been met (214 of 214
+    ruled), and while it remained it was a second eligibility predicate disagreeing with the
+    ruling on 29 of the 214 nodes.
+
+    What is still asserted is the part that made the shim necessary: the ruling must cover
+    every node, so that gating on ``is_deity = true`` cannot silently empty a result.
     """
-    shim = eligibility.eligible_predicate("d")
-    assert "coalesce(d.is_deity" in shim
-    assert "'HUMAN', 'PATRON_PRAISE'" in shim
-    assert shim != eligibility.ELIGIBLE_DEITY_PREDICATE
+    assert not hasattr(eligibility, "eligible_predicate"), (
+        "the transitional shim is back. Its fallback admits the 28 abstractions ruled "
+        "ABSTRACTION_NOT_AN_ADDRESSEE and excludes the dog the ruling admits, so a query "
+        "using it disagrees with every deity surface on 29 of the 214 nodes."
+    )
 
     rows = eligibility.rulings_for(_devatas(), dict(_RULINGS))
     ruled = {row.entity_key: row.is_deity for row in rows}
-    # Pre-landing, the shim's fallback keeps the ABSTRACT labels and drops the 29 curated
-    # non-members; post-landing the ruling overrides it. The two agree on everything the
-    # ruling does not touch, which is what "convergent" has to mean to be safe.
+    # The precondition the shim existed to cover: every node carries a ruling, so nothing
+    # falls through to a null and disappears from a WHERE.
+    assert set(ruled) == set(_STRUCTURES), (
+        "a devata-slot entry carries no ruling, so `is_deity = true` would drop it silently"
+    )
     for key, structure in _STRUCTURES.items():
-        fallback = structure not in ("HUMAN", "PATRON_PRAISE")
-        if structure not in eligibility.RULED_STRUCTURES:
-            assert ruled[key] == fallback, key
+        if structure in ("HUMAN", "PATRON_PRAISE"):
+            assert ruled[key] is False, key
 
 
 def test_the_real_ruling_file_is_the_one_copy_of_the_judgement() -> None:

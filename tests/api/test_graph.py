@@ -49,6 +49,8 @@ from vedagraph.api.services.graph_service import (
     encode_relationship_id,
 )
 
+from vedagraph.domain.ontology import LABEL_SEMANTIC_ASSERTION
+
 INDRA = "VG:DEVATA:INDRAH"
 AGNI = "VG:DEVATA:AGNIH"
 RV_FIRST = "VG:RV:SAK:M01:S001:V001"
@@ -57,7 +59,11 @@ ALTAR = "VG:CONCEPT:VEDI-ALTAR"
 GAYATRI = "VG:CHANDAS:GAYATRI"
 VISVA_BHUVANA = "VG:ENRICH:FORMULA-FAMILY:709faeaecdc5a79716fa565ce0a051f0"
 #: The one UNSPECIFIED entry in the Anukramani's devata slot. It is a dog.
+#: A DEITY under the recorded ruling -- see tests/api/test_devatas.py. Retained as the
+#: example of a subject the superseded structure predicate wrongly refused.
 THE_DOG = "VG:DEVATA:SUNAH"
+#: A ruled non-deity: ABSTRACTION_NOT_AN_ADDRESSEE, the class the old predicate admitted.
+AN_ABSTRACTION = "VG:DEVATA:BHAVAVRTTAM"
 #: A HUMAN entry and a PATRON_PRAISE entry, both with real traversable degree, so both
 #: can be reached as a root and as a neighbour rather than only looked up directly.
 VASISTHA_THE_PATRON = "VG:DEVATA:VASISTHAH"
@@ -569,6 +575,49 @@ class TestLiveInvariants:
             f"a node type has no product type name and would fall back to a derived one: "
             f"{sorted(missing)}"
         )
+
+    def test_semantic_assertion_carries_one_display_type_spelling(
+        self, live_repository: Neo4jRepository
+    ) -> None:
+        """One graph type, one product route. It was two.
+
+        4,865 :SemanticAssertion nodes carried display_type "SemanticAssertion" from the
+        domain builders and 30,266 carried "SEMANTIC_ASSERTION" from a stabilisation
+        backfill that chose a spelling declared in no ontology module. Both were mapped to
+        the same product type here, which hid the split from the API and not from anything
+        else: the public export ships display_type verbatim as the node's ``type``, and
+        ``world-groups.json`` maps the label spelling only -- so the browser world drew
+        30,266 of them as "other" and the other 4,865 as "record".
+
+        The authoritative value is asserted against the ontology constant rather than a
+        literal, so renaming the label moves this test with it.
+        """
+        rows = live_repository.run(
+            "MATCH (a:SemanticAssertion) RETURN a.display_type AS display_type, "
+            "count(*) AS n"
+        )
+        spellings = {row["display_type"]: row["n"] for row in rows}
+        assert list(spellings) == [LABEL_SEMANTIC_ASSERTION], (
+            f"one graph type is being served under {len(spellings)} product names: {spellings}"
+        )
+        assert spellings[LABEL_SEMANTIC_ASSERTION] > 0
+        assert "SEMANTIC_ASSERTION" not in spellings
+
+    def test_every_display_type_maps_to_exactly_one_product_type(self) -> None:
+        """Two display_type keys may not collapse onto one product type name.
+
+        That collapse is what let the split ship: mapping both spellings to
+        SEMANTIC_ASSERTION made the API look consistent while the graph, the export and the
+        browser world stayed inconsistent. A duplicate here is either a real synonym --
+        which belongs in the graph, normalised -- or the same defect returning.
+        """
+        seen: dict[str, str] = {}
+        duplicates: list[str] = []
+        for display_type, product_type in PRODUCT_TYPE_BY_DISPLAY_TYPE.items():
+            if product_type in seen:
+                duplicates.append(f"{seen[product_type]} and {display_type} -> {product_type}")
+            seen[product_type] = display_type
+        assert not duplicates, f"one product type served under two display_type keys: {duplicates}"
 
     def test_the_hub_ceiling_still_sits_above_every_subject_class(
         self, live_repository: Neo4jRepository
@@ -1197,7 +1246,7 @@ class TestNonDeitySubjects:
     ``entity_service.subject_disclosure`` and nothing here re-implements it.
     """
 
-    @pytest.mark.parametrize("node_id", [THE_DOG, VASISTHA_THE_PATRON, GIFT_PRAISE])
+    @pytest.mark.parametrize("node_id", [AN_ABSTRACTION, VASISTHA_THE_PATRON, GIFT_PRAISE])
     def test_a_non_deity_root_is_flagged_and_caveated(
         self, live_client: TestClient, node_id: str
     ) -> None:
@@ -1209,10 +1258,12 @@ class TestNonDeitySubjects:
         # and a graph endpoint inventing a different type would make following an EntityRef
         # change a node's type.
         assert body["root"]["type"] == "DEVATA"
-        assert body["root"]["metadata"]["structure"] in {
-            "HUMAN",
-            "PATRON_PRAISE",
-            "UNSPECIFIED",
+        # The ruling, not the structure: ABSTRACT is the class the superseded structure
+        # predicate admitted, so a structure allowlist here would have missed all 28.
+        assert body["root"]["metadata"]["non_deity_kind"] in {
+            "HUMAN_PATRON",
+            "DANASTUTI_GIFT_PRAISE",
+            "ABSTRACTION_NOT_AN_ADDRESSEE",
         }
         assert "THIS SUBJECT IS NOT A DEITY" in body["caveats"][0]["text"], (
             "the disclosure must come first; a reader who stops after one caveat must not "
@@ -1233,9 +1284,18 @@ class TestNonDeitySubjects:
             subject_disclosure,
         )
 
-        expected = subject_disclosure("UNSPECIFIED")[1][0].text
-        assert expected == NOT_A_DEITY_SUBJECT.format(structure="UNSPECIFIED")
-        body = live_client.get(f"/api/v1/graph/neighborhood/{THE_DOG}").json()
+        from vedagraph.api.services.deity_population import DevataSubject
+
+        subject = DevataSubject(
+            structure="ABSTRACT",
+            is_deity=False,
+            non_deity_kind="ABSTRACTION_NOT_AN_ADDRESSEE",
+        )
+        expected = subject_disclosure(subject)[1][0].text
+        assert expected == NOT_A_DEITY_SUBJECT.format(
+            structure="ABSTRACT", kind="ABSTRACTION_NOT_AN_ADDRESSEE"
+        )
+        body = live_client.get(f"/api/v1/graph/neighborhood/{AN_ABSTRACTION}").json()
         assert body["caveats"][0]["text"] == expected
 
     def test_a_real_deity_is_not_flagged_and_carries_no_disclosure(
@@ -1286,10 +1346,15 @@ class TestNonDeitySubjects:
     def test_a_path_touching_a_non_deity_discloses_it(self, live_client: TestClient) -> None:
         body = live_client.get(
             "/api/v1/graph/path",
-            params={"from": THE_DOG, "to": "VG:CONCEPT:SOMA-DRINK", "max_depth": 4},
+            params={"from": AN_ABSTRACTION, "to": "VG:CONCEPT:SOMA-DRINK", "max_depth": 4},
         ).json()
         assert body["source"]["is_deity"] is False
-        assert "THIS SUBJECT IS NOT A DEITY" in body["caveats"][0]["text"]
+        # Present, not necessarily first: a hub-mediated path puts its own routing caveat
+        # ahead of the disclosure. That the disclosure leads on a *root* payload is
+        # asserted by test_a_non_deity_root_is_flagged_and_caveated.
+        assert any(
+            "THIS SUBJECT IS NOT A DEITY" in caveat["text"] for caveat in body["caveats"]
+        )
 
     def test_a_path_between_two_non_deities_names_both(self, live_client: TestClient) -> None:
         body = live_client.get(
@@ -1307,9 +1372,32 @@ class TestNonDeitySubjects:
             "number agreement: two subjects take the plural reading"
         )
 
-    def test_the_singular_reading_is_used_for_one_subject(self, live_client: TestClient) -> None:
-        body = live_client.get(f"/api/v1/graph/neighborhood/{THE_DOG}").json()
-        naming = next(caveat for caveat in body["caveats"] if "devata-slot entry" in caveat["text"])
+    def test_the_singular_reading_is_used_for_one_subject(
+        self, live_client: TestClient, live_repository: Neo4jRepository
+    ) -> None:
+        # The subject is FOUND, not skipped. An earlier version of this test picked one
+        # exemplar and skipped when its payload held two non-deities, which turned the
+        # singular-number assertion off entirely -- invisible in a passed/failed count.
+        # 55 of the 57 ruled non-deities yield exactly one, so the singular case is found
+        # by looking rather than hoped for, and it fails if NONE of them is singular.
+        singular = None
+        for row in live_repository.run(
+            "MATCH (d:Devata) WHERE d.is_deity = false RETURN d.entity_key AS key "
+            "ORDER BY d.entity_key"
+        ):
+            body = live_client.get(
+                f"/api/v1/graph/neighborhood/{row['key']}", params={"limit_per_type": 1}
+            ).json()
+            if len([n for n in body["nodes"] if n["is_deity"] is False]) == 1:
+                singular = body
+                break
+        assert singular is not None, (
+            "no ruled non-deity yields a payload with exactly one, so the singular reading "
+            "of the caveat is now unreachable and untested"
+        )
+        naming = next(
+            caveat for caveat in singular["caveats"] if "devata-slot entry" in caveat["text"]
+        )
         assert "is a devata-slot entry that is NOT a deity" in naming["text"]
 
     def test_an_explanation_of_an_edge_touching_a_non_deity_discloses_it(
@@ -1332,7 +1420,7 @@ class TestNonDeitySubjects:
         population=all_ascriptions was requested", which is true of the deity routes and
         false here: these endpoints have no such parameter and resolve whatever id they are
         given. The adjacent sentence corrects the scope rather than forking the template."""
-        body = live_client.get(f"/api/v1/graph/neighborhood/{THE_DOG}").json()
+        body = live_client.get(f"/api/v1/graph/neighborhood/{AN_ABSTRACTION}").json()
         text = " ".join(caveat["text"] for caveat in body["caveats"])
         assert "has no `population` parameter" in text
         assert "population" not in " ".join(
@@ -1342,18 +1430,16 @@ class TestNonDeitySubjects:
             .get("parameters", [])
         )
 
-    def test_all_thirty_non_deity_subjects_are_flagged(
+    def test_all_ruled_non_deity_subjects_are_flagged(
         self, live_client: TestClient, live_repository: Neo4jRepository
     ) -> None:
         """Per subject, not per sample. This project has twice certified an absence from a
         sample that happened to miss the failing rows."""
         rows = live_repository.run(
-            "MATCH (d:Devata) "
-            "WHERE coalesce(d.structure, 'UNSPECIFIED') IN "
-            "  ['HUMAN', 'PATRON_PRAISE', 'UNSPECIFIED'] "
+            "MATCH (d:Devata) WHERE d.is_deity = false "
             "RETURN d.entity_key AS key ORDER BY d.entity_key"
         )
-        assert len(rows) == 30, f"the non-deity population moved: {len(rows)}"
+        assert len(rows) == 57, f"the non-deity population moved: {len(rows)}"
         for row in rows:
             body = live_client.get(f"/api/v1/graph/neighborhood/{row['key']}").json()
             assert body["root"]["is_deity"] is False, row["key"]
@@ -1365,13 +1451,15 @@ class TestNonDeitySubjects:
         """The other half of the partition, so a change that flagged everything as a
         non-deity would fail rather than look like a clean pass."""
         rows = live_repository.run(
-            "MATCH (d:Devata) "
-            "WHERE coalesce(d.structure, 'UNSPECIFIED') IN "
-            "  ['INDIVIDUAL', 'PAIR', 'GROUP', 'ABSTRACT'] "
+            "MATCH (d:Devata) WHERE d.is_deity = true "
             "RETURN d.entity_key AS key ORDER BY d.entity_key LIMIT 25"
         )
         assert len(rows) == 25
         for row in rows:
             body = live_client.get(f"/api/v1/graph/neighborhood/{row['key']}").json()
             assert body["root"]["is_deity"] is True, row["key"]
-            assert not any("NOT A DEITY" in c["text"] for c in body["caveats"]), row["key"]
+            # The disclosure may still appear -- a deity's neighbourhood can contain a
+            # ruled non-deity, and naming it is the point. What must never happen is the
+            # ROOT being named as one.
+            named = [c["text"] for c in body["caveats"] if "NOT deities" in c["text"] or "NOT a deity" in c["text"]]
+            assert not any(row["key"] in text for text in named), row["key"]

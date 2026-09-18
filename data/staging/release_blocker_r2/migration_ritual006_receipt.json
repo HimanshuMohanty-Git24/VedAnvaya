@@ -1,0 +1,41 @@
+{
+  "artifact": "R2_GAP_RITUAL_006_METHOD_LANDING_RECEIPT",
+  "at": "2026-09-17T17:47:21.885853+00:00",
+  "gap_id": "GAP-RITUAL-006",
+  "promised": {
+    "method_writes": 20210,
+    "citation_writes": 1903,
+    "rival_writes": 7769,
+    "nodes_created": 0,
+    "nodes_deleted": 0,
+    "relationships_created": 0,
+    "relationships_deleted": 0
+  },
+  "actual": {
+    "method_writes": 20210,
+    "citation_writes": 1903,
+    "rival_writes": 7769
+  },
+  "actual_equals_promised": true,
+  "readback": {
+    "method_present": 20210,
+    "citation_present": 1903,
+    "rival_present": 7769,
+    "method_values": {
+      "EXTERNAL_RITUAL_CITATION": 20210
+    }
+  },
+  "census_before": {
+    "nodes": 164201,
+    "relationships": 508042,
+    "core_corpus_total": 20210,
+    "derived_metric": 1085
+  },
+  "census_after": {
+    "nodes": 164201,
+    "relationships": 508042,
+    "core_corpus_total": 20210,
+    "derived_metric": 1085
+  },
+  "contract_satisfied": true
+}

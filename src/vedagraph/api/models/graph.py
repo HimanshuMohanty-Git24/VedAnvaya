@@ -115,9 +115,12 @@ class GraphNodeView(ApiModel):
     A copy-everything projection would have shipped every one of them.
 
     **``type: "DEVATA"`` does not mean the thing is a god, and :attr:`is_deity` is why this
-    model can say so.** The Anukramani names a *devata* for every hymn and 30 of the 214
+    model can say so.** The Anukramani names a *devata* for every hymn and 57 of the 214
     entries are not deities: 22 human patrons and seers, 7 labels naming a gift rather than
-    a recipient, and one dog. The frozen graph labels all of them ``:Devata``, so a generic
+    a recipient, and 28 abstractions ruled not to name an addressee. The dog is NOT among
+    them -- it is a deified animal beside thirteen others in the population, and excluding
+    it for carrying structure UNSPECIFIED was the morphological accident the eligibility
+    ruling names. The frozen graph labels all of them ``:Devata``, so a generic
     graph explorer -- whose job is to show what is connected to an arbitrary node -- will
     resolve one sooner or later, and eight of them carry real traversable degree.
 
@@ -138,8 +141,8 @@ class GraphNodeView(ApiModel):
         description="For a node in the Anukramani's devata slot, whether it is actually a "
         "god. Null for everything else, because the question does not apply to a metre or "
         "a formula and false would answer it. False means the slot holds a human patron, "
-        "praise of a gift, or the one dog -- do not render it as a deity, whatever `type` "
-        "says.",
+        "praise of a gift, or an abstraction ruled not to name an addressee -- do not "
+        "render it as a deity, whatever `type` says.",
     )
     metadata: dict[str, Any] = Field(
         default_factory=dict,

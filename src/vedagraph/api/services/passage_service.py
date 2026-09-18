@@ -335,8 +335,15 @@ _LAYER_SPECS: Final[tuple[LayerSpec, ...]] = (
     LayerSpec(
         "AGENTIVE_ASSERTION",
         "HAS_SEMANTIC_ASSERTION",
-        "Rigveda only. Who does what to whom is derived from the Rigveda-only lemma "
-        "annotation, so the other three corpora are absent from it entirely.",
+        # This said "Rigveda only ... the other three corpora are absent from it entirely"
+        # while the same route reported 6,167 edges over 3,295 Atharvavedic passages in the
+        # cell beside it. The note described the ASSERTION_AGENT sub-layer and the figure
+        # measured HAS_SEMANTIC_ASSERTION, which is a different and much larger population.
+        "Reaches all four corpora unevenly -- RV 27,057 assertions, AV 6,167, YV 1,543, "
+        "SV 364 -- and the agentive reading inside it does not. Only 2,502 assertions over "
+        "2,254 Rigvedic passages carry an agent, so 'who does what to whom' is Rigveda-only "
+        "even where the layer is not, and the Samavedic 364 are projected from "
+        "letter-identical Rigvedic verses rather than annotated in their own corpus.",
     ),
     LayerSpec(
         "CONCEPT_ASSERTION",
@@ -923,6 +930,11 @@ CALL (p) {
         quality_tier: a.quality_tier, evidence_basis: a.evidence_basis,
         attribution_precision: a.attribution_precision,
         knowledge_layer: a.knowledge_layer,
+        // The node's own cautions. All 364 Samavedic assertions carry
+        // ANALYSIS_IS_OF_A_LETTER_IDENTICAL_RIGVEDIC_VERSE_NOT_OF_A_SAMAVEDIC_ANNOTATION
+        // and this projection did not read it, so the route served a Samavedic verse its
+        // own semantic reading with no indication the analysis is of a Rigvedic one.
+        cautions: a.cautions,
         agent: CASE WHEN agent IS NULL THEN NULL ELSE
             {type: 'DEVATA', id: agent.entity_key, display_label: agent.display_label}
         END,
@@ -2951,10 +2963,12 @@ class PassageService:
     def _assertion_set(
         rows: object, total: object, passage: PassageSummary
     ) -> AttestedSet[AgentiveAssertionView]:
-        """The agentive layer, whose absence outside the Rigveda is the layer's shape.
+        """The assertion layer, whose unevenness across the four corpora is its shape.
 
-        All 4,865 assertions hang off Rigvedic passages, so an empty set for the other
-        three corpora is ``NOT_BUILT`` and carries the frozen action-scope caveat.
+        This said all 4,865 assertions hang off Rigvedic passages. The layer holds 35,131
+        and reaches AV, YV and SV as well, so an empty set is a verse the layer did not
+        reach rather than a corpus outside it. The Rigveda-only claim survives one level
+        down, on the agentive reading, and the caveat carries it there.
         """
         items: list[AgentiveAssertionView] = []
         for item in rows if isinstance(rows, list) else []:
@@ -2983,6 +2997,10 @@ class PassageService:
                     quality_tier=_nonempty(item.get("quality_tier")),
                     evidence_basis=_nonempty(item.get("evidence_basis")),
                     knowledge_layer=_nonempty(item.get("knowledge_layer")),
+                    cautions=[
+                        str(c) for c in (item.get("cautions") or [])
+                        if isinstance(c, str) and c
+                    ],
                 )
             )
         if items:
@@ -2993,6 +3011,16 @@ class PassageService:
             caveats = (
                 [CaveatView(text=_MODALITY_ABSENT_NOTE, source="measured")] if without_frame else []
             )
+            # Every caution the rows themselves carry, surfaced once per distinct code. The
+            # graph records these on 30,266 assertions -- among them
+            # ANALYSIS_IS_OF_A_LETTER_IDENTICAL_RIGVEDIC_VERSE_NOT_OF_A_SAMAVEDIC_ANNOTATION
+            # on all 364 Samavedic rows -- and this route dropped every one of them. A
+            # Samavedic verse was served its own semantic reading with quality_tier,
+            # evidence_basis and knowledge_layer all null and nothing at all to say the
+            # analysis is of a Rigvedic verse. The translation layer discloses its Rigvedic
+            # reuse; this layer had the same fact on the node and was not reading it.
+            for code in sorted({c for item in items for c in item.cautions}):
+                caveats.append(CaveatView(text=_caution_sentence(code), source="measured"))
             return AttestedSet[AgentiveAssertionView](
                 items=items, total=_as_int(total) or len(items), caveats=caveats
             )
@@ -3000,31 +3028,101 @@ class PassageService:
             items=[],
             total=0,
             data_status=KnowledgeStatus.NOT_BUILT,
+            # In scope for all four. The layer reaches AV, YV and SV -- this very route
+            # serves their assertions -- so declaring three corpora "not covered" told a
+            # reader an empty set was a missing layer when it is a verse the layer did not
+            # reach. What IS Rigveda-only is the agentive sub-layer, and the caveat says so.
             coverage=CoverageView(
-                vedas_in_scope=["RV"],
-                vedas_not_covered=[veda for veda in layer_figures.CORPUS_MANTRAS if veda != "RV"],
+                vedas_in_scope=sorted(layer_figures.CORPUS_MANTRAS),
+                vedas_not_covered=[],
                 denominator=dict(layer_figures.CORPUS_MANTRAS),
             ),
             caveats=[
+                # Written here, unconditionally. This read
+                # `named_query_caveat("action_predicate_breadth") or "..."`, and the left
+                # operand is NOT empty -- so the rewritten sentence was dead code and the
+                # registry string shipped instead. That string is true and it is about a
+                # DIFFERENT relation: it describes PERFORMS_ACTION and IS_ASKED_TO, 665
+                # edges aggregated from the 2,406 MORPHOLOGY_RULE assertions, and it ends
+                # "the Samaveda, Yajurveda and Atharvaveda are absent entirely". Beside a
+                # coverage block naming all four corpora in scope that was a flat
+                # self-contradiction inside one payload, and CoverageView cannot catch it:
+                # it validates its own two fields against each other and cannot see a
+                # caveat.
                 CaveatView(
-                    text=named_query_caveat("action_predicate_breadth")
-                    or (
-                        "The agentive assertion layer is Rigveda-only: all 4,865 assertions "
-                        "hang off Rigvedic passages, because the layer is derived from a "
-                        "morphological annotation that covers the Rigveda alone."
+                    text=(
+                        "The semantic assertion layer reaches this corpus and did not reach "
+                        "this verse, so this empty set is a gap in the annotation and not a "
+                        "corpus outside the layer. Two narrower readings do stop at the "
+                        "Rigveda and neither is what this block reports: only Rigvedic "
+                        "assertions carry an explicit agent, and the PERFORMS_ACTION and "
+                        "IS_ASKED_TO aggregates are Rigvedic in all 665 of their edges."
                     ),
-                    source="action_predicate_breadth",
+                    source="measured",
                 )
                 if passage.veda != "RV"
                 else CaveatView(
-                    text="No agentive assertion was extracted from this Rigvedic verse. The "
-                    "layer covers 2,542 of the Rigveda's 10,552 mantras, so most Rigvedic "
-                    "verses are outside it.",
+                    text="No semantic assertion was extracted from this Rigvedic verse. "
+                    "The layer covers 10,173 of the Rigveda's 10,552 mantras, so a verse "
+                    "without one is unusual rather than typical. This sentence read '2,542 "
+                    "... so most Rigvedic verses are outside it', which inverted the fact: "
+                    "the same API's /works route reported 0.9641 for the same relation.",
                     source="measured",
                 )
             ],
         )
 
+
+#: Every caution family the assertion nodes carry, in words, keyed on the part before the
+#: colon. 30,266 assertions carry a ``cautions`` list and the API read none of it.
+#:
+#: Keyed by FAMILY and not by whole value on purpose: 37 distinct codes exist and most are
+#: parameterised -- PREDICATE_VIA_PREVERB_STRIP:pra,
+#: POLARITY_NOT_MODELLED_NEGATION_PARTICLE_IN_SCOPE:ma,na -- so a map keyed on the whole
+#: string would cover the one code someone happened to look at and silently drop the other
+#: 36. The parameter is appended to the sentence rather than discarded, and an unrecognised
+#: family still ships verbatim: a caution nobody has written prose for must not become a
+#: caution nobody sees.
+_ASSERTION_CAUTIONS: Final[dict[str, str]] = {
+    "ANALYSIS_IS_OF_A_LETTER_IDENTICAL_RIGVEDIC_VERSE_NOT_OF_A_SAMAVEDIC_ANNOTATION": (
+        "At least one assertion here was derived from a letter-identical Rigvedic verse "
+        "rather than from an annotation of this corpus. The reading is carried across on "
+        "textual identity; no independent analysis of this verse in its own collection "
+        "exists. All 364 Samavedic assertions in this graph are of that kind."
+    ),
+    "FIRST_PERSON_AGENT_IS_THE_UNNAMED_SPEAKER": (
+        "The agent is a first-person verb form, so the actor is the verse's own unnamed "
+        "speaker and not a named deity. Do not read the agent slot as a person."
+    ),
+    "POLARITY_NOT_MODELLED_NEGATION_PARTICLE_IN_SCOPE": (
+        "A negation particle stands in the clause and polarity is NOT modelled, so the "
+        "assertion may state the opposite of what the verse says. Particle in scope"
+    ),
+    "FRAME_MAY_INVERT_NONACTIVE_VOICE_ON_FLAGGED_ROOT": (
+        "The verb is non-active on a root flagged for voice ambiguity, so the agent and the "
+        "patient may be the wrong way round."
+    ),
+    "FOLD_CARRIES_AN_UNMAPPED_MINORITY_SENSE": (
+        "The root was folded onto a predicate that does not cover all of its senses, so a "
+        "minority reading has been mapped to the majority one. Root"
+    ),
+    "PREDICATE_VIA_PREVERB_STRIP": (
+        "The predicate was reached by stripping a preverb, which can change the sense of "
+        "the verb materially. Preverb stripped"
+    ),
+    "PREDICATE_VIA_SECONDARY_STEM": (
+        "The predicate was reached through a secondary stem and not the primary root. Stem"
+    ),
+}
+
+
+def _caution_sentence(code: str) -> str:
+    """One caution code as a sentence, with its parameter carried rather than dropped."""
+    family, _, parameter = code.partition(":")
+    prose = _ASSERTION_CAUTIONS.get(family)
+    if prose is None:
+        return code
+    return f"{prose}: {parameter}." if parameter else prose
 
 #: Frozen domain queries whose caveat already states each attribution layer's reach. Reused
 #: rather than retyped: V3.1 and V3.2 both found hand-copied caveat prose that had drifted

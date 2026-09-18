@@ -66,7 +66,11 @@ const CLASS_LABEL: Record<string, { short: string; long: string }> = {
     },
     SEMANTIC_ASSERTION: {
         short: "Semantic assertion",
-        long: "Model-extracted statements about a verse. Every one of them is Rigvedic, so none can join a pair.",
+        // Said twice wrongly before: "model-extracted" of a layer that is mostly rule-derived
+        // (2,459 of 35,131 are model extractions), and "every one of them is Rigvedic" of a
+        // layer that reaches all four collections. The reason it joins no pair is structural
+        // and has nothing to do with how much of it was built.
+        long: "A statement about a single verse, so it relates no two collections. The layer reaches all four.",
     },
 };
 

@@ -17,12 +17,16 @@ exists to refuse -- a number a reader trusts because it looks measured.
 
 **Why the surfaces are declared.** The searchable surfaces do not cover the corpus evenly,
 and the gaps are invisible in a result list. Measured per passage against the live graph:
-English translation reaches the Rigveda (10,509), Atharvaveda (5,770), Yajurveda (1,939) and
+English translation reaches the Rigveda (10,510), Atharvaveda (5,770), Yajurveda (1,950) and
 173 Samavedic passages -- every one of those carrying Griffith's Rigvedic rendering of
 verified-identical text rather than a Samavedic translation, so **the Samaveda still has no
 English of its own** and 1,671 of its verses cannot be reached in English at all; the
-normalised Sanskrit surface exists for the
-Atharvaveda alone (5,839); the lemma layer is Rigvedic alone (6,560). A caller who searches
+normalised Sanskrit surface reaches all four corpora in full (20,210); the lemma layer is
+Rigvedic alone and reaches all 10,552 of its verses. This paragraph read "the normalised
+Sanskrit surface exists for the Atharvaveda alone (5,839); the lemma layer is Rigvedic alone
+(6,560)" after both layers had grown, which is the shape of defect the coverage block below
+exists to prevent and is the reason the figures are asserted against the graph by a test
+rather than kept here alone. A caller who searches
 an English phrase and finds nothing Samavedic has learnt nothing about the Samaveda, so
 :class:`SearchResponse` carries the surfaces it actually read and the coverage they have.
 """

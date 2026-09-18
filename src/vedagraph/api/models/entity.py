@@ -832,7 +832,8 @@ DEITY_SLUGS: Final[frozenset[str]] = frozenset({"devata", "devatas", "deity", "d
 #: Why a deity is refused by the generic surface. Not an apology -- a safety property.
 DEITY_SURFACE_REDIRECT: Final = (
     "Deities are not served by the generic entity surface. The Anukramani's devata slot "
-    "holds 22 human patrons, 7 praise-of-a-gift labels and one dog alongside the gods, and "
+    "holds 22 human patrons, 7 praise-of-a-gift labels and 28 abstractions ruled not to "
+    "name an addressee alongside the gods, and "
     "resolving that population is a contract only the deity endpoints apply. Use "
     "GET /api/v1/devatas (add population=all_ascriptions to see the slot as it stands)."
 )

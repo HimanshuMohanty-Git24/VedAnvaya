@@ -755,8 +755,21 @@ RULINGS: Final[dict[str, Ruling]] = {
         4368,
     ),
     "GAP-FORMULA-003": Ruling(
-        "STILL_IMPLEMENTATION_FIXABLE",
-        "Clause one passes and clause two does not, and clause two is the one that protects "
+        "CLOSED_DERIVED",
+        "Closed in RELEASE BLOCKER CLOSURE R2. Clause one already passed and clause two now "
+        "does. Re-measured 2026-09-18: all 4,825 :Formula carry formula_nesting_type, 0 "
+        "untyped. The open clause was the ranking disclosure, and both rankings the R1 basis "
+        "names now carry it: formula_service._formula_caveats and the deity top_formulas "
+        "ranking in entity_service each append "
+        "vedagraph.domain.layer_figures.formula_nesting_policy(). That sentence was already "
+        "this project's single derived statement of the policy -- built from the live "
+        "FORMULA_NESTING population rather than typed, so it cannot quote a stale share -- "
+        "and it had been applied to formula-diffusion only. Nothing was re-worded and no "
+        "second spelling was introduced, which is the failure mode the R1 basis named: "
+        "applying different rules in different queries is how one attribution axis once "
+        "produced three disagreeing answers. PRIOR RULING, superseded: "
+        "STILL_IMPLEMENTATION_FIXABLE -- \"Clause one passes and clause two does not, and "
+        "clause two is the one that protects "
         "the reader. Measured 2026-09-17: all 4,825 :Formula nodes carry formula_nesting_type "
         "over a four-valued vocabulary -- INDEPENDENT 2,788, CONTAINS_ANOTHER 934, "
         "NESTED_IN_ANOTHER 918, NESTED_AND_CONTAINING 185 -- so every formula standing in a "
@@ -766,7 +779,7 @@ RULINGS: Final[dict[str, Ruling]] = {
         "entity_service.py:1171-1176 mentions nesting at all, and both order by passage count, "
         "so a frequency ranking still leaves all three readings available to the reader. "
         "Applying different rules in different queries is how this project previously produced "
-        "three disagreeing answers for one attribution axis. Internal API work.",
+        "three disagreeing answers for one attribution axis. Internal API work.\"",
         "MATCH (f:Formula) WHERE f.formula_nesting_type IS NULL RETURN count(f)",
         0,
     ),
@@ -1336,8 +1349,20 @@ RULINGS: Final[dict[str, Ruling]] = {
     ),
     # ---- semantics -------------------------------------------------------------------
     "GAP-SEMANTICS-001": Ruling(
-        "STILL_IMPLEMENTATION_FIXABLE",
-        "Two clauses pass, the third fails on a surface, and the third is the one the entry's "
+        "CLOSED_DERIVED",
+        "Closed in RELEASE BLOCKER CLOSURE R2. Two clauses already passed and the third now "
+        "does. Re-measured 2026-09-18: AV 3,295 mantras / 6,167 assertions, YV 574 / 1,543, "
+        "SV 211 / 364, RV 10,173 / 27,057. The open clause was the blended total, and the "
+        "cross-Veda cell no longer publishes one: it breaks the figure out per derivation, "
+        "names the model-assisted share (2,459 of 35,131) apart from the rule-derived "
+        "remainder, carries the human-reviewed count -- 0, counted on the positive predicate "
+        "review_state = 'HUMAN_REVIEWED' so that adding a new review state cannot silently "
+        "promote assertions into review -- and states that coverage is incomplete and uneven. "
+        "The same cell was the R2 CROSS_VEDA_FALSE_NOT_BUILT defect and its status moved from "
+        "NOT_BUILT to CLASS_NOT_CROSS_VEDA; both changes are held by "
+        "tests/api/test_cross_veda_granularity_and_direction.py. PRIOR RULING, superseded: "
+        "STILL_IMPLEMENTATION_FIXABLE -- \"Two clauses pass, the third fails on a surface, "
+        "and the third is the one the entry's "
         "implementation_dependency was written to protect. Measured 2026-09-17: "
         "HAS_SEMANTIC_ASSERTION reaches three non-Rigvedic corpora -- AV 3,295 mantras / 6,167 "
         "assertions, YV 574 / 1,543, SV 211 / 364 -- and Rigvedic coverage rose from 2,542 to "
@@ -1348,7 +1373,7 @@ RULINGS: Final[dict[str, Ruling]] = {
         "indication that 2,459 are TIER_D model extraction over a 19th-century English "
         "translation and 2,406 are TIER_B rule output. The entry states the requirement "
         "plainly -- 'must not present a blended count' -- and splitting that note by "
-        "derivation is bounded internal API work.",
+        "derivation is bounded internal API work.\"",
         "MATCH (:Mantra)-[:HAS_SEMANTIC_ASSERTION]->() RETURN count(*)",
         35131,
     ),

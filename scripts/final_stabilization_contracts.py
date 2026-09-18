@@ -22,6 +22,9 @@ from typing import Any
 from neo4j import GraphDatabase
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
+
+from vedagraph.domain.ontology import LABEL_SEMANTIC_ASSERTION  # noqa: E402
 OUT = ROOT / "data" / "staging" / "final_stabilization" / "provenance_display_contract_receipt.json"
 URI = "bolt://localhost:7687"
 AUTH = ("neo4j", "vedagraph_dev")
@@ -146,12 +149,19 @@ def apply(session: Any) -> dict[str, int]:
 
     # A display string is derived from the controlled predicate plus the exact source surface.
     # It is neither an identity nor a normalization; the original verb_surface is untouched.
+    #
+    # The display_type spelling is LABEL_SEMANTIC_ASSERTION and not a literal typed here.
+    # This line read `coalesce(s.display_type, 'SEMANTIC_ASSERTION')`, which invented a
+    # second spelling for the 30,266 assertions that had none and split one graph type
+    # across two product type names -- a value declared in no ontology module, differing
+    # from the label, and differing from what both domain builders write. Spelling it from
+    # the constant is what stops a backfill choosing a name again.
     result["semantic_display_labels"] = count(
         session,
-        """MATCH (s:SemanticAssertion)
+        f"""MATCH (s:{LABEL_SEMANTIC_ASSERTION})
         WHERE s.display_label IS NULL AND s.predicate IS NOT NULL AND s.verb_surface IS NOT NULL
         SET s.display_label = s.predicate + ': ' + s.verb_surface,
-            s.display_type = coalesce(s.display_type, 'SEMANTIC_ASSERTION')
+            s.display_type = coalesce(s.display_type, '{LABEL_SEMANTIC_ASSERTION}')
         RETURN count(s) AS n""",
     )
     return result

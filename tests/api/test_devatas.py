@@ -35,14 +35,26 @@ from vedagraph.api.models.entity import (
     NON_DEITY_STRUCTURES,
 )
 from vedagraph.api.repositories.neo4j_repository import Neo4jRepository
-from vedagraph.api.services.deity_population import is_deity
+from vedagraph.api.services.deity_population import (
+    KNOWN_DEITY_STRUCTURES,
+    DevataSubject,
+    is_deity,
+)
 from vedagraph.api.services.entity_service import subject_disclosure
 
 INDRA = "VG:DEVATA:INDRAH"
 AGNI = "VG:DEVATA:AGNIH"
 SOMA = "VG:DEVATA:SOMAH"
 VASISTHA = "VG:DEVATA:VASISTHAH"
+#: The dog is a DEITY. It is kept here because it is the canonical example of a subject
+#: the *structure* predicate refused and the recorded ruling admits: 13 other animals are in
+#: the population, and excluding this one for carrying structure UNSPECIFIED rather than
+#: INDIVIDUAL was, in the ruling's own words, "excluding on a morphological accident".
 THE_DOG = "VG:DEVATA:SUNAH"
+#: A ruled non-deity, and of the class that matters: 28 ABSTRACT labels are ruled
+#: ABSTRACTION_NOT_AN_ADDRESSEE and the old structure predicate admitted every one of them.
+#: "the course of becoming" is the best-attested of them at 15 dedications.
+AN_ABSTRACTION = "VG:DEVATA:BHAVAVRTTAM"
 
 #: Names the unfiltered seer-bridge returns for Indra, verified live. Used as a
 #: denylist: if any of these reaches a deity surface the containment has regressed.
@@ -291,12 +303,12 @@ def test_network_co_occurrence_is_population_filtered_and_carries_its_own_caveat
 @pytest.mark.neo4j
 def test_human_nodes_cannot_surface_as_deities(live_client: TestClient) -> None:
     payload = live_client.get("/api/v1/devatas", params={"limit": MAX_PAGE_SIZE}).json()
-    assert payload["pagination"]["total"] == 184
+    assert payload["pagination"]["total"] == 157
     for row in payload["items"]:
-        assert row["structure"] not in NON_DEITY_STRUCTURES
-        assert row["display_label"] not in KNOWN_NON_DEITY_LABELS
+        assert row["is_deity"] is True
+        assert row["display_label"] not in KNOWN_NON_DEITY_LABELS - {"the dog"}
 
-    for key in (VASISTHA, THE_DOG):
+    for key in (VASISTHA, AN_ABSTRACTION):
         refused = live_client.get(f"/api/v1/devatas/{key}")
         assert refused.status_code == 404, f"{key} was served as a deity"
         assert "all_ascriptions" in refused.json()["hint"]
@@ -307,7 +319,7 @@ def test_human_nodes_cannot_surface_as_deities(live_client: TestClient) -> None:
         assert allowed.status_code == 200
         body = allowed.json()
         assert body["is_deity"] is False
-        assert body["structure"] in NON_DEITY_STRUCTURES
+        assert body["structure"] in KNOWN_DEITY_STRUCTURES
 
 
 @pytest.mark.neo4j
@@ -378,16 +390,19 @@ def test_every_deity_route_refuses_the_same_non_deities(
     ``/devatas/VG:DEVATA:SUNAH/network`` served the dog as ``type=DEVATA`` under a caveat
     reading "This response excludes all 30", and ``/passages`` served its Anukramani slot
     as a 200 SUPPORTED page.
+
+    The population is read from the recorded ruling, not from ``structure``. Reading it
+    from structure is what made this sweep agree with a gate that was itself wrong about
+    29 nodes: it never asked about the 28 abstractions, and it asked about the dog, whom
+    the ruling admits.
     """
     non_deities = [
         str(row["key"])
         for row in live_repository.run(
-            "MATCH (dv:Devata) WHERE coalesce(dv.structure, 'UNSPECIFIED') IN $non_deity "
-            "RETURN dv.entity_key AS key",
-            non_deity=sorted(NON_DEITY_STRUCTURES),
+            "MATCH (dv:Devata) WHERE dv.is_deity = false RETURN dv.entity_key AS key"
         )
     ]
-    assert len(non_deities) == 30, f"the non-deity population has moved: {len(non_deities)}"
+    assert len(non_deities) == 57, f"the non-deity population has moved: {len(non_deities)}"
     served = []
     for key in non_deities:
         separator = "&" if "?" in suffix else "?"
@@ -441,12 +456,11 @@ def test_every_opt_in_route_types_a_non_deity_subject(
     non_deities = [
         (str(row["key"]), str(row["structure"]))
         for row in live_repository.run(
-            "MATCH (dv:Devata) WHERE coalesce(dv.structure, 'UNSPECIFIED') IN $non_deity "
-            "RETURN dv.entity_key AS key, coalesce(dv.structure, 'UNSPECIFIED') AS structure",
-            non_deity=sorted(NON_DEITY_STRUCTURES),
+            "MATCH (dv:Devata) WHERE dv.is_deity = false "
+            "RETURN dv.entity_key AS key, coalesce(dv.structure, 'UNSPECIFIED') AS structure"
         )
     ]
-    assert len(non_deities) == 30, f"the non-deity population has moved: {len(non_deities)}"
+    assert len(non_deities) == 57, f"the non-deity population has moved: {len(non_deities)}"
     for key, structure in non_deities:
         response = live_client.get(
             path.format(key=key), params={"population": "all_ascriptions", **extra}
@@ -494,21 +508,31 @@ def test_the_subject_disclosure_is_produced_in_exactly_one_place() -> None:
     way to take one without the other.
     """
     for structure in sorted(NON_DEITY_STRUCTURES):
-        flag, caveats = subject_disclosure(structure)
+        flag, caveats = subject_disclosure(
+            DevataSubject(structure=structure, is_deity=False, non_deity_kind="HUMAN_PATRON")
+        )
         assert flag is False
         assert len(caveats) == 1
         assert "THIS SUBJECT IS NOT A DEITY" in caveats[0].text
         assert structure in caveats[0].text
         assert caveats[0].source == "deity_population_contract"
     for structure in sorted(DEITY_STRUCTURES):
-        flag, caveats = subject_disclosure(structure)
+        flag, caveats = subject_disclosure(DevataSubject(structure=structure, is_deity=True))
         assert flag is True
         assert caveats == []
-    # An unrecognised structure fails closed on both halves at once.
-    flag, caveats = subject_disclosure("SEMI_DIVINE")
+    # An unruled subject fails closed on both halves at once, whatever its structure says.
+    flag, caveats = subject_disclosure(DevataSubject(structure="SEMI_DIVINE", is_deity=False))
     assert flag is False and len(caveats) == 1
-    flag, caveats = subject_disclosure(None)
+    flag, caveats = subject_disclosure(DevataSubject(structure=None, is_deity=False))
     assert flag is False and len(caveats) == 1
+    # And an ABSTRACT subject, which the superseded structure predicate called a deity.
+    flag, caveats = subject_disclosure(
+        DevataSubject(
+            structure="ABSTRACT", is_deity=False, non_deity_kind="ABSTRACTION_NOT_AN_ADDRESSEE"
+        )
+    )
+    assert flag is False
+    assert "ABSTRACTION_NOT_AN_ADDRESSEE" in caveats[0].text
 
 
 @pytest.mark.neo4j
@@ -524,9 +548,24 @@ def test_every_deity_list_row_states_whether_it_is_a_deity(live_client: TestClie
         )
     assert len(rows) == 214
     assert all("is_deity" in row and row["structure"] for row in rows)
-    assert sum(1 for row in rows if row["is_deity"] is False) == 30
+    assert sum(1 for row in rows if row["is_deity"] is False) == 57
+    # Every row's flag agrees with the deity page's own gate for the same subject: a row
+    # flagged a deity must be servable under the default population, and one flagged not a
+    # deity must be refused by it. That is the cross-surface agreement this file exists for.
+    #
+    # All 214, never a prefix. A 40-row slice of an ordered list is the first 40 labels
+    # alphabetically, and this file's own sibling tests carry the reason: "Per subject, not
+    # per sample. This project has twice certified an absence from a sample that happened to
+    # miss the failing rows."
+    disagreements: list[str] = []
     for row in rows:
-        assert row["is_deity"] is (row["structure"] not in NON_DEITY_STRUCTURES), row["id"]
+        served = live_client.get(f"/api/v1/devatas/{row['id']}").status_code
+        if (served == 200) is not (row["is_deity"] is True):
+            disagreements.append(f"{row['id']} is_deity={row['is_deity']} route={served}")
+    assert not disagreements, (
+        f"the list flag and the deity route disagree on {len(disagreements)} of "
+        f"{len(rows)} subjects: {disagreements[:5]}"
+    )
 
 
 @pytest.mark.neo4j
@@ -536,7 +575,7 @@ def test_a_non_deity_served_under_all_ascriptions_says_it_is_not_a_deity(
     """A 200 from a deity route must never leave the reader to infer the structure."""
     for key, structure in (
         (VASISTHA, "HUMAN"),
-        (THE_DOG, "UNSPECIFIED"),
+        (AN_ABSTRACTION, "ABSTRACT"),
         ("VG:DEVATA:DANASTUTIH", "PATRON_PRAISE"),
     ):
         profile = live_client.get(

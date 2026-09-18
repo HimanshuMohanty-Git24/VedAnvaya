@@ -369,8 +369,11 @@ def test_samaveda_translation_count_is_measured_as_zero(live_client: TestClient)
 @pytest.mark.parametrize(
     ("work_id", "mantras", "translated", "range_covered"),
     [
-        ("VG:WORK:RV:SAK", 10_552, 10_479, 60),
-        ("VG:WORK:YV:VSM", 1_975, 1_939, 0),
+        # Re-measured in R2. The translation layer grew after these were written -- RV
+        # 10,479 -> 10,480 translated and YV 1,939 -> 1,950 -- and the same drift had left
+        # search_service.SURFACE_COVERAGE declaring a stale figure in every search response.
+        ("VG:WORK:RV:SAK", 10_552, 10_480, 60),
+        ("VG:WORK:YV:VSM", 1_975, 1_950, 0),
         ("VG:WORK:AV:SAU", 5_839, 5_715, 68),
         ("VG:WORK:SV:KAU", 1_844, 0, 0),
     ],
@@ -443,7 +446,16 @@ def test_the_samavedic_collection_level_is_declared_name_valued(live_client: Tes
     ("layer", "reaches"),
     [
         ("DEVATA_ASCRIPTION", {"VG:WORK:RV:SAK"}),
-        ("AGENTIVE_ASSERTION", {"VG:WORK:RV:SAK"}),
+        # All four. This expected {RV} and had been failing since the assertion layer
+        # reached AV, YV and SV -- which is the alarm that the layer's own published note
+        # still read "Rigveda only" while this route reported 6,167 Atharvavedic edges.
+        # The Rigveda-only claim is true one level down, of the agentive reading
+        # (ASSERTION_AGENT, 2,502 assertions over 2,254 Rigvedic passages), and the
+        # LayerSpec note now says that instead.
+        (
+            "AGENTIVE_ASSERTION",
+            {"VG:WORK:RV:SAK", "VG:WORK:AV:SAU", "VG:WORK:YV:VSM", "VG:WORK:SV:KAU"},
+        ),
         ("DEVATA_ASCRIPTION_DESCRIPTOR", {"VG:WORK:AV:SAU"}),
         ("CHANDAS_ATTRIBUTION", {"VG:WORK:RV:SAK", "VG:WORK:AV:SAU"}),
         ("RISHI_ATTRIBUTION", {"VG:WORK:RV:SAK", "VG:WORK:AV:SAU", "VG:WORK:YV:VSM"}),

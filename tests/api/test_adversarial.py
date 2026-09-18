@@ -46,11 +46,17 @@ from tests.api.test_app_health import (
 )
 from vedagraph.api.repositories.neo4j_repository import Neo4jRepository
 
-#: Anukramani devata-slot entries that are not gods, one per non-deity structure.
+#: Anukramani devata-slot entries the recorded ruling excludes, one per exclusion class.
+#:
+#: ``VG:DEVATA:SUNAH``, the dog, used to stand here for the UNSPECIFIED structure. It is a
+#: DEITY under the ruling -- thirteen other animals are in the population and excluding this
+#: one for its structure was "excluding on a morphological accident" -- so the third row is
+#: an ABSTRACT label ruled ABSTRACTION_NOT_AN_ADDRESSEE, which is the class the superseded
+#: structure predicate admitted and this sweep therefore never tested.
 NON_DEITY_IDS: tuple[tuple[str, str], ...] = (
     ("VG:DEVATA:VASISTHAH", "HUMAN"),
     ("VG:DEVATA:DANASTUTIH", "PATRON_PRAISE"),
-    ("VG:DEVATA:SUNAH", "UNSPECIFIED"),
+    ("VG:DEVATA:BHAVAVRTTAM", "ABSTRACT"),
 )
 
 #: RV 1.4.2 carries exactly one MENTIONS_DEVATA edge and it is graded DEITY_AMBIGUOUS.
@@ -601,7 +607,7 @@ def test_no_empty_first_page_ever_claims_supported(live_client: TestClient) -> N
         "/api/v1/devatas?structure=NOPE",
         "/api/v1/devatas?axis=NOPE",
         "/api/v1/devatas?structure=INDIVIDUAL&axis=NOPE",
-        "/api/v1/devatas/VG:DEVATA:SUNAH/passages?basis=mention",
+        "/api/v1/devatas/VG:DEVATA:BHAVAVRTTAM/passages?basis=mention",
         "/api/v1/devatas/VG:DEVATA:INDRAH/passages?basis=ascription&veda=SV",
         "/api/v1/devatas/VG:DEVATA:INDRAH/passages?basis=ascription&veda=AV",
         "/api/v1/devatas/VG:DEVATA:INDRAH/passages?basis=ascription&veda=YV",
@@ -689,21 +695,30 @@ def test_the_mention_layer_caveat_figures_still_match_the_graph(
 def test_the_deity_population_caveat_matches_the_measured_structures(
     live_client: TestClient, live_repository: Neo4jRepository
 ) -> None:
-    from vedagraph.api.models.entity import NON_DEITY_STRUCTURES
+    """The caveat's figures are measured, and measured from the ruling that decides them.
 
-    counts = {
-        str(row["s"]): int(row["c"])
+    This derived its expectation from ``structure``, which is what made the caveat say 30
+    and name a dog among the excluded. Eligibility is the recorded ruling, so the figure a
+    reader is given has to come from the same place the filter does -- otherwise the caveat
+    can be true about structures while the response is filtered on something else.
+    """
+    kinds = {
+        str(row["k"]): int(row["c"])
         for row in live_repository.run(
-            "MATCH (d:Devata) RETURN coalesce(d.structure,'UNSPECIFIED') AS s, count(*) AS c"
+            "MATCH (d:Devata) WHERE d.is_deity = false "
+            "RETURN coalesce(d.non_deity_kind,'UNTYPED') AS k, count(*) AS c"
         )
     }
-    non_deities = sum(c for s, c in counts.items() if s in NON_DEITY_STRUCTURES)
+    total = int(live_repository.run_one("MATCH (d:Devata) RETURN count(d) AS c")["c"])
+    excluded = sum(kinds.values())
+    assert "UNTYPED" not in kinds, f"a deity is excluded with no recorded kind: {kinds}"
     text = " ".join(
         caveat["text"] for caveat in live_client.get("/api/v1/devatas").json()["caveats"]
     )
-    assert f"{non_deities} of the {sum(counts.values())}" in text
-    assert f"{counts['HUMAN']} " in text
-    assert f"{counts['PATRON_PRAISE']} danastuti" in text
+    assert f"{excluded} of the {total}" in text
+    assert f"{kinds['HUMAN_PATRON']} " in text
+    assert f"{kinds['DANASTUTI_GIFT_PRAISE']} danastuti" in text
+    assert f"{kinds['ABSTRACTION_NOT_AN_ADDRESSEE']} abstractions" in text
 
 
 @pytest.mark.neo4j
@@ -1295,20 +1310,24 @@ CYPHER_CLAUSE_WORDS = ("MATCH", "RETURN", "WITH", "UNWIND", "CALL", "WHERE")
 DEITY_STRUCTURE_NAMES = frozenset({"INDIVIDUAL", "GROUP", "PAIR", "ABSTRACT"})
 
 
-def _all_devata_keys(repository: Neo4jRepository) -> list[tuple[str, str | None]]:
-    """Every ``:Devata`` key with its structure. All 214, never a sample.
+def _all_devata_keys(repository: Neo4jRepository) -> list[tuple[str, bool]]:
+    """Every ``:Devata`` key with its recorded eligibility ruling. All 214, never a sample.
 
     This project has twice certified an absence from a sample that a full sweep
     contradicted, and the deity population is 214 rows: there is no reason to sample it.
+
+    Returns the ruling, not the structure. Deriving eligibility from structure here made
+    these sweeps agree with a gate that was itself wrong about 29 nodes -- they asked about
+    the dog, whom the ruling admits, and never asked about the 28 ruled abstractions.
     """
     rows = repository.run(
-        "MATCH (d:Devata) RETURN d.entity_key AS key, d.structure AS structure "
+        "MATCH (d:Devata) RETURN d.entity_key AS key, d.is_deity AS is_deity "
         "ORDER BY d.entity_key"
     )
-    return [(str(row["key"]), row["structure"]) for row in rows]
+    return [(str(row["key"]), row["is_deity"] is True) for row in rows]
 
 
-def _devata_url(key: str, structure: str | None, base: str = "/api/v1/devatas") -> str:
+def _devata_url(key: str, is_deity: bool, base: str = "/api/v1/devatas") -> str:
     """The URL that serves ``key``, opting into the Anukramani slot only where it must.
 
     ``base`` exists because this helper was originally applied to the profile URL only,
@@ -1318,7 +1337,7 @@ def _devata_url(key: str, structure: str | None, base: str = "/api/v1/devatas") 
     this test failed for the right reason on the wrong line. Every deity surface must be
     addressed the same way, which is the whole content of G-01.
     """
-    if structure in DEITY_STRUCTURE_NAMES:
+    if is_deity:
         return f"{base}/{key}"
     return f"{base}/{key}?population=all_ascriptions"
 
@@ -1374,15 +1393,13 @@ def test_g01_the_deity_insight_route_gates_and_discloses_a_non_deity(
     halves of the same contract were open.
     """
     non_deities = [
-        (key, structure)
-        for key, structure in _all_devata_keys(live_repository)
-        if structure not in DEITY_STRUCTURE_NAMES
+        (key, ruled) for key, ruled in _all_devata_keys(live_repository) if not ruled
     ]
-    assert len(non_deities) == 30, f"the non-deity population moved: {len(non_deities)}"
+    assert len(non_deities) == 57, f"the non-deity population moved: {len(non_deities)}"
 
     served_by_default: list[str] = []
     missing_caveat: list[str] = []
-    for key, _structure in non_deities:
+    for key, _ruled in non_deities:
         response = live_client.get(f"/api/v1/insights/devatas/{key}")
         if response.status_code == 200:
             served_by_default.append(key)
@@ -1593,9 +1610,9 @@ def test_g06_both_deity_endpoints_agree_for_every_one_of_the_214(
         )
     }
     disagreements: list[str] = []
-    for key, structure in _all_devata_keys(live_repository):
-        profile = live_client.get(_devata_url(key, structure))
-        insight = live_client.get(_devata_url(key, structure, "/api/v1/insights/devatas"))
+    for key, ruled in _all_devata_keys(live_repository):
+        profile = live_client.get(_devata_url(key, ruled))
+        insight = live_client.get(_devata_url(key, ruled, "/api/v1/insights/devatas"))
         assert profile.status_code == 200, f"{key} -> {profile.status_code}"
         assert insight.status_code == 200, f"{key} -> {insight.status_code}"
         detail_total = profile.json()["mentions_included_total"]
@@ -1626,8 +1643,8 @@ def test_g07_the_certainty_triple_reconciles_with_the_edges_for_every_deity(
         tiers.setdefault(str(row["key"]), {})[str(row["tier"])] = int(row["count"])
 
     mismatches: list[str] = []
-    for key, structure in _all_devata_keys(live_repository):
-        block = live_client.get(_devata_url(key, structure)).json()["certainty"]
+    for key, ruled in _all_devata_keys(live_repository):
+        block = live_client.get(_devata_url(key, ruled)).json()["certainty"]
         graph = tiers.get(key, {})
         expected = (
             graph.get("DEITY_CERTAIN", 0),
@@ -1776,7 +1793,7 @@ def test_g10_head_matches_get_on_every_route_including_the_failures(
         "/api/v1/devatas",
         "/api/v1/devatas/VG:DEVATA:INDRAH",
         "/api/v1/devatas/VG:DEVATA:INDRAH/network",
-        "/api/v1/devatas/VG:DEVATA:SUNAH",
+        "/api/v1/devatas/VG:DEVATA:BHAVAVRTTAM",
         "/api/v1/entities/nosuchtype",
         "/api/v1/devatas?limit=99999",
         "/api/v1/search",

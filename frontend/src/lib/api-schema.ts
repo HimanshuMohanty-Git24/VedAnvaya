@@ -294,7 +294,8 @@ export interface paths {
          *     surfaces are not read, `total` is null, and a caveat says so.
          *
          *     **Deities are population-resolved.** The Anukramani's devata slot holds 22 human patrons,
-         *     7 praise-of-a-gift labels and one dog, and none of them is returned typed `DEVATA`.
+         *     7 praise-of-a-gift labels and 28 abstractions ruled not to name an addressee, and none of
+         *     them is returned typed `DEVATA`.
          *     Searching *Vasistha* will not offer him as a god; a caveat states how many such
          *     ascriptions the query matched and where to read them.
          */
@@ -429,10 +430,11 @@ export interface paths {
          * @description The resolved pantheon, ordered by total mentions.
          *
          *     **The population contract.** The Anukramani names a *devata* for every Rigvedic hymn and
-         *     that slot is not a theological claim: 30 of the 214 `:Devata` nodes are not gods -- 22
+         *     that slot is not a theological claim: 57 of the 214 `:Devata` nodes are not gods -- 22
          *     human patrons and seers (Vasistha, Visvamitra, Brbu the carpenter), 7 danastuti labels
          *     naming the gift rather than a recipient ("praise of the gift of Sudas son of Pijavana"),
-         *     and one dog. `population=deities` (the default) excludes all 30.
+         *     and 28 abstractions ruled not to name an addressee. `population=deities` (the default)
+         *     excludes all 57.
          *     `population=all_ascriptions` returns the slot as it stands, with every row's `structure`
          *     and `is_deity` stated, and `is_deity` false where it is false.
          *
@@ -474,10 +476,11 @@ export interface paths {
          *     **Mention and attribution totals are counted from the edges**, not read off materialised profile properties, which exist on only 30 of the 214 nodes. This is why `/devatas/{id}` and `/insights/devatas/{id}` agree.
          *
          *     **The population contract.** The Anukramani names a *devata* for every Rigvedic hymn and
-         *     that slot is not a theological claim: 30 of the 214 `:Devata` nodes are not gods -- 22
+         *     that slot is not a theological claim: 57 of the 214 `:Devata` nodes are not gods -- 22
          *     human patrons and seers (Vasistha, Visvamitra, Brbu the carpenter), 7 danastuti labels
          *     naming the gift rather than a recipient ("praise of the gift of Sudas son of Pijavana"),
-         *     and one dog. `population=deities` (the default) excludes all 30.
+         *     and 28 abstractions ruled not to name an addressee. `population=deities` (the default)
+         *     excludes all 57.
          *     `population=all_ascriptions` returns the slot as it stands, with every row's `structure`
          *     and `is_deity` stated, and `is_deity` false where it is false.
          *
@@ -552,10 +555,11 @@ export interface paths {
          *     **The subject is typed as well as its neighbours.** Under `population=all_ascriptions` the response states the subject's `subject_structure` and `subject_is_deity` and carries the THIS SUBJECT IS NOT A DEITY caveat when it is one of the 30 -- the same disclosure `/devatas/{id}` and `/devatas/{id}/passages` make, from the same helper.
          *
          *     **The population contract.** The Anukramani names a *devata* for every Rigvedic hymn and
-         *     that slot is not a theological claim: 30 of the 214 `:Devata` nodes are not gods -- 22
+         *     that slot is not a theological claim: 57 of the 214 `:Devata` nodes are not gods -- 22
          *     human patrons and seers (Vasistha, Visvamitra, Brbu the carpenter), 7 danastuti labels
          *     naming the gift rather than a recipient ("praise of the gift of Sudas son of Pijavana"),
-         *     and one dog. `population=deities` (the default) excludes all 30.
+         *     and 28 abstractions ruled not to name an addressee. `population=deities` (the default)
+         *     excludes all 57.
          *     `population=all_ascriptions` returns the slot as it stands, with every row's `structure`
          *     and `is_deity` stated, and `is_deity` false where it is false.
          *
@@ -821,7 +825,7 @@ export interface paths {
          *     a deity's prominence.
          *
          *     **`include_internal` cannot leak a QA finding.** Measured over the live graph, none of the
-         *     62 traversable predicates has an endpoint labelled `Internal`,
+         *     65 traversable predicates has an endpoint labelled `Internal`,
          *     `QAIssue`, `TextVersion`, `Translation`, `Source` or `SourceArtifact` -- so no value of any
          *     parameter can return one. What `include_internal=true` does, and the only thing it does, is
          *     add `MENTIONS_LEMMA` so that `:Lemma` nodes become reachable. That layer is marked internal
@@ -952,9 +956,9 @@ export interface paths {
          * Cross-Veda relatedness matrix (aggregate)
          * @description **Cost class: AGGREGATE.** Scans six relationship types in full and is exempt from the median latency target.
          *
-         *     Returns all six corpus pairs against every relationship class, with **every cell typed** -- including the empty ones. A cell is `MEASURED`, `MEASURED_ZERO`, `NOT_ESTABLISHED_FOR_PAIR`, `CLASS_NOT_CROSS_VEDA` or `NOT_BUILT`, and the count is null for every status but the first two. That distinction is the endpoint's whole purpose: directed textual reuse exists for one corpus pair only, and a table that rendered the other five as `0` would say the Atharvaveda reuses no Rigvedic text while the same graph carries hundreds of parallels between them.
+         *     Returns all six corpus pairs against every relationship class, with **every cell typed** -- including the empty ones. A cell is `MEASURED`, `MEASURED_ZERO`, `NOT_ESTABLISHED_FOR_PAIR`, `CLASS_NOT_CROSS_VEDA` or `NOT_BUILT`, and the count is null for every status but the first two. That distinction is the endpoint's whole purpose: directed textual reuse exists for two corpus pairs only, and a table that rendered the other four as `0` would say the Yajurveda reuses no Rigvedic text while the same graph carries hundreds of parallels between them.
          *
-         *     The semantic-resemblance and semantic-assertion rows are `NOT_BUILT` for every pair and are returned anyway -- the first because no non-lexical measure exists in this graph, the second because every semantic assertion is Rigvedic and so has no non-Rigvedic endpoint to pair with.
+         *     The semantic-resemblance and semantic-assertion rows carry no count for any pair and are returned anyway, with **different statuses, because the reasons differ**. Resemblance is `NOT_BUILT`: no non-lexical measure exists anywhere in this graph. The assertion row is `CLASS_NOT_CROSS_VEDA`: the layer exists, holds 35,131 assertions and reaches all four corpora, and still cannot enter a pair, because an assertion is a predication about one passage rather than a relation between two. This said the assertion row was `NOT_BUILT` because every semantic assertion is Rigvedic; both halves were false, and the status told a reader the layer does not exist anywhere in this graph.
          */
         get: operations["cross_veda_matrix_api_v1_insights_cross_veda_get"];
         put?: never;
@@ -1056,7 +1060,7 @@ export interface paths {
          *
          *     Mention totals default to CERTAIN plus PROBABLE. `certainty=strict` is offered and warned about: filtering to CERTAIN alone returns no non-Rigvedic mentions for several major deities, so the cautious caller gets the worse answer.
          *
-         *     **The default population refuses a non-deity.** The traditional devata slot holds 22 human patrons, 7 praise-of-a-gift labels and one dog alongside the gods, and under `population=deities` those 30 are a 404 here exactly as they are on `/devatas/{id}`. Ask with `population=all_ascriptions` to read one deliberately: the ascription figures are real, and the response then carries `is_resolved_deity: false`, the subject's `structure`, and a THIS SUBJECT IS NOT A DEITY caveat.
+         *     **The default population refuses a non-deity.** The traditional devata slot holds 22 human patrons, 7 praise-of-a-gift labels and 28 abstractions ruled not to name an addressee alongside the gods, and under `population=deities` those 57 are a 404 here exactly as they are on `/devatas/{id}`. Ask with `population=all_ascriptions` to read one deliberately: the ascription figures are real, and the response then carries `is_resolved_deity: false`, the subject's `structure`, and a THIS SUBJECT IS NOT A DEITY caveat.
          */
         get: operations["devata_insight_api_v1_insights_devatas__devata_id__get"];
         put?: never;
@@ -1246,7 +1250,7 @@ export interface paths {
          * Corpus and entity populations (aggregate)
          * @description **Cost class: AGGREGATE.** Groups over the mantra, translation, deity, seer and cross-Veda layers in one round trip, so it is exempt from the median latency target.
          *
-         *     **Two deity numbers, both labelled.** `resolved_deities` is the population every deity surface in this API uses. `anukramani_ascriptions` is the traditional devata slot as it stands, which also holds human patrons, labels naming a gift rather than a recipient, and one dog. Neither is the corrected version of the other.
+         *     **Two deity numbers, both labelled.** `resolved_deities` is the population every deity surface in this API uses. `anukramani_ascriptions` is the traditional devata slot as it stands, which also holds human patrons, labels naming a gift rather than a recipient, and abstractions ruled not to name an addressee. Neither is the corrected version of the other.
          *
          *     **Seers are separated from non-seer addressees.** The seer slot also names deities, abstractions, mythic beings, a plant and an object; those are counted apart and their kinds enumerated, because a combined figure is a category error.
          *
@@ -1331,10 +1335,17 @@ export interface components {
     schemas: {
         /**
          * AgentiveAssertionView
-         * @description One agent-predicate-target assertion, from the Rigveda-only agentive layer.
+         * @description One agent-predicate-target assertion from the semantic assertion layer.
          *
-         *     All 4,865 ``SemanticAssertion`` nodes hang off Rigvedic passages. A Yajurvedic verse
-         *     returning none of these is outside the layer, which is why the set carries a status.
+         *     This said "the Rigveda-only agentive layer" and "all 4,865 ``SemanticAssertion`` nodes
+         *     hang off Rigvedic passages". Both were true of an earlier state and are now false: the
+         *     layer holds 35,131 assertions and reaches all four corpora -- RV 27,057, AV 6,167,
+         *     YV 1,543, SV 364. A Yajurvedic verse returning none of these is a verse the layer did
+         *     not reach, not a corpus outside it, which is why the set carries a status.
+         *
+         *     What remains Rigveda-only is the *agentive* reading: 2,502 assertions over 2,254
+         *     Rigvedic passages carry an ``ASSERTION_AGENT``, because that reading is derived from a
+         *     morphological annotation covering the Rigveda alone.
          *
          *     **The layer is two layers and they do not share their vocabulary.** The 2,406
          *     deterministic assertions carry ``frame`` (ASSERTED or REQUESTED), ``verb_surface`` and
@@ -1386,6 +1397,11 @@ export interface components {
             evidence_basis?: string | null;
             /** Knowledge Layer */
             knowledge_layer?: string | null;
+            /**
+             * Cautions
+             * @description Caution codes the assertion node carries, verbatim. The load-bearing one is ANALYSIS_IS_OF_A_LETTER_IDENTICAL_RIGVEDIC_VERSE_NOT_OF_A_SAMAVEDIC_ANNOTATION, on all 364 Samavedic assertions: the reading was carried across on textual identity and is not an analysis of the verse in its own collection. The graph has recorded this since the layer was built and this field is what reads it.
+             */
+            cautions?: string[];
         };
         /**
          * AskMode
@@ -2550,11 +2566,17 @@ export interface components {
          *     ``REUSES_TEXT_FROM``'s six pairs disappear from a table and a reader concludes that only
          *     the Samaveda reuses Rigvedic text.
          *
-         *     Two rows carry no edges by construction and are here anyway. The semantic resemblance
-         *     row is ``NOT_BUILT`` -- no embedding, no vector index and no asserted resemblance exists
-         *     anywhere in this graph -- and the semantic assertion row is ``NOT_BUILT`` for every pair
-         *     because all of its assertions are Rigvedic, so that layer cannot contribute to a
-         *     cross-corpus comparison at all.
+         *     Two rows carry no edges by construction and are here anyway, and they carry different
+         *     statuses because the reasons differ. The semantic resemblance row is ``NOT_BUILT`` -- no
+         *     embedding, no vector index and no asserted resemblance exists anywhere in this graph.
+         *     The semantic assertion row is ``CLASS_NOT_CROSS_VEDA``: the layer exists, holds 35,131
+         *     assertions and reaches all four corpora, and still cannot contribute to a pair, because
+         *     an assertion is a predication about one passage rather than a relation between two.
+         *
+         *     That row read ``NOT_BUILT`` "because all of its assertions are Rigvedic". The premise
+         *     was false -- the layer reaches AV, YV and SV -- and the status told a reader the layer
+         *     does not exist anywhere in this graph, beside a measured total in the same cell that
+         *     said otherwise.
          */
         CrossVedaMatrixResponse: {
             /**
@@ -2680,7 +2702,8 @@ export interface components {
          *
          *     ``resolved_deities`` is the population every deity surface in this API uses.
          *     ``anukramani_ascriptions`` is the raw slot the tradition fills, which holds human
-         *     patrons, danastuti labels naming a gift rather than a recipient, and one dog. A single
+         *     patrons, danastuti labels naming a gift rather than a recipient, and abstractions ruled
+         *     not to name an addressee. A single
          *     "number of deities" would have to pick one and would be wrong for half its readers, so
          *     both ship, with the difference broken out by structure.
          */
@@ -2934,7 +2957,7 @@ export interface components {
             structure?: string | null;
             /**
              * Is Resolved Deity
-             * @description Whether this node is in the resolved deity population. False for the human patrons, gift-praise labels and one dog the Anukramani also names.
+             * @description Whether this node is in the resolved deity population. False for the human patrons, gift-praise labels and ruled-out abstractions the Anukramani also names.
              */
             is_resolved_deity: boolean;
             named_by_veda: components["schemas"]["VedaCountRow"];
@@ -3186,7 +3209,7 @@ export interface components {
             attributed_inherited?: number | null;
             /**
              * Attribution Scope
-             * @description Vedas the Anukramani attribution layer reaches. It is Rigveda-only, so a zero elsewhere is a missing layer and not an absent deity.
+             * @description Vedas the HAS_DEVATA attribution layer reaches, which is the Rigveda alone, so a zero elsewhere is a missing layer and not an absent deity. NOT the same as 'the Anukramani is Rigveda-only', which is false: the Atharvaveda has one, and 4,160 of its mantras carry ascription descriptors from it. Those descriptors are not resolved into the deity registry, which is why they are a separate predicate and are out of scope here.
              */
             attribution_scope?: string[];
             /** Top Rishis */
@@ -4150,9 +4173,12 @@ export interface components {
          *     A copy-everything projection would have shipped every one of them.
          *
          *     **``type: "DEVATA"`` does not mean the thing is a god, and :attr:`is_deity` is why this
-         *     model can say so.** The Anukramani names a *devata* for every hymn and 30 of the 214
+         *     model can say so.** The Anukramani names a *devata* for every hymn and 57 of the 214
          *     entries are not deities: 22 human patrons and seers, 7 labels naming a gift rather than
-         *     a recipient, and one dog. The frozen graph labels all of them ``:Devata``, so a generic
+         *     a recipient, and 28 abstractions ruled not to name an addressee. The dog is NOT among
+         *     them -- it is a deified animal beside thirteen others in the population, and excluding
+         *     it for carrying structure UNSPECIFIED was the morphological accident the eligibility
+         *     ruling names. The frozen graph labels all of them ``:Devata``, so a generic
          *     graph explorer -- whose job is to show what is connected to an arbitrary node -- will
          *     resolve one sooner or later, and eight of them carry real traversable degree.
          *
@@ -4183,7 +4209,7 @@ export interface components {
             description?: string | null;
             /**
              * Is Deity
-             * @description For a node in the Anukramani's devata slot, whether it is actually a god. Null for everything else, because the question does not apply to a metre or a formula and false would answer it. False means the slot holds a human patron, praise of a gift, or the one dog -- do not render it as a deity, whatever `type` says.
+             * @description For a node in the Anukramani's devata slot, whether it is actually a god. Null for everything else, because the question does not apply to a metre or a formula and false would answer it. False means the slot holds a human patron, praise of a gift, or an abstraction ruled not to name an addressee -- do not render it as a deity, whatever `type` says.
              */
             is_deity?: boolean | null;
             /**

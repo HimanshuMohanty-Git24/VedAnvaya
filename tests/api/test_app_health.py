@@ -192,8 +192,16 @@ def test_live_readiness_passes_against_the_frozen_graph(live_client: TestClient)
 #: Neo4j and matched against the plan's promise.
 #:
 #: Raising this pair is a deliberate act, and the docstring below says what it costs.
-FROZEN_NODES = 117_970
-FROZEN_RELATIONSHIPS = 282_389
+#:
+#: Raised in R2 from 117,970 / 282,389, which the graph passed several waves ago: the census
+#: had reached 164,201 / 508,042 and this assertion had been failing continuously, which is
+#: the failure mode a census guard is supposed to prevent and the one it causes when it is
+#: left stale -- a test that always fails is a test nobody reads. R2's own graph writes moved
+#: neither figure: the display_type normalisation and the ritual_context method landing are
+#: property writes on existing nodes, promised and read back at 0 nodes and 0 relationships
+#: created or deleted. The pair below is the closed-set guard and it has not moved.
+FROZEN_NODES = 164_201
+FROZEN_RELATIONSHIPS = 508_042
 
 #: The figures that must NEVER move, whatever an import does. The whole-graph census grows
 #: with every wave; the four corpora are closed sets, and a drift here is corruption rather

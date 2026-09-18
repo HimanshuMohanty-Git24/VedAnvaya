@@ -48,6 +48,7 @@ from vedagraph.api.models.formula import (
     FormulaOccurrenceView,
 )
 from vedagraph.api.repositories.neo4j_repository import Neo4jRepository
+from vedagraph.domain import layer_figures as figures
 from vedagraph.api.services.graph_service import (
     FAMILY_MEMBERSHIP_DIRECTION,
     FAMILY_MEMBERSHIP_MIRROR,
@@ -295,6 +296,12 @@ class FormulaService:
                     source="measured",
                 )
             )
+        # GAP-FORMULA-003 clause 2. Every formula carries a formula_nesting_type and this
+        # ranking ordered by occurrence count without saying which nesting reading it
+        # applied -- so a reader could not tell whether the top of the list was several
+        # phrases or one phrase at several lengths. The sentence is derived from the live
+        # population by layer_figures rather than typed here, so it cannot go stale.
+        caveats.append(CaveatView(text=figures.formula_nesting_policy(), source="measured"))
         return caveats
 
     # -- family ------------------------------------------------------------------

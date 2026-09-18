@@ -99,9 +99,14 @@ PROBED_ABSENT_PROPERTIES: Final[frozenset[str]] = frozenset(
         "embedding",  # Q22/Q49/Q53: no node carries a vector representation
         "vector",  # Q49, the same measurement under its other name
         "expected_count",  # Q78: no entity carries an externally sourced expectation
-        "ritual_context",  # Q84: no verse carries a ritual-versus-non-ritual assignment
     }
 )
+# ``ritual_context`` was in this set and is deliberately not any more. It was probed as an
+# absence and it is now present on all 20,210 mantras, five-valued with absence typed. A
+# name left here after the property appeared is the exact defect
+# ``test_every_probed_absence_is_still_absent`` exists to catch: the Q84 card went on
+# publishing "no verse carries a ritual-versus-non-ritual assignment" after every verse
+# carried one. Q84 now grades itself from the measurement instead of asserting the absence.
 
 
 @dataclass(frozen=True)
@@ -822,7 +827,15 @@ RETURN count(m) AS mantras,
        sum(CASE WHEN EXISTS { (m)-[:USED_FOR_RITE]->() } THEN 1 ELSE 0 END)
          AS mantras_linked_to_a_rite,
        sum(CASE WHEN m.ritual_context IS NOT NULL THEN 1 ELSE 0 END)
-         AS mantras_with_a_context_assignment
+         AS mantras_with_a_context_assignment,
+       sum(CASE WHEN m.ritual_context IN
+                 ['RITE_NAMED_IN_THIS_MANTRA', 'EMPLOYED_IN_RITE', 'EMPLOYED_IN_RITE_PROBABLE']
+                THEN 1 ELSE 0 END)
+         AS mantras_placed_in_a_rite,
+       sum(CASE WHEN m.ritual_context IN
+                 ['NO_RITUAL_CITATION_FOUND', 'UNRESOLVED_SHARED_OPENING']
+                THEN 1 ELSE 0 END)
+         AS mantras_whose_context_is_a_typed_absence
 """,
         measurements=(
             (
@@ -837,32 +850,54 @@ RETURN count(m) AS mantras,
             ),
             (
                 "mantras_with_a_context_assignment",
-                "Verses carrying a ritual-versus-non-ritual assignment. This zero is the "
-                "dimension the question turns on.",
+                "Verses carrying a ritual-context assignment. Every verse carries one, "
+                "which is a statement about coverage of the axis and not about how many "
+                "of them resolve to a rite.",
+            ),
+            (
+                "mantras_placed_in_a_rite",
+                "Verses the assignment actually places in a rite, certainly or probably. "
+                "This is the figure a context split can be run on.",
+            ),
+            (
+                "mantras_whose_context_is_a_typed_absence",
+                "Verses whose assignment is a typed non-answer -- no citation found, or an "
+                "opening shared with rival verses that the citation cannot choose between. "
+                "Counted here so the coverage figure above cannot be read as resolution.",
             ),
         ),
-        grade=_always(NA),
+        grade=_partial_if(lambda v: _n(v, "mantras_placed_in_a_rite") > 0),
         why=lambda v: (
-            "The occurrence half of this question is answerable and the context half is not. "
-            f"{_n(v, 'mantras_with_a_context_assignment')} of {_n(v, 'mantras'):,} verses "
-            "carry a ritual-versus-non-ritual assignment, and the nearest available "
-            f"substitute -- the {_n(v, 'mantras_linked_to_a_rite')} verses that mention a "
-            "rite in their own words -- is a lexical fact about the verse, not a statement "
-            "about its setting. Splitting metals by that substitute would report that metals "
-            "are almost never ritual, which would be a finding about an alias list."
+            "The axis exists and it resolves for a minority of the corpus. Every one of the "
+            f"{_n(v, 'mantras'):,} verses carries a ritual-context assignment derived from "
+            "external ritual citation, but "
+            f"only {_n(v, 'mantras_placed_in_a_rite'):,} of them are placed in a rite; the "
+            f"other {_n(v, 'mantras_whose_context_is_a_typed_absence'):,} carry a typed "
+            "absence -- no citation found, or an opening shared with rival verses. So a "
+            "crop-by-context or metal-by-context split is now possible over the resolved "
+            "verses and is NOT served by any endpoint yet: no product surface reads "
+            "ritual_context. What has changed is that the axis exists to build it on, and "
+            "that a split built on it would have to carry the typed absence rather than "
+            "collapse it into a zero."
         ),
         what_this_is_not=(
-            "This is NOT a finding that Vedic crops and metals are non-ritual. It is the "
-            "absence of the axis the split would run on."
+            "The coverage figure is NOT a resolution figure, and neither is a finding that "
+            "Vedic crops and metals are non-ritual. A verse whose context is "
+            "NO_RITUAL_CITATION_FOUND is one no surviving ritual manual cites, which is a "
+            "fact about the manuals and not about the verse."
         ),
         safe_alternative=(
             "The material-culture and metals views, which report occurrence by corpus with "
-            "the lexical-minimum ceiling stated, and do not split by context."
+            "the lexical-minimum ceiling stated, and do not split by context. There is no "
+            "context-split endpoint to point at: the axis is on the verses and nothing "
+            "reads it yet."
         ),
         what_would_change_it=(
-            "A per-verse ritual-context assignment grounded in something other than a "
-            "same-verse rite mention -- the sutra literature that states which verse is "
-            "used where would be the natural source."
+            "Two things, and only one of them is a data problem. A surface that reads the "
+            "axis, which nothing does yet; and raising resolution rather than coverage, "
+            "because the verses held at UNRESOLVED_SHARED_OPENING are blocked on choosing "
+            "between rival verses that share a pratika, which a pratika-disambiguating "
+            "index of the sutra literature would settle."
         ),
         endpoint="/api/v1/insights/material-culture",
     ),

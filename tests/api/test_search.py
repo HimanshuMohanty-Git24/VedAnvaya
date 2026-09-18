@@ -273,10 +273,20 @@ def test_the_samaveda_has_no_english_translation_and_the_response_says_so(
 
 
 @pytest.mark.neo4j
-def test_the_normalized_and_lemma_surfaces_declare_their_single_corpus(
+def test_each_sanskrit_surface_declares_the_corpora_it_does_not_reach(
     live_client: TestClient,
 ) -> None:
-    """A low-yield Sanskrit query, so every Sanskrit surface is actually read and declared."""
+    """A low-yield Sanskrit query, so every Sanskrit surface is actually read and declared.
+
+    This was named ``..._declare_their_single_corpus`` and asserted that the normalised
+    surface does not reach RV, YV or SV. It reaches all three -- every verse of each -- and
+    has since the search-derivative layer was built for four works. The test asserted the
+    stale declaration rather than the graph, so it passed while every Sanskrit search told a
+    reader that a miss on that surface said nothing about three quarters of the corpus.
+
+    What is asserted now is the property that matters and cannot go stale the same way: the
+    declared non-coverage of each surface must equal the corpora that surface really misses.
+    """
     body = live_client.get(
         "/api/v1/search", params={"q": "vasukra", "language": "sa", "limit": 25}
     ).json()
@@ -284,8 +294,17 @@ def test_the_normalized_and_lemma_surfaces_declare_their_single_corpus(
     assert set(views) >= {"SANSKRIT_TEXT", "NORMALIZED_SANSKRIT", "LEMMA"}, (
         f"a Sanskrit surface went unread and undeclared: {sorted(views)}"
     )
-    assert views["NORMALIZED_SANSKRIT"]["vedas_not_covered"] == ["RV", "YV", "SV"]
+    # The normalised surface reaches all four, so it withholds nothing.
+    assert views["NORMALIZED_SANSKRIT"]["vedas_not_covered"] == []
+    # The lemma layer is genuinely Rigvedic: the Zurich annotation covers that corpus alone.
     assert views["LEMMA"]["vedas_not_covered"] == ["AV", "YV", "SV"]
+    for surface, view in views.items():
+        declared = set(view["vedas_not_covered"])
+        reached = set(view["passages_by_veda"])
+        assert not (declared & reached), (
+            f"{surface} declares {sorted(declared & reached)} uncovered and reports "
+            f"passages for them in the same view"
+        )
 
 
 # ---------------------------------------------------------------------------
@@ -316,15 +335,35 @@ _SANSKRIT_WORDS = ["indra", "soma", "agni", "somam", "vacas", "mitra", "rta", "t
 
 
 def test_the_declared_repertoire_is_well_formed() -> None:
-    assert len(SANSKRIT_ASCII_BIGRAMS) == 308
-    assert len(SANSKRIT_ASCII_TRIGRAMS) == 2419
+    """Shape and the absent-letter guard, with one measured exception named.
+
+    The sizes rose from 308 / 2,419 when the repertoire was re-derived: the
+    normalised-Sanskrit surface grew from one corpus to four, so 13 bigrams and 179 trigrams
+    the corpus really contains were outside the declaration. That direction is the dangerous
+    one -- a gram missing from the set makes the prefilter reject a query the surface could
+    have matched, and the scan is skipped in silence. Nothing was lost in the re-derivation.
+
+    ``f`` is now in the repertoire and is NOT Vedic IAST. It is in the corpus, twice, and
+    only twice: the search fold has turned ``sph`` into ``sf`` in ``gayasfanah`` and
+    ``dhattamanapasfurantimesa`` and nowhere else, so this is an inconsistent fold rather
+    than a letter of the language. It is declared rather than filtered out, because removing
+    it would make those two verses unreachable by a query that folds the same way; the fold
+    itself is reported as an open defect. ``q``, ``w``, ``x`` and ``z`` remain absent and are
+    still asserted absent.
+    """
+    assert len(SANSKRIT_ASCII_BIGRAMS) == 321
+    assert len(SANSKRIT_ASCII_TRIGRAMS) == 2598
     assert all(len(g) == 2 and g.isalpha() and g.islower() for g in SANSKRIT_ASCII_BIGRAMS)
     assert all(len(g) == 3 and g.isalpha() and g.islower() for g in SANSKRIT_ASCII_TRIGRAMS)
-    for absent in "fqwxz":
+    for absent in "qwxz":
         assert not any(absent in g for g in SANSKRIT_ASCII_BIGRAMS), (
             f"{absent!r} does not occur in Vedic IAST and must not be in the repertoire"
         )
         assert not any(absent in g for g in SANSKRIT_ASCII_TRIGRAMS)
+    # The exception, bounded: f appears in exactly these grams and no others. If the fold
+    # spreads, this fails rather than letting a non-IAST letter quietly become ordinary.
+    assert sorted(g for g in SANSKRIT_ASCII_BIGRAMS if "f" in g) == ["fu", "sf"]
+    assert sorted(g for g in SANSKRIT_ASCII_TRIGRAMS if "f" in g) == ["asf", "fur", "sfu"]
 
 
 def test_every_declared_trigram_is_built_from_declared_bigrams() -> None:
@@ -807,17 +846,17 @@ def test_searching_a_human_patron_never_types_him_a_deity(live_client: TestClien
 def test_no_devata_row_anywhere_in_search_is_a_non_deity(
     live_repository: Neo4jRepository, live_client: TestClient
 ) -> None:
-    non_deities = {
-        str(row["label"])
-        for row in live_repository.run(
-            "MATCH (dv:Devata) "
-            "WHERE coalesce(dv.structure, 'UNSPECIFIED') IN "
-            "['HUMAN', 'PATRON_PRAISE', 'UNSPECIFIED'] "
-            "RETURN dv.display_label AS label"
-        )
-    }
-    assert len(non_deities) == 30
-    for query in ("Vasistha", "Atri", "praise", "the dog", "Visvamitra", "Brbu"):
+    # The recorded ruling, not the structure. Search filtered on structure and so disagreed
+    # with /devatas about 29 subjects: it hid the dog, which the ruling admits and the deity
+    # route serves, and surfaced the 28 abstractions the ruling excludes.
+    rows = live_repository.run(
+        "MATCH (dv:Devata) WHERE dv.is_deity = false RETURN dv.display_label AS label"
+    )
+    assert len(rows) == 57
+    # 56 distinct strings over 57 nodes: two ruled non-deities share a display label, so the
+    # set is built after the row count is asserted rather than instead of it.
+    non_deities = {str(row["label"]) for row in rows}
+    for query in ("Vasistha", "Atri", "praise", "becoming", "Visvamitra", "Brbu"):
         for item in live_client.get("/api/v1/search", params={"q": query, "limit": 50}).json()[
             "items"
         ]:

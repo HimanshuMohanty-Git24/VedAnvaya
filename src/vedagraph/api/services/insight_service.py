@@ -176,6 +176,7 @@ CALL () {
     RETURN p.veda AS reuse_veda, count(*) AS reuse_count
 }
 CALL () { MATCH (d:Devata) RETURN d.structure AS ds, count(*) AS dc }
+CALL () { MATCH (d:Devata) RETURN d.is_deity AS ruled, count(*) AS rdc }
 CALL () { MATCH (r:Rishi) RETURN r.is_seer AS seer, r.non_seer_kind AS kind, count(*) AS rc }
 CALL () { MATCH (f:RishiFamily) RETURN count(f) AS rishi_families }
 CALL () { MATCH (c:Chandas) RETURN count(c) AS chandas }
@@ -193,6 +194,7 @@ RETURN works, passages, translations, rishi_families, chandas, concepts,
        collect(DISTINCT [tv, tc]) AS translations_by_veda,
        collect(DISTINCT [reuse_veda, reuse_count]) AS reused_renderings_by_veda,
        collect(DISTINCT [ds, dc]) AS devata_structures,
+       collect(DISTINCT [ruled, rdc]) AS devata_rulings,
        collect(DISTINCT [seer, kind, rc]) AS rishi_kinds
 """
 
@@ -249,7 +251,9 @@ RETURN 'PARALLEL_TO' AS relationship_class, r.veda_pair AS veda_pair,
 _ASSERTION_REACH_QUERY: Final = """
 MATCH (p:Passage)-[:HAS_SEMANTIC_ASSERTION]->(s:SemanticAssertion)
 RETURN p.veda AS veda, s.derivation AS derivation,
-       count(DISTINCT s) AS assertions, count(DISTINCT p) AS passages
+       count(DISTINCT s) AS assertions, count(DISTINCT p) AS passages,
+       count(DISTINCT CASE WHEN s.review_state = 'HUMAN_REVIEWED' THEN s END)
+         AS human_reviewed
 ORDER BY assertions DESC
 """
 
@@ -595,13 +599,26 @@ _CROSS_VEDA_CLASSES: Final[tuple[tuple[str, str], ...]] = (
     ("PARALLEL_TO", "LITERAL_TEXTUAL_REUSE"),
 )
 
-#: Two rows of the matrix that carry no edges by construction and appear anyway. Omitting
-#: them would leave a reader with a table of five built classes and no way to know that the
-#: two questions people most want answered across corpora were never built.
-_UNBUILT_CROSS_VEDA_ROWS: Final[tuple[tuple[str, str, str], ...]] = (
+#: Two rows of the matrix that carry no edges for a corpus *pair* and appear anyway.
+#: Omitting them would leave a reader with a table of five built classes and no way to know
+#: that the two questions people most want answered across corpora are not in it.
+#:
+#: Each row carries its own status, and the two differ, because the reasons differ and the
+#: distinction is the entire purpose of this matrix. ``SEMANTIC_RESEMBLANCE`` is genuinely
+#: ``NOT_BUILT`` -- no embedding, no vector, no asserted resemblance exists anywhere.
+#: ``SEMANTIC_ASSERTION`` is ``CLASS_NOT_CROSS_VEDA``, which is a different claim and the
+#: true one: 35,131 assertions exist across all four corpora, and every one of them hangs
+#: off passages of a single Veda, so the class cannot enter a pair. It was published as
+#: NOT_BUILT with a note reading "every one of its assertions is Rigvedic" -- false since
+#: the layer reached AV, YV and SV -- beside a measured total that contradicted it in the
+#: same cell. A reader was told the layer does not exist anywhere in this graph.
+_NON_PAIRING_CROSS_VEDA_ROWS: Final[
+    tuple[tuple[str, str, CrossVedaCellStatus, str], ...]
+] = (
     (
         "SEMANTIC_RESEMBLANCE",
         "SEMANTIC_RESEMBLANCE",
+        CrossVedaCellStatus.NOT_BUILT,
         "No non-lexical resemblance measure exists anywhere in this graph: no embedding, no "
         "vector index, no asserted resemblance. This row is NOT_BUILT rather than zero, "
         "because a zero beside the built classes would read as a finding that Vedic "
@@ -610,8 +627,11 @@ _UNBUILT_CROSS_VEDA_ROWS: Final[tuple[tuple[str, str, str], ...]] = (
     (
         "SEMANTIC_ASSERTION",
         "SEMANTIC_PREDICATION",
-        "The semantic-assertion layer cannot contribute to any corpus pair: every one of "
-        "its assertions is Rigvedic, so it has no non-Rigvedic endpoint to pair with.",
+        CrossVedaCellStatus.CLASS_NOT_CROSS_VEDA,
+        "The semantic-assertion layer exists and reaches all four corpora. It cannot enter "
+        "a corpus pair because an assertion is a predication about one passage rather than "
+        "a relation between two, so it has no second endpoint to pair with -- which is a "
+        "fact about the shape of the class and not about how much of it was built.",
     ),
 )
 
@@ -710,6 +730,25 @@ def _pairs_to_counts(value: Any) -> dict[str, int]:
         if isinstance(key, str) and key and count is not None:
             counts[key] = counts.get(key, 0) + count
     return counts
+
+
+def _ruled_deity_count(value: Any) -> int:
+    """Fold ``collect([is_deity, count])`` into the count of nodes ruled a deity.
+
+    Not :func:`_pairs_to_counts`, which requires a string key and would drop a boolean one
+    silently -- returning 0 resolved deities and reporting the whole pantheon excluded.
+    Counts ``True`` only, so a null or missing ruling fails closed.
+    """
+    total = 0
+    if not isinstance(value, (list, tuple)):
+        return total
+    for item in value:
+        if not isinstance(item, (list, tuple)) or len(item) < 2:
+            continue
+        count = _as_int(item[1])
+        if item[0] is True and count is not None:
+            total += count
+    return total
 
 
 def _parse_values_json(value: Any) -> dict[str, Any] | None:
@@ -877,6 +916,7 @@ class InsightService:
         translations = _pairs_to_counts(row.get("translations_by_veda"))
         reused = _pairs_to_counts(row.get("reused_renderings_by_veda"))
         structures = _pairs_to_counts(row.get("devata_structures"))
+        ruled_deities = _ruled_deity_count(row.get("devata_rulings"))
         seer_rows = row.get("rishi_kinds")
 
         corpus: list[CorpusFigure] = [
@@ -1029,7 +1069,7 @@ class InsightService:
             ],
             corpus=corpus,
             entity_populations=entity_populations,
-            deities=self._deity_population_stat(structures),
+            deities=self._deity_population_stat(structures, ruled_deities),
             seers=self._seer_population_stat(seer_rows, _as_int(row.get("rishi_families")) or 0),
             cross_veda_relationships=cross_veda,
         )
@@ -1090,15 +1130,24 @@ class InsightService:
         )
         return _counted_by_veda(counts, status=status, note=note)
 
-    def _deity_population_stat(self, structures: Mapping[str, int]) -> DeityPopulationStat:
-        """Both deity counts, with the resolved population computed from the structures.
+    def _deity_population_stat(
+        self, structures: Mapping[str, int], ruled_deities: int = 0
+    ) -> DeityPopulationStat:
+        """Both deity counts, with the resolved population read from the recorded ruling.
 
-        Routed through :func:`~vedagraph.api.services.deity_population.is_deity` rather than
-        re-listing the structures, so the resolved population here is the same answer every
-        deity surface in this API uses. A structure the contract does not recognise counts
-        as a non-deity, which fails closed.
+        It was computed from the structure histogram, which made this the last surface in
+        the API still deriving eligibility from ``structure``: it published 184 resolved
+        deities while every deity route served 157, and the two disagreed about the 28
+        abstractions ruled ABSTRACTION_NOT_AN_ADDRESSEE and about the dog. The ruling is
+        counted here instead, on the positive predicate, so an unruled node fails closed.
+
+        ``by_structure`` keeps the structure histogram, because the structure is still a
+        real fact about each row and this response is the one place a reader can see the
+        Anukramani's slot broken down. What it is not is the eligibility rule.
         """
-        resolved = sum(count for name, count in structures.items() if is_deity(name))
+        # Counted on the positive ruling, from the same query that produced the structure
+        # histogram, so this needs no second read and an unruled node fails closed.
+        resolved = ruled_deities
         total = sum(structures.values())
         return DeityPopulationStat(
             resolved_deities=resolved,
@@ -1108,9 +1157,12 @@ class InsightService:
             note=(
                 "Two figures, and they answer different questions. resolved_deities is the "
                 "population every deity surface here uses. anukramani_ascriptions is the "
-                "tradition's devata slot as it stands, which also holds human patrons, "
-                "labels naming a gift rather than a recipient, and one dog. Neither is the "
-                "corrected version of the other."
+                "tradition's devata slot as it stands, which also holds 22 human patrons, "
+                "7 labels naming a gift rather than a recipient, and 28 abstractions ruled "
+                "not to name an addressee -- 57, the figure above. It does NOT hold the dog "
+                "apart: the dog is a deified animal and sits inside resolved_deities beside "
+                "thirteen other animals. Neither figure is the corrected version of the "
+                "other."
             ),
         )
 
@@ -1217,6 +1269,37 @@ class InsightService:
         assertion_rows = self._repository.run(_ASSERTION_REACH_QUERY)
         assertion_vedas = sorted({_as_str(row.get("veda")) or "" for row in assertion_rows} - {""})
         assertion_total = sum(_as_int(row.get("assertions")) or 0 for row in assertion_rows)
+        # Counted on the positive predicate. "not UNREVIEWED" would silently promote any
+        # review state added later into human review, which is the direction that lies.
+        assertion_reviewed = sum(
+            _as_int(row.get("human_reviewed")) or 0 for row in assertion_rows
+        )
+        # GAP-SEMANTICS-001 clause 3: no surface reports a blended assertion total. The cell
+        # published one figure summed across five derivations that are not the same kind of
+        # claim -- a morphological rule over a manual annotation and a model extraction read
+        # the same to anyone counting. The total still appears, because a reader needs the
+        # size of the layer, but it never appears alone: it is broken out by derivation, the
+        # model-assisted share is named as such, and the review state is carried with it.
+        by_derivation: dict[str, int] = {}
+        for row in assertion_rows:
+            key = _as_str(row.get("derivation")) or "UNDECLARED"
+            by_derivation[key] = by_derivation.get(key, 0) + (_as_int(row.get("assertions")) or 0)
+        model_assisted = sum(
+            count for name, count in by_derivation.items() if "MODEL" in name.upper()
+        )
+        derivation_text = ", ".join(
+            f"{name} {count:,}" for name, count in sorted(by_derivation.items())
+        )
+        assertion_note = (
+            f"Measured: {assertion_total:,} assertions over "
+            f"{', '.join(assertion_vedas) or 'no corpus'}, by derivation {derivation_text}. "
+            f"{model_assisted:,} of them are model-assisted, the Samavedic rows are projected "
+            "from letter-identical Rigvedic verses rather than annotated in their own corpus, "
+            "and the rest are derived by rule from source annotation; "
+            f"{assertion_reviewed:,} have been reviewed by a human. Coverage is incomplete "
+            "and uneven across the four corpora, so the layer is usable for a single passage "
+            "and not as a corpus-level comparison."
+        )
 
         by_class = {view.relationship_class: view for view in views}
         pair_totals = {
@@ -1242,18 +1325,15 @@ class InsightService:
                 )
                 status_counts[cell.status] = status_counts.get(cell.status, 0) + 1
                 row_cells.append(cell)
-            for name, _kind, why in _UNBUILT_CROSS_VEDA_ROWS:
+            for name, _kind, row_status, why in _NON_PAIRING_CROSS_VEDA_ROWS:
                 note = why
                 if name == "SEMANTIC_ASSERTION":
-                    note = (
-                        f"{why} Measured: {assertion_total:,} assertions over "
-                        f"{', '.join(assertion_vedas) or 'no corpus'}."
-                    )
+                    note = f"{why} {assertion_note}"
                 cell = CrossVedaCell(
                     relationship_class=name,
                     pair=pair,
                     edges=None,
-                    status=CrossVedaCellStatus.NOT_BUILT,
+                    status=row_status,
                     related_edges_on_pair=pair_totals[pair],
                     note=note,
                 )
@@ -1298,14 +1378,20 @@ class InsightService:
                 relationship_class=name,
                 resemblance_kind=kind,
                 cross_veda_edges=None,
+                # Zero, and it is the right zero. This field counts intra-corpus edges *of a
+                # relatedness class* -- the 325 same-corpus parallels the caveat discloses --
+                # and a semantic assertion is not an edge of that kind at all. Publishing the
+                # layer's 35,131 here read as a relatedness population and broke the
+                # disclosure's own arithmetic. The layer's size belongs in the cell note,
+                # which states it; ``population_status`` is what carries the correction.
                 within_one_veda_edges=0,
                 pairs_reached=[],
                 directed=None,
-                population_status="NOT_BUILT",
+                population_status=str(status.value),
             )
-            for name, kind, _why in _UNBUILT_CROSS_VEDA_ROWS
+            for name, kind, status, _why in _NON_PAIRING_CROSS_VEDA_ROWS
         ]
-        total_classes = len(_CROSS_VEDA_CLASSES) + len(_UNBUILT_CROSS_VEDA_ROWS)
+        total_classes = len(_CROSS_VEDA_CLASSES) + len(_NON_PAIRING_CROSS_VEDA_ROWS)
 
         pairwise_totals_text = ", ".join(f"{pair} {pair_totals[pair]:,}" for pair in VEDA_PAIRS)
         # Same-corpus parallels carry no veda_pair at all, so a matrix that filtered on that
@@ -3042,6 +3128,31 @@ class InsightService:
         rows = self._repository.run(_ASSERTION_REACH_QUERY)
         vedas = sorted({_as_str(row.get("veda")) or "" for row in rows} - {""})
         total = sum(_as_int(row.get("assertions")) or 0 for row in rows)
+        # Per corpus, and per corpus BY DERIVATION, because that is what makes the
+        # comparison unanswerable. This card used to interpolate the live total into a
+        # frozen sentence reading "all N of its assertions sit in one corpus, because it
+        # derives from a manual morphological annotation that exists for that corpus alone",
+        # which rendered as "reaches AV, RV, SV, YV and nothing else: all 35,131 ... sit in
+        # one corpus". A measurement inside frozen grammar reads as measured and is not.
+        by_veda: dict[str, int] = {}
+        instruments: dict[str, set[str]] = {}
+        for row in rows:
+            veda = _as_str(row.get("veda")) or ""
+            if not veda:
+                continue
+            by_veda[veda] = by_veda.get(veda, 0) + (_as_int(row.get("assertions")) or 0)
+            instruments.setdefault(veda, set()).add(_as_str(row.get("derivation")) or "UNDECLARED")
+        reach_text = ", ".join(f"{veda} {by_veda[veda]:,}" for veda in sorted(by_veda))
+        instrument_text = "; ".join(
+            f"{veda} {', '.join(sorted(instruments[veda]))}" for veda in sorted(instruments)
+        )
+        agent_row = self._repository.run_one(
+            "MATCH (p:Passage)-[:HAS_SEMANTIC_ASSERTION]->(s:SemanticAssertion)"
+            "-[:ASSERTION_AGENT]->() RETURN count(DISTINCT s) AS agentive, "
+            "count(DISTINCT p.veda) AS vedas"
+        )
+        agentive = _as_int((agent_row or {}).get("agentive")) or 0
+        agentive_vedas = _as_int((agent_row or {}).get("vedas")) or 0
         return CapabilityLimit(
             limit_id="semantic_roles_outside_the_rigveda",
             question_number=52,
@@ -3050,31 +3161,47 @@ class InsightService:
             benchmark_verdict=CapabilityVerdict.NOT_ANSWERABLE,
             data_status=KnowledgeStatus.NOT_BUILT,
             why=(
-                f"The semantic-assertion layer reaches {', '.join(vedas) or 'no corpus'} and "
-                f"nothing else: all {total:,} of its assertions sit in one corpus, because it "
-                "derives from a manual morphological annotation that exists for that corpus "
-                "alone. There is no non-Rigvedic row to compare, and no divergence statistic "
-                "anywhere in the graph."
+                f"The layer reaches all four corpora -- {reach_text} -- and the question is "
+                "still not answerable, for a different reason than a missing corpus. Each "
+                f"corpus is annotated by a different instrument ({instrument_text}), so a "
+                "measured difference between two corpora here would be a difference between "
+                "annotation projects rather than between the texts. The role reading the "
+                f"question asks for is narrower again: {agentive:,} assertions carry an "
+                f"explicit agent and they span {agentive_vedas} corpus, so there is no "
+                "second corpus of roles to compare. No divergence statistic exists anywhere "
+                "in the graph."
             ),
             what_this_is_not=(
-                "A zero for the other three corpora is an absent annotation layer and not an "
-                "absence of semantic structure in those texts. The layer must also never be "
-                "aggregated across its two derivations, which differ in strength and in reach."
+                "This is NOT a finding that the layer is absent outside the Rigveda -- it "
+                "reaches all four corpora. Nor is a smaller figure for a corpus an absence "
+                "of semantic structure in that text: it is a thinner annotation. The layer "
+                "must never be aggregated across its derivations, which differ in strength, "
+                "in reach and in what they were derived from."
             ),
             measurements=[
                 CapabilityMeasurement(
                     name="assertions",
                     value=total,
-                    means=f"All of them in {', '.join(vedas) or 'no corpus'}. The predicates "
-                    "derived from this layer inherit its scope, so they are single-corpus too.",
+                    means=f"The whole layer, across four corpora ({reach_text}). Not one "
+                    "figure to be compared against another: the derivations differ per "
+                    "corpus, so this total is a size and not a measurement of anything.",
+                ),
+                CapabilityMeasurement(
+                    name="assertions_carrying_an_explicit_agent",
+                    value=agentive,
+                    means="The subset that states who acts, which is the reading the question "
+                    "asks for. Rigvedic only, because it comes from a morphological "
+                    "annotation covering the Rigveda alone.",
                 ),
             ],
             safe_alternative=(
                 "The deity mention layer, which reaches all four corpora, though by two "
-                "different instruments that must not be averaged."
+                "different instruments that must not be averaged. For the assertion layer, "
+                "read one corpus at a time and read the derivation with it."
             ),
             what_would_change_it=(
-                "A morphological annotation for the other three corpora, plus a divergence "
+                "One annotation instrument applied to all four corpora, so that a difference "
+                "between corpora is not a difference between projects, plus a divergence "
                 "measure with a stated significance test."
             ),
             endpoint="/api/v1/insights/cross-veda",
@@ -3208,8 +3335,9 @@ class InsightService:
         """
         from vedagraph.api.services.entity_service import EntityService, subject_disclosure
 
-        structure = EntityService(self._repository)._resolve_devata(devata_id, population)
-        _is_deity, disclosure = subject_disclosure(structure)
+        subject = EntityService(self._repository)._resolve_devata(devata_id, population)
+        structure = subject.structure
+        _is_deity, disclosure = subject_disclosure(subject)
         row = self._repository.run_one(
             "MATCH (d:Devata {entity_key: $key}) RETURN d.display_label AS label", key=devata_id
         )
@@ -3482,8 +3610,9 @@ class InsightService:
         # ever grew an import-time failure.
         from vedagraph.api.services.entity_service import EntityService, subject_disclosure
 
-        structure = EntityService(self._repository)._resolve_devata(devata_id, population)
-        is_resolved_deity, disclosure = subject_disclosure(structure)
+        subject = EntityService(self._repository)._resolve_devata(devata_id, population)
+        structure = subject.structure
+        is_resolved_deity, disclosure = subject_disclosure(subject)
 
         row = self._repository.run_one(_DEVATA_INSIGHT_QUERY, key=devata_id, tiers=list(tiers))
         if row is None:  # pragma: no cover - the gate above already resolved the node

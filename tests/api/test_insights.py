@@ -656,7 +656,9 @@ def test_q25_partial_semantics_are_reachable_through_the_capability_catalogue(
     assert measured["rituals_modelled"] == RITUAL_TOTAL
     assert measured["step_edges"] == HAS_STEP_TOTAL
     assert measured["procedure_step_edges"] == PROCEDURE_STEP_TOTAL
-    assert measured["curated_implements"] == 14
+    # 15 since the ritual-object adjudication landed; was 14. The figure is a snapshot and
+    # the assertion below is the actual guard.
+    assert measured["curated_implements"] == 15
     # Grew from 23 with the Wave 3 object registry. The curation ceiling is the point of the
     # pair, so what matters is that the registry stays the larger of the two.
     assert measured["objects_in_the_registry"] == 41
@@ -729,10 +731,15 @@ def test_directed_reuse_absence_is_typed_and_carries_the_parallels_that_disprove
 ) -> None:
     """The single most dangerous zero in this graph, and how the matrix defuses it.
 
-    Directed textual reuse exists for RV-SV alone. Rendered as ``0`` for the other five
-    pairs it says the Atharvaveda reuses no Rigvedic text -- and the same pair carries
-    hundreds of undirected parallels in this very graph. So those cells are
-    NOT_ESTABLISHED_FOR_PAIR, and each carries the measured parallel count for its own pair.
+    Directed textual reuse reaches two pairs, RV-SV and AV-RV. Rendered as ``0`` for the
+    other four it would say the Yajurveda reuses no Rigvedic text -- and RV-YV carries 662
+    undirected parallels in this very graph. So those cells are NOT_ESTABLISHED_FOR_PAIR,
+    and each carries the measured parallel count for its own pair.
+
+    The absent example used to be AV-RV. It gained 311 directed edges when the reuse
+    direction layer was extended, so it is asserted here as the *second measured* pair and
+    the guard moves to a pair that still has none. Bumping the expected status instead
+    would have deleted the guard rather than updated it.
     """
     body = live_client.get(CROSS_VEDA).json()
     cells = {
@@ -744,23 +751,40 @@ def test_directed_reuse_absence_is_typed_and_carries_the_parallels_that_disprove
     assert measured["status"] == CrossVedaCellStatus.MEASURED
     assert measured["edges"] == 1684
 
-    absent = cells[("AV-RV", "REUSES_TEXT_FROM")]
-    assert absent["status"] == CrossVedaCellStatus.NOT_ESTABLISHED_FOR_PAIR
-    assert absent["edges"] is None
-    assert absent["related_edges_on_pair"] and absent["related_edges_on_pair"] > 1_000
-    assert "not a statement about the texts" in absent["note"]
+    also_measured = cells[("AV-RV", "REUSES_TEXT_FROM")]
+    assert also_measured["status"] == CrossVedaCellStatus.MEASURED
+    assert also_measured["edges"] and also_measured["edges"] > 0
+
+    # The four pairs with no directed reuse are MEASURED_ZERO now rather than
+    # NOT_ESTABLISHED_FOR_PAIR, because a typed refusal was computed for each: the zero is a
+    # decision that the instrument does not apply, not an unrun measurement. What this test
+    # guards is unchanged and asserted on the note -- the zero may not travel naked, it must
+    # name its refusal and carry the undirected parallels that disprove a reading of "these
+    # two corpora share no text".
+    refused = cells[("RV-YV", "REUSES_TEXT_FROM")]
+    assert refused["status"] == CrossVedaCellStatus.MEASURED_ZERO
+    assert refused["related_edges_on_pair"] and refused["related_edges_on_pair"] > 500
+    assert "REFUSED_UNIT_GRANULARITY_INCOMPARABLE" in refused["note"]
+    assert "measured refusal and not an unbuilt cell" in refused["note"]
+    assert "undirected parallel edges are unaffected" in refused["note"]
 
 
 @pytest.mark.neo4j
 def test_semantic_assertion_layer_contributes_no_cross_veda_count(
     live_client: TestClient,
 ) -> None:
-    """Every assertion is Rigvedic, so the layer has no non-Rigvedic endpoint to pair with.
+    """The layer contributes no *pair* count, and that is not the same as not existing.
 
-    Present as a row in all six pairs and NOT_BUILT in all six. Omitting the row would leave
-    a reader with a table of built classes and no way to know that the semantic layer cannot
-    speak to a cross-corpus question at all; reporting it as 0 would say the corpora share
-    no semantic structure.
+    This test asserted NOT_BUILT and required the word "Rigvedic" in the note, on the
+    premise that every assertion is Rigvedic. That premise was false when it was written
+    or became false soon after: the layer reaches AV, YV and SV as well, and the same cell
+    carried a measured total saying so. The row still appears in all six pairs and still
+    carries no count -- an assertion is a predication about one passage, so it has no
+    second endpoint -- but the reason is CLASS_NOT_CROSS_VEDA, not absence.
+
+    Omitting the row would leave a reader with a table of built classes and no way to know
+    the semantic layer cannot speak to a cross-corpus question; reporting it as 0 would say
+    the corpora share no semantic structure.
     """
     body = live_client.get(CROSS_VEDA).json()
     rows = [
@@ -771,9 +795,9 @@ def test_semantic_assertion_layer_contributes_no_cross_veda_count(
     ]
     assert len(rows) == 6
     for cell in rows:
-        assert cell["status"] == CrossVedaCellStatus.NOT_BUILT
+        assert cell["status"] == CrossVedaCellStatus.CLASS_NOT_CROSS_VEDA
         assert cell["edges"] is None
-        assert "Rigvedic" in cell["note"]
+        assert "every one of its assertions is Rigvedic" not in cell["note"]
 
 
 @pytest.mark.neo4j
@@ -796,7 +820,8 @@ def test_class_reaching_only_one_pair_is_visible_in_the_class_summary(
 ) -> None:
     body = live_client.get(CROSS_VEDA).json()
     views = {view["relationship_class"]: view for view in body["relationship_classes"]}
-    assert views["REUSES_TEXT_FROM"]["pairs_reached"] == ["RV-SV"]
+    # Two pairs since the direction layer was extended; was ["RV-SV"].
+    assert views["REUSES_TEXT_FROM"]["pairs_reached"] == ["AV-RV", "RV-SV"]
     assert len(views["NEAR_PARALLEL_OF"]["pairs_reached"]) == 6
     # A class entirely inside one corpus reports no pair and is typed as such per cell.
     assert views["PARALLEL_TO"]["pairs_reached"] == []
@@ -844,7 +869,7 @@ def test_deity_naming_and_ascription_are_separate_fields_with_separate_scopes(
 def test_g01_default_population_refuses_every_non_deity(
     live_client: TestClient, live_repository: Neo4jRepository
 ) -> None:
-    """The deity gate, on this route, for all 30 of them.
+    """The deity gate, on this route, for all 57 of them.
 
     This endpoint had the machine-readable half right -- ``is_resolved_deity: false`` and
     ``structure`` on the row -- and still served the dog at 200 with no disclosure under a
@@ -855,12 +880,10 @@ def test_g01_default_population_refuses_every_non_deity(
     non_deities = [
         str(row["k"])
         for row in live_repository.run(
-            "MATCH (d:Devata) WHERE coalesce(d.structure, 'UNSPECIFIED') IN $structures "
-            "RETURN d.entity_key AS k ORDER BY k",
-            structures=sorted(NON_DEITY_STRUCTURES),
+            "MATCH (d:Devata) WHERE d.is_deity = false RETURN d.entity_key AS k ORDER BY k"
         )
     ]
-    assert len(non_deities) == 30, "the non-deity population has moved; re-read this test"
+    assert len(non_deities) == 57, "the non-deity population has moved; re-read this test"
     for entity_key in non_deities:
         response = live_client.get(f"/api/v1/insights/devatas/{entity_key}")
         assert response.status_code == 404, entity_key
@@ -880,10 +903,11 @@ def test_g01_non_deity_under_all_ascriptions_carries_both_disclosure_halves(
     same error as omitting the caveat, one field along.
     """
     body = live_client.get(
-        "/api/v1/insights/devatas/VG:DEVATA:SUNAH", params={"population": "all_ascriptions"}
+        "/api/v1/insights/devatas/VG:DEVATA:BHAVAVRTTAM",
+        params={"population": "all_ascriptions"},
     ).json()
     assert body["is_resolved_deity"] is False
-    assert body["structure"] == "UNSPECIFIED"
+    assert body["structure"] == "ABSTRACT"
     disclosure = next(
         caveat for caveat in body["caveats"] if caveat["source"] == "deity_population_contract"
     )
@@ -1240,8 +1264,8 @@ def test_every_ritual_collection_has_bounds_that_describe_itself(
     assert "pagination" not in body
     bounds = body["collections"]
     assert set(bounds) == {"objects", "rituals"}
-    assert bounds["objects"]["returned"] == len(body["objects"]) == 14
-    assert bounds["objects"]["total"] == 14
+    assert bounds["objects"]["returned"] == len(body["objects"]) == 15
+    assert bounds["objects"]["total"] == 15
     assert not bounds["objects"]["has_more"]
 
     # The rite collection now overruns its page, which is the case this block was built for:

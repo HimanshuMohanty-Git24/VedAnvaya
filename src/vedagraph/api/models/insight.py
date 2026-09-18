@@ -357,7 +357,8 @@ class DeityPopulationStat(ApiModel):
 
     ``resolved_deities`` is the population every deity surface in this API uses.
     ``anukramani_ascriptions`` is the raw slot the tradition fills, which holds human
-    patrons, danastuti labels naming a gift rather than a recipient, and one dog. A single
+    patrons, danastuti labels naming a gift rather than a recipient, and abstractions ruled
+    not to name an addressee. A single
     "number of deities" would have to pick one and would be wrong for half its readers, so
     both ship, with the difference broken out by structure.
     """
@@ -519,11 +520,17 @@ class CrossVedaMatrixResponse(InsightEnvelope):
     ``REUSES_TEXT_FROM``'s six pairs disappear from a table and a reader concludes that only
     the Samaveda reuses Rigvedic text.
 
-    Two rows carry no edges by construction and are here anyway. The semantic resemblance
-    row is ``NOT_BUILT`` -- no embedding, no vector index and no asserted resemblance exists
-    anywhere in this graph -- and the semantic assertion row is ``NOT_BUILT`` for every pair
-    because all of its assertions are Rigvedic, so that layer cannot contribute to a
-    cross-corpus comparison at all.
+    Two rows carry no edges by construction and are here anyway, and they carry different
+    statuses because the reasons differ. The semantic resemblance row is ``NOT_BUILT`` -- no
+    embedding, no vector index and no asserted resemblance exists anywhere in this graph.
+    The semantic assertion row is ``CLASS_NOT_CROSS_VEDA``: the layer exists, holds 35,131
+    assertions and reaches all four corpora, and still cannot contribute to a pair, because
+    an assertion is a predication about one passage rather than a relation between two.
+
+    That row read ``NOT_BUILT`` "because all of its assertions are Rigvedic". The premise
+    was false -- the layer reaches AV, YV and SV -- and the status told a reader the layer
+    does not exist anywhere in this graph, beside a measured total in the same cell that
+    said otherwise.
     """
 
     pairs: list[CrossVedaPairRow] = Field(default_factory=list)
@@ -1353,7 +1360,8 @@ class DevataInsightResponse(InsightEnvelope):
     structure: str | None = None
     is_resolved_deity: bool = Field(
         description="Whether this node is in the resolved deity population. False for the "
-        "human patrons, gift-praise labels and one dog the Anukramani also names."
+        "human patrons, gift-praise labels and ruled-out abstractions the Anukramani also "
+        "names."
     )
     named_by_veda: VedaCountRow
     named_total: int | None = None

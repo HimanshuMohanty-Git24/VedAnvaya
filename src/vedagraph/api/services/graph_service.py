@@ -119,7 +119,7 @@ from vedagraph.api.repositories.neo4j_repository import (
     validated_label,
     validated_relationship_types,
 )
-from vedagraph.api.services.deity_population import subject_disclosure
+from vedagraph.api.services.deity_population import DevataSubject, subject_disclosure
 from vedagraph.domain import layer_figures
 from vedagraph.domain.ontology import LABEL_DEVATA
 
@@ -546,18 +546,30 @@ PRODUCT_TYPE_BY_DISPLAY_TYPE: Final[dict[str, str]] = {
     "DeityGroup": "DEITY_GROUP",
     "DevataAscription": "DEVATA_ASCRIPTION",
     "ActionPredicate": "ACTION_PREDICATE",
+    # One key, because the graph now holds one spelling. It held two: 4,865 nodes carried
+    # "SemanticAssertion" from the two domain builders and 30,266 carried
+    # "SEMANTIC_ASSERTION" from a stabilisation backfill's
+    # coalesce(s.display_type, 'SEMANTIC_ASSERTION') -- a value declared in no ontology
+    # module. Mapping both here served one product type under two names and papered over
+    # the split rather than closing it; downstream, frontend/scripts/world-groups.json has
+    # an entry for the label spelling only, so those 30,266 nodes were drawn in the browser
+    # world as "other" while the other 4,865 were drawn as "record". The 30,266 were
+    # normalised to the label spelling and the second key is deliberately NOT kept as a
+    # tolerance: if a builder writes it again, the live-graph coverage test fails loudly
+    # instead of the value being quietly accepted a second time.
+    #
+    # PADA_PARALLEL_GROUP below is the same shape and was NOT harmless, contrary to an
+    # earlier note here: its 1,434 nodes have no entry in world-groups.json either, so they
+    # are drawn in the browser world as "other" exactly as the 30,266 assertions were. What
+    # differs is the remedy -- no node has ever carried the PascalCase spelling, so there
+    # was nothing in the graph to normalise, and the fix is a missing group mapping rather
+    # than a migration. It is left open and reported rather than described as benign.
     "SemanticAssertion": "SEMANTIC_ASSERTION",
-    # Both of the graph's two spellings, because it holds both. Measured: 4,865
-    # SemanticAssertion nodes carry display_type "SemanticAssertion" and the 30,266
-    # whose identity comes from a persisted assertion_key carry "SEMANTIC_ASSERTION".
-    # One product object type was therefore served under two names -- and the second
-    # name was not merely undeclared but malformed, because the fallback below is
-    # _snake_upper, which inserts a separator before a capital and so turns an
-    # already-upper-snake display_type into SEMANTIC__ASSERTION. Declaring the
-    # display_type spelling alongside the label spelling costs one line each and
-    # removes the double underscore from 31,700 of the 71,373 public nodes.
-    "SEMANTIC_ASSERTION": "SEMANTIC_ASSERTION",
-    "PadaParallelGroup": "PADA_PARALLEL_GROUP",
+    # The graph's own spelling, and only it. A "PadaParallelGroup" key sat beside this one
+    # and no node has ever carried that value -- measured: 1,434 nodes, all
+    # PADA_PARALLEL_GROUP -- so unlike the assertion case there was nothing in the graph to
+    # normalise and removing the dead key changes no data. It was NOT harmless: see the
+    # note above.
     "PADA_PARALLEL_GROUP": "PADA_PARALLEL_GROUP",
     "DerivedMetric": "DERIVED_METRIC",
     "InterpretiveClaim": "INTERPRETIVE_CLAIM",
@@ -605,6 +617,10 @@ NODE_METADATA_KEYS: Final[frozenset[str]] = frozenset(
         "sequence_in_parent",
         # deity
         "structure",
+        # The recorded eligibility ruling, so a client reading the graph sees the same
+        # decision the deity routes filter on rather than re-deriving one from `structure`.
+        "non_deity_kind",
+        "deity_eligibility_ruling",
         "is_composite",
         "component_count",
         "axes",
@@ -1104,10 +1120,15 @@ PREDICATE_SEMANTICS: Final[dict[str, PredicateSemantics]] = {
     "HAS_SEMANTIC_ASSERTION": PredicateSemantics(
         "carries the semantic assertion",
         "This passage carries a reified assertion about who does what.",
-        "One label over two layers of unequal strength that must not be summed: 2,406 "
-        "assertions derived by rule from the Sanskrit annotation, and 2,459 extracted "
-        "unreviewed by a model from an English translation. All 4,865 are Rigvedic. "
-        "Read the assertion's own `derivation` before using it.",
+        "One label over five derivations of unequal strength that must not be summed: "
+        "28,370 and 2,406 derived by rule from the Sanskrit annotation, 1,532 from the "
+        "treebank dependency layer, 364 projected from a letter-identical Rigvedic verse "
+        "rather than annotated in their own corpus, and 2,459 extracted unreviewed by a "
+        "model from an English translation. The layer reaches all four corpora unevenly "
+        "-- RV 27,057, AV 6,167, YV 1,543, SV 364 -- and none of it is human-reviewed. "
+        "This said 'All 4,865 are Rigvedic', which was true of an earlier state of the "
+        "layer and is now false in both halves. Read the assertion's own `derivation` "
+        "before using it.",
     ),
     "USES_OBJECT": PredicateSemantics(
         "uses the object",
@@ -1639,7 +1660,15 @@ def node_view(properties: dict[str, Any], labels: list[str]) -> GraphNodeView:
     label = properties.get("display_label")
     is_deity: bool | None = None
     if LABEL_DEVATA in labels:
-        is_deity, _ = subject_disclosure(_as_optional_str(properties.get("structure")))
+        # The ruling, carried on the node. Deriving it from ``structure`` here made a graph
+        # node's is_deity flag disagree with the deity routes' own gate on 29 nodes.
+        is_deity, _ = subject_disclosure(
+            DevataSubject(
+                structure=_as_optional_str(properties.get("structure")),
+                is_deity=properties.get("is_deity") is True,
+                non_deity_kind=_as_optional_str(properties.get("non_deity_kind")),
+            )
+        )
     return GraphNodeView(
         id=node_id or "",
         type=product_type(properties, labels),
@@ -1677,10 +1706,20 @@ def non_deity_subject_caveats(nodes: Sequence[GraphNodeView]) -> list[CaveatView
     seen: set[str] = set()
     for node in offenders:
         structure = str(node.metadata.get("structure") or "UNSPECIFIED")
-        if structure in seen:
+        kind = node.metadata.get("non_deity_kind")
+        key = f"{structure}|{kind}"
+        if key in seen:
             continue
-        seen.add(structure)
-        caveats.extend(subject_disclosure(structure)[1])
+        seen.add(key)
+        caveats.extend(
+            subject_disclosure(
+                DevataSubject(
+                    structure=structure,
+                    is_deity=False,
+                    non_deity_kind=str(kind) if kind else None,
+                )
+            )[1]
+        )
     named = ", ".join(f"{node.label} ({node.id})" for node in offenders[:8])
     more = "" if len(offenders) <= 8 else f", and {len(offenders) - 8:,} more"
     count = len(offenders)

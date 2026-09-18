@@ -29,6 +29,7 @@
  *   node scripts/build-world.mjs              # composition   -> public/world/*
  */
 
+import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -506,9 +507,21 @@ const constellations = regionIds.map((id, i) => {
     };
 });
 
+/*
+ * world.bin is the one artifact that cannot declare its own lineage: it is a headerless
+ * typed-array blob, so there is nowhere in it to put a hash. It is pinned from the outside
+ * instead -- the manifest records its sha256 and its byte length, and the manifest is
+ * itself pinned to the public export. That closes the chain: a world.bin from a different
+ * build no longer matches the manifest that ships beside it, and `ids` is a positional join
+ * onto it, so the alternative is a silent mislabelling of every node.
+ */
+const worldBinSha256 = createHash("sha256").update(buffer).digest("hex");
+
 const manifest = {
     version: 2,
     inputPublicExportHash,
+    worldBinSha256,
+    worldBinBytes: buffer.byteLength,
     identityAudit,
     generated: raw.generated,
     source: { nodes: raw.counts.nodes, edges: raw.counts.edges },
@@ -537,7 +550,17 @@ const manifest = {
 mkdirSync(OUT_DIR, { recursive: true });
 writeFileSync(join(OUT_DIR, "world.bin"), buffer);
 writeFileSync(join(OUT_DIR, "world.json"), JSON.stringify(manifest));
+/*
+ * The labels sidecar carries the public-export hash for the same reason world.json does.
+ *
+ * world.json and constellations.json were pinned to the exact public export and this file
+ * was not, which left one shipped browser artifact outside the lineage contract: a
+ * labels file built from a different export would still load, and every label would be a
+ * real label -- of the wrong node. `ids` is a positional join onto world.bin, so that
+ * failure is silent and reads as data rather than as a build error.
+ */
 const labels = {
+    inputPublicExportHash,
     ids: nodes.map((n) => n.id),
     labels: nodes.map((n) => n.label ?? ""),
 };

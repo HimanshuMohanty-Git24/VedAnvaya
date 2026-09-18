@@ -31,7 +31,7 @@ router = APIRouter(tags=["Stats"], responses=COMMON_ERROR_RESPONSES)
         "**Two deity numbers, both labelled.** `resolved_deities` is the population every "
         "deity surface in this API uses. `anukramani_ascriptions` is the traditional devata "
         "slot as it stands, which also holds human patrons, labels naming a gift rather than a "
-        "recipient, and one dog. Neither is the corrected version of the other.\n\n"
+        "recipient, and abstractions ruled not to name an addressee. Neither is the corrected version of the other.\n\n"
         "**Seers are separated from non-seer addressees.** The seer slot also names deities, "
         "abstractions, mythic beings, a plant and an object; those are counted apart and their "
         "kinds enumerated, because a combined figure is a category error.\n\n"

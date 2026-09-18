@@ -99,7 +99,7 @@ export default async function LabIndexPage() {
         },
         deities: {
             figure: count(stats.data.deities?.resolved_deities) ?? "—",
-            unit: "deities resolved from the registry. The traditional index also names 30 subjects that are not gods, and they are refused.",
+            unit: "deities resolved from the registry. The traditional index also names 57 subjects that are not gods, and they are refused.",
         },
     };
 

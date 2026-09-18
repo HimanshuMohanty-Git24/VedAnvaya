@@ -77,7 +77,7 @@ const LAYERS: { label: string; technical: string; body: string }[] = [
     {
         label: "What a model extracted",
         technical: "Semantic or model-assisted",
-        body: "Statements pulled out of a translation by a language model and kept as candidates. Every one is marked, none is treated as a source statement, and this layer reaches the Rigveda only. It is the smallest layer here and the one held at the greatest distance.",
+        body: "Statements pulled out of a translation by a language model and kept as candidates. Every one is marked, none is treated as a source statement, and this layer reaches the Rigveda only \u2014 2,459 of them, a small share of a 35,131-assertion layer that itself spans all four collections. It is held at the greatest distance of anything here.",
     },
     {
         label: "What someone concluded",
@@ -128,7 +128,10 @@ const RELATIONSHIPS: { label: string; body: string }[] = [
     },
     {
         label: "Semantic assertion",
-        body: "A statement about a verse extracted by a model from its translation. Rigvedic only, permanently marked as a candidate, and never counted as a textual relationship.",
+        // Was "extracted by a model ... Rigvedic only". Both halves were false: most of the
+        // layer is derived by rule from source annotation rather than by a model, and it
+        // reaches all four collections, not one.
+        body: "A statement about a single verse. Most are derived by rule from scholarly morphological annotation and a minority are extracted by a model from a translation; the layer reaches all four collections, none of it has been reviewed by a human, and it is never counted as a textual relationship.",
     },
 ];
 

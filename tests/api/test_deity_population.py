@@ -48,6 +48,10 @@ EXPECTED_STRUCTURE_COUNTS = {
     "UNSPECIFIED": 1,
 }
 EXPECTED_DEVATA_TOTAL = 214
+#: The ruled eligible population. Not derived from the structure counts above, because the
+#: ruling and the structure disagree on 29 nodes and that disagreement is the whole of
+#: GAP-ENTITY_COVERAGE-008.
+EXPECTED_ELIGIBLE_DEITIES = 157
 
 
 # ---------------------------------------------------------------------------
@@ -78,50 +82,64 @@ def test_unknown_and_null_structures_fail_closed(structure: str | None) -> None:
     assert not is_deity(structure)
 
 
-def test_structure_clause_binds_a_parameter_and_names_no_structure() -> None:
-    """Nothing a caller controls, and no structure name, reaches the query text."""
+def test_structure_clause_binds_a_parameter_and_reads_the_ruling() -> None:
+    """Nothing a caller controls reaches the query text, and the clause reads the ruling.
+
+    It read ``structure``, which made it a second eligibility predicate beside the
+    documented one. Asserting the property name here is what stops it drifting back: a
+    structure list is the thing that got spelled four ways.
+    """
     clause = deity_structure_clause("dv")
     assert f"${DEITY_STRUCTURE_PARAM}" in clause
-    assert "coalesce(dv.structure, 'UNSPECIFIED')" in clause
+    assert "coalesce(dv.is_deity, false)" in clause
+    assert "structure" not in clause, "eligibility is the ruling, not the structure"
     for structure in DEITY_STRUCTURES:
-        assert structure not in clause, "the structure list must travel as a parameter"
+        assert structure not in clause, "no value may be interpolated into the query text"
 
 
-def test_structure_clause_coalesces_so_a_null_structure_is_excluded() -> None:
-    """The coalesce default must be a NON-deity, or a missing property admits a god."""
+def test_structure_clause_coalesces_so_an_unruled_node_is_excluded() -> None:
+    """The coalesce default must be false, or a missing ruling admits a god."""
     clause = deity_structure_clause("x")
-    default = clause.split("'")[1]
-    assert default in NON_DEITY_STRUCTURES
+    assert "coalesce(x.is_deity, false)" in clause
+    assert "coalesce(x.is_deity, true)" not in clause
 
 
 def test_populations_differ_only_in_the_bound_list() -> None:
     deities = deity_structure_parameters(DeityPopulation.DEITIES)
     everything = deity_structure_parameters(DeityPopulation.ALL_ASCRIPTIONS)
-    assert set(deities[DEITY_STRUCTURE_PARAM]) == DEITY_STRUCTURES
-    assert set(everything[DEITY_STRUCTURE_PARAM]) == KNOWN_DEITY_STRUCTURES
+    assert deities[DEITY_STRUCTURE_PARAM] == [True]
+    assert sorted(everything[DEITY_STRUCTURE_PARAM]) == [False, True]
     assert deities.keys() == everything.keys()
 
 
 def test_both_populations_carry_a_caveat() -> None:
-    """Filtering hides 30 real ascriptions; not filtering returns a dog. Both need saying."""
+    """Filtering hides 57 real ascriptions; not filtering returns them. Both need saying.
+
+    The figure was 30 and named a dog among the excluded. The recorded ruling admits the dog
+    and excludes 28 abstractions this caveat never mentioned, so the sentence was wrong in
+    both directions at once.
+    """
     for population in DeityPopulation:
         caveats = population_caveats(population)
         assert caveats, f"{population} returned no caveat"
         assert all(caveat.text for caveat in caveats)
-    assert "30 of the 214" in NON_DEITY_EXCLUSION_CAVEAT
+    assert "57 of the 214" in NON_DEITY_EXCLUSION_CAVEAT
+    assert "one dog" not in NON_DEITY_EXCLUSION_CAVEAT
 
 
 def test_filter_co_deity_labels_drops_humans_unknowns_and_unresolved() -> None:
     rows: list[dict[str, Any]] = [
-        {"display_label": "Soma", "structure": "INDIVIDUAL"},
-        {"display_label": "Vasukra", "structure": "HUMAN"},
-        {"display_label": "praise of a gift", "structure": "PATRON_PRAISE"},
-        {"display_label": "the dog", "structure": "UNSPECIFIED"},
+        {"display_label": "Soma", "structure": "INDIVIDUAL", "is_deity": True},
+        {"display_label": "Vasukra", "structure": "HUMAN", "is_deity": False},
+        {"display_label": "praise of a gift", "structure": "PATRON_PRAISE", "is_deity": False},
+        {"display_label": "the dog", "structure": "UNSPECIFIED", "is_deity": True},
         {"display_label": "something new", "structure": "SEMI_DIVINE"},
         {"display_label": "unresolvable"},
     ]
     kept = filter_co_deity_labels(rows)
-    assert [row["display_label"] for row in kept] == ["Soma"]
+    # The dog is kept now: the recorded ruling admits it, and dropping it was the
+    # morphological accident the ruling names. The unruled rows still fail closed.
+    assert [row["display_label"] for row in kept] == ["Soma", "the dog"]
 
 
 # ---------------------------------------------------------------------------
@@ -156,16 +174,19 @@ def test_known_structures_partition_every_devata_node(live_repository: Neo4jRepo
 def test_the_clause_resolves_the_expected_population_live(
     live_repository: Neo4jRepository,
 ) -> None:
-    """The two populations, run against the graph, differ by exactly the 30 non-deities."""
+    """The two populations, run against the graph, differ by exactly the 57 ruled out."""
     cypher = f"MATCH (dv:Devata) WHERE {deity_structure_clause('dv')} RETURN count(dv) AS n"
     deities = live_repository.run_one(cypher, **deity_structure_parameters(DeityPopulation.DEITIES))
     everything = live_repository.run_one(
         cypher, **deity_structure_parameters(DeityPopulation.ALL_ASCRIPTIONS)
     )
     assert deities is not None and everything is not None
-    non_deities = sum(EXPECTED_STRUCTURE_COUNTS[s] for s in NON_DEITY_STRUCTURES)
     assert int(everything["n"]) == EXPECTED_DEVATA_TOTAL
-    assert int(deities["n"]) == EXPECTED_DEVATA_TOTAL - non_deities == 184
+    # 157, the ruled population: 22 HUMAN_PATRON + 7 DANASTUTI_GIFT_PRAISE +
+    # 28 ABSTRACTION_NOT_AN_ADDRESSEE excluded. The structure clause returned 184 because it
+    # admitted all 41 ABSTRACT and excluded the one UNSPECIFIED node the ruling admits.
+    assert int(deities["n"]) == EXPECTED_ELIGIBLE_DEITIES == 157
+    assert int(everything["n"]) - int(deities["n"]) == 57
 
 
 @pytest.mark.neo4j

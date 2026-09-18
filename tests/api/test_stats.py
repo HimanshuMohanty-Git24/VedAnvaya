@@ -121,6 +121,10 @@ def _population_row() -> dict[str, Any]:
             ["PATRON_PRAISE", 7],
             ["UNSPECIFIED", 1],
         ],
+        # Mirrors rishi_kinds: the eligibility RULING, which is what the resolved figure is
+        # counted from. Deliberately not derivable from the structures above -- the whole
+        # point of the offline contract is that the two figures travel independently.
+        "devata_rulings": [[True, 157], [False, 57]],
         "rishi_kinds": [[True, None, 616], [False, "DEITY", 58], [False, "ABSTRACTION", 55]],
     }
 
@@ -178,7 +182,7 @@ def test_stats_reports_both_deity_figures_offline_and_they_reconcile(
     """
     body = scoped_client.get(STATS).json()
     deities = body["deities"]
-    assert deities["resolved_deities"] == 184
+    assert deities["resolved_deities"] == 157
     assert deities["anukramani_ascriptions"] == 214
     assert (
         deities["resolved_deities"] + deities["excluded_non_deities"]
@@ -257,7 +261,7 @@ def test_stats_reports_the_resolved_deity_population_and_the_ascription_slot(
         deities["resolved_deities"] + deities["excluded_non_deities"]
         == deities["anukramani_ascriptions"]
     )
-    assert deities["resolved_deities"] == 184
+    assert deities["resolved_deities"] == 157
     assert deities["anukramani_ascriptions"] == 214
     # The excluded structures must be visible, not merely subtracted.
     assert {"HUMAN", "PATRON_PRAISE"} <= set(deities["by_structure"])
@@ -292,8 +296,8 @@ def test_stats_reports_the_samavedic_translation_zero_as_a_measured_zero(
     note = translations["by_veda"]["note"] or ""
     assert "SV" in note
     assert "absent layer, not an absent text" in note
-    assert translations["by_veda"]["rv"] == 10509
-    assert translations["by_veda"]["yv"] == 1939
+    assert translations["by_veda"]["rv"] == 10510
+    assert translations["by_veda"]["yv"] == 1950
     assert translations["by_veda"]["av"] == 5749
 
     # The Samavedic zero survived an import that put a rendering on 173 of its verses, and
@@ -339,7 +343,8 @@ def test_stats_cross_veda_classes_are_reported_apart_and_exclude_intra_corpus_ed
     }
     assert classes["EXACT_PARALLEL_OF"]["cross_veda_edges"] == 750
     assert classes["EXACT_PARALLEL_OF"]["within_one_veda_edges"] == 256
-    assert classes["REUSES_TEXT_FROM"]["pairs_reached"] == ["RV-SV"]
+    # Two pairs since the reuse-direction layer was extended; was ["RV-SV"].
+    assert classes["REUSES_TEXT_FROM"]["pairs_reached"] == ["AV-RV", "RV-SV"]
     assert "not about what the texts share" in classes["REUSES_TEXT_FROM"]["note"]
     # Every edge of this class stays inside one corpus, so it contributes to no pair.
     assert classes["PARALLEL_TO"]["cross_veda_edges"] == 0

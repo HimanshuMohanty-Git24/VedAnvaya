@@ -43,6 +43,7 @@ from vedagraph.api.models.insight import (
 )
 from vedagraph.api.services.capability_probes import (
     BENCHMARK_NOT_ANSWERABLE,
+    PROBED_ABSENT_PROPERTIES,
     PROBED_LIMIT_SPECS,
 )
 
@@ -196,6 +197,84 @@ def test_q23_no_longer_claims_no_partition_exists(live_client: TestClient) -> No
         row for row in card["measurements"] if row["name"] == "deities_with_a_community_assignment"
     )
     assert assigned["value"] == 0
+
+
+def test_q84_grades_the_ritual_context_axis_from_the_measurement_not_a_constant() -> None:
+    """BAD -> FAIL, GOOD -> PASS, driven straight at the spec's own callables.
+
+    Q84's grade was ``_always(NOT_ANSWERABLE)``. A hardcoded verdict cannot notice that the
+    dimension it denies has been built, and this one was: ``ritual_context`` went from
+    absent to present on all 20,210 mantras while the card went on saying no verse carries
+    a ritual-versus-non-ritual assignment. Driving the callables with synthetic values is
+    what separates "the number happens to be right today" from "the card is derived": the
+    zero row is the BAD input and must still grade NOT_ANSWERABLE, the populated row is the
+    GOOD input and must not.
+    """
+    spec = next(s for s in PROBED_LIMIT_SPECS if s.question_number == 84)
+    unbuilt = {
+        "mantras": 20210,
+        "mantras_linked_to_a_rite": 513,
+        "mantras_with_a_context_assignment": 0,
+        "mantras_placed_in_a_rite": 0,
+        "mantras_whose_context_is_a_typed_absence": 0,
+    }
+    built = {
+        "mantras": 20210,
+        "mantras_linked_to_a_rite": 513,
+        "mantras_with_a_context_assignment": 20210,
+        "mantras_placed_in_a_rite": 1903,
+        "mantras_whose_context_is_a_typed_absence": 18307,
+    }
+    assert spec.grade(unbuilt) == CapabilityVerdict.NOT_ANSWERABLE
+    assert spec.grade(built) == CapabilityVerdict.PARTIALLY_ANSWERABLE
+    # The prose has to move with the grade. A card that grades PARTIALLY_ANSWERABLE while
+    # its own sentence still reports the axis as unpopulated is the defect relocated, not
+    # fixed, so the resolved figure must appear and the coverage figure must not be passed
+    # off as resolution.
+    why = spec.why(built)
+    assert "1,903" in why and "18,307" in why
+    # The sentence the card used to publish, asserted absent by its own shape rather than
+    # by one substring: no claim that some number *of* the corpus carries the assignment
+    # when the answer is all of it, and no denial that the assignment exists.
+    assert "carry a ritual-versus-non-ritual assignment" not in why
+    assert spec.why(unbuilt) != why
+
+
+def test_q84_does_not_probe_ritual_context_as_an_absence() -> None:
+    """The allowlist entry that let the false card ship, asserted gone.
+
+    ``PROBED_ABSENT_PROPERTIES`` exempts a property from the hygiene rule *because* the
+    graph does not have it. ``ritual_context`` is on every mantra, so its presence in that
+    set was the waiver keeping a false limitation alive.
+    """
+    assert "ritual_context" not in PROBED_ABSENT_PROPERTIES
+
+
+@pytest.mark.neo4j
+def test_q84_no_longer_advertises_the_ritual_context_axis_as_absent(
+    live_client: TestClient,
+) -> None:
+    """The published card, measured against the live graph.
+
+    The coverage figure and the resolution figure are asserted separately and on purpose:
+    20,210 verses carry an assignment and 1,903 of them resolve to a rite, and a card that
+    published only the first would invite exactly the reading -- nine tenths of the corpus
+    is non-ritual -- that the typed absence exists to prevent.
+    """
+    body = live_client.get("/api/v1/insights/capabilities", params={"question": 84}).json()
+    card = body["limits"][0]
+    measured = {row["name"]: row["value"] for row in card["measurements"]}
+    assert measured["mantras_with_a_context_assignment"] == measured["mantras"]
+    assert measured["mantras_placed_in_a_rite"] > 0
+    assert (
+        measured["mantras_placed_in_a_rite"]
+        + measured["mantras_whose_context_is_a_typed_absence"]
+        == measured["mantras"]
+    )
+    assert card["verdict"] == "PARTIALLY_ANSWERABLE"
+    assert "carries a ritual-context assignment" in card["why"]
+    assert "carry a ritual-versus-non-ritual assignment" not in card["why"]
+    assert "absence of the axis" not in card["what_this_is_not"]
 
 
 @pytest.mark.neo4j

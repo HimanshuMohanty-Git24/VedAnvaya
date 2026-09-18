@@ -234,9 +234,6 @@
     "SECTION": {
       "canonical_key": 70
     },
-    "SEMANTIC_ASSERTION": {
-      "semantic-assertion:<persisted assertion_key>": 30266
-    },
     "STRUCTURAL_CONTAINER": {
       "canonical_key": 498
     },
@@ -250,7 +247,8 @@
       "entity_key": 17
     },
     "SemanticAssertion": {
-      "assertion_id": 4865
+      "assertion_id": 4865,
+      "semantic-assertion:<persisted assertion_key>": 30266
     },
     "SocialRite": {
       "entity_key": 5

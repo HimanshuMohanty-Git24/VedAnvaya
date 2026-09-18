@@ -120,22 +120,21 @@ from vedagraph.normalize.unicode import ComparisonForm, comparison_form
 #: bigram REMOVED from this set makes the filter reject more, which is where an unsound
 #: skip would come from.
 _SANSKRIT_ASCII_BIGRAM_TEXT: Final = (
-    "ab ac ad ae ag ah ai aj ak al am an ap ar as at au av ay ba bd be bh bi bj bl bo br bu "
-    "bv by ca cc ce ch ci cm co cr cu cy da db dd de dg dh di dm dn do dr du dv dy ea eb ec "
-    "ed eg eh ej ek el em en ep er es et ev ey ga gb gd ge gg gh gi gl gm gn go gr gu gv gy "
-    "ha he hi hk hl hm hn ho hr hu hv hy ia ib ic id ig ih ij ik il im in ip ir is it iv iy "
-    "ja je jh ji jj jm jo jr ju jv jy ka ke kh ki kk kl km kn ko kp kr ks kt ku kv ky la lb "
-    "ld le lg lh li lk ll lm lo lp lu lv ly ma mb mc me mg mh mi mj mk ml mm mn mo mp mr ms "
-    "mt mu mv my na nd ne ng ni nm nn no nr nt nu nv ny oa ob oc od og oh oj ok ol om on oo "
-    "op or os ot ov oy pa pc pe ph pi pl pm pn po pp pr ps pt pu pv py ra rb rc rd re rg rh "
-    "ri rj rk rl rm rn ro rp rr rs rt ru rv ry sa se si sk sm sn so sp sr ss st su sv sy ta "
-    "te th ti tk tm tn to tp tr ts tt tu tv ty ub uc ud ug uh uj uk ul um un up ur us ut uv "
-    "uy va ve vi vl vn vo vr vu vy ya ye yi yo yr yu yv yy"
+    "ab ac ad ae ag ah ai aj ak al am an ap ar as at au av ay ba bd be bg bh bi bj bl bo br bu bv by ca "
+    "cc ce ch ci cm co cr cu cy da db dd de dg dh di dm dn do dr du dv dy ea eb ec ed eg eh ej ek el em "
+    "en ep er es et ev ey fu ga gb gd ge gg gh gi gj gl gm gn go gr gu gv gy ha he hi hk hl hm hn ho hr "
+    "hu hv hy ia ib ic id ig ih ij ik il im in ip ir is it iv iy ja je jh ji jj jm jo jr ju jv jy ka ke "
+    "kh ki kk kl km kn ko kp kr ks kt ku kv ky la lb ld le lg lh li lk ll lm lo lp lu lv ly ma mb mc me "
+    "mg mh mi mj mk ml mm mn mo mp mr ms mt mu mv my na nb nc nd ne ng nh ni nj nk nm nn no np nr ns nt "
+    "nu nv ny oa ob oc od og oh oj ok ol om on oo op or os ot ov oy pa pc pe ph pi pl pm pn po pp pr ps "
+    "pt pu pv py ra rb rc rd re rg rh ri rj rk rl rm rn ro rp rr rs rt ru rv ry sa se sf si sk sm sn so "
+    "sp sr ss st su sv sy ta te th ti tk tm tn to tp tr ts tt tu tv ty ub uc ud ug uh uj uk ul um un up "
+    "ur us ut uv uy va ve vi vl vn vo vr vu vy ya ye yg yh yi yo yr yu yv yy "
 )
 
 SANSKRIT_ASCII_BIGRAMS: Final[frozenset[str]] = frozenset(_SANSKRIT_ASCII_BIGRAM_TEXT.split())
 
-assert len(SANSKRIT_ASCII_BIGRAMS) == 308, "the declared repertoire lost or gained a pair"
+assert len(SANSKRIT_ASCII_BIGRAMS) == 321, "the declared repertoire lost or gained a pair"
 assert all(len(pair) == 2 and pair.isascii() and pair.isalpha() for pair in SANSKRIT_ASCII_BIGRAMS)
 
 #: The same repertoire at three letters. Same soundness argument, more discriminating power,
@@ -149,121 +148,115 @@ assert all(len(pair) == 2 and pair.isascii() and pair.isalpha() for pair in SANS
 #: derived-and-held set is a cache with a staleness mode where a declared one is a measured
 #: figure a test can falsify.
 _SANSKRIT_ASCII_TRIGRAM_TEXT: Final = (
-    "aba abd abe abh abi abj abl abo abr abu aca acc ace ach aci aco acu acy ada adb add ade "
-    "adg adh adi adm adn ado adr adu adv ady aet aga agb agd age agh agi agl agm agn ago agr "
-    "agu agv agy aha ahe ahi ahl ahm ahn aho ahr ahu ahv ahy aib aic aid aig aih aij aik ail "
-    "aim ain aip air ais ait aiv aiy aja aje aji ajj ajm ajo ajr aju ajv ajy aka ake akh aki "
-    "akl akm akn ako akr aks akt aku akv aky ala alb ald ale alg alh ali alk alm alo alp alu "
-    "alv aly ama amb amc ame amg ami amj aml amm amn amo amp amr amt amu amv amy ana and ane "
-    "ani anm ann ano anr ant anu anv any apa ape aph api apl apn apo apr aps apt apu apv apy "
-    "ara arb arc ard are arg arh ari arj ark arl arm arn aro arp ars art aru arv ary asa ase "
-    "asi ask asm asn aso asp asr ass ast asu asv asy ata ate ath ati atk atm atn ato atp atr "
-    "ats att atu atv aty aub auc aud aug auh auj auk aul aum aun aup aur aus aut auv ava ave "
-    "avi avn avo avr avu avy aya aye ayi ayo ayu ayy bab bac bad bah bai baj bak bal bam ban "
-    "bap bar bas bat bav bay bda bde bdh bdi bdo bed beh bek bem ben ber bha bhe bhi bhm bhn "
-    "bho bhr bhu bhv bhy bib bil bin bis bit bja bji bjo bob bod bra bru bub bud buj buk bun "
-    "bup bus buv bya cab cac cad cah cai caj cak cal cam can cap car cas cat cau cav cay cca "
-    "cch cci ceb cec ced ceh cek cem cen cer ces cet cev cey cha che chi chl chm chn cho chr "
-    "chu chv chy cib cic cid cig cij cik cim cin cip cir cis cit civ ciy cma cob coc cod cok "
-    "cop cor cot cov coy cre cuc cud cuk cum cun cur cus cut cya cye cyo cyu dab dac dad dag "
-    "dah dai daj dak dal dam dan dap dar das dat dau dav day dba dbh dbu dda ddh ddi ddu ddv "
-    "ddy deb dec ded deh dej dem den dep der det dev dey dga dgh dgi dgr dgu dha dhe dhi dhm "
-    "dhn dho dhr dhu dhv dhy dib did dig dih dik dil dim din dip dir dis dit div diy dma dme "
-    "dmi dmo dmy dna dne dno doa dob dod dog doh doj dok dom dor dos dot dra dre dri dro dru "
-    "drv dry dub duc dud dug duh duk dum dun dup dur dus duv dva dve dvi dvo dvr dvy dya dye "
-    "dyo dyu eag ean ear eav ebh eca ece ech eci ecy eda edd ede edh edi edm edo edr edu edy "
-    "ega egh ego egr eha ehi eho ehy eja eje eji ejo eka eke ekh eki eko ekt eku ela elh ema "
-    "eme emi emo emu emy ena end ene eni eno enu env eny epa epe epi epn epo eps epu epy era "
-    "ere eri ero ert eru ery esa eso est esu esv eta ete eth eti eto etr ett etu etv ety eva "
-    "eve evi evo evr evy eya eye eyi eyo eyu eyy gab gac gad gah gai gaj gak gal gam gan gap "
-    "gar gas gat gau gav gay gbh gbi gda gdh gea geb geh gem gen get gev gey ggh gha ghe ghi "
-    "ghm ghn gho ghr ghu ghv ghy gib gid gil gin gir git gla gma gme gmi gmo gmu gmy gna gne "
-    "gni gnu gny goa gob god gog goh goj gok gom gon goo gop gor gos got gov gra gre gri gro "
-    "gru gry gub gud guh guk gul gum gun gup gur gus gut guv gva gve gvi gvo gya gye gyo gyu "
-    "hab hac had hag hah hai haj hak hal ham han hap har has hat hau hav hay heb hec hed heh "
-    "hej hek hel hem hen hep her hes het hev hey hib hic hid hig hih hij hik hil him hin hip "
-    "hir his hit hiv hiy hkh hla hlo hma hme hmi hmo hna hne hni hno hnu hny hoa hob hoc hod "
-    "hog hoh hoj hok hom hon hop hor hos hot hov hoy hra hrd hre hri hro hru hry hub huc hud "
-    "hug huh huj huk hul hum hun hup hur hus hut huv huy hva hve hvi hvo hvr hvy hya hye hyo "
-    "hyu iba ibd ibe ibh ibi ibo ibr ibu ica icc ice ich ici ico icr icu icy ida idb idd ide "
-    "idh idi idm ido idr idu idv idy iga igb igd ige igh igi igm igo igr igu igv igy iha ihe "
-    "ihi ihm iho ihr ihu ihv ihy ija ije iji ijm ijo ijr iju ijy ika ike ikh iki ikl ikn iko "
-    "ikr iks ikt iku ikv iky ila ilb ile ili ilm ilo ilp ilv ily ima imb ime imi imk iml imm "
-    "imn imo imp imr imu imy ina ind ine ini inm inn ino inr int inu inv iny ipa ipe iph ipi "
-    "ipn ipo ipp ipr ips ipt ipu ipy ira irb ird ire irg irh iri irj irm iro irr iru irv iry "
-    "isa isi isk isp isr ist isu isv ita ite ith iti itk itm itn ito itp itr its itt itu itv "
-    "ity iva ive ivi ivl ivo ivr ivy iya iye iyo iyu jab jad jag jah jai jaj jak jal jam jan "
-    "jap jar jas jat jau jav jay jeb jeh jej jem jen jer jet jev jha jib jic jid jig jih jij "
-    "jik jim jin jip jir jit jiv jja jje jjh jji jju jjv jma jme jmi jmo job jod jog joh jop "
-    "jor jot joy jra jre jri jro jru jry jub jug juh juj juk jum jun jur jus jut juv jva jve "
-    "jvo jya jye jyo jyu kab kac kad kag kai kaj kak kal kam kan kap kar kas kat kau kav kay "
-    "keb kec ked kem ken kep ker kes ket kev kha khe khi khk khn kho khr khu khv khy kid kik "
-    "kil kim kin kir kis kit kiv kiy kka kla kle kli klo kma kme kmi kmo kmy kna kni kno knu "
-    "kny kok kol kom kon kop kot kra kre kri kro kru kry ksa kta kte kth kti kto ktr ktu ktv "
-    "kty kub kuc kud kuh kuk kul kum kun kup kur kus kut kuv kuy kva kve kvo kya kye kyu lab "
-    "lad lag lah lai laj lak lal lam lan lap lar las lat lau lav lay lba lbi lda leb led len "
-    "ler lev ley lga lgu lgv lha lhe lhi lib lig lih lik lil lim lin lip lir lit lka lko lku "
-    "lla llu lma lob lod log loh lok lom lon lop lpa lpe lph lpi lpy lub luc luk lul lum lun "
-    "lup lur lut lva lvi lvo lya lye lyo mab mac mad mag mah mai maj mak mal mam man map mar "
-    "mas mat mau mav may mba mbe mbh mbi mbu mbv mby mca meb med meg meh mej mek mem men mer "
-    "met mev mey mgr mha mib mic mid mig mih mik mim min mir mis mit miv miy mka mlu mma mmi "
-    "mmr mna mne mni mno mny mob moc mod mog moh mok mop mor mot mov mpa mpe mpi mpr mpu mra "
-    "mri mro mru msa mta mub muc mud mug muh muk mul mum mun mur mus mut muy mva mvi mvo mya "
-    "mye myo myu nab nac nad nag nah nai naj nak nal nam nan nap nar nas nat nau nav nay nda "
-    "ndd nde ndh ndi ndo ndr ndu ndy neb nec ned neh nej nek nel nem nen ner nes net nev ney "
-    "nib nic nid nig nih nij nik nil nim nin nip nir nis nit niv niy nma nme nmi nmo nmr nmu "
-    "nmy nna nne nni nno nob noc nod nog noh noj nok nom non nop nor nos not nov noy nta nte "
-    "nth nti nto ntr nts ntu ntv nty nub nuc nud nug nuh nuj nuk nul num nun nup nur nus nut "
-    "nuv nuy nva nve nvi nvo nya nye nyo nyr nyu oad oag oah oaj oak oan oar oav oba obh oca "
-    "occ oce och oci oco ocu ocy oda odb odd ode odh odi odn odo odr odu odv ody oga ogd oge "
-    "ogg ogh ogi ogo ogr ogu ogy oha ohe ohi oho ohu ohy oja oji ojm ojo oju ojy oka oke okh "
-    "oki okm oko okr okt oky ola olb oma omb ome omi omn omo omu omy ona ond one oni onm ono "
-    "onu ony oop opa ope opi opo opr ops opt opu opy ora ord ore ori orj orm oro orr oru orv "
-    "osa osr ota ote oth oti otm oto otp otr ots ott otu otv oty ova ovi ovr oya oyo oyu pab "
-    "pac pad pag pah pai paj pak pal pam pan pap par pas pat pau pav pay pch peb pec ped peh "
-    "pej pek pem pen pep per pet pev pey pha phe phi pho phr phu phy pib pid pih pij pik pil "
-    "pim pin pip pir pis pit piv piy pla plu pma pna pne pno pnu pny pob poc pod poh poj pom "
-    "pop por pos pot ppa pra pre pri pro pru pry psa psi psn pso psu psv psy pta pte pti pto "
-    "ptr ptu ptv pty puc pud pul pum pun pup pur pus put pva pve pya pye pyo pyu rab rac rad "
-    "rae rag rah rai raj rak ral ram ran rap rar ras rat rau rav ray rbh rbi rbr rbu rca rce "
-    "rch rci rco rda rde rdh rdi rdm rdo rdr rdu rdy rea reb rec red reg reh rej rek rel rem "
-    "ren rep rer res ret rev rey rga rge rgh rgi rgo rgr rgu rgy rha rhe rhi rho rhr rhy rib "
-    "ric rid rig rih rij rik rim rin rip rir ris rit riv riy rja rje rji rjm rjo rju rjy rka "
-    "rke rki rko rkr rkt rku rlo rma rme rmi rmo rmr rmu rmy rna rni roa rob roc rod rog roh "
-    "roj rok rol rom rop ror rot roy rpa rpe rph rpi rpo rpy rri rsr rta rte rth rti rtm rtn "
-    "rto rtr rts rtt rtu rtv rty rub ruc rud rug ruh ruj ruk rul rum run rup rur rus rut ruv "
-    "ruy rva rve rvi rvo rvr rvy rya rye ryo ryu sab sac sad sag sah sai saj sak sal sam san "
-    "sap sar sas sat sau sav say seb sec sed seh sek sem sen sep ser ses set sev sey sic sid "
-    "sih sik sil sim sin sip sir sis sit ska ske skr sku sma sme smi smo smr smy sna sne sni "
-    "sno snu sny soa sob sod sog som sop sor sot sov spa spe sph spi spr sra sre sri sro sru "
-    "ssi ssu ssv sta ste sth sti sto str stu stv sty sub suc sud sug suh suj suk sul sum sun "
-    "sup sur sus sut suv suy sva sve svi svo svy sya sye syo syu tab tac tad tag tah tai taj "
-    "tak tal tam tan tap tar tas tat tau tav tay teb ted teg teh tej tek tel tem ten tep ter "
-    "tes tet tev tey tha the thi thn tho thr thu thv thy tib tic tid tig tih tij tik til tim "
-    "tin tip tir tis tit tiv tiy tka tke tkh tkr tma tme tna tne tni tno tnu tnv tny tob toc "
-    "tod tog toj tok tol tom ton top tor tos tot tov tpa tpi tpu tra tre tri tro tru trv try "
-    "tsa tse tsi tsm tsn tso tst tsu tsv tsy tta tte tth tti tto ttr ttu ttv tty tub tuc tud "
-    "tug tuh tuj tuk tum tun tup tur tus tut tuv tuy tva tve tvi tvo tvy tya tye tyo tyu uba "
-    "ubd ube ubh ubj ubo ubr ubu uca ucc uce uch uci ucm uco ucr ucu ucy uda udb udd ude udg "
-    "udh udi udm udn udo udr udu udv udy uga ugb ugd uge ugh ugm ugo ugr ugu ugv uha uhe uhi "
-    "uho uhr uhu uhv uhy uja uje uji ujj ujm ujo ujr uju ujy uka uke ukh uki ukk ukl ukm uko "
-    "ukr ukt uku ukv uky ula ulb ule ulg uli ulk ull ulm ulo ulp ulu ulv uly uma umb ume umi "
-    "umn umo ump umr umu umy una und une uni unm unn uno unr unt unu unv uny upa upc upe uph "
-    "upi upo upr ups upt upu upv upy ura urb urd ure urg urh uri urj urk urm urn uro urp urr "
-    "urt uru urv ury usa usi usn uso usp usr ust usv uta ute uth uti utk utm utn uto utp utr "
-    "uts utt utu utv uty uva uve uvi uvo uvr uvu uvy uya uyo uyu vab vac vad vae vag vah vai "
-    "vaj vak val vam van vap var vas vat vau vav vay veb vec ved veg veh vej vek vel vem ven "
-    "vep ver ves vet vev vey vib vic vid vig vih vij vik vil vim vin vip vir vis vit viv viy "
-    "vla vna vne vno vny voa vob voc vod vog voj vol vom von vop vor vos vot vov voy vra vre "
-    "vri vro vru vur vus vya vye vyo vyr vyu yab yac yad yag yah yai yaj yak yal yam yan yap "
-    "yar yas yat yau yav yay yeb yed yeh yej yek yem yen yer yes yet yev yey yib yid yik yim "
-    "yin yip yir yis yit yiv yiy yoa yob yoc yod yog yoh yoj yok yol yom yon yop yor yos yot "
-    "yov yoy yub yuc yud yug yuh yuj yuk yul yum yun yup yur yus yut yuv yuy yya yye yyo"
+    "aba abd abe abh abi abj abl abo abr abu abv aca acc ace ach aci acm aco acu acy ada adb add ade adg "
+    "adh adi adm adn ado adr adu adv ady aen aet aga agb agd age agh agi agl agm agn ago agr agu agv agy "
+    "aha ahe ahi ahl ahm ahn aho ahr ahu ahv ahy aib aic aid aig aih aij aik ail aim ain aip air ais ait "
+    "aiv aiy aja aje ajh aji ajj ajm ajo ajr aju ajv ajy aka ake akh aki akk akl akm akn ako akr aks akt "
+    "aku akv aky ala alb ald ale alg alh ali alk alm alo alp alu alv aly ama amb amc ame amg ami amj aml "
+    "amm amn amo amp amr amt amu amv amy ana anb anc and ane ang anh ani ank anm ann ano anp anr ans ant "
+    "anu anv any apa ape aph api apl apn apo app apr aps apt apu apv apy ara arb arc ard are arg arh ari "
+    "arj ark arl arm arn aro arp ars art aru arv ary asa ase asf asi ask asm asn aso asp asr ass ast asu "
+    "asv asy ata ate ath ati atk atm atn ato atp atr ats att atu atv aty aub auc aud aug auh auj auk aul "
+    "aum aun aup aur aus aut auv ava ave avi avn avo avr avu avy aya aye ayg ayi ayo ayu ayy bab bac bad "
+    "bah bai baj bak bal bam ban bap bar bas bat bav bay bda bde bdh bdi bdo bed beh bek bem ben ber bgr "
+    "bha bhe bhi bhl bhm bhn bho bhr bhu bhv bhy bib bik bil bin bis bit bja bji bjo bob bod bra bru bub "
+    "bud buj buk bun bup bus buv bva bya cab cac cad cah cai caj cak cal cam can cap car cas cat cau cav "
+    "cay cca cch cci ceb cec ced ceh cek cem cen cer ces cet cev cey cha che chi chl chm chn cho chr chu "
+    "chv chy cib cic cid cig cij cik cim cin cip cir cis cit civ ciy cma cmi cob coc cod coj cok col cop "
+    "cor cot cov coy cre cuc cud cuk cum cun cur cus cut cya cye cyo cyu dab dac dad dag dah dai daj dak "
+    "dal dam dan dap dar das dat dau dav day dba dbh dbr dbu dda dde ddh ddi ddr ddu ddv ddy deb dec ded "
+    "deh dej dek dem den dep der det dev dey dga dgh dgi dgo dgr dgu dha dhe dhi dhm dhn dho dhr dhu dhv "
+    "dhy dib dic did dig dih dik dil dim din dip dir dis dit div diy dma dme dmi dmo dmy dna dne dno doa "
+    "dob dod dog doh doj dok dom don dor dos dot dra dre dri dro dru drv dry dub duc dud dug duh duj duk "
+    "dum dun dup dur dus dut duv dva dve dvi dvo dvr dvy dya dye dyo dyu eag ean ear eav ebh eca ece ech "
+    "eci ecy eda edd ede edh edi edm edo edr edu edv edy ega egh egn ego egr egu eha ehe ehi eho ehy eja "
+    "eje eji ejo ejy eka eke ekh eki eko ekt eku ela elh ema eme emi emo emu emy ena end ene eni enn eno "
+    "enu env eny epa epe epi epn epo eps epu epy era erb erd ere erh eri erj erm ero ert eru erv ery esa "
+    "eso est esu esv eta ete eth eti eto etr ets ett etu etv ety eva eve evi evo evr evy eya eye eyi eyo "
+    "eyu eyy fur gab gac gad gag gah gai gaj gak gal gam gan gap gar gas gat gau gav gay gbh gbi gda gde "
+    "gdh gdu gea geb ged geh gem gen get gev gey ggh gha ghe ghi ghm ghn gho ghr ghu ghv ghy gib gid gil "
+    "gim gin gir git gjy gla gma gme gmi gmo gmu gmy gna gne gni gnu gny goa gob god gog goh goj gok gol "
+    "gom gon goo gop gor gos got gov gra gre gri gro gru gry gub gud guh guk gul gum gun gup gur gus gut "
+    "guv gva gve gvi gvo gya gye gyo gyu hab hac had hag hah hai haj hak hal ham han hap har has hat hau "
+    "hav hay heb hec hed heh hej hek hel hem hen hep her hes het hev hey hib hic hid hig hih hij hik hil "
+    "him hin hip hir his hit hiv hiy hkh hla hlo hlu hma hme hmi hmo hna hne hni hno hnu hny hoa hob hoc "
+    "hod hog hoh hoj hok hom hon hop hor hos hot hov hoy hra hrd hre hri hro hru hrv hry hub huc hud hug "
+    "huh huj huk hul hum hun hup hur hus hut huv huy hva hve hvi hvo hvr hvy hya hye hyo hyu iba ibd ibe "
+    "ibh ibi ibo ibr ibu ica icc ice ich ici ico icr icu icy ida idb idd ide idg idh idi idm ido idr idu "
+    "idv idy iga igb igd ige igh igi igm igo igr igu igv igy iha ihe ihi ihm iho ihr ihu ihv ihy ija ije "
+    "iji ijj ijm ijo ijr iju ijy ika ike ikh iki ikl ikn iko ikp ikr iks ikt iku ikv iky ila ilb ile ili "
+    "ilm ilo ilp ilv ily ima imb ime imi imk iml imm imn imo imp imr imu imv imy ina inb ind ine inh ini "
+    "ink inm inn ino inp inr int inu inv iny ipa ipe iph ipi ipl ipn ipo ipp ipr ips ipt ipu ipy ira irb "
+    "ird ire irg irh iri irj irl irm irn iro irr iru irv iry isa isi isk isp isr ist isu isv ita ite ith "
+    "iti itk itm itn ito itp itr its itt itu itv ity iva ive ivi ivl ivo ivr ivy iya iye iyo iyu jab jad "
+    "jag jah jai jaj jak jal jam jan jap jar jas jat jau jav jay jeb jed jeh jej jem jen jer jet jev jha "
+    "jho jib jic jid jig jih jij jik jim jin jip jir jis jit jiv jja jje jjh jji jjo jju jjv jjy jma jme "
+    "jmi jmo job jod jog joh jon jop jor jot joy jra jre jri jro jru jry jub jug juh juj juk jum jun jur "
+    "jus jut juv jva jve jvo jya jye jyo jyu kab kac kad kag kai kaj kak kal kam kan kap kar kas kat kau "
+    "kav kay keb kec ked kem ken kep ker kes ket kev key kha khe khi khk khn kho khr khu khv khy kid kih "
+    "kik kil kim kin kir kis kit kiv kiy kka kku kla kle kli klo kma kme kmi kmo kmy kna kni kno knu kny "
+    "kob kok kol kom kon kop kot kpa kra kre kri kro kru kry ksa kso ksv kta kte kth kti kto ktr ktu ktv "
+    "kty kub kuc kud kuh kuk kul kum kun kup kur kus kut kuv kuy kva kve kvi kvo kya kye kyu lab lad lag "
+    "lah lai laj lak lal lam lan lap lar las lat lau lav lay lba lbh lbi lda leb led lek len ler lev ley "
+    "lga lgu lgv lha lhe lhi lib lig lih lik lil lim lin lip lir lit lka lko lku lla llo llu lma lmi lob "
+    "loc lod log loh lok lom lon lop lpa lpe lph lpi lpo lpy lub luc luk lul lum lun lup lur lut lva lvi "
+    "lvo lya lye lyo mab mac mad mag mah mai maj mak mal mam man map mar mas mat mau mav may mba mbe mbh "
+    "mbi mbu mbv mby mca meb med meg meh mej mek mem men mer mes met mev mey mgr mha mib mic mid mig mih "
+    "mij mik mim min mir mis mit miv miy mka mla mlo mlu mma mmi mmr mna mne mni mno mny mob moc mod mog "
+    "moh moj mok mom mop mor mot mov mpa mpe mpi mpr mpu mra mri mro mru mry msa mta mub muc mud mug muh "
+    "muj muk mul mum mun mup mur mus mut muv muy mva mve mvi mvo mya mye myo myu nab nac nad nag nah nai "
+    "naj nak nal nam nan nap nar nas nat nau nav nay nba nbh nbr nch nda ndd nde ndh ndi ndo ndr ndu ndv "
+    "ndy neb nec ned neh nej nek nel nem nen ner nes net nev ney nga ngo ngr ngu nha nhi nhu nhy nib nic "
+    "nid nig nih nij nik nil nim nin nip nir nis nit niv niy nje nka nko nma nme nmi nmo nmr nmu nmy nna "
+    "nne nni nno nnu nob noc nod nog noh noj nok nom non nop nor nos not nov noy npa npi npr npu nra nru "
+    "nse nta nte nth nti nto ntr nts ntu ntv nty nub nuc nud nug nuh nuj nuk nul num nun nup nur nus nut "
+    "nuv nuy nva nve nvi nvo nvr nvy nya nye nyo nyr nyu oad oag oah oaj oak oan oar oav oba obe obh oca "
+    "occ oce och oci oco ocu ocy oda odb odd ode odg odh odi odm odn odo odr odu odv ody oga ogd oge ogg "
+    "ogh ogi ogn ogo ogr ogu ogy oha ohe ohi oho ohu ohy oja oje oji ojj ojm ojo oju ojy oka oke okh oki "
+    "okk okm oko okp okr okt oky ola olb oma omb ome omi omn omo omp omu omy ona ond one oni onm ono onu "
+    "ony oop opa ope opi opo opr ops opt opu opy ora orb ord ore org orh ori orj orm orn oro orr oru orv "
+    "ory osa osi osm osr ost ota ote oth oti otk otm oto otp otr ots ott otu otv oty ova ovi ovr ovy oya "
+    "oyo oyu pab pac pad pag pah pai paj pak pal pam pan pap par pas pat pau pav pay pch peb pec ped peh "
+    "pej pek pem pen pep per pet pev pey pha phe phi pho phr phu phy pib pid pih pij pik pil pim pin pip "
+    "pir pis pit piv piy pla plu pma pna pne pno pnu pny pob poc pod poh poj pom pop por pos pot ppa ppi "
+    "pra pre pri pro pru pry psa psi psn pso psu psv psy pta pte pti pto ptr ptu ptv pty puc pud pul pum "
+    "pun pup pur pus put puv pva pve pya pye pyo pyu rab rac rad rae rag rah rai raj rak ral ram ran rap "
+    "rar ras rat rau rav ray rba rbh rbi rbo rbr rbu rca rcc rce rch rci rco rda rdd rde rdh rdi rdm rdo "
+    "rdr rdu rdv rdy rea reb rec red reg reh rej rek rel rem ren rep rer res ret rev rey rga rgb rge rgh "
+    "rgi rgl rgo rgr rgu rgy rha rhe rhi rho rhr rhv rhy rib ric rid rig rih rij rik rim rin rip rir ris "
+    "rit riv riy rja rje rji rjj rjm rjo rju rjy rka rke rki rkk rko rkr rkt rku rlo rma rme rmi rmo rmr "
+    "rmu rmy rna rni rnn rno rnu rny roa rob roc rod rog roh roj rok rol rom rop ror rot roy rpa rpe rph "
+    "rpi rpo rpy rri rsr rsv rta rte rth rti rtm rtn rto rtr rts rtt rtu rtv rty rub ruc rud rug ruh ruj "
+    "ruk rul rum run rup rur rus rut ruv ruy rva rve rvi rvo rvr rvy rya rye ryo ryu sab sac sad sag sah "
+    "sai saj sak sal sam san sap sar sas sat sau sav say seb sec sed seh sek sem sen sep ser ses set sev "
+    "sey sfu sic sid sih sik sil sim sin sip sir sis sit ska ske skr sku sma sme smi smo smr smy sna sne "
+    "sni sno snu sny soa sob soc sod sog som sop sor sos sot sov spa spe sph spi spo spr spu sra sre sri "
+    "sro sru ssi ssu ssv sta ste sth sti stm sto str stu stv sty sub suc sud sug suh suj suk sul sum sun "
+    "sup sur sus sut suv suy sva sve svi svo svy sya sye syo syu tab tac tad tae tag tah tai taj tak tal "
+    "tam tan tap tar tas tat tau tav tay teb ted teg teh tej tek tel tem ten tep ter tes tet tev tey tha "
+    "the thi thn tho thr thu thv thy tib tic tid tig tih tij tik til tim tin tip tir tis tit tiv tiy tka "
+    "tke tkh tki tkr tku tma tme tna tne tni tno tnu tnv tny tob toc tod tog toj tok tol tom ton top tor "
+    "tos tot tov tpa tpe tpi tpr tpu tra tre tri tro tru trv try tsa tse tsi tsm tsn tso tsr tst tsu tsv "
+    "tsy tta tte tth tti tto ttr ttu ttv tty tub tuc tud tug tuh tuj tuk tul tum tun tup tur tus tut tuv "
+    "tuy tva tve tvi tvo tvy tya tye tyo tyu uba ubd ube ubg ubh ubj ubo ubr ubu uca ucc uce uch uci ucm "
+    "uco ucr ucu ucy uda udb udd ude udg udh udi udm udn udo udr udu udv udy uga ugb ugd uge ugh ugm ugo "
+    "ugr ugu ugv ugy uha uhe uhi uho uhr uhu uhv uhy uja uje uji ujj ujm ujo ujr uju ujy uka uke ukh uki "
+    "ukk ukl ukm uko ukr ukt uku ukv uky ula ulb ule ulg uli ulk ull ulm ulo ulp ulu ulv uly uma umb ume "
+    "umi uml umn umo ump umr umu umy una und une uni unm unn uno unr unt unu unv uny upa upc upe uph upi "
+    "upo upp upr ups upt upu upv upy ura urb urd ure urg urh uri urj urk urm urn uro urp urr urt uru urv "
+    "ury usa use usi usn uso usp usr ust usv uta ute uth uti utk utm utn uto utp utr uts utt utu utv uty "
+    "uva uve uvi uvo uvr uvu uvy uya uyh uyo uyu vab vac vad vae vag vah vai vaj vak val vam van vap var "
+    "vas vat vau vav vay veb vec ved veg veh vej vek vel vem ven vep ver ves vet vev vey vib vic vid vig "
+    "vih vij vik vil vim vin vip vir vis vit viv viy vla vna vne vno vny voa vob voc vod vog voj vol vom "
+    "von vop vor vos vot vov voy vra vre vri vro vru vur vus vya vye vyo vyr vyu yab yac yad yag yah yai "
+    "yaj yak yal yam yan yap yar yas yat yau yav yay yeb yed yeh yej yek yem yen yer yes yet yev yey ygv "
+    "yib yid yik yim yin yip yir yis yit yiv yiy yoa yob yoc yod yog yoh yoj yok yol yom yon yop yor yos "
+    "yot yov yoy yub yuc yud yug yuh yuj yuk yul yum yun yup yur yus yut yuv yuy yva yya yye yyo "
 )
 
 SANSKRIT_ASCII_TRIGRAMS: Final[frozenset[str]] = frozenset(_SANSKRIT_ASCII_TRIGRAM_TEXT.split())
 
-assert len(SANSKRIT_ASCII_TRIGRAMS) == 2419, "the declared trigram repertoire changed size"
+assert len(SANSKRIT_ASCII_TRIGRAMS) == 2598, "the declared trigram repertoire changed size"
 
 #: The Cypher behind :data:`SANSKRIT_ASCII_BIGRAMS`, so the test re-derives it rather than
 #: reproducing it. Distinct space-separated tokens are enough: an ASCII-letter run cannot
@@ -458,18 +451,26 @@ SEARCH_WINDOW_LIMIT: Final = MAX_PAGE_SIZE
 #: the coverage note in every search response a lie.
 SURFACE_COVERAGE: Final[dict[SearchSurface, dict[str, int]]] = {
     SearchSurface.SANSKRIT_TEXT: {"RV": 10_552, "AV": 5_839, "YV": 1_836, "SV": 1_844},
-    SearchSurface.NORMALIZED_SANSKRIT: {"AV": 5_839},
+    # All four, and this was the worst stale figure in the file: it declared {"AV": 5,839}
+    # while the search-derivative layer had been built for every corpus, so the note below
+    # told a reader that a miss on the accent-stripped surface "says nothing at all about
+    # the other three corpora" -- a typed false zero over 14,371 verses the surface fully
+    # covers. The layer moved when GAP-MORPHOLOGY-005/006 landed 20,210 SEARCH_DERIVATIVE
+    # rows over four works, and this constant was not swept with it.
+    SearchSurface.NORMALIZED_SANSKRIT: {"RV": 10_552, "AV": 5_839, "YV": 1_975, "SV": 1_844},
     # Raised by the translation bulk integration. The Samavedic 173 is the figure that
     # needs reading carefully and the note below does the reading: those verses are
     # searchable in English because they carry Griffith's Rigvedic rendering of
     # verified-identical text, not because the Samaveda gained a translation.
     SearchSurface.ENGLISH_TRANSLATION: {
-        "RV": 10_509,
+        "RV": 10_510,
         "AV": 5_770,
-        "YV": 1_939,
+        "YV": 1_950,
         "SV": 173,
     },
-    SearchSurface.LEMMA: {"RV": 6_560},
+    # 10,552, not 6,560: every Rigvedic verse is reached by the lemma layer since
+    # GAP-MORPHOLOGY-001 took the projection from 39 distinct lemmas to 10,031.
+    SearchSurface.LEMMA: {"RV": 10_552},
 }
 
 #: What each declared surface cannot do, in its own words. Rendered onto every response
@@ -483,8 +484,12 @@ SURFACE_NOTES: Final[dict[SearchSurface, str]] = {
         "corpus layer, not evidence that the phrase is absent from the text."
     ),
     SearchSurface.NORMALIZED_SANSKRIT: (
-        "The accent-stripped search surface was built for the Atharvaveda only. A miss "
-        "here says nothing at all about the other three corpora."
+        "The accent-stripped search surface now covers all four corpora, every verse of "
+        "each. It was built for the Atharvaveda first and this note said so long after the "
+        "other three landed, which made a miss here read as no evidence about them when it "
+        "is evidence about all of them. What it still cannot do is carry accent: two verses "
+        "differing only in tone fold to the same string here, so a hit is a hit on the "
+        "unaccented letters and not on the accented word."
     ),
     SearchSurface.ENGLISH_TRANSLATION: (
         "Public-domain translations only: Griffith for the Rigveda and Yajurveda, "
@@ -499,7 +504,9 @@ SURFACE_NOTES: Final[dict[SearchSurface, str]] = {
     ),
     SearchSurface.LEMMA: (
         "The lemma layer comes from the manual Rigvedic morphological annotation and "
-        "reaches the Rigveda alone. A headword search cannot reach the other three corpora."
+        "reaches the Rigveda alone -- every one of its 10,552 verses, where this note "
+        "previously declared 6,560. A headword search cannot reach the other three corpora, "
+        "and that absence is the annotation's scope rather than a fact about those texts."
     ),
 }
 
@@ -712,7 +719,7 @@ WHERE match_type IS NOT NULL
   AND ($type_labels IS NULL OR any(l IN labels(n) WHERE l IN $type_labels))
 RETURN match_type, stable_id, labels(n) AS node_labels, n.display_label AS display_label,
        n.short_description AS short_description, n.definition AS definition,
-       n.structure AS structure, weight
+       n.structure AS structure, n.is_deity AS is_deity, weight
 ORDER BY $rung_order[match_type], weight DESC, stable_id
 LIMIT $fetch
 """
@@ -742,7 +749,8 @@ WITH n, stable_id, weight,
 WHERE match_type IS NOT NULL
   AND ($type_labels IS NULL OR any(l IN labels(n) WHERE l IN $type_labels))
 RETURN match_type, stable_id, labels(n) AS node_labels, n.display_label AS display_label,
-       null AS short_description, null AS definition, null AS structure, weight
+       null AS short_description, null AS definition, null AS structure,
+       null AS is_deity, weight
 ORDER BY $rung_order[match_type], weight DESC, stable_id
 LIMIT $fetch
 """
@@ -1235,7 +1243,11 @@ class SearchService:
 
         if "node_labels" in row:
             result_type = result_type_for_labels(row.get("node_labels"))
-            if result_type is SearchResultType.DEVATA and not is_deity(row.get("structure")):
+            # The recorded ruling, not the structure. Filtering search on structure made
+            # search disagree with /devatas about 29 subjects: it hid the dog, whom the
+            # ruling admits and the deity route serves, and surfaced the 28 abstractions
+            # the ruling excludes and the deity route 404s.
+            if result_type is SearchResultType.DEVATA and row.get("is_deity") is not True:
                 return None, 1
             body = row.get("definition") or row.get("short_description")
             return (

@@ -24,12 +24,16 @@ first group reads a *missing annotation layer* as an *absence in the text*, whic
 worst thing this catalogue can do, and it is invisible in the result set. Queries whose
 reach is narrower than their column names suggest therefore carry a ``caveat``.
 
-**Two layers can share one label without sharing a strength.** ``SemanticAssertion`` holds
-2,406 TIER_B nodes derived by rule from the Sanskrit annotation and 2,459 TIER_D nodes a
+**Five layers can share one label without sharing a strength.** ``SemanticAssertion``
+holds 35,131 nodes across five derivations and reaches all four corpora; among them are the
+2,406 TIER_B nodes derived by rule from the Sanskrit annotation and the 2,459 TIER_D nodes a
 model extracted, unreviewed, from a 19th-century English translation. Every query below that
-touches it either filters ``derivation`` or returns it, because one figure over both would
-average the two -- and they differ in reach as well as in trust, the rule layer covering
-2,228 passages against the model layer's 398. ``MENTIONS_DEVATA`` carries the same warning in
+touches it either filters ``derivation`` or returns it, because one figure over all of them
+would average instruments that are not comparable -- they differ in reach as well as in
+trust, the rule layer covering 2,228 passages against the model layer's 398, and the 364
+Samavedic rows being projections from Rigvedic verses rather than annotations of their own
+corpus. This paragraph described the label as two layers of 4,865 nodes after it had become
+five layers of 35,131. ``MENTIONS_DEVATA`` carries the same warning in
 milder form: it does span four corpora, but by manual lemma annotation in the Rigveda and
 surface string matching everywhere else.
 """
@@ -604,11 +608,13 @@ QUERIES: Final[tuple[InsightQuery, ...]] = (
         {"limit": 40},
         caveat=(
             "Filtered to derivation = 'MORPHOLOGY_RULE' deliberately. SemanticAssertion is "
-            "one label over two layers of very unequal strength -- 2,406 TIER_B nodes "
-            "derived by rule from the Sanskrit annotation and 2,459 TIER_D nodes extracted "
-            "by a model from a 19th-century English translation -- and an aggregate over "
-            "both would average the two. This query never sees the model layer. All 4,865 "
-            "assertions of either kind are Rigvedic."
+            "one label over five derivations of very unequal strength -- among them 2,406 "
+            "TIER_B nodes derived by rule from the Sanskrit annotation and 2,459 TIER_D "
+            "nodes extracted by a model from a 19th-century English translation -- and an "
+            "aggregate over all of them would average instruments that are not comparable. "
+            "This query never sees the model layer. The 2,406 it does see are Rigvedic; the "
+            "label as a whole holds 35,131 and reaches all four corpora, so this is a "
+            "statement about the filter and not about the layer."
         ),
     ),
     InsightQuery(

@@ -31,10 +31,11 @@ router = APIRouter(tags=["Devatas"], responses=COMMON_ERROR_RESPONSES)
 
 _POPULATION_NOTE = """
 **The population contract.** The Anukramani names a *devata* for every Rigvedic hymn and
-that slot is not a theological claim: 30 of the 214 `:Devata` nodes are not gods -- 22
+that slot is not a theological claim: 57 of the 214 `:Devata` nodes are not gods -- 22
 human patrons and seers (Vasistha, Visvamitra, Brbu the carpenter), 7 danastuti labels
 naming the gift rather than a recipient ("praise of the gift of Sudas son of Pijavana"),
-and one dog. `population=deities` (the default) excludes all 30.
+and 28 abstractions ruled not to name an addressee. `population=deities` (the default)
+excludes all 57.
 `population=all_ascriptions` returns the slot as it stands, with every row's `structure`
 and `is_deity` stated, and `is_deity` false where it is false.
 

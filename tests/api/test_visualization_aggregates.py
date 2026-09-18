@@ -237,5 +237,7 @@ def test_the_deity_gate_refuses_a_non_deity_on_every_new_route(
     live_client: TestClient, route: str
 ) -> None:
     """The dog. One gate, and these routes call it rather than reimplementing it."""
-    response = live_client.get(route.replace(INDRA, "VG:DEVATA:SUNAH"))
+    # A ruled non-deity. The dog is a deity under the recorded ruling; the ABSTRACT class
+    # is the one the superseded structure predicate wrongly admitted.
+    response = live_client.get(route.replace(INDRA, "VG:DEVATA:BHAVAVRTTAM"))
     assert response.status_code == 404

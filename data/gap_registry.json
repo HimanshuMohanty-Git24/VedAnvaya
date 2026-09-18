@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "campaign": "post-v1-data-completeness",
-  "generated_at": "2026-09-17T16:15:14.452305+00:00",
+  "generated_at": "2026-09-17T18:34:16.443544+00:00",
   "baseline_commit": "d6e93a92c4e3ff1a5682a17b20bf32c6ce8fa19c",
   "gaps": [
     {
@@ -1677,7 +1677,7 @@
       "implementation_dependency": "A nesting policy: decide whether a substring formula is a distinct formula, a member of its container, or a variant, and apply one contract rather than leaving all three readings available. Applying different rules in different queries is how this project previously produced three disagreeing answers for one attribution axis.",
       "owner_agent": 12,
       "closure_test": "Every formula either has no strict-substring relation to another or carries an explicit nesting type, and formula frequency rankings state which policy they apply.",
-      "status": "STILL_IMPLEMENTATION_FIXABLE",
+      "status": "CLOSED_DERIVED",
       "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
       "observed_gap": "1,103 of 4,825 formulas are strict substrings of another formula, so formula counts double-count nested wordings.",
       "initial_hypothesis": "The deduplication pass removed exact duplicates but not nested ones. A formula that is a substring of another will be counted as its own formula and will also inflate the containing formula's occurrence count, so any ranking by formula frequency is affected.",
@@ -1700,16 +1700,16 @@
       "measured_root_cause": null,
       "source_availability": "UNDIAGNOSED",
       "initial_hypothesis_status": "UNTESTED",
-      "closure_method": null,
-      "closure_basis": "Clause one passes and clause two does not, and clause two is the one that protects the reader. Measured 2026-09-17: all 4,825 :Formula nodes carry formula_nesting_type over a four-valued vocabulary -- INDEPENDENT 2,788, CONTAINS_ANOTHER 934, NESTED_IN_ANOTHER 918, NESTED_AND_CONTAINING 185 -- so every formula standing in a strict-substring relation is now explicitly typed and the nesting is no longer invisible. But no surface states which nesting policy its ranking applies: neither src/vedagraph/api/services/formula_service.py nor the top_formulas ranking in entity_service.py:1171-1176 mentions nesting at all, and both order by passage count, so a frequency ranking still leaves all three readings available to the reader. Applying different rules in different queries is how this project previously produced three disagreeing answers for one attribution axis. Internal API work.",
+      "closure_method": "IMPLEMENTATION_R2",
+      "closure_basis": "Both clauses measured 2026-09-18. Clause 1: all 4,825 :Formula carry formula_nesting_type and 0 are untyped, so no formula stands in an undeclared strict-substring relation. Clause 2 was the open one and is closed in R2: the two formula frequency rankings the entry names -- formula_service._formula_caveats and the deity top_formulas ranking at entity_service -- ordered by occurrence count and stated no nesting policy, so the head of either list could be one piece of phraseology at several lengths read as several phrases. Both now carry vedagraph.domain.layer_figures.formula_nesting_policy(), which was already the project's single derived statement of the policy and was applied only to formula-diffusion. It is built from the live FORMULA_NESTING population rather than typed, so the share it quotes cannot drift from the graph.",
       "closure_measure": "MATCH (f:Formula) WHERE f.formula_nesting_type IS NULL RETURN count(f)",
       "closure_measured_value": 0,
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
-      "closure_prior_expected_value": null,
-      "closure_reaudit": null
+      "closure_measured_at": "2026-09-17T18:34:16.443544+00:00",
+      "closure_prior_expected_value": 0,
+      "closure_reaudit": "RELEASE_BLOCKER_R2"
     },
     {
       "gap_id": "GAP-MORPHOLOGY-001",
@@ -3453,7 +3453,7 @@
       "implementation_dependency": "Any extension must keep the two derivations separately typed and must not present a blended count.",
       "owner_agent": 9,
       "closure_test": "HAS_SEMANTIC_ASSERTION reaches a non-Rigvedic corpus, RV coverage rises above 2,542, and no surface reports a blended assertion total.",
-      "status": "STILL_IMPLEMENTATION_FIXABLE",
+      "status": "CLOSED_DERIVED",
       "causation_status": "HYPOTHESIS_NOT_YET_MEASURED",
       "observed_gap": "The semantic assertion layer is Rigveda-only and covers 2,542 of 10,552 RV mantras, so 17,668 mantras carry no assertion.",
       "initial_hypothesis": "The layer has two instruments of unequal strength and neither was extended. The rule layer depends on the RV-only morphological annotation (GAP-MORPHOLOGY-002). The model layer reads a 19th-century English translation, so it cannot reach the Samaveda at all, which has no translation. Half the layer's volume concentrates on 3.8% of the Rigveda.",
@@ -3476,16 +3476,16 @@
       "measured_root_cause": null,
       "source_availability": "UNDIAGNOSED",
       "initial_hypothesis_status": "UNTESTED",
-      "closure_method": null,
-      "closure_basis": "Two clauses pass, the third fails on a surface, and the third is the one the entry's implementation_dependency was written to protect. Measured 2026-09-17: HAS_SEMANTIC_ASSERTION reaches three non-Rigvedic corpora -- AV 3,295 mantras / 6,167 assertions, YV 574 / 1,543, SV 211 / 364 -- and Rigvedic coverage rose from 2,542 to 10,173 mantras over 27,057 assertions. The derivations are separately typed in the data, five ways. But the cross-Veda insight surface reports a single blended figure: insight_service.py:1249 emits 'Measured: {assertion_total:,} assertions over {vedas}' from one sum across all five derivations, so the reader is shown 35,131 with no indication that 2,459 are TIER_D model extraction over a 19th-century English translation and 2,406 are TIER_B rule output. The entry states the requirement plainly -- 'must not present a blended count' -- and splitting that note by derivation is bounded internal API work.",
+      "closure_method": "IMPLEMENTATION_R2",
+      "closure_basis": "All three clauses measured 2026-09-18. Clause 1: HAS_SEMANTIC_ASSERTION reaches three non-Rigvedic corpora -- AV 3,295 mantras / 6,167 assertions, YV 574 / 1,543, SV 211 / 364. Clause 2: RV coverage is 10,173 mantras / 27,057 assertions, against the 2,542 the entry names. Clause 3 was the open one and is closed in R2: src/vedagraph/api/services/insight_service.py summed one assertion_total across five derivations and published it in the cross-Veda cell, which reported a morphological rule over manual annotation and a model extraction as one figure. The cell now publishes the total broken out per derivation, names the model-assisted share (2,459 of 35,131) separately from the rule-derived remainder, carries the human-reviewed count (0, counted on the positive predicate review_state='HUMAN_REVIEWED' so a new state cannot be promoted into review by accident), and states that coverage is incomplete and uneven. Regression: tests/api/test_cross_veda_granularity_and_direction.py::test_the_semantic_assertion_row_does_not_claim_the_layer_was_never_built asserts the breakdown, the model-assisted share and the review count are all present.",
       "closure_measure": "MATCH (:Mantra)-[:HAS_SEMANTIC_ASSERTION]->() RETURN count(*)",
       "closure_measured_value": 35131,
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
-      "closure_measured_at": "2026-09-17T16:15:14.452305+00:00",
-      "closure_prior_expected_value": null,
-      "closure_reaudit": null
+      "closure_measured_at": "2026-09-17T18:34:16.443544+00:00",
+      "closure_prior_expected_value": 35131,
+      "closure_reaudit": "RELEASE_BLOCKER_R2"
     },
     {
       "gap_id": "GAP-SEMANTICS-002",

@@ -72,31 +72,30 @@ CONTRACT_VERSION: Final = "VG:DEITY_ELIGIBILITY:V1"
 #: The one documented predicate. Every count over the deity population uses this string.
 ELIGIBLE_DEITY_PREDICATE: Final = "d.is_deity = true"
 
-#: The predicate a query must use UNTIL ``is_deity`` has landed on all 214 nodes.
-#:
-#: **Why a shim exists at all.** ``is_deity = true`` is the end state, but a query is code
-#: and the property is data, and the two land in different changes. A shipped query that
-#: reads a property the graph does not hold does not error -- Neo4j returns null, the
-#: WHERE excludes every row, and the endpoint answers with an empty result that looks like
-#: a finding. ``tests/api/test_cypher_property_hygiene.py`` exists because that exact
-#: failure shipped once.
-#:
-#: So the shim reads the ruling where it exists and falls back to the strongest rule the
-#: graph can state without it: the curated structure. Pre-landing it reads 185 (the 29
-#: curated non-members excluded, the 28 ABSTRACT rulings not yet available); post-landing it
-#: reads 157 and is identical to :data:`ELIGIBLE_DEITY_PREDICATE`. Both figures exclude the
-#: 29 the closure test names; neither is the 192 that shipped.
-#:
-#: **Removal condition.** When ``MATCH (d:Devata) WHERE d.is_deity IS NULL RETURN count(d)``
-#: is 0, replace every call with :data:`ELIGIBLE_DEITY_PREDICATE`. Queries that use the shim
-#: must also return the count of unruled nodes, so the transitional state is typed in the
-#: row rather than left to a caveat.
-def eligible_predicate(alias: str = "d") -> str:
-    """The convergent eligibility predicate for one Cypher alias."""
-    return (
-        f"coalesce({alias}.is_deity, "
-        f"NOT coalesce({alias}.structure, 'UNSPECIFIED') IN ['HUMAN', 'PATRON_PRAISE'])"
-    )
+# ---------------------------------------------------------------------------
+# The transitional shim, REMOVED. Kept as a note because the hazard it covered is real.
+# ---------------------------------------------------------------------------
+#
+# ``eligible_predicate(alias)`` stood here and returned
+# ``coalesce(a.is_deity, NOT coalesce(a.structure,'UNSPECIFIED') IN ['HUMAN','PATRON_PRAISE'])``.
+#
+# **Why a shim existed at all.** ``is_deity = true`` is the end state, but a query is code
+# and the property is data, and the two land in different changes. A shipped query that
+# reads a property the graph does not hold does not error -- Neo4j returns null, the WHERE
+# excludes every row, and the endpoint answers with an empty result that looks like a
+# finding. ``tests/api/test_cypher_property_hygiene.py`` exists because that exact failure
+# shipped once. So the shim read the ruling where it existed and fell back to the curated
+# structure where it did not.
+#
+# **Its own removal condition, met.** It said: when
+# ``MATCH (d:Devata) WHERE d.is_deity IS NULL RETURN count(d)`` is 0, replace every call
+# with :data:`ELIGIBLE_DEITY_PREDICATE`. Measured: 214 of 214 ruled, 0 unruled, 0 excluded
+# without a recorded reason. The condition had been met and the shim was still in every
+# shipped query, which made it a *second* eligibility predicate -- the one thing
+# GAP-ENTITY_COVERAGE-008 exists to remove. It disagreed with the ruling on 29 of the 214:
+# it admitted the 28 abstractions ruled ABSTRACTION_NOT_AN_ADDRESSEE and excluded the dog,
+# whom the ruling admits. Deleted rather than deprecated, because a fallback nobody calls is
+# a fallback somebody will call.
 
 
 #: Repo root, so the ruling file resolves the same from a test runner, a script and the

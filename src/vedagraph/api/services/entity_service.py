@@ -12,10 +12,15 @@ the data it described.
 
 **The four things this file exists to get right.**
 
-*A deity list must not contain a dog.* The Anukramani names a devata for every Rigvedic
-hymn and 30 of the 214 are not gods. Every deity query interpolates
+*A deity list must not contain an abstraction.* The Anukramani names a devata for every
+Rigvedic hymn and 57 of the 214 are not gods. Every deity query interpolates
 :func:`~vedagraph.api.services.deity_population.deity_structure_clause` and binds its
-structure list; the two populations run the same Cypher and differ only in that parameter.
+admitted values; the two populations run the same Cypher and differ only in that parameter.
+
+This heading read "must not contain a dog" and the figure was 30. The recorded eligibility
+ruling admits the dog -- a deified animal beside thirteen others in the population -- and
+excludes 28 abstractions the structure filter admitted, which is why the clause now reads
+the ruling rather than ``structure``.
 
 *A co-deity list must not contain a human.* ``profile_co_devatas`` holds display labels,
 not keys, and Indra's is literally ``['Vasukra']`` -- a human patron. The labels are
@@ -95,6 +100,7 @@ from vedagraph.api.repositories.neo4j_repository import named_query_caveat, vali
 from vedagraph.api.services.deity_population import (
     KNOWN_DEITY_STRUCTURES,
     NOT_A_DEITY_SUBJECT,
+    DevataSubject,
     deity_structure_clause,
     deity_structure_parameters,
     filter_co_deity_labels,
@@ -103,6 +109,7 @@ from vedagraph.api.services.deity_population import (
     subject_disclosure,
 )
 from vedagraph.api.services.search_service import VEDA_ORDER, result_type_for_labels
+from vedagraph.domain import layer_figures as figures
 from vedagraph.domain.layer_figures import CORPUS_MANTRAS
 from vedagraph.domain.ontology import product_filter
 from vedagraph.domain.theonyms import AMBIGUOUS, CERTAIN, PROBABLE, referent_tiers_for_mode
@@ -422,6 +429,7 @@ UNWIND profile_labels AS profile_label
 OPTIONAL MATCH (other:Devata) WHERE other.display_label = profile_label
 RETURN profile_label, other.entity_key AS entity_key,
        other.display_label AS display_label, other.structure AS structure,
+       other.is_deity AS is_deity, other.non_deity_kind AS non_deity_kind,
        other.short_description AS short_description
 """
 
@@ -449,6 +457,7 @@ WHERE {_DV_IS_DEITY}
   AND ($axis IS NULL OR EXISTS {{ (dv)-[:HAS_AXIS]->(:DeityAxis {{axis: $axis}}) }})
 RETURN dv.entity_key AS id, dv.display_label AS display_label,
        dv.label_iast AS label_iast, dv.structure AS structure,
+       dv.is_deity AS is_deity, dv.non_deity_kind AS non_deity_kind,
        dv.short_description AS short_description, dv.axes AS axes,
        dv.is_composite AS is_composite,
        dv.profile_mentions_by_veda_certainty AS tier_json,
@@ -1119,7 +1128,9 @@ class EntityService:
                     subtitle=_text(row.get("structure")),
                     short_description=_text(row.get("short_description")),
                     structure=_text(row.get("structure")),
-                    is_deity=is_deity(_text(row.get("structure"))),
+                    # The ruling, not the structure. Deriving this from structure made the
+                    # flag disagree with the filter that selected the row.
+                    is_deity=row.get("is_deity") is True,
                     axes=_as_list(row.get("axes")),
                     is_composite=bool(row.get("is_composite")),
                     passage_count=_as_int(row.get("attributed_total")),
@@ -1152,7 +1163,8 @@ class EntityService:
     ) -> DevataProfile:
         """The flagship deity payload, with every empty dimension explained."""
         tiers = tiers_for(certainty, include_ambiguous)
-        structure = self._resolve_devata(entity_id, population)
+        subject = self._resolve_devata(entity_id, population)
+        structure = subject.structure
         row = self._repository.run_one(_DEVATA_NODE_QUERY, key=entity_id, tiers=sorted(tiers))
         if row is None:  # pragma: no cover - the gate already proved it exists
             raise EntityNotFoundError(f"No deity with id '{entity_id}'.")
@@ -1209,7 +1221,7 @@ class EntityService:
             )
         )
 
-        subject_is_deity, subject_caveats = subject_disclosure(structure)
+        subject_is_deity, subject_caveats = subject_disclosure(subject)
         caveats = [
             *subject_caveats,
             *population_caveats(population),
@@ -1229,6 +1241,12 @@ class EntityService:
                     "asserted to be about it.",
                     source="measured",
                 )
+            )
+            # GAP-FORMULA-003 clause 2. This is a formula frequency ranking and it stated
+            # no nesting policy, so a deity's "top formulas" could be one piece of
+            # phraseology listed at four lengths and read as four separate formulas.
+            caveats.append(
+                CaveatView(text=figures.formula_nesting_policy(), source="measured")
             )
         if structure == "ABSTRACT":
             caveats.append(
@@ -1306,7 +1324,8 @@ class EntityService:
         SUPPORTED page from an endpoint titled "Passages naming or ascribed to a deity",
         while ``/devatas/VG:DEVATA:SUNAH`` 404'd for the same id.
         """
-        structure = self._resolve_devata(entity_id, population)
+        subject = self._resolve_devata(entity_id, population)
+        structure = subject.structure
         self._validate_veda(veda)
         tiers = tiers_for(certainty, include_ambiguous)
         counts = self._mention_certainty_from_edges(entity_id, tiers)
@@ -1346,7 +1365,7 @@ class EntityService:
                     source="measured",
                 )
             )
-        subject_is_deity, subject_caveats = subject_disclosure(structure)
+        subject_is_deity, subject_caveats = subject_disclosure(subject)
         caveats[:0] = subject_caveats
         total = _as_int(total_row.get("total")) if total_row else None
         page = paginate(
@@ -1379,8 +1398,9 @@ class EntityService:
         not, so the endpoint refused a non-deity as a neighbour while serving one as the
         thing being asked about.
         """
-        structure = self._resolve_devata(entity_id, population)
-        subject_is_deity, subject_caveats = subject_disclosure(structure)
+        subject = self._resolve_devata(entity_id, population)
+        structure = subject.structure
+        subject_is_deity, subject_caveats = subject_disclosure(subject)
         parameters = {
             **deity_structure_parameters(population),
             "key": entity_id,
@@ -1498,12 +1518,16 @@ class EntityService:
 
     # -- deity helpers ----------------------------------------------------------
 
-    def _resolve_devata(self, entity_id: str, population: DeityPopulation) -> str | None:
+    def _resolve_devata(
+        self, entity_id: str, population: DeityPopulation
+    ) -> DevataSubject:
         """THE deity gate. Every deity route passes through it; none can opt out.
 
-        Returns the subject's ``structure``, and raises otherwise, so a caller gets the
-        population decision and the structure from one call and cannot take one without
-        the other. It is a chokepoint rather than a check because the alternative was
+        Returns the subject's structure AND its recorded eligibility ruling, and raises
+        otherwise, so a caller gets the population decision and the subject's own ruling
+        from one call and cannot take one without the other. The gate reads the ruling:
+        it read ``structure`` and so refused the dog, whom the recorded ruling admits, while
+        admitting 28 abstractions the ruling excludes. It is a chokepoint rather than a check because the alternative was
         measured: the population contract lived in ``get_devata`` alone, and the network
         and passage routes each forgot it, so ``/devatas/VG:DEVATA:SUNAH/network`` served
         the dog as ``type=DEVATA`` under a caveat reading "This response excludes all 30"
@@ -1512,7 +1536,8 @@ class EntityService:
         without failing to type-check.
         """
         row = self._repository.run_one(
-            "MATCH (dv:Devata {entity_key: $key}) RETURN dv.structure AS structure",
+            "MATCH (dv:Devata {entity_key: $key}) RETURN dv.structure AS structure, "
+            "dv.is_deity AS is_deity, dv.non_deity_kind AS non_deity_kind",
             key=entity_id,
         )
         if row is None:
@@ -1520,15 +1545,19 @@ class EntityService:
                 f"No deity with id '{entity_id}'.",
                 hint="GET /api/v1/devatas lists them. Ids look like VG:DEVATA:INDRAH.",
             )
-        structure = _text(row.get("structure"))
-        if population is DeityPopulation.DEITIES and not is_deity(structure):
+        subject = DevataSubject(
+            structure=_text(row.get("structure")),
+            is_deity=row.get("is_deity") is True,
+            non_deity_kind=_text(row.get("non_deity_kind")),
+        )
+        if population is DeityPopulation.DEITIES and not subject.is_deity:
             raise EntityNotFoundError(
                 f"'{entity_id}' is an Anukramani devata-slot ascription, not a deity "
-                f"(structure={structure!r}).",
+                f"({subject.non_deity_kind or subject.structure}).",
                 hint="Ask again with population=all_ascriptions to read it as what it is. "
                 + DEITY_SURFACE_REDIRECT,
             )
-        return structure
+        return subject
 
     def _certainty_counts(
         self, tier_map: dict[str, dict[str, int]], tiers: frozenset[str]
@@ -1750,9 +1779,9 @@ class EntityService:
         unresolved = [str(row["profile_label"]) for row in rows if not row.get("entity_key")]
         deity_rows = filter_co_deity_labels(resolved)
         dropped = [
-            f"{row.get('display_label')} ({row.get('structure')})"
+            f"{row.get('display_label')} ({row.get('non_deity_kind') or row.get('structure')})"
             for row in resolved
-            if not is_deity(_text(row.get("structure")))
+            if row.get("is_deity") is not True
         ]
 
         refs = [

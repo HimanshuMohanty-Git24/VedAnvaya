@@ -1,0 +1,26 @@
+{
+  "artifact": "R2_GAP_RITUAL_006_METHOD_LANDING_PLAN",
+  "at": "2026-09-17T17:38:01.490882+00:00",
+  "gap_id": "GAP-RITUAL-006",
+  "source": "data/staging/final_closure_sprint/agent4/ritual_context.jsonl",
+  "join_verified": "20,210 staged keys / 20,210 live mantras / 0 missing / 0 ritual_context disagreements",
+  "operations": {
+    "method_writes": 20210,
+    "citation_writes": 1903,
+    "rival_writes": 7769,
+    "nodes_created": 0,
+    "nodes_deleted": 0,
+    "relationships_created": 0,
+    "relationships_deleted": 0
+  },
+  "expected_census_delta": {
+    "nodes": 0,
+    "relationships": 0
+  },
+  "census_before": {
+    "nodes": 164201,
+    "relationships": 508042,
+    "core_corpus_total": 20210,
+    "derived_metric": 1085
+  }
+}

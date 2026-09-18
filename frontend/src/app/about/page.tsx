@@ -262,7 +262,10 @@ export default async function AboutPage() {
                             something the model had been quietly wrong about — most often about what
                             counts as a deity, since the traditional index that names one for every
                             hymn also names twenty-two human patrons, seven praise-of-a-gift labels,
-                            and a dog.
+                            and twenty-eight abstractions that name a hymn&rsquo;s subject rather
+                            than anyone it addresses. It also names a dog, and the dog is a deity:
+                            thirteen other animals are in the pantheon, and excluding this one on
+                            the shape of its label would have been an accident of grammar.
                         </p>
                         <p>
                             The name changed last. <b>VedaGraph</b> described the technique, and by

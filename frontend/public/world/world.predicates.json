@@ -1,6 +1,7 @@
 {
   "version": 1,
-  "generated": "2026-09-17T16:01:33Z",
+  "generated": "2026-09-18T03:58:27Z",
+  "inputPublicExportHash": "a28bac85a71bcac178b4ab13bb95ff7517d51f4f4469a3776fa6f68539a52f87",
   "source": "vedagraph.api.services.graph_service.PREDICATE_SEMANTICS",
   "counts": {
     "predicates": 73,
@@ -231,7 +232,7 @@
     "HAS_SEMANTIC_ASSERTION": {
       "phrase": "carries the semantic assertion",
       "asserts": "This passage carries a reified assertion about who does what.",
-      "limit": "One label over two layers of unequal strength that must not be summed: 2,406 assertions derived by rule from the Sanskrit annotation, and 2,459 extracted unreviewed by a model from an English translation. All 4,865 are Rigvedic. Read the assertion's own `derivation` before using it.",
+      "limit": "One label over five derivations of unequal strength that must not be summed: 28,370 and 2,406 derived by rule from the Sanskrit annotation, 1,532 from the treebank dependency layer, 364 projected from a letter-identical Rigvedic verse rather than annotated in their own corpus, and 2,459 extracted unreviewed by a model from an English translation. The layer reaches all four corpora unevenly -- RV 27,057, AV 6,167, YV 1,543, SV 364 -- and none of it is human-reviewed. This said 'All 4,865 are Rigvedic', which was true of an earlier state of the layer and is now false in both halves. Read the assertion's own `derivation` before using it.",
       "direction": "UNDECLARED",
       "basis": "CURATED"
     },

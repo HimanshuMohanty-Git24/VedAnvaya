@@ -85,11 +85,16 @@ def test_neighboring_deity_pair_queries_exclude_human_addressees() -> None:
         "deity_pairs_not_rigvedic",
     ):
         cypher = QUERIES_BY_NAME[name].cypher
-        assert "a.is_deity" in cypher, name
-        assert "b.is_deity" in cypher, name
-        # The danastuti exclusion is the one the old predicate missed, and it is the one
-        # that made this question MISLEADING: 50 dedications across 15 hymns, 9 partners.
-        assert "'HUMAN', 'PATRON_PRAISE'" in cypher, name
+        # Both endpoints gated on the recorded ruling. This required the structure list
+        # "'HUMAN', 'PATRON_PRAISE'" in the text, which was the transitional shim's
+        # fallback: correct while is_deity was landing, and a second eligibility predicate
+        # once it had landed on all 214. The danastuti exclusion the old predicate missed
+        # -- 50 dedications across 15 hymns, 9 partners -- is now carried by the ruling
+        # itself (7 rows are non_deity_kind DANASTUTI_GIFT_PRAISE), which also excludes the
+        # 28 abstractions the structure fallback admitted.
+        assert "a.is_deity = true" in cypher, name
+        assert "b.is_deity = true" in cypher, name
+        assert "NOT coalesce(a.structure" not in cypher, name
         assert "coalesce(a.structure, 'UNSPECIFIED') <> 'HUMAN'" not in cypher, name
 
 
