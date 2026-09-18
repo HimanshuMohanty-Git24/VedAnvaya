@@ -182,10 +182,35 @@ ASSESSMENTS: dict[str, dict[str, Any]] = {
         "blocked_by": ["OWNER_DECISION_E_AUDIO_GATE"],
     },
     "samaveda_music": {
-        "B": ("UNKNOWN", "no semantic review recorded"),
-        "C": ("NOT_RUN", "adversarial test not yet performed"),
+        "B": (
+            "PASS",
+            "scripts/samaveda_music_gate_b.py, 2026-09-18: 12 checks across the four "
+            "sections this file names -- classification, population, source meaning, "
+            "relation meaning -- over the 1,136 ARCIKA_NOTATION rows and the 708 withheld, "
+            "12,782 row-evaluations, 0 defects, no check below full coverage. The 332 "
+            "GANA_RENDERING rows are reported and NOT averaged in: their object side is "
+            "outside Product V1 by OWNER_DECISIONS.md section 41, and a file holding two "
+            "kinds of claim has no single pass rate.",
+        ),
+        "C": (
+            "DEFECT_FOUND_AND_FIXED",
+            "scripts/samaveda_music_gate_c.py, 2026-09-18. It landed: 39 of the 708 "
+            "withheld verses stated a reason this repository disproves, their exact "
+            "normalised text being released with notation on a coreferent twin. The failing "
+            "run is preserved at data/staging/samaveda_music_002_final/gate_c_run1.json and "
+            "the 39 now carry WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT; no row "
+            "moved from withheld to released and no notation was invented. Re-run: "
+            "SURVIVED. The independence is the point -- it never reads the artifact's own "
+            "tone_stripped_text or QA report, re-implements the declared normalisation from "
+            "the manifest's prose via the Unicode character database, and carries a "
+            "negative control that reads 1,136/1,136 aligned against 0/1,136 shifted by one "
+            "verse.",
+        ),
         "restage_required": False,
-        "blocked_by": ["OWNER_DECISION_E_AUDIO_GATE"],
+        # OWNER_DECISION_F_NOTATION_IS_NOT_AUDIO (section 40) rules the audible gate covers
+        # AUDIO only, so it was never the right gate for a layer of printed tone marks.
+        # Section 42 then settled what "existing validation gates" meant. Both are answered.
+        "blocked_by": [],
     },
     "ritual": {
         "B": (

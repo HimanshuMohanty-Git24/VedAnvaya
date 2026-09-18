@@ -395,6 +395,42 @@ RETURN rituals_modelled, rituals_with_steps, step_edges, rituals_with_procedure,
        implements_curated, implements_reached, objects_in_registry
 """
 
+#: The Samavedic notation layer, and the SHAPE of its incompleteness.
+#:
+#: Every figure Q82 publishes is read here rather than typed into the prose, because a number
+#: in a sentence is the one number nothing can catch. The withheld count is returned beside
+#: the notated one for the reason this project keeps restating: a query that returns only the
+#: positive rows lets a reader infer a zero the data never stated.
+_SAMAVEDIC_NOTATION_QUERY: Final = """
+CALL () { MATCH (m:Mantra {veda:'SV'}) RETURN count(m) AS sv_verses }
+CALL () {
+    MATCH (m:Mantra {veda:'SV', samavedic_notation_state:'SOURCE_EXPLICIT_PRESENT'})
+    RETURN count(m) AS notated_verses
+}
+CALL () {
+    MATCH (m:Mantra {veda:'SV', samavedic_notation_state:'WITHHELD'})
+    RETURN count(m) AS withheld_verses,
+           count(DISTINCT m.samavedic_notation_withheld_class) AS withheld_classes
+}
+CALL () {
+    MATCH (m:Mantra {veda:'SV'}) WHERE m.samavedic_notation_state IS NULL
+    RETURN count(m) AS verses_with_no_state
+}
+CALL () {
+    MATCH (:Mantra {veda:'SV'})-[:HAS_TEXT_VERSION]->(t:TextVersion)
+    WHERE t.accented = true AND t.notation_system IS NOT NULL
+    RETURN count(t) AS notation_witnesses,
+           sum(t.notation_tone_mark_count) AS tone_marks,
+           count(DISTINCT t.notation_system) AS notation_systems,
+           sum(CASE WHEN t.notation_is_interpreted_into_pitch THEN 1 ELSE 0 END)
+               AS interpreted_into_pitch
+}
+CALL () { MATCH ()-[r:MUSICALIZED_AS]->() RETURN count(r) AS musicalized_as_edges }
+RETURN sv_verses, notated_verses, withheld_verses, withheld_classes, verses_with_no_state,
+       notation_witnesses, tone_marks, notation_systems, interpreted_into_pitch,
+       musicalized_as_edges
+"""
+
 #: Each modelled rite with its curated inventory sizes. Separate from ``ritual_profile``,
 #: which collects labels; this counts them, so a client can see that a rite with an empty
 #: object list has an empty *curation* rather than an empty apparatus.
@@ -3384,30 +3420,111 @@ class InsightService:
         )
 
     def _q82_samavedic_melody(self) -> CapabilityLimit:
+        """Q82. Half an answer, and the half that is missing is the important one.
+
+        This card read ``NOT_ANSWERABLE`` / ``NOT_BUILT`` on the sentence "No melodic layer
+        of any kind exists in this graph", and that sentence stopped being true when
+        GAP-SAMAVEDA_MUSIC-002 landed the notation. The frozen benchmark verdict is kept
+        beside the live one rather than rewritten: the divergence IS the finding, and
+        copying the frozen grade forward would publish a limitation that no longer holds.
+
+        What moved is NOTATION. What did not move is the SONG, and the distinction is the
+        whole content of the card. The marks are recorded as the codepoints the source
+        printed and are never interpreted into pitch -- the Kauthuma decipherment authority
+        (van der Hoogt 1929) is not held, and Howard 1988 is Jaiminiya. So a reader can now
+        see how a verse was MARKED and still cannot learn how it was SUNG.
+        """
         scopes = self.work_scopes()
         sv = scopes.get("SV")
         excluded = sv.excluded_corpora if sv else []
+        row = self._repository.run_one(_SAMAVEDIC_NOTATION_QUERY) or {}
+        verses = _as_int(row.get("sv_verses"))
+        notated = _as_int(row.get("notated_verses"))
+        withheld = _as_int(row.get("withheld_verses"))
+        classes = _as_int(row.get("withheld_classes"))
+        untyped = _as_int(row.get("verses_with_no_state"))
+        marks = _as_int(row.get("tone_marks"))
+        interpreted = _as_int(row.get("interpreted_into_pitch"))
+        edges = _as_int(row.get("musicalized_as_edges"))
+
+        answerable = bool(notated)
+        notated_text = "no" if not notated else f"{notated:,}"
+        verses_text = "the" if verses is None else f"{verses:,}"
+        withheld_text = "an unmeasured number of" if withheld is None else f"{withheld:,}"
+        marks_text = "" if marks is None else f"{marks:,} "
+        classes_text = "a" if classes is None else f"{classes}"
+
         return CapabilityLimit(
             limit_id="samavedic_melodic_layer",
             question_number=82,
             question="What does the Samaveda's musical dimension contain?",
-            verdict=CapabilityVerdict.NOT_ANSWERABLE,
+            verdict=(
+                CapabilityVerdict.PARTIALLY_ANSWERABLE
+                if answerable
+                else CapabilityVerdict.NOT_ANSWERABLE
+            ),
             benchmark_verdict=CapabilityVerdict.NOT_ANSWERABLE,
-            data_status=KnowledgeStatus.NOT_BUILT,
+            data_status=(
+                KnowledgeStatus.PARTIAL if answerable else KnowledgeStatus.NOT_BUILT
+            ),
             why=(
-                "The Samavedic corpus held here is the Kauthuma arcika verse text and nothing "
-                "else. The gana collections -- the sung realisation that is the reason the "
-                "Samaveda is a distinct Veda rather than a Rigvedic excerpt -- are excluded by "
-                f"the work's own declaration ({', '.join(excluded) or 'no exclusions recorded'}) "
-                "and require their own work identifier. No melodic layer of any kind exists in "
-                "this graph."
+                "It contains NOTATION and not song, and those are different answers. "
+                f"{notated_text} of {verses_text} Kauthuma arcika verses now carry the "
+                f"Kauthuma numeric svara marks their source printed on them -- {marks_text}"
+                "combining Devanagari Extended cantillation codepoints, read off one pinned "
+                "revision of a community transcription and aligned to this corpus's own "
+                f"coordinates. {withheld_text} verses carry no notation and say why in "
+                f"{classes_text}-valued typed reason on the verse itself, so the absence is "
+                "readable rather than inferred; coverage is NOT uniform across the four "
+                "collections. What is still entirely absent is the sung realisation: the "
+                "gana collections are excluded by the work's own declaration "
+                f"({', '.join(excluded) or 'no exclusions recorded'}) and require their own "
+                f"work identifier, and there are {edges if edges is not None else 'no'} "
+                "verse-to-saman edges because there is no canonical saman to point at."
             ),
             what_this_is_not=(
-                "This is NOT a statement that the Samaveda lacks a musical dimension, and no "
-                "Samavedic figure anywhere in this API may be read as covering the Samaveda. "
-                "The work node's own scope sentence begins by saying so in capitals."
+                "The marks are NOT a melody and this API does not decipher them. They are "
+                "recorded as the codepoints the source printed; no pitch, interval or svara "
+                "name is derived anywhere, because the Kauthuma decipherment authority is "
+                "not held and the one that is published is for a different school. A reader "
+                "can see how a verse was MARKED and still cannot learn how it was SUNG. Nor "
+                "is the notated count a coverage claim about the Samaveda: no Samavedic "
+                "figure anywhere in this API may be read as covering the Samaveda, and the "
+                "work node's own scope sentence begins by saying so in capitals."
             ),
             measurements=[
+                CapabilityMeasurement(
+                    name="verses_with_source_supplied_notation",
+                    value=notated,
+                    means="Verses carrying tone marks the source printed. Validated by the "
+                    "structural, semantic and adversarial gates before release.",
+                ),
+                CapabilityMeasurement(
+                    name="verses_with_notation_withheld",
+                    value=withheld,
+                    means="Verses the witness does not settle. Published beside the "
+                    "positive count on purpose: without it the notated figure reads as the "
+                    "whole corpus.",
+                ),
+                CapabilityMeasurement(
+                    name="verses_with_no_notation_disposition_at_all",
+                    value=untyped,
+                    means="Verses neither notated nor typed as withheld. This must be 0: an "
+                    "untyped verse is one a reader cannot tell apart from a verified zero.",
+                ),
+                CapabilityMeasurement(
+                    name="notation_rows_interpreted_into_pitch",
+                    value=interpreted,
+                    means="Rows converting a mark into a pitch. 0, and it is a refusal "
+                    "rather than a gap: no decipherment authority for this school is held.",
+                ),
+                CapabilityMeasurement(
+                    name="verse_to_saman_edges",
+                    value=edges,
+                    means="Edges from a verse to the saman that realises it. 0, because the "
+                    "object side is outside the bounded corpus and minting one to fill a "
+                    "denominator is forbidden.",
+                ),
                 CapabilityMeasurement(
                     name="excluded_samavedic_corpora",
                     value=len(excluded),
@@ -3416,19 +3533,27 @@ class InsightService:
                 ),
             ],
             safe_alternative=(
-                "The arcika verse text itself, and the measured Rigvedic reuse within it, "
-                "both of which are real and both of which are about the verse and not the song."
+                "The notated verse text itself, served as a parallel witness beside the "
+                "primary text, and the measured Rigvedic reuse within the arcika. All three "
+                "are real, and all three are about the verse rather than the song."
             ),
             what_would_change_it=(
-                "Ingesting a gana corpus under its own work identifier, with the melodic "
-                "assignment linked to the verses it realises."
+                "For the song: a gana corpus under its own work identifier, with the melodic "
+                "assignment linked to the verses it realises. For the notation's remaining "
+                "verses: philological adjudication of where this witness and this corpus "
+                "disagree, which needs a reader rather than another source."
             ),
             endpoint="/api/v1/insights/formula-diffusion",
             caveats=[
                 _measured_caveat(
                     "Samavedic scope, in the graph's own words: "
                     + (sv.scope if sv and sv.scope else "not recorded")
-                )
+                ),
+                _measured_caveat(
+                    "The notation's witness is a community transcription pinned to one "
+                    "revision, not a critical edition and not a school certification. It is "
+                    "offered as a witness beside the primary text, never as the text."
+                ),
             ],
         )
 

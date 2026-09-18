@@ -95,3 +95,10 @@ data/staging/release_blocker_r4/backup/*.jsonl
 data/staging/release_blocker_r3/backup/*.jsonl
 data/staging/release_blocker_r5/backup/*.jsonl
 data/staging/final_stabilization/neo4j_backup_20260917/*.dump
+
+# The Samaveda notation pre-import logical export: 537 MB of nodes.jsonl +
+# relationships.jsonl, same rule and same reason as the R3/R4/R5 exports above. The payload
+# is reproducible from the graph it was taken from and what a later reader needs is the
+# IDENTITY of the backup the import was gated on, so MANIFEST.json and the .sha256 sidecars
+# ARE tracked and the payload is not.
+data/staging/samaveda_music_002_final/backup/*.jsonl

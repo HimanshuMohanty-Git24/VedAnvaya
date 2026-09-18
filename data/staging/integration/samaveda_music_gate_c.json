@@ -1,0 +1,296 @@
+{
+  "artifact": "SAMAVEDA_MUSIC_GATE_C",
+  "gate": "C",
+  "gate_definition": "ADVERSARIAL -- headline survived an independent falsification attempt (data/staging/integration/wave3_eligibility.json)",
+  "domain": "samaveda_music",
+  "at": "2026-09-18T18:16:23.762873+00:00",
+  "headline_under_attack": "1,136 of the 1,844 Kauthuma arcika verses carry source-supplied Kauthuma numeric svara notation, aligned to this corpus's own canonical coordinates; 708 are withheld with a typed reason.",
+  "independence": {
+    "the_staging_pipeline_is_not_in_this_repository": true,
+    "fields_this_gate_refuses_to_read": [
+      "payload.tone_stripped_text",
+      "proofs/qa-report.json",
+      "the graph's stored SV primary text"
+    ],
+    "evidence_sources": {
+      "E1_canonical_files": [
+        "data/canonical/samaveda_arcika_v1/passages.jsonl",
+        "data/canonical/samaveda_arcika_v1/text_versions.jsonl"
+      ],
+      "E2_graph_running_series": "m.running_samhita_number (R5, a different citation system)",
+      "E3_witness_raw_string": "payload.notated_text_devanagari, including its own printed numerals",
+      "E4_unicode_character_database": "unicodedata.category, in place of the artifact's integer ranges"
+    },
+    "normalisation_reimplemented_from": "data/staging/samaveda_music/manifest.json config.normalisation, as prose"
+  },
+  "pass_condition": "Every attack fails to land AND every check covers its whole eligible population. A check below full coverage fails the gate.",
+  "checks": [
+    {
+      "name": "independent.an_independent_strip_rederives_the_canonical_text",
+      "attack": "Re-implement the declared normalisation from its written sentence, using the Unicode character database instead of the artifact's integer ranges, and apply it to the RAW witness string. Compare against the canonical FILE, never the artifact's own tone_stripped_text and never the graph's copy.",
+      "fatal_if": "Any row whose witness text does not reduce to the canonical text at its own key.",
+      "eligible": 1136,
+      "evaluated": 1136,
+      "coverage": 1.0,
+      "at_full_coverage": true,
+      "failures": 0,
+      "failure_detail": [],
+      "observed": {
+        "segmentation_invariant_reading_agrees": 1136,
+        "positional_reading_agrees": 1121,
+        "positional_reading_disagrees": 15,
+        "characters_involved_in_every_positional_disagreement": {
+          "DEVANAGARI SIGN ANUSVARA": 16,
+          "DEVANAGARI LETTER NA": 16,
+          "DEVANAGARI SIGN VIRAMA": 16
+        },
+        "why_two_readings": "The witness and our canonical text segment their words differently -- the witness prints 'maghavan gavistaya' as two tokens where the canonical prints one -- so 'word-final' is not a position both sides agree on. Every one of the disagreements under the positional reading is confined to ANUSVARA, NA and VIRAMA: the declared nasal fold and nothing else. No row differs in a consonant, a vowel or a vowel sign under either reading.",
+        "read_from": [
+          "data/canonical/samaveda_arcika_v1/text_versions.jsonl",
+          "payload.notated_text_devanagari"
+        ],
+        "never_read": [
+          "payload.tone_stripped_text",
+          "the graph's stored SV text"
+        ]
+      },
+      "status": "SURVIVED"
+    },
+    {
+      "name": "independent.the_comparison_has_discriminating_power",
+      "attack": "NEGATIVE CONTROL. Run C1 again against the NEXT canonical verse in order. A normalisation loose enough to match anything would score 1,136 of 1,136 above and mean nothing.",
+      "fatal_if": "The shifted comparison matching at any material rate. The aligned result is only evidence to the extent this one is near zero.",
+      "eligible": 1136,
+      "evaluated": 1136,
+      "coverage": 1.0,
+      "at_full_coverage": true,
+      "failures": 0,
+      "failure_detail": [],
+      "observed": {
+        "aligned_agreement_invariant": 1136,
+        "shifted_by_one_agreement_invariant": 0,
+        "shifted_by_one_agreement_positional": 0,
+        "discrimination": "1136 aligned vs 0 shifted, over the same 1136 rows and the same fold"
+      },
+      "status": "SURVIVED"
+    },
+    {
+      "name": "independent.no_undeclared_character_was_removed",
+      "attack": "The over-normalisation attack. Census every character the independent strip removes and classify each one. Removing an ordinary vowel sign would manufacture the match in C1 while looking like a clean run.",
+      "fatal_if": "Any removed character that is not a Vedic tone mark, a declared punctuation or digit, a folded spacing candrabindu, or part of the declared nasal fold.",
+      "eligible": 1136,
+      "evaluated": 1136,
+      "coverage": 1.0,
+      "at_full_coverage": true,
+      "failures": 0,
+      "failure_detail": [],
+      "observed": {
+        "removed_characters_by_class": {
+          "VEDIC_TONE_MARK": 25542,
+          "WHITESPACE_DIGIT_OR_PUNCTUATION": 19626,
+          "SPACING_CANDRABINDU_FOLDED_TO_ANUSVARA": 469,
+          "DECLARED_NASAL_FOLD": 3682
+        },
+        "distinct_codepoints_removed": 24,
+        "tone_codepoints_removed": [
+          "U+A8E1",
+          "U+A8E2",
+          "U+A8E3",
+          "U+A8EB",
+          "U+A8EC",
+          "U+A8EF"
+        ],
+        "undeclared_removals": 0
+      },
+      "status": "SURVIVED"
+    },
+    {
+      "name": "independent.the_witness_own_printed_numeral_agrees",
+      "attack": "The witness prints its own numerals, and the artifact states the join did not use them. Each one must equal either the verse index inside its dasati or the running Samhita number the graph carries from a different citation system.",
+      "fatal_if": "Any printed numeral matching neither series. Only the running series can detect a whole-decade shift, so its match count is reported separately rather than folded into one total.",
+      "eligible": 863,
+      "evaluated": 863,
+      "coverage": 1.0,
+      "at_full_coverage": true,
+      "failures": 0,
+      "failure_detail": [],
+      "observed": {
+        "rows_carrying_a_printed_numeral": 863,
+        "rows_carrying_none": 273,
+        "agreement_by_series": {
+          "both_series": 10,
+          "running_samhita_series": 281,
+          "verse_index_within_the_dasati": 572
+        },
+        "decisive_rows_the_running_series_pins": 291,
+        "running_series_provenance": "m.running_samhita_number, landed at R5 from citations.jsonl system WIKISOURCE_SA_RUNNING_SAMHITA_NUMBER. The notation artifact's own mapping_method states the page's printed numerals were NOT used to join, so this is evidence the join never saw.",
+        "parse_note": "A trailing run of numeral groups is read FIRST-group-first. Reading the last group instead mistakes the dasati-closing numeral for the verse numeral, and invented a disagreement at UTTARA:P01:R01:D04:V03 on a first attempt."
+      },
+      "status": "SURVIVED"
+    },
+    {
+      "name": "independent.rows_pinned_only_by_order_sit_between_pinned_anchors",
+      "attack": "405 of the 1,844 canonical verses do not have a unique normalised text, so a whole alignment shift would be INVISIBLE to C1 there. For each row on a repeated text that also carries no printed numeral, nothing but order pins it -- so it must fall strictly between two independently pinned rows in BOTH the witness's line order and the canonical order.",
+      "fatal_if": "Any order-only row with no pinned anchor on one side, or one whose canonical position does not lie between its anchors'.",
+      "eligible": 77,
+      "evaluated": 77,
+      "coverage": 1.0,
+      "at_full_coverage": true,
+      "failures": 0,
+      "failure_detail": [],
+      "observed": {
+        "canonical_verses_whose_normalised_text_is_not_unique": 405,
+        "repeated_text_groups": 202,
+        "notation_rows_on_a_repeated_text": 346,
+        "of_those_with_no_printed_numeral_either": 77,
+        "unbracketed": 0,
+        "witness_lines_strictly_increase_with_canonical_order": false
+      },
+      "status": "SURVIVED"
+    },
+    {
+      "name": "independent.the_marking_is_not_array_order_generated",
+      "attack": "If the marks had been generated rather than read off a page, they would betray it: one signature repeated, a constant count, or a count that moves monotonically with position in the file.",
+      "fatal_if": "A single mark signature covering a large share of the rows, a constant mark count, or a mark count monotone in file order.",
+      "eligible": 1136,
+      "evaluated": 1136,
+      "coverage": 1.0,
+      "at_full_coverage": true,
+      "failures": 0,
+      "failure_detail": [],
+      "observed": {
+        "distinct_mark_signatures": 580,
+        "most_common_signature_share": 0.015,
+        "distinct_mark_counts": 37,
+        "mark_count_range": [
+          4,
+          47
+        ],
+        "monotone_in_file_order": false
+      },
+      "status": "SURVIVED"
+    },
+    {
+      "name": "independent.the_withheld_reason_survives_its_own_falsification",
+      "attack": "Attack the WITHHOLDING, not just the release. 109 verses are withheld saying the witness 'plausibly does not carry this verse at all', and 599 saying the difference needs philological adjudication. Both claims are falsifiable in this repository: if a withheld verse's exact normalised text is RELEASED on a coreferent twin, then the witness demonstrably carries the text and neither reason is the true mechanism.",
+      "fatal_if": "Any withheld verse whose exact text is released elsewhere while its row still blames the witness for not carrying it, or blames a philological difference that the released twin shows is not there.",
+      "eligible": 708,
+      "evaluated": 708,
+      "coverage": 1.0,
+      "at_full_coverage": true,
+      "failures": 0,
+      "failure_detail": [],
+      "observed": {
+        "withheld_rows": 708,
+        "withheld_with_a_released_coreferent_twin": 39,
+        "misattributed_by_stated_class": {},
+        "overlay": {
+          "applied": true,
+          "path": "data/staging/samaveda_music_002_final/withheld_reason_overlay.json",
+          "rows": 39,
+          "why": "39 of the 708 withheld verses stated a reason this repository disproves: their exact text is released, with notation, on a coreferent twin, so the witness does carry it. The true mechanism is line exhaustion on a repeat. Corrected by overlay because the staging directory is a tracked, checksum-sealed artifact whose generator is not in this repository."
+        },
+        "repeated_groups_where_every_member_is_released": 153,
+        "repeated_groups_where_some_member_is_withheld": 49,
+        "mechanism": "153 of the 202 repeated-text groups have EVERY member released, so the witness does print a repeated verse more than once and the harvest does find both lines. Where only one member is released, the single order-consistent occurrence went to the earlier verse and the later one had no line left. That is line exhaustion on a coreferent repeat -- not an absence from the witness, and not a philological disagreement.",
+        "what_this_does_not_change": "No row moves from withheld to released. The notated string belongs to the coordinate the witness printed it at; copying a twin's marks onto another verse would be inventing notation. Only the stated reason changes."
+      },
+      "status": "SURVIVED"
+    },
+    {
+      "name": "adversarial_sample_40.every_check_re_applied_row_by_row",
+      "attack": "Re-run C1, C3, C4 and C5 over the 40 declared hardest rows individually, so a defect concentrated in one stratum cannot hide inside an aggregate. The sample was fixed before it was run and is not redrawn.",
+      "fatal_if": "Any defect on any sampled row.",
+      "eligible": 40,
+      "evaluated": 40,
+      "coverage": 1.0,
+      "at_full_coverage": true,
+      "failures": 0,
+      "failure_detail": [],
+      "observed": {
+        "sample": {
+          "size": 40,
+          "declared_size": 40,
+          "seed": 20260918,
+          "strata_declared": {
+            "repeated_text_and_no_printed_numeral": 10,
+            "shortest_normalised_text": 10,
+            "fewest_tone_marks": 10,
+            "first_or_last_notated_verse_of_a_collection": 5,
+            "seeded_random_from_the_remainder": 5
+          },
+          "strata_drawn": {
+            "repeated_text_and_no_printed_numeral": 10,
+            "shortest_normalised_text": 10,
+            "fewest_tone_marks": 10,
+            "first_or_last_notated_verse_of_a_collection": 5,
+            "seeded_random_from_the_remainder": 5
+          },
+          "strata_short_and_topped_up_from_the_seeded_remainder": {},
+          "keys": [
+            "VG:SV:KAU:ARANYA:D01:V07",
+            "VG:SV:KAU:ARANYA:D01:V08",
+            "VG:SV:KAU:ARANYA:D02:V02",
+            "VG:SV:KAU:ARANYA:D02:V03",
+            "VG:SV:KAU:ARANYA:D02:V04",
+            "VG:SV:KAU:ARANYA:D02:V07",
+            "VG:SV:KAU:ARANYA:D05:V04",
+            "VG:SV:KAU:ARANYA:D05:V05",
+            "VG:SV:KAU:CHANDA:P01:D02:V01",
+            "VG:SV:KAU:CHANDA:P01:D02:V03",
+            "VG:SV:KAU:CHANDA:P05:D07:V10",
+            "VG:SV:KAU:UTTARA:P08:R01:D14:V01",
+            "VG:SV:KAU:UTTARA:P09:R01:D02:V02",
+            "VG:SV:KAU:UTTARA:P09:R01:D17:V01",
+            "VG:SV:KAU:CHANDA:P05:D07:V03",
+            "VG:SV:KAU:CHANDA:P05:D07:V04",
+            "VG:SV:KAU:UTTARA:P09:R01:D17:V02",
+            "VG:SV:KAU:CHANDA:P05:D06:V02",
+            "VG:SV:KAU:CHANDA:P05:D06:V06",
+            "VG:SV:KAU:CHANDA:P05:D06:V07",
+            "VG:SV:KAU:CHANDA:P02:D10:V09",
+            "VG:SV:KAU:UTTARA:P02:R02:D06:V02",
+            "VG:SV:KAU:CHANDA:P02:D09:V02",
+            "VG:SV:KAU:CHANDA:P01:D03:V06",
+            "VG:SV:KAU:CHANDA:P03:D03:V07",
+            "VG:SV:KAU:UTTARA:P01:R01:D05:V01",
+            "VG:SV:KAU:CHANDA:P03:D04:V08",
+            "VG:SV:KAU:UTTARA:P01:R01:D04:V02",
+            "VG:SV:KAU:UTTARA:P01:R01:D05:V02",
+            "VG:SV:KAU:UTTARA:P06:R02:D14:V02",
+            "VG:SV:KAU:ARANYA:D01:V03",
+            "VG:SV:KAU:ARANYA:D05:V14",
+            "VG:SV:KAU:CHANDA:P01:D01:V01",
+            "VG:SV:KAU:CHANDA:P06:D09:V07",
+            "VG:SV:KAU:MAHANAMNYA:V01",
+            "VG:SV:KAU:UTTARA:P06:R03:D13:V01",
+            "VG:SV:KAU:UTTARA:P02:R02:D08:V02",
+            "VG:SV:KAU:CHANDA:P05:D05:V10",
+            "VG:SV:KAU:UTTARA:P01:R02:D04:V02",
+            "VG:SV:KAU:CHANDA:P01:D04:V03"
+          ],
+          "selection_rule": "Hardest strata first, in the fixed order above, de-duplicated, with any shortfall topped up from a seed-20260918 shuffle of whatever no stratum claimed. The strata are the rows where a wrong answer is HARDEST to see: a repeated text with no printed numeral is pinned by nothing but order, a short text is likeliest to match by accident, and a row with few marks carries the least information to be wrong about."
+        },
+        "defects": 0,
+        "defect_detail": [],
+        "pre_existing_sample_in_the_artifact": {
+          "name": "gana_rendering.adversarial_shortest_40",
+          "size": 40,
+          "defects": 0,
+          "population": "GANA_RENDERING",
+          "kept_not_replaced": true,
+          "why_it_is_not_this_gate": "It targets the 332 gana-rendering rows, never the 1,136 notation rows, and it was run by the same pass that produced them. It is recorded here and is not discarded; it is simply not evidence about this population."
+        }
+      },
+      "status": "SURVIVED"
+    }
+  ],
+  "summary": {
+    "attacks_run": 8,
+    "attacks_that_landed": 0,
+    "checks_below_full_coverage": [],
+    "total_defects": 0,
+    "rows_evaluated_across_all_checks": 6232
+  },
+  "verdict": "SURVIVED"
+}

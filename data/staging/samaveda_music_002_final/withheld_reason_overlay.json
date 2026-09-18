@@ -1,0 +1,545 @@
+{
+  "artifact": "SAMAVEDA_NOTATION_WITHHELD_REASON_OVERLAY",
+  "at": "2026-09-18T17:30:22.729800+00:00",
+  "found_by": "scripts/samaveda_music_gate_c.py check independent.the_withheld_reason_survives_its_own_falsification",
+  "first_failing_run": "data/staging/samaveda_music_002_final/gate_c_run1.json (39 defects)",
+  "why": "39 of the 708 withheld verses stated a reason this repository disproves: their exact text is released, with notation, on a coreferent twin, so the witness does carry it. The true mechanism is line exhaustion on a repeat. Corrected by overlay because the staging directory is a tracked, checksum-sealed artifact whose generator is not in this repository.",
+  "seals_respected": {
+    "staging_directory_untouched": true,
+    "manifest_checksums_still_valid": true,
+    "original_reason_preserved_on_every_corrected_row": true
+  },
+  "what_did_not_change": {
+    "rows_moving_from_withheld_to_released": 0,
+    "notation_values_invented": 0,
+    "released_population": 1136,
+    "withheld_population": 708
+  },
+  "declared_class_vocabulary": [
+    "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT",
+    "NO_NEAR_LINE_PROBABLE_ABSENCE",
+    "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT"
+  ],
+  "corrections": [
+    {
+      "canonical_key": "VG:SV:KAU:CHANDA:P02:D03:V09",
+      "disposition": "WITHHELD",
+      "disposition_unchanged": true,
+      "original_class": "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT",
+      "original_reason_verbatim": "No order-consistent, text-identical accented line. A near line exists at ratio >= 0.90, so this is a witness disagreement (sandhi, pluti or an inline editorial bracket), not an absence -- it needs philological adjudication, not another source.",
+      "corrected_class": "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT",
+      "corrected_reason": "The accented witness DOES carry this verse's text -- it is released, with notation, on a coreferent twin at another coordinate in this corpus. What it does not carry is a second order-consistent occurrence for this coordinate: the one available line was assigned to the twin. Withheld because notation belongs to the coordinate the source printed it at, and copying the twin's marks here would be inventing source-explicit data. This is not an absence from the witness and not a philological disagreement.",
+      "released_coreferent_twins": [
+        "VG:SV:KAU:UTTARA:P08:R02:D01:V01"
+      ],
+      "evidence": "The normalised canonical text of this verse is byte-identical to that of VG:SV:KAU:UTTARA:P08:R02:D01:V01, which is released with source-supplied notation. Normalisation re-derived independently of the staging pipeline from the manifest's declared spec."
+    },
+    {
+      "canonical_key": "VG:SV:KAU:CHANDA:P02:D07:V07",
+      "disposition": "WITHHELD",
+      "disposition_unchanged": true,
+      "original_class": "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT",
+      "original_reason_verbatim": "No order-consistent, text-identical accented line. A near line exists at ratio >= 0.90, so this is a witness disagreement (sandhi, pluti or an inline editorial bracket), not an absence -- it needs philological adjudication, not another source.",
+      "corrected_class": "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT",
+      "corrected_reason": "The accented witness DOES carry this verse's text -- it is released, with notation, on a coreferent twin at another coordinate in this corpus. What it does not carry is a second order-consistent occurrence for this coordinate: the one available line was assigned to the twin. Withheld because notation belongs to the coordinate the source printed it at, and copying the twin's marks here would be inventing source-explicit data. This is not an absence from the witness and not a philological disagreement.",
+      "released_coreferent_twins": [
+        "VG:SV:KAU:UTTARA:P01:R02:D07:V01"
+      ],
+      "evidence": "The normalised canonical text of this verse is byte-identical to that of VG:SV:KAU:UTTARA:P01:R02:D07:V01, which is released with source-supplied notation. Normalisation re-derived independently of the staging pipeline from the manifest's declared spec."
+    },
+    {
+      "canonical_key": "VG:SV:KAU:CHANDA:P02:D08:V01",
+      "disposition": "WITHHELD",
+      "disposition_unchanged": true,
+      "original_class": "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT",
+      "original_reason_verbatim": "No order-consistent, text-identical accented line. A near line exists at ratio >= 0.90, so this is a witness disagreement (sandhi, pluti or an inline editorial bracket), not an absence -- it needs philological adjudication, not another source.",
+      "corrected_class": "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT",
+      "corrected_reason": "The accented witness DOES carry this verse's text -- it is released, with notation, on a coreferent twin at another coordinate in this corpus. What it does not carry is a second order-consistent occurrence for this coordinate: the one available line was assigned to the twin. Withheld because notation belongs to the coordinate the source printed it at, and copying the twin's marks here would be inventing source-explicit data. This is not an absence from the witness and not a philological disagreement.",
+      "released_coreferent_twins": [
+        "VG:SV:KAU:UTTARA:P01:R02:D09:V01"
+      ],
+      "evidence": "The normalised canonical text of this verse is byte-identical to that of VG:SV:KAU:UTTARA:P01:R02:D09:V01, which is released with source-supplied notation. Normalisation re-derived independently of the staging pipeline from the manifest's declared spec."
+    },
+    {
+      "canonical_key": "VG:SV:KAU:CHANDA:P03:D03:V09",
+      "disposition": "WITHHELD",
+      "disposition_unchanged": true,
+      "original_class": "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT",
+      "original_reason_verbatim": "No order-consistent, text-identical accented line. A near line exists at ratio >= 0.90, so this is a witness disagreement (sandhi, pluti or an inline editorial bracket), not an absence -- it needs philological adjudication, not another source.",
+      "corrected_class": "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT",
+      "corrected_reason": "The accented witness DOES carry this verse's text -- it is released, with notation, on a coreferent twin at another coordinate in this corpus. What it does not carry is a second order-consistent occurrence for this coordinate: the one available line was assigned to the twin. Withheld because notation belongs to the coordinate the source printed it at, and copying the twin's marks here would be inventing source-explicit data. This is not an absence from the witness and not a philological disagreement.",
+      "released_coreferent_twins": [
+        "VG:SV:KAU:UTTARA:P08:R02:D05:V01"
+      ],
+      "evidence": "The normalised canonical text of this verse is byte-identical to that of VG:SV:KAU:UTTARA:P08:R02:D05:V01, which is released with source-supplied notation. Normalisation re-derived independently of the staging pipeline from the manifest's declared spec."
+    },
+    {
+      "canonical_key": "VG:SV:KAU:CHANDA:P03:D09:V01",
+      "disposition": "WITHHELD",
+      "disposition_unchanged": true,
+      "original_class": "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT",
+      "original_reason_verbatim": "No order-consistent, text-identical accented line. A near line exists at ratio >= 0.90, so this is a witness disagreement (sandhi, pluti or an inline editorial bracket), not an absence -- it needs philological adjudication, not another source.",
+      "corrected_class": "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT",
+      "corrected_reason": "The accented witness DOES carry this verse's text -- it is released, with notation, on a coreferent twin at another coordinate in this corpus. What it does not carry is a second order-consistent occurrence for this coordinate: the one available line was assigned to the twin. Withheld because notation belongs to the coordinate the source printed it at, and copying the twin's marks here would be inventing source-explicit data. This is not an absence from the witness and not a philological disagreement.",
+      "released_coreferent_twins": [
+        "VG:SV:KAU:UTTARA:P03:R01:D15:V01"
+      ],
+      "evidence": "The normalised canonical text of this verse is byte-identical to that of VG:SV:KAU:UTTARA:P03:R01:D15:V01, which is released with source-supplied notation. Normalisation re-derived independently of the staging pipeline from the manifest's declared spec."
+    },
+    {
+      "canonical_key": "VG:SV:KAU:CHANDA:P04:D04:V06",
+      "disposition": "WITHHELD",
+      "disposition_unchanged": true,
+      "original_class": "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT",
+      "original_reason_verbatim": "No order-consistent, text-identical accented line. A near line exists at ratio >= 0.90, so this is a witness disagreement (sandhi, pluti or an inline editorial bracket), not an absence -- it needs philological adjudication, not another source.",
+      "corrected_class": "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT",
+      "corrected_reason": "The accented witness DOES carry this verse's text -- it is released, with notation, on a coreferent twin at another coordinate in this corpus. What it does not carry is a second order-consistent occurrence for this coordinate: the one available line was assigned to the twin. Withheld because notation belongs to the coordinate the source printed it at, and copying the twin's marks here would be inventing source-explicit data. This is not an absence from the witness and not a philological disagreement.",
+      "released_coreferent_twins": [
+        "VG:SV:KAU:UTTARA:P09:R01:D11:V01"
+      ],
+      "evidence": "The normalised canonical text of this verse is byte-identical to that of VG:SV:KAU:UTTARA:P09:R01:D11:V01, which is released with source-supplied notation. Normalisation re-derived independently of the staging pipeline from the manifest's declared spec."
+    },
+    {
+      "canonical_key": "VG:SV:KAU:CHANDA:P05:D03:V10",
+      "disposition": "WITHHELD",
+      "disposition_unchanged": true,
+      "original_class": "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT",
+      "original_reason_verbatim": "No order-consistent, text-identical accented line. A near line exists at ratio >= 0.90, so this is a witness disagreement (sandhi, pluti or an inline editorial bracket), not an absence -- it needs philological adjudication, not another source.",
+      "corrected_class": "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT",
+      "corrected_reason": "The accented witness DOES carry this verse's text -- it is released, with notation, on a coreferent twin at another coordinate in this corpus. What it does not carry is a second order-consistent occurrence for this coordinate: the one available line was assigned to the twin. Withheld because notation belongs to the coordinate the source printed it at, and copying the twin's marks here would be inventing source-explicit data. This is not an absence from the witness and not a philological disagreement.",
+      "released_coreferent_twins": [
+        "VG:SV:KAU:UTTARA:P08:R03:D12:V01"
+      ],
+      "evidence": "The normalised canonical text of this verse is byte-identical to that of VG:SV:KAU:UTTARA:P08:R03:D12:V01, which is released with source-supplied notation. Normalisation re-derived independently of the staging pipeline from the manifest's declared spec."
+    },
+    {
+      "canonical_key": "VG:SV:KAU:CHANDA:P05:D09:V05",
+      "disposition": "WITHHELD",
+      "disposition_unchanged": true,
+      "original_class": "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT",
+      "original_reason_verbatim": "No order-consistent, text-identical accented line. A near line exists at ratio >= 0.90, so this is a witness disagreement (sandhi, pluti or an inline editorial bracket), not an absence -- it needs philological adjudication, not another source.",
+      "corrected_class": "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT",
+      "corrected_reason": "The accented witness DOES carry this verse's text -- it is released, with notation, on a coreferent twin at another coordinate in this corpus. What it does not carry is a second order-consistent occurrence for this coordinate: the one available line was assigned to the twin. Withheld because notation belongs to the coordinate the source printed it at, and copying the twin's marks here would be inventing source-explicit data. This is not an absence from the witness and not a philological disagreement.",
+      "released_coreferent_twins": [
+        "VG:SV:KAU:UTTARA:P02:R02:D14:V01"
+      ],
+      "evidence": "The normalised canonical text of this verse is byte-identical to that of VG:SV:KAU:UTTARA:P02:R02:D14:V01, which is released with source-supplied notation. Normalisation re-derived independently of the staging pipeline from the manifest's declared spec."
+    },
+    {
+      "canonical_key": "VG:SV:KAU:CHANDA:P05:D09:V10",
+      "disposition": "WITHHELD",
+      "disposition_unchanged": true,
+      "original_class": "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT",
+      "original_reason_verbatim": "No order-consistent, text-identical accented line. A near line exists at ratio >= 0.90, so this is a witness disagreement (sandhi, pluti or an inline editorial bracket), not an absence -- it needs philological adjudication, not another source.",
+      "corrected_class": "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT",
+      "corrected_reason": "The accented witness DOES carry this verse's text -- it is released, with notation, on a coreferent twin at another coordinate in this corpus. What it does not carry is a second order-consistent occurrence for this coordinate: the one available line was assigned to the twin. Withheld because notation belongs to the coordinate the source printed it at, and copying the twin's marks here would be inventing source-explicit data. This is not an absence from the witness and not a philological disagreement.",
+      "released_coreferent_twins": [
+        "VG:SV:KAU:UTTARA:P03:R01:D16:V01"
+      ],
+      "evidence": "The normalised canonical text of this verse is byte-identical to that of VG:SV:KAU:UTTARA:P03:R01:D16:V01, which is released with source-supplied notation. Normalisation re-derived independently of the staging pipeline from the manifest's declared spec."
+    },
+    {
+      "canonical_key": "VG:SV:KAU:CHANDA:P06:D01:V01",
+      "disposition": "WITHHELD",
+      "disposition_unchanged": true,
+      "original_class": "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT",
+      "original_reason_verbatim": "No order-consistent, text-identical accented line. A near line exists at ratio >= 0.90, so this is a witness disagreement (sandhi, pluti or an inline editorial bracket), not an absence -- it needs philological adjudication, not another source.",
+      "corrected_class": "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT",
+      "corrected_reason": "The accented witness DOES carry this verse's text -- it is released, with notation, on a coreferent twin at another coordinate in this corpus. What it does not carry is a second order-consistent occurrence for this coordinate: the one available line was assigned to the twin. Withheld because notation belongs to the coordinate the source printed it at, and copying the twin's marks here would be inventing source-explicit data. This is not an absence from the witness and not a philological disagreement.",
+      "released_coreferent_twins": [
+        "VG:SV:KAU:UTTARA:P05:R02:D20:V01"
+      ],
+      "evidence": "The normalised canonical text of this verse is byte-identical to that of VG:SV:KAU:UTTARA:P05:R02:D20:V01, which is released with source-supplied notation. Normalisation re-derived independently of the staging pipeline from the manifest's declared spec."
+    },
+    {
+      "canonical_key": "VG:SV:KAU:CHANDA:P06:D04:V06",
+      "disposition": "WITHHELD",
+      "disposition_unchanged": true,
+      "original_class": "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT",
+      "original_reason_verbatim": "No order-consistent, text-identical accented line. A near line exists at ratio >= 0.90, so this is a witness disagreement (sandhi, pluti or an inline editorial bracket), not an absence -- it needs philological adjudication, not another source.",
+      "corrected_class": "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT",
+      "corrected_reason": "The accented witness DOES carry this verse's text -- it is released, with notation, on a coreferent twin at another coordinate in this corpus. What it does not carry is a second order-consistent occurrence for this coordinate: the one available line was assigned to the twin. Withheld because notation belongs to the coordinate the source printed it at, and copying the twin's marks here would be inventing source-explicit data. This is not an absence from the witness and not a philological disagreement.",
+      "released_coreferent_twins": [
+        "VG:SV:KAU:UTTARA:P06:R02:D11:V01"
+      ],
+      "evidence": "The normalised canonical text of this verse is byte-identical to that of VG:SV:KAU:UTTARA:P06:R02:D11:V01, which is released with source-supplied notation. Normalisation re-derived independently of the staging pipeline from the manifest's declared spec."
+    },
+    {
+      "canonical_key": "VG:SV:KAU:CHANDA:P06:D07:V06",
+      "disposition": "WITHHELD",
+      "disposition_unchanged": true,
+      "original_class": "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT",
+      "original_reason_verbatim": "No order-consistent, text-identical accented line. A near line exists at ratio >= 0.90, so this is a witness disagreement (sandhi, pluti or an inline editorial bracket), not an absence -- it needs philological adjudication, not another source.",
+      "corrected_class": "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT",
+      "corrected_reason": "The accented witness DOES carry this verse's text -- it is released, with notation, on a coreferent twin at another coordinate in this corpus. What it does not carry is a second order-consistent occurrence for this coordinate: the one available line was assigned to the twin. Withheld because notation belongs to the coordinate the source printed it at, and copying the twin's marks here would be inventing source-explicit data. This is not an absence from the witness and not a philological disagreement.",
+      "released_coreferent_twins": [
+        "VG:SV:KAU:UTTARA:P02:R01:D17:V01"
+      ],
+      "evidence": "The normalised canonical text of this verse is byte-identical to that of VG:SV:KAU:UTTARA:P02:R01:D17:V01, which is released with source-supplied notation. Normalisation re-derived independently of the staging pipeline from the manifest's declared spec."
+    },
+    {
+      "canonical_key": "VG:SV:KAU:CHANDA:P06:D07:V09",
+      "disposition": "WITHHELD",
+      "disposition_unchanged": true,
+      "original_class": "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT",
+      "original_reason_verbatim": "No order-consistent, text-identical accented line. A near line exists at ratio >= 0.90, so this is a witness disagreement (sandhi, pluti or an inline editorial bracket), not an absence -- it needs philological adjudication, not another source.",
+      "corrected_class": "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT",
+      "corrected_reason": "The accented witness DOES carry this verse's text -- it is released, with notation, on a coreferent twin at another coordinate in this corpus. What it does not carry is a second order-consistent occurrence for this coordinate: the one available line was assigned to the twin. Withheld because notation belongs to the coordinate the source printed it at, and copying the twin's marks here would be inventing source-explicit data. This is not an absence from the witness and not a philological disagreement.",
+      "released_coreferent_twins": [
+        "VG:SV:KAU:UTTARA:P05:R02:D13:V01"
+      ],
+      "evidence": "The normalised canonical text of this verse is byte-identical to that of VG:SV:KAU:UTTARA:P05:R02:D13:V01, which is released with source-supplied notation. Normalisation re-derived independently of the staging pipeline from the manifest's declared spec."
+    },
+    {
+      "canonical_key": "VG:SV:KAU:UTTARA:P01:R01:D08:V03",
+      "disposition": "WITHHELD",
+      "disposition_unchanged": true,
+      "original_class": "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT",
+      "original_reason_verbatim": "No order-consistent, text-identical accented line. A near line exists at ratio >= 0.90, so this is a witness disagreement (sandhi, pluti or an inline editorial bracket), not an absence -- it needs philological adjudication, not another source.",
+      "corrected_class": "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT",
+      "corrected_reason": "The accented witness DOES carry this verse's text -- it is released, with notation, on a coreferent twin at another coordinate in this corpus. What it does not carry is a second order-consistent occurrence for this coordinate: the one available line was assigned to the twin. Withheld because notation belongs to the coordinate the source printed it at, and copying the twin's marks here would be inventing source-explicit data. This is not an absence from the witness and not a philological disagreement.",
+      "released_coreferent_twins": [
+        "VG:SV:KAU:ARANYA:D01:V08"
+      ],
+      "evidence": "The normalised canonical text of this verse is byte-identical to that of VG:SV:KAU:ARANYA:D01:V08, which is released with source-supplied notation. Normalisation re-derived independently of the staging pipeline from the manifest's declared spec."
+    },
+    {
+      "canonical_key": "VG:SV:KAU:UTTARA:P01:R02:D18:V03",
+      "disposition": "WITHHELD",
+      "disposition_unchanged": true,
+      "original_class": "NO_NEAR_LINE_PROBABLE_ABSENCE",
+      "original_reason_verbatim": "No order-consistent, text-identical accented line. No line on the accented page comes within 0.90 similarity; the accented witness plausibly does not carry this verse at all.",
+      "corrected_class": "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT",
+      "corrected_reason": "The accented witness DOES carry this verse's text -- it is released, with notation, on a coreferent twin at another coordinate in this corpus. What it does not carry is a second order-consistent occurrence for this coordinate: the one available line was assigned to the twin. Withheld because notation belongs to the coordinate the source printed it at, and copying the twin's marks here would be inventing source-explicit data. This is not an absence from the witness and not a philological disagreement.",
+      "released_coreferent_twins": [
+        "VG:SV:KAU:UTTARA:P01:R01:D01:V01"
+      ],
+      "evidence": "The normalised canonical text of this verse is byte-identical to that of VG:SV:KAU:UTTARA:P01:R01:D01:V01, which is released with source-supplied notation. Normalisation re-derived independently of the staging pipeline from the manifest's declared spec."
+    },
+    {
+      "canonical_key": "VG:SV:KAU:UTTARA:P01:R02:D22:V02",
+      "disposition": "WITHHELD",
+      "disposition_unchanged": true,
+      "original_class": "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT",
+      "original_reason_verbatim": "No order-consistent, text-identical accented line. A near line exists at ratio >= 0.90, so this is a witness disagreement (sandhi, pluti or an inline editorial bracket), not an absence -- it needs philological adjudication, not another source.",
+      "corrected_class": "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT",
+      "corrected_reason": "The accented witness DOES carry this verse's text -- it is released, with notation, on a coreferent twin at another coordinate in this corpus. What it does not carry is a second order-consistent occurrence for this coordinate: the one available line was assigned to the twin. Withheld because notation belongs to the coordinate the source printed it at, and copying the twin's marks here would be inventing source-explicit data. This is not an absence from the witness and not a philological disagreement.",
+      "released_coreferent_twins": [
+        "VG:SV:KAU:CHANDA:P06:D08:V11"
+      ],
+      "evidence": "The normalised canonical text of this verse is byte-identical to that of VG:SV:KAU:CHANDA:P06:D08:V11, which is released with source-supplied notation. Normalisation re-derived independently of the staging pipeline from the manifest's declared spec."
+    },
+    {
+      "canonical_key": "VG:SV:KAU:UTTARA:P01:R02:D22:V03",
+      "disposition": "WITHHELD",
+      "disposition_unchanged": true,
+      "original_class": "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT",
+      "original_reason_verbatim": "No order-consistent, text-identical accented line. A near line exists at ratio >= 0.90, so this is a witness disagreement (sandhi, pluti or an inline editorial bracket), not an absence -- it needs philological adjudication, not another source.",
+      "corrected_class": "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT",
+      "corrected_reason": "The accented witness DOES carry this verse's text -- it is released, with notation, on a coreferent twin at another coordinate in this corpus. What it does not carry is a second order-consistent occurrence for this coordinate: the one available line was assigned to the twin. Withheld because notation belongs to the coordinate the source printed it at, and copying the twin's marks here would be inventing source-explicit data. This is not an absence from the witness and not a philological disagreement.",
+      "released_coreferent_twins": [
+        "VG:SV:KAU:CHANDA:P06:D06:V09"
+      ],
+      "evidence": "The normalised canonical text of this verse is byte-identical to that of VG:SV:KAU:CHANDA:P06:D06:V09, which is released with source-supplied notation. Normalisation re-derived independently of the staging pipeline from the manifest's declared spec."
+    },
+    {
+      "canonical_key": "VG:SV:KAU:UTTARA:P02:R02:D16:V03",
+      "disposition": "WITHHELD",
+      "disposition_unchanged": true,
+      "original_class": "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT",
+      "original_reason_verbatim": "No order-consistent, text-identical accented line. A near line exists at ratio >= 0.90, so this is a witness disagreement (sandhi, pluti or an inline editorial bracket), not an absence -- it needs philological adjudication, not another source.",
+      "corrected_class": "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT",
+      "corrected_reason": "The accented witness DOES carry this verse's text -- it is released, with notation, on a coreferent twin at another coordinate in this corpus. What it does not carry is a second order-consistent occurrence for this coordinate: the one available line was assigned to the twin. Withheld because notation belongs to the coordinate the source printed it at, and copying the twin's marks here would be inventing source-explicit data. This is not an absence from the witness and not a philological disagreement.",
+      "released_coreferent_twins": [
+        "VG:SV:KAU:ARANYA:D02:V02"
+      ],
+      "evidence": "The normalised canonical text of this verse is byte-identical to that of VG:SV:KAU:ARANYA:D02:V02, which is released with source-supplied notation. Normalisation re-derived independently of the staging pipeline from the manifest's declared spec."
+    },
+    {
+      "canonical_key": "VG:SV:KAU:UTTARA:P03:R02:D14:V01",
+      "disposition": "WITHHELD",
+      "disposition_unchanged": true,
+      "original_class": "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT",
+      "original_reason_verbatim": "No order-consistent, text-identical accented line. A near line exists at ratio >= 0.90, so this is a witness disagreement (sandhi, pluti or an inline editorial bracket), not an absence -- it needs philological adjudication, not another source.",
+      "corrected_class": "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT",
+      "corrected_reason": "The accented witness DOES carry this verse's text -- it is released, with notation, on a coreferent twin at another coordinate in this corpus. What it does not carry is a second order-consistent occurrence for this coordinate: the one available line was assigned to the twin. Withheld because notation belongs to the coordinate the source printed it at, and copying the twin's marks here would be inventing source-explicit data. This is not an absence from the witness and not a philological disagreement.",
+      "released_coreferent_twins": [
+        "VG:SV:KAU:CHANDA:P05:D03:V03"
+      ],
+      "evidence": "The normalised canonical text of this verse is byte-identical to that of VG:SV:KAU:CHANDA:P05:D03:V03, which is released with source-supplied notation. Normalisation re-derived independently of the staging pipeline from the manifest's declared spec."
+    },
+    {
+      "canonical_key": "VG:SV:KAU:UTTARA:P03:R02:D21:V01",
+      "disposition": "WITHHELD",
+      "disposition_unchanged": true,
+      "original_class": "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT",
+      "original_reason_verbatim": "No order-consistent, text-identical accented line. A near line exists at ratio >= 0.90, so this is a witness disagreement (sandhi, pluti or an inline editorial bracket), not an absence -- it needs philological adjudication, not another source.",
+      "corrected_class": "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT",
+      "corrected_reason": "The accented witness DOES carry this verse's text -- it is released, with notation, on a coreferent twin at another coordinate in this corpus. What it does not carry is a second order-consistent occurrence for this coordinate: the one available line was assigned to the twin. Withheld because notation belongs to the coordinate the source printed it at, and copying the twin's marks here would be inventing source-explicit data. This is not an absence from the witness and not a philological disagreement.",
+      "released_coreferent_twins": [
+        "VG:SV:KAU:CHANDA:P05:D04:V01"
+      ],
+      "evidence": "The normalised canonical text of this verse is byte-identical to that of VG:SV:KAU:CHANDA:P05:D04:V01, which is released with source-supplied notation. Normalisation re-derived independently of the staging pipeline from the manifest's declared spec."
+    },
+    {
+      "canonical_key": "VG:SV:KAU:UTTARA:P04:R01:D09:V03",
+      "disposition": "WITHHELD",
+      "disposition_unchanged": true,
+      "original_class": "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT",
+      "original_reason_verbatim": "No order-consistent, text-identical accented line. A near line exists at ratio >= 0.90, so this is a witness disagreement (sandhi, pluti or an inline editorial bracket), not an absence -- it needs philological adjudication, not another source.",
+      "corrected_class": "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT",
+      "corrected_reason": "The accented witness DOES carry this verse's text -- it is released, with notation, on a coreferent twin at another coordinate in this corpus. What it does not carry is a second order-consistent occurrence for this coordinate: the one available line was assigned to the twin. Withheld because notation belongs to the coordinate the source printed it at, and copying the twin's marks here would be inventing source-explicit data. This is not an absence from the witness and not a philological disagreement.",
+      "released_coreferent_twins": [
+        "VG:SV:KAU:CHANDA:P03:D02:V04"
+      ],
+      "evidence": "The normalised canonical text of this verse is byte-identical to that of VG:SV:KAU:CHANDA:P03:D02:V04, which is released with source-supplied notation. Normalisation re-derived independently of the staging pipeline from the manifest's declared spec."
+    },
+    {
+      "canonical_key": "VG:SV:KAU:UTTARA:P05:R01:D15:V03",
+      "disposition": "WITHHELD",
+      "disposition_unchanged": true,
+      "original_class": "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT",
+      "original_reason_verbatim": "No order-consistent, text-identical accented line. A near line exists at ratio >= 0.90, so this is a witness disagreement (sandhi, pluti or an inline editorial bracket), not an absence -- it needs philological adjudication, not another source.",
+      "corrected_class": "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT",
+      "corrected_reason": "The accented witness DOES carry this verse's text -- it is released, with notation, on a coreferent twin at another coordinate in this corpus. What it does not carry is a second order-consistent occurrence for this coordinate: the one available line was assigned to the twin. Withheld because notation belongs to the coordinate the source printed it at, and copying the twin's marks here would be inventing source-explicit data. This is not an absence from the witness and not a philological disagreement.",
+      "released_coreferent_twins": [
+        "VG:SV:KAU:CHANDA:P06:D01:V06"
+      ],
+      "evidence": "The normalised canonical text of this verse is byte-identical to that of VG:SV:KAU:CHANDA:P06:D01:V06, which is released with source-supplied notation. Normalisation re-derived independently of the staging pipeline from the manifest's declared spec."
+    },
+    {
+      "canonical_key": "VG:SV:KAU:UTTARA:P05:R01:D16:V01",
+      "disposition": "WITHHELD",
+      "disposition_unchanged": true,
+      "original_class": "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT",
+      "original_reason_verbatim": "No order-consistent, text-identical accented line. A near line exists at ratio >= 0.90, so this is a witness disagreement (sandhi, pluti or an inline editorial bracket), not an absence -- it needs philological adjudication, not another source.",
+      "corrected_class": "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT",
+      "corrected_reason": "The accented witness DOES carry this verse's text -- it is released, with notation, on a coreferent twin at another coordinate in this corpus. What it does not carry is a second order-consistent occurrence for this coordinate: the one available line was assigned to the twin. Withheld because notation belongs to the coordinate the source printed it at, and copying the twin's marks here would be inventing source-explicit data. This is not an absence from the witness and not a philological disagreement.",
+      "released_coreferent_twins": [
+        "VG:SV:KAU:CHANDA:P06:D06:V05"
+      ],
+      "evidence": "The normalised canonical text of this verse is byte-identical to that of VG:SV:KAU:CHANDA:P06:D06:V05, which is released with source-supplied notation. Normalisation re-derived independently of the staging pipeline from the manifest's declared spec."
+    },
+    {
+      "canonical_key": "VG:SV:KAU:UTTARA:P05:R01:D18:V01",
+      "disposition": "WITHHELD",
+      "disposition_unchanged": true,
+      "original_class": "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT",
+      "original_reason_verbatim": "No order-consistent, text-identical accented line. A near line exists at ratio >= 0.90, so this is a witness disagreement (sandhi, pluti or an inline editorial bracket), not an absence -- it needs philological adjudication, not another source.",
+      "corrected_class": "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT",
+      "corrected_reason": "The accented witness DOES carry this verse's text -- it is released, with notation, on a coreferent twin at another coordinate in this corpus. What it does not carry is a second order-consistent occurrence for this coordinate: the one available line was assigned to the twin. Withheld because notation belongs to the coordinate the source printed it at, and copying the twin's marks here would be inventing source-explicit data. This is not an absence from the witness and not a philological disagreement.",
+      "released_coreferent_twins": [
+        "VG:SV:KAU:CHANDA:P01:D01:V05"
+      ],
+      "evidence": "The normalised canonical text of this verse is byte-identical to that of VG:SV:KAU:CHANDA:P01:D01:V05, which is released with source-supplied notation. Normalisation re-derived independently of the staging pipeline from the manifest's declared spec."
+    },
+    {
+      "canonical_key": "VG:SV:KAU:UTTARA:P05:R01:D19:V01",
+      "disposition": "WITHHELD",
+      "disposition_unchanged": true,
+      "original_class": "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT",
+      "original_reason_verbatim": "No order-consistent, text-identical accented line. A near line exists at ratio >= 0.90, so this is a witness disagreement (sandhi, pluti or an inline editorial bracket), not an absence -- it needs philological adjudication, not another source.",
+      "corrected_class": "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT",
+      "corrected_reason": "The accented witness DOES carry this verse's text -- it is released, with notation, on a coreferent twin at another coordinate in this corpus. What it does not carry is a second order-consistent occurrence for this coordinate: the one available line was assigned to the twin. Withheld because notation belongs to the coordinate the source printed it at, and copying the twin's marks here would be inventing source-explicit data. This is not an absence from the witness and not a philological disagreement.",
+      "released_coreferent_twins": [
+        "VG:SV:KAU:CHANDA:P05:D01:V03"
+      ],
+      "evidence": "The normalised canonical text of this verse is byte-identical to that of VG:SV:KAU:CHANDA:P05:D01:V03, which is released with source-supplied notation. Normalisation re-derived independently of the staging pipeline from the manifest's declared spec."
+    },
+    {
+      "canonical_key": "VG:SV:KAU:UTTARA:P05:R02:D01:V03",
+      "disposition": "WITHHELD",
+      "disposition_unchanged": true,
+      "original_class": "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT",
+      "original_reason_verbatim": "No order-consistent, text-identical accented line. A near line exists at ratio >= 0.90, so this is a witness disagreement (sandhi, pluti or an inline editorial bracket), not an absence -- it needs philological adjudication, not another source.",
+      "corrected_class": "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT",
+      "corrected_reason": "The accented witness DOES carry this verse's text -- it is released, with notation, on a coreferent twin at another coordinate in this corpus. What it does not carry is a second order-consistent occurrence for this coordinate: the one available line was assigned to the twin. Withheld because notation belongs to the coordinate the source printed it at, and copying the twin's marks here would be inventing source-explicit data. This is not an absence from the witness and not a philological disagreement.",
+      "released_coreferent_twins": [
+        "VG:SV:KAU:CHANDA:P06:D05:V10"
+      ],
+      "evidence": "The normalised canonical text of this verse is byte-identical to that of VG:SV:KAU:CHANDA:P06:D05:V10, which is released with source-supplied notation. Normalisation re-derived independently of the staging pipeline from the manifest's declared spec."
+    },
+    {
+      "canonical_key": "VG:SV:KAU:UTTARA:P06:R01:D08:V01",
+      "disposition": "WITHHELD",
+      "disposition_unchanged": true,
+      "original_class": "NO_NEAR_LINE_PROBABLE_ABSENCE",
+      "original_reason_verbatim": "No order-consistent, text-identical accented line. No line on the accented page comes within 0.90 similarity; the accented witness plausibly does not carry this verse at all.",
+      "corrected_class": "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT",
+      "corrected_reason": "The accented witness DOES carry this verse's text -- it is released, with notation, on a coreferent twin at another coordinate in this corpus. What it does not carry is a second order-consistent occurrence for this coordinate: the one available line was assigned to the twin. Withheld because notation belongs to the coordinate the source printed it at, and copying the twin's marks here would be inventing source-explicit data. This is not an absence from the witness and not a philological disagreement.",
+      "released_coreferent_twins": [
+        "VG:SV:KAU:CHANDA:P05:D05:V01"
+      ],
+      "evidence": "The normalised canonical text of this verse is byte-identical to that of VG:SV:KAU:CHANDA:P05:D05:V01, which is released with source-supplied notation. Normalisation re-derived independently of the staging pipeline from the manifest's declared spec."
+    },
+    {
+      "canonical_key": "VG:SV:KAU:UTTARA:P06:R02:D09:V01",
+      "disposition": "WITHHELD",
+      "disposition_unchanged": true,
+      "original_class": "NO_NEAR_LINE_PROBABLE_ABSENCE",
+      "original_reason_verbatim": "No order-consistent, text-identical accented line. No line on the accented page comes within 0.90 similarity; the accented witness plausibly does not carry this verse at all.",
+      "corrected_class": "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT",
+      "corrected_reason": "The accented witness DOES carry this verse's text -- it is released, with notation, on a coreferent twin at another coordinate in this corpus. What it does not carry is a second order-consistent occurrence for this coordinate: the one available line was assigned to the twin. Withheld because notation belongs to the coordinate the source printed it at, and copying the twin's marks here would be inventing source-explicit data. This is not an absence from the witness and not a philological disagreement.",
+      "released_coreferent_twins": [
+        "VG:SV:KAU:CHANDA:P04:D06:V09"
+      ],
+      "evidence": "The normalised canonical text of this verse is byte-identical to that of VG:SV:KAU:CHANDA:P04:D06:V09, which is released with source-supplied notation. Normalisation re-derived independently of the staging pipeline from the manifest's declared spec."
+    },
+    {
+      "canonical_key": "VG:SV:KAU:UTTARA:P06:R02:D16:V01",
+      "disposition": "WITHHELD",
+      "disposition_unchanged": true,
+      "original_class": "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT",
+      "original_reason_verbatim": "No order-consistent, text-identical accented line. A near line exists at ratio >= 0.90, so this is a witness disagreement (sandhi, pluti or an inline editorial bracket), not an absence -- it needs philological adjudication, not another source.",
+      "corrected_class": "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT",
+      "corrected_reason": "The accented witness DOES carry this verse's text -- it is released, with notation, on a coreferent twin at another coordinate in this corpus. What it does not carry is a second order-consistent occurrence for this coordinate: the one available line was assigned to the twin. Withheld because notation belongs to the coordinate the source printed it at, and copying the twin's marks here would be inventing source-explicit data. This is not an absence from the witness and not a philological disagreement.",
+      "released_coreferent_twins": [
+        "VG:SV:KAU:CHANDA:P03:D05:V07"
+      ],
+      "evidence": "The normalised canonical text of this verse is byte-identical to that of VG:SV:KAU:CHANDA:P03:D05:V07, which is released with source-supplied notation. Normalisation re-derived independently of the staging pipeline from the manifest's declared spec."
+    },
+    {
+      "canonical_key": "VG:SV:KAU:UTTARA:P06:R03:D10:V02",
+      "disposition": "WITHHELD",
+      "disposition_unchanged": true,
+      "original_class": "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT",
+      "original_reason_verbatim": "No order-consistent, text-identical accented line. A near line exists at ratio >= 0.90, so this is a witness disagreement (sandhi, pluti or an inline editorial bracket), not an absence -- it needs philological adjudication, not another source.",
+      "corrected_class": "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT",
+      "corrected_reason": "The accented witness DOES carry this verse's text -- it is released, with notation, on a coreferent twin at another coordinate in this corpus. What it does not carry is a second order-consistent occurrence for this coordinate: the one available line was assigned to the twin. Withheld because notation belongs to the coordinate the source printed it at, and copying the twin's marks here would be inventing source-explicit data. This is not an absence from the witness and not a philological disagreement.",
+      "released_coreferent_twins": [
+        "VG:SV:KAU:CHANDA:P02:D05:V05"
+      ],
+      "evidence": "The normalised canonical text of this verse is byte-identical to that of VG:SV:KAU:CHANDA:P02:D05:V05, which is released with source-supplied notation. Normalisation re-derived independently of the staging pipeline from the manifest's declared spec."
+    },
+    {
+      "canonical_key": "VG:SV:KAU:UTTARA:P07:R01:D11:V03",
+      "disposition": "WITHHELD",
+      "disposition_unchanged": true,
+      "original_class": "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT",
+      "original_reason_verbatim": "No order-consistent, text-identical accented line. A near line exists at ratio >= 0.90, so this is a witness disagreement (sandhi, pluti or an inline editorial bracket), not an absence -- it needs philological adjudication, not another source.",
+      "corrected_class": "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT",
+      "corrected_reason": "The accented witness DOES carry this verse's text -- it is released, with notation, on a coreferent twin at another coordinate in this corpus. What it does not carry is a second order-consistent occurrence for this coordinate: the one available line was assigned to the twin. Withheld because notation belongs to the coordinate the source printed it at, and copying the twin's marks here would be inventing source-explicit data. This is not an absence from the witness and not a philological disagreement.",
+      "released_coreferent_twins": [
+        "VG:SV:KAU:CHANDA:P01:D05:V07"
+      ],
+      "evidence": "The normalised canonical text of this verse is byte-identical to that of VG:SV:KAU:CHANDA:P01:D05:V07, which is released with source-supplied notation. Normalisation re-derived independently of the staging pipeline from the manifest's declared spec."
+    },
+    {
+      "canonical_key": "VG:SV:KAU:UTTARA:P07:R02:D10:V01",
+      "disposition": "WITHHELD",
+      "disposition_unchanged": true,
+      "original_class": "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT",
+      "original_reason_verbatim": "No order-consistent, text-identical accented line. A near line exists at ratio >= 0.90, so this is a witness disagreement (sandhi, pluti or an inline editorial bracket), not an absence -- it needs philological adjudication, not another source.",
+      "corrected_class": "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT",
+      "corrected_reason": "The accented witness DOES carry this verse's text -- it is released, with notation, on a coreferent twin at another coordinate in this corpus. What it does not carry is a second order-consistent occurrence for this coordinate: the one available line was assigned to the twin. Withheld because notation belongs to the coordinate the source printed it at, and copying the twin's marks here would be inventing source-explicit data. This is not an absence from the witness and not a philological disagreement.",
+      "released_coreferent_twins": [
+        "VG:SV:KAU:CHANDA:P02:D02:V05"
+      ],
+      "evidence": "The normalised canonical text of this verse is byte-identical to that of VG:SV:KAU:CHANDA:P02:D02:V05, which is released with source-supplied notation. Normalisation re-derived independently of the staging pipeline from the manifest's declared spec."
+    },
+    {
+      "canonical_key": "VG:SV:KAU:UTTARA:P07:R03:D03:V01",
+      "disposition": "WITHHELD",
+      "disposition_unchanged": true,
+      "original_class": "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT",
+      "original_reason_verbatim": "No order-consistent, text-identical accented line. A near line exists at ratio >= 0.90, so this is a witness disagreement (sandhi, pluti or an inline editorial bracket), not an absence -- it needs philological adjudication, not another source.",
+      "corrected_class": "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT",
+      "corrected_reason": "The accented witness DOES carry this verse's text -- it is released, with notation, on a coreferent twin at another coordinate in this corpus. What it does not carry is a second order-consistent occurrence for this coordinate: the one available line was assigned to the twin. Withheld because notation belongs to the coordinate the source printed it at, and copying the twin's marks here would be inventing source-explicit data. This is not an absence from the witness and not a philological disagreement.",
+      "released_coreferent_twins": [
+        "VG:SV:KAU:CHANDA:P03:D07:V01"
+      ],
+      "evidence": "The normalised canonical text of this verse is byte-identical to that of VG:SV:KAU:CHANDA:P03:D07:V01, which is released with source-supplied notation. Normalisation re-derived independently of the staging pipeline from the manifest's declared spec."
+    },
+    {
+      "canonical_key": "VG:SV:KAU:UTTARA:P07:R03:D05:V01",
+      "disposition": "WITHHELD",
+      "disposition_unchanged": true,
+      "original_class": "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT",
+      "original_reason_verbatim": "No order-consistent, text-identical accented line. A near line exists at ratio >= 0.90, so this is a witness disagreement (sandhi, pluti or an inline editorial bracket), not an absence -- it needs philological adjudication, not another source.",
+      "corrected_class": "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT",
+      "corrected_reason": "The accented witness DOES carry this verse's text -- it is released, with notation, on a coreferent twin at another coordinate in this corpus. What it does not carry is a second order-consistent occurrence for this coordinate: the one available line was assigned to the twin. Withheld because notation belongs to the coordinate the source printed it at, and copying the twin's marks here would be inventing source-explicit data. This is not an absence from the witness and not a philological disagreement.",
+      "released_coreferent_twins": [
+        "VG:SV:KAU:CHANDA:P01:D04:V10"
+      ],
+      "evidence": "The normalised canonical text of this verse is byte-identical to that of VG:SV:KAU:CHANDA:P01:D04:V10, which is released with source-supplied notation. Normalisation re-derived independently of the staging pipeline from the manifest's declared spec."
+    },
+    {
+      "canonical_key": "VG:SV:KAU:UTTARA:P08:R02:D08:V03",
+      "disposition": "WITHHELD",
+      "disposition_unchanged": true,
+      "original_class": "NO_NEAR_LINE_PROBABLE_ABSENCE",
+      "original_reason_verbatim": "No order-consistent, text-identical accented line. No line on the accented page comes within 0.90 similarity; the accented witness plausibly does not carry this verse at all.",
+      "corrected_class": "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT",
+      "corrected_reason": "The accented witness DOES carry this verse's text -- it is released, with notation, on a coreferent twin at another coordinate in this corpus. What it does not carry is a second order-consistent occurrence for this coordinate: the one available line was assigned to the twin. Withheld because notation belongs to the coordinate the source printed it at, and copying the twin's marks here would be inventing source-explicit data. This is not an absence from the witness and not a philological disagreement.",
+      "released_coreferent_twins": [
+        "VG:SV:KAU:CHANDA:P06:D06:V08",
+        "VG:SV:KAU:UTTARA:P05:R02:D18:V01"
+      ],
+      "evidence": "The normalised canonical text of this verse is byte-identical to that of VG:SV:KAU:CHANDA:P06:D06:V08, which is released with source-supplied notation. Normalisation re-derived independently of the staging pipeline from the manifest's declared spec."
+    },
+    {
+      "canonical_key": "VG:SV:KAU:UTTARA:P08:R02:D11:V01",
+      "disposition": "WITHHELD",
+      "disposition_unchanged": true,
+      "original_class": "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT",
+      "original_reason_verbatim": "No order-consistent, text-identical accented line. A near line exists at ratio >= 0.90, so this is a witness disagreement (sandhi, pluti or an inline editorial bracket), not an absence -- it needs philological adjudication, not another source.",
+      "corrected_class": "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT",
+      "corrected_reason": "The accented witness DOES carry this verse's text -- it is released, with notation, on a coreferent twin at another coordinate in this corpus. What it does not carry is a second order-consistent occurrence for this coordinate: the one available line was assigned to the twin. Withheld because notation belongs to the coordinate the source printed it at, and copying the twin's marks here would be inventing source-explicit data. This is not an absence from the witness and not a philological disagreement.",
+      "released_coreferent_twins": [
+        "VG:SV:KAU:CHANDA:P02:D02:V03"
+      ],
+      "evidence": "The normalised canonical text of this verse is byte-identical to that of VG:SV:KAU:CHANDA:P02:D02:V03, which is released with source-supplied notation. Normalisation re-derived independently of the staging pipeline from the manifest's declared spec."
+    },
+    {
+      "canonical_key": "VG:SV:KAU:UTTARA:P08:R02:D17:V02",
+      "disposition": "WITHHELD",
+      "disposition_unchanged": true,
+      "original_class": "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT",
+      "original_reason_verbatim": "No order-consistent, text-identical accented line. A near line exists at ratio >= 0.90, so this is a witness disagreement (sandhi, pluti or an inline editorial bracket), not an absence -- it needs philological adjudication, not another source.",
+      "corrected_class": "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT",
+      "corrected_reason": "The accented witness DOES carry this verse's text -- it is released, with notation, on a coreferent twin at another coordinate in this corpus. What it does not carry is a second order-consistent occurrence for this coordinate: the one available line was assigned to the twin. Withheld because notation belongs to the coordinate the source printed it at, and copying the twin's marks here would be inventing source-explicit data. This is not an absence from the witness and not a philological disagreement.",
+      "released_coreferent_twins": [
+        "VG:SV:KAU:UTTARA:P07:R03:D02:V01"
+      ],
+      "evidence": "The normalised canonical text of this verse is byte-identical to that of VG:SV:KAU:UTTARA:P07:R03:D02:V01, which is released with source-supplied notation. Normalisation re-derived independently of the staging pipeline from the manifest's declared spec."
+    },
+    {
+      "canonical_key": "VG:SV:KAU:UTTARA:P08:R02:D17:V03",
+      "disposition": "WITHHELD",
+      "disposition_unchanged": true,
+      "original_class": "NO_NEAR_LINE_PROBABLE_ABSENCE",
+      "original_reason_verbatim": "No order-consistent, text-identical accented line. No line on the accented page comes within 0.90 similarity; the accented witness plausibly does not carry this verse at all.",
+      "corrected_class": "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT",
+      "corrected_reason": "The accented witness DOES carry this verse's text -- it is released, with notation, on a coreferent twin at another coordinate in this corpus. What it does not carry is a second order-consistent occurrence for this coordinate: the one available line was assigned to the twin. Withheld because notation belongs to the coordinate the source printed it at, and copying the twin's marks here would be inventing source-explicit data. This is not an absence from the witness and not a philological disagreement.",
+      "released_coreferent_twins": [
+        "VG:SV:KAU:UTTARA:P07:R03:D02:V02"
+      ],
+      "evidence": "The normalised canonical text of this verse is byte-identical to that of VG:SV:KAU:UTTARA:P07:R03:D02:V02, which is released with source-supplied notation. Normalisation re-derived independently of the staging pipeline from the manifest's declared spec."
+    },
+    {
+      "canonical_key": "VG:SV:KAU:UTTARA:P09:R02:D11:V01",
+      "disposition": "WITHHELD",
+      "disposition_unchanged": true,
+      "original_class": "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT",
+      "original_reason_verbatim": "No order-consistent, text-identical accented line. A near line exists at ratio >= 0.90, so this is a witness disagreement (sandhi, pluti or an inline editorial bracket), not an absence -- it needs philological adjudication, not another source.",
+      "corrected_class": "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT",
+      "corrected_reason": "The accented witness DOES carry this verse's text -- it is released, with notation, on a coreferent twin at another coordinate in this corpus. What it does not carry is a second order-consistent occurrence for this coordinate: the one available line was assigned to the twin. Withheld because notation belongs to the coordinate the source printed it at, and copying the twin's marks here would be inventing source-explicit data. This is not an absence from the witness and not a philological disagreement.",
+      "released_coreferent_twins": [
+        "VG:SV:KAU:CHANDA:P02:D09:V10"
+      ],
+      "evidence": "The normalised canonical text of this verse is byte-identical to that of VG:SV:KAU:CHANDA:P02:D09:V10, which is released with source-supplied notation. Normalisation re-derived independently of the staging pipeline from the manifest's declared spec."
+    }
+  ],
+  "counts": {
+    "corrected": 39,
+    "by_original_class": {
+      "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT": 34,
+      "NO_NEAR_LINE_PROBABLE_ABSENCE": 5
+    },
+    "withheld_after_correction": {
+      "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT": 565,
+      "NO_NEAR_LINE_PROBABLE_ABSENCE": 104,
+      "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT": 39
+    }
+  }
+}

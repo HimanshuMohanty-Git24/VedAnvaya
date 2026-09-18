@@ -1,9 +1,9 @@
 {
   "artifact": "DEPENDENCY_STATUS",
-  "at": "2026-09-18T15:25:06.933559+00:00",
+  "at": "2026-09-18T18:18:13.187430+00:00",
   "graph_census": {
-    "nodes": 164601,
-    "relationships": 509769
+    "nodes": 165737,
+    "relationships": 510905
   },
   "consumers": [
     {
@@ -91,10 +91,10 @@
       "declared_outputs": [
         "docs/reports/GRAPH_QUALITY_V2_SCORECARD.md"
       ],
-      "built_at": "2026-09-18T15:24:25.597849+00:00",
+      "built_at": "2026-09-18T18:17:38.738064+00:00",
       "rebuilt_by": "scripts/graph_quality_scorecard.py",
-      "current_input_digest": "cc4d64f2bf6516361ecf0b059b80c58adf39a88438f0696007bd97b208c7a8d4",
-      "recorded_input_digest": "cc4d64f2bf6516361ecf0b059b80c58adf39a88438f0696007bd97b208c7a8d4"
+      "current_input_digest": "9f28f568a56efe5654c037c244f14e57b1f1a5bad8d2dd34bb9002b92922f95b",
+      "recorded_input_digest": "9f28f568a56efe5654c037c244f14e57b1f1a5bad8d2dd34bb9002b92922f95b"
     },
     {
       "consumer": "Ask retrieval",

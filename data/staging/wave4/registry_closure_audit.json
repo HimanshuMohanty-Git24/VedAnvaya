@@ -1,6 +1,6 @@
 {
   "artifact": "WAVE4_REGISTRY_CLOSURE_AUDIT",
-  "at": "2026-09-18T16:31:59.543742+00:00",
+  "at": "2026-09-18T18:22:12.949411+00:00",
   "entries": 85,
   "entries_without_a_ruling": [],
   "rulings_for_no_entry": [],
@@ -10,15 +10,13 @@
     "CLOSED_DERIVED": 52,
     "CLOSED_NOT_APPLICABLE": 2,
     "CLOSED_SCOPE_DECISION": 14,
+    "CLOSED_SOURCE_ACQUIRED": 1,
     "CLOSED_VERIFIED_ZERO": 5,
-    "NEEDS_AUDIBLE_REVIEW": 3,
-    "STILL_IMPLEMENTATION_FIXABLE": 1
+    "NEEDS_AUDIBLE_REVIEW": 3
   },
-  "closed": 80,
+  "closed": 81,
   "execution_blockers": 4,
-  "not_terminated": [
-    "GAP-SAMAVEDA_MUSIC-002"
-  ],
+  "not_terminated": [],
   "measurement_disagreements": [],
   "resolved_measurement_disagreements": [
     "GAP-ATTRIBUTION-001: declared 39 before integration, re-declared 47, graph measures 47. 0 resolved ascriptions became 39, so the AV half is no longer unbuilt and the entry's remaining reach is the SV and YV apparatus absence alone. R4 widened the deity-adjective suffix matcher to the vrddhi spelling and 8 more descriptors resolved, so this measure -- which counts resolved ascriptions and is shared with GAP- ATTRIBUTION-002 -- moved 39 -> 47. This entry's verdict is unchanged: the resolution count is context here and the SV/YV apparatus absence is what it is blocked on.",
@@ -41,6 +39,7 @@
     "GAP-RITUAL-004: declared 2 before integration, re-declared 0, graph measures 0. Declared 2 before R4 and re-declared 0, which the graph measures. The classical sixteen now reads 16 of 16 flagged, from 14.",
     "GAP-RITUAL-005: declared 0 before integration, re-declared 0, graph measures 0. RECEIVES_OFFERING is 4 before and after. R5's measure is different on purpose: 103 rites with no stated offering position became 0, which is what makes clause 2 evaluable under clause 3 instead of unsatisfiable.",
     "GAP-RITUAL-006: declared 0 before integration, re-declared 0, graph measures 0. ritual_context is 20,210 before and after. R5's measure is the clause that was actually failing: mantras with no precision figure went 20,210 -> 0, and the figure arrives with its review level attached rather than bare.",
+    "GAP-SAMAVEDA_MUSIC-002: declared 0 before integration, re-declared 0, graph measures 0. The measure CHANGED and the old one is reported rather than dropped. The previous gate was MUSICALIZED_AS, which reads 0 before and 0 after and is SUPPOSED to: section 41 rules the predicate out of Product V1 and forbids populating it. Gating on it would have made this entry unclosable by any means except the one act the owner barred. The new measure is the one the closure actually rests on -- Samavedic verses with no typed notation disposition, 1,844 before this pass and 0 after.",
     "GAP-SAMAVEDA_MUSIC-003: declared 1844 before integration, re-declared 0, graph measures 0. 1,844 Samavedic mantras with no running Samhita number became 0 and stay 0. Clause 2 is unmoved at 0 MUSICALIZED_AS edges and is now closed as out of Product V1 scope by OWNER_DECISION_G_GANA_OBJECT_OUT_OF_V1 rather than by an import: no gana node was minted and no edge was created.",
     "GAP-SEMANTICS-002: declared 4865 before integration, re-declared 35131, graph measures 35131. 4,865 UNREVIEWED became 35,131. The figure is re-declared upward rather than quietly re-based, and the entry closes on a recorded decision about human review, not on the count having improved -- it did not.",
     "GAP-SEMANTICS-003: declared 0 before integration, re-declared 103, graph measures 103. 0 non-Devata targets became 103, and the all-three-slots count 0 became 10. The population did not grow: the resolution was already in the graph and was never projected onto the assertion.",
@@ -51,10 +50,7 @@
     "GAP-CROSS-VEDA-DEVATA-IDENTITY-BRIDGE-001: declared 39 before integration, re-declared 47, graph measures 47. The bridge was declared unbuilt and is built for 39 of 324. The entry's test asks for a label-free join, not for full resolution, so the move closes it. R4 widened the deity-adjective suffix matcher to the vrddhi spelling and 8 more descriptors resolved, so this measure -- which counts resolved ascriptions and is shared with GAP- ATTRIBUTION-002 -- moved 39 -> 47. The entry's own verdict is unchanged: the resolution count is context here, not the thing being gated."
   ],
   "reaudited_without_a_stated_basis": [],
-  "registry_status_disagreements": [
-    "GAP-SAMAVEDA_MUSIC-002: the ruling table says STILL_IMPLEMENTATION_FIXABLE and data/gap_registry.json says BLOCKED_OWNER_DECISION_REQUIRED. One of the two is stale. The audit does not get to decide which by overwriting the other without the disagreement being read.",
-    "GAP-SAMAVEDA_MUSIC-003: the ruling table says CLOSED_SCOPE_DECISION and data/gap_registry.json says BLOCKED_OWNER_DECISION_REQUIRED. One of the two is stale. The audit does not get to decide which by overwriting the other without the disagreement being read."
-  ],
+  "registry_status_disagreements": [],
   "scope_citations_naming_no_file": [],
   "scope_citations_only_self_cited": [],
   "gate_coverage": {
@@ -1286,21 +1282,21 @@
     },
     {
       "gap_id": "GAP-SAMAVEDA_MUSIC-002",
-      "closure_status": "STILL_IMPLEMENTATION_FIXABLE",
-      "declared_status": "STILL_IMPLEMENTATION_FIXABLE",
+      "closure_status": "CLOSED_SOURCE_ACQUIRED",
+      "declared_status": "CLOSED_SOURCE_ACQUIRED",
       "downgraded": false,
-      "closure_basis": "THE OWNER GATE IS ANSWERED AND THE ENTRY IS STILL NOT CLOSED, which is the honest pair rather than a regression. OWNER_DECISION_F_NOTATION_IS_NOT_AUDIO (OWNER_DECISIONS.md section 40) rules that the audible-review gate covers AUDIO only and does not gate textual or musical notation, so this entry leaves BLOCKED_OWNER_DECISION_REQUIRED: the gate it was parked behind was never the right gate for 1,136 of the domain's 1,471 rows, which are combining Devanagari tone marks printed on verse text and contain no recording anyone could listen to. The decision is a PERMISSION CONDITIONAL ON FOUR THINGS, and they are measured rather than assumed. MET -- recension compatible with the canonical Kauthuma arcika: the source page-title prefix is samavedah/kauthumiya/samhita/, the accented witness's own headers run purvarcikah/chanda arcikah through uttararcikah/navamaprapathakah which is the Kauthuma arrangement and not Benfey's six-book Ranayaniya, 1,136 verses are byte-identical under the declared normalisation to the text already held at VG:WORK:SV:KAU, and recension.no_foreign_recension_inside_kauthuma evaluated 1,132 records against eight foreign-recension markers with 0 hits. MET for 1,136 and only those -- coordinate alignment: arcika_notation.text_redderives is 1,136 evaluated and 0 failures over CHANDA 471, ARANYA 31, MAHANAMNYA 3, UTTARA 631, the pairing order-consistent under an LCS alignment rather than merely set-equal, with identity.uuid_recomputes_from_urn 1,136/0 and identity.keys_and_urns_unique 1,132/0; the other 708 arcika verses are staged UNRESOLVED because the witness disagrees with our text there and are exactly what the decision's own 'uncertain or unaligned notation remains withheld' clause withholds. MET -- source-supplied and not inferred: arcika_notation.tone_mark_present 1,136/0, arcika_notation.no_pua_no_u0301 1,136/0 refusing both the private-use-area font hack and the U+0301 acute that makes an IAST sa indistinguishable from an udatta, and a codepoint census of 108,160 cantillation marks over 1,750,419 characters of which 98.09% are real combining Devanagari Extended U+A8E1-U+A8F1; the notation is recorded as codepoints and never interpreted into pitch. NOT MET -- existing validation gates pass: Gate A is PASS at full evaluation coverage with --graph and the domain's own QA report is 12 checks over 11,193 records with 0 defects, but wave3_eligibility.json records Gate B UNKNOWN and Gate C NOT_RUN against a stated eligibility rule of A and B and C all PASS. That fourth condition is not a technicality: Gate C is an INDEPENDENT falsification attempt, four of four domains adversarially tested so far have failed it, and two of those four had every aggregate count survive -- so the artifact's own adversarial sample (the 40 shortest gana-rendered verses, 0 defects) is the agent checking its own work, which is the thing Gate C exists because it is not. CONSEQUENCE: the notation is AUTHORISED AND NOT YET RELEASED. The graph still holds no melodic layer of any kind -- 0 MUSICALIZED_AS edges, the relationship type absent from db.relationshipTypes(), no label matching saman|gana|stobha|melod -- and a staged and unimported domain is not closed, which this ledger learned when 944 Atharvavedic translations were recorded as 'closed via the Wayback Machine' against a graph holding none of them. THE REMAINING WORK IS NAMED AND BOUNDED: run Gate B and Gate C for samaveda_music, then import the 1,136 aligned ARCIKA_NOTATION rows and leave the 708 unresolved ones withheld. If the owner intended 'existing validation gates' to mean the structural validator alone, this ruling is the one line that changes.",
-      "closure_measure": "MATCH ()-[r:MUSICALIZED_AS]->() RETURN count(r)",
+      "closure_basis": "CLOSED ON AN IMPORT, NOT ON A DECISION, AND THE GATE THAT WAS MISSING IS THE ONE THAT FOUND A DEFECT. The fourth condition of OWNER_DECISION_F_NOTATION_IS_NOT_AUDIO (section 40) read NOT MET because wave3_eligibility.json recorded Gate B UNKNOWN and Gate C NOT_RUN against a stated eligibility rule of A and B and C all PASS, and section 40 said in its own last paragraph that if the owner meant the structural validator alone, that would be a one-line change here. OWNER_DECISION_H_GATES_MEANS_A_AND_B_AND_C (section 42, OWNER-SUPPLIED 2026-09-18) rules the other way: all applicable gates, not Gate A alone. So the condition was satisfied by BUILDING the two gates rather than by narrowing the word. Gate A re-run live: PASS, 16 checks, 1,471 rows, every check at full evaluation coverage with --graph. Gate B, a new implementation because there was no semantic review to re-run: PASS, 12 checks over the four sections the eligibility file names (classification, population, source meaning, relation meaning), 12,782 row-evaluations, 0 defects, no check below full coverage. GATE C LANDED A DEFECT AND THE FAILING RUN IS KEPT: 39 of the 708 withheld verses stated a reason this repository disproves -- 5 said the witness 'plausibly does not carry this verse at all' and 34 blamed a philological disagreement, while the verse's exact normalised text is RELEASED WITH NOTATION on a coreferent twin, so the witness demonstrably carries it. The mechanism is measured rather than guessed: 153 of the 202 repeated-text groups have every member released, so the witness does print a repeat twice and the harvest does find both lines, and where only one is released the single order-consistent occurrence went to the earlier verse. A third class, WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT, now carries those 39; no row moved from withheld to released and no notation value was invented, because marks belong to the coordinate the source printed them at. The correction is an overlay rather than an edit -- data/staging/samaveda_music/ is checksum-sealed, Gate A verifies all twelve digests, and its generator is not in this repository -- so the original reason is preserved on every corrected row and Gate A still passes byte-identically. WHAT MAKES GATE C INDEPENDENT, which was section 40's whole objection to the artifact's own 40-row sample: it never reads payload.tone_stripped_text, the domain's own QA report, or the graph's stored SV text; it re-implements the declared normalisation from the manifest's prose using the Unicode character database in place of the artifact's hard-coded integer ranges, and compares against the canonical FILE. Its negative control is what makes the positive result evidence rather than an artifact of a loose fold: 1,136 of 1,136 aligned against 0 of 1,136 shifted by one verse, same fold and same rows. Two further independent pins: the witness's own printed numerals, which the artifact's mapping_method states the join did NOT use, agree with either the dasati-local verse index or the R5 running Samhita series on 863 of 863 rows carrying one; and the 77 rows pinned by nothing but order -- a repeated text with no printed numeral, where a whole alignment shift would be invisible -- are 77 of 77 bracketed by two independently pinned anchors. A census of every character the strip removes returns 0 undeclared removals, which rules out the match having been manufactured by over-normalising. THEN THE NOTATION WAS IMPORTED, which is what turns an authorisation into a closure: this ledger learned the difference when 944 Atharvavedic translations were recorded as closed against a graph holding none of them. 1,136 accented TextVersion witnesses landed on the PARALLEL_WITNESS surface the product already renders, promise kept against a pre-declared census with 0 disagreements and 0 content-hash mismatches on a per-row comparison, over a fresh logical backup of 164,601 nodes and 509,769 relationships. ALL 1,844 SAMAVEDIC VERSES NOW CARRY A TYPED DISPOSITION, not only the 1,136 that have notation: 1,136 SOURCE_EXPLICIT_PRESENT and 708 WITHHELD with the reason class and the reason prose on the verse, with 0 verses carrying no state at all -- because a layer that publishes only its positive rows lets a reader infer a zero the data never stated. SECTION 41 IS UNTOUCHED: 0 Gana nodes, 0 MUSICALIZED_AS edges, 0 melodic labels, 0 new relationship types, and 0 rows interpreting a mark into a pitch -- the Kauthuma decipherment authority is not held and the published one is Jaiminiya. THE ENTRY'S OWN closure_test AS WRITTEN IS NOT SILENTLY REDEFINED: it asked for a melodic node label, for MUSICALIZED_AS to carry a non-zero count, and for the capability card to stop reading NOT_BUILT. The third clause holds and is measured -- /api/v1/insights/capabilities now serves samavedic_melodic_layer as PARTIALLY_ANSWERABLE with data_status PARTIAL, keeping the frozen benchmark verdict NOT_ANSWERABLE beside it so the divergence is visible rather than overwritten. The first two clauses do NOT hold and are superseded by a recorded owner decision rather than by this pass: section 41 places the object-side Gana identity outside Product V1 and forbids minting a node or an edge to satisfy a denominator, and GAP-SAMAVEDA_MUSIC-003 already closed CLOSED_SCOPE_DECISION on that citation. What the entry was opened for was the sentence 'No melodic layer of any kind exists', and that sentence is now false. COVERAGE IS PUBLISHED AS FOUR FIGURES AND NOT ONE, because a bare 1,136 hides which arcika a reader can and cannot see: CHANDA 471/585, ARANYA 31/55, MAHANAMNYA 3/10, UTTARA 631/1194. The 332 GANA_RENDERING rows and the 495 staged MUSICALIZED_AS edges remain staged and unimported, which is where section 41 puts them.",
+      "closure_measure": "MATCH (m:Mantra {veda:'SV'}) WHERE m.samavedic_notation_state IS NULL RETURN count(m)",
       "closure_measured_value": 0,
       "closure_expected_value": 0,
-      "closure_prior_expected_value": null,
-      "closure_reaudit": null,
+      "closure_prior_expected_value": 0,
+      "closure_reaudit": "The measure CHANGED and the old one is reported rather than dropped. The previous gate was MUSICALIZED_AS, which reads 0 before and 0 after and is SUPPOSED to: section 41 rules the predicate out of Product V1 and forbids populating it. Gating on it would have made this entry unclosable by any means except the one act the owner barred. The new measure is the one the closure actually rests on -- Samavedic verses with no typed notation disposition, 1,844 before this pass and 0 after.",
       "closure_citation": null,
       "closure_owner_decision": null,
       "closure_blocked_evidence": null,
       "closure_blocked_evidence_missing": null,
-      "terminates": false,
-      "is_data_completeness_closure": false
+      "terminates": true,
+      "is_data_completeness_closure": true
     },
     {
       "gap_id": "GAP-SAMAVEDA_MUSIC-003",
@@ -1675,5 +1671,5 @@
       "is_data_completeness_closure": true
     }
   ],
-  "sha256": "fbfe1cef07adab96753e0349cd2b0f5b5982d914e687e5e78c20272ab89da136"
+  "sha256": "424f108cc4cd84d9b527a3f8929675978a191530407e424cba670b7335ba84f7"
 }

@@ -66,7 +66,7 @@ const SHAPE_NOTE: Record<string, string> = {
 
 const NOT_HELD: Record<string, string> = {
     RV: "Samhita only, in one recension. No Brahmana, Aranyaka or Upanisad layer is held, and the Ashvalayana recension is not present.",
-    SV: "The ārcika verses only. Gana collections are not included: they are a parallel and larger body, and they are the reason the Samaveda is a distinct Veda rather than a Rigvedic excerpt. Nothing here shows, notates or infers melody.",
+    SV: "The ārcika verses only. Gana collections are not included: they are a parallel and larger body, and they are the reason the Samaveda is a distinct Veda rather than a Rigvedic excerpt. 1,136 of the 1,844 verses do carry the tone marks their source printed, and 708 say why they do not; but a mark is not a melody. Nothing here turns one into a pitch, and nothing here shows how a verse was sung.",
     YV: "The White Yajurveda only. The Krishna Yajurveda is not held at all, which is the omission most likely to mislead, because the name ordinarily covers both. No Taittiriya, Kathaka, Maitrayani or Kapisthala samhita is present.",
     AV: "The Śaunaka recension only. The Paippalāda is not a minor variant: it is a substantially different collection with its own hymn order. An Atharvavedic absence measured here is an absence from Śaunaka.",
 };

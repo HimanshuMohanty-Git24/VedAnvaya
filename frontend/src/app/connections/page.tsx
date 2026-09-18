@@ -204,8 +204,8 @@ export default async function ConnectionsPage() {
             ) : null}
 
             <Caveat title="Samaveda scope" tone="boundary">
-                Kauthuma arcika only. The gana collections and complete musical information are not
-                held, so this view neither presents nor infers melody.
+                Kauthuma arcika only. The gana collections are not held and the tone marks that
+                are held are never deciphered, so this view neither presents nor infers melody.
             </Caveat>
             <CaveatList caveats={matrix.caveats} title="How the matrix was measured" />
         </div>

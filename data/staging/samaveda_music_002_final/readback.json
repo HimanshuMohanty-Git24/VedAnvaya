@@ -1,0 +1,42 @@
+{
+  "artifact": "SAMAVEDA_NOTATION_002_READBACK",
+  "at": "2026-09-18T17:46:16.352596+00:00",
+  "read_from": "the live graph only; the staging rows are used for the hash comparison",
+  "notated_verses": 1136,
+  "withheld_verses": 708,
+  "verses_with_no_state_at_all": 0,
+  "accented_witnesses": 1136,
+  "witnesses_carrying_a_tone_mark": 1136,
+  "witnesses_claiming_pitch_interpretation": 0,
+  "notation_on_a_withheld_verse": 0,
+  "withheld_verses_with_no_reason_class": 0,
+  "by_collection": {
+    "ARANYA": 31,
+    "CHANDA": 471,
+    "MAHANAMNYA": 3,
+    "UTTARA": 631
+  },
+  "denominator_by_collection": {
+    "ARANYA": 55,
+    "CHANDA": 585,
+    "MAHANAMNYA": 10,
+    "UTTARA": 1194
+  },
+  "coverage_by_collection": {
+    "ARANYA": 0.5636,
+    "CHANDA": 0.8051,
+    "MAHANAMNYA": 0.3,
+    "UTTARA": 0.5285
+  },
+  "withheld_by_class": {
+    "NEAR_LINE_EXISTS_WITNESS_DISAGREEMENT": 565,
+    "NO_NEAR_LINE_PROBABLE_ABSENCE": 104,
+    "WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT": 39
+  },
+  "content_hash_mismatches": 0,
+  "content_hash_mismatch_examples": [],
+  "musicalized_as_edges": 0,
+  "gana_labels": [],
+  "text_versions_sharing_the_new_text_version_id": 1136,
+  "distinct_text_ids_among_them": 1136
+}

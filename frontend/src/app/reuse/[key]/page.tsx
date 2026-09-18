@@ -69,8 +69,9 @@ export default async function ReusePage({ params }: Params) {
 
             {involvesSamaveda && (
                 <Caveat title="Samaveda scope" tone="boundary">
-                    This is the Kauthuma arcika verse corpus. The gana collections and the melodic
-                    apparatus are not held, so nothing here shows or implies how a verse was sung.
+                    This is the Kauthuma arcika verse corpus. Some verses carry the tone marks
+                    their source printed, but the gana collections are not held and no mark is
+                    deciphered, so nothing here shows or implies how a verse was sung.
                 </Caveat>
             )}
 

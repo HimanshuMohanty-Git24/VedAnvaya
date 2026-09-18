@@ -513,8 +513,10 @@ export default async function SourcesPage() {
                             <li>
                                 <b>The Samavedic gana corpus is absent.</b> A parallel and larger
                                 body than the verse collection held here, and the reason the
-                                Samaveda is a distinct Veda. Nothing here shows, notates or infers
-                                melody.
+                                Samaveda is a distinct Veda. The arcika verses do carry the tone
+                                marks their source printed — 1,136 of 1,844, with the other 708
+                                each saying why not — but the marks are recorded as codepoints and
+                                never read as pitch, so nothing here infers a melody.
                             </li>
                             <li>
                                 <b>The Krishna Yajurveda is absent entirely</b>, and the

@@ -68,7 +68,7 @@
   "quality evaluation": {
     "consumer": "quality evaluation",
     "input_hashes": {
-      "subgraph:whole-graph": "nodes=164601;keyless=79707;nodekeys=73e1d6b64b1ba8bb421b34dcdd249ab33ec8fd22efbdd5497ffe0f3b8c1dcc26;labels=67c51e1a04badc144f5a1472f844c140621fb66d9903e5362e0cb5507df8ce9f;edges=509769;unnamed=83862;edgekeys=cd2b92b2e78f23dc8b7e1939938003b3f6c8ca294e39151818a828a9fe1b53fe",
+      "subgraph:whole-graph": "nodes=165737;keyless=80843;nodekeys=73e1d6b64b1ba8bb421b34dcdd249ab33ec8fd22efbdd5497ffe0f3b8c1dcc26;labels=9cf2e8ef9a55e558b4122c7d9f9b0b062a21b00b692e21f63cf45934f1f9302d;edges=510905;unnamed=84998;edgekeys=cd2b92b2e78f23dc8b7e1939938003b3f6c8ca294e39151818a828a9fe1b53fe",
       "label:Passage": "n=22537;keyless=0;keys=39a13384921e22b23f9cd72bd9b4b26b462b22a089de2a09f6b2f6ecfb2eaaf7",
       "label:QAIssue": "n=915;keyless=915;keys=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "label:QualityVerdict": "n=2568;keyless=0;keys=a5c86f381d9a071f796af09129c4d1f378658c95df8c702345036780301a3b30",
@@ -76,13 +76,13 @@
       "type:QUALITY_VERDICT_ABOUT": "n=2568;unnamed=0;pairs=81b929c8b243d02d718fa8b26866b0a9a63b7aff37bd4bd8f47df6cb0b3b281c",
       "builder:scripts/graph_quality_scorecard.py": "81c51a88557629fdd2aca7bf561b6e7e1a6e76045997c91fcff0bfd7e62b3758"
     },
-    "built_at": "2026-09-18T15:24:25.597849+00:00",
+    "built_at": "2026-09-18T18:17:38.738064+00:00",
     "graph_census": {
-      "nodes": 164601,
-      "relationships": 509769
+      "nodes": 165737,
+      "relationships": 510905
     },
     "output_hashes": {
-      "docs/reports/GRAPH_QUALITY_V2_SCORECARD.md": "38f508765160d1dbb9223fb84013993629351d97a79fd79a57d2609686e8dcfa"
+      "docs/reports/GRAPH_QUALITY_V2_SCORECARD.md": "8e6df8c3ba3e297db8642989ae3523e3e86183f2a0740b58e38bb32f7c38c430"
     }
   },
   "Visualization Lab aggregates": {

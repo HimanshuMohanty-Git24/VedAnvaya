@@ -1099,6 +1099,14 @@ that is a one-line change to the ruling for this entry in
 than making the choice quietly. It is recorded as unmet because the conservative reading is
 the one that cannot manufacture a closure.
 
+> **Answered, and the conservative reading stood — see §42.** The owner ruled 2026-09-18
+> that "existing validation gates" means Gate A *and* Gate B *and* Gate C. Nothing above is
+> relaxed: the fourth condition was satisfied by building and running the two missing gates,
+> Gate C found a real defect in the withheld population's stated reasons, and the notation
+> was then imported. `GAP-SAMAVEDA_MUSIC-002` is now `CLOSED_SOURCE_ACQUIRED`; the
+> "`STILL_IMPLEMENTATION_FIXABLE`" and "authorised and not yet released" above are this
+> section's state as of 2026-09-18 and not the current one.
+
 ## 41. `OWNER_DECISION_G_GANA_OBJECT_OUT_OF_V1` — no object side, no `MUSICALIZED_AS`
 
 **Decision, as given:**
@@ -1155,3 +1163,85 @@ gana node was minted and no edge was created.
 `data/staging/samaveda_music/`, re-verified 495/495 against the graph's own stored arcika
 text, and they become importable the moment a gana corpus carries a canonical object identity.
 That is future enrichment, which is what the decision says it is.
+
+## 42. `OWNER_DECISION_H_GATES_MEANS_A_AND_B_AND_C` — the fourth condition, answered
+
+**Decision, as given (OWNER-SUPPLIED, 2026-09-18):**
+
+> "existing validation gates" means ALL APPLICABLE validation gates:
+>
+>     Gate A
+>     Gate B
+>     Gate C
+>
+> NOT Gate A alone.
+>
+> Do NOT weaken the decision to clear the registry.
+
+**What it answers.** §40 released Samavedic notation on four conditions and recorded three
+as met and one as not. The unmet one was "existing validation gates pass", and §40 said in
+its own last paragraph that if the owner meant the structural validator alone, "that is a
+one-line change to the ruling for this entry". The owner has ruled the other way. The
+conservative reading stands, so nothing in §40 is relaxed and the remaining work is exactly
+what §40 named: run Gate B and Gate C, then import.
+
+**The gates were built and run rather than asserted.** `wave3_eligibility.json` recorded
+Gate B `UNKNOWN` ("no semantic review recorded") and Gate C `NOT_RUN` ("adversarial test not
+yet performed"), so there was nothing to re-execute — both are new implementations, one file
+each, deliberately separate so the same codepath cannot validate itself.
+
+| gate | implementation | population | result |
+| --- | --- | --- | --- |
+| A | `scripts/validate_staging_artifact.py --graph` | 1,471 rows, 16 checks | **PASS**, every check at full coverage, 0 defects |
+| B | `scripts/samaveda_music_gate_b.py` | 1,136 notation rows + the 708 withheld | **PASS**, 12 checks, 12,782 row-evaluations, 0 defects |
+| C | `scripts/samaveda_music_gate_c.py` | 1,136 + a declared 40-row adversarial sample | **SURVIVED** — but only after it found a defect and the defect was fixed |
+
+**Gate C landed, which is the point of having it.** Its first run
+(`data/staging/samaveda_music_002_final/gate_c_run1.json`) is preserved as a failing run:
+39 of the 708 withheld verses stated a reason this repository itself disproves. 5 said "the
+accented witness plausibly does not carry this verse at all" and 34 blamed a philological
+disagreement, while the verse's exact normalised text is *released, with notation*, on a
+coreferent twin elsewhere in the corpus — so the witness demonstrably carries it. The
+measured mechanism is line exhaustion, not absence: 153 of the 202 repeated-text groups have
+every member released, so the witness does print a repeat twice and the harvest does find
+both lines; where only one is released the single order-consistent occurrence went to the
+earlier verse. A third reason class,
+`WITNESS_OCCURRENCE_CONSUMED_BY_A_COREFERENT_REPEAT`, now carries those 39.
+
+**The fix moved no row and invented no notation.** All 39 remain withheld. Marks belong to
+the coordinate the source printed them at, and copying a twin's onto another verse because
+the consonants agree would be manufacturing source-explicit data — the one act §40 forbids
+outright. Only the stated reason changed, the original is preserved on every corrected row,
+and the correction is an overlay
+(`data/staging/samaveda_music_002_final/withheld_reason_overlay.json`) rather than an edit:
+`data/staging/samaveda_music/` is checksum-sealed, Gate A verifies all twelve digests, and
+the generator that produced it is not in this repository, so an in-place edit could not be
+re-derived and would have destroyed the witness record it replaced.
+
+**What made Gate C independent, since that was §40's whole objection to the artifact's own
+adversarial sample.** It never reads `payload.tone_stripped_text`, the artifact's own QA
+report, or the graph's stored SV text. It re-implements the declared normalisation from the
+manifest's prose using the Unicode character database in place of the artifact's hard-coded
+integer ranges, applies it to the raw witness string, and compares against the canonical
+FILE. And it carries a negative control, which is what makes the positive result mean
+anything: **1,136 of 1,136 aligned versus 0 of 1,136 shifted by one verse**, same fold, same
+rows. Two further independent checks: the witness's own printed numerals, which the
+artifact's `mapping_method` states the join did not use, agree with either the dasati-local
+verse index or the R5 running Samhita series on **863 of 863** rows that carry one; and the
+77 rows pinned by nothing but order — a repeated text with no printed numeral — are **77 of
+77** bracketed by two independently pinned anchors. A character census of everything the
+strip removes returns **0 undeclared removals**, which is what rules out the match having
+been manufactured by over-normalising. The artifact's own 40-row sample is kept and
+re-reported, labelled as covering `GANA_RENDERING` and not this population.
+
+**Consequence: released.** 1,136 accented witness TextVersions landed on the
+`PARALLEL_WITNESS` surface the product already renders, with the primary text unmoved at the
+head of the surface preference. All 1,844 Samavedic verses now carry a typed notation
+disposition — 1,136 `SOURCE_EXPLICIT_PRESENT`, 708 `WITHHELD` with the reason class and the
+reason prose on the verse itself — because a layer that publishes only its positive rows
+lets a reader infer a zero the data never stated. 0 Gana nodes, 0 `MUSICALIZED_AS` edges and
+0 melodic labels were created: §41 is untouched. Nothing is interpreted into pitch.
+
+**Coverage is published as four figures and not one**, because a bare 1,136 hides which
+arcika a reader can and cannot see: CHANDA 471/585, ARANYA 31/55, MAHANAMNYA 3/10, UTTARA
+631/1194.
