@@ -266,8 +266,18 @@ def test_exactly_half_is_not_most() -> None:
 
 
 def test_superlative_most_is_not_read_as_a_majority() -> None:
-    """ "most densely" is a superlative. Flagging it would be a false positive."""
-    assert validate("It appears most densely in the RV [E1].", packet("Coverage: 3 of 10.")).ok
+    """ "most densely" is a superlative, and 3 of 10 says nothing about it.
+
+    This test asserted the whole audit was clean until the ranking rule shipped, which was
+    a stronger claim than its own name: "it appears most densely in the RV" over a single
+    "Coverage: 3 of 10" row is an unlicensed rank, and the ranking rule now says so. What
+    must stay true is that the MAJORITY rule keeps out of it -- reading a superlative as a
+    claim about more than half is the false positive this test was written for.
+    """
+    found = rules("It appears most densely in the RV [E1].", packet("Coverage: 3 of 10."))
+
+    assert QuantitativeRule.MAJORITY.value not in found
+    assert found == [QuantitativeRule.UNSUPPORTED_RANKING.value]
 
 
 def test_most_with_no_ratio_in_the_evidence_is_not_judged() -> None:
